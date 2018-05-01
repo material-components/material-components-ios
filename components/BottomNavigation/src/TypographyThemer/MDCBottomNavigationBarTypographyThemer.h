@@ -19,17 +19,16 @@
 #import "MaterialBottomNavigation.h"
 #import "MaterialTypographyScheme.h"
 
-
 /**
- Applies a Typography scheme to an MDCBottomNavigationBar.
+ The Material Design typography system's themer for instances of MDCBottomNavigationBar.
  */
 @interface MDCBottomNavigationBarTypographyThemer : NSObject
 
 /**
- Applies a typography scheme to theme an MDCBottomNavigationBar.
+ Applies a typography scheme's properties to an MDCBottomNavigationBar.
 
- @param typographyScheme The typography scheme to apply to an MDCBottomNavigationBar.
- @param bottomNavigationBar An MDCBottomNavigationBar instance to apply a typography scheme to.
+ @param typographyScheme The typography scheme to apply to the component instance.
+ @param bottomNavigationBar A component instance to which the typography scheme should be applied.
  */
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
         toBottomNavigationBar:(nonnull MDCBottomNavigationBar *)bottomNavigationBar;

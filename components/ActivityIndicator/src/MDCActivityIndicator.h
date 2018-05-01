@@ -42,7 +42,7 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorMode) {
  a standard UIActivityIndicator, MDCActivityIndicator supports showing determinate progress and uses
  custom Material Design animation for indeterminate progress.
 
- See https://material.io/guidelines/components/progress-activity.html
+ See https://material.io/go/design-progress-indicators
  */
 IB_DESIGNABLE
 @interface MDCActivityIndicator : UIView
@@ -58,7 +58,7 @@ IB_DESIGNABLE
 @property(nonatomic, assign, getter=isAnimating) BOOL animating;
 
 /**
- Spinner radius width. Defaults to 12dp (24x24dp circle), constrained to range [8dp, 72dp]. The
+ Spinner radius width. Defaults to 12dp (24x24dp circle), constrained to range [5dp, 72dp]. The
  spinner is centered in the view's bounds. If the bounds are smaller than the diameter of the
  spinner, the spinner may be clipped when clipToBounds is true.
  */

@@ -20,16 +20,15 @@
 #import <Foundation/Foundation.h>
 
 /**
- Used to apply a color scheme to theme MDCActivityIndicator.
+ The Material Design color system's themer for instances of MDCActivityIndicator.
  */
 @interface MDCActivityIndicatorColorThemer : NSObject
 
 /**
  Applies a color scheme's properties to an MDCActivityIndicator.
 
- @param colorScheme The color scheme to apply to MDCActivityIndicator.
- @param activityIndicator An MDCActivityIndicator instance to which the color scheme should be
- applied.
+ @param colorScheme The color scheme to apply to the component instance.
+ @param activityIndicator A component instance to which the color scheme should be applied.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
              toActivityIndicator:(nonnull MDCActivityIndicator *)activityIndicator;
@@ -37,14 +36,13 @@
 #pragma mark - Soon to be deprecated
 
 /**
- Applies a color scheme to theme a MDCActivityIndicator. Use a UIAppearance proxy to apply a color
- scheme to all instances of MDCActivityIndicator.
+ Applies a color scheme's properties to an MDCActivityIndicator.
 
- This method will soon be deprecated. Consider using +applySemanticColorScheme:toActivityIndicator:
- instead.
+ @warning This method will soon be deprecated. Consider using
+ @c +applySemanticColorScheme:toActivityIndicator: instead.
 
- @param colorScheme The color scheme to apply to MDCActivityIndicator.
- @param activityIndicator A MDCActivityIndicator instance to apply a color scheme.
+ @param colorScheme The color scheme to apply to the component instance.
+ @param activityIndicator A component instance to which the color scheme should be applied.
  */
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
      toActivityIndicator:(nonnull MDCActivityIndicator *)activityIndicator;

@@ -180,4 +180,58 @@ static inline UIColor *MDCColorLighten(UIColor *color, CGFloat percent) {
                              minimumDimension, 0.001);
 }
 
+#pragma mark - Touch Target
+
+- (void)testPointInsideWithCustomHitAreaInsets {
+  // Given
+  MDCChipView *chip = [[MDCChipView alloc] init];
+  chip.titleLabel.text = @"Chip";
+  [chip sizeToFit];
+
+  // When
+  UIEdgeInsets hitAreaInsets = UIEdgeInsetsMake(-10, -8, -6, -4);
+
+  chip.hitAreaInsets = hitAreaInsets;
+
+  // Then
+  CGRect chipBounds = CGRectStandardize(chip.bounds);
+  const CGFloat delta = (CGFloat)0.001;
+  // Top-left corner
+  XCTAssertTrue([chip pointInside:CGPointMake(CGRectGetMinX(chipBounds) + hitAreaInsets.left,
+                                              CGRectGetMinY(chipBounds) + hitAreaInsets.top)
+                        withEvent:nil]);
+  XCTAssertFalse([chip pointInside:CGPointMake(CGRectGetMinX(chipBounds) + hitAreaInsets.left -
+                                                  delta,
+                                               CGRectGetMinY(chipBounds) + hitAreaInsets.top -
+                                                  delta)
+                        withEvent:nil]);
+  // Top-right corner
+  XCTAssertTrue([chip pointInside:CGPointMake(CGRectGetMaxX(chipBounds) - hitAreaInsets.right -
+                                                  delta,
+                                              CGRectGetMinY(chipBounds) + hitAreaInsets.top)
+                        withEvent:nil]);
+  XCTAssertFalse([chip pointInside:CGPointMake(CGRectGetMaxX(chipBounds) - hitAreaInsets.right,
+                                               CGRectGetMinY(chipBounds) + hitAreaInsets.top -
+                                                  delta)
+                        withEvent:nil]);
+  // Bottom-left corner
+  XCTAssertTrue([chip pointInside:CGPointMake(CGRectGetMinX(chipBounds) + hitAreaInsets.left,
+                                              CGRectGetMaxY(chipBounds) - hitAreaInsets.bottom -
+                                                  delta)
+                        withEvent:nil]);
+  XCTAssertFalse([chip pointInside:CGPointMake(CGRectGetMinX(chipBounds) + hitAreaInsets.left -
+                                                  delta,
+                                               CGRectGetMaxY(chipBounds) - hitAreaInsets.bottom)
+                        withEvent:nil]);
+  // Bottom-right corner
+  XCTAssertTrue([chip pointInside:CGPointMake(CGRectGetMaxX(chipBounds) - hitAreaInsets.right -
+                                                  delta,
+                                              CGRectGetMaxY(chipBounds) - hitAreaInsets.bottom -
+                                                  delta)
+                        withEvent:nil]);
+  XCTAssertFalse([chip pointInside:CGPointMake(CGRectGetMaxX(chipBounds) - hitAreaInsets.right,
+                                               CGRectGetMaxY(chipBounds) - hitAreaInsets.bottom)
+                        withEvent:nil]);
+}
+
 @end

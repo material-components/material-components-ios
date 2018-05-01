@@ -18,7 +18,14 @@ Tabs are bars of buttons used to navigate between groups of content.
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/tabs.html">Material Design guidelines: Tabs</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-tabs">Material Design guidelines: Tabs</a></li>
+</ul>
+
+## Extensions
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--link"><a href="docs/color-theming.md">Color Theming</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="docs/typography-theming.md">Typography Theming</a></li>
 </ul>
 
 - - -
@@ -36,13 +43,13 @@ pod 'MaterialComponents/Tabs'
 <!--{: .code-renderer.code-renderer--install }-->
 
 To add this component along with its themer and other related extensions, please add the following instead:
-``` bash
+```bash
 pod 'MaterialComponents/Tabs+Extensions'
 ```
 
 Then, run the following command:
 
-``` bash
+```bash
 pod install
 ```
 
@@ -68,13 +75,13 @@ To use the tab bar in your code, import the MaterialTabs umbrella header (Object
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-``` swift
+```swift
 import MaterialComponents
 ```
 
 #### Objective-C
 
-``` objc
+```objc
 #import "MaterialTabs.h"
 ```
 
@@ -123,7 +130,7 @@ navigation bar. The bar will automatically update with the appropriate styling.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-``` swift
+```swift
 let tabBar = MDCTabBar(frame: view.bounds)
 tabBar.items = [
 UITabBarItem(title: "Recents", image: UIImage(named: "phone"), tag: 0),
@@ -137,7 +144,7 @@ view.addSubview(tabBar)
 
 #### Objective-C
 
-``` objc
+```objc
 MDCTabBar *tabBar = [[MDCTabBar alloc] initWithFrame:self.view.bounds];
 tabBar.items = @[
     [[UITabBarItem alloc] initWithTitle:@"Recents" image:[UIImage imageNamed:@"phone"] tag:0],

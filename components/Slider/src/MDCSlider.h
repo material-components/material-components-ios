@@ -24,7 +24,7 @@
 /**
  A Material slider.
 
- @see https://material.io/guidelines/components/sliders.html for full details.
+ @see https://material.io/go/design-sliders for full details.
 
  Differences between UISlider and MDCSlider:
    Does not have api to

@@ -20,15 +20,15 @@
 #import <Foundation/Foundation.h>
 
 /**
- Used to apply a typography scheme to theme MDCNavigationBar.
+ The Material Design typography system's themer for instances of MDCNavigationBar.
  */
 @interface MDCNavigationBarTypographyThemer : NSObject
 
 /**
- Applies a typography scheme to theme a MDCNavigationBar.
+ Applies a typography scheme's properties to an MDCNavigationBar.
 
- @param typographyScheme The typography scheme to apply to MDCNavigationBar.
- @param navigationBar A MDCNavigationBar instance to apply a typography scheme.
+ @param typographyScheme The typography scheme to apply to the component instance.
+ @param navigationBar A component instance to which the typography scheme should be applied.
  */
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
               toNavigationBar:(nonnull MDCNavigationBar *)navigationBar;

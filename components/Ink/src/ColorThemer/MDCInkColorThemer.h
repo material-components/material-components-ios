@@ -19,14 +19,20 @@
 
 #import <Foundation/Foundation.h>
 
+#pragma mark - Soon to be deprecated
+
 /**
  Used to apply a color scheme to theme MDCInkView.
+
+ @warning This class will soon be deprecated. There is no direct replacement. Ink color needs to be
+ set by the owning component in a context-specific manner.
  */
 @interface MDCInkColorThemer : NSObject
 
 /**
- Applies a color scheme to theme a MDCInkView. Use a UIAppearance proxy to apply a color scheme to
- all instances of MDCInkView.
+ Applies a color scheme to theme a MDCInkView.
+
+ @warning This API will soon be deprecated. There is no direct replacement.
 
  @param colorScheme The color scheme to apply to MDCInkView.
  @param inkView A MDCInkView instance to apply a color scheme.

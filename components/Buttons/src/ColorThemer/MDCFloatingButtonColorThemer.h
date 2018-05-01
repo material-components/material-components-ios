@@ -20,15 +20,15 @@
 #import <Foundation/Foundation.h>
 
 /**
- A color themer for a Material floating Button.
+ The Material Design color system's floating button themer for instances of MDCFloatingButton.
  */
 @interface MDCFloatingButtonColorThemer : NSObject
 
 /**
- Applies a color scheme to theme to an MDCFloatingButton.
+ Applies a color scheme's properties to an MDCFloatingButton using the floating button style.
 
- @param colorScheme The color scheme to apply to @c floatingButton.
- @param button An MDCFloatingButton instance to apply a color scheme.
+ @param colorScheme The color scheme to apply to the component instance.
+ @param button A component instance to which the color scheme should be applied.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                         toButton:(nonnull MDCFloatingButton *)button;

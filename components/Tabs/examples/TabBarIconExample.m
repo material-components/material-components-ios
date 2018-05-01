@@ -19,7 +19,7 @@
 #import "MaterialAppBar.h"
 #import "MaterialColorScheme.h"
 #import "MaterialTabs.h"
-#import "MDCTabBarColorThemer.h"
+#import "MaterialTabs+ColorThemer.h"
 
 @implementation TabBarIconExample
 

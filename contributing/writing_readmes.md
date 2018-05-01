@@ -46,7 +46,7 @@ fill out have been marked with `TODO` statements.
 
     Then, run the following command:
 
-    ``` bash
+    ```bash
     pod install
     ```
 
@@ -85,7 +85,7 @@ Swift language to use when writing examples.
 
     <!--<div class="material-code-render" markdown="1">-->
     #### Objective-C
-    ``` objc
+    ```objc
     - (void)viewDidLoad {
       [super viewDidLoad];
 
@@ -97,7 +97,7 @@ Swift language to use when writing examples.
     ```
 
     #### Swift
-    ``` swift
+    ```swift
     override func viewDidLoad() {
       super.viewDidLoad()
 

@@ -174,6 +174,26 @@ run_cocoapods() {
   bash <(curl -s https://codecov.io/bash)
 }
 
+generate_website() {
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    # Move into our cloned repo
+    cd github/repo
+
+    ./scripts/build_site.sh
+
+    gem install bundler --no-rdoc --no-ri --no-document --quiet
+    brew update
+    brew install yarn --without-node
+  fi
+
+  cd docsite-generator
+  bundle install
+  yarn install
+  cd ../
+
+  ./scripts/build_site.sh
+}
+
 POSITIONAL=()
 while [[ $# -gt 0 ]]; do
   key="$1"
@@ -225,6 +245,7 @@ case "$DEPENDENCY_SYSTEM" in
   "bazel")      run_bazel ;;
   "cocoapods")  run_cocoapods ;;
   "cocoapods-podspec")  run_cocoapods ;;
+  "website")    generate_website ;;
 
   *)            run_bazel ;;
 esac

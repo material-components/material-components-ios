@@ -68,10 +68,10 @@ static const CGFloat MDCButtonDefaultCornerRadius = 2.0;
 
 static const NSTimeInterval MDCButtonAnimationDuration = 0.2;
 
-// https://material.io/guidelines/components/buttons.html#buttons-main-buttons
+// https://material.io/go/design-buttons#buttons-main-buttons
 static const CGFloat MDCButtonDisabledAlpha = 0.12f;
 
-// Blue 500 from https://material.io/guidelines/style/color.html#color-color-palette .
+// Blue 500 from https://material.io/go/design-theming#color-color-palette .
 static const uint32_t MDCButtonDefaultBackgroundColor = 0x191919;
 
 // Creates a UIColor from a 24-bit RGB color encoded as an integer.

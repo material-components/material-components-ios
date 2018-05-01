@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponents"
-  mdc.version      = "54.12.0"
+  mdc.version      = "54.13.0"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -264,6 +264,13 @@ Pod::Spec.new do |mdc|
       extension.dependency "MaterialComponents/Cards"
       extension.dependency "MaterialComponents/schemes/Color"
     end
+    component.subspec "CardThemer" do |extension|
+      extension.ios.deployment_target = '8.0'
+      extension.public_header_files = "components/Cards/src/#{extension.base_name}/*.h"
+      extension.source_files = "components/Cards/src/#{extension.base_name}/*.{h,m}"
+      extension.dependency "MaterialComponents/Cards"
+      extension.dependency "MaterialComponents/Cards+Extensions/ColorThemer"
+    end
   end
 
   mdc.subspec "Chips" do |component|
@@ -305,6 +312,15 @@ Pod::Spec.new do |mdc|
 
       extension.dependency "MaterialComponents/Chips"
       extension.dependency "MaterialComponents/schemes/Typography"
+    end
+    component.subspec "ChipThemer" do |extension|
+      extension.ios.deployment_target = '8.0'
+      extension.public_header_files = "components/Chips/src/#{extension.base_name}/*.h"
+      extension.source_files = "components/Chips/src/#{extension.base_name}/*.{h,m}"
+
+      extension.dependency "MaterialComponents/Chips"
+      extension.dependency "MaterialComponents/Chips+Extensions/ColorThemer"
+      extension.dependency "MaterialComponents/Chips+Extensions/TypographyThemer"
     end
   end
 

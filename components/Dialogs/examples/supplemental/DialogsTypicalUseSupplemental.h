@@ -22,11 +22,13 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialCollections.h"
-
-//@class DialogsTypicalUseViewController;
+#import "MaterialColorScheme.h"
+#import "MaterialTypographyScheme.h"
 
 @interface DialogsTypicalUseViewController : MDCCollectionViewController
 @property(nonatomic, strong, nullable) NSArray *modes;
+@property(nonatomic, strong, nullable) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong, nullable) MDCTypographyScheme *typographyScheme;
 @end
 
 @interface DialogsTypicalUseViewController (Supplemental)

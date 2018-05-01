@@ -23,7 +23,7 @@
 /*
  A Material chip.
 
- @see https://material.io/guidelines/components/chips.html for full details.
+ @see https://material.io/go/design-chips for full details.
 
  Chips are compact elements that represent an attribute, text, entity, or action.
 
@@ -138,6 +138,12 @@
  Defaults to a minimum height of 32 points, and no minimum width.
  */
 @property(nonatomic, assign) CGSize minimumSize UI_APPEARANCE_SELECTOR;
+
+/**
+ Custom insets to use when computing touch targets. A positive inset value will shrink the hit
+ area for the Chip.
+ */
+@property(nonatomic, assign) UIEdgeInsets hitAreaInsets;
 
 /*
  A color used as the chip's @c backgroundColor for @c state.

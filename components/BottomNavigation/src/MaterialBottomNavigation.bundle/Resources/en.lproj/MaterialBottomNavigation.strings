@@ -8,6 +8,6 @@
 /*
  Bottom navigation provides quick navigation between top-level views of an app.
 
- @see https://material.io/guidelines/components/bottom-navigation.html
+ @see https://material.io/go/design-bottom-navigation
  */
 "MaterialBottomNavigationTabElementAccessibilityLabel" = "tab";

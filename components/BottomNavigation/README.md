@@ -14,7 +14,16 @@ api_doc_root: true
   <img src="docs/assets/bottomnavigation.png" alt="Bottom Navigation" width="375">
 </div>
 
-[Bottom navigation](https://material.io/guidelines/components/bottom-navigation.html) makes it easy to explore and switch between top-level views in a single tap. Tapping on a bottom navigation icon takes you directly to the associated view or refreshes the currently active view.
+## Extensions
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--link"><a href="docs/color-theming.md">Color Theming</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="docs/typography-theming.md">Typography Theming</a></li>
+</ul>
+
+- - -
+
+[Bottom navigation](https://material.io/go/design-bottom-navigation) makes it easy to explore and switch between top-level views in a single tap. Tapping on a bottom navigation icon takes you directly to the associated view or refreshes the currently active view.
 
 Bottom navigation should be used for top-level destinations in an app of similar importance or destinations requiring direct access from anywhere in the app. 
 
@@ -36,7 +45,7 @@ pod 'MaterialComponents/BottomNavigation'
 ~~~
 
 To add this component along with its themer and other related extensions, please add the following instead:
-``` bash
+```bash
 pod 'MaterialComponents/BottomNavigation+Extensions'
 ```
 
@@ -67,13 +76,13 @@ Before using Bottom Navigation, you'll need to import it:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-``` swift
+```swift
 import MaterialComponents.MaterialBottomNavigation
 ```
 
 #### Objective-C
 
-``` objc
+```objc
 #import "MaterialBottomNavigation.h"
 ```
 <!--</div>-->
@@ -83,7 +92,7 @@ import MaterialComponents.MaterialBottomNavigation
 
 Define a MDCBottomNavigationBar.
 
-``` swift
+```swift
 // Create a bottom navigation bar to add to a view.
 let bottomNavBar = MDCBottomNavigationBar()
 ```
@@ -127,7 +136,7 @@ override func viewWillLayoutSubviews() {
 #### Objective-C
 Define a MDCBottomNavigationBar.
 
-``` objc
+```objc
 @property(nonatomic, strong) MDCBottomNavigationBar *bottomNavBar;
 ```
 Add the bottom navigation to the parent view and populate its contents.

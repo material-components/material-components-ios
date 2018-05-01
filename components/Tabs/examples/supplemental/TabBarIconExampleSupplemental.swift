@@ -20,11 +20,17 @@
 import UIKit
 
 import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialButtons_ButtonThemer
 
 extension TabBarIconSwiftExample {
 
-  func setupAlignmentButton() -> MDCRaisedButton {
-    let alignmentButton = MDCRaisedButton()
+  func setupAlignmentButton() -> MDCButton {
+    let alignmentButton = MDCButton()
+
+    let buttonScheme = MDCButtonScheme()
+    buttonScheme.colorScheme = colorScheme
+    buttonScheme.typographyScheme = typographyScheme
+    MDCContainedButtonThemer.applyScheme(buttonScheme, to: alignmentButton)
 
     alignmentButton.setTitle("Change Alignment", for: .normal)
     alignmentButton.setTitleColor(.white, for: .normal)

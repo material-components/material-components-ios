@@ -20,8 +20,14 @@ or discrete set of values.
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/sliders.html">Material Design guidelines: Sliders</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-sliders">Material Design guidelines: Sliders</a></li>
   <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/sliders/api-docs/Classes/MDCSlider.html">API: MDCSlider</a></li>
+</ul>
+
+## Extensions
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--link"><a href="docs/color-theming.md">Color Theming</a></li>
 </ul>
 
 - - -
@@ -32,19 +38,19 @@ or discrete set of values.
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-``` bash
+```bash
 pod 'MaterialComponents/Slider'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
 To add this component along with its themer and other related extensions, please add the following instead:
-``` bash
+```bash
 pod 'MaterialComponents/Slider+Extensions'
 ```
 
 Then, run the following command:
 
-``` bash
+```bash
 pod install
 ```
 
@@ -60,13 +66,13 @@ Before using Slider, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 import MaterialComponents.MaterialSlider
 ```
 
 #### Objective-C
 
-``` objc
+```objc
 #import "MaterialSlider.h"
 ```
 <!--</div>-->
@@ -78,7 +84,7 @@ MDCSlider can be be used like a standard `UIControl`.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-``` swift
+```swift
 override func viewDidLoad() {
   super.viewDidLoad()
 
@@ -96,7 +102,7 @@ func didChangeSliderValue(senderSlider:MDCSlider) {
 
 #### Objective C
 
-``` objc
+```objc
 - (void)viewDidLoad {
   MDCSlider *slider = [[MDCSlider alloc] initWithFrame:CGRectMake(50, 50, 100, 27)];
   [slider addTarget:self
@@ -108,6 +114,32 @@ func didChangeSliderValue(senderSlider:MDCSlider) {
 - (void)didChangeSliderValue:(MDCSlider *)slider {
   NSLog(@"did change %@ value: %f", NSStringFromClass([slider class]), slider.value);
 }
+```
+<!--</div>-->
+
+### Stateful API
+
+`MDCSlider` exposes stateful APIs to customize the colors for different control states. In order to use this API you must enable `statefulAPIEnabled` on your `MDCSlider` instances.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+```swift
+ let slider = MDCSlider()
+ slider.isStatefulAPIEnabled = true
+
+ // Setting a thumb color for selected state.
+ slider.setThumbColor(.red, for: .selected)
+```
+
+#### Objective C
+
+```objc
+ MDCSlider *slider = [[MDCSlider alloc] init];
+ slider.statefulAPIEnabled = YES;
+ 
+ // Setting a thumb color for selected state.
+ [slider setThumbColor:[UIColor redColor] forState:UIControlStateSelected];
 ```
 <!--</div>-->
 

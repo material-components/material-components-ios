@@ -17,7 +17,7 @@
 #import "ChipsExamplesSupplemental.h"
 
 #import "MaterialChips.h"
-#import "MaterialChips+ColorThemer.h"
+#import "MaterialChips+ChipThemer.h"
 
 @implementation ChipsChoiceExampleViewController {
   MDCChipView *_sizingChip;
@@ -99,12 +99,14 @@
   if (indexPath.row == 2) {
     [chipView setEnabled:NO];
   }
+  
+  MDCChipViewScheme *scheme = [[MDCChipViewScheme alloc] init];
+  scheme.colorScheme = self.colorScheme;
+  
   if (_isStroked) {
-    [chipView setBorderWidth:1 forState:UIControlStateNormal];
-    [MDCChipViewColorThemer applySemanticColorScheme:_colorScheme toStrokedChipView:chipView];
+    [MDCChipViewThemer applyOutlinedVariantWithScheme:scheme toChipView:chipView];
   } else {
-    [chipView setBorderWidth:0 forState:UIControlStateNormal];
-    [MDCChipViewColorThemer applySemanticColorScheme:_colorScheme toChipView:chipView];
+    [MDCChipViewThemer applyScheme:scheme toChipView:chipView];
   }
 
   return cell;

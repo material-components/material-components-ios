@@ -15,7 +15,14 @@ Chips represent complex entities, such as a contact, in small blocks.
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/chips.html">Material Design guidelines: Chips</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-chips">Material Design guidelines: Chips</a></li>
+</ul>
+
+## Extensions
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--link"><a href="docs/color-theming.md">Color Theming</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="docs/typography-theming.md">Typography Theming</a></li>
 </ul>
 
 - - -
@@ -38,7 +45,7 @@ pod 'MaterialComponents/Chips'
 
 Then, run the following command:
 
-``` bash
+```bash
 pod install
 ```
 
@@ -50,13 +57,13 @@ Before using Chips, you'll need to import them:
 
 <!--<div class="material-code-render" markdown="1">-->
 ### Swift
-``` swift
+```swift
 import MaterialComponents.MaterialChips
 ```
 
 ### Objective-C
 
-``` objc
+```objc
 #import "MaterialChips.h"
 ```
 <!--</div>-->
@@ -84,7 +91,7 @@ It is easiest to create choice Chips using a `UICollectionView`:
 
  - Use `MDCChipCollectionViewFlowLayout` as the `UICollectionView` layout:
  <!--<div class="material-code-render" markdown="1">-->
- ``` objc
+ ```objc
  MDCChipCollectionViewFlowLayout *layout = [[MDCChipCollectionViewFlowLayout alloc] init];
   _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
  ```
@@ -94,7 +101,7 @@ It is easiest to create choice Chips using a `UICollectionView`:
  - Use `MDCChipCollectionViewCell` as `UICollectionView` cells. (`MDCChipCollectionViewCell` manages the state of the chip based on selection state of `UICollectionView` automatically)
 
   <!--<div class="material-code-render" markdown="1">-->
-   ``` objc
+   ```objc
   - (void)loadView {
     [super loadView];
     …
@@ -130,7 +137,7 @@ It is easiest to create filter Chips using a `UICollectionView`:
 
  - Use `MDCChipCollectionViewFlowLayout` as the `UICollectionView` layout:
  <!--<div class="material-code-render" markdown="1">-->
- ``` objc
+ ```objc
  MDCChipCollectionViewFlowLayout *layout = [[MDCChipCollectionViewFlowLayout alloc] init];
   _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
  ```
@@ -138,14 +145,14 @@ It is easiest to create filter Chips using a `UICollectionView`:
  
  - Allow multi cell selection in the `UICollectionView`:
   <!--<div class="material-code-render" markdown="1">-->
-  ``` objc
+  ```objc
   collectionView.allowsMultipleSelection = YES; 
   ```
   <!--</div>-->
  - Use `MDCChipCollectionViewCell` as `UICollectionView` cells. (`MDCChipCollectionViewCell` manages the state of the chip based on selection state of `UICollectionView` automatically)
 
   <!--<div class="material-code-render" markdown="1">-->
-   ``` objc
+   ```objc
   - (void)loadView {
     [super loadView];
     …
@@ -180,7 +187,7 @@ It is easiest to create action Chips using a `UICollectionView`:
 
  - Use `MDCChipCollectionViewFlowLayout` as the `UICollectionView` layout:
  <!--<div class="material-code-render" markdown="1">-->
- ``` objc
+ ```objc
  MDCChipCollectionViewFlowLayout *layout = [[MDCChipCollectionViewFlowLayout alloc] init];
   _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
  ```
@@ -190,7 +197,7 @@ It is easiest to create action Chips using a `UICollectionView`:
  - Use `MDCChipCollectionViewCell` as `UICollectionView` cells. (`MDCChipCollectionViewCell` manages the state of the chip based on selection state of `UICollectionView` automatically)
 
   <!--<div class="material-code-render" markdown="1">-->
-   ``` objc
+   ```objc
   - (void)loadView {
     [super loadView];
     …
@@ -213,7 +220,7 @@ It is easiest to create action Chips using a `UICollectionView`:
 - Make sure that `MDCChipCollectionViewCell` does not stay in selected state
 
  <!--<div class="material-code-render" markdown="1">-->
-   ``` objc
+   ```objc
  - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     // For action chips, we never want the chip to stay in selected state.
     // Other possible apporaches would be relying on theming or Customizing collectionViewCell
@@ -262,7 +269,7 @@ uses these property to determine `intrinsicContentSize` and `sizeThatFits`.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 let chipView = MDCChipView()
 chipView.titleLabel.text = "Tap me"
 chipView.setTitleColor(UIColor.red, for: .selected)
@@ -273,7 +280,7 @@ self.view.addSubview(chipView)
 
 #### Objective-C
 
-``` objc
+```objc
 MDCChipView *chipView = [[MDCChipView alloc] init];
 chipView.titleLabel.text = @"Tap me";
 [chipView setTitleColor:[UIColor redColor] forState:UIControlStateSelected];

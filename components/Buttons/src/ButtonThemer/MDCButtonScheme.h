@@ -14,36 +14,72 @@
  limitations under the License.
  */
 
-#import "MaterialButtons.h"
 #import "MaterialColorScheme.h"
 #import "MaterialTypographyScheme.h"
 
 #import <Foundation/Foundation.h>
 
-/** Defines a readonly immutable interface for button style data to be applied by a themer. */
+/**
+ MDCButtonScheming represents the design parameters for an MDCButton.
+
+ An instance of this protocol can be applied to an instance of MDCButton using any of the
+ MDC*ButtonThemer APIs.
+ */
 @protocol MDCButtonScheming
 
-/** The color scheme to apply to buttons. */
-@property(nonnull, readonly, nonatomic) id <MDCColorScheming> colorScheme;
+/**
+ The color scheme to be applied to a button.
+ */
+@property(nonnull, readonly, nonatomic) id<MDCColorScheming> colorScheme;
 
-/** The typography scheme to apply to buttons. */
-@property(nonnull, readonly, nonatomic) id <MDCTypographyScheming> typographyScheme;
+/**
+ The typography scheme to be applied to a button.
+ */
+@property(nonnull, readonly, nonatomic) id<MDCTypographyScheming> typographyScheme;
 
-/** The corner radius to be applied to buttons. */
+/**
+ The corner radius to be applied to a button.
+ */
 @property(readonly, nonatomic) CGFloat cornerRadius;
 
-/** The minimum height applied to buttons. */
+/**
+ The minimum height to be applied to a button.
+ */
 @property(readonly, nonatomic) CGFloat minimumHeight;
 
 @end
 
-/** Defines the button style data that will be applied to a button by a themer. */
+/**
+ An MDCButtonScheme is a mutable representation of the design parameters for an MDCButton.
+ */
 @interface MDCButtonScheme : NSObject <MDCButtonScheming>
 
-// Redeclare protocol properties as readwrite
+/**
+ A mutable representation of a color scheme.
+
+ By default, this is initialized with the latest color scheme defaults.
+ */
 @property(nonnull, readwrite, nonatomic) id<MDCColorScheming> colorScheme;
+
+/**
+ A mutable representation of a typography scheme.
+
+ By default, this is initialized with the latest typography scheme defaults.
+ */
 @property(nonnull, readwrite, nonatomic) id<MDCTypographyScheming> typographyScheme;
+
+/**
+ A mutable representation of corner radius.
+
+ By default, this is 4.
+ */
 @property(readwrite, nonatomic) CGFloat cornerRadius;
+
+/**
+ A mutable representation of minimum height.
+
+ By default, this is 36.
+ */
 @property(readwrite, nonatomic) CGFloat minimumHeight;
 
 @end

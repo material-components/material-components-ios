@@ -28,6 +28,12 @@ UIScrollViewDelegate events.
   <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Protocols/MDCFlexibleHeaderViewLayoutDelegate.html">API: MDCFlexibleHeaderViewLayoutDelegate</a></li>
 </ul>
 
+## Extensions
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--link"><a href="docs/color-theming.md">Color Theming</a></li>
+</ul>
+
 - - -
 
 ## Installation
@@ -42,13 +48,13 @@ pod 'MaterialComponents/FlexibleHeader'
 <!--{: .code-renderer.code-renderer--install }-->
 
 To add this component along with its themer and other related extensions, please add the following instead:
-``` bash
+```bash
 pod 'MaterialComponents/FlexibleHeader+Extensions'
 ```
 
 Then, run the following command:
 
-``` bash
+```bash
 pod install
 ```
 
@@ -96,13 +102,13 @@ Before using Flexible Header, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 import MaterialComponents.MaterialFlexibleHeader
 ```
 
 #### Objective-C
 
-``` objc
+```objc
 #import "MaterialFlexibleHeader.h"
 ```
 <!--</div>-->
@@ -126,7 +132,7 @@ controller to a MDCFlexibleHeaderView instance.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 let headerViewController = MDCFlexibleHeaderViewController()
 
 override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -144,7 +150,7 @@ required init?(coder aDecoder: NSCoder) {
 
 #### Objective-C
 
-``` objc
+```objc
 @property(nonatomic) MDCFlexibleHeaderViewController *headerViewController;
 ...
 
@@ -166,7 +172,7 @@ ensure that the Flexible Header is in front of all other views.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 override func viewDidLoad() {
   super.viewDidLoad()
 
@@ -178,7 +184,7 @@ override func viewDidLoad() {
 
 #### Objective-C
 
-``` objc
+```objc
 - (void)viewDidLoad {
   [super viewDidLoad];
 
@@ -205,13 +211,13 @@ In your viewDidLoad, set the `trackingScrollView` property on the header view:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 headerViewController.headerView.trackingScrollView = scrollView
 ```
 
 #### Objective-C
 
-``` objc
+```objc
 self.headerViewController.headerView.trackingScrollView = scrollView;
 ```
 <!--</div>-->
@@ -228,13 +234,13 @@ instance as the scroll view's delegate.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 scrollView.delegate = headerViewController
 ```
 
 #### Objective-C
 
-``` objc
+```objc
 scrollView.delegate = self.headerViewController;
 ```
 <!--</div>-->
@@ -245,7 +251,7 @@ UIScrollView subclass.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 // MARK: UIScrollViewDelegate
 
 override func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -277,7 +283,7 @@ override func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity v
 
 #### Objective-C
 
-``` objc
+```objc
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -317,12 +323,12 @@ by changing the Flexible Header's behavior.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 headerViewController.headerView.shiftBehavior = .enabled
 ```
 
 #### Objective-C
-``` objc
+```objc
 headerViewController.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabled;
 ```
 <!--</div>-->
@@ -338,7 +344,7 @@ behavior by setting the `enabledWithStatusBar` behavior and implementing
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 headerViewController.headerView.shiftBehavior = .enabledWithStatusBar
 
 override func childViewControllerForStatusBarHidden() -> UIViewController? {
@@ -347,7 +353,7 @@ override func childViewControllerForStatusBarHidden() -> UIViewController? {
 ```
 
 #### Objective-C
-``` objc
+```objc
 headerViewController.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar;
 
 - (UIViewController *)childViewControllerForStatusBarHidden {
@@ -363,7 +369,7 @@ MDCFlexibleHeaderViewController instance's `layoutDelegate`.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 extension MyViewController: MDCFlexibleHeaderViewLayoutDelegate {
 
   // MARK: MDCFlexibleHeaderViewLayoutDelegate
@@ -375,7 +381,7 @@ extension MyViewController: MDCFlexibleHeaderViewLayoutDelegate {
 ```
 
 #### Objective-C
-``` objc
+```objc
 // Conform to MDCFlexibleHeaderViewLayoutDelegate
 @interface MyViewController () <MDCFlexibleHeaderViewLayoutDelegate>
 @end
@@ -403,7 +409,7 @@ viewWillLayoutSubviews method.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-``` swift
+```swift
 override func viewWillLayoutSubviews() {
     super.viewDidLayoutSubviews()
     headerViewController.updateTopLayoutGuide()
@@ -412,7 +418,7 @@ override func viewWillLayoutSubviews() {
 
 #### Objective-C
 
-``` objc
+```objc
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     [self.headerViewController updateLayoutGuide];
@@ -428,13 +434,13 @@ take the z-index into account:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 view.insertSubview(myCustomView, belowSubview: headerViewController.headerView)
 ```
 
 #### Objective-C
 
-``` objc
+```objc
 [self.view insertSubview:myCustomView belowSubview:self.headerViewController.headerView];
 ```
 <!--</div>-->
@@ -456,7 +462,7 @@ animating in/out in a reasonable manner.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 override func viewWillAppear(animated: Bool) {
   super.viewWillAppear(animated)
 
@@ -465,7 +471,7 @@ override func viewWillAppear(animated: Bool) {
 ```
 
 #### Objective-C
-``` objc
+```objc
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
 
@@ -478,7 +484,7 @@ Add the following to view controllers that don't have an app bar:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 override func viewWillAppear(animated: Bool) {
   super.viewWillAppear(animated)
 
@@ -487,7 +493,7 @@ override func viewWillAppear(animated: Bool) {
 ```
 
 #### Objective-C
-``` objc
+```objc
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
 
@@ -502,12 +508,12 @@ at app restoration time!**
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 navigationController.setNavigationBarHidden(false, animated: false)
 ```
 
 #### Objective-C
-``` objc
+```objc
 UINavigationController *navigationController = ...;
 [navigationController setNavigationBarHidden:NO animated:NO];
 ```
@@ -528,7 +534,7 @@ interactivePopGestureRecognizer's delegate to the held pointer in the `viewWillD
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 // Create pointer to hold active interactivePopGestureRecognizer delegate
 var existingInteractivePopGestureRecognizerDelegate: UIGestureRecognizerDelegate?
 
@@ -560,7 +566,7 @@ override func viewWillDisappear(animated: Bool) {
 ```
 
 #### Objective-C
-``` objc
+```objc
 @interface MyViewController ()
 
 // Create pointer to hold active interactivePopGestureRecognizer delegate
@@ -613,14 +619,14 @@ controller.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 override var childViewControllerForStatusBarStyle: UIViewController? {
   return headerViewController
 }
 ```
 
 #### Objective-C
-``` objc
+```objc
 - (UIViewController *)childViewControllerForStatusBarStyle {
   return self.headerViewController;
 }
@@ -635,7 +641,7 @@ You can create and add a UIImageView subview to the Flexible Header view's conte
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 let headerView = headerViewController.headerView
 
 let imageView = ...
@@ -648,7 +654,7 @@ imageView.clipsToBounds = true
 ```
 
 #### Objective-C
-``` objc
+```objc
 UIImageView *imageView = ...;
 imageView.frame = self.headerViewController.headerView.bounds;
 imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -679,12 +685,12 @@ To start touch forwarding you must call `forwardTouchEventsForView:` with each v
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 headerView.forwardTouchEvents(for: someContentView)
 ```
 
 #### Objective-C
-``` objc
+```objc
 [headerView forwardTouchEventsForView:someContentView];
 ```
 <!--</div>-->
@@ -695,12 +701,12 @@ To stop touch forwarding you must call `forwardTouchEventsForView:` with each vi
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 headerView.stopForwardingTouchEvents(for: someContentView)
 ```
 
 #### Objective-C
-``` objc
+```objc
 [headerView stopForwardingTouchEventsForView:someContentView];
 ```
 <!--</div>-->

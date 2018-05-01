@@ -19,68 +19,71 @@
 
 #import <Foundation/Foundation.h>
 
+#pragma mark - Soon to be deprecated
+
 /**
- Used to apply a color scheme to theme MDCButton.
+ Color themers for instances of MDCButton and MDCFloatingButton.
+
+ @warning This class will soon be deprecated. Please consider using one of the more specific
+ @c MDC*ButtonColorThemer classes instead.
  */
 @interface MDCButtonColorThemer : NSObject
 
 /**
- Applies a color scheme to theme to an MDCButton.
+ Applies a color scheme's properties to an MDCButton.
 
- This method will soon be deprecated. Consider using MDCContainedButtonColorThemer's
- applySemanticColorScheme:toButton:
- or @c applySemanticColorScheme:toTextButton:.
+ @warning This method will soon be deprecated. There is no direct replacement. Consider using one of
+ the more specific  @c MDC*ButtonColorThemer classes instead.
 
- @param colorScheme The color scheme to apply to @c button.
- @param button A MDCButton instance to apply a color scheme.
+ @param colorScheme The color scheme to apply to the component instance.
+ @param button A component instance to which the color scheme should be applied.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                         toButton:(nonnull MDCButton *)button;
 
 /**
- Applies a color scheme to theme to an MDCFlatButton.
+ Applies a color scheme's properties to an MDCButton using the flat button style.
 
- This method will soon be deprecated. Consider using MDCTextButtonColorThemer's
- applySemanticColorScheme:toButton:
+ @warning This method will soon be deprecated. Consider using @c MDCTextButtonColorThemer instead.
 
- @param colorScheme The color scheme to apply to @c flatButton.
- @param flatButton An MDCFlatButton instance to apply a color scheme.
+ @param colorScheme The color scheme to apply to the component instance.
+ @param flatButton A component instance to which the color scheme should be applied.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                     toFlatButton:(nonnull MDCButton *)flatButton;
 
 /**
- Applies a color scheme to theme to an MDCRaisedButton.
+ Applies a color scheme's properties to an MDCButton using the raised button style.
 
- This method will soon be deprecated. Consider using MDCContainedButtonColorThemer's
- applySemanticColorScheme:toButton:
+ @warning This method will soon be deprecated. Consider using @c MDCContainedButtonColorThemer
+ instead.
 
- @param colorScheme The color scheme to apply to @c raisedButton.
- @param raisedButton An MDCRaisedButton instance to apply a color scheme.
+ @param colorScheme The color scheme to apply to the component instance.
+ @param raisedButton A component instance to which the color scheme should be applied.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                   toRaisedButton:(nonnull MDCButton *)raisedButton;
 
 /**
- Applies a color scheme to theme to an MDCFloatingButton.
+ Applies a color scheme's properties to an MDCFloatingButton using the floating button style.
 
- This method will soon be deprecated. Consider using MDCFloatingButtonColorThemer's
- applySemanticColorScheme:toButton:
+ @warning This method will soon be deprecated. Consider using @c MDCFloatingButtonColorThemer
+ instead.
 
- @param colorScheme The color scheme to apply to @c floatingButton.
- @param floatingButton An MDCFloatingButton instance to apply a color scheme.
+ @param colorScheme The color scheme to apply to the component instance.
+ @param floatingButton A component instance to which the color scheme should be applied.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                 toFloatingButton:(nonnull MDCFloatingButton *)floatingButton;
 
 /**
- Applies a color scheme to theme a MDCButton.
+ Applies a color scheme's properties to an MDCButton.
 
- This method will soon be deprecated. Consider using @c applySemanticColorScheme:toContainedButton:
- or @c applySemanticColorScheme:toTextButton:.
+ @warning This method will soon be deprecated. There is no direct replacement. Consider using one of
+ the more specific  @c MDC*ButtonColorThemer classes instead.
 
- @param colorScheme The color scheme to apply to @c button.
- @param button An MDCButton instance to apply a color scheme.
+ @param colorScheme The color scheme to apply to the component instance.
+ @param button A component instance to which the color scheme should be applied.
  */
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
                 toButton:(nonnull MDCButton *)button;

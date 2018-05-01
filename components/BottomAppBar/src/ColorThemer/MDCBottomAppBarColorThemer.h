@@ -20,13 +20,23 @@
 #import <Foundation/Foundation.h>
 
 /**
- Applies a color scheme to an MDCBottomAppBarView or its UIAppearance proxy.
+ A color themer for MDCBottomAppBarView. This API does not yet implement the Material Design color
+ system.
+
+ @seealso https://www.pivotaltracker.com/story/show/157095394
  */
 @interface MDCBottomAppBarColorThemer : NSObject
 
+#pragma mark - Soon to be deprecated
+
 /**
- Applies the secondary color (if present) of the colorScheme to the BottomAppBarView's
- @c barTintColor to color the background of the bar.
+ Applies a color scheme to theme a MDCBottomAppBarView.
+
+ @warning This method will soon be deprecated. There is no replacement yet.
+ @seealso https://www.pivotaltracker.com/story/show/157095394
+
+ @param colorScheme The color scheme to apply to the component instance.
+ @param bottomAppBarView A component instance to which the color scheme should be applied.
  */
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
       toBottomAppBarView:(nonnull MDCBottomAppBarView *)bottomAppBarView;
