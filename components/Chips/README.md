@@ -1,5 +1,5 @@
 <!--docs:
-title: "Chip"
+title: "Chips"
 layout: detail
 section: components
 excerpt: "<#short_description#>"
