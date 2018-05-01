@@ -15,6 +15,7 @@
  */
 
 import Foundation
+import MaterialComponents.MaterialButtons_ButtonThemer
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialTypographyScheme
 
