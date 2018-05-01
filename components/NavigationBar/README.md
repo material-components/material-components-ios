@@ -1,5 +1,5 @@
 <!--docs:
-title: "Navigation Bars"
+title: "Navigation Bar"
 layout: detail
 section: components
 excerpt: "The Navigation Bar component is a view composed of a left and right Button Bar and either a title label or a custom title view."
@@ -7,6 +7,8 @@ iconId: toolbar
 path: /catalog/flexible-headers/navigation-bars/
 api_doc_root: true
 -->
+
+<!-- This file was auto-generated using ./scripts/generate_readme NavigationBar -->
 
 # Navigation Bar
 
@@ -19,43 +21,29 @@ label or a custom title view.
 
 Consistent with iOS design guidelines, the title in the navigation bar is centered by default. However, certain use cases may warrant use of a left aligned title such as: when there is a strong relationship between the title and additional content appearing in the navigation bar, or where centering the title causes ambiguity.
 
-## Design & API Documentation
+## API documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/components/ios/catalog/flexible-headers/navigation-bars/api-docs/Classes/MDCNavigationBar.html">API: MDCNavigationBar</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/flexible-headers/navigation-bars/api-docs/Protocols/MDCUINavigationItemObservables.html">API: MDCUINavigationItemObservables</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/flexible-headers/navigation-bars/api-docs/Classes/MDCNavigationBar.html">API: MDCNavigationBar</a></li>
 </ul>
 
-## Extensions
+## Related components
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--link"><a href="docs/color-theming.md">Color Theming</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="docs/typography-theming.md">Typography Theming</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="../ProgressView">ProgressView</a></li>
 </ul>
 
-- - -
+## Table of contents
 
-## Installation
-
-### Installation with CocoaPods
-
-To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
-
-```bash
-pod 'MaterialComponents/NavigationBar'
-```
-<!--{: .code-renderer.code-renderer--install }-->
-
-To add this component along with its themer and other related extensions, please add the following instead:
-```bash
-pod 'MaterialComponents/NavigationBar+Extensions'
-```
-
-Then, run the following command:
-
-```bash
-pod install
-```
+- [Overview](#overview)
+- [Installation](#installation)
+  - [Installation with CocoaPods](#installation-with-cocoapods)
+  - [Importing](#importing)
+- [Usage](#usage)
+  - [Observing UINavigationItem instances](#observing-uinavigationitem-instances)
+- [Extensions](#extensions)
+# [Color Theming](#color-theming)
+# [Typography Theming](#typography-theming)
 
 - - -
 
@@ -67,24 +55,36 @@ Navigation Bar is a drop-in replacement for UINavigationBar with a few notable e
   button. TODO(featherless): Explain how to create a back button with Navigation Bar once
   https://github.com/material-components/material-components-ios/issues/340 lands.
 
-The MDCNavigationBar class is a composition of two [Button Bars](../ButtonBar) and a title label or
+The MDCNavigationBar class is a composition of two [Button Bars](ButtonBar) and a title label or
 title view. The left and right Button Bars are provided with the navigation item's corresponding bar
 button items.
 
 Read the Button Bar section on
-[UIBarButtonItem properties](../ButtonBar/#uibarbuttonitem-properties) to learn more about supported
+[UIBarButtonItem properties](ButtonBar/#uibarbuttonitem-properties) to learn more about supported
 UIBarButtonItem properties.
 
+## Installation
 
+<!-- Extracted from docs/../../../docs/component-installation.md -->
 
+### Installation with CocoaPods
 
-- - -
+Add the following to your `Podfile`:
 
-## Usage
+```bash
+pod 'MaterialComponents/NavigationBar'
+```
+<!--{: .code-renderer.code-renderer--install }-->
+
+Then, run the following command:
+
+```bash
+pod install
+```
 
 ### Importing
 
-Before using Navigation Bar, you'll need to import it:
+To import the component:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -98,6 +98,11 @@ import MaterialComponents.MaterialNavigationBar
 #import "MaterialNavigationBar.h"
 ```
 <!--</div>-->
+
+
+## Usage
+
+<!-- Extracted from docs/observing-navigationitem-instances.md -->
 
 ### Observing UINavigationItem instances
 
@@ -149,4 +154,88 @@ Navigation Bar as you'd expect, with the following exceptions:
   Use of these methods will result in the Navigation Bar becoming out of sync with the
   navigationItem properties.
 - `prompt` is not presently supported. https://github.com/material-components/material-components-ios/issues/230.
+
+
+
+## Extensions
+
+<!-- Extracted from docs/color-theming.md -->
+
+# Color Theming
+
+You can theme a navigation bar with your app's color scheme using the ColorThemer extension.
+
+You must first add the Color Themer extension to your project:
+
+```bash
+pod 'MaterialComponents/NavigationBar+Extensions/ColorThemer'
+```
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// Step 1: Import the ColorThemer extension
+import MaterialComponents.MaterialNavigationBar_ColorThemer
+
+// Step 2: Create or get a color scheme
+let colorScheme = MDCSemanticColorScheme()
+
+// Step 3: Apply the color scheme to your component
+MDCNavigationBarColorThemer.applySemanticColorScheme(colorScheme, to: component)
+```
+
+#### Objective-C
+
+```objc
+// Step 1: Import the ColorThemer extension
+#import "MaterialNavigationBar+ColorThemer.h"
+
+// Step 2: Create or get a color scheme
+id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+
+// Step 3: Apply the color scheme to your component
+[MDCNavigationBarColorThemer applySemanticColorScheme:colorScheme
+     toNavigationBar:component];
+```
+<!--</div>-->
+
+<!-- Extracted from docs/typography-theming.md -->
+
+# Typography Theming
+
+You can theme a navigation bar with your app's typography scheme using the TypographyThemer extension.
+
+You must first add the Typography Themer extension to your project:
+
+```bash
+pod 'MaterialComponents/NavigationBar+Extensions/TypographyThemer'
+```
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// Step 1: Import the TypographyThemer extension
+import MaterialComponents.MaterialNavigationBar_TypographyThemer
+
+// Step 2: Create or get a typography scheme
+let typographyScheme = MDCTypographyScheme()
+
+// Step 3: Apply the typography scheme to your component
+MDCNavigationBarTypographyThemer.applyTypographyScheme(typographyScheme, to: component)
+```
+
+#### Objective-C
+
+```objc
+// Step 1: Import the TypographyThemer extension
+#import "MaterialNavigationBar+TypographyThemer.h"
+
+// Step 2: Create or get a typography scheme
+id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
+
+// Step 3: Apply the typography scheme to your component
+[MDCNavigationBarTypographyThemer applyTypographyScheme:colorScheme
+     toNavigationBar:component];
+```
+<!--</div>-->
 
