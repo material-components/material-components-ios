@@ -1,3 +1,395 @@
+# #develop#
+
+## Breaking changes
+
+## New deprecations
+
+## New features
+
+## API changes
+
+### Resources
+
+**New component.**
+
+### Chips
+
+#### MDCChipView
+
+*new* property: `hitAreaInsets` in `MDCChipView`
+
+*modified* class: `MDCChipView`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCChipView : UIControl  /*  A UIImageView that leads the title label.  */ @property(nonatomic, readonly, nonnull) IBInspectable UIImageView *imageView;  /*  A UIImageView that leads the title label. Appears in front of the imageView. Only visible when the  chip is selected.   This image view is typically used to show some icon that denotes the chip as selected, such as a  check mark. If imageView has no image then the chip will require resizing when selected or  deselected to account for the changing visibility of selectedImageView.  */ @property(nonatomic, readonly, nonnull) IBInspectable UIImageView *selectedImageView;  /*  A UIView that trails the title label.   It will be given a size based on the value returned from sizeThatFits:.  */ @property(nonatomic, strong, nullable) IBInspectable UIView *accessoryView;  /*  The title label.   @note The title color is controlled by setTitleColor:forState:.  @note The title font is controlled by setTitleFont.  */ @property(nonatomic, readonly, nonnull) IBInspectable UILabel *titleLabel;  /*  Padding around the chip content. Each subview can be further padded with their invidual padding  property.   The chip uses this property to determine intrinsicContentSize and sizeThatFits.   Defaults to (4, 4, 4, 4).  */ @property(nonatomic, assign) UIEdgeInsets contentPadding UI_APPEARANCE_SELECTOR;  /*  Padding around the image view. Only used if the image view has a non-nil image.   The chip uses this property to determine intrinsicContentSize and sizeThatFits.   Defaults to (0, 0, 0, 0).  */ @property(nonatomic, assign) UIEdgeInsets imagePadding UI_APPEARANCE_SELECTOR;  /*  Padding around the accessory view. Only used if the accessory view is non-nil.   The chip uses this property to determine intrinsicContentSize and sizeThatFits.   Defaults to (0, 0, 0, 0).  */ @property(nonatomic, assign) UIEdgeInsets accessoryPadding UI_APPEARANCE_SELECTOR;  /*  Padding around the title.   The chip uses this property to determine intrinsicContentSize and sizeThatFits.   Defaults to (3, 8, 4, 8). The top padding is shorter so the default height of a chip is 32 pts.  */ @property(nonatomic, assign) UIEdgeInsets titlePadding UI_APPEARANCE_SELECTOR;  /*  Font used to render the title.   If nil, the chip will use the system font.  */ @property(nonatomic, strong, nullable) UIFont *titleFont UI_APPEARANCE_SELECTOR;  /*  The color of the ink ripple.  */ @property(nonatomic, strong, null_resettable) UIColor *inkColor UI_APPEARANCE_SELECTOR     __deprecated_msg("Use setInkColor:forState:");  /*  The shape generator used to define the chip's shape.  */ @property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator UI_APPEARANCE_SELECTOR;  /*  Indicates whether the chip should automatically update its font when the device’s  UIContentSizeCategory is changed.   This property is modeled after the adjustsFontForContentSizeCategory property in the  UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.   If set to YES, this button will base its text font on MDCFontTextStyleButton.   Default value is NO.  */ @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;  /**  The minimum dimensions of the Chip. A non-positive value for either height or width is equivalent  to no minimum for that dimension.   Defaults to a minimum height of 32 points, and no minimum width.  */ @property(nonatomic, assign) CGSize minimumSize UI_APPEARANCE_SELECTOR;  /*  A color used as the chip's @c backgroundColor for @c state.   If no background color has been set for a given state, the returned value will fall back to the  value set for UIControlStateNormal.   @param state The control state.  @return The background color.  */ - (nullable UIColor *)backgroundColorForState:(UIControlState)state;  /*  A color used as the chip's @c backgroundColor.   Defaults to blue.   @param backgroundColor The background color.  @param state The control state.  */ - (void)setBackgroundColor:(nullable UIColor *)backgroundColor forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  /*  Returns the border color for a particular control state.   If no border width has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal.   @param state The control state.  @return The border color for the requested state.  */ - (nullable UIColor *)borderColorForState:(UIControlState)state;  /*  Sets the border color for a particular control state.   @param borderColor The border color.  @param state The control state.  */ - (void)setBorderColor:(nullable UIColor *)borderColor forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  /*  Returns the border width for a particular control state.   If no border width has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal.   @param state The control state.  @return The border width for the requested state.  */ - (CGFloat)borderWidthForState:(UIControlState)state;  /*  Sets the border width for a particular control state.   @param borderWidth The border width.  @param state The control state.  */ - (void)setBorderWidth:(CGFloat)borderWidth forState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /*  Returns the elevation for a particular control state.   If no elevation has been set for a given state, the returned value will fall back to the value set  for UIControlStateNormal.   @param state The control state.  @return The elevation for the requested state.  */ - (MDCShadowElevation)elevationForState:(UIControlState)state;  /*  Sets the elevation for a particular control state.   @param elevation The elevation.  @param state The control state.  */ - (void)setElevation:(MDCShadowElevation)elevation forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  /*  Returns the ink color for a particular control state.   If no ink color has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal. Defaults to nil. When nil MDCInkView.defaultInkColor is used.   @param state The control state.  @return The ink color for the requested state.  */ - (nullable UIColor *)inkColorForState:(UIControlState)state;  /*  Sets the ink color for a particular control state.   @param inkColor The ink color.  @param state The control state.  */ - (void)setInkColor:(nullable UIColor *)inkColor forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  /*  Returns the shadow color for a particular control state.   If no shadow color has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal.   @param state The control state.  @return The shadow color for the requested state.  */ - (nullable UIColor *)shadowColorForState:(UIControlState)state;  /*  Sets the shadow color for a particular control state.   @param elevation The shadow color.  @param state The control state.  */ - (void)setShadowColor:(nullable UIColor *)shadowColor forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  /*  Returns the title color for a particular control state.   If no title color has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal.   @param state The control state.  @return The title color for the requested state.  */ - (nullable UIColor *)titleColorForState:(UIControlState)state;  /*  Sets the title color for a particular control state.   @param titleColor The title color.  @param state The control state.  */ - (void)setTitleColor:(nullable UIColor *)titleColor forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  @end` |
+| To: | `@interface MDCChipView : UIControl  /*  A UIImageView that leads the title label.  */ @property(nonatomic, readonly, nonnull) IBInspectable UIImageView *imageView;  /*  A UIImageView that leads the title label. Appears in front of the imageView. Only visible when the  chip is selected.   This image view is typically used to show some icon that denotes the chip as selected, such as a  check mark. If imageView has no image then the chip will require resizing when selected or  deselected to account for the changing visibility of selectedImageView.  */ @property(nonatomic, readonly, nonnull) IBInspectable UIImageView *selectedImageView;  /*  A UIView that trails the title label.   It will be given a size based on the value returned from sizeThatFits:.  */ @property(nonatomic, strong, nullable) IBInspectable UIView *accessoryView;  /*  The title label.   @note The title color is controlled by setTitleColor:forState:.  @note The title font is controlled by setTitleFont.  */ @property(nonatomic, readonly, nonnull) IBInspectable UILabel *titleLabel;  /*  Padding around the chip content. Each subview can be further padded with their invidual padding  property.   The chip uses this property to determine intrinsicContentSize and sizeThatFits.   Defaults to (4, 4, 4, 4).  */ @property(nonatomic, assign) UIEdgeInsets contentPadding UI_APPEARANCE_SELECTOR;  /*  Padding around the image view. Only used if the image view has a non-nil image.   The chip uses this property to determine intrinsicContentSize and sizeThatFits.   Defaults to (0, 0, 0, 0).  */ @property(nonatomic, assign) UIEdgeInsets imagePadding UI_APPEARANCE_SELECTOR;  /*  Padding around the accessory view. Only used if the accessory view is non-nil.   The chip uses this property to determine intrinsicContentSize and sizeThatFits.   Defaults to (0, 0, 0, 0).  */ @property(nonatomic, assign) UIEdgeInsets accessoryPadding UI_APPEARANCE_SELECTOR;  /*  Padding around the title.   The chip uses this property to determine intrinsicContentSize and sizeThatFits.   Defaults to (3, 8, 4, 8). The top padding is shorter so the default height of a chip is 32 pts.  */ @property(nonatomic, assign) UIEdgeInsets titlePadding UI_APPEARANCE_SELECTOR;  /*  Font used to render the title.   If nil, the chip will use the system font.  */ @property(nonatomic, strong, nullable) UIFont *titleFont UI_APPEARANCE_SELECTOR;  /*  The color of the ink ripple.  */ @property(nonatomic, strong, null_resettable) UIColor *inkColor UI_APPEARANCE_SELECTOR     __deprecated_msg("Use setInkColor:forState:");  /*  The shape generator used to define the chip's shape.  */ @property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator UI_APPEARANCE_SELECTOR;  /*  Indicates whether the chip should automatically update its font when the device’s  UIContentSizeCategory is changed.   This property is modeled after the adjustsFontForContentSizeCategory property in the  UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.   If set to YES, this button will base its text font on MDCFontTextStyleButton.   Default value is NO.  */ @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;  /**  The minimum dimensions of the Chip. A non-positive value for either height or width is equivalent  to no minimum for that dimension.   Defaults to a minimum height of 32 points, and no minimum width.  */ @property(nonatomic, assign) CGSize minimumSize UI_APPEARANCE_SELECTOR;  /**  Custom insets to use when computing touch targets. A positive inset value will shrink the hit  area for the Chip.  */ @property(nonatomic, assign) UIEdgeInsets hitAreaInsets;  /*  A color used as the chip's @c backgroundColor for @c state.   If no background color has been set for a given state, the returned value will fall back to the  value set for UIControlStateNormal.   @param state The control state.  @return The background color.  */ - (nullable UIColor *)backgroundColorForState:(UIControlState)state;  /*  A color used as the chip's @c backgroundColor.   Defaults to blue.   @param backgroundColor The background color.  @param state The control state.  */ - (void)setBackgroundColor:(nullable UIColor *)backgroundColor forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  /*  Returns the border color for a particular control state.   If no border width has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal.   @param state The control state.  @return The border color for the requested state.  */ - (nullable UIColor *)borderColorForState:(UIControlState)state;  /*  Sets the border color for a particular control state.   @param borderColor The border color.  @param state The control state.  */ - (void)setBorderColor:(nullable UIColor *)borderColor forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  /*  Returns the border width for a particular control state.   If no border width has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal.   @param state The control state.  @return The border width for the requested state.  */ - (CGFloat)borderWidthForState:(UIControlState)state;  /*  Sets the border width for a particular control state.   @param borderWidth The border width.  @param state The control state.  */ - (void)setBorderWidth:(CGFloat)borderWidth forState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /*  Returns the elevation for a particular control state.   If no elevation has been set for a given state, the returned value will fall back to the value set  for UIControlStateNormal.   @param state The control state.  @return The elevation for the requested state.  */ - (MDCShadowElevation)elevationForState:(UIControlState)state;  /*  Sets the elevation for a particular control state.   @param elevation The elevation.  @param state The control state.  */ - (void)setElevation:(MDCShadowElevation)elevation forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  /*  Returns the ink color for a particular control state.   If no ink color has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal. Defaults to nil. When nil MDCInkView.defaultInkColor is used.   @param state The control state.  @return The ink color for the requested state.  */ - (nullable UIColor *)inkColorForState:(UIControlState)state;  /*  Sets the ink color for a particular control state.   @param inkColor The ink color.  @param state The control state.  */ - (void)setInkColor:(nullable UIColor *)inkColor forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  /*  Returns the shadow color for a particular control state.   If no shadow color has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal.   @param state The control state.  @return The shadow color for the requested state.  */ - (nullable UIColor *)shadowColorForState:(UIControlState)state;  /*  Sets the shadow color for a particular control state.   @param elevation The shadow color.  @param state The control state.  */ - (void)setShadowColor:(nullable UIColor *)shadowColor forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  /*  Returns the title color for a particular control state.   If no title color has been set for a given state, the returned value will fall back to the value  set for UIControlStateNormal.   @param state The control state.  @return The title color for the requested state.  */ - (nullable UIColor *)titleColorForState:(UIControlState)state;  /*  Sets the title color for a particular control state.   @param titleColor The title color.  @param state The control state.  */ - (void)setTitleColor:(nullable UIColor *)titleColor forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  @end` |
+
+## Component changes
+
+### Tabs
+
+#### Changes
+
+* [Add umbrella headers for all extension targets. (#3476)](https://github.com/material-components/material-components-ios/commit/08403aecf78a08a249b9991c21aafd6dbd6be478) (featherless)
+* [Adding .vars files for each component. (#3561)](https://github.com/material-components/material-components-ios/commit/81aca79c69780d27b59a74e60f2364c297ebe2e1) (Mohammad Cazi)
+* [Generate all themer documentation. (#3562)](https://github.com/material-components/material-components-ios/commit/d3c5316db0c67aadb18fb0b7492a49234f8a4322) (featherless)
+* [Remove all UIAppearance references from documentation. (#3480)](https://github.com/material-components/material-components-ios/commit/8395836c98224912c41b455a2651904362a006e7) (featherless)
+* [Remove space after triple-backtick Markdown syntax. (#3577)](https://github.com/material-components/material-components-ios/commit/7a7293883fd25ead73fa16a594a7dcab324c36b7) (Adrian Secord)
+* [Replace MDCRaisedButton with contained button themer in TabBarIconExample. (#3499)](https://github.com/material-components/material-components-ios/commit/a5c816e8239c9d238dce20b06723ebfd86d77e9a) (featherless)
+* [Replace MDCRaisedButton with contained button themer in TabBarIndicatorTemplateExample. (#3500)](https://github.com/material-components/material-components-ios/commit/6ef99391113caf4ca19503019ae2b36c8fbc690c) (featherless)
+* [Replace MDCRaisedButton with contained button themer. (#3497)](https://github.com/material-components/material-components-ios/commit/32138a911831d6fdadc2f0599723da70ba979740) (featherless)
+* [Standardizing API docs. (#3481)](https://github.com/material-components/material-components-ios/commit/0cc7e9860f3820595f90da7110e3dc251950ea90) (featherless)
+* [Update Tabs Theme Section README.md (#3527)](https://github.com/material-components/material-components-ios/commit/a5fe979bc339d181f1adb0ee15a2f6b89ce96319) (Mohammad Cazi)
+* [[Docs] Updated known short link destination URLs to use short links. (#3575)](https://github.com/material-components/material-components-ios/commit/72045ffd6d303bb99a3e1a71e4f3cdda42fe5ad8) (Adrian Secord)
+* [update README.md Mistake](https://github.com/material-components/material-components-ios/commit/01b460529a87679b479359041491f263c766df9d) (Mohammad Cazi)
+
+### MaskedTransition
+
+#### Changes
+
+* [Remove space after triple-backtick Markdown syntax. (#3577)](https://github.com/material-components/material-components-ios/commit/7a7293883fd25ead73fa16a594a7dcab324c36b7) (Adrian Secord)
+
+### schemes/Color
+
+#### Changes
+
+* [Delete all of the older themer examples. (#3484)](https://github.com/material-components/material-components-ios/commit/24cf2bad0d6c40091d15c765f554872ff8b0caea) (featherless)
+* [[Tabs] Add umbrella headers for all extension targets. (#3476)](https://github.com/material-components/material-components-ios/commit/08403aecf78a08a249b9991c21aafd6dbd6be478) (featherless)
+* [[TextFields] Add umbrella headers for all extension targets. (#3477)](https://github.com/material-components/material-components-ios/commit/7e1e2f0e895d1a1bacf785a1c30886f407cc5f73) (featherless)
+
+### schemes/Typography
+
+#### Changes
+
+* [Remove all UIAppearance references from documentation. (#3480)](https://github.com/material-components/material-components-ios/commit/8395836c98224912c41b455a2651904362a006e7) (featherless)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Adding .vars files for each component. (#3557)](https://github.com/material-components/material-components-ios/commit/4186de3733f10650304c83cc6d29bf5afd714237) (featherless)
+* [Generate all themer documentation. (#3562)](https://github.com/material-components/material-components-ios/commit/d3c5316db0c67aadb18fb0b7492a49234f8a4322) (featherless)
+* [Remove all UIAppearance references from documentation. (#3480)](https://github.com/material-components/material-components-ios/commit/8395836c98224912c41b455a2651904362a006e7) (featherless)
+* [Remove space after triple-backtick Markdown syntax. (#3577)](https://github.com/material-components/material-components-ios/commit/7a7293883fd25ead73fa16a594a7dcab324c36b7) (Adrian Secord)
+* [Standardizing API docs. (#3481)](https://github.com/material-components/material-components-ios/commit/0cc7e9860f3820595f90da7110e3dc251950ea90) (featherless)
+* [[Typography][Color] Make sure our examples only use the new Color/Typography APIs (#3489)](https://github.com/material-components/material-components-ios/commit/a291896f0758575400bd35ba0a2ac3895e65e75c) (Mohammad Cazi)
+
+### AppBar
+
+#### Changes
+
+* [Add Theming Section to README.md (#3516)](https://github.com/material-components/material-components-ios/commit/b77e73d06e6fa008c185ca08d1c3e2efed76d569) (Mohammad Cazi)
+* [Added a AppBarTypicalCollectionViewExample. (#3491)](https://github.com/material-components/material-components-ios/commit/f7869ea61b70d95cdab2fa698b0fe99434ab5f6e) (Mohammad Cazi)
+* [Adding .vars files for each component. (#3557)](https://github.com/material-components/material-components-ios/commit/4186de3733f10650304c83cc6d29bf5afd714237) (featherless)
+* [Fix the app bar status bar style in the typical use demo. (#3505)](https://github.com/material-components/material-components-ios/commit/41ac8443640585693454488d339229b53507c9ac) (featherless)
+* [Generate all themer documentation. (#3562)](https://github.com/material-components/material-components-ios/commit/d3c5316db0c67aadb18fb0b7492a49234f8a4322) (featherless)
+* [Make MDCAppBarContainerViewController set bounds of child view controller (#3450)](https://github.com/material-components/material-components-ios/commit/3db1410ede9045b22663284b7c0830ddf80a360a) (John Detloff)
+* [Remove all UIAppearance references from documentation. (#3480)](https://github.com/material-components/material-components-ios/commit/8395836c98224912c41b455a2651904362a006e7) (featherless)
+* [Remove space after triple-backtick Markdown syntax. (#3577)](https://github.com/material-components/material-components-ios/commit/7a7293883fd25ead73fa16a594a7dcab324c36b7) (Adrian Secord)
+* [Revert "Make MDCAppBarContainerViewController set bounds of child view controller (#3450)" (#3594)](https://github.com/material-components/material-components-ios/commit/d512c3a9afa76e4b7e9258475001d1743c020892) (featherless)
+* [Standardizing API docs. (#3481)](https://github.com/material-components/material-components-ios/commit/0cc7e9860f3820595f90da7110e3dc251950ea90) (featherless)
+* [Update the examples, forwarding scrollView Delegate typical use. (#3494)](https://github.com/material-components/material-components-ios/commit/a6b31d4d54018495afba3b9fc863d3db2161704b) (Mohammad Cazi)
+
+### Ink
+
+#### Changes
+
+* [Generate all themer documentation. (#3562)](https://github.com/material-components/material-components-ios/commit/d3c5316db0c67aadb18fb0b7492a49234f8a4322) (featherless)
+* [Remove all UIAppearance references from documentation. (#3480)](https://github.com/material-components/material-components-ios/commit/8395836c98224912c41b455a2651904362a006e7) (featherless)
+* [Remove space after triple-backtick Markdown syntax. (#3577)](https://github.com/material-components/material-components-ios/commit/7a7293883fd25ead73fa16a594a7dcab324c36b7) (Adrian Secord)
+* [Standardizing API docs. (#3481)](https://github.com/material-components/material-components-ios/commit/0cc7e9860f3820595f90da7110e3dc251950ea90) (featherless)
+
+### CollectionCells
+
+#### Changes
+
+* [Adding .vars files for each component. (#3557)](https://github.com/material-components/material-components-ios/commit/4186de3733f10650304c83cc6d29bf5afd714237) (featherless)
+* [[Docs] Updated known short link destination URLs to use short links. (#3575)](https://github.com/material-components/material-components-ios/commit/72045ffd6d303bb99a3e1a71e4f3cdda42fe5ad8) (Adrian Secord)
+
+### Buttons
+
+#### Changes
+
+* [Add a floating action button themer. (#3588)](https://github.com/material-components/material-components-ios/commit/200fc906215de8201429c0ffca86495263160605) (featherless)
+* [Add floating action button documentation. (#3592)](https://github.com/material-components/material-components-ios/commit/c061444df2b60b2383595a0c6fb4757b200a8c93) (featherless)
+* [Add notice of pending deprecation to Flat and Raised buttons. (#3581)](https://github.com/material-components/material-components-ios/commit/2c8af495d32e3ea62833c619e9e8a516251a2d5a) (featherless)
+* [Add outlined button themer (#3566)](https://github.com/material-components/material-components-ios/commit/55b995233229ad536f5538d183c1f1dd010e5183) (John Detloff)
+* [Adding .vars files for each component. (#3557)](https://github.com/material-components/material-components-ios/commit/4186de3733f10650304c83cc6d29bf5afd714237) (featherless)
+* [Copy-edit pass of the readme. (#3587)](https://github.com/material-components/material-components-ios/commit/1766e1790fad143225121ade705b6ff0a75604d3) (featherless)
+* [Fix build breakage due to API changes in ButtonThemer. (#3518)](https://github.com/material-components/material-components-ios/commit/bfe781a17fe9294b91d0e83eaf3a2af40a17c3ff) (featherless)
+* [Fix build breakage. (#3593)](https://github.com/material-components/material-components-ios/commit/cb8571ab91438dec1b720e488f8fbd3d61f2ef9c) (featherless)
+* [Fix build regression. (#3595)](https://github.com/material-components/material-components-ios/commit/a66e99c3101180126086c882426f8f95a6089992) (featherless)
+* [Fix outlined button themer tests (#3598)](https://github.com/material-components/material-components-ios/commit/fc39022a08f5ded7582d4248f0225c5c3730791e) (John Detloff)
+* [Generate all themer documentation. (#3562)](https://github.com/material-components/material-components-ios/commit/d3c5316db0c67aadb18fb0b7492a49234f8a4322) (featherless)
+* [Minor copy edits to the main readme. (#3589)](https://github.com/material-components/material-components-ios/commit/7086086e50e61c2635b69a064bdaff6b2cc00b07) (featherless)
+* [Remove space after triple-backtick Markdown syntax. (#3577)](https://github.com/material-components/material-components-ios/commit/7a7293883fd25ead73fa16a594a7dcab324c36b7) (Adrian Secord)
+* [Replace MDCFlatButton with MDCButton + text themer in content edge insets example. (#3583)](https://github.com/material-components/material-components-ios/commit/2414525074f43c849b1564f18e016c552d776d3e) (featherless)
+* [Replace MDCRaisedButton with a contained button themer. (#3502)](https://github.com/material-components/material-components-ios/commit/d70da6a18d3fa7b041ba2cd2665e34267f9fdf06) (featherless)
+* [Replace MDCRaisedButton with contained button themer in ButtonsShapesExampleViewController. (#3503)](https://github.com/material-components/material-components-ios/commit/c4d443a5f3e0da80ec865cc7a4a600614d1cff11) (featherless)
+* [Replace references to MDCRaisedButton with MDCContainedButtonThemer. (#3482)](https://github.com/material-components/material-components-ios/commit/5a977ebd5fb8ac33ba0b0be663349d0d3626c450) (featherless)
+* [Revert "Changing ButtonScheme Header to accept protocols instead of actual class. (#3488)" (#3512)](https://github.com/material-components/material-components-ios/commit/5e051afefa1ccc087e92eb5147e8f45fdfbbdf7f) (featherless)
+* [Standardizing API docs. (#3481)](https://github.com/material-components/material-components-ios/commit/0cc7e9860f3820595f90da7110e3dc251950ea90) (featherless)
+* [[Button:TextButton] Fixed the ripple color for text buttons (#3524)](https://github.com/material-components/material-components-ios/commit/e789ba4551753e65c746995209fe2a3eaaef8d03) (Randall Li)
+* [[Button] Removed example of stroked button (#3421)](https://github.com/material-components/material-components-ios/commit/9201d9ec15fd2111bcfebede4d7dd2a50efe088b) (Randall Li)
+* [[Docs] Updated known short link destination URLs to use short links. (#3575)](https://github.com/material-components/material-components-ios/commit/72045ffd6d303bb99a3e1a71e4f3cdda42fe5ad8) (Adrian Secord)
+
+### ButtonBar
+
+#### Changes
+
+* [Adding .vars files for each component. (#3557)](https://github.com/material-components/material-components-ios/commit/4186de3733f10650304c83cc6d29bf5afd714237) (featherless)
+* [Fix typo in docs. (#3580)](https://github.com/material-components/material-components-ios/commit/f8f8092a6e6cf51fe87d1ce3859b39f0052ffd49) (featherless)
+* [Generate all themer documentation. (#3562)](https://github.com/material-components/material-components-ios/commit/d3c5316db0c67aadb18fb0b7492a49234f8a4322) (featherless)
+* [Remove all UIAppearance references from documentation. (#3480)](https://github.com/material-components/material-components-ios/commit/8395836c98224912c41b455a2651904362a006e7) (featherless)
+* [Remove space after triple-backtick Markdown syntax. (#3577)](https://github.com/material-components/material-components-ios/commit/7a7293883fd25ead73fa16a594a7dcab324c36b7) (Adrian Secord)
+* [Standardizing API docs. (#3481)](https://github.com/material-components/material-components-ios/commit/0cc7e9860f3820595f90da7110e3dc251950ea90) (featherless)
+
+### TextFields
+
+#### Changes
+
+* [Add umbrella headers for all extension targets. (#3477)](https://github.com/material-components/material-components-ios/commit/7e1e2f0e895d1a1bacf785a1c30886f407cc5f73) (featherless)
+* [Adding .vars files for each component. (#3561)](https://github.com/material-components/material-components-ios/commit/81aca79c69780d27b59a74e60f2364c297ebe2e1) (Mohammad Cazi)
+* [Generate all themer documentation. (#3562)](https://github.com/material-components/material-components-ios/commit/d3c5316db0c67aadb18fb0b7492a49234f8a4322) (featherless)
+* [Remove space after triple-backtick Markdown syntax. (#3577)](https://github.com/material-components/material-components-ios/commit/7a7293883fd25ead73fa16a594a7dcab324c36b7) (Adrian Secord)
+* [Standardizing API docs. (#3481)](https://github.com/material-components/material-components-ios/commit/0cc7e9860f3820595f90da7110e3dc251950ea90) (featherless)
+* [Stop the text example from loading on startup (#3567)](https://github.com/material-components/material-components-ios/commit/8c7f8faa51ddae7b3c8d30f8d0638be9e23392be) (ianegordon)
+* [Textfield Readme.md mistake.](https://github.com/material-components/material-components-ios/commit/0974e71428acd2674a89adae9234663f1c4b24c0) (Mohammad Cazi)
+* [Themer Example (#3521)](https://github.com/material-components/material-components-ios/commit/4a258d2a47c359779b3304c55483be2ce87465f0) (ianegordon)
+* [Update TextField Themer Section README.md (#3523)](https://github.com/material-components/material-components-ios/commit/8f3cf237bed97d098f26b3e123063bf8cc00b296) (Mohammad Cazi)
+* [[Docs] Updated known short link destination URLs to use short links. (#3575)](https://github.com/material-components/material-components-ios/commit/72045ffd6d303bb99a3e1a71e4f3cdda42fe5ad8) (Adrian Secord)
+
+### Chips
+
+#### Changes
+
+* [Add support for custom touch target (#3517)](https://github.com/material-components/material-components-ios/commit/25984d9f4bb5eee7412e80fd342ee7ba32e200a6) (Robert Moore)
+* [Adding .vars files for each component. (#3557)](https://github.com/material-components/material-components-ios/commit/4186de3733f10650304c83cc6d29bf5afd714237) (featherless)
+* [Create a ChipThemer for material and outlined schemes (#3563)](https://github.com/material-components/material-components-ios/commit/c185bc956f07aa9d1646844f6c5a0b96c08c4089) (John Detloff)
+* [Generate all themer documentation. (#3562)](https://github.com/material-components/material-components-ios/commit/d3c5316db0c67aadb18fb0b7492a49234f8a4322) (featherless)
+* [Remove all UIAppearance references from documentation. (#3480)](https://github.com/material-components/material-components-ios/commit/8395836c98224912c41b455a2651904362a006e7) (featherless)
+* [Remove space after triple-backtick Markdown syntax. (#3577)](https://github.com/material-components/material-components-ios/commit/7a7293883fd25ead73fa16a594a7dcab324c36b7) (Adrian Secord)
+* [Revert "Vertically center chips within available space (#3511)" (#3582)](https://github.com/material-components/material-components-ios/commit/dfe1f8516aa13f547c139c820295c4a1afdd8b79) (Robert Moore)
+* [Standardizing API docs. (#3481)](https://github.com/material-components/material-components-ios/commit/0cc7e9860f3820595f90da7110e3dc251950ea90) (featherless)
+* [Vertically center chips within available space (#3511)](https://github.com/material-components/material-components-ios/commit/f69d36d963b5a172df42dce62b2bb3f847c99f47) (Robert Moore)
+* [[Docs] Updated known short link destination URLs to use short links. (#3575)](https://github.com/material-components/material-components-ios/commit/72045ffd6d303bb99a3e1a71e4f3cdda42fe5ad8) (Adrian Secord)
+
+### Snackbar
+
+#### Changes
+
+* [Adding .vars files for each component. (#3561)](https://github.com/material-components/material-components-ios/commit/81aca79c69780d27b59a74e60f2364c297ebe2e1) (Mohammad Cazi)
+* [Generate all themer documentation. (#3562)](https://github.com/material-components/material-components-ios/commit/d3c5316db0c67aadb18fb0b7492a49234f8a4322) (featherless)
+* [Remove all UIAppearance references from documentation. (#3480)](https://github.com/material-components/material-components-ios/commit/8395836c98224912c41b455a2651904362a006e7) (featherless)
+* [Remove space after triple-backtick Markdown syntax. (#3577)](https://github.com/material-components/material-components-ios/commit/7a7293883fd25ead73fa16a594a7dcab324c36b7) (Adrian Secord)
+* [Standardizing API docs. (#3481)](https://github.com/material-components/material-components-ios/commit/0cc7e9860f3820595f90da7110e3dc251950ea90) (featherless)
+* [[Docs] Updated known short link destination URLs to use short links. (#3575)](https://github.com/material-components/material-components-ios/commit/72045ffd6d303bb99a3e1a71e4f3cdda42fe5ad8) (Adrian Secord)
+
+### Cards
+
+#### Changes
+
+* [Adding .vars files for each component. (#3557)](https://github.com/material-components/material-components-ios/commit/4186de3733f10650304c83cc6d29bf5afd714237) (featherless)
+* [Generate all themer documentation. (#3562)](https://github.com/material-components/material-components-ios/commit/d3c5316db0c67aadb18fb0b7492a49234f8a4322) (featherless)
+* [Implement stroke variant themer (#3485)](https://github.com/material-components/material-components-ios/commit/fc486cf285be44561474be8908ba3614233af5b6) (John Detloff)
+* [Remove space after triple-backtick Markdown syntax. (#3577)](https://github.com/material-components/material-components-ios/commit/7a7293883fd25ead73fa16a594a7dcab324c36b7) (Adrian Secord)
+* [Replace MDCFlatButton with text button themer in CardExampleViewController. (#3584)](https://github.com/material-components/material-components-ios/commit/7f9f54d5cb7d350622939074edb96ac93d441334) (featherless)
+* [Standardizing API docs. (#3481)](https://github.com/material-components/material-components-ios/commit/0cc7e9860f3820595f90da7110e3dc251950ea90) (featherless)
+* [[Docs] Updated known short link destination URLs to use short links. (#3575)](https://github.com/material-components/material-components-ios/commit/72045ffd6d303bb99a3e1a71e4f3cdda42fe5ad8) (Adrian Secord)
+
+### BottomAppBar
+
+#### Changes
+
+* [Adding .vars files for each component. (#3557)](https://github.com/material-components/material-components-ios/commit/4186de3733f10650304c83cc6d29bf5afd714237) (featherless)
+* [Generate all themer documentation. (#3562)](https://github.com/material-components/material-components-ios/commit/d3c5316db0c67aadb18fb0b7492a49234f8a4322) (featherless)
+* [Remove all UIAppearance references from documentation. (#3480)](https://github.com/material-components/material-components-ios/commit/8395836c98224912c41b455a2651904362a006e7) (featherless)
+* [Remove space after triple-backtick Markdown syntax. (#3577)](https://github.com/material-components/material-components-ios/commit/7a7293883fd25ead73fa16a594a7dcab324c36b7) (Adrian Secord)
+* [Standardizing API docs. (#3481)](https://github.com/material-components/material-components-ios/commit/0cc7e9860f3820595f90da7110e3dc251950ea90) (featherless)
+* [[Typography][Color] Make sure our examples only use the new Color/Typography APIs (#3489)](https://github.com/material-components/material-components-ios/commit/a291896f0758575400bd35ba0a2ac3895e65e75c) (Mohammad Cazi)
+
+### Slider
+
+#### Changes
+
+* [Added Theming Section to README (#3530)](https://github.com/material-components/material-components-ios/commit/a6b8c8533fc8e378f98106e62debc652298204e5) (Mohammad Cazi)
+* [Adding .vars files for each component. (#3561)](https://github.com/material-components/material-components-ios/commit/81aca79c69780d27b59a74e60f2364c297ebe2e1) (Mohammad Cazi)
+* [Disabling flaky test. (#3560)](https://github.com/material-components/material-components-ios/commit/40f69695cfdf242498cb2685369b668b00ba6659) (featherless)
+* [Generate all themer documentation. (#3562)](https://github.com/material-components/material-components-ios/commit/d3c5316db0c67aadb18fb0b7492a49234f8a4322) (featherless)
+* [Remove all UIAppearance references from documentation. (#3480)](https://github.com/material-components/material-components-ios/commit/8395836c98224912c41b455a2651904362a006e7) (featherless)
+* [Remove space after triple-backtick Markdown syntax. (#3577)](https://github.com/material-components/material-components-ios/commit/7a7293883fd25ead73fa16a594a7dcab324c36b7) (Adrian Secord)
+* [Standardizing API docs. (#3481)](https://github.com/material-components/material-components-ios/commit/0cc7e9860f3820595f90da7110e3dc251950ea90) (featherless)
+* [Stateful API Section Added. (#3565)](https://github.com/material-components/material-components-ios/commit/77d10fde8f2313a37d9d41d5372566fcf491e187) (Mohammad Cazi)
+* [[Docs] Updated known short link destination URLs to use short links. (#3575)](https://github.com/material-components/material-components-ios/commit/72045ffd6d303bb99a3e1a71e4f3cdda42fe5ad8) (Adrian Secord)
+
+### NavigationBar
+
+#### Changes
+
+* [Adding .vars files for each component. (#3561)](https://github.com/material-components/material-components-ios/commit/81aca79c69780d27b59a74e60f2364c297ebe2e1) (Mohammad Cazi)
+* [Generate all themer documentation. (#3562)](https://github.com/material-components/material-components-ios/commit/d3c5316db0c67aadb18fb0b7492a49234f8a4322) (featherless)
+* [Remove all UIAppearance references from documentation. (#3480)](https://github.com/material-components/material-components-ios/commit/8395836c98224912c41b455a2651904362a006e7) (featherless)
+* [Remove space after triple-backtick Markdown syntax. (#3577)](https://github.com/material-components/material-components-ios/commit/7a7293883fd25ead73fa16a594a7dcab324c36b7) (Adrian Secord)
+* [Standardizing API docs. (#3481)](https://github.com/material-components/material-components-ios/commit/0cc7e9860f3820595f90da7110e3dc251950ea90) (featherless)
+
+### OverlayWindow
+
+#### Changes
+
+* [Remove space after triple-backtick Markdown syntax. (#3577)](https://github.com/material-components/material-components-ios/commit/7a7293883fd25ead73fa16a594a7dcab324c36b7) (Adrian Secord)
+
+### LibraryInfo
+
+#### Changes
+
+* [Remove space after triple-backtick Markdown syntax. (#3577)](https://github.com/material-components/material-components-ios/commit/7a7293883fd25ead73fa16a594a7dcab324c36b7) (Adrian Secord)
+
+### ShadowLayer
+
+#### Changes
+
+* [Remove space after triple-backtick Markdown syntax. (#3577)](https://github.com/material-components/material-components-ios/commit/7a7293883fd25ead73fa16a594a7dcab324c36b7) (Adrian Secord)
+
+### ActivityIndicator
+
+#### Changes
+
+* [Apply the color themer template to the docs. (#3556)](https://github.com/material-components/material-components-ios/commit/49590b69fe90e0fb4e077398083f14b223beca7c) (featherless)
+* [Apply the contained button theme to the ActivityIndicatorTransitionExample button. (#3504)](https://github.com/material-components/material-components-ios/commit/88cdf7fda9d95131ea73963dea1f7e18fc5874c8) (featherless)
+* [Generate all themer documentation. (#3562)](https://github.com/material-components/material-components-ios/commit/d3c5316db0c67aadb18fb0b7492a49234f8a4322) (featherless)
+* [Make the gif not a screenshot. (#3542)](https://github.com/material-components/material-components-ios/commit/63fb7524425fc1191ac110154678e75668b0c40a) (featherless)
+* [Remove all UIAppearance references from documentation. (#3480)](https://github.com/material-components/material-components-ios/commit/8395836c98224912c41b455a2651904362a006e7) (featherless)
+* [Remove space after triple-backtick Markdown syntax. (#3577)](https://github.com/material-components/material-components-ios/commit/7a7293883fd25ead73fa16a594a7dcab324c36b7) (Adrian Secord)
+* [Standardizing API docs. (#3481)](https://github.com/material-components/material-components-ios/commit/0cc7e9860f3820595f90da7110e3dc251950ea90) (featherless)
+* [Update the README.md and examples. (#3510)](https://github.com/material-components/material-components-ios/commit/149834e8858a83194ee4528fd5aa3d4495bda6c6) (featherless)
+* [[Activity Indicator] Update the minimum radius documented in the header (#3498)](https://github.com/material-components/material-components-ios/commit/017b1aaa75c4c1f3881f3e1b0907d980a2cd3950) (Siyu Song)
+* [[Docs] Updated known short link destination URLs to use short links. (#3575)](https://github.com/material-components/material-components-ios/commit/72045ffd6d303bb99a3e1a71e4f3cdda42fe5ad8) (Adrian Secord)
+
+### BottomSheet
+
+#### Changes
+
+* [Adding .vars files for each component. (#3557)](https://github.com/material-components/material-components-ios/commit/4186de3733f10650304c83cc6d29bf5afd714237) (featherless)
+* [Remove space after triple-backtick Markdown syntax. (#3577)](https://github.com/material-components/material-components-ios/commit/7a7293883fd25ead73fa16a594a7dcab324c36b7) (Adrian Secord)
+* [[Docs] Updated known short link destination URLs to use short links. (#3575)](https://github.com/material-components/material-components-ios/commit/72045ffd6d303bb99a3e1a71e4f3cdda42fe5ad8) (Adrian Secord)
+
+### Typography
+
+#### Changes
+
+* [Remove space after triple-backtick Markdown syntax. (#3577)](https://github.com/material-components/material-components-ios/commit/7a7293883fd25ead73fa16a594a7dcab324c36b7) (Adrian Secord)
+* [[Docs] Updated known short link destination URLs to use short links. (#3575)](https://github.com/material-components/material-components-ios/commit/72045ffd6d303bb99a3e1a71e4f3cdda42fe5ad8) (Adrian Secord)
+
+### Dialogs
+
+#### Changes
+
+* [Adding .vars files for each component. (#3557)](https://github.com/material-components/material-components-ios/commit/4186de3733f10650304c83cc6d29bf5afd714237) (featherless)
+* [Generate all themer documentation. (#3562)](https://github.com/material-components/material-components-ios/commit/d3c5316db0c67aadb18fb0b7492a49234f8a4322) (featherless)
+* [Remove space after triple-backtick Markdown syntax. (#3577)](https://github.com/material-components/material-components-ios/commit/7a7293883fd25ead73fa16a594a7dcab324c36b7) (Adrian Secord)
+* [Replace MDCRaisedButton with themer APIs in DialogWithPreferredContentSizeViewController. (#3495)](https://github.com/material-components/material-components-ios/commit/d406f0fa7cb9813b3378faa715609f0550baa74f) (featherless)
+* [Standardizing API docs. (#3481)](https://github.com/material-components/material-components-ios/commit/0cc7e9860f3820595f90da7110e3dc251950ea90) (featherless)
+* [[Docs] Updated known short link destination URLs to use short links. (#3575)](https://github.com/material-components/material-components-ios/commit/72045ffd6d303bb99a3e1a71e4f3cdda42fe5ad8) (Adrian Secord)
+* [s/www.material.io/material.io/g (#3576)](https://github.com/material-components/material-components-ios/commit/7f09c94e4638aa7edeaaffd0b1b7570e99c7dc67) (Adrian Secord)
+
+### BottomNavigation
+
+#### Changes
+
+* [Adding .vars files for each component. (#3557)](https://github.com/material-components/material-components-ios/commit/4186de3733f10650304c83cc6d29bf5afd714237) (featherless)
+* [Generate all themer documentation. (#3562)](https://github.com/material-components/material-components-ios/commit/d3c5316db0c67aadb18fb0b7492a49234f8a4322) (featherless)
+* [Remove all UIAppearance references from documentation. (#3480)](https://github.com/material-components/material-components-ios/commit/8395836c98224912c41b455a2651904362a006e7) (featherless)
+* [Remove space after triple-backtick Markdown syntax. (#3577)](https://github.com/material-components/material-components-ios/commit/7a7293883fd25ead73fa16a594a7dcab324c36b7) (Adrian Secord)
+* [Standardizing API docs. (#3481)](https://github.com/material-components/material-components-ios/commit/0cc7e9860f3820595f90da7110e3dc251950ea90) (featherless)
+* [[Docs] Updated known short link destination URLs to use short links. (#3575)](https://github.com/material-components/material-components-ios/commit/72045ffd6d303bb99a3e1a71e4f3cdda42fe5ad8) (Adrian Secord)
+
+### PageControl
+
+#### Changes
+
+* [Adding .vars files for each component. (#3561)](https://github.com/material-components/material-components-ios/commit/81aca79c69780d27b59a74e60f2364c297ebe2e1) (Mohammad Cazi)
+* [Generate all themer documentation. (#3562)](https://github.com/material-components/material-components-ios/commit/d3c5316db0c67aadb18fb0b7492a49234f8a4322) (featherless)
+* [Remove all UIAppearance references from documentation. (#3480)](https://github.com/material-components/material-components-ios/commit/8395836c98224912c41b455a2651904362a006e7) (featherless)
+* [Remove space after triple-backtick Markdown syntax. (#3577)](https://github.com/material-components/material-components-ios/commit/7a7293883fd25ead73fa16a594a7dcab324c36b7) (Adrian Secord)
+* [Standardizing API docs. (#3481)](https://github.com/material-components/material-components-ios/commit/0cc7e9860f3820595f90da7110e3dc251950ea90) (featherless)
+
+### AnimationTiming
+
+#### Changes
+
+* [Adding .vars files for each component. (#3557)](https://github.com/material-components/material-components-ios/commit/4186de3733f10650304c83cc6d29bf5afd714237) (featherless)
+* [Remove space after triple-backtick Markdown syntax. (#3577)](https://github.com/material-components/material-components-ios/commit/7a7293883fd25ead73fa16a594a7dcab324c36b7) (Adrian Secord)
+
+### Collections
+
+#### Changes
+
+* [Adding .vars files for each component. (#3557)](https://github.com/material-components/material-components-ios/commit/4186de3733f10650304c83cc6d29bf5afd714237) (featherless)
+* [Remove space after triple-backtick Markdown syntax. (#3577)](https://github.com/material-components/material-components-ios/commit/7a7293883fd25ead73fa16a594a7dcab324c36b7) (Adrian Secord)
+* [[Docs] Updated known short link destination URLs to use short links. (#3575)](https://github.com/material-components/material-components-ios/commit/72045ffd6d303bb99a3e1a71e4f3cdda42fe5ad8) (Adrian Secord)
+
+### HeaderStackView
+
+#### Changes
+
+* [Adding .vars files for each component. (#3557)](https://github.com/material-components/material-components-ios/commit/4186de3733f10650304c83cc6d29bf5afd714237) (featherless)
+* [Generate all themer documentation. (#3562)](https://github.com/material-components/material-components-ios/commit/d3c5316db0c67aadb18fb0b7492a49234f8a4322) (featherless)
+* [Remove all UIAppearance references from documentation. (#3480)](https://github.com/material-components/material-components-ios/commit/8395836c98224912c41b455a2651904362a006e7) (featherless)
+* [Remove space after triple-backtick Markdown syntax. (#3577)](https://github.com/material-components/material-components-ios/commit/7a7293883fd25ead73fa16a594a7dcab324c36b7) (Adrian Secord)
+* [Standardizing API docs. (#3481)](https://github.com/material-components/material-components-ios/commit/0cc7e9860f3820595f90da7110e3dc251950ea90) (featherless)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Add Theming section to README.md. (#3531)](https://github.com/material-components/material-components-ios/commit/9ef7d0b607c6d651ae26f27b526ab1ee409e4f42) (featherless)
+* [Adding .vars files for each component. (#3557)](https://github.com/material-components/material-components-ios/commit/4186de3733f10650304c83cc6d29bf5afd714237) (featherless)
+* [Generate all themer documentation. (#3562)](https://github.com/material-components/material-components-ios/commit/d3c5316db0c67aadb18fb0b7492a49234f8a4322) (featherless)
+* [Remove all UIAppearance references from documentation. (#3480)](https://github.com/material-components/material-components-ios/commit/8395836c98224912c41b455a2651904362a006e7) (featherless)
+* [Remove space after triple-backtick Markdown syntax. (#3577)](https://github.com/material-components/material-components-ios/commit/7a7293883fd25ead73fa16a594a7dcab324c36b7) (Adrian Secord)
+* [Standardizing API docs. (#3481)](https://github.com/material-components/material-components-ios/commit/0cc7e9860f3820595f90da7110e3dc251950ea90) (featherless)
+
+### Themes
+
+#### Changes
+
+* [Remove space after triple-backtick Markdown syntax. (#3577)](https://github.com/material-components/material-components-ios/commit/7a7293883fd25ead73fa16a594a7dcab324c36b7) (Adrian Secord)
+
+### ShadowElevations
+
+#### Changes
+
+* [Remove space after triple-backtick Markdown syntax. (#3577)](https://github.com/material-components/material-components-ios/commit/7a7293883fd25ead73fa16a594a7dcab324c36b7) (Adrian Secord)
+* [[Docs] Updated known short link destination URLs to use short links. (#3575)](https://github.com/material-components/material-components-ios/commit/72045ffd6d303bb99a3e1a71e4f3cdda42fe5ad8) (Adrian Secord)
+
+### ProgressView
+
+#### Changes
+
+* [Adding .vars files for each component. (#3561)](https://github.com/material-components/material-components-ios/commit/81aca79c69780d27b59a74e60f2364c297ebe2e1) (Mohammad Cazi)
+* [Generate all themer documentation. (#3562)](https://github.com/material-components/material-components-ios/commit/d3c5316db0c67aadb18fb0b7492a49234f8a4322) (featherless)
+* [Remove all UIAppearance references from documentation. (#3480)](https://github.com/material-components/material-components-ios/commit/8395836c98224912c41b455a2651904362a006e7) (featherless)
+* [Remove space after triple-backtick Markdown syntax. (#3577)](https://github.com/material-components/material-components-ios/commit/7a7293883fd25ead73fa16a594a7dcab324c36b7) (Adrian Secord)
+* [Standardizing API docs. (#3481)](https://github.com/material-components/material-components-ios/commit/0cc7e9860f3820595f90da7110e3dc251950ea90) (featherless)
+* [[Docs] Updated known short link destination URLs to use short links. (#3575)](https://github.com/material-components/material-components-ios/commit/72045ffd6d303bb99a3e1a71e4f3cdda42fe5ad8) (Adrian Secord)
+
+### Palettes
+
+#### Changes
+
+* [Remove space after triple-backtick Markdown syntax. (#3577)](https://github.com/material-components/material-components-ios/commit/7a7293883fd25ead73fa16a594a7dcab324c36b7) (Adrian Secord)
+* [[Docs] Updated known short link destination URLs to use short links. (#3575)](https://github.com/material-components/material-components-ios/commit/72045ffd6d303bb99a3e1a71e4f3cdda42fe5ad8) (Adrian Secord)
+
+### CollectionLayoutAttributes
+
+#### Changes
+
+* [Adding .vars files for each component. (#3557)](https://github.com/material-components/material-components-ios/commit/4186de3733f10650304c83cc6d29bf5afd714237) (featherless)
+* [Remove space after triple-backtick Markdown syntax. (#3577)](https://github.com/material-components/material-components-ios/commit/7a7293883fd25ead73fa16a594a7dcab324c36b7) (Adrian Secord)
+
+---
+
 # 54.12.0
 
 This release introduces umbrella headers for all themer targets. We encourage you to start using the
