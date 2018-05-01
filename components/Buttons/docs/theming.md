@@ -1,13 +1,4 @@
-<!--docs:
-title: "Theming"
-layout: detail
-section: components
-excerpt: "How to theme Buttons using Material Design systems."
-iconId: button
-path: /catalog/buttons/theming/
--->
-
-# Buttons Theming
+### Theming
 
 You can theme an MDCButton to match one of the Material Design button styles using your app's
 schemes in the ButtonThemer extension.
@@ -46,7 +37,7 @@ MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
 ```
 <!--</div>-->
 
-## Text buttons
+#### Text buttons
 
 <img src="assets/text.gif" alt="An animation showing a Material Design text button." width="128">
 
@@ -65,7 +56,7 @@ MDCTextButtonThemer.applyScheme(buttonScheme, to: button)
 ```
 <!--</div>-->
 
-## Contained buttons
+#### Contained buttons
 
 <img src="assets/contained.gif" alt="An animation showing a Material Design contained button." width="128">
 
@@ -84,7 +75,7 @@ MDCContainedButtonThemer.applyScheme(buttonScheme, to: button)
 ```
 <!--</div>-->
 
-## Floating action buttons
+#### Floating action buttons
 
 <img src="assets/fab.gif" alt="An animation showing a Material Design floating action button." width="99">
 
