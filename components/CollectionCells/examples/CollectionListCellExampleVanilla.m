@@ -24,22 +24,25 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 static NSString *const kExampleDetailText =
     @"Pellentesque non quam ornare, porta urna sed, malesuada felis. Praesent at gravida felis, "
      "non facilisis enim. Proin dapibus laoreet lorem, in viverra leo dapibus a.";
+static const CGFloat kSmallestCellHeight = 40.f;
+static const CGFloat kSmallArbitraryCellWidth = 100.f;
 
 @implementation CollectionListCellExampleVanilla {
   NSMutableArray *_content;
   MDCInkTouchController *_inkTouchController;
   CGPoint _inkTouchLocation;
+  UICollectionViewFlowLayout *_flowLayout;
 }
 
 @synthesize collectionViewLayout = _collectionViewLayout;
 
 - (instancetype)init {
-  UICollectionViewFlowLayout *defaultLayout = [[UICollectionViewFlowLayout alloc] init];
-  defaultLayout.minimumInteritemSpacing = 0;
-  defaultLayout.minimumLineSpacing = 1;
-  defaultLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
-  defaultLayout.estimatedItemSize = CGSizeMake(1.f, 1.f);
-  return [self initWithCollectionViewLayout:defaultLayout];
+  _flowLayout = [[UICollectionViewFlowLayout alloc] init];
+  _flowLayout.minimumInteritemSpacing = 0;
+  _flowLayout.minimumLineSpacing = 1;
+  _flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
+  _flowLayout.estimatedItemSize = CGSizeMake(kSmallArbitraryCellWidth, kSmallestCellHeight);
+  return [self initWithCollectionViewLayout:_flowLayout];
 }
 
 - (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
@@ -56,7 +59,13 @@ static NSString *const kExampleDetailText =
   [self.collectionView setCollectionViewLayout:self.collectionViewLayout];
   self.collectionView.backgroundColor = UIColor.whiteColor;
   self.collectionView.alwaysBounceVertical = YES;
-
+  self.automaticallyAdjustsScrollViewInsets = NO;
+  self.parentViewController.automaticallyAdjustsScrollViewInsets = NO;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
+  }
+#endif
   // Register cell class.
   [self.collectionView registerClass:[MDCCollectionViewListCell class]
           forCellWithReuseIdentifier:kReusableIdentifierItem];
@@ -128,7 +137,8 @@ static NSString *const kExampleDetailText =
       [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
                                                 forIndexPath:indexPath];
   cell.mdc_adjustsFontForContentSizeCategory = YES;
-  [cell setCellWidth:CGRectGetWidth(collectionView.bounds)];
+  [cell setCellWidth:CGRectGetWidth(collectionView.bounds) -
+      (collectionView.adjustedContentInset.left + collectionView.adjustedContentInset.right)];
   cell.titleLabel.text = _content[indexPath.item][0];
   cell.titleLabel.textAlignment = [_content[indexPath.item][1] integerValue];
   cell.detailsTextLabel.text = _content[indexPath.item][2];
@@ -137,6 +147,23 @@ static NSString *const kExampleDetailText =
     [cell setImage:[MDCIcons imageFor_ic_info]];
   }
   return cell;
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+  [self.collectionView.collectionViewLayout invalidateLayout];
+  [self.collectionView reloadData];
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size
+       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+  [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+
+  [self.collectionView.collectionViewLayout invalidateLayout];
+
+  [coordinator animateAlongsideTransition:nil completion:^(__unused id context) {
+    [self.collectionView.collectionViewLayout invalidateLayout];
+  }];
 }
 
 #pragma mark - CatalogByConvention
