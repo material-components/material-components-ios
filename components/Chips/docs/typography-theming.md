@@ -1,13 +1,4 @@
-<!--docs:
-title: "Typography Theming"
-layout: detail
-section: components
-excerpt: "How to theme Chip using the Material Design typography system."
-iconId: chip
-path: /catalog/chips/typography-theming/
--->
-
-# Chip Typography Theming
+### Typography Theming
 
 You can theme a chip with your app's typography scheme using the TypographyThemer extension.
 
@@ -16,8 +7,6 @@ You must first add the Typography Themer extension to your project:
 ```bash
 pod 'MaterialComponents/Chips+Extensions/TypographyThemer'
 ```
-
-## Example code
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
