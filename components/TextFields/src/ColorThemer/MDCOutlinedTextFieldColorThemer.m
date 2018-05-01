@@ -43,6 +43,7 @@ static CGFloat const kOutlinedTextFieldDisabledAlpha = 0.38f;
     (id<MDCTextInputControllerFloatingPlaceholder>)textInputController;
     if ([textInputControllerFloatingPlaceholder
          respondsToSelector:@selector(setFloatingPlaceholderNormalColor:)]) {
+      textInputControllerFloatingPlaceholder.floatingPlaceholderNormalColor = onSurfaceOpacity;
       textInputControllerFloatingPlaceholder.floatingPlaceholderActiveColor =
           [colorScheme.primaryColor colorWithAlphaComponent:kOutlinedTextFieldActiveAlpha];
     }
