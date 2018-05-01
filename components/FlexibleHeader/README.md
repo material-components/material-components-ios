@@ -46,8 +46,10 @@ UIScrollViewDelegate events.
 - [Usage](#usage)
   - [Typical use: Add the Flexible Header to a view controller](#typical-use-add-the-flexible-header-to-a-view-controller)
   - [Typical use: Tracking a scroll view](#typical-use-tracking-a-scroll-view)
+#pragma [mark - UIScrollViewDelegate](#mark---uiscrollviewdelegate)
   - [Shifting a flexible header off-screen](#shifting-a-flexible-header-off-screen)
   - [Reacting to frame changes](#reacting-to-frame-changes)
+#pragma [- MDCFlexibleHeaderViewLayoutDelegate](#--mdcflexibleheaderviewlayoutdelegate)
   - [Utilizing Top Layout Guide on Parent View Controller](#utilizing-top-layout-guide-on-parent-view-controller)
   - [Subclassing considerations](#subclassing-considerations)
   - [Interacting with UINavigationController](#interacting-with-uinavigationcontroller)
@@ -57,7 +59,7 @@ UIScrollViewDelegate events.
   - [Touch forwarding](#touch-forwarding)
   - [Tracking a parent view](#tracking-a-parent-view)
 - [Extensions](#extensions)
-# [Flexible Header Color Theming](#flexible-header-color-theming)
+  - [Color Theming](#color-theming)
 - [Example code](#example-code)
 
 - - -
@@ -771,16 +773,7 @@ to combat the UITableView displaying its divider lines in front of the Flexible 
 
 <!-- Extracted from docs/color-theming.md -->
 
-<!--docs:
-title: "Color Theming"
-layout: detail
-section: components
-excerpt: "How to theme Flexible Header using the Material Design color system."
-iconId: header
-path: /catalog/flexible-headers/color-theming/
--->
-
-# Flexible Header Color Theming
+### Color Theming
 
 You can theme a flexible header with your app's color scheme using the ColorThemer extension.
 

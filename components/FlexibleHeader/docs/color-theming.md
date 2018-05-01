@@ -1,13 +1,4 @@
-<!--docs:
-title: "Color Theming"
-layout: detail
-section: components
-excerpt: "How to theme Flexible Header using the Material Design color system."
-iconId: header
-path: /catalog/flexible-headers/color-theming/
--->
-
-# Flexible Header Color Theming
+### Color Theming
 
 You can theme a flexible header with your app's color scheme using the ColorThemer extension.
 
