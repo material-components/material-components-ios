@@ -1,7 +1,8 @@
 # 54.13.0
 
 This release focused on documentation across all of our componentry and introduced new outlined
-themes for components.
+themes for components. There have also been significant improvements to theming in the MDCCatalog
+app.
 
 ## Breaking changes
 
