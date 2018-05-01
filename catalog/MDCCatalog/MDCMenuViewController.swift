@@ -16,6 +16,9 @@
 
 import UIKit
 import MaterialComponents.MDCIcons
+import MaterialComponents.MaterialIcons_ic_settings
+import MaterialComponents.MaterialIcons_ic_color_lens
+import MaterialComponents.MaterialIcons_ic_help_outline
 
 class MDCMenuViewController: UITableViewController {
 
