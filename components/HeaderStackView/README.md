@@ -24,12 +24,6 @@ bar views.
   <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/flexible-headers/header-stack-views/api-docs/Classes/MDCHeaderStackView.html">API: MDCHeaderStackView</a></li>
 </ul>
 
-## Extensions
-
-<ul class="icon-list">
-  <li class="icon-list-item icon-list-item--link"><a href="docs/color-theming.md">Color Theming</a></li>
-</ul>
-
 - - -
 
 ## Installation
