@@ -1,13 +1,4 @@
-<!--docs:
-title: "Color Theming"
-layout: detail
-section: components
-excerpt: "How to theme Chip using the Material Design color system."
-iconId: chip
-path: /catalog/chips/color-theming/
--->
-
-# Chip Color Theming
+### Chip Color Theming
 
 You can theme a chip with your app's color scheme using the ColorThemer extension.
 
@@ -16,8 +7,6 @@ You must first add the Color Themer extension to your project:
 ```bash
 pod 'MaterialComponents/Chips+Extensions/ColorThemer'
 ```
-
-## Example code
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
