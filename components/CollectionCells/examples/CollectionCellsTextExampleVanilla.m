@@ -72,10 +72,13 @@ static NSString *const kExampleDetailText =
   for (NSString *alignmentKey in alignmentValues) {
     [_content addObject:@[
       [NSString stringWithFormat:@"(%@) Single line text", alignmentKey],
-      alignmentValues[alignmentKey], @"", alignmentValues[alignmentKey]
+      alignmentValues[alignmentKey],
+      @"",
+      alignmentValues[alignmentKey]
     ]];
     [_content addObject:@[
-      @"", alignmentValues[alignmentKey],
+      @"",
+      alignmentValues[alignmentKey],
       [NSString stringWithFormat:@"(%@) Single line detail text", alignmentKey],
       alignmentValues[alignmentKey]
     ]];
@@ -155,7 +158,7 @@ static NSString *const kExampleDetailText =
 }
 
 + (BOOL)catalogIsDebug {
-  return YES;
+  return NO;
 }
 
 @end

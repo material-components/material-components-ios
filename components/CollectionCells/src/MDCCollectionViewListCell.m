@@ -1,13 +1,42 @@
-//
-//  MDCCollectionViewListCell.m
-//  MaterialComponents
-//
-//  Created by yar on 4/9/18.
-//
+/*
+ Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
 
 #import "MDCCollectionViewListCell.h"
 #import <MDFInternationalization/MDFInternationalization.h>
 #import "MaterialTypography.h"
+
+static const CGFloat kImagePadding = 16.f;
+static const CGFloat kImageHeight = 40.f;
+static const CGFloat kWithImageRightPadding = 12.f;
+
+static inline UIFont *defaultTitleFont(void) {
+  return [MDCTypography subheadFont];
+}
+
+static inline UIFont *defaultDetailsFont(void) {
+  return [MDCTypography body1Font];
+}
+
+static inline CGFloat defaultTitleOpacity(void) {
+  return [MDCTypography subheadFontOpacity];
+}
+
+static inline CGFloat defaultDetailsOpacity(void) {
+  return [MDCTypography captionFontOpacity];
+}
 
 @implementation MDCCollectionViewListCell {
   CGPoint _lastTouch;
@@ -16,14 +45,8 @@
   NSLayoutConstraint *_imageLeftPaddingConstraint;
   NSLayoutConstraint *_imageRightPaddingConstraint;
   NSLayoutConstraint *_imageWidthConstraint;
-  NSLayoutConstraint *_imageHeightConstraint;
   BOOL _mdc_adjustsFontForContentSizeCategory;
 }
-
-+ (Class)layerClass {
-  return [MDCShadowLayer class];
-}
-
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -43,18 +66,23 @@
 
 - (void)commonMDCCollectionViewListCellInit {
   _contentWrapper = [[UIView alloc] initWithFrame:self.contentView.bounds];
-  _contentWrapper.autoresizingMask =
-  UIViewAutoresizingFlexibleWidth | MDFTrailingMarginAutoresizingMaskForLayoutDirection(self.mdf_effectiveUserInterfaceLayoutDirection);
+  _contentWrapper.autoresizingMask = UIViewAutoresizingFlexibleWidth |
+      MDFTrailingMarginAutoresizingMaskForLayoutDirection(
+          self.mdf_effectiveUserInterfaceLayoutDirection);
   _contentWrapper.clipsToBounds = YES;
   [self.contentView addSubview:_contentWrapper];
 
   // Text label.
   _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-  _titleLabel.autoresizingMask = MDFTrailingMarginAutoresizingMaskForLayoutDirection(self.mdf_effectiveUserInterfaceLayoutDirection);
+  _titleLabel.autoresizingMask =
+      MDFTrailingMarginAutoresizingMaskForLayoutDirection(
+          self.mdf_effectiveUserInterfaceLayoutDirection);
 
   // Detail text label.
   _detailsTextLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-  _detailsTextLabel.autoresizingMask = MDFTrailingMarginAutoresizingMaskForLayoutDirection(self.mdf_effectiveUserInterfaceLayoutDirection);
+  _detailsTextLabel.autoresizingMask =
+      MDFTrailingMarginAutoresizingMaskForLayoutDirection(
+          self.mdf_effectiveUserInterfaceLayoutDirection);
 
   [self resetMDCCollectionViewListCell];
 
@@ -63,7 +91,9 @@
 
   // Image view.
   _imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
-  _imageView.autoresizingMask = MDFTrailingMarginAutoresizingMaskForLayoutDirection(self.mdf_effectiveUserInterfaceLayoutDirection);
+  _imageView.autoresizingMask =
+      MDFTrailingMarginAutoresizingMaskForLayoutDirection(
+          self.mdf_effectiveUserInterfaceLayoutDirection);
   [self.contentView addSubview:_imageView];
 
   [self setupConstraints];
@@ -87,12 +117,12 @@
   self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
 
   _cellWidthConstraint = [NSLayoutConstraint constraintWithItem:self.contentView
-                                                          attribute:NSLayoutAttributeWidth
-                                                          relatedBy:NSLayoutRelationEqual
-                                                             toItem:nil
-                                                          attribute:NSLayoutAttributeNotAnAttribute
-                                                         multiplier:1
-                                                           constant:0];
+                                                      attribute:NSLayoutAttributeWidth
+                                                      relatedBy:NSLayoutRelationEqual
+                                                         toItem:nil
+                                                      attribute:NSLayoutAttributeNotAnAttribute
+                                                     multiplier:1
+                                                       constant:0];
   [NSLayoutConstraint constraintWithItem:self.contentView
                                attribute:NSLayoutAttributeCenterY
                                relatedBy:NSLayoutRelationEqual
@@ -114,46 +144,55 @@
   _imageView.translatesAutoresizingMaskIntoConstraints = NO;
 
   NSDictionary *views =
-      @{@"contentWrapper": _contentWrapper,
-        @"titleLabel": _titleLabel,
-        @"detailsTextLabel": _detailsTextLabel,
-        @"imageView": _imageView
-        };
+  @{@"contentWrapper": _contentWrapper,
+    @"titleLabel": _titleLabel,
+    @"detailsTextLabel": _detailsTextLabel,
+    @"imageView": _imageView
+    };
 
   NSMutableArray *constraints = [[NSMutableArray alloc] init];
 
-   _imageLeftPaddingConstraint = [NSLayoutConstraint constraintWithItem:_imageView
-                                attribute:NSLayoutAttributeLeft
-                                relatedBy:NSLayoutRelationEqual
-                                   toItem:self.contentView
-                                attribute:NSLayoutAttributeLeft
-                               multiplier:1
-                                 constant:0];
+  _imageLeftPaddingConstraint = [NSLayoutConstraint constraintWithItem:_imageView
+                                                             attribute:NSLayoutAttributeLeft
+                                                             relatedBy:NSLayoutRelationEqual
+                                                                toItem:self.contentView
+                                                             attribute:NSLayoutAttributeLeft
+                                                            multiplier:1
+                                                              constant:0];
   _imageLeftPaddingConstraint.active = YES;
 
-  _imageRightPaddingConstraint = [NSLayoutConstraint constraintWithItem:_imageView
+  _imageRightPaddingConstraint = [NSLayoutConstraint constraintWithItem:_contentWrapper
+                                                              attribute:NSLayoutAttributeLeft
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:_imageView
+                                                              attribute:NSLayoutAttributeRight
+                                                             multiplier:1
+                                                               constant:kImagePadding];
+  _imageRightPaddingConstraint.active = YES;
+
+  _imageWidthConstraint = [NSLayoutConstraint constraintWithItem:_imageView
+                                                       attribute:NSLayoutAttributeWidth
+                                                       relatedBy:NSLayoutRelationEqual
+                                                          toItem:nil
+                                                       attribute:NSLayoutAttributeNotAnAttribute
+                                                      multiplier:1
+                                                        constant:0];
+  _imageWidthConstraint.active = YES;
+
+  [constraints addObject:
+   [NSLayoutConstraint constraintWithItem:self.contentView
                                 attribute:NSLayoutAttributeRight
                                 relatedBy:NSLayoutRelationEqual
                                    toItem:_contentWrapper
-                                attribute:NSLayoutAttributeLeft
-                               multiplier:1
-                                 constant:-16];
-  _imageRightPaddingConstraint.active = YES;
-
-  [constraints addObject:
-   [NSLayoutConstraint constraintWithItem:_contentWrapper
-                                attribute:NSLayoutAttributeRight
-                                relatedBy:NSLayoutRelationEqual
-                                   toItem:self.contentView
                                 attribute:NSLayoutAttributeRight
                                multiplier:1
-                                 constant:-16]];
+                                 constant:kImagePadding]];
 
   [constraints addObjectsFromArray:
    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[contentWrapper]|"
-                                              options:0
-                                              metrics:nil
-                                                views:views]];
+                                           options:0
+                                           metrics:nil
+                                             views:views]];
 
   [constraints addObjectsFromArray:
    [NSLayoutConstraint constraintsWithVisualFormat:@"|[titleLabel]|"
@@ -174,33 +213,24 @@
                                              views:views]];
 
   [constraints addObject:
-  [NSLayoutConstraint constraintWithItem:_imageView
-                               attribute:NSLayoutAttributeCenterY
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self.contentView
-                               attribute:NSLayoutAttributeCenterY
-                              multiplier:1
-                                constant:0]];
+   [NSLayoutConstraint constraintWithItem:_imageView
+                                attribute:NSLayoutAttributeCenterY
+                                relatedBy:NSLayoutRelationEqual
+                                   toItem:self.contentView
+                                attribute:NSLayoutAttributeCenterY
+                               multiplier:1
+                                 constant:0]];
+
+  [constraints addObject:
+   [NSLayoutConstraint constraintWithItem:_imageView
+                                attribute:NSLayoutAttributeHeight
+                                relatedBy:NSLayoutRelationEqual
+                                   toItem:nil
+                                attribute:NSLayoutAttributeNotAnAttribute
+                               multiplier:1
+                                 constant:kImageHeight]];
 
   [NSLayoutConstraint activateConstraints:constraints];
-
-  _imageWidthConstraint = [NSLayoutConstraint constraintWithItem:_imageView
-                                                       attribute:NSLayoutAttributeWidth
-                                                       relatedBy:NSLayoutRelationEqual
-                                                          toItem:nil
-                                                       attribute:NSLayoutAttributeNotAnAttribute
-                                                      multiplier:1
-                                                        constant:0];
-  _imageWidthConstraint.active = YES;
-
-  _imageHeightConstraint = [NSLayoutConstraint constraintWithItem:_imageView
-                                                       attribute:NSLayoutAttributeHeight
-                                                       relatedBy:NSLayoutRelationEqual
-                                                          toItem:nil
-                                                       attribute:NSLayoutAttributeNotAnAttribute
-                                                      multiplier:1
-                                                        constant:40];
-  _imageHeightConstraint.active = YES;
 }
 
 - (void)setCellWidth:(CGFloat)width {
@@ -212,15 +242,13 @@
   _imageView.image = image;
   _imageView.contentMode = UIViewContentModeScaleAspectFit;
   if (image) {
-    _imageWidthConstraint.constant = 40;
-    _imageLeftPaddingConstraint.constant = 16;
-    _imageRightPaddingConstraint.constant = -12;
-//    _imageHeightConstraint.active = YES;
+    _imageWidthConstraint.constant = kImageHeight;
+    _imageLeftPaddingConstraint.constant = kImagePadding;
+    _imageRightPaddingConstraint.constant = kWithImageRightPadding;
   } else {
     _imageWidthConstraint.constant = 0;
     _imageLeftPaddingConstraint.constant = 0;
-    _imageRightPaddingConstraint.constant = -16;
-//    _imageHeightConstraint.active = NO;
+    _imageRightPaddingConstraint.constant = kImagePadding;
   }
 }
 
@@ -315,27 +343,11 @@
   if (_mdc_adjustsFontForContentSizeCategory) {
     _detailsTextLabel.font =
     [_detailsFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleBody1
-                            scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+                               scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
   } else {
     _detailsTextLabel.font = _detailsFont;
   }
   [self setNeedsLayout];
-}
-
-static inline UIFont *defaultTitleFont(void) {
-  return [MDCTypography subheadFont];
-}
-
-static inline UIFont *defaultDetailsFont(void) {
-  return [MDCTypography body1Font];
-}
-
-static inline CGFloat defaultTitleOpacity(void) {
-  return [MDCTypography subheadFontOpacity];
-}
-
-static inline CGFloat defaultDetailsOpacity(void) {
-  return [MDCTypography captionFontOpacity];
 }
 
 @end
