@@ -58,7 +58,6 @@ UIScrollViewDelegate events.
   - [Tracking a parent view](#tracking-a-parent-view)
 - [Extensions](#extensions)
   - [Color Theming](#color-theming)
-- [Example code](#example-code)
 
 - - -
 
@@ -780,8 +779,6 @@ You must first add the Color Themer extension to your project:
 ```bash
 pod 'MaterialComponents/FlexibleHeader+Extensions/ColorThemer'
 ```
-
-## Example code
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift

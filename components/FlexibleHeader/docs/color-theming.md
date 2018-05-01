@@ -8,8 +8,6 @@ You must first add the Color Themer extension to your project:
 pod 'MaterialComponents/FlexibleHeader+Extensions/ColorThemer'
 ```
 
-## Example code
-
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
