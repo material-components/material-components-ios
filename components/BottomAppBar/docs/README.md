@@ -1,15 +1,3 @@
-<!--docs:
-title: "Bottom App Bar"
-layout: detail
-section: components
-excerpt: "Bottom app bar provides a bar at the bottom of the screen with primary action and navigation buttons."
-iconId: bottom_app_bar
-path: /catalog/bottomappbar/
-api_doc_root: true
--->
-
-<!-- This file was auto-generated using ./scripts/generate_readme BottomAppBar -->
-
 # Bottom App Bar
 
 <div class="article__asset article__asset--screenshot">
@@ -18,16 +6,7 @@ api_doc_root: true
 
 A bottom app bar provides a docked bar at the bottom of the screen for common application actions. The bottom app bar includes a <a href="https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCFloatingButton.html">floating button</a> for a primary action and a <a href="https://material.io/components/ios/catalog/flexible-headers/navigation-bars/">navigation bar</a> area for secondary actions. Transition animations are provided when the floating button shifts left or right, based on the application navigation state, and when the floating action button changes elevation or is hidden.
 
-## Table of contents
-
-- [Overview](#overview)
-- [Installation](#installation)
-  - [Installation with CocoaPods](#installation-with-cocoapods)
-  - [Importing](#importing)
-- [Usage](#usage)
-  - [Typical use](#typical-use)
-- [Extensions](#extensions)
-  - [Color Theming](#color-theming)
+<!-- toc -->
 
 - - -
 
@@ -45,60 +24,12 @@ Transitions between floating action button position, elevation and visibility st
 
 ## Installation
 
-<!-- Extracted from docs/../../../docs/component-installation.md -->
-
-### Installation with CocoaPods
-
-Add the following to your `Podfile`:
-
-```bash
-pod 'MaterialComponents/BottomAppBar'
-```
-<!--{: .code-renderer.code-renderer--install }-->
-
-Then, run the following command:
-
-```bash
-pod install
-```
-
-### Importing
-
-To import the component:
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-import MaterialComponents.MaterialBottomAppBar
-```
-
-#### Objective-C
-
-```objc
-#import "MaterialBottomAppBar.h"
-```
-<!--</div>-->
-
+- [Typical installation](../../../docs/component-installation.md)
 
 ## Usage
 
-<!-- Extracted from docs/typical-use.md -->
-
-### Typical use
-
-MDCBottomAppBarView can be added to a view hierarchy like any UIView. Material Design guidelines
-recommend always placing the bottom app bar at the bottom of the screen.
-
+- [Typical use](typical-use.md)
 
 ## Extensions
 
-<!-- Extracted from docs/color-theming.md -->
-
-### Color Theming
-
-Bottom App Bar does not yet have a Material Design color system themer. The following tasks are
-tracking its development:
-
-- Task: [Implement a color themer](https://www.pivotaltracker.com/story/show/157095394)
-- Task: [Impement a surface variant themer](https://www.pivotaltracker.com/story/show/156933141)
-
+- [Color Theming](color-theming.md)
