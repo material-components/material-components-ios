@@ -10,23 +10,18 @@ api_doc_root: true
 
 <!-- This file was auto-generated using ./scripts/generate_readme Chips -->
 
-# Tabs
+# Chips
 
-<div class="article__asset article__asset--screenshot">
-    <img src="docs/assets/tabs.png" alt="Tabs" width="375">
-</div>
-
-Tabs are bars of buttons used to navigate between groups of content.
+Chips represent complex entities, such as a contact, in small blocks.
 
 ## Design & API documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-tabs">Material Design guidelines: Tabs</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-chips">Material Design guidelines: Chips</a></li>
 </ul>
 
 ## Table of contents
 
-- [Overview](#overview)
 - [Installation](#installation)
   - [Installation with CocoaPods](#installation-with-cocoapods)
   - [Importing](#importing)
@@ -47,15 +42,6 @@ Tabs are bars of buttons used to navigate between groups of content.
   - [Typography Theming](#typography-theming)
 
 - - -
-
-## Overview
-
-When a user taps a tab, the content changes to match the selected subject in the tabs.
-
-We provide this functionality through MDCTabBar which communicates via a delegate as well as
-MDCTabBarViewController which provides a view containment model similar to UITabViewController.
-
-Tabs can also show a badge (usually a number) like UITabBar.
 
 ## Installation
 
