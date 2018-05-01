@@ -1,0 +1,114 @@
+#!/bin/bash -e
+#
+# Copyright 2018-present The Material Components for iOS Authors. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+usage() {
+  echo "Usage: $0 <ComponentName>"
+  echo
+  echo "Generates a root readme file from a component's documentation."
+  echo
+  echo "Example usage: $0 ActivityIndicator"
+}
+
+if [ "$#" -ne 1 ]; then
+  usage
+  exit 1
+fi
+
+COMPONENT="$1"
+
+COMPONENT_PATH="components/$COMPONENT"
+SITE_README_PATH="$COMPONENT_PATH/README.md"
+
+mkdir -p $(dirname "$SITE_README_PATH")
+
+TMP_PATH=$(mktemp -d)
+TMP_README_PATH="$TMP_PATH/README.md"
+TMP_EXPANDED_README_PATH="$TMP_PATH/README.md.expanded"
+TMP_TOC_PATH="$TMP_PATH/toc.md"
+TOC_STRING="<!-- toc -->"
+
+./scripts/apply_template "$COMPONENT" scripts/templates/component/README.md.template "$TMP_README_PATH"
+
+echo "<!-- This file was auto-generated using $0 $COMPONENT -->" >> "$TMP_README_PATH"
+echo "" >> "$TMP_README_PATH"
+
+cat "$COMPONENT_PATH/docs/README.md" >> "$TMP_README_PATH"
+
+# Rewrite asset paths
+perl -pi -e "s|src=\"assets|src=\"docs/assets|g" "$TMP_README_PATH"
+
+# Convert * spec urls to stylized lists
+perl -pi -e "s|\* \[(.+)\]\\((.+?)/go/design-(.+)\\)|  <li class=\"icon-list-item icon-list-item--spec\"><a href=\"\2/go/design-\3\">\1</a></li>|g" "$TMP_README_PATH"
+
+# Convert * list urls to stylized lists
+perl -pi -e "s|\* \[(.+)\]\\((.+)\\)|  <li class=\"icon-list-item icon-list-item--link\"><a href=\"\2\">\1</a></li>|g" "$TMP_README_PATH"
+
+# Convert * list text to stylized lists.
+perl -pi -e "s|\* (.+)$|  <li class=\"icon-list-item icon-list-item--spec\">\1</li>|g" "$TMP_README_PATH"
+
+# Prefix lists with <ul>
+perl -p0i -e "s|\n\n  <li|\n\n<ul class=\"icon-list\">\n  <li|g" "$TMP_README_PATH"
+
+# Postfix lists with </ul>
+perl -p0i -e "s|li>\n\n|li>\n</ul>\n\n|g" "$TMP_README_PATH"
+
+# Expand all files inline
+IFS='' # Don't trim whitespace from lines
+cat "$TMP_README_PATH" | while read line; do
+  if [[ $(echo $line | grep -e "^- \[.*\]\(.*\)$") ]]; then
+    file=$(echo $line | cut -d'(' -f2 | cut -d')' -f1)
+    file_path="$COMPONENT_PATH/docs/$file"
+    echo "<!-- Extracted from docs/$file -->" >> "$TMP_EXPANDED_README_PATH"
+    echo >> "$TMP_EXPANDED_README_PATH"
+    cat "$file_path" | sed "s/<#ComponentName#>/$COMPONENT/" >> "$TMP_EXPANDED_README_PATH"
+    echo >> "$TMP_EXPANDED_README_PATH" # Ensure that there is always a newline between files.
+  else
+    echo "$line" >> "$TMP_EXPANDED_README_PATH"
+  fi
+done
+
+rm "$TMP_README_PATH"
+
+# Write the table of contents
+cat "$TMP_EXPANDED_README_PATH" | while read line; do
+  if [ "$line" = "$TOC_STRING" ]; then
+    echo "## Table of contents" >> "$TMP_README_PATH"
+    echo "" >> "$TMP_README_PATH"
+    grep -e "^#" -e "^$TOC_STRING" "$TMP_EXPANDED_README_PATH" \
+      | grep -v "####" \
+      | grep -v "#import" \
+      | sed -n '/ toc /,$p' \
+      | tail -n +2  > "$TMP_TOC_PATH"
+
+    cat "$TMP_TOC_PATH" | while read toc; do
+      indent=$(echo $toc | cut -d' ' -f1 | sed "s/###/  -/" | sed "s/##/-/g")
+      text=$(echo $toc | cut -d' ' -f2-)
+      url=$(echo $text | awk '{print tolower($0)}')
+      url=${url//:} # Strip invalid characters
+      url=${url// /-} # Turn spaces into dashes
+      echo "$indent [$text](#$url)" >> "$TMP_README_PATH"
+    done
+  else
+    echo "$line" >> "$TMP_README_PATH"
+  fi
+done
+
+# Rewrite relative paths
+perl -pi -e "s|\(\.\./|(|g" "$TMP_README_PATH"
+perl -pi -e "s|href=\"\.\./|href=\"|g" "$TMP_README_PATH"
+perl -pi -e "s|\[(.+)\]\((.+)\.md\)|[\1](docs/\2.md)|g" "$TMP_README_PATH"
+
+mv "$TMP_README_PATH" "$SITE_README_PATH"
