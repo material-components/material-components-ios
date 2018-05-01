@@ -16,7 +16,5 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialCollections.h"
-
-@interface CollectionCellsTextExampleVanilla : UICollectionViewController
+@interface CollectionListCellExampleVanilla : UICollectionViewController
 @end

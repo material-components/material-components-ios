@@ -16,4 +16,3 @@
 
 #import "MDCCollectionViewCell.h"
 #import "MDCCollectionViewTextCell.h"
-#import "MDCCollectionViewListCell.h"

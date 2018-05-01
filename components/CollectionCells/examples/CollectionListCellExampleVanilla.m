@@ -14,16 +14,18 @@
  limitations under the License.
  */
 
-#import "MaterialTypography.h"
-#import "supplemental/CollectionCellsTextExampleVanilla.h"
 #import "MaterialIcons+ic_info.h"
+#import "MaterialInk.h"
+#import "MaterialTypography.h"
+#import "supplemental/CollectionListCellExampleVanilla.h"
+#import "supplemental/MDCCollectionViewListCell.h"
 
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 static NSString *const kExampleDetailText =
     @"Pellentesque non quam ornare, porta urna sed, malesuada felis. Praesent at gravida felis, "
      "non facilisis enim. Proin dapibus laoreet lorem, in viverra leo dapibus a.";
 
-@implementation CollectionCellsTextExampleVanilla {
+@implementation CollectionListCellExampleVanilla {
   NSMutableArray *_content;
   MDCInkTouchController *_inkTouchController;
   CGPoint _inkTouchLocation;
@@ -140,7 +142,7 @@ static NSString *const kExampleDetailText =
 #pragma mark - CatalogByConvention
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Collection Cells", @"Cell Text Example Vanilla" ];
+  return @[ @"Collection Cells", @"List Cell Example Vanilla" ];
 }
 
 + (BOOL)catalogIsPrimaryDemo {
