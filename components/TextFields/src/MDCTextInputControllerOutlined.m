@@ -137,10 +137,12 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
   UIBezierPath *path;
   if ([self isPlaceholderUp]) {
     CGFloat placeholderWidth =
-    [self.textInput.placeholderLabel systemLayoutSizeFittingSize:UILayoutFittingCompressedSize]
-    .width * (CGFloat)self.floatingPlaceholderScale.floatValue;
+        [self.textInput.placeholderLabel systemLayoutSizeFittingSize:UILayoutFittingCompressedSize]
+        .width * (CGFloat)self.floatingPlaceholderScale.floatValue;
 
-    path = [self roundedPathFromRect:pathRect withTextSpace:placeholderWidth  leftOffset:MDCTextInputOutlinedTextFieldFullPadding - 3];
+    path = [self roundedPathFromRect:pathRect
+                       withTextSpace:placeholderWidth
+                          leftOffset:MDCTextInputOutlinedTextFieldFullPadding];
   } else {
     CGSize cornerRadius = CGSizeMake(MDCTextInputControllerBaseDefaultBorderRadius,
                                      MDCTextInputControllerBaseDefaultBorderRadius);
@@ -169,9 +171,9 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 
   // Draw the path
   [path moveToPoint:CGPointMake(radius + xOffset, yOffset)];
-  [path addLineToPoint:CGPointMake(offset + xOffset, yOffset)];
+  [path addLineToPoint:CGPointMake(offset + xOffset - radius, yOffset)];
 
-  [path moveToPoint:CGPointMake(textSpace + offset + xOffset, yOffset)];
+  [path moveToPoint:CGPointMake(textSpace + offset + xOffset - radius, yOffset)];
 
   [path addLineToPoint:CGPointMake(f.size.width - radius + xOffset, yOffset)];
   [path addArcWithCenter:CGPointMake(f.size.width - radius + xOffset, radius + yOffset)
