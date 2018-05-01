@@ -21,7 +21,7 @@ find components -type d | grep ColorThemer | sort | uniq | while read line; do
   
   echo "Generating color theming documentation for $component..."
 
-  ./scripts/apply_template $component scripts/templates/component/docs/color-theming.md.template
+  ./scripts/apply_template $component scripts/templates/component/docs/color-theming.md.template components/$component/docs/color-theming.md
 done
 
 find components -type d | grep TypographyThemer | sort | uniq | while read line; do
@@ -30,5 +30,5 @@ find components -type d | grep TypographyThemer | sort | uniq | while read line;
   
   echo "Generating typography theming documentation for $component..."
 
-  ./scripts/apply_template $component scripts/templates/component/docs/typography-theming.md.template
+  ./scripts/apply_template $component scripts/templates/component/docs/typography-theming.md.template components/$component/docs/typography-theming.md
 done
