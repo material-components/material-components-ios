@@ -18,7 +18,9 @@ import UIKit
 
 import CatalogByConvention
 import MaterialComponents.MaterialAppBar
+import MaterialComponents.MaterialAppBar_ColorThemer
 import MaterialComponents.MaterialBottomSheet
+import MaterialComponents.MaterialCollections
 import MaterialComponents.MaterialIcons_ic_more_horiz
 
 @UIApplicationMain
