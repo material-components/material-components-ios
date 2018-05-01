@@ -2,7 +2,7 @@
 title: "Chips"
 layout: detail
 section: components
-excerpt: "<#short_description#>"
+excerpt: "Chips represent complex entities in small blocks, such as a contact."
 iconId: chip
 path: /catalog/chips/
 api_doc_root: true
