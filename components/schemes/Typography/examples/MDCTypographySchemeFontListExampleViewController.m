@@ -168,9 +168,13 @@ static NSArray<UIFont *> *Fonts() {
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+  if (section == (NSInteger)FontStyleNames().count - 1) {
+    return nil;
+  }
   HairlineSeparatorView *footer =
       (HairlineSeparatorView *)[tableView dequeueReusableCellWithIdentifier:@"footer"];
-  footer.contentView.backgroundColor = self.colorScheme.onBackgroundColor;
+  footer.contentView.backgroundColor =
+      [self.colorScheme.onBackgroundColor colorWithAlphaComponent:(CGFloat)0.12];
   return footer;
 }
 
