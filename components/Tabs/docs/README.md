@@ -37,4 +37,4 @@ Tabs can also show a badge (usually a number) like UITabBar.
 
 - [Color Theming](color-theming.md)
 
-- [Color Theming](typography-theming.md)
+- [Typography Theming](typography-theming.md)
