@@ -72,31 +72,30 @@ static NSString *const kExampleDetailText =
   for (NSString *alignmentKey in alignmentValues) {
     [_content addObject:@[
       [NSString stringWithFormat:@"(%@) Single line text", alignmentKey],
-      alignmentValues[alignmentKey], @"", alignmentValues[alignmentKey],
-      @(MDCCellDefaultOneLineHeight)
+      alignmentValues[alignmentKey], @"", alignmentValues[alignmentKey]
     ]];
     [_content addObject:@[
       @"", alignmentValues[alignmentKey],
       [NSString stringWithFormat:@"(%@) Single line detail text", alignmentKey],
-      alignmentValues[alignmentKey], @(MDCCellDefaultOneLineHeight)
+      alignmentValues[alignmentKey]
     ]];
     [_content addObject:@[
       [NSString stringWithFormat:@"(%@) Two line text", alignmentKey],
       alignmentValues[alignmentKey],
       [NSString stringWithFormat:@"(%@) Here is the detail text", alignmentKey],
-      alignmentValues[alignmentKey], @(MDCCellDefaultTwoLineHeight)
+      alignmentValues[alignmentKey]
     ]];
     [_content addObject:@[
       [NSString stringWithFormat:@"(%@) Two line text (truncated)", alignmentKey],
       alignmentValues[alignmentKey],
       [NSString stringWithFormat:@"(%@) %@", alignmentKey, kExampleDetailText],
-      alignmentValues[alignmentKey], @(MDCCellDefaultTwoLineHeight)
+      alignmentValues[alignmentKey]
     ]];
     [_content addObject:@[
       [NSString stringWithFormat:@"(%@) Three line text (wrapped)", alignmentKey],
       alignmentValues[alignmentKey],
       [NSString stringWithFormat:@"(%@) %@", alignmentKey, kExampleDetailText],
-      alignmentValues[alignmentKey], @(MDCCellDefaultThreeLineHeight)
+      alignmentValues[alignmentKey]
     ]];
   }
 
