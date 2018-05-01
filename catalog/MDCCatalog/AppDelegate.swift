@@ -17,7 +17,9 @@ limitations under the License.
 import UIKit
 
 import CatalogByConvention
+import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialBottomSheet
+import MaterialComponents.MaterialIcons_ic_more_horiz
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
