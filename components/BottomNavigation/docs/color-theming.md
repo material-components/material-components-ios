@@ -1,13 +1,4 @@
-<!--docs:
-title: "Color Theming"
-layout: detail
-section: components
-excerpt: "How to theme Bottom Navigation using the Material Design color system."
-iconId: bottom_navigation
-path: /catalog/bottomnavigation/color-theming/
--->
-
-# Bottom Navigation Color Theming
+### Color Theming
 
 You can theme a bottom navigation with your app's color scheme using the ColorThemer extension.
 
@@ -16,8 +7,6 @@ You must first add the Color Themer extension to your project:
 ```bash
 pod 'MaterialComponents/BottomNavigation+Extensions/ColorThemer'
 ```
-
-## Example code
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
