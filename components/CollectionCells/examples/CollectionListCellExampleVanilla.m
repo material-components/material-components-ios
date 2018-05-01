@@ -137,8 +137,14 @@ static const CGFloat kSmallArbitraryCellWidth = 100.f;
       [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
                                                 forIndexPath:indexPath];
   cell.mdc_adjustsFontForContentSizeCategory = YES;
-  [cell setCellWidth:CGRectGetWidth(collectionView.bounds) -
-      (collectionView.adjustedContentInset.left + collectionView.adjustedContentInset.right)];
+  CGFloat cellWidth = CGRectGetWidth(collectionView.bounds);
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    cellWidth -=
+        (collectionView.adjustedContentInset.left + collectionView.adjustedContentInset.right);
+  }
+#endif
+  [cell setCellWidth:cellWidth];
   cell.titleLabel.text = _content[indexPath.item][0];
   cell.titleLabel.textAlignment = [_content[indexPath.item][1] integerValue];
   cell.detailsTextLabel.text = _content[indexPath.item][2];
