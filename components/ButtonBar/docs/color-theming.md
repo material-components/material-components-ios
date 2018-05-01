@@ -1,13 +1,4 @@
-<!--docs:
-title: "Color Theming"
-layout: detail
-section: components
-excerpt: "How to theme Button Bar using the Material Design color system."
-iconId: button
-path: /catalog/button-bars/color-theming/
--->
-
-# Button Bar Color Theming
+### Color Theming
 
 You can theme a button bar with your app's color scheme using the ColorThemer extension.
 
@@ -16,8 +7,6 @@ You must first add the Color Themer extension to your project:
 ```bash
 pod 'MaterialComponents/ButtonBar+Extensions/ColorThemer'
 ```
-
-## Example code
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -29,7 +18,7 @@ import MaterialComponents.MaterialButtonBar_ColorThemer
 let colorScheme = MDCSemanticColorScheme()
 
 // Step 3: Apply the color scheme to your component
-MDCButtonBarColorThemer.applySemanticColorScheme(colorScheme, to: component)
+MDCButtonBarColorThemer.applySemanticColorScheme(colorScheme, to:buttonBar)
 ```
 
 #### Objective-C
@@ -43,6 +32,6 @@ id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
 
 // Step 3: Apply the color scheme to your component
 [MDCButtonBarColorThemer applySemanticColorScheme:colorScheme
-     toButtonBar:component];
+     toButtonBar:buttonBar];
 ```
 <!--</div>-->
