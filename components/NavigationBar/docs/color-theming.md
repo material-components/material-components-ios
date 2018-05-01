@@ -1,13 +1,4 @@
-<!--docs:
-title: "Color Theming"
-layout: detail
-section: components
-excerpt: "How to theme Navigation Bar using the Material Design color system."
-iconId: toolbar
-path: /catalog/flexible-headers/navigation-bars/color-theming/
--->
-
-# Navigation Bar Color Theming
+# Color Theming
 
 You can theme a navigation bar with your app's color scheme using the ColorThemer extension.
 
@@ -16,8 +7,6 @@ You must first add the Color Themer extension to your project:
 ```bash
 pod 'MaterialComponents/NavigationBar+Extensions/ColorThemer'
 ```
-
-## Example code
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
