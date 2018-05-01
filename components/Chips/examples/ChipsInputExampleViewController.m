@@ -18,7 +18,7 @@
 
 #import "MaterialChips.h"
 #import "MaterialTextFields.h"
-#import "MaterialChips+ColorThemer.h"
+#import "MaterialChips+ChipThemer.h"
 
 @interface ChipsInputExampleViewController () <MDCChipFieldDelegate>
 @end
@@ -35,7 +35,6 @@
   _chipField = [[MDCChipField alloc] initWithFrame:CGRectZero];
   _chipField.delegate = self;
   _chipField.textField.placeholderLabel.text = @"This is a chip field.";
-  _chipField.chipHeight = 48;
   _chipField.backgroundColor = [UIColor whiteColor];
   [self.view addSubview:_chipField];
 }
@@ -53,13 +52,14 @@
 }
 
 - (void)chipField:(MDCChipField *)chipField didAddChip:(MDCChipView *)chip {
+  MDCChipViewScheme *scheme = [[MDCChipViewScheme alloc] init];
+  scheme.colorScheme = self.colorScheme;
+  
   // Every other chip is stroked
   if (chipField.chips.count%2) {
-    [chip setBorderWidth:1 forState:UIControlStateNormal];
-    [MDCChipViewColorThemer applySemanticColorScheme:self.colorScheme toStrokedChipView:chip];
+    [MDCChipViewThemer applyOutlinedVariantWithScheme:scheme toChipView:chip];
   } else {
-    [chip setBorderWidth:0 forState:UIControlStateNormal];
-    [MDCChipViewColorThemer applySemanticColorScheme:self.colorScheme toChipView:chip];
+    [MDCChipViewThemer applyScheme:scheme toChipView:chip];
   }
   [chip sizeToFit];
   CGFloat chipVerticalInset = MIN(0, (CGRectGetHeight(chip.bounds) - 48) / 2);

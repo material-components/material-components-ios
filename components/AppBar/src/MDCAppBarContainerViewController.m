@@ -50,7 +50,6 @@
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
   [_appBar.headerViewController updateTopLayoutGuide];
-  self.contentViewController.view.frame = self.view.bounds;
 }
 
 - (BOOL)prefersStatusBarHidden {

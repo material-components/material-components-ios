@@ -83,3 +83,23 @@ MDCContainedButtonThemer.applyScheme(buttonScheme, to: button)
 [MDCContainedButtonThemer applyScheme:buttonScheme toButton:button];
 ```
 <!--</div>-->
+
+## Floating action buttons
+
+<img src="assets/fab.gif" alt="An animation showing a Material Design floating action button." width="99">
+
+To theme a button as a Material Design floating action button, use `MDCFloatingActionButtonThemer`
+with an `MDCRaisedButton`.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+MDCFloatingActionButtonThemer.applyScheme(buttonScheme, to: button)
+```
+
+#### Objective-C
+
+```objc
+[MDCFloatingActionButtonThemer applyScheme:buttonScheme toButton:button];
+```
+<!--</div>-->

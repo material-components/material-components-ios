@@ -14,8 +14,21 @@
  limitations under the License.
  */
 
-#import "MDCButtonColorThemer.h"
-#import "MDCContainedButtonColorThemer.h"
-#import "MDCFloatingButtonColorThemer.h"
-#import "MDCTextButtonColorThemer.h"
-#import "MDCOutlinedButtonColorThemer.h"
+#import "MaterialButtons.h"
+#import "MaterialColorScheme.h"
+
+/**
+ The Material Design color system's outlined button themer for instances of MDCButton.
+ */
+@interface MDCOutlinedButtonColorThemer : NSObject
+
+/**
+ Applies a color scheme's properties to an MDCButton using the outlined button style.
+
+ @param colorScheme The color scheme to apply to the component instance.
+ @param button A component instance to which the color scheme should be applied.
+ */
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                        toButton:(nonnull MDCButton *)button;
+
+@end
