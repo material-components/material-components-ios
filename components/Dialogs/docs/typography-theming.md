@@ -1,13 +1,4 @@
-<!--docs:
-title: "Typography Theming"
-layout: detail
-section: components
-excerpt: "How to theme Dialogs using the Material Design typography system."
-iconId: dialog
-path: /catalog/dialogs/typography-theming/
--->
-
-# Dialogs Typography Theming
+### Typography Theming
 
 You can theme a dialog with your app's typography scheme using the TypographyThemer extension.
 
@@ -16,8 +7,6 @@ You must first add the Typography Themer extension to your project:
 ```bash
 pod 'MaterialComponents/Dialogs+Extensions/TypographyThemer'
 ```
-
-## Example code
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
