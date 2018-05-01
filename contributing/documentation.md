@@ -54,6 +54,9 @@ typography_themer_api=
 themer_parameter_name=
 ```
 
+If a variable is not provided and a template requires it, then the template will be generated with
+the missing variables shown as placeholders still.
+
 ### Design & API links
 
 To generate a list that uses icons as bullets, use the `*` list format;
