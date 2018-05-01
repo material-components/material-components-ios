@@ -38,9 +38,9 @@ This pattern is not a delegation or data source-like relationship but rather a c
 
 - [Typical installation](../../../docs/component-installation.md)
 
-## Usage
-
 - [Classes](classes.md)
+
+## Usage
 
 - [Usage](usage.md)
 

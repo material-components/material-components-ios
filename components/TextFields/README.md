@@ -36,9 +36,9 @@ For more information on text field styles, and animated images of each style in 
 - [Installation](#installation)
   - [Installation with CocoaPods](#installation-with-cocoapods)
   - [Importing](#importing)
-- [Usage](#usage)
   - [Text Field Classes: The Inputs](#text-field-classes-the-inputs)
   - [Text Field Classes: The Controllers](#text-field-classes-the-controllers)
+- [Usage](#usage)
 - [Examples - Multi Line](#examples---multi-line)
   - [Text Field with Floating Placeholder](#text-field-with-floating-placeholder)
   - [Text Field with Character Count and Inline Placeholder](#text-field-with-character-count-and-inline-placeholder)
@@ -99,8 +99,6 @@ import MaterialComponents.Materialtextfields
 <!--</div>-->
 
 
-## Usage
-
 <!-- Extracted from docs/classes.md -->
 
 ### Text Field Classes: The Inputs
@@ -145,6 +143,8 @@ This class holds all the 'magic' logic necessary to make the naturally 'dumb' te
 
 Similar to the default text input controller but optimized for full width forms like emails.
 
+
+## Usage
 
 <!-- Extracted from docs/usage.md -->
 
