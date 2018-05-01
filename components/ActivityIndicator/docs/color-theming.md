@@ -1,13 +1,4 @@
-<!--docs:
-title: "Color Theming"
-layout: detail
-section: components
-excerpt: "How to theme Activity Indicator using the Material Design color system."
-iconId: progress_activity
-path: /catalog/progress-indicators/activity-indicators/color-theming/
--->
-
-# Activity Indicator Color Theming
+### Color Theming
 
 You can theme an activity indicator with your app's color scheme using the ColorThemer extension.
 
@@ -17,7 +8,7 @@ You must first add the Color Themer extension to your project:
 pod 'MaterialComponents/ActivityIndicator+Extensions/ColorThemer'
 ```
 
-## Example code
+Run `pod install` again.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -29,7 +20,7 @@ import MaterialComponents.MaterialActivityIndicator_ColorThemer
 let colorScheme = MDCSemanticColorScheme()
 
 // Step 3: Apply the color scheme to your component
-MDCActivityIndicatorColorThemer.applySemanticColorScheme(colorScheme, to: component)
+MDCActivityIndicatorColorThemer.applySemanticColorScheme(colorScheme, to: activityIndicator)
 ```
 
 #### Objective-C
@@ -43,6 +34,6 @@ id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
 
 // Step 3: Apply the color scheme to your component
 [MDCActivityIndicatorColorThemer applySemanticColorScheme:colorScheme
-     toActivityIndicator:component];
+     toActivityIndicator:activityIndicator];
 ```
 <!--</div>-->
