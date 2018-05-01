@@ -94,7 +94,7 @@ import MaterialComponents.MaterialTabs
 
 ## Usage
 
-<!-- Extracted from docs/Usage.md -->
+<!-- Extracted from docs/usage.md -->
 
 ### Importing
 
@@ -152,7 +152,7 @@ navigation bar. The bar will automatically update with the appropriate styling.
 
 ## Examples
 
-<!-- Extracted from docs/Examples.md -->
+<!-- Extracted from docs/examples.md -->
 
 ### Creating a tab bar
 
