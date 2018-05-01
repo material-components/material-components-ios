@@ -34,6 +34,16 @@
  */
 @property(nonatomic, readonly, strong, nullable) UIImageView *imageView;
 
+/**
+ The font for the title label of the list cell.
+ */
+@property(nonatomic, strong, nullable) UIFont *titleFont;
+
+/**
+ The font for the details label of the list cell.
+ */
+@property(nonatomic, strong, nullable) UIFont *detailsFont;
+
 /*
  Indicates whether the view's contents should automatically update their font when the device’s
  UIContentSizeCategory changes.
@@ -46,11 +56,19 @@
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
 BOOL mdc_adjustsFontForContentSizeCategory;
 
-@property(nonatomic, strong, nullable) UIFont *titleFont;
-@property(nonatomic, strong, nullable) UIFont *detailsFont;
+/**
+ Sets the cell width for the self-sizing cell.
+ Note: The self-sizing is only applied to the height, and the width is set using this method.
 
+ @param width The width to set the cell.
+ */
 - (void)setCellWidth:(CGFloat)width;
 
+/**
+ Sets the image that is seen on the left side of the cell.
+
+ @param image The image to set to.
+ */
 - (void)setImage:(nullable UIImage *)image;
 
 @end
