@@ -116,6 +116,9 @@ An `MDCCard` can be added and used as you would add any `UIView` or `UIControl`,
 
 An `MDCCardCollectionCell` can be added, used, and reused as a `UICollectionViewCell`, if manually in code, or through the interface builder.
 
+### Style Variants
+MDCCardThemer exposes apis to theme MDCCard and MDCCardCollectionCell instances as either a default or outlined variant. An outlined variant behaves identically to a default styled card, but differs in its coloring and in that it has a stroked border. Use 'applyScheme:toCard:' to style an instance with default values and 'applyOutlinedVariantWithScheme:toCard:' to style an instance with the outlined values.
+
 ### Importing
 
 Before using Cards, you'll need to import it:
