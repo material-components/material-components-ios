@@ -16,11 +16,23 @@ limitations under the License.
 
 import MaterialComponents
 
+/**
+ Returns a high-contrast color for text against @c backgroundColor. If no such color can be found,
+ returns black.
+
+ @params backgroundColor the background color to use for contrast calculations.
+
+ @returns a color with sufficiently-high contrast against @c backgroundColor, else just returns
+          black.
+ */
 func TextColorFor(backgroundColor: UIColor) -> UIColor {
-  let textAccessibilityOptions : MDFTextAccessibilityOptions = [ .enhancedContrast, .preferDarker ]
   if let safeColor = MDFTextAccessibility.textColor(fromChoices: [.black, .white],
                                                     onBackgroundColor: backgroundColor,
-                                                    options: textAccessibilityOptions) {
+                                                    options: [ .enhancedContrast, .preferDarker ]) {
+    return safeColor
+  } else if let safeColor = MDFTextAccessibility.textColor(fromChoices: [.black, .white],
+                                                           onBackgroundColor: backgroundColor,
+                                                            options: .preferDarker) {
     return safeColor
   }
   return .black
