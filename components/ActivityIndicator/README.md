@@ -228,7 +228,7 @@ import MaterialComponents.MaterialActivityIndicator_ColorThemer
 let colorScheme = MDCSemanticColorScheme()
 
 // Step 3: Apply the color scheme to your component
-MDCActivityIndicatorColorThemer.applySemanticColorScheme(colorScheme, to: component)
+MDCActivityIndicatorColorThemer.applySemanticColorScheme(colorScheme, to: activityIndicator)
 ```
 
 #### Objective-C
@@ -242,7 +242,7 @@ id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
 
 // Step 3: Apply the color scheme to your component
 [MDCActivityIndicatorColorThemer applySemanticColorScheme:colorScheme
-     toActivityIndicator:component];
+     toActivityIndicator:activityIndicator];
 ```
 <!--</div>-->
 
