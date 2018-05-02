@@ -51,9 +51,6 @@ echo "" >> "$TMP_README_PATH"
 
 cat "$COMPONENT_PATH/docs/README.md" >> "$TMP_README_PATH"
 
-# Rewrite asset paths
-perl -pi -e "s|src=\"assets|src=\"docs/assets|g" "$TMP_README_PATH"
-
 # Convert * spec urls to stylized lists
 perl -pi -e "s|\* \[(.+)\]\\((.+?)/go/design-(.+)\\)|  <li class=\"icon-list-item icon-list-item--spec\"><a href=\"\2/go/design-\3\">\1</a></li>|g" "$TMP_README_PATH"
 
@@ -114,5 +111,8 @@ done
 perl -pi -e "s|\(\.\./|(|g" "$TMP_README_PATH"
 perl -pi -e "s|href=\"\.\./|href=\"|g" "$TMP_README_PATH"
 perl -pi -e "s|\[(.+)\]\((.+)\.md\)|[\1](docs/\2.md)|g" "$TMP_README_PATH"
+
+# Rewrite asset paths
+perl -pi -e "s|src=\"assets|src=\"docs/assets|g" "$TMP_README_PATH"
 
 mv "$TMP_README_PATH" "$SITE_README_PATH"
