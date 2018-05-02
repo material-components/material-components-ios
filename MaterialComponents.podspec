@@ -326,7 +326,7 @@ Pod::Spec.new do |mdc|
     extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
 
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
-    extension.dependency "MaterialComponents/schemes/Typography"
+    extension.dependency "MaterialComponents/Themes"
   end
 
   mdc.subspec "Chips+TypographyThemer" do |extension|
