@@ -30,3 +30,4 @@ Apple's standard development tool chain.
 - [MDC-iOS on Stack Overflow](https://www.stackoverflow.com/questions/tagged/material-components+ios)
 - [Material.io](https://material.io)
 - [Material Design Guidelines](https://material.io/guidelines)
+- [Supporting Shapes](supporting-shapes/)
