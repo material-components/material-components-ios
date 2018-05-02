@@ -40,7 +40,11 @@ TMP_EXPANDED_README_PATH="$TMP_PATH/README.md.expanded"
 TMP_TOC_PATH="$TMP_PATH/toc.md"
 TOC_STRING="<!-- toc -->"
 
-./scripts/apply_template "$COMPONENT" scripts/templates/component/README.md.template "$TMP_README_PATH"
+touch "$TMP_README_PATH"
+
+if [[ $(grep -e "^root_path" "$COMPONENT_PATH/.vars") ]]; then
+  ./scripts/apply_template "$COMPONENT" scripts/templates/component/README.md.template "$TMP_README_PATH"
+fi
 
 echo "<!-- This file was auto-generated using $0 $COMPONENT -->" >> "$TMP_README_PATH"
 echo "" >> "$TMP_README_PATH"
