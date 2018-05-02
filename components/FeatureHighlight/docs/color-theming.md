@@ -1,13 +1,4 @@
-<!--docs:
-title: "Color Theming"
-layout: detail
-section: components
-excerpt: "How to theme Feature Highlight using the Material Design color system."
-iconId: feature_highlight
-path: /catalog/feature-highlights/color-theming/
--->
-
-# Feature Highlight Color Theming
+### Color Theming
 
 You can theme feature highlight with your app's color scheme using the ColorThemer extension.
 
@@ -16,8 +7,6 @@ You must first add the Color Themer extension to your project:
 ```bash
 pod 'MaterialComponents/FeatureHighlight+Extensions/ColorThemer'
 ```
-
-## Example code
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
