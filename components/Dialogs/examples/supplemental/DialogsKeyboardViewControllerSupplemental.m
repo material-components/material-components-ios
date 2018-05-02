@@ -60,7 +60,7 @@ static NSString * const kReusableIdentifierItem = @"cell";
 }
 
 + (BOOL)catalogIsPresentable {
-  return YES;
+  return NO;
 }
 
 @end

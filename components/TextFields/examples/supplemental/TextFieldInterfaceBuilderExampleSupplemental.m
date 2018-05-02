@@ -27,7 +27,7 @@
 @implementation TextFieldInterfaceBuilderExample (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Text Field", @"Storyboard (Objective C)" ];
+  return @[ @"Text Field", @"Storyboard" ];
 }
 
 + (NSString *)catalogStoryboardName {
@@ -39,7 +39,7 @@
 }
 
 + (BOOL)catalogIsPresentable {
-  return YES;
+  return NO;
 }
 
 @end
@@ -55,7 +55,7 @@
 @implementation TextFieldInterfaceBuilderLegacyExample (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Text Field", @"[Legacy] Storyboard (Objective C)" ];
+  return @[ @"Text Field", @"[Legacy] Storyboard" ];
 }
 
 + (NSString *)catalogStoryboardName {
@@ -67,7 +67,7 @@
 }
 
 + (BOOL)catalogIsPresentable {
-  return YES;
+  return NO;
 }
 
 @end
