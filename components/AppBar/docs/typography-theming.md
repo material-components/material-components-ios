@@ -1,13 +1,4 @@
-<!--docs:
-title: "Typography Theming"
-layout: detail
-section: components
-excerpt: "How to theme App Bar using the Material Design typography system."
-iconId: toolbar
-path: /catalog/app-bars/typography-theming/
--->
-
-# App Bar Typography Theming
+### Typography Theming
 
 You can theme an app bar with your app's typography scheme using the TypographyThemer extension.
 
