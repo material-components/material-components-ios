@@ -18,7 +18,7 @@
 #import "MaterialInk.h"
 #import "MaterialTypography.h"
 #import "supplemental/CollectionListCellExampleVanilla.h"
-#import "supplemental/MDCCollectionViewListCell.h"
+#import "supplemental/CollectionViewListCell.h"
 
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 static NSString *const kExampleDetailText =
@@ -68,7 +68,7 @@ static const CGFloat kSmallArbitraryCellWidth = 100.f;
   }
 #endif
   // Register cell class.
-  [self.collectionView registerClass:[MDCCollectionViewListCell class]
+  [self.collectionView registerClass:[CollectionViewListCell class]
           forCellWithReuseIdentifier:kReusableIdentifierItem];
 
   // Populate content with array of text, details text, and number of lines.
@@ -134,7 +134,7 @@ static const CGFloat kSmallArbitraryCellWidth = 100.f;
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-  MDCCollectionViewListCell *cell =
+  CollectionViewListCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
                                                 forIndexPath:indexPath];
   [cell applyTypographyScheme:_typographyScheme];

@@ -14,8 +14,9 @@
  limitations under the License.
  */
 
-#import "MDCCollectionViewListCell.h"
+#import "CollectionViewListCell.h"
 #import <MDFInternationalization/MDFInternationalization.h>
+#import "MaterialInk.h"
 #import "MaterialTypography.h"
 
 static const CGFloat kImagePadding = 16.f;
@@ -33,7 +34,7 @@ static inline UIFont *defaultDetailsFont(void) {
   return [UIFont systemFontOfSize:14.f];
 }
 
-@implementation MDCCollectionViewListCell {
+@implementation CollectionViewListCell {
   CGPoint _lastTouch;
   UIView *_contentWrapper;
   NSLayoutConstraint *_cellWidthConstraint;
@@ -41,12 +42,13 @@ static inline UIFont *defaultDetailsFont(void) {
   NSLayoutConstraint *_imageRightPaddingConstraint;
   NSLayoutConstraint *_imageWidthConstraint;
   BOOL _mdc_adjustsFontForContentSizeCategory;
+  MDCInkView *_inkView;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    [self commonMDCCollectionViewListCellInit];
+    [self commonCollectionViewListCellInit];
   }
   return self;
 }
@@ -54,12 +56,16 @@ static inline UIFont *defaultDetailsFont(void) {
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    [self commonMDCCollectionViewListCellInit];
+    [self commonCollectionViewListCellInit];
   }
   return self;
 }
 
-- (void)commonMDCCollectionViewListCellInit {
+- (void)commonCollectionViewListCellInit {
+  _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
+  _inkView.usesLegacyInkRipple = NO;
+  [self addSubview:_inkView];
+
   _contentWrapper = [[UIView alloc] initWithFrame:self.contentView.bounds];
   _contentWrapper.autoresizingMask = UIViewAutoresizingFlexibleWidth |
       MDFTrailingMarginAutoresizingMaskForLayoutDirection(
@@ -79,7 +85,7 @@ static inline UIFont *defaultDetailsFont(void) {
       MDFTrailingMarginAutoresizingMaskForLayoutDirection(
           self.mdf_effectiveUserInterfaceLayoutDirection);
 
-  [self resetMDCCollectionViewListCell];
+  [self resetCollectionViewListCell];
 
   [_contentWrapper addSubview:_titleLabel];
   [_contentWrapper addSubview:_detailsTextLabel];
@@ -94,7 +100,7 @@ static inline UIFont *defaultDetailsFont(void) {
   [self setupConstraints];
 }
 
-- (void)resetMDCCollectionViewListCell {
+- (void)resetCollectionViewListCell {
   [self updateTitleFont];
   _titleLabel.textColor = [UIColor colorWithWhite:0 alpha:kTitleColorOpacity];
   _titleLabel.textAlignment = NSTextAlignmentNatural;
@@ -257,7 +263,8 @@ static inline UIFont *defaultDetailsFont(void) {
   self.titleLabel.text = nil;
   self.detailsTextLabel.text = nil;
 
-  [self resetMDCCollectionViewListCell];
+  [self resetCollectionViewListCell];
+  [_inkView cancelAllAnimationsAnimated:NO];
 
   [super prepareForReuse];
 }
@@ -265,9 +272,9 @@ static inline UIFont *defaultDetailsFont(void) {
 - (void)setHighlighted:(BOOL)highlighted {
   [super setHighlighted:highlighted];
   if (highlighted) {
-    [self.inkView startTouchBeganAnimationAtPoint:_lastTouch completion:nil];
+    [_inkView startTouchBeganAnimationAtPoint:_lastTouch completion:nil];
   } else {
-    [self.inkView startTouchEndedAnimationAtPoint:_lastTouch completion:nil];
+    [_inkView startTouchEndedAnimationAtPoint:_lastTouch completion:nil];
   }
 }
 

@@ -15,10 +15,9 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "MDCCollectionViewCell.h"
 #import "MaterialTypographyScheme.h"
 
-@interface MDCCollectionViewListCell : MDCCollectionViewCell
+@interface CollectionViewListCell : UICollectionViewCell
 
 /**
  A text label. Typically this will be the first line of text in the cell.
