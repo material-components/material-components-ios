@@ -39,6 +39,7 @@ many distinct button styles including text buttons, contained buttons, and float
   - [Interface Builder](#interface-builder)
 - [Extensions](#extensions)
   - [Theming](#theming)
+- [Outlined buttons](#outlined-buttons)
   - [Color Theming](#color-theming)
   - [Typography Theming](#typography-theming)
 
@@ -251,7 +252,7 @@ MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
 
 #### Text buttons
 
-<img src="assets/text.gif" alt="An animation showing a Material Design text button." width="128">
+<img src="docs/assets/text.gif" alt="An animation showing a Material Design text button." width="128">
 
 To theme a button as a Material Design text button, use `MDCTextButtonThemer`.
 
@@ -270,7 +271,7 @@ MDCTextButtonThemer.applyScheme(buttonScheme, to: button)
 
 #### Contained buttons
 
-<img src="assets/contained.gif" alt="An animation showing a Material Design contained button." width="128">
+<img src="docs/assets/contained.gif" alt="An animation showing a Material Design contained button." width="128">
 
 To theme a button as a Material Design text button, use `MDCContainedButtonThemer`.
 
@@ -289,7 +290,7 @@ MDCContainedButtonThemer.applyScheme(buttonScheme, to: button)
 
 #### Floating action buttons
 
-<img src="assets/fab.gif" alt="An animation showing a Material Design floating action button." width="99">
+<img src="docs/assets/fab.gif" alt="An animation showing a Material Design floating action button." width="99">
 
 To theme a button as a Material Design floating action button, use `MDCFloatingActionButtonThemer`
 with an `MDCFloatingButton`.
@@ -304,6 +305,24 @@ MDCFloatingActionButtonThemer.applyScheme(buttonScheme, to: button)
 
 ```objc
 [MDCFloatingActionButtonThemer applyScheme:buttonScheme toButton:button];
+```
+<!--</div>-->
+
+## Outlined buttons
+
+To theme a button as a Material Design outlined button, use `MDCOutlinedButtonThemer`
+with an `MDCButton`.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+MDCOutlinedButtonThemer.applyScheme(buttonScheme, to: button)
+```
+
+#### Objective-C
+
+```objc
+[MDCOutlinedButtonThemer applyScheme:buttonScheme toButton:button];
 ```
 <!--</div>-->
 
