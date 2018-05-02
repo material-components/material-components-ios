@@ -22,6 +22,8 @@ static const CGFloat kImagePadding = 16.f;
 static const CGFloat kImageHeight = 40.f;
 static const CGFloat kWithImageRightPadding = 12.f;
 static const CGFloat kTextVerticalPadding = 12.f;
+static const CGFloat kTitleColorOpacity = 0.87f;
+static const CGFloat kDetailsColorOpacity = 0.6f;
 
 static inline UIFont *defaultTitleFont(void) {
   return [UIFont systemFontOfSize:16.f];
@@ -29,14 +31,6 @@ static inline UIFont *defaultTitleFont(void) {
 
 static inline UIFont *defaultDetailsFont(void) {
   return [UIFont systemFontOfSize:14.f];
-}
-
-static inline CGFloat defaultTitleOpacity(void) {
-  return [MDCTypography subheadFontOpacity];
-}
-
-static inline CGFloat defaultDetailsOpacity(void) {
-  return [MDCTypography captionFontOpacity];
 }
 
 @implementation MDCCollectionViewListCell {
@@ -102,13 +96,13 @@ static inline CGFloat defaultDetailsOpacity(void) {
 
 - (void)resetMDCCollectionViewListCell {
   [self updateTitleFont];
-  _titleLabel.textColor = [UIColor colorWithWhite:0 alpha:defaultTitleOpacity()];
+  _titleLabel.textColor = [UIColor colorWithWhite:0 alpha:kTitleColorOpacity];
   _titleLabel.textAlignment = NSTextAlignmentNatural;
   _titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
   _titleLabel.numberOfLines = 1;
 
   [self updateDetailsFont];
-  _detailsTextLabel.textColor = [UIColor colorWithWhite:0 alpha:defaultDetailsOpacity()];
+  _detailsTextLabel.textColor = [UIColor colorWithWhite:0 alpha:kDetailsColorOpacity];
   _detailsTextLabel.textAlignment = NSTextAlignmentNatural;
   _detailsTextLabel.lineBreakMode = NSLineBreakByTruncatingTail;
   _detailsTextLabel.numberOfLines = 3;
