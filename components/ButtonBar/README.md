@@ -183,7 +183,7 @@ You can theme a button bar with your app's color scheme using the ColorThemer ex
 You must first add the Color Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/ButtonBar+Extensions/ColorThemer'
+pod 'MaterialComponents/ButtonBar+ColorThemer'
 ```
 
 <!--<div class="material-code-render" markdown="1">-->
@@ -223,7 +223,7 @@ You can theme a button bar with your app's typography scheme using the Typograph
 You must first add the Typography Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/ButtonBar+Extensions/TypographyThemer'
+pod 'MaterialComponents/ButtonBar+TypographyThemer'
 ```
 
 <!--<div class="material-code-render" markdown="1">-->

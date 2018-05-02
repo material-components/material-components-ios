@@ -6,7 +6,7 @@ schemes in the ButtonThemer extension.
 You must first add the ButtonThemer extension to your project:
 
 ```bash
-pod 'MaterialComponents/Buttons+Extensions/ButtonThemer'
+pod 'MaterialComponents/Buttons+ButtonThemer'
 ```
 
 You can then import the extension and create an `MDCButtonScheme` instance. A button scheme defines

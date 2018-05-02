@@ -5,7 +5,7 @@ You can theme a tab bar with your app's typography scheme using the TypographyTh
 You must first add the Typography Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/Tabs+Extensions/TypographyThemer'
+pod 'MaterialComponents/Tabs+TypographyThemer'
 ```
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift

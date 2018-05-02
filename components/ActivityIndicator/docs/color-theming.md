@@ -5,7 +5,7 @@ You can theme an activity indicator with your app's color scheme using the Color
 You must first add the Color Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/ActivityIndicator+Extensions/ColorThemer'
+pod 'MaterialComponents/ActivityIndicator+ColorThemer'
 ```
 
 Run `pod install` again.

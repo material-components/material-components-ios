@@ -7,7 +7,7 @@ MDCCardThemer exposes apis to theme MDCCard and MDCCardCollectionCell instances 
 You must first add the Card Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/Cards+Extensions/CardThemer'
+pod 'MaterialComponents/Cards+CardThemer'
 ```
 
 <!--<div class="material-code-render" markdown="1">-->

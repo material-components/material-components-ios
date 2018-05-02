@@ -177,7 +177,7 @@ You can theme an snackbar with your app's color scheme using the ColorThemer ext
 You must first add the Color Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/Snackbar+Extensions/ColorThemer'
+pod 'MaterialComponents/Snackbar+ColorThemer'
 ```
 
 <!--<div class="material-code-render" markdown="1">-->
@@ -216,7 +216,7 @@ You can theme an snackbar with your app's typography scheme using the Typography
 You must first add the Typography Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/Snackbar+Extensions/TypographyThemer'
+pod 'MaterialComponents/Snackbar+TypographyThemer'
 ```
 
 <!--<div class="material-code-render" markdown="1">-->

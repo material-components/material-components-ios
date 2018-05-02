@@ -5,7 +5,7 @@ You can theme a button bar with your app's typography scheme using the Typograph
 You must first add the Typography Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/ButtonBar+Extensions/TypographyThemer'
+pod 'MaterialComponents/ButtonBar+TypographyThemer'
 ```
 
 <!--<div class="material-code-render" markdown="1">-->

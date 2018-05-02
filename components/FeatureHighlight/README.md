@@ -154,7 +154,7 @@ You can theme feature highlight with your app's color scheme using the ColorThem
 You must first add the Color Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/FeatureHighlight+Extensions/ColorThemer'
+pod 'MaterialComponents/FeatureHighlight+ColorThemer'
 ```
 
 <!--<div class="material-code-render" markdown="1">-->
@@ -194,7 +194,7 @@ You can theme feature highlight with your app's typography scheme using the Typo
 You must first add the Typography Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/FeatureHighlight+Extensions/TypographyThemer'
+pod 'MaterialComponents/FeatureHighlight+TypographyThemer'
 ```
 
 <!--<div class="material-code-render" markdown="1">-->

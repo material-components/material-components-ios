@@ -5,7 +5,7 @@ You can theme a navigation bar with your app's color scheme using the ColorTheme
 You must first add the Color Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/NavigationBar+Extensions/ColorThemer'
+pod 'MaterialComponents/NavigationBar+ColorThemer'
 ```
 
 <!--<div class="material-code-render" markdown="1">-->

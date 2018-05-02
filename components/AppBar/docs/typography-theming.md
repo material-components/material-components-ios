@@ -5,7 +5,7 @@ You can theme an app bar with your app's typography scheme using the TypographyT
 You must first add the Typography Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/AppBar+Extensions/TypographyThemer'
+pod 'MaterialComponents/AppBar+TypographyThemer'
 ```
 
 ## Example code
