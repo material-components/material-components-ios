@@ -1,13 +1,4 @@
-<!--docs:
-title: "Typography Theming"
-layout: detail
-section: components
-excerpt: "How to theme Snackbar using the Material Design typography system."
-iconId: toast
-path: /catalog/snackbars/typography-theming/
--->
-
-# Snackbar Typography Theming
+### Typography Theming
 
 You can theme an snackbar with your app's typography scheme using the TypographyThemer extension.
 
@@ -16,8 +7,6 @@ You must first add the Typography Themer extension to your project:
 ```bash
 pod 'MaterialComponents/Snackbar+Extensions/TypographyThemer'
 ```
-
-## Example code
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
