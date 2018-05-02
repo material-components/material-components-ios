@@ -656,6 +656,16 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   return YES;
 }
 
+#pragma mark - UIAccessibility
+
+- (void)setAccessibilityHint:(NSString *)accessibilityHint {
+  _titleLabel.accessibilityHint = accessibilityHint;
+}
+
+- (NSString *)accessibilityHint {
+  return _titleLabel.accessibilityHint;
+}
+
 #pragma mark - Resource bundle
 
 + (NSBundle *)bundle {
