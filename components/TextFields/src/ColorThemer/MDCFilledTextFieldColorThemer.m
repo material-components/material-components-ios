@@ -41,9 +41,9 @@ static CGFloat const kFilledTextFieldIndicatorLineAlpha = 0.42f;
   textInputControllerFilled.errorColor = colorScheme.errorColor;
   textInputControllerFilled.disabledColor =
       [colorScheme.onSurfaceColor colorWithAlphaComponent:kFilledTextFieldDisabledAlpha];
-  id<MDCTextInputControllerFloatingPlaceholder> textInputControllerFloatingPlaceholder =
-      (id<MDCTextInputControllerFloatingPlaceholder>)textInputControllerFilled;
-  textInputControllerFloatingPlaceholder.floatingPlaceholderActiveColor =
+  textInputControllerFilled.floatingPlaceholderNormalColor =
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:kFilledTextFieldOnSurfaceAlpha];
+  textInputControllerFilled.floatingPlaceholderActiveColor =
       [colorScheme.primaryColor colorWithAlphaComponent:kFilledTextFieldActiveAlpha];
 }
 
