@@ -9,7 +9,7 @@ path: /docs/customizing-shapes/
 
 The Shapes library offers a way to customize the shape of existing components, or expand your own view to have a custom shape.
 
-Currently we offer built-in functionality for shapes within our Buttons (https://github.com/material-components/material-components-ios/tree/develop/components/Buttons) and Cards (https://github.com/material-components/material-components-ios/tree/develop/components/Cards) components.
+Currently we offer built-in functionality for shapes within our <a href="../../components/Buttons">Buttons</a> and <a href="../../components/Cards">Cards</a> components.
 
 ### Shapes Library Preview
 
@@ -112,8 +112,8 @@ Now that our component can come in all different sizes and shapes, you will need
 
 If the component already supports shapes, it then already has an accessible id<MDCShapeGenerating> shapeGenerator property.
 In that case you only need to set the shapeGenerator to a shape of your choice and the component will be contained in that shape. There are available examples here: 
- * Shaped Buttons: https://github.com/material-components/material-components-ios/blob/develop/components/Buttons/examples/ButtonsShapesExampleViewController.m
- * Shaped Cards: https://github.com/material-components/material-components-ios/blob/develop/components/Cards/examples/ShapedCardViewController.swift 
+ * <a href="../../components/Buttons/examples/ButtonsShapesExampleViewController.m">Shaped Buttons</a>
+ * <a href="../../components/Cards/examples/ShapedCardViewController.swift ">Shaped Cards</a>
 
 ### Examples
 
