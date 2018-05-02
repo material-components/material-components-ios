@@ -39,12 +39,15 @@ TMP_README_PATH="$TMP_PATH/README.md"
 TMP_EXPANDED_README_PATH="$TMP_PATH/README.md.expanded"
 TMP_TOC_PATH="$TMP_PATH/toc.md"
 TOC_STRING="<!-- toc -->"
+VARS_PATH="$COMPONENT_PATH/.vars"
 
 touch "$TMP_README_PATH"
 
-if [[ $(grep -e "^root_path" "$COMPONENT_PATH/.vars") ]]; then
+if [[ $(grep -e "^root_path=" "$VARS_PATH") ]]; then
   ./scripts/apply_template "$COMPONENT" scripts/templates/component/README.md.template "$TMP_README_PATH"
 fi
+
+COMPONENT_NAME=$(grep -e "^component=" "$VARS_PATH" | cut -d'=' -f2-)
 
 echo "<!-- This file was auto-generated using $0 $COMPONENT -->" >> "$TMP_README_PATH"
 echo "" >> "$TMP_README_PATH"
@@ -74,7 +77,7 @@ cat "$TMP_README_PATH" | while read line; do
     file_path="$COMPONENT_PATH/docs/$file"
     echo "<!-- Extracted from docs/$file -->" >> "$TMP_EXPANDED_README_PATH"
     echo >> "$TMP_EXPANDED_README_PATH"
-    cat "$file_path" | sed "s/<#ComponentName#>/$COMPONENT/" >> "$TMP_EXPANDED_README_PATH"
+    cat "$file_path" | sed "s/<#ComponentName#>/$COMPONENT_NAME/" >> "$TMP_EXPANDED_README_PATH"
     echo >> "$TMP_EXPANDED_README_PATH" # Ensure that there is always a newline between files.
   else
     echo "$line" >> "$TMP_EXPANDED_README_PATH"
