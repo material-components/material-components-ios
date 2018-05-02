@@ -68,11 +68,12 @@ extension UINavigationController {
 
   func setMenuBarButton(for viewController: UIViewController) {
     let dotsImage = MDCIcons.imageFor_ic_more_horiz()?.withRenderingMode(.alwaysTemplate)
-    viewController.navigationItem.rightBarButtonItem =
-      UIBarButtonItem(image: dotsImage,
-                      style: .plain,
-                      target: self,
-                      action: #selector(presentMenu))
+    let menuItem = UIBarButtonItem(image: dotsImage,
+                                   style: .plain,
+                                   target: self,
+                                   action: #selector(presentMenu))
+    menuItem.accessibilityLabel = "Menu"
+    viewController.navigationItem.rightBarButtonItem = menuItem
   }
 
   class func embedExampleWithinAppBarContainer(using viewController: UIViewController,
