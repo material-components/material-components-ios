@@ -177,7 +177,7 @@ static const CGFloat kSmallArbitraryCellWidth = 100.f;
 #pragma mark - CatalogByConvention
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Collection Cells", @"List Cell Example Vanilla" ];
+  return @[ @"Lists", @"List Cell Example" ];
 }
 
 + (BOOL)catalogIsPrimaryDemo {
@@ -185,9 +185,7 @@ static const CGFloat kSmallArbitraryCellWidth = 100.f;
 }
 
 + (NSString *)catalogDescription {
-  return @"Material Collection Cells enables a native collection view cell to have Material "
-  "design layout and styling. It also provides editing and extensive customization "
-  "capabilities.";
+  return @"Material Collection Lists are continuous, vertical indexes of text or images.";
 }
 
 + (BOOL)catalogIsPresentable {
