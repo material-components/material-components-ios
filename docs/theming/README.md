@@ -65,8 +65,8 @@ Podfile. You can see which themers a given component supports by looking at the 
 directory.
 
 ```bash
-pod 'MaterialComponents/AppBar+Extensions/ColorThemer'
-pod 'MaterialComponents/AppBar+Extensions/TypographyThemer'
+pod 'MaterialComponents/AppBar+ColorThemer'
+pod 'MaterialComponents/AppBar+TypographyThemer'
 ```
 
 You can now access the AppBar themers.

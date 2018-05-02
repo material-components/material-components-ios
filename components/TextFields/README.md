@@ -233,7 +233,7 @@ You can theme a text field with your app's color scheme using the ColorThemer ex
 You must first add the Color Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/TextFields+Extensions/ColorThemer'
+pod 'MaterialComponents/TextFields+ColorThemer'
 ```
 
 <!--<div class="material-code-render" markdown="1">-->
@@ -292,7 +292,7 @@ You can theme a text field with your app's typography scheme using the Typograph
 You must first add the Typography Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/TextFields+Extensions/TypographyThemer'
+pod 'MaterialComponents/TextFields+TypographyThemer'
 ```
 
 <!--<div class="material-code-render" markdown="1">-->

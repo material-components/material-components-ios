@@ -777,7 +777,7 @@ You can theme a flexible header with your app's color scheme using the ColorThem
 You must first add the Color Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/FlexibleHeader+Extensions/ColorThemer'
+pod 'MaterialComponents/FlexibleHeader+ColorThemer'
 ```
 
 <!--<div class="material-code-render" markdown="1">-->

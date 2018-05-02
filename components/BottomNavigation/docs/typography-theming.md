@@ -5,7 +5,7 @@ You can theme a bottom navigation with your app's typography scheme using the Ty
 You must first add the Typography Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/BottomNavigation+Extensions/TypographyThemer'
+pod 'MaterialComponents/BottomNavigation+TypographyThemer'
 ```
 
 <!--<div class="material-code-render" markdown="1">-->

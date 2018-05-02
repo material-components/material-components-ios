@@ -5,7 +5,7 @@ You can theme a text field with your app's color scheme using the ColorThemer ex
 You must first add the Color Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/TextFields+Extensions/ColorThemer'
+pod 'MaterialComponents/TextFields+ColorThemer'
 ```
 
 <!--<div class="material-code-render" markdown="1">-->

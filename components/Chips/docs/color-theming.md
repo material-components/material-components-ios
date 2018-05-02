@@ -5,7 +5,7 @@ You can theme a chip with your app's color scheme using the ColorThemer extensio
 You must first add the Color Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/Chips+Extensions/ColorThemer'
+pod 'MaterialComponents/Chips+ColorThemer'
 ```
 
 <!--<div class="material-code-render" markdown="1">-->

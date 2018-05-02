@@ -246,7 +246,7 @@ You can theme an app bar with your app's color scheme using the ColorThemer exte
 You must first add the Color Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/AppBar+Extensions/ColorThemer'
+pod 'MaterialComponents/AppBar+ColorThemer'
 ```
 
 <!--<div class="material-code-render" markdown="1">-->
@@ -286,7 +286,7 @@ You can theme an app bar with your app's typography scheme using the TypographyT
 You must first add the Typography Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/AppBar+Extensions/TypographyThemer'
+pod 'MaterialComponents/AppBar+TypographyThemer'
 ```
 
 ## Example code

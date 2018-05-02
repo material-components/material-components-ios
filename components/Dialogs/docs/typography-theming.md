@@ -5,7 +5,7 @@ You can theme a dialog with your app's typography scheme using the TypographyThe
 You must first add the Typography Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/Dialogs+Extensions/TypographyThemer'
+pod 'MaterialComponents/Dialogs+TypographyThemer'
 ```
 
 <!--<div class="material-code-render" markdown="1">-->
