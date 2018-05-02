@@ -48,8 +48,8 @@
        conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
     Class<MDCTextInputControllerFloatingPlaceholder> textInputControllerFloatingPlaceholderClass =
         (Class<MDCTextInputControllerFloatingPlaceholder>)textInputControllerClass;
-    [textInputControllerFloatingPlaceholderClass
-        setFloatingPlaceholderNormalColorDefault:nil];
+    [textInputControllerFloatingPlaceholderClass setFloatingPlaceholderActiveColorDefault:nil];
+    [textInputControllerFloatingPlaceholderClass setFloatingPlaceholderNormalColorDefault:nil];
   }
 }
 #if !defined(__IPHONE_11_0)
@@ -96,6 +96,8 @@
   XCTAssertEqualObjects(MDCTextInputControllerBase.leadingUnderlineLabelTextColorDefault,
                         onSurface60Opacity);
   XCTAssertEqualObjects(MDCTextInputControllerBase.floatingPlaceholderNormalColorDefault,
+                        onSurface60Opacity);
+  XCTAssertEqualObjects(MDCTextInputControllerBase.floatingPlaceholderActiveColorDefault,
                         primary87Opacity);
 
   XCTAssertEqualObjects(MDCTextInputControllerFullWidth.errorColorDefault, colorScheme.errorColor);
