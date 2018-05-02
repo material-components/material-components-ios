@@ -17,7 +17,7 @@
 #import <UIKit/UIKit.h>
 #import "MaterialTypographyScheme.h"
 
-@interface CollectionListCellExampleVanilla : UICollectionViewController
+@interface CollectionListCellExampleTypicalUse : UICollectionViewController
 
 @property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 

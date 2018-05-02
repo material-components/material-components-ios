@@ -16,8 +16,8 @@
 
 #import "MaterialIcons+ic_info.h"
 #import "MaterialInk.h"
-#import "MaterialTypography.h"
-#import "supplemental/CollectionListCellExampleVanilla.h"
+#import "MaterialTypographyScheme.h"
+#import "supplemental/CollectionListCellExampleTypicalUse.h"
 #import "supplemental/CollectionViewListCell.h"
 
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
@@ -27,7 +27,7 @@ static NSString *const kExampleDetailText =
 static const CGFloat kSmallestCellHeight = 40.f;
 static const CGFloat kSmallArbitraryCellWidth = 100.f;
 
-@implementation CollectionListCellExampleVanilla {
+@implementation CollectionListCellExampleTypicalUse {
   NSMutableArray *_content;
   MDCInkTouchController *_inkTouchController;
   CGPoint _inkTouchLocation;
