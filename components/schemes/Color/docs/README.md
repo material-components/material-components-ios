@@ -47,13 +47,13 @@ Each of these colors are paired with a corresponding "on-color". An on color def
 color for text and iconography drawn on top of the associated color. Take care when picking on
 colors that they meet [the accessibility guidelines for text and contrasting color](https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html).
 
-| Color name            | Use        |
+| On color name         | Use        |
 |:--------------------- |:---------- |
-| `onPrimaryColor`      | Text/iconography drawn on top of primaryColor. |
-| `onSecondaryColor`    | Text/iconography drawn on top of secondaryColor. |
-| `onErrorColor`        | Text/iconography drawn on top of errorColor. |
-| `onSurfaceColor`      | Text/iconography drawn on top of surfaceColor. |
-| `onBackgroundColor`   | Text/iconography drawn on top of backgroundColor. |
+| `onPrimaryColor`      | Text/iconography drawn on top of `primaryColor`. |
+| `onSecondaryColor`    | Text/iconography drawn on top of `secondaryColor`. |
+| `onErrorColor`        | Text/iconography drawn on top of `errorColor`. |
+| `onSurfaceColor`      | Text/iconography drawn on top of `surfaceColor`. |
+| `onBackgroundColor`   | Text/iconography drawn on top of `backgroundColor`. |
 
 ## Installation
 
