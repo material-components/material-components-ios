@@ -55,6 +55,8 @@
   (void)controller.view;
 
   // Then
+  // TODO(https://github.com/material-components/material-components-ios/issues/3644 ):
+  // Switch these to XCTAssertNil (or refactor tests) once the default is removed.
   XCTAssertNotNil(controller.accessibilityHint);
   XCTAssertNotNil(controller.view.accessibilityHint);
 }
