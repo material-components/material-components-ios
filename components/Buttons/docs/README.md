@@ -3,7 +3,7 @@
 Material design buttons allow users to take actions, and make choices, with a single tap. There are
 many distinct button styles including text buttons, contained buttons, and floating action buttons.
 
-<img src="assets/text.gif" alt="An animation showing a Material Design text button." width="115"> <img src="assets/contained.gif" alt="An animation showing a Material Design contained button." width="115"> <img src="assets/fab.gif" alt="An animation showing a Material Design floating action button." width="99">
+<img src="assets/text.gif" alt="An animation showing a Material Design text button." width="115"> <img src="assets/outlined.gif" alt="An animation showing a Material Design outlined button." width="115"> <img src="assets/contained.gif" alt="An animation showing a Material Design contained button." width="115"> <img src="assets/fab.gif" alt="An animation showing a Material Design floating action button." width="99">
 
 ## Design & API documentation
 
