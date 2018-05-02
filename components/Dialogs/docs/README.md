@@ -24,7 +24,7 @@ view controller from the root controller to display it as a modal dialog.
 
 ### Presentation and transition controller
 
-Presenting dialogs utilizes two classes: MDCDialogPresentationController and
+Presenting dialogs uses two classes: MDCDialogPresentationController and
 MDCDialogTransitionController. These allow the presentation of view controllers in a material
 specificed manner. MDCDialogPresentationController is a subclass of UIPresentationController
 that observes the presented view controller for preferred content size.

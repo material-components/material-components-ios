@@ -32,7 +32,7 @@ OBJC_EXTERN NSTimeInterval const MDCSnackbarLegacyTransitionDuration;
 /**
  Designated initializer.
 
- Creates an overlay view which utilizes @c watcher to get its keyboard position information.
+ Creates an overlay view which uses @c watcher to get its keyboard position information.
  */
 - (instancetype)initWithFrame:(CGRect)frame;
 

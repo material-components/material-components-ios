@@ -56,7 +56,7 @@ overview of the directory structure for mdc:
     - _layout: the style defined for document site. You will modify this file for most of the cases.
 
     - _layout-api: the style defined for API reference site. This is a bit confusing but API
-      reference is actually built in as part of the document site and we want to utilize the syle we
+      reference is actually built in as part of the document site and we want to use the syle we
 have for the document site.
 
     - _icons & _step-sequence & _codemirror-syntax-highlighting: These are the utility class for all

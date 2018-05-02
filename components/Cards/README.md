@@ -78,13 +78,13 @@ MDCCardThemer exposes apis to theme MDCCard and MDCCardCollectionCell instances 
 
 `MDCCard` subclasses `UIControl` and provides a simple class for developers to subclass and create custom cards with ink, shadows, corner radius, and stroke matching the Material spec.
 
-`MDCCard` utilizes the `highlighted` property that is built-in in `UIControl` and the `UIControlState` to move between states.
+`MDCCard` uses the `highlighted` property that is built-in in `UIControl` and the `UIControlState` to move between states.
 
 #### MDCCardCollectionCell
 
-`MDCCardCollectionCell` subclasses `UICollectionViewCell` and provides a simple collection view cell for developers to utilize in their collections with ink, shadows, corner radius, and stroke matching the Material spec.
+`MDCCardCollectionCell` subclasses `UICollectionViewCell` and provides a simple collection view cell for developers to use in their collections with ink, shadows, corner radius, and stroke matching the Material spec.
 
-`MDCCardCollectionCell` utilizes the `selected` property that is built-in in `UICollectionViewCell` and has its own `MDCCardCellState` to keep track of the current state it is in.
+`MDCCardCollectionCell` uses the `selected` property that is built-in in `UICollectionViewCell` and has its own `MDCCardCellState` to keep track of the current state it is in.
 
 ## Installation
 

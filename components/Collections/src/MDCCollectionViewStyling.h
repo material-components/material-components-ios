@@ -110,7 +110,7 @@ typedef NS_ENUM(NSUInteger, MDCCollectionViewCellLayoutType) {
 - (MDCCollectionViewCellStyle)cellStyleAtSectionIndex:(NSInteger)section;
 
 /**
- The collection view cell background image view (utilized to render the background color and
+ The collection view cell background image view (used to render the background color and
  shadows) edge outsets as determined for a cell and its layout attributes.
 
  @param attr The cell's layout attributes.
