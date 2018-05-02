@@ -145,7 +145,6 @@ class ShapedCardViewController: UIViewController {
     primarySlider.sendActions(for: .valueChanged)
     secondarySlider.maximumValue = Float(min(card.bounds.width, card.bounds.height)/2)
     secondarySlider.sendActions(for: .valueChanged)
-    initialShape()
   }
 
   func didChangeSliderValue(slider: UISlider) {
@@ -197,23 +196,16 @@ class ShapedCardViewController: UIViewController {
   }
 
   func initialShape() {
-    primarySlider.isHidden = true
-    secondarySlider.isHidden = true
+    primarySlider.isHidden = false
+    secondarySlider.isHidden = false
 
     let shapeGenerator = MDCRectangleShapeGenerator()
-    let cutCornerTreatment = MDCCutCornerTreatment(cut: 20)
-    let roundedCornerTreatment = MDCRoundedCornerTreatment(radius: 20)
-    let curvedCornerTreatment = MDCCurvedCornerTreatment(size: CGSize(width: 20, height: 60))
-    shapeGenerator.topLeftCorner = cutCornerTreatment;
-    shapeGenerator.topRightCorner = roundedCornerTreatment;
-    shapeGenerator.bottomLeftCorner = roundedCornerTreatment;
-    shapeGenerator.bottomRightCorner = curvedCornerTreatment;
-//    shapeGenerator.setCorners(cutCornerTreatment)
-//    let triangleEdgeTreatment = MDCTriangleEdgeTreatment(size: 0, style: MDCTriangleEdgeStyleCut)
-//    shapeGenerator.setEdges(triangleEdgeTreatment)
+    let cutCornerTreatment = MDCCutCornerTreatment(cut: 0)
+    shapeGenerator.setCorners(cutCornerTreatment)
+    let triangleEdgeTreatment = MDCTriangleEdgeTreatment(size: 0, style: MDCTriangleEdgeStyleCut)
+    shapeGenerator.setEdges(triangleEdgeTreatment)
     card.shapeGenerator = shapeGenerator
     card.contentView.layoutMargins = UIEdgeInsetsMake(0, 5, 0, 5)
-    card.setNeedsLayout()
   }
 }
 

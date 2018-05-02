@@ -39,8 +39,6 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.colorScheme = [[MDCSemanticColorScheme alloc] init];
-
   self.view.backgroundColor = [UIColor colorWithWhite:0.9f alpha:1];
   UIColor *titleColor = [UIColor whiteColor];
 
@@ -52,6 +50,7 @@
 
   MDCButton *containedButton = [[MDCButton alloc] init];
   [containedButton setTitle:@"Add To Cart" forState:UIControlStateNormal];
+  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:containedButton];
 
   UIImage *plusImage = [UIImage imageNamed:@"Plus"];
   plusImage = [plusImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
@@ -59,7 +58,6 @@
 
   MDCRectangleShapeGenerator *raisedShapeGenerator =
       [[MDCRectangleShapeGenerator alloc] init];
-  raisedShapeGenerator.topLeftCorner = [[MDCCutCornerTreatment alloc] initWithCut:20];
   [raisedShapeGenerator setCorners:[[MDCCutCornerTreatment alloc] initWithCut:8.f]];
   containedButton.shapeGenerator = raisedShapeGenerator;
 
@@ -67,7 +65,6 @@
   [containedButton addTarget:self
                    action:@selector(didTap:)
          forControlEvents:UIControlEventTouchUpInside];
-  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:containedButton];
   [self.view addSubview:containedButton];
 
   // Disabled raised button
@@ -170,9 +167,9 @@
       [[MDCCutCornerTreatment alloc] initWithCut:CGRectGetWidth(self.floatingButton.bounds) / 2.f]];
   self.floatingButton.shapeGenerator = floatingShapeGenerator;
 
-//  [self.floatingButton addTarget:self
-//                          action:@selector(didTap:)
-//                forControlEvents:UIControlEventTouchUpInside];
+  [self.floatingButton addTarget:self
+                          action:@selector(didTap:)
+                forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:self.floatingButton];
 
   self.buttons = @[
