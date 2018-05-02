@@ -20,9 +20,13 @@
 
 @class MDCTonalPalette;
 
+#pragma mark - Soon to be deprecated
+
 /**
  A tonal color scheme is a color scheme based on a primary tonal color palette and secondary tonal
  color palette. The tonal color palettes are used for the color scheme color properties.
+
+ @warning This class will soon be deprecated. Consider using MDCColorScheming instead.
  */
 @interface MDCTonalColorScheme : NSObject <MDCColorScheme, NSCopying>
 

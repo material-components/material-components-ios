@@ -16,6 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
+#pragma mark - Soon to be deprecated
+
 /**
  A font scheme comprised of set of UIFonts that are associated with various text styles.
 
@@ -23,6 +25,8 @@
  of a components.
 
  If a font in a scheme is nil, a component should use its default font.
+
+ @warning This class will soon be deprecated. Consider using MDCTypographyScheming instead.
  */
 @protocol MDCFontScheme <NSObject>
 
@@ -69,6 +73,8 @@
 
 /**
  A basic font scheme implements the MDCFontScheme protocol.
+
+ @warning This class will soon be deprecated. Consider using MDCTypographyScheme instead.
  */
 @interface MDCBasicFontScheme : NSObject <MDCFontScheme>
 
