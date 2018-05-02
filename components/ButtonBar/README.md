@@ -1,13 +1,3 @@
-<!--docs:
-title: "Button Bar"
-layout: detail
-section: components
-excerpt: "The button bar is a view that represents a list of UIBarButtonItems as horizontally aligned buttons."
-iconId: button
-path: /catalog/button-bars/
-api_doc_root: true
--->
-
 <!-- This file was auto-generated using ./scripts/generate_readme ButtonBar -->
 
 # Button Bar
