@@ -425,7 +425,7 @@ headerViewController.layoutDelegate = self;
 
 ### Utilizing Top Layout Guide on Parent View Controller
 
-When pairing  MDCFlexibleHeaderViewController with a view controller, it may be desirable to utilize
+When pairing  MDCFlexibleHeaderViewController with a view controller, it may be desirable to use
 the paired view controller's `topLayoutGuide` to constrain additionals views. To constrain the
 `topLayoutGuide` to the bottom point of the MDCFlexibleHeaderViewController, call
 updateTopLayoutGuide on the flexible header view controller within the paired view controller's
