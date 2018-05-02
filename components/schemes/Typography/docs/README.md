@@ -24,11 +24,6 @@ class. By default, an instance of this class is configured with the Material def
 possible to use these defaults out of the box, you are encouraged to customize these fonts to
 better represent your branch.
 
-The following image shows an MDCButton themed with the default typography scheme value (top) and an
-MDCButton themed with custom typography scheme value (bottom).
-
-<img src="assets/themedbuttons.png" width="144" alt="An MDCButton themed with the default typography scheme and a custom one.">
-
 Most components with text elements support being themed with a typography scheme using a
 `typography themer` extension. You can learn more about which extensions are available for a given
 component by reading the [component documentation](../../../).
@@ -81,10 +76,6 @@ import MaterialComponents.MaterialTypographyScheme
 #import "MaterialTypographyScheme.h"
 ```
 <!--</div>-->
-
-## Usage
-
-- [Typical use: customizing a typography scheme](typical-use-customizing-a-scheme.md)
 
 ## Extensions
 
