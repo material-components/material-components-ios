@@ -84,7 +84,7 @@ The App Bar begins mirroring the state of your view controller's `navigationItem
 `navigationBar` once you call `addSubviewsToParent`.
 
 Learn more by reading the Navigation Bar section on
-[Observing UINavigationItem instances](NavigationBar/#observing-uinavigationitem-instances).
+[Observing UINavigationItem instances](../NavigationBar/#observing-uinavigationitem-instances).
 Notably: read the section on "Exceptions" to understand which UINavigationItem are **not**
 supported.
 
@@ -105,7 +105,7 @@ recommendation for building interactive background views is the following:
 
 1. Do not use the App Bar component.
 2. Create your own Flexible Header. Learn more by reading the Flexible Header
-   [Usage](FlexibleHeader/#usage) docs.
+   [Usage](../FlexibleHeader/#usage) docs.
 3. Add your views to this flexible header instance.
 4. Create a Navigation Bar if you need one. Treat it like any other custom view.
 
