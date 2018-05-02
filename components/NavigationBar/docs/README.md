@@ -29,12 +29,12 @@ Navigation Bar is a drop-in replacement for UINavigationBar with a few notable e
   button. TODO(featherless): Explain how to create a back button with Navigation Bar once
   https://github.com/material-components/material-components-ios/issues/340 lands.
 
-The MDCNavigationBar class is a composition of two [Button Bars](../ButtonBar) and a title label or
+The MDCNavigationBar class is a composition of two [Button Bars](../../ButtonBar) and a title label or
 title view. The left and right Button Bars are provided with the navigation item's corresponding bar
 button items.
 
 Read the Button Bar section on
-[UIBarButtonItem properties](../ButtonBar/#uibarbuttonitem-properties) to learn more about supported
+[UIBarButtonItem properties](../../ButtonBar/#uibarbuttonitem-properties) to learn more about supported
 UIBarButtonItem properties.
 
 ## Installation
