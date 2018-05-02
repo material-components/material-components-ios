@@ -56,6 +56,26 @@ MDCTextButtonThemer.applyScheme(buttonScheme, to: button)
 ```
 <!--</div>-->
 
+#### Outlined buttons
+
+<img src="assets/outlined.gif" alt="An animation showing a Material Design outlined button." width="115">
+
+To theme a button as a Material Design outlined button, use `MDCOutlinedButtonThemer`
+with an `MDCButton`.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+MDCOutlinedButtonThemer.applyScheme(buttonScheme, to: button)
+```
+
+#### Objective-C
+
+```objc
+[MDCOutlinedButtonThemer applyScheme:buttonScheme toButton:button];
+```
+<!--</div>-->
+
 #### Contained buttons
 
 <img src="assets/contained.gif" alt="An animation showing a Material Design contained button." width="128">
@@ -92,23 +112,5 @@ MDCFloatingActionButtonThemer.applyScheme(buttonScheme, to: button)
 
 ```objc
 [MDCFloatingActionButtonThemer applyScheme:buttonScheme toButton:button];
-```
-<!--</div>-->
-
-## Outlined buttons
-
-To theme a button as a Material Design outlined button, use `MDCOutlinedButtonThemer`
-with an `MDCButton`.
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-MDCOutlinedButtonThemer.applyScheme(buttonScheme, to: button)
-```
-
-#### Objective-C
-
-```objc
-[MDCOutlinedButtonThemer applyScheme:buttonScheme toButton:button];
 ```
 <!--</div>-->
