@@ -32,11 +32,9 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
 
 - (void)testInitMatchesInitWithMaterialDefaults {
   // Given
-  MDCSemanticColorScheme *scheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *initScheme = [[MDCSemanticColorScheme alloc] init];
   MDCSemanticColorScheme *mdDefaultScheme =
       [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-
-  scheme.primaryColor = ColorFromRGB(0x222222);
 
   // Then
   XCTAssertEqualObjects(initScheme.primaryColor, mdDefaultScheme.primaryColor);
