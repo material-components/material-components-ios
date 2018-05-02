@@ -45,9 +45,7 @@ Be cautious when combining bottom navigation with similar navigation placed at t
   - [Importing](#importing)
 - [Extensions](#extensions)
   - [Color Theming](#color-theming)
-- [Example code](#example-code)
   - [Typography Theming](#typography-theming)
-- [Example code](#example-code)
 
 - - -
 
@@ -115,8 +113,6 @@ You must first add the Color Themer extension to your project:
 pod 'MaterialComponents/BottomNavigation+Extensions/ColorThemer'
 ```
 
-## Example code
-
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
@@ -156,8 +152,6 @@ You must first add the Typography Themer extension to your project:
 ```bash
 pod 'MaterialComponents/BottomNavigation+Extensions/TypographyThemer'
 ```
-
-## Example code
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift

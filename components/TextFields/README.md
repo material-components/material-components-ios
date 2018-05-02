@@ -8,7 +8,7 @@ path: /catalog/textfields/
 api_doc_root: true
 -->
 
-<!-- This file was auto-generated using ./scripts/generate_readme textfields -->
+<!-- This file was auto-generated using ./scripts/generate_readme TextFields -->
 
 # Text Fields
 
@@ -71,7 +71,7 @@ This pattern is not a delegation or data source-like relationship but rather a c
 Add the following to your `Podfile`:
 
 ```bash
-pod 'MaterialComponents/textfields'
+pod 'MaterialComponents/TextFields'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
@@ -88,13 +88,13 @@ To import the component:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
-import MaterialComponents.Materialtextfields
+import MaterialComponents.MaterialTextFields
 ```
 
 #### Objective-C
 
 ```objc
-#import "Materialtextfields.h"
+#import "MaterialTextFields.h"
 ```
 <!--</div>-->
 
