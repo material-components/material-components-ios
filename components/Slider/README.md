@@ -1,5 +1,5 @@
 <!--docs:
-title: "Sliders"
+title: "Slider"
 layout: detail
 section: components
 excerpt: "The Slider component provides a Material Design control for selecting a value from a continuous range or discrete set of values."
@@ -7,6 +7,8 @@ iconId: slider
 path: /catalog/sliders/
 api_doc_root: true
 -->
+
+<!-- This file was auto-generated using ./scripts/generate_readme Slider -->
 
 # Slider
 
@@ -17,36 +19,39 @@ api_doc_root: true
 The `MDCSlider` object is a Material Design control used to select a value from a continuous range
 or discrete set of values.
 
-## Design & API Documentation
+## Design & API documentation
 
 <ul class="icon-list">
   <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-sliders">Material Design guidelines: Sliders</a></li>
   <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/sliders/api-docs/Classes/MDCSlider.html">API: MDCSlider</a></li>
 </ul>
 
-## Extensions
+## Table of contents
 
-<ul class="icon-list">
-  <li class="icon-list-item icon-list-item--link"><a href="docs/color-theming.md">Color Theming</a></li>
-</ul>
+- [Installation](#installation)
+  - [Installation with CocoaPods](#installation-with-cocoapods)
+  - [Importing](#importing)
+- [Usage](#usage)
+  - [Typical use](#typical-use)
+  - [Stateful APIs](#stateful-apis)
+  - [Differences from UISlider](#differences-from-uislider)
+- [Extensions](#extensions)
+  - [Color Theming](#color-theming)
 
 - - -
 
 ## Installation
 
+<!-- Extracted from docs/../../../docs/component-installation.md -->
+
 ### Installation with CocoaPods
 
-To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
+Add the following to your `Podfile`:
 
 ```bash
 pod 'MaterialComponents/Slider'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
-
-To add this component along with its themer and other related extensions, please add the following instead:
-```bash
-pod 'MaterialComponents/Slider+Extensions'
-```
 
 Then, run the following command:
 
@@ -54,15 +59,9 @@ Then, run the following command:
 pod install
 ```
 
-
-- - -
-
-
-## Usage
-
 ### Importing
 
-Before using Slider, you'll need to import it:
+To import the component:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -77,7 +76,12 @@ import MaterialComponents.MaterialSlider
 ```
 <!--</div>-->
 
-### Standard usage
+
+## Usage
+
+<!-- Extracted from docs/typical-use.md -->
+
+### Typical use
 
 MDCSlider can be be used like a standard `UIControl`.
 
@@ -117,7 +121,9 @@ func didChangeSliderValue(senderSlider:MDCSlider) {
 ```
 <!--</div>-->
 
-### Stateful API
+<!-- Extracted from docs/stateful-apis.md -->
+
+### Stateful APIs
 
 `MDCSlider` exposes stateful APIs to customize the colors for different control states. In order to use this API you must enable `statefulAPIEnabled` on your `MDCSlider` instances.
 
@@ -143,7 +149,9 @@ func didChangeSliderValue(senderSlider:MDCSlider) {
 ```
 <!--</div>-->
 
-### The differences between the UISlider class and the MDCSlider class:
+<!-- Extracted from docs/differences-from-uislider.md -->
+
+### Differences from UISlider
 
 Does not have api to:
 
@@ -160,3 +168,47 @@ Same features:
 New features:
 
 - making the slider a snap to discrete values via property numberOfDiscreteValues
+
+
+## Extensions
+
+<!-- Extracted from docs/color-theming.md -->
+
+### Color Theming
+
+You can theme a slider with your app's color scheme using the ColorThemer extension.
+
+You must first add the Color Themer extension to your project:
+
+```bash
+pod 'MaterialComponents/Slider+Extensions/ColorThemer'
+```
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// Step 1: Import the ColorThemer extension
+import MaterialComponents.MaterialSlider_ColorThemer
+
+// Step 2: Create or get a color scheme
+let colorScheme = MDCSemanticColorScheme()
+
+// Step 3: Apply the color scheme to your component
+MDCSliderColorThemer.applySemanticColorScheme(colorScheme, to: component)
+```
+
+#### Objective-C
+
+```objc
+// Step 1: Import the ColorThemer extension
+#import "MaterialSlider+ColorThemer.h"
+
+// Step 2: Create or get a color scheme
+id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+
+// Step 3: Apply the color scheme to your component
+[MDCSliderColorThemer applySemanticColorScheme:colorScheme
+     toslider:component];
+```
+<!--</div>-->
+
