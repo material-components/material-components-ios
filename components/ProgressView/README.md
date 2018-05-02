@@ -1,5 +1,5 @@
 <!--docs:
-title: "Progress Views"
+title: "Progress View"
 layout: detail
 section: components
 excerpt: "Progress View is a determinate and linear progress indicator that implements Material Design animation and layout."
@@ -7,6 +7,8 @@ iconId: progress_linear
 path: /catalog/progress-indicators/progress-views/
 api_doc_root: true
 -->
+
+<!-- This file was auto-generated using ./scripts/generate_readme ProgressView -->
 
 # Progress View
 
@@ -19,58 +21,61 @@ influenced by [Material Design specifications](https://material.io/go/design-pro
 for animation and layout. The API methods are the same as a `UIProgressView`, with the addition of a
 few key methods required to achieve the desired animation of the control.
 
-## Design & API Documentation
+## Design & API documentation
 
 <ul class="icon-list">
   <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-progress-indicators">Material Design guidelines: Progress & activity</a></li>
   <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/progress-indicators/progress-views/api-docs/Classes/MDCProgressView.html">API: MDCProgressView</a></li>
 </ul>
 
-## Extensions
+## Related components
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--link"><a href="docs/color-theming.md">Color Theming</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="../ActivityIndicator">ActivityIndicator</a></li>
 </ul>
+
+## Table of contents
+
+- [Overview](#overview)
+- [Installation](#installation)
+  - [Installation with CocoaPods](#installation-with-cocoapods)
+  - [Importing](#importing)
+- [Usage](#usage)
+  - [Typical use](#typical-use)
+- [Differences From UIProgressView](#differences-from-uiprogressview)
+- [Extensions](#extensions)
+  - [Color Theming](#color-theming)
 
 - - -
 
+## Overview
+
+`MDCActivityIndicator` is a view that has two modes: indeterminate and determinate. Indeterminate
+indicators express an unspecified wait time, while determinate indicators represent the length of a
+process. Activity indicators are indeterminate by default.
+
 ## Installation
+
+<!-- Extracted from docs/../../../docs/component-installation.md -->
 
 ### Installation with CocoaPods
 
-To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
+Add the following to your `Podfile`:
 
 ```bash
 pod 'MaterialComponents/ProgressView'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
-To add this component along with its themer and other related extensions, please add the following instead:
-```bash
-pod 'MaterialComponents/ProgressView+Extensions'
-```
-
 Then, run the following command:
 
 ```bash
-$ pod install
+pod install
 ```
-
-- - -
-
-## Differences From UIProgressView
-
-This progress view provides an animation effect when showing and hidding it: it grows up (resp.
-shrinks down). Additionally, all animated changes APIs take an optional completion block, to
-synchronize multistep animations.
-
-- - -
-
-## Usage
 
 ### Importing
 
-Before using Progress View, you'll need to import it:
+To import the component:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -85,11 +90,18 @@ import MaterialComponents.MaterialProgressView
 ```
 <!--</div>-->
 
+
+## Usage
+
+<!-- Extracted from docs/typical-use.md -->
+
+### Typical use
+
 Add the progress view to your view hierarchy like you would with any other view. Note that it works
 best when the progress view is added at the bottom of a view, as showing (resp. hiding) grows up
 (resp. shrinks down).
 
-### Step 1: Add the progress view to a view
+**Step 1: Add the progress view to a view**
 
 Add the progress view to a view and set the desired progress and hidden state.
 
@@ -118,7 +130,7 @@ self.progressView.progress = 0;  // You can also set a greater progress for acti
 ```
 <!--</div>-->
 
-### Step 2: Change the progress and hidden state
+**Step 2: Change the progress and hidden state**
 
 Both the progress and the hidden state can be animated, with a completion block.
 
@@ -155,10 +167,23 @@ func completeAndHideProgressView() {
 ```
 <!--</div>-->
 
-- - -
+<!-- Extracted from docs/differences-from-uiprogressview.md -->
 
-## Related Components
+## Differences From UIProgressView
 
-<ul class="icon-list">
-  <li class="icon-list-item icon-list-item--components"><a href="../ActivityIndicator">Activity Indicators</a></li>
-</ul>
+This progress view provides an animation effect when showing and hidding it: it grows up (resp.
+shrinks down). Additionally, all animated changes APIs take an optional completion block, to
+synchronize multistep animations.
+
+
+## Extensions
+
+<!-- Extracted from docs/color-theming.md -->
+
+### Color Theming
+
+Progress View does not yet have a Material Design color system themer. The following tasks are
+tracking its development:
+
+- Task: [Implement a color themer](https://www.pivotaltracker.com/story/show/157095443)
+
