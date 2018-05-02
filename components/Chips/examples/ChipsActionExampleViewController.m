@@ -22,7 +22,7 @@
 @implementation ChipsActionExampleViewController {
   UICollectionView *_collectionView;
   MDCChipView *_sizingChip;
-  BOOL _isStroked;
+  BOOL _isOutlined;
 }
 
 - (void)loadView {
@@ -57,17 +57,17 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  _isStroked = NO;
+  _isOutlined = NO;
   self.navigationItem.rightBarButtonItem =
-      [[UIBarButtonItem alloc] initWithTitle:@"Stroked Style"
+      [[UIBarButtonItem alloc] initWithTitle:@"Outlined Style"
                                        style:UIBarButtonItemStylePlain
                                       target:self
                                       action:@selector(switchStyle)];
 }
 
 - (void)switchStyle {
-  _isStroked = !_isStroked;
-  NSString *buttonTitle = _isStroked ? @"Filled Style" : @"Stroked Style";
+  _isOutlined = !_isOutlined;
+  NSString *buttonTitle = _isOutlined ? @"Filled Style" : @"Outlined Style";
   [self.navigationItem.rightBarButtonItem setTitle:buttonTitle];
   NSArray *indexPaths = [_collectionView indexPathsForSelectedItems];
   [_collectionView reloadData];
@@ -103,7 +103,7 @@
   scheme.colorScheme = self.colorScheme;
   
   // Apply Theming
-  if (_isStroked) {
+  if (_isOutlined) {
     [MDCChipViewThemer applyOutlinedVariantWithScheme:scheme toChipView:chipView];
   } else {
     [MDCChipViewThemer applyScheme:scheme toChipView:chipView];
