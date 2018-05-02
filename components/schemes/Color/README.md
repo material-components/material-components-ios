@@ -25,7 +25,7 @@ the surface colors of views.
 ## Related documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--link"><a href="../../docs/theming/">Theming Material Components</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="../../../docs/theming/">Theming Material Components</a></li>
 </ul>
 
 ## Table of contents
@@ -51,7 +51,7 @@ color scheme values (top) and an MDCButton themed with custom color scheme value
 
 Most components support being themed with a color scheme using a `color themer` extension. You can
 learn more about which extensions are available for a given component by reading the
-[component documentation](../).
+[component documentation](../../).
 
 ## Installation
 
