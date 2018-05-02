@@ -24,11 +24,11 @@ static const CGFloat kWithImageRightPadding = 12.f;
 static const CGFloat kTextVerticalPadding = 12.f;
 
 static inline UIFont *defaultTitleFont(void) {
-  return [MDCTypography subheadFont];
+  return [UIFont systemFontOfSize:16.f];
 }
 
 static inline UIFont *defaultDetailsFont(void) {
-  return [MDCTypography body1Font];
+  return [UIFont systemFontOfSize:14.f];
 }
 
 static inline CGFloat defaultTitleOpacity(void) {
@@ -275,6 +275,11 @@ static inline CGFloat defaultDetailsOpacity(void) {
   } else {
     [self.inkView startTouchEndedAnimationAtPoint:_lastTouch completion:nil];
   }
+}
+
+- (void)applyTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
+  self.titleFont = typographyScheme.subtitle1;
+  self.detailsFont = typographyScheme.body2;
 }
 
 #pragma mark - UIResponder

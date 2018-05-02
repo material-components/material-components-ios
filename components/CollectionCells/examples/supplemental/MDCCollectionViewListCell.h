@@ -16,6 +16,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MDCCollectionViewCell.h"
+#import "MaterialTypographyScheme.h"
 
 @interface MDCCollectionViewListCell : MDCCollectionViewCell
 
@@ -70,5 +71,12 @@ BOOL mdc_adjustsFontForContentSizeCategory;
  @param image The image to set to.
  */
 - (void)setImage:(nullable UIImage *)image;
+
+/**
+ Apply the typography scheme on the cell instance.
+
+ @param typographyScheme the typography scheme to apply.
+ */
+- (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme;
 
 @end

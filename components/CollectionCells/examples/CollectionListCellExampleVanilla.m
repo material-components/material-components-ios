@@ -37,6 +37,7 @@ static const CGFloat kSmallArbitraryCellWidth = 100.f;
 @synthesize collectionViewLayout = _collectionViewLayout;
 
 - (instancetype)init {
+  _typographyScheme = [[MDCTypographyScheme alloc] init];
   _flowLayout = [[UICollectionViewFlowLayout alloc] init];
   _flowLayout.minimumInteritemSpacing = 0;
   _flowLayout.minimumLineSpacing = 1;
@@ -136,6 +137,7 @@ static const CGFloat kSmallArbitraryCellWidth = 100.f;
   MDCCollectionViewListCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
                                                 forIndexPath:indexPath];
+  [cell applyTypographyScheme:_typographyScheme];
   cell.mdc_adjustsFontForContentSizeCategory = YES;
   CGFloat cellWidth = CGRectGetWidth(collectionView.bounds);
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
