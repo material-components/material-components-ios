@@ -1,15 +1,3 @@
-<!--docs:
-title: "Color Scheme"
-layout: detail
-section: components
-excerpt: "The Material color scheme provides support for theming an app with a semantic set of colors."
-iconId: themes
-path: /catalog/schemes/color//
-api_doc_root: true
--->
-
-<!-- This file was auto-generated using ./scripts/generate_readme schemes/Color -->
-
 # Color scheme
 
 The Material Design color system can be used to create a color theme that reflects your brand or
@@ -18,25 +6,13 @@ the surface colors of views.
 
 ## Design & API documentation
 
-<ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-color-theming">Material Design guidelines: Color theming</a></li>
-</ul>
+* [Material Design guidelines: Color theming](https://material.io/go/design-color-theming)
 
 ## Related documentation
 
-<ul class="icon-list">
-  <li class="icon-list-item icon-list-item--link"><a href="../../../docs/theming/">Theming Material Components</a></li>
-</ul>
+* [Theming Material Components](../../../../docs/theming/)
 
-## Table of contents
-
-- [Overview](#overview)
-  - [Semantic color values](#semantic-color-values)
-- [Installation](#installation)
-  - [Installation with CocoaPods](#installation-with-cocoapods)
-  - [Importing](#importing)
-- [Usage](#usage)
-  - [Typical use: customizing a color scheme](#typical-use-customizing-a-color-scheme)
+<!-- toc -->
 
 - - -
 
@@ -48,11 +24,11 @@ possible to use these defaults out of the box, you are highly encouraged to set 
 primary and secondary color values. The following image shows an MDCButton themed with the default
 color scheme values (top) and an MDCButton themed with custom color scheme values (bottom).
 
-<img src="docs/assets/themedbuttons.png" width="144" alt="An MDCButton themed with the default color scheme and a custom one.">
+<img src="assets/themedbuttons.png" width="144" alt="An MDCButton themed with the default color scheme and a custom one.">
 
 Most components support being themed with a color scheme using a `color themer` extension. You can
 learn more about which extensions are available for a given component by reading the
-[component documentation](../../).
+[component documentation](../../../).
 
 ### Semantic color values
 
@@ -115,46 +91,4 @@ import MaterialComponents.MaterialColorScheme
 
 ## Usage
 
-<!-- Extracted from docs/typical-use-customizing-a-scheme.md -->
-
-### Typical use: customizing a color scheme
-
-You'll typically want to create one default `MDCSemanticColorScheme` instance for your app where all
-of the color properties are set to your desired brand or style.
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-let colorScheme = MDCSemanticColorScheme()
-colorScheme.primaryColor = UIColor(red: CGFloat(0x21) / 255.0,
-                                   green: CGFloat(0x21) / 255.0,
-                                   blue: CGFloat(0x21) / 255.0,
-                                   alpha: 1)
-colorScheme.primaryColorVariant = UIColor(red: CGFloat(0x44) / 255.0,
-                                   green: CGFloat(0x44) / 255.0,
-                                   blue: CGFloat(0x44) / 255.0,
-                                   alpha: 1)
-
-// In this case we don't intend to use a secondary color, so we make it match our primary color
-colorScheme.secondaryColor = colorScheme.primaryColor
-```
-
-#### Objective-C
-
-```objc
-// A helper method for creating colors from hex values.
-static UIColor *ColorFromRGB(uint32_t colorValue) {
-  return [[UIColor alloc] initWithRed:(CGFloat)(((colorValue >> 16) & 0xFF) / 255.0)
-                                green:(CGFloat)(((colorValue >> 8) & 0xFF) / 255.0)
-                                 blue:(CGFloat)((colorValue & 0xFF) / 255.0) alpha:1];
-}
-
-MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
-colorScheme.primaryColor = ColorFromRGB(0x212121);
-colorScheme.primaryColorVariant = ColorFromRGB(0x444444);
-
-// In this case we don't intend to use a secondary color, so we make it match our primary color
-colorScheme.secondaryColor = colorScheme.primaryColor;
-```
-<!--</div>-->
-
+- [Typical use: customizing a color scheme](typical-use-customizing-a-scheme.md)
