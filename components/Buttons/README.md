@@ -15,7 +15,7 @@ api_doc_root: true
 Material design buttons allow users to take actions, and make choices, with a single tap. There are
 many distinct button styles including text buttons, contained buttons, and floating action buttons.
 
-<img src="docs/assets/text.gif" alt="An animation showing a Material Design text button." width="115"> <img src="docs/assets/contained.gif" alt="An animation showing a Material Design contained button." width="115"> <img src="docs/assets/fab.gif" alt="An animation showing a Material Design floating action button." width="99">
+<img src="docs/assets/text.gif" alt="An animation showing a Material Design text button." width="115"> <img src="docs/assets/outlined.gif" alt="An animation showing a Material Design outlined button." width="115"> <img src="docs/assets/contained.gif" alt="An animation showing a Material Design contained button." width="115"> <img src="docs/assets/fab.gif" alt="An animation showing a Material Design floating action button." width="99">
 
 ## Design & API documentation
 
@@ -39,7 +39,6 @@ many distinct button styles including text buttons, contained buttons, and float
   - [Interface Builder](#interface-builder)
 - [Extensions](#extensions)
   - [Theming](#theming)
-- [Outlined buttons](#outlined-buttons)
   - [Color Theming](#color-theming)
   - [Typography Theming](#typography-theming)
 
@@ -269,6 +268,26 @@ MDCTextButtonThemer.applyScheme(buttonScheme, to: button)
 ```
 <!--</div>-->
 
+#### Outlined buttons
+
+<img src="docs/assets/outlined.gif" alt="An animation showing a Material Design outlined button." width="115">
+
+To theme a button as a Material Design outlined button, use `MDCOutlinedButtonThemer`
+with an `MDCButton`.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+MDCOutlinedButtonThemer.applyScheme(buttonScheme, to: button)
+```
+
+#### Objective-C
+
+```objc
+[MDCOutlinedButtonThemer applyScheme:buttonScheme toButton:button];
+```
+<!--</div>-->
+
 #### Contained buttons
 
 <img src="docs/assets/contained.gif" alt="An animation showing a Material Design contained button." width="128">
@@ -305,24 +324,6 @@ MDCFloatingActionButtonThemer.applyScheme(buttonScheme, to: button)
 
 ```objc
 [MDCFloatingActionButtonThemer applyScheme:buttonScheme toButton:button];
-```
-<!--</div>-->
-
-## Outlined buttons
-
-To theme a button as a Material Design outlined button, use `MDCOutlinedButtonThemer`
-with an `MDCButton`.
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-MDCOutlinedButtonThemer.applyScheme(buttonScheme, to: button)
-```
-
-#### Objective-C
-
-```objc
-[MDCOutlinedButtonThemer applyScheme:buttonScheme toButton:button];
 ```
 <!--</div>-->
 
