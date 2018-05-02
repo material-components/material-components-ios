@@ -126,7 +126,7 @@ canMoveItemAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 + (BOOL)catalogIsPresentable {
-  return YES;
+  return NO;
 }
 
 + (BOOL)catalogIsDebug {

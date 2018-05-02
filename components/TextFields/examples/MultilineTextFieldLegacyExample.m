@@ -264,7 +264,7 @@
 }
 
 + (BOOL)catalogIsPresentable {
-  return YES;
+  return NO;
 }
 
 #pragma mark - Keyboard Handling

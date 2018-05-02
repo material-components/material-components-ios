@@ -120,6 +120,6 @@ extension BottomNavigationNilBadges {
   }
 
   @objc class func catalogIsPresentable() -> Bool {
-    return true
+    return false
   }
 }
