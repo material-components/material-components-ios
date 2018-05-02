@@ -30,6 +30,31 @@ Most components support being themed with a color scheme using a `color themer` 
 learn more about which extensions are available for a given component by reading the
 [component documentation](../../../).
 
+### Semantic color values
+
+A color scheme consists of the following semantic color values:
+
+| Color name            | Use        |
+|:--------------------- |:---------- |
+| `primaryColor`        | The color displayed most frequently across your app’s screens and components. |
+| `primaryColorVariant` | A light or dark variation of the primary color. |
+| `secondaryColor`      | Provides ways to accent and distinguish your product. Floating action buttons use the secondary color. |
+| `errorColor`          | The indication of errors within components such as text fields. |
+| `surfaceColor`        | Typically maps to the background of components such as cards, sheets, and dialogs. |
+| `backgroundColor`     | Typically found behind scrollable content. |
+
+Each of these colors are paired with a corresponding "on-color". An on color defines the
+color for text and iconography drawn on top of the associated color. Take care when picking on
+colors that they meet [the accessibility guidelines for text and contrasting color](https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html).
+
+| Color name            | Use        |
+|:--------------------- |:---------- |
+| `onPrimaryColor`      | Text/iconography drawn on top of primaryColor. |
+| `onSecondaryColor`    | Text/iconography drawn on top of secondaryColor. |
+| `onErrorColor`        | Text/iconography drawn on top of errorColor. |
+| `onSurfaceColor`      | Text/iconography drawn on top of surfaceColor. |
+| `onBackgroundColor`   | Text/iconography drawn on top of backgroundColor. |
+
 ## Installation
 
 ### Installation with CocoaPods
