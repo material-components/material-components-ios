@@ -1,14 +1,10 @@
-<!--docs:
-title: "Themes"
-layout: detail
-section: components
-excerpt: "Themes provides a mechanism to colorize components with color schemes."
-icon_id: themes
-path: /catalog/themes/
-api_doc_root: true
--->
-
 # Themes
+
+*Notice*: This component will soon be deprecated. Please consider using the
+[schemes/Typography](../schemes/Typography) and [schemes/Color](../schemes/Color) components and
+the [Material Theming](../../docs/theming) APIs instead.
+
+---
 
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/themes.png" alt="Themes" width="375">
