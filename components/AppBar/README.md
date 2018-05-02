@@ -1,5 +1,5 @@
 <!--docs:
-title: "App Bar"
+title: "Top App Bar"
 layout: detail
 section: components
 excerpt: "The Material Design top app bar displays information and actions relating to the current view."
