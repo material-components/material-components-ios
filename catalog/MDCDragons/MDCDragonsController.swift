@@ -250,7 +250,7 @@ class MDCDragonsController: UIViewController,
       vc.title = nodeData.node.title
       
       let headerView = container.appBar.headerViewController.headerView
-      if let collectionVC = vc as? MDCCollectionViewController {
+      if let collectionVC = vc as? UICollectionViewController {
         headerView.trackingScrollView = collectionVC.collectionView
       } else if let scrollView = vc.view as? UIScrollView {
         headerView.trackingScrollView = scrollView
