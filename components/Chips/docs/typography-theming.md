@@ -5,7 +5,7 @@ You can theme a chip with your app's typography scheme using the TypographyTheme
 You must first add the Typography Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/Chips+Extensions/TypographyThemer'
+pod 'MaterialComponents/Chips+TypographyThemer'
 ```
 
 <!--<div class="material-code-render" markdown="1">-->

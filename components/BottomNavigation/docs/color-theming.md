@@ -5,7 +5,7 @@ You can theme a bottom navigation with your app's color scheme using the ColorTh
 You must first add the Color Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/BottomNavigation+Extensions/ColorThemer'
+pod 'MaterialComponents/BottomNavigation+ColorThemer'
 ```
 
 <!--<div class="material-code-render" markdown="1">-->

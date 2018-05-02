@@ -200,7 +200,7 @@ You can theme a tab bar with your app's color scheme using the ColorThemer exten
 You must first add the Color Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/Tabs+Extensions/ColorThemer'
+pod 'MaterialComponents/Tabs+ColorThemer'
 ```
 
 <!--<div class="material-code-render" markdown="1">-->
@@ -246,7 +246,7 @@ You can theme a tab bar with your app's typography scheme using the TypographyTh
 You must first add the Typography Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/Tabs+Extensions/TypographyThemer'
+pod 'MaterialComponents/Tabs+TypographyThemer'
 ```
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift

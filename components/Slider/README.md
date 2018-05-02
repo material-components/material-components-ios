@@ -181,7 +181,7 @@ You can theme a slider with your app's color scheme using the ColorThemer extens
 You must first add the Color Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/Slider+Extensions/ColorThemer'
+pod 'MaterialComponents/Slider+ColorThemer'
 ```
 
 <!--<div class="material-code-render" markdown="1">-->

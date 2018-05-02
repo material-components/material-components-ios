@@ -218,7 +218,7 @@ schemes in the ButtonThemer extension.
 You must first add the ButtonThemer extension to your project:
 
 ```bash
-pod 'MaterialComponents/Buttons+Extensions/ButtonThemer'
+pod 'MaterialComponents/Buttons+ButtonThemer'
 ```
 
 You can then import the extension and create an `MDCButtonScheme` instance. A button scheme defines
@@ -336,7 +336,7 @@ You can theme buttons with your app's color scheme using the ColorThemer extensi
 You must first add the Color Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/Buttons+Extensions/ColorThemer'
+pod 'MaterialComponents/Buttons+ColorThemer'
 ```
 
 <!--<div class="material-code-render" markdown="1">-->
@@ -382,7 +382,7 @@ You can theme buttons with your app's typography scheme using the TypographyThem
 You must first add the Typography Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/Buttons+Extensions/TypographyThemer'
+pod 'MaterialComponents/Buttons+TypographyThemer'
 ```
 
 <!--<div class="material-code-render" markdown="1">-->

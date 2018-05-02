@@ -216,7 +216,7 @@ You can theme a card with your app's color scheme using the ColorThemer extensio
 You must first add the Color Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/Cards+Extensions/ColorThemer'
+pod 'MaterialComponents/Cards+ColorThemer'
 ```
 
 <!--<div class="material-code-render" markdown="1">-->

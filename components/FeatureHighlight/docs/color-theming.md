@@ -5,7 +5,7 @@ You can theme feature highlight with your app's color scheme using the ColorThem
 You must first add the Color Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/FeatureHighlight+Extensions/ColorThemer'
+pod 'MaterialComponents/FeatureHighlight+ColorThemer'
 ```
 
 <!--<div class="material-code-render" markdown="1">-->

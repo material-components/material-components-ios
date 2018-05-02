@@ -5,7 +5,7 @@ You can theme buttons with your app's typography scheme using the TypographyThem
 You must first add the Typography Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/Buttons+Extensions/TypographyThemer'
+pod 'MaterialComponents/Buttons+TypographyThemer'
 ```
 
 <!--<div class="material-code-render" markdown="1">-->

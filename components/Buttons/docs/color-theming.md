@@ -5,7 +5,7 @@ You can theme buttons with your app's color scheme using the ColorThemer extensi
 You must first add the Color Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/Buttons+Extensions/ColorThemer'
+pod 'MaterialComponents/Buttons+ColorThemer'
 ```
 
 <!--<div class="material-code-render" markdown="1">-->
