@@ -32,10 +32,8 @@ The Feature Highlight component is a way to visually highlight a part of the scr
 - [Usage](#usage)
   - [Typical use: highlight a view](#typical-use-highlight-a-view)
 - [Extensions](#extensions)
-# [Feature Highlight Color Theming](#feature-highlight-color-theming)
-- [Example code](#example-code)
-# [Feature Highlight Typography Theming](#feature-highlight-typography-theming)
-- [Example code](#example-code)
+  - [Color Theming](#color-theming)
+  - [Typography Theming](#typography-theming)
 
 - - -
 
@@ -149,16 +147,7 @@ MDCFeatureHighlightViewController *highlightController =
 
 <!-- Extracted from docs/color-theming.md -->
 
-<!--docs:
-title: "Color Theming"
-layout: detail
-section: components
-excerpt: "How to theme Feature Highlight using the Material Design color system."
-iconId: feature_highlight
-path: /catalog/feature-highlights/color-theming/
--->
-
-# Feature Highlight Color Theming
+### Color Theming
 
 You can theme feature highlight with your app's color scheme using the ColorThemer extension.
 
@@ -167,8 +156,6 @@ You must first add the Color Themer extension to your project:
 ```bash
 pod 'MaterialComponents/FeatureHighlight+Extensions/ColorThemer'
 ```
-
-## Example code
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -200,16 +187,7 @@ id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
 
 <!-- Extracted from docs/typography-theming.md -->
 
-<!--docs:
-title: "Typography Theming"
-layout: detail
-section: components
-excerpt: "How to theme Feature Highlight using the Material Design typography system."
-iconId: feature_highlight
-path: /catalog/feature-highlights/typography-theming/
--->
-
-# Feature Highlight Typography Theming
+### Typography Theming
 
 You can theme feature highlight with your app's typography scheme using the TypographyThemer extension.
 
@@ -218,8 +196,6 @@ You must first add the Typography Themer extension to your project:
 ```bash
 pod 'MaterialComponents/FeatureHighlight+Extensions/TypographyThemer'
 ```
-
-## Example code
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
