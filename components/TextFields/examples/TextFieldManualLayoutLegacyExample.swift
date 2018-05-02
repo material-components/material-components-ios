@@ -340,7 +340,7 @@ extension TextFieldManualLayoutLegacySwiftExample {
 // MARK: - CatalogByConvention
 extension TextFieldManualLayoutLegacySwiftExample {
   @objc class func catalogBreadcrumbs() -> [String] {
-    return ["Text Field", "[Legacy] Manual Layout"]
+    return ["Text Field", "[Legacy] Manual Layout (Swift)"]
   }
 
   @objc class func catalogIsPrimaryDemo() -> Bool {
