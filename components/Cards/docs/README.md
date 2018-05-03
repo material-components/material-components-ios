@@ -11,9 +11,7 @@ Cards are meant to be interactive, and shouldn't be used solely for displaying p
 
 Cards adhere to Material Design layout and styling.
 
-## Design & API documentation
-
-* [Material Design guidelines: Cards](https://material.io/go/design-cards)
+<!-- design-and-api -->
 
 <!-- toc -->
 

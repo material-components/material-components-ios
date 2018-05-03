@@ -27,6 +27,11 @@ Cards adhere to Material Design layout and styling.
 
 <ul class="icon-list">
   <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-cards">Material Design guidelines: Cards</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/cards/api-docs/Classes/MDCCard.html">MDCCard</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/cards/api-docs/Classes/MDCCardCollectionCell.html">MDCCardCollectionCell</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/cards/api-docs/Enums/MDCCardCellHorizontalImageAlignment.html">MDCCardCellHorizontalImageAlignment</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/cards/api-docs/Enums/MDCCardCellState.html">MDCCardCellState</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/cards/api-docs/Enums/MDCCardCellVerticalImageAlignment.html">MDCCardCellVerticalImageAlignment</a></li>
 </ul>
 
 ## Table of contents
@@ -55,16 +60,16 @@ When treated as a `UIControl` (`MDCCard`), it has a default styling (`UIControlS
 When treated as a `UICollectionViewCell` (`MDCCardCollectionCell`), it has a default styling (`MDCCardCellStateNormal`), a highlighted styling (`MDCCardCellStateHighlighted`), and lastly a selected styling (`MDCCardCellStateSelected`).
 
 Customization to the card is exposed via its API either in `MDCCard` or `MDCCardCollectionCell`. Currently the card consists of these customizations:
-  <li class="icon-list-item icon-list-item--spec">The border width for a specific state</li>
-  <li class="icon-list-item icon-list-item--spec">The border color for a specific state</li>
-  <li class="icon-list-item icon-list-item--spec">The shadow elevation for a specific state</li>
-  <li class="icon-list-item icon-list-item--spec">The shadow color for a specific state</li>
-  <li class="icon-list-item icon-list-item--spec">The corner radius for the card</li>
+  <li class="icon-list-item icon-list-item">The border width for a specific state</li>
+  <li class="icon-list-item icon-list-item">The border color for a specific state</li>
+  <li class="icon-list-item icon-list-item">The shadow elevation for a specific state</li>
+  <li class="icon-list-item icon-list-item">The shadow color for a specific state</li>
+  <li class="icon-list-item icon-list-item">The corner radius for the card</li>
 </ul>
 
 (`MDCCardCollectionCell` customization only):
-  <li class="icon-list-item icon-list-item--spec">Changing the image that appears in the Selected state.</li>
-  <li class="icon-list-item icon-list-item--spec">Changing the image tint color that appears in the Selected state.</li>
+  <li class="icon-list-item icon-list-item">Changing the image that appears in the Selected state.</li>
+  <li class="icon-list-item icon-list-item">Changing the image tint color that appears in the Selected state.</li>
 </ul>
 
 An `MDCCard` can be added and used as you would add any `UIView` or `UIControl`, if manually in code, or through Interface Builder.
