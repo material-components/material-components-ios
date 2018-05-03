@@ -146,7 +146,7 @@ class MDCThemePickerViewController: UIViewController, UICollectionViewDataSource
     cell.contentView.backgroundColor = colorSchemeCells[indexPath.item].mainColor
     cell.contentView.layer.cornerRadius = cellSize / 2
     cell.contentView.layer.borderWidth = 1
-    cell.contentView.layer.borderColor =
+    cell.contentView.layer.borderColor = CGSize(width: <#T##CGFloat#>, height: <#T##CGFloat#>)
       AppTheme.globalTheme.colorScheme.onSurfaceColor.withAlphaComponent(0.05).cgColor
     if AppTheme.globalTheme.colorScheme.primaryColor
       == colorSchemeCells[indexPath.item].mainColor {

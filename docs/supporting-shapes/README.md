@@ -54,10 +54,10 @@ We also have at our disposal convenience classes under the ShapeLibrary/ folder 
 
 #### Exposing the shape generator
 
-You will need to expose the shape generator in your component’s API to be able to set the shape. You will need to add a property in your .h file that is of the type `id<MDCShapeGenerating>`. You can use any of the convenience pre-made shape generators noted above, including the base `MDCRectangleShapeGenerator`. Alternatively the developer can build his own shape by creating an object that implements `MDCShapeGenerating` and creating a path with the help of `MDCPathGenerator`.
+You will need to expose the shape generator in your component’s API to be able to set the shape. You will need to add a property in your .h file that is of the type `id<MDCShapeGenerating>`. A client can use any of the convenience pre-made shape generators noted above, including the base `MDCRectangleShapeGenerator`. Alternatively the developer can build his own shape by creating an object that implements `MDCShapeGenerating` and creating a path with the help of `MDCPathGenerator`.
 
 ```objc
-@property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator
+@property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator;
 ```
 
 #### Adding proper shadow, border, and background color support
@@ -75,7 +75,7 @@ You then must also make sure that when setting your layer’s properties you mus
 
 #### Being conscious of setting layer’s properties such as shadowPath and cornerRadius
 
-Because shapes work with a different path than the view’s default layer, you need to be conscious of places in your code where the layer's properties are set, as that might cause unexpected behaviors or override existing behaviors to support shapes. When setting such properties, it is advised to check if `(shapeGenerator != nil)` before applying them.
+Because shapes work with a different path than the view’s default layer, you need to be conscious of places in your code where these layer's properties are set, as that might cause unexpected behaviors or override existing behaviors to support shapes. When setting such properties, it is advised to check if `(shapeGenerator != nil)` before applying them.
 
 #### Supporting touch events
 
@@ -110,7 +110,7 @@ If the component uses ink ripples, we will need to add shapes support for it. Fo
 
 #### Content Margins
 
-Now that our component can come in all different sizes and shapes, you will need to set a margin for the content so that the shape wont truncate the images/text etc. For that using the built-in UIView’s `layoutMargins` is recommended.
+Now that our component can come in all different sizes and shapes, you will need to set a margin for the content so that the shape won't truncate the images/text etc. For that using the built-in UIView’s `layoutMargins` is recommended.
 
 ### Using Shapes in the already shape-supported components (Buttons / Cards)
 
@@ -125,6 +125,20 @@ In that case you only need to set the shapeGenerator to a shape of your choice a
 
 ![Diamond FAB.](assets/diamondfab.gif)
 
+<!--<div class="material-code-render" markdown="1">-->
+##### Swift
+```swift
+let floatingButton = MDCFloatingButton()
+floatingButton.setImage(plusImage for:.normal)
+floatingButton.sizeToFit()
+
+let floatingShapeGenerator = MDCRectangleShapeGenerator()
+floatingShapeGenerator.setCorners(MDCCutCornerTreatment(cut: floatingButton.bounds.width / 2))
+floatingButton.shapeGenerator = floatingShapeGenerator
+self.view.addSubview(floatingButton)
+```
+
+##### Objective-C
 ```objc
 self.floatingButton = [[MDCFloatingButton alloc] init];
 [self.floatingButton setImage:plusImage forState:UIControlStateNormal];
@@ -136,11 +150,28 @@ MDCRectangleShapeGenerator *floatingShapeGenerator = [[MDCRectangleShapeGenerato
 self.floatingButton.shapeGenerator = floatingShapeGenerator;
 [self.view addSubview:self.floatingButton];
 ```
+<!--</div>-->
 
 #### Cut Corners Contained Button
 
 ![Cut Corners Button.](assets/cutcornersbutton.gif)
 
+<!--<div class="material-code-render" markdown="1">-->
+##### Swift
+```swift
+let containedButton = MDCButton()
+containedButton.setTitle("Add To Cart" for:.normal)
+containedButton.setImage(plusImage for:.normal)
+
+let raisedShapeGenerator = MDCRectangleShapeGenerator()
+raisedShapeGenerator.setCorners(MDCCutCornerTreatment(cut: 8))
+containedButton.shapeGenerator = raisedShapeGenerator
+
+containedButton.sizeToFit()
+self.view.addSubview(containedButton)
+```
+
+##### Objective-C
 ```objc
 MDCButton *containedButton = [[MDCButton alloc] init];
 [containedButton setTitle:@"Add To Cart" forState:UIControlStateNormal];
@@ -154,11 +185,26 @@ containedButton.shapeGenerator = raisedShapeGenerator;
 [containedButton sizeToFit];
 [self.view addSubview:containedButton];
 ```
+<!--</div>-->
 
 #### Top Left Cut Corner Card Cell
 
 ![Card Cell Cut Corner.](assets/cardcellcutcorner.gif)
 
+<!--<div class="material-code-render" markdown="1">-->
+##### Swift
+```swift
+func collectionView(_ collectionView: UICollectionView,
+                    cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+  let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kReusableIdentifierItem,
+                                                for: indexPath) as! MDCCardCollectionCell
+  let shapeGenerator = MDCRectangleShapeGenerator()
+  shapeGenerator.topLeftCorner = MDCCutCornerTreatment(cut: 20)
+  cell.shapeGenerator = shapeGenerator
+  return cell
+```
+
+##### Objective-C
 ```objc
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -172,11 +218,28 @@ containedButton.shapeGenerator = raisedShapeGenerator;
   return cell;
 }
 ```
+<!--</div>-->
 
 #### Card with different corners
 
 ![Card With Different Corners.](assets/cardwithdiffcorners.gif)
 
+<!--<div class="material-code-render" markdown="1">-->
+##### Swift
+```swift
+let card = MDCCard()
+let shapeGenerator = MDCRectangleShapeGenerator()
+let cutCorner = MDCCutCornerTreatment(cut: 20)
+let roundedCorner = MDCRoundedCornerTreatment(radius: 20)
+let curvedCorner = MDCCurvedCornerTreatment(size: CGSize(width: 20, height: 60))
+shapeGenerator.topLeftCorner = cutCorner
+shapeGenerator.topRightCorner = roundedCorner
+shapeGenerator.bottomLeftCorner = roundedCorner
+shapeGenerator.bottomRightCorner = curvedCorner
+card.shapeGenerator = shapeGenerator
+```
+
+##### Objective-C
 ```objc
 MDCCard *card = [[MDCCard alloc] init];
 MDCRectangleShapeGenerator *shapeGenerator =
@@ -192,4 +255,5 @@ shapeGenerator.bottomLeftCorner = roundedCorner;
 shapeGenerator.bottomRightCorner = curvedCorner;
 card.shapeGenerator = shapeGenerator;
 ```
+<!--</div>-->
 
