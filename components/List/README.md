@@ -21,8 +21,19 @@ We will walk through the example and discuss things needed to achieve a list cel
 
 The example files can be found <a href="examples/">here</a>
 
-Our example consists of our `UICollectionViewController` class: <a href="examples/CollectionListCellExampleTypicalUse.m">examples/CollectionListCellExampleTypicalUse.m</a>
-and also of our custom `UICollectionViewCell` class: <a href="examples/supplemental/CollectionViewListCell.m">examples/supplemental/CollectionViewListCell.m</a>.
+Our example consists of a `UICollectionViewController` class: <a href="examples/CollectionListCellExampleTypicalUse.m">examples/CollectionListCellExampleTypicalUse.m</a>
+and also of a custom `UICollectionViewCell` class: <a href="examples/supplemental/CollectionViewListCell.m">examples/supplemental/CollectionViewListCell.m</a>.
 
+Our main focus will be on the custom cell as that where all the logic goes in, whereas the collection view and its controller are using mostly boilerplate code of setting up a simple example and collection view.
+
+### Layout
+
+### Ink
+
+### Self Sizing
+
+### Typography
+
+### Dynamic Type
 
 
