@@ -52,6 +52,8 @@ short_description=
 color_themer_api=
 typography_themer_api=
 themer_parameter_name=
+guidelines_short_link=
+guidelines_title=
 ```
 
 If a variable is not provided and a template requires it, then the template will be generated with
@@ -59,10 +61,11 @@ the missing variables shown as placeholders still.
 
 ### Design & API links
 
-To generate a list that uses icons as bullets, use the `*` list format;
+To generate design and API links, use the following snippet. Note that this requires that you've
+installed [jazzy](https://github.com/realm/jazzy).
 
 ```markdown
-* [Material Design guidelines: Progress & activity](https://material.io/go/design-progress-indicators)
+<!-- design-and-api -->
 ```
 
 ### Embedding articles
