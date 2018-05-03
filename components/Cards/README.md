@@ -1,5 +1,5 @@
 <!--docs:
-title: "Card"
+title: "Cards"
 layout: detail
 section: components
 excerpt: "Cards are contained surfaces that serve as an entry point to more detailed information, with flexible visual parameters."
