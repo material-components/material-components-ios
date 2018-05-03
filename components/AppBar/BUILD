@@ -12,6 +12,7 @@
 # implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+# DO NOT MERGE
 
 load("//:material_components_ios.bzl",
      "mdc_public_objc_library",
