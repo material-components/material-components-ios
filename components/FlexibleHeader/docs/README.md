@@ -1,11 +1,11 @@
 # Flexible header
 
-<div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/flexible_header.png" alt="Flexible header" width="375">
-</div>
-
 A flexible header is a container view whose height and vertical offset react to
 UIScrollViewDelegate events.
+
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/flexible-header.gif" alt="An animation showing a flexible header appearing and disappearing." width="320">
+</div>
 
 <!-- design-and-api -->
 
