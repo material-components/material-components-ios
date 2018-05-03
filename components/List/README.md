@@ -21,7 +21,7 @@ We will walk through the example and discuss things needed to achieve a list cel
 
 The example files can be found <a href="examples/">here</a>
 
-<img src="docs/assets/listcellexample.gif" alt="List Cell Example">
+<img src="docs/assets/listcellexample.gif" alt="List Cell Example" width="300">
 
 Our example consists of a custom `UICollectionViewController`: <a href="examples/CollectionListCellExampleTypicalUse.m">examples/CollectionListCellExampleTypicalUse.m</a>
 and also of a custom `UICollectionViewCell`: <a href="examples/supplemental/CollectionViewListCell.m">examples/supplemental/CollectionViewListCell.m</a>.
