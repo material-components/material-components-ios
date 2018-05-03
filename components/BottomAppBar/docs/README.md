@@ -5,7 +5,7 @@ work like [navigation bars](../../NavigationBar), but with the additional option
 [floating action button](../../Buttons).
 
 <div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/bottomappbar.png" alt="Text Fields" width="375">
+  <img src="docs/assets/bottomappbar.png" alt="A screenshot of a bottom app bar." width="375">
 </div>
 
 <!-- design-and-api -->
