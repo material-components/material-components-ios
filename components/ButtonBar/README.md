@@ -11,8 +11,7 @@ The Button Bar is a view that represents a list of UIBarButtonItems as horizonta
 ## Design & API documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/button-bars/api-docs/Classes/MDCButtonBar.html">API: MDCButtonBar</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/button-bars/api-docs/Protocols/MDCButtonBarDelegate.html">API: MDCButtonBarDelegate</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-app-bar-top">Material Design guidelines: Top App Bar</a></li>
 </ul>
 
 ## Related components
@@ -38,7 +37,7 @@ The Button Bar is a view that represents a list of UIBarButtonItems as horizonta
 
 ## Overview
 
-A Button Bar is similar in concept to a UIToolbar, but Button Bars are **not*  <li class="icon-list-item icon-list-item--spec">a drop-in API</li>
+A Button Bar is similar in concept to a UIToolbar, but Button Bars are **not** a drop-in API
 replacement for UIToolbar. Button Bars are slightly more versatile in that one might use a Button
 Bar to create a Toolbar or a Navigation Bar (left/right button bars).
 

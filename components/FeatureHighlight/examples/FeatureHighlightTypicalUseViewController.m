@@ -33,6 +33,9 @@
 
   vc.titleText = @"Hey this is a multi-line title for the Feature Highlight";
   vc.bodyText = @"This is the description of the feature highlight view controller.";
+  // TODO(https://github.com/material-components/material-components-ios/issues/3644 ):
+  // Disable the incorrect "Double tap" hint for now
+  vc.accessibilityHint = nil;
   [self presentViewController:vc animated:YES completion:nil];
 }
 

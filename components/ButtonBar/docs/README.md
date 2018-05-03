@@ -6,10 +6,7 @@
 
 The Button Bar is a view that represents a list of UIBarButtonItems as horizontally aligned buttons.
 
-## Design & API documentation
-
-* [API: MDCButtonBar](https://material.io/components/ios/catalog/button-bars/api-docs/Classes/MDCButtonBar.html)
-* [API: MDCButtonBarDelegate](https://material.io/components/ios/catalog/button-bars/api-docs/Protocols/MDCButtonBarDelegate.html)
+<!-- design-and-api -->
 
 ## Related components
 

@@ -1,17 +1,12 @@
-# App Bar
-
-<div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/app_bar.png" alt="App Bar" width="375">
-</div>
+# App bars: top
 
 The Material Design top app bar displays information and actions relating to the current view.
 
-## Design & API documentation
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/top-app-bar.gif" alt="An animation showing a top app bar appearing and disappearing." width="320">
+</div>
 
-* [Material Design guidelines: App Bar](https://material.io/guidelines/layout/structure.html#structure-app-bar)
-* [Material Design guidelines: Scrolling Techniques](https://material.io/guidelines/patterns/scrolling-techniques.html)
-* [API: MDCAppBar](https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBar.html)
-* [API: MDCAppBarContainerViewController](https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBarContainerViewController.html)
+<!-- design-and-api -->
 
 ## Related components
 
@@ -23,7 +18,8 @@ The Material Design top app bar displays information and actions relating to the
 
 ## Overview
 
-The App Bar is a composite component that initializes and provides access to instances of the
+The top app bar is implemented on iOS in the AppBar component. This component's main API is
+`MDCAppBar`, a compose API that initializes and provides access to instances of the
 following components:
 
 * [Flexible Header](../../FlexibleHeader)

@@ -23,6 +23,11 @@ controller that will display a simple modal alert.
 
 <ul class="icon-list">
   <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-dialogs">Material Design guidelines: Dialogs</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/dialogs/api-docs/Classes.html#/c:objc(cs)MDCDialogTransitionController">MDCDialogTransitionController</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/dialogs/api-docs/Classes/MDCAlertAction.html">MDCAlertAction</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/dialogs/api-docs/Classes/MDCAlertController.html">MDCAlertController</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/dialogs/api-docs/Classes/MDCAlertControllerView.html">MDCAlertControllerView</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/dialogs/api-docs/Classes/MDCDialogPresentationController.html">MDCDialogPresentationController</a></li>
 </ul>
 
 ## Table of contents
@@ -51,7 +56,7 @@ view controller from the root controller to display it as a modal dialog.
 
 ### Presentation and transition controller
 
-Presenting dialogs utilizes two classes: MDCDialogPresentationController and
+Presenting dialogs uses two classes: MDCDialogPresentationController and
 MDCDialogTransitionController. These allow the presentation of view controllers in a material
 specificed manner. MDCDialogPresentationController is a subclass of UIPresentationController
 that observes the presented view controller for preferred content size.

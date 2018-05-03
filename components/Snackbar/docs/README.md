@@ -8,9 +8,7 @@ Snackbars provide brief feedback about an operation through a message at the bot
 Snackbars contain up to two lines of text directly related to the operation performed. They may
 contain a text action, but no icons.
 
-## Design & API documentation
-
-* [Material Design guidelines: Snackbars](https://material.io/go/design-snackbars)
+<!-- design-and-api -->
 
 ## Related components
 

@@ -44,11 +44,16 @@ We also have at our disposal convenience classes under the ShapeLibrary/ folder 
 #### Pre-made shape generators
 
 - **MDCCurvedRectShapeGenerator** This generates a shape using `MDCRectangleShapeGenerator` with `MDCCurvedCornerTreatment` for its corners.
-![MDCCurvedRectShapeGenerator](assets/MDCCurvedRectShapeGenerator.png)
+
+<img src="assets/MDCCurvedRectShapeGenerator.png" alt="MDCCurvedRectShapeGenerator" width="115">
+
 - **MDCPillShapeGenerator** This generates a shape using `MDCRectangleShapeGenerator` with `MDCRoundedCornerTreatment` for its corners.
-![MDCPillShapeGenerator](assets/MDCPillShapeGenerator.png)
+
+<img src="assets/MDCPillShapeGenerator.png" alt="MDCPillShapeGenerator" width="115">
+
 - **MDCSlantedRectShapeGenerator** This generates a shape using `MDCRectangleShapeGenerator` and adds a slant to its corners using a simple offset to its corners.
-![MDCSlantedRectShapeGenerator](assets/MDCSlantedRectShapeGenerator.png)
+
+<img src="assets/MDCSlantedRectShapeGenerator.png" alt="MDCSlantedRectShapeGenerator" width="115">
 
 ### Adding Shapes to your components
 
@@ -123,7 +128,7 @@ In that case you only need to set the shapeGenerator to a shape of your choice a
 
 #### Diamond FAB
 
-![Diamond FAB.](assets/diamondfab.gif)
+<img src="assets/diamondfab.gif" alt="Diamond FAB.">
 
 <!--<div class="material-code-render" markdown="1">-->
 ##### Swift
@@ -154,7 +159,7 @@ self.floatingButton.shapeGenerator = floatingShapeGenerator;
 
 #### Cut Corners Contained Button
 
-![Cut Corners Button.](assets/cutcornersbutton.gif)
+<img src="assets/cutcornersbutton.gif" alt="Cut Corners Button.">
 
 <!--<div class="material-code-render" markdown="1">-->
 ##### Swift
@@ -189,7 +194,7 @@ containedButton.shapeGenerator = raisedShapeGenerator;
 
 #### Top Left Cut Corner Card Cell
 
-![Card Cell Cut Corner.](assets/cardcellcutcorner.gif)
+<img src="assets/cardcellcutcorner.gif" alt="Card Cell Cut Corner.">
 
 <!--<div class="material-code-render" markdown="1">-->
 ##### Swift
@@ -222,7 +227,7 @@ func collectionView(_ collectionView: UICollectionView,
 
 #### Card with different corners
 
-![Card With Different Corners.](assets/cardwithdiffcorners.gif)
+<img src="assets/cardwithdiffcorners.gif" alt="Card With Different Corners.">
 
 <!--<div class="material-code-render" markdown="1">-->
 ##### Swift
