@@ -1,10 +1,28 @@
-# #develop#
+# 55.0.0
+
+This major release introduces breaking changes to CocoaPods dependencies. Please read the breaking
+changes section for more details.
+
+This release also includes a significant amount of documnetation polish and some accessibility bug
+fixes.
 
 ## Breaking changes
 
-## New deprecations
+CocoaPods +Extension targets have been removed and replaced with more specific targets for the
+individual extensions. For example, if you were importing a component's extensions like this before:
 
-## New features
+```
+pod 'MaterialComponents/Buttons+Extensions'
+```
+
+You'll now need to depend on the individual Button extension targets that you're making use of:
+
+```
+pod 'MaterialComponents/Buttons+ButtonThemer'
+```
+
+To see a full list of available extensions for a given component, read the
+MaterialComponents.podspec file.
 
 ## API changes
 
