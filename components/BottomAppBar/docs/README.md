@@ -1,4 +1,4 @@
-# Bottom App Bar
+# App bars: bottom
 
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/bottomappbar.png" alt="Text Fields" width="375">

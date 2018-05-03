@@ -1,5 +1,5 @@
 <!--docs:
-title: "Bottom App Bar"
+title: "App bars: bottom"
 layout: detail
 section: components
 excerpt: "Bottom app bar provides a bar at the bottom of the screen with primary action and navigation buttons."
@@ -10,7 +10,7 @@ api_doc_root: true
 
 <!-- This file was auto-generated using ./scripts/generate_readme BottomAppBar -->
 
-# Bottom App Bar
+# App bars: bottom
 
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/bottomappbar.png" alt="Text Fields" width="375">
@@ -21,7 +21,7 @@ A bottom app bar provides a docked bar at the bottom of the screen for common ap
 ## Design & API documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-app-bar-bottom">Material Design guidelines: Bottom App Bar</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-app-bar-bottom">Material Design guidelines: App bars: bottom</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/bottomappbar/api-docs/Classes/MDCBottomAppBarView.html">MDCBottomAppBarView</a></li>
   <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/bottomappbar/api-docs/Enums/MDCBottomAppBarFloatingButtonElevation.html">MDCBottomAppBarFloatingButtonElevation</a></li>
   <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/bottomappbar/api-docs/Enums/MDCBottomAppBarFloatingButtonPosition.html">MDCBottomAppBarFloatingButtonPosition</a></li>
