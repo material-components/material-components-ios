@@ -1,10 +1,10 @@
 ### Typical use: Tracking a scroll view
 
-The Flexible Header can be provided with tracking scroll view. This allows the Flexible Header to
+The flexible header can be provided with tracking scroll view. This allows the flexible header to
 expand, collapse, and shift off-screen in reaction to the tracking scroll view's delegate events.
 
 > Important: When using a tracking scroll view you must forward the relevant UIScrollViewDelegate
-> events to the Flexible Header.
+> events to the flexible header.
 
 Follow these steps to hook up a tracking scroll view:
 

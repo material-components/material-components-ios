@@ -11,7 +11,7 @@ font or button font.
 ## Related documentation
 
 * [Theming Material Components](../../../../docs/theming/)
-* [Color Theming](../../components/schemes/Color/)
+* [Color Theming](../../Color/)
 
 <!-- toc -->
 

@@ -1,8 +1,8 @@
 <!--docs:
-title: "Navigation Bar"
+title: "Navigation bar"
 layout: detail
 section: components
-excerpt: "The Navigation Bar component is a view composed of a left and right Button Bar and either a title label or a custom title view."
+excerpt: "The navigation bar component is a view composed of a left and right Button Bar and either a title label or a custom title view."
 iconId: toolbar
 path: /catalog/app-bars/navigation-bars/
 api_doc_root: true
@@ -10,21 +10,19 @@ api_doc_root: true
 
 <!-- This file was auto-generated using ./scripts/generate_readme NavigationBar -->
 
-# Navigation Bar
+# Navigation bar
+
+A navigation bar is a view composed of leading and trailing buttons and either a title label or a
+custom title view.
 
 <div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/navigation_bar.png" alt="Navigation Bar" width="320">
+  <img src="docs/assets/navigation_bar.png" alt="Navigation bar" width="320">
 </div>
-
-The Navigation Bar component is a view composed of a left and right Button Bar and either a title
-label or a custom title view.
-
-Consistent with iOS design guidelines, the title in the navigation bar is centered by default. However, certain use cases may warrant use of a left aligned title such as: when there is a strong relationship between the title and additional content appearing in the navigation bar, or where centering the title causes ambiguity.
 
 ## Design & API documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-app-bar-top">Material Design guidelines: Top App Bar</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-app-bar-top">Material Design guidelines: App bars: top</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/navigation-bars/api-docs/Classes/MDCNavigationBar.html">MDCNavigationBar</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/navigation-bars/api-docs/Classes/MDCNavigationBarTextColorAccessibilityMutator.html">MDCNavigationBarTextColorAccessibilityMutator</a></li>
   <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/app-bars/navigation-bars/api-docs/Protocols/MDCUINavigationItemObservables.html">MDCUINavigationItemObservables</a></li>
@@ -34,7 +32,8 @@ Consistent with iOS design guidelines, the title in the navigation bar is center
 ## Related components
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--link"><a href="../ProgressView">ProgressView</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="../AppBar">App bars: top</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="../BottomAppBar">App bars: bottom</a></li>
 </ul>
 
 ## Table of contents
@@ -53,10 +52,10 @@ Consistent with iOS design guidelines, the title in the navigation bar is center
 
 ## Overview
 
-Navigation Bar is a drop-in replacement for UINavigationBar with a few notable exceptions:
+Navigation bar is a drop-in replacement for UINavigationBar with a few notable exceptions:
 
 - No navigationItem stack. Instances of MDCNavigationBar must be explicitly provided with a back
-  button. TODO(featherless): Explain how to create a back button with Navigation Bar once
+  button. TODO(featherless): Explain how to create a back button with navigation bar once
   https://github.com/material-components/material-components-ios/issues/340 lands.
 
 The MDCNavigationBar class is a composition of two button bars and a title label or
@@ -152,10 +151,10 @@ navigationBar.unobserveNavigationItem()
 #### Exceptions
 
 All of the typical properties including UIViewController's `title` property will affect the
-Navigation Bar as you'd expect, with the following exceptions:
+navigation bar as you'd expect, with the following exceptions:
 
 - None of the `animated:` method varients are supported because they do not implement KVO events.
-  Use of these methods will result in the Navigation Bar becoming out of sync with the
+  Use of these methods will result in the navigation bar becoming out of sync with the
   navigationItem properties.
 - `prompt` is not presently supported. https://github.com/material-components/material-components-ios/issues/230.
 

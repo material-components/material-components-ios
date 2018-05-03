@@ -1,5 +1,5 @@
 <!--docs:
-title: "Bottom Sheet"
+title: "Sheets: bottom"
 layout: detail
 section: components
 excerpt: "Bottom sheets slide up from the bottom of the screen to reveal more content."
@@ -8,7 +8,7 @@ path: /catalog/bottom-sheet/
 -->
 
 
-# Bottom Sheet
+# Sheets: bottom
 
 <div class="article__asset article__asset--screenshot">
    <img src="docs/assets/bottom_sheet.png" alt="Bottom Sheet" width="375">
@@ -16,11 +16,10 @@ path: /catalog/bottom-sheet/
 
 Bottom sheets slide up from the bottom of the screen to reveal more content. Bottom sheets integrate with the app to display supporting content or present deep-linked content from other apps.
 
-
 ## Design & API Documentation
 
 <ul class="icon-list">
-<li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-sheets-bottom">Material Design guidelines: Bottom Sheet</a></li>
+<li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-sheets-bottom">Material Design guidelines: Bottom sheet</a></li>
 </ul>
 
 - - -

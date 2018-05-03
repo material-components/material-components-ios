@@ -1,12 +1,11 @@
-<!--docs:
-title: "Styling the collection view"
-navTitle: Styling
-layout: detail
-section: components
-iconId: list
-path: /catalog/collections/styling/
--->
 # Styling the collection view
+
+**Notice**: This component will be deprecated over the next few months in favor of the
+[Cards](../../Cards) and [List](../../List) components. See our
+[public tracker](https://www.pivotaltracker.com/epic/show/3938766) for more details on timing and
+the deprecation plan.
+
+---
 
 `MDCCollectionViewController` provides a `styler` property that conforms to the
 `MDCCollectionViewStyling` protocol. By using this property, styling can be easily set for the

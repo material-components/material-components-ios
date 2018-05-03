@@ -1,8 +1,8 @@
 <!--docs:
-title: "Flexible Header"
+title: "Flexible header"
 layout: detail
 section: components
-excerpt: "The Flexible Header is a container view whose height and vertical offset react to UIScrollViewDelegate events."
+excerpt: "The flexible header is a container view whose height and vertical offset react to UIScrollViewDelegate events."
 iconId: header
 path: /catalog/flexible-headers/
 api_doc_root: true
@@ -10,19 +10,19 @@ api_doc_root: true
 
 <!-- This file was auto-generated using ./scripts/generate_readme FlexibleHeader -->
 
-# Flexible Header
+# Flexible header
+
+A flexible header is a container view whose height and vertical offset react to
+UIScrollViewDelegate events.
 
 <div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/flexible_header.png" alt="Flexible Header" width="375">
+  <img src="docs/assets/flexible-header.gif" alt="An animation showing a flexible header appearing and disappearing." width="320">
 </div>
-
-The Flexible Header is a container view whose height and vertical offset react to
-UIScrollViewDelegate events.
 
 ## Design & API documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-app-bar-top">Material Design guidelines: Top App Bar</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-app-bar-top">Material Design guidelines: App bars: top</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Classes/MDCFlexibleHeaderContainerViewController.html">MDCFlexibleHeaderContainerViewController</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Classes/MDCFlexibleHeaderView.html">MDCFlexibleHeaderView</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Classes/MDCFlexibleHeaderView/behavior.html">behavior</a></li>
@@ -49,7 +49,7 @@ UIScrollViewDelegate events.
   - [Installation with CocoaPods](#installation-with-cocoapods)
   - [Importing](#importing)
 - [Usage](#usage)
-  - [Typical use: Add the Flexible Header to a view controller](#typical-use-add-the-flexible-header-to-a-view-controller)
+  - [Typical use: Add the flexible header to a view controller](#typical-use-add-the-flexible-header-to-a-view-controller)
   - [Typical use: Tracking a scroll view](#typical-use-tracking-a-scroll-view)
   - [Shifting a flexible header off-screen](#shifting-a-flexible-header-off-screen)
   - [Reacting to frame changes](#reacting-to-frame-changes)
@@ -68,31 +68,31 @@ UIScrollViewDelegate events.
 
 ## Overview
 
-The Flexible Header is a simple container view designed to live at the top of a view controller and
-react to scroll view events. Flexible Headers are intended to be created and owned by each view
+A flexible header is a simple container view designed to live at the top of a view controller and
+react to scroll view events. Flexible headers are intended to be created and owned by each view
 controller that requires one. This is an intentional deviation from the one-UINavigationBar design
 of UINavigationController, and we discuss the merits and drawbacks of this approach below.
 
-The heart of Flexible Header is MDCFlexibleHeaderView. MDCFlexibleHeaderView is a container view,
+The heart of flexible header is MDCFlexibleHeaderView. MDCFlexibleHeaderView is a container view,
 meaning you are expected to register your own subviews to it. MDCFlexibleHeaderView simply manages
 its "frame", you are responsible for everything within the bounds.
 
 MDCFlexibleHeaderViewController is the ideal way to create and manage the lifetime of a
 MDCFlexibleHeaderView instance. Adding this view controller as a child of your view controller
-ensures that the Flexible Header is able to react to device orientation and view appearance events.
+ensures that the flexible header is able to react to device orientation and view appearance events.
 This document generally assumes that you are familiar with
 [UIViewController containment](https://developer.apple.com/library/ios/featuredarticles/ViewControllerPGforiPhoneOS/ImplementingaContainerViewController.html).
 
 ### Considerations
 
-Requiring each view controller to own a Flexible Header instance has several technical advantages:
+Requiring each view controller to own a flexible header instance has several technical advantages:
 
 - Transitions between two view controllers can include the header in their motion considerations.
-- Flexible Header customizations are scoped to the owner view controller.
+- Flexible header customizations are scoped to the owner view controller.
 
 It also has some technical disadvantages:
 
-- There is a cost to registering and owning a Flexible Header instance when compared to
+- There is a cost to registering and owning a flexible header instance when compared to
   UINavigationController and the free availability of UINavigationBar. Improvements to this
   are being discussed on [issue #268](https://github.com/material-components/material-components-ios/issues/268).
 
@@ -137,15 +137,15 @@ import MaterialComponents.MaterialFlexibleHeader
 
 <!-- Extracted from docs/typical-use.md -->
 
-### Typical use: Add the Flexible Header to a view controller
+### Typical use: Add the flexible header to a view controller
 
-Each view controller in your app that intends to manage its own Flexible Header will follow these
-instructions. You'll typically add the Flexible Header to the same view controllers that you'd push
+Each view controller in your app that intends to manage its own flexible header will follow these
+instructions. You'll typically add the flexible header to the same view controllers that you'd push
 onto a UINavigationController, hiding the UINavigationController's `navigationBar` accordingly.
 
 The result of following these steps will be that:
 
-1. a Flexible Header is registered as a child view controller of your view controller, and that
+1. a flexible header is registered as a child view controller of your view controller, and that
 2. you have access to a MDCFlexibleHeaderView instance via the `headerView` property on your
    MDCFlexibleHeaderViewController instance.
 
@@ -192,7 +192,7 @@ required init?(coder aDecoder: NSCoder) {
 Step 2: **Add the MDCFlexibleHeaderViewController's view to your view controller's view**.
 
 Ideally you will do this after all views have been added to your controller's view in order to
-ensure that the Flexible Header is in front of all other views.
+ensure that the flexible header is in front of all other views.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -223,11 +223,11 @@ override func viewDidLoad() {
 
 ### Typical use: Tracking a scroll view
 
-The Flexible Header can be provided with tracking scroll view. This allows the Flexible Header to
+The flexible header can be provided with tracking scroll view. This allows the flexible header to
 expand, collapse, and shift off-screen in reaction to the tracking scroll view's delegate events.
 
 > Important: When using a tracking scroll view you must forward the relevant UIScrollViewDelegate
-> events to the Flexible Header.
+> events to the flexible header.
 
 Follow these steps to hook up a tracking scroll view:
 
@@ -345,9 +345,9 @@ override func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity v
 
 ### Shifting a flexible header off-screen
 
-A Flexible Header that tracks a scroll view will expand and contract its height in reaction to
-scroll view events. A Flexible Header can also shift off-screen in reaction to scroll view events
-by changing the Flexible Header's behavior.
+A flexible header that tracks a scroll view will expand and contract its height in reaction to
+scroll view events. A flexible header can also shift off-screen in reaction to scroll view events
+by changing the flexible header's behavior.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -361,12 +361,12 @@ headerViewController.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEn
 ```
 <!--</div>-->
 
-> Important: when a Flexible Header shifts off-screen it **will not hide the content views**. Your
-> content views are responsible for hiding themselves in reaction to the Flexible Header shifting
+> Important: when a flexible header shifts off-screen it **will not hide the content views**. Your
+> content views are responsible for hiding themselves in reaction to the flexible header shifting
 > off-screen. Read the section on [Reacting to frame changes](#reacting-to-frame-changes) for more
 > information.
 
-It is also possible to hide the status bar when shifting the Flexible Header off-screen. Enable this
+It is also possible to hide the status bar when shifting the flexible header off-screen. Enable this
 behavior by setting the `enabledWithStatusBar` behavior and implementing
 `childViewControllerForStatusBarHidden` on the parent view controller.
 
@@ -394,7 +394,7 @@ headerViewController.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEn
 
 ### Reacting to frame changes
 
-In order to react to Flexible Header frame changes you can set yourself as the
+In order to react to flexible header frame changes you can set yourself as the
 MDCFlexibleHeaderViewController instance's `layoutDelegate`.
 
 <!--<div class="material-code-render" markdown="1">-->
@@ -481,8 +481,8 @@ view.insertSubview(myCustomView, belowSubview: headerViewController.headerView)
 
 ### Interacting with UINavigationController
 
-Push a view controller with a Flexible Header onto UINavigationController and you may find that
-the existing UINavigationBar is undesired. The most obvious example occurs when your Flexible Header
+Push a view controller with a flexible header onto UINavigationController and you may find that
+the existing UINavigationBar is undesired. The most obvious example occurs when your flexible header
 has its own navigation bar.
 
 If this is the case then we recommend hiding the UINavigationController's `navigationBar` during
@@ -675,9 +675,9 @@ override var childViewControllerForStatusBarStyle: UIViewController? {
 
 ### Background images
 
-This example shows how to add a custom background image view to a Flexible Header.
+This example shows how to add a custom background image view to a flexible header.
 
-You can create and add a UIImageView subview to the Flexible Header view's content view:
+You can create and add a UIImageView subview to the flexible header view's content view:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -718,8 +718,8 @@ Notes:
 
 ### Touch forwarding
 
-The Flexible Header allows you to forward touch events to the tracking scroll view. This provides
-the illusion that the Flexible Header is part of the tracking scroll view.
+The flexible header allows you to forward touch events to the tracking scroll view. This provides
+the illusion that the flexible header is part of the tracking scroll view.
 
 #### Starting touch forwarding
 
@@ -758,17 +758,17 @@ headerView.stopForwardingTouchEvents(for: someContentView)
 ### Tracking a parent view
 
 While we do not recommend it, there are situations in which the trackingScrollView will be the
-parent view of the Flexible Header's view. The most notable example is UITableViewController, whose
+parent view of the flexible header's view. The most notable example is UITableViewController, whose
 `view` **is** the UITableView instance, so there is no other view to register the tracking scroll
 view to.
 
-As you might expect, this situation causes the Flexible Header to scroll off-screen with the scroll
-view regardless of the Flexible Header's scrolling behavior. To counter this, the Flexible Header
+As you might expect, this situation causes the flexible header to scroll off-screen with the scroll
+view regardless of the flexible header's scrolling behavior. To counter this, the flexible header
 sets its `transform` to an inversion of the current `contentOffset`. This gives the illusion of
-the Flexible Header staying fixed in place, even though the underlying scroll view is scrolling.
+the flexible header staying fixed in place, even though the underlying scroll view is scrolling.
 
-In these situations the Flexible Header also ensures that it is always the front-most view. This is
-to combat the UITableView displaying its divider lines in front of the Flexible Header.
+In these situations the flexible header also ensures that it is always the front-most view. This is
+to combat the UITableView displaying its divider lines in front of the flexible header.
 
 
 ## Extensions

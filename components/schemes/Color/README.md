@@ -1,10 +1,10 @@
 <!--docs:
-title: "Color Scheme"
+title: "Color scheme"
 layout: detail
 section: components
 excerpt: "The Material color scheme provides support for theming an app with a semantic set of colors."
 iconId: themes
-path: /catalog/schemes/color//
+path: /catalog/schemes/color/
 api_doc_root: true
 -->
 

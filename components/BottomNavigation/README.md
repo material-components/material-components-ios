@@ -1,8 +1,8 @@
 <!--docs:
-title: "Bottom Navigation"
+title: "Bottom navigation"
 layout: detail
 section: components
-excerpt: "Bottom navigation provides a bar at the bottom of the screen with items to navigate between different views."
+excerpt: "Bottom navigation bars allow movement between primary destinations in an app."
 iconId: bottom_navigation
 path: /catalog/bottomnavigation/
 api_doc_root: true
@@ -10,22 +10,19 @@ api_doc_root: true
 
 <!-- This file was auto-generated using ./scripts/generate_readme BottomNavigation -->
 
-# Bottom Navigation
+# Bottom navigation
+
+Bottom navigation bars allow movement between primary destinations in an app. Tapping on a bottom
+navigation icon takes you directly to the associated view or refreshes the currently active view.
 
 <div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/bottomnavigation.png" alt="Bottom Navigation" width="375">
+  <img src="docs/assets/bottom-navigation.gif" alt="An animation showing a change of selection in a bottom navigation component." width="320">
 </div>
-
-[Bottom navigation](https://material.io/go/design-bottom-navigation) makes it easy to explore and switch between top-level views in a single tap. Tapping on a bottom navigation icon takes you directly to the associated view or refreshes the currently active view.
-
-Bottom navigation should be used for top-level destinations in an app of similar importance or destinations requiring direct access from anywhere in the app. 
-
-Be cautious when combining bottom navigation with similar navigation placed at the bottom of the screen (e.g. a bottom tab bar), as the combination may cause confusion when navigating an app. For example, tapping across both bottom tabs and bottom navigation could display a mixture of different transitions across the same content.
 
 ## Design & API documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-bottom-navigation">Material Design guidelines: Bottom Navigation</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-bottom-navigation">Material Design guidelines: Bottom navigation</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/bottomnavigation/api-docs/Classes/MDCBottomNavigationBar.html">MDCBottomNavigationBar</a></li>
   <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/bottomnavigation/api-docs/Protocols/MDCBottomNavigationBarDelegate.html">MDCBottomNavigationBarDelegate</a></li>
   <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/bottomnavigation/api-docs/Enums/MDCBottomNavigationBarAlignment.html">MDCBottomNavigationBarAlignment</a></li>
@@ -35,6 +32,7 @@ Be cautious when combining bottom navigation with similar navigation placed at t
 ## Table of contents
 
 - [Overview](#overview)
+  - [Guidance](#guidance)
 - [Installation](#installation)
   - [Installation with CocoaPods](#installation-with-cocoapods)
   - [Importing](#importing)
@@ -55,6 +53,12 @@ It is recommended that three to five items are used to populate the content of t
 Title visibility can be configured in three ways: only show the title of the *selected* item, always show title regardless of any item's selection state, and never show title regardless of any item's selection state. The default behavior of bottom navigation is to only show the title for an item that is selected.
 
 In landscape orientation, items can be configured to be justified or compactly clustered together. When items are justified the bottom navigation bar is fitted to the width of the device. Justified items can have their titles shown below their respective icons or adjacent to their respective icons.
+
+### Guidance
+
+Bottom navigation should be used for top-level destinations in an app of similar importance or destinations requiring direct access from anywhere in the app. 
+
+Be cautious when combining bottom navigation with similar navigation placed at the bottom of the screen (e.g. a bottom tab bar), as the combination may cause confusion when navigating an app. For example, tapping across both bottom tabs and bottom navigation could display a mixture of different transitions across the same content.
 
 ## Installation
 
