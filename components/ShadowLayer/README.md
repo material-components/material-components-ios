@@ -1,22 +1,22 @@
 <!--docs:
-title: "Shadow Layer"
+title: "Shadow layer"
 layout: detail
 section: components
-excerpt: "The Shadow Layer component implements the Material Design specifications for elevation and shadows."
+excerpt: "The shadow layer component implements the Material Design specifications for elevation and shadows."
 iconId: shadow
-path: /catalog/shadows/shadow-layers/
+path: /catalog/shadows/shadow-layer/
 api_doc_root: true
 -->
 
-# Shadow Layer
+# Shadow layer
 
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/shadow_layer.png" width="375">
 </div>
 
-Shadow Layer implements the Material Design specifications for elevation and shadows.
+Shadow layer implements the Material Design specifications for elevation and shadows.
 By simulating the physical properties of paper, elevation and light source, shadows give
-visual depth to components. Shadow Layer provides an elevation property which affects
+visual depth to components. Shadow layer provides an elevation property which affects
 a shadow's depth and strength, automatically handling shadow diffusion based on the shadow's
 elevation.
 
@@ -75,7 +75,7 @@ pod install
 
 ### Importing
 
-Before using Shadow Layer, you'll need to import it:
+Before using shadow layer, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift

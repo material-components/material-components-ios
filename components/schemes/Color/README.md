@@ -1,5 +1,5 @@
 <!--docs:
-title: "Color Scheme"
+title: "Color scheme"
 layout: detail
 section: components
 excerpt: "The Material color scheme provides support for theming an app with a semantic set of colors."

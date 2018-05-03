@@ -1,5 +1,5 @@
 <!--docs:
-title: "Typography Scheme"
+title: "Typography scheme"
 layout: detail
 section: components
 excerpt: "The Material Design typography system can be used to create a type hierarchy that reflects your brand or style."
