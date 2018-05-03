@@ -21,6 +21,13 @@ By default, an instance of a scheme is initialized with the Material defaults. Y
 defaults as a baseline, but at a minimum we encourage you to tweak your color scheme's primary and
 secondary colors to match your brand colors.
 
+## Related documentation
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--link"><a href="../../components/schemes/Color">Color theming</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="../../components/schemes/Typography">Typography theming</a></li>
+</ul>
+
 ## Examples
 
 ### Creating a scheme

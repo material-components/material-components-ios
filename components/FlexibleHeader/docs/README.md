@@ -7,14 +7,7 @@
 The Flexible Header is a container view whose height and vertical offset react to
 UIScrollViewDelegate events.
 
-## Design & API documentation
-
-* [Material Design guidelines: Scrolling Techniques](https://material.io/guidelines/patterns/scrolling-techniques.html)
-* [API: MDCFlexibleHeaderContainerViewController](https://material.io/components/ios/catalog/flexible-headers/api-docs/Classes/MDCFlexibleHeaderContainerViewController.html)
-* [API: MDCFlexibleHeaderView](https://material.io/components/ios/catalog/flexible-headers/api-docs/Classes/MDCFlexibleHeaderView.html)
-* [API: MDCFlexibleHeaderViewController](https://material.io/components/ios/catalog/flexible-headers/api-docs/Classes/MDCFlexibleHeaderViewController.html)
-* [API: MDCFlexibleHeaderViewDelegate](https://material.io/components/ios/catalog/flexible-headers/api-docs/Protocols/MDCFlexibleHeaderViewDelegate.html)
-* [API: MDCFlexibleHeaderViewLayoutDelegate](https://material.io/components/ios/catalog/flexible-headers/api-docs/Protocols/MDCFlexibleHeaderViewLayoutDelegate.html)
+<!-- design-and-api -->
 
 ## Related components
 

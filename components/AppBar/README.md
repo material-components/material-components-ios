@@ -1,5 +1,5 @@
 <!--docs:
-title: "App Bar"
+title: "App bars: top"
 layout: detail
 section: components
 excerpt: "The Material Design top app bar displays information and actions relating to the current view."
@@ -10,21 +10,21 @@ api_doc_root: true
 
 <!-- This file was auto-generated using ./scripts/generate_readme AppBar -->
 
-# App Bar
-
-<div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/app_bar.png" alt="App Bar" width="375">
-</div>
+# App bars: top
 
 The Material Design top app bar displays information and actions relating to the current view.
+
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/top-app-bar.gif" alt="An animation showing a top app bar appearing and disappearing." width="320">
+</div>
 
 ## Design & API documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/guidelines/layout/structure.html#structure-app-bar">Material Design guidelines: App Bar</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/guidelines/patterns/scrolling-techniques.html">Material Design guidelines: Scrolling Techniques</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBar.html">API: MDCAppBar</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBarContainerViewController.html">API: MDCAppBarContainerViewController</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-app-bar-top">Material Design guidelines: App bars: top</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBar.html">MDCAppBar</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBarContainerViewController.html">MDCAppBarContainerViewController</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBarTextColorAccessibilityMutator.html">MDCAppBarTextColorAccessibilityMutator</a></li>
 </ul>
 
 ## Related components
@@ -52,7 +52,8 @@ The Material Design top app bar displays information and actions relating to the
 
 ## Overview
 
-The App Bar is a composite component that initializes and provides access to instances of the
+The top app bar is implemented on iOS in the AppBar component. This component's main API is
+`MDCAppBar`, a compose API that initializes and provides access to instances of the
 following components:
 
 <ul class="icon-list">

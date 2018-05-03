@@ -7,10 +7,7 @@
 The `MDCSlider` object is a Material Design control used to select a value from a continuous range
 or discrete set of values.
 
-## Design & API documentation
-
-* [Material Design guidelines: Sliders](https://material.io/go/design-sliders)
-* [API: MDCSlider](https://material.io/components/ios/catalog/sliders/api-docs/Classes/MDCSlider.html)
+<!-- design-and-api -->
 
 <!-- toc -->
 

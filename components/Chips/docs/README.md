@@ -2,9 +2,7 @@
 
 Chips represent complex entities, such as a contact, in small blocks.
 
-## Design & API documentation
-
-* [Material Design guidelines: Chips](https://material.io/go/design-chips)
+<!-- design-and-api -->
 
 <!-- toc -->
 

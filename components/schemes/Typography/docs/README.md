@@ -1,29 +1,17 @@
 # Typography Scheme
 
-<!-- Template: Short component description, summarized from the spec, connecting the Material spec
-terminology to the terminology being used in this component. Avoid talking about any specific API
-names here.
--->
-
-<!-- Template:
-Cropped, animated gif of the component. Avoid including any iOS chrome such as status bar.
-
-<img src="assets/component.gif" alt="Description of the animation.">
--->
+The Material Design typography system can be used to create a type hierarchy that reflects your
+brand or style. A _typography scheme_ represents your theme's specific fonts, such as its body
+font or button font.
 
 ## Design & API documentation
 
-* [Material Design guidelines: Progress & activity](https://material.io/go/design-progress-indicators)
-<!-- Template:
-Replace the url with the API's URL.
-* [API: SomeClass](https://material.io/components/ios/catalog/progress-indicators/activity-indicators/api-docs/Classes/MDCActivityIndicator.html)
--->
+* [Material Design guidelines: Typography theming](https://material.io/go/design-typography-theming)
 
-<!-- Template:
-## Related components
+## Related documentation
 
-* [OtherComponent](../../OtherComponent)
--->
+* [Theming Material Components](../../../../docs/theming/)
+* [Color Theming](../../components/schemes/Color/)
 
 <!-- toc -->
 
@@ -31,27 +19,68 @@ Replace the url with the API's URL.
 
 ## Overview
 
-<!-- Template:
-Detailed summary of the important APIs that are provided by this component.
--->
+An implementation of the Material Design typography scheme is provided in the `MDCTypographyScheme`
+class. By default, an instance of this class is configured with the Material defaults. While it is
+possible to use these defaults out of the box, you are encouraged to customize these fonts to
+better represent your branch.
+
+Most components with text elements support being themed with a typography scheme using a
+`typography themer` extension. You can learn more about which extensions are available for a given
+component by reading the [component documentation](../../../).
+
+### Semantic typography values
+
+A typography scheme includes the following semantic font style values, some of which have multiple
+numbered variants. The fonts are sized in decreasing size.  headline1 is larger than headline2
+which is larger than headline3 and so on.
+
+| Color name    | Use        |
+|:--------------|:---------- |
+| `headline`    | The largest text on the screen, reserved for short, important text or numerals. |
+| `subtitle`    | Smaller than headline, typically reserved for medium-emphasis text that is shorter in length. |
+| `body`        | Typically used for long-form writing. |
+| `caption`     | One of the smallest font sizes, may be used sparingly to annotate other visual elements. |
+| `button`      | Used in calls to action, such as buttons or tabs. |
+| `overline`    | One of the smallest font sizes, might be used to introduce a headline. |
 
 ## Installation
 
-- [Typical installation](../../../docs/component-installation.md)
+### Installation with CocoaPods
 
-## Usage
+Add the following to your `Podfile`:
 
-<!-- Template: Include at least one typical use article demonstrating the most common use case for
-the component.
+```bash
+pod 'MaterialComponents/schemes/TypographyScheme'
+```
+<!--{: .code-renderer.code-renderer--install }-->
 
-- [Typical use](typical-use.md)
-- [An article covering a specific topic](article.md)
--->
+Then, run the following command:
+
+```bash
+pod install
+```
+
+### Importing
+
+To import the component:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+import MaterialComponents.MaterialTypographyScheme
+```
+
+#### Objective-C
+
+```objc
+#import "MaterialTypographyScheme.h"
+```
+<!--</div>-->
 
 ## Extensions
 
 <!-- Template: Extensions should be called out separately from Usage docs.
 
-- [Color Theming](color-theming.md)
+- [Typography Theming](typography-theming.md)
 -->
 

@@ -6,9 +6,7 @@
 
 The Feature Highlight component is a way to visually highlight a part of the screen in order to introduce users to new features and functionality.
 
-## Design & API documentation
-
-* [Material Design guidelines: Feature Discovery](https://material.io/guidelines/growth-communications/feature-discovery.html)
+<!-- design-and-api -->
 
 <!-- toc -->
 
