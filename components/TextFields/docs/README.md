@@ -10,11 +10,7 @@ MDC's text fields come in several styles and have a great range of customization
 
 For more information on text field styles, and animated images of each style in action, see [Text Field Styles](./styling).
 
-## Design & API documentation
-
-* [Material Design guidelines: Text Fields](https://material.io/guidelines/components/text-fields.html)
-* [API: MDCTextFiel](https://material.io/components/ios/catalog/textfields/api-docs/Classes/MDCTextField.html)
-* [API: MDCMultilineTextField](https://material.io/components/ios/catalog/textfields/api-docs/Classes/MDCMultilineTextField.html)
+<!-- design-and-api -->
 
 <!-- toc -->
 

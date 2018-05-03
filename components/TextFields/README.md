@@ -25,9 +25,29 @@ For more information on text field styles, and animated images of each style in 
 ## Design & API documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/guidelines/components/text-fields.html">Material Design guidelines: Text Fields</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes/MDCTextField.html">API: MDCTextFiel</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes/MDCMultilineTextField.html">API: MDCMultilineTextField</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-text-fields">Material Design guidelines: Text Fields</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes.html#/c:objc(cs)MDCIntrinsicHeightTextView">MDCIntrinsicHeightTextView</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes.html#/c:objc(cs)MDCTextInputAllCharactersCounter">MDCTextInputAllCharactersCounter</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes.html#/c:objc(cs)MDCTextInputControllerFilled">MDCTextInputControllerFilled</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes.html#/c:objc(cs)MDCTextInputControllerFullWidth">MDCTextInputControllerFullWidth</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes.html#/c:objc(cs)MDCTextInputControllerLegacyDefault">MDCTextInputControllerLegacyDefault</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes.html#/c:objc(cs)MDCTextInputControllerLegacyFullWidth">MDCTextInputControllerLegacyFullWidth</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes.html#/c:objc(cs)MDCTextInputControllerOutlined">MDCTextInputControllerOutlined</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes.html#/c:objc(cs)MDCTextInputControllerOutlinedTextArea">MDCTextInputControllerOutlinedTextArea</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes.html#/c:objc(cs)MDCTextInputControllerUnderline">MDCTextInputControllerUnderline</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes/MDCMultilineTextField.html">MDCMultilineTextField</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes/MDCTextField.html">MDCTextField</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes/MDCTextInputControllerBase.html">MDCTextInputControllerBase</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes/MDCTextInputUnderlineView.html">MDCTextInputUnderlineView</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Protocols/MDCMultilineTextInput.html">MDCMultilineTextInput</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Protocols/MDCMultilineTextInputDelegate.html">MDCMultilineTextInputDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Protocols/MDCMultilineTextInputLayoutDelegate.html">MDCMultilineTextInputLayoutDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Protocols/MDCTextInput.html">MDCTextInput</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Protocols/MDCTextInputCharacterCounter.html">MDCTextInputCharacterCounter</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Protocols/MDCTextInputController.html">MDCTextInputController</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Protocols/MDCTextInputControllerFloatingPlaceholder.html">MDCTextInputControllerFloatingPlaceholder</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Protocols/MDCTextInputPositioningDelegate.html">MDCTextInputPositioningDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Enums/MDCTextInputTextInsetsMode.html">MDCTextInputTextInsetsMode</a></li>
 </ul>
 
 ## Table of contents
@@ -107,24 +127,30 @@ import MaterialComponents.MaterialTextFields
 
 This is a single-line text input. It's subclassed from `UITextField` and supports all the features you'd expect from a `UITextField`:
 
-* Placeholder
-* Overlay views (left and right / leading and trailing)
-* Custom fonts, colors
-* Clear button
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item">Placeholder</li>
+  <li class="icon-list-item icon-list-item">Overlay views (left and right / leading and trailing)</li>
+  <li class="icon-list-item icon-list-item">Custom fonts, colors</li>
+  <li class="icon-list-item icon-list-item">Clear button</li>
+</ul>
 
 as well as new features:
 
-* Underline
-* Labels below the input
-* Custom layouts
-* Persistable placeholder
-* Border view
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item">Underline</li>
+  <li class="icon-list-item icon-list-item">Labels below the input</li>
+  <li class="icon-list-item icon-list-item">Custom layouts</li>
+  <li class="icon-list-item icon-list-item">Persistable placeholder</li>
+  <li class="icon-list-item icon-list-item">Border view</li>
+</ul>
 
 #### Multi-line Text Field
 
 This is a multi-line text input. It's subclassed from `UIView` with an embedded `UITextView`. It supports all the features of the single-line text field and `UITextView` plus:
 
-* Minimum number of lines
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item">Minimum number of lines</li>
+</ul>
 
 ### Text Field Classes: The Controllers
 
@@ -132,10 +158,12 @@ This is a multi-line text input. It's subclassed from `UIView` with an embedded 
 
 This class holds all the 'magic' logic necessary to make the naturally 'dumb' text field and text view behave with:
 
-* Animations
-* Styles
-* Errors
-* Character counts
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item">Animations</li>
+  <li class="icon-list-item icon-list-item">Styles</li>
+  <li class="icon-list-item icon-list-item">Errors</li>
+  <li class="icon-list-item icon-list-item">Character counts</li>
+</ul>
 
 - - -
 
