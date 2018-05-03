@@ -127,22 +127,18 @@ import MaterialComponents.MaterialTextFields
 
 This is a single-line text input. It's subclassed from `UITextField` and supports all the features you'd expect from a `UITextField`:
 
-<ul class="icon-list">
-  <li class="icon-list-item icon-list-item">Placeholder</li>
-  <li class="icon-list-item icon-list-item">Overlay views (left and right / leading and trailing)</li>
-  <li class="icon-list-item icon-list-item">Custom fonts, colors</li>
-  <li class="icon-list-item icon-list-item">Clear button</li>
-</ul>
+- Placeholder
+- Overlay views (left and right / leading and trailing)
+- Custom fonts, colors
+- Clear button
 
 as well as new features:
 
-<ul class="icon-list">
-  <li class="icon-list-item icon-list-item">Underline</li>
-  <li class="icon-list-item icon-list-item">Labels below the input</li>
-  <li class="icon-list-item icon-list-item">Custom layouts</li>
-  <li class="icon-list-item icon-list-item">Persistable placeholder</li>
-  <li class="icon-list-item icon-list-item">Border view</li>
-</ul>
+- Underline
+- Labels below the input
+- Custom layouts
+- Persistable placeholder
+- Border view
 
 #### Multi-line Text Field
 
@@ -158,12 +154,10 @@ This is a multi-line text input. It's subclassed from `UIView` with an embedded 
 
 This class holds all the 'magic' logic necessary to make the naturally 'dumb' text field and text view behave with:
 
-<ul class="icon-list">
-  <li class="icon-list-item icon-list-item">Animations</li>
-  <li class="icon-list-item icon-list-item">Styles</li>
-  <li class="icon-list-item icon-list-item">Errors</li>
-  <li class="icon-list-item icon-list-item">Character counts</li>
-</ul>
+- Animations
+- Styles
+- Errors
+- Character counts
 
 - - -
 
