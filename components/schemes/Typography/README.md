@@ -1,3 +1,15 @@
+<!--docs:
+title: "Typography Scheme"
+layout: detail
+section: components
+excerpt: "The Material Design typography system can be used to create a type hierarchy that reflects your brand or style."
+iconId: themes
+path: /catalog/schemes/typography//
+api_doc_root: true
+-->
+
+<!-- This file was auto-generated using ./scripts/generate_readme schemes/Typography -->
+
 # Typography Scheme
 
 The Material Design typography system can be used to create a type hierarchy that reflects your
@@ -6,14 +18,25 @@ font or button font.
 
 ## Design & API documentation
 
-* [Material Design guidelines: Typography theming](https://material.io/go/design-typography-theming)
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-typography-theming">Material Design guidelines: Typography theming</a></li>
+</ul>
 
 ## Related documentation
 
-* [Theming Material Components](../../../../docs/theming/)
-* [Color Theming](../../Color/)
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--link"><a href="../../../docs/theming/">Theming Material Components</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="../Color/">Color Theming</a></li>
+</ul>
 
-<!-- toc -->
+## Table of contents
+
+- [Overview](#overview)
+  - [Semantic typography values](#semantic-typography-values)
+- [Installation](#installation)
+  - [Installation with CocoaPods](#installation-with-cocoapods)
+  - [Importing](#importing)
+- [Extensions](#extensions)
 
 - - -
 
@@ -26,7 +49,7 @@ better represent your branch.
 
 Most components with text elements support being themed with a typography scheme using a
 `typography themer` extension. You can learn more about which extensions are available for a given
-component by reading the [component documentation](../../../).
+component by reading the [component documentation](../../).
 
 ### Semantic typography values
 
@@ -81,6 +104,8 @@ import MaterialComponents.MaterialTypographyScheme
 
 <!-- Template: Extensions should be called out separately from Usage docs.
 
-- [Typography Theming](typography-theming.md)
+<!-- Extracted from docs/typography-theming.md -->
+
+
 -->
 
