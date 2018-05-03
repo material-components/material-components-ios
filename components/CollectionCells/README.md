@@ -1,14 +1,11 @@
-<!--docs:
-title: "Collection Cells"
-layout: detail
-section: components
-excerpt: "Collection view cell classes that adhere to Material Design layout and styling."
-iconId: list
-path: /catalog/collections/collection-cells/
-api_doc_root: true
--->
-
 # Collection Cells
+
+**Notice**: This component will be deprecated over the next few months in favor of the
+[Cards](../Cards) and [List](../List) components. See our
+[public tracker](https://www.pivotaltracker.com/epic/show/3938766) for more details on timing and
+the deprecation plan.
+
+---
 
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/collection_cells.png" alt="Collection Cells" width="375">

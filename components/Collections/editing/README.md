@@ -1,13 +1,11 @@
-<!--docs:
-title: "Editing the collection view"
-navTitle: Editing
-layout: detail
-section: components
-iconId: list
-path: /catalog/collections/editing/
--->
-
 # Editing the collection view
+
+**Notice**: This component will be deprecated over the next few months in favor of the
+[Cards](../../Cards) and [List](../../List) components. See our
+[public tracker](https://www.pivotaltracker.com/epic/show/3938766) for more details on timing and
+the deprecation plan.
+
+---
 
 The collection view controller provides an `editor` property that conforms to the
 `MDCCollectionViewEditing` protocol. Use this property to set the collection view into editing mode
