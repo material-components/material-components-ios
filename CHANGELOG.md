@@ -1,3 +1,181 @@
+# #develop#
+
+## Breaking changes
+
+## New deprecations
+
+## New features
+
+## API changes
+
+## Component changes
+
+### MaskedTransition
+
+#### Changes
+
+* [Standardize the casing for all components to match spec. (#3693)](https://github.com/material-components/material-components-ios/commit/a078a9722d9806dbac7bc63af976efe043e6d858) (featherless)
+
+### schemes/Color
+
+#### Changes
+
+* [Fix more casings.](https://github.com/material-components/material-components-ios/commit/ee0eeb7f511f639f6aaedd31ff764d44aefcc26d) (Jeff Verkoeyen)
+* [Fix scheme links.](https://github.com/material-components/material-components-ios/commit/a9f0b65a1606a13588f5cfbe6421998eaf507fa4) (Jeff Verkoeyen)
+
+### schemes/Typography
+
+#### Changes
+
+* [Fix more casings.](https://github.com/material-components/material-components-ios/commit/ee0eeb7f511f639f6aaedd31ff764d44aefcc26d) (Jeff Verkoeyen)
+* [Fix scheme links.](https://github.com/material-components/material-components-ios/commit/a9f0b65a1606a13588f5cfbe6421998eaf507fa4) (Jeff Verkoeyen)
+* [[Typography] Ensure that typography scheme is showing up on the site. (#3694)](https://github.com/material-components/material-components-ios/commit/a06a62beb062b40bbe1d93c9bab1900c13b37cde) (featherless)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Standardize the casing for all components to match spec. (#3693)](https://github.com/material-components/material-components-ios/commit/a078a9722d9806dbac7bc63af976efe043e6d858) (featherless)
+
+### AppBar
+
+#### Changes
+
+* [Update site naming for top and bottom app bars to match spec. (#3680)](https://github.com/material-components/material-components-ios/commit/c166652ae6977c26146a6450751d2580fbbd58f3) (featherless)
+
+### CollectionCells
+
+#### Changes
+
+* [[Collections] Add deprecation notice to the readmes and remove from the site. (#3695)](https://github.com/material-components/material-components-ios/commit/8ec943f57df1f29a080022b1eae34ef2d0b9c123) (featherless)
+* [[Collections] Mark all examples as dragons. (#3697)](https://github.com/material-components/material-components-ios/commit/01e592cb72481551a93d407bb2e29b5f1c5638d3) (featherless)
+
+### ButtonBar
+
+#### Changes
+
+* [Standardize the casing for all components to match spec. (#3693)](https://github.com/material-components/material-components-ios/commit/a078a9722d9806dbac7bc63af976efe043e6d858) (featherless)
+
+### TextFields
+
+#### Changes
+
+* [Standardize the casing for all components to match spec. (#3693)](https://github.com/material-components/material-components-ios/commit/a078a9722d9806dbac7bc63af976efe043e6d858) (featherless)
+
+### Cards
+
+#### Changes
+
+* [Make the site title be "Cards".](https://github.com/material-components/material-components-ios/commit/2c0a515df60c282048e8c674d8d109877bfbf520) (Jeff Verkoeyen)
+* [Update image and docs.](https://github.com/material-components/material-components-ios/commit/d94e03161ad0841116ff02dfb03b49e52c08b403) (Jeff Verkoeyen)
+
+### BottomAppBar
+
+#### Changes
+
+* [Add gif for bottom navigation and fix alt text in bottom app bar.](https://github.com/material-components/material-components-ios/commit/72ccfa73426c7d42cbdd7377f5fcb38faae8c89e) (Jeff Verkoeyen)
+* [Crop the screenshot to emphasize the bottom app bar.](https://github.com/material-components/material-components-ios/commit/1d85f287a00d960f7a9f64125467c859af6c1294) (Jeff Verkoeyen)
+* [Touch up the readme intro copy and image ordering.](https://github.com/material-components/material-components-ios/commit/75f367e61cbfabad9d84ea36d5b376c597893124) (Jeff Verkoeyen)
+* [Update site naming for top and bottom app bars to match spec. (#3680)](https://github.com/material-components/material-components-ios/commit/c166652ae6977c26146a6450751d2580fbbd58f3) (featherless)
+
+### NavigationBar
+
+#### Changes
+
+* [Fix ordering of header stack view and navigation bar intro text.](https://github.com/material-components/material-components-ios/commit/ead0ae49365d2db3778116798613110cb1ebdbdc) (Jeff Verkoeyen)
+* [Standardize the casing for all components to match spec. (#3693)](https://github.com/material-components/material-components-ios/commit/a078a9722d9806dbac7bc63af976efe043e6d858) (featherless)
+* [Update header stack view and navigation bar screenshots.](https://github.com/material-components/material-components-ios/commit/087d22f441e06c835b5a27f8228a1ca71eaf96e7) (Jeff Verkoeyen)
+
+### OverlayWindow
+
+#### Changes
+
+* [Standardize the casing for all components to match spec. (#3693)](https://github.com/material-components/material-components-ios/commit/a078a9722d9806dbac7bc63af976efe043e6d858) (featherless)
+
+### ShadowLayer
+
+#### Changes
+
+* [Fix more casings.](https://github.com/material-components/material-components-ios/commit/ee0eeb7f511f639f6aaedd31ff764d44aefcc26d) (Jeff Verkoeyen)
+
+### ActivityIndicator
+
+#### Changes
+
+* [Standardize the casing for all components to match spec. (#3693)](https://github.com/material-components/material-components-ios/commit/a078a9722d9806dbac7bc63af976efe043e6d858) (featherless)
+
+### BottomSheet
+
+#### Changes
+
+* [Standardize the casing for all components to match spec. (#3693)](https://github.com/material-components/material-components-ios/commit/a078a9722d9806dbac7bc63af976efe043e6d858) (featherless)
+
+### BottomNavigation
+
+#### Changes
+
+* [Add gif for bottom navigation and fix alt text in bottom app bar.](https://github.com/material-components/material-components-ios/commit/72ccfa73426c7d42cbdd7377f5fcb38faae8c89e) (Jeff Verkoeyen)
+* [Remove redundant link and update copy.](https://github.com/material-components/material-components-ios/commit/c8b8acabf8c78b9e266c33803848e9e67967fe73) (Jeff Verkoeyen)
+* [Shrink the gif.](https://github.com/material-components/material-components-ios/commit/e7b2b2c8e8888bd0525830613783c0c06b747fe4) (Jeff Verkoeyen)
+* [Standardize the casing for all components to match spec. (#3693)](https://github.com/material-components/material-components-ios/commit/a078a9722d9806dbac7bc63af976efe043e6d858) (featherless)
+
+### PageControl
+
+#### Changes
+
+* [Standardize the casing for all components to match spec. (#3693)](https://github.com/material-components/material-components-ios/commit/a078a9722d9806dbac7bc63af976efe043e6d858) (featherless)
+
+### AnimationTiming
+
+#### Changes
+
+* [Move animation below the intro text.](https://github.com/material-components/material-components-ios/commit/7af5818beffd68470a7a39670a3dc793b7a228eb) (Jeff Verkoeyen)
+* [Standardize the casing for all components to match spec. (#3693)](https://github.com/material-components/material-components-ios/commit/a078a9722d9806dbac7bc63af976efe043e6d858) (featherless)
+* [Update the copy.](https://github.com/material-components/material-components-ios/commit/e777fe00d330bafb98eeacaee093bbe020af5d40) (Jeff Verkoeyen)
+
+### Collections
+
+#### Changes
+
+* [Add deprecation notice to the readmes and remove from the site. (#3695)](https://github.com/material-components/material-components-ios/commit/8ec943f57df1f29a080022b1eae34ef2d0b9c123) (featherless)
+* [Mark all examples as dragons. (#3697)](https://github.com/material-components/material-components-ios/commit/01e592cb72481551a93d407bb2e29b5f1c5638d3) (featherless)
+
+### HeaderStackView
+
+#### Changes
+
+* [Fix ordering of header stack view and navigation bar intro text.](https://github.com/material-components/material-components-ios/commit/ead0ae49365d2db3778116798613110cb1ebdbdc) (Jeff Verkoeyen)
+* [Standardize the casing for all components to match spec. (#3693)](https://github.com/material-components/material-components-ios/commit/a078a9722d9806dbac7bc63af976efe043e6d858) (featherless)
+* [Update header stack view and navigation bar screenshots.](https://github.com/material-components/material-components-ios/commit/087d22f441e06c835b5a27f8228a1ca71eaf96e7) (Jeff Verkoeyen)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Add a gif for the docs.](https://github.com/material-components/material-components-ios/commit/1f3953d88ee0391494c4076140f8f1e1325ae1ad) (Jeff Verkoeyen)
+* [Fix casing in the site nav.](https://github.com/material-components/material-components-ios/commit/06c210637d8e24b6b8f7c342e9da28d34abe3f94) (Jeff Verkoeyen)
+* [Standardize the casing for all components to match spec. (#3693)](https://github.com/material-components/material-components-ios/commit/a078a9722d9806dbac7bc63af976efe043e6d858) (featherless)
+
+### ShadowElevations
+
+#### Changes
+
+* [Fix more casings.](https://github.com/material-components/material-components-ios/commit/ee0eeb7f511f639f6aaedd31ff764d44aefcc26d) (Jeff Verkoeyen)
+
+### ProgressView
+
+#### Changes
+
+* [Standardize the casing for all components to match spec. (#3693)](https://github.com/material-components/material-components-ios/commit/a078a9722d9806dbac7bc63af976efe043e6d858) (featherless)
+
+### CollectionLayoutAttributes
+
+#### Changes
+
+* [[Collections] Add deprecation notice to the readmes and remove from the site. (#3695)](https://github.com/material-components/material-components-ios/commit/8ec943f57df1f29a080022b1eae34ef2d0b9c123) (featherless)
+
+---
+
 # 55.0.0
 
 This major release introduces breaking changes to CocoaPods dependencies. Please read the breaking
