@@ -200,7 +200,7 @@ class ShapedCardViewController: UIViewController {
     secondarySlider.isHidden = false
 
     let shapeGenerator = MDCRectangleShapeGenerator()
-    let cutCornerTreatment = MDCCutCornerTreatment(cut: primarySlider.bounds.width)
+    let cutCornerTreatment = MDCCutCornerTreatment(cut: 0)
     shapeGenerator.setCorners(cutCornerTreatment)
     let triangleEdgeTreatment = MDCTriangleEdgeTreatment(size: 0, style: MDCTriangleEdgeStyleCut)
     shapeGenerator.setEdges(triangleEdgeTreatment)
