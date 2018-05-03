@@ -2,7 +2,7 @@
 title: "Cards"
 layout: detail
 section: components
-excerpt: "Cards are contained surfaces that serve as an entry point to more detailed information, with flexible visual parameters."
+excerpt: "Cards contain content and actions about a single subject."
 iconId: list
 path: /catalog/cards/
 api_doc_root: true
@@ -12,16 +12,13 @@ api_doc_root: true
 
 # Cards
 
+Cards contain content and actions about a single subject. They can be used standalone, or as part
+of a list. Cards are meant to be interactive, and aren't meant to be be used solely for style
+purposes.
+
 <div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/cards.png" alt="Cards" width="375">
+  <img src="docs/assets/cards.png" alt="Cards" width="320">
 </div>
-
-Cards are contained surfaces that serve as an entry point to more detailed information, with flexible visual parameters.
-
-They can be used as a standalone UIControl, or as a UICollectionViewCell in a UICollectionView.
-Cards are meant to be interactive, and shouldn't be used solely for displaying purposes.
-
-Cards adhere to Material Design layout and styling.
 
 ## Design & API documentation
 
