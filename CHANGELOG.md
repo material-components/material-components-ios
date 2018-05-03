@@ -1,3 +1,270 @@
+# #develop#
+
+## Breaking changes
+
+## New deprecations
+
+## New features
+
+## API changes
+
+## Component changes
+
+### Tabs
+
+#### Changes
+
+* [Flatten all +Extensions CocoaPods targets into standalone targets.  (#3572)](https://github.com/material-components/material-components-ios/commit/037bf7d0f0baee504a7f8111ece785fd33b0f722) (featherless)
+* [Regenerate component docs with automatic API links. (#3673)](https://github.com/material-components/material-components-ios/commit/da21941afa8500ba0fb5775da14e9f3646ed9299) (featherless)
+* [Rename Examples.md to examples.md](https://github.com/material-components/material-components-ios/commit/a26665e9a793109d2848f0aaa7197f3c572f4cab) (Mohammad Cazi)
+* [Rename Usage.md to usage.md](https://github.com/material-components/material-components-ios/commit/e9923dd93397be3fd3e3129cbc1adb7ed77f09b4) (Mohammad Cazi)
+* [Update README.md](https://github.com/material-components/material-components-ios/commit/8d8b459e97e6a86e4646fa3f864cf415e6c65d32) (Mohammad Cazi)
+* [[Catalog] Make many examples be dragons. (#3642)](https://github.com/material-components/material-components-ios/commit/e923d2d9283bfd9619f6db13bff2f72c47c8181c) (featherless)
+* [readme update. (#3613)](https://github.com/material-components/material-components-ios/commit/f84e745a990136fa4e2ba1021593848de0150eb7) (Mohammad Cazi)
+* [regenerating tabs after file change. (#3623)](https://github.com/material-components/material-components-ios/commit/7f9214eae3a37238c77b8d2dffcb65380c686d9a) (Mohammad Cazi)
+
+### schemes/Color
+
+#### Changes
+
+* [Fix build breakage.](https://github.com/material-components/material-components-ios/commit/09043a3e2ce57faa677a01eeb2d30607377f3887) (Jeff Verkoeyen)
+* [Update the default error color to match spec. (#3591)](https://github.com/material-components/material-components-ios/commit/31140876fb8bcb263667538dce91fe96d39b525e) (featherless)
+* [[Themes] Add deprecation notice to APIs and remove from the site. (#3636)](https://github.com/material-components/material-components-ios/commit/cd3a53c263f3b8968a9d947ecf2bd46ebe7c756a) (featherless)
+* [[schemes/Color Flesh out the documentation. (#3668)](https://github.com/material-components/material-components-ios/commit/f8b40770f70660b55282f437ed4aa6ec67599cc8) (featherless)
+
+### schemes/Typography
+
+#### Changes
+
+* [Add docs stubs. (#3609)](https://github.com/material-components/material-components-ios/commit/2979d1494aa065595ee33cb9f095119afc997053) (featherless)
+* [[Themes] Add deprecation notice to APIs and remove from the site. (#3636)](https://github.com/material-components/material-components-ios/commit/cd3a53c263f3b8968a9d947ecf2bd46ebe7c756a) (featherless)
+* [[Typography] Add TypographyScheme example (#3607)](https://github.com/material-components/material-components-ios/commit/3ba99c280b5bf9a7499dbbd334e691811713150d) (Robert Moore)
+* [[Typography] Preliminary Typography Scheme README (#3671)](https://github.com/material-components/material-components-ios/commit/fa87fde4b96f9b23f65beaf851b55fac50d83562) (ianegordon)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Allow setting accessibilityHint (#3649)](https://github.com/material-components/material-components-ios/commit/47c1bcb5d33772e9ef4e48d4e0aadba7f8ebd404) (Robert Moore)
+* [Flatten all +Extensions CocoaPods targets into standalone targets.  (#3572)](https://github.com/material-components/material-components-ios/commit/037bf7d0f0baee504a7f8111ece785fd33b0f722) (featherless)
+* [Regenerate component docs with automatic API links. (#3673)](https://github.com/material-components/material-components-ios/commit/da21941afa8500ba0fb5775da14e9f3646ed9299) (featherless)
+* [Remove theming preambles and regenerate root readme. (#3635)](https://github.com/material-components/material-components-ios/commit/de2bd52da695e2fddb08ee3888e646f19cf6e967) (featherless)
+* [Split the documentation into separate articles and run the readme generator. (#3620)](https://github.com/material-components/material-components-ios/commit/c1fc4e728b26b75df2bb04d30a3f0ffb011fbd70) (featherless)
+
+### AppBar
+
+#### Changes
+
+* [Add animated gif to the readme. (#3677)](https://github.com/material-components/material-components-ios/commit/8d7dda64e307d855967b02c93ffba3e136b0e5f5) (featherless)
+* [Flatten all +Extensions CocoaPods targets into standalone targets.  (#3572)](https://github.com/material-components/material-components-ios/commit/037bf7d0f0baee504a7f8111ece785fd33b0f722) (featherless)
+* [Make the App Bar appear as "Top App Bar" in the docsite. (#3670)](https://github.com/material-components/material-components-ios/commit/a312ab1b3065f9154c0cf778cb565db30839e996) (featherless)
+* [Make the interface builder and modal presentation examples be dragons. (#3659)](https://github.com/material-components/material-components-ios/commit/c2b286d559b9dbcdee3edb0d05aec082b632be3e) (featherless)
+* [Regenerate component docs with automatic API links. (#3673)](https://github.com/material-components/material-components-ios/commit/da21941afa8500ba0fb5775da14e9f3646ed9299) (featherless)
+* [Split the documentation into separate articles and run the readme generator. (#3634)](https://github.com/material-components/material-components-ios/commit/1e80136d29ce0283123cc5fbda25fc2b324eceb9) (featherless)
+
+### Buttons
+
+#### Changes
+
+* [Add documentation describing variants to buttons, chips and cards (#3600)](https://github.com/material-components/material-components-ios/commit/045e93e669cf1e08de486a4e17e4695e3d722f46) (John Detloff)
+* [Add outlined button gif. (#3639)](https://github.com/material-components/material-components-ios/commit/06667639354c75c66e16c076cc0096e5f2b45dfd) (featherless)
+* [Break the docs into separate articles and run the readme generator. (#3605)](https://github.com/material-components/material-components-ios/commit/5ec3e78a50e943e40885e66067ca1e77c52ea179) (featherless)
+* [Ensure buttons and cards reset their states correctly (#3599)](https://github.com/material-components/material-components-ios/commit/d471d4324cef89a83b4cc12d41ba66dc3747492b) (John Detloff)
+* [Flatten all +Extensions CocoaPods targets into standalone targets.  (#3572)](https://github.com/material-components/material-components-ios/commit/037bf7d0f0baee504a7f8111ece785fd33b0f722) (featherless)
+* [Regenerate component docs with automatic API links. (#3673)](https://github.com/material-components/material-components-ios/commit/da21941afa8500ba0fb5775da14e9f3646ed9299) (featherless)
+* [Theme the typical use example with the injected schemes. (#3603)](https://github.com/material-components/material-components-ios/commit/966a70e86d99483a7476e431f4dacde0e7369a38) (featherless)
+* [[scripts] Ensure that asset urls are remapped when generating readmes. (#3640)](https://github.com/material-components/material-components-ios/commit/91eca05769ab4bf976d16e9c4026d2bfdb2e1c7b) (featherless)
+
+### ButtonBar
+
+#### Changes
+
+* [Flatten all +Extensions CocoaPods targets into standalone targets.  (#3572)](https://github.com/material-components/material-components-ios/commit/037bf7d0f0baee504a7f8111ece785fd33b0f722) (featherless)
+* [Mark all of the AppBar implementation component examples as dragons. (#3596)](https://github.com/material-components/material-components-ios/commit/d0866fc6f0388456ec33f180d55c941a72bb9396) (featherless)
+* [Regenerate component docs with automatic API links. (#3673)](https://github.com/material-components/material-components-ios/commit/da21941afa8500ba0fb5775da14e9f3646ed9299) (featherless)
+* [Remove from the website. (#3638)](https://github.com/material-components/material-components-ios/commit/3e2cca9e9856d4c9f990194a771ab9a20e22eebc) (featherless)
+* [Split the documentation into separate articles and run the readme generator. (#3614)](https://github.com/material-components/material-components-ios/commit/74d0320132306f690db3f44c61742ac4c6c8820f) (featherless)
+
+### TextFields
+
+#### Changes
+
+* [Flatten all +Extensions CocoaPods targets into standalone targets.  (#3572)](https://github.com/material-components/material-components-ios/commit/037bf7d0f0baee504a7f8111ece785fd33b0f722) (featherless)
+* [Regenerate component docs with automatic API links. (#3673)](https://github.com/material-components/material-components-ios/commit/da21941afa8500ba0fb5775da14e9f3646ed9299) (featherless)
+* [[Catalog] Make many examples be dragons. (#3642)](https://github.com/material-components/material-components-ios/commit/e923d2d9283bfd9619f6db13bff2f72c47c8181c) (featherless)
+* [[TextField] floating placeholder overlaps with border. (#3606)](https://github.com/material-components/material-components-ios/commit/a0aa72556756cb48dbf8c579fb9285f82fa441c8) (Mohammad Cazi)
+* [[Textfields] readme auto generated update. (#3628)](https://github.com/material-components/material-components-ios/commit/c18026c59eafb4345445ad3b2c23ece70a27307b) (Mohammad Cazi)
+* [[scripts] Ensure that asset urls are remapped when generating readmes. (#3640)](https://github.com/material-components/material-components-ios/commit/91eca05769ab4bf976d16e9c4026d2bfdb2e1c7b) (featherless)
+* [fixing color mapping for floatingNormal and floatingActive Colors. (#3617)](https://github.com/material-components/material-components-ios/commit/7e3c5ae10731e08daead0052f1b15319fbe0fa16) (Mohammad Cazi)
+
+### Chips
+
+#### Changes
+
+* [Add documentation describing variants to buttons, chips and cards (#3600)](https://github.com/material-components/material-components-ios/commit/045e93e669cf1e08de486a4e17e4695e3d722f46) (John Detloff)
+* [Auto Generated README update. (#3621)](https://github.com/material-components/material-components-ios/commit/2835de1ac5be29d0ef80ff819ff5893b0aadf73b) (Mohammad Cazi)
+* [Flatten all +Extensions CocoaPods targets into standalone targets.  (#3572)](https://github.com/material-components/material-components-ios/commit/037bf7d0f0baee504a7f8111ece785fd33b0f722) (featherless)
+* [Regenerate component docs with automatic API links. (#3673)](https://github.com/material-components/material-components-ios/commit/da21941afa8500ba0fb5775da14e9f3646ed9299) (featherless)
+* [Replace "stroked" with "outlined" in the examples. (#3647)](https://github.com/material-components/material-components-ios/commit/3cd06801bbd24e82ea5d997533972937291c2634) (featherless)
+* [[Catalog] Make many examples be dragons. (#3642)](https://github.com/material-components/material-components-ios/commit/e923d2d9283bfd9619f6db13bff2f72c47c8181c) (featherless)
+
+### Snackbar
+
+#### Changes
+
+* [Flatten all +Extensions CocoaPods targets into standalone targets.  (#3572)](https://github.com/material-components/material-components-ios/commit/037bf7d0f0baee504a7f8111ece785fd33b0f722) (featherless)
+* [Global replace of "utilize" vs "use". (#3662)](https://github.com/material-components/material-components-ios/commit/14b9c1503f5a5de900413f44472f99fab38d2738) (Adrian Secord)
+* [Regenerate component docs with automatic API links. (#3673)](https://github.com/material-components/material-components-ios/commit/da21941afa8500ba0fb5775da14e9f3646ed9299) (featherless)
+* [Split the documentation into separate articles and run the readme generator. (#3627)](https://github.com/material-components/material-components-ios/commit/af0fb05ae59480765040520c8aee7c7f4ad0d098) (featherless)
+
+### Cards
+
+#### Changes
+
+* [Add documentation describing variants to buttons, chips and cards (#3600)](https://github.com/material-components/material-components-ios/commit/045e93e669cf1e08de486a4e17e4695e3d722f46) (John Detloff)
+* [Ensure buttons and cards reset their states correctly (#3599)](https://github.com/material-components/material-components-ios/commit/d471d4324cef89a83b4cc12d41ba66dc3747492b) (John Detloff)
+* [Flatten all +Extensions CocoaPods targets into standalone targets.  (#3572)](https://github.com/material-components/material-components-ios/commit/037bf7d0f0baee504a7f8111ece785fd33b0f722) (featherless)
+* [Global replace of "utilize" vs "use". (#3662)](https://github.com/material-components/material-components-ios/commit/14b9c1503f5a5de900413f44472f99fab38d2738) (Adrian Secord)
+* [Regenerate component docs with automatic API links. (#3673)](https://github.com/material-components/material-components-ios/commit/da21941afa8500ba0fb5775da14e9f3646ed9299) (featherless)
+* [Split the documentation into separate articles and run the readme generator. (#3618)](https://github.com/material-components/material-components-ios/commit/a3ad2dde8a947fbdc0db2928d853e0d818f1a0a4) (featherless)
+* [[Catalog] Make many examples be dragons. (#3642)](https://github.com/material-components/material-components-ios/commit/e923d2d9283bfd9619f6db13bff2f72c47c8181c) (featherless)
+
+### BottomAppBar
+
+#### Changes
+
+* [Regenerate component docs with automatic API links. (#3673)](https://github.com/material-components/material-components-ios/commit/da21941afa8500ba0fb5775da14e9f3646ed9299) (featherless)
+* [Split the documentation into separate articles and run the readme generator. (#3615)](https://github.com/material-components/material-components-ios/commit/ff1022a690258225af327a252391dc3ca9fbdadb) (featherless)
+
+### Slider
+
+#### Changes
+
+* [Flatten all +Extensions CocoaPods targets into standalone targets.  (#3572)](https://github.com/material-components/material-components-ios/commit/037bf7d0f0baee504a7f8111ece785fd33b0f722) (featherless)
+* [Regenerate component docs with automatic API links. (#3673)](https://github.com/material-components/material-components-ios/commit/da21941afa8500ba0fb5775da14e9f3646ed9299) (featherless)
+* [Split the documentation into separate articles and run the readme generator. (#3626)](https://github.com/material-components/material-components-ios/commit/854e234091ab2391d3cc7a3f5e6b7780535bfaaa) (featherless)
+* [[Catalog] Make many examples be dragons. (#3642)](https://github.com/material-components/material-components-ios/commit/e923d2d9283bfd9619f6db13bff2f72c47c8181c) (featherless)
+
+### NavigationBar
+
+#### Changes
+
+* [Fix broken link. (#3632)](https://github.com/material-components/material-components-ios/commit/574e115a7b267641bcf3669bd6522b553b641269) (featherless)
+* [Flatten all +Extensions CocoaPods targets into standalone targets.  (#3572)](https://github.com/material-components/material-components-ios/commit/037bf7d0f0baee504a7f8111ece785fd33b0f722) (featherless)
+* [Mark all of the AppBar implementation component examples as dragons. (#3596)](https://github.com/material-components/material-components-ios/commit/d0866fc6f0388456ec33f180d55c941a72bb9396) (featherless)
+* [Regenerate component docs with automatic API links. (#3673)](https://github.com/material-components/material-components-ios/commit/da21941afa8500ba0fb5775da14e9f3646ed9299) (featherless)
+* [Split the documentation into separate articles and run the readme generator. (#3622)](https://github.com/material-components/material-components-ios/commit/7ebaeb51bef3d0b1aa052448d4f434e1ae3d26c4) (featherless)
+* [[AppBar] Nest all of the implementation detail components under AppBar.](https://github.com/material-components/material-components-ios/commit/c541893c30bc151589432c24cdb5d839038e63f1) (featherless)
+* [[ButtonBar] Remove from the website. (#3638)](https://github.com/material-components/material-components-ios/commit/3e2cca9e9856d4c9f990194a771ab9a20e22eebc) (featherless)
+
+### ShadowLayer
+
+#### Changes
+
+* [Global replace of "utilize" vs "use". (#3662)](https://github.com/material-components/material-components-ios/commit/14b9c1503f5a5de900413f44472f99fab38d2738) (Adrian Secord)
+
+### ActivityIndicator
+
+#### Changes
+
+* [ Break the docs into separate articles and run the readme generator. (#3608)](https://github.com/material-components/material-components-ios/commit/00d40923c4e35da2beed828ce1d3821d50d4bcf1) (featherless)
+* [Flatten all +Extensions CocoaPods targets into standalone targets.  (#3572)](https://github.com/material-components/material-components-ios/commit/037bf7d0f0baee504a7f8111ece785fd33b0f722) (featherless)
+* [Regenerate component docs with automatic API links. (#3673)](https://github.com/material-components/material-components-ios/commit/da21941afa8500ba0fb5775da14e9f3646ed9299) (featherless)
+
+### BottomSheet
+
+#### Changes
+
+* [Fix issue causing black squares on bottom sheet rotation (#3630)](https://github.com/material-components/material-components-ios/commit/f12feaea2b5fb312538a138207112327d2384d79) (John Detloff)
+* [[Catalog] Make many examples be dragons. (#3642)](https://github.com/material-components/material-components-ios/commit/e923d2d9283bfd9619f6db13bff2f72c47c8181c) (featherless)
+
+### Typography
+
+#### Changes
+
+* [Add TypographyScheme example (#3607)](https://github.com/material-components/material-components-ios/commit/3ba99c280b5bf9a7499dbbd334e691811713150d) (Robert Moore)
+* [Add deprecation notice to the MDCTypography APIs and README (#3633)](https://github.com/material-components/material-components-ios/commit/fa155e0d1765381b8b2cca575008bedfb1d29428) (featherless)
+
+### Dialogs
+
+#### Changes
+
+* [Flatten all +Extensions CocoaPods targets into standalone targets.  (#3572)](https://github.com/material-components/material-components-ios/commit/037bf7d0f0baee504a7f8111ece785fd33b0f722) (featherless)
+* [Global replace of "utilize" vs "use". (#3662)](https://github.com/material-components/material-components-ios/commit/14b9c1503f5a5de900413f44472f99fab38d2738) (Adrian Secord)
+* [Regenerate component docs with automatic API links. (#3673)](https://github.com/material-components/material-components-ios/commit/da21941afa8500ba0fb5775da14e9f3646ed9299) (featherless)
+* [Split the documentation into separate articles and run the readme generator. (#3619)](https://github.com/material-components/material-components-ios/commit/ce9f1e0bbf5234ec373976074f0fda16d22d35d3) (featherless)
+* [[Catalog] Make many examples be dragons. (#3642)](https://github.com/material-components/material-components-ios/commit/e923d2d9283bfd9619f6db13bff2f72c47c8181c) (featherless)
+
+### BottomNavigation
+
+#### Changes
+
+* [Flatten all +Extensions CocoaPods targets into standalone targets.  (#3572)](https://github.com/material-components/material-components-ios/commit/037bf7d0f0baee504a7f8111ece785fd33b0f722) (featherless)
+* [Regenerate component docs with automatic API links. (#3673)](https://github.com/material-components/material-components-ios/commit/da21941afa8500ba0fb5775da14e9f3646ed9299) (featherless)
+* [Split the documentation into separate articles and run the readme generator. (#3616)](https://github.com/material-components/material-components-ios/commit/d2b8f7618ecada20392d4fcadfa324c188d6b7c4) (featherless)
+* [[Catalog] Make many examples be dragons. (#3642)](https://github.com/material-components/material-components-ios/commit/e923d2d9283bfd9619f6db13bff2f72c47c8181c) (featherless)
+* [[scripts] Ensure that asset urls are remapped when generating readmes. (#3640)](https://github.com/material-components/material-components-ios/commit/91eca05769ab4bf976d16e9c4026d2bfdb2e1c7b) (featherless)
+
+### PageControl
+
+#### Changes
+
+* [Regenerate component docs with automatic API links. (#3673)](https://github.com/material-components/material-components-ios/commit/da21941afa8500ba0fb5775da14e9f3646ed9299) (featherless)
+* [Split the documentation into separate articles and run the readme generator. (#3624)](https://github.com/material-components/material-components-ios/commit/ec4ec5fa2aafe31910b4625840e0beec8564a588) (featherless)
+* [[Catalog] Make many examples be dragons. (#3642)](https://github.com/material-components/material-components-ios/commit/e923d2d9283bfd9619f6db13bff2f72c47c8181c) (featherless)
+
+### AnimationTiming
+
+#### Changes
+
+* [Add a gif to the readme. (#3641)](https://github.com/material-components/material-components-ios/commit/6d02252fafab9243101b9a8022977e6488284baf) (featherless)
+
+### Collections
+
+#### Changes
+
+* [Global replace of "utilize" vs "use". (#3662)](https://github.com/material-components/material-components-ios/commit/14b9c1503f5a5de900413f44472f99fab38d2738) (Adrian Secord)
+
+### HeaderStackView
+
+#### Changes
+
+* [Mark all of the AppBar implementation component examples as dragons. (#3596)](https://github.com/material-components/material-components-ios/commit/d0866fc6f0388456ec33f180d55c941a72bb9396) (featherless)
+* [Remove color theming docs and mark the color themer as to be deprecated. (#3612)](https://github.com/material-components/material-components-ios/commit/e76147d8cd85ff1df6fcefe8c9fae9c87fdde818) (featherless)
+* [[AppBar] Nest all of the implementation detail components under AppBar.](https://github.com/material-components/material-components-ios/commit/c541893c30bc151589432c24cdb5d839038e63f1) (featherless)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Flatten all +Extensions CocoaPods targets into standalone targets.  (#3572)](https://github.com/material-components/material-components-ios/commit/037bf7d0f0baee504a7f8111ece785fd33b0f722) (featherless)
+* [Global replace of "utilize" vs "use". (#3662)](https://github.com/material-components/material-components-ios/commit/14b9c1503f5a5de900413f44472f99fab38d2738) (Adrian Secord)
+* [Mark all of the AppBar implementation component examples as dragons. (#3596)](https://github.com/material-components/material-components-ios/commit/d0866fc6f0388456ec33f180d55c941a72bb9396) (featherless)
+* [Regenerate component docs with automatic API links. (#3673)](https://github.com/material-components/material-components-ios/commit/da21941afa8500ba0fb5775da14e9f3646ed9299) (featherless)
+* [Split the documentation into separate articles and run the readme generator. (#3610)](https://github.com/material-components/material-components-ios/commit/e9e403d307f3779f6312b7b7acd214fe75cecae6) (featherless)
+
+### Themes
+
+#### Changes
+
+* [Add deprecation notice to APIs and remove from the site. (#3636)](https://github.com/material-components/material-components-ios/commit/cd3a53c263f3b8968a9d947ecf2bd46ebe7c756a) (featherless)
+
+### ProgressView
+
+#### Changes
+
+* [Regenerate component docs with automatic API links. (#3673)](https://github.com/material-components/material-components-ios/commit/da21941afa8500ba0fb5775da14e9f3646ed9299) (featherless)
+* [Split the documentation into separate articles and run the readme generator. (#3625)](https://github.com/material-components/material-components-ios/commit/6f8efafd30a536e8dd90fc74aa1f151792ee929d) (featherless)
+
+### Palettes
+
+#### Changes
+
+* [Improve example text contrast (#3590)](https://github.com/material-components/material-components-ios/commit/f636a9c5f2472c27cff92f64a7809075f4124f61) (Robert Moore)
+* [[Catalog] Make many examples be dragons. (#3642)](https://github.com/material-components/material-components-ios/commit/e923d2d9283bfd9619f6db13bff2f72c47c8181c) (featherless)
+
+---
+
 # 54.13.0
 
 This release focused on documentation across all of our componentry and introduced new outlined
