@@ -5,11 +5,7 @@ many distinct button styles including text buttons, contained buttons, and float
 
 <img src="assets/text.gif" alt="An animation showing a Material Design text button." width="115"> <img src="assets/outlined.gif" alt="An animation showing a Material Design outlined button." width="115"> <img src="assets/contained.gif" alt="An animation showing a Material Design contained button." width="115"> <img src="assets/fab.gif" alt="An animation showing a Material Design floating action button." width="99">
 
-## Design & API documentation
-
-* [Material Design guidelines: Buttons](https://material.io/go/design-buttons)
-* [API: MDCButton](https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCButton.html)
-* [API: MDCFloatingButton](https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCFloatingButton.html)
+<!-- design-and-api -->
 
 <!-- toc -->
 
