@@ -1,10 +1,10 @@
 # Top App Bar
 
-<div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/app_bar.png" alt="App Bar" width="375">
-</div>
-
 The Material Design top app bar displays information and actions relating to the current view.
+
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/top-app-bar.gif" alt="An animation showing a top app bar appearing and disappearing." width="320">
+</div>
 
 <!-- design-and-api -->
 
