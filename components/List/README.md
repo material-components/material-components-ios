@@ -29,7 +29,7 @@ and also of a custom `UICollectionViewCell`: <a href="examples/supplemental/Coll
 The main focus will be on the custom cell as that's where all the logic goes in, whereas the collection view and its controller are using mostly boilerplate code of setting up a simple example and collection view.
 
 ### Layout
-For our example we will have a layout consisting of a left aligned `UIImageView`, a title text `UILabel` and a details text `UILabel`. The title text will have a max of 1 line whereas the details text can be up to 3 lines. It is important to note that neither the image nor the labels need to have any content in them. To see more of the spec guidelines for Lists please see here: <a href="https://material.io/go/design-lists">https://material.io/go/design-lists</a>
+For our example we will have a layout consisting of a left aligned `UIImageView`, a title text `UILabel` and a details text `UILabel`. The title text will have a max of 1 line whereas the details text can be up to 3 lines. It is important to note that neither the image nor the labels need to be set. To see more of the spec guidelines for Lists please see here: <a href="https://material.io/go/design-lists">https://material.io/go/design-lists</a>
 
 To create our layout we used auto layout constraints that are all set up in the `(void)setupConstraints` method in our custom cell. It is important to make sure we set `translatesAutoresizingMaskIntoConstraints` to `NO` for all the views we are applying constraints on.
 
