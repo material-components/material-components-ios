@@ -37,7 +37,7 @@ The Button Bar is a view that represents a list of UIBarButtonItems as horizonta
 
 ## Overview
 
-A Button Bar is similar in concept to a UIToolbar, but Button Bars are **not*  <li class="icon-list-item icon-list-item--link">a drop-in API</li>
+A Button Bar is similar in concept to a UIToolbar, but Button Bars are **not** a drop-in API
 replacement for UIToolbar. Button Bars are slightly more versatile in that one might use a Button
 Bar to create a Toolbar or a Navigation Bar (left/right button bars).
 
