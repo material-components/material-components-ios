@@ -1,6 +1,7 @@
 # Bottom navigation
 
-[Bottom navigation](https://material.io/go/design-bottom-navigation) makes it easy to explore and switch between top-level views in a single tap. Tapping on a bottom navigation icon takes you directly to the associated view or refreshes the currently active view.
+Bottom navigation bars allow movement between primary destinations in an app. Tapping on a bottom
+navigation icon takes you directly to the associated view or refreshes the currently active view.
 
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/bottom-navigation.gif" alt="An animation showing a change of selection in a bottom navigation component." width="320">
