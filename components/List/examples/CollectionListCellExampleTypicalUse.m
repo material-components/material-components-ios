@@ -15,7 +15,6 @@
  */
 
 #import "MaterialIcons+ic_info.h"
-#import "MaterialInk.h"
 #import "MaterialTypographyScheme.h"
 #import "supplemental/CollectionListCellExampleTypicalUse.h"
 #import "supplemental/CollectionViewListCell.h"
@@ -29,8 +28,6 @@ static const CGFloat kSmallArbitraryCellWidth = 100.f;
 
 @implementation CollectionListCellExampleTypicalUse {
   NSMutableArray *_content;
-  MDCInkTouchController *_inkTouchController;
-  CGPoint _inkTouchLocation;
   UICollectionViewFlowLayout *_flowLayout;
 }
 
