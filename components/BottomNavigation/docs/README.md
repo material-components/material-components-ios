@@ -10,16 +10,7 @@ Bottom navigation should be used for top-level destinations in an app of similar
 
 Be cautious when combining bottom navigation with similar navigation placed at the bottom of the screen (e.g. a bottom tab bar), as the combination may cause confusion when navigating an app. For example, tapping across both bottom tabs and bottom navigation could display a mixture of different transitions across the same content.
 
-## Design & API documentation
-
-* [Material Design guidelines: Progress & activity](https://material.io/go/design-progress-indicators)
-* [API: MDCActivityIndicator](https://material.io/components/ios/catalog/progress-indicators/activity-indicators/api-docs/Classes/MDCActivityIndicator.html)
-* [API: MDCActivityIndicatorMode](https://material.io/components/ios/catalog/progress-indicators/activity-indicators/api-docs/Enums/MDCActivityIndicatorMode.html)
-* [API: MDCActivityIndicatorDelegate](https://material.io/components/ios/catalog/progress-indicators/activity-indicators/api-docs/Protocols/MDCActivityIndicatorDelegate.html)
-
-## Related components
-
-* [ProgressView](../../ProgressView)
+<!-- design-and-api -->
 
 <!-- toc -->
 

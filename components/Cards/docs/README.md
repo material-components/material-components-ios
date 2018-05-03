@@ -11,9 +11,7 @@ Cards are meant to be interactive, and shouldn't be used solely for displaying p
 
 Cards adhere to Material Design layout and styling.
 
-## Design & API documentation
-
-* [Material Design guidelines: Cards](https://material.io/go/design-cards)
+<!-- design-and-api -->
 
 <!-- toc -->
 
@@ -30,21 +28,24 @@ When treated as a `UIControl` (`MDCCard`), it has a default styling (`UIControlS
 When treated as a `UICollectionViewCell` (`MDCCardCollectionCell`), it has a default styling (`MDCCardCellStateNormal`), a highlighted styling (`MDCCardCellStateHighlighted`), and lastly a selected styling (`MDCCardCellStateSelected`).
 
 Customization to the card is exposed via its API either in `MDCCard` or `MDCCardCollectionCell`. Currently the card consists of these customizations:
-* The border width for a specific state
-* The border color for a specific state
-* The shadow elevation for a specific state
-* The shadow color for a specific state
-* The corner radius for the card
+
+- The border width for a specific state
+- The border color for a specific state
+- The shadow elevation for a specific state
+- The shadow color for a specific state
+- The corner radius for the card
 
 (`MDCCardCollectionCell` customization only):
-* Changing the image that appears in the Selected state.
-* Changing the image tint color that appears in the Selected state.
+
+- Changing the image that appears in the Selected state.
+- Changing the image tint color that appears in the Selected state.
 
 An `MDCCard` can be added and used as you would add any `UIView` or `UIControl`, if manually in code, or through Interface Builder.
 
 An `MDCCardCollectionCell` can be added, used, and reused as a `UICollectionViewCell`, if manually in code, or through Interface Builder.
 
 MDCCardThemer exposes apis to theme MDCCard and MDCCardCollectionCell instances as either a default or outlined variant. An outlined variant behaves identically to a default styled card, but differs in its coloring and in that it has a stroked border. Use 'applyScheme:toCard:' to style an instance with default values and 'applyOutlinedVariantWithScheme:toCard:' to style an instance with the outlined values.
+
 ### Cards Classes
 
 #### MDCCard

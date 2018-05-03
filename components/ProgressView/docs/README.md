@@ -9,10 +9,7 @@ influenced by [Material Design specifications](https://material.io/go/design-pro
 for animation and layout. The API methods are the same as a `UIProgressView`, with the addition of a
 few key methods required to achieve the desired animation of the control.
 
-## Design & API documentation
-
-* [Material Design guidelines: Progress & activity](https://material.io/go/design-progress-indicators)
-* [API: MDCProgressView](https://material.io/components/ios/catalog/progress-indicators/progress-views/api-docs/Classes/MDCProgressView.html)
+<!-- design-and-api -->
 
 ## Related components
 

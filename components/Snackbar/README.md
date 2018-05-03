@@ -23,7 +23,13 @@ contain a text action, but no icons.
 ## Design & API documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-snackbars">Material Design guidelines: Snackbars</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-snackbar">Material Design guidelines: Snack Bar</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/snackbars/api-docs/Classes/MDCSnackbarManager.html">MDCSnackbarManager</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/snackbars/api-docs/Classes/MDCSnackbarMessage.html">MDCSnackbarMessage</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/snackbars/api-docs/Classes/MDCSnackbarMessageAction.html">MDCSnackbarMessageAction</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/snackbars/api-docs/Classes/MDCSnackbarMessageView.html">MDCSnackbarMessageView</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/snackbars/api-docs/Classes/MDCSnackbarMessageView/snackbarMessageViewTextColor.html">snackbarMessageViewTextColor</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/snackbars/api-docs/Protocols.html#/c:objc(pl)MDCSnackbarSuspensionToken">MDCSnackbarSuspensionToken</a></li>
 </ul>
 
 ## Related components

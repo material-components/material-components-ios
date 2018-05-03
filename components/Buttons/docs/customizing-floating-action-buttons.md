@@ -14,7 +14,7 @@ UIButton property setters have been made unavailable and replaced with methods t
 specific mode and shape combination. Getters for these values are not available, and the normal
 getter will return the current value of the property.
 
-* `-setContentEdgeInsets` is replaced with `-setContentEdgeInsets:forShape:inMode:`
-* `-setHitAreaInsets` is replaced with `-setHitAreaInsets:forShape:inMode:`
-* `-setMinimumSize` is replaced with `-setMinimumSize:forShape:inMode:`
-* `-setMaximumSize` is replaced with `-setMaximumSize:forShape:inMode:`
+- `-setContentEdgeInsets` is replaced with `-setContentEdgeInsets:forShape:inMode:`
+- `-setHitAreaInsets` is replaced with `-setHitAreaInsets:forShape:inMode:`
+- `-setMinimumSize` is replaced with `-setMinimumSize:forShape:inMode:`
+- `-setMaximumSize` is replaced with `-setMaximumSize:forShape:inMode:`
