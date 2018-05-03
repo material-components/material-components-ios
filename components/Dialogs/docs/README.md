@@ -7,9 +7,7 @@
 Dialogs provides both a presentation controller for displaying a modal dialog and an alert
 controller that will display a simple modal alert.
 
-## Design & API documentation
-
-* [Material Design guidelines: Dialogs](https://material.io/go/design-dialogs)
+<!-- design-and-api -->
 
 <!-- toc -->
 

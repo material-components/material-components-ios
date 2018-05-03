@@ -9,9 +9,7 @@ influenced by Material Design specifications for animation and layout. The API m
 same as a `UIPageControl`, with the addition of a few key methods required to achieve the
 desired animation of the control.
 
-## Design & API documentation
-
-* [API: MDCPageControl](https://material.io/components/ios/catalog/page-controls/api-docs/Classes/MDCPageControl.html)
+<!-- design-and-api -->
 
 <!-- toc -->
 

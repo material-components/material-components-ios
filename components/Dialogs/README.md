@@ -23,6 +23,11 @@ controller that will display a simple modal alert.
 
 <ul class="icon-list">
   <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-dialogs">Material Design guidelines: Dialogs</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/dialogs/api-docs/Classes.html#/c:objc(cs)MDCDialogTransitionController">MDCDialogTransitionController</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/dialogs/api-docs/Classes/MDCAlertAction.html">MDCAlertAction</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/dialogs/api-docs/Classes/MDCAlertController.html">MDCAlertController</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/dialogs/api-docs/Classes/MDCAlertControllerView.html">MDCAlertControllerView</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/dialogs/api-docs/Classes/MDCDialogPresentationController.html">MDCDialogPresentationController</a></li>
 </ul>
 
 ## Table of contents

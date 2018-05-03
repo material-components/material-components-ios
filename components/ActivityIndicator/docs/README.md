@@ -8,12 +8,7 @@ This component only provides the circular implementation. See
 
 <img src="assets/activityindicator.gif" alt="An animation showing a determinate and indeterminate activity indicator." width="115">
 
-## Design & API documentation
-
-* [Material Design guidelines: Progress & activity](https://material.io/go/design-progress-indicators)
-* [API: MDCActivityIndicator](https://material.io/components/ios/catalog/progress-indicators/activity-indicators/api-docs/Classes/MDCActivityIndicator.html)
-* [API: MDCActivityIndicatorMode](https://material.io/components/ios/catalog/progress-indicators/activity-indicators/api-docs/Enums/MDCActivityIndicatorMode.html)
-* [API: MDCActivityIndicatorDelegate](https://material.io/components/ios/catalog/progress-indicators/activity-indicators/api-docs/Protocols/MDCActivityIndicatorDelegate.html)
+<!-- design-and-api -->
 
 ## Related components
 

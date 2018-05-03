@@ -6,9 +6,7 @@
 
 Tabs are bars of buttons used to navigate between groups of content.
 
-## Design & API documentation
-
-* [Material Design guidelines: Tabs](https://material.io/go/design-tabs)
+<!-- design-and-api -->
 
 <!-- toc -->
 

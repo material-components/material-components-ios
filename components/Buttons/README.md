@@ -21,8 +21,13 @@ many distinct button styles including text buttons, contained buttons, and float
 
 <ul class="icon-list">
   <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-buttons">Material Design guidelines: Buttons</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCButton.html">API: MDCButton</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCFloatingButton.html">API: MDCFloatingButton</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCButton.html">MDCButton</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCFlatButton.html">MDCFlatButton</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCFloatingButton.html">MDCFloatingButton</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/buttons/api-docs/Classes.html#/c:objc(cs)MDCRaisedButton">MDCRaisedButton</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/buttons/api-docs/Enums/MDCFloatingButtonImageLocation.html">MDCFloatingButtonImageLocation</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/buttons/api-docs/Enums/MDCFloatingButtonMode.html">MDCFloatingButtonMode</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/buttons/api-docs/Enums/MDCFloatingButtonShape.html">MDCFloatingButtonShape</a></li>
 </ul>
 
 ## Table of contents
@@ -193,10 +198,10 @@ UIButton property setters have been made unavailable and replaced with methods t
 specific mode and shape combination. Getters for these values are not available, and the normal
 getter will return the current value of the property.
 
-* `-setContentEdgeInsets` is replaced with `-setContentEdgeInsets:forShape:inMode:`
-* `-setHitAreaInsets` is replaced with `-setHitAreaInsets:forShape:inMode:`
-* `-setMinimumSize` is replaced with `-setMinimumSize:forShape:inMode:`
-* `-setMaximumSize` is replaced with `-setMaximumSize:forShape:inMode:`
+- `-setContentEdgeInsets` is replaced with `-setContentEdgeInsets:forShape:inMode:`
+- `-setHitAreaInsets` is replaced with `-setHitAreaInsets:forShape:inMode:`
+- `-setMinimumSize` is replaced with `-setMinimumSize:forShape:inMode:`
+- `-setMaximumSize` is replaced with `-setMaximumSize:forShape:inMode:`
 
 <!-- Extracted from docs/interface-builder.md -->
 

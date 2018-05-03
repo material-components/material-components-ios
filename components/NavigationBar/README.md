@@ -21,10 +21,14 @@ label or a custom title view.
 
 Consistent with iOS design guidelines, the title in the navigation bar is centered by default. However, certain use cases may warrant use of a left aligned title such as: when there is a strong relationship between the title and additional content appearing in the navigation bar, or where centering the title causes ambiguity.
 
-## API documentation
+## Design & API documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/flexible-headers/navigation-bars/api-docs/Classes/MDCNavigationBar.html">API: MDCNavigationBar</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-app-bar-top">Material Design guidelines: Top App Bar</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/navigation-bars/api-docs/Classes/MDCNavigationBar.html">MDCNavigationBar</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/navigation-bars/api-docs/Classes/MDCNavigationBarTextColorAccessibilityMutator.html">MDCNavigationBarTextColorAccessibilityMutator</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/app-bars/navigation-bars/api-docs/Protocols/MDCUINavigationItemObservables.html">MDCUINavigationItemObservables</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/app-bars/navigation-bars/api-docs/Enums/MDCNavigationBarTitleAlignment.html">MDCNavigationBarTitleAlignment</a></li>
 </ul>
 
 ## Related components

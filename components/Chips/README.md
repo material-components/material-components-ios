@@ -18,6 +18,12 @@ Chips represent complex entities, such as a contact, in small blocks.
 
 <ul class="icon-list">
   <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-chips">Material Design guidelines: Chips</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/chips/api-docs/Classes.html#/c:objc(cs)MDCChipCollectionViewFlowLayout">MDCChipCollectionViewFlowLayout</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/chips/api-docs/Classes/MDCChipCollectionViewCell.html">MDCChipCollectionViewCell</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/chips/api-docs/Classes/MDCChipField.html">MDCChipField</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/chips/api-docs/Classes/MDCChipView.html">MDCChipView</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/chips/api-docs/Protocols/MDCChipFieldDelegate.html">MDCChipFieldDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/chips/api-docs/Enums/MDCChipFieldDelimiter.html">MDCChipFieldDelimiter</a></li>
 </ul>
 
 ## Table of contents
