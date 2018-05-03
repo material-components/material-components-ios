@@ -42,10 +42,10 @@ navigationBar.unobserveNavigationItem()
 #### Exceptions
 
 All of the typical properties including UIViewController's `title` property will affect the
-Navigation Bar as you'd expect, with the following exceptions:
+navigation bar as you'd expect, with the following exceptions:
 
 - None of the `animated:` method varients are supported because they do not implement KVO events.
-  Use of these methods will result in the Navigation Bar becoming out of sync with the
+  Use of these methods will result in the navigation bar becoming out of sync with the
   navigationItem properties.
 - `prompt` is not presently supported. https://github.com/material-components/material-components-ios/issues/230.
 

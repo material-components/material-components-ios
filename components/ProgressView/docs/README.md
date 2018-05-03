@@ -1,4 +1,4 @@
-# Progress View
+# Progress view
 
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/progress_view.png" alt="Progress View" width="375">

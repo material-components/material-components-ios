@@ -1,4 +1,4 @@
-# Bottom Navigation
+# Bottom navigation
 
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/bottomnavigation.png" alt="Bottom Navigation" width="375">

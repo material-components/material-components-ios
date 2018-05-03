@@ -1,7 +1,7 @@
 ### Touch forwarding
 
-The Flexible Header allows you to forward touch events to the tracking scroll view. This provides
-the illusion that the Flexible Header is part of the tracking scroll view.
+The flexible header allows you to forward touch events to the tracking scroll view. This provides
+the illusion that the flexible header is part of the tracking scroll view.
 
 #### Starting touch forwarding
 

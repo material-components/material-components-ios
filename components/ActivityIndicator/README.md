@@ -1,5 +1,5 @@
 <!--docs:
-title: "Activity Indicator"
+title: "Circular progress & activity indicator"
 layout: detail
 section: components
 excerpt: "Material Design progress indicators display the length of a process or express an unspecified wait time."
@@ -10,7 +10,7 @@ api_doc_root: true
 
 <!-- This file was auto-generated using ./scripts/generate_readme ActivityIndicator -->
 
-# Activity Indicator
+# Circular progress & activity indicator
 
 Material Design progress indicators display the length of a process or express an unspecified wait
 time. There are two styles of progress indicators: linear and circular.
@@ -23,7 +23,7 @@ This component only provides the circular implementation. See
 ## Design & API documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-progress-indicators">Material Design guidelines: Progress & Activity</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-progress-indicators">Material Design guidelines: Progress & activity</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/progress-indicators/activity-indicators/api-docs/Classes/MDCActivityIndicator.html">MDCActivityIndicator</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/progress-indicators/activity-indicators/api-docs/Classes/MDCActivityIndicatorTransition.html">MDCActivityIndicatorTransition</a></li>
   <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/progress-indicators/activity-indicators/api-docs/Protocols/MDCActivityIndicatorDelegate.html">MDCActivityIndicatorDelegate</a></li>
