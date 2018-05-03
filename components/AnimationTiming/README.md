@@ -9,17 +9,16 @@ path: /catalog/animation-timing/
 
 # Animation timing
 
-Animation timing easing curves create smooth and consistent motion. Easing curves allow elements to
-move between positions or states. These easing curves affect an object's speed, opacity, and scale.
-These animation curves allow acceleration and deceleration changes to be smooth across the duration
-of an animation so that movement doesn't appear mechanical.
+Like color and typography, motion can play a role in defining your app's style and brand. The
+animation timing component provides implementations of the Material Motion easing curve types for
+iOS.
 
 <img src="docs/assets/animationtiming.gif" alt="An animation showing different Material Design animation timings." width="237">
 
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/motion/duration-easing.html">Material Design guidelines: Duration & easing</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-easing">Material Design guidelines: Easing</a></li>
 </ul>
 
 ## Installation
