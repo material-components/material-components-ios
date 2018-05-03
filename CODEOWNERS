@@ -30,7 +30,7 @@
 /components/Ink/                  @yarneo
 /components/LibraryInfo/          @ajsecord
 /components/MaskedTransition/     @jverkoey
-/components/NavigationBar/        @yarneo, @jverkoey
+/components/NavigationBar/        @yarneo @jverkoey
 /components/OverlayWindow/        @yarneo
 /components/PageControl/          @randallli
 /components/Palettes/             @ajsecord
@@ -39,7 +39,7 @@
 /components/ShadowLayer/          @ianegordon
 /components/Slider/               @romoore
 /components/Snackbar/             @yarneo
-/components/Tabs/                 @mohammadcazig, @brianjmoore
+/components/Tabs/                 @mohammadcazig @brianjmoore
 /components/TextFields/           @willlarche
 /components/Themes/               @jgunaratne
 /components/Typography/           @randallli
