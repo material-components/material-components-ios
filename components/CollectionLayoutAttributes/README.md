@@ -1,14 +1,11 @@
-<!--docs:
-title: "Collection Layout Attributes"
-layout: detail
-section: components
-excerpt: "Allows passing layout attributes to the cells and supplementary views."
-iconId: list
-path: /catalog/collections/collection-layout-attributes/
-api_doc_root: true
--->
-
 # Collection Layout Attributes
+
+**Notice**: This component will be deprecated over the next few months in favor of the
+[Cards](../Cards) and [List](../List) components. See our
+[public tracker](https://www.pivotaltracker.com/epic/show/3938766) for more details on timing and
+the deprecation plan.
+
+---
 
 Allows passing layout attributes to the cells and supplementary views.
 

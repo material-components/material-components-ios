@@ -1,7 +1,7 @@
-# Page Control
+# Page control
 
 <div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/page_control.png" alt="Page Control" width="375">
+  <img src="docs/assets/page_control.png" alt="Page control" width="375">
 </div>
 
 This control is designed to be a drop-in replacement for `UIPageControl`, with a user experience
@@ -32,7 +32,6 @@ Page control showing animated track with current page indicator positioned along
 <img src="docs/assets/MDCPageControl_screenshot-3.png" alt="screenshot-3" width="375">
 <!--{: .article__asset.article__asset--screenshot }-->
 Page control showing new current page.
-
 
 ## Installation
 

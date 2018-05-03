@@ -1,5 +1,5 @@
 <!--docs:
-title: "Text Fields"
+title: "Text fields"
 layout: detail
 section: components
 excerpt: "Text fields allow users to input text into your app."
@@ -10,7 +10,7 @@ api_doc_root: true
 
 <!-- This file was auto-generated using ./scripts/generate_readme TextFields -->
 
-# Text Fields
+# Text fields
 
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/textfields.png" alt="Text Fields" width="375">
@@ -25,7 +25,7 @@ For more information on text field styles, and animated images of each style in 
 ## Design & API documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-text-fields">Material Design guidelines: Text Fields</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-text-fields">Material Design guidelines: Text fields</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes.html#/c:objc(cs)MDCIntrinsicHeightTextView">MDCIntrinsicHeightTextView</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes.html#/c:objc(cs)MDCTextInputAllCharactersCounter">MDCTextInputAllCharactersCounter</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes.html#/c:objc(cs)MDCTextInputControllerFilled">MDCTextInputControllerFilled</a></li>
