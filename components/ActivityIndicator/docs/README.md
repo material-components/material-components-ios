@@ -1,4 +1,4 @@
-# Activity Indicator
+# Circular progress & activity indicator
 
 Material Design progress indicators display the length of a process or express an unspecified wait
 time. There are two styles of progress indicators: linear and circular.

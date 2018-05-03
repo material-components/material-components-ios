@@ -1,8 +1,8 @@
 <!--docs:
-title: "Feature Highlight"
+title: "Feature highlight"
 layout: detail
 section: components
-excerpt: "Feature Highlight highlights a part of the screen in order to introduce users to new features and functionality."
+excerpt: "Feature highlight highlights a part of the screen in order to introduce users to new features and functionality."
 iconId: feature_highlight
 path: /catalog/feature-highlights/
 api_doc_root: true
@@ -10,7 +10,7 @@ api_doc_root: true
 
 <!-- This file was auto-generated using ./scripts/generate_readme FeatureHighlight -->
 
-# Feature Highlight
+# Feature highlight
 
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/feature_highlight.png" alt="Feature Highlight" width="375">
