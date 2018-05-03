@@ -8,6 +8,8 @@ build_tests/CocoapodsSwiftApp/CocoapodsSwiftApp.xcworkspace
 scripts/external/material-design-icons/
 scripts/external/objc-diff/
 
+*apidocs/
+
 # Xcode
 #
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
