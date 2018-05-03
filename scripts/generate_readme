@@ -40,7 +40,13 @@ fi
 extract_apis_of_type() {
   type="$1"
   type_name="$2"
-  cat apidocs/search.json | tr , '\n' | grep "$type/" | grep -v "#" | while read line; do
+  cat apidocs/search.json | tr , '\n' \
+      | grep "^\"$type" \
+      | grep -v "$type\"$" \
+      | grep -v "(.*).*(.*)" \
+      | grep -v "@" \
+      | sort | uniq \
+      | while read line; do
     url=$(echo "$line" | cut -d'"' -f2)
     api=$(echo "$line" | cut -d'"' -f6)
     echo "* $type_name: [$api](${SITE_URL_BASE}${COMPONENT_SITE_PATH}/api-docs/$url)"
@@ -152,13 +158,13 @@ done
 echo "Generating pretty lists..."
 
 # Convert * spec urls to stylized lists
-perl -pi -e "s|\* \[(.+)\]\\((.+?)/go/design-(.+)\\)|  <li class=\"icon-list-item icon-list-item--spec\"><a href=\"\2/go/design-\3\">\1</a></li>|g" "$TMP_README_PATH"
+perl -pi -e "s|^\* \[(.+)\]\\((.+?)/go/design-(.+)\\)|  <li class=\"icon-list-item icon-list-item--spec\"><a href=\"\2/go/design-\3\">\1</a></li>|g" "$TMP_README_PATH"
 
 # Convert * list urls to stylized lists
-perl -pi -e "s|\* (.*)\[(.+)\]\\((.+)\\)|* \1<a href=\"\3\">\2</a>|g" "$TMP_README_PATH"
+perl -pi -e "s|^\* (.*)\[(.+)\]\\((.+)\\)|  <li class=\"icon-list-item icon-list-item--link\">\1<a href=\"\3\">\2</a></li>|g" "$TMP_README_PATH"
 
 # Convert * list text to stylized lists.
-perl -pi -e "s|\* (.+)$|  <li class=\"icon-list-item icon-list-item--link\">\1</li>|g" "$TMP_README_PATH"
+perl -pi -e "s|^\* (.+)$|  <li class=\"icon-list-item icon-list-item\">\1</li>|g" "$TMP_README_PATH"
 
 # Prefix lists with <ul>
 perl -p0i -e "s|\n\n  <li|\n\n<ul class=\"icon-list\">\n  <li|g" "$TMP_README_PATH"
