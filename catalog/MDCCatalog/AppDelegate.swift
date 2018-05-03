@@ -99,7 +99,7 @@ extension UINavigationController {
     // https://github.com/material-components/material-components-ios/issues/367 is resolved.
     viewController.title = title
     let headerView = container.appBar.headerViewController.headerView
-    if let collectionVC = viewController as? MDCCollectionViewController {
+    if let collectionVC = viewController as? UICollectionViewController {
       headerView.trackingScrollView = collectionVC.collectionView
     } else if let scrollView = viewController.view as? UIScrollView {
       headerView.trackingScrollView = scrollView
