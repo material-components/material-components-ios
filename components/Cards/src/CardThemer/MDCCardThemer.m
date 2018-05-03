@@ -27,13 +27,6 @@ static const CGFloat kBorderWidth = 1.f;
 
 + (void)applyScheme:(nonnull id<MDCCardScheming>)scheme
              toCard:(nonnull MDCCard *)card {
-  NSUInteger maximumStateValue =
-      UIControlStateNormal | UIControlStateSelected | UIControlStateHighlighted |
-          UIControlStateDisabled;
-  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
-    [card setBorderWidth:0.f forState:state];
-    [card setShadowElevation:0.f forState:state];
-  }
   [card setShadowElevation:kNormalElevation forState:UIControlStateNormal];
   [card setShadowElevation:kHighlightedElevation forState:UIControlStateHighlighted];
 
@@ -42,11 +35,6 @@ static const CGFloat kBorderWidth = 1.f;
 
 + (void)applyScheme:(nonnull id<MDCCardScheming>)scheme
          toCardCell:(nonnull MDCCardCollectionCell *)cardCell {
-  for (MDCCardCellState state = MDCCardCellStateNormal; state <= MDCCardCellStateSelected;
-      state++) {
-    [cardCell setShadowElevation:0.f forState:state];
-    [cardCell setBorderWidth:0.f forState:state];
-  }
   [cardCell setShadowElevation:kNormalElevation forState:MDCCardCellStateNormal];
   [cardCell setShadowElevation:kHighlightedElevation forState:MDCCardCellStateHighlighted];
   [cardCell setShadowElevation:kSelectedElevation forState:MDCCardCellStateSelected];
@@ -60,7 +48,6 @@ static const CGFloat kBorderWidth = 1.f;
       UIControlStateNormal | UIControlStateSelected | UIControlStateHighlighted |
       UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
-    [card setShadowElevation:0.f forState:state];
     [card setBorderWidth:kBorderWidth forState:state];
   }
   [card setShadowElevation:kHighlightedElevation forState:UIControlStateHighlighted];
@@ -71,7 +58,6 @@ static const CGFloat kBorderWidth = 1.f;
                             toCardCell:(nonnull MDCCardCollectionCell *)cardCell {
   for (MDCCardCellState state = MDCCardCellStateNormal; state <= MDCCardCellStateSelected;
        state++) {
-    [cardCell setShadowElevation:0.f forState:state];
     [cardCell setBorderWidth:kBorderWidth forState:state];
   }
   [cardCell setShadowElevation:kHighlightedElevation forState:MDCCardCellStateHighlighted];
