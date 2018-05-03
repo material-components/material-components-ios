@@ -1,8 +1,8 @@
 <!--docs:
-title: "Flexible Header"
+title: "Flexible header"
 layout: detail
 section: components
-excerpt: "The Flexible Header is a container view whose height and vertical offset react to UIScrollViewDelegate events."
+excerpt: "The flexible header is a container view whose height and vertical offset react to UIScrollViewDelegate events."
 iconId: header
 path: /catalog/flexible-headers/
 api_doc_root: true
@@ -22,7 +22,7 @@ UIScrollViewDelegate events.
 ## Design & API documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-app-bar-top">Material Design guidelines: Top App Bar</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-app-bar-top">Material Design guidelines: App bars: top</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Classes/MDCFlexibleHeaderContainerViewController.html">MDCFlexibleHeaderContainerViewController</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Classes/MDCFlexibleHeaderView.html">MDCFlexibleHeaderView</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Classes/MDCFlexibleHeaderView/behavior.html">behavior</a></li>
