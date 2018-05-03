@@ -1,14 +1,12 @@
-# Typography Theming
+### Typography Theming
 
 You can theme <#a_component_name#> with your app's typography scheme using the TypographyThemer extension.
 
-You must first add the Typography Themer extension to your project:
+You must first add the TypographyThemer extension to your project:
 
 ```bash
-pod 'MaterialComponents/<#component#>+Extensions/TypographyThemer'
+pod 'MaterialComponents/<#component#>+TypographyThemer'
 ```
-
-## Example code
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
