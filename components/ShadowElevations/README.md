@@ -1,5 +1,5 @@
 <!--docs:
-title: "Shadow Elevations"
+title: "Shadow elevations"
 layout: detail
 section: components
 excerpt: "The Shadow Elevations component provides the most commonly-used Material Design elevations."
@@ -8,7 +8,7 @@ path: /catalog/shadows/shadow-elevations/
 api_doc_root: true
 -->
 
-# Shadow Elevations
+# Shadow elevations
 
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/shadows.png" alt="Shadows" width="375">
