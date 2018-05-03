@@ -6,12 +6,7 @@
 
 The Material Design top app bar displays information and actions relating to the current view.
 
-## Design & API documentation
-
-* [Material Design guidelines: App Bar](https://material.io/guidelines/layout/structure.html#structure-app-bar)
-* [Material Design guidelines: Scrolling Techniques](https://material.io/guidelines/patterns/scrolling-techniques.html)
-* [API: MDCAppBar](https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBar.html)
-* [API: MDCAppBarContainerViewController](https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBarContainerViewController.html)
+<!-- design-and-api -->
 
 ## Related components
 
