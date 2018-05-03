@@ -44,10 +44,15 @@ We also have at our disposal convenience classes under the ShapeLibrary/ folder 
 #### Pre-made shape generators
 
 - **MDCCurvedRectShapeGenerator** This generates a shape using `MDCRectangleShapeGenerator` with `MDCCurvedCornerTreatment` for its corners.
+
 ![MDCCurvedRectShapeGenerator](assets/MDCCurvedRectShapeGenerator.png)
+
 - **MDCPillShapeGenerator** This generates a shape using `MDCRectangleShapeGenerator` with `MDCRoundedCornerTreatment` for its corners.
+
 ![MDCPillShapeGenerator](assets/MDCPillShapeGenerator.png)
+
 - **MDCSlantedRectShapeGenerator** This generates a shape using `MDCRectangleShapeGenerator` and adds a slant to its corners using a simple offset to its corners.
+
 ![MDCSlantedRectShapeGenerator](assets/MDCSlantedRectShapeGenerator.png)
 
 ### Adding Shapes to your components
