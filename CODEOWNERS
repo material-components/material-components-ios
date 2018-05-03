@@ -10,36 +10,36 @@
 # *.js    @octocat @github/js
 
 # You can also use email addresses if you prefer.
-components/ActivityIndicator/**    @jmdetloff
-components/AnimationTiming/**      @yarneo
-components/AppBar/**               @jverkoey
-components/BottomAppBar/**         @jmdetloff
-components/BottomNavigation/**     @romoore
-components/BottomSheet/**          @jmdetloff
-components/ButtonBar/**            @romoore
-components/Buttons/**              @randallli
-components/Cards/**                @yarneo
-components/Chips/**                @romoore
-components/CollectionCells/**      @yarneo
-components/CollectionLayoutAttributes/** @ianegordon
-components/Collections/**          @ianegordon
-components/Dialogs/**              @ianegordon
-components/FeatureHighlight/**     @mohammadcazig
-components/FlexibleHeader/**       @jverkoey
-components/HeaderStackView/**      @jverkoey
-components/Ink/**                  @yarneo
-components/LibraryInfo/**          @ajsecord
-components/MaskedTransition/**     @jverkoey
-components/NavigationBar/**        @yarneo, @jverkoey
-components/OverlayWindow/**        @yarneo
-components/PageControl/**          @randallli
-components/Palettes/**             @ajsecord
-components/ProgressView/**         @romoore
-components/ShadowElevations/**     @ianegordon
-components/ShadowLayer/**          @ianegordon
-components/Slider/**               @romoore
-components/Snackbar/**             @yarneo
-components/Tabs/**                 @mohammadcazig, @brianjmoore
-components/TextFields/**           @willlarche
-components/Themes/**               @jgunaratne
-components/Typography/**           @randallli
+/components/ActivityIndicator/    @jmdetloff
+/components/AnimationTiming/      @yarneo
+/components/AppBar/               @jverkoey
+/components/BottomAppBar/         @jmdetloff
+/components/BottomNavigation/     @romoore
+/components/BottomSheet/          @jmdetloff
+/components/ButtonBar/            @romoore
+/components/Buttons/              @randallli
+/components/Cards/                @yarneo
+/components/Chips/                @romoore
+/components/CollectionCells/      @yarneo
+/components/CollectionLayoutAttributes/ @ianegordon
+/components/Collections/          @ianegordon
+/components/Dialogs/              @ianegordon
+/components/FeatureHighlight/     @mohammadcazig
+/components/FlexibleHeader/       @jverkoey
+/components/HeaderStackView/      @jverkoey
+/components/Ink/                  @yarneo
+/components/LibraryInfo/          @ajsecord
+/components/MaskedTransition/     @jverkoey
+/components/NavigationBar/        @yarneo, @jverkoey
+/components/OverlayWindow/        @yarneo
+/components/PageControl/          @randallli
+/components/Palettes/             @ajsecord
+/components/ProgressView/         @romoore
+/components/ShadowElevations/     @ianegordon
+/components/ShadowLayer/          @ianegordon
+/components/Slider/               @romoore
+/components/Snackbar/             @yarneo
+/components/Tabs/                 @mohammadcazig, @brianjmoore
+/components/TextFields/           @willlarche
+/components/Themes/               @jgunaratne
+/components/Typography/           @randallli
