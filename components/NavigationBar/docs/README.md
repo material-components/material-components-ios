@@ -1,19 +1,18 @@
 # Navigation bar
 
+A navigation bar is a view composed of leading and trailing buttons and either a title label or a
+custom title view.
+
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/navigation_bar.png" alt="Navigation bar" width="320">
 </div>
-
-The navigation bar component is a view composed of a left and right Button Bar and either a title
-label or a custom title view.
-
-Consistent with iOS design guidelines, the title in the navigation bar is centered by default. However, certain use cases may warrant use of a left aligned title such as: when there is a strong relationship between the title and additional content appearing in the navigation bar, or where centering the title causes ambiguity.
 
 <!-- design-and-api -->
 
 ## Related components
 
-* [ProgressView](../../ProgressView)
+* [App bars: top](../../AppBar)
+* [App bars: bottom](../../BottomAppBar)
 
 <!-- toc -->
 
