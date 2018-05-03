@@ -13,14 +13,15 @@ Currently we offer built-in functionality for shapes within our <a href="../../c
 
 ### Shapes Library Preview
 
-Our shapes library consists of different APIs and classes you can use to build a shape. The final goal is to have your view/component consist of an object that implements the protocol `MDCShapeGenerating`. `MDCShapeGenerating` consists of one method that returns the shape’s `CGPath` for the expected size.
+Our shapes library consists of different APIs and classes you can use to build a shape.
+
+As you will see throughout the doc, we will be talking plentifully about the `shapeGenerator` object as part of our view/component. This object holds the generated shape and must conform to the `MDCShapeGenerating` protocol. `MDCShapeGenerating` consists of one method that returns the shape’s `CGPath` for the expected size.
 
 ```objc
 (CGPath *)pathForSize:(CGSize)size
 ```
 
-
-For our convenience we have a few classes under the hood that help us achieve such an object. At the core we have `MDCPathGenerator` that has a few helper methods to build your own custom `CGPath` that will serve as the path for your shape.
+For our convenience we have a few classes under the hood that help us generate a shape. At the core we have `MDCPathGenerator` that has a few helper methods to build your own custom `CGPath` that will serve as the path for your shape.
 We also have an `MDCShapedShadowLayer` class that has to be used as the base layer of your view instead of `MDCShadowLayer` to allow shapes to work well with shadows, borders, and also background color. This is needed because such attributes must follow the shape's path rather than the normal bounds of the view.
 
 `MDCShapedView` is a base `UIView` that already incorporates `MDCShapedShadowLayer`, a `shapeGenerator` object, and elevation support to provide a minimal view that has full shape support. This can be used as a basic building block to build on top of when building new components that need shape support from the get go.
@@ -43,8 +44,11 @@ We also have at our disposal convenience classes under the ShapeLibrary/ folder 
 #### Pre-made shape generators
 
 - **MDCCurvedRectShapeGenerator** This generates a shape using `MDCRectangleShapeGenerator` with `MDCCurvedCornerTreatment` for its corners.
+![MDCCurvedRectShapeGenerator](assets/MDCCurvedRectShapeGenerator.png)
 - **MDCPillShapeGenerator** This generates a shape using `MDCRectangleShapeGenerator` with `MDCRoundedCornerTreatment` for its corners.
+![MDCPillShapeGenerator](assets/MDCPillShapeGenerator.png)
 - **MDCSlantedRectShapeGenerator** This generates a shape using `MDCRectangleShapeGenerator` and adds a slant to its corners using a simple offset to its corners.
+![MDCSlantedRectShapeGenerator](assets/MDCSlantedRectShapeGenerator.png)
 
 ### Adding Shapes to your components
 
