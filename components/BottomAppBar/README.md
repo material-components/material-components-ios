@@ -2,7 +2,7 @@
 title: "App bars: bottom"
 layout: detail
 section: components
-excerpt: "Bottom app bar provides a bar at the bottom of the screen with primary action and navigation buttons."
+excerpt: "A bottom app bar displays navigation and key actions at the bottom of the screen."
 iconId: bottom_app_bar
 path: /catalog/bottomappbar/
 api_doc_root: true
@@ -12,11 +12,13 @@ api_doc_root: true
 
 # App bars: bottom
 
+A bottom app bar displays navigation and key actions at the bottom of the screen. Bottom app bars
+work like [navigation bars](../NavigationBar), but with the additional option to show a
+[floating action button](../Buttons).
+
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/bottomappbar.png" alt="Text Fields" width="375">
 </div>
-
-A bottom app bar provides a docked bar at the bottom of the screen for common application actions. The bottom app bar includes a <a href="https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCFloatingButton.html">floating button</a> for a primary action and a <a href="https://material.io/components/ios/catalog/flexible-headers/navigation-bars/">navigation bar</a> area for secondary actions. Transition animations are provided when the floating button shifts left or right, based on the application navigation state, and when the floating action button changes elevation or is hidden.
 
 ## Design & API documentation
 
