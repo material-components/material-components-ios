@@ -4,7 +4,7 @@ layout: detail
 section: components
 excerpt: "The Header Stack View component is a view that coordinates the layout of two vertically stacked bar views."
 iconId: header
-path: /catalog/flexible-headers/header-stack-views/
+path: /catalog/app-bars/header-stack-views/
 api_doc_root: true
 -->
 
@@ -22,12 +22,6 @@ bar views.
 <ul class="icon-list">
   <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/layout/structure.html#structure-app-bar">Material Design guidelines: App Bar</a></li>
   <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/flexible-headers/header-stack-views/api-docs/Classes/MDCHeaderStackView.html">API: MDCHeaderStackView</a></li>
-</ul>
-
-## Extensions
-
-<ul class="icon-list">
-  <li class="icon-list-item icon-list-item--link"><a href="docs/color-theming.md">Color Theming</a></li>
 </ul>
 
 - - -

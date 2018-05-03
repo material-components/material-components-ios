@@ -19,8 +19,13 @@
 
 #import <Foundation/Foundation.h>
 
+#pragma mark - Soon to be deprecated
+
 /**
- The Material Design color system's themer for instances of MDCHeaderStackView.
+ A color themer for instances of MDCHeaderStackView.
+
+ @warning This class will soon be deprecated. There will be no replacement API. Consider theming
+ your flexible header view or app bar instead.
  */
 @interface MDCHeaderStackViewColorThemer : NSObject
 

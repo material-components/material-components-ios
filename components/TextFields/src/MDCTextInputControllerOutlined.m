@@ -133,13 +133,23 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 
   CGRect pathRect = self.textInput.bounds;
   pathRect.origin.y = pathRect.origin.y + self.textInput.placeholderLabel.font.lineHeight * .5f;
-
   pathRect.size.height = [self borderHeight];
-  UIBezierPath *path = [UIBezierPath
-      bezierPathWithRoundedRect:pathRect
-              byRoundingCorners:self.roundedCorners
-                    cornerRadii:CGSizeMake(MDCTextInputControllerBaseDefaultBorderRadius,
-                                           MDCTextInputControllerBaseDefaultBorderRadius)];
+  UIBezierPath *path;
+  if ([self isPlaceholderUp]) {
+    CGFloat placeholderWidth =
+        [self.textInput.placeholderLabel systemLayoutSizeFittingSize:UILayoutFittingCompressedSize]
+        .width * (CGFloat)self.floatingPlaceholderScale.floatValue;
+
+    path = [self roundedPathFromRect:pathRect
+                       withTextSpace:placeholderWidth
+                          leftOffset:MDCTextInputOutlinedTextFieldFullPadding];
+  } else {
+    CGSize cornerRadius = CGSizeMake(MDCTextInputControllerBaseDefaultBorderRadius,
+                                     MDCTextInputControllerBaseDefaultBorderRadius);
+    path = [UIBezierPath bezierPathWithRoundedRect:pathRect
+                                 byRoundingCorners:self.roundedCorners
+                                       cornerRadii:cornerRadius];
+  }
   self.textInput.borderPath = path;
 
   UIColor *borderColor = self.textInput.isEditing ? self.activeColor : self.normalColor;
@@ -150,6 +160,49 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 
   [self updatePlaceholder];
 }
+
+- (UIBezierPath *)roundedPathFromRect:(CGRect)f
+                        withTextSpace:(CGFloat)textSpace
+                           leftOffset:(CGFloat)offset {
+  UIBezierPath *path = [[UIBezierPath alloc] init];
+  CGFloat radius = MDCTextInputControllerBaseDefaultBorderRadius;
+  CGFloat yOffset = f.origin.y;
+  CGFloat xOffset = f.origin.x;
+
+  // Draw the path
+  [path moveToPoint:CGPointMake(radius + xOffset, yOffset)];
+  [path addLineToPoint:CGPointMake(offset + xOffset - radius, yOffset)];
+
+  [path moveToPoint:CGPointMake(textSpace + offset + xOffset - radius, yOffset)];
+
+  [path addLineToPoint:CGPointMake(f.size.width - radius + xOffset, yOffset)];
+  [path addArcWithCenter:CGPointMake(f.size.width - radius + xOffset, radius + yOffset)
+                  radius:radius
+              startAngle:- (CGFloat)(M_PI / 2)
+                endAngle:0
+               clockwise:YES];
+  [path addLineToPoint:CGPointMake(f.size.width + xOffset, f.size.height - radius + yOffset)];
+  [path addArcWithCenter:CGPointMake(f.size.width - radius + xOffset, f.size.height - radius + yOffset)
+                  radius:radius
+              startAngle:0
+                endAngle:- (CGFloat)((M_PI * 3) / 2)
+               clockwise:YES];
+  [path addLineToPoint:CGPointMake(radius + xOffset, f.size.height + yOffset)];
+  [path addArcWithCenter:CGPointMake(radius + xOffset, f.size.height - radius + yOffset)
+                  radius:radius
+              startAngle:- (CGFloat)((M_PI * 3) / 2)
+                endAngle:- (CGFloat)M_PI
+               clockwise:YES];
+  [path addLineToPoint:CGPointMake(xOffset, radius + yOffset)];
+  [path addArcWithCenter:CGPointMake(radius + xOffset, radius + yOffset)
+                  radius:radius
+              startAngle:- (CGFloat)M_PI
+                endAngle:- (CGFloat)(M_PI / 2)
+               clockwise:YES];
+
+  return path;
+}
+
 
 - (void)updatePlaceholder {
   [super updatePlaceholder];

@@ -1,13 +1,4 @@
-<!--docs:
-title: "Theming"
-layout: detail
-section: components
-excerpt: "How to theme Buttons using Material Design systems."
-iconId: button
-path: /catalog/buttons/theming/
--->
-
-# Buttons Theming
+### Theming
 
 You can theme an MDCButton to match one of the Material Design button styles using your app's
 schemes in the ButtonThemer extension.
@@ -15,7 +6,7 @@ schemes in the ButtonThemer extension.
 You must first add the ButtonThemer extension to your project:
 
 ```bash
-pod 'MaterialComponents/Buttons+Extensions/ButtonThemer'
+pod 'MaterialComponents/Buttons+ButtonThemer'
 ```
 
 You can then import the extension and create an `MDCButtonScheme` instance. A button scheme defines
@@ -46,7 +37,7 @@ MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
 ```
 <!--</div>-->
 
-## Text buttons
+#### Text buttons
 
 <img src="assets/text.gif" alt="An animation showing a Material Design text button." width="128">
 
@@ -65,7 +56,27 @@ MDCTextButtonThemer.applyScheme(buttonScheme, to: button)
 ```
 <!--</div>-->
 
-## Contained buttons
+#### Outlined buttons
+
+<img src="assets/outlined.gif" alt="An animation showing a Material Design outlined button." width="115">
+
+To theme a button as a Material Design outlined button, use `MDCOutlinedButtonThemer`
+with an `MDCButton`.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+MDCOutlinedButtonThemer.applyScheme(buttonScheme, to: button)
+```
+
+#### Objective-C
+
+```objc
+[MDCOutlinedButtonThemer applyScheme:buttonScheme toButton:button];
+```
+<!--</div>-->
+
+#### Contained buttons
 
 <img src="assets/contained.gif" alt="An animation showing a Material Design contained button." width="128">
 
@@ -84,12 +95,12 @@ MDCContainedButtonThemer.applyScheme(buttonScheme, to: button)
 ```
 <!--</div>-->
 
-## Floating action buttons
+#### Floating action buttons
 
 <img src="assets/fab.gif" alt="An animation showing a Material Design floating action button." width="99">
 
 To theme a button as a Material Design floating action button, use `MDCFloatingActionButtonThemer`
-with an `MDCRaisedButton`.
+with an `MDCFloatingButton`.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift

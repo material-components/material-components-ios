@@ -35,6 +35,8 @@
   self.view.backgroundColor = [UIColor whiteColor];
 
   MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
+  buttonScheme.colorScheme = self.colorScheme;
+  buttonScheme.typographyScheme = self.typographyScheme;
 
   // Contained button
 

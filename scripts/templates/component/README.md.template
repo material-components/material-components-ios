@@ -1,0 +1,10 @@
+<!--docs:
+title: "<#component_name#>"
+layout: detail
+section: components
+excerpt: "<#short_description#>"
+iconId: <#icon_id#>
+path: <#root_path#>/
+api_doc_root: true
+-->
+

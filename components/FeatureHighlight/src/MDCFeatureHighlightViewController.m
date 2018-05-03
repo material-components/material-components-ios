@@ -97,6 +97,7 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
   _featureHighlightView.mdc_adjustsFontForContentSizeCategory =
       _mdc_adjustsFontForContentSizeCategory;
 
+  _featureHighlightView.accessibilityHint = self.accessibilityHint;
   __weak MDCFeatureHighlightViewController *weakSelf = self;
   _featureHighlightView.interactionBlock = ^(BOOL accepted) {
     MDCFeatureHighlightViewController *strongSelf = weakSelf;
@@ -285,6 +286,18 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
     return _animationController;
   }
   return nil;
+}
+
+#pragma mark - UIAccessibility
+
+- (void)setAccessibilityHint:(NSString *)accessibilityHint {
+  // Set through the property to ensure the view is loaded
+  self.view.accessibilityHint = accessibilityHint;
+}
+
+- (NSString *)accessibilityHint {
+  // Set throught the Ivar to avoid loading the view early
+  return _featureHighlightView ? _featureHighlightView.accessibilityHint : nil;
 }
 
 #pragma mark - Private

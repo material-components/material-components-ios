@@ -651,6 +651,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
       animations:^{
         self.textInput.placeholderLabel.transform = scaleTransform;
         [self updatePlaceholder];
+        [self updateBorder];
         [self.textInput layoutIfNeeded];
       }
       completion:^(__unused BOOL finished) {

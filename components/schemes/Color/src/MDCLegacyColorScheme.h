@@ -16,9 +16,13 @@
 
 #import <UIKit/UIKit.h>
 
+#pragma mark - Soon to be deprecated
+
 /**
  A color scheme comprised of set of primary and secondary colors. Material design guidelines
  recommend using primary and secondary colors with light and dark color variants.
+
+ @warning This class will soon be deprecated. Consider using MDCColorScheming instead.
  */
 @protocol MDCColorScheme <NSObject>
 
@@ -59,6 +63,8 @@
 /**
  A basic color scheme comprised of set of primary and secondary colors with light and dark color
  variants.
+
+ @warning This class will soon be deprecated. Consider using MDCSemanticColorScheme instead.
  */
 @interface MDCBasicColorScheme : NSObject <MDCColorScheme, NSCopying>
 

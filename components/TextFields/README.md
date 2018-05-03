@@ -3,10 +3,12 @@ title: "Text Fields"
 layout: detail
 section: components
 excerpt: "Text fields allow users to input text into your app."
-icon_id: text_field
+iconId: text_field
 path: /catalog/textfields/
 api_doc_root: true
 -->
+
+<!-- This file was auto-generated using ./scripts/generate_readme TextFields -->
 
 # Text Fields
 
@@ -20,58 +22,53 @@ MDC's text fields come in several styles and have a great range of customization
 
 For more information on text field styles, and animated images of each style in action, see [Text Field Styles](./styling).
 
-## Design & API Documentation
+## Design & API documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec">
-    <a href="https://material.io/go/design-text-fields">Material Design guidelines: Text Fields</a>
-  </li>
-  <li class="icon-list-item icon-list-item--link">
-    <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes/MDCTextField.html">API: MDCTextField</a>
-  </li>
-  <li class="icon-list-item icon-list-item--link">
-    <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes/MDCMultilineTextField.html">API: MDCMultilineTextField</a>
-  </li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-text-fields">Material Design guidelines: Text Fields</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes.html#/c:objc(cs)MDCIntrinsicHeightTextView">MDCIntrinsicHeightTextView</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes.html#/c:objc(cs)MDCTextInputAllCharactersCounter">MDCTextInputAllCharactersCounter</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes.html#/c:objc(cs)MDCTextInputControllerFilled">MDCTextInputControllerFilled</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes.html#/c:objc(cs)MDCTextInputControllerFullWidth">MDCTextInputControllerFullWidth</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes.html#/c:objc(cs)MDCTextInputControllerLegacyDefault">MDCTextInputControllerLegacyDefault</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes.html#/c:objc(cs)MDCTextInputControllerLegacyFullWidth">MDCTextInputControllerLegacyFullWidth</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes.html#/c:objc(cs)MDCTextInputControllerOutlined">MDCTextInputControllerOutlined</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes.html#/c:objc(cs)MDCTextInputControllerOutlinedTextArea">MDCTextInputControllerOutlinedTextArea</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes.html#/c:objc(cs)MDCTextInputControllerUnderline">MDCTextInputControllerUnderline</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes/MDCMultilineTextField.html">MDCMultilineTextField</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes/MDCTextField.html">MDCTextField</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes/MDCTextInputControllerBase.html">MDCTextInputControllerBase</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Classes/MDCTextInputUnderlineView.html">MDCTextInputUnderlineView</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Protocols/MDCMultilineTextInput.html">MDCMultilineTextInput</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Protocols/MDCMultilineTextInputDelegate.html">MDCMultilineTextInputDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Protocols/MDCMultilineTextInputLayoutDelegate.html">MDCMultilineTextInputLayoutDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Protocols/MDCTextInput.html">MDCTextInput</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Protocols/MDCTextInputCharacterCounter.html">MDCTextInputCharacterCounter</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Protocols/MDCTextInputController.html">MDCTextInputController</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Protocols/MDCTextInputControllerFloatingPlaceholder.html">MDCTextInputControllerFloatingPlaceholder</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Protocols/MDCTextInputPositioningDelegate.html">MDCTextInputPositioningDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/textfields/api-docs/Enums/MDCTextInputTextInsetsMode.html">MDCTextInputTextInsetsMode</a></li>
 </ul>
 
-## Extensions
+## Table of contents
 
-<ul class="icon-list">
-  <li class="icon-list-item icon-list-item--link"><a href="docs/color-theming.md">Color Theming</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="docs/typography-theming.md">Typography Theming</a></li>
-</ul>
+- [Overview](#overview)
+- [Installation](#installation)
+  - [Installation with CocoaPods](#installation-with-cocoapods)
+  - [Importing](#importing)
+  - [Text Field Classes: The Inputs](#text-field-classes-the-inputs)
+  - [Text Field Classes: The Controllers](#text-field-classes-the-controllers)
+- [Usage](#usage)
+- [Examples - Multi Line](#examples---multi-line)
+  - [Text Field with Floating Placeholder](#text-field-with-floating-placeholder)
+  - [Text Field with Character Count and Inline Placeholder](#text-field-with-character-count-and-inline-placeholder)
+- [Extensions](#extensions)
+  - [Text Fields Color Theming](#text-fields-color-theming)
+  - [Text Fields Typography Theming](#text-fields-typography-theming)
 
 - - -
 
-## Installation
-
-### Requirements
-
-- Xcode 8.0 or higher.
-- iOS SDK version 8.0 or higher.
-
-### Installation with CocoaPods
-
-To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
-
-```
-pod 'MaterialComponents/TextFields'
-```
-
-To add this component along with its themer and other related extensions, please add the following instead:
-```bash
-pod 'MaterialComponents/TextFields+Extensions'
-```
-
-Then run the following command:
-
-```bash
-pod install
-```
-
-- - -
-
-### Overview
+## Overview
 
 Text Fields provides both a single-line version based on `UITextField` and a multi-line version backed by `UITextView` as well as objects that customize the text fields' behavior and appearance called 'Text Input Controllers'.
 
@@ -85,61 +82,31 @@ Customize the included text input controllers via their parameters or create you
 
 This pattern is not a delegation or data source-like relationship but rather a controller-to-view relationship: the text field does not require nor expect to be served data or instruction but is instead malleable and easily influenced by outside interference.
 
-### Text Field Classes: The Inputs
+## Installation
 
-#### Text Field
+<!-- Extracted from docs/../../../docs/component-installation.md -->
 
-This is a single-line text input. It's subclassed from `UITextField` and supports all the features you'd expect from a `UITextField`:
+### Installation with CocoaPods
 
-* Placeholder
-* Overlay views (left and right / leading and trailing)
-* Custom fonts, colors
-* Clear button
+Add the following to your `Podfile`:
 
-as well as new features:
+```bash
+pod 'MaterialComponents/TextFields'
+```
+<!--{: .code-renderer.code-renderer--install }-->
 
-* Underline
-* Labels below the input
-* Custom layouts
-* Persistable placeholder
-* Border view
+Then, run the following command:
 
-#### Multi-line Text Field
-
-This is a multi-line text input. It's subclassed from `UIView` with an embedded `UITextView`. It supports all the features of the single-line text field and `UITextView` plus:
-
-* Minimum number of lines
-
-### Text Field Classes: The Controllers
-
-#### Default Text Input Controller
-
-This class holds all the 'magic' logic necessary to make the naturally 'dumb' text field and text view behave with:
-
-* Animations
-* Styles
-* Errors
-* Character counts
-
-- - -
-
-#### Full Width Text Input Controller
-
-Similar to the default text input controller but optimized for full width forms like emails.
-
-## Usage
-
-A text field that conforms to MDCTextInput can be added to a view hierarchy the same way UITextField and UIView are. But to achieve the animations and presentations defined by the guidelines (floating placeholders, character counts), a controller that conforms to protocol `MDCTextInputController` must be initialized to manage the text field.
-
-**NOTE:** Expect to interact with _both the text field_ (for the traditional API) _and the controller_ (for changes affecting the presentation and state).
+```bash
+pod install
+```
 
 ### Importing
 
-Before using Text Fields, you'll need to import it:
+To import the component:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-
 ```swift
 import MaterialComponents.MaterialTextFields
 ```
@@ -151,72 +118,64 @@ import MaterialComponents.MaterialTextFields
 ```
 <!--</div>-->
 
-## Examples - Single-line
 
-### Text Field with Floating Placeholder
+<!-- Extracted from docs/classes.md -->
 
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
+### Text Field Classes: The Inputs
 
-```swift
-let textFieldFloating = MDCTextField()
-scrollView.addSubview(textFieldFloating)
+#### Text Field
 
-textFieldFloating.placeholder = "Full Name"
-textFieldFloating.delegate = self
+This is a single-line text input. It's subclassed from `UITextField` and supports all the features you'd expect from a `UITextField`:
 
-textFieldControllerFloating = MDCTextInputControllerUnderline(input: textFieldFloating) // Hold on as a property
-```
+- Placeholder
+- Overlay views (left and right / leading and trailing)
+- Custom fonts, colors
+- Clear button
 
-#### Objective-C
+as well as new features:
 
-```objc
-MDCTextField *textFieldFloating = [[MDCTextField alloc] init];
-[self.scrollView addSubview:textFieldFloating];
+- Underline
+- Labels below the input
+- Custom layouts
+- Persistable placeholder
+- Border view
 
-textFieldFloating.placeholder = @"Full Name";
-textFieldFloating.delegate = self;
+#### Multi-line Text Field
 
-self.textFieldControllerFloating = [[MDCTextInputControllerUnderline alloc] initWithTextInput:textFieldFloating];
-```
-<!--</div>-->
+This is a multi-line text input. It's subclassed from `UIView` with an embedded `UITextView`. It supports all the features of the single-line text field and `UITextView` plus:
 
-### Text Field with Character Count and Inline Placeholder
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item">Minimum number of lines</li>
+</ul>
 
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
+### Text Field Classes: The Controllers
 
-```swift
-// First the text field component is setup just like a UITextField
-let textFieldDefaultCharMax = MDCTextField()
-scrollView.addSubview(textFieldDefaultCharMax)
+#### Default Text Input Controller
 
-textFieldDefaultCharMax.placeholder = "Enter up to 50 characters"
-textFieldDefaultCharMax.delegate = self
+This class holds all the 'magic' logic necessary to make the naturally 'dumb' text field and text view behave with:
 
-// Second the controller is created to manage the text field
-textFieldControllerDefaultCharMax = MDCTextInputControllerUnderline(input: textFieldDefaultCharMax) // Hold on as a property
-textFieldControllerDefaultCharMax.characterCountMax = 50
-textFieldControllerDefaultCharMax.isFloatingEnabled = false
-```
+- Animations
+- Styles
+- Errors
+- Character counts
 
-#### Objective-C
+- - -
 
-```objc
-// First the text field component is setup just like a UITextField
-MDCTextField *textFieldDefaultCharMax = [[MDCTextField alloc] init];
-[self.scrollView addSubview:textFieldDefaultCharMax];
+#### Full Width Text Input Controller
 
-textFieldDefaultCharMax.placeholder = @"Enter up to 50 characters";
-textFieldDefaultCharMax.delegate = self;
+Similar to the default text input controller but optimized for full width forms like emails.
 
-// Second the controller is created to manage the text field
-self.textFieldControllerDefaultCharMax = [[MDCTextInputControllerUnderline alloc] initWithTextInput: textFieldDefaultCharMax];
-self.textFieldControllerDefaultCharMax.characterCountMax = 50;
-self.textFieldControllerDefaultCharMax.floatingEnabled = NO;
 
-```
-<!--</div>-->
+## Usage
+
+<!-- Extracted from docs/usage.md -->
+
+A text field that conforms to MDCTextInput can be added to a view hierarchy the same way UITextField and UIView are. But to achieve the animations and presentations defined by the guidelines (floating placeholders, character counts), a controller that conforms to protocol `MDCTextInputController` must be initialized to manage the text field.
+
+**NOTE:** Expect to interact with _both the text field_ (for the traditional API) _and the controller_ (for changes affecting the presentation and state).
+
+
+<!-- Extracted from docs/examples.md -->
 
 ## Examples - Multi Line
 
@@ -225,7 +184,7 @@ self.textFieldControllerDefaultCharMax.floatingEnabled = NO;
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-```swift
+``` swift
 let textFieldFloating = MDCMultilineTextField()
 scrollView.addSubview(textFieldFloating)
 
@@ -237,7 +196,7 @@ textFieldControllerFloating = MDCTextInputControllerUnderline(input: textFieldFl
 
 #### Objective-C
 
-```objc
+``` objc
 MDCMultilineTextField *textFieldFloating = [[MDCMultilineTextField alloc] init];
 [self.scrollView addSubview:textFieldFloating];
 
@@ -253,7 +212,7 @@ self.textFieldControllerFloating = [[MDCTextInputControllerUnderline alloc] init
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-```swift
+``` swift
 // First the text field component is setup just like a UITextField
 let textFieldDefaultCharMax = MDCMultilineTextField()
 scrollView.addSubview(textFieldDefaultCharMax)
@@ -269,7 +228,7 @@ textFieldControllerDefaultCharMax.isFloatingEnabled = false
 
 #### Objective-C
 
-```objc
+``` objc
 // First the text field component is setup just like a UITextField
 MDCMultilineTextField *textFieldDefaultCharMax = [[MDCMultilineTextField alloc] init];
 [self.scrollView addSubview:textFieldDefaultCharMax];
@@ -281,6 +240,126 @@ textFieldDefaultCharMax.textView.delegate = self;
 self.textFieldControllerDefaultCharMax = [[MDCTextInputControllerUnderline alloc] initWithTextInput: textFieldDefaultCharMax];
 self.textFieldControllerDefaultCharMax.characterCountMax = 50;
 self.textFieldControllerDefaultCharMax.floatingEnabled = NO;
+```
+<!--</div>-->
+
+
+## Extensions
+
+<!-- Extracted from docs/color-theming.md -->
+
+### Text Fields Color Theming
+
+You can theme a text field with your app's color scheme using the ColorThemer extension.
+
+You must first add the Color Themer extension to your project:
+
+```bash
+pod 'MaterialComponents/TextFields+ColorThemer'
+```
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// Step 1: Import the ColorThemer extension
+import MaterialComponents.MaterialTextFields_ColorThemer
+
+// Step 2: Create or get a color scheme
+let colorScheme = MDCSemanticColorScheme()
+
+// Step 3: Apply the color scheme to your component
+
+// Applying to a text field
+MDCTextFieldColorThemer.apply(colorScheme, to: textField)
+
+// Applying to an input controller
+MDCTextFieldColorThemer.applySemanticColorScheme(colorScheme, to: inputController)
+
+// Applying to a specific class type of inputController
+MDCTextFieldColorThemer.applySemanticColorScheme(colorScheme, 
+    toAllControllersOfClass: MDCTextInputControllerUnderline.self)
+```
+
+#### Objective-C
+
+```objc
+// Step 1: Import the ColorThemer extension
+#import "MaterialTextFields+ColorThemer.h"
+
+// Step 2: Create or get a color scheme
+id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+
+// Step 3: Apply the color scheme to your component
+
+// Applying to a text field
+[MDCTextFieldColorThemer applySemanticColorScheme:colorScheme toTextInput:textField];
+
+// Applying to an input controller
+[MDCTextFieldColorThemer applySemanticColorScheme:colorScheme
+                            toTextInputController:inputController];
+
+// Applying to a specific class type of inputController
+[MDCTextFieldColorThemer applySemanticColorScheme:colorScheme 
+                 toAllTextInputControllersOfClass:[MDCTextInputControllerUnderline class]];
+```
+<!--</div>-->
+
+
+<!-- Extracted from docs/typography-theming.md -->
+
+### Text Fields Typography Theming
+
+You can theme a text field with your app's typography scheme using the TypographyThemer extension.
+
+You must first add the Typography Themer extension to your project:
+
+```bash
+pod 'MaterialComponents/TextFields+TypographyThemer'
+```
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// Step 1: Import the TypographyThemer extension
+import MaterialComponents.MaterialTextFields_TypographyThemer
+
+// Step 2: Create or get a typography scheme
+let typographyScheme = MDCTypographyScheme()
+
+// Step 3: Apply the typography scheme to your component
+
+// Applying to a text field
+MDCTextFieldTypographyThemer.apply(typographyScheme, to: textField)
+
+// Applying to an input controller
+MDCTextFieldTypographyThemer.apply(typographyScheme, to: inputController)
+
+// Applying to a specific class type of inputController
+MDCTextFieldTypographyThemer.apply(typographyScheme, 
+    toAllControllersOfClass: MDCTextInputControllerUnderline.self) 
+```
+
+#### Objective-C
+
+```objc
+// Step 1: Import the TypographyThemer extension
+#import "MaterialTextFields+TypographyThemer.h"
+
+// Step 2: Create or get a typography scheme
+id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
+
+// Step 3: Apply the typography scheme to your component
+
+// Applying to a text field
+[MDCTextFieldTypographyThemer applyTypographyScheme:typographyScheme toTextInput:textField];
+
+// Applying to an input controller
+[MDCTextFieldTypographyThemer applyTypographyScheme:typographyScheme
+                              toTextInputController:inputController];
+
+// Applying to a specific class type of inputController
+[MDCTextFieldTypographyThemer applyTypographyScheme:typographyScheme 
+                   toAllTextInputControllersOfClass:[MDCTextInputControllerUnderline class]];
 ```
 <!--</div>-->
 

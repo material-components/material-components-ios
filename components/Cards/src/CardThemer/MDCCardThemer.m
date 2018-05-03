@@ -27,11 +27,24 @@ static const CGFloat kBorderWidth = 1.f;
 
 + (void)applyScheme:(nonnull id<MDCCardScheming>)scheme
              toCard:(nonnull MDCCard *)card {
+  NSUInteger maximumStateValue =
+      UIControlStateNormal | UIControlStateSelected | UIControlStateHighlighted |
+      UIControlStateDisabled;
+  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
+    [card setBorderWidth:0.f forState:state];
+    [card setShadowElevation:0.f forState:state];
+  }
   [MDCCardsColorThemer applySemanticColorScheme:scheme.colorScheme toCard:card];
 }
 
 + (void)applyScheme:(nonnull id<MDCCardScheming>)scheme
          toCardCell:(nonnull MDCCardCollectionCell *)cardCell {
+  for (MDCCardCellState state = MDCCardCellStateNormal;
+       state <= MDCCardCellStateSelected;
+       state++) {
+    [cardCell setShadowElevation:0.f forState:state];
+    [cardCell setBorderWidth:0.f forState:state];
+  }
   [MDCCardsColorThemer applySemanticColorScheme:scheme.colorScheme toCardCell:cardCell];
 }
 

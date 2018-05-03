@@ -1,5 +1,5 @@
 <!--docs:
-title: "Flexible Headers"
+title: "Flexible Header"
 layout: detail
 section: components
 excerpt: "The Flexible Header is a container view whose height and vertical offset react to UIScrollViewDelegate events."
@@ -7,6 +7,8 @@ iconId: header
 path: /catalog/flexible-headers/
 api_doc_root: true
 -->
+
+<!-- This file was auto-generated using ./scripts/generate_readme FlexibleHeader -->
 
 # Flexible Header
 
@@ -17,46 +19,50 @@ api_doc_root: true
 The Flexible Header is a container view whose height and vertical offset react to
 UIScrollViewDelegate events.
 
-## Design & API Documentation
+## Design & API documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/patterns/scrolling-techniques.html">Material Design guidelines: Scrolling Techniques</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Classes/MDCFlexibleHeaderContainerViewController.html">API: MDCFlexibleHeaderContainerViewController</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Classes/MDCFlexibleHeaderView.html">API: MDCFlexibleHeaderView</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Classes/MDCFlexibleHeaderViewController.html">API: MDCFlexibleHeaderViewController</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Protocols/MDCFlexibleHeaderViewDelegate.html">API: MDCFlexibleHeaderViewDelegate</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Protocols/MDCFlexibleHeaderViewLayoutDelegate.html">API: MDCFlexibleHeaderViewLayoutDelegate</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-app-bar-top">Material Design guidelines: Top App Bar</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Classes/MDCFlexibleHeaderContainerViewController.html">MDCFlexibleHeaderContainerViewController</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Classes/MDCFlexibleHeaderView.html">MDCFlexibleHeaderView</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Classes/MDCFlexibleHeaderView/behavior.html">behavior</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Classes/MDCFlexibleHeaderView/contentView.html">contentView</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Classes/MDCFlexibleHeaderViewController.html">MDCFlexibleHeaderViewController</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Protocols/MDCFlexibleHeaderViewDelegate.html">MDCFlexibleHeaderViewDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Protocols/MDCFlexibleHeaderViewLayoutDelegate.html">MDCFlexibleHeaderViewLayoutDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Enums/MDCFlexibleHeaderContentImportance.html">MDCFlexibleHeaderContentImportance</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Enums/MDCFlexibleHeaderScrollPhase.html">MDCFlexibleHeaderScrollPhase</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Enums/MDCFlexibleHeaderShiftBehavior.html">MDCFlexibleHeaderShiftBehavior</a></li>
 </ul>
 
-## Extensions
+## Related components
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--link"><a href="docs/color-theming.md">Color Theming</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="../AppBar">AppBar</a></li>
 </ul>
 
-- - -
+## Table of contents
 
-## Installation
-
-### Installation with CocoaPods
-
-To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
-
-```
-pod 'MaterialComponents/FlexibleHeader'
-```
-<!--{: .code-renderer.code-renderer--install }-->
-
-To add this component along with its themer and other related extensions, please add the following instead:
-```bash
-pod 'MaterialComponents/FlexibleHeader+Extensions'
-```
-
-Then, run the following command:
-
-```bash
-pod install
-```
+- [Overview](#overview)
+  - [Considerations](#considerations)
+- [Installation](#installation)
+  - [Installation with CocoaPods](#installation-with-cocoapods)
+  - [Importing](#importing)
+- [Usage](#usage)
+  - [Typical use: Add the Flexible Header to a view controller](#typical-use-add-the-flexible-header-to-a-view-controller)
+  - [Typical use: Tracking a scroll view](#typical-use-tracking-a-scroll-view)
+  - [Shifting a flexible header off-screen](#shifting-a-flexible-header-off-screen)
+  - [Reacting to frame changes](#reacting-to-frame-changes)
+  - [Utilizing Top Layout Guide on Parent View Controller](#utilizing-top-layout-guide-on-parent-view-controller)
+  - [Subclassing considerations](#subclassing-considerations)
+  - [Interacting with UINavigationController](#interacting-with-uinavigationcontroller)
+  - [Enabling Swipe to Dismiss](#enabling-swipe-to-dismiss)
+  - [Status bar style](#status-bar-style)
+  - [Background images](#background-images)
+  - [Touch forwarding](#touch-forwarding)
+  - [Tracking a parent view](#tracking-a-parent-view)
+- [Extensions](#extensions)
+  - [Color Theming](#color-theming)
 
 - - -
 
@@ -90,15 +96,28 @@ It also has some technical disadvantages:
   UINavigationController and the free availability of UINavigationBar. Improvements to this
   are being discussed on [issue #268](https://github.com/material-components/material-components-ios/issues/268).
 
+## Installation
 
-- - -
+<!-- Extracted from docs/../../../docs/component-installation.md -->
 
+### Installation with CocoaPods
 
-## Usage
+Add the following to your `Podfile`:
+
+```bash
+pod 'MaterialComponents/FlexibleHeader'
+```
+<!--{: .code-renderer.code-renderer--install }-->
+
+Then, run the following command:
+
+```bash
+pod install
+```
 
 ### Importing
 
-Before using Flexible Header, you'll need to import it:
+To import the component:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -113,7 +132,12 @@ import MaterialComponents.MaterialFlexibleHeader
 ```
 <!--</div>-->
 
-### Add the Flexible Header to a view controller
+
+## Usage
+
+<!-- Extracted from docs/typical-use.md -->
+
+### Typical use: Add the Flexible Header to a view controller
 
 Each view controller in your app that intends to manage its own Flexible Header will follow these
 instructions. You'll typically add the Flexible Header to the same view controllers that you'd push
@@ -195,7 +219,9 @@ override func viewDidLoad() {
 ```
 <!--</div>-->
 
-### Tracking a scroll view
+<!-- Extracted from docs/typical-use-tracking-a-scroll-view.md -->
+
+### Typical use: Tracking a scroll view
 
 The Flexible Header can be provided with tracking scroll view. This allows the Flexible Header to
 expand, collapse, and shift off-screen in reaction to the tracking scroll view's delegate events.
@@ -315,7 +341,9 @@ override func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity v
 ```
 <!--</div>-->
 
-### Shifting a Flexible Header off-screen
+<!-- Extracted from docs/shift-behavior.md -->
+
+### Shifting a flexible header off-screen
 
 A Flexible Header that tracks a scroll view will expand and contract its height in reaction to
 scroll view events. A Flexible Header can also shift off-screen in reaction to scroll view events
@@ -362,6 +390,8 @@ headerViewController.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEn
 ```
 <!--</div>-->
 
+<!-- Extracted from docs/reacting-to-frame-changes.md -->
+
 ### Reacting to frame changes
 
 In order to react to Flexible Header frame changes you can set yourself as the
@@ -400,7 +430,7 @@ headerViewController.layoutDelegate = self;
 
 ### Utilizing Top Layout Guide on Parent View Controller
 
-When pairing  MDCFlexibleHeaderViewController with a view controller, it may be desirable to utilize
+When pairing  MDCFlexibleHeaderViewController with a view controller, it may be desirable to use
 the paired view controller's `topLayoutGuide` to constrain additionals views. To constrain the
 `topLayoutGuide` to the bottom point of the MDCFlexibleHeaderViewController, call
 updateTopLayoutGuide on the flexible header view controller within the paired view controller's
@@ -426,7 +456,9 @@ override func viewWillLayoutSubviews() {
 ```
 <!--</div>-->
 
-### Take care when subclassing
+<!-- Extracted from docs/subclassing-considerations.md -->
+
+### Subclassing considerations
 
 A subclass of your view controller may add additional views in their viewDidLoad, potentially
 resulting in the header being covered by the new views. It is the responsibility of the subclass to
@@ -444,6 +476,8 @@ view.insertSubview(myCustomView, belowSubview: headerViewController.headerView)
 [self.view insertSubview:myCustomView belowSubview:self.headerViewController.headerView];
 ```
 <!--</div>-->
+
+<!-- Extracted from docs/interacting-with-uinavigationcontroller.md -->
 
 ### Interacting with UINavigationController
 
@@ -519,7 +553,9 @@ UINavigationController *navigationController = ...;
 ```
 <!--</div>-->
 
-### Enabling Swipe to Go Back With Hidden NavigationBar
+<!-- Extracted from docs/enabling-swipe-to-dismiss.md -->
+
+### Enabling Swipe to Dismiss
 
 When using MDCFlexibileHeaderController within a UINavigationController, setting the
 UINavigationController's navigationBarHidden property to `YES` results in the loss of the
@@ -610,6 +646,8 @@ override func viewWillDisappear(animated: Bool) {
 
 <!--</div>-->
 
+<!-- Extracted from docs/status-bar-style.md -->
+
 ### Status bar style
 
 MDCHeaderViewController instances are able to recommend a status bar style by inspecting the
@@ -632,6 +670,8 @@ override var childViewControllerForStatusBarStyle: UIViewController? {
 }
 ```
 <!--</div>-->
+
+<!-- Extracted from docs/background-images.md -->
 
 ### Background images
 
@@ -674,6 +714,8 @@ Notes:
 - Enable `clipsToBounds` in order to ensure that your image view does not bleed past the bounds of
   the header view. The header view's `clipsToBounds` is disabled by default.
 
+<!-- Extracted from docs/touch-forwarding.md -->
+
 ### Touch forwarding
 
 The Flexible Header allows you to forward touch events to the tracking scroll view. This provides
@@ -711,7 +753,9 @@ headerView.stopForwardingTouchEvents(for: someContentView)
 ```
 <!--</div>-->
 
-### When trackingScrollView is the parent view
+<!-- Extracted from docs/tracking-a-parent-view.md -->
+
+### Tracking a parent view
 
 While we do not recommend it, there are situations in which the trackingScrollView will be the
 parent view of the Flexible Header's view. The most notable example is UITableViewController, whose
@@ -726,11 +770,46 @@ the Flexible Header staying fixed in place, even though the underlying scroll vi
 In these situations the Flexible Header also ensures that it is always the front-most view. This is
 to combat the UITableView displaying its divider lines in front of the Flexible Header.
 
-- - -
 
-## Related Components
+## Extensions
 
-<ul class="icon-list">
-  <li class="icon-list-item icon-list-item--components"><a href="../HeaderStackView">Header Stack Views</a></li>
-  <li class="icon-list-item icon-list-item--components"><a href="../NavigationBar">Navigation Bar</a></li>
-</ul>
+<!-- Extracted from docs/color-theming.md -->
+
+### Color Theming
+
+You can theme a flexible header with your app's color scheme using the ColorThemer extension.
+
+You must first add the Color Themer extension to your project:
+
+```bash
+pod 'MaterialComponents/FlexibleHeader+ColorThemer'
+```
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// Step 1: Import the ColorThemer extension
+import MaterialComponents.MaterialFlexibleHeader_ColorThemer
+
+// Step 2: Create or get a color scheme
+let colorScheme = MDCSemanticColorScheme()
+
+// Step 3: Apply the color scheme to your component
+MDCFlexibleHeaderColorThemer.applySemanticColorScheme(colorScheme, to: component)
+```
+
+#### Objective-C
+
+```objc
+// Step 1: Import the ColorThemer extension
+#import "MaterialFlexibleHeader+ColorThemer.h"
+
+// Step 2: Create or get a color scheme
+id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+
+// Step 3: Apply the color scheme to your component
+[MDCFlexibleHeaderColorThemer applySemanticColorScheme:colorScheme
+     toFlexibleHeaderView:component];
+```
+<!--</div>-->
+

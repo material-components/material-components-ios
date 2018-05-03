@@ -156,10 +156,10 @@ extension TypographyFontListExampleViewController {
   }
 
   @objc class func catalogIsPrimaryDemo() -> Bool {
-    return true
+    return false
   }
 
   @objc class func catalogIsPresentable() -> Bool {
-    return true
+    return false
   }
 }

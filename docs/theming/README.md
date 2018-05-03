@@ -21,6 +21,13 @@ By default, an instance of a scheme is initialized with the Material defaults. Y
 defaults as a baseline, but at a minimum we encourage you to tweak your color scheme's primary and
 secondary colors to match your brand colors.
 
+## Related documentation
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--link"><a href="../../components/schemes/Color">Color theming</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="../../components/schemes/Typography">Typography theming</a></li>
+</ul>
+
 ## Examples
 
 ### Creating a scheme
@@ -65,8 +72,8 @@ Podfile. You can see which themers a given component supports by looking at the 
 directory.
 
 ```bash
-pod 'MaterialComponents/AppBar+Extensions/ColorThemer'
-pod 'MaterialComponents/AppBar+Extensions/TypographyThemer'
+pod 'MaterialComponents/AppBar+ColorThemer'
+pod 'MaterialComponents/AppBar+TypographyThemer'
 ```
 
 You can now access the AppBar themers.

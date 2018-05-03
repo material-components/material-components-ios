@@ -15,7 +15,7 @@
 # limitations under the License.
 
 usage() {
-  echo "Usage: $0 <ComponentName> <path_to_.template_file>"
+  echo "Usage: $0 <ComponentName> <path_to_.template_file> <destination>"
   echo
   echo "Copies the template into the component directory and replaces all of the symbols defined"
   echo "in the component's .vars file."
@@ -31,16 +31,17 @@ usage() {
   echo "This script will replace all instances of <#symbol#> in the .template with the given"
   echo "replacement."
   echo
-  echo "Example usage: $0 ActivityIndicator scripts/templates/component/docs/ColorTheming.md.template"
+  echo "Example usage: $0 scripts/templates/component/docs/color-theming.md.template components/ActivityIndicator/docs/color-theming.md"
 }
 
-if [ "$#" -ne 2 ]; then
+if [ "$#" -ne 3 ]; then
   usage
   exit 1
 fi
 
 COMPONENT="$1"
 TEMPLATE_PATH="$2"
+DESTINATION_PATH="$3"
 
 if [ ! -f "$TEMPLATE_PATH" ]; then
   echo "$TEMPLATE_PATH is not a file."
@@ -49,8 +50,6 @@ if [ ! -f "$TEMPLATE_PATH" ]; then
   exit 1
 fi
 
-COMPONENT_PATH="components/$COMPONENT"
-DESTINATION_PATH="$COMPONENT_PATH/$(echo "$TEMPLATE_PATH" | cut -d'/' -f4- | sed 's/.template//')"
 mkdir -p $(dirname "$DESTINATION_PATH")
 
 COMPONENT_VARS="components/$COMPONENT/.vars"

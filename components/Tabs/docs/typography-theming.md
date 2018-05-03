@@ -1,24 +1,12 @@
-<!--docs:
-title: "Typography Theming"
-layout: detail
-section: components
-excerpt: "How to theme Tabs using the Material Design typography system."
-iconId: tabs
-path: /catalog/tabs/typography-theming/
--->
-
-# Tabs Typography Theming
+### Typography Theming
 
 You can theme a tab bar with your app's typography scheme using the TypographyThemer extension.
 
 You must first add the Typography Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/Tabs+Extensions/TypographyThemer'
+pod 'MaterialComponents/Tabs+TypographyThemer'
 ```
-
-## Example code
-
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift

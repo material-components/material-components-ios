@@ -1,23 +1,12 @@
-<!--docs:
-title: "Typography Theming"
-layout: detail
-section: components
-excerpt: "How to theme Feature Highlight using the Material Design typography system."
-iconId: feature_highlight
-path: /catalog/feature-highlights/typography-theming/
--->
-
-# Feature Highlight Typography Theming
+### Typography Theming
 
 You can theme feature highlight with your app's typography scheme using the TypographyThemer extension.
 
 You must first add the Typography Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/FeatureHighlight+Extensions/TypographyThemer'
+pod 'MaterialComponents/FeatureHighlight+TypographyThemer'
 ```
-
-## Example code
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift

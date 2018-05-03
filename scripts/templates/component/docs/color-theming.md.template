@@ -1,23 +1,12 @@
-<!--docs:
-title: "Color Theming"
-layout: detail
-section: components
-excerpt: "How to theme <#component_name#> using the Material Design color system."
-iconId: <#icon_id#>
-path: <#root_path#>/color-theming/
--->
-
-# <#component_name#> Color Theming
+### Color Theming
 
 You can theme <#a_component_name#> with your app's color scheme using the ColorThemer extension.
 
-You must first add the Color Themer extension to your project:
+You must first add the ColorThemer extension to your project:
 
 ```bash
-pod 'MaterialComponents/<#component#>+Extensions/ColorThemer'
+pod 'MaterialComponents/<#component#>+ColorThemer'
 ```
-
-## Example code
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
