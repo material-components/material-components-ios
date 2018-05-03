@@ -1,14 +1,10 @@
-<!--docs:
-title: "Typography"
-layout: detail
-section: components
-excerpt: "The Typography component provides methods for displaying text using the type sizes and opacities from the Material Design specifications."
-iconId: typography
-path: /catalog/typography/
-api_doc_root: true
--->
-
 # Typography
+
+*Notice*: Much of this component, with exception of the UIFont and UIFontDescriptor APIs, will soon
+be deprecated. Please consider using the [schemes/Typography](../schemes/Typography) component and
+the [Material Theming](../../docs/theming) APIs instead.
+
+---
 
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/typography.png" alt="Typography" width="375">

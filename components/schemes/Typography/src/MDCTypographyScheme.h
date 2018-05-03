@@ -22,18 +22,70 @@
  */
 @protocol MDCTypographyScheming
 
+
+/**
+ The headline 1 font.
+ */
 @property(nonatomic, nonnull, readonly) UIFont *headline1;
+
+/**
+ The headline 2 font.
+ */
 @property(nonatomic, nonnull, readonly) UIFont *headline2;
+
+/**
+ The headline 3 font.
+ */
 @property(nonatomic, nonnull, readonly) UIFont *headline3;
+
+/**
+ The headline 4 font.
+ */
 @property(nonatomic, nonnull, readonly) UIFont *headline4;
+
+/**
+ The headline 5 font.
+ */
 @property(nonatomic, nonnull, readonly) UIFont *headline5;
+
+/**
+ The headline 6 font.
+ */
 @property(nonatomic, nonnull, readonly) UIFont *headline6;
+
+/**
+ The subtitle 1 font.
+ */
 @property(nonatomic, nonnull, readonly) UIFont *subtitle1;
+
+/**
+ The subtitle 2 font.
+ */
 @property(nonatomic, nonnull, readonly) UIFont *subtitle2;
+
+/**
+ The body 1 font.
+ */
 @property(nonatomic, nonnull, readonly) UIFont *body1;
+
+/**
+ Return the body 2 font.
+ */
 @property(nonatomic, nonnull, readonly) UIFont *body2;
+
+/**
+ Return the caption font.
+ */
 @property(nonatomic, nonnull, readonly) UIFont *caption;
+
+/**
+ Return the button font.
+ */
 @property(nonatomic, nonnull, readonly) UIFont *button;
+
+/**
+ Return the overline font.
+ */
 @property(nonatomic, nonnull, readonly) UIFont *overline;
 
 @end

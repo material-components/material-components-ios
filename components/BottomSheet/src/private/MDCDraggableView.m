@@ -41,6 +41,8 @@ static void CancelGestureRecognizer(UIGestureRecognizer *gesture) {
     _dragRecognizer.maximumNumberOfTouches = 1;
     _dragRecognizer.delegate = self;
     [self addGestureRecognizer:_dragRecognizer];
+
+    self.clipsToBounds = YES;
   }
   return self;
 }

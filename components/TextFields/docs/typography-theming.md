@@ -1,23 +1,12 @@
-<!--docs:
-title: "Typography Theming"
-layout: detail
-section: components
-excerpt: "How to theme Text Fields using the Material Design typography system."
-iconId: text_field
-path: /catalog/textfields/typography-theming/
--->
-
-# Text Fields Typography Theming
+### Text Fields Typography Theming
 
 You can theme a text field with your app's typography scheme using the TypographyThemer extension.
 
 You must first add the Typography Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/TextFields+Extensions/TypographyThemer'
+pod 'MaterialComponents/TextFields+TypographyThemer'
 ```
-
-## Example code
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift

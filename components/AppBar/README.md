@@ -1,72 +1,66 @@
 <!--docs:
-title: "App Bars"
+title: "Top App Bar"
 layout: detail
 section: components
-excerpt: "The App Bar is a flexible navigation bar designed to provide a typical Material Design navigation experience."
+excerpt: "The Material Design top app bar displays information and actions relating to the current view."
 iconId: toolbar
 path: /catalog/app-bars/
 api_doc_root: true
 -->
 
-# App Bars
+<!-- This file was auto-generated using ./scripts/generate_readme AppBar -->
+
+# Top App Bar
+
+The Material Design top app bar displays information and actions relating to the current view.
 
 <div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/app_bar.png" alt="App Bar" width="375">
+  <img src="docs/assets/top-app-bar.gif" alt="An animation showing a top app bar appearing and disappearing." width="320">
 </div>
 
-The App Bar is a flexible navigation bar designed to provide a typical Material Design
-navigation experience.
-
-## Design & API Documentation
+## Design & API documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/layout/structure.html#structure-app-bar">Material Design guidelines: App Bar Structure</a></li>
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/patterns/scrolling-techniques.html">Material Design guidelines: Scrolling Techniques</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBar.html">API: MDCAppBar</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBarContainerViewController.html">API: MDCAppBarContainerViewController</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-app-bar-top">Material Design guidelines: Top App Bar</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBar.html">MDCAppBar</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBarContainerViewController.html">MDCAppBarContainerViewController</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBarTextColorAccessibilityMutator.html">MDCAppBarTextColorAccessibilityMutator</a></li>
 </ul>
 
-## Extensions
+## Related components
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--link"><a href="docs/color-theming.md">Color Theming</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="docs/typography-theming.md">Typography Theming</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="../FlexibleHeader">FlexibleHeader</a></li>
 </ul>
 
-- - -
+## Table of contents
 
-## Installation
-
-### Installation with CocoaPods
-
-To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
-
-```bash
-pod 'MaterialComponents/AppBar'
-```
-<!--{: .code-renderer.code-renderer--install }-->
-
-To add this component along with its themer and other related extensions, please add the following instead:
-```bash
-pod 'MaterialComponents/AppBar+Extensions'
-```
-
-Then, run the following command:
-
-```bash
-pod install
-```
+- [Overview](#overview)
+  - [UINavigationItem and the App Bar](#uinavigationitem-and-the-app-bar)
+  - [Interacting with background views](#interacting-with-background-views)
+- [Installation](#installation)
+  - [Installation with CocoaPods](#installation-with-cocoapods)
+  - [Importing](#importing)
+- [Usage](#usage)
+  - [Typical use: Adding an app bar to your app](#typical-use-adding-an-app-bar-to-your-app)
+- [Extensions](#extensions)
+  - [Color Theming](#color-theming)
+  - [Typography Theming](#typography-theming)
+- [Example code](#example-code)
 
 - - -
 
 ## Overview
 
-The App Bar is a composite component that initializes and provides access to instances of the
+The top app bar is implemented on iOS in the AppBar component. This component's main API is
+`MDCAppBar`, a compose API that initializes and provides access to instances of the
 following components:
 
-- [Flexible Header](../FlexibleHeader/)
-- [Header Stack View](../HeaderStackView/)
-- [Navigation Bar](../NavigationBar/)
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--link"><a href="../FlexibleHeader">Flexible Header</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="../HeaderStackView">Header Stack View</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="../NavigationBar">Navigation Bar</a></li>
+</ul>
 
 The provided view hierarchy looks like so:
 
@@ -85,20 +79,64 @@ doing so if the App Bar is limiting your ability to build something. In such a c
 also [filing an issue](https://github.com/material-components/material-components-ios/issues/new) so that we can
 identify whether your use case is something we can directly support.
 
+### UINavigationItem and the App Bar
 
+The App Bar begins mirroring the state of your view controller's `navigationItem` in the provided
+`navigationBar` once you call `addSubviewsToParent`.
 
-- - -
+Learn more by reading the Navigation Bar section on
+[Observing UINavigationItem instances](../NavigationBar/#observing-uinavigationitem-instances).
+Notably: read the section on "Exceptions" to understand which UINavigationItem are **not**
+supported.
 
-## Usage
+### Interacting with background views
+
+Scenario: you've added a background image to your App Bar and you'd now like to be able to tap the
+background image.
+
+This is not trivial to do with the App Bar APIs due to considerations being discussed in
+[Issue #184](https://github.com/material-components/material-components-ios/issues/184).
+
+The heart of the limitation is that we're using a view (`headerStackView`) to lay out the Navigation
+Bar. If you add a background view behind the `headerStackView` instance then `headerStackView` will
+end up eating all of your touch events.
+
+Until [Issue #184](https://github.com/material-components/material-components-ios/issues/184) is resolved, our
+recommendation for building interactive background views is the following:
+
+1. Do not use the App Bar component.
+2. Create your own Flexible Header. Learn more by reading the Flexible Header
+   [Usage](../FlexibleHeader/#usage) docs.
+3. Add your views to this flexible header instance.
+4. Create a Navigation Bar if you need one. Treat it like any other custom view.
+
+## Installation
+
+<!-- Extracted from docs/../../../docs/component-installation.md -->
+
+### Installation with CocoaPods
+
+Add the following to your `Podfile`:
+
+```bash
+pod 'MaterialComponents/AppBar'
+```
+<!--{: .code-renderer.code-renderer--install }-->
+
+Then, run the following command:
+
+```bash
+pod install
+```
 
 ### Importing
 
-Before using App Bar, you'll need to import it:
+To import the component:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
-import MaterialComponents
+import MaterialComponents.MaterialAppBar
 ```
 
 #### Objective-C
@@ -108,7 +146,12 @@ import MaterialComponents
 ```
 <!--</div>-->
 
-### Add the App Bar to a view controller
+
+## Usage
+
+<!-- Extracted from docs/typical-use-adding-an-app-bar.md -->
+
+### Typical use: Adding an app bar to your app
 
 Each view controller in your app that intends to use an App Bar will follow these instructions.
 You'll typically add the App Bar to the same view controllers that you'd push onto a
@@ -190,69 +233,90 @@ override func viewDidLoad() {
 ```
 <!--</div>-->
 
-### Tracking a scroll view
 
-The App Bar's flexible nature is made possible due to the Flexible Header's ability to respond to
-interactions with a scroll view. Learn how to set up this scroll view tracking by reading the
-Flexible Header section on [Tracking a scroll view](../FlexibleHeader/#tracking-a-scroll-view).
+See the [FlexibleHeader](../FlexibleHeader) documentation for additional usage guides.
 
-### App Bar & UINavigationController
+## Extensions
 
-A view controller with an App Bar pushed onto a UINavigationController will look odd due to the
-presence of two navigation bars: one provided by App Bar and another provided by
-UINavigationController. The Flexible Header section on
-[interacting with UINavigationController](../FlexibleHeader/#interacting-with-uinavigationcontroller)
-provides recommendations for hiding the navigation bar appropriately in this situation.
+<!-- Extracted from docs/color-theming.md -->
 
-### Status bar style
+### Color Theming
 
-The Flexible Header component provides facilities for inferring the status bar style based on the
-Flexible Header view's background color. Learn more by reading the section on
-[Status bar style](../FlexibleHeader/#status-bar-style).
+You can theme an app bar with your app's color scheme using the ColorThemer extension.
 
-### UINavigationItem and the App Bar
+You must first add the Color Themer extension to your project:
 
-The App Bar begins mirroring the state of your view controller's `navigationItem` in the provided
-`navigationBar` once you call `addSubviewsToParent`.
+```bash
+pod 'MaterialComponents/AppBar+ColorThemer'
+```
 
-Learn more by reading the Navigation Bar section on
-[Observing UINavigationItem instances](../NavigationBar/#observing-uinavigationitem-instances).
-Notably: read the section on "Exceptions" to understand which UINavigationItem are **not**
-supported.
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// Step 1: Import the ColorThemer extension
+import MaterialComponents.MaterialAppBar_ColorThemer
 
-### Background images
+// Step 2: Create or get a color scheme
+let colorScheme = MDCSemanticColorScheme()
 
-Showcase photography and imagery in your App Bar by adding image views to the App Bar's Flexible
-Header.
+// Step 3: Apply the color scheme to your component
+MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: component)
+```
 
-Learn more by reading the Flexible Header section on
-[Background images](../FlexibleHeader/#background-images).
+#### Objective-C
 
-### Touch forwarding
+```objc
+// Step 1: Import the ColorThemer extension
+#import "MaterialAppBar+ColorThemer.h"
 
-The App Bar enables touch forwarding for the headerStackView and the navigationBar instances. Touch
-events made to those views (not their subviews) will be forwarded to the tracking scroll view.
+// Step 2: Create or get a color scheme
+id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
 
-Learn more by reading the Flexible Header section on
-[Touch forwarding](../FlexibleHeader/#touch-forwarding).
+// Step 3: Apply the color scheme to your component
+[MDCAppBarColorThemer applySemanticColorScheme:colorScheme
+     toAppBar:component];
+```
+<!--</div>-->
 
-### Interacting with background views
+<!-- Extracted from docs/typography-theming.md -->
 
-Scenario: you've added a background image to your App Bar and you'd now like to be able to tap the
-background image.
+### Typography Theming
 
-This is not trivial to do with the App Bar APIs due to considerations being discussed in
-[Issue #184](https://github.com/material-components/material-components-ios/issues/184).
+You can theme an app bar with your app's typography scheme using the TypographyThemer extension.
 
-The heart of the limitation is that we're using a view (`headerStackView`) to lay out the Navigation
-Bar. If you add a background view behind the `headerStackView` instance then `headerStackView` will
-end up eating all of your touch events.
+You must first add the Typography Themer extension to your project:
 
-Until [Issue #184](https://github.com/material-components/material-components-ios/issues/184) is resolved, our
-recommendation for building interactive background views is the following:
+```bash
+pod 'MaterialComponents/AppBar+TypographyThemer'
+```
 
-1. Do not use the App Bar component.
-2. Create your own Flexible Header. Learn more by reading the Flexible Header
-   [Usage](../FlexibleHeader/#usage) docs.
-3. Add your views to this flexible header instance.
-4. Create a Navigation Bar if you need one. Treat it like any other custom view.
+## Example code
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// Step 1: Import the TypographyThemer extension
+import MaterialComponents.MaterialAppBar_TypographyThemer
+
+// Step 2: Create or get a typography scheme
+let typographyScheme = MDCTypographyScheme()
+
+// Step 3: Apply the typography scheme to your component
+MDCAppBarTypographyThemer.applyTypographyScheme(typographyScheme, to: component)
+```
+
+#### Objective-C
+
+```objc
+// Step 1: Import the TypographyThemer extension
+#import "MaterialAppBar+TypographyThemer.h"
+
+// Step 2: Create or get a typography scheme
+id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
+
+// Step 3: Apply the typography scheme to your component
+[MDCAppBarTypographyThemer applyTypographyScheme:colorScheme
+     toAppBar:component];
+```
+<!--</div>-->
+

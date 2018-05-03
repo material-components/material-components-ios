@@ -1,23 +1,12 @@
-<!--docs:
-title: "Typography Theming"
-layout: detail
-section: components
-excerpt: "How to theme Button Bar using the Material Design typography system."
-iconId: button
-path: /catalog/button-bars/typography-theming/
--->
-
-# Button Bar Typography Theming
+### Typography Theming
 
 You can theme a button bar with your app's typography scheme using the TypographyThemer extension.
 
 You must first add the Typography Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/ButtonBar+Extensions/TypographyThemer'
+pod 'MaterialComponents/ButtonBar+TypographyThemer'
 ```
-
-## Example code
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -29,7 +18,7 @@ import MaterialComponents.MaterialButtonBar_TypographyThemer
 let typographyScheme = MDCTypographyScheme()
 
 // Step 3: Apply the typography scheme to your component
-MDCButtonBarTypographyThemer.applyTypographyScheme(typographyScheme, to: component)
+MDCButtonBarTypographyThemer.applyTypographyScheme(typographyScheme, to: buttonBar)
 ```
 
 #### Objective-C
@@ -43,6 +32,6 @@ id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
 
 // Step 3: Apply the typography scheme to your component
 [MDCButtonBarTypographyThemer applyTypographyScheme:colorScheme
-     toButtonBar:component];
+     toButtonBar:buttonBar];
 ```
 <!--</div>-->

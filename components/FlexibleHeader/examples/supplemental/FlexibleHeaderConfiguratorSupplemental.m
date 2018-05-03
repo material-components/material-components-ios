@@ -40,7 +40,7 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
 }
 
 + (BOOL)catalogIsPresentable {
-  return YES;
+  return NO;
 }
 
 @end

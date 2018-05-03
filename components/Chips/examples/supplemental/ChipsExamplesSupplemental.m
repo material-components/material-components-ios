@@ -121,7 +121,7 @@ static UIButton *DeleteButton() {
 }
 
 + (BOOL)catalogIsPresentable {
-  return YES;
+  return NO;
 }
 
 @end
@@ -224,7 +224,7 @@ static UIButton *DeleteButton() {
 }
 
 + (BOOL)catalogIsPresentable {
-  return YES;
+  return NO;
 }
 
 @end

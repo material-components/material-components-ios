@@ -1,23 +1,12 @@
-<!--docs:
-title: "Color Theming"
-layout: detail
-section: components
-excerpt: "How to theme Tabs using the Material Design color system."
-iconId: tabs
-path: /catalog/tabs/color-theming/
--->
-
-# Tabs Color Theming
+### Color Theming
 
 You can theme a tab bar with your app's color scheme using the ColorThemer extension.
 
 You must first add the Color Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/Tabs+Extensions/ColorThemer'
+pod 'MaterialComponents/Tabs+ColorThemer'
 ```
-
-## Example code
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift

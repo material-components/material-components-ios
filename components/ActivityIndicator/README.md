@@ -1,51 +1,69 @@
 <!--docs:
-title: "Activity Indicators"
+title: "Activity Indicator"
 layout: detail
 section: components
-excerpt: "Progress and activity indicators are visual indications of an app loading content."
+excerpt: "Material Design progress indicators display the length of a process or express an unspecified wait time."
 iconId: progress_activity
 path: /catalog/progress-indicators/activity-indicators/
 api_doc_root: true
 -->
 
-# Activity Indicators
+<!-- This file was auto-generated using ./scripts/generate_readme ActivityIndicator -->
+
+# Activity Indicator
 
 Material Design progress indicators display the length of a process or express an unspecified wait
 time. There are two styles of progress indicators: linear and circular.
 
-This component only provides the circular implementation. See [Progress View](../ProgressView) for
-the linear implementation.
+This component only provides the circular implementation. See
+[Progress View](../ProgressView) for the linear implementation.
 
 <img src="docs/assets/activityindicator.gif" alt="An animation showing a determinate and indeterminate activity indicator." width="115">
 
-## Design & API Documentation
+## Design & API documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-progress-indicators">Material Design guidelines: Progress & activity</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/progress-indicators/activity-indicators/api-docs/Classes/MDCActivityIndicator.html">API: MDCActivityIndicator</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/progress-indicators/activity-indicators/api-docs/Enums/MDCActivityIndicatorMode.html">API: MDCActivityIndicatorMode</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/progress-indicators/activity-indicators/api-docs/Protocols/MDCActivityIndicatorDelegate.html">API: MDCActivityIndicatorDelegate</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-progress-indicators">Material Design guidelines: Progress & Activity</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/progress-indicators/activity-indicators/api-docs/Classes/MDCActivityIndicator.html">MDCActivityIndicator</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/progress-indicators/activity-indicators/api-docs/Classes/MDCActivityIndicatorTransition.html">MDCActivityIndicatorTransition</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/progress-indicators/activity-indicators/api-docs/Protocols/MDCActivityIndicatorDelegate.html">MDCActivityIndicatorDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/progress-indicators/activity-indicators/api-docs/Enums/MDCActivityIndicatorMode.html">MDCActivityIndicatorMode</a></li>
 </ul>
 
-## Extensions
+## Related components
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--link"><a href="docs/color-theming.md">Color Theming</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="../ProgressView">ProgressView</a></li>
 </ul>
 
-## Related Components
+## Table of contents
 
-<ul class="icon-list">
-  <li class="icon-list-item icon-list-item--components"><a href="../ProgressView">Progress Views</a></li>
-</ul>
+- [Overview](#overview)
+- [Installation](#installation)
+  - [Installation with CocoaPods](#installation-with-cocoapods)
+  - [Importing](#importing)
+- [Usage](#usage)
+  - [Typical use: Indeterminate](#typical-use-indeterminate)
+  - [Typical use: Determinate](#typical-use-determinate)
+  - [Showing multiple indeterminate colors](#showing-multiple-indeterminate-colors)
+- [Extensions](#extensions)
+  - [Color Theming](#color-theming)
 
 - - -
 
+## Overview
+
+`MDCActivityIndicator` is a view that has two modes: indeterminate and determinate. Indeterminate
+indicators express an unspecified wait time, while determinate indicators represent the length of a
+process. Activity indicators are indeterminate by default.
+
 ## Installation
+
+<!-- Extracted from docs/../../../docs/component-installation.md -->
 
 ### Installation with CocoaPods
 
-To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
+Add the following to your `Podfile`:
 
 ```bash
 pod 'MaterialComponents/ActivityIndicator'
@@ -75,15 +93,10 @@ import MaterialComponents.MaterialActivityIndicator
 ```
 <!--</div>-->
 
-- - -
-
-## Overview
-
-`MDCActivityIndicator` is a view that has two modes: indeterminate and determinate. Indeterminate
-indicators express an unspecified wait time, while determinate indicators represent the length of a
-process. Activity indicators are indeterminate by default.
 
 ## Usage
+
+<!-- Extracted from docs/typical-use-indeterminate.md -->
 
 ### Typical use: Indeterminate
 
@@ -118,6 +131,9 @@ MDCActivityIndicator *activityIndicator = [[MDCActivityIndicator alloc] init];
 ```
 <!--</div>-->
 
+
+
+<!-- Extracted from docs/typical-use-determinate.md -->
 
 ### Typical use: Determinate
 
@@ -161,6 +177,8 @@ activityIndicator.progress = 0.5;
 ```
 <!--</div>-->
 
+<!-- Extracted from docs/multiple-colors.md -->
+
 ### Showing multiple indeterminate colors
 
 Indeterminate activity indicators support showing multiple colors via the `cycleColors` API.
@@ -183,3 +201,49 @@ activityIndicator.cycleColors =  @[ UIColor.blueColor,
                                     UIColor.yellowColor ];
 ```
 <!--</div>-->
+
+
+## Extensions
+
+<!-- Extracted from docs/color-theming.md -->
+
+### Color Theming
+
+You can theme an activity indicator with your app's color scheme using the ColorThemer extension.
+
+You must first add the Color Themer extension to your project:
+
+```bash
+pod 'MaterialComponents/ActivityIndicator+ColorThemer'
+```
+
+Run `pod install` again.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// Step 1: Import the ColorThemer extension
+import MaterialComponents.MaterialActivityIndicator_ColorThemer
+
+// Step 2: Create or get a color scheme
+let colorScheme = MDCSemanticColorScheme()
+
+// Step 3: Apply the color scheme to your component
+MDCActivityIndicatorColorThemer.applySemanticColorScheme(colorScheme, to: activityIndicator)
+```
+
+#### Objective-C
+
+```objc
+// Step 1: Import the ColorThemer extension
+#import "MaterialActivityIndicator+ColorThemer.h"
+
+// Step 2: Create or get a color scheme
+id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+
+// Step 3: Apply the color scheme to your component
+[MDCActivityIndicatorColorThemer applySemanticColorScheme:colorScheme
+     toActivityIndicator:activityIndicator];
+```
+<!--</div>-->
+

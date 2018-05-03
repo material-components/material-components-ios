@@ -23,7 +23,7 @@
   UICollectionView *_collectionView;
   MDCChipView *_sizingChip;
   NSMutableArray *_selectedIndecies;
-  BOOL _isStroked;
+  BOOL _isOutlined;
 }
 
 - (void)loadView {
@@ -60,17 +60,17 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  _isStroked = NO;
+  _isOutlined = NO;
   self.navigationItem.rightBarButtonItem =
-      [[UIBarButtonItem alloc] initWithTitle:@"Stroked Style"
+      [[UIBarButtonItem alloc] initWithTitle:@"Outlined Style"
                                        style:UIBarButtonItemStylePlain
                                       target:self
                                       action:@selector(switchStyle)];
 }
 
 - (void)switchStyle {
-  _isStroked = !_isStroked;
-  NSString *buttonTitle = _isStroked ? @"Filled Style" : @"Stroked Style";
+  _isOutlined = !_isOutlined;
+  NSString *buttonTitle = _isOutlined ? @"Filled Style" : @"Outlined Style";
   [self.navigationItem.rightBarButtonItem setTitle:buttonTitle];
   [_collectionView reloadData];
   for (NSIndexPath *path in _selectedIndecies) {
@@ -109,7 +109,7 @@
   MDCChipViewScheme *scheme = [[MDCChipViewScheme alloc] init];
   scheme.colorScheme = self.colorScheme;
   
-  if (_isStroked) {
+  if (_isOutlined) {
     [MDCChipViewThemer applyOutlinedVariantWithScheme:scheme toChipView:chipView];
   } else {
     [MDCChipViewThemer applyScheme:scheme toChipView:chipView];

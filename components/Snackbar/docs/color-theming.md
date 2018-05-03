@@ -1,23 +1,12 @@
-<!--docs:
-title: "Color Theming"
-layout: detail
-section: components
-excerpt: "How to theme Snackbar using the Material Design color system."
-iconId: toast
-path: /catalog/snackbars/color-theming/
--->
-
-# Snackbar Color Theming
+### Color Theming
 
 You can theme an snackbar with your app's color scheme using the ColorThemer extension.
 
 You must first add the Color Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/Snackbar+Extensions/ColorThemer'
+pod 'MaterialComponents/Snackbar+ColorThemer'
 ```
-
-## Example code
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift

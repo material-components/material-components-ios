@@ -1,23 +1,12 @@
-<!--docs:
-title: "Color Theming"
-layout: detail
-section: components
-excerpt: "How to theme Flexible Header using the Material Design color system."
-iconId: header
-path: /catalog/flexible-headers/color-theming/
--->
-
-# Flexible Header Color Theming
+### Color Theming
 
 You can theme a flexible header with your app's color scheme using the ColorThemer extension.
 
 You must first add the Color Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/FlexibleHeader+Extensions/ColorThemer'
+pod 'MaterialComponents/FlexibleHeader+ColorThemer'
 ```
-
-## Example code
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift

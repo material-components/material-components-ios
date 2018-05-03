@@ -1,23 +1,12 @@
-<!--docs:
-title: "Color Theming"
-layout: detail
-section: components
-excerpt: "How to theme App Bar using the Material Design color system."
-iconId: toolbar
-path: /catalog/app-bars/color-theming/
--->
-
-# App Bar Color Theming
+### Color Theming
 
 You can theme an app bar with your app's color scheme using the ColorThemer extension.
 
 You must first add the Color Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/AppBar+Extensions/ColorThemer'
+pod 'MaterialComponents/AppBar+ColorThemer'
 ```
-
-## Example code
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift

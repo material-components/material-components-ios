@@ -1,23 +1,12 @@
-<!--docs:
-title: "Typography Theming"
-layout: detail
-section: components
-excerpt: "How to theme Buttons using the Material Design typography system."
-iconId: button
-path: /catalog/buttons/typography-theming/
--->
-
-# Buttons Typography Theming
+### Typography Theming
 
 You can theme buttons with your app's typography scheme using the TypographyThemer extension.
 
 You must first add the Typography Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/Buttons+Extensions/TypographyThemer'
+pod 'MaterialComponents/Buttons+TypographyThemer'
 ```
-
-## Example code
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift

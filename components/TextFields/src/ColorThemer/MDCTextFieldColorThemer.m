@@ -69,12 +69,9 @@
           conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {
     id<MDCTextInputControllerFloatingPlaceholder> textInputControllerFloatingPlaceholder =
         (id<MDCTextInputControllerFloatingPlaceholder>)textInputController;
-
-    if ([textInputControllerFloatingPlaceholder
-            respondsToSelector:@selector(setFloatingPlaceholderNormalColor:)]) {
-      UIColor *primary87Opacity = [colorScheme.primaryColor colorWithAlphaComponent:0.87f];
-      textInputControllerFloatingPlaceholder.floatingPlaceholderNormalColor = primary87Opacity;
-    }
+    UIColor *primary87Opacity = [colorScheme.primaryColor colorWithAlphaComponent:0.87f];
+    textInputControllerFloatingPlaceholder.floatingPlaceholderNormalColor = onSurface60Opacity;
+    textInputControllerFloatingPlaceholder.floatingPlaceholderActiveColor = primary87Opacity;
   }
 }
 
@@ -112,7 +109,9 @@ toAllTextInputControllersOfClass:(Class<MDCTextInputController>)textInputControl
         (Class<MDCTextInputControllerFloatingPlaceholder>)textInputControllerClass;
     UIColor *primary87Opacity = [colorScheme.primaryColor colorWithAlphaComponent:0.87f];
     [textInputControllerFloatingPlaceholderClass
-        setFloatingPlaceholderNormalColorDefault:primary87Opacity];
+        setFloatingPlaceholderNormalColorDefault:onSurface60Opacity];
+    [textInputControllerFloatingPlaceholderClass
+        setFloatingPlaceholderActiveColorDefault:primary87Opacity];
   }
 }
 #if !defined(__IPHONE_11_0)

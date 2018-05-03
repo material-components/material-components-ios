@@ -5,7 +5,10 @@ section: components
 excerpt: "The Dialogs component implements the Material Design specifications for modal presentations."
 iconId: dialog
 path: /catalog/dialogs/
+api_doc_root: true
 -->
+
+<!-- This file was auto-generated using ./scripts/generate_readme Dialogs -->
 
 # Dialogs
 
@@ -16,75 +19,80 @@ path: /catalog/dialogs/
 Dialogs provides both a presentation controller for displaying a modal dialog and an alert
 controller that will display a simple modal alert.
 
-## Design & API Documentation
+## Design & API documentation
 
 <ul class="icon-list">
   <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-dialogs">Material Design guidelines: Dialogs</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/dialogs/api-docs/Classes.html#/c:objc(cs)MDCDialogTransitionController">MDCDialogTransitionController</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/dialogs/api-docs/Classes/MDCAlertAction.html">MDCAlertAction</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/dialogs/api-docs/Classes/MDCAlertController.html">MDCAlertController</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/dialogs/api-docs/Classes/MDCAlertControllerView.html">MDCAlertControllerView</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/dialogs/api-docs/Classes/MDCDialogPresentationController.html">MDCDialogPresentationController</a></li>
 </ul>
 
-## Extensions
+## Table of contents
 
-<ul class="icon-list">
-  <li class="icon-list-item icon-list-item--link"><a href="docs/color-theming.md">Color Theming</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="docs/typography-theming.md">Typography Theming</a></li>
-</ul>
+- [Overview](#overview)
+  - [Presentation and transition controller](#presentation-and-transition-controller)
+  - [Alert controller](#alert-controller)
+- [Installation](#installation)
+  - [Installation with CocoaPods](#installation-with-cocoapods)
+  - [Importing](#importing)
+- [Usage](#usage)
+  - [Typical use: modal dialog](#typical-use-modal-dialog)
+  - [Typical use: alert](#typical-use-alert)
+- [Extensions](#extensions)
+  - [Color Theming](#color-theming)
+  - [Typography Theming](#typography-theming)
 
 - - -
 
-### Dialogs Classes
-
-#### Dialogs Presentation Controller and Transition Controller
-
-Presenting dialogs utilizes two classes: MDCDialogPresentationController and
-MDCDialogTransitionController. These allow the presentation of view controllers in a material
-specificed manner. MDCDialogPresentationController is a subclass of UIPresentationController
-that observes the presented view controller for preferred content size.
-MDCDialogTransitionController implements UIViewControllerAnimatedTransitioning and
-UIViewControllerTransitioningDelegate to vend the presentation controller during the transition.
-
-#### Alert Controller
-
-MDCAlertController provides a simple interface for developers to present a modal dialog
-according to the Material spec.
-
-## Installation
-
-### Installation with CocoaPods
-
-To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
-
-```
-pod 'MaterialComponents/Dialogs'
-```
-<!--{: .code-renderer.code-renderer--install }-->
-
-To add this component along with its themer and other related extensions, please add the following instead:
-```bash
-pod 'MaterialComponents/Dialogs+Extensions'
-```
-
-Then run the following command:
-
-```bash
-pod install
-```
-
-- - -
-
-## Usage
+## Overview
 
 To display a modal using MaterialDialogs you set two properties on the view controller to be
 presented. Set modalPresentationStyle to UIModalPresentationCustom and set
 transitioningDelegate to and instance of MDCDialogTransitionController. Then you present the
 view controller from the root controller to display it as a modal dialog.
 
+### Presentation and transition controller
+
+Presenting dialogs uses two classes: MDCDialogPresentationController and
+MDCDialogTransitionController. These allow the presentation of view controllers in a material
+specificed manner. MDCDialogPresentationController is a subclass of UIPresentationController
+that observes the presented view controller for preferred content size.
+MDCDialogTransitionController implements UIViewControllerAnimatedTransitioning and
+UIViewControllerTransitioningDelegate to vend the presentation controller during the transition.
+
+### Alert controller
+
+MDCAlertController provides a simple interface for developers to present a modal dialog
+according to the Material spec.
+
+## Installation
+
+<!-- Extracted from docs/../../../docs/component-installation.md -->
+
+### Installation with CocoaPods
+
+Add the following to your `Podfile`:
+
+```bash
+pod 'MaterialComponents/Dialogs'
+```
+<!--{: .code-renderer.code-renderer--install }-->
+
+Then, run the following command:
+
+```bash
+pod install
+```
+
 ### Importing
 
-Before using Dialogs, you'll need to import it:
+To import the component:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-
 ```swift
 import MaterialComponents.MaterialDialogs
 ```
@@ -96,9 +104,12 @@ import MaterialComponents.MaterialDialogs
 ```
 <!--</div>-->
 
-## Examples
 
-### Display a modal dialog
+## Usage
+
+<!-- Extracted from docs/typical-use-modal-dialog.md -->
+
+### Typical use: modal dialog
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -133,7 +144,9 @@ myDialogViewController.transitioningDelegate = self.dialogTransitionController;
 ```
 <!--</div>-->
 
-### Present an alert
+<!-- Extracted from docs/typical-use-alert.md -->
+
+### Typical use: alert
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -166,3 +179,87 @@ MDCAlertAction *alertAction =
 [self presentViewController:alertController animated:YES completion:...];
 ```
 <!--</div>-->
+
+
+## Extensions
+
+<!-- Extracted from docs/color-theming.md -->
+
+### Color Theming
+
+You can theme a dialog with your app's color scheme using the ColorThemer extension.
+
+You must first add the Color Themer extension to your project:
+
+```bash
+pod 'MaterialComponents/Dialogs+ColorThemer'
+```
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// Step 1: Import the ColorThemer extension
+import MaterialComponents.MaterialDialogs_ColorThemer
+
+// Step 2: Create or get a color scheme
+let colorScheme = MDCSemanticColorScheme()
+
+// Step 3: Apply the color scheme to your component
+MDCAlertColorThemer.applySemanticColorScheme(colorScheme, to: component)
+```
+
+#### Objective-C
+
+```objc
+// Step 1: Import the ColorThemer extension
+#import "MaterialDialogs+ColorThemer.h"
+
+// Step 2: Create or get a color scheme
+id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+
+// Step 3: Apply the color scheme to your component
+[MDCAlertColorThemer applySemanticColorScheme:colorScheme
+     toAlertController:component];
+```
+<!--</div>-->
+
+<!-- Extracted from docs/typography-theming.md -->
+
+### Typography Theming
+
+You can theme a dialog with your app's typography scheme using the TypographyThemer extension.
+
+You must first add the Typography Themer extension to your project:
+
+```bash
+pod 'MaterialComponents/Dialogs+TypographyThemer'
+```
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// Step 1: Import the TypographyThemer extension
+import MaterialComponents.MaterialDialogs_TypographyThemer
+
+// Step 2: Create or get a typography scheme
+let typographyScheme = MDCTypographyScheme()
+
+// Step 3: Apply the typography scheme to your component
+MDCAlertTypographyThemer.applyTypographyScheme(typographyScheme, to: component)
+```
+
+#### Objective-C
+
+```objc
+// Step 1: Import the TypographyThemer extension
+#import "MaterialDialogs+TypographyThemer.h"
+
+// Step 2: Create or get a typography scheme
+id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
+
+// Step 3: Apply the typography scheme to your component
+[MDCAlertTypographyThemer applyTypographyScheme:colorScheme
+     toAlertController:component];
+```
+<!--</div>-->
+

@@ -1,23 +1,12 @@
-<!--docs:
-title: "Color Theming"
-layout: detail
-section: components
-excerpt: "How to theme Text Fields using the Material Design color system."
-iconId: text_field
-path: /catalog/textfields/color-theming/
--->
-
-# Text Fields Color Theming
+### Text Fields Color Theming
 
 You can theme a text field with your app's color scheme using the ColorThemer extension.
 
 You must first add the Color Themer extension to your project:
 
 ```bash
-pod 'MaterialComponents/TextFields+Extensions/ColorThemer'
+pod 'MaterialComponents/TextFields+ColorThemer'
 ```
-
-## Example code
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift

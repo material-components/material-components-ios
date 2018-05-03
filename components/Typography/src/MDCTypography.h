@@ -16,11 +16,16 @@
 
 #import <UIKit/UIKit.h>
 
+#pragma mark - Soon to be deprecated
+
 /**
  MDCTypography uses this protocol to delegate responsibility of loading the custom fonts.
 
  The spec defines the Roboto font family and uses three fonts in the named styles. Use this
  protocol to define your own fonts if there is a brand need.
+
+ @warning This protocol will soon be deprecated. Consider using MDCTypographyScheme from the
+ schemes/Typography component instead.
 
  @see https://material.io/go/design-typography#typography-styles
  */
@@ -70,6 +75,9 @@
  Typographic constants and helpers.
 
  To use these fonts, you must add MaterialTypography.bundle to your target.
+
+ @warning This class will soon be deprecated. Consider using MDCTypographyScheme from the
+ schemes/Typography component instead.
 
  @see https://material.io/go/design-typography#typography-styles
  */
@@ -176,6 +184,9 @@
 
 /**
  MDCSystemFontLoader allows you to use the system font for @c MDCTypography.
+
+ @warning This class will soon be deprecated. Consider using MDCTypographyScheme from the
+ schemes/Typography component instead.
 
  #### Example
 

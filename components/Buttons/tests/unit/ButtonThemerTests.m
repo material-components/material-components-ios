@@ -94,7 +94,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
                              kEpsilonAccuracy);
   XCTAssertEqualWithAccuracy([button borderWidthForState:UIControlStateNormal], 1,
                              kEpsilonAccuracy);
-  XCTAssertEqualWithAccuracy([button borderWidthForState:UIControlStateHighlighted], 0,
+  XCTAssertEqualWithAccuracy([button borderWidthForState:UIControlStateHighlighted], 1,
                              kEpsilonAccuracy);
 }
 
