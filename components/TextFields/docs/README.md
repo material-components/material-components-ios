@@ -1,4 +1,4 @@
-# Text Fields
+# Text fields
 
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/textfields.png" alt="Text Fields" width="375">

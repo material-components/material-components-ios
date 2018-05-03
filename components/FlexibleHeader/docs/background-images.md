@@ -1,8 +1,8 @@
 ### Background images
 
-This example shows how to add a custom background image view to a Flexible Header.
+This example shows how to add a custom background image view to a flexible header.
 
-You can create and add a UIImageView subview to the Flexible Header view's content view:
+You can create and add a UIImageView subview to the flexible header view's content view:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift

@@ -1,5 +1,5 @@
 <!--docs:
-title: "Masked Transitions"
+title: "Masked transitions"
 layout: detail
 section: components
 excerpt: "A masked transition reveals content from a source view using a view controller transition."
@@ -8,7 +8,7 @@ path: /catalog/masked-transitions/
 api_doc_root: true
 -->
 
-# Masked Transitions
+# Masked transitions
 
 A masked transition reveals content from a source view using a view controller transition.
 

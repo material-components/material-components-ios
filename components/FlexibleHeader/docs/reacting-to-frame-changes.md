@@ -1,6 +1,6 @@
 ### Reacting to frame changes
 
-In order to react to Flexible Header frame changes you can set yourself as the
+In order to react to flexible header frame changes you can set yourself as the
 MDCFlexibleHeaderViewController instance's `layoutDelegate`.
 
 <!--<div class="material-code-render" markdown="1">-->

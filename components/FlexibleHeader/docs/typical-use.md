@@ -1,12 +1,12 @@
-### Typical use: Add the Flexible Header to a view controller
+### Typical use: Add the flexible header to a view controller
 
-Each view controller in your app that intends to manage its own Flexible Header will follow these
-instructions. You'll typically add the Flexible Header to the same view controllers that you'd push
+Each view controller in your app that intends to manage its own flexible header will follow these
+instructions. You'll typically add the flexible header to the same view controllers that you'd push
 onto a UINavigationController, hiding the UINavigationController's `navigationBar` accordingly.
 
 The result of following these steps will be that:
 
-1. a Flexible Header is registered as a child view controller of your view controller, and that
+1. a flexible header is registered as a child view controller of your view controller, and that
 2. you have access to a MDCFlexibleHeaderView instance via the `headerView` property on your
    MDCFlexibleHeaderViewController instance.
 
@@ -53,7 +53,7 @@ required init?(coder aDecoder: NSCoder) {
 Step 2: **Add the MDCFlexibleHeaderViewController's view to your view controller's view**.
 
 Ideally you will do this after all views have been added to your controller's view in order to
-ensure that the Flexible Header is in front of all other views.
+ensure that the flexible header is in front of all other views.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift

@@ -1,5 +1,5 @@
 <!--docs:
-title: "Animation Timing"
+title: "Animation timing"
 layout: detail
 section: components
 excerpt: "Material Design animation timing curves."
@@ -7,7 +7,7 @@ iconId: animation
 path: /catalog/animation-timing/
 -->
 
-# Animation Timing
+# Animation timing
 
 <img src="docs/assets/animationtiming.gif" alt="An animation showing different Material Design animation timings." width="237">
 

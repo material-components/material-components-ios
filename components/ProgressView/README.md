@@ -1,8 +1,8 @@
 <!--docs:
-title: "Progress View"
+title: "Progress view"
 layout: detail
 section: components
-excerpt: "Progress View is a determinate and linear progress indicator that implements Material Design animation and layout."
+excerpt: "Progress view is a determinate and linear progress indicator that implements Material Design animation and layout."
 iconId: progress_linear
 path: /catalog/progress-indicators/progress-views/
 api_doc_root: true
@@ -10,7 +10,7 @@ api_doc_root: true
 
 <!-- This file was auto-generated using ./scripts/generate_readme ProgressView -->
 
-# Progress View
+# Progress view
 
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/progress_view.png" alt="Progress View" width="375">

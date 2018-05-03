@@ -1,5 +1,5 @@
 <!--docs:
-title: "Bottom Navigation"
+title: "Bottom navigation"
 layout: detail
 section: components
 excerpt: "Bottom navigation provides a bar at the bottom of the screen with items to navigate between different views."
@@ -10,7 +10,7 @@ api_doc_root: true
 
 <!-- This file was auto-generated using ./scripts/generate_readme BottomNavigation -->
 
-# Bottom Navigation
+# Bottom navigation
 
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/bottomnavigation.png" alt="Bottom Navigation" width="375">
@@ -25,7 +25,7 @@ Be cautious when combining bottom navigation with similar navigation placed at t
 ## Design & API documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-bottom-navigation">Material Design guidelines: Bottom Navigation</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-bottom-navigation">Material Design guidelines: Bottom navigation</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/bottomnavigation/api-docs/Classes/MDCBottomNavigationBar.html">MDCBottomNavigationBar</a></li>
   <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/bottomnavigation/api-docs/Protocols/MDCBottomNavigationBarDelegate.html">MDCBottomNavigationBarDelegate</a></li>
   <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/bottomnavigation/api-docs/Enums/MDCBottomNavigationBarAlignment.html">MDCBottomNavigationBarAlignment</a></li>

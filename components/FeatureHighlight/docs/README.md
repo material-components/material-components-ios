@@ -1,4 +1,4 @@
-# Feature Highlight
+# Feature highlight
 
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/feature_highlight.png" alt="Feature Highlight" width="375">

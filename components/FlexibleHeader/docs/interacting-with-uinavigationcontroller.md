@@ -1,7 +1,7 @@
 ### Interacting with UINavigationController
 
-Push a view controller with a Flexible Header onto UINavigationController and you may find that
-the existing UINavigationBar is undesired. The most obvious example occurs when your Flexible Header
+Push a view controller with a flexible header onto UINavigationController and you may find that
+the existing UINavigationBar is undesired. The most obvious example occurs when your flexible header
 has its own navigation bar.
 
 If this is the case then we recommend hiding the UINavigationController's `navigationBar` during

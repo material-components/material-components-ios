@@ -1,13 +1,13 @@
 <!--docs:
-title: "Overlay Windows"
+title: "Overlay window"
 layout: detail
 section: components
 excerpt: "A window for managing sets of overlay views."
 iconId: tooltip
-path: /catalog/snackbars/overlay-windows/
+path: /catalog/snackbars/overlay-window/
 -->
 
-# Overlay Window
+# Overlay window
 
 Provides a window which can have an arbitrary number of overlay views that will sit above the root
 view of the window. Overlays will be the full size of the screen, and will be rotated as appropriate
