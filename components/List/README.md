@@ -14,27 +14,29 @@ Material Design Lists are a continuous group of text or images. They are compose
 
 The [Lists component](https://material.io/go/design-lists) is yet to be completed, please follow the [tracking issue](https://www.pivotaltracker.com/epic/show/3950586) for more information.
 
-In the meanwhile, we are offering a fully featured example on how to implement a list cell that is self-sizing, supports dynamic type, and right-to-left using pure UIKit classes. 
+In the meanwhile, we are offering an example on how to implement a list cell that is self-sizing, supports dynamic type, and right-to-left using pure UIKit classes. 
 We will walk through the example and discuss things needed to achieve a list cell implementation of your own.
 
 ## Example Walkthrough / How to implement your own List Cell
 
 The example files can be found <a href="examples/">here</a>
 
-Our example consists of a `UICollectionViewController` class: <a href="examples/CollectionListCellExampleTypicalUse.m">examples/CollectionListCellExampleTypicalUse.m</a>
-and also of a custom `UICollectionViewCell` class: <a href="examples/supplemental/CollectionViewListCell.m">examples/supplemental/CollectionViewListCell.m</a>.
+<img src="docs/assets/listcellexample.gif" alt="List Cell Example">
 
-Our main focus will be on the custom cell as that's where all the logic goes in, whereas the collection view and its controller are using mostly boilerplate code of setting up a simple example and collection view.
+Our example consists of a custom `UICollectionViewController`: <a href="examples/CollectionListCellExampleTypicalUse.m">examples/CollectionListCellExampleTypicalUse.m</a>
+and also of a custom `UICollectionViewCell`: <a href="examples/supplemental/CollectionViewListCell.m">examples/supplemental/CollectionViewListCell.m</a>.
+
+The main focus will be on the custom cell as that's where all the logic goes in, whereas the collection view and its controller are using mostly boilerplate code of setting up a simple example and collection view.
 
 ### Layout
-For our example we will have a layout consisting of a left sided UIImageView, a title text UILabel and a details text UILabel. The title text can have a max of 1 line whereas the details text can be up to 3 lines. It is important to note that neither the image nor the labels need to have any content in them. To see more of the spec guidelines for Lists please see here: <a href="https://material.io/go/design-lists">https://material.io/go/design-lists</a>
+For our example we will have a layout consisting of a left aligned `UIImageView`, a title text `UILabel` and a details text `UILabel`. The title text will have a max of 1 line whereas the details text can be up to 3 lines. It is important to note that neither the image nor the labels need to have any content in them. To see more of the spec guidelines for Lists please see here: <a href="https://material.io/go/design-lists">https://material.io/go/design-lists</a>
 
-To create our layout we used auto layout constraints that are all set up in the `(void)setupConstraints` method in our custom cell. It is important to make sure we set `translatesAutoresizingMaskIntoConstraints` to `NO` in all the views we are applying constraints on.
+To create our layout we used auto layout constraints that are all set up in the `(void)setupConstraints` method in our custom cell. It is important to make sure we set `translatesAutoresizingMaskIntoConstraints` to `NO` for all the views we are applying constraints on.
 
 ### Ink Ripple
-Interactable Material components and specifically List Cells have an ink ripple when tapping on them. To add the ink to your cells there are a few steps you need to take:
+Interactable Material components and specifically List Cells have an ink ripple when tapped on. To add ink to your cells there are a few steps you need to take:
 
-1. Add an `MDCInkView *` property to your custom cell.
+1. Add an `MDCInkView` property to your custom cell.
 
 2. Initialize `MDCInkView` on init and add it as a subview:
 
@@ -83,7 +85,7 @@ _inkView.usesLegacyInkRipple = NO;
 Now there is ink in our cells!
 
 ### Self Sizing
-In order to have our cells self-size based on the content and not rely on magic number constants to decide how big our cells should be, we need to follow these steps:
+In order to have cells self-size based on content and not rely on magic number constants to decide how big they should be, we need to follow these steps:
 
 1. apply autoulayout constraints of our added subviews relative to each other and their superview (the cell's `contentView`). We need to make sure our constraints don't define static heights or widths but rather constraints that are relative or our cell won't calculate itself based on the dynamically sized content.
 
@@ -96,7 +98,7 @@ You can see how it is achieved in the `(void)setupConstraints` method in our exa
 ``` 
 This is in order to support the changing layout if an image is set or not.
 
-2. Because our list cells need to fill the entire width of the collection view, we want to expose the cell's width to be settable by the collectionView when the cell is set up. For that we expose a `setCellWidth` method that sets the width constraint of the `contentView`:
+2. Because our list cells need to fill the entire width of the collection view, we want to expose the cell's width to be settable by the view controller when the cell is set up. For that we expose a `setCellWidth` method that sets the width constraint of the `contentView`:
 
 ```objc
 - (void)setCellWidth:(CGFloat)width {
@@ -105,7 +107,7 @@ This is in order to support the changing layout if an image is set or not.
 }
 ```
 
-and then in the collection view's `cellForItemAtIndexPath` method we set the width:
+and then in the collection view's `cellForItemAtIndexPath` delegate method we set the width:
 
 ```objc
 CGFloat cellWidth = CGRectGetWidth(collectionView.bounds);
@@ -120,7 +122,8 @@ CGFloat cellWidth = CGRectGetWidth(collectionView.bounds);
 
 
 3. In our collection view's flow layout we must set an `estimatedItemSize` so the collection view will defer the size calculations to its content.
-Note: It is better to set a too small rather then a too large estimation or constraints can break.
+
+Note: It is better to set the size smaller rather than larger or constraints might break in runtime.
 
 ```objc
 _flowLayout.estimatedItemSize = CGSizeMake(kSmallArbitraryCellWidth, kSmallestCellHeight);
@@ -184,7 +187,7 @@ Our collection view needs to be aware of the safe areas when being presented on 
 #endif
 ```
 
-Lastly, as seen in self-sizing step 2, when setting the width of the cell we need to set it to be the width of the collection view bounds minus the adjustedContentInset that now insets based on the safe area.
+Lastly, as seen in the self-sizing section on step 2, when setting the width of the cell we need to set it to be the width of the collection view bounds minus the adjustedContentInset that now insets based on the safe area.
 
 ### Landscape Support
 
@@ -208,3 +211,18 @@ In your view controller you need to invalidate the layout of your collection vie
   }];
 }
 ```
+
+### Right to Left Text Support
+
+To support right to left text we need to import `MDFInternationalization`:
+
+```objc
+#import <MDFInternationalization/MDFInternationalization.h>
+```
+
+and for each of our cell's subviews me need to update the `autoResizingMask`:
+
+```objc
+_titleLabel.autoresizingMask =
+    MDFTrailingMarginAutoresizingMaskForLayoutDirection(self.mdf_effectiveUserInterfaceLayoutDirection);
+``` 
