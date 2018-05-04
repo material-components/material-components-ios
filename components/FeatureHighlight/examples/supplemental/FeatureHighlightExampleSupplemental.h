@@ -41,8 +41,8 @@
 @end
 
 @interface FeatureHighlightShownViewExample : UIViewController
-@property(nonatomic) UILabel *infoLabel;
 @property(nonatomic) UIButton *button;
+@property(nonatomic) UIButton *actionButton;
 
 - (void)didTapButton:(id)sender;
 @end

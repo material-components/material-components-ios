@@ -207,22 +207,23 @@ static NSString *const reuseIdentifier = @"Cell";
 
   self.view.backgroundColor = [UIColor whiteColor];
 
-  self.infoLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-  self.infoLabel.text = @"Tap on the button below.";
-  self.infoLabel.font = [MDCTypography subheadFont];
-  self.infoLabel.textColor =
-      [self.infoLabel.textColor colorWithAlphaComponent:[MDCTypography captionFontOpacity]];
-  [self.view addSubview:self.infoLabel];
-
   self.button = [[MDCRaisedButton alloc] init];
   [self.button setBackgroundColor:[UIColor colorWithWhite:0.1f alpha:1]];
   [self.button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-  [self.button setTitle:@"Action" forState:UIControlStateNormal];
+  [self.button setTitle:@"Feature" forState:UIControlStateNormal];
   [self.button sizeToFit];
-  [self.button addTarget:self
-                  action:@selector(didTapButton:)
-        forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:self.button];
+
+  self.actionButton = [[MDCRaisedButton alloc] init];
+  [self.actionButton setBackgroundColor:[UIColor colorWithWhite:0.1f alpha:1]];
+  [self.actionButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+  [self.actionButton setTitle:@"Show Feature Highlight" forState:UIControlStateNormal];
+  [self.actionButton sizeToFit];
+  [self.actionButton addTarget:self
+                        action:@selector(didTapButton:)
+              forControlEvents:UIControlEventTouchUpInside];
+  [self.view addSubview:self.actionButton];
+
 }
 
 - (void)viewDidLayoutSubviews {
@@ -234,11 +235,11 @@ static NSString *const reuseIdentifier = @"Cell";
   frame.origin.y = self.view.frame.size.height / 2 - frame.size.height / 2;
   self.button.frame = frame;
 
-  CGSize labelSize = [self.infoLabel sizeThatFits:self.view.frame.size];
-  self.infoLabel.frame =
-      MDCRectAlignToScale(CGRectMake(self.view.frame.size.width / 2 - labelSize.width / 2, 20,
-                                     labelSize.width, labelSize.height),
-                          [UIScreen mainScreen].scale);
+  [self.actionButton sizeToFit];
+  frame = self.actionButton.frame;
+  frame.origin.x = self.view.frame.size.width / 2 - frame.size.width / 2;
+  frame.origin.y = self.view.frame.size.height - 60;
+  self.actionButton.frame = frame;
 }
 
 #pragma mark - CatalogByConvention
