@@ -18,33 +18,27 @@
 
 #import "MaterialCards+ColorThemer.h"
 
-static const MDCShadowElevation kElevation = 0.f;
+static const MDCShadowElevation kNormalElevation = 1.f;
+static const MDCShadowElevation kHighlightedElevation = 4.f;
 static const MDCShadowElevation kSelectedElevation = 4.f;
-static const MDCShadowElevation kHighlightedElevation = 8.f;
 static const CGFloat kBorderWidth = 1.f;
 
 @implementation MDCCardThemer
 
 + (void)applyScheme:(nonnull id<MDCCardScheming>)scheme
              toCard:(nonnull MDCCard *)card {
-  NSUInteger maximumStateValue =
-      UIControlStateNormal | UIControlStateSelected | UIControlStateHighlighted |
-      UIControlStateDisabled;
-  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
-    [card setBorderWidth:0.f forState:state];
-    [card setShadowElevation:0.f forState:state];
-  }
+  [card setShadowElevation:kNormalElevation forState:UIControlStateNormal];
+  [card setShadowElevation:kHighlightedElevation forState:UIControlStateHighlighted];
+
   [MDCCardsColorThemer applySemanticColorScheme:scheme.colorScheme toCard:card];
 }
 
 + (void)applyScheme:(nonnull id<MDCCardScheming>)scheme
          toCardCell:(nonnull MDCCardCollectionCell *)cardCell {
-  for (MDCCardCellState state = MDCCardCellStateNormal;
-       state <= MDCCardCellStateSelected;
-       state++) {
-    [cardCell setShadowElevation:0.f forState:state];
-    [cardCell setBorderWidth:0.f forState:state];
-  }
+  [cardCell setShadowElevation:kNormalElevation forState:MDCCardCellStateNormal];
+  [cardCell setShadowElevation:kHighlightedElevation forState:MDCCardCellStateHighlighted];
+  [cardCell setShadowElevation:kSelectedElevation forState:MDCCardCellStateSelected];
+
   [MDCCardsColorThemer applySemanticColorScheme:scheme.colorScheme toCardCell:cardCell];
 }
 
@@ -54,7 +48,6 @@ static const CGFloat kBorderWidth = 1.f;
       UIControlStateNormal | UIControlStateSelected | UIControlStateHighlighted |
       UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
-    [card setShadowElevation:kElevation forState:state];
     [card setBorderWidth:kBorderWidth forState:state];
   }
   [card setShadowElevation:kHighlightedElevation forState:UIControlStateHighlighted];
@@ -63,12 +56,14 @@ static const CGFloat kBorderWidth = 1.f;
 
 + (void)applyOutlinedVariantWithScheme:(nonnull id<MDCCardScheming>)scheme
                             toCardCell:(nonnull MDCCardCollectionCell *)cardCell {
-  [cardCell setShadowElevation:kElevation forState:MDCCardCellStateNormal];
-  [cardCell setShadowElevation:kSelectedElevation forState:MDCCardCellStateSelected];
+  for (MDCCardCellState state = MDCCardCellStateNormal; state <= MDCCardCellStateSelected;
+       state++) {
+    [cardCell setBorderWidth:kBorderWidth forState:state];
+  }
   [cardCell setShadowElevation:kHighlightedElevation forState:MDCCardCellStateHighlighted];
-  [cardCell setBorderWidth:kBorderWidth forState:MDCCardCellStateNormal];
-  [cardCell setBorderWidth:kBorderWidth forState:MDCCardCellStateSelected];
-  [cardCell setBorderWidth:kBorderWidth forState:MDCCardCellStateHighlighted];
+  [cardCell setShadowElevation:kSelectedElevation forState:MDCCardCellStateSelected];
+
+
   [MDCCardsColorThemer applyOutlinedVariantWithColorScheme:scheme.colorScheme toCardCell:cardCell];
 }
 

@@ -1,14 +1,6 @@
-<!--docs:
-title: "Lists"
-layout: detail
-section: components
-excerpt: "Material Design Lists are a continuous group of text or images. They are composed of items containing primary and supplemental actions, which are represented by icons and text."
-api_doc_root: true
--->
-
 # Lists
 
-Material Design Lists are a continuous group of text or images. They are composed of items containing primary and supplemental actions, which are represented by icons and text.
+Material Design lists are a continuous group of text or images. They are composed of items containing primary and supplemental actions, which are represented by icons and text.
 
 ## Status
 

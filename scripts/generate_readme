@@ -44,6 +44,7 @@ extract_apis_of_type() {
       | grep "^\"$type" \
       | grep -v "$type\"$" \
       | grep -v "(.*).*(.*)" \
+      | grep -v "/.*/" \
       | grep -v "@" \
       | sort | uniq \
       | while read line; do

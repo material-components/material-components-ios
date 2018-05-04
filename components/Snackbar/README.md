@@ -12,13 +12,13 @@ api_doc_root: true
 
 # Snackbar
 
-<div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/snackbar.png" alt="Snackbar" width="375">
-</div>
-
 Snackbars provide brief feedback about an operation through a message at the bottom of the screen.
 Snackbars contain up to two lines of text directly related to the operation performed. They may
 contain a text action, but no icons.
+
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/snackbar.png" alt="Snackbar" width="375">
+</div>
 
 ## Design & API documentation
 
@@ -28,7 +28,6 @@ contain a text action, but no icons.
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/snackbars/api-docs/Classes/MDCSnackbarMessage.html">MDCSnackbarMessage</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/snackbars/api-docs/Classes/MDCSnackbarMessageAction.html">MDCSnackbarMessageAction</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/snackbars/api-docs/Classes/MDCSnackbarMessageView.html">MDCSnackbarMessageView</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/snackbars/api-docs/Classes/MDCSnackbarMessageView/snackbarMessageViewTextColor.html">snackbarMessageViewTextColor</a></li>
   <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/snackbars/api-docs/Protocols.html#/c:objc(pl)MDCSnackbarSuspensionToken">MDCSnackbarSuspensionToken</a></li>
 </ul>
 

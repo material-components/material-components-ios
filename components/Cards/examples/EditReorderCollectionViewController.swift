@@ -32,10 +32,12 @@ class EditReorderCollectionViewController: UIViewController,
   var toggle = ToggleMode.reorder
   var toggleButton: UIButton!
   var colorScheme = MDCSemanticColorScheme()
+  let cardScheme = MDCCardScheme();
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    cardScheme.colorScheme = colorScheme
     collectionView.frame = view.bounds
     collectionView.dataSource = self
     collectionView.delegate = self
@@ -106,7 +108,8 @@ class EditReorderCollectionViewController: UIViewController,
                       cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell",
                                                   for: indexPath) as! MDCCardCollectionCell
-    MDCCardsColorThemer.applySemanticColorScheme(colorScheme, toCardCell: cell)
+
+    MDCCardThemer.applyScheme(cardScheme, toCardCell: cell)
     cell.isSelectable = (toggle == .edit)
     return cell
   }

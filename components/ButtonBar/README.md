@@ -1,6 +1,6 @@
 <!-- This file was auto-generated using ./scripts/generate_readme ButtonBar -->
 
-# Button bar
+# Button Bar
 
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/button_bar.png" alt="Button Bar" width="375">
@@ -11,7 +11,7 @@ The Button Bar is a view that represents a list of UIBarButtonItems as horizonta
 ## Design & API documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-app-bar-top">Material Design guidelines: Top App Bar</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-app-bar-top">Material Design guidelines: App bars: top</a></li>
 </ul>
 
 ## Related components

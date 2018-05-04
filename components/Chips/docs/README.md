@@ -1,6 +1,6 @@
 # Chips
 
-Chips represent complex entities, such as a contact, in small blocks.
+Chips are compact elements that represent an input, attribute, or action.
 
 <!-- design-and-api -->
 

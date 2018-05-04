@@ -4,7 +4,7 @@ layout: detail
 section: components
 excerpt: "The Material color scheme provides support for theming an app with a semantic set of colors."
 iconId: themes
-path: /catalog/schemes/color/
+path: /catalog/theming/color/
 api_doc_root: true
 -->
 
@@ -25,7 +25,7 @@ the surface colors of views.
 ## Related documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--link"><a href="../../../docs/theming/">Theming Material Components</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="../">Theming</a></li>
 </ul>
 
 ## Table of contents

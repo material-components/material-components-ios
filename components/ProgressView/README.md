@@ -1,8 +1,8 @@
 <!--docs:
-title: "Progress view"
+title: "Linear progress indicator"
 layout: detail
 section: components
-excerpt: "Progress view is a determinate and linear progress indicator that implements Material Design animation and layout."
+excerpt: "Progress view is a linear progress indicator that implements Material Design animation and layout."
 iconId: progress_linear
 path: /catalog/progress-indicators/progress-views/
 api_doc_root: true
@@ -12,14 +12,11 @@ api_doc_root: true
 
 # Progress view
 
+Progress view is a linear progress indicator that implements Material Design animation and layout.
+
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/progress_view.png" alt="Progress View" width="375">
 </div>
-
-This control is designed to be a drop-in replacement for `UIProgressView`, with a user experience
-influenced by [Material Design specifications](https://material.io/go/design-progress-indicators#)
-for animation and layout. The API methods are the same as a `UIProgressView`, with the addition of a
-few key methods required to achieve the desired animation of the control.
 
 ## Design & API documentation
 
@@ -51,9 +48,9 @@ few key methods required to achieve the desired animation of the control.
 
 ## Overview
 
-`MDCActivityIndicator` is a view that has two modes: indeterminate and determinate. Indeterminate
-indicators express an unspecified wait time, while determinate indicators represent the length of a
-process. Activity indicators are indeterminate by default.
+The `MDCProgressView` control is designed to be a drop-in replacement for `UIProgressView`. The API
+methods are the same as a `UIProgressView`, with the addition of a few key methods required to
+achieve the desired animation of the control.
 
 ## Installation
 
