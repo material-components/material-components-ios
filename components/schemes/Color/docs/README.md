@@ -10,7 +10,7 @@ the surface colors of views.
 
 ## Related documentation
 
-* [Theming Material Components](../../../../docs/theming/)
+* [Theming](../../)
 
 <!-- toc -->
 

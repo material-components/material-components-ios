@@ -4,7 +4,7 @@ layout: detail
 section: components
 excerpt: "The Material Design typography system can be used to create a type hierarchy that reflects your brand or style."
 iconId: themes
-path: /catalog/schemes/typography/
+path: /catalog/theming/typography/
 api_doc_root: true
 -->
 
@@ -25,8 +25,7 @@ font or button font.
 ## Related documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--link"><a href="../../../docs/theming/">Theming Material Components</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="../Color/">Color Theming</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="../">Theming</a></li>
 </ul>
 
 ## Table of contents
