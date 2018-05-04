@@ -34,7 +34,6 @@
 
   [self loadTabBar];
 
-
   self.addStarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add"
                                                             style:UIBarButtonItemStylePlain
                                                            target:self
