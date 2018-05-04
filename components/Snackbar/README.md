@@ -12,13 +12,13 @@ api_doc_root: true
 
 # Snackbar
 
-<div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/snackbar.png" alt="Snackbar" width="375">
-</div>
-
 Snackbars provide brief feedback about an operation through a message at the bottom of the screen.
 Snackbars contain up to two lines of text directly related to the operation performed. They may
 contain a text action, but no icons.
+
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/snackbar.png" alt="Snackbar" width="375">
+</div>
 
 ## Design & API documentation
 

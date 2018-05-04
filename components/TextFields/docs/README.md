@@ -1,10 +1,10 @@
 # Text fields
 
+Text fields allow users to input text into your app. They are a direct connection to your users' thoughts and intentions via on-screen, or physical, keyboard. The Material Design Text Fields take the familiar element to new levels by adding useful animations, character counts, helper text, error states, and styles.
+
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/textfields.png" alt="Text Fields" width="375">
 </div>
-
-Text fields allow users to input text into your app. They are a direct connection to your users' thoughts and intentions via on-screen, or physical, keyboard. The Material Design Text Fields take the familiar element to new levels by adding useful animations, character counts, helper text, error states, and styles.
 
 MDC's text fields come in several styles and have a great range of customization. Google's UX research has determined that Outlined and Filled (aka 'text box') styles perform the best by a large margin. So use `MDCTextInputControllerOutlinedField` , `MDCTextInputControllerTextFieldBox`, and `MDCTextInputControllerTextArea` if you can and set colors and fonts that match your company's branding.
 
