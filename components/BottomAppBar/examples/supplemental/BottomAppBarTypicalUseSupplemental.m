@@ -87,7 +87,6 @@ static NSString *const kCellIdentifier = @"cell";
                                action:@selector(didTapFABVisibilitySwitch:)
                      forControlEvents:UIControlEventValueChanged];
 
-
   [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kCellIdentifier];
   self.tableView.layoutMargins = UIEdgeInsetsZero;
   self.tableView.separatorInset = UIEdgeInsetsZero;
