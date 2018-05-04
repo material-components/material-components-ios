@@ -191,7 +191,14 @@ generate_website() {
   yarn install
   cd ../
 
-  ./scripts/build_site.sh
+  TMP_PATH=$(mktemp -d)
+  ./scripts/build_site.sh 2>&1 | tee "$TMP_PATH/output"
+
+  if [[ $(grep "^Error:" "$TMP_PATH/output") ]]; then
+    # Make site generation errors be script failures. build_site.sh always exits with 0
+    # unfortunately.
+    exit 1
+  fi
 }
 
 POSITIONAL=()
