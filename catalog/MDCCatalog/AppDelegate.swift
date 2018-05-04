@@ -103,6 +103,8 @@ extension UINavigationController {
       headerView.trackingScrollView = collectionVC.collectionView
     } else if let scrollView = viewController.view as? UIScrollView {
       headerView.trackingScrollView = scrollView
+    } else if let scrollView = getScrollView(vc: viewController) {
+      headerView.trackingScrollView = scrollView
     } else {
       // TODO(chuga): This is bad. We should be adjusting for Safe Area changes.
       var contentFrame = container.contentViewController.view.frame
@@ -112,6 +114,13 @@ extension UINavigationController {
       container.contentViewController.view.frame = contentFrame
     }
     return container
+  }
+  class func getScrollView(vc: UIViewController) -> UIScrollView? {
+    let scrollViewSel = NSSelectorFromString("scrollView");
+    if vc.responds(to: scrollViewSel) {
+      return vc.perform(scrollViewSel).takeRetainedValue() as? UIScrollView
+    }
+    return nil
   }
 
 }

@@ -19,10 +19,10 @@
 #import "MaterialPageControl.h"
 
 @interface PageControlTypicalUseViewController : UIViewController <UIScrollViewDelegate>
+@property (nonatomic, strong, readonly) UIScrollView *scrollView;
 @end
 
 @implementation PageControlTypicalUseViewController {
-  UIScrollView *_scrollView;
   MDCPageControl *_pageControl;
   NSArray *_pages;
 }
