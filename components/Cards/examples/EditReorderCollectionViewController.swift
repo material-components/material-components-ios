@@ -81,7 +81,6 @@ class EditReorderCollectionViewController: UIViewController,
     #endif
 
     self.updateTitle()
-
   }
 
   func preiOS11Constraints() {
