@@ -22,23 +22,7 @@
 
 @implementation BottomAppBarTypicalUseViewController
 
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  self = [super initWithCoder:aDecoder];
-  if (self) {
-    [self commonMDCBottomAppBarViewControllerInit];
-  }
-  return self;
-}
-
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-  if (self) {
-    [self commonMDCBottomAppBarViewControllerInit];
-  }
-  return self;
-}
-
-- (void)commonMDCBottomAppBarViewControllerInit {
+- (void)commonMDCBottomAppBarViewControllerSetup {
   _bottomBarView = [[MDCBottomAppBarView alloc] initWithFrame:CGRectZero];
   _bottomBarView.autoresizingMask =
       (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin);
@@ -53,6 +37,12 @@
                                          size.height);
   _bottomBarView.frame = bottomBarViewFrame;
 }
+
+- (void)viewDidLoad {
+  [super viewDidLoad];
+  [self commonMDCBottomAppBarViewControllerSetup];
+}
+
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
