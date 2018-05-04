@@ -10,15 +10,15 @@ api_doc_root: true
 
 # Shadow layer
 
-<div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/shadow_layer.png" width="375">
-</div>
-
 Shadow layer implements the Material Design specifications for elevation and shadows.
 By simulating the physical properties of paper, elevation and light source, shadows give
 visual depth to components. Shadow layer provides an elevation property which affects
 a shadow's depth and strength, automatically handling shadow diffusion based on the shadow's
 elevation.
+
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/shadow_layer.png" width="375">
+</div>
 
 ## Design & API Documentation
 
