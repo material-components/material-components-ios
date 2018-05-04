@@ -106,13 +106,6 @@
 
   [self.appBar addSubviewsToParent];
 
-  UIBarButtonItem *badgeIncrementItem =
-      [[UIBarButtonItem alloc] initWithTitle:@"Add"
-                                       style:UIBarButtonItemStylePlain
-                                      target:self
-                                      action:@selector(incrementDidTouch:)];
-
-  self.navigationItem.rightBarButtonItem = badgeIncrementItem;
   self.appBar.navigationBar.tintColor = UIColor.whiteColor;
 
   self.title = @"Tabs With Icons";
