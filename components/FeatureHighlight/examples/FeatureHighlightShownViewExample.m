@@ -25,7 +25,7 @@
 @implementation FeatureHighlightShownViewExample
 
 - (void)didTapButton:(id)sender {
-MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
+  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
   buttonScheme.colorScheme = self.colorScheme;
   buttonScheme.typographyScheme = self.typographyScheme;
 
