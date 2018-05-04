@@ -24,6 +24,7 @@ private func createSchemeWithPalette(_ palette: MDCPalette) -> MDCSemanticColorS
   scheme.primaryColor = palette.tint500
   scheme.primaryColorVariant = palette.tint900
   scheme.secondaryColor = scheme.primaryColor
+  scheme.onSecondaryColor = scheme.onPrimaryColor;
   return scheme
 }
 

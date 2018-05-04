@@ -89,12 +89,9 @@
 
   // Flat button
 
-  MDCFlatButton *flatButton = [[MDCFlatButton alloc] init];
+  MDCButton *flatButton = [[MDCButton alloc] init];
   [flatButton setTitle:@"Oval Flat" forState:UIControlStateNormal];
-  [MDCButtonTypographyThemer applyTypographyScheme:self.typographyScheme
-                                          toButton:flatButton];
-  [MDCButtonColorThemer applySemanticColorScheme:self.colorScheme
-                                    toFlatButton:flatButton];
+  [MDCTextButtonThemer applyScheme:buttonScheme toButton:flatButton];
 
   MDCPillShapeGenerator *flatShapeGenerator = [[MDCPillShapeGenerator alloc] init];
   flatButton.shapeGenerator = flatShapeGenerator;
@@ -166,6 +163,7 @@
   [floatingShapeGenerator setCorners:
       [[MDCCutCornerTreatment alloc] initWithCut:CGRectGetWidth(self.floatingButton.bounds) / 2.f]];
   self.floatingButton.shapeGenerator = floatingShapeGenerator;
+  [MDCFloatingActionButtonThemer applyScheme:buttonScheme toButton:self.floatingButton];
 
   [self.floatingButton addTarget:self
                           action:@selector(didTap:)

@@ -17,9 +17,16 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialBottomAppBar.h"
-#import "MaterialButtons+ColorThemer.h"
+#import "MaterialButtons+ButtonThemer.h"
 
 #import "supplemental/BottomAppBarTypicalUseSupplemental.h"
+
+@interface BottomAppBarTypicalUseExample ()
+
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
+
+@end
 
 @implementation BottomAppBarTypicalUseExample
 
@@ -27,12 +34,11 @@
   self = [super init];
   if (self) {
     self.title = @"Bottom App Bar";
-    [self commonBottomBarTypicalUseExampleInit];
   }
   return self;
 }
 
-- (void)commonBottomBarTypicalUseExampleInit {
+- (void)commonBottomBarSetup {
   [self setupExampleTableLayout];
 
   // Add touch handler to the floating button.
@@ -41,13 +47,9 @@
                               forControlEvents:UIControlEventTouchUpInside];
 
   // Set the image on the floating button.
-  UIImage *addImage = [UIImage imageNamed:@"Add"];
+  UIImage *addImage =
+      [[UIImage imageNamed:@"Add"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [self.bottomBarView.floatingButton setImage:addImage forState:UIControlStateNormal];
-
-  // Theme the floating button.
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
-  [MDCButtonColorThemer applySemanticColorScheme:colorScheme
-                                toFloatingButton:self.bottomBarView.floatingButton];
 
   // Configure the navigation buttons to be shown on the bottom app bar.
   UIBarButtonItem *barButtonLeadingItem =
@@ -70,6 +72,17 @@
   [self.bottomBarView setTrailingBarButtonItems:@[ barButtonTrailingItem ]];
 }
 
+
+- (void)viewDidLoad {
+  [super viewDidLoad];
+  [self commonBottomBarSetup];
+
+  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
+  buttonScheme.colorScheme = self.colorScheme;
+  buttonScheme.typographyScheme = self.typographyScheme;
+  [MDCFloatingActionButtonThemer applyScheme:buttonScheme
+                                    toButton:self.bottomBarView.floatingButton];
+}
 - (void)didTapFloatingButton:(id)sender {
   [self.bottomBarView setFloatingButtonHidden:YES animated:YES];
 }
