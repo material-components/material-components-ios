@@ -1,11 +1,11 @@
 # Dialogs
 
-<div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/dialogs.png" alt="Dialogs" width="375">
-</div>
+Dialogs inform users about a task and can contain critical information, require decisions, or
+involve multiple tasks.
 
-Dialogs provides both a presentation controller for displaying a modal dialog and an alert
-controller that will display a simple modal alert.
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/dialogs.gif" alt="Dialogs" width="320">
+</div>
 
 <!-- design-and-api -->
 
