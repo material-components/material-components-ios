@@ -1,12 +1,6 @@
-# #develop#
+# 55.0.2
 
-## Breaking changes
-
-## New deprecations
-
-## New features
-
-## API changes
+This patch release includes more documentation polish and a bug fix for Cards theming.
 
 ## Component changes
 
