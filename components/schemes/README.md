@@ -28,24 +28,17 @@ Material Theming is a consistent way to apply a uniform design across your app w
 For example, there is a scheme for both the Material Design typography system and the Material
 Design color system. Most components have a themer for at least one of these systems.
 
-### Schemes
-
-<ul class="icon-list">
-  <li class="icon-list-item icon-list-item--link"><a href="Color/">Color scheme</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="Typography/">Typography scheme</a></li>
-</ul>
-
 ### Sensible defaults, yet highly configurable
 
 By default, an instance of a scheme is initialized with the Material defaults. You can use these
 defaults as a baseline, but at a minimum we encourage you to tweak your color scheme's primary and
 secondary colors to match your brand colors.
 
-## Related documentation
+### Schemes
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--link"><a href="../../components/schemes/Color">Color theming</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="../../components/schemes/Typography">Typography theming</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="Color/">Color scheme</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="Typography/">Typography scheme</a></li>
 </ul>
 
 ## Examples
