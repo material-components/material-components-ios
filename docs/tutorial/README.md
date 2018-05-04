@@ -802,5 +802,5 @@ Use our examples and catalog apps to try out other components and other ways to 
 
 
 
-*   [Read the Component Documentation](https://github.com/material-components/material-components-ios/blob/develop/docs/tutorial/%7B%7B%20site.folder%20%7D%7D/components)
+*   [Read the Component Documentation](https://material.io/components/ios/catalog)
 *   [Stack Overflow "material-components-ios"](http://stackoverflow.com/questions/tagged/material-components-ios)
