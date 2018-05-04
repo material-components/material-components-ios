@@ -10,10 +10,6 @@ api_doc_root: true
 
 # Palettes
 
-<div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/palettes.png" alt="Palettes" width="375">
-</div>
-
 The Palettes component provides Material colors organized into similar palettes.
 
 ## Design & API Documentation
