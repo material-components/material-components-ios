@@ -2,7 +2,7 @@
 title: "Chips"
 layout: detail
 section: components
-excerpt: "Chips represent complex entities in small blocks, such as a contact."
+excerpt: "Chips are compact elements that represent an input, attribute, or action."
 iconId: chip
 path: /catalog/chips/
 api_doc_root: true
@@ -12,7 +12,7 @@ api_doc_root: true
 
 # Chips
 
-Chips represent complex entities, such as a contact, in small blocks.
+Chips are compact elements that represent an input, attribute, or action.
 
 ## Design & API documentation
 
