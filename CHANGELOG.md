@@ -1,3 +1,148 @@
+# 55.0.2
+
+This patch release includes more documentation polish and a bug fix for Cards theming.
+
+## Component changes
+
+### Tabs
+
+#### Changes
+
+* [Reorder image assets.](https://github.com/material-components/material-components-ios/commit/4272dc0074b4f453a10f136bfbfd5e90e074057c) (Jeff Verkoeyen)
+
+### schemes/Color
+
+#### Changes
+
+* [[Theming] Consolidate the theming documentation into one folder on the site.](https://github.com/material-components/material-components-ios/commit/15d7f006f622acf0bf7dd619b87c734260c0e999) (Jeff Verkoeyen)
+
+### schemes/Typography
+
+#### Changes
+
+* [[Theming] Consolidate the theming documentation into one folder on the site.](https://github.com/material-components/material-components-ios/commit/15d7f006f622acf0bf7dd619b87c734260c0e999) (Jeff Verkoeyen)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Reorder image assets.](https://github.com/material-components/material-components-ios/commit/4272dc0074b4f453a10f136bfbfd5e90e074057c) (Jeff Verkoeyen)
+
+### Ink
+
+#### Changes
+
+* [Make a gif.](https://github.com/material-components/material-components-ios/commit/fe2431b66db96609613f989f300e902ce4a380a4) (Jeff Verkoeyen)
+
+### Buttons
+
+#### Changes
+
+* [Avoid picking up class properties in the API table for READMEs.](https://github.com/material-components/material-components-ios/commit/f059a37d5040ea85f7fe005e759efff9678bb86c) (Jeff Verkoeyen)
+* [Update material.io/go/design-theming shortlink to material.io/go/design-color-theming.](https://github.com/material-components/material-components-ios/commit/8cf0cb3e14e6f6bceb8e857f9e7e9170e2cc136a) (Adrian Secord)
+
+### ButtonBar
+
+#### Changes
+
+* [Avoid picking up class properties in the API table for READMEs.](https://github.com/material-components/material-components-ios/commit/f059a37d5040ea85f7fe005e759efff9678bb86c) (Jeff Verkoeyen)
+
+### TextFields
+
+#### Changes
+
+* [Regenerate the readme.](https://github.com/material-components/material-components-ios/commit/dd122f98a8ea4328d3f857191f1dc5a87f4fc24b) (Jeff Verkoeyen)
+* [Reorder image assets.](https://github.com/material-components/material-components-ios/commit/4272dc0074b4f453a10f136bfbfd5e90e074057c) (Jeff Verkoeyen)
+
+### Chips
+
+#### Changes
+
+* [Update the intro copy.](https://github.com/material-components/material-components-ios/commit/fc6f997f6c907d09770ec259570a058450b2375e) (Jeff Verkoeyen)
+
+### Snackbar
+
+#### Changes
+
+* [Avoid picking up class properties in the API table for READMEs.](https://github.com/material-components/material-components-ios/commit/f059a37d5040ea85f7fe005e759efff9678bb86c) (Jeff Verkoeyen)
+* [Reorder image assets.](https://github.com/material-components/material-components-ios/commit/4272dc0074b4f453a10f136bfbfd5e90e074057c) (Jeff Verkoeyen)
+
+### Cards
+
+#### Changes
+
+* [Fix examples and themer (#3700)](https://github.com/material-components/material-components-ios/commit/96933c385f2aa80b9199143f3cb23bb345a1d8d9) (Yarden Eitan)
+
+### BottomAppBar
+
+#### Changes
+
+* [Avoid picking up class properties in the API table for READMEs.](https://github.com/material-components/material-components-ios/commit/f059a37d5040ea85f7fe005e759efff9678bb86c) (Jeff Verkoeyen)
+
+### Slider
+
+#### Changes
+
+* [Reorder image assets.](https://github.com/material-components/material-components-ios/commit/4272dc0074b4f453a10f136bfbfd5e90e074057c) (Jeff Verkoeyen)
+
+### LibraryInfo
+
+#### Changes
+
+* [Add a header and intro blurb.](https://github.com/material-components/material-components-ios/commit/1c53439fa899ddbdd44738995024f92337bc5d50) (Jeff Verkoeyen)
+
+### ShadowLayer
+
+#### Changes
+
+* [Tidy up links for shadows and progress indicators.](https://github.com/material-components/material-components-ios/commit/8f8c0819d368581101ab00b038b5f543c7c18c94) (Jeff Verkoeyen)
+* [[Shadow] Reorder screenshots.](https://github.com/material-components/material-components-ios/commit/651031dc569e9fcd5007fd1e97dbf53dd5fe6a62) (Jeff Verkoeyen)
+
+### BottomSheet
+
+#### Changes
+
+* [Reorder image assets.](https://github.com/material-components/material-components-ios/commit/4272dc0074b4f453a10f136bfbfd5e90e074057c) (Jeff Verkoeyen)
+
+### Dialogs
+
+#### Changes
+
+* [Update the copy and make a gif.](https://github.com/material-components/material-components-ios/commit/d16824c765c4f4667ea6c5551ebe4ab399a8e121) (Jeff Verkoeyen)
+
+### PageControl
+
+#### Changes
+
+* [Add gif.](https://github.com/material-components/material-components-ios/commit/28845deb5a74fdc8d9422412ea5de5bc395ad8de) (Jeff Verkoeyen)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Avoid picking up class properties in the API table for READMEs.](https://github.com/material-components/material-components-ios/commit/f059a37d5040ea85f7fe005e759efff9678bb86c) (Jeff Verkoeyen)
+
+### ShadowElevations
+
+#### Changes
+
+* [[Shadow] Reorder screenshots.](https://github.com/material-components/material-components-ios/commit/651031dc569e9fcd5007fd1e97dbf53dd5fe6a62) (Jeff Verkoeyen)
+
+### ProgressView
+
+#### Changes
+
+* [Tidy up the docs and links.](https://github.com/material-components/material-components-ios/commit/fb0f5a1cbb19f2c8a4116dd85468891b4492e895) (Jeff Verkoeyen)
+
+### Palettes
+
+#### Changes
+
+* [Remove screenshot.](https://github.com/material-components/material-components-ios/commit/805bb5769eb13233d87828219b80a422402725bb) (Jeff Verkoeyen)
+* [Update material.io/go/design-theming shortlink to material.io/go/design-color-theming.](https://github.com/material-components/material-components-ios/commit/8cf0cb3e14e6f6bceb8e857f9e7e9170e2cc136a) (Adrian Secord)
+
+---
+
 # 55.0.1
 
 This patch release polishes and fleshes out documentation across many of our components. There are
