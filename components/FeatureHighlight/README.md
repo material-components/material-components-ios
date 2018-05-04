@@ -12,11 +12,11 @@ api_doc_root: true
 
 # Feature highlight
 
+The Feature Highlight component is a way to visually highlight a part of the screen in order to introduce users to new features and functionality.
+
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/feature_highlight.png" alt="Feature Highlight" width="375">
 </div>
-
-The Feature Highlight component is a way to visually highlight a part of the screen in order to introduce users to new features and functionality.
 
 ## Design & API documentation
 

@@ -34,7 +34,7 @@ static const CGFloat kStrokeVariantBorderOpacity = 0.37f;
                                      toCard:(nonnull MDCCard *)card {
   NSUInteger maximumStateValue =
       UIControlStateNormal | UIControlStateSelected | UIControlStateHighlighted |
-      UIControlStateDisabled;
+          UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     [card setBorderColor:nil forState:state];
   }
@@ -49,7 +49,7 @@ static const CGFloat kStrokeVariantBorderOpacity = 0.37f;
                                  toCardCell:(MDCCardCollectionCell *)cardCell {
   NSUInteger maximumStateValue =
       UIControlStateNormal | UIControlStateSelected | UIControlStateHighlighted |
-      UIControlStateDisabled;
+          UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     [cardCell setBorderColor:nil forState:state];
   }

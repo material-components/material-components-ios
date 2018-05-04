@@ -1,13 +1,13 @@
 # Page control
 
-<div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/page_control.png" alt="Page control" width="375">
-</div>
-
 This control is designed to be a drop-in replacement for `UIPageControl`, with a user experience
 influenced by Material Design specifications for animation and layout. The API methods are the
 same as a `UIPageControl`, with the addition of a few key methods required to achieve the
 desired animation of the control.
+
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/pagecontrol.gif" alt="An animation demonstrating a page control alternating between three pages." width="190">
+</div>
 
 <!-- design-and-api -->
 
@@ -16,10 +16,6 @@ desired animation of the control.
 - - -
 
 ## Overview
-
-`MDCActivityIndicator` is a view that has two modes: indeterminate and determinate. Indeterminate
-indicators express an unspecified wait time, while determinate indicators represent the length of a
-process. Activity indicators are indeterminate by default.
 
 <img src="docs/assets/MDCPageControl_screenshot-1.png" alt="screenshot-1" width="375">
 <!--{: .article__asset.article__asset--screenshot }-->

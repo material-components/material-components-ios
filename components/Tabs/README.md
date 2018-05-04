@@ -12,11 +12,11 @@ api_doc_root: true
 
 # Tabs
 
+Tabs are bars of buttons used to navigate between groups of content.
+
 <div class="article__asset article__asset--screenshot">
     <img src="docs/assets/tabs.png" alt="Tabs" width="375">
 </div>
-
-Tabs are bars of buttons used to navigate between groups of content.
 
 ## Design & API documentation
 
