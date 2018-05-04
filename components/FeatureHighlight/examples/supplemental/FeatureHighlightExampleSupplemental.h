@@ -33,7 +33,6 @@
 @property(nonatomic) NSArray *colors;
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
-
 @end
 
 @interface FeatureHighlightCustomFontsExample : UIViewController

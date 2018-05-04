@@ -41,9 +41,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   [self commonMDCBottomAppBarViewControllerSetup];
-
 }
-
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
