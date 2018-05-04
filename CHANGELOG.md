@@ -1,3 +1,9 @@
+# 55.0.4
+
+This patch release adds metadata to the bidirectionality eng stub doc.
+
+---
+
 # 55.0.3
 
 This patch release adds documentation polish around bidirectionality.
