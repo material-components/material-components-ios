@@ -10,8 +10,7 @@ font or button font.
 
 ## Related documentation
 
-* [Theming Material Components](../../../../docs/theming/)
-* [Color Theming](../../Color/)
+* [Theming](../../)
 
 <!-- toc -->
 
