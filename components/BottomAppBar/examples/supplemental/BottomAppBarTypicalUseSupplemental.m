@@ -16,6 +16,8 @@
 
 #import "BottomAppBarTypicalUseSupplemental.h"
 
+static NSString *const kCellIdentifier = @"cell";
+
 @interface BottomAppBarExampleTableViewController ()
 @property(nonatomic, strong) UISwitch *fabVisibilitySwitch;
 @end
@@ -76,12 +78,6 @@
   return self;
 }
 
-- (void)dealloc {
-  [self.fabVisibilitySwitch removeTarget:self
-                                  action:@selector(didTapFABVisibilitySwitch:)
-                        forControlEvents:UIControlEventAllEvents];
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
 
@@ -92,7 +88,7 @@
                      forControlEvents:UIControlEventValueChanged];
 
 
-  [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
+  [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kCellIdentifier];
   self.tableView.layoutMargins = UIEdgeInsetsZero;
   self.tableView.separatorInset = UIEdgeInsetsZero;
 }
@@ -109,7 +105,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
   cell.layoutMargins = UIEdgeInsetsZero;
   cell.textLabel.text = self.listItems[indexPath.item];
   [self.fabVisibilitySwitch removeFromSuperview];
@@ -148,6 +144,8 @@
                                             animated:YES];
       break;
     case 5:
+      [self.fabVisibilitySwitch setOn:!self.fabVisibilitySwitch.isOn animated:YES];
+      [self didTapFABVisibilitySwitch:self.fabVisibilitySwitch];
       break;
     default:
       break;
