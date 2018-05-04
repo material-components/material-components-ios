@@ -16,6 +16,10 @@
 
 #import "BottomAppBarTypicalUseSupplemental.h"
 
+@interface BottomAppBarExampleTableViewController ()
+@property(nonatomic, strong) UISwitch *fabVisibilitySwitch;
+@end
+
 @implementation BottomAppBarTypicalUseExample (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
@@ -66,15 +70,29 @@
                                         @"Trailing Floating Button",
                                         @"Primary Elevation Floating Button",
                                         @"Secondary Elevation Floating Button",
-                                        @"Toggle Floating Button Visibility" ];
+                                        @"Visible FAB" ];
     _listItems = listItems;
   }
   return self;
 }
 
+- (void)dealloc {
+  [self.fabVisibilitySwitch removeTarget:self
+                                  action:@selector(didTapFABVisibilitySwitch:)
+                        forControlEvents:UIControlEventAllEvents];
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  self.fabVisibilitySwitch = [[UISwitch alloc] init];
+  self.fabVisibilitySwitch.on = !self.bottomBarView.floatingButtonHidden;
+  [self.fabVisibilitySwitch addTarget:self
+                               action:@selector(didTapFABVisibilitySwitch:)
+                     forControlEvents:UIControlEventValueChanged];
+
+
+  [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
   self.tableView.layoutMargins = UIEdgeInsetsZero;
   self.tableView.separatorInset = UIEdgeInsetsZero;
 }
@@ -92,13 +110,19 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-  if (!cell) {
-    cell =
-        [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-  }
   cell.layoutMargins = UIEdgeInsetsZero;
   cell.textLabel.text = self.listItems[indexPath.item];
+  [self.fabVisibilitySwitch removeFromSuperview];
+  if (indexPath.row == (NSInteger)(self.listItems.count - 1)) {
+    cell.accessoryView = self.fabVisibilitySwitch;
+  } else {
+    cell.accessoryView = nil;
+  }
   return cell;
+}
+
+- (void)didTapFABVisibilitySwitch:(UISwitch *)sender {
+  [self.bottomBarView setFloatingButtonHidden:!sender.isOn animated:YES];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -124,8 +148,6 @@
                                             animated:YES];
       break;
     case 5:
-      [self.bottomBarView setFloatingButtonHidden:!self.bottomBarView.floatingButtonHidden
-                                         animated:YES];
       break;
     default:
       break;
