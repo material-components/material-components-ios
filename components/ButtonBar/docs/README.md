@@ -1,4 +1,4 @@
-# Button Bar
+# Button bar
 
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/button_bar.png" alt="Button Bar" width="375">
