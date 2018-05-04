@@ -1,14 +1,6 @@
 # #develop#
 
-## Breaking changes
-
-## New deprecations
-
-## New features
-
-## API changes
-
-## Component changes
+This patch release adds metadata to the bidirectionality eng stub doc.
 
 ---
 
