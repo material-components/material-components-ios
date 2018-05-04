@@ -33,6 +33,9 @@
 
 @interface FeatureHighlightColorExample : MDCCollectionViewController
 @property(nonatomic) NSArray *colors;
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
+
 @end
 
 @interface FeatureHighlightCustomFontsExample : UIViewController
@@ -43,6 +46,9 @@
 @interface FeatureHighlightShownViewExample : UIViewController
 @property(nonatomic) UIButton *button;
 @property(nonatomic) UIButton *actionButton;
+
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 
 - (void)didTapButton:(id)sender;
 @end

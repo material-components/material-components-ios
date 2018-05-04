@@ -17,6 +17,7 @@
 #import "FeatureHighlightExampleSupplemental.h"
 
 #import "MaterialButtons.h"
+#import "MaterialButtons+ButtonThemer.h"
 #import "MaterialMath.h"
 #import "MaterialPalettes.h"
 #import "MaterialTypography.h"
@@ -29,6 +30,9 @@ static NSString *const reuseIdentifier = @"Cell";
   [super viewDidLoad];
 
   self.view.backgroundColor = [UIColor whiteColor];
+  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
+  buttonScheme.colorScheme = self.colorScheme;
+  buttonScheme.typographyScheme = self.typographyScheme;
 
   self.infoLabel = [[UILabel alloc] initWithFrame:CGRectZero];
   self.infoLabel.text = @"Tap anywhere to move the button.";
@@ -37,14 +41,16 @@ static NSString *const reuseIdentifier = @"Cell";
       [self.infoLabel.textColor colorWithAlphaComponent:[MDCTypography captionFontOpacity]];
   [self.view addSubview:self.infoLabel];
 
-  self.button = [[MDCRaisedButton alloc] init];
+  MDCButton *button = [[MDCButton alloc] init];
+  self.button = button;
   [self.button setBackgroundColor:[UIColor colorWithWhite:0.1f alpha:1]];
   [self.button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [self.button setTitle:@"Feature" forState:UIControlStateNormal];
   [self.button sizeToFit];
   [self.view addSubview:self.button];
 
-  self.actionButton = [[MDCRaisedButton alloc] init];
+  MDCButton *actionButton = [[MDCButton alloc] init];
+  self.actionButton = actionButton;
   [self.actionButton setBackgroundColor:[UIColor colorWithWhite:0.1f alpha:1]];
   [self.actionButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [self.actionButton setTitle:@"Show Feature Highlight" forState:UIControlStateNormal];
@@ -53,6 +59,9 @@ static NSString *const reuseIdentifier = @"Cell";
                         action:@selector(didTapButton:)
               forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:self.actionButton];
+
+  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:button];
+  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:actionButton];
 
   UITapGestureRecognizer *tapRecognizer =
       [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapBackground:)];
@@ -207,14 +216,20 @@ static NSString *const reuseIdentifier = @"Cell";
 
   self.view.backgroundColor = [UIColor whiteColor];
 
-  self.button = [[MDCRaisedButton alloc] init];
+  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
+  buttonScheme.colorScheme = self.colorScheme;
+  buttonScheme.typographyScheme = self.typographyScheme;
+
+  MDCButton *button = [[MDCButton alloc] init];
+  self.button = button;
   [self.button setBackgroundColor:[UIColor colorWithWhite:0.1f alpha:1]];
   [self.button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [self.button setTitle:@"Feature" forState:UIControlStateNormal];
   [self.button sizeToFit];
   [self.view addSubview:self.button];
 
-  self.actionButton = [[MDCRaisedButton alloc] init];
+  MDCButton *actionButton = [[MDCButton alloc] init];
+  self.actionButton = actionButton;
   [self.actionButton setBackgroundColor:[UIColor colorWithWhite:0.1f alpha:1]];
   [self.actionButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [self.actionButton setTitle:@"Show Feature Highlight" forState:UIControlStateNormal];
@@ -224,6 +239,8 @@ static NSString *const reuseIdentifier = @"Cell";
               forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:self.actionButton];
 
+  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:button];
+  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:actionButton];
 }
 
 - (void)viewDidLayoutSubviews {

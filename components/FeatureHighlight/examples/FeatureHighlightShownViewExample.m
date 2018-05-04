@@ -15,19 +15,26 @@
  */
 
 #import "MaterialButtons.h"
+#import "MaterialButtons+ButtonThemer.h"
 #import "MaterialFeatureHighlight.h"
+#import "MaterialFeatureHighlight+ColorThemer.h"
 #import "MaterialFeatureHighlight+FeatureHighlightAccessibilityMutator.h"
+#import "MaterialFeatureHighlight+TypographyThemer.h"
 #import "supplemental/FeatureHighlightExampleSupplemental.h"
 
 @implementation FeatureHighlightShownViewExample
 
 - (void)didTapButton:(id)sender {
-  MDCFloatingButton *fab =
-      [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeDefault];
+  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
+  buttonScheme.colorScheme = self.colorScheme;
+  buttonScheme.typographyScheme = self.typographyScheme;
+
+  MDCFloatingButton *fab = [[MDCFloatingButton alloc] init];
   [fab setImage:[UIImage imageNamed:@"Plus"] forState:UIControlStateNormal];
   [fab sizeToFit];
-  fab.backgroundColor = UIColor.orangeColor;
   fab.center = _button.center;
+
+  [MDCFloatingActionButtonThemer applyScheme:buttonScheme toButton:fab];
 
   MDCFeatureHighlightViewController *vc =
       [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_button
@@ -38,6 +45,10 @@
                                                                 }
                                                               }];
   [MDCFeatureHighlightAccessibilityMutator mutate:vc];
+  [MDCFeatureHighlightColorThemer applySemanticColorScheme:self.colorScheme
+                          toFeatureHighlightViewController:vc];
+  [MDCFeatureHighlightTypographyThemer applyTypographyScheme:self.typographyScheme
+                            toFeatureHighlightViewController:vc];
   vc.titleText = @"Shown views can be interactive";
   vc.bodyText = @"The shown button has custom tap animations.";
   [self presentViewController:vc animated:YES completion:nil];
