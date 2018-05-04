@@ -2,7 +2,7 @@
 title: "Ink"
 layout: detail
 section: components
-excerpt: "The Ink component provides a radial action in the form of a visual ripple of ink expanding outward from the user's touch."
+excerpt: "The Ink component provides a radial action in the form of a visual ripple expanding outward from the user's touch."
 iconId: ripple
 path: /catalog/ink/
 api_doc_root: true
@@ -10,12 +10,10 @@ api_doc_root: true
 
 # Ink
 
-<div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/ink.png" alt="Ink" width="375">
-</div>
+The Ink component provides a radial action in the form of a visual ripple expanding outward from
+the user's touch.
 
-The Ink component provides a radial action in the form of a visual ripple of ink expanding
-outward from the user's touch.
+<img src="docs/assets/ink.gif" alt="An animation showing a Material ink ripple on multiple surfaces." width="210">
 
 ## Design & API Documentation
 
