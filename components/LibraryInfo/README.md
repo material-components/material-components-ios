@@ -1,12 +1,16 @@
 <!--docs:
-title: "Library Info"
+title: "Library info"
 layout: detail
 section: components
-excerpt: "LibraryInfo contains programmatic access to information about the Material Components library."
+excerpt: "Library info contains programmatic access to information about the Material Components library."
 iconId: misc
 path: /catalog/library-info/
 api_doc_root: true
 -->
+
+# Library Info
+
+Library info contains programmatic access to information about the Material Components library.
 
 ## Installation
 
