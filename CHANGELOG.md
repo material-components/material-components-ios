@@ -1,3 +1,9 @@
+# 55.0.3
+
+This patch release adds documentation polish around bidirectionality.
+
+---
+
 # 55.0.2
 
 This patch release includes more documentation polish and a bug fix for Cards theming.
