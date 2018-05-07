@@ -43,16 +43,12 @@ static NSString *const reuseIdentifier = @"Cell";
 
   MDCButton *button = [[MDCButton alloc] init];
   self.button = button;
-  [self.button setBackgroundColor:[UIColor colorWithWhite:0.1f alpha:1]];
-  [self.button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [self.button setTitle:@"Feature" forState:UIControlStateNormal];
   [self.button sizeToFit];
   [self.view addSubview:self.button];
 
   MDCButton *actionButton = [[MDCButton alloc] init];
   self.actionButton = actionButton;
-  [self.actionButton setBackgroundColor:[UIColor colorWithWhite:0.1f alpha:1]];
-  [self.actionButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [self.actionButton setTitle:@"Show Feature Highlight" forState:UIControlStateNormal];
   [self.actionButton sizeToFit];
   [self.actionButton addTarget:self
@@ -222,16 +218,12 @@ static NSString *const reuseIdentifier = @"Cell";
 
   MDCButton *button = [[MDCButton alloc] init];
   self.button = button;
-  [self.button setBackgroundColor:[UIColor colorWithWhite:0.1f alpha:1]];
-  [self.button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [self.button setTitle:@"Feature" forState:UIControlStateNormal];
   [self.button sizeToFit];
   [self.view addSubview:self.button];
 
   MDCButton *actionButton = [[MDCButton alloc] init];
   self.actionButton = actionButton;
-  [self.actionButton setBackgroundColor:[UIColor colorWithWhite:0.1f alpha:1]];
-  [self.actionButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [self.actionButton setTitle:@"Show Feature Highlight" forState:UIControlStateNormal];
   [self.actionButton sizeToFit];
   [self.actionButton addTarget:self
