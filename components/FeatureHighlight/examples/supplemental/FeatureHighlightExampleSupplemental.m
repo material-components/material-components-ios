@@ -157,7 +157,7 @@ static NSString *const reuseIdentifier = @"Cell";
 }
 
 + (BOOL)catalogIsPresentable {
-  return YES;
+  return NO;
 }
 
 @end
