@@ -25,7 +25,6 @@ import MaterialComponents.MaterialDialogs
  Triple tapping anywhere will toggle the visible touches.
  */
 class MDCCatalogWindow: MDCOverlayWindow {
-  var debugUIEnabled = true
   var showTouches = false
 
   fileprivate let fadeDuration: TimeInterval = 0.2
@@ -61,12 +60,7 @@ class MDCCatalogWindow: MDCOverlayWindow {
           continue
         case .stationary:
           continue
-        case .ended:
-          if touch.tapCount == 3 && debugUIEnabled {
-            showDebugSettings()
-          }
-          fallthrough
-        case .cancelled:
+        case .cancelled, .ended:
           endDisplayingTouch(touch)
           continue
         }
@@ -76,7 +70,7 @@ class MDCCatalogWindow: MDCOverlayWindow {
     super.sendEvent(event)
   }
 
-  fileprivate func showDebugSettings() {
+  func showDebugSettings() {
     let touches = MDCCatalogDebugSetting(title: "Show touches")
     touches.getter = { self.showTouches }
     touches.setter = { newValue in self.showTouches = newValue }
@@ -85,11 +79,7 @@ class MDCCatalogWindow: MDCOverlayWindow {
     safeAreaInsets.getter = { self.showSafeAreaEdgeInsets }
     safeAreaInsets.setter = { newValue in self.showSafeAreaEdgeInsets = newValue }
 
-    let dontShow = MDCCatalogDebugSetting(title: "Don't show this again")
-    dontShow.getter = { !self.debugUIEnabled }
-    dontShow.setter = { newValue in self.debugUIEnabled = !newValue }
-
-    let debugUI = MDCCatalogDebugAlert(settings: [touches, safeAreaInsets, dontShow])
+    let debugUI = MDCCatalogDebugAlert(settings: [touches, safeAreaInsets])
     rootViewController?.present(debugUI, animated: true, completion: nil)
   }
 
