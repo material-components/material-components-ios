@@ -45,6 +45,9 @@ final class AppTheme {
                                          blue: CGFloat(0x76) / 255.0,
                                          alpha: 1)
     let typographyScheme = MDCTypographyScheme()
+    typographyScheme.headline1 = UIFont.systemFont(ofSize: 20)
+    typographyScheme.headline2 = UIFont.systemFont(ofSize: 18)
+    typographyScheme.headline3 = UIFont.systemFont(ofSize: 15)
     return AppTheme(colorScheme: colorScheme, typographyScheme: typographyScheme)
   }()
 

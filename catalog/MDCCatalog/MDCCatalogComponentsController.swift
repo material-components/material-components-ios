@@ -34,7 +34,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
   fileprivate struct Constants {
     static let headerScrollThreshold: CGFloat = 30
     static let inset: CGFloat = 16
-    static let logoTitleVerticalSpacing: CGFloat = 30
+    static let menuTopVerticalSpacing: CGFloat = 38
     static let logoWidthHeight: CGFloat = 30
     static let menuButtonWidthHeight: CGFloat = 24
     static let spacing: CGFloat = 1
@@ -71,13 +71,13 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
   private lazy var titleLabel: UILabel = {
     let titleLabel = UILabel()
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
+    titleLabel.adjustsFontSizeToFitWidth = true
     return titleLabel
   }()
 
-  private var titleLabelLeadingConstraint: NSLayoutConstraint?
-  private var titleLabelTrailingConstraint: NSLayoutConstraint?
-  private var titleLabelBottomConstraint: NSLayoutConstraint?
-  private var titleLabelHeightConstraint: NSLayoutConstraint?
+  private var logoLeftPaddingConstraint: NSLayoutConstraint?
+  private var menuButtonRightPaddingConstraint: NSLayoutConstraint?
+  private var menuTopPaddingConstraint: NSLayoutConstraint?
 
   init(collectionViewLayout ignoredLayout: UICollectionViewLayout, node: CBCNode) {
     self.node = node
@@ -143,21 +143,10 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     containerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
     titleLabel.text = title!
-    titleLabel.textColor = UIColor(white: 1, alpha: 1)
+    titleLabel.textColor = AppTheme.globalTheme.colorScheme.onPrimaryColor
     titleLabel.textAlignment = .center
-    titleLabel.font = UIFont.mdc_preferredFont(forMaterialTextStyle: .title)
-    if #available(iOS 9.0, *) {
-        titleLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 20, weight: UIFontWeightRegular)
-    } else {
-        let attribute: [String: UIFontDescriptorSymbolicTraits] =
-            [UIFontSymbolicTrait: UIFontDescriptorSymbolicTraits.traitMonoSpace]
-        let descriptor: UIFontDescriptor = UIFontDescriptor(fontAttributes: attribute)
-        titleLabel.font = UIFont(descriptor: descriptor, size: 14)
-    }
+    titleLabel.font = AppTheme.globalTheme.typographyScheme.headline1
     titleLabel.sizeToFit()
-    if Constants.inset + titleLabel.frame.size.width > containerView.frame.size.width {
-      titleLabel.font = MDCTypography.body2Font()
-    }
 
     let titleInsets = UIEdgeInsets(top: 0,
                                    left: Constants.inset,
@@ -166,15 +155,11 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     let titleSize = titleLabel.sizeThatFits(containerView.bounds.size)
 
     containerView.addSubview(titleLabel)
-    constrainLabel(label: titleLabel,
-                   containerView: containerView,
-                   insets: titleInsets,
-                   height: titleSize.height)
 
     headerViewController.headerView.addSubview(containerView)
     headerViewController.headerView.forwardTouchEvents(for: containerView)
 
-    headerViewController.headerView.addSubview(logo)
+    containerView.addSubview(logo)
 
     let colorScheme = AppTheme.globalTheme.colorScheme
 
@@ -190,9 +175,13 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
                          action: #selector(navigationController?.presentMenu),
                          for: .touchUpInside)
 
-    headerViewController.headerView.addSubview(menuButton)
+    containerView.addSubview(menuButton)
 
     setupFlexibleHeaderContentConstraints()
+    constrainLabel(label: titleLabel,
+                   containerView: containerView,
+                   insets: titleInsets,
+                   height: titleSize.height)
 
     MDCFlexibleHeaderColorThemer.applySemanticColorScheme(colorScheme,
                                                           to: headerViewController.headerView)
@@ -241,34 +230,48 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
   @available(iOS 11, *)
   override func viewSafeAreaInsetsDidChange() {
     // Re-constraint the title label to account for changes in safeAreaInsets's left and right.
-    let titleInsets = UIEdgeInsets(top: 0,
-                                   left: Constants.inset + view.safeAreaInsets.left,
-                                   bottom: Constants.inset,
-                                   right: Constants.inset + view.safeAreaInsets.right)
-
-    constrainLabel(label: titleLabel,
-                   containerView: titleLabel.superview!,
-                   insets: titleInsets,
-                   height: titleLabel.bounds.height)
+    logoLeftPaddingConstraint?.constant = Constants.inset + view.safeAreaInsets.left
+    menuButtonRightPaddingConstraint?.constant = -1 * (Constants.inset + view.safeAreaInsets.right)
+    menuTopPaddingConstraint?.constant = Constants.inset + view.safeAreaInsets.top
   }
 #endif
 
   func setupFlexibleHeaderContentConstraints() {
+
+    logoLeftPaddingConstraint = NSLayoutConstraint(item: logo,
+                                                   attribute: .leading,
+                                                   relatedBy: .equal,
+                                                   toItem: logo.superview,
+                                                   attribute: .leading,
+                                                   multiplier: 1,
+                                                   constant: Constants.inset)
+    logoLeftPaddingConstraint?.isActive = true
+
+    menuButtonRightPaddingConstraint = NSLayoutConstraint(item: menuButton,
+                                                          attribute: .trailing,
+                                                          relatedBy: .equal,
+                                                          toItem: menuButton.superview,
+                                                          attribute: .trailing,
+                                                          multiplier: 1,
+                                                          constant: -1 * Constants.inset)
+    menuButtonRightPaddingConstraint?.isActive = true
+
+    menuTopPaddingConstraint = NSLayoutConstraint(item: menuButton,
+                                                  attribute: .top,
+                                                  relatedBy: .equal,
+                                                  toItem: menuButton.superview,
+                                                  attribute: .top,
+                                                  multiplier: 1,
+                                                  constant: Constants.menuTopVerticalSpacing)
+    menuTopPaddingConstraint?.isActive = true
+
     NSLayoutConstraint(item: logo,
-                       attribute: .bottom,
+                       attribute: .centerY,
                        relatedBy: .equal,
-                       toItem: titleLabel,
-                       attribute: .top,
-                       multiplier: 1,
-                       constant: -1 * Constants.logoTitleVerticalSpacing).isActive = true
-    NSLayoutConstraint(item: logo,
-                       attribute: .leading,
-                       relatedBy: .equal,
-                       toItem: titleLabel,
-                       attribute: .leading,
+                       toItem: menuButton,
+                       attribute: .centerY,
                        multiplier: 1,
                        constant: 0).isActive = true
-
     NSLayoutConstraint(item: logo,
                        attribute: .width,
                        relatedBy: .equal,
@@ -283,21 +286,6 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
                        attribute: .notAnAttribute,
                        multiplier: 1,
                        constant: Constants.logoWidthHeight).isActive = true
-
-    NSLayoutConstraint(item: menuButton,
-                       attribute: .centerY,
-                       relatedBy: .equal,
-                       toItem: logo,
-                       attribute: .centerY,
-                       multiplier: 1,
-                       constant: 0).isActive = true
-    NSLayoutConstraint(item: menuButton,
-                       attribute: .trailing,
-                       relatedBy: .equal,
-                       toItem: headerViewController.headerView,
-                       attribute: .trailing,
-                       multiplier: 1,
-                       constant: -1 * Constants.inset).isActive = true
 
     NSLayoutConstraint(item: menuButton,
                        attribute: .width,
@@ -412,76 +400,38 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
                       containerView: UIView,
                       insets: UIEdgeInsets,
                       height: CGFloat) {
-    if let constraint = titleLabelLeadingConstraint {
-      constraint.constant = insets.left
-    } else {
-      titleLabelLeadingConstraint = NSLayoutConstraint(
-        item: label,
-        attribute: .leading,
-        relatedBy: .equal,
-        toItem: containerView,
-        attribute: .leading,
-        multiplier: 1.0,
-        constant: insets.left)
-      titleLabelLeadingConstraint!.isActive = true
-    }
 
-    if let constraint = titleLabelTrailingConstraint {
-      constraint.constant = -insets.right
-    } else {
-      titleLabelTrailingConstraint = NSLayoutConstraint(
-        item: label,
-        attribute: .trailing,
-        relatedBy: .equal,
-        toItem: containerView,
-        attribute: .trailing,
-        multiplier: 1.0,
-        constant: -insets.right)
-      titleLabelTrailingConstraint!.isActive = true
-    }
+    NSLayoutConstraint(item: label,
+                       attribute: .leading,
+                       relatedBy: .equal,
+                       toItem: logo,
+                       attribute: .trailing,
+                       multiplier: 1.0,
+                       constant: insets.left).isActive = true
 
-    if let constraint = titleLabelBottomConstraint {
-      constraint.constant = -insets.bottom
-    } else {
-      titleLabelBottomConstraint = NSLayoutConstraint(
-        item: label,
-        attribute: .bottom,
-        relatedBy: .equal,
-        toItem: containerView,
-        attribute: .bottom,
-        multiplier: 1.0,
-        constant: -insets.bottom)
-      titleLabelBottomConstraint!.isActive = true
-    }
+    NSLayoutConstraint(item: label,
+                       attribute: .trailing,
+                       relatedBy: .equal,
+                       toItem: menuButton,
+                       attribute: .leading,
+                       multiplier: 1.0,
+                       constant: -insets.right).isActive = true
 
-    if let constraint = titleLabelHeightConstraint {
-      constraint.constant = height
-    } else {
-      titleLabelHeightConstraint = NSLayoutConstraint(
-        item: label,
-        attribute: .height,
-        relatedBy: .equal,
-        toItem: nil,
-        attribute: .notAnAttribute,
-        multiplier: 1.0,
-        constant: height)
-      titleLabelHeightConstraint!.isActive = true
-    }
-  }
+    NSLayoutConstraint(item: label,
+                       attribute: .bottom,
+                       relatedBy: .equal,
+                       toItem: containerView,
+                       attribute: .bottom,
+                       multiplier: 1.0,
+                       constant: -insets.bottom).isActive = true
 
-  func adjustLogoForScrollView(_ scrollView: UIScrollView) {
-    let offset = scrollView.contentOffset.y
-    var inset = scrollView.contentInset.top
-// On the iPhone X, we need to use the offset which might take into account the safe area.
-#if swift(>=3.2)
-    if #available(iOS 11, *) {
-      inset = scrollView.adjustedContentInset.top
-    }
-#endif
-    let relativeOffset = inset + offset
-    let buttonsAlpha = 1 - (relativeOffset / Constants.headerScrollThreshold)
-    logo.alpha = buttonsAlpha
-    menuButton.alpha = buttonsAlpha
+    NSLayoutConstraint(item: label,
+                       attribute: .height,
+                       relatedBy: .equal,
+                       toItem: nil,
+                       attribute: .notAnAttribute,
+                       multiplier: 1.0,
+                       constant: height).isActive = true
   }
 }
 
@@ -491,7 +441,6 @@ extension MDCCatalogComponentsController {
   override func scrollViewDidScroll(_ scrollView: UIScrollView) {
     if scrollView == headerViewController.headerView.trackingScrollView {
       self.headerViewController.headerView.trackingScrollDidScroll()
-      adjustLogoForScrollView(scrollView)
     }
   }
 
