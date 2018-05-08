@@ -32,10 +32,11 @@ import UIKit
 class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchControllerDelegate {
 
   fileprivate struct Constants {
-    static let headerScrollThreshold: CGFloat = 20
+    static let headerScrollThreshold: CGFloat = 30
     static let inset: CGFloat = 16
-    static let logoTitleVerticalSpacing: CGFloat = 32
-    static let logoWidthHeight: CGFloat = 40
+    static let logoTitleVerticalSpacing: CGFloat = 30
+    static let logoWidthHeight: CGFloat = 30
+    static let menuButtonWidthHeight: CGFloat = 24
     static let spacing: CGFloat = 1
   }
 
@@ -55,6 +56,17 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     return imageView
   }()
 
+  private lazy var menuButton: UIButton = {
+    let button = UIButton()
+    button.translatesAutoresizingMaskIntoConstraints = false
+    let dotsImage = MDCIcons.imageFor_ic_more_horiz()?.withRenderingMode(.alwaysTemplate)
+    button.setImage(dotsImage, for: .normal)
+    button.adjustsImageWhenHighlighted = false
+    button.tintColor = .white
+    return button
+  }()
+
+
   private let node: CBCNode
   private lazy var titleLabel: UILabel = {
     let titleLabel = UILabel()
@@ -63,6 +75,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
   }()
 
   private var titleLabelLeadingConstraint: NSLayoutConstraint?
+  private var titleLabelTrailingConstraint: NSLayoutConstraint?
   private var titleLabelBottomConstraint: NSLayoutConstraint?
   private var titleLabelHeightConstraint: NSLayoutConstraint?
 
@@ -80,7 +93,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
     super.init(collectionViewLayout: layout)
 
-    title = "Material Components for iOS v\(MDCLibraryInfo.versionString)"
+    title = "Material Components for iOS"
 
     addChildViewController(headerViewController)
 
@@ -131,6 +144,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
     titleLabel.text = title!
     titleLabel.textColor = UIColor(white: 1, alpha: 1)
+    titleLabel.textAlignment = .center
     titleLabel.font = UIFont.mdc_preferredFont(forMaterialTextStyle: .title)
     if #available(iOS 9.0, *) {
         titleLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 20, weight: UIFontWeightRegular)
@@ -172,35 +186,13 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
                              colorScheme)
     logo.image = image
 
-    NSLayoutConstraint(item: logo,
-                       attribute: .bottom,
-                       relatedBy: .equal,
-                       toItem: titleLabel,
-                       attribute: .top,
-                       multiplier: 1,
-                       constant: -1 * Constants.logoTitleVerticalSpacing).isActive = true
-    NSLayoutConstraint(item: logo,
-                       attribute: .leading,
-                       relatedBy: .equal,
-                       toItem: titleLabel,
-                       attribute: .leading,
-                       multiplier: 1,
-                       constant: 0).isActive = true
+    menuButton.addTarget(self.navigationController,
+                         action: #selector(navigationController?.presentMenu),
+                         for: .touchUpInside)
 
-    NSLayoutConstraint(item: logo,
-                       attribute: .width,
-                       relatedBy: .equal,
-                       toItem: logo,
-                       attribute: .height,
-                       multiplier: 1,
-                       constant: 0).isActive = true
-    NSLayoutConstraint(item: logo,
-                       attribute: .width,
-                       relatedBy: .equal,
-                       toItem: nil,
-                       attribute: .notAnAttribute,
-                       multiplier: 1,
-                       constant: Constants.logoWidthHeight).isActive = true
+    headerViewController.headerView.addSubview(menuButton)
+
+    setupFlexibleHeaderContentConstraints()
 
     MDCFlexibleHeaderColorThemer.applySemanticColorScheme(colorScheme,
                                                           to: headerViewController.headerView)
@@ -260,6 +252,68 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
                    height: titleLabel.bounds.height)
   }
 #endif
+
+  func setupFlexibleHeaderContentConstraints() {
+    NSLayoutConstraint(item: logo,
+                       attribute: .bottom,
+                       relatedBy: .equal,
+                       toItem: titleLabel,
+                       attribute: .top,
+                       multiplier: 1,
+                       constant: -1 * Constants.logoTitleVerticalSpacing).isActive = true
+    NSLayoutConstraint(item: logo,
+                       attribute: .leading,
+                       relatedBy: .equal,
+                       toItem: titleLabel,
+                       attribute: .leading,
+                       multiplier: 1,
+                       constant: 0).isActive = true
+
+    NSLayoutConstraint(item: logo,
+                       attribute: .width,
+                       relatedBy: .equal,
+                       toItem: logo,
+                       attribute: .height,
+                       multiplier: 1,
+                       constant: 0).isActive = true
+    NSLayoutConstraint(item: logo,
+                       attribute: .width,
+                       relatedBy: .equal,
+                       toItem: nil,
+                       attribute: .notAnAttribute,
+                       multiplier: 1,
+                       constant: Constants.logoWidthHeight).isActive = true
+
+    NSLayoutConstraint(item: menuButton,
+                       attribute: .centerY,
+                       relatedBy: .equal,
+                       toItem: logo,
+                       attribute: .centerY,
+                       multiplier: 1,
+                       constant: 0).isActive = true
+    NSLayoutConstraint(item: menuButton,
+                       attribute: .trailing,
+                       relatedBy: .equal,
+                       toItem: headerViewController.headerView,
+                       attribute: .trailing,
+                       multiplier: 1,
+                       constant: -1 * Constants.inset).isActive = true
+
+    NSLayoutConstraint(item: menuButton,
+                       attribute: .width,
+                       relatedBy: .equal,
+                       toItem: menuButton,
+                       attribute: .height,
+                       multiplier: 1,
+                       constant: 0).isActive = true
+    NSLayoutConstraint(item: menuButton,
+                       attribute: .width,
+                       relatedBy: .equal,
+                       toItem: nil,
+                       attribute: .notAnAttribute,
+                       multiplier: 1,
+                       constant: Constants.menuButtonWidthHeight).isActive = true
+  }
 
   // MARK: UICollectionViewDataSource
 
@@ -372,14 +426,19 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
       titleLabelLeadingConstraint!.isActive = true
     }
 
-    _ = NSLayoutConstraint(
-      item: label,
-      attribute: .trailing,
-      relatedBy: .equal,
-      toItem: containerView,
-      attribute: .trailing,
-      multiplier: 1.0,
-      constant: 0).isActive = true
+    if let constraint = titleLabelTrailingConstraint {
+      constraint.constant = -insets.right
+    } else {
+      titleLabelTrailingConstraint = NSLayoutConstraint(
+        item: label,
+        attribute: .trailing,
+        relatedBy: .equal,
+        toItem: containerView,
+        attribute: .trailing,
+        multiplier: 1.0,
+        constant: -insets.right)
+      titleLabelTrailingConstraint!.isActive = true
+    }
 
     if let constraint = titleLabelBottomConstraint {
       constraint.constant = -insets.bottom
@@ -420,8 +479,9 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     }
 #endif
     let relativeOffset = inset + offset
-
-    logo.alpha = 1 - (relativeOffset / Constants.headerScrollThreshold)
+    let buttonsAlpha = 1 - (relativeOffset / Constants.headerScrollThreshold)
+    logo.alpha = buttonsAlpha
+    menuButton.alpha = buttonsAlpha
   }
 }
 
