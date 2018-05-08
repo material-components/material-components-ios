@@ -49,11 +49,13 @@ class FlexibleHeaderWrappingTopLayoutGuideTests: XCTestCase {
     // Then
     XCTAssertEqual(contentViewController.topLayoutGuide.length,
                    container.headerViewController.headerView.frame.maxY)
+    #if swift(>=3.2)
     if #available(iOS 11.0, *) {
       XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top,
                      container.headerViewController.headerView.frame.maxY
                       - MDCDeviceTopSafeAreaInset())
     }
+    #endif
   }
 
   // MARK: Untracked table view
@@ -67,12 +69,14 @@ class FlexibleHeaderWrappingTopLayoutGuideTests: XCTestCase {
     // Then
     XCTAssertEqual(contentViewController.topLayoutGuide.length,
                    container.headerViewController.headerView.frame.maxY)
+    #if swift(>=3.2)
     if #available(iOS 11.0, *) {
       XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top,
                      container.headerViewController.headerView.frame.maxY
                       - MDCDeviceTopSafeAreaInset())
       XCTAssertEqual(contentViewController.tableView.adjustedContentInset.top, 0)
     }
+    #endif
   }
 
   // MARK: Tracked table view
@@ -88,12 +92,14 @@ class FlexibleHeaderWrappingTopLayoutGuideTests: XCTestCase {
     // Then
     XCTAssertEqual(contentViewController.topLayoutGuide.length,
                    container.headerViewController.headerView.frame.maxY)
+    #if swift(>=3.2)
     if #available(iOS 11.0, *) {
       XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top, 0)
       XCTAssertEqual(contentViewController.tableView.adjustedContentInset.top,
                      container.headerViewController.headerView.maximumHeight
                       + MDCDeviceTopSafeAreaInset())
     }
+    #endif
   }
 
   // MARK: Untracked collection view
@@ -108,12 +114,14 @@ class FlexibleHeaderWrappingTopLayoutGuideTests: XCTestCase {
     // Then
     XCTAssertEqual(contentViewController.topLayoutGuide.length,
                    container.headerViewController.headerView.frame.maxY)
+    #if swift(>=3.2)
     if #available(iOS 11.0, *) {
       XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top,
                      container.headerViewController.headerView.frame.maxY
                       - MDCDeviceTopSafeAreaInset())
       XCTAssertEqual(contentViewController.collectionView!.adjustedContentInset.top, 0)
     }
+    #endif
   }
 
   // MARK: Tracked collection view view
@@ -131,12 +139,14 @@ class FlexibleHeaderWrappingTopLayoutGuideTests: XCTestCase {
     // Then
     XCTAssertEqual(contentViewController.topLayoutGuide.length,
                    container.headerViewController.headerView.frame.maxY)
+    #if swift(>=3.2)
     if #available(iOS 11.0, *) {
       XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top, 0)
       XCTAssertEqual(contentViewController.collectionView!.adjustedContentInset.top,
                      container.headerViewController.headerView.maximumHeight
                       + MDCDeviceTopSafeAreaInset())
     }
+    #endif
   }
 
 }
