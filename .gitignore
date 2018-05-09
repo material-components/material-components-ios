@@ -2,6 +2,7 @@ bazel-*
 .kokoro-ios-runner
 
 node_modules/
+yarn.lock
 
 # MDC
 
