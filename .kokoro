@@ -259,8 +259,13 @@ generate_apidiff() {
     if [ -f "$changelog_path" ]; then
       echo "## API diff detected the following changes" > "$changelog_path.tmp"
       cat "$changelog_path" >> "$changelog_path.tmp"
-      ./scripts/post_comment \
-        "$changelog_path.tmp" \
+      ./scripts/github_comment \
+        "$KOKORO_GITHUB_PULL_REQUEST_NUMBER" \
+        "apidiff" \
+        "$changelog_path.tmp"
+    else
+      # No changelog, so delete any existing comment
+      ./scripts/github_comment \
         "$KOKORO_GITHUB_PULL_REQUEST_NUMBER" \
         "apidiff"
     fi
