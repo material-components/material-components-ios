@@ -100,8 +100,6 @@
  Updates the topLayoutGuide to the correct position of a view controller paired with an instance of
  MDCFlexibleHeaderViewController.
 
- This method must be called in the |viewWillLayoutSubviews| method of view controller.
-
  @warning This API will be deprecated. There is no replacement because the top layout guide should
  update automatically as the flexible header's frame changes.
  */
