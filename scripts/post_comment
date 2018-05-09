@@ -1,0 +1,159 @@
+#!/usr/bin/php
+<?php
+/*
+ Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
+//
+// This tool can be used to post information to a GitHub pull request in a non-spammy manner.
+//
+// Will either create a comment or edit an existing one with a given identifier, if one exists.
+//
+
+$body_path = $argv[1];
+$pr = $argv[2];
+$identifier = $argv[3];
+
+if (!$body_path || !$pr || !$identifier) {
+  echo "Usage: ".$argv[0]." <file with comment contents> <pr #> <comment identifier>\n";
+  echo "\n";
+  echo "<comment identifier> will be used to uniquely identify a comment in a PR so, on\n";
+  echo "subsequent invocations the same comment can be updated instead of creating a new\n";
+  echo "one..\n";
+  echo "\n";
+  echo "Example: ".$argv[0]." /tmp/apidiff 1234 apidiff\n";
+  exit(1);
+}
+
+$token = getenv('GITHUB_API_TOKEN');
+
+if (!$token) {
+  echo "GITHUB_API_TOKEN environment variable must be set to a GitHub\n";
+  echo "token with public_repo scope.\n";
+  exit(1);
+}
+
+function httpHeader() {
+  global $token;
+  return array(
+    "Authorization: token ".$token,
+    "Content-Type: application/json"
+  );
+}
+
+function createCurlRequest($query) {
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, "https://api.github.com/$query");
+  curl_setopt($ch, CURLOPT_USERAGENT, 'mdc-tools');
+  curl_setopt($ch, CURLOPT_HTTPHEADER, httpHeader());
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  return $ch;
+}
+
+function checkCurlResponse($server_output) {
+  if (!$server_output) {
+    return true;
+  }
+  $result = json_decode($server_output, TRUE);
+  switch(json_last_error()) {
+      case JSON_ERROR_NONE:
+      break;
+      default:
+      return false;
+  }
+  if ($result['message']) {
+    echo "github: API request failed with message ".$result['message']."\n";
+    return false;
+  }
+  return true;
+}
+
+// Gets comments for a given PR.
+function getComments($pr) {
+  $ch = createCurlRequest("repos/material-components/material-components-ios/issues/$pr/comments");
+  $server_output = curl_exec($ch);
+  curl_close($ch);
+  if (!checkCurlResponse($server_output)) {
+    echo "Failed to configure repo $ownername/$reponame\n";
+    return false;
+  }
+  return $server_output;
+}
+
+// Posts a comment to the given PR.
+function postComment($pr, $body) {
+  $ch = createCurlRequest("repos/material-components/material-components-ios/issues/$pr/comments");
+  curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+  curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(array(
+    'body' => $body
+  )));
+  $server_output = curl_exec($ch);
+  curl_close($ch);
+  if (!checkCurlResponse($server_output)) {
+    echo "Failed to configure repo $ownername/$reponame\n";
+    return false;
+  }
+  return true;
+}
+
+// Edits a comment with the given id.
+function editComment($id, $body) {
+  $ch = createCurlRequest("repos/material-components/material-components-ios/issues/comments/$id");
+  curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PATCH");
+  curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(array(
+    'body' => $body
+  )));
+  $server_output = curl_exec($ch);
+  curl_close($ch);
+  if (!checkCurlResponse($server_output)) {
+    echo "Failed to configure repo $ownername/$reponame\n";
+    return false;
+  }
+  return true;
+}
+
+$identifier_tag = "<!-- identifier: $identifier -->";
+
+// First search for comment with the identifier...
+
+$comment = getComments($pr, $identifier_tag);
+if ($comment === false) {
+  exit(1);
+}
+
+$existing_comment_id = null;
+$comments = json_decode($comment, TRUE);
+foreach ($comments as $comment) {
+  if (strpos($comment['body'], $identifier_tag) !== false) {
+    $existing_comment_id = $comment['id'];
+    break;
+  }
+}
+
+// Then either edit or post a comment.
+
+$body = file_get_contents($body_path)."\n$identifier_tag";
+if ($existing_comment_id) {
+  if (!editComment($existing_comment_id, $body)) {
+    echo "Failed to edit commment.\n";
+    exit(1);
+  }
+
+} else {
+  if (!postComment($pr, $body)) {
+    echo "Failed to post commment.\n";
+    exit(1);
+  }
+}
