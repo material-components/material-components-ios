@@ -237,7 +237,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 #endif
 
   func setupFlexibleHeaderContentConstraints() {
-
+    print("hehe")
     logoLeftPaddingConstraint = NSLayoutConstraint(item: logo,
                                                    attribute: .leading,
                                                    relatedBy: .equal,
