@@ -174,6 +174,16 @@ run_cocoapods() {
   bash <(curl -s https://codecov.io/bash)
 }
 
+# For local runs, you must set the following environment variables:
+#
+#   DANGER_GITHUB_API_TOKEN -> Create a token here: https://github.com/settings/tokens.
+#                              Must have public_repo scope.
+#   DANGER_TEST_PR="###"    -> The PR # you want to test danger against.
+#
+# And you'll likely have to install danger:
+#
+#   yarn add danger
+#
 run_danger() {
   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
     # Move into our cloned repo

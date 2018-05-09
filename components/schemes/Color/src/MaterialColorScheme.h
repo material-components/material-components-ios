@@ -19,5 +19,3 @@
 #import "MDCLegacyTonalPalette.h"
 
 #import "MDCSemanticColorScheme.h"
-
-// More test.
