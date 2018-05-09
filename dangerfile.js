@@ -18,6 +18,6 @@ const {danger, warn, fail} = require('danger')
 
 // Danger.js documentation: http://danger.systems/js/
 
-if (danger.github.pr.body.length < 10) {
-  warn('This PR does not include a description.');
+if (!danger.github.pr.title.startsWith("[")) {
+  warn('This PR title does not include an affected component. For example: "[SomeComponent] Title.');
 }
