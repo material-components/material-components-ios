@@ -107,6 +107,7 @@
 
   if (_topLayoutGuideAdjustmentEnabled) {
     if ([self isViewLoaded] && [self.contentViewController isViewLoaded]) {
+      self.contentViewController.view.translatesAutoresizingMaskIntoConstraints = YES;
       self.contentViewController.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth
                                                           | UIViewAutoresizingFlexibleHeight);
       self.contentViewController.view.frame = self.view.bounds;

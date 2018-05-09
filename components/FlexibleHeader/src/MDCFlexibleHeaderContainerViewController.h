@@ -38,7 +38,12 @@
 @property(nonatomic, strong, nonnull, readonly)
     MDCFlexibleHeaderViewController *headerViewController;
 
-/** The content view controller to be displayed behind the header. */
+/**
+ The content view controller to be displayed behind the header.
+
+ This view controller's layout will be owned and managed by the container view controller. If the
+ content view controller has prior layout constraints associated with it, the behavior is undefined.
+ */
 @property(nonatomic, strong, nullable) UIViewController *contentViewController;
 
 #pragma mark - Enabling top layout guide adjustment behavior
