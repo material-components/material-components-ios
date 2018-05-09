@@ -147,9 +147,6 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
   _navigationBar = _appBarController.navigationBar;
 }
 
-- (void)testingAddingANewAPI {
-}
-
 - (void)commonMDCAppBarViewSetup {
   [_headerViewController addChildViewController:_appBarController];
   _appBarController.view.frame = _headerViewController.view.bounds;
