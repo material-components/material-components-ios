@@ -200,20 +200,21 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
 
 #pragma mark - Top layout guide support
 
-// Whenever the flexible header's height changes, we want to adjust the topLayoutGuide length
-// of the content view controller so that its content can adjust accordingly. This is the same
-// behavior that UIKit container view controllers provide. We want to provide similar behavior.
-//
-// Unfortunately, topLayoutGuide is a read-only property on UIViewController with no way to
-// override it, and no public setter for the length.
-//
-// The only known way to modify this property programmatically is to access the view controller's
-// view constraints and extract the first constraint that contains the top layout guide (and only
-// the top layout guide). Modifying the "constant" property of this constraint has the
-// undocumented side effect of also updating the topLayoutGuide's length.
-// This approach is discussed here:
-// https://stackoverflow.com/questions/19588171/how-to-set-toplayoutguide-position-for-child-view-controller
-//
+/*
+ When the flexible header's height changes, we want to adjust the topLayoutGuide length of the
+ content view controller so that its content can adjust accordingly. This is the same behavior that
+ UIKit container view controllers provide. We want to provide similar behavior.
+
+ Unfortunately, topLayoutGuide is a read-only property on UIViewController with no way to
+ override it, and no public setter for the length.
+
+ The only known way to modify this property programmatically is to access the view controller's
+ view constraints and extract the first constraint that contains the top layout guide (and only
+ the top layout guide). Modifying the "constant" property of this constraint has the
+ undocumented side effect of also updating the topLayoutGuide's length.
+ This approach is discussed here:
+ https://stackoverflow.com/questions/19588171/how-to-set-toplayoutguide-position-for-child-view-controller
+ */
 - (void)extractTopLayoutGuideConstraint {
   UIViewController *topLayoutGuideViewController = [self topLayoutGuideViewControllerWithFallback];
   // topLayoutGuide isn't available until the view has been loaded.
