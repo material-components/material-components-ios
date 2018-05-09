@@ -19,5 +19,8 @@ const {danger, warn, fail} = require('danger')
 // Danger.js documentation: http://danger.systems/js/
 
 if (!danger.github.pr.title.startsWith("[")) {
-  warn('This PR title does not include an affected component. For example: "[SomeComponent] Title.');
+  warn('This PR title does not include an affected component.'
+    + ' For example: "[SomeComponent] Title. If something is affecting multiple components and the'
+    + ' change can\'t be broken up into multiple PRs, then the common trait of the change could be'
+    + ' used in the PR title. E.g. `[documentation]`.');
 }
