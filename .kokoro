@@ -214,7 +214,7 @@ generate_apidiff() {
     echo "GITHUB_API_TOKEN must be set to a github token with public_repo scope."
     exit 1
   fi
-  
+
   if [ -z "$KOKORO_GITHUB_PULL_REQUEST_NUMBER" ]; then
     echo "KOKORO_GITHUB_PULL_REQUEST_NUMBER must be set to a github pull request number."
     exit 1
