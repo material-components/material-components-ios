@@ -33,7 +33,7 @@ if (!$pr || !$identifier) {
   echo "subsequent invocations the same comment can be updated instead of creating a new\n";
   echo "one.\n";
   echo "\n";
-  echo "If a file is provided, then a comment will be posted or edited.\n"
+  echo "If a file is provided, then a comment will be posted or edited.\n";
   echo "If no file provided, then the comment with the given identifier will be deleted.\n";
   echo "\n";
   echo "Example: ".$argv[0]." /tmp/apidiff 1234 apidiff\n";
