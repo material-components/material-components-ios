@@ -54,5 +54,5 @@ let components = Array.from(new Set(component_files.map(function(path) {
 
 if (components.length > 1) {
   warn('This PR affects more than one component. Consider splitting it up into smaller PRs if'
-  + ' possible. Components found in this PR: '+components.join(", "));
+  + ' possible. Components found in this PR: '+components.join(", ")+'.');
 }
