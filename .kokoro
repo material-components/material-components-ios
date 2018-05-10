@@ -230,6 +230,9 @@ generate_website() {
   fi
 }
 
+# Will generate an API diff between the current branch and the merge-base from develop.
+# The result will be posted to GitHub as a comment.
+#
 # For local runs, you must set the following environment variables:
 #
 #   GITHUB_API_TOKEN -> Create a token here: https://github.com/settings/tokens.
@@ -248,6 +251,19 @@ generate_apidiff() {
     # Install sourcekitten, a dependency of the apidiff tool
     brew install sourcekitten
   fi
+  
+  usage() {
+    echo "Usage: $0 -d apidiff"
+    echo
+    echo "Will generate an API diff between the current branch and the merge-base from develop."
+    echo "The result will be posted to GitHub as a comment."
+    echo
+    echo "Must set the following environment variables to run locally:"
+    echo
+    echo "GITHUB_API_TOKEN -> Create a token here: https://github.com/settings/tokens."
+    echo "                    Must have public_repo scope."
+    echo "KOKORO_GITHUB_PULL_REQUEST_NUMBER=\"###\" -> The PR # you want to post the API diff results to."
+  }
 
   if [ -z "$GITHUB_API_TOKEN" ]; then
     echo "GITHUB_API_TOKEN must be set to a github token with public_repo scope."
