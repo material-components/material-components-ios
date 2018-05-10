@@ -33,9 +33,12 @@ let all_files = danger.git.modified_files
   .concat(danger.git.deleted_files)
   .concat(danger.git.created_files);
 
+// Extract any component source modifications.
 let component_files = all_files.filter(function(path) {
-  return path.startsWith('components/');
+  return path.startsWith('components/') && path.indexOf('/src') >= 0;
 });
+
+// Generate a list of unique components that have been modified.
 let components = Array.from(new Set(component_files.map(function(path) {
   var path_parts = path.split('/');
   path_parts.splice(0, 1); // Drop the components/ prefix.
