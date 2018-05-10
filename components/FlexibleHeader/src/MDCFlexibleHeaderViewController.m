@@ -286,6 +286,7 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
 
   if ([self isViewLoaded]) {
     [self extractTopLayoutGuideConstraint];
+    [self updateTopLayoutGuide];
   }
 }
 
