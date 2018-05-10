@@ -230,6 +230,16 @@ generate_website() {
   fi
 }
 
+# For local runs, you must set the following environment variables:
+#
+#   GITHUB_API_TOKEN -> Create a token here: https://github.com/settings/tokens.
+#                       Must have public_repo scope.
+#   KOKORO_GITHUB_PULL_REQUEST_NUMBER="###" -> The PR # you want to post the API diff results to.
+#
+# And you'll likely have to install sourcekitten:
+#
+#   brew install sourcekitten
+#
 generate_apidiff() {
   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
     # Move into our cloned repo
