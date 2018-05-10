@@ -17,6 +17,7 @@
 #import "MDCFlexibleHeaderViewController.h"
 
 #import "MaterialApplication.h"
+#import "MaterialUIMetrics.h"
 #import "MDCFlexibleHeaderContainerViewController.h"
 #import "MDCFlexibleHeaderView.h"
 #import <MDFTextAccessibility/MDFTextAccessibility.h>
@@ -41,18 +42,10 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
 @interface MDCFlexibleHeaderViewController () <MDCFlexibleHeaderViewDelegate>
 
 /**
- The current height offset of the flexible header controller with the addition of the current status
- bar state at any given time.
-
- This property is used to determine the bottom point of the |flexibleHeaderView| within the window.
- */
-@property(nonatomic) CGFloat flexibleHeaderViewControllerHeightOffset;
-
-/**
  The NSLayoutConstraint attached to the flexible header view controller's parentViewController's
  topLayoutGuide.
 */
-@property(nonatomic, weak) id topLayoutGuideTopConstraint;
+@property(nonatomic, weak) NSLayoutConstraint *topLayoutGuideConstraint;
 
 @end
 
@@ -131,22 +124,14 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
   } else {
     [_headerView trackingScrollViewDidScroll];
   }
+
+  [self updateTopLayoutGuide];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
 
-  for (NSLayoutConstraint *constraint in self.parentViewController.view.constraints) {
-    // Because topLayoutGuide is a readonly property on a viewController we must manipulate
-    // the present one via the NSLayoutConstraint attached to it. Thus we keep reference to it.
-    if (constraint.firstItem == self.parentViewController.topLayoutGuide &&
-        constraint.secondItem == nil) {
-      self.topLayoutGuideTopConstraint = constraint;
-    }
-  }
-
-  // On moving to parentViewController, we calculate the height
-  self.flexibleHeaderViewControllerHeightOffset = [self headerViewControllerHeight];
+  [self updateTopLayoutGuide];
 
 #if DEBUG
   NSAssert(![self.parentViewController.parentViewController
@@ -178,6 +163,12 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
   [_headerView viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
 
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+
+  [self updateTopLayoutGuide];
+}
+
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -207,19 +198,95 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
   }
 }
 
-- (void)updateTopLayoutGuide {
-  [self.topLayoutGuideTopConstraint setConstant:self.flexibleHeaderViewControllerHeightOffset];
+#pragma mark - Top layout guide support
+
+/*
+ When the flexible header's height changes, we want to adjust the topLayoutGuide length of the
+ content view controller so that its content can adjust accordingly. This is the same behavior that
+ UIKit container view controllers provide. We want to provide similar behavior.
+
+ Unfortunately, topLayoutGuide is a read-only property on UIViewController with no way to
+ override it, and no public setter for the length.
+
+ The only known way to modify this property programmatically is to access the view controller's
+ view constraints and extract the first constraint that contains the top layout guide (and only
+ the top layout guide). Modifying the "constant" property of this constraint has the
+ undocumented side effect of also updating the topLayoutGuide's length.
+ This approach is discussed here:
+ https://stackoverflow.com/questions/19588171/how-to-set-toplayoutguide-position-for-child-view-controller
+ */
+- (void)extractTopLayoutGuideConstraint {
+  UIViewController *topLayoutGuideViewController = [self topLayoutGuideViewControllerWithFallback];
+  // topLayoutGuide isn't available until the view has been loaded.
+  if (!topLayoutGuideViewController || ![topLayoutGuideViewController isViewLoaded]) {
+    self.topLayoutGuideConstraint = nil;
+    return;
+  }
+  // Note: accessing topLayoutGuide has the side effect of setting up all of the view controller
+  // constraints. We need to access this property before we enter the for loop, otherwise
+  // view.constraints will be empty.
+  id<UILayoutSupport> topLayoutGuide = topLayoutGuideViewController.topLayoutGuide;
+  for (NSLayoutConstraint *constraint in topLayoutGuideViewController.view.constraints) {
+    if (constraint.firstItem == topLayoutGuide && constraint.secondItem == nil) {
+      self.topLayoutGuideConstraint = constraint;
+    }
+  }
 }
 
-- (CGFloat)headerViewControllerHeight {
-  BOOL shiftEnabledForStatusBar =
-      _headerView.shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar;
-  CGFloat statusBarHeight =
-      [UIApplication mdc_safeSharedApplication].statusBarFrame.size.height;
-  CGFloat height =
-      MAX(_headerView.frame.origin.y + _headerView.frame.size.height,
-          shiftEnabledForStatusBar ? 0 : statusBarHeight);
-  return height;
+- (UIViewController *)topLayoutGuideViewControllerWithFallback {
+  UIViewController *topLayoutGuideViewController = self.topLayoutGuideViewController;
+  if (!topLayoutGuideViewController) {
+    topLayoutGuideViewController = self.parentViewController;
+  }
+  return topLayoutGuideViewController;
+}
+
+- (void)updateTopLayoutGuide {
+  if (![self isViewLoaded]) {
+    return;
+  }
+  if (!self.topLayoutGuideConstraint) {
+    [self extractTopLayoutGuideConstraint];
+  }
+  CGFloat topInset = CGRectGetMaxY(_headerView.frame);
+  self.topLayoutGuideConstraint.constant = topInset;
+
+  // If there is a tracking scroll view then the flexible header will manage safe area insets via
+  // the tracking scroll view's contentInsets. Some day - in the long distant future when we only
+  // support iOS 11 and up - we can probably drop the content inset adjustment behavior in favor
+  // of modifying additionalSafeAreaInsets instead.
+  if (self.headerView.trackingScrollView != nil) {
+    return;
+  }
+
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    UIViewController *topLayoutGuideViewController = [self topLayoutGuideViewControllerWithFallback];
+    if (topLayoutGuideViewController != nil) {
+      UIEdgeInsets additionalSafeAreaInsets = topLayoutGuideViewController.additionalSafeAreaInsets;
+      if (self.headerView.statusBarHintCanOverlapHeader) {
+        // safe area insets will likely already take into account the top safe area inset, so let's
+        // avoid double-counting that here.
+        additionalSafeAreaInsets.top = topInset - MDCDeviceTopSafeAreaInset();
+
+      } else {
+        additionalSafeAreaInsets.top = topInset;
+      }
+      topLayoutGuideViewController.additionalSafeAreaInsets = additionalSafeAreaInsets;
+    }
+  }
+#endif
+}
+
+- (void)setTopLayoutGuideViewController:(UIViewController *)topLayoutGuideViewController {
+  if (topLayoutGuideViewController == _topLayoutGuideViewController) {
+    return;
+  }
+  _topLayoutGuideViewController = topLayoutGuideViewController;
+
+  if ([self isViewLoaded]) {
+    [self extractTopLayoutGuideConstraint];
+  }
 }
 
 #pragma mark MDCFlexibleHeaderViewDelegate
@@ -230,12 +297,7 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
 }
 
 - (void)flexibleHeaderViewFrameDidChange:(MDCFlexibleHeaderView *)headerView {
-  // Whenever the flexibleHeaderView's frame changes, we update the value of the height offset
-  self.flexibleHeaderViewControllerHeightOffset = [self headerViewControllerHeight];
-
-  // We must change the constant of the constraint attached to our parentViewController's
-  // topLayoutGuide to trigger the re-layout of its subviews
-  [self.topLayoutGuideTopConstraint setConstant:self.flexibleHeaderViewControllerHeightOffset];
+  [self updateTopLayoutGuide];
 
   [self.layoutDelegate flexibleHeaderViewController:self
                    flexibleHeaderViewFrameDidChange:headerView];

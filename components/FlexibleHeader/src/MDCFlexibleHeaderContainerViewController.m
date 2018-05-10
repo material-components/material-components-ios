@@ -56,11 +56,6 @@
   [self.headerViewController didMoveToParentViewController:self];
 }
 
-- (void)viewWillLayoutSubviews {
-  [super viewWillLayoutSubviews];
-  [self.headerViewController updateTopLayoutGuide];
-}
-
 - (BOOL)prefersStatusBarHidden {
   return _headerViewController.prefersStatusBarHidden;
 }
@@ -95,6 +90,40 @@
                   belowSubview:self.headerViewController.headerView];
       [contentViewController didMoveToParentViewController:self];
     }
+  }
+
+  if (_topLayoutGuideAdjustmentEnabled) {
+    self.headerViewController.topLayoutGuideViewController = self.contentViewController;
+  }
+}
+
+#pragma mark - Enabling top layout guide adjustment behavior
+
+- (void)setTopLayoutGuideAdjustmentEnabled:(BOOL)topLayoutGuideAdjustmentEnabled {
+  if (_topLayoutGuideAdjustmentEnabled == topLayoutGuideAdjustmentEnabled) {
+    return;
+  }
+  _topLayoutGuideAdjustmentEnabled = topLayoutGuideAdjustmentEnabled;
+
+  if (_topLayoutGuideAdjustmentEnabled) {
+    if ([self isViewLoaded] && [self.contentViewController isViewLoaded]) {
+      self.contentViewController.view.translatesAutoresizingMaskIntoConstraints = YES;
+      self.contentViewController.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth
+                                                          | UIViewAutoresizingFlexibleHeight);
+      self.contentViewController.view.frame = self.view.bounds;
+    }
+
+    // The flexible header view controller, by default, will assume that it is a child view
+    // controller of the content view controller and modify its parent view controller's
+    // topLayoutGuide. With an App Bar container view controller, however, our flexible header's
+    // parent is the app bar container view controller instead. There does not appear to be a way to
+    // make two top layout guides constrain to one other
+    // (e.g. self.topLayoutGuide == self.contentViewController.topLayoutGuide) so instead we must
+    // tell the flexible header controller which view controller it should modify.
+    self.headerViewController.topLayoutGuideViewController = self.contentViewController;
+
+  } else {
+    self.headerViewController.topLayoutGuideViewController = nil;
   }
 }
 
