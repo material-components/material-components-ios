@@ -25,7 +25,7 @@ static const CGFloat kShadowElevationsDefault = 8.f;
 static const CGFloat kShadowElevationsMax = 24.f;
 static const CGFloat kShadowElevationsSliderFrameHeight = 27.0f;
 
-@interface ShadowElevationsPointsView : UIView
+@interface ShadowElevationsPointsView : UIView <MDCSliderDelegate>
 
 @property(nonatomic) ShadowElevationsPointsLabel *paper;
 @property(nonatomic) UILabel *elevationLabel;
@@ -60,7 +60,10 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27.0f;
     CGRect sliderRect = CGRectMake(margin, 140.f, frame.size.width - margin * 2,
                                    kShadowElevationsSliderFrameHeight);
     MDCSlider *sliderControl = [[MDCSlider alloc] initWithFrame:sliderRect];
-    sliderControl.value = kShadowElevationsDefault / kShadowElevationsMax;
+    sliderControl.numberOfDiscreteValues = (NSUInteger) kShadowElevationsMax + 1;
+    sliderControl.maximumValue = kShadowElevationsMax;
+    sliderControl.value = kShadowElevationsDefault;
+    sliderControl.delegate = self;
     sliderControl.autoresizingMask =
         (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin |
          UIViewAutoresizingFlexibleRightMargin);
@@ -72,8 +75,13 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27.0f;
   return self;
 }
 
+- (NSString *)slider:(MDCSlider *)slider displayedStringForValue:(CGFloat)value {
+  NSInteger points = (NSInteger)round(value);
+  return [NSString stringWithFormat:@"%ld pt", (long)points];
+}
+
 - (void)sliderValueChanged:(MDCSlider *)slider {
-  NSInteger points = (NSInteger)round(slider.value * kShadowElevationsMax);
+  NSInteger points = (NSInteger)round(slider.value);
   _paper.text = [NSString stringWithFormat:@"%ld pt", (long)points];
   [_paper setElevation:points];
   if (points == MDCShadowElevationNone) {
