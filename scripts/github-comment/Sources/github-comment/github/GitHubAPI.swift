@@ -32,7 +32,7 @@ extension GitHub {
   func getAll(startingFrom urlAsString: String, didSucceed: (Any) -> Bool) {
     var nextUrl = URL(string: apiUrlBase + urlAsString)
     while let url = nextUrl {
-      var request = authenticated(request: URLRequest(url: url))
+      let request = authenticated(request: URLRequest(url: url))
 
       let results = synchronousRequestJson(with: request)
       if results.response?.statusCode == 200 {
@@ -65,23 +65,27 @@ extension GitHub {
    @param urlAsString An API url to request. Should be relative to https://api.github.com/
    @param didSucceed Invoked with the response data parsed as json.
    */
-  func get(from urlAsString: String, didSucceed: (Any) -> Void) {
+  func get<T: GitHubObject>(from urlAsString: String) -> T? {
     guard let url = URL(string: apiUrlBase + urlAsString) else {
-      return
+      return nil
     }
-    var request = authenticated(request: URLRequest(url: url))
-
+    let request = authenticated(request: URLRequest(url: url))
     let results = synchronousRequestJson(with: request)
     if results.response?.statusCode == 200 {
-      if let json = results.json {
-        didSucceed(json)
+      if let jsonResult = results.json {
+        guard let json = jsonResult as? T.JsonFormat else {
+          return nil
+        }
+        return T(json: json)
       }
+
     } else {
       if let error = results.error {
         print("Error: \(error.localizedDescription)")
       }
       exit(1)
     }
+    return nil
   }
 
   /**
@@ -89,10 +93,10 @@ extension GitHub {
 
    @param urlAsString An API url to request. Should be relative to https://api.github.com/
    @param json The json data to send.
-   @param didSucceed Invoked with the response data parsed as json.
+   @returns The parsed json object.
    */
-  func patch(to urlAsString: String, json: Any, didSucceed: (Any) -> Void) {
-    mutate(urlAsString: urlAsString, method: "PATCH", json: json, didSucceed: didSucceed)
+  @discardableResult func patch(to urlAsString: String, json: Any) -> Any? {
+    return mutate(urlAsString: urlAsString, method: "PATCH", json: json)
   }
 
   /**
@@ -100,10 +104,10 @@ extension GitHub {
 
    @param urlAsString An API url to request. Should be relative to https://api.github.com/
    @param json The json data to send.
-   @param didSucceed Invoked with the response data parsed as json.
+   @returns The parsed json object.
    */
-  func post(to urlAsString: String, json: Any, didSucceed: (Any) -> Void) {
-    mutate(urlAsString: urlAsString, method: "POST", json: json, didSucceed: didSucceed)
+  @discardableResult func post(to urlAsString: String, json: Any) -> Any? {
+    return mutate(urlAsString: urlAsString, method: "POST", json: json)
   }
 
   /**
@@ -111,15 +115,16 @@ extension GitHub {
 
    @param urlAsString An API url to request. Should be relative to https://api.github.com/
    @param didSucceed Invoked with the response data parsed as json.
+   @returns The parsed json object.
    */
-  func delete(at urlAsString: String, didSucceed: (Any) -> Void) {
-    mutate(urlAsString: urlAsString, method: "DELETE", json: nil, didSucceed: didSucceed)
+  @discardableResult func delete(at urlAsString: String) -> Any? {
+    return mutate(urlAsString: urlAsString, method: "DELETE", json: nil)
   }
 
-  private func mutate(urlAsString: String, method: String, json: Any?, didSucceed: (Any) -> Void) {
+  private func mutate(urlAsString: String, method: String, json: Any?) -> Any? {
     sleep(1) // Avoid hitting abuse rate limits
     guard let url = URL(string: apiUrlBase + urlAsString) else {
-      return
+      return nil
     }
     var request = authenticated(request: URLRequest(url: url))
     request.httpMethod = method
@@ -139,7 +144,7 @@ extension GitHub {
       || results.response?.statusCode == 201
       || results.response?.statusCode == 204 {
       if let json = results.json {
-        didSucceed(json)
+        return json
       }
     } else {
       if let error = results.error {
@@ -147,6 +152,7 @@ extension GitHub {
       }
       exit(1)
     }
+    return nil
   }
 
   private func authenticated(request: URLRequest) -> URLRequest {

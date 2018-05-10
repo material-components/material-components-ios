@@ -25,3 +25,8 @@ class GitHub {
   }
   let token: String
 }
+
+protocol GitHubObject {
+  associatedtype JsonFormat
+  init(json: JsonFormat)
+}

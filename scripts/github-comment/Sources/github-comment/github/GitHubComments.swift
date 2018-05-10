@@ -17,7 +17,7 @@
 import Foundation
 
 extension GitHub {
-  struct Comment {
+  struct Comment: GitHubObject {
     typealias JsonFormat = [String: Any]
     init(json: JsonFormat) {
       self.json = json
@@ -36,7 +36,7 @@ extension GitHub {
     }
   }
 
-  struct CommentList {
+  struct CommentList: GitHubObject {
     typealias JsonFormat = [Comment.JsonFormat]
     init(json: JsonFormat) {
       self.json = json

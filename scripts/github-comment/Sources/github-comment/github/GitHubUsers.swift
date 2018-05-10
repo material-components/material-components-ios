@@ -17,7 +17,7 @@
 import Foundation
 
 extension GitHub {
-  struct User {
+  struct User: GitHubObject {
     typealias JsonFormat = [String: Any]
     init(json: JsonFormat) {
       self.json = json

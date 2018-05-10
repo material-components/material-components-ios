@@ -76,13 +76,7 @@ let commentIdentifier = "<!-- identifier: \(identifier) -->"
 
 let github = GitHub(token: githubToken)
 
-var user: GitHub.User? = nil
-github.get(from: "user") { jsonResult in
-  guard let json = jsonResult as? GitHub.User.JsonFormat else {
-    return
-  }
-  user = GitHub.User(json: json)
-}
+var user: GitHub.User? = github.get(from: "user")
 
 guard let user = user, let userId = user.id else {
   print("Failed to get authenticated user.")
@@ -120,9 +114,7 @@ func getCommentBody() throws -> String? {
 if shouldDelete {
   if let existingCommentId = existingComment?.id {
     print("Deleting existing comment...")
-    github.delete(at: "repos/\(repo)/issues/comments/\(existingCommentId)") { jsonResult in
-      // Ignored.
-    }
+    github.delete(at: "repos/\(repo)/issues/comments/\(existingCommentId)")
   }
 
 } else if let body = try getCommentBody() {
@@ -136,18 +128,14 @@ if shouldDelete {
       print("Updating existing comment...")
       github.patch(to: "repos/\(repo)/issues/comments/\(existingCommentId)", json: [
         "body": desiredBody
-      ]) { jsonResult in
-        // Ignored.
-      }
+      ])
     }
 
   } else {
     print("Creating new comment...")
     github.post(to: "repos/\(repo)/issues/\(prNumber)/comments", json: [
       "body": body + "\n" + commentIdentifier
-    ]) { jsonResult in
-      // Ignored.
-    }
+    ])
   }
 }
 
