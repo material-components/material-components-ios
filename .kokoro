@@ -251,7 +251,7 @@ generate_apidiff() {
     # Install sourcekitten, a dependency of the apidiff tool
     brew install sourcekitten
   fi
-  
+
   usage() {
     echo "Usage: $0 -d apidiff"
     echo
@@ -267,11 +267,13 @@ generate_apidiff() {
 
   if [ -z "$GITHUB_API_TOKEN" ]; then
     echo "GITHUB_API_TOKEN must be set to a github token with public_repo scope."
+    usage
     exit 1
   fi
 
   if [ -z "$KOKORO_GITHUB_PULL_REQUEST_NUMBER" ]; then
     echo "KOKORO_GITHUB_PULL_REQUEST_NUMBER must be set to a github pull request number."
+    usage
     exit 1
   fi
 
