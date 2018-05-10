@@ -21,13 +21,6 @@
 
 #import "supplemental/BottomAppBarTypicalUseSupplemental.h"
 
-@interface BottomAppBarTypicalUseExample ()
-
-@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
-@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
-
-@end
-
 @implementation BottomAppBarTypicalUseExample
 
 - (id)init {
