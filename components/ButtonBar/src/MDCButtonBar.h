@@ -19,8 +19,6 @@
 /**
  The position of the button bar, typically aligned with the leading or trailing edge of the screen.
 
-Test.
-
  Default: MDCBarButtonLayoutPositionNone
  */
 typedef NS_OPTIONS(NSUInteger, MDCButtonBarLayoutPosition) {

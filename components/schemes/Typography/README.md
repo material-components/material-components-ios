@@ -12,8 +12,6 @@ api_doc_root: true
 
 # Typography Scheme
 
-Test.
-
 The Material Design typography system can be used to create a type hierarchy that reflects your
 brand or style. A _typography scheme_ represents your theme's specific fonts, such as its body
 font or button font.
