@@ -5,7 +5,6 @@ section: components
 excerpt: "Support and engineering guidance for bidirectional text."
 iconId: themes
 path: /catalog/theming/bidirectionality/
-api_doc_root: true
 -->
 
 # Bidirectionality
