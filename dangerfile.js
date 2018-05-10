@@ -24,3 +24,31 @@ if (!danger.github.pr.title.startsWith("[")) {
     + ' change can\'t be broken up into multiple PRs, then the common trait of the change could be'
     + ' used in the PR title. E.g. `[documentation]`.');
 }
+
+let all_files = danger.git.modified_files
+  .concat(danger.git.deleted_files)
+  .concat(danger.git.created_files);
+
+let component_files = all_files.filter(function(path) {
+  path.startsWith('component/')
+});
+let components = new Set(component_files.map(function(path) {
+  var path_parts = path.split('/');
+  path_parts.splice(0, 1); // Drop the components/ prefix.
+  
+  var component_path = [];
+  // Convention: lower-case names are directories. Upper-case names are components.
+  while (path_parts[0][0] == path_parts[0][0].toLowerCase())) {
+    component_path.push(path_parts.splice(0, 1));
+  }
+  if (path_parts[0][0] == path_parts[0][0].toUpperCase())) {
+    component_path.push(path_parts.splice(0, 1));
+    return component_path;
+  }
+  return null;
+})).filter(function(path) { return path !== null; });
+
+if (components.length > 1) {
+  warn('This PR affects more than one component. Consider splitting it up into smaller PRs if'
+  + ' possible. Components found in this PR: '+components.join(", "));
+}
