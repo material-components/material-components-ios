@@ -18,8 +18,14 @@
 
 #import "BottomAppBarTypicalUseViewController.h"
 #import "MaterialBottomAppBar.h"
+#import "MaterialColorScheme.h"
+#import "MaterialTypographyScheme.h"
 
 @interface BottomAppBarTypicalUseExample : BottomAppBarTypicalUseViewController
+
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+
+@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 
 @end
 

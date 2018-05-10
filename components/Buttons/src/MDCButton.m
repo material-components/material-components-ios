@@ -527,9 +527,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (void)updateTitleCase {
   // This calls setTitle or setAttributedTitle for every title value we have stored. In each
   // respective setter the title is upcased if _uppercaseTitle is YES.
-  for (NSNumber *key in _nontransformedTitles.keyEnumerator) {
+  NSDictionary<NSNumber *, NSString *> *nontransformedTitles = [_nontransformedTitles copy];
+  for (NSNumber *key in nontransformedTitles.keyEnumerator) {
     UIControlState state = key.unsignedIntegerValue;
-    NSString *title = _nontransformedTitles[key];
+    NSString *title = nontransformedTitles[key];
     if ([title isKindOfClass:[NSAttributedString class]]) {
       [self setAttributedTitle:(NSAttributedString *)title forState:state];
     } else {

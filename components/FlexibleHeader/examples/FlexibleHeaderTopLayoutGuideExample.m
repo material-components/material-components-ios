@@ -132,26 +132,11 @@
   [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
-- (void)viewWillLayoutSubviews {
-  [super viewWillLayoutSubviews];
-
-  // Call updateTopLayoutGuide on Flexible Header View Controller in viewWillLayoutSubviews
-  [self.fhvc updateTopLayoutGuide];
-}
-
 // This method must be implemented for MDCFlexibleHeaderViewController's
 // MDCFlexibleHeaderView to properly support MDCFlexibleHeaderShiftBehavior should you choose
 // to customize it.
 - (UIViewController *)childViewControllerForStatusBarHidden {
   return self.fhvc;
-}
-
-- (void)viewWillTransitionToSize:(CGSize)size
-       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-}
-
-- (void)viewDidLayoutSubviews {
-  [super viewDidLayoutSubviews];
 }
 
 #pragma mark - MDCFlexibleHeaderViewLayoutDelegate
