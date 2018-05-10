@@ -154,6 +154,8 @@ static NSString *controlStateDescription(UIControlState controlState) {
   // When
   button.uppercaseTitle = NO;
   [button setTitle:originalTitle forState:UIControlStateNormal];
+  [button setTitle:originalTitle forState:UIControlStateHighlighted];
+  [button setTitle:originalTitle forState:UIControlStateDisabled];
   button.uppercaseTitle = YES;
 
   // Then
@@ -169,6 +171,8 @@ static NSString *controlStateDescription(UIControlState controlState) {
   // When
   button.uppercaseTitle = YES;
   [button setTitle:originalTitle forState:UIControlStateNormal];
+  [button setTitle:originalTitle forState:UIControlStateHighlighted];
+  [button setTitle:originalTitle forState:UIControlStateDisabled];
   button.uppercaseTitle = NO;
 
   // Then
