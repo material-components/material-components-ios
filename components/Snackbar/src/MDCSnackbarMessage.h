@@ -162,4 +162,10 @@ extern NSString * __nonnull const MDCSnackbarMessageBoldAttributeName;
  */
 @property(nonatomic, copy, nullable) MDCSnackbarMessageActionHandler handler;
 
+/**
+ The class of the button which is instantiated to be presented in the message.
+
+ The class returned by this method must be a subclass of MDCSnackbarMessageViewButton.
+ */
+- (Class)buttonClass;
 @end
