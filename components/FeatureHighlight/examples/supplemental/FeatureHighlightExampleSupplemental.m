@@ -216,11 +216,14 @@ static NSString *const reuseIdentifier = @"Cell";
   buttonScheme.colorScheme = self.colorScheme;
   buttonScheme.typographyScheme = self.typographyScheme;
 
-  MDCButton *button = [[MDCButton alloc] init];
-  self.button = button;
-  [self.button setTitle:@"Feature" forState:UIControlStateNormal];
-  [self.button sizeToFit];
+  MDCFloatingButton *fab = [[MDCFloatingButton alloc] init];
+  [fab setImage:[UIImage imageNamed:@"Plus"] forState:UIControlStateNormal];
+  [fab sizeToFit];
+  self.button = fab;
   [self.view addSubview:self.button];
+
+  [MDCFloatingActionButtonThemer applyScheme:buttonScheme toButton:fab];
+
 
   MDCButton *actionButton = [[MDCButton alloc] init];
   self.actionButton = actionButton;
@@ -231,7 +234,6 @@ static NSString *const reuseIdentifier = @"Cell";
               forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:self.actionButton];
 
-  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:button];
   [MDCContainedButtonThemer applyScheme:buttonScheme toButton:actionButton];
 }
 
