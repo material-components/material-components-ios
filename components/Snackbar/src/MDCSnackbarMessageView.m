@@ -163,9 +163,6 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
 @end
 
-@interface MDCSnackbarMessageViewButton : MDCFlatButton
-@end
-
 @implementation MDCSnackbarMessageViewButton
 
 - (instancetype)initWithFrame:(CGRect)frame {
