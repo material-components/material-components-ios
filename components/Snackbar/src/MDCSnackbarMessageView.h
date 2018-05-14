@@ -15,6 +15,7 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "MDCSnackbarAlignment.h"
 
 /**
  Class which provides the default implementation of a snackbar.

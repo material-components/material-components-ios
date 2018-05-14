@@ -534,6 +534,13 @@ static BOOL _shouldApplyStyleChangesToVisibleSnackbars;
   manager.overlayView.bottomOffset = offset;
 }
 
++ (void)setAlignment:(MDCSnackbarAlignment)alignment {
+  NSAssert([NSThread isMainThread], @"setAlignment must be called on main thread.");
+
+  MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
+  manager.overlayView.alignment = alignment;
+}
+
 #pragma mark - Suspension
 
 + (id<MDCSnackbarSuspensionToken>)suspendMessagesWithCategory:(NSString *)category {

@@ -53,7 +53,19 @@ typedef void (^MDCSnackbarMessageDismissHandler)(BOOL userInitiated,
 /**
  If the snackbar view should be anchored to the bottom of the screen. Default is YES.
  */
-@property(nonatomic) BOOL anchoredToScreenEdge;
+@property(nonatomic) BOOL anchoredToScreenBottom;
+
+/**
+ The layout constraint which determines how far the snackbar is from the leading edge of the screen.
+ It is active when the alignment of the parent overlay view is MDCAlignmentLeading.
+ */
+@property(nonatomic) NSLayoutConstraint *leadingConstraint;
+
+/**
+ The layout constraint used to center the snackbar.
+ It is active when the alignment of the parent overlay view is MDCAlignmentCenter.
+ */
+@property(nonatomic) NSLayoutConstraint *centerConstraint;
 
 /**
  Creates a snackbar view to display @c message.
@@ -114,5 +126,14 @@ typedef void (^MDCSnackbarMessageDismissHandler)(BOOL userInitiated,
  */
 - (CABasicAnimation *_Nullable)animateSnackbarScaleFrom:(CGFloat)fromScale
                                                 toScale:(CGFloat)toScale;
+
+/**
+ Activate the appropriate constraints for the given alignment.
+ If the alignment is leading, the leading constraint is activated and the center constraint is deactivated.
+ If the alignment is center, the center constraint is activated and the leading constraint is deactivated.
+
+ @param alignment the alignment.
+ */
+- (void)activateConstraintsForAlignment:(MDCSnackbarAlignment)alignment;
 
 @end

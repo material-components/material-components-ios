@@ -246,7 +246,7 @@ static const CGFloat kMaximumHeight = 80.0f;
 
     CGFloat bottomMargin = [self staticBottomMargin];
     CGFloat sideMargin = [self sideMargin];
-    BOOL fullWidth = UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad;
+    BOOL isIphone = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone;
 
     UIView *container = self.containingView;
 
@@ -256,7 +256,7 @@ static const CGFloat kMaximumHeight = 80.0f;
       // Pin the snackbar to the bottom of the screen.
       [snackbarView setTranslatesAutoresizingMaskIntoConstraints:NO];
 
-      if (fullWidth) {
+      if (isIphone) {
         CGFloat leftMargin = sideMargin;
         CGFloat rightMargin = sideMargin;
 
@@ -284,13 +284,23 @@ static const CGFloat kMaximumHeight = 80.0f;
                                                                constant:-1 * rightMargin]];
       } else {
 
-        [container addConstraint:[NSLayoutConstraint constraintWithItem:snackbarView
-                                                              attribute:NSLayoutAttributeCenterX
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:container
-                                                              attribute:NSLayoutAttributeCenterX
-                                                             multiplier:1.0
-                                                               constant:0]];
+        snackbarView.centerConstraint  = [NSLayoutConstraint constraintWithItem:snackbarView
+                                                                      attribute:NSLayoutAttributeCenterX
+                                                                      relatedBy:NSLayoutRelationEqual
+                                                                         toItem:container
+                                                                      attribute:NSLayoutAttributeCenterX
+                                                                     multiplier:1.0
+                                                                       constant:0];
+        snackbarView.centerConstraint.active = self.alignment == MDCSnackbarAlignmentCenter;
+
+        snackbarView.leadingConstraint  = [NSLayoutConstraint constraintWithItem:snackbarView
+                                                                       attribute:NSLayoutAttributeLeading
+                                                                       relatedBy:NSLayoutRelationEqual
+                                                                          toItem:container
+                                                                       attribute:NSLayoutAttributeLeading
+                                                                      multiplier:1.0
+                                                                        constant:sideMargin];
+        snackbarView.leadingConstraint.active = self.alignment == MDCSnackbarAlignmentLeading;
 
         // If not full width, ensure that it doesn't get any larger than our own width.
         [container
@@ -379,7 +389,7 @@ static const CGFloat kMaximumHeight = 80.0f;
 
 - (void)triggerSnackbarLayoutChange {
   self.manualLayoutChange = YES;
-  self.snackbarView.anchoredToScreenEdge = self.anchoredToScreenEdge;
+  self.snackbarView.anchoredToScreenBottom = self.anchoredToScreenBottom;
   [self layoutIfNeeded];
   self.manualLayoutChange = NO;
 }
@@ -402,7 +412,7 @@ static const CGFloat kMaximumHeight = 80.0f;
   // Maximum height must be extended to include the bottom content safe area.
   CGFloat maximumHeight = kMaximumHeight;
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-  if (self.anchoredToScreenEdge && MDCSnackbarMessage.usesLegacySnackbar) {
+  if (self.anchoredToScreenBottom && MDCSnackbarMessage.usesLegacySnackbar) {
     if (@available(iOS 11.0, *)) {
       maximumHeight += self.safeAreaInsets.bottom;
     }
@@ -411,7 +421,7 @@ static const CGFloat kMaximumHeight = 80.0f;
   return maximumHeight;
 }
 
-- (BOOL)anchoredToScreenEdge {
+- (BOOL)anchoredToScreenBottom {
   return [self dynamicBottomMargin] == 0;
 }
 
@@ -616,6 +626,33 @@ static const CGFloat kMaximumHeight = 80.0f;
                         timingFunction:nil];
   }
 }
+
+- (void)setAlignment:(MDCSnackbarAlignment)alignment {
+  if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) {
+    return;
+  }
+
+  if (_alignment != alignment) {
+    _alignment = alignment;
+
+    [self.snackbarView activateConstraintsForAlignment:alignment];
+
+    [self triggerSnackbarLayoutChange];
+
+    // If there is no snackbar the following method returns CGRectNull, but we still need to notify
+    // observers of bottom offset changes.
+    CGRect frame = [self snackbarRectInScreenCoordinates];
+    if (CGRectIsNull(frame)) {
+      frame = CGRectMake(0, CGRectGetHeight(self.frame) - self.bottomOffset,
+                         CGRectGetWidth(self.frame), self.bottomOffset);
+    }
+    [self notifyOverlayChangeWithFrame:frame
+                              duration:[CATransaction animationDuration]
+                                 curve:UIViewAnimationCurveEaseInOut
+                        timingFunction:nil];
+  }
+}
+
 
 #pragma mark - Rotation
 

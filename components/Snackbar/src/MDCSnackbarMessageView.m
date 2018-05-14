@@ -238,7 +238,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
       self.layer.shadowRadius = kShadowSpread;
     }
 
-    _anchoredToScreenEdge = YES;
+    _anchoredToScreenBottom = YES;
 
     // Borders are drawn inside of the bounds of a layer. Because our border is translucent, we need
     // to have a view with transparent background and border only (@c self). Inside will be a
@@ -635,8 +635,8 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
 #pragma mark - Constraints and layout
 
-- (void)setAnchoredToScreenEdge:(BOOL)anchoredToScreenEdge {
-  _anchoredToScreenEdge = anchoredToScreenEdge;
+- (void)setAnchoredToScreenBottom:(BOOL)anchoredToScreenBottom {
+  _anchoredToScreenBottom = anchoredToScreenBottom;
   [self invalidateIntrinsicContentSize];
 
   if (self.viewConstraints) {
@@ -924,6 +924,22 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   return constraints;
 }
 
+- (void)activateConstraintsForAlignment:(MDCSnackbarAlignment)alignment {
+  switch (alignment) {
+    case MDCSnackbarAlignmentCenter:
+      self.leadingConstraint.active = NO;
+      self.centerConstraint.active = YES;
+      break;
+    case MDCSnackbarAlignmentLeading:
+      self.leadingConstraint.active = YES;
+      self.centerConstraint.active = NO;
+      break;
+    default:
+      NSAssert(NO, @"`alignment` should be a valid MDCSnackbarAlignment value");
+      break;
+  }
+}
+
 - (void)layoutSubviews {
   [super layoutSubviews];
 
@@ -956,7 +972,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   // If a bottom offset has been set to raise the HUD, e.g. above a tab bar, we should ignore
   // any safeAreaInsets, since it is no longer 'anchored' to the bottom of the screen. This is set
   // by the MDCSnackbarOverlayView whenever the bottomOffset is non-zero.
-  if (!self.anchoredToScreenEdge || !MDCSnackbarMessage.usesLegacySnackbar) {
+  if (!self.anchoredToScreenBottom || !MDCSnackbarMessage.usesLegacySnackbar) {
     return 0;
   }
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)

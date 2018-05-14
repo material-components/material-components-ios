@@ -15,6 +15,7 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "MDCSnackbarAlignment.h"
 
 @class MDCSnackbarMessage;
 @protocol MDCSnackbarSuspensionToken;
@@ -76,6 +77,17 @@
  move and should not be obscured.
  */
 + (void)setBottomOffset:(CGFloat)offset;
+
+/**
+ Determines whether the snackbar is presented in the center of the of the screen or (on iPad only)
+ from the leading edge of the screen.
+
+ If called within an animation block, the change will be animated.
+
+ @note This method must be called from the main thread.
+ @warning On non-iPad devices this setter will be a no-op.
+ */
++ (void)setAlignment:(MDCSnackbarAlignment)alignment;
 
 #pragma mark Suspending
 
