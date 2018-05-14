@@ -16,10 +16,17 @@
 
 #import "BottomAppBarTypicalUseSupplemental.h"
 
+#import "MaterialAppBar.h"
+#import "MaterialAppBar+ColorThemer.h"
+#import "MaterialAppBar+TypographyThemer.h"
+
 static NSString *const kCellIdentifier = @"cell";
 
 @interface BottomAppBarExampleTableViewController ()
 @property(nonatomic, strong) UISwitch *fabVisibilitySwitch;
+@property(nonatomic, strong) MDCAppBar *appBar;
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 @end
 
 @implementation BottomAppBarTypicalUseExample (CatalogByConvention)
@@ -52,6 +59,8 @@ static NSString *const kCellIdentifier = @"cell";
   BottomAppBarExampleTableViewController *tableView =
       [[BottomAppBarExampleTableViewController alloc] initWithNibName:nil bundle:nil];
   tableView.bottomBarView = self.bottomBarView;
+  tableView.colorScheme = self.colorScheme;
+  tableView.typographyScheme = self.typographyScheme;
   self.viewController = tableView;
 }
 
@@ -74,6 +83,11 @@ static NSString *const kCellIdentifier = @"cell";
                                         @"Secondary Elevation Floating Button",
                                         @"Visible FAB" ];
     _listItems = listItems;
+    
+    self.title = @"Bottom App Bar";
+    
+    _appBar = [[MDCAppBar alloc] init];
+    [self addChildViewController:_appBar.headerViewController];
   }
   return self;
 }
@@ -81,6 +95,14 @@ static NSString *const kCellIdentifier = @"cell";
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  [MDCAppBarTypographyThemer applyTypographyScheme:self.typographyScheme toAppBar:_appBar];
+  [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme toAppBar:_appBar];
+  
+  self.appBar.headerViewController.headerView.trackingScrollView = self.tableView;
+  self.tableView.delegate = self.appBar.headerViewController;
+  
+  [self.appBar addSubviewsToParent];
+  
   self.fabVisibilitySwitch = [[UISwitch alloc] init];
   self.fabVisibilitySwitch.on = !self.bottomBarView.floatingButtonHidden;
   [self.fabVisibilitySwitch addTarget:self

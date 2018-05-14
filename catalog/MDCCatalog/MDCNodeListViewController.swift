@@ -115,7 +115,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
   let estimadedAdditionalExamplesSectionHeight = CGFloat(50)
   let estimadedDemoRowHeight = CGFloat(60)
   let estimadedRowHeight = CGFloat(50)
-  let padding = CGFloat(20)
+  let padding = CGFloat(16)
   var componentDescription = ""
   var selectedNode: CBCNode? = nil
 
@@ -183,7 +183,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
     super.viewDidLoad()
 
     mainSectionHeader = MainSectionHeader()
-    additionalExamplesSectionHeader = AdditionalExamplesSectionHeader()
+    additionalExamplesSectionHeader = createAdditionalExamplesSectionHeader()
     self.tableView.backgroundColor = UIColor.white
     self.tableView.separatorStyle = .none
     self.tableView.rowHeight = UITableViewAutomaticDimension
@@ -335,8 +335,7 @@ extension MDCNodeListViewController {
     return additionalExamplesSectionHeader
   }
 
-  func AdditionalExamplesSectionHeader() -> UIView {
-
+  func createAdditionalExamplesSectionHeader() -> UIView {
     let sectionView = UIView()
     sectionView.backgroundColor = UIColor.white
     let lineDivider = UIView()
@@ -399,23 +398,41 @@ extension MDCNodeListViewController {
       multiplier: 1.0,
       constant: -padding).isActive = true
 
+    let preiOS11Behavior = {
+      NSLayoutConstraint(
+        item: sectionView,
+        attribute: .leading,
+        relatedBy: .equal,
+        toItem: sectionTitleLabel,
+        attribute: .leading,
+        multiplier: 1.0,
+        constant: -self.padding).isActive = true
+      NSLayoutConstraint(
+        item: sectionView,
+        attribute: .trailing,
+        relatedBy: .equal,
+        toItem: sectionTitleLabel,
+        attribute: .trailing,
+        multiplier: 1.0,
+        constant: self.padding).isActive = true
+    }
     // Title Label to Section View
-    NSLayoutConstraint(
-      item: sectionView,
-      attribute: .leading,
-      relatedBy: .equal,
-      toItem: sectionTitleLabel,
-      attribute: .leading,
-      multiplier: 1.0,
-      constant: -padding).isActive = true
-    NSLayoutConstraint(
-      item: sectionView,
-      attribute: .trailing,
-      relatedBy: .equal,
-      toItem: sectionTitleLabel,
-      attribute: .trailing,
-      multiplier: 1.0,
-      constant: padding).isActive = true
+    #if swift(>=3.2)
+    if #available(iOS 11.0, *) {
+      // Align to the safe area insets.
+      sectionTitleLabel.leadingAnchor
+        .constraint(equalTo: sectionView.safeAreaLayoutGuide.leadingAnchor,
+                    constant: padding).isActive = true
+      sectionTitleLabel.trailingAnchor
+        .constraint(equalTo: sectionView.safeAreaLayoutGuide.trailingAnchor,
+                    constant: -padding).isActive = true
+    } else {
+      preiOS11Behavior()
+    }
+    #else
+    preiOS11Behavior()
+    #endif
+
      NSLayoutConstraint(
       item: sectionView,
       attribute: .bottom,
@@ -451,22 +468,40 @@ extension MDCNodeListViewController {
     sectionView.addSubview(descriptionLabel)
 
     // sectionTitleLabel to SectionView
-    NSLayoutConstraint(
-      item: sectionView,
-      attribute: .leading,
-      relatedBy: .equal,
-      toItem: sectionTitleLabel,
-      attribute: .leading,
-      multiplier: 1.0,
-      constant: -padding).isActive = true
-    NSLayoutConstraint(
-      item: sectionView,
-      attribute: .trailing,
-      relatedBy: .equal,
-      toItem: sectionTitleLabel,
-      attribute: .trailing,
-      multiplier: 1.0,
-      constant: padding).isActive = true
+    let preiOS11Behavior = {
+      NSLayoutConstraint(
+        item: sectionView,
+        attribute: .leading,
+        relatedBy: .equal,
+        toItem: sectionTitleLabel,
+        attribute: .leading,
+        multiplier: 1.0,
+        constant: -self.padding).isActive = true
+      NSLayoutConstraint(
+        item: sectionView,
+        attribute: .trailing,
+        relatedBy: .equal,
+        toItem: sectionTitleLabel,
+        attribute: .trailing,
+        multiplier: 1.0,
+        constant: self.padding).isActive = true
+    }
+    #if swift(>=3.2)
+    if #available(iOS 11.0, *) {
+      // Align to the safe area insets.
+      sectionTitleLabel.leadingAnchor
+        .constraint(equalTo: sectionView.safeAreaLayoutGuide.leadingAnchor,
+                    constant: padding).isActive = true
+      sectionTitleLabel.trailingAnchor
+        .constraint(equalTo: sectionView.safeAreaLayoutGuide.trailingAnchor,
+                    constant: -padding).isActive = true
+    } else {
+      preiOS11Behavior()
+    }
+    #else
+    preiOS11Behavior()
+    #endif
+
     NSLayoutConstraint(
       item: sectionView,
       attribute: .top,
