@@ -70,7 +70,6 @@ OBJC_EXTERN NSTimeInterval const MDCSnackbarLegacyTransitionDuration;
  If called within an animation block, the change will be animated.
 
  @note This method must be called from the main thread.
- @warning On non-iPad devices this setter will be a no-op.
 */
 @property(nonatomic) MDCSnackbarAlignment alignment;
 

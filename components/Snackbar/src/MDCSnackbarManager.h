@@ -79,13 +79,11 @@
 + (void)setBottomOffset:(CGFloat)offset;
 
 /**
- Determines whether the snackbar is presented in the center of the of the screen or (on iPad only)
- from the leading edge of the screen.
+ Determines the snackbar alignment to the screen.
 
  If called within an animation block, the change will be animated.
 
  @note This method must be called from the main thread.
- @warning On non-iPad devices this setter will be a no-op.
  */
 + (void)setAlignment:(MDCSnackbarAlignment)alignment;
 

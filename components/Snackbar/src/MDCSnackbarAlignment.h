@@ -20,11 +20,14 @@
  States used to configure snackbar alignment.
  */
 typedef NS_ENUM(NSInteger, MDCSnackbarAlignment) {
-
-  // Snackbar is positioned in the center of the screen. This is the default setting
-  // and only permitted setting for iPhone.
+  /**
+   Snackbar is positioned in the center of the screen. This is the default setting
+   and only permitted setting for iPhone.
+   */
   MDCSnackbarAlignmentCenter = 0,
 
-  // Snackbar is positioned near the leading margin.
+  /**
+   Snackbar is positioned near the leading margin.
+   */
   MDCSnackbarAlignmentLeading = 1,
 };

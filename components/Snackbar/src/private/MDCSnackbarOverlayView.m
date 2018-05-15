@@ -246,7 +246,8 @@ static const CGFloat kMaximumHeight = 80.0f;
 
     CGFloat bottomMargin = [self staticBottomMargin];
     CGFloat sideMargin = [self sideMargin];
-    BOOL isIphone = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone;
+    CGFloat leftMargin = sideMargin;
+    CGFloat rightMargin = sideMargin;
 
     UIView *container = self.containingView;
 
@@ -256,81 +257,85 @@ static const CGFloat kMaximumHeight = 80.0f;
       // Pin the snackbar to the bottom of the screen.
       [snackbarView setTranslatesAutoresizingMaskIntoConstraints:NO];
 
-      if (isIphone) {
-        CGFloat leftMargin = sideMargin;
-        CGFloat rightMargin = sideMargin;
+      switch (self.traitCollection.horizontalSizeClass) {
+        case UIUserInterfaceSizeClassUnspecified:
+        case UIUserInterfaceSizeClassCompact:
 
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-        if (@available(iOS 11.0, *)) {
-          leftMargin += self.safeAreaInsets.left;
-          rightMargin += self.safeAreaInsets.right;
-        }
+          if (@available(iOS 11.0, *)) {
+            leftMargin += self.safeAreaInsets.left;
+            rightMargin += self.safeAreaInsets.right;
+          }
 #endif
 
-        [container addConstraint:[NSLayoutConstraint constraintWithItem:snackbarView
-                                                              attribute:NSLayoutAttributeLeading
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:container
-                                                              attribute:NSLayoutAttributeLeading
-                                                             multiplier:1.0
-                                                               constant:leftMargin]];
+          [container addConstraint:[NSLayoutConstraint constraintWithItem:snackbarView
+                                                                attribute:NSLayoutAttributeLeading
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:container
+                                                                attribute:NSLayoutAttributeLeading
+                                                               multiplier:1.0
+                                                                 constant:leftMargin]];
 
-        [container addConstraint:[NSLayoutConstraint constraintWithItem:snackbarView
-                                                              attribute:NSLayoutAttributeTrailing
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:container
-                                                              attribute:NSLayoutAttributeTrailing
-                                                             multiplier:1.0
-                                                               constant:-1 * rightMargin]];
-      } else {
+          [container addConstraint:[NSLayoutConstraint constraintWithItem:snackbarView
+                                                                attribute:NSLayoutAttributeTrailing
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:container
+                                                                attribute:NSLayoutAttributeTrailing
+                                                               multiplier:1.0
+                                                                 constant:-1 * rightMargin]];
+          break;
+        case UIUserInterfaceSizeClassRegular:
+          snackbarView.centerConstraint  = [NSLayoutConstraint constraintWithItem:snackbarView
+                                                                        attribute:NSLayoutAttributeCenterX
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:container
+                                                                        attribute:NSLayoutAttributeCenterX
+                                                                       multiplier:1.0
+                                                                         constant:0];
+          snackbarView.centerConstraint.active = self.alignment == MDCSnackbarAlignmentCenter;
 
-        snackbarView.centerConstraint  = [NSLayoutConstraint constraintWithItem:snackbarView
-                                                                      attribute:NSLayoutAttributeCenterX
-                                                                      relatedBy:NSLayoutRelationEqual
-                                                                         toItem:container
-                                                                      attribute:NSLayoutAttributeCenterX
-                                                                     multiplier:1.0
-                                                                       constant:0];
-        snackbarView.centerConstraint.active = self.alignment == MDCSnackbarAlignmentCenter;
+          snackbarView.leadingConstraint  = [NSLayoutConstraint constraintWithItem:snackbarView
+                                                                         attribute:NSLayoutAttributeLeading
+                                                                         relatedBy:NSLayoutRelationEqual
+                                                                            toItem:container
+                                                                         attribute:NSLayoutAttributeLeading
+                                                                        multiplier:1.0
+                                                                          constant:sideMargin];
+          snackbarView.leadingConstraint.active = self.alignment == MDCSnackbarAlignmentLeading;
 
-        snackbarView.leadingConstraint  = [NSLayoutConstraint constraintWithItem:snackbarView
-                                                                       attribute:NSLayoutAttributeLeading
-                                                                       relatedBy:NSLayoutRelationEqual
-                                                                          toItem:container
-                                                                       attribute:NSLayoutAttributeLeading
-                                                                      multiplier:1.0
-                                                                        constant:sideMargin];
-        snackbarView.leadingConstraint.active = self.alignment == MDCSnackbarAlignmentLeading;
+          // If not full width, ensure that it doesn't get any larger than our own width.
+          [container
+           addConstraint:[NSLayoutConstraint constraintWithItem:snackbarView
+                                                      attribute:NSLayoutAttributeWidth
+                                                      relatedBy:NSLayoutRelationLessThanOrEqual
+                                                         toItem:container
+                                                      attribute:NSLayoutAttributeWidth
+                                                     multiplier:1.0
+                                                       constant:-2 * sideMargin]];
 
-        // If not full width, ensure that it doesn't get any larger than our own width.
-        [container
-            addConstraint:[NSLayoutConstraint constraintWithItem:snackbarView
-                                                       attribute:NSLayoutAttributeWidth
-                                                       relatedBy:NSLayoutRelationLessThanOrEqual
-                                                          toItem:container
-                                                       attribute:NSLayoutAttributeWidth
-                                                      multiplier:1.0
-                                                        constant:-2 * sideMargin]];
+          // Also ensure that it doesn't get any smaller than its own minimum width.
+          [container
+           addConstraint:[NSLayoutConstraint constraintWithItem:snackbarView
+                                                      attribute:NSLayoutAttributeWidth
+                                                      relatedBy:NSLayoutRelationGreaterThanOrEqual
+                                                         toItem:nil
+                                                      attribute:NSLayoutAttributeNotAnAttribute
+                                                     multiplier:1.0
+                                                       constant:[snackbarView minimumWidth]]];
 
-        // Also ensure that it doesn't get any smaller than its own minimum width.
-        [container
-            addConstraint:[NSLayoutConstraint constraintWithItem:snackbarView
-                                                       attribute:NSLayoutAttributeWidth
-                                                       relatedBy:NSLayoutRelationGreaterThanOrEqual
-                                                          toItem:nil
-                                                       attribute:NSLayoutAttributeNotAnAttribute
-                                                      multiplier:1.0
-                                                        constant:[snackbarView minimumWidth]]];
-
-        // Also ensure that it doesn't get any larger than its own maximum width.
-        [container
-            addConstraint:[NSLayoutConstraint constraintWithItem:snackbarView
-                                                       attribute:NSLayoutAttributeWidth
-                                                       relatedBy:NSLayoutRelationLessThanOrEqual
-                                                          toItem:nil
-                                                       attribute:NSLayoutAttributeNotAnAttribute
-                                                      multiplier:1.0
-                                                        constant:[snackbarView maximumWidth]]];
+          // Also ensure that it doesn't get any larger than its own maximum width.
+          [container
+           addConstraint:[NSLayoutConstraint constraintWithItem:snackbarView
+                                                      attribute:NSLayoutAttributeWidth
+                                                      relatedBy:NSLayoutRelationLessThanOrEqual
+                                                         toItem:nil
+                                                      attribute:NSLayoutAttributeNotAnAttribute
+                                                     multiplier:1.0
+                                                       constant:[snackbarView maximumWidth]]];
+          break;
+        default:
+          NSAssert(NO, @"Unknown size class");
+          break;
       }
 
       _snackbarOnscreenConstraint = [NSLayoutConstraint constraintWithItem:snackbarView
@@ -628,10 +633,6 @@ static const CGFloat kMaximumHeight = 80.0f;
 }
 
 - (void)setAlignment:(MDCSnackbarAlignment)alignment {
-  if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) {
-    return;
-  }
-
   if (_alignment != alignment) {
     _alignment = alignment;
 
