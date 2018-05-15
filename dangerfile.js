@@ -44,7 +44,8 @@ let components = Array.from(new Set(component_files.map(function(path) {
   path_parts.splice(0, 1); // Drop the components/ prefix.
   
   var component_path = [];
-  // Convention: lower-case names are directories. Upper-case names are components.
+  // Convention: all-lower-case names are directories, e.g. `components/private/`.
+  // Capitalized names are components, e.g. `BottomNavigation`.
   // We want to get the full path up to and including the first component folder.
   while (path_parts[0][0] == path_parts[0][0].toLowerCase()) {
     component_path.push(path_parts.splice(0, 1));
