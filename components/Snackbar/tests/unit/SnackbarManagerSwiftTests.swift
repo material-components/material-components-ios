@@ -19,6 +19,11 @@ import MaterialComponents.MaterialSnackbar
 
 class SnackbarManagerSwiftTests: XCTestCase {
 
+  override func tearDown() {
+    MDCSnackbarManager.dismissAndCallCompletionBlocks(withCategory: nil)
+    super.tearDown()
+  }
+
   func testMessagesResumedWhenTokenIsDeallocated() {
     // Given
     let expectation = self.expectation(description: "completion")
@@ -41,6 +46,23 @@ class SnackbarManagerSwiftTests: XCTestCase {
 
     // Then
     // Swift unit tests are sometimes slower, need to wait a little longer
+    self.waitForExpectations(timeout: 3.0, handler: nil)
+  }
+
+  func testHasMessagesShowingOrQueued() {
+    let message = MDCSnackbarMessage(text: "foo1")
+    message.duration = 10;
+    MDCSnackbarManager.show(message)
+
+    let expectation = self.expectation(description: "has_shown_message")
+
+    // We need to dispatch_async in order to assure that the assertion happens after showMessage:
+    // actually displays the message.
+    DispatchQueue.main.async {
+      XCTAssertTrue(MDCSnackbarManager.hasMessagesShowingOrQueued())
+      expectation.fulfill()
+    }
+
     self.waitForExpectations(timeout: 3.0, handler: nil)
   }
 }
