@@ -26,6 +26,7 @@
 
 
 static const NSUInteger kTitleFontSize = 20;
+static const CGFloat kTitleLabelMinimumScaleFactor = 0.8f;
 static const CGFloat kNavigationBarDefaultHeight = 56;
 static const CGFloat kNavigationBarPadDefaultHeight = 64;
 static const CGFloat kNavigationBarMinHeight = 24;
@@ -158,6 +159,10 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
   _titleLabel.font = _titleFont;
   _titleLabel.accessibilityTraits |= UIAccessibilityTraitHeader;
   _titleLabel.textAlignment = NSTextAlignmentCenter;
+  _titleLabel.numberOfLines = 1;
+  _titleLabel.adjustsFontSizeToFitWidth = YES;
+  _titleLabel.minimumScaleFactor = kTitleLabelMinimumScaleFactor;
+  _titleLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
   _leadingButtonBar = [[MDCButtonBar alloc] init];
   _leadingButtonBar.layoutPosition = MDCButtonBarLayoutPositionLeading;
   _trailingButtonBar = [[MDCButtonBar alloc] init];
