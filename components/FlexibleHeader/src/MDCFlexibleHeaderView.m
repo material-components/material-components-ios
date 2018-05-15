@@ -30,9 +30,8 @@ static const CGFloat kFlexibleHeaderDefaultHeight = 56;
 // The maximum default opacity of the shadow.
 static const float kDefaultVisibleShadowOpacity = 0.4f;
 
-// The threshold in which the _viewsToHideWhenShifted should be fully hidden. 0.5 means the views
-// are completely hidden when the header has shifted half of its content height upwards. This should
-// never be 0.
+// The percentage shifted threshold at which point the _viewsToHideWhenShifted should be fully
+// hidden.
 static const float kContentHidingThreshold = 0.5f;
 
 // This length defines the moment at which the shadow will be fully visible as the header shifts
@@ -841,15 +840,6 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   frameBottomEdge = MAX(0, MIN(kShadowScaleLength, frameBottomEdge));
   CGFloat boundedAccumulator = MIN([self fhv_accumulatorMax], _shiftAccumulator);
 
-  if (_shiftBehavior != MDCFlexibleHeaderShiftBehaviorDisabled) {
-    CGFloat contentHeight = self.computedMinimumHeight - MDCDeviceTopSafeAreaInset();
-    CGFloat hideThreshold = kContentHidingThreshold;
-    CGFloat alpha = MAX(contentHeight - boundedAccumulator / hideThreshold, 0) / contentHeight;
-    for (UIView *view in _viewsToHideWhenShifted) {
-      view.alpha = alpha;
-    }
-  }
-
   CGFloat shadowIntensity;
   if (self.hidesStatusBarWhenCollapsed) {
     // Calculate the desired shadow strength for the offset & accumulator and then take the
@@ -1051,6 +1041,15 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 
   [self fhv_accumulatorDidChange];
   [self fhv_recalculatePhase];
+
+  // Update opacity of _viewsToHideWhenShifted
+  CGFloat contentHeight = self.computedMinimumHeight - MDCDeviceTopSafeAreaInset();
+  CGFloat hideThreshold = kContentHidingThreshold;
+  CGFloat boundedAccumulator = MIN([self fhv_accumulatorMax], _shiftAccumulator);
+  CGFloat alpha = MAX(contentHeight - boundedAccumulator / hideThreshold, 0) / contentHeight;
+  for (UIView *view in _viewsToHideWhenShifted) {
+    view.alpha = alpha;
+  }
 
   [_statusBarShifter setOffset:_shiftAccumulator];
 
