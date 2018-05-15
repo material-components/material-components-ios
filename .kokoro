@@ -311,8 +311,6 @@ generate_apidiff() {
     changelog_path=$(cat "$BUILDS_TMP_PATH/api_diff" | grep "Changelog=" | cut -d'=' -f2)
     error_path=$(cat "$BUILDS_TMP_PATH/api_diff" | grep "Errors=" | cut -d'=' -f2)
 
-    pushd scripts/github-comment >> /dev/null
-
     # TODO: Post the results to a GitHub comment.
 
     if [ -f "$error_path" ]; then
