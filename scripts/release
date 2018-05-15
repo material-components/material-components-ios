@@ -429,7 +429,11 @@ generate_release_apidiff() {
   }
 
   # Verify commits
-  old_commit=$(git rev-list -n 1 origin/stable)
+  if [ -n "$1" ]; then
+    old_commit=$(git rev-list -n 1 $1)
+  else
+    old_commit=$(git rev-list -n 1 origin/stable)
+  fi
   new_commit=$(git rev-list -n 1 $(get_latest_branch))
 
   if [[ -z "$old_commit" || -z "$new_commit" ]]; then
@@ -476,7 +480,7 @@ generate_release_apidiff() {
   echo "Errors=$ALL_ERROR_LOG_PATH"
 
   # Run new pathdiff script on each umbrella header in array
-  for path_to_component in $(generate_release_components | grep -v "private"); do
+  for path_to_component in $(generate_release_components "$old_commit" | grep -v "private"); do
     component=$(basename $path_to_component)
 
     echo -n "Diffing $component..."
@@ -521,7 +525,12 @@ generate_release_authors() {
 }
 
 generate_release_components() {
-  git diff --name-only origin/stable..$(get_latest_branch) components/ \
+  if [ -n "$1" ]; then
+    old_commit="$1"
+  else
+    old_commit=origin/stable
+  fi
+  git diff --name-only "$old_commit"..$(get_latest_branch) components/ \
     | grep "src/" | cut -d'/' -f2- | rev | cut -d'/' -f3- | rev | sed 's|/src||' | sort | uniq
 }
 
@@ -642,9 +651,9 @@ case "$1" in
   publish)    publish_release ${@:2} ;;
   podspec)    publish_podspec ${@:2} ;;
 
-  apidiff)    generate_release_apidiff ${@:2} ;;
+  apidiff)    generate_release_apidiff ${@:2} ;; # args: [base sha]
   authors)    generate_release_authors ${@:2} ;;
-  components) generate_release_components ${@:2} ;;
+  components) generate_release_components ${@:2} ;; # args: [base sha]
   diff)       generate_release_diff ${@:2} ;;
   files)      generate_release_files ${@:2} ;;
   headers)    generate_release_headers ${@:2} ;;
