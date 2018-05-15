@@ -14,6 +14,8 @@
  limitations under the License.
  */
 
+#import <Foundation/Foundation.h>
+
 /**
  States used to configure snackbar alignment.
  */

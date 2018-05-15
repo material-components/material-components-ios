@@ -14,6 +14,7 @@
  limitations under the License.
  */
 
+#import "MDCSnackbarAlignment.h"
 #import "MDCSnackbarManager.h"
 #import "MDCSnackbarMessage.h"
 #import "MDCSnackbarMessageView.h"
