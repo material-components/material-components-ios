@@ -153,7 +153,7 @@
 
  Default is set to MDCSnackbarMessageViewButton.
  */
-@property(class, nonatomic, strong, nullable) Class buttonClass;
+@property(class, nonatomic, strong, nonnull) Class buttonClass;
 
 /**
  If enabled, modifications of class styling properties will be applied immediately
