@@ -22,11 +22,13 @@
 
 @interface FeatureHighlightTypicalUseViewController : UIViewController
 @property(nonatomic) UILabel *infoLabel;
+@property(nonatomic) UIButton *actionButton;
 @property(nonatomic) UIButton *button;
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 
 - (void)didTapButton:(id)sender;
+
 @end
 
 @interface FeatureHighlightColorExample : MDCCollectionViewController
@@ -42,8 +44,8 @@
 @end
 
 @interface FeatureHighlightShownViewExample : UIViewController
-@property(nonatomic) UILabel *infoLabel;
 @property(nonatomic) UIButton *button;
+@property(nonatomic) UIButton *actionButton;
 
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
