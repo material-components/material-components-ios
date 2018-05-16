@@ -15,6 +15,7 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "MaterialButtons.h"
 
 /**
  Class which provides the default implementation of a snackbar.
@@ -101,3 +102,6 @@ __deprecated_msg("Use messsageTextColor instead.");
 
 @end
 // clang-format on
+
+@interface MDCSnackbarMessageViewButton : MDCFlatButton
+@end

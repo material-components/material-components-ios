@@ -102,6 +102,7 @@ static UIColor *_snackbarMessageViewShadowColor;
 static UIColor *_messageTextColor;
 static UIFont *_messageFont;
 static UIFont *_buttonFont;
+static Class _buttonClass;
 static NSMutableDictionary<NSNumber *, UIColor *> *_buttonTitleColors;
 static BOOL _mdc_adjustsFontForContentSizeCategory;
 static BOOL _shouldApplyStyleChangesToVisibleSnackbars;
@@ -123,6 +124,7 @@ static BOOL _shouldApplyStyleChangesToVisibleSnackbars;
     _pendingMessages = [[NSMutableArray alloc] init];
     _suspensionTokens = [NSMutableDictionary dictionary];
     _overlayView = [[MDCSnackbarOverlayView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    _buttonClass = _buttonClass ?: [MDCSnackbarMessageViewButton class];
   }
   return self;
 }
@@ -659,6 +661,19 @@ static BOOL _shouldApplyStyleChangesToVisibleSnackbars;
 
 + (UIFont *)buttonFont {
   return _buttonFont;
+}
+
++ (void)setButtonClass:(Class)buttonClass {
+  if (![buttonClass isSubclassOfClass:[MDCSnackbarMessageViewButton class]]) {
+    return;
+  }
+  if (buttonClass != _buttonClass) {
+    _buttonClass = buttonClass;
+  }
+}
+
++ (Class)buttonClass {
+  return _buttonClass;
 }
 
 + (void)setButtonTitleColor:(UIColor *)titleColor forState:(UIControlState)state {

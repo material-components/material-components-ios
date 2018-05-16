@@ -147,6 +147,13 @@
  */
 @property(class, nonatomic, strong, nullable) UIFont *buttonFont;
 
+/**
+ The button class to set the snackbar button.
+ Note: The class must be a subclass of MDCSnackbarMessageViewButton.
+
+ Default is set to MDCSnackbarMessageViewButton.
+ */
+@property(class, nonatomic, strong, nullable) Class buttonClass;
 
 /**
  If enabled, modifications of class styling properties will be applied immediately

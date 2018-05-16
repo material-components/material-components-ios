@@ -21,7 +21,6 @@
 #import "MDCSnackbarMessageView.h"
 
 #import "MaterialAnimationTiming.h"
-#import "MaterialButtons.h"
 #import "MaterialTypography.h"
 #import "private/MaterialSnackbarStrings.h"
 #import "private/MaterialSnackbarStrings_table.h"
@@ -161,9 +160,6 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
  */
 @property(nonatomic, copy) MDCSnackbarMessageDismissHandler dismissalHandler;
 
-@end
-
-@interface MDCSnackbarMessageViewButton : MDCFlatButton
 @end
 
 @implementation MDCSnackbarMessageViewButton
@@ -372,7 +368,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     [buttonView setTranslatesAutoresizingMaskIntoConstraints:NO];
     [_buttonView addSubview:buttonView];
 
-    MDCButton *button = [[MDCSnackbarMessageViewButton alloc] init];
+    MDCButton *button = [[MDCSnackbarManager.buttonClass alloc] init];
     [button setTitleColor:_buttonTitleColors[@(UIControlStateNormal)]
                  forState:UIControlStateNormal];
     [button setTitleColor:_buttonTitleColors[@(UIControlStateHighlighted)]
