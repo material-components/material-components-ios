@@ -1033,8 +1033,9 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 // Commit the current shiftOffscreenAccumulator value to the view's position.
 - (void)fhv_commitAccumulatorToFrame {
   CGPoint position = self.center;
+  CGFloat shiftOffset = MIN([self fhv_accumulatorMax], _shiftAccumulator);
   // Offset the frame.
-  position.y = -MIN([self fhv_accumulatorMax], _shiftAccumulator);
+  position.y = -shiftOffset;
   position.y += self.bounds.size.height / 2;
 
   self.center = position;
@@ -1042,13 +1043,13 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   [self fhv_accumulatorDidChange];
   [self fhv_recalculatePhase];
 
-  // Update opacity of _viewsToHideWhenShifted
-  CGFloat contentHeight = self.computedMinimumHeight - MDCDeviceTopSafeAreaInset();
-  CGFloat hideThreshold = kContentHidingThreshold;
-  CGFloat boundedAccumulator = MIN([self fhv_accumulatorMax], _shiftAccumulator);
-  CGFloat alpha = MAX(contentHeight - boundedAccumulator / hideThreshold, 0) / contentHeight;
+  CGFloat opacityShiftThreshold = [self fhv_accumulatorMax] * kContentHidingThreshold;
+  // 0% means not shifted at all, 100% means shifted up to our threshold amount.
+  CGFloat percentShiftedAlongThreshold = MIN(1, MAX(shiftOffset / opacityShiftThreshold, 0));
   for (UIView *view in _viewsToHideWhenShifted) {
-    view.alpha = alpha;
+    // When not shifted at all, we want to be fully visible. We invert the percentage to get our
+    // desired alpha.
+    view.alpha = 1 - percentShiftedAlongThreshold;
   }
 
   [_statusBarShifter setOffset:_shiftAccumulator];
