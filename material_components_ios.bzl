@@ -82,7 +82,7 @@ def mdc_app_test_suite(
     size = "medium",
     **kwargs):
   """Declare an MDC app unit_test_suite using the ios_runners matrix."""
-  ios_unit_test_suite(
+  ios_ui_test(
     name = name,
     deps = deps,
     minimum_os_version = minimum_os_version,
