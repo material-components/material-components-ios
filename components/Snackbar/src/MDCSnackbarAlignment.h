@@ -17,12 +17,11 @@
 #import <Foundation/Foundation.h>
 
 /**
- States used to configure snackbar alignment.
+ States used to configure Snackbar alignment.
  */
 typedef NS_ENUM(NSInteger, MDCSnackbarAlignment) {
   /**
-   Snackbar is positioned in the center of the screen. This is the default setting
-   and only permitted setting for iPhone.
+   Snackbar is positioned in the center of the screen.
    */
   MDCSnackbarAlignmentCenter = 0,
 

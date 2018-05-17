@@ -19,14 +19,14 @@
 
 @class MDCSnackbarMessageView;
 
-/** The identifier reported for the snackbar. */
+/** The identifier reported for the Snackbar. */
 OBJC_EXTERN NSString *const MDCSnackbarOverlayIdentifier;
 
-/** The time it takes to show or hide the snackbar. */
+/** The time it takes to show or hide the Snackbar. */
 OBJC_EXTERN NSTimeInterval const MDCSnackbarLegacyTransitionDuration;
 
 /**
- Custom overlay view for displaying snackbars.
+ Custom overlay view for displaying Snackbars.
  */
 @interface MDCSnackbarOverlayView : UIView
 
@@ -38,9 +38,9 @@ OBJC_EXTERN NSTimeInterval const MDCSnackbarLegacyTransitionDuration;
 - (instancetype)initWithFrame:(CGRect)frame;
 
 /**
- Shows the snackbar view with the most appropriate animation.
+ Shows the Snackbar view with the most appropriate animation.
 
- @param snackbarView The snackbar view to display.
+ @param snackbarView The Snackbar view to display.
  @param animated Whether or not the show should be animated.
  @param completion A block to execute when the presentation is finished.
  */
@@ -49,7 +49,7 @@ OBJC_EXTERN NSTimeInterval const MDCSnackbarLegacyTransitionDuration;
               completion:(void (^)(void))completion;
 
 /**
- Dismisses the currently showing snackbar view.
+ Dismisses the currently showing Snackbar view.
 
  @param animated Whether or not the dismiss should be animated.
  @param completion A block to execute when the dismissal is finished.
@@ -57,14 +57,14 @@ OBJC_EXTERN NSTimeInterval const MDCSnackbarLegacyTransitionDuration;
 - (void)dismissSnackbarViewAnimated:(BOOL)animated completion:(void (^)(void))completion;
 
 /**
- How far from the bottom of the screen should snackbars be presented.
+ How far from the bottom of the screen should Snackbars be presented.
 
  If set inside of an animation block, the change will animate.
  */
 @property(nonatomic) CGFloat bottomOffset;
 
 /**
- Determines whether the snackbar is presented in the center of the of the screen or (on iPad only)
+ Determines whether the Snackbar is presented in the center of the of the screen or (on iPad only)
  the leading edge of the screen.
 
  If called within an animation block, the change will be animated.

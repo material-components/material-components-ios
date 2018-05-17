@@ -20,7 +20,7 @@
 @class MDCSnackbarMessageAction;
 
 /**
- Called by the snackbar message view when the user interacts with the snackbar view.
+ Called by the Snackbar message view when the user interacts with the Snackbar view.
 
  @c userInitiated indicates whether or not the handler is being called due to direct user
  interaction. @c action, if non-nil, indicates that the user chose to execute a specific action.
@@ -31,17 +31,17 @@ typedef void (^MDCSnackbarMessageDismissHandler)(BOOL userInitiated,
 @interface MDCSnackbarMessageView ()
 
 /**
- If the user has tapped on the snackbar or if @c dismissWithAction:userInitiated: has been called.
+ If the user has tapped on the Snackbar or if @c dismissWithAction:userInitiated: has been called.
  */
 @property(nonatomic, getter=isDismissing) BOOL dismissing;
 
 /**
- The minimum width of the snackbar.
+ The minimum width of the Snackbar.
  */
 @property(nonatomic, readonly) CGFloat minimumWidth;
 
 /**
- The maximum width of the snackbar.
+ The maximum width of the Snackbar.
  */
 @property(nonatomic, readonly) CGFloat maximumWidth;
 
@@ -51,26 +51,26 @@ typedef void (^MDCSnackbarMessageDismissHandler)(BOOL userInitiated,
 @property(nonatomic, nullable, readonly, strong) MDCSnackbarMessage *message;
 
 /**
- If the snackbar view should be anchored to the bottom of the screen. Default is YES.
+ If the Snackbar view should be anchored to the bottom of the screen. Default is YES.
  */
 @property(nonatomic) BOOL anchoredToScreenBottom;
 
 /**
- The layout constraint which determines how far the snackbar is from the leading edge of the screen.
- It is active when the alignment of the parent overlay view is MDCAlignmentLeading.
+ The layout constraint which determines how far the Snackbar is from the leading edge of the screen.
+ It is active when the alignment of the parent overlay view is MDCSnackbarAlignmentLeading.
  */
 @property(nonatomic, nullable) NSLayoutConstraint *leadingConstraint;
 
 /**
- The layout constraint used to center the snackbar.
- It is active when the alignment of the parent overlay view is MDCAlignmentCenter.
+ The layout constraint used to center the Snackbar.
+ It is active when the alignment of the parent overlay view is MDCSnackbarAlignmentCenter.
  */
 @property(nonatomic, nullable) NSLayoutConstraint *centerConstraint;
 
 /**
- Creates a snackbar view to display @c message.
+ Creates a Snackbar view to display @c message.
 
- The view will call @c handler when the user has interacted with the snackbar view in such a way
+ The view will call @c handler when the user has interacted with the Snackbar view in such a way
  that it needs to be dismissed prior to its timer-based dismissal time.
  */
 - (_Nonnull instancetype)initWithMessage:(MDCSnackbarMessage *_Nullable)message
@@ -107,7 +107,7 @@ typedef void (^MDCSnackbarMessageDismissHandler)(BOOL userInitiated,
 
 
 /**
- Animate the opacity of the snackbar view.
+ Animate the opacity of the Snackbar view.
 
  @param fromOpacity initial opacity to start animation.
  @param toOpacity opacity to finish animation.
@@ -118,7 +118,7 @@ typedef void (^MDCSnackbarMessageDismissHandler)(BOOL userInitiated,
 
 
 /**
- Animate the scale of the snackbar view.
+ Animate the scale of the Snackbar view.
 
  @param fromScale initial scale to start animation.
  @param toScale scale to finish animation.
