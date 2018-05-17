@@ -45,6 +45,7 @@ static const CGFloat kSmallArbitraryCellWidth = 100.f;
   self = [super initWithCollectionViewLayout:layout];
   if (self) {
     _collectionViewLayout = layout;
+    _typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;
 }
