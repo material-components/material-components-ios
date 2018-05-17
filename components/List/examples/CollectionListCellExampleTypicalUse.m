@@ -28,25 +28,24 @@ static const CGFloat kSmallArbitraryCellWidth = 100.f;
 
 @implementation CollectionListCellExampleTypicalUse {
   NSMutableArray *_content;
-  UICollectionViewFlowLayout *_flowLayout;
 }
 
 @synthesize collectionViewLayout = _collectionViewLayout;
 
 - (instancetype)init {
-  _typographyScheme = [[MDCTypographyScheme alloc] init];
-  _flowLayout = [[UICollectionViewFlowLayout alloc] init];
-  _flowLayout.minimumInteritemSpacing = 0;
-  _flowLayout.minimumLineSpacing = 1;
-  _flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
-  _flowLayout.estimatedItemSize = CGSizeMake(kSmallArbitraryCellWidth, kSmallestCellHeight);
-  return [self initWithCollectionViewLayout:_flowLayout];
+  UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+  flowLayout.minimumInteritemSpacing = 0;
+  flowLayout.minimumLineSpacing = 1;
+  flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
+  flowLayout.estimatedItemSize = CGSizeMake(kSmallArbitraryCellWidth, kSmallestCellHeight);
+  return [self initWithCollectionViewLayout:flowLayout];
 }
 
 - (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
   self = [super initWithCollectionViewLayout:layout];
   if (self) {
     _collectionViewLayout = layout;
+    _typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;
 }
