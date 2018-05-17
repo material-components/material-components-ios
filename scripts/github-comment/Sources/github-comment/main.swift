@@ -106,7 +106,7 @@ github.getAll(startingFrom: "repos/\(repo)/issues/\(prNumber)/comments") { jsonR
 
 func getCommentBody() throws -> String? {
   if let bodyFilename = bodyFilename {
-    return try String.init(contentsOf: URL(fileURLWithPath: bodyFilename.path.asString))
+    return try String(contentsOf: URL(fileURLWithPath: bodyFilename.path.asString))
   }
   return nil
 }
