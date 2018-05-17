@@ -1045,7 +1045,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 
   CGFloat opacityShiftThreshold = [self fhv_accumulatorMax] * kContentHidingThreshold;
   // 0% means not shifted at all, 100% means shifted up to our threshold amount.
-  CGFloat percentShiftedAlongThreshold = MIN(1, MAX(shiftOffset / opacityShiftThreshold, 0));
+  CGFloat percentShiftedAlongThreshold = MIN(1, MAX(0, shiftOffset / opacityShiftThreshold));
   for (UIView *view in _viewsToHideWhenShifted) {
     // When not shifted at all, we want to be fully visible. We invert the percentage to get our
     // desired alpha.
