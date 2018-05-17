@@ -73,3 +73,22 @@ def mdc_unit_test_suite(
     size = size,
     **kwargs
   )
+
+def mdc_app_test_suite(
+    name = "app_tests",
+    deps = [],
+    minimum_os_version = "8.0",
+    visibility = ["//visibility:private"],
+    size = "medium",
+    **kwargs):
+  """Declare an MDC app unit_test_suite using the ios_runners matrix."""
+  ios_unit_test_suite(
+    name = name,
+    deps = deps,
+    minimum_os_version = minimum_os_version,
+    test_host = "@build_bazel_rules_apple//apple/testing/default_host/ios",
+    runners = DEFAULT_IOS_RUNNER_TARGETS,
+    visibility = visibility,
+    size = size,
+    **kwargs
+  )
