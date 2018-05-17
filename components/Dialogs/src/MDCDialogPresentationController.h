@@ -43,7 +43,8 @@
 @property(nonatomic, assign) BOOL dismissOnBackgroundTap;
 
 /**
- Should the shadow displayed under the presented view be hidden.
+ Should the shadow displayed under the presented view be hidden. This shadow should only be hidden
+ if you are handling the casting of the shadow yourself on your presented view.
 
  Defaults to NO.
  */
