@@ -101,7 +101,7 @@
 
 - (void)updateTopLayoutGuideBehavior {
   if (_topLayoutGuideAdjustmentEnabled) {
-    if ([self isViewLoaded] && [self.contentViewController isViewLoaded]) {
+    if ([self isViewLoaded]) {
       self.contentViewController.view.translatesAutoresizingMaskIntoConstraints = YES;
       self.contentViewController.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth
                                                           | UIViewAutoresizingFlexibleHeight);
