@@ -47,6 +47,28 @@ class FlexibleHeaderWrappingTopLayoutGuideTests: XCTestCase {
     let _ = container.view // Force the view to load.
 
     // Then
+    XCTAssertEqual(contentViewController.view.autoresizingMask, [.flexibleWidth, .flexibleHeight])
+    XCTAssertEqual(contentViewController.view.frame, container.view.bounds)
+    XCTAssertEqual(contentViewController.topLayoutGuide.length,
+                   container.headerViewController.headerView.frame.maxY)
+    #if swift(>=3.2)
+    if #available(iOS 11.0, *) {
+      XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top,
+                     container.headerViewController.headerView.frame.maxY
+                      - MDCDeviceTopSafeAreaInset())
+    }
+    #endif
+  }
+
+  func testEarlyViewLoadStillAffectsTopLayoutGuide() {
+    // Given
+    let contentViewController = UIViewController()
+    let _ = container.view // Force the view to load.
+    container.contentViewController = contentViewController
+
+    // Then
+    XCTAssertEqual(contentViewController.view.autoresizingMask, [.flexibleWidth, .flexibleHeight])
+    XCTAssertEqual(contentViewController.view.frame, container.view.bounds)
     XCTAssertEqual(contentViewController.topLayoutGuide.length,
                    container.headerViewController.headerView.frame.maxY)
     #if swift(>=3.2)
@@ -67,6 +89,8 @@ class FlexibleHeaderWrappingTopLayoutGuideTests: XCTestCase {
     let _ = container.view // Force the view to load.
 
     // Then
+    XCTAssertEqual(contentViewController.view.autoresizingMask, [.flexibleWidth, .flexibleHeight])
+    XCTAssertEqual(contentViewController.view.frame, container.view.bounds)
     XCTAssertEqual(contentViewController.topLayoutGuide.length,
                    container.headerViewController.headerView.frame.maxY)
     #if swift(>=3.2)
@@ -112,6 +136,8 @@ class FlexibleHeaderWrappingTopLayoutGuideTests: XCTestCase {
     let _ = container.view // Force the view to load.
 
     // Then
+    XCTAssertEqual(contentViewController.view.autoresizingMask, [.flexibleWidth, .flexibleHeight])
+    XCTAssertEqual(contentViewController.view.frame, container.view.bounds)
     XCTAssertEqual(contentViewController.topLayoutGuide.length,
                    container.headerViewController.headerView.frame.maxY)
     #if swift(>=3.2)
@@ -137,6 +163,8 @@ class FlexibleHeaderWrappingTopLayoutGuideTests: XCTestCase {
     container.headerViewController.headerView.trackingScrollDidScroll()
 
     // Then
+    XCTAssertEqual(contentViewController.view.autoresizingMask, [.flexibleWidth, .flexibleHeight])
+    XCTAssertEqual(contentViewController.view.frame, container.view.bounds)
     XCTAssertEqual(contentViewController.topLayoutGuide.length,
                    container.headerViewController.headerView.frame.maxY)
     #if swift(>=3.2)

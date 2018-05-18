@@ -54,6 +54,8 @@
   self.headerViewController.view.frame = self.view.bounds;
   [self.view addSubview:self.headerViewController.view];
   [self.headerViewController didMoveToParentViewController:self];
+
+  [self updateTopLayoutGuideBehavior];
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -92,21 +94,14 @@
     }
   }
 
-  if (_topLayoutGuideAdjustmentEnabled) {
-    self.headerViewController.topLayoutGuideViewController = self.contentViewController;
-  }
+  [self updateTopLayoutGuideBehavior];
 }
 
 #pragma mark - Enabling top layout guide adjustment behavior
 
-- (void)setTopLayoutGuideAdjustmentEnabled:(BOOL)topLayoutGuideAdjustmentEnabled {
-  if (_topLayoutGuideAdjustmentEnabled == topLayoutGuideAdjustmentEnabled) {
-    return;
-  }
-  _topLayoutGuideAdjustmentEnabled = topLayoutGuideAdjustmentEnabled;
-
+- (void)updateTopLayoutGuideBehavior {
   if (_topLayoutGuideAdjustmentEnabled) {
-    if ([self isViewLoaded] && [self.contentViewController isViewLoaded]) {
+    if ([self isViewLoaded]) {
       self.contentViewController.view.translatesAutoresizingMaskIntoConstraints = YES;
       self.contentViewController.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth
                                                           | UIViewAutoresizingFlexibleHeight);
@@ -125,6 +120,15 @@
   } else {
     self.headerViewController.topLayoutGuideViewController = nil;
   }
+}
+
+- (void)setTopLayoutGuideAdjustmentEnabled:(BOOL)topLayoutGuideAdjustmentEnabled {
+  if (_topLayoutGuideAdjustmentEnabled == topLayoutGuideAdjustmentEnabled) {
+    return;
+  }
+  _topLayoutGuideAdjustmentEnabled = topLayoutGuideAdjustmentEnabled;
+
+  [self updateTopLayoutGuideBehavior];
 }
 
 @end
