@@ -17,7 +17,25 @@
 #import <UIKit/UIKit.h>
 
 @class MDCSnackbarMessage;
+@class MDCSnackbarMessageView;
 @protocol MDCSnackbarSuspensionToken;
+
+
+/**
+ Delegate protocol for the MDCSnackbarManager.
+ */
+@protocol MDCSnackbarManagerDelegate <NSObject>
+
+
+/**
+ This method is called after the MDCSnackbarMessageView instance is initialized and right before
+ The view is presented on the screen.
+
+ @param messageView The messageView of the snackbar that will be presented.
+ */
+- (void)willPresentSnackbarWithMessageView:(nullable MDCSnackbarMessageView *)messageView;
+
+@end
 
 /**
  Provides a means of displaying an unobtrusive message to the user.
@@ -147,7 +165,6 @@
  */
 @property(class, nonatomic, strong, nullable) UIFont *buttonFont;
 
-
 /**
  If enabled, modifications of class styling properties will be applied immediately
  to the currently presented snackbar.
@@ -186,6 +203,12 @@
  */
 @property(class, nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
     BOOL mdc_adjustsFontForContentSizeCategory;
+
+
+/**
+ The delegate for MDCSnackbarManager through which it may inform of snackbar presentation updates.
+ */
+@property(class, nonatomic, weak, nullable) id<MDCSnackbarManagerDelegate> delegate;
 
 @end
 

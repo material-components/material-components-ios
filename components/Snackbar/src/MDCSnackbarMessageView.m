@@ -21,7 +21,6 @@
 #import "MDCSnackbarMessageView.h"
 
 #import "MaterialAnimationTiming.h"
-#import "MaterialButtons.h"
 #import "MaterialTypography.h"
 #import "private/MaterialSnackbarStrings.h"
 #import "private/MaterialSnackbarStrings_table.h"
@@ -174,6 +173,28 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     self.inkMaxRippleRadius = kButtonInkRadius;
     self.inkColor = [UIColor colorWithWhite:1 alpha:0.06f];
     self.inkStyle = MDCInkStyleUnbounded;
+
+    CGFloat buttonContentPadding =
+        MDCSnackbarMessage.usesLegacySnackbar ? kLegacyButtonPadding : kButtonPadding;
+    [self setTranslatesAutoresizingMaskIntoConstraints:NO];
+    self.tag = kButtonTagStart;
+
+    // Style the text in the button.
+    self.titleLabel.numberOfLines = 1;
+    self.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    self.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    self.contentEdgeInsets = UIEdgeInsetsMake(buttonContentPadding,
+                                                buttonContentPadding,
+                                                buttonContentPadding,
+                                                buttonContentPadding);
+
+    // Make sure the button doesn't get too compressed.
+    [self setContentCompressionResistancePriority:UILayoutPriorityRequired
+                                            forAxis:UILayoutConstraintAxisHorizontal];
+    [self setContentHuggingPriority:UILayoutPriorityDefaultHigh
+                              forAxis:UILayoutConstraintAxisHorizontal];
+
+
   }
   return self;
 }
@@ -386,21 +407,8 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     }
 #pragma clang diagnostic pop
 
-    CGFloat buttonContentPadding =
-        MDCSnackbarMessage.usesLegacySnackbar ? kLegacyButtonPadding : kButtonPadding;
-    [button setTranslatesAutoresizingMaskIntoConstraints:NO];
-    button.tag = kButtonTagStart;
     [buttonView addSubview:button];
     [_actionButtons addObject:button];
-
-    // Style the text in the button.
-    button.titleLabel.numberOfLines = 1;
-    button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-    button.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-    button.contentEdgeInsets = UIEdgeInsetsMake(buttonContentPadding,
-                                                buttonContentPadding,
-                                                buttonContentPadding,
-                                                buttonContentPadding);
 
     // Set up the button's accessibility values.
     button.accessibilityIdentifier = message.action.accessibilityIdentifier;
@@ -409,15 +417,12 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     [button setTitle:message.action.title forState:UIControlStateNormal];
     [button setTitle:message.action.title forState:UIControlStateHighlighted];
 
-    // Make sure the button doesn't get too compressed.
-    [button setContentCompressionResistancePriority:UILayoutPriorityRequired
-                                            forAxis:UILayoutConstraintAxisHorizontal];
-    [button setContentHuggingPriority:UILayoutPriorityDefaultHigh
-                              forAxis:UILayoutConstraintAxisHorizontal];
     [button addTarget:self
                action:@selector(handleButtonTapped:)
      forControlEvents:UIControlEventTouchUpInside];
 
+    CGFloat buttonContentPadding =
+        MDCSnackbarMessage.usesLegacySnackbar ? kLegacyButtonPadding : kButtonPadding;
     CGSize buttonSize = [button sizeThatFits:CGSizeMake(CGFLOAT_MAX,CGFLOAT_MAX)];
     availableTextWidth -= buttonSize.width;
     availableTextWidth -= 2 * buttonContentPadding;
