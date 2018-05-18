@@ -1,3 +1,98 @@
+# 55.1.0
+
+This minor release introduces some new features to Flexible Header and Snackbar and includes some
+bug fixes in the Catalog app.
+
+## Upcoming deprecations
+
+MDCFlexibleHeaderViewController's `-updateTopLayoutGuide` will be deprecated in the future. It
+should no longer be necessary to call this API if you are using an
+`MDCFlexibleHeaderContainerViewController`.
+
+## API changes
+
+### Snackbar
+
+#### MDCSnackbarManager
+
+*new* class method: `+hasMessagesShowingOrQueued` in `MDCSnackbarManager`
+
+## Component changes
+
+### Tabs
+
+#### Changes
+
+* ["Add" button shows when needed (#3739)](https://github.com/material-components/material-components-ios/commit/957f3fa127e5d7b11c4f01251efe5e48d53efa8e) (Robert Moore)
+
+### schemes/Color
+
+#### Changes
+
+* [[schemes] Fix docsite generation due to missing and malformed metadata. (#4151)](https://github.com/material-components/material-components-ios/commit/8c036dbace4c4e2f76cf4c624984f77a0d4c6009) (featherless)
+
+### schemes/Typography
+
+#### Changes
+
+* [[schemes] Fix docsite generation due to missing and malformed metadata. (#4151)](https://github.com/material-components/material-components-ios/commit/8c036dbace4c4e2f76cf4c624984f77a0d4c6009) (featherless)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Color Should be a dragon example. (#3743)](https://github.com/material-components/material-components-ios/commit/8b4c29328773709d24fcaaf92fd9dd36d174fb91) (Mohammad Cazi)
+* [[Catalog] Feature highlight should be triggered from a separate Button. (#3742)](https://github.com/material-components/material-components-ios/commit/f1b919ed5b8f711dde60397b39a05aba88ea7584) (Mohammad Cazi)
+* [[Catalog] FeatureHighlight should be themed according to global theming. (#3738)](https://github.com/material-components/material-components-ios/commit/6e7ed439ced27c3dc58af242be886f64f0bebf46) (Mohammad Cazi)
+* [title not attributed. (#4175)](https://github.com/material-components/material-components-ios/commit/5ed1f44fb19d8881073198e4de4106b936a55320) (Mohammad Cazi)
+
+### Buttons
+
+#### Changes
+
+* [FAB button in shapes example should be themed. (#3737)](https://github.com/material-components/material-components-ios/commit/988a577902dce2acc59952760fd6b8fb84bc78f4) (Mohammad Cazi)
+* [Fix updateTitles to prevent crash (#4153)](https://github.com/material-components/material-components-ios/commit/f8e2d2872ab947ac847ecc8dfcf4df9a17cb06bc) (Robert Moore)
+
+### Snackbar
+
+#### Changes
+
+* [add hasMessagesShowingOrQueued method (#4168)](https://github.com/material-components/material-components-ios/commit/9dc4065db7b4f41ca0544f583581c982a5358c1a) (Yarden Eitan)
+
+### Cards
+
+#### Changes
+
+* ['Edit' button should show action, not state (#3733)](https://github.com/material-components/material-components-ios/commit/9cef13c1a7ce68f0b2fe67435436fa98891f3e21) (Robert Moore)
+
+### BottomAppBar
+
+#### Changes
+
+* [Add an app bar to the bottom app bar demo (#3760)](https://github.com/material-components/material-components-ios/commit/bf21b5a2e673b527bb25d0fa3c0f01e9d62b65a2) (John Detloff)
+* [Make FAB visibility a switch (#3734)](https://github.com/material-components/material-components-ios/commit/ef522de732c5c283dd217f7d4c1b85a2d6e6b97e) (Robert Moore)
+* [[Catalog] Bottom App bar should theme the FAB Button. (#3740)](https://github.com/material-components/material-components-ios/commit/116071bf966e731257eb5fed6350b6b97242cef2) (Mohammad Cazi)
+
+### Dialogs
+
+#### Changes
+
+* [Make "modal" dialog "non-dismissable" (#3736)](https://github.com/material-components/material-components-ios/commit/b63c534ada8437f5ec9e2d707671fcd24677a1aa) (Robert Moore)
+
+### Themes
+
+#### Changes
+
+* [Add simple unit test (#4147)](https://github.com/material-components/material-components-ios/commit/128a545a21d2338760cc8b6d83ffaa60d1ca8f96) (Robert Moore)
+
+### ShadowElevations
+
+#### Changes
+
+* [[Shadow Elevation] Changed slider to be discrete to make it more clear that the named labels are for specific values of the slider. (#3741)](https://github.com/material-components/material-components-ios/commit/f6e04eb72c2597813d6ffa78cf5e1494262aa97a) (Randall Li)
+
+---
+
 # 55.0.4
 
 This patch release adds metadata to the bidirectionality eng stub doc.
