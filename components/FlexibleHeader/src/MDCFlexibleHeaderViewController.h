@@ -44,17 +44,6 @@
 /** The layout delegate will be notified of any changes to the flexible header view's frame. */
 @property(nonatomic, weak, nullable) id<MDCFlexibleHeaderViewLayoutDelegate> layoutDelegate;
 
-/**
- The view controller whose topLayoutGuide should be modified to match the flexible header view's
- height.
-
- If this property is nil, then the parent view controller is assumed to be the top layout guide
- view controller.
-
- By default, this property is nil.
- */
-@property(nonatomic, weak, nullable) UIViewController *topLayoutGuideViewController;
-
 #pragma mark UIViewController methods
 
 /**
@@ -72,6 +61,14 @@
  UIStatusBarStyleDefault.
  */
 - (UIStatusBarStyle)preferredStatusBarStyle;
+
+/**
+ Updates the topLayoutGuide to the correct position of a view controller paired with an instance of
+ MDCFlexibleHeaderViewController.
+
+ This method must be called in the |viewWillLayoutSubviews| method of view controller.
+ */
+- (void)updateTopLayoutGuide;
 
 @end
 
@@ -91,18 +88,5 @@
 - (void)flexibleHeaderViewController:
             (nonnull MDCFlexibleHeaderViewController *)flexibleHeaderViewController
     flexibleHeaderViewFrameDidChange:(nonnull MDCFlexibleHeaderView *)flexibleHeaderView;
-
-@end
-
-@interface MDCFlexibleHeaderViewController (ToBeDeprecated)
-
-/**
- Updates the topLayoutGuide to the correct position of a view controller paired with an instance of
- MDCFlexibleHeaderViewController.
-
- @warning This API will be deprecated. There is no replacement because the top layout guide should
- update automatically as the flexible header's frame changes.
- */
-- (void)updateTopLayoutGuide;
 
 @end
