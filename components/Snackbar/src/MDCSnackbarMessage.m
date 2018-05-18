@@ -60,6 +60,10 @@ static BOOL _usesLegacySnackbar = YES;
   return [MDCSnackbarMessageView class];
 }
 
+- (Class)buttonClass {
+  return [MDCSnackbarMessageViewButton class];
+}
+
 - (instancetype)copyWithZone:(__unused NSZone *)zone {
   MDCSnackbarMessage *copy = [[[self class] alloc] init];
   copy.attributedText = self.attributedText;

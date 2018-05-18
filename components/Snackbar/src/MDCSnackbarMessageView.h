@@ -107,3 +107,6 @@ __deprecated_msg("Use messsageTextColor instead.");
 
 @end
 // clang-format on
+
+@interface MDCSnackbarMessageViewButton : MDCFlatButton
+@end
