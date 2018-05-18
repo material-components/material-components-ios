@@ -1,10 +1,24 @@
-# #develop#
+# 55.1.0
 
-## Breaking changes
+This minor release introduces some new features to Flexible Header and Snackbar and includes some
+bug fixes in the Catalog app.
 
-## New deprecations
+## Upcoming deprecations
+
+MDCFlexibleHeaderViewController's `-updateTopLayoutGuide` will be deprecated in the future. It
+should no longer be necessary to call this API if you are using an
+`MDCFlexibleHeaderContainerViewController`.
 
 ## New features
+
+Flexible header container view controllers have a new flag that, when enabled, allows content view
+controllers to correctly make use of the topLayoutGuide in order to position views below the
+flexible header view. For example, to ensure that a view is always placed below a flexible header
+view you might calculate the view's frame like so:
+
+```
+frame.origin.y = self.topLayoutGuide.length + 32
+```
 
 ## API changes
 
@@ -13,17 +27,6 @@
 #### MDCFlexibleHeaderContainerViewController
 
 *new* property: `topLayoutGuideAdjustmentEnabled` in `MDCFlexibleHeaderContainerViewController`
-
-#### MDCFlexibleHeaderViewController(ToBeDeprecated)
-
-*new* category: `MDCFlexibleHeaderViewController(ToBeDeprecated)`
-
-*modified* method: `-updateTopLayoutGuide` in `MDCFlexibleHeaderViewController(ToBeDeprecated)`
-
-| Type of change: | parent.usr |
-|---|---|
-| From: | `c:objc(cs)MDCFlexibleHeaderViewController` |
-| To: | `c:objc(cy)MDCFlexibleHeaderViewController@ToBeDeprecated` |
 
 #### MDCFlexibleHeaderViewController
 
