@@ -46,6 +46,9 @@
     _appBar.navigationBar.inkColor = [UIColor colorWithWhite:0.9f alpha:0.1f];
 
     _appBar.navigationBar.useFlexibleTopBottomInsets = YES;
+
+    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;
 }

@@ -30,6 +30,7 @@
   self = [super initWithCollectionViewLayout:layout];
   if (self) {
     [self setupExampleViews:@[@"Change Alignment", @"Toggle Case", @"Clear Selection"]];
+    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
   }
   return self;
 }
