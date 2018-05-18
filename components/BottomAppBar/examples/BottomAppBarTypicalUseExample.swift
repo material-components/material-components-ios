@@ -22,7 +22,6 @@ import MaterialComponents.MaterialBottomAppBar
 import MaterialComponents.MaterialButtons_ColorThemer
 
 class BottomAppBarTypicalUseSwiftExample: UIViewController {
-
   let appBar = MDCAppBar()
   let bottomBarView = MDCBottomAppBarView()
 
@@ -31,6 +30,7 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
 
     self.title = "Bottom App Bar (Swift)"
     self.addChildViewController(appBar.headerViewController)
+    print("wdup")
 
     let color = UIColor(white: 0.2, alpha:1)
     appBar.headerViewController.headerView.backgroundColor = color
