@@ -79,6 +79,11 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
  */
 @property(nonatomic) BOOL showingMessage;
 
+/**
+ The delegate for MDCSnackbarManagerDelegate
+ */
+@property(nonatomic, weak) id<MDCSnackbarManagerDelegate> delegate;
+
 @end
 
 @interface MDCSnackbarManagerSuspensionToken : NSObject <MDCSnackbarSuspensionToken>
@@ -222,6 +227,7 @@ static BOOL _shouldApplyStyleChangesToVisibleSnackbars;
 
   Class viewClass = [message viewClass];
   snackbarView = [[viewClass alloc] initWithMessage:message dismissHandler:dismissHandler];
+  [self.delegate willPresentSnackbarWithMessageView:snackbarView];
   self.currentSnackbar = snackbarView;
   self.overlayView.accessibilityViewIsModal = ![self isSnackbarTransient:snackbarView];
   self.overlayView.hidden = NO;
@@ -493,6 +499,16 @@ static BOOL _shouldApplyStyleChangesToVisibleSnackbars;
 #pragma mark - Public API
 
 @implementation MDCSnackbarManager
+
++ (void)setDelegate:(id<MDCSnackbarManagerDelegate>)delegate {
+  MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
+  manager.delegate = delegate;
+}
+
++ (id<MDCSnackbarManagerDelegate>)delegate {
+  MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
+  return manager.delegate;
+}
 
 + (void)showMessage:(MDCSnackbarMessage *)inputMessage {
   if (!inputMessage) {

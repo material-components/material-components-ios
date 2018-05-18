@@ -15,6 +15,7 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "MaterialButtons.h"
 
 /**
  Class which provides the default implementation of a snackbar.
@@ -53,6 +54,11 @@
  The font for the button text in the snackbar message view.
  */
 @property(nonatomic, strong, nullable) UIFont *buttonFont UI_APPEARANCE_SELECTOR;
+
+/**
+ The array of action buttons of the snackbar.
+ */
+@property(nonatomic, strong, nullable) NSMutableArray<MDCButton *> *actionButtons;
 
 /**
  Returns the button title color for a particular control state.

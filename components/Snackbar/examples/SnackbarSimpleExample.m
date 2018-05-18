@@ -48,6 +48,7 @@
                                          style:UIBarButtonItemStylePlain
                                         target:self
                                         action:@selector(toggleDynamicType)]];
+  MDCSnackbarManager.delegate = self;
 }
 
 - (void)toggleModes {
@@ -197,6 +198,10 @@
     default:
       break;
   }
+}
+
+- (void)willPresentSnackbarWithMessageView:(nullable MDCSnackbarMessageView *)messageView {
+  NSLog(@"A snackbar will be presented");
 }
 
 @end
