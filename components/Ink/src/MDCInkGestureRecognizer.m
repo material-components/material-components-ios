@@ -72,6 +72,8 @@ static const CGFloat kInkGestureDefaultDragCancelDistance = 20;
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
   [super touchesEnded:touches withEvent:event];
   self.state = UIGestureRecognizerStateEnded;
+  NSLog(@"haha");
+  NSLog(@"haha");
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {

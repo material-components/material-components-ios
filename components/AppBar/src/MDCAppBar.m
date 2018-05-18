@@ -155,6 +155,7 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
 
   [_headerViewController.headerView forwardTouchEventsForView:_appBarController.headerStackView];
   [_headerViewController.headerView forwardTouchEventsForView:_appBarController.navigationBar];
+  NSLog(@"lol");
 }
 
 - (void)addHeaderViewControllerToParentViewController:
