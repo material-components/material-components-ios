@@ -4,6 +4,7 @@ load("@bazel_ios_warnings//:strict_warnings_objc_library.bzl", "strict_warnings_
 load("@build_bazel_rules_apple//apple/testing/default_runner:ios_test_runner.bzl", "ios_test_runner")
 load("@build_bazel_rules_apple//apple:ios.bzl", "ios_unit_test_suite")
 load("@build_bazel_rules_apple//apple:ios.bzl", "ios_ui_test_suite")
+load("@build_bazel_rules_apple//apple:swift.bzl", "swift_library")
 
 DEFAULT_IOS_RUNNER_TARGETS = [
     "//components/testing/runners:IPHONE_5_IN_8_1",
@@ -14,12 +15,21 @@ DEFAULT_IOS_RUNNER_TARGETS = [
 
 def mdc_objc_library(
     name,
-    copts = ["-swift-version", "3"],
+    copts = [],
     **kwargs):
   """Declare an Objective-C library with strict_warnings_objc_library."""
   strict_warnings_objc_library(
       name = name,
       copts = copts,
+      **kwargs)
+
+def mdc_swift_library(
+    name,
+    **kwargs):
+  """Declare a Swift library with strict_warnings_objc_library."""
+  swift_library(
+      name = name,
+      copts = ["-swift-version", "3"],
       **kwargs)
 
 def mdc_public_objc_library(
