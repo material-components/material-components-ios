@@ -93,14 +93,18 @@ def mdc_app_test_suite(
     size = "medium",
     **kwargs):
   """Declare an MDC ui test using the DEFAULT_IOS_RUNNER_TARGETS matrix."""
-  ios_ui_test_suite(
-    name = name,
-    deps = deps,
-    tags = ["exclusive"],
-    minimum_os_version = minimum_os_version,
-    test_host = "@build_bazel_rules_apple//apple/testing/default_host/ios",
-    runners = DEFAULT_IOS_RUNNER_TARGETS,
-    visibility = visibility,
-    size = size,
-    **kwargs
-  )
+  # Note that there would ideally be an ios_ui_test_suite. Until such an API is added to bazel,
+  # we simulate a suite by create a separate test target for each runner.
+  # https://github.com/bazelbuild/rules_apple/issues/183
+  for runner in DEFAULT_IOS_RUNNER_TARGETS:
+    ios_ui_test(
+      name = name + "_" + runner.split(':')[1],
+      deps = deps,
+      tags = ["exclusive"],
+      minimum_os_version = minimum_os_version,
+      test_host = "@build_bazel_rules_apple//apple/testing/default_host/ios",
+      runner = runner,
+      visibility = visibility,
+      size = size,
+      **kwargs
+    )
