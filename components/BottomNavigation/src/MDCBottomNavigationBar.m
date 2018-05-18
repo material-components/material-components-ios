@@ -20,6 +20,7 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
+#import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
 #import "private/MaterialBottomNavigationStrings.h"
@@ -52,7 +53,6 @@ static NSString *const kMDCBottomNavigationBarBarTintColorKey =
 static const CGFloat kMDCBottomNavigationBarHeight = 56.f;
 static const CGFloat kMDCBottomNavigationBarHeightAdjacentTitles = 40.f;
 static const CGFloat kMDCBottomNavigationBarLandscapeContainerWidth = 320.f;
-static const MDCShadowElevation kMDCBottomNavigationBarElevation = 6.f;
 static NSString *const kMDCBottomNavigationBarBadgeColorString = @"badgeColor";
 static NSString *const kMDCBottomNavigationBarBadgeValueString = @"badgeValue";
 static NSString *const kMDCBottomNavigationBarImageString = @"image";
@@ -184,7 +184,7 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
                                      UIViewAutoresizingFlexibleRightMargin);
   _containerView.clipsToBounds = YES;
   [self addSubview:_containerView];
-  [self setElevation:kMDCBottomNavigationBarElevation];
+  [self setElevation:MDCShadowElevationBottomNavigationBar];
   _itemViews = [NSMutableArray array];
   _itemTitleFont = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleCaption];
 }
