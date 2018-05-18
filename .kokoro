@@ -260,6 +260,8 @@ while [[ $# -gt 0 ]]; do
 done
 set -- "${POSITIONAL[@]}" # restore positional parameters
 
+VERBOSE_OUTPUT=1
+
 if [ -n "$VERBOSE_OUTPUT" ]; then
   # Display commands to stderr.
   set -x
