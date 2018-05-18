@@ -80,6 +80,7 @@ class EditReorderCollectionViewController: UIViewController,
       preiOS11Constraints()
     #endif
 
+    self.updateTitle()
   }
 
   func preiOS11Constraints() {
@@ -93,14 +94,23 @@ class EditReorderCollectionViewController: UIViewController,
                                                                  views: ["view": collectionView]));
   }
 
+  func updateTitle() {
+    if toggle == .edit {
+      navigationItem.rightBarButtonItem?.title = "Reorder"
+      self.title = "Cards (Edit)"
+    } else if toggle == .reorder {
+      navigationItem.rightBarButtonItem?.title = "Edit"
+      self.title = "Cards (Reorder)"
+    }
+  }
+
   func toggleModes() {
     if toggle == .edit {
       toggle = .reorder
-      navigationItem.rightBarButtonItem?.title = "Reorder"
     } else if toggle == .reorder {
       toggle = .edit
-      navigationItem.rightBarButtonItem?.title = "Edit"
     }
+    self.updateTitle()
     collectionView.reloadData()
   }
 

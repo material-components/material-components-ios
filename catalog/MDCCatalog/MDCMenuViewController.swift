@@ -19,13 +19,15 @@ import MaterialComponents.MDCIcons
 import MaterialComponents.MaterialIcons_ic_settings
 import MaterialComponents.MaterialIcons_ic_color_lens
 import MaterialComponents.MaterialIcons_ic_help_outline
+import MaterialComponents.MaterialLibraryInfo
 
 class MDCMenuViewController: UITableViewController {
 
   let tableData =
     [(title: "Settings", icon: MDCIcons.imageFor_ic_settings()?.withRenderingMode(.alwaysTemplate)),
      (title: "Themes", icon: MDCIcons.imageFor_ic_color_lens()?.withRenderingMode(.alwaysTemplate)),
-     (title: "Help", icon: MDCIcons.imageFor_ic_help_outline()?.withRenderingMode(.alwaysTemplate))]
+     (title:  "v\(MDCLibraryInfo.versionString)",
+      icon: MDCIcons.imageFor_ic_help_outline()?.withRenderingMode(.alwaysTemplate))]
   let cellIdentifier = "MenuCell"
   let iconColor = AppTheme.globalTheme.colorScheme.onSurfaceColor.withAlphaComponent(0.61)
 
@@ -59,7 +61,15 @@ class MDCMenuViewController: UITableViewController {
     guard let navController = self.presentingViewController as? UINavigationController else {
       return
     }
-    if (indexPath.item == 1) {
+    switch indexPath.item {
+    case 0:
+      self.dismiss(animated: true, completion: {
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+          let window = appDelegate.window as? MDCCatalogWindow {
+          window.showDebugSettings()
+        }
+      })
+    case 1:
       self.dismiss(animated: true, completion: {
         let themeViewController = MDCThemePickerViewController()
         let presentingViewController =
@@ -68,11 +78,9 @@ class MDCMenuViewController: UITableViewController {
                                                                    named: "Themes")
         navController.pushViewController(presentingViewController, animated: true)
       })
-    } else {
+    default:
       self.dismiss(animated: true, completion: nil)
     }
-
   }
-
 }
 

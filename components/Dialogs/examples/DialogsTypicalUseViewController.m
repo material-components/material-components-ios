@@ -28,7 +28,8 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  [self loadCollectionView:@[@"Programmatic", @"Storyboard", @"Modal", @"Open URL"]];
+  [self loadCollectionView:@[@"Dismissable Programmatic", @"Dismissable Storyboard",
+                             @"Non-dismissable Programmatic", @"Open URL"]];
   // We must create and store a strong reference to the transitionController.
   // A presented view controller will set this object as its transitioning delegate.
   self.transitionController = [[MDCDialogTransitionController alloc] init];

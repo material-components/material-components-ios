@@ -516,6 +516,14 @@ static BOOL _shouldApplyStyleChangesToVisibleSnackbars;
   manager.presentationHostView = hostView;
 }
 
++ (BOOL)hasMessagesShowingOrQueued {
+  NSAssert([NSThread isMainThread], @"hasMessagesShowingOrQueued must be called on main thread.");
+
+  MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
+
+  return (manager.showingMessage || manager.pendingMessages.count != 0);
+}
+
 + (void)dismissAndCallCompletionBlocksWithCategory:(NSString *)category {
   // Snag a copy now, we'll use that internally.
   NSString *categoryToDismiss = [category copy];

@@ -17,6 +17,7 @@
 #import "FeatureHighlightExampleSupplemental.h"
 
 #import "MaterialButtons.h"
+#import "MaterialButtons+ButtonThemer.h"
 #import "MaterialMath.h"
 #import "MaterialPalettes.h"
 #import "MaterialTypography.h"
@@ -29,6 +30,9 @@ static NSString *const reuseIdentifier = @"Cell";
   [super viewDidLoad];
 
   self.view.backgroundColor = [UIColor whiteColor];
+  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
+  buttonScheme.colorScheme = self.colorScheme;
+  buttonScheme.typographyScheme = self.typographyScheme;
 
   self.infoLabel = [[UILabel alloc] initWithFrame:CGRectZero];
   self.infoLabel.text = @"Tap anywhere to move the button.";
@@ -37,15 +41,23 @@ static NSString *const reuseIdentifier = @"Cell";
       [self.infoLabel.textColor colorWithAlphaComponent:[MDCTypography captionFontOpacity]];
   [self.view addSubview:self.infoLabel];
 
-  self.button = [[MDCRaisedButton alloc] init];
-  [self.button setBackgroundColor:[UIColor colorWithWhite:0.1f alpha:1]];
-  [self.button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-  [self.button setTitle:@"Action" forState:UIControlStateNormal];
+  MDCButton *button = [[MDCButton alloc] init];
+  self.button = button;
+  [self.button setTitle:@"Feature" forState:UIControlStateNormal];
   [self.button sizeToFit];
-  [self.button addTarget:self
-                  action:@selector(didTapButton:)
-        forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:self.button];
+
+  MDCButton *actionButton = [[MDCButton alloc] init];
+  self.actionButton = actionButton;
+  [self.actionButton setTitle:@"Show Feature Highlight" forState:UIControlStateNormal];
+  [self.actionButton sizeToFit];
+  [self.actionButton addTarget:self
+                        action:@selector(didTapButton:)
+              forControlEvents:UIControlEventTouchUpInside];
+  [self.view addSubview:self.actionButton];
+
+  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:button];
+  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:actionButton];
 
   UITapGestureRecognizer *tapRecognizer =
       [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapBackground:)];
@@ -60,6 +72,12 @@ static NSString *const reuseIdentifier = @"Cell";
   frame.origin.x = self.view.frame.size.width / 2 - frame.size.width / 2;
   frame.origin.y = self.view.frame.size.height / 2 - frame.size.height / 2;
   self.button.frame = frame;
+
+  [self.actionButton sizeToFit];
+  frame = self.actionButton.frame;
+  frame.origin.x = self.view.frame.size.width / 2 - frame.size.width / 2;
+  frame.origin.y = self.view.frame.size.height - 60;
+  self.actionButton.frame = frame;
 
   CGSize labelSize = [self.infoLabel sizeThatFits:self.view.frame.size];
   self.infoLabel.frame =
@@ -151,7 +169,7 @@ static NSString *const reuseIdentifier = @"Cell";
 }
 
 + (BOOL)catalogIsPresentable {
-  return YES;
+  return NO;
 }
 
 @end
@@ -194,22 +212,29 @@ static NSString *const reuseIdentifier = @"Cell";
 
   self.view.backgroundColor = [UIColor whiteColor];
 
-  self.infoLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-  self.infoLabel.text = @"Tap on the button below.";
-  self.infoLabel.font = [MDCTypography subheadFont];
-  self.infoLabel.textColor =
-      [self.infoLabel.textColor colorWithAlphaComponent:[MDCTypography captionFontOpacity]];
-  [self.view addSubview:self.infoLabel];
+  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
+  buttonScheme.colorScheme = self.colorScheme;
+  buttonScheme.typographyScheme = self.typographyScheme;
 
-  self.button = [[MDCRaisedButton alloc] init];
-  [self.button setBackgroundColor:[UIColor colorWithWhite:0.1f alpha:1]];
-  [self.button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-  [self.button setTitle:@"Action" forState:UIControlStateNormal];
-  [self.button sizeToFit];
-  [self.button addTarget:self
-                  action:@selector(didTapButton:)
-        forControlEvents:UIControlEventTouchUpInside];
+  MDCFloatingButton *fab = [[MDCFloatingButton alloc] init];
+  [fab setImage:[UIImage imageNamed:@"Plus"] forState:UIControlStateNormal];
+  [fab sizeToFit];
+  self.button = fab;
   [self.view addSubview:self.button];
+
+  [MDCFloatingActionButtonThemer applyScheme:buttonScheme toButton:fab];
+
+
+  MDCButton *actionButton = [[MDCButton alloc] init];
+  self.actionButton = actionButton;
+  [self.actionButton setTitle:@"Show Feature Highlight" forState:UIControlStateNormal];
+  [self.actionButton sizeToFit];
+  [self.actionButton addTarget:self
+                        action:@selector(didTapButton:)
+              forControlEvents:UIControlEventTouchUpInside];
+  [self.view addSubview:self.actionButton];
+
+  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:actionButton];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -221,11 +246,11 @@ static NSString *const reuseIdentifier = @"Cell";
   frame.origin.y = self.view.frame.size.height / 2 - frame.size.height / 2;
   self.button.frame = frame;
 
-  CGSize labelSize = [self.infoLabel sizeThatFits:self.view.frame.size];
-  self.infoLabel.frame =
-      MDCRectAlignToScale(CGRectMake(self.view.frame.size.width / 2 - labelSize.width / 2, 20,
-                                     labelSize.width, labelSize.height),
-                          [UIScreen mainScreen].scale);
+  [self.actionButton sizeToFit];
+  frame = self.actionButton.frame;
+  frame.origin.x = self.view.frame.size.width / 2 - frame.size.width / 2;
+  frame.origin.y = self.view.frame.size.height - 60;
+  self.actionButton.frame = frame;
 }
 
 #pragma mark - CatalogByConvention
