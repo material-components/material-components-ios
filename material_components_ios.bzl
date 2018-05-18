@@ -14,7 +14,7 @@ DEFAULT_IOS_RUNNER_TARGETS = [
 
 def mdc_objc_library(
     name,
-    copts = [],
+    copts = ["-swift-version", "3"],
     **kwargs):
   """Declare an Objective-C library with strict_warnings_objc_library."""
   strict_warnings_objc_library(
@@ -50,7 +50,6 @@ def mdc_public_objc_library(
       name = name,
       deps = deps,
       sdk_frameworks = sdk_frameworks,
-      copts = ["-swift-version", "3"],
       visibility = visibility,
       srcs = native.glob(["src/*.m", "src/private/*.h", "src/private/*.m"]) + extra_srcs,
       hdrs = native.glob(["src/*.h"]),
