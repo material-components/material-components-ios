@@ -58,7 +58,6 @@ class MDCCatalogDebugAlert: UICollectionViewController {
 
     layout.minimumLineSpacing = 0
     layout.minimumInteritemSpacing = 0
-    layout.itemSize = CGSize(width: 400, height: 44)
 
     super.init(collectionViewLayout: layout)
 

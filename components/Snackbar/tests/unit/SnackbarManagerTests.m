@@ -23,6 +23,11 @@
 
 @implementation SnackbarManagerTests
 
+- (void)tearDown {
+  [MDCSnackbarManager dismissAndCallCompletionBlocksWithCategory:nil];
+  [super tearDown];
+}
+
 // Disabled due to flakiness in CI.
 - (void)disabled_testMessagesResumedWhenTokenIsDeallocated {
   // Given
@@ -44,6 +49,23 @@
 
   // Then
   [self waitForExpectationsWithTimeout:1.0 handler:nil];
+}
+
+- (void)testHasMessagesShowingOrQueued {
+  MDCSnackbarMessage *message = [MDCSnackbarMessage messageWithText:@"foo1"];
+  message.duration = 10;
+  [MDCSnackbarManager showMessage:message];
+
+  XCTestExpectation *expectation = [self expectationWithDescription:@"has_shown_message"];
+
+  // We need to dispatch_async in order to assure that the assertion happens after showMessage:
+  // actually displays the message.
+  dispatch_async(dispatch_get_main_queue(), ^{
+    XCTAssertTrue([MDCSnackbarManager hasMessagesShowingOrQueued]);
+    [expectation fulfill];
+  });
+
+  [self waitForExpectationsWithTimeout:3.0 handler:nil];
 }
 
 @end

@@ -112,8 +112,8 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 }
 
 - (void)viewWillLayoutSubviews {
-  _featureHighlightView.titleLabel.text = self.titleText;
-  [self attributedStringForString:self.titleText lineSpacing:kMDCFeatureHighlightLineSpacing];
+  _featureHighlightView.titleLabel.attributedText =
+      [self attributedStringForString:self.titleText lineSpacing:kMDCFeatureHighlightLineSpacing];
   _featureHighlightView.bodyLabel.attributedText =
       [self attributedStringForString:self.bodyText lineSpacing:kMDCFeatureHighlightLineSpacing];
 }

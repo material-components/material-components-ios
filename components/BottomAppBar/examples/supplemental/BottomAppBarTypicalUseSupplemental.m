@@ -16,6 +16,19 @@
 
 #import "BottomAppBarTypicalUseSupplemental.h"
 
+#import "MaterialAppBar.h"
+#import "MaterialAppBar+ColorThemer.h"
+#import "MaterialAppBar+TypographyThemer.h"
+
+static NSString *const kCellIdentifier = @"cell";
+
+@interface BottomAppBarExampleTableViewController ()
+@property(nonatomic, strong) UISwitch *fabVisibilitySwitch;
+@property(nonatomic, strong) MDCAppBar *appBar;
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
+@end
+
 @implementation BottomAppBarTypicalUseExample (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
@@ -46,6 +59,8 @@
   BottomAppBarExampleTableViewController *tableView =
       [[BottomAppBarExampleTableViewController alloc] initWithNibName:nil bundle:nil];
   tableView.bottomBarView = self.bottomBarView;
+  tableView.colorScheme = self.colorScheme;
+  tableView.typographyScheme = self.typographyScheme;
   self.viewController = tableView;
 }
 
@@ -66,8 +81,13 @@
                                         @"Trailing Floating Button",
                                         @"Primary Elevation Floating Button",
                                         @"Secondary Elevation Floating Button",
-                                        @"Toggle Floating Button Visibility" ];
+                                        @"Visible FAB" ];
     _listItems = listItems;
+    
+    self.title = @"Bottom App Bar";
+    
+    _appBar = [[MDCAppBar alloc] init];
+    [self addChildViewController:_appBar.headerViewController];
   }
   return self;
 }
@@ -75,6 +95,21 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  [MDCAppBarTypographyThemer applyTypographyScheme:self.typographyScheme toAppBar:_appBar];
+  [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme toAppBar:_appBar];
+  
+  self.appBar.headerViewController.headerView.trackingScrollView = self.tableView;
+  self.tableView.delegate = self.appBar.headerViewController;
+  
+  [self.appBar addSubviewsToParent];
+  
+  self.fabVisibilitySwitch = [[UISwitch alloc] init];
+  self.fabVisibilitySwitch.on = !self.bottomBarView.floatingButtonHidden;
+  [self.fabVisibilitySwitch addTarget:self
+                               action:@selector(didTapFABVisibilitySwitch:)
+                     forControlEvents:UIControlEventValueChanged];
+
+  [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kCellIdentifier];
   self.tableView.layoutMargins = UIEdgeInsetsZero;
   self.tableView.separatorInset = UIEdgeInsetsZero;
 }
@@ -91,14 +126,20 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-  if (!cell) {
-    cell =
-        [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-  }
+  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
   cell.layoutMargins = UIEdgeInsetsZero;
   cell.textLabel.text = self.listItems[indexPath.item];
+  [self.fabVisibilitySwitch removeFromSuperview];
+  if (indexPath.row == (NSInteger)(self.listItems.count - 1)) {
+    cell.accessoryView = self.fabVisibilitySwitch;
+  } else {
+    cell.accessoryView = nil;
+  }
   return cell;
+}
+
+- (void)didTapFABVisibilitySwitch:(UISwitch *)sender {
+  [self.bottomBarView setFloatingButtonHidden:!sender.isOn animated:YES];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -124,8 +165,8 @@
                                             animated:YES];
       break;
     case 5:
-      [self.bottomBarView setFloatingButtonHidden:!self.bottomBarView.floatingButtonHidden
-                                         animated:YES];
+      [self.fabVisibilitySwitch setOn:!self.fabVisibilitySwitch.isOn animated:YES];
+      [self didTapFABVisibilitySwitch:self.fabVisibilitySwitch];
       break;
     default:
       break;

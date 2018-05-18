@@ -21,6 +21,10 @@
 #import "MaterialTabs.h"
 #import "MaterialTabs+ColorThemer.h"
 
+@interface TabBarIconExample ()
+@property(nonatomic, strong)UIBarButtonItem *addStarButtonItem;
+@end
+
 @implementation TabBarIconExample
 
 - (void)viewDidLoad {
@@ -29,6 +33,11 @@
   [self setupExampleViews];
 
   [self loadTabBar];
+
+  self.addStarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add"
+                                                            style:UIBarButtonItemStylePlain
+                                                           target:self
+                                                           action:@selector(incrementDidTouch:)];
 }
 
 #pragma mark - Action
@@ -123,6 +132,11 @@
 
   [self.scrollView setContentOffset:CGPointMake(index * CGRectGetWidth(self.view.bounds), 0)
                            animated:YES];
+  if (index == 0) {
+    self.navigationItem.rightBarButtonItem = nil;
+  } else {
+    self.navigationItem.rightBarButtonItem = self.addStarButtonItem;
+  }
 }
 
 @end

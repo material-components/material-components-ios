@@ -58,6 +58,13 @@
 + (void)setPresentationHostView:(nullable UIView *)hostView;
 
 /**
+ Checks if there is any message showing or queued. Does not consider suspended messages.
+
+ @note This method must be called from the main thread.
+ */
++ (BOOL)hasMessagesShowingOrQueued;
+
+/**
  Bypasses showing the messages of the given @c category.
 
  Completion blocks are called, but the UI won't show any queued messages and will dismiss any
