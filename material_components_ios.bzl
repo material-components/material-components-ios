@@ -3,7 +3,7 @@
 load("@bazel_ios_warnings//:strict_warnings_objc_library.bzl", "strict_warnings_objc_library")
 load("@build_bazel_rules_apple//apple/testing/default_runner:ios_test_runner.bzl", "ios_test_runner")
 load("@build_bazel_rules_apple//apple:ios.bzl", "ios_unit_test_suite")
-load("@build_bazel_rules_apple//apple:ios.bzl", "ios_ui_test")
+load("@build_bazel_rules_apple//apple:ios.bzl", "ios_ui_test_suite")
 
 DEFAULT_IOS_RUNNER_TARGETS = [
     "//components/testing/runners:IPHONE_5_IN_8_1",
@@ -83,12 +83,13 @@ def mdc_app_test_suite(
     size = "medium",
     **kwargs):
   """Declare an MDC ui test using the DEFAULT_IOS_RUNNER_TARGETS matrix."""
-  ios_ui_test(
+  ios_ui_test_suite(
     name = name,
     deps = deps,
+    tags = ["manual"],
     minimum_os_version = minimum_os_version,
     test_host = "@build_bazel_rules_apple//apple/testing/default_host/ios",
-    runner = "//components/testing/runners:IPHONE_5_IN_8_1",
+    runners = DEFAULT_IOS_RUNNER_TARGETS,
     visibility = visibility,
     size = size,
     **kwargs
