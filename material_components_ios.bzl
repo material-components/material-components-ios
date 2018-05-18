@@ -50,6 +50,7 @@ def mdc_public_objc_library(
       name = name,
       deps = deps,
       sdk_frameworks = sdk_frameworks,
+      copts = ["-swift-version", "3"],
       visibility = visibility,
       srcs = native.glob(["src/*.m", "src/private/*.h", "src/private/*.m"]) + extra_srcs,
       hdrs = native.glob(["src/*.h"]),
