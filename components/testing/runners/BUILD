@@ -21,7 +21,7 @@ ios_test_runner(
 ios_test_runner(
     name = "DYNAMIC_RUNNER",
     device_type = select({ ":xcode8_3_3": "iPad 2", ":xcode_9_0": "iPhone2017-C", "//conditions:default": "iPhone X" }),
-    os_version = select({ ":xcode8_3_3": "8.4", "//conditions:default": "11.1" }),
+    os_version = select({ ":xcode8_3_3": "8.4", "//conditions:default": "11.0" }),
     visibility = ["//visibility:public"],
 )
 
