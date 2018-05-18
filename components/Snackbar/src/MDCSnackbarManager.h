@@ -221,6 +221,3 @@
  */
 @protocol MDCSnackbarSuspensionToken <NSObject>
 @end
-
-
-
