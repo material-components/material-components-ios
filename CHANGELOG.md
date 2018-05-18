@@ -9,28 +9,7 @@ MDCFlexibleHeaderViewController's `-updateTopLayoutGuide` will be deprecated in 
 should no longer be necessary to call this API if you are using an
 `MDCFlexibleHeaderContainerViewController`.
 
-## New features
-
-Flexible header container view controllers have a new flag that, when enabled, allows content view
-controllers to correctly make use of the topLayoutGuide in order to position views below the
-flexible header view. For example, to ensure that a view is always placed below a flexible header
-view you might calculate the view's frame like so:
-
-```
-frame.origin.y = self.topLayoutGuide.length + 32
-```
-
 ## API changes
-
-### FlexibleHeader
-
-#### MDCFlexibleHeaderContainerViewController
-
-*new* property: `topLayoutGuideAdjustmentEnabled` in `MDCFlexibleHeaderContainerViewController`
-
-#### MDCFlexibleHeaderViewController
-
-*new* property: `topLayoutGuideViewController` in `MDCFlexibleHeaderViewController`
 
 ### Snackbar
 
@@ -99,12 +78,6 @@ frame.origin.y = self.topLayoutGuide.length + 32
 #### Changes
 
 * [Make "modal" dialog "non-dismissable" (#3736)](https://github.com/material-components/material-components-ios/commit/b63c534ada8437f5ec9e2d707671fcd24677a1aa) (Robert Moore)
-
-### FlexibleHeader
-
-#### Changes
-
-* [Fixed behavior for top layout guide and safe area insets. (#3754)](https://github.com/material-components/material-components-ios/commit/7f1c514829fc3a17cc2d1001c2ffca21265b2f0f) (featherless)
 
 ### Themes
 
