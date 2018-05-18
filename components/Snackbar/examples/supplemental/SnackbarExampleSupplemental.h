@@ -19,6 +19,7 @@
 #import "MaterialButtons.h"
 #import "MaterialCollections.h"
 #import "MaterialColorScheme.h"
+#import "MaterialSnackbar.h"
 #import "MaterialTypography.h"
 #import "MaterialTypographyScheme.h"
 
@@ -41,7 +42,7 @@
 
 @end
 
-@interface SnackbarSimpleExample : SnackbarExample
+@interface SnackbarSimpleExample : SnackbarExample <MDCSnackbarManagerDelegate>
 @end
 
 @interface SnackbarSuspensionExample : SnackbarExample

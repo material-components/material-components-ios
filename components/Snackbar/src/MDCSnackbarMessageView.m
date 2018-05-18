@@ -390,7 +390,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     [buttonView setTranslatesAutoresizingMaskIntoConstraints:NO];
     [_buttonView addSubview:buttonView];
 
-    MDCButton *button = [[MDCSnackbarManager.buttonClass alloc] init];
+    MDCButton *button = [[MDCSnackbarMessageViewButton alloc] init];
     [button setTitleColor:_buttonTitleColors[@(UIControlStateNormal)]
                  forState:UIControlStateNormal];
     [button setTitleColor:_buttonTitleColors[@(UIControlStateHighlighted)]

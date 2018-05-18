@@ -56,6 +56,11 @@
 @property(nonatomic, strong, nullable) UIFont *buttonFont UI_APPEARANCE_SELECTOR;
 
 /**
+ The array of action buttons of the snackbar.
+ */
+@property(nonatomic, strong, nullable) NSMutableArray<MDCButton *> *actionButtons;
+
+/**
  Returns the button title color for a particular control state.
 
  Default for UIControlStateNormal is MDCRGBAColor(0xFF, 0xFF, 0xFF, 0.6f).

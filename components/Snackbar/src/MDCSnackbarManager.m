@@ -79,6 +79,11 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
  */
 @property(nonatomic) BOOL showingMessage;
 
+/**
+ The delegate for MDCSnackbarManagerDelegate
+ */
+@property(nonatomic, weak) id<MDCSnackbarManagerDelegate> delegate;
+
 @end
 
 @interface MDCSnackbarManagerSuspensionToken : NSObject <MDCSnackbarSuspensionToken>
@@ -102,7 +107,6 @@ static UIColor *_snackbarMessageViewShadowColor;
 static UIColor *_messageTextColor;
 static UIFont *_messageFont;
 static UIFont *_buttonFont;
-static Class _buttonClass;
 static NSMutableDictionary<NSNumber *, UIColor *> *_buttonTitleColors;
 static BOOL _mdc_adjustsFontForContentSizeCategory;
 static BOOL _shouldApplyStyleChangesToVisibleSnackbars;
@@ -124,7 +128,6 @@ static BOOL _shouldApplyStyleChangesToVisibleSnackbars;
     _pendingMessages = [[NSMutableArray alloc] init];
     _suspensionTokens = [NSMutableDictionary dictionary];
     _overlayView = [[MDCSnackbarOverlayView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    _buttonClass = _buttonClass ?: [MDCSnackbarMessageViewButton class];
   }
   return self;
 }
@@ -224,6 +227,7 @@ static BOOL _shouldApplyStyleChangesToVisibleSnackbars;
 
   Class viewClass = [message viewClass];
   snackbarView = [[viewClass alloc] initWithMessage:message dismissHandler:dismissHandler];
+  [self.delegate willPresentSnackbarWithMessageView:snackbarView];
   self.currentSnackbar = snackbarView;
   self.overlayView.accessibilityViewIsModal = ![self isSnackbarTransient:snackbarView];
   self.overlayView.hidden = NO;
@@ -496,6 +500,16 @@ static BOOL _shouldApplyStyleChangesToVisibleSnackbars;
 
 @implementation MDCSnackbarManager
 
++ (void)setDelegate:(id<MDCSnackbarManagerDelegate>)delegate {
+  MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
+  manager.delegate = delegate;
+}
+
++ (id<MDCSnackbarManagerDelegate>)delegate {
+  MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
+  return manager.delegate;
+}
+
 + (void)showMessage:(MDCSnackbarMessage *)inputMessage {
   if (!inputMessage) {
     return;
@@ -661,19 +675,6 @@ static BOOL _shouldApplyStyleChangesToVisibleSnackbars;
 
 + (UIFont *)buttonFont {
   return _buttonFont;
-}
-
-+ (void)setButtonClass:(Class)buttonClass {
-  if (![buttonClass isSubclassOfClass:[MDCSnackbarMessageViewButton class]]) {
-    return;
-  }
-  if (buttonClass != _buttonClass) {
-    _buttonClass = buttonClass;
-  }
-}
-
-+ (Class)buttonClass {
-  return _buttonClass;
 }
 
 + (void)setButtonTitleColor:(UIColor *)titleColor forState:(UIControlState)state {
