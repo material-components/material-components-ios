@@ -113,17 +113,17 @@ def ios_runners2():
   )
   ios_test_runner(
     name = "DYNAMIC_RUNNER2",
-    device_type = select({ ":xcode8_3_3": "iPad 2", ":xcode_9_0": "iPhone2017-C", "//conditions:default": "iPhone X" }),
-    os_version = select({ ":xcode8_3_3": "8.4", "//conditions:default": "11.0" }), 
+    device_type = select({ ":xcode8_3_32": "iPad 2", ":xcode_9_02": "iPhone2017-C", "//conditions:default": "iPhone X" }),
+    os_version = select({ ":xcode8_3_32": "8.4", "//conditions:default": "11.0" }), 
   )
 
   native.config_setting(
-      name = "xcode8_3_3",
+      name = "xcode8_3_32",
       values = {"xcode_version": "8.3.3"},
   )
 
   native.config_setting(
-      name = "xcode_9_0",
+      name = "xcode_9_02",
       values = {"xcode_version": "9.0"},
   )
 
