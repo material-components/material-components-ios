@@ -10,7 +10,7 @@ DEFAULT_IOS_RUNNER_TARGETS = [
     "//components/testing/runners:IPHONE_5_IN_8_1",
     "//components/testing/runners:IPAD_PRO_12_9_IN_9_3",
     "//components/testing/runners:IPHONE_7_PLUS_IN_10_3",
-    "//components/testing/runners:DYNAMIC_RUNNER",
+#    "//components/testing/runners:DYNAMIC_RUNNER",
 ]
 
 def mdc_objc_library(
@@ -96,6 +96,7 @@ def mdc_app_test_suite(
   ios_unit_test_suite(
     name = name,
     deps = deps,
+    tags = ["exclusive"],
     minimum_os_version = minimum_os_version,
     test_host = "@build_bazel_rules_apple//apple/testing/default_host/ios",
     runners = DEFAULT_IOS_RUNNER_TARGETS,
