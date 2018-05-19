@@ -108,3 +108,14 @@ def mdc_app_test_suite(
       size = size,
       **kwargs
     )
+    ios_ui_test(
+      name = name + "_" + runner.split(':')[1] + '_2',
+      deps = deps,
+      tags = ["exclusive"],
+      minimum_os_version = minimum_os_version,
+      test_host = "@build_bazel_rules_apple//apple/testing/default_host/ios",
+      runner = runner,
+      visibility = visibility,
+      size = size,
+      **kwargs
+    )
