@@ -93,12 +93,12 @@ def mdc_app_test_suite(
     size = "medium",
     **kwargs):
   """Declare an MDC ui test using the DEFAULT_IOS_RUNNER_TARGETS matrix."""
-  ios_unit_test_suite(
+  ios_unit_test(
     name = name,
     deps = deps,
     minimum_os_version = minimum_os_version,
     test_host = "@build_bazel_rules_apple//apple/testing/default_host/ios",
-    runners = DEFAULT_IOS_RUNNER_TARGETS,
+    runner = "//components/testing/runners:IPHONE_5_IN_8_1",
     visibility = visibility,
     size = size,
     **kwargs
