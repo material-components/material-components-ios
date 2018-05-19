@@ -5,6 +5,7 @@ load("@build_bazel_rules_apple//apple/testing/default_runner:ios_test_runner.bzl
 load("@build_bazel_rules_apple//apple:ios.bzl", "ios_unit_test_suite")
 load("@build_bazel_rules_apple//apple:ios.bzl", "ios_unit_test")
 load("@build_bazel_rules_apple//apple:ios.bzl", "ios_ui_test")
+load("@build_bazel_rules_apple//apple:ios.bzl", "ios_ui_test_suite")
 load("@build_bazel_rules_apple//apple:swift.bzl", "swift_library")
 
 def mdc_objc_library(
@@ -155,7 +156,7 @@ def mdc_app_test_suite(
     size = "medium",
     **kwargs):
   """Declare an MDC ui test using the DEFAULT_IOS_RUNNER_TARGETS matrix."""
-  ios_unit_test_suite(
+  ios_ui_test_suite(
     name = name,
     deps = deps,
     tags = ["exclusive"],
