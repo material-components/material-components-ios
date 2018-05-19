@@ -271,8 +271,8 @@ fi
 
 pushd .kokoro-ios-runner
 git fetch > /dev/null
-TAG=$(git tag --sort=v:refname -l "$KOKORO_RUNNER_VERSION" | tail -n1)
-git checkout "$TAG" > /dev/null
+#TAG=$(git tag --sort=v:refname -l "$KOKORO_RUNNER_VERSION" | tail -n1)
+git checkout "origin/splittests" > /dev/null
 popd
 
 case "$DEPENDENCY_SYSTEM" in
