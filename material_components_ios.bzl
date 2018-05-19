@@ -78,6 +78,7 @@ def mdc_unit_test_suite(
   ios_unit_test_suite(
     name = name,
     deps = deps,
+    tags = ["exclusive"],
     minimum_os_version = minimum_os_version,
     runners = DEFAULT_IOS_RUNNER_TARGETS,
     visibility = visibility,
