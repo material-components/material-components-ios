@@ -10,7 +10,7 @@ DEFAULT_IOS_RUNNER_TARGETS = [
     "//components/testing/runners:IPHONE_5_IN_8_1",
     "//components/testing/runners:IPAD_PRO_12_9_IN_9_3",
     "//components/testing/runners:IPHONE_7_PLUS_IN_10_3",
-#    "//components/testing/runners:DYNAMIC_RUNNER",
+    "//components/testing/runners:DYNAMIC_RUNNER",
 ]
 
 def mdc_objc_library(
