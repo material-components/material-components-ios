@@ -100,6 +100,13 @@ run_bazel() {
     xcode_versions="--min-xcode-version $XCODE_MINIMUM_VERSION"
   fi
 
+  # First run tends to fail.
+  ./.kokoro-ios-runner/bazel.sh $COMMAND //components/BottomSheet/... \
+      $xcode_versions \
+      $verbosity_args \
+      --ios_minimum_os=8.0 \
+      --ios_multi_cpus=i386,x86_64 || echo "First run failed. Continuing anyway."
+
   ./.kokoro-ios-runner/bazel.sh $COMMAND $TARGET \
       $xcode_versions \
       $verbosity_args \
