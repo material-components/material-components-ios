@@ -158,6 +158,7 @@ def mdc_app_test_suite(
   ios_unit_test_suite(
     name = name,
     deps = deps,
+    tags = ["exclusive"],
     minimum_os_version = minimum_os_version,
     test_host = "@build_bazel_rules_apple//apple/testing/default_host/ios",
     runners = ios_runners2(),
