@@ -95,6 +95,40 @@ def ios_runners():
 
   return [":IPHONE_5_IN_8_1", ":IPAD_PRO_12_9_IN_9_3", ":IPHONE_7_PLUS_IN_10_3", ":DYNAMIC_RUNNER"]
 
+def ios_runners2():
+  ios_test_runner(
+    name = "IPHONE_5_IN_8_1",
+    device_type = "iPhone 5",
+    os_version = "8.1",
+  )
+  ios_test_runner(
+    name = "IPAD_PRO_12_9_IN_9_3",
+    device_type = "iPad Pro (12.9-inch)",
+    os_version = "9.3",
+  )
+  ios_test_runner(
+    name = "IPHONE_7_PLUS_IN_10_3",
+    device_type = "iPhone 7 Plus",
+    os_version = "10.3",
+  )
+  ios_test_runner(
+    name = "DYNAMIC_RUNNER",
+    device_type = select({ ":xcode8_3_3": "iPad 2", ":xcode_9_0": "iPhone2017-C", "//conditions:default": "iPhone X" }),
+    os_version = select({ ":xcode8_3_3": "8.4", "//conditions:default": "11.0" }), 
+  )
+
+  native.config_setting(
+      name = "xcode8_3_3",
+      values = {"xcode_version": "8.3.3"},
+  )
+
+  native.config_setting(
+      name = "xcode_9_0",
+      values = {"xcode_version": "9.0"},
+  )
+
+  return [":IPHONE_5_IN_8_1", ":IPAD_PRO_12_9_IN_9_3", ":IPHONE_7_PLUS_IN_10_3", ":DYNAMIC_RUNNER"]
+
 def mdc_unit_test_suite(
     name = "unit_tests",
     deps = [],
@@ -126,7 +160,7 @@ def mdc_app_test_suite(
     deps = deps,
     minimum_os_version = minimum_os_version,
     test_host = "@build_bazel_rules_apple//apple/testing/default_host/ios",
-    runners = ios_runners(),
+    runners = ios_runners2(),
     visibility = visibility,
     size = size,
     **kwargs
