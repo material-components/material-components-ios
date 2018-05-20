@@ -65,7 +65,7 @@
     [expectation fulfill];
   });
 
-  [self waitForExpectationsWithTimeout:3.0 handler:nil];
+  [self waitForExpectations:@[expectation] timeout:3.0];
 }
 
 @end
