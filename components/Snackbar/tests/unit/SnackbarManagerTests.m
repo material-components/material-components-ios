@@ -62,6 +62,7 @@
   // actually displays the message.
   dispatch_async(dispatch_get_main_queue(), ^{
     XCTAssertTrue([MDCSnackbarManager hasMessagesShowingOrQueued]);
+    NSLog(@"Did fullfill");
     [expectation fulfill];
   });
 
