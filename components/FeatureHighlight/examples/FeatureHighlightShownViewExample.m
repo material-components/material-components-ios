@@ -24,6 +24,15 @@
 
 @implementation FeatureHighlightShownViewExample
 
+- (id)init {
+  self = [super init];
+  if (self) {
+    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.typographyScheme = [[MDCTypographyScheme alloc] init];
+  }
+  return self;
+}
+
 - (void)didTapButton:(id)sender {
   MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
   buttonScheme.colorScheme = self.colorScheme;
