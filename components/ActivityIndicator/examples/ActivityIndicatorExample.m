@@ -35,6 +35,7 @@
   self = [super init];
   if (self) {
     self.title = @"Activity Indicator";
+    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
   }
   return self;
 }

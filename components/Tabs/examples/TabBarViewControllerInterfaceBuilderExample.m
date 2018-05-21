@@ -26,6 +26,14 @@
 
 @implementation TabBarViewControllerInterfaceBuilderExample
 
+- (id)init {
+  self = [super init];
+  if (self) {
+    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+  }
+  return self;
+}
+
 - (void)awakeFromNib {
   [super awakeFromNib];
   self.viewControllers = @[
