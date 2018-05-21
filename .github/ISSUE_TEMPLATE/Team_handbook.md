@@ -6,7 +6,6 @@ about: Propose a change to the team's handbook.
 
 - [ ] The issue's title has a prefix of `[Team handbook]`.
 - [ ] The issue has been labeled with `Team handbook`.
-- [ ] There is more than one variant in the proposal.
 
 A summary of the goal of this proposal.
 
