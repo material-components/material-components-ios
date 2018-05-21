@@ -18,7 +18,6 @@
 
 #import "MDCMultilineTextField.h"
 #import "MDCMultilineTextInputDelegate.h"
-#import "MDCPaddedLabel.h"
 #import "MDCTextField.h"
 #import "MDCTextFieldPositioningDelegate.h"
 #import "MDCTextInput.h"
@@ -337,7 +336,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 - (void)setupPlaceholderLabel {
   if (!_placeholderLabel) {
-    _placeholderLabel = [[MDCPaddedLabel alloc] initWithFrame:CGRectZero];
+    _placeholderLabel = [[UILabel alloc] initWithFrame:CGRectZero];
   }
   _placeholderLabel.translatesAutoresizingMaskIntoConstraints = NO;
   [_placeholderLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultLow - 2
