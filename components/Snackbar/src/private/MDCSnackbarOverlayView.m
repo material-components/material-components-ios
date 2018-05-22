@@ -65,6 +65,18 @@ static const CGFloat kMaximumHeight = 80.0f;
 @property(nonatomic) MDCSnackbarMessageView *snackbarView;
 
 /**
+ The layout constraint which determines how far the Snackbar is from the leading edge of the screen.
+ It is active when the alignment of the parent overlay view is MDCSnackbarAlignmentLeading.
+ */
+@property(nonatomic) NSLayoutConstraint *snackbarViewLeadingConstraint;
+
+/**
+ The layout constraint used to center the Snackbar.
+ It is active when the alignment of the parent overlay view is MDCSnackbarAlignmentCenter.
+ */
+@property(nonatomic) NSLayoutConstraint *snackbarViewCenterConstraint;
+
+/**
  The object which will notify us of changes in the keyboard position.
  */
 @property(nonatomic) MDCKeyboardWatcher *watcher;
@@ -266,7 +278,7 @@ static const CGFloat kMaximumHeight = 80.0f;
       BOOL isRegularHeight =
           self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular;
       if (isRegularWidth && isRegularHeight) {
-        snackbarView.centerConstraint =
+        self.snackbarViewCenterConstraint =
             [NSLayoutConstraint constraintWithItem:snackbarView
                                          attribute:NSLayoutAttributeCenterX
                                          relatedBy:NSLayoutRelationEqual
@@ -274,9 +286,9 @@ static const CGFloat kMaximumHeight = 80.0f;
                                          attribute:NSLayoutAttributeCenterX
                                         multiplier:1.0
                                           constant:0];
-        snackbarView.centerConstraint.active = self.alignment == MDCSnackbarAlignmentCenter;
+        self.snackbarViewCenterConstraint.active = self.alignment == MDCSnackbarAlignmentCenter;
 
-        snackbarView.leadingConstraint =
+        self.snackbarViewLeadingConstraint =
             [NSLayoutConstraint constraintWithItem:snackbarView
                                          attribute:NSLayoutAttributeLeading
                                          relatedBy:NSLayoutRelationEqual
@@ -284,7 +296,7 @@ static const CGFloat kMaximumHeight = 80.0f;
                                          attribute:NSLayoutAttributeLeading
                                         multiplier:1.0
                                           constant:sideMargin];
-        snackbarView.leadingConstraint.active = self.alignment == MDCSnackbarAlignmentLeading;
+        self.snackbarViewLeadingConstraint.active = self.alignment == MDCSnackbarAlignmentLeading;
 
         // If not full width, ensure that it doesn't get any larger than our own width.
         [container
@@ -628,7 +640,7 @@ static const CGFloat kMaximumHeight = 80.0f;
   [self updatesnackbarPositionWithKeyboardUserInfo:[notification userInfo]];
 }
 
-#pragma mark - Bottom Offset
+#pragma mark - Bottom And Side Margins
 
 - (void)setBottomOffset:(CGFloat)bottomOffset {
   if (_bottomOffset != bottomOffset) {
@@ -656,7 +668,7 @@ static const CGFloat kMaximumHeight = 80.0f;
   if (_alignment != alignment) {
     _alignment = alignment;
 
-    [self.snackbarView activateConstraintsForAlignment:alignment];
+    [self activateSnackbarViewConstraintsForAlignment:alignment];
 
     [self triggerSnackbarLayoutChange];
 
@@ -674,6 +686,22 @@ static const CGFloat kMaximumHeight = 80.0f;
   }
 }
 
+- (void)activateSnackbarViewConstraintsForAlignment:(MDCSnackbarAlignment)alignment {
+  switch (alignment) {
+    case MDCSnackbarAlignmentCenter:
+      self.snackbarViewLeadingConstraint.active = NO;
+      self.snackbarViewCenterConstraint.active = YES;
+      break;
+    case MDCSnackbarAlignmentLeading:
+      self.snackbarViewLeadingConstraint.active = YES;
+      self.snackbarViewCenterConstraint.active = NO;
+      break;
+    default:
+      self.snackbarViewLeadingConstraint.active = NO;
+      self.snackbarViewCenterConstraint.active = YES;
+      break;
+  }
+}
 
 #pragma mark - Rotation
 

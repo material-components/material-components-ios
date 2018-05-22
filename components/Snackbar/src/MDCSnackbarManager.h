@@ -44,7 +44,7 @@
 
  @note The setter must be called from the main thread.
  */
-@property (class, nonatomic) MDCSnackbarAlignment alignment;
+@property (class, nonatomic, assign) MDCSnackbarAlignment alignment;
 
 /**
  Shows @c message to the user, in a style consistent with the data contained in @c message.

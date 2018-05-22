@@ -924,23 +924,6 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   return constraints;
 }
 
-- (void)activateConstraintsForAlignment:(MDCSnackbarAlignment)alignment {
-  switch (alignment) {
-    case MDCSnackbarAlignmentCenter:
-      self.leadingConstraint.active = NO;
-      self.centerConstraint.active = YES;
-      break;
-    case MDCSnackbarAlignmentLeading:
-      self.leadingConstraint.active = YES;
-      self.centerConstraint.active = NO;
-      break;
-    default:
-      self.leadingConstraint.active = NO;
-      self.centerConstraint.active = YES;
-      break;
-  }
-}
-
 - (void)layoutSubviews {
   [super layoutSubviews];
 
