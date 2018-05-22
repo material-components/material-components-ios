@@ -15,8 +15,8 @@
 load("//:material_components_ios.bzl",
      "mdc_public_objc_library",
      "mdc_objc_library",
-     "mdc_unit_test_suite")
-load("@build_bazel_rules_apple//apple:swift.bzl", "swift_library")
+     "mdc_unit_test_suite",
+     "mdc_app_test_suite")
 
 licenses(["notice"])  # Apache 2.0
 
@@ -43,6 +43,26 @@ mdc_objc_library(
     ],
     deps = [":BottomSheet"],
     visibility = ["//visibility:private"],
+)
+
+mdc_objc_library(
+    name = "app_test_sources",
+    testonly = 1,
+    srcs = glob(["tests/app/*.m"]),
+    hdrs = glob(["tests/app/*.h"]),
+    sdk_frameworks = [
+        "UIKit",
+        "XCTest",
+    ],
+    deps = [":BottomSheet"],
+    visibility = ["//visibility:private"],
+)
+
+# These are separate from the regular unit test suite because we want to specify
+# test_host so we can exercise tests which depend on UIKit functionality like
+# UIViewController presentation logic.
+mdc_app_test_suite(
+    deps = [":app_test_sources"],
 )
 
 mdc_unit_test_suite(

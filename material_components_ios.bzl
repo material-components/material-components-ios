@@ -3,6 +3,8 @@
 load("@bazel_ios_warnings//:strict_warnings_objc_library.bzl", "strict_warnings_objc_library")
 load("@build_bazel_rules_apple//apple/testing/default_runner:ios_test_runner.bzl", "ios_test_runner")
 load("@build_bazel_rules_apple//apple:ios.bzl", "ios_unit_test_suite")
+load("@build_bazel_rules_apple//apple:ios.bzl", "ios_ui_test")
+load("@build_bazel_rules_apple//apple:swift.bzl", "swift_library")
 
 DEFAULT_IOS_RUNNER_TARGETS = [
     "//components/testing/runners:IPHONE_5_IN_8_1",
@@ -19,6 +21,15 @@ def mdc_objc_library(
   strict_warnings_objc_library(
       name = name,
       copts = copts,
+      **kwargs)
+
+def mdc_swift_library(
+    name,
+    **kwargs):
+  """Declare a Swift library with strict_warnings_objc_library."""
+  swift_library(
+      name = name,
+      copts = ["-swift-version", "3"],
       **kwargs)
 
 def mdc_public_objc_library(
@@ -63,11 +74,31 @@ def mdc_unit_test_suite(
     visibility = ["//visibility:private"],
     size = "medium",
     **kwargs):
-  """Declare a MDC unit_test_suite using the ios_runners matrix."""
+  """Declare a MDC unit_test_suite using the DEFAULT_IOS_RUNNER_TARGETS matrix."""
   ios_unit_test_suite(
     name = name,
     deps = deps,
     minimum_os_version = minimum_os_version,
+    runners = DEFAULT_IOS_RUNNER_TARGETS,
+    visibility = visibility,
+    size = size,
+    **kwargs
+  )
+
+def mdc_app_test_suite(
+    name = "app_tests",
+    deps = [],
+    minimum_os_version = "8.0",
+    visibility = ["//visibility:private"],
+    size = "large",
+    **kwargs):
+  """Declare an MDC ui test using the DEFAULT_IOS_RUNNER_TARGETS matrix."""
+  ios_unit_test_suite(
+    name = name,
+    deps = deps,
+    tags = ["exclusive"],
+    minimum_os_version = minimum_os_version,
+    test_host = "@build_bazel_rules_apple//apple/testing/default_host/ios",
     runners = DEFAULT_IOS_RUNNER_TARGETS,
     visibility = visibility,
     size = size,

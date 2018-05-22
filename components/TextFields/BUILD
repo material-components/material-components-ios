@@ -15,8 +15,8 @@
 load("//:material_components_ios.bzl",
      "mdc_public_objc_library",
      "mdc_objc_library",
+     "mdc_swift_library",
      "mdc_unit_test_suite")
-load("@build_bazel_rules_apple//apple:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
@@ -112,7 +112,7 @@ mdc_objc_library(
     visibility = ["//visibility:private"],
 )
 
-swift_library(
+mdc_swift_library(
     name = "unit_test_swift_sources",
     srcs = glob(["tests/unit/*.swift"]),
     deps = [
