@@ -50,7 +50,7 @@ mdc_objc_library(
     deps = [
         ":Typography",
         ":private",
-    ]
+    ],
     visibility = ["//visibility:private"],
 )
 
