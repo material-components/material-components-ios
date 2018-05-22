@@ -16,7 +16,7 @@
 
 #import "MDCSnackbarMessage.h"
 
-/**
+/**f
  Internal-only methods used by MDCSnackbarMessage and MDCSnackbarManager.
  */
 @interface MDCSnackbarMessage ()
