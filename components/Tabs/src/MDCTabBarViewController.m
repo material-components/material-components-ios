@@ -173,6 +173,10 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
 
 - (void)updateOldViewControllers:(NSArray<UIViewController *> *)oldViewControllers
                               to:(NSArray<UIViewController *> *)viewControllers {
+  if (!self.isViewLoaded || [oldViewControllers isEqual:viewControllers]) {
+    return;
+  }
+
   if (![oldViewControllers isEqual:viewControllers]) {
     // For all view controllers that this is removing, follow UIViewController.h's rules for
     // for removing a child view controller. See the comments in UIViewController.h for more
@@ -193,23 +197,28 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
 
 - (void)updateOldSelectedViewController:(nullable UIViewController *)oldSelectedViewController
                                      to:(nullable UIViewController *)selectedViewController {
-  NSAssert(self.isViewLoaded, @"view is not loaded yet");
   if (!self.isViewLoaded || oldSelectedViewController == selectedViewController) {
     return;
   }
   if (selectedViewController) {
     NSAssert([_viewControllers containsObject:selectedViewController], @"not one of us.");
   }
+
+  if (![self.childViewControllers containsObject:selectedViewController]) {
+    [self addChildViewController:selectedViewController];
+    UIView *view = selectedViewController.view;
+    [self.view addSubview:view];
+    [selectedViewController didMoveToParentViewController:self];
+  }
+  [self updateTabBarItems];
   BOOL animated = NO;
-  UIView *oldView = oldSelectedViewController.view;
-  UIViewController *oldController = [self controllerWithView:oldView];
-  [oldController beginAppearanceTransition:NO animated:animated];
+  [oldSelectedViewController beginAppearanceTransition:NO animated:animated];
   [selectedViewController beginAppearanceTransition:YES animated:animated];
 
-  [self transitionViewsWithoutAnimationFromViewController:oldController
+  [self transitionViewsWithoutAnimationFromViewController:oldSelectedViewController
                                          toViewController:selectedViewController];
 
-  [oldController endAppearanceTransition];
+  [oldSelectedViewController endAppearanceTransition];
   [selectedViewController endAppearanceTransition];
 
   if (selectedViewController) {
@@ -250,11 +259,6 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
     if (tabBarItem.image) {
       hasImages = YES;
     }
-    [self addChildViewController:child];
-    UIView *view = child.view;
-    view.hidden = child != _selectedViewController;
-    [self.view addSubview:view];
-    [child didMoveToParentViewController:self];
   }
   // This class preserves the invariant that if the selected controller is not nil, it is contained
   // in the array of viewControllers.
