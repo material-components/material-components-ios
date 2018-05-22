@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -14,7 +14,19 @@
  limitations under the License.
  */
 
-#import "MDCSnackbarAlignment.h"
-#import "MDCSnackbarManager.h"
-#import "MDCSnackbarMessage.h"
-#import "MDCSnackbarMessageView.h"
+#import <Foundation/Foundation.h>
+
+/**
+ States used to configure Snackbar alignment.
+ */
+typedef NS_ENUM(NSInteger, MDCSnackbarAlignment) {
+  /**
+   Snackbar is positioned in the center of the screen.
+   */
+  MDCSnackbarAlignmentCenter = 0,
+
+  /**
+   Snackbar is positioned near the leading margin.
+   */
+  MDCSnackbarAlignmentLeading = 1,
+};

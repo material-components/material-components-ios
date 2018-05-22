@@ -38,7 +38,7 @@ static inline UIColor *MDCRGBAColor(uint8_t r, uint8_t g, uint8_t b, float a) {
 }
 
 /**
- The thickness of the snackbar border.
+ The thickness of the Snackbar border.
  */
 static const CGFloat kBorderWidth = 0;
 
@@ -60,7 +60,7 @@ static const CGFloat kCornerRadius = 4;
 static const CGFloat kLegacyCornerRadius = 0;
 
 /**
- Padding between the edges of the snackbar and any content.
+ Padding between the edges of the Snackbar and any content.
  */
 static UIEdgeInsets kContentMargin = (UIEdgeInsets){16.0, 16.0, 16.0, 8.0};
 static UIEdgeInsets kLegacyContentMargin = (UIEdgeInsets){18.0, 24.0, 18.0, 24.0};
@@ -83,12 +83,12 @@ static const CGFloat kButtonPadding = 8.0f;
 
 
 /**
- Minimum padding for the vertical padding of the buttons to the snackbar
+ Minimum padding for the vertical padding of the buttons to the Snackbar
  */
 static const CGFloat kMinVerticalButtonPadding = 6.0f;
 
 /**
- The width of the snackbar.
+ The width of the Snackbar.
  */
 static const CGFloat kMinimumViewWidth_iPad = 288.0f;
 static const CGFloat kMaximumViewWidth_iPad = 568.0f;
@@ -96,7 +96,7 @@ static const CGFloat kMinimumViewWidth_iPhone = 320.0f;
 static const CGFloat kMaximumViewWidth_iPhone = 320.0f;
 
 /**
- The minimum height of the snackbar.
+ The minimum height of the Snackbar.
  */
 static const CGFloat kMinimumHeight = 48.0f;
 
@@ -156,7 +156,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 @property(nonatomic, strong) UIView *contentView;
 
 /**
- Holds onto the dismissal handler, called when the snackbar should dismiss due to user interaction.
+ Holds onto the dismissal handler, called when the Snackbar should dismiss due to user interaction.
  */
 @property(nonatomic, copy) MDCSnackbarMessageDismissHandler dismissalHandler;
 
@@ -259,7 +259,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
       self.layer.shadowRadius = kShadowSpread;
     }
 
-    _anchoredToScreenEdge = YES;
+    _anchoredToScreenBottom = YES;
 
     // Borders are drawn inside of the bounds of a layer. Because our border is translucent, we need
     // to have a view with transparent background and border only (@c self). Inside will be a
@@ -350,7 +350,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
                                            [[self class] bundle],
                                            @"Dismissal accessibility hint for Snackbar");
 
-    // For VoiceOver purposes, the label is the primary 'button' for dismissing the snackbar, so
+    // For VoiceOver purposes, the label is the primary 'button' for dismissing the Snackbar, so
     // we'll make sure the label looks like a button.
     _label.accessibilityTraits = UIAccessibilityTraitButton;
     _label.accessibilityIdentifier = MDCSnackbarMessageTitleAutomationIdentifier;
@@ -640,8 +640,8 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
 #pragma mark - Constraints and layout
 
-- (void)setAnchoredToScreenEdge:(BOOL)anchoredToScreenEdge {
-  _anchoredToScreenEdge = anchoredToScreenEdge;
+- (void)setAnchoredToScreenBottom:(BOOL)anchoredToScreenBottom {
+  _anchoredToScreenBottom = anchoredToScreenBottom;
   [self invalidateIntrinsicContentSize];
 
   if (self.viewConstraints) {
@@ -669,7 +669,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 }
 
 /**
- Provides constraints to pin the container view to the size of the snackbar, inset by
+ Provides constraints to pin the container view to the size of the Snackbar, inset by
  @c kBorderWidth. Also positions the content view and button view inside of the container view.
  */
 - (NSArray *)containerViewConstraints {
@@ -695,14 +695,14 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   NSString *formatString = nil;  // Scratch variable.
   NSMutableArray *constraints = [NSMutableArray array];
 
-  // Pin the left and right edges of the container view to the snackbar.
+  // Pin the left and right edges of the container view to the Snackbar.
   formatString = @"H:|-(==kBorderMargin)-[container]-(==kBorderMargin)-|";
   [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:formatString
                                                                            options:0
                                                                            metrics:metrics
                                                                              views:views]];
 
-  // Pin the top and bottom edges of the container view to the snackbar.
+  // Pin the top and bottom edges of the container view to the Snackbar.
   formatString = @"V:|-(==kBorderMargin)-[container]-(==kContentSafeBottomInset)-|";
   [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:formatString
                                                                            options:0
@@ -879,7 +879,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
       views[@"previousButton"] = previousButton;
     }
 
-    // In a horizontal layout, the button takes on the height of the snackbar.
+    // In a horizontal layout, the button takes on the height of the Snackbar.
     [constraints
         addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[buttonContainer]|"
                                                                     options:0
@@ -958,10 +958,10 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 }
 
 - (CGFloat)contentSafeBottomInset {
-  // If a bottom offset has been set to raise the HUD, e.g. above a tab bar, we should ignore
+  // If a bottom offset has been set to raise the HUD/Snackbar, e.g. above a tab bar, we should ignore
   // any safeAreaInsets, since it is no longer 'anchored' to the bottom of the screen. This is set
   // by the MDCSnackbarOverlayView whenever the bottomOffset is non-zero.
-  if (!self.anchoredToScreenEdge || !MDCSnackbarMessage.usesLegacySnackbar) {
+  if (!self.anchoredToScreenBottom || !MDCSnackbarMessage.usesLegacySnackbar) {
     return 0;
   }
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
