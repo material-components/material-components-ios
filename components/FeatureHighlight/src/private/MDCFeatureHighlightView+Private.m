@@ -113,15 +113,6 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
     _displayMaskLayer.fillColor = [UIColor whiteColor].CGColor;
 
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    // TODO(#2709): Migrate to a single source of truth for fonts
-    // If we are using the default (system) font loader, retrieve the
-    // font from the UIFont standardFont API.
-    if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-      _titleLabel.font = [UIFont mdc_standardFontForMaterialTextStyle:kTitleTextStyle];
-    } else {
-      // There is a custom font loader, retrieve the font from it.
-      _titleLabel.font = [MDCTypography titleFont];
-    }
     _titleLabel.textAlignment = NSTextAlignmentNatural;
     _titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     _titleLabel.numberOfLines = 0;
@@ -129,15 +120,6 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
     [self addSubview:_titleLabel];
 
     _bodyLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    // TODO(#2709): Migrate to a single source of truth for fonts
-    // If we are using the default (system) font loader, retrieve the
-    // font from the UIFont standardFont API.
-    if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-      _bodyLabel.font = [UIFont mdc_standardFontForMaterialTextStyle:kBodyTextStyle];
-    } else {
-      // There is a custom font loader, retrieve the font from it.
-      _bodyLabel.font = [MDCTypography body1Font];
-    }
     _bodyLabel.shadowColor = nil;
     _bodyLabel.shadowOffset = CGSizeZero;
     _bodyLabel.textAlignment = NSTextAlignmentNatural;

@@ -32,6 +32,7 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
   MDCFeatureHighlightAnimationController *_animationController;
   MDCFeatureHighlightCompletion _completion;
   MDCFeatureHighlightView *_featureHighlightView;
+  NSString *_viewAccessiblityHint;
   NSTimer *_pulseTimer;
   UIView *_displayedView;
   UIView *_highlightedView;
@@ -48,6 +49,7 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
     _completion = completion;
     _animationController = [[MDCFeatureHighlightAnimationController alloc] init];
     _animationController.presenting = YES;
+    [self applyMDCFeatureHighlightViewDefaults];
 
     _displayedView.accessibilityTraits = UIAccessibilityTraitButton;
 
@@ -55,6 +57,38 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
     super.modalPresentationStyle = UIModalPresentationCustom;
   }
   return self;
+}
+
+- (void)viewDidLoad {
+  [super viewDidLoad];
+
+  [self setupFeatureHighlightView];
+}
+
+- (void)setupFeatureHighlightView {
+  _featureHighlightView.displayedView = _displayedView;
+  _featureHighlightView.autoresizingMask =
+      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  _featureHighlightView.mdc_adjustsFontForContentSizeCategory =
+      _mdc_adjustsFontForContentSizeCategory;
+
+  __weak MDCFeatureHighlightViewController *weakSelf = self;
+  _featureHighlightView.interactionBlock = ^(BOOL accepted) {
+    MDCFeatureHighlightViewController *strongSelf = weakSelf;
+    [strongSelf dismiss:accepted];
+  };
+
+  UIGestureRecognizer *tapGestureRecognizer =
+      [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(acceptFeature)];
+  [_displayedView addGestureRecognizer:tapGestureRecognizer];
+
+  _featureHighlightView.outerHighlightColor = _outerHighlightColor;
+  _featureHighlightView.innerHighlightColor = _innerHighlightColor;
+  _featureHighlightView.titleColor = _titleColor;
+  _featureHighlightView.bodyColor = _bodyColor;
+  _featureHighlightView.titleFont = _titleFont;
+  _featureHighlightView.bodyFont = _bodyFont;
+  _featureHighlightView.accessibilityHint = _viewAccessiblityHint;
 }
 
 /* Disable setter. Always use internal transition controller */
@@ -91,23 +125,6 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 
 - (void)loadView {
   _featureHighlightView = [[MDCFeatureHighlightView alloc] initWithFrame:CGRectZero];
-  _featureHighlightView.displayedView = _displayedView;
-  _featureHighlightView.autoresizingMask =
-      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  _featureHighlightView.mdc_adjustsFontForContentSizeCategory =
-      _mdc_adjustsFontForContentSizeCategory;
-
-  _featureHighlightView.accessibilityHint = self.accessibilityHint;
-  __weak MDCFeatureHighlightViewController *weakSelf = self;
-  _featureHighlightView.interactionBlock = ^(BOOL accepted) {
-    MDCFeatureHighlightViewController *strongSelf = weakSelf;
-    [strongSelf dismiss:accepted];
-  };
-
-  UIGestureRecognizer *tapGestureRecognizer =
-      [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(acceptFeature)];
-  [_displayedView addGestureRecognizer:tapGestureRecognizer];
-
   self.view = _featureHighlightView;
 }
 
@@ -161,52 +178,36 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
                                completion:nil];
 }
 
-- (UIColor *)outerHighlightColor {
-  return self.view.outerHighlightColor;
-}
-
 - (void)setOuterHighlightColor:(UIColor *)outerHighlightColor {
-  self.view.outerHighlightColor = outerHighlightColor;
-}
-
-- (UIColor *)innerHighlightColor {
-  return self.view.innerHighlightColor;
+  _outerHighlightColor = outerHighlightColor;
+  _featureHighlightView.outerHighlightColor = outerHighlightColor;
 }
 
 - (void)setInnerHighlightColor:(UIColor *)innerHighlightColor {
-  self.view.innerHighlightColor = innerHighlightColor;
-}
-
-- (UIColor *)titleColor {
-  return self.view.titleColor;
+  _innerHighlightColor = innerHighlightColor;
+  _featureHighlightView.innerHighlightColor = innerHighlightColor;
 }
 
 - (void)setTitleColor:(UIColor *)titleColor {
-  self.view.titleColor = titleColor;
-}
+  _titleColor = titleColor;
+  _featureHighlightView.titleColor = titleColor;
 
-- (UIColor *)bodyColor {
-  return self.view.bodyColor;
 }
 
 - (void)setBodyColor:(UIColor *)bodyColor {
-  self.view.bodyColor = bodyColor;
+  _bodyColor = bodyColor;
+  _featureHighlightView.bodyColor = bodyColor;
+
 }
 
 - (void)setTitleFont:(UIFont *)titleFont {
-  self.view.titleFont = titleFont;
-}
-
-- (UIFont *)titleFont {
-  return self.view.titleFont;
+  _titleFont = titleFont;
+  _featureHighlightView.titleFont = titleFont;
 }
 
 - (void)setBodyFont:(UIFont *)bodyFont {
-  self.view.bodyFont = bodyFont;
-}
-
-- (UIFont *)bodyFont {
-  return self.view.bodyFont;
+  _bodyFont = bodyFont;
+  _featureHighlightView.bodyFont = bodyFont;
 }
 
 - (void)acceptFeature {
@@ -231,6 +232,20 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
                              }
                            }];
 }
+
+- (void)applyMDCFeatureHighlightViewDefaults {
+  _outerHighlightColor = [self MDCFeatureHighlightDefaultOuterHighlightColor];
+  _innerHighlightColor = [self MDCFeatureHighlightDefaultInnerHighlightColor];
+}
+
+- (UIColor *)MDCFeatureHighlightDefaultOuterHighlightColor {
+  return [[UIColor blueColor] colorWithAlphaComponent:kMDCFeatureHighlightOuterHighlightAlpha];
+}
+
+- (UIColor *)MDCFeatureHighlightDefaultInnerHighlightColor {
+  return [UIColor whiteColor];
+}
+
 
 #pragma mark - Dynamic Type
 
@@ -291,13 +306,12 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 #pragma mark - UIAccessibility
 
 - (void)setAccessibilityHint:(NSString *)accessibilityHint {
-  // Set through the property to ensure the view is loaded
-  self.view.accessibilityHint = accessibilityHint;
+  _viewAccessiblityHint = accessibilityHint;
+  _featureHighlightView.accessibilityHint = accessibilityHint;
 }
 
 - (NSString *)accessibilityHint {
-  // Set throught the Ivar to avoid loading the view early
-  return _featureHighlightView ? _featureHighlightView.accessibilityHint : nil;
+  return _viewAccessiblityHint;
 }
 
 #pragma mark - Private
