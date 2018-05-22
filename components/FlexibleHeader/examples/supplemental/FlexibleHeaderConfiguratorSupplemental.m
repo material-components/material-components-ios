@@ -99,6 +99,8 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
   [self.fhvc.headerView addSubview:titleLabel];
 
+  [self.fhvc.headerView hideViewWhenShifted:titleLabel];
+
   self.fhvc.headerView.minimumHeight = CGRectGetMaxY(titleLabel.frame);
 
   id (^switchItem)(NSString *, FlexibleHeaderConfiguratorField) = ^(
