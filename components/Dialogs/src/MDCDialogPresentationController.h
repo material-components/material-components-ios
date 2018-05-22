@@ -43,6 +43,15 @@
 @property(nonatomic, assign) BOOL dismissOnBackgroundTap;
 
 /**
+ Customize the corner radius in the tracking view to match the presented view's corner radius.
+ If the presented view and tracking view have different cornerRadius values, the rendered shadow
+ will not match.
+ 
+ Defaults to 0.0.
+ */
+@property(nonatomic, assign) CGFloat trackingViewCornerRadius;
+
+/**
  Returns the size of the specified child view controller's content.
 
  The size is initially based on container.preferredSize. Width is will have a minimum of 280 and a
