@@ -30,9 +30,8 @@ static const CGFloat kFlexibleHeaderDefaultHeight = 56;
 // The maximum default opacity of the shadow.
 static const float kDefaultVisibleShadowOpacity = 0.4f;
 
-// The threshold in which the _viewsToHideWhenShifted should be fully hidden. 0.5 means the views
-// are completely hidden when the header has shifted half of its content height upwards. This should
-// never be 0.
+// The percentage shifted threshold at which point the _viewsToHideWhenShifted should be fully
+// hidden.
 static const float kContentHidingThreshold = 0.5f;
 
 // This length defines the moment at which the shadow will be fully visible as the header shifts
@@ -841,15 +840,6 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   frameBottomEdge = MAX(0, MIN(kShadowScaleLength, frameBottomEdge));
   CGFloat boundedAccumulator = MIN([self fhv_accumulatorMax], _shiftAccumulator);
 
-  if (_shiftBehavior != MDCFlexibleHeaderShiftBehaviorDisabled) {
-    CGFloat contentHeight = self.computedMinimumHeight - MDCDeviceTopSafeAreaInset();
-    CGFloat hideThreshold = kContentHidingThreshold;
-    CGFloat alpha = MAX(contentHeight - boundedAccumulator / hideThreshold, 0) / contentHeight;
-    for (UIView *view in _viewsToHideWhenShifted) {
-      view.alpha = alpha;
-    }
-  }
-
   CGFloat shadowIntensity;
   if (self.hidesStatusBarWhenCollapsed) {
     // Calculate the desired shadow strength for the offset & accumulator and then take the
@@ -1043,14 +1033,24 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 // Commit the current shiftOffscreenAccumulator value to the view's position.
 - (void)fhv_commitAccumulatorToFrame {
   CGPoint position = self.center;
+  CGFloat shiftOffset = MIN([self fhv_accumulatorMax], _shiftAccumulator);
   // Offset the frame.
-  position.y = -MIN([self fhv_accumulatorMax], _shiftAccumulator);
+  position.y = -shiftOffset;
   position.y += self.bounds.size.height / 2;
 
   self.center = position;
 
   [self fhv_accumulatorDidChange];
   [self fhv_recalculatePhase];
+
+  CGFloat opacityShiftThreshold = [self fhv_accumulatorMax] * kContentHidingThreshold;
+  // 0% means not shifted at all, 100% means shifted up to our threshold amount.
+  CGFloat percentShiftedAlongThreshold = MIN(1, MAX(0, shiftOffset / opacityShiftThreshold));
+  for (UIView *view in _viewsToHideWhenShifted) {
+    // When not shifted at all, we want to be fully visible. We invert the percentage to get our
+    // desired alpha.
+    view.alpha = 1 - percentShiftedAlongThreshold;
+  }
 
   [_statusBarShifter setOffset:_shiftAccumulator];
 
