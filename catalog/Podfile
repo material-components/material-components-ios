@@ -4,7 +4,9 @@ project 'MDCCatalog.xcodeproj'
 target "MDCCatalog" do
   platform :ios, '8.0'
   project 'MDCCatalog.xcodeproj'
-  pod 'MaterialComponentsExamples', :path => '../'
+  pod 'MaterialComponentsExamplesSwift', :path => '../'
+  pod 'MaterialComponentsExamplesObjectiveC', :path => '../'
+  pod 'MaterialComponentsExamplesResources', :path => '../'
   pod 'MaterialComponents', :path => '../'
   pod 'CatalogByConvention', "~> 2.3"
   pod 'MaterialCatalog', :path => 'MaterialCatalog/'
@@ -26,7 +28,9 @@ end
 target "MDCActionExtension" do
   platform :ios, '8.0'
   project 'MDCCatalog.xcodeproj'
-  pod 'MaterialComponentsExamples', :path => '../'
+  pod 'MaterialComponentsExamplesSwift', :path => '../'
+  pod 'MaterialComponentsExamplesObjectiveC', :path => '../'
+  pod 'MaterialComponentsExamplesResources', :path => '../'
   pod 'MaterialComponents', :path => '../'
   pod 'CatalogByConvention', "~> 2.3"
   pod 'MaterialCatalog', :path => 'MaterialCatalog/'
@@ -39,7 +43,9 @@ target "MDCDragons" do
   project 'MDCDragons.xcodeproj'
   pod 'CatalogByConvention', "~> 2.3"
   pod 'MaterialComponents', :path => '../'
-  pod 'MaterialComponentsExamples', :path => '../'
+  pod 'MaterialComponentsExamplesSwift', :path => '../'
+  pod 'MaterialComponentsExamplesObjectiveC', :path => '../'
+  pod 'MaterialComponentsExamplesResources', :path => '../'
   use_frameworks!
 end
 
@@ -64,7 +70,8 @@ post_install do |installer|
   # Inject our specific warning flags into the .xcconfig files.
   mdc_xcconfigs = [
     "#{pod_dir}/Target Support Files/MaterialComponents/MaterialComponents.xcconfig",
-    "#{pod_dir}/Target Support Files//MaterialComponentsExamples/MaterialComponentsExamples.xcconfig",
+    "#{pod_dir}/Target Support Files//MaterialComponentsExamplesSwift/MaterialComponentsExamplesSwift.xcconfig",
+    "#{pod_dir}/Target Support Files//MaterialComponentsExamplesObjectiveC/MaterialComponentsExamplesObjectiveC.xcconfig",
     "#{pod_dir}/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog.debug.xcconfig",
     "#{pod_dir}/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog.release.xcconfig",
     "#{pod_dir}/Target Support Files/Pods-MDCUnitTests/Pods-MDCUnitTests.debug.xcconfig",
