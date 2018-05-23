@@ -137,4 +137,20 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
   XCTAssertEqual(view.messageLabel.text, message);
 }
 
+- (void)testTheViewIsNotLoadedWhenPropertiesAreSet {
+  MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:@"title"
+                                                                   message:@"message"];
+  UIColor *testColor = [UIColor redColor];
+  alert.titleColor = testColor;
+  alert.messageColor = testColor;
+  alert.buttonTitleColor = testColor;
+  alert.titleFont = [UIFont systemFontOfSize:12];
+  alert.messageFont = [UIFont systemFontOfSize:14];
+  alert.buttonFont = [UIFont systemFontOfSize:10];
+  [alert addAction:[MDCAlertAction actionWithTitle:@"test"
+                                           handler:^(MDCAlertAction * _Nonnull action) {
+                                           }]];
+  XCTAssertFalse(alert.isViewLoaded);
+}
+
 @end
