@@ -127,9 +127,12 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 - (void)setTitle:(NSString *)title {
   _alertTitle = [title copy];
-  self.alertView.titleLabel.text = title;
-  self.preferredContentSize =
-      [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
+  if (self.alertView) {
+    self.alertView.titleLabel.text = title;
+    self.preferredContentSize =
+        [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
+
+  }
 }
 
 - (NSString *)title {
