@@ -44,12 +44,12 @@
 
 /**
  Customize the corner radius of the shadow to match the presented view's corner radius.
- If the presented view corner radius and presentedViewCornerRadius are different, the rendered
- shadow will not match.
+ If the presented view corner radius and dialogCornerRadius are different, the rendered shadow will
+ not match.
  
  Defaults to 0.0.
  */
-@property(nonatomic, assign) CGFloat presentedViewCornerRadius;
+@property(nonatomic, assign) CGFloat dialogCornerRadius;
 
 /**
  Returns the size of the specified child view controller's content.

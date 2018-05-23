@@ -98,7 +98,7 @@ class DialogsCustomShadowViewController: UIViewController {
     // We set the corner radius to adjust the shadow that is implemented via the trackingView in the
     // presentation controller.
     if let presentationController = presentedController.mdc_dialogPresentationController {
-      presentationController.presentedViewCornerRadius = presentedController.view.layer.cornerRadius
+      presentationController.dialogCornerRadius = presentedController.view.layer.cornerRadius
     }
   }
 
