@@ -716,7 +716,9 @@ static UIImage *fakeImage(void) {
       NSStringFromCGAffineTransform(transform), NSStringFromCGAffineTransform(button.transform));
 }
 
-- (void)testCollapseExpandAnimatedRestoresTransform {
+// This test is flaky.
+// <unknown>:0: error: -[FloatingButtonsTests testCollapseExpandAnimatedRestoresTransform] : Asynchronous wait failed: Exceeded timeout of 1 seconds, with unfulfilled expectations: "Expand animation complete".
+- (void)disabled_testCollapseExpandAnimatedRestoresTransform {
   // Given
   MDCFloatingButton *button = [[MDCFloatingButton alloc] init];
   CGAffineTransform transform = CGAffineTransformMakeTranslation(10, (CGFloat)-77.1);

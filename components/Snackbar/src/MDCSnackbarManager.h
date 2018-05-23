@@ -15,9 +15,28 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "MDCSnackbarAlignment.h"
 
 @class MDCSnackbarMessage;
+@class MDCSnackbarMessageView;
 @protocol MDCSnackbarSuspensionToken;
+
+
+/**
+ Delegate protocol for the MDCSnackbarManager.
+ */
+@protocol MDCSnackbarManagerDelegate <NSObject>
+
+
+/**
+ This method is called after the MDCSnackbarMessageView instance is initialized and right before
+ The view is presented on the screen.
+
+ @param messageView The messageView of the snackbar that will be presented.
+ */
+- (void)willPresentSnackbarWithMessageView:(nullable MDCSnackbarMessageView *)messageView;
+
+@end
 
 /**
  Provides a means of displaying an unobtrusive message to the user.
@@ -33,6 +52,19 @@
 @interface MDCSnackbarManager : NSObject
 
 /**
+ Determines the Snackbar alignment to the screen.
+
+ If called within an animation block, the change will be animated.
+
+ @note This setting is only used when both the horizontal and vertical size classes of the presenting
+ window are @c UIUserInterfaceSizeClassRegular. Otherwise @c MDCSnackbarAlignmentCenter
+ will be used.
+
+ @note The setter must be called from the main thread.
+ */
+@property (class, nonatomic, assign) MDCSnackbarAlignment alignment;
+
+/**
  Shows @c message to the user, in a style consistent with the data contained in @c message.
 
  For messages with the same category, the firing of completion blocks has a guaranteed FIFO
@@ -44,7 +76,7 @@
 /**
  MDCSnackbarManager will display the messages in this view.
 
- Call this method to choose where in the view hierarchy snackbar messages will be presented. It is
+ Call this method to choose where in the view hierarchy Snackbar messages will be presented. It is
  only necessary to provide a host view if the default behavior is unable to find one on it's own,
  most commonly when using MDCSnackbarManager inside an application extension. By default, if you use
  MDCSnackbarManager without calling @c setPresentationHostView, the manager will attempt to find a
@@ -123,34 +155,33 @@
 #pragma mark Styling
 
 /**
- The color for the background of the snackbar message view.
+ The color for the background of the Snackbar message view.
  */
 @property(class, nonatomic, strong, nullable) UIColor *snackbarMessageViewBackgroundColor;
 
 /**
- The color for the shadow color for the snackbar message view.
+ The color for the shadow color for the Snackbar message view.
  */
 @property(class, nonatomic, strong, nullable) UIColor *snackbarMessageViewShadowColor;
 
 /**
- The color for the message text in the snackbar message view.
+ The color for the message text in the Snackbar message view.
  */
 @property(class, nonatomic, strong, nullable) UIColor *messageTextColor;
 
 /**
- The font for the message text in the snackbar message view.
+ The font for the message text in the Snackbar message view.
  */
 @property(class, nonatomic, strong, nullable) UIFont *messageFont;
 
 /**
- The font for the button text in the snackbar message view.
+ The font for the button text in the Snackbar message view.
  */
 @property(class, nonatomic, strong, nullable) UIFont *buttonFont;
 
-
 /**
  If enabled, modifications of class styling properties will be applied immediately
- to the currently presented snackbar.
+ to the currently presented Snackbar.
 
  Default is set to NO.
  */
@@ -173,7 +204,7 @@
 + (void)setButtonTitleColor:(nullable UIColor *)titleColor forState:(UIControlState)state;
 
 /**
- Indicates whether the snackbar should automatically update its font when the device’s
+ Indicates whether the Snackbar should automatically update its font when the device’s
  UIContentSizeCategory is changed.
 
  This property is modeled after the adjustsFontForContentSizeCategory property in the
@@ -187,10 +218,16 @@
 @property(class, nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
     BOOL mdc_adjustsFontForContentSizeCategory;
 
+
+/**
+ The delegate for MDCSnackbarManager through which it may inform of snackbar presentation updates.
+ */
+@property(class, nonatomic, weak, nullable) id<MDCSnackbarManagerDelegate> delegate;
+
 @end
 
 /**
- A suspension token is returned when messages are suspended by the snackbar manager.
+ A suspension token is returned when messages are suspended by the Snackbar manager.
 
  Messages are suppressed while a suspension token is kept in memory. Messages will resume being
  displayed when the suspension token is released or when the suspension token is passed to

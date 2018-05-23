@@ -17,6 +17,7 @@
 #import <XCTest/XCTest.h>
 
 #import "MaterialTypography.h"
+#import "../../src/private/UIFont+MaterialTypographyPrivate.h"
 
 static const CGFloat kEpsilon = 0.001f;
 static const CGFloat kOpacityLight = 0.54f;
@@ -365,5 +366,26 @@ static const CGFloat kOpacityMedium = 0.87f;
     XCTAssertEqualObjects(systemFont.familyName, mdcFont.familyName);
   }
 }
+
+- (void)testExtendedDescription {
+  // Given
+  UIFont *systemFont;
+  if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpartial-availability"
+    systemFont = [UIFont systemFontOfSize:22.0 weight:UIFontWeightRegular];
+  } else {
+    systemFont = [UIFont systemFontOfSize:22.0];
+  }
+#pragma clang diagnostic pop
+  XCTAssertNotNil(systemFont);
+
+  // When
+  NSString *fontExtendedDescription = [systemFont mdc_extendedDescription];
+
+  // Then
+  XCTAssertNotNil(fontExtendedDescription);
+}
+
 
 @end

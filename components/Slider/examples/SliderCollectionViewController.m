@@ -249,6 +249,8 @@ static CGFloat const kSliderVerticalMargin = 12.f;
     model.anchorValue = 0.1f;
     model.enabled = NO;
     [_sliders addObject:model];
+
+    _colorScheme = [[MDCSemanticColorScheme alloc] init];
   }
 
   return self;

@@ -31,6 +31,7 @@
   if (self) {
     _sizingChip = [[MDCChipView alloc] init];
     _sizingChip.mdc_adjustsFontForContentSizeCategory = YES;
+    self.typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;
 }
