@@ -15,6 +15,7 @@
  */
 
 import UIKit
+import MaterialComponents
 
 enum ToggleMode: Int {
   case edit = 1, reorder

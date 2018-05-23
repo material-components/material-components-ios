@@ -31,11 +31,6 @@ class CardExampleViewController: UIViewController {
 
     // The main image from the xib is taken from: https://unsplash.com/photos/wMzx2nBdeng
     // License details: https://unsplash.com/license
-    let bundle = Bundle(for: CardExampleViewController.self)
-    bundle.loadNibNamed("CardExampleViewController", owner: self, options: nil)
-    contentView.frame = self.view.bounds
-    self.view.addSubview(contentView)
-
     let bezierPath = UIBezierPath(roundedRect: imageView.bounds,
                                   byRoundingCorners: [.topLeft, .topRight],
                                   cornerRadii: CGSize(width: card.cornerRadius,

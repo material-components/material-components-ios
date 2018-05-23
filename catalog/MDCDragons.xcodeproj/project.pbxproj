@@ -114,6 +114,7 @@
 				5CE809261FD729880068A050 /* Frameworks */,
 				5CE809271FD729880068A050 /* Resources */,
 				EAC6C5AE2318143FD02F1206 /* [CP] Embed Pods Frameworks */,
+				0157D47AD97671EB6298D58B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -172,6 +173,71 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0157D47AD97671EB6298D58B /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-MDCDragons/Pods-MDCDragons-resources.sh",
+				"${PODS_ROOT}/../../components/AppBar/examples/resources/AppBarInterfaceBuilderExampleController.storyboard",
+				"${PODS_ROOT}/../../components/AppBar/examples/resources/AppBarInterfaceBuilderSwiftExampleController.storyboard",
+				"${PODS_ROOT}/../../components/BottomSheet/examples/resources/BottomSheetAutolayoutDummyViewController.storyboard",
+				"${PODS_ROOT}/../../components/Buttons/examples/resources/ButtonsContentEdgeInsets.storyboard",
+				"${PODS_ROOT}/../../components/Buttons/examples/resources/ButtonsStoryboardAndProgrammatic.storyboard",
+				"${PODS_ROOT}/../../components/Cards/examples/resources/CardExampleViewController.xib",
+				"${PODS_ROOT}/../../components/Collections/examples/resources/CollectionsStoryboardExample.storyboard",
+				"${PODS_ROOT}/../../components/Dialogs/examples/resources/DialogWithInputField.storyboard",
+				"${PODS_ROOT}/../../components/Dialogs/examples/resources/DialogWithPreferredContentSize.storyboard",
+				"${PODS_ROOT}/../../components/FlexibleHeader/examples/resources/FlexibleHeaderTypicalUseInstructionsView.xib",
+				"${PODS_ROOT}/../../components/FlexibleHeader/examples/resources/ic_swap_vert.png",
+				"${PODS_ROOT}/../../components/FlexibleHeader/examples/resources/ic_swap_vert@2x.png",
+				"${PODS_ROOT}/../../components/FlexibleHeader/examples/resources/ic_swap_vert@3x.png",
+				"${PODS_ROOT}/../../components/ShadowLayer/examples/resources/ShadowDragSquareExample.storyboard",
+				"${PODS_ROOT}/../../components/Slider/examples/resources/SliderAutolayoutExample.storyboard",
+				"${PODS_ROOT}/../../components/Tabs/examples/resources/TabBarInterfaceBuilderExample.storyboard",
+				"${PODS_ROOT}/../../components/Tabs/examples/resources/TabBarViewControllerInterfaceBuilderExample.storyboard",
+				"${PODS_ROOT}/../../components/TextFields/examples/resources/TextFieldInterfaceBuilderExample.storyboard",
+				"${PODS_ROOT}/../../components/TextFields/examples/resources/TextFieldInterfaceBuilderLegacyExample.storyboard",
+				"${PODS_ROOT}/../../components/AppBar/examples/resources/AppBarExample.xcassets",
+				"${PODS_ROOT}/../../components/Buttons/examples/resources/ButtonsExamples.xcassets",
+				"${PODS_ROOT}/../../components/Cards/examples/resources/CardsAssets.xcassets",
+				"${PODS_ROOT}/../../components/Chips/examples/resources/ChipsExampleAssets.xcassets",
+				"${PODS_ROOT}/../../components/CollectionCells/examples/resources/CollectionCellsExample.xcassets",
+				"${PODS_ROOT}/../../components/HeaderStackView/examples/resources/HeaderStackViewExample.xcassets",
+				"${PODS_ROOT}/../../components/Tabs/examples/resources/TabBarDemoAssets.xcassets",
+				"${PODS_ROOT}/../../components/TextFields/examples/resources/TextFieldsExample.xcassets",
+				"${PODS_ROOT}/../../components/private/Dragons/examples/resources/ZShadow.xib",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AppBarInterfaceBuilderExampleController.storyboardc",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AppBarInterfaceBuilderSwiftExampleController.storyboardc",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/BottomSheetAutolayoutDummyViewController.storyboardc",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ButtonsContentEdgeInsets.storyboardc",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ButtonsStoryboardAndProgrammatic.storyboardc",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/CardExampleViewController.nib",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/CollectionsStoryboardExample.storyboardc",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/DialogWithInputField.storyboardc",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/DialogWithPreferredContentSize.storyboardc",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FlexibleHeaderTypicalUseInstructionsView.nib",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ic_swap_vert.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ic_swap_vert@2x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ic_swap_vert@3x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ShadowDragSquareExample.storyboardc",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SliderAutolayoutExample.storyboardc",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TabBarInterfaceBuilderExample.storyboardc",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TabBarViewControllerInterfaceBuilderExample.storyboardc",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TextFieldInterfaceBuilderExample.storyboardc",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TextFieldInterfaceBuilderLegacyExample.storyboardc",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Assets.car",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ZShadow.nib",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MDCDragons/Pods-MDCDragons-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		9813A3952025837D99EDE840 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -201,7 +267,8 @@
 				"${BUILT_PRODUCTS_DIR}/MDFInternationalization/MDFInternationalization.framework",
 				"${BUILT_PRODUCTS_DIR}/MDFTextAccessibility/MDFTextAccessibility.framework",
 				"${BUILT_PRODUCTS_DIR}/MaterialComponents/MaterialComponents.framework",
-				"${BUILT_PRODUCTS_DIR}/MaterialComponentsExamples/MaterialComponentsExamples.framework",
+				"${BUILT_PRODUCTS_DIR}/MaterialComponentsExamplesObjectiveC/MaterialComponentsExamplesObjectiveC.framework",
+				"${BUILT_PRODUCTS_DIR}/MaterialComponentsExamplesSwift/MaterialComponentsExamplesSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/MotionAnimator/MotionAnimator.framework",
 				"${BUILT_PRODUCTS_DIR}/MotionInterchange/MotionInterchange.framework",
 				"${BUILT_PRODUCTS_DIR}/MotionTransitioning/MotionTransitioning.framework",
@@ -212,7 +279,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MDFInternationalization.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MDFTextAccessibility.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MaterialComponents.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MaterialComponentsExamples.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MaterialComponentsExamplesObjectiveC.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MaterialComponentsExamplesSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionAnimator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionInterchange.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionTransitioning.framework",
