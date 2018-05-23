@@ -736,12 +736,12 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 
 #pragma mark - UITextView Notification Observation
 
-- (void)textViewDidBeginEditing:(__unused UITextView *)textView {
+- (void)textViewDidBeginEditing:(__unused NSNotification *)note {
   self.editing = YES;
   [self.fundament didBeginEditing];
 }
 
-- (void)textViewDidChange:(__unused UITextView *)textView {
+- (void)textViewDidChange:(__unused NSNotification *)note {
   [self.fundament didChange];
   CGSize currentSize = self.bounds.size;
   CGSize requiredSize = [self sizeThatFits:CGSizeMake(currentSize.width, CGFLOAT_MAX)];
@@ -754,7 +754,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   }
 }
 
-- (void)textViewDidEndEditing:(__unused UITextView *)textView {
+- (void)textViewDidEndEditing:(__unused NSNotification *)note {
   self.editing = NO;
   [self.fundament didEndEditing];
 }
