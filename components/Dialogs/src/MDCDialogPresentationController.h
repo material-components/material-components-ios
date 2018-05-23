@@ -43,13 +43,13 @@
 @property(nonatomic, assign) BOOL dismissOnBackgroundTap;
 
 /**
- Customize the corner radius in the tracking view to match the presented view's corner radius.
- If the presented view and tracking view have different cornerRadius values, the rendered shadow
- will not match.
+ Customize the corner radius of the shadow to match the presented view's corner radius.
+ If the presented view corner radius and presentedViewCornerRadius are different, the rendered
+ shadow will not match.
  
  Defaults to 0.0.
  */
-@property(nonatomic, assign) CGFloat trackingViewCornerRadius;
+@property(nonatomic, assign) CGFloat presentedViewCornerRadius;
 
 /**
  Returns the size of the specified child view controller's content.

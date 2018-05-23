@@ -52,13 +52,13 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
   return _dismissGestureRecognizer.enabled;
 }
 
-// trackingViewCornerRadius wraps the cornerRadius property of our tracking view to avoid
+// presentedViewCornerRadius wraps the cornerRadius property of our tracking view to avoid
 // duplication.
-- (void)setTrackingViewCornerRadius:(CGFloat)cornerRadius {
+- (void)setPresentedViewCornerRadius:(CGFloat)cornerRadius {
   _trackingView.layer.cornerRadius = cornerRadius;
 }
 
-- (CGFloat)trackingViewCornerRadius {
+- (CGFloat)presentedViewCornerRadius {
   return _trackingView.layer.cornerRadius;
 }
 
