@@ -62,6 +62,8 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 @interface MDCAlertController ()
 
+@property(nonatomic, nullable, weak) MDCAlertControllerView *alertView;
+
 @property(nonatomic, strong) MDCDialogTransitionController *transitionController;
 
 - (nonnull instancetype)initWithTitle:(nullable NSString *)title
@@ -71,7 +73,6 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 @implementation MDCAlertController {
   NSMutableArray<MDCAlertAction *> *_actions;
-  MDCAlertControllerView *_alertView;
 
   // This is because title is overlapping with view controller title, However Apple alertController
   // redefines title as well.
@@ -100,12 +101,13 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   self = [super initWithNibName:nil bundle:nil];
   if (self) {
     _transitionController = [[MDCDialogTransitionController alloc] init];
+
+    _alertTitle = [title copy];
+    _message = [message copy];
     _actions = [[NSMutableArray alloc] init];
 
     super.transitioningDelegate = _transitionController;
     super.modalPresentationStyle = UIModalPresentationCustom;
-    [self setTitle:title];
-    [self setMessage:message];
   }
   return self;
 }
@@ -125,9 +127,9 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 - (void)setTitle:(NSString *)title {
   _alertTitle = [title copy];
-  _alertView.titleLabel.text = title;
+  self.alertView.titleLabel.text = title;
   self.preferredContentSize =
-      [_alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
+      [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
 }
 
 - (NSString *)title {
@@ -136,9 +138,11 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 - (void)setMessage:(NSString *)message {
   _message = [message copy];
-  _alertView.messageLabel.text = message;
-  self.preferredContentSize =
-      [_alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
+  if (self.alertView) {
+    self.alertView.messageLabel.text = message;
+    self.preferredContentSize =
+        [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
+  }
 }
 
 - (NSArray<MDCAlertAction *> *)actions {
@@ -151,50 +155,65 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 }
 
 - (void)addActionToAlertView:(MDCAlertAction *)action {
-  [_alertView addActionButtonTitle:action.title
-                            target:self
-                          selector:@selector(actionButtonPressed:)];
-  self.preferredContentSize =
-      [_alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
-  [_alertView setNeedsLayout];
+  if (self.alertView) {
+    [self.alertView addActionButtonTitle:action.title
+                                  target:self
+                                selector:@selector(actionButtonPressed:)];
+    self.preferredContentSize =
+        [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
+    [self.alertView setNeedsLayout];
+  }
 }
 
 - (void)setTitleFont:(UIFont *)titleFont {
   _titleFont = titleFont;
-  _alertView.titleFont = titleFont;
+  if (self.alertView) {
+    self.alertView.titleFont = titleFont;
+  }
 }
 
 - (void)setMessageFont:(UIFont *)messageFont {
   _messageFont = messageFont;
-  _alertView.messageFont = messageFont;
+  if (self.alertView) {
+    self.alertView.messageFont = messageFont;
+  }
 }
 
 - (void)setButtonFont:(UIFont *)buttonFont {
   _buttonFont = buttonFont;
-  _alertView.buttonFont = buttonFont;
+  if (self.alertView) {
+    self.alertView.buttonFont = buttonFont;
+  }
 }
 
 - (void)setTitleColor:(UIColor *)titleColor {
   _titleColor = titleColor;
-  _alertView.titleColor = titleColor;
+  if (self.alertView) {
+    self.alertView.titleColor = titleColor;
+  }
 }
 
 - (void)setMessageColor:(UIColor *)messageColor {
   _messageColor = messageColor;
-  _alertView.messageColor = messageColor;
+  if (self.alertView) {
+    self.alertView.messageColor = messageColor;
+  }
 }
 
 - (void)setButtonTitleColor:(UIColor *)buttonColor {
   _buttonTitleColor = buttonColor;
-  _alertView.buttonColor = buttonColor;
+  if (self.alertView) {
+    self.alertView.buttonColor = buttonColor;
+  }
 }
 
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
   _mdc_adjustsFontForContentSizeCategory = adjusts;
 
-  _alertView.mdc_adjustsFontForContentSizeCategory = adjusts;
-
-  [self updateFontsForDynamicType];
+  if (self.alertView) {
+    self.alertView.mdc_adjustsFontForContentSizeCategory = adjusts;
+    [self updateFontsForDynamicType];
+  }
   if (_mdc_adjustsFontForContentSizeCategory) {
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(contentSizeCategoryDidChange:)
@@ -215,16 +234,18 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 // Update the fonts used based on mdc_preferredFontForMaterialTextStyle and recalculate the
 // preferred content size.
 - (void)updateFontsForDynamicType {
-  [_alertView updateFonts];
+  if (self.alertView) {
+    [self.alertView updateFonts];
 
-  // Our presentation controller reacts to changes to preferredContentSize to determine our
-  // frame at the presented controller.
-  self.preferredContentSize =
-      [_alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
+    // Our presentation controller reacts to changes to preferredContentSize to determine our
+    // frame at the presented controller.
+    self.preferredContentSize =
+        [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
+  }
 }
 
 - (void)actionButtonPressed:(id)sender {
-  NSInteger actionIndex = [_alertView.actionButtons indexOfObject:sender];
+  NSInteger actionIndex = [self.alertView.actionButtons indexOfObject:sender];
   MDCAlertAction *action = self.actions[actionIndex];
   // We call our action.completionHandler after we dismiss the existing alert in case the handler
   // also presents a view controller. Otherwise we get a warning about presenting on a controller
@@ -239,8 +260,9 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 #pragma mark - UIViewController
 
 - (void)loadView {
-  _alertView = [[MDCAlertControllerView alloc] initWithFrame:CGRectZero];
-  self.view = _alertView;
+  self.view = [[MDCAlertControllerView alloc] initWithFrame:CGRectZero];
+  self.alertView = (MDCAlertControllerView *)self.view;
+
 }
 
 - (void)viewDidLoad {
@@ -249,11 +271,11 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   [self setupAlertView];
 
   _previousLayoutSize = CGSizeZero;
-  CGSize idealSize = [_alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
+  CGSize idealSize = [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
   self.preferredContentSize = idealSize;
 
   self.preferredContentSize =
-      [_alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
+      [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
 
   [self.view setNeedsLayout];
 
@@ -270,16 +292,16 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 - (void)setupAlertView {
   // Explicitly overwrite the view default if true
   if (_mdc_adjustsFontForContentSizeCategory) {
-    _alertView.mdc_adjustsFontForContentSizeCategory = YES;
+    self.alertView.mdc_adjustsFontForContentSizeCategory = YES;
   }
-  _alertView.titleLabel.text = self.title;
-  _alertView.messageLabel.text = self.message;
-  _alertView.titleFont = self.titleFont;
-  _alertView.messageFont = self.messageFont;
-  _alertView.titleColor = self.titleColor;
-  _alertView.messageColor = self.messageColor;
-  _alertView.buttonColor = self.buttonTitleColor;
-  _alertView.buttonFont = self.buttonFont;
+  self.alertView.titleLabel.text = self.title;
+  self.alertView.messageLabel.text = self.message;
+  self.alertView.titleFont = self.titleFont;
+  self.alertView.messageFont = self.messageFont;
+  self.alertView.titleColor = self.titleColor;
+  self.alertView.messageColor = self.messageColor;
+  self.alertView.buttonColor = self.buttonTitleColor;
+  self.alertView.buttonFont = self.buttonFont;
 
   for (MDCAlertAction *action in self.actions) {
     [self addActionToAlertView:action];
@@ -292,14 +314,14 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
       CGRectGetHeight(self.view.bounds) != _previousLayoutSize.height) {
     CGSize currentPreferredContentSize = self.preferredContentSize;
     CGSize calculatedPreferredContentSize =
-    [_alertView calculatePreferredContentSizeForBounds:CGRectStandardize(_alertView.bounds).size];
+    [self.alertView calculatePreferredContentSizeForBounds:CGRectStandardize(self.alertView.bounds).size];
 
     if (!CGSizeEqualToSize(currentPreferredContentSize, calculatedPreferredContentSize)) {
       // NOTE: Setting the preferredContentSize can lead to a change to self.view.bounds.
       self.preferredContentSize = calculatedPreferredContentSize;
     }
 
-    _previousLayoutSize = CGRectStandardize(_alertView.bounds).size;
+    _previousLayoutSize = CGRectStandardize(self.alertView.bounds).size;
   }
 }
 
@@ -331,16 +353,16 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   if (CGRectGetWidth(self.view.bounds) != _previousLayoutSize.width ||
       CGRectGetHeight(self.view.bounds) != _previousLayoutSize.height) {
     CGSize currentPreferredContentSize = self.preferredContentSize;
-    CGSize contentSize = CGRectStandardize(_alertView.bounds).size;
+    CGSize contentSize = CGRectStandardize(self.alertView.bounds).size;
     CGSize calculatedPreferredContentSize =
-        [_alertView calculatePreferredContentSizeForBounds:contentSize];
+        [self.alertView calculatePreferredContentSizeForBounds:contentSize];
 
     if (!CGSizeEqualToSize(currentPreferredContentSize, calculatedPreferredContentSize)) {
       // NOTE: Setting the preferredContentSize can lead to a change to self.view.bounds.
       self.preferredContentSize = calculatedPreferredContentSize;
     }
 
-    _previousLayoutSize = CGRectStandardize(_alertView.bounds).size;
+    _previousLayoutSize = CGRectStandardize(self.alertView.bounds).size;
   }
 }
 
@@ -352,7 +374,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
       ^(__unused id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
         // Reset preferredContentSize on viewWIllTransition to take advantage of additional width
         self.preferredContentSize =
-            [self->_alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
+            [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
       }
                                completion:nil];
 }
