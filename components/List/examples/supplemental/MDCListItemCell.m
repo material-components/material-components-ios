@@ -8,32 +8,57 @@
 #import "MDCListItemCell.h"
 #import "MDCListBaseCell+Private.h"
 
-static const CGFloat kImageSideLength = 40.0;
+//static const CGFloat kImageSideLength = 40.0;
 static const CGFloat kDefaultMarginTop = 10.0;
 static const CGFloat kDefaultMarginBottom = 10.0;
-//static const CGFloat kDefaultMarginLeading = 10.0;
+static const CGFloat kDefaultMarginLeading = 10.0;
 static const CGFloat kDefaultMarginTrailing = 10.0;
-static const CGFloat kDefaultInterViewPadding = 10.0;
+//static const CGFloat kDefaultInterViewPadding = 10.0;
 
 @interface MDCListItemCell ()
 
 #pragma mark Configurable Constraints
-@property (strong, nonatomic) NSLayoutConstraint *controlContainerWidthConstraint;
-@property (strong, nonatomic) NSLayoutConstraint *controlContainerHeightConstraint;
-@property (strong, nonatomic) NSLayoutConstraint *imageViewSideConstraint;
-@property (strong, nonatomic) NSLayoutConstraint *imageViewTitleLabelHorizontalPaddingConstraint;
-@property (strong, nonatomic) NSLayoutConstraint
-    *titleLabelControlContainerHorizontalPaddingConstraint;
-@property (strong, nonatomic) NSLayoutConstraint *titleLabelDetailLabelVerticalPaddingConstraint;
 
-@property (nonatomic, strong, nullable) UIView *textContainer;
-// maybe don't use ^
+@property (strong, nonatomic) UIView *leadingContainer;
+@property (strong, nonatomic) NSLayoutConstraint *leadingContainerWidthConstraint;
+@property (strong, nonatomic) NSLayoutConstraint *leadingContainerHeightConstraint;
+@property (strong, nonatomic) NSLayoutConstraint *leadingContainerLeadingConstraint;
+@property (strong, nonatomic) NSLayoutConstraint *leadingContainerTopConstraint;
+@property (strong, nonatomic) NSLayoutConstraint *leadingContainerBottomConstraint;
+
+@property (strong, nonatomic) UIView *trailingContainer;
+@property (strong, nonatomic) NSLayoutConstraint *trailingContainerWidthConstraint;
+@property (strong, nonatomic) NSLayoutConstraint *trailingContainerHeightConstraint;
+@property (strong, nonatomic) NSLayoutConstraint *trailingContainerTrailingConstraint;
+@property (strong, nonatomic) NSLayoutConstraint *trailingContainerTopConstraint;
+@property (strong, nonatomic) NSLayoutConstraint *trailingContainerBottomConstraint;
+
+@property (strong, nonatomic) UIView *textContainer;
+@property (strong, nonatomic) NSLayoutConstraint *textContainerLeadingConstraint;
+@property (strong, nonatomic) NSLayoutConstraint *textContainerTrailingConstraint;
+@property (strong, nonatomic) NSLayoutConstraint *textContainerTopConstraint;
+@property (strong, nonatomic) NSLayoutConstraint *textContainerBottomConstraint;
+
+
+
+@property (strong, nonatomic) UILabel *overlineLabel;
+@property (strong, nonatomic) NSLayoutConstraint *overlineLabelLeadingConstraint;
+@property (strong, nonatomic) NSLayoutConstraint *overlineLabelTrailingConstraint;
+@property (strong, nonatomic) NSLayoutConstraint *overlineLabelTopConstraint;
+@property (strong, nonatomic) NSLayoutConstraint *overlineLabelBottomConstraint;
+
+@property (strong, nonatomic) UILabel *titleLabel;
+//@property (strong, nonatomic) NSLayoutConstraint *leadingContainerLeadingConstraint;
+//@property (strong, nonatomic) NSLayoutConstraint *leadingContainerLeadingConstraint;
+@property (strong, nonatomic) UILabel *detailLabel;
+//@property (strong, nonatomic) NSLayoutConstraint *trailingContainerTrailingConstraint;
+//@property (strong, nonatomic) NSLayoutConstraint *trailingContainerWidthConstraint;
+//@property (strong, nonatomic) NSLayoutConstraint *trailingContainerHeightConstraint;
+
 
 #pragma mark Primary Supporting Views
-@property (strong, nonatomic) UIImageView *imageView;
-@property (strong, nonatomic) UIView *controlContainer;
-@property (nonatomic, strong, nullable) UILabel *titleLabel;
-@property (nonatomic, strong, nullable) UILabel *detailLabel;
+//@property (nonatomic, strong, nullable) UILabel *titleLabel;
+//@property (nonatomic, strong, nullable) UILabel *detailLabel;
 
 @end
 
@@ -70,10 +95,12 @@ static const CGFloat kDefaultInterViewPadding = 10.0;
 }
 
 - (void)commonInit {
+  self.contentView.accessibilityIdentifier = @"contentView";
   [self createSupportingViews];
-  [self setUpImageViewConstraints];
-  [self setUpControlContainerConstraints];
-  [self setUpTitleLabelConstraints];
+  [self setUpLeadingViewContainerConstraints];
+  [self setUpTrailingViewContainerConstraints];
+//  [self setUpTextContainerConstraints];
+//  [self setUpTitleLabelConstraints];
 //  [self setUpDetailLabelConstraints];
 //  [self setUpConstraints];
 //  [self setUpTitleLabel];
@@ -88,27 +115,44 @@ static const CGFloat kDefaultInterViewPadding = 10.0;
 -(void)prepareForReuse {
   [super prepareForReuse];
   
-  self.control = nil;
-  self.image = nil;
   self.titleText = nil;
   self.detailsText = nil;
 }
 
 - (void)createSupportingViews {
-  self.imageView = [[UIImageView alloc] init];
-  self.imageView.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.contentView addSubview:self.imageView];
+  self.leadingContainer = [[UIView alloc] init];
+  self.leadingContainer.translatesAutoresizingMaskIntoConstraints = NO;
+  self.leadingContainer.backgroundColor = [UIColor lightGrayColor];
+  self.leadingContainer.accessibilityIdentifier = @"leadingContainer";
+  [self.contentView addSubview:self.leadingContainer];
 
-  self.controlContainer = [[UIView alloc] init];
-  self.controlContainer.translatesAutoresizingMaskIntoConstraints = NO;
-  self.controlContainer.backgroundColor = [UIColor blueColor];
-  [self.contentView addSubview:self.controlContainer];
+  self.textContainer = [[UIView alloc] init];
+  self.textContainer.translatesAutoresizingMaskIntoConstraints = NO;
+  self.textContainer.backgroundColor = [UIColor redColor];
+  self.textContainer.accessibilityIdentifier = @"textContainer";
+//  [self.contentView addSubview:self.textContainer];
 
-  self.titleLabel = [[UILabel alloc] init];
-  self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  self.titleLabel.backgroundColor = [UIColor yellowColor];
-  self.titleLabel.textColor = [UIColor redColor];
-  [self.contentView addSubview:self.titleLabel];
+  self.overlineLabel = [[UILabel alloc] init];
+  self.overlineLabel.numberOfLines = 0;
+  self.overlineLabel.translatesAutoresizingMaskIntoConstraints = NO;
+  self.overlineLabel.backgroundColor = [UIColor yellowColor];
+  self.overlineLabel.textColor = [UIColor greenColor];
+  self.overlineLabel.accessibilityIdentifier = @"overlineLabel";
+//  [self.textContainer addSubview:self.overlineLabel];
+
+//  self.titleLabel = [[UILabel alloc] init];
+//  self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+//  self.titleLabel.backgroundColor = [UIColor yellowColor];
+//  self.titleLabel.textColor = [UIColor redColor];
+//  [self.contentView addSubview:self.titleLabel];
+
+  
+  self.trailingContainer = [[UIView alloc] init];
+  self.trailingContainer.translatesAutoresizingMaskIntoConstraints = NO;
+  self.trailingContainer.backgroundColor = [UIColor blueColor];
+  self.trailingContainer.accessibilityIdentifier = @"trailingContainer";
+  [self.contentView addSubview:self.trailingContainer];
+//
 //
 //  self.detailLabel = [[UILabel alloc] init];
 //  self.detailLabel.numberOfLines = 2;
@@ -121,250 +165,349 @@ static const CGFloat kDefaultInterViewPadding = 10.0;
 #pragma mark Layout
 
 
-- (void)setUpImageViewConstraints {
-  // Retain constraint determining imageView side length
-  self.imageViewSideConstraint =
-  [NSLayoutConstraint constraintWithItem:self.imageView
+- (void)setUpLeadingViewContainerConstraints {
+  // Constrain width
+  self.leadingContainerWidthConstraint =
+  [NSLayoutConstraint constraintWithItem:self.leadingContainer
                                attribute:NSLayoutAttributeWidth
                                relatedBy:NSLayoutRelationEqual
                                   toItem:nil
                                attribute:NSLayoutAttributeNotAnAttribute
                               multiplier:1.0
-                                constant:0];
-  self.imageViewSideConstraint.active = YES;
-  
-  // Constrain aspect ratio
-  [NSLayoutConstraint constraintWithItem:self.imageView
+                                constant:0.0];
+  self.leadingContainerWidthConstraint.active = YES;
+
+  // Constrain height
+  self.leadingContainerHeightConstraint =
+  [NSLayoutConstraint constraintWithItem:self.leadingContainer
                                attribute:NSLayoutAttributeHeight
                                relatedBy:NSLayoutRelationEqual
-                                  toItem:self.imageView
-                               attribute:NSLayoutAttributeWidth
+                                  toItem:nil
+                               attribute:NSLayoutAttributeNotAnAttribute
                               multiplier:1.0
-                                constant:0].active = YES;
-
+                                constant:0.0];
+  self.leadingContainerHeightConstraint.active = YES;
+  
   // Constrain to top
-  [NSLayoutConstraint constraintWithItem:self.imageView
+  self.leadingContainerTopConstraint =
+  [NSLayoutConstraint constraintWithItem:self.leadingContainer
                                attribute:NSLayoutAttributeTop
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self.contentView
                                attribute:NSLayoutAttributeTop
                               multiplier:1.0
-                                constant:kDefaultMarginTop].active = YES;
+                                constant:0.0];
+  self.leadingContainerTopConstraint.active = YES;
 
   // Constrain to leading edge
-  [NSLayoutConstraint constraintWithItem:self.imageView
+  self.leadingContainerLeadingConstraint =
+  [NSLayoutConstraint constraintWithItem:self.leadingContainer
                                attribute:NSLayoutAttributeLeading
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self.contentView
                                attribute:NSLayoutAttributeLeading
                               multiplier:1.0
-                                constant:kDefaultMarginTrailing].active = YES;
+                                constant:0.0];
+  self.leadingContainerLeadingConstraint.active = YES;
 
-  
-  // Constrain to trailing edge - get rid of
-  [NSLayoutConstraint constraintWithItem:self.imageView
-                               attribute:NSLayoutAttributeTrailing
+  // Constrain to bottom
+  self.leadingContainerBottomConstraint =
+  [NSLayoutConstraint constraintWithItem:self.leadingContainer
+                               attribute:NSLayoutAttributeBottom
                                relatedBy:NSLayoutRelationLessThanOrEqual
                                   toItem:self.contentView
-                               attribute:NSLayoutAttributeTrailing
-                              multiplier:1.0
-                                constant:-kDefaultMarginTrailing].active = YES;
-
-  
-  
-  
-  // Constrain to bottom
-  [NSLayoutConstraint constraintWithItem:self.imageView
-                               attribute:NSLayoutAttributeBottom
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self.contentView
                                attribute:NSLayoutAttributeBottom
                               multiplier:1.0
-                                constant:-kDefaultMarginBottom].active = YES;
+                                constant:0.0];
+  self.leadingContainerBottomConstraint.active = YES; // -kDefaultMarginBottom
 }
 
-- (void)setUpControlContainerConstraints {
-  // Retain constraint determining controlContainer width
-  self.controlContainerWidthConstraint =
-  [NSLayoutConstraint constraintWithItem:self.controlContainer
+- (void)setUpTrailingViewContainerConstraints {
+  // Constrain width
+  self.trailingContainerWidthConstraint =
+  [NSLayoutConstraint constraintWithItem:self.trailingContainer
                                attribute:NSLayoutAttributeWidth
                                relatedBy:NSLayoutRelationEqual
                                   toItem:nil
                                attribute:NSLayoutAttributeNotAnAttribute
                               multiplier:1.0
-                                constant:0];
-  self.controlContainerWidthConstraint.active = YES;
-
-  self.controlContainerHeightConstraint =
-  [NSLayoutConstraint constraintWithItem:self.controlContainer
+                                constant:0.0];
+  self.trailingContainerWidthConstraint.active = YES;
+  
+  // Constrain height
+  self.trailingContainerHeightConstraint =
+  [NSLayoutConstraint constraintWithItem:self.trailingContainer
                                attribute:NSLayoutAttributeHeight
                                relatedBy:NSLayoutRelationEqual
                                   toItem:nil
                                attribute:NSLayoutAttributeNotAnAttribute
                               multiplier:1.0
-                                constant:0];
-  self.controlContainerHeightConstraint.active = YES;
-
-  // Center vertically
-  [NSLayoutConstraint constraintWithItem:self.controlContainer
-                               attribute:NSLayoutAttributeCenterY
+                                constant:0.0];
+  self.trailingContainerHeightConstraint.active = YES;
+  
+  // Constrain to top
+  self.trailingContainerTopConstraint =
+  [NSLayoutConstraint constraintWithItem:self.trailingContainer
+                               attribute:NSLayoutAttributeTop
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self.contentView
-                               attribute:NSLayoutAttributeCenterY
-                              multiplier:1.0
-                                constant:0].active = YES;
-
-  // Constrain to top
-  [NSLayoutConstraint constraintWithItem:self.controlContainer
                                attribute:NSLayoutAttributeTop
-                               relatedBy:NSLayoutRelationGreaterThanOrEqual
+                              multiplier:1.0
+                                constant:0.0];
+  self.trailingContainerTopConstraint.active = YES;
+  
+  // Constrain to trailing edge
+  self.trailingContainerTrailingConstraint =
+  [NSLayoutConstraint constraintWithItem:self.trailingContainer
+                               attribute:NSLayoutAttributeTrailing
+                               relatedBy:NSLayoutRelationEqual
                                   toItem:self.contentView
-                               attribute:NSLayoutAttributeTop
+                               attribute:NSLayoutAttributeTrailing
                               multiplier:1.0
-                                constant:kDefaultMarginBottom].active = YES;
-
+                                constant:0.0];
+  self.trailingContainerTrailingConstraint.active = YES;
+  
   // Constrain to bottom
-  [NSLayoutConstraint constraintWithItem:self.controlContainer
+  
+  self.trailingContainerBottomConstraint =
+  [NSLayoutConstraint constraintWithItem:self.trailingContainer
                                attribute:NSLayoutAttributeBottom
                                relatedBy:NSLayoutRelationLessThanOrEqual
                                   toItem:self.contentView
                                attribute:NSLayoutAttributeBottom
                               multiplier:1.0
-                                constant:-kDefaultMarginBottom].active = YES;
-  // Constrain to trailing edge
-  [NSLayoutConstraint constraintWithItem:self.controlContainer
-                               attribute:NSLayoutAttributeTrailing
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self.contentView
-                               attribute:NSLayoutAttributeTrailing
-                              multiplier:1.0
-                                constant:-kDefaultMarginTrailing].active = YES;
+                                constant:0.0];
+  self.trailingContainerBottomConstraint.active = YES; // -kDefaultMarginBottom
 }
 
--(void)setUpTitleLabelConstraints {
+- (void)setUpTextContainerConstraints {
   // Constrain to top
-  [NSLayoutConstraint constraintWithItem:self.titleLabel
+  self.textContainerTopConstraint =
+  [NSLayoutConstraint constraintWithItem:self.textContainer
                                attribute:NSLayoutAttributeTop
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self.contentView
                                attribute:NSLayoutAttributeTop
-                              multiplier:1
-                                constant:kDefaultMarginTop].active = YES;
+                              multiplier:1.0
+                                constant:0.0];
+  self.textContainerTopConstraint.active = YES;
+  
+  // Constrain to leading edge
+  self.textContainerLeadingConstraint =
+  [NSLayoutConstraint constraintWithItem:self.textContainer
+                               attribute:NSLayoutAttributeLeading
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.leadingContainer
+                               attribute:NSLayoutAttributeTrailing
+                              multiplier:1.0
+                                constant:0.0];
+  self.textContainerLeadingConstraint.active = YES;
 
-  // Constrain to leading imageView
-  self.imageViewTitleLabelHorizontalPaddingConstraint =
-      [NSLayoutConstraint constraintWithItem:self.titleLabel
-                                   attribute:NSLayoutAttributeLeading
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:self.imageView
-                                   attribute:NSLayoutAttributeTrailing
-                                  multiplier:1
-                                    constant:kDefaultInterViewPadding];
-  self.imageViewTitleLabelHorizontalPaddingConstraint.active = YES;
-
-  // Constrain to trailing controlContainer
-  self.titleLabelControlContainerHorizontalPaddingConstraint =
-  [NSLayoutConstraint constraintWithItem:self.titleLabel
+  // Constrain to trailing edge
+  self.textContainerTrailingConstraint =
+  [NSLayoutConstraint constraintWithItem:self.textContainer
                                attribute:NSLayoutAttributeTrailing
                                relatedBy:NSLayoutRelationEqual
-                                  toItem:self.controlContainer
+                                  toItem:self.trailingContainer
                                attribute:NSLayoutAttributeLeading
                               multiplier:1.0
-                                constant:40/*-kDefaultInterViewPadding*/];
-  self.titleLabelControlContainerHorizontalPaddingConstraint.active = YES;
+                                constant:0.0];
+  self.textContainerTrailingConstraint.active = YES;
 
-  // Constrain to detailLabel
-//  self.titleLabelDetailLabelVerticalPaddingConstraint =
-//  [NSLayoutConstraint constraintWithItem:self.titleLabel
+  // Constrain to bottom
+  self.textContainerBottomConstraint =
+  [NSLayoutConstraint constraintWithItem:self.textContainer
+                               attribute:NSLayoutAttributeBottom
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.contentView
+                               attribute:NSLayoutAttributeBottom
+                              multiplier:1.0
+                                constant:0.0];
+  self.textContainerBottomConstraint.active = YES; // -kDefaultMarginBottom
+
+  // set up overline label constraints
+  
+  // Constrain to top
+//  self.overlineLabelTopConstraint =
+//  [NSLayoutConstraint constraintWithItem:self.overlineLabel
+//                               attribute:NSLayoutAttributeTop
+//                               relatedBy:NSLayoutRelationEqual
+//                                  toItem:self.textContainer
+//                               attribute:NSLayoutAttributeTop
+//                              multiplier:1.0
+//                                constant:0.0];
+//  self.overlineLabelTopConstraint.active = YES;
+//
+//  // Constrain to leading edge
+//  self.overlineLabelLeadingConstraint =
+//  [NSLayoutConstraint constraintWithItem:self.overlineLabel
+//                               attribute:NSLayoutAttributeLeading
+//                               relatedBy:NSLayoutRelationEqual
+//                                  toItem:self.textContainer
+//                               attribute:NSLayoutAttributeLeading
+//                              multiplier:1.0
+//                                constant:0.0];
+//  self.overlineLabelLeadingConstraint.active = YES;
+//
+//  // Constrain to trailing edge
+//  self.overlineLabelTrailingConstraint =
+//  [NSLayoutConstraint constraintWithItem:self.overlineLabel
+//                               attribute:NSLayoutAttributeTrailing
+//                               relatedBy:NSLayoutRelationEqual
+//                                  toItem:self.textContainer
+//                               attribute:NSLayoutAttributeTrailing
+//                              multiplier:1.0
+//                                constant:0.0];
+//  self.overlineLabelTrailingConstraint.active = YES;
+//
+//  // Constrain to bottom
+//  self.textContainerBottomConstraint =
+//  [NSLayoutConstraint constraintWithItem:self.overlineLabel
 //                               attribute:NSLayoutAttributeBottom
 //                               relatedBy:NSLayoutRelationEqual
-//                                  toItem:self.detailLabel
-//                               attribute:NSLayoutAttributeTop
-//                              multiplier:1
-//                                constant:kDefaultInterViewPadding];
-//  self.titleLabelDetailLabelVerticalPaddingConstraint.active = YES;
+//                                  toItem:self.textContainer
+//                               attribute:NSLayoutAttributeBottom
+//                              multiplier:1.0
+//                                constant:0.0];
+//  self.textContainerBottomConstraint.active = YES; // -kDefaultMarginBottom
+
+  
+  
+  
+}
+
+- (void)setUpOverlineLabelConstraints {
+  // Constrain to top
+  self.overlineLabelTopConstraint =
+  [NSLayoutConstraint constraintWithItem:self.overlineLabel
+                               attribute:NSLayoutAttributeTop
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.contentView
+                               attribute:NSLayoutAttributeTop
+                              multiplier:1.0
+                                constant:0.0];
+  self.leadingContainerTopConstraint.active = YES;
+
+  // Constrain height
+  self.leadingContainerHeightConstraint =
+  [NSLayoutConstraint constraintWithItem:self.leadingContainer
+                               attribute:NSLayoutAttributeHeight
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:nil
+                               attribute:NSLayoutAttributeNotAnAttribute
+                              multiplier:1.0
+                                constant:0.0];
+  self.leadingContainerHeightConstraint.active = YES;
+  
+  
+  // Constrain to leading edge
+  self.leadingContainerLeadingConstraint =
+  [NSLayoutConstraint constraintWithItem:self.leadingContainer
+                               attribute:NSLayoutAttributeLeading
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.contentView
+                               attribute:NSLayoutAttributeLeading
+                              multiplier:1.0
+                                constant:0.0];
+  self.leadingContainerLeadingConstraint.active = YES;
+  
+  // Constrain to bottom
+  self.leadingContainerBottomConstraint =
+  [NSLayoutConstraint constraintWithItem:self.leadingContainer
+                               attribute:NSLayoutAttributeBottom
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.contentView
+                               attribute:NSLayoutAttributeBottom
+                              multiplier:1.0
+                                constant:0.0];
+  self.leadingContainerBottomConstraint.active = YES; // -kDefaultMarginBottom
+}
+
+
+-(void)setUpTitleLabelConstraints {
 }
 
 - (void)setUpDetailLabelConstraints {
-  // Constrain leading edge to titleLabel
-  [NSLayoutConstraint constraintWithItem:self.titleLabel
-                               attribute:NSLayoutAttributeLeading
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self.detailLabel
-                               attribute:NSLayoutAttributeLeading
-                              multiplier:1
-                                constant:0].active = YES;
-
-  // Constrain top edge to titleLabel
-  [NSLayoutConstraint constraintWithItem:self.titleLabel
-                               attribute:NSLayoutAttributeTrailing
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self.detailLabel
-                               attribute:NSLayoutAttributeTrailing
-                              multiplier:1
-                                constant:0].active = YES;
-
-  // Constrain to trailing controlContainer
-  self.titleLabelControlContainerHorizontalPaddingConstraint =
-  [NSLayoutConstraint constraintWithItem:self.titleLabel
-                               attribute:NSLayoutAttributeTrailing
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self.controlContainer
-                               attribute:NSLayoutAttributeLeading
-                              multiplier:1
-                                constant:kDefaultInterViewPadding];
-  self.titleLabelControlContainerHorizontalPaddingConstraint.active = YES;
-
-  // Constrain top to bottom of titleView
-  [NSLayoutConstraint constraintWithItem:self.titleLabel
-                               attribute:NSLayoutAttributeBottom
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self.detailLabel
-                               attribute:NSLayoutAttributeTop
-                              multiplier:1
-                                constant:-kDefaultInterViewPadding].active = YES;
-
-  // Constrain to bottom of cell
-  [NSLayoutConstraint constraintWithItem:self.detailLabel
-                               attribute:NSLayoutAttributeBottom
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self.contentView
-                               attribute:NSLayoutAttributeBottom
-                              multiplier:1
-                                constant:-kDefaultInterViewPadding].active = YES;
-
-  
-  
 }
 
 #pragma mark Accessors
 
-- (void)setImage:(UIImage *)image {
-  if (image == _image) {
+-(void)setLeadingView:(UIView *)leadingView {
+  if (leadingView == _leadingView) {
     return;
   }
-  _image = image;
   
-  UIImage *imageToDisplay = self.image ?: self.placeholderImage;
-  self.imageView.image = imageToDisplay;
-  self.imageView.backgroundColor = [UIColor blueColor];
-  self.imageViewSideConstraint.constant = self.imageView.image ? kImageSideLength : 0;
-  self.imageViewTitleLabelHorizontalPaddingConstraint.constant =
-      self.imageView.image ? kDefaultInterViewPadding : 0;
+  [_leadingView removeFromSuperview];
+  _leadingView = leadingView;
+
+  if (_leadingView) {
+    [self.leadingContainer addSubview:_leadingView];
+    self.leadingContainerWidthConstraint.constant = _leadingView.frame.size.width;
+    self.leadingContainerHeightConstraint.constant = _leadingView.frame.size.height;
+    self.leadingContainerLeadingConstraint.constant = kDefaultMarginLeading;
+    self.leadingContainerTopConstraint.constant = kDefaultMarginTop;
+    self.leadingContainerBottomConstraint.constant = -kDefaultMarginBottom;
+    [NSLayoutConstraint constraintWithItem:_leadingView
+                                 attribute:NSLayoutAttributeCenterX
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:_leadingContainer
+                                 attribute:NSLayoutAttributeCenterX
+                                multiplier:1.0
+                                  constant:0].active = YES;
+    [NSLayoutConstraint constraintWithItem:_leadingView
+                                 attribute:NSLayoutAttributeCenterY
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:_leadingContainer
+                                 attribute:NSLayoutAttributeCenterY
+                                multiplier:1.0
+                                  constant:0].active = YES;
+  } else {
+    self.leadingContainerWidthConstraint.constant = 0;
+    self.leadingContainerHeightConstraint.constant = 0;
+    self.leadingContainerLeadingConstraint.constant = 0;
+    self.leadingContainerTopConstraint.constant = 0;
+    self.leadingContainerBottomConstraint.constant = 0;
+  }
+  
   [self setNeedsLayout];
 }
 
-- (void)setTitleText:(NSString *)titleText {
-  if (titleText == _titleText) {
+-(void)setTrailingView:(UIView *)trailingView {
+  if (trailingView == _trailingView) {
     return;
   }
-  _titleText = titleText;
-  self.titleLabel.text = _titleText;
   
-  self.titleLabelControlContainerHorizontalPaddingConstraint.constant =
-      self.titleText.length > 0 ? kDefaultInterViewPadding : 0;
-  self.titleLabelDetailLabelVerticalPaddingConstraint.constant =
-      self.detailsText.length > 0 ? kDefaultInterViewPadding : 0;
+  [_trailingView removeFromSuperview];
+  _trailingView = trailingView;
+  
+  if (_trailingView) {
+    [self.trailingContainer addSubview:_trailingView];
+    self.trailingContainerWidthConstraint.constant = _trailingView.frame.size.width;
+    self.trailingContainerHeightConstraint.constant = _trailingView.frame.size.height;
+    self.trailingContainerTrailingConstraint.constant = -kDefaultMarginTrailing;
+    self.trailingContainerTopConstraint.constant = kDefaultMarginTop;
+    self.trailingContainerBottomConstraint.constant = -kDefaultMarginBottom;
+    [NSLayoutConstraint constraintWithItem:_trailingView
+                                 attribute:NSLayoutAttributeCenterX
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:_trailingContainer
+                                 attribute:NSLayoutAttributeCenterX
+                                multiplier:1.0
+                                  constant:0].active = YES;
+    [NSLayoutConstraint constraintWithItem:_trailingView
+                                 attribute:NSLayoutAttributeCenterY
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:_trailingContainer
+                                 attribute:NSLayoutAttributeCenterY
+                                multiplier:1.0
+                                  constant:0].active = YES;
+  } else {
+    self.trailingContainerWidthConstraint.constant = 0;
+    self.trailingContainerHeightConstraint.constant = 0;
+    self.trailingContainerTrailingConstraint.constant = 0;
+    self.trailingContainerTopConstraint.constant = 0;
+    self.trailingContainerBottomConstraint.constant = 0;
+  }
   
   [self setNeedsLayout];
 }
@@ -378,37 +521,38 @@ static const CGFloat kDefaultInterViewPadding = 10.0;
   [self setNeedsLayout];
 }
 
--(void)setControl:(UIControl *)control {
-  if (control == _control) {
+-(void)setOverlineText:(NSString *)overlineText {
+  if (overlineText == _overlineText) {
     return;
   }
-  [_control removeFromSuperview];
-  _control = control;
+  _overlineText = overlineText;
+//  self.overlineLabel.text = _overlineText;
+//  [self setNeedsLayout];
+}
 
-  if (_control) {
-    [self.controlContainer addSubview:_control];
-    self.controlContainerWidthConstraint.constant = _control.intrinsicContentSize.width;
-    self.controlContainerHeightConstraint.constant = _control.intrinsicContentSize.height;
-    [NSLayoutConstraint constraintWithItem:self.control
-                                 attribute:NSLayoutAttributeCenterX
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self.controlContainer
-                                 attribute:NSLayoutAttributeCenterX
-                                multiplier:1.0
-                                  constant:0].active = YES;
-    [NSLayoutConstraint constraintWithItem:self.control
-                                 attribute:NSLayoutAttributeCenterY
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self.controlContainer
-                                 attribute:NSLayoutAttributeCenterY
-                                multiplier:1.0
-                                  constant:0].active = YES;
-  } else {
-    self.controlContainerWidthConstraint.constant = 0;
-    self.controlContainerHeightConstraint.constant = 0;
-  }
+
+
+-(void)setNeedsLayout {
+//    CGSize size1 = [self.textContainer systemLayoutSizeFittingSize:CGSizeMake(self.textContainer.frame.size.width, 50000)];
+//    CGSize size2 = [self.textContainer
+//                    sizeThatFits:CGSizeMake(self.textContainer.frame.size.width, 0)];
+//    CGSize size3 = [self.textContainer
+//                    sizeThatFits:CGSizeMake(self.textContainer.frame.size.width, 50000)];
+//
+//    NSLog(@"1: %@ %@",@(size1.width), @(size1.height));
+//    NSLog(@"2: %@ %@",@(size2.width), @(size2.height));
+//    NSLog(@"3: %@ %@",@(size3.width),@(size3.height));
   
-  [self setNeedsLayout];
+  [super setNeedsLayout];
+}
+
+-(void)layoutSubviews {
+//  self.textContainerLeadingConstraint.constant = self.leadingView ?
+//  if (!self.leadingView) {
+//    self.textContainerLeadingConstraint.constant = 50;
+//  }
+  
+  [super layoutSubviews];
 }
 
 @end

@@ -152,21 +152,28 @@ static const CGFloat kSmallArbitraryCellWidth = 200.f;
 #endif
   cell.cellWidth = cellWidth;
   if (indexPath.item % 2 == 0) {
-    cell.control = [[UISwitch alloc] init];
+//    cell.control = [[UISwitch alloc] init];
   }
   if (indexPath.item % 3 == 0) {
-    cell.image = [UIImage imageNamed:@"Cake"];
+    UIView *leadingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 70, 70)];
+    leadingView.backgroundColor = [UIColor purpleColor];
+    cell.leadingView = leadingView;
+  }
+  if (indexPath.item % 2 == 0) {
+    UIView *leadingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 70, 70)];
+    leadingView.backgroundColor = [UIColor purpleColor];
+    cell.trailingView = leadingView;
   }
 
-  NSArray *array = @[@"stuff sodifj sdoifj sdoifjs dofijsd foisdjfsodifj ",
-                     @"stuff sodifj ",
-                     @"stuff sodifj sdoifj sdlfks d;flkd lf;kaj sdf",
-                     @"stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs",
-                     @"stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs",
-                     @"stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs sdoifj sdoifjs stuff sodifj sdoifj sdoifjs",
-                     @"stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs sdoifj sdoifjs stuff sodifj sdoifj sdoifjssdoifj sdoifjs stuff sodifj sdoifj sdoifjs ",
-                     @"cat"];
-  cell.titleText = array[indexPath.item];
+//  NSArray *array = @[@"stuff sodifj sdoifj sdoifjs dofijsd foisdjfsodifj ",
+//                     @"stuff sodifj ",
+//                     @"stuff sodifj sdoifj sdlfks d;flkd lf;kaj sdf",
+//                     @"stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs",
+//                     @"stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs",
+//                     @"stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs sdoifj sdoifjs stuff sodifj sdoifj sdoifjs",
+//                     @"stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs sdoifj sdoifjs stuff sodifj sdoifjsdoifjs stuff sodifj sdoifj sdoifjs sdoifj sdoifjs stuff sodifj sdoifjsdoifjs stuff sodifj sdoifj sdoifjs sdoifj sdoifjs stuff sodifj sdoifjsdoifjs stuff sodifj sdoifj sdoifjs sdoifj sdoifjs stuff sodifj sdoifj sdoifjssdoifj sdoifjs stuff sodifj sdoifj sdoifjs ",
+//                     @"cat"];
+//  cell.overlineText = array[indexPath.item];
 //  cell.detailsText = array[(indexPath.item + 2) % 8];
 
   

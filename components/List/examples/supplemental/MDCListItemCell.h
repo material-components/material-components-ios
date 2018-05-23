@@ -20,16 +20,20 @@ typedef NS_ENUM(NSInteger, MDCListItemCellImageDisplayMode) {
 
 @interface MDCListItemCell : MDCListBaseCell
 
+@property (strong, nonatomic, readonly, nonnull) UILabel *overlineLabel;
+@property (strong, nonatomic, readonly, nonnull) UILabel *titleLabel;
+@property (strong, nonatomic, readonly, nonnull) UILabel *detailLabel;
+
+@property (nonatomic, copy, nullable) NSString *overlineText;
 @property (nonatomic, copy, nullable) NSString *titleText;
-@property (nonatomic, assign) NSInteger titleTextNumberOfLines;
 @property (nonatomic, copy, nullable) NSString *detailsText;
-@property (nonatomic, assign) NSInteger detailTextNumberOfLines;
+@property (nonatomic, assign) CGFloat textOffset;
 
-@property (strong, nonatomic, nullable) UIControl *control;
-@property (strong, nonatomic, nullable) UIImage *image;
-@property (nonatomic, assign) MDCListItemCellImageDisplayMode imageDisplayMode;
+@property (strong, nonatomic, nullable) UIView *leadingView;
+@property (nonatomic, assign) BOOL centerLeadingViewVertically;
 
-@property (strong, nonatomic, nullable) UIImage *placeholderImage;
+@property (strong, nonatomic, nullable) UIView *trailingView;
+@property (nonatomic, assign) BOOL centerTrailingViewVertically;
 
 /*
  @property (strong, nonatomic, nullable) UIImage *secondaryImage;
