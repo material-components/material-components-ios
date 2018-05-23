@@ -16,15 +16,19 @@
 
 #import "MaterialIcons+ic_info.h"
 #import "MaterialTypographyScheme.h"
-#import "supplemental/CollectionListCellExampleTypicalUse.h"
-#import "supplemental/CollectionViewListCell.h"
+#import "CollectionListCellExampleTypicalUse.h"
+#import "CollectionViewListCell.h"
+#import "MDCListBaseCell.h"
+#import "MDCListItemCell.h"
 
-static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
+static NSString *const kMDCListBaseCellReuseIdentifier = @"kMDCListBaseCellReuseIdentifier";
+static NSString *const kMDCListItemCellReuseIdentifier = @"kMDCListItemCellReuseIdentifier";
+
 static NSString *const kExampleDetailText =
     @"Pellentesque non quam ornare, porta urna sed, malesuada felis. Praesent at gravida felis, "
      "non facilisis enim. Proin dapibus laoreet lorem, in viverra leo dapibus a.";
 static const CGFloat kSmallestCellHeight = 40.f;
-static const CGFloat kSmallArbitraryCellWidth = 100.f;
+static const CGFloat kSmallArbitraryCellWidth = 200.f;
 
 @implementation CollectionListCellExampleTypicalUse {
   NSMutableArray *_content;
@@ -64,8 +68,10 @@ static const CGFloat kSmallArbitraryCellWidth = 100.f;
   }
 #endif
   // Register cell class.
-  [self.collectionView registerClass:[CollectionViewListCell class]
-          forCellWithReuseIdentifier:kReusableIdentifierItem];
+  [self.collectionView registerClass:[MDCListBaseCell class]
+          forCellWithReuseIdentifier:kMDCListBaseCellReuseIdentifier];
+  [self.collectionView registerClass:[MDCListItemCell class]
+          forCellWithReuseIdentifier:kMDCListItemCellReuseIdentifier];
 
   // Populate content with array of text, details text, and number of lines.
   _content = [NSMutableArray array];
@@ -125,16 +131,18 @@ static const CGFloat kSmallArbitraryCellWidth = 100.f;
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
-  return [_content count];
+  return 8;//[_content count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-  CollectionViewListCell *cell =
-      [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
+  MDCListItemCell *cell =
+      [collectionView dequeueReusableCellWithReuseIdentifier:kMDCListItemCellReuseIdentifier
                                                 forIndexPath:indexPath];
-  [cell applyTypographyScheme:_typographyScheme];
-  cell.mdc_adjustsFontForContentSizeCategory = YES;
+  
+  
+//  [cell applyTypographyScheme:_typographyScheme];
+//  cell.mdc_adjustsFontForContentSizeCategory = YES;
   CGFloat cellWidth = CGRectGetWidth(collectionView.bounds);
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
@@ -142,14 +150,32 @@ static const CGFloat kSmallArbitraryCellWidth = 100.f;
         (collectionView.adjustedContentInset.left + collectionView.adjustedContentInset.right);
   }
 #endif
-  [cell setCellWidth:cellWidth];
-  cell.titleLabel.text = _content[indexPath.item][0];
-  cell.titleLabel.textAlignment = [_content[indexPath.item][1] integerValue];
-  cell.detailsTextLabel.text = _content[indexPath.item][2];
-  cell.detailsTextLabel.textAlignment = [_content[indexPath.item][3] integerValue];
-  if (indexPath.item % 3 == 0) {
-    [cell setImage:[MDCIcons imageFor_ic_info]];
+  cell.cellWidth = cellWidth;
+  if (indexPath.item % 2 == 0) {
+    cell.control = [[UISwitch alloc] init];
   }
+  if (indexPath.item % 3 == 0) {
+    cell.image = [UIImage imageNamed:@"Cake"];
+  }
+
+  NSArray *array = @[@"stuff sodifj sdoifj sdoifjs dofijsd foisdjfsodifj ",
+                     @"stuff sodifj ",
+                     @"stuff sodifj sdoifj sdlfks d;flkd lf;kaj sdf",
+                     @"stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs",
+                     @"stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs",
+                     @"stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs sdoifj sdoifjs stuff sodifj sdoifj sdoifjs",
+                     @"stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs sdoifj sdoifjs stuff sodifj sdoifj sdoifjssdoifj sdoifjs stuff sodifj sdoifj sdoifjs ",
+                     @"cat"];
+  cell.titleText = array[indexPath.item];
+//  cell.detailsText = array[(indexPath.item + 2) % 8];
+
+  
+//  cell.titleLabel.textAlignment = [_content[indexPath.item][1] integerValue];
+//  cell.detailsTextLabel.text = _content[indexPath.item][2];
+//  cell.detailsTextLabel.textAlignment = [_content[indexPath.item][3] integerValue];
+//  if (indexPath.item % 3 == 0) {
+//    [cell setImage:[MDCIcons imageFor_ic_info]];
+//  }
   return cell;
 }
 
