@@ -105,7 +105,12 @@ static NSArray<UIFont *> *Fonts() {
 }
 
 - (instancetype)init {
-  return [super initWithStyle:UITableViewStyleGrouped];
+  self = [super initWithStyle:UITableViewStyleGrouped];
+  if (self) {
+    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.typographyScheme = [[MDCTypographyScheme alloc] init];
+  }
+  return self;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

@@ -37,6 +37,8 @@
     // Step 2: Initialize the App Bar and add the headerViewController as a child.
     _appBar = [[MDCAppBar alloc] init];
     [self addChildViewController:_appBar.headerViewController];
+
+    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
   }
   return self;
 }

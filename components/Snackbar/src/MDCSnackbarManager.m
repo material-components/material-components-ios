@@ -42,7 +42,7 @@ static BOOL UIViewHasFocusedAccessibilityElement(UIView *view) {
 static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 
 /**
- The 'actual' snackbar manager which will take care of showing/hiding snackbar messages.
+ The 'actual' Snackbar manager which will take care of showing/hiding Snackbar messages.
  */
 @interface MDCSnackbarManagerInternal : NSObject
 
@@ -60,7 +60,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 @property(nonatomic) NSMutableDictionary<NSString *, NSMutableSet<NSUUID *> *> *suspensionTokens;
 
 /**
- The view which will host our snackbar messages.
+ The view which will host our Snackbar messages.
  */
 @property(nonatomic) MDCSnackbarOverlayView *overlayView;
 
@@ -70,7 +70,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 @property(nonatomic) UIView *presentationHostView;
 
 /**
- The currently-showing snackbar.
+ The currently-showing Snackbar.
  */
 @property(nonatomic) MDCSnackbarMessageView *currentSnackbar;
 
@@ -78,6 +78,11 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
  Whether or not we are currently showing a message.
  */
 @property(nonatomic) BOOL showingMessage;
+
+/**
+ The delegate for MDCSnackbarManagerDelegate
+ */
+@property(nonatomic, weak) id<MDCSnackbarManagerDelegate> delegate;
 
 @end
 
@@ -130,7 +135,7 @@ static BOOL _shouldApplyStyleChangesToVisibleSnackbars;
 #pragma mark - Message Displaying
 
 /**
- Determines whether or not a message is eligible to be shown based on the snackbar manager's current
+ Determines whether or not a message is eligible to be shown based on the Snackbar manager's current
  configuration.
 
  @note This method should ensure that messages in the same category are not shown out of order.
@@ -208,9 +213,9 @@ static BOOL _shouldApplyStyleChangesToVisibleSnackbars;
   __block BOOL shouldDismiss = YES;
   MDCSnackbarMessageDismissHandler dismissHandler =
       ^(BOOL userInitiated, MDCSnackbarMessageAction *action) {
-        // Because we start a timer to dismiss the snackbar once it is on screen, there exists the
-        // potential to try and dismiss the snackbar view multiple times, say if the user taps on
-        // the snackbar (dismissal one) and then the timer fires (dismissal two). This check ensures
+        // Because we start a timer to dismiss the Snackbar once it is on screen, there exists the
+        // potential to try and dismiss the Snackbar view multiple times, say if the user taps on
+        // the Snackbar (dismissal one) and then the timer fires (dismissal two). This check ensures
         // that the dismissal logic will only fire one time for a given Snackbar view.
         if (shouldDismiss) {
           shouldDismiss = NO;
@@ -222,6 +227,7 @@ static BOOL _shouldApplyStyleChangesToVisibleSnackbars;
 
   Class viewClass = [message viewClass];
   snackbarView = [[viewClass alloc] initWithMessage:message dismissHandler:dismissHandler];
+  [self.delegate willPresentSnackbarWithMessageView:snackbarView];
   self.currentSnackbar = snackbarView;
   self.overlayView.accessibilityViewIsModal = ![self isSnackbarTransient:snackbarView];
   self.overlayView.hidden = NO;
@@ -252,7 +258,7 @@ static BOOL _shouldApplyStyleChangesToVisibleSnackbars;
                   BOOL hasVoiceOverFocus = UIAccessibilityIsVoiceOverRunning() &&
                                            UIViewHasFocusedAccessibilityElement(strongSnackbarView);
                   if (strongSnackbarView && !hasVoiceOverFocus) {
-                    // Mimic the user tapping on the snackbar.
+                    // Mimic the user tapping on the Snackbar.
                     [strongSnackbarView dismissWithAction:nil userInitiated:NO];
                   }
                 });
@@ -266,7 +272,7 @@ static BOOL _shouldApplyStyleChangesToVisibleSnackbars;
   // Ensure that this method is called on the main thread.
   NSAssert([NSThread isMainThread], @"Method is not called on main thread.");
 
-  // Mark the snackbar as being in the process of dismissal.
+  // Mark the Snackbar as being in the process of dismissal.
   snackbarView.dismissing = YES;
 
   MDCSnackbarMessage *message = snackbarView.message;
@@ -284,7 +290,7 @@ static BOOL _shouldApplyStyleChangesToVisibleSnackbars;
                                        [self deactivateOverlay:self.overlayView];
 
                                        // If VoiceOver had been enabled and the snackbarView was
-                                       // transient, the snackbar was just announced (layout was not
+                                       // transient, the Snackbar was just announced (layout was not
                                        // reported as changed) so there is no need to post a layout
                                        // change here.
                                        if (![self isSnackbarTransient:snackbarView]) {
@@ -294,7 +300,7 @@ static BOOL _shouldApplyStyleChangesToVisibleSnackbars;
 
                                        self.currentSnackbar = nil;
 
-                                       // Now that the snackbar view is offscreen, we can allow more
+                                       // Now that the snackbarView is offscreen, we can allow more
                                        // messages to be shown.
                                        self.showingMessage = NO;
                                        [self showNextMessageIfNecessaryMainThread];
@@ -399,7 +405,7 @@ static BOOL _shouldApplyStyleChangesToVisibleSnackbars;
   // Ensure that this method is called on the main thread.
   NSAssert([NSThread isMainThread], @"Method is not called on main thread.");
 
-  // Make sure that if there is a snackbar on screen, it does not belong to the current category.
+  // Make sure that if there is a Snackbar on screen, it does not belong to the current category.
   if (self.currentSnackbar != nil && !self.currentSnackbar.dismissing) {
     MDCSnackbarMessage *currentMessage = self.currentSnackbar.message;
 
@@ -412,7 +418,7 @@ static BOOL _shouldApplyStyleChangesToVisibleSnackbars;
     }
   }
 
-  // Now that we've ensured that the currently showing snackbar has been taken care of, we can go
+  // Now that we've ensured that the currently showing Snackbar has been taken care of, we can go
   // through pending messages and fire off their completion blocks as we remove them from the
   // queue.
   NSMutableIndexSet *indexesToRemove = [NSMutableIndexSet indexSet];
@@ -424,7 +430,7 @@ static BOOL _shouldApplyStyleChangesToVisibleSnackbars;
           // Mark the message for removal from the pending messages list.
           [indexesToRemove addIndex:idx];
 
-          // Notify the outside world that this snackbar has been completed.
+          // Notify the outside world that this Snackbar has been completed.
           [pendingMessage executeCompletionHandlerWithUserInteraction:NO completion:nil];
         }
       }];
@@ -494,6 +500,16 @@ static BOOL _shouldApplyStyleChangesToVisibleSnackbars;
 
 @implementation MDCSnackbarManager
 
++ (void)setDelegate:(id<MDCSnackbarManagerDelegate>)delegate {
+  MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
+  manager.delegate = delegate;
+}
+
++ (id<MDCSnackbarManagerDelegate>)delegate {
+  MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
+  return manager.delegate;
+}
+
 + (void)showMessage:(MDCSnackbarMessage *)inputMessage {
   if (!inputMessage) {
     return;
@@ -540,6 +556,18 @@ static BOOL _shouldApplyStyleChangesToVisibleSnackbars;
 
   MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
   manager.overlayView.bottomOffset = offset;
+}
+
++ (void)setAlignment:(MDCSnackbarAlignment)alignment {
+  NSAssert([NSThread isMainThread], @"setAlignment must be called on main thread.");
+
+  MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
+  manager.overlayView.alignment = alignment;
+}
+
++ (MDCSnackbarAlignment)alignment {
+  MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
+  return manager.overlayView.alignment;
 }
 
 #pragma mark - Suspension

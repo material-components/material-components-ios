@@ -32,10 +32,6 @@
   return YES;
 }
 
-- (BOOL)catalogShouldHideNavigation {
-  return NO;
-}
-
 + (BOOL)catalogIsPresentable {
   return YES;
 }
