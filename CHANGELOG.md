@@ -1,10 +1,26 @@
-# #develop#
+# 55.2.0
 
-## Breaking changes
-
-## New deprecations
+This minor release includes new Snackbar features and minor improvements to the Catalog.
 
 ## New features
+
+Snackbar now allows you to change the snackbar message alignment on iPad. For example:
+
+```objc
+MDCSnackbarManager.alignment = MDCSnackbarAlignmentLeading;
+```
+
+Snackbar also exposes a delegate for theming snackbar messages.
+
+```objc
+MDCSnackbarManager.delegate = appDelegate;
+
+- (void)willPresentSnackbarWithMessageView:(nullable MDCSnackbarMessageView *)messageView {
+  // You can theme the individual messageView.actionButtons here.
+}
+```
+
+There is a new shadow elevation constant, `MDCShadowElevationBottomNavigationBar`.
 
 ## API changes
 
@@ -16,15 +32,6 @@
 
 ### Snackbar
 
-#### MDCSnackbarSuspensionToken
-
-*modified* protocol: `MDCSnackbarSuspensionToken`
-
-| Type of change: | Swift declaration |
-|---|---|
-| From: | `protocol MDCSnackbarSuspensionToken` |
-| To: | `protocol MDCSnackbarSuspensionToken : NSObjectProtocol` |
-
 #### MDCSnackbarAlignment
 
 *new* enum value: `MDCSnackbarAlignmentCenter` in `MDCSnackbarAlignment`
@@ -32,8 +39,6 @@
 *new* enum value: `MDCSnackbarAlignmentLeading` in `MDCSnackbarAlignment`
 
 *new* enum: `MDCSnackbarAlignment`
-
-*new* typedef: `MDCSnackbarAlignment`
 
 #### MDCSnackbarMessageView
 
@@ -45,73 +50,11 @@
 
 *new* property: `alignment` in `MDCSnackbarManager`
 
-*modified* class method: `+setBottomOffset:` in `MDCSnackbarManager`
-
-| Type of change: | Swift declaration |
-|---|---|
-| From: | `class func setBottomOffset(_ offset: Any!)` |
-| To: | `class func setBottomOffset(_ offset: CGFloat)` |
-
-*modified* property: `mdc_adjustsFontForContentSizeCategory` in `MDCSnackbarManager`
-
-| Type of change: | Swift declaration |
-|---|---|
-| From: | `class var mdc_adjustsFontForContentSizeCategory: Int32 { get set }` |
-| To: | `class var mdc_adjustsFontForContentSizeCategory: Bool { get set }` |
-
-*modified* class method: `+hasMessagesShowingOrQueued` in `MDCSnackbarManager`
-
-| Type of change: | Swift declaration |
-|---|---|
-| From: | `class func hasMessagesShowingOrQueued() -> Any!` |
-| To: | `class func hasMessagesShowingOrQueued() -> Bool` |
-
-*modified* class method: `+suspendMessagesWithCategory:` in `MDCSnackbarManager`
-
-| Type of change: | Swift declaration |
-|---|---|
-| From: | `class func suspendMessages(withCategory category: Any!) -> MDCSnackbarSuspensionToken?` |
-| To: | `class func suspendMessages(withCategory category: String?) -> MDCSnackbarSuspensionToken?` |
-
-*modified* property: `shouldApplyStyleChangesToVisibleSnackbars` in `MDCSnackbarManager`
-
-| Type of change: | Swift declaration |
-|---|---|
-| From: | `class var shouldApplyStyleChangesToVisibleSnackbars: Int32 { get set }` |
-| To: | `class var shouldApplyStyleChangesToVisibleSnackbars: Bool { get set }` |
-
-*modified* class: `MDCSnackbarManager`
-
-| Type of change: | Swift declaration |
-|---|---|
-| From: | `class MDCSnackbarManager` |
-| To: | `class MDCSnackbarManager : NSObject` |
-
-*modified* class method: `+dismissAndCallCompletionBlocksWithCategory:` in `MDCSnackbarManager`
-
-| Type of change: | Swift declaration |
-|---|---|
-| From: | `class func dismissAndCallCompletionBlocks(withCategory category: Any!)` |
-| To: | `class func dismissAndCallCompletionBlocks(withCategory category: String?)` |
-
 #### MDCSnackbarManagerDelegate
 
 *new* protocol: `MDCSnackbarManagerDelegate`
 
 *new* method: `-willPresentSnackbarWithMessageView:` in `MDCSnackbarManagerDelegate`
-
-#### MDCSnackbarMessageView()
-
-*new* category: `MDCSnackbarMessageView()`
-
-*removed* category: `MDCSnackbarMessageView()`
-
-*modified* property: `snackbarMessageViewTextColor` in `MDCSnackbarMessageView()`
-
-| Type of change: | parent.usr |
-|---|---|
-| From: | `c:objc(ext)MDCSnackbarMessageView@MDCSnackbarMessageView.h@2959` |
-| To: | `c:objc(ext)MDCSnackbarMessageView@MDCSnackbarMessageView.h@3125` |
 
 ## Component changes
 
