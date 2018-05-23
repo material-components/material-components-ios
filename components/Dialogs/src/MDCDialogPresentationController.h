@@ -43,6 +43,14 @@
 @property(nonatomic, assign) BOOL dismissOnBackgroundTap;
 
 /**
+ Should the shadow displayed under the presented view be hidden. This shadow should only be hidden
+ if you are handling the casting of the shadow yourself on your presented view.
+
+ Defaults to NO.
+ */
+@property(nonatomic, getter=isShadowHidden, assign) BOOL shadowHidden;
+
+/**
  Returns the size of the specified child view controller's content.
 
  The size is initially based on container.preferredSize. Width is will have a minimum of 280 and a
