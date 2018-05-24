@@ -62,9 +62,13 @@ static const CGFloat kDefaultViewPadding = 10.0;
 @property (strong, nonatomic) NSLayoutConstraint *detailLabelTopConstraint;
 @property (strong, nonatomic) NSLayoutConstraint *detailLabelBottomConstraint;
 
+@property (strong, nonatomic) MDCTypographyScheme *defaultTypography;
+
 @end
 
 @implementation MDCListItemCell
+
+@synthesize mdc_adjustsFontForContentSizeCategory = _mdc_adjustsFontForContentSizeCategory;
 
 #pragma mark Object Lifecycle
 
@@ -98,6 +102,9 @@ static const CGFloat kDefaultViewPadding = 10.0;
 
 - (void)commonInit {
   self.contentView.accessibilityIdentifier = @"contentView";
+  
+  self.defaultTypography = [MDCTypographyScheme new];
+  
   [self createSupportingViews];
   [self setUpLeadingViewContainerConstraints];
   [self setUpTrailingViewContainerConstraints];
@@ -117,6 +124,8 @@ static const CGFloat kDefaultViewPadding = 10.0;
   self.overlineText = nil;
   self.titleText = nil;
   self.detailText = nil;
+
+  [self applyTypographyScheme:self.defaultTypography];
 }
 
 - (void)createSupportingViews {
@@ -747,5 +756,53 @@ static const CGFloat kDefaultViewPadding = 10.0;
 }
 
 
+#pragma mark - Dynamic Type Support
+
+- (BOOL)mdc_adjustsFontForContentSizeCategory {
+  return _mdc_adjustsFontForContentSizeCategory;
+}
+
+- (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
+  _mdc_adjustsFontForContentSizeCategory = adjusts;
+  
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(contentSizeCategoryDidChange:)
+                                                 name:UIContentSizeCategoryDidChangeNotification
+                                               object:nil];
+  } else {
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIContentSizeCategoryDidChangeNotification
+                                                  object:nil];
+  }
+  
+  [self adjustFontsForContentSizeCategory];
+}
+
+// Handles UIContentSizeCategoryDidChangeNotifications
+- (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
+  [self adjustFontsForContentSizeCategory];
+}
+
+- (void)adjustFontsForContentSizeCategory {
+  UIFont *overlineFont = self.overlineLabel.font ?: self.defaultTypography.overline;
+  UIFont *titleFont = self.titleLabel.font ?: self.defaultTypography.body1;
+  UIFont *detailFont = self.detailLabel.font ?: self.defaultTypography.body2;
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    overlineFont =
+    [overlineFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
+                             scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+    titleFont =
+    [overlineFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
+                               scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+    detailFont =
+    [overlineFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
+                               scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+  }
+  self.overlineLabel.font = overlineFont;
+  self.titleLabel.font = titleFont;
+  self.detailLabel.font = detailFont;
+  [self setNeedsLayout];
+}
 
 @end

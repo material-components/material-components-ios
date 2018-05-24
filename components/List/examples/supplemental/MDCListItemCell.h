@@ -29,7 +29,22 @@
 @property (strong, nonatomic, nullable) UIView *trailingView;
 @property (nonatomic, assign) BOOL centerTrailingViewVertically;
 
+
+/*
+ Indicates whether the view's contents should automatically update their font when the device’s
+ UIContentSizeCategory changes.
+ 
+ This property is modeled after the adjustsFontForContentSizeCategory property in the
+ UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
+ 
+ Default value is NO.
+ */
+@property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
+BOOL mdc_adjustsFontForContentSizeCategory;
+
+
 - (void)applyTypographyScheme:(id<MDCTypographyScheming>)typographyScheme;
+
 
 
 

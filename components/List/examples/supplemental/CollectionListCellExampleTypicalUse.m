@@ -143,7 +143,7 @@ static const CGFloat kSmallArbitraryCellWidth = 200.f;
   
   
   [cell applyTypographyScheme:_typographyScheme];
-//  cell.mdc_adjustsFontForContentSizeCategory = YES;
+  cell.mdc_adjustsFontForContentSizeCategory = YES;
   CGFloat cellWidth = CGRectGetWidth(collectionView.bounds);
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
