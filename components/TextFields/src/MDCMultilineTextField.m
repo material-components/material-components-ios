@@ -541,6 +541,8 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 - (void)setAttributedText:(NSAttributedString *)attributedText {
   self.textView.attributedText = attributedText;
   [self.fundament didSetText];
+  [[NSNotificationCenter defaultCenter] postNotificationName:MDCTextFieldTextDidSetTextNotification
+                                                      object:self];
 }
 
 - (UIBezierPath *)borderPath {
