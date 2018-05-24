@@ -16,7 +16,7 @@
 
 @property (nonatomic, copy, nullable) NSString *overlineText;
 @property (nonatomic, copy, nullable) NSString *titleText;
-@property (nonatomic, copy, nullable) NSString *detailsText;
+@property (nonatomic, copy, nullable) NSString *detailText;
 @property (nonatomic, assign) CGFloat textOffset;
 @property (nonatomic, assign) BOOL automaticallySetTextOffset;
 

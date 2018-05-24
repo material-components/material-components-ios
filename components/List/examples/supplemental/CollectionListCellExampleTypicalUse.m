@@ -132,7 +132,7 @@ static const CGFloat kSmallArbitraryCellWidth = 200.f;
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
-  return 1;//[_content count];
+  return 8;//[_content count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
@@ -157,42 +157,44 @@ static const CGFloat kSmallArbitraryCellWidth = 200.f;
     leadingView.backgroundColor = [UIColor purpleColor];
     cell.leadingView = leadingView;
   }
-  
-//  if (indexPath.item == 0) {
-//    CGSize size1 = [cell.contentView systemLayoutSizeFittingSize:CGSizeMake(cellWidth, 50000)];
-//    CGSize size2 = [cell.contentView
-//                    sizeThatFits:CGSizeMake(cellWidth, 0)];
-//    CGSize size3 = [cell.contentView
-//                    sizeThatFits:CGSizeMake(cellWidth, 50000)];
-//    CGSize size4 = [cell.contentView systemLayoutSizeFittingSize:CGSizeMake(cellWidth, 1)];
-//    CGSize size5 = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-//    NSLog(@"1: %@ %@",@(size1.width), @(size1.height));
-//    NSLog(@"2: %@ %@",@(size2.width), @(size2.height));
-//    NSLog(@"3: %@ %@",@(size3.width),@(size3.height));
-//    NSLog(@"4: %@ %@",@(size4.width),@(size4.height));
-//    NSLog(@"5: %@ %@",@(size5.width),@(size5.height));
-//  }
-  
 
-  
   if (indexPath.item % 2 == 0) {
     UIView *leadingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 90, 50)];
     leadingView.backgroundColor = [UIColor purpleColor];
     cell.trailingView = leadingView;
   }
 
-//  NSArray *array = @[@"stuff sodifj sdoifj sdoifjs dofijsd foisdjfsodifj ",
-//                     @"stuff sodifj ",
-//                     @"stuff sodifj sdoifj sdlfks d;flkd lf;kaj sdf",
-//                     @"stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs",
-//                     @"stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs",
-//                     @"stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs sdoifj sdoifjs stuff sodifj sdoifj sdoifjs",
-//                     @"stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs sdoifj sdoifjs stuff sodifj sdoifjsdoifjs stuff sodifj sdoifj sdoifjs sdoifj sdoifjs stuff sodifj sdoifjsdoifjs stuff sodifj sdoifj sdoifjs sdoifj sdoifjs stuff sodifj sdoifjsdoifjs stuff sodifj sdoifj sdoifjs sdoifj sdoifjs stuff sodifj sdoifj sdoifjssdoifj sdoifjs stuff sodifj sdoifj sdoifjs ",
-//                     @"cat"];
-//  cell.overlineText = array[indexPath.item];
-//  cell.titleText = array[(indexPath.item + 1) % 8];
+  NSArray *array = @[@"stuff sodifj sdoifj sdoifjs dofijsd foisdjfsodifj ",
+                     @"stuff sodifj ",
+                     @"stuff sodifj sdoifj sdlfks d;flkd lf;kaj sdf",
+                     @"stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs",
+                     @"stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs",
+                     @"stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs sdoifj sdoifjs stuff sodifj sdoifj sdoifjs",
+                     @"stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs sdoifj sdoifjs stuff sodifj sdoifjsdoifjs stuff sodifj sdoifj sdoifjs sdoifj sdoifjs stuff sodifj sdoifjsdoifjs stuff sodifj sdoifj sdoifjs sdoifj sdoifjs stuff sodifj sdoifjsdoifjs stuff sodifj sdoifj sdoifjs sdoifj sdoifjs stuff sodifj sdoifj sdoifjssdoifj sdoifjs stuff sodifj sdoifj sdoifjs ",
+                     @"cat"];
+  cell.overlineText = array[indexPath.item];
+  cell.titleText = array[(indexPath.item + 1) % 8];
+  cell.detailText = array[(indexPath.item + 2) % 8];
+
 
   
+  
+  //  if (indexPath.item == 0) {
+  //    CGSize size1 = [cell.contentView systemLayoutSizeFittingSize:CGSizeMake(cellWidth, 50000)];
+  //    CGSize size2 = [cell.contentView
+  //                    sizeThatFits:CGSizeMake(cellWidth, 0)];
+  //    CGSize size3 = [cell.contentView
+  //                    sizeThatFits:CGSizeMake(cellWidth, 50000)];
+  //    CGSize size4 = [cell.contentView systemLayoutSizeFittingSize:CGSizeMake(cellWidth, 1)];
+  //    CGSize size5 = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+  //    NSLog(@"1: %@ %@",@(size1.width), @(size1.height));
+  //    NSLog(@"2: %@ %@",@(size2.width), @(size2.height));
+  //    NSLog(@"3: %@ %@",@(size3.width),@(size3.height));
+  //    NSLog(@"4: %@ %@",@(size4.width),@(size4.height));
+  //    NSLog(@"5: %@ %@",@(size5.width),@(size5.height));
+  //  }
+  
+
 //  cell.titleLabel.textAlignment = [_content[indexPath.item][1] integerValue];
 //  cell.detailsTextLabel.text = _content[indexPath.item][2];
 //  cell.detailsTextLabel.textAlignment = [_content[indexPath.item][3] integerValue];
