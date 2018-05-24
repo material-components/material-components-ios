@@ -132,7 +132,7 @@ static const CGFloat kSmallArbitraryCellWidth = 200.f;
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
-  return 8;//[_content count];
+  return 100;//[_content count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
@@ -153,8 +153,10 @@ static const CGFloat kSmallArbitraryCellWidth = 200.f;
 #endif
   cell.cellWidth = cellWidth;
   if (indexPath.item % 3 == 0) {
-    UIView *leadingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 70, 70)];
+    UIImageView *leadingView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 70, 70)];
     leadingView.backgroundColor = [UIColor purpleColor];
+    leadingView.image = [UIImage imageNamed:@"Cake"];
+    leadingView.layer.cornerRadius = 35.0;
     cell.leadingView = leadingView;
     cell.centerLeadingViewVertically = YES;
   }
@@ -177,11 +179,18 @@ static const CGFloat kSmallArbitraryCellWidth = 200.f;
                      @"stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs sdoifj sdoifjs stuff sodifj sdoifj sdoifjs",
                      @"stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs sdoifj sdoifjs stuff sodifj sdoifjsdoifjs stuff sodifj sdoifj sdoifjs sdoifj sdoifjs stuff sodifj sdoifjsdoifjs stuff sodifj sdoifj sdoifjs sdoifj sdoifjs stuff sodifj sdoifjsdoifjs stuff sodifj sdoifj sdoifjs sdoifj sdoifjs stuff sodifj sdoifj sdoifjssdoifj sdoifjs stuff sodifj sdoifj sdoifjs ",
                      @"cat"];
-  cell.overlineText = array[indexPath.item];
+  cell.overlineText = array[indexPath.item % 8];
+  
   cell.overlineLabel.numberOfLines = 1;
   cell.titleText = array[(indexPath.item + 1) % 8];
   cell.detailText = array[(indexPath.item + 2) % 8];
   cell.textOffset = 50;
+  
+  if (indexPath.item == 1) {
+    cell.overlineText = nil;
+    cell.titleText = nil;
+    cell.detailText = nil;
+  }
   
   if (indexPath.item % 2 == 0) {
     cell.automaticallySetTextOffset = YES;

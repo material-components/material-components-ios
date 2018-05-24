@@ -120,10 +120,15 @@ static const CGFloat kDefaultViewPadding = 10.0;
 
 -(void)prepareForReuse {
   [super prepareForReuse];
-  
+
   self.overlineText = nil;
   self.titleText = nil;
   self.detailText = nil;
+  self.leadingView = nil;
+  self.trailingView = nil;
+  self.automaticallySetTextOffset = NO;
+  self.centerLeadingViewVertically = NO;
+  self.centerTrailingViewVertically = NO;
 
   [self applyTypographyScheme:self.defaultTypography];
 }
@@ -361,7 +366,7 @@ static const CGFloat kDefaultViewPadding = 10.0;
                                   toItem:self.trailingContainer
                                attribute:NSLayoutAttributeLeading
                               multiplier:1.0
-                                constant:0.0];
+                                constant:-kDefaultViewPadding];
   self.textContainerTrailingConstraint.active = YES;
 
   // Constrain to bottom
@@ -631,12 +636,14 @@ static const CGFloat kDefaultViewPadding = 10.0;
   _overlineText = overlineText;
   self.overlineLabel.text = _overlineText;
   
-  if (_overlineText.length > 0) {
-    self.overlineLabelTopConstraint.constant = kDefaultViewPadding;
-  } else {
-    self.overlineLabelTopConstraint.constant = 0;
-  }
+//  if (_overlineText.length > 0) {
+//    self.overlineLabelTopConstraint.constant = kDefaultViewPadding;
+//  } else {
+//    self.overlineLabelTopConstraint.constant = 0;
+//  }
   
+  [self adjustTextContainerConstraintsAfterTextChange];
+
   [self setNeedsLayout];
 }
 
@@ -653,6 +660,8 @@ static const CGFloat kDefaultViewPadding = 10.0;
     self.titleLabelTopConstraint.constant = 0;
   }
 
+  [self adjustTextContainerConstraintsAfterTextChange];
+  
   [self setNeedsLayout];
 }
 
@@ -668,6 +677,8 @@ static const CGFloat kDefaultViewPadding = 10.0;
   } else {
     self.detailLabelTopConstraint.constant = 0;
   }
+
+  [self adjustTextContainerConstraintsAfterTextChange];
 
   [self setNeedsLayout];
 }
@@ -722,37 +733,23 @@ static const CGFloat kDefaultViewPadding = 10.0;
   [self setNeedsLayout];
 }
 
-
--(void)setNeedsLayout {
-//  CGSize size5 = [self.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-//  self.cellHeightConstraint.constant = size5.height;
-//    CGSize size1 = [self.textContainer systemLayoutSizeFittingSize:CGSizeMake(self.textContainer.frame.size.width, 50000)];
-//    CGSize size2 = [self.textContainer
-//                    sizeThatFits:CGSizeMake(self.textContainer.frame.size.width, 0)];
-//    CGSize size3 = [self.textContainer
-//                    sizeThatFits:CGSizeMake(self.textContainer.frame.size.width, 50000)];
-//
-//    NSLog(@"1: %@ %@",@(size1.width), @(size1.height));
-//    NSLog(@"2: %@ %@",@(size2.width), @(size2.height));
-//    NSLog(@"3: %@ %@",@(size3.width),@(size3.height));
-  
-  [super setNeedsLayout];
-}
-
--(void)layoutSubviews {
-//  self.leadingViewTextContainerLeadingConstraint.constant = self.leadingView ?
-//  if (!self.leadingView) {
-//    self.leadingViewTextContainerLeadingConstraint.constant = 50;
-//  }
-  
-  [super layoutSubviews];
-}
-
-
 - (void)applyTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
   self.overlineLabel.font = typographyScheme.overline ?: self.overlineLabel.font;
   self.titleLabel.font = typographyScheme.body1 ?: self.titleLabel.font;
   self.detailLabel.font = typographyScheme.body2 ?: self.detailLabel.font;
+}
+
+- (void)adjustTextContainerConstraintsAfterTextChange {
+  BOOL hasOverline = self.overlineLabel.text.length > 0;
+  BOOL hasTitle = self.overlineLabel.text.length > 0;
+  BOOL hasDetail = self.overlineLabel.text.length > 0;
+  if (hasOverline | hasTitle | hasDetail) {
+    self.textContainerTopConstraint.constant = kDefaultMarginTop;
+    self.textContainerBottomConstraint.constant = -kDefaultMarginBottom;
+  } else {
+    self.textContainerTopConstraint.constant = 0;
+    self.textContainerBottomConstraint.constant = 0;
+  }
 }
 
 
