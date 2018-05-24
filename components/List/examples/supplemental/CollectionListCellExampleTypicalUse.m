@@ -177,8 +177,12 @@ static const CGFloat kSmallArbitraryCellWidth = 200.f;
   cell.overlineLabel.numberOfLines = 1;
   cell.titleText = array[(indexPath.item + 1) % 8];
   cell.detailText = array[(indexPath.item + 2) % 8];
-
+  cell.textOffset = 50;
   
+  if (indexPath.item % 2 == 0) {
+    cell.automaticallySetTextOffset = YES;
+  }
+
   
   //  if (indexPath.item == 0) {
   //    CGSize size1 = [cell.contentView systemLayoutSizeFittingSize:CGSizeMake(cellWidth, 50000)];

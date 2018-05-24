@@ -12,6 +12,7 @@ static const CGFloat kDefaultMarginTop = 10.0;
 static const CGFloat kDefaultMarginBottom = 10.0;
 static const CGFloat kDefaultMarginLeading = 10.0;
 static const CGFloat kDefaultMarginTrailing = 10.0;
+static const CGFloat kDefaultViewPadding = 10.0;
 
 @interface MDCListItemCell ()
 
@@ -302,18 +303,18 @@ static const CGFloat kDefaultMarginTrailing = 10.0;
                                attribute:NSLayoutAttributeTrailing
                               multiplier:1.0
                                 constant:0.0];
-  self.leadingViewTextContainerLeadingConstraint.active = YES;//self.automaticallySetTextOffset;
+  self.leadingViewTextContainerLeadingConstraint.active = self.automaticallySetTextOffset;
 
   // Constrain leading edge to contentView when automaticallySetTextOffset is set to NO
-//  self.contentViewTextContainerLeadingConstraint =
-//  [NSLayoutConstraint constraintWithItem:self.contentView
-//                               attribute:NSLayoutAttributeLeading
-//                               relatedBy:NSLayoutRelationEqual
-//                                  toItem:self.leadingContainer
-//                               attribute:NSLayoutAttributeTrailing
-//                              multiplier:1.0
-//                                constant:0.0];
-//  self.contentViewTextContainerLeadingConstraint.active = !self.automaticallySetTextOffset;
+  self.contentViewTextContainerLeadingConstraint =
+  [NSLayoutConstraint constraintWithItem:self.textContainer
+                               attribute:NSLayoutAttributeLeading
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.contentView
+                               attribute:NSLayoutAttributeLeading
+                              multiplier:1.0
+                                constant:0.0];
+  self.contentViewTextContainerLeadingConstraint.active = !self.automaticallySetTextOffset;
   
   // Constrain to trailing edge
   self.textContainerTrailingConstraint =
@@ -487,6 +488,8 @@ static const CGFloat kDefaultMarginTrailing = 10.0;
     return;
   }
   _textOffset = textOffset;
+  self.contentViewTextContainerLeadingConstraint.constant = textOffset;
+  [self setNeedsLayout];
 }
 
 #pragma mark Accessors
@@ -500,28 +503,33 @@ static const CGFloat kDefaultMarginTrailing = 10.0;
   _leadingView = leadingView;
 
   if (_leadingView) {
+    [self.leadingContainer addSubview:_leadingView];
     self.leadingContainerWidthConstraint.constant = _leadingView.frame.size.width;
     self.leadingContainerHeightConstraint.constant = _leadingView.frame.size.height;
     self.leadingContainerLeadingConstraint.constant = kDefaultMarginLeading;
     self.leadingContainerTopConstraint.constant = kDefaultMarginTop;
     self.leadingContainerBottomConstraint.constant = kDefaultMarginBottom;
-//    _leadingView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.leadingContainer addSubview:_leadingView];
     _leadingView.accessibilityIdentifier = @"leadingView";
+    NSLayoutConstraint *constraintCenterX =
     [NSLayoutConstraint constraintWithItem:_leadingView
                                  attribute:NSLayoutAttributeCenterX
                                  relatedBy:NSLayoutRelationEqual
                                     toItem:_leadingContainer
                                  attribute:NSLayoutAttributeCenterX
                                 multiplier:1.0
-                                  constant:0].active = YES;
+                                  constant:0];
+    constraintCenterX.priority = UILayoutPriorityDefaultHigh;
+    constraintCenterX.active = YES;
+    NSLayoutConstraint *constraintCenterY =
     [NSLayoutConstraint constraintWithItem:_leadingView
                                  attribute:NSLayoutAttributeCenterY
                                  relatedBy:NSLayoutRelationEqual
                                     toItem:_leadingContainer
                                  attribute:NSLayoutAttributeCenterY
                                 multiplier:1.0
-                                  constant:0].active = YES;
+                                  constant:0];
+    constraintCenterY.priority = UILayoutPriorityDefaultHigh;
+    constraintCenterY.active = YES;
   } else {
     self.leadingContainerWidthConstraint.constant = 0;
     self.leadingContainerHeightConstraint.constant = 0;
@@ -585,6 +593,13 @@ static const CGFloat kDefaultMarginTrailing = 10.0;
   }
   _overlineText = overlineText;
   self.overlineLabel.text = _overlineText;
+  
+  if (_overlineText.length > 0) {
+    self.overlineLabelTopConstraint.constant = kDefaultViewPadding;
+  } else {
+    self.overlineLabelTopConstraint.constant = 0;
+  }
+  
   [self setNeedsLayout];
 }
 
@@ -594,6 +609,13 @@ static const CGFloat kDefaultMarginTrailing = 10.0;
   }
   _titleText = titleText;
   self.titleLabel.text = _titleText;
+
+  if (_titleText.length > 0) {
+    self.titleLabelTopConstraint.constant = kDefaultViewPadding;
+  } else {
+    self.titleLabelTopConstraint.constant = 0;
+  }
+
   [self setNeedsLayout];
 }
 
@@ -603,9 +625,31 @@ static const CGFloat kDefaultMarginTrailing = 10.0;
   }
   _detailText = detailText;
   self.detailLabel.text = _detailText;
+  
+  if (_detailText.length > 0) {
+    self.detailLabelTopConstraint.constant = kDefaultViewPadding;
+  } else {
+    self.detailLabelTopConstraint.constant = 0;
+  }
+
   [self setNeedsLayout];
 }
 
+-(void)setAutomaticallySetTextOffset:(BOOL)automaticallySetTextOffset {
+  if (automaticallySetTextOffset == _automaticallySetTextOffset) {
+    return;
+  }
+  _automaticallySetTextOffset = automaticallySetTextOffset;
+  self.contentViewTextContainerLeadingConstraint.active = NO;
+  self.leadingViewTextContainerLeadingConstraint.active = NO;
+  if (_automaticallySetTextOffset) {
+    self.leadingViewTextContainerLeadingConstraint.active = YES;
+    self.leadingViewTextContainerLeadingConstraint.constant = kDefaultViewPadding;
+  } else {
+    self.contentViewTextContainerLeadingConstraint.active = YES;
+  }
+  [self setNeedsLayout];
+}
 
 -(void)setNeedsLayout {
 //  CGSize size5 = [self.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
