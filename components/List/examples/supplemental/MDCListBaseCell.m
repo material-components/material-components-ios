@@ -77,6 +77,8 @@
 }
 
 - (void)baseCommonInit {
+  self.backgroundColor = [UIColor greenColor];
+  self.contentView.backgroundColor = [UIColor greenColor];
   self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
   [self initializeInkView];
   self.backgroundColor = [UIColor lightGrayColor];

@@ -159,9 +159,10 @@ static const CGFloat kSmallArbitraryCellWidth = 200.f;
   }
 
   if (indexPath.item % 2 == 0) {
-    UIView *leadingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 90, 50)];
-    leadingView.backgroundColor = [UIColor purpleColor];
-    cell.trailingView = leadingView;
+//    UIView *leadingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 90, 50)];
+//    leadingView.backgroundColor = [UIColor purpleColor];
+    UISwitch *uiSwitch = [[UISwitch alloc] init];
+    cell.trailingView = uiSwitch;
   }
 
   NSArray *array = @[@"stuff sodifj sdoifj sdoifjs dofijsd foisdjfsodifj ",
@@ -173,9 +174,9 @@ static const CGFloat kSmallArbitraryCellWidth = 200.f;
                      @"stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs sdoifj sdoifjs stuff sodifj sdoifjsdoifjs stuff sodifj sdoifj sdoifjs sdoifj sdoifjs stuff sodifj sdoifjsdoifjs stuff sodifj sdoifj sdoifjs sdoifj sdoifjs stuff sodifj sdoifjsdoifjs stuff sodifj sdoifj sdoifjs sdoifj sdoifjs stuff sodifj sdoifj sdoifjssdoifj sdoifjs stuff sodifj sdoifj sdoifjs ",
                      @"cat"];
   cell.overlineText = array[indexPath.item];
+  cell.overlineLabel.numberOfLines = 1;
   cell.titleText = array[(indexPath.item + 1) % 8];
   cell.detailText = array[(indexPath.item + 2) % 8];
-
 
   
   

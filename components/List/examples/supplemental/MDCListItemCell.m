@@ -32,7 +32,8 @@ static const CGFloat kDefaultMarginTrailing = 10.0;
 @property (strong, nonatomic) NSLayoutConstraint *trailingContainerBottomConstraint;
 
 @property (strong, nonatomic) UIView *textContainer;
-@property (strong, nonatomic) NSLayoutConstraint *textContainerLeadingConstraint;
+@property (strong, nonatomic) NSLayoutConstraint *leadingViewTextContainerLeadingConstraint;
+@property (strong, nonatomic) NSLayoutConstraint *contentViewTextContainerLeadingConstraint;
 @property (strong, nonatomic) NSLayoutConstraint *textContainerTrailingConstraint;
 @property (strong, nonatomic) NSLayoutConstraint *textContainerTopConstraint;
 @property (strong, nonatomic) NSLayoutConstraint *textContainerBottomConstraint;
@@ -163,7 +164,6 @@ static const CGFloat kDefaultMarginTrailing = 10.0;
 
 #pragma mark Layout
 
-
 - (void)setUpLeadingViewContainerConstraints {
   // Constrain width
   self.leadingContainerWidthConstraint =
@@ -293,8 +293,8 @@ static const CGFloat kDefaultMarginTrailing = 10.0;
                                 constant:0.0];
   self.textContainerTopConstraint.active = YES;
   
-  // Constrain to leading edge
-  self.textContainerLeadingConstraint =
+  // Constrain leading edge to leadingContainer when automaticallySetTextOffset is set to YES
+  self.leadingViewTextContainerLeadingConstraint =
   [NSLayoutConstraint constraintWithItem:self.textContainer
                                attribute:NSLayoutAttributeLeading
                                relatedBy:NSLayoutRelationEqual
@@ -302,8 +302,19 @@ static const CGFloat kDefaultMarginTrailing = 10.0;
                                attribute:NSLayoutAttributeTrailing
                               multiplier:1.0
                                 constant:0.0];
-  self.textContainerLeadingConstraint.active = YES;
+  self.leadingViewTextContainerLeadingConstraint.active = YES;//self.automaticallySetTextOffset;
 
+  // Constrain leading edge to contentView when automaticallySetTextOffset is set to NO
+//  self.contentViewTextContainerLeadingConstraint =
+//  [NSLayoutConstraint constraintWithItem:self.contentView
+//                               attribute:NSLayoutAttributeLeading
+//                               relatedBy:NSLayoutRelationEqual
+//                                  toItem:self.leadingContainer
+//                               attribute:NSLayoutAttributeTrailing
+//                              multiplier:1.0
+//                                constant:0.0];
+//  self.contentViewTextContainerLeadingConstraint.active = !self.automaticallySetTextOffset;
+  
   // Constrain to trailing edge
   self.textContainerTrailingConstraint =
   [NSLayoutConstraint constraintWithItem:self.textContainer
@@ -472,7 +483,10 @@ static const CGFloat kDefaultMarginTrailing = 10.0;
 
 
 -(void)setTextOffset:(CGFloat)textOffset {
-  NSAssert(_textOffset == NSNotFound, @"Needs implementing");
+  if (textOffset == _textOffset) {
+    return;
+  }
+  _textOffset = textOffset;
 }
 
 #pragma mark Accessors
@@ -534,20 +548,26 @@ static const CGFloat kDefaultMarginTrailing = 10.0;
     self.trailingContainerTrailingConstraint.constant = -kDefaultMarginTrailing;
     self.trailingContainerTopConstraint.constant = kDefaultMarginTop;
     self.trailingContainerBottomConstraint.constant = kDefaultMarginBottom;
+    NSLayoutConstraint *constraintCenterX =
     [NSLayoutConstraint constraintWithItem:_trailingView
                                  attribute:NSLayoutAttributeCenterX
                                  relatedBy:NSLayoutRelationEqual
                                     toItem:_trailingContainer
                                  attribute:NSLayoutAttributeCenterX
                                 multiplier:1.0
-                                  constant:0].active = YES;
+                                  constant:0];
+    constraintCenterX.priority = UILayoutPriorityDefaultHigh;
+    constraintCenterX.active = YES;
+    NSLayoutConstraint *constraintCenterY =
     [NSLayoutConstraint constraintWithItem:_trailingView
                                  attribute:NSLayoutAttributeCenterY
                                  relatedBy:NSLayoutRelationEqual
                                     toItem:_trailingContainer
                                  attribute:NSLayoutAttributeCenterY
                                 multiplier:1.0
-                                  constant:0].active = YES;
+                                  constant:0];
+    constraintCenterY.priority = UILayoutPriorityDefaultHigh;
+    constraintCenterY.active = YES;
   } else {
     self.trailingContainerWidthConstraint.constant = 0;
     self.trailingContainerHeightConstraint.constant = 0;
@@ -604,9 +624,9 @@ static const CGFloat kDefaultMarginTrailing = 10.0;
 }
 
 -(void)layoutSubviews {
-//  self.textContainerLeadingConstraint.constant = self.leadingView ?
+//  self.leadingViewTextContainerLeadingConstraint.constant = self.leadingView ?
 //  if (!self.leadingView) {
-//    self.textContainerLeadingConstraint.constant = 50;
+//    self.leadingViewTextContainerLeadingConstraint.constant = 50;
 //  }
   
   [super layoutSubviews];
