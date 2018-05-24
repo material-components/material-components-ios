@@ -1,3 +1,170 @@
+# 55.2.0
+
+This minor release includes new Snackbar features and minor improvements to the Catalog.
+
+## New features
+
+Snackbar now allows you to change the snackbar message alignment on iPad. For example:
+
+```objc
+MDCSnackbarManager.alignment = MDCSnackbarAlignmentLeading;
+```
+
+Snackbar also exposes a delegate for theming snackbar messages.
+
+```objc
+MDCSnackbarManager.delegate = appDelegate;
+
+- (void)willPresentSnackbarWithMessageView:(nullable MDCSnackbarMessageView *)messageView {
+  // You can theme the individual messageView.actionButtons here.
+}
+```
+
+There is a new shadow elevation constant, `MDCShadowElevationBottomNavigationBar`.
+
+## API changes
+
+### ShadowElevations
+
+#### MDCShadowElevationBottomNavigationBar
+
+*new* constant: `MDCShadowElevationBottomNavigationBar`
+
+### Snackbar
+
+#### MDCSnackbarAlignment
+
+*new* enum value: `MDCSnackbarAlignmentCenter` in `MDCSnackbarAlignment`
+
+*new* enum value: `MDCSnackbarAlignmentLeading` in `MDCSnackbarAlignment`
+
+*new* enum: `MDCSnackbarAlignment`
+
+#### MDCSnackbarMessageView
+
+*new* property: `actionButtons` in `MDCSnackbarMessageView`
+
+#### MDCSnackbarManager
+
+*new* property: `delegate` in `MDCSnackbarManager`
+
+*new* property: `alignment` in `MDCSnackbarManager`
+
+#### MDCSnackbarManagerDelegate
+
+*new* protocol: `MDCSnackbarManagerDelegate`
+
+*new* method: `-willPresentSnackbarWithMessageView:` in `MDCSnackbarManagerDelegate`
+
+## Component changes
+
+### Tabs
+
+#### Changes
+
+* [Initialize default color and typography schemes in examples (#4200)](https://github.com/material-components/material-components-ios/commit/0c0ce4248edb23aeed4d139a55367192edff710c) (John Detloff)
+
+### schemes/Typography
+
+#### Changes
+
+* [Initialize default color and typography schemes in examples (#4200)](https://github.com/material-components/material-components-ios/commit/0c0ce4248edb23aeed4d139a55367192edff710c) (John Detloff)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Initialize default color and typography schemes in examples (#4200)](https://github.com/material-components/material-components-ios/commit/0c0ce4248edb23aeed4d139a55367192edff710c) (John Detloff)
+
+### AppBar
+
+#### Changes
+
+* [Create an example of MDCAppBarContainerViewController usage (#4197)](https://github.com/material-components/material-components-ios/commit/82afdff90d2f40a6c8830c70360943269c821553) (John Detloff)
+* [Initialize default color and typography schemes in examples (#4200)](https://github.com/material-components/material-components-ios/commit/0c0ce4248edb23aeed4d139a55367192edff710c) (John Detloff)
+
+### Buttons
+
+#### Changes
+
+* [Disable flaky test. (#4157)](https://github.com/material-components/material-components-ios/commit/480ceda7225a8dc8b0503e06ecc6407c2ebf0a8c) (featherless)
+* [Initialize default color and typography schemes in examples (#4200)](https://github.com/material-components/material-components-ios/commit/0c0ce4248edb23aeed4d139a55367192edff710c) (John Detloff)
+
+### ButtonBar
+
+#### Changes
+
+* [Initialize default color and typography schemes in examples (#4200)](https://github.com/material-components/material-components-ios/commit/0c0ce4248edb23aeed4d139a55367192edff710c) (John Detloff)
+
+### TextFields
+
+#### Changes
+
+* [Getting rid of paddedLabel Class since it's not needed anymore. (#4196)](https://github.com/material-components/material-components-ios/commit/9e7db06c7e917cd8fa023f6d885ae58ffa2a74cd) (Mohammad Cazi)
+
+### Chips
+
+#### Changes
+
+* [Initialize default color and typography schemes in examples (#4200)](https://github.com/material-components/material-components-ios/commit/0c0ce4248edb23aeed4d139a55367192edff710c) (John Detloff)
+
+### Snackbar
+
+#### Changes
+
+* [Allow Snackbars to have leading alignment on iPads (#4163)](https://github.com/material-components/material-components-ios/commit/fe0780ce5592553f0b2fce2116f82a5381731afd) (Andrew Overton)
+* [Exposed the snackbar button class (#4171)](https://github.com/material-components/material-components-ios/commit/b9d4698caa1d3652ccddf2f86c18e4838a093674) (Yarden Eitan)
+
+### Slider
+
+#### Changes
+
+* [Initialize default color and typography schemes in examples (#4200)](https://github.com/material-components/material-components-ios/commit/0c0ce4248edb23aeed4d139a55367192edff710c) (John Detloff)
+
+### NavigationBar
+
+#### Changes
+
+* [Initialize default color and typography schemes in examples (#4200)](https://github.com/material-components/material-components-ios/commit/0c0ce4248edb23aeed4d139a55367192edff710c) (John Detloff)
+
+### ActivityIndicator
+
+#### Changes
+
+* [Initialize default color and typography schemes in examples (#4200)](https://github.com/material-components/material-components-ios/commit/0c0ce4248edb23aeed4d139a55367192edff710c) (John Detloff)
+
+### Typography
+
+#### Changes
+
+* [Add unit test to improve coverage (#4198)](https://github.com/material-components/material-components-ios/commit/5f0e12550df56a9db112aaae5617cad4f4a1ff6d) (ianegordon)
+
+### Dialogs
+
+#### Changes
+
+* [Initialize default color and typography schemes in examples (#4200)](https://github.com/material-components/material-components-ios/commit/0c0ce4248edb23aeed4d139a55367192edff710c) (John Detloff)
+
+### BottomNavigation
+
+#### Changes
+
+* [Fix shadow elevation value (#4195)](https://github.com/material-components/material-components-ios/commit/7bf1c4ad8f6d0e974431aa512db5f542d2046131) (Robert Moore)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Always update opacity for views that hide when shifted. (#4170)](https://github.com/material-components/material-components-ios/commit/28b93d5bbf32412a67f101068c2a1b7fedaaeaab) (featherless)
+
+### ShadowElevations
+
+#### Changes
+
+* [Expose BottomNavigationBar elevation (#4194)](https://github.com/material-components/material-components-ios/commit/fb77f5c42cd5ec5c031775cef4d2402b7ae83387) (Robert Moore)
+
+---
+
 # 55.1.0
 
 This minor release introduces some new features to Flexible Header and Snackbar and includes some

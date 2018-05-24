@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -14,7 +14,18 @@
  limitations under the License.
  */
 
-#import "MDCSnackbarAlignment.h"
-#import "MDCSnackbarManager.h"
-#import "MDCSnackbarMessage.h"
-#import "MDCSnackbarMessageView.h"
+import Foundation
+
+extension GitHub {
+  struct User: GitHubObject {
+    typealias JsonFormat = [String: Any]
+    init(json: JsonFormat) {
+      self.json = json
+    }
+    private let json: JsonFormat
+
+    var id: Int? { get { return json["id"] as? Int } }
+    var name: String? { get { return json["name"] as? String } }
+    var login: String? { get { return json["login"] as? String } }
+  }
+}

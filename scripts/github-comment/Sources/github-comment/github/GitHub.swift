@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -14,7 +14,19 @@
  limitations under the License.
  */
 
-#import "MDCSnackbarAlignment.h"
-#import "MDCSnackbarManager.h"
-#import "MDCSnackbarMessage.h"
-#import "MDCSnackbarMessageView.h"
+import Foundation
+
+/**
+ An instance of this object is able to make authenticated requests to the GitHub API.
+ */
+class GitHub {
+  init(token: String) {
+    self.token = token
+  }
+  let token: String
+}
+
+protocol GitHubObject {
+  associatedtype JsonFormat
+  init(json: JsonFormat)
+}
