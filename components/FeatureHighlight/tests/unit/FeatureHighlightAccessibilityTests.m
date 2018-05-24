@@ -29,19 +29,6 @@
 
 @implementation FeatureHighlightAccessibilityTests
 
-- (void)testAccessibilityHintDefaultBeforeLoadingView {
-  // Given
-  UIView *view = [[UIView alloc] init];
-  UIView *view2 = [[UIView alloc] init];
-  MDCFeatureHighlightViewController *controller =
-  [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:view
-                                                         andShowView:view2
-                                                          completion:nil];
-
-  // Then
-  XCTAssertNil(controller.accessibilityHint);
-}
-
 - (void)testAccessibilityHintDefaultAfterLoadingView {
   // Given
   UIView *view = [[UIView alloc] init];
