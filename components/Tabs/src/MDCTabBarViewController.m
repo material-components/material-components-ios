@@ -86,8 +86,37 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
     _tabBar = [aDecoder decodeObjectOfClass:[MDCTabBar class]
                                      forKey:MDCTabBarViewControllerTabBarKey];
     _delegate = [aDecoder decodeObjectForKey:MDCTabBarViewControllerDelegateKey];
+    [self commonInit];
   }
   return self;
+}
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    [self commonInit];
+  }
+  return self;
+}
+
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+    [self commonInit];
+  }
+  return self;
+}
+
+-(void)commonInit {
+  // Already been setup through encoding/decoding
+  if (self.tabBar) {
+    return;
+  }
+  MDCTabBar *tabBar = [[MDCTabBar alloc] initWithFrame:CGRectZero];
+  tabBar.alignment = MDCTabBarAlignmentJustified;
+  tabBar.delegate = self;
+  self.tabBar = tabBar;
+  _tabBarShadow = [[MDCTabBarShadowView alloc] initWithFrame:CGRectZero];
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder {
@@ -107,13 +136,8 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
                           UIViewAutoresizingFlexibleRightMargin |
                           UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleHeight |
                           UIViewAutoresizingFlexibleBottomMargin;
-  MDCTabBar *tabBar = [[MDCTabBar alloc] initWithFrame:view.bounds];
-  tabBar.alignment = MDCTabBarAlignmentJustified;
-  tabBar.delegate = self;
-  self.tabBar = tabBar;
-  _tabBarShadow = [[MDCTabBarShadowView alloc] initWithFrame:view.bounds];
   [view addSubview:_tabBarShadow];
-  [view addSubview:tabBar];
+  [view addSubview:self.tabBar];
   [self updateOldViewControllers:nil to:_viewControllers];
   [self updateOldSelectedViewController:nil to:_selectedViewController];
 }
@@ -167,7 +191,7 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
 
 - (void)setViewControllers:(NSArray<UIViewController *> *)viewControllers {
   NSArray<UIViewController *> *oldViewControllers = _viewControllers;
-  _viewControllers = viewControllers;
+  _viewControllers = [viewControllers copy];
   [self updateOldViewControllers:oldViewControllers to:viewControllers];
 }
 
@@ -184,7 +208,7 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
     for (UIViewController *viewController in oldViewControllers) {
       if (![viewControllers containsObject:viewController]) {
         [viewController willMoveToParentViewController:nil];
-        if (viewController.viewLoaded) {
+        if (viewController.isViewLoaded) {
           [viewController.view removeFromSuperview];
         }
         [viewController removeFromParentViewController];
