@@ -8,12 +8,10 @@
 #import "MDCListItemCell.h"
 #import "MDCListBaseCell+Private.h"
 
-//static const CGFloat kImageSideLength = 40.0;
 static const CGFloat kDefaultMarginTop = 10.0;
 static const CGFloat kDefaultMarginBottom = 10.0;
 static const CGFloat kDefaultMarginLeading = 10.0;
 static const CGFloat kDefaultMarginTrailing = 10.0;
-//static const CGFloat kDefaultInterViewPadding = 10.0;
 
 @interface MDCListItemCell ()
 
@@ -52,14 +50,6 @@ static const CGFloat kDefaultMarginTrailing = 10.0;
 @property (strong, nonatomic) NSLayoutConstraint *titleLabelBottomConstraint;
 
 @property (strong, nonatomic) UILabel *detailLabel;
-//@property (strong, nonatomic) NSLayoutConstraint *trailingContainerTrailingConstraint;
-//@property (strong, nonatomic) NSLayoutConstraint *trailingContainerWidthConstraint;
-//@property (strong, nonatomic) NSLayoutConstraint *trailingContainerHeightConstraint;
-
-
-#pragma mark Primary Supporting Views
-//@property (nonatomic, strong, nullable) UILabel *titleLabel;
-//@property (nonatomic, strong, nullable) UILabel *detailLabel;
 
 @end
 
@@ -100,7 +90,7 @@ static const CGFloat kDefaultMarginTrailing = 10.0;
   [self createSupportingViews];
   [self setUpLeadingViewContainerConstraints];
   [self setUpTrailingViewContainerConstraints];
-//  [self setUpTextContainerConstraints];
+  [self setUpTextContainerConstraints];
 //  [self setUpOverlineLabelConstraints];
 //  [self setUpTitleLabelConstraints];
 //  [self setUpDetailLabelConstraints];
@@ -132,12 +122,12 @@ static const CGFloat kDefaultMarginTrailing = 10.0;
   self.trailingContainer.accessibilityIdentifier = @"trailingContainer";
   [self.contentView addSubview:self.trailingContainer];
 
-//  // Create textContainer
-//  self.textContainer = [[UIView alloc] init];
-//  self.textContainer.translatesAutoresizingMaskIntoConstraints = NO;
-//  self.textContainer.backgroundColor = [UIColor redColor];
-//  self.textContainer.accessibilityIdentifier = @"textContainer";
-//  [self.contentView addSubview:self.textContainer];
+  // Create textContainer
+  self.textContainer = [[UIView alloc] init];
+  self.textContainer.translatesAutoresizingMaskIntoConstraints = NO;
+  self.textContainer.backgroundColor = [UIColor redColor];
+  self.textContainer.accessibilityIdentifier = @"textContainer";
+  [self.contentView addSubview:self.textContainer];
 //
 //  // Create overlineLabel
 //  self.overlineLabel = [[UILabel alloc] init];
@@ -178,6 +168,7 @@ static const CGFloat kDefaultMarginTrailing = 10.0;
                                attribute:NSLayoutAttributeNotAnAttribute
                               multiplier:1.0
                                 constant:0.0];
+//  self.leadingContainerWidthConstraint.priority = UILayoutPriorityDefaultHigh;
   self.leadingContainerWidthConstraint.active = YES;
 
   // Constrain height
@@ -189,6 +180,7 @@ static const CGFloat kDefaultMarginTrailing = 10.0;
                                attribute:NSLayoutAttributeNotAnAttribute
                               multiplier:1.0
                                 constant:0.0];
+//  self.leadingContainerHeightConstraint.priority = UILayoutPriorityDefaultHigh;
   self.leadingContainerHeightConstraint.active = YES;
   
   // Constrain to top
@@ -215,14 +207,14 @@ static const CGFloat kDefaultMarginTrailing = 10.0;
 
   // Constrain to bottom
   self.leadingContainerBottomConstraint =
-  [NSLayoutConstraint constraintWithItem:self.leadingContainer
+  [NSLayoutConstraint constraintWithItem:self.contentView
                                attribute:NSLayoutAttributeBottom
-                               relatedBy:NSLayoutRelationLessThanOrEqual
-                                  toItem:self.contentView
+                               relatedBy:NSLayoutRelationGreaterThanOrEqual
+                                  toItem:self.leadingContainer
                                attribute:NSLayoutAttributeBottom
                               multiplier:1.0
                                 constant:0.0];
-  self.leadingContainerBottomConstraint.active = YES; // -kDefaultMarginBottom
+  self.leadingContainerBottomConstraint.active = YES;
 }
 
 - (void)setUpTrailingViewContainerConstraints {
@@ -273,14 +265,14 @@ static const CGFloat kDefaultMarginTrailing = 10.0;
   // Constrain to bottom
   
   self.trailingContainerBottomConstraint =
-  [NSLayoutConstraint constraintWithItem:self.trailingContainer
+  [NSLayoutConstraint constraintWithItem:self.contentView
                                attribute:NSLayoutAttributeBottom
-                               relatedBy:NSLayoutRelationLessThanOrEqual
-                                  toItem:self.contentView
+                               relatedBy:NSLayoutRelationGreaterThanOrEqual
+                                  toItem:self.trailingContainer
                                attribute:NSLayoutAttributeBottom
                               multiplier:1.0
                                 constant:0.0];
-  self.trailingContainerBottomConstraint.active = YES; // -kDefaultMarginBottom
+  self.trailingContainerBottomConstraint.active = YES;
 }
 
 - (void)setUpTextContainerConstraints {
@@ -445,12 +437,14 @@ static const CGFloat kDefaultMarginTrailing = 10.0;
   _leadingView = leadingView;
 
   if (_leadingView) {
-    [self.leadingContainer addSubview:_leadingView];
     self.leadingContainerWidthConstraint.constant = _leadingView.frame.size.width;
     self.leadingContainerHeightConstraint.constant = _leadingView.frame.size.height;
     self.leadingContainerLeadingConstraint.constant = kDefaultMarginLeading;
     self.leadingContainerTopConstraint.constant = kDefaultMarginTop;
-    self.leadingContainerBottomConstraint.constant = -kDefaultMarginBottom;
+    self.leadingContainerBottomConstraint.constant = kDefaultMarginBottom;
+//    _leadingView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.leadingContainer addSubview:_leadingView];
+    _leadingView.accessibilityIdentifier = @"leadingView";
     [NSLayoutConstraint constraintWithItem:_leadingView
                                  attribute:NSLayoutAttributeCenterX
                                  relatedBy:NSLayoutRelationEqual
@@ -490,7 +484,7 @@ static const CGFloat kDefaultMarginTrailing = 10.0;
     self.trailingContainerHeightConstraint.constant = _trailingView.frame.size.height;
     self.trailingContainerTrailingConstraint.constant = -kDefaultMarginTrailing;
     self.trailingContainerTopConstraint.constant = kDefaultMarginTop;
-    self.trailingContainerBottomConstraint.constant = -kDefaultMarginBottom;
+    self.trailingContainerBottomConstraint.constant = kDefaultMarginBottom;
     [NSLayoutConstraint constraintWithItem:_trailingView
                                  attribute:NSLayoutAttributeCenterX
                                  relatedBy:NSLayoutRelationEqual
@@ -545,6 +539,8 @@ static const CGFloat kDefaultMarginTrailing = 10.0;
 
 
 -(void)setNeedsLayout {
+//  CGSize size5 = [self.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+//  self.cellHeightConstraint.constant = size5.height;
 //    CGSize size1 = [self.textContainer systemLayoutSizeFittingSize:CGSizeMake(self.textContainer.frame.size.width, 50000)];
 //    CGSize size2 = [self.textContainer
 //                    sizeThatFits:CGSizeMake(self.textContainer.frame.size.width, 0)];
@@ -565,6 +561,11 @@ static const CGFloat kDefaultMarginTrailing = 10.0;
 //  }
   
   [super layoutSubviews];
+}
+
+-(UICollectionViewLayoutAttributes *)preferredLayoutAttributesFittingAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes {
+  UICollectionViewLayoutAttributes *attributes = [super preferredLayoutAttributesFittingAttributes:layoutAttributes];
+  return attributes;
 }
 
 @end

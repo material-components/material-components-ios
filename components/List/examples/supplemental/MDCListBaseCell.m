@@ -77,11 +77,11 @@
 }
 
 - (void)baseCommonInit {
+  self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
   [self initializeInkView];
   self.backgroundColor = [UIColor lightGrayColor];
   
   [self setUpConstraints];
-  self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
 - (void)initializeInkView {
@@ -99,6 +99,40 @@
                                                          multiplier:1
                                                            constant:0];
 
+  NSLayoutConstraint *c1 = [NSLayoutConstraint constraintWithItem:self.contentView
+                                                          attribute:NSLayoutAttributeBottom
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self
+                                                          attribute:NSLayoutAttributeBottom
+                                                         multiplier:1
+                                                         constant:0];
+  c1.active = YES;
+  c1.priority = UILayoutPriorityDefaultHigh;
+  NSLayoutConstraint *c2 = [NSLayoutConstraint constraintWithItem:self.contentView
+                                                          attribute:NSLayoutAttributeTop
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self
+                                                          attribute:NSLayoutAttributeTop
+                                                         multiplier:1
+                                                           constant:0];
+  c2.active = YES;
+  c2.priority = UILayoutPriorityDefaultHigh;
+  NSLayoutConstraint *c3 = [NSLayoutConstraint constraintWithItem:self.contentView
+                               attribute:NSLayoutAttributeLeading
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self
+                               attribute:NSLayoutAttributeLeading
+                              multiplier:1
+                                constant:0];
+  c3.active = YES;
+  c3.priority = UILayoutPriorityDefaultHigh;
+//  [NSLayoutConstraint constraintWithItem:self.contentView
+//                               attribute:NSLayoutAttributeTrailing
+//                               relatedBy:NSLayoutRelationEqual
+//                                  toItem:self
+//                               attribute:NSLayoutAttributeTrailing
+//                              multiplier:1
+//                                constant:0].active = YES;
 //  self.cellHeightConstraint =
 //      [NSLayoutConstraint constraintWithItem:self.contentView
 //                                   attribute:NSLayoutAttributeHeight
@@ -108,21 +142,22 @@
 //                                  multiplier:1
 //                                    constant:0.0];
 //  self.cellHeightConstraint.active = YES;
-  [NSLayoutConstraint constraintWithItem:self.contentView
-                               attribute:NSLayoutAttributeCenterX
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self
-                               attribute:NSLayoutAttributeCenterX
-                              multiplier:1.0
-                                constant:1.0].active = YES;
-  [NSLayoutConstraint constraintWithItem:self.contentView
-                               attribute:NSLayoutAttributeCenterY
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self
-                               attribute:NSLayoutAttributeCenterY
-                              multiplier:1.0
-                                constant:1.0].active = YES;
-
+//
+//  self.cellHeightConstraint.active = YES;
+//  [NSLayoutConstraint constraintWithItem:self.contentView
+//                               attribute:NSLayoutAttributeCenterX
+//                               relatedBy:NSLayoutRelationEqual
+//                                  toItem:self
+//                               attribute:NSLayoutAttributeCenterX
+//                              multiplier:1.0
+//                                constant:1.0].active = YES;
+//  [NSLayoutConstraint constraintWithItem:self.contentView
+//                               attribute:NSLayoutAttributeCenterY
+//                               relatedBy:NSLayoutRelationEqual
+//                                  toItem:self
+//                               attribute:NSLayoutAttributeCenterY
+//                              multiplier:1.0
+//                                constant:1.0].active = YES;
 }
 
 - (void)setHighlighted:(BOOL)highlighted {

@@ -45,6 +45,7 @@ static const CGFloat kSmallArbitraryCellWidth = 200.f;
   return [self initWithCollectionViewLayout:flowLayout];
 }
 
+
 - (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
   self = [super initWithCollectionViewLayout:layout];
   if (self) {
@@ -131,7 +132,7 @@ static const CGFloat kSmallArbitraryCellWidth = 200.f;
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
-  return 8;//[_content count];
+  return 1;//[_content count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
@@ -156,6 +157,24 @@ static const CGFloat kSmallArbitraryCellWidth = 200.f;
     leadingView.backgroundColor = [UIColor purpleColor];
     cell.leadingView = leadingView;
   }
+  
+//  if (indexPath.item == 0) {
+//    CGSize size1 = [cell.contentView systemLayoutSizeFittingSize:CGSizeMake(cellWidth, 50000)];
+//    CGSize size2 = [cell.contentView
+//                    sizeThatFits:CGSizeMake(cellWidth, 0)];
+//    CGSize size3 = [cell.contentView
+//                    sizeThatFits:CGSizeMake(cellWidth, 50000)];
+//    CGSize size4 = [cell.contentView systemLayoutSizeFittingSize:CGSizeMake(cellWidth, 1)];
+//    CGSize size5 = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+//    NSLog(@"1: %@ %@",@(size1.width), @(size1.height));
+//    NSLog(@"2: %@ %@",@(size2.width), @(size2.height));
+//    NSLog(@"3: %@ %@",@(size3.width),@(size3.height));
+//    NSLog(@"4: %@ %@",@(size4.width),@(size4.height));
+//    NSLog(@"5: %@ %@",@(size5.width),@(size5.height));
+//  }
+  
+
+  
   if (indexPath.item % 2 == 0) {
     UIView *leadingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 90, 50)];
     leadingView.backgroundColor = [UIColor purpleColor];
