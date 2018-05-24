@@ -8,16 +8,6 @@
 #import <UIKit/UIKit.h>
 #import "MDCListBaseCell.h"
 
-
-/** Avatar Display Mode */
-typedef NS_ENUM(NSInteger, MDCListItemCellImageDisplayMode) {
-  /** Images are rounded */
-  MDCListItemCellImageDisplayModeRound,
-  
-  /** Images are squares */
-  MDCListItemCellImageDisplayModeSquare,
-};
-
 @interface MDCListItemCell : MDCListBaseCell
 
 @property (strong, nonatomic, readonly, nonnull) UILabel *overlineLabel;
@@ -28,6 +18,7 @@ typedef NS_ENUM(NSInteger, MDCListItemCellImageDisplayMode) {
 @property (nonatomic, copy, nullable) NSString *titleText;
 @property (nonatomic, copy, nullable) NSString *detailsText;
 @property (nonatomic, assign) CGFloat textOffset;
+@property (nonatomic, assign) BOOL automaticallySetTextOffset;
 
 @property (strong, nonatomic, nullable) UIView *leadingView;
 @property (nonatomic, assign) BOOL centerLeadingViewVertically;
