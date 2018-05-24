@@ -32,10 +32,9 @@
   if (self = [super initWithNibName:nil bundle:nil]) {
     _contentViewController = contentViewController;
     _transitionController = [[MDCBottomSheetTransitionController alloc] init];
-
+    _transitionController.dismissOnBackgroundTap = YES;
     super.transitioningDelegate = _transitionController;
     super.modalPresentationStyle = UIModalPresentationCustom;
-    self.dismissOnBackgroundTap = YES;
   }
   return self;
 }
@@ -59,6 +58,9 @@
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
   self.mdc_bottomSheetPresentationController.delegate = self;
 #pragma clang diagnostic pop
+
+  self.mdc_bottomSheetPresentationController.dismissOnBackgroundTap =
+      _transitionController.dismissOnBackgroundTap;
 
   [self.contentViewController.view layoutIfNeeded];
 }
