@@ -182,42 +182,42 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 
 - (void)setOuterHighlightColor:(UIColor *)outerHighlightColor {
   _outerHighlightColor = outerHighlightColor;
-  if (self.featureHighlightView) {
+  if (self.isViewLoaded) {
     self.featureHighlightView.outerHighlightColor = outerHighlightColor;
   }
 }
 
 - (void)setInnerHighlightColor:(UIColor *)innerHighlightColor {
   _innerHighlightColor = innerHighlightColor;
-  if (self.featureHighlightView) {
+  if (self.isViewLoaded) {
     self.featureHighlightView.innerHighlightColor = innerHighlightColor;
   }
 }
 
 - (void)setTitleColor:(UIColor *)titleColor {
   _titleColor = titleColor;
-  if (self.featureHighlightView) {
+  if (self.isViewLoaded) {
     self.featureHighlightView.titleColor = titleColor;
   }
 }
 
 - (void)setBodyColor:(UIColor *)bodyColor {
   _bodyColor = bodyColor;
-  if (self.featureHighlightView) {
+  if (self.isViewLoaded) {
     self.featureHighlightView.bodyColor = bodyColor;
   }
 }
 
 - (void)setTitleFont:(UIFont *)titleFont {
   _titleFont = titleFont;
-  if (self.featureHighlightView) {
+  if (self.isViewLoaded) {
     self.featureHighlightView.titleFont = titleFont;
   }
 }
 
 - (void)setBodyFont:(UIFont *)bodyFont {
   _bodyFont = bodyFont;
-  if (self.featureHighlightView) {
+  if (self.isViewLoaded) {
     self.featureHighlightView.bodyFont = bodyFont;
   }
 }
@@ -305,7 +305,7 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 
 - (void)setAccessibilityHint:(NSString *)accessibilityHint {
   _viewAccessiblityHint = accessibilityHint;
-  if (self.featureHighlightView) {
+  if (self.isViewLoaded) {
     self.featureHighlightView.accessibilityHint = accessibilityHint;
   }
 }
