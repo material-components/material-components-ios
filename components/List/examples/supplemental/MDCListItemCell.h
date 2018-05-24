@@ -8,6 +8,8 @@
 #import <UIKit/UIKit.h>
 #import "MDCListBaseCell.h"
 
+@protocol MDCTypographyScheming;
+
 @interface MDCListItemCell : MDCListBaseCell
 
 @property (strong, nonatomic, readonly, nonnull) UILabel *overlineLabel;
@@ -27,6 +29,7 @@
 @property (strong, nonatomic, nullable) UIView *trailingView;
 @property (nonatomic, assign) BOOL centerTrailingViewVertically;
 
+- (void)applyTypographyScheme:(id<MDCTypographyScheming>)typographyScheme;
 
 
 

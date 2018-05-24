@@ -142,7 +142,7 @@ static const CGFloat kSmallArbitraryCellWidth = 200.f;
                                                 forIndexPath:indexPath];
   
   
-//  [cell applyTypographyScheme:_typographyScheme];
+  [cell applyTypographyScheme:_typographyScheme];
 //  cell.mdc_adjustsFontForContentSizeCategory = YES;
   CGFloat cellWidth = CGRectGetWidth(collectionView.bounds);
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
@@ -156,6 +156,7 @@ static const CGFloat kSmallArbitraryCellWidth = 200.f;
     UIView *leadingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 70, 70)];
     leadingView.backgroundColor = [UIColor purpleColor];
     cell.leadingView = leadingView;
+    cell.centerLeadingViewVertically = YES;
   }
 
   if (indexPath.item % 2 == 0) {
@@ -163,6 +164,9 @@ static const CGFloat kSmallArbitraryCellWidth = 200.f;
 //    leadingView.backgroundColor = [UIColor purpleColor];
     UISwitch *uiSwitch = [[UISwitch alloc] init];
     cell.trailingView = uiSwitch;
+    if (indexPath.item == 2) {
+      cell.centerTrailingViewVertically = YES;
+    }
   }
 
   NSArray *array = @[@"stuff sodifj sdoifj sdoifjs dofijsd foisdjfsodifj ",

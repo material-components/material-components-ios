@@ -8,6 +8,9 @@
 #import "MDCListItemCell.h"
 #import "MDCListBaseCell+Private.h"
 
+#import "MaterialTypography.h"
+#import "MaterialTypographyScheme.h"
+
 static const CGFloat kDefaultMarginTop = 10.0;
 static const CGFloat kDefaultMarginBottom = 10.0;
 static const CGFloat kDefaultMarginLeading = 10.0;
@@ -24,6 +27,7 @@ static const CGFloat kDefaultViewPadding = 10.0;
 @property (strong, nonatomic) NSLayoutConstraint *leadingContainerLeadingConstraint;
 @property (strong, nonatomic) NSLayoutConstraint *leadingContainerTopConstraint;
 @property (strong, nonatomic) NSLayoutConstraint *leadingContainerBottomConstraint;
+@property (strong, nonatomic) NSLayoutConstraint *leadingContainerCenterYConstraint;
 
 @property (strong, nonatomic) UIView *trailingContainer;
 @property (strong, nonatomic) NSLayoutConstraint *trailingContainerWidthConstraint;
@@ -31,6 +35,7 @@ static const CGFloat kDefaultViewPadding = 10.0;
 @property (strong, nonatomic) NSLayoutConstraint *trailingContainerTrailingConstraint;
 @property (strong, nonatomic) NSLayoutConstraint *trailingContainerTopConstraint;
 @property (strong, nonatomic) NSLayoutConstraint *trailingContainerBottomConstraint;
+@property (strong, nonatomic) NSLayoutConstraint *trailingContainerCenterYConstraint;
 
 @property (strong, nonatomic) UIView *textContainer;
 @property (strong, nonatomic) NSLayoutConstraint *leadingViewTextContainerLeadingConstraint;
@@ -190,17 +195,6 @@ static const CGFloat kDefaultViewPadding = 10.0;
 //  self.leadingContainerHeightConstraint.priority = UILayoutPriorityDefaultHigh;
   self.leadingContainerHeightConstraint.active = YES;
   
-  // Constrain to top
-  self.leadingContainerTopConstraint =
-  [NSLayoutConstraint constraintWithItem:self.leadingContainer
-                               attribute:NSLayoutAttributeTop
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self.contentView
-                               attribute:NSLayoutAttributeTop
-                              multiplier:1.0
-                                constant:0.0];
-  self.leadingContainerTopConstraint.active = YES;
-
   // Constrain to leading edge
   self.leadingContainerLeadingConstraint =
   [NSLayoutConstraint constraintWithItem:self.leadingContainer
@@ -211,6 +205,17 @@ static const CGFloat kDefaultViewPadding = 10.0;
                               multiplier:1.0
                                 constant:0.0];
   self.leadingContainerLeadingConstraint.active = YES;
+  
+  // Constrain to top
+  self.leadingContainerTopConstraint =
+  [NSLayoutConstraint constraintWithItem:self.leadingContainer
+                               attribute:NSLayoutAttributeTop
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.contentView
+                               attribute:NSLayoutAttributeTop
+                              multiplier:1.0
+                                constant:0.0];
+  self.leadingContainerTopConstraint.active = !self.leadingContainerCenterYConstraint;
 
   // Constrain to bottom
   self.leadingContainerBottomConstraint =
@@ -222,6 +227,18 @@ static const CGFloat kDefaultViewPadding = 10.0;
                               multiplier:1.0
                                 constant:0.0];
   self.leadingContainerBottomConstraint.active = YES;
+  
+  // Constrain to center Y
+  self.leadingContainerCenterYConstraint =
+  [NSLayoutConstraint constraintWithItem:self.leadingContainer
+                               attribute:NSLayoutAttributeCenterY
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.contentView
+                               attribute:NSLayoutAttributeCenterY
+                              multiplier:1.0
+                                constant:0.0];
+  self.leadingContainerCenterYConstraint.active = self.centerLeadingViewVertically;
+
 }
 
 - (void)setUpTrailingViewContainerConstraints {
@@ -247,17 +264,6 @@ static const CGFloat kDefaultViewPadding = 10.0;
                                 constant:0.0];
   self.trailingContainerHeightConstraint.active = YES;
   
-  // Constrain to top
-  self.trailingContainerTopConstraint =
-  [NSLayoutConstraint constraintWithItem:self.trailingContainer
-                               attribute:NSLayoutAttributeTop
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self.contentView
-                               attribute:NSLayoutAttributeTop
-                              multiplier:1.0
-                                constant:0.0];
-  self.trailingContainerTopConstraint.active = YES;
-  
   // Constrain to trailing edge
   self.trailingContainerTrailingConstraint =
   [NSLayoutConstraint constraintWithItem:self.trailingContainer
@@ -269,8 +275,18 @@ static const CGFloat kDefaultViewPadding = 10.0;
                                 constant:0.0];
   self.trailingContainerTrailingConstraint.active = YES;
   
-  // Constrain to bottom
+  // Constrain to top
+  self.trailingContainerTopConstraint =
+  [NSLayoutConstraint constraintWithItem:self.trailingContainer
+                               attribute:NSLayoutAttributeTop
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.contentView
+                               attribute:NSLayoutAttributeTop
+                              multiplier:1.0
+                                constant:0.0];
+  self.trailingContainerTopConstraint.active = !self.centerTrailingViewVertically;
   
+  // Constrain to bottom
   self.trailingContainerBottomConstraint =
   [NSLayoutConstraint constraintWithItem:self.contentView
                                attribute:NSLayoutAttributeBottom
@@ -280,6 +296,18 @@ static const CGFloat kDefaultViewPadding = 10.0;
                               multiplier:1.0
                                 constant:0.0];
   self.trailingContainerBottomConstraint.active = YES;
+
+  // Constrain to center Y
+  self.trailingContainerCenterYConstraint =
+  [NSLayoutConstraint constraintWithItem:self.trailingContainer
+                               attribute:NSLayoutAttributeCenterY
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.contentView
+                               attribute:NSLayoutAttributeCenterY
+                              multiplier:1.0
+                                constant:0.0];
+  self.trailingContainerCenterYConstraint.active = self.centerTrailingViewVertically;
+
 }
 
 - (void)setUpTextContainerConstraints {
@@ -651,6 +679,41 @@ static const CGFloat kDefaultViewPadding = 10.0;
   [self setNeedsLayout];
 }
 
+-(void)setCenterTrailingViewVertically:(BOOL)centerTrailingViewVertically {
+  if (centerTrailingViewVertically == _centerTrailingViewVertically) {
+    return;
+  }
+  _centerTrailingViewVertically = centerTrailingViewVertically;
+
+  self.trailingContainerTopConstraint.active = NO;
+  self.trailingContainerCenterYConstraint.active = NO;
+  if (_centerTrailingViewVertically) {
+    self.trailingContainerCenterYConstraint.active = YES;
+  } else {
+    self.trailingContainerTopConstraint.active = YES;
+  }
+  
+  [self setNeedsLayout];
+}
+
+-(void)setCenterLeadingViewVertically:(BOOL)centerLeadingViewVertically {
+  if (centerLeadingViewVertically == _centerLeadingViewVertically) {
+    return;
+  }
+  _centerLeadingViewVertically = centerLeadingViewVertically;
+  
+  self.leadingContainerTopConstraint.active = NO;
+  self.leadingContainerCenterYConstraint.active = NO;
+  if (_centerLeadingViewVertically) {
+    self.leadingContainerCenterYConstraint.active = YES;
+  } else {
+    self.leadingContainerTopConstraint.active = YES;
+  }
+  
+  [self setNeedsLayout];
+}
+
+
 -(void)setNeedsLayout {
 //  CGSize size5 = [self.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
 //  self.cellHeightConstraint.constant = size5.height;
@@ -676,9 +739,13 @@ static const CGFloat kDefaultViewPadding = 10.0;
   [super layoutSubviews];
 }
 
--(UICollectionViewLayoutAttributes *)preferredLayoutAttributesFittingAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes {
-  UICollectionViewLayoutAttributes *attributes = [super preferredLayoutAttributesFittingAttributes:layoutAttributes];
-  return attributes;
+
+- (void)applyTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
+  self.overlineLabel.font = typographyScheme.overline ?: self.overlineLabel.font;
+  self.titleLabel.font = typographyScheme.body1 ?: self.titleLabel.font;
+  self.detailLabel.font = typographyScheme.body2 ?: self.detailLabel.font;
 }
+
+
 
 @end
