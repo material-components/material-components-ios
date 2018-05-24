@@ -114,7 +114,8 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
   _tabBarShadow = [[MDCTabBarShadowView alloc] initWithFrame:view.bounds];
   [view addSubview:_tabBarShadow];
   [view addSubview:tabBar];
-  [self updateTabBarItems];
+  [self updateOldViewControllers:nil to:_viewControllers];
+  [self updateOldSelectedViewController:nil to:_selectedViewController];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -165,11 +166,22 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
 }
 
 - (void)setViewControllers:(NSArray<UIViewController *> *)viewControllers {
-  if (![_viewControllers isEqual:viewControllers]) {
+  NSArray<UIViewController *> *oldViewControllers = _viewControllers;
+  _viewControllers = viewControllers;
+  [self updateOldViewControllers:oldViewControllers to:viewControllers];
+}
+
+- (void)updateOldViewControllers:(NSArray<UIViewController *> *)oldViewControllers
+                              to:(NSArray<UIViewController *> *)viewControllers {
+  if (!self.isViewLoaded || [oldViewControllers isEqual:viewControllers]) {
+    return;
+  }
+
+  if (![oldViewControllers isEqual:viewControllers]) {
     // For all view controllers that this is removing, follow UIViewController.h's rules for
     // for removing a child view controller. See the comments in UIViewController.h for more
     // information.
-    for (UIViewController *viewController in _viewControllers) {
+    for (UIViewController *viewController in oldViewControllers) {
       if (![viewControllers containsObject:viewController]) {
         [viewController willMoveToParentViewController:nil];
         if (viewController.viewLoaded) {
@@ -178,36 +190,47 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
         [viewController removeFromParentViewController];
       }
     }
-    // Update the property.
-    _viewControllers = [viewControllers copy];
     // Show the newly-visible view controller.
     [self updateTabBarItems];
   }
 }
 
-- (void)setSelectedViewController:(nullable UIViewController *)selectedViewController {
-  if (_selectedViewController != selectedViewController) {
-    if (selectedViewController) {
-      NSAssert([_viewControllers containsObject:selectedViewController], @"not one of us.");
-    }
-    BOOL animated = NO;
-    UIView *oldView = _selectedViewController.view;
-    _selectedViewController = selectedViewController;
-    UIViewController *oldController = [self controllerWithView:oldView];
-    [oldController beginAppearanceTransition:NO animated:animated];
-    [selectedViewController beginAppearanceTransition:YES animated:animated];
-
-    [self transitionViewsWithoutAnimationFromViewController:oldController
-                                           toViewController:selectedViewController];
-
-    [oldController endAppearanceTransition];
-    [selectedViewController endAppearanceTransition];
-
-    if (selectedViewController) {
-      self.tabBar.selectedItem = selectedViewController.tabBarItem;
-    }
-    [self setNeedsStatusBarAppearanceUpdate];
+- (void)updateOldSelectedViewController:(nullable UIViewController *)oldSelectedViewController
+                                     to:(nullable UIViewController *)selectedViewController {
+  if (!self.isViewLoaded || oldSelectedViewController == selectedViewController) {
+    return;
   }
+  if (selectedViewController) {
+    NSAssert([_viewControllers containsObject:selectedViewController], @"not one of us.");
+  }
+
+  if (![self.childViewControllers containsObject:selectedViewController]) {
+    [self addChildViewController:selectedViewController];
+    UIView *view = selectedViewController.view;
+    [self.view addSubview:view];
+    [selectedViewController didMoveToParentViewController:self];
+  }
+  [self updateTabBarItems];
+  BOOL animated = NO;
+  [oldSelectedViewController beginAppearanceTransition:NO animated:animated];
+  [selectedViewController beginAppearanceTransition:YES animated:animated];
+
+  [self transitionViewsWithoutAnimationFromViewController:oldSelectedViewController
+                                         toViewController:selectedViewController];
+
+  [oldSelectedViewController endAppearanceTransition];
+  [selectedViewController endAppearanceTransition];
+
+  if (selectedViewController) {
+    self.tabBar.selectedItem = selectedViewController.tabBarItem;
+  }
+  [self setNeedsStatusBarAppearanceUpdate];
+}
+
+- (void)setSelectedViewController:(nullable UIViewController *)selectedViewController {
+  UIViewController *oldSelectedViewController = _selectedViewController;
+  _selectedViewController = selectedViewController;
+  [self updateOldSelectedViewController:oldSelectedViewController to:selectedViewController];
 }
 
 #pragma mark - private
@@ -236,11 +259,6 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
     if (tabBarItem.image) {
       hasImages = YES;
     }
-    [self addChildViewController:child];
-    UIView *view = child.view;
-    view.hidden = child != _selectedViewController;
-    [self.view addSubview:view];
-    [child didMoveToParentViewController:self];
   }
   // This class preserves the invariant that if the selected controller is not nil, it is contained
   // in the array of viewControllers.
