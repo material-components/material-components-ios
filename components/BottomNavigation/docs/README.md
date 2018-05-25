@@ -1,5 +1,7 @@
 # Bottom navigation
 
+<!-- badges -->
+
 Bottom navigation bars allow movement between primary destinations in an app. Tapping on a bottom
 navigation icon takes you directly to the associated view or refreshes the currently active view.
 

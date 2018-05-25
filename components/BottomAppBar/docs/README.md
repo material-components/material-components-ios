@@ -1,5 +1,7 @@
 # App bars: bottom
 
+<!-- badges -->
+
 A bottom app bar displays navigation and key actions at the bottom of the screen. Bottom app bars
 work like [navigation bars](../../NavigationBar), but with the additional option to show a
 [floating action button](../../Buttons).
