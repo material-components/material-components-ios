@@ -125,7 +125,7 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
     [_headerView trackingScrollViewDidScroll];
   }
 
-  if ([self fhv_shouldUseIdealTopLayoutGuideBehavior]) {
+  if (self.topLayoutGuideAdjustmentEnabled) {
     [self updateTopLayoutGuide];
   }
 }
@@ -168,7 +168,7 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
 
-  if ([self fhv_shouldUseIdealTopLayoutGuideBehavior]) {
+  if (self.topLayoutGuideAdjustmentEnabled) {
     [self updateTopLayoutGuide];
   }
 }
@@ -226,9 +226,9 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
     self.topLayoutGuideConstraint = nil;
     return;
   }
-  // Once fhv_shouldUseIdealTopLayoutGuideBehavior can be set to true at all times, we'll be able
+  // Once self.topLayoutGuideAdjustmentEnabled can be set to true at all times, we'll be able
   // to remove the if clause around the for loop entirely.
-  if ([self fhv_shouldUseIdealTopLayoutGuideBehavior]
+  if (self.topLayoutGuideAdjustmentEnabled
       || [topLayoutGuideViewController.view.constraints count] > 0) {
     // Note: accessing topLayoutGuide has the side effect of setting up all of the view controller
     // constraints. We need to access this property before we enter the for loop, otherwise
@@ -240,10 +240,6 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
       }
     }
   }
-}
-
-- (BOOL)fhv_shouldUseIdealTopLayoutGuideBehavior {
-  return self.topLayoutGuideViewController != nil;
 }
 
 - (UIViewController *)fhv_topLayoutGuideViewControllerWithFallback {
@@ -274,7 +270,7 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
 
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
-    if ([self fhv_shouldUseIdealTopLayoutGuideBehavior]) {
+    if (self.topLayoutGuideAdjustmentEnabled) {
       UIViewController *topLayoutGuideViewController = [self fhv_topLayoutGuideViewControllerWithFallback];
       if (topLayoutGuideViewController != nil) {
         UIEdgeInsets additionalSafeAreaInsets = topLayoutGuideViewController.additionalSafeAreaInsets;
@@ -298,6 +294,7 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
     return;
   }
   _topLayoutGuideViewController = topLayoutGuideViewController;
+  _topLayoutGuideAdjustmentEnabled = YES;
 
   if ([self isViewLoaded]) {
     [self fhv_extractTopLayoutGuideConstraint];

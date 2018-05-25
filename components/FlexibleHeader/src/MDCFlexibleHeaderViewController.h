@@ -44,6 +44,25 @@
 /** The layout delegate will be notified of any changes to the flexible header view's frame. */
 @property(nonatomic, weak, nullable) id<MDCFlexibleHeaderViewLayoutDelegate> layoutDelegate;
 
+#pragma mark - Enabling top layout guide adjustment behavior
+
+/**
+ This runtime flag affects the way the top layout guide is modified.
+
+ When disabled, the parent view controller is always assumed to be the topLayoutGuideViewController.
+ This is considered the "legacy" behavior.
+
+ When enabled, the topLayoutGuideViewController property will always determine which view
+ controller's topLayoutGuide is adjusted. If topLayoutGuideViewController is nil and this property
+ is enabled, no topLayoutGuide will be adjusted.
+
+ This property will eventually be enabled by default, so we encourage you to start setting an
+ explicit topLayoutGuideViewController rather than relying on the implicit legacy behavior.
+
+ By default this is NO. In the future it will be enabled by default and eventually removed.
+ */
+@property(nonatomic, getter=isTopLayoutGuideAdjustmentEnabled) BOOL topLayoutGuideAdjustmentEnabled;
+
 /**
  The view controller whose topLayoutGuide should be modified to match the flexible header view's
  height.
