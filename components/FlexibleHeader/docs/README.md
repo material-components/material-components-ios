@@ -1,5 +1,7 @@
 # Flexible header
 
+<!-- badges -->
+
 A flexible header is a container view whose height and vertical offset react to
 UIScrollViewDelegate events.
 

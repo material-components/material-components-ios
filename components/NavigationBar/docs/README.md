@@ -1,5 +1,7 @@
 # Navigation bar
 
+<!-- badges -->
+
 A navigation bar is a view composed of leading and trailing buttons and either a title label or a
 custom title view.
 

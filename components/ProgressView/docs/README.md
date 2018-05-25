@@ -1,5 +1,7 @@
 # Progress view
 
+<!-- badges -->
+
 Progress view is a linear progress indicator that implements Material Design animation and layout.
 
 <div class="article__asset article__asset--screenshot">
