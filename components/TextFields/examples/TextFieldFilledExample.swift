@@ -162,7 +162,7 @@ final class TextFieldFilledSwiftExample: UIViewController {
       It can even handle new lines.
       """
     #else
-      message.text = "This is where you could put a multi-line message like an email. It can even handle new lines./n"
+      message.text = "This is where you could put a multi-line message like an email.\n\nIt can even handle new lines."
     #endif
     messageController.placeholderText = "Message"
     allTextFieldControllers.append(messageController)
