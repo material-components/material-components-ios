@@ -12,6 +12,8 @@ api_doc_root: true
 
 # Bottom navigation
 
+[![Open bugs badge](https://img.shields.io/badge/dynamic/json.svg?label=open%20bugs&url=https%3A%2F%2Fapi.github.com%2Fsearch%2Fissues%3Fq%3Dis%253Aopen%2Blabel%253Atype%253ABug%2Blabel%253A%255BBottomNavigation%255D&query=%24.total_count)](https://github.com/material-components/material-components-ios/issues?q=is%3Aopen+is%3Aissue+label%3Atype%3ABug+label%3A%5BBottomNavigation%5D)
+
 Bottom navigation bars allow movement between primary destinations in an app. Tapping on a bottom
 navigation icon takes you directly to the associated view or refreshes the currently active view.
 

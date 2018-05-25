@@ -59,6 +59,14 @@ guidelines_title=
 If a variable is not provided and a template requires it, then the template will be generated with
 the missing variables shown as placeholders still.
 
+### Badges
+
+To generate badges for a component, use the following snippet.
+
+```markdown
+<!-- badges -->
+```
+
 ### Design & API links
 
 To generate design and API links, use the following snippet. Note that this requires that you've

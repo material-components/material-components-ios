@@ -1,5 +1,7 @@
 # App bars: top
 
+<!-- badges -->
+
 The Material Design top app bar displays information and actions relating to the current view.
 
 <div class="article__asset article__asset--screenshot">
