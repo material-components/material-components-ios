@@ -128,8 +128,8 @@
 
   self.messageController =
       [[MDCTextInputControllerOutlinedTextArea alloc] initWithTextInput:textFieldMessage];
-  textFieldMessage.text = @"This is where you could put a multi-line message like an email. It can"
-      "even handle new lines./n";
+  textFieldMessage.text = @"This is where you could put a multi-line message like an email.\n\n"
+      "It can even handle new lines.";
   self.messageController.placeholderText = @"Message";
 
   NSDictionary *views = @{
