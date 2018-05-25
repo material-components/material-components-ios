@@ -1,35 +1,36 @@
-//
-//  MDCListBaseCell.m
-//  CatalogByConvention
-//
-//  Created by andrewoverton on 5/22/18.
-//
+/*
+ Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
 
-#import "MDCListBaseCell.h"
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
+#import "AutoLayoutListBaseCell.h"
+
 #import <MDFInternationalization/MDFInternationalization.h>
+
 #import "MaterialInk.h"
 #import "MaterialTypography.h"
 
-
-@interface MDCListBaseCell ()
+@interface AutoLayoutListBaseCell ()
 
 @property (nonatomic, assign) CGPoint lastTouch;
 @property (strong, nonatomic) MDCInkView *inkView;
 @property (strong, nonatomic) NSLayoutConstraint *cellWidthConstraint;
 @property (strong, nonatomic) NSLayoutConstraint *cellHeightConstraint;
 
-
-//UIView *_contentWrapper;
-//NSLayoutConstraint *_cellWidthConstraint;
-//NSLayoutConstraint *_imageLeftPaddingConstraint;
-//NSLayoutConstraint *_imageRightPaddingConstraint;
-//NSLayoutConstraint *_imageWidthConstraint;
-//BOOL _mdc_adjustsFontForContentSizeCategory;
-
-
 @end
 
-@implementation MDCListBaseCell
+@implementation AutoLayoutListBaseCell
 
 #pragma mark Object Lifecycle
 
@@ -51,7 +52,6 @@
   return nil;
 }
 
-
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
@@ -62,28 +62,12 @@
 
 }
 
--(void)setNeedsLayout {
-//  CGSize size1 = [self.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-//  CGSize size2 = [self.contentView
-//                  sizeThatFits:CGSizeMake(self.cellWidthConstraint.constant, 0)];
-//  CGSize size3 = [self.contentView
-//                  sizeThatFits:CGSizeMake(self.cellWidthConstraint.constant, 50000)];
-//
-//  NSLog(@"1: %@ %@",@(size1.width), @(size1.height));
-//  NSLog(@"2: %@ %@",@(size2.width), @(size2.height));
-//  NSLog(@"3: %@ %@",@(size3.width),@(size3.height));
-//  self.cellHeightConstraint.constant = size.height;
-  [super setNeedsLayout];
-}
+#pragma mark Setup
 
 - (void)baseCommonInit {
-//  self.backgroundColor = [UIColor greenColor];
-//  self.contentView.backgroundColor = [UIColor greenColor];
   self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
   [self initializeInkView];
-//  self.backgroundColor = [UIColor lightGrayColor];
-  
-  [self setUpConstraints];
+  [self setUpContentViewConstraints];
 }
 
 - (void)initializeInkView {
@@ -92,7 +76,7 @@
   [self addSubview:_inkView];
 }
 
-- (void)setUpConstraints {
+- (void)setUpContentViewConstraints {
   self.cellWidthConstraint = [NSLayoutConstraint constraintWithItem:self.contentView
                                                           attribute:NSLayoutAttributeWidth
                                                           relatedBy:NSLayoutRelationEqual
@@ -101,66 +85,36 @@
                                                          multiplier:1
                                                            constant:0];
 
-  NSLayoutConstraint *c1 = [NSLayoutConstraint constraintWithItem:self.contentView
+  NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:self.contentView
                                                           attribute:NSLayoutAttributeBottom
                                                           relatedBy:NSLayoutRelationEqual
                                                              toItem:self
                                                           attribute:NSLayoutAttributeBottom
                                                          multiplier:1
                                                          constant:0];
-  c1.active = YES;
-  c1.priority = UILayoutPriorityDefaultHigh;
-  NSLayoutConstraint *c2 = [NSLayoutConstraint constraintWithItem:self.contentView
+  bottomConstraint.active = YES;
+  bottomConstraint.priority = UILayoutPriorityDefaultHigh;
+  NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:self.contentView
                                                           attribute:NSLayoutAttributeTop
                                                           relatedBy:NSLayoutRelationEqual
                                                              toItem:self
                                                           attribute:NSLayoutAttributeTop
                                                          multiplier:1
                                                            constant:0];
-  c2.active = YES;
-  c2.priority = UILayoutPriorityDefaultHigh;
-  NSLayoutConstraint *c3 = [NSLayoutConstraint constraintWithItem:self.contentView
+  topConstraint.active = YES;
+  topConstraint.priority = UILayoutPriorityDefaultHigh;
+  NSLayoutConstraint *leadingConstraint = [NSLayoutConstraint constraintWithItem:self.contentView
                                attribute:NSLayoutAttributeLeading
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self
                                attribute:NSLayoutAttributeLeading
                               multiplier:1
                                 constant:0];
-  c3.active = YES;
-  c3.priority = UILayoutPriorityDefaultHigh;
-//  [NSLayoutConstraint constraintWithItem:self.contentView
-//                               attribute:NSLayoutAttributeTrailing
-//                               relatedBy:NSLayoutRelationEqual
-//                                  toItem:self
-//                               attribute:NSLayoutAttributeTrailing
-//                              multiplier:1
-//                                constant:0].active = YES;
-//  self.cellHeightConstraint =
-//      [NSLayoutConstraint constraintWithItem:self.contentView
-//                                   attribute:NSLayoutAttributeHeight
-//                                   relatedBy:NSLayoutRelationEqual
-//                                      toItem:nil
-//                                   attribute:NSLayoutAttributeNotAnAttribute
-//                                  multiplier:1
-//                                    constant:0.0];
-//  self.cellHeightConstraint.active = YES;
-//
-//  self.cellHeightConstraint.active = YES;
-//  [NSLayoutConstraint constraintWithItem:self.contentView
-//                               attribute:NSLayoutAttributeCenterX
-//                               relatedBy:NSLayoutRelationEqual
-//                                  toItem:self
-//                               attribute:NSLayoutAttributeCenterX
-//                              multiplier:1.0
-//                                constant:1.0].active = YES;
-//  [NSLayoutConstraint constraintWithItem:self.contentView
-//                               attribute:NSLayoutAttributeCenterY
-//                               relatedBy:NSLayoutRelationEqual
-//                                  toItem:self
-//                               attribute:NSLayoutAttributeCenterY
-//                              multiplier:1.0
-//                                constant:1.0].active = YES;
+  leadingConstraint.active = YES;
+  leadingConstraint.priority = UILayoutPriorityDefaultHigh;
 }
+
+#pragma mark UICollectionViewCell
 
 - (void)setHighlighted:(BOOL)highlighted {
   [super setHighlighted:highlighted];
@@ -181,6 +135,8 @@
   self.lastTouch = location;
 }
 
+#pragma mark - Accessors
+
 -(void)setCellWidth:(CGFloat)cellWidth {
   if (_cellWidth == cellWidth) {
     return;
@@ -189,12 +145,5 @@
   _cellWidthConstraint.constant = _cellWidth;
   _cellWidthConstraint.active = YES;
 }
-
-- (void)performAsAtomicUpdateCellUpdate:(void(^)(void))updateBlock {
-  @synchronized(self) {
-    updateBlock();
-  }
-}
-
 
 @end

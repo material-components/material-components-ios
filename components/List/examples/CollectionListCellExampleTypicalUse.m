@@ -18,17 +18,13 @@
 #import "MaterialTypographyScheme.h"
 #import "CollectionListCellExampleTypicalUse.h"
 #import "CollectionViewListCell.h"
-#import "MDCListBaseCell.h"
-#import "MDCListItemCell.h"
 
-static NSString *const kMDCListBaseCellReuseIdentifier = @"kMDCListBaseCellReuseIdentifier";
-static NSString *const kMDCListItemCellReuseIdentifier = @"kMDCListItemCellReuseIdentifier";
-
+static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 static NSString *const kExampleDetailText =
     @"Pellentesque non quam ornare, porta urna sed, malesuada felis. Praesent at gravida felis, "
      "non facilisis enim. Proin dapibus laoreet lorem, in viverra leo dapibus a.";
 static const CGFloat kSmallestCellHeight = 40.f;
-static const CGFloat kSmallArbitraryCellWidth = 200.f;
+static const CGFloat kSmallArbitraryCellWidth = 100.f;
 
 @implementation CollectionListCellExampleTypicalUse {
   NSMutableArray *_content;
@@ -44,7 +40,6 @@ static const CGFloat kSmallArbitraryCellWidth = 200.f;
   flowLayout.estimatedItemSize = CGSizeMake(kSmallArbitraryCellWidth, kSmallestCellHeight);
   return [self initWithCollectionViewLayout:flowLayout];
 }
-
 
 - (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
   self = [super initWithCollectionViewLayout:layout];
@@ -69,10 +64,8 @@ static const CGFloat kSmallArbitraryCellWidth = 200.f;
   }
 #endif
   // Register cell class.
-  [self.collectionView registerClass:[MDCListBaseCell class]
-          forCellWithReuseIdentifier:kMDCListBaseCellReuseIdentifier];
-  [self.collectionView registerClass:[MDCListItemCell class]
-          forCellWithReuseIdentifier:kMDCListItemCellReuseIdentifier];
+  [self.collectionView registerClass:[CollectionViewListCell class]
+          forCellWithReuseIdentifier:kReusableIdentifierItem];
 
   // Populate content with array of text, details text, and number of lines.
   _content = [NSMutableArray array];
@@ -132,17 +125,16 @@ static const CGFloat kSmallArbitraryCellWidth = 200.f;
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
-  return 100;//[_content count];
+  return 100;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-  MDCListItemCell *cell =
-      [collectionView dequeueReusableCellWithReuseIdentifier:kMDCListItemCellReuseIdentifier
+  CollectionViewListCell *cell =
+      [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
                                                 forIndexPath:indexPath];
-
-  cell.typographyScheme = _typographyScheme;
-//  cell.mdc_adjustsFontForContentSizeCategory = YES;
+  [cell applyTypographyScheme:_typographyScheme];
+  cell.mdc_adjustsFontForContentSizeCategory = YES;
   CGFloat cellWidth = CGRectGetWidth(collectionView.bounds);
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
@@ -150,72 +142,14 @@ static const CGFloat kSmallArbitraryCellWidth = 200.f;
         (collectionView.adjustedContentInset.left + collectionView.adjustedContentInset.right);
   }
 #endif
-  cell.cellWidth = cellWidth;
+  [cell setCellWidth:cellWidth];
+  cell.titleLabel.text = _content[indexPath.item % _content.count][0];
+  cell.titleLabel.textAlignment = [_content[indexPath.item % _content.count][1] integerValue];
+  cell.detailsTextLabel.text = _content[indexPath.item % _content.count][2];
+  cell.detailsTextLabel.textAlignment = [_content[indexPath.item % _content.count][3] integerValue];
   if (indexPath.item % 3 == 0) {
-    UIImageView *leadingView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 70, 70)];
-    leadingView.image = [UIImage imageNamed:@"Favorite"];
-
-    cell.leadingView = leadingView;
+    [cell setImage:[MDCIcons imageFor_ic_info]];
   }
-
-  if (indexPath.item % 2 == 0) {
-//    UIView *leadingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 90, 50)];
-//    leadingView.backgroundColor = [UIColor purpleColor];
-    UISwitch *uiSwitch = [[UISwitch alloc] init];
-    cell.trailingView = uiSwitch;
-    if (indexPath.item != 2) {
-      cell.centerTrailingViewVertically = YES;
-    }
-  }
-
-  NSArray *array = @[@"stuff sodifj sdoifj sdoifjs dofijsd foisdjfsodifj ",
-                     @"stuff sodifj ",
-                     @"stuff sodifj sdoifj sdlfks d;flkd lf;kaj sdf",
-                     @"stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs",
-                     @"stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs",
-                     @"stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs sdoifj sdoifjs stuff sodifj sdoifj sdoifjs",
-                     @"stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs stuff sodifj sdoifj sdoifjs sdoifj sdoifjs stuff sodifj sdoifjsdoifjs stuff sodifj sdoifj sdoifjs sdoifj sdoifjs stuff sodifj sdoifjsdoifjs stuff sodifj sdoifj sdoifjs sdoifj sdoifjs stuff sodifj sdoifjsdoifjs stuff sodifj sdoifj sdoifjs sdoifj sdoifjs stuff sodifj sdoifj sdoifjssdoifj sdoifjs stuff sodifj sdoifj sdoifjs ",
-                     @"cat"];
-  cell.overlineText = array[indexPath.item % 8];
-  
-  cell.overlineLabel.numberOfLines = 1;
-  cell.titleText = array[(indexPath.item + 1) % 8];
-  cell.detailText = array[(indexPath.item + 2) % 8];
-  cell.textOffset = 50;
-  
-  if (indexPath.item == 1) {
-    cell.overlineText = nil;
-    cell.titleText = nil;
-    cell.detailText = nil;
-  }
-  
-  if (indexPath.item % 2 == 0) {
-    cell.automaticallySetTextOffset = YES;
-  }
-
-  
-  //  if (indexPath.item == 0) {
-  //    CGSize size1 = [cell.contentView systemLayoutSizeFittingSize:CGSizeMake(cellWidth, 50000)];
-  //    CGSize size2 = [cell.contentView
-  //                    sizeThatFits:CGSizeMake(cellWidth, 0)];
-  //    CGSize size3 = [cell.contentView
-  //                    sizeThatFits:CGSizeMake(cellWidth, 50000)];
-  //    CGSize size4 = [cell.contentView systemLayoutSizeFittingSize:CGSizeMake(cellWidth, 1)];
-  //    CGSize size5 = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-  //    NSLog(@"1: %@ %@",@(size1.width), @(size1.height));
-  //    NSLog(@"2: %@ %@",@(size2.width), @(size2.height));
-  //    NSLog(@"3: %@ %@",@(size3.width),@(size3.height));
-  //    NSLog(@"4: %@ %@",@(size4.width),@(size4.height));
-  //    NSLog(@"5: %@ %@",@(size5.width),@(size5.height));
-  //  }
-  
-
-//  cell.titleLabel.textAlignment = [_content[indexPath.item][1] integerValue];
-//  cell.detailsTextLabel.text = _content[indexPath.item][2];
-//  cell.detailsTextLabel.textAlignment = [_content[indexPath.item][3] integerValue];
-//  if (indexPath.item % 3 == 0) {
-//    [cell setImage:[MDCIcons imageFor_ic_info]];
-//  }
   return cell;
 }
 
@@ -239,7 +173,7 @@ static const CGFloat kSmallArbitraryCellWidth = 200.f;
 #pragma mark - CatalogByConvention
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Lists", @"List Cell Example" ];
+  return @[ @"Lists", @"Auto Layout Based List 1" ];
 }
 
 + (BOOL)catalogIsPrimaryDemo {
@@ -247,7 +181,7 @@ static const CGFloat kSmallArbitraryCellWidth = 200.f;
 }
 
 + (NSString *)catalogDescription {
-  return @"Material Collection Lists are continuous, vertical indexes of text or images.";
+  return @"Auto Layout Based List 1";
 }
 
 + (BOOL)catalogIsPresentable {
