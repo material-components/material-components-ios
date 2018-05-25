@@ -140,10 +140,9 @@ static const CGFloat kSmallArbitraryCellWidth = 200.f;
   MDCListItemCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:kMDCListItemCellReuseIdentifier
                                                 forIndexPath:indexPath];
-  
-  
-  [cell applyTypographyScheme:_typographyScheme];
-  cell.mdc_adjustsFontForContentSizeCategory = YES;
+
+  cell.typographyScheme = _typographyScheme;
+//  cell.mdc_adjustsFontForContentSizeCategory = YES;
   CGFloat cellWidth = CGRectGetWidth(collectionView.bounds);
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
@@ -154,11 +153,9 @@ static const CGFloat kSmallArbitraryCellWidth = 200.f;
   cell.cellWidth = cellWidth;
   if (indexPath.item % 3 == 0) {
     UIImageView *leadingView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 70, 70)];
-    leadingView.backgroundColor = [UIColor purpleColor];
-    leadingView.image = [UIImage imageNamed:@"Cake"];
-    leadingView.layer.cornerRadius = 35.0;
+    leadingView.image = [UIImage imageNamed:@"Favorite"];
+
     cell.leadingView = leadingView;
-    cell.centerLeadingViewVertically = YES;
   }
 
   if (indexPath.item % 2 == 0) {
@@ -166,7 +163,7 @@ static const CGFloat kSmallArbitraryCellWidth = 200.f;
 //    leadingView.backgroundColor = [UIColor purpleColor];
     UISwitch *uiSwitch = [[UISwitch alloc] init];
     cell.trailingView = uiSwitch;
-    if (indexPath.item == 2) {
+    if (indexPath.item != 2) {
       cell.centerTrailingViewVertically = YES;
     }
   }

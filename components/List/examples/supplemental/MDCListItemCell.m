@@ -16,6 +16,7 @@ static const CGFloat kDefaultMarginBottom = 10.0;
 static const CGFloat kDefaultMarginLeading = 10.0;
 static const CGFloat kDefaultMarginTrailing = 10.0;
 static const CGFloat kDefaultViewPadding = 10.0;
+static const CGFloat kDefaultVerticalLabelPadding = 10.0;
 
 @interface MDCListItemCell ()
 
@@ -62,8 +63,6 @@ static const CGFloat kDefaultViewPadding = 10.0;
 @property (strong, nonatomic) NSLayoutConstraint *detailLabelTopConstraint;
 @property (strong, nonatomic) NSLayoutConstraint *detailLabelBottomConstraint;
 
-@property (strong, nonatomic) MDCTypographyScheme *defaultTypography;
-
 @end
 
 @implementation MDCListItemCell
@@ -102,9 +101,7 @@ static const CGFloat kDefaultViewPadding = 10.0;
 
 - (void)commonInit {
   self.contentView.accessibilityIdentifier = @"contentView";
-  
-  self.defaultTypography = [MDCTypographyScheme new];
-  
+  self.typographyScheme = [self defaultTypographyScheme];
   [self createSupportingViews];
   [self setUpLeadingViewContainerConstraints];
   [self setUpTrailingViewContainerConstraints];
@@ -114,13 +111,10 @@ static const CGFloat kDefaultViewPadding = 10.0;
   [self setUpDetailLabelConstraints];
 }
 
-#pragma mark UIView Overrides
-
 #pragma mark UICollectionViewCell Overrides
 
 -(void)prepareForReuse {
   [super prepareForReuse];
-
   self.overlineText = nil;
   self.titleText = nil;
   self.detailText = nil;
@@ -129,29 +123,30 @@ static const CGFloat kDefaultViewPadding = 10.0;
   self.automaticallySetTextOffset = NO;
   self.centerLeadingViewVertically = NO;
   self.centerTrailingViewVertically = NO;
-
-  [self applyTypographyScheme:self.defaultTypography];
+  self.typographyScheme = self.defaultTypographyScheme;
 }
+
+#pragma mark View Setup
 
 - (void)createSupportingViews {
   // Create leadingContainer
   self.leadingContainer = [[UIView alloc] init];
   self.leadingContainer.translatesAutoresizingMaskIntoConstraints = NO;
-  self.leadingContainer.backgroundColor = [UIColor lightGrayColor];
+//  self.leadingContainer.backgroundColor = [UIColor lightGrayColor];
   self.leadingContainer.accessibilityIdentifier = @"leadingContainer";
   [self.contentView addSubview:self.leadingContainer];
 
   // Create trailingContainer
   self.trailingContainer = [[UIView alloc] init];
   self.trailingContainer.translatesAutoresizingMaskIntoConstraints = NO;
-  self.trailingContainer.backgroundColor = [UIColor blueColor];
+//  self.trailingContainer.backgroundColor = [UIColor blueColor];
   self.trailingContainer.accessibilityIdentifier = @"trailingContainer";
   [self.contentView addSubview:self.trailingContainer];
 
   // Create textContainer
   self.textContainer = [[UIView alloc] init];
   self.textContainer.translatesAutoresizingMaskIntoConstraints = NO;
-  self.textContainer.backgroundColor = [UIColor redColor];
+//  self.textContainer.backgroundColor = [UIColor redColor];
   self.textContainer.accessibilityIdentifier = @"textContainer";
   [self.contentView addSubview:self.textContainer];
 
@@ -159,8 +154,8 @@ static const CGFloat kDefaultViewPadding = 10.0;
   self.overlineLabel = [[UILabel alloc] init];
   self.overlineLabel.numberOfLines = 0;
   self.overlineLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  self.overlineLabel.backgroundColor = [UIColor yellowColor];
-  self.overlineLabel.textColor = [UIColor greenColor];
+//  self.overlineLabel.backgroundColor = [UIColor yellowColor];
+  self.overlineLabel.textColor = [UIColor blackColor];
   self.overlineLabel.accessibilityIdentifier = @"overlineLabel";
   [self.textContainer addSubview:self.overlineLabel];
 
@@ -168,8 +163,8 @@ static const CGFloat kDefaultViewPadding = 10.0;
   self.titleLabel = [[UILabel alloc] init];
   self.titleLabel.numberOfLines = 0;
   self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  self.titleLabel.backgroundColor = [UIColor blackColor];
-  self.titleLabel.textColor = [UIColor whiteColor];
+//  self.titleLabel.backgroundColor = [UIColor blackColor];
+  self.titleLabel.textColor = [UIColor blackColor];
   self.titleLabel.accessibilityIdentifier = @"titleLabel";
   [self.textContainer addSubview:self.titleLabel];
 
@@ -177,12 +172,10 @@ static const CGFloat kDefaultViewPadding = 10.0;
   self.detailLabel = [[UILabel alloc] init];
   self.detailLabel.numberOfLines = 0;
   self.detailLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  self.detailLabel.backgroundColor = [UIColor redColor];
-  self.detailLabel.textColor = [UIColor yellowColor];
+//  self.detailLabel.backgroundColor = [UIColor redColor];
+  self.detailLabel.textColor = [UIColor blackColor];
   [self.contentView addSubview:self.detailLabel];
 }
-
-#pragma mark Layout
 
 - (void)setUpLeadingViewContainerConstraints {
   // Constrain width
@@ -378,7 +371,7 @@ static const CGFloat kDefaultViewPadding = 10.0;
                                attribute:NSLayoutAttributeBottom
                               multiplier:1.0
                                 constant:0.0];
-  self.textContainerBottomConstraint.active = YES; // -kDefaultMarginBottom
+  self.textContainerBottomConstraint.active = YES;
 
   // set up overline label constraints
   
@@ -523,7 +516,20 @@ static const CGFloat kDefaultViewPadding = 10.0;
   self.detailLabelBottomConstraint.active = YES;
 }
 
+- (void)adjustTextContainerConstraintsAfterTextChange {
+  BOOL hasOverline = self.overlineLabel.text.length > 0;
+  BOOL hasTitle = self.overlineLabel.text.length > 0;
+  BOOL hasDetail = self.overlineLabel.text.length > 0;
+  if (hasOverline | hasTitle | hasDetail) {
+    self.textContainerTopConstraint.constant = kDefaultMarginTop;
+    self.textContainerBottomConstraint.constant = -kDefaultMarginBottom;
+  } else {
+    self.textContainerTopConstraint.constant = 0;
+    self.textContainerBottomConstraint.constant = 0;
+  }
+}
 
+#pragma mark Accessors
 
 -(void)setTextOffset:(CGFloat)textOffset {
   if (textOffset == _textOffset) {
@@ -533,8 +539,6 @@ static const CGFloat kDefaultViewPadding = 10.0;
   self.contentViewTextContainerLeadingConstraint.constant = textOffset;
   [self setNeedsLayout];
 }
-
-#pragma mark Accessors
 
 -(void)setLeadingView:(UIView *)leadingView {
   if (leadingView == _leadingView) {
@@ -733,27 +737,19 @@ static const CGFloat kDefaultViewPadding = 10.0;
   [self setNeedsLayout];
 }
 
-- (void)applyTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
-  self.overlineLabel.font = typographyScheme.overline ?: self.overlineLabel.font;
-  self.titleLabel.font = typographyScheme.body1 ?: self.titleLabel.font;
-  self.detailLabel.font = typographyScheme.body2 ?: self.detailLabel.font;
+#pragma mark - Typography/Dynamic Type Support
+
+- (MDCTypographyScheme *)defaultTypographyScheme {
+  return [MDCTypographyScheme new];
 }
 
-- (void)adjustTextContainerConstraintsAfterTextChange {
-  BOOL hasOverline = self.overlineLabel.text.length > 0;
-  BOOL hasTitle = self.overlineLabel.text.length > 0;
-  BOOL hasDetail = self.overlineLabel.text.length > 0;
-  if (hasOverline | hasTitle | hasDetail) {
-    self.textContainerTopConstraint.constant = kDefaultMarginTop;
-    self.textContainerBottomConstraint.constant = -kDefaultMarginBottom;
-  } else {
-    self.textContainerTopConstraint.constant = 0;
-    self.textContainerBottomConstraint.constant = 0;
-  }
+-(void)setTypographyScheme:(MDCTypographyScheme *)typographyScheme {
+  _typographyScheme = typographyScheme;
+  self.overlineLabel.font = _typographyScheme.overline ?: self.overlineLabel.font;
+  self.titleLabel.font = _typographyScheme.body1 ?: self.titleLabel.font;
+  self.detailLabel.font = _typographyScheme.body2 ?: self.detailLabel.font;
+  [self adjustFontsForContentSizeCategory];
 }
-
-
-#pragma mark - Dynamic Type Support
 
 - (BOOL)mdc_adjustsFontForContentSizeCategory {
   return _mdc_adjustsFontForContentSizeCategory;
@@ -782,18 +778,18 @@ static const CGFloat kDefaultViewPadding = 10.0;
 }
 
 - (void)adjustFontsForContentSizeCategory {
-  UIFont *overlineFont = self.overlineLabel.font ?: self.defaultTypography.overline;
-  UIFont *titleFont = self.titleLabel.font ?: self.defaultTypography.body1;
-  UIFont *detailFont = self.detailLabel.font ?: self.defaultTypography.body2;
+  UIFont *overlineFont = self.overlineLabel.font ?: self.typographyScheme.overline;
+  UIFont *titleFont = self.titleLabel.font ?: self.typographyScheme.body1;
+  UIFont *detailFont = self.detailLabel.font ?: self.typographyScheme.body2;
   if (_mdc_adjustsFontForContentSizeCategory) {
     overlineFont =
-    [overlineFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
+    [overlineFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleCaption
                              scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
     titleFont =
-    [overlineFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
+    [titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
                                scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
     detailFont =
-    [overlineFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
+    [detailFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleBody1
                                scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
   }
   self.overlineLabel.font = overlineFont;

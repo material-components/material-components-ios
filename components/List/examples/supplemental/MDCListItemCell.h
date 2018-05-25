@@ -24,11 +24,13 @@
 @property (nonatomic, assign) BOOL automaticallySetTextOffset;
 
 @property (strong, nonatomic, nullable) UIView *leadingView;
+@property (nonatomic, assign) NSInteger leadingViewSizingMode;
 @property (nonatomic, assign) BOOL centerLeadingViewVertically;
 
 @property (strong, nonatomic, nullable) UIView *trailingView;
 @property (nonatomic, assign) BOOL centerTrailingViewVertically;
 
+@property (strong, nonatomic) id<MDCTypographyScheming> typographyScheme;
 
 /*
  Indicates whether the view's contents should automatically update their font when the device’s
@@ -43,7 +45,7 @@
 BOOL mdc_adjustsFontForContentSizeCategory;
 
 
-- (void)applyTypographyScheme:(id<MDCTypographyScheming>)typographyScheme;
+//- (void)applyTypographyScheme:(id<MDCTypographyScheming>)typographyScheme;
 
 
 
