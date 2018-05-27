@@ -166,7 +166,7 @@ Outlined background with no fill.
 
 #### MDCTextInputControllerOutlinedTextArea
 
-Nearly identical to MDCTextInputControllerOutlined but with two differences:
+Nearly identical to `MDCTextInputControllerOutlined` but with two differences:
 
 - Intended only for multi-line text fields that remain expanded when empty
 - The floating placeholder does not cross the border but rather floats below it
@@ -183,7 +183,7 @@ Optimized for full width forms like emails. While common in messaging apps, its 
 
 #### MDCTextInputControllerUnderline
 
-'Classic' 2014 Material Design text field. This style is still found in many applications and sites but should be considered deprecated. It tested poorly in Material Research's user testing. Use MDCTextInputControllerFilled or MDCTextInputControllerOutlined instead.
+'Classic' 2014 Material Design text field. This style is still found in many applications and sites but should be considered deprecated. It tested poorly in Material Research's user testing. Use `MDCTextInputControllerFilled` or `MDCTextInputControllerOutlined` instead.
 
 #### MDCTextInputControllerLegacyDefault && MDCTextInputControllerLegacyFullWidth
 
@@ -195,7 +195,7 @@ See [Text Field Styles](./styling) for images and details.
 
 #### MDCTextInputControllerBase
 
-__This class is meant to be subclassed and not used on its own.__ It's a full implementation of the MDCTextInputControllerFloatingPlaceholder protocol and holds all the 'magic' logic necessary to make:
+__This class is meant to be subclassed and not used on its own.__ It's a full implementation of the `MDCTextInputControllerFloatingPlaceholder` protocol and holds all the 'magic' logic necessary to make:
 
 - Floating placeholder animations
 - Errors
@@ -205,7 +205,7 @@ __This class is meant to be subclassed and not used on its own.__ It's a full im
 
 <!-- Extracted from docs/usage.md -->
 
-A text field that conforms to MDCTextInput can be added to a view hierarchy the same way UITextField and UIView are. But to achieve the animations and presentations defined by the guidelines (floating placeholders, character counts), a controller that conforms to protocol `MDCTextInputController` must be initialized to manage the text field.
+A text field that conforms to `MDCTextInput` can be added to a view hierarchy the same way `UITextField` and `UIView` are. But to achieve the animations and presentations defined by the guidelines (floating placeholders, character counts), a controller that conforms to protocol `MDCTextInputController` must be initialized to manage the text field.
 
 **NOTE:** Expect to interact with _both the text field_ (for the traditional API) _and the controller_ (for changes affecting the presentation and state).
 
@@ -343,7 +343,7 @@ id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
 
 ### Text Fields Typography Theming
 
-You can theme a text field with your app's typography scheme using the TypographyThemer extension.
+You can theme a text field with your app's typography scheme using the `TypographyThemer` extension.
 
 You must first add the Typography Themer extension to your project:
 
