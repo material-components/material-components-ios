@@ -75,6 +75,7 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
     [_dimmingView addGestureRecognizer:_dismissGestureRecognizer];
 
     _trackingView = [[MDCDialogShadowedView alloc] init];
+    _trackingView.clipsToBounds = YES;
 
     [self registerKeyboardNotifications];
   }
