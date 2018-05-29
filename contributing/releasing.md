@@ -59,9 +59,9 @@ You can now start the internal release testing process documented at [go/mdc-rel
 Push `release-candidate` to GitHub with `git push origin release-candidate` as you make changes.
 This allows other people and machines to track the progress of the release.
 
-#### Making changes
+#### Make any necessary changes
 
-You or clients may find problems with the release that need fixing before continuing. You have two
+You, or clients, may find problems with the release that need fixing before continuing. You have two
 options for making those changes:
 
 1.  If the change does not touch library code and is trivial, then you can make the change directly
@@ -210,13 +210,15 @@ exception to our normal squash-and-merge procedure.
 Once you've resolved any merge conflicts your local `develop` and `stable` branches will both
 include the latest changes from `release-candidate`.
 
-Before pushing these changes to GitHub it's a good idea to run a final sanity check:
+## Push the branches to GitHub
 
-    git checkout develop
-    scripts/release test
-    
-    git checkout stable
-    scripts/release test
+You can now push the merged release candidate to GitHub so that you can complete the final
+synchronization within Google.
+
+    git push origin stable develop
+
+You can now sync to the desired stable release. [go/mdc-releasing#re-run-the-import-script-against-githubstable](http://go/mdc-releasing#re-run-the-import-script-against-githubstable). Once you've submitted
+the internal CL, continue below to tag and publish the release.
 
 ## Publish the official release
 
