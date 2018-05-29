@@ -26,9 +26,8 @@ Make sure you are working from a direct clone of the main Git repository.  The s
 assume that the remote "origin" is the actual repository and not your fork.  Since most contributors 
 will be working day-to-day with a fork, consider creating a separate clone just for releases.
 
-```
-git clone git@github.com:material-components/material-components-ios.git mdc-ios-release
-```
+    git clone git@github.com:material-components/material-components-ios.git mdc-ios-release
+    cd mdc-ios-release
 
 ## Cutting and testing the release
 
