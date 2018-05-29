@@ -42,7 +42,7 @@ fix_bazel_imports() {
   stashed_dir=""
   rewrite_tests "s/import MaterialComponents.Material(.+)_(.+)/import components_\1_\2/"
   rewrite_tests "s/import MaterialComponents.Material(.+)Scheme/import components_schemes_\1_\1/"
-  find "${tests_dir_prefix}/components/private" -type d | cut -d'/' -f3 | sort | uniq | while read private_component; do
+  find "${tests_dir_prefix}components/private" -type d | cut -d'/' -f3 | sort | uniq | while read private_component; do
     if [ -z "$private_component" ]; then
       continue
     fi
