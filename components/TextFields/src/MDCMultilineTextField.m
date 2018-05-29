@@ -51,6 +51,8 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 
 @property(nonatomic, assign, getter=isEditing) BOOL editing;
 
+@property(nonatomic, assign) CGFloat textViewWidth;
+
 @property(nonatomic, strong) MDCTextInputCommonFundament *fundament;
 
 @property(nonatomic, strong) NSLayoutConstraint *textViewBottomSuperviewBottom;
@@ -329,6 +331,8 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   if ([self.positioningDelegate respondsToSelector:@selector(textInputDidLayoutSubviews)]) {
     [self.positioningDelegate textInputDidLayoutSubviews];
   }
+
+  [self updateIntrinsicSizeFromTextView];
 }
 
 - (void)updateConstraints {
@@ -400,7 +404,9 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   [self.fundament updateConstraintsOfInput];
 
   [self updateTrailingViewLayout];
+  [self updateIntrinsicSizeFromTextView];
 
+  // This must always be the last message in this method.
   [super updateConstraints];
 }
 
@@ -411,6 +417,24 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 - (CGFloat)estimatedTextViewLineHeight {
   CGFloat scale = UIScreen.mainScreen.scale;
   return MDCCeil(self.textView.font.lineHeight * scale) / scale;
+}
+
+- (void)updateIntrinsicSizeFromTextView {
+  if ([self textViewWidthDidChange]) {
+    [self invalidateIntrinsicContentSize];
+  }
+}
+
+- (BOOL)textViewWidthDidChange {
+  BOOL widthDidChange = NO;
+  CGFloat currentTextViewWidth = CGRectGetWidth(self.textView.bounds);
+
+  if (self.textViewWidth != currentTextViewWidth) {
+    widthDidChange = YES;
+  }
+  self.textViewWidth = currentTextViewWidth;
+
+  return widthDidChange;
 }
 
 #pragma mark - Touch (UIView)
