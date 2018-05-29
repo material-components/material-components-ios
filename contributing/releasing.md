@@ -4,8 +4,19 @@ These instructions describe how to cut a new release.
 
 MDC follows the ["git flow"](http://nvie.com/posts/a-successful-git-branching-model/) style of
 development, where the default branch is called `develop`. `stable` (instead of the traditional
-`master`) is reserved for releases. The `develop` branch is periodically copied to a release branch,
+`master`) is reserved for releases. The `develop` branch is periodically copied to a release candidate,
 tested, and then merged into `stable`, which serves as the stable "vetted" branch.
+
+## A note on the role of the release engineer
+
+Each release is driven by a single **release engineer**, who is also a Googler. The release engineer
+is expected to do the following, in order of priority:
+
+- Do not break Google.
+- Land a release at least once a week.
+
+If something is stopping the release engineer from achieving either of the above goals, the
+culprit code should be removed immediately from the release.
 
 ## Before you start
 
@@ -38,6 +49,8 @@ that the `cut` script generated.
 
 **Do not use GitHub's big green button to merge the approved pull request.** Release are an
 exception to our normal squash-and-merge procedure.
+
+### Start internal testing
 
 You can now start the internal release testing process documented at [go/mdc-releasing](http://go/mdc-releasing).
 
