@@ -1512,11 +1512,12 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     return;
   }
 
+  // NOTE: Order of operation here is important.
   [self updateCursor];
-  [self updatePlaceholder];
   [self updateLeadingUnderlineLabel];
   [self updateTrailingUnderlineLabel];
   [self updateTextInput];
+  [self updatePlaceholder];
   [self updateUnderline];
   [self updateBorder];
 }
