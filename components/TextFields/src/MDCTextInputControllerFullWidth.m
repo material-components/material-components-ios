@@ -842,6 +842,7 @@ static UIFont *_trailingUnderlineLabelFontDefault;
     return;
   }
 
+  // NOTE: Order of operation here is important.
   [self updateLeadingUnderlineLabel];
   [self updateTrailingUnderlineLabel];
   [self updateTextInput];
