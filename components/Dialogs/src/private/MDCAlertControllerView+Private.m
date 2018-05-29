@@ -273,7 +273,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     size.width = MDCDialogActionsInsets.left + MDCDialogActionsInsets.right;
     for (UIButton *button in self.actionButtons) {
       CGSize buttonSize = [button sizeThatFits:size];
-      size.height += buttonSize.width;
+      size.height += buttonSize.height;
       size.width = MAX(size.width, buttonSize.width);
       if (button != [self.actionButtons lastObject]) {
         size.height += MDCDialogActionsVerticalPadding;
