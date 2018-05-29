@@ -35,6 +35,8 @@
   self = [super init];
   if (self) {
     self.title = @"Bottom Navigation";
+    _colorScheme = [[MDCSemanticColorScheme alloc] init];
+    _typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;
 }
