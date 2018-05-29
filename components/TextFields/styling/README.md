@@ -4,7 +4,7 @@ MDC's text fields are designed to be styled by controllers implementing the `MDC
 
 Some of the classes are marked as "Preferred". These are known, through extensive UX research, to have big performance gains in usability.
 
-There's also a class called `MDCTextInputControllerBase`. It's meant to be used as a super-class for controllers that want default floating placeholder behavior with minimal customization. Several other controllers inherit from it.
+There's also a class called `MDCTextInputControllerBase`. It's meant to be used as a superclass for controllers that want default floating placeholder behavior with minimal customization. Several other controllers inherit from it.
 
 Two of the classes include "Legacy" in their names. They are included to support older designs and avoid breaking changes that come from the size of newer styles.
 
