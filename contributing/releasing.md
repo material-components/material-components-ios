@@ -2,7 +2,7 @@
 
 These instructions describe how to cut a new release.
 
-MDC follows the ["git flow"](http://nvie.com/posts/a-successful-git-branching-model/) style of
+MDC follows the ["git flow"](http://nvie.com/posts/a-successful-git-branching-model/) style of 
 development, where the default branch is called `develop`. `stable` (instead of the traditional
 `master`) is reserved for releases. The `develop` branch is periodically copied to a release candidate,
 tested, and then merged into `stable`, which serves as the stable "vetted" branch.
@@ -43,7 +43,7 @@ Run the following command to cut a release:
 You will now have a local `release-candidate` branch, a new section in CHANGELOG.md titled
 "release-candidate", and the `release-candidate` branch will have been pushed to GitHub.
 
-At this point you can create the initial Release Candidate pull request using the URL
+At this point you should also create the initial Release Candidate pull request using the URL
 that the `cut` script generated.
 
 **Do not use GitHub's big green button to merge the approved pull request.** Release are an
