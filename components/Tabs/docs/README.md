@@ -1,5 +1,7 @@
 # Tabs
 
+<!-- badges -->
+
 Tabs are bars of buttons used to navigate between groups of content.
 
 <div class="article__asset article__asset--screenshot">

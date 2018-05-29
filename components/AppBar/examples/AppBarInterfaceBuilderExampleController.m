@@ -49,6 +49,7 @@
 
 - (void)commonAppBarInterfaceBuilderExampleSetup {
   self.appBar = [[MDCAppBar alloc] init];
+  self.colorScheme = [[MDCSemanticColorScheme alloc] init];
   [self addChildViewController:self.appBar.headerViewController];
 }
 

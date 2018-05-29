@@ -24,7 +24,7 @@
 typedef void (^MDCSnackbarMessageCompletionHandler)(BOOL userInitiated);
 
 /**
- Called when the button in the snackbar is tapped.
+ Called when the button in the Snackbar is tapped.
  */
 typedef void (^MDCSnackbarMessageActionHandler)(void);
 
@@ -47,7 +47,7 @@ extern NSString * __nonnull const MDCSnackbarMessageBoldAttributeName;
 /**
  Represents a message to unobtrusively show to the user.
 
- A snackbar message provides brief feedback about an operation. Messages are passed to the snackbar
+ A Snackbar message provides brief feedback about an operation. Messages are passed to the Snackbar
  manager to be displayed.
 
  Snackbars prefer an application's main window is a subclass of @c MDCOverlayWindow. When a standard
@@ -72,7 +72,7 @@ extern NSString * __nonnull const MDCSnackbarMessageBoldAttributeName;
 + (nonnull instancetype)messageWithAttributedText:(nonnull NSAttributedString *)attributedText;
 
 /**
- Use the older legacy version of snackbar. Default is YES.
+ Use the older legacy version of Snackbar. Default is YES.
  */
 @property(class, nonatomic, assign) BOOL usesLegacySnackbar;
 
@@ -87,20 +87,20 @@ extern NSString * __nonnull const MDCSnackbarMessageBoldAttributeName;
  The primary text of the message with styling.
 
  Any attributes supported by UIKit may be set, though font and color will be overridden by the
- snackbar. Either @c text or @c attributedText must be set.
+ Snackbar. Either @c text or @c attributedText must be set.
  */
 @property(nonatomic, copy, nullable) NSAttributedString *attributedText;
 
 /**
  Optional button to show along with the rest of the message.
 
- A MDCSnackbarMessageAction is displayed as a button on the snackbar. If no action is set no button
+ A MDCSnackbarMessageAction is displayed as a button on the Snackbar. If no action is set no button
  will appear on the Snackbar.
  */
 @property(nonatomic, strong, nullable) MDCSnackbarMessageAction *action;
 
 /**
-  The color used for button text on the snackbar in normal state.
+  The color used for button text on the Snackbar in normal state.
 
   Default is nil, but MDCRGBAColor(0xFF, 0xFF, 0xFF, 0.6f) will be set as the default color
   and is taken from MDCSnackbarMessageView's buttonTitleColorForState:
@@ -129,7 +129,7 @@ extern NSString * __nonnull const MDCSnackbarMessageBoldAttributeName;
 
  Default is nil. If set, only the last message of this category will be shown, any currently
  showing or pending messages in this category will be dismissed as if the user had directly tapped
- the snackbar.
+ the Snackbar.
  */
 @property(nonatomic, copy, nullable) NSString *category;
 
@@ -156,7 +156,7 @@ extern NSString * __nonnull const MDCSnackbarMessageBoldAttributeName;
 @property(nonatomic, copy, nullable) NSString *title;
 
 /**
- Called when the button in the snackbar is tapped.
+ Called when the button in the Snackbar is tapped.
 
  Always called on the main thread.
  */

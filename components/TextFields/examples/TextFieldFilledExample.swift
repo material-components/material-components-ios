@@ -155,6 +155,15 @@ final class TextFieldFilledSwiftExample: UIViewController {
     scrollView.addSubview(message)
     let messageController = MDCTextInputControllerFilled(textInput: message)
     message.textView?.delegate = self
+    #if swift(>=3.2)
+      message.text = """
+      This is where you could put a multi-line message like an email.
+
+      It can even handle new lines.
+      """
+    #else
+      message.text = "This is where you could put a multi-line message like an email.\n\nIt can even handle new lines."
+    #endif
     messageController.placeholderText = "Message"
     allTextFieldControllers.append(messageController)
 
