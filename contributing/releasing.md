@@ -15,11 +15,9 @@ Make sure you are working from a direct clone of the main Git repository.  The s
 assume that the remote "origin" is the actual repository and not your fork.  Since most contributors 
 will be working day-to-day with a fork, consider creating a separate clone just for releases.
 
-### Check for issues that might affect the release process
-
-Occasionally there are temporary issues with the release process, check the [`Blocking Release`
-label](https://github.com/material-components/material-components-ios/labels/is%3ABlocking%20next%20release) for
-any open issues that might affect the release.
+```
+git clone git@github.com:material-components/material-components-ios.git mdc-ios-release
+```
 
 ## Cutting and testing the release
 
@@ -35,15 +33,13 @@ Run the following command to cut a release:
 You will now have a local `release-candidate` branch, a new section in CHANGELOG.md titled
 "release-candidate", and the `release-candidate` branch will have been pushed to GitHub.
 
-The `scripts/release cut` script will output the body of an email you should now send to the
-[discussion list](https://groups.google.com/forum/#!forum/material-components-ios-discuss) so
-clients can test the release.
-
-At this point you should also create the initial Release Candidate pull request using the URL
+At this point you can create the initial Release Candidate pull request using the URL
 that the `cut` script generated.
 
 **Do not use GitHub's big green button to merge the approved pull request.** Release are an
-exception to our normal squash-and-merge procedure. 
+exception to our normal squash-and-merge procedure.
+
+You can now start the internal release testing process documented at [go/mdc-releasing](http://go/mdc-releasing).
 
 ### Resolve any failures
 
