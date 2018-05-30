@@ -1,3 +1,187 @@
+# 55.3.0
+
+This minor release includes added customization to `MDCDialogPresentationController`,  better topLayoutGuide support for `MDCFlexibleHeader`, doc improvements and other small bug fixes.
+
+## New features
+
+Flexible header has a new behavioral flag for opting in to better topLayoutGuide support. This is primarily useful when using the flexible header container view controller. To opt in to this new behavior, do the following:
+
+```swift
+let container = MDCFlexibleHeaderContainerViewController()
+container.isTopLayoutGuideAdjustmentEnabled = true
+```
+
+Dialogs now offer customizable cornerRadius support to enable proper shadowing. You can set the dialog corner radius like so:
+
+```swift
+
+// We set the corner radius to adjust the shadow that is implemented via the trackingView in the
+// presentation controller.
+if let presentationController = presentedController.mdc_dialogPresentationController {
+  presentationController.dialogCornerRadius = presentedController.view.layer.cornerRadius
+}
+```
+
+## API changes
+
+### Dialogs
+
+#### MDCDialogPresentationController
+
+*new* property: `dialogCornerRadius` in `MDCDialogPresentationController`
+
+### FlexibleHeader
+
+#### MDCFlexibleHeaderContainerViewController
+
+*new* property: `topLayoutGuideAdjustmentEnabled` in `MDCFlexibleHeaderContainerViewController`
+
+#### MDCFlexibleHeaderViewController(ToBeDeprecated)
+
+*new* category: `MDCFlexibleHeaderViewController(ToBeDeprecated)`
+
+*moved* method: `-updateTopLayoutGuide` from class `MDCFlexibleHeaderViewController` to category `MDCFlexibleHeaderViewController(ToBeDeprecated)`
+
+#### MDCFlexibleHeaderViewController
+
+*new* property: `topLayoutGuideAdjustmentEnabled` in `MDCFlexibleHeaderViewController`
+
+*new* property: `topLayoutGuideViewController` in `MDCFlexibleHeaderViewController`
+
+## Component changes
+
+### Tabs
+
+#### Changes
+
+* [We should not force viewDidLoad when ViewControllers are set.  (#4230)](https://github.com/material-components/material-components-ios/commit/2bf80cd568f2f5ed14aad02ad4daf93325f54eb8) (Mohammad Cazi)
+* [[Docs] Add badges to all components. (#4278)](https://github.com/material-components/material-components-ios/commit/e1e6d249a4f554ff76c36a49dcae8a824552ea58) (featherless)
+
+### FeatureHighlight
+
+#### Changes
+
+* [View should not be loaded unless it's explicitly called or presented. (#4234)](https://github.com/material-components/material-components-ios/commit/99f230313517930b85a6b87d6ed479c3577450db) (Mohammad Cazi)
+* [[Docs] Add badges to all components. (#4278)](https://github.com/material-components/material-components-ios/commit/e1e6d249a4f554ff76c36a49dcae8a824552ea58) (featherless)
+* [we dismiss and present feature highlight from the new spot. (#4300)](https://github.com/material-components/material-components-ios/commit/e91de068414486355a8426816846b6298a46a533) (Mohammad Cazi)
+
+### AppBar
+
+#### Changes
+
+* [[Docs] Add badges to all components. (#4278)](https://github.com/material-components/material-components-ios/commit/e1e6d249a4f554ff76c36a49dcae8a824552ea58) (featherless)
+
+### Buttons
+
+#### Changes
+
+* [[Docs] Add badges to all components. (#4278)](https://github.com/material-components/material-components-ios/commit/e1e6d249a4f554ff76c36a49dcae8a824552ea58) (featherless)
+
+### ButtonBar
+
+#### Changes
+
+* [[Docs] Add badges to all components. (#4278)](https://github.com/material-components/material-components-ios/commit/e1e6d249a4f554ff76c36a49dcae8a824552ea58) (featherless)
+
+### TextFields
+
+#### Changes
+
+* [Correcting copy mistake. (#4281)](https://github.com/material-components/material-components-ios/commit/d13077450f95f0b436e568a88c757f524f1bbb0f) (Will Larche)
+* [Corrects obscure bug of height. (#4297)](https://github.com/material-components/material-components-ios/commit/776a40e409a1c779cbfd6872952e8a462c34ba09) (Will Larche)
+* [Documentation update (#4295)](https://github.com/material-components/material-components-ios/commit/520ac156a3953db22436e7c868060fa4e881681e) (Will Larche)
+* [Fix notification parameter type (#4249)](https://github.com/material-components/material-components-ios/commit/7cfd4d67a68dab9f5d5e48dd65b2f270d501e3e4) (Robert Moore)
+* [Fix text area placeholder (#4274)](https://github.com/material-components/material-components-ios/commit/6f740c8c6281aa48e60ae347a2b39ae98e0e7fcd) (Will Larche)
+* [Post SetText notifications for attributed text (#4282)](https://github.com/material-components/material-components-ios/commit/a37b2891535b8f70a520215d36a66d0fb9eb01ab) (Robert Moore)
+* [[Docs] Add badges to all components. (#4278)](https://github.com/material-components/material-components-ios/commit/e1e6d249a4f554ff76c36a49dcae8a824552ea58) (featherless)
+
+### Chips
+
+#### Changes
+
+* [[Docs] Add badges to all components. (#4278)](https://github.com/material-components/material-components-ios/commit/e1e6d249a4f554ff76c36a49dcae8a824552ea58) (featherless)
+
+### Snackbar
+
+#### Changes
+
+* [[Docs] Add badges to all components. (#4278)](https://github.com/material-components/material-components-ios/commit/e1e6d249a4f554ff76c36a49dcae8a824552ea58) (featherless)
+
+### Cards
+
+#### Changes
+
+* [Fix the cards docs image asset.](https://github.com/material-components/material-components-ios/commit/790062b34f67c74b89b9a1d0a6d919045af67933) (Jeff Verkoeyen)
+* [[Docs] Add badges to all components. (#4278)](https://github.com/material-components/material-components-ios/commit/e1e6d249a4f554ff76c36a49dcae8a824552ea58) (featherless)
+
+### BottomAppBar
+
+#### Changes
+
+* [[Docs] Add badges to all components. (#4278)](https://github.com/material-components/material-components-ios/commit/e1e6d249a4f554ff76c36a49dcae8a824552ea58) (featherless)
+
+### Slider
+
+#### Changes
+
+* [[Docs] Add badges to all components. (#4278)](https://github.com/material-components/material-components-ios/commit/e1e6d249a4f554ff76c36a49dcae8a824552ea58) (featherless)
+
+### NavigationBar
+
+#### Changes
+
+* [[Docs] Add badges to all components. (#4278)](https://github.com/material-components/material-components-ios/commit/e1e6d249a4f554ff76c36a49dcae8a824552ea58) (featherless)
+
+### ActivityIndicator
+
+#### Changes
+
+* [[Docs] Add badges to all components. (#4278)](https://github.com/material-components/material-components-ios/commit/e1e6d249a4f554ff76c36a49dcae8a824552ea58) (featherless)
+
+### BottomSheet
+
+#### Changes
+
+* [Add an app bar to the typical use example. (#4268)](https://github.com/material-components/material-components-ios/commit/0575212f1ce0e97eadfbd512adb24a2e21924230) (featherless)
+* [Fix layout issues caused by invoking self.dismissOnBackgroundTap in -init (#4241)](https://github.com/material-components/material-components-ios/commit/2c80a9509e35d0288f26c9b6f720b4eb5fd95d83) (featherless)
+
+### Dialogs
+
+#### Changes
+
+* [Add customizable cornerRadius to enable proper shadowing (#4233)](https://github.com/material-components/material-components-ios/commit/02d19e08ad3953624ecd4741aeda2a45db0f3709) (ianegordon)
+* [AlertController button layout issue (#4291)](https://github.com/material-components/material-components-ios/commit/cacd2e2fdda6551dda9e523cd17741440439c971) (ianegordon)
+* [Setting Properties on Alert controller will not force the view to load. (#4238)](https://github.com/material-components/material-components-ios/commit/39030e7b2040e930e47deb3c3667374b320203bc) (Mohammad Cazi)
+* [[Docs] Add badges to all components. (#4278)](https://github.com/material-components/material-components-ios/commit/e1e6d249a4f554ff76c36a49dcae8a824552ea58) (featherless)
+
+### BottomNavigation
+
+#### Changes
+
+* [Correct long title layout (#4303)](https://github.com/material-components/material-components-ios/commit/4975c38a41977a1aabe4f08f8956886063b94369) (Robert Moore)
+* [[Docs] Add badges to all components. (#4278)](https://github.com/material-components/material-components-ios/commit/e1e6d249a4f554ff76c36a49dcae8a824552ea58) (featherless)
+
+### PageControl
+
+#### Changes
+
+* [[Docs] Add badges to all components. (#4278)](https://github.com/material-components/material-components-ios/commit/e1e6d249a4f554ff76c36a49dcae8a824552ea58) (featherless)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Fixed behavior for top layout guide and safe area insets. (#4214)](https://github.com/material-components/material-components-ios/commit/80fd217f766e0f5be6a3bc6bef5923f231721f9d) (featherless)
+* [[Docs] Add badges to all components. (#4278)](https://github.com/material-components/material-components-ios/commit/e1e6d249a4f554ff76c36a49dcae8a824552ea58) (featherless)
+
+### ProgressView
+
+#### Changes
+
+* [[Docs] Add badges to all components. (#4278)](https://github.com/material-components/material-components-ios/commit/e1e6d249a4f554ff76c36a49dcae8a824552ea58) (featherless)
+
+---
+
 # 55.2.0
 
 This minor release includes new Snackbar features and minor improvements to the Catalog.
