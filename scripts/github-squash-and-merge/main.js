@@ -19,9 +19,7 @@
  event firing after the initial load. This means if you open the pull requests page and then
  click a pull request, this js file is only executed when you load the initial pull requests page.
  Because the DOM is changing dynamically and we don't have a way to register live events to DOM
- elements as they're created, we need to poll the page for any squash-and-merge buttons. We do this
- on a 500ms interval in order to maximize the likelihood of us adding the event before someone
- clicks the button.
+ elements as they're created, we need to poll the page for any squash-and-merge buttons.
  */
 (function() {
   /*
