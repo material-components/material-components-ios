@@ -42,6 +42,14 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
 @interface MDCFlexibleHeaderViewController () <MDCFlexibleHeaderViewDelegate>
 
 /**
+ The current height offset of the flexible header controller with the addition of the current status
+ bar state at any given time.
+
+ This property is used to determine the bottom point of the |flexibleHeaderView| within the window.
+ */
+@property(nonatomic) CGFloat flexibleHeaderViewControllerHeightOffset;
+
+/**
  The NSLayoutConstraint attached to the flexible header view controller's parentViewController's
  topLayoutGuide.
 */
@@ -133,7 +141,23 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
 
-  [self updateTopLayoutGuide];
+  if (self.topLayoutGuideAdjustmentEnabled) {
+    [self updateTopLayoutGuide];
+
+  } else {
+    // Legacy behavior.
+    for (NSLayoutConstraint *constraint in self.parentViewController.view.constraints) {
+      // Because topLayoutGuide is a readonly property on a viewController we must manipulate
+      // the present one via the NSLayoutConstraint attached to it. Thus we keep reference to it.
+      if (constraint.firstItem == self.parentViewController.topLayoutGuide &&
+          constraint.secondItem == nil) {
+        self.topLayoutGuideConstraint = constraint;
+      }
+    }
+
+    // On moving to parentViewController, we calculate the height
+    self.flexibleHeaderViewControllerHeightOffset = [self headerViewControllerHeight];
+  }
 
 #if DEBUG
   NSAssert(![self.parentViewController.parentViewController
@@ -251,6 +275,13 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
 }
 
 - (void)updateTopLayoutGuide {
+  if (!self.topLayoutGuideAdjustmentEnabled) {
+    // Legacy behavior
+    [self.topLayoutGuideConstraint setConstant:self.flexibleHeaderViewControllerHeightOffset];
+
+    return;
+  }
+
   if (![self isViewLoaded]) {
     return;
   }
@@ -270,23 +301,32 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
 
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
-    if (self.topLayoutGuideAdjustmentEnabled) {
-      UIViewController *topLayoutGuideViewController = [self fhv_topLayoutGuideViewControllerWithFallback];
-      if (topLayoutGuideViewController != nil) {
-        UIEdgeInsets additionalSafeAreaInsets = topLayoutGuideViewController.additionalSafeAreaInsets;
-        if (self.headerView.statusBarHintCanOverlapHeader) {
-          // safe area insets will likely already take into account the top safe area inset, so let's
-          // avoid double-counting that here.
-          additionalSafeAreaInsets.top = topInset - MDCDeviceTopSafeAreaInset();
+    UIViewController *topLayoutGuideViewController = [self fhv_topLayoutGuideViewControllerWithFallback];
+    if (topLayoutGuideViewController != nil) {
+      UIEdgeInsets additionalSafeAreaInsets = topLayoutGuideViewController.additionalSafeAreaInsets;
+      if (self.headerView.statusBarHintCanOverlapHeader) {
+        // safe area insets will likely already take into account the top safe area inset, so let's
+        // avoid double-counting that here.
+        additionalSafeAreaInsets.top = topInset - MDCDeviceTopSafeAreaInset();
 
-        } else {
-          additionalSafeAreaInsets.top = topInset;
-        }
-        topLayoutGuideViewController.additionalSafeAreaInsets = additionalSafeAreaInsets;
+      } else {
+        additionalSafeAreaInsets.top = topInset;
       }
+      topLayoutGuideViewController.additionalSafeAreaInsets = additionalSafeAreaInsets;
     }
   }
 #endif
+}
+
+- (CGFloat)headerViewControllerHeight {
+  BOOL shiftEnabledForStatusBar =
+      _headerView.shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar;
+  CGFloat statusBarHeight =
+      [UIApplication mdc_safeSharedApplication].statusBarFrame.size.height;
+  CGFloat height =
+      MAX(_headerView.frame.origin.y + _headerView.frame.size.height,
+          shiftEnabledForStatusBar ? 0 : statusBarHeight);
+  return height;
 }
 
 - (void)setTopLayoutGuideViewController:(UIViewController *)topLayoutGuideViewController {
@@ -310,7 +350,18 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
 }
 
 - (void)flexibleHeaderViewFrameDidChange:(MDCFlexibleHeaderView *)headerView {
-  [self updateTopLayoutGuide];
+  if (self.topLayoutGuideAdjustmentEnabled) {
+    [self updateTopLayoutGuide];
+
+  } else {
+    // Legacy behavior
+    // Whenever the flexibleHeaderView's frame changes, we update the value of the height offset
+    self.flexibleHeaderViewControllerHeightOffset = [self headerViewControllerHeight];
+
+    // We must change the constant of the constraint attached to our parentViewController's
+    // topLayoutGuide to trigger the re-layout of its subviews
+    [self.topLayoutGuideConstraint setConstant:self.flexibleHeaderViewControllerHeightOffset];
+  }
 
   [self.layoutDelegate flexibleHeaderViewController:self
                    flexibleHeaderViewFrameDidChange:headerView];
