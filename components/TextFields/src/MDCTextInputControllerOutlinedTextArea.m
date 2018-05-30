@@ -82,10 +82,6 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 
 #pragma mark - MDCTextInputPositioningDelegate
 
-- (void)textInputDidLayoutSubviews {
-  [self updateBorder];
-}
-
 // clang-format off
 /**
  textInsets: is the source of truth for vertical layout. It's used to figure out the proper

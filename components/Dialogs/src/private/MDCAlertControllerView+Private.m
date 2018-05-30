@@ -255,7 +255,8 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     MDCDialogActionsInsets.top + MDCDialogActionButtonHeight + MDCDialogActionsInsets.bottom;
     size.width = MDCDialogActionsInsets.left + MDCDialogActionsInsets.right;
     for (UIButton *button in self.actionButtons) {
-      size.width += CGRectGetWidth(button.bounds);
+      CGSize buttonSize = [button sizeThatFits:size];
+      size.width += buttonSize.width;
       if (button != [self.actionButtons lastObject]) {
         size.width += MDCDialogActionsHorizontalPadding;
       }
@@ -271,8 +272,9 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     size.height = MDCDialogActionsInsets.top + MDCDialogActionsInsets.bottom;
     size.width = MDCDialogActionsInsets.left + MDCDialogActionsInsets.right;
     for (UIButton *button in self.actionButtons) {
-      size.height += CGRectGetHeight(button.bounds);
-      size.width = MAX(size.width, CGRectGetWidth(button.bounds));
+      CGSize buttonSize = [button sizeThatFits:size];
+      size.height += buttonSize.height;
+      size.width = MAX(size.width, buttonSize.width);
       if (button != [self.actionButtons lastObject]) {
         size.height += MDCDialogActionsVerticalPadding;
       }

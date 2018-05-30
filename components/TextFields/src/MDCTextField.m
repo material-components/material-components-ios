@@ -452,6 +452,17 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   }
 }
 
+- (void)setAttributedText:(NSAttributedString *)attributedText {
+  [super setAttributedText:attributedText];
+  [_fundament didSetText];
+
+  if (!self.isFirstResponder) {
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:MDCTextFieldTextDidSetTextNotification
+     object:self];
+  }
+}
+
 #pragma mark - UITextField Overrides
 
 // This method doesn't have a positioning delegate mirror per se. But it uses the

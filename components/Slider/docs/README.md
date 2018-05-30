@@ -1,5 +1,7 @@
 # Slider
 
+<!-- badges -->
+
 The `MDCSlider` object is a Material Design control used to select a value from a continuous range
 or discrete set of values.
 

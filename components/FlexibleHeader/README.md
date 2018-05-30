@@ -12,6 +12,8 @@ api_doc_root: true
 
 # Flexible header
 
+[![Open bugs badge](https://img.shields.io/badge/dynamic/json.svg?label=open%20bugs&url=https%3A%2F%2Fapi.github.com%2Fsearch%2Fissues%3Fq%3Dis%253Aopen%2Blabel%253Atype%253ABug%2Blabel%253A%255BFlexibleHeader%255D&query=%24.total_count)](https://github.com/material-components/material-components-ios/issues?q=is%3Aopen+is%3Aissue+label%3Atype%3ABug+label%3A%5BFlexibleHeader%5D)
+
 A flexible header is a container view whose height and vertical offset react to
 UIScrollViewDelegate events.
 

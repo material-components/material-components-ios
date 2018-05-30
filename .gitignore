@@ -1,5 +1,6 @@
 bazel-*
 .kokoro-ios-runner
+gh-pages/
 
 node_modules/
 yarn.lock
