@@ -35,3 +35,15 @@ elevation, Material Design ripples, and other stateful design APIs.
 - [Theming](theming.md)
 - [Color Theming](color-theming.md)
 - [Typography Theming](typography-theming.md)
+
+
+## Accessibility
+
+In order to get an accessible `MDCButton` make sure to set the accessibilty
+label. This is more important for `MDCFloatingButton` objects because they often
+only have icon and no text which would be the fallback label used by the
+accessibility system.
+
+```
+[button setAccessibilityLabel:@"Create"];
+```
