@@ -40,7 +40,7 @@ Run the following command to cut a release:
 
     scripts/release cut
 
-Note: if for some reason this fails, run `scripts/release abort` and try again.
+Note: if for some reason this fails, please ensure that nobody else on the team is in the middle of cutting a release as this could indicate that there is a "release-candidate" branch currently active. If that isn't the case, then please run `scripts/release abort` and try again.
 
 You will now have a local `release-candidate` branch, a new section in CHANGELOG.md titled
 "release-candidate", and the `release-candidate` branch will have been pushed to GitHub.
