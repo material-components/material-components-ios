@@ -1,4 +1,4 @@
-# #develop#
+# 55.3.0
 
 ## Breaking changes
 
@@ -24,12 +24,7 @@
 
 *new* category: `MDCFlexibleHeaderViewController(ToBeDeprecated)`
 
-*modified* method: `-updateTopLayoutGuide` in `MDCFlexibleHeaderViewController(ToBeDeprecated)`
-
-| Type of change: | parent.usr |
-|---|---|
-| From: | `c:objc(cs)MDCFlexibleHeaderViewController` |
-| To: | `c:objc(cy)MDCFlexibleHeaderViewController@ToBeDeprecated` |
+*moved* method: `-updateTopLayoutGuide` from class `MDCFlexibleHeaderViewController` to category `MDCFlexibleHeaderViewController(ToBeDeprecated)`
 
 #### MDCFlexibleHeaderViewController
 
