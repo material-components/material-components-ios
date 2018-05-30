@@ -67,6 +67,7 @@ TMP_EXPANDED_README_PATH="$TMP_PATH/README.md.expanded"
 TMP_TOC_PATH="$TMP_PATH/toc.md"
 TOC_STRING="<!-- toc -->"
 DESIGN_AND_API_STRING="<!-- design-and-api -->"
+BADGES_STRING="<!-- badges -->"
 VARS_PATH="$COMPONENT_PATH/.vars"
 SITE_URL_BASE="https://material.io/components/ios"
 
@@ -151,6 +152,8 @@ cat "$TMP_EXPANDED_README_PATH" | while read line; do
       url=${url// /-} # Turn spaces into dashes
       echo "$indent [$text](#$url)" >> "$TMP_README_PATH"
     done
+  elif [ "$line" = "$BADGES_STRING" ]; then
+    echo "[![Open bugs badge](https://img.shields.io/badge/dynamic/json.svg?label=open%20bugs&url=https%3A%2F%2Fapi.github.com%2Fsearch%2Fissues%3Fq%3Dis%253Aopen%2Blabel%253Atype%253ABug%2Blabel%253A%255B${COMPONENT}%255D&query=%24.total_count)](https://github.com/material-components/material-components-ios/issues?q=is%3Aopen+is%3Aissue+label%3Atype%3ABug+label%3A%5B${COMPONENT}%5D)" >> "$TMP_README_PATH"
   else
     echo "$line" >> "$TMP_README_PATH"
   fi

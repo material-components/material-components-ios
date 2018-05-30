@@ -123,14 +123,14 @@ typedef void (^MDCFeatureHighlightCompletion)(BOOL accepted);
 @property(nonatomic, strong, nullable) UIColor *bodyColor;
 
 /**
- Sets the font to be used for the title text.
+ Sets the custom font to be used for the title text.
 
  Defaults to nil.
  */
 @property(nonatomic, strong, nullable) UIFont *titleFont;
 
 /**
- Sets the font to be used for the body text.
+ Sets the custom font to be used for the body text.
 
  Defaults to nil.
  */

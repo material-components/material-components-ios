@@ -28,14 +28,8 @@
 }
 
 + (void)mutateTitleColor:(MDCFeatureHighlightViewController *)featureHighlightViewController{
-  MDCFeatureHighlightView *featureHighlightView =
-      (MDCFeatureHighlightView *)featureHighlightViewController.view;
-  if (![featureHighlightView isKindOfClass:[MDCFeatureHighlightView class]]) {
-    NSAssert(NO, @"FeatureHighlightViewController should have FeatureHighlightView");
-    return;
-  }
   MDFTextAccessibilityOptions options = MDFTextAccessibilityOptionsPreferLighter;
-  if ([MDFTextAccessibility isLargeForContrastRatios:featureHighlightView.titleFont]) {
+  if ([MDFTextAccessibility isLargeForContrastRatios:featureHighlightViewController.titleFont]) {
     options |= MDFTextAccessibilityOptionsLargeFont;
   }
 
@@ -61,14 +55,8 @@
 }
 
 + (void)mutateBodyColor:(MDCFeatureHighlightViewController *)featureHighlightViewController {
-  MDCFeatureHighlightView *featureHighlightView =
-      (MDCFeatureHighlightView *)featureHighlightViewController.view;
-  if (![featureHighlightView isKindOfClass:[MDCFeatureHighlightView class]]) {
-    NSAssert(NO, @"FeatureHighlightViewController should have FeatureHighlightView");
-    return;
-  }
   MDFTextAccessibilityOptions options = MDFTextAccessibilityOptionsPreferLighter;
-  if ([MDFTextAccessibility isLargeForContrastRatios:featureHighlightView.bodyFont]) {
+  if ([MDFTextAccessibility isLargeForContrastRatios:featureHighlightViewController.bodyFont]) {
     options |= MDFTextAccessibilityOptionsLargeFont;
   }
 

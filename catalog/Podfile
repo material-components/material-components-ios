@@ -6,7 +6,7 @@ target "MDCCatalog" do
   project 'MDCCatalog.xcodeproj'
   pod 'MaterialComponentsExamples', :path => '../'
   pod 'MaterialComponents', :path => '../'
-  pod 'CatalogByConvention', "~> 2.3"
+  pod 'CatalogByConvention', "~> 2.5"
   pod 'MaterialCatalog', :path => 'MaterialCatalog/'
 
   use_frameworks!
@@ -17,7 +17,7 @@ target "MDCUnitTests" do
   project 'MDCUnitTests.xcodeproj'
   pod 'MaterialComponentsUnitTests', :path => '../'
   pod 'MaterialComponents', :path => '../'
-  pod 'CatalogByConvention', "~> 2.3"
+  pod 'CatalogByConvention', "~> 2.5"
   pod 'MaterialCatalog', :path => 'MaterialCatalog/'
 
   use_frameworks!
@@ -28,7 +28,7 @@ target "MDCActionExtension" do
   project 'MDCCatalog.xcodeproj'
   pod 'MaterialComponentsExamples', :path => '../'
   pod 'MaterialComponents', :path => '../'
-  pod 'CatalogByConvention', "~> 2.3"
+  pod 'CatalogByConvention', "~> 2.5"
   pod 'MaterialCatalog', :path => 'MaterialCatalog/'
 
   use_frameworks!
@@ -37,7 +37,7 @@ end
 target "MDCDragons" do
   platform :ios, '8.0'
   project 'MDCDragons.xcodeproj'
-  pod 'CatalogByConvention', "~> 2.3"
+  pod 'CatalogByConvention', "~> 2.5"
   pod 'MaterialComponents', :path => '../'
   pod 'MaterialComponentsExamples', :path => '../'
   use_frameworks!

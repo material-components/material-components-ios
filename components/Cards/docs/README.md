@@ -1,11 +1,13 @@
 # Cards
 
+<!-- badges -->
+
 Cards contain content and actions about a single subject. They can be used standalone, or as part
 of a list. Cards are meant to be interactive, and aren't meant to be be used solely for style
 purposes.
 
 <div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/cards.png" alt="Cards" width="320">
+  <img src="assets/cards.png" alt="Cards" width="320">
 </div>
 
 <!-- design-and-api -->

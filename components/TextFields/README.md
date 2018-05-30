@@ -12,13 +12,15 @@ api_doc_root: true
 
 # Text fields
 
+[![Open bugs badge](https://img.shields.io/badge/dynamic/json.svg?label=open%20bugs&url=https%3A%2F%2Fapi.github.com%2Fsearch%2Fissues%3Fq%3Dis%253Aopen%2Blabel%253Atype%253ABug%2Blabel%253A%255BTextFields%255D&query=%24.total_count)](https://github.com/material-components/material-components-ios/issues?q=is%3Aopen+is%3Aissue+label%3Atype%3ABug+label%3A%5BTextFields%5D)
+
 Text fields allow users to input text into your app. They are a direct connection to your users' thoughts and intentions via on-screen, or physical, keyboard. The Material Design Text Fields take the familiar element to new levels by adding useful animations, character counts, helper text, error states, and styles.
 
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/textfields.png" alt="Text Fields" width="375">
 </div>
 
-MDC's text fields come in several styles and have a great range of customization. Google's UX research has determined that Outlined and Filled (aka 'text box') styles perform the best by a large margin. So use `MDCTextInputControllerOutlinedField` , `MDCTextInputControllerTextFieldBox`, and `MDCTextInputControllerTextArea` if you can and set colors and fonts that match your company's branding.
+MDC's text fields come in several styles and have a great range of customization. Google's UX research has determined that Outlined and Filled (aka 'text box') styles perform the best by a large margin. So use  `MDCTextInputControllerFilled`, `MDCTextInputControllerOutlined`, and `MDCTextInputControllerOutlinedTextArea` if you can and set colors and fonts that match your company's branding.
 
 For more information on text field styles, and animated images of each style in action, see [Text Field Styles](./styling).
 
@@ -74,9 +76,9 @@ Text Fields provides both a single-line version based on `UITextField` and a mul
 
 The actual components (`MDCTextField` & `MDCMultilineTextField`) are 'dumb': they do not have styles, animations, or advanced features. They are designed to be controlled from the outside, via very liberal public API, with a text input controller.
 
-Most text input controllers included are based on `MDCTextInputControllerUnderline` which manipulates the exposed elements of the text field to make placeholders float.
+Most text input controllers included are based on `MDCTextInputControllerBase` which manipulates the exposed elements of the text field to make placeholders float.
 
-There is also a text input controller for full-width forms (`MDCTextInputControllerFullWidth`). Like `MDCTextInputControllerUnderline`, it also handles errors and character counting.
+There is also a text input controller for full-width forms (`MDCTextInputControllerFullWidth`). Like `MDCTextInputControllerBase`d controllers, it also handles errors and character counting but has not been thoroughly tested with UX research. 
 
 Customize the included text input controllers via their parameters or create your own to express your app's brand identity thru typography, color, and animation: if the placeholder should move, add constraints or change the frame. If the trailing label should display validation information, change the text and color it.
 
@@ -148,32 +150,64 @@ This is a multi-line text input. It's subclassed from `UIView` with an embedded 
   <li class="icon-list-item icon-list-item">Minimum number of lines</li>
 </ul>
 
-### Text Field Classes: The Controllers
+### Text Input Controller Classes: Recommended
 
-#### Default Text Input Controller
+See [Text Field Styles](./styling) for images and details.
 
-This class holds all the 'magic' logic necessary to make the naturally 'dumb' text field and text view behave with:
+These are the controllers that have been optimized for discoverability and clickability thru rigorous research, design iterations, and user testing. Always try to use one of these first.
 
-- Animations
-- Styles
+#### MDCTextInputControllerFilled
+
+Filled background with underline.
+
+#### MDCTextInputControllerOutlined
+
+Outlined background with no fill.
+
+#### MDCTextInputControllerOutlinedTextArea
+
+Nearly identical to `MDCTextInputControllerOutlined` but with two differences:
+
+- Intended only for multi-line text fields that remain expanded when empty
+- The floating placeholder does not cross the border but rather floats below it
+
+### Text Input Controller Classes: Cautioned
+
+See [Text Field Styles](./styling) for images and details.
+
+These are the controllers that have performed the worst in user testing or haven't been extensively user tested at all. Use them only if you have to or conduct your own A/B testing against one of the recommended controllers to see if they perform as expected in your application.
+
+#### MDCTextInputControllerFullWidth
+
+Optimized for full width forms like emails. While common in messaging apps, its design hasn't been rigorously tested with users. For now, the Material Design team suggests using this only when another design is impracticle. 
+
+#### MDCTextInputControllerUnderline
+
+'Classic' 2014 Material Design text field. This style is still found in many applications and sites but should be considered deprecated. It tested poorly in Material Research's user testing. Use `MDCTextInputControllerFilled` or `MDCTextInputControllerOutlined` instead.
+
+#### MDCTextInputControllerLegacyDefault && MDCTextInputControllerLegacyFullWidth
+
+Soon to be deprecated styles only created and included for backwards compatibility of the library. They have no visual distinction from the other full width and underline controllers but their layout behaves slightly differently.
+
+### Text Input Controller Classes: For Subclassing Only
+
+See [Text Field Styles](./styling) for images and details.
+
+#### MDCTextInputControllerBase
+
+__This class is meant to be subclassed and not used on its own.__ It's a full implementation of the `MDCTextInputControllerFloatingPlaceholder` protocol and holds all the 'magic' logic necessary to make:
+
+- Floating placeholder animations
 - Errors
 - Character counts
-
-- - -
-
-#### Full Width Text Input Controller
-
-Similar to the default text input controller but optimized for full width forms like emails.
-
 
 ## Usage
 
 <!-- Extracted from docs/usage.md -->
 
-A text field that conforms to MDCTextInput can be added to a view hierarchy the same way UITextField and UIView are. But to achieve the animations and presentations defined by the guidelines (floating placeholders, character counts), a controller that conforms to protocol `MDCTextInputController` must be initialized to manage the text field.
+A text field that conforms to `MDCTextInput` can be added to a view hierarchy the same way `UITextField` and `UIView` are. But to achieve the animations and presentations defined by the guidelines (floating placeholders, character counts), a controller that conforms to protocol `MDCTextInputController` must be initialized to manage the text field.
 
 **NOTE:** Expect to interact with _both the text field_ (for the traditional API) _and the controller_ (for changes affecting the presentation and state).
-
 
 <!-- Extracted from docs/examples.md -->
 
@@ -309,7 +343,7 @@ id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
 
 ### Text Fields Typography Theming
 
-You can theme a text field with your app's typography scheme using the TypographyThemer extension.
+You can theme a text field with your app's typography scheme using the `TypographyThemer` extension.
 
 You must first add the Typography Themer extension to your project:
 

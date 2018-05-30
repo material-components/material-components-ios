@@ -1,5 +1,7 @@
 # Buttons
 
+<!-- badges -->
+
 Material design buttons allow users to take actions, and make choices, with a single tap. There are
 many distinct button styles including text buttons, contained buttons, and floating action buttons.
 

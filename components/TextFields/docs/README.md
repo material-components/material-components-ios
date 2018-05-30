@@ -1,5 +1,7 @@
 # Text fields
 
+<!-- badges -->
+
 Text fields allow users to input text into your app. They are a direct connection to your users' thoughts and intentions via on-screen, or physical, keyboard. The Material Design Text Fields take the familiar element to new levels by adding useful animations, character counts, helper text, error states, and styles.
 
 <div class="article__asset article__asset--screenshot">
