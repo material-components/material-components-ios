@@ -41,6 +41,8 @@
     }
 
     squashButton.addEventListener('click', function() {
+      // GitHub populates the commit message with a bit of a delay, so we also need to delay our
+      // population of the message.
       setTimeout(function() {
         var mergeMessageField = document.getElementById('merge_message_field');
         var prTextarea = document.getElementsByClassName('comment-form-textarea')[0];
