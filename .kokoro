@@ -28,6 +28,14 @@ fix_bazel_imports() {
     tests_dir_prefix="github/repo/"
   fi
   
+  private_components() {
+    if [ -z "$KOKORO_BUILD_NUMBER" ]; then
+      find "components/private" -type d | cut -d'/' -f3 | sort | uniq
+    else
+      find "github/repo/components/private" -type d | cut -d'/' -f5 | sort | uniq
+    fi
+  }
+  
   rewrite_tests() {
     find "${stashed_dir}${tests_dir_prefix}"components/private/*/tests/unit -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
     find "${stashed_dir}${tests_dir_prefix}"components/*/tests/unit -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
@@ -42,7 +50,12 @@ fix_bazel_imports() {
   stashed_dir=""
   rewrite_tests "s/import MaterialComponents.Material(.+)_(.+)/import components_\1_\2/"
   rewrite_tests "s/import MaterialComponents.Material(.+)Scheme/import components_schemes_\1_\1/"
-  rewrite_tests "s/import MaterialComponents.MaterialMath/import components_private_Math_Math/"
+  private_components | while read private_component; do
+    if [ -z "$private_component" ]; then
+      continue
+    fi
+    rewrite_tests "s/import MaterialComponents.Material$private_component/import components_private_${private_component}_${private_component}/"
+  done
   rewrite_tests "s/import MaterialComponents.Material(.+)/import components_\1_\1/"
   rewrite_source "s/import <Motion(.+)\/Motion.+\.h>/import \"Motion\1.h\"/"
   rewrite_source "s/import <MDF(.+)\/MDF.+\.h>/import \"MDF\1.h\"/"
@@ -52,7 +65,7 @@ fix_bazel_imports() {
   reset_imports() {
     # Undoes our source changes from above.
     rewrite_tests "s/import components_schemes_(.+)_.+/import MaterialComponents.Material\1Scheme/"
-    rewrite_tests "s/import components_private_Math_Math/import MaterialComponents.MaterialMath/"
+    rewrite_tests "s/import components_private_(.+)_.+/import MaterialComponents.Material\1/"
     rewrite_tests "s/import components_(.+)_\1/import MaterialComponents.Material\1/"
     rewrite_tests "s/import components_(.+)_(.+)/import MaterialComponents.Material\1_\2/"
     rewrite_source "s/import \"Motion(.+)\.h\"/import <Motion\1\/Motion\1.h>/"
