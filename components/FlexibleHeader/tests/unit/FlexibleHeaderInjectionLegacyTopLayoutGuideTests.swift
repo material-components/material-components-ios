@@ -18,7 +18,7 @@ import XCTest
 import MaterialComponents.MaterialFlexibleHeader
 import MaterialComponents.MaterialUIMetrics
 
-class FlexibleHeaderInjectionTopLayoutGuideTests: XCTestCase {
+class FlexibleHeaderInjectionLegacyTopLayoutGuideTests: XCTestCase {
 
   var fhvc: MDCFlexibleHeaderViewController!
 
@@ -26,7 +26,8 @@ class FlexibleHeaderInjectionTopLayoutGuideTests: XCTestCase {
     super.setUp()
 
     fhvc = MDCFlexibleHeaderViewController()
-    fhvc.isTopLayoutGuideAdjustmentEnabled = true
+    // This is the legacy behavior.
+    fhvc.isTopLayoutGuideAdjustmentEnabled = false
     fhvc.headerView.minMaxHeightIncludesSafeArea = false
     fhvc.headerView.minimumHeight = 50
     fhvc.headerView.maximumHeight = 100
@@ -40,7 +41,7 @@ class FlexibleHeaderInjectionTopLayoutGuideTests: XCTestCase {
 
   // MARK: No scroll view
 
-  func testNoScrollViewTopLayoutGuideEqualsBottomEdgeOfHeaderView() {
+  func testNoScrollViewTopLayoutGuideEqualsZero() {
     // Given
     let contentViewController = UIViewController()
     contentViewController.addChildViewController(fhvc)
@@ -48,18 +49,17 @@ class FlexibleHeaderInjectionTopLayoutGuideTests: XCTestCase {
     fhvc.didMove(toParentViewController: contentViewController)
 
     // Then
-    XCTAssertEqual(contentViewController.topLayoutGuide.length, fhvc.headerView.frame.maxY)
+    XCTAssertEqual(contentViewController.topLayoutGuide.length, 0)
     #if swift(>=3.2)
     if #available(iOS 11.0, *) {
-      XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top,
-                     fhvc.headerView.frame.maxY - MDCDeviceTopSafeAreaInset())
+      XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top, 0)
     }
     #endif
   }
 
   // MARK: Untracked table view
 
-  func testUntrackedTableViewTopLayoutGuideEqualsBottomEdgeOfHeaderView() {
+  func testUntrackedTableViewTopLayoutGuideEqualsZero() {
     // Given
     let contentViewController = UITableViewController()
     contentViewController.addChildViewController(fhvc)
@@ -67,11 +67,10 @@ class FlexibleHeaderInjectionTopLayoutGuideTests: XCTestCase {
     fhvc.didMove(toParentViewController: contentViewController)
 
     // Then
-    XCTAssertEqual(contentViewController.topLayoutGuide.length, fhvc.headerView.frame.maxY)
+    XCTAssertEqual(contentViewController.topLayoutGuide.length, 0)
     #if swift(>=3.2)
     if #available(iOS 11.0, *) {
-      XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top,
-                     fhvc.headerView.frame.maxY - MDCDeviceTopSafeAreaInset())
+      XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top, 0)
       XCTAssertEqual(contentViewController.tableView.adjustedContentInset.top, 0)
     }
     #endif
@@ -79,7 +78,7 @@ class FlexibleHeaderInjectionTopLayoutGuideTests: XCTestCase {
 
   // MARK: Tracked table view
 
-  func testTrackedTableViewTopLayoutGuideEqualsBottomEdgeOfHeaderView() {
+  func testTrackedTableViewTopLayoutGuideEqualsZero() {
     // Given
     let contentViewController = UITableViewController()
     fhvc.headerView.trackingScrollView = contentViewController.tableView
@@ -89,7 +88,7 @@ class FlexibleHeaderInjectionTopLayoutGuideTests: XCTestCase {
     fhvc.headerView.trackingScrollDidScroll()
 
     // Then
-    XCTAssertEqual(contentViewController.topLayoutGuide.length, fhvc.headerView.frame.maxY)
+    XCTAssertEqual(contentViewController.topLayoutGuide.length, 0)
     #if swift(>=3.2)
     if #available(iOS 11.0, *) {
       XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top, 0)
@@ -128,7 +127,7 @@ class FlexibleHeaderInjectionTopLayoutGuideTests: XCTestCase {
 
   // MARK: Untracked collection view
 
-  func testUntrackedCollectionViewTopLayoutGuideEqualsBottomEdgeOfHeaderView() {
+  func testUntrackedCollectionViewTopLayoutGuideEqualsZero() {
     // Given
     let flow = UICollectionViewFlowLayout()
     let contentViewController = UICollectionViewController(collectionViewLayout: flow)
@@ -137,11 +136,10 @@ class FlexibleHeaderInjectionTopLayoutGuideTests: XCTestCase {
     fhvc.didMove(toParentViewController: contentViewController)
 
     // Then
-    XCTAssertEqual(contentViewController.topLayoutGuide.length, fhvc.headerView.frame.maxY)
+    XCTAssertEqual(contentViewController.topLayoutGuide.length, 0)
     #if swift(>=3.2)
     if #available(iOS 11.0, *) {
-      XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top,
-                     fhvc.headerView.frame.maxY - MDCDeviceTopSafeAreaInset())
+      XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top, 0)
       XCTAssertEqual(contentViewController.collectionView!.adjustedContentInset.top, 0)
     }
     #endif
@@ -149,7 +147,7 @@ class FlexibleHeaderInjectionTopLayoutGuideTests: XCTestCase {
 
   // MARK: Tracked collection view view
 
-  func testTrackedCollectionViewTopLayoutGuideEqualsBottomEdgeOfHeaderView() {
+  func testTrackedCollectionViewTopLayoutGuideEqualsZero() {
     // Given
     let flow = UICollectionViewFlowLayout()
     let contentViewController = UICollectionViewController(collectionViewLayout: flow)
@@ -160,7 +158,7 @@ class FlexibleHeaderInjectionTopLayoutGuideTests: XCTestCase {
     fhvc.headerView.trackingScrollDidScroll()
 
     // Then
-    XCTAssertEqual(contentViewController.topLayoutGuide.length, fhvc.headerView.frame.maxY)
+    XCTAssertEqual(contentViewController.topLayoutGuide.length, 0)
     #if swift(>=3.2)
     if #available(iOS 11.0, *) {
       XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top, 0)
@@ -170,7 +168,7 @@ class FlexibleHeaderInjectionTopLayoutGuideTests: XCTestCase {
     #endif
   }
 
-  func testTrackedCollectionViewTopLayoutGuideEqualsBottomEdgeOfHeaderViewAfterScrolling() {
+  func testTrackedCollectionViewTopLayoutGuideEqualsZeroAfterScrolling() {
     // Given
     let flow = UICollectionViewFlowLayout()
     let contentViewController = UICollectionViewController(collectionViewLayout: flow)
@@ -187,7 +185,7 @@ class FlexibleHeaderInjectionTopLayoutGuideTests: XCTestCase {
     fhvc.headerView.trackingScrollDidScroll()
 
     // Then
-    XCTAssertEqual(contentViewController.topLayoutGuide.length, fhvc.headerView.frame.maxY)
+    XCTAssertEqual(contentViewController.topLayoutGuide.length, 0)
     #if swift(>=3.2)
     if #available(iOS 11.0, *) {
       XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top, 0)
