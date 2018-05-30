@@ -2,10 +2,21 @@
 
 These instructions describe how to cut a new release.
 
-MDC follows the ["git flow"](http://nvie.com/posts/a-successful-git-branching-model/) style of
+MDC follows the ["git flow"](http://nvie.com/posts/a-successful-git-branching-model/) style of 
 development, where the default branch is called `develop`. `stable` (instead of the traditional
-`master`) is reserved for releases. The `develop` branch is periodically copied to a release branch,
+`master`) is reserved for releases. The `develop` branch is periodically copied to a release candidate,
 tested, and then merged into `stable`, which serves as the stable "vetted" branch.
+
+## A note on the role of the release engineer
+
+Each release is driven by a single **release engineer**, who is also a Googler. The release engineer
+is expected to do the following, in order of priority:
+
+- Do not break Google.
+- Land a release at least once a week.
+
+If something is stopping the release engineer from achieving either of the above goals, the
+culprit code should be removed immediately from the release.
 
 ## Before you start
 
@@ -15,11 +26,8 @@ Make sure you are working from a direct clone of the main Git repository.  The s
 assume that the remote "origin" is the actual repository and not your fork.  Since most contributors 
 will be working day-to-day with a fork, consider creating a separate clone just for releases.
 
-### Check for issues that might affect the release process
-
-Occasionally there are temporary issues with the release process, check the [`Blocking Release`
-label](https://github.com/material-components/material-components-ios/labels/is%3ABlocking%20next%20release) for
-any open issues that might affect the release.
+    git clone git@github.com:material-components/material-components-ios.git mdc-ios-release
+    cd mdc-ios-release
 
 ## Cutting and testing the release
 
@@ -35,24 +43,24 @@ Run the following command to cut a release:
 You will now have a local `release-candidate` branch, a new section in CHANGELOG.md titled
 "release-candidate", and the `release-candidate` branch will have been pushed to GitHub.
 
-The `scripts/release cut` script will output the body of an email you should now send to the
-[discussion list](https://groups.google.com/forum/#!forum/material-components-ios-discuss) so
-clients can test the release.
-
 At this point you should also create the initial Release Candidate pull request using the URL
 that the `cut` script generated.
 
 **Do not use GitHub's big green button to merge the approved pull request.** Release are an
-exception to our normal squash-and-merge procedure. 
+exception to our normal squash-and-merge procedure.
+
+### Start internal testing
+
+You can now start the internal release testing process documented at [go/mdc-releasing](http://go/mdc-releasing).
 
 ### Resolve any failures
 
 Push `release-candidate` to GitHub with `git push origin release-candidate` as you make changes.
 This allows other people and machines to track the progress of the release.
 
-#### Making changes
+#### Make any necessary changes
 
-You or clients may find problems with the release that need fixing before continuing. You have two
+You, or clients, may find problems with the release that need fixing before continuing. You have two
 options for making those changes:
 
 1.  If the change does not touch library code and is trivial, then you can make the change directly
@@ -201,13 +209,15 @@ exception to our normal squash-and-merge procedure.
 Once you've resolved any merge conflicts your local `develop` and `stable` branches will both
 include the latest changes from `release-candidate`.
 
-Before pushing these changes to GitHub it's a good idea to run a final sanity check:
+## Push the branches to GitHub
 
-    git checkout develop
-    scripts/release test
-    
-    git checkout stable
-    scripts/release test
+You can now push the merged release candidate to GitHub so that you can complete the final
+synchronization within Google.
+
+    git push origin stable develop
+
+You can now sync to the desired stable release. [go/mdc-releasing#re-run-the-import-script-against-githubstable](http://go/mdc-releasing#re-run-the-import-script-against-githubstable). Once you've submitted
+the internal CL, continue below to tag and publish the release.
 
 ## Publish the official release
 
