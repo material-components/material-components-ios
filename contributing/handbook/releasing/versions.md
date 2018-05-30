@@ -1,3 +1,10 @@
+<!--docs:
+title: "Versions and releases"
+layout: detail
+section: docs
+path: /docs/handbook/releasing/versions
+-->
+
 # Versions and releases
 
 MDC's version numbers strictly follow [semantic versioning](http://semver.org/):

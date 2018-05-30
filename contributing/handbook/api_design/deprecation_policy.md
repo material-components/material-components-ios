@@ -1,3 +1,10 @@
+<!--docs:
+title: "Deprecation policy"
+layout: detail
+section: docs
+path: /docs/handbook/api_design/deprecation_policy
+-->
+
 # Deprecation policy
 
 The ability to deprecate features, components and paradigms is essential to the health of this project. 

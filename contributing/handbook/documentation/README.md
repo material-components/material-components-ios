@@ -1,3 +1,10 @@
+<!--docs:
+title: "Documentation"
+layout: detail
+section: docs
+path: /docs/handbook/documentation/
+-->
+
 # Documentation
 
 Every component is expected to provide complete API documentation for every public API and a
@@ -101,6 +108,36 @@ Use the following snippet to generate installation docs for your component:
 
 - [Typical installation](../../../docs/component-installation.md)
 ```
+
+### Code snippets
+
+Every code snippet must provide both an Objective-C version and a Swift version. Consult the
+document on [Supported Versions](../../../docs/build-env/) for information on which version of the
+Swift language to use when writing examples.
+
+    <!--<div class="material-code-render" markdown="1">-->
+    #### Objective-C
+    ```objc
+    - (void)viewDidLoad {
+      [super viewDidLoad];
+
+      ...
+
+      // After all other views have been registered.
+      MDCAppBarAddViews(self);
+    }
+    ```
+
+    #### Swift
+    ```swift
+    override func viewDidLoad() {
+      super.viewDidLoad()
+
+      // After all other views have been registered.
+      MDCAppBarAddViews(self)
+    }
+    ```
+    <!--</div>-->
 
 - - -
 

@@ -1,3 +1,10 @@
+<!--docs:
+title: "Code formatting tools"
+layout: detail
+section: docs
+path: /docs/handbook/conventions/clang-format
+-->
+
 # Code formatting tools
 
 ## Objective-C and clang-format

@@ -1,3 +1,10 @@
+<!--docs:
+title: "Component checklist"
+layout: detail
+section: docs
+path: /docs/handbook/component_checklist/
+-->
+
 # Component checklist
 
 
@@ -21,7 +28,7 @@ Before a component is built, the API proposed must be agreed upon by the main co
 ### README.md
 
 
-Every component has a README.md file describing what it is, what it does, when to use it, etc, in the root of the component's folder. To create a new README.md file see the template at [writing_readmes](writing_readmes.md).
+Every component has a README.md file describing what it is, what it does, when to use it, etc, in the root of the component's folder. To create a new README.md file see the template at [writing_readmes](../documentation/).
 
 1. Verify the component has a filled out README.md
 1. Verify Swift code samples appear before Objective-C samples.
@@ -178,7 +185,7 @@ Visual components should have interaction tests built with [Earl Grey](https://g
 ### Kokoro Support
 
 
-MDC-iOS uses Google's continuous integration service Kokoro for automated tests on each PR. Kokoro builds MDC with Google's open source build system, [Bazel](https://bazel.build/). For more information, see the [Kokoro & Bazel document](bazel_kokoro.md).
+MDC-iOS uses Google's continuous integration service Kokoro for automated tests on each PR. Kokoro builds MDC with Google's open source build system, [Bazel](https://bazel.build/). For more information, see the [Kokoro & Bazel document](../continuous_integration/bazel_kokoro.md).
 
 1. Add a Bazel `BUILD` file to the root directory of the component.
 1. Add `BUILD` files for any components that are dependencies of the component. (If necessary.)
@@ -552,4 +559,4 @@ The following components failed: components/ActivityIndicator.
 
 ## Creating new checks
 
-To create a new check, see [`scripts/check/README.md`](../scripts/check/README.md).
+To create a new check, see [`scripts/check/README.md`](../../../scripts/check/README.md).

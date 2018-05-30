@@ -1,3 +1,10 @@
+<!--docs:
+title: "Releasing"
+layout: detail
+section: docs
+path: /docs/handbook/releasing/
+-->
+
 # Releasing
 
 These instructions describe how to cut a new release.
@@ -32,7 +39,7 @@ will be working day-to-day with a fork, consider creating a separate clone just 
 ## Cutting and testing the release
 
 Our entire release process is encoded into the `release` script in the scripts/ directory.
-Read the [tool's readme](../scripts/README-release.md) to learn more about the tool.
+Read the [tool's readme](../../../scripts/README-release.md) to learn more about the tool.
 
 ### Cut a release branch and notify clients
 
