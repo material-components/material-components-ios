@@ -231,7 +231,7 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
 /*
  When the flexible header's height changes, we want to adjust the topLayoutGuide length of the
  content view controller so that its content can adjust accordingly. This is the same behavior that
- UIKit container view controllers provide. We want to provide similar behavior.
+ UIKit container view controllers provide.
 
  Unfortunately, topLayoutGuide is a read-only property on UIViewController with no way to
  override it, and no public setter for the length.
@@ -250,8 +250,6 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
     self.topLayoutGuideConstraint = nil;
     return;
   }
-  // Once self.topLayoutGuideAdjustmentEnabled can be set to true at all times, we'll be able
-  // to remove the if clause around the for loop entirely.
   if (self.topLayoutGuideAdjustmentEnabled
       || [topLayoutGuideViewController.view.constraints count] > 0) {
     // Note: accessing topLayoutGuide has the side effect of setting up all of the view controller
@@ -278,7 +276,6 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
   if (!self.topLayoutGuideAdjustmentEnabled) {
     // Legacy behavior
     [self.topLayoutGuideConstraint setConstant:self.flexibleHeaderViewControllerHeightOffset];
-
     return;
   }
 

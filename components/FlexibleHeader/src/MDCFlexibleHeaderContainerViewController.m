@@ -108,7 +108,7 @@
 #pragma mark - Enabling top layout guide adjustment behavior
 
 - (void)updateTopLayoutGuideBehavior {
-  if (_topLayoutGuideAdjustmentEnabled) {
+  if (self.topLayoutGuideAdjustmentEnabled) {
     if ([self isViewLoaded]) {
       self.contentViewController.view.translatesAutoresizingMaskIntoConstraints = YES;
       self.contentViewController.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth
