@@ -1,10 +1,26 @@
 # 55.3.0
 
-## Breaking changes
-
-## New deprecations
+This minor release includes added customization to `MDCDialogPresentationController`,  better topLayoutGuide support for `MDCFlexibleHeader`, doc improvements and other small bug fixes.
 
 ## New features
+
+Flexible header has a new behavioral flag for opting in to better topLayoutGuide support. This is primarily useful when using the flexible header container view controller. To opt in to this new behavior, do the following:
+
+```swift
+let container = MDCFlexibleHeaderContainerViewController()
+container.isTopLayoutGuideAdjustmentEnabled = true
+```
+
+Dialogs now offer customizable cornerRadius support to enable proper shadowing. You can set the dialog corner radius like so:
+
+```swift
+
+// We set the corner radius to adjust the shadow that is implemented via the trackingView in the
+// presentation controller.
+if let presentationController = presentedController.mdc_dialogPresentationController {
+  presentationController.dialogCornerRadius = presentedController.view.layer.cornerRadius
+}
+```
 
 ## API changes
 
@@ -76,7 +92,6 @@
 * [Documentation update (#4295)](https://github.com/material-components/material-components-ios/commit/520ac156a3953db22436e7c868060fa4e881681e) (Will Larche)
 * [Fix notification parameter type (#4249)](https://github.com/material-components/material-components-ios/commit/7cfd4d67a68dab9f5d5e48dd65b2f270d501e3e4) (Robert Moore)
 * [Fix text area placeholder (#4274)](https://github.com/material-components/material-components-ios/commit/6f740c8c6281aa48e60ae347a2b39ae98e0e7fcd) (Will Larche)
-* [Floating placeholder font changes after users starts typing. (#4213)](https://github.com/material-components/material-components-ios/commit/3ac33a79e2f6fb744248fee8454cd0379bb7c3b9) (Mohammad Cazi)
 * [Post SetText notifications for attributed text (#4282)](https://github.com/material-components/material-components-ios/commit/a37b2891535b8f70a520215d36a66d0fb9eb01ab) (Robert Moore)
 * [[Docs] Add badges to all components. (#4278)](https://github.com/material-components/material-components-ios/commit/e1e6d249a4f554ff76c36a49dcae8a824552ea58) (featherless)
 
