@@ -702,7 +702,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 }
 
 - (NSString *)accessibilityValue {
-  NSMutableArray *accessibilityStrings = [NSMutableArray new];
+  NSMutableArray *accessibilityStrings = [[NSMutableArray alloc] init];
   if ([super accessibilityValue].length > 0) {
     [accessibilityStrings addObject:[super accessibilityValue]];
   }
@@ -713,7 +713,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
     [accessibilityStrings addObject:self.placeholderLabel.accessibilityLabel];
   }
   return accessibilityStrings.count > 0 ?
-      [accessibilityStrings componentsJoinedByString:@" "] : nil;
+      [accessibilityStrings componentsJoinedByString:@", "] : nil;
 }
 
 #pragma mark - Testing
