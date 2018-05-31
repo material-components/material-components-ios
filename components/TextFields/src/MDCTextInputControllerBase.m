@@ -568,6 +568,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 - (void)updateLeadingUnderlineLabel {
   UIFont *font = self.leadingUnderlineLabelFont;
   if (self.mdc_adjustsFontForContentSizeCategory) {
+    // TODO: (#4331) This needs to be converted to the new text scheme.
     font =
         [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleCaption
                            scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
@@ -588,6 +589,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   if (self.mdc_adjustsFontForContentSizeCategory) {
     font = [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleBody1
                               scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+    // TODO: (#4331) This needs to be converted to the new text scheme.
   }
   self.textInput.font = font;
 }
@@ -599,6 +601,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 - (void)updatePlaceholder {
   UIFont *placeHolderFont = self.inlinePlaceholderFont;
   if (self.mdc_adjustsFontForContentSizeCategory) {
+    // TODO: (#4331) This needs to be converted to the new text scheme.
     placeHolderFont =
         [placeHolderFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleBody1
                                       scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
@@ -845,6 +848,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     self.textInput.trailingUnderlineLabel.text = [self characterCountText];
     UIFont *font = self.trailingUnderlineLabelFont;
     if (self.mdc_adjustsFontForContentSizeCategory) {
+      // TODO: (#4331) This needs to be converted to the new text scheme.
       font =
           [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleCaption
                              scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
@@ -920,9 +924,11 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 + (UIFont *)placeholderFont {
   return [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody1];
+  // TODO: (#4331) This needs to be converted to the new text scheme.
 }
 
 + (UIFont *)underlineLabelsFont {
+  // TODO: (#4331) This needs to be converted to the new text scheme.
   return [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleCaption];
 }
 
