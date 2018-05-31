@@ -45,7 +45,7 @@ the following recommendations:
 *  Set an appropriate
 [`accessibilityLabel`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619577-accessibilitylabel)
 value if your button does not have a title. This is often the case with `MDCFloatingButton`
-instances.
+instances which typically only have an icon.
 
 ```
 button.accessibilityLabel = @"Create";
