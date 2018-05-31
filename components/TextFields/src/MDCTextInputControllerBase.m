@@ -607,7 +607,10 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                                       scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
 
   }
-  self.textInput.placeholderLabel.font = placeHolderFont;
+
+  if (![self.textInput.placeholderLabel.font isEqualToFont:placeHolderFont]) {
+    self.textInput.placeholderLabel.font = placeHolderFont;
+  }
 
   UIColor *placeholderColor;
   if ([self isPlaceholderUp]) {

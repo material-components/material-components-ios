@@ -25,6 +25,12 @@
 
 #import "UIFont+SimpleEquality.h"
 
+#import "MaterialMath.h"
+
 @implementation UIFont (SimpleEquality)
+
+- (BOOL)isEqualToFont:(UIFont *)font {
+  return [self.fontName isEqualToString:font.fontName] && MDCCGFloatEqual(self.pointSize, font.pointSize) && [self.fontDescriptor objectForKey:UIFontDescriptorFaceAttribute] == [font.fontDescriptor objectForKey:UIFontDescriptorFaceAttribute];
+}
 
 @end
