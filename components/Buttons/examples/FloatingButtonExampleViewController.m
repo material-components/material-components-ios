@@ -59,7 +59,7 @@ NSString *kMiniButtonLabel = @"Add";
                                                                shape:MDCFloatingButtonShapeMini];
   self.miniFloatingButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.miniFloatingButton setImage:plusImage forState:UIControlStateNormal];
-  [self.miniFloatingButton setAccessibilityLabel:kMiniButtonLabel];
+  self.miniFloatingButton.accessibilityLabel = kMiniButtonLabel;
   [self.miniFloatingButton setMinimumSize:CGSizeMake(96, 40)
                                  forShape:MDCFloatingButtonShapeMini
                                    inMode:MDCFloatingButtonModeExpanded];
@@ -69,14 +69,14 @@ NSString *kMiniButtonLabel = @"Add";
   self.defaultFloatingButton = [[MDCFloatingButton alloc] init];
   self.defaultFloatingButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.defaultFloatingButton setImage:plusImage forState:UIControlStateNormal];
-  [self.defaultFloatingButton setAccessibilityLabel:kButtonLabel];
+  self.defaultFloatingButton.accessibilityLabel = kButtonLabel;
   [MDCFloatingButtonColorThemer applySemanticColorScheme:self.colorScheme
                                                 toButton:self.defaultFloatingButton];
 
   self.largeIconFloatingButton = [[MDCFloatingButton alloc] init];
   self.largeIconFloatingButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.largeIconFloatingButton setImage:plusImage36 forState:UIControlStateNormal];
-  [self.largeIconFloatingButton setAccessibilityLabel:kButtonLabel];
+  self.largeIconFloatingButton.accessibilityLabel = kButtonLabel;
   [self.largeIconFloatingButton setContentEdgeInsets:UIEdgeInsetsMake(-6, -6, -6, 0)
                                             forShape:MDCFloatingButtonShapeDefault
                                               inMode:MDCFloatingButtonModeExpanded];

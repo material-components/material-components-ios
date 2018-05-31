@@ -39,11 +39,14 @@ elevation, Material Design ripples, and other stateful design APIs.
 
 ## Accessibility
 
-In order to get an accessible `MDCButton` make sure to set the accessibilty
-label. This is more important for `MDCFloatingButton` objects because they often
-only have icon and no text which would be the fallback label used by the
-accessibility system.
+To help ensure your buttons are accessible to as many users as possible, please be sure to review
+the following recommendations:
+
+*  Set an appropriate
+[`accessibilityLabel`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619577-accessibilitylabel)
+value if your button does not have a title. This is often the case with `MDCFloatingButton`
+instances.
 
 ```
-[button setAccessibilityLabel:@"Create"];
+button.accessibilityLabel = @"Create";
 ```
