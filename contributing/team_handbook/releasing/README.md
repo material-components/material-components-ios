@@ -2,7 +2,7 @@
 title: "Releasing"
 layout: detail
 section: docs
-path: /docs/handbook/releasing/
+path: /team_handbook/releasing/
 -->
 
 # Releasing

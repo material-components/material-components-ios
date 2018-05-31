@@ -2,7 +2,7 @@
 title: "Documentation"
 layout: detail
 section: docs
-path: /docs/handbook/documentation/
+path: /team_handbook/documentation/
 -->
 
 # Documentation

@@ -2,7 +2,7 @@
 title: "Bazel and Kokoro"
 layout: detail
 section: docs
-path: /docs/handbook/continuous_integration/bazel_kokoro
+path: /team_handbook/continuous_integration/bazel_kokoro
 -->
 
 # Bazel and Kokoro

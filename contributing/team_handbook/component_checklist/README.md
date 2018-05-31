@@ -2,7 +2,7 @@
 title: "Component checklist"
 layout: detail
 section: docs
-path: /docs/handbook/component_checklist/
+path: /team_handbook/component_checklist/
 -->
 
 # Component checklist

@@ -2,7 +2,7 @@
 title: "Deprecation policy"
 layout: detail
 section: docs
-path: /docs/handbook/api_design/deprecation_policy
+path: /team_handbook/api_design/deprecation_policy
 -->
 
 # Deprecation policy

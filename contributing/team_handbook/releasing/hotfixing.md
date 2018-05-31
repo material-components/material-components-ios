@@ -2,7 +2,7 @@
 title: "Hotfixing"
 layout: detail
 section: docs
-path: /docs/handbook/releasing/hotfixing
+path: /team_handbook/releasing/hotfixing
 -->
 
 # Hotfixing

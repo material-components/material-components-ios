@@ -2,7 +2,7 @@
 title: "Code formatting tools"
 layout: detail
 section: docs
-path: /docs/handbook/conventions/clang-format
+path: /team_handbook/conventions/clang-format
 -->
 
 # Code formatting tools

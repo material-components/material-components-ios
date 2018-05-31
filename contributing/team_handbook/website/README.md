@@ -2,7 +2,7 @@
 title: "Site Development"
 layout: detail
 section: docs
-path: /docs/handbook/website/
+path: /team_handbook/website/
 -->
 
 # Site Development

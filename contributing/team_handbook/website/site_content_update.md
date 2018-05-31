@@ -2,7 +2,7 @@
 title: "Site Content Update"
 layout: detail
 section: docs
-path: /docs/handbook/website/site_content_update
+path: /team_handbook/website/site_content_update
 -->
 
 # Site Content Update

@@ -2,7 +2,7 @@
 title: "Versions and releases"
 layout: detail
 section: docs
-path: /docs/handbook/releasing/versions
+path: /team_handbook/releasing/versions
 -->
 
 # Versions and releases

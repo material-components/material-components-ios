@@ -2,7 +2,7 @@
 title: "Coding conventions"
 layout: detail
 section: docs
-path: /docs/handbook/conventions/
+path: /team_handbook/conventions/
 -->
 
 # Coding conventions
