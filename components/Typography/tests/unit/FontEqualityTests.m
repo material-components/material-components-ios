@@ -27,7 +27,8 @@
   CGFloat fontSize = 16.0;
   UIFont *baseFont = [UIFont systemFontOfSize:fontSize];
 
-  UIFontDescriptor *newDescriptor = [[baseFont fontDescriptor] fontDescriptorByAddingAttributes:@{@"NSCTFontUIUsageAttribute" : UIFontTextStyleBody}];
+  UIFontDescriptor *newDescriptor = [[baseFont fontDescriptor]
+      fontDescriptorByAddingAttributes:@{@"NSCTFontUIUsageAttribute" : UIFontTextStyleBody}];
   UIFont *additionalAttributeFont = [UIFont fontWithDescriptor:newDescriptor size:fontSize];
 
   XCTAssertFalse(baseFont == additionalAttributeFont);
