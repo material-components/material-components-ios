@@ -27,7 +27,12 @@
 
 @interface UIFont (SimpleEquality)
 
-/* Checks simple characteristics: name, weight, pointsize. */
+/*
+ Checks simple characteristics: name, weight, pointsize, traits.
+
+ While the actual implementation of UIFont's isEqual: is not known, it is believed that
+ isEqualToFont: is more 'shallow' than isEqual:.
+ */
 - (BOOL)isEqualToFont:(UIFont*)font;
 
 @end
