@@ -30,6 +30,15 @@
 
 @implementation AppBarWrappingUITableViewControllerExample
 
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+    _colorScheme = [[MDCSemanticColorScheme alloc] init];
+    _typographyScheme = [[MDCTypographyScheme alloc] init];
+  }
+  return self;
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
 
