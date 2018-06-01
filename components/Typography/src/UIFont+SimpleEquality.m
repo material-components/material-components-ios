@@ -32,8 +32,8 @@
 - (BOOL)isEqualToFont:(UIFont *)font {
   return [self.fontName isEqualToString:font.fontName] &&
          MDCCGFloatEqual(self.pointSize, font.pointSize) &&
-         [self.fontDescriptor objectForKey:UIFontDescriptorFaceAttribute] ==
-             [font.fontDescriptor objectForKey:UIFontDescriptorFaceAttribute];
+         [[self.fontDescriptor objectForKey:UIFontDescriptorFaceAttribute] isEqual:
+             [font.fontDescriptor objectForKey:UIFontDescriptorFaceAttribute]];
 }
 
 @end
