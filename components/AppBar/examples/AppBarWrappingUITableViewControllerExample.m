@@ -49,6 +49,8 @@
       [[MDCAppBarContainerViewController alloc] initWithContentViewController:tableViewController];
 
   tableViewController.tableView.dataSource = self;
+  tableViewController.tableView.delegate =
+      self.appBarContainerViewController.appBar.headerViewController;
   [tableViewController.tableView registerClass:[UITableViewCell class]
                         forCellReuseIdentifier:@"cell"];
 
