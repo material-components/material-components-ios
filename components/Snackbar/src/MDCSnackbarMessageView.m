@@ -575,7 +575,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   }
   if (_mdc_adjustsFontForContentSizeCategory) {
     finalButtonFont =
-        [_buttonFont mdc_fontSizedForMaterialTextStyle:kMessageTextStyle
+        [_buttonFont mdc_fontSizedForMaterialTextStyle:kButtonTextStyle
                                   scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
   } else {
     finalButtonFont = _messageFont;
