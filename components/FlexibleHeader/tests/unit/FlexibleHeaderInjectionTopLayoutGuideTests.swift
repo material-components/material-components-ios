@@ -84,6 +84,17 @@ class FlexibleHeaderInjectionTopLayoutGuideTests: XCTestCase {
     contentViewController.view.addSubview(fhvc.view)
     fhvc.didMove(toParentViewController: contentViewController)
 
+    // Then
+    XCTAssertEqual(contentViewController.topLayoutGuide.length, fhvc.headerView.frame.maxY)
+    #if swift(>=3.2)
+    if #available(iOS 11.0, *) {
+      XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top,
+                     fhvc.headerView.frame.maxY - MDCDeviceTopSafeAreaInset())
+      XCTAssertEqual(contentViewController.tableView.adjustedContentInset.top, 0)
+    }
+    #endif
+
+    // And then when
     fhvc.headerView.trackingScrollView = contentViewController.tableView
 
     // Then
