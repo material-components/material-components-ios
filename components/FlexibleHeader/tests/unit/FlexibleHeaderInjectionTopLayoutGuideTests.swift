@@ -77,6 +77,26 @@ class FlexibleHeaderInjectionTopLayoutGuideTests: XCTestCase {
     #endif
   }
 
+  func testTrackingAnUntrackedTableViewTopLayoutGuideEqualsBottomEdgeOfHeaderView() {
+    // Given
+    let contentViewController = UITableViewController()
+    contentViewController.addChildViewController(fhvc)
+    contentViewController.view.addSubview(fhvc.view)
+    fhvc.didMove(toParentViewController: contentViewController)
+
+    fhvc.headerView.trackingScrollView = contentViewController.tableView
+
+    // Then
+    XCTAssertEqual(contentViewController.topLayoutGuide.length, fhvc.headerView.frame.maxY)
+    #if swift(>=3.2)
+    if #available(iOS 11.0, *) {
+      XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top, 0)
+      XCTAssertEqual(contentViewController.tableView.adjustedContentInset.top,
+                     fhvc.headerView.maximumHeight + MDCDeviceTopSafeAreaInset())
+    }
+    #endif
+  }
+
   // MARK: Tracked table view
 
   func testTrackedTableViewTopLayoutGuideEqualsBottomEdgeOfHeaderView() {
