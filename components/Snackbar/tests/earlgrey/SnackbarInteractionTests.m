@@ -85,14 +85,17 @@
  @note Only the first two elements are currently handled.
  */
 + (void)jumpToExampleWithBreadcrumbs:(NSArray<NSString *> *)breadcrumbs {
-  NSAssert(breadcrumbs.count >= 2, @"Breadcrumb paths must be at least 2 elements.");
+  NSAssert(breadcrumbs.count >= 1, @"Breadcrumb paths must be at least 1 element.");
   [SnackbarEarlGreyTests scrollToElementWithIdentifier:breadcrumbs[0]
                                inElementWithIdentifier:@"collectionView"
                                              direction:kGREYDirectionDown
                                               withStep:-1
                                                    tap:YES];
+  NSString *demoName =
+      breadcrumbs.count >= 2 ? [NSString stringWithFormat:@"Cell%@", breadcrumbs[1]]
+                             : @"start.demo";
   [SnackbarEarlGreyTests
-      scrollToElementWithIdentifier:[NSString stringWithFormat:@"Cell%@", breadcrumbs[1]]
+      scrollToElementWithIdentifier:demoName
             inElementWithIdentifier:[NSString stringWithFormat:@"Table%@", breadcrumbs[0]]
                           direction:kGREYDirectionDown
                            withStep:-1
@@ -112,7 +115,7 @@
 }
 
 - (void)testSliding {
-  [SnackbarEarlGreyTests jumpToExampleWithBreadcrumbs:@[ @"Snackbar", @"Demo" ]];
+  [SnackbarEarlGreyTests jumpToExampleWithBreadcrumbs:@[ @"Snackbar"]];
   [[EarlGrey selectElementWithMatcher:grey_accessibilityID(@"Simple Snackbar")]
       performAction:grey_tap()];
   [SnackbarEarlGreyTests returnToMainScreen];

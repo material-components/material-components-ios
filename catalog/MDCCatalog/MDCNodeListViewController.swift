@@ -109,6 +109,7 @@ class NodeViewTableViewPrimaryDemoCell: UITableViewCell {
   func setupContainedButton() {
     containedButton.setTitle("Start Demo", for: .normal)
     containedButton.translatesAutoresizingMaskIntoConstraints = false
+    containedButton.accessibilityIdentifier = "start.demo";
     contentView.addSubview(containedButton)
 
     // constraints
