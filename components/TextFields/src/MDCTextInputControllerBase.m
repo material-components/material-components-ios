@@ -608,7 +608,10 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
   }
 
-  if (![self.textInput.placeholderLabel.font isEqualToFont:placeHolderFont]) {
+  // Aside from not wanting to kick off extra work for setting a font that hasn't changed, we use
+  // this custom equality check to prevent an edge case that caused a 1 pixel change in width even
+  // when the important parts of the new font were the same as the existing font.
+  if (!MDCFontIsSimplyEqualToFont(self.textInput.placeholderLabel.font, placeHolderFont)){
     self.textInput.placeholderLabel.font = placeHolderFont;
   }
 

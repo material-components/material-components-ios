@@ -23,19 +23,19 @@
  expand or contract the header file space without consumer modifications.
  */
 
-#import "UIFont+SimpleEquality.h"
+#import "UIFont+MaterialSimpleEquality.h"
 
 #import "MaterialMath.h"
 
-@implementation UIFont (SimpleEquality)
+@implementation UIFont (MaterialSimpleEquality)
 
-- (BOOL)isEqualToFont:(UIFont *)font {
-  return [self.fontName isEqualToString:font.fontName] &&
-         MDCCGFloatEqual(self.pointSize, font.pointSize) &&
-         [[self.fontDescriptor objectForKey:UIFontDescriptorFaceAttribute] isEqual:
-           [font.fontDescriptor objectForKey:UIFontDescriptorFaceAttribute]] &&
-         [[self.fontDescriptor objectForKey:UIFontDescriptorTraitsAttribute] isEqual:
-          [font.fontDescriptor objectForKey:UIFontDescriptorTraitsAttribute]];
+BOOL MDCFontIsSimplyEqualToFont(UIFont *font1, UIFont *font2) {
+  return [font1.fontName isEqualToString:font2.fontName] &&
+  MDCCGFloatEqual(font1.pointSize, font2.pointSize) &&
+  [[font1.fontDescriptor objectForKey:UIFontDescriptorFaceAttribute] isEqual:
+   [font2.fontDescriptor objectForKey:UIFontDescriptorFaceAttribute]] &&
+  [[font1.fontDescriptor objectForKey:UIFontDescriptorTraitsAttribute] isEqual:
+   [font2.fontDescriptor objectForKey:UIFontDescriptorTraitsAttribute]];
 }
 
 @end

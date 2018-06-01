@@ -25,7 +25,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIFont (SimpleEquality)
+@interface UIFont (MaterialSimpleEquality)
 
 /*
  Checks simple characteristics: name, weight, pointsize, traits.
@@ -33,6 +33,6 @@
  While the actual implementation of UIFont's isEqual: is not known, it is believed that
  isEqualToFont: is more 'shallow' than isEqual:.
  */
-- (BOOL)isEqualToFont:(UIFont*)font;
+FOUNDATION_EXPORT BOOL MDCFontIsSimplyEqualToFont(UIFont *font1, UIFont *font2);
 
 @end
