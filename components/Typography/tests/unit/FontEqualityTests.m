@@ -33,7 +33,7 @@
 
   XCTAssertFalse(baseFont == additionalAttributeFont);
   XCTAssertFalse([baseFont isEqual:additionalAttributeFont]);
-  XCTAssertTrue([baseFont mdc_isEqualToFont:additionalAttributeFont]);
+  XCTAssertTrue(MDCFontIsSimplyEqualToFont(baseFont, additionalAttributeFont));
 }
 
 @end
