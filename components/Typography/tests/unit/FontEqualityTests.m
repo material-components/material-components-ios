@@ -26,10 +26,14 @@
 - (void)testSimpleFontEquality {
   CGFloat fontSize = 16.0;
   UIFont *baseFont = [UIFont systemFontOfSize:fontSize];
+  XCTAssertNotNil(baseFont);
 
   UIFontDescriptor *newDescriptor = [[baseFont fontDescriptor]
       fontDescriptorByAddingAttributes:@{@"NSCTFontUIUsageAttribute" : UIFontTextStyleBody}];
+  XCTAssertNotNil(newDescriptor);
+
   UIFont *additionalAttributeFont = [UIFont fontWithDescriptor:newDescriptor size:fontSize];
+  XCTAssertNotNil(additionalAttributeFont);
 
   XCTAssertFalse(baseFont == additionalAttributeFont);
   XCTAssertFalse([baseFont isEqual:additionalAttributeFont]);
