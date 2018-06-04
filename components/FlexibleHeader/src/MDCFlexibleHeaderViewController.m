@@ -294,12 +294,17 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
   // support iOS 11 and up - we can probably drop the content inset adjustment behavior in favor
   // of modifying additionalSafeAreaInsets instead.
   if (self.headerView.trackingScrollView != nil) {
-    // Reset the additional safe area insets if we are now tracking a scroll view.
-    if (topLayoutGuideViewController != nil) {
-      UIEdgeInsets additionalSafeAreaInsets = topLayoutGuideViewController.additionalSafeAreaInsets;
-      additionalSafeAreaInsets.top = 0;
-      topLayoutGuideViewController.additionalSafeAreaInsets = additionalSafeAreaInsets;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+    if (@available(iOS 11.0, *)) {
+      // Reset the additional safe area insets if we are now tracking a scroll view.
+      if (topLayoutGuideViewController != nil) {
+        UIEdgeInsets additionalSafeAreaInsets =
+            topLayoutGuideViewController.additionalSafeAreaInsets;
+        additionalSafeAreaInsets.top = 0;
+        topLayoutGuideViewController.additionalSafeAreaInsets = additionalSafeAreaInsets;
+      }
     }
+#endif
     return;
   }
 
