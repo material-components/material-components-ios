@@ -153,6 +153,7 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
 - (void)commonMDCNavigationBarInit {
   _observedNavigationItemLock = [[NSObject alloc] init];
   _titleFont = [MDCTypography titleFont];
+  _useFlexibleTopBottomInsets = YES;
 
   _titleLabel = [[UILabel alloc] init];
   _titleLabel.font = _titleFont;
