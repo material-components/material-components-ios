@@ -81,21 +81,27 @@
   [pageControl sizeToFit];
   nativePageControl.numberOfPages = 1;
   [nativePageControl sizeToFit];
-  XCTAssertTrue(CGRectEqualToRect(CGRectIntegral(pageControl.frame), nativePageControl.frame));
+  CGRect frame = CGRectIntegral(pageControl.frame);
+  XCTAssertEqual(frame.size.height, 48.0);
+  XCTAssertEqual(frame.size.width, nativePageControl.frame.size.width);
 
   // Test both controls with 4 pages.
   pageControl.numberOfPages = 4;
   [pageControl sizeToFit];
   nativePageControl.numberOfPages = 4;
   [nativePageControl sizeToFit];
-  XCTAssertTrue(CGRectEqualToRect(CGRectIntegral(pageControl.frame), nativePageControl.frame));
+  frame = CGRectIntegral(pageControl.frame);
+  XCTAssertEqual(frame.size.height, 48.0);
+  XCTAssertEqual(frame.size.width, nativePageControl.frame.size.width);
 
   // Test with different number of pages for each control.
   pageControl.numberOfPages = 4;
   [pageControl sizeToFit];
   nativePageControl.numberOfPages = 2;
   [nativePageControl sizeToFit];
-  XCTAssertFalse(CGRectEqualToRect(CGRectIntegral(pageControl.frame), nativePageControl.frame));
+  frame = CGRectIntegral(pageControl.frame);
+  XCTAssertEqual(frame.size.height, 48.0);
+  XCTAssertNotEqual(frame.size.width, nativePageControl.frame.size.width);
 }
 
 - (void)testScrollOffsetOutOfBoundsOfNumberOfPages {
