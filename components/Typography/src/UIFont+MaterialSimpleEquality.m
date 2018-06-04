@@ -19,6 +19,15 @@
 #import "MaterialMath.h"
 
 BOOL MDCFontIsSimplyEqualToFont(UIFont *font1, UIFont *font2) {
+  NSLog(@"%@", font1.fontName);
+  NSLog(@"%@", font2.fontName);
+
+  NSLog(@"%f", font1.pointSize);
+  NSLog(@"%f", font2.pointSize);
+
+  NSLog(@"%@", font1.fontDescriptor);
+  NSLog(@"%@", font2.fontDescriptor);
+
   return [font1.fontName isEqualToString:font2.fontName] &&
   MDCCGFloatEqual(font1.pointSize, font2.pointSize) &&
   [[font1.fontDescriptor objectForKey:UIFontDescriptorFaceAttribute] isEqual:
