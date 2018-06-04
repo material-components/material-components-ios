@@ -25,8 +25,11 @@ BOOL MDCFontIsSimplyEqualToFont(UIFont *font1, UIFont *font2) {
   NSLog(@"%f", font1.pointSize);
   NSLog(@"%f", font2.pointSize);
 
-  NSLog(@"%@", font1.fontDescriptor);
-  NSLog(@"%@", font2.fontDescriptor);
+  NSLog(@"%@", [font1.fontDescriptor objectForKey:UIFontDescriptorFaceAttribute]);
+  NSLog(@"%@", [font2.fontDescriptor objectForKey:UIFontDescriptorFaceAttribute]);
+
+  NSLog(@"%@", [font1.fontDescriptor objectForKey:UIFontDescriptorTraitsAttribute]);
+  NSLog(@"%@", [font2.fontDescriptor objectForKey:UIFontDescriptorTraitsAttribute]);
 
   return [font1.fontName isEqualToString:font2.fontName] &&
   MDCCGFloatEqual(font1.pointSize, font2.pointSize) &&
