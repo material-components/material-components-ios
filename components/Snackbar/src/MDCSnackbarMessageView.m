@@ -535,45 +535,27 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 }
 
 - (void)updateMessageFont {
-  // If we have a custom font apply it to the label.
-  // If not, fall back to the Material specified font.
-  if (_messageFont) {
-    // If we are automatically adjusting for Dynamic Type resize the font based on the text style
-    if (_mdc_adjustsFontForContentSizeCategory) {
-      _label.font =
-          [_messageFont mdc_fontSizedForMaterialTextStyle:kMessageTextStyle
-                                     scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
-    } else {
-      _label.font = _messageFont;
-    }
-  } else {
-    // TODO(#2709): Migrate to a single source of truth for fonts
-    // There is no custom font, so use the default font.
-    if (_mdc_adjustsFontForContentSizeCategory) {
-      // If we are using the default (system) font loader, retrieve the
-      // font from the UIFont preferredFont API.
-      if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-        _label.font = [UIFont mdc_preferredFontForMaterialTextStyle:kMessageTextStyle];
-      } else {
-        // There is a custom font loader, retrieve the font and scale it.
-        UIFont *customTypographyFont = [MDCTypography body1Font];
-        _label.font =
-            [customTypographyFont mdc_fontSizedForMaterialTextStyle:kMessageTextStyle
-                scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
-      }
-    } else {
-      // If we are using the default (system) font loader, retrieve the
-      // font from the UIFont standardFont API.
-      if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-        _label.font = [UIFont mdc_standardFontForMaterialTextStyle:kMessageTextStyle];
-      } else {
-        // There is a custom font loader, retrieve the font from it.
-        _label.font = [MDCTypography body1Font];
-      }
-    }
+  if (!_messageFont) {
+    _messageFont = [[self class] defaultMessageFont];
   }
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    _label.font =
+        [_messageFont mdc_fontSizedForMaterialTextStyle:kMessageTextStyle
+                                 scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+  } else {
+    _label.font = _messageFont;
+  }
+
   [self setNeedsLayout];
 }
+
++ (UIFont *)defaultMessageFont {
+  if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
+    return [UIFont mdc_standardFontForMaterialTextStyle:kMessageTextStyle];
+  }
+  return [MDCTypography body1Font];
+}
+
 
 - (UIFont *)buttonFont {
   return _buttonFont;
@@ -588,42 +570,15 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 - (void)updateButtonFont {
   UIFont *finalButtonFont;
 
-  // If we have a custom font apply it to the label.
-  // If not, fall back to the Material specified font.
-  if (_buttonFont) {
-    // If we are automatically adjusting for Dynamic Type resize the font based on the text style
-    if (_mdc_adjustsFontForContentSizeCategory) {
-      finalButtonFont =
-          [_buttonFont mdc_fontSizedForMaterialTextStyle:kButtonTextStyle
-                                    scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
-    } else {
-      finalButtonFont = _buttonFont;
-    }
+  if (!_buttonFont) {
+    _buttonFont = [[self class] defaultMessageFont];
+  }
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    finalButtonFont =
+        [_buttonFont mdc_fontSizedForMaterialTextStyle:kButtonTextStyle
+                                  scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
   } else {
-    // TODO(#2709): Migrate to a single source of truth for fonts
-    // There is no custom font, so use the default font.
-    if (_mdc_adjustsFontForContentSizeCategory) {
-      // If we are using the default (system) font loader, retrieve the
-      // font from the UIFont preferredFont API.
-      if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-        finalButtonFont = [UIFont mdc_preferredFontForMaterialTextStyle:kButtonTextStyle];
-      } else {
-        // There is a custom font loader, retrieve the font and scale it.
-        UIFont *customTypographyFont = [MDCTypography buttonFont];
-        finalButtonFont =
-            [customTypographyFont mdc_fontSizedForMaterialTextStyle:kButtonTextStyle
-                scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
-      }
-    } else {
-      // If we are using the default (system) font loader, retrieve the
-      // font from the UIFont standardFont API.
-      if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-        finalButtonFont = [UIFont mdc_standardFontForMaterialTextStyle:kButtonTextStyle];
-      } else {
-        // There is a custom font loader, retrieve the font from it.
-        finalButtonFont = [MDCTypography buttonFont];
-      }
-    }
+    finalButtonFont = _messageFont;
   }
 
   for (MDCButton *button in _actionButtons) {
@@ -633,6 +588,14 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
   [self setNeedsLayout];
 }
+
++ (UIFont *)defaultButtonFont {
+  if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
+    return [UIFont mdc_standardFontForMaterialTextStyle:kButtonTextStyle];
+  }
+  return [MDCTypography buttonFont];
+}
+
 
 - (BOOL)shouldWaitForDismissalDuringVoiceover {
   return self.message.action != nil;
