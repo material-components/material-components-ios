@@ -255,7 +255,7 @@ textFieldDefaultCharMax.placeholder = "Enter up to 50 characters"
 textFieldDefaultCharMax.textView.delegate = self
 
 // Second the controller is created to manage the text field
-textFieldControllerDefaultCharMax = MDCTextInputControllerUnderline(input: textFieldDefaultCharMax) // Hold on as a property
+textFieldControllerDefaultCharMax = MDCTextInputControllerUnderline(textInput: textFieldDefaultCharMax) // Hold on as a property
 textFieldControllerDefaultCharMax.characterCountMax = 50
 textFieldControllerDefaultCharMax.isFloatingEnabled = false
 ```
