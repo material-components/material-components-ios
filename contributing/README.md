@@ -15,13 +15,13 @@ The iOS team also abides by the following policy items:
 
 ### Code Conventions
 
-MDC follows certain [coding styles and conventions](code-conventions.md) for its code to help
+MDC follows certain [coding styles and conventions](team_handbook/conventions/) for its code to help
 everyone easily read, review, and understand our code. Please follow these conventions when
 submitting pull requests.
 
 ### Component Checklist
 
-All components should pass [these](checklist.md) checks or give a compelling reason why they shouldn’t.
+All components should pass [these](team_handbook/component_checklist/) checks or give a compelling reason why they shouldn’t.
 
 There is a [great script](../scripts/check_components) that checks for _some_ of these criteria. Run it regularly during development. It will also be run by the continuous integration system when you make a pull request. If the script fails at that point, the pull request will be blocked.
 
@@ -44,11 +44,11 @@ Since PRs on github permanently stay in the `Changes requested` state it is hard
 
 ### Deprecation
 
-See [deprecation_policy.md](deprecation_policy.md) for details.
+See [deprecation_policy.md](team_handbook/api_design/deprecation_policy.md) for details.
 
 ### Hotfixing
 
-Occasionally it is necessary to hotfix the framework. See [hotfixing.md](hotfixing.md) for details.
+Occasionally it is necessary to hotfix the framework. See [hotfixing.md](team_handbook/releasing/hotfixing.md) for details.
 
 ## Finding an issue to work on
 

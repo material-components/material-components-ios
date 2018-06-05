@@ -1,9 +1,15 @@
+<!--docs:
+title: "Site Development"
+layout: detail
+section: docs
+path: /team_handbook/website/
+-->
+
 # Site Development
 
 **This document talks about Material Components for iOS site development. If you are trying to
 updating the contents of site, please refer to [Site Content Update](./site_content_update.md)
 instead.**
-
 
 ## Overview
 

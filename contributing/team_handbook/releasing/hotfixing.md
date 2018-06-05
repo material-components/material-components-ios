@@ -1,7 +1,14 @@
+<!--docs:
+title: "Hotfixing"
+layout: detail
+section: docs
+path: /team_handbook/releasing/hotfixing
+-->
+
 # Hotfixing
 
 Hotfixes are changes made to the stable branch or a previous release in order to resolve a critical
-bug that may have been detected post-release. Hotfixes are essentially [releases](releasing.md) that
+bug that may have been detected post-release. Hotfixes are essentially [releases](README.md) that
 happen off-schedule.
 
 We only support the latest tagged release on `origin/stable`.
@@ -20,5 +27,5 @@ words, the hotfix branch must start from `origin/stable`.
 
 ### Follow the releasing process
 
-Start at [Test the release branch](releasing.md#test-the-release-branch) and cut the hotfix release
+Start at [Test the release branch](README.md#test-the-release-branch) and cut the hotfix release
 as though it were a normal release.

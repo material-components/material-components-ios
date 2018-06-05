@@ -1,3 +1,10 @@
+<!--docs:
+title: "Coding conventions"
+layout: detail
+section: docs
+path: /team_handbook/conventions/
+-->
+
 # Coding conventions
 
 Since we all want to spend more time coding and less time fiddling with whitespace, Material

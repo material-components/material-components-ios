@@ -1,3 +1,10 @@
+<!--docs:
+title: "Site Content Update"
+layout: detail
+section: docs
+path: /team_handbook/website/site_content_update
+-->
+
 # Site Content Update
 
 ## Overview
@@ -10,7 +17,7 @@ This document will walk you through the process for updating the contents on
 document site and API reference, or adding new sections to the document site.
 You only need to edit markdown files in most cases, however, if you wish to make
 further changes to the templates, please read to [Site
-Development](./site_development.md).
+Development](README.md).
 
 
 ## Updating Content
@@ -23,7 +30,7 @@ The Material Components site uses [Jekyll](https://jekyllrb.com/) to help
 transform Markdown files into static HTML. This means although it is consistent
 with GitHub Flavored Markdown for most cases, we do have some style classes and
 special javascript to handle complicate rendering for the website. Please refer
-to [Writing READMES](./writing_readmes.md) for the syntax we use.
+to [Writing READMES](../documentation/) for the syntax we use.
 
 #### Structure
 
@@ -56,7 +63,7 @@ cd site-source
 # and do git commit & push here...
 ```
 
-This relates to how the site is organized. If you are curious about that, you may read the appendix at the end of [Site Development](./site_development.md).
+This relates to how the site is organized. If you are curious about that, you may read the appendix at the end of [Site Development](README.md).
 
 ### API Reference
 

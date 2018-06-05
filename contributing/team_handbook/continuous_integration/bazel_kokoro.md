@@ -1,4 +1,11 @@
-# Bazel and Kokoro support for MDC iOS
+<!--docs:
+title: "Bazel and Kokoro"
+layout: detail
+section: docs
+path: /team_handbook/continuous_integration/bazel_kokoro
+-->
+
+# Bazel and Kokoro
 
 [Bazel](https://bazel.build/) is Google's open source build infrastructure. Kokoro is Google's
 continuous integration infrastructure, presently visible
