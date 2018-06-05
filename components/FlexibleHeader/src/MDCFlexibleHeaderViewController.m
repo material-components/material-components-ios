@@ -246,7 +246,7 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
 - (void)fhv_extractTopLayoutGuideConstraint {
   UIViewController *topLayoutGuideViewController =
       [self fhv_topLayoutGuideViewControllerWithFallback];
-  if (![topLayoutGuideViewController isViewLoaded]) {
+  if (!topLayoutGuideViewController.isViewLoaded) {
     self.topLayoutGuideConstraint = nil;
     return;
   }
