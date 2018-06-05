@@ -1748,9 +1748,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
           errorText.length > 0 ? [NSString stringWithFormat:@"Error: %@", errorText] : @"Error.";
     }
 
-    // Simply sending a layout change notification does not seem to
-    UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, announcementString);
-
     NSString *valueString = @"";
 
     if (self.textInput.text.length > 0) {
@@ -1766,6 +1763,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     self.textInput.leadingUnderlineLabel.accessibilityLabel =
         [NSString stringWithFormat:@"Error: %@.",
                                    leadingUnderlineLabelText ? leadingUnderlineLabelText : @""];
+    UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, self.textInput.leadingUnderlineLabel);
   } else {
     self.textInput.accessibilityValue = nil;
     self.textInput.leadingUnderlineLabel.accessibilityLabel = nil;
