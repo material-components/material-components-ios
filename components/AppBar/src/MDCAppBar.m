@@ -359,9 +359,18 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
 #endif
 }
 
+- (BOOL)accessibilityPerformEscape {
+  [self dismissSelf];
+  return YES;
+}
+
 #pragma mark User actions
 
 - (void)didTapBackButton:(__unused id)sender {
+  [self dismissSelf];
+}
+
+- (void)dismissSelf {
   UIViewController *pvc = self.flexibleHeaderParentViewController;
   if (pvc.navigationController && pvc.navigationController.viewControllers.count > 1) {
     [pvc.navigationController popViewControllerAnimated:YES];
