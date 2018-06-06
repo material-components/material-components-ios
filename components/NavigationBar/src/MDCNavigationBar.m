@@ -155,6 +155,7 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
   _titleFont = [MDCTypography titleFont];
   _useFlexibleTopBottomInsets = YES;
 
+  _titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorFill;
   _titleLabel = [[UILabel alloc] init];
   _titleLabel.font = _titleFont;
   _titleLabel.accessibilityTraits |= UIAccessibilityTraitHeader;
@@ -394,6 +395,26 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
   }
 
   CGRect titleViewFrame = textFrame;
+  switch (self.titleViewLayoutBehavior) {
+    case MDCNavigationBarTitleViewLayoutBehaviorFill:
+      // Do nothing. The default textFrame calculation will fill the available space.
+      break;
+
+    case MDCNavigationBarTitleViewLayoutBehaviorCenter: {
+      CGFloat availableWidth = UIEdgeInsetsInsetRect(self.bounds, textInsets).size.width;
+      availableWidth -= MAX(_leadingButtonBar.frame.size.width,
+                            _trailingButtonBar.frame.size.width) * 2;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+      if (@available(iOS 11.0, *)) {
+        availableWidth -= self.safeAreaInsets.left + self.safeAreaInsets.right;
+      }
+#endif
+      titleViewFrame.size.width = availableWidth;
+      titleViewFrame = [self mdc_frameAlignedHorizontally:titleViewFrame
+                                                alignment:MDCNavigationBarTitleAlignmentCenter];
+      break;
+    }
+  }
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
   if (self.useFlexibleTopBottomInsets) {
