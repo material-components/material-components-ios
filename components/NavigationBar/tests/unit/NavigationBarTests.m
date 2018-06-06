@@ -89,6 +89,91 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   XCTAssertEqual(alignment, MDCNavigationBarTitleAlignmentCenter);
 }
 
+- (void)testTitleViewIsCenteredWithNoButtonsAndFillBehavior {
+  // Given
+  MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
+  navBar.frame = CGRectMake(0, 0, 300, 25);
+  navBar.titleView = [[UIView alloc] init];
+  navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorFill;
+
+  // When
+  [navBar layoutIfNeeded];
+
+  // Then
+  XCTAssertEqualWithAccuracy(navBar.titleView.center.x, CGRectGetMidX(navBar.bounds),
+                             kEpsilonAccuracy);
+}
+
+- (void)testTitleViewShiftedRightWithLeadingButtonsAndFillBehavior {
+  // Given
+  MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
+  navBar.frame = CGRectMake(0, 0, 300, 25);
+  navBar.titleView = [[UIView alloc] init];
+  navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorFill;
+  navBar.leadingBarButtonItems = @[[[UIBarButtonItem alloc] initWithTitle:@"Button"
+                                                                    style:UIBarButtonItemStylePlain
+                                                                   target:nil action:nil]];
+
+  // When
+  [navBar layoutIfNeeded];
+
+  // Then
+  XCTAssertGreaterThan(navBar.titleView.center.x, CGRectGetMidX(navBar.bounds));
+}
+
+- (void)testTitleViewShiftedLeftWithTrailingButtonsAndFillBehavior {
+  // Given
+  MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
+  navBar.frame = CGRectMake(0, 0, 300, 25);
+  navBar.titleView = [[UIView alloc] init];
+  navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorFill;
+  navBar.trailingBarButtonItems = @[[[UIBarButtonItem alloc] initWithTitle:@"Button"
+                                                                     style:UIBarButtonItemStylePlain
+                                                                    target:nil action:nil]];
+
+  // When
+  [navBar layoutIfNeeded];
+
+  // Then
+  XCTAssertLessThan(navBar.titleView.center.x, CGRectGetMidX(navBar.bounds));
+}
+
+- (void)testTitleViewCenteredWithLeadingButtonsAndCenterBehavior {
+  // Given
+  MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
+  navBar.frame = CGRectMake(0, 0, 300, 25);
+  navBar.titleView = [[UIView alloc] init];
+  navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorCenter;
+  navBar.leadingBarButtonItems = @[[[UIBarButtonItem alloc] initWithTitle:@"Button"
+                                                                    style:UIBarButtonItemStylePlain
+                                                                   target:nil action:nil]];
+
+  // When
+  [navBar layoutIfNeeded];
+
+  // Then
+  XCTAssertEqualWithAccuracy(navBar.titleView.center.x, CGRectGetMidX(navBar.bounds),
+                             kEpsilonAccuracy);
+}
+
+- (void)testTitleViewCenteredWithTrailingButtonsAndCenterBehavior {
+  // Given
+  MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
+  navBar.frame = CGRectMake(0, 0, 300, 25);
+  navBar.titleView = [[UIView alloc] init];
+  navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorCenter;
+  navBar.trailingBarButtonItems = @[[[UIBarButtonItem alloc] initWithTitle:@"Button"
+                                                                     style:UIBarButtonItemStylePlain
+                                                                    target:nil action:nil]];
+
+  // When
+  [navBar layoutIfNeeded];
+
+  // Then
+  XCTAssertEqualWithAccuracy(navBar.titleView.center.x, CGRectGetMidX(navBar.bounds),
+                             kEpsilonAccuracy);
+}
+
 - (void)testTitleFontProperty {
   MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
   navBar.frame = CGRectMake(0, 0, 300, 25);
