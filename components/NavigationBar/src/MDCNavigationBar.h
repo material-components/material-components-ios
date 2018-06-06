@@ -27,6 +27,24 @@ typedef NS_ENUM(NSInteger, MDCNavigationBarTitleAlignment) {
 };
 
 /**
+ Behaviors that affect the layout of an |MDCNavigationBar|'s titleView.
+ */
+typedef NS_ENUM(NSInteger, MDCNavigationBarTitleViewLayoutBehavior) {
+  /**
+   The title view's width will equal the navigation bar's width minus any space consumed by the
+   leading and trailing buttons.
+
+   The title view's center may not align with the navigation bar's center in this case.
+   */
+  MDCNavigationBarTitleViewLayoutBehaviorFill,
+
+  /**
+   Align the title view's center with the navigation bar's center, if possible.
+   */
+  MDCNavigationBarTitleViewLayoutBehaviorCenter
+};
+
+/**
  This protocol defines all of the properties on UINavigationItem that can be listened to by
  MDCNavigationBar.
  */
@@ -97,6 +115,13 @@ IB_DESIGNABLE
  requires it.
  */
 @property(nonatomic, strong, nullable) UIView *titleView;
+
+/**
+ The behavior that determines how to position the title view.
+
+ By default this is MDCNavigationBarTitleViewLayoutBehaviorFill.
+ */
+@property(nonatomic) MDCNavigationBarTitleViewLayoutBehavior titleViewLayoutBehavior;
 
 /**
  The font applied to the title of navigation bar.
