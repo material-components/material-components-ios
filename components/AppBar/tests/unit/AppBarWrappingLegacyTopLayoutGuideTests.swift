@@ -34,6 +34,7 @@ class AppBarWrappingLegacyTopLayoutGuideTests: XCTestCase {
     let _ = container.view // Force the view to load.
 
     // Then
+    XCTAssertNil(container.appBar.headerViewController.topLayoutGuideViewController)
     XCTAssertEqual(contentViewController.topLayoutGuide.length, 0)
     #if swift(>=3.2)
     if #available(iOS 11.0, *) {
@@ -56,6 +57,7 @@ class AppBarWrappingLegacyTopLayoutGuideTests: XCTestCase {
     let _ = container.view // Force the view to load.
 
     // Then
+    XCTAssertNil(container.appBar.headerViewController.topLayoutGuideViewController)
     XCTAssertEqual(contentViewController.topLayoutGuide.length, 0)
     #if swift(>=3.2)
     if #available(iOS 11.0, *) {
@@ -82,6 +84,7 @@ class AppBarWrappingLegacyTopLayoutGuideTests: XCTestCase {
     container.appBar.headerViewController.headerView.trackingScrollDidScroll()
 
     // Then
+    XCTAssertNil(container.appBar.headerViewController.topLayoutGuideViewController)
     XCTAssertEqual(contentViewController.topLayoutGuide.length, 0)
     #if swift(>=3.2)
     if #available(iOS 11.0, *) {
@@ -108,6 +111,7 @@ class AppBarWrappingLegacyTopLayoutGuideTests: XCTestCase {
     let _ = container.view // Force the view to load.
 
     // Then
+    XCTAssertNil(container.appBar.headerViewController.topLayoutGuideViewController)
     XCTAssertEqual(contentViewController.topLayoutGuide.length, 0)
     #if swift(>=3.2)
     if #available(iOS 11.0, *) {
@@ -117,7 +121,7 @@ class AppBarWrappingLegacyTopLayoutGuideTests: XCTestCase {
     #endif
   }
 
-  // MARK: Tracked collection view view
+  // MARK: Tracked collection view
 
   func testTrackedCollectionViewTopLayoutGuideEqualsZero() {
     // Given
@@ -136,6 +140,7 @@ class AppBarWrappingLegacyTopLayoutGuideTests: XCTestCase {
     container.appBar.headerViewController.headerView.trackingScrollDidScroll()
 
     // Then
+    XCTAssertNil(container.appBar.headerViewController.topLayoutGuideViewController)
     XCTAssertEqual(contentViewController.topLayoutGuide.length, 0)
     #if swift(>=3.2)
     if #available(iOS 11.0, *) {
