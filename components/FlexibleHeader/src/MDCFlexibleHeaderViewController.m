@@ -288,18 +288,23 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
   CGFloat topInset = CGRectGetMaxY(_headerView.frame);
   self.topLayoutGuideConstraint.constant = topInset;
 
-  // If there is a tracking scroll view then the flexible header will manage safe area insets via
-  // the tracking scroll view's contentInsets. Some day - in the long distant future when we only
-  // support iOS 11 and up - we can probably drop the content inset adjustment behavior in favor
-  // of modifying additionalSafeAreaInsets instead.
-  if (self.headerView.trackingScrollView != nil) {
-    return;
-  }
-
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     UIViewController *topLayoutGuideViewController = [self fhv_topLayoutGuideViewControllerWithFallback];
-    if (topLayoutGuideViewController != nil) {
+    // If there is a tracking scroll view then the flexible header will manage safe area insets via
+    // the tracking scroll view's contentInsets. Some day - in the long distant future when we only
+    // support iOS 11 and up - we can probably drop the content inset adjustment behavior in favor
+    // of modifying additionalSafeAreaInsets instead.
+    if (self.headerView.trackingScrollView != nil) {
+      // Reset the additional safe area insets if we are now tracking a scroll view.
+      if (topLayoutGuideViewController != nil) {
+        UIEdgeInsets additionalSafeAreaInsets =
+            topLayoutGuideViewController.additionalSafeAreaInsets;
+        additionalSafeAreaInsets.top = 0;
+        topLayoutGuideViewController.additionalSafeAreaInsets = additionalSafeAreaInsets;
+      }
+
+    } else if (topLayoutGuideViewController != nil) {
       UIEdgeInsets additionalSafeAreaInsets = topLayoutGuideViewController.additionalSafeAreaInsets;
       if (self.headerView.statusBarHintCanOverlapHeader) {
         // safe area insets will likely already take into account the top safe area inset, so let's
