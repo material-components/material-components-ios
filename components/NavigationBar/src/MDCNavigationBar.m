@@ -153,6 +153,7 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
 - (void)commonMDCNavigationBarInit {
   _observedNavigationItemLock = [[NSObject alloc] init];
   _titleFont = [MDCTypography titleFont];
+  _useFlexibleTopBottomInsets = YES;
 
   _titleLabel = [[UILabel alloc] init];
   _titleLabel.font = _titleFont;
@@ -343,7 +344,10 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
   _trailingButtonBar.frame = trailingButtonBarFrame;
 
   UIEdgeInsets textInsets = [self usePadInsets] ? kTextPadInsets : kTextInsets;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   if (self.useFlexibleTopBottomInsets) {
+#pragma clang diagnostic pop
     textInsets.top = 0;
     textInsets.bottom = 0;
   }
@@ -390,7 +394,10 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
   }
 
   CGRect titleViewFrame = textFrame;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   if (self.useFlexibleTopBottomInsets) {
+#pragma clang diagnostic pop
     // No insets for the titleView, and a height that is the same as the button bars. Clients
     // can vertically center their titleView subviews to align them with buttons.
     titleViewFrame.origin.y = 0;
@@ -423,8 +430,11 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
   CGFloat maxHeight =
       [self usePadInsets] ? kNavigationBarPadDefaultHeight : kNavigationBarDefaultHeight;
   CGFloat minHeight = kNavigationBarMinHeight;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   CGFloat height =
       self.useFlexibleTopBottomInsets ? MIN(MAX(size.height, minHeight), maxHeight) : maxHeight;
+#pragma clang diagnostic pop
   return CGSizeMake(size.width, height);
 }
 
@@ -546,8 +556,11 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
       // the header regardless of the header's height.
       CGFloat maxHeight =
           [self usePadInsets] ? kNavigationBarPadDefaultHeight : kNavigationBarDefaultHeight;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
       CGFloat height =
           self.useFlexibleTopBottomInsets ? MIN(CGRectGetHeight(bounds), maxHeight) : maxHeight;
+#pragma clang diagnostic pop
       CGFloat navigationBarCenteredY = MDCFloor((height - CGRectGetHeight(frame)) / 2);
       navigationBarCenteredY = MAX(0, navigationBarCenteredY);
       return CGRectMake(CGRectGetMinX(frame), navigationBarCenteredY, CGRectGetWidth(frame),
@@ -571,7 +584,10 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
       MDCButtonBar *leftButtonBar = self.leadingButtonBar;
       MDCButtonBar *rightButtonBar = self.trailingButtonBar;
       UIEdgeInsets textInsets = [self usePadInsets] ? kTextPadInsets : kTextInsets;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
       if (self.useFlexibleTopBottomInsets) {
+#pragma clang diagnostic pop
         textInsets.top = 0;
         textInsets.bottom = 0;
       }
