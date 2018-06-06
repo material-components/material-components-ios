@@ -89,11 +89,12 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   XCTAssertEqual(alignment, MDCNavigationBarTitleAlignmentCenter);
 }
 
-- (void)testTitleViewIsCenteredWithNoButtons {
+- (void)testTitleViewIsCenteredWithNoButtonsAndFillBehavior {
   // Given
   MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
   navBar.frame = CGRectMake(0, 0, 300, 25);
   navBar.titleView = [[UIView alloc] init];
+  navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorFill;
 
   // When
   [navBar layoutIfNeeded];
@@ -103,11 +104,12 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
                              kEpsilonAccuracy);
 }
 
-- (void)testTitleViewShiftedRightWithLeadingButtons {
+- (void)testTitleViewShiftedRightWithLeadingButtonsAndFillBehavior {
   // Given
   MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
   navBar.frame = CGRectMake(0, 0, 300, 25);
   navBar.titleView = [[UIView alloc] init];
+  navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorFill;
   navBar.leadingBarButtonItems = @[[[UIBarButtonItem alloc] initWithTitle:@"Button"
                                                                     style:UIBarButtonItemStylePlain
                                                                    target:nil action:nil]];
@@ -119,11 +121,12 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   XCTAssertGreaterThan(navBar.titleView.center.x, CGRectGetMidX(navBar.bounds));
 }
 
-- (void)testTitleViewShiftedLeftWithTrailingButtons {
+- (void)testTitleViewShiftedLeftWithTrailingButtonsAndFillBehavior {
   // Given
   MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
   navBar.frame = CGRectMake(0, 0, 300, 25);
   navBar.titleView = [[UIView alloc] init];
+  navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorFill;
   navBar.trailingBarButtonItems = @[[[UIBarButtonItem alloc] initWithTitle:@"Button"
                                                                      style:UIBarButtonItemStylePlain
                                                                     target:nil action:nil]];
