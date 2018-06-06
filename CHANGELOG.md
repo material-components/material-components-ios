@@ -1,3 +1,141 @@
+# #develop#
+
+## Breaking changes
+
+## New deprecations
+
+## New features
+
+## API changes
+
+### AppBar
+
+#### MDCAppBarContainerViewController
+
+*new* property: `topLayoutGuideAdjustmentEnabled` in `MDCAppBarContainerViewController`
+
+### NavigationBar
+
+#### MDCNavigationBar
+
+*new* property: `titleViewLayoutBehavior` in `MDCNavigationBar`
+
+*modified* property: `useFlexibleTopBottomInsets` in `MDCNavigationBar`
+
+| Type of change: | Deprecation message |
+|---|---|
+| From: | `` |
+| To: | `Implement proper vertical alignment with the default YES behavior.` |
+
+*modified* property: `useFlexibleTopBottomInsets` in `MDCNavigationBar`
+
+| Type of change: | Deprecation |
+|---|---|
+| From: | `0` |
+| To: | `1` |
+
+#### MDCNavigationBarTitleViewLayoutBehavior
+
+*new* enum value: `MDCNavigationBarTitleViewLayoutBehaviorFill` in `MDCNavigationBarTitleViewLayoutBehavior`
+
+*new* typedef: `MDCNavigationBarTitleViewLayoutBehavior`
+
+*new* enum value: `MDCNavigationBarTitleViewLayoutBehaviorCenter` in `MDCNavigationBarTitleViewLayoutBehavior`
+
+*new* enum: `MDCNavigationBarTitleViewLayoutBehavior`
+
+### Typography
+
+#### MDCFontIsSimplyEqualToFont
+
+*new* sourcekitten.source.lang.objc.decl.function: `MDCFontIsSimplyEqualToFont`
+
+## Component changes
+
+### AppBar
+
+#### Changes
+
+* [Add a wrapped table view controller example. (#4336)](https://github.com/material-components/material-components-ios/commit/0e792aacf65d2aaea573437b98f308d998514fb1) (featherless)
+* [Add example of an AppBar in a presented vc (#4351)](https://github.com/material-components/material-components-ios/commit/56bdce0b32bf5f12adc908647e5bf422c963cb45) (John Detloff)
+* [Fix VoiceOver escape gesture bug. (#4360)](https://github.com/material-components/material-components-ios/commit/944a0947e2661d4c09aae7dac17f58ad7651ea0f) (featherless)
+* [Implement topLayoutGuideAdjustmentEnabled on the app bar container. (#4370)](https://github.com/material-components/material-components-ios/commit/9707aec0fd0bb5e0fe667439d6246e0d6e5824ce) (featherless)
+* [[NavigationBar] Deprecate useFlexibleTopBottomInsets (#4358)](https://github.com/material-components/material-components-ios/commit/b9086c94c48f7360e9bb4319c873c2f1e80333a9) (Ali Rabbani)
+
+### Buttons
+
+#### Changes
+
+* [Adding Accessibility labels to README and fab example. (#4330)](https://github.com/material-components/material-components-ios/commit/5ec8aa09805051b241a569715d4808ae395db9bf) (Randall Li)
+
+### TextFields
+
+#### Changes
+
+* [Add placeholderLabel accessibilityLabel to textField accessibilityValue (#4319)](https://github.com/material-components/material-components-ios/commit/9bbaaaad6e8f75e0ea93ce3c003c65203c23c654) (Andrew Overton)
+* [Prevents functionally equivalent fonts from causing rendering jumps (#4344)](https://github.com/material-components/material-components-ios/commit/de44925eb609f1a06c6529fbd06ba7d5f80dcfa9) (Will Larche)
+* [Tweak accessibility notification to prevent VoiceOver from cutting off (#4364)](https://github.com/material-components/material-components-ios/commit/0b5706dadd4837ddf8d4da45a73ff9a5203c76ee) (Andrew Overton)
+* [[Documentation] Update TextField README.md (#4352)](https://github.com/material-components/material-components-ios/commit/fec408500a0891a0218f5ae027b6fdaed4fffa99) (ianegordon)
+
+### Snackbar
+
+#### Changes
+
+* [Fix Earl Grey test (#4349)](https://github.com/material-components/material-components-ios/commit/d9d4b5ca616f847c33649037e04ff63f34c31dbb) (Robert Moore)
+
+### Slider
+
+#### Changes
+
+* [Fix accessibilityIncrement for discrete sliders (#4327)](https://github.com/material-components/material-components-ios/commit/e965234aaf3893452a9b363f9e1dc5cb19eebc41) (John Detloff)
+* [Notify VoiceOver of MDCSlider value changes (#4350)](https://github.com/material-components/material-components-ios/commit/ede606f704a8f62e012c104e629ee0fbdd87c179) (Andrew Overton)
+
+### NavigationBar
+
+#### Changes
+
+* [Add a titleViewLayoutBehavior API. (#4371)](https://github.com/material-components/material-components-ios/commit/c7ee146de25c67300816ca10dff5273b173e00e6) (featherless)
+* [Deprecate useFlexibleTopBottomInsets (#4358)](https://github.com/material-components/material-components-ios/commit/b9086c94c48f7360e9bb4319c873c2f1e80333a9) (Ali Rabbani)
+
+### BottomSheet
+
+#### Changes
+
+* [Add a short bottom sheet example to MDCCatalog (#4318)](https://github.com/material-components/material-components-ios/commit/18b23ed0e623428dbc49698369b046479975f49c) (featherless)
+
+### Typography
+
+#### Changes
+
+* [[TextFields] Prevents functionally equivalent fonts from causing rendering jumps (#4344)](https://github.com/material-components/material-components-ios/commit/de44925eb609f1a06c6529fbd06ba7d5f80dcfa9) (Will Larche)
+
+### PageControl
+
+#### Changes
+
+* [Make MDCPageControl minimum height adhere to accessibility requirements (#4359)](https://github.com/material-components/material-components-ios/commit/8c3063b2ed58042e49d7e2648e106967bbd01112) (Andrew Overton)
+
+### Collections
+
+#### Changes
+
+* [Remove Earl Grey tests (#4348)](https://github.com/material-components/material-components-ios/commit/acd639cf4d8ece7c8a7ca436889a57c4c50a4e31) (Robert Moore)
+
+### HeaderStackView
+
+#### Changes
+
+* [Change the layout behavior in MDCHeaderStack view to accommodate a topBar with flexible height. (#4355)](https://github.com/material-components/material-components-ios/commit/912bdcb9128e589c99429082d7687391d26d03c3) (Ali Rabbani)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Fix additionalSafeAreaInsets bug when topLayoutGuideAdjustmentEnabled is enabled. (#4354)](https://github.com/material-components/material-components-ios/commit/dc903f95ba532d3c6ffad7677f9468f7be9fb232) (featherless)
+* [Only extract the top layout guide if the view has loaded. (#4357)](https://github.com/material-components/material-components-ios/commit/b663fcfa7004d545aa19fbe12f2c3f972e8c19f8) (featherless)
+
+---
+
 # 55.3.0
 
 This minor release includes added customization to `MDCDialogPresentationController`,  better topLayoutGuide support for `MDCFlexibleHeader`, doc improvements and other small bug fixes.
