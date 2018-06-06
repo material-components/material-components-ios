@@ -47,6 +47,7 @@
   tableViewController.title = @"Wrapped table view";
   self.appBarContainerViewController =
       [[MDCAppBarContainerViewController alloc] initWithContentViewController:tableViewController];
+  self.appBarContainerViewController.topLayoutGuideAdjustmentEnabled = YES;
 
   tableViewController.tableView.dataSource = self;
   tableViewController.tableView.delegate =
