@@ -23,6 +23,7 @@
  expand or contract the header file space without consumer modifications.
  */
 
+#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
 /*
