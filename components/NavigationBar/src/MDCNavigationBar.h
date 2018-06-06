@@ -242,24 +242,6 @@ IB_DESIGNABLE
 #pragma mark - To be deprecated
 
 /**
- Makes the navigation bar use flexible top and bottom insets for buttons and titles, by vertically
- positioning them based on the height of the navigation bar. Default insets do not allow the height
- of the navigation bar to be set to anything less than 56.0f, so this property has to be set to YES
- in that case.
- 
- When this is set to YES, the custom titleView is aligned with the button bars and has the same
- height as them, regardless of the height of the navigation bar. This allows vertically aligning the
- content of the titleView with the buttons, by vertically centering the content of the titleView.
- 
- Default is NO.
- 
- NOTE: This property will be deprecated and the YES behavior will replace the current behavior.
- All clients who rely on the titleView should set this to YES and implement proper alignment before
- deprecation.
- */
-@property(nonatomic) BOOL useFlexibleTopBottomInsets;
-
-/**
  Display attributes for the titleView's title text.
 
  Font attribute will take precedence over titleFont property.
@@ -280,5 +262,24 @@ IB_DESIGNABLE
 
 /** The text alignment of the navigation bar title. Defaults to NSTextAlignmentLeft. */
 @property(nonatomic) NSTextAlignment textAlignment __deprecated_msg("Use titleAlignment instead.");
+
+/**
+ Makes the navigation bar use flexible top and bottom insets for buttons and titles, by vertically
+ positioning them based on the height of the navigation bar.
+
+ When set to NO, vertical insets do not allow the height of the navigation bar to be set to anything
+ less than 56.0f, and titleView occupies the entire vertical space in MDCNavigationBar, regardless
+ of the height and position of button bars.
+
+ When set to YES, the titleView is aligned with the button bars and has the same height as them,
+ regardless of the height of the navigation bar. This allows vertically aligning the content of the
+ titleView with the buttons, by vertically centering the content of the titleView.
+
+ Default is YES.
+
+ NOTE: This property will be removed soon.
+ */
+@property(nonatomic) BOOL useFlexibleTopBottomInsets
+    __deprecated_msg("Implement proper vertical alignment with the default YES behavior.");
 
 @end
