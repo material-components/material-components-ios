@@ -39,28 +39,27 @@ class ButtonBarObservationTests: XCTestCase {
   // MARK: Initial state
 
   func testInitialTextButtonStateMatchesItemState() {
+    // Given
     let item = UIBarButtonItem(title: "LEFT", style: .plain, target: nil, action: nil)
     buttonBar.items = [item]
     buttonBar.layoutSubviews()
 
-    do {
-      let titles = buttonBar.subviews.flatMap { $0 as? MDCButton }.map { $0.title(for: .normal) }
-      XCTAssertEqual(titles, [item.title])
-    }
+    // Then
+    let titles = buttonBar.subviews.flatMap { $0 as? MDCButton }.flatMap { $0.title(for: .normal) }
+    XCTAssertEqual(titles, [item.title!])
   }
 
   func testInitialImageButtonStateMatchesItemState() {
+    // Given
     let image1 = createImage(colored: .red)
-
     let item = UIBarButtonItem(image: image1, style: .plain, target: nil, action: nil)
     buttonBar.items = [item]
     buttonBar.layoutSubviews()
 
-    do {
-      let images =
-          buttonBar.subviews.flatMap { $0 as? MDCButton }.flatMap { $0.image(for: .normal) }
-      XCTAssertEqual(images, [item.image!])
-    }
+    // Then
+    let images =
+        buttonBar.subviews.flatMap { $0 as? MDCButton }.flatMap { $0.image(for: .normal) }
+    XCTAssertEqual(images, [item.image!])
   }
 
   func testInitialGeneralStateMatchesItemState() {
