@@ -827,7 +827,6 @@ Pod::Spec.new do |mdc|
     component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
 
     component.dependency "MaterialComponents/private/Application"
-    component.dependency "MaterialComponents/private/Math"
   end
 
   mdc.subspec "schemes" do |scheme_spec|

@@ -134,7 +134,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     // This is the first call to the .textInput property. On MDCMultilineTextField, .textView is a
     // failsafe, lazy var. It will create a .textView instance if there wasn't one on the ivar.
     _textInput.font = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody1];
-    // TODO: (#4331) This needs to be converted to the new text scheme.
 
     // Initialize elements of UI
     [self setupPlaceholderLabel];
@@ -868,7 +867,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 - (void)updateFontsForDynamicType {
   if (self.mdc_adjustsFontForContentSizeCategory) {
     UIFont *textFont = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
-    // TODO: (#4331) This needs to be converted to the new text scheme.
     self.textInput.font = textFont;
     self.leadingUnderlineLabel.font = textFont;
     self.trailingUnderlineLabel.font = textFont;
