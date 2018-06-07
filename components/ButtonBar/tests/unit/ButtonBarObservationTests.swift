@@ -36,6 +36,8 @@ class ButtonBarObservationTests: XCTestCase {
     return image!
   }
 
+  // MARK: Initial state
+
   func testInitialTextButtonStateMatchesItemState() {
     let item = UIBarButtonItem(title: "LEFT", style: .plain, target: nil, action: nil)
     buttonBar.items = [item]
@@ -73,35 +75,7 @@ class ButtonBarObservationTests: XCTestCase {
     XCTAssertEqual(enabled, [item.isEnabled])
   }
 
-  func testTitleChangesAreObserved() {
-    // Given
-    let item = UIBarButtonItem(title: "LEFT", style: .plain, target: nil, action: nil)
-    buttonBar.items = [item]
-    buttonBar.layoutSubviews()
-
-    // When
-    item.title = "NEW TITLE"
-
-    // Then
-    let titles = buttonBar.subviews.flatMap { $0 as? MDCButton }.flatMap { $0.title(for: .normal) }
-    XCTAssertEqual(titles, [item.title!])
-  }
-
-  func testImageChangesAreObserved() {
-    // Given
-    let image1 = createImage(colored: .red)
-    let item = UIBarButtonItem(image: image1, style: .plain, target: nil, action: nil)
-    buttonBar.items = [item]
-    buttonBar.layoutSubviews()
-
-    // When
-    item.image = createImage(colored: .blue)
-
-    // Then
-    let images =
-        buttonBar.subviews.flatMap { $0 as? MDCButton }.flatMap { $0.image(for: .normal) }
-    XCTAssertEqual(images, [item.image!])
-  }
+  // MARK: KVO observation
 
   func testEnabledChangesAreObserved() {
     // Given
@@ -117,4 +91,35 @@ class ButtonBarObservationTests: XCTestCase {
     let enabled = buttonBar.subviews.flatMap { $0 as? MDCButton }.map { $0.isEnabled }
     XCTAssertEqual(enabled, [item.isEnabled])
   }
+
+  func testImageChangesAreObserved() {
+    // Given
+    let image1 = createImage(colored: .red)
+    let item = UIBarButtonItem(image: image1, style: .plain, target: nil, action: nil)
+    buttonBar.items = [item]
+    buttonBar.layoutSubviews()
+
+    // When
+    item.image = createImage(colored: .blue)
+
+    // Then
+    let images =
+      buttonBar.subviews.flatMap { $0 as? MDCButton }.flatMap { $0.image(for: .normal) }
+    XCTAssertEqual(images, [item.image!])
+  }
+
+  func testTitleChangesAreObserved() {
+    // Given
+    let item = UIBarButtonItem(title: "LEFT", style: .plain, target: nil, action: nil)
+    buttonBar.items = [item]
+    buttonBar.layoutSubviews()
+
+    // When
+    item.title = "NEW TITLE"
+
+    // Then
+    let titles = buttonBar.subviews.flatMap { $0 as? MDCButton }.flatMap { $0.title(for: .normal) }
+    XCTAssertEqual(titles, [item.title!])
+  }
+
 }
