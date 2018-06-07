@@ -53,16 +53,18 @@ class ButtonBarObservationTests: XCTestCase {
     buttonBar.layoutSubviews()
 
     do {
-      let images = buttonBar.subviews.flatMap { $0 as? MDCButton }.map { $0.image(for: .normal) }
-      XCTAssertEqual(images, [item.image])
+      let images =
+          buttonBar.subviews.flatMap { $0 as? MDCButton }.flatMap { $0.image(for: .normal) }
+      XCTAssertEqual(images, [item.image!])
     }
 
     // Change the value post-assignment
     item.image = createImage(colored: .blue)
 
     do {
-      let images = buttonBar.subviews.flatMap { $0 as? MDCButton }.map { $0.image(for: .normal) }
-      XCTAssertEqual(images, [item.image])
+      let images =
+          buttonBar.subviews.flatMap { $0 as? MDCButton }.flatMap { $0.image(for: .normal) }
+      XCTAssertEqual(images, [item.image!])
     }
   }
 
