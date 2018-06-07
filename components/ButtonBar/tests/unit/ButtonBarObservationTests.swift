@@ -39,8 +39,10 @@ class ButtonBarObservationTests: XCTestCase {
   // MARK: Initial state
 
   func testInitialTextButtonStateMatchesItemState() {
-    // When
+    // Given
     let item = UIBarButtonItem(title: "LEFT", style: .plain, target: nil, action: nil)
+
+    // When
     buttonBar.items = [item]
     buttonBar.layoutSubviews()
 
@@ -50,9 +52,11 @@ class ButtonBarObservationTests: XCTestCase {
   }
 
   func testInitialImageButtonStateMatchesItemState() {
-    // When
+    // Given
     let image1 = createImage(colored: .red)
     let item = UIBarButtonItem(image: image1, style: .plain, target: nil, action: nil)
+
+    // When
     buttonBar.items = [item]
     buttonBar.layoutSubviews()
 
@@ -63,8 +67,10 @@ class ButtonBarObservationTests: XCTestCase {
   }
 
   func testInitialGeneralStateMatchesItemState() {
-    // When
+    // Given
     let item = UIBarButtonItem(title: "Title", style: .plain, target: nil, action: nil)
+
+    // When
     item.isEnabled = true
     buttonBar.items = [item]
     buttonBar.layoutSubviews()
