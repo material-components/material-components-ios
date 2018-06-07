@@ -71,16 +71,102 @@ class ButtonBarObservationTests: XCTestCase {
     let item = UIBarButtonItem(title: "Title", style: .plain, target: nil, action: nil)
 
     // When
+    item.accessibilityHint = "Hint"
+    item.accessibilityIdentifier = "Identifier"
+    item.accessibilityLabel = "Label"
+    item.accessibilityValue = "Value"
     item.isEnabled = true
+    item.tag = 100
+    item.tintColor = .blue
     buttonBar.items = [item]
     buttonBar.layoutSubviews()
 
     // Then
+    let accessibilityHints =
+        buttonBar.subviews.flatMap { $0 as? MDCButton }.flatMap { $0.accessibilityHint }
+    XCTAssertEqual(accessibilityHints, [item.accessibilityHint!])
+    let accessibilityIdentifiers =
+        buttonBar.subviews.flatMap { $0 as? MDCButton }.flatMap { $0.accessibilityIdentifier }
+    XCTAssertEqual(accessibilityIdentifiers, [item.accessibilityIdentifier!])
+    let accessibilityLabels =
+        buttonBar.subviews.flatMap { $0 as? MDCButton }.flatMap { $0.accessibilityLabel }
+    XCTAssertEqual(accessibilityLabels, [item.accessibilityLabel!])
+    let accessibilityValues =
+        buttonBar.subviews.flatMap { $0 as? MDCButton }.flatMap { $0.accessibilityValue }
+    XCTAssertEqual(accessibilityValues, [item.accessibilityValue!])
     let enabled = buttonBar.subviews.flatMap { $0 as? MDCButton }.map { $0.isEnabled }
     XCTAssertEqual(enabled, [item.isEnabled])
+    let tags = buttonBar.subviews.flatMap { $0 as? MDCButton }.map { $0.tag }
+    XCTAssertEqual(tags, [item.tag])
+    let tintColors = buttonBar.subviews.flatMap { $0 as? MDCButton }.flatMap { $0.tintColor }
+    XCTAssertEqual(tintColors, [item.tintColor!])
   }
 
   // MARK: KVO observation
+
+  func testAccessibilityHintChangesAreObserved() {
+    // Given
+    let item = UIBarButtonItem(title: "Title", style: .plain, target: nil, action: nil)
+    item.accessibilityHint = "Hint"
+    buttonBar.items = [item]
+    buttonBar.layoutSubviews()
+
+    // When
+    item.accessibilityHint = "Other hint"
+
+    // Then
+    let accessibilityLabels =
+        buttonBar.subviews.flatMap { $0 as? MDCButton }.flatMap { $0.accessibilityHint }
+    XCTAssertEqual(accessibilityLabels, [item.accessibilityHint!])
+  }
+
+  func testAccessibilityIdentifierChangesAreObserved() {
+    // Given
+    let item = UIBarButtonItem(title: "Title", style: .plain, target: nil, action: nil)
+    item.accessibilityIdentifier = "Identifier"
+    buttonBar.items = [item]
+    buttonBar.layoutSubviews()
+
+    // When
+    item.accessibilityIdentifier = "Other identifier"
+
+    // Then
+    let accessibilityIdentifiers =
+        buttonBar.subviews.flatMap { $0 as? MDCButton }.flatMap { $0.accessibilityIdentifier }
+    XCTAssertEqual(accessibilityIdentifiers, [item.accessibilityIdentifier!])
+  }
+
+  func testAccessibilityLabelChangesAreObserved() {
+    // Given
+    let item = UIBarButtonItem(title: "Title", style: .plain, target: nil, action: nil)
+    item.accessibilityLabel = "Label"
+    buttonBar.items = [item]
+    buttonBar.layoutSubviews()
+
+    // When
+    item.accessibilityLabel = "Other label"
+
+    // Then
+    let accessibilityLabels =
+        buttonBar.subviews.flatMap { $0 as? MDCButton }.flatMap { $0.accessibilityLabel }
+    XCTAssertEqual(accessibilityLabels, [item.accessibilityLabel!])
+  }
+
+  func testAccessibilityValueChangesAreObserved() {
+    // Given
+    let item = UIBarButtonItem(title: "Title", style: .plain, target: nil, action: nil)
+    item.accessibilityValue = "Value"
+    buttonBar.items = [item]
+    buttonBar.layoutSubviews()
+
+    // When
+    item.accessibilityValue = "Other value"
+
+    // Then
+    let accessibilityValues =
+        buttonBar.subviews.flatMap { $0 as? MDCButton }.flatMap { $0.accessibilityValue }
+    XCTAssertEqual(accessibilityValues, [item.accessibilityValue!])
+  }
 
   func testEnabledChangesAreObserved() {
     // Given
@@ -111,6 +197,59 @@ class ButtonBarObservationTests: XCTestCase {
     let images =
       buttonBar.subviews.flatMap { $0 as? MDCButton }.flatMap { $0.image(for: .normal) }
     XCTAssertEqual(images, [item.image!])
+  }
+
+  func testTagChangesAreObserved() {
+    // Given
+    let item = UIBarButtonItem(title: "Title", style: .plain, target: nil, action: nil)
+    item.tag = 100
+    buttonBar.items = [item]
+    buttonBar.layoutSubviews()
+
+    // When
+    item.tag = 50
+
+    // Then
+    let tags = buttonBar.subviews.flatMap { $0 as? MDCButton }.map { $0.tag }
+    XCTAssertEqual(tags, [item.tag])
+  }
+
+  func testTintColorChangesAreObserved() {
+    // Given
+    let item = UIBarButtonItem(title: "Title", style: .plain, target: nil, action: nil)
+    item.tintColor = .blue
+    buttonBar.items = [item]
+    buttonBar.layoutSubviews()
+
+    // When
+    item.tintColor = .red
+
+    // Then
+    let tintColors = buttonBar.subviews.flatMap { $0 as? MDCButton }.flatMap { $0.tintColor }
+    XCTAssertEqual(tintColors, [item.tintColor!])
+
+    // Verify that the tint color reverts to the default
+    item.tintColor = nil
+
+    do {
+      let tintColors = buttonBar.subviews.flatMap { $0 as? MDCButton }.flatMap { $0.tintColor }
+      XCTAssertEqual(tintColors, [buttonBar.tintColor])
+    }
+  }
+
+  func testTintColorChangeToNilIsObservedAndReset() {
+    // Given
+    let item = UIBarButtonItem(title: "Title", style: .plain, target: nil, action: nil)
+    item.tintColor = .blue
+    buttonBar.items = [item]
+    buttonBar.layoutSubviews()
+
+    // When
+    item.tintColor = nil
+
+    // Then
+    let tintColors = buttonBar.subviews.flatMap { $0 as? MDCButton }.flatMap { $0.tintColor }
+    XCTAssertEqual(tintColors, [buttonBar.tintColor])
   }
 
   func testTitleChangesAreObserved() {
