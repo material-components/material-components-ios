@@ -83,8 +83,8 @@ class ButtonBarObservationTests: XCTestCase {
     item.title = "NEW TITLE"
 
     // Then
-    let titles = buttonBar.subviews.flatMap { $0 as? MDCButton }.map { $0.title(for: .normal) }
-    XCTAssertEqual(titles, [item.title])
+    let titles = buttonBar.subviews.flatMap { $0 as? MDCButton }.flatMap { $0.title(for: .normal) }
+    XCTAssertEqual(titles, [item.title!])
   }
 
   func testImageChangesAreObserved() {
