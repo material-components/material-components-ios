@@ -55,6 +55,19 @@
   if (!self.topLayoutGuideAdjustmentEnabled) {
     [_appBar.headerViewController updateTopLayoutGuide];
   }
+
+  void (^preIOS11Behavior)(void) = ^(void) {
+    [self.appBar containerViewControllerSafeAreaInsetsDidChange:self];
+  };
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    // Do nothing
+  } else {
+    preIOS11Behavior();
+  }
+#else
+  preIOS11Behavior();
+#endif
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -75,6 +88,12 @@
 
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
   return self.contentViewController.preferredInterfaceOrientationForPresentation;
+}
+
+- (void)viewSafeAreaInsetsDidChange {
+  [super viewSafeAreaInsetsDidChange];
+
+  [self.appBar containerViewControllerSafeAreaInsetsDidChange:self];
 }
 
 #pragma mark - Enabling top layout guide adjustment behavior

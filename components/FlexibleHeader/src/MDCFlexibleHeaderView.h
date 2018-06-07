@@ -376,6 +376,8 @@ IB_DESIGNABLE
  */
 @property(nonatomic) BOOL statusBarHintCanOverlapHeader;
 
+- (void)containerViewControllerSafeAreaInsetsDidChange:(UIViewController *)containerViewController;
+
 @property(nonatomic) float visibleShadowOpacity;  ///< The visible shadow opacity. Default: 0.4
 
 #pragma mark Scroll View Tracking

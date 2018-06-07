@@ -260,6 +260,24 @@ class MDCNodeListViewController: CBCNodeListViewController {
     return appBar.headerViewController
   }
 
+  override func viewWillLayoutSubviews() {
+    super.viewWillLayoutSubviews()
+
+    if #available(iOS 11.0, *) {
+      // Do nothing on iOS 11 devices - we rely on viewSafeAreaInsetsDidChange instead.
+    } else {
+      appBar.containerViewControllerSafeAreaInsetsDidChange(self)
+    }
+  }
+
+  override func viewSafeAreaInsetsDidChange() {
+    if #available(iOS 11.0, *) {
+      super.viewSafeAreaInsetsDidChange()
+    }
+
+    appBar.containerViewControllerSafeAreaInsetsDidChange(self)
+  }
+
   func themeDidChange(notification: NSNotification) {
     guard let colorScheme = notification.userInfo?[AppTheme.globalThemeNotificationColorSchemeKey]
           as? MDCColorScheming else {

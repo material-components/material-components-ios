@@ -75,4 +75,6 @@
  */
 @property(nonatomic, strong, nonnull, readonly) MDCHeaderStackView *headerStackView;
 
+- (void)containerViewControllerSafeAreaInsetsDidChange:(UIViewController *)containerViewController;
+
 @end

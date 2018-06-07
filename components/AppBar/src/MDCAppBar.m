@@ -86,6 +86,8 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
 @property(nonatomic, strong) MDCHeaderStackView *headerStackView;
 @property(nonatomic, strong) MDCNavigationBar *navigationBar;
 
+- (void)containerViewControllerSafeAreaInsetsDidChange:(UIViewController *)containerViewController;
+
 @end
 
 @implementation MDCAppBar
@@ -182,6 +184,12 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
   [fhvc didMoveToParentViewController:fhvc.parentViewController];
 
   [self.navigationBar observeNavigationItem:fhvc.parentViewController.navigationItem];
+}
+
+- (void)containerViewControllerSafeAreaInsetsDidChange:(UIViewController *)containerViewController {
+  [_headerViewController.headerView
+      containerViewControllerSafeAreaInsetsDidChange:containerViewController];
+  [_appBarController containerViewControllerSafeAreaInsetsDidChange:containerViewController];
 }
 
 #pragma mark - NSSecureCoding
@@ -319,14 +327,13 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
                             views:@{kBarStackKey : self.headerStackView}];
   [self.view addConstraints:horizontalConstraints];
 
-  CGFloat topMargin = MDCDeviceTopSafeAreaInset();
   _verticalConstraint = [NSLayoutConstraint constraintWithItem:self.headerStackView
                                                      attribute:NSLayoutAttributeTop
                                                      relatedBy:NSLayoutRelationEqual
                                                         toItem:self.view
                                                      attribute:NSLayoutAttributeTop
                                                     multiplier:1
-                                                      constant:topMargin];
+                                                      constant:0];
   _verticalConstraint.active = YES;
 
   [NSLayoutConstraint constraintWithItem:self.headerStackView
@@ -341,27 +348,39 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
 
+  if (![self shouldConsiderSafeAreaInsetsInLayout]) {
+    _verticalConstraint.constant = 0;
+  }
+
   UIBarButtonItem *backBarButtonItem = [self backButtonItem];
   if (backBarButtonItem && !self.navigationBar.backItem) {
     self.navigationBar.backItem = backBarButtonItem;
   }
 }
 
-- (void)viewWillLayoutSubviews {
-  [super viewWillLayoutSubviews];
-
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-  if (@available(iOS 11.0, *)) {
-    // We only update the top inset on iOS 11 because previously we were not adjusting the header
-    // height to make it smaller when the status bar is hidden.
-    _verticalConstraint.constant = MDCDeviceTopSafeAreaInset();
-  }
-#endif
-}
-
 - (BOOL)accessibilityPerformEscape {
   [self dismissSelf];
   return YES;
+}
+
+- (BOOL)shouldConsiderSafeAreaInsetsInLayout {
+  return self.flexibleHeaderParentViewController.popoverPresentationController == nil;
+}
+
+- (void)containerViewControllerSafeAreaInsetsDidChange:(UIViewController *)containerViewController {
+  void (^preIOS11Behavior)(void) = ^(void) {
+    self->_verticalConstraint.constant = containerViewController.topLayoutGuide.length;
+  };
+
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    _verticalConstraint.constant = containerViewController.view.safeAreaInsets.top;
+  } else {
+    preIOS11Behavior();
+  }
+#else
+  preIOS11Behavior();
+#endif
 }
 
 #pragma mark User actions
