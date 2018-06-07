@@ -40,9 +40,15 @@ typedef NS_OPTIONS(NSUInteger, MDCButtonBarLayoutPosition) {
 
  This view will register KVO listeners on the provided button items for the following properties:
 
+ - accessibilityHint
+ - accessibilityIdentifier
+ - accessibilityLabel
+ - accessibilityValue
  - enabled
- - title
  - image
+ - tag
+ - tintColor
+ - title
 
  If any of the above properties change, the MDCButtonBar will immediately reflect the change
  in the visible UIButton instance.
