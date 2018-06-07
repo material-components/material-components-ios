@@ -52,6 +52,7 @@
   [super viewDidLoad];
 
   _appBar.headerViewController.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabled;
+  _appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = NO;
   [_appBar.headerViewController.headerView hideViewWhenShifted:_appBar.headerStackView];
 
   _appBar.navigationBar.useFlexibleTopBottomInsets = YES;
@@ -87,6 +88,12 @@
 
 - (CGSize)preferredContentSize {
   return CGSizeMake(300, 300);
+}
+
+- (void)viewSafeAreaInsetsDidChange {
+  [super viewSafeAreaInsetsDidChange];
+
+  [_appBar containerViewControllerSafeAreaInsetsDidChange:self];
 }
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
@@ -152,7 +159,6 @@
 
 @interface AppBarPresentedExample : UIViewController
 
-@property(nonatomic, strong) PresentedDemoViewController *demoViewController;
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 
@@ -164,10 +170,6 @@
   [super viewDidLoad];
 
   self.view.backgroundColor = [UIColor colorWithWhite:0.95f alpha:1];
-
-  self.demoViewController = [[PresentedDemoViewController alloc] init];
-  self.demoViewController.colorScheme = self.colorScheme;
-  self.demoViewController.typographyScheme = self.typographyScheme;
 
   // Need to update the status bar style after applying the theme.
   [self setNeedsStatusBarAppearanceUpdate];
@@ -212,11 +214,19 @@
 }
 
 - (void)presentDemo {
-  self.demoViewController.modalPresentationStyle = UIModalPresentationPageSheet;
-  [self presentViewController:self.demoViewController animated:YES completion:nil];
+  PresentedDemoViewController *demoViewController = [[PresentedDemoViewController alloc] init];
+  demoViewController.colorScheme = self.colorScheme;
+  demoViewController.typographyScheme = self.typographyScheme;
+
+  demoViewController.modalPresentationStyle = UIModalPresentationPageSheet;
+  [self presentViewController:demoViewController animated:YES completion:nil];
 }
 
 - (void)presentDemoPopover {
+  PresentedDemoViewController *demoViewController = [[PresentedDemoViewController alloc] init];
+  demoViewController.colorScheme = self.colorScheme;
+  demoViewController.typographyScheme = self.typographyScheme;
+
   CGRect rect = CGRectMake(self.view.bounds.size.width / 2, self.topLayoutGuide.length, 1, 1);
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
@@ -224,11 +234,11 @@
   }
 #endif
   
-  self.demoViewController.modalPresentationStyle = UIModalPresentationPopover;
-  self.demoViewController.popoverPresentationController.sourceView = self.view;
-  self.demoViewController.popoverPresentationController.sourceRect = rect;
+  demoViewController.modalPresentationStyle = UIModalPresentationPopover;
+  demoViewController.popoverPresentationController.sourceView = self.view;
+  demoViewController.popoverPresentationController.sourceRect = rect;
   UIPopoverController *popoverController =
-      [[UIPopoverController alloc] initWithContentViewController:self.demoViewController];
+      [[UIPopoverController alloc] initWithContentViewController:demoViewController];
   [popoverController presentPopoverFromRect:rect
                                      inView:self.view
                    permittedArrowDirections:UIPopoverArrowDirectionAny

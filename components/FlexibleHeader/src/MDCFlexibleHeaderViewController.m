@@ -141,6 +141,10 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
 
+  if (self.parentViewController.popoverPresentationController) {
+    self.headerView.statusBarHintCanOverlapHeader = NO;
+  }
+
   if (self.topLayoutGuideAdjustmentEnabled) {
     [self updateTopLayoutGuide];
 
