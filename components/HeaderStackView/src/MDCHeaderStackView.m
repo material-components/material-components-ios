@@ -61,10 +61,10 @@ static NSString *const MDCHeaderStackViewBottomBarKey = @"MDCHeaderStackViewBott
 
   CGSize boundsSize = self.bounds.size;
 
-  CGSize topBarSize = [_topBar sizeThatFits:boundsSize];
   CGSize bottomBarSize = [_bottomBar sizeThatFits:boundsSize];
-
-  CGFloat remainingHeight = boundsSize.height - topBarSize.height - bottomBarSize.height;
+  CGFloat remainingHeight = boundsSize.height - bottomBarSize.height;
+  CGSize topBarSize = [_topBar sizeThatFits:CGSizeMake(boundsSize.width, remainingHeight)];
+  remainingHeight -= topBarSize.height;
 
   CGRect topBarFrame = CGRectMake(0, 0, topBarSize.width, topBarSize.height);
   CGRect bottomBarFrame = CGRectMake(0, 0, bottomBarSize.width, bottomBarSize.height);

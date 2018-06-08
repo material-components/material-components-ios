@@ -24,7 +24,7 @@
 /components/CollectionLayoutAttributes/ @ianegordon
 /components/Collections/          @ianegordon
 /components/Dialogs/              @ianegordon
-/components/FeatureHighlight/     @mohammadcazig
+# /components/FeatureHighlight/     No owner
 /components/FlexibleHeader/       @jverkoey
 /components/HeaderStackView/      @jverkoey
 /components/Ink/                  @yarneo
@@ -39,7 +39,7 @@
 /components/ShadowLayer/          @ianegordon
 /components/Slider/               @romoore
 /components/Snackbar/             @yarneo
-/components/Tabs/                 @mohammadcazig @brianjmoore
-/components/TextFields/           @mohammadcazig
+/components/Tabs/                 @brianjmoore
+# /components/TextFields/           No owner
 /components/Themes/               @featherless
-/components/Typography/           @randallli
+/components/Typography/           @ianegordon
