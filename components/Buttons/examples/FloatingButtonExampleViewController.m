@@ -19,6 +19,9 @@
 #import "MaterialButtons.h"
 #import "MaterialButtons+ColorThemer.h"
 
+NSString *kButtonLabel = @"Create";
+NSString *kMiniButtonLabel = @"Add";
+
 @interface FloatingButtonExampleViewController : UIViewController
 @property(nonatomic, strong) UILabel *iPadLabel;
 @property(nonatomic, strong) MDCFloatingButton *miniFloatingButton;
@@ -56,6 +59,7 @@
                                                                shape:MDCFloatingButtonShapeMini];
   self.miniFloatingButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.miniFloatingButton setImage:plusImage forState:UIControlStateNormal];
+  self.miniFloatingButton.accessibilityLabel = kMiniButtonLabel;
   [self.miniFloatingButton setMinimumSize:CGSizeMake(96, 40)
                                  forShape:MDCFloatingButtonShapeMini
                                    inMode:MDCFloatingButtonModeExpanded];
@@ -65,12 +69,14 @@
   self.defaultFloatingButton = [[MDCFloatingButton alloc] init];
   self.defaultFloatingButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.defaultFloatingButton setImage:plusImage forState:UIControlStateNormal];
+  self.defaultFloatingButton.accessibilityLabel = kButtonLabel;
   [MDCFloatingButtonColorThemer applySemanticColorScheme:self.colorScheme
                                                 toButton:self.defaultFloatingButton];
 
   self.largeIconFloatingButton = [[MDCFloatingButton alloc] init];
   self.largeIconFloatingButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.largeIconFloatingButton setImage:plusImage36 forState:UIControlStateNormal];
+  self.largeIconFloatingButton.accessibilityLabel = kButtonLabel;
   [self.largeIconFloatingButton setContentEdgeInsets:UIEdgeInsetsMake(-6, -6, -6, 0)
                                             forShape:MDCFloatingButtonShapeDefault
                                               inMode:MDCFloatingButtonModeExpanded];
@@ -133,11 +139,11 @@
 - (void)updateFloatingButtonsWhenSizeClassIsRegularRegular:(BOOL)isRegularRegular {
   if (isRegularRegular) {
     self.miniFloatingButton.mode = MDCFloatingButtonModeExpanded;
-    [self.miniFloatingButton setTitle:@"Add" forState:UIControlStateNormal];
+    [self.miniFloatingButton setTitle:kMiniButtonLabel forState:UIControlStateNormal];
     self.defaultFloatingButton.mode = MDCFloatingButtonModeExpanded;
-    [self.defaultFloatingButton setTitle:@"Create" forState:UIControlStateNormal];
+    [self.defaultFloatingButton setTitle:kButtonLabel forState:UIControlStateNormal];
     self.largeIconFloatingButton.mode = MDCFloatingButtonModeExpanded;
-    [self.largeIconFloatingButton setTitle:@"Create" forState:UIControlStateNormal];
+    [self.largeIconFloatingButton setTitle:kButtonLabel forState:UIControlStateNormal];
   } else {
     self.miniFloatingButton.mode = MDCFloatingButtonModeNormal;
     [self.miniFloatingButton setTitle:nil forState:UIControlStateNormal];

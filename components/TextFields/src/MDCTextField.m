@@ -713,12 +713,18 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 }
 
 - (NSString *)accessibilityValue {
-  if (self.leadingUnderlineLabel.text.length > 0) {
-    return [NSString stringWithFormat:@"%@ %@", [super accessibilityValue],
-                                      self.leadingUnderlineLabel.accessibilityLabel];
+  NSMutableArray *accessibilityStrings = [[NSMutableArray alloc] init];
+  if ([super accessibilityValue].length > 0) {
+    [accessibilityStrings addObject:[super accessibilityValue]];
   }
-
-  return [super accessibilityValue];
+  if (self.leadingUnderlineLabel.accessibilityLabel.length > 0) {
+    [accessibilityStrings addObject:self.leadingUnderlineLabel.accessibilityLabel];
+  }
+  if (self.placeholderLabel.accessibilityLabel.length > 0) {
+    [accessibilityStrings addObject:self.placeholderLabel.accessibilityLabel];
+  }
+  return accessibilityStrings.count > 0 ?
+      [accessibilityStrings componentsJoinedByString:@", "] : nil;
 }
 
 #pragma mark - Testing

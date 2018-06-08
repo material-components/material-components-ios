@@ -1069,6 +1069,27 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   XCTAssertTrue(self.slider.accessibilityTraits & UIAccessibilityTraitAdjustable);
 }
 
+- (void)testAccessibilityIncrementDiscreteSlider {
+  for (NSUInteger i = 2; i < 20; ++i) {
+    // Given
+    self.slider.numberOfDiscreteValues = i;
+    self.slider.minimumValue = 0;
+    self.slider.maximumValue = 1;
+    self.slider.value = self.slider.minimumValue;
+
+    // When
+    [self.slider accessibilityIncrement];
+
+    // Then
+    CGFloat stepValue = (self.slider.maximumValue - self.slider.minimumValue) /
+        (self.slider.numberOfDiscreteValues - 1);
+    CGFloat expectedValue = self.slider.minimumValue + stepValue;
+    XCTAssertEqualWithAccuracy(self.slider.value, expectedValue, 0.0001,
+                               @"A slider with (%lu) discrete values should have step of '%.3f'.",
+                               (unsigned long)self.slider.numberOfDiscreteValues, stepValue);
+  }
+}
+
 #pragma mark Private test helpers
 
 - (CGFloat)randomNumber {

@@ -35,3 +35,18 @@ elevation, Material Design ripples, and other stateful design APIs.
 - [Theming](theming.md)
 - [Color Theming](color-theming.md)
 - [Typography Theming](typography-theming.md)
+
+
+## Accessibility
+
+To help ensure your buttons are accessible to as many users as possible, please be sure to review
+the following recommendations:
+
+*  Set an appropriate
+[`accessibilityLabel`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619577-accessibilitylabel)
+value if your button does not have a title. This is often the case with `MDCFloatingButton`
+instances which typically only have an icon.
+
+```
+button.accessibilityLabel = @"Create";
+```

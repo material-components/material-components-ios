@@ -445,7 +445,11 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 - (void)accessibilityIncrement {
   if (self.enabled) {
     CGFloat range = self.maximumValue - self.minimumValue;
-    CGFloat newValue = self.value + kSliderAccessibilityIncrement * range;
+    CGFloat adjustmentAmount = kSliderAccessibilityIncrement * range;
+    if (self.numberOfDiscreteValues > 1) {
+      adjustmentAmount = range / (self.numberOfDiscreteValues - 1);
+    }
+    CGFloat newValue = self.value + adjustmentAmount;
     [_thumbTrack setValue:newValue
                      animated:NO
         animateThumbAfterMove:NO
@@ -459,7 +463,11 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 - (void)accessibilityDecrement {
   if (self.enabled) {
     CGFloat range = self.maximumValue - self.minimumValue;
-    CGFloat newValue = self.value - kSliderAccessibilityIncrement * range;
+    CGFloat adjustmentAmount = kSliderAccessibilityIncrement * range;
+    if (self.numberOfDiscreteValues > 1) {
+      adjustmentAmount = range / (self.numberOfDiscreteValues - 1);
+    }
+    CGFloat newValue = self.value - adjustmentAmount;
     [_thumbTrack setValue:newValue
                      animated:NO
         animateThumbAfterMove:NO
@@ -480,6 +488,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 
 - (void)thumbTrackValueChanged:(__unused MDCThumbTrack *)thumbTrack {
   [self sendActionsForControlEvents:UIControlEventValueChanged];
+  UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, self.accessibilityValue);
 }
 
 - (void)thumbTrackTouchDown:(__unused MDCThumbTrack *)thumbTrack {
