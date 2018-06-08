@@ -20,6 +20,7 @@ import CatalogByConvention
 
 import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialAppBar_ColorThemer
+import MaterialComponents.MaterialAppBar_TypographyThemer
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialButtons_ButtonThemer
 import MaterialComponents.MaterialCollections
@@ -35,8 +36,7 @@ class NodeViewTableViewDemoCell: UITableViewCell {
     textLabel!.font = MDCTypography.subheadFont()
     imageView!.image = UIImage(named: "Demo")
 
-    // Ensure subtitile text is proportionally less pronounced than the title label
-    let textLabelFont = textLabel!.font
+    // Ensure subtitle text is proportionally less pronounced than the title label
     detailTextLabel?.alpha = MDCTypography.captionFontOpacity()
     detailTextLabel?.font = MDCTypography.body2Font()
 
