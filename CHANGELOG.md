@@ -1,10 +1,34 @@
-# #develop#
+# 55.4.0
 
-## Breaking changes
+This minor release includes better layout guide and safe area insets support to `MDCAppBar`'s `MDCAppBarContainerViewController`, added customization to `MDCNavigationBar` title view layout, accessibility improvements and documentation.
 
 ## New deprecations
 
+`MDCNavigationBar`'s property `useFlexibleTopBottomInsets` has been defaulted to `YES` and has now been deprecated. It will eventually be removed and become the default behavior.
+
 ## New features
+
+AppBar now allows its wrapped content view controllers to make proper use of the top layout guide and additional safe area insets APIs. This is done using the newly added property to AppBar's `MDCAppBarContainerViewController` named `topLayoutGuideAdjustmentEnabled`.
+An example on how to implement this behavior:
+
+```objc
+MDCAppBarContainerViewController *appBarContainerViewController;
+UITableViewController *tableViewController =
+    [[UITableViewController alloc] initWithStyle:UITableViewStylePlain];
+appBarContainerViewController =
+    [[MDCAppBarContainerViewController alloc] initWithContentViewController:tableViewController];
+self.appBarContainerViewController.topLayoutGuideAdjustmentEnabled = YES;
+```
+
+NavigationBar now allows configuration of its title view layout behavior to be either "fill" or "center". The fill behavior is the default and existing behavior, which sets the title view's frame to fill the available navigation bar space. The center behavior will always attempt to center the title view within the navigation bar's bounds.
+The center behavior is desired by teams in the simple cases of when they want their title view to be centered within the navigation bar as best as possible. This is also the default behavior of UINavigationBar.
+Example usage:
+
+```objc
+MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
+navBar.titleView = [[UIView alloc] init];
+navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorCenter;
+```
 
 ## API changes
 
@@ -20,35 +44,14 @@
 
 *new* property: `titleViewLayoutBehavior` in `MDCNavigationBar`
 
-*modified* property: `useFlexibleTopBottomInsets` in `MDCNavigationBar`
+*deprecated* property: `useFlexibleTopBottomInsets` in `MDCNavigationBar`
 
 | Type of change: | Deprecation message |
 |---|---|
-| From: | `` |
+| From: | `useFlexibleTopBottomInsets` |
 | To: | `Implement proper vertical alignment with the default YES behavior.` |
 
-*modified* property: `useFlexibleTopBottomInsets` in `MDCNavigationBar`
-
-| Type of change: | Deprecation |
-|---|---|
-| From: | `0` |
-| To: | `1` |
-
-#### MDCNavigationBarTitleViewLayoutBehavior
-
-*new* enum value: `MDCNavigationBarTitleViewLayoutBehaviorFill` in `MDCNavigationBarTitleViewLayoutBehavior`
-
-*new* typedef: `MDCNavigationBarTitleViewLayoutBehavior`
-
-*new* enum value: `MDCNavigationBarTitleViewLayoutBehaviorCenter` in `MDCNavigationBarTitleViewLayoutBehavior`
-
-*new* enum: `MDCNavigationBarTitleViewLayoutBehavior`
-
-### Typography
-
-#### MDCFontIsSimplyEqualToFont
-
-*new* sourcekitten.source.lang.objc.decl.function: `MDCFontIsSimplyEqualToFont`
+*new* enum `MDCNavigationBarTitleViewLayoutBehavior` with values `MDCNavigationBarTitleViewLayoutBehaviorFill` and `MDCNavigationBarTitleViewLayoutBehaviorCenter`.
 
 ## Component changes
 
@@ -73,7 +76,6 @@
 #### Changes
 
 * [Add placeholderLabel accessibilityLabel to textField accessibilityValue (#4319)](https://github.com/material-components/material-components-ios/commit/9bbaaaad6e8f75e0ea93ce3c003c65203c23c654) (Andrew Overton)
-* [Prevents functionally equivalent fonts from causing rendering jumps (#4344)](https://github.com/material-components/material-components-ios/commit/de44925eb609f1a06c6529fbd06ba7d5f80dcfa9) (Will Larche)
 * [Tweak accessibility notification to prevent VoiceOver from cutting off (#4364)](https://github.com/material-components/material-components-ios/commit/0b5706dadd4837ddf8d4da45a73ff9a5203c76ee) (Andrew Overton)
 * [[Documentation] Update TextField README.md (#4352)](https://github.com/material-components/material-components-ios/commit/fec408500a0891a0218f5ae027b6fdaed4fffa99) (ianegordon)
 
