@@ -81,7 +81,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
 
   let baselineTestLabel: UILabel = {
     let baselineTestLabel = UILabel()
-    baselineTestLabel.text = "⨏🧐p       "
+    baselineTestLabel.text = "popopopopopop       "
     baselineTestLabel.translatesAutoresizingMaskIntoConstraints = false
     return baselineTestLabel
   }()
