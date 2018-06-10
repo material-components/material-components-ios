@@ -146,6 +146,8 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 
   [self setupUnderlineConstraints];
 
+  [self setupInputLayoutStrut];
+
   NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
   [defaultCenter addObserver:self
                     selector:@selector(textFieldDidBeginEditing:)
@@ -224,6 +226,25 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 
 - (void)updateBorder {
   self.borderView.borderPath = self.borderPath;
+}
+
+#pragma mark - Input Layout Strut Implementation
+
+- (void)setupInputLayoutStrut {
+  self.inputLayoutStrut = [[UILabel alloc] initWithFrame:CGRectZero];
+  //self.inputLayoutStrut.alpha = 0.f;
+  [self addSubview:self.inputLayoutStrut];
+
+  self.inputLayoutStrut.numberOfLines = 1;
+  self.inputLayoutStrut.alpha = 0.f;
+}
+
+- (void)updateInputLayoutStrut {
+  self.inputLayoutStrut.font = self.font;
+  self.inputLayoutStrut.text = self.text;
+
+  UIEdgeInsets insets = [self textInsets];
+  self.inputLayoutStrut.frame = CGRectMake(insets.left, insets.top, CGRectGetWidth(self.bounds) - insets.right, self.inputLayoutStrut.intrinsicContentSize.height);
 }
 
 #pragma mark - Applying Color
@@ -652,6 +673,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   }
   [self updateBorder];
   [self applyCursorColor];
+  [self updateInputLayoutStrut];
 
   if ([self.positioningDelegate respondsToSelector:@selector(textInputDidLayoutSubviews)]) {
     [self.positioningDelegate textInputDidLayoutSubviews];
@@ -670,6 +692,19 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 
 + (BOOL)requiresConstraintBasedLayout {
   return YES;
+}
+
+- (UIView *)viewForFirstBaselineLayout {
+  return self.inputLayoutStrut;
+}
+
+- (UIView *)viewForLastBaselineLayout {
+  return self.inputLayoutStrut;
+}
+
+// TODO: (larche) Remove when we drop iOS 9 support
+- (UIView *)viewForBaselineLayout {
+  return self.inputLayoutStrut;
 }
 
 #pragma mark - UITextField Notification Observation
