@@ -523,6 +523,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
                                                     self.placeholderLabel.font.lineHeight) /
                                                 2.f);  // Text field or placeholder
   actualY = textInsets.top - actualY;
+  actualY += 1.f;
   textRect.origin.y = actualY;
 
   if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
