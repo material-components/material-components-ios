@@ -54,7 +54,7 @@ button.accessibilityLabel = @"Create";
 ### Minimum touch size
 
 #### Set the frame
-Make set your buttons to have a minium height. Touch guidelines recommends a height of 48 points.
+Set your buttons to have a minium size. [Material Touch guidelines](https://material.io/design/layout/spacing-methods.html#touch-click-targets) typically recommend a height and width of 48 points.
 ```
 button.minimumSize = CGSizeMake(48, 48);
 ```
