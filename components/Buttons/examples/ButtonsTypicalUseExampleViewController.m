@@ -23,7 +23,7 @@
 
 #import "supplemental/ButtonsTypicalUseSupplemental.h"
 
-const CGFloat kAllyButtonHeight = 48.0;
+const CGFloat kMinimumAccessibleButtonHeight = 48.0;
 
 @interface ButtonsTypicalUseExampleViewController ()
 @property(nonatomic, strong) MDCFloatingButton *floatingButton;
@@ -49,15 +49,16 @@ const CGFloat kAllyButtonHeight = 48.0;
   buttonScheme.colorScheme = self.colorScheme;
   buttonScheme.typographyScheme = self.typographyScheme;
 
-  CGFloat verticalInset;
   // Contained button
 
   MDCButton *containedButton = [[MDCButton alloc] init];
   [containedButton setTitle:@"Button" forState:UIControlStateNormal];
   [MDCContainedButtonThemer applyScheme:buttonScheme toButton:containedButton];
   [containedButton sizeToFit];
-  verticalInset = MIN(0, -(kAllyButtonHeight - containedButton.frame.size.height) / 2);
-  containedButton.hitAreaInsets = UIEdgeInsetsMake(verticalInset, 0, verticalInset, 0);
+  CGFloat containedButtonVerticalInset =
+      MIN(0, -(kMinimumAccessibleButtonHeight - CGRectGetHeight(containedButton.frame)) / 2);
+  containedButton.hitAreaInsets =
+      UIEdgeInsetsMake(containedButtonVerticalInset, 0, containedButtonVerticalInset, 0);
   [containedButton addTarget:self
                       action:@selector(didTap:)
             forControlEvents:UIControlEventTouchUpInside];
@@ -81,8 +82,9 @@ const CGFloat kAllyButtonHeight = 48.0;
   [MDCTextButtonThemer applyScheme:buttonScheme toButton:textButton];
   [textButton setTitle:@"Button" forState:UIControlStateNormal];
   [textButton sizeToFit];
-  verticalInset = MIN(0, -(kAllyButtonHeight - textButton.frame.size.height) / 2);
-  textButton.hitAreaInsets = UIEdgeInsetsMake(verticalInset, 0, verticalInset, 0);
+  CGFloat textButtonVerticalInset = MIN(0, -(kMinimumAccessibleButtonHeight - CGRectGetHeight(textButton.frame)) / 2);
+  textButton.hitAreaInsets =
+      UIEdgeInsetsMake(textButtonVerticalInset, 0, textButtonVerticalInset, 0);
   [textButton addTarget:self
                  action:@selector(didTap:)
        forControlEvents:UIControlEventTouchUpInside];
@@ -106,8 +108,10 @@ const CGFloat kAllyButtonHeight = 48.0;
   [outlinedButton setTitle:@"Button" forState:UIControlStateNormal];
   [MDCOutlinedButtonThemer applyScheme:buttonScheme toButton:outlinedButton];
   [outlinedButton sizeToFit];
-  verticalInset = MIN(0, -(kAllyButtonHeight - outlinedButton.frame.size.height) / 2);
-  outlinedButton.hitAreaInsets = UIEdgeInsetsMake(verticalInset, 0, verticalInset, 0);
+  CGFloat outlineButtonVerticalInset =
+      MIN(0, -(kMinimumAccessibleButtonHeight - CGRectGetHeight(outlinedButton.frame)) / 2);
+  outlinedButton.hitAreaInsets =
+      UIEdgeInsetsMake(outlineButtonVerticalInset, 0, outlineButtonVerticalInset, 0);
   [outlinedButton addTarget:self
                     action:@selector(didTap:)
           forControlEvents:UIControlEventTouchUpInside];
@@ -137,8 +141,10 @@ const CGFloat kAllyButtonHeight = 48.0;
       [[UIImage imageNamed:@"Plus"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [self.floatingButton setImage:plusImage forState:UIControlStateNormal];
   [MDCFloatingActionButtonThemer applyScheme:buttonScheme toButton:self.floatingButton];
-  verticalInset = MIN(0, -(kAllyButtonHeight - self.floatingButton.frame.size.height) / 2);
-  UIEdgeInsets touchInsets = UIEdgeInsetsMake(verticalInset, 0, verticalInset, 0);
+  CGFloat floatingActionButtonVerticalInset =
+      MIN(0, -(kMinimumAccessibleButtonHeight - CGRectGetHeight(self.floatingButton.frame)) / 2);
+  UIEdgeInsets touchInsets =
+      UIEdgeInsetsMake(floatingActionButtonVerticalInset, 0, floatingActionButtonVerticalInset, 0);
   [self.floatingButton setHitAreaInsets:touchInsets
                                forShape:MDCFloatingButtonShapeDefault
                                  inMode:MDCFloatingButtonModeNormal];
