@@ -39,7 +39,7 @@ extern NSString *_Nonnull const MDCTextFieldTextDidSetTextNotification;
 
  It always has an alpha of 0.0.
  */
-@property(nonatomic, nullable, strong) UILabel *inputLayoutStrut;
+@property(nonatomic, nonnull, strong, readonly) UILabel *inputLayoutStrut;
 
 /**
  An overlay view on the leading side.

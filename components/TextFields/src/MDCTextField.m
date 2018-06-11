@@ -43,6 +43,8 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 
 @interface MDCTextField () {
   UIColor *_cursorColor;
+
+  UILabel *_inputLayoutStrut;
 }
 
 @property(nonatomic, strong) MDCTextInputCommonFundament *fundament;
@@ -231,7 +233,6 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 #pragma mark - Input Layout Strut Implementation
 
 - (void)setupInputLayoutStrut {
-  self.inputLayoutStrut = [[UILabel alloc] initWithFrame:CGRectZero];
   self.inputLayoutStrut.hidden = YES;
   self.inputLayoutStrut.numberOfLines = 1;
 
@@ -292,6 +293,13 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 
 - (void)setHidesPlaceholderOnInput:(BOOL)hidesPlaceholderOnInput {
   _fundament.hidesPlaceholderOnInput = hidesPlaceholderOnInput;
+}
+
+- (UILabel *)inputLayoutStrut {
+  if (!_inputLayoutStrut) {
+    _inputLayoutStrut = [[UILabel alloc] initWithFrame:CGRectZero];
+  }
+  return _inputLayoutStrut;
 }
 
 - (UILabel *)leadingUnderlineLabel {
