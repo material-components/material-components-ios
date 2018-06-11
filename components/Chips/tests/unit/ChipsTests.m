@@ -41,6 +41,18 @@ static inline UIColor *MDCColorLighten(UIColor *color, CGFloat percent) {
   return MDCColorDarken(color, -percent);
 }
 
+static inline UIImage *TestImage(CGSize size) {
+  CGFloat scale = [UIScreen mainScreen].scale;
+  UIGraphicsBeginImageContextWithOptions(size, false, scale);
+  [UIColor.redColor setFill];
+  CGRect fillRect = CGRectZero;
+  fillRect.size = size;
+  UIRectFill(fillRect);
+  UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+  UIGraphicsEndImageContext();
+  return image;
+}
+
 @interface ChipsTests : XCTestCase
 
 @end
@@ -178,6 +190,49 @@ static inline UIColor *MDCColorLighten(UIColor *color, CGFloat percent) {
                              minimumDimension, 0.001);
   XCTAssertEqualWithAccuracy(chipWithMinimumHeightAndWidth.intrinsicContentSize.height,
                              minimumDimension, 0.001);
+}
+
+- (void)testLayoutWithHorizontalContentModeFill {
+  // Given
+  MDCChipView *chip = [[MDCChipView alloc] init];
+  chip.titleLabel.text = @"Chip";
+  chip.imageView.image = TestImage(CGSizeMake(24, 24));
+
+  // When
+  chip.frame = CGRectMake(0, 0, 1000, 500);
+  [chip layoutIfNeeded];
+
+  // Then
+  XCTAssertLessThan(CGRectGetMinX(chip.titleLabel.frame), CGRectGetMidX(chip.bounds));
+  XCTAssertLessThan(CGRectGetMinY(chip.titleLabel.frame), CGRectGetMidY(chip.bounds));
+  XCTAssertGreaterThan(CGRectGetMaxX(chip.titleLabel.frame), CGRectGetMidX(chip.bounds));
+  XCTAssertGreaterThan(CGRectGetMaxY(chip.titleLabel.frame), CGRectGetMidY(chip.bounds));
+  XCTAssertLessThan(CGRectGetMinX(chip.imageView.frame), CGRectGetMidX(chip.bounds));
+  XCTAssertLessThan(CGRectGetMinY(chip.imageView.frame), CGRectGetMidY(chip.bounds));
+  XCTAssertLessThan(CGRectGetMaxX(chip.imageView.frame), 100);
+  XCTAssertGreaterThan(CGRectGetMaxY(chip.imageView.frame), CGRectGetMidY(chip.bounds));
+}
+
+- (void)testLayoutWithHorizontalContentModeCenter {
+  // Given
+  MDCChipView *chip = [[MDCChipView alloc] init];
+  chip.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+  chip.titleLabel.text = @"Chip";
+  chip.imageView.image = TestImage(CGSizeMake(24, 24));
+
+  // When
+  chip.frame = CGRectMake(0, 0, 1000, 1000);
+  [chip layoutIfNeeded];
+
+  // Then
+  XCTAssertLessThan(CGRectGetMinX(chip.titleLabel.frame), CGRectGetMidX(chip.bounds));
+  XCTAssertLessThan(CGRectGetMinY(chip.titleLabel.frame), CGRectGetMidY(chip.bounds));
+  XCTAssertGreaterThan(CGRectGetMaxX(chip.titleLabel.frame), CGRectGetMidX(chip.bounds));
+  XCTAssertGreaterThan(CGRectGetMaxY(chip.titleLabel.frame), CGRectGetMidY(chip.bounds));
+  XCTAssertLessThan(CGRectGetMinX(chip.imageView.frame), CGRectGetMidX(chip.bounds));
+  XCTAssertLessThan(CGRectGetMinY(chip.imageView.frame), CGRectGetMidY(chip.bounds));
+  XCTAssertGreaterThan(CGRectGetMaxX(chip.imageView.frame), 100);
+  XCTAssertGreaterThan(CGRectGetMaxY(chip.imageView.frame), CGRectGetMidY(chip.bounds));
 }
 
 #pragma mark - Touch Target
