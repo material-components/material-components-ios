@@ -709,7 +709,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   return self.inputLayoutStrut;
 }
 
-// TODO: (larche) Remove when we drop iOS 9 support
+// TODO: (#4390) Remove when we drop iOS 9 support
 - (UIView *)viewForBaselineLayout {
   return self.inputLayoutStrut;
 }
