@@ -40,6 +40,7 @@ NSString *const MDCTextFieldTextDidSetTextNotification = @"MDCTextFieldTextDidSe
 // by this amount on each side.
 static const CGFloat MDCTextInputClearButtonImageBuiltInPadding = -2.5f;
 static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
+static const CGFloat MDCTextInputTextRectYCorrection = 1.f;
 
 @interface MDCTextField () {
   UIColor *_cursorColor;
@@ -522,7 +523,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
       (CGRectGetHeight(bounds) / 2.f) - MDCRint(MAX(self.font.lineHeight,
                                                     self.placeholderLabel.font.lineHeight) /
                                                 2.f);  // Text field or placeholder
-  actualY = textInsets.top - actualY;
+  actualY = textInsets.top - actualY + MDCTextInputTextRectYCorrection;
   textRect.origin.y = actualY;
 
   if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
