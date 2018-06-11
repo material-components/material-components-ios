@@ -232,11 +232,10 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 
 - (void)setupInputLayoutStrut {
   self.inputLayoutStrut = [[UILabel alloc] initWithFrame:CGRectZero];
-  //self.inputLayoutStrut.alpha = 0.f;
-  [self addSubview:self.inputLayoutStrut];
-
+  self.inputLayoutStrut.hidden = YES;
   self.inputLayoutStrut.numberOfLines = 1;
-  self.inputLayoutStrut.alpha = 0.f;
+
+  [self addSubview:self.inputLayoutStrut];
 }
 
 - (void)updateInputLayoutStrut {
