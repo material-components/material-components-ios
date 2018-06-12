@@ -440,7 +440,7 @@ extension TextFieldUnderlineSwiftExample {
 
 extension TextFieldUnderlineSwiftExample {
   @objc class func catalogBreadcrumbs() -> [String] {
-    return ["Text Field", "Typical Use"]
+    return ["Text Field", "Underline Style"]
   }
 
   @objc class func catalogDescription() -> String {
