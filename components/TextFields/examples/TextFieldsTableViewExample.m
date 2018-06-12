@@ -79,7 +79,7 @@ static NSString *const TextFieldTableViewCellIdentifier = @"cell";
       NSString *string = self.strings[indexPath.row];
       textFieldCell.textFieldController.textInput.text = string;
     }
-    textFieldCell.textFieldController.placeholderText = [NSString stringWithFormat:@"TextField #%lu", indexPath.row];
+    textFieldCell.textFieldController.placeholderText = [NSString stringWithFormat:@"TextField #%lu", (long)indexPath.row];
   }
 
   return cell;
@@ -148,4 +148,3 @@ static NSString *const TextFieldTableViewCellIdentifier = @"cell";
 }
 
 @end
-
