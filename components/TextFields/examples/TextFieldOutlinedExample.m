@@ -417,7 +417,7 @@
 }
 
 + (BOOL)catalogIsPrimaryDemo {
-  return NO;
+  return YES;
 }
 
 + (BOOL)catalogIsPresentable {

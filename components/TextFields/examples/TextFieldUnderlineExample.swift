@@ -18,7 +18,7 @@
 
 import MaterialComponents.MaterialTextFields
 
-final class TextFieldSwiftExample: UIViewController {
+final class TextFieldUnderlineSwiftExample: UIViewController {
 
   let scrollView = UIScrollView()
 
@@ -325,7 +325,7 @@ final class TextFieldSwiftExample: UIViewController {
   }
 }
 
-extension TextFieldSwiftExample: UITextFieldDelegate {
+extension TextFieldUnderlineSwiftExample: UITextFieldDelegate {
   func textField(_ textField: UITextField,
                  shouldChangeCharactersIn range: NSRange,
                  replacementString string: String) -> Bool {
@@ -379,13 +379,13 @@ extension TextFieldSwiftExample: UITextFieldDelegate {
   }
 }
 
-extension TextFieldSwiftExample: UITextViewDelegate {
+extension TextFieldUnderlineSwiftExample: UITextViewDelegate {
   func textViewDidEndEditing(_ textView: UITextView) {
     print(textView.text)
   }
 }
 
-extension TextFieldSwiftExample: MDCMultilineTextInputDelegate {
+extension TextFieldUnderlineSwiftExample: MDCMultilineTextInputDelegate {
   func multilineTextFieldShouldClear(_ textField: UIView!) -> Bool {
     return true
   }
@@ -393,7 +393,7 @@ extension TextFieldSwiftExample: MDCMultilineTextInputDelegate {
 
 // MARK: - Keyboard Handling
 
-extension TextFieldSwiftExample {
+extension TextFieldUnderlineSwiftExample {
   func registerKeyboardNotifications() {
     let notificationCenter = NotificationCenter.default
     notificationCenter.addObserver(
@@ -430,7 +430,7 @@ extension TextFieldSwiftExample {
 
 // MARK: - Status Bar Style
 
-extension TextFieldSwiftExample {
+extension TextFieldUnderlineSwiftExample {
   override var preferredStatusBarStyle: UIStatusBarStyle {
     return .lightContent
   }
@@ -438,9 +438,9 @@ extension TextFieldSwiftExample {
 
 // MARK: - CatalogByConvention
 
-extension TextFieldSwiftExample {
+extension TextFieldUnderlineSwiftExample {
   @objc class func catalogBreadcrumbs() -> [String] {
-    return ["Text Field", "Typical Use"]
+    return ["Text Field", "Underline Style"]
   }
 
   @objc class func catalogDescription() -> String {
@@ -449,11 +449,11 @@ extension TextFieldSwiftExample {
   }
 
   @objc class func catalogIsPrimaryDemo() -> Bool {
-    return true
+    return false
   }
 
   @objc class func catalogIsPresentable() -> Bool {
-    return true
+    return false
   }
 }
 
