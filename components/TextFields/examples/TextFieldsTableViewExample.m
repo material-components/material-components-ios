@@ -38,6 +38,8 @@ static NSString *const TextFieldTableViewCellIdentifier = @"cell";
   [super viewDidLoad];
 
   self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+  self.tableView.rowHeight = UITableViewAutomaticDimension;
+  self.tableView.estimatedRowHeight = 82.f;
   self.tableView.dataSource = self;
   [self.tableView registerClass:[TextFieldTableViewCell class] forCellReuseIdentifier:TextFieldTableViewCellIdentifier];
 
