@@ -408,6 +408,7 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
   if (_items == items) {
     return;
   }
+  
   // Remove existing item views from the bottom navigation so it can be repopulated with new items.
   for (MDCBottomNavigationItemView *itemView in self.itemViews) {
     [itemView removeFromSuperview];
