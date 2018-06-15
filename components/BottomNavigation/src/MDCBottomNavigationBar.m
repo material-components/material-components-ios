@@ -275,7 +275,6 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
   CGFloat navBarHeight = CGRectGetHeight(self.containerView.bounds);
   CGFloat itemWidth = navBarWidth / numItems;
   for (NSUInteger i = 0; i < self.itemViews.count; i++) {
-    NSLog(@"%lu", (unsigned long)self.itemViews.count);
     MDCBottomNavigationItemView *itemView = self.itemViews[i];
     if (layoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
       itemView.frame = CGRectMake(i * itemWidth, 0, itemWidth, navBarHeight);
@@ -417,10 +416,8 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
   [self removeObserversFromTabBarItems];
 
   _items = [items copy];
-  NSLog(@"We are working");
   for (NSUInteger i = 0; i < items.count; i++) {
     UITabBarItem *item = items[i];
-    // This could be it
     MDCBottomNavigationItemView *itemView =
         [[MDCBottomNavigationItemView alloc] initWithFrame:CGRectZero];
     itemView.title = item.title;
@@ -472,7 +469,6 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
                         action:@selector(didCancelTouchesForButton:)
               forControlEvents:UIControlEventTouchCancel];
     [self.itemViews addObject:itemView];
-    itemView.backgroundColor = [UIColor blueColor];
     [self.containerView addSubview:itemView];
   }
   [self addObserversToTabBarItems];
