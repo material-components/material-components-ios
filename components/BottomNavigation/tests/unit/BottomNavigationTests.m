@@ -82,4 +82,16 @@
   }
 }
 
+-(void)testItemReset {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:0];
+
+  // When
+  self.bottomNavBar.items = @[item1, item2];
+
+  // Then
+  XCTAssertEqual(self.bottomNavBar.itemViews.count, 2);
+}
+
 @end
