@@ -413,6 +413,7 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
   for (MDCBottomNavigationItemView *itemView in self.itemViews) {
     [itemView removeFromSuperview];
   }
+  [self.itemViews removeAllObjects];
   [self removeObserversFromTabBarItems];
 
   _items = [items copy];
