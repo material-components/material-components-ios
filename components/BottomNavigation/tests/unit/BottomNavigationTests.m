@@ -93,7 +93,7 @@
   self.bottomNavBar.items = @[item1, item2, item3];
 
   // Then
-  unsigned int tabsCount = 3;
+  NSUInteger tabsCount = 3;
   XCTAssertEqual(self.bottomNavBar.itemViews.count, tabsCount);
 }
 
