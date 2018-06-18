@@ -103,6 +103,19 @@
   XCTAssertEqual(self.card.inkView.layer.sublayers.count, 2U);
 }
 
+- (void)testCardInteractabilityToggle {
+  self.card.isInteractable = NO;
+  XCTAssertEqual(self.card.inkView.hidden, YES);
+  self.card.highlighted = YES;
+  XCTAssertEqual(((MDCShadowLayer *)self.card.layer).elevation, 1.f);
+  self.card.highlighted = NO;
+  self.card.isInteractable = YES;
+  XCTAssertEqual(self.card.inkView.hidden, NO);
+  self.card.highlighted = YES;
+  XCTAssertEqual(((MDCShadowLayer *)self.card.layer).elevation, 8.f);
+  self.card.highlighted = NO;
+}
+
 - (void)testCardEncoding {
   self.card.cornerRadius = 7.5f;
   self.card.bounds = CGRectMake(1, 2, 3, 4);
@@ -114,6 +127,7 @@
   [self.card setShadowColor:[UIColor greenColor] forState:UIControlStateHighlighted];
   [self.card setBorderColor:[UIColor redColor] forState:UIControlStateNormal];
   [self.card setBorderColor:[UIColor greenColor] forState:UIControlStateHighlighted];
+  self.card.isInteractable = NO;
 
   NSData *archivedData = [NSKeyedArchiver archivedDataWithRootObject:self.card];
   MDCCard *unarchivedCard = [NSKeyedUnarchiver unarchiveObjectWithData:archivedData];
@@ -146,6 +160,7 @@
                  [self.card borderWidthForState:UIControlStateHighlighted]);
   XCTAssertNotNil(unarchivedCard.inkView);
   XCTAssertEqual(unarchivedCard.subviews.count, self.card.subviews.count);
+  XCTAssertEqual(unarchivedCard.isInteractable, NO);
 }
 
 - (void)testCellSelectAndUnselect {
@@ -175,6 +190,23 @@
   XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 1.f);
   XCTAssertEqual(self.cell.cornerRadius, 4.f);
   XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 1U);
+}
+
+- (void)testCellInteractabilityToggle {
+  self.cell.isInteractable = NO;
+  XCTAssertEqual(self.cell.inkView.hidden, YES);
+  self.cell.selectable = YES;
+  self.cell.selected = YES;
+  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 1.f);
+  self.cell.selectable = YES;
+  self.cell.selected = YES;
+  self.cell.isInteractable = YES;
+  XCTAssertEqual(self.cell.inkView.hidden, NO);
+  self.cell.selectable = YES;
+  self.cell.selected = YES;
+  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 8.f);
+  self.cell.selectable = YES;
+  self.cell.selected = YES;
 }
 
 - (void)testCellLongPress {
@@ -411,6 +443,7 @@ static UIImage *FakeImage(void) {
   [self.cell setBorderColor:[UIColor redColor] forState:MDCCardCellStateNormal];
   [self.cell setBorderColor:[UIColor greenColor] forState:MDCCardCellStateHighlighted];
   [self.cell setBorderColor:[UIColor blueColor] forState:MDCCardCellStateSelected];
+  self.cell.isInteractable = NO;
 
   NSData *archivedData = [NSKeyedArchiver archivedDataWithRootObject:self.cell];
   MDCCardCollectionCell *unarchivedCell = [NSKeyedUnarchiver unarchiveObjectWithData:archivedData];
@@ -481,6 +514,7 @@ static UIImage *FakeImage(void) {
                  [self.cell verticalImageAlignmentForState:MDCCardCellStateHighlighted]);
   XCTAssertEqual([unarchivedCell verticalImageAlignmentForState:MDCCardCellStateSelected],
                  [self.cell verticalImageAlignmentForState:MDCCardCellStateSelected]);
+  XCTAssertEqual(unarchivedCell.isInteractable, NO);
 }
 
 @end
