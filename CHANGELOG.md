@@ -1,3 +1,57 @@
+# #develop#
+
+## Breaking changes
+
+## New deprecations
+
+## New features
+
+## API changes
+
+### TextFields
+
+#### MDCTextField
+
+*new* property: `inputLayoutStrut` in `MDCTextField`
+
+## Component changes
+
+### Buttons
+
+#### Changes
+
+* [Added a11y minimum touch target size to Accessibility section in readme. (#4386)](https://github.com/material-components/material-components-ios/commit/1d692a8ab2597c95b70ec03f36fb7d1d40a2fef8) (Randall Li)
+
+### ButtonBar
+
+#### Changes
+
+* [Add tintColor observation support. (#4380)](https://github.com/material-components/material-components-ios/commit/c1b513ba9eecbfe5513282ca1198fed8f251875f) (featherless)
+* [Add unit tests for KVO behavior. (#4379)](https://github.com/material-components/material-components-ios/commit/fc2671fe9400e28d8baf31e1a2a5bb0a6c34389e) (featherless)
+
+### TextFields
+
+#### Changes
+
+* [Add baseline constraint support (#4387)](https://github.com/material-components/material-components-ios/commit/89c2a40911e38376a1e6595eea98d8d35162f5f4) (Will Larche)
+* [Example cleanup. (#4392)](https://github.com/material-components/material-components-ios/commit/bc119b3b73778cdebab80a6eeaf0a957cfd5a09b) (Will Larche)
+* [TableView example. (#4391)](https://github.com/material-components/material-components-ios/commit/0516f703c89a53dae458574e096de8fa4ee3c888) (Will Larche)
+* [Text Input adjustment. (#4389)](https://github.com/material-components/material-components-ios/commit/fc61f064511c7c7bca370121f049ad7387022f09) (Will Larche)
+
+### Chips
+
+#### Changes
+
+* [Adds support for reading contentHorizontalAlignment in MDCChipView. The only supported values so far are Fill (the default now) and Center (the new value). (#4369)](https://github.com/material-components/material-components-ios/commit/d8a1dfc9194e1f70ecc65253d302918659667e63) (compositeprimes)
+
+### BottomNavigation
+
+#### Changes
+
+* [Fix bug when `setItems` does not correctly set items (#4398)](https://github.com/material-components/material-components-ios/commit/1d6444634a9bed1238afb2c7e551502bc38dbcc2) (Cody Weaver)
+
+---
+
 # 55.4.0
 
 This minor release includes better layout guide and safe area insets support to `MDCAppBar`'s `MDCAppBarContainerViewController`, added customization to `MDCNavigationBar` title view layout, accessibility improvements and documentation.
