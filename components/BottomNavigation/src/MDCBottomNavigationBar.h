@@ -66,14 +66,13 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
  Configures when item titles should be displayed.
  Default is MDCBottomNavigationBarTitleVisibilitySelected.
  */
-@property(nonatomic, assign) MDCBottomNavigationBarTitleVisibility titleVisibility
-    UI_APPEARANCE_SELECTOR;
+@property(nonatomic, assign) MDCBottomNavigationBarTitleVisibility titleVisibility;
 
 /**
  Configures item space distribution and title orientation in landscape mode.
  Default is MDCBottomNavigationBarDistributionEqual.
  */
-@property(nonatomic, assign) MDCBottomNavigationBarAlignment alignment UI_APPEARANCE_SELECTOR;
+@property(nonatomic, assign) MDCBottomNavigationBarAlignment alignment;
 
 /**
  An array of UITabBarItems that is used to populate bottom navigation bar content. It is strongly
@@ -92,14 +91,13 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
  Display font used for item titles.
  Default is system font.
  */
-@property(nonatomic, strong, nonnull) UIFont *itemTitleFont UI_APPEARANCE_SELECTOR;
+@property(nonatomic, strong, nonnull) UIFont *itemTitleFont;
 
 /**
  Color of selected item. Applies color to items' icons and text. If set also sets
  selectedItemTitleColor. Default color is black.
  */
-@property (nonatomic, strong, readwrite, nonnull) UIColor *selectedItemTintColor
-    UI_APPEARANCE_SELECTOR;
+@property (nonatomic, strong, readwrite, nonnull) UIColor *selectedItemTintColor;
 
 /**
  Color of the selected item's title text. Default color is black.
@@ -110,18 +108,17 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
  Color of unselected items. Applies color to items' icons. Text is not displayed in unselected mode.
  Default color is dark gray.
  */
-@property (nonatomic, strong, readwrite, nonnull) UIColor *unselectedItemTintColor
-    UI_APPEARANCE_SELECTOR;
+@property (nonatomic, strong, readwrite, nonnull) UIColor *unselectedItemTintColor;
 
 /**
  Color of the background of bottom navigation bar and the bar items.
  */
-@property(nonatomic, strong, nullable) UIColor *barTintColor UI_APPEARANCE_SELECTOR;
+@property(nonatomic, strong, nullable) UIColor *barTintColor;
 
 /**
  To color the background of the view use -barTintColor instead.
  */
-@property(nullable, nonatomic,copy) UIColor *backgroundColor UI_APPEARANCE_SELECTOR;
+@property(nullable, nonatomic,copy) UIColor *backgroundColor;
 
 @end
 

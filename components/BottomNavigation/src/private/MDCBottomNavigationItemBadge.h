@@ -25,7 +25,7 @@
 @property(nonatomic, assign) CGFloat yPadding;
 
 @property(nonatomic, copy) NSString *badgeValue;
-@property(nonatomic, strong) UIColor *badgeColor UI_APPEARANCE_SELECTOR;
+@property(nonatomic, strong) UIColor *badgeColor;
 @property(nonatomic, strong, readonly) UILabel *badgeValueLabel;
 
 @end
