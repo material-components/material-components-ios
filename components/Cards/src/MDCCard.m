@@ -26,11 +26,12 @@ static NSString *const MDCCardCornerRadiusKey = @"MDCCardCornerRadiusKey";
 static NSString *const MDCCardInkViewKey = @"MDCCardInkViewKey";
 static NSString *const MDCCardShadowColorsKey = @"MDCCardShadowColorsKey";
 static NSString *const MDCCardShadowElevationsKey = @"MDCCardShadowElevationsKey";
+static NSString *const MDCCardIsInteractableKey = @"MDCCardIsInteractableKey";
 
 static const CGFloat MDCCardShadowElevationNormal = 1.f;
 static const CGFloat MDCCardShadowElevationHighlighted = 8.f;
 static const CGFloat MDCCardCornerRadiusDefault = 4.f;
-
+static const BOOL MDCCardIsInteractableDefault = YES;
 
 @interface MDCCard ()
 @property(nonatomic, readonly, strong) MDCShapedShadowLayer *layer;
@@ -43,6 +44,7 @@ static const CGFloat MDCCardCornerRadiusDefault = 4.f;
   NSMutableDictionary<NSNumber *, UIColor *> *_borderColors;
   UIColor *_backgroundColor;
   CGPoint _lastTouch;
+  BOOL _isInteractable;
 }
 
 @dynamic layer;
@@ -72,6 +74,11 @@ static const CGFloat MDCCardCornerRadiusDefault = 4.f;
       [self.layer setShapedBackgroundColor:[coder decodeObjectOfClass:[UIColor class]
                                                                forKey:MDCCardBackgroundColorsKey]];
     }
+    if ([coder containsValueForKey:MDCCardIsInteractableKey]) {
+      self.isInteractable = [coder decodeBoolForKey:MDCCardIsInteractableKey];
+    } else {
+      self.isInteractable = MDCCardIsInteractableDefault;
+    }
     [self commonMDCCardInit];
   }
   return self;
@@ -81,6 +88,7 @@ static const CGFloat MDCCardCornerRadiusDefault = 4.f;
   self = [super initWithFrame:frame];
   if (self) {
     self.layer.cornerRadius = MDCCardCornerRadiusDefault;
+    _isInteractable = MDCCardIsInteractableDefault;
     [self commonMDCCardInit];
   }
   return self;
@@ -124,6 +132,7 @@ static const CGFloat MDCCardCornerRadiusDefault = 4.f;
   [self updateBorderWidth];
   [self updateBorderColor];
   [self updateBackgroundColor];
+  [self updateIsInteractable];
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder {
@@ -135,6 +144,7 @@ static const CGFloat MDCCardCornerRadiusDefault = 4.f;
   [coder encodeObject:_inkView forKey:MDCCardInkViewKey];
   [coder encodeDouble:self.layer.cornerRadius forKey:MDCCardCornerRadiusKey];
   [coder encodeObject:self.layer.shapedBackgroundColor forKey:MDCCardBackgroundColorsKey];
+  [coder encodeBool:_isInteractable forKey:MDCCardIsInteractableKey];
 }
 
 - (void)layoutSubviews {
@@ -250,6 +260,9 @@ static const CGFloat MDCCardCornerRadiusDefault = 4.f;
 }
 
 - (void)setHighlighted:(BOOL)highlighted {
+  if (!_isInteractable) {
+    return;
+  }
   if (highlighted && !self.highlighted) {
     [self.inkView startTouchBeganAnimationAtPoint:_lastTouch completion:nil];
   } else if (!highlighted && self.highlighted) {
@@ -315,6 +328,19 @@ static const CGFloat MDCCardCornerRadiusDefault = 4.f;
 
 - (void)updateBackgroundColor {
   self.layer.shapedBackgroundColor = _backgroundColor;
+}
+
+- (void)setIsInteractable:(BOOL)isInteractable {
+  _isInteractable = isInteractable;
+  [self updateIsInteractable];
+}
+
+- (BOOL)isInteractable {
+  return _isInteractable;
+}
+
+- (void)updateIsInteractable {
+  self.inkView.hidden = !_isInteractable;
 }
 
 @end
