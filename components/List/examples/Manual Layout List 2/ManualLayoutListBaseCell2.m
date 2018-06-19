@@ -21,19 +21,11 @@
 #import "MaterialMath.h"
 
 static NSString *const MDCListBaseCellInkViewKey = @"MDCListBaseCellInkViewKey";
-static NSString *const MDCListBaseCellShadowColorsKey = @"MDCListBaseCellShadowColorsKey";
-static NSString *const MDCListBaseCellShadowElevationsKey = @"MDCListBaseCellShadowElevationsKey";
-
-static const CGFloat MDCListBaseCellShadowElevationNormal = 0.f;
-static const CGFloat MDCListBaseCellShadowElevationSelected = 0.f;
-static const CGFloat MDCListBaseCellShadowElevationHighlighted = 0.f;
 
 @interface ManualLayoutListBaseCell2 ()
 
 @property (nonatomic, assign) CGPoint lastTouch;
 @property (strong, nonatomic, nonnull) MDCInkView *inkView;
-@property (strong, nonatomic, nonnull) NSMutableDictionary<NSNumber *, NSNumber *> *shadowElevations;
-@property (strong, nonatomic, nonnull) NSMutableDictionary<NSNumber *, UIColor *> *shadowColors;
 
 @end
 
@@ -53,10 +45,6 @@ static const CGFloat MDCListBaseCellShadowElevationHighlighted = 0.f;
 -(instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    _shadowElevations = [aDecoder decodeObjectOfClass:[NSMutableDictionary class]
-                                               forKey:MDCListBaseCellShadowElevationsKey];
-    _shadowColors = [aDecoder decodeObjectOfClass:[NSMutableDictionary class]
-                                           forKey:MDCListBaseCellShadowColorsKey];
     _inkView = [aDecoder decodeObjectOfClass:[MDCInkView class]
                                       forKey:MDCListBaseCellInkViewKey];
     [self baseManualLayoutListBaseCell2Init];
@@ -67,8 +55,6 @@ static const CGFloat MDCListBaseCellShadowElevationHighlighted = 0.f;
 
 - (void)encodeWithCoder:(NSCoder *)coder {
   [super encodeWithCoder:coder];
-  [coder encodeObject:_shadowElevations forKey:MDCListBaseCellShadowElevationsKey];
-  [coder encodeObject:_shadowColors forKey:MDCListBaseCellShadowColorsKey];
   [coder encodeObject:_inkView forKey:MDCListBaseCellInkViewKey];
 }
 
@@ -85,7 +71,6 @@ static const CGFloat MDCListBaseCellShadowElevationHighlighted = 0.f;
 
 - (void)baseManualLayoutListBaseCell2Init {
   [self setUpInkView];
-  [self setUpShadows];
 }
 
 - (void)setUpInkView {
@@ -94,32 +79,6 @@ static const CGFloat MDCListBaseCellShadowElevationHighlighted = 0.f;
   }
   _inkView.usesLegacyInkRipple = NO;
   [self addSubview:_inkView];
-}
-
-- (void)setUpShadows {
-  if (self.shadowElevations == nil) {
-    self.shadowElevations = [NSMutableDictionary dictionary];
-    self.shadowElevations[@(MDCListBaseCellStateNormal)] = @(MDCListBaseCellShadowElevationNormal);
-    self.shadowElevations[@(MDCListBaseCellStateHighlighted)] = @(MDCListBaseCellShadowElevationHighlighted);
-    self.shadowElevations[@(MDCListBaseCellStateSelected)] = @(MDCListBaseCellShadowElevationSelected);
-  }
-
-  if (self.shadowColors == nil) {
-    self.shadowColors = [NSMutableDictionary dictionary];
-    self.shadowColors[@(MDCListBaseCellStateNormal)] = UIColor.blackColor;
-    self.shadowColors[@(MDCListBaseCellStateHighlighted)] = UIColor.blackColor;
-    self.shadowColors[@(MDCListBaseCellStateSelected)] = UIColor.blackColor;
-  }
-}
-
-- (MDCListBaseCellState)currentState {
-  if (self.selected) {
-    return MDCListBaseCellStateSelected;
-  } else if (self.highlighted) {
-    return MDCListBaseCellStateHighlighted;
-  } else {
-    return MDCListBaseCellStateNormal;
-  }
 }
 
 #pragma mark - UIResponder
@@ -141,27 +100,7 @@ static const CGFloat MDCListBaseCellShadowElevationHighlighted = 0.f;
 
 - (void)setHighlighted:(BOOL)highlighted {
   [super setHighlighted:highlighted];
-  [self updateShadowElevation];
-  [self updateShadowColor];
-  [self performInkAnimation];
- }
-
--(void)setSelected:(BOOL)selected {
-  [super setSelected:selected];
-  [self updateShadowElevation];
-  [self updateShadowColor];
-}
-
--(void)layoutSubviews {
-  [super layoutSubviews];
-  [self updateShadowElevation];
-  [self updateShadowColor];
-}
-
-#pragma mark Ink
-
-- (void)performInkAnimation {
-  if (self.highlighted) {
+  if (highlighted) {
     [self.inkView startTouchBeganAtPoint:_lastTouch
                                 animated:YES
                           withCompletion:nil];
@@ -172,53 +111,31 @@ static const CGFloat MDCListBaseCellShadowElevationHighlighted = 0.f;
   }
 }
 
+-(void)layoutSubviews {
+  [super layoutSubviews];
+  [self updateShadowElevation];
+  self.inkView.frame = self.bounds;
+}
+
+#pragma mark Accessors
+
+-(void)setElevation:(MDCShadowElevation)elevation {
+  if (elevation == _elevation) {
+    return;
+  }
+  _elevation = elevation;
+  [self updateShadowElevation];
+}
+
 #pragma mark Shadow
 
 - (UIBezierPath *)boundingPath {
   return [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:self.layer.cornerRadius];
 }
 
-- (void)setShadowElevation:(MDCShadowElevation)shadowElevation forState:(MDCListBaseCellState)state {
-  _shadowElevations[@(state)] = @(shadowElevation);
-  [self updateShadowElevation];
-}
-
-- (MDCShadowElevation)shadowElevationForState:(MDCListBaseCellState)state {
-  NSNumber *elevation = _shadowElevations[@(state)];
-  if (state != MDCListBaseCellStateNormal && elevation == nil) {
-    elevation = _shadowElevations[@(MDCListBaseCellShadowElevationNormal)];
-  }
-  if (elevation != nil) {
-    return (CGFloat)[elevation doubleValue];
-  }
-  return 0;
-}
-
 - (void)updateShadowElevation {
-  CGFloat elevation = [self shadowElevationForState:self.currentState];
   self.layer.shadowPath = [self boundingPath].CGPath;
-  [(MDCShadowLayer *)self.layer setElevation:elevation];
-}
-
-- (void)setShadowColor:(UIColor *)shadowColor forState:(MDCListBaseCellState)state {
-  _shadowColors[@(state)] = shadowColor;
-  [self updateShadowColor];
-}
-
-- (UIColor *)shadowColorForState:(MDCListBaseCellState)state {
-  UIColor *shadowColor = _shadowColors[@(state)];
-  if (state != MDCListBaseCellStateNormal && shadowColor == nil) {
-    shadowColor = _shadowColors[@(MDCListBaseCellStateNormal)];
-  }
-  if (shadowColor != nil) {
-    return shadowColor;
-  }
-  return [UIColor blackColor];
-}
-
-- (void)updateShadowColor {
-  CGColorRef shadowColor = [self shadowColorForState:self.currentState].CGColor;
-  self.layer.shadowColor = shadowColor;
+  [(MDCShadowLayer *)self.layer setElevation:self.elevation];
 }
 
 @end
