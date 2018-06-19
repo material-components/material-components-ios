@@ -101,10 +101,12 @@ static const CGFloat kDetailColorOpacity = 0.6f;
 
   self.titleLabel = [[UILabel alloc] init];
   self.titleLabel.textColor = [UIColor colorWithWhite:0 alpha:kTitleColorOpacity];
+  self.titleLabel.font = [self defaultTitleLabelFont];
   [self.textContainer addSubview:self.titleLabel];
 
   self.detailLabel = [[UILabel alloc] init];
   self.detailLabel.textColor = [UIColor colorWithWhite:0 alpha:kDetailColorOpacity];
+  self.detailLabel.font = [self defaultDetailLabelFont];
   [self.textContainer addSubview:self.detailLabel];
 }
 
@@ -125,10 +127,15 @@ static const CGFloat kDetailColorOpacity = 0.6f;
 -(void)prepareForReuse {
   [super prepareForReuse];
   self.titleText = nil;
+  self.titleLabelTextColor = self.defaultTitleLabelTextColor;
+  self.titleLabelFont = self.defaultTitleLabelFont;
+  self.titleLabelTextAlignment = NSTextAlignmentLeft;
   self.detailText = nil;
+  self.detailLabelTextColor = self.defaultDetailLabelTextColor;
+  self.detailLabelFont = self.defaultDetailLabelFont;
+  self.detailLabelTextAlignment = NSTextAlignmentLeft;
   self.leadingImage = nil;
   self.trailingImage = nil;
-  self.typographyScheme = self.defaultTypographyScheme;
 }
 
 #pragma mark Accessors
@@ -144,6 +151,39 @@ static const CGFloat kDetailColorOpacity = 0.6f;
   return self.titleLabel.text;
 }
 
+-(void)setTitleLabelTextColor:(UIColor *)titleLabelTextColor {
+  if ([titleLabelTextColor isEqual:self.titleLabel.textColor]) {
+    return;
+  }
+  self.titleLabel.textColor = titleLabelTextColor;
+}
+
+-(UIColor *)titleLabelTextColor {
+  return self.titleLabel.textColor;
+}
+
+-(void)setTitleLabelFont:(UIFont *)titleLabelFont {
+  if ([titleLabelFont isEqual:self.titleLabel.font]) {
+    return;
+  }
+  self.titleLabel.font = titleLabelFont;
+}
+
+-(UIFont *)titleLabelFont {
+  return self.titleLabel.font;
+}
+
+-(void)setTitleLabelTextAlignment:(NSTextAlignment)titleLabelTextAlignment {
+  if (titleLabelTextAlignment == self.titleLabel.textAlignment) {
+    return;
+  }
+  self.titleLabel.textAlignment = titleLabelTextAlignment;
+}
+
+-(NSTextAlignment)titleLabelTextAlignment {
+  return self.titleLabel.textAlignment;
+}
+
 -(void)setDetailText:(NSString *)detailText {
   if ([detailText isEqualToString:self.detailLabel.text]) {
     return;
@@ -153,6 +193,39 @@ static const CGFloat kDetailColorOpacity = 0.6f;
 
 -(NSString *)detailText {
   return self.detailLabel.text;
+}
+
+-(void)setDetailLabelTextColor:(UIColor *)detailLabelTextColor {
+  if ([detailLabelTextColor isEqual:self.detailLabel.textColor]) {
+    return;
+  }
+  self.detailLabel.textColor = detailLabelTextColor;
+}
+
+-(UIColor *)detailLabelTextColor {
+  return self.detailLabel.textColor;
+}
+
+-(void)setDetailLabelFont:(UIFont *)detailLabelFont {
+  if ([detailLabelFont isEqual:self.detailLabel.font]) {
+    return;
+  }
+  self.detailLabel.font = detailLabelFont;
+}
+
+-(UIFont *)detailLabelFont {
+  return self.detailLabel.font;
+}
+
+-(void)setDetailLabelTextAlignment:(NSTextAlignment)detailLabelTextAlignment {
+  if (detailLabelTextAlignment == self.detailLabel.textAlignment) {
+    return;
+  }
+  self.detailLabel.textAlignment = detailLabelTextAlignment;
+}
+
+-(NSTextAlignment)detailLabelTextAlignment {
+  return self.detailLabel.textAlignment;
 }
 
 - (void)setLeadingImage:(UIImage *)leadingImage {
@@ -399,13 +472,6 @@ static const CGFloat kDetailColorOpacity = 0.6f;
   return [MDCTypographyScheme new];
 }
 
--(void)setTypographyScheme:(MDCTypographyScheme *)typographyScheme {
-  _typographyScheme = typographyScheme;
-  self.titleLabel.font = _typographyScheme.body1 ?: self.titleLabel.font;
-  self.detailLabel.font = _typographyScheme.body2 ?: self.detailLabel.font;
-  [self adjustFontsForContentSizeCategory];
-}
-
 - (BOOL)mdc_adjustsFontForContentSizeCategory {
   return _mdc_adjustsFontForContentSizeCategory;
 }
@@ -433,8 +499,8 @@ static const CGFloat kDetailColorOpacity = 0.6f;
 }
 
 - (void)adjustFontsForContentSizeCategory {
-  UIFont *titleFont = self.titleLabel.font ?: self.typographyScheme.headline1;
-  UIFont *detailFont = self.detailLabel.font ?: self.typographyScheme.subtitle1;
+  UIFont *titleFont = self.titleLabel.font ?: self.defaultTitleLabelFont;
+  UIFont *detailFont = self.detailLabel.font ?: self.defaultDetailLabelFont;
 //  if (_mdc_adjustsFontForContentSizeCategory) {
 //    titleFont =
 //    [titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleHeadline
@@ -446,6 +512,22 @@ static const CGFloat kDetailColorOpacity = 0.6f;
   self.titleLabel.font = titleFont;
   self.detailLabel.font = detailFont;
   [self assignFrames];
+}
+
+- (UIFont *)defaultTitleLabelFont {
+  return [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleTitle];
+}
+
+- (UIFont *)defaultDetailLabelFont {
+  return [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleCaption];
+}
+
+- (UIColor *)defaultTitleLabelTextColor {
+  return [UIColor colorWithWhite:0 alpha:kTitleColorOpacity];
+}
+
+- (UIColor *)defaultDetailLabelTextColor {
+  return [UIColor colorWithWhite:0 alpha:kDetailColorOpacity];
 }
 
 @end
