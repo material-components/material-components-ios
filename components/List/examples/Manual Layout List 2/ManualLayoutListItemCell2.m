@@ -288,7 +288,7 @@ static const CGFloat kDetailColorOpacity = 0.6f;
   CGFloat leadingPadding = 0;
   CGFloat topPadding = 0;
   if (!CGSizeEqualToSize(size, CGSizeZero)) {
-    leadingPadding = kDefaultHorizontalMargin;
+    leadingPadding = self.layoutMargins.left + kDefaultHorizontalMargin;
     topPadding = [self verticalMarginForImageViewOfSize:size];
   }
   CGPoint origin = CGPointMake(leadingPadding, topPadding);
@@ -306,7 +306,7 @@ static const CGFloat kDetailColorOpacity = 0.6f;
   CGFloat trailingPadding = 0;
   CGFloat topPadding = 0;
   if (!CGSizeEqualToSize(size, CGSizeZero)) {
-    trailingPadding = kDefaultHorizontalMargin;
+    trailingPadding = self.layoutMargins.right + kDefaultHorizontalMargin;
     topPadding = [self verticalMarginForImageViewOfSize:size];
   }
   CGFloat originX = self.cellWidth - trailingPadding - size.width;
@@ -335,7 +335,7 @@ static const CGFloat kDetailColorOpacity = 0.6f;
 //  CGFloat textContainerMinX = leadingImageViewMaxX + kDefaultHorizontalMargin;
   CGFloat textContainerMinX = [self dynamicTextOffset];
   CGFloat trailingImageViewMinX = self.trailingImage ?
-      CGRectGetMinX(self.trailingImageView.frame) : self.cellWidth;
+      CGRectGetMinX(self.trailingImageView.frame) : self.cellWidth - self.layoutMargins.right;
   CGFloat textContainerMaxX = trailingImageViewMinX - kDefaultHorizontalMargin;
   CGFloat textContainerMinY = kDefaultVerticalMarginMax;
   CGFloat textContainerWidth = textContainerMaxX - textContainerMinX;
@@ -408,13 +408,21 @@ static const CGFloat kDetailColorOpacity = 0.6f;
 }
 
 - (CGFloat)dynamicTextOffset {
-  if (!self.leadingImage) {
-    return kTextLeadingMarginMin;
-  } else if (CGRectGetHeight(self.leadingImageView.frame) <= kImageSideLengthMedium) {
-    return kTextLeadingMarginMedium;
+  CGFloat startingOffset = 0;
+  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    startingOffset = self.layoutMargins.right;
   } else {
-    return kTextLeadingMarginMax;
+    startingOffset = self.layoutMargins.left;
   }
+  CGFloat additionalOffset = 0;
+  if (!self.leadingImage) {
+    additionalOffset = kTextLeadingMarginMin;
+  } else if (CGRectGetHeight(self.leadingImageView.frame) <= kImageSideLengthMedium) {
+    additionalOffset = kTextLeadingMarginMedium;
+  } else {
+    additionalOffset = kTextLeadingMarginMax;
+  }
+  return startingOffset + additionalOffset;
 }
 
 - (CGFloat)dynamicInterLabelVerticalPadding {
@@ -501,14 +509,14 @@ static const CGFloat kDetailColorOpacity = 0.6f;
 - (void)adjustFontsForContentSizeCategory {
   UIFont *titleFont = self.titleLabel.font ?: self.defaultTitleLabelFont;
   UIFont *detailFont = self.detailLabel.font ?: self.defaultDetailLabelFont;
-//  if (_mdc_adjustsFontForContentSizeCategory) {
-//    titleFont =
-//    [titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleHeadline
-//                            scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
-//    detailFont =
-//    [detailFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
-//                             scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
-//  }
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    titleFont =
+    [titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleTitle
+                            scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+    detailFont =
+    [detailFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleCaption
+                             scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+  }
   self.titleLabel.font = titleFont;
   self.detailLabel.font = detailFont;
   [self assignFrames];
