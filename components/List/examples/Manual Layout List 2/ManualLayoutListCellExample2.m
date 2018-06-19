@@ -22,8 +22,7 @@
 
 static NSString *const kManualLayoutListItemCell2ReuseIdentifier = @"kManualLayoutListItemCell2ReuseIdentifier";
 
-static const CGFloat kSmallestCellHeight = 40.f;
-static const CGFloat kSmallArbitraryCellWidth = 200.f;
+static const CGFloat kArbitraryCellHeight = 40.f;
 
 @interface ManualLayoutListCellExample2 ()
 
@@ -38,7 +37,6 @@ static const CGFloat kSmallArbitraryCellWidth = 200.f;
   flowLayout.minimumInteritemSpacing = 0;
   flowLayout.minimumLineSpacing = 1;
   flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
-  flowLayout.estimatedItemSize = CGSizeMake(kSmallArbitraryCellWidth, kSmallestCellHeight);
   return [self initWithCollectionViewLayout:flowLayout];
 }
 
@@ -59,9 +57,11 @@ static const CGFloat kSmallArbitraryCellWidth = 200.f;
   self.collectionView.alwaysBounceVertical = YES;
   self.automaticallyAdjustsScrollViewInsets = NO;
   self.parentViewController.automaticallyAdjustsScrollViewInsets = NO;
+  ((UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout).estimatedItemSize =
+      CGSizeMake(self.view.bounds.size.width, kArbitraryCellHeight);
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
-    self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
+    self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
   }
 #endif
   // Register cell class.
@@ -93,24 +93,13 @@ static const CGFloat kSmallArbitraryCellWidth = 200.f;
                                             forIndexPath:indexPath];
 
   CGFloat cellWidth = CGRectGetWidth(self.collectionView.bounds);
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-  if (@available(iOS 11.0, *)) {
-    cellWidth -=
-    (collectionView.adjustedContentInset.left + collectionView.adjustedContentInset.right);
-  }
-#endif
   cell.cellWidth = cellWidth;
 
-  cell.typographyScheme = _typographyScheme;
   cell.mdc_adjustsFontForContentSizeCategory = YES;
 
   if (indexPath.item % 2 == 0) {
     UIImage *image2 = [UIImage imageNamed:@"Cake"];
     cell.trailingImage = image2;
-  }
-
-  if (indexPath.item == 36) {
-    NSLog(@"32");
   }
 
   NSArray *array = @[@"Sed ut perspiciatis unde omnis iste natus error",
@@ -163,10 +152,12 @@ static const CGFloat kSmallArbitraryCellWidth = 200.f;
        withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 
-  [self.collectionView.collectionViewLayout invalidateLayout];
+  ((UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout).estimatedItemSize =
+  CGSizeMake(size.width, kArbitraryCellHeight);
 
   [coordinator animateAlongsideTransition:nil completion:^(__unused id context) {
     [self.collectionView.collectionViewLayout invalidateLayout];
+    [self.collectionView reloadData];
   }];
 }
 

@@ -32,24 +32,44 @@
 @property (nonatomic, assign) CGFloat cellWidth;
 
 /**
- The label used to display title text, which is the most prominent text in the cell.
- */
-@property (strong, nonatomic, readonly, nonnull) UILabel *titleLabel;
-
-/**
  A convenience accessor for the title text.
  */
 @property (nonatomic, copy, nullable) NSString *titleText;
 
 /**
- The label used to display detail text, below the title text.
+ A convenience accessor for the title text color.
  */
-@property (strong, nonatomic, readonly, nonnull) UILabel *detailLabel;
+@property (nonatomic, strong, nullable) UIColor *titleLabelTextColor;
+
+/**
+ A convenience accessor for the title text font.
+ */
+@property (nonatomic, strong, nullable) UIFont *titleLabelFont;
+
+/**
+ A convenience accessor for the title text font.
+ */
+@property (nonatomic, assign) NSTextAlignment titleLabelTextAlignment;
 
 /**
  A convenience accessor for the detail text.
  */
 @property (nonatomic, copy, nullable) NSString *detailText;
+
+/**
+ A convenience accessor for the detail text color.
+ */
+@property (nonatomic, strong, nullable) UIColor *detailLabelTextColor;
+
+/**
+ A convenience accessor for the detail text font.
+ */
+@property (nonatomic, strong, nullable) UIFont *detailLabelFont;
+
+/**
+ A convenience accessor for the detail text font.
+ */
+@property (nonatomic, assign) NSTextAlignment detailLabelTextAlignment;
 
 /**
  The UIImageview used to display the leading image.
@@ -62,9 +82,9 @@
 @property (strong, nonatomic, nullable) UIImage *leadingImage;
 
 /**
- The UIImageview used to display the trailing image.
+ A convenience accessor for the leading image corner radius.
  */
-@property (strong, nonatomic, nonnull, readonly) UIImageView *trailingImageView;
+@property (nonatomic, assign) UIImage *leadingImageCornerRadius;
 
 /**
  A convenience accessor for the trailing image.
@@ -72,9 +92,9 @@
 @property (strong, nonatomic, nullable) UIImage *trailingImage;
 
 /**
- The typography scheme of the cell.
+ A convenience accessor for the trailing image corner radius.
  */
-@property (strong, nonatomic, nonnull) id<MDCTypographyScheming> typographyScheme;
+@property (nonatomic, assign) UIImage *trailingImageCornerRadius;
 
 /**
  Indicates whether the view's contents should automatically update their font when the device’s
