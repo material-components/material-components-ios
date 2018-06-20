@@ -16,6 +16,8 @@
 
 #import "MDCTextInputControllerFilled.h"
 
+#import <MDFInternationalization/MDFInternationalization.h>
+
 #import "MDCMultilineTextField.h"
 #import "MDCTextInput.h"
 #import "MDCTextInputBorderView.h"
@@ -43,6 +45,7 @@ static const CGFloat MDCTextInputControllerFilledFullPadding = 16.f;
 // The guidelines have 8 points of padding but since the fonts on iOS are slightly smaller, we need
 // to add points to keep the versions at the same height.
 static const CGFloat MDCTextInputControllerFilledHalfPadding = 8.f;
+static const CGFloat MDCTextInputControllerFilledThreeQuartersPadding = 12.f;
 static const CGFloat MDCTextInputControllerFilledHalfPaddingAddition = 1.f;
 static const CGFloat MDCTextInputControllerFilledNormalPlaceholderPadding = 20.f;
 
@@ -105,6 +108,24 @@ static CGFloat _underlineHeightNormalDefault =
 }
 
 #pragma mark - MDCTextInputPositioningDelegate
+
+- (CGRect)leadingViewRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect {
+  CGRect leadingViewRect = defaultRect;
+  CGFloat xOffset = (self.textInput.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) ? -1 * MDCTextInputControllerFilledFullPadding : MDCTextInputControllerFilledFullPadding;
+
+  leadingViewRect = CGRectOffset(leadingViewRect, xOffset, 0.f);
+
+  return leadingViewRect;
+}
+
+- (CGRect)trailingViewRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect {
+  CGRect trailingViewRect = defaultRect;
+  CGFloat xOffset = (self.textInput.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) ? MDCTextInputControllerFilledThreeQuartersPadding : -1 * MDCTextInputControllerFilledThreeQuartersPadding;
+
+  trailingViewRect = CGRectOffset(trailingViewRect, xOffset, 0.f);
+
+  return trailingViewRect;
+}
 
 // clang-format off
 /**
