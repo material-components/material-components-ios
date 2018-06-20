@@ -44,10 +44,24 @@
  */
 - (CGRect)editingRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect;
 
+/**
+ The area that the leadingView should inhabit when shown.
+
+ @param defaultRect The default value of the leading view rect.
+ */
+- (CGRect)leadingViewRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect;
+
 /** Called from the end of the input's layoutSubviews. */
 - (void)textInputDidLayoutSubviews;
 
 /** Called from the end of the input's updateConstraints. */
 - (void)textInputDidUpdateConstraints;
+
+/**
+ The area that the trailingView should inhabit when shown.
+
+ @param defaultRect The default value of the trailing view rect.
+ */
+- (CGRect)trailingViewRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect;
 
 @end
