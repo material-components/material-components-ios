@@ -16,7 +16,7 @@
 
 #import "MaterialTextFields.h"
 
-static NSString *const TextFieldTableViewCellIdentifier = @"cell";
+static NSString *const TSTTextFieldTableViewCellIdentifier = @"TSTTextFieldsTableViewExampleCell";
 
 @interface TextFieldTableViewCell : UITableViewCell
 
@@ -41,7 +41,7 @@ static NSString *const TextFieldTableViewCellIdentifier = @"cell";
   self.tableView.rowHeight = UITableViewAutomaticDimension;
   self.tableView.estimatedRowHeight = 82.f;
   self.tableView.dataSource = self;
-  [self.tableView registerClass:[TextFieldTableViewCell class] forCellReuseIdentifier:TextFieldTableViewCellIdentifier];
+  [self.tableView registerClass:[TextFieldTableViewCell class] forCellReuseIdentifier:TSTTextFieldTableViewCellIdentifier];
 
   self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:self.tableView];
@@ -70,7 +70,7 @@ static NSString *const TextFieldTableViewCellIdentifier = @"cell";
 #pragma mark - UITableViewDataSource
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:TextFieldTableViewCellIdentifier];
+  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:TSTTextFieldTableViewCellIdentifier];
   if ([cell isKindOfClass:[TextFieldTableViewCell class]]) {
     TextFieldTableViewCell *textFieldCell = (TextFieldTableViewCell*)cell;
 
