@@ -48,13 +48,13 @@ Set an appropriate
 value if your button does not have a title. This is often the case with Floating
 Action Button instances which typically only have an icon.
 
-####Objective-C
+#### Objective-C
 
 ```objc
 button.accessibilityLabel = @"Create";
 ```
 
-####Swift
+#### Swift
 
 ```swift
 button.accessibilityLabel = "Create"
@@ -79,7 +79,7 @@ while maintaining the desired visual appearance. For more see the [layout
 guidance](https://guidelines.googleplex.com/googlematerial/layout/#principles)
 in the spec.
 
-#####Objective-C
+##### Objective-C
 
 ```objc
   CGFloat verticalInset = MIN(0, -(48 - CGRectGetHeight(button.bounds)) / 2);
@@ -87,7 +87,7 @@ in the spec.
   button.hitAreaInsets = UIEdgeInsetsMake(verticalInset, horizontalInset, verticalInset, horizontalInset);
 ```
 
-#####Swift
+##### Swift
 
 ```swift
 let buttonVerticalInset =
@@ -106,13 +106,13 @@ guidelines](https://guidelines.googleplex.com/googlematerial/components/buttons.
 typically recommend [a minimum height of 36 points and a minimum width of 64
 points](https://material.io/design/components/buttons.html#specs).
 
-#####Objective-C
+##### Objective-C
 
 ```objc
 button.minimumSize = CGSizeMake(64, 36);
 ```
 
-#####Swift
+##### Swift
 
 ```swift
 button.minimumSize = CGSize(width: 64, height: 48)
