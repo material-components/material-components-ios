@@ -36,43 +36,109 @@ elevation, Material Design ripples, and other stateful design APIs.
 - [Color Theming](color-theming.md)
 - [Typography Theming](typography-theming.md)
 
+## Accessibility {#a11y}
 
-## Accessibility
-
-To help ensure your buttons are accessible to as many users as possible, please be sure to review
-the following recommendations:
+To help ensure your buttons are accessible to as many users as possible, please
+be sure to review the following recommendations:
 
 ### Set `-accessibilityLabel`
+
 Set an appropriate
 [`accessibilityLabel`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619577-accessibilitylabel)
-value if your button does not have a title. This is often the case with `MDCFloatingButton`
-instances which typically only have an icon.
-```
+value if your button does not have a title. This is often the case with Floating
+Action Button instances which typically only have an icon.
+
+#### Objective-C
+
+```objc
 button.accessibilityLabel = @"Create";
+```
+
+#### Swift
+
+```swift
+button.accessibilityLabel = "Create"
 ```
 
 ### Minimum touch size
 
-#### Set the frame
-Set your buttons to have a minium size. [Material Touch guidelines](https://material.io/design/layout/spacing-methods.html#touch-click-targets) typically recommend a height and width of 48 points.
+Make sure that your buttons have a minimum touch area. The Google Material spec
+for buttons calls for buttons that have a [visual height of
+36](https://guidelines.googleplex.com/googlematerial/components/buttons.html#style)
+and that [touch areas should be at least 48 points high and 64
+wide](https://material.io/design/layout/spacing-methods.html#touch-click-targets).
+
+#### Set the touch size
+
+To keep a button's visual sizes small with larger touchable areas, set the
+`hitAreaInsets` to a negative value. Be careful to maintain sufficient distance
+between the button touch targets. This will allow your button to have [a large
+enough touch
+target](https://material.io/design/layout/spacing-methods.html#touch-click-targets)
+while maintaining the desired visual appearance. For more see the [layout
+guidance](https://guidelines.googleplex.com/googlematerial/layout/#principles)
+in the spec.
+
+##### Objective-C
+
+```objc
+  CGFloat verticalInset = MIN(0, -(48 - CGRectGetHeight(button.bounds)) / 2);
+  CGFloat horizontalInset = MIN(0, -(48 - CGRectGetWidth(button.bounds)) / 2);
+  button.hitAreaInsets = UIEdgeInsetsMake(verticalInset, horizontalInset, verticalInset, horizontalInset);
 ```
-button.minimumSize = CGSizeMake(48, 48);
+
+##### Swift
+
+```swift
+let buttonVerticalInset =
+  min(0, -(kMinimumAccessibleButtonSize.height - button.bounds.height) / 2);
+let buttonHorizontalInset =
+  min(0, -(kMinimumAccessibleButtonSize.width - button.bounds.width) / 2);
+button.hitAreaInsets =
+  UIEdgeInsetsMake(buttonVerticalInset, buttonHorizontalInset,
+                   buttonVerticalInset, buttonHorizontalInset);
 ```
 
-#### Set the touch size (alternative)
+#### Set the minimum visual size of the button
 
-An alternate approach is to set the `hitAreaInsets` to a negative value to make the touch target
-larger than the visual appearance of the button. When you do this you should be careful to make sure
-you maintain an 8-point distance between the button touch targets. This will allow your button to
-have [a large enough touch
-target](https://material.io/design/layout/spacing-methods.html#touch-click-targets) while
-maintaining the desired visual appearance.
+Set your buttons to have a minimum size. [Google Material Buttons
+guidelines](https://guidelines.googleplex.com/googlematerial/components/buttons.html#style)
+typically recommend [a minimum height of 36 points and a minimum width of 64
+points](https://material.io/design/components/buttons.html#specs).
 
+##### Objective-C
+
+```objc
+button.minimumSize = CGSizeMake(64, 36);
 ```
-  CGFloat verticalInset = MIN(0, -(48 - button.frame.size.height) / 2);
-  button .hitAreaInsets = UIEdgeInsetsMake(verticalInset, 0, verticalInset, 0);
 
+##### Swift
+
+```swift
+button.minimumSize = CGSize(width: 64, height: 48)
 ```
-When you do this make sure to follow the rest of the layout guidence and pad buttons with the
-recommended space.
 
+##### Exceptions
+
+However there are
+[some](https://material.io/design/components/buttons.html#toggle-button) clear
+[exceptions](https://material.io/design/components/app-bars-bottom.html#specs)
+for these rules. Please adjust your buttons sizes accordingly.
+
+#### Using `accessibilityHint`
+
+Apple rarely recommends using the `accessibilityHint` because the label should
+already be clear enough to indicate what will happen. Before you consider
+setting an `-accessibilityHint` consider if you need it or if the rest of your
+UI could be adjusted to make it more contextually clear.
+
+A well-crafted, thoughtful user interface can remove the need for
+`accessibilityHint` in most situations. Examples for a selection dialog to
+choose one or more days of the week for a repeating calendar event:
+
+*   (Good) The dialog includes a header above the list of days reading, "Event
+    repeats weekly on the following day(s)." The list items do not need
+    `accessibilityHint` values.
+*   (Bad) The dialog has no header above the list of days. Each list item
+    (representing a day of the week) has the `accessibilityHint` value, "Toggles
+    this day."
