@@ -22,6 +22,7 @@ import MaterialComponents.MaterialButtons
 class ButtonsSimpleExampleSwiftViewController: UIViewController {
 
   let floatingButtonPlusDimension = CGFloat(24)
+  let kMinimumAccessibleButtonSize = CGSize(width: 64, height: 48)
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -29,23 +30,37 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
     view.backgroundColor = UIColor(white: 0.9, alpha: 1.0)
     //let titleColor = UIColor.white
     let backgroundColor = UIColor(white: 0.1, alpha: 1.0)
+    let buttonScheme = MDCButtonScheme()
+    
+    let containedButton = MDCButton()
+    MDCContainedButtonThemer.applyScheme(buttonScheme, to: containedButton)
+    containedButton.setTitle("Tap Me Too", for: UIControlState())
+    containedButton.sizeToFit()
+    let containedButtonVerticalInset =
+      min(0, -(kMinimumAccessibleButtonSize.height - containedButton.bounds.height) / 2);
+    let containedButtonHorizontalInset =
+      min(0, -(kMinimumAccessibleButtonSize.width - containedButton.bounds.width) / 2);
+    containedButton.hitAreaInsets =
+      UIEdgeInsetsMake(containedButtonVerticalInset, containedButtonHorizontalInset,
+                       containedButtonVerticalInset, containedButtonHorizontalInset);
+    containedButton.translatesAutoresizingMaskIntoConstraints = false
+    containedButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
+    view.addSubview(containedButton)
 
-    let raisedButton = MDCRaisedButton()
-    raisedButton.setBackgroundColor(backgroundColor, for: .normal)
-    raisedButton.setElevation(.raisedButtonResting, for: UIControlState())
-    raisedButton.setTitle("Tap Me Too", for: UIControlState())
-    raisedButton.sizeToFit()
-    raisedButton.translatesAutoresizingMaskIntoConstraints = false
-    raisedButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
-    view.addSubview(raisedButton)
-
-    let flatButton = MDCFlatButton()
-    flatButton.setTitleColor(.gray, for: .normal)
-    flatButton.setTitle("Touch me", for: UIControlState())
-    flatButton.sizeToFit()
-    flatButton.translatesAutoresizingMaskIntoConstraints = false
-    flatButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
-    view.addSubview(flatButton)
+    let textButton = MDCButton()
+    MDCTextButtonThemer.applyScheme(buttonScheme, to: textButton)
+    textButton.setTitle("Touch me", for: UIControlState())
+    textButton.sizeToFit()
+    let textButtonVerticalInset =
+      min(0, -(kMinimumAccessibleButtonSize.height - textButton.bounds.height) / 2);
+    let textButtonHorizontalInset =
+      min(0, -(kMinimumAccessibleButtonSize.width - textButton.bounds.width) / 2);
+    textButton.hitAreaInsets =
+      UIEdgeInsetsMake(textButtonVerticalInset, textButtonHorizontalInset,
+                       textButtonVerticalInset, textButtonHorizontalInset);
+    textButton.translatesAutoresizingMaskIntoConstraints = false
+    textButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
+    view.addSubview(textButton)
 
     let floatingButton = MDCFloatingButton()
     floatingButton.backgroundColor = backgroundColor
@@ -55,19 +70,20 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
 
     let plusShapeLayer = ButtonsTypicalUseSupplemental.createPlusShapeLayer(floatingButton)
     floatingButton.layer.addSublayer(plusShapeLayer)
+    floatingButton.accessibilityLabel = "Create"
 
     view.addSubview(floatingButton)
 
     let views = [
-      "raised": raisedButton,
-      "flat": flatButton,
+      "contained": containedButton,
+      "text": textButton,
       "floating": floatingButton
     ]
 
-    centerView(view: flatButton, onView: self.view)
+    centerView(view: textButton, onView: self.view)
 
     view.addConstraints(
-      NSLayoutConstraint.constraints(withVisualFormat: "V:[raised]-40-[flat]-40-[floating]",
+      NSLayoutConstraint.constraints(withVisualFormat: "V:[contained]-40-[text]-40-[floating]",
         options: .alignAllCenterX,
         metrics: nil,
         views: views))
