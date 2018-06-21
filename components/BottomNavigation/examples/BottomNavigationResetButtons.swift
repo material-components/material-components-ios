@@ -104,12 +104,10 @@ class BottomNavigationResetExample: UIViewController {
 
   @objc func reorderOne(_ button: UIButton) {
     bottomNavBar.items = [tabBarItem2, tabBarItem3, tabBarItem1]
-    
   }
 
   @objc func reorderTwo(_ button: UIButton) {
     bottomNavBar.items = [tabBarItem3, tabBarItem1, tabBarItem2]
-    bottomNavBar.selectedItem = tabBarItem2
   }
 }
 
