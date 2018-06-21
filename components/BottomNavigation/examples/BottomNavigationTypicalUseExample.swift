@@ -53,9 +53,7 @@ class BottomNavigationTypicalUseSwiftExample: UIViewController {
 
     // Select a bottom navigation bar item.
     bottomNavBar.selectedItem = tabBarItem2;
-    bottomNavBar.backgroundColor = .white
-    bottomNavBar.selectedItemTintColor = .blue
-    bottomNavBar.unselectedItemTintColor = .red
+
   }
   
   func layoutBottomNavBar() {
