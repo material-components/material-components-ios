@@ -43,21 +43,6 @@ target "MDCDragons" do
   use_frameworks!
 end
 
-# EarlGrey configuration
-PROJECT_NAME = 'MDCCatalog'
-TEST_TARGET = 'MDCEarlGreyTests'
-SCHEME_FILE = 'MDCEarlGreyTests.xcscheme'
-
-target TEST_TARGET do
-  platform :ios, '8.0'
-  project PROJECT_NAME
-  inherit! :search_paths
-  pod 'EarlGrey', '<2'
-  pod 'MaterialComponentsEarlGreyTests', :path => '../'
-
-  use_frameworks!
-end
-
 post_install do |installer|
   pod_dir = File.dirname(installer.pods_project.path)
 
@@ -77,22 +62,5 @@ post_install do |installer|
     new_xcconfig = File.read(mdc_xcconfig)
     new_xcconfig << "\n#include \"../../../MaterialComponentsWarnings.xcconfig\""
     File.write(mdc_xcconfig, new_xcconfig)
-  end
-
-  # EarlGrey configuration
-  earl_grey_dir = "#{File.dirname(__FILE__)}/third_party/EarlGrey"
-  `git submodule update --init #{earl_grey_dir}`
-  if $?.exitstatus == 0 
-    load "#{earl_grey_dir}/gem/lib/earlgrey/configure_earlgrey.rb"
-    configure_for_earlgrey(installer, PROJECT_NAME, TEST_TARGET, SCHEME_FILE)
-  else
-    puts "Earl Grey submodule update failed. If this project is not a git "\
-         "repository, then this is fine." 
-  end
-
-  installer.pods_project.build_configurations.each do |config|
-    config.build_settings['LD_RUNPATH_SEARCH_PATHS'] = [
-      '$(FRAMEWORK_SEARCH_PATHS)'
-    ]
   end
 end

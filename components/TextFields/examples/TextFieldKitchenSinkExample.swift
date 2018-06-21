@@ -79,6 +79,13 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     return helperLabel
   }()
 
+  let baselineTestLabel: UILabel = {
+    let baselineTestLabel = UILabel()
+    baselineTestLabel.text = "popopopopopop       "
+    baselineTestLabel.translatesAutoresizingMaskIntoConstraints = false
+    return baselineTestLabel
+  }()
+
   var allInputControllers = [MDCTextInputController]()
   var allTextFieldControllers = [MDCTextInputController]()
   var allMultilineTextFieldControllers = [MDCTextInputController]()
@@ -193,6 +200,31 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     textFieldControllerFloatingCharMax.placeholderText = "This is floating with character count"
 
     controllersWithCharacterCount.append(textFieldControllerFloatingCharMax)
+
+    baselineTestLabel.font = textFieldFloatingCharMax.font
+    self.scrollView.addSubview(baselineTestLabel)
+
+    if #available(iOSApplicationExtension 9.0, *) {
+      baselineTestLabel.trailingAnchor.constraint(equalTo: textFieldFloatingCharMax.trailingAnchor,
+                                                 constant: 0).isActive = true
+
+      baselineTestLabel.firstBaselineAnchor.constraint(equalTo: textFieldFloatingCharMax.firstBaselineAnchor).isActive = true
+    } else {
+      NSLayoutConstraint(item: baselineTestLabel,
+                         attribute: .trailing,
+                         relatedBy: .equal,
+                         toItem: textFieldFloatingCharMax,
+                         attribute: .trailing,
+                         multiplier: 1,
+                         constant: 0).isActive = true
+      NSLayoutConstraint(item: baselineTestLabel,
+                         attribute: .lastBaseline,
+                         relatedBy: .equal,
+                         toItem: textFieldFloatingCharMax,
+                         attribute: .lastBaseline,
+                         multiplier: 1,
+                         constant: 0).isActive = true
+    }
 
     return [textFieldControllerFloating, textFieldControllerFloatingCharMax]
   }
