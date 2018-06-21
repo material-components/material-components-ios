@@ -80,12 +80,6 @@ class BottomNavigationTypicalUseSwiftExample: UIViewController {
   }
   #endif
 
-  override func viewDidLoad() {
-    super.viewDidLoad()
-
-    appBar.addSubviewsToParent()
-  }
-
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     self.navigationController?.setNavigationBarHidden(true, animated: animated)
