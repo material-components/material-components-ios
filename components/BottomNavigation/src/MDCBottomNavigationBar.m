@@ -193,7 +193,7 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
   [super layoutSubviews];
 
   CGSize size = self.bounds.size;
-  if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation)) {
+  if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
     [self layoutLandscapeModeWithBottomNavSize:size
                                 containerWidth:self.maxLandscapeClusterContainerWidth];
   } else {
@@ -208,7 +208,7 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
   UIEdgeInsets insets = self.mdc_safeAreaInsets;
   CGFloat heightWithInset = kMDCBottomNavigationBarHeight + insets.bottom;
   if (self.alignment == MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles &&
-      UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation)) {
+      self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
     heightWithInset = kMDCBottomNavigationBarHeightAdjacentTitles + insets.bottom;
   }
   CGSize insetSize = CGSizeMake(size.width, heightWithInset);
@@ -252,7 +252,7 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
                            containerWidth:(CGFloat)containerWidth {
   CGFloat barHeight = kMDCBottomNavigationBarHeight;
   if (self.alignment == MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles &&
-      UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation)) {
+      self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
     barHeight = kMDCBottomNavigationBarHeightAdjacentTitles;
   }
   if (itemsDistributed) {
