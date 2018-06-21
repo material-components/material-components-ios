@@ -16,9 +16,9 @@
 
 #import <UIKit/UIKit.h>
 
-#import "TextFieldPresentationStylesLegacyExampleSupplemental.h"
+#import "TextFieldControllerStylesExampleSupplemental.h"
 
-@implementation TextFieldPresentationStylesExample (Supplemental)
+@implementation TextFieldControllerStylesExample (Supplemental)
 
 - (void)setupExampleViews {
   [self setupScrollView];
@@ -61,7 +61,7 @@
 
 @end
 
-@implementation TextFieldPresentationStylesExample (CatalogByConvention)
+@implementation TextFieldControllerStylesExample (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
   return @[ @"Text Field", @"Controller Styles" ];
@@ -72,7 +72,7 @@
 }
 
 + (BOOL)catalogIsPresentable {
-  return NO;
+  return YES;
 }
 
 @end

@@ -23,6 +23,7 @@
   MDCChipView *_chipView;
   MDCSlider *_widthSlider;
   MDCSlider *_heightSlider;
+  UISegmentedControl *_horizontalAlignmentControl;
 }
 
 - (void)viewDidLoad {
@@ -54,6 +55,13 @@
                     action:@selector(heightSliderChanged:)
           forControlEvents:UIControlEventValueChanged];
   [self.view addSubview:_heightSlider];
+
+  _horizontalAlignmentControl = [[UISegmentedControl alloc] initWithItems:@[ @"Default", @"Centered" ]];
+  _horizontalAlignmentControl.selectedSegmentIndex = 0;
+  [_horizontalAlignmentControl addTarget:self
+                                  action:@selector(horizontalAlignmentChanged:)
+                        forControlEvents:UIControlEventValueChanged];
+  [self.view addSubview:_horizontalAlignmentControl];
 }
 
 - (void)viewWillLayoutSubviews {
@@ -63,6 +71,8 @@
   _widthSlider.frame = CGRectMake(20, 140, self.view.bounds.size.width - 40, sliderSize.height);
   _heightSlider.frame =
       CGRectMake(20, 140 + sliderSize.height + 20, self.view.bounds.size.width - 40, sliderSize.height);
+  _horizontalAlignmentControl.frame =
+      CGRectMake(20, CGRectGetMaxY(_heightSlider.frame) + 20, self.view.bounds.size.width - 40, _horizontalAlignmentControl.frame.size.height);
 }
 
 - (void)widthSliderChanged:(MDCSlider *)slider {
@@ -76,6 +86,14 @@
   CGRect frame = _chipView.frame;
   frame.size.height = slider.value;
   _chipView.frame = frame;
+  [_chipView layoutIfNeeded];
+}
+
+- (void)horizontalAlignmentChanged:(UISegmentedControl *)segmentedControl {
+  UIControlContentHorizontalAlignment alignment = (segmentedControl.selectedSegmentIndex == 0)
+      ? UIControlContentHorizontalAlignmentFill
+      : UIControlContentHorizontalAlignmentCenter;
+  _chipView.contentHorizontalAlignment = alignment;
   [_chipView layoutIfNeeded];
 }
 

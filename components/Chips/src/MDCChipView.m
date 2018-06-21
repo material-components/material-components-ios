@@ -226,6 +226,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
    forControlEvents:UIControlEventTouchDragExit];
 
     self.layer.elevation = [self elevationForState:UIControlStateNormal];
+    self.contentHorizontalAlignment = UIControlContentHorizontalAlignmentFill;
 
     [self updateBackgroundColor];
   }
@@ -511,6 +512,11 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   [self updateTitleColor];
 }
 
+- (void)setContentHorizontalAlignment:(UIControlContentHorizontalAlignment)alignment {
+  [super setContentHorizontalAlignment:alignment];
+  [self setNeedsLayout];
+}
+
 - (void)updateTitleFont {
   UIFont *customTitleFont = _titleFont;
 
@@ -629,7 +635,47 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 }
 
 - (CGRect)contentRect {
-  return UIEdgeInsetsInsetRect(self.bounds, self.contentPadding);
+  CGRect contentRect = UIEdgeInsetsInsetRect(self.bounds, self.contentPadding);
+  UIControlContentHorizontalAlignment alignment = self.contentHorizontalAlignment;
+  if (alignment != UIControlContentHorizontalAlignmentCenter) {
+    return contentRect;
+  }
+
+  // Calculate the minimum width needed for all the content. If it's less than contentSize.width,
+  // then inset to center. If not, just return contentRect.
+  CGFloat neededContentWidth = 0.0f;
+  CGSize maxContentSize = contentRect.size;
+
+  // If there's an imageView, add it and its padding.
+  if (self.showImageView || self.showSelectedImageView) {
+    CGFloat maxImageWidth = 0.0f;
+    if (self.showImageView) {
+      maxImageWidth = [self sizeForImageView:self.imageView maxSize:maxContentSize].width;
+    }
+    if (self.showSelectedImageView) {
+      maxImageWidth = MAX(
+          maxImageWidth, [self sizeForImageView:self.selectedImageView maxSize:maxContentSize].width);
+    }
+    neededContentWidth += maxImageWidth + UIEdgeInsetsHorizontal(self.imagePadding);
+  }
+
+  // Always add the title and its padding.
+  neededContentWidth += [_titleLabel sizeThatFits:maxContentSize].width;
+  neededContentWidth += UIEdgeInsetsHorizontal(_titlePadding);
+
+  // If there's an accessoryView, add it and its padding.
+  if (self.showAccessoryView) {
+    neededContentWidth += [self sizeForAccessoryViewWithMaxSize:maxContentSize].width;
+    neededContentWidth += UIEdgeInsetsHorizontal(self.accessoryPadding);
+  }
+
+  CGFloat difference = maxContentSize.width - neededContentWidth;
+  if (difference > 0.0f) {
+    CGFloat padding = difference / 2.0f;
+    contentRect.size.width -= difference;
+    contentRect.origin.x += padding;
+  }
+  return contentRect;
 }
 
 - (CGRect)imageViewFrame {
@@ -643,8 +689,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 - (CGRect)frameForImageView:(UIImageView *)imageView visible:(BOOL)visible {
   CGRect frame = CGRectMake(CGRectGetMinX(self.contentRect), CGRectGetMidY(self.contentRect), 0, 0);
   if (visible) {
-    CGSize availableSize = CGSizeShrinkWithInsets(self.contentRect.size, self.imagePadding);
-    CGSize selectedSize = [imageView sizeThatFits:availableSize];
+    CGSize selectedSize = [self sizeForImageView:imageView maxSize:self.contentRect.size];
     frame = MDCChipBuildFrame(_imagePadding,
                               selectedSize,
                               CGRectGetMinX(self.contentRect),
@@ -654,11 +699,15 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   return frame;
 }
 
+- (CGSize)sizeForImageView:(UIImageView *)imageView maxSize:(CGSize)maxSize {
+  CGSize availableSize = CGSizeShrinkWithInsets(maxSize, self.imagePadding);
+  return [imageView sizeThatFits:availableSize];
+}
+
 - (CGRect)accessoryViewFrame {
   CGSize size = CGSizeZero;
   if (self.showAccessoryView) {
-    CGSize availableSize = CGSizeShrinkWithInsets(self.contentRect.size, self.accessoryPadding);
-    size = [_accessoryView sizeThatFits:availableSize];
+    size = [self sizeForAccessoryViewWithMaxSize:self.contentRect.size];
   }
   CGFloat xOffset = CGRectGetMaxX(self.contentRect) - size.width - _accessoryPadding.right;
   return MDCChipBuildFrame(_accessoryPadding,
@@ -666,6 +715,11 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
                            xOffset,
                            CGRectGetHeight(self.frame),
                            self.pixelScale);
+}
+
+- (CGSize)sizeForAccessoryViewWithMaxSize:(CGSize)maxSize {
+  CGSize availableSize = CGSizeShrinkWithInsets(maxSize, self.accessoryPadding);
+  return [_accessoryView sizeThatFits:availableSize];
 }
 
 - (CGRect)titleLabelFrame {

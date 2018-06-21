@@ -16,13 +16,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TextFieldPresentationStylesExample : UIViewController <UITextFieldDelegate>
+@interface TextFieldControllerStylesExample : UIViewController <UITextFieldDelegate>
 
 @property(nonatomic, strong) UIScrollView *scrollView;
 
 @end
 
-@interface TextFieldPresentationStylesExample (Supplemental)
+@interface TextFieldControllerStylesExample (Supplemental)
 
 - (void)setupExampleViews;
 

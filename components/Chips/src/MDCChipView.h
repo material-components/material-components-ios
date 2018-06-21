@@ -29,6 +29,12 @@
 
  Chips contain an optional leading image, a title label and an optional trailing accessory view.
  They can also contain a leading image that appears only when the chip is selected.
+
+ Chips currently support two contentHorizontalAlignment styles: centered
+ (UIControlContentHorizontalAlignmentCenter) and default
+ (any other UIControlContentHorizontalAlignment value). In the default mode, the image and text will
+ be left-aligned, and the accessory view will be right aligned. In the centered mode, all three will
+ appear together in the center of the chip.
  */
 @interface MDCChipView : UIControl
 

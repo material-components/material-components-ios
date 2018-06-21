@@ -291,11 +291,30 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
             [button setValue:newValue forKey:keyPath];
           }
 
-        } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(title))]) {
-          [button setTitle:newValue forState:UIControlStateNormal];
+        } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(accessibilityHint))]) {
+          button.accessibilityHint = newValue;
+
+        } else if ([keyPath isEqualToString:
+                        NSStringFromSelector(@selector(accessibilityIdentifier))]) {
+          button.accessibilityIdentifier = newValue;
+
+        } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(accessibilityLabel))]) {
+          button.accessibilityLabel = newValue;
+
+        } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(accessibilityValue))]) {
+          button.accessibilityValue = newValue;
 
         } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(image))]) {
           [button setImage:newValue forState:UIControlStateNormal];
+
+        } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(tag))]) {
+          button.tag = [newValue integerValue];
+
+        } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(tintColor))]) {
+          button.tintColor = newValue;
+
+        } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(title))]) {
+          [button setTitle:newValue forState:UIControlStateNormal];
 
         } else {
           NSLog(@"Unknown key path notification received by %@ for %@.",
@@ -388,8 +407,15 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
     }
 
     NSArray<NSString *> *keyPaths = @[
-      kEnabledSelector, NSStringFromSelector(@selector(title)),
-      NSStringFromSelector(@selector(image))
+      NSStringFromSelector(@selector(accessibilityHint)),
+      NSStringFromSelector(@selector(accessibilityIdentifier)),
+      NSStringFromSelector(@selector(accessibilityLabel)),
+      NSStringFromSelector(@selector(accessibilityValue)),
+      kEnabledSelector,
+      NSStringFromSelector(@selector(image)),
+      NSStringFromSelector(@selector(tag)),
+      NSStringFromSelector(@selector(tintColor)),
+      NSStringFromSelector(@selector(title))
     ];
 
     // Remove old observers

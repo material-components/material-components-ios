@@ -40,9 +40,12 @@ NSString *const MDCTextFieldTextDidSetTextNotification = @"MDCTextFieldTextDidSe
 // by this amount on each side.
 static const CGFloat MDCTextInputClearButtonImageBuiltInPadding = -2.5f;
 static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
+static const CGFloat MDCTextInputTextRectYCorrection = 1.f;
 
 @interface MDCTextField () {
   UIColor *_cursorColor;
+
+  UILabel *_inputLayoutStrut;
 }
 
 @property(nonatomic, strong) MDCTextInputCommonFundament *fundament;
@@ -146,6 +149,8 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 
   [self setupUnderlineConstraints];
 
+  [self setupInputLayoutStrut];
+
   NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
   [defaultCenter addObserver:self
                     selector:@selector(textFieldDidBeginEditing:)
@@ -226,6 +231,23 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   self.borderView.borderPath = self.borderPath;
 }
 
+#pragma mark - Input Layout Strut Implementation
+
+- (void)setupInputLayoutStrut {
+  self.inputLayoutStrut.hidden = YES;
+  self.inputLayoutStrut.numberOfLines = 1;
+
+  [self addSubview:self.inputLayoutStrut];
+}
+
+- (void)updateInputLayoutStrut {
+  self.inputLayoutStrut.font = self.font;
+  self.inputLayoutStrut.text = self.text;
+
+  UIEdgeInsets insets = [self textInsets];
+  self.inputLayoutStrut.frame = CGRectMake(insets.left, insets.top, CGRectGetWidth(self.bounds) - insets.right, self.inputLayoutStrut.intrinsicContentSize.height);
+}
+
 #pragma mark - Applying Color
 
 - (void)applyCursorColor {
@@ -272,6 +294,13 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 
 - (void)setHidesPlaceholderOnInput:(BOOL)hidesPlaceholderOnInput {
   _fundament.hidesPlaceholderOnInput = hidesPlaceholderOnInput;
+}
+
+- (UILabel *)inputLayoutStrut {
+  if (!_inputLayoutStrut) {
+    _inputLayoutStrut = [[UILabel alloc] initWithFrame:CGRectZero];
+  }
+  return _inputLayoutStrut;
 }
 
 - (UILabel *)leadingUnderlineLabel {
@@ -522,7 +551,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
       (CGRectGetHeight(bounds) / 2.f) - MDCRint(MAX(self.font.lineHeight,
                                                     self.placeholderLabel.font.lineHeight) /
                                                 2.f);  // Text field or placeholder
-  actualY = textInsets.top - actualY;
+  actualY = textInsets.top - actualY + MDCTextInputTextRectYCorrection;
   textRect.origin.y = actualY;
 
   if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
@@ -652,6 +681,7 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
   }
   [self updateBorder];
   [self applyCursorColor];
+  [self updateInputLayoutStrut];
 
   if ([self.positioningDelegate respondsToSelector:@selector(textInputDidLayoutSubviews)]) {
     [self.positioningDelegate textInputDidLayoutSubviews];
@@ -670,6 +700,19 @@ static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
 
 + (BOOL)requiresConstraintBasedLayout {
   return YES;
+}
+
+- (UIView *)viewForFirstBaselineLayout {
+  return self.inputLayoutStrut;
+}
+
+- (UIView *)viewForLastBaselineLayout {
+  return self.inputLayoutStrut;
+}
+
+// TODO: (#4390) Remove when we drop iOS 9 support
+- (UIView *)viewForBaselineLayout {
+  return self.inputLayoutStrut;
 }
 
 #pragma mark - UITextField Notification Observation

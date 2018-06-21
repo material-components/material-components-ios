@@ -167,14 +167,6 @@ Unit tests in MDC are run by the developer, the continuous integration service, 
 1. Ensure unit tests run with no errors.
 1. Enter YES or NO
 
-
-### Interaction Tests (If necessary)
-
-
-Visual components should have interaction tests built with [Earl Grey](https://github.com/google/EarlGrey).
-
-//TODO and explain how
-
 ### Kokoro Support
 
 
