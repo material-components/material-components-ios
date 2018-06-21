@@ -19,7 +19,6 @@ import MaterialComponents
 
 class BottomNavigationExplicitlySetColorExample: UIViewController {
 
-  let appBar = MDCAppBar()
   var colorScheme = MDCSemanticColorScheme()
 
   let bottomNavBar = MDCBottomNavigationBar()
@@ -29,53 +28,11 @@ class BottomNavigationExplicitlySetColorExample: UIViewController {
 
   init() {
     super.init(nibName: nil, bundle: nil)
-    self.title = "Bottom Navigation Set Color (Swift)"
-
-    self.addChildViewController(appBar.headerViewController)
-    let color = UIColor(white: 0.2, alpha: 1)
-    appBar.headerViewController.headerView.backgroundColor = color
-    appBar.navigationBar.tintColor = .white
-    appBar.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
-
-    commonBottomNavigationExampleInit()
   }
 
   @available(*, unavailable)
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
-  }
-
-  func commonBottomNavigationExampleInit() {
-    view.backgroundColor = .lightGray
-    view.addSubview(bottomNavBar)
-
-    bottomNavBar.titleVisibility = .always
-
-    bottomNavBar.alignment = .centered
-
-    // Add items to the bottom navigation bar.
-    let tabBarItem1 = UITabBarItem(title: "Home", image: UIImage(named: "Home"), tag: 0)
-    let tabBarItem2 =
-      UITabBarItem(title: "Messages", image: UIImage(named: "Email"), tag: 0)
-    let tabBarItem3 =
-      UITabBarItem(title: "Favorites", image: UIImage(named: "Favorite"), tag: 0)
-    bottomNavBar.items = [ tabBarItem1, tabBarItem2, tabBarItem3 ]
-
-    // Select a bottom navigation bar item.
-    bottomNavBar.selectedItem = tabBarItem2;
-
-    // Layout buttons
-    redButton.frame = CGRect(x: view.center.x - 72, y: view.center.y - 72, width: 144, height: 56)
-    redButton.backgroundColor = .red
-    redButton.setTitle("Red theme", for: .normal)
-    redButton.addTarget(self, action: #selector(redTheme), for: .touchUpInside)
-    view.addSubview(redButton)
-
-    blueButton.frame = CGRect(x: view.center.x - 72, y: view.center.y + 16, width: 144, height: 56)
-    blueButton.backgroundColor = .blue
-    blueButton.setTitle("Blue theme", for: .normal)
-    blueButton.addTarget(self, action: #selector(blueTheme), for: .touchUpInside)
-    view.addSubview(blueButton)
   }
 
   func layoutBottomNavBar() {
@@ -102,7 +59,39 @@ class BottomNavigationExplicitlySetColorExample: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    appBar.addSubviewsToParent()
+
+    view.backgroundColor = .lightGray
+    view.addSubview(bottomNavBar)
+
+    bottomNavBar.alignment = .centered
+
+    // Add items to the bottom navigation bar.
+    let tabBarItem1 = UITabBarItem(title: "Home", image: UIImage(named: "Home"), tag: 0)
+    let tabBarItem2 =
+      UITabBarItem(title: "Messages", image: UIImage(named: "Email"), tag: 0)
+    let tabBarItem3 =
+      UITabBarItem(title: "Favorites", image: UIImage(named: "Favorite"), tag: 0)
+    bottomNavBar.items = [ tabBarItem1, tabBarItem2, tabBarItem3 ]
+
+    // Select a bottom navigation bar item.
+    bottomNavBar.selectedItem = tabBarItem2;
+
+    // Layout buttons
+    redButton.setTitle("Red theme", for: .normal)
+    redButton.sizeToFit()
+    redButton.frame.origin = CGPoint(x: view.center.x - (redButton.frame.width / 2),
+                                     y: view.center.y - (redButton.frame.height + 16))
+    redButton.backgroundColor = .red
+    redButton.addTarget(self, action: #selector(redTheme), for: .touchUpInside)
+    view.addSubview(redButton)
+
+    blueButton.setTitle("Blue theme", for: .normal)
+    blueButton.sizeToFit()
+    blueButton.frame.origin = CGPoint(x: view.center.x - (blueButton.frame.width / 2),
+                                      y: view.center.y + 16)
+    blueButton.backgroundColor = .blue
+    blueButton.addTarget(self, action: #selector(blueTheme), for: .touchUpInside)
+    view.addSubview(blueButton)
 
     MDCBottomNavigationBarColorThemer.applySemanticColorScheme(colorScheme,
                                                                toBottomNavigation: bottomNavBar)
@@ -133,10 +122,6 @@ extension BottomNavigationExplicitlySetColorExample {
 
   class func catalogIsPrimaryDemo() -> Bool {
     return false
-  }
-
-  func catalogShouldHideNavigation() -> Bool {
-    return true
   }
 
   @objc class func catalogIsPresentable() -> Bool {

@@ -19,7 +19,6 @@ import MaterialComponents
 
 class BottomNavigationTypicalUseSwiftExample: UIViewController {
 
-  let appBar = MDCAppBar()
   var colorScheme = MDCSemanticColorScheme()
 
   // Create a bottom navigation bar to add to a view.
@@ -27,15 +26,6 @@ class BottomNavigationTypicalUseSwiftExample: UIViewController {
 
   init() {
     super.init(nibName: nil, bundle: nil)
-    self.title = "Bottom Navigation (Swift)"
-
-    self.addChildViewController(appBar.headerViewController)
-    let color = UIColor(white: 0.2, alpha:1)
-    appBar.headerViewController.headerView.backgroundColor = color
-    appBar.navigationBar.tintColor = .white
-    appBar.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
-
-    commonBottomNavigationTypicalUseSwiftExampleInit()
   }
 
   @available(*, unavailable)
@@ -63,6 +53,9 @@ class BottomNavigationTypicalUseSwiftExample: UIViewController {
 
     // Select a bottom navigation bar item.
     bottomNavBar.selectedItem = tabBarItem2;
+    bottomNavBar.backgroundColor = .white
+    bottomNavBar.selectedItemTintColor = .blue
+    bottomNavBar.unselectedItemTintColor = .red
   }
   
   func layoutBottomNavBar() {
@@ -91,10 +84,6 @@ class BottomNavigationTypicalUseSwiftExample: UIViewController {
     super.viewDidLoad()
 
     appBar.addSubviewsToParent()
-
-    // Theme the bottom navigation bar.
-    MDCBottomNavigationBarColorThemer.applySemanticColorScheme(colorScheme,
-                                                               toBottomNavigation: bottomNavBar);
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -111,9 +100,5 @@ extension BottomNavigationTypicalUseSwiftExample {
 
   class func catalogIsPrimaryDemo() -> Bool {
     return false
-  }
-
-  func catalogShouldHideNavigation() -> Bool {
-    return true
   }
 }
