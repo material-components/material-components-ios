@@ -473,7 +473,10 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
     [self.itemViews addObject:itemView];
     [self.containerView addSubview:itemView];
   }
+  self.selectedItem = self.items[0];
   [self addObserversToTabBarItems];
+  [self setNeedsLayout];
+  [self setNeedsDisplay];
 }
 
 - (void)setSelectedItem:(UITabBarItem *)selectedItem {
