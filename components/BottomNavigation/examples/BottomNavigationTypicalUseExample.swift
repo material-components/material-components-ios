@@ -46,9 +46,9 @@ class BottomNavigationTypicalUseSwiftExample: UIViewController {
     // Add items to the bottom navigation bar.
     let tabBarItem1 = UITabBarItem(title: "Home", image: UIImage(named: "Home"), tag: 0)
     let tabBarItem2 =
-      UITabBarItem(title: "Messages", image: UIImage(named: "Email"), tag: 0)
+      UITabBarItem(title: "Messages", image: UIImage(named: "Email"), tag: 1)
     let tabBarItem3 =
-      UITabBarItem(title: "Favorites", image: UIImage(named: "Favorite"), tag: 0)
+      UITabBarItem(title: "Favorites", image: UIImage(named: "Favorite"), tag: 2)
     bottomNavBar.items = [ tabBarItem1, tabBarItem2, tabBarItem3 ]
 
     // Select a bottom navigation bar item.
