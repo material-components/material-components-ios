@@ -98,17 +98,21 @@
 }
 
 -(void)testItemFrameAfterReset {
+
+  MDCBottomNavigationBar *bar =
+      [[MDCBottomNavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, 80)];
   // Given
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
   UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:0];
   UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:0];
 
   // When
-  self.bottomNavBar.items = @[item1, item2];
-  self.bottomNavBar.items = @[item1, item2, item3];
+  bar.items = @[item1, item2];
+  bar.items = @[item1, item2, item3];
+
 
   // Then
-  XCTAssertFalse(CGRectEqualToRect(self.bottomNavBar.itemViews[0].frame, CGRectZero));
+  XCTAssertFalse(!CGRectEqualToRect(bar.itemViews[0].frame, CGRectZero));
 }
 
 -(void)testSelectedItemAfterReset {
