@@ -26,9 +26,10 @@ class BottomNavigationResetExample: UIViewController {
   // The tabs that will be reordered later
   let tabBarItem1 = UITabBarItem(title: "Home", image: UIImage(named: "Home"), tag: 0)
   let tabBarItem2 =
-    UITabBarItem(title: "Messages", image: UIImage(named: "Email"), tag: 0)
+    UITabBarItem(title: "Messages", image: UIImage(named: "Email"), tag: 1)
   let tabBarItem3 =
-    UITabBarItem(title: "Favorites", image: UIImage(named: "Favorite"), tag: 0)
+    UITabBarItem(title: "Favorites", image: UIImage(named: "Favorite"), tag: 2)
+  let tabBarItem4 = UITabBarItem(title: "Cake", image: UIImage(named: "Cake"), tag: 3)
 
   let buttonOne = MDCButton()
   let buttonTwo = MDCButton()
@@ -107,7 +108,8 @@ class BottomNavigationResetExample: UIViewController {
   }
 
   @objc func reorderTwo(_ button: UIButton) {
-    bottomNavBar.items = [tabBarItem3, tabBarItem1, tabBarItem2]
+    bottomNavBar.items = [tabBarItem3, tabBarItem1, tabBarItem2, tabBarItem4]
+    bottomNavBar.selectedItem = tabBarItem3
   }
 }
 

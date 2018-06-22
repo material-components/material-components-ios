@@ -405,7 +405,7 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
 #pragma mark - Setters
 
 - (void)setItems:(NSArray<UITabBarItem *> *)items {
-  if (_items == items) {
+  if ([_items isEqual:items]) {
     return;
   }
 
@@ -475,6 +475,7 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
   }
   self.selectedItem = self.items[0];
   [self addObserversToTabBarItems];
+  self.selectedItem = NULL;
   [self setNeedsLayout];
   [self setNeedsDisplay];
 }
