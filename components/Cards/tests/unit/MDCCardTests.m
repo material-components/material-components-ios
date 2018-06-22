@@ -105,15 +105,14 @@
 
 - (void)testCardInteractabilityToggle {
   self.card.isInteractable = NO;
-  XCTAssertEqual(self.card.inkView.hidden, YES);
-  self.card.highlighted = YES;
-  XCTAssertEqual(((MDCShadowLayer *)self.card.layer).elevation, 1.f);
-  self.card.highlighted = NO;
-  self.card.isInteractable = YES;
-  XCTAssertEqual(self.card.inkView.hidden, NO);
-  self.card.highlighted = YES;
-  XCTAssertEqual(((MDCShadowLayer *)self.card.layer).elevation, 8.f);
-  self.card.highlighted = NO;
+  self.card.frame = CGRectMake(0, 0, 1000, 1000);
+  NSMutableArray *touchArray = [NSMutableArray new];
+  [touchArray addObject:[UITouch new]];
+  NSSet *touches = [[NSSet alloc] init];
+  [touches setByAddingObjectsFromArray:touchArray];
+  UIEvent *event = [[UIEvent alloc] init];
+  UIView *view = [self.card hitTest:self.card.center withEvent:event];
+  XCTAssertNil(view);
 }
 
 - (void)testCardEncoding {
@@ -194,19 +193,14 @@
 
 - (void)testCellInteractabilityToggle {
   self.cell.isInteractable = NO;
-  XCTAssertEqual(self.cell.inkView.hidden, YES);
-  self.cell.selectable = YES;
-  self.cell.selected = YES;
-  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 1.f);
-  self.cell.selectable = YES;
-  self.cell.selected = YES;
-  self.cell.isInteractable = YES;
-  XCTAssertEqual(self.cell.inkView.hidden, NO);
-  self.cell.selectable = YES;
-  self.cell.selected = YES;
-  XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 8.f);
-  self.cell.selectable = YES;
-  self.cell.selected = YES;
+  self.cell.frame = CGRectMake(0, 0, 1000, 1000);
+  NSMutableArray *touchArray = [NSMutableArray new];
+  [touchArray addObject:[UITouch new]];
+  NSSet *touches = [[NSSet alloc] init];
+  [touches setByAddingObjectsFromArray:touchArray];
+  UIEvent *event = [[UIEvent alloc] init];
+  UIView *view = [self.cell hitTest:self.cell.center withEvent:event];
+  XCTAssertNil(view);
 }
 
 - (void)testCellLongPress {
