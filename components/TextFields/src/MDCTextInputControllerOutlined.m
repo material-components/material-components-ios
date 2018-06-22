@@ -16,6 +16,8 @@
 
 #import "MDCTextInputControllerOutlined.h"
 
+#import <MDFInternationalization/MDFInternationalization.h>
+
 #import "MDCTextInput.h"
 #import "MDCTextInputBorderView.h"
 #import "MDCTextInputController.h"
@@ -28,9 +30,10 @@
 
 #pragma mark - Class Properties
 
+static const CGFloat MDCTextInputOutlinedTextFieldFloatingPlaceholderPadding = 8.f;
 static const CGFloat MDCTextInputOutlinedTextFieldFullPadding = 16.f;
 static const CGFloat MDCTextInputOutlinedTextFieldNormalPlaceholderPadding = 20.f;
-static const CGFloat MDCTextInputOutlinedTextFieldFloatingPlaceholderPadding = 8.f;
+static const CGFloat MDCTextInputOutlinedTextFieldThreeQuartersPadding = 12.f;
 
 static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 
@@ -81,6 +84,30 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 
 #pragma mark - MDCTextInputPositioningDelegate
 
+- (CGRect)leadingViewRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect {
+  CGRect leadingViewRect = defaultRect;
+  CGFloat xOffset = (self.textInput.mdf_effectiveUserInterfaceLayoutDirection ==
+                     UIUserInterfaceLayoutDirectionRightToLeft)
+                        ? -1 * MDCTextInputOutlinedTextFieldFullPadding
+                        : MDCTextInputOutlinedTextFieldFullPadding;
+
+  leadingViewRect = CGRectOffset(leadingViewRect, xOffset, 0.f);
+
+  return leadingViewRect;
+}
+
+- (CGRect)trailingViewRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect {
+  CGRect trailingViewRect = defaultRect;
+  CGFloat xOffset = (self.textInput.mdf_effectiveUserInterfaceLayoutDirection ==
+                     UIUserInterfaceLayoutDirectionRightToLeft)
+                        ? MDCTextInputOutlinedTextFieldThreeQuartersPadding
+                        : -1 * MDCTextInputOutlinedTextFieldThreeQuartersPadding;
+
+  trailingViewRect = CGRectOffset(trailingViewRect, xOffset, 0.f);
+
+  return trailingViewRect;
+}
+
 // clang-format off
 /**
  textInsets: is the source of truth for vertical layout. It's used to figure out the proper
@@ -108,8 +135,8 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
   CGFloat scale = UIScreen.mainScreen.scale;
   CGFloat placeholderEstimatedHeight =
       MDCCeil(self.textInput.placeholderLabel.font.lineHeight * scale) / scale;
-  textInsets.top =
-      [self borderHeight] - MDCTextInputOutlinedTextFieldFullPadding - placeholderEstimatedHeight + textVerticalOffset;
+  textInsets.top = [self borderHeight] - MDCTextInputOutlinedTextFieldFullPadding -
+                   placeholderEstimatedHeight + textVerticalOffset;
 
   textInsets.left = MDCTextInputOutlinedTextFieldFullPadding;
   textInsets.right = MDCTextInputOutlinedTextFieldFullPadding;

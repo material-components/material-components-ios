@@ -619,14 +619,18 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1.f;
   CGRect leftViewRect = [super leftViewRectForBounds:bounds];
   leftViewRect.origin.y = [self centerYForOverlayViews:CGRectGetHeight(leftViewRect)];
 
-  if ((self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) && [self.positioningDelegate
-                                                                                                        respondsToSelector:@selector(trailingViewRectForBounds:defaultRect:)]) {
+  if ((self.mdf_effectiveUserInterfaceLayoutDirection ==
+       UIUserInterfaceLayoutDirectionRightToLeft) &&
+      [self.positioningDelegate
+          respondsToSelector:@selector(trailingViewRectForBounds:defaultRect:)]) {
     leftViewRect =
-    [self.positioningDelegate trailingViewRectForBounds:bounds defaultRect:leftViewRect];
-  } else if ((self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) && [self.positioningDelegate
-              respondsToSelector:@selector(leadingViewRectForBounds:defaultRect:)]) {
+        [self.positioningDelegate trailingViewRectForBounds:bounds defaultRect:leftViewRect];
+  } else if ((self.mdf_effectiveUserInterfaceLayoutDirection ==
+              UIUserInterfaceLayoutDirectionLeftToRight) &&
+             [self.positioningDelegate
+                 respondsToSelector:@selector(leadingViewRectForBounds:defaultRect:)]) {
     leftViewRect =
-    [self.positioningDelegate leadingViewRectForBounds:bounds defaultRect:leftViewRect];
+        [self.positioningDelegate leadingViewRectForBounds:bounds defaultRect:leftViewRect];
   }
 
   return leftViewRect;
@@ -637,14 +641,18 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1.f;
   CGRect rightViewRect = [super rightViewRectForBounds:bounds];
   rightViewRect.origin.y = [self centerYForOverlayViews:CGRectGetHeight(rightViewRect)];
 
-  if ((self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) && [self.positioningDelegate
-                                                                                                        respondsToSelector:@selector(leadingViewRectForBounds:defaultRect:)]) {
-      rightViewRect =
-      [self.positioningDelegate leadingViewRectForBounds:bounds defaultRect:rightViewRect];
-  } else if ((self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) && [self.positioningDelegate
-              respondsToSelector:@selector(trailingViewRectForBounds:defaultRect:)]) {
+  if ((self.mdf_effectiveUserInterfaceLayoutDirection ==
+       UIUserInterfaceLayoutDirectionRightToLeft) &&
+      [self.positioningDelegate
+          respondsToSelector:@selector(leadingViewRectForBounds:defaultRect:)]) {
     rightViewRect =
-    [self.positioningDelegate trailingViewRectForBounds:bounds defaultRect:rightViewRect];
+        [self.positioningDelegate leadingViewRectForBounds:bounds defaultRect:rightViewRect];
+  } else if ((self.mdf_effectiveUserInterfaceLayoutDirection ==
+              UIUserInterfaceLayoutDirectionLeftToRight) &&
+             [self.positioningDelegate
+                 respondsToSelector:@selector(trailingViewRectForBounds:defaultRect:)]) {
+    rightViewRect =
+        [self.positioningDelegate trailingViewRectForBounds:bounds defaultRect:rightViewRect];
   }
   return rightViewRect;
 }
