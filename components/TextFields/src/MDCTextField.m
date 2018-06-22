@@ -510,14 +510,34 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1.f;
   // To keep things simple, we correct this so .leftView gets the value for leftViewRectForBounds
   // and .rightView gets the value for rightViewRectForBounds.
 
+  CGFloat leadingViewPadding = 0.f;
+  if ([self.positioningDelegate respondsToSelector:@selector(leadingViewTrailingPaddingConstant)]) {
+    leadingViewPadding = [self.positioningDelegate leadingViewTrailingPaddingConstant];
+  }
+
+  CGFloat trailingViewPadding = 0.f;
+  if ([self.positioningDelegate
+          respondsToSelector:@selector(trailingViewTrailingPaddingConstant)]) {
+    trailingViewPadding = [self.positioningDelegate trailingViewTrailingPaddingConstant];
+  }
+
   CGFloat leftViewWidth =
       self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft
           ? CGRectGetWidth([self rightViewRectForBounds:bounds])
           : CGRectGetWidth([self leftViewRectForBounds:bounds]);
+  leftViewWidth +=
+      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft
+          ? trailingViewPadding
+          : leadingViewPadding;
+
   CGFloat rightViewWidth =
       self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft
           ? CGRectGetWidth([self leftViewRectForBounds:bounds])
           : CGRectGetWidth([self rightViewRectForBounds:bounds]);
+  rightViewWidth +=
+      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft
+          ? leadingViewPadding
+          : trailingViewPadding;
 
   if (self.leftView.superview) {
     textRect.origin.x += leftViewWidth;

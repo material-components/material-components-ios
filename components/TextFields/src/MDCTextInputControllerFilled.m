@@ -121,6 +121,10 @@ static CGFloat _underlineHeightNormalDefault =
   return leadingViewRect;
 }
 
+- (CGFloat)leadingViewTrailingPaddingConstant {
+  return MDCTextInputControllerFilledFullPadding;
+}
+
 - (CGRect)trailingViewRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect {
   CGRect trailingViewRect = defaultRect;
   CGFloat xOffset = (self.textInput.mdf_effectiveUserInterfaceLayoutDirection ==
@@ -131,6 +135,10 @@ static CGFloat _underlineHeightNormalDefault =
   trailingViewRect = CGRectOffset(trailingViewRect, xOffset, 0.f);
 
   return trailingViewRect;
+}
+
+- (CGFloat)trailngViewTrailingPaddingConstant {
+  return MDCTextInputControllerFilledThreeQuartersPadding;
 }
 
 // clang-format off

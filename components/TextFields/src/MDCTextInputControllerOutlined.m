@@ -96,6 +96,10 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
   return leadingViewRect;
 }
 
+- (CGFloat)leadingViewTrailingPaddingConstant {
+  return MDCTextInputOutlinedTextFieldThreeQuartersPadding;
+}
+
 - (CGRect)trailingViewRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect {
   CGRect trailingViewRect = defaultRect;
   CGFloat xOffset = (self.textInput.mdf_effectiveUserInterfaceLayoutDirection ==
@@ -106,6 +110,10 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
   trailingViewRect = CGRectOffset(trailingViewRect, xOffset, 0.f);
 
   return trailingViewRect;
+}
+
+- (CGFloat)trailingViewTrailingPaddingConstant {
+  return MDCTextInputOutlinedTextFieldThreeQuartersPadding;
 }
 
 // clang-format off
