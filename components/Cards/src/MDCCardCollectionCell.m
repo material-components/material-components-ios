@@ -197,7 +197,6 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
   [self updateImage];
   [self updateImageTintColor];
   [self updateBackgroundColor];
-  [self updateIsInteractable];
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder {
@@ -237,10 +236,6 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 }
 
 - (void)setState:(MDCCardCellState)state animated:(BOOL)animated {
-  if (!_isInteractable) {
-    return;
-  }
-
   switch (state) {
     case MDCCardCellStateSelected: {
       if (_state != MDCCardCellStateHighlighted) {
@@ -551,18 +546,21 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 
 - (void)setIsInteractable:(BOOL)isInteractable {
   _isInteractable = isInteractable;
-  [self updateIsInteractable];
 }
 
 - (BOOL)isInteractable {
   return _isInteractable;
 }
 
-- (void)updateIsInteractable {
-  self.inkView.hidden = !_isInteractable;
-}
-
 #pragma mark - UIResponder
+
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+  UIView *result = [super hitTest:point withEvent:event];
+  if (!_isInteractable && result == self) {
+    return nil;
+  }
+  return result;
+}
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
   [super touchesBegan:touches withEvent:event];

@@ -132,7 +132,6 @@ static const BOOL MDCCardIsInteractableDefault = YES;
   [self updateBorderWidth];
   [self updateBorderColor];
   [self updateBackgroundColor];
-  [self updateIsInteractable];
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder {
@@ -260,9 +259,6 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 }
 
 - (void)setHighlighted:(BOOL)highlighted {
-  if (!_isInteractable) {
-    return;
-  }
   if (highlighted && !self.highlighted) {
     [self.inkView startTouchBeganAnimationAtPoint:_lastTouch completion:nil];
   } else if (!highlighted && self.highlighted) {
@@ -283,14 +279,16 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+  UIView *result = [super hitTest:point withEvent:event];
+  if (!_isInteractable && result == self) {
+    return nil;
+  }
   if (self.layer.shapeGenerator) {
-    if (CGPathContainsPoint(self.layer.shapeLayer.path, nil, point, true)) {
-      return self;
-    } else {
+    if (!CGPathContainsPoint(self.layer.shapeLayer.path, nil, point, true)) {
       return nil;
     }
   }
-  return [super hitTest:point withEvent:event];
+  return result;
 }
 
 - (void)setShapeGenerator:(id<MDCShapeGenerating>)shapeGenerator {
@@ -332,15 +330,10 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 
 - (void)setIsInteractable:(BOOL)isInteractable {
   _isInteractable = isInteractable;
-  [self updateIsInteractable];
 }
 
 - (BOOL)isInteractable {
   return _isInteractable;
-}
-
-- (void)updateIsInteractable {
-  self.inkView.hidden = !_isInteractable;
 }
 
 @end
