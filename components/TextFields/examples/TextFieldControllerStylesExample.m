@@ -27,6 +27,9 @@
 @property(nonatomic, strong) MDCTextInputControllerFilled *textFieldControllerFilled;
 @property(nonatomic, strong) MDCTextInputControllerUnderline *textFieldControllerUnderline;
 
+@property(nonatomic, strong) UIImage *leadingImage;
+@property(nonatomic, strong) UIImage *trailingImage;
+
 @end
 
 @implementation TextFieldControllerStylesExample
@@ -38,8 +41,14 @@
   self.title = @"Material Text Fields";
 
   [self setupExampleViews];
+  [self setupImages];
   [self setupTextFields];
   [self registerKeyboardNotifications];
+}
+
+- (void)setupImages {
+  self.leadingImage = [UIImage imageNamed:@"ic_search" inBundle:[NSBundle bundleForClass:[TextFieldControllerStylesExample class]] compatibleWithTraitCollection:nil];
+  self.trailingImage = [UIImage imageNamed:@"ic_done" inBundle:[NSBundle bundleForClass:[TextFieldControllerStylesExample class]] compatibleWithTraitCollection:nil];
 }
 
 - (void)setupTextFields {
@@ -53,6 +62,11 @@
   int characterCountMax = 25;
   textFieldOutlined.delegate = self;
   textFieldOutlined.clearButtonMode = UITextFieldViewModeAlways;
+
+  textFieldOutlined.leadingView = [[UIImageView alloc] initWithImage:self.leadingImage];
+  textFieldOutlined.leadingViewMode = UITextFieldViewModeAlways;
+  textFieldOutlined.trailingView = [[UIImageView alloc] initWithImage:self.trailingImage];
+  textFieldOutlined.trailingViewMode = UITextFieldViewModeAlways;
 
   // Second the controller is created to manage the text field
   self.textFieldControllerOutlined =
