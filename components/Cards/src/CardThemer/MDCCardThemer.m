@@ -29,7 +29,7 @@ static const CGFloat kBorderWidth = 1.f;
              toCard:(nonnull MDCCard *)card {
   [card setShadowElevation:kNormalElevation forState:UIControlStateNormal];
   [card setShadowElevation:kHighlightedElevation forState:UIControlStateHighlighted];
-  [card setIsInteractable:YES];
+  [card setInteractable:YES];
   [MDCCardsColorThemer applySemanticColorScheme:scheme.colorScheme toCard:card];
 }
 
@@ -38,7 +38,7 @@ static const CGFloat kBorderWidth = 1.f;
   [cardCell setShadowElevation:kNormalElevation forState:MDCCardCellStateNormal];
   [cardCell setShadowElevation:kHighlightedElevation forState:MDCCardCellStateHighlighted];
   [cardCell setShadowElevation:kSelectedElevation forState:MDCCardCellStateSelected];
-  [cardCell setIsInteractable:YES];
+  [cardCell setInteractable:YES];
   [MDCCardsColorThemer applySemanticColorScheme:scheme.colorScheme toCardCell:cardCell];
 }
 

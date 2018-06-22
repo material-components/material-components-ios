@@ -104,7 +104,7 @@
 }
 
 - (void)testCardInteractabilityToggle {
-  self.card.isInteractable = NO;
+  self.card.interactable = NO;
   self.card.frame = CGRectMake(0, 0, 1000, 1000);
   NSMutableArray *touchArray = [NSMutableArray new];
   [touchArray addObject:[UITouch new]];
@@ -126,7 +126,7 @@
   [self.card setShadowColor:[UIColor greenColor] forState:UIControlStateHighlighted];
   [self.card setBorderColor:[UIColor redColor] forState:UIControlStateNormal];
   [self.card setBorderColor:[UIColor greenColor] forState:UIControlStateHighlighted];
-  self.card.isInteractable = NO;
+  self.card.interactable = NO;
 
   NSData *archivedData = [NSKeyedArchiver archivedDataWithRootObject:self.card];
   MDCCard *unarchivedCard = [NSKeyedUnarchiver unarchiveObjectWithData:archivedData];
@@ -192,7 +192,7 @@
 }
 
 - (void)testCellInteractabilityToggle {
-  self.cell.isInteractable = NO;
+  self.cell.interactable = NO;
   self.cell.frame = CGRectMake(0, 0, 1000, 1000);
   NSMutableArray *touchArray = [NSMutableArray new];
   [touchArray addObject:[UITouch new]];
@@ -437,7 +437,7 @@ static UIImage *FakeImage(void) {
   [self.cell setBorderColor:[UIColor redColor] forState:MDCCardCellStateNormal];
   [self.cell setBorderColor:[UIColor greenColor] forState:MDCCardCellStateHighlighted];
   [self.cell setBorderColor:[UIColor blueColor] forState:MDCCardCellStateSelected];
-  self.cell.isInteractable = NO;
+  self.cell.interactable = NO;
 
   NSData *archivedData = [NSKeyedArchiver archivedDataWithRootObject:self.cell];
   MDCCardCollectionCell *unarchivedCell = [NSKeyedUnarchiver unarchiveObjectWithData:archivedData];

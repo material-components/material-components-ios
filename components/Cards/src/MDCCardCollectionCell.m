@@ -106,9 +106,9 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
                               forKey:MDCCardCellBackgroundColorsKey]];
     }
     if ([coder containsValueForKey:MDCCardCellIsInteractableKey]) {
-      self.isInteractable = [coder decodeBoolForKey:MDCCardCellIsInteractableKey];
+      self.interactable = [coder decodeBoolForKey:MDCCardCellIsInteractableKey];
     } else {
-      self.isInteractable = MDCCardCellIsInteractableDefault;
+      self.interactable = MDCCardCellIsInteractableDefault;
     }
     [self commonMDCCardCollectionCellInit];
   }
@@ -544,8 +544,8 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
   self.layer.shapedBackgroundColor = _backgroundColor;
 }
 
-- (void)setIsInteractable:(BOOL)isInteractable {
-  _isInteractable = isInteractable;
+- (void)setInteractable:(BOOL)interactable {
+  _isInteractable = interactable;
 }
 
 - (BOOL)isInteractable {
@@ -556,7 +556,7 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
   UIView *result = [super hitTest:point withEvent:event];
-  if (!_isInteractable && result == self) {
+  if (!_isInteractable && result == self.contentView) {
     return nil;
   }
   return result;

@@ -75,9 +75,9 @@ static const BOOL MDCCardIsInteractableDefault = YES;
                                                                forKey:MDCCardBackgroundColorsKey]];
     }
     if ([coder containsValueForKey:MDCCardIsInteractableKey]) {
-      self.isInteractable = [coder decodeBoolForKey:MDCCardIsInteractableKey];
+      self.interactable = [coder decodeBoolForKey:MDCCardIsInteractableKey];
     } else {
-      self.isInteractable = MDCCardIsInteractableDefault;
+      self.interactable = MDCCardIsInteractableDefault;
     }
     [self commonMDCCardInit];
   }
@@ -328,8 +328,8 @@ static const BOOL MDCCardIsInteractableDefault = YES;
   self.layer.shapedBackgroundColor = _backgroundColor;
 }
 
-- (void)setIsInteractable:(BOOL)isInteractable {
-  _isInteractable = isInteractable;
+- (void)setInteractable:(BOOL)interactable {
+  _isInteractable = interactable;
 }
 
 - (BOOL)isInteractable {
