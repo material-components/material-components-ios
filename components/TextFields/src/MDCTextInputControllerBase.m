@@ -569,10 +569,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   UIFont *font = self.leadingUnderlineLabelFont;
   if (self.mdc_adjustsFontForContentSizeCategory) {
     // TODO: (#4331) This needs to be converted to the new text scheme.
-    font =
-        [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleCaption
-                           scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
-
+    font = [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleCaption
+                              scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
   }
   self.textInput.leadingUnderlineLabel.font = font;
 
