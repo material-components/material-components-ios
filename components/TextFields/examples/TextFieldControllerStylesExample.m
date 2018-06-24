@@ -47,8 +47,15 @@
 }
 
 - (void)setupImages {
-  self.leadingImage = [UIImage imageNamed:@"ic_search" inBundle:[NSBundle bundleForClass:[TextFieldControllerStylesExample class]] compatibleWithTraitCollection:nil];
-  self.trailingImage = [UIImage imageNamed:@"ic_done" inBundle:[NSBundle bundleForClass:[TextFieldControllerStylesExample class]] compatibleWithTraitCollection:nil];
+  self.leadingImage = [UIImage imageNamed:@"ic_search"
+                                 inBundle:[NSBundle bundleForClass:[TextFieldControllerStylesExample
+                                                                       class]]
+            compatibleWithTraitCollection:nil];
+  self.trailingImage =
+      [UIImage imageNamed:@"ic_done"
+                               inBundle:[NSBundle
+                                            bundleForClass:[TextFieldControllerStylesExample class]]
+          compatibleWithTraitCollection:nil];
 }
 
 - (void)setupTextFields {

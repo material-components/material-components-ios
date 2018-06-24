@@ -118,7 +118,8 @@ static CGFloat _underlineHeightNormalDefault =
 
   leadingViewRect = CGRectOffset(leadingViewRect, xOffset, 0.f);
 
-  leadingViewRect.origin.y = CGRectGetHeight(self.textInput.borderPath.bounds) / 2.f - CGRectGetHeight(leadingViewRect) / 2.f;
+  leadingViewRect.origin.y = CGRectGetHeight(self.textInput.borderPath.bounds) / 2.f -
+                             CGRectGetHeight(leadingViewRect) / 2.f;
 
   return leadingViewRect;
 }
@@ -136,7 +137,8 @@ static CGFloat _underlineHeightNormalDefault =
 
   trailingViewRect = CGRectOffset(trailingViewRect, xOffset, 0.f);
 
-  trailingViewRect.origin.y = CGRectGetHeight(self.textInput.borderPath.bounds) / 2.f - CGRectGetHeight(trailingViewRect) / 2.f;
+  trailingViewRect.origin.y = CGRectGetHeight(self.textInput.borderPath.bounds) / 2.f -
+                              CGRectGetHeight(trailingViewRect) / 2.f;
 
   return trailingViewRect;
 }
@@ -313,9 +315,10 @@ static CGFloat _underlineHeightNormalDefault =
   UIOffset offset = [super floatingPlaceholderOffset];
 
   if ([self.textInput conformsToProtocol:@protocol(MDCLeadingViewTextInput)]) {
-    UIView <MDCLeadingViewTextInput> *input = (UIView <MDCLeadingViewTextInput> *)self.textInput;
+    UIView<MDCLeadingViewTextInput> *input = (UIView<MDCLeadingViewTextInput> *)self.textInput;
     if (input.leadingView.superview) {
-      offset.horizontal -= CGRectGetWidth(input.leadingView.frame) + [self leadingViewTrailingPaddingConstant];
+      offset.horizontal -=
+          CGRectGetWidth(input.leadingView.frame) + [self leadingViewTrailingPaddingConstant];
     }
   }
   return offset;

@@ -94,7 +94,8 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
   leadingViewRect = CGRectOffset(leadingViewRect, xOffset, 0.f);
 
   CGRect borderRect = [self borderRect];
-  leadingViewRect.origin.y = CGRectGetMinY(borderRect) + CGRectGetHeight(borderRect) / 2.f - CGRectGetHeight(leadingViewRect) / 2.f;
+  leadingViewRect.origin.y = CGRectGetMinY(borderRect) + CGRectGetHeight(borderRect) / 2.f -
+                             CGRectGetHeight(leadingViewRect) / 2.f;
 
   return leadingViewRect;
 }
@@ -113,7 +114,8 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
   trailingViewRect = CGRectOffset(trailingViewRect, xOffset, 0.f);
 
   CGRect borderRect = [self borderRect];
-  trailingViewRect.origin.y = CGRectGetMinY(borderRect) + CGRectGetHeight(borderRect) / 2.f - CGRectGetHeight(trailingViewRect) / 2.f;
+  trailingViewRect.origin.y = CGRectGetMinY(borderRect) + CGRectGetHeight(borderRect) / 2.f -
+                              CGRectGetHeight(trailingViewRect) / 2.f;
 
   return trailingViewRect;
 }
@@ -177,10 +179,11 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 
     placeholderWidth += MDCTextInputOutlinedTextFieldFloatingPlaceholderPadding;
 
-    path = [self roundedPathFromRect:[self borderRect]
-                       withTextSpace:placeholderWidth
-                          leftOffset:MDCTextInputOutlinedTextFieldFullPadding -
-                                     MDCTextInputOutlinedTextFieldFloatingPlaceholderPadding/2.0f];
+    path =
+        [self roundedPathFromRect:[self borderRect]
+                    withTextSpace:placeholderWidth
+                       leftOffset:MDCTextInputOutlinedTextFieldFullPadding -
+                                  MDCTextInputOutlinedTextFieldFloatingPlaceholderPadding / 2.0f];
   } else {
     CGSize cornerRadius = CGSizeMake(MDCTextInputControllerBaseDefaultBorderRadius,
                                      MDCTextInputControllerBaseDefaultBorderRadius);
@@ -276,21 +279,22 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
   CGFloat placeholderLeadingConstant = MDCTextInputOutlinedTextFieldFullPadding;
 
   if ([self.textInput conformsToProtocol:@protocol(MDCLeadingViewTextInput)]) {
-    UIView <MDCLeadingViewTextInput> *leadingViewInput = (UIView <MDCLeadingViewTextInput>*)self.textInput;
+    UIView<MDCLeadingViewTextInput> *leadingViewInput =
+        (UIView<MDCLeadingViewTextInput> *)self.textInput;
     if (leadingViewInput.leadingView.superview) {
-      placeholderLeadingConstant += CGRectGetWidth(leadingViewInput.leadingView.frame) + [self leadingViewTrailingPaddingConstant];
+      placeholderLeadingConstant += CGRectGetWidth(leadingViewInput.leadingView.frame) +
+                                    [self leadingViewTrailingPaddingConstant];
     }
   }
 
   if (!self.placeholderLeading) {
-    self.placeholderLeading =
-        [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
-                                     attribute:NSLayoutAttributeLeading
-                                     relatedBy:NSLayoutRelationEqual
-                                        toItem:self.textInput
-                                     attribute:NSLayoutAttributeLeading
-                                    multiplier:1
-                                      constant:placeholderLeadingConstant];
+    self.placeholderLeading = [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
+                                                           attribute:NSLayoutAttributeLeading
+                                                           relatedBy:NSLayoutRelationEqual
+                                                              toItem:self.textInput
+                                                           attribute:NSLayoutAttributeLeading
+                                                          multiplier:1
+                                                            constant:placeholderLeadingConstant];
     self.placeholderLeading.priority = UILayoutPriorityDefaultHigh;
     self.placeholderLeading.active = YES;
   }
