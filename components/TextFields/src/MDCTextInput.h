@@ -205,6 +205,22 @@ typedef NS_ENUM(NSUInteger, MDCTextInputTextInsetsMode) {
 
 @end
 
+@protocol MDCLeadingViewTextInput <MDCTextInput>
+
+/**
+ An overlay view on the leading side.
+
+ Note: if RTL is engaged, this will return the .rightView and if LTR, it will return the .leftView.
+ */
+@property(nonatomic, nullable, strong) UIView *leadingView;
+
+/**
+ Controls when the leading view will display.
+ */
+@property(nonatomic, assign) UITextFieldViewMode leadingViewMode;
+
+@end
+
 /** Common API for Material Design compliant multi-line text inputs. */
 @protocol MDCMultilineTextInput <MDCTextInput>
 

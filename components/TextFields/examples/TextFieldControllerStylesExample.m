@@ -84,6 +84,11 @@
   textFieldFilled.delegate = self;
   textFieldFilled.clearButtonMode = UITextFieldViewModeUnlessEditing;
 
+  textFieldFilled.leadingView = [[UIImageView alloc] initWithImage:self.leadingImage];
+  textFieldFilled.leadingViewMode = UITextFieldViewModeAlways;
+  textFieldFilled.trailingView = [[UIImageView alloc] initWithImage:self.trailingImage];
+  textFieldFilled.trailingViewMode = UITextFieldViewModeAlways;
+
   self.textFieldControllerFilled =
       [[MDCTextInputControllerFilled alloc] initWithTextInput:textFieldFilled];
   self.textFieldControllerFilled.placeholderText = @"MDCTextInputControllerFilled";
@@ -133,6 +138,11 @@
 
   textFieldUnderline.delegate = self;
   textFieldUnderline.clearButtonMode = UITextFieldViewModeUnlessEditing;
+
+  textFieldUnderline.leadingView = [[UIImageView alloc] initWithImage:self.leadingImage];
+  textFieldUnderline.leadingViewMode = UITextFieldViewModeAlways;
+  textFieldUnderline.trailingView = [[UIImageView alloc] initWithImage:self.trailingImage];
+  textFieldUnderline.trailingViewMode = UITextFieldViewModeAlways;
 
   self.textFieldControllerUnderline =
       [[MDCTextInputControllerUnderline alloc] initWithTextInput:textFieldUnderline];

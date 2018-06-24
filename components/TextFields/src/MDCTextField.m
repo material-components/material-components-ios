@@ -254,6 +254,34 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1.f;
   self.tintColor = self.cursorColor;
 }
 
+#pragma mark - MDCLeadingViewTextInput Implementation
+
+- (void)setLeadingView:(UIView *)leadingView {
+  if ([self shouldManuallyEnforceRightToLeftLayoutForOverlayViews] &&
+      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    self.rightView = leadingView;
+  } else {
+    self.leftView = leadingView;
+  }
+}
+
+- (UITextFieldViewMode)leadingViewMode {
+  if ([self shouldManuallyEnforceRightToLeftLayoutForOverlayViews] &&
+      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    return self.rightViewMode;
+  }
+  return self.leftViewMode;
+}
+
+- (void)setLeadingViewMode:(UITextFieldViewMode)leadingViewMode {
+  if ([self shouldManuallyEnforceRightToLeftLayoutForOverlayViews] &&
+      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    self.rightViewMode = leadingViewMode;
+  } else {
+    self.leftViewMode = leadingViewMode;
+  }
+}
+
 #pragma mark - Properties Implementation
 
 - (UIBezierPath *)borderPath {
@@ -432,32 +460,6 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1.f;
     return self.rightView;
   }
   return self.leftView;
-}
-
-- (void)setLeadingView:(UIView *)leadingView {
-  if ([self shouldManuallyEnforceRightToLeftLayoutForOverlayViews] &&
-      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
-    self.rightView = leadingView;
-  } else {
-    self.leftView = leadingView;
-  }
-}
-
-- (UITextFieldViewMode)leadingViewMode {
-  if ([self shouldManuallyEnforceRightToLeftLayoutForOverlayViews] &&
-      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
-    return self.rightViewMode;
-  }
-  return self.leftViewMode;
-}
-
-- (void)setLeadingViewMode:(UITextFieldViewMode)leadingViewMode {
-  if ([self shouldManuallyEnforceRightToLeftLayoutForOverlayViews] &&
-      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
-    self.rightViewMode = leadingViewMode;
-  } else {
-    self.leftViewMode = leadingViewMode;
-  }
 }
 
 - (NSString *)placeholder {
