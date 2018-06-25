@@ -254,6 +254,34 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1.f;
   self.tintColor = self.cursorColor;
 }
 
+#pragma mark - MDCLeadingViewTextInput Implementation
+
+- (void)setLeadingView:(UIView *)leadingView {
+  if ([self shouldManuallyEnforceRightToLeftLayoutForOverlayViews] &&
+      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    self.rightView = leadingView;
+  } else {
+    self.leftView = leadingView;
+  }
+}
+
+- (UITextFieldViewMode)leadingViewMode {
+  if ([self shouldManuallyEnforceRightToLeftLayoutForOverlayViews] &&
+      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    return self.rightViewMode;
+  }
+  return self.leftViewMode;
+}
+
+- (void)setLeadingViewMode:(UITextFieldViewMode)leadingViewMode {
+  if ([self shouldManuallyEnforceRightToLeftLayoutForOverlayViews] &&
+      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    self.rightViewMode = leadingViewMode;
+  } else {
+    self.leftViewMode = leadingViewMode;
+  }
+}
+
 #pragma mark - Properties Implementation
 
 - (UIBezierPath *)borderPath {
@@ -434,32 +462,6 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1.f;
   return self.leftView;
 }
 
-- (void)setLeadingView:(UIView *)leadingView {
-  if ([self shouldManuallyEnforceRightToLeftLayoutForOverlayViews] &&
-      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
-    self.rightView = leadingView;
-  } else {
-    self.leftView = leadingView;
-  }
-}
-
-- (UITextFieldViewMode)leadingViewMode {
-  if ([self shouldManuallyEnforceRightToLeftLayoutForOverlayViews] &&
-      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
-    return self.rightViewMode;
-  }
-  return self.leftViewMode;
-}
-
-- (void)setLeadingViewMode:(UITextFieldViewMode)leadingViewMode {
-  if ([self shouldManuallyEnforceRightToLeftLayoutForOverlayViews] &&
-      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
-    self.rightViewMode = leadingViewMode;
-  } else {
-    self.leftViewMode = leadingViewMode;
-  }
-}
-
 - (NSString *)placeholder {
   return self.fundament.placeholder;
 }
@@ -510,14 +512,34 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1.f;
   // To keep things simple, we correct this so .leftView gets the value for leftViewRectForBounds
   // and .rightView gets the value for rightViewRectForBounds.
 
+  CGFloat leadingViewPadding = 0.f;
+  if ([self.positioningDelegate respondsToSelector:@selector(leadingViewTrailingPaddingConstant)]) {
+    leadingViewPadding = [self.positioningDelegate leadingViewTrailingPaddingConstant];
+  }
+
+  CGFloat trailingViewPadding = 0.f;
+  if ([self.positioningDelegate
+          respondsToSelector:@selector(trailingViewTrailingPaddingConstant)]) {
+    trailingViewPadding = [self.positioningDelegate trailingViewTrailingPaddingConstant];
+  }
+
   CGFloat leftViewWidth =
       self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft
           ? CGRectGetWidth([self rightViewRectForBounds:bounds])
           : CGRectGetWidth([self leftViewRectForBounds:bounds]);
+  leftViewWidth +=
+      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft
+          ? trailingViewPadding
+          : leadingViewPadding;
+
   CGFloat rightViewWidth =
       self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft
           ? CGRectGetWidth([self leftViewRectForBounds:bounds])
           : CGRectGetWidth([self rightViewRectForBounds:bounds]);
+  rightViewWidth +=
+      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft
+          ? leadingViewPadding
+          : trailingViewPadding;
 
   if (self.leftView.superview) {
     textRect.origin.x += leftViewWidth;
@@ -614,20 +636,47 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1.f;
   return self.clearButton.frame;
 }
 
-// NOTE: leftViewRectForBounds: and rightViewRectForBounds: should return LTR values regardless of
-// layout direction. Then the OS flips it when it renders it.
+// In RTL, the OS assigns this to the .rightView.
 - (CGRect)leftViewRectForBounds:(CGRect)bounds {
-  CGRect defaultRect = [super leftViewRectForBounds:bounds];
-  defaultRect.origin.y = [self centerYForOverlayViews:CGRectGetHeight(defaultRect)];
+  CGRect leftViewRect = [super leftViewRectForBounds:bounds];
+  leftViewRect.origin.y = [self centerYForOverlayViews:CGRectGetHeight(leftViewRect)];
 
-  return defaultRect;
+  if ((self.mdf_effectiveUserInterfaceLayoutDirection ==
+       UIUserInterfaceLayoutDirectionRightToLeft) &&
+      [self.positioningDelegate
+          respondsToSelector:@selector(trailingViewRectForBounds:defaultRect:)]) {
+    leftViewRect =
+        [self.positioningDelegate trailingViewRectForBounds:bounds defaultRect:leftViewRect];
+  } else if ((self.mdf_effectiveUserInterfaceLayoutDirection ==
+              UIUserInterfaceLayoutDirectionLeftToRight) &&
+             [self.positioningDelegate
+                 respondsToSelector:@selector(leadingViewRectForBounds:defaultRect:)]) {
+    leftViewRect =
+        [self.positioningDelegate leadingViewRectForBounds:bounds defaultRect:leftViewRect];
+  }
+
+  return leftViewRect;
 }
 
+// In RTL, the OS assigns this to the .leftView.
 - (CGRect)rightViewRectForBounds:(CGRect)bounds {
-  CGRect defaultRect = [super rightViewRectForBounds:bounds];
-  defaultRect.origin.y = [self centerYForOverlayViews:CGRectGetHeight(defaultRect)];
+  CGRect rightViewRect = [super rightViewRectForBounds:bounds];
+  rightViewRect.origin.y = [self centerYForOverlayViews:CGRectGetHeight(rightViewRect)];
 
-  return defaultRect;
+  if ((self.mdf_effectiveUserInterfaceLayoutDirection ==
+       UIUserInterfaceLayoutDirectionRightToLeft) &&
+      [self.positioningDelegate
+          respondsToSelector:@selector(leadingViewRectForBounds:defaultRect:)]) {
+    rightViewRect =
+        [self.positioningDelegate leadingViewRectForBounds:bounds defaultRect:rightViewRect];
+  } else if ((self.mdf_effectiveUserInterfaceLayoutDirection ==
+              UIUserInterfaceLayoutDirectionLeftToRight) &&
+             [self.positioningDelegate
+                 respondsToSelector:@selector(trailingViewRectForBounds:defaultRect:)]) {
+    rightViewRect =
+        [self.positioningDelegate trailingViewRectForBounds:bounds defaultRect:rightViewRect];
+  }
+  return rightViewRect;
 }
 
 - (CGFloat)centerYForOverlayViews:(CGFloat)heightOfView {

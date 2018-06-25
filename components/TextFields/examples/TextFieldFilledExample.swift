@@ -75,6 +75,18 @@ final class TextFieldFilledSwiftExample: UIViewController {
 
   var allTextFieldControllers = [MDCTextInputControllerFilled]()
 
+  let leadingImage: UIImage = {
+    return UIImage.init(named: "ic_search",
+                        in: Bundle(for: TextFieldFilledSwiftExample.self),
+                        compatibleWith: nil)!
+  }()
+
+  let trailingImage: UIImage = {
+    return UIImage.init(named: "ic_done",
+                        in: Bundle(for: TextFieldFilledSwiftExample.self),
+                        compatibleWith: nil)!
+  }()
+
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     cityController = MDCTextInputControllerFilled(textInput: city)
     stateController = MDCTextInputControllerFilled(textInput: state)
@@ -114,6 +126,10 @@ final class TextFieldFilledSwiftExample: UIViewController {
     let nameController = MDCTextInputControllerFilled(textInput: name)
     name.delegate = self
     name.text = "Grace Hopper"
+    name.leadingView = UIImageView(image: leadingImage)
+    name.leadingViewMode = .always
+    name.trailingView = UIImageView(image: trailingImage)
+    name.trailingViewMode = .always
     nameController.placeholderText = "Name"
     nameController.helperText = "First and Last"
     allTextFieldControllers.append(nameController)

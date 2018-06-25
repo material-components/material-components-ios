@@ -54,6 +54,22 @@
   textFieldName.clearButtonMode = UITextFieldViewModeUnlessEditing;
   textFieldName.backgroundColor = [UIColor whiteColor];
 
+  UIImage *leadingImage = [UIImage
+                         imageNamed:@"ic_search"
+                           inBundle:[NSBundle
+                                        bundleForClass:[TextFieldOutlinedObjectiveCExample class]]
+      compatibleWithTraitCollection:nil];
+  textFieldName.leadingView = [[UIImageView alloc] initWithImage:leadingImage];
+  textFieldName.leadingViewMode = UITextFieldViewModeAlways;
+
+  UIImage *trailingImage = [UIImage
+                         imageNamed:@"ic_done"
+                           inBundle:[NSBundle
+                                        bundleForClass:[TextFieldOutlinedObjectiveCExample class]]
+      compatibleWithTraitCollection:nil];
+  textFieldName.trailingView = [[UIImageView alloc] initWithImage:trailingImage];
+  textFieldName.trailingViewMode = UITextFieldViewModeAlways;
+
   self.nameController = [[MDCTextInputControllerOutlined alloc] initWithTextInput:textFieldName];
   self.nameController.placeholderText = @"Full Name";
 
