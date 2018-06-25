@@ -69,7 +69,7 @@ class BottomNavigationResetExample: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = MDCPalette.grey.tint100
+    view.backgroundColor = colorScheme.backgroundColor
     view.addSubview(bottomNavBar)
 
     bottomNavBar.alignment = .centered

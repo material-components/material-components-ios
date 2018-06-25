@@ -104,13 +104,13 @@
   UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:2];
   [self.bottomNavBar sizeToFit];
   self.bottomNavBar.frame = CGRectMake(0, 0, 320, 56);
-  [self.bottomNavBar setNeedsLayout];
 
   // When
   self.bottomNavBar.items = @[item1, item2];
   self.bottomNavBar.items = @[item1, item2, item3];
   [self.bottomNavBar layoutIfNeeded];
 
+  // Then
   XCTAssertFalse(CGRectEqualToRect(self.bottomNavBar.itemViews[0].frame, CGRectZero));
 }
 
@@ -124,6 +124,7 @@
   self.bottomNavBar.items = @[item1, item2];
   self.bottomNavBar.items = @[item1, item2, item3];
 
+  // Then
   XCTAssertNil(self.bottomNavBar.selectedItem);
 }
 
