@@ -899,17 +899,27 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   }
 
   MDCTextField *textField = (MDCTextField *)self.textInput;
-  if (textField.leadingView.superview && !self.placeholderLeadingLeadingViewTrailing) {
-    self.placeholderLeadingLeadingViewTrailing =
-        [NSLayoutConstraint constraintWithItem:textField.placeholderLabel
-                                     attribute:NSLayoutAttributeLeading
-                                     relatedBy:NSLayoutRelationEqual
-                                        toItem:textField.leadingView
-                                     attribute:NSLayoutAttributeTrailing
-                                    multiplier:1
-                                      constant:MDCTextInputOverlayViewToEditingRectPadding];
-    self.placeholderLeadingLeadingViewTrailing.priority = UILayoutPriorityDefaultLow + 1;
-    self.placeholderLeadingLeadingViewTrailing.active = YES;
+  if (textField.leadingView.superview) {
+    CGFloat leadingViewTrailingConstant = MDCTextInputOverlayViewToEditingRectPadding;
+    if ([self.textInput.positioningDelegate
+            respondsToSelector:@selector(leadingViewTrailingPaddingConstant)]) {
+      leadingViewTrailingConstant =
+          [self.textInput.positioningDelegate leadingViewTrailingPaddingConstant];
+    }
+
+    if (!self.placeholderLeadingLeadingViewTrailing) {
+      self.placeholderLeadingLeadingViewTrailing =
+          [NSLayoutConstraint constraintWithItem:textField.placeholderLabel
+                                       attribute:NSLayoutAttributeLeading
+                                       relatedBy:NSLayoutRelationEqual
+                                          toItem:textField.leadingView
+                                       attribute:NSLayoutAttributeTrailing
+                                      multiplier:1
+                                        constant:leadingViewTrailingConstant];
+      self.placeholderLeadingLeadingViewTrailing.priority = UILayoutPriorityDefaultLow + 1;
+      self.placeholderLeadingLeadingViewTrailing.active = YES;
+    }
+    self.placeholderLeadingLeadingViewTrailing.constant = leadingViewTrailingConstant;
   } else if (!textField.leadingView.superview && self.placeholderLeadingLeadingViewTrailing) {
     self.placeholderLeadingLeadingViewTrailing = nil;
   }
