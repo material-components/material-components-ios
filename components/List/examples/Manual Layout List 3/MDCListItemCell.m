@@ -1,12 +1,9 @@
 /*
  Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
-
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
-
  http://www.apache.org/licenses/LICENSE-2.0
-
  Unless required by applicable law or agreed to in writing, software
  distributed under the License is distributed on an "AS IS" BASIS,
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,21 +11,17 @@
  limitations under the License.
  */
 
+#import "MDCListItemCell.h"
+
 #import "ManualLayoutListItemCell2.h"
 
 #import <MDFInternationalization/MDFInternationalization.h>
-
 #import "MaterialInk.h"
 #import "MaterialTypography.h"
-#import "MaterialTypographyScheme.h"
 
 static const CGFloat kDefaultVerticalMarginMin = 8.0;
 static const CGFloat kDefaultVerticalMarginMax = 16.0;
 static const CGFloat kDefaultHorizontalMargin = 16.0;
-
-static const CGFloat kTextLeadingMarginMin = 16.0;
-static const CGFloat kTextLeadingMarginMedium = 72.0;
-static const CGFloat kTextLeadingMarginMax = 88.0;
 
 static const CGFloat kImageSideLengthMedium = 40.0;
 static const CGFloat kImageSideLengthMax = 56.0;
@@ -36,26 +29,33 @@ static const CGFloat kImageSideLengthMax = 56.0;
 static const CGFloat kTitleColorOpacity = 0.87f;
 static const CGFloat kDetailColorOpacity = 0.6f;
 
-@interface ManualLayoutListItemCell2 ()
+@interface MDCListItemCell ()
 
-@property (strong, nonatomic, nonnull) UIView *textContainer;
-@property (strong, nonatomic, nonnull) UILabel *titleLabel;
-@property (strong, nonatomic, nonnull) UILabel *detailLabel;
-@property (strong, nonatomic, nonnull) UIImageView *leadingImageView;
-@property (strong, nonatomic, nonnull) UIImageView *trailingImageView;
-@property (nonatomic, assign) BOOL hasSetCellWidth;
+@property (nonatomic, strong) UIView *textContainer;
+@property (nonatomic, assign) CGRect textContainerFrame;
+@property (nonatomic, assign) CGRect titleLabelFrame;
+@property (nonatomic, assign) CGRect detailLabelFrame;
+@property (nonatomic, assign) CGRect leadingImageViewFrame;
+@property (nonatomic, assign) CGRect trailingImageViewFrame;
 
 @end
 
-@implementation ManualLayoutListItemCell2
+@implementation MDCListItemCell
 @synthesize mdc_adjustsFontForContentSizeCategory = _mdc_adjustsFontForContentSizeCategory;
 
-#pragma mark Object Lifecycle
+-(instancetype)init {
+  self = [super init];
+  if (self) {
+    [self baseMDCListItemCellInit];
+    return self;
+  }
+  return nil;
+}
 
 -(instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    [self baseManualLayoutListItemCell2Init];
+    [self baseMDCListItemCellInit];
     return self;
   }
   return nil;
@@ -64,23 +64,13 @@ static const CGFloat kDetailColorOpacity = 0.6f;
 -(instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    [self baseManualLayoutListItemCell2Init];
+    [self baseMDCListItemCellInit];
     return self;
   }
   return nil;
 }
-
--(instancetype)init {
-  self = [super init];
-  if (self) {
-    [self baseManualLayoutListItemCell2Init];
-    return self;
-  }
-  return nil;
-}
-
-- (void)baseManualLayoutListItemCell2Init {
-  [self createSupportingViews];
+- (void)baseMDCListItemCellInit {
+  [self createSubviews];
 }
 
 -(void)dealloc {
@@ -89,129 +79,76 @@ static const CGFloat kDetailColorOpacity = 0.6f;
 
 #pragma mark Setup
 
-- (void)createSupportingViews {
+- (void)createSubviews {
+  self.textContainer = [[UIView alloc] init];
+  [self.contentView addSubview:self.textContainer];
+
+  self.titleLabel = [[UILabel alloc] init];
+  self.titleLabel.numberOfLines = 0;
+  self.titleLabel.font = self.defaultDetailLabelFont;
+  [self.textContainer addSubview:self.titleLabel];
+
+  self.detailLabel = [[UILabel alloc] init];
+  self.detailLabel.numberOfLines = 0;
+  self.detailLabel.font = self.defaultDetailLabelFont;
+  [self.textContainer addSubview:self.detailLabel];
+
   self.leadingImageView = [[UIImageView alloc] init];
   [self.contentView addSubview:self.leadingImageView];
 
   self.trailingImageView = [[UIImageView alloc] init];
   [self.contentView addSubview:self.trailingImageView];
+}
 
-  self.textContainer = [[UIView alloc] init];
-  [self.contentView addSubview:self.textContainer];
+#pragma mark UIView Overrides
 
-  self.titleLabel = [[UILabel alloc] init];
-  self.titleLabel.textColor = [UIColor colorWithWhite:0 alpha:kTitleColorOpacity];
-  [self.textContainer addSubview:self.titleLabel];
-
-  self.detailLabel = [[UILabel alloc] init];
-  self.detailLabel.textColor = [UIColor colorWithWhite:0 alpha:kDetailColorOpacity];
-  [self.textContainer addSubview:self.detailLabel];
+-(void)layoutSubviews {
+  [super layoutSubviews];
+  self.textContainer.frame = self.textContainerFrame;
+  self.titleLabel.frame = self.titleLabelFrame;
+  self.detailLabel.frame = self.detailLabelFrame;
+  self.leadingImageView.frame = self.leadingImageViewFrame;
+  self.trailingImageView.frame = self.trailingImageViewFrame;
+  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    self.leadingImageView.frame =
+    MDFRectFlippedHorizontally(self.leadingImageView.frame, self.cellWidth);
+    self.trailingImageView.frame =
+    MDFRectFlippedHorizontally(self.trailingImageView.frame, self.cellWidth);
+    self.textContainer.frame =
+    MDFRectFlippedHorizontally(self.textContainer.frame, self.cellWidth);
+  }
 }
 
 #pragma mark UICollectionViewCell Overrides
 
--(UICollectionViewLayoutAttributes *)preferredLayoutAttributesFittingAttributes:
-(UICollectionViewLayoutAttributes *)layoutAttributes {
-  UICollectionViewLayoutAttributes *attributes =
-      [super preferredLayoutAttributesFittingAttributes:layoutAttributes];
-  [self assignFrames];
-  CGPoint origin = attributes.frame.origin;
-  CGFloat cellHeight = [self calculateHeight];
-  CGRect frame = CGRectMake(origin.x, origin.y, self.cellWidth, cellHeight);
-  attributes.frame = frame;
-  return attributes;
-}
-
 -(void)prepareForReuse {
   [super prepareForReuse];
-  self.titleText = nil;
-  self.detailText = nil;
-  self.leadingImage = nil;
-  self.trailingImage = nil;
-  self.typographyScheme = self.defaultTypographyScheme;
+  self.titleLabel.text = nil;
+  self.titleLabel.font = self.defaultTitleLabelFont;
+  self.titleLabelFrame = CGRectZero;
+  self.detailLabel.text = nil;
+  self.detailLabel.font = self.defaultDetailLabelFont;
+  self.detailLabelFrame = CGRectZero;
+  self.leadingImageView.image = nil;
+  self.leadingImageViewFrame = CGRectZero;
+  self.trailingImageView.image = nil;
+  self.trailingImageViewFrame = CGRectZero;
 }
 
-#pragma mark Accessors
-
--(void)setTitleText:(NSString *)titleText {
-  if ([titleText isEqualToString:self.titleLabel.text]) {
-    return;
-  }
-  self.titleLabel.text = titleText;
+-(CGSize)systemLayoutSizeFittingSize:(CGSize)targetSize {
+  self.cellWidth = targetSize.width;
+  [self calculateSubviewFrames];
+  return CGSizeMake(self.cellWidth, [self calculateHeight]);
 }
 
--(NSString *)titleText {
-  return self.titleLabel.text;
+- (void)calculateSubviewFrames {
+  [self calculateLeadingImageViewFrame];
+  [self calculateTrailingViewFrame];
+  [self calculateTextContainerFrame];
 }
 
--(void)setDetailText:(NSString *)detailText {
-  if ([detailText isEqualToString:self.detailLabel.text]) {
-    return;
-  }
-  self.detailLabel.text = detailText;
-}
-
--(NSString *)detailText {
-  return self.detailLabel.text;
-}
-
-- (void)setLeadingImage:(UIImage *)leadingImage {
-  if (leadingImage == self.leadingImageView.image) {
-    return;
-  }
-  self.leadingImageView.image = leadingImage;
-}
-
--(UIImage *)leadingImage {
-  return self.leadingImageView.image;
-}
-
-- (void)setTrailingImage:(UIImage *)trailingImage {
-  if (trailingImage == self.trailingImageView.image) {
-    return;
-  }
-  self.trailingImageView.image = trailingImage;
-}
-
--(UIImage *)trailingImage {
-  return self.trailingImageView.image;
-}
-
-#pragma mark Layout
-
--(void)setCellWidth:(CGFloat)cellWidth {
-  self.hasSetCellWidth = YES;
-  if (cellWidth == _cellWidth) {
-    return;
-  }
-  _cellWidth = cellWidth;
-}
-
--(void)setHasSetCellWidth:(BOOL)hasSetCellWidth {
-  if (hasSetCellWidth == _hasSetCellWidth) {
-    return;
-  }
-  _hasSetCellWidth = hasSetCellWidth;
-}
-
-- (void)assignFrames {
-  NSAssert(self.hasSetCellWidth, @"Developer Error - You must set desired cell width for height \
-      calculation to work properly.");
-  [self assignLeadingViewFrame];
-  [self assignTrailingViewFrame];
-  [self assignTextContainerFrame];
-  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
-    self.leadingImageView.frame =
-        MDFRectFlippedHorizontally(self.leadingImageView.frame, self.cellWidth);
-    self.trailingImageView.frame =
-        MDFRectFlippedHorizontally(self.trailingImageView.frame, self.cellWidth);
-    self.textContainer.frame =
-        MDFRectFlippedHorizontally(self.textContainer.frame, self.cellWidth);
-  }
-}
-
-- (void)assignLeadingViewFrame {
-  CGSize size = [self sizeForImage:self.leadingImage];
+- (void)calculateLeadingImageViewFrame {
+  CGSize size = [self sizeForImage:self.leadingImageView.image];
   CGFloat leadingPadding = 0;
   CGFloat topPadding = 0;
   if (!CGSizeEqualToSize(size, CGSizeZero)) {
@@ -225,11 +162,11 @@ static const CGFloat kDetailColorOpacity = 0.6f;
   if (CGRectGetMaxX(rect) > self.cellWidth) {
     rect = CGRectZero;
   }
-  self.leadingImageView.frame = rect;
+  self.leadingImageViewFrame = rect;
 }
 
-- (void)assignTrailingViewFrame {
-  CGSize size = [self sizeForImage:self.trailingImage];
+- (void)calculateTrailingViewFrame {
+  CGSize size = [self sizeForImage:self.trailingImageView.image];
   CGFloat trailingPadding = 0;
   CGFloat topPadding = 0;
   if (!CGSizeEqualToSize(size, CGSizeZero)) {
@@ -244,25 +181,24 @@ static const CGFloat kDetailColorOpacity = 0.6f;
   if (originX < 0 || (CGRectGetMaxX(rect) > self.cellWidth)) {
     rect = CGRectZero;
   }
-  self.trailingImageView.frame = rect;
+  self.trailingImageViewFrame = rect;
 }
 
-- (void)assignTextContainerFrame {
+- (void)calculateTextContainerFrame {
   BOOL containsTitleText = self.titleLabel.text.length > 0;
   BOOL containsDetailText = self.detailLabel.text.length > 0;
   if (!containsTitleText && !containsDetailText) {
-    self.titleLabel.frame = CGRectZero;
-    self.detailLabel.frame = CGRectZero;
-    self.textContainer.frame = CGRectZero;
+    self.titleLabelFrame = CGRectZero;
+    self.detailLabelFrame = CGRectZero;
+    self.textContainerFrame = CGRectZero;
     return;
   }
 
-//  CGFloat leadingImageViewMaxX = self.leadingImage ?
-//      CGRectGetMaxX(self.leadingImageView.frame) : 0;
-//  CGFloat textContainerMinX = leadingImageViewMaxX + kDefaultHorizontalMargin;
-  CGFloat textContainerMinX = [self dynamicTextOffset];
-  CGFloat trailingImageViewMinX = self.trailingImage ?
-      CGRectGetMinX(self.trailingImageView.frame) : self.cellWidth;
+    CGFloat leadingImageViewMaxX = self.leadingImageView.image ?
+        CGRectGetMaxX(self.leadingImageViewFrame) : 0;
+    CGFloat textContainerMinX = leadingImageViewMaxX + kDefaultHorizontalMargin;
+  CGFloat trailingImageViewMinX = self.trailingImageView.image ?
+  CGRectGetMinX(self.trailingImageViewFrame) : self.cellWidth;
   CGFloat textContainerMaxX = trailingImageViewMinX - kDefaultHorizontalMargin;
   CGFloat textContainerMinY = kDefaultVerticalMarginMax;
   CGFloat textContainerWidth = textContainerMaxX - textContainerMinX;
@@ -273,49 +209,49 @@ static const CGFloat kDetailColorOpacity = 0.6f;
 
   CGSize fittingSize = CGSizeMake(textContainerWidth, 50000);
   CGSize titleSize = [self.titleLabel sizeThatFits:fittingSize];
-  if (titleSize.width > textContainerWidth) {
+  if (self.titleLabel.numberOfLines != 0 && titleSize.width > textContainerWidth) {
     titleSize.width = textContainerWidth;
   }
   CGPoint titleOrigin = CGPointMake(labelMinX, labelMinY);
   CGRect titleFrame = CGRectZero;
   titleFrame.origin = titleOrigin;
   titleFrame.size = titleSize;
-  self.titleLabel.frame = titleFrame;
+  self.titleLabelFrame = titleFrame;
 
   labelMinY = CGRectGetMaxY(titleFrame);
-  if (self.titleText.length > 0 && self.detailText.length > 0) {
+  if (self.titleLabel.text.length > 0 && self.detailLabel.text.length > 0) {
     labelMinY += [self dynamicInterLabelVerticalPadding];
   }
 
   CGSize detailSize = [self.detailLabel sizeThatFits:fittingSize];
-  if (detailSize.width > textContainerWidth) {
+  if (self.detailLabel.numberOfLines != 0 && detailSize.width > textContainerWidth) {
     detailSize.width = textContainerWidth;
   }
   CGPoint detailOrigin = CGPointMake(labelMinX, labelMinY);
   CGRect detailFrame = CGRectZero;
   detailFrame.origin = detailOrigin;
   detailFrame.size = detailSize;
-  self.detailLabel.frame = detailFrame;
+  self.detailLabelFrame = detailFrame;
 
-  textContainerHeight = CGRectGetMaxY(self.detailLabel.frame);
+  textContainerHeight = CGRectGetMaxY(self.detailLabelFrame);
 
   CGRect textContainerFrame = CGRectZero;
   CGPoint textContainerOrigin = CGPointMake(textContainerMinX, textContainerMinY);
   CGSize textContainerSize = CGSizeMake(textContainerWidth, textContainerHeight);
   textContainerFrame.origin = textContainerOrigin;
   textContainerFrame.size = textContainerSize;
-  self.textContainer.frame = textContainerFrame;
+  self.textContainerFrame = textContainerFrame;
 
   BOOL containsOnlyTitleText = containsTitleText && !containsDetailText;
-  BOOL shouldVerticallyCenterTitleText = containsOnlyTitleText && self.leadingImage;
+  BOOL shouldVerticallyCenterTitleText = containsOnlyTitleText && self.leadingImageView.image;
   if (shouldVerticallyCenterTitleText) {
-    CGFloat leadingImageViewCenterY = CGRectGetMidY(self.leadingImageView.frame);
-    CGFloat textContainerCenterY = CGRectGetMidY(self.textContainer.frame);
+    CGFloat leadingImageViewCenterY = CGRectGetMidY(self.leadingImageViewFrame);
+    CGFloat textContainerCenterY = CGRectGetMidY(self.textContainerFrame);
     CGFloat difference = textContainerCenterY - leadingImageViewCenterY;
-    CGRect offsetTextContainerRect = CGRectOffset(self.textContainer.frame, 0, -difference);
+    CGRect offsetTextContainerRect = CGRectOffset(self.textContainerFrame, 0, -difference);
     BOOL willExtendPastMargin = offsetTextContainerRect.origin.y < kDefaultVerticalMarginMax;
     if (!willExtendPastMargin) {
-      self.textContainer.frame = offsetTextContainerRect;
+      self.textContainerFrame = offsetTextContainerRect;
     }
   }
 }
@@ -331,16 +267,6 @@ static const CGFloat kDetailColorOpacity = 0.6f;
     return CGSizeMake(image.size.width * aspectRatio, image.size.height * aspectRatio);
   } else {
     return image.size;
-  }
-}
-
-- (CGFloat)dynamicTextOffset {
-  if (!self.leadingImage) {
-    return kTextLeadingMarginMin;
-  } else if (CGRectGetHeight(self.leadingImageView.frame) <= kImageSideLengthMedium) {
-    return kTextLeadingMarginMedium;
-  } else {
-    return kTextLeadingMarginMax;
   }
 }
 
@@ -363,47 +289,31 @@ static const CGFloat kDetailColorOpacity = 0.6f;
 
 - (CGFloat)calculateHeight {
   CGFloat maxHeight = 0;
-  CGRect leadingImageViewFrame = self.leadingImageView.frame;
-  CGRect trailingImageViewFrame = self.trailingImageView.frame;
-  CGRect textContainerFrame = self.textContainer.frame;
   CGFloat leadingImageViewRequiredVerticalSpace = 0;
   CGFloat trailingImageViewRequiredVerticalSpace = 0;
   CGFloat textContainerRequiredVerticalSpace = 0;
-  if (self.leadingImage) {
-    leadingImageViewRequiredVerticalSpace = CGRectGetMaxY(leadingImageViewFrame) +
-        [self verticalMarginForImageViewOfSize:leadingImageViewFrame.size];
+  if (self.leadingImageView.image) {
+    leadingImageViewRequiredVerticalSpace = CGRectGetMaxY(self.leadingImageViewFrame) +
+    [self verticalMarginForImageViewOfSize:self.leadingImageViewFrame.size];
     if (leadingImageViewRequiredVerticalSpace > maxHeight) {
       maxHeight = leadingImageViewRequiredVerticalSpace;
     }
   }
-  if (self.trailingImage) {
-    trailingImageViewRequiredVerticalSpace = CGRectGetMaxY(trailingImageViewFrame) +
-        [self verticalMarginForImageViewOfSize:trailingImageViewFrame.size];
+  if (self.trailingImageView.image) {
+    trailingImageViewRequiredVerticalSpace = CGRectGetMaxY(self.trailingImageViewFrame) +
+    [self verticalMarginForImageViewOfSize:self.trailingImageViewFrame.size];
     if (trailingImageViewRequiredVerticalSpace > maxHeight) {
       maxHeight = trailingImageViewRequiredVerticalSpace;
     }
   }
-  if (CGRectGetMaxY(textContainerFrame) > 0) {
-    textContainerRequiredVerticalSpace = CGRectGetMaxY(textContainerFrame) +
-        kDefaultVerticalMarginMax;
+  if (CGRectGetMaxY(self.titleLabelFrame) > 0) {
+    textContainerRequiredVerticalSpace = CGRectGetMaxY(self.textContainerFrame) +
+    kDefaultVerticalMarginMax;
     if (textContainerRequiredVerticalSpace > maxHeight) {
       maxHeight = textContainerRequiredVerticalSpace;
     }
   }
   return maxHeight;
-}
-
-#pragma mark - Typography/Dynamic Type Support
-
-- (MDCTypographyScheme *)defaultTypographyScheme {
-  return [MDCTypographyScheme new];
-}
-
--(void)setTypographyScheme:(MDCTypographyScheme *)typographyScheme {
-  _typographyScheme = typographyScheme;
-  self.titleLabel.font = _typographyScheme.body1 ?: self.titleLabel.font;
-  self.detailLabel.font = _typographyScheme.body2 ?: self.detailLabel.font;
-  [self adjustFontsForContentSizeCategory];
 }
 
 - (BOOL)mdc_adjustsFontForContentSizeCategory {
@@ -433,19 +343,35 @@ static const CGFloat kDetailColorOpacity = 0.6f;
 }
 
 - (void)adjustFontsForContentSizeCategory {
-  UIFont *titleFont = self.titleLabel.font ?: self.typographyScheme.headline1;
-  UIFont *detailFont = self.detailLabel.font ?: self.typographyScheme.subtitle1;
-//  if (_mdc_adjustsFontForContentSizeCategory) {
-//    titleFont =
-//    [titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleHeadline
-//                            scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
-//    detailFont =
-//    [detailFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
-//                             scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
-//  }
+  UIFont *titleFont = self.titleLabel.font ?: self.defaultTitleLabelFont;
+  UIFont *detailFont = self.detailLabel.font ?: self.defaultDetailLabelFont;
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    titleFont =
+    [titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleTitle
+                            scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+    detailFont =
+    [detailFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleCaption
+                             scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+  }
   self.titleLabel.font = titleFont;
   self.detailLabel.font = detailFont;
-  [self assignFrames];
+  [self calculateSubviewFrames];
+}
+
+- (UIFont *)defaultTitleLabelFont {
+  return [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleTitle];
+}
+
+- (UIFont *)defaultDetailLabelFont {
+  return [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleCaption];
+}
+
+- (UIColor *)defaultTitleLabelTextColor {
+  return [UIColor colorWithWhite:0 alpha:kTitleColorOpacity];
+}
+
+- (UIColor *)defaultDetailLabelTextColor {
+  return [UIColor colorWithWhite:0 alpha:kDetailColorOpacity];
 }
 
 @end
