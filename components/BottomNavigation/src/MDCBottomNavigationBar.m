@@ -405,7 +405,6 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
 #pragma mark - Setters
 
 - (void)setItems:(NSArray<UITabBarItem *> *)items {
-  NSAssert(items.count > 1, @"Items should always have 2 or more tabs");
   if ([_items isEqual:items] || _items == items) {
     return;
   }
@@ -474,14 +473,9 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
     [self.itemViews addObject:itemView];
     [self.containerView addSubview:itemView];
   }
-  if (items.count >= 1) {
-    self.selectedItem = self.items[0];
-  } else {
-    self.selectedItem = nil;
-  }
+  self.selectedItem = nil;
   [self addObserversToTabBarItems];
   [self setNeedsLayout];
-  [self setNeedsDisplay];
 }
 
 - (void)setSelectedItem:(UITabBarItem *)selectedItem {

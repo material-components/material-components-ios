@@ -17,9 +17,11 @@
 import Foundation
 import MaterialComponents
 
+/// Example to showcase a reorder of the tabs from an user action
 class BottomNavigationResetExample: UIViewController {
 
   var colorScheme = MDCSemanticColorScheme()
+  var typographyScheme = MDCTypographyScheme()
 
   let bottomNavBar = MDCBottomNavigationBar()
 
@@ -67,8 +69,7 @@ class BottomNavigationResetExample: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-
-    view.backgroundColor = .lightGray
+    view.backgroundColor = MDCPalette.grey.tint100
     view.addSubview(bottomNavBar)
 
     bottomNavBar.alignment = .centered
@@ -84,30 +85,27 @@ class BottomNavigationResetExample: UIViewController {
     buttonOne.sizeToFit()
     buttonOne.frame.origin = CGPoint(x: view.center.x - (buttonOne.frame.width / 2),
                                      y: view.center.y - (buttonOne.frame.height + 16))
-    buttonOne.addTarget(self, action: #selector(reorderOne), for: .touchUpInside)
+    buttonOne.addTarget(self, action: #selector(reorderItems), for: .touchUpInside)
     view.addSubview(buttonOne)
 
     buttonTwo.setTitle("Reorder Two", for: .normal)
     buttonTwo.sizeToFit()
     buttonTwo.frame.origin = CGPoint(x: view.center.x - (buttonTwo.frame.width / 2),
                                       y: view.center.y + 16)
-    buttonTwo.addTarget(self, action: #selector(reorderTwo), for: .touchUpInside)
+    buttonTwo.addTarget(self, action: #selector(reorderItemsAndSetSelected), for: .touchUpInside)
     view.addSubview(buttonTwo)
 
     MDCBottomNavigationBarColorThemer.applySemanticColorScheme(colorScheme,
                                                                toBottomNavigation: bottomNavBar)
+    MDCBottomNavigationBarTypographyThemer.applyTypographyScheme(typographyScheme,
+                                                                 to: bottomNavBar)
   }
 
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    self.navigationController?.setNavigationBarHidden(true, animated: animated)
-  }
-
-  @objc func reorderOne(_ button: UIButton) {
+  @objc func reorderItems(_ button: UIButton) {
     bottomNavBar.items = [tabBarItem2, tabBarItem3, tabBarItem1]
   }
 
-  @objc func reorderTwo(_ button: UIButton) {
+  @objc func reorderItemsAndSetSelected(_ button: UIButton) {
     bottomNavBar.items = [tabBarItem3, tabBarItem1, tabBarItem2, tabBarItem4]
     bottomNavBar.selectedItem = tabBarItem3
   }
@@ -116,7 +114,7 @@ class BottomNavigationResetExample: UIViewController {
 // MARK: Catalog by convention
 extension BottomNavigationResetExample {
   class func catalogBreadcrumbs() -> [String] {
-    return ["Bottom Navigation", "Bottom Navigation Reset (Swift)"]
+    return ["Bottom Navigation", "Bottom Navigation Reorder (Swift)"]
   }
 
   class func catalogIsPrimaryDemo() -> Bool {
@@ -125,5 +123,9 @@ extension BottomNavigationResetExample {
 
   @objc class func catalogIsPresentable() -> Bool {
     return false
+  }
+
+  class func catalogShouldHideNavigation() -> Bool {
+    return true
   }
 }
