@@ -15,8 +15,6 @@
 
 #import "MaterialShadowElevations.h"
 
-@class MDCInkView;
-
 @interface MDCListBaseCell : UICollectionViewCell
 
 /**

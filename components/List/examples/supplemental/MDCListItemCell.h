@@ -21,12 +21,6 @@
 @interface MDCListItemCell : MDCListBaseCell
 
 /**
- Sets the cell width for the self-sizing cell.
- Note: The self-sizing is only applied to the height, and the width is set using this method.
- */
-@property (nonatomic, assign) CGFloat cellWidth;
-
-/**
  A convenience accessor for the title text.
  */
 @property (nonatomic, copy, nullable) NSString *titleText;
@@ -67,11 +61,6 @@
 @property (nonatomic, assign) NSTextAlignment detailLabelTextAlignment;
 
 /**
- The UIImageview used to display the leading image.
- */
-@property (strong, nonatomic, nonnull, readonly) UIImageView *leadingImageView;
-
-/**
  A convenience accessor for the leading image.
  */
 @property (strong, nonatomic, nullable) UIImage *leadingImage;
@@ -98,7 +87,7 @@
  UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
  Default value is NO.
  */
-@property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
+@property(nonatomic, assign, setter=mdc_setAdjustsFontForContentSizeCategory:)
 BOOL mdc_adjustsFontForContentSizeCategory;
 
 @end
