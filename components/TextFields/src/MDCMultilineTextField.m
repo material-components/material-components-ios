@@ -175,6 +175,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   self.backgroundColor = [UIColor clearColor];
 
   self.textColor = _fundament.textColor;
+  // TODO: (#4331) This needs to be converted to the new text scheme.
   self.font = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody1];
   self.clearButton.tintColor = [UIColor colorWithWhite:0 alpha:[MDCTypography captionFontOpacity]];
 

@@ -1,5 +1,5 @@
 /*
- Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -23,8 +23,17 @@
  expand or contract the header file space without consumer modifications.
  */
 
-#import "MDCFontTextStyle.h"
-#import "MDCTypography.h"
-#import "UIFont+MaterialSimpleEquality.h"
-#import "UIFont+MaterialTypography.h"
-#import "UIFontDescriptor+MaterialTypography.h"
+#import <UIKit/UIKit.h>
+
+@interface UIFont (MaterialSimpleEquality)
+
+/*
+ Checks simple characteristics: name, weight, pointsize, traits.
+
+ While the actual implementation of UIFont's isEqual: is not known, it is believed that
+ isSimplyEqual: is more 'shallow' than isEqual:.
+ */
+
+- (BOOL)mdc_isSimplyEqual:(UIFont*)font;
+
+@end
