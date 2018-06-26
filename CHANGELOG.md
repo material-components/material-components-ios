@@ -1,5 +1,9 @@
 # 56.0.0
 
+In this release we updated the icon layout of `MDCTextField`s add accessibilty docs for `MDCButton`
+and some more `MDCBottomNavigation` examples. We also tweeked the `MDCChipView` and `MDCButtonBar` 
+buttons.
+
 ## Breaking changes
 
 ### New layout for `MDCTextField`'s with icons
