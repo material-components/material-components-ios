@@ -21,8 +21,8 @@ class FeatureHighlightSwiftViewController: UIViewController {
 
   let showButton = MDCButton()
   let featureButton = MDCButton()
-  let colorScheme = MDCSemanticColorScheme()
-  let typographyScheme = MDCTypographyScheme()
+  var colorScheme = MDCSemanticColorScheme()
+  var typographyScheme = MDCTypographyScheme()
   let buttonScheme = MDCButtonScheme()
 
   override func viewDidLoad() {
@@ -60,7 +60,6 @@ class FeatureHighlightSwiftViewController: UIViewController {
     vc.mdc_adjustsFontForContentSizeCategory = true
     vc.titleText = "Hey this is a title for the Feature Highlight"
     vc.bodyText = "This is the description of the feature highlight view controller"
-    vc.accessibilityHint = "This is the accessibility hint"
     self.present(vc, animated: true, completion: nil)
   }
 }
