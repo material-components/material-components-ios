@@ -568,10 +568,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 - (void)updateLeadingUnderlineLabel {
   UIFont *font = self.leadingUnderlineLabelFont;
   if (self.mdc_adjustsFontForContentSizeCategory) {
-    font =
-        [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleCaption
-                           scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
-
+    // TODO: (#4331) This needs to be converted to the new text scheme.
+    font = [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleCaption
+                              scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
   }
   self.textInput.leadingUnderlineLabel.font = font;
 
@@ -588,6 +587,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   if (self.mdc_adjustsFontForContentSizeCategory) {
     font = [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleBody1
                               scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+    // TODO: (#4331) This needs to be converted to the new text scheme.
   }
   self.textInput.font = font;
 }
@@ -599,12 +599,19 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 - (void)updatePlaceholder {
   UIFont *placeHolderFont = self.inlinePlaceholderFont;
   if (self.mdc_adjustsFontForContentSizeCategory) {
+    // TODO: (#4331) This needs to be converted to the new text scheme.
     placeHolderFont =
         [placeHolderFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleBody1
                                       scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
 
   }
-  self.textInput.placeholderLabel.font = placeHolderFont;
+
+  // Aside from not wanting to kick off extra work for setting a font that hasn't changed, we use
+  // this custom equality check to prevent an edge case that caused a 1 pixel change in width even
+  // when the important parts of the new font were the same as the existing font.
+  if (![self.textInput.placeholderLabel.font mdc_isSimplyEqual:placeHolderFont]){
+    self.textInput.placeholderLabel.font = placeHolderFont;
+  }
 
   UIColor *placeholderColor;
   if ([self isPlaceholderUp]) {
@@ -845,6 +852,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     self.textInput.trailingUnderlineLabel.text = [self characterCountText];
     UIFont *font = self.trailingUnderlineLabelFont;
     if (self.mdc_adjustsFontForContentSizeCategory) {
+      // TODO: (#4331) This needs to be converted to the new text scheme.
       font =
           [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleCaption
                              scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
@@ -920,9 +928,11 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 + (UIFont *)placeholderFont {
   return [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody1];
+  // TODO: (#4331) This needs to be converted to the new text scheme.
 }
 
 + (UIFont *)underlineLabelsFont {
+  // TODO: (#4331) This needs to be converted to the new text scheme.
   return [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleCaption];
 }
 
