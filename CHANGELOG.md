@@ -2,9 +2,7 @@
 
 ## Breaking changes
 
-## New deprecations
-
-## New features
+### New layout for `MDCTextField`'s with icons
 
 ## API changes
 
