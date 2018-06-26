@@ -136,6 +136,16 @@
 /** Default value for textInputFontDefault. If nil, textInput.font would be the fallback.  */
 @property(class, nonatomic, nullable, strong) UIFont *textInputFontDefault;
 
+/**
+ The tintColor applied to the textInput's clear button.
+
+ See @c UIImageView.tintColor for additional details.
+ */
+@property(nonatomic, null_resettable, strong) UIColor *textInputClearButtonTintColor;
+
+/**
+ Default value for @c textInputClearButtonTintColor. */
+@property(class, nonatomic, nullable, strong) UIColor *textInputClearButtonTintColorDefault;
 
 /**
  The font applied to the placeholder when inline (not floating).
