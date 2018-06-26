@@ -349,14 +349,8 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
-
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-  if (@available(iOS 11.0, *)) {
-    // We only update the top inset on iOS 11 because previously we were not adjusting the header
-    // height to make it smaller when the status bar is hidden.
-    _verticalConstraint.constant = MDCDeviceTopSafeAreaInset();
-  }
-#endif
+  CGFloat constant = MDCDeviceTopSafeAreaInsetAffectingView(self.view);
+  _verticalConstraint.constant = constant;
 }
 
 - (BOOL)accessibilityPerformEscape {
