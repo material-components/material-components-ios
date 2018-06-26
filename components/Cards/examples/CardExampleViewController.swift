@@ -19,7 +19,7 @@ import MaterialComponents.MaterialButtons_ButtonThemer
 
 class CardExampleViewController: UIViewController {
   @IBOutlet var contentView: UIView!
-  @IBOutlet weak var imageView: UIImageView!
+  @IBOutlet weak var imageView: CardImageView!
   @IBOutlet weak var card: MDCCard!
   @IBOutlet weak var button: MDCButton!
 
@@ -36,15 +36,6 @@ class CardExampleViewController: UIViewController {
     contentView.frame = self.view.bounds
     self.view.addSubview(contentView)
 
-    let bezierPath = UIBezierPath(roundedRect: imageView.bounds,
-                                  byRoundingCorners: [.topLeft, .topRight],
-                                  cornerRadii: CGSize(width: card.cornerRadius,
-                                                      height: card.cornerRadius))
-    let shapeLayer = CAShapeLayer()
-    shapeLayer.frame = imageView.bounds
-    shapeLayer.path = bezierPath.cgPath
-    imageView.layer.mask = shapeLayer
-
     let buttonScheme = MDCButtonScheme();
     buttonScheme.colorScheme = colorScheme
     buttonScheme.typographyScheme = typographyScheme
@@ -53,11 +44,7 @@ class CardExampleViewController: UIViewController {
     let cardScheme = MDCCardScheme();
     cardScheme.colorScheme = colorScheme
     MDCCardThemer.applyScheme(cardScheme, to: card)
-  }
-
-  override func didReceiveMemoryWarning() {
-      super.didReceiveMemoryWarning()
-      // Dispose of any resources that can be recreated.
+    card.isInteractable = false
   }
 
   override public var traitCollection: UITraitCollection {
@@ -90,4 +77,33 @@ extension CardExampleViewController {
   @objc class func catalogDescription() -> String {
     return "Cards contain content and actions about a single subject."
   }
+}
+
+class CardImageView: UIImageView {
+  override func layoutSubviews() {
+    super.layoutSubviews()
+    self.curveImageToCorners()
+  }
+
+  func curveImageToCorners() {
+    // The main image from the xib is taken from: https://unsplash.com/photos/wMzx2nBdeng
+    // License details: https://unsplash.com/license
+    var roundingCorners = UIRectCorner.topLeft
+    if (UIDevice.current.orientation == .portrait ||
+      UIDevice.current.orientation == .portraitUpsideDown) {
+      roundingCorners.formUnion(.topRight)
+    } else {
+      roundingCorners.formUnion(.bottomLeft)
+    }
+
+    let bezierPath = UIBezierPath(roundedRect: self.bounds,
+                                  byRoundingCorners: roundingCorners,
+                                  cornerRadii: CGSize(width: 4,
+                                                      height: 4))
+    let shapeLayer = CAShapeLayer()
+    shapeLayer.frame = self.bounds
+    shapeLayer.path = bezierPath.cgPath
+    self.layer.mask = shapeLayer
+  }
+
 }
