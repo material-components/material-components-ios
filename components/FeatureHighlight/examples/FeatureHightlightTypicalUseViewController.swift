@@ -25,15 +25,6 @@ class FeatureHighlightSwiftViewController: UIViewController {
   let typographyScheme = MDCTypographyScheme()
   let buttonScheme = MDCButtonScheme()
 
-  init() {
-    super.init(nibName: nil, bundle: nil)
-  }
-
-  @available(*, unavailable)
-  required init?(coder aDecoder: NSCoder) {
-    super.init(coder: aDecoder)
-  }
-
   override func viewDidLoad() {
     super.viewDidLoad()
     colorScheme.backgroundColor = .white
