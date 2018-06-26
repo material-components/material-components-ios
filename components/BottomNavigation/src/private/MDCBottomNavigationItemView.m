@@ -213,7 +213,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   [self centerLayoutAnimated:NO];
 }
 
-- (void)centerLayoutAnimated:(bool)animated {
+- (void)centerLayoutAnimated:(BOOL)animated {
   if (self.titleBelowIcon) {
     CGPoint iconImageViewCenter =
         CGPointMake(CGRectGetMidX(self.bounds), CGRectGetHeight(self.iconImageView.bounds) / 2 +
