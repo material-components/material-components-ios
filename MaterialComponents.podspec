@@ -535,6 +535,14 @@ Pod::Spec.new do |mdc|
     component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
   end
 
+  # ListItems
+
+  mdc.subspec "ListItems" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+  end
+
   # MaskedTransition
 
   mdc.subspec "MaskedTransition" do |component|
