@@ -556,7 +556,7 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
   UIView *result = [super hitTest:point withEvent:event];
-  if (!_isInteractable && result == self.contentView) {
+  if (!_isInteractable && (result == self.contentView || result == self)) {
     return nil;
   }
   return result;
