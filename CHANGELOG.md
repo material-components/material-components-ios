@@ -1,8 +1,10 @@
-# #develop#
+# 56.0.0
 
 ## Breaking changes
 
 ### New layout for `MDCTextField`'s with icons
+
+* [Making leading and trailing view layout customizeable (#4434)](https://github.com/material-components/material-components-ios/commit/1f10ae3e3e12b8a0b367ae118c7cc7d6e706e8a5) (Will Larche)
 
 ## API changes
 
