@@ -315,7 +315,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     self.label.textColor = self.selectedItemTitleColor;
     self.iconImageView.tintColor = self.selectedItemTintColor;
     self.button.accessibilityTraits |= UIAccessibilityTraitSelected;
-
+    self.iconImageView.image = (self.selectedImage) ? self.selectedImage : self.image;
     switch (self.titleVisibility) {
       case MDCBottomNavigationBarTitleVisibilitySelected:
         self.label.hidden = NO;
@@ -331,7 +331,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     self.label.textColor = self.unselectedItemTintColor;
     self.iconImageView.tintColor = self.unselectedItemTintColor;
     self.button.accessibilityTraits &= ~UIAccessibilityTraitSelected;
-
+    self.iconImageView.image = self.image;
     switch (self.titleVisibility) {
       case MDCBottomNavigationBarTitleVisibilitySelected:
         self.label.hidden = YES;
@@ -397,6 +397,14 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 - (void)setImage:(UIImage *)image {
   _image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   self.iconImageView.image = _image;
+  self.iconImageView.tintColor = (self.selected) ? self.selectedItemTintColor
+      : self.unselectedItemTintColor;
+  [self.iconImageView sizeToFit];
+}
+
+-(void)setSelectedImage:(UIImage *)selectedImage {
+  _selectedImage = [selectedImage imageWithRenderingMode: UIImageRenderingModeAlwaysTemplate];
+  self.iconImageView.image = _selectedImage;
   self.iconImageView.tintColor = self.selectedItemTintColor;
   [self.iconImageView sizeToFit];
 }

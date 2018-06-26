@@ -32,6 +32,7 @@
 
 @property(nonatomic, strong) UIButton *button;
 @property(nonatomic, strong) UIImage *image;
+@property(nonatomic, strong) UIImage *selectedImage;
 
 @property(nonatomic, strong) UIColor *badgeColor UI_APPEARANCE_SELECTOR;
 @property(nonatomic, strong) UIColor *selectedItemTintColor UI_APPEARANCE_SELECTOR;

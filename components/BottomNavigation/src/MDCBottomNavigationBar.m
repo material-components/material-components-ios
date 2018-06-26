@@ -443,6 +443,9 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
     if (item.image) {
       itemView.image = item.image;
     }
+    if (item.selectedImage) {
+      itemView.selectedImage = item.selectedImage;
+    }
     if (item.badgeValue) {
       itemView.badgeValue = item.badgeValue;
     }
