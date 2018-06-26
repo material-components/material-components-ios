@@ -19,6 +19,7 @@ import MaterialComponents
 /// Example to show how to use a feature highlight in Swift
 class FeatureHighlightSwiftViewController: UIViewController {
 
+  let showButton = MDCButton()
   let featureButton = MDCButton()
   let colorScheme = MDCSemanticColorScheme()
   let typographyScheme = MDCTypographyScheme()
@@ -38,21 +39,26 @@ class FeatureHighlightSwiftViewController: UIViewController {
     colorScheme.backgroundColor = .white
     view.backgroundColor = colorScheme.backgroundColor
 
-    let button = MDCButton()
-    button.setTitle("Show Feature Highlight", for: .normal)
-    button.sizeToFit()
-    button.addTarget(self, action: #selector(showFeatureHighlight), for: .touchUpInside)
-    button.frame.origin.y =
-        view.bounds.height - (button.frame.height + 120)
-    button.frame.origin.x = view.center.x - button.frame.width / 2
-    MDCContainedButtonThemer.applyScheme(buttonScheme, to: button)
-    self.view.addSubview(button)
+    showButton.setTitle("Show Feature Highlight", for: .normal)
+    showButton.addTarget(self, action: #selector(showFeatureHighlight), for: .touchUpInside)
+    MDCContainedButtonThemer.applyScheme(buttonScheme, to: showButton)
+    self.view.addSubview(showButton)
 
     featureButton.setTitle("Feature", for: .normal)
-    featureButton.sizeToFit()
-    featureButton.center = view.center
     MDCContainedButtonThemer.applyScheme(buttonScheme, to: featureButton)
     self.view.addSubview(featureButton)
+  }
+
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    showButton.sizeToFit()
+    showButton.frame.origin.y =
+      view.bounds.height - (showButton.frame.height + 60)
+    showButton.frame.origin.x = view.center.x - showButton.frame.width / 2
+
+    featureButton.sizeToFit()
+    featureButton.frame.origin.x = view.center.x - featureButton.frame.width / 2
+    featureButton.frame.origin.y = view.bounds.height / 2 - featureButton.frame.height / 2
   }
 
   func showFeatureHighlight() {
