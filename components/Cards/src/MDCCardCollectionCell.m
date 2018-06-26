@@ -61,7 +61,6 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
   NSMutableDictionary<NSNumber *, UIColor *> *_imageTintColors;
   UIColor *_backgroundColor;
   CGPoint _lastTouch;
-  BOOL _isInteractable;
 }
 
 @dynamic layer;
@@ -106,9 +105,9 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
                               forKey:MDCCardCellBackgroundColorsKey]];
     }
     if ([coder containsValueForKey:MDCCardCellIsInteractableKey]) {
-      self.interactable = [coder decodeBoolForKey:MDCCardCellIsInteractableKey];
+      _interactable = [coder decodeBoolForKey:MDCCardCellIsInteractableKey];
     } else {
-      self.interactable = MDCCardCellIsInteractableDefault;
+      _interactable = MDCCardCellIsInteractableDefault;
     }
     [self commonMDCCardCollectionCellInit];
   }
@@ -119,7 +118,7 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
   self = [super initWithFrame:frame];
   if (self) {
     self.layer.cornerRadius = MDCCardCellCornerRadiusDefault;
-    _isInteractable = YES;
+    _interactable = YES;
     [self commonMDCCardCollectionCellInit];
   }
   return self;
@@ -215,7 +214,7 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
   [coder encodeObject:_verticalImageAlignments forKey:MDCCardCellVerticalImageAlignmentsKey];
   [coder encodeObject:_imageTintColors forKey:MDCCardCellImageTintColorsKey];
   [coder encodeObject:self.layer.shapedBackgroundColor forKey:MDCCardCellBackgroundColorsKey];
-  [coder encodeBool:_isInteractable forKey:MDCCardCellIsInteractableKey];
+  [coder encodeBool:_interactable forKey:MDCCardCellIsInteractableKey];
 }
 
 - (void)layoutSubviews {
@@ -544,19 +543,11 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
   self.layer.shapedBackgroundColor = _backgroundColor;
 }
 
-- (void)setInteractable:(BOOL)interactable {
-  _isInteractable = interactable;
-}
-
-- (BOOL)isInteractable {
-  return _isInteractable;
-}
-
 #pragma mark - UIResponder
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
   UIView *result = [super hitTest:point withEvent:event];
-  if (!_isInteractable && (result == self.contentView || result == self)) {
+  if (!_interactable && (result == self.contentView || result == self)) {
     return nil;
   }
   return result;

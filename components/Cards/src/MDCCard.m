@@ -44,7 +44,6 @@ static const BOOL MDCCardIsInteractableDefault = YES;
   NSMutableDictionary<NSNumber *, UIColor *> *_borderColors;
   UIColor *_backgroundColor;
   CGPoint _lastTouch;
-  BOOL _isInteractable;
 }
 
 @dynamic layer;
@@ -75,9 +74,9 @@ static const BOOL MDCCardIsInteractableDefault = YES;
                                                                forKey:MDCCardBackgroundColorsKey]];
     }
     if ([coder containsValueForKey:MDCCardIsInteractableKey]) {
-      self.interactable = [coder decodeBoolForKey:MDCCardIsInteractableKey];
+      _interactable = [coder decodeBoolForKey:MDCCardIsInteractableKey];
     } else {
-      self.interactable = MDCCardIsInteractableDefault;
+      _interactable = MDCCardIsInteractableDefault;
     }
     [self commonMDCCardInit];
   }
@@ -88,7 +87,7 @@ static const BOOL MDCCardIsInteractableDefault = YES;
   self = [super initWithFrame:frame];
   if (self) {
     self.layer.cornerRadius = MDCCardCornerRadiusDefault;
-    _isInteractable = MDCCardIsInteractableDefault;
+    _interactable = MDCCardIsInteractableDefault;
     [self commonMDCCardInit];
   }
   return self;
@@ -143,7 +142,7 @@ static const BOOL MDCCardIsInteractableDefault = YES;
   [coder encodeObject:_inkView forKey:MDCCardInkViewKey];
   [coder encodeDouble:self.layer.cornerRadius forKey:MDCCardCornerRadiusKey];
   [coder encodeObject:self.layer.shapedBackgroundColor forKey:MDCCardBackgroundColorsKey];
-  [coder encodeBool:_isInteractable forKey:MDCCardIsInteractableKey];
+  [coder encodeBool:_interactable forKey:MDCCardIsInteractableKey];
 }
 
 - (void)layoutSubviews {
@@ -280,7 +279,7 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
   UIView *result = [super hitTest:point withEvent:event];
-  if (!_isInteractable && result == self) {
+  if (!_interactable && result == self) {
     return nil;
   }
   if (self.layer.shapeGenerator) {
@@ -326,14 +325,6 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 
 - (void)updateBackgroundColor {
   self.layer.shapedBackgroundColor = _backgroundColor;
-}
-
-- (void)setInteractable:(BOOL)interactable {
-  _isInteractable = interactable;
-}
-
-- (BOOL)isInteractable {
-  return _isInteractable;
 }
 
 @end
