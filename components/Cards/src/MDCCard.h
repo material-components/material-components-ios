@@ -45,7 +45,7 @@
  Therefore, this property should be set to NO *only if* there are other interactable items within
  the card's content, such as buttons or other tappable controls.
  */
-@property (nonatomic, getter=isInteractable) BOOL interactable;
+@property (nonatomic, getter=isInteractable) IBInspectable BOOL interactable;
 
 /**
  Sets the shadow elevation for an UIControlState state

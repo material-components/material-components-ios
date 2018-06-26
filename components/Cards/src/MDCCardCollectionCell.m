@@ -118,7 +118,7 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
   self = [super initWithFrame:frame];
   if (self) {
     self.layer.cornerRadius = MDCCardCellCornerRadiusDefault;
-    _interactable = YES;
+    _interactable = MDCCardCellIsInteractableDefault;
     [self commonMDCCardCollectionCellInit];
   }
   return self;

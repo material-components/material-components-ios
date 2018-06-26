@@ -102,7 +102,7 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
  Therefore, this property should be set to NO *only if* there are other interactable items within
  the card's content, such as buttons or other tappable controls.
  */
-@property (nonatomic, getter=isInteractable) BOOL interactable;
+@property (nonatomic, getter=isInteractable) IBInspectable BOOL interactable;
 
 /*
  The shape generator used to define the card cell's shape.
