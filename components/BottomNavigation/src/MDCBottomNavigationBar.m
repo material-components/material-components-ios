@@ -56,6 +56,7 @@ static const CGFloat kMDCBottomNavigationBarLandscapeContainerWidth = 320.f;
 static NSString *const kMDCBottomNavigationBarBadgeColorString = @"badgeColor";
 static NSString *const kMDCBottomNavigationBarBadgeValueString = @"badgeValue";
 static NSString *const kMDCBottomNavigationBarImageString = @"image";
+static NSString *const kMDCBottomNavigationBarSelectedImageString = @"selectedImage";
 static NSString *const kMDCBottomNavigationBarNewString = @"new";
 static NSString *const kMDCBottomNavigationBarOfString = @"of";
 static NSString *const kMDCBottomNavigationBarTitleString = @"title";
@@ -304,6 +305,10 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
               options:NSKeyValueObservingOptionNew
               context:nil];
     [item addObserver:self
+           forKeyPath:kMDCBottomNavigationBarSelectedImageString
+              options:NSKeyValueObservingOptionNew
+              context:nil];
+    [item addObserver:self
            forKeyPath:kMDCBottomNavigationBarTitleString
               options:NSKeyValueObservingOptionNew
               context:nil];
@@ -316,6 +321,8 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
       [item removeObserver:self forKeyPath:kMDCBottomNavigationBarBadgeColorString];
       [item removeObserver:self forKeyPath:kMDCBottomNavigationBarBadgeValueString];
       [item removeObserver:self forKeyPath:kMDCBottomNavigationBarImageString];
+      [item removeObserver:self
+                forKeyPath:kMDCBottomNavigationBarSelectedImageString];
       [item removeObserver:self forKeyPath:kMDCBottomNavigationBarTitleString];
     }
     @catch (NSException *exception) {
@@ -346,6 +353,8 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
       itemView.badgeValue = change[kMDCBottomNavigationBarNewString];
     } else if ([keyPath isEqualToString:kMDCBottomNavigationBarImageString]) {
       itemView.image = change[kMDCBottomNavigationBarNewString];
+    } else if ([keyPath isEqualToString:kMDCBottomNavigationBarSelectedImageString]) {
+      itemView.selectedImage = change[kMDCBottomNavigationBarNewString];
     } else if ([keyPath isEqualToString:kMDCBottomNavigationBarTitleString]) {
       itemView.title = change[kMDCBottomNavigationBarNewString];
     }
@@ -429,6 +438,7 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
     itemView.unselectedItemTintColor = self.unselectedItemTintColor;
     itemView.titleVisibility = self.titleVisibility;
     itemView.titleBelowIcon = self.titleBelowItem;
+    itemView.accessibilityValue = item.accessibilityValue;
 
     NSString *key =
         kMaterialBottomNavigationStringTable[kStr_MaterialBottomNavigationItemCountAccessibilityHint];

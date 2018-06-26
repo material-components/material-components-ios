@@ -196,6 +196,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     _button.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     _button.accessibilityLabel = [self accessibilityLabelWithTitle:_title];
     _button.accessibilityTraits &= ~UIAccessibilityTraitButton;
+    _button.accessibilityValue = self.accessibilityValue;
     [self addSubview:_button];
   }
 }
@@ -386,11 +387,17 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     badgeValue = nil;
   }
   self.badge.badgeValue = badgeValue;
-  self.button.accessibilityValue = badgeValue;
   if (badgeValue == nil || badgeValue.length == 0) {
     self.badge.hidden = YES;
+    self.button.accessibilityValue = self.accessibilityValue;
   } else {
     self.badge.hidden = NO;
+    if (self.accessibilityValue == nil || self.accessibilityValue.length == 0) {
+      self.button.accessibilityValue = badgeValue;
+    } else {
+      self.button.accessibilityValue =
+          [NSString stringWithFormat:@"%@ %@", self.accessibilityValue, badgeValue];
+    }
   }
 }
 
@@ -419,6 +426,15 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   _itemTitleFont = itemTitleFont;
   self.label.font = itemTitleFont;
   [self setNeedsLayout];
+}
+
+-(void)setAccessibilityValue:(NSString *)accessibilityValue {
+  if (self.badgeValue == nil || self.badgeValue.length == 0) {
+    self.button.accessibilityValue = accessibilityValue;
+  } else {
+    self.button.accessibilityValue =
+        [NSString stringWithFormat:@"%@ %@", accessibilityValue, self.badgeValue];
+  }
 }
 
 #pragma mark - Resource bundle
