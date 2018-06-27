@@ -231,9 +231,6 @@ synchronization within Google.
 
     git push origin stable develop
 
-You can now sync to the desired stable release. [go/mdc-releasing#re-run-the-import-script-against-githubstable](http://go/mdc-releasing#re-run-the-import-script-against-githubstable). Once you've submitted
-the internal CL, continue below to tag and publish the release.
-
 ## Publish the official release
 
 > Have all release-blocking clients given the go-ahead? **Do not create the official release
@@ -243,6 +240,8 @@ the internal CL, continue below to tag and publish the release.
 You can now publish the release to GitHub:
 
     scripts/release publish <version>
+
+- Google: You can now sync the internal cl to the tagged stable release. [go/mdc-releasing#re-run-the-import-script-against-githubstable](http://go/mdc-releasing#re-run-the-import-script-against-githubstable). The release must be tagged in GitHub before you sync internally.
 
 ## Publish to Cocoapods
 

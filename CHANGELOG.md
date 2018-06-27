@@ -1,3 +1,89 @@
+# 56.0.0
+
+In this release we updated the icon layout of `MDCTextField`s add accessibilty docs for `MDCButton`
+and some more `MDCBottomNavigation` examples. We also tweeked the `MDCChipView` and `MDCButtonBar` 
+buttons.
+
+## Breaking changes
+
+### New layout for `MDCTextField`'s with icons
+
+* [Making leading and trailing view layout customizeable (#4434)](https://github.com/material-components/material-components-ios/commit/1f10ae3e3e12b8a0b367ae118c7cc7d6e706e8a5) (Will Larche)
+
+## API changes
+
+### TextFields
+
+#### MDCLeadingViewTextInput
+
+*new* protocol: `MDCLeadingViewTextInput`
+
+*new* property: `leadingView` in `MDCLeadingViewTextInput`
+
+*new* property: `leadingViewMode` in `MDCLeadingViewTextInput`
+
+#### MDCTextInputPositioningDelegate
+
+*new* method: `-leadingViewTrailingPaddingConstant` in `MDCTextInputPositioningDelegate`
+
+*new* method: `-leadingViewRectForBounds:defaultRect:` in `MDCTextInputPositioningDelegate`
+
+*new* method: `-trailingViewTrailingPaddingConstant` in `MDCTextInputPositioningDelegate`
+
+*new* method: `-trailingViewRectForBounds:defaultRect:` in `MDCTextInputPositioningDelegate`
+
+#### MDCTextField
+
+*modified* class: `MDCTextField`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `class MDCTextField : MDCTextInput` |
+| To: | `class MDCTextField : MDCTextInput, MDCLeadingViewTextInput` |
+
+*modified* class: `MDCTextField`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCTextField : UITextField <MDCTextInput>` |
+| To: | `@interface MDCTextField : UITextField <MDCTextInput, MDCLeadingViewTextInput>` |
+
+## Component changes
+
+### Buttons
+
+#### Changes
+
+* [Updated accessibility documentation and examples (#4418)](https://github.com/material-components/material-components-ios/commit/25b0ed9ea21cee6369c7ad00c497b198ed29e589) (Randall Li)
+
+### ButtonBar
+
+#### Changes
+
+* [Update disabled button alpha to match spec (#4430)](https://github.com/material-components/material-components-ios/commit/95751ee02ba8f118f004bee02d66accdd2215add) (Randall Li)
+
+### TextFields
+
+#### Changes
+
+* [Making leading and trailing view layout customizeable (#4434)](https://github.com/material-components/material-components-ios/commit/1f10ae3e3e12b8a0b367ae118c7cc7d6e706e8a5) (Will Larche)
+
+### Chips
+
+#### Changes
+
+* [Update accessibility selected & dimmed states (#4399)](https://github.com/material-components/material-components-ios/commit/9fc828498f6469326a447f5664ab4f1f6977f14f) (galiak11)
+
+### BottomNavigation
+
+#### Changes
+
+* [Add example when we explicitly set color (#4420)](https://github.com/material-components/material-components-ios/commit/a9d508c681543397ea809b5d848986f79566e6be) (Cody Weaver)
+* [Update ripple color to match spec. (#4422)](https://github.com/material-components/material-components-ios/commit/beecea91ef9af9ba892ddc0498f0bce5971d1ed4) (Cody Weaver)
+* [Use size classes instead of device orientation to determine layout in bottom navigation (#4424)](https://github.com/material-components/material-components-ios/commit/1dd5ee9e4acf9a9eb4622b44e8582f50f322003c) (Andrew Overton)
+
+---
+
 # 55.5.0
 
 ## API changes

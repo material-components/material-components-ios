@@ -82,6 +82,18 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
 
   var allTextFieldControllers = [MDCTextInputControllerFloatingPlaceholder]()
 
+  let leadingImage: UIImage = {
+    return UIImage.init(named: "ic_search",
+                        in: Bundle(for: TextFieldOutlinedSwiftExample.self),
+                        compatibleWith: nil)!
+  }()
+
+  let trailingImage: UIImage = {
+    return UIImage.init(named: "ic_done",
+                        in: Bundle(for: TextFieldOutlinedSwiftExample.self),
+                        compatibleWith: nil)!
+  }()
+
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     cityController = MDCTextInputControllerOutlined(textInput: city)
     stateController = MDCTextInputControllerOutlined(textInput: state)
@@ -111,6 +123,10 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
     let nameController = MDCTextInputControllerOutlined(textInput: name)
     name.delegate = self
     name.text = "Grace Hopper"
+    name.leadingView = UIImageView(image: leadingImage)
+    name.leadingViewMode = .always
+    name.trailingView = UIImageView(image: trailingImage)
+    name.trailingViewMode = .always
     nameController.placeholderText = "Name"
     nameController.helperText = "First and Last"
     allTextFieldControllers.append(nameController)

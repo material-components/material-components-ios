@@ -23,7 +23,7 @@
 
 #import "supplemental/ButtonsTypicalUseSupplemental.h"
 
-const CGFloat kMinimumAccessibleButtonHeight = 48.0;
+const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
 
 @interface ButtonsTypicalUseExampleViewController ()
 @property(nonatomic, strong) MDCFloatingButton *floatingButton;
@@ -56,9 +56,12 @@ const CGFloat kMinimumAccessibleButtonHeight = 48.0;
   [MDCContainedButtonThemer applyScheme:buttonScheme toButton:containedButton];
   [containedButton sizeToFit];
   CGFloat containedButtonVerticalInset =
-      MIN(0, -(kMinimumAccessibleButtonHeight - CGRectGetHeight(containedButton.frame)) / 2);
+      MIN(0, -(kMinimumAccessibleButtonSize.height - CGRectGetHeight(containedButton.bounds)) / 2);
+  CGFloat containedButtonHorizontalInset =
+      MIN(0, -(kMinimumAccessibleButtonSize.width - CGRectGetWidth(containedButton.bounds)) / 2);
   containedButton.hitAreaInsets =
-      UIEdgeInsetsMake(containedButtonVerticalInset, 0, containedButtonVerticalInset, 0);
+      UIEdgeInsetsMake(containedButtonVerticalInset, containedButtonHorizontalInset,
+                       containedButtonVerticalInset, containedButtonHorizontalInset);
   [containedButton addTarget:self
                       action:@selector(didTap:)
             forControlEvents:UIControlEventTouchUpInside];
@@ -82,9 +85,13 @@ const CGFloat kMinimumAccessibleButtonHeight = 48.0;
   [MDCTextButtonThemer applyScheme:buttonScheme toButton:textButton];
   [textButton setTitle:@"Button" forState:UIControlStateNormal];
   [textButton sizeToFit];
-  CGFloat textButtonVerticalInset = MIN(0, -(kMinimumAccessibleButtonHeight - CGRectGetHeight(textButton.frame)) / 2);
+  CGFloat textButtonVerticalInset =
+      MIN(0, -(kMinimumAccessibleButtonSize.height - CGRectGetHeight(textButton.bounds)) / 2);
+  CGFloat textButtonHorizontalInset =
+      MIN(0, -(kMinimumAccessibleButtonSize.width - CGRectGetWidth(textButton.bounds)) / 2);
   textButton.hitAreaInsets =
-      UIEdgeInsetsMake(textButtonVerticalInset, 0, textButtonVerticalInset, 0);
+      UIEdgeInsetsMake(textButtonVerticalInset, textButtonHorizontalInset,
+                       textButtonVerticalInset, textButtonHorizontalInset);
   [textButton addTarget:self
                  action:@selector(didTap:)
        forControlEvents:UIControlEventTouchUpInside];
@@ -109,9 +116,12 @@ const CGFloat kMinimumAccessibleButtonHeight = 48.0;
   [MDCOutlinedButtonThemer applyScheme:buttonScheme toButton:outlinedButton];
   [outlinedButton sizeToFit];
   CGFloat outlineButtonVerticalInset =
-      MIN(0, -(kMinimumAccessibleButtonHeight - CGRectGetHeight(outlinedButton.frame)) / 2);
+      MIN(0, -(kMinimumAccessibleButtonSize.height - CGRectGetHeight(outlinedButton.frame)) / 2);
+  CGFloat outlineButtonHorizontalInset =
+      MIN(0, -(kMinimumAccessibleButtonSize.width - CGRectGetWidth(outlinedButton.frame)) / 2);
   outlinedButton.hitAreaInsets =
-      UIEdgeInsetsMake(outlineButtonVerticalInset, 0, outlineButtonVerticalInset, 0);
+      UIEdgeInsetsMake(outlineButtonVerticalInset, outlineButtonHorizontalInset,
+                       outlineButtonVerticalInset, outlineButtonHorizontalInset);
   [outlinedButton addTarget:self
                     action:@selector(didTap:)
           forControlEvents:UIControlEventTouchUpInside];
@@ -141,13 +151,7 @@ const CGFloat kMinimumAccessibleButtonHeight = 48.0;
       [[UIImage imageNamed:@"Plus"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [self.floatingButton setImage:plusImage forState:UIControlStateNormal];
   [MDCFloatingActionButtonThemer applyScheme:buttonScheme toButton:self.floatingButton];
-  CGFloat floatingActionButtonVerticalInset =
-      MIN(0, -(kMinimumAccessibleButtonHeight - CGRectGetHeight(self.floatingButton.frame)) / 2);
-  UIEdgeInsets touchInsets =
-      UIEdgeInsetsMake(floatingActionButtonVerticalInset, 0, floatingActionButtonVerticalInset, 0);
-  [self.floatingButton setHitAreaInsets:touchInsets
-                               forShape:MDCFloatingButtonShapeDefault
-                                 inMode:MDCFloatingButtonModeNormal];
+  self.floatingButton.accessibilityLabel = @"Create";
   [self.view addSubview:self.floatingButton];
 
   self.buttons = @[

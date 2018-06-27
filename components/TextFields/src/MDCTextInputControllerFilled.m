@@ -16,6 +16,8 @@
 
 #import "MDCTextInputControllerFilled.h"
 
+#import <MDFInternationalization/MDFInternationalization.h>
+
 #import "MDCMultilineTextField.h"
 #import "MDCTextInput.h"
 #import "MDCTextInputBorderView.h"
@@ -45,6 +47,7 @@ static const CGFloat MDCTextInputControllerFilledFullPadding = 16.f;
 static const CGFloat MDCTextInputControllerFilledHalfPadding = 8.f;
 static const CGFloat MDCTextInputControllerFilledHalfPaddingAddition = 1.f;
 static const CGFloat MDCTextInputControllerFilledNormalPlaceholderPadding = 20.f;
+static const CGFloat MDCTextInputControllerFilledThreeQuartersPadding = 12.f;
 
 static inline UIColor *MDCTextInputControllerFilledDefaultBorderFillColorDefault() {
   return [UIColor colorWithWhite:0 alpha:.06f];
@@ -105,6 +108,44 @@ static CGFloat _underlineHeightNormalDefault =
 }
 
 #pragma mark - MDCTextInputPositioningDelegate
+
+- (CGRect)leadingViewRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect {
+  CGRect leadingViewRect = defaultRect;
+  CGFloat xOffset = (self.textInput.mdf_effectiveUserInterfaceLayoutDirection ==
+                     UIUserInterfaceLayoutDirectionRightToLeft)
+                        ? -1 * MDCTextInputControllerFilledFullPadding
+                        : MDCTextInputControllerFilledFullPadding;
+
+  leadingViewRect = CGRectOffset(leadingViewRect, xOffset, 0.f);
+
+  leadingViewRect.origin.y = CGRectGetHeight(self.textInput.borderPath.bounds) / 2.f -
+                             CGRectGetHeight(leadingViewRect) / 2.f;
+
+  return leadingViewRect;
+}
+
+- (CGFloat)leadingViewTrailingPaddingConstant {
+  return MDCTextInputControllerFilledFullPadding;
+}
+
+- (CGRect)trailingViewRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect {
+  CGRect trailingViewRect = defaultRect;
+  CGFloat xOffset = (self.textInput.mdf_effectiveUserInterfaceLayoutDirection ==
+                     UIUserInterfaceLayoutDirectionRightToLeft)
+                        ? MDCTextInputControllerFilledThreeQuartersPadding
+                        : -1 * MDCTextInputControllerFilledThreeQuartersPadding;
+
+  trailingViewRect = CGRectOffset(trailingViewRect, xOffset, 0.f);
+
+  trailingViewRect.origin.y = CGRectGetHeight(self.textInput.borderPath.bounds) / 2.f -
+                              CGRectGetHeight(trailingViewRect) / 2.f;
+
+  return trailingViewRect;
+}
+
+- (CGFloat)trailingViewTrailingPaddingConstant {
+  return MDCTextInputControllerFilledThreeQuartersPadding;
+}
 
 // clang-format off
 /**
@@ -268,6 +309,19 @@ static CGFloat _underlineHeightNormalDefault =
   CGFloat estimatedTextHeight = MDCCeil(self.textInput.font.lineHeight * scale) / scale;
 
   return estimatedTextHeight;
+}
+
+- (UIOffset)floatingPlaceholderOffset {
+  UIOffset offset = [super floatingPlaceholderOffset];
+
+  if ([self.textInput conformsToProtocol:@protocol(MDCLeadingViewTextInput)]) {
+    UIView<MDCLeadingViewTextInput> *input = (UIView<MDCLeadingViewTextInput> *)self.textInput;
+    if (input.leadingView.superview) {
+      offset.horizontal -=
+          CGRectGetWidth(input.leadingView.frame) + [self leadingViewTrailingPaddingConstant];
+    }
+  }
+  return offset;
 }
 
 // The space ABOVE the underline but under the text input area.
