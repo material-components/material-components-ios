@@ -35,14 +35,17 @@ class FloatingButtonExampleSwiftViewController: UIViewController {
     miniFloatingButton.translatesAutoresizingMaskIntoConstraints = false
     miniFloatingButton.setMinimumSize(CGSize(width: 96, height: 40), for: .mini, in: .expanded)
     miniFloatingButton.setImage(plusImage, for: .normal)
+    miniFloatingButton.accessibilityLabel = "Create"
 
     defaultFloatingButton.sizeToFit()
     defaultFloatingButton.translatesAutoresizingMaskIntoConstraints = false
     defaultFloatingButton.setImage(plusImage, for: .normal)
+    defaultFloatingButton.accessibilityLabel = "Create"
 
     largeIconFloatingButton.sizeToFit()
     largeIconFloatingButton.translatesAutoresizingMaskIntoConstraints = false
     largeIconFloatingButton.setImage(plusImage36, for: .normal)
+    largeIconFloatingButton.accessibilityLabel = "Create"
     largeIconFloatingButton.setContentEdgeInsets(UIEdgeInsetsMake(-6, -6, -6, 0), for: .default,
                                                  in: .expanded)
 

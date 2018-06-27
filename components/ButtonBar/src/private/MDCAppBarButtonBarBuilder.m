@@ -30,7 +30,7 @@ static const CGFloat kEdgeButtonAdditionalMarginPad = 12.f;
 // The default MDCButton's alpha for display state is 0.1f which in the context of bar buttons
 // makes it practically invisible. Setting button to a higher opacity is closer to what the
 // button should look like when it is disabled.
-static const CGFloat kDisabledButtonAlpha = 0.45f;
+static const CGFloat kDisabledButtonAlpha = 0.38f;
 
 // Default content inset for buttons.
 static const UIEdgeInsets kButtonInset = {0, 12.0f, 0, 12.0f};
