@@ -31,7 +31,7 @@ class BottomNavigationSelectedIconExample: UIViewController {
     let tabBarItem1 = UITabBarItem(title: "Home", image: UIImage(named: "Home"), tag: 0)
     let tabBarItem2 = UITabBarItem(title: "Messages", image: UIImage(named: "Email"), tag: 1)
     tabBarItem2.selectedImage = nil
-    let tabBarItem3 = UITabBarItem(title: "Favorites", image: UIImage(named: "FavoriteOutline"), tag: 2)
+    let tabBarItem3 = UITabBarItem(title: "Favorites", image: UIImage(named: "Cake"), tag: 2)
     tabBarItem3.selectedImage = UIImage(named: "Favorite")
     bottomNavBar.items = [ tabBarItem1, tabBarItem2, tabBarItem3 ]
     bottomNavBar.selectedItem = tabBarItem1
