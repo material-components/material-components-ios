@@ -30,4 +30,3 @@
  with hardware safe areas (iPhone X).
  */
 FOUNDATION_EXPORT CGFloat MDCDeviceTopSafeAreaInset(void);
-FOUNDATION_EXPORT CGFloat MDCDeviceTopSafeAreaInsetAffectingView(UIView *);

@@ -318,7 +318,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   _statusBarHintCanOverlapHeader = YES;
 
   _minMaxHeightIncludesSafeArea = YES;
-  _minimumHeight = kFlexibleHeaderDefaultHeight + MDCDeviceTopSafeAreaInsetAffectingView(self);
+  _minimumHeight = kFlexibleHeaderDefaultHeight + [self additionalSpaceNeededForDeviceTopSafeAreaInset];
   _maximumHeight = _minimumHeight;
 
   _visibleShadowOpacity = kDefaultVisibleShadowOpacity;
@@ -468,7 +468,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
     BOOL hasSetMinOrMaxHeight = _hasExplicitlySetMinHeight || _hasExplicitlySetMaxHeight;
     if (!hasSetMinOrMaxHeight && _minMaxHeightIncludesSafeArea) {
       // If we're using the defaults we need to update them to account for the new Safe Area inset.
-      _minimumHeight = kFlexibleHeaderDefaultHeight + MDCDeviceTopSafeAreaInsetAffectingView(self);
+      _minimumHeight = kFlexibleHeaderDefaultHeight + [self additionalSpaceNeededForDeviceTopSafeAreaInset];
       _maximumHeight = _minimumHeight;
     }
 
@@ -569,7 +569,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 //
 // Our desired top content inset is always at least:
 //
-//     _maximumHeight (with safe area insets removed) + MDCDeviceTopSafeAreaInsetAffectingView(self)
+//     _maximumHeight (with safe area insets removed) + [self additionalSpaceNeededForDeviceTopSafeAreaInset]
 //
 // This ensures that when our scroll view is scrolled to its top that our header is able to be fully
 // expanded.
@@ -596,7 +596,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   // we ensure that our desired top inset is always at least the header height.
   CGFloat minimumTopInset;
   if (_minMaxHeightIncludesSafeArea) {
-    minimumTopInset = _maximumHeight - MDCDeviceTopSafeAreaInsetAffectingView(self);
+    minimumTopInset = _maximumHeight - [self additionalSpaceNeededForDeviceTopSafeAreaInset];
   } else {
     minimumTopInset = _maximumHeight;
   }
@@ -913,7 +913,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   // here.
   BOOL hasSetMinOrMaxHeight = _hasExplicitlySetMinHeight || _hasExplicitlySetMaxHeight;
   if (!hasSetMinOrMaxHeight && _minMaxHeightIncludesSafeArea) {
-    _minimumHeight = kFlexibleHeaderDefaultHeight + MDCDeviceTopSafeAreaInsetAffectingView(self);
+    _minimumHeight = kFlexibleHeaderDefaultHeight + [self additionalSpaceNeededForDeviceTopSafeAreaInset];
     _maximumHeight = _minimumHeight;
   }
 
@@ -1085,6 +1085,17 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   }
 
   [self fhv_updateLayout];
+}
+
+- (CGFloat)additionalSpaceNeededForDeviceTopSafeAreaInset {
+  return [self isWithinDeviceTopSafeAreaInsets] ? 0 : MDCDeviceTopSafeAreaInset();
+}
+
+- (BOOL)isWithinDeviceTopSafeAreaInsets {
+  UIWindow *keyWindow = [UIApplication mdc_safeSharedApplication].keyWindow;
+  CGFloat topMargin = MDCDeviceTopSafeAreaInset();
+  CGPoint originInWindow = [self convertPoint:CGPointZero toCoordinateSpace:keyWindow];
+  return originInWindow.y >= topMargin;
 }
 
 #pragma mark Gestures
@@ -1391,7 +1402,7 @@ static BOOL isRunningiOS10_3OrAbove() {
   if (_minMaxHeightIncludesSafeArea) {
     return _minimumHeight;
   } else {
-    return _minimumHeight + MDCDeviceTopSafeAreaInsetAffectingView(self);
+    return _minimumHeight + [self additionalSpaceNeededForDeviceTopSafeAreaInset];
   }
 }
 
@@ -1399,7 +1410,7 @@ static BOOL isRunningiOS10_3OrAbove() {
   if (_minMaxHeightIncludesSafeArea) {
     return _maximumHeight;
   } else {
-    return _maximumHeight + MDCDeviceTopSafeAreaInsetAffectingView(self);
+    return _maximumHeight + [self additionalSpaceNeededForDeviceTopSafeAreaInset];
   }
 }
 
@@ -1412,14 +1423,14 @@ static BOOL isRunningiOS10_3OrAbove() {
   // Update default values accordingly.
   if (!_hasExplicitlySetMinHeight) {
     if (_minMaxHeightIncludesSafeArea) {
-      _minimumHeight = kFlexibleHeaderDefaultHeight + MDCDeviceTopSafeAreaInsetAffectingView(self);
+      _minimumHeight = kFlexibleHeaderDefaultHeight + [self additionalSpaceNeededForDeviceTopSafeAreaInset];
     } else {
       _minimumHeight = kFlexibleHeaderDefaultHeight;
     }
   }
   if (!_hasExplicitlySetMaxHeight) {
     if (_minMaxHeightIncludesSafeArea) {
-      _maximumHeight = kFlexibleHeaderDefaultHeight + MDCDeviceTopSafeAreaInsetAffectingView(self);
+      _maximumHeight = kFlexibleHeaderDefaultHeight + [self additionalSpaceNeededForDeviceTopSafeAreaInset];
     } else {
       _maximumHeight = kFlexibleHeaderDefaultHeight;
     }

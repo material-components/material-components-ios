@@ -60,14 +60,3 @@ CGFloat MDCDeviceTopSafeAreaInset(void) {
 #endif
   return topInset;
 }
-
-CGFloat MDCDeviceTopSafeAreaInsetAffectingView(UIView *view) {
-  UIWindow *keyWindow = [UIApplication mdc_safeSharedApplication].keyWindow;
-  CGFloat topMargin = MDCDeviceTopSafeAreaInset();
-  CGPoint viewOriginInWindow = [view convertPoint:CGPointZero toCoordinateSpace:keyWindow];
-  CGFloat difference = topMargin - viewOriginInWindow.y;
-  if (difference <= 0) {
-    difference = 0;
-  }
-  return difference;
-}
