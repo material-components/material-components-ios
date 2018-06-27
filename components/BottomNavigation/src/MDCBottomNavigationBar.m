@@ -363,8 +363,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
       itemView.badgeColor = change[kMDCBottomNavigationBarNewString];
     } else if ([keyPath
                 isEqualToString:kMDCBottomNavigationBarAccessibilityValueString]) {
-      NSString *changeString = change[NSKeyValueChangeNewKey];
-      itemView.accessibilityValue = changeString;
+      itemView.accessibilityValue = change[NSKeyValueChangeNewKey];
     } else if ([keyPath isEqualToString:kMDCBottomNavigationBarBadgeValueString]) {
       itemView.badgeValue = change[kMDCBottomNavigationBarNewString];
     } else if ([keyPath isEqualToString:kMDCBottomNavigationBarImageString]) {
@@ -372,8 +371,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
     } else if ([keyPath isEqualToString:kMDCBottomNavigationBarSelectedImageString]) {
       itemView.selectedImage = change[kMDCBottomNavigationBarNewString];
     } else if ([keyPath isEqualToString:kMDCBottomNavigationBarTitleString]) {
-      NSString *changeString = change[kMDCBottomNavigationBarNewString];
-      itemView.title = changeString;
+      itemView.title = change[kMDCBottomNavigationBarNewString];
     }
   }
 }
