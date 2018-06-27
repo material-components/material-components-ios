@@ -387,17 +387,13 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     badgeValue = nil;
   }
   self.badge.badgeValue = badgeValue;
+  if (self.accessibilityValue == nil || self.accessibilityValue.length == 0) {
+    self.button.accessibilityValue = badgeValue;
+  }
   if (badgeValue == nil || badgeValue.length == 0) {
     self.badge.hidden = YES;
-    self.button.accessibilityValue = self.accessibilityValue;
   } else {
     self.badge.hidden = NO;
-    if (self.accessibilityValue == nil || self.accessibilityValue.length == 0) {
-      self.button.accessibilityValue = badgeValue;
-    } else {
-      self.button.accessibilityValue =
-          [NSString stringWithFormat:@"%@ %@", self.accessibilityValue, badgeValue];
-    }
   }
 }
 
@@ -429,12 +425,11 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 }
 
 -(void)setAccessibilityValue:(NSString *)accessibilityValue {
-  if (self.badgeValue == nil || self.badgeValue.length == 0) {
-    self.button.accessibilityValue = accessibilityValue;
-  } else {
-    self.button.accessibilityValue =
-        [NSString stringWithFormat:@"%@ %@", accessibilityValue, self.badgeValue];
-  }
+  self.button.accessibilityValue = accessibilityValue;
+}
+
+- (NSString *)accessibilityValue {
+  return self.button.accessibilityValue;
 }
 
 #pragma mark - Resource bundle
