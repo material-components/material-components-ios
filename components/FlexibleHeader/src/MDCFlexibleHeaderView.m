@@ -1088,14 +1088,17 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 }
 
 - (CGFloat)additionalSpaceNeededForDeviceTopSafeAreaInset {
-  return [self isWithinDeviceTopSafeAreaInsets] ? 0 : MDCDeviceTopSafeAreaInset();
+  if (![UIApplication mdc_isAppExtension] && [self isWithinDeviceTopSafeAreaInsets]) {
+    return 0;
+  } else {
+    return MDCDeviceTopSafeAreaInset();
+  }
 }
 
 - (BOOL)isWithinDeviceTopSafeAreaInsets {
   UIWindow *keyWindow = [UIApplication mdc_safeSharedApplication].keyWindow;
-  CGFloat topMargin = MDCDeviceTopSafeAreaInset();
   CGPoint originInWindow = [self convertPoint:CGPointZero toCoordinateSpace:keyWindow];
-  return originInWindow.y >= topMargin;
+  return originInWindow.y > MDCDeviceTopSafeAreaInset();
 }
 
 #pragma mark Gestures

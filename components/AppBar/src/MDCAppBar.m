@@ -349,18 +349,17 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
-  if ([self viewIsWithinDeviceSafeAreaInsets]) {
+  if (![UIApplication mdc_isAppExtension] && [self viewIsWithinDeviceTopSafeAreaInsets]) {
     _verticalConstraint.constant = 0;
   } else {
     _verticalConstraint.constant = MDCDeviceTopSafeAreaInset();
   }
 }
 
-- (BOOL)viewIsWithinDeviceSafeAreaInsets {
+- (BOOL)viewIsWithinDeviceTopSafeAreaInsets {
   UIWindow *keyWindow = [UIApplication mdc_safeSharedApplication].keyWindow;
-  CGFloat topMargin = MDCDeviceTopSafeAreaInset();
   CGPoint viewOriginInWindow = [self.view convertPoint:CGPointZero toCoordinateSpace:keyWindow];
-  return viewOriginInWindow.y >= topMargin;
+  return viewOriginInWindow.y > MDCDeviceTopSafeAreaInset();
 }
 
 - (BOOL)accessibilityPerformEscape {
