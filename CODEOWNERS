@@ -24,7 +24,7 @@
 /components/CollectionLayoutAttributes/ @ianegordon
 /components/Collections/          @ianegordon
 /components/Dialogs/              @ianegordon
-# /components/FeatureHighlight/     No owner
+/components/FeatureHighlight/     @codeman7
 /components/FlexibleHeader/       @jverkoey
 /components/HeaderStackView/      @jverkoey
 /components/Ink/                  @yarneo
@@ -40,6 +40,6 @@
 /components/Slider/               @romoore
 /components/Snackbar/             @yarneo
 /components/Tabs/                 @brianjmoore
-# /components/TextFields/           No owner
+/components/TextFields/           @andrewoverton
 /components/Themes/               @featherless
 /components/Typography/           @ianegordon
