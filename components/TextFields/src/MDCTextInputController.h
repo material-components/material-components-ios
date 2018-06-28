@@ -136,6 +136,7 @@
 /** Default value for textInputFontDefault. If nil, textInput.font would be the fallback.  */
 @property(class, nonatomic, nullable, strong) UIFont *textInputFontDefault;
 
+
 /**
  The font applied to the placeholder when inline (not floating).
 

@@ -458,7 +458,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
   [self subscribeForNotifications];
   _textInput.underline.color = [self class].normalColorDefault;
-  _textInput.backgroundColor = self.backgroundColor;
   _textInput.clearButton.tintColor = self.textInputClearButtonTintColor;
   [self forceUpdatePlaceholderY];
 }
@@ -976,7 +975,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   if (_backgroundColor != backgroundColor) {
     _backgroundColor = backgroundColor ?: [self class].backgroundColorDefault;
   }
-  self.textInput.backgroundColor = self.backgroundColor;
 }
 
 + (UIColor *)backgroundColorDefault {

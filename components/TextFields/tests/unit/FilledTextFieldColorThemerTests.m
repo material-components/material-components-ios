@@ -40,7 +40,9 @@
 
   // Then
   XCTAssertEqualObjects(controller.backgroundColor, colorScheme.surfaceColor);
-  XCTAssertEqualObjects(textField.backgroundColor, controller.backgroundColor);
+  // MDCTextInputController does not apply the backgroundColor and it would break Filled styles
+  // anyway.
+  XCTAssertNil(textField.backgroundColor);
   XCTAssertEqualObjects(controller.borderFillColor,
                         [colorScheme.onSurfaceColor colorWithAlphaComponent:0.04f]);
   XCTAssertEqualObjects(textField.borderView.borderFillColor, controller.borderFillColor);
@@ -105,7 +107,9 @@
 
   // Then
   XCTAssertEqualObjects(controller.backgroundColor, colorScheme.surfaceColor);
-  XCTAssertEqualObjects(textField.backgroundColor, controller.backgroundColor);
+  // MDCTextInputController does not apply the backgroundColor and it would break Filled styles
+  // anyway.
+  XCTAssertEqualObjects(textField.backgroundColor, UIColor.clearColor);
   XCTAssertEqualObjects(controller.borderFillColor,
                         [colorScheme.onSurfaceColor colorWithAlphaComponent:0.04f]);
   XCTAssertEqualObjects(textField.borderView.borderFillColor, controller.borderFillColor);

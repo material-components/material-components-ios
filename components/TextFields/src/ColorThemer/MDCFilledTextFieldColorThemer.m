@@ -27,6 +27,7 @@ static CGFloat const kFilledTextFieldIconAlpha = 0.54f;
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
      toTextInputControllerFilled:(nonnull MDCTextInputControllerFilled *)textInputControllerFilled {
+  textInputControllerFilled.backgroundColor = colorScheme.surfaceColor;
   textInputControllerFilled.borderFillColor =
       [colorScheme.onSurfaceColor colorWithAlphaComponent:kFilledTextFieldSurfaceOverlayAlpha];
   textInputControllerFilled.normalColor =
