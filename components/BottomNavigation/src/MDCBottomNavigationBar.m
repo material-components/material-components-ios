@@ -55,10 +55,17 @@ static const CGFloat kMDCBottomNavigationBarHeightAdjacentTitles = 40.f;
 static const CGFloat kMDCBottomNavigationBarLandscapeContainerWidth = 320.f;
 static NSString *const kMDCBottomNavigationBarBadgeColorString = @"badgeColor";
 static NSString *const kMDCBottomNavigationBarBadgeValueString = @"badgeValue";
+static NSString *const kMDCBottomNavigationBarAccessibilityValueString =
+    @"accessibilityValue";
 static NSString *const kMDCBottomNavigationBarImageString = @"image";
+static NSString *const kMDCBottomNavigationBarSelectedImageString = @"selectedImage";
+// TODO: - Change to NSKeyValueChangeNewKey
 static NSString *const kMDCBottomNavigationBarNewString = @"new";
-static NSString *const kMDCBottomNavigationBarOfString = @"of";
 static NSString *const kMDCBottomNavigationBarTitleString = @"title";
+
+
+static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
+
 
 @interface MDCBottomNavigationBar ()
 
@@ -300,7 +307,15 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
               options:NSKeyValueObservingOptionNew
               context:nil];
     [item addObserver:self
+           forKeyPath:kMDCBottomNavigationBarAccessibilityValueString
+              options:NSKeyValueObservingOptionNew
+              context:nil];
+    [item addObserver:self
            forKeyPath:kMDCBottomNavigationBarImageString
+              options:NSKeyValueObservingOptionNew
+              context:nil];
+    [item addObserver:self
+           forKeyPath:kMDCBottomNavigationBarSelectedImageString
               options:NSKeyValueObservingOptionNew
               context:nil];
     [item addObserver:self
@@ -315,7 +330,11 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
     @try {
       [item removeObserver:self forKeyPath:kMDCBottomNavigationBarBadgeColorString];
       [item removeObserver:self forKeyPath:kMDCBottomNavigationBarBadgeValueString];
+      [item removeObserver:self
+                forKeyPath:kMDCBottomNavigationBarAccessibilityValueString];
       [item removeObserver:self forKeyPath:kMDCBottomNavigationBarImageString];
+      [item removeObserver:self
+                forKeyPath:kMDCBottomNavigationBarSelectedImageString];
       [item removeObserver:self forKeyPath:kMDCBottomNavigationBarTitleString];
     }
     @catch (NSException *exception) {
@@ -342,10 +361,15 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
     MDCBottomNavigationItemView *itemView = _itemViews[selectedItemNum];
     if ([keyPath isEqualToString:kMDCBottomNavigationBarBadgeColorString]) {
       itemView.badgeColor = change[kMDCBottomNavigationBarNewString];
+    } else if ([keyPath
+                isEqualToString:kMDCBottomNavigationBarAccessibilityValueString]) {
+      itemView.accessibilityValue = change[NSKeyValueChangeNewKey];
     } else if ([keyPath isEqualToString:kMDCBottomNavigationBarBadgeValueString]) {
       itemView.badgeValue = change[kMDCBottomNavigationBarNewString];
     } else if ([keyPath isEqualToString:kMDCBottomNavigationBarImageString]) {
       itemView.image = change[kMDCBottomNavigationBarNewString];
+    } else if ([keyPath isEqualToString:kMDCBottomNavigationBarSelectedImageString]) {
+      itemView.selectedImage = change[kMDCBottomNavigationBarNewString];
     } else if ([keyPath isEqualToString:kMDCBottomNavigationBarTitleString]) {
       itemView.title = change[kMDCBottomNavigationBarNewString];
     }
@@ -429,6 +453,7 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
     itemView.unselectedItemTintColor = self.unselectedItemTintColor;
     itemView.titleVisibility = self.titleVisibility;
     itemView.titleBelowIcon = self.titleBelowItem;
+    itemView.accessibilityValue = item.accessibilityValue;
 
     NSString *key =
         kMaterialBottomNavigationStringTable[kStr_MaterialBottomNavigationItemCountAccessibilityHint];
@@ -442,6 +467,9 @@ static NSString *const kMDCBottomNavigationBarTitleString = @"title";
     itemView.button.accessibilityHint = localizedPosition;
     if (item.image) {
       itemView.image = item.image;
+    }
+    if (item.selectedImage) {
+      itemView.selectedImage = item.selectedImage;
     }
     if (item.badgeValue) {
       itemView.badgeValue = item.badgeValue;
