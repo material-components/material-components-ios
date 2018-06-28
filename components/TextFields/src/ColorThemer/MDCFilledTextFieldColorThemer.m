@@ -21,7 +21,7 @@ static CGFloat const kFilledTextFieldOnSurfaceAlpha = 0.6f;
 static CGFloat const kFilledTextFieldDisabledAlpha = 0.38f;
 static CGFloat const kFilledTextFieldSurfaceOverlayAlpha = 0.04f;
 static CGFloat const kFilledTextFieldIndicatorLineAlpha = 0.42f;
-static CGFloat const kFilledTextFieldIconAlpha = 0.54f;
+static CGFloat const kFilledTextFieldIconAlpha = 0.77f;
 
 @implementation MDCFilledTextFieldColorThemer
 
