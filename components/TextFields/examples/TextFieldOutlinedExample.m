@@ -50,7 +50,6 @@
                                 toTextInputController:controller];
   [MDCTextFieldTypographyThemer applyTypographyScheme:self.typographyScheme
                                           toTextInput:controller.textInput];
-
 }
 
 - (void)viewDidLoad {
@@ -122,7 +121,6 @@
   self.cityController.placeholderText = @"City";
   [self styleTextInputController:self.cityController];
 
-
   MDCTextField *textFieldState = [[MDCTextField alloc] init];
   textFieldState.translatesAutoresizingMaskIntoConstraints = NO;
 
@@ -134,7 +132,6 @@
   self.stateController.placeholderText = @"State";
   [self styleTextInputController:self.stateController];
 
-
   MDCTextField *textFieldZip = [[MDCTextField alloc] init];
   textFieldZip.translatesAutoresizingMaskIntoConstraints = NO;
 
@@ -145,7 +142,6 @@
   self.zipController = [[MDCTextInputControllerOutlined alloc] initWithTextInput:textFieldZip];
   self.zipController.placeholderText = @"Zip Code";
   [self styleTextInputController:self.zipController];
-
 
   UIView *stateZip = [[UIView alloc] initWithFrame:CGRectZero];
   stateZip.translatesAutoresizingMaskIntoConstraints = NO;
@@ -167,7 +163,6 @@
   self.phoneController.placeholderText = @"Phone Number";
   self.phoneController.helperText = @"XXX-XXX-XXXX";
   [self styleTextInputController:self.phoneController];
-
 
   MDCMultilineTextField *textFieldMessage = [[MDCMultilineTextField alloc] init];
   textFieldMessage.translatesAutoresizingMaskIntoConstraints = NO;
