@@ -349,7 +349,7 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
-  if (![UIApplication mdc_isAppExtension] && [self viewIsWithinDeviceTopSafeAreaInsets]) {
+  if ([self viewIsWithinDeviceTopSafeAreaInsets]) {
     _verticalConstraint.constant = 0;
   } else {
     _verticalConstraint.constant = MDCDeviceTopSafeAreaInset();

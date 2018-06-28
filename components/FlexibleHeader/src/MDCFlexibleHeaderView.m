@@ -1088,7 +1088,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 }
 
 - (CGFloat)additionalSpaceNeededForDeviceTopSafeAreaInset {
-  if (![UIApplication mdc_isAppExtension] && [self isWithinDeviceTopSafeAreaInsets]) {
+  if ([self isWithinDeviceTopSafeAreaInsets]) {
     return 0;
   } else {
     return MDCDeviceTopSafeAreaInset();
