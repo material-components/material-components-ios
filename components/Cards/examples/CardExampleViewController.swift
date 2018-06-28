@@ -45,6 +45,9 @@ class CardExampleViewController: UIViewController {
     cardScheme.colorScheme = colorScheme
     MDCCardThemer.applyScheme(cardScheme, to: card)
     card.isInteractable = false
+
+    imageView.isAccessibilityElement = true
+    imageView.accessibilityLabel = "Missing Dish"
   }
 
   override public var traitCollection: UITraitCollection {
