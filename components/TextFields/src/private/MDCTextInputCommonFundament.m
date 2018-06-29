@@ -551,7 +551,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 - (void)updateClearButton {
   UIImage *image = self.clearButton.currentImage
                        ? self.clearButton.currentImage
-  : [self drawnClearButtonImage:self.clearButton.tintColor];
+                       : [self drawnClearButtonImage:self.clearButton.tintColor];
 
   if (![self.clearButton imageForState:UIControlStateNormal]) {
     [self.clearButton setImage:image forState:UIControlStateNormal];
