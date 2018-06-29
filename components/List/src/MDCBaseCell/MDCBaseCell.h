@@ -18,8 +18,13 @@
 @interface MDCBaseCell : UICollectionViewCell
 
 /**
- The shadow elevation for the cell.
+ The current elevation of the cell.
  */
-@property (nonatomic, assign) MDCShadowElevation elevation;
+@property (nonatomic, assign) MDCShadowElevation currentElevation;
+
+/**
+ The current color of the cell’s underlying Ripple.
+ */
+@property (nonatomic, strong) UIColor *currentInkColor;
 
 @end
