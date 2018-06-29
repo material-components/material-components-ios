@@ -551,7 +551,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 - (void)updateClearButton {
   UIImage *image = self.clearButton.currentImage
                        ? self.clearButton.currentImage
-                       : [self drawnClearButtonImage:self.clearButton.tintColor];
+                       : [self drawnClearButtonImage];
 
   if (![self.clearButton imageForState:UIControlStateNormal]) {
     [self.clearButton setImage:image forState:UIControlStateNormal];
@@ -628,14 +628,14 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   return clearButtonAlpha;
 }
 
-- (UIImage *)drawnClearButtonImage:(UIColor *)color {
+- (UIImage *)drawnClearButtonImage {
   CGSize clearButtonSize = CGSizeMake(MDCTextInputClearButtonImageSquareWidthHeight,
                                       MDCTextInputClearButtonImageSquareWidthHeight);
 
   CGFloat scale = [UIScreen mainScreen].scale;
   CGRect bounds = CGRectMake(0, 0, clearButtonSize.width * scale, clearButtonSize.height * scale);
   UIGraphicsBeginImageContextWithOptions(bounds.size, false, scale);
-  [color setFill];
+  [UIColor.grayColor setFill];
 
   [MDCPathForClearButtonImageFrame(bounds) fill];
   UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
