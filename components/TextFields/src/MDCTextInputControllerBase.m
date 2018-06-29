@@ -1421,7 +1421,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   if (_textInputClearButtonTintColor) {
     return _textInputClearButtonTintColor;
   }
-  return [self class].textInputClearButtonTintColorDefault ?: self.textInput.tintColor;
+  return [self class].textInputClearButtonTintColorDefault ?: self.textInput.clearButton.tintColor;
 }
 
 - (void)setTextInputClearButtonTintColor:(UIColor *)textInputClearButtonTintColor {
