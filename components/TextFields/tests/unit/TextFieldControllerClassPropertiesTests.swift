@@ -45,6 +45,7 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
 
     MDCTextInputControllerFilled.floatingPlaceholderNormalColorDefault = nil
     MDCTextInputControllerFilled.floatingPlaceholderScaleDefault = 0.75
+    MDCTextInputControllerFilled.textInputClearButtonTintColorDefault = nil;
 
     MDCTextInputControllerOutlined.roundedCornersDefault = []
     MDCTextInputControllerOutlined.errorColorDefault = nil
@@ -66,6 +67,7 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     MDCTextInputControllerOutlined.floatingPlaceholderNormalColorDefault = nil
     MDCTextInputControllerOutlined.floatingPlaceholderScaleDefault = 0.75
     MDCTextInputControllerOutlined.isFloatingEnabledDefault = true
+    MDCTextInputControllerOutlined.textInputClearButtonTintColorDefault = nil;
 
     MDCTextInputControllerUnderline.roundedCornersDefault = []
     MDCTextInputControllerUnderline.errorColorDefault = nil
@@ -142,6 +144,8 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     XCTAssertEqual(Float(MDCTextInputControllerFilled.floatingPlaceholderScaleDefault), 0.75)
     XCTAssertEqual(MDCTextInputControllerFilled.isFloatingEnabledDefault, true)
     XCTAssertEqual(MDCTextInputControllerFilled.roundedCornersDefault, .allCorners)
+
+    XCTAssertNil(MDCTextInputControllerFilled.textInputClearButtonTintColorDefault)
 
     // Test the use of the class properties.
     let textField = MDCTextField()
@@ -285,7 +289,6 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
   }
 
   func testOutlined() {
-
     // Test the values of the class properties.
     XCTAssertEqual(MDCTextInputControllerOutlined.errorColorDefault, MDCPalette.red.accent400)
     XCTAssertEqual(MDCTextInputControllerOutlined.inlinePlaceholderColorDefault,
@@ -777,5 +780,85 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
                    MDCTextInputControllerFullWidth.leadingUnderlineLabelFontDefault)
     XCTAssertEqual(controller.trailingUnderlineLabelFont,
                    MDCTextInputControllerFullWidth.trailingUnderlineLabelFontDefault)
+  }
+
+  // MARK: - textInputClearButtonTintColor
+
+  func testFilledTextInputClearButtonTintColorUsesDefault() {
+    // Given
+    MDCTextInputControllerFilled.textInputClearButtonTintColorDefault = .orange
+
+    // When
+    let textInput = MDCTextField()
+    let controllerFilled = MDCTextInputControllerFilled(textInput: textInput)
+
+    // Then
+    XCTAssertEqual(controllerFilled.textInputClearButtonTintColor,
+                   MDCTextInputControllerFilled.textInputClearButtonTintColorDefault)
+  }
+
+  func testFilledTextInputClearButtonTintColorDefaultAppliesToTextField() {
+    // Given
+    MDCTextInputControllerFilled.textInputClearButtonTintColorDefault = .orange
+
+    // When
+    let textInputFilled = MDCTextField()
+    let _ = MDCTextInputControllerFilled(textInput: textInputFilled)
+
+    // Then
+    XCTAssertEqual(textInputFilled.clearButton.tintColor,
+                   MDCTextInputControllerFilled.textInputClearButtonTintColorDefault)
+  }
+
+  func testFilledTextInputClearButtonTintColorAppliesToTextField() {
+    // Given
+    let textInputFilled = MDCTextField()
+    let controllerFilled = MDCTextInputControllerFilled(textInput: textInputFilled)
+
+    // When
+    controllerFilled.textInputClearButtonTintColor = .black
+
+    // Then
+    XCTAssertEqual(textInputFilled.clearButton.tintColor,
+                   controllerFilled.textInputClearButtonTintColor)
+  }
+
+  func testOutlinedTextInputClearButtonTintColorUsesDefault() {
+    // Given
+    MDCTextInputControllerOutlined.textInputClearButtonTintColorDefault = .cyan
+
+    // When
+    let textInput = MDCTextField()
+    let controllerOutlined = MDCTextInputControllerOutlined(textInput: textInput)
+
+    // Then
+    XCTAssertEqual(controllerOutlined.textInputClearButtonTintColor,
+                   MDCTextInputControllerFilled.textInputClearButtonTintColorDefault)
+  }
+
+  func testOutlinedTextInputClearButtonTintColorDefaultAppliesToTextField() {
+    // Given
+    MDCTextInputControllerOutlined.textInputClearButtonTintColorDefault = .cyan
+
+    // When
+    let textInputOutlined = MDCTextField()
+    let _ = MDCTextInputControllerOutlined(textInput: textInputOutlined)
+
+    // Then
+    XCTAssertEqual(textInputOutlined.clearButton.tintColor,
+                   MDCTextInputControllerFilled.textInputClearButtonTintColorDefault)
+  }
+
+  func testOutlinedTextInputClearButtonTintColorAppliesToTextField() {
+    // Given
+    let textInputOutlined = MDCTextField()
+    let controllerOutlined = MDCTextInputControllerOutlined(textInput: textInputOutlined)
+
+    // When
+    controllerOutlined.textInputClearButtonTintColor = .red
+
+    // Then
+    XCTAssertEqual(textInputOutlined.clearButton.tintColor,
+                   controllerOutlined.textInputClearButtonTintColor)
   }
 }
