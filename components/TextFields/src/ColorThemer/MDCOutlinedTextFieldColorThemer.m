@@ -20,7 +20,7 @@
 static CGFloat const kOutlinedTextFieldActiveAlpha = 0.87f;
 static CGFloat const kOutlinedTextFieldOnSurfaceAlpha = 0.6f;
 static CGFloat const kOutlinedTextFieldDisabledAlpha = 0.38f;
-static CGFloat const kOutlinedTextFieldIconAlpha = 0.77f;
+static CGFloat const kOutlinedTextFieldIconAlpha = 0.54f;
 
 @implementation MDCOutlinedTextFieldColorThemer
 
