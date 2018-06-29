@@ -919,8 +919,7 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     let controllerFullWidth = MDCTextInputControllerFullWidth(textInput: textInput)
     
     // Then
-    XCTAssertEqual(controllerFullWidth.textInputClearButtonTintColor,
-                   MDCTextInputControllerFullWidth.textInputClearButtonTintColorDefault)
+    XCTAssertEqual(controllerFullWidth.textInputClearButtonTintColor, MDCTextInputControllerFullWidth.textInputClearButtonTintColorDefault)
   }
   
   func testFullWidthTextInputClearButtonTintColorDefaultAppliesToTextField() {
