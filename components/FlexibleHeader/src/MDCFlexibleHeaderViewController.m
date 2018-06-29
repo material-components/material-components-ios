@@ -347,8 +347,8 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
 #pragma mark MDCFlexibleHeaderViewDelegate
 
 - (void)flexibleHeaderViewNeedsStatusBarAppearanceUpdate:
-    (__unused MDCFlexibleHeaderView *)headerView {
-  [self setNeedsStatusBarAppearanceUpdate];
+    (MDCFlexibleHeaderView *)headerView {
+  [[UIApplication mdc_safeSharedApplication] setStatusBarHidden:headerView.prefersStatusBarHidden];
 }
 
 - (void)flexibleHeaderViewFrameDidChange:(MDCFlexibleHeaderView *)headerView {
