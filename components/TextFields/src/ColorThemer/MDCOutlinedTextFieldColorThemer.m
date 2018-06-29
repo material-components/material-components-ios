@@ -15,10 +15,12 @@
  */
 
 #import "MDCOutlinedTextFieldColorThemer.h"
+#import "MDCTextInputControllerBase.h"
 
 static CGFloat const kOutlinedTextFieldActiveAlpha = 0.87f;
 static CGFloat const kOutlinedTextFieldOnSurfaceAlpha = 0.6f;
 static CGFloat const kOutlinedTextFieldDisabledAlpha = 0.38f;
+static CGFloat const kOutlinedTextFieldIconAlpha = 0.54f;
 
 @implementation MDCOutlinedTextFieldColorThemer
 
@@ -36,6 +38,13 @@ static CGFloat const kOutlinedTextFieldDisabledAlpha = 0.38f;
   textInputController.leadingUnderlineLabelTextColor = onSurfaceOpacity;
   textInputController.disabledColor =
       [colorScheme.onSurfaceColor colorWithAlphaComponent:kOutlinedTextFieldDisabledAlpha];
+
+  if ([textInputController isKindOfClass:[MDCTextInputControllerBase class]]) {
+    MDCTextInputControllerBase *baseController =
+        (MDCTextInputControllerBase *)textInputController;
+    baseController.textInputClearButtonTintColor =
+        [colorScheme.onSurfaceColor colorWithAlphaComponent:kOutlinedTextFieldIconAlpha];
+  }
 
   if ([textInputController
        conformsToProtocol:@protocol(MDCTextInputControllerFloatingPlaceholder)]) {

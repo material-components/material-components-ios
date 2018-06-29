@@ -21,6 +21,7 @@ static CGFloat const kFilledTextFieldOnSurfaceAlpha = 0.6f;
 static CGFloat const kFilledTextFieldDisabledAlpha = 0.38f;
 static CGFloat const kFilledTextFieldSurfaceOverlayAlpha = 0.04f;
 static CGFloat const kFilledTextFieldIndicatorLineAlpha = 0.42f;
+static CGFloat const kFilledTextFieldIconAlpha = 0.54f;
 
 @implementation MDCFilledTextFieldColorThemer
 
@@ -44,6 +45,8 @@ static CGFloat const kFilledTextFieldIndicatorLineAlpha = 0.42f;
       [colorScheme.onSurfaceColor colorWithAlphaComponent:kFilledTextFieldOnSurfaceAlpha];
   textInputControllerFilled.floatingPlaceholderActiveColor =
       [colorScheme.primaryColor colorWithAlphaComponent:kFilledTextFieldActiveAlpha];
+  textInputControllerFilled.textInputClearButtonTintColor =
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:kFilledTextFieldIconAlpha];
 }
 
 @end
