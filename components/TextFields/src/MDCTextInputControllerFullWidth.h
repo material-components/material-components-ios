@@ -63,4 +63,9 @@
  */
 @property(nonatomic, null_resettable, strong) UIColor *backgroundColor;
 
+/**
+ Default value for backgroundColor.
+ */
+@property(class, nonatomic, null_resettable, strong) UIColor *backgroundColorDefault;
+
 @end
