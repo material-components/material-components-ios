@@ -103,7 +103,7 @@ class MDCMenuViewController: UITableViewController {
       })
     case 2:
       // Do nothing
-      _ = 1
+      break
     default:
       self.dismiss(animated: true, completion: nil)
     }
