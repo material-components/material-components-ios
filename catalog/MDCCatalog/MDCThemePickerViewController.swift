@@ -28,9 +28,10 @@ private func createSchemeWithPalette(_ palette: MDCPalette) -> MDCSemanticColorS
 }
 
 class MDCColorThemeCellConfiguration {
-  var name: String
-  var mainColor: UIColor
-  var colorScheme: MDCColorScheming
+  let name: String
+  let mainColor: UIColor
+  let colorScheme: MDCColorScheming
+
   init(name: String, mainColor: UIColor, colorScheme: MDCColorScheming) {
     self.name = name
     self.mainColor = mainColor
@@ -50,32 +51,25 @@ class MDCThemePickerViewController: UIViewController, UICollectionViewDataSource
   private let colorSchemeConfigurations = [
     MDCColorThemeCellConfiguration(name: "Default",
                                    mainColor: AppTheme.defaultTheme.colorScheme.primaryColor,
-                                   colorScheme: { return AppTheme.defaultTheme.colorScheme }()
-    ),
+                                   colorScheme: AppTheme.defaultTheme.colorScheme),
     MDCColorThemeCellConfiguration(name: "Blue",
                                    mainColor: MDCPalette.blue.tint500,
-                                   colorScheme: { return createSchemeWithPalette(MDCPalette.blue) }()
-    ),
+                                   colorScheme: createSchemeWithPalette(MDCPalette.blue)),
     MDCColorThemeCellConfiguration(name: "Red",
                                    mainColor: MDCPalette.red.tint500,
-                                   colorScheme: { return createSchemeWithPalette(MDCPalette.red) }()
-    ),
+                                   colorScheme: createSchemeWithPalette(MDCPalette.red)),
     MDCColorThemeCellConfiguration(name: "Green",
                                    mainColor: MDCPalette.green.tint500,
-                                   colorScheme: { return createSchemeWithPalette(MDCPalette.green) }()
-    ),
+                                   colorScheme: createSchemeWithPalette(MDCPalette.green)),
     MDCColorThemeCellConfiguration(name: "Amber",
                                    mainColor: MDCPalette.amber.tint500,
-                                   colorScheme: { return createSchemeWithPalette(MDCPalette.amber) }()
-    ),
+                                   colorScheme: createSchemeWithPalette(MDCPalette.amber)),
     MDCColorThemeCellConfiguration(name: "Pink",
                                    mainColor: MDCPalette.pink.tint500,
-                                   colorScheme: { return createSchemeWithPalette(MDCPalette.pink) }()
-    ),
+                                   colorScheme: createSchemeWithPalette(MDCPalette.pink)),
     MDCColorThemeCellConfiguration(name: "Orange",
                                    mainColor: MDCPalette.orange.tint500,
-                                   colorScheme: { return createSchemeWithPalette(MDCPalette.orange) }()
-    )
+                                   colorScheme: createSchemeWithPalette(MDCPalette.orange))
   ]
 
   private let cellSize : CGFloat = 33.0
