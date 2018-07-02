@@ -63,6 +63,8 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     button.setImage(dotsImage, for: .normal)
     button.adjustsImageWhenHighlighted = false
     button.tintColor = .white
+    button.accessibilityLabel = "Menu"
+    button.accessibilityHint = "Opens catalog configuration options."
     return button
   }()
 

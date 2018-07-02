@@ -21,15 +21,35 @@ import MaterialComponents.MaterialIcons_ic_color_lens
 import MaterialComponents.MaterialIcons_ic_help_outline
 import MaterialComponents.MaterialLibraryInfo
 
+class MDCMenuItem {
+  var title: String!
+  var icon: UIImage?
+  var accessibilityLabel: String?
+  var accessibilityHint: String?
+  var isButton: Bool
+  init(_ title: String, _ icon: UIImage?, _ accessibilityLabel: String?, _ accessibilityHint: String?,
+       _ isButton: Bool) {
+    self.title = title
+    self.icon = icon
+    self.accessibilityLabel = accessibilityLabel
+    self.accessibilityHint = accessibilityHint
+    self.isButton = isButton
+  }
+}
+
 class MDCMenuViewController: UITableViewController {
 
   let tableData =
-    [(title: "Settings", icon: MDCIcons.imageFor_ic_settings()?.withRenderingMode(.alwaysTemplate)),
-     (title: "Themes", icon: MDCIcons.imageFor_ic_color_lens()?.withRenderingMode(.alwaysTemplate)),
-     (title:  "v\(MDCLibraryInfo.versionString)",
-      icon: MDCIcons.imageFor_ic_help_outline()?.withRenderingMode(.alwaysTemplate))]
+    [MDCMenuItem("Settings", MDCIcons.imageFor_ic_settings()?.withRenderingMode(.alwaysTemplate),
+                 nil, "Opens debugging menu.", true),
+     MDCMenuItem("Themes", MDCIcons.imageFor_ic_color_lens()?.withRenderingMode(.alwaysTemplate),
+                  nil, "Opens color theme chooser.", true),
+     MDCMenuItem("v\(MDCLibraryInfo.versionString)",
+      MDCIcons.imageFor_ic_help_outline()?.withRenderingMode(.alwaysTemplate),
+      "Version \(MDCLibraryInfo.versionString)", nil, false),
+     MDCMenuItem("Close", MDCIcons.imageFor_ic_arrow_back()?.withRenderingMode(.alwaysTemplate),
+                 nil, nil, true)]
   let cellIdentifier = "MenuCell"
-  let iconColor = AppTheme.globalTheme.colorScheme.onSurfaceColor.withAlphaComponent(0.61)
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -39,12 +59,15 @@ class MDCMenuViewController: UITableViewController {
 
   override func tableView(_ tableView: UITableView,
                           cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let iconColor = AppTheme.globalTheme.colorScheme.onSurfaceColor.withAlphaComponent(0.61)
     let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
     let cellData = tableData[indexPath.item]
     cell.textLabel?.text = cellData.title
     cell.textLabel?.textColor = iconColor
     cell.imageView?.image = cellData.icon
     cell.imageView?.tintColor = iconColor
+    cell.accessibilityLabel = cellData.accessibilityLabel
+    cell.accessibilityHint = cellData.accessibilityHint
     return cell
   }
 
@@ -78,6 +101,9 @@ class MDCMenuViewController: UITableViewController {
                                                                    named: "Themes")
         navController.pushViewController(presentingViewController, animated: true)
       })
+    case 2:
+      // Do nothing
+      _ = 1
     default:
       self.dismiss(animated: true, completion: nil)
     }
