@@ -106,7 +106,7 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
     MDCTextInputControllerFullWidth.leadingUnderlineLabelFontDefault = nil
     MDCTextInputControllerFullWidth.trailingUnderlineLabelFontDefault = nil
     
-    MDCTextInputControllerFullWidth.textInputClearButtonTintColorDefault = nil;
+    MDCTextInputControllerFullWidth.textInputClearButtonTintColorDefault = nil
   }
 
   func testFilled() {
