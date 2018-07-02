@@ -27,12 +27,12 @@ private func createSchemeWithPalette(_ palette: MDCPalette) -> MDCSemanticColorS
   return scheme
 }
 
-class MDCColorThemeCellConfiguration {
+private struct MDCColorThemeCellConfiguration {
   let name: String
   let mainColor: UIColor
-  let colorScheme: MDCColorScheming
+  let colorScheme: () -> MDCColorScheming
 
-  init(name: String, mainColor: UIColor, colorScheme: MDCColorScheming) {
+  init(name: String, mainColor: UIColor, colorScheme: @escaping () -> MDCColorScheming) {
     self.name = name
     self.mainColor = mainColor
     self.colorScheme = colorScheme
@@ -51,25 +51,37 @@ class MDCThemePickerViewController: UIViewController, UICollectionViewDataSource
   private let colorSchemeConfigurations = [
     MDCColorThemeCellConfiguration(name: "Default",
                                    mainColor: AppTheme.defaultTheme.colorScheme.primaryColor,
-                                   colorScheme: AppTheme.defaultTheme.colorScheme),
+                                   colorScheme: { return AppTheme.defaultTheme.colorScheme }),
     MDCColorThemeCellConfiguration(name: "Blue",
                                    mainColor: MDCPalette.blue.tint500,
-                                   colorScheme: createSchemeWithPalette(MDCPalette.blue)),
+                                   colorScheme: {
+                                    return createSchemeWithPalette(MDCPalette.blue)
+    }),
     MDCColorThemeCellConfiguration(name: "Red",
                                    mainColor: MDCPalette.red.tint500,
-                                   colorScheme: createSchemeWithPalette(MDCPalette.red)),
+                                   colorScheme: {
+                                    return createSchemeWithPalette(MDCPalette.red)
+    }),
     MDCColorThemeCellConfiguration(name: "Green",
                                    mainColor: MDCPalette.green.tint500,
-                                   colorScheme: createSchemeWithPalette(MDCPalette.green)),
+                                   colorScheme: {
+                                    return createSchemeWithPalette(MDCPalette.green)
+    }),
     MDCColorThemeCellConfiguration(name: "Amber",
                                    mainColor: MDCPalette.amber.tint500,
-                                   colorScheme: createSchemeWithPalette(MDCPalette.amber)),
+                                   colorScheme: {
+                                    return createSchemeWithPalette(MDCPalette.amber)
+    }),
     MDCColorThemeCellConfiguration(name: "Pink",
                                    mainColor: MDCPalette.pink.tint500,
-                                   colorScheme: createSchemeWithPalette(MDCPalette.pink)),
+                                   colorScheme: {
+                                    return createSchemeWithPalette(MDCPalette.pink)
+    }),
     MDCColorThemeCellConfiguration(name: "Orange",
                                    mainColor: MDCPalette.orange.tint500,
-                                   colorScheme: createSchemeWithPalette(MDCPalette.orange))
+                                   colorScheme: {
+                                    return createSchemeWithPalette(MDCPalette.orange)
+    })
   ]
 
   private let cellSize : CGFloat = 33.0
@@ -205,7 +217,7 @@ class MDCThemePickerViewController: UIViewController, UICollectionViewDataSource
   }
 
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    let colorScheme = colorSchemeConfigurations[indexPath.item].colorScheme
+    let colorScheme = colorSchemeConfigurations[indexPath.item].colorScheme()
     navigationController?.popViewController(animated: true)
     AppTheme.globalTheme = AppTheme(colorScheme: colorScheme,
                                     typographyScheme: AppTheme.globalTheme.typographyScheme)
