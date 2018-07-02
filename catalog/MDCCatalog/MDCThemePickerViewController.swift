@@ -14,6 +14,7 @@
  limitations under the License.
  */
 
+import MDFTextAccessibility
 import MaterialComponents.MaterialIcons_ic_check
 import MaterialComponents.MaterialPalettes
 import MaterialComponents.MaterialThemes
@@ -24,6 +25,22 @@ private func createSchemeWithPalette(_ palette: MDCPalette) -> MDCSemanticColorS
   scheme.primaryColor = palette.tint500
   scheme.primaryColorVariant = palette.tint900
   scheme.secondaryColor = scheme.primaryColor
+  if let onPrimaryColor = MDFTextAccessibility.textColor(fromChoices: [MDCPalette.grey.tint100,
+                                                                      MDCPalette.grey.tint900,
+                                                                      UIColor.black,
+                                                                      UIColor.white],
+                                                        onBackgroundColor: scheme.primaryColor,
+                                                        options: .preferLighter) {
+    scheme.onPrimaryColor = onPrimaryColor
+  }
+  if let onSecondaryColor = MDFTextAccessibility.textColor(fromChoices: [MDCPalette.grey.tint100,
+                                                                         MDCPalette.grey.tint900,
+                                                                         UIColor.black,
+                                                                         UIColor.white],
+                                                           onBackgroundColor: scheme.secondaryColor,
+                                                           options: .preferLighter) {
+    scheme.onSecondaryColor = onSecondaryColor
+  }
   return scheme
 }
 
