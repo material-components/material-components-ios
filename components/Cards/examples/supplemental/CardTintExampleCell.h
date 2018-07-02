@@ -21,4 +21,6 @@
 @property(nonatomic, readonly, strong, nonnull) UISwitch *switchView;
 @property(nonatomic, readonly, strong, nonnull) UISlider *sliderView;
 
+- (void)customAccessibilityActionToggleSwitch;
+
 @end
