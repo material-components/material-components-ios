@@ -808,12 +808,11 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1.f;
   NSMutableArray *accessibilityStrings = [[NSMutableArray alloc] init];
   if ([super accessibilityValue].length > 0) {
     [accessibilityStrings addObject:[super accessibilityValue]];
+  } else if (self.placeholderLabel.accessibilityLabel.length > 0) {
+    [accessibilityStrings addObject:self.placeholderLabel.accessibilityLabel];
   }
   if (self.leadingUnderlineLabel.accessibilityLabel.length > 0) {
     [accessibilityStrings addObject:self.leadingUnderlineLabel.accessibilityLabel];
-  }
-  if (self.placeholderLabel.accessibilityLabel.length > 0) {
-    [accessibilityStrings addObject:self.placeholderLabel.accessibilityLabel];
   }
   return accessibilityStrings.count > 0 ?
       [accessibilityStrings componentsJoinedByString:@", "] : nil;
