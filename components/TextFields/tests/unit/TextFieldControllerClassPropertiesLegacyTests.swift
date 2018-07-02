@@ -432,7 +432,7 @@ class TextFieldControllerClassPropertiesLegacyTests: XCTestCase {
   func testLegacyFullWidthTextInputClearButtonTintColorAppliesToTextField() {
     // Given
     let textInputLegacyFullWidth = MDCTextField()
-    let controllerLegacyFullWidth  = MDCTextInputControllerLegacyDefault(textInput: textInputLegacyFullWidth)
+    let controllerLegacyFullWidth  = MDCTextInputControllerLegacyFullWidth(textInput: textInputLegacyFullWidth)
     
     // When
     controllerLegacyFullWidth.textInputClearButtonTintColor = .black
