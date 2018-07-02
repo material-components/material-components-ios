@@ -26,14 +26,12 @@ class MDCMenuItem {
   var icon: UIImage?
   var accessibilityLabel: String?
   var accessibilityHint: String?
-  var isButton: Bool
-  init(_ title: String, _ icon: UIImage?, _ accessibilityLabel: String?, _ accessibilityHint: String?,
-       _ isButton: Bool) {
+  init(_ title: String, _ icon: UIImage?, _ accessibilityLabel: String?,
+       _ accessibilityHint: String?) {
     self.title = title
     self.icon = icon
     self.accessibilityLabel = accessibilityLabel
     self.accessibilityHint = accessibilityHint
-    self.isButton = isButton
   }
 }
 
@@ -41,14 +39,14 @@ class MDCMenuViewController: UITableViewController {
 
   let tableData =
     [MDCMenuItem("Settings", MDCIcons.imageFor_ic_settings()?.withRenderingMode(.alwaysTemplate),
-                 nil, "Opens debugging menu.", true),
+                 nil, "Opens debugging menu."),
      MDCMenuItem("Themes", MDCIcons.imageFor_ic_color_lens()?.withRenderingMode(.alwaysTemplate),
-                  nil, "Opens color theme chooser.", true),
+                  nil, "Opens color theme chooser."),
      MDCMenuItem("v\(MDCLibraryInfo.versionString)",
       MDCIcons.imageFor_ic_help_outline()?.withRenderingMode(.alwaysTemplate),
-      "Version \(MDCLibraryInfo.versionString)", nil, false),
+      "Version \(MDCLibraryInfo.versionString)", nil),
      MDCMenuItem("Close", MDCIcons.imageFor_ic_arrow_back()?.withRenderingMode(.alwaysTemplate),
-                 nil, nil, true)]
+                 nil, nil)]
   let cellIdentifier = "MenuCell"
 
   override func viewDidLoad() {
