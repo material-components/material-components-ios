@@ -62,7 +62,6 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     let dotsImage = MDCIcons.imageFor_ic_more_horiz()?.withRenderingMode(.alwaysTemplate)
     button.setImage(dotsImage, for: .normal)
     button.adjustsImageWhenHighlighted = false
-    button.tintColor = .white
     return button
   }()
 
@@ -122,6 +121,8 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     MDCFlexibleHeaderColorThemer.applySemanticColorScheme(colorScheme,
                                                           to: headerViewController.headerView)
 
+    titleLabel.textColor = colorScheme.onPrimaryColor
+    menuButton.tintColor = colorScheme.onPrimaryColor
     collectionView?.collectionViewLayout.invalidateLayout()
     collectionView?.reloadData()
   }
@@ -174,7 +175,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     menuButton.addTarget(self.navigationController,
                          action: #selector(navigationController?.presentMenu),
                          for: .touchUpInside)
-
+    menuButton.tintColor = colorScheme.onPrimaryColor
     containerView.addSubview(menuButton)
 
     setupFlexibleHeaderContentConstraints()
