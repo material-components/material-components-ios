@@ -78,7 +78,7 @@
                                                                               forIndexPath:indexPath];
   cell.layer.borderColor = [UIColor darkGrayColor].CGColor;
   cell.layer.borderWidth = 1;
-  cell.currentInkColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.1];
+  cell.currentInkColor = [UIColor colorWithRed:0 green:(CGFloat)0 blue:(CGFloat)0 alpha:(CGFloat)0.1];
   return cell;
 }
 
