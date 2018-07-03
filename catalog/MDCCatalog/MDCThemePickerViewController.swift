@@ -14,6 +14,7 @@
  limitations under the License.
  */
 
+import MDFTextAccessibility
 import MaterialComponents.MaterialIcons_ic_check
 import MaterialComponents.MaterialPalettes
 import MaterialComponents.MaterialThemes
@@ -83,8 +84,7 @@ class MDCThemePickerViewController: UIViewController, UICollectionViewDataSource
                                     return createSchemeWithPalette(MDCPalette.orange)
     })
   ]
-
-  private let cellSize : CGFloat = 33.0
+  private let cellSize : CGFloat = 48.0 // minimum touch target
   private let cellSpacing : CGFloat = 8.0
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -126,6 +126,10 @@ class MDCThemePickerViewController: UIViewController, UICollectionViewDataSource
     palettesCollectionView.backgroundColor = .white
     palettesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0)
     view.addSubview(palettesCollectionView)
+    let rowWidth = view.bounds.width - cellSpacing * 2
+    let cellsPerRow = floor(rowWidth / (cellSize + cellSpacing))
+    let numberOfCells = CGFloat(colorSchemeConfigurations.count)
+    let numberOfRows = ceil(numberOfCells / cellsPerRow)
     view.addConstraint(NSLayoutConstraint(item: palettesCollectionView,
                                           attribute: .left,
                                           relatedBy: .equal,
@@ -153,7 +157,7 @@ class MDCThemePickerViewController: UIViewController, UICollectionViewDataSource
                                           toItem: nil,
                                           attribute: .notAnAttribute,
                                           multiplier: 1,
-                                          constant: cellSize + (cellSpacing * 2)))
+                                          constant: numberOfRows * (cellSize + (cellSpacing * 2))))
     view.backgroundColor = .white
   }
 
