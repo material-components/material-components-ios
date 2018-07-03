@@ -17,15 +17,31 @@
 #import "ChipsExamplesSupplemental.h"
 
 #import "MaterialChips.h"
+#import "MaterialChips+ChipThemer.h"
 #import "MaterialSlider.h"
+#import "MaterialSlider+ColorThemer.h"
 #import "MaterialShapes.h"
 #import "MaterialShapeLibrary.h"
+
+@interface ChipsShapingExampleViewController()
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
+@end
 
 @implementation ChipsShapingExampleViewController {
   MDCChipView *_chipView;
   MDCSlider *_cornerSlider;
   MDCRectangleShapeGenerator *_rectangleShapeGenerator;
   UISegmentedControl *_cornerStyleControl;
+}
+
+- (id)init {
+  self = [super init];
+  if (self) {
+    _colorScheme = [[MDCSemanticColorScheme alloc] init];
+    _typographyScheme = [[MDCTypographyScheme alloc] init];
+  }
+  return self;
 }
 
 - (void)viewDidLoad {
@@ -41,12 +57,15 @@
   _chipView.accessoryView = [self deleteButton];
   _chipView.imagePadding = UIEdgeInsetsMake(0, 10.f, 0, 0);
   _chipView.accessoryPadding = UIEdgeInsetsMake(0, 0, 0, 10.f);
-  [self.view addSubview:_chipView];
-
   CGSize chipSize = [_chipView sizeThatFits:self.view.bounds.size];
   _chipView.frame = CGRectMake(20, 20, chipSize.width + 20, chipSize.height + 20);
-
   _chipView.shapeGenerator = _rectangleShapeGenerator;
+
+  MDCChipViewScheme *chipScheme = [[MDCChipViewScheme alloc] init];
+  chipScheme.colorScheme = _colorScheme;
+  chipScheme.typographyScheme = _typographyScheme;
+  [MDCChipViewThemer applyScheme:chipScheme toChipView:_chipView];
+  [self.view addSubview:_chipView];
 
   _cornerSlider = [[MDCSlider alloc] initWithFrame:CGRectZero];
   _cornerSlider.maximumValue =
@@ -55,6 +74,7 @@
   [_cornerSlider addTarget:self
                     action:@selector(cornerSliderChanged:)
           forControlEvents:UIControlEventValueChanged];
+  [MDCSliderColorThemer applySemanticColorScheme:_colorScheme toSlider:_cornerSlider];
   [self.view addSubview:_cornerSlider];
 
   _cornerStyleControl = [[UISegmentedControl alloc] initWithItems:@[ @"Rounded", @"Cut", @"None" ]];
