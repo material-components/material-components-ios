@@ -89,10 +89,10 @@ extension UINavigationController {
       appBarFont = UIFont(descriptor: descriptor, size: 16)
     }
     let container = MDCAppBarContainerViewController(contentViewController: viewController)
+    MDCAppBarColorThemer.applySemanticColorScheme(AppTheme.globalTheme.colorScheme,
+                                                  to: container.appBar);
     container.appBar.navigationBar.titleAlignment = .center
-    container.appBar.navigationBar.tintColor = UIColor.white
-    container.appBar.navigationBar.titleTextAttributes =
-      [ NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: appBarFont ]
+    container.appBar.navigationBar.titleTextAttributes = [ NSFontAttributeName: appBarFont ]
     MDCAppBarColorThemer.applySemanticColorScheme(AppTheme.globalTheme.colorScheme,
                                                   to: container.appBar)
     // TODO(featherless): Remove once
