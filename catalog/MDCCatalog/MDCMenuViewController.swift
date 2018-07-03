@@ -21,32 +21,30 @@ import MaterialComponents.MaterialIcons_ic_color_lens
 import MaterialComponents.MaterialIcons_ic_help_outline
 import MaterialComponents.MaterialLibraryInfo
 
-class MDCMenuItem {
-  var title: String!
-  var icon: UIImage?
-  var accessibilityLabel: String?
-  var accessibilityHint: String?
-  init(_ title: String, _ icon: UIImage?, _ accessibilityLabel: String?,
-       _ accessibilityHint: String?) {
-    self.title = title
-    self.icon = icon
-    self.accessibilityLabel = accessibilityLabel
-    self.accessibilityHint = accessibilityHint
-  }
-}
-
 class MDCMenuViewController: UITableViewController {
 
-  let tableData =
+  private struct MDCMenuItem {
+    let title: String!
+    let icon: UIImage?
+    let accessibilityLabel: String?
+    let accessibilityHint: String?
+    init(_ title: String, _ icon: UIImage?, _ accessibilityLabel: String?,
+         _ accessibilityHint: String?) {
+      self.title = title
+      self.icon = icon
+      self.accessibilityLabel = accessibilityLabel
+      self.accessibilityHint = accessibilityHint
+    }
+  }
+
+  private let tableData =
     [MDCMenuItem("Settings", MDCIcons.imageFor_ic_settings()?.withRenderingMode(.alwaysTemplate),
                  nil, "Opens debugging menu."),
      MDCMenuItem("Themes", MDCIcons.imageFor_ic_color_lens()?.withRenderingMode(.alwaysTemplate),
                   nil, "Opens color theme chooser."),
      MDCMenuItem("v\(MDCLibraryInfo.versionString)",
       MDCIcons.imageFor_ic_help_outline()?.withRenderingMode(.alwaysTemplate),
-      "Version \(MDCLibraryInfo.versionString)", nil),
-     MDCMenuItem("Close", MDCIcons.imageFor_ic_arrow_back()?.withRenderingMode(.alwaysTemplate),
-                 nil, nil)]
+      "Version \(MDCLibraryInfo.versionString)", "Closes this menu.")]
   let cellIdentifier = "MenuCell"
 
   override func viewDidLoad() {
@@ -99,9 +97,6 @@ class MDCMenuViewController: UITableViewController {
                                                                    named: "Themes")
         navController.pushViewController(presentingViewController, animated: true)
       })
-    case 2:
-      // Do nothing
-      break
     default:
       self.dismiss(animated: true, completion: nil)
     }
