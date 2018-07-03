@@ -128,7 +128,7 @@ class MDCThemePickerViewController: UIViewController, UICollectionViewDataSource
     view.addSubview(palettesCollectionView)
     let rowWidth = view.bounds.width - cellSpacing * 2
     let cellsPerRow = floor(rowWidth / (cellSize + cellSpacing))
-    let numberOfCells = CGFloat(colorSchemeCells.count)
+    let numberOfCells = CGFloat(colorSchemeConfigurations.count)
     let numberOfRows = ceil(numberOfCells / cellsPerRow)
     view.addConstraint(NSLayoutConstraint(item: palettesCollectionView,
                                           attribute: .left,
