@@ -157,7 +157,7 @@ class MDCThemePickerViewController: UIViewController, UICollectionViewDataSource
                                           toItem: nil,
                                           attribute: .notAnAttribute,
                                           multiplier: 1,
-                                          constant:numberOfRows * (cellSize + (cellSpacing * 2))))
+                                          constant: numberOfRows * (cellSize + (cellSpacing * 2))))
     view.backgroundColor = .white
   }
 
