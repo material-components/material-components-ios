@@ -18,7 +18,7 @@ load("//:material_components_ios.bzl",
 licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
-    name = "ListItems",
+    name = "List",
     sdk_frameworks = [
         "CoreGraphics",
         "UIKit",

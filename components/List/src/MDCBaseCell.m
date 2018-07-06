@@ -135,7 +135,6 @@ static NSString *const MDCListBaseCellCurrentElevationKey = @"MDCListBaseCellCur
   [self endInk];
 }
 
-
 #pragma mark UIView Overrides
 
 + (Class)layerClass {

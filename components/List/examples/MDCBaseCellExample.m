@@ -11,7 +11,7 @@
  limitations under the License.
  */
 
-#import "supplemental/MDCBaseCellExample.h"
+#import "MDCBaseCellExample.h"
 
 #import "MDCBaseCell.h"
 
