@@ -51,7 +51,7 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  self.view.layer.masksToBounds = YES;
+
   self.contentViewController.view.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   self.contentViewController.view.frame = self.view.bounds;
@@ -124,7 +124,6 @@
 - (void)bottomSheetWillChangeState:(MDCBottomSheetPresentationController *)bottomSheet
                         sheetState:(MDCSheetState)sheetState {
   _state = sheetState;
-  NSLog(@"%lu", _state);
   [self updateShapeGenerator];
 }
 
