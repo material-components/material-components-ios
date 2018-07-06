@@ -253,6 +253,30 @@ static UIButton *DeleteButton() {
 
 @end
 
+@implementation ChipsShapingExampleViewController (Supplemental)
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Chips", @"Shaped Chip" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
+- (UIImage *)faceImage {
+  return FaceImage();
+}
+
+- (UIButton *)deleteButton {
+  return DeleteButton();
+}
+
++ (BOOL)catalogIsPresentable {
+  return NO;
+}
+
+@end
+
 @implementation ChipModel
 
 - (void)apply:(MDCChipView *)chipView {
