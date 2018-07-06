@@ -97,15 +97,4 @@ extern const CGFloat MDCTextInputControllerBaseDefaultBorderRadius;
  */
 @property(nonatomic, assign) NSUInteger minimumLines;
 
-/**
- The tintColor applied to the textInput's clear button.
-
- See @c UIImageView.tintColor for additional details.
- */
-@property(nonatomic, null_resettable, strong) UIColor *textInputClearButtonTintColor;
-
-/**
- Default value for @c textInputClearButtonTintColor. */
-@property(class, nonatomic, nullable, strong) UIColor *textInputClearButtonTintColorDefault;
-
 @end
