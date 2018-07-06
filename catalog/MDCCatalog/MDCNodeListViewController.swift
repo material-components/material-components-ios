@@ -630,7 +630,7 @@ extension MDCNodeListViewController {
   }
 
   override func accessibilityPerformMagicTap() -> Bool {
-    self.primaryDemoButtonClicked()
+    primaryDemoButtonClicked()
     return true
   }
 
