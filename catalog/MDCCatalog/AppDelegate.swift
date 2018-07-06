@@ -73,6 +73,7 @@ extension UINavigationController {
                                    target: self,
                                    action: #selector(presentMenu))
     menuItem.accessibilityLabel = "Menu"
+    menuItem.accessibilityHint = "Opens catalog configuration options."
     viewController.navigationItem.rightBarButtonItem = menuItem
   }
 

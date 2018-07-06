@@ -78,6 +78,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
 
 static UIFont *_inlinePlaceholderFontDefault;
 static UIFont *_textInputFontDefault;
+static UIColor *_textInputClearButtonTintColorDefault;
 static UIFont *_trailingUnderlineLabelFontDefault;
 
 @interface MDCTextInputControllerFullWidth () {
@@ -92,6 +93,7 @@ static UIFont *_trailingUnderlineLabelFontDefault;
 
   UIFont *_inlinePlaceholderFont;
   UIFont *_textInputFont;
+  UIColor *_textInputClearButtonTintColor;
   UIFont *_trailingUnderlineLabelFont;
 }
 
@@ -258,6 +260,7 @@ static UIFont *_trailingUnderlineLabelFontDefault;
 
   [self subscribeForNotifications];
   _textInput.underline.color = [UIColor clearColor];
+  _textInput.clearButton.tintColor = self.textInputClearButtonTintColor;
   [self updateLayout];
 }
 
@@ -734,6 +737,26 @@ static UIFont *_trailingUnderlineLabelFontDefault;
 
 + (void)setTextInputFontDefault:(UIFont *)textInputFontDefault {
   _textInputFontDefault = textInputFontDefault;
+}
+
+- (UIColor *)textInputClearButtonTintColor {
+    if (_textInputClearButtonTintColor) {
+        return _textInputClearButtonTintColor;
+    }
+    return [self class].textInputClearButtonTintColorDefault ?: self.textInput.clearButton.tintColor;
+}
+
+- (void)setTextInputClearButtonTintColor:(UIColor *)textInputClearButtonTintColor {
+    _textInputClearButtonTintColor = textInputClearButtonTintColor;
+    _textInput.clearButton.tintColor = _textInputClearButtonTintColor;
+}
+
++ (UIColor *)textInputClearButtonTintColorDefault {
+    return _textInputClearButtonTintColorDefault;
+}
+
++ (void)setTextInputClearButtonTintColorDefault:(UIColor *)textInputClearButtonTintColorDefault {
+    _textInputClearButtonTintColorDefault = textInputClearButtonTintColorDefault;
 }
 
 - (UIFont *)trailingUnderlineLabelFont {

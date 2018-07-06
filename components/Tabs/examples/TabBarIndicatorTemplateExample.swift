@@ -99,6 +99,8 @@ class TabBarIndicatorTemplateExample: UIViewController {
 
   @objc func changeAlignmentDidTouch(sender: UIButton) {
     let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+    sheet.popoverPresentationController?.sourceView = self.alignmentButton
+    sheet.popoverPresentationController?.sourceRect = self.alignmentButton.bounds
     sheet.addAction(UIAlertAction(title: "Leading", style: .default, handler: { _ in
       self.alignment = .leading
     }))
@@ -116,6 +118,8 @@ class TabBarIndicatorTemplateExample: UIViewController {
 
   @objc func changeAppearance(fromSender sender: UIButton) {
     let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+    sheet.popoverPresentationController?.sourceView = self.appearanceButton
+    sheet.popoverPresentationController?.sourceRect = self.appearanceButton.bounds
     sheet.addAction(UIAlertAction(title: "Titles", style: .default, handler: { _ in
       self.itemAppearance = .titles
     }))

@@ -81,6 +81,8 @@
       [UIAlertController alertControllerWithTitle:nil
                                           message:nil
                                    preferredStyle:UIAlertControllerStyleActionSheet];
+  sheet.popoverPresentationController.sourceView = (UICollectionViewCell *)sender;
+  sheet.popoverPresentationController.sourceRect = ((UICollectionViewCell *)sender).bounds;
   [sheet addAction:[UIAlertAction actionWithTitle:@"Leading"
                                             style:UIAlertActionStyleDefault
                                           handler:^(UIAlertAction *_Nonnull action) {
@@ -115,7 +117,7 @@
   [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
   switch (indexPath.row) {
     case 0:
-      [self changeAlignment:collectionView];
+      [self changeAlignment:[collectionView cellForItemAtIndexPath:indexPath]];
       break;
 
     case 1:

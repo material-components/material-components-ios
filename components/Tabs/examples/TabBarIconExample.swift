@@ -76,6 +76,8 @@ class TabBarIconSwiftExample: UIViewController {
 
   @objc func changeAlignmentDidTouch(sender: UIButton) {
     let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+    sheet.popoverPresentationController?.sourceView = self.alignmentButton
+    sheet.popoverPresentationController?.sourceRect = self.alignmentButton.bounds
     sheet.addAction(UIAlertAction(title: "Leading", style: .default, handler: { _ in
       self.alignment = .leading
     }))
