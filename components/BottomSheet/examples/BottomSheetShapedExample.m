@@ -46,26 +46,11 @@
       [[MDCBottomSheetController alloc] initWithContentViewController:container];
   bottomSheet.trackingScrollView = viewController.collectionView;
   MDCRectangleShapeGenerator *shapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
-  MDCCornerTreatment *cornerTreatment = [[MDCRoundedCornerTreatment alloc] initWithRadius:60.f];
+  MDCCornerTreatment *cornerTreatment = [[MDCRoundedCornerTreatment alloc] initWithRadius:4.f];
   shapeGenerator.topLeftCorner = cornerTreatment;
   shapeGenerator.topRightCorner = cornerTreatment;
   [bottomSheet setShapeGenerator:shapeGenerator forState:MDCSheetStatePreferred];
-  
-//  bottomSheet.shapeGenerator = shapeGenerator;
   [self presentViewController:bottomSheet animated:YES completion:nil];
-
-//  BottomSheetDummyStaticViewController *viewController =
-//  [[BottomSheetDummyStaticViewController alloc] init];
-//
-//  MDCBottomSheetController *bottomSheet =
-//  [[MDCBottomSheetController alloc] initWithContentViewController:viewController];
-//    MDCRectangleShapeGenerator *shapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
-//    MDCCornerTreatment *cornerTreatment = [[MDCRoundedCornerTreatment alloc] initWithRadius:60.f];
-//    shapeGenerator.topLeftCorner = cornerTreatment;
-//    shapeGenerator.topRightCorner = cornerTreatment;
-//    bottomSheet.shapeGenerator = shapeGenerator;
-//  [bottomSheet.view setNeedsLayout];
-//  [self presentViewController:bottomSheet animated:YES completion:nil];
 }
 
 @end

@@ -1,5 +1,5 @@
 /*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -16,8 +16,20 @@
 
 #import <Foundation/Foundation.h>
 
+
+/**
+ The MDCSheetState enum provides the different possible states the bottom sheet can be in.
+ There are currently 3 different states for the bottom sheet:
+
+ - MDCSheetStateClosed: This state is reached when the bottom sheet is dragged down and is
+   dismissed.
+ - MDCSheetStatePreferred: This state is reached when the bottom sheet is half collapsed - when
+   it visible but not in full screen. This state is also the default state for the sheet.
+ - MDCSheetStateExtended: This state is reached when the sheet is expanded and is in full screen.
+ */
 typedef NS_ENUM(NSUInteger, MDCSheetState) {
   MDCSheetStateClosed,
   MDCSheetStatePreferred,
   MDCSheetStateExtended
 };
+
