@@ -27,7 +27,7 @@ class EditReorderCollectionViewController: UIViewController,
 
   let collectionView = UICollectionView(frame: .zero,
                                         collectionViewLayout: UICollectionViewFlowLayout())
-  var dataSource = [(Int, Bool)]()
+  var dataSource = [(Int, Bool, String)]()
   var longPressGesture: UILongPressGestureRecognizer!
   var toggle = ToggleMode.reorder
   var toggleButton: UIButton!
@@ -43,7 +43,7 @@ class EditReorderCollectionViewController: UIViewController,
     collectionView.delegate = self
     collectionView.backgroundColor = UIColor(white: 0.9, alpha: 1)
     collectionView.alwaysBounceVertical = true;
-    collectionView.register(MDCCardCollectionCell.self, forCellWithReuseIdentifier: "Cell")
+    collectionView.register(CardEditReorderCollectionCell.self, forCellWithReuseIdentifier: "Cell")
     collectionView.translatesAutoresizingMaskIntoConstraints = false
     collectionView.allowsMultipleSelection = true
     view.addSubview(collectionView)
@@ -60,8 +60,13 @@ class EditReorderCollectionViewController: UIViewController,
       collectionView.addGestureRecognizer(longPressGesture)
     }
 
+    let titles = ["Mainsail", "Break point", "Matchday", "Blue run", "90th Minute",
+                  "Race track", "Backcourt", "Alley-oop", "Approach", "Scoring",
+                  "Master point", "Overhead", "Relay", "Tie breaker", "Break shot",
+                  "Track race", "Wide ball", "Sideback", "Baseline", "Off side"]
+
     for i in 0..<20 {
-      dataSource.append((i, false))
+      dataSource.append((i, false, titles[i]))
     }
 
     #if swift(>=3.2)
@@ -116,12 +121,21 @@ class EditReorderCollectionViewController: UIViewController,
 
   func collectionView(_ collectionView: UICollectionView,
                       cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell",
-                                                  for: indexPath) as! MDCCardCollectionCell
 
-    MDCCardThemer.applyScheme(cardScheme, toCardCell: cell)
-    cell.isSelectable = (toggle == .edit)
-    return cell
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
+    guard let cardCell = cell as? CardEditReorderCollectionCell else { return cell }
+
+    MDCCardThemer.applyScheme(cardScheme, toCardCell: cardCell)
+    cardCell.isSelectable = (toggle == .edit)
+
+    let title = dataSource[indexPath.item].2
+    let number = dataSource[indexPath.item].0
+    cardCell.configure(title: title, number: number)
+
+    cardCell.isAccessibilityElement = true
+    cardCell.accessibilityLabel = title
+
+   return cardCell
   }
 
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
