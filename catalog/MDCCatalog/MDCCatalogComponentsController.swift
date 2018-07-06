@@ -62,6 +62,8 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     let dotsImage = MDCIcons.imageFor_ic_more_horiz()?.withRenderingMode(.alwaysTemplate)
     button.setImage(dotsImage, for: .normal)
     button.adjustsImageWhenHighlighted = false
+    button.accessibilityLabel = "Menu"
+    button.accessibilityHint = "Opens catalog configuration options."
     return button
   }()
 
