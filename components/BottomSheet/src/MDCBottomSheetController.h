@@ -63,14 +63,14 @@
 
  Defaults to @c nil.
  */
-@property(nonatomic, copy) NSString *scrimAccessibilityLabel;
+@property(nullable, nonatomic, copy) NSString *scrimAccessibilityLabel;
 
 /**
  The @c accessibilityHint value of the dimmed scrim view.
 
  Defaults to @c nil.
  */
-@property(nonatomic, copy) NSString *scrimAccessibilityHint;
+@property(nullable, nonatomic, copy) NSString *scrimAccessibilityHint;
 
 /**
  The @c accessibilityTraits of the dimmed scrim view.
