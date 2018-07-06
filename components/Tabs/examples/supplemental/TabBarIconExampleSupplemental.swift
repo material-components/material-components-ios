@@ -82,8 +82,6 @@ extension TabBarIconSwiftExample {
 
     self.navigationItem.rightBarButtonItem = badgeIncrementItem
 
-    self.title = "Tabs With Icons"
-
     setupScrollingContent()
   }
 
@@ -245,7 +243,7 @@ extension TabBarIconSwiftExample {
 // MARK: - Catalog by convention
 extension TabBarIconSwiftExample {
   @objc class func catalogBreadcrumbs() -> [String] {
-    return ["Tab Bar", "Icons and Text (Swift)"]
+    return ["Tab Bar", "Tabs with Icons (Swift)"]
   }
 
   @objc class func catalogIsPrimaryDemo() -> Bool {
