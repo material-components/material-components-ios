@@ -106,6 +106,8 @@
       [UIAlertController alertControllerWithTitle:nil
                                           message:nil
                                    preferredStyle:UIAlertControllerStyleActionSheet];
+  sheet.popoverPresentationController.sourceView = self.alignmentButton;
+  sheet.popoverPresentationController.sourceRect = self.alignmentButton.bounds;
   [sheet addAction:[UIAlertAction actionWithTitle:@"Leading"
                                             style:UIAlertActionStyleDefault
                                           handler:^(UIAlertAction *_Nonnull action) {
