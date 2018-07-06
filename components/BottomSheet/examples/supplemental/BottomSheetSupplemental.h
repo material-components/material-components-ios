@@ -30,3 +30,6 @@
 
 @interface BottomSheetTypicalUseExample : BottomSheetPresenterViewController
 @end
+
+@interface BottomSheetShapedExample : BottomSheetPresenterViewController
+@end

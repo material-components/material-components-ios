@@ -15,6 +15,8 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "MDCSheetState.h"
+#import "MaterialShapes.h"
 
 @protocol MDCBottomSheetControllerDelegate;
 
@@ -54,6 +56,30 @@
  The bottom sheet delegate.
  */
 @property(nonatomic, weak, nullable) id<MDCBottomSheetControllerDelegate> delegate;
+
+/**
+ The shape generator used to define the bottom sheet's shape.
+
+ note: If a layer property is explicitly set after the shapeGenerator has been set,
+ it can lead to unexpected behavior.
+
+ When the shapeGenerator is nil, MDCBottomSheetController will use the default underlying layer with
+ its default settings.
+
+ Default value for shapeGenerator is nil.
+ */
+//@property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGeneratorCollapsed;
+//
+//@property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGeneratorExpanded;
+
+@property(nonatomic, readonly) MDCSheetState state;
+
+- (void)setShapeGenerator:(id<MDCShapeGenerating>)shapeGenerator
+                 forState:(MDCSheetState)state;
+
+
+- (id<MDCShapeGenerating>)shapeGeneratorForState:(MDCSheetState)state;
+
 
 /**
  Initializes the controller with a content view controller.
