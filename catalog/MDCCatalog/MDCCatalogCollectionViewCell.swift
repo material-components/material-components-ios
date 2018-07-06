@@ -39,6 +39,8 @@ class MDCCatalogCollectionViewCell: UICollectionViewCell {
     contentView.addSubview(label)
     contentView.clipsToBounds = true
     contentView.addSubview(tile)
+    self.isAccessibilityElement = true
+    self.accessibilityTraits |= UIAccessibilityTraitButton
   }
 
   @available(*, unavailable)
@@ -76,5 +78,14 @@ class MDCCatalogCollectionViewCell: UICollectionViewCell {
     label.text = componentName
     tile.componentName = componentName
     accessibilityIdentifier = componentName
+  }
+
+  override public var accessibilityLabel: String? {
+    get {
+      return self.label.accessibilityLabel
+    }
+    set {
+      self.label.accessibilityLabel = newValue
+    }
   }
 }
