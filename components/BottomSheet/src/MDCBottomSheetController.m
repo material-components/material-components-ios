@@ -21,10 +21,18 @@
 #import "UIViewController+MaterialBottomSheet.h"
 
 @interface MDCBottomSheetController () <MDCBottomSheetPresentationControllerDelegate>
+@property(nonatomic, readonly, strong) MDCShapedView *view;
 @end
 
 @implementation MDCBottomSheetController {
   MDCBottomSheetTransitionController *_transitionController;
+  NSMutableDictionary<NSNumber *, id<MDCShapeGenerating>> *_shapeGenerators;
+}
+
+@dynamic view;
+
+- (void)loadView {
+  self.view = [[MDCShapedView alloc] initWithFrame:CGRectZero];
 }
 
 - (nonnull instancetype)initWithContentViewController:
@@ -35,6 +43,8 @@
     _transitionController.dismissOnBackgroundTap = YES;
     super.transitioningDelegate = _transitionController;
     super.modalPresentationStyle = UIModalPresentationCustom;
+    _shapeGenerators = [NSMutableDictionary dictionary];
+    _state = MDCSheetStatePreferred;
   }
   return self;
 }
@@ -45,7 +55,6 @@
   self.contentViewController.view.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   self.contentViewController.view.frame = self.view.bounds;
-
   [self addChildViewController:self.contentViewController];
   [self.view addSubview:self.contentViewController.view];
   [self.contentViewController didMoveToParentViewController:self];
@@ -110,6 +119,43 @@
 - (void)setDismissOnBackgroundTap:(BOOL)dismissOnBackgroundTap {
   _transitionController.dismissOnBackgroundTap = dismissOnBackgroundTap;
   self.mdc_bottomSheetPresentationController.dismissOnBackgroundTap = dismissOnBackgroundTap;
+}
+
+- (void)bottomSheetWillChangeState:(MDCBottomSheetPresentationController *)bottomSheet
+                        sheetState:(MDCSheetState)sheetState {
+  _state = sheetState;
+  [self updateShapeGenerator];
+}
+
+- (id<MDCShapeGenerating>)shapeGeneratorForState:(MDCSheetState)state {
+  id<MDCShapeGenerating> shapeGenerator = _shapeGenerators[@(state)];
+  if (state != MDCSheetStateClosed && shapeGenerator == nil) {
+    shapeGenerator = _shapeGenerators[@(MDCSheetStateClosed)];
+  }
+  if (shapeGenerator != nil) {
+    return shapeGenerator;
+  }
+  return nil;
+}
+
+- (void)setShapeGenerator:(id<MDCShapeGenerating>)shapeGenerator
+                 forState:(MDCSheetState)state {
+  _shapeGenerators[@(state)] = shapeGenerator;
+
+  [self updateShapeGenerator];
+}
+
+- (void)updateShapeGenerator {
+  id<MDCShapeGenerating> shapeGenerator = [self shapeGeneratorForState:_state];
+  if (self.view.shapeGenerator != shapeGenerator) {
+    self.view.shapeGenerator = shapeGenerator;
+    if (shapeGenerator != nil) {
+      self.contentViewController.view.layer.mask =
+      ((MDCShapedShadowLayer *)self.view.layer).shapeLayer;
+    } else {
+      self.contentViewController.view.layer.mask = nil;
+    }
+  }
 }
 
 /* Disable setter. Always use internal transition controller */

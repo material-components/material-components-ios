@@ -15,6 +15,7 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "MDCBottomSheetController.h"
 
 @class MDCBottomSheetPresentationController;
 
@@ -43,6 +44,8 @@
 - (void)bottomSheetPresentationControllerDidDismissBottomSheet:
     (nonnull MDCBottomSheetPresentationController *)bottomSheet;
 
+- (void)bottomSheetWillChangeState:(nonnull MDCBottomSheetPresentationController *)bottomSheet
+                        sheetState:(MDCSheetState)sheetState;
 @end
 
 /**
