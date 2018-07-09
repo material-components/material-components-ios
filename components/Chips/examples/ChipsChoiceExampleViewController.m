@@ -19,10 +19,12 @@
 #import "MaterialChips.h"
 #import "MaterialChips+ChipThemer.h"
 
-@implementation ChipsChoiceExampleViewController {
-  MDCChipView *_sizingChip;
-  BOOL _isOutlined;
-}
+@interface ChipsChoiceExampleViewController ()
+@property(nonatomic, strong) MDCChipView *sizingChip;
+@property(nonatomic, assign, getter=isOutlined) BOOL outlined;
+@end
+
+@implementation ChipsChoiceExampleViewController
 
 - (id)init {
   self = [super init];
@@ -62,7 +64,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  _isOutlined = NO;
+  self.outlined = NO;
   self.navigationItem.rightBarButtonItem =
       [[UIBarButtonItem alloc] initWithTitle:@"Outlined Style"
                                        style:UIBarButtonItemStylePlain
@@ -72,8 +74,8 @@
 
 
 - (void)switchStyle {
-  _isOutlined = !_isOutlined;
-  NSString *buttonTitle = _isOutlined ? @"Filled Style" : @"Outlined Style";
+  self.outlined = !self.isOutlined;
+  NSString *buttonTitle = self.isOutlined ? @"Filled Style" : @"Outlined Style";
   [self.navigationItem.rightBarButtonItem setTitle:buttonTitle];
   NSArray *indexPaths = [_collectionView indexPathsForSelectedItems];
   [_collectionView reloadData];
@@ -90,7 +92,6 @@
   _collectionView.frame = self.view.bounds;
 }
 
-
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
   return self.titles.count;
@@ -104,14 +105,13 @@
 
   // Customize Chip
   chipView.titleLabel.text = self.titles[indexPath.row];
-  if (indexPath.row == 2) {
-    [chipView setEnabled:NO];
-  }
-  
+  chipView.enabled = indexPath.row != 2;
+  cell.userInteractionEnabled = indexPath.row != 2;
+
   MDCChipViewScheme *scheme = [[MDCChipViewScheme alloc] init];
   scheme.colorScheme = self.colorScheme;
   
-  if (_isOutlined) {
+  if (self.isOutlined) {
     [MDCChipViewThemer applyOutlinedVariantWithScheme:scheme toChipView:chipView];
   } else {
     [MDCChipViewThemer applyScheme:scheme toChipView:chipView];
@@ -125,8 +125,8 @@
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
 
   // The size of the chip depends on title here.
-  _sizingChip.titleLabel.text = self.titles[indexPath.row];
-  return [_sizingChip sizeThatFits:collectionView.bounds.size];
+  self.sizingChip.titleLabel.text = self.titles[indexPath.row];
+  return [self.sizingChip sizeThatFits:collectionView.bounds.size];
 }
 
 - (NSArray *)titles {
