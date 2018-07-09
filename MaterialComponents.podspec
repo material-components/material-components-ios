@@ -171,6 +171,8 @@ Pod::Spec.new do |mdc|
 
     component.dependency "MaterialComponents/private/KeyboardWatcher"
     component.dependency "MaterialComponents/private/Math"
+    component.dependency "MaterialComponents/private/ShapeLibrary"
+    component.dependency "MaterialComponents/private/Shapes"
   end
 
   # Buttons

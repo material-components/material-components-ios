@@ -29,6 +29,8 @@ mdc_public_objc_library(
     deps = [
       "//components/private/KeyboardWatcher",
       "//components/private/Math",
+      "//components/private/ShapeLibrary",
+      "//components/private/Shapes",
     ],
 )
 

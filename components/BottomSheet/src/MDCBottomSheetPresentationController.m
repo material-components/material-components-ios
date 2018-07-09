@@ -15,9 +15,6 @@
  */
 
 #import "MDCBottomSheetPresentationController.h"
-
-#import "MDCBottomSheetController.h"
-
 #import "MaterialMath.h"
 #import "private/MDCSheetContainerView.h"
 
@@ -201,6 +198,15 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   if ([strongDelegate respondsToSelector:
        @selector(bottomSheetPresentationControllerDidDismissBottomSheet:)]) {
     [strongDelegate bottomSheetPresentationControllerDidDismissBottomSheet:self];
+  }
+}
+
+- (void)sheetContainerViewWillChangeState:(nonnull MDCSheetContainerView *)containerView
+                               sheetState:(MDCSheetState)sheetState {
+  id<MDCBottomSheetPresentationControllerDelegate> strongDelegate = self.delegate;
+  if ([strongDelegate respondsToSelector:
+       @selector(bottomSheetWillChangeState:sheetState:)]) {
+    [strongDelegate bottomSheetWillChangeState:self sheetState:sheetState];
   }
 }
 
