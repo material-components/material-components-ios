@@ -80,13 +80,13 @@ class BaseCellExample : UIViewController {
 extension BaseCellExample: UICollectionViewDelegate {
   func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
     guard let cell = collectionView.cellForItem(at: indexPath) as? MDCBaseCell else { fatalError() }
-    cell.currentElevation = ShadowElevation(rawValue: 10)
+    cell.elevation = ShadowElevation(rawValue: 10)
   }
 
   func collectionView(_ collectionView: UICollectionView,
                       didUnhighlightItemAt indexPath: IndexPath) {
     guard let cell = collectionView.cellForItem(at: indexPath) as? MDCBaseCell else { fatalError() }
-    cell.currentElevation = ShadowElevation(rawValue: 0)
+    cell.elevation = ShadowElevation(rawValue: 0)
   }
 }
 
@@ -107,7 +107,7 @@ extension BaseCellExample: UICollectionViewDataSource {
       else { fatalError() }
     cell.layer.borderColor = UIColor.darkGray.cgColor
     cell.layer.borderWidth = 1
-    cell.currentInkColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.1)
+    cell.inkColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.1)
     return cell
   }
 }

@@ -35,9 +35,8 @@ static NSString *const MDCListBaseCellCurrentElevationKey = @"MDCListBaseCellCur
   self = [super initWithFrame:frame];
   if (self) {
     [self commonMDCBaseCellInit];
-    return self;
   }
-  return nil;
+  return self;
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
@@ -56,38 +55,24 @@ static NSString *const MDCListBaseCellCurrentElevationKey = @"MDCListBaseCellCur
     NSNumber *decodedElevation = [aDecoder decodeObjectOfClass:[NSNumber class]
                                                         forKey:MDCListBaseCellCurrentElevationKey];
     if (decodedElevation) {
-      self.currentElevation = (CGFloat)[decodedElevation floatValue];
+      self.elevation = (CGFloat)[decodedElevation doubleValue];
     }
     [self commonMDCBaseCellInit];
-    return self;
   }
-  return nil;
+  return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder {
   [super encodeWithCoder:coder];
   [coder encodeObject:_inkView forKey:MDCListBaseCellInkViewKey];
   [coder encodeObject:_inkView.inkColor forKey:MDCListBaseCellCurrentInkColorKey];
-  [coder encodeObject:[NSNumber numberWithFloat:(float)_currentElevation]
+  [coder encodeObject:[NSNumber numberWithDouble:(double)_elevation]
                forKey:MDCListBaseCellCurrentInkColorKey];
-}
-
-- (instancetype)init {
-  self = [super init];
-  if (self) {
-    [self commonMDCBaseCellInit];
-    return self;
-  }
-  return nil;
 }
 
 #pragma mark Setup
 
 - (void)commonMDCBaseCellInit {
-  [self setUpInkView];
-}
-
-- (void)setUpInkView {
   if (!self.inkView) {
     self.inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
   }
@@ -117,7 +102,7 @@ static NSString *const MDCListBaseCellCurrentElevationKey = @"MDCListBaseCellCur
 
 - (void)updateShadowElevation {
   self.layer.shadowPath = [self boundingPath].CGPath;
-  [self.shadowLayer setElevation:self.currentElevation];
+  [self.shadowLayer setElevation:self.elevation];
 }
 
 #pragma mark - UIResponder
@@ -158,29 +143,28 @@ static NSString *const MDCListBaseCellCurrentElevationKey = @"MDCListBaseCellCur
 
 - (void)prepareForReuse {
   [super prepareForReuse];
-  self.currentElevation = 0;
-  self.currentInkColor = nil;
+  self.elevation = 0;
   [self.inkView cancelAllAnimationsAnimated:NO];
 }
 
 #pragma mark Accessors
 
-- (void)setCurrentElevation:(MDCShadowElevation)currentElevation {
-  if (currentElevation == _currentElevation) {
+- (void)setElevation:(MDCShadowElevation)elevation {
+  if (elevation == _elevation) {
     return;
   }
-  _currentElevation = currentElevation;
+  _elevation = elevation;
   [self updateShadowElevation];
 }
 
-- (void)setCurrentInkColor:(UIColor *)currentInkColor {
-  if ([self.currentInkColor  isEqual:currentInkColor]) {
+- (void)setInkColor:(UIColor *)inkColor {
+  if ([self.inkColor isEqual:inkColor]) {
     return;
   }
-  self.inkView.inkColor = currentInkColor;
+  self.inkView.inkColor = inkColor;
 }
 
-- (UIColor *)currentInkColor {
+- (UIColor *)inkColor {
   return self.inkView.inkColor;
 }
 

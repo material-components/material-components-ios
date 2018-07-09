@@ -31,7 +31,8 @@
 
 - (void)createCollectionView {
   self.collectionViewLayout = [[UICollectionViewFlowLayout alloc] init];
-  self.collectionViewLayout.estimatedItemSize = CGSizeMake(self.collectionView.bounds.size.width - 20, kArbitraryCellHeight);
+  self.collectionViewLayout.estimatedItemSize =
+      CGSizeMake(self.collectionView.bounds.size.width - 20, kArbitraryCellHeight);
   self.collectionViewLayout.minimumInteritemSpacing = 5;
   self.collectionViewLayout.minimumLineSpacing = 5;
   self.collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds
@@ -60,7 +61,8 @@
 #endif
   CGRect frame = CGRectMake(originX, originY, width, height);
   self.collectionView.frame = frame;
-  self.collectionViewLayout.estimatedItemSize = CGSizeMake(self.collectionView.bounds.size.width - 20, kArbitraryCellHeight);
+  self.collectionViewLayout.estimatedItemSize =
+      CGSizeMake(self.collectionView.bounds.size.width - 20, kArbitraryCellHeight);
   [self.collectionViewLayout invalidateLayout];
   [self.collectionView reloadData];
 }
@@ -69,27 +71,32 @@
   return 1;
 }
 
--(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+-(NSInteger)collectionView:(UICollectionView *)collectionView
+    numberOfItemsInSection:(NSInteger)section {
   return self.numberOfCells;
 }
 
--(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-  MDCBaseCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kBaseCellIdentifier
-                                                                              forIndexPath:indexPath];
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                 cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+  MDCBaseCell *cell =
+      [collectionView dequeueReusableCellWithReuseIdentifier:kBaseCellIdentifier
+                                                forIndexPath:indexPath];
   cell.layer.borderColor = [UIColor darkGrayColor].CGColor;
   cell.layer.borderWidth = 1;
-  cell.currentInkColor = [UIColor colorWithRed:0 green:(CGFloat)0 blue:(CGFloat)0 alpha:(CGFloat)0.1];
+  cell.inkColor = [UIColor colorWithRed:0 green:(CGFloat)0 blue:(CGFloat)0 alpha:(CGFloat)0.1];
   return cell;
 }
 
--(void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
+-(void)collectionView:(UICollectionView *)collectionView
+    didHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
   MDCBaseCell *cell = (MDCBaseCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
-  cell.currentElevation = 10;
+  cell.elevation = 10;
 }
 
--(void)collectionView:(UICollectionView *)collectionView didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath {
+-(void)collectionView:(UICollectionView *)collectionView
+    didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath {
   MDCBaseCell *cell = (MDCBaseCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
-  cell.currentElevation = 0;
+  cell.elevation = 0;
 }
 
 #pragma mark - CatalogByConvention

@@ -20,11 +20,11 @@
 /**
  The current elevation of the cell.
  */
-@property (nonatomic, assign) MDCShadowElevation currentElevation;
+@property (nonatomic, assign) MDCShadowElevation elevation;
 
 /**
  The color of the cell’s underlying Ripple.
  */
-@property (nonatomic, strong) UIColor *currentInkColor;
+@property (nonatomic, strong, nonnull) UIColor *inkColor;
 
 @end
