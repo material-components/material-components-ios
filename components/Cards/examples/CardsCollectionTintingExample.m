@@ -22,7 +22,9 @@
 
 @end
 
-@implementation CardsCollectionTintingExample
+@implementation CardsCollectionTintingExample {
+  BOOL _interactable;
+}
 
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 @synthesize collectionViewLayout = _collectionViewLayout;
@@ -55,6 +57,12 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   [self.collectionView registerClass:[CardTintExampleCell class]
           forCellWithReuseIdentifier:kReusableIdentifierItem];
 
+  _interactable = NO;
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
+                                            initWithTitle:@"Interactable"
+                                            style:UIBarButtonItemStylePlain
+                                            target:self
+                                            action:@selector(toggleModes)];
 }
 
 #pragma mark <UICollectionViewDataSource>
@@ -75,6 +83,22 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
                                                 forIndexPath:indexPath];
   [cell setTintColor:[UIColor redColor]];
   [cell setNeedsDisplay];
+
+  // enable interactable mode and accessibility for interactivity.
+  if (_interactable) {
+    cell.interactable = YES;
+    cell.selectable = YES;
+
+    cell.isAccessibilityElement = YES;
+    cell.accessibilityCustomActions = @[
+      [[UIAccessibilityCustomAction alloc] initWithName:@"Toggle Switch"
+          target:cell selector:@selector(customAccessibilityActionToggleSwitch)],
+      [[UIAccessibilityCustomAction alloc] initWithName:@"Increment Slider"
+          target:cell selector:@selector(accessibilityIncrement)],
+      [[UIAccessibilityCustomAction alloc] initWithName:@"Decrement Slider"
+          target:cell selector:@selector(accessibilityDecrement)]
+    ];
+  }
   return cell;
 }
 
@@ -105,10 +129,20 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
   return 8.f;
 }
 
+#pragma mark - actions
+
+- (void)toggleModes {
+  _interactable = !_interactable;
+  NSString *buttonTitle = _interactable ? @"DEFAULT" : @"INTERACTABLE";
+  [self.navigationItem.rightBarButtonItem setTitle:buttonTitle];
+  self.navigationItem.rightBarButtonItem.accessibilityLabel = buttonTitle;
+  [self.collectionView reloadData];
+}
+
 #pragma mark - CatalogByConvention
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Cards", @"Collection Card Tinting" ];
+  return @[ @"Cards", @"Interactable Cards Collection" ];
 }
 
 + (BOOL)catalogIsPrimaryDemo {
@@ -120,10 +154,6 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
 }
 
 + (BOOL)catalogIsDebug {
-  return NO;
-}
-
-- (BOOL)catalogShouldHideNavigation {
   return NO;
 }
 

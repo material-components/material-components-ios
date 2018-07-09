@@ -27,13 +27,15 @@
     [self.contentView addSubview:_switchView];
     _sliderView = [[UISlider alloc] init];
     [self.contentView addSubview:_sliderView];
-    self.selectable = true;
     UIImage *img = [[self imageForState:MDCCardCellStateSelected] copy];
     [self setImage:img forState:MDCCardCellStateNormal];
 
     [self setImageTintColor:[UIColor blueColor] forState:MDCCardCellStateNormal];
     [self setImageTintColor:[UIColor blueColor] forState:MDCCardCellStateSelected];
-    [self setInteractable:NO];
+
+    // accessibilityLabels for non-interactable mode
+    _switchView.accessibilityLabel = @"A switch";
+    _sliderView.accessibilityLabel = @"A slider";
   }
   return self;
 }
@@ -44,4 +46,39 @@
   _sliderView.center = CGPointMake(self.contentView.center.x, self.bounds.size.height - _sliderView.bounds.size.height);
 }
 
+- (void)prepareForReuse {
+  self.selected = false;
+  _switchView.on = false;
+  _sliderView.value = 0;
+
+  [self resetInteractableDemoValues];
+}
+
+#pragma mark - Accessibility
+
+- (void)customAccessibilityActionToggleSwitch {
+  _switchView.on = !_switchView.isOn;
+}
+
+- (void)accessibilityIncrement {
+  _sliderView.value += _sliderView.maximumValue * 0.25f;
+}
+
+- (void)accessibilityDecrement {
+  _sliderView.value -= _sliderView.maximumValue * 0.25f;
+}
+
+// accessibilityLabel for interactable mode
+- (NSString *)accessibilityLabel {
+  return [NSString stringWithFormat:@"%@ cell. Switch is: %@.",
+          self.selected ? @"Selected" : @"Unselected", self.switchView.on ? @"ON" : @"OFF"];
+}
+
+- (void)resetInteractableDemoValues {
+  self.interactable = false;
+  self.selectable = false;
+
+  self.isAccessibilityElement = NO;
+  self.accessibilityCustomActions = nil;
+}
 @end
