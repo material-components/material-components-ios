@@ -66,15 +66,16 @@
  Sets the shape generator for state that is used to define the bottom sheet's shape for that state.
 
  note: If a layer property is explicitly set after the shapeGenerator has been set,
- it can lead to unexpected behavior.
+ it can lead to unexpected behavior. As an example, changes to the view layer's properties such as
+ cornerRadius, mask, or shadow properties are not advised when the shapeGenerator is set.
 
- When the shapeGenerator for a state is nil,
- MDCBottomSheetController will use the default underlying layer with its default settings.
+ When the shapeGenerator for a state is nil, MDCBottomSheetController will use the default view's
+ underlying layer (self.view.layer) with its default settings.
 
  @param shapeGenerator The shape generator holding the desired shape of the sheet.
  @param state The state of the bottom sheet.
  */
-- (void)setShapeGenerator:(id<MDCShapeGenerating>)shapeGenerator
+- (void)setShapeGenerator:(nullable id<MDCShapeGenerating>)shapeGenerator
                  forState:(MDCSheetState)state;
 
 /**
@@ -83,7 +84,7 @@
  @param state The state of the bottom sheet
  @return the shape generator for the state given.
  */
-- (id<MDCShapeGenerating>)shapeGeneratorForState:(MDCSheetState)state;
+- (nullable id<MDCShapeGenerating>)shapeGeneratorForState:(MDCSheetState)state;
 
 /**
  Initializes the controller with a content view controller.
