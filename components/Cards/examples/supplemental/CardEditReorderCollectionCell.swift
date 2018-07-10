@@ -4,6 +4,9 @@
 //
 //  Created by Galia Kaufman on 7/6/18.
 //
+//  Card images source:
+//  Material Design Guidelines (https://material.io/design/components/cards.html#card-collections)
+//
 
 import UIKit
 import MaterialComponents.MaterialCards
@@ -45,15 +48,11 @@ class CardEditReorderCollectionCell: MDCCardCollectionCell {
 
     titleLabel.setContentCompressionResistancePriority(800, for: .vertical)
 
-    #if swift(>=3.2)
-      if #available(iOS 11, *) {
-        post_iOS11Constraints()
-      } else {
-        pre_iOS11Constraints()
-    }
-    #else
+    if #available(iOS 11, *) {
+      post_iOS11Constraints()
+    } else {
       pre_iOS11Constraints()
-    #endif
+    }
   }
 
   @available(iOS 11, *)
@@ -73,8 +72,10 @@ class CardEditReorderCollectionCell: MDCCardCollectionCell {
         titleLabel.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: margin),
         titleLabel.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -margin),
         titleLabel.bottomAnchor.constraint(equalTo: guide.bottomAnchor, constant: -margin)
-        ])
-      #endif
+      ]);
+    #else
+      pre_iOS11Constraints()
+    #endif
   }
 
   private func pre_iOS11Constraints() {
