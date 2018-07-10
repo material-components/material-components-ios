@@ -171,6 +171,38 @@
   return;
 }
 
+- (void)setIsScrimAccessibilityElement:(BOOL)isScrimAccessibilityElement {
+  _transitionController.isScrimAccessibilityElement = isScrimAccessibilityElement;
+}
+
+- (BOOL)isScrimAccessibilityElement {
+  return _transitionController.isScrimAccessibilityElement;
+}
+
+- (void)setScrimAccessibilityLabel:(NSString *)scrimAccessibilityLabel {
+  _transitionController.scrimAccessibilityLabel = scrimAccessibilityLabel;
+}
+
+- (NSString *)scrimAccessibilityLabel {
+  return _transitionController.scrimAccessibilityLabel;
+}
+
+- (void)setScrimAccessibilityHint:(NSString *)scrimAccessibilityHint {
+  _transitionController.scrimAccessibilityHint = scrimAccessibilityHint;
+}
+
+- (NSString *)scrimAccessibilityHint {
+  return _transitionController.scrimAccessibilityHint;
+}
+
+- (void)setScrimAccessibilityTraits:(UIAccessibilityTraits)scrimAccessibilityTraits {
+  _transitionController.scrimAccessibilityTraits = scrimAccessibilityTraits;
+}
+
+- (UIAccessibilityTraits)scrimAccessibilityTraits {
+  return _transitionController.scrimAccessibilityTraits;
+}
+
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 - (void)bottomSheetPresentationControllerDidDismissBottomSheet:
