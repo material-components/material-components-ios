@@ -13,6 +13,9 @@ import MaterialComponents.MaterialCards
 
 class CardEditReorderCollectionCell: MDCCardCollectionCell {
 
+  var colorScheme = MDCSemanticColorScheme()
+  var typographyScheme = MDCTypographyScheme()
+
   private lazy var imageView: UIImageView = {
     let imageView = UIImageView(frame: CGRect.zero)
     imageView.contentMode = .scaleAspectFit
@@ -26,7 +29,7 @@ class CardEditReorderCollectionCell: MDCCardCollectionCell {
     label.numberOfLines = 1
     label.textAlignment = .center
     label.lineBreakMode = .byTruncatingTail
-    label.font = UIFont.systemFont(ofSize: 12.0)
+    label.font = self.typographyScheme.caption
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
