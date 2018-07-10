@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Build each branch of the Flutter codelabs in an iOS context.
+# Build every iOS codelab.
 #
 # If --verbose (-v) is specified, print the progress of each build.
 #
