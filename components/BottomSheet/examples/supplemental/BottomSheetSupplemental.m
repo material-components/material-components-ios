@@ -100,3 +100,19 @@
 }
 
 @end
+
+@implementation BottomSheetShapedExample (CatalogByConvention)
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Bottom Sheet", @"Shaped Bottom Sheet" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
++ (BOOL)catalogIsPresentable {
+  return NO;
+}
+
+@end
