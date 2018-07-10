@@ -629,6 +629,11 @@ extension MDCNodeListViewController {
     return cell!
   }
 
+  override func accessibilityPerformMagicTap() -> Bool {
+    primaryDemoButtonClicked()
+    return true
+  }
+
   func primaryDemoButtonClicked () {
     let indexPath = IndexPath(row: 0, section: Section.description.rawValue)
     self.tableView(self.tableView, didSelectRowAt: indexPath)
