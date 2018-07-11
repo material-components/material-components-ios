@@ -6,12 +6,12 @@
     },
     {
       "idiom" : "universal",
-      "filename" : "sample-image@2x.jpg",
+      "filename" : "marina_beach@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "sample-image@3x.jpg",
+      "filename" : "marina_beach@3x.png",
       "scale" : "3x"
     }
   ],

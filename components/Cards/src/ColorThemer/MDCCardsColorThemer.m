@@ -1,4 +1,4 @@
-/*
+ /*
  Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,6 +28,8 @@ static const CGFloat kStrokeVariantBorderOpacity = 0.37f;
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                       toCardCell:(nonnull MDCCardCollectionCell *)cardCell {
   cardCell.backgroundColor = colorScheme.surfaceColor;
+  cardCell.inkView.inkColor = [colorScheme.primaryColor colorWithAlphaComponent:0.08];
+  cardCell.tintColor = colorScheme.primaryColor;
 }
 
 + (void)applyOutlinedVariantWithColorScheme:(nonnull id<MDCColorScheming>)colorScheme

@@ -1,12 +1,18 @@
-//
-//  CardEditReorderCollectionCell.swift
-//  CatalogByConvention
-//
-//  Created by Galia Kaufman on 7/6/18.
-//
-//  Card images source:
-//  Material Design Guidelines (https://material.io/design/components/cards.html#card-collections)
-//
+/*
+ Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
 
 import UIKit
 import MaterialComponents.MaterialCards
@@ -18,8 +24,8 @@ class CardEditReorderCollectionCell: MDCCardCollectionCell {
 
   private lazy var imageView: UIImageView = {
     let imageView = UIImageView(frame: CGRect.zero)
-    imageView.contentMode = .scaleAspectFit
-    imageView.layer.cornerRadius = 6.0
+    imageView.contentMode = .scaleAspectFill
+    imageView.clipsToBounds = true
     imageView.translatesAutoresizingMaskIntoConstraints = false
     return imageView
   }()
@@ -34,16 +40,11 @@ class CardEditReorderCollectionCell: MDCCardCollectionCell {
     return label
   }()
 
-  func configure(title: String, number: Int) {
+  func configure(title: String, imageName: String) {
 
     let bundle = Bundle(for: CardEditReorderCollectionCell.self)
 
-    let img = UIImage(named: "check-circle-blue", in: bundle, compatibleWith: nil)
-    self.setImage(img, for: .selected)
-
-    let maxImageNumber = 7
-    let imageName = "cell-image-\(number % maxImageNumber)"
-    self.imageView.image = UIImage(named: imageName, in: bundle, compatibleWith: nil)
+    self.imageView.image  = UIImage(named: imageName, in: bundle, compatibleWith: nil)
     self.titleLabel.text = title
 
     self.insertSubview(imageView, at: 0)
@@ -63,14 +64,13 @@ class CardEditReorderCollectionCell: MDCCardCollectionCell {
     #if swift(>=3.2)
       let guide = self.safeAreaLayoutGuide
       let margin: CGFloat = 8.0
-      let thinMargin: CGFloat = 4.0
 
       NSLayoutConstraint.activate([
         imageView.topAnchor.constraint(equalTo: guide.topAnchor, constant: margin),
         imageView.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: margin),
         imageView.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -margin),
 
-        imageView.bottomAnchor.constraint(equalTo: titleLabel.topAnchor, constant: -thinMargin),
+        titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: margin / 2),
 
         titleLabel.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: margin),
         titleLabel.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -margin),
@@ -83,13 +83,13 @@ class CardEditReorderCollectionCell: MDCCardCollectionCell {
 
   private func pre_iOS11Constraints() {
     let views: [String: UIView] = ["image": self.imageView, "label": self.titleLabel]
-    let metrics = ["margin": 8.0, "thin": 4.0]
+    let metrics = ["margin": 8.0, "half": 4.0]
     self.addConstraints(
       NSLayoutConstraint.constraints(
         withVisualFormat: "H:|-(margin)-[image]-(margin)-|",
         options: [], metrics: metrics, views: views) +
       NSLayoutConstraint.constraints(
-        withVisualFormat: "V:|-(margin)-[image]-(thin)-[label]-(margin)-|",
+        withVisualFormat: "V:|-(margin)-[image]-(half)-[label]-(margin)-|",
         options: [], metrics: metrics, views: views) +
       NSLayoutConstraint.constraints(
         withVisualFormat: "H:|-(margin)-[label]-(margin)-|",

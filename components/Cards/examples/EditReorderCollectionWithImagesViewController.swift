@@ -16,18 +16,42 @@
 
 import UIKit
 
-enum ToggleMode: Int {
-  case edit = 1, reorder
-}
-
-class EditReorderCollectionViewController: UIViewController,
+class EditReorderCollectionWithImagesViewController: UIViewController,
   UICollectionViewDelegate,
   UICollectionViewDataSource,
-  UICollectionViewDelegateFlowLayout {
+UICollectionViewDelegateFlowLayout {
+
+  enum ToggleMode: Int {
+    case edit = 1, reorder
+  }
 
   let collectionView = UICollectionView(frame: .zero,
                                         collectionViewLayout: UICollectionViewFlowLayout())
-  var dataSource = [(Int, Bool)]()
+  lazy var dataSource = [
+    ("veggie_basket", "Veggie Basket", false),
+    ("spices_and_herbs", "Spices & Herbs", false),
+    ("salt_farmer", "Salt Farmer", false),
+    ("french_quarter", "French Quarter", false),
+    ("sf_bayview", "Bayview", false),
+    ("london-belgravia", "London, Belgravia", false),
+    ("georgetown", "Georgetown", false),
+    ("dc_cathedral_heights", "Cathedral Heights", false),
+    ("dc_cleveland_park", "Cleveland Park", false),
+    ("amsterdam", "Amsterdam", false),
+    ("silk_weavers", "Silk Weavers", false),
+    ("marina_beach", "Marina Beach", false),
+    ("temple_market", "Temple Market", false),
+    ("fishing_boat", "Fishing Boat", false),
+    ("salt_farm", "Salt Farm", false),
+    ("chettinad_mansion", "Mansions", false),
+    ("chettinad_street", "Chettinad", false),
+    ("tile_makers", "Tile Makers", false),
+    ("fisherman", "Fisherman", false),
+    ("fishermen_village", "Fishermen Village", false),
+    ("twilight_zone", "Twilight Zone", false),
+    ("marina_fish", "Marina Fish", false),
+    ("flower_market", "Flower Market", false)
+  ]
   var longPressGesture: UILongPressGestureRecognizer!
   var toggle = ToggleMode.reorder
   var toggleButton: UIButton!
@@ -43,7 +67,7 @@ class EditReorderCollectionViewController: UIViewController,
     collectionView.delegate = self
     collectionView.backgroundColor = UIColor(white: 0.9, alpha: 1)
     collectionView.alwaysBounceVertical = true;
-    collectionView.register(MDCCardCollectionCell.self, forCellWithReuseIdentifier: "Cell")
+    collectionView.register(CardEditReorderCollectionCell.self, forCellWithReuseIdentifier: "Cell")
     collectionView.translatesAutoresizingMaskIntoConstraints = false
     collectionView.allowsMultipleSelection = true
     view.addSubview(collectionView)
@@ -58,10 +82,6 @@ class EditReorderCollectionViewController: UIViewController,
                                                       action: #selector(handleReordering(gesture:)))
       longPressGesture.cancelsTouchesInView = false
       collectionView.addGestureRecognizer(longPressGesture)
-    }
-
-    for i in 0..<20 {
-      dataSource.append((i, false))
     }
 
     #if swift(>=3.2)
@@ -116,17 +136,27 @@ class EditReorderCollectionViewController: UIViewController,
 
   func collectionView(_ collectionView: UICollectionView,
                       cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell",
-                                                  for: indexPath) as! MDCCardCollectionCell
 
-    MDCCardThemer.applyScheme(cardScheme, toCardCell: cell)
-    cell.isSelectable = (toggle == .edit)
-    return cell
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
+    guard let cardCell = cell as? CardEditReorderCollectionCell else { return cell }
+
+    MDCCardThemer.applyScheme(cardScheme, toCardCell: cardCell)
+    cardCell.isSelectable = (toggle == .edit)
+
+    let title = dataSource[indexPath.item].1
+    let imageName = dataSource[indexPath.item].0
+    cardCell.configure(title: title, imageName: imageName)
+    cardCell.isSelected = dataSource[indexPath.item].2
+
+    cardCell.isAccessibilityElement = true
+    cardCell.accessibilityLabel = title
+
+    return cardCell
   }
 
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     if toggle == .edit {
-      dataSource[indexPath.item].1 = !dataSource[indexPath.item].1
+      dataSource[indexPath.item].2 = !dataSource[indexPath.item].2
     }
   }
 
@@ -196,20 +226,20 @@ class EditReorderCollectionViewController: UIViewController,
 
 }
 
-extension EditReorderCollectionViewController {
+extension EditReorderCollectionWithImagesViewController {
   @objc class func catalogBreadcrumbs() -> [String] {
-    return ["Cards", "Edit/Reorder"]
+    return ["Cards", "Edit/Reorder - With Images"]
   }
 
   @objc class func catalogIsPresentable() -> Bool {
-    return true
+    return false
   }
 
   @objc class func catalogIsDebug() -> Bool {
     return false
   }
 
-  @objc class func catalogIsPrimaryExample() -> Bool {
-    return true
+  @objc class func catalogIsPrimaryDemo() -> Bool {
+    return false
   }
 }
