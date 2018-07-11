@@ -1,3 +1,206 @@
+# #develop#
+
+## Breaking changes
+
+## New deprecations
+
+## New features
+
+## API changes
+
+### BottomSheet
+
+#### MDCBottomSheetTransitionController(ScrimAccessibility)
+
+*new* category: `MDCBottomSheetTransitionController(ScrimAccessibility)`
+
+*new* property: `isScrimAccessibilityElement` in `MDCBottomSheetTransitionController(ScrimAccessibility)`
+
+*new* property: `scrimAccessibilityLabel` in `MDCBottomSheetTransitionController(ScrimAccessibility)`
+
+*new* property: `scrimAccessibilityHint` in `MDCBottomSheetTransitionController(ScrimAccessibility)`
+
+*new* property: `scrimAccessibilityTraits` in `MDCBottomSheetTransitionController(ScrimAccessibility)`
+
+#### MDCBottomSheetController
+
+*new* property: `scrimAccessibilityHint` in `MDCBottomSheetController`
+
+*new* property: `isScrimAccessibilityElement` in `MDCBottomSheetController`
+
+*new* property: `state` in `MDCBottomSheetController`
+
+*new* method: `-shapeGeneratorForState:` in `MDCBottomSheetController`
+
+*new* property: `scrimAccessibilityLabel` in `MDCBottomSheetController`
+
+*new* method: `-setShapeGenerator:forState:` in `MDCBottomSheetController`
+
+*new* property: `scrimAccessibilityTraits` in `MDCBottomSheetController`
+
+#### MDCSheetState
+
+*new* enum value: `MDCSheetStateExtended` in `MDCSheetState`
+
+*new* enum value: `MDCSheetStatePreferred` in `MDCSheetState`
+
+*new* enum value: `MDCSheetStateClosed` in `MDCSheetState`
+
+*new* enum: `MDCSheetState`
+
+*new* typedef: `MDCSheetState`
+
+#### MDCBottomSheetPresentationControllerDelegate
+
+*new* method: `-bottomSheetWillChangeState:sheetState:` in `MDCBottomSheetPresentationControllerDelegate`
+
+#### MDCBottomSheetPresentationController
+
+*new* property: `scrimAccessibilityLabel` in `MDCBottomSheetPresentationController`
+
+*new* property: `isScrimAccessibilityElement` in `MDCBottomSheetPresentationController`
+
+*new* property: `scrimAccessibilityTraits` in `MDCBottomSheetPresentationController`
+
+*new* property: `scrimAccessibilityHint` in `MDCBottomSheetPresentationController`
+
+### Cards
+
+#### MDCCardCollectionCell
+
+*new* property: `interactable` in `MDCCardCollectionCell`
+
+*modified* class: `MDCCardCollectionCell`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCCardCollectionCell : UICollectionViewCell  /**  When selectable is set to YES, a tap on a cell will trigger a visual change between selected  and unselected. When it is set to NO, a tap will trigger a normal tap (rather than trigger  different visual selection states on the card).  Default is set to NO.  */ @property(nonatomic, assign, getter=isSelectable) BOOL selectable;  /**  The corner radius for the card  Default is set to 4.  */ @property(nonatomic, assign) CGFloat cornerRadius UI_APPEARANCE_SELECTOR;  /**  The inkView for the card that is initiated on tap  */ @property(nonatomic, readonly, strong, nonnull) MDCInkView *inkView;  /*  The shape generator used to define the card cell's shape.  When set, layer properties such as cornerRadius and other layer properties are nullified/zeroed.  If a layer property is explicitly set after the shapeGenerator has been set, it will lead to  unexpected behavior.   When the shapeGenerator is nil, MDCCardCollectionCell will use the default underlying layer with  its default settings.   Default value for shapeGenerator is nil.  */ @property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator;  /**  Sets the shadow elevation for an MDCCardViewState state   @param shadowElevation The shadow elevation  @param state MDCCardCellState the card state  */ - (void)setShadowElevation:(MDCShadowElevation)shadowElevation forState:(MDCCardCellState)state     UI_APPEARANCE_SELECTOR;  /**  Returns the shadow elevation for an MDCCardViewState state   If no elevation has been set for a state, the value for MDCCardCellStateNormal will be returned.  Default value for MDCCardCellStateNormal is 1  Default value for MDCCardCellStateHighlighted is 8  Default value for MDCCardCellStateSelected is 8   @param state MDCCardCellStateNormal the card state  @return The shadow elevation for the requested state.  */ - (MDCShadowElevation)shadowElevationForState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Sets the border width for an MDCCardViewState state   @param borderWidth The border width  @param state MDCCardCellState the card state  */ - (void)setBorderWidth:(CGFloat)borderWidth forState:(MDCCardCellState)state     UI_APPEARANCE_SELECTOR;  /**  Returns the border width for an MDCCardCellState state   If no border width has been set for a state, the value for MDCCardCellStateNormal will be returned.  Default value for MDCCardCellStateNormal is 0   @param state MDCCardCellState the card state  @return The border width for the requested state.  */ - (CGFloat)borderWidthForState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Sets the border color for an MDCCardCellStateNormal state   @param borderColor The border color  @param state MDCCardCellState the card state  */ - (void)setBorderColor:(nullable UIColor *)borderColor forState:(MDCCardCellState)state     UI_APPEARANCE_SELECTOR;  /**  Returns the border color for an MDCCardCellStateNormal state   If no border color has been set for a state, it will check the value of UIControlStateNormal.  If that value also isn't set, then nil will be returned.   @param state MDCCardCellState the card state  @return The border color for the requested state.  */ - (nullable UIColor *)borderColorForState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Sets the shadow color for an MDCCardCellStateNormal state   @param shadowColor The shadow color  @param state MDCCardCellState the card state  */ - (void)setShadowColor:(nullable UIColor *)shadowColor forState:(MDCCardCellState)state     UI_APPEARANCE_SELECTOR;  /**  Returns the shadow color for an MDCCardCellStateNormal state   If no color has been set for a state, the value for MDCCardViewStateNormal will be returned.  Default value for MDCCardCellStateNormal is blackColor   @param state MDCCardCellState the card state  @return The shadow color for the requested state.  */ - (nullable UIColor *)shadowColorForState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Returns the image for an MDCCardCellStateNormal state.   @note The image is only displayed when `selectable` is YES.  If no image has been set for a state, it will check the value of UIControlStateNormal.  If that value also isn't set, then nil will be returned.  Default value for MDCCardCellStateSelected is ic_check_circle   @param state MDCCardCellState the card state  @return The image for the requested state.  */ - (nullable UIImage *)imageForState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Sets the image for an MDCCardCellStateNormal state   @note The image is only displayed when `selectable` is YES.  @param image The image  @param state MDCCardCellState the card state  */ - (void)setImage:(nullable UIImage *)image forState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Returns the horizontal image alignment for an MDCCardCellStateNormal state   @note The image is only displayed when `selectable` is YES.  If no alignment has been set for a state, it will check the value of UIControlStateNormal.  If that value also isn't set, then MDCCardCellImageHorizontalAlignmentRight will be returned.   @param state MDCCardCellState the card state  @return The horizontal alignment for the requested state.  */ - (MDCCardCellHorizontalImageAlignment)horizontalImageAlignmentForState:(MDCCardCellState)state     UI_APPEARANCE_SELECTOR;  /**  Sets the image alignment for an MDCCardCellStateNormal state   @note The image is only displayed when `selectable` is YES.  @param horizontalImageAlignment The image alignment  @param state MDCCardCellState the card state  */ - (void)setHorizontalImageAlignment:(MDCCardCellHorizontalImageAlignment)horizontalImageAlignment                            forState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Returns the vertical image alignment for an MDCCardCellStateNormal state   @note The image is only displayed when `selectable` is YES.  If no alignment has been set for a state, it will check the value of UIControlStateNormal.  If that value also isn't set, then MDCCardCellImageVerticalAlignmentTop will be returned.   @param state MDCCardCellState the card state  @return The vertical alignment for the requested state.  */ - (MDCCardCellVerticalImageAlignment)verticalImageAlignmentForState:(MDCCardCellState)state     UI_APPEARANCE_SELECTOR;  /**  Sets the image alignment for an MDCCardCellStateNormal state   @note The image is only displayed when `selectable` is YES.  @param verticalImageAlignment The image alignment  @param state MDCCardCellState the card state  */ - (void)setVerticalImageAlignment:(MDCCardCellVerticalImageAlignment)verticalImageAlignment                          forState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Returns the image tint color for an MDCCardCellStateNormal state   @note The image is only displayed when `selectable` is YES.  If no tint color has been set for a state, it will check the value of UIControlStateNormal.  If that value also isn't set, then nil will be returned.   @param state MDCCardCellState the card state  @return The image tint color for the requested state.  */ - (nullable UIColor *)imageTintColorForState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Sets the image tint color for an MDCCardCellStateNormal state   @note The image is only displayed when `selectable` is YES.  @param imageTintColor The image tint color  @param state MDCCardCellState the card state  */ - (void)setImageTintColor:(nullable UIColor *)imageTintColor forState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  The state of the card cell.  Default is MDCCardCellStateNormal.  */ @property(nonatomic, readonly) MDCCardCellState state;  @end` |
+| To: | `@interface MDCCardCollectionCell : UICollectionViewCell  /**  When selectable is set to YES, a tap on a cell will trigger a visual change between selected  and unselected. When it is set to NO, a tap will trigger a normal tap (rather than trigger  different visual selection states on the card).  Default is set to NO.  */ @property(nonatomic, assign, getter=isSelectable) BOOL selectable;  /**  The corner radius for the card  Default is set to 4.  */ @property(nonatomic, assign) CGFloat cornerRadius UI_APPEARANCE_SELECTOR;  /**  The inkView for the card that is initiated on tap  */ @property(nonatomic, readonly, strong, nonnull) MDCInkView *inkView;  /**  This property defines if a card as a whole should be interactable or not.  What this means is that when isInteractable is set to NO, there will be no ink ripple and  no change in shadow elevation when tapped or selected. Also the card container itself will not be  tappable, but any of its subviews will still be tappable.   Default is set to YES.   Important: Our specification for cards explicitly define a card as being an interactable component.  Therefore, this property should be set to NO *only if* there are other interactable items within  the card's content, such as buttons or other tappable controls.  */ @property (nonatomic, getter=isInteractable) IBInspectable BOOL interactable;  /*  The shape generator used to define the card cell's shape.  When set, layer properties such as cornerRadius and other layer properties are nullified/zeroed.  If a layer property is explicitly set after the shapeGenerator has been set, it will lead to  unexpected behavior.   When the shapeGenerator is nil, MDCCardCollectionCell will use the default underlying layer with  its default settings.   Default value for shapeGenerator is nil.  */ @property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator;  /**  Sets the shadow elevation for an MDCCardViewState state   @param shadowElevation The shadow elevation  @param state MDCCardCellState the card state  */ - (void)setShadowElevation:(MDCShadowElevation)shadowElevation forState:(MDCCardCellState)state     UI_APPEARANCE_SELECTOR;  /**  Returns the shadow elevation for an MDCCardViewState state   If no elevation has been set for a state, the value for MDCCardCellStateNormal will be returned.  Default value for MDCCardCellStateNormal is 1  Default value for MDCCardCellStateHighlighted is 8  Default value for MDCCardCellStateSelected is 8   @param state MDCCardCellStateNormal the card state  @return The shadow elevation for the requested state.  */ - (MDCShadowElevation)shadowElevationForState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Sets the border width for an MDCCardViewState state   @param borderWidth The border width  @param state MDCCardCellState the card state  */ - (void)setBorderWidth:(CGFloat)borderWidth forState:(MDCCardCellState)state     UI_APPEARANCE_SELECTOR;  /**  Returns the border width for an MDCCardCellState state   If no border width has been set for a state, the value for MDCCardCellStateNormal will be returned.  Default value for MDCCardCellStateNormal is 0   @param state MDCCardCellState the card state  @return The border width for the requested state.  */ - (CGFloat)borderWidthForState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Sets the border color for an MDCCardCellStateNormal state   @param borderColor The border color  @param state MDCCardCellState the card state  */ - (void)setBorderColor:(nullable UIColor *)borderColor forState:(MDCCardCellState)state     UI_APPEARANCE_SELECTOR;  /**  Returns the border color for an MDCCardCellStateNormal state   If no border color has been set for a state, it will check the value of UIControlStateNormal.  If that value also isn't set, then nil will be returned.   @param state MDCCardCellState the card state  @return The border color for the requested state.  */ - (nullable UIColor *)borderColorForState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Sets the shadow color for an MDCCardCellStateNormal state   @param shadowColor The shadow color  @param state MDCCardCellState the card state  */ - (void)setShadowColor:(nullable UIColor *)shadowColor forState:(MDCCardCellState)state     UI_APPEARANCE_SELECTOR;  /**  Returns the shadow color for an MDCCardCellStateNormal state   If no color has been set for a state, the value for MDCCardViewStateNormal will be returned.  Default value for MDCCardCellStateNormal is blackColor   @param state MDCCardCellState the card state  @return The shadow color for the requested state.  */ - (nullable UIColor *)shadowColorForState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Returns the image for an MDCCardCellStateNormal state.   @note The image is only displayed when `selectable` is YES.  If no image has been set for a state, it will check the value of UIControlStateNormal.  If that value also isn't set, then nil will be returned.  Default value for MDCCardCellStateSelected is ic_check_circle   @param state MDCCardCellState the card state  @return The image for the requested state.  */ - (nullable UIImage *)imageForState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Sets the image for an MDCCardCellStateNormal state   @note The image is only displayed when `selectable` is YES.  @param image The image  @param state MDCCardCellState the card state  */ - (void)setImage:(nullable UIImage *)image forState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Returns the horizontal image alignment for an MDCCardCellStateNormal state   @note The image is only displayed when `selectable` is YES.  If no alignment has been set for a state, it will check the value of UIControlStateNormal.  If that value also isn't set, then MDCCardCellImageHorizontalAlignmentRight will be returned.   @param state MDCCardCellState the card state  @return The horizontal alignment for the requested state.  */ - (MDCCardCellHorizontalImageAlignment)horizontalImageAlignmentForState:(MDCCardCellState)state     UI_APPEARANCE_SELECTOR;  /**  Sets the image alignment for an MDCCardCellStateNormal state   @note The image is only displayed when `selectable` is YES.  @param horizontalImageAlignment The image alignment  @param state MDCCardCellState the card state  */ - (void)setHorizontalImageAlignment:(MDCCardCellHorizontalImageAlignment)horizontalImageAlignment                            forState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Returns the vertical image alignment for an MDCCardCellStateNormal state   @note The image is only displayed when `selectable` is YES.  If no alignment has been set for a state, it will check the value of UIControlStateNormal.  If that value also isn't set, then MDCCardCellImageVerticalAlignmentTop will be returned.   @param state MDCCardCellState the card state  @return The vertical alignment for the requested state.  */ - (MDCCardCellVerticalImageAlignment)verticalImageAlignmentForState:(MDCCardCellState)state     UI_APPEARANCE_SELECTOR;  /**  Sets the image alignment for an MDCCardCellStateNormal state   @note The image is only displayed when `selectable` is YES.  @param verticalImageAlignment The image alignment  @param state MDCCardCellState the card state  */ - (void)setVerticalImageAlignment:(MDCCardCellVerticalImageAlignment)verticalImageAlignment                          forState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Returns the image tint color for an MDCCardCellStateNormal state   @note The image is only displayed when `selectable` is YES.  If no tint color has been set for a state, it will check the value of UIControlStateNormal.  If that value also isn't set, then nil will be returned.   @param state MDCCardCellState the card state  @return The image tint color for the requested state.  */ - (nullable UIColor *)imageTintColorForState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  Sets the image tint color for an MDCCardCellStateNormal state   @note The image is only displayed when `selectable` is YES.  @param imageTintColor The image tint color  @param state MDCCardCellState the card state  */ - (void)setImageTintColor:(nullable UIColor *)imageTintColor forState:(MDCCardCellState)state UI_APPEARANCE_SELECTOR;  /**  The state of the card cell.  Default is MDCCardCellStateNormal.  */ @property(nonatomic, readonly) MDCCardCellState state;  @end` |
+
+#### MDCCard
+
+*new* property: `interactable` in `MDCCard`
+
+*modified* class: `MDCCard`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCCard : UIControl  /**  The corner radius for the card  Default is set to 4.  */ @property(nonatomic, assign) CGFloat cornerRadius UI_APPEARANCE_SELECTOR;  /**  The inkView for the card that is initiated on tap  */ @property(nonatomic, readonly, strong, nonnull) MDCInkView *inkView;   /**  Sets the shadow elevation for an UIControlState state   @param shadowElevation The shadow elevation  @param state UIControlState the card state  */ - (void)setShadowElevation:(MDCShadowElevation)shadowElevation forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  /**  Returns the shadow elevation for an UIControlState state   If no elevation has been set for a state, the value for UIControlStateNormal will be returned.  Default value for UIControlStateNormal is 1  Default value for UIControlStateHighlighted is 8   @param state UIControlState the card state  @return The shadow elevation for the requested state.  */ - (MDCShadowElevation)shadowElevationForState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /**  Sets the border width for an UIControlState state   @param borderWidth The border width  @param state UIControlState the card state  */ - (void)setBorderWidth:(CGFloat)borderWidth forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  /**  Returns the border width for an UIControlState state   If no border width has been set for a state, the value for UIControlStateNormal will be returned.  Default value for UIControlStateNormal is 0   @param state UIControlState the card state  @return The border width for the requested state.  */ - (CGFloat)borderWidthForState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /**  Sets the border color for an UIControlState state   @param borderColor The border color  @param state UIControlState the card state  */ - (void)setBorderColor:(nullable UIColor *)borderColor forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  /**  Returns the border color for an UIControlState state   If no border color has been set for a state, it will check the value of UIControlStateNormal.  If that value also isn't set, then nil will be returned.   @param state UIControlState the card state  @return The border color for the requested state.  */ - (nullable UIColor *)borderColorForState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /**  Sets the shadow color for an UIControlState state   @param shadowColor The shadow color  @param state UIControlState the card state  */ - (void)setShadowColor:(nullable UIColor *)shadowColor forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  /**  Returns the shadow color for an UIControlState state   If no color has been set for a state, the value for MDCCardViewStateNormal will be returned.  Default value for UIControlStateNormal is blackColor   @param state UIControlState the card state  @return The shadow color for the requested state.  */ - (nullable UIColor *)shadowColorForState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /*  The shape generator used to define the card's shape.  When set, layer properties such as cornerRadius and other layer properties are nullified/zeroed.  If a layer property is explicitly set after the shapeGenerator has been set, it will lead to  unexpected behavior.   When the shapeGenerator is nil, MDCCard will use the default underlying layer with  its default settings.    Default value for shapeGenerator is nil.  */ @property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator;   @end` |
+| To: | `@interface MDCCard : UIControl  /**  The corner radius for the card  Default is set to 4.  */ @property(nonatomic, assign) CGFloat cornerRadius UI_APPEARANCE_SELECTOR;  /**  The inkView for the card that is initiated on tap  */ @property(nonatomic, readonly, strong, nonnull) MDCInkView *inkView;  /**  This property defines if a card as a whole should be interactable or not.  What this means is that when isInteractable is set to NO, there will be no ink ripple and  no change in shadow elevation when tapped or selected. Also the card container itself will not be  tappable, but any of its subviews will still be tappable.   Default is set to YES.   Important: Our specification for cards explicitly define a card as being an interactable component.  Therefore, this property should be set to NO *only if* there are other interactable items within  the card's content, such as buttons or other tappable controls.  */ @property (nonatomic, getter=isInteractable) IBInspectable BOOL interactable;  /**  Sets the shadow elevation for an UIControlState state   @param shadowElevation The shadow elevation  @param state UIControlState the card state  */ - (void)setShadowElevation:(MDCShadowElevation)shadowElevation forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  /**  Returns the shadow elevation for an UIControlState state   If no elevation has been set for a state, the value for UIControlStateNormal will be returned.  Default value for UIControlStateNormal is 1  Default value for UIControlStateHighlighted is 8   @param state UIControlState the card state  @return The shadow elevation for the requested state.  */ - (MDCShadowElevation)shadowElevationForState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /**  Sets the border width for an UIControlState state   @param borderWidth The border width  @param state UIControlState the card state  */ - (void)setBorderWidth:(CGFloat)borderWidth forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  /**  Returns the border width for an UIControlState state   If no border width has been set for a state, the value for UIControlStateNormal will be returned.  Default value for UIControlStateNormal is 0   @param state UIControlState the card state  @return The border width for the requested state.  */ - (CGFloat)borderWidthForState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /**  Sets the border color for an UIControlState state   @param borderColor The border color  @param state UIControlState the card state  */ - (void)setBorderColor:(nullable UIColor *)borderColor forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  /**  Returns the border color for an UIControlState state   If no border color has been set for a state, it will check the value of UIControlStateNormal.  If that value also isn't set, then nil will be returned.   @param state UIControlState the card state  @return The border color for the requested state.  */ - (nullable UIColor *)borderColorForState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /**  Sets the shadow color for an UIControlState state   @param shadowColor The shadow color  @param state UIControlState the card state  */ - (void)setShadowColor:(nullable UIColor *)shadowColor forState:(UIControlState)state     UI_APPEARANCE_SELECTOR;  /**  Returns the shadow color for an UIControlState state   If no color has been set for a state, the value for MDCCardViewStateNormal will be returned.  Default value for UIControlStateNormal is blackColor   @param state UIControlState the card state  @return The shadow color for the requested state.  */ - (nullable UIColor *)shadowColorForState:(UIControlState)state UI_APPEARANCE_SELECTOR;  /*  The shape generator used to define the card's shape.  When set, layer properties such as cornerRadius and other layer properties are nullified/zeroed.  If a layer property is explicitly set after the shapeGenerator has been set, it will lead to  unexpected behavior.   When the shapeGenerator is nil, MDCCard will use the default underlying layer with  its default settings.    Default value for shapeGenerator is nil.  */ @property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator;   @end` |
+
+### List
+
+**New component.**
+
+### TextFields
+
+#### MDCTextInputControllerFullWidth
+
+*new* property: `backgroundColor` in `MDCTextInputControllerFullWidth`
+
+*new* property: `backgroundColorDefault` in `MDCTextInputControllerFullWidth`
+
+#### MDCTextInputControllerBase
+
+*removed* property: `backgroundColor` in `MDCTextInputControllerBase`
+
+#### MDCTextInputController
+
+*new* property: `textInputClearButtonTintColorDefault` in `MDCTextInputController`
+
+*new* property: `textInputClearButtonTintColor` in `MDCTextInputController`
+
+*removed* property: `backgroundColorDefault` in `MDCTextInputController`
+
+*removed* property: `backgroundColor` in `MDCTextInputController`
+
+### Typography
+
+#### UIFont(MaterialSimpleEquality)
+
+*new* method: `-mdc_isSimplyEqual:` in `UIFont(MaterialSimpleEquality)`
+
+*new* category: `UIFont(MaterialSimpleEquality)`
+
+## Component changes
+
+### Tabs
+
+#### Changes
+
+* [ Fix alerts in examples (#4480)](https://github.com/material-components/material-components-ios/commit/cb08164a8d29642619c4578e9552856ae82a3cc4) (Robert Moore)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Add swift example (#4439)](https://github.com/material-components/material-components-ios/commit/7e71bb0079ae77046eae5fdb6460c8dd6792f7ec) (Cody Weaver)
+
+### Buttons
+
+#### Changes
+
+* [[Catalog] Fix VoiceOver ordering in Buttons demo (#4482)](https://github.com/material-components/material-components-ios/commit/7a1c3ced310c214fce431a78632d4b0ecadc8540) (Robert Moore)
+
+### TextFields
+
+#### Changes
+
+* [Fix clearIcon drawing (#4450)](https://github.com/material-components/material-components-ios/commit/2abcf53b9dc18a0f469fa7a0b35d9e24b38a6b74) (Robert Moore)
+* [Make MDCTextField accessibilityValue include only placeholder or [super accessibilityValue], not both (#4460)](https://github.com/material-components/material-components-ios/commit/c0124aa9fe7b20aec23e54530d29ab645036cdc4) (Andrew Overton)
+* [Migrate textInputClearButtonTintColor to MDCTextInputController, tests (#4465)](https://github.com/material-components/material-components-ios/commit/528f46323fb7f7ab5a16ac306da0ee71c2f548c7) (Michelle Dudley)
+* [Support clear button tint color (#4449)](https://github.com/material-components/material-components-ios/commit/8835a412a271026b8e4a9d0ed155b266b1840f83) (Robert Moore)
+* [[Typography] 3rd PR on font equality (#4435)](https://github.com/material-components/material-components-ios/commit/53876c3dca2e5bcb07d6e8f1ef91fc5bb202835c) (Will Larche)
+* [{BreakingChange} Remove unused `backgroundColor` property (#4452)](https://github.com/material-components/material-components-ios/commit/55eead6f1668095b73833d7652839757682a4fa2) (Robert Moore)
+
+### Chips
+
+#### Changes
+
+* [Fix Choice demo (#4473)](https://github.com/material-components/material-components-ios/commit/63970a2b1fd6a759b5d38b96e57e21361350ebe9) (Robert Moore)
+* [chips shape support fix + example (#4474)](https://github.com/material-components/material-components-ios/commit/84e9f2334505b45be96ade7559400bbc50641218) (Yarden Eitan)
+
+### Cards
+
+#### Changes
+
+* [Added interactability toggle to Cards (#4404)](https://github.com/material-components/material-components-ios/commit/27a6c46fc3bd41f121d9c23b832f3297dafe2418) (Yarden Eitan)
+
+### List
+
+#### Changes
+
+* [[ListItems] Add Base Cell With Example (#4461)](https://github.com/material-components/material-components-ios/commit/4b6eb9430ce5d4bb061b633946df14152f79db51) (Andrew Overton)
+
+### BottomSheet
+
+#### Changes
+
+* [Dismiss BottomSheet with UIAccessibility (#4475)](https://github.com/material-components/material-components-ios/commit/031d797ecf188c9994701ab90aad3b31603b6a55) (Robert Moore)
+* [[Shapes] Added Shapes support for BottomSheet (#4486)](https://github.com/material-components/material-components-ios/commit/61e65488afd298bd78db2acb5f6bcda92b1f1b4d) (Yarden Eitan)
+
+### Typography
+
+#### Changes
+
+* [3rd PR on font equality (#4435)](https://github.com/material-components/material-components-ios/commit/53876c3dca2e5bcb07d6e8f1ef91fc5bb202835c) (Will Larche)
+
+### BottomNavigation
+
+#### Changes
+
+* [AccessibilityValue and Selected icon support (#4444)](https://github.com/material-components/material-components-ios/commit/684f96c9f38337f0c3fad531a58e53635d3839d1) (Cody Weaver)
+* [Test cases when we reset the bottom navigation items array (#4431)](https://github.com/material-components/material-components-ios/commit/c9fb2d91a4278d22da9151a8b49b546d6217e628) (Cody Weaver)
+* [[BottomNavigation, Math] Fix `BOOL` types (#4436)](https://github.com/material-components/material-components-ios/commit/f1bb92ee921050fddb0eaf80f07b0d09a28ef09e) (Robert Moore)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Fix odd scrolling bugs in voiceover (#4485)](https://github.com/material-components/material-components-ios/commit/5dc67c88c06f11761769de1d0bae34ff2c657046) (John Detloff)
+
+---
+
 # 56.0.0
 
 In this release we updated the icon layout of `MDCTextField`s add accessibilty docs for `MDCButton`
