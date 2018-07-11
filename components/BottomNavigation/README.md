@@ -229,8 +229,3 @@ height: size.height)
 bottomNavBar.frame = bottomNavBarFrame
 ```
 As long as you use `sizeThatFits` you'll be fine. If you explicitly set the height the component will respond to that new height and may not respect the recommended touch area.
-
-
-
-
-
