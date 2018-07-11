@@ -194,7 +194,30 @@ The label will be the title of the UITabBarItem. Currently you can't set this to
 Set an appropriate
 [`accessibilityValue`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619583-accessibilityvalue)
 value if your item has a badge value. For example, an item with an inbox icon with a badge value for how many
-emails are unread.
+emails are unread. You should explicitly set the `accessibilityValue` when the badge value doesn't provide enough context. For example, in an inbox example simply having
+
+#### Objective-C
+```objc
+accessibilityValue = @"10";
+``` 
+#### Swift
+```swift
+accessiblityValue = "10"
+```
+doesn't provide enough context, instead the accessibility value should explain what the badge value symbolizes.
+
+#### Objective-C
+```objc
+accessibilityValue = @"10 unread emails";
+```
+
+
+#### Swift
+```swift
+accessibilityValue = "10 unread emails"
+```
+
+The default value if there is a badge value and you haven't set any `accessibilityValue` will be that the `accessibilityValue` is the `badgeValue`.
 
 #### Objective-C
 ```objc
@@ -211,21 +234,29 @@ Make sure that your bottom navigation bar respects the minimum touch area. The G
 
 ##### Objective-C
 ```objc
-CGSize size = [_bottomNavigationBar sizeThatFits:self.view.bounds.size];
-CGRect bottomNavBarFrame = CGRectMake(0, 
-CGRectGetHeight(self.view.bounds) - size.height,
-size.width,
-size.height);
-_bottomNavigationBar.frame = bottomNavBarFrame;
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+  CGSize size = [_bottomNavigationBar sizeThatFits:self.view.bounds.size];
+  CGRect bottomNavBarFrame = CGRectMake(0, 
+                                        CGRectGetHeight(self.view.bounds) - size.height,
+                                        size.width,
+                                        size.height);
+  _bottomNavigationBar.frame = bottomNavBarFrame;
+}
+
 ```
 
 ##### Swift
 ```swift
-let size = bottomNavBar.sizeThatFits(view.bounds.size)
-let bottomNavBarFrame = CGRect(x: 0,
-y: view.bounds.height - size.height,
-width: size.width,
-height: size.height)
-bottomNavBar.frame = bottomNavBarFrame
+override func viewWillLayoutSubviews() {
+  super.viewWillLayoutSubviews()
+  let size = bottomNavBar.sizeThatFits(view.bounds.size)
+  let bottomNavBarFrame = CGRect(x: 0,
+                                 y: view.bounds.height - size.height,
+                                 width: size.width,
+                                 height: size.height)
+  bottomNavBar.frame = bottomNavBarFrame
+}
+
 ```
 As long as you use `sizeThatFits` you'll be fine. If you explicitly set the height the component will respond to that new height and may not respect the recommended touch area.
