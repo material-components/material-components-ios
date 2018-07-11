@@ -219,6 +219,7 @@
 }
 
 - (IBAction)didTapOverpopulatedAlert {
+  NSString *titleString = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur";
   NSString *messageString =
       @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur "
       "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus "
@@ -259,7 +260,7 @@
       "euismod libero. Aliquam commodo urna vitae massa convallis aliquet.";
 
   MDCAlertController *materialAlertController =
-      [MDCAlertController alertControllerWithTitle:nil message:messageString];
+      [MDCAlertController alertControllerWithTitle:titleString message:messageString];
   [self themeAlertController:materialAlertController];
   materialAlertController.mdc_adjustsFontForContentSizeCategory = YES;
 

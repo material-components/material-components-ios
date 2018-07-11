@@ -49,3 +49,7 @@ according to the Material spec.
 
 - [Color Theming](color-theming.md)
 - [Typography Theming](typography-theming.md)
+
+## Accessibility
+
+- [Accessibility](accessibility.md)
