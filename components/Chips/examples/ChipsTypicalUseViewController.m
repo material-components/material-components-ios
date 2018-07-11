@@ -54,14 +54,26 @@
   [self.collectionView registerClass:[MDCChipCollectionViewCell class]
           forCellWithReuseIdentifier:@"Cell"];
 
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Clear"
-                                                                            style:UIBarButtonItemStylePlain
-                                                                           target:self
-                                                                           action:@selector(clearSelected)];
+  self.navigationItem.rightBarButtonItem =
+      [[UIBarButtonItem alloc] initWithTitle:@"Clear"
+                                       style:UIBarButtonItemStylePlain
+                                      target:self
+                                      action:@selector(clearSelected)];
+
+  NSDictionary *enabledAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
+  NSDictionary *disabledAttributes =
+      @{NSForegroundColorAttributeName: [UIColor colorWithWhite:1 alpha:0.75]};
+  [self.navigationItem.rightBarButtonItem setTitleTextAttributes:enabledAttributes
+                                                        forState:UIControlStateNormal];
+  [self.navigationItem.rightBarButtonItem setTitleTextAttributes:disabledAttributes
+                                                        forState:UIControlStateDisabled];
+
+  self.navigationItem.rightBarButtonItem.accessibilityHint = @"Unselects all chips";
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(contentSizeCategoryDidChange)
                                                name:UIContentSizeCategoryDidChangeNotification
                                              object:nil];
+  [self updateClearButton];
 }
 
 - (void)contentSizeCategoryDidChange {
@@ -74,6 +86,12 @@
     [self.collectionView deselectItemAtIndexPath:indexPath animated:NO];
   }
   [self.collectionView performBatchUpdates:nil completion:nil];
+  [self updateClearButton];
+}
+
+- (void)updateClearButton {
+  BOOL hasSelectedItems = [self.collectionView indexPathsForSelectedItems].count > 0;
+  self.navigationItem.rightBarButtonItem.enabled = hasSelectedItems ? YES : NO;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
@@ -99,6 +117,7 @@
 - (void)collectionView:(UICollectionView *)collectionView
     didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   [collectionView performBatchUpdates:nil completion:nil];
+  [self updateClearButton];
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
