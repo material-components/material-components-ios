@@ -191,12 +191,14 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 @synthesize sharedWithManyScrollViews = _sharedWithManyScrollViews;
 @synthesize visibleShadowOpacity = _visibleShadowOpacity;
 
-#if DEBUG
 - (void)dealloc {
+#if DEBUG
   [_trackingScrollView.panGestureRecognizer removeTarget:self
                                                   action:@selector(fhv_scrollViewDidPan:)];
-}
 #endif
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -352,6 +354,11 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   self.layer.shadowOffset = CGSizeMake(0, 1);
   self.layer.shadowRadius = 4.f;
   self.layer.shadowOpacity = 0;
+
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(fhv_updateLayout)
+                                               name:UIAccessibilityVoiceOverStatusChanged
+                                             object:nil];
 }
 
 - (void)setVisibleShadowOpacity:(float)visibleShadowOpacity {
@@ -1004,7 +1011,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 
   CGRect bounds = self.bounds;
 
-  if (_canOverExtend) {
+  if (_canOverExtend && !UIAccessibilityIsVoiceOverRunning()) {
     bounds.size.height = MAX(self.computedMinimumHeight, headerHeight);
 
   } else {
@@ -1069,10 +1076,27 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   // header other than as a subview to the scroll view. This is the most common case to which the
   // following logic has been written.
   if (self.superview == self.trackingScrollView) {
-    self.transform = CGAffineTransformMakeTranslation(0, self.trackingScrollView.contentOffset.y);
-
     if (self.superview.subviews.lastObject != self) {
       [self.superview bringSubviewToFront:self];
+    }
+
+    if (UIAccessibilityIsVoiceOverRunning()) {
+      // Clamp the offset to at least -self.maximumHeight. Accessibility may attempt to scroll to
+      // a lesser offset than this to pull the flexible header into the center of the scrollview on
+      // focusing.
+      CGPoint offset = self.trackingScrollView.contentOffset;
+      offset.y = MAX(offset.y, -self.maximumHeight);
+      self.trackingScrollView.contentOffset = offset;
+      // Setting the transform on the same run loop as the accessibility scroll can cause additional
+      // incorrect scrolling as the scrollview attempts to resolve to a position that will place
+      // the header in the center of the scroll. Punting to the next loop prevents this.
+      dispatch_async(dispatch_get_main_queue(), ^{
+        self.transform =
+            CGAffineTransformMakeTranslation(0, self.trackingScrollView.contentOffset.y);
+        [self fhv_updateLayout];
+      });
+    } else {
+      self.transform = CGAffineTransformMakeTranslation(0, self.trackingScrollView.contentOffset.y);
     }
   }
 

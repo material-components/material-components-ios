@@ -160,6 +160,13 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
   ];
 
   [self setupExampleViews];
+
+  NSMutableArray *accessibilityElements = [@[] mutableCopy];
+  for (NSUInteger index = 0; index < self.buttons.count; ++index) {
+    [accessibilityElements addObject:self.labels[index]];
+    [accessibilityElements addObject:self.buttons[index]];
+  }
+  self.view.accessibilityElements = [accessibilityElements copy];
 }
 
 - (void)setupExampleViews {

@@ -66,7 +66,7 @@ static inline CGFloat MDCDegreesToRadians(CGFloat degrees) {
 #endif
 }
 
-static inline bool MDCCGFloatEqual(CGFloat a, CGFloat b) {
+static inline BOOL MDCCGFloatEqual(CGFloat a, CGFloat b) {
   const CGFloat constantK = 3;
 #if CGFLOAT_IS_DOUBLE
   const CGFloat epsilon = DBL_EPSILON;

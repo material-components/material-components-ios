@@ -134,6 +134,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     // This is the first call to the .textInput property. On MDCMultilineTextField, .textView is a
     // failsafe, lazy var. It will create a .textView instance if there wasn't one on the ivar.
     _textInput.font = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody1];
+    // TODO: (#4331) This needs to be converted to the new text scheme.
 
     // Initialize elements of UI
     [self setupPlaceholderLabel];
@@ -550,7 +551,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 - (void)updateClearButton {
   UIImage *image = self.clearButton.currentImage
                        ? self.clearButton.currentImage
-                       : [self drawnClearButtonImage:self.clearButton.tintColor];
+                       : [self drawnClearButtonImage];
 
   if (![self.clearButton imageForState:UIControlStateNormal]) {
     [self.clearButton setImage:image forState:UIControlStateNormal];
@@ -627,14 +628,14 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   return clearButtonAlpha;
 }
 
-- (UIImage *)drawnClearButtonImage:(UIColor *)color {
+- (UIImage *)drawnClearButtonImage {
   CGSize clearButtonSize = CGSizeMake(MDCTextInputClearButtonImageSquareWidthHeight,
                                       MDCTextInputClearButtonImageSquareWidthHeight);
 
   CGFloat scale = [UIScreen mainScreen].scale;
   CGRect bounds = CGRectMake(0, 0, clearButtonSize.width * scale, clearButtonSize.height * scale);
   UIGraphicsBeginImageContextWithOptions(bounds.size, false, scale);
-  [color setFill];
+  [UIColor.grayColor setFill];
 
   [MDCPathForClearButtonImageFrame(bounds) fill];
   UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
@@ -867,6 +868,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 - (void)updateFontsForDynamicType {
   if (self.mdc_adjustsFontForContentSizeCategory) {
     UIFont *textFont = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
+    // TODO: (#4331) This needs to be converted to the new text scheme.
     self.textInput.font = textFont;
     self.leadingUnderlineLabel.font = textFont;
     self.trailingUnderlineLabel.font = textFont;

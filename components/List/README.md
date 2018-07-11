@@ -1,13 +1,18 @@
-# Lists
+# List
 
-Material Design lists are a continuous group of text or images. They are composed of items containing primary and supplemental actions, which are represented by icons and text.
+Material Design Lists are a continuous group of text or images. The elements comprising Lists are referred to as List Items. The MDCBaseCell is a List Item at its simplest--a basic UICollectionViewCell subclass with Material Ink Ripple and Elevation.
 
-## Status
+## Description
 
-The [Lists component](https://material.io/go/design-lists) is yet to be completed, please follow the [tracking issue](https://www.pivotaltracker.com/epic/show/3950586) for more information.
+The [Material guidelines](https://material.io/go/design-lists) for Lists are extensive, and there is no class at this time for implementing any one of them, let alone all of them. However, the MDCBaseCell provides a starting point to build anything the guidelines provide.
 
-In the meanwhile, we are offering an example on how to implement a list cell that is self-sizing, supports dynamic type, and right-to-left using pure UIKit classes. 
-We will walk through the example and discuss things needed to achieve a list cell implementation of your own.
+To build a List using the MDCBaseCell simply treat it like you would any other UICollectionViewCell.
+
+The MDCBaseCell has two configurable properties--Ink Ripple color (`currentInkColor`) and Elevation (`elevation`).
+
+Below is an example:
+
+![MDCBaseCell Example](https://user-images.githubusercontent.com/8020010/42164205-3a7f699a-7dfd-11e8-9109-a7a6040996db.gif)
 
 ## Example Walkthrough / How to implement your own List Cell
 

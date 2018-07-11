@@ -196,6 +196,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     _button.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     _button.accessibilityLabel = [self accessibilityLabelWithTitle:_title];
     _button.accessibilityTraits &= ~UIAccessibilityTraitButton;
+    _button.accessibilityValue = self.accessibilityValue;
     [self addSubview:_button];
   }
 }
@@ -213,7 +214,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   [self centerLayoutAnimated:NO];
 }
 
-- (void)centerLayoutAnimated:(bool)animated {
+- (void)centerLayoutAnimated:(BOOL)animated {
   if (self.titleBelowIcon) {
     CGPoint iconImageViewCenter =
         CGPointMake(CGRectGetMidX(self.bounds), CGRectGetHeight(self.iconImageView.bounds) / 2 +
@@ -315,7 +316,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     self.label.textColor = self.selectedItemTitleColor;
     self.iconImageView.tintColor = self.selectedItemTintColor;
     self.button.accessibilityTraits |= UIAccessibilityTraitSelected;
-
+    self.iconImageView.image = (self.selectedImage) ? self.selectedImage : self.image;
     switch (self.titleVisibility) {
       case MDCBottomNavigationBarTitleVisibilitySelected:
         self.label.hidden = NO;
@@ -331,7 +332,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     self.label.textColor = self.unselectedItemTintColor;
     self.iconImageView.tintColor = self.unselectedItemTintColor;
     self.button.accessibilityTraits &= ~UIAccessibilityTraitSelected;
-
+    self.iconImageView.image = self.image;
     switch (self.titleVisibility) {
       case MDCBottomNavigationBarTitleVisibilitySelected:
         self.label.hidden = YES;
@@ -386,7 +387,9 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     badgeValue = nil;
   }
   self.badge.badgeValue = badgeValue;
-  self.button.accessibilityValue = badgeValue;
+  if (self.accessibilityValue == nil || self.accessibilityValue.length == 0) {
+    self.button.accessibilityValue = badgeValue;
+  }
   if (badgeValue == nil || badgeValue.length == 0) {
     self.badge.hidden = YES;
   } else {
@@ -397,6 +400,14 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 - (void)setImage:(UIImage *)image {
   _image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   self.iconImageView.image = _image;
+  self.iconImageView.tintColor = (self.selected) ? self.selectedItemTintColor
+      : self.unselectedItemTintColor;
+  [self.iconImageView sizeToFit];
+}
+
+-(void)setSelectedImage:(UIImage *)selectedImage {
+  _selectedImage = [selectedImage imageWithRenderingMode: UIImageRenderingModeAlwaysTemplate];
+  self.iconImageView.image = _selectedImage;
   self.iconImageView.tintColor = self.selectedItemTintColor;
   [self.iconImageView sizeToFit];
 }
@@ -411,6 +422,14 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   _itemTitleFont = itemTitleFont;
   self.label.font = itemTitleFont;
   [self setNeedsLayout];
+}
+
+-(void)setAccessibilityValue:(NSString *)accessibilityValue {
+  self.button.accessibilityValue = accessibilityValue;
+}
+
+- (NSString *)accessibilityValue {
+  return self.button.accessibilityValue;
 }
 
 #pragma mark - Resource bundle

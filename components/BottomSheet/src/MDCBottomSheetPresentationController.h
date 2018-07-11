@@ -15,6 +15,7 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "MDCBottomSheetController.h"
 
 @class MDCBottomSheetPresentationController;
 
@@ -43,6 +44,8 @@
 - (void)bottomSheetPresentationControllerDidDismissBottomSheet:
     (nonnull MDCBottomSheetPresentationController *)bottomSheet;
 
+- (void)bottomSheetWillChangeState:(nonnull MDCBottomSheetPresentationController *)bottomSheet
+                        sheetState:(MDCSheetState)sheetState;
 @end
 
 /**
@@ -62,6 +65,35 @@
  When set to false, the bottom sheet controller can't be dismissed by tapping outside of sheet area.
  */
 @property(nonatomic, assign) BOOL dismissOnBackgroundTap;
+
+/**
+ If @c YES, then the dimmed scrim view will act as an accessibility element for dismissing the
+ bottom sheet.
+
+ Defaults to @c NO.
+ */
+@property(nonatomic, assign) BOOL isScrimAccessibilityElement;
+
+/**
+ The @c accessibilityLabel value of the dimmed scrim view.
+
+ Defaults to @c nil.
+ */
+@property(nullable, nonatomic, copy) NSString *scrimAccessibilityLabel;
+
+/**
+ The @c accessibilityHint value of the dimmed scrim view.
+
+ Defaults to @c nil.
+ */
+@property(nullable, nonatomic, copy) NSString *scrimAccessibilityHint;
+
+/**
+ The @c accessibilityTraits of the dimmed scrim view.
+
+ Defaults to @c UIAccessibilityTraitButton.
+ */
+@property(nonatomic, assign) UIAccessibilityTraits scrimAccessibilityTraits;
 
 /**
  Delegate to tell the presenter when to dismiss.

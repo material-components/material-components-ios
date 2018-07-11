@@ -26,11 +26,12 @@ static NSString *const MDCCardCornerRadiusKey = @"MDCCardCornerRadiusKey";
 static NSString *const MDCCardInkViewKey = @"MDCCardInkViewKey";
 static NSString *const MDCCardShadowColorsKey = @"MDCCardShadowColorsKey";
 static NSString *const MDCCardShadowElevationsKey = @"MDCCardShadowElevationsKey";
+static NSString *const MDCCardIsInteractableKey = @"MDCCardIsInteractableKey";
 
 static const CGFloat MDCCardShadowElevationNormal = 1.f;
 static const CGFloat MDCCardShadowElevationHighlighted = 8.f;
 static const CGFloat MDCCardCornerRadiusDefault = 4.f;
-
+static const BOOL MDCCardIsInteractableDefault = YES;
 
 @interface MDCCard ()
 @property(nonatomic, readonly, strong) MDCShapedShadowLayer *layer;
@@ -72,6 +73,11 @@ static const CGFloat MDCCardCornerRadiusDefault = 4.f;
       [self.layer setShapedBackgroundColor:[coder decodeObjectOfClass:[UIColor class]
                                                                forKey:MDCCardBackgroundColorsKey]];
     }
+    if ([coder containsValueForKey:MDCCardIsInteractableKey]) {
+      _interactable = [coder decodeBoolForKey:MDCCardIsInteractableKey];
+    } else {
+      _interactable = MDCCardIsInteractableDefault;
+    }
     [self commonMDCCardInit];
   }
   return self;
@@ -81,6 +87,7 @@ static const CGFloat MDCCardCornerRadiusDefault = 4.f;
   self = [super initWithFrame:frame];
   if (self) {
     self.layer.cornerRadius = MDCCardCornerRadiusDefault;
+    _interactable = MDCCardIsInteractableDefault;
     [self commonMDCCardInit];
   }
   return self;
@@ -135,6 +142,7 @@ static const CGFloat MDCCardCornerRadiusDefault = 4.f;
   [coder encodeObject:_inkView forKey:MDCCardInkViewKey];
   [coder encodeDouble:self.layer.cornerRadius forKey:MDCCardCornerRadiusKey];
   [coder encodeObject:self.layer.shapedBackgroundColor forKey:MDCCardBackgroundColorsKey];
+  [coder encodeBool:_interactable forKey:MDCCardIsInteractableKey];
 }
 
 - (void)layoutSubviews {
@@ -270,14 +278,16 @@ static const CGFloat MDCCardCornerRadiusDefault = 4.f;
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+  UIView *result = [super hitTest:point withEvent:event];
+  if (!_interactable && result == self) {
+    return nil;
+  }
   if (self.layer.shapeGenerator) {
-    if (CGPathContainsPoint(self.layer.shapeLayer.path, nil, point, true)) {
-      return self;
-    } else {
+    if (!CGPathContainsPoint(self.layer.shapeLayer.path, nil, point, true)) {
       return nil;
     }
   }
-  return [super hitTest:point withEvent:event];
+  return result;
 }
 
 - (void)setShapeGenerator:(id<MDCShapeGenerating>)shapeGenerator {

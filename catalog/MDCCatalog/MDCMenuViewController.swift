@@ -23,13 +23,29 @@ import MaterialComponents.MaterialLibraryInfo
 
 class MDCMenuViewController: UITableViewController {
 
-  let tableData =
-    [(title: "Settings", icon: MDCIcons.imageFor_ic_settings()?.withRenderingMode(.alwaysTemplate)),
-     (title: "Themes", icon: MDCIcons.imageFor_ic_color_lens()?.withRenderingMode(.alwaysTemplate)),
-     (title:  "v\(MDCLibraryInfo.versionString)",
-      icon: MDCIcons.imageFor_ic_help_outline()?.withRenderingMode(.alwaysTemplate))]
+  private struct MDCMenuItem {
+    let title: String!
+    let icon: UIImage?
+    let accessibilityLabel: String?
+    let accessibilityHint: String?
+    init(_ title: String, _ icon: UIImage?, _ accessibilityLabel: String?,
+         _ accessibilityHint: String?) {
+      self.title = title
+      self.icon = icon
+      self.accessibilityLabel = accessibilityLabel
+      self.accessibilityHint = accessibilityHint
+    }
+  }
+
+  private let tableData =
+    [MDCMenuItem("Settings", MDCIcons.imageFor_ic_settings()?.withRenderingMode(.alwaysTemplate),
+                 nil, "Opens debugging menu."),
+     MDCMenuItem("Themes", MDCIcons.imageFor_ic_color_lens()?.withRenderingMode(.alwaysTemplate),
+                  nil, "Opens color theme chooser."),
+     MDCMenuItem("v\(MDCLibraryInfo.versionString)",
+      MDCIcons.imageFor_ic_help_outline()?.withRenderingMode(.alwaysTemplate),
+      "Version \(MDCLibraryInfo.versionString)", "Closes this menu.")]
   let cellIdentifier = "MenuCell"
-  let iconColor = AppTheme.globalTheme.colorScheme.onSurfaceColor.withAlphaComponent(0.61)
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -39,12 +55,15 @@ class MDCMenuViewController: UITableViewController {
 
   override func tableView(_ tableView: UITableView,
                           cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let iconColor = AppTheme.globalTheme.colorScheme.onSurfaceColor.withAlphaComponent(0.61)
     let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
     let cellData = tableData[indexPath.item]
     cell.textLabel?.text = cellData.title
     cell.textLabel?.textColor = iconColor
     cell.imageView?.image = cellData.icon
     cell.imageView?.tintColor = iconColor
+    cell.accessibilityLabel = cellData.accessibilityLabel
+    cell.accessibilityHint = cellData.accessibilityHint
     return cell
   }
 

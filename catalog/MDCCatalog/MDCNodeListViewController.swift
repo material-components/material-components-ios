@@ -272,8 +272,6 @@ class MDCNodeListViewController: CBCNodeListViewController {
 
   private func applyColorScheme(_ colorScheme: MDCColorScheming) {
     MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
-
-    appBar.navigationBar.tintColor = UIColor.white
   }
 
   func applyThemeToCurrentExample() {
@@ -629,6 +627,11 @@ extension MDCNodeListViewController {
     }
 
     return cell!
+  }
+
+  override func accessibilityPerformMagicTap() -> Bool {
+    primaryDemoButtonClicked()
+    return true
   }
 
   func primaryDemoButtonClicked () {
