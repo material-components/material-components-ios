@@ -1,3 +1,220 @@
+# 57.0.0
+
+In this release we have added the List component, made accessibility improvements to Bottom Sheet, added Shapes support for Chips and Bottom Sheet, made Catalog visual improvements, and other bug fixes.
+
+## Breaking changes
+
+### TextFields
+
+We have removed property `backgroundColor` from `MDCTextInputControllerBase` and properties `backgroundColor` and `backgroundColorDefault` from `MDCTextInputController`. The reason for removal was due to these properties not being used by the controller in any meaningful way, and therefore this should not produce any changes.
+
+## New features
+
+### BottomSheet
+
+VoiceOver and switch device users currently have to use the accessibility escape gesture to dismiss a Bottom Sheet. Optionally, the BottomSheet can use
+the dimmed "scrim" area (which can be tappable) to dismiss the bottom sheet using accessibility technologies.
+
+As an example of how this could be used by clients, here's how our AppDelegate would change to support a VoiceOver button for dismissal:
+```swift
+let menuViewController = MDCMenuViewController(style: .plain)
+let bottomSheet = MDCBottomSheetController(contentViewController: menuViewController)
+bottomSheet.dismissOnBackgroundTap = true
+bottomSheet.isScrimAccessibilityElement = true
+bottomSheet.scrimAccessibilityLabel = "Close"
+self.present(bottomSheet, animated: true, completion: nil)
+```
+
+### Cards
+
+You can now set the car to be interactable or not. Our specification for cards explicitly define a card as being an interactable component.
+Therefore, the interactable property should be set to NO *only if* there are other interactable items within the card's content, such as buttons or other tappable controls.
+To set the interactability to no in your cards:
+```swift
+let card = MDCCard()
+card.isInteractable = false
+
+let cardCell = MDCCardCollectionCell()
+cardCell.isInteractable = false
+```
+
+### List
+
+We now have a new component, List! See more information about the component here: https://github.com/material-components/material-components-ios/tree/develop/components/List
+
+## API changes
+
+### BottomSheet
+
+#### MDCBottomSheetTransitionController(ScrimAccessibility)
+
+*new* category: `MDCBottomSheetTransitionController(ScrimAccessibility)`
+
+*new* property: `isScrimAccessibilityElement` in `MDCBottomSheetTransitionController(ScrimAccessibility)`
+
+*new* property: `scrimAccessibilityLabel` in `MDCBottomSheetTransitionController(ScrimAccessibility)`
+
+*new* property: `scrimAccessibilityHint` in `MDCBottomSheetTransitionController(ScrimAccessibility)`
+
+*new* property: `scrimAccessibilityTraits` in `MDCBottomSheetTransitionController(ScrimAccessibility)`
+
+#### MDCBottomSheetController
+
+*new* property: `scrimAccessibilityHint` in `MDCBottomSheetController`
+
+*new* property: `isScrimAccessibilityElement` in `MDCBottomSheetController`
+
+*new* property: `state` in `MDCBottomSheetController`
+
+*new* method: `-shapeGeneratorForState:` in `MDCBottomSheetController`
+
+*new* property: `scrimAccessibilityLabel` in `MDCBottomSheetController`
+
+*new* method: `-setShapeGenerator:forState:` in `MDCBottomSheetController`
+
+*new* property: `scrimAccessibilityTraits` in `MDCBottomSheetController`
+
+#### MDCSheetState
+
+*new* enum: `MDCSheetState` with values `MDCSheetStateExtended`, `MDCSheetStatePreferred`, and `MDCSheetStateClosed`
+
+#### MDCBottomSheetPresentationControllerDelegate
+
+*new* method: `-bottomSheetWillChangeState:sheetState:` in `MDCBottomSheetPresentationControllerDelegate`
+
+#### MDCBottomSheetPresentationController
+
+*new* property: `scrimAccessibilityLabel` in `MDCBottomSheetPresentationController`
+
+*new* property: `isScrimAccessibilityElement` in `MDCBottomSheetPresentationController`
+
+*new* property: `scrimAccessibilityTraits` in `MDCBottomSheetPresentationController`
+
+*new* property: `scrimAccessibilityHint` in `MDCBottomSheetPresentationController`
+
+### Cards
+
+#### MDCCardCollectionCell
+
+*new* property: `interactable` in `MDCCardCollectionCell`
+
+#### MDCCard
+
+*new* property: `interactable` in `MDCCard`
+
+### List
+
+**New component.**
+
+### TextFields
+
+#### MDCTextInputControllerFullWidth
+
+*new* property: `backgroundColor` in `MDCTextInputControllerFullWidth`
+
+*new* property: `backgroundColorDefault` in `MDCTextInputControllerFullWidth`
+
+#### MDCTextInputControllerBase
+
+*removed* property: `backgroundColor` in `MDCTextInputControllerBase`
+
+#### MDCTextInputController
+
+*new* property: `textInputClearButtonTintColorDefault` in `MDCTextInputController`
+
+*new* property: `textInputClearButtonTintColor` in `MDCTextInputController`
+
+*removed* property: `backgroundColorDefault` in `MDCTextInputController`
+
+*removed* property: `backgroundColor` in `MDCTextInputController`
+
+### Typography
+
+#### UIFont(MaterialSimpleEquality)
+
+*new* method: `-mdc_isSimplyEqual:` in `UIFont(MaterialSimpleEquality)`
+
+*new* category: `UIFont(MaterialSimpleEquality)`
+
+## Component changes
+
+### Tabs
+
+#### Changes
+
+* [ Fix alerts in examples (#4480)](https://github.com/material-components/material-components-ios/commit/cb08164a8d29642619c4578e9552856ae82a3cc4) (Robert Moore)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Add swift example (#4439)](https://github.com/material-components/material-components-ios/commit/7e71bb0079ae77046eae5fdb6460c8dd6792f7ec) (Cody Weaver)
+
+### Buttons
+
+#### Changes
+
+* [[Catalog] Fix VoiceOver ordering in Buttons demo (#4482)](https://github.com/material-components/material-components-ios/commit/7a1c3ced310c214fce431a78632d4b0ecadc8540) (Robert Moore)
+
+### TextFields
+
+#### Changes
+
+* [Fix clearIcon drawing (#4450)](https://github.com/material-components/material-components-ios/commit/2abcf53b9dc18a0f469fa7a0b35d9e24b38a6b74) (Robert Moore)
+* [Make MDCTextField accessibilityValue include only placeholder or [super accessibilityValue], not both (#4460)](https://github.com/material-components/material-components-ios/commit/c0124aa9fe7b20aec23e54530d29ab645036cdc4) (Andrew Overton)
+* [Migrate textInputClearButtonTintColor to MDCTextInputController, tests (#4465)](https://github.com/material-components/material-components-ios/commit/528f46323fb7f7ab5a16ac306da0ee71c2f548c7) (Michelle Dudley)
+* [Support clear button tint color (#4449)](https://github.com/material-components/material-components-ios/commit/8835a412a271026b8e4a9d0ed155b266b1840f83) (Robert Moore)
+* [[Typography] 3rd PR on font equality (#4435)](https://github.com/material-components/material-components-ios/commit/53876c3dca2e5bcb07d6e8f1ef91fc5bb202835c) (Will Larche)
+* [{BreakingChange} Remove unused `backgroundColor` property (#4452)](https://github.com/material-components/material-components-ios/commit/55eead6f1668095b73833d7652839757682a4fa2) (Robert Moore)
+
+### Chips
+
+#### Changes
+
+* [Fix Choice demo (#4473)](https://github.com/material-components/material-components-ios/commit/63970a2b1fd6a759b5d38b96e57e21361350ebe9) (Robert Moore)
+* [chips shape support fix + example (#4474)](https://github.com/material-components/material-components-ios/commit/84e9f2334505b45be96ade7559400bbc50641218) (Yarden Eitan)
+
+### Cards
+
+#### Changes
+
+* [Added interactability toggle to Cards (#4404)](https://github.com/material-components/material-components-ios/commit/27a6c46fc3bd41f121d9c23b832f3297dafe2418) (Yarden Eitan)
+
+### List
+
+#### Changes
+
+* [[ListItems] Add Base Cell With Example (#4461)](https://github.com/material-components/material-components-ios/commit/4b6eb9430ce5d4bb061b633946df14152f79db51) (Andrew Overton)
+
+### BottomSheet
+
+#### Changes
+
+* [Dismiss BottomSheet with UIAccessibility (#4475)](https://github.com/material-components/material-components-ios/commit/031d797ecf188c9994701ab90aad3b31603b6a55) (Robert Moore)
+* [[Shapes] Added Shapes support for BottomSheet (#4486)](https://github.com/material-components/material-components-ios/commit/61e65488afd298bd78db2acb5f6bcda92b1f1b4d) (Yarden Eitan)
+
+### Typography
+
+#### Changes
+
+* [3rd PR on font equality (#4435)](https://github.com/material-components/material-components-ios/commit/53876c3dca2e5bcb07d6e8f1ef91fc5bb202835c) (Will Larche)
+
+### BottomNavigation
+
+#### Changes
+
+* [AccessibilityValue and Selected icon support (#4444)](https://github.com/material-components/material-components-ios/commit/684f96c9f38337f0c3fad531a58e53635d3839d1) (Cody Weaver)
+* [Test cases when we reset the bottom navigation items array (#4431)](https://github.com/material-components/material-components-ios/commit/c9fb2d91a4278d22da9151a8b49b546d6217e628) (Cody Weaver)
+* [[BottomNavigation, Math] Fix `BOOL` types (#4436)](https://github.com/material-components/material-components-ios/commit/f1bb92ee921050fddb0eaf80f07b0d09a28ef09e) (Robert Moore)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Fix odd scrolling bugs in voiceover (#4485)](https://github.com/material-components/material-components-ios/commit/5dc67c88c06f11761769de1d0bae34ff2c657046) (John Detloff)
+
+---
+
 # 56.0.0
 
 In this release we updated the icon layout of `MDCTextField`s add accessibilty docs for `MDCButton`
