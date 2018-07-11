@@ -3,12 +3,9 @@
 To help ensure your bottom navigation item is accessible to as many users as possible, please
 be sure to review the following recommendations:
 
-### `-accessibilityLabel`
-The label will be the title of the UITabBarItem. Currently you can't set this to a custom value.
+ `-accessibilityLabel` The label will be the title of the UITabBarItem. Currently you can't set this to a custom value.
 
-### Set `-accessibilityValue` 
-
-Set an appropriate
+`-accessibilityValue`  Set an appropriate
 [`accessibilityValue`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619583-accessibilityvalue)
 value if your item has a badge value. For example, an item with an inbox icon with a badge value for how many
 emails are unread. You should explicitly set the `accessibilityValue` when the badge value doesn't provide enough context. For example, in an inbox example simply having doesn't provide enough context, instead the accessibility value should explain what the badge value symbolizes. The default value if there is a badge value and you haven't set any `accessibilityValue` will be that the `accessibilityValue` is the `badgeValue`.
