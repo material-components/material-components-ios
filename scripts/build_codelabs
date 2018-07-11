@@ -9,7 +9,6 @@
 
 readonly SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly ROOT_DIR="$SCRIPTS_DIR/.."
-readonly CURRENT_DIR="$PWD"
 
 # Given a path to an Xcode log file in $1, exit with status 0 if it looks like
 # the failure is expected and can be ignored, or exit with non-zero status
@@ -58,7 +57,7 @@ readonly IS_XCPRETTY_AVAILABLE=$?
 
 all_builds_ok=1
 
-cd $SCRIPTS_DIR/external
+cd external
 # Remove the codelabs folder if it exists already so it can be re-cloned.
 if [ -d "material-components-ios-codelabs" ]; then
   rm -rf material-components-ios-codelabs
@@ -66,7 +65,7 @@ fi
 git clone https://github.com/material-components/material-components-ios-codelabs.git
 cd material-components-ios-codelabs
 
-readonly WORKSPACE_PATHS=$(find $SCRIPTS_DIR/external/material-components-ios-codelabs -name "*.xcworkspace" ! -name "project.xcworkspace")
+readonly WORKSPACE_PATHS=$(find $SCRIPTS_DIR -name "*.xcworkspace" ! -name "project.xcworkspace")
 
 for workspace_path in $WORKSPACE_PATHS; do
   # Give the output some meaning, since all the filenames (mostly) the same.
@@ -105,7 +104,7 @@ for workspace_path in $WORKSPACE_PATHS; do
   fi
 done
 
-cd $CURRENT_DIR
+cd $SCRIPTS_DIR
 
 # If any build failed, exit with a failure exit status so continuous integration
 # tools can react appropriately.
