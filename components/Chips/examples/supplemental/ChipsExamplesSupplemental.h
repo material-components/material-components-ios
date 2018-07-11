@@ -89,6 +89,14 @@
 - (UIImage *)doneImage;
 @end
 
+@interface ChipsShapingExampleViewController : UIViewController
+@end
+
+@interface ChipsShapingExampleViewController (Supplemental)
+- (UIImage *)faceImage;
+- (UIButton *)deleteButton;
+@end
+
 @interface ChipModel : NSObject
 @property(nonatomic, strong) NSString *title;
 @property(nonatomic, assign) BOOL showProfilePic;

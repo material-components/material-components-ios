@@ -107,8 +107,6 @@
   [self.appBar addSubviewsToParent];
 
   self.appBar.navigationBar.tintColor = UIColor.whiteColor;
-
-  self.title = @"Tabs With Icons";
 }
 
 - (void)setupScrollView {
@@ -282,7 +280,7 @@
 @implementation TabBarIconExample (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Tab Bar", @"Icons and Text" ];
+  return @[ @"Tab Bar", @"Tabs with Icons" ];
 }
 
 + (BOOL)catalogIsPrimaryDemo {

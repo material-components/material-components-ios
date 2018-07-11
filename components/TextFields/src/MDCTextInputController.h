@@ -37,19 +37,6 @@
 @property(class, nonatomic, null_resettable, strong) UIColor *activeColorDefault;
 
 /**
- Color for background for the various views making up a text field.
-
- Default is backgroundColorDefault.
- */
-@property(nonatomic, null_resettable, strong) UIColor *backgroundColor;
-
-/**
- Default value for backgroundColor.
- */
-@property(class, nonatomic, null_resettable, strong) UIColor *backgroundColorDefault;
-
-
-/**
  The character counter. Override to use a custom character counter.
 
  Default is an internal instance MDCTextInputAllCharactersCounter. Setting this property to null
@@ -207,6 +194,16 @@
 
 /** The text input the controller is affecting. */
 @property(nonatomic, nullable, strong) UIView<MDCTextInput> *textInput;
+
+/**
+ The tintColor applied to the textInput's clear button.
+ See @c UIImageView.tintColor for additional details.
+ */
+@property(nonatomic, null_resettable, strong) UIColor *textInputClearButtonTintColor;
+
+/**
+ Default value for @c textInputClearButtonTintColor. */
+@property(class, nonatomic, nullable, strong) UIColor *textInputClearButtonTintColorDefault;
 
 /**
  The font applied to the trailing side underline label.

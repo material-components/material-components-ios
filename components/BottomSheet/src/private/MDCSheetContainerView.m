@@ -388,4 +388,11 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
   self.isDragging = YES;
 }
 
+- (void)setSheetState:(MDCSheetState)sheetState {
+  if (sheetState != _sheetState) {
+    _sheetState = sheetState;
+    [self.delegate sheetContainerViewWillChangeState:self sheetState:sheetState];
+  }
+}
+
 @end

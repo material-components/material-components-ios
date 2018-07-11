@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponents"
-  mdc.version      = "56.0.0"
+  mdc.version      = "57.0.0"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -171,6 +171,8 @@ Pod::Spec.new do |mdc|
 
     component.dependency "MaterialComponents/private/KeyboardWatcher"
     component.dependency "MaterialComponents/private/Math"
+    component.dependency "MaterialComponents/private/ShapeLibrary"
+    component.dependency "MaterialComponents/private/Shapes"
   end
 
   # Buttons
@@ -535,6 +537,18 @@ Pod::Spec.new do |mdc|
     component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
   end
 
+  # List
+
+  mdc.subspec "List" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+
+    component.dependency "MaterialComponents/Ink"
+    component.dependency "MaterialComponents/ShadowElevations"
+    component.dependency "MaterialComponents/ShadowLayer"
+  end
+
   # MaskedTransition
 
   mdc.subspec "MaskedTransition" do |component|
@@ -827,6 +841,7 @@ Pod::Spec.new do |mdc|
     component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
 
     component.dependency "MaterialComponents/private/Application"
+    component.dependency "MaterialComponents/private/Math"
   end
 
   mdc.subspec "schemes" do |scheme_spec|

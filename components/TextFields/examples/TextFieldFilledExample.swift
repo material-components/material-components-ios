@@ -121,6 +121,14 @@ final class TextFieldFilledSwiftExample: UIViewController {
     self.navigationItem.rightBarButtonItem = styleButton
   }
 
+  func style(textInputController:MDCTextInputControllerFilled) {
+    MDCFilledTextFieldColorThemer.applySemanticColorScheme(colorScheme, to: textInputController)
+    MDCTextFieldTypographyThemer.applyTypographyScheme(typographyScheme, to: textInputController)
+    if let textInput = textInputController.textInput as? MDCTextInput {
+      MDCTextFieldTypographyThemer.applyTypographyScheme(typographyScheme, to: textInput)
+    }
+  }
+
   func setupTextFields() {
     scrollView.addSubview(name)
     let nameController = MDCTextInputControllerFilled(textInput: name)
@@ -304,11 +312,6 @@ final class TextFieldFilledSwiftExample: UIViewController {
     let margins = UIEdgeInsets(top: 0, left: marginOffset, bottom: 0, right: marginOffset)
 
     scrollView.layoutMargins = margins
-  }
-
-  func style(textInputController : MDCTextInputControllerFilled) {
-    MDCFilledTextFieldColorThemer.applySemanticColorScheme(colorScheme, to: textInputController)
-    MDCTextFieldTypographyThemer.applyTypographyScheme(typographyScheme, to: textInputController)
   }
   
   func addGestureRecognizer() {

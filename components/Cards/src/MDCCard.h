@@ -33,6 +33,19 @@
  */
 @property(nonatomic, readonly, strong, nonnull) MDCInkView *inkView;
 
+/**
+ This property defines if a card as a whole should be interactable or not.
+ What this means is that when isInteractable is set to NO, there will be no ink ripple and
+ no change in shadow elevation when tapped or selected. Also the card container itself will not be
+ tappable, but any of its subviews will still be tappable.
+
+ Default is set to YES.
+
+ Important: Our specification for cards explicitly define a card as being an interactable component.
+ Therefore, this property should be set to NO *only if* there are other interactable items within
+ the card's content, such as buttons or other tappable controls.
+ */
+@property (nonatomic, getter=isInteractable) IBInspectable BOOL interactable;
 
 /**
  Sets the shadow elevation for an UIControlState state

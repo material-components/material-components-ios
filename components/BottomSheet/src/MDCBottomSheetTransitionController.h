@@ -48,3 +48,36 @@
 @property(nonatomic, assign) BOOL dismissOnBackgroundTap;
 
 @end
+
+@interface MDCBottomSheetTransitionController (ScrimAccessibility)
+
+/**
+ If @c YES, then the dimmed scrim view will act as an accessibility element for dismissing the
+ bottom sheet.
+
+ Defaults to @c NO.
+ */
+@property(nonatomic, assign) BOOL isScrimAccessibilityElement;
+
+/**
+ The @c accessibilityLabel value of the dimmed scrim view.
+
+ Defaults to @c nil.
+ */
+@property(nullable, nonatomic, copy) NSString *scrimAccessibilityLabel;
+
+/**
+ The @c accessibilityHint value of the dimmed scrim view.
+
+ Defaults to @c nil.
+ */
+@property(nullable, nonatomic, copy) NSString *scrimAccessibilityHint;
+
+/**
+ The @c accessibilityTraits of the dimmed scrim view.
+
+ Defaults to @c UIAccessibilityTraitButton.
+ */
+@property(nonatomic, assign) UIAccessibilityTraits scrimAccessibilityTraits;
+
+@end

@@ -78,6 +78,7 @@ static UIColor *_trailingUnderlineLabelTextColorDefault;
 
 static UIFont *_inlinePlaceholderFontDefault;
 static UIFont *_textInputFontDefault;
+static UIColor *_textInputClearButtonTintColorDefault;
 static UIFont *_trailingUnderlineLabelFontDefault;
 
 @interface MDCTextInputControllerFullWidth () {
@@ -92,6 +93,7 @@ static UIFont *_trailingUnderlineLabelFontDefault;
 
   UIFont *_inlinePlaceholderFont;
   UIFont *_textInputFont;
+  UIColor *_textInputClearButtonTintColor;
   UIFont *_trailingUnderlineLabelFont;
 }
 
@@ -258,6 +260,7 @@ static UIFont *_trailingUnderlineLabelFontDefault;
 
   [self subscribeForNotifications];
   _textInput.underline.color = [UIColor clearColor];
+  _textInput.clearButton.tintColor = self.textInputClearButtonTintColor;
   [self updateLayout];
 }
 
@@ -340,6 +343,7 @@ static UIFont *_trailingUnderlineLabelFontDefault;
 - (void)updateTextInput {
   UIFont *font = self.textInputFont;
   if (self.mdc_adjustsFontForContentSizeCategory) {
+    // TODO: (#4331) This needs to be converted to the new text scheme.
     font =
         [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleBody1
                            scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
@@ -359,6 +363,7 @@ static UIFont *_trailingUnderlineLabelFontDefault;
 - (void)updatePlaceholder {
   UIFont *placeHolderFont = self.inlinePlaceholderFont;
   if (self.mdc_adjustsFontForContentSizeCategory) {
+    // TODO: (#4331) This needs to be converted to the new text scheme.
     placeHolderFont =
         [placeHolderFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleBody1
                                       scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
@@ -379,6 +384,7 @@ static UIFont *_trailingUnderlineLabelFontDefault;
     self.textInput.trailingUnderlineLabel.text = [self characterCountText];
     UIFont *font = self.trailingUnderlineLabelFont;
     if (self.mdc_adjustsFontForContentSizeCategory) {
+      // TODO: (#4331) This needs to be converted to the new text scheme.
       font =
           [font mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleCaption
                              scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
@@ -426,10 +432,12 @@ static UIFont *_trailingUnderlineLabelFontDefault;
 #pragma mark - Underline Labels Fonts
 
 + (UIFont *)placeholderFont {
+  // TODO: (#4331) This needs to be converted to the new text scheme.
   return [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody1];
 }
 
 + (UIFont *)underlineLabelsFont {
+  // TODO: (#4331) This needs to be converted to the new text scheme.
   return [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleCaption];
 }
 
@@ -729,6 +737,26 @@ static UIFont *_trailingUnderlineLabelFontDefault;
 
 + (void)setTextInputFontDefault:(UIFont *)textInputFontDefault {
   _textInputFontDefault = textInputFontDefault;
+}
+
+- (UIColor *)textInputClearButtonTintColor {
+    if (_textInputClearButtonTintColor) {
+        return _textInputClearButtonTintColor;
+    }
+    return [self class].textInputClearButtonTintColorDefault ?: self.textInput.clearButton.tintColor;
+}
+
+- (void)setTextInputClearButtonTintColor:(UIColor *)textInputClearButtonTintColor {
+    _textInputClearButtonTintColor = textInputClearButtonTintColor;
+    _textInput.clearButton.tintColor = _textInputClearButtonTintColor;
+}
+
++ (UIColor *)textInputClearButtonTintColorDefault {
+    return _textInputClearButtonTintColorDefault;
+}
+
++ (void)setTextInputClearButtonTintColorDefault:(UIColor *)textInputClearButtonTintColorDefault {
+    _textInputClearButtonTintColorDefault = textInputClearButtonTintColorDefault;
 }
 
 - (UIFont *)trailingUnderlineLabelFont {
