@@ -58,10 +58,12 @@
                                                                             style:UIBarButtonItemStylePlain
                                                                            target:self
                                                                            action:@selector(clearSelected)];
+  self.navigationItem.rightBarButtonItem.accessibilityHint = @"Unselects all chips";
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(contentSizeCategoryDidChange)
                                                name:UIContentSizeCategoryDidChangeNotification
                                              object:nil];
+  [self updateClearButton];
 }
 
 - (void)contentSizeCategoryDidChange {
@@ -74,6 +76,12 @@
     [self.collectionView deselectItemAtIndexPath:indexPath animated:NO];
   }
   [self.collectionView performBatchUpdates:nil completion:nil];
+  [self updateClearButton];
+}
+
+- (void)updateClearButton {
+  BOOL hasSelectedItems = [self.collectionView indexPathsForSelectedItems].count > 0;
+  self.navigationItem.rightBarButtonItem.enabled = hasSelectedItems ? YES : NO;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
@@ -99,6 +107,7 @@
 - (void)collectionView:(UICollectionView *)collectionView
     didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   [collectionView performBatchUpdates:nil completion:nil];
+  [self updateClearButton];
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
