@@ -27,7 +27,7 @@ button.accessibilityLabel = "Create"
 Make sure that your buttons have a minimum touch area. The Google Material spec
 for buttons calls for buttons that have a [visual height of
 36](https://guidelines.googleplex.com/googlematerial/components/buttons.html#style)
-and that [touch areas should be at least 48 points high and 64
+and that [touch areas should be at least 48 points high and 48
 wide](https://material.io/design/layout/spacing-methods.html#touch-click-targets).
 
 #### Set the touch size
