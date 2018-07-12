@@ -228,6 +228,7 @@ To help ensure your slider is accessible to as many users as possible, please be
 
 Set an appropriate `accessibilityLabel` value for your slider. This should reflect what the slider affects.
 
+<!--<div class="material-code-render" markdown="1">-->
 #### Objective - C
 ```objc
 slider.accessibilityLabel = @"Volume Slider";
@@ -237,7 +238,7 @@ slider.accessibilityLabel = @"Volume Slider";
 ```swift
 slider.accessibilityLabel = "Volume Slider"
 ```
-
+<!--</div>-->
 ### `-accessibilityActivate`
  
  Our implementation closely resembles what UISlider does but it's not an exact match. On an `accessibilityActivate` we move one sixth of the amount between the current value and the midpoint value.
