@@ -59,6 +59,7 @@
   WrappedDemoViewController *demoVC = [[WrappedDemoViewController alloc] init];
   self.appBarContainerViewController =
       [[MDCAppBarContainerViewController alloc] initWithContentViewController:demoVC];
+  self.appBarContainerViewController.topLayoutGuideAdjustmentEnabled = YES;
 
   [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme
                                         toAppBar:self.appBarContainerViewController.appBar];
