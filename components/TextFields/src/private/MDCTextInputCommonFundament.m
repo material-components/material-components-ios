@@ -641,7 +641,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   UIGraphicsEndImageContext();
 
   image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  NSLog(@"%@", NSStringFromCGSize(image.size));
   return image;
 }
 
