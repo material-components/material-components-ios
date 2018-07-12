@@ -94,6 +94,7 @@ extension UINavigationController {
                                                   to: container.appBar);
     container.appBar.navigationBar.titleAlignment = .center
     container.appBar.navigationBar.titleTextAttributes = [ NSFontAttributeName: appBarFont ]
+    container.isTopLayoutGuideAdjustmentEnabled = true
     MDCAppBarColorThemer.applySemanticColorScheme(AppTheme.globalTheme.colorScheme,
                                                   to: container.appBar)
     // TODO(featherless): Remove once
@@ -104,13 +105,6 @@ extension UINavigationController {
       headerView.trackingScrollView = collectionVC.collectionView
     } else if let scrollView = viewController.view as? UIScrollView {
       headerView.trackingScrollView = scrollView
-    } else {
-      // TODO(chuga): This is bad. We should be adjusting for Safe Area changes.
-      var contentFrame = container.contentViewController.view.frame
-      let headerSize = headerView.sizeThatFits(container.contentViewController.view.frame.size)
-      contentFrame.origin.y = headerSize.height
-      contentFrame.size.height = currentBounds.height - headerSize.height
-      container.contentViewController.view.frame = contentFrame
     }
     return container
   }
