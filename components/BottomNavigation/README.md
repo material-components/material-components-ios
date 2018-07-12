@@ -191,8 +191,6 @@ id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
 
 <!-- Extracted from docs/accessibility.md -->
 
-## Accessibility {#a11y}
-
 To help ensure your bottom navigation item is accessible to as many users as possible, please
 be sure to review the following recommendations:
 
@@ -214,17 +212,6 @@ tabBarItem.accessibilityValue = @"10 unread emails";
 #### Swift
 ```swift
 tabBarItem.accessibilityValue = "10 unread emails"
-```
-
-### Bad
-
-#### Objective-C
-```objc
-tabBarItem.accessibilityValue = @"10";
-``` 
-#### Swift
-```swift
-tabBarItem.accessiblityValue = "10"
 ```
 
 ### Minimum touch size
@@ -258,5 +245,4 @@ override func viewWillLayoutSubviews() {
 }
 
 ```
-As long as you use `sizeThatFits` you'll be fine. If you explicitly set the height the component will respond to that new height and may not respect the recommended touch area.
 

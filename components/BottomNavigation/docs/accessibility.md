@@ -23,17 +23,6 @@ tabBarItem.accessibilityValue = @"10 unread emails";
 tabBarItem.accessibilityValue = "10 unread emails"
 ```
 
-### Bad
-
-#### Objective-C
-```objc
-tabBarItem.accessibilityValue = @"10";
-``` 
-#### Swift
-```swift
-tabBarItem.accessiblityValue = "10"
-```
-
 ### Minimum touch size
 
 Make sure that your bottom navigation bar respects the minimum touch area. The Google Material spec calls for [touch areas that should be least 48 points high and 48 wide](https://material.io/design/layout/spacing-methods.html#touch-click-targets). 
@@ -65,4 +54,3 @@ override func viewWillLayoutSubviews() {
 }
 
 ```
-As long as you use `sizeThatFits` you'll be fine. If you explicitly set the height the component will respond to that new height and may not respect the recommended touch area.
