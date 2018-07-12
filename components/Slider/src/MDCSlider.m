@@ -479,10 +479,11 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 }
 
 - (BOOL)accessibilityActivate {
-  CGFloat midPoint = (self.maximumValue - self.minimumValue) / 2.0;
+  CGFloat midPoint = (self.maximumValue - self.minimumValue) / 2.0f;
   CGFloat newValue;
-  CGFloat adjustmentAmount = fabs((self.value - midPoint) / 3.0);
-  if (adjustmentAmount > 1.5f) {
+  CGFloat adjustmentAmount = fabs((self.value - midPoint) / 3.0f);
+  CGFloat minimumAdjustment = (self.maximumValue - self.minimumValue) * 0.015f;
+  if (adjustmentAmount > minimumAdjustment) {
     if (self.value > midPoint) {
       newValue = self.value - adjustmentAmount;
     } else {

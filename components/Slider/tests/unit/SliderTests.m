@@ -1049,7 +1049,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testAccessibilityActivate {
   // Given
-  self.slider.value = 0;
+  self.slider.value = 0.0f;
 
   // When
   [self.slider accessibilityActivate];
