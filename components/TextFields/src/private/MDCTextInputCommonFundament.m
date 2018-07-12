@@ -632,9 +632,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   CGSize clearButtonSize = CGSizeMake(MDCTextInputClearButtonImageSquareWidthHeight,
                                       MDCTextInputClearButtonImageSquareWidthHeight);
 
-  CGFloat scale = [UIScreen mainScreen].scale;
-  CGRect bounds = CGRectMake(0, 0, clearButtonSize.width * scale, clearButtonSize.height * scale);
-  UIGraphicsBeginImageContextWithOptions(bounds.size, false, scale);
+  CGRect bounds = CGRectMake(0, 0, clearButtonSize.width, clearButtonSize.height);
+  UIGraphicsBeginImageContextWithOptions(bounds.size, false, 0);
   [UIColor.grayColor setFill];
 
   [MDCPathForClearButtonImageFrame(bounds) fill];
