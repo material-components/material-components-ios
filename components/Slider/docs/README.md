@@ -28,7 +28,4 @@ or discrete set of values.
 ## Extensions
 
 - [Color Theming](color-theming.md)
-
-## Accessibility {a11y}
-
 - [Accessibility](accessibility.md)

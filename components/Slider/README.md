@@ -40,8 +40,7 @@ or discrete set of values.
   - [Differences from UISlider](#differences-from-uislider)
 - [Extensions](#extensions)
   - [Color Theming](#color-theming)
-- [Accessibility {a11y}](#accessibility-{a11y})
-- [Accessibility {a11y}](#accessibility-{a11y})
+- [Accessibility](#accessibility)
   - [Set `-accessibilityLabel`](#set-`-accessibilitylabel`)
   - [`-accessibilityActivate`](#`-accessibilityactivate`)
   - [Minimum touch size](#minimum-touch-size)
@@ -220,18 +219,15 @@ id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
 ```
 <!--</div>-->
 
-
-## Accessibility {a11y}
-
 <!-- Extracted from docs/accessibility.md -->
 
+## Accessibility
 To help ensure your slider is accessible to as many users as possible, please be sure to review the following recommendations:
 
 ### Set `-accessibilityLabel`
 
 Set an appropriate `accessibilityLabel` value for your slider. This should reflect what the slider affects.
 
-<!--<div class="material-code-render" markdown="1">-->
 #### Objective - C
 ```objc
 slider.accessibilityLabel = @"Volume Slider";
@@ -241,7 +237,6 @@ slider.accessibilityLabel = @"Volume Slider";
 ```swift
 slider.accessibilityLabel = "Volume Slider"
 ```
-<!--</div>-->
 
 ### `-accessibilityActivate`
  

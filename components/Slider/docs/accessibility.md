@@ -1,5 +1,4 @@
-## Accessibility {a11y}
-
+## Accessibility
 To help ensure your slider is accessible to as many users as possible, please be sure to review the following recommendations:
 
 ### Set `-accessibilityLabel`
