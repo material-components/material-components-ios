@@ -24,14 +24,14 @@ By default these values are set to 10%.
 
 #### Objective - C
 ```objc
-slider.accessibilityIncrement = 0.25f;
-slider.accessibilityDecrement = 0.35f;
+slider.accessibilityIncrementAmount = 0.25f;
+slider.accessibilityDecrementAmount = 0.35f;
 ```
 
 #### Swift
 ```swift
-slider.accessibilityIncrement = CGFloat(0.25)
-slider.accessibilityDecrement = CGFloat(0.35)
+slider.accessibilityIncrementAmount = CGFloat(0.25)
+slider.accessibilityDecrementAmount = CGFloat(0.35)
 ```
 
 
