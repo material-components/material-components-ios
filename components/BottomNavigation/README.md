@@ -201,8 +201,7 @@ be sure to review the following recommendations:
 value if your item has a badge value. For example, an item with an inbox icon with a badge value for how many
 emails are unread. You should explicitly set the `accessibilityValue` when the badge value doesn't provide enough context. For example, in an inbox example simply having doesn't provide enough context, instead the accessibility value should explain what the badge value symbolizes. The default value if there is a badge value and you haven't set any `accessibilityValue` will be that the `accessibilityValue` is the `badgeValue`.
 
-### Good
-
+<!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
 ```objc
 tabBarItem.accessibilityValue = @"10 unread emails";
@@ -213,11 +212,13 @@ tabBarItem.accessibilityValue = @"10 unread emails";
 ```swift
 tabBarItem.accessibilityValue = "10 unread emails"
 ```
+<!--</div>-->
 
 ### Minimum touch size
 
 Make sure that your bottom navigation bar respects the minimum touch area. The Google Material spec calls for [touch areas that should be least 48 points high and 48 wide](https://material.io/design/layout/spacing-methods.html#touch-click-targets). 
 
+<!--<div class="material-code-render" markdown="1">-->
 #### Objective-C
 ```objc
 - (void)viewWillLayoutSubviews {
@@ -245,4 +246,5 @@ override func viewWillLayoutSubviews() {
 }
 
 ```
+<!--</div>-->
 
