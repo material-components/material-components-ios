@@ -25,6 +25,7 @@ static const CGFloat kSliderDefaultWidth = 100.0f;
 static const CGFloat kSliderFrameHeight = 27.0f;
 static const CGFloat kSliderMinTouchSize = 48.0f;
 static const CGFloat kSliderDefaultThumbRadius = 6.0f;
+static const CGFloat kSliderAccessibilityIncrement = 0.1f;  // Matches UISlider's percent increment.
 static const CGFloat kSliderLightThemeTrackAlpha = 0.26f;
 
 static inline UIColor *MDCThumbTrackDefaultColor(void) {
@@ -103,8 +104,6 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   _backgroundTickColorsForState = [@{} mutableCopy];
   _backgroundTickColorsForState[@(UIControlStateNormal)] = UIColor.blackColor;
 
-  _accessibilityIncrementAmount = 0.1f;
-  _accessibilityDecrementAmount = 0.1f;
   [self addSubview:_thumbTrack];
 }
 
@@ -446,7 +445,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 - (void)accessibilityIncrement {
   if (self.enabled) {
     CGFloat range = self.maximumValue - self.minimumValue;
-    CGFloat adjustmentAmount = _accessibilityIncrementAmount * range;
+    CGFloat adjustmentAmount = kSliderAccessibilityIncrement * range;
     if (self.numberOfDiscreteValues > 1) {
       adjustmentAmount = range / (self.numberOfDiscreteValues - 1);
     }
@@ -464,7 +463,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 - (void)accessibilityDecrement {
   if (self.enabled) {
     CGFloat range = self.maximumValue - self.minimumValue;
-    CGFloat adjustmentAmount = _accessibilityDecrementAmount * range;
+    CGFloat adjustmentAmount = kSliderAccessibilityIncrement * range;
     if (self.numberOfDiscreteValues > 1) {
       adjustmentAmount = range / (self.numberOfDiscreteValues - 1);
     }
@@ -477,6 +476,24 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 
     [self sendActionsForControlEvents:UIControlEventValueChanged];
   }
+}
+
+- (BOOL)accessibilityActivate {
+  CGFloat midPoint = (self.maximumValue - self.minimumValue) / 2.0;
+  CGFloat newValue;
+  CGFloat adjustmentAmount = fabs((self.value - midPoint) / 3.0);
+  if (self.value > midPoint) {
+    newValue = self.value - adjustmentAmount;
+  } else {
+    newValue = self.value + adjustmentAmount;
+  }
+  [_thumbTrack setValue:newValue
+               animated:NO
+  animateThumbAfterMove:NO
+          userGenerated:YES
+             completion:NULL];
+  [self sendActionsForControlEvents:UIControlEventValueChanged];
+  return YES;
 }
 
 #pragma mark - NSSecureCoding
