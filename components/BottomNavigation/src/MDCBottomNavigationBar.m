@@ -191,6 +191,14 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
                                      UIViewAutoresizingFlexibleRightMargin);
   _containerView.clipsToBounds = YES;
   [self addSubview:_containerView];
+#if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability"
+  if (&UIAccessibilityTraitTabBar != NULL) {
+    _containerView.accessibilityTraits = UIAccessibilityTraitTabBar;
+  }
+#pragma clang diagnostic pop
+#endif
   [self setElevation:MDCShadowElevationBottomNavigationBar];
   _itemViews = [NSMutableArray array];
   _itemTitleFont = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleCaption];
