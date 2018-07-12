@@ -482,17 +482,19 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   CGFloat midPoint = (self.maximumValue - self.minimumValue) / 2.0;
   CGFloat newValue;
   CGFloat adjustmentAmount = fabs((self.value - midPoint) / 3.0);
-  if (self.value > midPoint) {
-    newValue = self.value - adjustmentAmount;
-  } else {
-    newValue = self.value + adjustmentAmount;
+  if (adjustmentAmount > 1.5f) {
+    if (self.value > midPoint) {
+      newValue = self.value - adjustmentAmount;
+    } else {
+      newValue = self.value + adjustmentAmount;
+    }
+    [_thumbTrack setValue:newValue
+                 animated:NO
+    animateThumbAfterMove:NO
+            userGenerated:YES
+               completion:NULL];
+    [self sendActionsForControlEvents:UIControlEventValueChanged];
   }
-  [_thumbTrack setValue:newValue
-               animated:NO
-  animateThumbAfterMove:NO
-          userGenerated:YES
-             completion:NULL];
-  [self sendActionsForControlEvents:UIControlEventValueChanged];
   return YES;
 }
 
