@@ -43,7 +43,7 @@ or discrete set of values.
 - [Accessibility {a11y}](#accessibility-{a11y})
 - [Accessibility {a11y}](#accessibility-{a11y})
   - [Set `-accessibilityLabel`](#set-`-accessibilitylabel`)
-  - [Using `accessibilityIncrement` or `accessibilityDecrement`](#using-`accessibilityincrement`-or-`accessibilitydecrement`)
+  - [`-accessibilityActivate`](#`-accessibilityactivate`)
   - [Minimum touch size](#minimum-touch-size)
 
 - - -
@@ -243,24 +243,9 @@ slider.accessibilityLabel = @"Volume Slider";
 slider.accessibilityLabel = "Volume Slider"
 ```
 
-### Using `accessibilityIncrement` or `accessibilityDecrement`
-
-When you need to set custom increment or decrement levels use the `accessibilityIncrement` property to affect how much the slider will increment on an upward swipe and `accessibilityDecrement` property to affect how much the slider will decrement on a downward swipe.
-
-By default these values are set to 10%.
-
-#### Objective - C
-```objc
-slider.accessibilityIncrementAmount = 0.25f;
-slider.accessibilityDecrementAmount = 0.35f;
-```
-
-#### Swift
-```swift
-slider.accessibilityIncrementAmount = CGFloat(0.25)
-slider.accessibilityDecrementAmount = CGFloat(0.35)
-```
-
+### `-accessibilityActivate`
+ 
+ Our implementation closely resembles what UISlider does but it's not an exact match. On an `accessibilityActivate` we move one sixth of the amount between the current value and the midpoint value.
 
 ### Minimum touch size
 
