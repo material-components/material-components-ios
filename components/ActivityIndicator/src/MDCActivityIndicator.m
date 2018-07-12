@@ -182,6 +182,7 @@ static const CGFloat kSingleCycleRotation =
   // Colors.
   _cycleColorsIndex = 0;
   _cycleColors = [MDCActivityIndicator defaultCycleColors];
+  self.accessibilityLabel = [self defaultAccessibilityLabel];
 
   // Track layer.
   _trackLayer = [CAShapeLayer layer];
@@ -973,7 +974,7 @@ static const CGFloat kSingleCycleRotation =
   return self.isAnimating;
 }
 
-- (NSString *)accessibilityLabel {
+- (NSString *)defaultAccessibilityLabel {
   MaterialActivityIndicatorStringId keyIndex = kStr_MaterialActivityIndicatorAccessibilityLabel;
   NSString *key = kMaterialActivityIndicatorStringTable[keyIndex];
   return NSLocalizedStringFromTableInBundle(key,
