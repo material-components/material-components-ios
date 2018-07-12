@@ -25,7 +25,6 @@ static const CGFloat kSliderDefaultWidth = 100.0f;
 static const CGFloat kSliderFrameHeight = 27.0f;
 static const CGFloat kSliderMinTouchSize = 48.0f;
 static const CGFloat kSliderDefaultThumbRadius = 6.0f;
-static const CGFloat kSliderAccessibilityIncrement = 0.1f;  // Matches UISlider's percent increment.
 static const CGFloat kSliderLightThemeTrackAlpha = 0.26f;
 
 static inline UIColor *MDCThumbTrackDefaultColor(void) {
@@ -104,6 +103,8 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   _backgroundTickColorsForState = [@{} mutableCopy];
   _backgroundTickColorsForState[@(UIControlStateNormal)] = UIColor.blackColor;
 
+  _accessibilityIncrementAmount = 0.1f;
+  _accessibilityDecrementAmount = 0.1f;
   [self addSubview:_thumbTrack];
 }
 
@@ -445,7 +446,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 - (void)accessibilityIncrement {
   if (self.enabled) {
     CGFloat range = self.maximumValue - self.minimumValue;
-    CGFloat adjustmentAmount = kSliderAccessibilityIncrement * range;
+    CGFloat adjustmentAmount = _accessibilityIncrementAmount * range;
     if (self.numberOfDiscreteValues > 1) {
       adjustmentAmount = range / (self.numberOfDiscreteValues - 1);
     }
@@ -463,7 +464,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 - (void)accessibilityDecrement {
   if (self.enabled) {
     CGFloat range = self.maximumValue - self.minimumValue;
-    CGFloat adjustmentAmount = kSliderAccessibilityIncrement * range;
+    CGFloat adjustmentAmount = _accessibilityDecrementAmount * range;
     if (self.numberOfDiscreteValues > 1) {
       adjustmentAmount = range / (self.numberOfDiscreteValues - 1);
     }

@@ -292,6 +292,20 @@ IB_DESIGNABLE
  */
 @property(nonatomic, assign, getter=isThumbHollowAtStart) BOOL thumbHollowAtStart;
 
+/**
+Tells the accessibility element what amount to increment the value of its content.
+
+ Default increment level is 10%.
+ */
+@property(nonatomic) CGFloat accessibilityIncrementAmount;
+
+/**
+Tells the accessibility element what amount to decrement the value of its content.
+
+ Default decrement level is 10%.
+ */
+@property(nonatomic) CGFloat accessibilityDecrementAmount;
+
 #pragma mark - To be deprecated
 
 /**
