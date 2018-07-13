@@ -15,3 +15,8 @@ Same features:
 New features:
 
 - making the slider a snap to discrete values via property numberOfDiscreteValues
+
+#### `-accessibilityActivate`
+
+Our implementation closely resembles what UISlider does but it's not an exact match. On an
+`accessibilityActivate` we move one sixth of the amount between the current value and the midpoint value.
