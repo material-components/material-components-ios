@@ -20,6 +20,7 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
+#import "MaterialMath.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
@@ -53,6 +54,7 @@ static NSString *const kMDCBottomNavigationBarBarTintColorKey =
 static const CGFloat kMDCBottomNavigationBarHeight = 56.f;
 static const CGFloat kMDCBottomNavigationBarHeightAdjacentTitles = 40.f;
 static const CGFloat kMDCBottomNavigationBarLandscapeContainerWidth = 320.f;
+static const CGFloat kMDCBottomNavigationBarItemsHorizontalMargin = 12.f;
 static NSString *const kMDCBottomNavigationBarBadgeColorString = @"badgeColor";
 static NSString *const kMDCBottomNavigationBarBadgeValueString = @"badgeValue";
 static NSString *const kMDCBottomNavigationBarAccessibilityValueString =
@@ -168,6 +170,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 }
 
 - (void)commonMDCBottomNavigationBarInit {
+  _itemsContentHorizontalMargin = kMDCBottomNavigationBarItemsHorizontalMargin;
   _selectedItemTintColor = [UIColor blackColor];
   _unselectedItemTintColor = [UIColor grayColor];
   _selectedItemTitleColor = _selectedItemTintColor;
@@ -462,6 +465,9 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
     itemView.titleVisibility = self.titleVisibility;
     itemView.titleBelowIcon = self.titleBelowItem;
     itemView.accessibilityValue = item.accessibilityValue;
+    itemView.contentInsets = self.itemsContentInsets;
+    itemView.contentVerticalMargin = self.itemsContentVerticalMargin;
+    itemView.contentHorizontalMargin = self.itemsContentHorizontalMargin;
 
     NSString *key =
         kMaterialBottomNavigationStringTable[kStr_MaterialBottomNavigationItemCountAccessibilityHint];
@@ -532,6 +538,42 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
       [itemView setSelected:NO animated:animated];
     }
   }
+}
+
+- (void)setItemsContentInsets:(UIEdgeInsets)itemsContentInsets {
+  if (UIEdgeInsetsEqualToEdgeInsets(_itemsContentInsets, itemsContentInsets)) {
+    return;
+  }
+  _itemsContentInsets = itemsContentInsets;
+  for (NSUInteger i = 0; i < self.items.count; i++) {
+    MDCBottomNavigationItemView *itemView = self.itemViews[i];
+    itemView.contentInsets = itemsContentInsets;
+  }
+  [self setNeedsLayout];
+}
+
+- (void)setItemsContentVerticalMargin:(CGFloat)itemsContentsVerticalMargin {
+  if (MDCCGFloatEqual(_itemsContentVerticalMargin, itemsContentsVerticalMargin)) {
+    return;
+  }
+  _itemsContentVerticalMargin = itemsContentsVerticalMargin;
+  for (NSUInteger i = 0; i < self.items.count; i++) {
+    MDCBottomNavigationItemView *itemView = self.itemViews[i];
+    itemView.contentVerticalMargin = itemsContentsVerticalMargin;
+  }
+  [self setNeedsLayout];
+}
+
+- (void)setItemsContentHorizontalMargin:(CGFloat)itemsContentHorizontalMargin {
+  if (MDCCGFloatEqual(_itemsContentHorizontalMargin, itemsContentHorizontalMargin)) {
+    return;
+  }
+  _itemsContentHorizontalMargin = itemsContentHorizontalMargin;
+  for (NSUInteger i = 0; i < self.items.count; i++) {
+    MDCBottomNavigationItemView *itemView = self.itemViews[i];
+    itemView.contentHorizontalMargin = itemsContentHorizontalMargin;
+  }
+  [self setNeedsLayout];
 }
 
 - (void)setTitleBelowItem:(BOOL)titleBelowItem {

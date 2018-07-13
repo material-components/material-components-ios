@@ -30,6 +30,11 @@ static UIImage *fakeImage(void) {
   return image;
 }
 
+@interface MDCBottomNavigationItemView (Testing)
+@property(nonatomic, strong) UIImageView *iconImageView;
+@property(nonatomic, strong) UILabel *label;
+@end
+
 @interface BottomNavigationItemViewCodingTests : XCTestCase
 
 @end
@@ -87,6 +92,77 @@ static UIImage *fakeImage(void) {
 
   // Then
   XCTAssertEqual(view.subviews.count, unarchivedView.subviews.count);
+}
+
+- (void)testVerticalMarginLayout {
+  // Given
+  MDCBottomNavigationItemView *view = [[MDCBottomNavigationItemView alloc] init];
+  view.title = @"Test Content";
+  view.image = fakeImage();
+  view.bounds = CGRectMake(0, 0, 100, 100);
+  view.contentVerticalMargin = 20;
+  view.contentHorizontalMargin = 20;
+  view.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+
+  // When
+  view.titleBelowIcon = YES;
+  [view layoutSubviews];
+
+  // Then
+  CGFloat contentHeight =
+      CGRectGetHeight(view.label.bounds) + CGRectGetHeight(view.iconImageView.bounds);
+  CGFloat expectedDistance = contentHeight / 2 + view.contentVerticalMargin;
+  XCTAssertEqualWithAccuracy(view.label.center.y - view.iconImageView.center.y,
+                             expectedDistance,
+                             0.001f);
+}
+
+- (void)testHorizontalMarginLayout {
+  // Given
+  MDCBottomNavigationItemView *view = [[MDCBottomNavigationItemView alloc] init];
+  view.title = @"Test Content";
+  view.image = fakeImage();
+  view.bounds = CGRectMake(0, 0, 100, 100);
+  view.contentVerticalMargin = 20;
+  view.contentHorizontalMargin = 20;
+  view.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+
+  // When
+  view.titleBelowIcon = NO;
+  [view layoutSubviews];
+
+  // Then
+  CGFloat contentWidth =
+      CGRectGetWidth(view.label.bounds) + CGRectGetWidth(view.iconImageView.bounds);
+  CGFloat expectedDistance = contentWidth / 2 + view.contentHorizontalMargin;
+  XCTAssertEqualWithAccuracy(view.label.center.x - view.iconImageView.center.x,
+                             expectedDistance,
+                             0.001f);
+}
+
+- (void)testContentInsetLayout {
+  // Given
+  MDCBottomNavigationItemView *view = [[MDCBottomNavigationItemView alloc] init];
+  view.title = @"Test Content";
+  view.image = fakeImage();
+  view.bounds = CGRectMake(0, 0, 100, 100);
+  view.contentVerticalMargin = 20;
+  view.contentHorizontalMargin = 20;
+  view.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+
+  // When
+  view.titleBelowIcon = YES;
+  view.contentInsets = UIEdgeInsetsMake(10, 10, 5, 5);
+  [view layoutSubviews];
+
+  // Then
+  CGRect contentRect = UIEdgeInsetsInsetRect(view.bounds, view.contentInsets);
+  XCTAssert(view.label.center.x == CGRectGetMidX(contentRect));
+  XCTAssert(view.iconImageView.center.x == CGRectGetMidX(contentRect));
+  CGFloat contentSpan = CGRectGetMaxY(view.label.frame) - CGRectGetMinY(view.iconImageView.frame);
+  XCTAssertEqualWithAccuracy(CGRectGetMinY(view.iconImageView.frame) + contentSpan / 2,
+                             CGRectGetMidY(contentRect),
+                             0.001f);
 }
 
 @end
