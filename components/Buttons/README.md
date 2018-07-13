@@ -49,7 +49,7 @@ many distinct button styles including text buttons, contained buttons, and float
   - [Theming](#theming)
   - [Color Theming](#color-theming)
   - [Typography Theming](#typography-theming)
-- [Accessibility {a11y}](#accessibility-{a11y})
+- [Accessibility](#accessibility)
   - [Set `-accessibilityLabel`](#set-`-accessibilitylabel`)
   - [Minimum touch size](#minimum-touch-size)
 
@@ -425,10 +425,9 @@ id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
 <!--</div>-->
 
 
-## Accessibility {#a11y}
 <!-- Extracted from docs/accessibility.md -->
 
-## Accessibility {a11y}
+## Accessibility
 
 To help ensure your buttons are accessible to as many users as possible, please
 be sure to review the following recommendations:

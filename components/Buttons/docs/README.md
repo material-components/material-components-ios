@@ -36,5 +36,4 @@ elevation, Material Design ripples, and other stateful design APIs.
 - [Color Theming](color-theming.md)
 - [Typography Theming](typography-theming.md)
 
-## Accessibility {#a11y}
 - [Accessibility](accessibility.md)
