@@ -55,6 +55,12 @@
 
 - (void)commonMDCFlexibleHeaderViewControllerInit {
   _fhvc = [[MDCFlexibleHeaderViewController alloc] initWithNibName:nil bundle:nil];
+  
+  // Behavioral flags.
+  _fhvc.topLayoutGuideAdjustmentEnabled = YES;
+  _fhvc.headerView.topSafeAreaInsetBehaviorEnabled = YES;
+  _fhvc.headerView.minMaxHeightIncludesSafeArea = NO;
+
   [self addChildViewController:_fhvc];
 
   _label = [[UILabel alloc] init];
@@ -92,6 +98,22 @@
   [self.navigationController setNavigationBarHidden:YES animated:animated];
 
   self.label.center = CGPointMake(self.wrappedViewController.view.frame.size.width / 2.f, 120.f);
+}
+
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+
+  self.fhvc.headerView.topSafeAreaInset =
+      [MDCFlexibleHeaderView topSafeAreaInsetFromViewController:self];
+}
+
+- (void)willMoveToParentViewController:(UIViewController *)parent {
+  [super willMoveToParentViewController:parent];
+
+  if (parent != nil) {
+    self.fhvc.headerView.topSafeAreaInset =
+        [MDCFlexibleHeaderView topSafeAreaInsetFromViewController:parent];
+  }
 }
 
 // This method must be implemented for MDCFlexibleHeaderViewController's

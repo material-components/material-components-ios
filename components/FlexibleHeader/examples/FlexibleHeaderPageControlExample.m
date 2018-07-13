@@ -60,6 +60,12 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 
 - (void)commonMDCFlexibleHeaderViewControllerInit {
   _fhvc = [[MDCFlexibleHeaderViewController alloc] initWithNibName:nil bundle:nil];
+
+  // Behavioral flags.
+  _fhvc.topLayoutGuideAdjustmentEnabled = YES;
+  _fhvc.headerView.topSafeAreaInsetBehaviorEnabled = YES;
+  _fhvc.headerView.minMaxHeightIncludesSafeArea = NO;
+
   _fhvc.headerView.minimumHeight = kFlexibleHeaderMinHeight;
   [self addChildViewController:_fhvc];
 }
@@ -137,6 +143,22 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
   [super viewWillAppear:animated];
 
   [self.navigationController setNavigationBarHidden:YES animated:animated];
+}
+
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+
+  self.fhvc.headerView.topSafeAreaInset =
+      [MDCFlexibleHeaderView topSafeAreaInsetFromViewController:self];
+}
+
+- (void)willMoveToParentViewController:(UIViewController *)parent {
+  [super willMoveToParentViewController:parent];
+
+  if (parent != nil) {
+    self.fhvc.headerView.topSafeAreaInset =
+        [MDCFlexibleHeaderView topSafeAreaInsetFromViewController:parent];
+  }
 }
 
 // This method must be implemented for MDCFlexibleHeaderViewController's

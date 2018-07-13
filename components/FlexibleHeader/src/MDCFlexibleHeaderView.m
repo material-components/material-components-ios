@@ -144,6 +144,37 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   BOOL _wasStatusBarHiddenIsValid;
   BOOL _wasStatusBarHidden;
 
+  // We use this value to correctly handle top safe area insets on non-iPhone X devices.
+  //
+  // Generally-speaking, we consider the top safe area inset to equate to the length of any
+  // "device-owned" pixels.
+  //
+  // On an iPhone X, the top safe area inset is a fixed hardware constant, varying only based on
+  // device orientation.
+  //
+  // On non-X devices, however, the top safe area inset is a flexible software value reflecting the
+  // status bar's current height. If the status bar is hidden, the top safe area inset is zero.
+  //
+  // This affects the flexible header mostly when the status bar shift behavior is enabled. The
+  // flexible header is able to hide the status bar interactively, meaning our top safe area inset
+  // can fluctuate between 0 and 20 on non-X devices as we show/hide the status bar. This can cause
+  // the tracking scroll view's content inset to "jump" because we make the scroll view's top
+  // content inset equal maximumHeight + topSafeAreaInset.
+  //
+  // Aside: If we only supported iOS 11 and up we'd likely be able to simplify a lot of this
+  // behavior by solely relying on additionalSafeAreaInsets. Alas, that will likely be sometime
+  // after 2020.
+  //
+  // So, to avoid the jumping behavior, we keep track of what the lost non-zero top safe area inset
+  // was. If it was 20 and we know we've programmatically hidden the status bar, we continue to
+  // pretend that the top safe area inset is 20. Once the status bar is visible again we rely on the
+  // actual topSafeAreaInset value.
+  CGFloat _lastNonZeroTopSafeAreaInset;
+
+  // UILayoutGuide was introduced in iOS 9, so in order to support iOS 8, we use a UIView as a
+  // layout guide. Once we drop iOS 8 support this can be changed to a UILayoutGuide instead.
+  UIView *_topSafeAreaGuide;
+
   MDCStatusBarShifter *_statusBarShifter;
 
   // Layers for header shadows.
@@ -218,7 +249,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   _statusBarHintCanOverlapHeader = YES;
 
   _minMaxHeightIncludesSafeArea = YES;
-  _minimumHeight = kFlexibleHeaderDefaultHeight + MDCDeviceTopSafeAreaInset();
+  _minimumHeight = kFlexibleHeaderDefaultHeight + [self fhv_topSafeAreaInset];
   _maximumHeight = _minimumHeight;
 
   _visibleShadowOpacity = kDefaultVisibleShadowOpacity;
@@ -367,36 +398,115 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 - (void)safeAreaInsetsDidChange {
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
-    // If the min or max height have been explicitly set, don't adjust anything if the values
-    // already include a Safe Area inset.
-    BOOL hasSetMinOrMaxHeight = _hasExplicitlySetMinHeight || _hasExplicitlySetMaxHeight;
-    if (!hasSetMinOrMaxHeight && _minMaxHeightIncludesSafeArea) {
-      // If we're using the defaults we need to update them to account for the new Safe Area inset.
-      _minimumHeight = kFlexibleHeaderDefaultHeight + MDCDeviceTopSafeAreaInset();
-      _maximumHeight = _minimumHeight;
-    }
+    [super safeAreaInsetsDidChange];
 
-    // Adjust the scroll view insets to account for the new Safe Area inset.
-    [self fhv_enforceInsetsForScrollView:_trackingScrollView];
-
-    // Ignore any content offset delta that occured as a result of any safe area insets change.
-    _shiftAccumulatorLastContentOffset = [self fhv_boundedContentOffset];
-
-    // The changes might require us to re-calculate the frame, or update the entire layout.
-    if (!_trackingScrollView) {
-      CGRect bounds = self.bounds;
-      bounds.size.height = self.computedMinimumHeight;
-      self.bounds = bounds;
-      CGPoint position = self.center;
-      position.y = -MIN([self fhv_accumulatorMax], _shiftAccumulator);
-      position.y += self.bounds.size.height / 2;
-      self.center = position;
-      [self.delegate flexibleHeaderViewFrameDidChange:self];
-    } else {
-      [self fhv_updateLayout];
+    // We don't need to react to safeAreaInsetsDidChange events if we're using an explicit top safe
+    // area inset because the topSafeAreaInset setter will do this for us.
+    if (!self.topSafeAreaInsetBehaviorEnabled) {
+      [self fhv_topSafeAreaInsetDidChange];
     }
   }
 #endif
+}
+
+#pragma mark - Top Safe Area Inset
+
+- (CGFloat)fhv_topSafeAreaInset {
+  if (self.topSafeAreaInsetBehaviorEnabled) {
+    BOOL topSafeAreaInsetLikelyAffectedByStatusBarVisibility = _lastNonZeroTopSafeAreaInset == 20;
+    if (topSafeAreaInsetLikelyAffectedByStatusBarVisibility
+        && [self fhv_canShiftOffscreen]
+        && _shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar
+        && _statusBarShifter.prefersStatusBarHidden) {
+      return _lastNonZeroTopSafeAreaInset;
+
+    } else {
+      return self.topSafeAreaInset;
+    }
+  } else {
+    return MDCDeviceTopSafeAreaInset();
+  }
+}
+
+- (void)fhv_topSafeAreaInsetDidChange {
+  // If the min or max height have been explicitly set, don't adjust anything if the values
+  // already include a Safe Area inset.
+  BOOL hasSetMinOrMaxHeight = _hasExplicitlySetMinHeight || _hasExplicitlySetMaxHeight;
+  if (!hasSetMinOrMaxHeight && _minMaxHeightIncludesSafeArea) {
+    // If we're using the defaults we need to update them to account for the new Safe Area inset.
+    _minimumHeight = kFlexibleHeaderDefaultHeight + [self fhv_topSafeAreaInset];
+    _maximumHeight = _minimumHeight;
+  }
+
+  _topSafeAreaGuide.frame = CGRectMake(0, 0, self.bounds.size.width, [self fhv_topSafeAreaInset]);
+
+  // Adjust the scroll view insets to account for the new Safe Area inset.
+  [self fhv_enforceInsetsForScrollView:_trackingScrollView];
+
+  // Ignore any content offset delta that occured as a result of any safe area insets change.
+  _shiftAccumulatorLastContentOffset = [self fhv_boundedContentOffset];
+
+  // The changes might require us to re-calculate the frame, or update the entire layout.
+  if (!_trackingScrollView) {
+    CGRect bounds = self.bounds;
+    bounds.size.height = self.computedMinimumHeight;
+    self.bounds = bounds;
+    CGPoint position = self.center;
+    position.y = -MIN([self fhv_accumulatorMax], _shiftAccumulator);
+    position.y += self.bounds.size.height / 2;
+    self.center = position;
+    [self.delegate flexibleHeaderViewFrameDidChange:self];
+  } else {
+    [self fhv_updateLayout];
+  }
+}
+
+- (void)setTopSafeAreaInset:(CGFloat)topSafeAreaInset {
+  _topSafeAreaInset = topSafeAreaInset;
+
+  if (_topSafeAreaInset > 0) {
+    _lastNonZeroTopSafeAreaInset = _topSafeAreaInset;
+  }
+
+  if (self.topSafeAreaInsetBehaviorEnabled) {
+    [self fhv_topSafeAreaInsetDidChange];
+  }
+}
+
+- (void)setTopSafeAreaInsetBehaviorEnabled:(BOOL)topSafeAreaInsetBehaviorEnabled {
+  if (_topSafeAreaInsetBehaviorEnabled == topSafeAreaInsetBehaviorEnabled) {
+    return;
+  }
+  _topSafeAreaInsetBehaviorEnabled = topSafeAreaInsetBehaviorEnabled;
+
+  if (_topSafeAreaInsetBehaviorEnabled) {
+    _topSafeAreaGuide = [[UIView alloc] init];
+    [self addSubview:_topSafeAreaGuide];
+
+  } else if (_topSafeAreaGuide != nil) {
+    [_topSafeAreaGuide removeFromSuperview];
+    _topSafeAreaGuide = nil;
+  }
+
+  [self fhv_topSafeAreaInsetDidChange];
+}
+
+- (id)topSafeAreaGuide {
+  return _topSafeAreaGuide;
+}
+
++ (CGFloat)topSafeAreaInsetFromViewController:(nonnull UIViewController *)viewController {
+  CGFloat topSafeAreaInset;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if ([viewController.view respondsToSelector:@selector(safeAreaInsets)]) {
+    topSafeAreaInset = viewController.view.safeAreaInsets.top;
+  } else {
+    topSafeAreaInset = viewController.topLayoutGuide.length;
+  }
+#else
+  topSafeAreaInset = viewController.topLayoutGuide.length;
+#endif
+  return topSafeAreaInset;
 }
 
 #pragma mark - Private (fhv_ prefix)
@@ -473,7 +583,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 //
 // Our desired top content inset is always at least:
 //
-//     _maximumHeight (with safe area insets removed) + MDCDeviceTopSafeAreaInset()
+//     _maximumHeight (with safe area insets removed) + [self fhv_topSafeAreaInset]
 //
 // This ensures that when our scroll view is scrolled to its top that our header is able to be fully
 // expanded.
@@ -500,7 +610,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   // we ensure that our desired top inset is always at least the header height.
   CGFloat minimumTopInset;
   if (_minMaxHeightIncludesSafeArea) {
-    minimumTopInset = _maximumHeight - MDCDeviceTopSafeAreaInset();
+    minimumTopInset = _maximumHeight - [self fhv_topSafeAreaInset];
   } else {
     minimumTopInset = _maximumHeight;
   }
@@ -817,7 +927,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   // here.
   BOOL hasSetMinOrMaxHeight = _hasExplicitlySetMinHeight || _hasExplicitlySetMaxHeight;
   if (!hasSetMinOrMaxHeight && _minMaxHeightIncludesSafeArea) {
-    _minimumHeight = kFlexibleHeaderDefaultHeight + MDCDeviceTopSafeAreaInset();
+    _minimumHeight = kFlexibleHeaderDefaultHeight + [self fhv_topSafeAreaInset];
     _maximumHeight = _minimumHeight;
   }
 
@@ -1327,7 +1437,7 @@ static BOOL isRunningiOS10_3OrAbove() {
   if (_minMaxHeightIncludesSafeArea) {
     return _minimumHeight;
   } else {
-    return _minimumHeight + MDCDeviceTopSafeAreaInset();
+    return _minimumHeight + [self fhv_topSafeAreaInset];
   }
 }
 
@@ -1335,7 +1445,7 @@ static BOOL isRunningiOS10_3OrAbove() {
   if (_minMaxHeightIncludesSafeArea) {
     return _maximumHeight;
   } else {
-    return _maximumHeight + MDCDeviceTopSafeAreaInset();
+    return _maximumHeight + [self fhv_topSafeAreaInset];
   }
 }
 
@@ -1348,14 +1458,14 @@ static BOOL isRunningiOS10_3OrAbove() {
   // Update default values accordingly.
   if (!_hasExplicitlySetMinHeight) {
     if (_minMaxHeightIncludesSafeArea) {
-      _minimumHeight = kFlexibleHeaderDefaultHeight + MDCDeviceTopSafeAreaInset();
+      _minimumHeight = kFlexibleHeaderDefaultHeight + [self fhv_topSafeAreaInset];
     } else {
       _minimumHeight = kFlexibleHeaderDefaultHeight;
     }
   }
   if (!_hasExplicitlySetMaxHeight) {
     if (_minMaxHeightIncludesSafeArea) {
-      _maximumHeight = kFlexibleHeaderDefaultHeight + MDCDeviceTopSafeAreaInset();
+      _maximumHeight = kFlexibleHeaderDefaultHeight + [self fhv_topSafeAreaInset];
     } else {
       _maximumHeight = kFlexibleHeaderDefaultHeight;
     }

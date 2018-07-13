@@ -25,6 +25,7 @@
   self = [super initWithNibName:nil bundle:nil];
   if (self) {
     _headerViewController = [[MDCFlexibleHeaderViewController alloc] init];
+    _headerViewController.headerView.topSafeAreaInsetBehaviorEnabled = YES;
     [self addChildViewController:_headerViewController];
 
     self.contentViewController = contentViewController;
@@ -63,6 +64,18 @@
 
   if (!self.topLayoutGuideAdjustmentEnabled) {
     [self.headerViewController updateTopLayoutGuide];
+  }
+
+  self.headerViewController.headerView.topSafeAreaInset =
+      [MDCFlexibleHeaderView topSafeAreaInsetFromViewController:self];
+}
+
+- (void)willMoveToParentViewController:(UIViewController *)parent {
+  [super willMoveToParentViewController:parent];
+
+  if (parent != nil) {
+    self.headerViewController.headerView.topSafeAreaInset =
+        [MDCFlexibleHeaderView topSafeAreaInsetFromViewController:self];
   }
 }
 

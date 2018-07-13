@@ -55,6 +55,12 @@
 
 - (void)commonMDCFlexibleHeaderViewControllerInit {
   _fhvc = [[MDCFlexibleHeaderViewController alloc] initWithNibName:nil bundle:nil];
+
+  // Behavioral flags.
+  _fhvc.topLayoutGuideViewController = self;
+  _fhvc.headerView.topSafeAreaInsetBehaviorEnabled = YES;
+  _fhvc.headerView.minMaxHeightIncludesSafeArea = NO;
+
   [self addChildViewController:_fhvc];
 }
 
@@ -124,6 +130,22 @@
                                                             multiplier:1.0
                                                               constant:0];
   leading.active = YES;
+}
+
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+
+  self.fhvc.headerView.topSafeAreaInset =
+      [MDCFlexibleHeaderView topSafeAreaInsetFromViewController:self.parentViewController];
+}
+
+- (void)willMoveToParentViewController:(UIViewController *)parent {
+  [super willMoveToParentViewController:parent];
+
+  if (parent != nil) {
+    self.fhvc.headerView.topSafeAreaInset =
+        [MDCFlexibleHeaderView topSafeAreaInsetFromViewController:parent];
+  }
 }
 
 - (void)viewWillAppear:(BOOL)animated {

@@ -98,6 +98,8 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
     addChildViewController(headerViewController)
 
+    headerViewController.isTopLayoutGuideAdjustmentEnabled = true
+    headerViewController.headerView.topSafeAreaInsetBehaviorEnabled = true
     headerViewController.headerView.minMaxHeightIncludesSafeArea = false
     headerViewController.headerView.maximumHeight = 128
     headerViewController.headerView.minimumHeight = 56
@@ -208,6 +210,22 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
       collectionView?.contentInsetAdjustmentBehavior = .always
     }
 #endif
+  }
+
+  override func willMove(toParentViewController parent: UIViewController?) {
+    super.willMove(toParentViewController: parent)
+
+    if let parent = parent {
+      headerViewController.headerView.topSafeAreaInset =
+        MDCFlexibleHeaderView.topSafeAreaInset(from: parent)
+    }
+  }
+
+  override func viewWillLayoutSubviews() {
+    super.viewWillLayoutSubviews()
+
+    headerViewController.headerView.topSafeAreaInset =
+      MDCFlexibleHeaderView.topSafeAreaInset(from: self)
   }
 
   override func viewWillAppear(_ animated: Bool) {

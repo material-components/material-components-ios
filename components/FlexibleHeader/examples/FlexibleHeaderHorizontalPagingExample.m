@@ -150,6 +150,12 @@ static const NSUInteger kNumberOfPages = 10;
 
 - (void)commonMDCFlexibleHeaderViewControllerInit {
   self.fhvc = [[MDCFlexibleHeaderViewController alloc] initWithNibName:nil bundle:nil];
+
+  // Behavioral flags.
+  self.fhvc.topLayoutGuideAdjustmentEnabled = YES;
+  self.fhvc.headerView.topSafeAreaInsetBehaviorEnabled = YES;
+  self.fhvc.headerView.minMaxHeightIncludesSafeArea = NO;
+
   self.fhvc.headerView.sharedWithManyScrollViews = YES;
   self.fhvc.headerView.maximumHeight = 200;
   [self addChildViewController:_fhvc];
@@ -161,6 +167,22 @@ static const NSUInteger kNumberOfPages = 10;
   [self.fhvc didMoveToParentViewController:self];
 
   self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:0.1f alpha:1.0f];
+}
+
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+
+  self.fhvc.headerView.topSafeAreaInset =
+      [MDCFlexibleHeaderView topSafeAreaInsetFromViewController:self];
+}
+
+- (void)willMoveToParentViewController:(UIViewController *)parent {
+  [super willMoveToParentViewController:parent];
+
+  if (parent != nil) {
+    self.fhvc.headerView.topSafeAreaInset =
+        [MDCFlexibleHeaderView topSafeAreaInsetFromViewController:parent];
+  }
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

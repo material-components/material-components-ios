@@ -57,7 +57,13 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 
 - (void)commonMDCFlexibleHeaderViewControllerInit {
   _fhvc = [[MDCFlexibleHeaderViewController alloc] initWithNibName:nil bundle:nil];
-  _fhvc.headerView.minimumHeight = kFlexibleHeaderMinHeight;
+
+  // Behavioral flags.
+  _fhvc.topLayoutGuideAdjustmentEnabled = YES;
+  _fhvc.headerView.topSafeAreaInsetBehaviorEnabled = YES;
+  _fhvc.headerView.minMaxHeightIncludesSafeArea = NO;
+
+  _fhvc.headerView.maximumHeight = kFlexibleHeaderMinHeight;
   [self addChildViewController:_fhvc];
 }
 
@@ -102,6 +108,22 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
   [self.view addSubview:self.floatingButton];
 }
 
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+
+  self.fhvc.headerView.topSafeAreaInset =
+      [MDCFlexibleHeaderView topSafeAreaInsetFromViewController:self];
+}
+
+- (void)willMoveToParentViewController:(UIViewController *)parent {
+  [super willMoveToParentViewController:parent];
+
+  if (parent != nil) {
+    self.fhvc.headerView.topSafeAreaInset =
+        [MDCFlexibleHeaderView topSafeAreaInsetFromViewController:parent];
+  }
+}
+
 // This method must be implemented for MDCFlexibleHeaderViewController's
 // MDCFlexibleHeaderView to properly support MDCFlexibleHeaderShiftBehavior should you choose
 // to customize it.
@@ -124,12 +146,11 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 #pragma mark - <UIScrollViewDelegate>
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-  CGFloat contentOffsetY = -scrollView.contentOffset.y;
-  if (contentOffsetY < kFlexibleHeaderMinHeight) {
-    contentOffsetY = kFlexibleHeaderMinHeight;
+  if (scrollView == self.fhvc.headerView.trackingScrollView) {
+    [self.fhvc scrollViewDidScroll:scrollView];
   }
-  self.floatingButton.center = CGPointMake(self.floatingButton.center.x, contentOffsetY);
-  [self.fhvc scrollViewDidScroll:scrollView];
+  self.floatingButton.center = CGPointMake(self.floatingButton.center.x,
+                                           CGRectGetMaxY(self.fhvc.headerView.frame));
 }
 
 @end
