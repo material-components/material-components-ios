@@ -129,8 +129,6 @@ static const CGFloat kSingleCycleRotation =
   self = [super initWithCoder:coder];
   if (self) {
     [self commonMDCActivityIndicatorInit];
-    // TODO: Overwrite cycleColors if the value is present in the coder
-    // https://github.com/material-components/material-components-ios/issues/1530
   }
   return self;
 }
