@@ -25,6 +25,7 @@ Progress view is a linear progress indicator that implements Material Design ani
 <ul class="icon-list">
   <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-progress-indicators">Material Design guidelines: Progress & Activity</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/progress-indicators/progress-views/api-docs/Classes/MDCProgressView.html">MDCProgressView</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/progress-indicators/progress-views/api-docs/Enums.html">Enumerations</a></li>
   <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/progress-indicators/progress-views/api-docs/Enums/MDCProgressViewBackwardAnimationMode.html">MDCProgressViewBackwardAnimationMode</a></li>
 </ul>
 
@@ -45,6 +46,8 @@ Progress view is a linear progress indicator that implements Material Design ani
 - [Differences From UIProgressView](#differences-from-uiprogressview)
 - [Extensions](#extensions)
   - [Color Theming](#color-theming)
+- [Accessibility](#accessibility)
+  - [MDCProgressView](#mdcprogressview)
 
 - - -
 
@@ -186,4 +189,21 @@ Progress View does not yet have a Material Design color system themer. The follo
 tracking its development:
 
 - Task: [Implement a color themer](https://www.pivotaltracker.com/story/show/157095443)
+
+
+## Accessibility
+
+<!-- Extracted from docs/accessibility.md -->
+
+### MDCProgressView
+
+#### -accessibilityValue
+
+Like UIProgressView, MDCProgressView's `accessibilityValue` is based on the current value of the ProgressView's
+`progress` property. UIProgressView has internal logic that makes it so that a `progress` value of .476 will yield an
+`accessibilityValue` of "fifty percent". To ensure that the MDCProgressView follows the same behavior, the
+MDCProgressView class has a static UIProgressView that instances query for its `accessibilityValue` whenever
+they need to provide their own.
+
+The ProgressView announces a new `accessibilityValue` whenever its `progress` changes if VoiceOver is on.
 
