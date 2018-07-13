@@ -45,6 +45,11 @@
     self.title = @"Presented App Bar";
 
     _appBar = [[MDCAppBar alloc] init];
+
+    // Behavioral flags.
+    _appBar.inferTopSafeAreaInsetFromViewController = YES;
+    _appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = NO;
+
     [self addChildViewController:_appBar.headerViewController];
 
     self.colorScheme = [[MDCSemanticColorScheme alloc] init];

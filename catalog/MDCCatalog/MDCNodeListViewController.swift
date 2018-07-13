@@ -195,6 +195,9 @@ class MDCNodeListViewController: CBCNodeListViewController {
 
     self.addChildViewController(appBar.headerViewController)
 
+    appBar.inferTopSafeAreaInsetFromViewController = true
+    appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = false
+
     appBar.navigationBar.titleAlignment = .center
     applyColorScheme(AppTheme.globalTheme.colorScheme)
     MDCAppBarTypographyThemer.applyTypographyScheme(
