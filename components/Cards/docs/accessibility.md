@@ -1,4 +1,4 @@
-### MDCCard Accessibility
+### Card Accessibility
 
 To help ensure your cards are accessible to as many users as possible, please be sure to review the following 
 recommendations:
@@ -35,9 +35,9 @@ Objective-C
 Nested elements in MDCCards are available to assistive technologies without additional customization, however
 additional setup may be needed to accommodate special scenarios, such as:
 
-* Images that have additional context beyond text that is already presented on the card.  For example, news article 
-images can benefit from an [`accessibility
-Label`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619577-accessibilitylabel) 
+* Images that have additional context beyond text that is already presented on the card.  
+For example, news article images can benefit from an 
+[`accessibilityLabel`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619577-accessibilitylabel) 
 describing their content.
 
 Swift
@@ -52,10 +52,10 @@ Objective-C
   articleImageView.accessibilityLabel = @"Event or scene description";
 ```
 
-* Star or rating images should have an [`accessibility
-Label`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619577-accessibilitylabel) 
-describing its purpuse and an [`accessibility
-Value`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619583-accessibilityvalue) 
+* Star or rating images should have an 
+[`accessibilityLabel`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619577-accessibilitylabel) 
+describing its purpuse and an 
+[`accessibilityValue`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619583-accessibilityvalue) 
 describing the rating value.
 
 Swift
@@ -72,10 +72,10 @@ Objective-C
   ratingView.accessibilityValue = @"4.5";
 ```
 
-* Primary content or actions that appear lower on the screen will be read last by assistive technologies, 
-sometimes after longer or non-primary content. To change the order, or group elements together, you can make 
-the card an accessibility container by adopting the [`UIAccessibility
-Container`](https://developer.apple.com/documentation/uikit/accessibility/uiaccessibilitycontainer) protocol. 
-Grouping and order is controlled by creating [`UIAccessibility
-Element`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement) elements as needed, 
-and returning them in the desired order.   
+* Primary content or actions that appear lower on the screen will be read last by assistive 
+technologies, sometimes after longer or non-primary content. To change the order, or group 
+elements together, you can make the card an accessibility container by adopting the 
+[`UIAccessibilityContainer`](https://developer.apple.com/documentation/uikit/accessibility/uiaccessibilitycontainer) 
+protocol. Grouping and order is controlled by creating 
+[`UIAccessibilityElement`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement) 
+elements as needed, and returning them in the desired order. 

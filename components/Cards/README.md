@@ -47,7 +47,7 @@ purposes.
 - [Extensions](#extensions)
   - [Color Theming](#color-theming)
 - [Accessibility](#accessibility)
-  - [MDCCard Accessibility](#mdccard-accessibility)
+  - [Card Accessibility](#card-accessibility)
 
 - - -
 
@@ -260,7 +260,7 @@ id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
 
 <!-- Extracted from docs/accessibility.md -->
 
-### MDCCard Accessibility
+### Card Accessibility
 
 To help ensure your cards are accessible to as many users as possible, please be sure to review the following 
 recommendations:
@@ -298,9 +298,9 @@ Nested elements in MDCCards are available to assistive technologies without addi
 additional setup may be needed to accommodate special scenarios, such as:
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item">Images that have additional context beyond text that is already presented on the card.  For example, news article </li>
-images can benefit from an [`accessibility
-Label`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619577-accessibilitylabel) 
+  <li class="icon-list-item icon-list-item">Images that have additional context beyond text that is already presented on the card.  </li>
+For example, news article images can benefit from an 
+[`accessibilityLabel`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619577-accessibilitylabel) 
 describing their content.
 
 Swift
@@ -316,10 +316,10 @@ Objective-C
 ```
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item">Star or rating images should have an [`accessibility</li>
-Label`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619577-accessibilitylabel) 
-describing its purpuse and an [`accessibility
-Value`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619583-accessibilityvalue) 
+  <li class="icon-list-item icon-list-item">Star or rating images should have an </li>
+[`accessibilityLabel`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619577-accessibilitylabel) 
+describing its purpuse and an 
+[`accessibilityValue`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619583-accessibilityvalue) 
 describing the rating value.
 
 Swift
@@ -337,11 +337,11 @@ Objective-C
 ```
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item">Primary content or actions that appear lower on the screen will be read last by assistive technologies, </li>
-sometimes after longer or non-primary content. To change the order, or group elements together, you can make 
-the card an accessibility container by adopting the [`UIAccessibility
-Container`](https://developer.apple.com/documentation/uikit/accessibility/uiaccessibilitycontainer) protocol. 
-Grouping and order is controlled by creating [`UIAccessibility
-Element`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement) elements as needed, 
-and returning them in the desired order.   
+  <li class="icon-list-item icon-list-item">Primary content or actions that appear lower on the screen will be read last by assistive </li>
+technologies, sometimes after longer or non-primary content. To change the order, or group 
+elements together, you can make the card an accessibility container by adopting the 
+[`UIAccessibilityContainer`](https://developer.apple.com/documentation/uikit/accessibility/uiaccessibilitycontainer) 
+protocol. Grouping and order is controlled by creating 
+[`UIAccessibilityElement`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement) 
+elements as needed, and returning them in the desired order. 
 
