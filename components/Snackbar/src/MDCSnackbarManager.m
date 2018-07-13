@@ -47,6 +47,12 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 @interface MDCSnackbarManagerInternal : NSObject
 
 /**
+ The instance of MDCSnackbarManager that "owns" this internal manager.  Used to get theming
+ properties. Can be refactored away in the future.
+ */
+@property(nonatomic, weak) MDCSnackbarManager *manager;
+
+/**
  The list of messages waiting to be displayed.
  */
 @property(nonatomic) NSMutableArray *pendingMessages;
@@ -84,6 +90,8 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
  */
 @property(nonatomic, weak) id<MDCSnackbarManagerDelegate> delegate;
 
+- (instancetype)initWithSnackbarManager:(__weak MDCSnackbarManager *)manager;
+
 @end
 
 @interface MDCSnackbarManagerSuspensionToken : NSObject <MDCSnackbarSuspensionToken>
@@ -113,20 +121,11 @@ static NSMutableDictionary<NSNumber *, UIColor *> *_buttonTitleColors;
 static BOOL _mdc_adjustsFontForContentSizeCategory;
 static BOOL _shouldApplyStyleChangesToVisibleSnackbars;
 
-+ (MDCSnackbarManagerInternal *)scaredInstance {
-  static MDCSnackbarManagerInternal *manager = nil;
-  static dispatch_once_t onceToken;
 
-  dispatch_once(&onceToken, ^{
-    manager = [[MDCSnackbarManagerInternal alloc] init];
-  });
-
-  return manager;
-}
-
-- (instancetype)init {
+- (instancetype)initWithSnackbarManager:(MDCSnackbarManager *__weak)manager {
   self = [super init];
   if (self) {
+    _manager = manager;
     _pendingMessages = [[NSMutableArray alloc] init];
     _suspensionTokens = [NSMutableDictionary dictionary];
     _overlayView = [[MDCSnackbarOverlayView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -228,7 +227,9 @@ static BOOL _shouldApplyStyleChangesToVisibleSnackbars;
       };
 
   Class viewClass = [message viewClass];
-  snackbarView = [[viewClass alloc] initWithMessage:message dismissHandler:dismissHandler];
+  snackbarView = [[viewClass alloc] initWithMessage:message
+                                     dismissHandler:dismissHandler
+                                    snackbarManager:self.manager];
   [self.delegate willPresentSnackbarWithMessageView:snackbarView];
   self.currentSnackbar = snackbarView;
   self.overlayView.accessibilityViewIsModal = ![self isSnackbarTransient:snackbarView];
@@ -518,7 +519,7 @@ static BOOL _shouldApplyStyleChangesToVisibleSnackbars;
 - (instancetype)init {
   self = [super init];
   if (self) {
-    _internalManager = [[MDCSnackbarManagerInternal alloc] init];
+    _internalManager = [[MDCSnackbarManagerInternal alloc] initWithSnackbarManager:self];
   }
   return self;
 }

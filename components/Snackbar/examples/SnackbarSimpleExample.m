@@ -27,6 +27,13 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  if (!self.colorScheme) {
+    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+  }
+  if (!self.typographyScheme) {
+    self.typographyScheme = [[MDCTypographyScheme alloc] init];
+  }
+  
   [self setupExampleViews:@[
       @"Simple Snackbar",
       @"Snackbar with Action Button",

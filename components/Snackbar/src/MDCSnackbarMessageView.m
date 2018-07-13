@@ -214,10 +214,28 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 }
 
 - (instancetype)initWithMessage:(MDCSnackbarMessage *)message
-                 dismissHandler:(MDCSnackbarMessageDismissHandler)handler {
-  self = [self initWithFrame:CGRectZero];
+                 dismissHandler:(MDCSnackbarMessageDismissHandler)handler
+                snackbarManager:(MDCSnackbarManager *__weak)manager {
+  self = [super initWithFrame:CGRectZero];
 
   if (self) {
+    _snackbarMessageViewShadowColor =
+        manager.snackbarMessageViewShadowColor ?: UIColor.blackColor;
+    _snackbarMessageViewBackgroundColor =
+        manager.snackbarMessageViewBackgroundColor ?: MDCRGBAColor(0x32, 0x32, 0x32, 1);
+    _messageTextColor =
+        manager.messageTextColor ?: UIColor.whiteColor;
+    _buttonTitleColors = [NSMutableDictionary dictionary];
+    _buttonTitleColors[@(UIControlStateNormal)] =
+        [manager buttonTitleColorForState:UIControlStateNormal] ?:
+        MDCRGBAColor(0xFF, 0xFF, 0xFF, 0.6f);
+    _buttonTitleColors[@(UIControlStateHighlighted)] =
+        [manager buttonTitleColorForState:UIControlStateHighlighted] ?:
+        UIColor.whiteColor;
+    _mdc_adjustsFontForContentSizeCategory =
+        manager.mdc_adjustsFontForContentSizeCategory;
+    _messageFont = manager.messageFont;
+    _buttonFont = manager.buttonFont;
     _message = message;
     _dismissalHandler = [handler copy];
 

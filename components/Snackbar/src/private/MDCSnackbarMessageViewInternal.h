@@ -62,7 +62,8 @@ typedef void (^MDCSnackbarMessageDismissHandler)(BOOL userInitiated,
  that it needs to be dismissed prior to its timer-based dismissal time.
  */
 - (_Nonnull instancetype)initWithMessage:(MDCSnackbarMessage *_Nullable)message
-                          dismissHandler:(MDCSnackbarMessageDismissHandler _Nullable)handler;
+                          dismissHandler:(MDCSnackbarMessageDismissHandler _Nullable)handler
+                         snackbarManager:(MDCSnackbarManager *__weak)manager;
 
 /**
  Dismisses the message view.
