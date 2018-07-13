@@ -36,3 +36,7 @@ achieve the desired animation of the control.
 ## Extensions
 
 - [Color Theming](color-theming.md)
+
+## Accessibility
+
+- [Accessibility](accessibility.md)
