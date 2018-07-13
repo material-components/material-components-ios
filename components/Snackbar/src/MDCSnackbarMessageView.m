@@ -213,35 +213,10 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   BOOL _mdc_adjustsFontForContentSizeCategory;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame {
-  self = [super initWithFrame:frame];
-
-  if (self) {
-    _snackbarMessageViewShadowColor =
-        MDCSnackbarManager.snackbarMessageViewShadowColor ?: UIColor.blackColor;
-    _snackbarMessageViewBackgroundColor =
-        MDCSnackbarManager.snackbarMessageViewBackgroundColor ?: MDCRGBAColor(0x32, 0x32, 0x32, 1);
-    _messageTextColor =
-        MDCSnackbarManager.messageTextColor ?: UIColor.whiteColor;
-    _buttonTitleColors = [NSMutableDictionary dictionary];
-    _buttonTitleColors[@(UIControlStateNormal)] =
-        [MDCSnackbarManager buttonTitleColorForState:UIControlStateNormal] ?:
-            MDCRGBAColor(0xFF, 0xFF, 0xFF, 0.6f);
-    _buttonTitleColors[@(UIControlStateHighlighted)] =
-        [MDCSnackbarManager buttonTitleColorForState:UIControlStateHighlighted] ?:
-            UIColor.whiteColor;
-    _mdc_adjustsFontForContentSizeCategory =
-        MDCSnackbarManager.mdc_adjustsFontForContentSizeCategory;
-    _messageFont = MDCSnackbarManager.messageFont;
-    _buttonFont = MDCSnackbarManager.buttonFont;
-  }
-
-  return self;
-}
-
 - (instancetype)initWithMessage:(MDCSnackbarMessage *)message
                  dismissHandler:(MDCSnackbarMessageDismissHandler)handler {
-  self = [super init];
+  self = [self initWithFrame:CGRectZero];
+
   if (self) {
     _message = message;
     _dismissalHandler = [handler copy];

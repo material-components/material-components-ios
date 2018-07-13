@@ -18,16 +18,15 @@
 
 @implementation MDCSnackbarColorThemer
 
-+ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme {
-  MDCSnackbarManager.snackbarMessageViewBackgroundColor =
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+               toSnackbarManager:(nonnull MDCSnackbarManager *)manager {
+  manager.snackbarMessageViewBackgroundColor =
       [colorScheme.onSurfaceColor colorWithAlphaComponent:0.8f];
-  MDCSnackbarManager.messageTextColor = [colorScheme.surfaceColor colorWithAlphaComponent:0.87f];
+  manager.messageTextColor = [colorScheme.surfaceColor colorWithAlphaComponent:0.87f];
   UIColor *buttonTitleColor = [colorScheme.surfaceColor
-                                       colorWithAlphaComponent:0.6f];
-  [MDCSnackbarManager setButtonTitleColor:buttonTitleColor
-                                 forState:UIControlStateNormal];
-  [MDCSnackbarManager setButtonTitleColor:buttonTitleColor
-                                 forState:UIControlStateHighlighted];
+                               colorWithAlphaComponent:0.6f];
+  [manager setButtonTitleColor:buttonTitleColor forState:UIControlStateNormal];
+  [manager setButtonTitleColor:buttonTitleColor forState:UIControlStateHighlighted];
 }
 
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme

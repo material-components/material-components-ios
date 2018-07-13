@@ -48,7 +48,9 @@
  instead.
 
  @param fontScheme The font scheme to apply to MDCSnackbarMessageView.
+ @param manager The instance of MDCSnackbarManager to theme.
  */
-+ (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme;
++ (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme
+      toSnackbarManager:(nonnull MDCSnackbarManager *)manager;
 
 @end

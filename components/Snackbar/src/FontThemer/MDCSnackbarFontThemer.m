@@ -24,9 +24,10 @@
   snackbarMessageView.buttonFont = fontScheme.button;
 }
 
-+ (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme {
-  MDCSnackbarManager.messageFont = fontScheme.body2;
-  MDCSnackbarManager.buttonFont = fontScheme.button;
++ (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme
+      toSnackbarManager:(nonnull MDCSnackbarManager *)manager {
+  manager.messageFont = fontScheme.body2;
+  manager.buttonFont = fontScheme.button;
 }
 
 @end

@@ -81,7 +81,7 @@ static const CGFloat kBottomBarHeight = 44.0f;
 - (void)viewWillDisappear:(BOOL)animated {
   [super viewWillDisappear:animated];
 
-  [MDCSnackbarManager setBottomOffset:0];
+  [MDCSnackbarManager.defaultManager setBottomOffset:0];
 }
 
 - (void)toggleModes {
@@ -111,7 +111,7 @@ static const CGFloat kBottomBarHeight = 44.0f;
   NSString *text = @"Snackbar Message";
   MDCSnackbarMessage *message = [MDCSnackbarMessage messageWithText:text];
   message.duration = 5.0f;
-  [MDCSnackbarManager showMessage:message];
+  [MDCSnackbarManager.defaultManager showMessage:message];
 }
 
 - (void)toggleBottomBar {
@@ -129,7 +129,7 @@ static const CGFloat kBottomBarHeight = 44.0f;
                    animations:^{
                      self.bottomBar.center = CGPointMake(self.bottomBar.center.x,
                                                          self.bottomBar.center.y + translation);
-                     [MDCSnackbarManager setBottomOffset:bottomOffset];
+                     [MDCSnackbarManager.defaultManager setBottomOffset:bottomOffset];
                    }];
 }
 

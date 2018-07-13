@@ -48,7 +48,7 @@
                                          style:UIBarButtonItemStylePlain
                                         target:self
                                         action:@selector(toggleDynamicType)]];
-  MDCSnackbarManager.delegate = self;
+  MDCSnackbarManager.defaultManager.delegate = self;
 }
 
 - (void)toggleModes {
@@ -68,7 +68,7 @@
   } else {
     [self.navigationItem.rightBarButtonItems.lastObject setTitle:@"DT Off"];
   }
-  [MDCSnackbarManager mdc_setAdjustsFontForContentSizeCategory:_dynamicType];
+  [MDCSnackbarManager.defaultManager mdc_setAdjustsFontForContentSizeCategory:_dynamicType];
 }
 
 #pragma mark - Event Handling
@@ -76,7 +76,7 @@
 - (void)showSimpleSnackbar:(id)sender {
   MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
   message.text = @"Snackbar Message";
-  [MDCSnackbarManager showMessage:message];
+  [MDCSnackbarManager.defaultManager showMessage:message];
 }
 
 - (void)showSnackbarWithAction:(id)sender {
@@ -85,7 +85,7 @@
   MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
   action.title = @"Tap Me";
   message.action = action;
-  [MDCSnackbarManager showMessage:message];
+  [MDCSnackbarManager.defaultManager showMessage:message];
 }
 
 
@@ -96,13 +96,13 @@
   MDCSnackbarMessageActionHandler actionHandler = ^() {
     MDCSnackbarMessage *answerMessage = [[MDCSnackbarMessage alloc] init];
     answerMessage.text = @"The sky was cloudless and of a deep dark blue.";
-    [MDCSnackbarManager showMessage:answerMessage];
+    [MDCSnackbarManager.defaultManager showMessage:answerMessage];
   };
   action.handler = actionHandler;
   action.title = @"Action";
   message.action = action;
 
-  [MDCSnackbarManager showMessage:message];
+  [MDCSnackbarManager.defaultManager showMessage:message];
 }
 
 
@@ -118,7 +118,7 @@
                                 initWithString:@" go where no one has gone before."]];
   message.attributedText = text;
 
-  [MDCSnackbarManager showMessage:message];
+  [MDCSnackbarManager.defaultManager showMessage:message];
 }
 
 - (void)showColorThemedSnackbar:(id)sender {
@@ -127,22 +127,22 @@
   MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
   action.title = @"Tap Me";
   message.action = action;
-  [MDCSnackbarManager setButtonTitleColor:MDCPalette.purplePalette.tint400
-                                 forState:UIControlStateNormal];
-  [MDCSnackbarManager setButtonTitleColor:MDCPalette.purplePalette.tint700
-                                 forState:UIControlStateHighlighted];
-  MDCSnackbarManager.messageTextColor = MDCPalette.greenPalette.tint500;
-  [MDCSnackbarManager showMessage:message];
+  [MDCSnackbarManager.defaultManager setButtonTitleColor:MDCPalette.purplePalette.tint400
+                                                forState:UIControlStateNormal];
+  [MDCSnackbarManager.defaultManager setButtonTitleColor:MDCPalette.purplePalette.tint700
+                                                forState:UIControlStateHighlighted];
+  MDCSnackbarManager.defaultManager.messageTextColor = MDCPalette.greenPalette.tint500;
+  [MDCSnackbarManager.defaultManager showMessage:message];
 }
 
 - (void)showCustomizedSnackbar:(id)sender {
   UIFont *customMessageFont = [UIFont fontWithName:@"Zapfino" size:14.0f];
   NSAssert(customMessageFont, @"Unable to instantiate font");
-  MDCSnackbarManager.messageFont = customMessageFont;
+  MDCSnackbarManager.defaultManager.messageFont = customMessageFont;
 
   UIFont *customButtonFont = [UIFont fontWithName:@"ChalkDuster" size:14.0f];
   NSAssert(customButtonFont, @"Unable to instantiate font");
-  MDCSnackbarManager.buttonFont = customButtonFont;
+  MDCSnackbarManager.defaultManager.buttonFont = customButtonFont;
 
   MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
   message.text = @"Customized Fonts";
@@ -150,15 +150,15 @@
   action.title = @"Fancy";
   message.action = action;
 
-  [MDCSnackbarManager showMessage:message];
+  [MDCSnackbarManager.defaultManager showMessage:message];
 }
 
 - (void)showDecustomizedSnackbar:(id)sender {
-  MDCSnackbarManager.messageFont = nil;
-  MDCSnackbarManager.buttonFont = nil;
-  [MDCSnackbarManager setButtonTitleColor:nil forState:UIControlStateNormal];
-  [MDCSnackbarManager setButtonTitleColor:nil forState:UIControlStateHighlighted];
-  MDCSnackbarManager.messageTextColor = nil;
+  MDCSnackbarManager.defaultManager.messageFont = nil;
+  MDCSnackbarManager.defaultManager.buttonFont = nil;
+  [MDCSnackbarManager.defaultManager setButtonTitleColor:nil forState:UIControlStateNormal];
+  [MDCSnackbarManager.defaultManager setButtonTitleColor:nil forState:UIControlStateHighlighted];
+  MDCSnackbarManager.defaultManager.messageTextColor = nil;
 
   MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
   message.text = @"Back to the standard snackbar";
@@ -166,7 +166,7 @@
   action.title = @"Okay";
   message.action = action;
 
-  [MDCSnackbarManager showMessage:message];
+  [MDCSnackbarManager.defaultManager showMessage:message];
 }
 
 #pragma mark - UICollectionView
