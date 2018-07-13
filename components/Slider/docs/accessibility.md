@@ -5,19 +5,15 @@ To help ensure your slider is accessible to as many users as possible, please be
 
 Set an appropriate `accessibilityLabel` value for your slider. This should reflect what the slider affects.
 
-#### Objective - C
-```objc
-slider.accessibilityLabel = @"Volume Slider";
-``` 
-
 #### Swift
 ```swift
 slider.accessibilityLabel = "Volume Slider"
 ```
 
-### `-accessibilityActivate`
- 
- Our implementation closely resembles what UISlider does but it's not an exact match. On an `accessibilityActivate` we move one sixth of the amount between the current value and the midpoint value.
+#### Objective - C
+```objc
+slider.accessibilityLabel = @"Volume Slider";
+``` 
 
 ### Minimum touch size
 
