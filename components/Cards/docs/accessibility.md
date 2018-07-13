@@ -5,13 +5,12 @@ recommendations:
 
 #### Accessibility for Cards in a Collection
 
-Since assistive technologies visit all cards in a collection in a sequential order, it is often easier to distinguish 
-between elements that belong to different cards, by aggregating all the card's information to a single sentence. 
-This can be done by setting an appropriate [`accessibility
-Label`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619577-accessibilitylabel) for the 
-card. In addition, the card's [`isAccessiblity
-Element`](https://developer.apple.com/documentation/objectivec/nsobject/1615141-isaccessibilityelement) 
-property should be enabled, so it is treated as a single entity by assistive technologies.
+Since assistive technologies visit all card in a collection in a sequential order, it is often easier to distinguish 
+between elements that belong to different card by aggregating all the card's information to a single sentence.  This can be done by setting an appropriate 
+[`accessibilityLabel`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619577-accessibilitylabel) 
+for the card. Additionally, set the card's 
+[`isAccessiblityElement`](https://developer.apple.com/documentation/objectivec/nsobject/1615141-isaccessibilityelement) 
+to on. Cards are a container element and setting isAccessibiltElement for a container turns off individually selecting its subelements.
 
 Swift
 ```swift
