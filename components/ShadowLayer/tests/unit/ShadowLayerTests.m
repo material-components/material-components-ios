@@ -22,41 +22,6 @@
 
 @implementation ShadowLayerTests
 
-- (void)testBasicEncode {
-  MDCShadowLayer *shadowLayer = [[MDCShadowLayer alloc] init];
-
-  NSData *data = [NSKeyedArchiver archivedDataWithRootObject:shadowLayer];
-
-  MDCShadowLayer *unarchivedLayer = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-
-  XCTAssertEqual(shadowLayer.elevation, unarchivedLayer.elevation);
-  XCTAssertEqual(shadowLayer.shadowMaskEnabled, unarchivedLayer.shadowMaskEnabled);
-}
-
-- (void)testElevationEncode {
-  MDCShadowLayer *shadowLayer = [[MDCShadowLayer alloc] init];
-  shadowLayer.elevation = 11.0;
-
-  NSData *data = [NSKeyedArchiver archivedDataWithRootObject:shadowLayer];
-
-  MDCShadowLayer *unarchivedLayer = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-
-  XCTAssertEqual(shadowLayer.elevation, unarchivedLayer.elevation);
-  XCTAssertEqual(shadowLayer.shadowMaskEnabled, unarchivedLayer.shadowMaskEnabled);
-}
-
-- (void)testShadowMaskEncode {
-  MDCShadowLayer *shadowLayer = [[MDCShadowLayer alloc] init];
-  shadowLayer.shadowMaskEnabled = NO;
-
-  NSData *data = [NSKeyedArchiver archivedDataWithRootObject:shadowLayer];
-
-  MDCShadowLayer *unarchivedLayer = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-
-  XCTAssertEqual(shadowLayer.elevation, unarchivedLayer.elevation);
-  XCTAssertEqual(shadowLayer.shadowMaskEnabled, unarchivedLayer.shadowMaskEnabled);
-}
-
 - (void)testDefaultValues {
   // Given
   MDCShadowLayer *shadowLayer = [[MDCShadowLayer alloc] init];
