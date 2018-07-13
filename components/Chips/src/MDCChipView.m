@@ -25,26 +25,6 @@
 #import "MaterialShapes.h"
 #import "MaterialTypography.h"
 
-static NSString *const MDCChipImageViewKey = @"MDCChipImageViewKey";
-static NSString *const MDCChipSelectedImageViewKey = @"MDCChipSelectedImageViewKey";
-static NSString *const MDCChipAccessoryViewKey = @"MDCChipAccessoryViewKey";
-static NSString *const MDCChipTitleLabelKey = @"MDCChipTitleLabelKey";
-static NSString *const MDCChipContentPaddingKey = @"MDCChipContentPaddingKey";
-static NSString *const MDCChipImagePaddingKey = @"MDCChipImagePaddingKey";
-static NSString *const MDCChipAccessoryPaddingKey = @"MDCChipAccessoryPaddingKey";
-static NSString *const MDCChipTitlePaddingKey = @"MDCChipTitlePaddingKey";
-static NSString *const MDCChipInkViewKey = @"MDCChipInkViewKey";
-static NSString *const MDCChipAdjustsFontForContentSizeKey = @"MDCChipAdjustsFontForContentSizeKey";
-static NSString *const MDCChipBackgroundColorsKey = @"MDCChipBackgroundColorsKey";
-static NSString *const MDCChipBorderColorsKey = @"MDCChipBorderColorsKey";
-static NSString *const MDCChipBorderWidthsKey = @"MDCChipBorderWidthsKey";
-static NSString *const MDCChipElevationsKey = @"MDCChipElevationsKey";
-static NSString *const MDCChipInkColorsKey = @"MDCChipInkColorsKey";
-static NSString *const MDCChipShadowColorsKey = @"MDCChipShadowColorsKey";
-static NSString *const MDCChipTitleFontKey = @"MDCChipTitleFontKey";
-static NSString *const MDCChipTitleColorsKey = @"MDCChipTitleColorsKey";
-static NSString *const MDCChipMinimumSizeKey = @"MDCChipMinimumSizeKey";
-
 static const MDCFontTextStyle kTitleTextStyle = MDCFontTextStyleBody2;
 
 static const CGSize kMDCChipMinimumSizeDefault = (CGSize){(CGFloat)0, (CGFloat)32};
@@ -154,6 +134,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 }
 
 - (void)commonMDCChipViewInit {
+  _minimumSize = kMDCChipMinimumSizeDefault;
   self.isAccessibilityElement = YES;
 }
 
@@ -217,7 +198,6 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     _imagePadding = MDCChipImagePadding;
     _titlePadding = MDCChipTitlePadding;
     _accessoryPadding = MDCChipAccessoryPadding;
-    _minimumSize = kMDCChipMinimumSizeDefault;
 
     // UIControl has a drag enter/exit boundary that is outside of the frame of the button itself.
     // Because this is not exposed externally, we can't use -touchesMoved: to calculate when to
@@ -241,69 +221,9 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   if (self = [super initWithCoder:aDecoder]) {
-    _imageView = [aDecoder decodeObjectOfClass:[UIImageView class] forKey:MDCChipImageViewKey];
-    _selectedImageView = [aDecoder decodeObjectOfClass:[UIImageView class]
-                                                forKey:MDCChipSelectedImageViewKey];
-    _titleLabel = [aDecoder decodeObjectOfClass:[UILabel class] forKey:MDCChipTitleLabelKey];
-    _accessoryView = [aDecoder decodeObjectOfClass:[UIView class] forKey:MDCChipAccessoryViewKey];
-
-    _contentPadding = [aDecoder decodeUIEdgeInsetsForKey:MDCChipContentPaddingKey];
-    _imagePadding = [aDecoder decodeUIEdgeInsetsForKey:MDCChipImagePaddingKey];
-    _titlePadding = [aDecoder decodeUIEdgeInsetsForKey:MDCChipTitlePaddingKey];
-    _accessoryPadding = [aDecoder decodeUIEdgeInsetsForKey:MDCChipAccessoryPaddingKey];
-
-    _inkView = [aDecoder decodeObjectOfClass:[MDCInkView class] forKey:MDCChipInkViewKey];
-
-    _backgroundColors = [aDecoder decodeObjectOfClass:[NSMutableDictionary class]
-                                               forKey:MDCChipBackgroundColorsKey];
-    _borderColors = [aDecoder decodeObjectOfClass:[NSMutableDictionary class]
-                                           forKey:MDCChipBorderColorsKey];
-    _borderWidths = [aDecoder decodeObjectOfClass:[NSMutableDictionary class]
-                                           forKey:MDCChipBorderWidthsKey];
-    _elevations = [aDecoder decodeObjectOfClass:[NSMutableDictionary class]
-                                         forKey:MDCChipElevationsKey];
-    _inkColors = [aDecoder decodeObjectOfClass:[NSMutableDictionary class]
-                                        forKey:MDCChipInkColorsKey];
-    _shadowColors = [aDecoder decodeObjectOfClass:[NSMutableDictionary class]
-                                           forKey:MDCChipShadowColorsKey];
-    _titleFont = [aDecoder decodeObjectOfClass:[UIFont class] forKey:MDCChipTitleFontKey];
-    _titleColors = [aDecoder decodeObjectOfClass:[NSMutableDictionary class]
-                                          forKey:MDCChipTitleColorsKey];
-    _minimumSize = kMDCChipMinimumSizeDefault;
-    if ([aDecoder containsValueForKey:MDCChipMinimumSizeKey]) {
-      _minimumSize = [aDecoder decodeCGSizeForKey:MDCChipMinimumSizeKey];
-    }
-
-    self.mdc_adjustsFontForContentSizeCategory =
-        [aDecoder decodeBoolForKey:MDCChipAdjustsFontForContentSizeKey];
-
     [self commonMDCChipViewInit];
   }
   return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [super encodeWithCoder:aCoder];
-
-  [aCoder encodeObject:_imageView forKey:MDCChipImageViewKey];
-  [aCoder encodeObject:_selectedImageView forKey:MDCChipSelectedImageViewKey];
-  [aCoder encodeObject:_titleLabel forKey:MDCChipTitleLabelKey];
-  [aCoder encodeObject:_accessoryView forKey:MDCChipAccessoryViewKey];
-  [aCoder encodeUIEdgeInsets:_contentPadding forKey:MDCChipContentPaddingKey];
-  [aCoder encodeUIEdgeInsets:_imagePadding forKey:MDCChipImagePaddingKey];
-  [aCoder encodeUIEdgeInsets:_titlePadding forKey:MDCChipTitlePaddingKey];
-  [aCoder encodeUIEdgeInsets:_accessoryPadding forKey:MDCChipAccessoryPaddingKey];
-  [aCoder encodeObject:_inkView forKey:MDCChipInkViewKey];
-  [aCoder encodeBool:_mdc_adjustsFontForContentSizeCategory forKey:MDCChipAdjustsFontForContentSizeKey];
-  [aCoder encodeObject:_backgroundColors forKey:MDCChipBackgroundColorsKey];
-  [aCoder encodeObject:_borderColors forKey:MDCChipBorderColorsKey];
-  [aCoder encodeObject:_borderWidths forKey:MDCChipBorderWidthsKey];
-  [aCoder encodeObject:_elevations forKey:MDCChipElevationsKey];
-  [aCoder encodeObject:_inkColors forKey:MDCChipInkColorsKey];
-  [aCoder encodeObject:_shadowColors forKey:MDCChipShadowColorsKey];
-  [aCoder encodeObject:_titleFont forKey:MDCChipTitleFontKey];
-  [aCoder encodeObject:_titleColors forKey:MDCChipTitleColorsKey];
-  [aCoder encodeCGSize:_minimumSize forKey:MDCChipMinimumSizeKey];
 }
 
 - (void)dealloc {
