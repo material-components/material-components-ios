@@ -20,9 +20,22 @@
 
 static const NSTimeInterval MDCBottomSheetTransitionDuration = 0.25;
 
-@implementation MDCBottomSheetTransitionController
+@implementation MDCBottomSheetTransitionController {
+  @protected BOOL _isScrimAccessibilityElement;
+  @protected NSString *_scrimAccessibilityLabel;
+  @protected NSString *_scrimAccessibilityHint;
+  @protected UIAccessibilityTraits _scrimAccessibilityTraits;
+}
 
 #pragma mark - UIViewControllerTransitioningDelegate
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    _scrimAccessibilityTraits = UIAccessibilityTraitButton;
+  }
+  return self;
+}
 
 - (UIPresentationController *)
     presentationControllerForPresentedViewController:(UIViewController *)presented
@@ -33,6 +46,10 @@ static const NSTimeInterval MDCBottomSheetTransitionDuration = 0.25;
                                                            presentingViewController:presenting];
   presentationController.trackingScrollView = self.trackingScrollView;
   presentationController.dismissOnBackgroundTap = self.dismissOnBackgroundTap;
+  presentationController.scrimAccessibilityTraits = _scrimAccessibilityTraits;
+  presentationController.isScrimAccessibilityElement = _isScrimAccessibilityElement;
+  presentationController.scrimAccessibilityHint = _scrimAccessibilityHint;
+  presentationController.scrimAccessibilityLabel = _scrimAccessibilityLabel;
   return presentationController;
 }
 
@@ -129,6 +146,38 @@ static const NSTimeInterval MDCBottomSheetTransitionDuration = 0.25;
   } else {
     return containerView.frame;
   }
+}
+
+- (void)setIsScrimAccessibilityElement:(BOOL)isScrimAccessibilityElement {
+  _isScrimAccessibilityElement = isScrimAccessibilityElement;
+}
+
+- (BOOL)isScrimAccessibilityElement {
+  return _isScrimAccessibilityElement;
+}
+
+- (void)setScrimAccessibilityLabel:(NSString *)scrimAccessibilityLabel {
+  _scrimAccessibilityLabel = scrimAccessibilityLabel;
+}
+
+- (NSString *)scrimAccessibilityLabel {
+  return _scrimAccessibilityLabel;
+}
+
+- (void)setScrimAccessibilityHint:(NSString *)scrimAccessibilityHint {
+  _scrimAccessibilityHint = scrimAccessibilityHint;
+}
+
+- (NSString *)scrimAccessibilityHint {
+  return _scrimAccessibilityHint;
+}
+
+- (void)setScrimAccessibilityTraits:(UIAccessibilityTraits)scrimAccessibilityTraits {
+  _scrimAccessibilityTraits = scrimAccessibilityTraits;
+}
+
+- (UIAccessibilityTraits)scrimAccessibilityTraits {
+  return _scrimAccessibilityTraits;
 }
 
 @end

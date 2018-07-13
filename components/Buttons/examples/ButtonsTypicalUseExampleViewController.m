@@ -160,6 +160,13 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
   ];
 
   [self setupExampleViews];
+
+  NSMutableArray *accessibilityElements = [@[] mutableCopy];
+  for (NSUInteger index = 0; index < self.buttons.count; ++index) {
+    [accessibilityElements addObject:self.labels[index]];
+    [accessibilityElements addObject:self.buttons[index]];
+  }
+  self.view.accessibilityElements = [accessibilityElements copy];
 }
 
 - (void)setupExampleViews {
@@ -179,28 +186,30 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
 
 - (void)didTap:(id)sender {
   NSLog(@"%@ was tapped.", NSStringFromClass([sender class]));
-  if (sender == self.floatingButton) {
-    [self.floatingButton
-          collapse:YES
-        completion:^{
-          dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)),
-                         dispatch_get_main_queue(), ^{
-                           [self.floatingButton expand:YES completion:nil];
-                         });
-        }];
+  if (!UIAccessibilityIsVoiceOverRunning()) {
+    if (sender == self.floatingButton) {
+      [self.floatingButton
+            collapse:YES
+          completion:^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)),
+                           dispatch_get_main_queue(), ^{
+                             [self.floatingButton expand:YES completion:nil];
+                           });
+          }];
+    }
   }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  if (animated) {
+  if (animated && !UIAccessibilityIsVoiceOverRunning()) {
     [self.floatingButton collapse:NO completion:nil];
   }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
-  if (animated) {
+  if (animated && !UIAccessibilityIsVoiceOverRunning()) {
     [self.floatingButton expand:YES completion:nil];
   }
 }

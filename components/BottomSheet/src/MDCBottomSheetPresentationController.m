@@ -15,9 +15,6 @@
  */
 
 #import "MDCBottomSheetPresentationController.h"
-
-#import "MDCBottomSheetController.h"
-
 #import "MaterialMath.h"
 #import "private/MDCSheetContainerView.h"
 
@@ -50,6 +47,10 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 @implementation MDCBottomSheetPresentationController {
   UIView *_dimmingView;
   MDCSheetContainerView *_sheetView;
+  @private BOOL _scrimIsAccessibilityElement;
+  @private NSString *_scrimAccessibilityLabel;
+  @private NSString *_scrimAccessibilityHint;
+  @private UIAccessibilityTraits _scrimAccessibilityTraits;
 }
 
 @synthesize delegate;
@@ -86,6 +87,11 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   _dimmingView.translatesAutoresizingMaskIntoConstraints = NO;
   _dimmingView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  _dimmingView.accessibilityTraits |= UIAccessibilityTraitButton;
+  _dimmingView.isAccessibilityElement = _scrimIsAccessibilityElement;
+  _dimmingView.accessibilityTraits = _scrimAccessibilityTraits;
+  _dimmingView.accessibilityLabel = _scrimAccessibilityLabel;
+  _dimmingView.accessibilityHint = _scrimAccessibilityHint;
 
   UIScrollView *scrollView = self.trackingScrollView;
   if (scrollView == nil) {
@@ -192,6 +198,44 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   }
 }
 
+#pragma mark - Properties
+
+- (void)setIsScrimAccessibilityElement:(BOOL)isScrimAccessibilityElement {
+  _scrimIsAccessibilityElement = isScrimAccessibilityElement;
+  _dimmingView.isAccessibilityElement = isScrimAccessibilityElement;
+}
+
+- (BOOL)isScrimAccessibilityElement {
+  return _scrimIsAccessibilityElement;
+}
+
+- (void)setScrimAccessibilityLabel:(NSString *)scrimAccessibilityLabel {
+  _scrimAccessibilityLabel = scrimAccessibilityLabel;
+  _dimmingView.accessibilityLabel = scrimAccessibilityLabel;
+}
+
+- (NSString *)scrimAccessibilityLabel {
+  return _scrimAccessibilityLabel;
+}
+
+- (void)setScrimAccessibilityHint:(NSString *)scrimAccessibilityHint {
+  _scrimAccessibilityHint = scrimAccessibilityHint;
+  _dimmingView.accessibilityHint = scrimAccessibilityHint;
+}
+
+- (NSString *)scrimAccessibilityHint {
+  return _scrimAccessibilityHint;
+}
+
+- (void)setScrimAccessibilityTraits:(UIAccessibilityTraits)scrimAccessibilityTraits {
+  _scrimAccessibilityTraits = scrimAccessibilityTraits;
+  _dimmingView.accessibilityTraits = scrimAccessibilityTraits;
+}
+
+- (UIAccessibilityTraits)scrimAccessibilityTraits {
+  return _scrimAccessibilityTraits;
+}
+
 #pragma mark - MDCSheetContainerViewDelegate
 
 - (void)sheetContainerViewDidHide:(nonnull __unused MDCSheetContainerView *)containerView {
@@ -201,6 +245,15 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   if ([strongDelegate respondsToSelector:
        @selector(bottomSheetPresentationControllerDidDismissBottomSheet:)]) {
     [strongDelegate bottomSheetPresentationControllerDidDismissBottomSheet:self];
+  }
+}
+
+- (void)sheetContainerViewWillChangeState:(nonnull MDCSheetContainerView *)containerView
+                               sheetState:(MDCSheetState)sheetState {
+  id<MDCBottomSheetPresentationControllerDelegate> strongDelegate = self.delegate;
+  if ([strongDelegate respondsToSelector:
+       @selector(bottomSheetWillChangeState:sheetState:)]) {
+    [strongDelegate bottomSheetWillChangeState:self sheetState:sheetState];
   }
 }
 

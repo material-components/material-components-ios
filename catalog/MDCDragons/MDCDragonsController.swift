@@ -247,6 +247,7 @@ class MDCDragonsController: UIViewController,
       container.appBar.navigationBar.titleTextAttributes =
         [ NSForegroundColorAttributeName: UIColor.white,
           NSFontAttributeName: UIFont.systemFont(ofSize: 16) ]
+      container.isTopLayoutGuideAdjustmentEnabled = true
       vc.title = nodeData.node.title
       
       let headerView = container.appBar.headerViewController.headerView
@@ -254,12 +255,6 @@ class MDCDragonsController: UIViewController,
         headerView.trackingScrollView = collectionVC.collectionView
       } else if let scrollView = vc.view as? UIScrollView {
         headerView.trackingScrollView = scrollView
-      } else {
-        var contentFrame = container.contentViewController.view.frame
-        let headerSize = headerView.sizeThatFits(container.contentViewController.view.frame.size)
-        contentFrame.origin.y = headerSize.height
-        contentFrame.size.height = self.view.bounds.height - headerSize.height
-        container.contentViewController.view.frame = contentFrame
       }
       vc = container
     }
