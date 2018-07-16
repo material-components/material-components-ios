@@ -364,7 +364,9 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 
   if (!self.topLayoutGuideAdjustmentEnabled) {
     // Legacy behavior
+    self.isUpdatingTopLayoutGuide = YES;
     [self.topLayoutGuideConstraint setConstant:self.flexibleHeaderViewControllerHeightOffset];
+    self.isUpdatingTopLayoutGuide = NO;
     return;
   }
 
