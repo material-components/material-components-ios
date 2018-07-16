@@ -341,26 +341,6 @@ We want to avoid misuse of initializers both in the calling of existing classes 
 1. Enter YES or NO
 
 
-### NS(Secure)Coding Support
-
-
-Conforming to NSCoding is necessary for Interface Builder support in views and could be used to
-serialize non-view classes. Prefer to implement
-[NSSecureCoding](https://developer.apple.com/documentation/foundation/nssecurecoding). If your superclass only support
-NSCoding,
-that is sufficient.
-
-Tip: write a unit test for this. 
-Tip: NSCoding encodes UIColors as 32bits, so it is possible to lose precision by encoding and decoding when running in 64bits.
-
-1. Implement `-initWithCoder:`.
-1. For decoding objects always use `decodeObjectOfClass:forKey:` whenever possible.
-1. Implement `-encodeWithCoder:`.
-1. Implement NSSecureCoding Protocol if all subclasses support NSSecureCoding. For example UIView and UIViewController do not support NSSecureCoding.
-1. If implementing NSSecureCoding, implement `+supportsSecureCoding`.
-1. Enter YES or NO
-
-
 ### commonMDCClassInit (If necessary)
 
 
