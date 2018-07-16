@@ -68,28 +68,6 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   return intendedShiftBehavior;
 }
 
-static NSString *const MDCFlexibleHeaderMinimumHeightKey = @"MDCFlexibleHeaderMinimumHeightKey";
-static NSString *const MDCFlexibleHeaderMaximumHeightKey = @"MDCFlexibleHeaderMaximumHeightKey";
-static NSString *const MDCFlexibleHeaderMinMaxHeightIncludesSafeAreaKey =
-    @"MDCFlexibleHeaderMinMaxHeightIncludesSafeAreaKey";
-static NSString *const MDCFlexibleHeaderShiftBehaviorKey = @"MDCFlexibleHeaderShiftBehaviorKey";
-static NSString *const MDCFlexibleHeaderContentImportanceKey =
-    @"MDCFlexibleHeaderContentImportanceKey";
-static NSString *const MDCFlexibleHeaderCanOverExtendKey = @"MDCFlexibleHeaderCanOverExtendKey";
-static NSString *const MDCFlexibleHeaderStatusBarCanOverlapKey =
-    @"MDCFlexibleHeaderStatusBarCanOverlapKey";
-static NSString *const MDCFlexibleHeaderVisibleShadowOpacityKey =
-    @"MDCFlexibleHeaderVisibleShadowOpacityKey";
-static NSString *const MDCFlexibleHeaderTrackingScrollViewKey =
-    @"MDCFlexibleHeaderTrackingScrollViewKey";
-static NSString *const MDCFlexibleHeaderInFrontOfInfiniteContentKey =
-    @"MDCFlexibleHeaderInFrontOfInfiniteContentKey";
-static NSString *const MDCFlexibleHeaderSharedWithManyScrollViewsKey =
-    @"MDCFlexibleHeaderSharedWithManyScrollViewsKey";
-static NSString *const MDCFlexibleHeaderContentIsTranslucentKey =
-    @"MDCFlexibleHeaderContentIsTranslucentKey";
-static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegateKey";
-
 @interface MDCFlexibleHeaderView () <MDCStatusBarShifterDelegate>
 
 // The intensity strength of the shadow being displayed under the flexible header. Use this property
@@ -199,7 +177,6 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
@@ -212,92 +189,8 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   self = [super initWithCoder:aDecoder];
   if (self) {
     [self commonMDCFlexibleHeaderViewInit];
-    if ([aDecoder containsValueForKey:MDCFlexibleHeaderMinimumHeightKey]) {
-      _minimumHeight = (CGFloat)[aDecoder decodeDoubleForKey:MDCFlexibleHeaderMinimumHeightKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCFlexibleHeaderMaximumHeightKey]) {
-      _maximumHeight = (CGFloat)[aDecoder decodeDoubleForKey:MDCFlexibleHeaderMaximumHeightKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCFlexibleHeaderMinMaxHeightIncludesSafeAreaKey]) {
-      _minMaxHeightIncludesSafeArea =
-          [aDecoder decodeBoolForKey:MDCFlexibleHeaderMinMaxHeightIncludesSafeAreaKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCFlexibleHeaderShiftBehaviorKey]) {
-      _shiftBehavior = [aDecoder decodeIntegerForKey:MDCFlexibleHeaderShiftBehaviorKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCFlexibleHeaderContentImportanceKey]) {
-      _headerContentImportance =
-          [aDecoder decodeIntegerForKey:MDCFlexibleHeaderContentImportanceKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCFlexibleHeaderCanOverExtendKey]) {
-      _canOverExtend = [aDecoder decodeBoolForKey:MDCFlexibleHeaderCanOverExtendKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCFlexibleHeaderStatusBarCanOverlapKey]) {
-      _statusBarHintCanOverlapHeader =
-          [aDecoder decodeBoolForKey:MDCFlexibleHeaderStatusBarCanOverlapKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCFlexibleHeaderVisibleShadowOpacityKey]) {
-      _visibleShadowOpacity = [aDecoder decodeFloatForKey:MDCFlexibleHeaderVisibleShadowOpacityKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCFlexibleHeaderTrackingScrollViewKey]) {
-      _trackingScrollView = [aDecoder decodeObjectOfClass:[UIScrollView class] 
-                                                   forKey:MDCFlexibleHeaderTrackingScrollViewKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCFlexibleHeaderInFrontOfInfiniteContentKey]) {
-      _inFrontOfInfiniteContent =
-          [aDecoder decodeBoolForKey:MDCFlexibleHeaderInFrontOfInfiniteContentKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCFlexibleHeaderSharedWithManyScrollViewsKey]) {
-      _sharedWithManyScrollViews =
-          [aDecoder decodeBoolForKey:MDCFlexibleHeaderSharedWithManyScrollViewsKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCFlexibleHeaderContentIsTranslucentKey]) {
-      _contentIsTranslucent = [aDecoder decodeBoolForKey:MDCFlexibleHeaderContentIsTranslucentKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCFlexibleHeaderDelegateKey]) {
-      _delegate = [aDecoder decodeObjectForKey:MDCFlexibleHeaderDelegateKey];
-    }
   }
   return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [super encodeWithCoder:aCoder];
-
-  [aCoder encodeDouble:self.minimumHeight forKey:MDCFlexibleHeaderMinimumHeightKey];
-  [aCoder encodeDouble:self.maximumHeight forKey:MDCFlexibleHeaderMaximumHeightKey];
-  [aCoder encodeBool:self.minMaxHeightIncludesSafeArea
-              forKey:MDCFlexibleHeaderMinMaxHeightIncludesSafeAreaKey];
-  [aCoder encodeInteger:self.shiftBehavior forKey:MDCFlexibleHeaderShiftBehaviorKey];
-  [aCoder encodeInteger:self.headerContentImportance forKey:MDCFlexibleHeaderContentImportanceKey];
-  [aCoder encodeBool:self.canOverExtend forKey:MDCFlexibleHeaderCanOverExtendKey];
-  [aCoder encodeBool:self.statusBarHintCanOverlapHeader
-              forKey:MDCFlexibleHeaderStatusBarCanOverlapKey];
-  [aCoder encodeFloat:self.visibleShadowOpacity forKey:MDCFlexibleHeaderVisibleShadowOpacityKey];
-  [aCoder encodeBool:self.inFrontOfInfiniteContent
-              forKey:MDCFlexibleHeaderInFrontOfInfiniteContentKey];
-  [aCoder encodeBool:self.sharedWithManyScrollViews
-              forKey:MDCFlexibleHeaderSharedWithManyScrollViewsKey];
-  [aCoder encodeBool:self.contentIsTranslucent forKey:MDCFlexibleHeaderContentIsTranslucentKey];
-  if (self.trackingScrollView) {
-    [aCoder encodeConditionalObject:self.trackingScrollView
-                             forKey:MDCFlexibleHeaderTrackingScrollViewKey];
-  }
-  if (self.delegate) {
-    [aCoder encodeConditionalObject:self.delegate forKey:MDCFlexibleHeaderDelegateKey];
-  }
 }
 
 - (void)commonMDCFlexibleHeaderViewInit {
