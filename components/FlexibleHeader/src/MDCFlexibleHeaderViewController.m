@@ -352,6 +352,8 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 }
 
 - (void)updateTopLayoutGuide {
+  NSAssert([NSThread isMainThread],
+           @"updateTopLayoutGuide must be called from the main thread.");
   // We observe (using KVO) the top layout guide's constant and re-invoke updateTopLayoutGuide
   // whenever it changes. We also change the constant in this method. So, to avoid a recursive
   // infinite loop we bail out early here if we're the ones that initiated the top layout guide
