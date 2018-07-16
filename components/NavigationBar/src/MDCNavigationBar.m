@@ -65,18 +65,6 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   return forwardingKeyPaths;
 }
 
-static NSString *const MDCNavigationBarTitleKey = @"MDCNavigationBarTitleKey";
-static NSString *const MDCNavigationBarTitleViewKey = @"MDCNavigationBarTitleViewKey";
-static NSString *const MDCNavigationBarTitleTextAttributesKey =
-    @"MDCNavigationBarTitleTextAttributesKey";
-static NSString *const MDCNavigationBarBackItemKey = @"MDCNavigationBarBackItemKey";
-static NSString *const MDCNavigationBarHidesBackButtonKey = @"MDCNavigationBarHidesBackButtonKey";
-static NSString *const MDCNavigationBarLeadingBarItemsKey = @"MDCNavigationBarLeadingBarItemsKey";
-static NSString *const MDCNavigationBarTrailingBarItemsKey = @"MDCNavigationBarTrailingBarItemsKey";
-static NSString *const MDCNavigationBarLeadingButtonSupplementsBackButtonKey =
-    @"MDCNavigationBarLeadingButtonSupplementsBackButtonKey";
-static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTitleAlignmentKey";
-
 @implementation MDCNavigationBarTextColorAccessibilityMutator
 
 - (nonnull instancetype)init {
@@ -174,50 +162,6 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
   self = [super initWithCoder:aDecoder];
   if (self) {
     [self commonMDCNavigationBarInit];
-    if ([aDecoder containsValueForKey:MDCNavigationBarTitleKey]) {
-      self.title = [aDecoder decodeObjectOfClass:[NSString class] forKey:MDCNavigationBarTitleKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCNavigationBarTitleViewKey]) {
-      self.titleView =  [aDecoder decodeObjectOfClass:[UIView class]
-                                               forKey:MDCNavigationBarTitleViewKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCNavigationBarTitleTextAttributesKey]) {
-      self.titleTextAttributes =
-          [aDecoder decodeObjectOfClass:[NSDictionary class]
-                                 forKey:MDCNavigationBarTitleTextAttributesKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCNavigationBarBackItemKey]) {
-      self.backItem = [aDecoder decodeObjectOfClass:[UIBarButtonItem class]
-                                             forKey:MDCNavigationBarBackItemKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCNavigationBarHidesBackButtonKey]) {
-      self.hidesBackButton = [aDecoder decodeBoolForKey:MDCNavigationBarHidesBackButtonKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCNavigationBarLeadingBarItemsKey]) {
-      self.leadingBarButtonItems =
-          [aDecoder decodeObjectOfClass:[NSArray class]
-                                 forKey:MDCNavigationBarLeadingBarItemsKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCNavigationBarTrailingBarItemsKey]) {
-      self.trailingBarButtonItems =
-          [aDecoder decodeObjectOfClass:[NSArray class]
-                                 forKey:MDCNavigationBarTrailingBarItemsKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCNavigationBarLeadingButtonSupplementsBackButtonKey]) {
-      self.leadingItemsSupplementBackButton =
-          [aDecoder decodeBoolForKey:MDCNavigationBarLeadingButtonSupplementsBackButtonKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCNavigationBarTitleAlignmentKey]) {
-      self.titleAlignment = [aDecoder decodeIntegerForKey:MDCNavigationBarTitleAlignmentKey];
-    }
   }
   return self;
 }
@@ -230,40 +174,6 @@ static NSString *const MDCNavigationBarTitleAlignmentKey = @"MDCNavigationBarTit
     _trailingButtonBar.backgroundColor = nil;
   }
   return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [super encodeWithCoder:aCoder];
-
-  if (self.title) {
-    [aCoder encodeObject:self.title forKey:MDCNavigationBarTitleKey];
-  }
-
-  if (self.titleView) {
-    [aCoder encodeObject:self.titleView forKey:MDCNavigationBarTitleViewKey];
-  }
-
-  if (self.titleTextAttributes) {
-    [aCoder encodeObject:self.titleTextAttributes forKey:MDCNavigationBarTitleTextAttributesKey];
-  }
-
-  if (self.backItem) {
-    [aCoder encodeObject:self.backItem forKey:MDCNavigationBarBackItemKey];
-  }
-
-  [aCoder encodeBool:self.hidesBackButton forKey:MDCNavigationBarHidesBackButtonKey];
-
-  if (self.leadingBarButtonItems && self.leadingBarButtonItems.count > 0) {
-    [aCoder encodeObject:self.leadingBarButtonItems forKey:MDCNavigationBarLeadingBarItemsKey];
-  }
-
-  if (self.trailingBarButtonItems && self.trailingBarButtonItems.count > 0) {
-    [aCoder encodeObject:self.trailingBarButtonItems forKey:MDCNavigationBarTrailingBarItemsKey];
-  }
-
-  [aCoder encodeBool:self.leadingItemsSupplementBackButton
-              forKey:MDCNavigationBarLeadingButtonSupplementsBackButtonKey];
-  [aCoder encodeInteger:self.titleAlignment forKey:MDCNavigationBarTitleAlignmentKey];
 }
 
 - (void)setTitleFont:(UIFont *)titleFont {
