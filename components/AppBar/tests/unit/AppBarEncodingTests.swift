@@ -24,17 +24,6 @@ class AppBarEncodingTests: XCTestCase {
   func testEncoding() {
 
     // Given
-    appBar.headerViewController.headerView.shiftBehavior = .enabledWithStatusBar
-    appBar.headerViewController.headerView.minimumHeight = 46.0
-    appBar.headerViewController.headerView.maximumHeight = 112.0
-    appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = true
-    appBar.headerViewController.headerView.shiftBehavior = .enabled
-    appBar.headerViewController.headerView.statusBarHintCanOverlapHeader = true
-    appBar.headerViewController.headerView.visibleShadowOpacity = 3.0
-    appBar.headerViewController.headerView.isInFrontOfInfiniteContent = true
-    appBar.headerViewController.headerView.sharedWithManyScrollViews = true
-    appBar.headerViewController.headerView.contentIsTranslucent = true
-    appBar.headerViewController.headerView.headerContentImportance = .high
     appBar.navigationBar.backgroundColor = UIColor.black
     appBar.navigationBar.tintColor = UIColor.white
     appBar.navigationBar.title = "Title"
@@ -48,36 +37,6 @@ class AppBarEncodingTests: XCTestCase {
     let unarchivedAppBar = NSKeyedUnarchiver.unarchiveObject(with: data) as? MDCAppBar
 
     // Then
-    XCTAssertEqual(appBar.headerViewController.headerView.shiftBehavior,
-                   unarchivedAppBar?.headerViewController.headerView.shiftBehavior)
-
-    XCTAssertEqual(appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea,
-                   unarchivedAppBar?.headerViewController.headerView.minMaxHeightIncludesSafeArea)
-
-    XCTAssertEqual(appBar.headerViewController.headerView.visibleShadowOpacity,
-                   unarchivedAppBar?.headerViewController.headerView.visibleShadowOpacity)
-
-    XCTAssertEqual(appBar.headerViewController.headerView.statusBarHintCanOverlapHeader,
-                   unarchivedAppBar?.headerViewController.headerView.statusBarHintCanOverlapHeader)
-
-    XCTAssertEqual(appBar.headerViewController.headerView.isInFrontOfInfiniteContent,
-                   unarchivedAppBar?.headerViewController.headerView.isInFrontOfInfiniteContent)
-
-    XCTAssertEqual(appBar.headerViewController.headerView.sharedWithManyScrollViews,
-                   unarchivedAppBar?.headerViewController.headerView.sharedWithManyScrollViews)
-
-    XCTAssertEqual(appBar.headerViewController.headerView.minimumHeight,
-                   unarchivedAppBar?.headerViewController.headerView.minimumHeight)
-
-    XCTAssertEqual(appBar.headerViewController.headerView.maximumHeight,
-                   unarchivedAppBar?.headerViewController.headerView.maximumHeight)
-
-    XCTAssertEqual(appBar.headerViewController.headerView.contentIsTranslucent,
-                   unarchivedAppBar?.headerViewController.headerView.contentIsTranslucent)
-
-    XCTAssertEqual(appBar.headerViewController.headerView.headerContentImportance,
-                   unarchivedAppBar?.headerViewController.headerView.headerContentImportance)
-
     XCTAssertEqual(appBar.navigationBar.backgroundColor,
                    unarchivedAppBar?.navigationBar.backgroundColor)
 
