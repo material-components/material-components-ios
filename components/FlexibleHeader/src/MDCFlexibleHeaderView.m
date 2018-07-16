@@ -68,28 +68,6 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   return intendedShiftBehavior;
 }
 
-static NSString *const MDCFlexibleHeaderMinimumHeightKey = @"MDCFlexibleHeaderMinimumHeightKey";
-static NSString *const MDCFlexibleHeaderMaximumHeightKey = @"MDCFlexibleHeaderMaximumHeightKey";
-static NSString *const MDCFlexibleHeaderMinMaxHeightIncludesSafeAreaKey =
-    @"MDCFlexibleHeaderMinMaxHeightIncludesSafeAreaKey";
-static NSString *const MDCFlexibleHeaderShiftBehaviorKey = @"MDCFlexibleHeaderShiftBehaviorKey";
-static NSString *const MDCFlexibleHeaderContentImportanceKey =
-    @"MDCFlexibleHeaderContentImportanceKey";
-static NSString *const MDCFlexibleHeaderCanOverExtendKey = @"MDCFlexibleHeaderCanOverExtendKey";
-static NSString *const MDCFlexibleHeaderStatusBarCanOverlapKey =
-    @"MDCFlexibleHeaderStatusBarCanOverlapKey";
-static NSString *const MDCFlexibleHeaderVisibleShadowOpacityKey =
-    @"MDCFlexibleHeaderVisibleShadowOpacityKey";
-static NSString *const MDCFlexibleHeaderTrackingScrollViewKey =
-    @"MDCFlexibleHeaderTrackingScrollViewKey";
-static NSString *const MDCFlexibleHeaderInFrontOfInfiniteContentKey =
-    @"MDCFlexibleHeaderInFrontOfInfiniteContentKey";
-static NSString *const MDCFlexibleHeaderSharedWithManyScrollViewsKey =
-    @"MDCFlexibleHeaderSharedWithManyScrollViewsKey";
-static NSString *const MDCFlexibleHeaderContentIsTranslucentKey =
-    @"MDCFlexibleHeaderContentIsTranslucentKey";
-static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegateKey";
-
 @interface MDCFlexibleHeaderView () <MDCStatusBarShifterDelegate>
 
 // The intensity strength of the shadow being displayed under the flexible header. Use this property
@@ -191,12 +169,13 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 @synthesize sharedWithManyScrollViews = _sharedWithManyScrollViews;
 @synthesize visibleShadowOpacity = _visibleShadowOpacity;
 
-#if DEBUG
 - (void)dealloc {
+#if DEBUG
   [_trackingScrollView.panGestureRecognizer removeTarget:self
                                                   action:@selector(fhv_scrollViewDidPan:)];
-}
 #endif
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -210,92 +189,8 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   self = [super initWithCoder:aDecoder];
   if (self) {
     [self commonMDCFlexibleHeaderViewInit];
-    if ([aDecoder containsValueForKey:MDCFlexibleHeaderMinimumHeightKey]) {
-      _minimumHeight = (CGFloat)[aDecoder decodeDoubleForKey:MDCFlexibleHeaderMinimumHeightKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCFlexibleHeaderMaximumHeightKey]) {
-      _maximumHeight = (CGFloat)[aDecoder decodeDoubleForKey:MDCFlexibleHeaderMaximumHeightKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCFlexibleHeaderMinMaxHeightIncludesSafeAreaKey]) {
-      _minMaxHeightIncludesSafeArea =
-          [aDecoder decodeBoolForKey:MDCFlexibleHeaderMinMaxHeightIncludesSafeAreaKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCFlexibleHeaderShiftBehaviorKey]) {
-      _shiftBehavior = [aDecoder decodeIntegerForKey:MDCFlexibleHeaderShiftBehaviorKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCFlexibleHeaderContentImportanceKey]) {
-      _headerContentImportance =
-          [aDecoder decodeIntegerForKey:MDCFlexibleHeaderContentImportanceKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCFlexibleHeaderCanOverExtendKey]) {
-      _canOverExtend = [aDecoder decodeBoolForKey:MDCFlexibleHeaderCanOverExtendKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCFlexibleHeaderStatusBarCanOverlapKey]) {
-      _statusBarHintCanOverlapHeader =
-          [aDecoder decodeBoolForKey:MDCFlexibleHeaderStatusBarCanOverlapKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCFlexibleHeaderVisibleShadowOpacityKey]) {
-      _visibleShadowOpacity = [aDecoder decodeFloatForKey:MDCFlexibleHeaderVisibleShadowOpacityKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCFlexibleHeaderTrackingScrollViewKey]) {
-      _trackingScrollView = [aDecoder decodeObjectOfClass:[UIScrollView class] 
-                                                   forKey:MDCFlexibleHeaderTrackingScrollViewKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCFlexibleHeaderInFrontOfInfiniteContentKey]) {
-      _inFrontOfInfiniteContent =
-          [aDecoder decodeBoolForKey:MDCFlexibleHeaderInFrontOfInfiniteContentKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCFlexibleHeaderSharedWithManyScrollViewsKey]) {
-      _sharedWithManyScrollViews =
-          [aDecoder decodeBoolForKey:MDCFlexibleHeaderSharedWithManyScrollViewsKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCFlexibleHeaderContentIsTranslucentKey]) {
-      _contentIsTranslucent = [aDecoder decodeBoolForKey:MDCFlexibleHeaderContentIsTranslucentKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCFlexibleHeaderDelegateKey]) {
-      _delegate = [aDecoder decodeObjectForKey:MDCFlexibleHeaderDelegateKey];
-    }
   }
   return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [super encodeWithCoder:aCoder];
-
-  [aCoder encodeDouble:self.minimumHeight forKey:MDCFlexibleHeaderMinimumHeightKey];
-  [aCoder encodeDouble:self.maximumHeight forKey:MDCFlexibleHeaderMaximumHeightKey];
-  [aCoder encodeBool:self.minMaxHeightIncludesSafeArea
-              forKey:MDCFlexibleHeaderMinMaxHeightIncludesSafeAreaKey];
-  [aCoder encodeInteger:self.shiftBehavior forKey:MDCFlexibleHeaderShiftBehaviorKey];
-  [aCoder encodeInteger:self.headerContentImportance forKey:MDCFlexibleHeaderContentImportanceKey];
-  [aCoder encodeBool:self.canOverExtend forKey:MDCFlexibleHeaderCanOverExtendKey];
-  [aCoder encodeBool:self.statusBarHintCanOverlapHeader
-              forKey:MDCFlexibleHeaderStatusBarCanOverlapKey];
-  [aCoder encodeFloat:self.visibleShadowOpacity forKey:MDCFlexibleHeaderVisibleShadowOpacityKey];
-  [aCoder encodeBool:self.inFrontOfInfiniteContent
-              forKey:MDCFlexibleHeaderInFrontOfInfiniteContentKey];
-  [aCoder encodeBool:self.sharedWithManyScrollViews
-              forKey:MDCFlexibleHeaderSharedWithManyScrollViewsKey];
-  [aCoder encodeBool:self.contentIsTranslucent forKey:MDCFlexibleHeaderContentIsTranslucentKey];
-  if (self.trackingScrollView) {
-    [aCoder encodeConditionalObject:self.trackingScrollView
-                             forKey:MDCFlexibleHeaderTrackingScrollViewKey];
-  }
-  if (self.delegate) {
-    [aCoder encodeConditionalObject:self.delegate forKey:MDCFlexibleHeaderDelegateKey];
-  }
 }
 
 - (void)commonMDCFlexibleHeaderViewInit {
@@ -352,6 +247,11 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   self.layer.shadowOffset = CGSizeMake(0, 1);
   self.layer.shadowRadius = 4.f;
   self.layer.shadowOpacity = 0;
+
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(fhv_updateLayout)
+                                               name:UIAccessibilityVoiceOverStatusChanged
+                                             object:nil];
 }
 
 - (void)setVisibleShadowOpacity:(float)visibleShadowOpacity {
@@ -1004,7 +904,7 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
 
   CGRect bounds = self.bounds;
 
-  if (_canOverExtend) {
+  if (_canOverExtend && !UIAccessibilityIsVoiceOverRunning()) {
     bounds.size.height = MAX(self.computedMinimumHeight, headerHeight);
 
   } else {
@@ -1069,10 +969,27 @@ static NSString *const MDCFlexibleHeaderDelegateKey = @"MDCFlexibleHeaderDelegat
   // header other than as a subview to the scroll view. This is the most common case to which the
   // following logic has been written.
   if (self.superview == self.trackingScrollView) {
-    self.transform = CGAffineTransformMakeTranslation(0, self.trackingScrollView.contentOffset.y);
-
     if (self.superview.subviews.lastObject != self) {
       [self.superview bringSubviewToFront:self];
+    }
+
+    if (UIAccessibilityIsVoiceOverRunning()) {
+      // Clamp the offset to at least -self.maximumHeight. Accessibility may attempt to scroll to
+      // a lesser offset than this to pull the flexible header into the center of the scrollview on
+      // focusing.
+      CGPoint offset = self.trackingScrollView.contentOffset;
+      offset.y = MAX(offset.y, -self.maximumHeight);
+      self.trackingScrollView.contentOffset = offset;
+      // Setting the transform on the same run loop as the accessibility scroll can cause additional
+      // incorrect scrolling as the scrollview attempts to resolve to a position that will place
+      // the header in the center of the scroll. Punting to the next loop prevents this.
+      dispatch_async(dispatch_get_main_queue(), ^{
+        self.transform =
+            CGAffineTransformMakeTranslation(0, self.trackingScrollView.contentOffset.y);
+        [self fhv_updateLayout];
+      });
+    } else {
+      self.transform = CGAffineTransformMakeTranslation(0, self.trackingScrollView.contentOffset.y);
     }
   }
 

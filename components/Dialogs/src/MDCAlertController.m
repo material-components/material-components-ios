@@ -22,6 +22,8 @@
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
 #import "MDCAlertControllerView.h"
+#import "UIViewController+MaterialDialogs.h"
+#import "MDCDialogPresentationController.h"
 #import "private/MDCAlertControllerView+Private.h"
 #import "private/MaterialDialogsStrings.h"
 #import "private/MaterialDialogsStrings_table.h"
@@ -385,8 +387,13 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 #pragma mark - UIAccessibilityAction
 
 - (BOOL)accessibilityPerformEscape {
-  [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
-  return YES;
+  MDCDialogPresentationController *dialogPresentationController =
+      self.mdc_dialogPresentationController;
+  if (dialogPresentationController.dismissOnBackgroundTap) {
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
+    return YES;
+  }
+  return NO;
 }
 
 @end

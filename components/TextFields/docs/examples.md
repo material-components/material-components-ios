@@ -12,7 +12,7 @@ scrollView.addSubview(textFieldFloating)
 textFieldFloating.placeholder = "Full Name"
 textFieldFloating.textView.delegate = self
 
-textFieldControllerFloating = MDCTextInputControllerUnderline(input: textFieldFloating) // Hold on as a property
+textFieldControllerFloating = MDCTextInputControllerUnderline(textInput: textFieldFloating) // Hold on as a property
 ```
 
 #### Objective-C
@@ -42,7 +42,7 @@ textFieldDefaultCharMax.placeholder = "Enter up to 50 characters"
 textFieldDefaultCharMax.textView.delegate = self
 
 // Second the controller is created to manage the text field
-textFieldControllerDefaultCharMax = MDCTextInputControllerUnderline(input: textFieldDefaultCharMax) // Hold on as a property
+textFieldControllerDefaultCharMax = MDCTextInputControllerUnderline(textInput: textFieldDefaultCharMax) // Hold on as a property
 textFieldControllerDefaultCharMax.characterCountMax = 50
 textFieldControllerDefaultCharMax.isFloatingEnabled = false
 ```

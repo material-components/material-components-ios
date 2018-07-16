@@ -123,6 +123,25 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
  */
 @property(nullable, nonatomic,copy) UIColor *backgroundColor UI_APPEARANCE_SELECTOR;
 
+/**
+ The inset applied to each items bounds to determine the rect in which the items' contents will be
+ centered. The contents are centered in this rect, but not compressed, so they may still extend
+ beyond these bounds. Defaults to {0, 0, 0, 0}. The inset is flipped for RTL.
+ */
+@property(nonatomic, assign) UIEdgeInsets itemsContentInsets;
+
+/**
+ The margin between the item's icon and title when alignment is either Justified or Centered.
+ Defaults to 0.
+ */
+@property(nonatomic, assign) CGFloat itemsContentVerticalMargin;
+
+/**
+ The margin between the item's icon and title when alignment is JustifiedAdjacentTitles. Defaults to
+ 12.
+ */
+@property(nonatomic, assign) CGFloat itemsContentHorizontalMargin;
+
 @end
 
 #pragma mark - MDCBottomNavigationBarDelegate

@@ -121,6 +121,10 @@ class EditReorderCollectionViewController: UIViewController,
 
     MDCCardThemer.applyScheme(cardScheme, toCardCell: cell)
     cell.isSelectable = (toggle == .edit)
+
+    cell.isAccessibilityElement = true
+    cell.accessibilityLabel = "Cell"
+
     return cell
   }
 

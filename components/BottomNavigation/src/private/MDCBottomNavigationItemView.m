@@ -41,7 +41,6 @@ static NSString *const MDCBottomNavigationItemViewUnselectedItemTintColorKey =
     @"MDCBottomNavigationItemViewUnselectedItemTintColorKey";
 
 static const CGFloat MDCBottomNavigationItemViewInkOpacity = 0.150f;
-static const CGFloat kMDCBottomNavigationItemViewItemInset = 8.f;
 static const CGFloat MDCBottomNavigationItemViewTitleFontSize = 12.f;
 
 // The duration of the selection transition animation.
@@ -215,26 +214,32 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 }
 
 - (void)centerLayoutAnimated:(BOOL)animated {
+  CGRect contentBoundingRect = UIEdgeInsetsInsetRect(self.bounds, self.contentInsets);
+  CGRect iconBounds = self.iconImageView.bounds;
+  CGFloat centerY = CGRectGetMidY(contentBoundingRect);
+  CGFloat centerX = CGRectGetMidX(contentBoundingRect);
+  UIUserInterfaceLayoutDirection layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
+  BOOL isRTL = layoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
+  if (isRTL) {
+    centerX = CGRectGetWidth(self.bounds) - centerX;
+  }
+
   if (self.titleBelowIcon) {
-    CGPoint iconImageViewCenter =
-        CGPointMake(CGRectGetMidX(self.bounds), CGRectGetHeight(self.iconImageView.bounds) / 2 +
-                    kMDCBottomNavigationItemViewItemInset);
-    BOOL titleVisibilityNever = self.selected &&
-        self.titleVisibility == MDCBottomNavigationBarTitleVisibilityNever;
-    BOOL titleVisibilitySelectedNever = !self.selected &&
-        (self.titleVisibility == MDCBottomNavigationBarTitleVisibilitySelected ||
-         self.titleVisibility == MDCBottomNavigationBarTitleVisibilityNever);
-    if (titleVisibilityNever) {
-      iconImageViewCenter = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
-    } else if (titleVisibilitySelectedNever) {
-      iconImageViewCenter = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
+    BOOL titleHidden =
+        self.titleVisibility == MDCBottomNavigationBarTitleVisibilityNever ||
+        (self.titleVisibility == MDCBottomNavigationBarTitleVisibilitySelected && !self.selected);
+    CGFloat iconHeight = CGRectGetHeight(self.iconImageView.bounds);
+    CGFloat labelHeight = CGRectGetHeight(self.label.bounds);
+    CGFloat totalContentHeight = iconHeight;
+    if (!titleHidden) {
+      totalContentHeight += labelHeight + self.contentVerticalMargin;
     }
+    CGPoint iconImageViewCenter =
+        CGPointMake(centerX, centerY - totalContentHeight / 2 + iconHeight / 2);
     CGPoint badgeCenter =
-        CGPointMake(CGRectGetMidX(self.bounds) + CGRectGetWidth(self.iconImageView.bounds) / 2,
-                    iconImageViewCenter.y - CGRectGetMidX(self.iconImageView.bounds));
-    self.label.center =
-        CGPointMake(CGRectGetMidX(self.bounds), CGRectGetHeight(self.bounds) -
-                    CGRectGetHeight(self.label.bounds) / 2 - kMDCBottomNavigationItemViewItemInset);
+        CGPointMake(iconImageViewCenter.x + CGRectGetMidX(iconBounds) * (isRTL ? -1 : 1),
+                    iconImageViewCenter.y - CGRectGetMidY(iconBounds));
+    self.label.center = CGPointMake(centerX, centerY + totalContentHeight / 2 - labelHeight / 2);
     if (animated) {
       [UIView animateWithDuration:kMDCBottomNavigationItemViewTransitionDuration animations:^(void) {
         self.iconImageView.center = iconImageViewCenter;
@@ -246,34 +251,29 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     }
     self.label.textAlignment = NSTextAlignmentCenter;
   } else {
-    UIUserInterfaceLayoutDirection layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
-    if (layoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
+    CGFloat contentsWidth =
+        CGRectGetWidth(self.iconImageView.bounds) + CGRectGetWidth(self.label.bounds);
+    if (!isRTL) {
       CGPoint iconImageViewCenter =
-          CGPointMake(CGRectGetMidX(self.bounds) - CGRectGetWidth(self.bounds) * 0.2f,
-                      CGRectGetMidY(self.bounds));
+          CGPointMake(centerX - CGRectGetWidth(contentBoundingRect) * 0.2f, centerY);
       self.iconImageView.center = iconImageViewCenter;
-      self.label.center =
-          CGPointMake(iconImageViewCenter.x + CGRectGetWidth(self.iconImageView.bounds) +
-                      CGRectGetWidth(self.label.bounds) / 2,
-                      CGRectGetMidY(self.bounds));
+      CGFloat labelCenterX =
+          iconImageViewCenter.x + contentsWidth / 2 + self.contentHorizontalMargin;
+      self.label.center = CGPointMake(labelCenterX, centerY);
       self.badge.center =
-          CGPointMake(CGRectGetMidX(self.bounds) - CGRectGetWidth(self.bounds) * 0.2f +
-                      CGRectGetWidth(self.iconImageView.bounds) / 2,
-                      iconImageViewCenter.y - CGRectGetMidX(self.iconImageView.bounds));
+          CGPointMake(iconImageViewCenter.x + CGRectGetMidX(iconBounds),
+                      iconImageViewCenter.y - CGRectGetMidY(iconBounds));
       self.label.textAlignment = NSTextAlignmentLeft;
     } else {
       CGPoint iconImageViewCenter =
-          CGPointMake(CGRectGetMidX(self.bounds) + CGRectGetWidth(self.bounds) * 0.2f,
-                      CGRectGetMidY(self.bounds));
+          CGPointMake(centerX + CGRectGetWidth(contentBoundingRect) * 0.2f, centerY);
       self.iconImageView.center = iconImageViewCenter;
-      self.label.center =
-          CGPointMake(iconImageViewCenter.x - CGRectGetWidth(self.iconImageView.bounds) -
-                      CGRectGetWidth(self.label.bounds) / 2,
-                      CGRectGetMidY(self.bounds));
+      CGFloat labelCenterX =
+          iconImageViewCenter.x - contentsWidth / 2 - self.contentHorizontalMargin;
+      self.label.center = CGPointMake(labelCenterX, centerY);
       self.badge.center =
-          CGPointMake(CGRectGetMidX(self.bounds) + CGRectGetWidth(self.bounds) * 0.2f +
-                      CGRectGetWidth(self.iconImageView.bounds) / 2,
-                      iconImageViewCenter.y - CGRectGetMidX(self.iconImageView.bounds));
+          CGPointMake(iconImageViewCenter.x - CGRectGetMidX(iconBounds),
+                      iconImageViewCenter.y - CGRectGetMidY(iconBounds));
       self.label.textAlignment = NSTextAlignmentRight;
     }
   }
