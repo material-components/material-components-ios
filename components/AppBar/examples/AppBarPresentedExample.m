@@ -54,8 +54,6 @@
   _appBar.headerViewController.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabled;
   [_appBar.headerViewController.headerView hideViewWhenShifted:_appBar.headerStackView];
 
-  _appBar.navigationBar.useFlexibleTopBottomInsets = YES;
-
   [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme
                                         toAppBar:_appBar];
   [MDCAppBarTypographyThemer applyTypographyScheme:self.typographyScheme
