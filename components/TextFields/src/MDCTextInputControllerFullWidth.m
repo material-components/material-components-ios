@@ -64,8 +64,14 @@ static inline UIColor *MDCTextInputControllerFullWidthInlinePlaceholderTextColor
   return [UIColor colorWithWhite:0 alpha:MDCTextInputControllerFullWidthHintTextOpacity];
 }
 
+static UIColor *ColorFromRGB(uint32_t colorValue) {
+  return [UIColor colorWithRed:(CGFloat)(((colorValue >> 16) & 0xFF) / 255.0)
+                         green:(CGFloat)(((colorValue >> 8) & 0xFF) / 255.0)
+                          blue:(CGFloat)((colorValue & 0xFF) / 255.0) alpha:1];
+}
+
 static inline UIColor *MDCTextInputControllerFullWidthErrorColorDefault() {
-  return [MDCPalette redPalette].accent400;
+  return ColorFromRGB(0xB00020);
 }
 
 #pragma mark - Class Properties
