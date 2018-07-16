@@ -28,7 +28,7 @@ static const CGFloat kStrokeVariantBorderOpacity = 0.37f;
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                       toCardCell:(nonnull MDCCardCollectionCell *)cardCell {
   cardCell.backgroundColor = colorScheme.surfaceColor;
-  cardCell.inkView.inkColor = [colorScheme.primaryColor colorWithAlphaComponent:0.08];
+  cardCell.inkView.inkColor = [colorScheme.primaryColor colorWithAlphaComponent:0.08f];
   cardCell.tintColor = colorScheme.primaryColor;
 }
 
