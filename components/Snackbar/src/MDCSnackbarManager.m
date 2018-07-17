@@ -112,16 +112,6 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 
 @implementation MDCSnackbarManagerInternal
 
-static UIColor *_snackbarMessageViewBackgroundColor;
-static UIColor *_snackbarMessageViewShadowColor;
-static UIColor *_messageTextColor;
-static UIFont *_messageFont;
-static UIFont *_buttonFont;
-static NSMutableDictionary<NSNumber *, UIColor *> *_buttonTitleColors;
-static BOOL _mdc_adjustsFontForContentSizeCategory;
-static BOOL _shouldApplyStyleChangesToVisibleSnackbars;
-
-
 - (instancetype)initWithSnackbarManager:(MDCSnackbarManager *__weak)manager {
   self = [super init];
   if (self) {
@@ -505,7 +495,17 @@ static BOOL _shouldApplyStyleChangesToVisibleSnackbars;
 @property(nonnull, nonatomic, strong) MDCSnackbarManagerInternal *internalManager;
 @end
 
-@implementation MDCSnackbarManager
+@implementation MDCSnackbarManager {
+  UIColor *_snackbarMessageViewBackgroundColor;
+  UIColor *_snackbarMessageViewShadowColor;
+  UIColor *_messageTextColor;
+  UIFont *_messageFont;
+  UIFont *_buttonFont;
+  NSMutableDictionary<NSNumber *, UIColor *> *_buttonTitleColors;
+  BOOL _mdc_adjustsFontForContentSizeCategory;
+  BOOL _shouldApplyStyleChangesToVisibleSnackbars;
+}
+
 
 + (instancetype)defaultManager {
   static MDCSnackbarManager *kDefaultManager;
