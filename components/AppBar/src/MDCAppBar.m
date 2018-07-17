@@ -30,6 +30,8 @@
 #import "private/MaterialAppBarStrings.h"
 #import "private/MaterialAppBarStrings_table.h"
 
+static NSString *const kBarStackKey = @"barStack";
+
 // The Bundle for string resources.
 static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
 
