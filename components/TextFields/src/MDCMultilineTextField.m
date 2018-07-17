@@ -85,10 +85,7 @@
     // been encoded differently.
     [self setupTextView];
 
-    MDCTextInputCommonFundament *fundament =
-        [aDecoder decodeObjectForKey:MDCMultilineTextFieldFundamentKey];
-    _fundament =
-        fundament ? fundament : [[MDCTextInputCommonFundament alloc] initWithTextInput:self];
+    _fundament = [[MDCTextInputCommonFundament alloc] initWithTextInput:self];
 
     [self commonMDCMultilineTextFieldInitialization];
   }
