@@ -54,7 +54,7 @@
 /**
  An instance of MDCSnackbarManager bound to the main screen.
  */
-@property(class, nonatomic, readonly, strong) MDCSnackbarManager *defaultManager;
+@property(class, nonnull, nonatomic, readonly, strong) MDCSnackbarManager *defaultManager;
 
 /**
  Determines the Snackbar alignment to the screen.
@@ -67,7 +67,7 @@
 
  @note The setter must be called from the main thread.
  */
-@property (nonatomic, assign) MDCSnackbarAlignment alignment;
+@property(nonatomic, assign) MDCSnackbarAlignment alignment;
 
 /**
  Shows @c message to the user, in a style consistent with the data contained in @c message.
@@ -239,4 +239,107 @@
  @c resumeMessagesWithToken.
  */
 @protocol MDCSnackbarSuspensionToken <NSObject>
+@end
+
+#pragma mark - To be deprecated
+
+@interface MDCSnackbarManager (LegacyAPI)
+
+/**
+ The @c alignment property of the @c defaultManager instance.
+ */
+@property(class, nonatomic, assign) MDCSnackbarAlignment alignment;
+
+/**
+ Calls @c -showMessage: on the @c defaultManager instance.
+ */
++ (void)showMessage:(nullable MDCSnackbarMessage *)message;
+
+/**
+ Calls @c -setPresentationHostView: on the @c defaultManager instance.
+ */
++ (void)setPresentationHostView:(nullable UIView *)hostView;
+
+/**
+ Calls @c -hasMessagesShowingORQueued on the @c defaultManager instance.
+ */
++ (BOOL)hasMessagesShowingOrQueued;
+
+/**
+ Calls @c -dismissAndCallCompletionBlocksWithCategory: on the @c defaultManager instance.
+ */
++ (void)dismissAndCallCompletionBlocksWithCategory:(nullable NSString *)category;
+
+/**
+ Calls -setBottomOffset: on the @c defaultManager instance.
+ */
++ (void)setBottomOffset:(CGFloat)offset;
+
+/**
+ Calls @c -suspendAllMessages on the @c defaultManager instance.
+ */
++ (nullable id <MDCSnackbarSuspensionToken>)suspendAllMessages;
+
+/**
+ Calls @c -suspendMessagesWithCategory: on the @c defaultManager instance.
+ */
++ (nullable id <MDCSnackbarSuspensionToken>)
+    suspendMessagesWithCategory:(nullable NSString *)category;
+
+/**
+ Calls @c -resumeMessagesWithToken: on the @c defaultManager instance.
+ */
++ (void)resumeMessagesWithToken:(nullable id <MDCSnackbarSuspensionToken>)token;
+
+/**
+ Bound to @c snackbarMessageViewBackgroundColor on the @c defaultManager instance.
+ */
+@property(class, nonatomic, strong, nullable) UIColor *snackbarMessageViewBackgroundColor;
+
+/**
+ Bound to @c snackbarMessageViewShadowColor on the @c defaultManager instance.
+ */
+@property(class, nonatomic, strong, nullable) UIColor *snackbarMessageViewShadowColor;
+
+/**
+ Bound to @c messageTextColor on the @c defaultManager instance.
+ */
+@property(class, nonatomic, strong, nullable) UIColor *messageTextColor;
+
+/**
+ Bound to @c messageFont on the @c defaultManager instance.
+ */
+@property(class, nonatomic, strong, nullable) UIFont *messageFont;
+
+/**
+ Bound to @c buttonFont on the @c defaultManager instance.
+ */
+@property(class, nonatomic, strong, nullable) UIFont *buttonFont;
+
+/**
+ Bound to @c shouldApplyStyleChangesToVisibleSnackbars on the @c defaultManager instance.
+ */
+@property(class, nonatomic, assign) BOOL shouldApplyStyleChangesToVisibleSnackbars;
+
+/**
+ Calls @c -buttonTitleColorForState: on the @c defaultManager instance.
+ */
++ (nullable UIColor *)buttonTitleColorForState:(UIControlState)state;
+
+/**
+ Calls @c -setButtonTitleColor:forState: on the @c defaultManager instance.
+ */
++ (void)setButtonTitleColor:(nullable UIColor *)titleColor forState:(UIControlState)state;
+
+/**
+ Bound to @c mdc_adjustsFontForContentSizeCategory on the @c defaultManager instance.
+ */
+@property(class, nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
+    BOOL mdc_adjustsFontForContentSizeCategory;
+
+/**
+ Bound to @c delegate on the @c defaultManager instance.
+ */
+@property(class, nonatomic, weak, nullable) id<MDCSnackbarManagerDelegate> delegate;
+
 @end
