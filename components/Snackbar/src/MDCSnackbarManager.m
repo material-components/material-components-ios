@@ -793,7 +793,7 @@ static BOOL _shouldApplyStyleChangesToVisibleSnackbars;
 }
 
 + (nullable id <MDCSnackbarSuspensionToken>)suspendAllMessages {
-  return MDCSnackbarManager.suspendAllMessages;
+  return MDCSnackbarManager.defaultManager.suspendAllMessages;
 }
 
 + (nullable id <MDCSnackbarSuspensionToken>)

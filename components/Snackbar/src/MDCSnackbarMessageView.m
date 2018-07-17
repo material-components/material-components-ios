@@ -213,6 +213,12 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   BOOL _mdc_adjustsFontForContentSizeCategory;
 }
 
+- (instancetype)initWithFrame:(CGRect)frame {
+  return [self initWithMessage:nil
+                dismissHandler:NULL
+               snackbarManager:MDCSnackbarManager.defaultManager];
+}
+
 - (instancetype)initWithMessage:(MDCSnackbarMessage *)message
                  dismissHandler:(MDCSnackbarMessageDismissHandler)handler
                 snackbarManager:(MDCSnackbarManager *__weak)manager {
