@@ -19,8 +19,8 @@
 @implementation MDCSnackbarTypographyThemer
 
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme {
-  MDCSnackbarManager.defaultManager.buttonFont = typographyScheme.button;
-  MDCSnackbarManager.defaultManager.messageFont = typographyScheme.body2;
+  MDCSnackbarManager.buttonFont = typographyScheme.button;
+  MDCSnackbarManager.messageFont = typographyScheme.body2;
 }
 
 @end

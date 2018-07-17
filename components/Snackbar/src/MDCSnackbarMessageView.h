@@ -17,8 +17,6 @@
 #import <UIKit/UIKit.h>
 #import "MaterialButtons.h"
 
-@class MDCSnackbarManager;
-
 /**
  Class which provides the default implementation of a Snackbar.
  */
