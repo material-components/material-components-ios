@@ -215,7 +215,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
 - (instancetype)initWithFrame:(CGRect)frame {
   return [self initWithMessage:nil
-                dismissHandler:NULL
+                dismissHandler:nil
                snackbarManager:MDCSnackbarManager.defaultManager];
 }
 
