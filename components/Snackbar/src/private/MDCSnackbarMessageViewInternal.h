@@ -16,6 +16,7 @@
 
 #import "../MDCSnackbarMessageView.h"
 
+@class MDCSnackbarManager;
 @class MDCSnackbarMessage;
 @class MDCSnackbarMessageAction;
 
