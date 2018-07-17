@@ -37,6 +37,26 @@ class FlexibleHeaderInjectionTopLayoutGuideTests: XCTestCase {
     super.tearDown()
   }
 
+  // MARK: No top layout guide view controller
+
+  func testTopLayoutGuideIsUnaffactedWithNoTopLayoutGuideViewController() {
+    // Given
+    let contentViewController = UIViewController()
+    contentViewController.addChildViewController(fhvc)
+    contentViewController.view.addSubview(fhvc.view)
+    fhvc.isTopLayoutGuideAdjustmentEnabled = true
+    fhvc.topLayoutGuideViewController = nil
+    fhvc.didMove(toParentViewController: contentViewController)
+
+    // Then
+    XCTAssertEqual(contentViewController.topLayoutGuide.length, 0)
+    #if swift(>=3.2)
+    if #available(iOS 11.0, *) {
+      XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top, 0)
+    }
+    #endif
+  }
+
   // MARK: No scroll view
 
   func testNoScrollViewTopLayoutGuideEqualsBottomEdgeOfHeaderView() {
