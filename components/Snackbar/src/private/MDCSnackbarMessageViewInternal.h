@@ -64,7 +64,7 @@ typedef void (^MDCSnackbarMessageDismissHandler)(BOOL userInitiated,
  */
 - (_Nonnull instancetype)initWithMessage:(MDCSnackbarMessage *_Nullable)message
                           dismissHandler:(MDCSnackbarMessageDismissHandler _Nullable)handler
-                         snackbarManager:(MDCSnackbarManager *__weak)manager;
+                         snackbarManager:(MDCSnackbarManager *)manager;
 
 /**
  Dismisses the message view.

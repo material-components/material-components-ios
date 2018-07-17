@@ -221,7 +221,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
 - (instancetype)initWithMessage:(MDCSnackbarMessage *)message
                  dismissHandler:(MDCSnackbarMessageDismissHandler)handler
-                snackbarManager:(MDCSnackbarManager *__weak)manager {
+                snackbarManager:(MDCSnackbarManager *)manager {
   self = [super initWithFrame:CGRectZero];
 
   if (self) {

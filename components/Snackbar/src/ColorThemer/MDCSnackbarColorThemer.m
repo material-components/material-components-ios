@@ -22,9 +22,12 @@
   MDCSnackbarManager.snackbarMessageViewBackgroundColor =
       [colorScheme.onSurfaceColor colorWithAlphaComponent:0.8f];
   MDCSnackbarManager.messageTextColor = [colorScheme.surfaceColor colorWithAlphaComponent:0.87f];
-  UIColor *buttonTitleColor = [colorScheme.surfaceColor colorWithAlphaComponent:0.6f];
-  [MDCSnackbarManager setButtonTitleColor:buttonTitleColor forState:UIControlStateNormal];
-  [MDCSnackbarManager setButtonTitleColor:buttonTitleColor forState:UIControlStateHighlighted];
+  UIColor *buttonTitleColor = [colorScheme.surfaceColor
+                                       colorWithAlphaComponent:0.6f];
+  [MDCSnackbarManager setButtonTitleColor:buttonTitleColor
+                                 forState:UIControlStateNormal];
+  [MDCSnackbarManager setButtonTitleColor:buttonTitleColor
+                                 forState:UIControlStateHighlighted];
 }
 
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme

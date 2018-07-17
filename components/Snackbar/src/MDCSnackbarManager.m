@@ -508,12 +508,12 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 
 
 + (instancetype)defaultManager {
-  static MDCSnackbarManager *kDefaultManager;
+  static MDCSnackbarManager *defaultManager;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    kDefaultManager = [[MDCSnackbarManager alloc] init];
+    defaultManager = [[MDCSnackbarManager alloc] init];
   });
-  return kDefaultManager;
+  return defaultManager;
 }
 
 - (instancetype)init {
@@ -529,7 +529,6 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 }
 
 - (id<MDCSnackbarManagerDelegate>)delegate {
-
   return self.internalManager.delegate;
 }
 
