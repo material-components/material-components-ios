@@ -38,7 +38,7 @@
 /components/LibraryInfo/          @ajsecord
 /components/MaskedTransition/     @jverkoey
 # /components/NavigationBar/        @yarneo 
-components/NavigationBar/         @jverkoey
+/components/NavigationBar/         @jverkoey
 /components/OverlayWindow/        @yarneo
 /components/PageControl/          @randallli
 /components/Palettes/             @ajsecord
