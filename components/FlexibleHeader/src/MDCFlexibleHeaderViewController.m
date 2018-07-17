@@ -353,7 +353,7 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 
 - (void)fhv_setTopLayoutGuideConstraintConstant:(CGFloat)constant {
   self.isUpdatingTopLayoutGuide = YES;
-  self.topLayoutGuideConstraint.constant = self.flexibleHeaderViewControllerHeightOffset;
+  self.topLayoutGuideConstraint.constant = constant;
   self.isUpdatingTopLayoutGuide = NO;
 }
 
@@ -383,7 +383,7 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
   CGFloat topInset = CGRectGetMaxY(_headerView.frame);
   // Avoid excessive re-calculations.
   if (self.topLayoutGuideConstraint.constant != topInset) {
-    [self fhv_setTopLayoutGuideConstraintConstant:self.flexibleHeaderViewControllerHeightOffset];
+    [self fhv_setTopLayoutGuideConstraintConstant:topInset];
   }
 
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
