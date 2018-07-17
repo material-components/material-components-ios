@@ -135,9 +135,9 @@
   action.title = @"Tap Me";
   message.action = action;
   [MDCSnackbarManager setButtonTitleColor:MDCPalette.purplePalette.tint400
-                                                forState:UIControlStateNormal];
+                                 forState:UIControlStateNormal];
   [MDCSnackbarManager setButtonTitleColor:MDCPalette.purplePalette.tint700
-                                                forState:UIControlStateHighlighted];
+                                 forState:UIControlStateHighlighted];
   MDCSnackbarManager.messageTextColor = MDCPalette.greenPalette.tint500;
   [MDCSnackbarManager showMessage:message];
 }
