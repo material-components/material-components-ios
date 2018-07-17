@@ -345,7 +345,7 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 
 - (UIViewController *)fhv_topLayoutGuideViewControllerWithFallback {
   UIViewController *topLayoutGuideViewController = self.topLayoutGuideViewController;
-  if (!topLayoutGuideViewController) {
+  if (!topLayoutGuideViewController && !self.topLayoutGuideAdjustmentEnabled) {
     topLayoutGuideViewController = self.parentViewController;
   }
   return topLayoutGuideViewController;

@@ -26,7 +26,6 @@ class FlexibleHeaderInjectionTopLayoutGuideTests: XCTestCase {
     super.setUp()
 
     fhvc = MDCFlexibleHeaderViewController()
-    fhvc.isTopLayoutGuideAdjustmentEnabled = true
     fhvc.headerView.minMaxHeightIncludesSafeArea = false
     fhvc.headerView.minimumHeight = 50
     fhvc.headerView.maximumHeight = 100
@@ -45,6 +44,7 @@ class FlexibleHeaderInjectionTopLayoutGuideTests: XCTestCase {
     let contentViewController = UIViewController()
     contentViewController.addChildViewController(fhvc)
     contentViewController.view.addSubview(fhvc.view)
+    fhvc.topLayoutGuideViewController = contentViewController
     fhvc.didMove(toParentViewController: contentViewController)
 
     // Then
@@ -64,6 +64,7 @@ class FlexibleHeaderInjectionTopLayoutGuideTests: XCTestCase {
     let contentViewController = UITableViewController()
     contentViewController.addChildViewController(fhvc)
     contentViewController.view.addSubview(fhvc.view)
+    fhvc.topLayoutGuideViewController = contentViewController
     fhvc.didMove(toParentViewController: contentViewController)
 
     // Then
@@ -82,6 +83,7 @@ class FlexibleHeaderInjectionTopLayoutGuideTests: XCTestCase {
     let contentViewController = UITableViewController()
     contentViewController.addChildViewController(fhvc)
     contentViewController.view.addSubview(fhvc.view)
+    fhvc.topLayoutGuideViewController = contentViewController
     fhvc.didMove(toParentViewController: contentViewController)
 
     // Then
@@ -116,6 +118,7 @@ class FlexibleHeaderInjectionTopLayoutGuideTests: XCTestCase {
     fhvc.headerView.trackingScrollView = contentViewController.tableView
     contentViewController.addChildViewController(fhvc)
     contentViewController.view.addSubview(fhvc.view)
+    fhvc.topLayoutGuideViewController = contentViewController
     fhvc.didMove(toParentViewController: contentViewController)
     fhvc.headerView.trackingScrollDidScroll()
 
@@ -139,6 +142,7 @@ class FlexibleHeaderInjectionTopLayoutGuideTests: XCTestCase {
     fhvc.headerView.trackingScrollView = contentViewController.tableView
     contentViewController.addChildViewController(fhvc)
     contentViewController.view.addSubview(fhvc.view)
+    fhvc.topLayoutGuideViewController = contentViewController
     fhvc.didMove(toParentViewController: contentViewController)
     fhvc.headerView.trackingScrollDidScroll()
     contentViewController.tableView.contentOffset =
@@ -165,6 +169,7 @@ class FlexibleHeaderInjectionTopLayoutGuideTests: XCTestCase {
     let contentViewController = UICollectionViewController(collectionViewLayout: flow)
     contentViewController.addChildViewController(fhvc)
     contentViewController.view.addSubview(fhvc.view)
+    fhvc.topLayoutGuideViewController = contentViewController
     fhvc.didMove(toParentViewController: contentViewController)
 
     // Then
@@ -187,6 +192,7 @@ class FlexibleHeaderInjectionTopLayoutGuideTests: XCTestCase {
     fhvc.headerView.trackingScrollView = contentViewController.collectionView
     contentViewController.addChildViewController(fhvc)
     contentViewController.view.addSubview(fhvc.view)
+    fhvc.topLayoutGuideViewController = contentViewController
     fhvc.didMove(toParentViewController: contentViewController)
     fhvc.headerView.trackingScrollDidScroll()
 
@@ -211,6 +217,7 @@ class FlexibleHeaderInjectionTopLayoutGuideTests: XCTestCase {
     fhvc.headerView.trackingScrollView = contentViewController.collectionView!
     contentViewController.addChildViewController(fhvc)
     contentViewController.view.addSubview(fhvc.view)
+    fhvc.topLayoutGuideViewController = contentViewController
     fhvc.didMove(toParentViewController: contentViewController)
     fhvc.headerView.trackingScrollDidScroll()
     contentViewController.collectionView!.contentOffset =
