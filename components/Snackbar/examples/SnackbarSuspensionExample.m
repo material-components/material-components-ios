@@ -65,34 +65,34 @@ static NSString *const kCategoryB = @"CategoryB";
   [attributedMessage appendAttributedString:attributedStringID];
   message.attributedText = attributedMessage;
   message.category = category;
-  [MDCSnackbarManager.defaultManager showMessage:message];
+  [MDCSnackbarManager showMessage:message];
 }
 
 #pragma mark - Suspend/Resume
 
 - (void)setSuspendedGroupA:(BOOL)suspended {
   if (suspended && self.groupAToken == nil) {
-    self.groupAToken = [MDCSnackbarManager.defaultManager suspendMessagesWithCategory:kCategoryA];
+    self.groupAToken = [MDCSnackbarManager suspendMessagesWithCategory:kCategoryA];
   } else if (!suspended && self.groupAToken != nil) {
-    [MDCSnackbarManager.defaultManager resumeMessagesWithToken:self.groupAToken];
+    [MDCSnackbarManager resumeMessagesWithToken:self.groupAToken];
     self.groupAToken = nil;
   }
 }
 
 - (void)setSuspendedGroupB:(BOOL)suspended {
   if (suspended && self.groupBToken == nil) {
-    self.groupBToken = [MDCSnackbarManager.defaultManager suspendMessagesWithCategory:kCategoryB];
+    self.groupBToken = [MDCSnackbarManager suspendMessagesWithCategory:kCategoryB];
   } else if (!suspended && self.groupBToken != nil) {
-    [MDCSnackbarManager.defaultManager resumeMessagesWithToken:self.groupBToken];
+    [MDCSnackbarManager resumeMessagesWithToken:self.groupBToken];
     self.groupBToken = nil;
   }
 }
 
 - (void)setSuspendedAllMessages:(BOOL)suspended {
   if (suspended && self.allMessagesToken == nil) {
-    self.allMessagesToken = [MDCSnackbarManager.defaultManager suspendAllMessages];
+    self.allMessagesToken = [MDCSnackbarManager suspendAllMessages];
   } else if (!suspended && self.allMessagesToken != nil) {
-    [MDCSnackbarManager.defaultManager resumeMessagesWithToken:self.allMessagesToken];
+    [MDCSnackbarManager resumeMessagesWithToken:self.allMessagesToken];
     self.allMessagesToken = nil;
   }
 }

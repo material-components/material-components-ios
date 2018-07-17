@@ -28,7 +28,7 @@ static NSString * const kCellIdentifier = @"Cell";
   [self.collectionView registerClass:[MDCCollectionViewTextCell class]
           forCellWithReuseIdentifier:kCellIdentifier];
   [MDCSnackbarColorThemer applySemanticColorScheme:self.colorScheme
-                                 toSnackbarManager:MDCSnackbarManager.defaultManager];
+                                 toSnackbarManager:MDCSnackbarManager];
   [MDCSnackbarTypographyThemer applyTypographyScheme:self.typographyScheme];
 }
 
