@@ -22,7 +22,7 @@
 @protocol MDCTextInputCharacterCounter;
 
 /** Controllers that manipulate styling and animation of text inputs. */
-@protocol MDCTextInputController <NSObject, NSSecureCoding, NSCopying, MDCTextInputPositioningDelegate>
+@protocol MDCTextInputController <NSObject, NSCopying, MDCTextInputPositioningDelegate>
 
 /**
  Color for decorations that indicates the input is currently editing.
