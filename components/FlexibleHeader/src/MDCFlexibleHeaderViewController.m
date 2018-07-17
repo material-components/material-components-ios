@@ -351,6 +351,12 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
   return topLayoutGuideViewController;
 }
 
+- (void)fhv_setTopLayoutGuideConstraintConstant:(CGFloat)constant {
+  self.isUpdatingTopLayoutGuide = YES;
+  self.topLayoutGuideConstraint.constant = self.flexibleHeaderViewControllerHeightOffset;
+  self.isUpdatingTopLayoutGuide = NO;
+}
+
 - (void)updateTopLayoutGuide {
   NSAssert([NSThread isMainThread],
            @"updateTopLayoutGuide must be called from the main thread.");
@@ -364,9 +370,7 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 
   if (!self.topLayoutGuideAdjustmentEnabled) {
     // Legacy behavior
-    self.isUpdatingTopLayoutGuide = YES;
-    [self.topLayoutGuideConstraint setConstant:self.flexibleHeaderViewControllerHeightOffset];
-    self.isUpdatingTopLayoutGuide = NO;
+    [self fhv_setTopLayoutGuideConstraintConstant:self.flexibleHeaderViewControllerHeightOffset];
     return;
   }
 
@@ -379,9 +383,7 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
   CGFloat topInset = CGRectGetMaxY(_headerView.frame);
   // Avoid excessive re-calculations.
   if (self.topLayoutGuideConstraint.constant != topInset) {
-    self.isUpdatingTopLayoutGuide = YES;
-    self.topLayoutGuideConstraint.constant = topInset;
-    self.isUpdatingTopLayoutGuide = NO;
+    [self fhv_setTopLayoutGuideConstraintConstant:self.flexibleHeaderViewControllerHeightOffset];
   }
 
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
@@ -458,7 +460,7 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 
     // We must change the constant of the constraint attached to our parentViewController's
     // topLayoutGuide to trigger the re-layout of its subviews
-    [self.topLayoutGuideConstraint setConstant:self.flexibleHeaderViewControllerHeightOffset];
+    [self fhv_setTopLayoutGuideConstraintConstant:self.flexibleHeaderViewControllerHeightOffset];
   }
 
   [self.layoutDelegate flexibleHeaderViewController:self
