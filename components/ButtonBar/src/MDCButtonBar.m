@@ -31,10 +31,6 @@ static char *const kKVOContextMDCButtonBar = "kKVOContextMDCButtonBar";
 // This is required because @selector(enabled) throws a compiler warning of unrecognized selector.
 static NSString *const kEnabledSelector = @"enabled";
 
-static NSString *const MDCButtonBarItemsKey = @"MDCButtonBarItemsKey";
-static NSString *const MDCButtonBarButtonTitleBaselineKey = @"MDCButtonBarButtonTitleBaselineKey";
-static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButtonLayoutPositionKey";
-
 @implementation MDCButtonBar {
   id _buttonItemsLock;
   NSArray<__kindof UIView *> *_buttonViews;
@@ -65,39 +61,8 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
   self = [super initWithCoder:coder];
   if (self) {
     [self commonMDCButtonBarInit];
-    if ([coder containsValueForKey:MDCButtonBarButtonTitleBaselineKey]) {
-      _buttonTitleBaseline = (CGFloat)[coder decodeDoubleForKey:MDCButtonBarButtonTitleBaselineKey];
-    }
-
-    if ([coder containsValueForKey:MDCButtonBarButtonLayoutPositionKey]) {
-      _layoutPosition = [coder decodeIntegerForKey:MDCButtonBarButtonLayoutPositionKey];
-    }
-
-    if ([coder containsValueForKey:MDCButtonBarItemsKey]) {
-      // Force going through the setter to ensure KVO is observed for these items
-      NSArray *items = [coder decodeObjectOfClass:[NSArray class] forKey:MDCButtonBarItemsKey];
-      BOOL isValid = YES;
-      for (id item in items) {
-        if (![item isKindOfClass:[UIBarButtonItem class]]) {
-          isValid = NO;
-          NSAssert(NO, @"Wrong class type for MDCButtonBar items when decoding.");
-        }
-      }
-      if (isValid) {
-        self.items = [coder decodeObjectOfClass:[NSArray class] forKey:MDCButtonBarItemsKey];
-      }
-    }
   }
   return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [super encodeWithCoder:aCoder];
-  if (self.items && self.items.count > 0) {
-    [aCoder encodeObject:self.items forKey:MDCButtonBarItemsKey];
-  }
-  [aCoder encodeDouble:self.buttonTitleBaseline forKey:MDCButtonBarButtonTitleBaselineKey];
-  [aCoder encodeInteger:self.layoutPosition forKey:MDCButtonBarButtonLayoutPositionKey];
 }
 
 - (void)alignButtonBaseline:(UIButton *)button {

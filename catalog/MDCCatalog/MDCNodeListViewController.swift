@@ -150,6 +150,8 @@ class NodeViewTableViewPrimaryDemoCell: UITableViewCell {
 class MDCNodeListViewController: CBCNodeListViewController {
   let appBar = MDCAppBar()
   var mainSectionHeader : UIView?
+  var mainSectionHeaderTitleLabel : UILabel?
+  var mainSectionHeaderDescriptionLabel : UILabel?
   var additionalExamplesSectionHeader : UIView?
   let sectionNames = ["Description", "Additional Examples"]
   let estimadedDescriptionSectionHeight = CGFloat(100)
@@ -353,8 +355,13 @@ extension MDCNodeListViewController {
   }
 
   override func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
-    if section == Section.description.rawValue {
-      return estimadedDescriptionSectionHeight
+    if let mainSectionHeader = mainSectionHeader, section == Section.description.rawValue {
+      let labelPreferredMaxLayoutWidth = tableView.frame.size.width - (2 * padding)
+      mainSectionHeaderDescriptionLabel?.preferredMaxLayoutWidth = labelPreferredMaxLayoutWidth
+      mainSectionHeaderTitleLabel?.preferredMaxLayoutWidth = labelPreferredMaxLayoutWidth
+      let targetSize = CGSize(width: tableView.frame.size.width,
+                              height: estimadedDescriptionSectionHeight)
+      return mainSectionHeader.systemLayoutSizeFitting(targetSize).height
     }
     return estimadedAdditionalExamplesSectionHeight
   }
@@ -487,6 +494,7 @@ extension MDCNodeListViewController {
     sectionTitleLabel.text = sectionNames[0]
     sectionTitleLabel.numberOfLines = 0
     sectionTitleLabel.setContentCompressionResistancePriority(1000, for: .vertical)
+    mainSectionHeaderTitleLabel = sectionTitleLabel
 
     let descriptionLabel = UILabel()
     descriptionLabel.font = MDCTypography.body1Font()
@@ -501,6 +509,8 @@ extension MDCNodeListViewController {
     descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
     descriptionLabel.numberOfLines = 0
     descriptionLabel.setContentCompressionResistancePriority(1000, for: .vertical)
+    mainSectionHeaderDescriptionLabel = descriptionLabel
+
     sectionView.addSubview(sectionTitleLabel)
     sectionView.addSubview(descriptionLabel)
 

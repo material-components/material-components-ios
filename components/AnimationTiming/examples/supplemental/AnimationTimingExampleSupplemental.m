@@ -54,13 +54,53 @@ static const CGSize kAnimationCircleSize = {48.f, 48.f};
   self.title = @"Animation Timing";
 
   self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
-  self.scrollView.autoresizingMask =
-      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
   self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.view.frame),
                                            CGRectGetHeight(self.view.frame) + kTopMargin);
   self.scrollView.clipsToBounds = YES;
   [self.view addSubview:self.scrollView];
+
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    // No need to do anything - additionalSafeAreaInsets will inset our content.
+    self.scrollView.autoresizingMask =
+        UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  } else {
+#endif
+    self.scrollView.translatesAutoresizingMaskIntoConstraints = NO;
+    [NSLayoutConstraint activateConstraints:
+     @[[NSLayoutConstraint constraintWithItem:self.scrollView
+                                    attribute:NSLayoutAttributeTop
+                                    relatedBy:NSLayoutRelationEqual
+                                       toItem:self.topLayoutGuide
+                                    attribute:NSLayoutAttributeBottom
+                                   multiplier:1.0
+                                     constant:0],
+       [NSLayoutConstraint constraintWithItem:self.scrollView
+                                    attribute:NSLayoutAttributeBottom
+                                    relatedBy:NSLayoutRelationEqual
+                                       toItem:self.view
+                                    attribute:NSLayoutAttributeBottom
+                                   multiplier:1.0
+                                     constant:0],
+       [NSLayoutConstraint constraintWithItem:self.scrollView
+                                    attribute:NSLayoutAttributeLeft
+                                    relatedBy:NSLayoutRelationEqual
+                                       toItem:self.view
+                                    attribute:NSLayoutAttributeLeft
+                                   multiplier:1.0
+                                     constant:0],
+       [NSLayoutConstraint constraintWithItem:self.scrollView
+                                    attribute:NSLayoutAttributeRight
+                                    relatedBy:NSLayoutRelationEqual
+                                       toItem:self.view
+                                    attribute:NSLayoutAttributeRight
+                                   multiplier:1.0
+                                     constant:0]
+       ]];
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  }
+#endif
 
   CGFloat lineSpace = (CGRectGetHeight(self.view.frame) - 50.f) / 5.f;
   UILabel *linearLabel = [AnimationTimingExample curveLabelWithTitle:@"Linear"];
