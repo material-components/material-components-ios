@@ -153,8 +153,9 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
   }
 
   // Invalidate the snapshot if our replica view is currently hidden and we're attempting to take
-  // a new snapshot. This handles the case where are on an iPhone X in landscape, shift the status
-  // bar off-screen, then rotate to portrait and drag back down.
+  // a new snapshot. This handles the case where you're running on an iPhone X in landscape, you
+  // hide the header, and then rotate back to portrait. It is at this point that we want to
+  // invalidate the snapshot.
   if (_isChangingInterfaceOrientation && snapshotState == MDCStatusBarShifterStateIsSnapshot) {
     snapshotState = MDCStatusBarShifterStateInvalidSnapshot;
   }
