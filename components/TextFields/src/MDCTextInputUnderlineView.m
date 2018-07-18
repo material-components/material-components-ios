@@ -18,12 +18,6 @@
 
 #import "MaterialPalettes.h"
 
-static NSString *const MDCTextInputUnderlineColorKey = @"MDCTextInputUnderlineColorKey";
-static NSString *const MDCTextInputUnderlineDisabledColorKey =
-    @"MDCTextInputUnderlineDisabledColorKey";
-static NSString *const MDCTextInputUnderlineEnabledKey = @"MDCTextInputUnderlineEnabledKey";
-static NSString *const MDCTextInputUnderlineLineHeightKey = @"MDCTextInputUnderlineLineHeightKey";
-
 static const CGFloat MDCTextInputUnderlineDefaultHeight = 1.f;
 
 // TODO: (larche): Make disabled color parameterized?
@@ -52,12 +46,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   self = [super initWithCoder:coder];
   if (self) {
     [self commonMDCUnderlineViewInit];
-
-    _color = [coder decodeObjectOfClass:[UIColor class] forKey:MDCTextInputUnderlineColorKey];
-    _disabledColor =
-        [coder decodeObjectOfClass:[UIColor class] forKey:MDCTextInputUnderlineDisabledColorKey];
-    _enabled = [coder decodeBoolForKey:MDCTextInputUnderlineEnabledKey];
-    _lineHeight = (CGFloat)[coder decodeDoubleForKey:MDCTextInputUnderlineLineHeightKey];
   }
   return self;
 }
@@ -72,14 +60,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                           forAxis:UILayoutConstraintAxisVertical];
   [self setClipsToBounds:NO];
   [self updateUnderline];
-}
-
-- (void)encodeWithCoder:(NSCoder *)coder {
-  [super encodeWithCoder:coder];
-  [coder encodeObject:self.color forKey:MDCTextInputUnderlineColorKey];
-  [coder encodeObject:self.disabledColor forKey:MDCTextInputUnderlineDisabledColorKey];
-  [coder encodeBool:self.enabled forKey:MDCTextInputUnderlineEnabledKey];
-  [coder encodeDouble:(double)self.lineHeight forKey:MDCTextInputUnderlineLineHeightKey];
 }
 
 - (instancetype)copyWithZone:(__unused NSZone *)zone {
@@ -188,12 +168,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     _lineHeight = lineHeight;
   }
   [self updateUnderline];
-}
-
-#pragma mark - NSSecureCoding
-
-+ (BOOL)supportsSecureCoding {
-  return YES;
 }
 
 @end
