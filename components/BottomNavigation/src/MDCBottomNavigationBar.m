@@ -197,6 +197,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 #if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunguarded-availability"
+#pragma clang diagnostic ignored "-Wtautological-pointer-compare"
   if (&UIAccessibilityTraitTabBar != NULL) {
     _containerView.accessibilityTraits = UIAccessibilityTraitTabBar;
   }
