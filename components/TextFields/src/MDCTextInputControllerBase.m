@@ -1313,12 +1313,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   _underlineViewModeDefault = underlineViewModeDefault;
 }
 
-#pragma mark - NSSecureCoding
-
-+ (BOOL)supportsSecureCoding {
-  return YES;
-}
-
 #pragma mark - Layout
 
 - (void)updateLayout {

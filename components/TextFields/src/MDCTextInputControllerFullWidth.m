@@ -775,12 +775,6 @@ static UIFont *_trailingUnderlineLabelFontDefault;
   // Not implemented. Underline is never shown.
 }
 
-#pragma mark - NSSecureCoding
-
-+ (BOOL)supportsSecureCoding {
-  return YES;
-}
-
 #pragma mark - Layout
 
 - (void)updateLayout {

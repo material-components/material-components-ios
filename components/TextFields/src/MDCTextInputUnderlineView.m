@@ -170,10 +170,4 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [self updateUnderline];
 }
 
-#pragma mark - NSSecureCoding
-
-+ (BOOL)supportsSecureCoding {
-  return YES;
-}
-
 @end

@@ -31,28 +31,6 @@
 #import "MaterialPalettes.h"
 #import "MaterialTypography.h"
 
-static NSString *const MDCTextInputFundamentBorderPathKey = @"MDCTextInputFundamentBorderPathKey";
-static NSString *const MDCTextInputFundamentBorderViewKey = @"MDCTextInputFundamentBorderViewKey";
-static NSString *const MDCTextInputFundamentClearButtonKey = @"MDCTextInputFundamentClearButtonKey";
-static NSString *const MDCTextInputFundamentHidesPlaceholderKey =
-    @"MDCTextInputFundamentHidesPlaceholderKey";
-static NSString *const MDCTextInputFundamentLeadingLabelKey =
-    @"MDCTextInputFundamentLeadingLabelKey";
-static NSString *const MDCTextInputFundamentMDCAdjustsFontsKey =
-    @"MDCTextInputFundamentMDCAdjustsFontsKey";
-static NSString *const MDCTextInputFundamentPlaceholderLabelKey =
-    @"MDCTextInputFundamentPlaceholderLabelKey";
-static NSString *const MDCTextInputFundamentPositioningDelegateKey =
-    @"MDCTextInputFundamentPositioningDelegateKey";
-static NSString *const MDCTextInputFundamentTextColorKey = @"MDCTextInputFundamentTextColorKey";
-static NSString *const MDCTextInputFundamentTextInputKey = @"MDCTextInputFundamentTextInputKey";
-static NSString *const MDCTextInputFundamentTextInsetsModeKey =
-    @"MDCTextInputFundamentTextInsetsModeKey";
-static NSString *const MDCTextInputFundamentTrailingLabelKey =
-    @"MDCTextInputFundamentTrailingLabelKey";
-static NSString *const MDCTextInputFundamentUnderlineViewKey =
-    @"MDCTextInputFundamentUnderlineViewKey";
-
 static NSString *const MDCTextInputUnderlineKVOKeyColor = @"color";
 static NSString *const MDCTextInputUnderlineKVOKeyLineHeight = @"lineHeight";
 
@@ -159,27 +137,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   if (self) {
     [self commonMDCTextInputCommonFundamentInit];
 
-    _borderPath = [aDecoder decodeObjectOfClass:[UIBezierPath class]
-                                         forKey:MDCTextInputFundamentBorderPathKey];
-    _borderView = [aDecoder decodeObjectOfClass:[MDCTextInputBorderView class]
-                                         forKey:MDCTextInputFundamentBorderViewKey];
-    _clearButton = [aDecoder decodeObjectOfClass:[UIButton class]
-                                          forKey:MDCTextInputFundamentClearButtonKey];
-    _hidesPlaceholderOnInput = [aDecoder decodeBoolForKey:MDCTextInputFundamentHidesPlaceholderKey];
-    _leadingUnderlineLabel = [aDecoder decodeObjectOfClass:[UILabel class]
-                                                    forKey:MDCTextInputFundamentLeadingLabelKey];
-    _mdc_adjustsFontForContentSizeCategory =
-        [aDecoder decodeBoolForKey:MDCTextInputFundamentMDCAdjustsFontsKey];
-    _placeholderLabel = [aDecoder decodeObjectOfClass:[UILabel class]
-                                               forKey:MDCTextInputFundamentPlaceholderLabelKey];
-    _textInput = [aDecoder decodeObjectOfClass:[UIView class]
-                                        forKey:MDCTextInputFundamentTextInputKey];
-    _textColor =
-        [aDecoder decodeObjectOfClass:[UIColor class] forKey:MDCTextInputFundamentTextColorKey];
-    if ([aDecoder containsValueForKey:MDCTextInputFundamentTextInsetsModeKey]) {
-      _textInsetsMode = (MDCTextInputTextInsetsMode)
-          [aDecoder decodeIntegerForKey:MDCTextInputFundamentTextInsetsModeKey];
-    }
     _trailingUnderlineLabel =
         [aDecoder decodeObjectOfClass:[UILabel class] forKey:MDCTextInputFundamentTrailingLabelKey];
     _underline = [aDecoder decodeObjectOfClass:[MDCTextInputUnderlineView class]
@@ -850,12 +807,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 - (void)setTrailingViewMode:(UITextFieldViewMode)trailingViewMode {
   self.textInput.trailingViewMode = trailingViewMode;
-}
-
-#pragma mark - NSSecureCoding
-
-+ (BOOL)supportsSecureCoding {
-  return YES;
 }
 
 #pragma mark - Layout
