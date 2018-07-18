@@ -41,3 +41,5 @@ Be cautious when combining bottom navigation with similar navigation placed at t
 
 - [Color Theming](color-theming.md)
 - [Typography Theming](typography-theming.md)
+
+- [Accessibility](accessibility.md)

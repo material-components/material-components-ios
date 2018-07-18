@@ -84,7 +84,7 @@ static CGFloat kPestoInset = 5.f;
 
 #pragma mark - PestoCollectionViewControllerDelegate
 
-- (void)didSelectCell:(PestoCardCollectionViewCell *)cell completion:(void (^)())completionBlock {
+- (void)didSelectCell:(PestoCardCollectionViewCell *)cell completion:(void (^)(void))completionBlock {
   self.zoomableView.frame = CGRectMake(
       cell.frame.origin.x, cell.frame.origin.y - self.collectionViewController.scrollOffsetY,
       cell.frame.size.width, cell.frame.size.height - 50.f);

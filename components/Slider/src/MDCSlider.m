@@ -478,6 +478,28 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   }
 }
 
+- (BOOL)accessibilityActivate {
+  CGFloat midPoint = (self.maximumValue - self.minimumValue) / 2.0f;
+  CGFloat newValue;
+  CGFloat adjustmentAmount = (self.value - midPoint) / 3.0f;
+  adjustmentAmount = (adjustmentAmount > 0) ? adjustmentAmount : -adjustmentAmount;
+  CGFloat minimumAdjustment = (self.maximumValue - self.minimumValue) * 0.015f;
+  if (adjustmentAmount > minimumAdjustment) {
+    if (self.value > midPoint) {
+      newValue = self.value - adjustmentAmount;
+    } else {
+      newValue = self.value + adjustmentAmount;
+    }
+    [_thumbTrack setValue:newValue
+                 animated:NO
+    animateThumbAfterMove:NO
+            userGenerated:YES
+               completion:NULL];
+    [self sendActionsForControlEvents:UIControlEventValueChanged];
+  }
+  return YES;
+}
+
 #pragma mark - NSSecureCoding
 
 + (BOOL)supportsSecureCoding {

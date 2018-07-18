@@ -28,3 +28,4 @@ or discrete set of values.
 ## Extensions
 
 - [Color Theming](color-theming.md)
+- [Accessibility](accessibility.md)

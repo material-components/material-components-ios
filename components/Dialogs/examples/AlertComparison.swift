@@ -81,12 +81,28 @@ class DialogsAlertComparison: UIViewController {
   }
 
   @objc func tapMaterial(_ sender: Any) {
+    let titleString = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur"
     let messageString = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur " +
+      "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus " +
+      "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, " +
+      "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. " +
+      "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus " +
+      "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, " +
+      "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. " +
+      "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus " +
+      "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, " +
+      "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. " +
+      "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus " +
+      "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, " +
+      "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. " +
+      "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus " +
+      "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, " +
+      "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. " +
       "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus " +
       "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, " +
       "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. "
 
-    let alertController = MDCAlertController(title: nil, message: messageString)
+    let alertController = MDCAlertController(title: titleString, message: messageString)
 
     let acceptAction = MDCAlertAction(title:"Accept") { (_) in print("Accept") }
     alertController.addAction(acceptAction)
@@ -101,12 +117,30 @@ class DialogsAlertComparison: UIViewController {
   }
 
   @objc func tapUIKit(_ sender: Any) {
+    let titleString = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur"
     let messageString = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur " +
+      "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus " +
+      "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, " +
+      "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. " +
+      "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus " +
+      "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, " +
+      "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. " +
+      "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus " +
+      "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, " +
+      "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. " +
+      "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus " +
+      "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, " +
+      "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. " +
+      "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus " +
+      "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, " +
+      "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. " +
       "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus " +
       "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, " +
       "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. "
 
-    let alertController = UIAlertController(title: nil, message: messageString, preferredStyle:.alert)
+    let alertController = UIAlertController(title: titleString,
+                                            message: messageString,
+                                            preferredStyle:.alert)
 
     let acceptAction = UIAlertAction(title:"Accept", style:.default) { (_) in print("Accept") }
     alertController.addAction(acceptAction)

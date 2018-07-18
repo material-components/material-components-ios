@@ -1,6 +1,6 @@
 ### Text Fields Typography Theming
 
-You can theme a text field with your app's typography scheme using the TypographyThemer extension.
+You can theme a text field with your app's typography scheme using the `TypographyThemer` extension.
 
 You must first add the Typography Themer extension to your project:
 

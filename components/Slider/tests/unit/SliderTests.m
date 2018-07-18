@@ -1047,6 +1047,18 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   XCTAssertEqual(originalValue - 0.1f, self.slider.value);
 }
 
+- (void)testAccessibilityActivate {
+  // Given
+  self.slider.value = 0.0f;
+
+  // When
+  [self.slider accessibilityActivate];
+  CGFloat newValue = (self.slider.maximumValue - self.slider.minimumValue) / 6.0f;
+
+  // Then
+  XCTAssertEqual(self.slider.value, newValue);
+}
+
 - (void)testAccessibilityIncrementWithLargerMax {
   // Given
   self.slider.maximumValue = [self randomNumber];

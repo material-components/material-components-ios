@@ -99,7 +99,7 @@
 @implementation InkTypicalUseViewController (Supplemental)
 
 - (void)setupExampleViews {
-  self.view.backgroundColor = [UIColor colorWithWhite:0.95f alpha:1];
+  self.view.backgroundColor = [UIColor colorWithWhite:0.5f alpha:1];
 
   CGRect boundedTitleLabelFrame =
       CGRectMake(0, CGRectGetHeight(self.shapes.frame), CGRectGetWidth(self.shapes.frame), 24);

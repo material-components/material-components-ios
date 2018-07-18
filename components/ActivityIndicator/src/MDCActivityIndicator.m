@@ -129,8 +129,6 @@ static const CGFloat kSingleCycleRotation =
   self = [super initWithCoder:coder];
   if (self) {
     [self commonMDCActivityIndicatorInit];
-    // TODO: Overwrite cycleColors if the value is present in the coder
-    // https://github.com/material-components/material-components-ios/issues/1530
   }
   return self;
 }
@@ -182,6 +180,7 @@ static const CGFloat kSingleCycleRotation =
   // Colors.
   _cycleColorsIndex = 0;
   _cycleColors = [MDCActivityIndicator defaultCycleColors];
+  self.accessibilityLabel = [self defaultAccessibilityLabel];
 
   // Track layer.
   _trackLayer = [CAShapeLayer layer];
@@ -973,7 +972,7 @@ static const CGFloat kSingleCycleRotation =
   return self.isAnimating;
 }
 
-- (NSString *)accessibilityLabel {
+- (NSString *)defaultAccessibilityLabel {
   MaterialActivityIndicatorStringId keyIndex = kStr_MaterialActivityIndicatorAccessibilityLabel;
   NSString *key = kMaterialActivityIndicatorStringTable[keyIndex];
   return NSLocalizedStringFromTableInBundle(key,

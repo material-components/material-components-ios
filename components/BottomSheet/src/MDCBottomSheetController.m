@@ -82,7 +82,10 @@
   if (!self.dismissOnBackgroundTap) {
     return NO;
   }
-  [self dismissViewControllerAnimated:YES completion:nil];
+  __weak typeof(self) weakSelf = self;
+  [self dismissViewControllerAnimated:YES completion:^{
+    [weakSelf.delegate bottomSheetControllerDidDismissBottomSheet:weakSelf];
+  }];
   return YES;
 }
 

@@ -90,3 +90,8 @@ See the [FlexibleHeader](../../FlexibleHeader) documentation for additional usag
 
 - [Color Theming](color-theming.md)
 - [Typography Theming](typography-theming.md)
+
+
+## Accessibility
+
+- [Accessibility](accessibility.md)
