@@ -20,7 +20,7 @@
  A view that draws the underline effect for an instance of MDCTextInput. The underline has 2
  possible states enabled and disabled. Disabled shows a dotted line instead of solid.
  */
-@interface MDCTextInputUnderlineView : UIView <NSCopying, NSSecureCoding>
+@interface MDCTextInputUnderlineView : UIView <NSCopying>
 
 @property(nonatomic, strong) UIColor *color;
 @property(nonatomic, strong) UIColor *disabledColor;
