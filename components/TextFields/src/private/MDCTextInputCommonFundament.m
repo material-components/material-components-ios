@@ -137,11 +137,6 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   if (self) {
     [self commonMDCTextInputCommonFundamentInit];
 
-    _trailingUnderlineLabel =
-        [aDecoder decodeObjectOfClass:[UILabel class] forKey:MDCTextInputFundamentTrailingLabelKey];
-    _underline = [aDecoder decodeObjectOfClass:[MDCTextInputUnderlineView class]
-                                        forKey:MDCTextInputFundamentUnderlineViewKey];
-
     [self setupBorder];
     [self setupPlaceholderLabel];
 
@@ -152,31 +147,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     [self setupUnderlineView];
 
     [self subscribeForKVO];
-
-    // This is done last because it's an external object that may also depend on us. So, we want to
-    // be completely ready before we recreate it.
-    _positioningDelegate =
-        [aDecoder decodeObjectForKey:MDCTextInputFundamentPositioningDelegateKey];
   }
   return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [aCoder encodeObject:self.borderPath forKey:MDCTextInputFundamentBorderPathKey];
-  [aCoder encodeObject:self.borderView forKey:MDCTextInputFundamentBorderViewKey];
-  [aCoder encodeObject:self.clearButton forKey:MDCTextInputFundamentClearButtonKey];
-  [aCoder encodeBool:self.hidesPlaceholderOnInput forKey:MDCTextInputFundamentHidesPlaceholderKey];
-  [aCoder encodeObject:self.leadingUnderlineLabel forKey:MDCTextInputFundamentLeadingLabelKey];
-  [aCoder encodeBool:self.mdc_adjustsFontForContentSizeCategory
-              forKey:MDCTextInputFundamentMDCAdjustsFontsKey];
-  [aCoder encodeObject:self.placeholderLabel forKey:MDCTextInputFundamentPlaceholderLabelKey];
-  [aCoder encodeConditionalObject:self.positioningDelegate
-                           forKey:MDCTextInputFundamentPositioningDelegateKey];
-  [aCoder encodeConditionalObject:self.textInput forKey:MDCTextInputFundamentTextInputKey];
-  [aCoder encodeObject:self.textColor forKey:MDCTextInputFundamentTextColorKey];
-  [aCoder encodeInteger:self.textInsetsMode forKey:MDCTextInputFundamentTextInsetsModeKey];
-  [aCoder encodeObject:self.trailingUnderlineLabel forKey:MDCTextInputFundamentTrailingLabelKey];
-  [aCoder encodeObject:self.underline forKey:MDCTextInputFundamentUnderlineViewKey];
 }
 
 - (instancetype)copyWithZone:(__unused NSZone *)zone {
