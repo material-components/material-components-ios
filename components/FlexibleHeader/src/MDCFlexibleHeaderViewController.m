@@ -252,11 +252,13 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
       [self updateTopLayoutGuide];
     };
 
-    // Ensure that UIKit modifications occur on the main thread.
-    if ([NSThread isMainThread]) {
-      mainThreadWork();
-    } else {
-      [[NSOperationQueue mainQueue] addOperationWithBlock:mainThreadWork];
+    if (self.topLayoutGuideAdjustmentEnabled) {
+      // Ensure that UIKit modifications occur on the main thread.
+      if ([NSThread isMainThread]) {
+        mainThreadWork();
+      } else {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:mainThreadWork];
+      }
     }
 
   } else {
