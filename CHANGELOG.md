@@ -1,10 +1,23 @@
-# #develop#
+# 58.0.0
+
+This major release focused on accessibility and removing property coding/encoding from a variety of
+components. It also fixed a bug related to top layout guides on pre-iOS 11 devices.
 
 ## Breaking changes
 
-## New deprecations
+Property encoding/decoding has been removed from a majority of the components, along with any
+related explicit conformances to NSCoding and NSSecureCoding. See the
+[tracking project](https://github.com/material-components/material-components-ios/projects/22) to
+learn more about the status of this work.
+
+MDCNavigationBar's deprecated `useFlexibleTopBottomInsets` has been removed.
 
 ## New features
+
+A variety of accessibility documentation has been added to many of the components.
+
+BottomNavigation has new parameters for the top padding of the nav bar items and the vertical
+spacing between the icon and title. 
 
 ## API changes
 
@@ -28,13 +41,16 @@
 
 ### AppBar
 
+#### Breaking changes
+
+* [**Breaking**:  Mainline the YES behaviour for useFlexibleTopBottomInsets, and remove the already deprecated API. (#4570)](https://github.com/material-components/material-components-ios/commit/4438b441b2022201a5a3113825831ba5166f5167) (Ali Rabbani)
+* [**Breaking**:  [FlexibleHeader] Remove NSCoding support. (#4554)](https://github.com/material-components/material-components-ios/commit/a7dd419ebe436852b342327b32b60fc61d5216a6) (featherless)
+* [**Breaking**:  [NavigationBar] Remove NSCoding support. (#4560)](https://github.com/material-components/material-components-ios/commit/de0d57e8e3cdfd364b388e2f4e726d318038776c) (featherless)
+
 #### Changes
 
 * [Add docs on making navigationItems accessible with MDCAppBars (#4540)](https://github.com/material-components/material-components-ios/commit/0a0db27c915e81ae4c22dfdf456ba4a16c1e7707) (Andrew Overton)
-* [Mainline the YES behaviour for useFlexibleTopBottomInsets, and remove the already deprecated API. (#4570)](https://github.com/material-components/material-components-ios/commit/4438b441b2022201a5a3113825831ba5166f5167) (Ali Rabbani)
 * [[Catalog] Enable AppBar's isTopLayoutGuideAdjustmentEnabled in all examples. (#4537)](https://github.com/material-components/material-components-ios/commit/abae199d7135aaa8ea5ba2d1636e8fd767794285) (featherless)
-* [[FlexibleHeader] Remove NSCoding support. (#4554)](https://github.com/material-components/material-components-ios/commit/a7dd419ebe436852b342327b32b60fc61d5216a6) (featherless)
-* [[NavigationBar] Remove NSCoding support. (#4560)](https://github.com/material-components/material-components-ios/commit/de0d57e8e3cdfd364b388e2f4e726d318038776c) (featherless)
 
 ### Ink
 
@@ -44,20 +60,23 @@
 
 ### Buttons
 
+#### Breaking changes
+
+* [**Breaking**:  Remove NSCoding support. (#4565)](https://github.com/material-components/material-components-ios/commit/48890aa9bf1991cffe497c906845841681a5386d) (featherless)
+
 #### Changes
 
 * [Disable FAB animation for VoiceOver (#4535)](https://github.com/material-components/material-components-ios/commit/3244f5491d28ffa1077a7e8456349fbed6525c0c) (Robert Moore)
 * [Fix button README (#4547)](https://github.com/material-components/material-components-ios/commit/4e7db26ccb43357d01fd844f3bd9867f2d824aff) (Cody Weaver)
 * [Make accessibility docs match other components (#4501)](https://github.com/material-components/material-components-ios/commit/88dabcfac9a0d5bdc51b1dc93e5f2572c0ad8f08) (Cody Weaver)
-* [Remove NSCoding support. (#4565)](https://github.com/material-components/material-components-ios/commit/48890aa9bf1991cffe497c906845841681a5386d) (featherless)
 * [Removed internal links from docs. (#4559)](https://github.com/material-components/material-components-ios/commit/3d665a45b8770cd64be5088ec14e7163de9e4c4b) (Randall Li)
 * [[Catalog] Enable AppBar's isTopLayoutGuideAdjustmentEnabled in all examples. (#4537)](https://github.com/material-components/material-components-ios/commit/abae199d7135aaa8ea5ba2d1636e8fd767794285) (featherless)
 
 ### ButtonBar
 
-#### Changes
+#### Breaking changes
 
-* [Remove NSCoding support. (#4553)](https://github.com/material-components/material-components-ios/commit/7f5f920493a3081fb8e5b49f527675c95aa4627b) (featherless)
+* [**Breaking**:  Remove NSCoding support. (#4553)](https://github.com/material-components/material-components-ios/commit/7f5f920493a3081fb8e5b49f527675c95aa4627b) (featherless)
 
 ### TextFields
 
@@ -68,17 +87,23 @@
 
 ### Chips
 
+#### Breaking changes
+
+* [**Breaking**:  Remove NSCoding support. (#4549)](https://github.com/material-components/material-components-ios/commit/cfa8a68eaf3c75bb3a92ded94541adcceb33d1dc) (featherless)
+
 #### Changes
 
 * [Add accessibilityHint to clear button in chips example (#4504)](https://github.com/material-components/material-components-ios/commit/7272f877a145d369b1b7ed305081638de7c8f523) (Andrew Overton)
-* [Remove NSCoding support. (#4549)](https://github.com/material-components/material-components-ios/commit/cfa8a68eaf3c75bb3a92ded94541adcceb33d1dc) (featherless)
 
 ### Cards
+
+#### Breaking changes
+
+* [**Breaking**:  Remove NSCoding support. (#4548)](https://github.com/material-components/material-components-ios/commit/0b26db87660dc0a82fe4f87cdaad2f103ebd244e) (featherless)
 
 #### Changes
 
 * [Add accessibility documentation (#4454)](https://github.com/material-components/material-components-ios/commit/ae8231e49ac1f192adb21b4425176de591e3de5e) (Galia Kaufman)
-* [Remove NSCoding support. (#4548)](https://github.com/material-components/material-components-ios/commit/0b26db87660dc0a82fe4f87cdaad2f103ebd244e) (featherless)
 
 ### Slider
 
@@ -89,10 +114,13 @@
 
 ### NavigationBar
 
+#### Breaking changes
+
+* [**Breaking**:  Remove NSCoding support. (#4560)](https://github.com/material-components/material-components-ios/commit/de0d57e8e3cdfd364b388e2f4e726d318038776c) (featherless)
+
 #### Changes
 
 * [Mainline the YES behaviour for useFlexibleTopBottomInsets, and remove the already deprecated API. (#4570)](https://github.com/material-components/material-components-ios/commit/4438b441b2022201a5a3113825831ba5166f5167) (Ali Rabbani)
-* [Remove NSCoding support. (#4560)](https://github.com/material-components/material-components-ios/commit/de0d57e8e3cdfd364b388e2f4e726d318038776c) (featherless)
 
 ### ShadowLayer
 
@@ -138,20 +166,20 @@
 
 ### HeaderStackView
 
-#### Changes
+#### Breaking changes
 
-* [Remove NSCoding support. (#4544)](https://github.com/material-components/material-components-ios/commit/e68fff55dea351fe49e61bdaf2eabf676b9d1e99) (featherless)
+* [**Breaking**:  Remove NSCoding support. (#4544)](https://github.com/material-components/material-components-ios/commit/e68fff55dea351fe49e61bdaf2eabf676b9d1e99) (featherless)
 
 ### FlexibleHeader
 
 #### Breaking changes
 
 * [**Breaking**:  Update top layout behavior to match documentation. (#4577)](https://github.com/material-components/material-components-ios/commit/516885895a8eb2ff9bdd268d9510cc635cf8ecc4) (featherless)
+* [**Breaking**:  Remove NSCoding support. (#4554)](https://github.com/material-components/material-components-ios/commit/a7dd419ebe436852b342327b32b60fc61d5216a6) (featherless)
 
 #### Changes
 
 * [Enforce top layout guide adjustment on pre-iOS 11 devices. (#4573)](https://github.com/material-components/material-components-ios/commit/3e441f22991368e1ceb3e3e130b0cb666b610b6f) (featherless)
-* [Remove NSCoding support. (#4554)](https://github.com/material-components/material-components-ios/commit/a7dd419ebe436852b342327b32b60fc61d5216a6) (featherless)
 
 ### ProgressView
 
