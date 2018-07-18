@@ -1,7 +1,8 @@
 # 58.0.0
 
 This major release focused on accessibility and removing property coding/encoding from a variety of
-components. It also fixed a bug related to top layout guides on pre-iOS 11 devices.
+components. It also fixed a bug related to AppBar/FlexibleHeader top layout guide behavior on
+pre-iOS 11 devices.
 
 ## Breaking changes
 
