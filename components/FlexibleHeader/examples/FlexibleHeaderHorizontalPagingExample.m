@@ -169,22 +169,6 @@ static const NSUInteger kNumberOfPages = 10;
   self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:0.1f alpha:1.0f];
 }
 
-- (void)viewWillLayoutSubviews {
-  [super viewWillLayoutSubviews];
-
-  self.fhvc.headerView.topSafeAreaInset =
-      [MDCFlexibleHeaderView topSafeAreaInsetFromViewController:self];
-}
-
-- (void)willMoveToParentViewController:(UIViewController *)parent {
-  [super willMoveToParentViewController:parent];
-
-  if (parent != nil) {
-    self.fhvc.headerView.topSafeAreaInset =
-        [MDCFlexibleHeaderView topSafeAreaInsetFromViewController:parent];
-  }
-}
-
 - (UIStatusBarStyle)preferredStatusBarStyle {
   return UIStatusBarStyleLightContent;
 }

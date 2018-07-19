@@ -102,22 +102,6 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
   [self.fhvc.headerView addSubview:self.button];
 }
 
-- (void)viewWillLayoutSubviews {
-  [super viewWillLayoutSubviews];
-
-  self.fhvc.headerView.topSafeAreaInset =
-      [MDCFlexibleHeaderView topSafeAreaInsetFromViewController:self];
-}
-
-- (void)willMoveToParentViewController:(UIViewController *)parent {
-  [super willMoveToParentViewController:parent];
-
-  if (parent != nil) {
-    self.fhvc.headerView.topSafeAreaInset =
-        [MDCFlexibleHeaderView topSafeAreaInsetFromViewController:parent];
-  }
-}
-
 - (void)didTapButton:(id)sender {
   NSLog(@"Button Tapped: %@", sender);
 }

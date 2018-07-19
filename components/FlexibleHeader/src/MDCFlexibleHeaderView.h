@@ -330,70 +330,6 @@ IB_DESIGNABLE
 @property(nonatomic) BOOL minMaxHeightIncludesSafeArea;
 
 /**
- The top safe area inset to consider when calculating the true minimum and maximum height of the
- flexible header view.
-
- This property is typically assigned the value of view.safeAreaInsets.top (iOS 11 and up) or
- viewController.topLayoutGuide.length (below iOS 11) from the header view controller's parent view
- controller.
-
- This property is ignored if topSafeAreaInsetBehaviorEnabled is NO.
-
- Assign this value from the parent view controller's invocation of viewWillLayoutSubviews, using an
- ancestor view controller's top safe area inset. This will handle the majority of the cases in which
- the top safe area inset has changed. The following example demonstrates how one might extract the
- top safe area inset from a view controller:
-
-@code
-- (void)viewWillLayoutSubviews {
-  [super viewWillLayoutSubviews];
-
-  self.fhvc.headerView.topSafeAreaInset =
-      [MDCFlexibleHeaderView topSafeAreaInsetFromViewController:self];
-}
-@endcode
-
- If you support devices running below iOS 11, you may also want to implement
- willMoveToParentViewController. This will ensure that your scroll view's content offset is adjusted
- before the view controller is presented. Otherwise your scroll view content may initially appear
- partially shifted off-screen.
-
-@code
-- (void)willMoveToParentViewController:(UIViewController *)parent {
-  [super willMoveToParentViewController:parent];
-
-  if (parent != nil) {
-    self.fhvc.headerView.topSafeAreaInset =
-        [MDCFlexibleHeaderView topSafeAreaInsetFromViewController:parent];
-  }
-}
-@endcode
-
- If minMaxHeightIncludesSafeArea is enabled and both the minimum and maximum height have not been
- modified, then minimum height and maximum height will be updated to include any changes in this
- value.
-
- @note
- If you set a topLayoutGuideViewController on your flexible header view controller, take care
- to extract a top safe area inset from an ancestor of the topLayoutGuideViewController instead of
- from the topLayoutGuideViewController itself. This commonly happens when adding a flexible header
- as a child of a content view controller. If you then set the content view controller as the
- topLayoutGuideViewController, then you must use the content view controller's @b parent to extract
- the top safe area inset. You can avoid having to think about this by using an
- MDCFlexibleHeaderContainerViewController, or similarly by creating your own view controller where
- the flexible header view controller is a sibling to the content view controller, like so:
-
-@code
-CustomContainerViewController         -> Where you extract the top safe area inset.
- | - ContentViewController            -> The topLayoutGuideViewController
- | - MDCFlexibleHeaderViewController  -> Set this top safe area inset with the extracted top safe
-                                         area inset. This will propagate the value to
-                                         topLayoutGuideViewController.
-@endcode
- */
-@property(nonatomic) CGFloat topSafeAreaInset;
-
-/**
  Whether topSafeAreaInset should be used when calculating the top safe area insets for the
  flexible header view.
 
@@ -421,21 +357,8 @@ CustomContainerViewController         -> Where you extract the top safe area ins
 
  Use this layout guide to position subviews in the flexible header in relation to the top safe area
  insets.
-
- This property only returns a valid object if topSafeAreaInsetBehaviorEnabled is true.
-
- Once topSafeAreaInsetBehaviorEnabled is enabled by default and the behavioral flag is removed,
- this property will become non-null.
  */
-@property(nonatomic, nullable, readonly) id topSafeAreaGuide;
-
-/**
- Returns the top safe area inset for a given view controller.
-
- On devices running iOS 11 or above, this will return the view controller view's top safe area
- inset. On all other devices, this will return the view controller's top layout guide length.
- */
-+ (CGFloat)topSafeAreaInsetFromViewController:(nonnull UIViewController *)viewController;
+@property(nonatomic, nonnull, readonly) id topSafeAreaGuide;
 
 #pragma mark Behaviors
 

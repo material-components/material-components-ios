@@ -74,22 +74,6 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
   [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
-- (void)viewWillLayoutSubviews {
-  [super viewWillLayoutSubviews];
-
-  self.fhvc.headerView.topSafeAreaInset =
-      [MDCFlexibleHeaderView topSafeAreaInsetFromViewController:self];
-}
-
-- (void)willMoveToParentViewController:(UIViewController *)parent {
-  [super willMoveToParentViewController:parent];
-
-  if (parent != nil) {
-    self.fhvc.headerView.topSafeAreaInset =
-        [MDCFlexibleHeaderView topSafeAreaInsetFromViewController:parent];
-  }
-}
-
 - (UIStatusBarStyle)preferredStatusBarStyle {
   return UIStatusBarStyleLightContent;
 }

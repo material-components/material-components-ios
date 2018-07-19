@@ -108,22 +108,6 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
   [self.view addSubview:self.floatingButton];
 }
 
-- (void)viewWillLayoutSubviews {
-  [super viewWillLayoutSubviews];
-
-  self.fhvc.headerView.topSafeAreaInset =
-      [MDCFlexibleHeaderView topSafeAreaInsetFromViewController:self];
-}
-
-- (void)willMoveToParentViewController:(UIViewController *)parent {
-  [super willMoveToParentViewController:parent];
-
-  if (parent != nil) {
-    self.fhvc.headerView.topSafeAreaInset =
-        [MDCFlexibleHeaderView topSafeAreaInsetFromViewController:parent];
-  }
-}
-
 // This method must be implemented for MDCFlexibleHeaderViewController's
 // MDCFlexibleHeaderView to properly support MDCFlexibleHeaderShiftBehavior should you choose
 // to customize it.

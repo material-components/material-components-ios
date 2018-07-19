@@ -19,6 +19,7 @@
 #import "MaterialApplication.h"
 #import "MaterialUIMetrics.h"
 #import "private/MDCStatusBarShifter.h"
+#import "private/MDCFlexibleHeaderView+Private.h"
 
 #if TARGET_IPHONE_SIMULATOR
 float UIAnimationDragCoefficient(void);  // Private API for simulator animation speed
@@ -74,6 +75,16 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 // to check what the intensity of a custom shadow should be depending on a scroll position. Valid
 // values range from 0 to 1. Where 0 is no shadow is visible and 1 is the shadow is fully visible.
 @property(nonatomic, readonly) CGFloat shadowIntensity;
+
+// The top safe area inset to consider when calculating the true minimum and maximum height of the
+// flexible header view.
+//
+// This property is typically assigned the value of view.safeAreaInsets.top (iOS 11 and up) or
+// viewController.topLayoutGuide.length (below iOS 11) from the header view controller's parent view
+// controller.
+//
+// This property is ignored if topSafeAreaInsetBehaviorEnabled is NO.
+@property(nonatomic) CGFloat topSafeAreaInset;
 
 @end
 
@@ -205,6 +216,9 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 @synthesize sharedWithManyScrollViews = _sharedWithManyScrollViews;
 @synthesize visibleShadowOpacity = _visibleShadowOpacity;
 
+// Private
+@synthesize topSafeAreaInset = _topSafeAreaInset;
+
 - (void)dealloc {
 #if DEBUG
   [_trackingScrollView.panGestureRecognizer removeTarget:self
@@ -267,6 +281,10 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   _customShadowLayer = [CALayer layer];
   _customShadowLayer.hidden = YES;
   [self.layer addSublayer:_customShadowLayer];
+
+  _topSafeAreaGuide = [[UIView alloc] init];
+  _topSafeAreaGuide.frame = CGRectMake(0, 0, 0, [self fhv_topSafeAreaInset]);
+  [self addSubview:_topSafeAreaGuide];
 
   _contentView = [[UIView alloc] initWithFrame:self.bounds];
   _contentView.autoresizingMask =
@@ -368,6 +386,21 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   [_statusBarShifter didMoveToWindow];
 }
 
+- (void)extractTopSafeAreaInset {
+  [self fhv_updateTopSafeAreaInset];
+}
+
+- (void)fhv_updateTopSafeAreaInset {
+  self.topSafeAreaInset =
+      [MDCFlexibleHeaderView topSafeAreaInsetFromViewController:_topSafeAreaSourceViewController];
+}
+
+- (void)setTopSafeAreaSourceViewController:(UIViewController *)topSafeAreaSourceViewController {
+  _topSafeAreaSourceViewController = topSafeAreaSourceViewController;
+
+  [self fhv_updateTopSafeAreaInset];
+}
+
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
   UIView *hitView = [super hitTest:point withEvent:event];
 
@@ -399,6 +432,8 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     [super safeAreaInsetsDidChange];
+
+    [self fhv_updateTopSafeAreaInset];
 
     // We don't need to react to safeAreaInsetsDidChange events if we're using an explicit top safe
     // area inset because the topSafeAreaInset setter will do this for us.
@@ -468,9 +503,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
     _lastNonZeroTopSafeAreaInset = _topSafeAreaInset;
   }
 
-  if (self.topSafeAreaInsetBehaviorEnabled) {
-    [self fhv_topSafeAreaInsetDidChange];
-  }
+  [self fhv_topSafeAreaInsetDidChange];
 }
 
 - (void)setTopSafeAreaInsetBehaviorEnabled:(BOOL)topSafeAreaInsetBehaviorEnabled {
@@ -479,15 +512,6 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   }
   _topSafeAreaInsetBehaviorEnabled = topSafeAreaInsetBehaviorEnabled;
 
-  if (_topSafeAreaInsetBehaviorEnabled) {
-    _topSafeAreaGuide = [[UIView alloc] init];
-    [self addSubview:_topSafeAreaGuide];
-
-  } else if (_topSafeAreaGuide != nil) {
-    [_topSafeAreaGuide removeFromSuperview];
-    _topSafeAreaGuide = nil;
-  }
-
   [self fhv_topSafeAreaInsetDidChange];
 }
 
@@ -495,7 +519,16 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   return _topSafeAreaGuide;
 }
 
+// Returns the top safe area inset for a given view controller.
+//
+// If the view controller's view is not loaded, returns 0.
+// Otherwise, on devices running iOS 11 or above, this will return the view controller view's top
+// safe area inset. On all other devices, this will return the view controller's top layout guide
+// length.
 + (CGFloat)topSafeAreaInsetFromViewController:(nonnull UIViewController *)viewController {
+  if (![viewController isViewLoaded]) {
+    return 0;
+  }
   CGFloat topSafeAreaInset;
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if ([viewController.view respondsToSelector:@selector(safeAreaInsets)]) {
@@ -1355,6 +1388,7 @@ static BOOL isRunningiOS10_3OrAbove() {
   NSAssert(_interfaceOrientationIsChanging, @"Call to %@::%@ not matched by a call to %@.",
            NSStringFromClass([self class]), NSStringFromSelector(_cmd),
            NSStringFromSelector(@selector(interfaceOrientationWillChange)));
+  [self fhv_updateTopSafeAreaInset];
   [self fhv_updateLayout];
 }
 

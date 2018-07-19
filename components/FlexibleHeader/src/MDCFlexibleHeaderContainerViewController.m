@@ -59,26 +59,6 @@
   [self updateTopLayoutGuideBehavior];
 }
 
-- (void)viewWillLayoutSubviews {
-  [super viewWillLayoutSubviews];
-
-  if (!self.topLayoutGuideAdjustmentEnabled) {
-    [self.headerViewController updateTopLayoutGuide];
-  }
-
-  self.headerViewController.headerView.topSafeAreaInset =
-      [MDCFlexibleHeaderView topSafeAreaInsetFromViewController:self];
-}
-
-- (void)willMoveToParentViewController:(UIViewController *)parent {
-  [super willMoveToParentViewController:parent];
-
-  if (parent != nil) {
-    self.headerViewController.headerView.topSafeAreaInset =
-        [MDCFlexibleHeaderView topSafeAreaInsetFromViewController:self];
-  }
-}
-
 - (BOOL)prefersStatusBarHidden {
   return _headerViewController.prefersStatusBarHidden;
 }
