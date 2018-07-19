@@ -50,11 +50,12 @@ static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.1
 static NSString *const kMaterialBottomNavigationBundle = @"MaterialBottomNavigation.bundle";
 static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 
-@interface MDCBottomNavigationItemView ()
+@interface MDCBottomNavigationItemView () <MDCInkViewDelegate>
 
 @property(nonatomic, strong) MDCBottomNavigationItemBadge *badge;
 @property(nonatomic, strong) UIImageView *iconImageView;
 @property(nonatomic, strong) UILabel *label;
+@property(nonatomic, assign) BOOL inkAnimationInProgress;
 
 @end
 
@@ -187,6 +188,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     _inkView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     _inkView.usesLegacyInkRipple = NO;
     _inkView.clipsToBounds = NO;
+    _inkView.animationDelegate = self;
     [self addSubview:_inkView];
   }
 
@@ -198,6 +200,15 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     _button.accessibilityValue = self.accessibilityValue;
     [self addSubview:_button];
   }
+}
+
+-(UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+  if ([self pointInside:point withEvent:event] && !self.inkAnimationInProgress) {
+    CGPoint centerPoint = CGPointMake(CGRectGetMidX(_inkView.bounds),
+                                      CGRectGetMidY(_inkView.bounds));
+    [self.inkView startTouchBeganAnimationAtPoint:centerPoint completion:nil];
+  }
+  return [super hitTest:point withEvent:event];
 }
 
 - (void)layoutSubviews {
@@ -430,6 +441,16 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 
 - (NSString *)accessibilityValue {
   return self.button.accessibilityValue;
+}
+
+#pragma mark - MDCInkViewDelegate
+
+-(void)inkAnimationDidEnd:(MDCInkView *)inkView {
+  self.inkAnimationInProgress = NO;
+}
+
+-(void)inkAnimationDidStart:(MDCInkView *)inkView {
+  self.inkAnimationInProgress = YES;
 }
 
 #pragma mark - Resource bundle
