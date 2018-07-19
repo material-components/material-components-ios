@@ -28,40 +28,41 @@ UICollectionViewDelegateFlowLayout {
   let collectionView = UICollectionView(frame: .zero,
                                         collectionViewLayout: UICollectionViewFlowLayout())
   lazy var dataSource = [
-    ("austin-south-lamar-coffeshop", "South Lamar", false),
-    ("bangkok-chatuchak", "Chatuchak", false),
-    ("bangkok-ratchathewi", "Ratchathewi", false),
-    ("austin-hancock", "Hancock", false),
-    ("austin-old-west-austin-collection", "Old West Austin", false),
-    ("austin-south-congress-mall", "South Congress", false),
-    ("bangkok-bangna", "Bangkok Bangna", false),
-    ("amsterdam-zeeburg", "Zeeburg", false),
-    ("austin-clarksville", "Clarksville", false),
-    ("austin-east-riverside", "East Riverside", false),
-    ("austin-university-texas-pond", "Austin University", false),
-    ("austin-old-west-austin-bike", "Old West Austin", false),
-    ("austin-south-congress-banjo", "South Congress", false),
-    ("austin-south-lamar-skateboard-shop", "South Lamar", false),
-    ("austin-university-texas-bronze", "Austin University", false),
-    ("austin-south-lamar-street", "South Lamar", false),
-    ("austin-south-congress", "South Congress", false),
-    ("austin-south-lamar-wheels", "South Lamar", false),
-    ("austin-travis-heights", "Travis Heights", false),
-    ("austin-travis-playground", "Travis", false),
-    ("austin-travis", "Travis", false),
-    ("austin-hyde-park", "Hyde Park, Austin", false),
-    ("austin-upper-boggy-creek", "Boggy Creek", false),
-    ("austin-zilker-bridge", "Zilker Bridge", false),
-    ("austin-downtown", "Downtown Austin", false),
-    ("austin-university-texas", "Austin University", false),
-    ("austin-bouldin-creek", "Bouldin Creek", false),
-    ("bangkok-aree-bamboo", "Bangkok Aree", false),
-    ("bangkok-chatuchak-market", "Chatuchak Market", false),
-    ("austin-old-west-austin", "Old West Austin", false),
-    ("austin-dawson", "Dawson", false),
-    ("bangkok-aree-flower", "Bangkok Aree", false),
-    ("austin-north-loop", "North Loop", false),
-    ("bangkok-aree-market", "Bangkok Aree", false)
+    (image: "bangkok-bangna",               title: "Bangkok Bangna",    selected: false),
+    (image: "austin-hancock",               title: "Hancock",           selected: false),
+    (image: "bangkok-ratchathewi",          title: "Ratchathewi",       selected: false),
+    (image: "old-west-austin-lake",         title: "Old West Austin",   selected: false),
+    (image: "amsterdam-zeeburg",            title: "Zeeburg",           selected: false),
+    (image: "south-lamar-coffeshop",        title: "South Lamar",       selected: false),
+    (image: "austin-u-texas-pond",          title: "Austin University", selected: false),
+    (image: "bangkok-chatuchak",            title: "Chatuchak",         selected: false),
+    (image: "austin-clarksville",           title: "Clarksville",       selected: false),
+    (image: "austin-south-congress-banjo",  title: "South Congress",    selected: false),
+    (image: "austin-u-texas",               title: "Austin University", selected: false),
+    (image: "old-west-austin-bike",         title: "Old West Austin",   selected: false),
+    (image: "austin-south-congress-mall",   title: "South Congress",    selected: false),
+    (image: "south-lamar-skateboard",       title: "South Lamar",       selected: false),
+    (image: "austin-east-riverside",        title: "East Riverside",    selected: false),
+    (image: "austin-u-texas-bronze",        title: "Austin University", selected: false),
+    (image: "south-lamar-street",           title: "South Lamar",       selected: false),
+    (image: "austin-zilker-bridge",         title: "Zilker Bridge",     selected: false),
+    (image: "austin-travis",                title: "Travis",            selected: false),
+    (image: "austin-north-loop",            title: "North Loop",        selected: false),
+    (image: "austin-bouldin-creek",         title: "Bouldin Creek",     selected: false),
+    (image: "austin-travis-heights",        title: "Travis Heights",    selected: false),
+    (image: "austin-travis-playground",     title: "Travis",            selected: false),
+    (image: "bangkok-aree-bamboo",          title: "Bangkok Aree",      selected: false),
+    (image: "bangkok-chatuchak-market",     title: "Chatuchak Market",  selected: false),
+    (image: "austin-hyde-park",             title: "Hyde Park, Austin", selected: false),
+    (image: "austin-downtown",              title: "Downtown Austin",   selected: false),
+    (image: "austin-upper-boggy-creek",     title: "Boggy Creek",       selected: false),
+    (image: "south-lamar-wheels",           title: "South Lamar",       selected: false),
+    (image: "temple_market",                title: "Temple Market",     selected: false),
+    (image: "austin-dawson",                title: "Dawson",            selected: false),
+    (image: "bangkok-aree-flower",          title: "Bangkok Aree",      selected: false),
+    (image: "austin-south-congress",        title: "South Congress",    selected: false),
+    (image: "bangkok-aree-market",          title: "Bangkok Aree",      selected: false),
+    (image: "old-west-austin-lake",         title: "Old West Austin",   selected: false)
   ]
   var longPressGesture: UILongPressGestureRecognizer!
   var toggle = ToggleMode.reorder
@@ -152,12 +153,16 @@ UICollectionViewDelegateFlowLayout {
     guard let cardCell = cell as? CardEditReorderCollectionCell else { return cell }
 
     MDCCardThemer.applyScheme(cardScheme, toCardCell: cardCell)
-    cardCell.isSelectable = (toggle == .edit)
 
-    let title = dataSource[indexPath.item].1
-    let imageName = dataSource[indexPath.item].0
+    let title = dataSource[indexPath.item].title
+    let imageName = dataSource[indexPath.item].image
     cardCell.configure(title: title, imageName: imageName)
-    cardCell.isSelected = dataSource[indexPath.item].2
+
+    cardCell.isSelectable = (toggle == .edit)
+    if self.dataSource[indexPath.item].selected {
+      collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
+      cardCell.isSelected = true
+    }
 
     cardCell.isAccessibilityElement = true
     cardCell.accessibilityLabel = title
@@ -166,9 +171,13 @@ UICollectionViewDelegateFlowLayout {
   }
 
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    if toggle == .edit {
-      dataSource[indexPath.item].2 = !dataSource[indexPath.item].2
-    }
+    guard toggle == .edit else { return }
+    dataSource[indexPath.item].selected = true
+  }
+
+  func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+    guard toggle == .edit else { return }
+    dataSource[indexPath.item].selected = false
   }
 
   func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -178,11 +187,6 @@ UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView,
                       numberOfItemsInSection section: Int) -> Int {
     return dataSource.count
-  }
-
-  func collectionView(_ collectionView: UICollectionView,
-                      moveItemAt sourceIndexPath: IndexPath,
-                      to destinationIndexPath: IndexPath) {
   }
 
   func collectionView(_ collectionView: UICollectionView,
@@ -213,6 +217,26 @@ UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView,
                       canMoveItemAt indexPath: IndexPath) -> Bool {
     return toggle == .reorder
+  }
+
+  func collectionView(_ collectionView: UICollectionView,
+                      moveItemAt sourceIndexPath: IndexPath,
+                      to destinationIndexPath: IndexPath) {
+
+    let sourceItem = dataSource[sourceIndexPath.item]
+
+    // reorder all cells in between source and destination, moving each by 1 position
+    if sourceIndexPath.item < destinationIndexPath.item {
+      for ind in sourceIndexPath.item ..< destinationIndexPath.item {
+        dataSource[ind] = dataSource[ind + 1]
+      }
+    } else {
+      for ind in (destinationIndexPath.item + 1 ... sourceIndexPath.item).reversed() {
+        dataSource[ind] = dataSource[ind - 1]
+      }
+    }
+
+    dataSource[destinationIndexPath.item] = sourceItem
   }
 
   @available(iOS 9.0, *)

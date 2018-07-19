@@ -63,14 +63,14 @@ class CardEditReorderCollectionCell: MDCCardCollectionCell {
   private func post_iOS11Constraints() {
     #if swift(>=3.2)
       let guide = self.safeAreaLayoutGuide
-      let margin: CGFloat = 8.0
+      let margin: CGFloat = 4.0
 
       NSLayoutConstraint.activate([
-        imageView.topAnchor.constraint(equalTo: guide.topAnchor, constant: margin),
-        imageView.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: margin),
-        imageView.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -margin),
+        imageView.topAnchor.constraint(equalTo: guide.topAnchor),
+        imageView.leadingAnchor.constraint(equalTo: guide.leadingAnchor),
+        imageView.trailingAnchor.constraint(equalTo: guide.trailingAnchor),
 
-        titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: margin / 2),
+        titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: margin),
 
         titleLabel.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: margin),
         titleLabel.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -margin),
@@ -83,13 +83,13 @@ class CardEditReorderCollectionCell: MDCCardCollectionCell {
 
   private func pre_iOS11Constraints() {
     let views: [String: UIView] = ["image": self.imageView, "label": self.titleLabel]
-    let metrics = ["margin": 8.0, "half": 4.0]
+    let metrics = ["margin": 4.0]
     self.addConstraints(
       NSLayoutConstraint.constraints(
-        withVisualFormat: "H:|-(margin)-[image]-(margin)-|",
+        withVisualFormat: "H:|-[image]-|",
         options: [], metrics: metrics, views: views) +
       NSLayoutConstraint.constraints(
-        withVisualFormat: "V:|-(margin)-[image]-(half)-[label]-(margin)-|",
+        withVisualFormat: "V:|-[image]-(margin)-[label]-(margin)-|",
         options: [], metrics: metrics, views: views) +
       NSLayoutConstraint.constraints(
         withVisualFormat: "H:|-(margin)-[label]-(margin)-|",
