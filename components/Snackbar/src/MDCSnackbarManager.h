@@ -52,7 +52,7 @@
 @interface MDCSnackbarManager : NSObject
 
 /**
- An instance of MDCSnackbarManager bound to the main screen.
+ An instance of MDCSnackbarManager.
  */
 @property(class, nonnull, nonatomic, readonly, strong) MDCSnackbarManager *defaultManager;
 
