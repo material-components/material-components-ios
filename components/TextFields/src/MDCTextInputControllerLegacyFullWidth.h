@@ -52,6 +52,6 @@
 
  Underline View Mode - While editing
  */
-@interface MDCTextInputControllerLegacyFullWidth : MDCTextInputControllerFullWidth<NSSecureCoding>
+@interface MDCTextInputControllerLegacyFullWidth : MDCTextInputControllerFullWidth
 
 @end

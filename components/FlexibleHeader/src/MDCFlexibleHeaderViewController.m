@@ -39,6 +39,10 @@ static NSString *const MDCFlexibleHeaderViewControllerHeaderViewKey =
 static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
     @"MDCFlexibleHeaderViewControllerLayoutDelegateKey";
 
+// KVO contexts
+static char *const kKVOContextMDCFlexibleHeaderViewController =
+    "kKVOContextMDCFlexibleHeaderViewController";
+
 @interface MDCFlexibleHeaderViewController () <MDCFlexibleHeaderViewDelegate>
 
 /**
@@ -51,13 +55,20 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
 
 /**
  The NSLayoutConstraint attached to the flexible header view controller's parentViewController's
- topLayoutGuide.
+ topLayoutGuide. We need to strongly hold it in order to de-register KVO events.
 */
-@property(nonatomic, weak) NSLayoutConstraint *topLayoutGuideConstraint;
+@property(nonatomic, strong) NSLayoutConstraint *topLayoutGuideConstraint;
+
+// For avoiding re-entrant recursion while modifying the top layout guide.
+@property(nonatomic) BOOL isUpdatingTopLayoutGuide;
 
 @end
 
 @implementation MDCFlexibleHeaderViewController
+
+- (void)dealloc {
+  self.topLayoutGuideConstraint = nil; // Clear KVO observers
+}
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -226,6 +237,35 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
   }
 }
 
+#pragma mark KVO
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context {
+  if (context == kKVOContextMDCFlexibleHeaderViewController) {
+    void (^mainThreadWork)(void) = ^{
+      if (object != self->_topLayoutGuideConstraint) {
+        return;
+      }
+
+      [self updateTopLayoutGuide];
+    };
+
+    if (self.topLayoutGuideAdjustmentEnabled) {
+      // Ensure that UIKit modifications occur on the main thread.
+      if ([NSThread isMainThread]) {
+        mainThreadWork();
+      } else {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:mainThreadWork];
+      }
+    }
+
+  } else {
+    [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+  }
+}
+
 #pragma mark - Top layout guide support
 
 /*
@@ -242,6 +282,9 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
  undocumented side effect of also updating the topLayoutGuide's length.
  This approach is discussed here:
  https://stackoverflow.com/questions/19588171/how-to-set-toplayoutguide-position-for-child-view-controller
+
+ Also see this open radar feature request for a mutable top layout guide:
+ http://www.openradar.me/19984939
  */
 - (void)fhv_extractTopLayoutGuideConstraint {
   UIViewController *topLayoutGuideViewController =
@@ -264,18 +307,72 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
   }
 }
 
+- (void)setTopLayoutGuideConstraint:(NSLayoutConstraint *)topLayoutGuideConstraint {
+  if (_topLayoutGuideConstraint == topLayoutGuideConstraint) {
+    return;
+  }
+
+  /*
+   On pre-iOS 11 devices, the top layout guide's constant gets set by UIKit multiple times on
+   call stacks that we have no influence over, meaning it's easy for our custom top layout guide
+   value to be lost (being reset to UIKit's default of "20" usually). We want to have final say on
+   the value though, so we KVO the property and re-apply our calculated top layout guide any time
+   the top layout guide is modified.
+
+   We only do this on pre-iOS 11 devices because iOS 11 and above are less aggressive about setting
+   the top layout guide constant (and clients should be relying on additionalSafeAreaInsets anyway).
+   */
+  BOOL shouldObserveLayoutGuideConstant = YES;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    shouldObserveLayoutGuideConstant = NO;
+  }
+#endif
+
+  if (shouldObserveLayoutGuideConstant) {
+    [_topLayoutGuideConstraint removeObserver:self
+                                   forKeyPath:NSStringFromSelector(@selector(constant))
+                                      context:kKVOContextMDCFlexibleHeaderViewController];
+  }
+
+  _topLayoutGuideConstraint = topLayoutGuideConstraint;
+
+  if (shouldObserveLayoutGuideConstant) {
+    [_topLayoutGuideConstraint addObserver:self
+                                forKeyPath:NSStringFromSelector(@selector(constant))
+                                   options:NSKeyValueObservingOptionNew
+                                   context:kKVOContextMDCFlexibleHeaderViewController];
+  }
+}
+
 - (UIViewController *)fhv_topLayoutGuideViewControllerWithFallback {
   UIViewController *topLayoutGuideViewController = self.topLayoutGuideViewController;
-  if (!topLayoutGuideViewController) {
+  if (!topLayoutGuideViewController && !self.topLayoutGuideAdjustmentEnabled) {
     topLayoutGuideViewController = self.parentViewController;
   }
   return topLayoutGuideViewController;
 }
 
+- (void)fhv_setTopLayoutGuideConstraintConstant:(CGFloat)constant {
+  self.isUpdatingTopLayoutGuide = YES;
+  self.topLayoutGuideConstraint.constant = constant;
+  self.isUpdatingTopLayoutGuide = NO;
+}
+
 - (void)updateTopLayoutGuide {
+  NSAssert([NSThread isMainThread],
+           @"updateTopLayoutGuide must be called from the main thread.");
+  // We observe (using KVO) the top layout guide's constant and re-invoke updateTopLayoutGuide
+  // whenever it changes. We also change the constant in this method. So, to avoid a recursive
+  // infinite loop we bail out early here if we're the ones that initiated the top layout guide
+  // constant change.
+  if (self.isUpdatingTopLayoutGuide) {
+    return;
+  }
+
   if (!self.topLayoutGuideAdjustmentEnabled) {
     // Legacy behavior
-    [self.topLayoutGuideConstraint setConstant:self.flexibleHeaderViewControllerHeightOffset];
+    [self fhv_setTopLayoutGuideConstraintConstant:self.flexibleHeaderViewControllerHeightOffset];
     return;
   }
 
@@ -286,7 +383,10 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
     [self fhv_extractTopLayoutGuideConstraint];
   }
   CGFloat topInset = CGRectGetMaxY(_headerView.frame);
-  self.topLayoutGuideConstraint.constant = topInset;
+  // Avoid excessive re-calculations.
+  if (self.topLayoutGuideConstraint.constant != topInset) {
+    [self fhv_setTopLayoutGuideConstraintConstant:topInset];
+  }
 
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
@@ -362,7 +462,7 @@ static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
 
     // We must change the constant of the constraint attached to our parentViewController's
     // topLayoutGuide to trigger the re-layout of its subviews
-    [self.topLayoutGuideConstraint setConstant:self.flexibleHeaderViewControllerHeightOffset];
+    [self fhv_setTopLayoutGuideConstraintConstant:self.flexibleHeaderViewControllerHeightOffset];
   }
 
   [self.layoutDelegate flexibleHeaderViewController:self

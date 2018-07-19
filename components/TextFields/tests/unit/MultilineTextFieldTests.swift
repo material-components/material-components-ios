@@ -100,52 +100,6 @@ class MultilineTextFieldTests: XCTestCase {
     XCTAssertTrue(textField.mdc_adjustsFontForContentSizeCategory)
   }
 
-  func testSerialization() {
-    let textField = MDCMultilineTextField()
-    textField.translatesAutoresizingMaskIntoConstraints = false
-    textField.text = "Lorem ipsum dolor sit amet, consectetuer adipiscing"
-    textField.cursorColor = .red
-
-    let controller = MDCTextInputControllerUnderline(textInput: textField)
-    XCTAssertNotNil(controller.textInput)
-
-    let leadingText = "Serialized Helper Test"
-    controller.helperText = leadingText
-    controller.characterCountMax = 40
-    textField.textInsetsMode = .never
-
-    let trailingView = UIView()
-    trailingView.backgroundColor = .blue
-    textField.trailingView = trailingView
-    textField.trailingViewMode = .never
-
-    let serializedInput = NSKeyedArchiver.archivedData(withRootObject: textField)
-    XCTAssertNotNil(serializedInput)
-
-    let unserializedInput =
-      NSKeyedUnarchiver.unarchiveObject(with: serializedInput) as? MDCMultilineTextField
-    XCTAssertNotNil(unserializedInput)
-
-    XCTAssertEqual(textField.translatesAutoresizingMaskIntoConstraints,
-                   unserializedInput?.translatesAutoresizingMaskIntoConstraints)
-    XCTAssertEqual(textField.text,
-                   unserializedInput?.text)
-
-    XCTAssert(textField.cursorColor?.isEqualAsFloats(unserializedInput?.cursorColor) ?? false)
-
-    XCTAssertEqual(textField.leadingUnderlineLabel.text,
-                   unserializedInput?.leadingUnderlineLabel.text)
-
-    XCTAssertEqual(textField.textInsetsMode, unserializedInput?.textInsetsMode)
-
-    XCTAssertEqual(textField.trailingView?.backgroundColor,
-                   unserializedInput?.trailingView?.backgroundColor)
-    XCTAssertEqual(textField.trailingViewMode, unserializedInput?.trailingViewMode)
-    XCTAssertEqual(textField.trailingUnderlineLabel.text, "51 / 40")
-    XCTAssertEqual(textField.trailingUnderlineLabel.text,
-                   unserializedInput?.trailingUnderlineLabel.text)
-  }
-
   func testSizing() {
     let textField = MDCMultilineTextField(frame: CGRect(x: 0, y: 0, width: 300, height: 0))
     XCTAssertEqual(textField.frame.height, 0)

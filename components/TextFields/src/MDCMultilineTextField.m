@@ -28,21 +28,6 @@
 #import "MaterialMath.h"
 #import "MaterialTypography.h"
 
-static NSString *const MDCMultilineTextFieldCursorColorKey = @"MDCMultilineTextFieldCursorColorKey";
-static NSString *const MDCMultilineTextFieldExpandsOnOverflowKey =
-    @"MDCMultilineTextFieldExpandsOnOverflowKey";
-static NSString *const MDCMultilineTextFieldFundamentKey = @"MDCMultilineTextFieldFundamentKey";
-static NSString *const MDCMultilineTextFieldLayoutDelegateKey =
-    @"MDCMultilineTextFieldLayoutDelegateKey";
-static NSString *const MDCMultilineTextFieldMinimumLinesKey = @"MDCMultilineTextMinimumLinesKey";
-static NSString *const MDCMultilineTextFieldMultilineDelegateKey =
-    @"MDCMultilineTextFieldMultilineDelegateKey";
-static NSString *const MDCMultilineTextFieldTextViewKey = @"MDCMultilineTextFieldTextViewKey";
-static NSString *const MDCMultilineTextFieldTrailingViewKey =
-    @"MDCMultilineTextFieldTrailingViewKey";
-static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
-    @"MDCMultilineTextFieldTrailingViewModeKey";
-
 @interface MDCMultilineTextField () {
   UIColor *_cursorColor;
 
@@ -93,9 +78,6 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    if ([aDecoder containsValueForKey:MDCMultilineTextFieldTextViewKey]) {
-      _textView = [aDecoder decodeObjectForKey:MDCMultilineTextFieldTextViewKey];
-    }
     if (!_textView) {
       _textView = [[MDCIntrinsicHeightTextView alloc] initWithFrame:CGRectZero];
     }
@@ -103,27 +85,9 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
     // been encoded differently.
     [self setupTextView];
 
-    MDCTextInputCommonFundament *fundament =
-        [aDecoder decodeObjectForKey:MDCMultilineTextFieldFundamentKey];
-    _fundament =
-        fundament ? fundament : [[MDCTextInputCommonFundament alloc] initWithTextInput:self];
+    _fundament = [[MDCTextInputCommonFundament alloc] initWithTextInput:self];
 
     [self commonMDCMultilineTextFieldInitialization];
-    _cursorColor = [aDecoder decodeObjectForKey:MDCMultilineTextFieldCursorColorKey];
-
-    if ([aDecoder containsValueForKey:MDCMultilineTextFieldExpandsOnOverflowKey]) {
-      self.expandsOnOverflow =
-          [aDecoder decodeBoolForKey:MDCMultilineTextFieldExpandsOnOverflowKey];
-    }
-    _layoutDelegate = [aDecoder decodeObjectForKey:MDCMultilineTextFieldLayoutDelegateKey];
-    if ([aDecoder containsValueForKey:MDCMultilineTextFieldMinimumLinesKey]) {
-      _minimumLines = [aDecoder decodeIntegerForKey:MDCMultilineTextFieldMinimumLinesKey];
-    }
-    _multilineDelegate = [aDecoder decodeObjectForKey:MDCMultilineTextFieldMultilineDelegateKey];
-
-    _trailingView = [aDecoder decodeObjectForKey:MDCMultilineTextFieldTrailingViewKey];
-    _trailingViewMode = (UITextFieldViewMode)
-        [aDecoder decodeIntegerForKey:MDCMultilineTextFieldTrailingViewModeKey];
   }
 
   return self;
@@ -131,21 +95,6 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [super encodeWithCoder:aCoder];
-  [aCoder encodeObject:self.cursorColor forKey:MDCMultilineTextFieldCursorColorKey];
-  [aCoder encodeBool:self.expandsOnOverflow forKey:MDCMultilineTextFieldExpandsOnOverflowKey];
-  [aCoder encodeObject:self.fundament forKey:MDCMultilineTextFieldFundamentKey];
-  [aCoder encodeConditionalObject:self.layoutDelegate
-                           forKey:MDCMultilineTextFieldLayoutDelegateKey];
-  [aCoder encodeInteger:self.minimumLines forKey:MDCMultilineTextFieldMinimumLinesKey];
-  [aCoder encodeConditionalObject:self.multilineDelegate
-                           forKey:MDCMultilineTextFieldMultilineDelegateKey];
-  [aCoder encodeObject:self.textView forKey:MDCMultilineTextFieldTextViewKey];
-  [aCoder encodeObject:self.trailingView forKey:MDCMultilineTextFieldTrailingViewKey];
-  [aCoder encodeInteger:self.trailingViewMode forKey:MDCMultilineTextFieldTrailingViewModeKey];
 }
 
 - (instancetype)copyWithZone:(__unused NSZone *)zone {

@@ -20,9 +20,6 @@ static const CGFloat kShadowElevationDialog = 24.0;
 static const float kKeyShadowOpacity = 0.26f;
 static const float kAmbientShadowOpacity = 0.08f;
 
-static NSString *const MDCShadowLayerElevationKey = @"MDCShadowLayerElevationKey";
-static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShadowMaskEnabledKey";
-
 @interface MDCPendingAnimation : NSObject <CAAction>
 @property(nonatomic, weak) CALayer *animationSourceLayer;
 @property(nonatomic, strong) NSString *keyPath;
@@ -114,13 +111,6 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
 - (nullable instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    if ([aDecoder containsValueForKey:MDCShadowLayerElevationKey]) {
-      _elevation = (CGFloat)[aDecoder decodeDoubleForKey:MDCShadowLayerElevationKey];
-    }
-    if ([aDecoder containsValueForKey:MDCShadowLayerShadowMaskEnabledKey]) {
-      _shadowMaskEnabled = [aDecoder decodeBoolForKey:MDCShadowLayerShadowMaskEnabledKey];
-    }
-
     [self commonMDCShadowLayerInit];
   }
   return self;
@@ -188,14 +178,6 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
     _topShadow.mask = _topShadowMask;
     _bottomShadow.mask = _bottomShadowMask;
   }
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [super encodeWithCoder:aCoder];
-  [aCoder encodeDouble:_elevation forKey:MDCShadowLayerElevationKey];
-  [aCoder encodeBool:_shadowMaskEnabled forKey:MDCShadowLayerShadowMaskEnabledKey];
-  // Additional state is calculated at deserialization time based on _elevation and
-  // _shadowMaskEnabled so we don't need to store them.
 }
 
 - (void)layoutSublayers {
