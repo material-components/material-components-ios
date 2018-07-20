@@ -369,7 +369,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 
   } else {
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-    if ([viewController.view respondsToSelector:@selector(safeAreaInsets)]) {
+    if (@available(iOS 11.0, *)) {
       self.topSafeAreaInset = viewController.view.safeAreaInsets.top;
     } else {
       self.topSafeAreaInset = viewController.topLayoutGuide.length;
