@@ -23,6 +23,10 @@
 #import "private/MDCFlexibleHeaderView+Private.h"
 #import <MDFTextAccessibility/MDFTextAccessibility.h>
 
+@interface UIView ()
+- (UIEdgeInsets)safeAreaInsets; // For pre-iOS 11 SDK targets.
+@end
+
 static inline BOOL ShouldUseLightStatusBarOnBackgroundColor(UIColor *color) {
   if (CGColorGetAlpha(color.CGColor) < 1) {
     return NO;
