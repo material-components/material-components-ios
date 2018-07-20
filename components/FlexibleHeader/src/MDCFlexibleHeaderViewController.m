@@ -177,7 +177,7 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
   if (self.inferTopSafeAreaInsetFromViewController) {
     // At this point we can be confident that our view controller ancestry is as complete as
     // possible, so we can now infer our top safe area source view controller.
-    [self fhv_inferTopSafeAreaSourceViewControllerFrom:self.parentViewController];
+    [self fhv_inferTopSafeAreaSourceViewController];
 
     // Querying the top layout guide ensures that the flexible header receives layout event when
     // the status bar visibility changes. This allows the flexible header to animate alongside any
@@ -514,9 +514,11 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
   _topLayoutGuideViewController = topLayoutGuideViewController;
   _topLayoutGuideAdjustmentEnabled = YES;
 
-  // Need to re-infer the top safe area source view controller because it may now be a child of the
-  // top layout guide view controller.
-  [self fhv_inferTopSafeAreaSourceViewControllerFrom:self.parentViewController];
+  if (self.inferTopSafeAreaInsetFromViewController) {
+    // Need to re-infer the top safe area source view controller because it may now be a child of the
+    // top layout guide view controller.
+    [self fhv_inferTopSafeAreaSourceViewController];
+  }
 
   if ([self isViewLoaded]) {
     [self fhv_extractTopLayoutGuideConstraint];
@@ -526,6 +528,14 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 
 - (void)setInferTopSafeAreaInsetFromViewController:(BOOL)inferTopSafeAreaInsetFromViewController {
   _headerView.inferTopSafeAreaInsetFromViewController = inferTopSafeAreaInsetFromViewController;
+
+  if (inferTopSafeAreaInsetFromViewController) {
+    [self fhv_inferTopSafeAreaSourceViewController];
+  } else {
+    _headerView.topSafeAreaSourceViewController = nil;
+    self.topSafeAreaConstraint = nil;
+    self.topSafeAreaView = nil;
+  }
 }
 
 - (BOOL)inferTopSafeAreaInsetFromViewController {
@@ -561,7 +571,19 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 // to look at when determining the top safe area inset. It's possible that this assumption will not
 // hold true in all cases, so we may also need to expose an explicit API for setting the top safe
 // area source view controller.
-- (void)fhv_inferTopSafeAreaSourceViewControllerFrom:(UIViewController *)parent {
+- (void)fhv_inferTopSafeAreaSourceViewController {
+  UIViewController *parent = self.parentViewController;
+  if (parent == nil) {
+    _headerView.topSafeAreaSourceViewController = nil;
+    self.topSafeAreaConstraint = nil;
+    self.topSafeAreaView = nil;
+    return;
+  }
+
+  NSAssert(self.inferTopSafeAreaInsetFromViewController,
+           @"%@ should only be invoked if inferTopSafeAreaInsetFromViewController is enabled.",
+           NSStringFromSelector(_cmd));
+
   UIViewController *ancestor = [self fhv_rootAncestorOfViewController:parent];
 
   // Are we attempting to extract the top safe area inset from our top layout guide view controller?
@@ -576,7 +598,7 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 
   // if ancestor == nil at this point, then we're in a bad spot because there's nowhere for us to
   // extract a top safe area inset from. Should we throw an assert?
-  NSAssert(!self.inferTopSafeAreaInsetFromViewController || ancestor != nil,
+  NSAssert(ancestor != nil,
            @"inferTopSafeAreaInsetFromViewController is true but we were unable to infer a view controller"
            @" from which we could extract a safe area. Consider placing your view controller inside"
            @" a container view controller.");
