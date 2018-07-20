@@ -156,30 +156,6 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   BOOL _wasStatusBarHidden;
 
   // We use this value to correctly handle top safe area insets on non-iPhone X devices.
-  //
-  // Generally-speaking, we consider the top safe area inset to equate to the length of any
-  // "device-owned" pixels.
-  //
-  // On an iPhone X, the top safe area inset is a fixed hardware constant, varying only based on
-  // device orientation.
-  //
-  // On non-X devices, however, the top safe area inset is a flexible software value reflecting the
-  // status bar's current height. If the status bar is hidden, the top safe area inset is zero.
-  //
-  // This affects the flexible header mostly when the status bar shift behavior is enabled. The
-  // flexible header is able to hide the status bar interactively, meaning our top safe area inset
-  // can fluctuate between 0 and 20 on non-X devices as we show/hide the status bar. This can cause
-  // the tracking scroll view's content inset to "jump" because we make the scroll view's top
-  // content inset equal maximumHeight + topSafeAreaInset.
-  //
-  // Aside: If we only supported iOS 11 and up we'd likely be able to simplify a lot of this
-  // behavior by solely relying on additionalSafeAreaInsets. Alas, that will likely be sometime
-  // after 2020.
-  //
-  // So, to avoid the jumping behavior, we keep track of what the last non-zero top safe area inset
-  // was. If it was 20 and we know we've programmatically hidden the status bar, we continue to
-  // pretend that the top safe area inset is 20. Once the status bar is visible again we rely on the
-  // actual topSafeAreaInset value.
   CGFloat _lastNonZeroTopSafeAreaInset;
 
   // UILayoutGuide was introduced in iOS 9, so in order to support iOS 8, we use a UIView as a
@@ -442,23 +418,6 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 
 #pragma mark - Top Safe Area Inset
 
-- (CGFloat)fhv_topSafeAreaInset {
-  if (self.inferTopSafeAreaInsetFromViewController) {
-    BOOL topSafeAreaInsetLikelyAffectedByStatusBarVisibility = _lastNonZeroTopSafeAreaInset == 20;
-    if (topSafeAreaInsetLikelyAffectedByStatusBarVisibility
-        && [self fhv_canShiftOffscreen]
-        && _shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar
-        && _statusBarShifter.prefersStatusBarHidden) {
-      return _lastNonZeroTopSafeAreaInset;
-
-    } else {
-      return self.topSafeAreaInset;
-    }
-  } else {
-    return MDCDeviceTopSafeAreaInset();
-  }
-}
-
 - (void)fhv_topSafeAreaInsetDidChange {
   // If the min or max height have been explicitly set, don't adjust anything if the values
   // already include a Safe Area inset.
@@ -489,6 +448,46 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
     [self.delegate flexibleHeaderViewFrameDidChange:self];
   } else {
     [self fhv_updateLayout];
+  }
+}
+
+// Generally-speaking, we consider the top safe area inset to equate to the length of any
+// "device-owned" pixels.
+//
+// On an iPhone X, the top safe area inset is a fixed hardware constant, varying only based on
+// device orientation.
+//
+// On non-X devices, however, the top safe area inset is a flexible software value reflecting the
+// status bar's current height. If the status bar is hidden, the top safe area inset is zero.
+//
+// This affects the flexible header mostly when the status bar shift behavior is enabled. The
+// flexible header is able to hide the status bar interactively, meaning our top safe area inset
+// can fluctuate between 0 and 20 on non-X devices as we show/hide the status bar. This can cause
+// the tracking scroll view's content inset to "jump" because we make the scroll view's top
+// content inset equal maximumHeight + topSafeAreaInset.
+//
+// Aside: If we only supported iOS 11 and up we'd likely be able to simplify a lot of this
+// behavior by solely relying on additionalSafeAreaInsets. Alas, that will likely be sometime
+// after 2020.
+//
+// So, to avoid the jumping behavior, we keep track of what the last non-zero top safe area inset
+// was. If it was 20 and we know we've programmatically hidden the status bar, we continue to
+// pretend that the top safe area inset is 20. Once the status bar is visible again we rely on the
+// actual topSafeAreaInset value.
+- (CGFloat)fhv_topSafeAreaInset {
+  if (self.inferTopSafeAreaInsetFromViewController) {
+    BOOL topSafeAreaInsetLikelyAffectedByStatusBarVisibility = _lastNonZeroTopSafeAreaInset == 20;
+    if (topSafeAreaInsetLikelyAffectedByStatusBarVisibility
+        && [self fhv_canShiftOffscreen]
+        && _shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar
+        && _statusBarShifter.prefersStatusBarHidden) {
+      return _lastNonZeroTopSafeAreaInset;
+
+    } else {
+      return self.topSafeAreaInset;
+    }
+  } else {
+    return MDCDeviceTopSafeAreaInset();
   }
 }
 
