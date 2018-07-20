@@ -59,6 +59,14 @@
   [self updateTopLayoutGuideBehavior];
 }
 
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+
+  if (!self.topLayoutGuideAdjustmentEnabled) {
+    [self.headerViewController updateTopLayoutGuide];
+  }
+}
+
 - (BOOL)prefersStatusBarHidden {
   return _headerViewController.prefersStatusBarHidden;
 }
