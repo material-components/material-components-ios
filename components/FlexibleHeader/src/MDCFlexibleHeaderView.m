@@ -176,7 +176,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   // behavior by solely relying on additionalSafeAreaInsets. Alas, that will likely be sometime
   // after 2020.
   //
-  // So, to avoid the jumping behavior, we keep track of what the lost non-zero top safe area inset
+  // So, to avoid the jumping behavior, we keep track of what the last non-zero top safe area inset
   // was. If it was 20 and we know we've programmatically hidden the status bar, we continue to
   // pretend that the top safe area inset is 20. Once the status bar is visible again we rely on the
   // actual topSafeAreaInset value.
@@ -387,18 +387,14 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 }
 
 - (void)extractTopSafeAreaInset {
-  [self fhv_updateTopSafeAreaInset];
-}
-
-- (void)fhv_updateTopSafeAreaInset {
-  self.topSafeAreaInset =
-      [MDCFlexibleHeaderView topSafeAreaInsetFromViewController:_topSafeAreaSourceViewController];
+  self.topSafeAreaInset = [MDCFlexibleHeaderView topSafeAreaInsetFromViewController:
+                              self.topSafeAreaSourceViewController];
 }
 
 - (void)setTopSafeAreaSourceViewController:(UIViewController *)topSafeAreaSourceViewController {
   _topSafeAreaSourceViewController = topSafeAreaSourceViewController;
 
-  [self fhv_updateTopSafeAreaInset];
+  [self extractTopSafeAreaInset];
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
@@ -433,7 +429,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   if (@available(iOS 11.0, *)) {
     [super safeAreaInsetsDidChange];
 
-    [self fhv_updateTopSafeAreaInset];
+    [self extractTopSafeAreaInset];
 
     // We don't need to react to safeAreaInsetsDidChange events if we're using an explicit top safe
     // area inset because the topSafeAreaInset setter will do this for us.
@@ -1388,7 +1384,7 @@ static BOOL isRunningiOS10_3OrAbove() {
   NSAssert(_interfaceOrientationIsChanging, @"Call to %@::%@ not matched by a call to %@.",
            NSStringFromClass([self class]), NSStringFromSelector(_cmd),
            NSStringFromSelector(@selector(interfaceOrientationWillChange)));
-  [self fhv_updateTopSafeAreaInset];
+  [self extractTopSafeAreaInset];
   [self fhv_updateLayout];
 }
 
