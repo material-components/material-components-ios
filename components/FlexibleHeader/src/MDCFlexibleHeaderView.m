@@ -83,7 +83,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 // viewController.topLayoutGuide.length (below iOS 11) from the header view controller's parent view
 // controller.
 //
-// This property is ignored if topSafeAreaInsetBehaviorEnabled is NO.
+// This property is ignored if inferTopSafeAreaInsetFromViewController is NO.
 @property(nonatomic) CGFloat topSafeAreaInset;
 
 @end
@@ -437,7 +437,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 
     // We don't need to react to safeAreaInsetsDidChange events if we're using an explicit top safe
     // area inset because the topSafeAreaInset setter will do this for us.
-    if (!self.topSafeAreaInsetBehaviorEnabled) {
+    if (!self.inferTopSafeAreaInsetFromViewController) {
       [self fhv_topSafeAreaInsetDidChange];
     }
   }
@@ -447,7 +447,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 #pragma mark - Top Safe Area Inset
 
 - (CGFloat)fhv_topSafeAreaInset {
-  if (self.topSafeAreaInsetBehaviorEnabled) {
+  if (self.inferTopSafeAreaInsetFromViewController) {
     BOOL topSafeAreaInsetLikelyAffectedByStatusBarVisibility = _lastNonZeroTopSafeAreaInset == 20;
     if (topSafeAreaInsetLikelyAffectedByStatusBarVisibility
         && [self fhv_canShiftOffscreen]
@@ -506,11 +506,11 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   [self fhv_topSafeAreaInsetDidChange];
 }
 
-- (void)setTopSafeAreaInsetBehaviorEnabled:(BOOL)topSafeAreaInsetBehaviorEnabled {
-  if (_topSafeAreaInsetBehaviorEnabled == topSafeAreaInsetBehaviorEnabled) {
+- (void)setInferTopSafeAreaInsetFromViewController:(BOOL)inferTopSafeAreaInsetFromViewController {
+  if (_inferTopSafeAreaInsetFromViewController == inferTopSafeAreaInsetFromViewController) {
     return;
   }
-  _topSafeAreaInsetBehaviorEnabled = topSafeAreaInsetBehaviorEnabled;
+  _inferTopSafeAreaInsetFromViewController = inferTopSafeAreaInsetFromViewController;
 
   [self fhv_topSafeAreaInsetDidChange];
 }

@@ -58,7 +58,7 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
 
     // Behavioral flags.
     self.fhvc.topLayoutGuideAdjustmentEnabled = YES;
-    self.fhvc.headerView.topSafeAreaInsetBehaviorEnabled = YES;
+    self.fhvc.inferTopSafeAreaInsetFromViewController = YES;
     self.fhvc.headerView.minMaxHeightIncludesSafeArea = NO;
 
     [self addChildViewController:self.fhvc];

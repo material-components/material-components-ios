@@ -25,7 +25,7 @@
   self = [super initWithNibName:nil bundle:nil];
   if (self) {
     _headerViewController = [[MDCFlexibleHeaderViewController alloc] init];
-    _headerViewController.headerView.topSafeAreaInsetBehaviorEnabled = YES;
+    _headerViewController.inferTopSafeAreaInsetFromViewController = YES;
     [self addChildViewController:_headerViewController];
 
     self.contentViewController = contentViewController;

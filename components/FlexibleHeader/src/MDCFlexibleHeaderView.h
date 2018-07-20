@@ -330,29 +330,6 @@ IB_DESIGNABLE
 @property(nonatomic) BOOL minMaxHeightIncludesSafeArea;
 
 /**
- Whether topSafeAreaInset should be used when calculating the top safe area insets for the
- flexible header view.
-
- When this property is enabled, the flexible header will solely rely on topSafeAreaInset
- to determine the size of the top safe area for the flexible header. Set topSafeAreaInset with a
- reasonable value - likely the value of a parent view controller's top safe area insets or top
- layout guide. See topSafeAreaInset for additional context.
-
- When this property is disabled, the flexible header will infer the device's top safe area insets
- automatically. This assumes that the flexible header consumes the entire screen. If this is not the
- case, such as in a popover or an iPad modal sheet), consider enabling this property and setting
- topSafeAreaInset to 0.
-
- Enabling this property will also make topSafeAreaGuide return a non-nil object.
-
- This behavior will eventually be enabled by default, with the expectation that you provide a
- reasonable top safe area inset.
-
- Default is NO.
- */
-@property(nonatomic) BOOL topSafeAreaInsetBehaviorEnabled;
-
-/**
  A layout guide that equates to the top safe area inset of the flexible header view.
 
  Use this layout guide to position subviews in the flexible header in relation to the top safe area

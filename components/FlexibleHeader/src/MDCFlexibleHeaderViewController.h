@@ -74,6 +74,30 @@
  */
 @property(nonatomic, weak, nullable) UIViewController *topLayoutGuideViewController;
 
+/**
+ Whether the view controller should attempt to extract safe area insets from the view controller
+ hierarchy or not.
+
+ When this property is enabled, the flexible header will infer the top safe area inset for the
+ flexible header view based on the header view controller's root ancestor view controller.
+
+ When this property is disabled, the flexible header will infer the top safe area inset using the
+ device's inferred top safe area insets. This assumes that the flexible header consumes the entire
+ screen. If this is not the case, such as in a popover or an iPad modal sheet), consider enabling
+ this property.
+
+ @note If both topLayoutGuideAdjustmentEnabled and this property are enabled, you must take care to
+ have at least one ancestor view controller containing the topLayoutGuideViewController, otherwise
+ an assertion will be thrown. This is to ensure that the value extracted from the ancestor doesn't
+ increase the topLayoutGuideViewController's top layout guide, which would then be included in the
+ next read of the ancestor's safe area inset, compounding the safe area inset infinitely.
+
+ This behavior will eventually be enabled by default.
+
+ Default is NO.
+ */
+@property(nonatomic) BOOL inferTopSafeAreaInsetFromViewController;
+
 #pragma mark UIViewController methods
 
 /**

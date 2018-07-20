@@ -162,7 +162,7 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
 
-  if (self.headerView.topSafeAreaInsetBehaviorEnabled) {
+  if (self.inferTopSafeAreaInsetFromViewController) {
     // At this point we can be confident that our view controller ancestry is as complete as
     // possible, so we can now infer our top safe area source view controller.
     [self fhv_inferTopSafeAreaSourceViewControllerFrom:self.parentViewController];
@@ -510,6 +510,14 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
   }
 }
 
+- (void)setInferTopSafeAreaInsetFromViewController:(BOOL)inferTopSafeAreaInsetFromViewController {
+  _headerView.inferTopSafeAreaInsetFromViewController = inferTopSafeAreaInsetFromViewController;
+}
+
+- (BOOL)inferTopSafeAreaInsetFromViewController {
+  return _headerView.inferTopSafeAreaInsetFromViewController;
+}
+
 #pragma mark - Top safe area inset extraction
 
 - (BOOL)fhv_isViewControllerDescendantOfTopLayoutGuideViewController:(UIViewController *)child {
@@ -554,8 +562,8 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 
   // if ancestor == nil at this point, then we're in a bad spot because there's nowhere for us to
   // extract a top safe area inset from. Should we throw an assert?
-  NSAssert(!self.headerView.topSafeAreaInsetBehaviorEnabled || ancestor != nil,
-           @"topSafeAreaInsetBehaviorEnabled is true but we were unable to infer a view controller"
+  NSAssert(!self.inferTopSafeAreaInsetFromViewController || ancestor != nil,
+           @"inferTopSafeAreaInsetFromViewController is true but we were unable to infer a view controller"
            @" from which we could extract a safe area. Consider placing your view controller inside"
            @" a container view controller.");
 

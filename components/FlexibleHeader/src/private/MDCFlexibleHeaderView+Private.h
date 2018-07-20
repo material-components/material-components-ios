@@ -24,6 +24,8 @@
  */
 @property(nonatomic, weak, nullable) UIViewController *topSafeAreaSourceViewController;
 
+@property(nonatomic) BOOL inferTopSafeAreaInsetFromViewController;
+
 - (void)extractTopSafeAreaInset;
 
 @end
