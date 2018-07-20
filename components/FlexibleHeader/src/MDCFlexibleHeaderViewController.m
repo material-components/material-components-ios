@@ -554,7 +554,10 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 
   // if ancestor == nil at this point, then we're in a bad spot because there's nowhere for us to
   // extract a top safe area inset from. Should we throw an assert?
-  NSAssert(ancestor != nil, @"Failed to find a safe top safe area source view controller");
+  NSAssert(!self.headerView.topSafeAreaInsetBehaviorEnabled || ancestor != nil,
+           @"topSafeAreaInsetBehaviorEnabled is true but we were unable to infer a view controller"
+           @" from which we could extract a safe area. Consider placing your view controller inside"
+           @" a container view controller.");
 
   if (_headerView.topSafeAreaSourceViewController != ancestor) {
     _headerView.topSafeAreaSourceViewController = ancestor;

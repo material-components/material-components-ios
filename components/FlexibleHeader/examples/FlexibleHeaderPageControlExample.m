@@ -66,7 +66,7 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
   _fhvc.headerView.topSafeAreaInsetBehaviorEnabled = YES;
   _fhvc.headerView.minMaxHeightIncludesSafeArea = NO;
 
-  _fhvc.headerView.minimumHeight = kFlexibleHeaderMinHeight;
+  _fhvc.headerView.maximumHeight = kFlexibleHeaderMinHeight;
   [self addChildViewController:_fhvc];
 }
 
