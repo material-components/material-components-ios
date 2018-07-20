@@ -212,22 +212,6 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 #endif
   }
 
-  override func willMove(toParentViewController parent: UIViewController?) {
-    super.willMove(toParentViewController: parent)
-
-    if let parent = parent {
-      headerViewController.headerView.topSafeAreaInset =
-        MDCFlexibleHeaderView.topSafeAreaInset(from: parent)
-    }
-  }
-
-  override func viewWillLayoutSubviews() {
-    super.viewWillLayoutSubviews()
-
-    headerViewController.headerView.topSafeAreaInset =
-      MDCFlexibleHeaderView.topSafeAreaInset(from: self)
-  }
-
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     collectionView?.collectionViewLayout.invalidateLayout()
