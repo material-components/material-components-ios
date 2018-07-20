@@ -19,7 +19,7 @@
 /**
  The view controller from which the top safe area insets should be extracted.
 
- This is typically the top-most parent of the view controller that owns the flexible header view
+ This is typically the root parent of the view controller that owns the flexible header view
  controller.
  */
 @property(nonatomic, weak, nullable) UIViewController *topSafeAreaSourceViewController;
