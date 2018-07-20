@@ -46,7 +46,7 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 
 @interface MDCFlexibleHeaderViewController () <MDCFlexibleHeaderViewDelegate>
 
-/**
+/*
  The current height offset of the flexible header controller with the addition of the current status
  bar state at any given time.
 
@@ -54,28 +54,40 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
  */
 @property(nonatomic) CGFloat flexibleHeaderViewControllerHeightOffset;
 
-/**
- The NSLayoutConstraint attached to the flexible header view controller's parentViewController's
- topLayoutGuide. We need to strongly hold it in order to de-register KVO events.
+/*
+ This is the target top layout guide that we will modify such that it includes the flexible header's
+ height and any top safe area insets we were able to infer.
+
+ We hold a strong reference to it because on pre-iOS 11 devices UIKit will attempt to reset the
+ top layout guide. We observe (using KVO) any changes made to the constraint and reset the
+ constraint's length when a modification outside of our awareness occurs.
 */
 @property(nonatomic, strong) NSLayoutConstraint *topLayoutGuideConstraint;
 
-/**
- The NSLayoutConstraint attached to the source view controller from which we extract our top safe
- area.
+/*
+ For avoiding re-entrant recursion while modifying the top layout guide.
+ */
+@property(nonatomic) BOOL isUpdatingTopLayoutGuide;
+
+/*
+ On pre-iOS 11 devices, we use this layout constraint to extract the top safe area inset from the
+ root ancestor view controller.
  */
 @property(nonatomic, strong) NSLayoutConstraint *topSafeAreaConstraint;
-@property(nonatomic, strong) UIView *topSafeAreaView;
 
-// For avoiding re-entrant recursion while modifying the top layout guide.
-@property(nonatomic) BOOL isUpdatingTopLayoutGuide;
+/*
+ On iOS 11+ devices, we use this view to extract the top safe area inset from the root ancestor view
+ controller.
+ */
+@property(nonatomic, strong) UIView *topSafeAreaView;
 
 @end
 
 @implementation MDCFlexibleHeaderViewController
 
 - (void)dealloc {
-  self.topLayoutGuideConstraint = nil; // Clear KVO observers
+  // Clear KVO observers
+  self.topLayoutGuideConstraint = nil;
   self.topSafeAreaConstraint = nil;
   self.topSafeAreaView = nil;
 }
@@ -167,8 +179,9 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
     // possible, so we can now infer our top safe area source view controller.
     [self fhv_inferTopSafeAreaSourceViewControllerFrom:self.parentViewController];
 
-    // Querying the top layout guide ensures that our parent view controller will receive
-    // viewWillLayoutSubviews events when the status bar visibility changes on devices below iOS 11.
+    // Querying the top layout guide ensures that the flexible header receives layout event when
+    // the status bar visibility changes. This allows the flexible header to animate alongside any
+    // status bar visibility changes.
     [self.parentViewController topLayoutGuide];
   }
 
@@ -269,7 +282,8 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
           && self.topLayoutGuideAdjustmentEnabled) {
         [self updateTopLayoutGuide];
       }
-      if (object == self->_topSafeAreaConstraint || object == self->_topSafeAreaView) {
+      if (self.inferTopSafeAreaInsetFromViewController
+          && (object == self->_topSafeAreaConstraint || object == self->_topSafeAreaView)) {
         [self->_headerView extractTopSafeAreaInset];
       }
     };
