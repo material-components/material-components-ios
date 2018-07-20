@@ -383,7 +383,9 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 - (void)setTopSafeAreaSourceViewController:(UIViewController *)topSafeAreaSourceViewController {
   _topSafeAreaSourceViewController = topSafeAreaSourceViewController;
 
-  [self extractTopSafeAreaInset];
+  if (self.inferTopSafeAreaInsetFromViewController) {
+    [self extractTopSafeAreaInset];
+  }
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
@@ -520,7 +522,11 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   }
   _inferTopSafeAreaInsetFromViewController = inferTopSafeAreaInsetFromViewController;
 
-  [self fhv_topSafeAreaInsetDidChange];
+  if (_inferTopSafeAreaInsetFromViewController) {
+    [self extractTopSafeAreaInset];
+  } else {
+    [self fhv_topSafeAreaInsetDidChange];
+  }
 }
 
 - (id)topSafeAreaGuide {
@@ -1373,7 +1379,9 @@ static BOOL isRunningiOS10_3OrAbove() {
   NSAssert(_interfaceOrientationIsChanging, @"Call to %@::%@ not matched by a call to %@.",
            NSStringFromClass([self class]), NSStringFromSelector(_cmd),
            NSStringFromSelector(@selector(interfaceOrientationWillChange)));
-  [self extractTopSafeAreaInset];
+  if (self.inferTopSafeAreaInsetFromViewController) {
+    [self extractTopSafeAreaInset];
+  }
   [self fhv_updateLayout];
 }
 
