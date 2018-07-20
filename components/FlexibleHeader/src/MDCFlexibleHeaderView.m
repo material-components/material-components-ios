@@ -405,11 +405,11 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   if (@available(iOS 11.0, *)) {
     [super safeAreaInsetsDidChange];
 
-    [self extractTopSafeAreaInset];
+    if (self.inferTopSafeAreaInsetFromViewController) {
+      // Will eventually invoke fhv_topSafeAreaInsetDidChange if needed.
+      [self extractTopSafeAreaInset];
 
-    // We don't need to react to safeAreaInsetsDidChange events if we're using an explicit top safe
-    // area inset because the topSafeAreaInset setter will do this for us.
-    if (!self.inferTopSafeAreaInsetFromViewController) {
+    } else {
       [self fhv_topSafeAreaInsetDidChange];
     }
   }
