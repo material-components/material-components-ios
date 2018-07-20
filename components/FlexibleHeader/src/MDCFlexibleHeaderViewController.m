@@ -577,8 +577,7 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
   UIViewController *ancestor = [self fhv_rootAncestorOfViewController:parent];
 
   // Are we attempting to extract the top safe area inset from our top layout guide view controller?
-  if (self.topLayoutGuideAdjustmentEnabled
-      && parent == self.topLayoutGuideViewController) {
+  if (self.topLayoutGuideAdjustmentEnabled && ancestor == self.topLayoutGuideViewController) {
     // We can't use the provided ancestor because it's a child of the top layout guide view
     // controller. Doing so would result in the top layout guide being infinitely increased.
     // Let's use the top layout guide view controller's ancestor instead.
