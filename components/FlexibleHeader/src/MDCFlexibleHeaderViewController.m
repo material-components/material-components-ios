@@ -515,8 +515,8 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
   _topLayoutGuideAdjustmentEnabled = YES;
 
   if (self.inferTopSafeAreaInsetFromViewController) {
-    // Need to re-infer the top safe area source view controller because it may now be a child of the
-    // top layout guide view controller.
+    // Need to re-infer the top safe area source view controller because it may now be a child of
+    // the top layout guide view controller.
     [self fhv_inferTopSafeAreaSourceViewController];
   }
 
@@ -529,13 +529,7 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 - (void)setInferTopSafeAreaInsetFromViewController:(BOOL)inferTopSafeAreaInsetFromViewController {
   _headerView.inferTopSafeAreaInsetFromViewController = inferTopSafeAreaInsetFromViewController;
 
-  if (inferTopSafeAreaInsetFromViewController) {
-    [self fhv_inferTopSafeAreaSourceViewController];
-  } else {
-    _headerView.topSafeAreaSourceViewController = nil;
-    self.topSafeAreaConstraint = nil;
-    self.topSafeAreaView = nil;
-  }
+  [self fhv_inferTopSafeAreaSourceViewController];
 }
 
 - (BOOL)inferTopSafeAreaInsetFromViewController {
@@ -573,16 +567,12 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 // area source view controller.
 - (void)fhv_inferTopSafeAreaSourceViewController {
   UIViewController *parent = self.parentViewController;
-  if (parent == nil) {
+  if (parent == nil || !self.inferTopSafeAreaInsetFromViewController) {
     _headerView.topSafeAreaSourceViewController = nil;
     self.topSafeAreaConstraint = nil;
     self.topSafeAreaView = nil;
     return;
   }
-
-  NSAssert(self.inferTopSafeAreaInsetFromViewController,
-           @"%@ should only be invoked if inferTopSafeAreaInsetFromViewController is enabled.",
-           NSStringFromSelector(_cmd));
 
   UIViewController *ancestor = [self fhv_rootAncestorOfViewController:parent];
 
