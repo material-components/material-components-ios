@@ -363,8 +363,21 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 }
 
 - (void)extractTopSafeAreaInset {
-  self.topSafeAreaInset = [MDCFlexibleHeaderView topSafeAreaInsetFromViewController:
-                              self.topSafeAreaSourceViewController];
+  UIViewController *viewController = self.topSafeAreaSourceViewController;
+  if (![viewController isViewLoaded]) {
+    self.topSafeAreaInset = 0;
+
+  } else {
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+    if ([viewController.view respondsToSelector:@selector(safeAreaInsets)]) {
+      self.topSafeAreaInset = viewController.view.safeAreaInsets.top;
+    } else {
+      self.topSafeAreaInset = viewController.topLayoutGuide.length;
+    }
+#else
+    self.topSafeAreaInset = viewController.topLayoutGuide.length;
+#endif
+  }
 }
 
 - (void)setTopSafeAreaSourceViewController:(UIViewController *)topSafeAreaSourceViewController {
@@ -512,29 +525,6 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 
 - (id)topSafeAreaGuide {
   return _topSafeAreaGuide;
-}
-
-// Returns the top safe area inset for a given view controller.
-//
-// If the view controller's view is not loaded, returns 0.
-// Otherwise, on devices running iOS 11 or above, this will return the view controller view's top
-// safe area inset. On all other devices, this will return the view controller's top layout guide
-// length.
-+ (CGFloat)topSafeAreaInsetFromViewController:(nonnull UIViewController *)viewController {
-  if (![viewController isViewLoaded]) {
-    return 0;
-  }
-  CGFloat topSafeAreaInset;
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-  if ([viewController.view respondsToSelector:@selector(safeAreaInsets)]) {
-    topSafeAreaInset = viewController.view.safeAreaInsets.top;
-  } else {
-    topSafeAreaInset = viewController.topLayoutGuide.length;
-  }
-#else
-  topSafeAreaInset = viewController.topLayoutGuide.length;
-#endif
-  return topSafeAreaInset;
 }
 
 #pragma mark - Private (fhv_ prefix)
