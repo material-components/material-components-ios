@@ -99,7 +99,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     addChildViewController(headerViewController)
 
     headerViewController.isTopLayoutGuideAdjustmentEnabled = true
-    headerViewController.headerView.topSafeAreaInsetBehaviorEnabled = true
+    headerViewController.inferTopSafeAreaInsetFromViewController = true
     headerViewController.headerView.minMaxHeightIncludesSafeArea = false
     headerViewController.headerView.maximumHeight = 128
     headerViewController.headerView.minimumHeight = 56
