@@ -271,11 +271,8 @@ static CGFloat _underlineHeightNormalDefault =
   // The amount of space underneath the underline may depend on whether there is content in the
   // underline labels.
 
-  CGFloat scale = UIScreen.mainScreen.scale;
-  CGFloat leadingOffset =
-      MDCCeil(self.textInput.leadingUnderlineLabel.font.lineHeight * scale) / scale;
-  CGFloat trailingOffset =
-      MDCCeil(self.textInput.trailingUnderlineLabel.font.lineHeight * scale) / scale;
+  CGFloat leadingOffset = self.textInput.leadingUnderlineLabel.intrinsicContentSize.height;
+  CGFloat trailingOffset = self.textInput.trailingUnderlineLabel.intrinsicContentSize.height;
 
   CGFloat underlineOffset = 0;
   switch (self.textInput.textInsetsMode) {
