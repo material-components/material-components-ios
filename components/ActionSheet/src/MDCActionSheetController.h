@@ -78,16 +78,8 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
 
 @end
 
-/*@class MDCActionSheetPresentationController;
+@protocol MDCActionSheetControllerDelegate <NSObject>
 
-@protocol MDCActionSheetPresentationControllerDelegate <UIAdaptivePresentationControllerDelegate>
-@optional
+-(void)actionSheetControllerDidDismissActionSheet:(nonnull MDCActionSheetController *)controller;
 
-- (void)prepareForActionSheetPresentation:(nonnull MDCActionSheetPresentationController *)actionSheet;
 @end
-
-@interface MDCActionSheetPresentationController : UIPresentationController
-
-@property(nonatomic, weak, nullable) id<MDCActionSheetPresentationControllerDelegate> delegate;
-
-@end*/

@@ -15,8 +15,13 @@
  */
 
 #import "MDCActionSheetController.h"
-#import "MDCBottomSheetController.h"
-#import "MDCSheetContainerView.h"
+#import "MaterialBottomSheet.h"
+
+static const CGFloat TitleOpacity = 0.6f;
+static const CGFloat TitleLeadingPadding = 16.f;
+static const CGFloat TitleBaselinePadding = 32.f;
+static const CGFloat ContentOpacity = 0.87f;
+static const CGFloat LabelLeadingPadding = 56.f;
 
 @interface MDCActionSheetAction ()
 
@@ -55,10 +60,15 @@
 
 @end
 
+@interface MDCActionSheetController () <MDCBottomSheetPresentationControllerDelegate>
+@end
+
+
 @implementation MDCActionSheetController {
   NSMutableArray<MDCActionSheetAction *> *_actions;
   UIViewController *contentViewController;
-  MDCBottomSheetController *bottomSheet;
+  MDCBottomSheetTransitionController *_transitionController;
+  id<MDCActionSheetControllerDelegate> delegate;
 }
 
 + (instancetype)actionSheetControllerWithTitle:(NSString *)title {
@@ -70,17 +80,15 @@
 - (nonnull instancetype)initWithTitle:(nullable NSString *)title {
   self = [super initWithNibName:nil bundle:nil];
   if (self) {
-    _actions = [[NSMutableArray alloc] init];
     contentViewController = [[UIViewController alloc] initWithNibName:nil bundle:nil];
-    contentViewController.view.backgroundColor = [UIColor whiteColor];
-    bottomSheet =
-        [[MDCBottomSheetController alloc] initWithContentViewController:contentViewController];
+    _transitionController = [[MDCBottomSheetTransitionController alloc] init];
+    _transitionController.dismissOnBackgroundTap = YES;
+    super.transitioningDelegate = _transitionController;
+    super.modalPresentationStyle = UIModalPresentationCustom;
+    _actions = [[NSMutableArray alloc] init];
+    [self layoutTitleWithText:title];
   }
   return self;
-}
-
-- (NSArray<MDCActionSheetAction *> *)actions {
-  return [_actions copy];
 }
 
 - (void)addAction:(MDCActionSheetAction *)action {
@@ -88,50 +96,164 @@
   [self addActionToActionSheet:action];
 }
 
-- (void)addActionToActionSheet:(MDCActionSheetAction *)action {
-  /*if (self.tableView) {
+- (NSArray<MDCActionSheetAction *> *)actions {
+  return [_actions copy];
+}
 
-  }*/
+-(void)layoutTitleWithText:(NSString *)title {
+  UILabel *titleLabel = [[UILabel alloc] init];
+  titleLabel.text = title;
+  [titleLabel sizeToFit];
+  [titleLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+  titleLabel.alpha = TitleOpacity;
+  [contentViewController.view addSubview:titleLabel];
+  [NSLayoutConstraint constraintWithItem:titleLabel
+                               attribute:NSLayoutAttributeLeading
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:contentViewController.view
+                               attribute:NSLayoutAttributeLeading
+                              multiplier:1
+                                constant:TitleLeadingPadding].active = YES;
+  CGFloat yPosition = TitleBaselinePadding - titleLabel.font.ascender;
+  [NSLayoutConstraint constraintWithItem:titleLabel
+                               attribute:NSLayoutAttributeTop
+                               relatedBy:NSLayoutRelationEqual
+                               toItem:contentViewController.view
+                               attribute:NSLayoutAttributeTop
+                               multiplier:1
+                               constant:yPosition].active = YES;
+}
+
+- (void)addActionToActionSheet:(MDCActionSheetAction *)action {
+  UILabel *label = [[UILabel alloc] init];
+  label.text = action.title;
+  [label sizeToFit];
+  [label setTranslatesAutoresizingMaskIntoConstraints:NO];
+  label.alpha = ContentOpacity;
+  [contentViewController.view addSubview:label];
+  [NSLayoutConstraint constraintWithItem:label
+                               attribute:NSLayoutAttributeLeading
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:contentViewController.view
+                               attribute:NSLayoutAttributeLeading
+                              multiplier:1
+                                constant:LabelLeadingPadding].active = YES;
+  CGFloat yPosition = 92.0 - label.font.ascender;
+  [NSLayoutConstraint constraintWithItem:label
+                               attribute:NSLayoutAttributeTop
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:contentViewController.view
+                               attribute:NSLayoutAttributeTop
+                              multiplier:1
+                                constant:yPosition].active = YES;
+  UIImageView *icon = [[UIImageView alloc] initWithImage:action.image];
+  icon.frame = CGRectMake(0, 0, 24, 24);
+  icon.alpha = ContentOpacity;
+  [icon setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [contentViewController.view addSubview:icon];
+  [NSLayoutConstraint constraintWithItem:icon
+                               attribute:NSLayoutAttributeLeading
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:contentViewController.view
+                               attribute:NSLayoutAttributeLeading
+                              multiplier:1
+                                constant:16].active = YES;
+  [NSLayoutConstraint constraintWithItem:icon
+                               attribute:NSLayoutAttributeTop
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:contentViewController.view
+                               attribute:NSLayoutAttributeTop
+                              multiplier:1
+                                constant:72].active = YES;
+
+  NSLog(@"Add action");
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  self.view.backgroundColor = [UIColor greenColor];
-  [self addChildViewController:bottomSheet];
+
+  contentViewController.view.autoresizingMask =
+      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  contentViewController.view.frame = self.view.bounds;
+  [self addChildViewController:contentViewController];
+  [self.view addSubview:contentViewController.view];
+  [contentViewController didMoveToParentViewController:self];
+  contentViewController.view.backgroundColor = [UIColor whiteColor];
+  contentViewController.preferredContentSize = CGSizeMake(CGRectGetWidth(self.view.bounds), (_actions.count + 1) * 56);
 }
 
-@end
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
 
-/*@interface MDCActionSheetPresentationController ()
-@end
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+  self.mdc_bottomSheetPresentationController.delegate = self;
+#pragma clang diagnostic pop
 
-@implementation MDCActionSheetPresentationController {
-  UIView *_scrimView;
-  MDCSheetContainerView *_sheetView;
+  self.mdc_bottomSheetPresentationController.dismissOnBackgroundTap =
+      _transitionController.dismissOnBackgroundTap;
+  [contentViewController.view layoutIfNeeded];
 }
 
-@synthesize delegate;
-
-- (UIView *)presentedView {
-  return _sheetView;
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+  return contentViewController.supportedInterfaceOrientations;
 }
 
-- (void)presentationTransitionDidEnd:(BOOL)completed {
-  if (!completed) {
-    [_scrimView removeFromSuperview];
+- (BOOL)accessibilityPerformEscape {
+  if (!self.dismissOnBackgroundTap) {
+    return NO;
   }
+  [self dismissViewControllerAnimated:YES completion:nil];
+  return YES;
 }
 
-- (void)dismissalTransitionWillBegin {
-
+- (CGSize)preferredContentSize {
+  return contentViewController.preferredContentSize;
 }
 
-@end*/
+- (void)setPreferredContentSize:(CGSize)preferredContentSize {
+  contentViewController.preferredContentSize = preferredContentSize;
+}
 
+- (void)preferredContentSizeDidChangeForChildContentContainer:(id<UIContentContainer>)container {
+  [super preferredContentSizeDidChangeForChildContentContainer:container];
+  [self.presentationController
+      preferredContentSizeDidChangeForChildContentContainer:self];
+}
 
+- (UIScrollView *)trackingScrollView {
+  return _transitionController.trackingScrollView;
+}
 
+- (void)setTrackingScrollView:(UIScrollView *)trackingScrollView {
+  _transitionController.trackingScrollView = trackingScrollView;
+}
 
+- (BOOL)dismissOnBackgroundTap {
+  return _transitionController.dismissOnBackgroundTap;
+}
 
+-(void)setDismissOnBackgroundTap:(BOOL)dismissOnBackgroundTap {
+  _transitionController.dismissOnBackgroundTap = dismissOnBackgroundTap;
+  self.mdc_bottomSheetPresentationController.dismissOnBackgroundTap = dismissOnBackgroundTap;
+}
 
+-(void)setTransitioningDelegate:(id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
+    NSAssert(NO, @"MDCActionSheetController.transitionDelegate cannot be changed");
+    return;
+}
 
+-(void)setModalPresentationStyle:(__unused UIModalPresentationStyle)modalPresentationStyle {
+    NSAssert(NO, @"MDCActionSheetController.modalPresentationStyle cannot be changed.");
+    return;
+}
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+- (void)actionSheetPresentationControllerDidDismissAction:
+    (nonnull __unused MDCBottomSheetPresentationController *)bottomSheet {
+#pragma clang diagnostic pop
+  [delegate actionSheetControllerDidDismissActionSheet:self];
+}
+
+@end
