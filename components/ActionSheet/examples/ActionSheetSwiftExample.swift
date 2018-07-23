@@ -39,9 +39,12 @@ class ActionSheetSwiftExample: UIViewController {
   }
 
   func showActionSheet() {
-    print("We came here")
     let action = MDCActionSheetAction(title: "Home", image: UIImage(named: "Home")!, handler: nil)
     actionSheet.addAction(action)
+    let secondAction = MDCActionSheetAction(title: "Favorite",
+                                            image: UIImage(named: "Favorite")!,
+                                            handler: nil)
+    actionSheet.addAction(secondAction)
     present(actionSheet, animated: true, completion: nil)
   }
 }
