@@ -334,6 +334,8 @@ IB_DESIGNABLE
 
  Use this layout guide to position subviews in the flexible header in relation to the top safe area
  insets.
+
+ This object is intended to be used as a constraint item.
  */
 @property(nonatomic, nonnull, readonly) id topSafeAreaGuide;
 
