@@ -1412,6 +1412,14 @@ static BOOL isRunningiOS10_3OrAbove() {
     CGPoint offset = scrollView.contentOffset;
     offset.y = self.trackingScrollView.contentOffset.y;
     scrollView.contentOffset = offset;
+
+  } else if (self.trackingScrollView.contentOffset.y > scrollView.contentOffset.y
+             && scrollView.contentOffset.y < 0) { // Destination is showing an expanded header.
+    // Our header is possibly smaller now than it will be when we move to the new content.
+    // Scroll the new content such that we collapse the header to the current height.
+    CGPoint offset = scrollView.contentOffset;
+    offset.y = MIN(self.trackingScrollView.contentOffset.y, 0);
+    scrollView.contentOffset = offset;
   }
 }
 
