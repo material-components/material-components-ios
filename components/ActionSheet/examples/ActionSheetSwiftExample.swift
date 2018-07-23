@@ -14,10 +14,7 @@
 import UIKit
 
 class ActionSheetSwiftExample: UIViewController {
-  lazy var actionSheet: MDCActionSheetController = {
-    let actionSheet = MDCActionSheetController()
-    return actionSheet
-  }()
+  let actionSheet = MDCActionSheetController(title: "Action sheet")
 
   var colorScheme = MDCSemanticColorScheme()
   var typographyScheme = MDCTypographyScheme()
@@ -30,6 +27,7 @@ class ActionSheetSwiftExample: UIViewController {
     let showButton = MDCButton()
     showButton.setTitle("Show Action Sheet", for: .normal)
     showButton.sizeToFit()
+    showButton.frame.size.height = 48
     showButton.center = view.center
     MDCContainedButtonThemer.applyScheme(MDCButtonScheme(), to: showButton)
     MDCContainedButtonColorThemer.applySemanticColorScheme(colorScheme, to: showButton)
@@ -42,10 +40,9 @@ class ActionSheetSwiftExample: UIViewController {
 
   func showActionSheet() {
     print("We came here")
-    view.addSubview(actionSheet.view)
-    /*present(actionSheet, animated: false, completion: {
-      print("Show action sheet")
-    })*/
+    let action = MDCActionSheetAction(title: "Home", image: UIImage(named: "Home")!, handler: nil)
+    actionSheet.addAction(action)
+    present(actionSheet, animated: true, completion: nil)
   }
 }
 
