@@ -218,20 +218,16 @@ class EditReorderCollectionViewController: UIViewController,
     dataSource[destinationIndexPath.item] = sourceItem
   }
 
+  @available(iOS 9.0, *)
   @objc func reorderCards(gesture: UILongPressGestureRecognizer) {
-
-    guard toggle == .reorder,
-      #available(iOS 9.0, *) else { return }
 
     switch(gesture.state) {
     case .began:
       guard let selectedIndexPath = collectionView.indexPathForItem(at:
-        gesture.location(in: collectionView)) else {
-          break
-      }
+        gesture.location(in: collectionView)) else { break }
       collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
     case .changed:
-      guard let gestureView = gesture.view else { return }
+      guard let gestureView = gesture.view else { break }
       collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gestureView))
     case .ended:
       collectionView.endInteractiveMovement()
