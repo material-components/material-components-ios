@@ -99,7 +99,6 @@ static NSString *const kCellIdentifier = @"cell";
   [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme toAppBar:_appBar];
   
   self.appBar.headerViewController.headerView.trackingScrollView = self.tableView;
-  self.tableView.delegate = self.appBar.headerViewController;
   
   [self.appBar addSubviewsToParent];
   
@@ -171,6 +170,28 @@ static NSString *const kCellIdentifier = @"cell";
     default:
       break;
   }
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+  [self.appBar.headerViewController scrollViewDidScroll:scrollView];
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+  [self.appBar.headerViewController scrollViewDidEndDecelerating:scrollView];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+  [self.appBar.headerViewController scrollViewDidEndDragging:scrollView willDecelerate:decelerate];
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView
+                     withVelocity:(CGPoint)velocity
+              targetContentOffset:(inout CGPoint *)targetContentOffset {
+  [self.appBar.headerViewController scrollViewWillEndDragging:scrollView
+                                                 withVelocity:velocity
+                                          targetContentOffset:targetContentOffset];
 }
 
 @end
