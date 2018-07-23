@@ -63,18 +63,26 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
 - (nonnull instancetype)init NS_UNAVAILABLE;
 
 /**
- Title of the button shown on the action sheet.
+ Title of the cell shown on the action sheet.
 
- Action sheets actions must have a title that will be set within actionWithTitle:image:handler: method.
+ Action sheet actions must have a title that will be set within actionWithTitle:image:handler: method.
  */
 @property (nonatomic, nonnull, readonly) NSString *title;
 
 /**
- Image of the button shown on the action sheet.
+ Image of the cell shown on the action sheet.
 
- Action sheets actions must have an image that will be set within actionWithTitle:image:handler: method.
+ Action sheet actions must have an image that will be set within actionWithTitle:image:handler: method.
 */
 @property (nonatomic, nonnull, readonly) UIImage *image;
+
+/**
+  Action of the cell shown on the action sheet.
+
+  Action sheet actions must have an action taht will be set within
+    actionWithTitle:image:handler: method.
+*/
+@property (nonatomic, nonnull, readonly) MDCActionSheetHandler action;
 
 @end
 
