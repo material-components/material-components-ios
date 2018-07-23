@@ -9,6 +9,13 @@
 # will be requested to review.
 # *.js    @octocat @github/js
 
+# !!!! IMPORTANT !!!!
+# If a component is commented-out with a current contributor/team member
+# it means that the person still "owns" the component but does not want
+# to be automatically added as a reviewer to all PRs touching that component.
+# Please add them manually if you feel they need to address the changes 
+# personally, otherwise the team will be added instead.
+
 # You can also use email addresses if you prefer.
 /components/ActivityIndicator/    @jmdetloff
 /components/AnimationTiming/      @yarneo
@@ -30,7 +37,8 @@
 /components/Ink/                  @yarneo
 /components/LibraryInfo/          @ajsecord
 /components/MaskedTransition/     @jverkoey
-/components/NavigationBar/        @yarneo @jverkoey
+# /components/NavigationBar/        @yarneo 
+/components/NavigationBar/        @jverkoey
 /components/OverlayWindow/        @yarneo
 /components/PageControl/          @randallli
 /components/Palettes/             @ajsecord
