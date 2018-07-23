@@ -140,6 +140,26 @@ static UIImage *fakeImage(void) {
                              0.001f);
 }
 
+- (void)testAccessibilityIdentifier {
+  UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home"
+                                                           image:nil
+                                                             tag:0];
+  tabBarItem.accessibilityIdentifier = @"accessibilityIdentifier";
+  MDCBottomNavigationBar *bar = [[MDCBottomNavigationBar alloc] init];
+  bar.items = @[ tabBarItem ];
+  BOOL containsButtonWithCorrectAccessibilityIdentifier = NO;
+  for (UIView *subview1 in bar.subviews) {
+    for (UIView *subview2 in subview1.subviews) {
+      for (UIView *subview3 in subview2.subviews) {
+        if ([subview3.accessibilityIdentifier isEqualToString:tabBarItem.accessibilityIdentifier]) {
+          containsButtonWithCorrectAccessibilityIdentifier = YES;
+        }
+      }
+    }
+  }
+  XCTAssert(containsButtonWithCorrectAccessibilityIdentifier);
+}
+
 - (void)testContentInsetLayout {
   // Given
   MDCBottomNavigationItemView *view = [[MDCBottomNavigationItemView alloc] init];
