@@ -651,6 +651,8 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
   return [resourcePath stringByAppendingPathComponent:bundleName];
 }
 
+#pragma mark - MDCInkTouchControllerDelegate methods
+
 - (MDCInkView *)inkTouchController:(MDCInkTouchController *)inkTouchController
             inkViewAtTouchLocation:(CGPoint)location {
   return ((MDCBottomNavigationItemView *)inkTouchController.view).inkView;

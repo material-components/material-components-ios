@@ -196,7 +196,6 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     _button.accessibilityLabel = [self accessibilityLabelWithTitle:_title];
     _button.accessibilityTraits &= ~UIAccessibilityTraitButton;
     _button.accessibilityValue = self.accessibilityValue;
-    _button.exclusiveTouch = NO;
     [self addSubview:_button];
   }
 }
