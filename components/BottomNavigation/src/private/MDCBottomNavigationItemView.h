@@ -19,7 +19,7 @@
 #import "MDCBottomNavigationBar.h"
 #import "MaterialInk.h"
 
-@interface MDCBottomNavigationItemView : UIView
+@interface MDCBottomNavigationItemView : UIView <MDCInkTouchControllerDelegate>
 
 @property(nonatomic, assign) BOOL titleBelowIcon;
 @property(nonatomic, assign) BOOL selected;

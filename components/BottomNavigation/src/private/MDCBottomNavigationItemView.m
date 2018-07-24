@@ -196,6 +196,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     _button.accessibilityLabel = [self accessibilityLabelWithTitle:_title];
     _button.accessibilityTraits &= ~UIAccessibilityTraitButton;
     _button.accessibilityValue = self.accessibilityValue;
+    _button.exclusiveTouch = NO;
     [self addSubview:_button];
   }
 }
@@ -450,6 +451,10 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   NSBundle *bundle = [NSBundle bundleForClass:[MDCBottomNavigationBar class]];
   NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle) resourcePath];
   return [resourcePath stringByAppendingPathComponent:bundleName];
+}
+
+- (MDCInkView *)inkTouchController:(MDCInkTouchController *)inkTouchController inkViewAtTouchLocation:(CGPoint)location {
+  return self.inkView;
 }
 
 @end
