@@ -30,7 +30,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 static const UIEdgeInsets MDCDialogContentInsets = {24.0, 24.0, 24.0, 24.0};
 static const CGFloat MDCDialogContentVerticalPadding = 20.0;
 
-static const UIEdgeInsets MDCDialogActionsInsets = {8.0, 8.0, 8.0, 8.0};
+static const UIEdgeInsets MDCDialogActionsInsets = {2.0, 8.0, 2.0, 8.0};
 static const CGFloat MDCDialogActionsHorizontalPadding = 8.0;
 static const CGFloat MDCDialogActionsVerticalPadding = 8.0;
 static const CGFloat MDCDialogActionButtonHeight = 48.0;
@@ -355,6 +355,10 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
   for (UIButton *button in self.actionButtons) {
     [button sizeToFit];
+    CGRect buttonFrame = button.frame;
+    buttonFrame.size.height = MAX(CGRectGetHeight(buttonFrame), MDCDialogActionButtonHeight);
+    buttonFrame.size.width = MAX(CGRectGetWidth(buttonFrame), MDCDialogActionButtonMinimumWidth);
+    button.frame = buttonFrame;
   }
 
   // Used to calculate the height of the scrolling content, so we limit the width.
@@ -435,8 +439,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
       buttonOrigin.x -= buttonRect.size.width;
       buttonRect.origin = buttonOrigin;
-      buttonRect.size.width = MAX(CGRectGetWidth(buttonRect), MDCDialogActionButtonMinimumWidth);
-      buttonRect.size.height = MAX(CGRectGetHeight(buttonRect), MDCDialogActionButtonHeight);
+
       button.frame = buttonRect;
 
       if (button != [self.actionButtons lastObject]) {
