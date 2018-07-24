@@ -33,7 +33,7 @@ static const CGFloat MDCDialogContentVerticalPadding = 20.0;
 static const UIEdgeInsets MDCDialogActionsInsets = {8.0, 8.0, 8.0, 8.0};
 static const CGFloat MDCDialogActionsHorizontalPadding = 8.0;
 static const CGFloat MDCDialogActionsVerticalPadding = 8.0;
-static const CGFloat MDCDialogActionButtonHeight = 36.0;
+static const CGFloat MDCDialogActionButtonHeight = 48.0;
 static const CGFloat MDCDialogActionButtonMinimumWidth = 48.0;
 
 static const CGFloat MDCDialogMessageOpacity = 0.54f;
@@ -435,7 +435,8 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
       buttonOrigin.x -= buttonRect.size.width;
       buttonRect.origin = buttonOrigin;
-
+      buttonRect.size.width = MAX(CGRectGetWidth(buttonRect), MDCDialogActionButtonMinimumWidth);
+      buttonRect.size.height = MAX(CGRectGetHeight(buttonRect), MDCDialogActionButtonHeight);
       button.frame = buttonRect;
 
       if (button != [self.actionButtons lastObject]) {
