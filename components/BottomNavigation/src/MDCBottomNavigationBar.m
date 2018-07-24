@@ -401,13 +401,6 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 
 #pragma mark - Touch handlers
 
-- (void)didTouchDownButton:(UIButton *)button {
-  MDCBottomNavigationItemView *itemView = (MDCBottomNavigationItemView *)button.superview;
-  CGPoint centerPoint = CGPointMake(CGRectGetMidX(itemView.inkView.bounds),
-                                    CGRectGetMidY(itemView.inkView.bounds));
-  [itemView.inkView startTouchBeganAnimationAtPoint:centerPoint completion:nil];
-}
-
 - (void)didTouchUpInsideButton:(UIButton *)button {
   for (NSUInteger i = 0; i < self.items.count; i++) {
     UITabBarItem *item = self.items[i];
@@ -501,9 +494,6 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 #pragma clang diagnostic pop
 #endif
     itemView.selected = NO;
-    [itemView.button addTarget:self
-                        action:@selector(didTouchDownButton:)
-              forControlEvents:UIControlEventTouchDown];
     [itemView.button addTarget:self
                         action:@selector(didTouchUpInsideButton:)
               forControlEvents:UIControlEventTouchUpInside];
