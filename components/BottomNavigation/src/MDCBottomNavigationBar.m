@@ -475,7 +475,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
     itemView.contentHorizontalMargin = self.itemsContentHorizontalMargin;
     MDCInkTouchController *controller = [[MDCInkTouchController alloc] initWithView:itemView];
     controller.delegate = self;
-    [self.inkControllers  addObject:controller];
+    [self.inkControllers addObject:controller];
 
     NSString *key =
         kMaterialBottomNavigationStringTable[kStr_MaterialBottomNavigationItemCountAccessibilityHint];
@@ -655,7 +655,10 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 
 - (MDCInkView *)inkTouchController:(MDCInkTouchController *)inkTouchController
             inkViewAtTouchLocation:(CGPoint)location {
-  return ((MDCBottomNavigationItemView *)inkTouchController.view).inkView;
+  if ([inkTouchController.view isKindOfClass:[MDCBottomNavigationItemView class]]) {
+    return ((MDCBottomNavigationItemView *)inkTouchController.view).inkView;
+  }
+  return nil;
 }
 
 @end
