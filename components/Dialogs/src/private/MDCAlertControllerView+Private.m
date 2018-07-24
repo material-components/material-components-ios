@@ -230,6 +230,17 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   }
   for (MDCFlatButton *button in self.actionButtons) {
     [button setTitleFont:finalButtonFont forState:UIControlStateNormal];
+    [button sizeToFit];
+    CGRect buttonRect = button.frame;
+    buttonRect.size.height = MAX(CGRectGetHeight(buttonRect), MDCDialogActionButtonHeight);
+    buttonRect.size.width = MAX(CGRectGetWidth(buttonRect), MDCDialogActionButtonMinimumWidth);
+    button.frame = buttonRect;
+    CGFloat verticalInset = MIN(0, -(48 - CGRectGetHeight(button.bounds)) / 2);
+    CGFloat horizontalInset = MIN(0, -(48 - CGRectGetWidth(button.bounds)) / 2);
+    button.hitAreaInsets = UIEdgeInsetsMake(verticalInset,
+                                                  horizontalInset,
+                                                  verticalInset,
+                                                  horizontalInset);
   }
 
   [self setNeedsLayout];
