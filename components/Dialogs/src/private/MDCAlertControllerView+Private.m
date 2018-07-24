@@ -30,7 +30,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 static const UIEdgeInsets MDCDialogContentInsets = {24.0, 24.0, 24.0, 24.0};
 static const CGFloat MDCDialogContentVerticalPadding = 20.0;
 
-static const UIEdgeInsets MDCDialogActionsInsets = {2.0, 8.0, 2.0, 8.0};
+static const UIEdgeInsets MDCDialogActionsInsets = {8.0, 8.0, 8.0, 8.0};
 static const CGFloat MDCDialogActionsHorizontalPadding = 8.0;
 static const CGFloat MDCDialogActionsVerticalPadding = 8.0;
 static const CGFloat MDCDialogActionButtonHeight = 48.0;
