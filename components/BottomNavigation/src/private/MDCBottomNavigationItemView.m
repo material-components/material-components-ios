@@ -453,8 +453,4 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   return [resourcePath stringByAppendingPathComponent:bundleName];
 }
 
-- (MDCInkView *)inkTouchController:(MDCInkTouchController *)inkTouchController inkViewAtTouchLocation:(CGPoint)location {
-  return self.inkView;
-}
-
 @end
