@@ -390,6 +390,8 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
       itemView.selectedImage = change[kMDCBottomNavigationBarNewString];
     } else if ([keyPath isEqualToString:kMDCBottomNavigationBarTitleString]) {
       itemView.title = change[kMDCBottomNavigationBarNewString];
+    } else if ([keyPath isEqualToString:kMDCBottomNavigationBarAccessibilityIdentifier]) {
+      itemView.accessibilityIdentifier = change[kMDCBottomNavigationBarNewString];
     }
   }
 }
@@ -472,7 +474,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
     itemView.titleVisibility = self.titleVisibility;
     itemView.titleBelowIcon = self.titleBelowItem;
     itemView.accessibilityValue = item.accessibilityValue;
-    itemView.button.accessibilityIdentifier = item.accessibilityIdentifier;
+    itemView.accessibilityIdentifier = item.accessibilityIdentifier;
     itemView.contentInsets = self.itemsContentInsets;
     itemView.contentVerticalMargin = self.itemsContentVerticalMargin;
     itemView.contentHorizontalMargin = self.itemsContentHorizontalMargin;

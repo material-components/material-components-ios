@@ -141,23 +141,29 @@ static UIImage *fakeImage(void) {
 }
 
 - (void)testAccessibilityIdentifier {
-  UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home"
-                                                           image:nil
-                                                             tag:0];
-  tabBarItem.accessibilityIdentifier = @"accessibilityIdentifier";
-  MDCBottomNavigationBar *bar = [[MDCBottomNavigationBar alloc] init];
-  bar.items = @[ tabBarItem ];
-  BOOL containsButtonWithCorrectAccessibilityIdentifier = NO;
-  for (UIView *subview1 in bar.subviews) {
-    for (UIView *subview2 in subview1.subviews) {
-      for (UIView *subview3 in subview2.subviews) {
-        if ([subview3.accessibilityIdentifier isEqualToString:tabBarItem.accessibilityIdentifier]) {
-          containsButtonWithCorrectAccessibilityIdentifier = YES;
+  BOOL (^bottomNavContainsItemViewWithAccessibilityIdentifier)(UIView *, NSString *) =
+  ^BOOL(UIView *view, NSString *accessibilityIdentifier) {
+    for (UIView *subview1 in view.subviews) {
+      for (UIView *subview2 in subview1.subviews) {
+        if ([subview2.accessibilityIdentifier isEqualToString:accessibilityIdentifier]) {
+          return YES;
         }
       }
     }
-  }
-  XCTAssert(containsButtonWithCorrectAccessibilityIdentifier);
+    return NO;
+  };
+
+  NSString *oldIdentifier = @"oldIdentifier";
+  NSString *newIdentifier = @"newIdentifier";
+  UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home"
+                                                           image:nil
+                                                             tag:0];
+  tabBarItem.accessibilityIdentifier = oldIdentifier;
+  MDCBottomNavigationBar *bar = [[MDCBottomNavigationBar alloc] init];
+  bar.items = @[ tabBarItem ];
+  XCTAssert(bottomNavContainsItemViewWithAccessibilityIdentifier(bar,oldIdentifier));
+  tabBarItem.accessibilityIdentifier = newIdentifier;
+  XCTAssert(bottomNavContainsItemViewWithAccessibilityIdentifier(bar,newIdentifier));
 }
 
 - (void)testContentInsetLayout {
