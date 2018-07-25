@@ -1,3 +1,122 @@
+# #develop#
+
+## Breaking changes
+
+## New deprecations
+
+## New features
+
+## API changes
+
+### FlexibleHeader
+
+#### MDCFlexibleHeaderView
+
+*new* property: `topSafeAreaGuide` in `MDCFlexibleHeaderView`
+
+#### MDCFlexibleHeaderView()
+
+*new* category: `MDCFlexibleHeaderView()`
+
+*removed* category: `MDCFlexibleHeaderView()`
+
+*modified* property: `behavior` in `MDCFlexibleHeaderView()`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(ext)MDCFlexibleHeaderView@MDCFlexibleHeaderView.h@16973` |
+| To: | `c:objc(ext)MDCFlexibleHeaderView@MDCFlexibleHeaderView.h@17297` |
+
+*modified* property: `contentView` in `MDCFlexibleHeaderView()`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(ext)MDCFlexibleHeaderView@MDCFlexibleHeaderView.h@16973` |
+| To: | `c:objc(ext)MDCFlexibleHeaderView@MDCFlexibleHeaderView.h@17297` |
+
+#### MDCFlexibleHeaderViewController
+
+*new* property: `inferTopSafeAreaInsetFromViewController` in `MDCFlexibleHeaderViewController`
+
+### TextFields
+
+#### MDCTextInputControllerLegacyFullWidth
+
+*modified* class: `MDCTextInputControllerLegacyFullWidth`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCTextInputControllerLegacyFullWidth     : MDCTextInputControllerFullWidth <NSSecureCoding>` |
+| To: | `@interface MDCTextInputControllerLegacyFullWidth     : MDCTextInputControllerFullWidth` |
+
+#### MDCTextInputUnderlineView
+
+*modified* class: `MDCTextInputUnderlineView`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCTextInputUnderlineView : UIView <NSCopying, NSSecureCoding>` |
+| To: | `@interface MDCTextInputUnderlineView : UIView <NSCopying>` |
+
+#### MDCTextInputController
+
+*modified* protocol: `MDCTextInputController`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@protocol MDCTextInputController <NSObject, NSSecureCoding, NSCopying,                                   MDCTextInputPositioningDelegate>` |
+| To: | `@protocol MDCTextInputController <NSObject, NSCopying,                                   MDCTextInputPositioningDelegate>` |
+
+## Component changes
+
+### AppBar
+
+#### Breaking changes
+
+* [**Breaking**:  Remove encoding/decoding behavior for custom properties (#4566)](https://github.com/material-components/material-components-ios/commit/39248f223017bd64d9d291e5f063dd7ccc4fa9af) (featherless)
+
+### Ink
+
+#### Changes
+
+* [Remove encoding/decoding behavior for custom properties (#4555)](https://github.com/material-components/material-components-ios/commit/fc1e82cd17f0abeaa9e62f7c3a3f39a91944a05b) (featherless)
+
+### TextFields
+
+#### Breaking changes
+
+* [**Breaking**:  Remove encoding/decoding behavior for custom properties (#4567)](https://github.com/material-components/material-components-ios/commit/c4935b333d214ec0c028c5147cc8e6ddd00e319c) (featherless)
+
+### BottomAppBar
+
+#### Changes
+
+* [Fix example (#4616)](https://github.com/material-components/material-components-ios/commit/8dd6d9f3d4c7d047fb2a584dd6aced06329cd1be) (Robert Moore)
+
+### BottomSheet
+
+#### Changes
+
+* [Replacing typeof(self) by __typeof(self) (#4617)](https://github.com/material-components/material-components-ios/commit/03244a3dca8e35722e802bd53e6c74a1314118bc) (Jérôme Lebel)
+
+### BottomNavigation
+
+#### Breaking changes
+
+* [**Breaking**:  Remove encoding/decoding behavior for custom properties (#4562)](https://github.com/material-components/material-components-ios/commit/001fbfac55bf1728798cefad767bcf36b9693985) (featherless)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Add behavior for enabling contextual safe area insets (#4596)](https://github.com/material-components/material-components-ios/commit/bb245597d8895a78c346c76f7d0986d7a993ad12) (featherless)
+* [Fix iPhone X status bar bug when changing orientation. (#4592)](https://github.com/material-components/material-components-ios/commit/f5011f7e44b0b24af31d7dc4ae872e53ed29cbd7) (featherless)
+* [Fix inconsistent shifting behavior when deceleration ends. (#4622)](https://github.com/material-components/material-components-ios/commit/98b046dd1f695c9db2506feb63c820905240c233) (featherless)
+* [Improved height consistency when horizontally paging. (#4601)](https://github.com/material-components/material-components-ios/commit/ca4e619287e1c8c438d162ce4f8fe724fcd5d113) (featherless)
+* [Remove Swift typical use example. (#4595)](https://github.com/material-components/material-components-ios/commit/272548637f5a2543a14652372a312fd899e340e2) (featherless)
+
+---
+
 # 58.0.0
 
 This major release focused on accessibility and removing property coding/encoding from a variety of
