@@ -90,8 +90,7 @@ class FlexibleHeaderWrappingLegacyTopLayoutGuideTests: XCTestCase {
     if #available(iOS 11.0, *) {
       XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top, 0)
       XCTAssertEqual(contentViewController.tableView.adjustedContentInset.top,
-                     container.headerViewController.headerView.maximumHeight
-                      + MDCDeviceTopSafeAreaInset())
+                     container.headerViewController.headerView.maximumHeight)
     }
     #endif
   }
@@ -133,8 +132,7 @@ class FlexibleHeaderWrappingLegacyTopLayoutGuideTests: XCTestCase {
     if #available(iOS 11.0, *) {
       XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top, 0)
       XCTAssertEqual(contentViewController.collectionView!.adjustedContentInset.top,
-                     container.headerViewController.headerView.maximumHeight
-                      + MDCDeviceTopSafeAreaInset())
+                     container.headerViewController.headerView.maximumHeight)
     }
     #endif
   }

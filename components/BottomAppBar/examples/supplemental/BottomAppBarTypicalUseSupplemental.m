@@ -99,7 +99,6 @@ static NSString *const kCellIdentifier = @"cell";
   [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme toAppBar:_appBar];
   
   self.appBar.headerViewController.headerView.trackingScrollView = self.tableView;
-  self.tableView.delegate = self.appBar.headerViewController;
   
   [self.appBar addSubviewsToParent];
   
@@ -170,6 +169,37 @@ static NSString *const kCellIdentifier = @"cell";
       break;
     default:
       break;
+  }
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+  if (scrollView == self.appBar.headerViewController.headerView.trackingScrollView) {
+    [self.appBar.headerViewController.headerView trackingScrollViewDidScroll];
+  }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+  if (scrollView == self.appBar.headerViewController.headerView.trackingScrollView) {
+    [self.appBar.headerViewController.headerView trackingScrollViewDidEndDecelerating];
+  }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+  if (scrollView == self.appBar.headerViewController.headerView.trackingScrollView) {
+    [self.appBar.headerViewController.headerView
+     trackingScrollViewDidEndDraggingWillDecelerate:decelerate];
+  }
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView
+                     withVelocity:(CGPoint)velocity
+              targetContentOffset:(inout CGPoint *)targetContentOffset {
+  if (scrollView == self.appBar.headerViewController.headerView.trackingScrollView) {
+    [self.appBar.headerViewController.headerView
+        trackingScrollViewWillEndDraggingWithVelocity:velocity
+                                  targetContentOffset:targetContentOffset];
   }
 }
 
