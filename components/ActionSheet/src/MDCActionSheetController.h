@@ -16,7 +16,6 @@
 
 #import <UIKit/UIKit.h>
 
-
 @class MDCActionSheetAction;
 
 @interface MDCActionSheetController : UIViewController

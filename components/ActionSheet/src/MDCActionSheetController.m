@@ -16,12 +16,13 @@
 
 #import "MDCActionSheetController.h"
 #import "MDCActionSheetItemView.h"
+#import "MDCActionSheetListViewController.h"
 #import "MaterialBottomSheet.h"
 
-static const CGFloat TitleLeadingPadding = 16.f;
-static const CGFloat TitleBaselinePadding = 36.f;
-static const CGFloat TitleAlpha = 0.54f;
-static const CGFloat RowHeight = 56.f;
+static const CGFloat kTitleLeadingPadding = 16.f;
+static const CGFloat kTitleBaselinePadding = 36.f;
+static const CGFloat kTitleAlpha = 0.54f;
+//static const CGFloat kRowHeight = 56.f;
 
 @interface MDCActionSheetAction ()
 
@@ -71,7 +72,7 @@ static const CGFloat RowHeight = 56.f;
   MDCBottomSheetTransitionController *_transitionController;
   id<MDCActionSheetControllerDelegate> delegate;
   NSString *_title;
-  UITableView *_tableView;
+  MDCActionSheetListViewController *_tableView;
 }
 
 + (instancetype)actionSheetControllerWithTitle:(NSString *)title {
@@ -96,13 +97,10 @@ static const CGFloat RowHeight = 56.f;
     super.transitioningDelegate = _transitionController;
     super.modalPresentationStyle = UIModalPresentationCustom;
     _actions = [[NSMutableArray alloc] init];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
 }
 
 - (void)addAction:(MDCActionSheetAction *)action {
   [_actions addObject:[action copy]];
-  [_tableView reloadData];
 }
 
 - (NSArray<MDCActionSheetAction *> *)actions {
@@ -122,19 +120,16 @@ static const CGFloat RowHeight = 56.f;
   contentViewController.preferredContentSize = CGSizeMake(CGRectGetWidth(self.view.bounds),
                                                           (_actions.count + 1) * 56);
   [self addTitle];
-  _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-  _tableView.rowHeight = RowHeight;
-  [_tableView registerClass:MDCActionSheetItemView.self forCellReuseIdentifier:@"Cell"];
-  [_tableView reloadData];
-  [contentViewController.view addSubview:_tableView];
-  [_tableView setTranslatesAutoresizingMaskIntoConstraints:NO];
+  _tableView = [[MDCActionSheetListViewController alloc] initWithActions:_actions];
+  [contentViewController.view addSubview:_tableView.view];
+  /*[_tableView setTranslatesAutoresizingMaskIntoConstraints:NO];
   [NSLayoutConstraint constraintWithItem:_tableView
                                attribute:NSLayoutAttributeTop
                                relatedBy:NSLayoutRelationEqual
                                   toItem:contentViewController.view
                                attribute:NSLayoutAttributeTop
                               multiplier:1
-                                constant:RowHeight].active = YES;
+                                constant:kRowHeight].active = YES;
   [NSLayoutConstraint constraintWithItem:_tableView
                                attribute:NSLayoutAttributeHeight
                                relatedBy:NSLayoutRelationEqual
@@ -156,15 +151,14 @@ static const CGFloat RowHeight = 56.f;
                                   toItem:contentViewController.view
                                attribute:NSLayoutAttributeLeading
                               multiplier:1
-                                constant:0.f].active = YES;
-  _tableView.separatorStyle = UITableViewCellSelectionStyleNone;
+                                constant:0.f].active = YES;*/
 }
 
 - (void)addTitle {
   UILabel *titleLabel = [[UILabel alloc] init];
   titleLabel.text = _title;
   [titleLabel sizeToFit];
-  titleLabel.alpha = TitleAlpha;
+  titleLabel.alpha = kTitleAlpha;
   [contentViewController.view addSubview:titleLabel];
   [titleLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
   [NSLayoutConstraint constraintWithItem:titleLabel
@@ -173,8 +167,8 @@ static const CGFloat RowHeight = 56.f;
                                   toItem:contentViewController.view
                                attribute:NSLayoutAttributeLeading
                               multiplier:1
-                                constant:TitleLeadingPadding].active = YES;
-  CGFloat yPosition = TitleBaselinePadding - titleLabel.font.ascender;
+                                constant:kTitleLeadingPadding].active = YES;
+  CGFloat yPosition = kTitleBaselinePadding - titleLabel.font.ascender;
   [NSLayoutConstraint constraintWithItem:titleLabel
                                attribute:NSLayoutAttributeTop
                                relatedBy:NSLayoutRelationEqual
