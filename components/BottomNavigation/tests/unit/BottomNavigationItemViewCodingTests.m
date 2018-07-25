@@ -140,32 +140,6 @@ static UIImage *fakeImage(void) {
                              0.001f);
 }
 
-- (void)testAccessibilityIdentifier {
-  BOOL (^bottomNavContainsItemViewWithAccessibilityIdentifier)(UIView *, NSString *) =
-  ^BOOL(UIView *view, NSString *accessibilityIdentifier) {
-    for (UIView *subview1 in view.subviews) {
-      for (UIView *subview2 in subview1.subviews) {
-        if ([subview2.accessibilityIdentifier isEqualToString:accessibilityIdentifier]) {
-          return YES;
-        }
-      }
-    }
-    return NO;
-  };
-
-  NSString *oldIdentifier = @"oldIdentifier";
-  NSString *newIdentifier = @"newIdentifier";
-  UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home"
-                                                           image:nil
-                                                             tag:0];
-  tabBarItem.accessibilityIdentifier = oldIdentifier;
-  MDCBottomNavigationBar *bar = [[MDCBottomNavigationBar alloc] init];
-  bar.items = @[ tabBarItem ];
-  XCTAssert(bottomNavContainsItemViewWithAccessibilityIdentifier(bar,oldIdentifier));
-  tabBarItem.accessibilityIdentifier = newIdentifier;
-  XCTAssert(bottomNavContainsItemViewWithAccessibilityIdentifier(bar,newIdentifier));
-}
-
 - (void)testContentInsetLayout {
   // Given
   MDCBottomNavigationItemView *view = [[MDCBottomNavigationItemView alloc] init];
