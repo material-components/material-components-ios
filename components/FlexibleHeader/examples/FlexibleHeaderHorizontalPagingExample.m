@@ -150,6 +150,12 @@ static const NSUInteger kNumberOfPages = 10;
 
 - (void)commonMDCFlexibleHeaderViewControllerInit {
   self.fhvc = [[MDCFlexibleHeaderViewController alloc] initWithNibName:nil bundle:nil];
+
+  // Behavioral flags.
+  self.fhvc.topLayoutGuideAdjustmentEnabled = YES;
+  self.fhvc.inferTopSafeAreaInsetFromViewController = YES;
+  self.fhvc.headerView.minMaxHeightIncludesSafeArea = NO;
+
   self.fhvc.headerView.sharedWithManyScrollViews = YES;
   self.fhvc.headerView.maximumHeight = 200;
   [self addChildViewController:_fhvc];

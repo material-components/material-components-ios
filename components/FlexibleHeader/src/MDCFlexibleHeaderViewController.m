@@ -20,7 +20,12 @@
 #import "MaterialUIMetrics.h"
 #import "MDCFlexibleHeaderContainerViewController.h"
 #import "MDCFlexibleHeaderView.h"
+#import "private/MDCFlexibleHeaderView+Private.h"
 #import <MDFTextAccessibility/MDFTextAccessibility.h>
+
+@interface UIView ()
+- (UIEdgeInsets)safeAreaInsets; // For pre-iOS 11 SDK targets.
+@end
 
 static inline BOOL ShouldUseLightStatusBarOnBackgroundColor(UIColor *color) {
   if (CGColorGetAlpha(color.CGColor) < 1) {
@@ -45,7 +50,7 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 
 @interface MDCFlexibleHeaderViewController () <MDCFlexibleHeaderViewDelegate>
 
-/**
+/*
  The current height offset of the flexible header controller with the addition of the current status
  bar state at any given time.
 
@@ -53,21 +58,42 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
  */
 @property(nonatomic) CGFloat flexibleHeaderViewControllerHeightOffset;
 
-/**
- The NSLayoutConstraint attached to the flexible header view controller's parentViewController's
- topLayoutGuide. We need to strongly hold it in order to de-register KVO events.
+/*
+ This is the target top layout guide that we will modify such that it includes the flexible header's
+ height and any top safe area insets we were able to infer.
+
+ We hold a strong reference to it because on pre-iOS 11 devices UIKit will attempt to reset the
+ top layout guide. We observe (using KVO) any changes made to the constraint and reset the
+ constraint's length when a modification outside of our awareness occurs.
 */
 @property(nonatomic, strong) NSLayoutConstraint *topLayoutGuideConstraint;
 
-// For avoiding re-entrant recursion while modifying the top layout guide.
+/*
+ For avoiding re-entrant recursion while modifying the top layout guide.
+ */
 @property(nonatomic) BOOL isUpdatingTopLayoutGuide;
+
+/*
+ On pre-iOS 11 devices, we use this layout constraint to extract the top safe area inset from the
+ root ancestor view controller.
+ */
+@property(nonatomic, strong) NSLayoutConstraint *topSafeAreaConstraint;
+
+/*
+ On iOS 11+ devices, we use this view to extract the top safe area inset from the root ancestor view
+ controller.
+ */
+@property(nonatomic, strong) UIView *topSafeAreaView;
 
 @end
 
 @implementation MDCFlexibleHeaderViewController
 
 - (void)dealloc {
-  self.topLayoutGuideConstraint = nil; // Clear KVO observers
+  // Clear KVO observers
+  self.topLayoutGuideConstraint = nil;
+  self.topSafeAreaConstraint = nil;
+  self.topSafeAreaView = nil;
 }
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -151,6 +177,17 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
+
+  if (self.inferTopSafeAreaInsetFromViewController) {
+    // At this point we can be confident that our view controller ancestry is as complete as
+    // possible, so we can now infer our top safe area source view controller.
+    [self fhv_inferTopSafeAreaSourceViewController];
+
+    // Querying the top layout guide ensures that the flexible header receives layout event when
+    // the status bar visibility changes. This allows the flexible header to animate alongside any
+    // status bar visibility changes.
+    [self.parentViewController topLayoutGuide];
+  }
 
   if (self.topLayoutGuideAdjustmentEnabled) {
     [self updateTopLayoutGuide];
@@ -245,20 +282,21 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
                        context:(void *)context {
   if (context == kKVOContextMDCFlexibleHeaderViewController) {
     void (^mainThreadWork)(void) = ^{
-      if (object != self->_topLayoutGuideConstraint) {
-        return;
+      if (object == self->_topLayoutGuideConstraint
+          && self.topLayoutGuideAdjustmentEnabled) {
+        [self updateTopLayoutGuide];
       }
-
-      [self updateTopLayoutGuide];
+      if (self.inferTopSafeAreaInsetFromViewController
+          && (object == self->_topSafeAreaConstraint || object == self->_topSafeAreaView)) {
+        [self->_headerView extractTopSafeAreaInset];
+      }
     };
 
-    if (self.topLayoutGuideAdjustmentEnabled) {
-      // Ensure that UIKit modifications occur on the main thread.
-      if ([NSThread isMainThread]) {
-        mainThreadWork();
-      } else {
-        [[NSOperationQueue mainQueue] addOperationWithBlock:mainThreadWork];
-      }
+    // Ensure that UIKit modifications occur on the main thread.
+    if ([NSThread isMainThread]) {
+      mainThreadWork();
+    } else {
+      [[NSOperationQueue mainQueue] addOperationWithBlock:mainThreadWork];
     }
 
   } else {
@@ -295,16 +333,24 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
   }
   if (self.topLayoutGuideAdjustmentEnabled
       || [topLayoutGuideViewController.view.constraints count] > 0) {
-    // Note: accessing topLayoutGuide has the side effect of setting up all of the view controller
-    // constraints. We need to access this property before we enter the for loop, otherwise
-    // view.constraints will be empty.
-    id<UILayoutSupport> topLayoutGuide = topLayoutGuideViewController.topLayoutGuide;
-    for (NSLayoutConstraint *constraint in topLayoutGuideViewController.view.constraints) {
-      if (constraint.firstItem == topLayoutGuide && constraint.secondItem == nil) {
-        self.topLayoutGuideConstraint = constraint;
-      }
+    self.topLayoutGuideConstraint =
+        [self fhv_topLayoutGuideConstraintForViewController:topLayoutGuideViewController];
+  }
+}
+
+- (NSLayoutConstraint *)
+      fhv_topLayoutGuideConstraintForViewController:(UIViewController *)viewController {
+  // Note: accessing topLayoutGuide has the side effect of setting up all of the view controller
+  // constraints. We need to access this property before we enter the for loop, otherwise
+  // view.constraints will be empty.
+  id<UILayoutSupport> topLayoutGuide = viewController.topLayoutGuide;
+  NSLayoutConstraint *foundConstraint = nil;
+  for (NSLayoutConstraint *constraint in viewController.view.constraints) {
+    if (constraint.firstItem == topLayoutGuide && constraint.secondItem == nil) {
+      foundConstraint = constraint;
     }
   }
+  return foundConstraint;
 }
 
 - (void)setTopLayoutGuideConstraint:(NSLayoutConstraint *)topLayoutGuideConstraint {
@@ -343,6 +389,40 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
                                    options:NSKeyValueObservingOptionNew
                                    context:kKVOContextMDCFlexibleHeaderViewController];
   }
+}
+
+- (void)setTopSafeAreaConstraint:(NSLayoutConstraint *)topSafeAreaConstraint {
+  if (_topSafeAreaConstraint == topSafeAreaConstraint) {
+    return;
+  }
+
+  [_topSafeAreaConstraint removeObserver:self
+                              forKeyPath:NSStringFromSelector(@selector(constant))
+                                 context:kKVOContextMDCFlexibleHeaderViewController];
+
+  _topSafeAreaConstraint = topSafeAreaConstraint;
+
+  [_topSafeAreaConstraint addObserver:self
+                           forKeyPath:NSStringFromSelector(@selector(constant))
+                              options:NSKeyValueObservingOptionNew
+                              context:kKVOContextMDCFlexibleHeaderViewController];
+}
+
+- (void)setTopSafeAreaView:(UIView *)topSafeAreaView {
+  if (_topSafeAreaView == topSafeAreaView) {
+    return;
+  }
+
+  [_topSafeAreaView removeObserver:self
+                        forKeyPath:NSStringFromSelector(@selector(safeAreaInsets))
+                           context:kKVOContextMDCFlexibleHeaderViewController];
+
+  _topSafeAreaView = topSafeAreaView;
+
+  [_topSafeAreaView addObserver:self
+                     forKeyPath:NSStringFromSelector(@selector(safeAreaInsets))
+                        options:NSKeyValueObservingOptionNew
+                        context:kKVOContextMDCFlexibleHeaderViewController];
 }
 
 - (UIViewController *)fhv_topLayoutGuideViewControllerWithFallback {
@@ -438,9 +518,98 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
   _topLayoutGuideViewController = topLayoutGuideViewController;
   _topLayoutGuideAdjustmentEnabled = YES;
 
+  if (self.inferTopSafeAreaInsetFromViewController) {
+    // Need to re-infer the top safe area source view controller because it may now be a child of
+    // the top layout guide view controller.
+    [self fhv_inferTopSafeAreaSourceViewController];
+  }
+
   if ([self isViewLoaded]) {
     [self fhv_extractTopLayoutGuideConstraint];
     [self updateTopLayoutGuide];
+  }
+}
+
+- (void)setInferTopSafeAreaInsetFromViewController:(BOOL)inferTopSafeAreaInsetFromViewController {
+  _headerView.inferTopSafeAreaInsetFromViewController = inferTopSafeAreaInsetFromViewController;
+
+  [self fhv_inferTopSafeAreaSourceViewController];
+}
+
+- (BOOL)inferTopSafeAreaInsetFromViewController {
+  return _headerView.inferTopSafeAreaInsetFromViewController;
+}
+
+#pragma mark - Top safe area inset extraction
+
+- (BOOL)fhv_isViewControllerDescendantOfTopLayoutGuideViewController:(UIViewController *)child {
+  // No need to walk the ancestry.
+  if (self.topLayoutGuideViewController == nil) {
+    return NO;
+  }
+
+  UIViewController *ancestorIterator = child;
+  while (ancestorIterator != nil) {
+    if (ancestorIterator == self.topLayoutGuideViewController) {
+      return YES;
+    }
+    ancestorIterator = ancestorIterator.parentViewController;
+  }
+  return NO;
+}
+
+- (UIViewController *)fhv_rootAncestorOfViewController:(UIViewController *)viewController {
+  while (viewController.parentViewController != nil) {
+    viewController = viewController.parentViewController;
+  }
+  return viewController;
+}
+
+// This method makes the assumption that the root-most view controller is the best view controller
+// to look at when determining the top safe area inset. It's possible that this assumption will not
+// hold true in all cases, so we may also need to expose an explicit API for setting the top safe
+// area source view controller.
+- (void)fhv_inferTopSafeAreaSourceViewController {
+  UIViewController *parent = self.parentViewController;
+  if (parent == nil || !self.inferTopSafeAreaInsetFromViewController) {
+    _headerView.topSafeAreaSourceViewController = nil;
+    self.topSafeAreaConstraint = nil;
+    self.topSafeAreaView = nil;
+    return;
+  }
+
+  UIViewController *ancestor = [self fhv_rootAncestorOfViewController:parent];
+
+  // Are we attempting to extract the top safe area inset from our top layout guide view controller?
+  if (self.topLayoutGuideAdjustmentEnabled && ancestor == self.topLayoutGuideViewController) {
+    // We can't use the provided ancestor because it's a child of the top layout guide view
+    // controller. Doing so would result in the top layout guide being infinitely increased.
+    // Let's use the top layout guide view controller's ancestor instead.
+    ancestor = [self fhv_rootAncestorOfViewController:
+                    self.topLayoutGuideViewController.parentViewController];
+  }
+
+  // if ancestor == nil at this point, then we're in a bad spot because there's nowhere for us to
+  // extract a top safe area inset from. Should we throw an assert?
+  NSAssert(ancestor != nil,
+           @"inferTopSafeAreaInsetFromViewController is true but we were unable to infer a view controller"
+           @" from which we could extract a safe area. Consider placing your view controller inside"
+           @" a container view controller.");
+
+  if (_headerView.topSafeAreaSourceViewController != ancestor) {
+    _headerView.topSafeAreaSourceViewController = ancestor;
+
+    BOOL shouldObserveLayoutGuide = YES;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+    if (@available(iOS 11.0, *)) {
+      shouldObserveLayoutGuide = NO;
+    }
+#endif
+    if (shouldObserveLayoutGuide) {
+      self.topSafeAreaConstraint = [self fhv_topLayoutGuideConstraintForViewController:ancestor];
+    } else {
+      self.topSafeAreaView = ancestor.view;
+    }
   }
 }
 
