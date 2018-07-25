@@ -24,22 +24,6 @@
 #import "MaterialMath.h"
 #import "MDCBottomNavigationItemBadge.h"
 
-static NSString *const MDCBottomNavigationItemViewTitleBelowIconKey =
-    @"MDCBottomNavigationItemViewTitleBelowIconKey";
-static NSString *const MDCBottomNavigationItemViewSelectedKey =
-    @"MDCBottomNavigationItemViewSelectedKey";
-static NSString *const MDCBottomNavigationItemViewTitleVisibilityKey =
-    @"MDCBottomNavigationItemViewTitleVisibilityKey";
-static NSString *const MDCBottomNavigationItemViewTitleKey = @"MDCBottomNavigationItemViewTitleKey";
-static NSString *const MDCBottomNavigationItemViewItemTitleFontKey =
-    @"MDCBottomNavigationItemViewItemTitleFontKey";
-static NSString *const MDCBottomNavigationItemViewBadgeColorKey =
-    @"MDCBottomNavigationItemViewBadgeColorKey";
-static NSString *const MDCBottomNavigationItemViewSelectedItemTintColorKey =
-    @"MDCBottomNavigationItemViewSelectedItemTintColorKey";
-static NSString *const MDCBottomNavigationItemViewUnselectedItemTintColorKey =
-    @"MDCBottomNavigationItemViewUnselectedItemTintColorKey";
-
 static const CGFloat MDCBottomNavigationItemViewInkOpacity = 0.150f;
 static const CGFloat MDCBottomNavigationItemViewTitleFontSize = 12.f;
 
@@ -98,51 +82,9 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
              @"Unexpected number of subviews. Expected %lu but restored %lu. Unarchiving may fail.",
              (unsigned long)self.subviews.count, (unsigned long)totalViewsProcessed);
 
-    if ([aDecoder containsValueForKey:MDCBottomNavigationItemViewTitleBelowIconKey]) {
-      _titleBelowIcon = [aDecoder decodeBoolForKey:MDCBottomNavigationItemViewTitleBelowIconKey];
-    }
-    if ([aDecoder containsValueForKey:MDCBottomNavigationItemViewSelectedKey]) {
-      _selected = [aDecoder decodeBoolForKey:MDCBottomNavigationItemViewSelectedKey];
-    }
-    if ([aDecoder containsValueForKey:MDCBottomNavigationItemViewTitleVisibilityKey]) {
-      _titleVisibility =
-          [aDecoder decodeIntegerForKey:MDCBottomNavigationItemViewTitleVisibilityKey];
-    }
-    if ([aDecoder containsValueForKey:MDCBottomNavigationItemViewTitleKey]) {
-      _title = [aDecoder decodeObjectForKey:MDCBottomNavigationItemViewTitleKey];
-    }
-    if ([aDecoder containsValueForKey:MDCBottomNavigationItemViewItemTitleFontKey]) {
-      _itemTitleFont = [aDecoder decodeObjectForKey:MDCBottomNavigationItemViewItemTitleFontKey];
-    }
-    if ([aDecoder containsValueForKey:MDCBottomNavigationItemViewBadgeColorKey]) {
-      _badgeColor = [aDecoder decodeObjectForKey:MDCBottomNavigationItemViewBadgeColorKey];
-    }
-    if ([aDecoder containsValueForKey:MDCBottomNavigationItemViewSelectedItemTintColorKey]) {
-      _selectedItemTintColor =
-          [aDecoder decodeObjectForKey:MDCBottomNavigationItemViewSelectedItemTintColorKey];
-    }
-    if ([aDecoder containsValueForKey:MDCBottomNavigationItemViewUnselectedItemTintColorKey]) {
-      _unselectedItemTintColor =
-      [aDecoder decodeObjectForKey:MDCBottomNavigationItemViewUnselectedItemTintColorKey];
-    }
-
     [self commonMDCBottomNavigationItemViewInit];
   }
   return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [super encodeWithCoder:aCoder];
-  [aCoder encodeBool:self.titleBelowIcon forKey:MDCBottomNavigationItemViewTitleBelowIconKey];
-  [aCoder encodeBool:self.selected forKey:MDCBottomNavigationItemViewSelectedKey];
-  [aCoder encodeInteger:self.titleVisibility forKey:MDCBottomNavigationItemViewTitleVisibilityKey];
-  [aCoder encodeObject:self.title forKey:MDCBottomNavigationItemViewTitleKey];
-  [aCoder encodeObject:self.itemTitleFont forKey:MDCBottomNavigationItemViewItemTitleFontKey];
-  [aCoder encodeObject:self.badgeColor  forKey:MDCBottomNavigationItemViewBadgeColorKey];
-  [aCoder encodeObject:self.selectedItemTintColor
-                forKey:MDCBottomNavigationItemViewSelectedItemTintColorKey];
-  [aCoder encodeObject:self.unselectedItemTintColor
-                forKey:MDCBottomNavigationItemViewUnselectedItemTintColorKey];
 }
 
 - (void)commonMDCBottomNavigationItemViewInit {

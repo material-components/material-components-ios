@@ -57,7 +57,13 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 
 - (void)commonMDCFlexibleHeaderViewControllerInit {
   _fhvc = [[MDCFlexibleHeaderViewController alloc] initWithNibName:nil bundle:nil];
-  _fhvc.headerView.minimumHeight = kFlexibleHeaderMinHeight;
+
+  // Behavioral flags.
+  _fhvc.topLayoutGuideAdjustmentEnabled = YES;
+  _fhvc.inferTopSafeAreaInsetFromViewController = YES;
+  _fhvc.headerView.minMaxHeightIncludesSafeArea = NO;
+
+  _fhvc.headerView.maximumHeight = kFlexibleHeaderMinHeight;
   [self addChildViewController:_fhvc];
 }
 
@@ -124,12 +130,11 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 #pragma mark - <UIScrollViewDelegate>
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-  CGFloat contentOffsetY = -scrollView.contentOffset.y;
-  if (contentOffsetY < kFlexibleHeaderMinHeight) {
-    contentOffsetY = kFlexibleHeaderMinHeight;
+  if (scrollView == self.fhvc.headerView.trackingScrollView) {
+    [self.fhvc scrollViewDidScroll:scrollView];
   }
-  self.floatingButton.center = CGPointMake(self.floatingButton.center.x, contentOffsetY);
-  [self.fhvc scrollViewDidScroll:scrollView];
+  self.floatingButton.center = CGPointMake(self.floatingButton.center.x,
+                                           CGRectGetMaxY(self.fhvc.headerView.frame));
 }
 
 @end

@@ -171,10 +171,4 @@ static CGFloat _underlineHeightNormalLegacyDefault =
   return UIOffsetMake(horizontal, vertical);
 }
 
-#pragma mark - NSSecureCoding
-
-+ (BOOL)supportsSecureCoding {
-  return YES;
-}
-
 @end
