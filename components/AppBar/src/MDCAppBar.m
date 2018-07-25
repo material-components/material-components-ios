@@ -31,10 +31,6 @@
 #import "private/MaterialAppBarStrings_table.h"
 
 static NSString *const kBarStackKey = @"barStack";
-static NSString *const kStatusBarHeightKey = @"statusBarHeight";
-static NSString *const MDCAppBarHeaderViewControllerKey = @"MDCAppBarHeaderViewControllerKey";
-static NSString *const MDCAppBarNavigationBarKey = @"MDCAppBarNavigationBarKey";
-static NSString *const MDCAppBarHeaderStackViewKey = @"MDCAppBarHeaderStackViewKey";
 
 // The Bundle for string resources.
 static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
@@ -103,32 +99,9 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
   self = [super init];
   if (self) {
     [self commonMDCAppBarInit];
-    if ([aDecoder containsValueForKey:MDCAppBarHeaderViewControllerKey]) {
-      _headerViewController = [aDecoder decodeObjectOfClass:[MDCFlexibleHeaderViewController class]
-                                                     forKey:MDCAppBarHeaderViewControllerKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCAppBarNavigationBarKey]) {
-      _navigationBar = [aDecoder decodeObjectOfClass:[MDCNavigationBar class]
-                                              forKey:MDCAppBarNavigationBarKey];
-      _appBarController.navigationBar = _navigationBar;
-    }
-
-    if ([aDecoder containsValueForKey:MDCAppBarHeaderStackViewKey]) {
-      _headerStackView = [aDecoder decodeObjectOfClass:[MDCHeaderStackView class]
-                                              forKey:MDCAppBarHeaderStackViewKey];
-      _appBarController.headerStackView = _headerStackView;
-    }
-
     [self commonMDCAppBarViewSetup];
   }
   return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [aCoder encodeObject:self.headerViewController forKey:MDCAppBarHeaderViewControllerKey];
-  [aCoder encodeObject:self.navigationBar forKey:MDCAppBarNavigationBarKey];
-  [aCoder encodeObject:self.headerStackView forKey:MDCAppBarHeaderStackViewKey];
 }
 
 - (void)commonMDCAppBarInit {
