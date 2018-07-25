@@ -36,6 +36,7 @@ static const CGFloat IconAlpha = 0.54f;
   NSString *title;
   UIImage *image;
   MDCActionSheetHandler handler;
+  MDCInkView *_inkView;
 }
 
 + (instancetype)cellWithAction:(MDCActionSheetAction *)action {
@@ -62,46 +63,63 @@ static const CGFloat IconAlpha = 0.54f;
 }
 
 - (void)commonMDCActionSheetItemViewInit {
-  _titleLabel = [[UILabel alloc] init];
-  _titleLabel.text = title;
-  _titleLabel.alpha = LabelAlpha;
-  [_titleLabel sizeToFit];
-  [self addSubview:_titleLabel];
-  [NSLayoutConstraint constraintWithItem:_titleLabel
-                               attribute:NSLayoutAttributeLeading
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self
-                               attribute:NSLayoutAttributeLeading
-                              multiplier:1
-                                constant:LabelLeadingPadding].active = YES;
+  self.selectionStyle = UITableViewCellSelectionStyleNone;
 
-  CGFloat yPosition = LabelBaselinePadding - _titleLabel.font.ascender;
-  [NSLayoutConstraint constraintWithItem:_titleLabel
-                               attribute:NSLayoutAttributeTop
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self
-                               attribute:NSLayoutAttributeTop
-                              multiplier:1
-                                constant:yPosition].active = YES;
+  if (!_inkView) {
+    _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
+    _inkView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+    _inkView.usesLegacyInkRipple = NO;
+    _inkView.clipsToBounds = NO;
+    _inkView.inkColor = [UIColor blackColor];
+    [self addSubview:_inkView];
+  }
 
-  _icon = [[UIImageView alloc] initWithImage:image];
-  _icon.frame = CGRectMake(0, 0, 24, 24);
-  _icon.alpha = IconAlpha;
-  [self addSubview:_icon];
-  [NSLayoutConstraint constraintWithItem:_icon
-                               attribute:NSLayoutAttributeLeading
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self
-                               attribute:NSLayoutAttributeLeading
-                              multiplier:1
-                                constant:IconLeadingPadding].active = YES;
-  [NSLayoutConstraint constraintWithItem:_icon
-                               attribute:NSLayoutAttributeTop
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self
-                               attribute:NSLayoutAttributeTop
-                              multiplier:1
-                                constant:IconTopPadding].active = YES;
+  if (!_titleLabel) {
+    _titleLabel = [[UILabel alloc] init];
+    _titleLabel.text = title;
+    _titleLabel.alpha = LabelAlpha;
+    [_titleLabel sizeToFit];
+    [self addSubview:_titleLabel];
+    [_titleLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [NSLayoutConstraint constraintWithItem:_titleLabel
+                                 attribute:NSLayoutAttributeLeading
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self
+                                 attribute:NSLayoutAttributeLeading
+                                multiplier:1
+                                  constant:LabelLeadingPadding].active = YES;
+
+    CGFloat yPosition = LabelBaselinePadding - _titleLabel.font.ascender;
+    [NSLayoutConstraint constraintWithItem:_titleLabel
+                                 attribute:NSLayoutAttributeTop
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self
+                                 attribute:NSLayoutAttributeTop
+                                multiplier:1
+                                  constant:yPosition].active = YES;
+  }
+
+  if (!_icon) {
+    _icon = [[UIImageView alloc] initWithImage:image];
+    _icon.frame = CGRectMake(0, 0, 24, 24);
+    _icon.alpha = IconAlpha;
+    [self addSubview:_icon];
+    [_icon setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [NSLayoutConstraint constraintWithItem:_icon
+                                 attribute:NSLayoutAttributeLeading
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self
+                                 attribute:NSLayoutAttributeLeading
+                                multiplier:1
+                                  constant:IconLeadingPadding].active = YES;
+    [NSLayoutConstraint constraintWithItem:_icon
+                                 attribute:NSLayoutAttributeTop
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self
+                                 attribute:NSLayoutAttributeTop
+                                multiplier:1
+                                  constant:IconTopPadding].active = YES;
+  }
 }
 
 @end
