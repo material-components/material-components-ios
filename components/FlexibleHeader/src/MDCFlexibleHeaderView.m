@@ -984,8 +984,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
       // incorrect scrolling as the scrollview attempts to resolve to a position that will place
       // the header in the center of the scroll. Punting to the next loop prevents this.
       dispatch_async(dispatch_get_main_queue(), ^{
-        self.transform =
-            CGAffineTransformMakeTranslation(0, self.trackingScrollView.contentOffset.y);
+        self.transform = CGAffineTransformMakeTranslation(0, offset.y);
         [self fhv_updateLayout];
       });
     } else {
