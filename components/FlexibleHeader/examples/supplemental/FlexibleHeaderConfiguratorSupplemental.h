@@ -42,6 +42,7 @@ typedef enum : NSUInteger {
 - (NSNumber *)valueForField:(FlexibleHeaderConfiguratorField)field;
 - (void)field:(FlexibleHeaderConfiguratorField)field didChangeValue:(NSNumber *)value;
 
+@property(nonatomic) UILabel *titleLabel;
 @property(nonatomic) MDCFlexibleHeaderViewController *fhvc;
 @property(nonatomic) CGFloat minimumHeaderHeight;
 

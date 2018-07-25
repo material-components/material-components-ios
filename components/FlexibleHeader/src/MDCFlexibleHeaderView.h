@@ -329,6 +329,16 @@ IB_DESIGNABLE
  */
 @property(nonatomic) BOOL minMaxHeightIncludesSafeArea;
 
+/**
+ A layout guide that equates to the top safe area inset of the flexible header view.
+
+ Use this layout guide to position subviews in the flexible header in relation to the top safe area
+ insets.
+
+ This object is intended to be used as a constraint item.
+ */
+@property(nonatomic, nonnull, readonly) id topSafeAreaGuide;
+
 #pragma mark Behaviors
 
 /** The behavior of the header in response to the user interacting with the tracking scroll view. */
