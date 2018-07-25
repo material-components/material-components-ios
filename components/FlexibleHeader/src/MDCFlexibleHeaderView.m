@@ -130,6 +130,11 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   BOOL _interfaceOrientationIsChanging;
   BOOL _contentInsetsAreChanging;
 
+  // When the user tosses the scroll view we enter a deceleration phase. This is always eventually
+  // followed up by a call to trackingScrollViewDidEndDecelerating. See the
+  // trackingScrollViewDidEndDecelerating for more details on this behavior.
+  BOOL _didDecelerate;
+
   // _isChangingStatusBarVisibility documents whether we know that we're adjusting the status bar
   // visibility, while _wasStatusBarHidden allows us to detect whether someone else has adjusted
   // the status bar visibility. In either case, we need to counteract any content offsets
@@ -962,6 +967,10 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   _didAdjustTargetContentOffset = NO;
 #endif
 
+  if (self.trackingScrollView.isTracking) {
+    _didDecelerate = NO; // Invalidate the flag - we're not actually decelerating right now.
+  }
+
   // We generally expect the tracking scroll view to be a sibling to the flexible header, but there
   // are cases where this assumption is always incorrect.
   //
@@ -1142,9 +1151,20 @@ static BOOL isRunningiOS10_3OrAbove() {
   if (!willDecelerate && [self fhv_isPartiallyShifted]) {
     [self fhv_startDisplayLink];
   }
+  _didDecelerate = willDecelerate;
 }
 
 - (void)trackingScrollViewDidEndDecelerating {
+  // This event can be invoked after two different forms of user interaction:
+  //
+  // 1. When the tracking scroll view was tossed and then came to rest.
+  // 2. When the tracking scroll view was tossed, then grabbed and released (without another toss).
+  //
+  // We only want to react to the first type of interaction. _didDecelerate will only be true in the
+  // first case.
+  if (!_didDecelerate) {
+    return;
+  }
   if ([self fhv_isPartiallyShifted]) {
     _wantsToBeHidden =
         (_shiftAccumulator >= (1 - kMinimumVisibleProportion) * [self fhv_accumulatorMax]);
