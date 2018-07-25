@@ -44,6 +44,7 @@ static NSString *const kMDCBottomNavigationBarSelectedImageString = @"selectedIm
 // TODO: - Change to NSKeyValueChangeNewKey
 static NSString *const kMDCBottomNavigationBarNewString = @"new";
 static NSString *const kMDCBottomNavigationBarTitleString = @"title";
+static NSString *const kMDCBottomNavigationBarAccessibilityIdentifier = @"accessibilityIdentifier";
 
 
 static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
@@ -245,6 +246,10 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
            forKeyPath:kMDCBottomNavigationBarTitleString
               options:NSKeyValueObservingOptionNew
               context:nil];
+    [item addObserver:self
+           forKeyPath:kMDCBottomNavigationBarAccessibilityIdentifier
+              options:NSKeyValueObservingOptionNew
+              context:nil];
   }
 }
 
@@ -259,6 +264,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
       [item removeObserver:self
                 forKeyPath:kMDCBottomNavigationBarSelectedImageString];
       [item removeObserver:self forKeyPath:kMDCBottomNavigationBarTitleString];
+      [item removeObserver:self forKeyPath:kMDCBottomNavigationBarAccessibilityIdentifier];
     }
     @catch (NSException *exception) {
       if (exception) {
@@ -295,6 +301,8 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
       itemView.selectedImage = change[kMDCBottomNavigationBarNewString];
     } else if ([keyPath isEqualToString:kMDCBottomNavigationBarTitleString]) {
       itemView.title = change[kMDCBottomNavigationBarNewString];
+    } else if ([keyPath isEqualToString:kMDCBottomNavigationBarAccessibilityIdentifier]) {
+      itemView.accessibilityIdentifier = change[kMDCBottomNavigationBarNewString];
     }
   }
 }
@@ -377,6 +385,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
     itemView.titleVisibility = self.titleVisibility;
     itemView.titleBelowIcon = self.titleBelowItem;
     itemView.accessibilityValue = item.accessibilityValue;
+    itemView.accessibilityIdentifier = item.accessibilityIdentifier;
     itemView.contentInsets = self.itemsContentInsets;
     itemView.contentVerticalMargin = self.itemsContentVerticalMargin;
     itemView.contentHorizontalMargin = self.itemsContentHorizontalMargin;

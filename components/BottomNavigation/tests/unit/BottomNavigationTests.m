@@ -128,4 +128,18 @@
   XCTAssertNil(self.bottomNavBar.selectedItem);
 }
 
+- (void)testAccessibilityIdentifier {
+  NSString *oldIdentifier = @"oldIdentifier";
+  NSString *newIdentifier = @"newIdentifier";
+  UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home"
+                                                           image:nil
+                                                             tag:0];
+  tabBarItem.accessibilityIdentifier = oldIdentifier;
+  MDCBottomNavigationBar *bar = [[MDCBottomNavigationBar alloc] init];
+  bar.items = @[ tabBarItem ];
+  XCTAssert([bar.itemViews.firstObject.accessibilityIdentifier isEqualToString:oldIdentifier]);
+  tabBarItem.accessibilityIdentifier = newIdentifier;
+  XCTAssert([bar.itemViews.firstObject.accessibilityIdentifier isEqualToString:newIdentifier]);
+}
+
 @end
