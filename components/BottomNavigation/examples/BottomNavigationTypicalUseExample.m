@@ -105,8 +105,8 @@
   self.view.backgroundColor = self.colorScheme.backgroundColor;
 }
 
-- (void)viewWillLayoutSubviews {
-  [super viewWillLayoutSubviews];
+- (void)viewDidLayoutSubviews {
+  [super viewDidLayoutSubviews];
   [self layoutBottomNavBar];
 }
 
