@@ -34,10 +34,16 @@ class EditReorderCollectionViewController: UIViewController,
   let cardScheme = MDCCardScheme()
 
   let images = [
-    (image: "amsterdam-zeeburg",          title: "Zeeburg"),
-    (image: "venice-st-marks-square",     title: "St. Mark's Square"),
-    (image: "venice-grand-canal",         title: "Grand Canal"),
-    (image: "austin-u-texas-pond",        title: "Austin U")
+    (image: "amsterdam-kadoelen",
+     title: NSLocalizedString("Kadoelen", comment: "Card image title")),
+    (image: "amsterdam-zeeburg",
+     title: NSLocalizedString("Zeeburg", comment: "Card image title")),
+    (image: "venice-st-marks-square",
+     title: NSLocalizedString("St. Mark's Square", comment: "Card image title")),
+    (image: "venice-grand-canal",
+     title: NSLocalizedString("Grand Canal", comment: "Card image title")),
+    (image: "austin-u-texas-pond",
+     title: NSLocalizedString("Austin U", comment: "Card image title")),
   ]
   var dataSource: [(image: String, title: String, selected: Bool)] = []
 

@@ -269,19 +269,18 @@ recommendations:
 
 Since assistive technologies visit all cards in a collection in a sequential order, it is often 
 easier to distinguish between elements that belong to different cards by aggregating all the 
-card's information so the card is read as a single sentence.  
-This can be done by setting an appropriate 
+card's information to a single sentence.  This can be done by setting an appropriate 
 [`accessibilityLabel`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619577-accessibilitylabel) 
 for the card. Additionally, set the card's 
-[`isAccessibilityElement`](https://developer.apple.com/documentation/objectivec/nsobject/1615141-isaccessibilityelement) 
-to true. Cards are a container element and setting isAccessibiltyElement for a container 
-turns off individually selecting its subelements.
+[`isAccessiblityElement`](https://developer.apple.com/documentation/objectivec/nsobject/1615141-isaccessibilityelement) 
+to on. Cards are a container element and setting isAccessibiltElement for a container turns 
+off individually selecting its subelements.
 
 Swift
 ```swift
   card.isAccessibilityElement = true
   card.accessibilityLabel = "Location (userLocation.name) is popular with users " +
-    "who enjoy (userLocation.popularActivityMatchingUserProfile(userProfile))"
+    "who enjoy (userLocation.popularActivityMatchingUserProfile(userProfile)."
 ```
 
 Objective-C
@@ -327,17 +326,15 @@ describing the rating value.
 Swift
 ```swift
   ratingView.isAccessibilityElement = true
-  ratingView.accessibilityLabel = "Average customer rating, out of " + 
-    "(MDCProductRating.maximumValue) stars"
-  ratingView.accessibilityValue = (String)product.averageRating
+  ratingView.accessibilityLabel = "Customer Rating"
+  ratingView.accessibilityValue = "4.5";
 ```
 
 Objective-C
 ```objc
   ratingView.isAccessibilityElement = YES;
-  ratingView.accessibilityLabel = [NSString stringWithFormat:@"Average customer" +
-    " rating, out of %d stars", MDCProductRating.maximumValue];
-  ratingView.accessibilityValue = @(product.averageRating).stringValue;
+  ratingView.accessibilityLabel = @"Customer Rating";
+  ratingView.accessibilityValue = @"4.5";
 ```
 
 #### Accessibility for Single Cards: Reordering elements
@@ -345,7 +342,7 @@ Primary content or actions that appear lower on the screen will be read last by 
 technologies, sometimes after longer or non-primary content. To change the order, or group 
 elements together, you can make the card an accessibility container by adopting the 
 [`UIAccessibilityContainer`](https://developer.apple.com/documentation/uikit/accessibility/uiaccessibilitycontainer) 
-protocol. Grouping and order is controlled by creating as many 
+protocol. Grouping and order is controlled by creating 
 [`UIAccessibilityElement`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement) 
 elements as needed, and returning them in the desired order. 
 

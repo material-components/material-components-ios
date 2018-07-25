@@ -72,8 +72,8 @@ class CardEditReorderCollectionCell: MDCCardCollectionCell {
 
         titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: margin),
 
-        titleLabel.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: margin),
-        titleLabel.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -margin),
+        titleLabel.leadingAnchor.constraint(equalTo: guide.leadingAnchor),
+        titleLabel.trailingAnchor.constraint(equalTo: guide.trailingAnchor),
         titleLabel.bottomAnchor.constraint(equalTo: guide.bottomAnchor, constant: -margin)
       ]);
     #else
@@ -86,13 +86,13 @@ class CardEditReorderCollectionCell: MDCCardCollectionCell {
     let metrics = ["margin": 4.0]
     self.addConstraints(
       NSLayoutConstraint.constraints(
-        withVisualFormat: "H:|-[image]-|",
+        withVisualFormat: "H:|[image]|",
         options: [], metrics: metrics, views: views) +
       NSLayoutConstraint.constraints(
-        withVisualFormat: "V:|-[image]-(margin)-[label]-(margin)-|",
+        withVisualFormat: "V:|[image]-(margin)-[label]-(margin)-|",
         options: [], metrics: metrics, views: views) +
       NSLayoutConstraint.constraints(
-        withVisualFormat: "H:|-(margin)-[label]-(margin)-|",
+        withVisualFormat: "H:|-(margin)-[label]|",
         options: [], metrics: metrics, views: views)
     );
   }
