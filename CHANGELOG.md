@@ -1,10 +1,14 @@
-# #develop#
+# 59.0.0
+
+This major release removed the remaining encoding/decoding behaviors from components ([tracking project](https://github.com/material-components/material-components-ios/projects/22)) and fixed a variety of bugs in FlexibleHeader with relation to safe area insets.
 
 ## Breaking changes
 
-## New deprecations
+AppBar, TextFields, BottomNavigation, and Ink all removed support for encoding/decoding their custom properties.
 
 ## New features
+
+FlexibleHeader has a new behavior, `inferTopSafeAreaInsetFromViewController`, which allows the flexible header to determine its safe area insets from its view controller context, rather than always assuming that the header will consume the entire screen. This new behavior is most useful in extensions and on the iPad when presenting modal dialogs or popovers. To enable the new behavior, you simply set `inferTopSafeAreaInsetFromViewController` on `MDCFlexibleHeaderViewController` to `YES`.
 
 ## API changes
 
@@ -13,26 +17,6 @@
 #### MDCFlexibleHeaderView
 
 *new* property: `topSafeAreaGuide` in `MDCFlexibleHeaderView`
-
-#### MDCFlexibleHeaderView()
-
-*new* category: `MDCFlexibleHeaderView()`
-
-*removed* category: `MDCFlexibleHeaderView()`
-
-*modified* property: `behavior` in `MDCFlexibleHeaderView()`
-
-| Type of change: | parent.usr |
-|---|---|
-| From: | `c:objc(ext)MDCFlexibleHeaderView@MDCFlexibleHeaderView.h@16973` |
-| To: | `c:objc(ext)MDCFlexibleHeaderView@MDCFlexibleHeaderView.h@17297` |
-
-*modified* property: `contentView` in `MDCFlexibleHeaderView()`
-
-| Type of change: | parent.usr |
-|---|---|
-| From: | `c:objc(ext)MDCFlexibleHeaderView@MDCFlexibleHeaderView.h@16973` |
-| To: | `c:objc(ext)MDCFlexibleHeaderView@MDCFlexibleHeaderView.h@17297` |
 
 #### MDCFlexibleHeaderViewController
 
@@ -77,9 +61,9 @@
 
 ### Ink
 
-#### Changes
+#### Breaking changes
 
-* [Remove encoding/decoding behavior for custom properties (#4555)](https://github.com/material-components/material-components-ios/commit/fc1e82cd17f0abeaa9e62f7c3a3f39a91944a05b) (featherless)
+* [**Breaking**:  Remove encoding/decoding behavior for custom properties (#4555)](https://github.com/material-components/material-components-ios/commit/fc1e82cd17f0abeaa9e62f7c3a3f39a91944a05b) (featherless)
 
 ### TextFields
 
