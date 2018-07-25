@@ -368,17 +368,17 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                     constant:-MDCTextInputHalfPadding];
   leadingBottom.priority = UILayoutPriorityDefaultLow;
 
-  NSLayoutConstraint *trailingBottom =
-      [NSLayoutConstraint constraintWithItem:_trailingUnderlineLabel
-                                   attribute:NSLayoutAttributeBottom
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:_textInput
-                                   attribute:NSLayoutAttributeBottom
-                                  multiplier:1
-                                    constant:0];
-  trailingBottom.priority = UILayoutPriorityDefaultLow;
+  NSLayoutConstraint *trailingTop =
+  [NSLayoutConstraint constraintWithItem:_underline
+                               attribute:NSLayoutAttributeBottom
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:_trailingUnderlineLabel
+                               attribute:NSLayoutAttributeTop
+                              multiplier:1
+                                constant:-MDCTextInputHalfPadding];
+  trailingTop.priority = UILayoutPriorityDefaultLow;
 
-  [NSLayoutConstraint activateConstraints:@[ leadingBottom, trailingBottom, leadingTop ]];
+  [NSLayoutConstraint activateConstraints:@[ leadingTop, leadingBottom, trailingTop ]];
 
   // When push comes to shove, the leading label is more likely to expand than the trailing.
   [_leadingUnderlineLabel setContentHuggingPriority:UILayoutPriorityDefaultLow - 1
