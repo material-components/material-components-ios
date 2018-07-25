@@ -38,7 +38,7 @@
     @[ @"Show Alert",
        @"Show Long Alert",
        @"Non-Dismissable Alert",
-       @"Dynamic Alert",
+       @"Alert (Dynamic Type enabled)",
        @"Overpopulated Alert",
        @"Style Alert",
        @"Un-style Alert"]];
