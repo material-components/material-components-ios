@@ -25,6 +25,9 @@
 float UIAnimationDragCoefficient(void);  // Private API for simulator animation speed
 #endif
 
+// The default status bar height for non-X devices.
+static const CGFloat kNonXStatusBarHeight = 20;
+
 // The default maximum height for the header. Does not include the status bar height.
 static const CGFloat kFlexibleHeaderDefaultHeight = 56;
 
@@ -366,7 +369,6 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   UIViewController *viewController = self.topSafeAreaSourceViewController;
   if (![viewController isViewLoaded]) {
     self.topSafeAreaInset = 0;
-
   } else {
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
     if (@available(iOS 11.0, *)) {
@@ -491,7 +493,8 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 // actual topSafeAreaInset value.
 - (CGFloat)fhv_topSafeAreaInset {
   if (self.inferTopSafeAreaInsetFromViewController) {
-    BOOL topSafeAreaInsetLikelyAffectedByStatusBarVisibility = _lastNonZeroTopSafeAreaInset == 20;
+    BOOL topSafeAreaInsetLikelyAffectedByStatusBarVisibility =
+        _lastNonZeroTopSafeAreaInset == kNonXStatusBarHeight;
     if (topSafeAreaInsetLikelyAffectedByStatusBarVisibility
         && [self fhv_canShiftOffscreen]
         && _shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar
