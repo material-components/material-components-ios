@@ -22,6 +22,11 @@ class AppBarImagerySwiftExample: UITableViewController {
   let appBar = MDCAppBar()
   var colorScheme = MDCSemanticColorScheme()
 
+  deinit {
+    // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
+    appBar.headerViewController.headerView.trackingScrollView = nil
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -51,8 +56,10 @@ class AppBarImagerySwiftExample: UITableViewController {
     // Allow the header to show more of the image.
     headerView.maximumHeight = 200
 
+    // Allows us to avoid forwarding events, but means we can't enable shift behaviors.
+    headerView.observesTrackingScrollViewScrollEvents = true
+
     headerView.trackingScrollView = self.tableView
-    self.tableView.delegate = appBar.headerViewController
 
     appBar.addSubviewsToParent()
   }
@@ -114,7 +121,6 @@ extension AppBarImagerySwiftExample {
       if cell == nil {
         cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
       }
-      cell!.layoutMargins = UIEdgeInsets.zero
       return cell!
   }
 }
