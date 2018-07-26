@@ -22,13 +22,7 @@
 static const CGFloat kTitleLeadingPadding = 16.f;
 static const CGFloat kTitleBaselinePadding = 36.f;
 static const CGFloat kTitleAlpha = 0.54f;
-//static const CGFloat kRowHeight = 56.f;
-
-@interface MDCActionSheetAction ()
-
-@property(nonatomic, nullable, copy) MDCActionSheetHandler completionHandler;
-
-@end
+//static const CGFloat kCellHeight = 56.f;
 
 @implementation MDCActionSheetAction
 
@@ -62,7 +56,7 @@ static const CGFloat kTitleAlpha = 0.54f;
 @end
 
 @interface MDCActionSheetController () <MDCBottomSheetPresentationControllerDelegate,
-    UITableViewDelegate, UITableViewDataSource>
+    UITableViewDelegate>
 @end
 
 
@@ -91,12 +85,13 @@ static const CGFloat kTitleAlpha = 0.54f;
 }
 
 - (void)commonMDCActionSheetControllerInit {
-    contentViewController = [[UIViewController alloc] initWithNibName:nil bundle:nil];
-    _transitionController = [[MDCBottomSheetTransitionController alloc] init];
-    _transitionController.dismissOnBackgroundTap = YES;
-    super.transitioningDelegate = _transitionController;
-    super.modalPresentationStyle = UIModalPresentationCustom;
-    _actions = [[NSMutableArray alloc] init];
+  contentViewController = [[UIViewController alloc] initWithNibName:nil bundle:nil];
+  _transitionController = [[MDCBottomSheetTransitionController alloc] init];
+  _transitionController.dismissOnBackgroundTap = YES;
+  super.transitioningDelegate = _transitionController;
+  super.modalPresentationStyle = UIModalPresentationCustom;
+  _actions = [[NSMutableArray alloc] init];
+  //_tableView.delegate = self;
 }
 
 - (void)addAction:(MDCActionSheetAction *)action {
@@ -117,41 +112,11 @@ static const CGFloat kTitleAlpha = 0.54f;
   [self.view addSubview:contentViewController.view];
   [contentViewController didMoveToParentViewController:self];
   contentViewController.view.backgroundColor = [UIColor whiteColor];
-  contentViewController.preferredContentSize = CGSizeMake(CGRectGetWidth(self.view.bounds),
-                                                          (_actions.count + 1) * 56);
+  contentViewController.preferredContentSize = CGSizeMake(CGRectGetWidth(self.view.bounds), (_actions.count + 1) * 56);
   [self addTitle];
   _tableView = [[MDCActionSheetListViewController alloc] initWithActions:_actions];
+  //_tableView.delegate = self;
   [contentViewController.view addSubview:_tableView.view];
-  /*[_tableView setTranslatesAutoresizingMaskIntoConstraints:NO];
-  [NSLayoutConstraint constraintWithItem:_tableView
-                               attribute:NSLayoutAttributeTop
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:contentViewController.view
-                               attribute:NSLayoutAttributeTop
-                              multiplier:1
-                                constant:kRowHeight].active = YES;
-  [NSLayoutConstraint constraintWithItem:_tableView
-                               attribute:NSLayoutAttributeHeight
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:nil
-                               attribute:NSLayoutAttributeNotAnAttribute
-                              multiplier:1
-                                constant:56.f * _actions.count].active = YES;
-  CGFloat width = CGRectGetWidth(contentViewController.view.frame);
-  [NSLayoutConstraint constraintWithItem:_tableView
-                               attribute:NSLayoutAttributeWidth
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:nil
-                               attribute:NSLayoutAttributeNotAnAttribute
-                              multiplier:1
-                                constant:width].active = YES;
- [NSLayoutConstraint constraintWithItem:_tableView
-                               attribute:NSLayoutAttributeLeading
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:contentViewController.view
-                               attribute:NSLayoutAttributeLeading
-                              multiplier:1
-                                constant:0.f].active = YES;*/
 }
 
 - (void)addTitle {
@@ -252,28 +217,24 @@ static const CGFloat kTitleAlpha = 0.54f;
   [delegate actionSheetControllerDidDismissActionSheet:self];
 }
 
-- (void)tableView:(UITableView *)tableView
-    didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-  [_actions[indexPath.row] action];
+/**#pragma mark - Table view delegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+  return kCellHeight;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView
-     numberOfRowsInSection:(NSInteger)section {
-  NSLog(@"We are looking for number of rows in section");
-  return _actions.count + 7;
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+  return kCellHeight;
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-  return 1;
-}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+  
+  MDCActionSheetAction *action = _actions[indexPath.row];
+  [self.presentingViewController dismissViewControllerAnimated:YES completion:^(void) {
+    if (action.completionHandler) {
+      action.completionHandler(action);
+    }
+  }];
+}*/
 
-- (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-  MDCActionSheetItemView *cell = [[MDCActionSheetItemView alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
-//      [MDCActionSheetItemView cellWithAction:_actions[indexPath.row]];
-  return cell;
-}
 @end
-
-
-
-

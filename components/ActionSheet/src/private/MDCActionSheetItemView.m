@@ -122,4 +122,30 @@ static const CGFloat IconAlpha = 0.54f;
   }
 }
 
+- (NSString *)accessibilityLabel {
+  return [NSString stringWithFormat:@"Button %@", title];
+}
+
 @end
+
+/**@implementation MDCACtionSheetHeaderView
+
+- (instancetype)headerWithTitle:(NSString *)title {
+  return [self headerWithTitle:title message:nil];
+}
+
+- (instancetype)headerWithTitle:(NSString *)title message:(NSString *)message {
+  self = [super initWithReuseIdentifier:@"Header"];
+  if (self) {
+    _title = title;
+    _message = message;
+    [self commonMDCActionSheetHeaderViewInit];
+  }
+  return self;
+}
+
+- (void)commonMDCActionSheetHeaderViewInit {
+
+}
+
+@end*/

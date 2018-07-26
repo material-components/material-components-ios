@@ -45,3 +45,24 @@
 @property(nonatomic, nonnull, readonly) MDCActionSheetAction *action;
 
 @end
+
+@interface MDCACtionSheetHeaderView : UITableViewHeaderFooterView
+
+/** */
+- (nonnull instancetype)headerWithTitle:(NSString *)title;
+
+- (nonnull instancetype)headerWithTitle:(NSString *)title
+                                message:(nullable NSString *)message;
+
+/** Header must be created with either headerWithTitle: or headerWithTitle:message: */
+- (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
+
+/** Header must be created with either headerWithTitle: or headerWithTitle:message: */
+- (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
+
+@property(nonatomic, nullable) NSString *title;
+
+@property(nonatomic, nullable) NSString *message;
+
+
+@end

@@ -19,7 +19,11 @@
 
 static const CGFloat kCellHeight = 56.f;
 
-@interface MDCActionSheetListViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface MDCActionSheetAction ()
+
+@end
+
+@interface MDCActionSheetListViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @end
 
@@ -38,9 +42,10 @@ static const CGFloat kCellHeight = 56.f;
 
 -(void)commonMDCActionSheetListInit {
   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+  self.tableView.scrollEnabled = NO;
 }
 
-#pragma mark - Delegate methods
+#pragma mark - Table view delegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
   return kCellHeight;
@@ -48,6 +53,16 @@ static const CGFloat kCellHeight = 56.f;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   return kCellHeight;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+
+  MDCActionSheetAction *action = _actions[indexPath.row];
+  [self.presentingViewController dismissViewControllerAnimated:YES completion:^(void) {
+    if (action.completionHandler) {
+      action.completionHandler(action);
+    }
+  }];
 }
 
 #pragma mark - Datasource
