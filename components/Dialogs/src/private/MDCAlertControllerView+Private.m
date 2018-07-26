@@ -35,6 +35,7 @@ static const CGFloat MDCDialogActionsHorizontalPadding = 8.0;
 static const CGFloat MDCDialogActionsVerticalPadding = 8.0;
 static const CGFloat MDCDialogActionButtonHeight = 36.0;
 static const CGFloat MDCDialogActionButtonMinimumWidth = 48.0;
+static const CGFloat MDCDialogActionButtonTouchTarget = 48.f;
 
 static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
@@ -129,12 +130,6 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   buttonRect.size.height = MAX(buttonRect.size.height, MDCDialogActionButtonHeight);
   buttonRect.size.width = MAX(buttonRect.size.width, MDCDialogActionButtonMinimumWidth);
   actionButton.frame = buttonRect;
-  CGFloat verticalInset = MIN(0, -(48 - CGRectGetHeight(actionButton.bounds)) / 2);
-  CGFloat horizontalInset = MIN(0, -(48 - CGRectGetWidth(actionButton.bounds)) / 2);
-  actionButton.hitAreaInsets = UIEdgeInsetsMake(verticalInset,
-                                                horizontalInset,
-                                                verticalInset,
-                                                horizontalInset);
   [actionButton addTarget:target
                    action:selector
          forControlEvents:UIControlEventTouchUpInside];
@@ -230,17 +225,6 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   }
   for (MDCFlatButton *button in self.actionButtons) {
     [button setTitleFont:finalButtonFont forState:UIControlStateNormal];
-    [button sizeToFit];
-    CGRect buttonRect = button.frame;
-    buttonRect.size.height = MAX(CGRectGetHeight(buttonRect), MDCDialogActionButtonHeight);
-    buttonRect.size.width = MAX(CGRectGetWidth(buttonRect), MDCDialogActionButtonMinimumWidth);
-    button.frame = buttonRect;
-    CGFloat verticalInset = MIN(0, -(48 - CGRectGetHeight(button.bounds)) / 2);
-    CGFloat horizontalInset = MIN(0, -(48 - CGRectGetWidth(button.bounds)) / 2);
-    button.hitAreaInsets = UIEdgeInsetsMake(verticalInset,
-                                                  horizontalInset,
-                                                  verticalInset,
-                                                  horizontalInset);
   }
 
   [self setNeedsLayout];
@@ -371,7 +355,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  for (UIButton *button in self.actionButtons) {
+  for (MDCFlatButton *button in self.actionButtons) {
     [button sizeToFit];
     CGRect buttonFrame = button.frame;
     buttonFrame.size.width =
@@ -379,6 +363,16 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     buttonFrame.size.height =
         MAX(CGRectGetHeight(buttonFrame), MDCDialogActionButtonHeight);
     button.frame = buttonFrame;
+    CGFloat verticalInsets =
+        -(MDCDialogActionButtonTouchTarget - CGRectGetHeight(button.frame)) / 2;
+    CGFloat horizontalInsets =
+        -(MDCDialogActionButtonTouchTarget - CGRectGetWidth(button.frame)) / 2;
+    verticalInsets = MIN(0, verticalInsets);
+    horizontalInsets = MIN(0, horizontalInsets);
+    button.hitAreaInsets = UIEdgeInsetsMake(verticalInsets,
+                                            horizontalInsets,
+                                            verticalInsets,
+                                            horizontalInsets);
   }
 
   // Used to calculate the height of the scrolling content, so we limit the width.
