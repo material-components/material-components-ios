@@ -53,6 +53,8 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
   // While our snapshot is invalid we have slightly different status bar visibility.
   BOOL _prefersStatusBarHiddenWhileInvalid;
 
+  BOOL _isChangingInterfaceOrientation;
+
   BOOL _prefersStatusBarHidden;
   MDCStatusBarShifterState _snapshotState;
 
@@ -147,6 +149,14 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
   // state.
   if (!_snapshottingEnabled && _snapshotState == MDCStatusBarShifterStateRealStatusBar &&
       snapshotState == MDCStatusBarShifterStateIsSnapshot) {
+    snapshotState = MDCStatusBarShifterStateInvalidSnapshot;
+  }
+
+  // Invalidate the snapshot if our replica view is currently hidden and we're attempting to take
+  // a new snapshot. This handles the case where you're running on an iPhone X in landscape, you
+  // hide the header, and then rotate back to portrait. It is at this point that we want to
+  // invalidate the snapshot.
+  if (_isChangingInterfaceOrientation && snapshotState == MDCStatusBarShifterStateIsSnapshot) {
     snapshotState = MDCStatusBarShifterStateInvalidSnapshot;
   }
 
@@ -273,10 +283,12 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
 
 - (void)interfaceOrientationWillChange {
   _statusBarReplicaView.hidden = YES;
+  _isChangingInterfaceOrientation = YES;
 }
 
 - (void)interfaceOrientationDidChange {
   _statusBarReplicaView.hidden = NO;
+  _isChangingInterfaceOrientation = NO;
 }
 
 - (void)didMoveToWindow {

@@ -35,64 +35,11 @@ static UIImage *fakeImage(void) {
 @property(nonatomic, strong) UILabel *label;
 @end
 
-@interface BottomNavigationItemViewCodingTests : XCTestCase
+@interface BottomNavigationItemViewTests : XCTestCase
 
 @end
 
-@implementation BottomNavigationItemViewCodingTests
-
-- (void)testBasicCoding {
-  // Given
-  MDCBottomNavigationItemView *view = [[MDCBottomNavigationItemView alloc] init];
-  view.titleBelowIcon = NO;
-  view.selected = YES;
-  view.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
-  view.inkView.usesLegacyInkRipple = YES;
-  view.badgeValue = @"123";
-  view.title = @"a title";
-  view.itemTitleFont = [UIFont systemFontOfSize:23];
-  [view.button setTitle:@"button" forState:UIControlStateNormal];
-  view.image = fakeImage();
-  view.badgeColor = UIColor.purpleColor;
-  view.selectedItemTintColor = UIColor.redColor;
-  view.unselectedItemTintColor = UIColor.orangeColor;
-
-  // When
-  NSData *archive = [NSKeyedArchiver archivedDataWithRootObject:view];
-  MDCBottomNavigationItemView *unarchivedView = [NSKeyedUnarchiver unarchiveObjectWithData:archive];
-
-  // Then
-  XCTAssertEqual(view.titleBelowIcon, unarchivedView.titleBelowIcon);
-  XCTAssertEqual(view.selected, unarchivedView.selected);
-  XCTAssertEqual(view.titleVisibility, unarchivedView.titleVisibility);
-  XCTAssertEqual(view.inkView.usesLegacyInkRipple, unarchivedView.inkView.usesLegacyInkRipple);
-  XCTAssertEqualObjects(view.badgeValue, unarchivedView.badgeValue);
-  XCTAssertEqualObjects(view.title, unarchivedView.title);
-  XCTAssertEqualObjects(view.itemTitleFont, unarchivedView.itemTitleFont);
-  XCTAssertEqualObjects([view.button titleForState:UIControlStateNormal],
-                        [unarchivedView.button titleForState:UIControlStateNormal]);
-  XCTAssertNotNil(unarchivedView.image);
-  XCTAssertEqualObjects(view.badgeColor, unarchivedView.badgeColor);
-  XCTAssertEqualObjects(view.selectedItemTintColor, unarchivedView.selectedItemTintColor);
-  XCTAssertEqualObjects(view.unselectedItemTintColor, unarchivedView.unselectedItemTintColor);
-}
-
-- (void)testMultipleCodingsKeepSubviewsEqual {
-  // Given
-  MDCBottomNavigationItemView *view = [[MDCBottomNavigationItemView alloc] init];
-
-  // When
-  NSData *archive = [NSKeyedArchiver archivedDataWithRootObject:view];
-  MDCBottomNavigationItemView *unarchivedView =
-      [NSKeyedUnarchiver unarchiveObjectWithData:archive];
-  for (int i = 0; i < 3; ++i) {
-    archive = [NSKeyedArchiver archivedDataWithRootObject:unarchivedView];
-    unarchivedView = [NSKeyedUnarchiver unarchiveObjectWithData:archive];
-  }
-
-  // Then
-  XCTAssertEqual(view.subviews.count, unarchivedView.subviews.count);
-}
+@implementation BottomNavigationItemViewTests
 
 - (void)testVerticalMarginLayout {
   // Given

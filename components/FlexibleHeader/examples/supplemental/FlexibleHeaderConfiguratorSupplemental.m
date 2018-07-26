@@ -55,6 +55,12 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
   self = [super initWithStyle:style];
   if (self) {
     self.fhvc = [[MDCFlexibleHeaderViewController alloc] initWithNibName:nil bundle:nil];
+
+    // Behavioral flags.
+    self.fhvc.topLayoutGuideAdjustmentEnabled = YES;
+    self.fhvc.inferTopSafeAreaInsetFromViewController = YES;
+    self.fhvc.headerView.minMaxHeightIncludesSafeArea = NO;
+
     [self addChildViewController:self.fhvc];
 
     self.title = @"Configurator";
@@ -85,23 +91,51 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
 
   self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:0.1f alpha:1.0f];
 
-  self.fhvc.headerView.minMaxHeightIncludesSafeArea = NO;
-
-  UILabel *titleLabel = [[UILabel alloc] init];
-  titleLabel.text = self.title;
-  titleLabel.textColor = [UIColor whiteColor];
-  titleLabel.font = [UIFont systemFontOfSize:22];
-  titleLabel.textAlignment = NSTextAlignmentCenter;
-  [titleLabel sizeToFit];
+  self.titleLabel = [[UILabel alloc] init];
+  self.titleLabel.text = self.title;
+  self.titleLabel.textColor = [UIColor whiteColor];
+  self.titleLabel.font = [UIFont systemFontOfSize:22];
+  self.titleLabel.textAlignment = NSTextAlignmentCenter;
+  [self.titleLabel sizeToFit];
   CGRect frame = self.fhvc.headerView.bounds;
-  titleLabel.frame = CGRectMake(0, 20, frame.size.width, frame.size.height - 20);
-  titleLabel.autoresizingMask =
+  self.titleLabel.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
+  self.titleLabel.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
-  [self.fhvc.headerView addSubview:titleLabel];
+  [self.fhvc.headerView addSubview:self.titleLabel];
 
-  [self.fhvc.headerView hideViewWhenShifted:titleLabel];
+  self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+  [NSLayoutConstraint activateConstraints:
+   @[[NSLayoutConstraint constraintWithItem:self.titleLabel
+                                  attribute:NSLayoutAttributeTop
+                                  relatedBy:NSLayoutRelationEqual
+                                     toItem:self.fhvc.headerView.topSafeAreaGuide
+                                  attribute:NSLayoutAttributeBottom
+                                 multiplier:1.0
+                                   constant:0],
+     [NSLayoutConstraint constraintWithItem:self.titleLabel
+                                  attribute:NSLayoutAttributeBottom
+                                  relatedBy:NSLayoutRelationEqual
+                                     toItem:self.fhvc.headerView
+                                  attribute:NSLayoutAttributeBottom
+                                 multiplier:1.0
+                                   constant:0],
+     [NSLayoutConstraint constraintWithItem:self.titleLabel
+                                  attribute:NSLayoutAttributeLeft
+                                  relatedBy:NSLayoutRelationEqual
+                                     toItem:self.fhvc.headerView
+                                  attribute:NSLayoutAttributeLeft
+                                 multiplier:1.0
+                                   constant:0],
+     [NSLayoutConstraint constraintWithItem:self.titleLabel
+                                  attribute:NSLayoutAttributeRight
+                                  relatedBy:NSLayoutRelationEqual
+                                     toItem:self.fhvc.headerView
+                                  attribute:NSLayoutAttributeRight
+                                 multiplier:1.0
+                                   constant:0]
+     ]];
 
-  self.fhvc.headerView.minimumHeight = CGRectGetMaxY(titleLabel.frame);
+  [self.fhvc.headerView hideViewWhenShifted:self.titleLabel];
 
   id (^switchItem)(NSString *, FlexibleHeaderConfiguratorField) = ^(
       NSString *title, FlexibleHeaderConfiguratorField field) {
