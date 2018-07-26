@@ -240,10 +240,6 @@ class MDCNodeListViewController: CBCNodeListViewController {
     self.navigationController?.setNavigationBarHidden(true, animated: animated)
   }
 
-  override var preferredStatusBarStyle: UIStatusBarStyle {
-    return .lightContent
-  }
-
   func themeDidChange(notification: NSNotification) {
     self.tableView.reloadData()
   }
