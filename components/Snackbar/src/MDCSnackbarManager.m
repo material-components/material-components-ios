@@ -738,7 +738,30 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   return _shouldApplyStyleChangesToVisibleSnackbars;
 }
 
-#pragma mark - To be deprecated
+@end
+
+@interface MDCSnackbarManagerSuspensionToken ()
+@property(nonatomic, weak) MDCSnackbarManager *manager;
+@end
+
+@implementation MDCSnackbarManagerSuspensionToken
+
+- (instancetype)initWithManager:(MDCSnackbarManager *)manager {
+  self = [super init];
+  if (self != nil) {
+    _identifier = [NSUUID UUID];
+    _manager = manager;
+  }
+  return self;
+}
+
+- (void)dealloc {
+  [_manager resumeMessagesWithToken:self];
+}
+
+@end
+
+@implementation MDCSnackbarManager (LegacyAPI)
 
 + (MDCSnackbarAlignment)alignment {
   return MDCSnackbarManager.defaultManager.alignment;
@@ -773,7 +796,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 }
 
 + (nullable id <MDCSnackbarSuspensionToken>)
-suspendMessagesWithCategory:(nullable NSString *)category {
+    suspendMessagesWithCategory:(nullable NSString *)category {
   return [MDCSnackbarManager.defaultManager suspendMessagesWithCategory:category];
 }
 
@@ -787,7 +810,7 @@ suspendMessagesWithCategory:(nullable NSString *)category {
 
 + (void)setSnackbarMessageViewBackgroundColor:(UIColor *)snackbarMessageViewBackgroundColor {
   MDCSnackbarManager.defaultManager.snackbarMessageViewBackgroundColor =
-  snackbarMessageViewBackgroundColor;
+      snackbarMessageViewBackgroundColor;
 }
 
 + (UIColor *)snackbarMessageViewShadowColor {
@@ -827,9 +850,9 @@ suspendMessagesWithCategory:(nullable NSString *)category {
 }
 
 + (void)setShouldApplyStyleChangesToVisibleSnackbars:(BOOL)shouldApplyStyleChangesToVisibleSnackbars
-{
+    {
   MDCSnackbarManager.defaultManager.shouldApplyStyleChangesToVisibleSnackbars =
-  shouldApplyStyleChangesToVisibleSnackbars;
+      shouldApplyStyleChangesToVisibleSnackbars;
 }
 
 + (UIColor *)buttonTitleColorForState:(UIControlState)state {
@@ -846,7 +869,7 @@ suspendMessagesWithCategory:(nullable NSString *)category {
 
 + (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)mdc_adjustsFontForContentSizeCategory {
   [MDCSnackbarManager.defaultManager
-   mdc_setAdjustsFontForContentSizeCategory:mdc_adjustsFontForContentSizeCategory];
+      mdc_setAdjustsFontForContentSizeCategory:mdc_adjustsFontForContentSizeCategory];
 }
 
 + (id<MDCSnackbarManagerDelegate>)delegate {
@@ -855,27 +878,6 @@ suspendMessagesWithCategory:(nullable NSString *)category {
 
 + (void)setDelegate:(id<MDCSnackbarManagerDelegate>)delegate {
   MDCSnackbarManager.defaultManager.delegate = delegate;
-}
-
-@end
-
-@interface MDCSnackbarManagerSuspensionToken ()
-@property(nonatomic, weak) MDCSnackbarManager *manager;
-@end
-
-@implementation MDCSnackbarManagerSuspensionToken
-
-- (instancetype)initWithManager:(MDCSnackbarManager *)manager {
-  self = [super init];
-  if (self != nil) {
-    _identifier = [NSUUID UUID];
-    _manager = manager;
-  }
-  return self;
-}
-
-- (void)dealloc {
-  [_manager resumeMessagesWithToken:self];
 }
 
 @end

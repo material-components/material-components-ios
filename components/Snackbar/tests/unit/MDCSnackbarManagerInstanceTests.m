@@ -101,7 +101,7 @@
   MDCSnackbarManager.alignment = MDCSnackbarAlignmentLeading;
   MDCSnackbarManager.buttonFont = [UIFont systemFontOfSize:72];
   MDCSnackbarManager.delegate = delegate;
-  MDCSnackbarManager.mdc_adjustsFontForContentSizeCategory = YES;
+  [MDCSnackbarManager mdc_setAdjustsFontForContentSizeCategory:YES];
   MDCSnackbarManager.messageFont = [UIFont systemFontOfSize:66];
   MDCSnackbarManager.messageTextColor = UIColor.orangeColor;
   MDCSnackbarManager.shouldApplyStyleChangesToVisibleSnackbars = YES;
