@@ -31,4 +31,6 @@
 /** MDCActionSheetListViewController must be created with initWithActions: */
 - (instancetype)initWithStyle:(UITableViewStyle)style NS_UNAVAILABLE;
 
+@property(nonatomic, weak) id<UITableViewDelegate> delegate;
+
 @end

@@ -22,14 +22,23 @@
 
 + (nonnull instancetype)actionSheetControllerWithTitle:(nullable NSString *)title;
 
-/** Action sheet controllers must be created with alertControllerWithTitle:message: */
+//+ (nonnull instancetype)actionSheetControllerWithTitle:(NSString *)title
+//                                               message:(nullable NSString *)message;
+
+/** Action sheet controllers must be created with actionSheetControllerWithTitle: or
+ with actionSheetControllerWithTitle:message:  */
 - (nonnull instancetype)initWithNibName:(NSString *)nibNameOrNil
                                  bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
 
-/** Action sheet controllers must be created with alertControllerWithTitle:message: */
+/** Action sheet controllers must be created with actionSheetControllerwithTitle: or with actionSheetControllerWithTitle:message:  */
 - (nullable instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 
 
+/**
+ <#Description#>
+
+ @param action <#action description#>
+ */
 - (void)addAction:(nonnull MDCActionSheetAction *)action;
 
 /**
@@ -51,9 +60,15 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
  */
 @interface MDCActionSheetAction : NSObject <NSCopying>
 
-/**
 
-*/
+/**
+ <#Description#>
+
+ @param title <#title description#>
+ @param image <#image description#>
+ @param handler <#handler description#>
+ @return <#return value description#>
+ */
 + (nonnull instancetype)actionWithTitle:(nonnull NSString *)title
                                   image:(nonnull UIImage *)image
                                 handler:(__nullable MDCActionSheetHandler)handler;
@@ -83,10 +98,20 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
 */
 @property (nonatomic, nonnull, readonly) MDCActionSheetHandler action;
 
+/**
+
+ */
+@property(nonatomic, nullable, copy) MDCActionSheetHandler completionHandler;
+
 @end
 
 @protocol MDCActionSheetControllerDelegate <NSObject>
 
+/**
+ <#Description#>
+
+ @param controller <#controller description#>
+ */
 -(void)actionSheetControllerDidDismissActionSheet:(nonnull MDCActionSheetController *)controller;
 
 @end
