@@ -70,8 +70,8 @@
 
 // Inject an App Bar, if necessary, when a view controller is pushed.
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
-  // We call this invoking super because super immediately queries the pushed view controller for
-  // things like status bar style, which we want to have rerouted to our flexible header view
+  // We call this before invoking super because super immediately queries the pushed view controller
+  // for things like status bar style, which we want to have rerouted to our flexible header view
   // controller.
   [self injectAppBarIntoViewController:viewController];
 
