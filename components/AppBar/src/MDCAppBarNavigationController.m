@@ -20,6 +20,27 @@
 
 #import <objc/runtime.h>
 
+// Light-weight book-keeping associated with any pushed view controller.
+@interface MDCAppBarNavigationControllerInfo: NSObject
+
+@property(nonatomic, strong) MDCAppBar *appBar;
+
+// Note that this is a strong reference so that we can keep it around until we know that we're done
+// with it (i.e. once the associated view controller is released).
+@property(nonatomic, strong) UIScrollView *trackingScrollView;
+
+@end
+
+@implementation MDCAppBarNavigationControllerInfo
+
+- (void)dealloc {
+  // On pre-iOS 11 devices we need to manually clear out the trackingScrollView because we've
+  // enabled the observesTrackingScrollViewScrollEvents behavior on the flexible header.
+  self.appBar.headerViewController.headerView.trackingScrollView = nil;
+}
+
+@end
+
 @implementation MDCAppBarNavigationController
 
 // We're overriding UINavigationController's delegate solely to change its type (we don't provide
@@ -68,19 +89,40 @@
     return; // Already has a flexible header (not one we injected, but that's ok).
   }
 
+  // Attempt to infer the tracking scroll view.
+  UIScrollView *trackingScrollView =
+      [self findFirstInstanceOfUIScrollViewInView:viewController.view];
+
   MDCAppBar *appBar = [[MDCAppBar alloc] init];
-  [self setAppBar:appBar forViewController:viewController];
+
+  // Book-keeping so that we can do two things:
+  // 1. Return the associated App Bar for a given view controller.
+  // 2. Hold a strong reference to the scroll view until the view controller is released, at which
+  //    point we nil out the trackingScrollView on the App Bar so that the header's KVO observer is
+  //    unregistered.
+  MDCAppBarNavigationControllerInfo *info = [[MDCAppBarNavigationControllerInfo alloc] init];
+  info.appBar = appBar;
+  info.trackingScrollView = trackingScrollView;
+  [self setInfo:info forViewController:viewController];
 
   // Ensures that the view controller's top layout guide / additional safe area insets are adjusted
   // to take into consideration the flexible header's height.
   appBar.headerViewController.topLayoutGuideViewController = viewController;
+
+  // Ensures that our App Bar's top layout guide reflects the current view controller hierarchy.
+  // Most notably, this ensures we support iPad popovers and extensions.
   appBar.headerViewController.inferTopSafeAreaInsetFromViewController = YES;
+
+  // We want our flexible header to calculate the safe area insets dynamically, rather than assume
+  // we've pre-calculated them.
   appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = NO;
+
+  // This is the magic that allows us to avoid having to explicitly forward any scroll view events
+  // to the flexible header. Enabling this means we cannot enable the shiftBehavior on the
+  // flexible header. In those cases the client is expected to create their own App Bar.
   appBar.headerViewController.headerView.observesTrackingScrollViewScrollEvents = YES;
 
-  // Attempt to infer the tracking scroll view.
-  appBar.headerViewController.headerView.trackingScrollView =
-      [self findFirstInstanceOfUIScrollViewInView:viewController.view];
+  appBar.headerViewController.headerView.trackingScrollView = trackingScrollView;
 
   if ([self.delegate respondsToSelector:
        @selector(appBarNavigationController:willAddAppBar:asChildOfViewController:)]) {
@@ -90,7 +132,6 @@
   }
 
   [viewController addChildViewController:appBar.headerViewController];
-
   [appBar addSubviewsToParent];
 }
 
@@ -118,15 +159,22 @@
   return nil;
 }
 
-- (MDCAppBar *)appBarForViewController:(UIViewController *)viewController {
-  return (MDCAppBar *)objc_getAssociatedObject(viewController, _cmd);
+- (MDCAppBarNavigationControllerInfo *)infoForViewController:(UIViewController *)viewController {
+  return objc_getAssociatedObject(viewController, _cmd);
 }
 
-- (void)setAppBar:(MDCAppBar *)appBar forViewController:(UIViewController *)viewController {
+- (void)setInfo:(MDCAppBarNavigationControllerInfo *)info
+    forViewController:(UIViewController *)viewController {
   objc_setAssociatedObject(viewController,
-                           @selector(appBarForViewController:),
-                           appBar,
+                           @selector(infoForViewController:),
+                           info,
                            OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+#pragma mark - Public
+
+- (MDCAppBar *)appBarForViewController:(UIViewController *)viewController {
+  return [self infoForViewController:viewController].appBar;
 }
 
 @end
