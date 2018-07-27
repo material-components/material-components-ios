@@ -16,8 +16,9 @@
 
 #import "MDCActionSheetListViewController.h"
 #import "MDCActionSheetItemView.h"
+#import "MaterialTypography.h"
 
-static const CGFloat kCellHeight = 56.f;
+static const CGFloat kVerticalLabelPadding = 18.f;
 
 @interface MDCActionSheetAction ()
 
@@ -29,11 +30,15 @@ static const CGFloat kCellHeight = 56.f;
 
 @implementation MDCActionSheetListViewController {
   NSArray<MDCActionSheetAction *> *_actions;
+  NSString *_title;
+  UIFont *_font;
 }
 
-- (instancetype)initWithActions:(NSArray<MDCActionSheetAction *> *)actions {
+- (instancetype)initWithTitle:(NSString *) title
+                      actions:(NSArray<MDCActionSheetAction *> *)actions {
   self = [super initWithStyle:UITableViewStylePlain];
   if (self) {
+    _title = title;
     _actions = actions;
     [self commonMDCActionSheetListInit];
   }
@@ -43,20 +48,26 @@ static const CGFloat kCellHeight = 56.f;
 -(void)commonMDCActionSheetListInit {
   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   self.tableView.scrollEnabled = NO;
+  [self updateFonts];
 }
 
 #pragma mark - Table view delegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-  return kCellHeight;
+  return floor((kVerticalLabelPadding * 2) + _font.lineHeight);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-  return kCellHeight;
+  return 56;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+  MDCACtionSheetHeaderView *header = [[MDCACtionSheetHeaderView alloc] initWithTitle:_title];
+  header.font = _font;
+  return header;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-
   MDCActionSheetAction *action = _actions[indexPath.row];
   [self.presentingViewController dismissViewControllerAnimated:YES completion:^(void) {
     if (action.completionHandler) {
@@ -75,9 +86,42 @@ static const CGFloat kCellHeight = 56.f;
   return _actions.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   MDCActionSheetItemView *cell = [MDCActionSheetItemView cellWithAction:_actions[indexPath.row]];
+  cell.font = _font;
   return cell;
 }
+
+#pragma mark - Dynamic type
+
+- (BOOL)mdc_adjustFontForContentSizeCategory {
+  return _mdc_adjustsFontForContentSizeCategory;
+}
+
+- (void)mdc_setAdjustFontForContentSizeCategory:(BOOL)adjusts {
+  _mdc_adjustsFontForContentSizeCategory = adjusts;
+  [self updateFonts];
+  [self.view setNeedsLayout];
+}
+
+-(void)updateFonts {
+  UIFont *finalFont = _font ?: [[self class] font];
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    finalFont =
+        [finalFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
+                                scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+  }
+  _font = finalFont;
+  [self.view setNeedsLayout];
+}
+
++ (UIFont *)font {
+  if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
+    return [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
+  }
+  return [MDCTypography subheadFont];
+}
+
 
 @end

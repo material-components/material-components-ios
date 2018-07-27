@@ -16,8 +16,17 @@
 
 #import "MDCActionSheetItemView.h"
 
+static const CGFloat TitleLabelAlpha = 0.54f;
+static const CGFloat TitleLabelLeadingPadding = 16.f;
+static const CGFloat TitleLabelTopPadding = 36.f;
+
 static const CGFloat LabelLeadingPadding = 72.f;
-static const CGFloat LabelBaselinePadding = 32.f;
+static const CGFloat LabelTrailingPadding = 16.f;
+/// This comes from design, a cell should be 56pt tall and the baseline for a single
+/// line list item should be centered. Standard font is 20pt tall so that leaves 36pt
+/// to support dynamic type we have 36pt / 2 = 18pt.
+/// If we change the standard font this will need to be changed.
+static const CGFloat LabelVerticalPadding = 18.f;
 static const CGFloat LabelAlpha = 0.87f;
 
 static const CGFloat IconLeadingPadding = 16.f;
@@ -36,19 +45,11 @@ static const CGFloat IconAlpha = 0.54f;
   NSString *title;
   UIImage *image;
   MDCActionSheetHandler handler;
-  MDCInkView *_inkView;
+  MDCInkTouchController *_inkTouchController;
 }
 
 + (instancetype)cellWithAction:(MDCActionSheetAction *)action {
   return [[MDCActionSheetItemView alloc] initWithAction:action];
-}
-
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-  self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-  if (self) {
-    self.textLabel.text = @"hello";
-  }
-  return self;
 }
 
 - (instancetype)initWithAction:(MDCActionSheetAction *)action {
@@ -64,88 +65,145 @@ static const CGFloat IconAlpha = 0.54f;
 
 - (void)commonMDCActionSheetItemViewInit {
   self.selectionStyle = UITableViewCellSelectionStyleNone;
-
-  if (!_inkView) {
-    _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
-    _inkView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-    _inkView.usesLegacyInkRipple = NO;
-    _inkView.clipsToBounds = NO;
-    _inkView.inkColor = [UIColor blackColor];
-    [self addSubview:_inkView];
-  }
+  self.accessibilityTraits = UIAccessibilityTraitButton;
 
   if (!_titleLabel) {
     _titleLabel = [[UILabel alloc] init];
     _titleLabel.text = title;
-    _titleLabel.alpha = LabelAlpha;
-    [_titleLabel sizeToFit];
-    [self addSubview:_titleLabel];
-    [_titleLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [NSLayoutConstraint constraintWithItem:_titleLabel
-                                 attribute:NSLayoutAttributeLeading
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self
-                                 attribute:NSLayoutAttributeLeading
-                                multiplier:1
-                                  constant:LabelLeadingPadding].active = YES;
-
-    CGFloat yPosition = LabelBaselinePadding - _titleLabel.font.ascender;
-    [NSLayoutConstraint constraintWithItem:_titleLabel
-                                 attribute:NSLayoutAttributeTop
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self
-                                 attribute:NSLayoutAttributeTop
-                                multiplier:1
-                                  constant:yPosition].active = YES;
+    _titleLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
+    _titleLabel.numberOfLines = 0;
   }
+  [self addSubview:_titleLabel];
+  [_titleLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+
+  [NSLayoutConstraint constraintWithItem:_titleLabel
+                               attribute:NSLayoutAttributeLeading
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.contentView
+                               attribute:NSLayoutAttributeLeading
+                              multiplier:1
+                                constant:LabelLeadingPadding].active = YES;
+
+  [NSLayoutConstraint constraintWithItem:_titleLabel
+                               attribute:NSLayoutAttributeTop
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.contentView
+                               attribute:NSLayoutAttributeTop
+                              multiplier:1
+                                constant:LabelVerticalPadding].active = YES;
+
+  [NSLayoutConstraint constraintWithItem:_titleLabel
+                               attribute:NSLayoutAttributeBottom
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.contentView
+                               attribute:NSLayoutAttributeBottom
+                              multiplier:1
+                                constant:LabelVerticalPadding].active = YES;
+  [NSLayoutConstraint constraintWithItem:_titleLabel
+                               attribute:NSLayoutAttributeTrailing
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.contentView
+                               attribute:NSLayoutAttributeTrailing
+                              multiplier:1
+                                constant:LabelTrailingPadding].active = YES;
 
   if (!_icon) {
     _icon = [[UIImageView alloc] initWithImage:image];
-    _icon.frame = CGRectMake(0, 0, 24, 24);
-    _icon.alpha = IconAlpha;
-    [self addSubview:_icon];
-    [_icon setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [NSLayoutConstraint constraintWithItem:_icon
-                                 attribute:NSLayoutAttributeLeading
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self
-                                 attribute:NSLayoutAttributeLeading
-                                multiplier:1
-                                  constant:IconLeadingPadding].active = YES;
-    [NSLayoutConstraint constraintWithItem:_icon
-                                 attribute:NSLayoutAttributeTop
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self
-                                 attribute:NSLayoutAttributeTop
-                                multiplier:1
-                                  constant:IconTopPadding].active = YES;
+  }
+
+  if (!_inkTouchController) {
+    _inkTouchController = [[MDCInkTouchController alloc] initWithView:self];
+    [_inkTouchController addInkView];
   }
 }
 
+- (void)layoutSubviews {
+  [super layoutSubviews];
+  _titleLabel.alpha = LabelAlpha;
+  _titleLabel.font = _font;
+
+  [self.contentView setNeedsLayout];
+  [self.contentView layoutIfNeeded];
+
+  _icon.frame = CGRectMake(0, 0, 24, 24);
+  _icon.alpha = IconAlpha;
+  [self addSubview:_icon];
+  [_icon setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [NSLayoutConstraint constraintWithItem:_icon
+                               attribute:NSLayoutAttributeLeading
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self
+                               attribute:NSLayoutAttributeLeading
+                              multiplier:1
+                                constant:IconLeadingPadding].active = YES;
+  [NSLayoutConstraint constraintWithItem:_icon
+                               attribute:NSLayoutAttributeTop
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self
+                               attribute:NSLayoutAttributeTop
+                              multiplier:1
+                                constant:IconTopPadding].active = YES;
+}
+
 - (NSString *)accessibilityLabel {
-  return [NSString stringWithFormat:@"Button %@", title];
+  return title;
+}
+
+- (void)setFont:(UIFont *)font {
+  _font = font;
+  [self setNeedsLayout];
 }
 
 @end
 
-/**@implementation MDCACtionSheetHeaderView
-
-- (instancetype)headerWithTitle:(NSString *)title {
-  return [self headerWithTitle:title message:nil];
+@implementation MDCACtionSheetHeaderView {
+  UILabel *_titleLabel;
 }
 
-- (instancetype)headerWithTitle:(NSString *)title message:(NSString *)message {
-  self = [super initWithReuseIdentifier:@"Header"];
+- (instancetype)initWithTitle:(NSString *)title {
+  self = [super init];
   if (self) {
     _title = title;
-    _message = message;
     [self commonMDCActionSheetHeaderViewInit];
   }
   return self;
 }
 
 - (void)commonMDCActionSheetHeaderViewInit {
-
+  self.backgroundColor = [UIColor whiteColor];
+  if (!_titleLabel) {
+    _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+  }
 }
 
-@end*/
+- (void)layoutSubviews {
+  _titleLabel.text = _title;
+  _titleLabel.alpha = TitleLabelAlpha;
+  _titleLabel.font = _font;
+  [_titleLabel sizeToFit];
+  [self addSubview:_titleLabel];
+  [_titleLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [NSLayoutConstraint constraintWithItem:_titleLabel
+                               attribute:NSLayoutAttributeLeading
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self
+                               attribute:NSLayoutAttributeLeading
+                              multiplier:1
+                                constant:TitleLabelLeadingPadding].active = YES;
+
+  CGFloat yPosition = TitleLabelTopPadding - _titleLabel.font.ascender;
+  [NSLayoutConstraint constraintWithItem:_titleLabel
+                               attribute:NSLayoutAttributeTop
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self
+                               attribute:NSLayoutAttributeTop
+                              multiplier:1
+                                constant:yPosition].active = YES;
+}
+
+- (void)setFont:(UIFont *)font {
+  _font = font;
+  [self setNeedsLayout];
+}
+
+@end
