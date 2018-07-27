@@ -178,9 +178,13 @@ class TextFieldTests: XCTestCase {
     let controller1 = MDCTextInputControllerFilled(textInput: textField1)
     var errorMessage = "Error!"
     controller1.setErrorText(errorMessage, errorAccessibilityValue: nil)
+    textField1.setNeedsLayout()
+    textField1.layoutIfNeeded()
     let textField1Height1 = textField1.intrinsicContentSize.height
     errorMessage += ("\n" + errorMessage)
     controller1.setErrorText(errorMessage, errorAccessibilityValue: nil)
+    textField1.setNeedsLayout()
+    textField1.layoutIfNeeded()
     let textField1Height2 = textField1.intrinsicContentSize.height
 
     let textField2 = MDCMultilineTextField(frame: CGRect(x: 0, y: 0, width: 250, height: 250))
@@ -188,9 +192,13 @@ class TextFieldTests: XCTestCase {
     let controller2 = MDCTextInputControllerOutlinedTextArea(textInput: textField2)
     errorMessage = "Error!"
     controller2.setErrorText(errorMessage, errorAccessibilityValue: nil)
+    textField2.setNeedsLayout()
+    textField2.layoutIfNeeded()
     let textField2Height1 = textField2.intrinsicContentSize.height
     errorMessage += ("\n" + errorMessage)
     controller2.setErrorText(errorMessage, errorAccessibilityValue: nil)
+    textField2.setNeedsLayout()
+    textField2.layoutIfNeeded()
     let textField2Height2 = textField2.intrinsicContentSize.height
 
     XCTAssert(textField1Height2 > textField1Height1 + textField1.leadingUnderlineLabel.font.lineHeight)
