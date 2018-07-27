@@ -225,8 +225,6 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   if (self.selected) {
     switch (self.titleVisibility) {
       case MDCBottomNavigationBarTitleVisibilitySelected:
-        self.label.hidden = NO;
-        break;
       case MDCBottomNavigationBarTitleVisibilityAlways:
         self.label.hidden = NO;
         break;
@@ -237,13 +235,11 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   } else {
     switch (self.titleVisibility) {
       case MDCBottomNavigationBarTitleVisibilitySelected:
+      case MDCBottomNavigationBarTitleVisibilityNever:
         self.label.hidden = YES;
         break;
       case MDCBottomNavigationBarTitleVisibilityAlways:
         self.label.hidden = NO;
-        break;
-      case MDCBottomNavigationBarTitleVisibilityNever:
-        self.label.hidden = YES;
         break;
     }
   }
