@@ -81,10 +81,6 @@
 #pragma mark - Private
 
 - (void)injectAppBarIntoViewController:(UIViewController *)viewController {
-  if ([self appBarForViewController:viewController] != nil) {
-    return; // Already injected.
-  }
-
   if ([self viewControllerHasFlexibleHeader:viewController]) {
     return; // Already has a flexible header (not one we injected, but that's ok).
   }
