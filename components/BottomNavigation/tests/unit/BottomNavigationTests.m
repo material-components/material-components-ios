@@ -23,6 +23,10 @@
 @property(nonatomic, strong) NSMutableArray<MDCBottomNavigationItemView *> *itemViews;
 @end
 
+@interface MDCBottomNavigationItemView (Testing)
+@property(nonatomic, strong) UILabel *label;
+@end
+
 @interface BottomNavigationTests : XCTestCase
 @property(nonatomic, strong) MDCBottomNavigationBar *bottomNavBar;
 @end
@@ -140,6 +144,25 @@
   XCTAssert([bar.itemViews.firstObject.accessibilityIdentifier isEqualToString:oldIdentifier]);
   tabBarItem.accessibilityIdentifier = newIdentifier;
   XCTAssert([bar.itemViews.firstObject.accessibilityIdentifier isEqualToString:newIdentifier]);
+}
+
+-(void)testTitleVisibility {
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:0];
+  self.bottomNavBar.items = @[item1, item2];
+  self.bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityNever;
+  for (MDCBottomNavigationItemView *itemView in self.bottomNavBar.itemViews) {
+    XCTAssert(itemView.label.isHidden);
+  }
+  self.bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  for (MDCBottomNavigationItemView *itemView in self.bottomNavBar.itemViews) {
+    XCTAssert(!itemView.label.isHidden);
+  }
+  self.bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
+  self.bottomNavBar.itemViews.firstObject.selected = YES;
+  self.bottomNavBar.itemViews.lastObject.selected = NO;
+  XCTAssert(!self.bottomNavBar.itemViews.firstObject.label.isHidden);
+  XCTAssert(self.bottomNavBar.itemViews.lastObject.label.isHidden);
 }
 
 @end
