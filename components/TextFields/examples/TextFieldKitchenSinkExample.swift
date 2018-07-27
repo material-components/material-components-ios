@@ -667,9 +667,13 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
   }
 
   @objc func errorSwitchDidChange(errorSwitch: UISwitch) {
-    allInputControllers.forEach { controller in
+    for (index, controller) in allInputControllers.enumerated() {
       if errorSwitch.isOn {
-        controller.setErrorText("Uh oh! Try something else.", errorAccessibilityValue: nil)
+        let shortError = "Uh oh! Try something else."
+        let longError = "Uh oh! Try something else. This is a long error message." +
+            " Such a long error message!"
+        let errorToUse = index % 2 == 0 ? shortError : longError
+        controller.setErrorText(errorToUse, errorAccessibilityValue: nil)
       } else {
         controller.setErrorText(nil, errorAccessibilityValue: nil)
       }
