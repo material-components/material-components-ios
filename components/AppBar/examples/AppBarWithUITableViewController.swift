@@ -30,6 +30,11 @@ class AppBarWithUITableViewController: UITableViewController {
   var numberOfRows = 50
   var colorScheme = MDCSemanticColorScheme()
 
+  deinit {
+    // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
+    appBar.headerViewController.headerView.trackingScrollView = nil
+  }
+
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     self.addChildViewController(appBar.headerViewController)
@@ -47,7 +52,10 @@ class AppBarWithUITableViewController: UITableViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+
+    // Allows us to avoid forwarding events, but means we can't enable shift behaviors.
+    appBar.headerViewController.headerView.observesTrackingScrollViewScrollEvents = true
+
     appBar.addSubviewsToParent()
 
     MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
@@ -86,35 +94,6 @@ class AppBarWithUITableViewController: UITableViewController {
     numberOfRows += 1
     tableView.endUpdates()
   }
-
-  // MARK: UIScrollViewDelegate
-
-  override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
-      appBar.headerViewController.headerView.trackingScrollDidScroll()
-    }
-  }
-
-  override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
-      appBar.headerViewController.headerView.trackingScrollDidEndDecelerating()
-    }
-  }
-
-  override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-    let headerView = appBar.headerViewController.headerView
-    if scrollView == headerView.trackingScrollView {
-      headerView.trackingScrollDidEndDraggingWillDecelerate(decelerate)
-    }
-  }
-
-  override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-    let headerView = appBar.headerViewController.headerView
-    if scrollView == headerView.trackingScrollView {
-      headerView.trackingScrollWillEndDragging(withVelocity: velocity, targetContentOffset: targetContentOffset)
-    }
-  }
-
 }
 
 extension AppBarWithUITableViewController {

@@ -23,6 +23,11 @@ class AppBarModalPresentationSwiftExamplePresented: UITableViewController {
   let appBar = MDCAppBar()
   var colorScheme = MDCSemanticColorScheme()
 
+  deinit {
+    // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
+    appBar.headerViewController.headerView.trackingScrollView = nil
+  }
+
   init() {
     super.init(nibName: nil, bundle: nil)
 
@@ -42,13 +47,12 @@ class AppBarModalPresentationSwiftExamplePresented: UITableViewController {
 
     MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
 
+    // Allows us to avoid forwarding events, but means we can't enable shift behaviors.
+    appBar.headerViewController.headerView.observesTrackingScrollViewScrollEvents = true
+
     appBar.headerViewController.headerView.trackingScrollView = self.tableView
-    self.tableView.delegate = appBar.headerViewController
 
     appBar.addSubviewsToParent()
-
-    self.tableView.layoutMargins = UIEdgeInsets.zero
-    self.tableView.separatorInset = UIEdgeInsets.zero
 
     self.navigationItem.rightBarButtonItem =
       UIBarButtonItem(title: "Touch", style: .done, target: nil, action: nil)

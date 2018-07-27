@@ -30,6 +30,11 @@
 
 @implementation PresentedDemoViewController
 
+- (void)dealloc {
+  // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
+  self.appBar.headerViewController.headerView.trackingScrollView = nil;
+}
+
 - (id)init {
   UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
   layout.minimumInteritemSpacing = 10.0f;
@@ -51,8 +56,8 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  _appBar.headerViewController.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabled;
-  [_appBar.headerViewController.headerView hideViewWhenShifted:_appBar.headerStackView];
+  // Allows us to avoid forwarding events, but means we can't enable shift behaviors.
+  self.appBar.headerViewController.headerView.observesTrackingScrollViewScrollEvents = YES;
 
   [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme
                                         toAppBar:_appBar];
@@ -113,37 +118,6 @@
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
   CGRect collectionViewFrame = collectionView.frame;
   return CGSizeMake(collectionViewFrame.size.width/2.f - 14.f, 40.f);
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-  MDCFlexibleHeaderView *headerView = self.appBar.headerViewController.headerView;
-  if (scrollView == headerView.trackingScrollView) {
-    [headerView trackingScrollViewDidScroll];
-  }
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-  MDCFlexibleHeaderView *headerView = self.appBar.headerViewController.headerView;
-  if (scrollView == headerView.trackingScrollView) {
-    [headerView trackingScrollViewDidEndDraggingWillDecelerate:decelerate];
-  }
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-  MDCFlexibleHeaderView *headerView = self.appBar.headerViewController.headerView;
-  if (scrollView == headerView.trackingScrollView) {
-    [headerView trackingScrollViewDidEndDecelerating];
-  }
-}
-
-- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView
-                     withVelocity:(CGPoint)velocity
-              targetContentOffset:(inout CGPoint *)targetContentOffset {
-  MDCFlexibleHeaderView *headerView = self.appBar.headerViewController.headerView;
-  if (scrollView == headerView.trackingScrollView) {
-    [headerView trackingScrollViewWillEndDraggingWithVelocity:velocity
-                                          targetContentOffset:targetContentOffset];
-  }
 }
 
 @end
