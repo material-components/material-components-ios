@@ -78,6 +78,22 @@
   [super pushViewController:viewController animated:animated];
 }
 
+- (void)setNavigationBarHidden:(BOOL)navigationBarHidden {
+  // TODO: Consider using this API to hide the top view controller's flexible header.
+  NSAssert(navigationBarHidden, @"%@ requires that the system navigation bar remain hidden.",
+           NSStringFromClass([self class]));
+
+  [super setNavigationBarHidden:YES];
+}
+
+- (void)setNavigationBarHidden:(BOOL)navigationBarHidden animated:(BOOL)animated {
+  // TODO: Consider using this API to hide the top view controller's flexible header.
+  NSAssert(navigationBarHidden, @"%@ requires that the system navigation bar remain hidden.",
+           NSStringFromClass([self class]));
+
+  [super setNavigationBarHidden:YES animated:animated];
+}
+
 #pragma mark - Private
 
 - (void)injectAppBarIntoViewController:(UIViewController *)viewController {
