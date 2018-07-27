@@ -34,16 +34,11 @@ class EditReorderCollectionViewController: UIViewController,
   let cardScheme = MDCCardScheme()
 
   let images = [
-    (image: "amsterdam-kadoelen",
-     title: NSLocalizedString("Kadoelen", comment: "Card image title")),
-    (image: "amsterdam-zeeburg",
-     title: NSLocalizedString("Zeeburg", comment: "Card image title")),
-    (image: "venice-st-marks-square",
-     title: NSLocalizedString("St. Mark's Square", comment: "Card image title")),
-    (image: "venice-grand-canal",
-     title: NSLocalizedString("Grand Canal", comment: "Card image title")),
-    (image: "austin-u-texas-pond",
-     title: NSLocalizedString("Austin U", comment: "Card image title")),
+    (image: "amsterdam-kadoelen",     title: "Kadoelen"),
+    (image: "amsterdam-zeeburg",      title: "Zeeburg"),
+    (image: "venice-st-marks-square", title: "St. Mark's Square"),
+    (image: "venice-grand-canal",     title: "Grand Canal"),
+    (image: "austin-u-texas-pond",    title: "Austin U"),
   ]
   var dataSource: [(image: String, title: String, selected: Bool)] = []
 
@@ -138,7 +133,7 @@ class EditReorderCollectionViewController: UIViewController,
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
     guard let cardCell = cell as? CardEditReorderCollectionCell else { return cell }
 
-    MDCCardThemer.applyScheme(cardScheme, toCardCell: cardCell)
+    cardCell.apply(cardScheme: cardScheme, typographyScheme: typographyScheme)
 
     let title = dataSource[indexPath.item].title
     let imageName = dataSource[indexPath.item].image
@@ -178,7 +173,7 @@ class EditReorderCollectionViewController: UIViewController,
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
                       sizeForItemAt indexPath: IndexPath) -> CGSize {
-    let cardSize = (collectionView.bounds.size.width - 8 * 4) / 3
+    let cardSize = (collectionView.bounds.size.width / 3) - 12
     return CGSize(width: cardSize, height: cardSize)
   }
 

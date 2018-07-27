@@ -19,9 +19,6 @@ import MaterialComponents.MaterialCards
 
 class CardEditReorderCollectionCell: MDCCardCollectionCell {
 
-  var colorScheme = MDCSemanticColorScheme()
-  var typographyScheme = MDCTypographyScheme()
-
   private lazy var imageView: UIImageView = {
     let imageView = UIImageView(frame: CGRect.zero)
     imageView.contentMode = .scaleAspectFill
@@ -35,7 +32,6 @@ class CardEditReorderCollectionCell: MDCCardCollectionCell {
     label.numberOfLines = 1
     label.textAlignment = .center
     label.lineBreakMode = .byTruncatingTail
-    label.font = self.typographyScheme.caption
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
@@ -52,36 +48,15 @@ class CardEditReorderCollectionCell: MDCCardCollectionCell {
 
     titleLabel.setContentCompressionResistancePriority(800, for: .vertical)
 
-    if #available(iOS 11, *) {
-      post_iOS11Constraints()
-    } else {
-      pre_iOS11Constraints()
-    }
+    addConstraints()
   }
 
-  @available(iOS 11, *)
-  private func post_iOS11Constraints() {
-    #if swift(>=3.2)
-      let guide = self.safeAreaLayoutGuide
-      let margin: CGFloat = 4.0
-
-      NSLayoutConstraint.activate([
-        imageView.topAnchor.constraint(equalTo: guide.topAnchor),
-        imageView.leadingAnchor.constraint(equalTo: guide.leadingAnchor),
-        imageView.trailingAnchor.constraint(equalTo: guide.trailingAnchor),
-
-        titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: margin),
-
-        titleLabel.leadingAnchor.constraint(equalTo: guide.leadingAnchor),
-        titleLabel.trailingAnchor.constraint(equalTo: guide.trailingAnchor),
-        titleLabel.bottomAnchor.constraint(equalTo: guide.bottomAnchor, constant: -margin)
-      ]);
-    #else
-      pre_iOS11Constraints()
-    #endif
+  func apply(cardScheme: MDCCardScheme, typographyScheme: MDCTypographyScheme) {
+    MDCCardThemer.applyScheme(cardScheme, toCardCell: self)
+    self.titleLabel.font = typographyScheme.caption
   }
 
-  private func pre_iOS11Constraints() {
+  private func addConstraints() {
     let views: [String: UIView] = ["image": self.imageView, "label": self.titleLabel]
     let metrics = ["margin": 4.0]
     self.addConstraints(
