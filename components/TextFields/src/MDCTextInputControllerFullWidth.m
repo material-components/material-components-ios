@@ -479,6 +479,7 @@ static UIFont *_trailingUnderlineLabelFontDefault;
   } else {
     if (![self.textInput.leadingUnderlineLabel.text isEqualToString:helperText]) {
       self.textInput.leadingUnderlineLabel.text = helperText;
+      [self.textInput layoutIfNeeded];
       [self updateLayout];
     }
   }
@@ -1163,6 +1164,9 @@ static UIFont *_trailingUnderlineLabelFontDefault;
       self.textInput.leadingUnderlineLabel.accessibilityLabel = nil;
     }
   }
+
+  [self.textInput layoutIfNeeded];
+  [self updateLayout];
 }
 
 - (void)setHelperText:(NSString *)helperText
