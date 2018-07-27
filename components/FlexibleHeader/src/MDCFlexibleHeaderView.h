@@ -122,6 +122,8 @@ IB_DESIGNABLE
 
  Must be called from the trackingScrollView delegate's UIScrollViewDelegate::scrollViewDidScroll:
  implementor.
+
+ @note Do not invoke this method if self.observesTrackingScrollViewScrollEvents is YES.
  */
 - (void)trackingScrollViewDidScroll;
 
@@ -130,6 +132,8 @@ IB_DESIGNABLE
 
  Must be called from the trackingScrollView delegate's
  UIScrollViewDelegate::scrollViewDidEndDragging:willDecelerate: implementor.
+
+ @note Do not invoke this method if self.observesTrackingScrollViewScrollEvents is YES.
  */
 - (void)trackingScrollViewDidEndDraggingWillDecelerate:(BOOL)willDecelerate;
 
@@ -138,6 +142,8 @@ IB_DESIGNABLE
 
  Must be called from the trackingScrollView delegate's
  UIScrollViewDelegate::scrollViewDidEndDecelerating: implementor.
+
+ @note Do not invoke this method if self.observesTrackingScrollViewScrollEvents is YES.
  */
 - (void)trackingScrollViewDidEndDecelerating;
 
@@ -150,6 +156,8 @@ IB_DESIGNABLE
 
  If your scroll view is vertically paging then this method will do nothing. You should also
  disable hidesStatusBarWhenCollapsed.
+
+ @note Do not invoke this method if self.observesTrackingScrollViewScrollEvents is YES.
 
  @return A Boolean value indicating whether the target content offset was modified.
  */
@@ -341,7 +349,13 @@ IB_DESIGNABLE
 
 #pragma mark Behaviors
 
-/** The behavior of the header in response to the user interacting with the tracking scroll view. */
+/**
+ The behavior of the header in response to the user interacting with the tracking scroll view.
+
+ @note If self.observesTrackingScrollViewScrollEvents is YES, then this property can only be
+ MDCFlexibleHeaderShiftBehaviorDisabled. Attempts to set shiftBehavior to any other value if
+ self.observesTrackingScrollViewScrollEvents is YES will result in an assertion being thrown.
+ */
 @property(nonatomic) MDCFlexibleHeaderShiftBehavior shiftBehavior;
 
 /**
@@ -408,6 +422,31 @@ IB_DESIGNABLE
  delegate points to a dead object.
  */
 @property(nonatomic, weak, nullable) UIScrollView *trackingScrollView;
+
+/**
+ Whether to automatically observe the trackingScrollView's content offset changes.
+
+ When enabled, the header view will observe the contentOffset property of the tracking scroll view
+ and react to changes accordingly.
+
+ You must not forward any scroll view events to the header view if this property is enabled. Any
+ attempts to do so will result in an assertion.
+
+ If you attempt to enable this property when shiftBehavior is set to anything other than
+ MDCFlexibleHeaderShiftBehaviorDisabled, an assertion will be thrown. If you intend to use any
+ shifting behavior you must manually forward the necessary scroll view events.
+
+ @note If you enable this property and you support iOS 10.3 or below, you are responsible for
+ explicitly nilling out the tracking scroll view before it is deallocated. This is not required if
+ your minimum OS is iOS 11 or above. Failure to nil out the tracking scroll view may lead to runtime
+ crashes due to dangling observers on the tracking scroll view. Most commonly, the tracking scroll
+ view can be nil'd out in the view controller's dealloc method. An example of the error you might
+ see is: "An instance of class UITableView was deallocated while key value observers were still
+ registered with it."
+
+ Default: NO
+ */
+@property(nonatomic) BOOL observesTrackingScrollViewScrollEvents;
 
 /**
  When enabled, the header view will prioritize shifting off-screen and collapsing over shifting

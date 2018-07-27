@@ -30,6 +30,12 @@
 
 @implementation AppBarWrappingUITableViewControllerExample
 
+- (void)dealloc {
+  // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
+  self.appBarContainerViewController.appBar.headerViewController.headerView.trackingScrollView
+      = nil;
+}
+
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
@@ -50,13 +56,16 @@
   self.appBarContainerViewController.topLayoutGuideAdjustmentEnabled = YES;
 
   tableViewController.tableView.dataSource = self;
-  tableViewController.tableView.delegate =
-      self.appBarContainerViewController.appBar.headerViewController;
   [tableViewController.tableView registerClass:[UITableViewCell class]
                         forCellReuseIdentifier:@"cell"];
 
-  self.appBarContainerViewController.appBar.headerViewController.headerView.trackingScrollView =
-      tableViewController.tableView;
+  MDCFlexibleHeaderView *headerView =
+      self.appBarContainerViewController.appBar.headerViewController.headerView;
+
+  // Allows us to avoid forwarding events, but means we can't enable shift behaviors.
+  headerView.observesTrackingScrollViewScrollEvents = YES;
+
+  headerView.trackingScrollView = tableViewController.tableView;
 
   [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme
                                         toAppBar:self.appBarContainerViewController.appBar];

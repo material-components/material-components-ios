@@ -23,6 +23,11 @@ class AppBarInterfaceBuilderSwiftExample: UIViewController, UIScrollViewDelegate
   let appBar = MDCAppBar()
   var colorScheme = MDCSemanticColorScheme()
 
+  deinit {
+    // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
+    appBar.headerViewController.headerView.trackingScrollView = nil
+  }
+
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     commonAppBarInterfaceBuilderSwiftExampleSetup()
@@ -45,10 +50,11 @@ class AppBarInterfaceBuilderSwiftExample: UIViewController, UIScrollViewDelegate
     super.viewDidLoad()
 
     MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
-    
-    appBar.headerViewController.headerView.trackingScrollView = scrollView
 
-    scrollView.delegate = appBar.headerViewController
+    // Allows us to avoid forwarding events, but means we can't enable shift behaviors.
+    appBar.headerViewController.headerView.observesTrackingScrollViewScrollEvents = true
+
+    appBar.headerViewController.headerView.trackingScrollView = scrollView
 
     appBar.addSubviewsToParent()
   }
