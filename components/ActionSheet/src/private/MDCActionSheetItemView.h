@@ -21,7 +21,7 @@
 @interface MDCActionSheetItemView : UITableViewCell
 
 /** Cells must be created with cellWithAction: */
-- (nonnull instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;// NS_UNAVAILABLE;
+- (nonnull instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier NS_UNAVAILABLE;
 
 /** Cells must be created with cellWithAction: */
 - (nonnull instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
@@ -44,25 +44,23 @@
 */
 @property(nonatomic, nonnull, readonly) MDCActionSheetAction *action;
 
+@property(nonatomic, nonnull) UIFont *font;
+
 @end
 
-@interface MDCACtionSheetHeaderView : UITableViewHeaderFooterView
+@interface MDCACtionSheetHeaderView : UIView
 
 /** */
-- (nonnull instancetype)headerWithTitle:(NSString *)title;
+- (nonnull instancetype)initWithTitle:(NSString *)title;
 
-- (nonnull instancetype)headerWithTitle:(NSString *)title
-                                message:(nullable NSString *)message;
-
-/** Header must be created with either headerWithTitle: or headerWithTitle:message: */
+/** Header must be created with either headerWithTitle: */
 - (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
 
-/** Header must be created with either headerWithTitle: or headerWithTitle:message: */
+/** Header must be created with either headerWithTitle: */
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 
 @property(nonatomic, nullable) NSString *title;
 
-@property(nonatomic, nullable) NSString *message;
-
+@property(nonatomic, nonnull) UIFont *font;
 
 @end

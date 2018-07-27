@@ -18,11 +18,7 @@
 #import "MDCActionSheetItemView.h"
 #import "MDCActionSheetListViewController.h"
 #import "MaterialBottomSheet.h"
-
-static const CGFloat kTitleLeadingPadding = 16.f;
-static const CGFloat kTitleBaselinePadding = 36.f;
-static const CGFloat kTitleAlpha = 0.54f;
-//static const CGFloat kCellHeight = 56.f;
+#import "MaterialTypography.h"
 
 @implementation MDCActionSheetAction
 
@@ -67,6 +63,7 @@ static const CGFloat kTitleAlpha = 0.54f;
   id<MDCActionSheetControllerDelegate> delegate;
   NSString *_title;
   MDCActionSheetListViewController *_tableView;
+  BOOL _mdc_adjustsFontForContentSizeCategory;
 }
 
 + (instancetype)actionSheetControllerWithTitle:(NSString *)title {
@@ -91,7 +88,6 @@ static const CGFloat kTitleAlpha = 0.54f;
   super.transitioningDelegate = _transitionController;
   super.modalPresentationStyle = UIModalPresentationCustom;
   _actions = [[NSMutableArray alloc] init];
-  //_tableView.delegate = self;
 }
 
 - (void)addAction:(MDCActionSheetAction *)action {
@@ -113,34 +109,12 @@ static const CGFloat kTitleAlpha = 0.54f;
   [contentViewController didMoveToParentViewController:self];
   contentViewController.view.backgroundColor = [UIColor whiteColor];
   contentViewController.preferredContentSize = CGSizeMake(CGRectGetWidth(self.view.bounds), (_actions.count + 1) * 56);
-  [self addTitle];
-  _tableView = [[MDCActionSheetListViewController alloc] initWithActions:_actions];
-  //_tableView.delegate = self;
+  _tableView = [[MDCActionSheetListViewController alloc] initWithTitle:_title
+                                                               actions: _actions];
+  CGRect tableFrame = _tableView.view.frame;
+  tableFrame.origin.y = 0;
+  _tableView.view.frame = tableFrame;
   [contentViewController.view addSubview:_tableView.view];
-}
-
-- (void)addTitle {
-  UILabel *titleLabel = [[UILabel alloc] init];
-  titleLabel.text = _title;
-  [titleLabel sizeToFit];
-  titleLabel.alpha = kTitleAlpha;
-  [contentViewController.view addSubview:titleLabel];
-  [titleLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
-  [NSLayoutConstraint constraintWithItem:titleLabel
-                               attribute:NSLayoutAttributeLeading
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:contentViewController.view
-                               attribute:NSLayoutAttributeLeading
-                              multiplier:1
-                                constant:kTitleLeadingPadding].active = YES;
-  CGFloat yPosition = kTitleBaselinePadding - titleLabel.font.ascender;
-  [NSLayoutConstraint constraintWithItem:titleLabel
-                               attribute:NSLayoutAttributeTop
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:contentViewController.view
-                               attribute:NSLayoutAttributeTop
-                              multiplier:1
-                                constant:yPosition].active = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -217,24 +191,15 @@ static const CGFloat kTitleAlpha = 0.54f;
   [delegate actionSheetControllerDidDismissActionSheet:self];
 }
 
-/**#pragma mark - Table view delegate
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-  return kCellHeight;
+#pragma mark - Dynamic Type
+- (BOOL)mdc_adjustFontForContentSizeCategory {
+  return _mdc_adjustsFontForContentSizeCategory;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-  return kCellHeight;
+- (void)mdc_setAdjustFontForContentSizeCategory:(BOOL)adjusts {
+  _mdc_adjustsFontForContentSizeCategory = adjusts;
+  [self.view setNeedsLayout];
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-  
-  MDCActionSheetAction *action = _actions[indexPath.row];
-  [self.presentingViewController dismissViewControllerAnimated:YES completion:^(void) {
-    if (action.completionHandler) {
-      action.completionHandler(action);
-    }
-  }];
-}*/
 
 @end

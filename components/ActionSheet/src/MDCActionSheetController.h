@@ -22,9 +22,6 @@
 
 + (nonnull instancetype)actionSheetControllerWithTitle:(nullable NSString *)title;
 
-//+ (nonnull instancetype)actionSheetControllerWithTitle:(NSString *)title
-//                                               message:(nullable NSString *)message;
-
 /** Action sheet controllers must be created with actionSheetControllerWithTitle: or
  with actionSheetControllerWithTitle:message:  */
 - (nonnull instancetype)initWithNibName:(NSString *)nibNameOrNil
@@ -47,6 +44,20 @@
  The order of the actions in the array matches the order in which they were added to the alert.
  */
 @property (nonatomic, nonnull, readonly) NSArray<MDCActionSheetAction *> *actions;
+
+/*
+ Indicates whether the button should automatically update its font when the device’s
+ UIContentSizeCategory is changed.
+
+ This property is modeled after the adjustsFontForContentSizeCategory property in the
+ UIConnectSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
+
+ If set to YES, this button will base its text font on MDCFontTextStyleButton.
+
+ Defaults value is NO.
+ */
+@property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
+BOOL mdc_adjustsFontForContentSizeCategory;
 
 @end
 
