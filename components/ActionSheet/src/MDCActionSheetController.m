@@ -51,8 +51,7 @@
 
 @end
 
-@interface MDCActionSheetController () <MDCBottomSheetPresentationControllerDelegate,
-    UITableViewDelegate>
+@interface MDCActionSheetController () <MDCBottomSheetPresentationControllerDelegate>
 @end
 
 

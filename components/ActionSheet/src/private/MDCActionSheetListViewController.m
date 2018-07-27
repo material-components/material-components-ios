@@ -18,8 +18,6 @@
 #import "MDCActionSheetItemView.h"
 #import "MaterialTypography.h"
 
-static const CGFloat kVerticalLabelPadding = 18.f;
-
 @interface MDCActionSheetAction ()
 
 @end
@@ -48,18 +46,15 @@ static const CGFloat kVerticalLabelPadding = 18.f;
 -(void)commonMDCActionSheetListInit {
   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   self.tableView.scrollEnabled = NO;
+  self.tableView.dataSource = self;
+  [self.tableView setTranslatesAutoresizingMaskIntoConstraints:NO];
+  self.tableView.estimatedRowHeight = 56;
+  self.tableView.rowHeight = UITableViewAutomaticDimension;
+  self.tableView.estimatedSectionHeaderHeight = 56;
   [self updateFonts];
 }
 
 #pragma mark - Table view delegate
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-  return floor((kVerticalLabelPadding * 2) + _font.lineHeight);
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-  return 56;
-}
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
   MDCACtionSheetHeaderView *header = [[MDCACtionSheetHeaderView alloc] initWithTitle:_title];
@@ -95,6 +90,13 @@ static const CGFloat kVerticalLabelPadding = 18.f;
 
 #pragma mark - Dynamic type
 
++ (UIFont *)font {
+  if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
+    return [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
+  }
+  return [MDCTypography subheadFont];
+}
+
 - (BOOL)mdc_adjustFontForContentSizeCategory {
   return _mdc_adjustsFontForContentSizeCategory;
 }
@@ -110,18 +112,10 @@ static const CGFloat kVerticalLabelPadding = 18.f;
   if (_mdc_adjustsFontForContentSizeCategory) {
     finalFont =
         [finalFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
-                                scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+                              scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
   }
   _font = finalFont;
   [self.view setNeedsLayout];
 }
-
-+ (UIFont *)font {
-  if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-    return [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
-  }
-  return [MDCTypography subheadFont];
-}
-
 
 @end

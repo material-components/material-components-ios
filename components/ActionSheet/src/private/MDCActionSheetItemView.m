@@ -15,10 +15,11 @@
  */
 
 #import "MDCActionSheetItemView.h"
+#import "MaterialTypography.h"
 
 static const CGFloat TitleLabelAlpha = 0.54f;
 static const CGFloat TitleLabelLeadingPadding = 16.f;
-static const CGFloat TitleLabelTopPadding = 36.f;
+static const CGFloat TitleLabelVerticalPadding = 18.f;
 
 static const CGFloat LabelLeadingPadding = 72.f;
 static const CGFloat LabelTrailingPadding = 16.f;
@@ -72,10 +73,11 @@ static const CGFloat IconAlpha = 0.54f;
     _titleLabel.text = title;
     _titleLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
     _titleLabel.numberOfLines = 0;
+    _titleLabel.alpha = LabelAlpha;
   }
-  [self addSubview:_titleLabel];
+  _titleLabel.font = _font;
+  [self.contentView addSubview:_titleLabel];
   [_titleLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
-
   [NSLayoutConstraint constraintWithItem:_titleLabel
                                attribute:NSLayoutAttributeLeading
                                relatedBy:NSLayoutRelationEqual
@@ -98,36 +100,23 @@ static const CGFloat IconAlpha = 0.54f;
                                   toItem:self.contentView
                                attribute:NSLayoutAttributeBottom
                               multiplier:1
-                                constant:LabelVerticalPadding].active = YES;
+                                constant:-LabelVerticalPadding].active = YES;
+
   [NSLayoutConstraint constraintWithItem:_titleLabel
                                attribute:NSLayoutAttributeTrailing
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self.contentView
                                attribute:NSLayoutAttributeTrailing
                               multiplier:1
-                                constant:LabelTrailingPadding].active = YES;
+                                constant:-LabelTrailingPadding].active = YES;
 
   if (!_icon) {
     _icon = [[UIImageView alloc] initWithImage:image];
   }
 
-  if (!_inkTouchController) {
-    _inkTouchController = [[MDCInkTouchController alloc] initWithView:self];
-    [_inkTouchController addInkView];
-  }
-}
-
-- (void)layoutSubviews {
-  [super layoutSubviews];
-  _titleLabel.alpha = LabelAlpha;
-  _titleLabel.font = _font;
-
-  [self.contentView setNeedsLayout];
-  [self.contentView layoutIfNeeded];
-
+  [self addSubview:_icon];
   _icon.frame = CGRectMake(0, 0, 24, 24);
   _icon.alpha = IconAlpha;
-  [self addSubview:_icon];
   [_icon setTranslatesAutoresizingMaskIntoConstraints:NO];
   [NSLayoutConstraint constraintWithItem:_icon
                                attribute:NSLayoutAttributeLeading
@@ -143,6 +132,11 @@ static const CGFloat IconAlpha = 0.54f;
                                attribute:NSLayoutAttributeTop
                               multiplier:1
                                 constant:IconTopPadding].active = YES;
+
+  if (!_inkTouchController) {
+    _inkTouchController = [[MDCInkTouchController alloc] initWithView:self];
+    [_inkTouchController addInkView];
+  }
 }
 
 - (NSString *)accessibilityLabel {
@@ -180,7 +174,6 @@ static const CGFloat IconAlpha = 0.54f;
   _titleLabel.text = _title;
   _titleLabel.alpha = TitleLabelAlpha;
   _titleLabel.font = _font;
-  [_titleLabel sizeToFit];
   [self addSubview:_titleLabel];
   [_titleLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
   [NSLayoutConstraint constraintWithItem:_titleLabel
@@ -191,14 +184,20 @@ static const CGFloat IconAlpha = 0.54f;
                               multiplier:1
                                 constant:TitleLabelLeadingPadding].active = YES;
 
-  CGFloat yPosition = TitleLabelTopPadding - _titleLabel.font.ascender;
   [NSLayoutConstraint constraintWithItem:_titleLabel
                                attribute:NSLayoutAttributeTop
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self
                                attribute:NSLayoutAttributeTop
                               multiplier:1
-                                constant:yPosition].active = YES;
+                                constant:TitleLabelVerticalPadding].active = YES;
+  [NSLayoutConstraint constraintWithItem:_titleLabel
+                               attribute:NSLayoutAttributeBottom
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self
+                               attribute:NSLayoutAttributeBottom
+                              multiplier:1
+                                constant:-TitleLabelVerticalPadding].active = YES;
 }
 
 - (void)setFont:(UIFont *)font {
