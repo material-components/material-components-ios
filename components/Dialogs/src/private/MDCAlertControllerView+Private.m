@@ -35,7 +35,7 @@ static const CGFloat MDCDialogActionsHorizontalPadding = 8.0;
 static const CGFloat MDCDialogActionsVerticalPadding = 8.0;
 static const CGFloat MDCDialogActionButtonHeight = 36.0;
 static const CGFloat MDCDialogActionButtonMinimumWidth = 48.0;
-static const CGFloat MDCDialogActionButtonTouchTarget = 48.f;
+static const CGFloat MDCDialogActionMinTouchTarget = 48.f;
 
 static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
@@ -363,10 +363,8 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     buttonFrame.size.height =
         MAX(CGRectGetHeight(buttonFrame), MDCDialogActionButtonHeight);
     button.frame = buttonFrame;
-    CGFloat verticalInsets =
-        -(MDCDialogActionButtonTouchTarget - CGRectGetHeight(button.frame)) / 2;
-    CGFloat horizontalInsets =
-        -(MDCDialogActionButtonTouchTarget - CGRectGetWidth(button.frame)) / 2;
+    CGFloat verticalInsets = (CGRectGetHeight(button.frame) - MDCDialogActionMinTouchTarget) / 2;
+    CGFloat horizontalInsets = (CGRectGetWidth(button.frame) - MDCDialogActionMinTouchTarget) / 2;
     verticalInsets = MIN(0, verticalInsets);
     horizontalInsets = MIN(0, horizontalInsets);
     button.hitAreaInsets = UIEdgeInsetsMake(verticalInsets,
