@@ -51,8 +51,18 @@
 -(void)presentActionSheet {
   _actionSheet = [MDCActionSheetController
       actionSheetControllerWithTitle:@"Action sheet"];
-  MDCActionSheetAction *action = [MDCActionSheetAction actionWithTitle:@"Home" image:[UIImage imageNamed:@"Home"] handler:nil];
-  [_actionSheet addAction:action];
+  _actionSheet.mdc_adjustsFontForContentSizeCategory = YES;
+  MDCActionSheetAction *homeAction = [MDCActionSheetAction actionWithTitle:@"Home"
+                                                                 image:[UIImage imageNamed:@"Home"]
+                                                               handler:nil];
+  MDCActionSheetAction *favoriteAction =
+      [MDCActionSheetAction actionWithTitle:@"Favorite"
+                                      image:[UIImage imageNamed:@"Favorite"]
+                                    handler:^(MDCActionSheetAction *action){
+                                      NSLog(@"Favorite Action");
+                                    }];
+  [_actionSheet addAction:homeAction];
+  [_actionSheet addAction:favoriteAction];
   [self presentViewController:_actionSheet animated:YES completion:^(void){
     NSLog(@"Complete");
   }];
