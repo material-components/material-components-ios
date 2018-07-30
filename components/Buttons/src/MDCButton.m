@@ -261,6 +261,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+  NSLog(@"Button (%p) touch area: %@", self, NSStringFromCGRect(UIEdgeInsetsInsetRect(CGRectStandardize(self.frame), self.hitAreaInsets)));
   // If there are custom hitAreaInsets, use those
   if (!UIEdgeInsetsEqualToEdgeInsets(self.hitAreaInsets, UIEdgeInsetsZero)) {
     return CGRectContainsPoint(

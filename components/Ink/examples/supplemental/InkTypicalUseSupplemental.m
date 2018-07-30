@@ -108,7 +108,7 @@
   boundedTitleLabel.text = @"Ink";
   boundedTitleLabel.textAlignment = NSTextAlignmentCenter;
   boundedTitleLabel.font = [MDCTypography captionFont];
-  boundedTitleLabel.textColor = MDCPalette.greyPalette.tint800;
+  boundedTitleLabel.alpha = [MDCTypography captionFontOpacity];
   [self.shapes addSubview:boundedTitleLabel];
 
   self.legacyShape.autoresizingMask =
@@ -125,7 +125,7 @@
   legacyTitleLabel.text = @"Legacy Ink";
   legacyTitleLabel.textAlignment = NSTextAlignmentCenter;
   legacyTitleLabel.font = [MDCTypography captionFont];
-  legacyTitleLabel.textColor = MDCPalette.greyPalette.tint800;
+  legacyTitleLabel.alpha = [MDCTypography captionFontOpacity];
   [self.legacyShape addSubview:legacyTitleLabel];
 }
 
