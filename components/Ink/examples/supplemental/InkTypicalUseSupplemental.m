@@ -21,6 +21,7 @@
 
 #import "InkTypicalUseSupplemental.h"
 
+#import "MaterialPalettes.h"
 #import "MaterialTypography.h"
 
 // A set of UILabels in an variety of shapes to tap on.
@@ -99,7 +100,7 @@
 @implementation InkTypicalUseViewController (Supplemental)
 
 - (void)setupExampleViews {
-  self.view.backgroundColor = [UIColor colorWithWhite:0.5f alpha:1];
+  self.view.backgroundColor = MDCPalette.greyPalette.tint800;
 
   CGRect boundedTitleLabelFrame =
       CGRectMake(0, CGRectGetHeight(self.shapes.frame), CGRectGetWidth(self.shapes.frame), 24);
@@ -107,7 +108,7 @@
   boundedTitleLabel.text = @"Ink";
   boundedTitleLabel.textAlignment = NSTextAlignmentCenter;
   boundedTitleLabel.font = [MDCTypography captionFont];
-  boundedTitleLabel.alpha = [MDCTypography captionFontOpacity];
+  boundedTitleLabel.textColor = UIColor.whiteColor;
   [self.shapes addSubview:boundedTitleLabel];
 
   self.legacyShape.autoresizingMask =
@@ -123,7 +124,7 @@
   legacyTitleLabel.text = @"Legacy Ink";
   legacyTitleLabel.textAlignment = NSTextAlignmentCenter;
   legacyTitleLabel.font = [MDCTypography captionFont];
-  legacyTitleLabel.alpha = [MDCTypography captionFontOpacity];
+  legacyTitleLabel.textColor = UIColor.whiteColor;
   [self.legacyShape addSubview:legacyTitleLabel];
 }
 
