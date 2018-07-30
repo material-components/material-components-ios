@@ -33,6 +33,10 @@ class AppBarModalPresentationSwiftExamplePresented: UITableViewController {
 
     self.title = "Modal Presentation (Swift)"
 
+    // Behavioral flags.
+    appBar.inferTopSafeAreaInsetFromViewController = true
+    appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = false
+
     self.addChildViewController(appBar.headerViewController)
     self.modalPresentationStyle = .formSheet
     self.modalTransitionStyle = .coverVertical
@@ -121,9 +125,6 @@ class AppBarModalPresentationSwiftExample: UITableViewController {
     self.tableView.delegate = appBar.headerViewController
 
     appBar.addSubviewsToParent()
-
-    self.tableView.layoutMargins = UIEdgeInsets.zero
-    self.tableView.separatorInset = UIEdgeInsets.zero
 
     self.navigationItem.rightBarButtonItem =
       UIBarButtonItem(title: "Detail", style: .done, target: self, action: #selector(presentModal))

@@ -53,6 +53,11 @@
   tableViewController.title = @"Wrapped table view";
   self.appBarContainerViewController =
       [[MDCAppBarContainerViewController alloc] initWithContentViewController:tableViewController];
+
+  // Behavioral flags.
+  MDCAppBar *appBar = self.appBarContainerViewController.appBar;
+  appBar.inferTopSafeAreaInsetFromViewController = YES;
+  appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = NO;
   self.appBarContainerViewController.topLayoutGuideAdjustmentEnabled = YES;
 
   tableViewController.tableView.dataSource = self;

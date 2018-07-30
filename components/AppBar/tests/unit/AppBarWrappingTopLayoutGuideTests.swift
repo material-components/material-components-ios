@@ -26,6 +26,7 @@ class AppBarWrappingTopLayoutGuideTests: XCTestCase {
     // Given
     let contentViewController = UIViewController()
     let container = MDCAppBarContainerViewController(contentViewController: contentViewController)
+    container.appBar.inferTopSafeAreaInsetFromViewController = true
     container.isTopLayoutGuideAdjustmentEnabled = true
     container.appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = false
     container.appBar.headerViewController.headerView.minimumHeight = 50
@@ -50,6 +51,7 @@ class AppBarWrappingTopLayoutGuideTests: XCTestCase {
     // Given
     let contentViewController = UIViewController()
     let container = MDCAppBarContainerViewController(contentViewController: contentViewController)
+    container.appBar.inferTopSafeAreaInsetFromViewController = true
     container.isTopLayoutGuideAdjustmentEnabled = true
     container.appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = false
     container.appBar.headerViewController.headerView.minimumHeight = 50
@@ -76,6 +78,7 @@ class AppBarWrappingTopLayoutGuideTests: XCTestCase {
     // Given
     let contentViewController = UITableViewController()
     let container = MDCAppBarContainerViewController(contentViewController: contentViewController)
+    container.appBar.inferTopSafeAreaInsetFromViewController = true
     container.isTopLayoutGuideAdjustmentEnabled = true
     container.appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = false
     container.appBar.headerViewController.headerView.minimumHeight = 50
@@ -104,6 +107,7 @@ class AppBarWrappingTopLayoutGuideTests: XCTestCase {
     let contentViewController = UITableViewController()
 
     let container = MDCAppBarContainerViewController(contentViewController: contentViewController)
+    container.appBar.inferTopSafeAreaInsetFromViewController = true
     container.isTopLayoutGuideAdjustmentEnabled = true
     container.appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = false
     container.appBar.headerViewController.headerView.minimumHeight = 50
@@ -121,8 +125,7 @@ class AppBarWrappingTopLayoutGuideTests: XCTestCase {
     if #available(iOS 11.0, *) {
       XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top, 0)
       XCTAssertEqual(contentViewController.tableView.adjustedContentInset.top,
-                     container.appBar.headerViewController.headerView.maximumHeight
-                      + MDCDeviceTopSafeAreaInset())
+                     container.appBar.headerViewController.headerView.maximumHeight)
     }
     #endif
   }
@@ -135,6 +138,7 @@ class AppBarWrappingTopLayoutGuideTests: XCTestCase {
     let contentViewController = UICollectionViewController(collectionViewLayout: flow)
 
     let container = MDCAppBarContainerViewController(contentViewController: contentViewController)
+    container.appBar.inferTopSafeAreaInsetFromViewController = true
     container.isTopLayoutGuideAdjustmentEnabled = true
     container.appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = false
     container.appBar.headerViewController.headerView.minimumHeight = 50
@@ -164,6 +168,7 @@ class AppBarWrappingTopLayoutGuideTests: XCTestCase {
     let contentViewController = UICollectionViewController(collectionViewLayout: flow)
 
     let container = MDCAppBarContainerViewController(contentViewController: contentViewController)
+    container.appBar.inferTopSafeAreaInsetFromViewController = true
     container.isTopLayoutGuideAdjustmentEnabled = true
     container.appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = false
     container.appBar.headerViewController.headerView.minimumHeight = 50
@@ -183,8 +188,7 @@ class AppBarWrappingTopLayoutGuideTests: XCTestCase {
     if #available(iOS 11.0, *) {
       XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top, 0)
       XCTAssertEqual(contentViewController.collectionView!.adjustedContentInset.top,
-                     container.appBar.headerViewController.headerView.maximumHeight
-                      + MDCDeviceTopSafeAreaInset())
+                     container.appBar.headerViewController.headerView.maximumHeight)
     }
     #endif
   }

@@ -76,6 +76,10 @@ class AppBarImagerySwiftExample: UITableViewController {
 
     self.title = "Imagery (Swift)"
 
+    // Behavioral flags.
+    appBar.inferTopSafeAreaInsetFromViewController = true
+    appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = false
+
     self.addChildViewController(appBar.headerViewController)
   }
 
