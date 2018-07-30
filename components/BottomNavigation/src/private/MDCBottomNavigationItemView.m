@@ -221,6 +221,30 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   }
 }
 
+- (void)updateLabelVisibility {
+  if (self.selected) {
+    switch (self.titleVisibility) {
+      case MDCBottomNavigationBarTitleVisibilitySelected:
+      case MDCBottomNavigationBarTitleVisibilityAlways:
+        self.label.hidden = NO;
+        break;
+      case MDCBottomNavigationBarTitleVisibilityNever:
+        self.label.hidden = YES;
+        break;
+    }
+  } else {
+    switch (self.titleVisibility) {
+      case MDCBottomNavigationBarTitleVisibilitySelected:
+      case MDCBottomNavigationBarTitleVisibilityNever:
+        self.label.hidden = YES;
+        break;
+      case MDCBottomNavigationBarTitleVisibilityAlways:
+        self.label.hidden = NO;
+        break;
+    }
+  }
+}
+
 - (NSString *)accessibilityLabelWithTitle:(NSString *)title {
   NSMutableArray *labelComponents = [NSMutableArray array];
 
@@ -259,33 +283,13 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     self.iconImageView.tintColor = self.selectedItemTintColor;
     self.button.accessibilityTraits |= UIAccessibilityTraitSelected;
     self.iconImageView.image = (self.selectedImage) ? self.selectedImage : self.image;
-    switch (self.titleVisibility) {
-      case MDCBottomNavigationBarTitleVisibilitySelected:
-        self.label.hidden = NO;
-        break;
-      case MDCBottomNavigationBarTitleVisibilityAlways:
-        self.label.hidden = NO;
-        break;
-      case MDCBottomNavigationBarTitleVisibilityNever:
-        self.label.hidden = YES;
-        break;
-    }
+    [self updateLabelVisibility];
   } else {
     self.label.textColor = self.unselectedItemTintColor;
     self.iconImageView.tintColor = self.unselectedItemTintColor;
     self.button.accessibilityTraits &= ~UIAccessibilityTraitSelected;
     self.iconImageView.image = self.image;
-    switch (self.titleVisibility) {
-      case MDCBottomNavigationBarTitleVisibilitySelected:
-        self.label.hidden = YES;
-        break;
-      case MDCBottomNavigationBarTitleVisibilityAlways:
-        self.label.hidden = NO;
-        break;
-      case MDCBottomNavigationBarTitleVisibilityNever:
-        self.label.hidden = YES;
-        break;
-    }
+    [self updateLabelVisibility];
   }
   [self centerLayoutAnimated:animated];
 }
@@ -358,6 +362,11 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   _title = [title copy];
   self.label.text = _title;
   self.button.accessibilityLabel = [self accessibilityLabelWithTitle:_title];
+}
+
+-(void)setTitleVisibility:(MDCBottomNavigationBarTitleVisibility)titleVisibility {
+  _titleVisibility = titleVisibility;
+  [self updateLabelVisibility];
 }
 
 - (void)setItemTitleFont:(UIFont *)itemTitleFont {

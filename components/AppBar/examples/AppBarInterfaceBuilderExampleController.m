@@ -29,6 +29,11 @@
 
 @implementation AppBarInterfaceBuilderExample
 
+- (void)dealloc {
+  // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
+  self.appBar.headerViewController.headerView.trackingScrollView = nil;
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
@@ -57,13 +62,11 @@
   [super viewDidLoad];
 
   [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme toAppBar:_appBar];
-  
-  self.appBar.headerViewController.headerView.trackingScrollView = self.scrollView;
 
-  // Choice: If you do not need to implement any delegate methods and you are not using a
-  //         collection view, you can use the headerViewController as the delegate.
-  // Alternative: See AppBarTypicalUseExample.
-  self.scrollView.delegate = self.appBar.headerViewController;
+  // Allows us to avoid forwarding events, but means we can't enable shift behaviors.
+  self.appBar.headerViewController.headerView.observesTrackingScrollViewScrollEvents = YES;
+
+  self.appBar.headerViewController.headerView.trackingScrollView = self.scrollView;
 
   [self.appBar addSubviewsToParent];
 }

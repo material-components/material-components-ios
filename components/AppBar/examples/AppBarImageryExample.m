@@ -26,6 +26,11 @@
 
 @implementation AppBarImageryExample
 
+- (void)dealloc {
+  // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
+  self.appBar.headerViewController.headerView.trackingScrollView = nil;
+}
+
 - (id)init {
   self = [super init];
   if (self) {
@@ -65,18 +70,13 @@
   // Allow the header to show more of the image.
   self.appBar.headerViewController.headerView.maximumHeight = 300;
 
+  // Allows us to avoid forwarding events, but means we can't enable shift behaviors.
+  self.appBar.headerViewController.headerView.observesTrackingScrollViewScrollEvents = YES;
+
   // Typical use
   self.appBar.headerViewController.headerView.trackingScrollView = self.tableView;
 
-  // Choice: If you do not need to implement any delegate methods and you are not using a
-  //         collection view, you can use the headerViewController as the delegate.
-  // Alternative: See AppBarTypicalUseExample.
-  self.tableView.delegate = self.appBar.headerViewController;
-
   [self.appBar addSubviewsToParent];
-
-  self.tableView.layoutMargins = UIEdgeInsetsZero;
-  self.tableView.separatorInset = UIEdgeInsetsZero;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -143,7 +143,6 @@
     cell =
         [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
   }
-  cell.layoutMargins = UIEdgeInsetsZero;
   return cell;
 }
 
