@@ -178,33 +178,15 @@ class TextFieldTests: XCTestCase {
     let controller1 = MDCTextInputControllerFilled(textInput: textField1)
     var errorMessage = "Error!"
     controller1.setErrorText(errorMessage, errorAccessibilityValue: nil)
-    let textField1Height1 = textField1.intrinsicContentSize.height
+    let labelIntrinsicHeight1 = textField1.leadingUnderlineLabel.intrinsicContentSize.height
+    let labelLineHeight = textField1.leadingUnderlineLabel.font.lineHeight
+    let labelNumberOfLinesBefore = round((labelIntrinsicHeight1 / labelLineHeight))
     errorMessage += ("\n" + errorMessage)
     controller1.setErrorText(errorMessage, errorAccessibilityValue: nil)
-    let textField1Height2 = textField1.intrinsicContentSize.height
-    let textField1labelLineHeight = textField1.leadingUnderlineLabel.font.lineHeight
-    XCTAssert(textField1Height2 > textField1Height1 + textField1labelLineHeight)
-
-    let textField2 = MDCMultilineTextField(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-    textField2.translatesAutoresizingMaskIntoConstraints = false
-    let controller2 = MDCTextInputControllerOutlinedTextArea(textInput: textField2)
-    textField2.text = "text\ntext\ntext\ntext\ntext\ntext\ntext\ntext\ntext\ntext\n"
-    NSLayoutConstraint(item: textField2,
-                       attribute: .width,
-                       relatedBy: .equal,
-                       toItem: nil,
-                       attribute: .notAnAttribute,
-                       multiplier: 1,
-                       constant: 100)
-      .isActive = true
-    errorMessage = "Error!"
-    controller2.setErrorText(errorMessage, errorAccessibilityValue: nil)
-    let textField2Height1 = textField2.intrinsicContentSize.height
-    errorMessage += ("\n" + errorMessage)
-    controller2.setErrorText(errorMessage, errorAccessibilityValue: nil)
-    let textField2Height2 = textField2.intrinsicContentSize.height
-    let textField2labelLineHeight = textField2.leadingUnderlineLabel.font.lineHeight
-    XCTAssert(textField2Height2 > textField2Height1 + textField2labelLineHeight)
+    let labelIntrinsicHeight2 = textField1.leadingUnderlineLabel.intrinsicContentSize.height
+    let labelNumberOfLinesAfter = round((labelIntrinsicHeight2 / labelLineHeight))
+    XCTAssert(labelNumberOfLinesBefore == 1)
+    XCTAssert(labelNumberOfLinesAfter == 2)
   }
 
   func testUnderlineSetters() {
