@@ -1,6 +1,6 @@
 # 59.0.0
 
-This major release removed the remaining encoding/decoding behaviors from components ([tracking project](https://github.com/material-components/material-components-ios/projects/22)) and fixed a variety of bugs in FlexibleHeader with relation to safe area insets.
+This major release [removed the remaining encoding/decoding behaviors from components (tracking project)](https://github.com/material-components/material-components-ios/projects/22) and fixed a variety of bugs in FlexibleHeader with relation to safe area insets.
 
 ## Breaking changes
 
@@ -8,7 +8,7 @@ AppBar, TextFields, BottomNavigation, and Ink all removed support for encoding/d
 
 ## New features
 
-FlexibleHeader has a new behavior, `inferTopSafeAreaInsetFromViewController`, which allows the flexible header to determine its safe area insets from its view controller context, rather than always assuming that the header will consume the entire screen. This new behavior is most useful in extensions and on the iPad when presenting modal dialogs or popovers. To enable the new behavior, you simply set `inferTopSafeAreaInsetFromViewController` on `MDCFlexibleHeaderViewController` to `YES`.
+FlexibleHeader has a new behavior, `inferTopSafeAreaInsetFromViewController`, which allows the flexible header to determine its safe area insets from its view controller context, rather than always assuming that the header will consume the entire screen. This new behavior is most useful in extensions and on the iPad when presenting modal dialogs or popovers. To enable the new behavior, you simply set `- inferTopSafeAreaInsetFromViewController` on an instance of `MDCFlexibleHeaderViewController` to `YES`.
 
 ## API changes
 
