@@ -93,6 +93,10 @@
   if (self) {
     _appBar = [[MDCAppBar alloc] init];
 
+    // Behavioral flags.
+    _appBar.inferTopSafeAreaInsetFromViewController = YES;
+    _appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = NO;
+
     self.title = @"Imagery";
 
     [self addChildViewController:_appBar.headerViewController];

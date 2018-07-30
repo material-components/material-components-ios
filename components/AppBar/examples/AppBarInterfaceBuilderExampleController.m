@@ -54,6 +54,11 @@
 
 - (void)commonAppBarInterfaceBuilderExampleSetup {
   self.appBar = [[MDCAppBar alloc] init];
+
+  // Behavioral flags.
+  self.appBar.inferTopSafeAreaInsetFromViewController = YES;
+  self.appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = NO;
+
   self.colorScheme = [[MDCSemanticColorScheme alloc] init];
   [self addChildViewController:self.appBar.headerViewController];
 }

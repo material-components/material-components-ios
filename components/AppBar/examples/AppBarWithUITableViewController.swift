@@ -37,16 +37,25 @@ class AppBarWithUITableViewController: UITableViewController {
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    self.addChildViewController(appBar.headerViewController)
+    commonInit()
   }
 
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
-    self.addChildViewController(appBar.headerViewController)
+    commonInit()
   }
 
   override init(style: UITableViewStyle) {
     super.init(style: style)
+    commonInit()
+  }
+
+  func commonInit() {
+
+    // Behavioral flags.
+    appBar.inferTopSafeAreaInsetFromViewController = true
+    appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = false
+
     self.addChildViewController(appBar.headerViewController)
   }
 
