@@ -313,7 +313,7 @@
  If the TextField is not in an error state helperText is set as the leadingUnderlineLabel's text and
  helperAccessibilityLabel is set as the leadingUnderlineLabel's accessibilityLabel.
  */
--(void)setHelperText:(NSString *)helperText
-    helperAccessibilityLabel:(NSString *)helperAccessibilityLabel;
+-(void)setHelperText:(nullable NSString *)helperText
+    helperAccessibilityLabel:(nullable NSString *)helperAccessibilityLabel;
 
 @end
