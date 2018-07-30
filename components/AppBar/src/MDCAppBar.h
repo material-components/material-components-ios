@@ -84,7 +84,7 @@
 
  Enabling this behavior will do the following:
 
- - Enable the same-named behavior on the headerViewController's headerView.
+ - Enable the same-named behavior on the headerViewController.
  - Enable the headerViewController's topLayoutGuideAdjustmentEnabled behavior. Consider setting a
    topLayoutGuideViewController to your content view controller if you want to use topLayoutGuide.
  - The header stack view's frame will be inset by the flexible header view's topSafeAreaGuide rather
