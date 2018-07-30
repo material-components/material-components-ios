@@ -76,17 +76,17 @@ class EditReorderCollectionViewController: UIViewController,
     }
 
     #if swift(>=3.2)
-    if #available(iOS 11, *) {
-      let guide = view.safeAreaLayoutGuide
-      NSLayoutConstraint.activate([
-        collectionView.leftAnchor.constraint(equalTo: guide.leftAnchor),
-        collectionView.rightAnchor.constraint(equalTo: guide.rightAnchor),
-        collectionView.topAnchor.constraint(equalTo: view.topAnchor),
-        collectionView.bottomAnchor.constraint(equalTo: guide.bottomAnchor)])
-      collectionView.contentInsetAdjustmentBehavior = .always
-    } else {
-      preiOS11Constraints()
-    }
+      if #available(iOS 11, *) {
+        let guide = view.safeAreaLayoutGuide
+        NSLayoutConstraint.activate([
+          collectionView.leftAnchor.constraint(equalTo: guide.leftAnchor),
+          collectionView.rightAnchor.constraint(equalTo: guide.rightAnchor),
+          collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+          collectionView.bottomAnchor.constraint(equalTo: guide.bottomAnchor)])
+        collectionView.contentInsetAdjustmentBehavior = .always
+      } else {
+        preiOS11Constraints()
+      }
     #else
       preiOS11Constraints()
     #endif
