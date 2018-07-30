@@ -28,8 +28,12 @@
 
 @implementation MDCActionSheetListViewController {
   NSArray<MDCActionSheetAction *> *_actions;
-  NSString *_title;
-  UIFont *_font;
+}
+
+- (instancetype)initWithTitle:(NSString *)title
+                      message:(NSString *)message
+                      actions:(NSArray<MDCActionSheetAction *> *)actions {
+
 }
 
 - (instancetype)initWithTitle:(NSString *) title
@@ -58,7 +62,7 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
   MDCACtionSheetHeaderView *header = [[MDCACtionSheetHeaderView alloc] initWithTitle:_title];
-  header.font = _font;
+  header.font = _titleFont;
   return header;
 }
 
