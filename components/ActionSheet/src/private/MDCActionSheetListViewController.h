@@ -22,6 +22,10 @@
 - (nonnull instancetype)initWithTitle:(NSString *) title
                               actions:(NSArray<MDCActionSheetAction *> *)actions;
 
+- (nonnull instancetype)initWithTitle:(NSString *)title
+                              message:(NSString *)message
+                              actions:(NSArray<MDCActionSheetAction *> *)actions;
+
 /** MDCActionSheetListViewController must be created with initWithActions: */
 - (nullable instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 
@@ -33,6 +37,29 @@
 - (instancetype)initWithStyle:(UITableViewStyle)style NS_UNAVAILABLE;
 
 @property(nonatomic, weak) id<UITableViewDelegate> delegate;
+
+@property(nonatomic, nonnull) MDCACtionSheetHeaderView *header;
+
+/** The font applied to the title of the action sheet controller. */
+@property(nonatomic, strong, nullable) UIFont *titleFont;
+
+/** The font applied to the message of the action sheet controller. */
+@property(nonatomic, strong, nullable) UIFont *messageFont;
+
+/** The font applied to the action items of the action sheet controller. */
+@property(nonatomic, strong, nullable) UIFont *actionsLabelFont;
+
+/** The color applied to the title of Alert Controller.*/
+@property(nonatomic, strong, nullable) UIColor *titleColor;
+
+/** The color applied to the message of Alert Controller.*/
+@property(nonatomic, strong, nullable) UIColor *messageColor;
+
+/** The color applied to the item list labels of Alert Controller.*/
+@property(nonatomic, strong, nullable) UIColor *actionsLabelColor;
+
+/** The color applied to the icon items of Alert Controller.*/
+@property(nonatomic, strong, nullable) UIColor *iconsColor;
 
 /*
  Indicates whether the button should automatically update its font when the device’s

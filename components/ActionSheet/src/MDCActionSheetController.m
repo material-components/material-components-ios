@@ -20,6 +20,12 @@
 #import "MaterialBottomSheet.h"
 #import "MaterialTypography.h"
 
+@interface MDCActionSheetAction ()
+
+@property(nonatomic, nullable, copy) MDCActionSheetHandler completionHandler;
+
+@end
+
 @implementation MDCActionSheetAction
 
 + (instancetype)actionWithTitle:(nonnull NSString *)title
@@ -52,29 +58,37 @@
 @end
 
 @interface MDCActionSheetController () <MDCBottomSheetPresentationControllerDelegate>
+
+@property(nonatomic, strong) MDCBottomSheetTransitionController *transitionController;
+@property(nonatomic, nullable) NSString *title;
+@property(nonatomic, nullable) NSString *message;
+
 @end
 
 
 @implementation MDCActionSheetController {
   NSMutableArray<MDCActionSheetAction *> *_actions;
   UIViewController *contentViewController;
-  MDCBottomSheetTransitionController *_transitionController;
   id<MDCActionSheetControllerDelegate> delegate;
-  NSString *_title;
   MDCActionSheetListViewController *_tableView;
   BOOL _mdc_adjustsFontForContentSizeCategory;
 }
 
 + (instancetype)actionSheetControllerWithTitle:(NSString *)title {
-  MDCActionSheetController *actionController =
-      [[MDCActionSheetController alloc] initWithTitle:title];
-  return actionController;
+  return [[MDCActionSheetController alloc] initWithTitle:title message:nil];
 }
 
-- (nonnull instancetype)initWithTitle:(nullable NSString *)title {
++ (instancetype)actionSheetControllerWithTitle:(NSString *)title
+                                       message:(NSString *)message {
+  return [[MDCActionSheetController alloc] initWithTitle:title message:message];
+}
+
+- (nonnull instancetype)initWithTitle:(nullable NSString *)title
+                              message:(nullable NSString *)message {
   self = [super initWithNibName:nil bundle:nil];
   if (self) {
     _title = title;
+    _message = message
     [self commonMDCActionSheetControllerInit];
   }
   return self;
@@ -200,5 +214,106 @@
   [self.view setNeedsLayout];
 }
 
+#pragma mark - Table Header
+- (void)setTitle:(NSString *)title {
+  if (title != _title) {
+    _title = title;
+    _tableView.header.title = title;
+  }
+}
+
+- (NSString *)title {
+  return _tableView.header.title;
+}
+
+- (void)setTitleFont:(UIFont *)titleFont {
+  if (_titleFont != titleFont) {
+    _titleFont = titleFont;
+    _tableView.header.titleFont = titleFont;
+  }
+}
+
+- (UIFont *)titleFont {
+  return _tableView.header.titleFont;
+}
+
+- (void)setTitleColor:(UIColor *)titleColor {
+  if (_titleColor != titleColor) {
+    _titleColor = titleColor;
+    _tableView.header.titleColor = titleColor;
+  }
+}
+
+- (UIColor *)titleColor {
+  return _tableView.header.titleColor;
+}
+
+- (void)setMessage:(NSString *)message {
+  if (_message != message) {
+    _message = message;
+    _tableView.header.message = message;
+  }
+}
+
+- (NSString *)message {
+  return _tableView.header.message;
+}
+
+- (void)setMessageFont:(UIFont *)messageFont {
+  if (_messageFont != messageFont) {
+    _messageFont = messageFont;
+    _tableView.header.messageFont = messageFont;
+  }
+}
+
+- (UIFont *)messageFont {
+  return _tableView.header.messageFont;
+}
+
+- (void)setMessageColor:(UIColor *)messageColor {
+  if (_messageColor != messageColor) {
+    _messageColor = messageColor;
+    _tableView.header.messageColor = messageColor;
+  }
+}
+
+- (UIColor *)messageColor {
+  return _tableView.header.messageColor;
+}
+
+#pragma mark - List item
+
+- (void)setActionsLabelFont:(UIFont *)actionsLabelFont {
+  if (_actionsLabelFont != actionsLabelFont) {
+    _actionsLabelFont = actionsLabelFont;
+    _tableView.actionsLabelFont = actionsLabelFont;
+  }
+}
+
+- (UIFont *)actionsLabelFont {
+  return _tableView.actionsLabelFont;
+}
+
+- (void)setActionsLabelColor:(UIColor *)actionsLabelColor {
+  if (_actionsLabelColor != actionsLabelColor) {
+    _actionsLabelColor = actionsLabelColor;
+    _tableView.actionsLabelColor = actionsLabelColor;
+  }
+}
+
+- (UIColor *)actionsLabelColor {
+  return _tableView.actionsLabelColor;
+}
+
+- (void)setIconsColor:(UIColor *)iconsColor {
+  if (_iconsColor != iconsColor) {
+    _iconsColor = iconsColor;
+    _tableView.iconsColor = iconsColor;
+  }
+}
+
+- (UIColor *)iconsColor {
+  return _tableView.iconsColor;
+}
 
 @end

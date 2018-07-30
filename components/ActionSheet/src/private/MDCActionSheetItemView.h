@@ -30,21 +30,20 @@
 - (nonnull instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
 
 /**
- Convenience constructor to create and return a cell that will have a title, icon and action.
-
- @param action The action holds the title, icon and action of the item view.
-
- @return An initialized MDCActionSheetItemView object.
- */
-+ (nonnull instancetype)cellWithAction:(nonnull MDCActionSheetAction *)action;
-
-/**
   The action contains the title, icon, and handler
   If you need to change any of the three you must pass a new action in.
 */
 @property(nonatomic, nonnull, readonly) MDCActionSheetAction *action;
 
-@property(nonatomic, nonnull) UIFont *font;
+@property(nonatomic, nullable) UIFont *font;
+
+@property(nonatomic, nullable) UIColor *labelColor;
+
+@property(nonatomic, nullable) UIColor *iconColor;
+
+@property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
+BOOL mdc_adjustsFontForContentSizeCategory;
+
 
 @end
 
@@ -53,14 +52,34 @@
 /** */
 - (nonnull instancetype)initWithTitle:(NSString *)title;
 
+- (nonnull instancetype)initWithTitle:(NSString *)title message:(NSString *)message;
+
 /** Header must be created with either headerWithTitle: */
 - (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
 
 /** Header must be created with either headerWithTitle: */
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 
+/** The text that will applied to the title of the action sheet controller. */
 @property(nonatomic, nullable) NSString *title;
 
-@property(nonatomic, nonnull) UIFont *font;
+/** The text that will applied to the message of the action sheet controller. */
+@property(nonatomic, nullable) NSString *message;
+
+/** The font applied to the title of the action sheet controller. */
+@property(nonatomic, nullable) UIFont *titleFont;
+
+/** The font applied to the message of the action sheet controller. */
+@property(nonatomic, nullable) UIFont *messageFont;
+
+/** The color applied to the title of the action sheet controller. */
+@property(nonatomic, nullable) UIColor *titleColor;
+
+/** The color applied to the message of the action sheet controller. */
+@property(nonatomic, nullable) UIColor *messageColor;
+
+@property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
+BOOL mdc_adjustsFontForContentSizeCategory;
+
 
 @end

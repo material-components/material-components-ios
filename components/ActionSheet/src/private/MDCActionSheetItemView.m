@@ -152,6 +152,7 @@ static const CGFloat IconAlpha = 0.54f;
 
 @implementation MDCACtionSheetHeaderView {
   UILabel *_titleLabel;
+  UILabel *_messageLabel;
 }
 
 - (instancetype)initWithTitle:(NSString *)title {
@@ -173,7 +174,7 @@ static const CGFloat IconAlpha = 0.54f;
 - (void)layoutSubviews {
   _titleLabel.text = _title;
   _titleLabel.alpha = TitleLabelAlpha;
-  _titleLabel.font = _font;
+  _titleLabel.font = _titleFont;
   [self addSubview:_titleLabel];
   [_titleLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
   [NSLayoutConstraint constraintWithItem:_titleLabel
@@ -200,9 +201,76 @@ static const CGFloat IconAlpha = 0.54f;
                                 constant:-TitleLabelVerticalPadding].active = YES;
 }
 
-- (void)setFont:(UIFont *)font {
-  _font = font;
-  [self setNeedsLayout];
+- (void)setTitle:(NSString *)title {
+  if (_title != title) {
+    _title = title;
+    _titleLabel.text = title;
+    [self setNeedsLayout];
+  }
+}
+
+- (NSString *)title {
+  return _titleLabel.text;
+}
+
+- (void)setMessage:(NSString *)message {
+  if (_message != message) {
+    _message = message;
+    _messageLabel = message;
+    [self setNeedsLayout];
+  }
+}
+
+- (NSString *)message {
+  return _messageLabel.text;
+}
+
+- (void)setTitleFont:(UIFont *)titleFont {
+  if (_titleFont != titleFont) {
+    _titleFont = titleFont;
+    _titleLabel.font = titleFont;
+    [self setNeedsLayout];
+  }
+}
+
+- (UIFont *)titleFont {
+  return _titleLabel.font
+}
+
+- (void)setMessageFont:(UIFont *)messageFont {
+  if (_messageFont != messageFont) {
+    _messageFont = messageFont;
+    _messageLabel.font = messageFont;
+    [self setNeedsLayout];
+  }
+}
+
+- (UIFont *)messageFont {
+  return _messageLabel.font;
+}
+
+- (void)setTitleColor:(UIColor *)titleColor {
+  if (_titleColor != titleColor) {
+    _titleColor = titleColor;
+    _titleLabel.textColor = titleColor;
+    [self setNeedsLayout];
+  }
+}
+
+- (UIColor *)titleColor {
+  return _titleLabel.textColor;
+}
+
+- (void)setMessageColor:(UIColor *)messageColor {
+  if (_messageColor != messageColor) {
+    _messageColor = messageColor;
+    _messageLabel.textColor = messageColor;
+    [self setNeedsLayout];
+  }
+}
+
+- (UIColor *)messageColor {
+  return _messageLabel.textColor;
 }
 
 @end
