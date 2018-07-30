@@ -60,9 +60,7 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    _maskLayer = [CAShapeLayer layer];
-    _maskLayer.delegate = self;
-    _usesLegacyInkRipple = YES;
+    [self commonMDCInkViewInit];
   }
   return self;
 }
