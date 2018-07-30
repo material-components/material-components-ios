@@ -60,6 +60,7 @@
 @interface MDCActionSheetController () <MDCBottomSheetPresentationControllerDelegate>
 
 @property(nonatomic, strong) MDCBottomSheetTransitionController *transitionController;
+@property(nonatomic, nonnull, strong) MDCActionSheetListViewController *tableView;
 @property(nonatomic, nullable) NSString *title;
 @property(nonatomic, nullable) NSString *message;
 
@@ -70,7 +71,6 @@
   NSMutableArray<MDCActionSheetAction *> *_actions;
   UIViewController *contentViewController;
   id<MDCActionSheetControllerDelegate> delegate;
-  MDCActionSheetListViewController *_tableView;
   BOOL _mdc_adjustsFontForContentSizeCategory;
 }
 
@@ -305,15 +305,15 @@
   return _tableView.actionsLabelColor;
 }
 
-- (void)setIconsColor:(UIColor *)iconsColor {
-  if (_iconsColor != iconsColor) {
-    _iconsColor = iconsColor;
-    _tableView.iconsColor = iconsColor;
+- (void)setImageColor:(UIColor *)imageColor {
+  if (_imageColor != imageColor) {
+    _imageColor = imageColor;
+    _tableView.imageColor = imageColor;
   }
 }
 
-- (UIColor *)iconsColor {
-  return _tableView.iconsColor;
+- (UIColor *)imageColor {
+  return _tableView.imageColor;
 }
 
 @end

@@ -16,6 +16,7 @@
 
 #import <UIKit/UIKit.h>
 #import "../MDCActionSheetController.h"
+#import "MDCActionSheetItemView.h"
 
 @interface MDCActionSheetListViewController : UITableViewController
 
@@ -38,7 +39,7 @@
 
 @property(nonatomic, weak) id<UITableViewDelegate> delegate;
 
-@property(nonatomic, nonnull) MDCACtionSheetHeaderView *header;
+@property(nonatomic, nonnull) MDCActionSheetHeaderView *header;
 
 /** The font applied to the title of the action sheet controller. */
 @property(nonatomic, strong, nullable) UIFont *titleFont;
@@ -47,7 +48,7 @@
 @property(nonatomic, strong, nullable) UIFont *messageFont;
 
 /** The font applied to the action items of the action sheet controller. */
-@property(nonatomic, strong, nullable) UIFont *actionsLabelFont;
+@property(nonatomic, strong, nullable) UIFont *actionFont;
 
 /** The color applied to the title of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIColor *titleColor;
@@ -56,10 +57,10 @@
 @property(nonatomic, strong, nullable) UIColor *messageColor;
 
 /** The color applied to the item list labels of Alert Controller.*/
-@property(nonatomic, strong, nullable) UIColor *actionsLabelColor;
+@property(nonatomic, strong, nullable) UIColor *actionColor;
 
-/** The color applied to the icon items of Alert Controller.*/
-@property(nonatomic, strong, nullable) UIColor *iconsColor;
+/** The color applied to the image items of Alert Controller.*/
+@property(nonatomic, strong, nullable) UIColor *imageColor;
 
 /*
  Indicates whether the button should automatically update its font when the device’s
