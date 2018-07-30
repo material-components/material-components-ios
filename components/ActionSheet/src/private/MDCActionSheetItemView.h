@@ -30,7 +30,7 @@
 - (nonnull instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
 
 /**
-  The action contains the title, icon, and handler
+  The action contains the title, image, and handler
   If you need to change any of the three you must pass a new action in.
 */
 @property(nonatomic, nonnull, readonly) MDCActionSheetAction *action;
@@ -39,7 +39,7 @@
 
 @property(nonatomic, nullable) UIColor *labelColor;
 
-@property(nonatomic, nullable) UIColor *iconColor;
+@property(nonatomic, nullable) UIColor *imageColor;
 
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
 BOOL mdc_adjustsFontForContentSizeCategory;
@@ -47,7 +47,7 @@ BOOL mdc_adjustsFontForContentSizeCategory;
 
 @end
 
-@interface MDCACtionSheetHeaderView : UIView
+@interface MDCActionSheetHeaderView : UIView
 
 /** */
 - (nonnull instancetype)initWithTitle:(NSString *)title;

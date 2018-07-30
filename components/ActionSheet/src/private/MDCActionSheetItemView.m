@@ -30,14 +30,14 @@ static const CGFloat LabelTrailingPadding = 16.f;
 static const CGFloat LabelVerticalPadding = 18.f;
 static const CGFloat LabelAlpha = 0.87f;
 
-static const CGFloat IconLeadingPadding = 16.f;
-static const CGFloat IconTopPadding = 16.f;
-static const CGFloat IconAlpha = 0.54f;
+static const CGFloat ImageLeadingPadding = 16.f;
+static const CGFloat ImageTopPadding = 16.f;
+static const CGFloat ImageAlpha = 0.54f;
 
 @interface MDCActionSheetItemView ()
 
 @property(nonatomic, nonnull, strong) UILabel *titleLabel;
-@property(nonatomic, nonnull, strong) UIImageView *icon;
+@property(nonatomic, nonnull, strong) UIImageView *image;
 
 @end
 
@@ -110,28 +110,28 @@ static const CGFloat IconAlpha = 0.54f;
                               multiplier:1
                                 constant:-LabelTrailingPadding].active = YES;
 
-  if (!_icon) {
-    _icon = [[UIImageView alloc] initWithImage:image];
+  if (!_image) {
+    _image = [[UIImageView alloc] initWithImage:image];
   }
 
-  [self addSubview:_icon];
-  _icon.frame = CGRectMake(0, 0, 24, 24);
-  _icon.alpha = IconAlpha;
-  [_icon setTranslatesAutoresizingMaskIntoConstraints:NO];
-  [NSLayoutConstraint constraintWithItem:_icon
+  [self addSubview:_image];
+  _image.frame = CGRectMake(0, 0, 24, 24);
+  _image.alpha = ImageAlpha;
+  [_image setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [NSLayoutConstraint constraintWithItem:_image
                                attribute:NSLayoutAttributeLeading
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self
                                attribute:NSLayoutAttributeLeading
                               multiplier:1
-                                constant:IconLeadingPadding].active = YES;
-  [NSLayoutConstraint constraintWithItem:_icon
+                                constant:ImageLeadingPadding].active = YES;
+  [NSLayoutConstraint constraintWithItem:_image
                                attribute:NSLayoutAttributeTop
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self
                                attribute:NSLayoutAttributeTop
                               multiplier:1
-                                constant:IconTopPadding].active = YES;
+                                constant:ImageTopPadding].active = YES;
 
   if (!_inkTouchController) {
     _inkTouchController = [[MDCInkTouchController alloc] initWithView:self];

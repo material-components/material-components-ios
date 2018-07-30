@@ -24,27 +24,33 @@
 
 @interface MDCActionSheetListViewController () <UITableViewDataSource, UITableViewDelegate>
 
+@property (nonatomic, nullable) NSString *title;
+@property (nonatomic, nullable) NSString *message;
+
 @end
 
 @implementation MDCActionSheetListViewController {
   NSArray<MDCActionSheetAction *> *_actions;
 }
 
-- (instancetype)initWithTitle:(NSString *)title
-                      message:(NSString *)message
-                      actions:(NSArray<MDCActionSheetAction *> *)actions {
-
-}
-
-- (instancetype)initWithTitle:(NSString *) title
+- (instancetype)initWithTitle:(nullable NSString *)title
+                      message:(nullable NSString *)message
                       actions:(NSArray<MDCActionSheetAction *> *)actions {
   self = [super initWithStyle:UITableViewStylePlain];
   if (self) {
     _title = title;
+    _message = message;
     _actions = actions;
     [self commonMDCActionSheetListInit];
   }
   return self;
+}
+
+- (instancetype)initWithTitle:(nullable NSString *) title
+                      actions:(NSArray<MDCActionSheetAction *> *)actions {
+  return [[MDCActionSheetListViewController alloc] initWithTitle:title
+                                                         message:nil
+                                                         actions:actions];
 }
 
 -(void)commonMDCActionSheetListInit {
@@ -61,7 +67,7 @@
 #pragma mark - Table view delegate
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-  MDCACtionSheetHeaderView *header = [[MDCACtionSheetHeaderView alloc] initWithTitle:_title];
+  MDCActionSheetHeaderView *header = [[MDCActionSheetHeaderView alloc] initWithTitle:_title];
   header.font = _titleFont;
   return header;
 }
@@ -111,7 +117,7 @@
   [self.view setNeedsLayout];
 }
 
--(void)updateFonts {
+/*-(void)updateFonts {
   UIFont *finalFont = _font ?: [[self class] font];
   if (_mdc_adjustsFontForContentSizeCategory) {
     finalFont =
@@ -120,6 +126,18 @@
   }
   _font = finalFont;
   [self.view setNeedsLayout];
+}*/
+
+- (void)setTitle:(NSString *)title {
+  if (_title != title) {
+    _title = title;
+    _header.title = title;
+    [self.view setNeedsLayout];
+  }
+}
+
+- (NSString *)title {
+  return _header.title;
 }
 
 @end
