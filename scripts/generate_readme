@@ -27,12 +27,11 @@ if [ "$#" -ne 1 ]; then
   exit 1
 fi
 
-JAZZY_VERSION=`jazzy --version`
-if [[ $? != 0 ]]; then
-  echo "Cannot find jazzy. jazzy is required to generate API links. To install try:"
-  echo "[sudo] gem install jazzy"
+command -v jazzy >/dev/null 2>&1 || { 
+  echo >&2 "Cannot find jazzy. jazzy is required to generate API links. To install try:"
+  echo >&2 "[sudo] gem install jazzy"
   exit 1
-fi
+}
 
 # Generates a list of urls to APIs
 # Args: $1 - Jazzy API type name. E.g. Classes
