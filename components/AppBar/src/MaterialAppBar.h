@@ -16,3 +16,4 @@
 
 #import "MDCAppBar.h"
 #import "MDCAppBarContainerViewController.h"
+#import "MDCAppBarNavigationController.h"

@@ -24,21 +24,24 @@ import MaterialComponents.MaterialCollections
 import MaterialComponents.MaterialIcons_ic_more_horiz
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, MDCAppBarNavigationControllerDelegate {
 
   var window: UIWindow?
+
+  let navigationController = MDCAppBarNavigationController()
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions
                    launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
     self.window = MDCCatalogWindow(frame: UIScreen.main.bounds)
-    UIApplication.shared.statusBarStyle = .lightContent
 
     // The navigation tree will only take examples that implement
     // and return YES to catalogIsPresentable.
     let tree = CBCCreatePresentableNavigationTree()
 
+    navigationController.delegate = self
+
     let rootNodeViewController = MDCCatalogComponentsController(node: tree)
-    let navigationController = UINavigationController(rootViewController: rootNodeViewController)
+    navigationController.pushViewController(rootNodeViewController, animated: false)
 
     // In the event that an example view controller hides the navigation bar we generally want to
     // ensure that the edge-swipe pop gesture can still take effect. This may be overly-assumptive
@@ -49,7 +52,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     self.window?.rootViewController = navigationController
     self.window?.makeKeyAndVisible()
 
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(self.themeDidChange),
+      name: AppTheme.didChangeGlobalThemeNotificationName,
+      object: nil)
+
     return true
+  }
+
+  func themeDidChange(notification: NSNotification) {
+    guard let colorScheme = notification.userInfo?[AppTheme.globalThemeNotificationColorSchemeKey]
+      as? MDCColorScheming else {
+        return
+    }
+    for viewController in navigationController.childViewControllers {
+      guard let appBar = navigationController.appBar(for: viewController) else {
+        continue
+      }
+
+      MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
+    }
+  }
+
+  // MARK: MDCAppBarNavigationControllerInjectorDelegate
+
+  func appBarNavigationController(_ navigationController: MDCAppBarNavigationController,
+                                  willAdd appBar: MDCAppBar,
+                                  asChildOf viewController: UIViewController) {
+    MDCAppBarColorThemer.applySemanticColorScheme(AppTheme.globalTheme.colorScheme, to: appBar)
+    MDCAppBarTypographyThemer.applyTypographyScheme(AppTheme.globalTheme.typographyScheme,
+                                                    to: appBar)
+
+    if let injectee = viewController as? CatalogAppBarInjectee {
+      injectee.appBarNavigationControllerInjector(willAdd: appBar)
+    }
   }
 }
 
@@ -57,6 +94,10 @@ extension UINavigationController: UIGestureRecognizerDelegate {
   public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
     return viewControllers.count > 1
   }
+}
+
+protocol CatalogAppBarInjectee {
+  func appBarNavigationControllerInjector(willAdd appBar: MDCAppBar)
 }
 
 extension UINavigationController {
@@ -76,37 +117,4 @@ extension UINavigationController {
     menuItem.accessibilityHint = "Opens catalog configuration options."
     viewController.navigationItem.rightBarButtonItem = menuItem
   }
-
-  class func embedExampleWithinAppBarContainer(using viewController: UIViewController,
-                                               currentBounds: CGRect,
-                                               named title: String) -> UIViewController {
-    let appBarFont: UIFont
-    if #available(iOS 9.0, *) {
-      appBarFont = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: UIFontWeightRegular)
-    } else {
-      let attribute: [String: UIFontDescriptorSymbolicTraits] =
-        [UIFontSymbolicTrait: UIFontDescriptorSymbolicTraits.traitMonoSpace]
-      let descriptor: UIFontDescriptor = UIFontDescriptor(fontAttributes: attribute)
-      appBarFont = UIFont(descriptor: descriptor, size: 16)
-    }
-    let container = MDCAppBarContainerViewController(contentViewController: viewController)
-    MDCAppBarColorThemer.applySemanticColorScheme(AppTheme.globalTheme.colorScheme,
-                                                  to: container.appBar);
-    container.appBar.navigationBar.titleAlignment = .center
-    container.appBar.navigationBar.titleTextAttributes = [ NSFontAttributeName: appBarFont ]
-    container.isTopLayoutGuideAdjustmentEnabled = true
-    MDCAppBarColorThemer.applySemanticColorScheme(AppTheme.globalTheme.colorScheme,
-                                                  to: container.appBar)
-    // TODO(featherless): Remove once
-    // https://github.com/material-components/material-components-ios/issues/367 is resolved.
-    viewController.title = title
-    let headerView = container.appBar.headerViewController.headerView
-    if let collectionVC = viewController as? UICollectionViewController {
-      headerView.trackingScrollView = collectionVC.collectionView
-    } else if let scrollView = viewController.view as? UIScrollView {
-      headerView.trackingScrollView = scrollView
-    }
-    return container
-  }
-
 }
