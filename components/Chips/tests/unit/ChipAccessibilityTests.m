@@ -86,4 +86,21 @@
   XCTAssertNotEqual(chip.accessibilityTraits & UIAccessibilityTraitSelected, UIAccessibilityTraitSelected, @"Chip accessibility should be de-selected when disabled & highlighted");
 }
 
+- (void)testAccessibilityLabel_default {
+  chip.titleLabel.text = @"Title";
+  XCTAssertEqualObjects(chip.accessibilityLabel, @"Title");
+}
+
+- (void)testAccessibilityLabel_setTitleLabelAccessibilityLabel {
+  chip.titleLabel.text = @"Title";
+  chip.titleLabel.accessibilityLabel = @"Accessibility Title";
+  XCTAssertEqualObjects(chip.accessibilityLabel, @"Accessibility Title");
+}
+
+- (void)testAccessibilityLabel_setAccessibilityLabel {
+  chip.titleLabel.text = @"Title";
+  chip.accessibilityLabel = @"Accessibility Title";
+  XCTAssertEqualObjects(chip.accessibilityLabel, @"Accessibility Title");
+}
+
 @end
