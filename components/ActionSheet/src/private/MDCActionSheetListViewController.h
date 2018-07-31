@@ -20,11 +20,11 @@
 
 @interface MDCActionSheetListViewController : UITableViewController
 
-- (nonnull instancetype)initWithTitle:(NSString *) title
+- (nonnull instancetype)initWithTitle:(nullable NSString *)title
                               actions:(NSArray<MDCActionSheetAction *> *)actions;
 
-- (nonnull instancetype)initWithTitle:(NSString *)title
-                              message:(NSString *)message
+- (nonnull instancetype)initWithTitle:(nullable NSString *)title
+                              message:(nullable NSString *)message
                               actions:(NSArray<MDCActionSheetAction *> *)actions;
 
 /** MDCActionSheetListViewController must be created with initWithActions: */

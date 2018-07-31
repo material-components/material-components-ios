@@ -41,7 +41,7 @@
  @return An initialized MDCActionSheetController object.
  */
 + (nonnull instancetype)actionSheetControllerWithTitle:(nullable NSString *)title
-                                               message:(NSString *)message;
+                                               message:(nullable NSString *)message;
 
 /** Action sheet controllers must be created with actionSheetControllerWithTitle: or
  with actionSheetControllerWithTitle:message:  */
@@ -105,10 +105,10 @@ BOOL mdc_adjustsFontForContentSizeCategory;
 @property(nonatomic, strong, nullable) UIColor *messageColor;
 
 /** The color applied to the item list labels of Alert Controller.*/
-@property(nonatomic, strong, nullable) UIColor *actionColor;
+@property(nonatomic, strong, nullable) UIColor *actionTextColor;
 
 /** The color applied to the image items of Alert Controller.*/
-@property(nonatomic, strong, nullable) UIColor *imageColor;
+@property(nonatomic, strong, nullable) UIColor *actionImageColor;
 
 @end
 
