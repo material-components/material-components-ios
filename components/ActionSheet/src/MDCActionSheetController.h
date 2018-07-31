@@ -43,15 +43,10 @@
 + (nonnull instancetype)actionSheetControllerWithTitle:(nullable NSString *)title
                                                message:(nullable NSString *)message;
 
-/** Action sheet controllers must be created with actionSheetControllerWithTitle: or
- with actionSheetControllerWithTitle:message:  */
 - (nonnull instancetype)initWithNibName:(NSString *)nibNameOrNil
-                                 bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
+                                 bundle:(NSBundle *)nibBundleOrNil;
 
-/** Action sheet controllers must be created with actionSheetControllerwithTitle:
-   or with actionSheetControllerWithTitle:message:  */
-- (nullable instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
-
+- (nullable instancetype)initWithCoder:(NSCoder *)aDecoder;
 
 /**
  Adds an action to the action sheet.
@@ -72,6 +67,16 @@
  */
 @property (nonatomic, nonnull, readonly) NSArray<MDCActionSheetAction *> *actions;
 
+/**
+ The title of the action sheet controller.
+ */
+@property (nonatomic, nullable, copy) NSString *title;
+
+/**
+ The message of the action sheet controller.
+ */
+@property (nonatomic, nullable, copy) NSString *message;
+
 /*
  Indicates whether the button should automatically update its font when the device’s
  UIContentSizeCategory is changed.
@@ -85,30 +90,6 @@
  */
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
 BOOL mdc_adjustsFontForContentSizeCategory;
-
-/** The color applied to the sheet view of the action sheet controller. */
-@property(nonatomic, strong, nullable) UIColor *backgroundColor;
-
-/** The font applied to the title of the action sheet controller. */
-@property(nonatomic, strong, nullable) UIFont *titleFont;
-
-/** The font applied to the message of the action sheet controller. */
-@property(nonatomic, strong, nullable) UIFont *messageFont;
-
-/** The font applied to the action items of the action sheet controller. */
-@property(nonatomic, strong, nullable) UIFont *actionFont;
-
-/** The color applied to the title of Alert Controller.*/
-@property(nonatomic, strong, nullable) UIColor *titleColor;
-
-/** The color applied to the message of Alert Controller.*/
-@property(nonatomic, strong, nullable) UIColor *messageColor;
-
-/** The color applied to the item list labels of Alert Controller.*/
-@property(nonatomic, strong, nullable) UIColor *actionTextColor;
-
-/** The color applied to the image items of Alert Controller.*/
-@property(nonatomic, strong, nullable) UIColor *actionImageColor;
 
 @end
 
