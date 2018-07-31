@@ -148,7 +148,6 @@ class NodeViewTableViewPrimaryDemoCell: UITableViewCell {
 
 
 class MDCNodeListViewController: CBCNodeListViewController {
-  let appBar = MDCAppBar()
   var mainSectionHeader : UIView?
   var mainSectionHeaderTitleLabel : UILabel?
   var mainSectionHeaderDescriptionLabel : UILabel?
@@ -193,17 +192,6 @@ class MDCNodeListViewController: CBCNodeListViewController {
 
     componentDescription = childrenNodes.first?.exampleDescription() ?? ""
 
-    self.addChildViewController(appBar.headerViewController)
-
-    appBar.inferTopSafeAreaInsetFromViewController = true
-    appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = false
-
-    appBar.navigationBar.titleAlignment = .center
-    applyColorScheme(AppTheme.globalTheme.colorScheme)
-    MDCAppBarTypographyThemer.applyTypographyScheme(
-        AppTheme.globalTheme.typographyScheme,
-        to:appBar)
-
     NotificationCenter.default.addObserver(
       self,
       selector: #selector(self.themeDidChange),
@@ -244,95 +232,16 @@ class MDCNodeListViewController: CBCNodeListViewController {
                             forCellReuseIdentifier: "NodeViewTableViewPrimaryDemoCell")
     self.tableView.register(NodeViewTableViewDemoCell.self,
                             forCellReuseIdentifier: "NodeViewTableViewDemoCell")
-    appBar.headerViewController.headerView.trackingScrollView = self.tableView
-
-    appBar.addSubviewsToParent()
   }
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
 
     self.navigationController?.setNavigationBarHidden(true, animated: animated)
-
-    applyColorScheme(AppTheme.globalTheme.colorScheme)
-  }
-
-  override var childViewControllerForStatusBarStyle: UIViewController? {
-    return appBar.headerViewController
-  }
-
-  override var childViewControllerForStatusBarHidden: UIViewController? {
-    return appBar.headerViewController
   }
 
   func themeDidChange(notification: NSNotification) {
-    guard let colorScheme = notification.userInfo?[AppTheme.globalThemeNotificationColorSchemeKey]
-          as? MDCColorScheming else {
-      return
-    }
-    applyColorScheme(colorScheme)
-    applyThemeToCurrentExample()
     self.tableView.reloadData()
-  }
-
-  private func applyColorScheme(_ colorScheme: MDCColorScheming) {
-    MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
-  }
-
-  func applyThemeToCurrentExample() {
-    // This is a short term solution of applying the theme instantly on the
-    // currently presented example. A better solution would be to re-theme the example's components
-    // and not reload the example entirely with a pop-push.
-    guard let navigationController = self.navigationController else {
-      return
-    }
-    guard let topVC = navigationController.topViewController,
-      topVC is MDCAppBarContainerViewController ||
-        topVC.self.responds(to: NSSelectorFromString("catalogBreadcrumbs")) else {
-          return
-    }
-    navigationController.popViewController(animated: false)
-    guard let selectedNode = selectedNode else {
-      return
-    }
-    let vc = createViewController(from: selectedNode)
-    self.navigationController?.pushViewController(vc, animated: false)
-  }
-}
-
-// MARK: UIScrollViewDelegate
-extension MDCNodeListViewController {
-
-  override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
-      appBar.headerViewController.headerView.trackingScrollDidScroll()
-    }
-  }
-
-  override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
-      appBar.headerViewController.headerView.trackingScrollDidEndDecelerating()
-    }
-  }
-
-  override func scrollViewDidEndDragging(_ scrollView: UIScrollView,
-                                         willDecelerate decelerate: Bool) {
-    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
-      let headerView = appBar.headerViewController.headerView
-      headerView.trackingScrollDidEndDraggingWillDecelerate(decelerate)
-    }
-  }
-
-  override func scrollViewWillEndDragging(_ scrollView: UIScrollView,
-                                          withVelocity velocity: CGPoint,
-                                          targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
-      let headerView = appBar.headerViewController.headerView
-      headerView.trackingScrollWillEndDragging(
-        withVelocity: velocity,
-        targetContentOffset: targetContentOffset
-      )
-    }
   }
 }
 
@@ -672,18 +581,10 @@ extension MDCNodeListViewController {
   }
 
   func createViewController(from node: CBCNode) -> UIViewController {
-    var vc: UIViewController
     let contentVC = node.createExampleViewController()
     themeExample(vc: contentVC)
-    if contentVC.responds(to: NSSelectorFromString("catalogShouldHideNavigation")) {
-      vc = contentVC
-    } else {
-      self.navigationController?.setMenuBarButton(for: contentVC)
-      vc = UINavigationController.embedExampleWithinAppBarContainer(using: contentVC,
-                                                                    currentBounds: view.bounds,
-                                                                    named: node.title)
-    }
-    return vc
+    self.navigationController?.setMenuBarButton(for: contentVC)
+    return contentVC
   }
 
   func themeExample(vc: UIViewController) {
