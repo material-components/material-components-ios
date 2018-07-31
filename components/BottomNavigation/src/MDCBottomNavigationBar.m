@@ -59,6 +59,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 @property(nonatomic, readonly) UIEdgeInsets mdc_safeAreaInsets;
 @property(nonatomic, strong) UIView *containerView;
 @property(nonatomic, strong) NSMutableArray *inkControllers;
+@property(nonatomic) BOOL shouldPretendToBeATabBar;
 
 @end
 
@@ -113,8 +114,12 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 #pragma clang diagnostic ignored "-Wtautological-pointer-compare"
   if (&UIAccessibilityTraitTabBar != NULL) {
     _containerView.accessibilityTraits = UIAccessibilityTraitTabBar;
+  } else {
+    _shouldPretendToBeATabBar = YES;
   }
 #pragma clang diagnostic pop
+#else
+  _shouldPretendToBeATabBar = YES;
 #endif
   [self setElevation:MDCShadowElevationBottomNavigationBar];
   _itemViews = [NSMutableArray array];
@@ -397,16 +402,19 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
     controller.delegate = self;
     [self.inkControllers addObject:controller];
 
-    NSString *key =
-        kMaterialBottomNavigationStringTable[kStr_MaterialBottomNavigationItemCountAccessibilityHint];
-    NSString *itemOfTotalString =
-        NSLocalizedStringFromTableInBundle(key,
-                                           kMaterialBottomNavigationStringsTableName,
-                                           [[self class] bundle],
-                                           kMDCBottomNavigationBarOfString);
-   NSString *localizedPosition =
-        [NSString localizedStringWithFormat:itemOfTotalString, (i + 1), (int)items.count];
-    itemView.button.accessibilityHint = localizedPosition;
+    if (self.shouldPretendToBeATabBar) {
+      NSString *key = kMaterialBottomNavigationStringTable[
+        kStr_MaterialBottomNavigationItemCountAccessibilityHint
+      ];
+      NSString *itemOfTotalString =
+          NSLocalizedStringFromTableInBundle(key,
+                                             kMaterialBottomNavigationStringsTableName,
+                                             [[self class] bundle],
+                                             kMDCBottomNavigationBarOfString);
+      NSString *localizedPosition =
+          [NSString localizedStringWithFormat:itemOfTotalString, (i + 1), (int)items.count];
+      itemView.button.accessibilityHint = localizedPosition;
+    }
     if (item.image) {
       itemView.image = item.image;
     }
