@@ -173,17 +173,18 @@ class TextFieldTests: XCTestCase {
   }
 
   func testMultilineErrorMessages() {
-    let textField1 = MDCTextField(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-    textField1.translatesAutoresizingMaskIntoConstraints = false
-    let controller1 = MDCTextInputControllerFilled(textInput: textField1)
+    let textField = MDCTextField(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+    textField.leadingUnderlineLabel.numberOfLines = 2
+    textField.translatesAutoresizingMaskIntoConstraints = false
+    let controller1 = MDCTextInputControllerFilled(textInput: textField)
     var errorMessage = "Error!"
     controller1.setErrorText(errorMessage, errorAccessibilityValue: nil)
-    let labelIntrinsicHeight1 = textField1.leadingUnderlineLabel.intrinsicContentSize.height
-    let labelLineHeight = textField1.leadingUnderlineLabel.font.lineHeight
+    let labelIntrinsicHeight1 = textField.leadingUnderlineLabel.intrinsicContentSize.height
+    let labelLineHeight = textField.leadingUnderlineLabel.font.lineHeight
     let labelNumberOfLinesBefore = round((labelIntrinsicHeight1 / labelLineHeight))
     errorMessage += ("\n" + errorMessage)
     controller1.setErrorText(errorMessage, errorAccessibilityValue: nil)
-    let labelIntrinsicHeight2 = textField1.leadingUnderlineLabel.intrinsicContentSize.height
+    let labelIntrinsicHeight2 = textField.leadingUnderlineLabel.intrinsicContentSize.height
     let labelNumberOfLinesAfter = round((labelIntrinsicHeight2 / labelLineHeight))
     XCTAssert(labelNumberOfLinesBefore == 1)
     XCTAssert(labelNumberOfLinesAfter == 2)
