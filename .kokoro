@@ -127,13 +127,6 @@ run_cocoapods() {
     # Move into our cloned repo
     cd github/repo
 
-    # Required to fix the following xcpretty error we started seeing on kokoro:
-    # /Users/kbuilder/.rvm/gems/ruby-2.5.0/gems/xcpretty-0.2.8/lib/xcpretty/parser.rb:429:in `===': invalid byte sequence in US-ASCII (ArgumentError)
-    # https://stackoverflow.com/questions/17031651/invalid-byte-sequence-in-us-ascii-argument-error-when-i-run-rake-dbseed-in-ra#17031697
-    export LANG=en_US.UTF-8
-    export LANGUAGE=en_US.UTF-8
-    export LC_ALL=en_US.UTF-8
-
     gem install xcpretty cocoapods --no-rdoc --no-ri --no-document --quiet
     pod --version
   fi
