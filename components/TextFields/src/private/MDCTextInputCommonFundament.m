@@ -67,6 +67,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 @property(nonatomic, strong) NSLayoutConstraint *clearButtonTrailing;
 @property(nonatomic, strong) NSLayoutConstraint *clearButtonWidth;
 @property(nonatomic, strong) NSLayoutConstraint *leadingUnderlineLeading;
+@property(nonatomic, strong) NSLayoutConstraint *leadingUnderlineWidth;
 @property(nonatomic, strong) NSLayoutConstraint *trailingUnderlineTrailing;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderLeading;
 @property(nonatomic, strong) NSLayoutConstraint *placeholderLeadingLeadingViewTrailing;
@@ -298,7 +299,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     _leadingUnderlineLabel.textColor = MDCTextInputDefaultPlaceholderTextColor();
     _leadingUnderlineLabel.font = _textInput.font;
     _leadingUnderlineLabel.textAlignment = NSTextAlignmentNatural;
-    _leadingUnderlineLabel.numberOfLines = 2;
+    _leadingUnderlineLabel.numberOfLines = 1;
     _leadingUnderlineLabel.lineBreakMode = NSLineBreakByTruncatingTail;
 
     [_leadingUnderlineLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -326,6 +327,15 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                                            constant:0];
   _leadingUnderlineLeading.priority = UILayoutPriorityDefaultLow;
 
+  _leadingUnderlineWidth = [NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel
+                                                          attribute:NSLayoutAttributeWidth
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:nil
+                                                          attribute:NSLayoutAttributeNotAnAttribute
+                                                         multiplier:1
+                                                           constant:0];
+  _leadingUnderlineWidth.priority = UILayoutPriorityDefaultLow;
+
   _trailingUnderlineTrailing = [NSLayoutConstraint constraintWithItem:_trailingUnderlineLabel
                                                             attribute:NSLayoutAttributeTrailing
                                                             relatedBy:NSLayoutRelationEqual
@@ -346,7 +356,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   labelSpacing.priority = UILayoutPriorityDefaultLow;
 
   [NSLayoutConstraint
-      activateConstraints:@[ labelSpacing, _leadingUnderlineLeading, _trailingUnderlineTrailing ]];
+      activateConstraints:@[ labelSpacing, _leadingUnderlineLeading, _trailingUnderlineTrailing,
+      _leadingUnderlineWidth]];
 
   NSLayoutConstraint *leadingTop =
   [NSLayoutConstraint constraintWithItem:_underline
@@ -382,6 +393,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
   // When push comes to shove, the leading label is more likely to expand than the trailing.
   [_leadingUnderlineLabel setContentHuggingPriority:UILayoutPriorityDefaultLow - 1
+                                            forAxis:UILayoutConstraintAxisHorizontal];
+  [_leadingUnderlineLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultLow - 1
                                             forAxis:UILayoutConstraintAxisHorizontal];
 
   [_trailingUnderlineLabel
@@ -935,7 +948,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
   self.leadingUnderlineLeading.constant = textInsets.left;
   self.trailingUnderlineTrailing.constant = -1 * textInsets.right;
-  _leadingUnderlineLabel.preferredMaxLayoutWidth = CGRectGetWidth(self.textInput.frame) -
+  _leadingUnderlineWidth.constant = CGRectGetWidth(self.textInput.frame) -
       CGRectGetWidth(self.trailingUnderlineLabel.frame) - textInsets.right - textInsets.left;
 }
 
