@@ -35,7 +35,6 @@ static const CGFloat MDCDialogActionsHorizontalPadding = 8.0;
 static const CGFloat MDCDialogActionsVerticalPadding = 8.0;
 static const CGFloat MDCDialogActionButtonHeight = 36.0;
 static const CGFloat MDCDialogActionButtonMinimumWidth = 48.0;
-static const CGFloat MDCDialogActionMinTouchTarget = 48.f;
 
 static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
@@ -274,7 +273,6 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     size.width = MDCDialogActionsInsets.left + MDCDialogActionsInsets.right;
     for (UIButton *button in self.actionButtons) {
       CGSize buttonSize = [button sizeThatFits:size];
-      buttonSize.height = MAX(buttonSize.height, MDCDialogActionButtonHeight);
       size.height += buttonSize.height;
       size.width = MAX(size.width, buttonSize.width);
       if (button != [self.actionButtons lastObject]) {
@@ -355,22 +353,8 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  for (MDCFlatButton *button in self.actionButtons) {
+  for (UIButton *button in self.actionButtons) {
     [button sizeToFit];
-    CGRect buttonFrame = button.frame;
-    buttonFrame.size.width =
-        MAX(CGRectGetWidth(buttonFrame), MDCDialogActionButtonMinimumWidth);
-    buttonFrame.size.height =
-        MAX(CGRectGetHeight(buttonFrame), MDCDialogActionButtonHeight);
-    button.frame = buttonFrame;
-    CGFloat verticalInsets = (CGRectGetHeight(button.frame) - MDCDialogActionMinTouchTarget) / 2;
-    CGFloat horizontalInsets = (CGRectGetWidth(button.frame) - MDCDialogActionMinTouchTarget) / 2;
-    verticalInsets = MIN(0, verticalInsets);
-    horizontalInsets = MIN(0, horizontalInsets);
-    button.hitAreaInsets = UIEdgeInsetsMake(verticalInsets,
-                                            horizontalInsets,
-                                            verticalInsets,
-                                            horizontalInsets);
   }
 
   // Used to calculate the height of the scrolling content, so we limit the width.
