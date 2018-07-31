@@ -312,8 +312,8 @@
   }
 }
 
-- (UIColor *)imageColor {
-  return _tableView.imageColor;
+- (UIColor *)actionImageColor {
+  return self.tableView.imageColor;
 }
 
 @end

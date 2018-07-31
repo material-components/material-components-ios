@@ -16,16 +16,13 @@
 
 #import "MDCActionSheetListViewController.h"
 #import "MDCActionSheetItemView.h"
+#import "../MDCActionSheetController.m"
 #import "MaterialTypography.h"
-
-@interface MDCActionSheetAction ()
-
-@end
 
 @interface MDCActionSheetListViewController () <UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic, nullable) NSString *title;
-@property (nonatomic, nullable) NSString *message;
+@property (nonatomic, nullable, copy) NSString *title;
+@property (nonatomic, nullable, copy) NSString *message;
 
 @end
 
@@ -38,8 +35,8 @@
                       actions:(NSArray<MDCActionSheetAction *> *)actions {
   self = [super initWithStyle:UITableViewStylePlain];
   if (self) {
-    _title = title;
-    _message = message;
+    self.title = [title copy];
+    _message = [message copy];
     _actions = actions;
     [self commonMDCActionSheetListInit];
   }
@@ -61,14 +58,14 @@
   self.tableView.estimatedRowHeight = 56;
   self.tableView.rowHeight = UITableViewAutomaticDimension;
   self.tableView.estimatedSectionHeaderHeight = 56;
-  [self updateFonts];
+  //[self updateFonts];
 }
 
 #pragma mark - Table view delegate
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-  MDCActionSheetHeaderView *header = [[MDCActionSheetHeaderView alloc] initWithTitle:_title];
-  header.font = _titleFont;
+  MDCActionSheetHeaderView *header = [[MDCActionSheetHeaderView alloc] initWithTitle:self.title];
+  //header.font = _titleFont;
   return header;
 }
 
@@ -93,14 +90,14 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  MDCActionSheetItemView *cell = [MDCActionSheetItemView cellWithAction:_actions[indexPath.row]];
-  cell.font = _font;
+  MDCActionSheetItemView *cell = [[MDCActionSheetItemView alloc] init];
+  cell.action = _actions[indexPath.row];
   return cell;
 }
 
 #pragma mark - Dynamic type
 
-+ (UIFont *)font {
+/*+ (UIFont *)font {
   if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
     return [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
   }
@@ -117,7 +114,7 @@
   [self.view setNeedsLayout];
 }
 
-/*-(void)updateFonts {
+-(void)updateFonts {
   UIFont *finalFont = _font ?: [[self class] font];
   if (_mdc_adjustsFontForContentSizeCategory) {
     finalFont =
@@ -128,10 +125,12 @@
   [self.view setNeedsLayout];
 }*/
 
+#pragma mark - Setters / Getters
+
 - (void)setTitle:(NSString *)title {
   if (_title != title) {
     _title = title;
-    _header.title = title;
+    _header.title = titleText;
     [self.view setNeedsLayout];
   }
 }
@@ -139,5 +138,6 @@
 - (NSString *)title {
   return _header.title;
 }
+
 
 @end
