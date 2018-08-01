@@ -355,7 +355,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  for (MDCFlatButton *button in self.actionButtons) {
+  for (MDCButton *button in self.actionButtons) {
     [button sizeToFit];
     CGRect buttonFrame = button.frame;
     buttonFrame.size.width =
