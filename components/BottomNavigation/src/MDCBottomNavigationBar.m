@@ -27,6 +27,7 @@
 #import "private/MaterialBottomNavigationStrings.h"
 #import "private/MaterialBottomNavigationStrings_table.h"
 #import "private/MDCBottomNavigationItemView.h"
+#import "UITabBarItem+MDCBottomNavigation.h"
 
 // The Bundle for string resources.
 static NSString *const kMaterialBottomNavigationBundle = @"MaterialBottomNavigation.bundle";
@@ -401,7 +402,9 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
     itemView.contentInsets = self.itemsContentInsets;
     itemView.contentVerticalMargin = self.itemsContentVerticalMargin;
     itemView.contentHorizontalMargin = self.itemsContentHorizontalMargin;
-    itemView.badgeTextColor = item.badgeTextColor;
+    if (item.badgeTextColor) {
+      itemView.badgeTextColor = item.badgeTextColor;
+    }
     MDCInkTouchController *controller = [[MDCInkTouchController alloc] initWithView:itemView];
     controller.delegate = self;
     [self.inkControllers addObject:controller];
