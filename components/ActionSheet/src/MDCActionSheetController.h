@@ -37,24 +37,19 @@
  After creating the alert controller, add actions to the controller by calling -addAction.
 
  @param title The title of the alert.
- @param message Descriptive text that summarizes a decision in a sentence of two.
+ @param message Descriptive text that summarizes a decision in a sentence or two.
  @return An initialized MDCActionSheetController object.
  */
 + (nonnull instancetype)actionSheetControllerWithTitle:(nullable NSString *)title
                                                message:(nullable NSString *)message;
-
-- (nonnull instancetype)initWithNibName:(NSString *)nibNameOrNil
-                                 bundle:(NSBundle *)nibBundleOrNil;
-
-- (nullable instancetype)initWithCoder:(NSCoder *)aDecoder;
 
 /**
  Adds an action to the action sheet.
 
  Actions are the possible reactions of the user to the presented alert. Actions are added as a
  list item in the list of the action sheet.
- Action buttons will be laid out from right to top to bottom depending on the the order they
- were added, first being top last being bottom.
+ Action buttons will be laid out from top to bottom depending on the the order they
+ were added.
 
  @param action Will be added to the end of MDCActionSheetController.actions.
  */
@@ -89,7 +84,7 @@
  Defaults value is NO.
  */
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
-BOOL mdc_adjustsFontForContentSizeCategory;
+    BOOL mdc_adjustsFontForContentSizeCategory;
 
 @end
 
@@ -99,17 +94,17 @@ BOOL mdc_adjustsFontForContentSizeCategory;
 typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
 
 /**
-  MDCActionSheetAction is passed to MDCActionSheetController to add a button to the action sheet.
+ MDCActionSheetAction is passed to MDCActionSheetController to add a button to the action sheet.
  */
 @interface MDCActionSheetAction : NSObject <NSCopying>
 
 
 /**
-  Action alerts control the list items that will be displayed on the bottom of an action
+ Action alerts control the list items that will be displayed on the bottom of an action
  sheet controller.
 
- @param title The title of the list item shown on the list
- @param image The icon of the list item shown on the list
+ @param title The title of the list item shown in the list
+ @param image The icon of the list item shown in the list
  @param handler A block to execute when the user selects the action.
  @return An initialized MDCActionSheetAction object.
  */
@@ -121,24 +116,24 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
 - (nonnull instancetype)init NS_UNAVAILABLE;
 
 /**
- Title of the cell shown on the action sheet.
+ Title of the list item shown on the action sheet.
 
  Action sheet actions must have a title that will be set within actionWithTitle:image:handler: method.
  */
 @property (nonatomic, nonnull, readonly) NSString *title;
 
 /**
- Image of the cell shown on the action sheet.
+ Image of the list item shown on the action sheet.
 
  Action sheet actions must have an image that will be set within actionWithTitle:image:handler: method.
 */
 @property (nonatomic, nonnull, readonly) UIImage *image;
 
 /**
-  Action of the cell shown on the action sheet.
+ Action of the list item shown on the action sheet.
 
-  Action sheet actions must have an action taht will be set within
-    actionWithTitle:image:handler: method.
+ Action sheet actions must have an action taht will be set within
+ actionWithTitle:image:handler: method.
 */
 @property (nonatomic, nonnull, readonly) MDCActionSheetHandler action;
 
