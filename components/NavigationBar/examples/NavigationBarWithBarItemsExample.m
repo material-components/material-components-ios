@@ -36,16 +36,19 @@
 
   self.title = @"With Items";
 
+  // The action selector we are using has a signature of id:UIEvent:UIButton to demonstrate how to
+  // identify the underlying UIView of the UIBarButtonItem. This is required because we don't have
+  // access to the necessary private ivars to associate the item with the button.
   self.navigationItem.leftBarButtonItem =
       [[UIBarButtonItem alloc] initWithTitle:@"Leading"
                                        style:UIBarButtonItemStylePlain
                                       target:self
-                                      action:@selector(itemTapped:)];
+                                      action:@selector(itemTapped:withEvent:fromButton:)];
   self.navigationItem.rightBarButtonItem =
       [[UIBarButtonItem alloc] initWithTitle:@"Trailing"
                                        style:UIBarButtonItemStylePlain
                                       target:self
-                                      action:@selector(itemTapped:)];
+                                      action:@selector(itemTapped:withEvent:fromButton:)];
 
   self.navBar = [[MDCNavigationBar alloc] initWithFrame:CGRectZero];
   [self.navBar observeNavigationItem:self.navigationItem];
@@ -94,9 +97,9 @@
   [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
-- (void)itemTapped:(id)sender {
+- (void)itemTapped:(id)sender withEvent:(UIEvent *)event fromButton:(UIButton *)button {
   NSAssert([sender respondsToSelector:@selector(title)], @"");
-  NSLog(@"%@", [sender title]);
+  NSLog(@"%@ : %@", [sender title], button);
 }
 
 @end
