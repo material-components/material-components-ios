@@ -39,6 +39,10 @@ class EditReorderShapedCollectionViewController: UIViewController,
   UICollectionViewDataSource,
   UICollectionViewDelegateFlowLayout {
 
+  enum ToggleMode: Int {
+    case edit = 1, reorder
+  }
+  
   let collectionView = UICollectionView(frame: .zero,
                                         collectionViewLayout: UICollectionViewFlowLayout())
   var dataSource = [(Int, Bool)]()

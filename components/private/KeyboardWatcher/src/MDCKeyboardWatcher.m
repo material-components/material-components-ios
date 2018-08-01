@@ -52,20 +52,21 @@ static MDCKeyboardWatcher *_sKeyboardWatcher;
 - (instancetype)init {
   self = [super init];
   if (self) {
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow:)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
+    NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+    [defaultCenter addObserver:self
+                      selector:@selector(keyboardWillShow:)
+                          name:UIKeyboardWillShowNotification
+                        object:nil];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillHide:)
-                                                 name:UIKeyboardWillHideNotification
-                                               object:nil];
+    [defaultCenter addObserver:self
+                      selector:@selector(keyboardWillHide:)
+                          name:UIKeyboardWillHideNotification
+                        object:nil];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillChangeFrame:)
-                                                 name:UIKeyboardWillChangeFrameNotification
-                                               object:nil];
+    [defaultCenter addObserver:self
+                      selector:@selector(keyboardWillChangeFrame:)
+                          name:UIKeyboardWillChangeFrameNotification
+                        object:nil];
   }
 
   return self;

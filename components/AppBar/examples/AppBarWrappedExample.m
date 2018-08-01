@@ -59,6 +59,11 @@
   WrappedDemoViewController *demoVC = [[WrappedDemoViewController alloc] init];
   self.appBarContainerViewController =
       [[MDCAppBarContainerViewController alloc] initWithContentViewController:demoVC];
+
+  // Behavioral flags.
+  MDCAppBar *appBar = self.appBarContainerViewController.appBar;
+  appBar.inferTopSafeAreaInsetFromViewController = YES;
+  appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = NO;
   self.appBarContainerViewController.topLayoutGuideAdjustmentEnabled = YES;
 
   [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme
