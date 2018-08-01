@@ -18,8 +18,38 @@
 
 @class MDCActionSheetAction;
 
+/**
+ MDCActionSheetController displays an alert message to the user, similar to
+     UIAlertControllerStyleActionSheet.
+
+ A Material Action Sheet consist of a title, message and a list of actions.
+
+ Learn more at the [Material spec bottom
+ sheet](https://material.io/design/components/sheets-bottom.html)
+ [Material spec list](https://material.io/design/components/lists.html)
+
+ To learn more about
+ [UIAlertController](https://developer.apple.com/documentation/uikit/uialertcontroller)
+ or [UIAlertControllerSytleActionSheet](https://developer.apple.com/documentation/uikit/uialertcontrollerstyle/uialertcontrollerstyleactionsheet)
+
+
+ ### Dependencies
+
+ MDCActionSheetController depends on BottomSheet Component.
+ */
 @interface MDCActionSheetController : UIViewController
 
+/**
+ Designated constructor to create and return a view controller for displaying an alert to the user.
+
+ After creating the alert controller, add actions to the controller by calling -addAction.
+
+ @param title The title of the alert.
+ @param message Descriptive text that summarizes a decision in a sentence or two.
+ @return An initialized MDCActionSheetController object.
+ */
++ (nonnull instancetype)actionSheetControllerWithTitle:(nullable NSString *)title
+                                               message:(nullable NSString *)message;
 
 /**
  Convenience constructor to create and return a view controller for displaying an alert to the user.
@@ -31,17 +61,17 @@
  */
 + (nonnull instancetype)actionSheetControllerWithTitle:(nullable NSString *)title;
 
-/**
- Convenience constructor to create and return a view controller for displaying an alert to the user.
 
- After creating the alert controller, add actions to the controller by calling -addAction.
+- (nonnull instancetype)init;
 
- @param title The title of the alert.
- @param message Descriptive text that summarizes a decision in a sentence or two.
- @return An initialized MDCActionSheetController object.
- */
-+ (nonnull instancetype)actionSheetControllerWithTitle:(nullable NSString *)title
-                                               message:(nullable NSString *)message;
+/** Action sheet controllers must be created with actionSheetControllerWithTitle: or
+ with actionSheetControllerWithTitle:message:  */
+- (nonnull instancetype)initWithNibName:(NSString *)nibNameOrNil
+                                 bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
+
+/** Action sheet controllers must be created with actionSheetControllerwithTitle:
+   or with actionSheetControllerWithTitle:message:  */
+- (nullable instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 
 /**
  Adds an action to the action sheet.
@@ -64,11 +94,15 @@
 
 /**
  The title of the action sheet controller.
+
+ If this is updated after presentation the view will be updated to match the new value.
  */
 @property (nonatomic, nullable, copy) NSString *title;
 
 /**
  The message of the action sheet controller.
+
+ If this is updated after presentation the view will be updated to match the new value.
  */
 @property (nonatomic, nullable, copy) NSString *message;
 
@@ -94,7 +128,8 @@
 typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
 
 /**
- MDCActionSheetAction is passed to MDCActionSheetController to add a button to the action sheet.
+ An instance of MDCActionSheetAction is passed to MDCActionSheetController to add an action to the
+ action sheet.
  */
 @interface MDCActionSheetAction : NSObject <NSCopying>
 
@@ -136,18 +171,5 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
  actionWithTitle:image:handler: method.
 */
 @property (nonatomic, nonnull, readonly) MDCActionSheetHandler action;
-
-@end
-
-@protocol MDCActionSheetControllerDelegate <NSObject>
-
-/**
- Called when the user taps the dimmed background or swipes the action sheet off to dismiss
- the action sheet. This method is not called if the action sheet is dismissed
- programatically.
-
- @param controller The MDCActionSheetController that was dismissed.
- */
--(void)actionSheetControllerDidDismissActionSheet:(nonnull MDCActionSheetController *)controller;
 
 @end
