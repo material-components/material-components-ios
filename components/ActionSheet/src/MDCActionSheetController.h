@@ -16,6 +16,14 @@
 
 #import <UIKit/UIKit.h>
 
+#ifndef MDC_SUBCLASSING_RESTRICTED
+#if defined(__has_attribute) && __has_attribute(objc_subclassing_restricted)
+#define MDC_SUBCLASSING_RESTRICTED __attribute__((objc_subclassing_restricted))
+#else
+#define MDC_SUBCLASSING_RESTRICTED
+#endif
+#endif  // #ifndef MDC_SUBCLASSING_RESTRICTED
+
 @class MDCActionSheetAction;
 
 /**
@@ -37,6 +45,7 @@
 
  MDCActionSheetController depends on BottomSheet Component.
  */
+MDC_SUBCLASSING_RESTRICTED
 @interface MDCActionSheetController : UIViewController
 
 /**
@@ -49,7 +58,8 @@
  @return An initialized MDCActionSheetController object.
  */
 + (nonnull instancetype)actionSheetControllerWithTitle:(nullable NSString *)title
-                                               message:(nullable NSString *)message;
+                                               message:(nullable NSString *)message
+    NS_DESIGNATED_INITIALIZER;
 
 /**
  Convenience constructor to create and return a view controller for displaying an alert to the user.
@@ -59,10 +69,10 @@
  @param title The title of the alert.
  @return An initialized MDCActionSheetController object.
  */
-+ (nonnull instancetype)actionSheetControllerWithTitle:(nullable NSString *)title;
++ (instancetype)actionSheetControllerWithTitle:(nullable NSString *)title;
 
 
-- (nonnull instancetype)init;
+- (instancetype)init;
 
 /** Action sheet controllers must be created with actionSheetControllerWithTitle: or
  with actionSheetControllerWithTitle:message:  */
@@ -123,20 +133,19 @@
 @end
 
 /**
- MDCActionHandler is a block that will be invoked when the action is selected.
+ MDCActionSheetActionHandler is a block that will be invoked when the action is selected.
  */
 typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
 
 /**
- An instance of MDCActionSheetAction is passed to MDCActionSheetController to add an action to the
- action sheet.
+ An instance of MDCActionSheetAction is passed to MDCActionSheetController to add an
+ action to the action sheet.
  */
 @interface MDCActionSheetAction : NSObject <NSCopying>
 
 
 /**
- Action alerts control the list items that will be displayed on the bottom of an action
- sheet controller.
+ Returns an action sheet action with the populated given values.
 
  @param title The title of the list item shown in the list
  @param image The icon of the list item shown in the list
@@ -153,23 +162,17 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
 /**
  Title of the list item shown on the action sheet.
 
- Action sheet actions must have a title that will be set within actionWithTitle:image:handler: method.
+ Action sheet actions must have a title that will be set within actionWithTitle:image:handler:
+ method.
  */
 @property (nonatomic, nonnull, readonly) NSString *title;
 
 /**
  Image of the list item shown on the action sheet.
 
- Action sheet actions must have an image that will be set within actionWithTitle:image:handler: method.
+ Action sheet actions must have an image that will be set within actionWithTitle:image:handler:
+ method.
 */
 @property (nonatomic, nonnull, readonly) UIImage *image;
-
-/**
- Action of the list item shown on the action sheet.
-
- Action sheet actions must have an action taht will be set within
- actionWithTitle:image:handler: method.
-*/
-@property (nonatomic, nonnull, readonly) MDCActionSheetHandler action;
 
 @end
