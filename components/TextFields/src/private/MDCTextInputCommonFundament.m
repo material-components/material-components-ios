@@ -366,7 +366,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                   toItem:_leadingUnderlineLabel
                                attribute:NSLayoutAttributeTop
                               multiplier:1
-                                constant:-MDCTextInputHalfPadding];
+                                constant:-1 * MDCTextInputHalfPadding];
   leadingTop.priority = UILayoutPriorityDefaultLow;
 
   NSLayoutConstraint *leadingBottom =
@@ -376,7 +376,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                       toItem:_textInput
                                    attribute:NSLayoutAttributeBottom
                                   multiplier:1
-                                    constant:-MDCTextInputHalfPadding];
+                                    constant:-1 * MDCTextInputHalfPadding];
   leadingBottom.priority = UILayoutPriorityDefaultLow;
 
   NSLayoutConstraint *trailingTop =
@@ -386,7 +386,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                   toItem:_trailingUnderlineLabel
                                attribute:NSLayoutAttributeTop
                               multiplier:1
-                                constant:-MDCTextInputHalfPadding];
+                                constant:-1 * MDCTextInputHalfPadding];
   trailingTop.priority = UILayoutPriorityDefaultLow;
 
   [NSLayoutConstraint activateConstraints:@[ leadingTop, leadingBottom, trailingTop ]];
