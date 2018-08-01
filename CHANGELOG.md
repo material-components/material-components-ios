@@ -1,3 +1,301 @@
+# #develop#
+
+## Breaking changes
+
+## New deprecations
+
+## New features
+
+## API changes
+
+### AppBar
+
+#### MDCAppBarNavigationController
+
+*new* property: `delegate` in `MDCAppBarNavigationController`
+
+*new* class: `MDCAppBarNavigationController`
+
+*new* method: `-appBarForViewController:` in `MDCAppBarNavigationController`
+
+#### MDCAppBar
+
+*new* property: `inferTopSafeAreaInsetFromViewController` in `MDCAppBar`
+
+*modified* class: `MDCAppBar`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCAppBar : NSObject  /**  Adds headerViewController.view to headerViewController.parentViewController.view and registers  navigationItem observation on headerViewController.parentViewController.  */ - (void)addSubviewsToParent;  /** The header view controller instance manages the App Bar's flexible header view behavior. */ @property(nonatomic, strong, nonnull, readonly)     MDCFlexibleHeaderViewController *headerViewController;  /** The navigation bar. */ @property(nonatomic, strong, nonnull, readonly) MDCNavigationBar *navigationBar;  /**  The header stack view that owns the navigationBar (as the top bar) and an optional bottom bar.  */ @property(nonatomic, strong, nonnull, readonly) MDCHeaderStackView *headerStackView;  @end` |
+| To: | `@interface MDCAppBar : NSObject  /**  Adds headerViewController.view to headerViewController.parentViewController.view and registers  navigationItem observation on headerViewController.parentViewController.  */ - (void)addSubviewsToParent;  /** The header view controller instance manages the App Bar's flexible header view behavior. */ @property(nonatomic, strong, nonnull, readonly)     MDCFlexibleHeaderViewController *headerViewController;  /** The navigation bar. */ @property(nonatomic, strong, nonnull, readonly) MDCNavigationBar *navigationBar;  /**  The header stack view that owns the navigationBar (as the top bar) and an optional bottom bar.  */ @property(nonatomic, strong, nonnull, readonly) MDCHeaderStackView *headerStackView;  /**  Whether the App Bar should attempt to extract safe area insets from the view controller hierarchy  or not.   This behavior provides better support for App Bars on iPad, extensions, and anywhere else where the  view controller might not be directly behind the status bar / device safe area insets.   Enabling this behavior will do the following:   - Enable the same-named behavior on the headerViewController.  - Enable the headerViewController's topLayoutGuideAdjustmentEnabled behavior. Consider setting a    topLayoutGuideViewController to your content view controller if you want to use topLayoutGuide.  - The header stack view's frame will be inset by the flexible header view's topSafeAreaGuide rather    than the global device safe area insets.   Disabling this behavior will not disable headerViewController's topLayoutGuideAdjustmentEnabled  behavior.   This behavior will eventually be enabled by default.   See MDCFlexibleHeaderViewController's documentation for the API of the same name.   Default is NO.  */ @property(nonatomic) BOOL inferTopSafeAreaInsetFromViewController;  @end` |
+
+#### MDCAppBarNavigationControllerDelegate
+
+*new* protocol: `MDCAppBarNavigationControllerDelegate`
+
+*new* method: `-appBarNavigationController:willAddAppBar:asChildOfViewController:` in `MDCAppBarNavigationControllerDelegate`
+
+### FlexibleHeader
+
+#### MDCFlexibleHeaderView()
+
+*new* category: `MDCFlexibleHeaderView()`
+
+*removed* category: `MDCFlexibleHeaderView()`
+
+*modified* property: `behavior` in `MDCFlexibleHeaderView()`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(ext)MDCFlexibleHeaderView@MDCFlexibleHeaderView.h@17297` |
+| To: | `c:objc(ext)MDCFlexibleHeaderView@MDCFlexibleHeaderView.h@19263` |
+
+*modified* property: `contentView` in `MDCFlexibleHeaderView()`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(ext)MDCFlexibleHeaderView@MDCFlexibleHeaderView.h@17297` |
+| To: | `c:objc(ext)MDCFlexibleHeaderView@MDCFlexibleHeaderView.h@19263` |
+
+#### MDCFlexibleHeaderView
+
+*new* property: `observesTrackingScrollViewScrollEvents` in `MDCFlexibleHeaderView`
+
+### Snackbar
+
+#### MDCSnackbarManager(LegacyAPI)
+
+*new* category: `MDCSnackbarManager(LegacyAPI)`
+
+*modified* class method: `+setButtonTitleColor:forState:` in `MDCSnackbarManager(LegacyAPI)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarManager` |
+| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
+
+*modified* class method: `+dismissAndCallCompletionBlocksWithCategory:` in `MDCSnackbarManager(LegacyAPI)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarManager` |
+| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
+
+*modified* class method: `+buttonTitleColorForState:` in `MDCSnackbarManager(LegacyAPI)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarManager` |
+| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
+
+*modified* property: `buttonFont` in `MDCSnackbarManager(LegacyAPI)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarManager` |
+| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
+
+*modified* class method: `+showMessage:` in `MDCSnackbarManager(LegacyAPI)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarManager` |
+| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
+
+*modified* class method: `+suspendMessagesWithCategory:` in `MDCSnackbarManager(LegacyAPI)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarManager` |
+| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
+
+*modified* property: `mdc_adjustsFontForContentSizeCategory` in `MDCSnackbarManager(LegacyAPI)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarManager` |
+| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
+
+*modified* property: `messageFont` in `MDCSnackbarManager(LegacyAPI)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarManager` |
+| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
+
+*modified* class method: `+hasMessagesShowingOrQueued` in `MDCSnackbarManager(LegacyAPI)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarManager` |
+| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
+
+*modified* property: `snackbarMessageViewShadowColor` in `MDCSnackbarManager(LegacyAPI)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarManager` |
+| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
+
+*modified* class method: `+setBottomOffset:` in `MDCSnackbarManager(LegacyAPI)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarManager` |
+| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
+
+*modified* class method: `+setPresentationHostView:` in `MDCSnackbarManager(LegacyAPI)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarManager` |
+| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
+
+*modified* property: `snackbarMessageViewBackgroundColor` in `MDCSnackbarManager(LegacyAPI)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarManager` |
+| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
+
+*modified* class method: `+resumeMessagesWithToken:` in `MDCSnackbarManager(LegacyAPI)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarManager` |
+| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
+
+*modified* property: `messageTextColor` in `MDCSnackbarManager(LegacyAPI)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarManager` |
+| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
+
+*modified* property: `alignment` in `MDCSnackbarManager(LegacyAPI)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarManager` |
+| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
+
+*modified* class method: `+suspendAllMessages` in `MDCSnackbarManager(LegacyAPI)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarManager` |
+| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
+
+*modified* property: `delegate` in `MDCSnackbarManager(LegacyAPI)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarManager` |
+| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
+
+*modified* property: `shouldApplyStyleChangesToVisibleSnackbars` in `MDCSnackbarManager(LegacyAPI)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarManager` |
+| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
+
+#### MDCSnackbarManager
+
+*new* property: `defaultManager` in `MDCSnackbarManager`
+
+*new* method: `-setButtonTitleColor:forState:` in `MDCSnackbarManager`
+
+*new* property: `messageFont` in `MDCSnackbarManager`
+
+*new* method: `-suspendMessagesWithCategory:` in `MDCSnackbarManager`
+
+*new* method: `-setBottomOffset:` in `MDCSnackbarManager`
+
+*new* property: `messageTextColor` in `MDCSnackbarManager`
+
+*new* property: `mdc_adjustsFontForContentSizeCategory` in `MDCSnackbarManager`
+
+*new* property: `snackbarMessageViewShadowColor` in `MDCSnackbarManager`
+
+*new* method: `-showMessage:` in `MDCSnackbarManager`
+
+*new* method: `-hasMessagesShowingOrQueued` in `MDCSnackbarManager`
+
+*new* method: `-setPresentationHostView:` in `MDCSnackbarManager`
+
+*new* property: `buttonFont` in `MDCSnackbarManager`
+
+*new* method: `-suspendAllMessages` in `MDCSnackbarManager`
+
+*new* property: `snackbarMessageViewBackgroundColor` in `MDCSnackbarManager`
+
+*new* property: `shouldApplyStyleChangesToVisibleSnackbars` in `MDCSnackbarManager`
+
+*new* method: `-dismissAndCallCompletionBlocksWithCategory:` in `MDCSnackbarManager`
+
+*new* property: `delegate` in `MDCSnackbarManager`
+
+*new* method: `-resumeMessagesWithToken:` in `MDCSnackbarManager`
+
+*new* property: `alignment` in `MDCSnackbarManager`
+
+*new* method: `-buttonTitleColorForState:` in `MDCSnackbarManager`
+
+## Component changes
+
+### AppBar
+
+#### Changes
+
+* [Add an inferTopSafeAreaInsetFromViewController behavior. (#4648)](https://github.com/material-components/material-components-ios/commit/76a5c1e6882f46eb4c40d632c5bfd6ac49aff592) (featherless)
+* [Add new MDCAppBarNavigationController API.  (#4650)](https://github.com/material-components/material-components-ios/commit/f2d7edb84604244a9a2ffefb0f78abad36d35d92) (featherless)
+* [[FlexibleHeader] Add support for observing the tracking scroll view. (#4647)](https://github.com/material-components/material-components-ios/commit/a5594f37802c8563086cc2ba85109c7c975aa535) (featherless)
+
+### Ink
+
+#### Changes
+
+* [[Catalog] Improve Ink demo color contrast (#4660)](https://github.com/material-components/material-components-ios/commit/bece3086d85c624c9112ac68ad7f8baec1ffba66) (Robert Moore)
+* [add commonMDCInkViewInit call to -initWithCoder: (#4662)](https://github.com/material-components/material-components-ios/commit/49a870fd94545535ead2b915a1ebf65d793b99fb) (Andrew Overton)
+
+### Snackbar
+
+#### Changes
+
+* [Create explicit singleton (#4556)](https://github.com/material-components/material-components-ios/commit/c6ffe403ba550da972317936c2740790549002b1) (Robert Moore)
+
+### Cards
+
+#### Changes
+
+* [ accessibility example for collection cards (#4488)](https://github.com/material-components/material-components-ios/commit/f040e95bffda55a4f637dd5d48c679e740cf59bc) (Galia Kaufman)
+* [Accessibility: Fixing documentation typos (#4634)](https://github.com/material-components/material-components-ios/commit/cf014946d8f25ee95858631c6f301ef222f3b6c0) (Galia Kaufman)
+
+### Dialogs
+
+#### Changes
+
+* [Best example description (#4643)](https://github.com/material-components/material-components-ios/commit/d2d1cc064f7bad4d96b432d4a1a9797a65c768d8) (ianegordon)
+* [Revert "Update buttons touch area to be 48x48 minimum (#4624)" (#4675)](https://github.com/material-components/material-components-ios/commit/a55e190c3c51c04e7f5c6506adac0e460bdf19b4) (ianegordon)
+* [Update buttons touch area to be 48x48 minimum (#4624)](https://github.com/material-components/material-components-ios/commit/2c8539c3be9bb39dd8198341fb71c860cbc61e93) (Cody Weaver)
+
+### BottomNavigation
+
+#### Changes
+
+* [Explicitly update label visibility after titleVisibility is set (#4635)](https://github.com/material-components/material-components-ios/commit/203160c80e8e5572443ee27616be730e56a43a79) (Andrew Overton)
+* [Fix delayed ink ripple (#4625)](https://github.com/material-components/material-components-ios/commit/9d16a4a8946e9a356c752427f80c6fbb078133cb) (Robert Moore)
+* [Give UITabBarItems' accessibilityIdentifiers to MDCBottomNavigationBa… (#4599)](https://github.com/material-components/material-components-ios/commit/87496292fff9a73ca671ab63939fcc2ed665fe34) (Andrew Overton)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Add support for observing the tracking scroll view. (#4647)](https://github.com/material-components/material-components-ios/commit/a5594f37802c8563086cc2ba85109c7c975aa535) (featherless)
+
+---
+
 # 59.0.0
 
 This major release removed the remaining encoding/decoding behaviors from components ([tracking project](https://github.com/material-components/material-components-ios/projects/22)) and fixed a variety of bugs in FlexibleHeader with relation to safe area insets.
