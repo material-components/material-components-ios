@@ -1,10 +1,44 @@
-# #develop#
+# 59.1.0
 
-## Breaking changes
-
-## New deprecations
+AppBar and FlexibleHeader shipped several new features in this release and Snackbar's manager is now implemented as a true singleton. This release also includes additional accessibility improvements and examples, and also fixes some bugs.
 
 ## New features
+
+The new MDCAppBarNavigationController class is a simpler integration strategy for adding an App Bar to an application. Example:
+
+```swift
+let navigationController = MDCAppBarNavigationController()
+
+// Will automatically inject an AppBar into the view controller if one is not already present.
+navigationController.pushViewController(viewController, animated: true)
+```
+
+This new API enables all of the new AppBar and FlexibleHeader behaviors, meaning view controllers will better handle being presented in non-full screen settings. If you have already integrated with App Bar, migrating to MDCAppBarNavigationController will allow you to delete a substantial amount of boilerplate from your application. Most notably, MDCAppBarNavigationController enables the new `observesTrackingScrollViewScrollEvents` feature on FlexibleHeader, meaning you do not need to forward scroll view events to the navigation controller.
+
+At a minimum you will need to implement the MDCAppBarNavigationController's delegate to theme the injected App Bars. Implement the delegate like so:
+
+```swift
+navigationController.delegate = self
+
+// MARK: MDCAppBarNavigationControllerInjectorDelegate
+
+func appBarNavigationController(_ navigationController: MDCAppBarNavigationController,
+                                willAdd appBar: MDCAppBar,
+                                asChildOf viewController: UIViewController) {
+  let colorScheme: MDCSemanticColorScheme = <# Fetch your color scheme #>
+  let typographyScheme: MDCTypographyScheme = <# Fetch your typography scheme #>
+  MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
+  MDCAppBarTypographyThemer.applyTypographyScheme(typographyScheme, to: appBar)
+                                                  
+  // Additional configuration of appBar if needed.
+}
+```
+
+AppBar's new `inferTopSafeAreaInsetFromViewController` property enables App Bars to be presented in non-full-screen contexts, such as iPad popovers or extensions. Consider enabling this property by default in all use cases.
+
+FlexibleHeader's new `observesTrackingScrollViewScrollEvents` property allows the FlexibleHeader to automatically observe content offset changes to the tracking scroll view, removing the need for forwarding the UIScrollViewDelegate events to the FlexibleHeader. Note: you can only use this new feature if you have *not* enabled the shift behavior.
+
+MDCSnackbarManager is now implemented as a true singleton with the ability to also create individual instances, making it possible to write self-contained tests for the component.
 
 ## API changes
 
@@ -12,22 +46,15 @@
 
 #### MDCAppBarNavigationController
 
-*new* property: `delegate` in `MDCAppBarNavigationController`
-
 *new* class: `MDCAppBarNavigationController`
+
+*new* property: `delegate` in `MDCAppBarNavigationController`
 
 *new* method: `-appBarForViewController:` in `MDCAppBarNavigationController`
 
 #### MDCAppBar
 
 *new* property: `inferTopSafeAreaInsetFromViewController` in `MDCAppBar`
-
-*modified* class: `MDCAppBar`
-
-| Type of change: | Declaration |
-|---|---|
-| From: | `@interface MDCAppBar : NSObject  /**  Adds headerViewController.view to headerViewController.parentViewController.view and registers  navigationItem observation on headerViewController.parentViewController.  */ - (void)addSubviewsToParent;  /** The header view controller instance manages the App Bar's flexible header view behavior. */ @property(nonatomic, strong, nonnull, readonly)     MDCFlexibleHeaderViewController *headerViewController;  /** The navigation bar. */ @property(nonatomic, strong, nonnull, readonly) MDCNavigationBar *navigationBar;  /**  The header stack view that owns the navigationBar (as the top bar) and an optional bottom bar.  */ @property(nonatomic, strong, nonnull, readonly) MDCHeaderStackView *headerStackView;  @end` |
-| To: | `@interface MDCAppBar : NSObject  /**  Adds headerViewController.view to headerViewController.parentViewController.view and registers  navigationItem observation on headerViewController.parentViewController.  */ - (void)addSubviewsToParent;  /** The header view controller instance manages the App Bar's flexible header view behavior. */ @property(nonatomic, strong, nonnull, readonly)     MDCFlexibleHeaderViewController *headerViewController;  /** The navigation bar. */ @property(nonatomic, strong, nonnull, readonly) MDCNavigationBar *navigationBar;  /**  The header stack view that owns the navigationBar (as the top bar) and an optional bottom bar.  */ @property(nonatomic, strong, nonnull, readonly) MDCHeaderStackView *headerStackView;  /**  Whether the App Bar should attempt to extract safe area insets from the view controller hierarchy  or not.   This behavior provides better support for App Bars on iPad, extensions, and anywhere else where the  view controller might not be directly behind the status bar / device safe area insets.   Enabling this behavior will do the following:   - Enable the same-named behavior on the headerViewController.  - Enable the headerViewController's topLayoutGuideAdjustmentEnabled behavior. Consider setting a    topLayoutGuideViewController to your content view controller if you want to use topLayoutGuide.  - The header stack view's frame will be inset by the flexible header view's topSafeAreaGuide rather    than the global device safe area insets.   Disabling this behavior will not disable headerViewController's topLayoutGuideAdjustmentEnabled  behavior.   This behavior will eventually be enabled by default.   See MDCFlexibleHeaderViewController's documentation for the API of the same name.   Default is NO.  */ @property(nonatomic) BOOL inferTopSafeAreaInsetFromViewController;  @end` |
 
 #### MDCAppBarNavigationControllerDelegate
 
@@ -36,26 +63,6 @@
 *new* method: `-appBarNavigationController:willAddAppBar:asChildOfViewController:` in `MDCAppBarNavigationControllerDelegate`
 
 ### FlexibleHeader
-
-#### MDCFlexibleHeaderView()
-
-*new* category: `MDCFlexibleHeaderView()`
-
-*removed* category: `MDCFlexibleHeaderView()`
-
-*modified* property: `behavior` in `MDCFlexibleHeaderView()`
-
-| Type of change: | parent.usr |
-|---|---|
-| From: | `c:objc(ext)MDCFlexibleHeaderView@MDCFlexibleHeaderView.h@17297` |
-| To: | `c:objc(ext)MDCFlexibleHeaderView@MDCFlexibleHeaderView.h@19263` |
-
-*modified* property: `contentView` in `MDCFlexibleHeaderView()`
-
-| Type of change: | parent.usr |
-|---|---|
-| From: | `c:objc(ext)MDCFlexibleHeaderView@MDCFlexibleHeaderView.h@17297` |
-| To: | `c:objc(ext)MDCFlexibleHeaderView@MDCFlexibleHeaderView.h@19263` |
 
 #### MDCFlexibleHeaderView
 
