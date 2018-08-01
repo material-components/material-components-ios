@@ -16,7 +16,6 @@
 
 #import "../MDCSnackbarMessageView.h"
 
-@class MDCSnackbarManager;
 @class MDCSnackbarMessage;
 @class MDCSnackbarMessageAction;
 
@@ -63,8 +62,7 @@ typedef void (^MDCSnackbarMessageDismissHandler)(BOOL userInitiated,
  that it needs to be dismissed prior to its timer-based dismissal time.
  */
 - (_Nonnull instancetype)initWithMessage:(MDCSnackbarMessage *_Nullable)message
-                          dismissHandler:(MDCSnackbarMessageDismissHandler _Nullable)handler
-                         snackbarManager:(MDCSnackbarManager *_Nonnull)manager;
+                          dismissHandler:(MDCSnackbarMessageDismissHandler _Nullable)handler;
 
 /**
  Dismisses the message view.
