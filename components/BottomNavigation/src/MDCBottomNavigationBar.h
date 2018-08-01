@@ -144,6 +144,15 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
 
 @end
 
+@interface UITabBarItem ()
+
+/**
+ Color of the text represented in the badge
+ */
+@property(nonatomic, strong, nullable) UIColor *badgeTextColor;
+
+@end
+
 #pragma mark - MDCBottomNavigationBarDelegate
 
 /**
