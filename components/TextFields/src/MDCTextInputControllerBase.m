@@ -995,10 +995,10 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (void)setHelperText:(NSString *)helperText {
   if (self.isDisplayingErrorText) {
-    self.previousLeadingText = [helperText copy];
+    self.previousLeadingText = helperText;
   } else {
     if (![self.textInput.leadingUnderlineLabel.text isEqualToString:helperText]) {
-      self.textInput.leadingUnderlineLabel.text = [helperText copy];
+      self.textInput.leadingUnderlineLabel.text = helperText;
       [self updateLayout];
     }
   }
