@@ -19,19 +19,19 @@ import MaterialComponents
 
 class ShadowElevationsTypicalUseExample: UIViewController {
 
-  let appBar = MDCAppBar()
+  let appBarViewController = MDCAppBarViewController()
   let paper = ShadowElevationsPointsLabel()
 
   init() {
     super.init(nibName: nil, bundle: nil)
 
     self.title = "Shadow Elevations (Swift)"
-    self.addChildViewController(appBar.headerViewController)
+    self.addChildViewController(appBarViewController)
 
     let color = UIColor(white: 0.2, alpha:1)
-    appBar.headerViewController.headerView.backgroundColor = color
-    appBar.navigationBar.tintColor = .white
-    appBar.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
+    appBarViewController.headerView.backgroundColor = color
+    appBarViewController.navigationBar.tintColor = .white
+    appBarViewController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
 
     let paperDim = CGFloat(200)
     paper.frame =
@@ -48,7 +48,8 @@ class ShadowElevationsTypicalUseExample: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    appBar.addSubviewsToParent()
+    view.addSubview(appBarViewController.view)
+    appBarViewController.didMove(toParentViewController: self)
   }
 
   override func viewWillAppear(_ animated: Bool) {

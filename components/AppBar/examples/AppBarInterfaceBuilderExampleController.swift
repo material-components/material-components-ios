@@ -20,12 +20,12 @@ import MaterialComponents.MaterialAppBar_ColorThemer
 
 class AppBarInterfaceBuilderSwiftExample: UIViewController, UIScrollViewDelegate {
   @IBOutlet weak var scrollView: UIScrollView!
-  let appBar = MDCAppBar()
+  let appBarViewController = MDCAppBarViewController()
   var colorScheme = MDCSemanticColorScheme()
 
   deinit {
     // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
-    appBar.headerViewController.headerView.trackingScrollView = nil
+    appBarViewController.headerView.trackingScrollView = nil
   }
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -44,23 +44,24 @@ class AppBarInterfaceBuilderSwiftExample: UIViewController, UIScrollViewDelegate
 
   func commonAppBarInterfaceBuilderSwiftExampleSetup() {
     // Behavioral flags.
-    appBar.inferTopSafeAreaInsetFromViewController = true
-    appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = false
+    appBarViewController.inferTopSafeAreaInsetFromViewController = true
+    appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
 
-    addChildViewController(appBar.headerViewController)
+    addChildViewController(appBarViewController)
   }
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
+    MDCAppBarColorThemer.applyColorScheme(colorScheme, to: appBarViewController)
 
     // Allows us to avoid forwarding events, but means we can't enable shift behaviors.
-    appBar.headerViewController.headerView.observesTrackingScrollViewScrollEvents = true
+    appBarViewController.headerView.observesTrackingScrollViewScrollEvents = true
 
-    appBar.headerViewController.headerView.trackingScrollView = scrollView
+    appBarViewController.headerView.trackingScrollView = scrollView
 
-    appBar.addSubviewsToParent()
+    view.addSubview(appBarViewController.view)
+    appBarViewController.didMove(toParentViewController: self)
   }
 
   override var preferredStatusBarStyle: UIStatusBarStyle {

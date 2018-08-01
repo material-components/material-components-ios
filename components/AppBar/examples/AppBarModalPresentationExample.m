@@ -20,7 +20,7 @@
 #import "MaterialAppBar+ColorThemer.h"
 
 @interface AppBarModalPresentationExamplePresented : UITableViewController
-@property(strong, nonatomic) MDCAppBar *appBar;
+@property(strong, nonatomic) MDCAppBarViewController *appBarViewController;
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @end
 
@@ -28,20 +28,20 @@
 
 - (void)dealloc {
   // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
-  self.appBar.headerViewController.headerView.trackingScrollView = nil;
+  self.appBarViewController.headerView.trackingScrollView = nil;
 }
 
 - (instancetype)init {
   self = [super init];
   if (self) {
     // Initialize the App Bar and add the headerViewController as a child.
-    _appBar = [[MDCAppBar alloc] init];
+    _appBarViewController = [[MDCAppBarViewController alloc] init];
 
     // Behavioral flags.
-    _appBar.inferTopSafeAreaInsetFromViewController = YES;
-    _appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = NO;
+    _appBarViewController.inferTopSafeAreaInsetFromViewController = YES;
+    _appBarViewController.headerView.minMaxHeightIncludesSafeArea = NO;
 
-    [self addChildViewController:_appBar.headerViewController];
+    [self addChildViewController:_appBarViewController];
 
     // Set presentation style
     [self setModalPresentationStyle:UIModalPresentationFormSheet];
@@ -58,13 +58,14 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme toAppBar:_appBar];
+  [MDCAppBarColorThemer applyColorScheme:self.colorScheme toAppBarViewController:self.appBarViewController];
 
   // Allows us to avoid forwarding events, but means we can't enable shift behaviors.
-  self.appBar.headerViewController.headerView.observesTrackingScrollViewScrollEvents = YES;
+  self.appBarViewController.headerView.observesTrackingScrollViewScrollEvents = YES;
 
-  self.appBar.headerViewController.headerView.trackingScrollView = self.tableView;
-  [self.appBar addSubviewsToParent];
+  self.appBarViewController.headerView.trackingScrollView = self.tableView;
+  [self.view addSubview:self.appBarViewController.view];
+  [self.appBarViewController didMoveToParentViewController:self];
 
   // Add optional navigation items
   self.navigationItem.leftBarButtonItem =
@@ -105,7 +106,7 @@
 // AppBarModalPresentationExamplePresented
 
 @interface AppBarModalPresentationExample : UITableViewController
-@property(nonatomic, strong) MDCAppBar *appBar;
+@property(nonatomic, strong) MDCAppBarViewController *appBarViewController;
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @end
 
@@ -116,8 +117,9 @@
 
   self.tableView.delegate = self;
 
-  self.appBar.headerViewController.headerView.trackingScrollView = self.tableView;
-  [self.appBar addSubviewsToParent];
+  self.appBarViewController.headerView.trackingScrollView = self.tableView;
+  [self.view addSubview:self.appBarViewController.view];
+  [self.appBarViewController didMoveToParentViewController:self];
 
   self.tableView.layoutMargins = UIEdgeInsetsZero;
   self.tableView.separatorInset = UIEdgeInsetsZero;
@@ -141,19 +143,19 @@
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-  if (scrollView == self.appBar.headerViewController.headerView.trackingScrollView) {
-    [self.appBar.headerViewController.headerView trackingScrollViewDidScroll];
+  if (scrollView == self.appBarViewController.headerView.trackingScrollView) {
+    [self.appBarViewController.headerView trackingScrollViewDidScroll];
   }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-  if (scrollView == self.appBar.headerViewController.headerView.trackingScrollView) {
-    [self.appBar.headerViewController.headerView trackingScrollViewDidEndDecelerating];
+  if (scrollView == self.appBarViewController.headerView.trackingScrollView) {
+    [self.appBarViewController.headerView trackingScrollViewDidEndDecelerating];
   }
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-  MDCFlexibleHeaderView *headerView = self.appBar.headerViewController.headerView;
+  MDCFlexibleHeaderView *headerView = self.appBarViewController.headerView;
   if (scrollView == headerView.trackingScrollView) {
     [headerView trackingScrollViewDidEndDraggingWillDecelerate:decelerate];
   }
@@ -162,7 +164,7 @@
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView
                      withVelocity:(CGPoint)velocity
               targetContentOffset:(inout CGPoint *)targetContentOffset {
-  MDCFlexibleHeaderView *headerView = self.appBar.headerViewController.headerView;
+  MDCFlexibleHeaderView *headerView = self.appBarViewController.headerView;
   if (scrollView == headerView.trackingScrollView) {
     [headerView trackingScrollViewWillEndDraggingWithVelocity:velocity
                                           targetContentOffset:targetContentOffset];
@@ -196,8 +198,8 @@
 - (id)init {
   self = [super init];
   if (self) {
-    _appBar = [[MDCAppBar alloc] init];
-    [self addChildViewController:_appBar.headerViewController];
+    _appBarViewController = [[MDCAppBarViewController alloc] init];
+    [self addChildViewController:_appBarViewController];
 
     self.title = @"Modal Presentation";
   }
@@ -207,15 +209,15 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme toAppBar:_appBar];
+  [MDCAppBarColorThemer applyColorScheme:self.colorScheme toAppBarViewController:self.appBarViewController];
 }
 
 - (UIViewController *)childViewControllerForStatusBarHidden {
-  return self.appBar.headerViewController;
+  return self.appBarViewController;
 }
 
 - (UIViewController *)childViewControllerForStatusBarStyle {
-  return self.appBar.headerViewController;
+  return self.appBarViewController;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
