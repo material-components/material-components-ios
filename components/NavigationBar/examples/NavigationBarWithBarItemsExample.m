@@ -36,7 +36,7 @@
 
   self.title = @"With Items";
 
-  // The actino selector we are using has a signature of id:UIEvent:UIButton to demonstrate how to
+  // The action selector we are using has a signature of id:UIEvent:UIButton to demonstrate how to
   // identify the underlying UIView of the UIBarButtonItem. This is required because we don't have
   // access to the necessary private ivars to associate the item with the button.
   self.navigationItem.leftBarButtonItem =
