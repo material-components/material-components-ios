@@ -1,0 +1,83 @@
+/*
+ Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
+#import <UIKit/UIKit.h>
+
+#ifndef MDC_SUBCLASSING_RESTRICTED
+#if defined(__has_attribute) && __has_attribute(objc_subclassing_restricted)
+#define MDC_SUBCLASSING_RESTRICTED __attribute__((objc_subclassing_restricted))
+#else
+#define MDC_SUBCLASSING_RESTRICTED
+#endif
+#endif  // #ifndef MDC_SUBCLASSING_RESTRICTED
+
+@class MDCAppBar;
+@class MDCAppBarNavigationController;
+
+/**
+ Defines the events that an MDCAppBarNavigationController may send to a delegate.
+ */
+@protocol MDCAppBarNavigationControllerDelegate <UINavigationControllerDelegate>
+@optional
+
+/**
+ Informs the receiver that the given App Bar will be added as a child of the given view controller.
+
+ This event is primarily intended to allow any configuration or theming of the App Bar to occur
+ before it becomes part of the view controller hierarchy.
+
+ By the time this event has fired, the navigation controller will already have attempted to infer
+ the tracking scroll view from the provided view controller.
+
+ @note This method will only be invoked if a new App Bar instance is about to be added to the view
+ controller. If a flexible header is already present in the view controller, this method will not
+ be invoked.
+ */
+- (void)appBarNavigationController:(nonnull MDCAppBarNavigationController *)navigationController
+                     willAddAppBar:(nonnull MDCAppBar *)appBar
+           asChildOfViewController:(nonnull UIViewController *)viewController;
+
+@end
+
+/**
+ A custom navigation controller instance that auto-injects App Bar instances into pushed view
+ controllers.
+
+ If a pushed view controller already has an App Bar or a Flexible Header then the navigation
+ controller will not inject a new App Bar.
+
+ To theme the injected App Bar, implement the delegate's
+ -appBarNavigationController:willAddAppBar:asChildOfViewController: API.
+ */
+MDC_SUBCLASSING_RESTRICTED
+@interface MDCAppBarNavigationController : UINavigationController
+
+#pragma mark - Reacting to state changes
+
+/**
+ An extension of the UINavigationController's delegate.
+ */
+@property(nonatomic, weak, nullable) id<MDCAppBarNavigationControllerDelegate> delegate;
+
+#pragma mark - Getting App Bar instances
+
+/**
+ Returns the injected App Bar for a given view controller, if an App Bar was injected.
+ */
+- (nullable MDCAppBar *)appBarForViewController:(nonnull UIViewController *)viewController;
+
+@end
+

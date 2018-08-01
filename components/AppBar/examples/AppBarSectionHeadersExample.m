@@ -29,6 +29,11 @@
 
 @implementation AppBarSectionHeadersExample
 
+- (void)dealloc {
+  // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
+  self.appBar.headerViewController.headerView.trackingScrollView = nil;
+}
+
 - (id)init {
   self = [super init];
   if (self) {
@@ -36,6 +41,11 @@
 
     // Step 2: Initialize the App Bar and add the headerViewController as a child.
     _appBar = [[MDCAppBar alloc] init];
+
+    // Behavioral flags.
+    _appBar.inferTopSafeAreaInsetFromViewController = YES;
+    _appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = NO;
+
     [self addChildViewController:_appBar.headerViewController];
 
     self.colorScheme = [[MDCSemanticColorScheme alloc] init];
@@ -59,13 +69,11 @@
   // Step 3: Register the App Bar views.
   [self.appBar addSubviewsToParent];
 
-  self.tableView.layoutMargins = UIEdgeInsetsZero;
-
   self.navigationItem.rightBarButtonItem =
-  [[UIBarButtonItem alloc] initWithTitle:@"Right"
-                                   style:UIBarButtonItemStyleDone
-                                  target:nil
-                                  action:nil];
+      [[UIBarButtonItem alloc] initWithTitle:@"Right"
+                                       style:UIBarButtonItemStyleDone
+                                      target:nil
+                                      action:nil];
 }
 
 // Optional step: If you allow the header view to hide the status bar you must implement this
@@ -119,7 +127,6 @@
     cell =
     [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
   }
-  cell.layoutMargins = UIEdgeInsetsZero;
   cell.textLabel.text = indexPath.section == 0 ? @"Demo" : @"Example";
   return cell;
 }

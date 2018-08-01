@@ -44,12 +44,13 @@ static NSString *const kMDCBottomNavigationBarSelectedImageString = @"selectedIm
 // TODO: - Change to NSKeyValueChangeNewKey
 static NSString *const kMDCBottomNavigationBarNewString = @"new";
 static NSString *const kMDCBottomNavigationBarTitleString = @"title";
+static NSString *const kMDCBottomNavigationBarAccessibilityIdentifier = @"accessibilityIdentifier";
 
 
 static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 
 
-@interface MDCBottomNavigationBar ()
+@interface MDCBottomNavigationBar () <MDCInkTouchControllerDelegate>
 
 @property(nonatomic, assign) BOOL itemsDistributed;
 @property(nonatomic, assign) BOOL titleBelowItem;
@@ -57,6 +58,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 @property(nonatomic, strong) NSMutableArray<MDCBottomNavigationItemView *> *itemViews;
 @property(nonatomic, readonly) UIEdgeInsets mdc_safeAreaInsets;
 @property(nonatomic, strong) UIView *containerView;
+@property(nonatomic, strong) NSMutableArray *inkControllers;
 
 @end
 
@@ -245,6 +247,10 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
            forKeyPath:kMDCBottomNavigationBarTitleString
               options:NSKeyValueObservingOptionNew
               context:nil];
+    [item addObserver:self
+           forKeyPath:kMDCBottomNavigationBarAccessibilityIdentifier
+              options:NSKeyValueObservingOptionNew
+              context:nil];
   }
 }
 
@@ -259,6 +265,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
       [item removeObserver:self
                 forKeyPath:kMDCBottomNavigationBarSelectedImageString];
       [item removeObserver:self forKeyPath:kMDCBottomNavigationBarTitleString];
+      [item removeObserver:self forKeyPath:kMDCBottomNavigationBarAccessibilityIdentifier];
     }
     @catch (NSException *exception) {
       if (exception) {
@@ -295,6 +302,8 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
       itemView.selectedImage = change[kMDCBottomNavigationBarNewString];
     } else if ([keyPath isEqualToString:kMDCBottomNavigationBarTitleString]) {
       itemView.title = change[kMDCBottomNavigationBarNewString];
+    } else if ([keyPath isEqualToString:kMDCBottomNavigationBarAccessibilityIdentifier]) {
+      itemView.accessibilityIdentifier = change[kMDCBottomNavigationBarNewString];
     }
   }
 }
@@ -334,7 +343,6 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
           [self.delegate bottomNavigationBar:self didSelectItem:item];
         }
       }
-      [itemView.inkView startTouchEndedAnimationAtPoint:CGPointZero completion:nil];
     }
   }
 }
@@ -361,6 +369,10 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
     [itemView removeFromSuperview];
   }
   [self.itemViews removeAllObjects];
+  [self.inkControllers removeAllObjects];
+  if (!self.inkControllers) {
+    _inkControllers = [@[] mutableCopy];
+  }
   [self removeObserversFromTabBarItems];
 
   _items = [items copy];
@@ -377,9 +389,13 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
     itemView.titleVisibility = self.titleVisibility;
     itemView.titleBelowIcon = self.titleBelowItem;
     itemView.accessibilityValue = item.accessibilityValue;
+    itemView.accessibilityIdentifier = item.accessibilityIdentifier;
     itemView.contentInsets = self.itemsContentInsets;
     itemView.contentVerticalMargin = self.itemsContentVerticalMargin;
     itemView.contentHorizontalMargin = self.itemsContentHorizontalMargin;
+    MDCInkTouchController *controller = [[MDCInkTouchController alloc] initWithView:itemView];
+    controller.delegate = self;
+    [self.inkControllers addObject:controller];
 
     NSString *key =
         kMaterialBottomNavigationStringTable[kStr_MaterialBottomNavigationItemCountAccessibilityHint];
@@ -413,17 +429,8 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 #endif
     itemView.selected = NO;
     [itemView.button addTarget:self
-                        action:@selector(didTouchDownButton:)
-              forControlEvents:UIControlEventTouchDown];
-    [itemView.button addTarget:self
                         action:@selector(didTouchUpInsideButton:)
               forControlEvents:UIControlEventTouchUpInside];
-    [itemView.button addTarget:self
-                        action:@selector(didTouchUpOutsideButton:)
-              forControlEvents:UIControlEventTouchUpOutside];
-    [itemView.button addTarget:self
-                        action:@selector(didCancelTouchesForButton:)
-              forControlEvents:UIControlEventTouchCancel];
     [self.itemViews addObject:itemView];
     [self.containerView addSubview:itemView];
   }
@@ -562,6 +569,16 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
   NSBundle *bundle = [NSBundle bundleForClass:[MDCBottomNavigationBar class]];
   NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle) resourcePath];
   return [resourcePath stringByAppendingPathComponent:bundleName];
+}
+
+#pragma mark - MDCInkTouchControllerDelegate methods
+
+- (MDCInkView *)inkTouchController:(MDCInkTouchController *)inkTouchController
+            inkViewAtTouchLocation:(CGPoint)location {
+  if ([inkTouchController.view isKindOfClass:[MDCBottomNavigationItemView class]]) {
+    return ((MDCBottomNavigationItemView *)inkTouchController.view).inkView;
+  }
+  return nil;
 }
 
 @end

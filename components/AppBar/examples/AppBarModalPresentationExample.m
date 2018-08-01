@@ -26,11 +26,21 @@
 
 @implementation AppBarModalPresentationExamplePresented
 
+- (void)dealloc {
+  // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
+  self.appBar.headerViewController.headerView.trackingScrollView = nil;
+}
+
 - (instancetype)init {
   self = [super init];
   if (self) {
     // Initialize the App Bar and add the headerViewController as a child.
     _appBar = [[MDCAppBar alloc] init];
+
+    // Behavioral flags.
+    _appBar.inferTopSafeAreaInsetFromViewController = YES;
+    _appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = NO;
+
     [self addChildViewController:_appBar.headerViewController];
 
     // Set presentation style
@@ -50,15 +60,11 @@
 
   [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme toAppBar:_appBar];
 
-  // UITableViewController's tableView.delegate is self by default. We're setting it here for
-  // emphasis.
-  self.tableView.delegate = self;
+  // Allows us to avoid forwarding events, but means we can't enable shift behaviors.
+  self.appBar.headerViewController.headerView.observesTrackingScrollViewScrollEvents = YES;
 
   self.appBar.headerViewController.headerView.trackingScrollView = self.tableView;
   [self.appBar addSubviewsToParent];
-
-  self.tableView.layoutMargins = UIEdgeInsetsZero;
-  self.tableView.separatorInset = UIEdgeInsetsZero;
 
   // Add optional navigation items
   self.navigationItem.leftBarButtonItem =
@@ -76,40 +82,6 @@
 
 - (void)dismissSelf {
   [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-#pragma mark - UIScrollViewDelegate
-
-// The following four methods must be forwarded to the tracking scroll view in order to implement
-// the Flexible Header's behavior.
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-  if (scrollView == self.appBar.headerViewController.headerView.trackingScrollView) {
-    [self.appBar.headerViewController.headerView trackingScrollViewDidScroll];
-  }
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-  if (scrollView == self.appBar.headerViewController.headerView.trackingScrollView) {
-    [self.appBar.headerViewController.headerView trackingScrollViewDidEndDecelerating];
-  }
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-  MDCFlexibleHeaderView *headerView = self.appBar.headerViewController.headerView;
-  if (scrollView == headerView.trackingScrollView) {
-    [headerView trackingScrollViewDidEndDraggingWillDecelerate:decelerate];
-  }
-}
-
-- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView
-                     withVelocity:(CGPoint)velocity
-              targetContentOffset:(inout CGPoint *)targetContentOffset {
-  MDCFlexibleHeaderView *headerView = self.appBar.headerViewController.headerView;
-  if (scrollView == headerView.trackingScrollView) {
-    [headerView trackingScrollViewWillEndDraggingWithVelocity:velocity
-                                          targetContentOffset:targetContentOffset];
-  }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

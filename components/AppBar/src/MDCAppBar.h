@@ -75,4 +75,30 @@
  */
 @property(nonatomic, strong, nonnull, readonly) MDCHeaderStackView *headerStackView;
 
+/**
+ Whether the App Bar should attempt to extract safe area insets from the view controller hierarchy
+ or not.
+
+ This behavior provides better support for App Bars on iPad, extensions, and anywhere else where the
+ view controller might not be directly behind the status bar / device safe area insets.
+
+ Enabling this behavior will do the following:
+
+ - Enable the same-named behavior on the headerViewController.
+ - Enable the headerViewController's topLayoutGuideAdjustmentEnabled behavior. Consider setting a
+   topLayoutGuideViewController to your content view controller if you want to use topLayoutGuide.
+ - The header stack view's frame will be inset by the flexible header view's topSafeAreaGuide rather
+   than the global device safe area insets.
+
+ Disabling this behavior will not disable headerViewController's topLayoutGuideAdjustmentEnabled
+ behavior.
+
+ This behavior will eventually be enabled by default.
+
+ See MDCFlexibleHeaderViewController's documentation for the API of the same name.
+
+ Default is NO.
+ */
+@property(nonatomic) BOOL inferTopSafeAreaInsetFromViewController;
+
 @end

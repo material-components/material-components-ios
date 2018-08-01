@@ -90,12 +90,7 @@ class MDCMenuViewController: UITableViewController {
       })
     case 1:
       self.dismiss(animated: true, completion: {
-        let themeViewController = MDCThemePickerViewController()
-        let presentingViewController =
-          UINavigationController.embedExampleWithinAppBarContainer(using: themeViewController,
-                                                                   currentBounds: self.view.bounds,
-                                                                   named: "Themes")
-        navController.pushViewController(presentingViewController, animated: true)
+        navController.pushViewController(MDCThemePickerViewController(), animated: true)
       })
     default:
       self.dismiss(animated: true, completion: nil)
