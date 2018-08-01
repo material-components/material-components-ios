@@ -26,25 +26,32 @@ The Material Design top app bar displays information and actions relating to the
   <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-app-bar-top">Material Design guidelines: App bars: top</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBar.html">MDCAppBar</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBarContainerViewController.html">MDCAppBarContainerViewController</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBarNavigationController.html">MDCAppBarNavigationController</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBarTextColorAccessibilityMutator.html">MDCAppBarTextColorAccessibilityMutator</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBarViewController.html">MDCAppBarViewController</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Protocols/MDCAppBarNavigationControllerDelegate.html">MDCAppBarNavigationControllerDelegate</a></li>
 </ul>
 
 ## Related components
 
 <ul class="icon-list">
   <li class="icon-list-item icon-list-item--link"><a href="../FlexibleHeader">FlexibleHeader</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="../HeaderStackView">HeaderStackView</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="../NavigationBar">NavigationBar</a></li>
 </ul>
 
 ## Table of contents
 
 - [Overview](#overview)
-  - [UINavigationItem and the App Bar](#uinavigationitem-and-the-app-bar)
-  - [Interacting with background views](#interacting-with-background-views)
 - [Installation](#installation)
   - [Installation with CocoaPods](#installation-with-cocoapods)
   - [Importing](#importing)
 - [Usage](#usage)
-  - [Typical use: Adding an app bar to your app](#typical-use-adding-an-app-bar-to-your-app)
+  - [Typical use: View controller containment, as a navigation controller](#typical-use-view-controller-containment,-as-a-navigation-controller)
+  - [Typical use: View controller containment, as a child](#typical-use-view-controller-containment,-as-a-child)
+  - [Typical use: View controller containment, as a container](#typical-use-view-controller-containment,-as-a-container)
+  - [UINavigationItem support](#uinavigationitem-support)
+  - [Interactive background views](#interactive-background-views)
 - [Extensions](#extensions)
   - [Color Theming](#color-theming)
   - [Typography Theming](#typography-theming)
@@ -56,63 +63,20 @@ The Material Design top app bar displays information and actions relating to the
 
 ## Overview
 
-The top app bar is implemented on iOS in the AppBar component. This component's main API is
-`MDCAppBar`, a compose API that initializes and provides access to instances of the
-following components:
+App bar is composed of the following components:
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--link"><a href="../FlexibleHeader">Flexible Header</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="../HeaderStackView">Header Stack View</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="../NavigationBar">Navigation Bar</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="../FlexibleHeader">FlexibleHeader</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="../HeaderStackView">HeaderStackView</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="../NavigationBar">NavigationBar</a></li>
 </ul>
 
-The provided view hierarchy looks like so:
+It is essentially a FlexibleHeader with a HeaderStackView and NavigationBar added as subviews.
 
-    <MDCFlexibleHeaderView>
-       | <CALayer>
-       |    | <MDCShadowLayer>
-       | <UIView> <- headerView.contentView
-       |    | <MDCHeaderStackView>
-       |    |    | <MDCNavigationBar>
-
-This view hierarchy will be added to your view controller hierarchy using the convenience methods
-outlined in the Usage docs below.
-
-Note that it is possible to create each of the above components yourself, though we only encourage
-doing so if the App Bar is limiting your ability to build something. In such a case we recommend
-also [filing an issue](https://github.com/material-components/material-components-ios/issues/new) so that we can
-identify whether your use case is something we can directly support.
-
-### UINavigationItem and the App Bar
-
-The App Bar begins mirroring the state of your view controller's `navigationItem` in the provided
-`navigationBar` once you call `addSubviewsToParent`.
-
-Learn more by reading the Navigation Bar section on
-[Observing UINavigationItem instances](../NavigationBar/#observing-uinavigationitem-instances).
-Notably: read the section on "Exceptions" to understand which UINavigationItem are **not**
-supported.
-
-### Interacting with background views
-
-Scenario: you've added a background image to your App Bar and you'd now like to be able to tap the
-background image.
-
-This is not trivial to do with the App Bar APIs due to considerations being discussed in
-[Issue #184](https://github.com/material-components/material-components-ios/issues/184).
-
-The heart of the limitation is that we're using a view (`headerStackView`) to lay out the Navigation
-Bar. If you add a background view behind the `headerStackView` instance then `headerStackView` will
-end up eating all of your touch events.
-
-Until [Issue #184](https://github.com/material-components/material-components-ios/issues/184) is resolved, our
-recommendation for building interactive background views is the following:
-
-1. Do not use the App Bar component.
-2. Create your own Flexible Header. Learn more by reading the Flexible Header
-   [Usage](../FlexibleHeader/#usage) docs.
-3. Add your views to this flexible header instance.
-4. Create a Navigation Bar if you need one. Treat it like any other custom view.
+`MDCAppBarViewController` is the primary API for the component. All integration strategies will
+make use of it in some manner. Unlike UIKit, which shares a single UINavigationBar instance across
+many view controllers in a stack, app bar relies on each view controller creating and managing its
+own MDCAppBarViewController instance.
 
 ## Installation
 
@@ -153,89 +117,188 @@ import MaterialComponents.MaterialAppBar
 
 ## Usage
 
-<!-- Extracted from docs/typical-use-adding-an-app-bar.md -->
+<!-- Extracted from docs/typical-use-navigation-controller.md -->
 
-### Typical use: Adding an app bar to your app
+### Typical use: View controller containment, as a navigation controller
 
-Each view controller in your app that intends to use an App Bar will follow these instructions.
-You'll typically add the App Bar to the same view controllers that you'd push onto a
-UINavigationController, hiding the UINavigationController's `navigationBar` accordingly.
+The easiest integration path for using the app bar is through the `MDCAppBarNavigationController`.
+This API is a subclass of UINavigationController that automatically adds an
+`MDCAppBarViewController` instance to each view controller that is pushed onto it, unless an app bar
+or flexible header already exists.
 
-The result of following these steps will be that:
+When using the `MDCAppBarNavigationController` you will, at a minimum, need to configure the added
+app bar's background color using the delegate.
 
-1. an App Bar is registered as a child view controller of your view controller,
-2. you have access to the App Bar's Flexible Header view via the headerViewController property, and
-   that
-3. you have access to the Navigation Bar and Header Stack View views via the corresponding
-   properties.
-
-Step 1: **Create an instance of MDCAppBar**.
-
-You must also add the `headerViewController` as a child view controller.
+#### Example
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
-let appBar = MDCAppBar()
+let navigationController = MDCAppBarNavigationController()
+navigationController.pushViewController(<#T##viewController: UIViewController##UIViewController#>, animated: <#T##Bool#>)
+
+// MARK: MDCAppBarNavigationControllerDelegate
+
+func appBarNavigationController(_ navigationController: MDCAppBarNavigationController,
+                                willAdd appBarViewController: MDCAppBarViewController,
+                                asChildOf viewController: UIViewController) {
+  appBarViewController.headerView.backgroundColor = <#(UIColor)#>
+}
+```
+
+#### Objective-C
+
+```objc
+MDCAppBarNavigationController *navigationController =
+    [[MDCAppBarNavigationController alloc] init];
+[navigationController pushViewController:<#(nonnull UIViewController *)#> animated:<#(BOOL)#>];
+
+#pragma mark - MDCAppBarNavigationControllerDelegate
+
+- (void)appBarNavigationController:(MDCAppBarNavigationController *)navigationController
+       willAddAppBarViewController:(MDCAppBarViewController *)appBarViewController
+           asChildOfViewController:(UIViewController *)viewController {
+  appBarViewController.headerView.backgroundColor = <#(nonnull UIColor *)#>;
+}
+```
+<!--</div>-->
+
+<!-- Extracted from docs/typical-use-child.md -->
+
+### Typical use: View controller containment, as a child
+
+When an `MDCAppBarViewController` instance is added as a child to another view controller. In this
+case, the parent view controller is often the object that creates and manages the
+`MDCAppBarViewController` instance. This allows the parent view controller to configure the app bar
+directly.
+
+You'll typically push the parent onto a navigation controller, in which case you will also hide the
+navigation controller's navigation bar using `UINavigationController`'s
+`-setNavigationBarHidden:animated:`.
+
+#### Example
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+let appBarViewController = MDCAppBarViewController()
 
 override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
   super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
-  self.addChildViewController(appBar.headerViewController)
+  self.addChildViewController(appBarViewController)
+}
+
+override func viewDidLoad() {
+  super.viewDidLoad()
+
+  view.addSubview(appBarViewController.view)
+  appBarViewController.didMove(toParentViewController: self)
 }
 ```
 
 #### Objective-C
 
 ```objc
-@interface ObjcViewController ()
-@property(nonatomic, strong, nonnull) MDCAppBar *appBar;
+@interface MyViewController ()
+@property(nonatomic, strong, nonnull) MDCAppBarViewController *appBarViewController;
 @end
 
-@implementation ObjcViewController
+@implementation MyViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
-    _appBar = [[MDCAppBar alloc] init];
+    _appBarViewController = [[MDCAppBarViewController alloc] init];
 
-    [self addChildViewController:_appBar.headerViewController];
+    [self addChildViewController:_appBarViewController];
   }
   return self;
+}
+
+- (void)viewDidLoad {
+  [super viewDidLoad];
+
+  [self.view addSubview:self.appBarViewController.view];
+  [self.appBarViewController didMoveToParentViewController:self];
 }
 
 @end
 ```
 <!--</div>-->
 
-Step 2: **Inform the App Bar that your view controller's view has loaded**.
+<!-- Extracted from docs/typical-use-container.md -->
 
-Ideally you will do this after all views have been added to your controller's view in order to
-ensure that the App Bar's Flexible Header is in front of all other views.
+### Typical use: View controller containment, as a container
+
+There are cases where adding an `MDCAppBarViewController` as a child is not possible, most notably:
+
+- UIPageViewController's view is a horizontally-paging scroll view, meaning there is no fixed view
+  to which an app bar could be added.
+- Any other view controller that animates its content horizontally without providing a fixed,
+  non-horizontally-moving parent view.
+
+In such cases, using `MDCAppBarContainerViewController` is preferred.
+`MDCAppBarContainerViewController` is a simple container view controller that places a content view
+controller as a sibling to an `MDCAppBarViewController`.
+
+**Note:** the trade off to using this API is that it will affect your view controller hierarchy. If
+the makes any assumptions about its parent view controller or its navigationController properties
+then these assumptions may break once the view controller is wrapped.
+
+You'll typically push the container view controller onto a navigation controller, in which case you
+will also hide the navigation controller's navigation bar using UINavigationController's
+`-setNavigationBarHidden:animated:`.
+
+#### Example
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
-override func viewDidLoad() {
-  super.viewDidLoad()
-
-  // After all other views have been registered.
-  appBar.addSubviewsToParent()
-}
+let container = MDCAppBarContainerViewController(contentViewController: <#T##UIViewController#>)
 ```
 
 #### Objective-C
+
 ```objc
-- (void)viewDidLoad {
-  [super viewDidLoad];
-
-  ...
-
-  // After all other views have been registered.
-  [self.appBar addSubviewsToParent];
-}
+MDCAppBarContainerViewController *container =
+    [[MDCAppBarContainerViewController alloc] initWithContentViewController:<#(nonnull UIViewController *)#>];
 ```
 <!--</div>-->
+
+<!-- Extracted from docs/uinavigationitem-support.md -->
+
+### UINavigationItem support
+
+The App Bar begins mirroring the state of your view controller's `navigationItem` in the provided
+`navigationBar` once you call `addSubviewsToParent`.
+
+Learn more by reading the Navigation Bar section on
+[Observing UINavigationItem instances](../NavigationBar/#observing-uinavigationitem-instances).
+Notably: read the section on "Exceptions" to understand which UINavigationItem are **not**
+supported.
+
+<!-- Extracted from docs/interactive-background-views.md -->
+
+### Interactive background views
+
+Scenario: you've added a background image to your App Bar and you'd now like to be able to tap the
+background image.
+
+This is not trivial to do with the App Bar APIs due to considerations being discussed in
+[Issue #184](https://github.com/material-components/material-components-ios/issues/184).
+
+The heart of the limitation is that we're using a view (`headerStackView`) to lay out the Navigation
+Bar. If you add a background view behind the `headerStackView` instance then `headerStackView` will
+end up eating all of your touch events.
+
+Until [Issue #184](https://github.com/material-components/material-components-ios/issues/184) is resolved, our recommendation for building interactive background views is the following:
+
+1. Do not use the App Bar component.
+2. Create your own Flexible Header. Learn more by reading the Flexible Header
+   [Usage](../FlexibleHeader/#usage) docs.
+3. Add your views to this flexible header instance.
+4. Create a Navigation Bar if you need one. Treat it like any other custom view.
 
 
 See the [FlexibleHeader](../FlexibleHeader) documentation for additional usage guides.
@@ -323,7 +386,6 @@ id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
      toAppBar:component];
 ```
 <!--</div>-->
-
 
 
 ## Accessibility

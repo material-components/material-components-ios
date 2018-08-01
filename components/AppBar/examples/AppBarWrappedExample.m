@@ -43,7 +43,7 @@
 
 @end
 
-@interface AppBarWrappedExample : UIViewController
+@interface AppBarWrappedExample : UIViewController <MDCAppBarNavigationControllerDelegate>
 
 @property(nonatomic, strong) MDCAppBarContainerViewController *appBarContainerViewController;
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
@@ -53,12 +53,24 @@
 
 @implementation AppBarWrappedExample
 
+#pragma mark - MDCAppBarNavigationControllerDelegate
+
+- (void)appBarNavigationController:(MDCAppBarNavigationController *)navigationController
+       willAddAppBarViewController:(MDCAppBarViewController *)appBarViewController
+           asChildOfViewController:(UIViewController *)viewController {
+  appBarViewController.headerView.backgroundColor = <#(nonnull UIViewController *)#>;
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
 
   WrappedDemoViewController *demoVC = [[WrappedDemoViewController alloc] init];
   self.appBarContainerViewController =
       [[MDCAppBarContainerViewController alloc] initWithContentViewController:demoVC];
+
+MDCAppBarNavigationController *navigationController =
+    [[MDCAppBarNavigationController alloc] init];
+[navigationController pushViewController:<#(nonnull UIViewController *)#> animated:<#(BOOL)#>];
 
   // Behavioral flags.
   MDCAppBarViewController *appBarViewController = self.appBarContainerViewController.appBarViewController;
