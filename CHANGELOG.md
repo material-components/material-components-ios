@@ -52,202 +52,21 @@ MDCSnackbarManager is now implemented as a true singleton with the ability to al
 
 *new* method: `-appBarForViewController:` in `MDCAppBarNavigationController`
 
-#### MDCAppBar
-
-*new* property: `inferTopSafeAreaInsetFromViewController` in `MDCAppBar`
-
 #### MDCAppBarNavigationControllerDelegate
 
 *new* protocol: `MDCAppBarNavigationControllerDelegate`
 
 *new* method: `-appBarNavigationController:willAddAppBar:asChildOfViewController:` in `MDCAppBarNavigationControllerDelegate`
 
+#### MDCAppBar
+
+*new* property: `inferTopSafeAreaInsetFromViewController` in `MDCAppBar`
+
 ### FlexibleHeader
 
 #### MDCFlexibleHeaderView
 
 *new* property: `observesTrackingScrollViewScrollEvents` in `MDCFlexibleHeaderView`
-
-### Snackbar
-
-#### MDCSnackbarManager(LegacyAPI)
-
-*new* category: `MDCSnackbarManager(LegacyAPI)`
-
-*modified* class method: `+setButtonTitleColor:forState:` in `MDCSnackbarManager(LegacyAPI)`
-
-| Type of change: | parent.usr |
-|---|---|
-| From: | `c:objc(cs)MDCSnackbarManager` |
-| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
-
-*modified* class method: `+dismissAndCallCompletionBlocksWithCategory:` in `MDCSnackbarManager(LegacyAPI)`
-
-| Type of change: | parent.usr |
-|---|---|
-| From: | `c:objc(cs)MDCSnackbarManager` |
-| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
-
-*modified* class method: `+buttonTitleColorForState:` in `MDCSnackbarManager(LegacyAPI)`
-
-| Type of change: | parent.usr |
-|---|---|
-| From: | `c:objc(cs)MDCSnackbarManager` |
-| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
-
-*modified* property: `buttonFont` in `MDCSnackbarManager(LegacyAPI)`
-
-| Type of change: | parent.usr |
-|---|---|
-| From: | `c:objc(cs)MDCSnackbarManager` |
-| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
-
-*modified* class method: `+showMessage:` in `MDCSnackbarManager(LegacyAPI)`
-
-| Type of change: | parent.usr |
-|---|---|
-| From: | `c:objc(cs)MDCSnackbarManager` |
-| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
-
-*modified* class method: `+suspendMessagesWithCategory:` in `MDCSnackbarManager(LegacyAPI)`
-
-| Type of change: | parent.usr |
-|---|---|
-| From: | `c:objc(cs)MDCSnackbarManager` |
-| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
-
-*modified* property: `mdc_adjustsFontForContentSizeCategory` in `MDCSnackbarManager(LegacyAPI)`
-
-| Type of change: | parent.usr |
-|---|---|
-| From: | `c:objc(cs)MDCSnackbarManager` |
-| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
-
-*modified* property: `messageFont` in `MDCSnackbarManager(LegacyAPI)`
-
-| Type of change: | parent.usr |
-|---|---|
-| From: | `c:objc(cs)MDCSnackbarManager` |
-| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
-
-*modified* class method: `+hasMessagesShowingOrQueued` in `MDCSnackbarManager(LegacyAPI)`
-
-| Type of change: | parent.usr |
-|---|---|
-| From: | `c:objc(cs)MDCSnackbarManager` |
-| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
-
-*modified* property: `snackbarMessageViewShadowColor` in `MDCSnackbarManager(LegacyAPI)`
-
-| Type of change: | parent.usr |
-|---|---|
-| From: | `c:objc(cs)MDCSnackbarManager` |
-| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
-
-*modified* class method: `+setBottomOffset:` in `MDCSnackbarManager(LegacyAPI)`
-
-| Type of change: | parent.usr |
-|---|---|
-| From: | `c:objc(cs)MDCSnackbarManager` |
-| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
-
-*modified* class method: `+setPresentationHostView:` in `MDCSnackbarManager(LegacyAPI)`
-
-| Type of change: | parent.usr |
-|---|---|
-| From: | `c:objc(cs)MDCSnackbarManager` |
-| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
-
-*modified* property: `snackbarMessageViewBackgroundColor` in `MDCSnackbarManager(LegacyAPI)`
-
-| Type of change: | parent.usr |
-|---|---|
-| From: | `c:objc(cs)MDCSnackbarManager` |
-| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
-
-*modified* class method: `+resumeMessagesWithToken:` in `MDCSnackbarManager(LegacyAPI)`
-
-| Type of change: | parent.usr |
-|---|---|
-| From: | `c:objc(cs)MDCSnackbarManager` |
-| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
-
-*modified* property: `messageTextColor` in `MDCSnackbarManager(LegacyAPI)`
-
-| Type of change: | parent.usr |
-|---|---|
-| From: | `c:objc(cs)MDCSnackbarManager` |
-| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
-
-*modified* property: `alignment` in `MDCSnackbarManager(LegacyAPI)`
-
-| Type of change: | parent.usr |
-|---|---|
-| From: | `c:objc(cs)MDCSnackbarManager` |
-| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
-
-*modified* class method: `+suspendAllMessages` in `MDCSnackbarManager(LegacyAPI)`
-
-| Type of change: | parent.usr |
-|---|---|
-| From: | `c:objc(cs)MDCSnackbarManager` |
-| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
-
-*modified* property: `delegate` in `MDCSnackbarManager(LegacyAPI)`
-
-| Type of change: | parent.usr |
-|---|---|
-| From: | `c:objc(cs)MDCSnackbarManager` |
-| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
-
-*modified* property: `shouldApplyStyleChangesToVisibleSnackbars` in `MDCSnackbarManager(LegacyAPI)`
-
-| Type of change: | parent.usr |
-|---|---|
-| From: | `c:objc(cs)MDCSnackbarManager` |
-| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
-
-#### MDCSnackbarManager
-
-*new* property: `defaultManager` in `MDCSnackbarManager`
-
-*new* method: `-setButtonTitleColor:forState:` in `MDCSnackbarManager`
-
-*new* property: `messageFont` in `MDCSnackbarManager`
-
-*new* method: `-suspendMessagesWithCategory:` in `MDCSnackbarManager`
-
-*new* method: `-setBottomOffset:` in `MDCSnackbarManager`
-
-*new* property: `messageTextColor` in `MDCSnackbarManager`
-
-*new* property: `mdc_adjustsFontForContentSizeCategory` in `MDCSnackbarManager`
-
-*new* property: `snackbarMessageViewShadowColor` in `MDCSnackbarManager`
-
-*new* method: `-showMessage:` in `MDCSnackbarManager`
-
-*new* method: `-hasMessagesShowingOrQueued` in `MDCSnackbarManager`
-
-*new* method: `-setPresentationHostView:` in `MDCSnackbarManager`
-
-*new* property: `buttonFont` in `MDCSnackbarManager`
-
-*new* method: `-suspendAllMessages` in `MDCSnackbarManager`
-
-*new* property: `snackbarMessageViewBackgroundColor` in `MDCSnackbarManager`
-
-*new* property: `shouldApplyStyleChangesToVisibleSnackbars` in `MDCSnackbarManager`
-
-*new* method: `-dismissAndCallCompletionBlocksWithCategory:` in `MDCSnackbarManager`
-
-*new* property: `delegate` in `MDCSnackbarManager`
-
-*new* method: `-resumeMessagesWithToken:` in `MDCSnackbarManager`
-
-*new* property: `alignment` in `MDCSnackbarManager`
-
-*new* method: `-buttonTitleColorForState:` in `MDCSnackbarManager`
 
 ## Component changes
 
@@ -271,6 +90,7 @@ MDCSnackbarManager is now implemented as a true singleton with the ability to al
 #### Changes
 
 * [Create explicit singleton (#4556)](https://github.com/material-components/material-components-ios/commit/c6ffe403ba550da972317936c2740790549002b1) (Robert Moore)
+* [Revert "Create explicit singleton (#4556)"](https://github.com/material-components/material-components-ios/commit/8492359a0243da096c53b02dcea69f2b8d3d29f9) (Jeff Verkoeyen)
 
 ### Cards
 
@@ -278,6 +98,12 @@ MDCSnackbarManager is now implemented as a true singleton with the ability to al
 
 * [ accessibility example for collection cards (#4488)](https://github.com/material-components/material-components-ios/commit/f040e95bffda55a4f637dd5d48c679e740cf59bc) (Galia Kaufman)
 * [Accessibility: Fixing documentation typos (#4634)](https://github.com/material-components/material-components-ios/commit/cf014946d8f25ee95858631c6f301ef222f3b6c0) (Galia Kaufman)
+
+### LibraryInfo
+
+#### Changes
+
+* [Version bump.](https://github.com/material-components/material-components-ios/commit/85334ead24f13cf7c5dce7caaaf0c0d27e79f28a) (Jeff Verkoeyen)
 
 ### Dialogs
 
