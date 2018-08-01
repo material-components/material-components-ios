@@ -328,12 +328,12 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 }
 
 - (void)setBadgeTextColor:(UIColor *)badgeTextColor {
-  if (_badgeTextColor != badgeTextColor) {
+  if (self.badgeTextColor != badgeTextColor) {
     if (badgeTextColor == nil) {
-      _badgeTextColor = [UIColor whiteColor];
+      self.badgeTextColor = [UIColor whiteColor];
       self.badge.badgeValueLabel.textColor = [UIColor whiteColor];
     } else {
-      _badgeTextColor = badgeTextColor;
+      self.badgeTextColor = badgeTextColor;
       self.badge.badgeValueLabel.textColor = badgeTextColor;
     }
   }

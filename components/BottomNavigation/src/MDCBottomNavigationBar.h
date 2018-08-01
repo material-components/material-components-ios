@@ -142,6 +142,10 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
  */
 @property(nonatomic, assign) CGFloat itemsContentHorizontalMargin;
 
+@end
+
+@interface UITabBarItem ()
+
 /**
  Color of the text represented in the badge
  */
