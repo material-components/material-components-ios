@@ -37,8 +37,8 @@
 - (void)extractTopSafeAreaInset;
 
 /**
- The length of the top safe area guide.
+ The height of the top safe area guide.
  */
-@property(nonatomic, readonly) CGFloat topSafeAreaGuideLength;
+@property(nonatomic, readonly) CGFloat topSafeAreaGuideHeight;
 
 @end

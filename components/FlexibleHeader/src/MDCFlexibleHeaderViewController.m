@@ -488,7 +488,7 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
       UIEdgeInsets additionalSafeAreaInsets = topLayoutGuideViewController.additionalSafeAreaInsets;
       // We need to avoid double-counting any top safe area amount because this will already be
       // taken into account as part of additionalSafeAreaInsets.
-      topInset -= self.headerView.topSafeAreaGuideLength;
+      topInset -= self.headerView.topSafeAreaGuideHeight;
       if (self.headerView.minMaxHeightIncludesSafeArea) {
         topInset = MIN(self.headerView.maximumHeight - MDCDeviceTopSafeAreaInset(), topInset);
       } else {

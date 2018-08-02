@@ -543,7 +543,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   return _topSafeAreaGuide;
 }
 
-- (CGFloat)topSafeAreaGuideLength {
+- (CGFloat)topSafeAreaGuideHeight {
   return _topSafeAreaGuide.frame.size.height;
 }
 
