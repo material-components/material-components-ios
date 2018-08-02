@@ -48,7 +48,7 @@
   return self;
 }
 
--(id)copyWithZone:(NSZone *)zone {
+-(id)copyWithZone:(__unused NSZone *)zone {
   MDCActionSheetAction *action = [[self class] actionWithTitle:self.title
                                                          image:self.image
                                                        handler:self.completionHandler];
@@ -59,51 +59,46 @@
 
 @interface MDCActionSheetController () <MDCBottomSheetPresentationControllerDelegate>
 
-@property(nonatomic, strong) MDCBottomSheetTransitionController *transitionController;
-@property(nonatomic, strong) MDCActionSheetListViewController *tableView;
+@property(nonatomic, nullable, weak) MDCActionSheetListViewController *tableView;
+
+- (nonnull instancetype)initWithTitle:(nullable NSString *)title
+                              message:(nullable NSString *)message;
 
 @end
 
-
-
-
 @implementation MDCActionSheetController {
+  NSString *_actionSheetTitle;
   NSMutableArray<MDCActionSheetAction *> *_actions;
+  MDCBottomSheetTransitionController *_transitionController;
   UIViewController *contentViewController;
-  BOOL _mdc_adjustsFontForContentSizeCategory;
 }
 
-- (nonnull instancetype)initWithTitle:(NSString *)title
-                              message:(NSString *)message {
-  self = [super initWithNibName:nil bundle:nil];
-  if (self) {
-    self.message = message;
-    self.title = title;
-    [self commonMDCActionSheetControllerInit];
-  }
-  return self;
++ (instancetype)actionSheetControllerWithTitle:(NSString *)title message:(NSString *)message {
+  MDCActionSheetController *actionSheet = [[MDCActionSheetController alloc] initWithTitle:title
+                                                                                  message:message];
+  return actionSheet;
 }
 
 + (instancetype)actionSheetControllerWithTitle:(NSString *)title {
-  return [[MDCActionSheetController alloc] initWithTitle:title message:nil];
-}
-
-+ (instancetype)actionSheetControllerWithTitle:(NSString *)title
-                                       message:(NSString *)message {
-  return [[MDCActionSheetController alloc] initWithTitle:title message:message];
+  return [MDCActionSheetController actionSheetControllerWithTitle:title message:nil];
 }
 
 - (instancetype)init {
   return [MDCActionSheetController actionSheetControllerWithTitle:nil message:nil];
 }
 
+- (nonnull instancetype)initWithTitle:(NSString *)title message:(NSString *)message {
+  self = [super initWithNibName:nil bundle:nil];
+  if (self) {
+    _actionSheetTitle = [title copy];
+    _message = message;
+    [self commonMDCActionSheetControllerInit];
+  }
+  return self;
+}
+
 - (void)commonMDCActionSheetControllerInit {
-  contentViewController = [[UIViewController alloc] initWithNibName:nil bundle:nil];
-  _transitionController = [[MDCBottomSheetTransitionController alloc] init];
-  _transitionController.dismissOnBackgroundTap = YES;
-  super.transitioningDelegate = _transitionController;
-  super.modalPresentationStyle = UIModalPresentationCustom;
-  _actions = [[NSMutableArray alloc] init];
+  
 }
 
 - (void)addAction:(MDCActionSheetAction *)action {
@@ -112,25 +107,6 @@
 
 - (NSArray<MDCActionSheetAction *> *)actions {
   return [_actions copy];
-}
-
-- (void)viewDidLoad {
-  [super viewDidLoad];
-
-  contentViewController.view.autoresizingMask =
-      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  contentViewController.view.frame = self.view.bounds;
-  [self addChildViewController:contentViewController];
-  [self.view addSubview:contentViewController.view];
-  [contentViewController didMoveToParentViewController:self];
-  contentViewController.view.backgroundColor = [UIColor whiteColor];
-  contentViewController.preferredContentSize = CGSizeMake(CGRectGetWidth(self.view.bounds), (_actions.count + 1) * 56);
-//  _tableView = [[MDCActionSheetListViewController alloc] initWithTitle:_title
-//                                                               actions: _actions];
-  CGRect tableFrame = _tableView.view.frame;
-  tableFrame.origin.y = 0;
-  _tableView.view.frame = tableFrame;
-  [contentViewController.view addSubview:_tableView.view];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -199,30 +175,30 @@
   return;
 }
 
-#pragma mark - Dynamic Type
-- (BOOL)mdc_adjustFontForContentSizeCategory {
-  return _mdc_adjustsFontForContentSizeCategory;
+
+#pragma mark - Table view delegate
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+  MDCActionSheetHeaderView *header = [[MDCActionSheetHeaderView alloc] initWithTitle:self.title];
+  //header.font = _titleFont;
+  return header;
 }
 
-- (void)mdc_setAdjustFontForContentSizeCategory:(BOOL)adjusts {
-  _mdc_adjustsFontForContentSizeCategory = adjusts;
-  [self.view setNeedsLayout];
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+  MDCActionSheetAction *action = _actions[indexPath.row];
+  action.completionHandler(action);
 }
+
+#pragma mark - Dynamic Type
 
 - (void)setTitle:(NSString *)title {
-
+  if (_actionSheetTitle != title) {
+    _actionSheetTitle = title;
+  }
 }
 
 - (NSString *)title {
-  return self.tableView.header.title;
-}
-
-- (void)setMessage:(NSString *)message {
-
-}
-
-- (NSString *)message {
-  return self.tableView.header.message;
+  return _actionSheetTitle;
 }
 
 @end

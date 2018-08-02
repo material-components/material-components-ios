@@ -33,13 +33,7 @@
   The action contains the title, image, and handler
   If you need to change any of the three you must pass a new action in.
 */
-@property(nonatomic, nonnull, readonly) MDCActionSheetAction *action;
-
-@property(nonatomic, nullable) UIFont *font;
-
-@property(nonatomic, nullable) UIColor *labelColor;
-
-@property(nonatomic, nullable) UIColor *imageColor;
+@property(nonatomic, nonnull) MDCActionSheetAction *action;
 
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
 BOOL mdc_adjustsFontForContentSizeCategory;
@@ -60,23 +54,9 @@ BOOL mdc_adjustsFontForContentSizeCategory;
 /** Header must be created with either headerWithTitle: */
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 
-/** The text that will applied to the title of the action sheet controller. */
-@property(nonatomic, nullable) NSString *title;
+@property (nonatomic, nullable, strong) NSString *title;
 
-/** The text that will applied to the message of the action sheet controller. */
-@property(nonatomic, nullable) NSString *message;
-
-/** The font applied to the title of the action sheet controller. */
-@property(nonatomic, nullable) UIFont *titleFont;
-
-/** The font applied to the message of the action sheet controller. */
-@property(nonatomic, nullable) UIFont *messageFont;
-
-/** The color applied to the title of the action sheet controller. */
-@property(nonatomic, nullable) UIColor *titleColor;
-
-/** The color applied to the message of the action sheet controller. */
-@property(nonatomic, nullable) UIColor *messageColor;
+@property (nonatomic, nullable, strong) NSString *message;
 
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
 BOOL mdc_adjustsFontForContentSizeCategory;

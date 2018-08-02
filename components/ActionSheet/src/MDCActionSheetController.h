@@ -102,21 +102,21 @@ MDC_SUBCLASSING_RESTRICTED
 
  The order of the actions in the array matches the order in which they were added to the action sheet.
  */
-@property (nonatomic, nonnull, readonly) NSArray<MDCActionSheetAction *> *actions;
+@property(nonatomic, nonnull, readonly) NSArray<MDCActionSheetAction *> *actions;
 
 /**
  The title of the action sheet controller.
 
  If this is updated after presentation the view will be updated to match the new value.
  */
-@property (nonatomic, nullable, copy) NSString *title;
+@property(nonatomic, nullable, copy) NSString *title;
 
 /**
  The message of the action sheet controller.
 
  If this is updated after presentation the view will be updated to match the new value.
  */
-@property (nonatomic, nullable, copy) NSString *message;
+@property(nonatomic, nullable, copy) NSString *message;
 
 /*
  Indicates whether the button should automatically update its font when the device’s
@@ -167,7 +167,7 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
  Action sheet actions must have a title that will be set within actionWithTitle:image:handler:
  method.
  */
-@property (nonatomic, nonnull, readonly) NSString *title;
+@property(nonatomic, nonnull, readonly) NSString *title;
 
 /**
  Image of the list item shown on the action sheet.
@@ -175,6 +175,6 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
  Action sheet actions must have an image that will be set within actionWithTitle:image:handler:
  method.
  */
-@property (nonatomic, nonnull, readonly) UIImage *image;
+@property(nonatomic, nonnull, readonly) UIImage *image;
 
 @end

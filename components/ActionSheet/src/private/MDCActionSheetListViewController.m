@@ -16,7 +16,7 @@
 
 #import "MDCActionSheetListViewController.h"
 #import "MDCActionSheetItemView.h"
-#import "../MDCActionSheetController.m"
+#import "../MDCActionSheetController.h"
 #import "MaterialTypography.h"
 
 @interface MDCActionSheetListViewController () <UITableViewDataSource, UITableViewDelegate>
@@ -27,6 +27,7 @@
 @end
 
 @implementation MDCActionSheetListViewController {
+  NSString *_tableTitle;
   NSArray<MDCActionSheetAction *> *_actions;
 }
 
@@ -61,22 +62,6 @@
   //[self updateFonts];
 }
 
-#pragma mark - Table view delegate
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-  MDCActionSheetHeaderView *header = [[MDCActionSheetHeaderView alloc] initWithTitle:self.title];
-  //header.font = _titleFont;
-  return header;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-  MDCActionSheetAction *action = _actions[indexPath.row];
-  [self.presentingViewController dismissViewControllerAnimated:YES completion:^(void) {
-    if (action.completionHandler) {
-      action.completionHandler(action);
-    }
-  }];
-}
 
 #pragma mark - Datasource
 
@@ -128,16 +113,13 @@
 #pragma mark - Setters / Getters
 
 - (void)setTitle:(NSString *)title {
-  if (_title != title) {
-    _title = title;
-    _header.title = titleText;
-    [self.view setNeedsLayout];
+  if (_tableTitle != title) {
+    _tableTitle = title;
   }
 }
 
 - (NSString *)title {
-  return _header.title;
+  return _tableTitle;
 }
-
 
 @end
