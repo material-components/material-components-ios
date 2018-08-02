@@ -88,6 +88,7 @@ static UIFont *_trailingUnderlineLabelFontDefault;
 
 @property(nonatomic, copy) NSString *errorAccessibilityValue;
 @property(nonatomic, copy, readwrite) NSString *errorText;
+@property(nonatomic, copy) NSString *helperAccessibilityLabel;
 @property(nonatomic, copy) NSString *previousLeadingText;
 
 @property(nonatomic, strong) UIColor *previousPlaceholderColor;
@@ -428,6 +429,13 @@ static UIFont *_trailingUnderlineLabelFontDefault;
 
 - (void)setErrorAccessibilityValue:(NSString *)errorAccessibilityValue {
   _errorAccessibilityValue = [errorAccessibilityValue copy];
+}
+
+-(void)setHelperAccessibilityLabel:(NSString *)helperAccessibilityLabel {
+  _helperAccessibilityLabel = [helperAccessibilityLabel copy];
+  if ([self.textInput.leadingUnderlineLabel.text isEqualToString:self.helperText]) {
+    self.textInput.leadingUnderlineLabel.accessibilityLabel = _helperAccessibilityLabel;
+  }
 }
 
 - (UIColor *)errorColor {
@@ -1149,8 +1157,18 @@ static UIFont *_trailingUnderlineLabelFontDefault;
                                    leadingUnderlineLabelText ? leadingUnderlineLabelText : @""];
   } else {
     self.textInput.accessibilityValue = nil;
-    self.textInput.leadingUnderlineLabel.accessibilityLabel = nil;
+    if ([self.textInput.leadingUnderlineLabel.text isEqualToString:self.helperText]) {
+      self.textInput.leadingUnderlineLabel.accessibilityLabel = self.helperAccessibilityLabel;
+    } else {
+      self.textInput.leadingUnderlineLabel.accessibilityLabel = nil;
+    }
   }
+}
+
+- (void)setHelperText:(NSString *)helperText
+    helperAccessibilityLabel:(NSString *)helperAccessibilityLabel {
+  self.helperText = helperText;
+  self.helperAccessibilityLabel = helperAccessibilityLabel;
 }
 
 #pragma mark - Accessibility

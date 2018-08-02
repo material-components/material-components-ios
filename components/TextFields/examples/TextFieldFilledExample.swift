@@ -167,7 +167,7 @@ final class TextFieldFilledSwiftExample: UIViewController {
     stateZip.addSubview(zip)
     zip.delegate = self
     zipController.placeholderText = "Zip Code"
-    zipController.helperText = "XXXXX"
+    zipController.setHelperText("XXXXX", helperAccessibilityLabel: "5 digits")
     allTextFieldControllers.append(zipController)
 
     scrollView.addSubview(phone)
