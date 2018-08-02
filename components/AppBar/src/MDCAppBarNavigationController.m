@@ -123,7 +123,7 @@
 
   // Ensures that our App Bar's top layout guide reflects the current view controller hierarchy.
   // Most notably, this ensures we support iPad popovers and extensions.
-  appBar.headerViewController.inferTopSafeAreaInsetFromViewController = YES;
+  appBar.inferTopSafeAreaInsetFromViewController = YES;
 
   // We want our flexible header to calculate the safe area insets dynamically, rather than assume
   // we've pre-calculated them.
