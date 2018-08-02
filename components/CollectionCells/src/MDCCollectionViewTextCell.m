@@ -225,7 +225,7 @@ static inline CGRect AlignRectToUpperPixel(CGRect rect) {
       detailFrame.origin.y = (boundsHeight / 2) - (detailFrame.size.height / 2);
     }
 
-  } else if (numberOfAllVisibleTextLines == 3) {
+  } else if (numberOfAllVisibleTextLines >= 3) {
     if (!CGRectIsEmpty(textFrame) && !CGRectIsEmpty(detailFrame)) {
       // Alignment for three lines.
       textFrame.origin.y =
