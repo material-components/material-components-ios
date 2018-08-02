@@ -61,6 +61,10 @@
 
  To theme the injected App Bar, implement the delegate's
  -appBarNavigationController:willAddAppBar:asChildOfViewController: API.
+
+ @note If you use the initWithRootViewController: API you will not have been able to provide a
+ delegate yet. In this case, use the -appBarForViewController: API to retrieve the injected App Bar
+ for your root view controller and execute your delegate logic on the returned result, if any.
  */
 MDC_SUBCLASSING_RESTRICTED
 @interface MDCAppBarNavigationController : UINavigationController

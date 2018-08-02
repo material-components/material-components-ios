@@ -56,6 +56,14 @@
   return self;
 }
 
+- (instancetype)initWithRootViewController:(UIViewController *)rootViewController {
+  self = [super initWithRootViewController:rootViewController];
+  if (self) {
+    [self injectAppBarIntoViewController:rootViewController];
+  }
+  return self;
+}
+
 #pragma mark - UINavigationController overrides
 
 // Intercept status bar style inquiries and reroute them to our flexible header view controller.
