@@ -97,13 +97,17 @@
 #pragma mark - Private
 
 - (void)injectAppBarIntoViewController:(UIViewController *)viewController {
+  // Force the view to load immediately in case the view controller is using viewDidLoad to manage
+  // its child view controllers (potentially injecting an App Bar as a result).
+  UIView *viewControllerView = viewController.view;
+
   if ([self viewControllerHasFlexibleHeader:viewController]) {
     return; // Already has a flexible header (not one we injected, but that's ok).
   }
 
   // Attempt to infer the tracking scroll view.
   UIScrollView *trackingScrollView =
-      [self findFirstInstanceOfUIScrollViewInView:viewController.view];
+      [self findFirstInstanceOfUIScrollViewInView:viewControllerView];
 
   MDCAppBar *appBar = [[MDCAppBar alloc] init];
 
@@ -152,6 +156,10 @@
   // case. MDCFlexibleHeaderViewController can never be a top-level view controller.
   for (UIViewController *childViewController in viewController.childViewControllers) {
     if ([childViewController isKindOfClass:[MDCFlexibleHeaderViewController class]]) {
+      return YES;
+    }
+    // Recurse in case the flexible header is nested within a container.
+    if ([self viewControllerHasFlexibleHeader:childViewController]) {
       return YES;
     }
   }

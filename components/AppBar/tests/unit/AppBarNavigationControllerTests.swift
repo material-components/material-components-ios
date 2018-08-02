@@ -68,6 +68,24 @@ class AppBarNavigationControllerTests: XCTestCase {
                     + " controller may have injected another App Bar.")
   }
 
+  func testPushingAContainedAppBarContainerViewControllerDoesNotInjectAnAppBar() {
+    // Given
+    let viewController = UIViewController()
+    let container = MDCAppBarContainerViewController(contentViewController: viewController)
+    let nestedContainer = UIViewController()
+    nestedContainer.addChildViewController(container)
+    nestedContainer.view.addSubview(container.view)
+    container.didMove(toParentViewController: nestedContainer)
+
+    // When
+    navigationController.pushViewController(nestedContainer, animated: false)
+
+    // Then
+    XCTAssertEqual(nestedContainer.childViewControllers.count, 1,
+                   "The view controller hierarchy already has one app bar view controller, but it"
+                    + " appears to have possibly added another.")
+  }
+
   func testPushingAViewControllerWithAFlexibleHeaderDoesNotInjectAnAppBar() {
     // Given
     let viewController = UIViewController()
