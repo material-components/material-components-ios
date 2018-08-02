@@ -1121,7 +1121,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   // Notably, UITableViewController's .view _is_ the tableView, so there is no way to add a flexible
   // header other than as a subview to the scroll view. This is the most common case to which the
   // following logic has been written.
-  if (self.superview == self.trackingScrollView) {
+  if (self.superview && self.superview == self.trackingScrollView) {
     if (self.superview.subviews.lastObject != self) {
       [self.superview bringSubviewToFront:self];
     }
