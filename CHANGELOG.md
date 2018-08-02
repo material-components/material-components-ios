@@ -1,14 +1,16 @@
-# #develop#
+# 59.1.1
 
-## Breaking changes
-
-## New deprecations
-
-## New features
+This patch release fixes a bug with Flexible Header when VoiceOver is enabled.
 
 ## API changes
 
 ## Component changes
+
+### FlexibleHeader
+
+#### Changes
+
+* [Fixes a layout bug with VoiceOver on that was introduced in v57.0.0 (5dc67c88c06f11761769de1d0bae34ff2c657046). (#4698)](https://github.com/material-components/material-components-ios/commit/e5c3b79df0a9ae09b5063416df57044ba1cb6179) (featherless)
 
 ---
 
