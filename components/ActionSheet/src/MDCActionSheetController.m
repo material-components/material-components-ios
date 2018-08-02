@@ -60,9 +60,7 @@
 @interface MDCActionSheetController () <MDCBottomSheetPresentationControllerDelegate>
 
 @property(nonatomic, strong) MDCBottomSheetTransitionController *transitionController;
-@property(nonatomic, nonnull, strong) MDCActionSheetListViewController *tableView;
-@property(nonatomic, nullable) NSString *title;
-@property(nonatomic, nullable) NSString *message;
+@property(nonatomic, strong) MDCActionSheetListViewController *tableView;
 
 @end
 
@@ -70,8 +68,18 @@
 @implementation MDCActionSheetController {
   NSMutableArray<MDCActionSheetAction *> *_actions;
   UIViewController *contentViewController;
-  id<MDCActionSheetControllerDelegate> delegate;
   BOOL _mdc_adjustsFontForContentSizeCategory;
+}
+
+- (nonnull instancetype)initWithTitle:(NSString *)title
+                              message:(NSString *)message {
+  self = [super initWithNibName:nil bundle:nil];
+  if (self) {
+    self.message = message;
+    self.title = title;
+    [self commonMDCActionSheetControllerInit];
+  }
+  return self;
 }
 
 + (instancetype)actionSheetControllerWithTitle:(NSString *)title {
@@ -83,15 +91,8 @@
   return [[MDCActionSheetController alloc] initWithTitle:title message:message];
 }
 
-- (nonnull instancetype)initWithTitle:(nullable NSString *)title
-                              message:(nullable NSString *)message {
-  self = [super initWithNibName:nil bundle:nil];
-  if (self) {
-    _title = title;
-    _message = message
-    [self commonMDCActionSheetControllerInit];
-  }
-  return self;
+- (instancetype)init {
+  return [MDCActionSheetController actionSheetControllerWithTitle:nil message:nil];
 }
 
 - (void)commonMDCActionSheetControllerInit {
@@ -122,8 +123,8 @@
   [contentViewController didMoveToParentViewController:self];
   contentViewController.view.backgroundColor = [UIColor whiteColor];
   contentViewController.preferredContentSize = CGSizeMake(CGRectGetWidth(self.view.bounds), (_actions.count + 1) * 56);
-  _tableView = [[MDCActionSheetListViewController alloc] initWithTitle:_title
-                                                               actions: _actions];
+//  _tableView = [[MDCActionSheetListViewController alloc] initWithTitle:_title
+//                                                               actions: _actions];
   CGRect tableFrame = _tableView.view.frame;
   tableFrame.origin.y = 0;
   _tableView.view.frame = tableFrame;
@@ -196,14 +197,6 @@
   return;
 }
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-- (void)actionSheetPresentationControllerDidDismissAction:
-(nonnull __unused MDCBottomSheetPresentationController *)bottomSheet {
-#pragma clang diagnostic pop
-  [delegate actionSheetControllerDidDismissActionSheet:self];
-}
-
 #pragma mark - Dynamic Type
 - (BOOL)mdc_adjustFontForContentSizeCategory {
   return _mdc_adjustsFontForContentSizeCategory;
@@ -214,106 +207,20 @@
   [self.view setNeedsLayout];
 }
 
-#pragma mark - Table Header
 - (void)setTitle:(NSString *)title {
-  if (title != _title) {
-    _title = title;
-    _tableView.header.title = title;
-  }
+
 }
 
 - (NSString *)title {
-  return _tableView.header.title;
-}
-
-- (void)setTitleFont:(UIFont *)titleFont {
-  if (_titleFont != titleFont) {
-    _titleFont = titleFont;
-    _tableView.header.titleFont = titleFont;
-  }
-}
-
-- (UIFont *)titleFont {
-  return _tableView.header.titleFont;
-}
-
-- (void)setTitleColor:(UIColor *)titleColor {
-  if (_titleColor != titleColor) {
-    _titleColor = titleColor;
-    _tableView.header.titleColor = titleColor;
-  }
-}
-
-- (UIColor *)titleColor {
-  return _tableView.header.titleColor;
+  return self.tableView.header.title;
 }
 
 - (void)setMessage:(NSString *)message {
-  if (_message != message) {
-    _message = message;
-    _tableView.header.message = message;
-  }
+
 }
 
 - (NSString *)message {
-  return _tableView.header.message;
-}
-
-- (void)setMessageFont:(UIFont *)messageFont {
-  if (_messageFont != messageFont) {
-    _messageFont = messageFont;
-    _tableView.header.messageFont = messageFont;
-  }
-}
-
-- (UIFont *)messageFont {
-  return _tableView.header.messageFont;
-}
-
-- (void)setMessageColor:(UIColor *)messageColor {
-  if (_messageColor != messageColor) {
-    _messageColor = messageColor;
-    _tableView.header.messageColor = messageColor;
-  }
-}
-
-- (UIColor *)messageColor {
-  return _tableView.header.messageColor;
-}
-
-#pragma mark - List item
-
-- (void)setActionsLabelFont:(UIFont *)actionsLabelFont {
-  if (_actionsLabelFont != actionsLabelFont) {
-    _actionsLabelFont = actionsLabelFont;
-    _tableView.actionsLabelFont = actionsLabelFont;
-  }
-}
-
-- (UIFont *)actionsLabelFont {
-  return _tableView.actionsLabelFont;
-}
-
-- (void)setActionsLabelColor:(UIColor *)actionsLabelColor {
-  if (_actionsLabelColor != actionsLabelColor) {
-    _actionsLabelColor = actionsLabelColor;
-    _tableView.actionsLabelColor = actionsLabelColor;
-  }
-}
-
-- (UIColor *)actionsLabelColor {
-  return _tableView.actionsLabelColor;
-}
-
-- (void)setImageColor:(UIColor *)imageColor {
-  if (_imageColor != imageColor) {
-    _imageColor = imageColor;
-    _tableView.imageColor = imageColor;
-  }
-}
-
-- (UIColor *)actionImageColor {
-  return self.tableView.imageColor;
+  return self.tableView.header.message;
 }
 
 @end

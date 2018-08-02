@@ -40,6 +40,9 @@
  [UIAlertController](https://developer.apple.com/documentation/uikit/uialertcontroller)
  or [UIAlertControllerSytleActionSheet](https://developer.apple.com/documentation/uikit/uialertcontrollerstyle/uialertcontrollerstyleactionsheet)
 
+ MDCActionSheetController does not support UIPopoverController, instead it will always be presented
+ in a sheet from the bottom.
+
 
  ### Dependencies
 
