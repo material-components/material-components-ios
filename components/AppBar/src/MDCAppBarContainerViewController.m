@@ -77,6 +77,10 @@
   return self.contentViewController.preferredInterfaceOrientationForPresentation;
 }
 
+- (MDCAppBarViewController *)appBarViewController {
+  return _appBar.appBarViewController;
+}
+
 #pragma mark - Enabling top layout guide adjustment behavior
 
 - (void)updateTopLayoutGuideBehavior {
