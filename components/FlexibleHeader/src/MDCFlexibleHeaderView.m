@@ -543,6 +543,10 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   return _topSafeAreaGuide;
 }
 
+- (CGFloat)topSafeAreaGuideHeight {
+  return _topSafeAreaGuide.frame.size.height;
+}
+
 #pragma mark - Private (fhv_ prefix)
 
 - (void)fhv_setContentOffset:(CGPoint)contentOffset {

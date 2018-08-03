@@ -486,14 +486,15 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 
     } else if (topLayoutGuideViewController != nil) {
       UIEdgeInsets additionalSafeAreaInsets = topLayoutGuideViewController.additionalSafeAreaInsets;
-      if (self.headerView.statusBarHintCanOverlapHeader) {
-        // safe area insets will likely already take into account the top safe area inset, so let's
-        // avoid double-counting that here.
-        additionalSafeAreaInsets.top = topInset - MDCDeviceTopSafeAreaInset();
-
+      // We need to avoid double-counting any top safe area amount because this will already be
+      // taken into account as part of additionalSafeAreaInsets.
+      topInset -= self.headerView.topSafeAreaGuideHeight;
+      if (self.headerView.minMaxHeightIncludesSafeArea) {
+        topInset = MIN(self.headerView.maximumHeight - MDCDeviceTopSafeAreaInset(), topInset);
       } else {
-        additionalSafeAreaInsets.top = topInset;
+        topInset = MIN(self.headerView.maximumHeight, topInset);
       }
+      additionalSafeAreaInsets.top = topInset;
       topLayoutGuideViewController.additionalSafeAreaInsets = additionalSafeAreaInsets;
     }
   }
