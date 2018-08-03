@@ -36,7 +36,7 @@
 - (void)dealloc {
   // On pre-iOS 11 devices we need to manually clear out the trackingScrollView because we've
   // enabled the observesTrackingScrollViewScrollEvents behavior on the flexible header.
-  self.appBar.headerViewController.headerView.trackingScrollView = nil;
+  self.appBar.appBarViewController.headerView.trackingScrollView = nil;
 }
 
 @end
@@ -71,7 +71,7 @@
   UIViewController *child = [super childViewControllerForStatusBarStyle];
   MDCAppBar *appBar = [self appBarForViewController:child];
   if (appBar) {
-    return appBar.headerViewController;
+    return appBar.appBarViewController;
   }
   return child; // Fall back to using the child if we didn't knowingly inject an app bar.
 }
@@ -131,22 +131,22 @@
 
   // Ensures that the view controller's top layout guide / additional safe area insets are adjusted
   // to take into consideration the flexible header's height.
-  appBar.headerViewController.topLayoutGuideViewController = viewController;
+  appBar.appBarViewController.topLayoutGuideViewController = viewController;
 
   // Ensures that our App Bar's top layout guide reflects the current view controller hierarchy.
   // Most notably, this ensures we support iPad popovers and extensions.
-  appBar.inferTopSafeAreaInsetFromViewController = YES;
+  appBar.appBarViewController.inferTopSafeAreaInsetFromViewController = YES;
 
   // We want our flexible header to calculate the safe area insets dynamically, rather than assume
   // we've pre-calculated them.
-  appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = NO;
+  appBar.appBarViewController.headerView.minMaxHeightIncludesSafeArea = NO;
 
   // This is the magic that allows us to avoid having to explicitly forward any scroll view events
   // to the flexible header. Enabling this means we cannot enable the shiftBehavior on the
   // flexible header. In those cases the client is expected to create their own App Bar.
-  appBar.headerViewController.headerView.observesTrackingScrollViewScrollEvents = YES;
+  appBar.appBarViewController.headerView.observesTrackingScrollViewScrollEvents = YES;
 
-  appBar.headerViewController.headerView.trackingScrollView = trackingScrollView;
+  appBar.appBarViewController.headerView.trackingScrollView = trackingScrollView;
 
   if ([self.delegate respondsToSelector:
        @selector(appBarNavigationController:willAddAppBar:asChildOfViewController:)]) {
@@ -155,7 +155,14 @@
                       asChildOfViewController:viewController];
   }
 
-  [viewController addChildViewController:appBar.headerViewController];
+  if ([self.delegate respondsToSelector:
+       @selector(appBarNavigationController:willAddAppBarViewController:asChildOfViewController:)]) {
+    [self.delegate appBarNavigationController:self
+                  willAddAppBarViewController:appBar.appBarViewController
+                      asChildOfViewController:viewController];
+  }
+
+  [viewController addChildViewController:appBar.appBarViewController];
   [appBar addSubviewsToParent];
 }
 
@@ -203,6 +210,11 @@
 
 - (MDCAppBar *)appBarForViewController:(UIViewController *)viewController {
   return [self infoForViewController:viewController].appBar;
+}
+
+- (MDCAppBarViewController *)
+    appBarViewControllerForViewController:(UIViewController *)viewController {
+  return [self infoForViewController:viewController].appBar.appBarViewController;
 }
 
 @end

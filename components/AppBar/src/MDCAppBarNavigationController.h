@@ -25,6 +25,7 @@
 #endif  // #ifndef MDC_SUBCLASSING_RESTRICTED
 
 @class MDCAppBar;
+@class MDCAppBarViewController;
 @class MDCAppBarNavigationController;
 
 /**
@@ -45,6 +46,28 @@
  @note This method will only be invoked if a new App Bar instance is about to be added to the view
  controller. If a flexible header is already present in the view controller, this method will not
  be invoked.
+ */
+- (void)appBarNavigationController:(nonnull MDCAppBarNavigationController *)navigationController
+       willAddAppBarViewController:(nonnull MDCAppBarViewController *)appBarViewController
+           asChildOfViewController:(nonnull UIViewController *)viewController;
+
+#pragma mark - Will be deprecated
+
+/**
+ Informs the receiver that the given App Bar will be added as a child of the given view controller.
+
+ This event is primarily intended to allow any configuration or theming of the App Bar to occur
+ before it becomes part of the view controller hierarchy.
+
+ By the time this event has fired, the navigation controller will already have attempted to infer
+ the tracking scroll view from the provided view controller.
+
+ @note This method will only be invoked if a new App Bar instance is about to be added to the view
+ controller. If a flexible header is already present in the view controller, this method will not
+ be invoked.
+
+ This method will soon be deprecated. Please use
+ -appBarNavigationController:willAddAppBarViewController:asChildOfViewController: instead.
  */
 - (void)appBarNavigationController:(nonnull MDCAppBarNavigationController *)navigationController
                      willAddAppBar:(nonnull MDCAppBar *)appBar
@@ -76,10 +99,21 @@ MDC_SUBCLASSING_RESTRICTED
  */
 @property(nonatomic, weak, nullable) id<MDCAppBarNavigationControllerDelegate> delegate;
 
-#pragma mark - Getting App Bar instances
+#pragma mark - Getting App Bar view controller instances
+
+/**
+ Returns the injected App Bar view controller for a given view controller, if an App Bar was
+ injected.
+ */
+- (nullable MDCAppBarViewController *)appBarViewControllerForViewController:
+    (nonnull UIViewController *)viewController;
+
+#pragma mark - To be deprecated
 
 /**
  Returns the injected App Bar for a given view controller, if an App Bar was injected.
+
+ This method will eventually be deprecated. Use -appBarViewControllerForViewController: instead.
  */
 - (nullable MDCAppBar *)appBarForViewController:(nonnull UIViewController *)viewController;
 
