@@ -128,6 +128,7 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 - (void)loadView {
   self.view = [[MDCFeatureHighlightView alloc] initWithFrame:CGRectZero];
   self.featureHighlightView = (MDCFeatureHighlightView *)self.view;
+  self.featureHighlightView.accessibilityLabel = self.accessibilityLabel;
 }
 
 - (void)viewWillLayoutSubviews {
