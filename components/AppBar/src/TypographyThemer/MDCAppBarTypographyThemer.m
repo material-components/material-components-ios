@@ -20,6 +20,14 @@
 
 @implementation MDCAppBarTypographyThemer
 
++ (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
+       toAppBarViewController:(nonnull MDCAppBarViewController *)appBarViewController {
+  [MDCNavigationBarTypographyThemer applyTypographyScheme:typographyScheme
+                                          toNavigationBar:appBarViewController.navigationBar];
+}
+
+#pragma mark - To be deprecated
+
 + (void)applyTypographyScheme:(id<MDCTypographyScheming>)typographyScheme
                      toAppBar:(MDCAppBar *)appBar {
   [MDCNavigationBarTypographyThemer applyTypographyScheme:typographyScheme

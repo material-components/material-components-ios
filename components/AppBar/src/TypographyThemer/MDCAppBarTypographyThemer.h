@@ -26,6 +26,17 @@
  Applies a typography scheme's properties to an MDCAppBar.
 
  @param typographyScheme The typography scheme to apply to the component instance.
+ @param appBarViewController A component instance to which the typography scheme should be applied.
+ */
++ (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
+       toAppBarViewController:(nonnull MDCAppBarViewController *)appBarViewController;
+
+#pragma mark - To be deprecated
+
+/**
+ Applies a typography scheme's properties to an MDCAppBar.
+
+ @param typographyScheme The typography scheme to apply to the component instance.
  @param appBar A component instance to which the typography scheme should be applied.
  */
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme

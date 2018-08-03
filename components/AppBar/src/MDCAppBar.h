@@ -18,27 +18,29 @@
 #import "MaterialHeaderStackView.h"
 #import "MaterialNavigationBar.h"
 
-@class MDCAppBar;
+@class MDCAppBarViewController;
 
 /**
- The MDCAppBarTextColorAccessibilityMutator class creates an external object with which to work on
- an instance of a Material App Bar to activate and ensure accessibility on its title and buttons.
-
- ### Dependencies
-
- Material AppBarTextColorAccessibilityMutator depends on the AppBar material component and
- MDFTextAccessibility Framework.
+ MDCAppBarViewController is a flexible header view controller that manages a navigation bar and
+ header stack view in order to provide the Material Top App Bar user interface.
  */
-
-@interface MDCAppBarTextColorAccessibilityMutator : NSObject
+@interface MDCAppBarViewController : MDCFlexibleHeaderViewController
 
 /**
- Mutates title text color and navigation items' tint colors based on background color of
- app bar's navigation bar or header view background color.
+ The navigation bar often represents the information stored in a view controller's navigationItem
+ propoerty, but it can also be directly configured.
  */
-- (void)mutate:(nonnull MDCAppBar *)appBar;
+@property(nonatomic, strong, nonnull) MDCNavigationBar *navigationBar;
+
+/**
+ The header stack view owns the navigationBar (as the top bar) and an optional bottom bar (typically
+ a tab bar).
+ */
+@property(nonatomic, strong, nonnull) MDCHeaderStackView *headerStackView;
 
 @end
+
+#pragma mark - To be deprecated
 
 /**
  The MDCAppBar class creates and configures the constellation of components required to represent a
@@ -53,8 +55,9 @@
  ### Dependencies
 
  AppBar depends on the FlexibleHeader, HeaderStackView, and NavigationBar Material Components.
+
+ @note This API will be deprecated in favor of MDCAppBarViewController.
  */
-//TODO: (#3012) Re-add NSSecureCoding
 @interface MDCAppBar : NSObject
 
 /**
@@ -66,6 +69,9 @@
 /** The header view controller instance manages the App Bar's flexible header view behavior. */
 @property(nonatomic, strong, nonnull, readonly)
     MDCFlexibleHeaderViewController *headerViewController;
+
+/** The App Bar view controller instance manages the App Bar's flexible header view behavior. */
+@property(nonatomic, strong, nonnull, readonly) MDCAppBarViewController *appBarViewController;
 
 /** The navigation bar. */
 @property(nonatomic, strong, nonnull, readonly) MDCNavigationBar *navigationBar;
@@ -100,5 +106,27 @@
  Default is NO.
  */
 @property(nonatomic) BOOL inferTopSafeAreaInsetFromViewController;
+
+@end
+
+/**
+ The MDCAppBarTextColorAccessibilityMutator class creates an external object with which to work on
+ an instance of a Material App Bar to activate and ensure accessibility on its title and buttons.
+
+ ### Dependencies
+
+ Material AppBarTextColorAccessibilityMutator depends on the AppBar material component and
+ MDFTextAccessibility Framework.
+
+ @note This API will be deprecated with no replacement.
+ */
+
+@interface MDCAppBarTextColorAccessibilityMutator : NSObject
+
+/**
+ Mutates title text color and navigation items' tint colors based on background color of
+ app bar's navigation bar or header view background color.
+ */
+- (void)mutate:(nonnull MDCAppBar *)appBar;
 
 @end
