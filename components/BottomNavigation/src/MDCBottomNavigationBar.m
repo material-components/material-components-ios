@@ -24,10 +24,10 @@
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
+#import "UITabBarItem+BottomNavigation.h"
 #import "private/MaterialBottomNavigationStrings.h"
 #import "private/MaterialBottomNavigationStrings_table.h"
 #import "private/MDCBottomNavigationItemView.h"
-#import "UITabBarItem+MDCBottomNavigation.h"
 
 // The Bundle for string resources.
 static NSString *const kMaterialBottomNavigationBundle = @"MaterialBottomNavigation.bundle";
@@ -37,7 +37,7 @@ static const CGFloat kMDCBottomNavigationBarHeightAdjacentTitles = 40.f;
 static const CGFloat kMDCBottomNavigationBarLandscapeContainerWidth = 320.f;
 static const CGFloat kMDCBottomNavigationBarItemsHorizontalMargin = 12.f;
 static NSString *const kMDCBottomNavigationBarBadgeColorString = @"badgeColor";
-static NSString *const kMDCBottomNavigationBarBadgeTextColorString = @"badgeTextColor";
+static NSString *const kMDCBottomNavigationBarBadgeTextColorString = @"mdc_badgeTextColor";
 static NSString *const kMDCBottomNavigationBarBadgeValueString = @"badgeValue";
 static NSString *const kMDCBottomNavigationBarAccessibilityValueString =
     @"accessibilityValue";
@@ -402,8 +402,8 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
     itemView.contentInsets = self.itemsContentInsets;
     itemView.contentVerticalMargin = self.itemsContentVerticalMargin;
     itemView.contentHorizontalMargin = self.itemsContentHorizontalMargin;
-    if (item.badgeTextColor) {
-      itemView.badgeTextColor = item.badgeTextColor;
+    if (item.mdc_badgeTextColor) {
+      itemView.badgeTextColor = item.mdc_badgeTextColor;
     }
     MDCInkTouchController *controller = [[MDCInkTouchController alloc] initWithView:itemView];
     controller.delegate = self;
