@@ -26,3 +26,7 @@ The Feature Highlight component is a way to visually highlight a part of the scr
 
 - [Color Theming](color-theming.md)
 - [Typography Theming](typography-theming.md)
+
+## Accessibility 
+
+- [Accessibility](accessibility.md)
