@@ -139,7 +139,7 @@ to all buttons within the bottom app bar.
 ```swift
 bottomAppBar.floatingButton.accessibilityLabel = "Compose"
 let trailingButton = UIBarButtonItem()
-trailingButton.accessibilityLabel = "New"
+trailingButton.accessibilityLabel = "Buy"
 bottomAppBar.trailingBarButtonItems = [ trailingButton ]
 ```
 
