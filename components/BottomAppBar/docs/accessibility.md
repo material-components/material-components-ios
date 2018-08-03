@@ -7,32 +7,29 @@ Set an appropriate
 [`accessibilityLabel`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619577-accessibilitylabel)
 to all buttons within the bottom app bar.
 
+<!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
 ```swift
 bottomAppBar.floatingButton.accessibilityLabel = "Compose"
+let trailingButton = UIBarButtonItem()
+trailingButton.accessibilityLabel = "New"
+bottomAppBar.trailingBarButtonItems = [ trailingButton ]
 ```
 
 #### Objective-C
 
 ```objc
-bottomAppBar.floatingButton.accessibilityLabel = "Compose"
+bottomAppBar.floatingButton.accessibilityLabel = @"Compose";
+UIBarButtonItem *trailingButton = 
+    [[UIBarButtonItem alloc] initWithTitle:nil
+                                     style:UIBarButtonItemStylePlain
+                                    target:self
+                                    action:@selector(didTapTrailing:)];
+trailingButton.accessibilityLabel = @"Buy";
+[bottomAppBar setTrailingBarButtonItems:@[ trailingButton ]];
 ```
-
-If you do not do this then the button's label will be the name of the image.
-
-#### Swift
-
-```swift
-let image = UIImage(named: "Edit")
-bottomAppBar.floatingButton.setImage(image, for: .normal)
-```
-
-#### Objective-C
-```objc
-UIImage *image = [UIImage imageNamed:@"Edit"];
-[bottomAppBar.floatingButton setImage:image forState:UIControlStateNormal];
-```
+<!--</div>-->
 
 ### Set `-accessibilityHint`
 
@@ -40,14 +37,26 @@ Set an appropriate
 [`accessibilityHint`](https://developer.apple.com/documentation/objectivec/nsobject/1615093-accessibilityhint)
 to all buttons within the bottom app bar.
 
+<!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
 ```swift
 bottomAppBar.floatingButton.accessibilityHint = "Create new email"
+let trailingButton = UIBarButtonItem()
+trailingButton.accessibilityHint = "Purchase the item"
+bottomAppBar.trailingBarButtonItems = [ trailingButton ]
 ```
 
 #### Objective-C
 
 ```objc
-bottomAppBar.floatingButton.accessibilityHint = "Create new email"
+bottomAppBar.floatingButton.accessibilityHint = @"Create new email";
+UIBarButtonItem *trailingButton = 
+    [[UIBarButtonItem alloc] initWithTitle:nil
+                                     style:UIBarButtonItemStylePlain
+                                    target:self
+                                    action:@selector(didTapTrailing:)];
+trailingButton.accessibilityHint = @"Purchase the item";
+[bottomAppBar setTrailingBarButtonItems:@[ trailingButton ]];
 ```
+<!--</div>-->
