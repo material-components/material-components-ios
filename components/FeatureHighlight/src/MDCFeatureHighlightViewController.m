@@ -128,7 +128,6 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 - (void)loadView {
   self.view = [[MDCFeatureHighlightView alloc] initWithFrame:CGRectZero];
   self.featureHighlightView = (MDCFeatureHighlightView *)self.view;
-  self.featureHighlightView.accessibilityLabel = self.accessibilityLabel;
 }
 
 - (void)viewWillLayoutSubviews {
@@ -152,7 +151,8 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
-
+  UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification,
+                                  self.accessibilityLabel);
   _pulseTimer = [NSTimer scheduledTimerWithTimeInterval:kMDCFeatureHighlightPulseAnimationInterval
                                                  target:self.featureHighlightView
                                                selector:@selector(animatePulse)

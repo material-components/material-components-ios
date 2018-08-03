@@ -293,8 +293,6 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 }
 
 - (void)layoutSubviews {
-  UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification,
-                                  self.accessibilityLabel);
   [_innerLayer removeAllAnimations];
   [_outerLayer removeAllAnimations];
   [_pulseLayer removeAllAnimations];
