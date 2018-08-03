@@ -43,7 +43,6 @@ work like [navigation bars](../NavigationBar), but with the additional option to
 - [Extensions](#extensions)
   - [Color Theming](#color-theming)
 - [Accessibility](#accessibility)
-- [Accessibility](#accessibility)
   - [Set `-accessibilityLabel`](#set-`-accessibilitylabel`)
   - [Set `-accessibilityHint`](#set-`-accessibilityhint`)
 
@@ -124,8 +123,6 @@ tracking its development:
 ## Accessibility
 
 <!-- Extracted from docs/accessibility.md -->
-
-## Accessibility
 
 To help ensure your bottom app bar is accessible to as many users as possible, please be sure to review the
 following recommendations:

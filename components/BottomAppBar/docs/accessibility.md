@@ -1,5 +1,3 @@
-## Accessibility
-
 To help ensure your bottom app bar is accessible to as many users as possible, please be sure to review the
 following recommendations:
 
