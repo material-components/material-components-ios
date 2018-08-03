@@ -4,6 +4,7 @@ project 'MDCCatalog.xcodeproj'
 target "MDCCatalog" do
   platform :ios, '8.0'
   project 'MDCCatalog.xcodeproj'
+  pod 'MDFInternationalization', :git => 'https://github.com/material-foundation/material-internationalization-ios', :branch => 'release-candidate'
   pod 'MaterialComponentsExamples', :path => '../'
   pod 'MaterialComponents', :path => '../'
   pod 'CatalogByConvention', "~> 2.5"
