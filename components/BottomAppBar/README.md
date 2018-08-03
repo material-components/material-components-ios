@@ -42,7 +42,7 @@ work like [navigation bars](../NavigationBar), but with the additional option to
   - [Typical use](#typical-use)
 - [Extensions](#extensions)
   - [Color Theming](#color-theming)
-- [Accessibility ](#accessibility-)
+- [Accessibility](#accessibility)
 - [Accessibility](#accessibility)
   - [Set `-accessibilityLabel`](#set-`-accessibilitylabel`)
   - [Set `-accessibilityHint`](#set-`-accessibilityhint`)
@@ -121,7 +121,7 @@ tracking its development:
 - Task: [Impement a surface variant themer](https://www.pivotaltracker.com/story/show/156933141)
 
 
-## Accessibility 
+## Accessibility
 
 <!-- Extracted from docs/accessibility.md -->
 
