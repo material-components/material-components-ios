@@ -27,6 +27,7 @@ work like [navigation bars](../NavigationBar), but with the additional option to
 <ul class="icon-list">
   <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-app-bar-bottom">Material Design guidelines: App bars: bottom</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/bottomappbar/api-docs/Classes/MDCBottomAppBarView.html">MDCBottomAppBarView</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/bottomappbar/api-docs/Enums.html">Enumerations</a></li>
   <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/bottomappbar/api-docs/Enums/MDCBottomAppBarFloatingButtonElevation.html">MDCBottomAppBarFloatingButtonElevation</a></li>
   <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/bottomappbar/api-docs/Enums/MDCBottomAppBarFloatingButtonPosition.html">MDCBottomAppBarFloatingButtonPosition</a></li>
 </ul>
@@ -41,6 +42,10 @@ work like [navigation bars](../NavigationBar), but with the additional option to
   - [Typical use](#typical-use)
 - [Extensions](#extensions)
   - [Color Theming](#color-theming)
+- [Accessibility ](#accessibility-)
+- [Accessibility](#accessibility)
+  - [Set `-accessibilityLabel`](#set-`-accessibilitylabel`)
+  - [Set `-accessibilityHint`](#set-`-accessibilityhint`)
 
 - - -
 
@@ -114,4 +119,65 @@ tracking its development:
 
 - Task: [Implement a color themer](https://www.pivotaltracker.com/story/show/157095394)
 - Task: [Impement a surface variant themer](https://www.pivotaltracker.com/story/show/156933141)
+
+
+## Accessibility 
+
+<!-- Extracted from docs/accessibility.md -->
+
+## Accessibility
+
+To help ensure your bottom app bar is accessible to as many users as possible, please be sure to review the
+following recommendations:
+
+### Set `-accessibilityLabel`
+
+Set an appropriate
+[`accessibilityLabel`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619577-accessibilitylabel)
+to all buttons within the bottom app bar.
+
+#### Swift
+
+```swift
+bottomAppBar.floatingButton.accessibilityLabel = "Compose"
+```
+
+#### Objective-C
+
+```objc
+bottomAppBar.floatingButton.accessibilityLabel = "Compose"
+```
+
+If you do not do this then the button's label will be the name of the image.
+
+#### Swift
+
+```swift
+let image = UIImage(named: "Edit")
+bottomAppBar.floatingButton.setImage(image, for: .normal)
+```
+
+#### Objective-C
+```objc
+UIImage *image = [UIImage imageNamed:@"Edit"];
+[bottomAppBar.floatingButton setImage:image forState:UIControlStateNormal];
+```
+
+### Set `-accessibilityHint`
+
+Set an appropriate
+[`accessibilityHint`](https://developer.apple.com/documentation/objectivec/nsobject/1615093-accessibilityhint)
+to all buttons within the bottom app bar.
+
+#### Swift
+
+```swift
+bottomAppBar.floatingButton.accessibilityHint = "Create new email"
+```
+
+#### Objective-C
+
+```objc
+bottomAppBar.floatingButton.accessibilityHint = "Create new email"
+```
 
