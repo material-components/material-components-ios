@@ -55,7 +55,6 @@ The Material Design top app bar displays information and actions relating to the
 - [Extensions](#extensions)
   - [Color Theming](#color-theming)
   - [Typography Theming](#typography-theming)
-- [Example code](#example-code)
 - [Accessibility](#accessibility)
   - [MDCAppBar Accessibility](#mdcappbar-accessibility)
 
@@ -356,8 +355,6 @@ You must first add the Typography Themer extension to your project:
 ```bash
 pod 'MaterialComponents/AppBar+TypographyThemer'
 ```
-
-## Example code
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
