@@ -57,9 +57,9 @@
 
 @end
 
-@interface MDCActionSheetController () <MDCBottomSheetPresentationControllerDelegate>
+@interface MDCActionSheetController () <MDCBottomSheetPresentationControllerDelegate, UITableViewDelegate>
 
-@property(nonatomic, nullable, weak) MDCActionSheetListViewController *tableView;
+@property(nonatomic, nullable) MDCActionSheetListViewController *tableView;
 
 - (nonnull instancetype)initWithTitle:(nullable NSString *)title
                               message:(nullable NSString *)message;
@@ -98,7 +98,12 @@
 }
 
 - (void)commonMDCActionSheetControllerInit {
-  
+  contentViewController = [[UIViewController alloc] initWithNibName:nil bundle:nil];
+  _transitionController = [[MDCBottomSheetTransitionController alloc] init];
+  _transitionController.dismissOnBackgroundTap = YES;
+  super.transitioningDelegate = _transitionController;
+  super.modalPresentationStyle = UIModalPresentationCustom;
+  _actions = [[NSMutableArray alloc] init];
 }
 
 - (void)addAction:(MDCActionSheetAction *)action {
@@ -107,6 +112,29 @@
 
 - (NSArray<MDCActionSheetAction *> *)actions {
   return [_actions copy];
+}
+
+- (void)viewDidLoad {
+  [super viewDidLoad];
+
+  contentViewController.view.autoresizingMask =
+      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  contentViewController.view.frame = self.view.bounds;
+  [self addChildViewController:contentViewController];
+  [self.view addSubview:contentViewController.view];
+  [contentViewController didMoveToParentViewController:self];
+  contentViewController.view.backgroundColor = [UIColor whiteColor];
+  contentViewController.preferredContentSize =
+      CGSizeMake(CGRectGetWidth(self.view.bounds), 56);
+
+  _tableView = [[MDCActionSheetListViewController alloc] initWithTitle:_actionSheetTitle
+                                                               message:_message
+                                                               actions:_actions];
+  _tableView.tableView.delegate = self;
+  CGRect tableFrame = _tableView.view.frame;
+  tableFrame.origin.y = 0;
+  _tableView.view.frame = tableFrame;
+  [contentViewController.view addSubview:_tableView.view];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -176,11 +204,13 @@
 }
 
 
+
+
 #pragma mark - Table view delegate
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-  MDCActionSheetHeaderView *header = [[MDCActionSheetHeaderView alloc] initWithTitle:self.title];
-  //header.font = _titleFont;
+  MDCActionSheetHeaderView *header =
+      [[MDCActionSheetHeaderView alloc] initWithTitle:self.title message:self.message];
   return header;
 }
 

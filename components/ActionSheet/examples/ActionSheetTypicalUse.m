@@ -49,9 +49,10 @@
 }
 
 -(void)presentActionSheet {
-  _actionSheet = [MDCActionSheetController
-      actionSheetControllerWithTitle:@"Action sheet"];
-  _actionSheet.mdc_adjustsFontForContentSizeCategory = YES;
+  NSString *messageString = @"The supporting message for this action sheet";
+  _actionSheet =
+      [MDCActionSheetController actionSheetControllerWithTitle:@"Action sheet"
+                                                       message:messageString];
   MDCActionSheetAction *homeAction = [MDCActionSheetAction actionWithTitle:@"Home"
                                                                  image:[UIImage imageNamed:@"Home"]
                                                                handler:nil];

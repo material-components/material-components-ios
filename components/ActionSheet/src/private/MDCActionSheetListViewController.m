@@ -19,6 +19,8 @@
 #import "../MDCActionSheetController.h"
 #import "MaterialTypography.h"
 
+NSString *const kReuseIdentifier = @"BaseCell";
+
 @interface MDCActionSheetListViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, nullable, copy) NSString *title;
@@ -55,11 +57,13 @@
   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   self.tableView.scrollEnabled = NO;
   self.tableView.dataSource = self;
+  [self.tableView registerClass:[MDCActionSheetItemView class]
+         forCellReuseIdentifier:kReuseIdentifier];
   [self.tableView setTranslatesAutoresizingMaskIntoConstraints:NO];
   self.tableView.estimatedRowHeight = 56;
   self.tableView.rowHeight = UITableViewAutomaticDimension;
   self.tableView.estimatedSectionHeaderHeight = 56;
-  //[self updateFonts];
+  self.tableView.sectionHeaderHeight = UITableViewAutomaticDimension;
 }
 
 
@@ -75,7 +79,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  MDCActionSheetItemView *cell = [[MDCActionSheetItemView alloc] init];
+  MDCActionSheetItemView *cell =
+      [[MDCActionSheetItemView alloc] initWithStyle:UITableViewCellStyleDefault
+                                    reuseIdentifier:kReuseIdentifier];
   cell.action = _actions[indexPath.row];
   return cell;
 }
@@ -115,6 +121,7 @@
 - (void)setTitle:(NSString *)title {
   if (_tableTitle != title) {
     _tableTitle = title;
+    self.header.title = title;
   }
 }
 

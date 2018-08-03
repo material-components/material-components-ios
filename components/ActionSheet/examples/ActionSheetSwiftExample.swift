@@ -14,7 +14,7 @@
 import UIKit
 
 class ActionSheetSwiftExample: UIViewController {
-  let actionSheet = MDCActionSheetController(title: "Action sheet")
+  let actionSheet: MDCActionSheetController = MDCActionSheetController(title: "Action sheet")
 
   var colorScheme = MDCSemanticColorScheme()
   var typographyScheme = MDCTypographyScheme()
