@@ -75,7 +75,6 @@ import MaterialComponents
       UITabBarItem(title: "Favorites", image: UIImage(named: "Favorite"), tag: 2)
 
     bottomNavBar.items = [ tabBarItem1, tabBarItem2, tabBarItem3 ]
-
     tabBarItem2.mdc_badgeTextColor = UIColor.blue
     tabBarItem2.badgeValue = "2"
     // Select a bottom navigation bar item.

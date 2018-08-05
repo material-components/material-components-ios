@@ -16,6 +16,9 @@
 
 @interface UITabBarItem (BottomNavigation)
 
-@property(nonatomic, strong, setter=mdc_setBadgeTextColor:) UIColor *mdc_badgeTextColor;
+/**
+ Color of the text represented in the badge
+ */
+@property (nonatomic, strong, setter=mdc_setBadgeTextColor:) UIColor *mdc_badgeTextColor;
 
 @end
