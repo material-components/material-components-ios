@@ -22,6 +22,7 @@
 #import "MaterialPalettes.h"
 #import "MaterialBottomNavigation+ColorThemer.h"
 #import "MaterialBottomNavigation+TypographyThemer.h"
+#import "UITabBarItem+BottomNavigation.h"
 
 @interface BottomNavigationTypicalUseExample () <MDCBottomNavigationBarDelegate>
 
@@ -81,6 +82,8 @@
 #endif
   _bottomNavBar.items = @[ tabBarItem1, tabBarItem2, tabBarItem3, tabBarItem4, tabBarItem5 ];
   _bottomNavBar.selectedItem = tabBarItem2;
+  tabBarItem2.mdc_badgeTextColor = nil;
+
   [self updateBadgeItemCount];
 }
 

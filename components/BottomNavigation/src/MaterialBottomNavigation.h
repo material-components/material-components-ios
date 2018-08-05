@@ -15,3 +15,4 @@
  */
 
 #import "MDCBottomNavigationBar.h"
+#import "UITabBarItem+BottomNavigation.h"

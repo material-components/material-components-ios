@@ -24,6 +24,7 @@
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
+#import "UITabBarItem+BottomNavigation.h"
 #import "private/MaterialBottomNavigationStrings.h"
 #import "private/MaterialBottomNavigationStrings_table.h"
 #import "private/MDCBottomNavigationItemView.h"
@@ -36,6 +37,7 @@ static const CGFloat kMDCBottomNavigationBarHeightAdjacentTitles = 40.f;
 static const CGFloat kMDCBottomNavigationBarLandscapeContainerWidth = 320.f;
 static const CGFloat kMDCBottomNavigationBarItemsHorizontalMargin = 12.f;
 static NSString *const kMDCBottomNavigationBarBadgeColorString = @"badgeColor";
+static NSString *const kMDCBottomNavigationBarBadgeTextColorString = @"mdc_badgeTextColor";
 static NSString *const kMDCBottomNavigationBarBadgeValueString = @"badgeValue";
 static NSString *const kMDCBottomNavigationBarAccessibilityValueString =
     @"accessibilityValue";
@@ -228,6 +230,10 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
               options:NSKeyValueObservingOptionNew
               context:nil];
     [item addObserver:self
+           forKeyPath:kMDCBottomNavigationBarBadgeTextColorString
+              options:NSKeyValueObservingOptionNew
+              context:nil];
+    [item addObserver:self
            forKeyPath:kMDCBottomNavigationBarBadgeValueString
               options:NSKeyValueObservingOptionNew
               context:nil];
@@ -258,6 +264,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
   for (UITabBarItem *item in self.items) {
     @try {
       [item removeObserver:self forKeyPath:kMDCBottomNavigationBarBadgeColorString];
+      [item removeObserver:self forKeyPath:kMDCBottomNavigationBarBadgeTextColorString];
       [item removeObserver:self forKeyPath:kMDCBottomNavigationBarBadgeValueString];
       [item removeObserver:self
                 forKeyPath:kMDCBottomNavigationBarAccessibilityValueString];
@@ -291,6 +298,8 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
     MDCBottomNavigationItemView *itemView = _itemViews[selectedItemNum];
     if ([keyPath isEqualToString:kMDCBottomNavigationBarBadgeColorString]) {
       itemView.badgeColor = change[kMDCBottomNavigationBarNewString];
+    } else if ([keyPath isEqualToString:kMDCBottomNavigationBarBadgeTextColorString]) {
+      itemView.badgeTextColor = change[kMDCBottomNavigationBarBadgeTextColorString];
     } else if ([keyPath
                 isEqualToString:kMDCBottomNavigationBarAccessibilityValueString]) {
       itemView.accessibilityValue = change[NSKeyValueChangeNewKey];
@@ -393,6 +402,9 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
     itemView.contentInsets = self.itemsContentInsets;
     itemView.contentVerticalMargin = self.itemsContentVerticalMargin;
     itemView.contentHorizontalMargin = self.itemsContentHorizontalMargin;
+    if (item.mdc_badgeTextColor) {
+      itemView.badgeTextColor = item.mdc_badgeTextColor;
+    }
     MDCInkTouchController *controller = [[MDCInkTouchController alloc] initWithView:itemView];
     controller.delegate = self;
     [self.inkControllers addObject:controller];
