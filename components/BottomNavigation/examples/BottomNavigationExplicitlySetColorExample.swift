@@ -17,7 +17,7 @@
 import Foundation
 import MaterialComponents
 
-class BottomNavigationExplicitlySetColorExample: UIViewController {
+@objcMembers class BottomNavigationExplicitlySetColorExample: UIViewController {
 
   var colorScheme = MDCSemanticColorScheme()
 
@@ -76,7 +76,7 @@ class BottomNavigationExplicitlySetColorExample: UIViewController {
 
     bottomNavBar.items = [ tabBarItem1, tabBarItem2, tabBarItem3 ]
 
-    //tabBarItem2.badgeTextColor = UIColor.blue
+    tabBarItem2.mdc_badgeTextColor = UIColor.blue
     tabBarItem2.badgeValue = "2"
     // Select a bottom navigation bar item.
     bottomNavBar.selectedItem = tabBarItem2;

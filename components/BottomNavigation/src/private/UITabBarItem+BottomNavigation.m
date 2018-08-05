@@ -13,20 +13,17 @@
 // limitations under the License.
 
 #import "UITabBarItem+BottomNavigation.h"
+#import "objc/runtime.h"
 
 @implementation UITabBarItem (BottomNavigation)
 
-@dynamic mdc_badgeTextColor;
-
 - (UIColor *)mdc_badgeTextColor {
-  return objc_getAssociatedObject(self, _cmd)
+  return nil;
 }
 
 - (void)mdc_setBadgeTextColor:(UIColor *)badgeTextColor {
-  objc_setAssociatedObject(self,
-                           @selector(mdc_badgeTextColor),
-                           badgeTextColor,
-                           OBJC_ASSOCIATION_STRONG_NONATOMIC);
+  objc_setAssociatedObject(self, @selector(mdc_badgeTextColor), badgeTextColor,
+                           OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 @end

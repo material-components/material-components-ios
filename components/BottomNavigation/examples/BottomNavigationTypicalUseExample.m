@@ -81,6 +81,8 @@
 #endif
   _bottomNavBar.items = @[ tabBarItem1, tabBarItem2, tabBarItem3, tabBarItem4, tabBarItem5 ];
   _bottomNavBar.selectedItem = tabBarItem2;
+
+  tabBarItem2.mdc_badgeTextColor = [UIColor blueColor];
   [self updateBadgeItemCount];
 }
 
