@@ -30,6 +30,7 @@ UIScrollViewDelegate events.
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Classes/MDCFlexibleHeaderViewController.html">MDCFlexibleHeaderViewController</a></li>
   <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Protocols/MDCFlexibleHeaderViewDelegate.html">MDCFlexibleHeaderViewDelegate</a></li>
   <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Protocols/MDCFlexibleHeaderViewLayoutDelegate.html">MDCFlexibleHeaderViewLayoutDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Enums.html">Enumerations</a></li>
   <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Enums/MDCFlexibleHeaderContentImportance.html">MDCFlexibleHeaderContentImportance</a></li>
   <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Enums/MDCFlexibleHeaderScrollPhase.html">MDCFlexibleHeaderScrollPhase</a></li>
   <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/flexible-headers/api-docs/Enums/MDCFlexibleHeaderShiftBehavior.html">MDCFlexibleHeaderShiftBehavior</a></li>
@@ -61,6 +62,10 @@ UIScrollViewDelegate events.
   - [Background images](#background-images)
   - [Touch forwarding](#touch-forwarding)
   - [Tracking a parent view](#tracking-a-parent-view)
+- [Behavioral flags](#behavioral-flags)
+  - [Recommended behavioral flags](#recommended-behavioral-flags)
+  - [Removing safe area insets from the min/max heights](#removing-safe-area-insets-from-the-min/max-heights)
+  - [Enabling top layout guide adjustment](#enabling-top-layout-guide-adjustment)
 - [Extensions](#extensions)
   - [Color Theming](#color-theming)
 
@@ -769,6 +774,94 @@ the flexible header staying fixed in place, even though the underlying scroll vi
 
 In these situations the flexible header also ensures that it is always the front-most view. This is
 to combat the UITableView displaying its divider lines in front of the flexible header.
+
+
+## Behavioral flags
+
+<!-- Extracted from docs/recommended-behavioral-flags.md -->
+
+### Recommended behavioral flags
+
+The flexible header component includes a variety of flags that affect the behavior of the
+`MDCFlexibleHeaderViewController`. Many of these flags represent feature flags that we are using
+to allow client teams to migrate from an old behavior to a new, usually less-buggy one.
+
+You are encouraged to set all of the behavioral flags immediately after creating an instance of the
+flexible header.
+
+The minimal set of recommended flag values are:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// Enables support for iPad popovers and extensions.
+// Automatically enables topLayoutGuideAdjustmentEnabled as well, but does not set a
+// topLayoutGuideViewController.
+flexibleHeaderViewController.inferTopSafeAreaInsetFromViewController = true
+
+// Enables support for iPhone X safe area insets.
+flexibleHeaderViewController.headerView.minMaxHeightIncludesSafeArea = false
+```
+
+#### Objective-C
+
+```objc
+// Enables support for iPad popovers and extensions.
+// Automatically enables topLayoutGuideAdjustmentEnabled as well, but does not set a
+// topLayoutGuideViewController.
+flexibleHeaderViewController.inferTopSafeAreaInsetFromViewController = YES;
+
+// Enables support for iPhone X safe area insets.
+flexibleHeaderViewController.headerView.minMaxHeightIncludesSafeArea = NO;
+<!--</div>-->
+
+<!-- Extracted from docs/behavior-minmax-safearea.md -->
+
+### Removing safe area insets from the min/max heights
+
+The minimum and maximum height values of the flexible header view assume by default that the values
+include the top safe area insets value. This assumption no longer holds true on devices with a
+physical safe area inset and it never held true when flexible headers were shown in non full screen
+settings (such as popovers on iPad).
+
+This behavioral flag is enabled by default, but will eventually be disabled by default and the flag
+will eventually be removed.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+flexibleHeaderViewController.headerView.minMaxHeightIncludesSafeArea = false
+```
+
+#### Objective-C
+
+```objc
+flexibleHeaderViewController.headerView.minMaxHeightIncludesSafeArea = NO;
+<!--</div>-->
+
+<!-- Extracted from docs/behavior-top-layout-adjustment.md -->
+
+### Enabling top layout guide adjustment
+
+The `topLayoutGuideAdjustmentEnabled` behavior flag affects `topLayoutGuideViewController`. `Setting `topLayoutGuideAdjustmentEnabled` to YES enables the new behavior.
+
+`topLayoutGuideAdjustmentEnabled` is disabled by default, but will eventually be enabled by default
+and the flag will eventually be removed.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+flexibleHeaderViewController.topLayoutGuideAdjustmentEnabled = true
+```
+
+#### Objective-C
+
+```objc
+flexibleHeaderViewController.topLayoutGuideAdjustmentEnabled = YES;
+<!--</div>-->
+
+<!-- Extracted from docs/behabehavior-inferring-top-safe-area-inset.md -->
+
 
 
 ## Extensions

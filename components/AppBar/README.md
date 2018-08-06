@@ -50,8 +50,15 @@ The Material Design top app bar displays information and actions relating to the
   - [Typical use: View controller containment, as a navigation controller](#typical-use-view-controller-containment,-as-a-navigation-controller)
   - [Typical use: View controller containment, as a child](#typical-use-view-controller-containment,-as-a-child)
   - [Typical use: View controller containment, as a container](#typical-use-view-controller-containment,-as-a-container)
+  - [Typical use: Tracking a scroll view](#typical-use-tracking-a-scroll-view)
+  - [Enabling observation of the tracking scroll view](#enabling-observation-of-the-tracking-scroll-view)
   - [UINavigationItem support](#uinavigationitem-support)
   - [Interactive background views](#interactive-background-views)
+  - [Adjusting the top layout guide of a view controller](#adjusting-the-top-layout-guide-of-a-view-controller)
+- [Behavioral flags](#behavioral-flags)
+  - [Recommended behavioral flags](#recommended-behavioral-flags)
+  - [Removing safe area insets from the min/max heights](#removing-safe-area-insets-from-the-min/max-heights)
+  - [Enabling top layout guide adjustment](#enabling-top-layout-guide-adjustment)
 - [Extensions](#extensions)
   - [Color Theming](#color-theming)
   - [Typography Theming](#typography-theming)
@@ -265,6 +272,151 @@ MDCAppBarContainerViewController *container =
 ```
 <!--</div>-->
 
+<!-- Extracted from docs/../../FlexibleHeader/docs/typical-use-tracking-a-scroll-view.md -->
+
+### Typical use: Tracking a scroll view
+
+The flexible header can be provided with tracking scroll view. This allows the flexible header to
+expand, collapse, and shift off-screen in reaction to the tracking scroll view's delegate events.
+
+> Important: When using a tracking scroll view you must forward the relevant UIScrollViewDelegate
+> events to the flexible header.
+
+Follow these steps to hook up a tracking scroll view:
+
+Step 1: **Set the tracking scroll view**.
+
+In your viewDidLoad, set the `trackingScrollView` property on the header view:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+headerViewController.headerView.trackingScrollView = scrollView
+```
+
+#### Objective-C
+
+```objc
+self.headerViewController.headerView.trackingScrollView = scrollView;
+```
+<!--</div>-->
+
+`scrollView` might be a table view, collection view, or a plain UIScrollView.
+
+Step 2: **Forward UIScrollViewDelegate events to the Header View**.
+
+There are two ways to forward scroll events.
+
+Option 1: if your controller does not need to respond to UIScrollViewDelegate events and you're
+using either a plain UIScrollView or a UITableView you can set your MDCFlexibleHeaderViewController
+instance as the scroll view's delegate.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+scrollView.delegate = headerViewController
+```
+
+#### Objective-C
+
+```objc
+scrollView.delegate = self.headerViewController;
+```
+<!--</div>-->
+
+Option 2: implement the required UIScrollViewDelegate methods and forward them to the
+MDCFlexibleHeaderView instance. This is the most flexible approach and will work with any
+UIScrollView subclass.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// MARK: UIScrollViewDelegate
+
+override func scrollViewDidScroll(scrollView: UIScrollView) {
+  if scrollView == headerViewController.headerView.trackingScrollView {
+    headerViewController.headerView.trackingScrollViewDidScroll()
+  }
+}
+
+override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+  if scrollView == headerViewController.headerView.trackingScrollView {
+    headerViewController.headerView.trackingScrollViewDidEndDecelerating()
+  }
+}
+
+override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+  let headerView = headerViewController.headerView
+  if scrollView == headerView.trackingScrollView {
+    headerView.trackingScrollViewDidEndDraggingWillDecelerate(decelerate)
+  }
+}
+
+override func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+  let headerView = headerViewController.headerView
+  if scrollView == headerView.trackingScrollView {
+    headerView.trackingScrollViewWillEndDraggingWithVelocity(velocity, targetContentOffset: targetContentOffset)
+  }
+}
+```
+
+#### Objective-C
+
+```objc
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+  if (scrollView == self.headerViewController.headerView.trackingScrollView) {
+    [self.headerViewController.headerView trackingScrollViewDidScroll];
+  }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+  if (scrollView == self.headerViewController.headerView.trackingScrollView) {
+    [self.headerViewController.headerView trackingScrollViewDidEndDecelerating];
+  }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+  if (scrollView == self.headerViewController.headerView.trackingScrollView) {
+    [self.headerViewController.headerView trackingScrollViewDidEndDraggingWillDecelerate:decelerate];
+  }
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView
+                     withVelocity:(CGPoint)velocity
+              targetContentOffset:(inout CGPoint *)targetContentOffset {
+  if (scrollView == self.headerViewController.headerView.trackingScrollView) {
+    [self.headerViewController.headerView trackingScrollViewWillEndDraggingWithVelocity:velocity
+                                                                    targetContentOffset:targetContentOffset];
+  }
+}
+```
+<!--</div>-->
+
+<!-- Extracted from docs/../../FlexibleHeader/docs/scroll-view-observation.md -->
+
+### Enabling observation of the tracking scroll view
+
+If you do not require the flexible header's shift behavior, then you can avoid having to manually
+forward UIScrollViewDelegate events to the flexible header by enabling
+`observesTrackingScrollViewScrollEvents` on the flexible header view.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+flexibleHeaderViewController.headerView.observesTrackingScrollViewScrollEvents = true
+```
+
+#### Objective-C
+
+```objc
+flexibleHeaderViewController.headerView.observesTrackingScrollViewScrollEvents = YES;
+<!--</div>-->
+
+**Note:** if `observesTrackingScrollViewScrollEvents` is enabled then you can neither enable shift
+behavior nor manually forward scroll view delegate events to the flexible header.
+
 <!-- Extracted from docs/uinavigationitem-support.md -->
 
 ### UINavigationItem support
@@ -298,6 +450,124 @@ Until [Issue #184](https://github.com/material-components/material-components-io
    [Usage](../FlexibleHeader/#usage) docs.
 3. Add your views to this flexible header instance.
 4. Create a Navigation Bar if you need one. Treat it like any other custom view.
+
+<!-- Extracted from docs/../../FlexibleHeader/docs/top-layout-guide-adjustment.md -->
+
+### Adjusting the top layout guide of a view controller
+
+If your content view controller depends on the top layout guide being adjusted — e.g. if the
+content does not have a tracking scroll view and therefor relies on the top layout guide to perform
+layout calculations — then you should consider setting `topLayoutGuideViewController` to the
+content view controller.
+
+Setting this property does two things:
+
+1. Adjusts the view controller's `topLayoutGuide` property to take the flexible header into account
+   (most useful pre-iOS 11).
+2. On iOS 11 and up — if there is no tracking scroll view — also adjusts the
+   `additionalSafeAreaInsets` property to take the flexible header into account.
+
+**Note:** `topLayoutGuideAdjustmentEnabled` is automatically enabled if this property is set.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+flexibleHeaderViewController.topLayoutGuideViewController = contentViewController
+```
+
+#### Objective-C
+
+```objc
+flexibleHeaderViewController.topLayoutGuideViewController = contentViewController;
+<!--</div>-->
+
+
+## Behavioral flags
+
+<!-- Extracted from docs/recommended-behavioral-flags.md -->
+
+### Recommended behavioral flags
+
+The app bar component and its dependencies include a variety of flags that affect the behavior of
+the `MDCAppBarViewController`. Many of these flags represent feature flags that we are using
+to allow client teams to migrate from an old behavior to a new, usually less-buggy one.
+
+You are encouraged to set all of the behavioral flags immediately after creating an instance of the
+app bar.
+
+The minimal set of recommended flag values are:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// Enables support for iPad popovers and extensions.
+// Automatically enables topLayoutGuideAdjustmentEnabled as well, but does not set a
+// topLayoutGuideViewController.
+appBarViewController.inferTopSafeAreaInsetFromViewController = true
+
+// Enables support for iPhone X safe area insets.
+appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
+```
+
+#### Objective-C
+
+```objc
+// Enables support for iPad popovers and extensions.
+// Automatically enables topLayoutGuideAdjustmentEnabled as well, but does not set a
+// topLayoutGuideViewController.
+appBarViewController.inferTopSafeAreaInsetFromViewController = YES;
+
+// Enables support for iPhone X safe area insets.
+appBarViewController.headerView.minMaxHeightIncludesSafeArea = NO;
+<!--</div>-->
+
+<!-- Extracted from docs/../../FlexibleHeader/docs/behavior-minmax-safearea.md -->
+
+### Removing safe area insets from the min/max heights
+
+The minimum and maximum height values of the flexible header view assume by default that the values
+include the top safe area insets value. This assumption no longer holds true on devices with a
+physical safe area inset and it never held true when flexible headers were shown in non full screen
+settings (such as popovers on iPad).
+
+This behavioral flag is enabled by default, but will eventually be disabled by default and the flag
+will eventually be removed.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+flexibleHeaderViewController.headerView.minMaxHeightIncludesSafeArea = false
+```
+
+#### Objective-C
+
+```objc
+flexibleHeaderViewController.headerView.minMaxHeightIncludesSafeArea = NO;
+<!--</div>-->
+
+<!-- Extracted from docs/../../FlexibleHeader/docs/behavior-top-layout-adjustment.md -->
+
+### Enabling top layout guide adjustment
+
+The `topLayoutGuideAdjustmentEnabled` behavior flag affects `topLayoutGuideViewController`. `Setting `topLayoutGuideAdjustmentEnabled` to YES enables the new behavior.
+
+`topLayoutGuideAdjustmentEnabled` is disabled by default, but will eventually be enabled by default
+and the flag will eventually be removed.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+flexibleHeaderViewController.topLayoutGuideAdjustmentEnabled = true
+```
+
+#### Objective-C
+
+```objc
+flexibleHeaderViewController.topLayoutGuideAdjustmentEnabled = YES;
+<!--</div>-->
+
+<!-- Extracted from docs/../../FlexibleHeader/docs/behabehavior-inferring-top-safe-area-inset.md -->
+
 
 
 See the [FlexibleHeader](../FlexibleHeader) documentation for additional usage guides.

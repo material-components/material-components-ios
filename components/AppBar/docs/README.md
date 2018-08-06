@@ -44,8 +44,18 @@ own MDCAppBarViewController instance.
 - [Typical use: View controller containment, as a navigation controller](typical-use-navigation-controller.md)
 - [Typical use: View controller containment, as a child](typical-use-child.md)
 - [Typical use: View controller containment, as a container](typical-use-container.md)
+- [Tracking a scroll view](../../FlexibleHeader/docs/typical-use-tracking-a-scroll-view.md)
+- [Enabling observation of the tracking scroll view](../../FlexibleHeader/docs/scroll-view-observation.md)
 - [UINavigationItem support](uinavigationitem-support.md)
 - [Interactive background views](interactive-background-views.md)
+- [Adjusting the top layout guide of a view controller](../../FlexibleHeader/docs/top-layout-guide-adjustment.md)
+
+## Behavioral flags
+
+- [Recommended behavioral flags](recommended-behavioral-flags.md)
+- [Removing safe area insets from the min/max heights](../../FlexibleHeader/docs/behavior-minmax-safearea.md)
+- [Enabling top layout guide adjustment](../../FlexibleHeader/docs/behavior-top-layout-adjustment.md)
+- [Enabling inferred top safe area insets](../../FlexibleHeader/docs/behabehavior-inferring-top-safe-area-inset.md)
 
 See the [FlexibleHeader](../../FlexibleHeader) documentation for additional usage guides.
 
