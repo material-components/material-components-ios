@@ -16,7 +16,7 @@
 
 #import "MDCAppBarNavigationController.h"
 
-#import "MDCAppBar.h"
+#import "MDCAppBarViewController.h"
 
 #import <objc/runtime.h>
 
