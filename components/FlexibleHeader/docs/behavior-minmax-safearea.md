@@ -18,4 +18,5 @@ flexibleHeaderViewController.headerView.minMaxHeightIncludesSafeArea = false
 
 ```objc
 flexibleHeaderViewController.headerView.minMaxHeightIncludesSafeArea = NO;
+```
 <!--</div>-->

@@ -839,6 +839,7 @@ flexibleHeaderViewController.inferTopSafeAreaInsetFromViewController = YES;
 
 // Enables support for iPhone X safe area insets.
 flexibleHeaderViewController.headerView.minMaxHeightIncludesSafeArea = NO;
+```
 <!--</div>-->
 
 <!-- Extracted from docs/behavior-minmax-safearea.md -->
@@ -863,6 +864,7 @@ flexibleHeaderViewController.headerView.minMaxHeightIncludesSafeArea = false
 
 ```objc
 flexibleHeaderViewController.headerView.minMaxHeightIncludesSafeArea = NO;
+```
 <!--</div>-->
 
 <!-- Extracted from docs/behavior-top-layout-adjustment.md -->
@@ -884,6 +886,7 @@ flexibleHeaderViewController.topLayoutGuideAdjustmentEnabled = true
 
 ```objc
 flexibleHeaderViewController.topLayoutGuideAdjustmentEnabled = YES;
+```
 <!--</div>-->
 
 <!-- Extracted from docs/behavior-inferring-top-safe-area-inset.md -->
@@ -911,6 +914,7 @@ flexibleHeaderViewController.inferTopSafeAreaInsetFromViewController = true
 
 ```objc
 flexibleHeaderViewController.inferTopSafeAreaInsetFromViewController = YES;
+```
 <!--</div>-->
 
 **Note:** if this flag is enabled and you've also provided a `topLayoutGuideViewController`, take

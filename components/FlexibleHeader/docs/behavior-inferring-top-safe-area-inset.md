@@ -21,6 +21,7 @@ flexibleHeaderViewController.inferTopSafeAreaInsetFromViewController = true
 
 ```objc
 flexibleHeaderViewController.inferTopSafeAreaInsetFromViewController = YES;
+```
 <!--</div>-->
 
 **Note:** if this flag is enabled and you've also provided a `topLayoutGuideViewController`, take

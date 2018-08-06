@@ -31,4 +31,5 @@ flexibleHeaderViewController.inferTopSafeAreaInsetFromViewController = YES;
 
 // Enables support for iPhone X safe area insets.
 flexibleHeaderViewController.headerView.minMaxHeightIncludesSafeArea = NO;
+```
 <!--</div>-->
