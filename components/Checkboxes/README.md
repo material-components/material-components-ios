@@ -1,4 +1,3 @@
 # Checkboxes
 
-The [Checkboxes component](https://material.io/go/design-checkboxes) is yet to be completed, please follow the [tracking issue](https://www.pivotaltracker.com/epic/show/3954817) for more information.
-
+The [Checkboxes component](https://material.io/go/design-checkboxes) will not be implemented on iOS. Please [use the native UISwitch to align with cross-platform guidance](https://material.io/design/platform-guidance/cross-platform-adaptation.html).
