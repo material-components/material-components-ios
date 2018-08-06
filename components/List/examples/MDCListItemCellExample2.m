@@ -11,15 +11,15 @@
  limitations under the License.
  */
 
-#import "MDCListItemCellExample.h"
+#import "MDCListItemCellExample2.h"
 
 #import "MDCListItemCell.h"
 
 static CGFloat const kArbitraryCellHeight = 75.f;
 static NSString *const kListItemCellIdentifier = @"kListItemCellIdentifier";
 
-@interface MDCListItemCellExample () <UICollectionViewDelegate,
-                                      UICollectionViewDataSource>
+@interface MDCListItemCellExample2 () <UICollectionViewDelegate,
+                                       UICollectionViewDataSource>
 
 @property (strong, nonatomic) UICollectionView *collectionView;
 @property (strong, nonatomic) UICollectionViewFlowLayout *collectionViewLayout;
@@ -27,7 +27,7 @@ static NSString *const kListItemCellIdentifier = @"kListItemCellIdentifier";
 @property (nonatomic, assign) NSInteger numberOfCells;
 @end
 
-@implementation MDCListItemCellExample
+@implementation MDCListItemCellExample2
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -96,11 +96,9 @@ static NSString *const kListItemCellIdentifier = @"kListItemCellIdentifier";
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   MDCListItemCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kListItemCellIdentifier
-                                                                       forIndexPath:indexPath];
+                                                                    forIndexPath:indexPath];
   cell.titleLabel.text = self.randomStrings[indexPath.item];
-  cell.detailLabel.text = self.randomStrings[(indexPath.item + 1) % self.randomStrings.count];
   cell.leadingImageView.image = [UIImage imageNamed:@"Cake"];
-  cell.trailingImageView.image = [UIImage imageNamed:@"Favorite"];
   cell.mdc_adjustsFontForContentSizeCategory = YES;
   return cell;
 }
@@ -125,7 +123,7 @@ static NSString *const kListItemCellIdentifier = @"kListItemCellIdentifier";
 #pragma mark - CatalogByConvention
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Lists", @"List Item Example 1" ];
+  return @[ @"Lists", @"List Item Example 2" ];
 }
 
 + (BOOL)catalogIsPrimaryDemo {
@@ -133,7 +131,7 @@ static NSString *const kListItemCellIdentifier = @"kListItemCellIdentifier";
 }
 
 + (NSString *)catalogDescription {
-  return @"List Item Example 1";
+  return @"List Item Example 2";
 }
 
 + (BOOL)catalogIsPresentable {

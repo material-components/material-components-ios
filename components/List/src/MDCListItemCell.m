@@ -83,7 +83,7 @@ static const CGFloat kDetailColorOpacity = 0.6f;
 
   self.titleLabel = [[UILabel alloc] init];
   self.titleLabel.numberOfLines = 0;
-  self.titleLabel.font = self.defaultDetailLabelFont;
+  self.titleLabel.font = self.defaultTitleLabelFont;
   [self.textContainer addSubview:self.titleLabel];
 
   self.detailLabel = [[UILabel alloc] init];
