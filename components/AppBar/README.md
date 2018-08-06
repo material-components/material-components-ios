@@ -57,7 +57,7 @@ The Material Design top app bar displays information and actions relating to the
   - [Adjusting the top layout guide of a view controller](#adjusting-the-top-layout-guide-of-a-view-controller)
 - [Behavioral flags](#behavioral-flags)
   - [Recommended behavioral flags](#recommended-behavioral-flags)
-  - [Removing safe area insets from the min/max heights](#removing-safe-area-insets-from-the-min-max-heights)
+  - [Removing safe area insets from the min/max heights](#removing-safe-area-insets-from-the-minmax-heights)
   - [Enabling top layout guide adjustment](#enabling-top-layout-guide-adjustment)
   - [Enabling inferred top safe area insets](#enabling-inferred-top-safe-area-insets)
 - [Extensions](#extensions)

@@ -65,7 +65,7 @@ UIScrollViewDelegate events.
   - [Tracking a parent view](#tracking-a-parent-view)
 - [Behavioral flags](#behavioral-flags)
   - [Recommended behavioral flags](#recommended-behavioral-flags)
-  - [Removing safe area insets from the min/max heights](#removing-safe-area-insets-from-the-min-max-heights)
+  - [Removing safe area insets from the min/max heights](#removing-safe-area-insets-from-the-minmax-heights)
   - [Enabling top layout guide adjustment](#enabling-top-layout-guide-adjustment)
   - [Enabling inferred top safe area insets](#enabling-inferred-top-safe-area-insets)
 - [Extensions](#extensions)
