@@ -28,11 +28,11 @@
 
 /**
  MDCActionSheetController displays an alert message to the user, similar to
-     UIAlertControllerStyleActionSheet.
+ UIAlertControllerStyleActionSheet.
 
- A Material Action Sheet consist of a title, message and a list of actions.
+ A Material Action Sheet consists of a title, message and a list of actions.
 
- Learn more at the [Material spec bottom
+ Learn more about [Material bottom
  sheet](https://material.io/design/components/sheets-bottom.html)
  [Material spec list](https://material.io/design/components/lists.html)
 
@@ -51,7 +51,7 @@ MDC_SUBCLASSING_RESTRICTED
 @interface MDCActionSheetController : UIViewController
 
 /**
- Designated constructor to create and return a view controller for displaying an alert to the user.
+ Designated initializer to create and return a view controller for displaying an alert to the user.
 
  After creating the alert controller, add actions to the controller by calling -addAction.
 
@@ -63,7 +63,7 @@ MDC_SUBCLASSING_RESTRICTED
                                                message:(nullable NSString *)message;
 
 /**
- Convenience constructor to create and return a view controller for displaying an alert to the user.
+ Convenience initializer to create and return a view controller for displaying an alert to the user.
 
  After creating the alert controller, add actions to the controller by calling -addAction.
 
@@ -72,16 +72,17 @@ MDC_SUBCLASSING_RESTRICTED
  */
 + (instancetype)actionSheetControllerWithTitle:(nullable NSString *)title;
 
-
-- (instancetype)init;
-
-/** Action sheet controllers must be created with actionSheetControllerWithTitle: or
- with actionSheetControllerWithTitle:message:  */
+/**
+ Action sheet controllers must be created with actionSheetControllerWithTitle: or
+ with actionSheetControllerWithTitle:message:
+ */
 - (nonnull instancetype)initWithNibName:(NSString *)nibNameOrNil
                                  bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
 
-/** Action sheet controllers must be created with actionSheetControllerwithTitle:
-   or with actionSheetControllerWithTitle:message:  */
+/**
+ Action sheet controllers must be created with actionSheetControllerwithTitle:
+   or with actionSheetControllerWithTitle:message:
+ */
 - (nullable instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 
 /**
@@ -89,7 +90,7 @@ MDC_SUBCLASSING_RESTRICTED
 
  Actions are the possible reactions of the user to the presented alert. Actions are added as a
  list item in the list of the action sheet.
- Action buttons will be laid out from top to bottom depending on the the order they
+ Action buttons will be laid out from top to bottom depending on the order they
  were added.
 
  @param action Will be added to the end of MDCActionSheetController.actions.
@@ -157,7 +158,9 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
                                   image:(nonnull UIImage *)image
                                 handler:(__nullable MDCActionSheetHandler)handler;
 
-/** Action sheet actions must be created with actionWithTitle:image:handler: */
+/**
+ Action sheet actions must be created with actionWithTitle:image:handler:
+ */
 - (nonnull instancetype)init NS_UNAVAILABLE;
 
 /**
