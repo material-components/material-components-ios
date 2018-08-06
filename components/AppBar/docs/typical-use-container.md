@@ -12,8 +12,9 @@ In such cases, using `MDCAppBarContainerViewController` is preferred.
 controller as a sibling to an `MDCAppBarViewController`.
 
 **Note:** the trade off to using this API is that it will affect your view controller hierarchy. If
-the makes any assumptions about its parent view controller or its navigationController properties
-then these assumptions may break once the view controller is wrapped.
+the view controller makes any assumptions about its parent view controller or its
+navigationController properties then these assumptions may break once the view controller is
+wrapped.
 
 You'll typically push the container view controller onto a navigation controller, in which case you
 will also hide the navigation controller's navigation bar using UINavigationController's
