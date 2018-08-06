@@ -12,9 +12,9 @@ limitations under the License.
 */
 
 #import <UIKit/UIKit.h>
-#import "MDCBaseCollectionViewCell.h"
+#import "MDCBaseCell.h"
 
-@interface MDCListItemCell : MDCBaseCollectionViewCell
+@interface MDCListItemCell : MDCBaseCell
 
 /**
  The UIImageView responsible for displaying the leading image.

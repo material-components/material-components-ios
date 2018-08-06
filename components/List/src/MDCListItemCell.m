@@ -13,8 +13,6 @@
 
 #import "MDCListItemCell.h"
 
-#import "ManualLayoutListItemCell2.h"
-
 #import <MDFInternationalization/MDFInternationalization.h>
 #import "MaterialInk.h"
 #import "MaterialTypography.h"
