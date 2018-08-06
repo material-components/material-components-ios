@@ -14,6 +14,7 @@ flexibleHeaderViewController.headerView.observesTrackingScrollViewScrollEvents =
 
 ```objc
 flexibleHeaderViewController.headerView.observesTrackingScrollViewScrollEvents = YES;
+```
 <!--</div>-->
 
 **Note:** if `observesTrackingScrollViewScrollEvents` is enabled then you can neither enable shift

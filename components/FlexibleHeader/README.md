@@ -52,6 +52,7 @@ UIScrollViewDelegate events.
 - [Usage](#usage)
   - [Typical use: Add the flexible header to a view controller](#typical-use-add-the-flexible-header-to-a-view-controller)
   - [Typical use: Tracking a scroll view](#typical-use-tracking-a-scroll-view)
+  - [Enabling observation of the tracking scroll view](#enabling-observation-of-the-tracking-scroll-view)
   - [Shifting a flexible header off-screen](#shifting-a-flexible-header-off-screen)
   - [Reacting to frame changes](#reacting-to-frame-changes)
   - [Utilizing Top Layout Guide on Parent View Controller](#utilizing-top-layout-guide-on-parent-view-controller)
@@ -346,6 +347,30 @@ override func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity v
 }
 ```
 <!--</div>-->
+
+<!-- Extracted from docs/typical-use-scroll-view-observation.md -->
+
+### Enabling observation of the tracking scroll view
+
+If you do not require the flexible header's shift behavior, then you can avoid having to manually
+forward UIScrollViewDelegate events to the flexible header by enabling
+`observesTrackingScrollViewScrollEvents` on the flexible header view.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+flexibleHeaderViewController.headerView.observesTrackingScrollViewScrollEvents = true
+```
+
+#### Objective-C
+
+```objc
+flexibleHeaderViewController.headerView.observesTrackingScrollViewScrollEvents = YES;
+```
+<!--</div>-->
+
+**Note:** if `observesTrackingScrollViewScrollEvents` is enabled then you can neither enable shift
+behavior nor manually forward scroll view delegate events to the flexible header.
 
 <!-- Extracted from docs/shift-behavior.md -->
 

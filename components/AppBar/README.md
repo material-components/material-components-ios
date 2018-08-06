@@ -395,7 +395,7 @@ override func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity v
 ```
 <!--</div>-->
 
-<!-- Extracted from docs/../../FlexibleHeader/docs/scroll-view-observation.md -->
+<!-- Extracted from docs/../../FlexibleHeader/docs/typical-use-scroll-view-observation.md -->
 
 ### Enabling observation of the tracking scroll view
 
@@ -413,6 +413,7 @@ flexibleHeaderViewController.headerView.observesTrackingScrollViewScrollEvents =
 
 ```objc
 flexibleHeaderViewController.headerView.observesTrackingScrollViewScrollEvents = YES;
+```
 <!--</div>-->
 
 **Note:** if `observesTrackingScrollViewScrollEvents` is enabled then you can neither enable shift

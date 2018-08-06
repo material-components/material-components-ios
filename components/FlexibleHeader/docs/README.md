@@ -57,6 +57,7 @@ It also has some technical disadvantages:
 
 - [Typical use: Add the flexible header to a view controller](typical-use.md)
 - [Typical use: Tracking a scroll view](typical-use-tracking-a-scroll-view.md)
+- [Typical use: Enabling observation of the tracking scroll view](typical-use-scroll-view-observation.md)
 - [Shifting a flexible header off-screen](shift-behavior.md)
 - [Reacting to frame changes](reacting-to-frame-changes.md)
 - [Subclassing considerations](subclassing-considerations.md)
