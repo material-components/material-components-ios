@@ -55,7 +55,7 @@ own MDCAppBarViewController instance.
 - [Recommended behavioral flags](recommended-behavioral-flags.md)
 - [Removing safe area insets from the min/max heights](../../FlexibleHeader/docs/behavior-minmax-safearea.md)
 - [Enabling top layout guide adjustment](../../FlexibleHeader/docs/behavior-top-layout-adjustment.md)
-- [Enabling inferred top safe area insets](../../FlexibleHeader/docs/behabehavior-inferring-top-safe-area-inset.md)
+- [Enabling inferred top safe area insets](../../FlexibleHeader/docs/behavior-inferring-top-safe-area-inset.md)
 
 See the [FlexibleHeader](../../FlexibleHeader) documentation for additional usage guides.
 

@@ -47,9 +47,9 @@ The Material Design top app bar displays information and actions relating to the
   - [Installation with CocoaPods](#installation-with-cocoapods)
   - [Importing](#importing)
 - [Usage](#usage)
-  - [Typical use: View controller containment, as a navigation controller](#typical-use-view-controller-containment,-as-a-navigation-controller)
-  - [Typical use: View controller containment, as a child](#typical-use-view-controller-containment,-as-a-child)
-  - [Typical use: View controller containment, as a container](#typical-use-view-controller-containment,-as-a-container)
+  - [Typical use: View controller containment, as a navigation controller](#typical-use-view-controller-containment-as-a-navigation-controller)
+  - [Typical use: View controller containment, as a child](#typical-use-view-controller-containment-as-a-child)
+  - [Typical use: View controller containment, as a container](#typical-use-view-controller-containment-as-a-container)
   - [Typical use: Tracking a scroll view](#typical-use-tracking-a-scroll-view)
   - [Enabling observation of the tracking scroll view](#enabling-observation-of-the-tracking-scroll-view)
   - [UINavigationItem support](#uinavigationitem-support)
@@ -59,6 +59,7 @@ The Material Design top app bar displays information and actions relating to the
   - [Recommended behavioral flags](#recommended-behavioral-flags)
   - [Removing safe area insets from the min/max heights](#removing-safe-area-insets-from-the-min/max-heights)
   - [Enabling top layout guide adjustment](#enabling-top-layout-guide-adjustment)
+  - [Enabling inferred top safe area insets](#enabling-inferred-top-safe-area-insets)
 - [Extensions](#extensions)
   - [Color Theming](#color-theming)
   - [Typography Theming](#typography-theming)
@@ -566,8 +567,37 @@ flexibleHeaderViewController.topLayoutGuideAdjustmentEnabled = true
 flexibleHeaderViewController.topLayoutGuideAdjustmentEnabled = YES;
 <!--</div>-->
 
-<!-- Extracted from docs/../../FlexibleHeader/docs/behabehavior-inferring-top-safe-area-inset.md -->
+<!-- Extracted from docs/../../FlexibleHeader/docs/behavior-inferring-top-safe-area-inset.md -->
 
+### Enabling inferred top safe area insets
+
+Prior to this behavioral flag, the flexible header always assumed that it was presented in a
+full-screen capacity, meaning it would be placed directly behind the status bar or device chrome.
+This assumption does not support extensions and iPad popovers.
+
+Enabling the `inferTopSafeAreaInsetFromViewController` flag tells the flexible header to use its
+view controller ancestry to extract a safe area inset from its context, instead of relying on
+assumptions about placement of the header.
+
+This behavioral flag is disabled by default, but will eventually be enabled by default and the flag
+will eventually be removed.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+flexibleHeaderViewController.inferTopSafeAreaInsetFromViewController = true
+```
+
+#### Objective-C
+
+```objc
+flexibleHeaderViewController.inferTopSafeAreaInsetFromViewController = YES;
+<!--</div>-->
+
+**Note:** if this flag is enabled and you've also provided a `topLayoutGuideViewController`, take
+care that the `topLayoutGuideViewController` is not a direct ancestor of the flexible header or your
+app **will** enter an infinite loop. As a general rule, your `topLayoutGuideViewController` should
+be a sibling to the flexible header.
 
 
 See the [FlexibleHeader](../FlexibleHeader) documentation for additional usage guides.

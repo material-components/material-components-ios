@@ -72,7 +72,7 @@ It also has some technical disadvantages:
 - [Recommended behavioral flags](recommended-behavioral-flags.md)
 - [Removing safe area insets from the min/max heights](behavior-minmax-safearea.md)
 - [Enabling top layout guide adjustment](behavior-top-layout-adjustment.md)
-- [Enabling inferred top safe area insets](behabehavior-inferring-top-safe-area-inset.md)
+- [Enabling inferred top safe area insets](behavior-inferring-top-safe-area-inset.md)
 
 ## Extensions
 
