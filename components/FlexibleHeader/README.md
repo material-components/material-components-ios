@@ -804,6 +804,14 @@ to combat the UITableView displaying its divider lines in front of the flexible 
 
 ## Behavioral flags
 
+A behavioral flag is a temporary API that is introduced to allow client teams to migrate from an old
+behavior to a new one in a graceful fashion. Behavioral flags all go through the following life
+cycle:
+
+1. The flag is introduced. The default is chosen such that clients must opt in to the new behavior.
+2. After some time, the default changes to the new behavior and the flag is marked as deprecated.
+3. After some time, the flag is removed.
+
 <!-- Extracted from docs/recommended-behavioral-flags.md -->
 
 ### Recommended behavioral flags
