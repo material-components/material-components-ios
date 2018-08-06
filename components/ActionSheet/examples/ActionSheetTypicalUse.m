@@ -49,7 +49,7 @@
 }
 
 -(void)presentActionSheet {
-  NSString *messageString = @"The supporting message for this action sheet";
+  NSString *messageString = @"The supporting message for this action sheet this can be mutliple lines but never more than two";
   _actionSheet =
       [MDCActionSheetController actionSheetControllerWithTitle:@"Action sheet"
                                                        message:messageString];

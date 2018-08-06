@@ -21,7 +21,8 @@
 @interface MDCActionSheetItemView : UITableViewCell
 
 /** Cells must be created with cellWithAction: */
-- (nonnull instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
+- (nonnull instancetype)initWithAction:(MDCActionSheetAction *)action
+                       reuseIdentifier:(NSString *)reuseIdentifier;
 
 /** Cells must be created with cellWithAction: */
 - (nonnull instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
@@ -44,7 +45,7 @@ BOOL mdc_adjustsFontForContentSizeCategory;
 @interface MDCActionSheetHeaderView : UIView
 
 /** */
-- (nonnull instancetype)initWithTitle:(NSString *)title;
+- (instancetype)initWithTitle:(NSString *)title;
 
 - (nonnull instancetype)initWithTitle:(NSString *)title message:(NSString *)message;
 

@@ -21,15 +21,10 @@
 
 NSString *const kReuseIdentifier = @"BaseCell";
 
-@interface MDCActionSheetListViewController () <UITableViewDataSource, UITableViewDelegate>
-
-@property (nonatomic, nullable, copy) NSString *title;
-@property (nonatomic, nullable, copy) NSString *message;
-
+@interface MDCActionSheetListViewController () <UITableViewDataSource>
 @end
 
 @implementation MDCActionSheetListViewController {
-  NSString *_tableTitle;
   NSArray<MDCActionSheetAction *> *_actions;
 }
 
@@ -38,8 +33,6 @@ NSString *const kReuseIdentifier = @"BaseCell";
                       actions:(NSArray<MDCActionSheetAction *> *)actions {
   self = [super initWithStyle:UITableViewStylePlain];
   if (self) {
-    self.title = [title copy];
-    _message = [message copy];
     _actions = actions;
     [self commonMDCActionSheetListInit];
   }
@@ -57,13 +50,9 @@ NSString *const kReuseIdentifier = @"BaseCell";
   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   self.tableView.scrollEnabled = NO;
   self.tableView.dataSource = self;
+  [self.tableView setTranslatesAutoresizingMaskIntoConstraints:NO];
   [self.tableView registerClass:[MDCActionSheetItemView class]
          forCellReuseIdentifier:kReuseIdentifier];
-  [self.tableView setTranslatesAutoresizingMaskIntoConstraints:NO];
-  self.tableView.estimatedRowHeight = 56;
-  self.tableView.rowHeight = UITableViewAutomaticDimension;
-  self.tableView.estimatedSectionHeaderHeight = 56;
-  self.tableView.sectionHeaderHeight = UITableViewAutomaticDimension;
 }
 
 
@@ -80,9 +69,8 @@ NSString *const kReuseIdentifier = @"BaseCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   MDCActionSheetItemView *cell =
-      [[MDCActionSheetItemView alloc] initWithStyle:UITableViewCellStyleDefault
-                                    reuseIdentifier:kReuseIdentifier];
-  cell.action = _actions[indexPath.row];
+      [[MDCActionSheetItemView alloc] initWithAction:_actions[indexPath.row]
+                                     reuseIdentifier:kReuseIdentifier];
   return cell;
 }
 
@@ -117,16 +105,5 @@ NSString *const kReuseIdentifier = @"BaseCell";
 }*/
 
 #pragma mark - Setters / Getters
-
-- (void)setTitle:(NSString *)title {
-  if (_tableTitle != title) {
-    _tableTitle = title;
-    self.header.title = title;
-  }
-}
-
-- (NSString *)title {
-  return _tableTitle;
-}
 
 @end

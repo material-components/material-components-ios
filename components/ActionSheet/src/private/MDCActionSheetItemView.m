@@ -19,6 +19,8 @@
 
 static const CGFloat kTitleLabelAlpha = 0.87f;
 static const CGFloat kMessageLabelAlpha = 0.54f;
+static const CGFloat kImageAlpha = 0.54f;
+static const CGFloat kCellLabelAlpha = 0.87f;
 //static const CGFloat TitleLabelLeadingPadding = 16.f;
 //static const CGFloat TitleLabelVerticalPadding = 18.f;
 //
@@ -36,31 +38,106 @@ static const CGFloat kMessageLabelAlpha = 0.54f;
 //static const CGFloat ImageAlpha = 0.54f;
 
 @interface MDCActionSheetItemView ()
-
-@property(nonatomic, nullable, strong) UILabel *textLabel;
-@property(nonatomic, nullable, strong) UIImageView *imageView;
-
 @end
 
 
 @implementation MDCActionSheetItemView {
   MDCActionSheetAction *_itemAction;
+  UILabel *_textLabel;
+  UIImageView *_imageView;
+  MDCInkTouchController *_inkTouchController;
 }
 
-@synthesize textLabel = _textLabel;
-@synthesize imageView = _imageView;
-
-- (instancetype)initWithStyle:(UITableViewCellStyle)style
-              reuseIdentifier:(NSString *)reuseIdentifier {
-  self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+- (instancetype)initWithAction:(MDCActionSheetAction *)action
+               reuseIdentifier:(NSString *)reuseIdentifier {
+  self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
   if (self) {
+    _itemAction = action;
     [self commonMDCActionSheetItemViewInit];
   }
   return self;
 }
 
 - (void)commonMDCActionSheetItemViewInit {
+  [self setTranslatesAutoresizingMaskIntoConstraints:NO];
+  self.selectionStyle = UITableViewCellSelectionStyleNone;
+  self.accessibilityTraits = UIAccessibilityTraitButton;
+  _textLabel = [[UILabel alloc] init];
+  _textLabel.text = _itemAction.title;
+  [_textLabel sizeToFit];
+  [self.contentView addSubview:_textLabel];
+  _textLabel.numberOfLines = 0;
+  [_textLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+  _textLabel.font = [UIFont systemFontOfSize:16.f];
+  _textLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
+  _textLabel.alpha = kCellLabelAlpha;
+  [NSLayoutConstraint constraintWithItem:_textLabel
+                               attribute:NSLayoutAttributeTop
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.contentView
+                               attribute:NSLayoutAttributeTop
+                              multiplier:1
+                                constant:18.f].active = YES;
+  [NSLayoutConstraint constraintWithItem:_textLabel
+                               attribute:NSLayoutAttributeBottom
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.contentView
+                               attribute:NSLayoutAttributeBottom
+                              multiplier:1
+                                constant:-18.f].active = YES;
+  [NSLayoutConstraint constraintWithItem:_textLabel
+                               attribute:NSLayoutAttributeLeading
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.contentView
+                               attribute:NSLayoutAttributeLeading
+                              multiplier:1
+                                constant:72.f].active = YES;
+  [NSLayoutConstraint constraintWithItem:_textLabel
+                               attribute:NSLayoutAttributeTrailing
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.contentView
+                               attribute:NSLayoutAttributeTrailing
+                              multiplier:1
+                                constant:-16.f].active = YES;
 
+  _imageView = [[UIImageView alloc] init];
+  [self.contentView addSubview:_imageView];
+  [_imageView setTranslatesAutoresizingMaskIntoConstraints:NO];
+  _imageView.image = _itemAction.image;
+  _imageView.alpha = kImageAlpha;
+  [NSLayoutConstraint constraintWithItem:_imageView
+                               attribute:NSLayoutAttributeTop
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.contentView
+                               attribute:NSLayoutAttributeTop
+                              multiplier:1
+                                constant:16.f].active = YES;
+  [NSLayoutConstraint constraintWithItem:_imageView
+                               attribute:NSLayoutAttributeLeading
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.contentView
+                               attribute:NSLayoutAttributeLeading
+                              multiplier:1
+                                constant:16.f].active = YES;
+  [NSLayoutConstraint constraintWithItem:_imageView
+                               attribute:NSLayoutAttributeWidth
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:nil
+                               attribute:NSLayoutAttributeNotAnAttribute
+                              multiplier:1
+                                constant:24.f].active = YES;
+  [NSLayoutConstraint constraintWithItem:_imageView
+                               attribute:NSLayoutAttributeHeight
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:nil
+                               attribute:NSLayoutAttributeNotAnAttribute
+                              multiplier:1
+                                constant:24.f].active = YES;
+
+  if (!_inkTouchController) {
+    _inkTouchController = [[MDCInkTouchController alloc] initWithView:self];
+    [_inkTouchController addInkView];
+  }
 }
 
 - (void)setAction:(MDCActionSheetAction *)action {
@@ -94,7 +171,7 @@ static const CGFloat kMessageLabelAlpha = 0.54f;
   return [[MDCActionSheetHeaderView alloc] initWithTitle:title message:nil];
 }
 
-- (instancetype)initWithTitle:(NSString *)title message:(NSString *)message {
+- (nonnull instancetype)initWithTitle:(NSString *)title message:(NSString *)message {
   self = [super init];
   if (self) {
     titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -107,10 +184,9 @@ static const CGFloat kMessageLabelAlpha = 0.54f;
 }
 
 -(void)commonMDCActionSheetHeaderViewInit {
-  titleLabel.text = self.title;
-  [titleLabel sizeToFit];
   [titleLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
   [self addSubview:titleLabel];
+  titleLabel.font = [UIFont systemFontOfSize:16];
   titleLabel.numberOfLines = 0;
   titleLabel.alpha = kTitleLabelAlpha;
   [NSLayoutConstraint constraintWithItem:titleLabel
@@ -126,7 +202,7 @@ static const CGFloat kMessageLabelAlpha = 0.54f;
                                   toItem:self
                                attribute:NSLayoutAttributeTrailing
                               multiplier:1
-                                constant:16.f];
+                                constant:-16.f];
   _titleTopConstraint = [NSLayoutConstraint constraintWithItem:titleLabel
                                                      attribute:NSLayoutAttributeTop
                                                      relatedBy:NSLayoutRelationEqual
@@ -142,10 +218,9 @@ static const CGFloat kMessageLabelAlpha = 0.54f;
                                                        multiplier:1
                                                          constant:0.f];
 
-  messageLabel.text = self.message;
-  [messageLabel sizeToFit];
   [messageLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
   [self addSubview:messageLabel];
+  messageLabel.font = [UIFont systemFontOfSize:14];
   messageLabel.numberOfLines = 0;
   messageLabel.alpha = kMessageLabelAlpha;
   [NSLayoutConstraint constraintWithItem:messageLabel
@@ -161,7 +236,7 @@ static const CGFloat kMessageLabelAlpha = 0.54f;
                                   toItem:self
                                attribute:NSLayoutAttributeTrailing
                               multiplier:1
-                                constant:16.f].active = YES;
+                                constant:-16.f].active = YES;
   _messageTopConstraint = [NSLayoutConstraint constraintWithItem:messageLabel
                                                        attribute:NSLayoutAttributeTop
                                                        relatedBy:NSLayoutRelationEqual
@@ -176,11 +251,7 @@ static const CGFloat kMessageLabelAlpha = 0.54f;
                                                           attribute:NSLayoutAttributeBottom
                                                          multiplier:1
                                                            constant:0.f];
-}
 
-
-- (void)layoutSubviews {
-  [super layoutSubviews];
   BOOL addTitle = (titleLabel.text != nil) && (![titleLabel.text  isEqual:@""]);
   BOOL addMessage = (messageLabel.text != nil) && (![messageLabel.text isEqual:@""]);
   if (addTitle && addMessage) {
@@ -193,16 +264,16 @@ static const CGFloat kMessageLabelAlpha = 0.54f;
 }
 
 - (void)layoutBoth {
-  _titleTopConstraint.constant = 12.f;
+  _titleTopConstraint.constant = 16.f;
   _titleTopConstraint.active = YES;
 
-  _titleBottomConstraint.constant = -32.f;
+  _titleBottomConstraint.constant = -60.f;
   _titleBottomConstraint.active = YES;
 
-  _messageTopConstraint.constant = 38.f;
+  _messageTopConstraint.constant = 46.f;
   _messageTopConstraint.active = YES;
 
-  _messageBottomConstraint.constant = -12.f;
+  _messageBottomConstraint.constant = -16.f;
   _messageBottomConstraint.active = YES;
 
 }
@@ -211,11 +282,25 @@ static const CGFloat kMessageLabelAlpha = 0.54f;
   _titleTopConstraint.constant = 18.f;
   _titleTopConstraint.active = YES;
 
-  _titleBottomConstraint.constant = 18.f;
+  _titleBottomConstraint.constant = -18.f;
   _titleBottomConstraint.active = YES;
+
+  _messageTopConstraint.constant = 0.f;
+  _messageTopConstraint.active = YES;
+
+  _messageBottomConstraint.constant = 0.f;
+  _messageBottomConstraint.active = YES;
+  
 }
 
 - (void)layoutMessage {
+
+  _titleTopConstraint.constant = 0.f;
+  _titleTopConstraint.active = YES;
+
+  _titleBottomConstraint.constant = 0.f;
+  _titleBottomConstraint.active = YES;
+
   _messageTopConstraint.constant = 23.f;
   _messageTopConstraint.active = YES;
   _messageBottomConstraint.constant = -23.f;

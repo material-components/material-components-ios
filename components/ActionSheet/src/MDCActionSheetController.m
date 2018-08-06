@@ -59,6 +59,8 @@
 
 @interface MDCActionSheetController () <MDCBottomSheetPresentationControllerDelegate, UITableViewDelegate>
 
+@property(nonatomic, nonnull) MDCActionSheetHeaderView *header;
+
 @property(nonatomic, nullable) MDCActionSheetListViewController *tableView;
 
 - (nonnull instancetype)initWithTitle:(nullable NSString *)title
@@ -76,6 +78,7 @@
 + (instancetype)actionSheetControllerWithTitle:(NSString *)title message:(NSString *)message {
   MDCActionSheetController *actionSheet = [[MDCActionSheetController alloc] initWithTitle:title
                                                                                   message:message];
+  
   return actionSheet;
 }
 
@@ -104,6 +107,19 @@
   super.transitioningDelegate = _transitionController;
   super.modalPresentationStyle = UIModalPresentationCustom;
   _actions = [[NSMutableArray alloc] init];
+  _tableView = [[MDCActionSheetListViewController alloc] initWithTitle:_actionSheetTitle
+                                                               message:_message
+                                                               actions:_actions];
+  
+  _tableView.tableView.delegate = self;
+  [_tableView.tableView setTranslatesAutoresizingMaskIntoConstraints:NO];
+  _tableView.tableView.estimatedRowHeight = 56.f;
+  _tableView.tableView.rowHeight = UITableViewAutomaticDimension;
+  _tableView.tableView.sectionHeaderHeight = UITableViewAutomaticDimension;
+  _tableView.tableView.estimatedSectionHeaderHeight = 56.f;
+  CGRect tableFrame = _tableView.view.frame;
+  tableFrame.origin.y = 0;
+  _tableView.view.frame = tableFrame;
 }
 
 - (void)addAction:(MDCActionSheetAction *)action {
@@ -124,17 +140,15 @@
   [self.view addSubview:contentViewController.view];
   [contentViewController didMoveToParentViewController:self];
   contentViewController.view.backgroundColor = [UIColor whiteColor];
-  contentViewController.preferredContentSize =
-      CGSizeMake(CGRectGetWidth(self.view.bounds), 56);
-
-  _tableView = [[MDCActionSheetListViewController alloc] initWithTitle:_actionSheetTitle
-                                                               message:_message
-                                                               actions:_actions];
-  _tableView.tableView.delegate = self;
-  CGRect tableFrame = _tableView.view.frame;
-  tableFrame.origin.y = 0;
-  _tableView.view.frame = tableFrame;
   [contentViewController.view addSubview:_tableView.view];
+}
+
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+
+  CGFloat height = CGRectGetHeight(_header.frame) + (_actions.count * 56);
+  contentViewController.preferredContentSize =
+      CGSizeMake(CGRectGetWidth(self.view.bounds), height);
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -203,20 +217,21 @@
   return;
 }
 
-
-
-
 #pragma mark - Table view delegate
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-  MDCActionSheetHeaderView *header =
-      [[MDCActionSheetHeaderView alloc] initWithTitle:self.title message:self.message];
-  return header;
+  _header = [[MDCActionSheetHeaderView alloc] initWithTitle:self.title message:self.message];
+  return _header;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   MDCActionSheetAction *action = _actions[indexPath.row];
-  action.completionHandler(action);
+
+  [self.presentingViewController dismissViewControllerAnimated:YES completion:^(void){
+    if (action.completionHandler) {
+      action.completionHandler(action);
+    }
+  }];
 }
 
 #pragma mark - Dynamic Type

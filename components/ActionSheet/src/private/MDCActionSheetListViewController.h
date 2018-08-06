@@ -34,7 +34,6 @@
 /** MDCActionSheetListViewController must be created with initWithActions: */
 - (instancetype)initWithStyle:(UITableViewStyle)style NS_UNAVAILABLE;
 
-@property(nonatomic, nonnull) MDCActionSheetHeaderView *header;
 /*
  Indicates whether the button should automatically update its font when the device’s
  UIContentSizeCategory is changed.

@@ -46,12 +46,14 @@ class ActionSheetSwiftExample: UIViewController {
     actionSheet.addAction(action)
     let secondAction = MDCActionSheetAction(title: "Favorite",
                                             image: UIImage(named: "Favorite")!,
-                                            handler: { _ in
-                                              self.actionSheet.dismiss(animated: true, completion: {
-                                                print("Removed action sheet")
-                                              })
+                                            handler: { action in
                                               print("Favorite action") })
     actionSheet.addAction(secondAction)
+
+    let thirdAction = MDCActionSheetAction(title: "Email", image: UIImage(named: "Email")!) {_ in
+      print("Email action")
+    }
+    actionSheet.addAction(thirdAction)
     present(actionSheet, animated: true, completion: nil)
   }
 }
