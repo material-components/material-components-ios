@@ -14,6 +14,10 @@
  limitations under the License.
  */
 
-#import "MDCAppBar.h"
+#import "MDCAppBarViewController.h"
 #import "MDCAppBarContainerViewController.h"
 #import "MDCAppBarNavigationController.h"
+
+#pragma mark - To be deprecated
+
+#import "MDCAppBar.h"
