@@ -31,9 +31,9 @@ App bar is composed of the following components:
 It is essentially a FlexibleHeader with a HeaderStackView and NavigationBar added as subviews.
 
 `MDCAppBarViewController` is the primary API for the component. All integration strategies will
-make use of it in some manner. Unlike UIKit, which shares a single UINavigationBar instance across
+make use of it in some manner. Unlike UIKit, which shares a single `UINavigationBar` instance across
 many view controllers in a stack, app bar relies on each view controller creating and managing its
-own MDCAppBarViewController instance.
+own `MDCAppBarViewController` instance.
 
 ## Installation
 
