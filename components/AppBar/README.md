@@ -57,7 +57,7 @@ The Material Design top app bar displays information and actions relating to the
   - [Adjusting the top layout guide of a view controller](#adjusting-the-top-layout-guide-of-a-view-controller)
 - [Behavioral flags](#behavioral-flags)
   - [Recommended behavioral flags](#recommended-behavioral-flags)
-  - [Removing safe area insets from the min/max heights](#removing-safe-area-insets-from-the-min/max-heights)
+  - [Removing safe area insets from the min/max heights](#removing-safe-area-insets-from-the-min-max-heights)
   - [Enabling top layout guide adjustment](#enabling-top-layout-guide-adjustment)
   - [Enabling inferred top safe area insets](#enabling-inferred-top-safe-area-insets)
 - [Extensions](#extensions)
@@ -522,6 +522,7 @@ appBarViewController.inferTopSafeAreaInsetFromViewController = YES;
 
 // Enables support for iPhone X safe area insets.
 appBarViewController.headerView.minMaxHeightIncludesSafeArea = NO;
+```
 <!--</div>-->
 
 <!-- Extracted from docs/../../FlexibleHeader/docs/behavior-minmax-safearea.md -->

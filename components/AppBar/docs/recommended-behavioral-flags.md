@@ -31,4 +31,5 @@ appBarViewController.inferTopSafeAreaInsetFromViewController = YES;
 
 // Enables support for iPhone X safe area insets.
 appBarViewController.headerView.minMaxHeightIncludesSafeArea = NO;
+```
 <!--</div>-->
