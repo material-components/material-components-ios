@@ -38,7 +38,6 @@ The Feature Highlight component is a way to visually highlight a part of the scr
   - [Color Theming](#color-theming)
   - [Typography Theming](#typography-theming)
 - [Accessibility ](#accessibility-)
-  - [Set `-accessibilityLabel`](#set-`-accessibilitylabel`)
 
 - - -
 
@@ -235,22 +234,28 @@ id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
 
 <!-- Extracted from docs/accessibility.md -->
 
-If you would like to announce when the Feature Highlight is shown
-
-
-### Set `-accessibilityLabel`
-
+If you would like to announce when the Feature Highlight is shown we recommend doing it inside the completion 
+block.
 
 #### Swift
 
 ```swift
-button.accessibilityLabel = "Try out this cool feature!"
+let vc = MDCFeatureHighlightViewController(highlightedView: button, completion:nil)
+present(vc, animated: true, completion: {
+    UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, 
+    "Try out this cool feature") })
 ```
 
 #### Objective-C
 
 ```objc
-button.accessibilityLabel = @"Try out this cool feature";
+MDCFeatureHighlightViewController *vc =
+    [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_button 
+                                                            completion:nil];
+[self presentViewController:vc, animated:YES completion:^{
+  UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, 
+  @"Try out this new feature.");
+}];
 ```
 
 
