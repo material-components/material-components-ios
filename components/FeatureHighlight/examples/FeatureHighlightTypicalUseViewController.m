@@ -44,7 +44,7 @@
   vc.bodyText = @"This is the description of the feature highlight view controller.";
   // TODO(https://github.com/material-components/material-components-ios/issues/3644 ):
   // Disable the incorrect "Double tap" hint for now
-  vc.accessibilityLabel = @"Try out this new feature";
+  vc.accessibilityHint = nil;
   [self presentViewController:vc animated:YES completion:nil];
 }
 
