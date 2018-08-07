@@ -102,7 +102,7 @@ MDC_SUBCLASSING_RESTRICTED
 
  The order of the actions in the array matches the order in which they were added to the action sheet.
  */
-@property (nonatomic, nonnull, readonly) NSArray<MDCActionSheetAction *> *actions;
+@property (nonatomic, nonnull, readonly, copy) NSArray<MDCActionSheetAction *> *actions;
 
 /**
  The title of the action sheet controller.
