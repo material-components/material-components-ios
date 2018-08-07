@@ -347,7 +347,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     badgeValue = nil;
   }
   self.badge.badgeValue = badgeValue;
-  if (self.accessibilityValue == nil || self.accessibilityValue.length == 0) {
+  if ([super accessibilityValue] == nil || [self accessibilityValue].length == 0) {
     self.button.accessibilityValue = badgeValue;
   }
   if (badgeValue == nil || badgeValue.length == 0) {
@@ -390,6 +390,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 }
 
 -(void)setAccessibilityValue:(NSString *)accessibilityValue {
+  [super setAccessibilityValue:accessibilityValue];
   self.button.accessibilityValue = accessibilityValue;
 }
 
