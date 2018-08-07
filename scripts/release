@@ -484,7 +484,7 @@ generate_release_apidiff() {
     umbrella_header=$(basename "$umbrella_header_path")
     component=$(echo "$umbrella_header" | cut -d'.' -f1 | sed 's:^Material::')
 
-    echo -n "Diffing $umbrella_header..."
+    echo -n "Diffing $component..."
 
     if [ ! -f "$OLD_ROOT_PATH/$umbrella_header_path" ]; then
       echo >> $ALL_CHANGELOG_PATH
