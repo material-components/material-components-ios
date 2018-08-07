@@ -23,7 +23,7 @@
 @interface AppBarTypicalUseExample : UITableViewController
 
 // Step 1: Create an App Bar.
-@property(nonatomic, strong) MDCAppBar *appBar;
+@property(nonatomic, strong) MDCAppBarViewController *appBarViewController;
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 
@@ -33,7 +33,7 @@
 
 - (void)dealloc {
   // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
-  self.appBar.headerViewController.headerView.trackingScrollView = nil;
+  self.appBarViewController.headerView.trackingScrollView = nil;
 }
 
 - (id)init {
@@ -42,15 +42,15 @@
     self.title = @"App Bar";
 
     // Step 2: Initialize the App Bar and add the headerViewController as a child.
-    _appBar = [[MDCAppBar alloc] init];
+    _appBarViewController = [[MDCAppBarViewController alloc] init];
 
     // Behavioral flags.
-    _appBar.inferTopSafeAreaInsetFromViewController = YES;
-    _appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = NO;
+    _appBarViewController.inferTopSafeAreaInsetFromViewController = YES;
+    _appBarViewController.headerView.minMaxHeightIncludesSafeArea = NO;
 
-    [self addChildViewController:_appBar.headerViewController];
+    [self addChildViewController:_appBarViewController];
 
-    _appBar.navigationBar.inkColor = [UIColor colorWithWhite:0.9f alpha:0.1f];
+    _appBarViewController.navigationBar.inkColor = [UIColor colorWithWhite:0.9f alpha:0.1f];
 
     self.colorScheme = [[MDCSemanticColorScheme alloc] init];
     self.typographyScheme = [[MDCTypographyScheme alloc] init];
@@ -61,20 +61,23 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme toAppBar:_appBar];
-  [MDCAppBarTypographyThemer applyTypographyScheme:self.typographyScheme toAppBar:_appBar];
+  [MDCAppBarColorThemer applyColorScheme:self.colorScheme
+                  toAppBarViewController:self.appBarViewController];
+  [MDCAppBarTypographyThemer applyTypographyScheme:self.typographyScheme
+                            toAppBarViewController:_appBarViewController];
 
   // Need to update the status bar style after applying the theme.
   [self setNeedsStatusBarAppearanceUpdate];
 
   // Allows us to avoid forwarding events, but means we can't enable shift behaviors.
-  self.appBar.headerViewController.headerView.observesTrackingScrollViewScrollEvents = YES;
+  self.appBarViewController.headerView.observesTrackingScrollViewScrollEvents = YES;
 
   // Recommended step: Set the tracking scroll view.
-  self.appBar.headerViewController.headerView.trackingScrollView = self.tableView;
+  self.appBarViewController.headerView.trackingScrollView = self.tableView;
 
   // Step 3: Register the App Bar views.
-  [self.appBar addSubviewsToParent];
+  [self.view addSubview:self.appBarViewController.view];
+  [self.appBarViewController didMoveToParentViewController:self];
 
   self.navigationItem.rightBarButtonItem =
       [[UIBarButtonItem alloc] initWithTitle:@"Right"
@@ -86,13 +89,13 @@
 // Optional step: If you allow the header view to hide the status bar you must implement this
 //                method and return the headerViewController.
 - (UIViewController *)childViewControllerForStatusBarHidden {
-  return self.appBar.headerViewController;
+  return self.appBarViewController;
 }
 
 // Optional step: The Header View Controller does basic inspection of the header view's background
 //                color to identify whether the status bar should be light or dark-themed.
 - (UIViewController *)childViewControllerForStatusBarStyle {
-  return self.appBar.headerViewController;
+  return self.appBarViewController;
 }
 
 - (void)viewWillAppear:(BOOL)animated {

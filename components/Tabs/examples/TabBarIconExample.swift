@@ -35,7 +35,7 @@ class TabBarIconSwiftExample: UIViewController {
   }
 
   lazy var alignmentButton: MDCButton = self.setupAlignmentButton()
-  lazy var appBar: MDCAppBar = self.setupAppBar()
+  lazy var appBarViewController: MDCAppBarViewController = self.setupAppBar()
   lazy var scrollView: UIScrollView = self.setupScrollView()
   lazy var starPage: UIView = self.setupStarPage()
   var colorScheme = MDCSemanticColorScheme()

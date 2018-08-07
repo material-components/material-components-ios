@@ -20,6 +20,8 @@
 
 #import "TabBarIconExampleSupplemental.h"
 
+#import "MaterialAppBar+ColorThemer.h"
+#import "MaterialAppBar+TypographyThemer.h"
 #import "MaterialButtons+ButtonThemer.h"
 #import "MaterialPalettes.h"
 #import "MaterialTabs+TypographyThemer.h"
@@ -80,12 +82,12 @@
 - (void)setupAppBar {
   self.view.backgroundColor = [UIColor whiteColor];
 
-  self.appBar = [[MDCAppBar alloc] init];
-  [self addChildViewController:self.appBar.headerViewController];
+  self.appBarViewController = [[MDCAppBarViewController alloc] init];
+  [self addChildViewController:self.appBarViewController];
 
-  self.appBar.headerViewController.headerView.tintColor = [UIColor whiteColor];
-  self.appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = NO;
-  self.appBar.headerViewController.headerView.minimumHeight = 56 + 72;
+  self.appBarViewController.headerView.tintColor = [UIColor whiteColor];
+  self.appBarViewController.headerView.minMaxHeightIncludesSafeArea = NO;
+  self.appBarViewController.headerView.minimumHeight = 56 + 72;
 
   UIFont *font;
   if ([UIFont respondsToSelector:@selector(monospacedDigitSystemFontOfSize:weight:)]) {
@@ -99,14 +101,13 @@
     }
   }
 
-  self.appBar.navigationBar.titleTextAttributes = @{
-    NSForegroundColorAttributeName : [UIColor whiteColor],
-    NSFontAttributeName : font
-  };
+  [self.view addSubview:self.appBarViewController.view];
+  [self.appBarViewController didMoveToParentViewController:self];
 
-  [self.appBar addSubviewsToParent];
-
-  self.appBar.navigationBar.tintColor = UIColor.whiteColor;
+  [MDCAppBarColorThemer applyColorScheme:self.colorScheme
+                  toAppBarViewController:self.appBarViewController];
+  [MDCAppBarTypographyThemer applyTypographyScheme:self.typographyScheme
+                            toAppBarViewController:self.appBarViewController];
 }
 
 - (void)setupScrollView {
@@ -117,7 +118,7 @@
   [self.view addSubview:self.scrollView];
 
   NSDictionary *viewsScrollView =
-      @{@"scrollView" : self.scrollView, @"header" : self.appBar.headerStackView};
+      @{@"scrollView" : self.scrollView, @"header" : self.appBarViewController.headerStackView};
   [NSLayoutConstraint
       activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[header][scrollView]|"
                                                                   options:0
@@ -257,7 +258,7 @@
 }
 
 - (UIViewController *)childViewControllerForStatusBarStyle {
-  return self.appBar.headerViewController;
+  return self.appBarViewController;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

@@ -23,7 +23,7 @@
 @interface AppBarTypicalCollectionViewExample : UICollectionViewController
 
 // Step 1: Create an App Bar.
-@property(nonatomic, strong) MDCAppBar *appBar;
+@property(nonatomic, strong) MDCAppBarViewController *appBarViewController;
 
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
@@ -33,7 +33,7 @@
 
 - (void)dealloc {
   // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
-  self.appBar.headerViewController.headerView.trackingScrollView = nil;
+  self.appBarViewController.headerView.trackingScrollView = nil;
 }
 
 - (id)init {
@@ -46,14 +46,14 @@
     self.title = @"App Bar";
 
     // Step 2: Initialize the App Bar and add the headerViewController as a child.
-    _appBar = [[MDCAppBar alloc] init];
+    _appBarViewController = [[MDCAppBarViewController alloc] init];
 
     // Behavioral flags.
-    _appBar.inferTopSafeAreaInsetFromViewController = YES;
-    _appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = NO;
+    _appBarViewController.inferTopSafeAreaInsetFromViewController = YES;
+    _appBarViewController.headerView.minMaxHeightIncludesSafeArea = NO;
 
-    [self addChildViewController:_appBar.headerViewController];
-    _appBar.headerViewController.headerView.observesTrackingScrollViewScrollEvents = YES;
+    [self addChildViewController:_appBarViewController];
+    _appBarViewController.headerView.observesTrackingScrollViewScrollEvents = YES;
 
     self.colorScheme = [[MDCSemanticColorScheme alloc] init];
     self.typographyScheme = [[MDCTypographyScheme alloc] init];
@@ -72,14 +72,16 @@
           forCellWithReuseIdentifier:@"Cell"];
 
   // Recommended step: Set the tracking scroll view.
-  MDCFlexibleHeaderView *headerView = self.appBar.headerViewController.headerView;
+  MDCFlexibleHeaderView *headerView = self.appBarViewController.headerView;
   headerView.trackingScrollView = self.collectionView;
   headerView.minimumHeight = 64;
   headerView.maximumHeight = 200;
 
-  [self.appBar addSubviewsToParent];
-  [MDCAppBarTypographyThemer applyTypographyScheme:self.typographyScheme toAppBar:_appBar];
-  [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme toAppBar:_appBar];
+  [self.view addSubview:self.appBarViewController.view];
+  [self.appBarViewController didMoveToParentViewController:self];
+  [MDCAppBarTypographyThemer applyTypographyScheme:self.typographyScheme
+                            toAppBarViewController:_appBarViewController];
+  [MDCAppBarColorThemer applyColorScheme:self.colorScheme toAppBarViewController:self.appBarViewController];
 }
 
 

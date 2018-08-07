@@ -39,4 +39,6 @@
 
 @interface TBVCSampleViewController : UIViewController
 + (nonnull instancetype)sampleWithTitle:(nonnull NSString *)title color:(nonnull UIColor *)color;
+@property(nonatomic, nullable) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, nullable) MDCTypographyScheme *typographyScheme;
 @end
