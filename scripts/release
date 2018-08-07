@@ -483,8 +483,9 @@ generate_release_apidiff() {
   for umbrella_header_path in $(generate_release_umbrella_headers "$old_commit" | grep -v "private"); do
     umbrella_header=$(basename "$umbrella_header_path")
     component=$(echo "$umbrella_header" | cut -d'.' -f1 | sed 's:^Material::')
+    component_path=$(dirname "$umbrella_header_path")
 
-    echo -n "Diffing $component..."
+    echo -n "Diffing $component ($component_path)..."
 
     if [ ! -f "$OLD_ROOT_PATH/$umbrella_header_path" ]; then
       echo >> $ALL_CHANGELOG_PATH
