@@ -248,6 +248,10 @@ static const CGFloat kCellLabelAlpha = 0.87f;
                                                          multiplier:1
                                                            constant:0.f];
 
+
+}
+
+- (void)layoutSubviews {
   BOOL addTitle = (titleLabel.text != nil) && (![titleLabel.text  isEqual:@""]);
   BOOL addMessage = (messageLabel.text != nil) && (![messageLabel.text isEqual:@""]);
   if (addTitle && addMessage) {

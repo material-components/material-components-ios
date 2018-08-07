@@ -239,13 +239,12 @@
 #pragma mark - Dynamic Type
 
 - (void)setTitle:(NSString *)title {
-  if (_actionSheetTitle != title) {
-    _actionSheetTitle = title;
-  }
+  _header.title = title;
+  [_header setNeedsLayout];
 }
 
 - (NSString *)title {
-  return _actionSheetTitle;
+  return _header.title;
 }
 
 @end

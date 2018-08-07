@@ -13,7 +13,7 @@
 
 import UIKit
 
-class ActionSheetSwiftExample: UIViewController {
+class ActionSheetNoTitleSwiftExample: UIViewController {
 
   var colorScheme = MDCSemanticColorScheme()
   var typographyScheme = MDCTypographyScheme()
@@ -43,7 +43,7 @@ class ActionSheetSwiftExample: UIViewController {
                                                                          message: message)
 
     let action = MDCActionSheetAction(title: "Home",
-                                      image: UIImage(named: "Home")!,
+                                      image: nil,
                                       handler: { action in
                                         print("Home action") })
     actionSheet.addAction(action)
@@ -53,16 +53,18 @@ class ActionSheetSwiftExample: UIViewController {
                                               print("Favorite action") })
     actionSheet.addAction(secondAction)
 
-    let thirdAction = MDCActionSheetAction(title: "Email", image: UIImage(named: "Email")!) {_ in
-      print("Email action")
-    }
+    let thirdAction = MDCActionSheetAction(title: "Email",
+                                           image: nil,
+                                           handler: { _ in
+                                            print("Email action") })
     actionSheet.addAction(thirdAction)
     present(actionSheet, animated: true, completion: nil)
+    actionSheet.title = "Hello"
   }
 }
 
 // MARK: Catalog by Convensions
-extension ActionSheetSwiftExample {
+extension ActionSheetNoTitleSwiftExample {
   class func catalogIsPrimaryDemo() -> Bool {
     return false
   }
