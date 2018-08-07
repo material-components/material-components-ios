@@ -23,34 +23,33 @@
 
 @end
 
-@implementation ActionSheetTypicalUse {
-  MDCButton *_button;
-  MDCActionSheetController *_actionSheet;
-}
+@implementation ActionSheetTypicalUse
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
     self.view.backgroundColor = [UIColor whiteColor];
-    _button = [[MDCButton alloc] initWithFrame:CGRectZero];
-    [_button setTitle:@"Show action sheet" forState:UIControlStateNormal];
-    [_button sizeToFit];
-    CGFloat width = CGRectGetWidth(_button.frame);
-    _button.frame = CGRectMake(self.view.center.x - (width / 2.f),
+    MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectZero];
+    [button setTitle:@"Show action sheet" forState:UIControlStateNormal];
+    [button sizeToFit];
+    CGFloat width = CGRectGetWidth(button.frame);
+    button.frame = CGRectMake(self.view.center.x - (width / 2.f),
                                self.view.center.y - 24.f,
                                width,
                                48.f);
     MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
-    [MDCContainedButtonThemer applyScheme:buttonScheme toButton:_button];
-    [_button addTarget:self
+    [MDCContainedButtonThemer applyScheme:buttonScheme toButton:button];
+    [button addTarget:self
                 action:@selector(presentActionSheet)
       forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_button];
+    [self.view addSubview:button];
 }
 
--(void)presentActionSheet {
+
+
+- (void)presentActionSheet {
   NSString *messageString = @"The supporting message for this action sheet this can be mutliple lines but never more than two";
-  _actionSheet =
+  MDCActionSheetController *actionSheet =
       [MDCActionSheetController actionSheetControllerWithTitle:@"Action sheet"
                                                        message:messageString];
   MDCActionSheetAction *homeAction = [MDCActionSheetAction actionWithTitle:@"Home"
@@ -62,11 +61,9 @@
                                     handler:^(MDCActionSheetAction *action){
                                       NSLog(@"Favorite Action");
                                     }];
-  [_actionSheet addAction:homeAction];
-  [_actionSheet addAction:favoriteAction];
-  [self presentViewController:_actionSheet animated:YES completion:^(void){
-    NSLog(@"Complete");
-  }];
+  [actionSheet addAction:homeAction];
+  [actionSheet addAction:favoriteAction];
+  [self presentViewController:actionSheet animated:YES completion:nil];
 }
 
 @end
