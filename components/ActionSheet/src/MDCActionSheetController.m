@@ -18,6 +18,7 @@
 #import "MDCActionSheetItemView.h"
 #import "MDCActionSheetListViewController.h"
 #import "MaterialBottomSheet.h"
+#import "MaterialApplication.h"
 #import "MaterialTypography.h"
 
 @interface MDCActionSheetAction ()
@@ -97,6 +98,7 @@
     _message = message;
     [self commonMDCActionSheetControllerInit];
   }
+
   return self;
 }
 
@@ -124,6 +126,7 @@
 
 - (void)addAction:(MDCActionSheetAction *)action {
   [_actions addObject:[action copy]];
+  [_tableView.tableView reloadData];
 }
 
 - (NSArray<MDCActionSheetAction *> *)actions {
@@ -145,7 +148,6 @@
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
-
   CGFloat height = CGRectGetHeight(_header.frame) + (_actions.count * 56);
   contentViewController.preferredContentSize =
       CGSizeMake(CGRectGetWidth(self.view.bounds), height);
