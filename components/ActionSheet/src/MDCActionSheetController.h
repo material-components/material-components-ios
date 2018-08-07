@@ -38,7 +38,7 @@
 
  To learn more about
  [UIAlertController](https://developer.apple.com/documentation/uikit/uialertcontroller)
- or [UIAlertControllerSytleActionSheet](https://developer.apple.com/documentation/uikit/uialertcontrollerstyle/uialertcontrollerstyleactionsheet)
+ or [UIAlertControllerStyleActionSheet](https://developer.apple.com/documentation/uikit/uialertcontrollerstyle/uialertcontrollerstyleactionsheet)
 
  MDCActionSheetController does not support UIPopoverController, instead it will always be presented
  in a sheet from the bottom.
@@ -123,7 +123,7 @@ MDC_SUBCLASSING_RESTRICTED
  UIContentSizeCategory is changed.
 
  This property is modeled after the adjustsFontForContentSizeCategory property in the
- UIConnectSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
+ UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
 
  If set to YES, this button will base its text font on MDCFontTextStyleButton.
 
@@ -143,6 +143,7 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
  An instance of MDCActionSheetAction is passed to MDCActionSheetController to add an
  action to the action sheet.
  */
+MDC_SUBCLASSING_RESTRICTED
 @interface MDCActionSheetAction : NSObject <NSCopying>
 
 
@@ -155,7 +156,7 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
  @return An initialized MDCActionSheetAction object.
  */
 + (nonnull instancetype)actionWithTitle:(nonnull NSString *)title
-                                  image:(nonnull UIImage *)image
+                                  image:(nullable UIImage *)image
                                 handler:(__nullable MDCActionSheetHandler)handler;
 
 /**
@@ -177,6 +178,6 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
  Action sheet actions must have an image that will be set within actionWithTitle:image:handler:
  method.
 */
-@property (nonatomic, nonnull, readonly) UIImage *image;
+@property (nonatomic, nullable, readonly) UIImage *image;
 
 @end
