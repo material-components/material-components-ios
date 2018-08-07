@@ -29,7 +29,7 @@
 @implementation MDCActionSheetAction
 
 + (instancetype)actionWithTitle:(nonnull NSString *)title
-                          image:(nonnull UIImage *)image
+                          image:(nullable UIImage *)image
                           handler:(void (^__nullable)(MDCActionSheetAction *action))handler {
     return [[MDCActionSheetAction alloc] initWithTitle:title
                                                  image:image
@@ -37,7 +37,7 @@
 }
 
 - (instancetype)initWithTitle:(nonnull NSString *)title
-                        image:(nonnull UIImage *)image
+                        image:(nullable UIImage *)image
                       handler:(void (^__nullable)(MDCActionSheetAction *action))handler {
   self = [super init];
   if (self) {

@@ -21,21 +21,6 @@ static const CGFloat kTitleLabelAlpha = 0.87f;
 static const CGFloat kMessageLabelAlpha = 0.54f;
 static const CGFloat kImageAlpha = 0.54f;
 static const CGFloat kCellLabelAlpha = 0.87f;
-//static const CGFloat TitleLabelLeadingPadding = 16.f;
-//static const CGFloat TitleLabelVerticalPadding = 18.f;
-//
-//static const CGFloat LabelLeadingPadding = 72.f;
-//static const CGFloat LabelTrailingPadding = 16.f;
-///// This comes from design, a cell should be 56pt tall and the baseline for a single
-///// line list item should be centered. Standard font is 20pt tall so that leaves 36pt
-///// to support dynamic type we have 36pt / 2 = 18pt.
-///// If we change the standard font this will need to be changed.
-//static const CGFloat LabelVerticalPadding = 18.f;
-//static const CGFloat LabelAlpha = 0.87f;
-//
-//static const CGFloat ImageLeadingPadding = 16.f;
-//static const CGFloat ImageTopPadding = 16.f;
-//static const CGFloat ImageAlpha = 0.54f;
 
 @interface MDCActionSheetItemView ()
 @end
@@ -85,13 +70,19 @@ static const CGFloat kCellLabelAlpha = 0.87f;
                                attribute:NSLayoutAttributeBottom
                               multiplier:1
                                 constant:-18.f].active = YES;
+  CGFloat leadingConstant;
+  if (_itemAction.image == nil) {
+    leadingConstant = 16.f;
+  } else {
+    leadingConstant = 72.f;
+  }
   [NSLayoutConstraint constraintWithItem:_textLabel
                                attribute:NSLayoutAttributeLeading
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self.contentView
                                attribute:NSLayoutAttributeLeading
                               multiplier:1
-                                constant:72.f].active = YES;
+                                constant:leadingConstant].active = YES;
   [NSLayoutConstraint constraintWithItem:_textLabel
                                attribute:NSLayoutAttributeTrailing
                                relatedBy:NSLayoutRelationEqual
@@ -99,7 +90,13 @@ static const CGFloat kCellLabelAlpha = 0.87f;
                                attribute:NSLayoutAttributeTrailing
                               multiplier:1
                                 constant:-16.f].active = YES;
-
+  if (!_inkTouchController) {
+    _inkTouchController = [[MDCInkTouchController alloc] initWithView:self];
+    [_inkTouchController addInkView];
+  }
+  if (_itemAction.image == nil) {
+    return;
+  }
   _imageView = [[UIImageView alloc] init];
   [self.contentView addSubview:_imageView];
   [_imageView setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -133,11 +130,6 @@ static const CGFloat kCellLabelAlpha = 0.87f;
                                attribute:NSLayoutAttributeNotAnAttribute
                               multiplier:1
                                 constant:24.f].active = YES;
-
-  if (!_inkTouchController) {
-    _inkTouchController = [[MDCInkTouchController alloc] initWithView:self];
-    [_inkTouchController addInkView];
-  }
 }
 
 - (void)setAction:(MDCActionSheetAction *)action {
@@ -188,7 +180,11 @@ static const CGFloat kCellLabelAlpha = 0.87f;
   [self addSubview:titleLabel];
   titleLabel.font = [UIFont systemFontOfSize:16];
   titleLabel.numberOfLines = 0;
-  titleLabel.alpha = kTitleLabelAlpha;
+  if (self.message == nil || [self.message isEqualToString:@""]) {
+    titleLabel.alpha = kMessageLabelAlpha;
+  } else {
+    titleLabel.alpha = kTitleLabelAlpha;
+  }
   [NSLayoutConstraint constraintWithItem:titleLabel
                                attribute:NSLayoutAttributeLeading
                                relatedBy:NSLayoutRelationEqual

@@ -30,119 +30,124 @@
  MDCActionSheetController displays an alert message to the user, similar to
  UIAlertControllerStyleActionSheet.
 
- A Material Action Sheet consist of a title, message and a list of actions.
+ A Material Action Sheet consists of a title, message and a list of actions.
 
- Learn more at the [Material spec bottom
+ Learn more about [Material bottom
  sheet](https://material.io/design/components/sheets-bottom.html)
  [Material spec list](https://material.io/design/components/lists.html)
 
  To learn more about
  [UIAlertController](https://developer.apple.com/documentation/uikit/uialertcontroller)
- or [UIAlertControllerSytleActionSheet](https://developer.apple.com/documentation/uikit/uialertcontrollerstyle/uialertcontrollerstyleactionsheet)
+ or [UIAlertControllerStyleActionSheet](https://developer.apple.com/documentation/uikit/uialertcontrollerstyle/uialertcontrollerstyleactionsheet)
 
  MDCActionSheetController does not support UIPopoverController, instead it will always be presented
  in a sheet from the bottom.
 
-
  ### Dependencies
 
  MDCActionSheetController depends on BottomSheet Component.
- */
+*/
 MDC_SUBCLASSING_RESTRICTED
 @interface MDCActionSheetController : UIViewController
 
 /**
- Designated constructor to create and return a view controller for displaying an alert to the user.
+ Designated initializer to create and return a view controller for displaying an alert to the user.
 
  After creating the alert controller, add actions to the controller by calling -addAction.
 
  @param title The title of the alert.
  @param message Descriptive text that summarizes a decision in a sentence or two.
  @return An initialized MDCActionSheetController object.
- */
+*/
 + (nonnull instancetype)actionSheetControllerWithTitle:(nullable NSString *)title
                                                message:(nullable NSString *)message;
 
 /**
- Convenience constructor to create and return a view controller for displaying an alert to the user.
+ Convenience initializer to create and return a view controller for displaying an alert to the user.
 
- After creating the alert controller, add actions to the controller by calling -addAction.
+ After creating the alert controller, add actions to the controller by calling -
+ addAction.
 
  @param title The title of the alert.
  @return An initialized MDCActionSheetController object.
- */
+*/
 + (instancetype)actionSheetControllerWithTitle:(nullable NSString *)title;
 
-
-- (instancetype)init;
-
-/** Action sheet controllers must be created with actionSheetControllerWithTitle: or
- with actionSheetControllerWithTitle:message:  */
+/**
+ Action sheet controllers must be created with actionSheetControllerWithTitle: or
+ with actionSheetControllerWithTitle:message:
+*/
 - (nonnull instancetype)initWithNibName:(NSString *)nibNameOrNil
                                  bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
 
-/** Action sheet controllers must be created with actionSheetControllerwithTitle:
- or with actionSheetControllerWithTitle:message:  */
+/**
+ Action sheet controllers must be created with actionSheetControllerwithTitle:
+ or with actionSheetControllerWithTitle:message:
+*/
 - (nullable instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 
 /**
  Adds an action to the action sheet.
 
- Actions are the possible reactions of the user to the presented alert. Actions are added as a
- list item in the list of the action sheet.
- Action buttons will be laid out from top to bottom depending on the the order they
+ Actions are the possible reactions of the user to the presented alert. Actions
+ are added as a list item in the list of the action sheet.
+ Action buttons will be laid out from top to bottom depending on the order they
  were added.
 
  @param action Will be added to the end of MDCActionSheetController.actions.
- */
+*/
 - (void)addAction:(nonnull MDCActionSheetAction *)action;
 
 /**
  The actions that the user can take in response to the action sheet.
 
- The order of the actions in the array matches the order in which they were added to the action sheet.
- */
-@property(nonatomic, nonnull, readonly) NSArray<MDCActionSheetAction *> *actions;
+ The order of the actions in the array matches the order in which they were added
+ to the action sheet.
+*/
+@property (nonatomic, nonnull, readonly, copy) NSArray<MDCActionSheetAction *> *actions;
 
 /**
  The title of the action sheet controller.
 
- If this is updated after presentation the view will be updated to match the new value.
- */
-@property(nonatomic, nullable, copy) NSString *title;
+ If this is updated after presentation the view will be updated to match the new
+ value.
+*/
+@property (nonatomic, nullable, copy) NSString *title;
 
 /**
  The message of the action sheet controller.
 
  If this is updated after presentation the view will be updated to match the new value.
- */
-@property(nonatomic, nullable, copy) NSString *message;
+*/
+@property (nonatomic, nullable, copy) NSString *message;
 
-/*
+/**
  Indicates whether the button should automatically update its font when the device’s
  UIContentSizeCategory is changed.
 
  This property is modeled after the adjustsFontForContentSizeCategory property in the
- UIConnectSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
+ UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
 
  If set to YES, this button will base its text font on MDCFontTextStyleButton.
 
  Defaults value is NO.
- */
+*/
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
 BOOL mdc_adjustsFontForContentSizeCategory;
 
 @end
 
 /**
- MDCActionSheetActionHandler is a block that will be invoked when the action is selected.
- */
+ MDCActionSheetActionHandler is a block that will be invoked when the action is
+ selected.
+*/
 typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
 
 /**
- An instance of MDCActionSheetAction is passed to MDCActionSheetController to add an
- action to the action sheet.
- */
+ An instance of MDCActionSheetAction is passed to MDCActionSheetController to add
+ an action to the action sheet.
+*/
+MDC_SUBCLASSING_RESTRICTED
 @interface MDCActionSheetAction : NSObject <NSCopying>
 
 
@@ -153,12 +158,14 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
  @param image The icon of the list item shown in the list
  @param handler A block to execute when the user selects the action.
  @return An initialized MDCActionSheetAction object.
- */
+*/
 + (nonnull instancetype)actionWithTitle:(nonnull NSString *)title
-                                  image:(nonnull UIImage *)image
+                                  image:(nullable UIImage *)image
                                 handler:(__nullable MDCActionSheetHandler)handler;
 
-/** Action sheet actions must be created with actionWithTitle:image:handler: */
+/**
+ Action sheet actions must be created with actionWithTitle:image:handler:
+*/
 - (nonnull instancetype)init NS_UNAVAILABLE;
 
 /**
@@ -166,15 +173,16 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
 
  Action sheet actions must have a title that will be set within actionWithTitle:image:handler:
  method.
- */
-@property(nonatomic, nonnull, readonly) NSString *title;
+*/
+@property (nonatomic, nonnull, readonly) NSString *title;
 
 /**
  Image of the list item shown on the action sheet.
 
  Action sheet actions must have an image that will be set within actionWithTitle:image:handler:
  method.
- */
-@property(nonatomic, nonnull, readonly) UIImage *image;
+*/
+@property (nonatomic, nullable, readonly) UIImage *image;
 
 @end
+
