@@ -32,7 +32,7 @@
 
 - (void)dealloc {
   // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
-  self.appBarContainerViewController.appBar.headerViewController.headerView.trackingScrollView
+  self.appBarContainerViewController.appBarViewController.headerView.trackingScrollView
       = nil;
 }
 
@@ -55,9 +55,9 @@
       [[MDCAppBarContainerViewController alloc] initWithContentViewController:tableViewController];
 
   // Behavioral flags.
-  MDCAppBar *appBar = self.appBarContainerViewController.appBar;
-  appBar.inferTopSafeAreaInsetFromViewController = YES;
-  appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = NO;
+  MDCAppBarViewController *appBarViewController = self.appBarContainerViewController.appBarViewController;
+  appBarViewController.inferTopSafeAreaInsetFromViewController = YES;
+  appBarViewController.headerView.minMaxHeightIncludesSafeArea = NO;
   self.appBarContainerViewController.topLayoutGuideAdjustmentEnabled = YES;
 
   tableViewController.tableView.dataSource = self;
@@ -65,17 +65,17 @@
                         forCellReuseIdentifier:@"cell"];
 
   MDCFlexibleHeaderView *headerView =
-      self.appBarContainerViewController.appBar.headerViewController.headerView;
+      self.appBarContainerViewController.appBarViewController.headerView;
 
   // Allows us to avoid forwarding events, but means we can't enable shift behaviors.
   headerView.observesTrackingScrollViewScrollEvents = YES;
 
   headerView.trackingScrollView = tableViewController.tableView;
 
-  [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme
-                                        toAppBar:self.appBarContainerViewController.appBar];
+  [MDCAppBarColorThemer applyColorScheme:self.colorScheme
+                  toAppBarViewController:self.appBarContainerViewController.appBarViewController];
   [MDCAppBarTypographyThemer applyTypographyScheme:self.typographyScheme
-                                          toAppBar:self.appBarContainerViewController.appBar];
+                            toAppBarViewController:self.appBarContainerViewController.appBarViewController];
 
   // Need to update the status bar style after applying the theme.
   [self setNeedsStatusBarAppearanceUpdate];

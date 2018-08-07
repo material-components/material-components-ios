@@ -26,13 +26,13 @@ import MaterialComponents.MaterialAppBar_ColorThemer
 
 class AppBarWithUITableViewController: UITableViewController {
 
-  let appBar = MDCAppBar()
+  let appBarViewController = MDCAppBarViewController()
   var numberOfRows = 50
   var colorScheme = MDCSemanticColorScheme()
 
   deinit {
     // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
-    appBar.headerViewController.headerView.trackingScrollView = nil
+    appBarViewController.headerView.trackingScrollView = nil
   }
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -53,24 +53,25 @@ class AppBarWithUITableViewController: UITableViewController {
   func commonInit() {
 
     // Behavioral flags.
-    appBar.inferTopSafeAreaInsetFromViewController = true
-    appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = false
+    appBarViewController.inferTopSafeAreaInsetFromViewController = true
+    appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
 
-    self.addChildViewController(appBar.headerViewController)
+    self.addChildViewController(appBarViewController)
   }
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
     // Allows us to avoid forwarding events, but means we can't enable shift behaviors.
-    appBar.headerViewController.headerView.observesTrackingScrollViewScrollEvents = true
+    appBarViewController.headerView.observesTrackingScrollViewScrollEvents = true
 
-    appBar.addSubviewsToParent()
+    view.addSubview(appBarViewController.view)
+    appBarViewController.didMove(toParentViewController: self)
 
-    MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
+    MDCAppBarColorThemer.applyColorScheme(colorScheme, to: appBarViewController)
     
     self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-    let headerView = appBar.headerViewController.headerView
+    let headerView = appBarViewController.headerView
     headerView.trackingScrollView = self.tableView
     headerView.maximumHeight = 300
     headerView.minimumHeight = 100

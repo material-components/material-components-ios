@@ -97,8 +97,8 @@
   tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
 
   self.tabBar = tabBar;
-  self.appBar.headerStackView.bottomBar = self.tabBar;
-  [self.appBar.headerStackView setNeedsLayout];
+  self.appBarViewController.headerStackView.bottomBar = self.tabBar;
+  [self.appBarViewController.headerStackView setNeedsLayout];
 }
 
 - (void)changeAlignment:(id)sender {

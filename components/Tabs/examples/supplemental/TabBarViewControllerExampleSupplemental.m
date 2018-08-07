@@ -21,6 +21,8 @@
 #import "TabBarViewControllerExampleSupplemental.h"
 
 #import "MaterialAppBar.h"
+#import "MaterialAppBar+ColorThemer.h"
+#import "MaterialAppBar+TypographyThemer.h"
 #import "MaterialPalettes.h"
 
 @interface TBVCSampleView : UIView
@@ -31,7 +33,7 @@
 // Draw a frame inset around our content area, to show that view are being resized correctly.
 - (void)drawRect:(CGRect)rect {
   [super drawRect:rect];
-  // In this example, it happens to be the appBar.headerViewController.headerView
+  // In this example, it happens to be the appBarViewController.headerView
   UIView *header = self.subviews.firstObject;
   CGRect bounds = self.bounds;
   CGRect dontCare;
@@ -40,28 +42,36 @@
   [UIColor.whiteColor set];
   UIRectFrame(bounds);
 }
+
 @end
 
 @interface TBVCSampleViewController ()
-@property(nonatomic) MDCAppBar *appBar;
+@property(nonatomic) MDCAppBarViewController *appBarViewController;
 @property(nonatomic) UILabel *titleLabel;
 @end
 
 @implementation TBVCSampleViewController
-- (void)loadView {
-  self.view = [[TBVCSampleView alloc] init];
-}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  self.appBar = [[MDCAppBar alloc] init];
-  [self addChildViewController:self.appBar.headerViewController];
-  [self.appBar addSubviewsToParent];
-  self.appBar.navigationBar.tintColor = UIColor.blackColor;
-  self.appBar.navigationBar.titleTextAttributes =
-      @{NSForegroundColorAttributeName : UIColor.blackColor};
-  self.appBar.headerViewController.headerView.backgroundColor = UIColor.whiteColor;
-  self.appBar.headerViewController.headerView.tintColor = UIColor.blackColor;
+
+  TBVCSampleView *sampleView = [[TBVCSampleView alloc] initWithFrame:self.view.bounds];
+  [self.view addSubview:sampleView];
+
+  self.appBarViewController = [[MDCAppBarViewController alloc] init];
+
+  [self addChildViewController:self.appBarViewController];
+  [self.view addSubview:self.appBarViewController.view];
+  [self.appBarViewController didMoveToParentViewController:self];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+
+  [MDCAppBarColorThemer applyColorScheme:self.colorScheme
+                  toAppBarViewController:self.appBarViewController];
+  [MDCAppBarTypographyThemer applyTypographyScheme:self.typographyScheme
+                            toAppBarViewController:self.appBarViewController];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -102,15 +112,20 @@
 
 - (nonnull NSArray *)constructExampleViewControllers {
   NSBundle *bundle = [NSBundle bundleForClass:[TabBarViewControllerExample class]];
-  UIViewController *child1 =
+  TBVCSampleViewController *child1 =
       [TBVCSampleViewController sampleWithTitle:@"One" color:UIColor.redColor];
   UIColor *blue = [UIColor colorWithRed:0x3A / 255.f green:0x56 / 255.f blue:0xFF / 255.f alpha:1];
-  UIViewController *child2 = [TBVCSampleViewController sampleWithTitle:@"Two" color:blue];
+  TBVCSampleViewController *child2 = [TBVCSampleViewController sampleWithTitle:@"Two" color:blue];
   UIImage *starImage =
       [UIImage imageNamed:@"TabBarDemo_ic_star" inBundle:bundle compatibleWithTraitCollection:nil];
-  UIViewController *child3 =
+  TBVCSampleViewController *child3 =
       [TBVCSampleViewController sampleWithTitle:@"Three" color:UIColor.blueColor icon:starImage];
-  return @[ child1, child2, child3 ];
+  NSArray *viewControllers = @[ child1, child2, child3 ];
+  for (TBVCSampleViewController *vc in viewControllers) {
+    vc.colorScheme = self.colorScheme;
+    vc.typographyScheme = self.typographyScheme;
+  }
+  return viewControllers;
 }
 
 @end

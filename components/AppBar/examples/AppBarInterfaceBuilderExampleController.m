@@ -22,7 +22,7 @@
 @interface AppBarInterfaceBuilderExample : UIViewController <UIScrollViewDelegate>
 
 @property(nonatomic, weak) IBOutlet UIScrollView *scrollView;
-@property(nonatomic, strong) MDCAppBar *appBar;
+@property(nonatomic, strong) MDCAppBarViewController *appBarViewController;
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 
 @end
@@ -31,7 +31,7 @@
 
 - (void)dealloc {
   // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
-  self.appBar.headerViewController.headerView.trackingScrollView = nil;
+  self.appBarViewController.headerView.trackingScrollView = nil;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -53,27 +53,28 @@
 }
 
 - (void)commonAppBarInterfaceBuilderExampleSetup {
-  self.appBar = [[MDCAppBar alloc] init];
+  self.appBarViewController = [[MDCAppBarViewController alloc] init];
 
   // Behavioral flags.
-  self.appBar.inferTopSafeAreaInsetFromViewController = YES;
-  self.appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = NO;
+  self.appBarViewController.inferTopSafeAreaInsetFromViewController = YES;
+  self.appBarViewController.headerView.minMaxHeightIncludesSafeArea = NO;
 
   self.colorScheme = [[MDCSemanticColorScheme alloc] init];
-  [self addChildViewController:self.appBar.headerViewController];
+  [self addChildViewController:self.appBarViewController];
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme toAppBar:_appBar];
+  [MDCAppBarColorThemer applyColorScheme:self.colorScheme toAppBarViewController:self.appBarViewController];
 
   // Allows us to avoid forwarding events, but means we can't enable shift behaviors.
-  self.appBar.headerViewController.headerView.observesTrackingScrollViewScrollEvents = YES;
+  self.appBarViewController.headerView.observesTrackingScrollViewScrollEvents = YES;
 
-  self.appBar.headerViewController.headerView.trackingScrollView = self.scrollView;
+  self.appBarViewController.headerView.trackingScrollView = self.scrollView;
 
-  [self.appBar addSubviewsToParent];
+  [self.view addSubview:self.appBarViewController.view];
+  [self.appBarViewController didMoveToParentViewController:self];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

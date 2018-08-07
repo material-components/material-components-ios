@@ -19,18 +19,18 @@ import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialAppBar_ColorThemer
 
 class AppBarImagerySwiftExample: UITableViewController {
-  let appBar = MDCAppBar()
+  let appBarViewController = MDCAppBarViewController()
   var colorScheme = MDCSemanticColorScheme()
 
   deinit {
     // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
-    appBar.headerViewController.headerView.trackingScrollView = nil
+    appBarViewController.headerView.trackingScrollView = nil
   }
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    let headerView = appBar.headerViewController.headerView
+    let headerView = appBarViewController.headerView
 
     // Create our custom image view and add it to the header view.
     let imageView = UIImageView(image: self.headerBackgroundImage())
@@ -48,10 +48,10 @@ class AppBarImagerySwiftExample: UITableViewController {
     // The header view does not clip to bounds by default so we ensure that the image is clipped.
     imageView.clipsToBounds = true
 
-    MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
+    MDCAppBarColorThemer.applyColorScheme(colorScheme, to: appBarViewController)
 
     // Make sure navigation bar background color is clear so the image view is visible.
-    appBar.navigationBar.backgroundColor = UIColor.clear
+    appBarViewController.navigationBar.backgroundColor = UIColor.clear
 
     // Allow the header to show more of the image.
     headerView.maximumHeight = 200
@@ -61,7 +61,8 @@ class AppBarImagerySwiftExample: UITableViewController {
 
     headerView.trackingScrollView = self.tableView
 
-    appBar.addSubviewsToParent()
+    view.addSubview(appBarViewController.view)
+    appBarViewController.didMove(toParentViewController: self)
   }
 
   override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -77,10 +78,10 @@ class AppBarImagerySwiftExample: UITableViewController {
     self.title = "Imagery (Swift)"
 
     // Behavioral flags.
-    appBar.inferTopSafeAreaInsetFromViewController = true
-    appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = false
+    appBarViewController.inferTopSafeAreaInsetFromViewController = true
+    appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
 
-    self.addChildViewController(appBar.headerViewController)
+    self.addChildViewController(appBarViewController)
   }
 
   required init?(coder aDecoder: NSCoder) {
