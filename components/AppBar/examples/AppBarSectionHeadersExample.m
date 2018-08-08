@@ -22,7 +22,7 @@
 @interface AppBarSectionHeadersExample : UITableViewController
 
 // Step 1: Create an App Bar.
-@property(nonatomic, strong) MDCAppBar *appBar;
+@property(nonatomic, strong) MDCAppBarViewController *appBarViewController;
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 
 @end
@@ -31,7 +31,7 @@
 
 - (void)dealloc {
   // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
-  self.appBar.headerViewController.headerView.trackingScrollView = nil;
+  self.appBarViewController.headerView.trackingScrollView = nil;
 }
 
 - (id)init {
@@ -40,13 +40,13 @@
     self.title = @"App Bar";
 
     // Step 2: Initialize the App Bar and add the headerViewController as a child.
-    _appBar = [[MDCAppBar alloc] init];
+    _appBarViewController = [[MDCAppBarViewController alloc] init];
 
     // Behavioral flags.
-    _appBar.inferTopSafeAreaInsetFromViewController = YES;
-    _appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = NO;
+    _appBarViewController.inferTopSafeAreaInsetFromViewController = YES;
+    _appBarViewController.headerView.minMaxHeightIncludesSafeArea = NO;
 
-    [self addChildViewController:_appBar.headerViewController];
+    [self addChildViewController:_appBarViewController];
 
     self.colorScheme = [[MDCSemanticColorScheme alloc] init];
   }
@@ -56,18 +56,19 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme toAppBar:_appBar];
+  [MDCAppBarColorThemer applyColorScheme:self.colorScheme toAppBarViewController:self.appBarViewController];
 
   // Recommended step: Set the tracking scroll view.
-  self.appBar.headerViewController.headerView.trackingScrollView = self.tableView;
+  self.appBarViewController.headerView.trackingScrollView = self.tableView;
 
   // Choice: If you do not need to implement any delegate methods and you are not using a
   //         collection view, you can use the headerViewController as the delegate.
   // Alternative: See AppBarTypicalUseExample.
-  self.tableView.delegate = self.appBar.headerViewController;
+  self.tableView.delegate = self.appBarViewController;
 
   // Step 3: Register the App Bar views.
-  [self.appBar addSubviewsToParent];
+  [self.view addSubview:self.appBarViewController.view];
+  [self.appBarViewController didMoveToParentViewController:self];
 
   self.navigationItem.rightBarButtonItem =
       [[UIBarButtonItem alloc] initWithTitle:@"Right"
@@ -79,13 +80,13 @@
 // Optional step: If you allow the header view to hide the status bar you must implement this
 //                method and return the headerViewController.
 - (UIViewController *)childViewControllerForStatusBarHidden {
-  return self.appBar.headerViewController;
+  return self.appBarViewController;
 }
 
 // Optional step: The Header View Controller does basic inspection of the header view's background
 //                color to identify whether the status bar should be light or dark-themed.
 - (UIViewController *)childViewControllerForStatusBarStyle {
-  return self.appBar.headerViewController;
+  return self.appBarViewController;
 }
 
 - (void)viewWillAppear:(BOOL)animated {

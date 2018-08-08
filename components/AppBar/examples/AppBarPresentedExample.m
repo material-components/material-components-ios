@@ -23,7 +23,7 @@
 #import "MaterialButtons+ButtonThemer.h"
 
 @interface PresentedDemoViewController : UICollectionViewController
-@property(nonatomic, strong) MDCAppBar *appBar;
+@property(nonatomic, strong) MDCAppBarViewController *appBarViewController;
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 @end
@@ -32,7 +32,7 @@
 
 - (void)dealloc {
   // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
-  self.appBar.headerViewController.headerView.trackingScrollView = nil;
+  self.appBarViewController.headerView.trackingScrollView = nil;
 }
 
 - (id)init {
@@ -44,13 +44,13 @@
   if (self) {
     self.title = @"Presented App Bar";
 
-    _appBar = [[MDCAppBar alloc] init];
+    _appBarViewController = [[MDCAppBarViewController alloc] init];
 
     // Behavioral flags.
-    _appBar.inferTopSafeAreaInsetFromViewController = YES;
-    _appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = NO;
+    _appBarViewController.inferTopSafeAreaInsetFromViewController = YES;
+    _appBarViewController.headerView.minMaxHeightIncludesSafeArea = NO;
 
-    [self addChildViewController:_appBar.headerViewController];
+    [self addChildViewController:_appBarViewController];
 
     self.colorScheme = [[MDCSemanticColorScheme alloc] init];
     self.typographyScheme = [[MDCTypographyScheme alloc] init];
@@ -62,18 +62,20 @@
   [super viewDidLoad];
 
   // Allows us to avoid forwarding events, but means we can't enable shift behaviors.
-  self.appBar.headerViewController.headerView.observesTrackingScrollViewScrollEvents = YES;
+  self.appBarViewController.headerView.observesTrackingScrollViewScrollEvents = YES;
 
-  [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme
-                                        toAppBar:_appBar];
+  [MDCAppBarColorThemer applyColorScheme:self.colorScheme
+                  toAppBarViewController:_appBarViewController];
   [MDCAppBarTypographyThemer applyTypographyScheme:self.typographyScheme
-                                          toAppBar:_appBar];
+                            toAppBarViewController:_appBarViewController];
 
   // Need to update the status bar style after applying the theme.
   [self setNeedsStatusBarAppearanceUpdate];
 
-  _appBar.headerViewController.headerView.trackingScrollView = self.collectionView;
-  [_appBar addSubviewsToParent];
+  _appBarViewController.headerView.trackingScrollView = self.collectionView;
+
+  [self.view addSubview:_appBarViewController.view];
+  [_appBarViewController didMoveToParentViewController:self];
 
   [self.collectionView registerClass:[UICollectionViewCell class]
           forCellWithReuseIdentifier:@"Cell"];

@@ -38,7 +38,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   [self loadTabBar];
-  self.appBar.headerStackView.bottomBar = self.tabBar;
+  self.appBarViewController.headerStackView.bottomBar = self.tabBar;
 }
 
 #pragma mark - Action

@@ -24,7 +24,7 @@ static NSString *const kCellIdentifier = @"cell";
 
 @interface BottomAppBarExampleTableViewController ()
 @property(nonatomic, strong) UISwitch *fabVisibilitySwitch;
-@property(nonatomic, strong) MDCAppBar *appBar;
+@property(nonatomic, strong) MDCAppBarViewController *appBarViewController;
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 @end
@@ -86,8 +86,8 @@ static NSString *const kCellIdentifier = @"cell";
     
     self.title = @"Bottom App Bar";
     
-    _appBar = [[MDCAppBar alloc] init];
-    [self addChildViewController:_appBar.headerViewController];
+    _appBarViewController = [[MDCAppBarViewController alloc] init];
+    [self addChildViewController:_appBarViewController];
   }
   return self;
 }
@@ -95,12 +95,13 @@ static NSString *const kCellIdentifier = @"cell";
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  [MDCAppBarTypographyThemer applyTypographyScheme:self.typographyScheme toAppBar:_appBar];
-  [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme toAppBar:_appBar];
+  [MDCAppBarTypographyThemer applyTypographyScheme:self.typographyScheme toAppBarViewController:_appBarViewController];
+  [MDCAppBarColorThemer applyColorScheme:self.colorScheme toAppBarViewController:self.appBarViewController];
   
-  self.appBar.headerViewController.headerView.trackingScrollView = self.tableView;
+  self.appBarViewController.headerView.trackingScrollView = self.tableView;
   
-  [self.appBar addSubviewsToParent];
+  [self.view addSubview:self.appBarViewController.view];
+  [self.appBarViewController didMoveToParentViewController:self];
   
   self.fabVisibilitySwitch = [[UISwitch alloc] init];
   self.fabVisibilitySwitch.on = !self.bottomBarView.floatingButtonHidden;
@@ -175,20 +176,20 @@ static NSString *const kCellIdentifier = @"cell";
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-  if (scrollView == self.appBar.headerViewController.headerView.trackingScrollView) {
-    [self.appBar.headerViewController.headerView trackingScrollViewDidScroll];
+  if (scrollView == self.appBarViewController.headerView.trackingScrollView) {
+    [self.appBarViewController.headerView trackingScrollViewDidScroll];
   }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-  if (scrollView == self.appBar.headerViewController.headerView.trackingScrollView) {
-    [self.appBar.headerViewController.headerView trackingScrollViewDidEndDecelerating];
+  if (scrollView == self.appBarViewController.headerView.trackingScrollView) {
+    [self.appBarViewController.headerView trackingScrollViewDidEndDecelerating];
   }
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-  if (scrollView == self.appBar.headerViewController.headerView.trackingScrollView) {
-    [self.appBar.headerViewController.headerView
+  if (scrollView == self.appBarViewController.headerView.trackingScrollView) {
+    [self.appBarViewController.headerView
      trackingScrollViewDidEndDraggingWillDecelerate:decelerate];
   }
 }
@@ -196,8 +197,8 @@ static NSString *const kCellIdentifier = @"cell";
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView
                      withVelocity:(CGPoint)velocity
               targetContentOffset:(inout CGPoint *)targetContentOffset {
-  if (scrollView == self.appBar.headerViewController.headerView.trackingScrollView) {
-    [self.appBar.headerViewController.headerView
+  if (scrollView == self.appBarViewController.headerView.trackingScrollView) {
+    [self.appBarViewController.headerView
         trackingScrollViewWillEndDraggingWithVelocity:velocity
                                   targetContentOffset:targetContentOffset];
   }

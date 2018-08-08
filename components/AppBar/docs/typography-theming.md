@@ -8,8 +8,6 @@ You must first add the Typography Themer extension to your project:
 pod 'MaterialComponents/AppBar+TypographyThemer'
 ```
 
-## Example code
-
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift

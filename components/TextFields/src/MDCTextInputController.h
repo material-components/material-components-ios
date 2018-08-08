@@ -298,4 +298,22 @@
 - (void)setErrorText:(nullable NSString *)errorText
     errorAccessibilityValue:(nullable NSString *)errorAccessibilityValue;
 
+/**
+ Sets helper text and a corresponding accessibilityLabel.
+
+ @param helperText               The helper text to be shown as leading underline text. (Copied.)
+ @param helperAccessibilityLabel Optional override of leading underline accessibilityLabel when
+                                 helper text is displayed. (Copied.)
+
+ If the TextField is in an error state helperText is saved as the previousLeadingText, and
+ helperAccessibilityLabel is saved in an instance variable. When the TextField eventually leaves the
+ error state the previousLeadingText becomes the leadingUnderlineLabel's text and the
+ helperAccessibilityLabel becomes the leadingUnderlinLabel's accessibilityLabel.
+
+ If the TextField is not in an error state helperText is set as the leadingUnderlineLabel's text and
+ helperAccessibilityLabel is set as the leadingUnderlineLabel's accessibilityLabel.
+ */
+-(void)setHelperText:(nullable NSString *)helperText
+    helperAccessibilityLabel:(nullable NSString *)helperAccessibilityLabel;
+
 @end

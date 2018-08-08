@@ -49,8 +49,10 @@
 }
 
 - (void)pushHidesNavigation {
-  UIViewController *vc =
+  TBVCSampleViewController *vc =
       [TBVCSampleViewController sampleWithTitle:@"Push&Hide" color:UIColor.grayColor];
+  vc.colorScheme = self.colorScheme;
+  vc.typographyScheme = self.typographyScheme;
   [self.navigationController pushViewController:vc animated:YES];
 }
 

@@ -513,7 +513,15 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 }
 
 - (NSString *)accessibilityLabel {
-  return self.titleLabel.accessibilityLabel ?: self.titleLabel.text;
+  NSString *accessibilityLabel = [super accessibilityLabel];
+  if (accessibilityLabel.length > 0) {
+    return accessibilityLabel;
+  }
+  accessibilityLabel = self.titleLabel.accessibilityLabel;
+  if (accessibilityLabel.length > 0) {
+    return accessibilityLabel;
+  }
+  return self.titleLabel.text;
 }
 
 - (void)updateState {

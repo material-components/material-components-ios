@@ -15,3 +15,4 @@
  */
 
 #import "MDCAppBarColorThemer.h"
+

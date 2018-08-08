@@ -371,20 +371,6 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 }
 
 - (void)initializeMDCSnackbarMessageViewButtons:(MDCSnackbarMessage *)message {
-  // Figure out how much horizontal space the main text needs, in order to decide if the buttons
-  // are laid out horizontally or vertically.
-  __block CGFloat availableTextWidth = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad
-                                           ? kMaximumViewWidth_iPad
-                                           : kMaximumViewWidth_iPhone;
-
-  // Take into account the content padding.
-  availableTextWidth -= (self.safeContentMargin.left + self.safeContentMargin.right);
-
-  // If there are buttons, account for the padding between the title and the buttons.
-  if (message.action) {
-    availableTextWidth -= kTitleButtonPadding;
-  }
-
   // Add buttons to the view. We'll use this opportunity to determine how much space a button will
   // need, to inform the layout direction.
   NSMutableArray *actions = [NSMutableArray array];
@@ -420,12 +406,6 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     [button addTarget:self
                action:@selector(handleButtonTapped:)
      forControlEvents:UIControlEventTouchUpInside];
-
-    CGFloat buttonContentPadding =
-        MDCSnackbarMessage.usesLegacySnackbar ? kLegacyButtonPadding : kButtonPadding;
-    CGSize buttonSize = [button sizeThatFits:CGSizeMake(CGFLOAT_MAX,CGFLOAT_MAX)];
-    availableTextWidth -= buttonSize.width;
-    availableTextWidth -= 2 * buttonContentPadding;
 
     [actions addObject:buttonView];
   }
