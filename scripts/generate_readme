@@ -148,6 +148,8 @@ cat "$TMP_EXPANDED_README_PATH" | while read line; do
       text=$(echo $toc | cut -d' ' -f2-)
       url=$(echo $text | awk '{print tolower($0)}')
       url=${url//:} # Strip invalid characters
+      url=${url//,} # Strip invalid characters
+      url=${url//\/} # Strip invalid characters
       url=${url// /-} # Turn spaces into dashes
       echo "$indent [$text](#$url)" >> "$TMP_README_PATH"
     done
