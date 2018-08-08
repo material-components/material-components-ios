@@ -1,3 +1,271 @@
+# #develop#
+
+## Breaking changes
+
+## New deprecations
+
+## New features
+
+## API changes
+
+### AppBar+ColorThemer
+
+#### MDCAppBarColorThemer
+
+*new* class method: `+applySurfaceVariantWithColorScheme:toAppBarViewController:` in `MDCAppBarColorThemer`
+
+*new* class method: `+applyColorScheme:toAppBarViewController:` in `MDCAppBarColorThemer`
+
+### AppBar
+
+#### MDCAppBar
+
+*new* property: `appBarViewController` in `MDCAppBar`
+
+*modified* property: `navigationBar` in `MDCAppBar`
+
+| Type of change: | key.doc.file |
+|---|---|
+| From: | `/components/AppBar/src/MDCAppBar.h` |
+| To: | `/components/AppBar/src/MDCAppBarViewController.h` |
+
+*modified* property: `navigationBar` in `MDCAppBar`
+
+| Type of change: | key.filepath |
+|---|---|
+| From: | `/components/AppBar/src/MDCAppBar.h` |
+| To: | `/components/AppBar/src/MDCAppBarViewController.h` |
+
+*modified* property: `headerStackView` in `MDCAppBar`
+
+| Type of change: | key.doc.file |
+|---|---|
+| From: | `/components/AppBar/src/MDCAppBar.h` |
+| To: | `/components/AppBar/src/MDCAppBarViewController.h` |
+
+*modified* property: `headerStackView` in `MDCAppBar`
+
+| Type of change: | key.filepath |
+|---|---|
+| From: | `/components/AppBar/src/MDCAppBar.h` |
+| To: | `/components/AppBar/src/MDCAppBarViewController.h` |
+
+*modified* property: `headerViewController` in `MDCAppBar`
+
+| Type of change: | key.doc.file |
+|---|---|
+| From: | `/components/AppBar/src/MDCAppBar.h` |
+| To: | `/components/AppBar/src/MDCAppBarViewController.h` |
+
+*modified* property: `headerViewController` in `MDCAppBar`
+
+| Type of change: | key.filepath |
+|---|---|
+| From: | `/components/AppBar/src/MDCAppBar.h` |
+| To: | `/components/AppBar/src/MDCAppBarViewController.h` |
+
+*modified* property: `inferTopSafeAreaInsetFromViewController` in `MDCAppBar`
+
+| Type of change: | key.doc.file |
+|---|---|
+| From: | `/components/AppBar/src/MDCAppBar.h` |
+| To: | `/components/AppBar/src/MDCAppBarViewController.h` |
+
+*modified* property: `inferTopSafeAreaInsetFromViewController` in `MDCAppBar`
+
+| Type of change: | key.filepath |
+|---|---|
+| From: | `/components/AppBar/src/MDCAppBar.h` |
+| To: | `/components/AppBar/src/MDCAppBarViewController.h` |
+
+*modified* class: `MDCAppBar`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCAppBar : NSObject  /**  Adds headerViewController.view to headerViewController.parentViewController.view and registers  navigationItem observation on headerViewController.parentViewController.  */ - (void)addSubviewsToParent;  /** The header view controller instance manages the App Bar's flexible header view behavior. */ @property(nonatomic, strong, nonnull, readonly)     MDCFlexibleHeaderViewController *headerViewController;  /** The navigation bar. */ @property(nonatomic, strong, nonnull, readonly) MDCNavigationBar *navigationBar;  /**  The header stack view that owns the navigationBar (as the top bar) and an optional bottom bar.  */ @property(nonatomic, strong, nonnull, readonly) MDCHeaderStackView *headerStackView;  /**  Whether the App Bar should attempt to extract safe area insets from the view controller hierarchy  or not.   This behavior provides better support for App Bars on iPad, extensions, and anywhere else where the  view controller might not be directly behind the status bar / device safe area insets.   Enabling this behavior will do the following:   - Enable the same-named behavior on the headerViewController.  - Enable the headerViewController's topLayoutGuideAdjustmentEnabled behavior. Consider setting a    topLayoutGuideViewController to your content view controller if you want to use topLayoutGuide.  - The header stack view's frame will be inset by the flexible header view's topSafeAreaGuide rather    than the global device safe area insets.   Disabling this behavior will not disable headerViewController's topLayoutGuideAdjustmentEnabled  behavior.   This behavior will eventually be enabled by default.   See MDCFlexibleHeaderViewController's documentation for the API of the same name.   Default is NO.  */ @property(nonatomic) BOOL inferTopSafeAreaInsetFromViewController;  @end` |
+| To: | `@interface MDCAppBar` |
+
+*modified* class: `MDCAppBar`
+
+| Type of change: | key.doc.file |
+|---|---|
+| From: | `/components/AppBar/src/MDCAppBar.h` |
+| To: | `/components/AppBar/src/MDCAppBarViewController.h` |
+
+*modified* class: `MDCAppBar`
+
+| Type of change: | key.filepath |
+|---|---|
+| From: | `/components/AppBar/src/MDCAppBar.h` |
+| To: | `/components/AppBar/src/MDCAppBarViewController.h` |
+
+*modified* method: `-addSubviewsToParent` in `MDCAppBar`
+
+| Type of change: | key.doc.file |
+|---|---|
+| From: | `/components/AppBar/src/MDCAppBar.h` |
+| To: | `/components/AppBar/src/MDCAppBarViewController.h` |
+
+*modified* method: `-addSubviewsToParent` in `MDCAppBar`
+
+| Type of change: | key.filepath |
+|---|---|
+| From: | `/components/AppBar/src/MDCAppBar.h` |
+| To: | `/components/AppBar/src/MDCAppBarViewController.h` |
+
+#### MDCAppBarTextColorAccessibilityMutator
+
+*modified* class: `MDCAppBarTextColorAccessibilityMutator`
+
+| Type of change: | key.doc.file |
+|---|---|
+| From: | `/components/AppBar/src/MDCAppBar.h` |
+| To: | `/components/AppBar/src/MDCAppBarViewController.h` |
+
+*modified* class: `MDCAppBarTextColorAccessibilityMutator`
+
+| Type of change: | key.filepath |
+|---|---|
+| From: | `/components/AppBar/src/MDCAppBar.h` |
+| To: | `/components/AppBar/src/MDCAppBarViewController.h` |
+
+*modified* method: `-mutate:` in `MDCAppBarTextColorAccessibilityMutator`
+
+| Type of change: | key.doc.file |
+|---|---|
+| From: | `/components/AppBar/src/MDCAppBar.h` |
+| To: | `/components/AppBar/src/MDCAppBarViewController.h` |
+
+*modified* method: `-mutate:` in `MDCAppBarTextColorAccessibilityMutator`
+
+| Type of change: | key.filepath |
+|---|---|
+| From: | `/components/AppBar/src/MDCAppBar.h` |
+| To: | `/components/AppBar/src/MDCAppBarViewController.h` |
+
+#### MDCAppBarNavigationControllerDelegate
+
+*new* method: `-appBarNavigationController:willAddAppBarViewController:asChildOfViewController:` in `MDCAppBarNavigationControllerDelegate`
+
+#### MDCAppBarNavigationController
+
+*new* method: `-appBarViewControllerForViewController:` in `MDCAppBarNavigationController`
+
+#### MDCAppBarContainerViewController
+
+*new* property: `appBarViewController` in `MDCAppBarContainerViewController`
+
+#### MDCAppBarViewController
+
+*new* property: `headerStackView` in `MDCAppBarViewController`
+
+*new* class: `MDCAppBarViewController`
+
+*new* property: `navigationBar` in `MDCAppBarViewController`
+
+### AppBar+TypographyThemer
+
+#### MDCAppBarTypographyThemer
+
+*new* class method: `+applyTypographyScheme:toAppBarViewController:` in `MDCAppBarTypographyThemer`
+
+### TextFields
+
+#### MDCTextInputController
+
+*new* method: `-setHelperText:helperAccessibilityLabel:` in `MDCTextInputController`
+
+## Component changes
+
+### Tabs
+
+#### Changes
+
+* [[Catalog] Conversion to new App Bar View Controller API (#4696)](https://github.com/material-components/material-components-ios/commit/50e1fd091d8d08426f390c124bf6310c54174d8c) (featherless)
+
+### AppBar
+
+#### Changes
+
+* [Complete pass at documentation modernization. (#4708)](https://github.com/material-components/material-components-ios/commit/4f181203ad7f74ae0e38b214466fda9fdf36b131) (featherless)
+* [Enable inferTopSafeAreaInsetFromViewController on the App Bar in the navigation controller. (#4693)](https://github.com/material-components/material-components-ios/commit/3192a41078ecde5fb822abaa56d8f70eeee0f740) (featherless)
+* [Expose MDCAppBarViewController as a replacement for MDCAppBar. (#4695)](https://github.com/material-components/material-components-ios/commit/2645cc539f6a17e8ecb729a1b5b7997be24f07fa) (featherless)
+* [Fix bug where root view controller during initialization of nav controller would not be injected with an App Bar. (#4691)](https://github.com/material-components/material-components-ios/commit/ade5b5daa3f61131817e5d19e6f7413cd249d757) (featherless)
+* [Implement setViewControllers on MDCAppBarNavigationController. (#4736)](https://github.com/material-components/material-components-ios/commit/873a89f3d850873fd5f7ffed3e37389348e0d63a) (featherless)
+* [Increase likelihood that we detect existing App Bars when auto-injecting. (#4692)](https://github.com/material-components/material-components-ios/commit/e9eb2579aa6f2393472fce4190eb8142924915ff) (featherless)
+* [Rename MDCAppBar.h to MDCAppBarViewController.h. (#4704)](https://github.com/material-components/material-components-ios/commit/363750d44a1e047cb7d8f0929d7cc569915020db) (featherless)
+* [[Catalog] Conversion to new App Bar View Controller API (#4696)](https://github.com/material-components/material-components-ios/commit/50e1fd091d8d08426f390c124bf6310c54174d8c) (featherless)
+
+### TextFields
+
+#### Changes
+
+* [Add setHelperText:helperAccessibilityLabel (#4661)](https://github.com/material-components/material-components-ios/commit/6acde0b27560a8924639f70f46150fb3a86d4061) (Andrew Overton)
+* [Consider UIUserInterfaceLayoutDirection when drawing outlined text controller outline path (#4719)](https://github.com/material-components/material-components-ios/commit/5f66ae926378247066b9153f39f5e9f170b42422) (Andrew Overton)
+
+### Chips
+
+#### Changes
+
+* [Allow clients to set `accessibilityLabel` on MDCChipView (#4664)](https://github.com/material-components/material-components-ios/commit/18bca47a34c5c647c28954abfd4e3712fef3eee2) (compositeprimes)
+
+### Snackbar
+
+#### Changes
+
+* [Removed unused variable from MDCSnackbarMessageView (#4690)](https://github.com/material-components/material-components-ios/commit/a4338106ce9bfe8a3d47ad8db6b358e8f5d0fe79) (trungducc)
+
+### BottomAppBar
+
+#### Changes
+
+* [Add a11y guide to README (#4705)](https://github.com/material-components/material-components-ios/commit/f4199c850a4b9c4edf5c9d6a6f15df31f6ef00aa) (Cody Weaver)
+* [[Catalog] Conversion to new App Bar View Controller API (#4696)](https://github.com/material-components/material-components-ios/commit/50e1fd091d8d08426f390c124bf6310c54174d8c) (featherless)
+
+### NavigationBar
+
+#### Changes
+
+* [ButtonBar example with associated UIButton (#4677)](https://github.com/material-components/material-components-ios/commit/e3e6dd39e2d3bd17075645ecf882463906f40dc8) (ianegordon)
+
+### BottomSheet
+
+#### Changes
+
+* [Examples support accessible scrim (#4711)](https://github.com/material-components/material-components-ios/commit/24ddf9c4d671648b957edaf27ed7773b8ccfa26d) (Robert Moore)
+* [[Catalog] Conversion to new App Bar View Controller API (#4696)](https://github.com/material-components/material-components-ios/commit/50e1fd091d8d08426f390c124bf6310c54174d8c) (featherless)
+
+### Dialogs
+
+#### Changes
+
+* [Fix button hit areas to match accessibility (#4684)](https://github.com/material-components/material-components-ios/commit/255dae403bd46ab0391d34623da3fe63b0915aee) (Cody Weaver)
+
+### BottomNavigation
+
+#### Changes
+
+* [Fix safe area insets on bottom nav example (#4637)](https://github.com/material-components/material-components-ios/commit/120c93d32973ebbc9baa8c04493dd38f19243dcc) (John Detloff)
+* [Remove duplicate tab position descriptions (#4679)](https://github.com/material-components/material-components-ios/commit/5721ba816fba9585402ee664f82ed8b0bf65de61) (Robert Moore)
+* [[Catalog] Conversion to new App Bar View Controller API (#4696)](https://github.com/material-components/material-components-ios/commit/50e1fd091d8d08426f390c124bf6310c54174d8c) (featherless)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Allow additionalSafeAreaInsets to respect contextual top insets. (#4697)](https://github.com/material-components/material-components-ios/commit/da322f74027ea486bdbd7a331c03ed5b13cd2f0e) (featherless)
+* [Fix infinite recursion when observesTrackingScrollViewScrollEvents is enabled. (#4694)](https://github.com/material-components/material-components-ios/commit/56be84def1069825efb0ed3303a7eeec73033e58) (featherless)
+* [Fixes a layout bug with VoiceOver on that was introduced in v57.0.0 (5dc67c88c06f11761769de1d0bae34ff2c657046). (#4698)](https://github.com/material-components/material-components-ios/commit/6325fb35b2f64c47dc9d3780c2decdad9960787e) (featherless)
+* [[AppBar] Complete pass at documentation modernization. (#4708)](https://github.com/material-components/material-components-ios/commit/4f181203ad7f74ae0e38b214466fda9fdf36b131) (featherless)
+
+### ShadowElevations
+
+#### Changes
+
+* [[Catalog] Conversion to new App Bar View Controller API (#4696)](https://github.com/material-components/material-components-ios/commit/50e1fd091d8d08426f390c124bf6310c54174d8c) (featherless)
+
+---
+
 # 59.1.1
 
 This patch release fixes a bug with Flexible Header when VoiceOver is enabled.
