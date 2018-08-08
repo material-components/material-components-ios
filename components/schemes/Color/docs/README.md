@@ -92,3 +92,7 @@ import MaterialComponents.MaterialColorScheme
 ## Usage
 
 - [Typical use: customizing a color scheme](typical-use-customizing-a-scheme.md)
+
+## Migration guides
+
+- [Migration guide: semantic color schemes](migration-guide-semantic-color-scheme.md)
