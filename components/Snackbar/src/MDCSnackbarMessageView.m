@@ -214,35 +214,34 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
-  self = [super initWithFrame:frame];
-
-  if (self) {
-    _snackbarMessageViewShadowColor =
-        MDCSnackbarManager.snackbarMessageViewShadowColor ?: UIColor.blackColor;
-    _snackbarMessageViewBackgroundColor =
-        MDCSnackbarManager.snackbarMessageViewBackgroundColor ?: MDCRGBAColor(0x32, 0x32, 0x32, 1);
-    _messageTextColor =
-        MDCSnackbarManager.messageTextColor ?: UIColor.whiteColor;
-    _buttonTitleColors = [NSMutableDictionary dictionary];
-    _buttonTitleColors[@(UIControlStateNormal)] =
-        [MDCSnackbarManager buttonTitleColorForState:UIControlStateNormal] ?:
-            MDCRGBAColor(0xFF, 0xFF, 0xFF, 0.6f);
-    _buttonTitleColors[@(UIControlStateHighlighted)] =
-        [MDCSnackbarManager buttonTitleColorForState:UIControlStateHighlighted] ?:
-            UIColor.whiteColor;
-    _mdc_adjustsFontForContentSizeCategory =
-        MDCSnackbarManager.mdc_adjustsFontForContentSizeCategory;
-    _messageFont = MDCSnackbarManager.messageFont;
-    _buttonFont = MDCSnackbarManager.buttonFont;
-  }
-
-  return self;
+  return [self initWithMessage:nil
+                dismissHandler:nil
+               snackbarManager:MDCSnackbarManager.defaultManager];
 }
 
 - (instancetype)initWithMessage:(MDCSnackbarMessage *)message
-                 dismissHandler:(MDCSnackbarMessageDismissHandler)handler {
-  self = [super init];
+                 dismissHandler:(MDCSnackbarMessageDismissHandler)handler
+                snackbarManager:(MDCSnackbarManager *)manager {
+  self = [super initWithFrame:CGRectZero];
+
   if (self) {
+    _snackbarMessageViewShadowColor =
+        manager.snackbarMessageViewShadowColor ?: UIColor.blackColor;
+    _snackbarMessageViewBackgroundColor =
+        manager.snackbarMessageViewBackgroundColor ?: MDCRGBAColor(0x32, 0x32, 0x32, 1);
+    _messageTextColor =
+        manager.messageTextColor ?: UIColor.whiteColor;
+    _buttonTitleColors = [NSMutableDictionary dictionary];
+    _buttonTitleColors[@(UIControlStateNormal)] =
+        [manager buttonTitleColorForState:UIControlStateNormal] ?:
+        MDCRGBAColor(0xFF, 0xFF, 0xFF, 0.6f);
+    _buttonTitleColors[@(UIControlStateHighlighted)] =
+        [manager buttonTitleColorForState:UIControlStateHighlighted] ?:
+        UIColor.whiteColor;
+    _mdc_adjustsFontForContentSizeCategory =
+        manager.mdc_adjustsFontForContentSizeCategory;
+    _messageFont = manager.messageFont;
+    _buttonFont = manager.buttonFont;
     _message = message;
     _dismissalHandler = [handler copy];
 
