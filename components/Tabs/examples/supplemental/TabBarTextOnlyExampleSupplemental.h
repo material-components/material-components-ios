@@ -26,7 +26,7 @@
 
 @interface TabBarTextOnlyExample : MDCCollectionViewController
 
-@property(nonatomic, nullable) MDCAppBar *appBar;
+@property(nonatomic, nullable) MDCAppBarViewController *appBarViewController;
 @property(nonatomic, nullable) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, nullable) MDCTabBar *tabBar;
 @property(nonatomic, nullable) NSArray *choices;

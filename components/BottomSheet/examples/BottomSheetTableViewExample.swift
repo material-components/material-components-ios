@@ -64,6 +64,8 @@ class BottomSheetTableViewExample: UIViewController {
   @objc func didTapFloatingButton(_ sender : MDCFloatingButton) {
     let menu = BottomSheetTableViewMenu(style: .plain)
     let bottomSheet = MDCBottomSheetController(contentViewController: menu)
+    bottomSheet.isScrimAccessibilityElement = true
+    bottomSheet.scrimAccessibilityLabel = "Close"
     bottomSheet.trackingScrollView = menu.tableView
     present(bottomSheet, animated: true)
   }

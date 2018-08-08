@@ -23,19 +23,19 @@ import MaterialComponents.MaterialButtons_ColorThemer
 
 class BottomAppBarTypicalUseSwiftExample: UIViewController {
 
-  let appBar = MDCAppBar()
+  let appBarViewController = MDCAppBarViewController()
   let bottomBarView = MDCBottomAppBarView()
 
   init() {
     super.init(nibName: nil, bundle: nil)
 
     self.title = "Bottom App Bar (Swift)"
-    self.addChildViewController(appBar.headerViewController)
+    self.addChildViewController(appBarViewController)
 
     let color = UIColor(white: 0.2, alpha:1)
-    appBar.headerViewController.headerView.backgroundColor = color
-    appBar.navigationBar.tintColor = .white
-    appBar.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
+    appBarViewController.headerView.backgroundColor = color
+    appBarViewController.navigationBar.tintColor = .white
+    appBarViewController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
     commonInitBottomAppBarTypicalUseSwiftExample()
   }
 
@@ -47,7 +47,8 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    appBar.addSubviewsToParent()
+    view.addSubview(appBarViewController.view)
+    appBarViewController.didMove(toParentViewController: self)
   }
 
   func commonInitBottomAppBarTypicalUseSwiftExample() {

@@ -79,14 +79,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MDCAppBarNavigationContro
   // MARK: MDCAppBarNavigationControllerInjectorDelegate
 
   func appBarNavigationController(_ navigationController: MDCAppBarNavigationController,
-                                  willAdd appBar: MDCAppBar,
+                                  willAdd appBarViewController: MDCAppBarViewController,
                                   asChildOf viewController: UIViewController) {
-    MDCAppBarColorThemer.applySemanticColorScheme(AppTheme.globalTheme.colorScheme, to: appBar)
+    MDCAppBarColorThemer.applyColorScheme(AppTheme.globalTheme.colorScheme,
+                                                        to: appBarViewController)
     MDCAppBarTypographyThemer.applyTypographyScheme(AppTheme.globalTheme.typographyScheme,
-                                                    to: appBar)
+                                                    to: appBarViewController)
 
     if let injectee = viewController as? CatalogAppBarInjectee {
-      injectee.appBarNavigationControllerInjector(willAdd: appBar)
+      injectee.appBarNavigationControllerInjector(willAdd: appBarViewController)
     }
   }
 }
@@ -98,7 +99,7 @@ extension UINavigationController: UIGestureRecognizerDelegate {
 }
 
 protocol CatalogAppBarInjectee {
-  func appBarNavigationControllerInjector(willAdd appBar: MDCAppBar)
+  func appBarNavigationControllerInjector(willAdd appBarViewController: MDCAppBarViewController)
 }
 
 extension UINavigationController {

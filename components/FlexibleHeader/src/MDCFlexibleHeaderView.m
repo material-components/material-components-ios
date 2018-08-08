@@ -543,10 +543,18 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   return _topSafeAreaGuide;
 }
 
+- (CGFloat)topSafeAreaGuideHeight {
+  return _topSafeAreaGuide.frame.size.height;
+}
+
 #pragma mark - Private (fhv_ prefix)
 
 - (void)fhv_setContentOffset:(CGPoint)contentOffset {
-  _trackingScrollView.contentOffset = contentOffset;
+  // Avoid excessive writes. This can also cause infinite recursion if we're observing the content
+  // offset because of observesTrackingScrollViewScrollEvents.
+  if (!CGPointEqualToPoint(contentOffset, _trackingScrollView.contentOffset)) {
+    _trackingScrollView.contentOffset = contentOffset;
+  }
 
   // When we manually set our content offset it's because we're trying to avoid any sort of content
   // jumping behavior, so we ignore immediate content offset delta by resetting the shift

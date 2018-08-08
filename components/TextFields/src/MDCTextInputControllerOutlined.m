@@ -182,7 +182,7 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
     path =
         [self roundedPathFromRect:[self borderRect]
                     withTextSpace:placeholderWidth
-                       leftOffset:MDCTextInputOutlinedTextFieldFullPadding -
+                    leadingOffset:MDCTextInputOutlinedTextFieldFullPadding -
                                   MDCTextInputOutlinedTextFieldFloatingPlaceholderPadding / 2.0f];
   } else {
     CGSize cornerRadius = CGSizeMake(MDCTextInputControllerBaseDefaultBorderRadius,
@@ -211,7 +211,7 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 
 - (UIBezierPath *)roundedPathFromRect:(CGRect)f
                         withTextSpace:(CGFloat)textSpace
-                           leftOffset:(CGFloat)offset {
+                        leadingOffset:(CGFloat)offset {
   UIBezierPath *path = [[UIBezierPath alloc] init];
   CGFloat radius = MDCTextInputControllerBaseDefaultBorderRadius;
   CGFloat yOffset = f.origin.y;
@@ -219,11 +219,17 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 
   // Draw the path
   [path moveToPoint:CGPointMake(radius + xOffset, yOffset)];
-  [path addLineToPoint:CGPointMake(offset + xOffset, yOffset)];
+  if (self.textInput.mdf_effectiveUserInterfaceLayoutDirection ==
+      UIUserInterfaceLayoutDirectionLeftToRight) {
+    [path addLineToPoint:CGPointMake(offset + xOffset, yOffset)];
+    [path moveToPoint:CGPointMake(textSpace + offset + xOffset, yOffset)];
+    [path addLineToPoint:CGPointMake(f.size.width - radius + xOffset, yOffset)];
+  } else {
+    [path addLineToPoint:CGPointMake(xOffset + (f.size.width - (offset + textSpace)), yOffset)];
+    [path moveToPoint:CGPointMake(xOffset + (f.size.width - offset), yOffset)];
+    [path addLineToPoint:CGPointMake(xOffset + (f.size.width - radius), yOffset)];
+  }
 
-  [path moveToPoint:CGPointMake(textSpace + offset + xOffset, yOffset)];
-
-  [path addLineToPoint:CGPointMake(f.size.width - radius + xOffset, yOffset)];
   [path addArcWithCenter:CGPointMake(f.size.width - radius + xOffset, radius + yOffset)
                   radius:radius
               startAngle:- (CGFloat)(M_PI / 2)

@@ -56,24 +56,25 @@ extension TabBarIconSwiftExample {
     return alignmentButton
   }
 
-  func setupAppBar() -> MDCAppBar {
-    let appBar = MDCAppBar()
+  func setupAppBar() -> MDCAppBarViewController {
+    let appBarViewController = MDCAppBarViewController()
 
-    self.addChildViewController(appBar.headerViewController)
-    appBar.headerViewController.headerView.backgroundColor = UIColor.white
-    appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = false
-    appBar.headerViewController.headerView.minimumHeight = 56 + 72
-    appBar.headerViewController.headerView.tintColor = MDCPalette.blue.tint500
+    self.addChildViewController(appBarViewController)
+    appBarViewController.headerView.backgroundColor = UIColor.white
+    appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
+    appBarViewController.headerView.minimumHeight = 56 + 72
+    appBarViewController.headerView.tintColor = MDCPalette.blue.tint500
 
-    appBar.headerStackView.bottomBar = self.tabBar
-    appBar.headerStackView.setNeedsLayout()
-    return appBar
+    appBarViewController.headerStackView.bottomBar = self.tabBar
+    appBarViewController.headerStackView.setNeedsLayout()
+    return appBarViewController
   }
 
   func setupExampleViews() {
     view.backgroundColor = UIColor.white
 
-    appBar.addSubviewsToParent()
+    view.addSubview(appBarViewController.view)
+    appBarViewController.didMove(toParentViewController: self)
 
     let badgeIncrementItem = UIBarButtonItem(title: "Add",
                                              style: .plain,
@@ -94,7 +95,10 @@ extension TabBarIconSwiftExample {
 
     scrollView.backgroundColor = UIColor.red
 
-    let views = ["scrollView": scrollView, "header": self.appBar.headerStackView]
+    let views: [String: UIView] = [
+      "scrollView": scrollView,
+      "header": self.appBarViewController.headerStackView
+    ]
     NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "V:[header][scrollView]|",
                                                                options: [],
                                                                metrics: nil,
@@ -227,7 +231,7 @@ extension TabBarIconSwiftExample {
 
 extension TabBarIconSwiftExample {
   override var childViewControllerForStatusBarStyle: UIViewController? {
-    return appBar.headerViewController
+    return appBarViewController
   }
 
   override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {

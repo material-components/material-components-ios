@@ -17,6 +17,7 @@
 #import <UIKit/UIKit.h>
 
 @class MDCAppBar;
+@class MDCAppBarViewController;
 
 /**
  The MDCAppBarContainerViewController controller provides an interface for placing a
@@ -53,8 +54,10 @@
 - (nonnull instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;
 - (nonnull instancetype)init NS_UNAVAILABLE;
 
-/** The App Bar views that will be presented in front of the contentViewController's view. */
-@property(nonatomic, strong, nonnull, readonly) MDCAppBar *appBar;
+/**
+ The App Bar view controller that will be a sibling to the contentViewController.
+ */
+@property(nonatomic, strong, nonnull, readonly) MDCAppBarViewController *appBarViewController;
 
 /** The content view controller to be displayed behind the header. */
 @property(nonatomic, strong, nonnull, readonly) UIViewController *contentViewController;
@@ -84,5 +87,14 @@
      frame.origin.y = self.topLayoutGuide.length + 32
  */
 @property(nonatomic, getter=isTopLayoutGuideAdjustmentEnabled) BOOL topLayoutGuideAdjustmentEnabled;
+
+#pragma mark - To be deprecated
+
+/**
+ The App Bar views that will be presented in front of the contentViewController's view.
+
+ This API will eventually be deprecated. Use appBarViewController instead.
+ */
+@property(nonatomic, strong, nonnull, readonly) MDCAppBar *appBar;
 
 @end

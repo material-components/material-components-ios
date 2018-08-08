@@ -42,13 +42,13 @@ class TabBarIndicatorTemplateExample: UIViewController {
       tabBar.itemAppearance = newValue
 
       // itemAppearance affects the height of the tab bar.
-      appBar.headerStackView.setNeedsLayout()
+      appBarViewController.headerStackView.setNeedsLayout()
     }
   }
 
   lazy var alignmentButton: MDCButton = self.makeAlignmentButton()
   lazy var appearanceButton: MDCButton = self.makeAppearanceButton()
-  lazy var appBar: MDCAppBar = self.makeAppBar()
+  lazy var appBarViewController: MDCAppBarViewController = self.makeAppBar()
   var colorScheme = MDCSemanticColorScheme()
   var typographyScheme = MDCTypographyScheme()
 
@@ -95,6 +95,10 @@ class TabBarIndicatorTemplateExample: UIViewController {
       self,
       action: #selector(changeAppearance),
       for: .touchUpInside)
+
+    MDCAppBarColorThemer.applyColorScheme(self.colorScheme, to: self.appBarViewController)
+    MDCAppBarTypographyThemer.applyTypographyScheme(self.typographyScheme,
+                                                    to: self.appBarViewController)
   }
 
   @objc func changeAlignmentDidTouch(sender: UIButton) {

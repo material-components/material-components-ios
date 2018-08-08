@@ -57,6 +57,7 @@ It also has some technical disadvantages:
 
 - [Typical use: Add the flexible header to a view controller](typical-use.md)
 - [Typical use: Tracking a scroll view](typical-use-tracking-a-scroll-view.md)
+- [Typical use: Enabling observation of the tracking scroll view](typical-use-scroll-view-observation.md)
 - [Shifting a flexible header off-screen](shift-behavior.md)
 - [Reacting to frame changes](reacting-to-frame-changes.md)
 - [Subclassing considerations](subclassing-considerations.md)
@@ -66,6 +67,21 @@ It also has some technical disadvantages:
 - [Background images](background-images.md)
 - [Touch forwarding](touch-forwarding.md)
 - [Tracking a parent view](tracking-a-parent-view.md)
+
+## Behavioral flags
+
+A behavioral flag is a temporary API that is introduced to allow client teams to migrate from an old
+behavior to a new one in a graceful fashion. Behavioral flags all go through the following life
+cycle:
+
+1. The flag is introduced. The default is chosen such that clients must opt in to the new behavior.
+2. After some time, the default changes to the new behavior and the flag is marked as deprecated.
+3. After some time, the flag is removed.
+
+- [Recommended behavioral flags](recommended-behavioral-flags.md)
+- [Removing safe area insets from the min/max heights](behavior-minmax-safearea.md)
+- [Enabling top layout guide adjustment](behavior-top-layout-adjustment.md)
+- [Enabling inferred top safe area insets](behavior-inferred-top-safe-area-inset.md)
 
 ## Extensions
 

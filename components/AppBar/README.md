@@ -26,29 +26,43 @@ The Material Design top app bar displays information and actions relating to the
   <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-app-bar-top">Material Design guidelines: App bars: top</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBar.html">MDCAppBar</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBarContainerViewController.html">MDCAppBarContainerViewController</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBarNavigationController.html">MDCAppBarNavigationController</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBarTextColorAccessibilityMutator.html">MDCAppBarTextColorAccessibilityMutator</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBarViewController.html">MDCAppBarViewController</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Protocols/MDCAppBarNavigationControllerDelegate.html">MDCAppBarNavigationControllerDelegate</a></li>
 </ul>
 
 ## Related components
 
 <ul class="icon-list">
   <li class="icon-list-item icon-list-item--link"><a href="../FlexibleHeader">FlexibleHeader</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="../HeaderStackView">HeaderStackView</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="../NavigationBar">NavigationBar</a></li>
 </ul>
 
 ## Table of contents
 
 - [Overview](#overview)
-  - [UINavigationItem and the App Bar](#uinavigationitem-and-the-app-bar)
-  - [Interacting with background views](#interacting-with-background-views)
 - [Installation](#installation)
   - [Installation with CocoaPods](#installation-with-cocoapods)
   - [Importing](#importing)
 - [Usage](#usage)
-  - [Typical use: Adding an app bar to your app](#typical-use-adding-an-app-bar-to-your-app)
+  - [Typical use: View controller containment, as a navigation controller](#typical-use-view-controller-containment-as-a-navigation-controller)
+  - [Typical use: View controller containment, as a child](#typical-use-view-controller-containment-as-a-child)
+  - [Typical use: View controller containment, as a container](#typical-use-view-controller-containment-as-a-container)
+  - [Typical use: Tracking a scroll view](#typical-use-tracking-a-scroll-view)
+  - [Enabling observation of the tracking scroll view](#enabling-observation-of-the-tracking-scroll-view)
+  - [UINavigationItem support](#uinavigationitem-support)
+  - [Interactive background views](#interactive-background-views)
+  - [Adjusting the top layout guide of a view controller](#adjusting-the-top-layout-guide-of-a-view-controller)
+- [Behavioral flags](#behavioral-flags)
+  - [Recommended behavioral flags](#recommended-behavioral-flags)
+  - [Removing safe area insets from the min/max heights](#removing-safe-area-insets-from-the-minmax-heights)
+  - [Enabling top layout guide adjustment](#enabling-top-layout-guide-adjustment)
+  - [Enabling inferred top safe area insets](#enabling-inferred-top-safe-area-insets)
 - [Extensions](#extensions)
   - [Color Theming](#color-theming)
   - [Typography Theming](#typography-theming)
-- [Example code](#example-code)
 - [Accessibility](#accessibility)
   - [MDCAppBar Accessibility](#mdcappbar-accessibility)
 
@@ -56,63 +70,20 @@ The Material Design top app bar displays information and actions relating to the
 
 ## Overview
 
-The top app bar is implemented on iOS in the AppBar component. This component's main API is
-`MDCAppBar`, a compose API that initializes and provides access to instances of the
-following components:
+App bar is composed of the following components:
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--link"><a href="../FlexibleHeader">Flexible Header</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="../HeaderStackView">Header Stack View</a></li>
-  <li class="icon-list-item icon-list-item--link"><a href="../NavigationBar">Navigation Bar</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="../FlexibleHeader">FlexibleHeader</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="../HeaderStackView">HeaderStackView</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="../NavigationBar">NavigationBar</a></li>
 </ul>
 
-The provided view hierarchy looks like so:
+It is essentially a FlexibleHeader with a HeaderStackView and NavigationBar added as subviews.
 
-    <MDCFlexibleHeaderView>
-       | <CALayer>
-       |    | <MDCShadowLayer>
-       | <UIView> <- headerView.contentView
-       |    | <MDCHeaderStackView>
-       |    |    | <MDCNavigationBar>
-
-This view hierarchy will be added to your view controller hierarchy using the convenience methods
-outlined in the Usage docs below.
-
-Note that it is possible to create each of the above components yourself, though we only encourage
-doing so if the App Bar is limiting your ability to build something. In such a case we recommend
-also [filing an issue](https://github.com/material-components/material-components-ios/issues/new) so that we can
-identify whether your use case is something we can directly support.
-
-### UINavigationItem and the App Bar
-
-The App Bar begins mirroring the state of your view controller's `navigationItem` in the provided
-`navigationBar` once you call `addSubviewsToParent`.
-
-Learn more by reading the Navigation Bar section on
-[Observing UINavigationItem instances](../NavigationBar/#observing-uinavigationitem-instances).
-Notably: read the section on "Exceptions" to understand which UINavigationItem are **not**
-supported.
-
-### Interacting with background views
-
-Scenario: you've added a background image to your App Bar and you'd now like to be able to tap the
-background image.
-
-This is not trivial to do with the App Bar APIs due to considerations being discussed in
-[Issue #184](https://github.com/material-components/material-components-ios/issues/184).
-
-The heart of the limitation is that we're using a view (`headerStackView`) to lay out the Navigation
-Bar. If you add a background view behind the `headerStackView` instance then `headerStackView` will
-end up eating all of your touch events.
-
-Until [Issue #184](https://github.com/material-components/material-components-ios/issues/184) is resolved, our
-recommendation for building interactive background views is the following:
-
-1. Do not use the App Bar component.
-2. Create your own Flexible Header. Learn more by reading the Flexible Header
-   [Usage](../FlexibleHeader/#usage) docs.
-3. Add your views to this flexible header instance.
-4. Create a Navigation Bar if you need one. Treat it like any other custom view.
+`MDCAppBarViewController` is the primary API for the component. All integration strategies will
+make use of it in some manner. Unlike UIKit, which shares a single `UINavigationBar` instance across
+many view controllers in a stack, app bar relies on each view controller creating and managing its
+own `MDCAppBarViewController` instance.
 
 ## Installation
 
@@ -153,89 +124,498 @@ import MaterialComponents.MaterialAppBar
 
 ## Usage
 
-<!-- Extracted from docs/typical-use-adding-an-app-bar.md -->
+<!-- Extracted from docs/typical-use-navigation-controller.md -->
 
-### Typical use: Adding an app bar to your app
+### Typical use: View controller containment, as a navigation controller
 
-Each view controller in your app that intends to use an App Bar will follow these instructions.
-You'll typically add the App Bar to the same view controllers that you'd push onto a
-UINavigationController, hiding the UINavigationController's `navigationBar` accordingly.
+The easiest integration path for using the app bar is through the `MDCAppBarNavigationController`.
+This API is a subclass of UINavigationController that automatically adds an
+`MDCAppBarViewController` instance to each view controller that is pushed onto it, unless an app bar
+or flexible header already exists.
 
-The result of following these steps will be that:
+When using the `MDCAppBarNavigationController` you will, at a minimum, need to configure the added
+app bar's background color using the delegate.
 
-1. an App Bar is registered as a child view controller of your view controller,
-2. you have access to the App Bar's Flexible Header view via the headerViewController property, and
-   that
-3. you have access to the Navigation Bar and Header Stack View views via the corresponding
-   properties.
-
-Step 1: **Create an instance of MDCAppBar**.
-
-You must also add the `headerViewController` as a child view controller.
+#### Example
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
-let appBar = MDCAppBar()
+let navigationController = MDCAppBarNavigationController()
+navigationController.pushViewController(<#T##viewController: UIViewController##UIViewController#>, animated: <#T##Bool#>)
+
+// MARK: MDCAppBarNavigationControllerDelegate
+
+func appBarNavigationController(_ navigationController: MDCAppBarNavigationController,
+                                willAdd appBarViewController: MDCAppBarViewController,
+                                asChildOf viewController: UIViewController) {
+  appBarViewController.headerView.backgroundColor = <#(UIColor)#>
+}
+```
+
+#### Objective-C
+
+```objc
+MDCAppBarNavigationController *navigationController =
+    [[MDCAppBarNavigationController alloc] init];
+[navigationController pushViewController:<#(nonnull UIViewController *)#> animated:<#(BOOL)#>];
+
+#pragma mark - MDCAppBarNavigationControllerDelegate
+
+- (void)appBarNavigationController:(MDCAppBarNavigationController *)navigationController
+       willAddAppBarViewController:(MDCAppBarViewController *)appBarViewController
+           asChildOfViewController:(UIViewController *)viewController {
+  appBarViewController.headerView.backgroundColor = <#(nonnull UIColor *)#>;
+}
+```
+<!--</div>-->
+
+<!-- Extracted from docs/typical-use-child.md -->
+
+### Typical use: View controller containment, as a child
+
+When an `MDCAppBarViewController` instance is added as a child to another view controller. In this
+case, the parent view controller is often the object that creates and manages the
+`MDCAppBarViewController` instance. This allows the parent view controller to configure the app bar
+directly.
+
+You'll typically push the parent onto a navigation controller, in which case you will also hide the
+navigation controller's navigation bar using `UINavigationController`'s
+`-setNavigationBarHidden:animated:`.
+
+#### Example
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+let appBarViewController = MDCAppBarViewController()
 
 override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
   super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
-  self.addChildViewController(appBar.headerViewController)
+  self.addChildViewController(appBarViewController)
+}
+
+override func viewDidLoad() {
+  super.viewDidLoad()
+
+  view.addSubview(appBarViewController.view)
+  appBarViewController.didMove(toParentViewController: self)
 }
 ```
 
 #### Objective-C
 
 ```objc
-@interface ObjcViewController ()
-@property(nonatomic, strong, nonnull) MDCAppBar *appBar;
+@interface MyViewController ()
+@property(nonatomic, strong, nonnull) MDCAppBarViewController *appBarViewController;
 @end
 
-@implementation ObjcViewController
+@implementation MyViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
-    _appBar = [[MDCAppBar alloc] init];
+    _appBarViewController = [[MDCAppBarViewController alloc] init];
 
-    [self addChildViewController:_appBar.headerViewController];
+    [self addChildViewController:_appBarViewController];
   }
   return self;
+}
+
+- (void)viewDidLoad {
+  [super viewDidLoad];
+
+  [self.view addSubview:self.appBarViewController.view];
+  [self.appBarViewController didMoveToParentViewController:self];
 }
 
 @end
 ```
 <!--</div>-->
 
-Step 2: **Inform the App Bar that your view controller's view has loaded**.
+<!-- Extracted from docs/typical-use-container.md -->
 
-Ideally you will do this after all views have been added to your controller's view in order to
-ensure that the App Bar's Flexible Header is in front of all other views.
+### Typical use: View controller containment, as a container
+
+There are cases where adding an `MDCAppBarViewController` as a child is not possible, most notably:
+
+- UIPageViewController's view is a horizontally-paging scroll view, meaning there is no fixed view
+  to which an app bar could be added.
+- Any other view controller that animates its content horizontally without providing a fixed,
+  non-horizontally-moving parent view.
+
+In such cases, using `MDCAppBarContainerViewController` is preferred.
+`MDCAppBarContainerViewController` is a simple container view controller that places a content view
+controller as a sibling to an `MDCAppBarViewController`.
+
+**Note:** the trade off to using this API is that it will affect your view controller hierarchy. If
+the view controller makes any assumptions about its parent view controller or its
+navigationController properties then these assumptions may break once the view controller is
+wrapped.
+
+You'll typically push the container view controller onto a navigation controller, in which case you
+will also hide the navigation controller's navigation bar using UINavigationController's
+`-setNavigationBarHidden:animated:`.
+
+#### Example
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
-override func viewDidLoad() {
-  super.viewDidLoad()
+let container = MDCAppBarContainerViewController(contentViewController: <#T##UIViewController#>)
+```
 
-  // After all other views have been registered.
-  appBar.addSubviewsToParent()
+#### Objective-C
+
+```objc
+MDCAppBarContainerViewController *container =
+    [[MDCAppBarContainerViewController alloc] initWithContentViewController:<#(nonnull UIViewController *)#>];
+```
+<!--</div>-->
+
+<!-- Extracted from docs/../../FlexibleHeader/docs/typical-use-tracking-a-scroll-view.md -->
+
+### Typical use: Tracking a scroll view
+
+The flexible header can be provided with tracking scroll view. This allows the flexible header to
+expand, collapse, and shift off-screen in reaction to the tracking scroll view's delegate events.
+
+> Important: When using a tracking scroll view you must forward the relevant UIScrollViewDelegate
+> events to the flexible header.
+
+Follow these steps to hook up a tracking scroll view:
+
+Step 1: **Set the tracking scroll view**.
+
+In your viewDidLoad, set the `trackingScrollView` property on the header view:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+headerViewController.headerView.trackingScrollView = scrollView
+```
+
+#### Objective-C
+
+```objc
+self.headerViewController.headerView.trackingScrollView = scrollView;
+```
+<!--</div>-->
+
+`scrollView` might be a table view, collection view, or a plain UIScrollView.
+
+Step 2: **Forward UIScrollViewDelegate events to the Header View**.
+
+There are two ways to forward scroll events.
+
+Option 1: if your controller does not need to respond to UIScrollViewDelegate events and you're
+using either a plain UIScrollView or a UITableView you can set your MDCFlexibleHeaderViewController
+instance as the scroll view's delegate.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+scrollView.delegate = headerViewController
+```
+
+#### Objective-C
+
+```objc
+scrollView.delegate = self.headerViewController;
+```
+<!--</div>-->
+
+Option 2: implement the required UIScrollViewDelegate methods and forward them to the
+MDCFlexibleHeaderView instance. This is the most flexible approach and will work with any
+UIScrollView subclass.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// MARK: UIScrollViewDelegate
+
+override func scrollViewDidScroll(scrollView: UIScrollView) {
+  if scrollView == headerViewController.headerView.trackingScrollView {
+    headerViewController.headerView.trackingScrollViewDidScroll()
+  }
+}
+
+override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+  if scrollView == headerViewController.headerView.trackingScrollView {
+    headerViewController.headerView.trackingScrollViewDidEndDecelerating()
+  }
+}
+
+override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+  let headerView = headerViewController.headerView
+  if scrollView == headerView.trackingScrollView {
+    headerView.trackingScrollViewDidEndDraggingWillDecelerate(decelerate)
+  }
+}
+
+override func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+  let headerView = headerViewController.headerView
+  if scrollView == headerView.trackingScrollView {
+    headerView.trackingScrollViewWillEndDraggingWithVelocity(velocity, targetContentOffset: targetContentOffset)
+  }
 }
 ```
 
 #### Objective-C
+
 ```objc
-- (void)viewDidLoad {
-  [super viewDidLoad];
+#pragma mark - UIScrollViewDelegate
 
-  ...
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+  if (scrollView == self.headerViewController.headerView.trackingScrollView) {
+    [self.headerViewController.headerView trackingScrollViewDidScroll];
+  }
+}
 
-  // After all other views have been registered.
-  [self.appBar addSubviewsToParent];
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+  if (scrollView == self.headerViewController.headerView.trackingScrollView) {
+    [self.headerViewController.headerView trackingScrollViewDidEndDecelerating];
+  }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+  if (scrollView == self.headerViewController.headerView.trackingScrollView) {
+    [self.headerViewController.headerView trackingScrollViewDidEndDraggingWillDecelerate:decelerate];
+  }
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView
+                     withVelocity:(CGPoint)velocity
+              targetContentOffset:(inout CGPoint *)targetContentOffset {
+  if (scrollView == self.headerViewController.headerView.trackingScrollView) {
+    [self.headerViewController.headerView trackingScrollViewWillEndDraggingWithVelocity:velocity
+                                                                    targetContentOffset:targetContentOffset];
+  }
 }
 ```
 <!--</div>-->
+
+<!-- Extracted from docs/../../FlexibleHeader/docs/typical-use-scroll-view-observation.md -->
+
+### Enabling observation of the tracking scroll view
+
+If you do not require the flexible header's shift behavior, then you can avoid having to manually
+forward UIScrollViewDelegate events to the flexible header by enabling
+`observesTrackingScrollViewScrollEvents` on the flexible header view. Observing the tracking
+scroll view allows the flexible header to over-extend, if enabled, and allows the header's shadow to
+show and hide itself as the content is scrolled.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+flexibleHeaderViewController.headerView.observesTrackingScrollViewScrollEvents = true
+```
+
+#### Objective-C
+
+```objc
+flexibleHeaderViewController.headerView.observesTrackingScrollViewScrollEvents = YES;
+```
+<!--</div>-->
+
+**Note:** if `observesTrackingScrollViewScrollEvents` is enabled then you can neither enable shift
+behavior nor manually forward scroll view delegate events to the flexible header.
+
+<!-- Extracted from docs/uinavigationitem-support.md -->
+
+### UINavigationItem support
+
+The App Bar begins mirroring the state of your view controller's `navigationItem` in the provided
+`navigationBar` once you call `addSubviewsToParent`.
+
+Learn more by reading the Navigation Bar section on
+[Observing UINavigationItem instances](../NavigationBar/#observing-uinavigationitem-instances).
+Notably: read the section on "Exceptions" to understand which UINavigationItem are **not**
+supported.
+
+<!-- Extracted from docs/interactive-background-views.md -->
+
+### Interactive background views
+
+Scenario: you've added a background image to your App Bar and you'd now like to be able to tap the
+background image.
+
+This is not trivial to do with the App Bar APIs due to considerations being discussed in
+[Issue #184](https://github.com/material-components/material-components-ios/issues/184).
+
+The heart of the limitation is that we're using a view (`headerStackView`) to lay out the Navigation
+Bar. If you add a background view behind the `headerStackView` instance then `headerStackView` will
+end up eating all of your touch events.
+
+Until [Issue #184](https://github.com/material-components/material-components-ios/issues/184) is resolved, our recommendation for building interactive background views is the following:
+
+1. Do not use the App Bar component.
+2. Create your own Flexible Header. Learn more by reading the Flexible Header
+   [Usage](../FlexibleHeader/#usage) docs.
+3. Add your views to this flexible header instance.
+4. Create a Navigation Bar if you need one. Treat it like any other custom view.
+
+<!-- Extracted from docs/../../FlexibleHeader/docs/top-layout-guide-adjustment.md -->
+
+### Adjusting the top layout guide of a view controller
+
+If your content view controller depends on the top layout guide being adjusted — e.g. if the
+content does not have a tracking scroll view and therefore relies on the top layout guide to perform
+layout calculations — then you should consider setting `topLayoutGuideViewController` to the
+content view controller.
+
+Setting this property does two things:
+
+1. Adjusts the view controller's `topLayoutGuide` property to take the flexible header into account
+   (most useful pre-iOS 11).
+2. On iOS 11 and up — if there is no tracking scroll view — also adjusts the
+   `additionalSafeAreaInsets` property to take the flexible header into account.
+
+**Note:** `topLayoutGuideAdjustmentEnabled` is automatically enabled if this property is set.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+flexibleHeaderViewController.topLayoutGuideViewController = contentViewController
+```
+
+#### Objective-C
+
+```objc
+flexibleHeaderViewController.topLayoutGuideViewController = contentViewController;
+```
+<!--</div>-->
+
+
+## Behavioral flags
+
+A behavioral flag is a temporary API that is introduced to allow client teams to migrate from an old
+behavior to a new one in a graceful fashion. Behavioral flags all go through the following life
+cycle:
+
+1. The flag is introduced. The default is chosen such that clients must opt in to the new behavior.
+2. After some time, the default changes to the new behavior and the flag is marked as deprecated.
+3. After some time, the flag is removed.
+
+<!-- Extracted from docs/recommended-behavioral-flags.md -->
+
+### Recommended behavioral flags
+
+The app bar component and its dependencies include a variety of flags that affect the behavior of
+the `MDCAppBarViewController`. Many of these flags represent feature flags that we are using
+to allow client teams to migrate from an old behavior to a new, usually less-buggy one.
+
+You are encouraged to set all of the behavioral flags immediately after creating an instance of the
+app bar.
+
+The minimal set of recommended flag values are:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// Enables support for iPad popovers and extensions.
+// Automatically enables topLayoutGuideAdjustmentEnabled as well, but does not set a
+// topLayoutGuideViewController.
+appBarViewController.inferTopSafeAreaInsetFromViewController = true
+
+// Enables support for iPhone X safe area insets.
+appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
+```
+
+#### Objective-C
+
+```objc
+// Enables support for iPad popovers and extensions.
+// Automatically enables topLayoutGuideAdjustmentEnabled as well, but does not set a
+// topLayoutGuideViewController.
+appBarViewController.inferTopSafeAreaInsetFromViewController = YES;
+
+// Enables support for iPhone X safe area insets.
+appBarViewController.headerView.minMaxHeightIncludesSafeArea = NO;
+```
+<!--</div>-->
+
+<!-- Extracted from docs/../../FlexibleHeader/docs/behavior-minmax-safearea.md -->
+
+### Removing safe area insets from the min/max heights
+
+The minimum and maximum height values of the flexible header view assume by default that the values
+include the top safe area insets value. This assumption no longer holds true on devices with a
+physical safe area inset and it never held true when flexible headers were shown in non full screen
+settings (such as popovers on iPad).
+
+This behavioral flag is enabled by default, but will eventually be disabled by default and the flag
+will eventually be removed.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+flexibleHeaderViewController.headerView.minMaxHeightIncludesSafeArea = false
+```
+
+#### Objective-C
+
+```objc
+flexibleHeaderViewController.headerView.minMaxHeightIncludesSafeArea = NO;
+```
+<!--</div>-->
+
+<!-- Extracted from docs/../../FlexibleHeader/docs/behavior-top-layout-adjustment.md -->
+
+### Enabling top layout guide adjustment
+
+The `topLayoutGuideAdjustmentEnabled` behavior flag affects `topLayoutGuideViewController`.
+Setting `topLayoutGuideAdjustmentEnabled` to YES enables the new behavior.
+
+`topLayoutGuideAdjustmentEnabled` is disabled by default, but will eventually be enabled by default
+and the flag will eventually be removed.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+flexibleHeaderViewController.topLayoutGuideAdjustmentEnabled = true
+```
+
+#### Objective-C
+
+```objc
+flexibleHeaderViewController.topLayoutGuideAdjustmentEnabled = YES;
+```
+<!--</div>-->
+
+<!-- Extracted from docs/../../FlexibleHeader/docs/behavior-inferred-top-safe-area-inset.md -->
+
+### Enabling inferred top safe area insets
+
+Prior to this behavioral flag, the flexible header always assumed that it was presented in a
+full-screen capacity, meaning it would be placed directly behind the status bar or device bezel
+(such as the iPhone X's notch). This assumption does not support extensions and iPad popovers.
+
+Enabling the `inferTopSafeAreaInsetFromViewController` flag tells the flexible header to use its
+view controller ancestry to extract a safe area inset from its context, instead of relying on
+assumptions about placement of the header.
+
+This behavioral flag is disabled by default, but will eventually be enabled by default and the flag
+will eventually be removed.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+flexibleHeaderViewController.inferTopSafeAreaInsetFromViewController = true
+```
+
+#### Objective-C
+
+```objc
+flexibleHeaderViewController.inferTopSafeAreaInsetFromViewController = YES;
+```
+<!--</div>-->
+
+**Note:** if this flag is enabled and you've also provided a `topLayoutGuideViewController`, take
+care that the `topLayoutGuideViewController` is not a direct ancestor of the flexible header or your
+app **will** enter an infinite loop. As a general rule, your `topLayoutGuideViewController` should
+be a sibling to the flexible header.
 
 
 See the [FlexibleHeader](../FlexibleHeader) documentation for additional usage guides.
@@ -294,8 +674,6 @@ You must first add the Typography Themer extension to your project:
 pod 'MaterialComponents/AppBar+TypographyThemer'
 ```
 
-## Example code
-
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
@@ -323,7 +701,6 @@ id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
      toAppBar:component];
 ```
 <!--</div>-->
-
 
 
 ## Accessibility

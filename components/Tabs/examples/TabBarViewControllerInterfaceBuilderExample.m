@@ -54,7 +54,7 @@
 }
 
 // TabBarViewControllerInterfaceBuilderExample expect that appBars be inside the tabs,
-// so don't stick an appBar on it.
+// so don't stick an appBarViewController on it.
 - (BOOL)catalogShouldHideNavigation {
   return YES;
 }

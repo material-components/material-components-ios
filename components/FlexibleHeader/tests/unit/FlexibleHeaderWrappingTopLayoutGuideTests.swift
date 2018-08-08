@@ -16,7 +16,6 @@
 
 import XCTest
 import MaterialComponents.MaterialFlexibleHeader
-import MaterialComponents.MaterialUIMetrics
 
 class FlexibleHeaderWrappingTopLayoutGuideTests: XCTestCase {
 
@@ -54,8 +53,7 @@ class FlexibleHeaderWrappingTopLayoutGuideTests: XCTestCase {
     #if swift(>=3.2)
     if #available(iOS 11.0, *) {
       XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top,
-                     container.headerViewController.headerView.frame.maxY
-                      - MDCDeviceTopSafeAreaInset())
+                     container.headerViewController.headerView.frame.maxY)
     }
     #endif
   }
@@ -74,8 +72,7 @@ class FlexibleHeaderWrappingTopLayoutGuideTests: XCTestCase {
     #if swift(>=3.2)
     if #available(iOS 11.0, *) {
       XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top,
-                     container.headerViewController.headerView.frame.maxY
-                      - MDCDeviceTopSafeAreaInset())
+                     container.headerViewController.headerView.frame.maxY)
     }
     #endif
   }
@@ -96,8 +93,7 @@ class FlexibleHeaderWrappingTopLayoutGuideTests: XCTestCase {
     #if swift(>=3.2)
     if #available(iOS 11.0, *) {
       XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top,
-                     container.headerViewController.headerView.frame.maxY
-                      - MDCDeviceTopSafeAreaInset())
+                     container.headerViewController.headerView.frame.maxY)
       XCTAssertEqual(contentViewController.tableView.adjustedContentInset.top, 0)
     }
     #endif
@@ -142,8 +138,7 @@ class FlexibleHeaderWrappingTopLayoutGuideTests: XCTestCase {
     #if swift(>=3.2)
     if #available(iOS 11.0, *) {
       XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top,
-                     container.headerViewController.headerView.frame.maxY
-                      - MDCDeviceTopSafeAreaInset())
+                     container.headerViewController.headerView.frame.maxY)
       XCTAssertEqual(contentViewController.collectionView!.adjustedContentInset.top, 0)
     }
     #endif
