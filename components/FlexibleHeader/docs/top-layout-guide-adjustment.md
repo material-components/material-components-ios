@@ -1,7 +1,7 @@
 ### Adjusting the top layout guide of a view controller
 
 If your content view controller depends on the top layout guide being adjusted — e.g. if the
-content does not have a tracking scroll view and therefor relies on the top layout guide to perform
+content does not have a tracking scroll view and therefore relies on the top layout guide to perform
 layout calculations — then you should consider setting `topLayoutGuideViewController` to the
 content view controller.
 

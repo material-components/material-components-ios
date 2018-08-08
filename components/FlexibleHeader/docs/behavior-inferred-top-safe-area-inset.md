@@ -1,8 +1,8 @@
 ### Enabling inferred top safe area insets
 
 Prior to this behavioral flag, the flexible header always assumed that it was presented in a
-full-screen capacity, meaning it would be placed directly behind the status bar or device chrome.
-This assumption does not support extensions and iPad popovers.
+full-screen capacity, meaning it would be placed directly behind the status bar or device bezel
+(such as the iPhone X's notch). This assumption does not support extensions and iPad popovers.
 
 Enabling the `inferTopSafeAreaInsetFromViewController` flag tells the flexible header to use its
 view controller ancestry to extract a safe area inset from its context, instead of relying on

@@ -354,7 +354,9 @@ override func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity v
 
 If you do not require the flexible header's shift behavior, then you can avoid having to manually
 forward UIScrollViewDelegate events to the flexible header by enabling
-`observesTrackingScrollViewScrollEvents` on the flexible header view.
+`observesTrackingScrollViewScrollEvents` on the flexible header view. Observing the tracking
+scroll view allows the flexible header to over-extend, if enabled, and allows the header's shadow to
+show and hide itself as the content is scrolled.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -879,7 +881,8 @@ flexibleHeaderViewController.headerView.minMaxHeightIncludesSafeArea = NO;
 
 ### Enabling top layout guide adjustment
 
-The `topLayoutGuideAdjustmentEnabled` behavior flag affects `topLayoutGuideViewController`. `Setting `topLayoutGuideAdjustmentEnabled` to YES enables the new behavior.
+The `topLayoutGuideAdjustmentEnabled` behavior flag affects `topLayoutGuideViewController`.
+Setting `topLayoutGuideAdjustmentEnabled` to YES enables the new behavior.
 
 `topLayoutGuideAdjustmentEnabled` is disabled by default, but will eventually be enabled by default
 and the flag will eventually be removed.
@@ -897,13 +900,13 @@ flexibleHeaderViewController.topLayoutGuideAdjustmentEnabled = YES;
 ```
 <!--</div>-->
 
-<!-- Extracted from docs/behavior-inferring-top-safe-area-inset.md -->
+<!-- Extracted from docs/behavior-inferred-top-safe-area-inset.md -->
 
 ### Enabling inferred top safe area insets
 
 Prior to this behavioral flag, the flexible header always assumed that it was presented in a
-full-screen capacity, meaning it would be placed directly behind the status bar or device chrome.
-This assumption does not support extensions and iPad popovers.
+full-screen capacity, meaning it would be placed directly behind the status bar or device bezel
+(such as the iPhone X's notch). This assumption does not support extensions and iPad popovers.
 
 Enabling the `inferTopSafeAreaInsetFromViewController` flag tells the flexible header to use its
 view controller ancestry to extract a safe area inset from its context, instead of relying on
