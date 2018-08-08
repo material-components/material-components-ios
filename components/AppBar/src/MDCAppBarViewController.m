@@ -40,6 +40,32 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
   NSLayoutConstraint *_topSafeAreaConstraint;
 }
 
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+    [self MDCAppBarViewController_commonInit];
+  }
+  return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+  self = [super initWithCoder:aDecoder];
+  if (self) {
+    [self MDCAppBarViewController_commonInit];
+  }
+  return self;
+}
+
+- (void)MDCAppBarViewController_commonInit {
+  // Shadow layer
+  MDCFlexibleHeaderShadowIntensityChangeBlock intensityBlock =
+  ^(CALayer *_Nonnull shadowLayer, CGFloat intensity) {
+    CGFloat elevation = MDCShadowElevationAppBar * intensity;
+    [(MDCShadowLayer *)shadowLayer setElevation:elevation];
+  };
+  [self.headerView setShadowLayer:[MDCShadowLayer layer] intensityDidChangeBlock:intensityBlock];
+}
+
 - (MDCHeaderStackView *)headerStackView {
   // Removed call to loadView here as we should never be calling it manually.
   // It previously replaced loadViewIfNeeded call that is only iOS 9.0+ to
@@ -142,14 +168,6 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-
-  // Shadow layer
-  MDCFlexibleHeaderShadowIntensityChangeBlock intensityBlock =
-      ^(CALayer *_Nonnull shadowLayer, CGFloat intensity) {
-        CGFloat elevation = MDCShadowElevationAppBar * intensity;
-        [(MDCShadowLayer *)shadowLayer setElevation:elevation];
-      };
-  [self.headerView setShadowLayer:[MDCShadowLayer layer] intensityDidChangeBlock:intensityBlock];
 
   [self.headerView forwardTouchEventsForView:self.headerStackView];
   [self.headerView forwardTouchEventsForView:self.navigationBar];
