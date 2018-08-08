@@ -1,10 +1,31 @@
-# #develop#
+# 59.2.0
 
-## Breaking changes
-
-## New deprecations
+This minor release introduces several new improvements to the AppBar component and bug fixes and
+accessibility improvements to various components.
 
 ## New features
+
+AppBar's documentation has been updated to reflect all of the most modern APIs and behavioral flags.
+
+AppBar also now exposes a new `MDCAppBarViewController` API which is meant to be a more familiar
+replacement API for `MDCAppBar`.
+
+A typical migration diff will look something like so (in Swift):
+
+```swift
+// Step 1
+-  let appBar = MDCAppBar()
++  let appBarViewController = MDCAppBarViewController()
+
+// Step 2
+-    self.addChildViewController(appBar.headerViewController)
++    self.addChildViewController(appBarViewController)
+
+// Step 3
+-    appBar.addSubviewsToParent()
++    view.addSubview(appBarViewController.view)
++    appBarViewController.didMove(toParentViewController: self)
+```
 
 ## API changes
 
@@ -22,127 +43,6 @@
 
 *new* property: `appBarViewController` in `MDCAppBar`
 
-*modified* property: `navigationBar` in `MDCAppBar`
-
-| Type of change: | key.doc.file |
-|---|---|
-| From: | `/components/AppBar/src/MDCAppBar.h` |
-| To: | `/components/AppBar/src/MDCAppBarViewController.h` |
-
-*modified* property: `navigationBar` in `MDCAppBar`
-
-| Type of change: | key.filepath |
-|---|---|
-| From: | `/components/AppBar/src/MDCAppBar.h` |
-| To: | `/components/AppBar/src/MDCAppBarViewController.h` |
-
-*modified* property: `headerStackView` in `MDCAppBar`
-
-| Type of change: | key.doc.file |
-|---|---|
-| From: | `/components/AppBar/src/MDCAppBar.h` |
-| To: | `/components/AppBar/src/MDCAppBarViewController.h` |
-
-*modified* property: `headerStackView` in `MDCAppBar`
-
-| Type of change: | key.filepath |
-|---|---|
-| From: | `/components/AppBar/src/MDCAppBar.h` |
-| To: | `/components/AppBar/src/MDCAppBarViewController.h` |
-
-*modified* property: `headerViewController` in `MDCAppBar`
-
-| Type of change: | key.doc.file |
-|---|---|
-| From: | `/components/AppBar/src/MDCAppBar.h` |
-| To: | `/components/AppBar/src/MDCAppBarViewController.h` |
-
-*modified* property: `headerViewController` in `MDCAppBar`
-
-| Type of change: | key.filepath |
-|---|---|
-| From: | `/components/AppBar/src/MDCAppBar.h` |
-| To: | `/components/AppBar/src/MDCAppBarViewController.h` |
-
-*modified* property: `inferTopSafeAreaInsetFromViewController` in `MDCAppBar`
-
-| Type of change: | key.doc.file |
-|---|---|
-| From: | `/components/AppBar/src/MDCAppBar.h` |
-| To: | `/components/AppBar/src/MDCAppBarViewController.h` |
-
-*modified* property: `inferTopSafeAreaInsetFromViewController` in `MDCAppBar`
-
-| Type of change: | key.filepath |
-|---|---|
-| From: | `/components/AppBar/src/MDCAppBar.h` |
-| To: | `/components/AppBar/src/MDCAppBarViewController.h` |
-
-*modified* class: `MDCAppBar`
-
-| Type of change: | Declaration |
-|---|---|
-| From: | `@interface MDCAppBar : NSObject  /**  Adds headerViewController.view to headerViewController.parentViewController.view and registers  navigationItem observation on headerViewController.parentViewController.  */ - (void)addSubviewsToParent;  /** The header view controller instance manages the App Bar's flexible header view behavior. */ @property(nonatomic, strong, nonnull, readonly)     MDCFlexibleHeaderViewController *headerViewController;  /** The navigation bar. */ @property(nonatomic, strong, nonnull, readonly) MDCNavigationBar *navigationBar;  /**  The header stack view that owns the navigationBar (as the top bar) and an optional bottom bar.  */ @property(nonatomic, strong, nonnull, readonly) MDCHeaderStackView *headerStackView;  /**  Whether the App Bar should attempt to extract safe area insets from the view controller hierarchy  or not.   This behavior provides better support for App Bars on iPad, extensions, and anywhere else where the  view controller might not be directly behind the status bar / device safe area insets.   Enabling this behavior will do the following:   - Enable the same-named behavior on the headerViewController.  - Enable the headerViewController's topLayoutGuideAdjustmentEnabled behavior. Consider setting a    topLayoutGuideViewController to your content view controller if you want to use topLayoutGuide.  - The header stack view's frame will be inset by the flexible header view's topSafeAreaGuide rather    than the global device safe area insets.   Disabling this behavior will not disable headerViewController's topLayoutGuideAdjustmentEnabled  behavior.   This behavior will eventually be enabled by default.   See MDCFlexibleHeaderViewController's documentation for the API of the same name.   Default is NO.  */ @property(nonatomic) BOOL inferTopSafeAreaInsetFromViewController;  @end` |
-| To: | `@interface MDCAppBar` |
-
-*modified* class: `MDCAppBar`
-
-| Type of change: | key.doc.file |
-|---|---|
-| From: | `/components/AppBar/src/MDCAppBar.h` |
-| To: | `/components/AppBar/src/MDCAppBarViewController.h` |
-
-*modified* class: `MDCAppBar`
-
-| Type of change: | key.filepath |
-|---|---|
-| From: | `/components/AppBar/src/MDCAppBar.h` |
-| To: | `/components/AppBar/src/MDCAppBarViewController.h` |
-
-*modified* method: `-addSubviewsToParent` in `MDCAppBar`
-
-| Type of change: | key.doc.file |
-|---|---|
-| From: | `/components/AppBar/src/MDCAppBar.h` |
-| To: | `/components/AppBar/src/MDCAppBarViewController.h` |
-
-*modified* method: `-addSubviewsToParent` in `MDCAppBar`
-
-| Type of change: | key.filepath |
-|---|---|
-| From: | `/components/AppBar/src/MDCAppBar.h` |
-| To: | `/components/AppBar/src/MDCAppBarViewController.h` |
-
-#### MDCAppBarTextColorAccessibilityMutator
-
-*modified* class: `MDCAppBarTextColorAccessibilityMutator`
-
-| Type of change: | key.doc.file |
-|---|---|
-| From: | `/components/AppBar/src/MDCAppBar.h` |
-| To: | `/components/AppBar/src/MDCAppBarViewController.h` |
-
-*modified* class: `MDCAppBarTextColorAccessibilityMutator`
-
-| Type of change: | key.filepath |
-|---|---|
-| From: | `/components/AppBar/src/MDCAppBar.h` |
-| To: | `/components/AppBar/src/MDCAppBarViewController.h` |
-
-*modified* method: `-mutate:` in `MDCAppBarTextColorAccessibilityMutator`
-
-| Type of change: | key.doc.file |
-|---|---|
-| From: | `/components/AppBar/src/MDCAppBar.h` |
-| To: | `/components/AppBar/src/MDCAppBarViewController.h` |
-
-*modified* method: `-mutate:` in `MDCAppBarTextColorAccessibilityMutator`
-
-| Type of change: | key.filepath |
-|---|---|
-| From: | `/components/AppBar/src/MDCAppBar.h` |
-| To: | `/components/AppBar/src/MDCAppBarViewController.h` |
-
 #### MDCAppBarNavigationControllerDelegate
 
 *new* method: `-appBarNavigationController:willAddAppBarViewController:asChildOfViewController:` in `MDCAppBarNavigationControllerDelegate`
@@ -157,11 +57,7 @@
 
 #### MDCAppBarViewController
 
-*new* property: `headerStackView` in `MDCAppBarViewController`
-
 *new* class: `MDCAppBarViewController`
-
-*new* property: `navigationBar` in `MDCAppBarViewController`
 
 ### AppBar+TypographyThemer
 
