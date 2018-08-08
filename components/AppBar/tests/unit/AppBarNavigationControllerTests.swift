@@ -80,6 +80,60 @@ class AppBarNavigationControllerTests: XCTestCase {
     }
   }
 
+  func testSettingAViewControllerInjectsAnAppBar() {
+    // Given
+    let viewController = UIViewController()
+
+    // When
+    navigationController.viewControllers = [viewController]
+
+    // Then
+    XCTAssertEqual(viewController.childViewControllers.count, 1,
+                   "Expected there to be exactly one child view controller added to the view"
+                    + " controller.")
+
+    XCTAssertEqual(navigationController.topViewController, viewController,
+                   "The navigation controller's top view controller is supposed to be the pushed"
+                    + " view controller, but it is \(viewController).")
+
+    XCTAssertTrue(viewController.childViewControllers.first is MDCFlexibleHeaderViewController,
+                  "The injected view controller is not a flexible header view controller, it is"
+                    + "\(String(describing: viewController.childViewControllers.first)) instead.")
+
+    if let headerViewController
+      = viewController.childViewControllers.first as? MDCFlexibleHeaderViewController {
+      XCTAssertEqual(headerViewController.headerView.frame.height,
+                     headerViewController.headerView.maximumHeight)
+    }
+  }
+
+  func testSettingAViewControllerAnimatedInjectsAnAppBar() {
+    // Given
+    let viewController = UIViewController()
+
+    // When
+    navigationController.setViewControllers([viewController], animated: false)
+
+    // Then
+    XCTAssertEqual(viewController.childViewControllers.count, 1,
+                   "Expected there to be exactly one child view controller added to the view"
+                    + " controller.")
+
+    XCTAssertEqual(navigationController.topViewController, viewController,
+                   "The navigation controller's top view controller is supposed to be the pushed"
+                    + " view controller, but it is \(viewController).")
+
+    XCTAssertTrue(viewController.childViewControllers.first is MDCFlexibleHeaderViewController,
+                  "The injected view controller is not a flexible header view controller, it is"
+                    + "\(String(describing: viewController.childViewControllers.first)) instead.")
+
+    if let headerViewController
+      = viewController.childViewControllers.first as? MDCFlexibleHeaderViewController {
+      XCTAssertEqual(headerViewController.headerView.frame.height,
+                     headerViewController.headerView.maximumHeight)
+    }
+  }
+
   func testPushingAnAppBarContainerViewControllerDoesNotInjectAnAppBar() {
     // Given
     let viewController = UIViewController()
