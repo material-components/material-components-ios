@@ -86,6 +86,17 @@
   [super pushViewController:viewController animated:animated];
 }
 
+- (void)setViewControllers:(NSArray<UIViewController *> *)viewControllers animated:(BOOL)animated {
+  for (UIViewController *viewController in viewControllers) {
+    // We call this before invoking super because super immediately queries the pushed view controller
+    // for things like status bar style, which we want to have rerouted to our flexible header view
+    // controller.
+    [self injectAppBarIntoViewController:viewController];
+  }
+
+  [super setViewControllers:viewControllers animated:animated];
+}
+
 - (void)setNavigationBarHidden:(BOOL)navigationBarHidden {
   // TODO: Consider using this API to hide the top view controller's flexible header.
   NSAssert(navigationBarHidden, @"%@ requires that the system navigation bar remain hidden.",
