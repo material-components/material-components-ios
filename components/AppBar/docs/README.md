@@ -13,6 +13,8 @@ The Material Design top app bar displays information and actions relating to the
 ## Related components
 
 * [FlexibleHeader](../../FlexibleHeader)
+* [HeaderStackView](../../HeaderStackView)
+* [NavigationBar](../../NavigationBar)
 
 <!-- toc -->
 
@@ -20,61 +22,18 @@ The Material Design top app bar displays information and actions relating to the
 
 ## Overview
 
-The top app bar is implemented on iOS in the AppBar component. This component's main API is
-`MDCAppBar`, a compose API that initializes and provides access to instances of the
-following components:
+App bar is composed of the following components:
 
-* [Flexible Header](../../FlexibleHeader)
-* [Header Stack View](../../HeaderStackView)
-* [Navigation Bar](../../NavigationBar)
+* [FlexibleHeader](../../FlexibleHeader)
+* [HeaderStackView](../../HeaderStackView)
+* [NavigationBar](../../NavigationBar)
 
-The provided view hierarchy looks like so:
+It is essentially a FlexibleHeader with a HeaderStackView and NavigationBar added as subviews.
 
-    <MDCFlexibleHeaderView>
-       | <CALayer>
-       |    | <MDCShadowLayer>
-       | <UIView> <- headerView.contentView
-       |    | <MDCHeaderStackView>
-       |    |    | <MDCNavigationBar>
-
-This view hierarchy will be added to your view controller hierarchy using the convenience methods
-outlined in the Usage docs below.
-
-Note that it is possible to create each of the above components yourself, though we only encourage
-doing so if the App Bar is limiting your ability to build something. In such a case we recommend
-also [filing an issue](https://github.com/material-components/material-components-ios/issues/new) so that we can
-identify whether your use case is something we can directly support.
-
-### UINavigationItem and the App Bar
-
-The App Bar begins mirroring the state of your view controller's `navigationItem` in the provided
-`navigationBar` once you call `addSubviewsToParent`.
-
-Learn more by reading the Navigation Bar section on
-[Observing UINavigationItem instances](../../NavigationBar/#observing-uinavigationitem-instances).
-Notably: read the section on "Exceptions" to understand which UINavigationItem are **not**
-supported.
-
-### Interacting with background views
-
-Scenario: you've added a background image to your App Bar and you'd now like to be able to tap the
-background image.
-
-This is not trivial to do with the App Bar APIs due to considerations being discussed in
-[Issue #184](https://github.com/material-components/material-components-ios/issues/184).
-
-The heart of the limitation is that we're using a view (`headerStackView`) to lay out the Navigation
-Bar. If you add a background view behind the `headerStackView` instance then `headerStackView` will
-end up eating all of your touch events.
-
-Until [Issue #184](https://github.com/material-components/material-components-ios/issues/184) is resolved, our
-recommendation for building interactive background views is the following:
-
-1. Do not use the App Bar component.
-2. Create your own Flexible Header. Learn more by reading the Flexible Header
-   [Usage](../../FlexibleHeader/#usage) docs.
-3. Add your views to this flexible header instance.
-4. Create a Navigation Bar if you need one. Treat it like any other custom view.
+`MDCAppBarViewController` is the primary API for the component. All integration strategies will
+make use of it in some manner. Unlike UIKit, which shares a single `UINavigationBar` instance across
+many view controllers in a stack, app bar relies on each view controller creating and managing its
+own `MDCAppBarViewController` instance.
 
 ## Installation
 
@@ -82,7 +41,29 @@ recommendation for building interactive background views is the following:
 
 ## Usage
 
-- [Typical use: Adding an app bar to your app](typical-use-adding-an-app-bar.md)
+- [Typical use: View controller containment, as a navigation controller](typical-use-navigation-controller.md)
+- [Typical use: View controller containment, as a child](typical-use-child.md)
+- [Typical use: View controller containment, as a container](typical-use-container.md)
+- [Typical use: Tracking a scroll view](../../FlexibleHeader/docs/typical-use-tracking-a-scroll-view.md)
+- [Typical use: Enabling observation of the tracking scroll view](../../FlexibleHeader/docs/typical-use-scroll-view-observation.md)
+- [UINavigationItem support](uinavigationitem-support.md)
+- [Interactive background views](interactive-background-views.md)
+- [Adjusting the top layout guide of a view controller](../../FlexibleHeader/docs/top-layout-guide-adjustment.md)
+
+## Behavioral flags
+
+A behavioral flag is a temporary API that is introduced to allow client teams to migrate from an old
+behavior to a new one in a graceful fashion. Behavioral flags all go through the following life
+cycle:
+
+1. The flag is introduced. The default is chosen such that clients must opt in to the new behavior.
+2. After some time, the default changes to the new behavior and the flag is marked as deprecated.
+3. After some time, the flag is removed.
+
+- [Recommended behavioral flags](recommended-behavioral-flags.md)
+- [Removing safe area insets from the min/max heights](../../FlexibleHeader/docs/behavior-minmax-safearea.md)
+- [Enabling top layout guide adjustment](../../FlexibleHeader/docs/behavior-top-layout-adjustment.md)
+- [Enabling inferred top safe area insets](../../FlexibleHeader/docs/behavior-inferred-top-safe-area-inset.md)
 
 See the [FlexibleHeader](../../FlexibleHeader) documentation for additional usage guides.
 
@@ -90,7 +71,6 @@ See the [FlexibleHeader](../../FlexibleHeader) documentation for additional usag
 
 - [Color Theming](color-theming.md)
 - [Typography Theming](typography-theming.md)
-
 
 ## Accessibility
 
