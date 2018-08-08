@@ -53,13 +53,16 @@
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                      toTextInput:(nonnull id<MDCTextInput>)textInput;
 
-#pragma mark - Soon to be deprecated
+@end
+
+@interface MDCTextFieldColorThemer (ToBeDeprecated)
 
 /**
  Applies a color scheme to theme MDCTextField in MDCTextInputController.
 
  @warning This method will soon be deprecated. Consider using
- +applySemanticColorScheme:toTextInputController: instead.
+ +applySemanticColorScheme:toTextInputController: instead. Learn more at
+ components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
 
  @param colorScheme The color scheme to apply.
  @param textInputController A MDCTextInputController instance to apply a color scheme.
@@ -72,7 +75,8 @@
  using the default color class properties.
 
  @warning This method will soon be deprecated. Consider using
- +applySemanticColorScheme:toAllTextInputControllersOfClass: instead.
+ +applySemanticColorScheme:toAllTextInputControllersOfClass: instead. Learn more at
+ components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
 
  @param colorScheme The color scheme to apply.
  @param textInputControllerClass A Class that conforms to MDCTextInputController (at least.)

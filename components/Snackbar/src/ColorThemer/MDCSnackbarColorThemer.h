@@ -31,12 +31,15 @@
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme;
 
-#pragma mark - Deprecated
+@end
+
+@interface MDCSnackbarColorThemer (Deprecated)
 
 /**
  Applies a color scheme to theme to a MDCSnackbarMessageView.
 
- @warning This method is deprecated. Consider using applySemanticColorScheme:colorScheme.
+ @warning This method is deprecated. Consider using applySemanticColorScheme:colorScheme. Learn more
+ at components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
 
  @param colorScheme The color scheme to apply to MDCSnackbarMessageView.
  @param snackbarMessageView A MDCSnackbarMessageView instance to apply a color scheme.
@@ -44,4 +47,5 @@
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
    toSnackbarMessageView:(nonnull MDCSnackbarMessageView *)snackbarMessageView
        __deprecated_msg("use applySemanticColorScheme: instead.");
+
 @end
