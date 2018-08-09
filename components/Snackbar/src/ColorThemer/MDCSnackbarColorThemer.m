@@ -30,8 +30,11 @@
                                  forState:UIControlStateHighlighted];
 }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
    toSnackbarMessageView:(nonnull MDCSnackbarMessageView *)snackbarMessageView {
 }
+#pragma clang diagnostic pop
 
 @end
