@@ -1,7 +1,7 @@
 # 59.2.2
 
 This patch release undoes some additional App Bar initialization changes that were introduced in
-v59.2.0 in order to maintain existing behavior.
+v59.2.0.
 
 ## Component changes
 
