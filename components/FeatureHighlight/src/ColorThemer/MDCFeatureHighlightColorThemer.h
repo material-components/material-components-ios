@@ -35,13 +35,16 @@
     toFeatureHighlightViewController:
         (nonnull MDCFeatureHighlightViewController *)featureHighlightViewController;
 
-#pragma mark - Soon to be deprecated
+@end
+
+@interface MDCFeatureHighlightColorThemer (ToBeDeprecated)
 
 /**
  Applies a color scheme to theme to a MDCFeatureHighlightView.
 
  @warning This method will soon be deprecated. Consider using
- @c applySemanticColorScheme:toFeatureHighlightViewController: instead.
+ @c applySemanticColorScheme:toFeatureHighlightViewController: instead. Learn more at
+ components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
 
  @param colorScheme The color scheme to apply to MDCFeatureHighlightView. 
  @param featureHighlightView A MDCFeatureHighlightView instance to apply a color scheme.

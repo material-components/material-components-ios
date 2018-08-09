@@ -33,13 +33,16 @@
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                toAlertController:(nonnull MDCAlertController *)alertController;
 
-#pragma mark - Soon to be deprecated
+@end
+
+@interface MDCAlertColorThemer (ToBeDeprecated)
 
 /**
  Applies a color scheme to theme to all MDCAlertController alert dialogs.
 
  @warning This method will soon be deprecated. There is no direct replacement. Consider using
- @c applySemanticColorScheme:toAlertController: instead.
+ @c applySemanticColorScheme:toAlertController: instead. Learn more at
+ components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
 
  @param colorScheme The color scheme to apply to all MDCAlertController alert dialogs.
  */

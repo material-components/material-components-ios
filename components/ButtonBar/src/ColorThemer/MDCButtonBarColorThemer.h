@@ -31,13 +31,16 @@
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                      toButtonBar:(nonnull MDCButtonBar *)buttonBar;
 
-#pragma mark - Soon to be deprecated
+@end
+
+@interface MDCButtonBarColorThemer (ToBeDeprecated)
 
 /**
  Applies a color scheme's properties to an MDCButtonBar.
 
  @warning This method will soon be deprecated. Consider using
- @c +applySemanticColorScheme:toButtonBar: instead.
+ @c +applySemanticColorScheme:toButtonBar: instead. Learn more at
+ components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
 
  @param colorScheme The color scheme to apply to the component instance.
  @param buttonBar A component instance to which the color scheme should be applied.

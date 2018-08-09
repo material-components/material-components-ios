@@ -27,13 +27,15 @@
  */
 @interface MDCBottomAppBarColorThemer : NSObject
 
-#pragma mark - Soon to be deprecated
+@end
+
+@interface MDCBottomAppBarColorThemer (ToBeDeprecated)
 
 /**
  Applies a color scheme to theme a MDCBottomAppBarView.
 
  @warning This method will soon be deprecated. There is no replacement yet.
- @seealso https://www.pivotaltracker.com/story/show/157095394
+ Learn more at components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
 
  @param colorScheme The color scheme to apply to the component instance.
  @param bottomAppBarView A component instance to which the color scheme should be applied.
