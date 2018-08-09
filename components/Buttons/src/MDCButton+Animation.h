@@ -14,9 +14,9 @@
  limitations under the License.
  */
 
-#import "MDCFloatingButton.h"
+#import "MDCButton.h"
 
-@interface MDCFloatingButton (Animation)
+@interface MDCButton (Animation)
 
 /**
  Expand this button to its unscaled (normal) size.
