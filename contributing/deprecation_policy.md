@@ -17,7 +17,7 @@ Before embarking on the deprecation of any API we should collaboratively answer 
 
 ## Our deprecation process
 
-1. Measure usage of the API.
+1. Measure internal usage of the API.
 2. Create a GitHub project.
 3. Write a migration guide.
 4. Annotate the API as "ToBeDeprecated".
@@ -27,7 +27,7 @@ Before embarking on the deprecation of any API we should collaboratively answer 
 8. After the deletion date, re-evaluate usage of the API.
 9. Delete the API and migration guide.
 
-### Step 1: Measure usage of the API
+### Step 1: Measure internal usage of the API
 
 Read [go/mdc-ios-measuring-api-usage](http://go/mdc-ios-measuring-api-usage) to learn how to measure
 API usage internally.
