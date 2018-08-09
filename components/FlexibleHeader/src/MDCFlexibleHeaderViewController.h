@@ -112,13 +112,25 @@
 - (BOOL)prefersStatusBarHidden;
 
 /**
- Calculates the status bar style based on the header view's background color.
-
- Light background colors use the default black status bar and dark background colors use the light
- status bar. If the header view's background color is not fully-opaque, then this returns
- UIStatusBarStyleDefault.
+ The status bar style that should be used for this view controller.
  */
-- (UIStatusBarStyle)preferredStatusBarStyle;
+@property(nonatomic) UIStatusBarStyle preferredStatusBarStyle;
+
+/**
+ Whether to calculate the preferredStatusBarStyle based on the view's background color.
+
+ If enabled, preferredStatusBarStyle will automatically return a status bar style that meets
+ accessibility contrast ratio guidelines. Light background colors use the default black status bar
+ and dark background colors use the light status bar. If the header view's background color is not
+ fully-opaque, then preferredStatusBarStyle will return UIStatusBarStyleDefault. Attempting to set
+ a value when this property is enabled will result in an assertion.
+
+ If disabled, preferredStatusBarStyle will act as a standard property - the value that you set will
+ be the value that is returned.
+
+ Default is YES.
+ */
+@property(nonatomic) BOOL inferPreferredStatusBarStyle;
 
 @end
 

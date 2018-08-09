@@ -89,6 +89,8 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 
 @implementation MDCFlexibleHeaderViewController
 
+@synthesize preferredStatusBarStyle = _preferredStatusBarStyle;
+
 - (void)dealloc {
   // Clear KVO observers
   self.topLayoutGuideConstraint = nil;
@@ -130,6 +132,8 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 }
 
 - (void)commonMDCFlexibleHeaderViewControllerInit {
+  _inferPreferredStatusBarStyle = YES;
+
   MDCFlexibleHeaderView *headerView =
       [[MDCFlexibleHeaderView alloc] initWithFrame:[UIScreen mainScreen].bounds];
   headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -220,11 +224,22 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
-  UIColor *backgroundColor =
-      [MDCFlexibleHeaderView appearance].backgroundColor ?: _headerView.backgroundColor;
-  return (ShouldUseLightStatusBarOnBackgroundColor(backgroundColor)
-              ? UIStatusBarStyleLightContent
-              : UIStatusBarStyleDefault);
+  if (self.inferPreferredStatusBarStyle) {
+    UIColor *backgroundColor =
+        [MDCFlexibleHeaderView appearance].backgroundColor ?: _headerView.backgroundColor;
+    return (ShouldUseLightStatusBarOnBackgroundColor(backgroundColor)
+                ? UIStatusBarStyleLightContent
+                : UIStatusBarStyleDefault);
+  } else {
+    return _preferredStatusBarStyle;
+  }
+}
+
+- (void)setPreferredStatusBarStyle:(UIStatusBarStyle)preferredStatusBarStyle {
+  NSAssert(!self.inferPreferredStatusBarStyle,
+           @"You must disable inferPreferredStatusBarStyle prior to setting a status bar style.");
+
+  _preferredStatusBarStyle = preferredStatusBarStyle;
 }
 
 - (BOOL)prefersStatusBarHidden {
