@@ -281,7 +281,7 @@ Swift
 ```swift
   card.isAccessibilityElement = true
   card.accessibilityLabel = "Location (userLocation.name) is popular with users " +
-    "who enjoy \(userLocation.popularActivityMatchingUserProfile(userProfile))"
+    "who enjoy (userLocation.popularActivityMatchingUserProfile(userProfile))"
 ```
 
 Objective-C
