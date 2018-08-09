@@ -753,13 +753,13 @@ like so:
 +  let appBarViewController = MDCAppBarViewController()
 
 // Step 2
--    self.addChildViewController(appBar.headerViewController)
-+    self.addChildViewController(appBarViewController)
+-  self.addChildViewController(appBar.headerViewController)
++  self.addChildViewController(appBarViewController)
 
 // Step 3
--    appBar.addSubviewsToParent()
-+    view.addSubview(appBarViewController.view)
-+    appBarViewController.didMove(toParentViewController: self)
+-  appBar.addSubviewsToParent()
++  view.addSubview(appBarViewController.view)
++  appBarViewController.didMove(toParentViewController: self)
 ```
 
 `MDCAppBarViewController` is a subclass of `MDCFlexibleHeaderViewController`, meaning you configure
