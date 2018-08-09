@@ -4,27 +4,89 @@ The ability to deprecate features, components and paradigms is essential to the 
 
 However, the price paid in disruption and maintenance is real; deprecating without warning, too often, or for poor rationale is a hinderance to adoption and contribution. It must be done with care and process.
 
-## Get the 'thumbs up'
+Before embarking on the deprecation of any API we should collaboratively answer the following questions:
 
-Propose your deprecation on GitHub as an issue where the title's first phrase is "Deprecation [Component Name]". Much like a feature proposal, the contributors have a responsibility to carefully judge the consequences of breaking changes against possible gains. 
-
-We should collaboratively answer the following questions:
-
-1. Should this code be deprecated? Is it really worth the time and effort for everyone?
+1. Should this code be deprecated? Is the effort required to deprecate this component worth the benefit of removing the old behavior?
 1. Why is the code being deprecated? Why should clients switch?
 1. What are clients supposed to replace the code with?
 1. What is a good deprecation timeline?
-    1. Small changes can be done in a month.
-    1. Larger changes can be done in a quarter/three months.
-    1. Adjust up or down based on the size/complexity of the change.
-1. Who’s on point? It’s good to have a single person to keep track of things.
+1. Who is responsible for the deprecation plan?
 
-## Make sure replacement code is ready
+## Our deprecation process
 
-1. Has the catalog been updated to use and demo it? 
-1. Is the new code documented in the headers and site?
+1. Measure usage of the API.
+2. Create a GitHub project.
+3. Write a migration guide.
+4. Annotate the API as "ToBeDeprecated".
+5. Determine a schedule for the API deletion.
+6. Announce that the API will be deprecated
+7. After the deprecation date, deprecate the API.
+8. After the deletion date, re-evaluate usage of the API.
+9. Delete the API.
 
-## Pin down the schedule
+### Step 1: Measure usage of the API
+
+Read [go/mdc-ios-measuring-api-usage](http://go/mdc-ios-measuring-api-usage) to learn how to measure API usage internally.
+
+If there is zero API usage beyond our own library: skip to step 9 (Delete the API).
+Otherwise, proceed to step 2.
+
+### Step 2: Create a GitHub project
+
+Visit [go/mdc-ios-project-template](http://go/mdc-ios-project-template) or this [GitHub search](https://github.com/material-components/material-components-ios/projects?utf8=%E2%9C%93&query=is%3Aopen+Template+project) to access the template GitHub project.
+
+Name the project "Deprecate YYY". Use this project to organize any work related to this deprecation.
+
+Create at least one issue in the project titled "Delete YYY". This will be the last issue you close once the API is deleted.
+
+### Step 3: Write a migration guide
+
+This guide should be placed in the component's docs/ folder and have a prefix `migration-guide-`.
+
+For example, `migration-guide-appbar-appbarviewcontroller.md` is a guide from MDCAppBar to MDCAppBarViewController.
+
+Send this migration guide out for review as a standalone pull request.
+
+### Step 4: Annotate the API as "ToBeDeprecated"
+
+Add a `@warning` annotation to the API's public documentation indicating the intent for this API to eventually be deprecated. This warning should also provide a short suggested alternative, if one exists, and a link to the migration guide.
+
+For example:
+
+```objc
+@warning This method will soon be deprecated. Consider using
+@c +applySemanticColorScheme:toFlexibleHeaderView: instead. Learn more at
+components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
+```
+
+If the API to be deprecated is a method or property of a class, also move the API to a category named `ToBeDeprecated`. This will cause the API to show up in our release notes automatically as a to-be-deprecated API.
+
+For example:
+
+```objc
+@interface MDCAppBarContainerViewController (ToBeDeprecated)
+
+/**
+ The App Bar views that will be presented in front of the contentViewController's view.
+
+ @warning This API will eventually be deprecated. Use appBarViewController instead. Learn more at
+ components/AppBar/docs/migration-guide-appbar-appbarviewcontroller.md
+ */
+@property(nonatomic, strong, nonnull, readonly) MDCAppBar *appBar;
+
+@end
+```
+
+### Step 5: Determine a schedule for the API deletion
+
+Generally-speaking deprecations take a long time unless you take an active part in migrating clients. Calculate your estimates with this in mind. A rough guideline:
+
+- small changes can often be done in a month.
+- larger changes can be done in a quarter/three months.
+
+Adjust up or down based on the usage of the to-be-deprecated API and the complexity of the migration guide.
+
+Sanity check your estimate with a team member before moving on to the next step.
 
 Assuming that you’re looking at a one-month deprecation, then the schedule looks roughly like this:
 
@@ -42,22 +104,43 @@ Map this schedule onto reality:
 1. Is the to-be-replaced code particularly problematic for some reason? 
 1. Does the deprecation fall near a release of the operating system or new devices?
 
-## Do the work
+### Step 6: Announce that the API will be deprecated
 
-Before announcing the deprecation, create an issue in GitHub that represents it. That issue will stay open until the deletion PR is submitted.
+Inform internal clients of the impending deprecation by sending an email with the following format:
 
-TODO: Include announcement instructions. Generally, this is done via blog.
+```
+Subject: YYY will eventually be deprecated.
+Body:
+YYY will eventually be deprecated. Please see <link to migration guide> for more details.
 
-Deprecate APIs using the macro provided by Apple in AvailabilityMacros.h that includes a message:
-* DEPRECATED_MSG_ATTRIBUTE(msg)
+The timeline for this deprecation is as follows:
 
-This macro requires an explanation string which should be similar to: ”This API will be removed on D/M/YYYY. Please use XYZ instead. See issue #n for more details.”
+- <Deprecation date>: The API will be formally marked as deprecated. You will start receiving build warnings if you are still using the deprecated API.
+- <Deletion date>: The API will be deleted.
+```
 
-For any code that should be eventually deleted, add the following comment nearby to make it easier to find and remove the code: // DEPRECATION(github.com/material-components/material-components-ios/issues/n)
+### Step 7: After the deprecation date, deprecate the API
 
-Once you submit the breaking PR, don’t immediately pile on subsequent PRs that would conflict with an emergency rollback.
+Send a pull request annotating the API as deprecated. Use `__deprecated_msg("")` and provide a concise message with a recommendation for an alternative API, if any is available.
 
-## Versioning
+### Step 8: After the deletion date, re-evaluate usage of the API
+
+Once the deletion date has passed you can now consider deleting the API, but first you must evaluate whether the API is being used by any internal clients.
+
+If the API is still being used by clients, you have a few options:
+
+- Reach out to the client teams directly, reminding them of the deprecation.
+- Help the client teams migrate.
+
+### Step 9: Delete the API
+
+Once you have confirmed that there is no internal usage of the API, you can safely delete it.
+
+Send a pull request deleting the API, marking your "Delete YYY" issue as closed.
+
+## Addendum
+
+### Versioning
 
 Adding the deprecation *warning* (no breaking change) is a minor version bump.
 
@@ -65,23 +148,7 @@ Actually changing the code (breaking change) is a major version bump.
 
 Changes that don't break anyone (or change behavior surprisingly) don't need a deprecation.
 
-## Checklist
-
-This is an idealized summary of how to replace old code with new code.
-
-1. Create an alternative.
-    1. Discuss the reasoning via GitHub issue.
-    1. Discuss the change via GitHub pull request.
-1. Publicize and do the deprecation.
-    1. Document the old code so new users don’t start using it.
-    1. Create a breaking change schedule. 
-    1. Mark the old code as deprecated.
-1. Clean up
-    1. Delete the old code.
-    1. Close the issue.
-    1. Release
-
-## Compiler warnings
+### Compiler warnings
 
 If you are treating warnings as errors in your application via the `-Werror` compiler flag, you may need to disable this functionality for deprecated code warnings.
 
