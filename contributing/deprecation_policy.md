@@ -46,6 +46,21 @@ Name the project "Deprecate YYY". Use this project to organize any work related 
 Create at least one issue in the project titled "Delete YYY". This will be the last issue you close
 once the API is deleted.
 
+If you'd like, you can create a card for your project with the following checklist to help keep track
+of the progress of the API through the deprecation process:
+
+```
+- [ ] Measure internal usage of the API.
+- [ ] Create a GitHub project.
+- [ ] Write a migration guide.
+- [ ] Annotate the API as "ToBeDeprecated".
+- [ ] Determine a schedule for the API deletion.
+- [ ] Announce that the API will be deprecated
+- [ ] After the deprecation date, deprecate the API.
+- [ ] After the deletion date, re-evaluate usage of the API.
+- [ ] Delete the API and migration guide.
+```
+
 ### Step 3: Write a migration guide
 
 This guide should be placed in the component's docs/ folder and have a prefix `migration-guide-`.
