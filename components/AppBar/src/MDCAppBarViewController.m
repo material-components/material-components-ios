@@ -64,6 +64,12 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
     [(MDCShadowLayer *)shadowLayer setElevation:elevation];
   };
   [self.headerView setShadowLayer:[MDCShadowLayer layer] intensityDidChangeBlock:intensityBlock];
+
+  [self.headerView forwardTouchEventsForView:self.headerStackView];
+  [self.headerView forwardTouchEventsForView:self.navigationBar];
+
+  self.headerStackView.translatesAutoresizingMaskIntoConstraints = NO;
+  self.headerStackView.topBar = self.navigationBar;
 }
 
 - (MDCHeaderStackView *)headerStackView {
@@ -168,12 +174,6 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-
-  [self.headerView forwardTouchEventsForView:self.headerStackView];
-  [self.headerView forwardTouchEventsForView:self.navigationBar];
-
-  self.headerStackView.translatesAutoresizingMaskIntoConstraints = NO;
-  self.headerStackView.topBar = self.navigationBar;
 
   [self.view addSubview:self.headerStackView];
 
