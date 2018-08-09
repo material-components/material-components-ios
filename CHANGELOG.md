@@ -1,4 +1,19 @@
-# v59.2.1
+# 59.2.2
+
+This patch release undoes some additional App Bar initialization changes that were introduced in
+v59.2.0.
+
+## Component changes
+
+### AppBar
+
+#### Changes
+
+* [Move more app bar logic back to the init phase. (#4749)](https://github.com/material-components/material-components-ios/commit/b77876e2885eb272a433ede6c32d17afbbe3b25c) (featherless)
+
+---
+
+# 59.2.1
 
 This patch release reverts an unintentional change in App Bar shadow layer initialization behavior
 that was introduced in v59.2.0.
