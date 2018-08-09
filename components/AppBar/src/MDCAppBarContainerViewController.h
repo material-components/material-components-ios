@@ -88,9 +88,7 @@
  */
 @property(nonatomic, getter=isTopLayoutGuideAdjustmentEnabled) BOOL topLayoutGuideAdjustmentEnabled;
 
-@end
-
-@interface MDCAppBarContainerViewController (ToBeDeprecated)
+#pragma mark - To be deprecated
 
 /**
  The App Bar views that will be presented in front of the contentViewController's view.
