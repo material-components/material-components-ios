@@ -16,7 +16,7 @@
 
 #import "MDCFloatingButton.h"
 
-@interface MDCFloatingButton (Animation)
+@interface MDCButton (Animation)
 
 /**
  Expand this button to its unscaled (normal) size.
