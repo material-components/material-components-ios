@@ -24,9 +24,9 @@ NSString *kMiniButtonLabel = @"Add";
 
 @interface FloatingButtonExampleViewController : UIViewController
 @property(nonatomic, strong) UILabel *iPadLabel;
-@property(nonatomic, strong) MDCButton *miniFloatingButton;
-@property(nonatomic, strong) MDCButton *defaultFloatingButton;
-@property(nonatomic, strong) MDCButton *largeIconFloatingButton;
+@property(nonatomic, strong) MDCFloatingButton *miniFloatingButton;
+@property(nonatomic, strong) MDCFloatingButton *defaultFloatingButton;
+@property(nonatomic, strong) MDCFloatingButton *largeIconFloatingButton;
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @end
 
@@ -55,14 +55,14 @@ NSString *kMiniButtonLabel = @"Add";
   self.iPadLabel = [[UILabel alloc] init];
   self.iPadLabel.text = @"Try me on an iPad!";
 
-  self.miniButton = [[MDCButton alloc] initWithFrame:CGRectZero
+  self.miniFloatingButton = [[MDCFloatingButton alloc] initWithFrame:CGRectZero
                                                                shape:MDCFloatingButtonShapeMini];
-  self.miniButton.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.miniButton setImage:plusImage forState:UIControlStateNormal];
-  self.miniButton.accessibilityLabel = kMiniButtonLabel;
-  [self.miniButton setMinimumSize:CGSizeMake(96, 40)
-                         forShape:MDCFloatingButtonShapeMini
-                           inMode:MDCFloatingButtonModeExpanded];
+  self.miniFloatingButton.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.miniFloatingButton setImage:plusImage forState:UIControlStateNormal];
+  self.miniFloatingButton.accessibilityLabel = kMiniButtonLabel;
+  [self.miniFloatingButton setMinimumSize:CGSizeMake(96, 40)
+                                 forShape:MDCFloatingButtonShapeMini
+                                   inMode:MDCFloatingButtonModeExpanded];
   [MDCFloatingButtonColorThemer applySemanticColorScheme:self.colorScheme
                                                 toButton:self.miniFloatingButton];
 
