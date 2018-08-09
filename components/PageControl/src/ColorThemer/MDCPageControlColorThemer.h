@@ -22,18 +22,18 @@
 /**
  Used to apply a color scheme to theme MDCPageControl. This API does not yet implement the Material
  Design color system.
-
- @seealso https://www.pivotaltracker.com/story/show/157072365
  */
 @interface MDCPageControlColorThemer : NSObject
 
-#pragma mark - Soon to be deprecated
+@end
+
+@interface MDCPageControlColorThemer (ToBeDeprecated)
 
 /**
  Applies a color scheme to theme a MDCPageControl.
 
- @warning This method will soon be deprecated. There is no replacement yet.
- @seealso https://www.pivotaltracker.com/story/show/157072365
+ @warning This method will soon be deprecated. There is no replacement yet. Learn more at
+ components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
 
  @param colorScheme The color scheme to apply to the component instance.
  @param pageControl A component instance to which the color scheme should be applied.

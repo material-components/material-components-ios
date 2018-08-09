@@ -46,13 +46,16 @@
 + (void)applySurfaceVariantWithColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                       toFlexibleHeaderView:(nonnull MDCFlexibleHeaderView *)flexibleHeaderView;
 
-#pragma mark - Soon to be deprecated
+@end
+
+@interface MDCFlexibleHeaderColorThemer (ToBeDeprecated)
 
 /**
  Applies a color scheme to theme a MDCFlexibleHeaderView.
 
  @warning This method will soon be deprecated. Consider using
- @c +applySemanticColorScheme:toFlexibleHeaderView: instead.
+ @c +applySemanticColorScheme:toFlexibleHeaderView: instead. Learn more at
+ components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
 
  @param colorScheme The color scheme to apply to MDCFlexibleHeaderView.
  @param flexibleHeaderView A MDCFlexibleHeaderView instance to apply a color scheme.
@@ -64,7 +67,8 @@
  Applies a color scheme to theme a MDCFlexibleHeaderViewController.
 
  @warning This method will soon be deprecated. Consider using
- @c +applySemanticColorScheme:toFlexibleHeaderView: instead.
+ @c +applySemanticColorScheme:toFlexibleHeaderView: instead. Learn more at
+ components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
 
  @param colorScheme The color scheme to apply to MDCFlexibleHeaderView.
  @param flexibleHeaderController A MDCFlexibleHeaderViewController instance to apply a color scheme.
