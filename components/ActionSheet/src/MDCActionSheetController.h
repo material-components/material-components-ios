@@ -60,7 +60,7 @@ MDC_SUBCLASSING_RESTRICTED
  @return An initialized MDCActionSheetController object.
  */
 + (nonnull instancetype)actionSheetControllerWithTitle:(nullable NSString *)title
-                                               message:(nullable NSString *)message;
+                                               message:(nullable NSString *)message NS_DESIGNATED_INITIALIZER;
 
 /**
  Convenience initializer to create and return a view controller for displaying an alert to the user.
@@ -70,7 +70,7 @@ MDC_SUBCLASSING_RESTRICTED
  @param title The title of the alert.
  @return An initialized MDCActionSheetController object.
  */
-+ (instancetype)actionSheetControllerWithTitle:(nullable NSString *)title;
++ (nonnull instancetype)actionSheetControllerWithTitle:(nullable NSString *)title;
 
 /**
  Action sheet controllers must be created with actionSheetControllerWithTitle: or
