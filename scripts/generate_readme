@@ -107,7 +107,7 @@ rm "$TMP_README_PATH"
 echo "Generating table of contents..."
 
 # Write the table of contents and design/api links
-cat "$TMP_EXPANDED_README_PATH" | while read line; do
+cat "$TMP_EXPANDED_README_PATH" | while read -r line; do
   if [ "$line" = "$DESIGN_AND_API_STRING" ]; then
     echo "## Design & API documentation" >> "$TMP_README_PATH"
     echo "" >> "$TMP_README_PATH"

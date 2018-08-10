@@ -1,3 +1,684 @@
+# 60.0.0
+
+This major release introduces a breaking change for Swift libraries using FlexibleHeader. This
+change also introduces a migration guide for color schemes along, changes to the Snackbar's
+singleton pattern, and updated button theming in Dialogs.
+
+## Breaking changes
+
+### FlexibleHeader
+
+* [**Breaking** Make preferredStatusBarStyle settable. (#4750)](https://github.com/material-components/material-components-ios/commit/d3cc4e4ebe14c8bd4b25b258ba02f19cbdc7bc0b) (featherless)
+
+This breaking change only affects Swift code and requires the following changes.
+
+```swift
+// Before
+.preferredStatusBarStyle()
+
+// After
+.preferredStatusBarStyle
+```
+
+## New features
+
+FlexibleHeader has a new `inferPreferredStatusBarStyle` API that allows you to set an explicity
+`preferredStatusBarStyle` on the `MDCFlexibleHeaderViewController`.
+
+An example of setting an explicit `preferredStatusBarStyle`:
+
+```swift
+flexibleHeaderViewController.inferPreferredStatusBarStyle = false
+flexibleHeaderViewController.preferredStatusBarStyle = .lightContent
+```
+
+## Upcoming deprecations
+
+`MDCColorScheme` and `MDCBasicColorScheme` will both be deprecated on the following timeline:
+
+- October 10, 2018: Both APIs and any corresponding themer API will be deprecated.
+- November 10, 2018: Both APIs and any corresponding themer API will be deleted.
+
+[Learn more by reading the migration guide](https://github.com/material-components/material-components-ios/blob/develop/components/schemes/Color/docs/migration-guide-semantic-color-scheme.md).
+
+## API changes
+
+### ActivityIndicator+ColorThemer
+
+#### MDCActivityIndicatorColorThemer(ToBeDeprecated)
+
+*new* category: `MDCActivityIndicatorColorThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyColorScheme:toActivityIndicator:` in `MDCActivityIndicatorColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCActivityIndicatorColorThemer` |
+| To: | `c:objc(cy)MDCActivityIndicatorColorThemer@ToBeDeprecated` |
+
+### AppBar+ColorThemer
+
+#### MDCAppBarColorThemer(ToBeDeprecated)
+
+*new* category: `MDCAppBarColorThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyColorScheme:toAppBar:` in `MDCAppBarColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCAppBarColorThemer` |
+| To: | `c:objc(cy)MDCAppBarColorThemer@ToBeDeprecated` |
+
+### BottomAppBar+ColorThemer
+
+#### MDCBottomAppBarColorThemer(ToBeDeprecated)
+
+*new* category: `MDCBottomAppBarColorThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyColorScheme:toBottomAppBarView:` in `MDCBottomAppBarColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCBottomAppBarColorThemer` |
+| To: | `c:objc(cy)MDCBottomAppBarColorThemer@ToBeDeprecated` |
+
+### BottomNavigation+ColorThemer
+
+#### MDCBottomNavigationBarColorThemer(ToBeDeprecated)
+
+*new* category: `MDCBottomNavigationBarColorThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyColorScheme:toBottomNavigationBar:` in `MDCBottomNavigationBarColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCBottomNavigationBarColorThemer` |
+| To: | `c:objc(cy)MDCBottomNavigationBarColorThemer@ToBeDeprecated` |
+
+### ButtonBar+ColorThemer
+
+#### MDCButtonBarColorThemer(ToBeDeprecated)
+
+*new* category: `MDCButtonBarColorThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyColorScheme:toButtonBar:` in `MDCButtonBarColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCButtonBarColorThemer` |
+| To: | `c:objc(cy)MDCButtonBarColorThemer@ToBeDeprecated` |
+
+### Buttons+ColorThemer
+
+#### MDCButtonColorThemer(ToBeDeprecated)
+
+*new* category: `MDCButtonColorThemer(ToBeDeprecated)`
+
+*modified* class method: `+applySemanticColorScheme:toRaisedButton:` in `MDCButtonColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCButtonColorThemer` |
+| To: | `c:objc(cy)MDCButtonColorThemer@ToBeDeprecated` |
+
+*modified* class method: `+applySemanticColorScheme:toFlatButton:` in `MDCButtonColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCButtonColorThemer` |
+| To: | `c:objc(cy)MDCButtonColorThemer@ToBeDeprecated` |
+
+*modified* class method: `+applyColorScheme:toButton:` in `MDCButtonColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCButtonColorThemer` |
+| To: | `c:objc(cy)MDCButtonColorThemer@ToBeDeprecated` |
+
+*modified* class method: `+applySemanticColorScheme:toButton:` in `MDCButtonColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCButtonColorThemer` |
+| To: | `c:objc(cy)MDCButtonColorThemer@ToBeDeprecated` |
+
+*modified* class method: `+applySemanticColorScheme:toFloatingButton:` in `MDCButtonColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCButtonColorThemer` |
+| To: | `c:objc(cy)MDCButtonColorThemer@ToBeDeprecated` |
+
+### Chips+ColorThemer
+
+#### MDCChipViewColorThemer(ToBeDeprecated)
+
+*new* category: `MDCChipViewColorThemer(ToBeDeprecated)`
+
+*modified* class method: `+applySemanticColorScheme:toStrokedChipView:` in `MDCChipViewColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCChipViewColorThemer` |
+| To: | `c:objc(cy)MDCChipViewColorThemer@ToBeDeprecated` |
+
+### Dialogs+ColorThemer
+
+#### MDCAlertColorThemer(ToBeDeprecated)
+
+*new* category: `MDCAlertColorThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyColorScheme:` in `MDCAlertColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCAlertColorThemer` |
+| To: | `c:objc(cy)MDCAlertColorThemer@ToBeDeprecated` |
+
+### FeatureHighlight+ColorThemer
+
+#### MDCFeatureHighlightColorThemer(ToBeDeprecated)
+
+*new* category: `MDCFeatureHighlightColorThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyColorScheme:toFeatureHighlightView:` in `MDCFeatureHighlightColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCFeatureHighlightColorThemer` |
+| To: | `c:objc(cy)MDCFeatureHighlightColorThemer@ToBeDeprecated` |
+
+### FlexibleHeader+ColorThemer
+
+#### MDCFlexibleHeaderColorThemer(ToBeDeprecated)
+
+*new* category: `MDCFlexibleHeaderColorThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyColorScheme:toFlexibleHeaderView:` in `MDCFlexibleHeaderColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCFlexibleHeaderColorThemer` |
+| To: | `c:objc(cy)MDCFlexibleHeaderColorThemer@ToBeDeprecated` |
+
+*modified* class method: `+applyColorScheme:toMDCFlexibleHeaderController:` in `MDCFlexibleHeaderColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCFlexibleHeaderColorThemer` |
+| To: | `c:objc(cy)MDCFlexibleHeaderColorThemer@ToBeDeprecated` |
+
+### FlexibleHeader
+
+#### MDCFlexibleHeaderViewController
+
+*new* property: `preferredStatusBarStyle` in `MDCFlexibleHeaderViewController`
+
+*new* property: `inferPreferredStatusBarStyle` in `MDCFlexibleHeaderViewController`
+
+*removed* method: `-preferredStatusBarStyle` in `MDCFlexibleHeaderViewController`
+
+### HeaderStackView+ColorThemer
+
+#### MDCHeaderStackViewColorThemer(ToBeDeprecated)
+
+*new* category: `MDCHeaderStackViewColorThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyColorScheme:toHeaderStackView:` in `MDCHeaderStackViewColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCHeaderStackViewColorThemer` |
+| To: | `c:objc(cy)MDCHeaderStackViewColorThemer@ToBeDeprecated` |
+
+### Ink+ColorThemer
+
+#### MDCInkColorThemer(ToBeDeprecated)
+
+*new* category: `MDCInkColorThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyColorScheme:toInkView:` in `MDCInkColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCInkColorThemer` |
+| To: | `c:objc(cy)MDCInkColorThemer@ToBeDeprecated` |
+
+### NavigationBar+ColorThemer
+
+#### MDCNavigationBarColorThemer(ToBeDeprecated)
+
+*new* category: `MDCNavigationBarColorThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyColorScheme:toNavigationBar:` in `MDCNavigationBarColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCNavigationBarColorThemer` |
+| To: | `c:objc(cy)MDCNavigationBarColorThemer@ToBeDeprecated` |
+
+### PageControl+ColorThemer
+
+#### MDCPageControlColorThemer(ToBeDeprecated)
+
+*new* category: `MDCPageControlColorThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyColorScheme:toPageControl:` in `MDCPageControlColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCPageControlColorThemer` |
+| To: | `c:objc(cy)MDCPageControlColorThemer@ToBeDeprecated` |
+
+### ProgressView+ColorThemer
+
+#### MDCProgressViewColorThemer(ToBeDeprecated)
+
+*new* category: `MDCProgressViewColorThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyColorScheme:toProgressView:` in `MDCProgressViewColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCProgressViewColorThemer` |
+| To: | `c:objc(cy)MDCProgressViewColorThemer@ToBeDeprecated` |
+
+### Slider+ColorThemer
+
+#### MDCSliderColorThemer(ToBeDeprecated)
+
+*new* category: `MDCSliderColorThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyColorScheme:toSlider:` in `MDCSliderColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSliderColorThemer` |
+| To: | `c:objc(cy)MDCSliderColorThemer@ToBeDeprecated` |
+
+*modified* class method: `+defaultSliderLightColorScheme` in `MDCSliderColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSliderColorThemer` |
+| To: | `c:objc(cy)MDCSliderColorThemer@ToBeDeprecated` |
+
+*modified* class method: `+defaultSliderDarkColorScheme` in `MDCSliderColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSliderColorThemer` |
+| To: | `c:objc(cy)MDCSliderColorThemer@ToBeDeprecated` |
+
+### Snackbar+ColorThemer
+
+#### MDCSnackbarColorThemer(Deprecated)
+
+*new* category: `MDCSnackbarColorThemer(Deprecated)`
+
+*modified* class method: `+applyColorScheme:toSnackbarMessageView:` in `MDCSnackbarColorThemer(Deprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarColorThemer` |
+| To: | `c:objc(cy)MDCSnackbarColorThemer@Deprecated` |
+
+### Snackbar
+
+#### MDCSnackbarManager
+
+*new* property: `defaultManager` in `MDCSnackbarManager`
+
+*new* property: `messageTextColor` in `MDCSnackbarManager`
+
+*new* method: `-suspendMessagesWithCategory:` in `MDCSnackbarManager`
+
+*new* property: `buttonFont` in `MDCSnackbarManager`
+
+*new* property: `snackbarMessageViewShadowColor` in `MDCSnackbarManager`
+
+*new* method: `-buttonTitleColorForState:` in `MDCSnackbarManager`
+
+*new* property: `alignment` in `MDCSnackbarManager`
+
+*new* method: `-showMessage:` in `MDCSnackbarManager`
+
+*new* property: `shouldApplyStyleChangesToVisibleSnackbars` in `MDCSnackbarManager`
+
+*new* method: `-setBottomOffset:` in `MDCSnackbarManager`
+
+*new* property: `messageFont` in `MDCSnackbarManager`
+
+*new* property: `snackbarMessageViewBackgroundColor` in `MDCSnackbarManager`
+
+*new* method: `-suspendAllMessages` in `MDCSnackbarManager`
+
+*new* property: `delegate` in `MDCSnackbarManager`
+
+*new* method: `-setPresentationHostView:` in `MDCSnackbarManager`
+
+*new* method: `-resumeMessagesWithToken:` in `MDCSnackbarManager`
+
+*new* method: `-setButtonTitleColor:forState:` in `MDCSnackbarManager`
+
+*new* method: `-hasMessagesShowingOrQueued` in `MDCSnackbarManager`
+
+*new* method: `-dismissAndCallCompletionBlocksWithCategory:` in `MDCSnackbarManager`
+
+*new* property: `mdc_adjustsFontForContentSizeCategory` in `MDCSnackbarManager`
+
+#### MDCSnackbarManager(LegacyAPI)
+
+*new* category: `MDCSnackbarManager(LegacyAPI)`
+
+*modified* property: `snackbarMessageViewBackgroundColor` in `MDCSnackbarManager(LegacyAPI)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarManager` |
+| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
+
+*modified* class method: `+hasMessagesShowingOrQueued` in `MDCSnackbarManager(LegacyAPI)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarManager` |
+| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
+
+*modified* property: `shouldApplyStyleChangesToVisibleSnackbars` in `MDCSnackbarManager(LegacyAPI)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarManager` |
+| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
+
+*modified* property: `delegate` in `MDCSnackbarManager(LegacyAPI)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarManager` |
+| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
+
+*modified* class method: `+setButtonTitleColor:forState:` in `MDCSnackbarManager(LegacyAPI)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarManager` |
+| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
+
+*modified* property: `alignment` in `MDCSnackbarManager(LegacyAPI)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarManager` |
+| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
+
+*modified* property: `messageTextColor` in `MDCSnackbarManager(LegacyAPI)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarManager` |
+| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
+
+*modified* class method: `+suspendAllMessages` in `MDCSnackbarManager(LegacyAPI)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarManager` |
+| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
+
+*modified* class method: `+resumeMessagesWithToken:` in `MDCSnackbarManager(LegacyAPI)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarManager` |
+| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
+
+*modified* class method: `+showMessage:` in `MDCSnackbarManager(LegacyAPI)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarManager` |
+| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
+
+*modified* class method: `+setBottomOffset:` in `MDCSnackbarManager(LegacyAPI)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarManager` |
+| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
+
+*modified* property: `messageFont` in `MDCSnackbarManager(LegacyAPI)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarManager` |
+| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
+
+*modified* property: `mdc_adjustsFontForContentSizeCategory` in `MDCSnackbarManager(LegacyAPI)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarManager` |
+| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
+
+*modified* class method: `+dismissAndCallCompletionBlocksWithCategory:` in `MDCSnackbarManager(LegacyAPI)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarManager` |
+| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
+
+*modified* class method: `+setPresentationHostView:` in `MDCSnackbarManager(LegacyAPI)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarManager` |
+| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
+
+*modified* class method: `+buttonTitleColorForState:` in `MDCSnackbarManager(LegacyAPI)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarManager` |
+| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
+
+*modified* class method: `+suspendMessagesWithCategory:` in `MDCSnackbarManager(LegacyAPI)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarManager` |
+| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
+
+*modified* property: `snackbarMessageViewShadowColor` in `MDCSnackbarManager(LegacyAPI)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarManager` |
+| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
+
+*modified* property: `buttonFont` in `MDCSnackbarManager(LegacyAPI)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCSnackbarManager` |
+| To: | `c:objc(cy)MDCSnackbarManager@LegacyAPI` |
+
+### Tabs+ColorThemer
+
+#### MDCTabBarColorThemer(ToBeDeprecated)
+
+*new* category: `MDCTabBarColorThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyColorScheme:toTabBar:` in `MDCTabBarColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCTabBarColorThemer` |
+| To: | `c:objc(cy)MDCTabBarColorThemer@ToBeDeprecated` |
+
+### TextFields+ColorThemer
+
+#### MDCTextFieldColorThemer(ToBeDeprecated)
+
+*new* category: `MDCTextFieldColorThemer(ToBeDeprecated)`
+
+*modified* class method: `+applyColorScheme:toAllTextInputControllersOfClass:` in `MDCTextFieldColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCTextFieldColorThemer` |
+| To: | `c:objc(cy)MDCTextFieldColorThemer@ToBeDeprecated` |
+
+*modified* class method: `+applyColorScheme:toTextInputController:` in `MDCTextFieldColorThemer(ToBeDeprecated)`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(cs)MDCTextFieldColorThemer` |
+| To: | `c:objc(cy)MDCTextFieldColorThemer@ToBeDeprecated` |
+
+## Component changes
+
+### Tabs
+
+#### Changes
+
+* [[automated] Regenerate all readmes.](https://github.com/material-components/material-components-ios/commit/4a9df7c8cbabfa43c08ef23d22aa8b0d552c881a) (Jeff Verkoeyen)
+* [[schemes/Color] Formally mark all to-be-deprecated APIs as "ToBeDeprecated". (#4738)](https://github.com/material-components/material-components-ios/commit/e14b90e8292577c7ee5e284080353097fbbe5c2e) (featherless)
+
+### schemes/Color
+
+#### Changes
+
+* [Add a color scheme migration guide. (#4737)](https://github.com/material-components/material-components-ios/commit/2495417ca2d5f6f54cebbe57874bbbed1fd5a9e6) (featherless)
+
+### FeatureHighlight
+
+#### Changes
+
+* [[schemes/Color] Formally mark all to-be-deprecated APIs as "ToBeDeprecated". (#4738)](https://github.com/material-components/material-components-ios/commit/e14b90e8292577c7ee5e284080353097fbbe5c2e) (featherless)
+
+### AppBar
+
+#### Changes
+
+* [Move more app bar logic back to the init phase. (#4749)](https://github.com/material-components/material-components-ios/commit/8444432c4cb809e142d6687af06f3460f1df1284) (featherless)
+* [Move shadow layer initialization back to the init phase. (#4746)](https://github.com/material-components/material-components-ios/commit/9012cf9b747dbfb5657fe66229d02ff691c39711) (featherless)
+* [[schemes/Color] Formally mark all to-be-deprecated APIs as "ToBeDeprecated". (#4738)](https://github.com/material-components/material-components-ios/commit/e14b90e8292577c7ee5e284080353097fbbe5c2e) (featherless)
+
+### Ink
+
+#### Changes
+
+* [[schemes/Color] Formally mark all to-be-deprecated APIs as "ToBeDeprecated". (#4738)](https://github.com/material-components/material-components-ios/commit/e14b90e8292577c7ee5e284080353097fbbe5c2e) (featherless)
+
+### Buttons
+
+#### Changes
+
+* [[schemes/Color] Formally mark all to-be-deprecated APIs as "ToBeDeprecated". (#4738)](https://github.com/material-components/material-components-ios/commit/e14b90e8292577c7ee5e284080353097fbbe5c2e) (featherless)
+
+### ButtonBar
+
+#### Changes
+
+* [[schemes/Color] Formally mark all to-be-deprecated APIs as "ToBeDeprecated". (#4738)](https://github.com/material-components/material-components-ios/commit/e14b90e8292577c7ee5e284080353097fbbe5c2e) (featherless)
+
+### TextFields
+
+#### Changes
+
+* [[schemes/Color] Formally mark all to-be-deprecated APIs as "ToBeDeprecated". (#4738)](https://github.com/material-components/material-components-ios/commit/e14b90e8292577c7ee5e284080353097fbbe5c2e) (featherless)
+
+### Chips
+
+#### Changes
+
+* [[automated] Regenerate all readmes.](https://github.com/material-components/material-components-ios/commit/4a9df7c8cbabfa43c08ef23d22aa8b0d552c881a) (Jeff Verkoeyen)
+* [[schemes/Color] Formally mark all to-be-deprecated APIs as "ToBeDeprecated". (#4738)](https://github.com/material-components/material-components-ios/commit/e14b90e8292577c7ee5e284080353097fbbe5c2e) (featherless)
+
+### Snackbar
+
+#### Changes
+
+* [Create explicit singleton (#4742)](https://github.com/material-components/material-components-ios/commit/df30e777ba5acea9713318c7142373ba01df6a34) (Robert Moore)
+* [Make examples accessible to Switch Control (#4745)](https://github.com/material-components/material-components-ios/commit/514ed51aeaa99570f6e1eb2cae8db076999db5c5) (Robert Moore)
+* [[automated] Regenerate all readmes.](https://github.com/material-components/material-components-ios/commit/4a9df7c8cbabfa43c08ef23d22aa8b0d552c881a) (Jeff Verkoeyen)
+* [[schemes/Color] Formally mark all to-be-deprecated APIs as "ToBeDeprecated". (#4738)](https://github.com/material-components/material-components-ios/commit/e14b90e8292577c7ee5e284080353097fbbe5c2e) (featherless)
+
+### Cards
+
+#### Changes
+
+* [[automated] Regenerate all readmes.](https://github.com/material-components/material-components-ios/commit/4a9df7c8cbabfa43c08ef23d22aa8b0d552c881a) (Jeff Verkoeyen)
+
+### BottomAppBar
+
+#### Changes
+
+* [[schemes/Color] Formally mark all to-be-deprecated APIs as "ToBeDeprecated". (#4738)](https://github.com/material-components/material-components-ios/commit/e14b90e8292577c7ee5e284080353097fbbe5c2e) (featherless)
+
+### Slider
+
+#### Changes
+
+* [[schemes/Color] Formally mark all to-be-deprecated APIs as "ToBeDeprecated". (#4738)](https://github.com/material-components/material-components-ios/commit/e14b90e8292577c7ee5e284080353097fbbe5c2e) (featherless)
+
+### NavigationBar
+
+#### Changes
+
+* [[automated] Regenerate all readmes.](https://github.com/material-components/material-components-ios/commit/4a9df7c8cbabfa43c08ef23d22aa8b0d552c881a) (Jeff Verkoeyen)
+* [[schemes/Color] Formally mark all to-be-deprecated APIs as "ToBeDeprecated". (#4738)](https://github.com/material-components/material-components-ios/commit/e14b90e8292577c7ee5e284080353097fbbe5c2e) (featherless)
+
+### ActivityIndicator
+
+#### Changes
+
+* [[automated] Regenerate all readmes.](https://github.com/material-components/material-components-ios/commit/4a9df7c8cbabfa43c08ef23d22aa8b0d552c881a) (Jeff Verkoeyen)
+* [[schemes/Color] Formally mark all to-be-deprecated APIs as "ToBeDeprecated". (#4738)](https://github.com/material-components/material-components-ios/commit/e14b90e8292577c7ee5e284080353097fbbe5c2e) (featherless)
+
+### Dialogs
+
+#### Changes
+
+* [Remove use of MDCFlatButton for MDCButton and MDCTextButtonThemer (#4739)](https://github.com/material-components/material-components-ios/commit/84d5dfbb83d0118ff26921318df8cc549d919809) (Cody Weaver)
+* [[schemes/Color] Formally mark all to-be-deprecated APIs as "ToBeDeprecated". (#4738)](https://github.com/material-components/material-components-ios/commit/e14b90e8292577c7ee5e284080353097fbbe5c2e) (featherless)
+
+### BottomNavigation
+
+#### Changes
+
+* [Fix accessibilityValue for badgeValue updates (#4734)](https://github.com/material-components/material-components-ios/commit/057c72429f06b6c99fd3ea78e368f0c2cce7061a) (Robert Moore)
+* [[automated] Regenerate all readmes.](https://github.com/material-components/material-components-ios/commit/4a9df7c8cbabfa43c08ef23d22aa8b0d552c881a) (Jeff Verkoeyen)
+* [[schemes/Color] Formally mark all to-be-deprecated APIs as "ToBeDeprecated". (#4738)](https://github.com/material-components/material-components-ios/commit/e14b90e8292577c7ee5e284080353097fbbe5c2e) (featherless)
+
+### PageControl
+
+#### Changes
+
+* [[schemes/Color] Formally mark all to-be-deprecated APIs as "ToBeDeprecated". (#4738)](https://github.com/material-components/material-components-ios/commit/e14b90e8292577c7ee5e284080353097fbbe5c2e) (featherless)
+
+### HeaderStackView
+
+#### Changes
+
+* [[schemes/Color] Formally mark all to-be-deprecated APIs as "ToBeDeprecated". (#4738)](https://github.com/material-components/material-components-ios/commit/e14b90e8292577c7ee5e284080353097fbbe5c2e) (featherless)
+
+### FlexibleHeader
+
+#### Changes
+
+* [[schemes/Color] Formally mark all to-be-deprecated APIs as "ToBeDeprecated". (#4738)](https://github.com/material-components/material-components-ios/commit/e14b90e8292577c7ee5e284080353097fbbe5c2e) (featherless)
+
+### ProgressView
+
+#### Changes
+
+* [[schemes/Color] Formally mark all to-be-deprecated APIs as "ToBeDeprecated". (#4738)](https://github.com/material-components/material-components-ios/commit/e14b90e8292577c7ee5e284080353097fbbe5c2e) (featherless)
+
+---
+
 # 59.2.2
 
 This patch release undoes some additional App Bar initialization changes that were introduced in

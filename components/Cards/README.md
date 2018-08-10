@@ -280,8 +280,8 @@ turns off individually selecting its subelements.
 Swift
 ```swift
   card.isAccessibilityElement = true
-  card.accessibilityLabel = "Location (userLocation.name) is popular with users " +
-    "who enjoy (userLocation.popularActivityMatchingUserProfile(userProfile))"
+  card.accessibilityLabel = "Location \(userLocation.name) is popular with users " +
+    "who enjoy \(userLocation.popularActivityMatchingUserProfile(userProfile))"
 ```
 
 Objective-C
@@ -328,7 +328,7 @@ Swift
 ```swift
   ratingView.isAccessibilityElement = true
   ratingView.accessibilityLabel = "Average customer rating, out of " + 
-    "(MDCProductRating.maximumValue) stars"
+    "\(MDCProductRating.maximumValue) stars"
   ratingView.accessibilityValue = (String)product.averageRating
 ```
 
