@@ -3,9 +3,13 @@
 `minMaxHeightIncludesSafeArea` is a behavioral flag on `MDCFlexibleHeaderView that must be disabled
 to ensure iPhone X compatibility.
 
-When this property is enabled, the `minimumHeight` and `maximumHeight` values are expected to
-include the device's top safe area insets in their value. This means it is the responsibility of
-the client to update these height values with the values of the top safe area insets.
+When this property is enabled (the legacy behavior), the `minimumHeight` and `maximumHeight` values
+are expected to include the device's top safe area insets in their value. This means it is the
+responsibility of the client to update these height values with the values of the top safe area
+insets.
+
+When you disable this property you are expected to set `minimumHeight` and `maximumHeight` to only
+the height of the content that would be displayed below the top safe area insets.
 
 We intend to eventually **disable** `minMaxHeightIncludesSafeArea` by default and remove the
 property altogether. As such, you are encouraged to proactively disable this property now anywhere
