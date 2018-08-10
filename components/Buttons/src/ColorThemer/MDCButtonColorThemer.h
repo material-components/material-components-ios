@@ -25,15 +25,21 @@
  Color themers for instances of MDCButton and MDCFloatingButton.
 
  @warning This class will soon be deprecated. Please consider using one of the more specific
- @c MDC*ButtonColorThemer classes instead.
+ @c MDC*ButtonColorThemer classes instead. Learn more at
+ components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
  */
 @interface MDCButtonColorThemer : NSObject
+
+@end
+
+@interface MDCButtonColorThemer (ToBeDeprecated)
 
 /**
  Applies a color scheme's properties to an MDCButton.
 
  @warning This method will soon be deprecated. There is no direct replacement. Consider using one of
- the more specific  @c MDC*ButtonColorThemer classes instead.
+ the more specific  @c MDC*ButtonColorThemer classes instead. Learn more at
+ components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
 
  @param colorScheme The color scheme to apply to the component instance.
  @param button A component instance to which the color scheme should be applied.
@@ -45,6 +51,7 @@
  Applies a color scheme's properties to an MDCButton using the flat button style.
 
  @warning This method will soon be deprecated. Consider using @c MDCTextButtonColorThemer instead.
+ Learn more at components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
 
  @param colorScheme The color scheme to apply to the component instance.
  @param flatButton A component instance to which the color scheme should be applied.
@@ -56,7 +63,7 @@
  Applies a color scheme's properties to an MDCButton using the raised button style.
 
  @warning This method will soon be deprecated. Consider using @c MDCContainedButtonColorThemer
- instead.
+ instead. Learn more at components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
 
  @param colorScheme The color scheme to apply to the component instance.
  @param raisedButton A component instance to which the color scheme should be applied.
@@ -68,7 +75,7 @@
  Applies a color scheme's properties to an MDCFloatingButton using the floating button style.
 
  @warning This method will soon be deprecated. Consider using @c MDCFloatingButtonColorThemer
- instead.
+ instead. Learn more at components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
 
  @param colorScheme The color scheme to apply to the component instance.
  @param floatingButton A component instance to which the color scheme should be applied.
@@ -80,7 +87,8 @@
  Applies a color scheme's properties to an MDCButton.
 
  @warning This method will soon be deprecated. There is no direct replacement. Consider using one of
- the more specific  @c MDC*ButtonColorThemer classes instead.
+ the more specific  @c MDC*ButtonColorThemer classes instead. Learn more at
+ components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
 
  @param colorScheme The color scheme to apply to the component instance.
  @param button A component instance to which the color scheme should be applied.

@@ -61,7 +61,7 @@ In landscape orientation, items can be configured to be justified or compactly c
 
 ### Guidance
 
-Bottom navigation should be used for top-level destinations in an app of similar importance or destinations requiring direct access from anywhere in the app.
+Bottom navigation should be used for top-level destinations in an app of similar importance or destinations requiring direct access from anywhere in the app. 
 
 Be cautious when combining bottom navigation with similar navigation placed at the bottom of the screen (e.g. a bottom tab bar), as the combination may cause confusion when navigating an app. For example, tapping across both bottom tabs and bottom navigation could display a mixture of different transitions across the same content.
 

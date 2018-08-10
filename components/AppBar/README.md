@@ -731,7 +731,7 @@ NSLog(@"accessibilityLabel: %@",self.navigationItem.rightBarButtonItem.accessibi
 self.navigationItem.rightBarButtonItem =
     UIBarButtonItem(title: "Right", style: .done, target: nil, action: nil)
 
-print("accessibilityLabel: (self.navigationItem.rightBarButtonItem.accessibilityLabel)")
+print("accessibilityLabel: \(self.navigationItem.rightBarButtonItem.accessibilityLabel)")
 // Prints out "accessibilityLabel: Right"
 ```
 

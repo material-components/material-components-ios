@@ -28,7 +28,9 @@ custom title view.
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/navigation-bars/api-docs/Classes/MDCNavigationBar.html">MDCNavigationBar</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/navigation-bars/api-docs/Classes/MDCNavigationBarTextColorAccessibilityMutator.html">MDCNavigationBarTextColorAccessibilityMutator</a></li>
   <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/app-bars/navigation-bars/api-docs/Protocols/MDCUINavigationItemObservables.html">MDCUINavigationItemObservables</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/app-bars/navigation-bars/api-docs/Enums.html">Enumerations</a></li>
   <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/app-bars/navigation-bars/api-docs/Enums/MDCNavigationBarTitleAlignment.html">MDCNavigationBarTitleAlignment</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/app-bars/navigation-bars/api-docs/Enums/MDCNavigationBarTitleViewLayoutBehavior.html">MDCNavigationBarTitleViewLayoutBehavior</a></li>
 </ul>
 
 ## Related components

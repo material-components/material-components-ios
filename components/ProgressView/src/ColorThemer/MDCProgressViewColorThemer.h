@@ -22,18 +22,17 @@
 /**
  Used to apply a color scheme to theme MDCProgressView. This API does not yet implement the Material
  Design color system.
-
- @seealso https://www.pivotaltracker.com/story/show/157095443
  */
 @interface MDCProgressViewColorThemer : NSObject
+@end
 
-#pragma mark - Soon to be deprecated
+@interface MDCProgressViewColorThemer (ToBeDeprecated)
 
 /**
  Applies a color scheme to theme a MDCProgressView.
 
- @warning This method will soon be deprecated. There is no replacement yet.
- @seealso https://www.pivotaltracker.com/story/show/157095443
+ @warning This method will soon be deprecated. There is no replacement yet. Learn more at
+ components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
 
  @param colorScheme The color scheme to apply to the component instance.
  @param progressView A component instance to which the color scheme should be applied.
