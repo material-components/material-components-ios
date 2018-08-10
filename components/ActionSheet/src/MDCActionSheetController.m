@@ -21,6 +21,8 @@
 #import "MaterialApplication.h"
 #import "MaterialTypography.h"
 
+//NSString *const kTableReuseIdentifier = @"BaseCell";
+
 @interface MDCActionSheetAction ()
 
 @property(nonatomic, nullable, copy) MDCActionSheetHandler completionHandler;
@@ -95,7 +97,7 @@
   self = [super initWithNibName:nil bundle:nil];
   if (self) {
     _actionSheetTitle = [title copy];
-    _message = message;
+    _message = [message copy];
     [self commonMDCActionSheetControllerInit];
   }
 
@@ -125,12 +127,11 @@
 }
 
 - (void)addAction:(MDCActionSheetAction *)action {
-  [_actions addObject:[action copy]];
-  [_tableView.tableView reloadData];
+  [_tableView addAction:action];
 }
 
 - (NSArray<MDCActionSheetAction *> *)actions {
-  return [_actions copy];
+  return _tableView.actions;
 }
 
 - (void)viewDidLoad {
@@ -148,7 +149,7 @@
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
-  CGFloat height = CGRectGetHeight(_header.frame) + (_actions.count * 56);
+  CGFloat height = CGRectGetHeight(_header.frame) + (self.actions.count * 56);
   contentViewController.preferredContentSize =
       CGSizeMake(CGRectGetWidth(self.view.bounds), height);
 }
@@ -222,7 +223,7 @@
 #pragma mark - Table view delegate
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-  _header = [[MDCActionSheetHeaderView alloc] initWithTitle:self.title message:self.message];
+  _header = [[MDCActionSheetHeaderView alloc] initWithTitle:_actionSheetTitle message:self.message];
   return _header;
 }
 
@@ -236,15 +237,33 @@
   }];
 }
 
+//#pragma mark - Table view data source
+//
+//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+//  return 1;
+//}
+//
+//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+//  return _actions.count;
+//}
+//
+//- (UITableViewCell *)tableView:(UITableView *)tableView
+//         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+//  MDCActionSheetItemView *cell =
+//  [[MDCActionSheetItemView alloc] initWithAction:_actions[indexPath.row]
+//                                 reuseIdentifier:kTableReuseIdentifier];
+//  return cell;
+//}
+
 #pragma mark - Dynamic Type
 
 - (void)setTitle:(NSString *)title {
+  _actionSheetTitle = title;
   _header.title = title;
-  [_header setNeedsLayout];
 }
 
 - (NSString *)title {
-  return _header.title;
+  return _actionSheetTitle;
 }
 
 @end

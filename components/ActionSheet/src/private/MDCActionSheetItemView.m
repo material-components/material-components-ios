@@ -217,7 +217,7 @@ static const CGFloat kCellLabelAlpha = 0.87f;
   [messageLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
   [self addSubview:messageLabel];
   messageLabel.font = [UIFont systemFontOfSize:14];
-  messageLabel.numberOfLines = 0;
+  messageLabel.numberOfLines = 2;
   messageLabel.alpha = kMessageLabelAlpha;
   [NSLayoutConstraint constraintWithItem:messageLabel
                                attribute:NSLayoutAttributeLeading
@@ -247,8 +247,15 @@ static const CGFloat kCellLabelAlpha = 0.87f;
                                                           attribute:NSLayoutAttributeBottom
                                                          multiplier:1
                                                            constant:0.f];
-
-
+  BOOL addTitle = (titleLabel.text != nil) && (![titleLabel.text  isEqual:@""]);
+  BOOL addMessage = (messageLabel.text != nil) && (![messageLabel.text isEqual:@""]);
+  if (addTitle && addMessage) {
+    [self layoutBoth];
+  } else if (addTitle) {
+    [self layoutTitle];
+  } else if (addMessage) {
+    [self layoutMessage];
+  }
 }
 
 - (void)layoutSubviews {

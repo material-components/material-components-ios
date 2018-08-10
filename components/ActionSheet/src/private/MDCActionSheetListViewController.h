@@ -24,15 +24,33 @@
                               message:(nullable NSString *)message
                               actions:(NSArray<MDCActionSheetAction *> *)actions;
 
-/** MDCActionSheetListViewController must be created with initWithActions: */
+/**
+ MDCActionSheetListViewController must be created with initWithActions:
+*/
 - (nullable instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 
-/** MDCActionSheetListViewController must be created with initWithActions: */
+/**
+ MDCActionSheetListViewController must be created with initWithActions:
+*/
 - (nonnull instancetype)initWithNibName:(NSString *)nibNameOrNil
                                  bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
 
-/** MDCActionSheetListViewController must be created with initWithActions: */
+/**
+ MDCActionSheetListViewController must be created with initWithActions:
+*/
 - (instancetype)initWithStyle:(UITableViewStyle)style NS_UNAVAILABLE;
+
+/**
+ Adds an action to the table view.
+
+ @param action Will be added to the table view.
+*/
+- (void)addAction:(nonnull MDCActionSheetAction *)action;
+
+/**
+ The actions that the table will display
+*/
+@property(nonatomic, readwrite, strong) NSMutableArray<MDCActionSheetAction *> *actions;
 
 /*
  Indicates whether the button should automatically update its font when the device’s

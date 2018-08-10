@@ -24,16 +24,14 @@ NSString *const kReuseIdentifier = @"BaseCell";
 @interface MDCActionSheetListViewController () <UITableViewDataSource>
 @end
 
-@implementation MDCActionSheetListViewController {
-  NSArray<MDCActionSheetAction *> *_actions;
-}
+@implementation MDCActionSheetListViewController
 
 - (instancetype)initWithTitle:(nullable NSString *)title
                       message:(nullable NSString *)message
                       actions:(NSArray<MDCActionSheetAction *> *)actions {
   self = [super initWithStyle:UITableViewStylePlain];
   if (self) {
-    _actions = actions;
+    self.actions = [NSMutableArray arrayWithArray:[actions copy]];
     [self commonMDCActionSheetListInit];
   }
   return self;
@@ -55,22 +53,26 @@ NSString *const kReuseIdentifier = @"BaseCell";
          forCellReuseIdentifier:kReuseIdentifier];
 }
 
+- (void)addAction:(MDCActionSheetAction *)action {
+  [self.actions addObject:action];
+  [self.tableView reloadData];
+}
 
-#pragma mark - Datasource
+#pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
   return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  return _actions.count;
+  return self.actions.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   MDCActionSheetItemView *cell =
-      [[MDCActionSheetItemView alloc] initWithAction:_actions[indexPath.row]
-                                     reuseIdentifier:kReuseIdentifier];
+  [[MDCActionSheetItemView alloc] initWithAction:self.actions[indexPath.row]
+                                 reuseIdentifier:kReuseIdentifier];
   return cell;
 }
 

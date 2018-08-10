@@ -71,7 +71,7 @@ MDC_SUBCLASSING_RESTRICTED
  @param title The title of the alert.
  @return An initialized MDCActionSheetController object.
 */
-+ (instancetype)actionSheetControllerWithTitle:(nullable NSString *)title;
++ (instancetype _Nonnull)actionSheetControllerWithTitle:(nullable NSString *)title;
 
 /**
  Action sheet controllers must be created with actionSheetControllerWithTitle: or

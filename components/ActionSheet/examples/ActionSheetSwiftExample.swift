@@ -14,46 +14,57 @@
 import UIKit
 
 class ActionSheetSwiftExample: UIViewController {
-  let actionSheet: MDCActionSheetController = MDCActionSheetController(title: "Action sheet")
 
   var colorScheme = MDCSemanticColorScheme()
   var typographyScheme = MDCTypographyScheme()
+  let tableView = UITableView()
+  enum ActionSheetExampleType {
+    case typical, missingTitle, missingMessage, missingIcons, missingHeading, dynamicType
+  }
+  typealias ExamplesTuple = (label: String, type: ActionSheetExampleType)
+  let data: [ExamplesTuple] = [
+    ("Typical Use", .typical),
+    ("No Title", .missingTitle),
+    ("No Message", .missingMessage),
+    ("No Icons", .missingIcons),
+    ("No Heading", .missingHeading),
+    ("Dynamic Type Enabled", .dynamicType)
+  ]
+  let cellIdentifier = "BaseCell"
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    tableView.delegate = self
+    tableView.dataSource = self
+    tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
 
-    view.backgroundColor = colorScheme.backgroundColor
-
-    let showButton = MDCButton()
-    showButton.setTitle("Show Action Sheet", for: .normal)
-    showButton.sizeToFit()
-    showButton.frame.size.height = 48
-    showButton.center = view.center
-    MDCContainedButtonThemer.applyScheme(MDCButtonScheme(), to: showButton)
-    MDCContainedButtonColorThemer.applySemanticColorScheme(colorScheme, to: showButton)
-    MDCButtonTypographyThemer.applyTypographyScheme(typographyScheme, to: showButton)
-    showButton.addTarget(self,
-                         action: #selector(showActionSheet),
-                            for: .touchUpInside)
-    view.addSubview(showButton)
   }
 
-  func showActionSheet() {
-    let action = MDCActionSheetAction(title: "Home",
-                                      image: UIImage(named: "Home")!,
-                                      handler: { action in
-                                        print("Home action") })
-    actionSheet.addAction(action)
-    let secondAction = MDCActionSheetAction(title: "Favorite",
-                                            image:  nil,
-                                            handler: { action in
-                                              print("Favorite action") })
-    actionSheet.addAction(secondAction)
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    view.backgroundColor = colorScheme.backgroundColor
+    tableView.frame = view.frame
+    tableView.frame.origin.y = 0.0
+    view.addSubview(tableView)
+  }
 
-    let thirdAction = MDCActionSheetAction(title: "Email", image: UIImage(named: "Email")!) {_ in
-      print("Email action")
+  func showActionSheet(_ type: ActionSheetExampleType) {
+    let actionSheet: MDCActionSheetController
+    switch type {
+    case .typical:
+      actionSheet = MDCActionSheetSwiftSupplemental.typical()
+    case .missingTitle:
+      actionSheet = MDCActionSheetSwiftSupplemental.missingTitle()
+    case .missingMessage:
+      actionSheet = MDCActionSheetSwiftSupplemental.missingMessage()
+    case .missingIcons:
+      actionSheet = MDCActionSheetSwiftSupplemental.missingIcons()
+    case .missingHeading:
+      actionSheet = MDCActionSheetSwiftSupplemental.missingHeading()
+    case .dynamicType:
+      actionSheet = MDCActionSheetSwiftSupplemental.typical()//dynamicType()
     }
-    actionSheet.addAction(thirdAction)
+
     present(actionSheet, animated: true, completion: nil)
   }
 }
@@ -66,5 +77,23 @@ extension ActionSheetSwiftExample {
 
   class func catalogBreadcrumbs() -> [String] {
     return ["Action Sheet", "Action Sheet (Swift)"]
+  }
+}
+
+extension ActionSheetSwiftExample : UITableViewDelegate {
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    showActionSheet(data[indexPath.row].type)
+  }
+}
+
+extension ActionSheetSwiftExample : UITableViewDataSource {
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+    cell.textLabel?.text = data[indexPath.row].label
+    return cell
+  }
+
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return data.count
   }
 }
