@@ -42,7 +42,9 @@
 + (void)applyOutlinedVariantWithColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                                  toChipView:(nonnull MDCChipView *)chipView;
 
-#pragma mark - Soon to be deprecated
+@end
+
+@interface MDCChipViewColorThemer (ToBeDeprecated)
 
 /**
  Applies a color scheme's properties to a stroked MDCChipView.

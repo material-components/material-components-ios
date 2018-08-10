@@ -24,20 +24,35 @@ class FlexibleHeaderStatusBarTests: XCTestCase {
     let controller = MDCFlexibleHeaderViewController()
     let view = controller.headerView
     view.backgroundColor = UIColor.black
-    XCTAssertEqual(controller.preferredStatusBarStyle(), UIStatusBarStyle.lightContent)
+    XCTAssertEqual(controller.preferredStatusBarStyle, UIStatusBarStyle.lightContent)
   }
 
   func testLightBackgroundColor() {
     let controller = MDCFlexibleHeaderViewController()
     let view = controller.headerView
     view.backgroundColor = UIColor.white
-    XCTAssertEqual(controller.preferredStatusBarStyle(), UIStatusBarStyle.default)
+    XCTAssertEqual(controller.preferredStatusBarStyle, UIStatusBarStyle.default)
   }
 
   func testNonOpaqueBackgroundColor() {
     let controller = MDCFlexibleHeaderViewController()
     let view = controller.headerView
     view.backgroundColor = UIColor.init(white: 0, alpha: 0)
-    XCTAssertEqual(controller.preferredStatusBarStyle(), UIStatusBarStyle.default)
+    XCTAssertEqual(controller.preferredStatusBarStyle, UIStatusBarStyle.default)
   }
+
+  func testExplicitStyleWhenDefault() {
+    let controller = MDCFlexibleHeaderViewController()
+    controller.inferPreferredStatusBarStyle = false
+    controller.preferredStatusBarStyle = .default
+    XCTAssertEqual(controller.preferredStatusBarStyle, .default)
+  }
+
+  func testExplicitStyleWhenLightContent() {
+    let controller = MDCFlexibleHeaderViewController()
+    controller.inferPreferredStatusBarStyle = false
+    controller.preferredStatusBarStyle = .lightContent
+    XCTAssertEqual(controller.preferredStatusBarStyle, .lightContent)
+  }
+
 }

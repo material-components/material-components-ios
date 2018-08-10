@@ -52,6 +52,11 @@
 @interface MDCSnackbarManager : NSObject
 
 /**
+ An instance of MDCSnackbarManager.
+ */
+@property(class, nonnull, nonatomic, readonly, strong) MDCSnackbarManager *defaultManager;
+
+/**
  Determines the Snackbar alignment to the screen.
 
  If called within an animation block, the change will be animated.
@@ -62,7 +67,7 @@
 
  @note The setter must be called from the main thread.
  */
-@property (class, nonatomic, assign) MDCSnackbarAlignment alignment;
+@property(nonatomic, assign) MDCSnackbarAlignment alignment;
 
 /**
  Shows @c message to the user, in a style consistent with the data contained in @c message.
@@ -71,7 +76,7 @@
  ordering. Ordering between completion blocks of different categories is not guaranteed. This method
  is safe to call from any thread.
  */
-+ (void)showMessage:(nullable MDCSnackbarMessage *)message;
+- (void)showMessage:(nullable MDCSnackbarMessage *)message;
 
 /**
  MDCSnackbarManager will display the messages in this view.
@@ -87,14 +92,14 @@
  @note This method must be called from the main thread.
  @note Calling setPresentationHostView will not change the parent of the currently visible message.
  */
-+ (void)setPresentationHostView:(nullable UIView *)hostView;
+- (void)setPresentationHostView:(nullable UIView *)hostView;
 
 /**
  Checks if there is any message showing or queued. Does not consider suspended messages.
 
  @note This method must be called from the main thread.
  */
-+ (BOOL)hasMessagesShowingOrQueued;
+- (BOOL)hasMessagesShowingOrQueued;
 
 /**
  Bypasses showing the messages of the given @c category.
@@ -103,7 +108,7 @@
  messages for the @c category. Calling this method with @c nil will dismiss all messages. This
  method is safe to call from any thread.
  */
-+ (void)dismissAndCallCompletionBlocksWithCategory:(nullable NSString *)category;
+- (void)dismissAndCallCompletionBlocksWithCategory:(nullable NSString *)category;
 
 /**
  How far from the bottom of the screen messages are displayed.
@@ -114,7 +119,7 @@
  @note This is meant for apps which have a navigation element such as a tab bar, which cannot
  move and should not be obscured.
  */
-+ (void)setBottomOffset:(CGFloat)offset;
+- (void)setBottomOffset:(CGFloat)offset;
 
 #pragma mark Suspending
 
@@ -127,7 +132,7 @@
  @return A token suitable for use in {@c +[MDCSnackbarManager resumeWithToken:]}. Letting this
  object deallocate is equivalent to calling {@c +[MDCSnackbarManager resumeMessagesWithToken:]}.
  */
-+ (nullable id <MDCSnackbarSuspensionToken>)suspendAllMessages;
+- (nullable id <MDCSnackbarSuspensionToken>)suspendAllMessages;
 
 /**
  Suspends the display of all messages in a given category.
@@ -140,7 +145,7 @@
  Letting this object dealloc is equivalent to calling
  {@c +[MDCSnackbarManager resumeMessagesWithToken:]}.
  */
-+ (nullable id <MDCSnackbarSuspensionToken>)
+- (nullable id <MDCSnackbarSuspensionToken>)
     suspendMessagesWithCategory:(nullable NSString *)category;
 
 /**
@@ -150,34 +155,34 @@
 
  @param token The suspension token to invalidate.
  */
-+ (void)resumeMessagesWithToken:(nullable id <MDCSnackbarSuspensionToken>)token;
+- (void)resumeMessagesWithToken:(nullable id <MDCSnackbarSuspensionToken>)token;
 
 #pragma mark Styling
 
 /**
  The color for the background of the Snackbar message view.
  */
-@property(class, nonatomic, strong, nullable) UIColor *snackbarMessageViewBackgroundColor;
+@property(nonatomic, strong, nullable) UIColor *snackbarMessageViewBackgroundColor;
 
 /**
  The color for the shadow color for the Snackbar message view.
  */
-@property(class, nonatomic, strong, nullable) UIColor *snackbarMessageViewShadowColor;
+@property(nonatomic, strong, nullable) UIColor *snackbarMessageViewShadowColor;
 
 /**
  The color for the message text in the Snackbar message view.
  */
-@property(class, nonatomic, strong, nullable) UIColor *messageTextColor;
+@property(nonatomic, strong, nullable) UIColor *messageTextColor;
 
 /**
  The font for the message text in the Snackbar message view.
  */
-@property(class, nonatomic, strong, nullable) UIFont *messageFont;
+@property(nonatomic, strong, nullable) UIFont *messageFont;
 
 /**
  The font for the button text in the Snackbar message view.
  */
-@property(class, nonatomic, strong, nullable) UIFont *buttonFont;
+@property(nonatomic, strong, nullable) UIFont *buttonFont;
 
 /**
  If enabled, modifications of class styling properties will be applied immediately
@@ -185,7 +190,7 @@
 
  Default is set to NO.
  */
-@property(class, nonatomic, assign) BOOL shouldApplyStyleChangesToVisibleSnackbars;
+@property(nonatomic, assign) BOOL shouldApplyStyleChangesToVisibleSnackbars;
 
 /**
  Returns the button title color for a particular control state.
@@ -193,7 +198,7 @@
  @param state The control state.
  @return The button title color for the requested state.
  */
-+ (nullable UIColor *)buttonTitleColorForState:(UIControlState)state;
+- (nullable UIColor *)buttonTitleColorForState:(UIControlState)state;
 
 /**
  Sets the button title color for a particular control state.
@@ -201,7 +206,7 @@
  @param titleColor The title color.
  @param state The control state.
  */
-+ (void)setButtonTitleColor:(nullable UIColor *)titleColor forState:(UIControlState)state;
+- (void)setButtonTitleColor:(nullable UIColor *)titleColor forState:(UIControlState)state;
 
 /**
  Indicates whether the Snackbar should automatically update its font when the device’s
@@ -215,14 +220,14 @@
 
  Default is set to NO.
  */
-@property(class, nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
+@property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
     BOOL mdc_adjustsFontForContentSizeCategory;
 
 
 /**
  The delegate for MDCSnackbarManager through which it may inform of snackbar presentation updates.
  */
-@property(class, nonatomic, weak, nullable) id<MDCSnackbarManagerDelegate> delegate;
+@property(nonatomic, weak, nullable) id<MDCSnackbarManagerDelegate> delegate;
 
 @end
 
@@ -234,4 +239,107 @@
  @c resumeMessagesWithToken.
  */
 @protocol MDCSnackbarSuspensionToken <NSObject>
+@end
+
+#pragma mark - To be deprecated
+
+@interface MDCSnackbarManager (LegacyAPI)
+
+/**
+ The @c alignment property of the @c defaultManager instance.
+ */
+@property(class, nonatomic, assign) MDCSnackbarAlignment alignment;
+
+/**
+ Calls @c -showMessage: on the @c defaultManager instance.
+ */
++ (void)showMessage:(nullable MDCSnackbarMessage *)message;
+
+/**
+ Calls @c -setPresentationHostView: on the @c defaultManager instance.
+ */
++ (void)setPresentationHostView:(nullable UIView *)hostView;
+
+/**
+ Calls @c -hasMessagesShowingORQueued on the @c defaultManager instance.
+ */
++ (BOOL)hasMessagesShowingOrQueued;
+
+/**
+ Calls @c -dismissAndCallCompletionBlocksWithCategory: on the @c defaultManager instance.
+ */
++ (void)dismissAndCallCompletionBlocksWithCategory:(nullable NSString *)category;
+
+/**
+ Calls -setBottomOffset: on the @c defaultManager instance.
+ */
++ (void)setBottomOffset:(CGFloat)offset;
+
+/**
+ Calls @c -suspendAllMessages on the @c defaultManager instance.
+ */
++ (nullable id <MDCSnackbarSuspensionToken>)suspendAllMessages;
+
+/**
+ Calls @c -suspendMessagesWithCategory: on the @c defaultManager instance.
+ */
++ (nullable id <MDCSnackbarSuspensionToken>)
+    suspendMessagesWithCategory:(nullable NSString *)category;
+
+/**
+ Calls @c -resumeMessagesWithToken: on the @c defaultManager instance.
+ */
++ (void)resumeMessagesWithToken:(nullable id <MDCSnackbarSuspensionToken>)token;
+
+/**
+ Bound to @c snackbarMessageViewBackgroundColor on the @c defaultManager instance.
+ */
+@property(class, nonatomic, strong, nullable) UIColor *snackbarMessageViewBackgroundColor;
+
+/**
+ Bound to @c snackbarMessageViewShadowColor on the @c defaultManager instance.
+ */
+@property(class, nonatomic, strong, nullable) UIColor *snackbarMessageViewShadowColor;
+
+/**
+ Bound to @c messageTextColor on the @c defaultManager instance.
+ */
+@property(class, nonatomic, strong, nullable) UIColor *messageTextColor;
+
+/**
+ Bound to @c messageFont on the @c defaultManager instance.
+ */
+@property(class, nonatomic, strong, nullable) UIFont *messageFont;
+
+/**
+ Bound to @c buttonFont on the @c defaultManager instance.
+ */
+@property(class, nonatomic, strong, nullable) UIFont *buttonFont;
+
+/**
+ Bound to @c shouldApplyStyleChangesToVisibleSnackbars on the @c defaultManager instance.
+ */
+@property(class, nonatomic, assign) BOOL shouldApplyStyleChangesToVisibleSnackbars;
+
+/**
+ Calls @c -buttonTitleColorForState: on the @c defaultManager instance.
+ */
++ (nullable UIColor *)buttonTitleColorForState:(UIControlState)state;
+
+/**
+ Calls @c -setButtonTitleColor:forState: on the @c defaultManager instance.
+ */
++ (void)setButtonTitleColor:(nullable UIColor *)titleColor forState:(UIControlState)state;
+
+/**
+ Bound to @c mdc_adjustsFontForContentSizeCategory on the @c defaultManager instance.
+ */
+@property(class, nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
+    BOOL mdc_adjustsFontForContentSizeCategory;
+
+/**
+ Bound to @c delegate on the @c defaultManager instance.
+ */
+@property(class, nonatomic, weak, nullable) id<MDCSnackbarManagerDelegate> delegate;
+
 @end

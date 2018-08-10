@@ -28,11 +28,15 @@
  set by the owning component in a context-specific manner.
  */
 @interface MDCInkColorThemer : NSObject
+@end
+
+@interface MDCInkColorThemer (ToBeDeprecated)
 
 /**
  Applies a color scheme to theme a MDCInkView.
 
- @warning This API will soon be deprecated. There is no direct replacement.
+ @warning This API will soon be deprecated. There is no direct replacement. Learn more at
+ components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
 
  @param colorScheme The color scheme to apply to MDCInkView.
  @param inkView A MDCInkView instance to apply a color scheme.
@@ -41,3 +45,4 @@
                toInkView:(nonnull MDCInkView *)inkView;
 
 @end
+
