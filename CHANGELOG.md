@@ -1,10 +1,45 @@
-# #develop#
+# 60.0.0
+
+This major release introduces a breaking change for Swift libraries using FlexibleHeader. This
+change also introduces a migration guide for color schemes along, changes to the Snackbar's
+singleton pattern, and updated button theming in Dialogs.
 
 ## Breaking changes
 
-## New deprecations
+### FlexibleHeader
+
+* [**Breaking** Make preferredStatusBarStyle settable. (#4750)](https://github.com/material-components/material-components-ios/commit/d3cc4e4ebe14c8bd4b25b258ba02f19cbdc7bc0b) (featherless)
+
+This breaking change only affects Swift code and requires the following changes.
+
+```swift
+// Before
+.preferredStatusBarStyle()
+
+// After
+.preferredStatusBarStyle
+```
 
 ## New features
+
+FlexibleHeader has a new `inferPreferredStatusBarStyle` API that allows you to set an explicity
+`preferredStatusBarStyle` on the `MDCFlexibleHeaderViewController`.
+
+An example of setting an explicit `preferredStatusBarStyle`:
+
+```swift
+flexibleHeaderViewController.inferPreferredStatusBarStyle = false
+flexibleHeaderViewController.preferredStatusBarStyle = .lightContent
+```
+
+## Upcoming deprecations
+
+`MDCColorScheme` and `MDCBasicColorScheme` will both be deprecated on the following timeline:
+
+- October 10, 2018: Both APIs and any corresponding themer API will be deprecated.
+- November 10, 2018: Both APIs and any corresponding themer API will be deleted.
+
+[Learn more by reading the migration guide](https://github.com/material-components/material-components-ios/blob/develop/components/schemes/Color/docs/migration-guide-semantic-color-scheme.md).
 
 ## API changes
 
@@ -634,7 +669,6 @@
 
 #### Changes
 
-* [Make preferredStatusBarStyle settable. (#4750)](https://github.com/material-components/material-components-ios/commit/d3cc4e4ebe14c8bd4b25b258ba02f19cbdc7bc0b) (featherless)
 * [[schemes/Color] Formally mark all to-be-deprecated APIs as "ToBeDeprecated". (#4738)](https://github.com/material-components/material-components-ios/commit/e14b90e8292577c7ee5e284080353097fbbe5c2e) (featherless)
 
 ### ProgressView
