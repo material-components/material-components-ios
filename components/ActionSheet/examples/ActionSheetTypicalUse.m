@@ -21,33 +21,48 @@
 
 @interface ActionSheetTypicalUse ()
 
+@property(nonatomic, strong) MDCButton *showButton;
+
 @end
 
-@implementation ActionSheetTypicalUse
+@implementation ActionSheetTypicalUse {
+  MDCButtonScheme *_buttonScheme;
+}
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    self.title = @"Action Sheet";
+    _colorScheme = [[MDCSemanticColorScheme alloc] init];
+    _typographyScheme = [[MDCTypographyScheme alloc] init];
+    _showButton = [[MDCButton alloc] init];
+    _buttonScheme = [[MDCButtonScheme alloc] init];
+  }
+  return self;
+}
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
+  [super viewDidLoad];
+  self.view.backgroundColor = _colorScheme.backgroundColor;
+  [_showButton setTitle:@"Show action sheet" forState:UIControlStateNormal];
+  [_showButton sizeToFit];
+  _buttonScheme.colorScheme = _colorScheme;
+  _buttonScheme.typographyScheme = _typographyScheme;
+  [MDCContainedButtonThemer applyScheme:_buttonScheme toButton:_showButton];
+  [_showButton addTarget:self
+                  action:@selector(showActionSheet)
+        forControlEvents:UIControlEventTouchUpInside];
+  [self.view addSubview:_showButton];
+}
 
-    self.view.backgroundColor = [UIColor whiteColor];
-    MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectZero];
-    [button setTitle:@"Show action sheet" forState:UIControlStateNormal];
-    [button sizeToFit];
-    CGFloat width = CGRectGetWidth(button.frame);
-    button.frame = CGRectMake(self.view.center.x - (width / 2.f),
-                               self.view.center.y - 24.f,
-                               width,
-                               48.f);
-    MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
-    [MDCContainedButtonThemer applyScheme:buttonScheme toButton:button];
-    [button addTarget:self
-                action:@selector(presentActionSheet)
-      forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:button];
+- (void)viewDidLayoutSubviews {
+  [super viewDidLayoutSubviews];
+  _showButton.center = CGPointMake(self.view.center.x, self.view.center.y - 80);
 }
 
 
 
-- (void)presentActionSheet {
+- (void)showActionSheet {
   NSString *messageString = @"The supporting message for this action sheet this can be mutliple lines but never more than two";
   MDCActionSheetController *actionSheet =
       [MDCActionSheetController actionSheetControllerWithTitle:@"Action sheet"

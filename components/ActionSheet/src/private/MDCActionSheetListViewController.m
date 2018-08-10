@@ -24,7 +24,9 @@ NSString *const kReuseIdentifier = @"BaseCell";
 @interface MDCActionSheetListViewController () <UITableViewDataSource>
 @end
 
-@implementation MDCActionSheetListViewController
+@implementation MDCActionSheetListViewController {
+  BOOL _mdc_adjustsFontForContentSizeCategory;
+}
 
 - (instancetype)initWithTitle:(nullable NSString *)title
                       message:(nullable NSString *)message
@@ -73,12 +75,13 @@ NSString *const kReuseIdentifier = @"BaseCell";
   MDCActionSheetItemView *cell =
   [[MDCActionSheetItemView alloc] initWithAction:self.actions[indexPath.row]
                                  reuseIdentifier:kReuseIdentifier];
+  cell.actionsFont = _actionsFont;
   return cell;
 }
 
 #pragma mark - Dynamic type
 
-/*+ (UIFont *)font {
++ (UIFont *)actionsFontDefault {
   if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
     return [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
   }
@@ -92,20 +95,26 @@ NSString *const kReuseIdentifier = @"BaseCell";
 - (void)mdc_setAdjustFontForContentSizeCategory:(BOOL)adjusts {
   _mdc_adjustsFontForContentSizeCategory = adjusts;
   [self updateFonts];
-  [self.view setNeedsLayout];
 }
 
--(void)updateFonts {
-  UIFont *finalFont = _font ?: [[self class] font];
+
+- (void)updateFonts {
+  UIFont *finalFont = _actionsFont ?: [[self class] actionsFontDefault];
   if (_mdc_adjustsFontForContentSizeCategory) {
     finalFont =
         [finalFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
                               scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
   }
-  _font = finalFont;
+  _actionsFont = finalFont;
+  [self.tableView reloadData];
   [self.view setNeedsLayout];
-}*/
+}
 
 #pragma mark - Setters / Getters
+
+- (void)setActionsFont:(UIFont *)actionsFont {
+  _actionsFont = actionsFont;
+  [self updateFonts];
+}
 
 @end

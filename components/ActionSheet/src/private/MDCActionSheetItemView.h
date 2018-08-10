@@ -39,6 +39,7 @@
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
 BOOL mdc_adjustsFontForContentSizeCategory;
 
+@property (nonatomic, nonnull, strong) UIFont *actionsFont;
 
 @end
 
@@ -61,6 +62,12 @@ BOOL mdc_adjustsFontForContentSizeCategory;
 
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
 BOOL mdc_adjustsFontForContentSizeCategory;
+
+@property (nonatomic, strong, nonnull) UIFont *titleFont;
+
+@property (nonatomic, strong, nonnull) UIFont *messageFont;
+
+- (void)updateFonts;
 
 
 @end

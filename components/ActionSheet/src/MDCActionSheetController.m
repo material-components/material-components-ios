@@ -76,6 +76,7 @@
   NSMutableArray<MDCActionSheetAction *> *_actions;
   MDCBottomSheetTransitionController *_transitionController;
   UIViewController *contentViewController;
+  BOOL mdc_adjustFontForContentSizeCategory;
 }
 
 + (instancetype)actionSheetControllerWithTitle:(NSString *)title message:(NSString *)message {
@@ -124,6 +125,7 @@
   CGRect tableFrame = _tableView.view.frame;
   tableFrame.origin.y = 0;
   _tableView.view.frame = tableFrame;
+  _header = [[MDCActionSheetHeaderView alloc] initWithTitle:_actionSheetTitle message:_message];
 }
 
 - (void)addAction:(MDCActionSheetAction *)action {
@@ -223,7 +225,7 @@
 #pragma mark - Table view delegate
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-  _header = [[MDCActionSheetHeaderView alloc] initWithTitle:_actionSheetTitle message:self.message];
+  //_header = [[MDCActionSheetHeaderView alloc] initWithTitle:_actionSheetTitle message:self.message];
   return _header;
 }
 
@@ -237,26 +239,6 @@
   }];
 }
 
-//#pragma mark - Table view data source
-//
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-//  return 1;
-//}
-//
-//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//  return _actions.count;
-//}
-//
-//- (UITableViewCell *)tableView:(UITableView *)tableView
-//         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//  MDCActionSheetItemView *cell =
-//  [[MDCActionSheetItemView alloc] initWithAction:_actions[indexPath.row]
-//                                 reuseIdentifier:kTableReuseIdentifier];
-//  return cell;
-//}
-
-#pragma mark - Dynamic Type
-
 - (void)setTitle:(NSString *)title {
   _actionSheetTitle = title;
   _header.title = title;
@@ -264,6 +246,44 @@
 
 - (NSString *)title {
   return _actionSheetTitle;
+}
+
+- (void)setTitleFont:(UIFont *)titleFont {
+  _titleFont = titleFont;
+  self.header.titleFont = titleFont;
+}
+
+- (void)setMessageFont:(UIFont *)messageFont {
+  _messageFont = messageFont;
+  self.header.messageFont = messageFont;
+}
+
+#pragma mark - Dynamic Type
+
+- (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
+  _mdc_adjustsFontForContentSizeCategory = adjusts;
+  self.header.mdc_adjustsFontForContentSizeCategory = adjusts;
+  self.tableView.mdc_adjustsFontForContentSizeCategory = adjusts;
+  [self updateFontsForDynamicType];
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(contentSizeCategoryDidChange:)
+                                                 name:UIContentSizeCategoryDidChangeNotification
+                                               object:nil];
+  } else {
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIContentSizeCategoryDidChangeNotification
+                                                  object:nil];
+  }
+}
+
+- (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
+  [self updateFontsForDynamicType];
+}
+
+- (void)updateFontsForDynamicType {
+  [self.header updateFonts];
+  [self.tableView updateFonts];
 }
 
 @end

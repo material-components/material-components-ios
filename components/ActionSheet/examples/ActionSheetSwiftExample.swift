@@ -62,7 +62,7 @@ class ActionSheetSwiftExample: UIViewController {
     case .missingHeading:
       actionSheet = MDCActionSheetSwiftSupplemental.missingHeading()
     case .dynamicType:
-      actionSheet = MDCActionSheetSwiftSupplemental.typical()//dynamicType()
+      actionSheet = MDCActionSheetSwiftSupplemental.dynamic()
     }
 
     present(actionSheet, animated: true, completion: nil)

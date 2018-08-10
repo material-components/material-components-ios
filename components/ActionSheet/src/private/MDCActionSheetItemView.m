@@ -31,6 +31,7 @@ static const CGFloat kCellLabelAlpha = 0.87f;
   UILabel *_textLabel;
   UIImageView *_imageView;
   MDCInkTouchController *_inkTouchController;
+  BOOL _mdc_adjustsFontForContentSizeCategory;
 }
 
 - (instancetype)initWithAction:(MDCActionSheetAction *)action
@@ -53,7 +54,11 @@ static const CGFloat kCellLabelAlpha = 0.87f;
   [self.contentView addSubview:_textLabel];
   _textLabel.numberOfLines = 0;
   [_textLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
-  _textLabel.font = [UIFont systemFontOfSize:16.f];
+  if (self.mdc_adjustsFontForContentSizeCategory) {
+    _textLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
+  } else {
+    _textLabel.font = [MDCTypography subheadFont];
+  }
   _textLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
   _textLabel.alpha = kCellLabelAlpha;
   [NSLayoutConstraint constraintWithItem:_textLabel
@@ -143,6 +148,39 @@ static const CGFloat kCellLabelAlpha = 0.87f;
   return _itemAction;
 }
 
+- (void)setActionsFont:(UIFont *)actionsFont {
+  _actionsFont = actionsFont;
+  [self updateTitleFont];
+}
+
++ (UIFont *)titleFontDefault {
+  if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
+    return [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
+  }
+  return [MDCTypography subheadFont];
+}
+
+- (void)updateTitleFont {
+  UIFont *titleFont = _actionsFont ?: [[self class] titleFontDefault];
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    _textLabel.font =
+        [titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
+                                scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+  } else {
+    _textLabel.font = titleFont;
+  }
+  [self setNeedsLayout];
+}
+
+- (BOOL)mdc_adjustsFontForContentSizeCategory {
+  return _mdc_adjustsFontForContentSizeCategory;
+}
+
+- (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
+  _mdc_adjustsFontForContentSizeCategory = adjusts;
+  [self updateTitleFont];
+}
+
 @end
 
 @interface MDCActionSheetHeaderView ()
@@ -157,6 +195,7 @@ static const CGFloat kCellLabelAlpha = 0.87f;
 @implementation MDCActionSheetHeaderView {
   UILabel *titleLabel;
   UILabel *messageLabel;
+  BOOL _mdc_adjustsFontForContentSizeCategory;
 }
 
 - (instancetype)initWithTitle:(NSString *)title {
@@ -178,7 +217,11 @@ static const CGFloat kCellLabelAlpha = 0.87f;
 -(void)commonMDCActionSheetHeaderViewInit {
   [titleLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
   [self addSubview:titleLabel];
-  titleLabel.font = [UIFont systemFontOfSize:16];
+  if (self.mdc_adjustsFontForContentSizeCategory) {
+    titleLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
+  } else {
+    titleLabel.font = [MDCTypography subheadFont];
+  }
   titleLabel.numberOfLines = 0;
   if (self.message == nil || [self.message isEqualToString:@""]) {
     titleLabel.alpha = kMessageLabelAlpha;
@@ -216,7 +259,11 @@ static const CGFloat kCellLabelAlpha = 0.87f;
 
   [messageLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
   [self addSubview:messageLabel];
-  messageLabel.font = [UIFont systemFontOfSize:14];
+  if (self.mdc_adjustsFontForContentSizeCategory) {
+    messageLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
+  } else {
+    messageLabel.font = [MDCTypography body1Font];
+  }
   messageLabel.numberOfLines = 2;
   messageLabel.alpha = kMessageLabelAlpha;
   [NSLayoutConstraint constraintWithItem:messageLabel
@@ -330,6 +377,68 @@ static const CGFloat kCellLabelAlpha = 0.87f;
 
 - (NSString *)message {
   return messageLabel.text;
+}
+
+- (void)setTitleFont:(UIFont *)titleFont {
+  _titleFont = titleFont;
+  [self updateTitleFont];
+}
+
+- (void)setMessageFont:(UIFont *)messageFont {
+  _messageFont = messageFont;
+  [self updateMessageFont];
+}
+
++ (UIFont *)titleFontDefault {
+  if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
+    return [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
+  }
+  return [MDCTypography subheadFont];
+}
+
++ (UIFont *)messageFontDefault {
+  if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
+    return [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody1];
+  }
+  return [MDCTypography body1Font];
+}
+
+- (void)updateFonts {
+  [self updateTitleFont];
+  [self updateMessageFont];
+}
+
+- (void)updateTitleFont {
+  UIFont *titleFont = _titleFont ?: [[self class] titleFontDefault];
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    titleLabel.font =
+        [titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
+                                scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+  } else {
+    titleLabel.font = titleFont;
+  }
+  [self setNeedsLayout];
+}
+
+- (void)updateMessageFont {
+  UIFont *messageFont = _messageFont ?: [[self class] messageFontDefault];
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    messageLabel.font =
+        [messageFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleBody1
+                                  scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+  } else {
+    messageLabel.font = messageFont;
+  }
+  [self setNeedsLayout];
+}
+
+- (BOOL)mdc_adjustsFontForContentSizeCategory {
+  return _mdc_adjustsFontForContentSizeCategory;
+}
+
+- (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
+  _mdc_adjustsFontForContentSizeCategory = adjusts;
+  [self updateFonts];
 }
 
 @end

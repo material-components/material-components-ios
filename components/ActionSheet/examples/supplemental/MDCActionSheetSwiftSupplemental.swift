@@ -92,4 +92,12 @@ class MDCActionSheetSwiftSupplemental {
     actionSheet.addAction(action3)
     return actionSheet
   }
+
+  static func dynamic() -> MDCActionSheetController {
+    let actionSheet = MDCActionSheetController(title: "Action sheet", message: message)
+    actionSheet.mdc_adjustsFontForContentSizeCategory = true
+    actionSheet.addAction(actionOne)
+    actionSheet.addAction(actionTwo)
+    return actionSheet
+  }
 }

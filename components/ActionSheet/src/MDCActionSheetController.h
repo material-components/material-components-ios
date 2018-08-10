@@ -46,7 +46,7 @@
  ### Dependencies
 
  MDCActionSheetController depends on BottomSheet Component.
-*/
+ */
 MDC_SUBCLASSING_RESTRICTED
 @interface MDCActionSheetController : UIViewController
 
@@ -58,7 +58,7 @@ MDC_SUBCLASSING_RESTRICTED
  @param title The title of the alert.
  @param message Descriptive text that summarizes a decision in a sentence or two.
  @return An initialized MDCActionSheetController object.
-*/
+ */
 + (nonnull instancetype)actionSheetControllerWithTitle:(nullable NSString *)title
                                                message:(nullable NSString *)message;
 
@@ -70,20 +70,20 @@ MDC_SUBCLASSING_RESTRICTED
 
  @param title The title of the alert.
  @return An initialized MDCActionSheetController object.
-*/
-+ (instancetype _Nonnull)actionSheetControllerWithTitle:(nullable NSString *)title;
+ */
++ (nonnull instancetype)actionSheetControllerWithTitle:(nullable NSString *)title;
 
 /**
  Action sheet controllers must be created with actionSheetControllerWithTitle: or
  with actionSheetControllerWithTitle:message:
-*/
+ */
 - (nonnull instancetype)initWithNibName:(NSString *)nibNameOrNil
                                  bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
 
 /**
  Action sheet controllers must be created with actionSheetControllerwithTitle:
  or with actionSheetControllerWithTitle:message:
-*/
+ */
 - (nullable instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 
 /**
@@ -95,7 +95,7 @@ MDC_SUBCLASSING_RESTRICTED
  were added.
 
  @param action Will be added to the end of MDCActionSheetController.actions.
-*/
+ */
 - (void)addAction:(nonnull MDCActionSheetAction *)action;
 
 /**
@@ -103,22 +103,22 @@ MDC_SUBCLASSING_RESTRICTED
 
  The order of the actions in the array matches the order in which they were added
  to the action sheet.
-*/
+ */
 @property (nonatomic, nonnull, readonly, copy) NSArray<MDCActionSheetAction *> *actions;
 
 /**
  The title of the action sheet controller.
 
- If this is updated after presentation the view will be updated to match the new
- value.
-*/
+ If this is updated after presentation the view will be updated to match the
+ new value.
+ */
 @property (nonatomic, nullable, copy) NSString *title;
 
 /**
  The message of the action sheet controller.
 
  If this is updated after presentation the view will be updated to match the new value.
-*/
+ */
 @property (nonatomic, nullable, copy) NSString *message;
 
 /**
@@ -131,22 +131,37 @@ MDC_SUBCLASSING_RESTRICTED
  If set to YES, this button will base its text font on MDCFontTextStyleButton.
 
  Defaults value is NO.
-*/
+ */
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
-BOOL mdc_adjustsFontForContentSizeCategory;
+    BOOL mdc_adjustsFontForContentSizeCategory;
+
+/**
+  The font applied to the title of the action sheet controller.
+ */
+@property (nonatomic, nonnull, strong) UIFont *titleFont;
+
+/**
+  The font applied to the message of the action sheet controller.
+ */
+@property (nonatomic, nonnull, strong) UIFont *messageFont;
+
+/**
+   The font applied to the action items of the action sheet controller.
+ */
+@property (nonatomic, nonnull, strong) UIFont *actionsFont;
 
 @end
 
 /**
  MDCActionSheetActionHandler is a block that will be invoked when the action is
  selected.
-*/
+ */
 typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
 
 /**
- An instance of MDCActionSheetAction is passed to MDCActionSheetController to add
- an action to the action sheet.
-*/
+ An instance of MDCActionSheetAction is passed to MDCActionSheetController to
+ add an action to the action sheet.
+ */
 MDC_SUBCLASSING_RESTRICTED
 @interface MDCActionSheetAction : NSObject <NSCopying>
 
@@ -158,14 +173,14 @@ MDC_SUBCLASSING_RESTRICTED
  @param image The icon of the list item shown in the list
  @param handler A block to execute when the user selects the action.
  @return An initialized MDCActionSheetAction object.
-*/
+ */
 + (nonnull instancetype)actionWithTitle:(nonnull NSString *)title
                                   image:(nullable UIImage *)image
                                 handler:(__nullable MDCActionSheetHandler)handler;
 
 /**
  Action sheet actions must be created with actionWithTitle:image:handler:
-*/
+ */
 - (nonnull instancetype)init NS_UNAVAILABLE;
 
 /**
@@ -173,7 +188,7 @@ MDC_SUBCLASSING_RESTRICTED
 
  Action sheet actions must have a title that will be set within actionWithTitle:image:handler:
  method.
-*/
+ */
 @property (nonatomic, nonnull, readonly) NSString *title;
 
 /**
@@ -185,4 +200,3 @@ MDC_SUBCLASSING_RESTRICTED
 @property (nonatomic, nullable, readonly) UIImage *image;
 
 @end
-
