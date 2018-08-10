@@ -136,6 +136,8 @@ Map this schedule onto reality:
 1. Is the to-be-replaced code particularly problematic for some reason? 
 1. Does the deprecation fall near a release of the operating system or new devices?
 
+**Once you have determined a schedule, add the schedule to the migration guide**.
+
 ### Step 6: Announce that the API will be deprecated
 
 Inform internal clients of the impending deprecation by sending an email with the following
