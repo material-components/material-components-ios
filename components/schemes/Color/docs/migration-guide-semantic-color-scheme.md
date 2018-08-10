@@ -1,5 +1,10 @@
 ### Migration guide: semantic color schemes
 
+Deprecation schedule:
+
+- October 10, 2018: Both APIs and any corresponding themer API will be deprecated.
+- November 10, 2018: Both APIs and any corresponding themer API will be deleted.
+
 The following is guidance for migrating from the legacy colors cheme APIs to the modern, Material
 color system-compatible APIs.
 
