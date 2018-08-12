@@ -380,7 +380,7 @@ static const CGFloat kMaximumHeight = 80.0f;
                                                                    constant:-bottomMargin];
       _snackbarOffscreenConstraint.active = MDCSnackbarMessage.usesLegacySnackbar;
       if (!MDCSnackbarMessage.usesLegacySnackbar) {
-        _snackbarOffscreenConstraint.priority = UILayoutPriorityDefaultHigh;
+        _snackbarOffscreenConstraint.priority = UILayoutPriorityDefaultLow;
       }
       [container addConstraint:_snackbarOffscreenConstraint];
 
