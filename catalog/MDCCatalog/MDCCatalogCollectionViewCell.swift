@@ -22,13 +22,12 @@ class MDCCatalogCollectionViewCell: UICollectionViewCell {
 
   fileprivate struct Constants {
     static let imageWidthHeight: CGFloat = 80
-    static let xPadding: CGFloat = 14
-    static let yPadding: CGFloat = 16
+    static let padding: CGFloat = 16
   }
 
   private lazy var label: UILabel = {
     let label = UILabel()
-    label.textColor = UIColor(white: 0, alpha: MDCTypography.buttonFontOpacity())
+    label.textColor = AppTheme.defaultTheme.colorScheme.primaryColor
     label.font = MDCTypography.buttonFont()
 
     return label
@@ -40,6 +39,8 @@ class MDCCatalogCollectionViewCell: UICollectionViewCell {
     contentView.addSubview(label)
     contentView.clipsToBounds = true
     contentView.addSubview(tile)
+    self.isAccessibilityElement = true
+    self.accessibilityTraits |= UIAccessibilityTraitButton
   }
 
   @available(*, unavailable)
@@ -55,9 +56,9 @@ class MDCCatalogCollectionViewCell: UICollectionViewCell {
     super.layoutSubviews()
     label.sizeToFit()
     label.frame = CGRect(
-      x: Constants.xPadding,
-      y: frame.height - label.frame.height - Constants.yPadding,
-      width: frame.width - Constants.xPadding * 2,
+      x: Constants.padding,
+      y: frame.height - label.frame.height - Constants.padding,
+      width: frame.width - Constants.padding * 2,
       height: label.frame.height
     )
     tile.bounds = CGRect(x: 0,
@@ -77,5 +78,14 @@ class MDCCatalogCollectionViewCell: UICollectionViewCell {
     label.text = componentName
     tile.componentName = componentName
     accessibilityIdentifier = componentName
+  }
+
+  override public var accessibilityLabel: String? {
+    get {
+      return self.label.accessibilityLabel
+    }
+    set {
+      self.label.accessibilityLabel = newValue
+    }
   }
 }

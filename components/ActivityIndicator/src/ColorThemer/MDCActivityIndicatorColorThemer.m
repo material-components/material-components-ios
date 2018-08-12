@@ -18,6 +18,11 @@
 
 @implementation MDCActivityIndicatorColorThemer
 
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+             toActivityIndicator:(nonnull MDCActivityIndicator *)activityIndicator {
+  activityIndicator.cycleColors = @[ colorScheme.primaryColor ];
+}
+
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
      toActivityIndicator:(MDCActivityIndicator *)activityIndicator {
   activityIndicator.cycleColors = @[ colorScheme.primaryColor ];

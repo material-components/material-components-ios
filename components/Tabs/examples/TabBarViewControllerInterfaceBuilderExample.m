@@ -16,14 +16,23 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialPalettes.h"
+#import "MaterialColorScheme.h"
 #import "MaterialTabs.h"
+#import "MaterialTabs+ColorThemer.h"
 
 @interface TabBarViewControllerInterfaceBuilderExample : MDCTabBarViewController
-
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @end
 
 @implementation TabBarViewControllerInterfaceBuilderExample
+
+- (id)init {
+  self = [super init];
+  if (self) {
+    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+  }
+  return self;
+}
 
 - (void)awakeFromNib {
   [super awakeFromNib];
@@ -32,9 +41,7 @@
     [self.storyboard instantiateViewControllerWithIdentifier:@"blue"],
     [self.storyboard instantiateViewControllerWithIdentifier:@"green"],
   ];
-  self.tabBar.backgroundColor = MDCPalette.greyPalette.tint100;
-  self.tabBar.unselectedItemTintColor = MDCPalette.greyPalette.tint900;
-  self.tabBar.selectedItemTintColor = MDCPalette.bluePalette.tint500;
+  [MDCTabBarColorThemer applySemanticColorScheme:self.colorScheme toTabs:self.tabBar];
 }
 
 @end
@@ -47,7 +54,7 @@
 }
 
 // TabBarViewControllerInterfaceBuilderExample expect that appBars be inside the tabs,
-// so don't stick an appBar on it.
+// so don't stick an appBarViewController on it.
 - (BOOL)catalogShouldHideNavigation {
   return YES;
 }
@@ -69,7 +76,7 @@
 }
 
 + (BOOL)catalogIsPresentable {
-  return YES;
+  return NO;
 }
 
 @end

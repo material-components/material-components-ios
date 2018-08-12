@@ -16,22 +16,24 @@
 
 #import "MDCTextInputControllerOutlined.h"
 
+#import <MDFInternationalization/MDFInternationalization.h>
+
 #import "MDCTextInput.h"
 #import "MDCTextInputBorderView.h"
 #import "MDCTextInputController.h"
 #import "MDCTextInputControllerBase.h"
 #import "MDCTextInputControllerFloatingPlaceholder.h"
 #import "MDCTextInputUnderlineView.h"
-#import "private/MDCPaddedLabel.h"
 #import "private/MDCTextInputControllerBase+Subclassing.h"
 
 #import "MaterialMath.h"
 
 #pragma mark - Class Properties
 
+static const CGFloat MDCTextInputOutlinedTextFieldFloatingPlaceholderPadding = 8.f;
 static const CGFloat MDCTextInputOutlinedTextFieldFullPadding = 16.f;
 static const CGFloat MDCTextInputOutlinedTextFieldNormalPlaceholderPadding = 20.f;
-static const CGFloat MDCTextInputOutlinedTextFieldPlaceholderPadding = 4.f;
+static const CGFloat MDCTextInputOutlinedTextFieldThreeQuartersPadding = 12.f;
 
 static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 
@@ -69,8 +71,6 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
   UIOffset offset = [super floatingPlaceholderOffset];
   CGFloat textVerticalOffset = 0;
   offset.vertical = textVerticalOffset;
-  MDCPaddedLabel *placeholderLabel = (MDCPaddedLabel *)self.textInput.placeholderLabel;
-  offset.horizontal += placeholderLabel.horizontalPadding;
   return offset;
 }
 
@@ -83,6 +83,46 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 }
 
 #pragma mark - MDCTextInputPositioningDelegate
+
+- (CGRect)leadingViewRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect {
+  CGRect leadingViewRect = defaultRect;
+  CGFloat xOffset = (self.textInput.mdf_effectiveUserInterfaceLayoutDirection ==
+                     UIUserInterfaceLayoutDirectionRightToLeft)
+                        ? -1 * MDCTextInputOutlinedTextFieldFullPadding
+                        : MDCTextInputOutlinedTextFieldFullPadding;
+
+  leadingViewRect = CGRectOffset(leadingViewRect, xOffset, 0.f);
+
+  CGRect borderRect = [self borderRect];
+  leadingViewRect.origin.y = CGRectGetMinY(borderRect) + CGRectGetHeight(borderRect) / 2.f -
+                             CGRectGetHeight(leadingViewRect) / 2.f;
+
+  return leadingViewRect;
+}
+
+- (CGFloat)leadingViewTrailingPaddingConstant {
+  return MDCTextInputOutlinedTextFieldFullPadding;
+}
+
+- (CGRect)trailingViewRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect {
+  CGRect trailingViewRect = defaultRect;
+  CGFloat xOffset = (self.textInput.mdf_effectiveUserInterfaceLayoutDirection ==
+                     UIUserInterfaceLayoutDirectionRightToLeft)
+                        ? MDCTextInputOutlinedTextFieldThreeQuartersPadding
+                        : -1 * MDCTextInputOutlinedTextFieldThreeQuartersPadding;
+
+  trailingViewRect = CGRectOffset(trailingViewRect, xOffset, 0.f);
+
+  CGRect borderRect = [self borderRect];
+  trailingViewRect.origin.y = CGRectGetMinY(borderRect) + CGRectGetHeight(borderRect) / 2.f -
+                              CGRectGetHeight(trailingViewRect) / 2.f;
+
+  return trailingViewRect;
+}
+
+- (CGFloat)trailingViewTrailingPaddingConstant {
+  return MDCTextInputOutlinedTextFieldThreeQuartersPadding;
+}
 
 // clang-format off
 /**
@@ -111,8 +151,8 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
   CGFloat scale = UIScreen.mainScreen.scale;
   CGFloat placeholderEstimatedHeight =
       MDCCeil(self.textInput.placeholderLabel.font.lineHeight * scale) / scale;
-  textInsets.top =
-      [self borderHeight] - MDCTextInputOutlinedTextFieldFullPadding - placeholderEstimatedHeight + textVerticalOffset;
+  textInsets.top = [self borderHeight] - MDCTextInputOutlinedTextFieldFullPadding -
+                   placeholderEstimatedHeight + textVerticalOffset;
 
   textInsets.left = MDCTextInputOutlinedTextFieldFullPadding;
   textInsets.right = MDCTextInputOutlinedTextFieldFullPadding;
@@ -131,15 +171,26 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 - (void)updateBorder {
   [super updateBorder];
 
-  CGRect pathRect = self.textInput.bounds;
-  pathRect.origin.y = pathRect.origin.y + self.textInput.placeholderLabel.font.lineHeight * .5f;
+  UIBezierPath *path;
+  if ([self isPlaceholderUp]) {
+    CGFloat placeholderWidth =
+        [self.textInput.placeholderLabel systemLayoutSizeFittingSize:UILayoutFittingCompressedSize]
+        .width * (CGFloat)self.floatingPlaceholderScale.floatValue;
 
-  pathRect.size.height = [self borderHeight];
-  UIBezierPath *path = [UIBezierPath
-      bezierPathWithRoundedRect:pathRect
-              byRoundingCorners:self.roundedCorners
-                    cornerRadii:CGSizeMake(MDCTextInputControllerBaseDefaultBorderRadius,
-                                           MDCTextInputControllerBaseDefaultBorderRadius)];
+    placeholderWidth += MDCTextInputOutlinedTextFieldFloatingPlaceholderPadding;
+
+    path =
+        [self roundedPathFromRect:[self borderRect]
+                    withTextSpace:placeholderWidth
+                    leadingOffset:MDCTextInputOutlinedTextFieldFullPadding -
+                                  MDCTextInputOutlinedTextFieldFloatingPlaceholderPadding / 2.0f];
+  } else {
+    CGSize cornerRadius = CGSizeMake(MDCTextInputControllerBaseDefaultBorderRadius,
+                                     MDCTextInputControllerBaseDefaultBorderRadius);
+    path = [UIBezierPath bezierPathWithRoundedRect:[self borderRect]
+                                 byRoundingCorners:self.roundedCorners
+                                       cornerRadii:cornerRadius];
+  }
   self.textInput.borderPath = path;
 
   UIColor *borderColor = self.textInput.isEditing ? self.activeColor : self.normalColor;
@@ -149,6 +200,61 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
   self.textInput.borderView.borderPath.lineWidth = self.textInput.isEditing ? 2 : 1;
 
   [self updatePlaceholder];
+}
+
+- (CGRect)borderRect {
+  CGRect pathRect = self.textInput.bounds;
+  pathRect.origin.y = pathRect.origin.y + self.textInput.placeholderLabel.font.lineHeight * .5f;
+  pathRect.size.height = [self borderHeight];
+  return pathRect;
+}
+
+- (UIBezierPath *)roundedPathFromRect:(CGRect)f
+                        withTextSpace:(CGFloat)textSpace
+                        leadingOffset:(CGFloat)offset {
+  UIBezierPath *path = [[UIBezierPath alloc] init];
+  CGFloat radius = MDCTextInputControllerBaseDefaultBorderRadius;
+  CGFloat yOffset = f.origin.y;
+  CGFloat xOffset = f.origin.x;
+
+  // Draw the path
+  [path moveToPoint:CGPointMake(radius + xOffset, yOffset)];
+  if (self.textInput.mdf_effectiveUserInterfaceLayoutDirection ==
+      UIUserInterfaceLayoutDirectionLeftToRight) {
+    [path addLineToPoint:CGPointMake(offset + xOffset, yOffset)];
+    [path moveToPoint:CGPointMake(textSpace + offset + xOffset, yOffset)];
+    [path addLineToPoint:CGPointMake(f.size.width - radius + xOffset, yOffset)];
+  } else {
+    [path addLineToPoint:CGPointMake(xOffset + (f.size.width - (offset + textSpace)), yOffset)];
+    [path moveToPoint:CGPointMake(xOffset + (f.size.width - offset), yOffset)];
+    [path addLineToPoint:CGPointMake(xOffset + (f.size.width - radius), yOffset)];
+  }
+
+  [path addArcWithCenter:CGPointMake(f.size.width - radius + xOffset, radius + yOffset)
+                  radius:radius
+              startAngle:- (CGFloat)(M_PI / 2)
+                endAngle:0
+               clockwise:YES];
+  [path addLineToPoint:CGPointMake(f.size.width + xOffset, f.size.height - radius + yOffset)];
+  [path addArcWithCenter:CGPointMake(f.size.width - radius + xOffset, f.size.height - radius + yOffset)
+                  radius:radius
+              startAngle:0
+                endAngle:- (CGFloat)((M_PI * 3) / 2)
+               clockwise:YES];
+  [path addLineToPoint:CGPointMake(radius + xOffset, f.size.height + yOffset)];
+  [path addArcWithCenter:CGPointMake(radius + xOffset, f.size.height - radius + yOffset)
+                  radius:radius
+              startAngle:- (CGFloat)((M_PI * 3) / 2)
+                endAngle:- (CGFloat)M_PI
+               clockwise:YES];
+  [path addLineToPoint:CGPointMake(xOffset, radius + yOffset)];
+  [path addArcWithCenter:CGPointMake(radius + xOffset, radius + yOffset)
+                  radius:radius
+              startAngle:- (CGFloat)M_PI
+                endAngle:- (CGFloat)(M_PI / 2)
+               clockwise:YES];
+
+  return path;
 }
 
 - (void)updatePlaceholder {
@@ -176,22 +282,29 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
   }
   self.placeholderCenterY.constant = placeholderConstant;
 
-  MDCPaddedLabel *placeholderLabel = (MDCPaddedLabel *)self.textInput.placeholderLabel;
-  placeholderLabel.horizontalPadding = MDCTextInputOutlinedTextFieldPlaceholderPadding;
+  CGFloat placeholderLeadingConstant = MDCTextInputOutlinedTextFieldFullPadding;
+
+  if ([self.textInput conformsToProtocol:@protocol(MDCLeadingViewTextInput)]) {
+    UIView<MDCLeadingViewTextInput> *leadingViewInput =
+        (UIView<MDCLeadingViewTextInput> *)self.textInput;
+    if (leadingViewInput.leadingView.superview) {
+      placeholderLeadingConstant += CGRectGetWidth(leadingViewInput.leadingView.frame) +
+                                    [self leadingViewTrailingPaddingConstant];
+    }
+  }
 
   if (!self.placeholderLeading) {
-    self.placeholderLeading =
-        [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
-                                     attribute:NSLayoutAttributeLeading
-                                     relatedBy:NSLayoutRelationEqual
-                                        toItem:self.textInput
-                                     attribute:NSLayoutAttributeLeading
-                                    multiplier:1
-                                      constant:MDCTextInputOutlinedTextFieldFullPadding -
-                                               placeholderLabel.horizontalPadding];
+    self.placeholderLeading = [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
+                                                           attribute:NSLayoutAttributeLeading
+                                                           relatedBy:NSLayoutRelationEqual
+                                                              toItem:self.textInput
+                                                           attribute:NSLayoutAttributeLeading
+                                                          multiplier:1
+                                                            constant:placeholderLeadingConstant];
     self.placeholderLeading.priority = UILayoutPriorityDefaultHigh;
     self.placeholderLeading.active = YES;
   }
+  self.placeholderLeading.constant = placeholderLeadingConstant;
 }
 
 - (CGFloat)borderHeight {

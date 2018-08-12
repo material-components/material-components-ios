@@ -21,18 +21,15 @@
 #import "MaterialButtons.h"
 #import "private/MDCAppBarButtonBarBuilder.h"
 
-static const CGFloat kDefaultHeight = 56;
-static const CGFloat kDefaultPadHeight = 64;
+static const CGFloat kButtonBarMaxHeight = 56;
+static const CGFloat kButtonBarMaxPadHeight = 64;
+static const CGFloat kButtonBarMinHeight = 24;
 
 // KVO contexts
 static char *const kKVOContextMDCButtonBar = "kKVOContextMDCButtonBar";
 
 // This is required because @selector(enabled) throws a compiler warning of unrecognized selector.
 static NSString *const kEnabledSelector = @"enabled";
-
-static NSString *const MDCButtonBarItemsKey = @"MDCButtonBarItemsKey";
-static NSString *const MDCButtonBarButtonTitleBaselineKey = @"MDCButtonBarButtonTitleBaselineKey";
-static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButtonLayoutPositionKey";
 
 @implementation MDCButtonBar {
   id _buttonItemsLock;
@@ -64,39 +61,8 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
   self = [super initWithCoder:coder];
   if (self) {
     [self commonMDCButtonBarInit];
-    if ([coder containsValueForKey:MDCButtonBarButtonTitleBaselineKey]) {
-      _buttonTitleBaseline = (CGFloat)[coder decodeDoubleForKey:MDCButtonBarButtonTitleBaselineKey];
-    }
-
-    if ([coder containsValueForKey:MDCButtonBarButtonLayoutPositionKey]) {
-      _layoutPosition = [coder decodeIntegerForKey:MDCButtonBarButtonLayoutPositionKey];
-    }
-
-    if ([coder containsValueForKey:MDCButtonBarItemsKey]) {
-      // Force going through the setter to ensure KVO is observed for these items
-      NSArray *items = [coder decodeObjectOfClass:[NSArray class] forKey:MDCButtonBarItemsKey];
-      BOOL isValid = YES;
-      for (id item in items) {
-        if (![item isKindOfClass:[UIBarButtonItem class]]) {
-          isValid = NO;
-          NSAssert(NO, @"Wrong class type for MDCButtonBar items when decoding.");
-        }
-      }
-      if (isValid) {
-        self.items = [coder decodeObjectOfClass:[NSArray class] forKey:MDCButtonBarItemsKey];
-      }
-    }
   }
   return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [super encodeWithCoder:aCoder];
-  if (self.items && self.items.count > 0) {
-    [aCoder encodeObject:self.items forKey:MDCButtonBarItemsKey];
-  }
-  [aCoder encodeDouble:self.buttonTitleBaseline forKey:MDCButtonBarButtonTitleBaselineKey];
-  [aCoder encodeInteger:self.layoutPosition forKey:MDCButtonBarButtonLayoutPositionKey];
 }
 
 - (void)alignButtonBaseline:(UIButton *)button {
@@ -164,8 +130,9 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
     totalWidth += width;
   }
 
-  CGFloat maxHeight = [self usePadHeight] ? kDefaultPadHeight : kDefaultHeight;
-  CGFloat height = size.height > 0 ? MIN(size.height, maxHeight) : maxHeight;
+  CGFloat maxHeight = [self usePadHeight] ? kButtonBarMaxPadHeight : kButtonBarMaxHeight;
+  CGFloat minHeight = kButtonBarMinHeight;
+  CGFloat height = MIN(MAX(size.height, minHeight), maxHeight);
   return CGSizeMake(totalWidth, height);
 }
 
@@ -216,6 +183,15 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
     if ([viewObj isKindOfClass:[MDCButton class]]) {
       MDCButton *buttonView = (MDCButton *)viewObj;
       [buttonView setTitleColor:self.tintColor forState:UIControlStateNormal];
+    }
+  }
+}
+
+- (void)updateButtonsWithInkColor:(UIColor *)inkColor {
+  for (UIView *viewObj in _buttonViews) {
+    if ([viewObj isKindOfClass:[MDCButton class]]) {
+      MDCButton *buttonView = (MDCButton *)viewObj;
+      buttonView.inkColor = inkColor;
     }
   }
 }
@@ -280,11 +256,30 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
             [button setValue:newValue forKey:keyPath];
           }
 
-        } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(title))]) {
-          [button setTitle:newValue forState:UIControlStateNormal];
+        } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(accessibilityHint))]) {
+          button.accessibilityHint = newValue;
+
+        } else if ([keyPath isEqualToString:
+                        NSStringFromSelector(@selector(accessibilityIdentifier))]) {
+          button.accessibilityIdentifier = newValue;
+
+        } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(accessibilityLabel))]) {
+          button.accessibilityLabel = newValue;
+
+        } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(accessibilityValue))]) {
+          button.accessibilityValue = newValue;
 
         } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(image))]) {
           [button setImage:newValue forState:UIControlStateNormal];
+
+        } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(tag))]) {
+          button.tag = [newValue integerValue];
+
+        } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(tintColor))]) {
+          button.tintColor = newValue;
+
+        } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(title))]) {
+          [button setTitle:newValue forState:UIControlStateNormal];
 
         } else {
           NSLog(@"Unknown key path notification received by %@ for %@.",
@@ -377,8 +372,15 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
     }
 
     NSArray<NSString *> *keyPaths = @[
-      kEnabledSelector, NSStringFromSelector(@selector(title)),
-      NSStringFromSelector(@selector(image))
+      NSStringFromSelector(@selector(accessibilityHint)),
+      NSStringFromSelector(@selector(accessibilityIdentifier)),
+      NSStringFromSelector(@selector(accessibilityLabel)),
+      NSStringFromSelector(@selector(accessibilityValue)),
+      kEnabledSelector,
+      NSStringFromSelector(@selector(image)),
+      NSStringFromSelector(@selector(tag)),
+      NSStringFromSelector(@selector(tintColor)),
+      NSStringFromSelector(@selector(title))
     ];
 
     // Remove old observers
@@ -404,6 +406,51 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
   }
 }
 
+- (void)setButtonsTitleFont:(UIFont *)font forState:(UIControlState)state {
+  [_defaultBuilder setTitleFont:font forState:state];
+
+  for (NSUInteger i = 0; i < [_buttonViews count]; ++i) {
+    UIView *viewObj = _buttonViews[i];
+    if ([viewObj isKindOfClass:[UIButton class]]) {
+      MDCButton *button = (MDCButton *)viewObj;
+      [button setTitleFont:font forState:state];
+
+      if (i < [_items count]) {
+        UIBarButtonItem *item = _items[i];
+
+        CGRect frame = button.frame;
+        if (item.width > 0) {
+          frame.size.width = item.width;
+        } else {
+          frame.size.width = [button sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)].width;
+        }
+        button.frame = frame;
+
+        [self setNeedsLayout];
+      }
+    }
+  }
+}
+
+- (nullable UIFont *)buttonsTitleFontForState:(UIControlState)state {
+  return [_defaultBuilder titleFontForState:state];
+}
+
+- (void)setButtonsTitleColor:(nullable UIColor *)color forState:(UIControlState)state {
+  [_defaultBuilder setTitleColor:color forState:state];
+
+  for (UIView *viewObj in _buttonViews) {
+    if ([viewObj isKindOfClass:[UIButton class]]) {
+      MDCButton *button = (MDCButton *)viewObj;
+      [button setTitleColor:color forState:state];
+    }
+  }
+}
+
+- (UIColor *)buttonsTitleColorForState:(UIControlState)state {
+  return [_defaultBuilder titleColorForState:state];
+}
+
 // UISemanticContentAttribute was added in iOS SDK 9.0 but is available on devices running earlier
 // version of iOS. We ignore the partial-availability warning that gets thrown on our use of this
 // symbol.
@@ -419,6 +466,14 @@ static NSString *const MDCButtonBarButtonLayoutPositionKey = @"MDCButtonBarButto
   _buttonTitleBaseline = buttonTitleBaseline;
 
   [self setNeedsLayout];
+}
+
+- (void)setInkColor:(UIColor *)inkColor {
+  if (_inkColor == inkColor) {
+    return;
+  }
+  _inkColor = inkColor;
+  [self updateButtonsWithInkColor:_inkColor];
 }
 
 - (void)reloadButtonViews {

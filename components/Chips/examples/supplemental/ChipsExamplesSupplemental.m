@@ -88,6 +88,25 @@ static UIButton *DeleteButton() {
 
 @end
 
+@interface ChipsActionExampleViewController (Supplemental)
+@end
+
+@implementation ChipsActionExampleViewController (Supplemental)
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Chips", @"Action" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
++ (BOOL)catalogIsPresentable {
+  return YES;
+}
+
+@end
+
 @interface ChipsCollectionExampleViewController (Supplemental)
 @end
 
@@ -102,7 +121,7 @@ static UIButton *DeleteButton() {
 }
 
 + (BOOL)catalogIsPresentable {
-  return YES;
+  return NO;
 }
 
 @end
@@ -147,6 +166,26 @@ static UIButton *DeleteButton() {
 
 @end
 
+@implementation ChipsFilterAnimatedExampleViewController (Supplemental)
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Chips", @"Filter Animated" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
+- (UIImage *)doneImage {
+  return DoneImage();
+}
+
++ (BOOL)catalogIsPresentable {
+  return NO;
+}
+
+@end
+
 @interface ChipsInputExampleViewController (Supplemental)
 @end
 
@@ -185,7 +224,7 @@ static UIButton *DeleteButton() {
 }
 
 + (BOOL)catalogIsPresentable {
-  return YES;
+  return NO;
 }
 
 @end
@@ -194,6 +233,10 @@ static UIButton *DeleteButton() {
 
 + (NSArray *)catalogBreadcrumbs {
   return @[ @"Chips", @"Chips" ];
+}
+
++ (NSString *)catalogDescription {
+  return @"Chips are compact elements that represent an input, attribute, or action.";
 }
 
 + (BOOL)catalogIsPrimaryDemo {
@@ -206,6 +249,30 @@ static UIButton *DeleteButton() {
 
 + (BOOL)catalogIsPresentable {
   return YES;
+}
+
+@end
+
+@implementation ChipsShapingExampleViewController (Supplemental)
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Chips", @"Shaped Chip" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
+- (UIImage *)faceImage {
+  return FaceImage();
+}
+
+- (UIButton *)deleteButton {
+  return DeleteButton();
+}
+
++ (BOOL)catalogIsPresentable {
+  return NO;
 }
 
 @end

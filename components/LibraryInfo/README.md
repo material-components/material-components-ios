@@ -1,12 +1,16 @@
 <!--docs:
-title: "Library Info"
+title: "Library info"
 layout: detail
 section: components
-excerpt: "LibraryInfo contains programmatic access to information about the Material Components library."
+excerpt: "Library info contains programmatic access to information about the Material Components library."
 iconId: misc
 path: /catalog/library-info/
 api_doc_root: true
 -->
+
+# Library Info
+
+Library info contains programmatic access to information about the Material Components library.
 
 ## Installation
 
@@ -14,14 +18,14 @@ api_doc_root: true
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-``` bash
+```bash
 pod 'MaterialComponents/LibraryInfo'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 
-``` bash
+```bash
 pod install
 ```
 
@@ -42,13 +46,13 @@ Before using LibraryInfo, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 import MaterialComponents
 ```
 
 #### Objective-C
 
-``` objc
+```objc
 #import "MaterialLibraryInfo.h"
 ```
 <!--</div>-->
@@ -59,13 +63,13 @@ LibraryInfo contains a singleton class of type LibraryInfo that can be queried.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 print("This binary was compiled with MDC-iOS v" + MDCLibraryInfo.version + ".")
 ```
 
 #### Objective-C
 
-``` objc
+```objc
 NSLog(@"This binary was compiled with MDC-iOS v%@.", MDCLibraryInfo.version);
 ```
 <!--</div>-->

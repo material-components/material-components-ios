@@ -15,6 +15,8 @@
  */
 
 #import "SnackbarExampleSupplemental.h"
+#import "MaterialSnackbar+ColorThemer.h"
+#import "MaterialSnackbar+TypographyThemer.h"
 
 static NSString * const kCellIdentifier = @"Cell";
 
@@ -25,6 +27,8 @@ static NSString * const kCellIdentifier = @"Cell";
   self.view.backgroundColor = [UIColor whiteColor];
   [self.collectionView registerClass:[MDCCollectionViewTextCell class]
           forCellWithReuseIdentifier:kCellIdentifier];
+  [MDCSnackbarColorThemer applySemanticColorScheme:self.colorScheme];
+  [MDCSnackbarTypographyThemer applyTypographyScheme:self.typographyScheme];
 }
 
 #pragma mark - UICollectionView
@@ -41,8 +45,10 @@ static NSString * const kCellIdentifier = @"Cell";
       [collectionView dequeueReusableCellWithReuseIdentifier:kCellIdentifier
                                                 forIndexPath:indexPath];
   cell.textLabel.text = self.choices[indexPath.row];
-
+  cell.accessibilityTraits = cell.accessibilityTraits | UIAccessibilityTraitButton;
+  cell.isAccessibilityElement = YES;
   cell.accessibilityIdentifier = cell.textLabel.text;
+  cell.accessibilityLabel = cell.textLabel.text;
   return cell;
 }
 
@@ -55,8 +61,7 @@ static NSString * const kCellIdentifier = @"Cell";
 }
 
 + (NSString *)catalogDescription {
-  return @"Snackbars provide brief feedback about an operation through a message at the bottom of"
-          " the screen.";
+  return @"Snackbars provide brief messages about app processes at the bottom of the screen.";
 }
 
 + (BOOL)catalogIsPrimaryDemo {
@@ -118,6 +123,9 @@ static NSString * const kCellIdentifier = @"Cell";
                                             forIndexPath:indexPath];
 
   cell.textLabel.text = self.choices[indexPath.row];
+  cell.isAccessibilityElement = YES;
+  cell.accessibilityTraits = cell.accessibilityTraits | UIAccessibilityTraitButton;
+  cell.accessibilityLabel = cell.textLabel.text;
   if (indexPath.row > 2) {
     UISwitch *editingSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
     [editingSwitch setTag:indexPath.row];
@@ -125,8 +133,10 @@ static NSString * const kCellIdentifier = @"Cell";
                       action:@selector(handleSuspendStateChanged:)
             forControlEvents:UIControlEventValueChanged];
     cell.accessoryView = editingSwitch;
+    cell.accessibilityValue = editingSwitch.isOn ? @"on" : @"off";
   } else {
     cell.accessoryView = nil;
+    cell.accessibilityValue = nil;
   }
 
   return cell;

@@ -19,7 +19,7 @@
 /**
  Material Design compliant text field from early 2017 with floating placeholder and an underline.
  https://www.google.com/design/spec/components/text-fields.html#text-fields-single-line-text-field
- https://material.io/guidelines/components/text-fields.html#text-fields-labels
+ https://material.io/go/design-text-fields#text-fields-labels
 
  Defaults:
 

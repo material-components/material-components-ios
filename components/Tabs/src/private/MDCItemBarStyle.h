@@ -58,6 +58,12 @@
 /** Color of title text when selected. Default is opaque white. */
 @property(nonatomic, strong, nonnull) UIColor *selectedTitleColor;
 
+/** Tint color of image when not selected. Default is opaque white. */
+@property(nonatomic, strong, nonnull) UIColor *imageTintColor;
+
+/** Tint color of image when selected. Default is opaque white. */
+@property(nonatomic, strong, nonnull) UIColor *selectedImageTintColor;
+
 /** Font used for selected item titles. */
 @property(nonatomic, strong, nonnull) UIFont *selectedTitleFont;
 

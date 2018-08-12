@@ -20,22 +20,21 @@
  */
 
 #import "ButtonsTypicalUseSupplemental.h"
-
 #import "MaterialButtons.h"
 #import "MaterialMath.h"
 #import "MaterialTypography.h"
 
 #pragma mark - ButtonsTypicalUseViewController
 
-@implementation ButtonsTypicalUseViewController (CatalogByConvention)
+@implementation ButtonsTypicalUseExampleViewController (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
   return @[ @"Buttons", @"Buttons" ];
 }
 
 + (NSString *)catalogDescription {
-  return @"Buttons is a collection of Material Design buttons, including a flat button, a raised"
-          " button and a floating action button.";
+  return @"Buttons allow users to take actions, and make choices, with a single tap.\nA floating"
+          " action button (FAB) represents the primary action of a screen.";
 }
 
 + (BOOL)catalogIsPrimaryDemo {
@@ -48,7 +47,24 @@
 
 @end
 
-@implementation ButtonsTypicalUseViewController (Supplemental)
+
+@implementation ButtonsShapesExampleViewController (CatalogByConvention)
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Buttons", @"Shaped Buttons" ];
+}
+
++ (BOOL)catalogIsPresentable {
+  return YES;
+}
+
++ (BOOL)catalogIsDebug {
+  return NO;
+}
+
+@end
+
+@implementation ButtonsTypicalUseViewController
 
 - (UILabel *)addLabelWithText:(NSString *)text {
   UILabel *label = [[UILabel alloc] init];
@@ -61,31 +77,44 @@
   return label;
 }
 
-- (void)setupExampleViews {
-  UILabel *raisedButtonLabel = [self addLabelWithText:@"Raised"];
-  UILabel *disabledRaisedButtonLabel = [self addLabelWithText:@"Disabled Raised"];
-  UILabel *flatButtonLabel = [self addLabelWithText:@"Flat"];
-  UILabel *disabledFlatButtonLabel = [self addLabelWithText:@"Disabled Flat"];
-  UILabel *strokedButtonLabel = [self addLabelWithText:@"Stroked"];
-  UILabel *disabledStrokedButtonLabel = [self addLabelWithText:@"Disabled Stroked"];
-  UILabel *floatingButtonLabel = [self addLabelWithText:@"Floating Action"];
+- (CGRect)contentBounds {
+  CGRect bounds = self.view.bounds;
+  __block CGRect contentBounds = CGRectZero;
 
-  self.labels = @[
-    raisedButtonLabel, disabledRaisedButtonLabel, flatButtonLabel, disabledFlatButtonLabel,
-    strokedButtonLabel, disabledStrokedButtonLabel, floatingButtonLabel
-  ];
+  void (^preiOS11Behavior)(void) = ^{
+    CGRect safeAreaBounds;
+    CGRectDivide(bounds,
+                 &safeAreaBounds,
+                 &contentBounds,
+                 self.topLayoutGuide.length,
+                 CGRectMinYEdge);
+  };
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if ([self.view respondsToSelector:@selector(safeAreaInsets)]) {
+    UIEdgeInsets safeAreaInsets = self.view.safeAreaInsets;
+    contentBounds = UIEdgeInsetsInsetRect(bounds, safeAreaInsets);
+
+  } else {
+    preiOS11Behavior();
+  }
+#else
+  preiOS11Behavior();
+#endif
+
+  return contentBounds;
 }
 
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
 
-  CGFloat centerX = CGRectGetMidX(self.view.bounds);
+  CGRect contentBounds = [self contentBounds];
+  CGFloat centerX = CGRectGetMidX(contentBounds);
   [self layoutButtonsInRange:NSMakeRange(0, self.buttons.count) around:centerX];
 
   UIView *lastButton = self.buttons.lastObject;
   CGFloat lastButtonMaxY = (CGRectGetHeight(lastButton.bounds) / 2) + lastButton.center.y;
-  if (lastButtonMaxY > CGRectGetHeight(self.view.bounds)) {
-    CGFloat columnOffset = CGRectGetWidth(self.view.bounds) / 4;
+  if (lastButtonMaxY > CGRectGetMaxY(contentBounds)) {
+    CGFloat columnOffset = CGRectGetWidth(contentBounds) / 4;
     NSUInteger splitIndex = (NSUInteger)ceil(self.buttons.count / 2);
 
     if (((MDCButton *)self.buttons[splitIndex - 1]).enabled) {
@@ -100,8 +129,10 @@
 
 - (void)layoutButtonsInRange:(NSRange)range around:(CGFloat)centerX {
   CGFloat heightSum = 0;
-  CGFloat viewHeight = CGRectGetHeight(self.view.bounds);
+  CGRect contentBounds = [self contentBounds];
+  CGFloat viewHeight = CGRectGetHeight(contentBounds);
 
+  // Calculate the overall height of the labels + buttons
   for (NSUInteger i = range.location; i < NSMaxRange(range); i++) {
     MDCButton *button = self.buttons[i];
     UILabel *label = self.labels[i];
@@ -117,9 +148,11 @@
     }
   }
 
+  // Center the labels and buttons within the content bounds
   MDCButton *lastButton = self.buttons[NSMaxRange(range) - 1];
   CGFloat verticalCenterY =
       (viewHeight - (lastButton.center.y + (CGRectGetHeight(lastButton.bounds) / 2))) / 2;
+  verticalCenterY += CGRectGetMinY(contentBounds);
   for (NSUInteger i = range.location; i < NSMaxRange(range); i++) {
     MDCButton *button = self.buttons[i];
     UILabel *label = self.labels[i];

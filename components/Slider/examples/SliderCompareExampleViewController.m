@@ -16,14 +16,24 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialColorScheme.h"
 #import "MaterialMath.h"
 #import "MaterialSlider.h"
+#import "MaterialSlider+ColorThemer.h"
 
 @interface SliderCompareExampleViewController : UIViewController
-
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @end
 
 @implementation SliderCompareExampleViewController
+
+- (id)init {
+  self = [super init];
+  if (self) {
+    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+  }
+  return self;
+}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -31,6 +41,8 @@
 
   // Load your Material Component here.
   MDCSlider *slider = [[MDCSlider alloc] initWithFrame:CGRectMake(0, 0, 100, 27)];
+  slider.statefulAPIEnabled = YES;
+  [MDCSliderColorThemer applySemanticColorScheme:self.colorScheme toSlider:slider];
   [slider addTarget:self
                 action:@selector(didChangeMDCSliderValue:)
       forControlEvents:UIControlEventValueChanged];
@@ -80,7 +92,7 @@
 }
 
 + (BOOL)catalogIsPresentable {
-  return YES;
+  return NO;
 }
 
 @end

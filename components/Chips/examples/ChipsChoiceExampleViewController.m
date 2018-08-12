@@ -17,38 +17,79 @@
 #import "ChipsExamplesSupplemental.h"
 
 #import "MaterialChips.h"
+#import "MaterialChips+ChipThemer.h"
+
+@interface ChipsChoiceExampleViewController ()
+@property(nonatomic, strong) MDCChipView *sizingChip;
+@property(nonatomic, assign, getter=isOutlined) BOOL outlined;
+@end
 
 @implementation ChipsChoiceExampleViewController
+
+- (id)init {
+  self = [super init];
+  if (self) {
+    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+  }
+  return self;
+}
 
 - (void)loadView {
   [super loadView];
   self.view.backgroundColor = [UIColor whiteColor];
 
-  CGSize estimatedItemSize = CGSizeMake(60, 33);
-  CGRect collectionStartingRect = CGRectMake(0, 0, 100, estimatedItemSize.height);
+  // This is used to calculate the size of each chip based on the chip setup
+  _sizingChip = [[MDCChipView alloc] init];
 
-  UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-  layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-  layout.minimumInteritemSpacing = 10.0f;
-  layout.estimatedItemSize = estimatedItemSize;
+  // Our preferred CollectionView Layout For chips
+  MDCChipCollectionViewFlowLayout *layout = [[MDCChipCollectionViewFlowLayout alloc] init];
+  layout.minimumInteritemSpacing = 10;
 
-  _collectionView = [[UICollectionView alloc] initWithFrame:collectionStartingRect
-                                       collectionViewLayout:layout];
+  _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
+
+  // Since there is no scrolling turning off the delaysContentTouches makes the cells respond faster
+  _collectionView.delaysContentTouches = NO;
+
+  // Collection view setup
   _collectionView.dataSource = self;
   _collectionView.delegate = self;
   _collectionView.backgroundColor = [UIColor whiteColor];
-  _collectionView.delaysContentTouches = NO;
-  _collectionView.clipsToBounds = NO;
+  _collectionView.contentInset = UIEdgeInsetsMake(20, 20, 20, 20);
   [_collectionView registerClass:[MDCChipCollectionViewCell class]
-          forCellWithReuseIdentifier:@"Cell"];
+      forCellWithReuseIdentifier:@"Cell"];
 
   [self.view addSubview:_collectionView];
+}
+
+- (void)viewDidLoad {
+  [super viewDidLoad];
+
+  self.outlined = NO;
+  self.navigationItem.rightBarButtonItem =
+      [[UIBarButtonItem alloc] initWithTitle:@"Outlined Style"
+                                       style:UIBarButtonItemStylePlain
+                                      target:self
+                                      action:@selector(switchStyle)];
+}
+
+
+- (void)switchStyle {
+  self.outlined = !self.isOutlined;
+  NSString *buttonTitle = self.isOutlined ? @"Filled Style" : @"Outlined Style";
+  [self.navigationItem.rightBarButtonItem setTitle:buttonTitle];
+  NSArray *indexPaths = [_collectionView indexPathsForSelectedItems];
+  [_collectionView reloadData];
+  for (NSIndexPath *path in indexPaths) {
+    [_collectionView selectItemAtIndexPath:path
+                                  animated:NO
+                            scrollPosition:UICollectionViewScrollPositionNone];
+  }
 }
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
 
-  _collectionView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 33);
+  _collectionView.frame = self.view.bounds;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
@@ -60,8 +101,32 @@
                            cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   MDCChipCollectionViewCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
-  cell.chipView.titleLabel.text = self.titles[indexPath.row];
+  MDCChipView *chipView = cell.chipView;
+
+  // Customize Chip
+  chipView.titleLabel.text = self.titles[indexPath.row];
+  chipView.enabled = indexPath.row != 2;
+  cell.userInteractionEnabled = indexPath.row != 2;
+
+  MDCChipViewScheme *scheme = [[MDCChipViewScheme alloc] init];
+  scheme.colorScheme = self.colorScheme;
+  
+  if (self.isOutlined) {
+    [MDCChipViewThemer applyOutlinedVariantWithScheme:scheme toChipView:chipView];
+  } else {
+    [MDCChipViewThemer applyScheme:scheme toChipView:chipView];
+  }
+
   return cell;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                  layout:(UICollectionViewLayout*)collectionViewLayout
+  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+
+  // The size of the chip depends on title here.
+  self.sizingChip.titleLabel.text = self.titles[indexPath.row];
+  return [self.sizingChip sizeThatFits:collectionView.bounds.size];
 }
 
 - (NSArray *)titles {

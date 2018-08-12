@@ -151,7 +151,7 @@ cut_release() {
     # Add the new changelog contents in reverse order:
     echo -e "\n---\n" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
     generate_release_notes | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
-    echo -e "## Component changes\n" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
+    echo -e "\n## Component changes" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
     cat "$CHANGELOG_PATH" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
     echo -e "## API changes" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
     echo -e "## New features\n" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
@@ -429,7 +429,11 @@ generate_release_apidiff() {
   }
 
   # Verify commits
-  old_commit=$(git rev-list -n 1 origin/stable)
+  if [ -n "$1" ]; then
+    old_commit=$(git rev-list -n 1 $1)
+  else
+    old_commit=$(git rev-list -n 1 origin/stable)
+  fi
   new_commit=$(git rev-list -n 1 $(get_latest_branch))
 
   if [[ -z "$old_commit" || -z "$new_commit" ]]; then
@@ -476,12 +480,14 @@ generate_release_apidiff() {
   echo "Errors=$ALL_ERROR_LOG_PATH"
 
   # Run new pathdiff script on each umbrella header in array
-  for path_to_component in $(generate_release_components | grep -v "private"); do
-    component=$(basename $path_to_component)
+  for umbrella_header_path in $(generate_release_umbrella_headers "$old_commit" | grep -v "private"); do
+    umbrella_header=$(basename "$umbrella_header_path")
+    component=$(echo "$umbrella_header" | cut -d'.' -f1 | sed 's:^Material::')
+    component_path=$(dirname "$umbrella_header_path")
 
-    echo -n "Diffing $component..."
+    echo -n "Diffing $component ($component_path)..."
 
-    if [ ! -d "$OLD_ROOT_PATH/components/$path_to_component/src" ]; then
+    if [ ! -f "$OLD_ROOT_PATH/$umbrella_header_path" ]; then
       echo >> $ALL_CHANGELOG_PATH
       echo "### $component" >> $ALL_CHANGELOG_PATH
       echo >> $ALL_CHANGELOG_PATH
@@ -495,7 +501,7 @@ generate_release_apidiff() {
     ERROR_PATH="$TMP_PATH/${component}errlog"
 
     "$dir/external/material-motion-apidiff/src/pathapidiff" \
-       "$OLD_ROOT_PATH" "$NEW_ROOT_PATH" objc "/components/$component/src/Material$component.h" \
+       "$OLD_ROOT_PATH" "$NEW_ROOT_PATH" objc "/$umbrella_header_path" \
        >> "$CHANGES_PATH" \
        2>> "$ERROR_PATH"
 
@@ -521,12 +527,26 @@ generate_release_authors() {
 }
 
 generate_release_components() {
-  git diff --name-only origin/stable..$(get_latest_branch) components/ \
+  if [ -n "$1" ]; then
+    old_commit="$1"
+  else
+    old_commit=origin/stable
+  fi
+  git diff --name-only "$old_commit"..$(get_latest_branch) components/ \
     | grep "src/" | cut -d'/' -f2- | rev | cut -d'/' -f3- | rev | sed 's|/src||' | sort | uniq
 }
 
 generate_release_files() {
   git diff --name-only origin/stable..$(get_latest_branch) components/
+}
+
+generate_release_umbrella_headers() {
+  for file in $(generate_release_files); do
+    file_dir=$(dirname $file)
+    if ls "$file_dir"/Material*.h 1> /dev/null 2>&1; then
+      ls "$file_dir"/Material*.h | grep -v "_table"
+    fi
+  done | sort | uniq
 }
 
 generate_release_headers() {
@@ -606,6 +626,10 @@ generate_release_source() {
     | grep "src/"
 }
 
+generate_release_stories() {
+  generate_release_log | grep -i pivotal
+}
+
 if [ $# -eq 0 ]; then
   usage
   exit 1
@@ -638,15 +662,17 @@ case "$1" in
   publish)    publish_release ${@:2} ;;
   podspec)    publish_podspec ${@:2} ;;
 
-  apidiff)    generate_release_apidiff ${@:2} ;;
+  apidiff)    generate_release_apidiff ${@:2} ;; # args: [base sha]
   authors)    generate_release_authors ${@:2} ;;
-  components) generate_release_components ${@:2} ;;
+  components) generate_release_components ${@:2} ;; # args: [base sha]
   diff)       generate_release_diff ${@:2} ;;
   files)      generate_release_files ${@:2} ;;
   headers)    generate_release_headers ${@:2} ;;
   log)        generate_release_log ${@:2} ;;
   notes)      generate_release_notes ${@:2} ;;
   source)     generate_release_source ${@:2} ;;
+  stories)    generate_release_stories ${@:2} ;;
+  umbrellas)  generate_release_umbrella_headers ${@:2} ;;
 
   abort)      abort_release ${@:2} ;;
 

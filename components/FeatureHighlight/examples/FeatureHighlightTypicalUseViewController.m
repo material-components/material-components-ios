@@ -15,20 +15,36 @@
  */
 
 #import "MaterialFeatureHighlight.h"
-#import "MDCFeatureHighlightAccessibilityMutator.h"
+#import "MaterialFeatureHighlight+ColorThemer.h"
+#import "MaterialFeatureHighlight+TypographyThemer.h"
 #import "supplemental/FeatureHighlightExampleSupplemental.h"
 
 @implementation FeatureHighlightTypicalUseViewController
 
+- (id)init {
+  self = [super init];
+  if (self) {
+    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.typographyScheme = [[MDCTypographyScheme alloc] init];
+  }
+  return self;
+}
+
 - (void)didTapButton:(id)sender {
   MDCFeatureHighlightViewController *vc =
       [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_button completion:nil];
-  [MDCFeatureHighlightAccessibilityMutator mutate:vc];
+  [MDCFeatureHighlightColorThemer applySemanticColorScheme:self.colorScheme
+                          toFeatureHighlightViewController:vc];
+  [MDCFeatureHighlightTypographyThemer applyTypographyScheme:self.typographyScheme
+                            toFeatureHighlightViewController:vc];
 
-  vc.featureHighlightView.mdc_adjustsFontForContentSizeCategory = YES;
+  vc.mdc_adjustsFontForContentSizeCategory = YES;
 
   vc.titleText = @"Hey this is a multi-line title for the Feature Highlight";
   vc.bodyText = @"This is the description of the feature highlight view controller.";
+  // TODO(https://github.com/material-components/material-components-ios/issues/3644 ):
+  // Disable the incorrect "Double tap" hint for now
+  vc.accessibilityHint = nil;
   [self presentViewController:vc animated:YES completion:nil];
 }
 

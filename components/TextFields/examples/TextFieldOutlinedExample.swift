@@ -21,6 +21,8 @@ import MaterialComponents.MaterialTextFields
 final class TextFieldOutlinedSwiftExample: UIViewController {
 
   let scrollView = UIScrollView()
+  var colorScheme = MDCSemanticColorScheme()
+  var typographyScheme = MDCTypographyScheme()
 
   let name: MDCTextField = {
     let name = MDCTextField()
@@ -80,6 +82,18 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
 
   var allTextFieldControllers = [MDCTextInputControllerFloatingPlaceholder]()
 
+  let leadingImage: UIImage = {
+    return UIImage.init(named: "ic_search",
+                        in: Bundle(for: TextFieldOutlinedSwiftExample.self),
+                        compatibleWith: nil)!
+  }()
+
+  let trailingImage: UIImage = {
+    return UIImage.init(named: "ic_done",
+                        in: Bundle(for: TextFieldOutlinedSwiftExample.self),
+                        compatibleWith: nil)!
+  }()
+
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     cityController = MDCTextInputControllerOutlined(textInput: city)
     stateController = MDCTextInputControllerOutlined(textInput: state)
@@ -109,6 +123,10 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
     let nameController = MDCTextInputControllerOutlined(textInput: name)
     name.delegate = self
     name.text = "Grace Hopper"
+    name.leadingView = UIImageView(image: leadingImage)
+    name.leadingViewMode = .always
+    name.trailingView = UIImageView(image: trailingImage)
+    name.trailingViewMode = .always
     nameController.placeholderText = "Name"
     nameController.helperText = "First and Last"
     allTextFieldControllers.append(nameController)
@@ -167,6 +185,7 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
     var tag = 0
     for controller in allTextFieldControllers {
       guard let textField = controller.textInput as? MDCTextField else { continue }
+      style(textInputController: controller);
       textField.tag = tag
       tag += 1
     }
@@ -285,6 +304,11 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
     let margins = UIEdgeInsets(top: 0, left: marginOffset, bottom: 0, right: marginOffset)
 
     scrollView.layoutMargins = margins
+  }
+
+  func style(textInputController : MDCTextInputController) {
+    MDCOutlinedTextFieldColorThemer.applySemanticColorScheme(colorScheme, to: textInputController)
+    MDCTextFieldTypographyThemer.applyTypographyScheme(typographyScheme, to: textInputController)
   }
 
   func addGestureRecognizer() {
@@ -408,9 +432,5 @@ extension TextFieldOutlinedSwiftExample {
 extension TextFieldOutlinedSwiftExample {
   @objc class func catalogBreadcrumbs() -> [String] {
     return ["Text Field", "Outlined Fields & Text Areas"]
-  }
-
-  @objc class func catalogIsPresentable() -> Bool {
-    return true
   }
 }

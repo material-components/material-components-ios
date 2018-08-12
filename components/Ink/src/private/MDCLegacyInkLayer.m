@@ -323,7 +323,7 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
     _foregroundScaleAnim.duration = kInkLayerForegroundBoundedRadiusExitDuration;
   } else {
     NSNumber *opacityVal = [self.presentationLayer valueForKeyPath:kInkLayerOpacity];
-    if (!opacityVal) {
+    if (opacityVal == nil) {
       opacityVal = [NSNumber numberWithFloat:0];
     }
     CGFloat adjustedDuration = kInkLayerForegroundBoundedPositionExitDuration;
@@ -333,7 +333,7 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
     _foregroundOpacityAnim.duration = opacityDuration + adjustedDuration;
 
     NSNumber *scaleVal = [self.presentationLayer valueForKeyPath:kInkLayerScale];
-    if (!scaleVal) {
+    if (scaleVal == nil) {
       scaleVal = [NSNumber numberWithFloat:0];
     }
     CGFloat unboundedDuration = (CGFloat)sqrt(((1.f - scaleVal.floatValue) * self.radius) /
@@ -388,7 +388,7 @@ static CGFloat const kInkLayerBackgroundFastEnterDuration = 0.12f;
 static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim";
 
 @interface MDCLegacyInkLayerBackgroundRipple ()
-@property(nonatomic, strong, nonnull) CAKeyframeAnimation *backgroundOpacityAnim;
+@property(nonatomic, strong, nullable) CAKeyframeAnimation *backgroundOpacityAnim;
 @end
 
 @implementation MDCLegacyInkLayerBackgroundRipple
@@ -423,7 +423,7 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   }
 
   NSNumber *opacityVal = [self.presentationLayer valueForKeyPath:kInkLayerOpacity];
-  if (!opacityVal) {
+  if (opacityVal == nil) {
     opacityVal = [NSNumber numberWithFloat:0];
   }
   CGFloat duration = kInkLayerBackgroundBaseOpacityExitDuration;

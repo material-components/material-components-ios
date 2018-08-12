@@ -20,9 +20,10 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 
 #import "MaterialButtons.h"
+#import "MaterialButtons+ButtonThemer.h"
 #import "MaterialTypography.h"
 
-// https://material.io/guidelines/components/dialogs.html#dialogs-specs
+// https://material.io/go/design-dialogs#dialogs-specs
 static const MDCFontTextStyle kTitleTextStyle = MDCFontTextStyleTitle;
 static const MDCFontTextStyle kMessageTextStyle = MDCFontTextStyleBody1;
 static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
@@ -32,9 +33,10 @@ static const CGFloat MDCDialogContentVerticalPadding = 20.0;
 
 static const UIEdgeInsets MDCDialogActionsInsets = {8.0, 8.0, 8.0, 8.0};
 static const CGFloat MDCDialogActionsHorizontalPadding = 8.0;
-static const CGFloat MDCDialogActionsVerticalPadding = 8.0;
+static const CGFloat MDCDialogActionsVerticalPadding = 12.0;
 static const CGFloat MDCDialogActionButtonHeight = 36.0;
 static const CGFloat MDCDialogActionButtonMinimumWidth = 48.0;
+static const CGFloat MDCDialogActionMinTouchTarget = 48.f;
 
 static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
@@ -48,8 +50,9 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 @end
 
 @implementation MDCAlertControllerView {
-    NSMutableArray<MDCFlatButton *> *_actionButtons;
+    NSMutableArray<MDCButton *> *_actionButtons;
     BOOL _mdc_adjustsFontForContentSizeCategory;
+    MDCButtonScheme *buttonScheme;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -87,7 +90,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     }
     self.messageLabel.textColor = [UIColor colorWithWhite:0.0f alpha:MDCDialogMessageOpacity];
     [self.contentScrollView addSubview:self.messageLabel];
-
+    buttonScheme = [[MDCButtonScheme alloc] init];
     _actionButtons = [[NSMutableArray alloc] init];
 
     [self setNeedsLayout];
@@ -114,8 +117,9 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   [self setNeedsLayout];
 }
 
-- (void)addActionButtonTitle:(NSString *)actionTitle selector:(SEL)selector {
-  MDCFlatButton *actionButton = [[MDCFlatButton alloc] initWithFrame:CGRectZero];
+- (void)addActionButtonTitle:(NSString *)actionTitle target:(id)target selector:(SEL)selector {
+  MDCButton *actionButton = [[MDCButton alloc] initWithFrame:CGRectZero];
+  [MDCTextButtonThemer applyScheme:buttonScheme toButton:actionButton];
   actionButton.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
   [actionButton setTitle:actionTitle forState:UIControlStateNormal];
   if (_buttonColor) {
@@ -129,7 +133,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   buttonRect.size.height = MAX(buttonRect.size.height, MDCDialogActionButtonHeight);
   buttonRect.size.width = MAX(buttonRect.size.width, MDCDialogActionButtonMinimumWidth);
   actionButton.frame = buttonRect;
-  [actionButton addTarget:nil
+  [actionButton addTarget:target
                    action:selector
          forControlEvents:UIControlEventTouchUpInside];
   [self.actionsScrollView addSubview:actionButton];
@@ -143,47 +147,23 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   [self updateTitleFont];
 }
 
-
 - (void)updateTitleFont {
-  // If we have a custom font apply it to the label.
-  // If not, fall back to the Material specified font.
-  if (_titleFont) {
-    // If we are automatically adjusting for Dynamic Type resize the font based on the text style
-    if (_mdc_adjustsFontForContentSizeCategory) {
-      _titleLabel.font =
-      [_titleFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
-                               scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
-    } else {
-      _titleLabel.font = _titleFont;
-    }
+  UIFont *titleFont = _titleFont ?: [[self class] titleFontDefault];
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    _titleLabel.font =
+    [titleFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
+                            scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
   } else {
-    // TODO(#2709): Migrate to a single source of truth for fonts
-    // There is no custom font, so use the default font.
-    if (_mdc_adjustsFontForContentSizeCategory) {
-      // If we are using the default (system) font loader, retrieve the
-      // font from the UIFont preferredFont API.
-      if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-        _titleLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:kTitleTextStyle];
-      } else {
-        // There is a custom font loader, retrieve the font and scale it.
-        UIFont *customTypographyFont = [MDCTypography titleFont];
-        _titleLabel.font =
-        [customTypographyFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
-                                           scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
-      }
-    } else {
-      // If we are using the default (system) font loader, retrieve the
-      // font from the UIFont standardFont API.
-      if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-        _titleLabel.font = [UIFont mdc_standardFontForMaterialTextStyle:kTitleTextStyle];
-      } else {
-        // There is a custom font loader, retrieve the font from it.
-        _titleLabel.font = [MDCTypography titleFont];
-      }
-    }
+    _titleLabel.font = titleFont;
   }
-
   [self setNeedsLayout];
+}
+
++ (UIFont *)titleFontDefault {
+  if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
+    return [UIFont mdc_standardFontForMaterialTextStyle:kTitleTextStyle];
+  }
+  return [MDCTypography titleFont];
 }
 
 - (void)setTitleColor:(UIColor *)titleColor {
@@ -209,45 +189,22 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 }
 
 - (void)updateMessageFont {
-  // If we have a custom font apply it to the label.
-  // If not, fall back to the Material specified font.
-  if (_messageFont) {
-    if (_mdc_adjustsFontForContentSizeCategory) {
-      // If we are automatically adjusting for Dynamic Type resize the font based on the text style
-      _messageLabel.font =
-          [_messageFont mdc_fontSizedForMaterialTextStyle:kMessageTextStyle
-                                     scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
-    } else {
-      _messageLabel.font = _messageFont;
-    }
+  UIFont *messageFont = _messageFont ?: [[self class] messageFontDefault];
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    _messageLabel.font =
+        [messageFont mdc_fontSizedForMaterialTextStyle:kMessageTextStyle
+                                scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
   } else {
-    // TODO(#2709): Migrate to a single source of truth for fonts
-    // There is no custom font, so use the default font.
-    if (_mdc_adjustsFontForContentSizeCategory) {
-      // If we are using the default (system) font loader, retrieve the
-      // font from the UIFont preferredFont API.
-      if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-        _messageLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:kMessageTextStyle];
-      } else {
-        // There is a custom font loader, retrieve the font and scale it.
-        UIFont *customTypographyFont = [MDCTypography body1Font];
-        _messageLabel.font =
-        [customTypographyFont mdc_fontSizedForMaterialTextStyle:kMessageTextStyle
-                                           scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
-      }
-    } else {
-      // If we are using the default (system) font loader, retrieve the
-      // font from the UIFont standardFont API.
-      if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-        _messageLabel.font = [UIFont mdc_standardFontForMaterialTextStyle:kMessageTextStyle];
-      } else {
-        // There is a custom font loader, retrieve the font from it.
-        _messageLabel.font = [MDCTypography body1Font];
-      }
-    }
+    _messageLabel.font = messageFont;
   }
-
   [self setNeedsLayout];
+}
+
++ (UIFont *)messageFontDefault {
+  if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
+    return [UIFont mdc_standardFontForMaterialTextStyle:kMessageTextStyle];
+  }
+  return [MDCTypography body1Font];
 }
 
 - (void)setMessageColor:(UIColor *)messageColor {
@@ -263,56 +220,31 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 }
 
 - (void)updateButtonFont {
-  // If we have a custom font apply it.
-  // If not, fall back to the Material specified font.
-  UIFont *finalButtonFont;
-  if (_buttonFont) {
-    // If we are automatically adjusting for Dynamic Type resize the font based on the text style
-    if (_mdc_adjustsFontForContentSizeCategory) {
-      finalButtonFont =
-          [_buttonFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
-                                    scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
-    } else {
-      finalButtonFont = _buttonFont;
-    }
-  } else {
-    // TODO(#2709): Migrate to a single source of truth for fonts
-    // There is no custom font, so use the default font.
-    if (_mdc_adjustsFontForContentSizeCategory) {
-      // If we are using the default (system) font loader, retrieve the
-      // font from the UIFont preferredFont API.
-      if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-        finalButtonFont = [UIFont mdc_preferredFontForMaterialTextStyle:kButtonTextStyle];
-      } else {
-        // There is a custom font loader, retrieve the font and scale it.
-        UIFont *customTypographyFont = [MDCTypography titleFont];
-        finalButtonFont =
-            [customTypographyFont mdc_fontSizedForMaterialTextStyle:kButtonTextStyle
-                 scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
-      }
-    } else {
-      // If we are using the default (system) font loader, retrieve the
-      // font from the UIFont standardFont API.
-      if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-        finalButtonFont = [UIFont mdc_standardFontForMaterialTextStyle:kButtonTextStyle];
-      } else {
-        // There is a custom font loader, retrieve the font from it.
-        finalButtonFont = [MDCTypography titleFont];
-      }
-    }
+  UIFont *finalButtonFont = _buttonFont ?: [[self class] buttonFontDefault];
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    finalButtonFont =
+        [finalButtonFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
+                                scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
   }
-
-  for (MDCFlatButton *button in self.actionButtons) {
+  for (MDCButton *button in self.actionButtons) {
     [button setTitleFont:finalButtonFont forState:UIControlStateNormal];
   }
 
   [self setNeedsLayout];
 }
 
++ (UIFont *)buttonFontDefault {
+  if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
+    return [UIFont mdc_standardFontForMaterialTextStyle:kButtonTextStyle];
+  }
+  return [MDCTypography titleFont];
+}
+
+
 - (void)setButtonColor:(UIColor *)color {
   _buttonColor = color;
 
-  for (MDCFlatButton *button in self.actionButtons) {
+  for (MDCButton *button in self.actionButtons) {
     [button setTitleColor:_buttonColor forState:UIControlStateNormal];
   }
 }
@@ -327,7 +259,8 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     MDCDialogActionsInsets.top + MDCDialogActionButtonHeight + MDCDialogActionsInsets.bottom;
     size.width = MDCDialogActionsInsets.left + MDCDialogActionsInsets.right;
     for (UIButton *button in self.actionButtons) {
-      size.width += CGRectGetWidth(button.bounds);
+      CGSize buttonSize = [button sizeThatFits:size];
+      size.width += buttonSize.width;
       if (button != [self.actionButtons lastObject]) {
         size.width += MDCDialogActionsHorizontalPadding;
       }
@@ -343,8 +276,10 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     size.height = MDCDialogActionsInsets.top + MDCDialogActionsInsets.bottom;
     size.width = MDCDialogActionsInsets.left + MDCDialogActionsInsets.right;
     for (UIButton *button in self.actionButtons) {
-      size.height += CGRectGetHeight(button.bounds);
-      size.width = MAX(size.width, CGRectGetWidth(button.bounds));
+      CGSize buttonSize = [button sizeThatFits:size];
+      buttonSize.height = MAX(buttonSize.height, MDCDialogActionButtonHeight);
+      size.height += buttonSize.height;
+      size.width = MAX(size.width, buttonSize.width);
       if (button != [self.actionButtons lastObject]) {
         size.height += MDCDialogActionsVerticalPadding;
       }
@@ -423,8 +358,22 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  for (UIButton *button in self.actionButtons) {
+  for (MDCButton *button in self.actionButtons) {
     [button sizeToFit];
+    CGRect buttonFrame = button.frame;
+    buttonFrame.size.width =
+        MAX(CGRectGetWidth(buttonFrame), MDCDialogActionButtonMinimumWidth);
+    buttonFrame.size.height =
+        MAX(CGRectGetHeight(buttonFrame), MDCDialogActionButtonHeight);
+    button.frame = buttonFrame;
+    CGFloat verticalInsets = (CGRectGetHeight(button.frame) - MDCDialogActionMinTouchTarget) / 2;
+    CGFloat horizontalInsets = (CGRectGetWidth(button.frame) - MDCDialogActionMinTouchTarget) / 2;
+    verticalInsets = MIN(0, verticalInsets);
+    horizontalInsets = MIN(0, horizontalInsets);
+    button.hitAreaInsets = UIEdgeInsetsMake(verticalInsets,
+                                            horizontalInsets,
+                                            verticalInsets,
+                                            horizontalInsets);
   }
 
   // Used to calculate the height of the scrolling content, so we limit the width.
@@ -567,15 +516,15 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
   _mdc_adjustsFontForContentSizeCategory = adjusts;
 
-  for (MDCFlatButton *button in _actionButtons) {
+  for (MDCButton *button in _actionButtons) {
     button.mdc_adjustsFontForContentSizeCategory = adjusts;
   }
 
-  [self updateFontsForDynamicType];
+  [self updateFonts];
 }
 
 // Update the fonts used based on whether Dynamic Type is enabled
-- (void)updateFontsForDynamicType {
+- (void)updateFonts {
   [self updateTitleFont];
   [self updateMessageFont];
   [self updateButtonFont];

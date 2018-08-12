@@ -15,15 +15,22 @@ limitations under the License.
 */
 
 import Foundation
-import MaterialComponents
+import MaterialComponents.MaterialAppBar
+import MaterialComponents.MaterialAppBar_ColorThemer
 
 class AppBarImagerySwiftExample: UITableViewController {
-  let appBar = MDCAppBar()
+  let appBarViewController = MDCAppBarViewController()
+  var colorScheme = MDCSemanticColorScheme()
+
+  deinit {
+    // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
+    appBarViewController.headerView.trackingScrollView = nil
+  }
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    let headerView = appBar.headerViewController.headerView
+    let headerView = appBarViewController.headerView
 
     // Create our custom image view and add it to the header view.
     let imageView = UIImageView(image: self.headerBackgroundImage())
@@ -41,22 +48,21 @@ class AppBarImagerySwiftExample: UITableViewController {
     // The header view does not clip to bounds by default so we ensure that the image is clipped.
     imageView.clipsToBounds = true
 
-    // We want navigation bar + status bar tint color to be white, so we set tint color here and
-    // implement -preferredStatusBarStyle.
-    appBar.navigationBar.tintColor = UIColor.white
-    appBar.navigationBar.titleTextAttributes =
-      [ NSForegroundColorAttributeName: UIColor.white ]
+    MDCAppBarColorThemer.applyColorScheme(colorScheme, to: appBarViewController)
 
     // Make sure navigation bar background color is clear so the image view is visible.
-    appBar.navigationBar.backgroundColor = UIColor.clear
+    appBarViewController.navigationBar.backgroundColor = UIColor.clear
 
     // Allow the header to show more of the image.
     headerView.maximumHeight = 200
 
-    headerView.trackingScrollView = self.tableView
-    self.tableView.delegate = appBar.headerViewController
+    // Allows us to avoid forwarding events, but means we can't enable shift behaviors.
+    headerView.observesTrackingScrollViewScrollEvents = true
 
-    appBar.addSubviewsToParent()
+    headerView.trackingScrollView = self.tableView
+
+    view.addSubview(appBarViewController.view)
+    appBarViewController.didMove(toParentViewController: self)
   }
 
   override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -71,7 +77,11 @@ class AppBarImagerySwiftExample: UITableViewController {
 
     self.title = "Imagery (Swift)"
 
-    self.addChildViewController(appBar.headerViewController)
+    // Behavioral flags.
+    appBarViewController.inferTopSafeAreaInsetFromViewController = true
+    appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
+
+    self.addChildViewController(appBarViewController)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -98,11 +108,6 @@ extension AppBarImagerySwiftExample {
   func catalogShouldHideNavigation() -> Bool {
     return true
   }
-
-  @objc class func catalogIsPresentable() -> Bool {
-    return true
-  }
-  
 }
 
 // MARK: - Typical application code (not Material-specific)
@@ -121,7 +126,6 @@ extension AppBarImagerySwiftExample {
       if cell == nil {
         cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
       }
-      cell!.layoutMargins = UIEdgeInsets.zero
       return cell!
   }
 }

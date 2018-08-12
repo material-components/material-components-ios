@@ -40,9 +40,15 @@ typedef NS_OPTIONS(NSUInteger, MDCButtonBarLayoutPosition) {
 
  This view will register KVO listeners on the provided button items for the following properties:
 
+ - accessibilityHint
+ - accessibilityIdentifier
+ - accessibilityLabel
+ - accessibilityValue
  - enabled
- - title
  - image
+ - tag
+ - tintColor
+ - title
 
  If any of the above properties change, the MDCButtonBar will immediately reflect the change
  in the visible UIButton instance.
@@ -99,11 +105,56 @@ IB_DESIGNABLE
 @property(nonatomic) CGFloat buttonTitleBaseline;
 
 /**
+ Sets the title font for the given state for all buttons.
+
+ @param font The font that should be displayed on text buttons for the given state.
+ @param state The state for which the font should be displayed.
+ */
+- (void)setButtonsTitleFont:(nullable UIFont *)font forState:(UIControlState)state;
+
+/**
+ Returns the font set for @c state that was set by setButtonsTitleFont:forState:.
+
+ If no font has been set for a given state, the returned value will fall back to the value
+ set for UIControlStateNormal.
+
+ @param state The state for which the font should be returned.
+ @return The font associated with the given state.
+ */
+- (nullable UIFont *)buttonsTitleFontForState:(UIControlState)state;
+
+/**
+ Sets the title label color for the given state for all buttons.
+
+ @param color The color that should be used on text buttons labels for the given state.
+ @param state The state for which the color should be used.
+ */
+- (void)setButtonsTitleColor:(nullable UIColor *)color forState:(UIControlState)state;
+
+/**
+ Returns the color set for @c state that was set by setButtonsTitleColor:forState:.
+
+ If no value has been set for a given state, the returned value will fall back to the value
+ set for UIControlStateNormal.
+
+ @param state The state for which the color should be returned.
+ @return The color associated with the given state.
+ */
+- (nullable UIColor *)buttonsTitleColorForState:(UIControlState)state;
+
+/**
  The position of the button bar, usually positioned on the leading or trailing edge of the screen.
 
  Default: MDCBarButtonLayoutPositionNone
  */
 @property(nonatomic) MDCButtonBarLayoutPosition layoutPosition;
+
+/**
+ The inkColor that is used for all buttons in the button bar.
+
+ If set to nil, button bar buttons use default ink color.
+ */
+@property(nonatomic, strong, nullable) UIColor *inkColor;
 
 /**
  Returns a height adhering to the Material spec for Bars and a width that is able to accommodate

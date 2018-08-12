@@ -28,20 +28,14 @@
 }
 
 + (void)mutateTitleColor:(MDCFeatureHighlightViewController *)featureHighlightViewController{
-  MDCFeatureHighlightView *featureHighlightView =
-      featureHighlightViewController.featureHighlightView;
-  if (![featureHighlightView isKindOfClass:[MDCFeatureHighlightView class]]) {
-    NSAssert(NO, @"FeatureHighlightViewController should have FeatureHighlightView");
-    return;
-  }
   MDFTextAccessibilityOptions options = MDFTextAccessibilityOptionsPreferLighter;
-  if ([MDFTextAccessibility isLargeForContrastRatios:featureHighlightView.titleFont]) {
+  if ([MDFTextAccessibility isLargeForContrastRatios:featureHighlightViewController.titleFont]) {
     options |= MDFTextAccessibilityOptionsLargeFont;
   }
 
-  UIColor *textColor = featureHighlightView.titleColor;
+  UIColor *textColor = featureHighlightViewController.titleColor;
   UIColor *backgroundColor =
-      [featureHighlightView.outerHighlightColor colorWithAlphaComponent:1.0f];
+      [featureHighlightViewController.outerHighlightColor colorWithAlphaComponent:1.0f];
   UIColor *titleColor =
       [MDCFeatureHighlightAccessibilityMutator accessibleColorForTextColor:textColor
                                                        withBackgroundColor:backgroundColor
@@ -57,25 +51,19 @@
                               onBackgroundColor:backgroundColor
                                         options:options];
   titleAlpha = MAX([MDCTypography titleFontOpacity], titleAlpha);
-  featureHighlightView.titleColor = [titleColor colorWithAlphaComponent:titleAlpha];
+  featureHighlightViewController.titleColor = [titleColor colorWithAlphaComponent:titleAlpha];
 }
 
 + (void)mutateBodyColor:(MDCFeatureHighlightViewController *)featureHighlightViewController {
-  MDCFeatureHighlightView *featureHighlightView =
-      featureHighlightViewController.featureHighlightView;
-  if (![featureHighlightView isKindOfClass:[MDCFeatureHighlightView class]]) {
-    NSAssert(NO, @"FeatureHighlightViewController should have FeatureHighlightView");
-    return;
-  }
   MDFTextAccessibilityOptions options = MDFTextAccessibilityOptionsPreferLighter;
-  if ([MDFTextAccessibility isLargeForContrastRatios:featureHighlightView.bodyFont]) {
+  if ([MDFTextAccessibility isLargeForContrastRatios:featureHighlightViewController.bodyFont]) {
     options |= MDFTextAccessibilityOptionsLargeFont;
   }
 
-  UIColor *textColor = featureHighlightView.bodyColor;
+  UIColor *textColor = featureHighlightViewController.bodyColor;
   UIColor *backgroundColor =
-      [featureHighlightView.outerHighlightColor colorWithAlphaComponent:1.0f];
-  featureHighlightView.bodyColor =
+      [featureHighlightViewController.outerHighlightColor colorWithAlphaComponent:1.0f];
+  featureHighlightViewController.bodyColor =
       [MDCFeatureHighlightAccessibilityMutator accessibleColorForTextColor:textColor
                                                        withBackgroundColor:backgroundColor
                                                                    options:options];

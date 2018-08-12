@@ -58,7 +58,7 @@ mdc_objc_library(
     ],
     deps = [
         ":ActivityIndicator",
-        "//components/Themes",
+        "//components/schemes/Color",
     ],
     visibility = ["//visibility:public"],
 )

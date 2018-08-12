@@ -17,11 +17,22 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialButtonBar.h"
+#import "MaterialColorScheme.h"
+#import "MaterialButtonBar+ColorThemer.h"
 
 @interface ButtonBarTypicalUseExample : UIViewController
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @end
 
 @implementation ButtonBarTypicalUseExample
+
+- (id)init {
+  self = [super init];
+  if (self) {
+    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+  }
+  return self;
+}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -42,16 +53,9 @@
                                       target:self
                                       action:@selector(didTapActionButton:)];
 
-  NSArray *items = @[ actionItem, secondActionItem ];
+  buttonBar.items = @[ actionItem, secondActionItem ];
 
-  // Set the title text attributes before assigning to buttonBar.items
-  // because of https://github.com/material-components/material-components-ios/issues/277
-  for (UIBarButtonItem *item in items) {
-    [item setTitleTextAttributes:@{ NSForegroundColorAttributeName : [UIColor whiteColor] }
-                        forState:UIControlStateNormal];
-  }
-
-  buttonBar.items = items;
+  [MDCButtonBarColorThemer applySemanticColorScheme:self.colorScheme toButtonBar:buttonBar];
 
   // MDCButtonBar's sizeThatFits gives a "best-fit" size of the provided items.
   CGSize size = [buttonBar sizeThatFits:self.view.bounds.size];
@@ -88,10 +92,6 @@
 + (NSString *)catalogDescription {
   return @"The Button Bar is a view that represents a list of UIBarButtonItems as"
           " horizontally-aligned buttons.";
-}
-
-+ (BOOL)catalogIsPresentable {
-  return YES;
 }
 
 @end

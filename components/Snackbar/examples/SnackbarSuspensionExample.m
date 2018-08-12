@@ -111,6 +111,51 @@ static NSString *const kCategoryB = @"CategoryB";
     case 2:
       [self showMessageWithPrefix:@"No Category Message" category:nil];
       break;
+    case 3: {
+      UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
+      if ([cell isKindOfClass:[MDCCollectionViewTextCell class]]) {
+        MDCCollectionViewTextCell *mdcCell = (MDCCollectionViewTextCell *)cell;
+        UIView *accessoryView = mdcCell.accessoryView;
+        if ([accessoryView isKindOfClass:[UISwitch class]]) {
+          UISwitch *theSwitch = (UISwitch *)accessoryView;
+          [theSwitch setOn:!theSwitch.isOn animated:YES];
+          cell.accessibilityValue = theSwitch.isOn ? @"on" : @"off";
+          cell.accessibilityLabel = mdcCell.textLabel.text;
+          [self setSuspendedGroupA:theSwitch.isOn];
+        }
+      }
+      break;
+    }
+    case 4: {
+      UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
+      if ([cell isKindOfClass:[MDCCollectionViewTextCell class]]) {
+        MDCCollectionViewTextCell *mdcCell = (MDCCollectionViewTextCell *)cell;
+        UIView *accessoryView = mdcCell.accessoryView;
+        if ([accessoryView isKindOfClass:[UISwitch class]]) {
+          UISwitch *theSwitch = (UISwitch *)accessoryView;
+          [theSwitch setOn:!theSwitch.isOn animated:YES];
+          cell.accessibilityValue = theSwitch.isOn ? @"on" : @"off";
+          cell.accessibilityLabel = mdcCell.textLabel.text;
+          [self setSuspendedGroupB:theSwitch.isOn];
+        }
+      }
+      break;
+    }
+    case 5: {
+      UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
+      if ([cell isKindOfClass:[MDCCollectionViewTextCell class]]) {
+        MDCCollectionViewTextCell *mdcCell = (MDCCollectionViewTextCell *)cell;
+        UIView *accessoryView = mdcCell.accessoryView;
+        if ([accessoryView isKindOfClass:[UISwitch class]]) {
+          UISwitch *theSwitch = (UISwitch *)accessoryView;
+          [theSwitch setOn:!theSwitch.isOn animated:YES];
+          cell.accessibilityValue = theSwitch.isOn ? @"on" : @"off";
+          cell.accessibilityLabel = mdcCell.textLabel.text;
+          [self setSuspendedAllMessages:theSwitch.isOn];
+        }
+      }
+      break;
+    }
     default:
       break;
   }

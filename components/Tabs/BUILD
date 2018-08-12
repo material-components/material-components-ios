@@ -58,7 +58,7 @@ mdc_objc_library(
     ],
     deps = [
         ":Tabs",
-        "//components/Themes",
+        "//components/schemes/Color",
     ],
     visibility = ["//visibility:public"],
 )
@@ -74,6 +74,21 @@ mdc_objc_library(
     deps = [
         ":Tabs",
         "//components/Themes",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
+    name = "TypographyThemer",
+    srcs = native.glob(["src/TypographyThemer/*.m"]),
+    hdrs = native.glob(["src/TypographyThemer/*.h"]),
+    includes = ["src/TypographyThemer"],
+    sdk_frameworks = [
+        "UIKit",
+    ],
+    deps = [
+        ":Tabs",
+        "//components/schemes/Typography",
     ],
     visibility = ["//visibility:public"],
 )
@@ -100,6 +115,7 @@ mdc_objc_library(
         ":Tabs",
         ":ColorThemer",
         ":FontThemer",
+        ":TypographyThemer",
         ":private",
     ],
     visibility = ["//visibility:private"],

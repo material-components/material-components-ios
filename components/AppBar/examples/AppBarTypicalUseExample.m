@@ -17,15 +17,24 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialAppBar.h"
+#import "MaterialAppBar+ColorThemer.h"
+#import "MaterialAppBar+TypographyThemer.h"
 
 @interface AppBarTypicalUseExample : UITableViewController
 
 // Step 1: Create an App Bar.
-@property(nonatomic, strong) MDCAppBar *appBar;
+@property(nonatomic, strong) MDCAppBarViewController *appBarViewController;
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 
 @end
 
 @implementation AppBarTypicalUseExample
+
+- (void)dealloc {
+  // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
+  self.appBarViewController.headerView.trackingScrollView = nil;
+}
 
 - (id)init {
   self = [super init];
@@ -33,19 +42,18 @@
     self.title = @"App Bar";
 
     // Step 2: Initialize the App Bar and add the headerViewController as a child.
-    _appBar = [[MDCAppBar alloc] init];
-    [self addChildViewController:_appBar.headerViewController];
+    _appBarViewController = [[MDCAppBarViewController alloc] init];
 
-    // Optional: Change the App Bar's background color and tint color.
-    UIColor *color = [UIColor colorWithWhite:0.2f alpha:1];
-    _appBar.headerViewController.headerView.backgroundColor = color;
-    _appBar.headerViewController.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabled;
-    [_appBar.headerViewController.headerView hideViewWhenShifted:_appBar.headerStackView];
+    // Behavioral flags.
+    _appBarViewController.inferTopSafeAreaInsetFromViewController = YES;
+    _appBarViewController.headerView.minMaxHeightIncludesSafeArea = NO;
 
-    _appBar.navigationBar.tintColor = [UIColor whiteColor];
-    _appBar.navigationBar.titleTextAttributes = @{
-                                            NSForegroundColorAttributeName : [UIColor whiteColor],
-                                            };
+    [self addChildViewController:_appBarViewController];
+
+    _appBarViewController.navigationBar.inkColor = [UIColor colorWithWhite:0.9f alpha:0.1f];
+
+    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;
 }
@@ -53,19 +61,23 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  // Recommended step: Set the tracking scroll view.
-  self.appBar.headerViewController.headerView.trackingScrollView = self.tableView;
+  [MDCAppBarColorThemer applyColorScheme:self.colorScheme
+                  toAppBarViewController:self.appBarViewController];
+  [MDCAppBarTypographyThemer applyTypographyScheme:self.typographyScheme
+                            toAppBarViewController:_appBarViewController];
 
-  // Choice: If you do not need to implement any delegate methods and you are not using a
-  //         collection view, you can use the headerViewController as the delegate.
-  // Alternative: See AppBarDelegateForwardingExample.
-  self.tableView.delegate = self.appBar.headerViewController;
+  // Need to update the status bar style after applying the theme.
+  [self setNeedsStatusBarAppearanceUpdate];
+
+  // Allows us to avoid forwarding events, but means we can't enable shift behaviors.
+  self.appBarViewController.headerView.observesTrackingScrollViewScrollEvents = YES;
+
+  // Recommended step: Set the tracking scroll view.
+  self.appBarViewController.headerView.trackingScrollView = self.tableView;
 
   // Step 3: Register the App Bar views.
-  [self.appBar addSubviewsToParent];
-
-  self.tableView.layoutMargins = UIEdgeInsetsZero;
-  self.tableView.separatorInset = UIEdgeInsetsZero;
+  [self.view addSubview:self.appBarViewController.view];
+  [self.appBarViewController didMoveToParentViewController:self];
 
   self.navigationItem.rightBarButtonItem =
       [[UIBarButtonItem alloc] initWithTitle:@"Right"
@@ -77,13 +89,13 @@
 // Optional step: If you allow the header view to hide the status bar you must implement this
 //                method and return the headerViewController.
 - (UIViewController *)childViewControllerForStatusBarHidden {
-  return self.appBar.headerViewController;
+  return self.appBarViewController;
 }
 
 // Optional step: The Header View Controller does basic inspection of the header view's background
 //                color to identify whether the status bar should be light or dark-themed.
 - (UIViewController *)childViewControllerForStatusBarStyle {
-  return self.appBar.headerViewController;
+  return self.appBarViewController;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -101,8 +113,7 @@
 }
 
 + (NSString *)catalogDescription {
-  return @"The App Bar is a flexible navigation bar designed to provide a typical Material Design"
-          " navigation experience.";
+  return @"The top app bar displays information and actions relating to the current view.";
 }
 
 + (BOOL)catalogIsPrimaryDemo {

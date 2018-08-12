@@ -20,15 +20,6 @@
 #import "private/MDCInkLayer.h"
 #import "private/MDCLegacyInkLayer.h"
 
-static NSString *const MDCInkViewAnimationDelegateKey = @"MDCInkViewAnimationDelegateKey";
-static NSString *const MDCInkViewInkStyleKey = @"MDCInkViewInkStyleKey";
-static NSString *const MDCInkViewUsesLegacyInkRippleKey = @"MDCInkViewUsesLegacyInkRippleKey";
-static NSString *const MDCInkViewMaskLayerKey = @"MDCInkViewMaskLayerKey";
-static NSString *const MDCInkViewUsesCustomInkCenterKey = @"MDCInkViewUsesCustomInkCenterKey";
-static NSString *const MDCInkViewCustomInkCenterKey = @"MDCInkViewCustomInkCenterKey";
-static NSString *const MDCInkViewInkColorKey = @"MDCInkViewInkColorKey";
-static NSString *const MDCInkViewMaxRippleRadiusKey = @"MDCInkViewMaxRippleRadiusKey";
-
 @interface MDCInkPendingAnimation : NSObject <CAAction>
 
 @property(nonatomic, weak) CALayer *animationSourceLayer;
@@ -69,57 +60,9 @@ static NSString *const MDCInkViewMaxRippleRadiusKey = @"MDCInkViewMaxRippleRadiu
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    if ([aDecoder containsValueForKey:MDCInkViewAnimationDelegateKey]) {
-      _animationDelegate = [aDecoder decodeObjectForKey:MDCInkViewAnimationDelegateKey];
-    }
-    if ([aDecoder containsValueForKey:MDCInkViewMaskLayerKey]) {
-      _maskLayer = [aDecoder decodeObjectForKey:MDCInkViewMaskLayerKey];
-      _maskLayer.delegate = self;
-    } else {
-      _maskLayer = [CAShapeLayer layer];
-      _maskLayer.delegate = self;
-    }
-    if ([aDecoder containsValueForKey:MDCInkViewUsesLegacyInkRippleKey]) {
-      _usesLegacyInkRipple = [aDecoder decodeBoolForKey:MDCInkViewUsesLegacyInkRippleKey];
-    } else {
-      _usesLegacyInkRipple = YES;
-    }
-    if ([aDecoder containsValueForKey:MDCInkViewInkStyleKey]) {
-      self.inkStyle = [aDecoder decodeIntegerForKey:MDCInkViewInkStyleKey];
-    }
-
-    // The following are derived properties, but `layer` may not have been encoded
-    if ([aDecoder containsValueForKey:MDCInkViewUsesCustomInkCenterKey]) {
-      self.usesCustomInkCenter = [aDecoder decodeBoolForKey:MDCInkViewUsesCustomInkCenterKey];
-    }
-    if ([aDecoder containsValueForKey:MDCInkViewCustomInkCenterKey]) {
-      self.customInkCenter = [aDecoder decodeCGPointForKey:MDCInkViewCustomInkCenterKey];
-    }
-    if ([aDecoder containsValueForKey:MDCInkViewMaxRippleRadiusKey]) {
-      self.maxRippleRadius = (CGFloat)[aDecoder decodeDoubleForKey:MDCInkViewMaxRippleRadiusKey];
-    }
-    if ([aDecoder containsValueForKey:MDCInkViewInkColorKey]) {
-      self.inkColor = [aDecoder decodeObjectOfClass:[UIColor class] forKey:MDCInkViewInkColorKey];
-    }
+    [self commonMDCInkViewInit];
   }
   return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [super encodeWithCoder:aCoder];
-
-  if (self.animationDelegate && [self.animationDelegate conformsToProtocol:@protocol(NSCoding)]) {
-    [aCoder encodeObject:self.animationDelegate forKey:MDCInkViewAnimationDelegateKey];
-  }
-  [aCoder encodeInteger:self.inkStyle forKey:MDCInkViewInkStyleKey];
-  [aCoder encodeBool:self.usesLegacyInkRipple forKey:MDCInkViewUsesLegacyInkRippleKey];
-  [aCoder encodeObject:self.maskLayer forKey:MDCInkViewMaskLayerKey];
-
-  // The following are derived properties, but `layer` may not get encoded by the superclass
-  [aCoder encodeBool:self.usesCustomInkCenter forKey:MDCInkViewUsesCustomInkCenterKey];
-  [aCoder encodeCGPoint:self.customInkCenter forKey:MDCInkViewCustomInkCenterKey];
-  [aCoder encodeDouble:self.maxRippleRadius forKey:MDCInkViewMaxRippleRadiusKey];
-  [aCoder encodeObject:self.inkColor forKey:MDCInkViewInkColorKey];
 }
 
 - (void)commonMDCInkViewInit {
@@ -142,7 +85,6 @@ static NSString *const MDCInkViewMaxRippleRadiusKey = @"MDCInkViewMaxRippleRadiu
   if (self.superview.layer.shadowPath) {
     self.maskLayer.path = self.superview.layer.shadowPath;
     self.layer.mask = _maskLayer;
-    self.layer.masksToBounds = YES;
   }
 
   CGRect inkBounds = CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
@@ -154,13 +96,6 @@ static NSString *const MDCInkViewMaxRippleRadiusKey = @"MDCInkViewMaxRippleRadiu
       MDCInkLayer *inkLayer = (MDCInkLayer *)layer;
       inkLayer.bounds = inkBounds;
     }
-  }
-
-  // If the superview has a shadowPath make sure ink does not spread outside of the shadowPath.
-  if (self.superview.layer.shadowPath) {
-    self.maskLayer.path = self.superview.layer.shadowPath;
-    self.layer.mask = _maskLayer;
-    self.layer.masksToBounds = YES;
   }
 }
 

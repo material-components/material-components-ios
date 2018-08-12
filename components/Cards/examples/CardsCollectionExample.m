@@ -125,12 +125,8 @@ canMoveItemAtIndexPath:(NSIndexPath *)indexPath {
   return NO;
 }
 
-+ (NSString *)catalogDescription {
-  return @"Material Cards.";
-}
-
 + (BOOL)catalogIsPresentable {
-  return YES;
+  return NO;
 }
 
 + (BOOL)catalogIsDebug {

@@ -16,7 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCFlexibleHeaderColorThemer.h"
+#import "MaterialFlexibleHeader+ColorThemer.h"
 #import "MaterialFlexibleHeader.h"
 #import "supplemental/FlexibleHeaderTypicalUseSupplemental.h"
 
@@ -54,6 +54,12 @@
 
 - (void)commonMDCFlexibleHeaderViewControllerInit {
   _fhvc = [[MDCFlexibleHeaderViewController alloc] initWithNibName:nil bundle:nil];
+
+  // Behavioral flags.
+  _fhvc.topLayoutGuideAdjustmentEnabled = YES;
+  _fhvc.inferTopSafeAreaInsetFromViewController = YES;
+  _fhvc.headerView.minMaxHeightIncludesSafeArea = NO;
+
   [self addChildViewController:_fhvc];
 }
 

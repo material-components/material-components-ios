@@ -15,6 +15,8 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "MaterialColorScheme.h"
+#import "MaterialTypographyScheme.h"
 
 @class MDCChipView;
 @class ChipModel;
@@ -26,6 +28,14 @@
     <UICollectionViewDelegate, UICollectionViewDataSource>
 @property(nonatomic, strong) NSArray<NSString *> *titles;
 @property(nonatomic, strong) UICollectionView *collectionView;
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+@end
+
+@interface ChipsActionExampleViewController : UIViewController
+    <UICollectionViewDelegate, UICollectionViewDataSource>
+@property(nonatomic, strong) NSArray<NSString *> *titles;
+@property(nonatomic, strong) UICollectionView *collectionView;
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @end
 
 @interface ChipsCollectionExampleViewController : ExampleChipCollectionViewController
@@ -46,6 +56,11 @@
 @interface ChipsFilterExampleViewController : UIViewController
     <UICollectionViewDelegate, UICollectionViewDataSource>
 @property(nonatomic, strong) NSArray<NSString *> *titles;
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+@end
+
+@interface ChipsFilterAnimatedExampleViewController : ChipsFilterExampleViewController
+<UICollectionViewDelegate, UICollectionViewDataSource>
 @end
 
 @interface ChipsFilterExampleViewController (Supplemental)
@@ -53,6 +68,7 @@
 @end
 
 @interface ChipsInputExampleViewController : UIViewController
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @end
 
 @interface ChipsSizingExampleViewController : UIViewController
@@ -66,10 +82,19 @@
 @interface ChipsTypicalUseViewController : ExampleChipCollectionViewController
     <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @property(nonatomic, strong) NSArray<ChipModel *> *model;
+@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 @end
 
 @interface ChipsTypicalUseViewController (Supplemental)
 - (UIImage *)doneImage;
+@end
+
+@interface ChipsShapingExampleViewController : UIViewController
+@end
+
+@interface ChipsShapingExampleViewController (Supplemental)
+- (UIImage *)faceImage;
+- (UIButton *)deleteButton;
 @end
 
 @interface ChipModel : NSObject

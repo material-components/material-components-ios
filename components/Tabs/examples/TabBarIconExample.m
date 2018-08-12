@@ -17,10 +17,24 @@
 #import "supplemental/TabBarIconExampleSupplemental.h"
 
 #import "MaterialAppBar.h"
-#import "MaterialPalettes.h"
+#import "MaterialColorScheme.h"
 #import "MaterialTabs.h"
+#import "MaterialTabs+ColorThemer.h"
+
+@interface TabBarIconExample ()
+@property(nonatomic, strong)UIBarButtonItem *addStarButtonItem;
+@end
 
 @implementation TabBarIconExample
+
+- (id)init {
+  self = [super init];
+  if (self) {
+    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.typographyScheme = [[MDCTypographyScheme alloc] init];
+  }
+  return self;
+}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -28,6 +42,11 @@
   [self setupExampleViews];
 
   [self loadTabBar];
+
+  self.addStarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add"
+                                                            style:UIBarButtonItemStylePlain
+                                                           target:self
+                                                           action:@selector(incrementDidTouch:)];
 }
 
 #pragma mark - Action
@@ -72,18 +91,14 @@
   // Give the second item a badge
   [tabBar.items[1] setBadgeValue:@"1"];
 
-  UIColor *green =  [UIColor colorWithRed:11/255.0f green:232/255.0f blue:94/255.0f alpha:1];
+  [MDCTabBarColorThemer applySemanticColorScheme:self.colorScheme toTabs:tabBar];
 
-  tabBar.barTintColor = [UIColor colorWithWhite:0.1f alpha:1.0f];
-  tabBar.tintColor = green;
   tabBar.inkColor = [[UIColor whiteColor] colorWithAlphaComponent:0.1f];
-  tabBar.selectedItemTintColor = [[UIColor whiteColor] colorWithAlphaComponent:.87f];
-  tabBar.unselectedItemTintColor = [[UIColor whiteColor] colorWithAlphaComponent:.38f];
   tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
 
   self.tabBar = tabBar;
-  self.appBar.headerStackView.bottomBar = self.tabBar;
-  [self.appBar.headerStackView setNeedsLayout];
+  self.appBarViewController.headerStackView.bottomBar = self.tabBar;
+  [self.appBarViewController.headerStackView setNeedsLayout];
 }
 
 - (void)changeAlignment:(id)sender {
@@ -91,6 +106,8 @@
       [UIAlertController alertControllerWithTitle:nil
                                           message:nil
                                    preferredStyle:UIAlertControllerStyleActionSheet];
+  sheet.popoverPresentationController.sourceView = self.alignmentButton;
+  sheet.popoverPresentationController.sourceRect = self.alignmentButton.bounds;
   [sheet addAction:[UIAlertAction actionWithTitle:@"Leading"
                                             style:UIAlertActionStyleDefault
                                           handler:^(UIAlertAction *_Nonnull action) {
@@ -126,6 +143,11 @@
 
   [self.scrollView setContentOffset:CGPointMake(index * CGRectGetWidth(self.view.bounds), 0)
                            animated:YES];
+  if (index == 0) {
+    self.navigationItem.rightBarButtonItem = nil;
+  } else {
+    self.navigationItem.rightBarButtonItem = self.addStarButtonItem;
+  }
 }
 
 @end

@@ -17,11 +17,23 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialButtons.h"
+#import "MaterialButtons+ButtonThemer.h"
+#import "MaterialColorScheme.h"
 #import "MaterialSlider.h"
 #import "MaterialTabs.h"
+#import "MaterialTabs+ColorThemer.h"
 #import "supplemental/TabBarViewControllerExampleSupplemental.h"
 
 @implementation TabBarViewControllerExample
+
+- (id)init {
+  self = [super init];
+  if (self) {
+    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.typographyScheme = [[MDCTypographyScheme alloc] init];
+  }
+  return self;
+}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -37,8 +49,10 @@
 }
 
 - (void)pushHidesNavigation {
-  UIViewController *vc =
+  TBVCSampleViewController *vc =
       [TBVCSampleViewController sampleWithTitle:@"Push&Hide" color:UIColor.grayColor];
+  vc.colorScheme = self.colorScheme;
+  vc.typographyScheme = self.typographyScheme;
   [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -50,8 +64,14 @@
   UIViewController *child0 = viewControllers[0];
   self.selectedViewController = child0;
   UIViewController *child1 = viewControllers[1];
+
+  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
+  buttonScheme.colorScheme = self.colorScheme;
+  buttonScheme.typographyScheme = self.typographyScheme;
+
   // Put the button under the header.
-  MDCRaisedButton *button = [[MDCRaisedButton alloc] initWithFrame:CGRectMake(10, 120, 300, 40)];
+  MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectMake(10, 120, 300, 40)];
+  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:button];
   [button setTitle:@"Push and Hide Tab" forState:UIControlStateNormal];
   [button sizeToFit];
   [child1.view addSubview:button];
@@ -61,13 +81,16 @@
 
   UIViewController *child2 = viewControllers[2];
   // Put the button under the header.
-  button = [[MDCRaisedButton alloc] initWithFrame:CGRectMake(10, 120, 300, 40)];
+  button = [[MDCButton alloc] initWithFrame:CGRectMake(10, 120, 300, 40)];
+  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:button];
   [button setTitle:@"Toggle Tab Bar" forState:UIControlStateNormal];
   [button sizeToFit];
   [child2.view addSubview:button];
   [button addTarget:self
                 action:@selector(toggleTabBar)
       forControlEvents:UIControlEventTouchUpInside];
+  
+  [MDCTabBarColorThemer applySemanticColorScheme:self.colorScheme toTabs:self.tabBar];
 }
 
 @end

@@ -21,6 +21,8 @@ import MaterialComponents.MaterialTextFields
 final class TextFieldFilledSwiftExample: UIViewController {
 
   let scrollView = UIScrollView()
+  var colorScheme = MDCSemanticColorScheme()
+  var typographyScheme = MDCTypographyScheme()
 
   let name: MDCTextField = {
     let name = MDCTextField()
@@ -73,6 +75,18 @@ final class TextFieldFilledSwiftExample: UIViewController {
 
   var allTextFieldControllers = [MDCTextInputControllerFilled]()
 
+  let leadingImage: UIImage = {
+    return UIImage.init(named: "ic_search",
+                        in: Bundle(for: TextFieldFilledSwiftExample.self),
+                        compatibleWith: nil)!
+  }()
+
+  let trailingImage: UIImage = {
+    return UIImage.init(named: "ic_done",
+                        in: Bundle(for: TextFieldFilledSwiftExample.self),
+                        compatibleWith: nil)!
+  }()
+
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     cityController = MDCTextInputControllerFilled(textInput: city)
     stateController = MDCTextInputControllerFilled(textInput: state)
@@ -107,11 +121,23 @@ final class TextFieldFilledSwiftExample: UIViewController {
     self.navigationItem.rightBarButtonItem = styleButton
   }
 
+  func style(textInputController:MDCTextInputControllerFilled) {
+    MDCFilledTextFieldColorThemer.applySemanticColorScheme(colorScheme, to: textInputController)
+    MDCTextFieldTypographyThemer.applyTypographyScheme(typographyScheme, to: textInputController)
+    if let textInput = textInputController.textInput as? MDCTextInput {
+      MDCTextFieldTypographyThemer.applyTypographyScheme(typographyScheme, to: textInput)
+    }
+  }
+
   func setupTextFields() {
     scrollView.addSubview(name)
     let nameController = MDCTextInputControllerFilled(textInput: name)
     name.delegate = self
     name.text = "Grace Hopper"
+    name.leadingView = UIImageView(image: leadingImage)
+    name.leadingViewMode = .always
+    name.trailingView = UIImageView(image: trailingImage)
+    name.trailingViewMode = .always
     nameController.placeholderText = "Name"
     nameController.helperText = "First and Last"
     allTextFieldControllers.append(nameController)
@@ -141,7 +167,7 @@ final class TextFieldFilledSwiftExample: UIViewController {
     stateZip.addSubview(zip)
     zip.delegate = self
     zipController.placeholderText = "Zip Code"
-    zipController.helperText = "XXXXX"
+    zipController.setHelperText("XXXXX", helperAccessibilityLabel: "5 digits")
     allTextFieldControllers.append(zipController)
 
     scrollView.addSubview(phone)
@@ -153,12 +179,22 @@ final class TextFieldFilledSwiftExample: UIViewController {
     scrollView.addSubview(message)
     let messageController = MDCTextInputControllerFilled(textInput: message)
     message.textView?.delegate = self
+    #if swift(>=3.2)
+      message.text = """
+      This is where you could put a multi-line message like an email.
+
+      It can even handle new lines.
+      """
+    #else
+      message.text = "This is where you could put a multi-line message like an email.\n\nIt can even handle new lines."
+    #endif
     messageController.placeholderText = "Message"
     allTextFieldControllers.append(messageController)
 
     var tag = 0
     for controller in allTextFieldControllers {
       guard let textField = controller.textInput as? MDCTextField else { continue }
+      style(textInputController: controller);
       textField.tag = tag
       tag += 1
     }
@@ -277,7 +313,7 @@ final class TextFieldFilledSwiftExample: UIViewController {
 
     scrollView.layoutMargins = margins
   }
-
+  
   func addGestureRecognizer() {
     let tapRecognizer = UITapGestureRecognizer(target: self,
                                                action: #selector(tapDidTouch(sender: )))

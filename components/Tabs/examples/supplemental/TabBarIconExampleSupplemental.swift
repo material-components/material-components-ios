@@ -20,11 +20,17 @@
 import UIKit
 
 import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialButtons_ButtonThemer
 
 extension TabBarIconSwiftExample {
 
-  func setupAlignmentButton() -> MDCRaisedButton {
-    let alignmentButton = MDCRaisedButton()
+  func setupAlignmentButton() -> MDCButton {
+    let alignmentButton = MDCButton()
+
+    let buttonScheme = MDCButtonScheme()
+    buttonScheme.colorScheme = colorScheme
+    buttonScheme.typographyScheme = typographyScheme
+    MDCContainedButtonThemer.applyScheme(buttonScheme, to: alignmentButton)
 
     alignmentButton.setTitle("Change Alignment", for: .normal)
     alignmentButton.setTitleColor(.white, for: .normal)
@@ -50,24 +56,25 @@ extension TabBarIconSwiftExample {
     return alignmentButton
   }
 
-  func setupAppBar() -> MDCAppBar {
-    let appBar = MDCAppBar()
+  func setupAppBar() -> MDCAppBarViewController {
+    let appBarViewController = MDCAppBarViewController()
 
-    self.addChildViewController(appBar.headerViewController)
-    appBar.headerViewController.headerView.backgroundColor = UIColor.white
-    appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = false
-    appBar.headerViewController.headerView.minimumHeight = 56 + 72
-    appBar.headerViewController.headerView.tintColor = MDCPalette.blue.tint500
+    self.addChildViewController(appBarViewController)
+    appBarViewController.headerView.backgroundColor = UIColor.white
+    appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
+    appBarViewController.headerView.minimumHeight = 56 + 72
+    appBarViewController.headerView.tintColor = MDCPalette.blue.tint500
 
-    appBar.headerStackView.bottomBar = self.tabBar
-    appBar.headerStackView.setNeedsLayout()
-    return appBar
+    appBarViewController.headerStackView.bottomBar = self.tabBar
+    appBarViewController.headerStackView.setNeedsLayout()
+    return appBarViewController
   }
 
   func setupExampleViews() {
     view.backgroundColor = UIColor.white
 
-    appBar.addSubviewsToParent()
+    view.addSubview(appBarViewController.view)
+    appBarViewController.didMove(toParentViewController: self)
 
     let badgeIncrementItem = UIBarButtonItem(title: "Add",
                                              style: .plain,
@@ -75,8 +82,6 @@ extension TabBarIconSwiftExample {
                                              action:#selector(incrementDidTouch(sender: )))
 
     self.navigationItem.rightBarButtonItem = badgeIncrementItem
-
-    self.title = "Tabs With Icons"
 
     setupScrollingContent()
   }
@@ -90,7 +95,10 @@ extension TabBarIconSwiftExample {
 
     scrollView.backgroundColor = UIColor.red
 
-    let views = ["scrollView": scrollView, "header": self.appBar.headerStackView]
+    let views: [String: UIView] = [
+      "scrollView": scrollView,
+      "header": self.appBarViewController.headerStackView
+    ]
     NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "V:[header][scrollView]|",
                                                                options: [],
                                                                metrics: nil,
@@ -223,7 +231,7 @@ extension TabBarIconSwiftExample {
 
 extension TabBarIconSwiftExample {
   override var childViewControllerForStatusBarStyle: UIViewController? {
-    return appBar.headerViewController
+    return appBarViewController
   }
 
   override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -239,7 +247,7 @@ extension TabBarIconSwiftExample {
 // MARK: - Catalog by convention
 extension TabBarIconSwiftExample {
   @objc class func catalogBreadcrumbs() -> [String] {
-    return ["Tab Bar", "Icons and Text (Swift)"]
+    return ["Tab Bar", "Tabs with Icons (Swift)"]
   }
 
   @objc class func catalogIsPrimaryDemo() -> Bool {
@@ -247,10 +255,6 @@ extension TabBarIconSwiftExample {
   }
 
   func catalogShouldHideNavigation() -> Bool {
-    return true
-  }
-
-  @objc class func catalogIsPresentable() -> Bool {
     return true
   }
 }

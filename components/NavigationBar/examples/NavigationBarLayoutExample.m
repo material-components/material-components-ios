@@ -14,6 +14,7 @@
 #import "MaterialIcons+ic_arrow_back.h"
 #import "MaterialNavigationBar.h"
 #import "MaterialTextFields.h"
+#import "MaterialNavigationBar+ColorThemer.h"
 #import <MDFInternationalization/MDFInternationalization.h>
 
 @interface NavigationBarLayoutExample : UIViewController <UITextFieldDelegate>
@@ -27,9 +28,18 @@
 @property(nonatomic, strong) MDCTextField *titleField;
 @property(nonatomic, weak) UIBarButtonItem *trailingBarButtonItem;
 @property(nonatomic, weak) UIBarButtonItem *leadingBarButtonItem;
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 
 @end
 @implementation NavigationBarLayoutExample
+
+- (id)init {
+  self = [super init];
+  if (self) {
+    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+  }
+  return self;
+}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -40,19 +50,10 @@
   self.navigationBar = [[MDCNavigationBar alloc] initWithFrame:CGRectZero];
   self.navigationBar.translatesAutoresizingMaskIntoConstraints = NO;
   [self.navigationBar observeNavigationItem:self.navigationItem];
-  self.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : UIColor.whiteColor};
   [self.view addSubview:self.navigationBar];
 
-  self.navigationItem.hidesBackButton = NO;
-
-  UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc]
-      initWithImage:[[[MDCIcons imageFor_ic_arrow_back]
-                        mdf_imageWithHorizontallyFlippedOrientation]
-                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
-              style:UIBarButtonItemStylePlain
-             target:self
-             action:@selector(didTapBackButton)];
-  backButtonItem.tintColor = UIColor.whiteColor;
+  [MDCNavigationBarColorThemer applySemanticColorScheme:self.colorScheme
+                                        toNavigationBar:self.navigationBar];
 
   UIBarButtonItem *leadingButtonItem =
       [[UIBarButtonItem alloc] initWithTitle:@"L"
@@ -65,7 +66,6 @@
                                       target:nil
                                       action:nil];
 
-  self.navigationBar.tintColor = UIColor.whiteColor;
   self.leadingBarButtonItem = leadingButtonItem;
   self.trailingBarButtonItem = trailingButtonItem;
   self.navigationItem.hidesBackButton = NO;
@@ -228,7 +228,7 @@
 }
 
 + (BOOL)catalogIsPresentable {
-  return YES;
+  return NO;
 }
 
 @end

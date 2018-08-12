@@ -122,7 +122,7 @@ static NSString *const kExampleDetailText =
 }
 
 + (BOOL)catalogIsPresentable {
-  return YES;
+  return NO;
 }
 
 @end

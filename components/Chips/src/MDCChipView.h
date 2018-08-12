@@ -23,12 +23,18 @@
 /*
  A Material chip.
 
- @see https://material.io/guidelines/components/chips.html for full details.
+ @see https://material.io/go/design-chips for full details.
 
  Chips are compact elements that represent an attribute, text, entity, or action.
 
  Chips contain an optional leading image, a title label and an optional trailing accessory view.
  They can also contain a leading image that appears only when the chip is selected.
+
+ Chips currently support two contentHorizontalAlignment styles: centered
+ (UIControlContentHorizontalAlignmentCenter) and default
+ (any other UIControlContentHorizontalAlignment value). In the default mode, the image and text will
+ be left-aligned, and the accessory view will be right aligned. In the centered mode, all three will
+ appear together in the center of the chip.
  */
 @interface MDCChipView : UIControl
 
@@ -138,6 +144,12 @@
  Defaults to a minimum height of 32 points, and no minimum width.
  */
 @property(nonatomic, assign) CGSize minimumSize UI_APPEARANCE_SELECTOR;
+
+/**
+ Custom insets to use when computing touch targets. A positive inset value will shrink the hit
+ area for the Chip.
+ */
+@property(nonatomic, assign) UIEdgeInsets hitAreaInsets;
 
 /*
  A color used as the chip's @c backgroundColor for @c state.

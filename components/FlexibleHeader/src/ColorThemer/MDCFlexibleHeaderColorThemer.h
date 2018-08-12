@@ -14,17 +14,48 @@
  limitations under the License.
  */
 
-#import "MaterialThemes.h"
+#import "MaterialColorScheme.h"
 #import "MaterialFlexibleHeader.h"
 
+#import <Foundation/Foundation.h>
+
 /**
- Used to apply a color scheme to theme MDCFlexibleHeaderView.
+ The Material Design color system's themer for instances of MDCFlexibleHeaderView.
  */
 @interface MDCFlexibleHeaderColorThemer : NSObject
 
 /**
- Applies a color scheme to theme a MDCFlexibleHeaderView. Use a UIAppearance proxy to apply a color
- scheme to all instances of MDCFlexibleHeaderView.
+ Applies a color scheme's properties to an MDCFlexibleHeaderView using the primary mapping.
+
+ Uses the primary color as the most important color for the component.
+
+ @param colorScheme The color scheme to apply to the component instance.
+ @param flexibleHeaderView A component instance to which the color scheme should be applied.
+ */
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+            toFlexibleHeaderView:(nonnull MDCFlexibleHeaderView *)flexibleHeaderView;
+
+/**
+ Applies a color scheme's properties to an MDCFlexibleHeaderView using the surface mapping.
+
+ Uses the surface color as the most important color for the component.
+
+ @param colorScheme The color scheme to apply to the component instance.
+ @param flexibleHeaderView A component instance to which the color scheme should be applied.
+ */
++ (void)applySurfaceVariantWithColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                      toFlexibleHeaderView:(nonnull MDCFlexibleHeaderView *)flexibleHeaderView;
+
+@end
+
+@interface MDCFlexibleHeaderColorThemer (ToBeDeprecated)
+
+/**
+ Applies a color scheme to theme a MDCFlexibleHeaderView.
+
+ @warning This method will soon be deprecated. Consider using
+ @c +applySemanticColorScheme:toFlexibleHeaderView: instead. Learn more at
+ components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
 
  @param colorScheme The color scheme to apply to MDCFlexibleHeaderView.
  @param flexibleHeaderView A MDCFlexibleHeaderView instance to apply a color scheme.
@@ -33,8 +64,11 @@
     toFlexibleHeaderView:(nonnull MDCFlexibleHeaderView *)flexibleHeaderView;
 
 /**
- Applies a color scheme to theme a MDCFlexibleHeaderViewController. Use a UIAppearance proxy to
- apply a color scheme to all instances of MDCFlexibleHeaderViewController.
+ Applies a color scheme to theme a MDCFlexibleHeaderViewController.
+
+ @warning This method will soon be deprecated. Consider using
+ @c +applySemanticColorScheme:toFlexibleHeaderView: instead. Learn more at
+ components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
 
  @param colorScheme The color scheme to apply to MDCFlexibleHeaderView.
  @param flexibleHeaderController A MDCFlexibleHeaderViewController instance to apply a color scheme.

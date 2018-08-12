@@ -16,6 +16,9 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialAppBar.h"
+#import "MaterialAppBar+ColorThemer.h"
+#import "MaterialAppBar+TypographyThemer.h"
 #import "MaterialBottomSheet.h"
 #import "supplemental/BottomSheetDummyCollectionViewController.h"
 #import "supplemental/BottomSheetSupplemental.h"
@@ -25,10 +28,24 @@
 - (void)presentBottomSheet {
   BottomSheetDummyCollectionViewController *viewController =
       [[BottomSheetDummyCollectionViewController alloc] initWithNumItems:102];
-  viewController.preferredContentSize = CGSizeMake(500, 200);
+  viewController.title = @"Bottom sheet example";
+
+  MDCAppBarContainerViewController *container =
+      [[MDCAppBarContainerViewController alloc] initWithContentViewController:viewController];
+  container.preferredContentSize = CGSizeMake(500, 200);
+  container.appBarViewController.headerView.trackingScrollView =
+      viewController.collectionView;
+  container.topLayoutGuideAdjustmentEnabled = YES;
+
+  [MDCAppBarColorThemer applyColorScheme:self.colorScheme
+                  toAppBarViewController:container.appBarViewController];
+  [MDCAppBarTypographyThemer applyTypographyScheme:self.typographyScheme
+                            toAppBarViewController:container.appBarViewController];
 
   MDCBottomSheetController *bottomSheet =
-      [[MDCBottomSheetController alloc] initWithContentViewController:viewController];
+      [[MDCBottomSheetController alloc] initWithContentViewController:container];
+  bottomSheet.isScrimAccessibilityElement = YES;
+  bottomSheet.scrimAccessibilityLabel = @"Close";
   bottomSheet.trackingScrollView = viewController.collectionView;
   [self presentViewController:bottomSheet animated:YES completion:nil];
 }

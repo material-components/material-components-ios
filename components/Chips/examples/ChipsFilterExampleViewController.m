@@ -17,31 +17,75 @@
 #import "ChipsExamplesSupplemental.h"
 
 #import "MaterialChips.h"
+#import "MaterialChips+ChipThemer.h"
 
 @implementation ChipsFilterExampleViewController {
   UICollectionView *_collectionView;
   MDCChipView *_sizingChip;
+  NSMutableArray *_selectedIndecies;
+  BOOL _isOutlined;
+}
+
+- (id)init {
+  self = [super init];
+  if (self) {
+    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+  }
+  return self;
 }
 
 - (void)loadView {
   [super loadView];
 
+  _selectedIndecies = [NSMutableArray new];
+
+  // Our preferred CollectionView Layout For chips
   MDCChipCollectionViewFlowLayout *layout = [[MDCChipCollectionViewFlowLayout alloc] init];
   layout.minimumInteritemSpacing = 10;
 
   _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
+  // Filter chips should allow multiSelection, MDCChipCollectionViewCell manages the state of the
+  // chip accordingly.
+  _collectionView.allowsMultipleSelection = YES;
+
+  // Since there is no scrolling turning off the delaysContentTouches makes the cells respond faster
+  _collectionView.delaysContentTouches = NO;
+
+  // Collection view setup
   _collectionView.dataSource = self;
   _collectionView.delegate = self;
-  _collectionView.allowsMultipleSelection = YES;
   _collectionView.backgroundColor = [UIColor whiteColor];
-  _collectionView.delaysContentTouches = NO;
   _collectionView.contentInset = UIEdgeInsetsMake(4, 8, 4, 8);
   [_collectionView registerClass:[MDCChipCollectionViewCell class]
       forCellWithReuseIdentifier:@"Cell"];
 
+  // This is used to calculate the size of each chip based on the chip setup
   _sizingChip = [[MDCChipView alloc] init];
 
   [self.view addSubview:_collectionView];
+}
+
+- (void)viewDidLoad {
+  [super viewDidLoad];
+
+  _isOutlined = NO;
+  self.navigationItem.rightBarButtonItem =
+      [[UIBarButtonItem alloc] initWithTitle:@"Outlined Style"
+                                       style:UIBarButtonItemStylePlain
+                                      target:self
+                                      action:@selector(switchStyle)];
+}
+
+- (void)switchStyle {
+  _isOutlined = !_isOutlined;
+  NSString *buttonTitle = _isOutlined ? @"Filled Style" : @"Outlined Style";
+  [self.navigationItem.rightBarButtonItem setTitle:buttonTitle];
+  [_collectionView reloadData];
+  for (NSIndexPath *path in _selectedIndecies) {
+    [_collectionView selectItemAtIndexPath:path
+                                  animated:NO
+                            scrollPosition:UICollectionViewScrollPositionNone];
+  }
 }
 
 - (void)viewWillLayoutSubviews {
@@ -59,17 +103,34 @@
                            cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   MDCChipCollectionViewCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
-  cell.chipView.titleLabel.text = self.titles[indexPath.row];
-  cell.chipView.selectedImageView.image = [self doneImage];
-  cell.alwaysAnimateResize = YES;
+  MDCChipView *chipView = cell.chipView;
+
+  // Customize Chip
+  chipView.titleLabel.text = self.titles[indexPath.row];
+  chipView.selectedImageView.image =
+      [[self doneImage] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  chipView.selectedImageView.tintColor =
+      [_colorScheme.onSurfaceColor colorWithAlphaComponent:0.54f];
+  chipView.selected = [_selectedIndecies containsObject:indexPath];
+  cell.alwaysAnimateResize = [self shouldAnimateResize];
+ 
+  MDCChipViewScheme *scheme = [[MDCChipViewScheme alloc] init];
+  scheme.colorScheme = self.colorScheme;
+  
+  if (_isOutlined) {
+    [MDCChipViewThemer applyOutlinedVariantWithScheme:scheme toChipView:chipView];
+  } else {
+    [MDCChipViewThemer applyScheme:scheme toChipView:chipView];
+  }
+
   return cell;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
                   layout:(UICollectionViewLayout*)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-  NSArray *selectedPaths = [collectionView indexPathsForSelectedItems];
-  _sizingChip.selected = [selectedPaths containsObject:indexPath];
+  // The size of the chip depends on title, image and selection state.
+  _sizingChip.selected = [_selectedIndecies containsObject:indexPath];
   _sizingChip.titleLabel.text = self.titles[indexPath.row];
   _sizingChip.selectedImageView.image = [self doneImage];
   return [_sizingChip sizeThatFits:collectionView.bounds.size];
@@ -77,31 +138,39 @@
 
 - (void)collectionView:(UICollectionView *)collectionView
     didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+  [_selectedIndecies addObject:indexPath];
+  // Animating Chip Selection
   [collectionView performBatchUpdates:nil completion:nil];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView
     didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
+  [_selectedIndecies removeObject:indexPath];
+  // Animating Chip Deselection
   [collectionView performBatchUpdates:nil completion:nil];
 }
 
 - (NSArray *)titles {
   if (!_titles) {
     _titles = @[
-      @"Doorman",
-      @"Elevator",
-      @"Garage Parking",
-      @"Gym",
-      @"Laundry in Building",
-      @"Green Building",
-      @"Parking Available",
-      @"Pets Allowed",
-      @"Pied-a-Terre Allowed",
-      @"Swimming Pool",
-      @"Smoke-free",
-    ];
+                @"Doorman",
+                @"Elevator",
+                @"Garage Parking",
+                @"Gym",
+                @"Laundry in Building",
+                @"Green Building",
+                @"Parking Available",
+                @"Pets Allowed",
+                @"Pied-a-Terre Allowed",
+                @"Swimming Pool",
+                @"Smoke-free",
+                ];
   }
   return _titles;
+}
+
+- (BOOL)shouldAnimateResize {
+  return NO;
 }
 
 @end

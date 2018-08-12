@@ -129,8 +129,6 @@ static const CGFloat kSingleCycleRotation =
   self = [super initWithCoder:coder];
   if (self) {
     [self commonMDCActivityIndicatorInit];
-    // TODO: Overwrite cycleColors if the value is present in the coder
-    // https://github.com/material-components/material-components-ios/issues/1530
   }
   return self;
 }
@@ -182,6 +180,7 @@ static const CGFloat kSingleCycleRotation =
   // Colors.
   _cycleColorsIndex = 0;
   _cycleColors = [MDCActivityIndicator defaultCycleColors];
+  self.accessibilityLabel = [self defaultAccessibilityLabel];
 
   // Track layer.
   _trackLayer = [CAShapeLayer layer];
@@ -970,32 +969,43 @@ static const CGFloat kSingleCycleRotation =
 #pragma mark - Accessibility
 
 - (BOOL)isAccessibilityElement {
-  return YES;
+  return self.isAnimating;
 }
 
-- (NSString *)accessibilityLabel {
+- (NSString *)defaultAccessibilityLabel {
+  MaterialActivityIndicatorStringId keyIndex = kStr_MaterialActivityIndicatorAccessibilityLabel;
+  NSString *key = kMaterialActivityIndicatorStringTable[keyIndex];
+  return NSLocalizedStringFromTableInBundle(key,
+                                            kMaterialActivityIndicatorStringsTableName,
+                                            [[self class] bundle],
+                                            @"Activity Indicator");
+}
 
+- (NSString *)accessibilityValue {
   if (self.isAnimating) {
     if (self.indicatorMode == MDCActivityIndicatorModeIndeterminate) {
-      NSString *key =
-      kMaterialActivityIndicatorStringTable[kStr_MaterialActivityIndicatorInProgressAccessibilityLabel];
+      MaterialActivityIndicatorStringId keyIndex =
+          kStr_MaterialActivityIndicatorInProgressAccessibilityValue;
+      NSString *key = kMaterialActivityIndicatorStringTable[keyIndex];
       return NSLocalizedStringFromTableInBundle(key,
                                                 kMaterialActivityIndicatorStringsTableName,
                                                 [[self class] bundle],
                                                 @"In Progress");
     } else {
       NSUInteger percentage = (int)(self.progress * 100);
-      NSString *key =
-      kMaterialActivityIndicatorStringTable[kStr_MaterialActivityIndicatorProgressCompletedAccessibilityLabel];
+      MaterialActivityIndicatorStringId keyIndex =
+          kStr_MaterialActivityIndicatorProgressCompletedAccessibilityValue;
+      NSString *key = kMaterialActivityIndicatorStringTable[keyIndex];
       NSString *localizedString = NSLocalizedStringFromTableInBundle(key,
-                                                kMaterialActivityIndicatorStringsTableName,
-                                                [[self class] bundle],
-                                                @"{percentage} Percent Complete");
+                                                                     kMaterialActivityIndicatorStringsTableName,
+                                                                     [[self class] bundle],
+                                                                     @"{percentage} Percent Complete");
       return [NSString localizedStringWithFormat:localizedString, percentage];
     }
   } else {
-    NSString *key =
-        kMaterialActivityIndicatorStringTable[kStr_MaterialActivityIndicatorProgressHaltedAccessibilityLabel];
+    MaterialActivityIndicatorStringId keyIndex =
+        kStr_MaterialActivityIndicatorProgressHaltedAccessibilityValue;
+    NSString *key = kMaterialActivityIndicatorStringTable[keyIndex];
     return NSLocalizedStringFromTableInBundle(key,
                                               kMaterialActivityIndicatorStringsTableName,
                                               [[self class] bundle],
@@ -1005,14 +1015,6 @@ static const CGFloat kSingleCycleRotation =
 
 - (UIAccessibilityTraits)accessibilityTraits {
   return UIAccessibilityTraitUpdatesFrequently;
-}
-
-- (NSString *)accessibilityValue {
-  if (self.isAnimating) {
-    return [NSNumberFormatter localizedStringFromNumber:@1 numberStyle:NSNumberFormatterNoStyle];
-  } else {
-    return [NSNumberFormatter localizedStringFromNumber:@0 numberStyle:NSNumberFormatterNoStyle];
-  }
 }
 
 @end

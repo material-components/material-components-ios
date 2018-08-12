@@ -27,13 +27,16 @@
 
 /**
  Constants for elevation: the relative depth, or distance, between two surfaces along the z-axis.
- https://material.io/guidelines/material-design/elevation-shadows.html
+ https://material.io/go/design-elevation
  */
 NS_SWIFT_NAME(ShadowElevation)
 typedef CGFloat MDCShadowElevation MDC_SHADOW_ELEVATION_TYPED_EXTENSIBLE_ENUM;
 
 /** The shadow elevation of the app bar. */
 FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationAppBar;
+
+/** The shadow elevation of the Bottom App Bar. */
+FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationBottomNavigationBar;
 
 /** The shadow elevation of a card in its picked up state. */
 FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationCardPickedUp;

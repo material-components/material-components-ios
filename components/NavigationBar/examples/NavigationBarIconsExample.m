@@ -23,6 +23,8 @@
 #import "MaterialIcons+ic_info.h"
 #import "MaterialIcons+ic_reorder.h"
 #import "MaterialNavigationBar.h"
+#import "MaterialNavigationBar+ColorThemer.h"
+#import "MaterialNavigationBar+TypographyThemer.h"
 #import "supplemental/NavigationBarTypicalUseExampleSupplemental.h"
 
 @interface NavigationBarIconsExample ()
@@ -34,6 +36,15 @@
 @end
 @implementation NavigationBarIconsExample
 
+- (id)init {
+  self = [super init];
+  if (self) {
+    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.typographyScheme = [[MDCTypographyScheme alloc] init];
+  }
+  return self;
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
 
@@ -43,8 +54,12 @@
   self.navigationBar = [[MDCNavigationBar alloc] initWithFrame:CGRectZero];
   self.navigationBar.translatesAutoresizingMaskIntoConstraints = NO;
   [self.navigationBar observeNavigationItem:self.navigationItem];
-  self.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : UIColor.whiteColor};
+  [MDCNavigationBarTypographyThemer applyTypographyScheme:self.typographyScheme
+                                          toNavigationBar:self.navigationBar];
   [self.view addSubview:self.navigationBar];
+
+  [MDCNavigationBarColorThemer applySemanticColorScheme:self.colorScheme
+                                        toNavigationBar:self.navigationBar];
 
   UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc]
       initWithImage:[[[MDCIcons imageFor_ic_arrow_back]
@@ -53,7 +68,6 @@
               style:UIBarButtonItemStylePlain
              target:self
              action:@selector(didTapBackButton)];
-  //  backButtonItem.tintColor = UIColor.whiteColor;
 
   UIBarButtonItem *leadingButtonItem = [[UIBarButtonItem alloc]
       initWithImage:[[MDCIcons imageFor_ic_info]
@@ -61,16 +75,13 @@
               style:UIBarButtonItemStylePlain
              target:nil
              action:nil];
-  //  leadingButtonItem.tintColor = UIColor.whiteColor;
   UIBarButtonItem *trailingButtonItem = [[UIBarButtonItem alloc]
       initWithImage:[[MDCIcons imageFor_ic_reorder]
                         imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
               style:UIBarButtonItemStylePlain
              target:nil
              action:nil];
-  //  trailingButtonItem.tintColor = UIColor.whiteColor;
 
-  self.navigationBar.tintColor = UIColor.whiteColor;
   self.leadingBarButtonItem = leadingButtonItem;
   self.trailingBarButtonItem = trailingButtonItem;
   self.navigationItem.hidesBackButton = NO;
@@ -133,7 +144,7 @@
 }
 
 + (BOOL)catalogIsPresentable {
-  return YES;
+  return NO;
 }
 
 @end

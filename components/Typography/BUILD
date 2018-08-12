@@ -27,8 +27,16 @@ mdc_public_objc_library(
     ],
     deps = [
         "//components/private/Application",
+        "//components/private/Math",
         "@material_internationalization_ios//:MDFInternationalization"
     ],
+)
+
+mdc_objc_library(
+    name = "private",
+    hdrs = native.glob(["src/private/*.h"]),
+    includes = ["src/private"],
+    visibility = ["//visibility:private"],
 )
 
 mdc_objc_library(
@@ -40,7 +48,10 @@ mdc_objc_library(
         "UIKit",
         "XCTest",
     ],
-    deps = [":Typography"],
+    deps = [
+        ":Typography",
+        ":private",
+    ],
     visibility = ["//visibility:private"],
 )
 

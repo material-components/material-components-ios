@@ -66,6 +66,23 @@ mdc_objc_library(
     deps = [
         ":AppBar",
         "//components/Themes",
+        "//components/FlexibleHeader:ColorThemer",
+        "//components/NavigationBar:ColorThemer",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
+    name = "TypographyThemer",
+    srcs = native.glob(["src/TypographyThemer/*.m"]),
+    hdrs = native.glob(["src/TypographyThemer/*.h"]),
+    includes = ["src/TypographyThemer"],
+    sdk_frameworks = [
+        "UIKit",
+    ],
+    deps = [
+        ":AppBar",
+        "//components/NavigationBar:TypographyThemer",
     ],
     visibility = ["//visibility:public"],
 )
@@ -84,6 +101,7 @@ swift_library(
         ":AppBar",
         ":ColorThemer",
         ":private",
+        ":TypographyThemer",
     ],
     visibility = ["//visibility:private"],
 )

@@ -15,6 +15,7 @@
  */
 
 #import "MDCChipViewFontThemer.h"
+
 #import "MaterialChips.h"
 #import "MaterialThemes.h"
 

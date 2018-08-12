@@ -20,7 +20,11 @@
 
 #import "TabBarIconExampleSupplemental.h"
 
+#import "MaterialAppBar+ColorThemer.h"
+#import "MaterialAppBar+TypographyThemer.h"
+#import "MaterialButtons+ButtonThemer.h"
 #import "MaterialPalettes.h"
+#import "MaterialTabs+TypographyThemer.h"
 
 // Exposing selectors defined in the main example class
 @interface TabBarIconExample ()
@@ -37,10 +41,18 @@
   [self setupScrollingContent];
 
   [self setupAlignmentButton];
+
+  [MDCTabBarTypographyThemer applyTypographyScheme:self.typographyScheme toTabBar:self.tabBar];
 }
 
 - (void)setupAlignmentButton {
-  self.alignmentButton = [[MDCRaisedButton alloc] init];
+  self.alignmentButton = [[MDCButton alloc] init];
+
+  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
+  buttonScheme.colorScheme = self.colorScheme;
+  buttonScheme.typographyScheme = self.typographyScheme;
+  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:self.alignmentButton];
+
   [self.view addSubview:self.alignmentButton];
 
   self.alignmentButton.translatesAutoresizingMaskIntoConstraints = NO;
@@ -62,8 +74,6 @@
       .active = YES;
 
   [self.alignmentButton setTitle:@"Change Alignment" forState:UIControlStateNormal];
-  [self.alignmentButton setBackgroundColor:[UIColor blackColor] forState:UIControlStateNormal];
-  [self.alignmentButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [self.alignmentButton addTarget:self
                            action:@selector(changeAlignment:)
                  forControlEvents:UIControlEventTouchUpInside];
@@ -72,12 +82,12 @@
 - (void)setupAppBar {
   self.view.backgroundColor = [UIColor whiteColor];
 
-  self.appBar = [[MDCAppBar alloc] init];
-  [self addChildViewController:self.appBar.headerViewController];
+  self.appBarViewController = [[MDCAppBarViewController alloc] init];
+  [self addChildViewController:self.appBarViewController];
 
-  self.appBar.headerViewController.headerView.tintColor = [UIColor whiteColor];
-  self.appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = NO;
-  self.appBar.headerViewController.headerView.minimumHeight = 56 + 72;
+  self.appBarViewController.headerView.tintColor = [UIColor whiteColor];
+  self.appBarViewController.headerView.minMaxHeightIncludesSafeArea = NO;
+  self.appBarViewController.headerView.minimumHeight = 56 + 72;
 
   UIFont *font;
   if ([UIFont respondsToSelector:@selector(monospacedDigitSystemFontOfSize:weight:)]) {
@@ -91,23 +101,13 @@
     }
   }
 
-  self.appBar.navigationBar.titleTextAttributes = @{
-    NSForegroundColorAttributeName : [UIColor whiteColor],
-    NSFontAttributeName : font
-  };
+  [self.view addSubview:self.appBarViewController.view];
+  [self.appBarViewController didMoveToParentViewController:self];
 
-  [self.appBar addSubviewsToParent];
-
-  UIBarButtonItem *badgeIncrementItem =
-      [[UIBarButtonItem alloc] initWithTitle:@"Add"
-                                       style:UIBarButtonItemStylePlain
-                                      target:self
-                                      action:@selector(incrementDidTouch:)];
-
-  self.navigationItem.rightBarButtonItem = badgeIncrementItem;
-  self.appBar.navigationBar.tintColor = UIColor.whiteColor;
-
-  self.title = @"Tabs With Icons";
+  [MDCAppBarColorThemer applyColorScheme:self.colorScheme
+                  toAppBarViewController:self.appBarViewController];
+  [MDCAppBarTypographyThemer applyTypographyScheme:self.typographyScheme
+                            toAppBarViewController:self.appBarViewController];
 }
 
 - (void)setupScrollView {
@@ -118,7 +118,7 @@
   [self.view addSubview:self.scrollView];
 
   NSDictionary *viewsScrollView =
-      @{@"scrollView" : self.scrollView, @"header" : self.appBar.headerStackView};
+      @{@"scrollView" : self.scrollView, @"header" : self.appBarViewController.headerStackView};
   [NSLayoutConstraint
       activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[header][scrollView]|"
                                                                   options:0
@@ -258,7 +258,7 @@
 }
 
 - (UIViewController *)childViewControllerForStatusBarStyle {
-  return self.appBar.headerViewController;
+  return self.appBarViewController;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -281,7 +281,7 @@
 @implementation TabBarIconExample (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Tab Bar", @"Icons and Text" ];
+  return @[ @"Tab Bar", @"Tabs with Icons" ];
 }
 
 + (BOOL)catalogIsPrimaryDemo {
@@ -289,7 +289,7 @@
 }
 
 + (NSString *)catalogDescription {
-  return @"The tab bar is a component for switching between views of grouped content.";
+  return @"Tabs organize content across different screens, data sets, and other interactions.";
 }
 
 - (BOOL)catalogShouldHideNavigation {

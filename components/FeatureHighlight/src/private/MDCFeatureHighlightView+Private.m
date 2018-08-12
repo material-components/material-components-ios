@@ -29,9 +29,6 @@ static inline CGFloat CGPointDistanceToPoint(CGPoint a, CGPoint b) {
   return MDCHypot(a.x - b.x, a.y - b.y);
 }
 
-// The Bundle for string resources.
-static NSString *const kMaterialFeatureHighlightBundle = @"MaterialFeatureHighlight.bundle";
-
 const CGFloat kMDCFeatureHighlightMinimumInnerRadius = 44.0f;
 const CGFloat kMDCFeatureHighlightInnerContentPadding = 10.0f;
 const CGFloat kMDCFeatureHighlightInnerPadding = 20.0f;
@@ -66,13 +63,6 @@ static const MDCFontTextStyle kBodyTextStyle = MDCFontTextStyleSubheadline;
 static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   return CGPointMake(a.x + b.x, a.y + b.y);
 }
-
-@interface MDCFeatureHighlightView ()
-
-@property (class, nonatomic, readonly) UIFont *titleFontDefault;
-@property (class, nonatomic, readonly) UIFont *bodyFontDefault;
-
-@end
 
 @implementation MDCFeatureHighlightView {
   BOOL _forceConcentricLayout;
@@ -120,31 +110,12 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
     _displayMaskLayer.fillColor = [UIColor whiteColor].CGColor;
 
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    // TODO(#2709): Migrate to a single source of truth for fonts
-    // If we are using the default (system) font loader, retrieve the
-    // font from the UIFont standardFont API.
-    if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-      _titleLabel.font = [UIFont mdc_standardFontForMaterialTextStyle:kTitleTextStyle];
-    } else {
-      // There is a custom font loader, retrieve the font from it.
-      _titleLabel.font = [MDCTypography titleFont];
-    }
     _titleLabel.textAlignment = NSTextAlignmentNatural;
     _titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     _titleLabel.numberOfLines = 0;
-    _titleLabel.accessibilityHint = [[self class] dismissAccessibilityHint];
     [self addSubview:_titleLabel];
 
     _bodyLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    // TODO(#2709): Migrate to a single source of truth for fonts
-    // If we are using the default (system) font loader, retrieve the
-    // font from the UIFont standardFont API.
-    if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-      _bodyLabel.font = [UIFont mdc_standardFontForMaterialTextStyle:kBodyTextStyle];
-    } else {
-      // There is a custom font loader, retrieve the font from it.
-      _bodyLabel.font = [MDCTypography body1Font];
-    }
     _bodyLabel.shadowColor = nil;
     _bodyLabel.shadowOffset = CGSizeZero;
     _bodyLabel.textAlignment = NSTextAlignmentNatural;
@@ -205,18 +176,22 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 
 - (void)setTitleFont:(UIFont *)titleFont {
   _titleFont = titleFont;
-   [self updateTitleFont];
+
+  [self updateTitleFont];
 }
 
 - (void)updateTitleFont {
-  UIFont *titleFont = _titleFont ?: [[self class] titleFontDefault];
+  if (!_titleFont) {
+    _titleFont = [MDCFeatureHighlightView defaultTitleFont];
+  }
   if (_mdc_adjustsFontForContentSizeCategory) {
     _titleLabel.font =
-        [titleFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
+        [_titleFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
                                 scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
   } else {
-    _titleLabel.font = titleFont;
+    _titleLabel.font = _titleFont;
   }
+
   [self setNeedsLayout];
 }
 
@@ -226,34 +201,22 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   _titleLabel.textColor = titleColor;
 }
 
-+ (UIFont *)titleFontDefault {
-  if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-    return [UIFont mdc_standardFontForMaterialTextStyle:kTitleTextStyle];
-  }
-  return [MDCTypography titleFont];
-}
-
 - (void)setBodyFont:(UIFont *)bodyFont {
   _bodyFont = bodyFont;
+
   [self updateBodyFont];
 }
 
-+ (UIFont *)bodyFontDefault {
-  if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-    return [UIFont mdc_standardFontForMaterialTextStyle:kBodyTextStyle];
-  }
-  return [MDCTypography body1Font];
-}
-
 - (void)updateBodyFont {
-  UIFont *bodyFont = _bodyFont ?: [[self class] bodyFontDefault];
+  if (!_bodyFont) {
+    _bodyFont = [MDCFeatureHighlightView defaultBodyFont];
+  }
   if (_mdc_adjustsFontForContentSizeCategory) {
-    // If we are automatically adjusting for Dynamic Type resize the font based on the text style
     _bodyLabel.font =
-        [bodyFont mdc_fontSizedForMaterialTextStyle:kBodyTextStyle
-                               scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+        [_bodyFont mdc_fontSizedForMaterialTextStyle:kBodyTextStyle
+                                scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
   } else {
-    _bodyLabel.font = bodyFont;
+    _bodyLabel.font = _bodyFont;
   }
   [self setNeedsLayout];
 }
@@ -262,6 +225,20 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   _bodyColor = bodyColor;
 
   _bodyLabel.textColor = bodyColor;
+}
+
++ (UIFont *)defaultBodyFont {
+  if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
+    return [UIFont mdc_standardFontForMaterialTextStyle:kBodyTextStyle];
+  }
+  return [MDCTypography body1Font];
+}
+
++ (UIFont *)defaultTitleFont {
+  if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
+    return [UIFont mdc_standardFontForMaterialTextStyle:kTitleTextStyle];
+  }
+  return [MDCTypography titleFont];
 }
 
 - (void)setInnerHighlightColor:(UIColor *)innerHighlightColor {
@@ -610,14 +587,6 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   }
 }
 
-+ (NSString *)dismissAccessibilityHint {
-  NSString *key =
-      kMaterialFeatureHighlightStringTable[kStr_MaterialFeatureHighlightDismissAccessibilityHint];
-  NSString *localizedString = NSLocalizedStringFromTableInBundle(
-      key, kMaterialFeatureHighlightStringsTableName, [self bundle], @"Double-tap to dismiss.");
-  return localizedString;
-}
-
 #pragma mark - Dynamic Type Support
 
 - (BOOL)mdc_adjustsFontForContentSizeCategory {
@@ -640,14 +609,12 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 
   [self updateTitleFont];
   [self updateBodyFont];
-  [self layoutIfNeeded];
 }
 
 // Handles UIContentSizeCategoryDidChangeNotifications
 - (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
   [self updateTitleFont];
   [self updateBodyFont];
-  [self layoutIfNeeded];
 }
 
 #pragma mark - UIGestureRecognizerDelegate (Tap)
@@ -659,25 +626,14 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   return YES;
 }
 
-#pragma mark - Resource bundle
+#pragma mark - UIAccessibility
 
-+ (NSBundle *)bundle {
-  static NSBundle *bundle = nil;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    bundle = [NSBundle bundleWithPath:[self bundlePathWithName:kMaterialFeatureHighlightBundle]];
-  });
-
-  return bundle;
+- (void)setAccessibilityHint:(NSString *)accessibilityHint {
+  _titleLabel.accessibilityHint = accessibilityHint;
 }
 
-+ (NSString *)bundlePathWithName:(NSString *)bundleName {
-  // In iOS 8+, we could be included by way of a dynamic framework, and our resource bundles may
-  // not be in the main .app bundle, but rather in a nested framework, so figure out where we live
-  // and use that as the search location.
-  NSBundle *bundle = [NSBundle bundleForClass:[MDCFeatureHighlightView class]];
-  NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle) resourcePath];
-  return [resourcePath stringByAppendingPathComponent:bundleName];
+- (NSString *)accessibilityHint {
+  return _titleLabel.accessibilityHint;
 }
 
 @end

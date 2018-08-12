@@ -17,8 +17,10 @@
 import UIKit
 
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MaterialPalettes
+import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialTabs
+import MaterialComponents.MaterialTabs_ColorThemer
+import MaterialComponents.MaterialTypographyScheme
 
 class TabBarIconSwiftExample: UIViewController {
 
@@ -32,13 +34,12 @@ class TabBarIconSwiftExample: UIViewController {
     }
   }
 
-  lazy var alignmentButton: MDCRaisedButton = self.setupAlignmentButton()
-
-  lazy var appBar: MDCAppBar = self.setupAppBar()
-
+  lazy var alignmentButton: MDCButton = self.setupAlignmentButton()
+  lazy var appBarViewController: MDCAppBarViewController = self.setupAppBar()
   lazy var scrollView: UIScrollView = self.setupScrollView()
-
   lazy var starPage: UIView = self.setupStarPage()
+  var colorScheme = MDCSemanticColorScheme()
+  var typographyScheme = MDCTypographyScheme()
 
   lazy var tabBar: MDCTabBar = {
     let tabBar = MDCTabBar()
@@ -53,14 +54,11 @@ class TabBarIconSwiftExample: UIViewController {
                     UITabBarItem(title: "Stars", image: star, tag:0)]
     tabBar.items[1].badgeValue = "1"
 
-    let blue = MDCPalette.blue.tint500
-    tabBar.tintColor = blue
-    tabBar.inkColor = blue
+    MDCTabBarColorThemer.applySemanticColorScheme(self.colorScheme, toTabs: tabBar);
 
-    tabBar.barTintColor = UIColor.white
+    let blue = MDCPalette.blue.tint500
+    tabBar.inkColor = blue
     tabBar.itemAppearance = .titledImages
-    tabBar.selectedItemTintColor = UIColor.black.withAlphaComponent(0.87)
-    tabBar.unselectedItemTintColor = UIColor.black.withAlphaComponent(0.38)
 
     return tabBar
   }()
@@ -78,6 +76,8 @@ class TabBarIconSwiftExample: UIViewController {
 
   @objc func changeAlignmentDidTouch(sender: UIButton) {
     let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+    sheet.popoverPresentationController?.sourceView = self.alignmentButton
+    sheet.popoverPresentationController?.sourceRect = self.alignmentButton.bounds
     sheet.addAction(UIAlertAction(title: "Leading", style: .default, handler: { _ in
       self.alignment = .leading
     }))

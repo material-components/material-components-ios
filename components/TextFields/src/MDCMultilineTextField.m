@@ -28,21 +28,6 @@
 #import "MaterialMath.h"
 #import "MaterialTypography.h"
 
-static NSString *const MDCMultilineTextFieldCursorColorKey = @"MDCMultilineTextFieldCursorColorKey";
-static NSString *const MDCMultilineTextFieldExpandsOnOverflowKey =
-    @"MDCMultilineTextFieldExpandsOnOverflowKey";
-static NSString *const MDCMultilineTextFieldFundamentKey = @"MDCMultilineTextFieldFundamentKey";
-static NSString *const MDCMultilineTextFieldLayoutDelegateKey =
-    @"MDCMultilineTextFieldLayoutDelegateKey";
-static NSString *const MDCMultilineTextFieldMinimumLinesKey = @"MDCMultilineTextMinimumLinesKey";
-static NSString *const MDCMultilineTextFieldMultilineDelegateKey =
-    @"MDCMultilineTextFieldMultilineDelegateKey";
-static NSString *const MDCMultilineTextFieldTextViewKey = @"MDCMultilineTextFieldTextViewKey";
-static NSString *const MDCMultilineTextFieldTrailingViewKey =
-    @"MDCMultilineTextFieldTrailingViewKey";
-static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
-    @"MDCMultilineTextFieldTrailingViewModeKey";
-
 @interface MDCMultilineTextField () {
   UIColor *_cursorColor;
 
@@ -50,6 +35,8 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 }
 
 @property(nonatomic, assign, getter=isEditing) BOOL editing;
+
+@property(nonatomic, assign) CGFloat textViewWidth;
 
 @property(nonatomic, strong) MDCTextInputCommonFundament *fundament;
 
@@ -91,9 +78,6 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    if ([aDecoder containsValueForKey:MDCMultilineTextFieldTextViewKey]) {
-      _textView = [aDecoder decodeObjectForKey:MDCMultilineTextFieldTextViewKey];
-    }
     if (!_textView) {
       _textView = [[MDCIntrinsicHeightTextView alloc] initWithFrame:CGRectZero];
     }
@@ -101,27 +85,9 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
     // been encoded differently.
     [self setupTextView];
 
-    MDCTextInputCommonFundament *fundament =
-        [aDecoder decodeObjectForKey:MDCMultilineTextFieldFundamentKey];
-    _fundament =
-        fundament ? fundament : [[MDCTextInputCommonFundament alloc] initWithTextInput:self];
+    _fundament = [[MDCTextInputCommonFundament alloc] initWithTextInput:self];
 
     [self commonMDCMultilineTextFieldInitialization];
-    _cursorColor = [aDecoder decodeObjectForKey:MDCMultilineTextFieldCursorColorKey];
-
-    if ([aDecoder containsValueForKey:MDCMultilineTextFieldExpandsOnOverflowKey]) {
-      self.expandsOnOverflow =
-          [aDecoder decodeBoolForKey:MDCMultilineTextFieldExpandsOnOverflowKey];
-    }
-    _layoutDelegate = [aDecoder decodeObjectForKey:MDCMultilineTextFieldLayoutDelegateKey];
-    if ([aDecoder containsValueForKey:MDCMultilineTextFieldMinimumLinesKey]) {
-      _minimumLines = [aDecoder decodeIntegerForKey:MDCMultilineTextFieldMinimumLinesKey];
-    }
-    _multilineDelegate = [aDecoder decodeObjectForKey:MDCMultilineTextFieldMultilineDelegateKey];
-
-    _trailingView = [aDecoder decodeObjectForKey:MDCMultilineTextFieldTrailingViewKey];
-    _trailingViewMode = (UITextFieldViewMode)
-        [aDecoder decodeIntegerForKey:MDCMultilineTextFieldTrailingViewModeKey];
   }
 
   return self;
@@ -129,21 +95,6 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [super encodeWithCoder:aCoder];
-  [aCoder encodeObject:self.cursorColor forKey:MDCMultilineTextFieldCursorColorKey];
-  [aCoder encodeBool:self.expandsOnOverflow forKey:MDCMultilineTextFieldExpandsOnOverflowKey];
-  [aCoder encodeObject:self.fundament forKey:MDCMultilineTextFieldFundamentKey];
-  [aCoder encodeConditionalObject:self.layoutDelegate
-                           forKey:MDCMultilineTextFieldLayoutDelegateKey];
-  [aCoder encodeInteger:self.minimumLines forKey:MDCMultilineTextFieldMinimumLinesKey];
-  [aCoder encodeConditionalObject:self.multilineDelegate
-                           forKey:MDCMultilineTextFieldMultilineDelegateKey];
-  [aCoder encodeObject:self.textView forKey:MDCMultilineTextFieldTextViewKey];
-  [aCoder encodeObject:self.trailingView forKey:MDCMultilineTextFieldTrailingViewKey];
-  [aCoder encodeInteger:self.trailingViewMode forKey:MDCMultilineTextFieldTrailingViewModeKey];
 }
 
 - (instancetype)copyWithZone:(__unused NSZone *)zone {
@@ -173,6 +124,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   self.backgroundColor = [UIColor clearColor];
 
   self.textColor = _fundament.textColor;
+  // TODO: (#4331) This needs to be converted to the new text scheme.
   self.font = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody1];
   self.clearButton.tintColor = [UIColor colorWithWhite:0 alpha:[MDCTypography captionFontOpacity]];
 
@@ -329,6 +281,8 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   if ([self.positioningDelegate respondsToSelector:@selector(textInputDidLayoutSubviews)]) {
     [self.positioningDelegate textInputDidLayoutSubviews];
   }
+
+  [self updateIntrinsicSizeFromTextView];
 }
 
 - (void)updateConstraints {
@@ -400,7 +354,9 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   [self.fundament updateConstraintsOfInput];
 
   [self updateTrailingViewLayout];
+  [self updateIntrinsicSizeFromTextView];
 
+  // This must always be the last message in this method.
   [super updateConstraints];
 }
 
@@ -411,6 +367,24 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 - (CGFloat)estimatedTextViewLineHeight {
   CGFloat scale = UIScreen.mainScreen.scale;
   return MDCCeil(self.textView.font.lineHeight * scale) / scale;
+}
+
+- (void)updateIntrinsicSizeFromTextView {
+  if ([self textViewWidthDidChange]) {
+    [self invalidateIntrinsicContentSize];
+  }
+}
+
+- (BOOL)textViewWidthDidChange {
+  BOOL widthDidChange = NO;
+  CGFloat currentTextViewWidth = CGRectGetWidth(self.textView.bounds);
+
+  if (self.textViewWidth != currentTextViewWidth) {
+    widthDidChange = YES;
+  }
+  self.textViewWidth = currentTextViewWidth;
+
+  return widthDidChange;
 }
 
 #pragma mark - Touch (UIView)
@@ -541,6 +515,8 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 - (void)setAttributedText:(NSAttributedString *)attributedText {
   self.textView.attributedText = attributedText;
   [self.fundament didSetText];
+  [[NSNotificationCenter defaultCenter] postNotificationName:MDCTextFieldTextDidSetTextNotification
+                                                      object:self];
 }
 
 - (UIBezierPath *)borderPath {
@@ -736,12 +712,12 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
 
 #pragma mark - UITextView Notification Observation
 
-- (void)textViewDidBeginEditing:(__unused UITextView *)textView {
+- (void)textViewDidBeginEditing:(__unused NSNotification *)note {
   self.editing = YES;
   [self.fundament didBeginEditing];
 }
 
-- (void)textViewDidChange:(__unused UITextView *)textView {
+- (void)textViewDidChange:(__unused NSNotification *)note {
   [self.fundament didChange];
   CGSize currentSize = self.bounds.size;
   CGSize requiredSize = [self sizeThatFits:CGSizeMake(currentSize.width, CGFLOAT_MAX)];
@@ -754,7 +730,7 @@ static NSString *const MDCMultilineTextFieldTrailingViewModeKey =
   }
 }
 
-- (void)textViewDidEndEditing:(__unused UITextView *)textView {
+- (void)textViewDidEndEditing:(__unused NSNotification *)note {
   self.editing = NO;
   [self.fundament didEndEditing];
 }

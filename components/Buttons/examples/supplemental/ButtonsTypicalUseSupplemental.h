@@ -21,17 +21,24 @@
 
 #import <UIKit/UIKit.h>
 
-@class ButtonsTypicalUseViewController;
+#import "MaterialColorScheme.h"
+#import "MaterialTypographyScheme.h"
 
 @interface ButtonsTypicalUseViewController : UIViewController
 
 @property(nonatomic, strong) NSArray *buttons;
 @property(nonatomic, strong) NSArray *labels;
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
+
+- (UILabel *)addLabelWithText:(NSString *)text;
 
 @end
 
-@interface ButtonsTypicalUseViewController (Supplemental)
+@interface ButtonsTypicalUseExampleViewController : ButtonsTypicalUseViewController
 
-- (void)setupExampleViews;
+@end
+
+@interface ButtonsShapesExampleViewController : ButtonsTypicalUseViewController
 
 @end

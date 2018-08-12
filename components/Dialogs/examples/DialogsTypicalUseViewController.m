@@ -16,6 +16,7 @@
 
 #import "MaterialDialogs.h"
 #import "supplemental/DialogsTypicalUseSupplemental.h"
+#import "supplemental/DialogWithPreferredContentSizeViewController.h"
 
 @interface DialogsTypicalUseViewController ()
 
@@ -25,9 +26,19 @@
 
 @implementation DialogsTypicalUseViewController
 
+- (id)init {
+  self = [super init];
+  if (self) {
+    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.typographyScheme = [[MDCTypographyScheme alloc] init];
+  }
+  return self;
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
-  [self loadCollectionView:@[@"Programmatic", @"Storyboard", @"Modal", @"Open URL"]];
+  [self loadCollectionView:@[@"Dismissable Programmatic", @"Dismissable Storyboard",
+                             @"Non-dismissable Programmatic", @"Open URL"]];
   // We must create and store a strong reference to the transitionController.
   // A presented view controller will set this object as its transitioning delegate.
   self.transitionController = [[MDCDialogTransitionController alloc] init];
@@ -86,11 +97,12 @@
       [UIStoryboard storyboardWithName:@"DialogWithPreferredContentSize" bundle:bundle];
   NSString *identifier = @"DialogID";
 
-  UIViewController *viewController =
+  DialogWithPreferredContentSizeViewController *viewController =
       [storyboard instantiateViewControllerWithIdentifier:identifier];
   viewController.modalPresentationStyle = UIModalPresentationCustom;
   viewController.transitioningDelegate = self.transitionController;
-
+  viewController.colorScheme = self.colorScheme;
+  viewController.typographyScheme = self.typographyScheme;
   [self presentViewController:viewController animated:YES completion:NULL];
 }
 

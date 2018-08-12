@@ -18,6 +18,7 @@
 
 #import "MaterialButtonBar.h"
 #import "MaterialNavigationBar.h"
+#import "MaterialNavigationBar+TypographyThemer.h"
 
 static const CGFloat kEpsilonAccuracy = 0.001f;
 
@@ -88,56 +89,115 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   XCTAssertEqual(alignment, MDCNavigationBarTitleAlignmentCenter);
 }
 
-- (void)testEncoding {
+- (void)testTitleViewIsCenteredWithNoButtonsAndFillBehavior {
   // Given
   MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
-  navBar.title = @"A title";
+  navBar.frame = CGRectMake(0, 0, 300, 25);
   navBar.titleView = [[UIView alloc] init];
-  navBar.titleView.contentMode = UIViewContentModeTop;
-  navBar.titleTextAttributes = @{NSFontAttributeName : [UIFont systemFontOfSize:12]};
-  UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
-  backItem.title = @"Go back!";
-  navBar.backItem = backItem;
-  navBar.hidesBackButton = YES;
-  UIBarButtonItem *item1 = [[UIBarButtonItem alloc] init];
-  item1.title = @"Item 1";
-  UIBarButtonItem *item2 = [[UIBarButtonItem alloc] init];
-  item2.title = @"Item 2";
-  navBar.leadingBarButtonItems = @[item1, item2];
-  navBar.trailingBarButtonItems = @[item2, item1];
-  navBar.leadingItemsSupplementBackButton = YES;
-  navBar.titleAlignment = MDCNavigationBarTitleAlignmentCenter;
+  navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorFill;
 
   // When
-  NSData *archive = [NSKeyedArchiver archivedDataWithRootObject:navBar];
-  MDCNavigationBar *unarchivedBar =
-      (MDCNavigationBar *)[NSKeyedUnarchiver unarchiveObjectWithData:archive];
+  [navBar layoutIfNeeded];
 
   // Then
-  XCTAssertEqualObjects(navBar.title, unarchivedBar.title);
-  XCTAssertNotNil(unarchivedBar.titleView);
-  XCTAssertEqual(navBar.titleView.contentMode, unarchivedBar.titleView.contentMode);
-  XCTAssertEqualObjects(navBar.titleTextAttributes, unarchivedBar.titleTextAttributes);
-  XCTAssertNotNil(unarchivedBar.backItem);
-  XCTAssertEqualObjects(navBar.backItem.title, unarchivedBar.backItem.title);
-  XCTAssertEqual(navBar.hidesBackButton, unarchivedBar.hidesBackButton);
-  XCTAssertEqual(2U, unarchivedBar.leadingBarButtonItems.count);
-  XCTAssertEqual(navBar.leadingBarButtonItems.count, unarchivedBar.leadingBarButtonItems.count);
-  for (NSUInteger i = 0; i < navBar.leadingBarButtonItems.count; ++i) {
-    XCTAssertEqualObjects(navBar.leadingBarButtonItems[i].title,
-                          unarchivedBar.leadingBarButtonItems[i].title);
-  }
-  XCTAssertEqual(2U, unarchivedBar.trailingBarButtonItems.count);
-  XCTAssertEqual(navBar.trailingBarButtonItems.count, unarchivedBar.trailingBarButtonItems.count);
-  for (NSUInteger i = 0; i < navBar.trailingBarButtonItems.count; ++i) {
-    XCTAssertEqualObjects(navBar.trailingBarButtonItems[i].title,
-                          unarchivedBar.trailingBarButtonItems[i].title);
-  }
-  XCTAssertEqual(navBar.leadingItemsSupplementBackButton,
-                unarchivedBar.leadingItemsSupplementBackButton);
-  XCTAssertEqual(navBar.titleAlignment, unarchivedBar.titleAlignment);
+  XCTAssertEqualWithAccuracy(navBar.titleView.center.x, CGRectGetMidX(navBar.bounds),
+                             kEpsilonAccuracy);
 }
 
+- (void)testTitleViewShiftedRightWithLeadingButtonsAndFillBehavior {
+  // Given
+  MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
+  navBar.frame = CGRectMake(0, 0, 300, 25);
+  navBar.titleView = [[UIView alloc] init];
+  navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorFill;
+  navBar.leadingBarButtonItems = @[[[UIBarButtonItem alloc] initWithTitle:@"Button"
+                                                                    style:UIBarButtonItemStylePlain
+                                                                   target:nil action:nil]];
+
+  // When
+  [navBar layoutIfNeeded];
+
+  // Then
+  XCTAssertGreaterThan(navBar.titleView.center.x, CGRectGetMidX(navBar.bounds));
+}
+
+- (void)testTitleViewShiftedLeftWithTrailingButtonsAndFillBehavior {
+  // Given
+  MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
+  navBar.frame = CGRectMake(0, 0, 300, 25);
+  navBar.titleView = [[UIView alloc] init];
+  navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorFill;
+  navBar.trailingBarButtonItems = @[[[UIBarButtonItem alloc] initWithTitle:@"Button"
+                                                                     style:UIBarButtonItemStylePlain
+                                                                    target:nil action:nil]];
+
+  // When
+  [navBar layoutIfNeeded];
+
+  // Then
+  XCTAssertLessThan(navBar.titleView.center.x, CGRectGetMidX(navBar.bounds));
+}
+
+- (void)testTitleViewCenteredWithLeadingButtonsAndCenterBehavior {
+  // Given
+  MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
+  navBar.frame = CGRectMake(0, 0, 300, 25);
+  navBar.titleView = [[UIView alloc] init];
+  navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorCenter;
+  navBar.leadingBarButtonItems = @[[[UIBarButtonItem alloc] initWithTitle:@"Button"
+                                                                    style:UIBarButtonItemStylePlain
+                                                                   target:nil action:nil]];
+
+  // When
+  [navBar layoutIfNeeded];
+
+  // Then
+  XCTAssertEqualWithAccuracy(navBar.titleView.center.x, CGRectGetMidX(navBar.bounds),
+                             kEpsilonAccuracy);
+}
+
+- (void)testTitleViewCenteredWithTrailingButtonsAndCenterBehavior {
+  // Given
+  MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
+  navBar.frame = CGRectMake(0, 0, 300, 25);
+  navBar.titleView = [[UIView alloc] init];
+  navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorCenter;
+  navBar.trailingBarButtonItems = @[[[UIBarButtonItem alloc] initWithTitle:@"Button"
+                                                                     style:UIBarButtonItemStylePlain
+                                                                    target:nil action:nil]];
+
+  // When
+  [navBar layoutIfNeeded];
+
+  // Then
+  XCTAssertEqualWithAccuracy(navBar.titleView.center.x, CGRectGetMidX(navBar.bounds),
+                             kEpsilonAccuracy);
+}
+
+- (void)testTitleFontProperty {
+  MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
+  navBar.frame = CGRectMake(0, 0, 300, 25);
+  navBar.title = @"this is a Title";
+  navBar.titleAlignment = MDCNavigationBarTitleAlignmentCenter;
+  [navBar layoutIfNeeded];
+
+  XCTAssertNotNil(navBar.titleFont);
+  XCTAssertEqual(navBar.titleLabel.font, navBar.titleFont);
+
+  UIFont *font = [UIFont systemFontOfSize:24];
+  navBar.titleFont = font;
+
+  UIFont *resultFont = navBar.titleLabel.font;
+  XCTAssertEqualObjects(resultFont.fontName, font.fontName);
+  XCTAssertEqualWithAccuracy(resultFont.pointSize, 20, 0.01);
+
+  NSDictionary <NSString *, NSNumber *> *fontTraits =
+      [[font fontDescriptor] objectForKey:UIFontDescriptorTraitsAttribute];
+  NSDictionary <NSString *, NSNumber *> *resultTraits =
+      [[resultFont fontDescriptor] objectForKey:UIFontDescriptorTraitsAttribute];
+
+  XCTAssertEqual(fontTraits, resultTraits);
+}
 
 #pragma mark - Accessibility
 
@@ -262,6 +322,47 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
     MDCButtonBar *trailingButtonBar = (MDCButtonBar *)secondItem;
     XCTAssertEqual(2U, trailingButtonBar.subviews.count);
   }
+}
+
+#pragma mark - Typography
+
+- (void)testTypographyThemer {
+  MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
+  MDCTypographyScheme *scheme = [[MDCTypographyScheme alloc] init];
+  [MDCNavigationBarTypographyThemer applyTypographyScheme:scheme toNavigationBar:navBar];
+
+  // To enforce 20 point size we are using fontWithName:size: and for some reason even though the
+  // printout looks idential comparing the fonts returns false. (Using fontWithSize: did not work
+  // for system font medium, instead it returned a regular font).
+  UIFont *titleFont = navBar.titleLabel.font;
+  XCTAssertEqualObjects(titleFont.fontName, scheme.headline6.fontName);
+  XCTAssertEqual(titleFont.pointSize, scheme.headline6.pointSize);
+
+  // Weight for Fonts was not introduced on iOS 8
+  // TODO: remove this when we drop iOS 8 support.
+#if defined(__IPHONE_9_0) && __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_9_0
+  XCTAssertEqual([NavigationBarTests weightForFont:titleFont],
+                 [NavigationBarTests weightForFont:scheme.headline6]);
+#endif
+}
+
+// I really don't like doing this but just to make sure the font has the right weight for the test
+// I had to do this. Couldn't find any other way around it. When Apple support FontWithSize:
+// properly for all fonts we can get rid of this.
++ (CGFloat)weightForFont:(UIFont *)font {
+  // The default font weight is UIFontWeightRegular, which is 0.0.
+  CGFloat weight = 0.0;
+
+  NSDictionary *fontTraits = [font.fontDescriptor objectForKey:UIFontDescriptorTraitsAttribute];
+  if (fontTraits) {
+    NSNumber *weightNumber = fontTraits[UIFontWeightTrait];
+    if (weightNumber != nil) {
+      weight = [weightNumber floatValue];
+    }
+  }
+
+  return weight;
+
 }
 
 @end

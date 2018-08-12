@@ -22,7 +22,7 @@ extern const CGFloat MDCTextInputHalfPadding;
 UIKIT_EXTERN UIColor *_Nonnull MDCTextInputCursorColor(void);
 
 /** A controller for common traits shared by text inputs. */
-@interface MDCTextInputCommonFundament : NSObject <MDCTextInput, NSCopying, NSSecureCoding>
+@interface MDCTextInputCommonFundament : NSObject <MDCTextInput, NSCopying>
 
 /**
  An overlay view on the side of the input where reading and writing lines begin. In LTR this is
@@ -62,6 +62,9 @@ UIKIT_EXTERN UIColor *_Nonnull MDCTextInputCursorColor(void);
 
 /** Mirror of UIView's updateConstraints(). */
 - (void)updateConstraintsOfInput;
+
+/** Clear button did touch event. */
+- (void)clearButtonDidTouch;
 
 - (nullable instancetype)initWithCoder:(NSCoder *_Nonnull)aDecoder NS_DESIGNATED_INITIALIZER;
 

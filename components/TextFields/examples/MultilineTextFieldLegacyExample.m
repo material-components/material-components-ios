@@ -256,7 +256,7 @@
 #pragma mark - CatalogByConvention
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Text Field", @"[Legacy] Multi-line (Objective C)" ];
+  return @[ @"Text Field", @"[Legacy] Multi-line" ];
 }
 
 + (BOOL)catalogIsPrimaryDemo {
@@ -264,7 +264,7 @@
 }
 
 + (BOOL)catalogIsPresentable {
-  return YES;
+  return NO;
 }
 
 #pragma mark - Keyboard Handling

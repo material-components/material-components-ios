@@ -18,10 +18,23 @@
 
 @implementation MDCSnackbarColorThemer
 
-+ (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
-    toSnackbarMessageView:(nonnull MDCSnackbarMessageView *)snackbarMessageView {
-  // TODO(yar): Currently a stub. Will need to update the color setting once we have concluded
-  // the proper color theming and scheme.
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme {
+  MDCSnackbarManager.snackbarMessageViewBackgroundColor =
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:0.8f];
+  MDCSnackbarManager.messageTextColor = [colorScheme.surfaceColor colorWithAlphaComponent:0.87f];
+  UIColor *buttonTitleColor = [colorScheme.surfaceColor
+                                       colorWithAlphaComponent:0.6f];
+  [MDCSnackbarManager setButtonTitleColor:buttonTitleColor
+                                 forState:UIControlStateNormal];
+  [MDCSnackbarManager setButtonTitleColor:buttonTitleColor
+                                 forState:UIControlStateHighlighted];
 }
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
++ (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
+   toSnackbarMessageView:(nonnull MDCSnackbarMessageView *)snackbarMessageView {
+}
+#pragma clang diagnostic pop
 
 @end

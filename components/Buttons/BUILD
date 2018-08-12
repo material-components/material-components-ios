@@ -35,6 +35,8 @@ mdc_public_objc_library(
         "//components/ShadowLayer",
         "//components/Typography",
         "//components/private/Math",
+        "//components/private/ShapeLibrary",
+        "//components/private/Shapes",
         "@material_text_accessibility_ios//:MDFTextAccessibility",
     ],
 )
@@ -46,7 +48,7 @@ mdc_objc_library(
     includes = ["src/ColorThemer"],
     deps = [
         ":Buttons",
-        "//components/Themes",
+        "//components/schemes/Color",
     ],
     visibility = ["//visibility:public"],
 )
@@ -59,6 +61,31 @@ mdc_objc_library(
     deps = [
         ":Buttons",
         "@material_text_accessibility_ios//:MDFTextAccessibility",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
+    name = "TypographyThemer",
+    srcs = native.glob(["src/TypographyThemer/*.m"]),
+    hdrs = native.glob(["src/TypographyThemer/*.h"]),
+    includes = ["src/TypographyThemer"],
+    deps = [
+        ":Buttons",
+        "//components/schemes/Typography",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
+    name = "ButtonThemer",
+    srcs = native.glob(["src/ButtonThemer/*.m"]),
+    hdrs = native.glob(["src/ButtonThemer/*.h"]),
+    includes = ["src/ButtonThemer"],
+    deps = [
+        ":Buttons",
+        ":TypographyThemer",
+        ":ColorThemer",
     ],
     visibility = ["//visibility:public"],
 )
@@ -94,7 +121,10 @@ mdc_objc_library(
         ":Buttons",
         ":private",
         ":ColorThemer",
+        ":ButtonThemer",
         ":TitleColorAccessibilityMutator",
+        ":TypographyThemer",
+        "//components/Palettes",
     ],
     visibility = ["//visibility:private"],
     xibs = native.glob(["tests/unit/resources/*.xib"]),

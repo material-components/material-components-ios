@@ -52,6 +52,16 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
   return _dismissGestureRecognizer.enabled;
 }
 
+// presentedViewCornerRadius wraps the cornerRadius property of our tracking view to avoid
+// duplication.
+- (void)setDialogCornerRadius:(CGFloat)cornerRadius {
+  _trackingView.layer.cornerRadius = cornerRadius;
+}
+
+- (CGFloat)dialogCornerRadius {
+  return _trackingView.layer.cornerRadius;
+}
+
 - (instancetype)initWithPresentedViewController:(UIViewController *)presentedViewController
                        presentingViewController:(UIViewController *)presentingViewController {
   self = [super initWithPresentedViewController:presentedViewController
@@ -97,7 +107,7 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
   CGFloat keyboardHeight = [MDCKeyboardWatcher sharedKeyboardWatcher].visibleKeyboardHeight;
   containerSafeAreaInsets.bottom = MAX(containerSafeAreaInsets.bottom, keyboardHeight);
 
-  // Area that the presented dialog can utilize.
+  // Area that the presented dialog can use.
   CGRect standardPresentableBounds = UIEdgeInsetsInsetRect(containerBounds, containerSafeAreaInsets);
 
   CGRect presentedViewFrame = CGRectZero;

@@ -94,18 +94,26 @@ open class MaskedTransitionTypicalUseSwiftExample: UIViewController {
     tableView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .none)
   }
 
+  var transitionController: MDCMaskedTransitionController? = nil
   func didTapFab(fab: UIView) {
     let target = targets[tableView.indexPathForSelectedRow!.row]
     let vc = target.viewControllerType.init()
 
-    let transition = MDCMaskedTransition(sourceView: fab)
-    transition.calculateFrameOfPresentedView = target.calculateFrame
     vc.view.autoresizingMask = target.autoresizingMask
-    vc.mdm_transitionController.transition = transition
+
+    // Customize the transition
+    let transitionController = MDCMaskedTransitionController(sourceView: fab)
+    if target.calculateFrame != nil {
+      transitionController.calculateFrameOfPresentedView = target.calculateFrame
+      vc.modalPresentationStyle = .custom
+    }
+    vc.transitioningDelegate = transitionController
+
+    // Must keep a reference to the transition controller
+    self.transitionController = transitionController
 
     showDetailViewController(vc, sender: self)
   }
-
 }
 
 extension MaskedTransitionTypicalUseSwiftExample: UITableViewDataSource {

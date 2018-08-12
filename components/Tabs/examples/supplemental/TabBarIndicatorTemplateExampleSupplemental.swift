@@ -17,40 +17,49 @@
 import UIKit
 
 import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialButtons_ButtonThemer
 
 extension TabBarIndicatorTemplateExample {
 
-  func makeAlignmentButton() -> MDCRaisedButton {
-    let button = MDCRaisedButton()
+  private func themeButton(_ button: MDCButton) {
+    let buttonScheme = MDCButtonScheme()
+    buttonScheme.colorScheme = colorScheme
+    buttonScheme.typographyScheme = typographyScheme
+    MDCContainedButtonThemer.applyScheme(buttonScheme, to: button)
+  }
+
+  func makeAlignmentButton() -> MDCButton {
+    let button = MDCButton()
+    themeButton(button)
     button.setTitle("Change Alignment", for: .normal)
     return button
   }
 
-  func makeAppearanceButton() -> MDCRaisedButton {
-    let button = MDCRaisedButton()
+  func makeAppearanceButton() -> MDCButton {
+    let button = MDCButton()
+    themeButton(button)
     button.setTitle("Change Appearance", for: .normal)
     return button
   }
 
-  func makeAppBar() -> MDCAppBar {
-    let appBar = MDCAppBar()
+  func makeAppBar() -> MDCAppBarViewController {
+    let appBarViewController = MDCAppBarViewController()
 
-    self.addChildViewController(appBar.headerViewController)
-    appBar.navigationBar.backgroundColor = UIColor.white
-    appBar.headerViewController.headerView.backgroundColor = UIColor.white
+    self.addChildViewController(appBarViewController)
 
     // Give the tab bar enough height to accomodate all possible item appearances.
-    appBar.headerViewController.headerView.minMaxHeightIncludesSafeArea = false
-    appBar.headerViewController.headerView.minimumHeight = 128
+    appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
+    appBarViewController.headerView.minimumHeight = 128
 
-    appBar.headerStackView.bottomBar = self.tabBar
-    appBar.headerStackView.setNeedsLayout()
-    return appBar
+    appBarViewController.headerStackView.bottomBar = self.tabBar
+    appBarViewController.headerStackView.setNeedsLayout()
+    return appBarViewController
   }
 
   func setupExampleViews() {
     view.backgroundColor = UIColor.white
-    appBar.addSubviewsToParent()
+    view.addSubview(appBarViewController.view)
+    appBarViewController.didMove(toParentViewController: self)
 
     // Set up buttons
     alignmentButton.translatesAutoresizingMaskIntoConstraints = false
@@ -110,7 +119,7 @@ extension TabBarIndicatorTemplateExample {
 
 extension TabBarIndicatorTemplateExample {
   override var childViewControllerForStatusBarStyle: UIViewController? {
-    return appBar.headerViewController
+    return appBarViewController
   }
 }
 

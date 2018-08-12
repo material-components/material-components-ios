@@ -17,16 +17,34 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialButtonBar.h"
+#import "MaterialButtonBar+ColorThemer.h"
+#import "MaterialButtonBar+TypographyThemer.h"
 
 @interface ButtonBarCustomizedFontExample : UIViewController
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 @end
 
 @implementation ButtonBarCustomizedFontExample
+
+- (id)init {
+  self = [super init];
+  if (self) {
+    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.typographyScheme = [[MDCTypographyScheme alloc] init];
+  }
+  return self;
+}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
 
   MDCButtonBar *buttonBar = [[MDCButtonBar alloc] init];
+
+  self.typographyScheme.button = [UIFont fontWithName:@"American Typewriter" size:10.0f];
+  [MDCButtonBarTypographyThemer applyTypographyScheme:self.typographyScheme toButtonBar:buttonBar];
+
+  [MDCButtonBarColorThemer applySemanticColorScheme:self.colorScheme toButtonBar:buttonBar];
 
   // MDCButtonBar ignores the style of UIBarButtonItem.
   UIBarButtonItemStyle ignored = UIBarButtonItemStyleDone;
@@ -42,16 +60,7 @@
                                       target:self
                                       action:@selector(didTapActionButton:)];
 
-  NSArray *items = @[ actionItem, secondActionItem ];
-
-  // Set the title text attributes before assigning to buttonBar.items
-  // because of https://github.com/material-components/material-components-ios/issues/277
-  for (UIBarButtonItem *item in items) {
-    [item setTitleTextAttributes:@{ NSForegroundColorAttributeName : [UIColor greenColor] }
-                        forState:UIControlStateNormal];
-  }
-
-  buttonBar.items = items;
+  buttonBar.items = @[ actionItem, secondActionItem ];
 
   // MDCButtonBar's sizeThatFits gives a "best-fit" size of the provided items.
   CGSize size = [buttonBar sizeThatFits:self.view.bounds.size];
@@ -71,9 +80,6 @@
 
 - (void)didTapActionButton:(id)sender {
   NSLog(@"Did tap action item: %@", sender);
-
-  // Disable Customization
-  [[MDCButtonBarButton appearance] setTitleFont:nil forState:UIControlStateNormal];
 }
 
 @end
@@ -88,10 +94,6 @@
   return NO;
 }
 
-+ (BOOL)catalogIsPresentable {
-  return YES;
-}
-
 @end
 
 #pragma mark - Typical application code (not Material-specific)
@@ -102,17 +104,6 @@
   self = [super init];
   if (self) {
     self.title = @"Button Bar";
-
-    // You would normally set your UIAppearance properties in your AppDelegate in
-    // applicationDidFinishLoading.  We are doing it here to keep the revalent
-    // code in the sample.
-    // Once this code has been executed ALL MDCButtonBar's will have the following
-    // font.
-    // See Apple > UIKit > UIAppearance
-    // https://developer.apple.com/documentation/uikit/uiappearance
-    UIFont *customFont = [UIFont fontWithName:@"American Typewriter" size:10.0f];
-    NSAssert(customFont, @"Unable to instantiate font");
-    [[MDCButtonBarButton appearance] setTitleFont:customFont forState:UIControlStateNormal];
   }
   return self;
 }

@@ -27,6 +27,24 @@ typedef NS_ENUM(NSInteger, MDCNavigationBarTitleAlignment) {
 };
 
 /**
+ Behaviors that affect the layout of an |MDCNavigationBar|'s titleView.
+ */
+typedef NS_ENUM(NSInteger, MDCNavigationBarTitleViewLayoutBehavior) {
+  /**
+   The title view's width will equal the navigation bar's width minus any space consumed by the
+   leading and trailing buttons.
+
+   The title view's center may not align with the navigation bar's center in this case.
+   */
+  MDCNavigationBarTitleViewLayoutBehaviorFill,
+
+  /**
+   Align the title view's center with the navigation bar's center, if possible.
+   */
+  MDCNavigationBarTitleViewLayoutBehaviorCenter
+};
+
+/**
  This protocol defines all of the properties on UINavigationItem that can be listened to by
  MDCNavigationBar.
  */
@@ -99,18 +117,71 @@ IB_DESIGNABLE
 @property(nonatomic, strong, nullable) UIView *titleView;
 
 /**
- Display attributes for the titleView's title text.
+ The behavior that determines how to position the title view.
 
- Setting this property will render an NSAttributedString with the assigned attributes across the
- entire text.
+ By default this is MDCNavigationBarTitleViewLayoutBehaviorFill.
  */
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-@property(nonatomic, copy, nullable)
-    NSDictionary<NSAttributedStringKey, id> *titleTextAttributes UI_APPEARANCE_SELECTOR;
-#else
-@property(nonatomic, copy, nullable)
-    NSDictionary<NSString *, id> *titleTextAttributes UI_APPEARANCE_SELECTOR;
-#endif
+@property(nonatomic) MDCNavigationBarTitleViewLayoutBehavior titleViewLayoutBehavior;
+
+/**
+ The font applied to the title of navigation bar.
+ Font size is enforced to 20.
+ Both Default and null_resettable value is MDCTypography's titleFont.
+ Note that the font attribute of titleTextAttributes will take precedence over this property.
+ */
+@property(nonatomic, strong, null_resettable) UIFont *titleFont;
+
+/**
+ The title label's text color.
+
+ Default is nil (text draws black).
+ */
+@property(nonatomic, strong, nullable) UIColor *titleTextColor;
+
+/**
+ The inkColor that is used for all buttons in trailing and leading button bars.
+
+ If set to nil, button bar buttons use default ink color.
+ */
+@property(nonatomic, strong, nullable) UIColor *inkColor;
+
+/**
+ Sets the title font for the given state for all buttons.
+
+ @param font The font that should be displayed on text buttons for the given state.
+ @param state The state for which the font should be displayed.
+ */
+- (void)setButtonsTitleFont:(nullable UIFont *)font forState:(UIControlState)state;
+
+/**
+ Returns the font set for @c state that was set by setButtonsTitleFont:forState:.
+
+ If no font has been set for a given state, the returned value will fall back to the value
+ set for UIControlStateNormal.
+
+ @param state The state for which the font should be returned.
+ @return The font associated with the given state.
+ */
+- (nullable UIFont *)buttonsTitleFontForState:(UIControlState)state;
+
+/**
+ Sets the title label color for the given state for all buttons.
+
+ @param color The color that should be used on text buttons labels for the given state.
+ @param state The state for which the color should be used.
+ */
+- (void)setButtonsTitleColor:(nullable UIColor *)color forState:(UIControlState)state;
+
+/**
+ Returns the color set for @c state that was set by setButtonsTitleColor:forState:.
+
+ If no value has been set for a given state, the returned value will fall back to the value
+ set for UIControlStateNormal.
+
+ @param state The state for which the color should be returned.
+ @return The color associated with the given state.
+ */
+- (nullable UIColor *)buttonsTitleColorForState:(UIControlState)state;
 
 /** The back button to be displayed, if any. */
 @property(nonatomic, strong, nullable) UIBarButtonItem *backItem;
@@ -192,6 +263,27 @@ IB_DESIGNABLE
 
 /* Equivalent to leadingItemsSupplementBackButton. */
 @property(nonatomic) BOOL leftItemsSupplementBackButton;
+
+#pragma mark - To be deprecated
+
+/**
+ Display attributes for the titleView's title text.
+
+ Font attribute will take precedence over titleFont property.
+ Setting this property will render an NSAttributedString with the assigned attributes across the
+ entire text.
+
+ Note: this property will be deprecated in future, please use titleFont and titleTextColor instead.
+ */
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+@property(nonatomic, copy, nullable)
+    NSDictionary<NSAttributedStringKey, id> *titleTextAttributes UI_APPEARANCE_SELECTOR;
+#else
+@property(nonatomic, copy, nullable)
+    NSDictionary<NSString *, id> *titleTextAttributes UI_APPEARANCE_SELECTOR;
+#endif
+
+#pragma mark - Deprecated
 
 /** The text alignment of the navigation bar title. Defaults to NSTextAlignmentLeft. */
 @property(nonatomic) NSTextAlignment textAlignment __deprecated_msg("Use titleAlignment instead.");

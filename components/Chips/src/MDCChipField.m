@@ -130,9 +130,16 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
     chipTextField.autocorrectionType = UITextAutocorrectionTypeNo;
     chipTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
     chipTextField.keyboardType = MDCChipFieldDefaultKeyboardType;
-    [chipTextField addTarget:self
-                      action:@selector(textFieldDidChange)
-            forControlEvents:UIControlEventEditingChanged];
+    // Listen for notifications posted when the text field is the first responder.
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(textFieldDidChange)
+                                                 name:UITextFieldTextDidChangeNotification
+                                               object:chipTextField];
+    // Also listen for notifications posted when the text field is not the first responder.
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(textFieldDidChange)
+                                                 name:MDCTextFieldTextDidSetTextNotification
+                                               object:chipTextField];
     [self addSubview:chipTextField];
     _textField = chipTextField;
   }
@@ -170,6 +177,10 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
     }
   }
   return self;
+}
+
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)commonMDCChipFieldInit {

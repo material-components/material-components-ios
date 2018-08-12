@@ -18,8 +18,9 @@ import UIKit
 import CoreGraphics
 
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MaterialPalettes
+import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialTabs
+import MaterialComponents.MaterialTabs_ColorThemer
 
 class TabBarIndicatorTemplateExample: UIViewController {
 
@@ -41,17 +42,21 @@ class TabBarIndicatorTemplateExample: UIViewController {
       tabBar.itemAppearance = newValue
 
       // itemAppearance affects the height of the tab bar.
-      appBar.headerStackView.setNeedsLayout()
+      appBarViewController.headerStackView.setNeedsLayout()
     }
   }
 
-  lazy var alignmentButton: MDCRaisedButton = self.makeAlignmentButton()
-  lazy var appearanceButton: MDCRaisedButton = self.makeAppearanceButton()
-  lazy var appBar: MDCAppBar = self.makeAppBar()
+  lazy var alignmentButton: MDCButton = self.makeAlignmentButton()
+  lazy var appearanceButton: MDCButton = self.makeAppearanceButton()
+  lazy var appBarViewController: MDCAppBarViewController = self.makeAppBar()
+  var colorScheme = MDCSemanticColorScheme()
+  var typographyScheme = MDCTypographyScheme()
 
   lazy var tabBar: MDCTabBar = {
     let tabBar = MDCTabBar()
     tabBar.alignment = .justified
+
+    MDCTabBarColorThemer.applySemanticColorScheme(self.colorScheme, toTabs: tabBar);
 
     let bundle = Bundle(for: TabBarIndicatorTemplateExample.self)
     let info = UIImage.init(named: "TabBarDemo_ic_info", in: bundle, compatibleWith:nil)
@@ -90,10 +95,16 @@ class TabBarIndicatorTemplateExample: UIViewController {
       self,
       action: #selector(changeAppearance),
       for: .touchUpInside)
+
+    MDCAppBarColorThemer.applyColorScheme(self.colorScheme, to: self.appBarViewController)
+    MDCAppBarTypographyThemer.applyTypographyScheme(self.typographyScheme,
+                                                    to: self.appBarViewController)
   }
 
   @objc func changeAlignmentDidTouch(sender: UIButton) {
     let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+    sheet.popoverPresentationController?.sourceView = self.alignmentButton
+    sheet.popoverPresentationController?.sourceRect = self.alignmentButton.bounds
     sheet.addAction(UIAlertAction(title: "Leading", style: .default, handler: { _ in
       self.alignment = .leading
     }))
@@ -111,6 +122,8 @@ class TabBarIndicatorTemplateExample: UIViewController {
 
   @objc func changeAppearance(fromSender sender: UIButton) {
     let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+    sheet.popoverPresentationController?.sourceView = self.appearanceButton
+    sheet.popoverPresentationController?.sourceRect = self.appearanceButton.bounds
     sheet.addAction(UIAlertAction(title: "Titles", style: .default, handler: { _ in
       self.itemAppearance = .titles
     }))

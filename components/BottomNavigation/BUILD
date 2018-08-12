@@ -29,6 +29,7 @@ mdc_public_objc_library(
     ],
     deps = [
         "//components/Ink",
+        "//components/ShadowElevations",
         "//components/ShadowLayer",
         "//components/Typography",
         "//components/private/Math",
@@ -58,7 +59,23 @@ mdc_objc_library(
     ],
     deps = [
         ":BottomNavigation",
-        "//components/Themes",
+        "//components/schemes/Color",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+
+mdc_objc_library(
+    name = "TypographyThemer",
+    srcs = native.glob(["src/TypographyThemer/*.m"]),
+    hdrs = native.glob(["src/TypographyThemer/*.h"]),
+    includes = ["src/TypographyThemer"],
+    sdk_frameworks = [
+        "Foundation",
+    ],
+    deps = [
+        ":BottomNavigation",
+        "//components/schemes/Typography",
     ],
     visibility = ["//visibility:public"],
 )
@@ -84,6 +101,7 @@ mdc_objc_library(
     deps = [
         ":BottomNavigation",
         ":ColorThemer",
+        ":TypographyThemer",
         ":private",
     ],
     visibility = ["//visibility:private"],

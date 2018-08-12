@@ -1,0 +1,66 @@
+#!/bin/bash -e
+#
+# Copyright 2018-present The Material Components for iOS Authors. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+usage() {
+  echo "Usage: $0 <ComponentName> <path_to_.template_file> <destination>"
+  echo
+  echo "Copies the template into the component directory and replaces all of the symbols defined"
+  echo "in the component's .vars file."
+  echo
+  echo ".vars files should be placed in the root of the component's directory."
+  echo "Example: components/ActivityIndicator/.vars"
+  echo
+  echo "Each line of the .vars file should be of the form symbol=replacement."
+  echo "Example:"
+  echo "component=ActivityIndicator"
+  echo "component_name=Activity Indicator"
+  echo
+  echo "This script will replace all instances of <#symbol#> in the .template with the given"
+  echo "replacement."
+  echo
+  echo "Example usage: $0 scripts/templates/component/docs/color-theming.md.template components/ActivityIndicator/docs/color-theming.md"
+}
+
+if [ "$#" -ne 3 ]; then
+  usage
+  exit 1
+fi
+
+COMPONENT="$1"
+TEMPLATE_PATH="$2"
+DESTINATION_PATH="$3"
+
+if [ ! -f "$TEMPLATE_PATH" ]; then
+  echo "$TEMPLATE_PATH is not a file."
+  echo
+  usage
+  exit 1
+fi
+
+mkdir -p $(dirname "$DESTINATION_PATH")
+
+COMPONENT_VARS="components/$COMPONENT/.vars"
+
+cp "$TEMPLATE_PATH" "$DESTINATION_PATH"
+
+cat $COMPONENT_VARS | grep -v "^#" | while read line; do
+  variable=$(echo "$line" | cut -d'=' -f1)
+  replacement=$(echo "$line" | cut -d'=' -f2-)
+
+  echo "Replacing <#$variable#> with $replacement..."
+
+  perl -pi -e "s|<#$variable#>|$replacement|g" "$DESTINATION_PATH"
+done

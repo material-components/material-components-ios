@@ -20,7 +20,7 @@
  MDCDialogPresentationController will present a modal ViewController as a dialog according to the
  Material spec.
 
- https://material.io/guidelines/components/dialogs.html
+ https://material.io/go/design-dialogs
 
  MDCDialogPresentationController should not be used to present full-screen dialogs.
 
@@ -41,6 +41,15 @@
  Defaults to YES.
  */
 @property(nonatomic, assign) BOOL dismissOnBackgroundTap;
+
+/**
+ Customize the corner radius of the shadow to match the presented view's corner radius.
+ If the presented view corner radius and dialogCornerRadius are different, the rendered shadow will
+ not match.
+ 
+ Defaults to 0.0.
+ */
+@property(nonatomic, assign) CGFloat dialogCornerRadius;
 
 /**
  Returns the size of the specified child view controller's content.

@@ -19,7 +19,9 @@
 #import "MaterialAppBar.h"
 #import "MaterialButtons.h"
 #import "MaterialCollections.h"
+#import "MaterialColorScheme.h"
 #import "MaterialTabs.h"
+#import "MaterialTabs+ColorThemer.h"
 #import "supplemental/TabBarTextOnlyExampleSupplemental.h"
 
 @implementation TabBarTextOnlyExample
@@ -28,6 +30,7 @@
   self = [super initWithCollectionViewLayout:layout];
   if (self) {
     [self setupExampleViews:@[@"Change Alignment", @"Toggle Case", @"Clear Selection"]];
+    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
   }
   return self;
 }
@@ -35,7 +38,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   [self loadTabBar];
-  self.appBar.headerStackView.bottomBar = self.tabBar;
+  self.appBarViewController.headerStackView.bottomBar = self.tabBar;
 }
 
 #pragma mark - Action
@@ -66,10 +69,7 @@
                                     tag:0],
   ];
 
-  // Give change the selected item tint color and the tab bar tint color. For other color properties
-  // rely on the UIAppearance proxy.
-  self.tabBar.selectedItemTintColor = [UIColor whiteColor];
-  self.tabBar.tintColor = [UIColor colorWithWhite:1.0f alpha:0.5f];
+  [MDCTabBarColorThemer applySemanticColorScheme:self.colorScheme toTabs:self.tabBar];
 
   self.tabBar.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
@@ -81,6 +81,8 @@
       [UIAlertController alertControllerWithTitle:nil
                                           message:nil
                                    preferredStyle:UIAlertControllerStyleActionSheet];
+  sheet.popoverPresentationController.sourceView = (UICollectionViewCell *)sender;
+  sheet.popoverPresentationController.sourceRect = ((UICollectionViewCell *)sender).bounds;
   [sheet addAction:[UIAlertAction actionWithTitle:@"Leading"
                                             style:UIAlertActionStyleDefault
                                           handler:^(UIAlertAction *_Nonnull action) {
@@ -115,7 +117,7 @@
   [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
   switch (indexPath.row) {
     case 0:
-      [self changeAlignment:collectionView];
+      [self changeAlignment:[collectionView cellForItemAtIndexPath:indexPath]];
       break;
 
     case 1:

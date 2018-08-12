@@ -16,12 +16,6 @@
 
 #import "MDCTextInputBorderView.h"
 
-static NSString *const MDCTextInputBorderViewBorderFillColorKey =
-    @"MDCTextInputBorderViewBorderFillColorKey";
-static NSString *const MDCTextInputBorderViewBorderPathKey = @"MDCTextInputBorderViewBorderPathKey";
-static NSString *const MDCTextInputBorderViewBorderStrokeColorKey =
-    @"MDCTextInputBorderViewBorderStrokeColorKey";
-
 static inline NSString *_Nullable MDCNSStringFromCGLineCap(CGLineCap lineCap) {
   NSString *lineCapString;
   switch (lineCap) {
@@ -73,22 +67,9 @@ static inline NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin)
 - (instancetype)initWithCoder:(NSCoder *)coder {
   self = [super initWithCoder:coder];
   if (self) {
-    _borderFillColor = [coder decodeObjectOfClass:[UIColor class]
-                                           forKey:MDCTextInputBorderViewBorderFillColorKey];
-    _borderPath = [coder decodeObjectOfClass:[UIBezierPath class]
-                                     forKey:MDCTextInputBorderViewBorderPathKey];
-    _borderStrokeColor = [coder decodeObjectOfClass:[UIColor class]
-                                            forKey:MDCTextInputBorderViewBorderStrokeColorKey];
     [self commonMDCTextInputBorderViewInit];
   }
   return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [super encodeWithCoder:aCoder];
-  [aCoder encodeObject:self.borderFillColor forKey:MDCTextInputBorderViewBorderFillColorKey];
-  [aCoder encodeObject:self.borderPath forKey:MDCTextInputBorderViewBorderPathKey];
-  [aCoder encodeObject:self.borderStrokeColor forKey:MDCTextInputBorderViewBorderStrokeColorKey];
 }
 
 - (nonnull id)copyWithZone:(nullable __unused NSZone *)zone {

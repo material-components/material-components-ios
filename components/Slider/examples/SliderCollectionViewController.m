@@ -15,8 +15,11 @@
  */
 
 #import "MaterialCollections.h"
+#import "MaterialColorScheme.h"
+#import "MaterialPalettes.h"
 #import "MaterialSlider.h"
 #import "MaterialTypography.h"
+#import "MaterialSlider+ColorThemer.h"
 #import "supplemental/SliderCollectionSupplemental.h"
 
 static NSString *const kReusableIdentifierItem = @"sliderItemCellIdentifier";
@@ -29,6 +32,8 @@ static CGFloat const kSliderVerticalMargin = 12.f;
 @property(nonatomic, assign) UIColor *labelColor;
 @property(nonatomic, assign) UIColor *bgColor;
 @property(nonatomic, nullable) UIColor *sliderColor;
+@property(nonatomic, nullable) UIColor *filledTickColor;
+@property(nonatomic, nullable) UIColor *backgroundTickColor;
 @property(nonatomic, nullable) UIColor *trackBackgroundColor;
 @property(nonatomic, assign) int numDiscreteValues;
 @property(nonatomic, assign) CGFloat value;
@@ -70,8 +75,7 @@ static CGFloat const kSliderVerticalMargin = 12.f;
 @end
 
 @interface MDCSliderExampleCollectionViewCell : UICollectionViewCell
-
-- (void)applyModel:(MDCSliderModel *)model;
+- (void)applyModel:(MDCSliderModel *)model withColorScheme:(MDCSemanticColorScheme *)colorScheme;
 
 @end
 
@@ -93,16 +97,37 @@ static CGFloat const kSliderVerticalMargin = 12.f;
   return self;
 }
 
-- (void)applyModel:(MDCSliderModel *)model {
+- (void)applyModel:(MDCSliderModel *)model withColorScheme:(MDCSemanticColorScheme *)colorScheme {
   _label.text = model.labelString;
   _label.textColor = model.labelColor;
   self.contentView.backgroundColor = model.bgColor;
+  _slider.statefulAPIEnabled = YES;
+  [MDCSliderColorThemer applySemanticColorScheme:colorScheme toSlider:_slider];
   _slider.numberOfDiscreteValues = model.numDiscreteValues;
   _slider.value = model.value;
   _slider.filledTrackAnchorValue = model.anchorValue;
   _slider.shouldDisplayDiscreteValueLabel = model.discreteValueLabel;
   _slider.thumbHollowAtStart = model.hollowCircle;
   _slider.enabled = model.enabled;
+  
+  // Don't apply a `nil` color, use the default
+  if (model.sliderColor) {
+    [_slider setTrackFillColor:model.sliderColor forState:UIControlStateNormal];
+    [_slider setThumbColor:model.sliderColor forState:UIControlStateNormal];
+    _slider.inkColor = model.sliderColor;
+  }
+
+  if (model.trackBackgroundColor) {
+    [_slider setTrackBackgroundColor:model.trackBackgroundColor forState:UIControlStateNormal];
+  }
+  
+  if (model.filledTickColor) {
+    [_slider setFilledTrackTickColor:model.filledTickColor forState:UIControlStateNormal];
+  }
+
+  if (model.backgroundTickColor) {
+    [_slider setBackgroundTrackTickColor:model.backgroundTickColor forState:UIControlStateNormal];
+  }
 
   // Add target/action pair
   [_slider addTarget:model
@@ -185,6 +210,7 @@ static CGFloat const kSliderVerticalMargin = 12.f;
 
     model = [[MDCSliderModel alloc] init];
     model.labelString = @"Green slider without hollow circle at 0";
+    model.sliderColor = MDCPalette.greenPalette.tint800;
     model.hollowCircle = NO;
     model.value = 0.f;
     [_sliders addObject:model];
@@ -206,6 +232,7 @@ static CGFloat const kSliderVerticalMargin = 12.f;
     model.labelString = @"Dark themed slider";
     model.labelColor = [UIColor whiteColor];
     model.trackBackgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.3f];
+    model.sliderColor = MDCPalette.bluePalette.tint500;
     model.bgColor = [UIColor darkGrayColor];
     model.value = 0.2f;
     [_sliders addObject:model];
@@ -219,8 +246,11 @@ static CGFloat const kSliderVerticalMargin = 12.f;
     model = [[MDCSliderModel alloc] init];
     model.labelString = @"Disabled slider";
     model.value = 0.5f;
+    model.anchorValue = 0.1f;
     model.enabled = NO;
     [_sliders addObject:model];
+
+    _colorScheme = [[MDCSemanticColorScheme alloc] init];
   }
 
   return self;
@@ -239,8 +269,7 @@ static CGFloat const kSliderVerticalMargin = 12.f;
       [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
                                                 forIndexPath:indexPath];
   MDCSliderModel *model = [_sliders objectAtIndex:indexPath.item];
-
-  [cell applyModel:model];
+  [cell applyModel:model withColorScheme:self.colorScheme];
   return cell;
 }
 

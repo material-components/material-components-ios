@@ -50,17 +50,57 @@ static const CGSize kAnimationCircleSize = {48.f, 48.f};
 @implementation AnimationTimingExample (Supplemental)
 
 - (void)setupExampleViews {
-  self.view.backgroundColor = [UIColor colorWithWhite:0.9f alpha:1.0f];
+  self.view.backgroundColor = UIColor.whiteColor;
   self.title = @"Animation Timing";
 
   self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
-  self.scrollView.autoresizingMask =
-      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
   self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.view.frame),
                                            CGRectGetHeight(self.view.frame) + kTopMargin);
   self.scrollView.clipsToBounds = YES;
   [self.view addSubview:self.scrollView];
+
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    // No need to do anything - additionalSafeAreaInsets will inset our content.
+    self.scrollView.autoresizingMask =
+        UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  } else {
+#endif
+    self.scrollView.translatesAutoresizingMaskIntoConstraints = NO;
+    [NSLayoutConstraint activateConstraints:
+     @[[NSLayoutConstraint constraintWithItem:self.scrollView
+                                    attribute:NSLayoutAttributeTop
+                                    relatedBy:NSLayoutRelationEqual
+                                       toItem:self.topLayoutGuide
+                                    attribute:NSLayoutAttributeBottom
+                                   multiplier:1.0
+                                     constant:0],
+       [NSLayoutConstraint constraintWithItem:self.scrollView
+                                    attribute:NSLayoutAttributeBottom
+                                    relatedBy:NSLayoutRelationEqual
+                                       toItem:self.view
+                                    attribute:NSLayoutAttributeBottom
+                                   multiplier:1.0
+                                     constant:0],
+       [NSLayoutConstraint constraintWithItem:self.scrollView
+                                    attribute:NSLayoutAttributeLeft
+                                    relatedBy:NSLayoutRelationEqual
+                                       toItem:self.view
+                                    attribute:NSLayoutAttributeLeft
+                                   multiplier:1.0
+                                     constant:0],
+       [NSLayoutConstraint constraintWithItem:self.scrollView
+                                    attribute:NSLayoutAttributeRight
+                                    relatedBy:NSLayoutRelationEqual
+                                       toItem:self.view
+                                    attribute:NSLayoutAttributeRight
+                                   multiplier:1.0
+                                     constant:0]
+       ]];
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  }
+#endif
 
   CGFloat lineSpace = (CGRectGetHeight(self.view.frame) - 50.f) / 5.f;
   UILabel *linearLabel = [AnimationTimingExample curveLabelWithTitle:@"Linear"];
@@ -137,7 +177,7 @@ static const CGSize kAnimationCircleSize = {48.f, 48.f};
 + (UILabel *)curveLabelWithTitle:(NSString *)text {
   UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
   label.font = [MDCTypography captionFont];
-  label.textColor = [UIColor colorWithWhite:0 alpha:[MDCTypography captionFontOpacity]];
+  label.textColor = [UIColor colorWithWhite:0 alpha:[MDCTypography body2FontOpacity]];
   label.text = text;
   [label sizeToFit];
   return label;
@@ -149,11 +189,11 @@ static const CGSize kAnimationCircleSize = {48.f, 48.f};
   dispatch_once(&onceToken, ^{
     UIColor *primaryColor = [UIColor darkGrayColor];
     defaultColors = @[
-      [primaryColor colorWithAlphaComponent:0.8f],
-      [primaryColor colorWithAlphaComponent:0.65f],
-      [primaryColor colorWithAlphaComponent:0.5f],
-      [primaryColor colorWithAlphaComponent:0.35f],
-      [primaryColor colorWithAlphaComponent:0.2f]
+      [primaryColor colorWithAlphaComponent:0.95f],
+      [primaryColor colorWithAlphaComponent:0.90f],
+      [primaryColor colorWithAlphaComponent:0.85f],
+      [primaryColor colorWithAlphaComponent:0.80f],
+      [primaryColor colorWithAlphaComponent:0.75f]
     ];
   });
   return defaultColors;

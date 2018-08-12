@@ -18,6 +18,7 @@
 
 #import "MaterialButtons.h"
 #import "MaterialShadowElevations.h"
+#import "MaterialShapes.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
 
@@ -83,7 +84,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
   return [string copy];
 }
 
-@interface FakeShadowLayer : MDCShadowLayer
+@interface FakeShadowLayer : MDCShapedShadowLayer
 @property(nonatomic, assign) NSInteger elevationAssignmentCount;
 @end
 
@@ -153,6 +154,8 @@ static NSString *controlStateDescription(UIControlState controlState) {
   // When
   button.uppercaseTitle = NO;
   [button setTitle:originalTitle forState:UIControlStateNormal];
+  [button setTitle:originalTitle forState:UIControlStateHighlighted];
+  [button setTitle:originalTitle forState:UIControlStateDisabled];
   button.uppercaseTitle = YES;
 
   // Then
@@ -168,6 +171,8 @@ static NSString *controlStateDescription(UIControlState controlState) {
   // When
   button.uppercaseTitle = YES;
   [button setTitle:originalTitle forState:UIControlStateNormal];
+  [button setTitle:originalTitle forState:UIControlStateHighlighted];
+  [button setTitle:originalTitle forState:UIControlStateDisabled];
   button.uppercaseTitle = NO;
 
   // Then
@@ -365,6 +370,91 @@ static NSString *controlStateDescription(UIControlState controlState) {
   }
 }
 
+#pragma mark - imageTintColor:forState:
+
+- (void)testRemovedImageTintColorForState {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+
+  // When
+  [button setImageTintColor:nil forState:UIControlStateNormal];
+
+  // Then
+  XCTAssertNil([button imageTintColorForState:UIControlStateNormal]);
+  XCTAssertNil([button imageTintColorForState:UIControlStateHighlighted]);
+}
+
+- (void)testDefaultImageTintColorForState {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+
+  // Then
+  XCTAssertNil([button imageTintColorForState:UIControlStateSelected]);
+}
+
+- (void)testImageTintForUnspecifiedStateEqualsNormalState {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  UIColor *color = randomColor();
+
+  // When
+  [button setImageTintColor:color forState:UIControlStateNormal];
+
+  XCTAssertEqual([button imageTintColorForState:UIControlStateHighlighted], color);
+}
+
+- (void)testImageTintColorForState {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+
+  for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
+    // And given
+    UIColor *color = randomColor();
+
+    // When
+    [button setImageTintColor:color forState:controlState];
+
+    // Then
+    XCTAssertEqualObjects([button imageTintColorForState:controlState], color);
+  }
+}
+
+- (void)testImageTintColorForStateFallsBackToDefault {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  UIColor *normalTint = [UIColor yellowColor];
+  UIColor *selectedTint = [UIColor redColor];
+
+  // When
+  [button setImageTintColor:normalTint forState:UIControlStateNormal];
+  [button setImageTintColor:selectedTint forState:UIControlStateSelected];
+
+  // Then
+  XCTAssertEqualObjects([button imageTintColorForState:UIControlStateNormal], normalTint);
+  XCTAssertEqualObjects([button imageTintColorForState:UIControlStateSelected], selectedTint);
+  XCTAssertEqualObjects([button imageTintColorForState:UIControlStateHighlighted], normalTint);
+}
+
+- (void)testImageTintColorForStateSetsImageViewTintColor {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  UIColor *normalTint = [UIColor yellowColor];
+  UIColor *selectedTint = [UIColor redColor];
+
+  // When
+  [button setImageTintColor:normalTint forState:UIControlStateNormal];
+  [button setImageTintColor:selectedTint forState:UIControlStateSelected];
+
+  // Then
+  XCTAssertEqualObjects(button.imageView.tintColor, normalTint);
+
+  // When
+  button.selected = YES;
+
+  // Then
+  XCTAssertEqualObjects(button.imageView.tintColor, selectedTint);
+}
+
 #pragma mark - backgroundColor:forState:
 
 - (void)testCurrentBackgroundColorNormal {
@@ -542,96 +632,6 @@ static NSString *controlStateDescription(UIControlState controlState) {
 
   // Then
   XCTAssertEqualWithAccuracy(alpha, button.alpha, (CGFloat)0.0001);
-}
-
-- (void)testEncode {
-  // Given
-  MDCButton *button = [[MDCButton alloc] init];
-  button.inkStyle = arc4random_uniform(2) ? MDCInkStyleBounded : MDCInkStyleUnbounded;
-  button.inkMaxRippleRadius = randomNumber();
-  button.uppercaseTitle = (BOOL)arc4random_uniform(2) ? YES : NO;
-  button.hitAreaInsets = UIEdgeInsetsMake(10, 10, 10, 10);
-  button.inkColor = randomColor();
-  button.underlyingColorHint = randomColor();
-  button.minimumSize = CGSizeMake(15, 33);
-  button.maximumSize = CGSizeMake(17, 41);
-  CGFloat buttonAlpha = (CGFloat)0.5;
-  button.alpha = buttonAlpha;
-  button.enabled = NO;
-
-  for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
-    [button setBackgroundColor:randomColor() forState:controlState];
-    [button setElevation:randomNumber() forState:controlState];
-    [button setShadowColor:randomColor() forState:controlState];
-  }
-  NSData *data = [NSKeyedArchiver archivedDataWithRootObject:button];
-
-  // When
-  MDCButton *unarchivedButton = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-
-  // Then
-  XCTAssertEqualObjects(unarchivedButton.inkColor, button.inkColor);
-  XCTAssertEqual(unarchivedButton.uppercaseTitle, button.uppercaseTitle);
-  XCTAssertEqual(unarchivedButton.inkStyle, button.inkStyle);
-  XCTAssertEqualWithAccuracy(unarchivedButton.inkMaxRippleRadius,
-                             button.inkMaxRippleRadius,
-                             kEpsilonAccuracy);
-  XCTAssertEqualWithAccuracy(unarchivedButton.hitAreaInsets.bottom,
-                             button.hitAreaInsets.bottom,
-                             kEpsilonAccuracy);
-  XCTAssertEqualWithAccuracy(unarchivedButton.hitAreaInsets.top,
-                             button.hitAreaInsets.top,
-                             kEpsilonAccuracy);
-  XCTAssertEqualWithAccuracy(unarchivedButton.hitAreaInsets.right,
-                             button.hitAreaInsets.right,
-                             kEpsilonAccuracy);
-  XCTAssertEqualWithAccuracy(unarchivedButton.hitAreaInsets.left,
-                             button.hitAreaInsets.left,
-                             kEpsilonAccuracy);
-  XCTAssertEqualObjects(unarchivedButton.underlyingColorHint, button.underlyingColorHint);
-  XCTAssertTrue(CGSizeEqualToSize(unarchivedButton.minimumSize, button.minimumSize));
-  XCTAssertTrue(CGSizeEqualToSize(unarchivedButton.maximumSize, button.maximumSize));
-  XCTAssertEqual(unarchivedButton.enabled, button.enabled);
-  XCTAssertEqualWithAccuracy(unarchivedButton.alpha, button.alpha, (CGFloat)0.0001);
-  unarchivedButton.enabled = YES;
-  XCTAssertEqualWithAccuracy(unarchivedButton.alpha, buttonAlpha, (CGFloat)0.0001);
-  XCTAssertEqualObjects(unarchivedButton.titleLabel.font, button.titleLabel.font);
-  for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
-    XCTAssertEqualWithAccuracy([unarchivedButton elevationForState:controlState],
-                               [button elevationForState:controlState],
-                               kEpsilonAccuracy);
-    XCTAssertEqualObjects([unarchivedButton backgroundColorForState:controlState],
-                   [button backgroundColorForState:controlState]);
-    XCTAssertEqualObjects([unarchivedButton shadowColorForState:controlState],
-                          [button shadowColorForState:controlState]);
-    XCTAssertEqualObjects([unarchivedButton titleFontForState:controlState],
-                          [button titleFontForState:controlState]);
-  }
-}
-
-- (void)testDecodeOnUpgradeFromVersionWithoutShadowColors {
-  // Given
-  MDCButton *button = [[MDCButton alloc] init];
-
-  for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
-    [button setShadowColor:randomColor() forState:controlState];
-  }
-
-  // When
-  id shadowColorsValue = [button valueForKey:@"_shadowColors"];
-  [button setValue:nil forKey:@"_shadowColors"];
-
-  NSData *data = [NSKeyedArchiver archivedDataWithRootObject:button];
-  [button setValue:shadowColorsValue forKey:@"_shadowColors"];
-  MDCButton *unarchivedButton = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-
-  // Then
-  UIColor *normalStateShadowColor = [unarchivedButton shadowColorForState:UIControlStateNormal];
-  XCTAssertNotNil(normalStateShadowColor);
-  for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
-    XCTAssertEqualObjects(normalStateShadowColor,
-                          [unarchivedButton shadowColorForState:controlState]);
-  }
 }
 
 - (void)testPointInsideWithoutHitAreaInsets {

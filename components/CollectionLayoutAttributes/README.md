@@ -1,14 +1,11 @@
-<!--docs:
-title: "Collection Layout Attributes"
-layout: detail
-section: components
-excerpt: "Allows passing layout attributes to the cells and supplementary views."
-iconId: list
-path: /catalog/collections/collection-layout-attributes/
-api_doc_root: true
--->
-
 # Collection Layout Attributes
+
+**Notice**: This component will be deprecated over the next few months in favor of the
+[Cards](../Cards) and [List](../List) components. See our
+[public tracker](https://www.pivotaltracker.com/epic/show/3938766) for more details on timing and
+the deprecation plan.
+
+---
 
 Allows passing layout attributes to the cells and supplementary views.
 
@@ -33,7 +30,7 @@ pod 'MaterialComponents/CollectionLayoutAttributes'
 
 Then, run the following command:
 
-``` bash
+```bash
 pod install
 ```
 
@@ -47,12 +44,12 @@ Before using Collection Layout Attributes, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 import MaterialComponents.MaterialCollectionLayoutAttributes
 ```
 
 #### Objective-C
-``` objc
+```objc
 #import "MaterialCollectionLayoutAttributes.h"
 ```
 <!--</div>-->
@@ -63,7 +60,7 @@ view layout. Override the `-applyLayoutAttributes` method of any `UICollectionRe
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
   super.apply(layoutAttributes)
   if let attr = layoutAttributes as? MDCCollectionViewLayoutAttributes {
@@ -76,7 +73,7 @@ override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
 }
 ```
 #### Objective-C
-``` objc
+```objc
 - (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes {
   [super applyLayoutAttributes:layoutAttributes];
   if ([layoutAttributes isKindOfClass:[MDCCollectionViewLayoutAttributes class]]) {

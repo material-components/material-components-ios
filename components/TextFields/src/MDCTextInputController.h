@@ -22,7 +22,7 @@
 @protocol MDCTextInputCharacterCounter;
 
 /** Controllers that manipulate styling and animation of text inputs. */
-@protocol MDCTextInputController <NSObject, NSSecureCoding, NSCopying, MDCTextInputPositioningDelegate>
+@protocol MDCTextInputController <NSObject, NSCopying, MDCTextInputPositioningDelegate>
 
 /**
  Color for decorations that indicates the input is currently editing.
@@ -113,6 +113,18 @@
 @property(class, nonatomic, null_resettable, strong) UIColor *inlinePlaceholderColorDefault;
 
 /**
+ The font applied to the text input.
+
+ Default or in case this property is nil, the value will be textInputFontDefault.
+ If textInputFontDefault is nil, textInput.font would be the fallback.
+ */
+@property(nonatomic, null_resettable, strong) UIFont *textInputFont;
+
+/** Default value for textInputFontDefault. If nil, textInput.font would be the fallback.  */
+@property(class, nonatomic, nullable, strong) UIFont *textInputFontDefault;
+
+
+/**
  The font applied to the placeholder when inline (not floating).
 
  Default is inlinePlaceholderFontDefault;
@@ -184,14 +196,14 @@
 @property(nonatomic, nullable, strong) UIView<MDCTextInput> *textInput;
 
 /**
- The font applied to the text input.
-
- Default is textInputFontDefault.
+ The tintColor applied to the textInput's clear button.
+ See @c UIImageView.tintColor for additional details.
  */
-@property(nonatomic, null_resettable, strong) UIFont *textInputFont;
+@property(nonatomic, null_resettable, strong) UIColor *textInputClearButtonTintColor;
 
-/** Default value for textInputFontDefault. */
-@property(class, nonatomic, null_resettable, strong) UIFont *textInputFontDefault;
+/**
+ Default value for @c textInputClearButtonTintColor. */
+@property(class, nonatomic, nullable, strong) UIColor *textInputClearButtonTintColorDefault;
 
 /**
  The font applied to the trailing side underline label.
@@ -285,5 +297,23 @@
  */
 - (void)setErrorText:(nullable NSString *)errorText
     errorAccessibilityValue:(nullable NSString *)errorAccessibilityValue;
+
+/**
+ Sets helper text and a corresponding accessibilityLabel.
+
+ @param helperText               The helper text to be shown as leading underline text. (Copied.)
+ @param helperAccessibilityLabel Optional override of leading underline accessibilityLabel when
+                                 helper text is displayed. (Copied.)
+
+ If the TextField is in an error state helperText is saved as the previousLeadingText, and
+ helperAccessibilityLabel is saved in an instance variable. When the TextField eventually leaves the
+ error state the previousLeadingText becomes the leadingUnderlineLabel's text and the
+ helperAccessibilityLabel becomes the leadingUnderlinLabel's accessibilityLabel.
+
+ If the TextField is not in an error state helperText is set as the leadingUnderlineLabel's text and
+ helperAccessibilityLabel is set as the leadingUnderlineLabel's accessibilityLabel.
+ */
+-(void)setHelperText:(nullable NSString *)helperText
+    helperAccessibilityLabel:(nullable NSString *)helperAccessibilityLabel;
 
 @end

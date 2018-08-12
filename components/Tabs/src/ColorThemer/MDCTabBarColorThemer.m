@@ -16,7 +16,43 @@
 
 #import "MDCTabBarColorThemer.h"
 
+static const CGFloat kUnselectedTitleOpacity = 0.6f;
+static const CGFloat kUnselectedImageOpacity = 0.54f;
+static const CGFloat kBottomDividerOpacity = 0.12f;
+
 @implementation MDCTabBarColorThemer
+
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                          toTabs:(nonnull MDCTabBar *)tabBar {
+  tabBar.barTintColor = colorScheme.primaryColor;
+  tabBar.tintColor = colorScheme.onPrimaryColor;
+  [tabBar setTitleColor:colorScheme.onPrimaryColor forState:MDCTabBarItemStateSelected];
+  [tabBar setImageTintColor:colorScheme.onPrimaryColor forState:MDCTabBarItemStateSelected];
+  UIColor *unselectedTitleColor =
+      [colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedTitleOpacity];
+  UIColor *unselectedImageColor =
+      [colorScheme.onPrimaryColor colorWithAlphaComponent:kUnselectedImageOpacity];
+  [tabBar setTitleColor:unselectedTitleColor forState:MDCTabBarItemStateNormal];
+  [tabBar setImageTintColor:unselectedImageColor forState:MDCTabBarItemStateNormal];
+  tabBar.bottomDividerColor =
+      [colorScheme.onPrimaryColor colorWithAlphaComponent:kBottomDividerOpacity];
+}
+
++ (void)applySurfaceVariantWithColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                                    toTabs:(nonnull MDCTabBar *)tabBar {
+  tabBar.barTintColor = colorScheme.surfaceColor;
+  tabBar.tintColor = colorScheme.primaryColor;
+  [tabBar setTitleColor:colorScheme.primaryColor forState:MDCTabBarItemStateSelected];
+  [tabBar setImageTintColor:colorScheme.primaryColor forState:MDCTabBarItemStateSelected];
+  UIColor *unselectedTitleColor =
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:kUnselectedTitleOpacity];
+  UIColor *unselectedImageColor =
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:kUnselectedImageOpacity];
+  [tabBar setTitleColor:unselectedTitleColor forState:MDCTabBarItemStateNormal];
+  [tabBar setImageTintColor:unselectedImageColor forState:MDCTabBarItemStateNormal];
+  tabBar.bottomDividerColor =
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:kBottomDividerOpacity];
+}
 
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
                 toTabBar:(MDCTabBar *)tabBar {

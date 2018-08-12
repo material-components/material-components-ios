@@ -40,6 +40,19 @@ mdc_public_objc_library(
 )
 
 mdc_objc_library(
+    name = "ChipThemer",
+    srcs = native.glob(["src/ChipThemer/*.m"]),
+    hdrs = native.glob(["src/ChipThemer/*.h"]),
+    includes = ["src/ChipThemer"],
+    deps = [
+        ":Chips",
+        ":ColorThemer",
+        ":TypographyThemer",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
     name = "FontThemer",
     srcs = native.glob(["src/FontThemer/*.m"]),
     hdrs = native.glob(["src/FontThemer/*.h"]),
@@ -48,6 +61,30 @@ mdc_objc_library(
     deps = [
         ":Chips",
         "//components/Themes",
+    ],
+)
+
+mdc_objc_library(
+    name = "ColorThemer",
+    srcs = native.glob(["src/ColorThemer/*.m"]),
+    hdrs = native.glob(["src/ColorThemer/*.h"]),
+    includes = ["src/ColorThemer"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":Chips",
+        "//components/schemes/Color",
+    ],
+)
+
+mdc_objc_library(
+    name = "TypographyThemer",
+    srcs = native.glob(["src/TypographyThemer/*.m"]),
+    hdrs = native.glob(["src/TypographyThemer/*.h"]),
+    includes = ["src/TypographyThemer"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":Chips",
+        "//components/schemes/Typography",
     ],
 )
 
@@ -72,8 +109,11 @@ mdc_objc_library(
     ],
     deps = [
         ":Chips",
+        ":ColorThemer",
         ":FontThemer",
+        ":TypographyThemer",
         ":private",
+        "//components/TextFields:private",
         "//components/private/ShapeLibrary",
     ],
     visibility = ["//visibility:private"],
@@ -84,4 +124,3 @@ mdc_unit_test_suite(
       ":unit_test_sources",
     ],
 )
-

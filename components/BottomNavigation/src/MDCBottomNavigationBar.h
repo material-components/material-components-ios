@@ -95,11 +95,16 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
 @property(nonatomic, strong, nonnull) UIFont *itemTitleFont UI_APPEARANCE_SELECTOR;
 
 /**
- Color of selected item. Applies color to items' icons and text.
- Default color is black.
+ Color of selected item. Applies color to items' icons and text. If set also sets
+ selectedItemTitleColor. Default color is black.
  */
 @property (nonatomic, strong, readwrite, nonnull) UIColor *selectedItemTintColor
     UI_APPEARANCE_SELECTOR;
+
+/**
+ Color of the selected item's title text. Default color is black.
+ */
+@property(nonatomic, strong, readwrite, nonnull) UIColor *selectedItemTitleColor;
 
 /**
  Color of unselected items. Applies color to items' icons. Text is not displayed in unselected mode.
@@ -117,6 +122,25 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
  To color the background of the view use -barTintColor instead.
  */
 @property(nullable, nonatomic,copy) UIColor *backgroundColor UI_APPEARANCE_SELECTOR;
+
+/**
+ The inset applied to each items bounds to determine the rect in which the items' contents will be
+ centered. The contents are centered in this rect, but not compressed, so they may still extend
+ beyond these bounds. Defaults to {0, 0, 0, 0}. The inset is flipped for RTL.
+ */
+@property(nonatomic, assign) UIEdgeInsets itemsContentInsets;
+
+/**
+ The margin between the item's icon and title when alignment is either Justified or Centered.
+ Defaults to 0.
+ */
+@property(nonatomic, assign) CGFloat itemsContentVerticalMargin;
+
+/**
+ The margin between the item's icon and title when alignment is JustifiedAdjacentTitles. Defaults to
+ 12.
+ */
+@property(nonatomic, assign) CGFloat itemsContentHorizontalMargin;
 
 @end
 

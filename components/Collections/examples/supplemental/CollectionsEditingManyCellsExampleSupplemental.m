@@ -29,7 +29,7 @@
 }
 
 + (BOOL)catalogIsPresentable {
-  return YES;
+  return NO;
 }
 
 #pragma mark - <UICollectionViewDataSource>

@@ -14,19 +14,24 @@
  limitations under the License.
  */
 
+#import "MaterialChips.h"
+#import "MaterialTypographyScheme.h"
+
 #import <Foundation/Foundation.h>
 
-@class MDCChipView;
-@protocol MDCFontScheme;
+#pragma mark - Soon to be deprecated
 
 /**
  Themes @c MDCChipView objects to set their text font to the appropriate font trait given a font
  scheme.
+
+ @warning This class will soon be deprecated. Please consider using MDCChipViewTypographyThemer
+ instead.
  */
 @interface MDCChipViewFontThemer : NSObject
 
 /**
- Applies the provided font scheme to the given Chip or its UIAppearance proxy.
+ Applies the provided font scheme to the given Chip.
  */
 + (void)applyFontScheme:(nonnull id<MDCFontScheme>)fontScheme
              toChipView:(nonnull MDCChipView *)chipView;

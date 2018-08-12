@@ -14,14 +14,25 @@
  limitations under the License.
  */
 
+#import "MaterialColorScheme.h"
 #import "MaterialTabs.h"
+#import "MaterialTabs+ColorThemer.h"
 
 @interface BottomNavigationBarExample : UIViewController <MDCTabBarDelegate>
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @end
 
 @implementation BottomNavigationBarExample {
   MDCTabBar *_bottomNavigationBar;
   NSArray<UIColor *> *_colors;
+}
+
+- (id)init {
+  self = [super init];
+  if (self) {
+    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+  }
+  return self;
 }
 
 - (void)viewDidLoad {
@@ -30,11 +41,8 @@
   _bottomNavigationBar = [[MDCTabBar alloc] initWithFrame:CGRectZero];
   _bottomNavigationBar.translatesAutoresizingMaskIntoConstraints = NO;
   _bottomNavigationBar.delegate = self;
-
-  _bottomNavigationBar.barTintColor = [UIColor whiteColor];
-  _bottomNavigationBar.selectedItemTintColor = nil;
-  _bottomNavigationBar.unselectedItemTintColor = [UIColor colorWithWhite:0 alpha:0.50];
-  _bottomNavigationBar.tintColor = [UIColor colorWithRed:0 green:0.5f blue:0 alpha:1];
+  [MDCTabBarColorThemer applySemanticColorScheme:self.colorScheme toTabs:_bottomNavigationBar];
+  
   _bottomNavigationBar.inkColor = [UIColor colorWithRed:0 green:0.5f blue:0 alpha:0.15f];
 
   NSBundle *bundle = [NSBundle bundleForClass:[BottomNavigationBarExample class]];
@@ -119,7 +127,7 @@
 }
 
 + (BOOL)catalogIsPresentable {
-  return YES;
+  return NO;
 }
 
 @end

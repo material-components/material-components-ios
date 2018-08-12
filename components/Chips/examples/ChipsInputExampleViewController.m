@@ -18,6 +18,7 @@
 
 #import "MaterialChips.h"
 #import "MaterialTextFields.h"
+#import "MaterialChips+ChipThemer.h"
 
 @interface ChipsInputExampleViewController () <MDCChipFieldDelegate>
 @end
@@ -26,11 +27,19 @@
   MDCChipField *_chipField;
 }
 
+- (id)init {
+  self = [super init];
+  if (self) {
+    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+  }
+  return self;
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
 
   self.view.backgroundColor = [UIColor lightGrayColor];
-
+  
   _chipField = [[MDCChipField alloc] initWithFrame:CGRectZero];
   _chipField.delegate = self;
   _chipField.textField.placeholderLabel.text = @"This is a chip field.";
@@ -48,6 +57,21 @@
 
 - (void)chipFieldHeightDidChange:(MDCChipField *)chipField {
   [self.view layoutIfNeeded];
+}
+
+- (void)chipField:(MDCChipField *)chipField didAddChip:(MDCChipView *)chip {
+  MDCChipViewScheme *scheme = [[MDCChipViewScheme alloc] init];
+  scheme.colorScheme = self.colorScheme;
+  
+  // Every other chip is stroked
+  if (chipField.chips.count%2) {
+    [MDCChipViewThemer applyOutlinedVariantWithScheme:scheme toChipView:chip];
+  } else {
+    [MDCChipViewThemer applyScheme:scheme toChipView:chip];
+  }
+  [chip sizeToFit];
+  CGFloat chipVerticalInset = MIN(0, (CGRectGetHeight(chip.bounds) - 48) / 2);
+  chip.hitAreaInsets = UIEdgeInsetsMake(chipVerticalInset, 0, chipVerticalInset, 0);
 }
 
 @end

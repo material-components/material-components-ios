@@ -20,6 +20,21 @@ load("@build_bazel_rules_apple//apple:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
+mdc_objc_library(
+    name = "private",
+    hdrs = native.glob(["src/private/*.h"]),
+    includes = ["src/private"],
+    visibility = [":test_targets"],
+)
+
+package_group(
+    name = "test_targets",
+    packages = [
+        "//components/Chips/...",
+        "//components/TextFields/...",
+    ]
+)
+
 mdc_public_objc_library(
     name = "TextFields",
     sdk_frameworks = [
@@ -65,6 +80,21 @@ mdc_objc_library(
 )
 
 mdc_objc_library(
+    name = "TypographyThemer",
+    srcs = native.glob(["src/TypographyThemer/*.m"]),
+    hdrs = native.glob(["src/TypographyThemer/*.h"]),
+    includes = ["src/TypographyThemer"],
+    sdk_frameworks = [
+        "UIKit",
+    ],
+    deps = [
+        ":TextFields",
+        "//components/schemes/Typography",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
     srcs = glob(["tests/unit/*.m"]),
@@ -77,6 +107,7 @@ mdc_objc_library(
         ":TextFields",
         ":ColorThemer",
         ":FontThemer",
+        ":TypographyThemer",
     ],
     visibility = ["//visibility:private"],
 )

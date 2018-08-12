@@ -17,13 +17,13 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialButtons.h"
+#import "MaterialButtons+ButtonThemer.h"
 
 @interface ButtonsContentEdgeInsetsExample : UIViewController
-@property(weak, nonatomic) IBOutlet MDCFlatButton *flatButton;
-@property(weak, nonatomic) IBOutlet MDCRaisedButton *raisedButton;
+@property(weak, nonatomic) IBOutlet MDCButton *textButton;
+@property(weak, nonatomic) IBOutlet MDCButton *containedButton;
 @property(weak, nonatomic) IBOutlet MDCFloatingButton *floatingActionButton;
 @property(weak, nonatomic) IBOutlet UISwitch *inkBoundingSwitch;
-
 @end
 
 @implementation ButtonsContentEdgeInsetsExample
@@ -42,21 +42,17 @@
   return NO;
 }
 
-+ (BOOL)catalogIsPresentable {
-  return YES;
-}
-
 #pragma mark - UIViewController
 
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  // Force a darker background color to show the button frame
-  [self.flatButton setBackgroundColor:[UIColor colorWithWhite:0.2f alpha:1.0f]
-                             forState:UIControlStateNormal];
-  self.flatButton.inkColor = [UIColor colorWithWhite:1.0f alpha:0.1f];
-  self.flatButton.contentEdgeInsets = UIEdgeInsetsMake(64, 64, 0, 0);
-  self.raisedButton.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 64, 64);
+  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
+  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:self.containedButton];
+  [MDCTextButtonThemer applyScheme:buttonScheme toButton:self.textButton];
+
+  self.textButton.contentEdgeInsets = UIEdgeInsetsMake(64, 64, 0, 0);
+  self.containedButton.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 64, 64);
   [self.floatingActionButton setContentEdgeInsets:UIEdgeInsetsMake(40, 40, 0, 0)
                                          forShape:MDCFloatingButtonShapeDefault
                                            inMode:MDCFloatingButtonModeNormal];
@@ -65,8 +61,8 @@
 }
 
 - (void)updateInkStyle:(MDCInkStyle)inkStyle {
-  self.flatButton.inkStyle = inkStyle;
-  self.raisedButton.inkStyle = inkStyle;
+  self.textButton.inkStyle = inkStyle;
+  self.containedButton.inkStyle = inkStyle;
   self.floatingActionButton.inkStyle = inkStyle;
 }
 

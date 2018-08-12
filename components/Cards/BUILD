@@ -17,6 +17,7 @@ load("//:material_components_ios.bzl",
      "mdc_public_objc_library",
      "mdc_objc_library",
      "mdc_unit_test_suite")
+load("@build_bazel_rules_apple//apple:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
@@ -31,7 +32,46 @@ mdc_public_objc_library(
         "//components/ShadowLayer",
         "//components/private/Math",
         "//components/private/Icons/icons/ic_check_circle",
+        "//components/private/ShapeLibrary",
+        "//components/private/Shapes",
     ],
+)
+
+mdc_objc_library(
+    name = "CardThemer",
+    srcs = native.glob(["src/CardThemer/*.m"]),
+    hdrs = native.glob(["src/CardThemer/*.h"]),
+    includes = ["src/CardThemer"],
+    deps = [
+        ":Cards",
+        ":ColorThemer",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
+    name = "ColorThemer",
+    srcs = native.glob(["src/ColorThemer/*.m"]),
+    hdrs = native.glob(["src/ColorThemer/*.h"]),
+    includes = ["src/ColorThemer"],
+    sdk_frameworks = [
+        "UIKit",
+    ],
+    deps = [
+        ":Cards",
+        "//components/schemes/Color",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+swift_library(
+    name = "unit_test_swift_sources",
+    srcs = glob(["tests/unit/*.swift"]),
+    deps = [
+        ":Cards",
+        ":ColorThemer",
+    ],
+    visibility = ["//visibility:private"],
 )
 
 mdc_objc_library(
@@ -55,6 +95,7 @@ mdc_objc_library(
 mdc_unit_test_suite(
     deps = [
       ":unit_test_sources",
+      ":unit_test_swift_sources"
     ],
 )
 

@@ -16,17 +16,28 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialColorScheme.h"
 #import "MaterialPalettes.h"
 #import "MaterialTabs.h"
+#import "MaterialTabs+ColorThemer.h"
 
 @interface TabBarInterfaceBuilderExample : UIViewController <MDCTabBarDelegate>
 
 @property(weak, nonatomic) IBOutlet MDCTabBar *tabBar;
 @property(nonatomic) NSArray<UIColor *> *colors;
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 
 @end
 
 @implementation TabBarInterfaceBuilderExample
+
+- (id)init {
+  self = [super init];
+  if (self) {
+    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+  }
+  return self;
+}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -43,6 +54,8 @@
     MDCPalette.redPalette.tint500, MDCPalette.greenPalette.tint500
   ];
 
+  [MDCTabBarColorThemer applySemanticColorScheme:self.colorScheme toTabs:self.tabBar];
+  
   self.view.backgroundColor = self.colors[0];
 }
 
@@ -59,6 +72,8 @@
       [UIAlertController alertControllerWithTitle:nil
                                           message:nil
                                    preferredStyle:UIAlertControllerStyleActionSheet];
+  sheet.popoverPresentationController.sourceView = sender;
+  sheet.popoverPresentationController.sourceRect = sender.bounds;
   [sheet addAction:[UIAlertAction actionWithTitle:@"Leading"
                                             style:UIAlertActionStyleDefault
                                           handler:^(UIAlertAction *_Nonnull action) {
@@ -109,7 +124,7 @@
 }
 
 + (BOOL)catalogIsPresentable {
-  return YES;
+  return NO;
 }
 
 @end

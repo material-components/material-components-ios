@@ -15,11 +15,18 @@ limitations under the License.
 */
 
 import Foundation
-import MaterialComponents
+import MaterialComponents.MaterialAppBar
+import MaterialComponents.MaterialAppBar_ColorThemer
 
 class AppBarInterfaceBuilderSwiftExample: UIViewController, UIScrollViewDelegate {
   @IBOutlet weak var scrollView: UIScrollView!
-  let appBar = MDCAppBar()
+  let appBarViewController = MDCAppBarViewController()
+  var colorScheme = MDCSemanticColorScheme()
+
+  deinit {
+    // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
+    appBarViewController.headerView.trackingScrollView = nil
+  }
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -36,22 +43,25 @@ class AppBarInterfaceBuilderSwiftExample: UIViewController, UIScrollViewDelegate
   }
 
   func commonAppBarInterfaceBuilderSwiftExampleSetup() {
-    addChildViewController(appBar.headerViewController)
-    let headerColor = UIColor(white: 0.2, alpha:1)
-    appBar.headerViewController.headerView.backgroundColor = headerColor
+    // Behavioral flags.
+    appBarViewController.inferTopSafeAreaInsetFromViewController = true
+    appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
 
-    let mutator = MDCAppBarTextColorAccessibilityMutator()
-    mutator.mutate(appBar)
+    addChildViewController(appBarViewController)
   }
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    appBar.headerViewController.headerView.trackingScrollView = scrollView
+    MDCAppBarColorThemer.applyColorScheme(colorScheme, to: appBarViewController)
 
-    scrollView.delegate = appBar.headerViewController
+    // Allows us to avoid forwarding events, but means we can't enable shift behaviors.
+    appBarViewController.headerView.observesTrackingScrollViewScrollEvents = true
 
-    appBar.addSubviewsToParent()
+    appBarViewController.headerView.trackingScrollView = scrollView
+
+    view.addSubview(appBarViewController.view)
+    appBarViewController.didMove(toParentViewController: self)
   }
 
   override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -77,9 +87,4 @@ extension AppBarInterfaceBuilderSwiftExample {
   func catalogShouldHideNavigation() -> Bool {
     return true
   }
-
-  @objc class func catalogIsPresentable() -> Bool {
-    return true
-  }
-
 }

@@ -167,14 +167,6 @@ Unit tests in MDC are run by the developer, the continuous integration service, 
 1. Ensure unit tests run with no errors.
 1. Enter YES or NO
 
-
-### Interaction Tests (If necessary)
-
-
-Visual components should have interaction tests built with [Earl Grey](https://github.com/google/EarlGrey).
-
-//TODO and explain how
-
 ### Kokoro Support
 
 
@@ -346,26 +338,6 @@ We want to avoid misuse of initializers both in the calling of existing classes 
 1. If a class provides one or more designated initializers, it must also implement all of the designated initializers of its superclass; mark them `NS_DESIGNATED_INITIALIZER` if you want them to still to be designated. If those initializers should no longer be called, declare them `NS_UNAVAILABLE`.
 1. If a class has no new designated initializers and no existing designated initializers have been marked `NS_UNAVAILABLE`, nothing needs to be done.
 1. Call convenience initializers that refer to the designated initializer or the designated initializer itself. Only call `init` if you know that it is, or refers to, the designated initializer.
-1. Enter YES or NO
-
-
-### NS(Secure)Coding Support
-
-
-Conforming to NSCoding is necessary for Interface Builder support in views and could be used to
-serialize non-view classes. Prefer to implement
-[NSSecureCoding](https://developer.apple.com/documentation/foundation/nssecurecoding). If your superclass only support
-NSCoding,
-that is sufficient.
-
-Tip: write a unit test for this. 
-Tip: NSCoding encodes UIColors as 32bits, so it is possible to lose precision by encoding and decoding when running in 64bits.
-
-1. Implement `-initWithCoder:`.
-1. For decoding objects always use `decodeObjectOfClass:forKey:` whenever possible.
-1. Implement `-encodeWithCoder:`.
-1. Implement NSSecureCoding Protocol if all subclasses support NSSecureCoding. For example UIView and UIViewController do not support NSSecureCoding.
-1. If implementing NSSecureCoding, implement `+supportsSecureCoding`.
 1. Enter YES or NO
 
 

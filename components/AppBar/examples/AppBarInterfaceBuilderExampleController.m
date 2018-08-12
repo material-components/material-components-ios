@@ -17,15 +17,22 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialAppBar.h"
+#import "MaterialAppBar+ColorThemer.h"
 
 @interface AppBarInterfaceBuilderExample : UIViewController <UIScrollViewDelegate>
 
 @property(nonatomic, weak) IBOutlet UIScrollView *scrollView;
-@property(nonatomic, strong) MDCAppBar *appBar;
+@property(nonatomic, strong) MDCAppBarViewController *appBarViewController;
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 
 @end
 
 @implementation AppBarInterfaceBuilderExample
+
+- (void)dealloc {
+  // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
+  self.appBarViewController.headerView.trackingScrollView = nil;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -46,24 +53,28 @@
 }
 
 - (void)commonAppBarInterfaceBuilderExampleSetup {
-  self.appBar = [[MDCAppBar alloc] init];
-  [self addChildViewController:self.appBar.headerViewController];
-  UIColor *headerColor = [UIColor colorWithWhite:0.2f alpha:1];
-  self.appBar.headerViewController.headerView.backgroundColor = headerColor;
+  self.appBarViewController = [[MDCAppBarViewController alloc] init];
 
-  MDCAppBarTextColorAccessibilityMutator *mutator =
-      [[MDCAppBarTextColorAccessibilityMutator alloc] init];
-  [mutator mutate:_appBar];
+  // Behavioral flags.
+  self.appBarViewController.inferTopSafeAreaInsetFromViewController = YES;
+  self.appBarViewController.headerView.minMaxHeightIncludesSafeArea = NO;
+
+  self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+  [self addChildViewController:self.appBarViewController];
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.appBar.headerViewController.headerView.trackingScrollView = self.scrollView;
+  [MDCAppBarColorThemer applyColorScheme:self.colorScheme toAppBarViewController:self.appBarViewController];
 
-  self.scrollView.delegate = self.appBar.headerViewController;
+  // Allows us to avoid forwarding events, but means we can't enable shift behaviors.
+  self.appBarViewController.headerView.observesTrackingScrollViewScrollEvents = YES;
 
-  [self.appBar addSubviewsToParent];
+  self.appBarViewController.headerView.trackingScrollView = self.scrollView;
+
+  [self.view addSubview:self.appBarViewController.view];
+  [self.appBarViewController didMoveToParentViewController:self];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -92,7 +103,7 @@
 }
 
 + (BOOL)catalogIsPresentable {
-  return YES;
+  return NO;
 }
 
 @end

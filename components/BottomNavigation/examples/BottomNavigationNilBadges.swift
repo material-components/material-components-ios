@@ -19,7 +19,8 @@ import MaterialComponents
 
 class BottomNavigationNilBadges : UIViewController {
 
-  let appBar = MDCAppBar()
+  let appBarViewController = MDCAppBarViewController()
+  var colorScheme = MDCSemanticColorScheme()
 
   // Create a bottom navigation bar to add to a view.
   let bottomNavBar = MDCBottomNavigationBar()
@@ -28,11 +29,11 @@ class BottomNavigationNilBadges : UIViewController {
     super.init(nibName: nil, bundle: nil)
     self.title = "Bottom Navigation (Swift)"
 
-    self.addChildViewController(appBar.headerViewController)
+    self.addChildViewController(appBarViewController)
     let color = UIColor(white: 0.2, alpha:1)
-    appBar.headerViewController.headerView.backgroundColor = color
-    appBar.navigationBar.tintColor = .white
-    appBar.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
+    appBarViewController.headerView.backgroundColor = color
+    appBarViewController.navigationBar.tintColor = .white
+    appBarViewController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
 
     commonBottomNavigationTypicalUseSwiftExampleInit()
   }
@@ -51,11 +52,6 @@ class BottomNavigationNilBadges : UIViewController {
 
     // Cluster and center the bottom navigation bar items.
     bottomNavBar.alignment = .centered
-
-    // Theme the bottom navigation bar.
-    let scheme = MDCBasicColorScheme(primaryColor: MDCPalette.purple.tint700,
-                                     secondaryColor: .white)
-    MDCBottomNavigationBarColorThemer.apply(scheme, to: bottomNavBar)
 
     // Add items to the bottom navigation bar.
     let tabBarItem1 = UITabBarItem(title: "Home", image: UIImage(named: "Home"), tag: 0)
@@ -95,7 +91,13 @@ class BottomNavigationNilBadges : UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    appBar.addSubviewsToParent()
+
+    view.addSubview(appBarViewController.view)
+    appBarViewController.didMove(toParentViewController: self)
+
+    // Theme the bottom navigation bar.
+    MDCBottomNavigationBarColorThemer.applySemanticColorScheme(colorScheme,
+                                                               toBottomNavigation: bottomNavBar);
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -119,6 +121,6 @@ extension BottomNavigationNilBadges {
   }
 
   @objc class func catalogIsPresentable() -> Bool {
-    return true
+    return false
   }
 }

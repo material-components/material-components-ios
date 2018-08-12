@@ -17,17 +17,32 @@
 #import "MaterialHeaderStackView.h"
 #import "MaterialThemes.h"
 
+#import <Foundation/Foundation.h>
+
+#pragma mark - Soon to be deprecated
+
 /**
- Used to apply a color scheme to theme MDCSlider.
+ A color themer for instances of MDCHeaderStackView.
+
+ @warning This class will soon be deprecated. There will be no replacement API. Consider theming
+ your flexible header view or app bar instead. Learn more at
+ components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
  */
 @interface MDCHeaderStackViewColorThemer : NSObject
 
-/**
- Applies a color scheme to theme a MDCHeaderStackView. Use a UIAppearance proxy to apply a color
- scheme to all instances of MDCHeaderStackView.
+@end
 
- @param colorScheme The color scheme to apply to MDCHeaderStackView.
- @param headerStackView A MDCHeaderStackView instance to apply a color scheme.
+@interface MDCHeaderStackViewColorThemer (ToBeDeprecated)
+
+/**
+ Applies a color scheme's properties to an MDCHeaderStackView.
+
+ @warning This class will soon be deprecated. There will be no replacement API. Consider theming
+ your flexible header view or app bar instead. Learn more at
+ components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
+
+ @param colorScheme The color scheme to apply to the component instance.
+ @param headerStackView A component instance to which the color scheme should be applied.
  */
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
        toHeaderStackView:(nonnull MDCHeaderStackView *)headerStackView;

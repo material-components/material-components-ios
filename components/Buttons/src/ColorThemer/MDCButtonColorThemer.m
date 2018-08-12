@@ -16,7 +16,41 @@
 
 #import "MDCButtonColorThemer.h"
 
+#import "MDCContainedButtonColorThemer.h"
+#import "MDCTextButtonColorThemer.h"
+
 @implementation MDCButtonColorThemer
+
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                        toButton:(nonnull MDCButton *)button {
+  [MDCContainedButtonColorThemer applySemanticColorScheme:colorScheme toButton:button];
+}
+
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                    toFlatButton:(nonnull MDCButton *)flatButton {
+  [MDCTextButtonColorThemer applySemanticColorScheme:colorScheme toButton:flatButton];
+}
+
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                toFloatingButton:(nonnull MDCFloatingButton *)floatingButton {
+  [self resetUIControlStatesForButtonTheming:floatingButton];
+  [floatingButton setBackgroundColor:colorScheme.secondaryColor forState:UIControlStateNormal];
+  floatingButton.disabledAlpha = 1.f;
+}
+
++ (void)resetUIControlStatesForButtonTheming:(nonnull MDCButton *)button {
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+      UIControlStateHighlighted | UIControlStateDisabled;
+  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
+    [button setBackgroundColor:nil forState:state];
+    [button setTitleColor:nil forState:state];
+  }
+}
+
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                  toRaisedButton:(nonnull MDCButton *)raisedButton {
+  [MDCContainedButtonColorThemer applySemanticColorScheme:colorScheme toButton:raisedButton];
+}
 
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme
                 toButton:(MDCButton *)button {

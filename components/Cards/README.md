@@ -2,52 +2,56 @@
 title: "Cards"
 layout: detail
 section: components
-excerpt: "Cards are contained surfaces that serve as an entry point to more detailed information, with flexible visual parameters."
+excerpt: "Cards contain content and actions about a single subject."
 iconId: list
 path: /catalog/cards/
 api_doc_root: true
 -->
 
+<!-- This file was auto-generated using ./scripts/generate_readme Cards -->
+
 # Cards
 
+[![Open bugs badge](https://img.shields.io/badge/dynamic/json.svg?label=open%20bugs&url=https%3A%2F%2Fapi.github.com%2Fsearch%2Fissues%3Fq%3Dis%253Aopen%2Blabel%253Atype%253ABug%2Blabel%253A%255BCards%255D&query=%24.total_count)](https://github.com/material-components/material-components-ios/issues?q=is%3Aopen+is%3Aissue+label%3Atype%3ABug+label%3A%5BCards%5D)
+
+Cards contain content and actions about a single subject. They can be used standalone, or as part
+of a list. Cards are meant to be interactive, and aren't meant to be be used solely for style
+purposes.
+
 <div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/cards.png" alt="Cards" width="375">
+  <img src="docs/assets/cards.png" alt="Cards" width="320">
 </div>
 
-Cards are contained surfaces that serve as an entry point to more detailed information, with flexible visual parameters.
-
-They can be used as a standalone UIControl, or as a UICollectionViewCell in a UICollectionView.
-Cards are meant to be interactive, and shouldn't be used solely for displaying purposes.
-
-Cards adhere to Material Design layout and styling.
-
-## Design & API Documentation
+## Design & API documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec">
-    <a href="https://material.io/guidelines/components/cards.html">Material Design guidelines: Cards</a>
-  </li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-cards">Material Design guidelines: Cards</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/cards/api-docs/Classes/MDCCard.html">MDCCard</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/cards/api-docs/Classes/MDCCardCollectionCell.html">MDCCardCollectionCell</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/cards/api-docs/Enums.html">Enumerations</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/cards/api-docs/Enums/MDCCardCellHorizontalImageAlignment.html">MDCCardCellHorizontalImageAlignment</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/cards/api-docs/Enums/MDCCardCellState.html">MDCCardCellState</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/cards/api-docs/Enums/MDCCardCellVerticalImageAlignment.html">MDCCardCellVerticalImageAlignment</a></li>
 </ul>
 
-## Installation
+## Table of contents
 
-### Installation with CocoaPods
-
-To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
-
-```
-pod 'MaterialComponents/Cards'
-```
-
-Then run the following command:
-
-``` bash
-pod install
-```
+- [Overview](#overview)
+  - [Cards Classes](#cards-classes)
+- [Installation](#installation)
+  - [Installation with CocoaPods](#installation-with-cocoapods)
+  - [Importing](#importing)
+- [Usage](#usage)
+  - [Typical use: as a view](#typical-use-as-a-view)
+  - [Typical use: in a collection view](#typical-use-in-a-collection-view)
+- [Extensions](#extensions)
+  - [Color Theming](#color-theming)
+- [Accessibility](#accessibility)
+  - [Card Accessibility](#card-accessibility)
 
 - - -
 
-### Overview
+## Overview
 
 Cards provides two different versions, `MDCCard` inheriting from `UIControl` and `MDCCardCollectionCell` inheriting from `UICollectionViewCell`.
 
@@ -58,15 +62,23 @@ When treated as a `UIControl` (`MDCCard`), it has a default styling (`UIControlS
 When treated as a `UICollectionViewCell` (`MDCCardCollectionCell`), it has a default styling (`MDCCardCellStateNormal`), a highlighted styling (`MDCCardCellStateHighlighted`), and lastly a selected styling (`MDCCardCellStateSelected`).
 
 Customization to the card is exposed via its API either in `MDCCard` or `MDCCardCollectionCell`. Currently the card consists of these customizations:
-* The border width for a specific state
-* The border color for a specific state
-* The shadow elevation for a specific state
-* The shadow color for a specific state
-* The corner radius for the card
+
+- The border width for a specific state
+- The border color for a specific state
+- The shadow elevation for a specific state
+- The shadow color for a specific state
+- The corner radius for the card
 
 (`MDCCardCollectionCell` customization only):
-* Changing the image that appears in the Selected state.
-* Changing the image tint color that appears in the Selected state.
+
+- Changing the image that appears in the Selected state.
+- Changing the image tint color that appears in the Selected state.
+
+An `MDCCard` can be added and used as you would add any `UIView` or `UIControl`, if manually in code, or through Interface Builder.
+
+An `MDCCardCollectionCell` can be added, used, and reused as a `UICollectionViewCell`, if manually in code, or through Interface Builder.
+
+MDCCardThemer exposes apis to theme MDCCard and MDCCardCollectionCell instances as either a default or outlined variant. An outlined variant behaves identically to a default styled card, but differs in its coloring and in that it has a stroked border. Use 'applyScheme:toCard:' to style an instance with default values and 'applyOutlinedVariantWithScheme:toCard:' to style an instance with the outlined values.
 
 ### Cards Classes
 
@@ -74,103 +86,91 @@ Customization to the card is exposed via its API either in `MDCCard` or `MDCCard
 
 `MDCCard` subclasses `UIControl` and provides a simple class for developers to subclass and create custom cards with ink, shadows, corner radius, and stroke matching the Material spec.
 
-`MDCCard` utilizes the `highlighted` property that is built-in in `UIControl` and the `UIControlState` to move between states.
+`MDCCard` uses the `highlighted` property that is built-in in `UIControl` and the `UIControlState` to move between states.
 
 #### MDCCardCollectionCell
 
-`MDCCardCollectionCell` subclasses `UICollectionViewCell` and provides a simple collection view cell for developers to utilize in their collections with ink, shadows, corner radius, and stroke matching the Material spec.
+`MDCCardCollectionCell` subclasses `UICollectionViewCell` and provides a simple collection view cell for developers to use in their collections with ink, shadows, corner radius, and stroke matching the Material spec.
 
-`MDCCardCollectionCell` utilizes the `selected` property that is built-in in `UICollectionViewCell` and has its own `MDCCardCellState` to keep track of the current state it is in.
+`MDCCardCollectionCell` uses the `selected` property that is built-in in `UICollectionViewCell` and has its own `MDCCardCellState` to keep track of the current state it is in.
 
 ## Installation
 
+<!-- Extracted from docs/../../../docs/component-installation.md -->
+
 ### Installation with CocoaPods
 
-To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
+Add the following to your `Podfile`:
 
-```
-pod 'MaterialComponents/Collections'
+```bash
+pod 'MaterialComponents/Cards'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 
-``` bash
+```bash
 pod install
 ```
 
-- - -
-
-## Usage
-
-An `MDCCard` can be added and used as you would add any `UIView` or `UIControl`, if manually in code, or through the interface builder.
-
-An `MDCCardCollectionCell` can be added, used, and reused as a `UICollectionViewCell`, if manually in code, or through the interface builder.
-
 ### Importing
 
-Before using Cards, you'll need to import it:
+To import the component:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 import MaterialComponents.MaterialCards
 ```
 
 #### Objective-C
-``` objc
+
+```objc
 #import "MaterialCards.h"
 ```
 <!--</div>-->
 
-## Examples
 
-### Use `MDCCard` as a base class for your custom card
+## Usage
+
+<!-- Extracted from docs/typical-use-view.md -->
+
+### Typical use: as a view
+
+`MDCCard` can be used like a regular UIView.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-``` swift
+```swift
 let card = MDCCard()
 
-// Customization (optional)
-card.cornerRadius = 8
-card.setShadowElevation(6, for: .highlighted)
-card.setBorderWidth(1, for: .normal)
-card.setBorderColor(UIColor.brown, for: .normal)
-
-// Adding content inside a card (optional)
+// Create, position, and add content views:
 let imageView = UIImageView()
 card.addSubview(imageView)
-
-view.addSubview(card)
 ```
 
 #### Objective-C
 
-``` objc
+```objc
 MDCCard *card = [[MDCCard alloc] init];
 
-// Customization (optional)
-[card setCornerRadius:8.f];
-[card setShadowElevation:6.f forState:UIControlStateHighlighted];
-[card setBorderWidth:1.f forState:UIControlStateNormal];
-[card setBorderColor:[UIColor brownColor] forState:UIControlStateNormal];
-
-// Adding content inside a card (optional)
+// Create, position, and add content views:
 UIImageView *imageView = [[UIImageView alloc] init];
 [card addSubview:imageView];
-
-[self.view addSubview:card];
 ```
 <!--</div>-->
 
-### Use `MDCCardCollectionCell` as a base class for your custom collection view cell
+<!-- Extracted from docs/typical-use-collections.md -->
+
+### Typical use: in a collection view
+
+Use `MDCCardCollectionCell` as a base class for your custom collection view cell
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-``` swift
+```swift
 collectionView.register(MDCCardCollectionCell.self, forCellWithReuseIdentifier: "Cell")
 
 func collectionView(_ collectionView: UICollectionView,
@@ -191,7 +191,7 @@ func collectionView(_ collectionView: UICollectionView,
 
 #### Objective-C
 
-``` objc
+```objc
 [self.collectionView registerClass:[MDCCardCollectionCell class]
         forCellWithReuseIdentifier:@"Cell"];
 
@@ -212,11 +212,140 @@ func collectionView(_ collectionView: UICollectionView,
 ```
 <!--</div>-->
 
-- - -
 
-## Related Components
+## Extensions
 
-<ul class="icon-list">
-  <li class="icon-list-item icon-list-item--components"><a href="../CollectionCells">Collection Cells</a></li>
-</ul>
+<!-- Extracted from docs/color-theming.md -->
+
+### Color Theming
+
+You can theme a card with your app's color scheme using the ColorThemer extension.
+
+You must first add the Color Themer extension to your project:
+
+```bash
+pod 'MaterialComponents/Cards+ColorThemer'
+```
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// Step 1: Import the ColorThemer extension
+import MaterialComponents.MaterialCards_ColorThemer
+
+// Step 2: Create or get a color scheme
+let colorScheme = MDCSemanticColorScheme()
+
+// Step 3: Apply the color scheme to your component
+MDCCardsColorThemer.applySemanticColorScheme(colorScheme, to: component)
+```
+
+#### Objective-C
+
+```objc
+// Step 1: Import the ColorThemer extension
+#import "MaterialCards+ColorThemer.h"
+
+// Step 2: Create or get a color scheme
+id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+
+// Step 3: Apply the color scheme to your component
+[MDCCardsColorThemer applySemanticColorScheme:colorScheme
+     toCard:component];
+```
+<!--</div>-->
+
+
+## Accessibility
+
+<!-- Extracted from docs/accessibility.md -->
+
+### Card Accessibility
+
+To help ensure your cards are accessible to as many users as possible, please be sure to review the following 
+recommendations:
+
+#### Accessibility for Cards in a Collection
+
+Since assistive technologies visit all cards in a collection in a sequential order, it is often 
+easier to distinguish between elements that belong to different cards by aggregating all the 
+card's information so the card is read as a single sentence.  
+This can be done by setting an appropriate 
+[`accessibilityLabel`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619577-accessibilitylabel) 
+for the card. Additionally, set the card's 
+[`isAccessibilityElement`](https://developer.apple.com/documentation/objectivec/nsobject/1615141-isaccessibilityelement) 
+to true. Cards are a container element and setting isAccessibiltyElement for a container 
+turns off individually selecting its subelements.
+
+Swift
+```swift
+  card.isAccessibilityElement = true
+  card.accessibilityLabel = "Location \(userLocation.name) is popular with users " +
+    "who enjoy \(userLocation.popularActivityMatchingUserProfile(userProfile))"
+```
+
+Objective-C
+```objc
+  card.isAccessibilityElement = YES;
+  card.accessibilityLabel = [NSString 
+    stringWithFormat:@"Location %@ is popular with users who enjoy %@",  
+    userLocation.name, 
+    userLocation.popularActivityMatchingUserProfile(userProfile)];
+```
+
+#### Accessibility for Single Cards
+
+Nested elements in MDCCards are available to assistive technologies without additional 
+customization, however additional setup may be needed to accommodate special scenarios, 
+such as:
+
+#### Accessibility for Single Cards: Images 
+Images that have additional context beyond text that is already presented on the card.  
+For example, news article images can benefit from an 
+[`accessibilityLabel`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619577-accessibilitylabel) 
+describing their content.
+
+Swift
+```swift
+  articleImageView.isAccessibilityElement = true
+  articleImageView.accessibilityLabel = "Event or scene description"
+```
+
+Objective-C
+```objc
+  articleImageView.isAccessibilityElement = YES;
+  articleImageView.accessibilityLabel = @"Event or scene description";
+```
+
+#### Accessibility for Single Cards: Star Rating
+Star or rating images should have an 
+[`accessibilityLabel`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619577-accessibilitylabel) 
+describing its purpuse and an 
+[`accessibilityValue`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619583-accessibilityvalue) 
+describing the rating value.
+
+Swift
+```swift
+  ratingView.isAccessibilityElement = true
+  ratingView.accessibilityLabel = "Average customer rating, out of " + 
+    "\(MDCProductRating.maximumValue) stars"
+  ratingView.accessibilityValue = (String)product.averageRating
+```
+
+Objective-C
+```objc
+  ratingView.isAccessibilityElement = YES;
+  ratingView.accessibilityLabel = [NSString stringWithFormat:@"Average customer" +
+    " rating, out of %d stars", MDCProductRating.maximumValue];
+  ratingView.accessibilityValue = @(product.averageRating).stringValue;
+```
+
+#### Accessibility for Single Cards: Reordering elements
+Primary content or actions that appear lower on the screen will be read last by assistive 
+technologies, sometimes after longer or non-primary content. To change the order, or group 
+elements together, you can make the card an accessibility container by adopting the 
+[`UIAccessibilityContainer`](https://developer.apple.com/documentation/uikit/accessibility/uiaccessibilitycontainer) 
+protocol. Grouping and order is controlled by creating as many 
+[`UIAccessibilityElement`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement) 
+elements as needed, and returning them in the desired order. 
 

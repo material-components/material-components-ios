@@ -60,7 +60,13 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 
 - (void)commonMDCFlexibleHeaderViewControllerInit {
   _fhvc = [[MDCFlexibleHeaderViewController alloc] initWithNibName:nil bundle:nil];
-  _fhvc.headerView.minimumHeight = kFlexibleHeaderMinHeight;
+
+  // Behavioral flags.
+  _fhvc.topLayoutGuideAdjustmentEnabled = YES;
+  _fhvc.inferTopSafeAreaInsetFromViewController = YES;
+  _fhvc.headerView.minMaxHeightIncludesSafeArea = NO;
+
+  _fhvc.headerView.maximumHeight = kFlexibleHeaderMinHeight;
   [self addChildViewController:_fhvc];
 }
 
@@ -106,7 +112,7 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
   for (NSUInteger i = 0; i < pageColors.count; i++) {
     CGRect pageFrame = CGRectOffset(pageScrollViewFrame, i * boundsWidth, 0);
     UILabel *page = [[UILabel alloc] initWithFrame:pageFrame];
-    page.text = [NSString stringWithFormat:@"Page %zd", i + 1];
+    page.text = [NSString stringWithFormat:@"Page %lu", (unsigned long)(i + 1)];
     page.font = [UIFont systemFontOfSize:18];
     page.textColor = [UIColor colorWithWhite:1 alpha:0.8f];
     page.textAlignment = NSTextAlignmentCenter;

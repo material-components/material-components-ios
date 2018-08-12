@@ -31,4 +31,7 @@
 /** Refreshes the layout and style of the placeholder label. Called within updateLayout. */
 - (void)updatePlaceholder;
 
+/** Refreshes the layout and style of the border view. Called within updateLayout. */
+- (BOOL)isPlaceholderUp;
+
 @end

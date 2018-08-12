@@ -33,6 +33,7 @@
 
     [self setImageTintColor:[UIColor blueColor] forState:MDCCardCellStateNormal];
     [self setImageTintColor:[UIColor blueColor] forState:MDCCardCellStateSelected];
+    [self setInteractable:NO];
   }
   return self;
 }

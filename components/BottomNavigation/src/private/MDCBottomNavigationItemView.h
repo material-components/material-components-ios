@@ -32,10 +32,17 @@
 
 @property(nonatomic, strong) UIButton *button;
 @property(nonatomic, strong) UIImage *image;
+@property(nonatomic, strong) UIImage *selectedImage;
 
 @property(nonatomic, strong) UIColor *badgeColor UI_APPEARANCE_SELECTOR;
 @property(nonatomic, strong) UIColor *selectedItemTintColor UI_APPEARANCE_SELECTOR;
 @property(nonatomic, strong) UIColor *unselectedItemTintColor UI_APPEARANCE_SELECTOR;
+@property(nonatomic, strong) UIColor *selectedItemTitleColor;
+
+@property(nonatomic, assign) UIEdgeInsets contentInsets;
+
+@property(nonatomic, assign) CGFloat contentVerticalMargin;
+@property(nonatomic, assign) CGFloat contentHorizontalMargin;
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated;
 

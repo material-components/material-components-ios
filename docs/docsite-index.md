@@ -33,7 +33,7 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
 
     To install CocoaPods, run the following commands:
 
-    ``` bash
+    ```bash
     sudo gem install cocoapods
     ```
     <!--{: .code-renderer.code-renderer--install }-->
@@ -45,7 +45,7 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
 
     To initialize CocoaPods in your project, run the following commands:
 
-    ``` bash
+    ```bash
     cd your-project-directory
     pod init
     ```
@@ -57,7 +57,7 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
     to your target in your Podfile:
 
 
-    ``` ruby
+    ```ruby
     target "MyApp" do
       ...
       pod 'MaterialComponents'
@@ -65,12 +65,9 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
     ```
     <!--{: .code-renderer.code-renderer--install }-->
 
-    If you are using Swift, don’t forget to uncomment the `use_frameworks!` line
-    at the top of your Podfile.
-
     Then run the command:
 
-    ``` bash
+    ```bash
     pod install
     open your-project.xcworkspace
     ```
@@ -88,7 +85,7 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
     <!--<div class="material-code-render" markdown="1">-->
     #### Objective-C
 
-    ``` objc
+    ```objc
     #import "MaterialButtons.h"
 
     @implementation ViewController
@@ -96,14 +93,14 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
     - (void)viewDidLoad {
       [super viewDidLoad];
 
-      MDCRaisedButton *raisedButton = [[MDCRaisedButton alloc] init];
-      [raisedButton setTitle:@"Raised Button" forState:UIControlStateNormal];
-      [raisedButton sizeToFit];
-      [raisedButton addTarget:self
-                       action:@selector(tapped:)
-             forControlEvents:UIControlEventTouchUpInside];
+      MDCButton *button = [[MDCButton alloc] init];
+      [button setTitle:@"Button" forState:UIControlStateNormal];
+      [button sizeToFit];
+      [button addTarget:self
+                 action:@selector(tapped:)
+       forControlEvents:UIControlEventTouchUpInside];
 
-      [self.view addSubview:raisedButton];
+      [self.view addSubview:button];
     }
 
     - (void)tapped:(id)sender {
@@ -115,18 +112,19 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
 
     #### Swift
 
-    ``` swift
+    ```swift
     import MaterialComponents.MaterialButtons
 
     class MDCBuildTestViewController: UIViewController {
 
       override func viewDidLoad() {
         super.viewDidLoad()
-        let raisedButton = MDCRaisedButton()
-        raisedButton.setTitle("Raised Button", for: .normal)
-        raisedButton.sizeToFit()
-        raisedButton.addTarget(self, action: #selector(tapped), for: .touchUpInside)
-        self.view.addSubview(raisedButton)
+        
+        let button = MDCButton()
+        button.setTitle("Button", for: .normal)
+        button.sizeToFit()
+        button.addTarget(self, action: #selector(tapped), for: .touchUpInside)
+        self.view.addSubview(button)
       }
 
       func tapped(sender: UIButton?){
@@ -141,13 +139,10 @@ An easy way to create beautiful apps with modular and customizable UI&nbsp;compo
 
     <ul class="icon-list">
       <li class="icon-list-item icon-list-item--guide">
-        <a href="../howto">Read the Development Guide</a>
+        <a href="README.md">Read the Development Guide</a>
       </li>
       <li class="icon-list-item icon-list-item--components">
         <a href="../components">View the Component Documentation</a>
-      </li>
-      <li class="icon-list-item icon-list-item--code">
-        <a href="../howto/tutorial/#sample-code">Explore our Code Samples</a>
       </li>
       <li class="icon-list-item icon-list-item--github">
         <a href="https://github.com/material-components/material-components-ios/">View the project on GitHub</a>

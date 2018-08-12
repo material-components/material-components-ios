@@ -18,7 +18,7 @@
 
 /**
  Material Design compliant text field for full width applications like email forms.
- https://material.io/guidelines/components/text-fields.html#text-fields-field-variations
+ https://material.io/go/design-text-fields#text-fields-field-variations
 
  NOTE: This class does not inherit from MDCTextInputControllerBase. It does not have a floating
  placeholder.
@@ -55,5 +55,17 @@
  Underline View Mode - While editing
  */
 @interface MDCTextInputControllerFullWidth : NSObject <MDCTextInputController>
+
+/**
+ Color for background for the various views making up a text field.
+
+ Default is backgroundColorDefault.
+ */
+@property(nonatomic, null_resettable, strong) UIColor *backgroundColor;
+
+/**
+ Default value for backgroundColor.
+ */
+@property(class, nonatomic, null_resettable, strong) UIColor *backgroundColorDefault;
 
 @end

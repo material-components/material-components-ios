@@ -2,66 +2,265 @@
 title: "Chips"
 layout: detail
 section: components
-excerpt: "Chips represent complex entities in small blocks, such as a contact."
+excerpt: "Chips are compact elements that represent an input, attribute, or action."
 iconId: chip
 path: /catalog/chips/
 api_doc_root: true
 -->
 
+<!-- This file was auto-generated using ./scripts/generate_readme Chips -->
+
 # Chips
 
-Chips represent complex entities, such as a contact, in small blocks.
+[![Open bugs badge](https://img.shields.io/badge/dynamic/json.svg?label=open%20bugs&url=https%3A%2F%2Fapi.github.com%2Fsearch%2Fissues%3Fq%3Dis%253Aopen%2Blabel%253Atype%253ABug%2Blabel%253A%255BChips%255D&query=%24.total_count)](https://github.com/material-components/material-components-ios/issues?q=is%3Aopen+is%3Aissue+label%3Atype%3ABug+label%3A%5BChips%5D)
 
-## Design & API Documentation
+Chips are compact elements that represent an input, attribute, or action.
+
+## Design & API documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/chips.html">Material Design guidelines: Chips</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-chips">Material Design guidelines: Chips</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/chips/api-docs/Classes.html#/c:objc(cs)MDCChipCollectionViewFlowLayout">MDCChipCollectionViewFlowLayout</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/chips/api-docs/Classes/MDCChipCollectionViewCell.html">MDCChipCollectionViewCell</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/chips/api-docs/Classes/MDCChipField.html">MDCChipField</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/chips/api-docs/Classes/MDCChipView.html">MDCChipView</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/chips/api-docs/Protocols/MDCChipFieldDelegate.html">MDCChipFieldDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/chips/api-docs/Enums.html">Enumerations</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/chips/api-docs/Enums/MDCChipFieldDelimiter.html">MDCChipFieldDelimiter</a></li>
 </ul>
+
+## Table of contents
+
+- [Installation](#installation)
+  - [Installation with CocoaPods](#installation-with-cocoapods)
+  - [Importing](#importing)
+- [Chips Collections](#chips-collections)
+  - [Input Chips](#input-chips)
+  - [Choice Chips](#choice-chips)
+  - [Filter Chips](#filter-chips)
+  - [Action Chips](#action-chips)
+- [Tips](#tips)
+  - [Ink ripple animation](#ink-ripple-animation)
+  - [Stateful properties](#stateful-properties)
+  - [Selected Image View](#selected-image-view)
+  - [Padding](#padding)
+- [Examples](#examples)
+  - [Create a single Chip](#create-a-single-chip)
+- [Extensions](#extensions)
+  - [Chip Color Theming](#chip-color-theming)
+  - [Typography Theming](#typography-theming)
 
 - - -
 
 ## Installation
 
-### Requirements
-
-- Xcode 8.0 or higher.
-- iOS SDK version 7.0 or higher.
+<!-- Extracted from docs/../../../docs/component-installation.md -->
 
 ### Installation with CocoaPods
 
-To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
+Add the following to your `Podfile`:
 
-```
+```bash
 pod 'MaterialComponents/Chips'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 
-``` bash
+```bash
 pod install
 ```
 
-- - -
-
-## Usage
-
 ### Importing
 
-Before using Chips, you'll need to import them:
+To import the component:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 import MaterialComponents.MaterialChips
 ```
 
 #### Objective-C
 
-``` objc
+```objc
 #import "MaterialChips.h"
 ```
 <!--</div>-->
+
+
+## Chips Collections
+
+<!-- Extracted from docs/chips-collections.md -->
+
+Material design suggest the usage of chips collection in four context: Input Chips, Choice Chips, Filter Chips, and Action Chips.
+
+### Input Chips
+Input chips represent a complex piece of information in compact form, such as an entity (person, place, or thing) or text. They enable user input and verify that input by converting text into chips.
+
+
+#### Implementation
+We currently provide an implementation of Input Chips called `MDCChipField`. 
+
+
+### Choice Chips
+Choice chips allow selection of a single chip from a set of options.
+
+Choice chips clearly delineate and display options in a compact area. They are a good alternative to toggle buttons, radio buttons, and single select menus.
+
+#### Implementation
+It is easiest to create choice Chips using a `UICollectionView`:
+
+ - Use `MDCChipCollectionViewFlowLayout` as the `UICollectionView` layout:
+ <!--<div class="material-code-render" markdown="1">-->
+ ```objc
+ MDCChipCollectionViewFlowLayout *layout = [[MDCChipCollectionViewFlowLayout alloc] init];
+  _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
+ ```
+ <!--</div>-->
+ 
+ - Leave the default `UICollectionView` selection setting (single selection).
+ - Use `MDCChipCollectionViewCell` as `UICollectionView` cells. (`MDCChipCollectionViewCell` manages the state of the chip based on selection state of `UICollectionView` automatically)
+
+  <!--<div class="material-code-render" markdown="1">-->
+   ```objc
+  - (void)loadView {
+    [super loadView];
+    …
+    [_collectionView registerClass:[MDCChipCollectionViewCell class]
+        forCellWithReuseIdentifier:@"identifier"];
+    ...
+   }
+
+  - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                             cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    MDCChipCollectionViewCell *cell =
+        [collectionView dequeueReusableCellWithReuseIdentifier:@"identifier" forIndexPath:indexPath];
+    MDCChipView *chipView = cell.chipView;
+    // configure the chipView
+     return cell;
+  }
+  ```
+  <!--</div>-->
+
+- Use `UICollectionViewDelegate` methods `collectionView:didSelectItemAtIndexPath:` for reacting to new choices.
+
+- Use `UICollectionView` `selectItemAtIndexPath:animated:scrollPosition:` method to edit choice selection programmatically.
+
+
+### Filter Chips
+Filter chips use tags or descriptive words to filter content.
+
+Filter chips clearly delineate and display options in a compact area. They are a good alternative to toggle buttons or checkboxes.
+
+
+#### Implementation
+It is easiest to create filter Chips using a `UICollectionView`:
+
+ - Use `MDCChipCollectionViewFlowLayout` as the `UICollectionView` layout:
+ <!--<div class="material-code-render" markdown="1">-->
+ ```objc
+ MDCChipCollectionViewFlowLayout *layout = [[MDCChipCollectionViewFlowLayout alloc] init];
+  _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
+ ```
+ <!--</div>-->
+ 
+ - Allow multi cell selection in the `UICollectionView`:
+  <!--<div class="material-code-render" markdown="1">-->
+  ```objc
+  collectionView.allowsMultipleSelection = YES; 
+  ```
+  <!--</div>-->
+ - Use `MDCChipCollectionViewCell` as `UICollectionView` cells. (`MDCChipCollectionViewCell` manages the state of the chip based on selection state of `UICollectionView` automatically)
+
+  <!--<div class="material-code-render" markdown="1">-->
+   ```objc
+  - (void)loadView {
+    [super loadView];
+    …
+    [_collectionView registerClass:[MDCChipCollectionViewCell class]
+        forCellWithReuseIdentifier:@"identifier"];
+    ...
+   }
+
+  - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                             cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    MDCChipCollectionViewCell *cell =
+        [collectionView dequeueReusableCellWithReuseIdentifier:@"identifier" forIndexPath:indexPath];
+    MDCChipView *chipView = cell.chipView;
+    // configure the chipView
+     return cell;
+  }
+  ```
+  <!--</div>-->
+
+- Use `UICollectionViewDelegate` methods `collectionView:didSelectItemAtIndexPath:` and `collectionView:didDeselectItemAtIndexPath:` for reacting to filter changes.
+
+- Use `UICollectionView` `deselectItemAtIndexPath:animated:` and `selectItemAtIndexPath:animated:scrollPosition:` methods to edit filter selection in code.
+
+
+### Action Chips
+Action chips offer actions related to primary content. They should appear dynamically and contextually in a UI.
+
+An alternative to action chips are buttons, which should appear persistently and consistently.
+
+#### Implementation
+It is easiest to create action Chips using a `UICollectionView`:
+
+ - Use `MDCChipCollectionViewFlowLayout` as the `UICollectionView` layout:
+ <!--<div class="material-code-render" markdown="1">-->
+ ```objc
+ MDCChipCollectionViewFlowLayout *layout = [[MDCChipCollectionViewFlowLayout alloc] init];
+  _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
+ ```
+ <!--</div>-->
+ 
+ - Leave the default `UICollectionView` selection setting (single selection).
+ - Use `MDCChipCollectionViewCell` as `UICollectionView` cells. (`MDCChipCollectionViewCell` manages the state of the chip based on selection state of `UICollectionView` automatically)
+
+  <!--<div class="material-code-render" markdown="1">-->
+   ```objc
+  - (void)loadView {
+    [super loadView];
+    …
+    [_collectionView registerClass:[MDCChipCollectionViewCell class]
+        forCellWithReuseIdentifier:@"identifier"];
+    ...
+   }
+
+  - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                             cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    MDCChipCollectionViewCell *cell =
+        [collectionView dequeueReusableCellWithReuseIdentifier:@"identifier" forIndexPath:indexPath];
+    MDCChipView *chipView = cell.chipView;
+    // configure the chipView
+     return cell;
+  }
+  ```
+  <!--</div>-->
+
+- Make sure that `MDCChipCollectionViewCell` does not stay in selected state
+
+ <!--<div class="material-code-render" markdown="1">-->
+   ```objc
+ - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    // For action chips, we never want the chip to stay in selected state.
+    // Other possible apporaches would be relying on theming or Customizing collectionViewCell
+    // selected state.
+    [collectionView deselectItemAtIndexPath:indexPath animated:NO];
+    // Trigger the action
+  }
+  ```
+  <!--</div>-->
+
+- Use `UICollectionViewDelegate` method `collectionView:didSelectItemAtIndexPath:` to Trigger the action.
+
+- - -
+
+
+## Tips
+
+<!-- Extracted from docs/tips.md -->
 
 ### Ink ripple animation
 Chips display animated ink splashes when the user presses the chip. Keep in mind this will appear on
@@ -87,20 +286,18 @@ the others (`contentPadding`). This is useful so that you can set each of the pa
 ensure your chips look correct whether or not they have an image and/or accessory view. The chip
 uses these property to determine `intrinsicContentSize` and `sizeThatFits`.
 
-### Collections of Chips
-It is easiest to show large groups of Chips by containing them in a UICollectionView. Use
-`MDCChipCollectionViewCell` and `MDCChipCollectionViewLayout` to configure a collection view to show
-chips.
-
 - - -
 
+
 ## Examples
+
+<!-- Extracted from docs/Examples.md -->
 
 ### Create a single Chip
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 let chipView = MDCChipView()
 chipView.titleLabel.text = "Tap me"
 chipView.setTitleColor(UIColor.red, for: .selected)
@@ -111,7 +308,7 @@ self.view.addSubview(chipView)
 
 #### Objective-C
 
-``` objc
+```objc
 MDCChipView *chipView = [[MDCChipView alloc] init];
 chipView.titleLabel.text = @"Tap me";
 [chipView setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
@@ -122,3 +319,88 @@ chipView.titleLabel.text = @"Tap me";
 [self.view addSubview:chipView];
 ```
 <!--</div>-->
+
+
+## Extensions
+
+<!-- Extracted from docs/color-theming.md -->
+
+### Chip Color Theming
+
+You can theme a chip with your app's color scheme using the ColorThemer extension.
+
+You must first add the Color Themer extension to your project:
+
+```bash
+pod 'MaterialComponents/Chips+ColorThemer'
+```
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// Step 1: Import the ColorThemer extension
+import MaterialComponents.MaterialChips_ColorThemer
+
+// Step 2: Create or get a color scheme
+let colorScheme = MDCSemanticColorScheme()
+
+// Step 3: Apply the color scheme to your component
+MDCChipViewColorThemer.applySemanticColorScheme(colorScheme, to: component)
+```
+
+#### Objective-C
+
+```objc
+// Step 1: Import the ColorThemer extension
+#import "MaterialChips+ColorThemer.h"
+
+// Step 2: Create or get a color scheme
+id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+
+// Step 3: Apply the color scheme to your component
+[MDCChipViewColorThemer applySemanticColorScheme:colorScheme
+     toChipView:component];
+```
+<!--</div>-->
+
+
+<!-- Extracted from docs/typography-theming.md -->
+
+### Typography Theming
+
+You can theme a chip with your app's typography scheme using the TypographyThemer extension.
+
+You must first add the Typography Themer extension to your project:
+
+```bash
+pod 'MaterialComponents/Chips+TypographyThemer'
+```
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// Step 1: Import the TypographyThemer extension
+import MaterialComponents.MaterialChips_TypographyThemer
+
+// Step 2: Create or get a typography scheme
+let typographyScheme = MDCTypographyScheme()
+
+// Step 3: Apply the typography scheme to your component
+MDCChipViewTypographyThemer.applyTypographyScheme(typographyScheme, to: component)
+```
+
+#### Objective-C
+
+```objc
+// Step 1: Import the TypographyThemer extension
+#import "MaterialChips+TypographyThemer.h"
+
+// Step 2: Create or get a typography scheme
+id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
+
+// Step 3: Apply the typography scheme to your component
+[MDCChipViewTypographyThemer applyTypographyScheme:colorScheme
+     toChipView:component];
+```
+<!--</div>-->
+

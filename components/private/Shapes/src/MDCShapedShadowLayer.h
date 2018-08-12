@@ -63,4 +63,21 @@
  */
 @property(nonatomic, strong, nullable) id<MDCShapeGenerating> shapeGenerator;
 
+/*
+ The created CAShapeLayer representing the generated shape path for the implementing UIView
+ from the shapeGenerator.
+
+ This layer is exposed to easily mask subviews of the implementing UIView so they won't spill
+ outside the layer to fit the bounds.
+ */
+@property(nonatomic, strong, nonnull) CAShapeLayer *shapeLayer;
+
+/*
+ A sublayer of @c shapeLayer that is responsible for the background color of the shape layer.
+
+ The colorLayer imitates the path of shapeLayer and is added as a sublayer. It is updated when
+ shapedBackgroundColor is set on the layer.
+ */
+@property(nonatomic, strong, nonnull) CAShapeLayer *colorLayer;
+
 @end

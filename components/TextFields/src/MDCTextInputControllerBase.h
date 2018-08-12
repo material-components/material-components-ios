@@ -26,7 +26,7 @@ extern const CGFloat MDCTextInputControllerBaseDefaultBorderRadius;
  The placeholder text is laid out inline. If floating is enabled, it will float above the field when
  there is content or the field is being edited. The character count is below text. The Material
  Design guidelines call this 'Floating inline labels.'
- https://material.io/guidelines/components/text-fields.html#text-fields-labels
+ https://material.io/go/design-text-fields#text-fields-labels
 
  Defaults:
 

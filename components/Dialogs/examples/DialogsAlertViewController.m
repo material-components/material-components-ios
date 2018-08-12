@@ -17,16 +17,28 @@
 #import "supplemental/DialogsAlertViewControllerSupplemental.h"
 #import "MaterialButtons.h"
 #import "MaterialDialogs.h"
+#import "MaterialDialogs+ColorThemer.h"
+#import "MaterialDialogs+TypographyThemer.h"
 
 @implementation DialogsAlertViewController
 
+- (id)init {
+  self = [super init];
+  if (self) {
+    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.typographyScheme = [[MDCTypographyScheme alloc] init];
+  }
+  return self;
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
+
   [self loadCollectionView:
     @[ @"Show Alert",
        @"Show Long Alert",
        @"Non-Dismissable Alert",
-       @"Dynamic Alert",
+       @"Alert (Dynamic Type enabled)",
        @"Overpopulated Alert",
        @"Style Alert",
        @"Un-style Alert"]];
@@ -59,6 +71,12 @@
   }
 }
 
+- (void)themeAlertController:(MDCAlertController *)alertController {
+  [MDCAlertColorThemer applySemanticColorScheme:self.colorScheme toAlertController:alertController];
+  [MDCAlertTypographyThemer applyTypographyScheme:self.typographyScheme
+                                toAlertController:alertController];
+}
+
 - (IBAction)didTapShowAlert {
 
   NSString *titleString = @"Using Material alert controller?";
@@ -66,6 +84,7 @@
 
   MDCAlertController *materialAlertController =
       [MDCAlertController alertControllerWithTitle:titleString message:messageString];
+  [self themeAlertController:materialAlertController];
 
   MDCAlertAction *agreeAaction = [MDCAlertAction actionWithTitle:@"AGREE"
                                                          handler:^(MDCAlertAction *action) {
@@ -124,6 +143,7 @@
 
   MDCAlertController *materialAlertController =
       [MDCAlertController alertControllerWithTitle:nil message:messageString];
+  [self themeAlertController:materialAlertController];
 
   MDCAlertAction *okAction = [MDCAlertAction actionWithTitle:@"OK"
                                                      handler:^(MDCAlertAction *action) {
@@ -141,6 +161,7 @@
 
   MDCAlertController *materialAlertController =
       [MDCAlertController alertControllerWithTitle:titleString message:messageString];
+  [self themeAlertController:materialAlertController];
 
   MDCAlertAction *agreeAction = [MDCAlertAction actionWithTitle:@"AGREE"
                                                         handler:^(MDCAlertAction *action) {
@@ -173,6 +194,7 @@
 
   MDCAlertController *materialAlertController =
       [MDCAlertController alertControllerWithTitle:titleString message:messageString];
+  [self themeAlertController:materialAlertController];
   materialAlertController.mdc_adjustsFontForContentSizeCategory = YES;
 
   MDCAlertAction *agreeAction = [MDCAlertAction actionWithTitle:@"AGREE"
@@ -197,6 +219,7 @@
 }
 
 - (IBAction)didTapOverpopulatedAlert {
+  NSString *titleString = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur";
   NSString *messageString =
       @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur "
       "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus "
@@ -237,7 +260,8 @@
       "euismod libero. Aliquam commodo urna vitae massa convallis aliquet.";
 
   MDCAlertController *materialAlertController =
-      [MDCAlertController alertControllerWithTitle:nil message:messageString];
+      [MDCAlertController alertControllerWithTitle:titleString message:messageString];
+  [self themeAlertController:materialAlertController];
   materialAlertController.mdc_adjustsFontForContentSizeCategory = YES;
 
   MDCAlertAction *okAction = [MDCAlertAction actionWithTitle:@"OK"
@@ -276,6 +300,24 @@
                                                     }];
   [materialAlertController addAction:action6];
 
+  MDCAlertAction *action7 = [MDCAlertAction actionWithTitle:@"OK - 7"
+                                                    handler:^(MDCAlertAction *action) {
+                                                      NSLog(@"%@", @"OK pressed");
+                                                    }];
+  [materialAlertController addAction:action7];
+
+  MDCAlertAction *action8 = [MDCAlertAction actionWithTitle:@"OK - 8"
+                                                    handler:^(MDCAlertAction *action) {
+                                                      NSLog(@"%@", @"OK pressed");
+                                                    }];
+  [materialAlertController addAction:action8];
+
+  MDCAlertAction *action9 = [MDCAlertAction actionWithTitle:@"OK - 9"
+                                                    handler:^(MDCAlertAction *action) {
+                                                      NSLog(@"%@", @"OK pressed");
+                                                    }];
+  [materialAlertController addAction:action9];
+
   [self presentViewController:materialAlertController animated:YES completion:NULL];
 }
 
@@ -293,6 +335,7 @@
 
   MDCAlertController *materialAlertController =
     [MDCAlertController alertControllerWithTitle:titleString message:messageString];
+  [self themeAlertController:materialAlertController];
 
   MDCAlertAction *agreeAaction = [MDCAlertAction actionWithTitle:@"AGREE"
                                                          handler:^(MDCAlertAction *action) {
@@ -325,6 +368,7 @@
 
   MDCAlertController *materialAlertController =
       [MDCAlertController alertControllerWithTitle:titleString message:messageString];
+  [self themeAlertController:materialAlertController];
 
   MDCAlertAction *agreeAaction = [MDCAlertAction actionWithTitle:@"AGREE"
                                                          handler:^(MDCAlertAction *action) {

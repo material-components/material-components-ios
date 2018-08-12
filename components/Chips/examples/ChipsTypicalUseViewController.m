@@ -17,6 +17,7 @@
 #import "ChipsExamplesSupplemental.h"
 
 #import "MaterialChips.h"
+#import "MaterialChips+TypographyThemer.h"
 
 @implementation ChipsTypicalUseViewController {
   MDCChipView *_sizingChip;
@@ -30,6 +31,7 @@
   if (self) {
     _sizingChip = [[MDCChipView alloc] init];
     _sizingChip.mdc_adjustsFontForContentSizeCategory = YES;
+    self.typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;
 }
@@ -43,20 +45,35 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  [MDCChipViewTypographyThemer applyTypographyScheme:self.typographyScheme
+                                          toChipView:_sizingChip];
+  
   self.collectionView.backgroundColor = [UIColor whiteColor];
   self.collectionView.delaysContentTouches = NO;
   self.collectionView.contentInset = UIEdgeInsetsMake(20, 20, 20, 20);
   [self.collectionView registerClass:[MDCChipCollectionViewCell class]
           forCellWithReuseIdentifier:@"Cell"];
 
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Clear"
-                                                                            style:UIBarButtonItemStylePlain
-                                                                           target:self
-                                                                           action:@selector(clearSelected)];
+  self.navigationItem.rightBarButtonItem =
+      [[UIBarButtonItem alloc] initWithTitle:@"Clear"
+                                       style:UIBarButtonItemStylePlain
+                                      target:self
+                                      action:@selector(clearSelected)];
+
+  NSDictionary *enabledAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
+  NSDictionary *disabledAttributes =
+      @{NSForegroundColorAttributeName: [UIColor colorWithWhite:1 alpha:0.75]};
+  [self.navigationItem.rightBarButtonItem setTitleTextAttributes:enabledAttributes
+                                                        forState:UIControlStateNormal];
+  [self.navigationItem.rightBarButtonItem setTitleTextAttributes:disabledAttributes
+                                                        forState:UIControlStateDisabled];
+
+  self.navigationItem.rightBarButtonItem.accessibilityHint = @"Unselects all chips";
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(contentSizeCategoryDidChange)
                                                name:UIContentSizeCategoryDidChangeNotification
                                              object:nil];
+  [self updateClearButton];
 }
 
 - (void)contentSizeCategoryDidChange {
@@ -69,6 +86,12 @@
     [self.collectionView deselectItemAtIndexPath:indexPath animated:NO];
   }
   [self.collectionView performBatchUpdates:nil completion:nil];
+  [self updateClearButton];
+}
+
+- (void)updateClearButton {
+  BOOL hasSelectedItems = [self.collectionView indexPathsForSelectedItems].count > 0;
+  self.navigationItem.rightBarButtonItem.enabled = hasSelectedItems ? YES : NO;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
@@ -85,6 +108,8 @@
 
   ChipModel *model = self.model[indexPath.row];
   [model apply:cell.chipView];
+  [MDCChipViewTypographyThemer applyTypographyScheme:self.typographyScheme
+                                          toChipView:cell.chipView];
 
   return cell;
 }
@@ -92,6 +117,7 @@
 - (void)collectionView:(UICollectionView *)collectionView
     didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   [collectionView performBatchUpdates:nil completion:nil];
+  [self updateClearButton];
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView

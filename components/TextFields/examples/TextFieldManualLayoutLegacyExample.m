@@ -154,7 +154,7 @@
 @implementation TextFieldManualLayoutLegacyExample (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Text Field", @"[Legacy] Manual Layout (Objective C)" ];
+  return @[ @"Text Field", @"[Legacy] Manual Layout" ];
 }
 
 + (BOOL)catalogIsPrimaryDemo {
@@ -162,7 +162,7 @@
 }
 
 + (BOOL)catalogIsPresentable {
-  return YES;
+  return NO;
 }
 
 @end

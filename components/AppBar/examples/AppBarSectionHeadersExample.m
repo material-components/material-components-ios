@@ -17,15 +17,22 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialAppBar.h"
+#import "MaterialAppBar+ColorThemer.h"
 
 @interface AppBarSectionHeadersExample : UITableViewController
 
 // Step 1: Create an App Bar.
-@property(nonatomic, strong) MDCAppBar *appBar;
+@property(nonatomic, strong) MDCAppBarViewController *appBarViewController;
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 
 @end
 
 @implementation AppBarSectionHeadersExample
+
+- (void)dealloc {
+  // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
+  self.appBarViewController.headerView.trackingScrollView = nil;
+}
 
 - (id)init {
   self = [super init];
@@ -33,16 +40,15 @@
     self.title = @"App Bar";
 
     // Step 2: Initialize the App Bar and add the headerViewController as a child.
-    _appBar = [[MDCAppBar alloc] init];
-    [self addChildViewController:_appBar.headerViewController];
+    _appBarViewController = [[MDCAppBarViewController alloc] init];
 
-    // Optional: Change the App Bar's background color and tint color.
-    UIColor *color = [UIColor colorWithWhite:0.2f alpha:1];
-    _appBar.headerViewController.headerView.backgroundColor = color;
-    _appBar.navigationBar.tintColor = [UIColor whiteColor];
-    _appBar.navigationBar.titleTextAttributes = @{
-                                                  NSForegroundColorAttributeName : [UIColor whiteColor],
-                                                  };
+    // Behavioral flags.
+    _appBarViewController.inferTopSafeAreaInsetFromViewController = YES;
+    _appBarViewController.headerView.minMaxHeightIncludesSafeArea = NO;
+
+    [self addChildViewController:_appBarViewController];
+
+    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
   }
   return self;
 }
@@ -50,36 +56,37 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  [MDCAppBarColorThemer applyColorScheme:self.colorScheme toAppBarViewController:self.appBarViewController];
+
   // Recommended step: Set the tracking scroll view.
-  self.appBar.headerViewController.headerView.trackingScrollView = self.tableView;
+  self.appBarViewController.headerView.trackingScrollView = self.tableView;
 
   // Choice: If you do not need to implement any delegate methods and you are not using a
   //         collection view, you can use the headerViewController as the delegate.
-  // Alternative: See AppBarDelegateForwardingExample.
-  self.tableView.delegate = self.appBar.headerViewController;
+  // Alternative: See AppBarTypicalUseExample.
+  self.tableView.delegate = self.appBarViewController;
 
   // Step 3: Register the App Bar views.
-  [self.appBar addSubviewsToParent];
-
-  self.tableView.layoutMargins = UIEdgeInsetsZero;
+  [self.view addSubview:self.appBarViewController.view];
+  [self.appBarViewController didMoveToParentViewController:self];
 
   self.navigationItem.rightBarButtonItem =
-  [[UIBarButtonItem alloc] initWithTitle:@"Right"
-                                   style:UIBarButtonItemStyleDone
-                                  target:nil
-                                  action:nil];
+      [[UIBarButtonItem alloc] initWithTitle:@"Right"
+                                       style:UIBarButtonItemStyleDone
+                                      target:nil
+                                      action:nil];
 }
 
 // Optional step: If you allow the header view to hide the status bar you must implement this
 //                method and return the headerViewController.
 - (UIViewController *)childViewControllerForStatusBarHidden {
-  return self.appBar.headerViewController;
+  return self.appBarViewController;
 }
 
 // Optional step: The Header View Controller does basic inspection of the header view's background
 //                color to identify whether the status bar should be light or dark-themed.
 - (UIViewController *)childViewControllerForStatusBarStyle {
-  return self.appBar.headerViewController;
+  return self.appBarViewController;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -121,7 +128,6 @@
     cell =
     [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
   }
-  cell.layoutMargins = UIEdgeInsetsZero;
   cell.textLabel.text = indexPath.section == 0 ? @"Demo" : @"Example";
   return cell;
 }

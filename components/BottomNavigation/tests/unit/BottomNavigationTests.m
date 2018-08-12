@@ -23,6 +23,10 @@
 @property(nonatomic, strong) NSMutableArray<MDCBottomNavigationItemView *> *itemViews;
 @end
 
+@interface MDCBottomNavigationItemView (Testing)
+@property(nonatomic, strong) UILabel *label;
+@end
+
 @interface BottomNavigationTests : XCTestCase
 @property(nonatomic, strong) MDCBottomNavigationBar *bottomNavBar;
 @end
@@ -80,6 +84,85 @@
   for (MDCBottomNavigationItemView *item in self.bottomNavBar.itemViews) {
     XCTAssertEqual(item.itemTitleFont, self.bottomNavBar.itemTitleFont);
   }
+}
+
+-(void)testItemReset {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:0];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:0];
+
+  // When
+  self.bottomNavBar.items = @[item1, item2];
+  self.bottomNavBar.items = @[item1, item2, item3];
+
+  // Then
+  NSUInteger tabsCount = 3;
+  XCTAssertEqual(self.bottomNavBar.itemViews.count, tabsCount);
+}
+
+-(void)testFramesAfterReset {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:1];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:2];
+  [self.bottomNavBar sizeToFit];
+  self.bottomNavBar.frame = CGRectMake(0, 0, 320, 56);
+
+  // When
+  self.bottomNavBar.items = @[item1, item2];
+  self.bottomNavBar.items = @[item1, item2, item3];
+  [self.bottomNavBar layoutIfNeeded];
+
+  // Then
+  XCTAssertFalse(CGRectEqualToRect(self.bottomNavBar.itemViews[0].frame, CGRectZero));
+}
+
+-(void)testSelectedItemAfterReset {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:0];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:0];
+
+  // When
+  self.bottomNavBar.items = @[item1, item2];
+  self.bottomNavBar.items = @[item1, item2, item3];
+
+  // Then
+  XCTAssertNil(self.bottomNavBar.selectedItem);
+}
+
+- (void)testAccessibilityIdentifier {
+  NSString *oldIdentifier = @"oldIdentifier";
+  NSString *newIdentifier = @"newIdentifier";
+  UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home"
+                                                           image:nil
+                                                             tag:0];
+  tabBarItem.accessibilityIdentifier = oldIdentifier;
+  MDCBottomNavigationBar *bar = [[MDCBottomNavigationBar alloc] init];
+  bar.items = @[ tabBarItem ];
+  XCTAssert([bar.itemViews.firstObject.accessibilityIdentifier isEqualToString:oldIdentifier]);
+  tabBarItem.accessibilityIdentifier = newIdentifier;
+  XCTAssert([bar.itemViews.firstObject.accessibilityIdentifier isEqualToString:newIdentifier]);
+}
+
+-(void)testTitleVisibility {
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:0];
+  self.bottomNavBar.items = @[item1, item2];
+  self.bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityNever;
+  for (MDCBottomNavigationItemView *itemView in self.bottomNavBar.itemViews) {
+    XCTAssert(itemView.label.isHidden);
+  }
+  self.bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  for (MDCBottomNavigationItemView *itemView in self.bottomNavBar.itemViews) {
+    XCTAssert(!itemView.label.isHidden);
+  }
+  self.bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
+  self.bottomNavBar.itemViews.firstObject.selected = YES;
+  self.bottomNavBar.itemViews.lastObject.selected = NO;
+  XCTAssert(!self.bottomNavBar.itemViews.firstObject.label.isHidden);
+  XCTAssert(self.bottomNavBar.itemViews.lastObject.label.isHidden);
 }
 
 @end

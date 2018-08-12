@@ -15,14 +15,9 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "MDCSheetState.h"
 
 @protocol MDCSheetContainerViewDelegate;
-
-typedef NS_ENUM(NSUInteger, MDCSheetState) {
-  MDCSheetStateClosed,
-  MDCSheetStatePreferred,
-  MDCSheetStateExtended
-};
 
 @interface MDCSheetContainerView : UIView
 
@@ -42,5 +37,7 @@ typedef NS_ENUM(NSUInteger, MDCSheetState) {
 @protocol MDCSheetContainerViewDelegate <NSObject>
 
 - (void)sheetContainerViewDidHide:(nonnull MDCSheetContainerView *)containerView;
+- (void)sheetContainerViewWillChangeState:(nonnull MDCSheetContainerView *)containerView
+                               sheetState:(MDCSheetState)sheetState;
 
 @end

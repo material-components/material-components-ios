@@ -16,7 +16,9 @@
 
 #import "SliderAutolayoutExampleViewController.h"
 
+#import "MaterialColorScheme.h"
 #import "MaterialSlider.h"
+#import "MaterialSlider+ColorThemer.h"
 
 @interface SliderAutolayoutExampleViewController ()
 @property(weak, nonatomic) IBOutlet MDCSlider *materialSlider;
@@ -27,6 +29,14 @@
 
 @implementation SliderAutolayoutExampleViewController
 
+- (id)init {
+  self = [super init];
+  if (self) {
+    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+  }
+  return self;
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
   // Do any additional setup after loading the view, typically from a nib.
@@ -36,6 +46,10 @@
   _vanillaSlider.enabled = _materialSlider.enabled;
   _enabledSwitch.on = _materialSlider.enabled;
   _materialSlider.value = _vanillaSlider.value;
+  
+  self.materialSlider.statefulAPIEnabled = YES;
+  
+  [MDCSliderColorThemer applySemanticColorScheme:self.colorScheme toSlider:self.materialSlider];
 }
 
 - (IBAction)materialSliderDidChange:(id)sender {
@@ -67,7 +81,7 @@
 }
 
 + (BOOL)catalogIsPresentable {
-  return YES;
+  return NO;
 }
 
 @end
