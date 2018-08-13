@@ -53,7 +53,12 @@ static const CGFloat kEmptyPadding = 0.f;
   self.selectionStyle = UITableViewCellSelectionStyleNone;
   self.accessibilityTraits = UIAccessibilityTraitButton;
   _textLabel = [[UILabel alloc] init];
-  _textLabel.text = _itemAction.title;
+  NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+  paragraphStyle.hyphenationFactor = 1.f;
+  NSDictionary<NSAttributedStringKey, id> *dict = @{ NSParagraphStyleAttributeName : paragraphStyle };
+  NSMutableAttributedString *attrString =
+      [[NSMutableAttributedString alloc] initWithString:_itemAction.title attributes:dict];
+  _textLabel.attributedText = attrString;
   [_textLabel sizeToFit];
   [self.contentView addSubview:_textLabel];
   _textLabel.numberOfLines = 0;
@@ -226,6 +231,7 @@ static const CGFloat kEmptyPadding = 0.f;
     titleLabel.font = [MDCTypography subheadFont];
   }
   titleLabel.numberOfLines = 0;
+  titleLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
   if (self.message == nil || [self.message isEqualToString:@""]) {
     titleLabel.alpha = kMessageLabelAlpha;
   } else {
@@ -262,6 +268,7 @@ static const CGFloat kEmptyPadding = 0.f;
     messageLabel.font = [MDCTypography body1Font];
   }
   messageLabel.numberOfLines = 2;
+  messageLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
   messageLabel.alpha = kMessageLabelAlpha;
   [NSLayoutConstraint constraintWithItem:messageLabel
                                attribute:NSLayoutAttributeLeading
@@ -278,10 +285,10 @@ static const CGFloat kEmptyPadding = 0.f;
                               multiplier:1
                                 constant:-16.f].active = YES;
   _bottomConstraint = [NSLayoutConstraint constraintWithItem:messageLabel
-                                                   attribute:NSLayoutAttributeTop
+                                                   attribute:NSLayoutAttributeBottom
                                                    relatedBy:NSLayoutRelationEqual
                                                       toItem:self
-                                                   attribute:NSLayoutAttributeTop
+                                                   attribute:NSLayoutAttributeBottom
                                                   multiplier:1
                                                     constant:0.f];
   _bottomConstraint.active = YES;

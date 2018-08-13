@@ -120,12 +120,7 @@
   [_tableView.tableView setTranslatesAutoresizingMaskIntoConstraints:NO];
   _tableView.tableView.estimatedRowHeight = 56.f;
   _tableView.tableView.rowHeight = UITableViewAutomaticDimension;
-  _tableView.tableView.sectionHeaderHeight = UITableViewAutomaticDimension;
-  _tableView.tableView.estimatedSectionHeaderHeight = 56.f;
-  CGRect tableFrame = _tableView.view.frame;
-  tableFrame.origin.y = 0;
-  _tableView.view.frame = tableFrame;
-  _header = [[MDCActionSheetHeaderView alloc] initWithTitle:_actionSheetTitle message:_message];
+  _header = [self headerView];
 }
 
 - (void)addAction:(MDCActionSheetAction *)action {
@@ -147,11 +142,40 @@
   [contentViewController didMoveToParentViewController:self];
   contentViewController.view.backgroundColor = [UIColor whiteColor];
   [contentViewController.view addSubview:_tableView.view];
+  [contentViewController.view addSubview:_header];
+  [NSLayoutConstraint constraintWithItem:_header
+                               attribute:NSLayoutAttributeWidth
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:nil
+                               attribute:NSLayoutAttributeNotAnAttribute
+                              multiplier:1
+                                constant:CGRectGetWidth(contentViewController.view.frame)].active = YES;
+  [NSLayoutConstraint constraintWithItem:_header
+                               attribute:NSLayoutAttributeTop
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:contentViewController.view
+                               attribute:NSLayoutAttributeTop
+                              multiplier:1
+                                constant:0].active = YES;
+  [NSLayoutConstraint constraintWithItem:_header
+                               attribute:NSLayoutAttributeLeading
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:contentViewController.view
+                               attribute:NSLayoutAttributeLeading
+                              multiplier:1
+                                constant:0].active = YES;
+
+  //[contentViewController.view addSubview:_tableView.view];
 }
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
+  
   CGFloat height = CGRectGetHeight(_header.frame) + (self.actions.count * 56);
+  CGFloat tableYOrigin = CGRectGetHeight(_header.frame) + _header.frame.origin.y;
+  CGRect tableFrame = _tableView.tableView.frame;
+  tableFrame.origin.y = tableYOrigin;
+  _tableView.tableView.frame = tableFrame;
   contentViewController.preferredContentSize =
       CGSizeMake(CGRectGetWidth(self.view.bounds), height);
 }
@@ -222,11 +246,15 @@
   return;
 }
 
-#pragma mark - Table view delegate
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-  return _header;
+- (MDCActionSheetHeaderView *)headerView {
+  MDCActionSheetHeaderView *header =
+      [[MDCActionSheetHeaderView alloc] initWithTitle:_actionSheetTitle
+                                              message:_message];
+  [header setTranslatesAutoresizingMaskIntoConstraints:NO];
+  return header;
 }
+
+#pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   MDCActionSheetAction *action = _actions[indexPath.row];

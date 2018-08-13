@@ -96,8 +96,13 @@ class MDCActionSheetSwiftSupplemental {
   static func dynamic() -> MDCActionSheetController {
     let actionSheet = MDCActionSheetController(title: "Action sheet", message: message)
     actionSheet.mdc_adjustsFontForContentSizeCategory = true
+    let title = "reallyLongItemActionTitleThatIsLongerThanOneLine"
+    let actionThree = MDCActionSheetAction(title: title,
+                                           image: UIImage(named: "Email")!,
+                                           handler: nil)
     actionSheet.addAction(actionOne)
     actionSheet.addAction(actionTwo)
+    actionSheet.addAction(actionThree)
     return actionSheet
   }
 }
