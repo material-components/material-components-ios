@@ -20,6 +20,7 @@
 #import "MaterialUIMetrics.h"
 #import "MDCFlexibleHeaderContainerViewController.h"
 #import "MDCFlexibleHeaderView.h"
+#import "MDCFlexibleHeaderView+ShiftBehavior.h"
 #import "private/MDCFlexibleHeaderView+Private.h"
 #import <MDFTextAccessibility/MDFTextAccessibility.h>
 

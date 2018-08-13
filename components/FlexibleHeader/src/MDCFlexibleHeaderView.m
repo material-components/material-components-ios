@@ -18,6 +18,7 @@
 
 #import "MaterialApplication.h"
 #import "MaterialUIMetrics.h"
+#import "MDCFlexibleHeaderView+ShiftBehavior.h"
 #import "private/MDCStatusBarShifter.h"
 #import "private/MDCFlexibleHeaderView+Private.h"
 
