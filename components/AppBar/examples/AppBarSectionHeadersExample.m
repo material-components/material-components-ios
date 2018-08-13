@@ -129,6 +129,7 @@
     [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
   }
   cell.textLabel.text = indexPath.section == 0 ? @"Demo" : @"Example";
+  cell.selectionStyle = UITableViewCellSelectionStyleNone;
   return cell;
 }
 
