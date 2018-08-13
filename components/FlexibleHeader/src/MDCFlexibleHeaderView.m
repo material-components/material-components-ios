@@ -1410,7 +1410,7 @@ static BOOL isRunningiOS10_3OrAbove() {
           !_trackingScrollView.pagingEnabled);
 }
 
-- (void)setstatusBarHintCanOverlapHeader:(BOOL)statusBarHintCanOverlapHeader {
+- (void)setStatusBarHintCanOverlapHeader:(BOOL)statusBarHintCanOverlapHeader {
   if (_statusBarHintCanOverlapHeader == statusBarHintCanOverlapHeader) {
     return;
   }
