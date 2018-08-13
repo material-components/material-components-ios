@@ -144,10 +144,6 @@
   // to take into consideration the flexible header's height.
   appBar.appBarViewController.topLayoutGuideViewController = viewController;
 
-  // Ensures that our App Bar's top layout guide reflects the current view controller hierarchy.
-  // Most notably, this ensures we support iPad popovers and extensions.
-  appBar.appBarViewController.inferTopSafeAreaInsetFromViewController = YES;
-
   // We want our flexible header to calculate the safe area insets dynamically, rather than assume
   // we've pre-calculated them.
   appBar.appBarViewController.headerView.minMaxHeightIncludesSafeArea = NO;

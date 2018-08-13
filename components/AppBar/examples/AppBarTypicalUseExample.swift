@@ -37,7 +37,6 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
     self.title = "App Bar (Swift)"
 
     // Behavioral flags.
-    appBarViewController.inferTopSafeAreaInsetFromViewController = true
     appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
 
     // Step 2: Add the headerViewController as a child.

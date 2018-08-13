@@ -58,7 +58,6 @@
 
   // Behavioral flags.
   _fhvc.topLayoutGuideViewController = self;
-  _fhvc.inferTopSafeAreaInsetFromViewController = YES;
   _fhvc.headerView.minMaxHeightIncludesSafeArea = NO;
 
   [self addChildViewController:_fhvc];
@@ -82,7 +81,6 @@
   [self.fhvc didMoveToParentViewController:self];
 
   self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:0.1f alpha:1.0f];
-  self.fhvc.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar;
 
   [self setupScrollViewContent];
   [self.scrollView setScrollEnabled:YES];

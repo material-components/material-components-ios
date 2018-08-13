@@ -81,7 +81,6 @@ class MDCDragonsController: UIViewController,
     super.viewDidLoad()
     title = "Material Dragons"
     addChildViewController(headerViewController)
-    headerViewController.headerView.minMaxHeightIncludesSafeArea = false
     headerViewController.headerView.maximumHeight = Constants.headerViewMaxHeight
     headerViewController.headerView.minimumHeight = Constants.headerViewMinHeight
     tableView = UITableView(frame: self.view.bounds, style: .grouped)

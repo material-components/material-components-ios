@@ -58,7 +58,6 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
 
     // Behavioral flags.
     self.fhvc.topLayoutGuideAdjustmentEnabled = YES;
-    self.fhvc.inferTopSafeAreaInsetFromViewController = YES;
     self.fhvc.headerView.minMaxHeightIncludesSafeArea = NO;
 
     [self addChildViewController:self.fhvc];
@@ -134,8 +133,6 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
                                  multiplier:1.0
                                    constant:0]
      ]];
-
-  [self.fhvc.headerView hideViewWhenShifted:self.titleLabel];
 
   id (^switchItem)(NSString *, FlexibleHeaderConfiguratorField) = ^(
       NSString *title, FlexibleHeaderConfiguratorField field) {

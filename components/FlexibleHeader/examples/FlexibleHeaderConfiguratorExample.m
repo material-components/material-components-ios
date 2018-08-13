@@ -42,9 +42,6 @@
     case FlexibleHeaderConfiguratorFieldHideStatusBar: {
       self.overrideStatusBarHidden = [value boolValue];
 
-      BOOL statusBarCanBeVisible = !self.overrideStatusBarHidden;
-      headerView.statusBarHintCanOverlapHeader = statusBarCanBeVisible;
-
       [UIView animateWithDuration:0.4
                        animations:^{
                          [self setNeedsStatusBarAppearanceUpdate];
@@ -57,12 +54,10 @@
     case FlexibleHeaderConfiguratorFieldShiftBehaviorEnabled: {
       BOOL isOn = [value boolValue];
       if (!isOn) {
-        headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorDisabled;
         [self
             didChangeValueForField:FlexibleHeaderConfiguratorFieldShiftBehaviorEnabledWithStatusBar
                           animated:YES];
       } else {
-        headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabled;
       }
       break;
     }
@@ -70,9 +65,7 @@
     case FlexibleHeaderConfiguratorFieldShiftBehaviorEnabledWithStatusBar: {
       BOOL isOn = [value boolValue];
       if (!isOn) {
-        headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabled;
       } else {
-        headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar;
         [self didChangeValueForField:FlexibleHeaderConfiguratorFieldShiftBehaviorEnabled
                             animated:YES];
       }
@@ -80,9 +73,6 @@
     }
 
     case FlexibleHeaderConfiguratorFieldContentImportance:
-      headerView.headerContentImportance =
-          ([value boolValue] ? MDCFlexibleHeaderContentImportanceHigh
-                             : MDCFlexibleHeaderContentImportanceDefault);
       break;
 
     // Header height
@@ -165,23 +155,17 @@ static const CGFloat kHeightScalar = 300;
       return @(self.fhvc.headerView.canOverExtend);
 
     case FlexibleHeaderConfiguratorFieldContentImportance:
-      return @(
-          (self.fhvc.headerView.headerContentImportance == MDCFlexibleHeaderContentImportanceHigh));
+      return @(0);
 
     case FlexibleHeaderConfiguratorFieldHideStatusBar:
       return @(self.overrideStatusBarHidden);
 
     case FlexibleHeaderConfiguratorFieldShiftBehaviorEnabled: {
-      MDCFlexibleHeaderShiftBehavior behavior = self.fhvc.headerView.shiftBehavior;
-      BOOL enabled = (behavior == MDCFlexibleHeaderShiftBehaviorEnabled ||
-                      behavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar);
-      return @(enabled);
+      return @(YES);
     }
 
     case FlexibleHeaderConfiguratorFieldShiftBehaviorEnabledWithStatusBar: {
-      MDCFlexibleHeaderShiftBehavior behavior = self.fhvc.headerView.shiftBehavior;
-      BOOL enabled = (behavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar);
-      return @(enabled);
+      return @(YES);
     }
 
     case FlexibleHeaderConfiguratorFieldInFrontOfInfiniteContent:

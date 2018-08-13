@@ -51,14 +51,6 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 @interface MDCFlexibleHeaderViewController () <MDCFlexibleHeaderViewDelegate>
 
 /*
- The current height offset of the flexible header controller with the addition of the current status
- bar state at any given time.
-
- This property is used to determine the bottom point of the |flexibleHeaderView| within the window.
- */
-@property(nonatomic) CGFloat flexibleHeaderViewControllerHeightOffset;
-
-/*
  This is the target top layout guide that we will modify such that it includes the flexible header's
  height and any top safe area insets we were able to infer.
 
@@ -79,12 +71,6 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
  */
 @property(nonatomic, strong) NSLayoutConstraint *topSafeAreaConstraint;
 
-/*
- On iOS 11+ devices, we use this view to extract the top safe area inset from the root ancestor view
- controller.
- */
-@property(nonatomic, strong) UIView *topSafeAreaView;
-
 @end
 
 @implementation MDCFlexibleHeaderViewController
@@ -95,7 +81,6 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
   // Clear KVO observers
   self.topLayoutGuideConstraint = nil;
   self.topSafeAreaConstraint = nil;
-  self.topSafeAreaView = nil;
 }
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -182,34 +167,12 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
 
-  if (self.inferTopSafeAreaInsetFromViewController) {
-    // At this point we can be confident that our view controller ancestry is as complete as
-    // possible, so we can now infer our top safe area source view controller.
-    [self fhv_inferTopSafeAreaSourceViewController];
+  // Querying the top layout guide ensures that the flexible header receives layout event when
+  // the status bar visibility changes. This allows the flexible header to animate alongside any
+  // status bar visibility changes.
+  [self.parentViewController topLayoutGuide];
 
-    // Querying the top layout guide ensures that the flexible header receives layout event when
-    // the status bar visibility changes. This allows the flexible header to animate alongside any
-    // status bar visibility changes.
-    [self.parentViewController topLayoutGuide];
-  }
-
-  if (self.topLayoutGuideAdjustmentEnabled) {
-    [self updateTopLayoutGuide];
-
-  } else {
-    // Legacy behavior.
-    for (NSLayoutConstraint *constraint in self.parentViewController.view.constraints) {
-      // Because topLayoutGuide is a readonly property on a viewController we must manipulate
-      // the present one via the NSLayoutConstraint attached to it. Thus we keep reference to it.
-      if (constraint.firstItem == self.parentViewController.topLayoutGuide &&
-          constraint.secondItem == nil) {
-        self.topLayoutGuideConstraint = constraint;
-      }
-    }
-
-    // On moving to parentViewController, we calculate the height
-    self.flexibleHeaderViewControllerHeightOffset = [self headerViewControllerHeight];
-  }
+  [self updateTopLayoutGuide];
 
 #if DEBUG
   NSAssert(![self.parentViewController.parentViewController
@@ -240,10 +203,6 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
            @"You must disable inferPreferredStatusBarStyle prior to setting a status bar style.");
 
   _preferredStatusBarStyle = preferredStatusBarStyle;
-}
-
-- (BOOL)prefersStatusBarHidden {
-  return _headerView.prefersStatusBarHidden;
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
@@ -300,10 +259,6 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
       if (object == self->_topLayoutGuideConstraint
           && self.topLayoutGuideAdjustmentEnabled) {
         [self updateTopLayoutGuide];
-      }
-      if (self.inferTopSafeAreaInsetFromViewController
-          && (object == self->_topSafeAreaConstraint || object == self->_topSafeAreaView)) {
-        [self->_headerView extractTopSafeAreaInset];
       }
     };
 
@@ -423,23 +378,6 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
                               context:kKVOContextMDCFlexibleHeaderViewController];
 }
 
-- (void)setTopSafeAreaView:(UIView *)topSafeAreaView {
-  if (_topSafeAreaView == topSafeAreaView) {
-    return;
-  }
-
-  [_topSafeAreaView removeObserver:self
-                        forKeyPath:NSStringFromSelector(@selector(safeAreaInsets))
-                           context:kKVOContextMDCFlexibleHeaderViewController];
-
-  _topSafeAreaView = topSafeAreaView;
-
-  [_topSafeAreaView addObserver:self
-                     forKeyPath:NSStringFromSelector(@selector(safeAreaInsets))
-                        options:NSKeyValueObservingOptionNew
-                        context:kKVOContextMDCFlexibleHeaderViewController];
-}
-
 - (UIViewController *)fhv_topLayoutGuideViewControllerWithFallback {
   UIViewController *topLayoutGuideViewController = self.topLayoutGuideViewController;
   if (!topLayoutGuideViewController && !self.topLayoutGuideAdjustmentEnabled) {
@@ -462,12 +400,6 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
   // infinite loop we bail out early here if we're the ones that initiated the top layout guide
   // constant change.
   if (self.isUpdatingTopLayoutGuide) {
-    return;
-  }
-
-  if (!self.topLayoutGuideAdjustmentEnabled) {
-    // Legacy behavior
-    [self fhv_setTopLayoutGuideConstraintConstant:self.flexibleHeaderViewControllerHeightOffset];
     return;
   }
 
@@ -516,17 +448,6 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 #endif
 }
 
-- (CGFloat)headerViewControllerHeight {
-  BOOL shiftEnabledForStatusBar =
-      _headerView.shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar;
-  CGFloat statusBarHeight =
-      [UIApplication mdc_safeSharedApplication].statusBarFrame.size.height;
-  CGFloat height =
-      MAX(_headerView.frame.origin.y + _headerView.frame.size.height,
-          shiftEnabledForStatusBar ? 0 : statusBarHeight);
-  return height;
-}
-
 - (void)setTopLayoutGuideViewController:(UIViewController *)topLayoutGuideViewController {
   if (topLayoutGuideViewController == _topLayoutGuideViewController) {
     return;
@@ -534,26 +455,10 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
   _topLayoutGuideViewController = topLayoutGuideViewController;
   _topLayoutGuideAdjustmentEnabled = YES;
 
-  if (self.inferTopSafeAreaInsetFromViewController) {
-    // Need to re-infer the top safe area source view controller because it may now be a child of
-    // the top layout guide view controller.
-    [self fhv_inferTopSafeAreaSourceViewController];
-  }
-
   if ([self isViewLoaded]) {
     [self fhv_extractTopLayoutGuideConstraint];
     [self updateTopLayoutGuide];
   }
-}
-
-- (void)setInferTopSafeAreaInsetFromViewController:(BOOL)inferTopSafeAreaInsetFromViewController {
-  _headerView.inferTopSafeAreaInsetFromViewController = inferTopSafeAreaInsetFromViewController;
-
-  [self fhv_inferTopSafeAreaSourceViewController];
-}
-
-- (BOOL)inferTopSafeAreaInsetFromViewController {
-  return _headerView.inferTopSafeAreaInsetFromViewController;
 }
 
 #pragma mark - Top safe area inset extraction
@@ -581,54 +486,6 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
   return viewController;
 }
 
-// This method makes the assumption that the root-most view controller is the best view controller
-// to look at when determining the top safe area inset. It's possible that this assumption will not
-// hold true in all cases, so we may also need to expose an explicit API for setting the top safe
-// area source view controller.
-- (void)fhv_inferTopSafeAreaSourceViewController {
-  UIViewController *parent = self.parentViewController;
-  if (parent == nil || !self.inferTopSafeAreaInsetFromViewController) {
-    _headerView.topSafeAreaSourceViewController = nil;
-    self.topSafeAreaConstraint = nil;
-    self.topSafeAreaView = nil;
-    return;
-  }
-
-  UIViewController *ancestor = [self fhv_rootAncestorOfViewController:parent];
-
-  // Are we attempting to extract the top safe area inset from our top layout guide view controller?
-  if (self.topLayoutGuideAdjustmentEnabled && ancestor == self.topLayoutGuideViewController) {
-    // We can't use the provided ancestor because it's a child of the top layout guide view
-    // controller. Doing so would result in the top layout guide being infinitely increased.
-    // Let's use the top layout guide view controller's ancestor instead.
-    ancestor = [self fhv_rootAncestorOfViewController:
-                    self.topLayoutGuideViewController.parentViewController];
-  }
-
-  // if ancestor == nil at this point, then we're in a bad spot because there's nowhere for us to
-  // extract a top safe area inset from. Should we throw an assert?
-  NSAssert(ancestor != nil,
-           @"inferTopSafeAreaInsetFromViewController is true but we were unable to infer a view controller"
-           @" from which we could extract a safe area. Consider placing your view controller inside"
-           @" a container view controller.");
-
-  if (_headerView.topSafeAreaSourceViewController != ancestor) {
-    _headerView.topSafeAreaSourceViewController = ancestor;
-
-    BOOL shouldObserveLayoutGuide = YES;
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-    if (@available(iOS 11.0, *)) {
-      shouldObserveLayoutGuide = NO;
-    }
-#endif
-    if (shouldObserveLayoutGuide) {
-      self.topSafeAreaConstraint = [self fhv_topLayoutGuideConstraintForViewController:ancestor];
-    } else {
-      self.topSafeAreaView = ancestor.view;
-    }
-  }
-}
-
 #pragma mark MDCFlexibleHeaderViewDelegate
 
 - (void)flexibleHeaderViewNeedsStatusBarAppearanceUpdate:
@@ -637,18 +494,7 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 }
 
 - (void)flexibleHeaderViewFrameDidChange:(MDCFlexibleHeaderView *)headerView {
-  if (self.topLayoutGuideAdjustmentEnabled) {
-    [self updateTopLayoutGuide];
-
-  } else {
-    // Legacy behavior
-    // Whenever the flexibleHeaderView's frame changes, we update the value of the height offset
-    self.flexibleHeaderViewControllerHeightOffset = [self headerViewControllerHeight];
-
-    // We must change the constant of the constraint attached to our parentViewController's
-    // topLayoutGuide to trigger the re-layout of its subviews
-    [self fhv_setTopLayoutGuideConstraintConstant:self.flexibleHeaderViewControllerHeightOffset];
-  }
+  [self updateTopLayoutGuide];
 
   [self.layoutDelegate flexibleHeaderViewController:self
                    flexibleHeaderViewFrameDidChange:headerView];
