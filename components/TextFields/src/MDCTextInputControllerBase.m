@@ -38,6 +38,8 @@ static const CGFloat MDCTextInputControllerBaseDefaultFloatingPlaceholderScaleDe
 static const CGFloat MDCTextInputControllerBaseDefaultHintTextOpacity = 0.54f;
 static const CGFloat MDCTextInputControllerBaseDefaultPadding = 8.f;
 
+static NSString *const MDCTextInputKVOKeyEnabled = @"enabled";
+
 static const NSTimeInterval
     MDCTextInputControllerBaseDefaultFloatingPlaceholderDownAnimationDuration = 0.266666f;
 static const NSTimeInterval
@@ -130,6 +132,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 @property(nonatomic, copy) NSString *helperAccessibilityLabel;
 @property(nonatomic, copy) NSString *previousLeadingText;
 
+@property(nonatomic, assign) BOOL isRegisteredForKVO;
+
 @end
 
 @implementation MDCTextInputControllerBase
@@ -219,6 +223,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
 - (void)dealloc {
   [self unsubscribeFromNotifications];
+  [self unsubscribeFromKVO];
 }
 
 - (void)commonMDCTextInputControllerBaseInitialization {
@@ -262,6 +267,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     ((id<MDCMultilineTextInput>)_textInput).expandsOnOverflow = self.expandsOnOverflow;
   }
 
+  [self subscribeForKVO];
   [self subscribeForNotifications];
   _textInput.underline.color = [self class].normalColorDefault;
   _textInput.clearButton.tintColor = self.textInputClearButtonTintColor;
@@ -318,6 +324,40 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 - (void)unsubscribeFromNotifications {
   NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
   [defaultCenter removeObserver:self];
+}
+
+- (void)subscribeForKVO {
+  [self.textInput addObserver:self
+                   forKeyPath:MDCTextInputKVOKeyEnabled
+                      options:0
+                      context:nil];
+  _isRegisteredForKVO = YES;
+}
+
+- (void)unsubscribeFromKVO {
+  if (!_textInput || !self.isRegisteredForKVO) {
+    return;
+  }
+  @try {
+    [_textInput removeObserver:self forKeyPath:MDCTextInputKVOKeyEnabled];
+  } @catch (__unused NSException *exception) {
+    NSLog(@"Tried to unsubscribe from KVO in MDCTextInputControllerBase but could not.");
+  }
+  _isRegisteredForKVO = NO;
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(__unused NSDictionary<NSKeyValueChangeKey, id> *)change
+                       context:(__unused void *)context {
+  // Listening to outside setting of underline properties.
+  if (object != self.textInput) {
+    return;
+  }
+
+  if ([keyPath isEqualToString:MDCTextInputKVOKeyEnabled]) {
+    [self updateLayout];
+  }
 }
 
 #pragma mark - Border Customization
@@ -433,6 +473,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                            : nonErrorColor;
   } else {
     placeholderColor = self.textInput.isEditing ? self.activeColor : self.inlinePlaceholderColor;
+  }
+  if (!self.textInput.isEnabled) {
+    placeholderColor = self.disabledColor;
   }
   self.textInput.placeholderLabel.textColor = placeholderColor;
 }
@@ -1124,7 +1167,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 - (void)setNormalColor:(UIColor *)normalColor {
   if (![_normalColor isEqual:normalColor]) {
     _normalColor = normalColor;
-    [self updateUnderline];
+    [self updateLayout];
   }
 }
 
@@ -1178,6 +1221,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 - (void)setTextInput:(UIView<MDCTextInput> *)textInput {
   if (_textInput != textInput) {
     [self unsubscribeFromNotifications];
+    [self unsubscribeFromKVO];
 
     _textInput = textInput;
     [self setupInput];
