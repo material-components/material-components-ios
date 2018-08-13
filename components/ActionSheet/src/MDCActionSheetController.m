@@ -225,7 +225,6 @@
 #pragma mark - Table view delegate
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-  //_header = [[MDCActionSheetHeaderView alloc] initWithTitle:_actionSheetTitle message:self.message];
   return _header;
 }
 

@@ -21,6 +21,10 @@ static const CGFloat kTitleLabelAlpha = 0.87f;
 static const CGFloat kMessageLabelAlpha = 0.54f;
 static const CGFloat kImageAlpha = 0.54f;
 static const CGFloat kCellLabelAlpha = 0.87f;
+static const CGFloat kStandardPadding = 16.f;
+static const CGFloat kTitleOnlyPadding = 18.f;
+static const CGFloat kMessageOnlyPadding = 23.f;
+static const CGFloat kEmptyPadding = 0.f;
 
 @interface MDCActionSheetItemView ()
 @end
@@ -185,10 +189,9 @@ static const CGFloat kCellLabelAlpha = 0.87f;
 
 @interface MDCActionSheetHeaderView ()
 
-@property(nonatomic, strong) NSLayoutConstraint *titleTopConstraint;
-@property(nonatomic, strong) NSLayoutConstraint *titleBottomConstraint;
-@property(nonatomic, strong) NSLayoutConstraint *messageTopConstraint;
-@property(nonatomic, strong) NSLayoutConstraint *messageBottomConstraint;
+@property(nonatomic, strong) NSLayoutConstraint *topConstraint;
+@property(nonatomic, strong) NSLayoutConstraint *middleConstraint;
+@property(nonatomic, strong) NSLayoutConstraint *bottomConstraint;
 
 @end
 
@@ -242,20 +245,14 @@ static const CGFloat kCellLabelAlpha = 0.87f;
                                attribute:NSLayoutAttributeTrailing
                               multiplier:1
                                 constant:-16.f];
-  _titleTopConstraint = [NSLayoutConstraint constraintWithItem:titleLabel
-                                                     attribute:NSLayoutAttributeTop
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:self
-                                                     attribute:NSLayoutAttributeTop
-                                                    multiplier:1
-                                                      constant:0.f];
-  _titleBottomConstraint = [NSLayoutConstraint constraintWithItem:titleLabel
-                                                        attribute:NSLayoutAttributeBottom
-                                                        relatedBy:NSLayoutRelationEqual
-                                                           toItem:self
-                                                        attribute:NSLayoutAttributeBottom
-                                                       multiplier:1
-                                                         constant:0.f];
+  _topConstraint = [NSLayoutConstraint constraintWithItem:titleLabel
+                                                attribute:NSLayoutAttributeTop
+                                                relatedBy:NSLayoutRelationEqual
+                                                   toItem:self
+                                                attribute:NSLayoutAttributeTop
+                                               multiplier:1
+                                                 constant:0.f];
+  _topConstraint.active = YES;
 
   [messageLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
   [self addSubview:messageLabel];
@@ -280,85 +277,51 @@ static const CGFloat kCellLabelAlpha = 0.87f;
                                attribute:NSLayoutAttributeTrailing
                               multiplier:1
                                 constant:-16.f].active = YES;
-  _messageTopConstraint = [NSLayoutConstraint constraintWithItem:messageLabel
-                                                       attribute:NSLayoutAttributeTop
-                                                       relatedBy:NSLayoutRelationEqual
-                                                          toItem:self
-                                                       attribute:NSLayoutAttributeTop
-                                                      multiplier:1
-                                                        constant:0.f];
-  _messageBottomConstraint = [NSLayoutConstraint constraintWithItem:messageLabel
-                                                          attribute:NSLayoutAttributeBottom
-                                                          relatedBy:NSLayoutRelationEqual
-                                                             toItem:self
-                                                          attribute:NSLayoutAttributeBottom
-                                                         multiplier:1
-                                                           constant:0.f];
+  _bottomConstraint = [NSLayoutConstraint constraintWithItem:messageLabel
+                                                   attribute:NSLayoutAttributeTop
+                                                   relatedBy:NSLayoutRelationEqual
+                                                      toItem:self
+                                                   attribute:NSLayoutAttributeTop
+                                                  multiplier:1
+                                                    constant:0.f];
+  _bottomConstraint.active = YES;
+
+  _middleConstraint = [NSLayoutConstraint constraintWithItem:titleLabel
+                                                   attribute:NSLayoutAttributeBottom
+                                                   relatedBy:NSLayoutRelationEqual
+                                                      toItem:messageLabel
+                                                   attribute:NSLayoutAttributeTop
+                                                  multiplier:1
+                                                    constant:0.f];
+  _middleConstraint.active = YES;
+  [self layoutCheck];
+}
+
+- (void)layoutCheck {
   BOOL addTitle = (titleLabel.text != nil) && (![titleLabel.text  isEqual:@""]);
   BOOL addMessage = (messageLabel.text != nil) && (![messageLabel.text isEqual:@""]);
   if (addTitle && addMessage) {
-    [self layoutBoth];
+    _topConstraint.constant = kStandardPadding;
+    _middleConstraint.constant = -8.f;
+    _bottomConstraint.constant = -kStandardPadding;
   } else if (addTitle) {
-    [self layoutTitle];
+    _topConstraint.constant = kTitleOnlyPadding;
+    _middleConstraint.constant = 0.f;
+    _bottomConstraint.constant = -kTitleOnlyPadding;
   } else if (addMessage) {
-    [self layoutMessage];
+    _topConstraint.constant = kMessageOnlyPadding;
+    _middleConstraint.constant = 0.f;
+    _bottomConstraint.constant = -kMessageOnlyPadding;
+  } else {
+    _topConstraint.constant = kEmptyPadding;
+    _middleConstraint.constant = 0.f;
+    _bottomConstraint.constant = kEmptyPadding;
   }
 }
 
 - (void)layoutSubviews {
-  BOOL addTitle = (titleLabel.text != nil) && (![titleLabel.text  isEqual:@""]);
-  BOOL addMessage = (messageLabel.text != nil) && (![messageLabel.text isEqual:@""]);
-  if (addTitle && addMessage) {
-    [self layoutBoth];
-  } else if (addTitle) {
-    [self layoutTitle];
-  } else if (addMessage) {
-    [self layoutMessage];
-  }
-}
-
-- (void)layoutBoth {
-  _titleTopConstraint.constant = 16.f;
-  _titleTopConstraint.active = YES;
-
-  _titleBottomConstraint.constant = -60.f;
-  _titleBottomConstraint.active = YES;
-
-  _messageTopConstraint.constant = 46.f;
-  _messageTopConstraint.active = YES;
-
-  _messageBottomConstraint.constant = -16.f;
-  _messageBottomConstraint.active = YES;
-
-}
-
-- (void)layoutTitle {
-  _titleTopConstraint.constant = 18.f;
-  _titleTopConstraint.active = YES;
-
-  _titleBottomConstraint.constant = -18.f;
-  _titleBottomConstraint.active = YES;
-
-  _messageTopConstraint.constant = 0.f;
-  _messageTopConstraint.active = YES;
-
-  _messageBottomConstraint.constant = 0.f;
-  _messageBottomConstraint.active = YES;
-  
-}
-
-- (void)layoutMessage {
-
-  _titleTopConstraint.constant = 0.f;
-  _titleTopConstraint.active = YES;
-
-  _titleBottomConstraint.constant = 0.f;
-  _titleBottomConstraint.active = YES;
-
-  _messageTopConstraint.constant = 23.f;
-  _messageTopConstraint.active = YES;
-  _messageBottomConstraint.constant = -23.f;
-  _messageBottomConstraint.active = YES;
+  [super layoutSubviews];
+  [self layoutCheck];
 }
 
 - (void)setTitle:(NSString *)title {
