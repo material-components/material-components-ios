@@ -119,7 +119,7 @@ extension AppBarTypicalUseSwiftExample {
         cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
       }
       cell!.layoutMargins = UIEdgeInsets.zero
-      cell!.selectionStyle = UITableViewCellSelectionStyle.none
+      cell!.selectionStyle = .none
       return cell!
   }
 
