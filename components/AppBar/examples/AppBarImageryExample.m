@@ -149,6 +149,7 @@
     cell =
         [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
   }
+  cell.selectionStyle = UITableViewCellSelectionStyleNone;
   return cell;
 }
 

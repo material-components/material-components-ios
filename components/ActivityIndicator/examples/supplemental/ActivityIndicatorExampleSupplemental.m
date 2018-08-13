@@ -144,6 +144,7 @@ static NSString * const kCell = @"Cell";
   UITableViewCell *cell =
       [tableView dequeueReusableCellWithIdentifier:kCell forIndexPath:indexPath];
   cell.textLabel.text = @"";
+  cell.selectionStyle = UITableViewCellSelectionStyleNone;
   switch (indexPath.row) {
     case 0:
       cell.accessoryView = nil;
