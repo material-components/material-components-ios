@@ -53,7 +53,6 @@ class AppBarWithUITableViewController: UITableViewController {
   func commonInit() {
 
     // Behavioral flags.
-    appBarViewController.inferTopSafeAreaInsetFromViewController = true
     appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
 
     self.addChildViewController(appBarViewController)

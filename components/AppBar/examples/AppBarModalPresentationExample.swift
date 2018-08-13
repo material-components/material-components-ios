@@ -34,7 +34,6 @@ class AppBarModalPresentationSwiftExamplePresented: UITableViewController {
     self.title = "Modal Presentation (Swift)"
 
     // Behavioral flags.
-    appBarViewController.inferTopSafeAreaInsetFromViewController = true
     appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
 
     self.addChildViewController(appBarViewController)

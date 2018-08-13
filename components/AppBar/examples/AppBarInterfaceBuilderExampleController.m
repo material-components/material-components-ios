@@ -56,7 +56,6 @@
   self.appBarViewController = [[MDCAppBarViewController alloc] init];
 
   // Behavioral flags.
-  self.appBarViewController.inferTopSafeAreaInsetFromViewController = YES;
   self.appBarViewController.headerView.minMaxHeightIncludesSafeArea = NO;
 
   self.colorScheme = [[MDCSemanticColorScheme alloc] init];

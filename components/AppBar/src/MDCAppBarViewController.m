@@ -185,16 +185,6 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
                             views:@{kBarStackKey : self.headerStackView}];
   [self.view addConstraints:horizontalConstraints];
 
-  CGFloat topMargin = MDCDeviceTopSafeAreaInset();
-  _verticalConstraint = [NSLayoutConstraint constraintWithItem:self.headerStackView
-                                                     attribute:NSLayoutAttributeTop
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:self.view
-                                                     attribute:NSLayoutAttributeTop
-                                                    multiplier:1
-                                                      constant:topMargin];
-  _verticalConstraint.active = !self.inferTopSafeAreaInsetFromViewController;
-
   _topSafeAreaConstraint =
       [NSLayoutConstraint constraintWithItem:self.headerView.topSafeAreaGuide
                                    attribute:NSLayoutAttributeBottom
@@ -203,7 +193,7 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
                                    attribute:NSLayoutAttributeTop
                                   multiplier:1
                                     constant:0];
-  _topSafeAreaConstraint.active = self.inferTopSafeAreaInsetFromViewController;
+  _topSafeAreaConstraint.active = YES;
 
   [NSLayoutConstraint constraintWithItem:self.headerStackView
                                attribute:NSLayoutAttributeBottom
@@ -212,17 +202,6 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
                                attribute:NSLayoutAttributeBottom
                               multiplier:1
                                 constant:0].active = YES;
-}
-
-- (void)setInferTopSafeAreaInsetFromViewController:(BOOL)inferTopSafeAreaInsetFromViewController {
-  [super setInferTopSafeAreaInsetFromViewController:inferTopSafeAreaInsetFromViewController];
-
-  if (inferTopSafeAreaInsetFromViewController) {
-    self.topLayoutGuideAdjustmentEnabled = YES;
-  }
-
-  _verticalConstraint.active = !self.inferTopSafeAreaInsetFromViewController;
-  _topSafeAreaConstraint.active = self.inferTopSafeAreaInsetFromViewController;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -316,15 +295,6 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
 
   [abvc.parentViewController.view addSubview:abvc.view];
   [abvc didMoveToParentViewController:abvc.parentViewController];
-}
-
-- (void)setInferTopSafeAreaInsetFromViewController:(BOOL)inferTopSafeAreaInsetFromViewController {
-  self.appBarViewController.inferTopSafeAreaInsetFromViewController =
-      inferTopSafeAreaInsetFromViewController;
-}
-
-- (BOOL)inferTopSafeAreaInsetFromViewController {
-  return self.appBarViewController.inferTopSafeAreaInsetFromViewController;
 }
 
 @end

@@ -62,7 +62,6 @@
 
   // Behavioral flags.
   MDCAppBarViewController *appBarViewController = self.appBarContainerViewController.appBarViewController;
-  appBarViewController.inferTopSafeAreaInsetFromViewController = YES;
   appBarViewController.headerView.minMaxHeightIncludesSafeArea = NO;
   self.appBarContainerViewController.topLayoutGuideAdjustmentEnabled = YES;
 
