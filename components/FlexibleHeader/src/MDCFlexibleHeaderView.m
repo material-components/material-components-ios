@@ -142,8 +142,11 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 
   // Prevents delta calculations on first update pass.
   BOOL _shiftAccumulatorLastContentOffsetIsValid;
-  // When the header can slide off-screen, this tracks how off-screen the header is.
+  // When the header can slide off-screen, a positive value indicates how off-screen the header is.
   // Essentially: view's top edge = -_shiftAccumulator
+  // When canAlwaysExpandToMaximumHeight is enabled, a negative value indicates how expanded the
+  // header is.
+  // Essentially: view's height += -_shiftAccumulator
   CGFloat _shiftAccumulator;
   CGPoint _shiftAccumulatorLastContentOffset;  // Stores our last delta'd content offset.
   CGFloat _shiftAccumulatorDeltaY;
