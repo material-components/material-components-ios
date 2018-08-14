@@ -17,10 +17,30 @@
 import Foundation
 import MaterialComponents
 
+class ShadowElevationsPointsLabelSwift: UILabel {
+  
+  var elevation: ShadowElevation {
+    get {
+      let layer = self.layer as! MDCShadowLayer
+      return layer.elevation
+    }
+    set {
+      let layer = self.layer as! MDCShadowLayer
+      layer.elevation = newValue
+    }
+  }
+
+  override class var layerClass: AnyClass {
+    get {
+      return MDCShadowLayer.self
+    }
+  }
+}
+
 class ShadowElevationsTypicalUseExample: UIViewController {
 
   let appBarViewController = MDCAppBarViewController()
-  let paper = ShadowElevationsPointsLabel()
+  let paper = ShadowElevationsPointsLabelSwift()
 
   init() {
     super.init(nibName: nil, bundle: nil)
