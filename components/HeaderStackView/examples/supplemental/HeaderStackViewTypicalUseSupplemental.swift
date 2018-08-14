@@ -18,7 +18,7 @@
  */
 
 import Foundation
-import MaterialComponents
+import MaterialComponents.MaterialHeaderStackView
 
 extension HeaderStackViewTypicalUseSwiftExample {
 

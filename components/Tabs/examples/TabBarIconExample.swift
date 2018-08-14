@@ -17,7 +17,9 @@
 import UIKit
 
 import MaterialComponents.MaterialAppBar
+import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialPalettes
 import MaterialComponents.MaterialTabs
 import MaterialComponents.MaterialTabs_ColorThemer
 import MaterialComponents.MaterialTypographyScheme

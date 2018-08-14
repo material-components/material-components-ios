@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import UIKit
-import MaterialComponents.MaterialNavigationBar
+import MaterialComponents.MaterialNavigationBar_ColorThemer
 
 open class NavigationBarTypicalUseSwiftExample: UIViewController {
 

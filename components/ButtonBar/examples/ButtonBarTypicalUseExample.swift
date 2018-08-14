@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import Foundation
-import MaterialComponents
+import MaterialComponents.MaterialButtonBar_ColorThemer
 
 class ButtonBarTypicalUseSwiftExample: UIViewController {
   var colorScheme = MDCSemanticColorScheme()
