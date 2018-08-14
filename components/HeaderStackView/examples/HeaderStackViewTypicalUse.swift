@@ -16,6 +16,10 @@
 
 import UIKit
 import MaterialComponents.MaterialHeaderStackView
+import MaterialComponents.MaterialNavigationBar
+import MaterialComponents.MaterialPalettes
+import MaterialComponents.MaterialColorScheme
+
 
 open class HeaderStackViewTypicalUseSwiftExample: UIViewController {
 
