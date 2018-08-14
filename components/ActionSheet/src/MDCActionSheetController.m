@@ -257,7 +257,7 @@
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-  MDCActionSheetAction *action = _actions[indexPath.row];
+  MDCActionSheetAction *action = self.actions[indexPath.row];
 
   [self.presentingViewController dismissViewControllerAnimated:YES completion:^(void){
     if (action.completionHandler) {
