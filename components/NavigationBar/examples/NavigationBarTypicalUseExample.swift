@@ -91,7 +91,7 @@ open class NavigationBarTypicalUseSwiftExample: UIViewController {
                                                          options: [],
                                                          metrics: nil,
                                                          views: viewBindings)
-    constraintsArray += NSLayoutConstraint.constraints(withVisualFormat: "V:|[navBar]-[exampleView]|",
+    constraintsArray += NSLayoutConstraint.constraints(withVisualFormat: "V:[navBar]-[exampleView]|",
                                                        options: [],
                                                        metrics: nil,
                                                        views: viewBindings)
