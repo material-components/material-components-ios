@@ -19,8 +19,8 @@ This file contains supplemental code used to populate the examples with dummy da
 instructions. It is not necessary to import this file to use Material Components for iOS.
 */
 
-import Foundation
-import MaterialComponents
+import UIKit
+import MaterialComponents.MaterialNavigationBar
 
 extension NavigationBarTypicalUseSwiftExample {
 

@@ -17,6 +17,7 @@ limitations under the License.
 import Foundation
 
 import MaterialComponents.MaterialPageControl
+import MaterialComponents.MaterialPalettes
 
 class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDelegate {
 
