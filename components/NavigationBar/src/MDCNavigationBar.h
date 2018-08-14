@@ -227,7 +227,7 @@ IB_DESIGNABLE
 
 
 /**
- If YES, the title label will be ausized to fit a certain width. The default value is NO.
+ If YES, the title label will be autosized to fit a certain width. The default value is NO.
  */
 @property(nonatomic) BOOL adjustsFontSizeToFitWidth;
 
