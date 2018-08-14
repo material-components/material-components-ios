@@ -85,7 +85,7 @@ open class NavigationBarTypicalUseSwiftExample: UIViewController {
     exampleView.frame = self.view.bounds
     self.view.insertSubview(exampleView, belowSubview: navBar)
     exampleView.translatesAutoresizingMaskIntoConstraints = false
-    let viewBindings = [ "exampleView" : exampleView, "navBar" : navBar ]
+    let viewBindings: [String : Any] = [ "exampleView" : exampleView, "navBar" : navBar ]
     var constraintsArray: [NSLayoutConstraint] = []
     constraintsArray += NSLayoutConstraint.constraints(withVisualFormat: "H:|[exampleView]|",
                                                          options: [],
@@ -95,7 +95,6 @@ open class NavigationBarTypicalUseSwiftExample: UIViewController {
                                                        options: [],
                                                        metrics: nil,
                                                        views: viewBindings)
-
     view.addConstraints(constraintsArray)
   }
 
