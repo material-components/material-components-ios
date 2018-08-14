@@ -225,6 +225,12 @@ IB_DESIGNABLE
  */
 @property(nonatomic) MDCNavigationBarTitleAlignment titleAlignment;
 
+
+/**
+ If YES, the title label will be ausized to fit a certain width. The default value is NO.
+ */
+@property(nonatomic) BOOL adjustsFontSizeToFitWidth;
+
 #pragma mark Observing UINavigationItem instances
 
 /**
