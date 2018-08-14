@@ -16,8 +16,9 @@
 
 import UIKit
 import Foundation
-import MaterialComponents.MaterialShadowElevations
 import MaterialComponents.MaterialAppBar
+import MaterialComponents.MaterialShadowElevations
+import MaterialComponents.MaterialShadowLayer
 
 class ShadowElevationsPointsLabelSwift: UILabel {
   
