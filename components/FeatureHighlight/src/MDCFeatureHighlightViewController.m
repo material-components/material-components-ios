@@ -169,15 +169,26 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
        withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
   UIViewController *presenter = self.presentingViewController;
-  UIViewController *presentingViewController = self;
+  UIViewController *presentedViewController = self;
   [self dismissViewControllerAnimated:NO completion:nil];
 
-  [coordinator animateAlongsideTransition:^(__unused
-                   id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
-  }
-                               completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
-                                 [presenter presentViewController:presentingViewController animated:YES completion:nil];
-                               }];
+  [coordinator animateAlongsideTransition:nil
+                               completion:
+      ^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+        BOOL presentedIsNonNilDueToRaceCondition = presenter.presentedViewController;
+        void (^presentAgain)(void) = ^void(void) {
+          [presenter presentViewController:presentedViewController
+                                  animated:YES
+                                completion:nil];
+        };
+        if (presentedIsNonNilDueToRaceCondition) {
+          dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)),
+                         dispatch_get_main_queue(),
+                         presentAgain);
+        } else {
+          presentAgain();
+        }
+  }];
 }
 
 - (void)setOuterHighlightColor:(UIColor *)outerHighlightColor {
