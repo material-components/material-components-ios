@@ -27,86 +27,48 @@
 /**
 
  */
-@property(nonnull, readonly, nonatomic) MDCShapeCategory *smallContainerShape;
+@property(nonnull, readonly, nonatomic) MDCShapeCategory *smallSurfaceShape;
 
 /**
 
  */
-@property(nonnull, readonly, nonatomic) MDCShapeCategory *mediumContainerShape;
+@property(nonnull, readonly, nonatomic) MDCShapeCategory *mediumSurfaceShape;
 
 /**
 
  */
-@property(nonnull, readonly, nonatomic) MDCShapeCategory *largeContainerShape;
-
-/**
-
- */
-@property(nonnull, readonly, nonatomic) MDCShapeCategory *FABShape;
-
-/**
-
- */
-@property(nonnull, readonly, nonatomic) MDCShapeCategory *chipShape;
-
-/**
-
- */
-@property(nonnull, readonly, nonatomic) MDCShapeFamily *extFABShape;
-
-/**
-
- */
-@property(nonnull, readonly, nonatomic) MDCShapeFamily *expandedSheetShape;
+@property(nonnull, readonly, nonatomic) MDCShapeCategory *largeSurfaceShape;
 
 @end
 
 /**
  An enum of default color schemes that are supported.
  */
-typedef NS_ENUM(NSInteger, MDCColorSchemeDefaults) {
+typedef NS_ENUM(NSInteger, MDCShapeSchemeDefaults) {
   /**
-   The Material defaults, circa April 2018.
+   The Material defaults, circa August 2018.
    */
-  MDCColorSchemeDefaultsMaterial201804
+  MDCShapeSchemeDefaultsMaterial201808
 };
 
 /**
- A simple implementation of @c MDCColorScheming that provides Material default color values from
- which basic customizations can be made.
+
  */
 @interface MDCSemanticShapeScheme : NSObject <MDCShapeScheming>
 
 // Redeclare protocol properties as readwrite
-@property(nonnull, readwrite, nonatomic) UIColor *primaryColor;
-@property(nonnull, readwrite, nonatomic) UIColor *primaryColorVariant;
-@property(nonnull, readwrite, nonatomic) UIColor *secondaryColor;
-@property(nonnull, readwrite, nonatomic) UIColor *errorColor;
-@property(nonnull, readwrite, nonatomic) UIColor *surfaceColor;
-@property(nonnull, readwrite, nonatomic) UIColor *backgroundColor;
-@property(nonnull, readwrite, nonatomic) UIColor *onPrimaryColor;
-@property(nonnull, readwrite, nonatomic) UIColor *onSecondaryColor;
-@property(nonnull, readwrite, nonatomic) UIColor *onSurfaceColor;
-@property(nonnull, readwrite, nonatomic) UIColor *onBackgroundColor;
+@property(nonnull, readwrite, nonatomic) MDCShapeCategory *smallSurfaceShape;
+@property(nonnull, readwrite, nonatomic) MDCShapeCategory *mediumSurfaceShape;
+@property(nonnull, readwrite, nonatomic) MDCShapeCategory *largeSurfaceShape;
 
 /**
- Initializes the color scheme with the latest material defaults.
+
  */
 - (nonnull instancetype)init;
 
 /**
- Initializes the color scheme with the colors associated with the given defaults.
- */
-- (nonnull instancetype)initWithDefaults:(MDCColorSchemeDefaults)defaults;
 
-/**
- Blending a color over a background color using Alpha compositing technique.
- More info about Alpha compositing: https://en.wikipedia.org/wiki/Alpha_compositing
-
- @param color UIColor value that sits on top.
- @param backgroundColor UIColor on the background.
  */
-+ (nonnull UIColor *)blendColor:(nonnull UIColor *)color
-            withBackgroundColor:(nonnull UIColor *)backgroundColor;
+- (nonnull instancetype)initWithDefaults:(MDCShapeSchemeDefaults)defaults;
 
 @end

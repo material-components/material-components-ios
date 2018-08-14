@@ -12,17 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <Foundation/Foundation.h>
+#import "MaterialShapes.h"
 
-typedef NS_ENUM(NSInteger, MDCShapeFamily) {
-  MDCShapeFamilyRightAngledCorner,
-  MDCShapeFamilyCurvedCorner,
-  MDCShapeFamilyAngledCorner
+typedef NS_ENUM(NSInteger, MDCCornerType) {
+  MDCCornerTypeCurved,
+  MDCCornerTypeCut,
+  MDCCornerTypeRounded
 };
 
-@interface MDCShapeCategory : NSObject
+@interface MDCCornerTreatment (CornerTypeInitalizer)
 
-@property(assign, nonatomic) MDCShapeFamily shapeFamily;
-@property(assign, nonatomic) NSUInteger shapeValue;
+- (instancetype)initWithCornerType:(MDCCornerType)cornerType andValue:(NSValue *)value;
 
 @end

@@ -12,22 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCShapeCategory.h"
+#import <Foundation/Foundation.h>
 
-@implementation MDCShapeCategory
+typedef NS_ENUM(NSInteger, MDCShapeFamily) {
+  MDCShapeFamilyRoundedCorner,
+  MDCShapeFamilyAngledCorner
+};
 
-- (instancetype)init
-{
-  return [self initWithShapeFamily:MDCShapeFamilyRightAngledCorner andValue:0];
-}
+@interface MDCShapeCorner : NSObject
 
-- (instancetype)initWithShapeFamily:(MDCShapeFamily)shapeFamily andValue:(NSUInteger)shapeValue
-{
-  if (self = [super init]) {
-    _shapeFamily = shapeFamily;
-    _shapeValue = shapeValue;
-  }
-  return self;
-}
+@property(assign, nonatomic) MDCShapeFamily shapeFamily;
+@property(assign, nonatomic) NSUInteger shapeValue;
 
+- (instancetype)initWithShapeFamily:(MDCShapeFamily)shapeFamily andValue:(NSUInteger)shapeValue;
 @end
