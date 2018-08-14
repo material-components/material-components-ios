@@ -86,3 +86,7 @@ cycle:
 ## Extensions
 
 - [Color Theming](color-theming.md)
+
+## Migration guides
+
+- [Migration guide: minMaxHeightIncludesSafeArea](migration-guide-minMaxHeightIncludesSafeArea.md)
