@@ -42,6 +42,4 @@ extension NavigationBarTypicalUseSwiftExample {
     return false
   }
 
-
-
 }
