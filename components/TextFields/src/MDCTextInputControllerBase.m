@@ -1575,9 +1575,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     }
   }
 
+  [self updateLayout];
   [self.textInput setNeedsLayout];
   [self.textInput layoutIfNeeded];
-  [self updateLayout];
 }
 
 -(void)setHelperText:(NSString *)helperText
