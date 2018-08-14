@@ -17,8 +17,11 @@
 import UIKit
 import CoreGraphics
 
-import MaterialComponents.MaterialAppBar
+import MaterialComponents.MaterialAppBar_ColorThemer
+import MaterialComponents.MaterialAppBar_TypographyThemer
+import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialTypographyScheme
 import MaterialComponents.MaterialTabs
 import MaterialComponents.MaterialTabs_ColorThemer
 

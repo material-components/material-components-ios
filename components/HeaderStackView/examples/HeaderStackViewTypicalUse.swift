@@ -14,8 +14,8 @@
  limitations under the License.
  */
 
-import Foundation
-import MaterialComponents
+import UIKit
+import MaterialComponents.MaterialHeaderStackView
 
 open class HeaderStackViewTypicalUseSwiftExample: UIViewController {
 

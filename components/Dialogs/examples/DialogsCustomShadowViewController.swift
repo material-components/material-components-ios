@@ -15,7 +15,8 @@
  */
 
 import Foundation
-import MaterialComponents
+import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialDialogs
 
 class CustomShadowViewController: UIViewController {
 

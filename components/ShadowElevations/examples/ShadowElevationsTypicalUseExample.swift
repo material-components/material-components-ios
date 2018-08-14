@@ -14,8 +14,10 @@
  limitations under the License.
  */
 
+import UIKit
 import Foundation
-import MaterialComponents
+import MaterialComponents.MaterialShadowElevations
+import MaterialComponents.MaterialAppBar
 
 class ShadowElevationsPointsLabelSwift: UILabel {
   
