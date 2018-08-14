@@ -142,7 +142,7 @@ class ExampleInstructionsViewHeaderStackViewSwiftTypicalUse : UIView {
     let instructionsAttributedString = NSMutableAttributedString(string: instructionText)
     instructionsAttributedString.addAttributes(instructionsDictionary1,
                                                range: NSMakeRange(0, 11))
-    let endLength = instructionText.count - 11
+    let endLength = instructionText.characters.count - 11
     instructionsAttributedString.addAttributes(instructionsDictionary2,
                                                range: NSMakeRange(11, endLength))
     return instructionsAttributedString
