@@ -90,10 +90,9 @@
                  CGRectMinYEdge);
   };
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-  if ([self.view respondsToSelector:@selector(safeAreaInsets)]) {
-    UIEdgeInsets safeAreaInsets = self.view.safeAreaInsets;
-    contentBounds = UIEdgeInsetsInsetRect(bounds, safeAreaInsets);
-
+  if (@available(iOS 11.0, *)) {
+      UIEdgeInsets safeAreaInsets = self.view.safeAreaInsets;
+      contentBounds = UIEdgeInsetsInsetRect(bounds, safeAreaInsets);
   } else {
     preiOS11Behavior();
   }
