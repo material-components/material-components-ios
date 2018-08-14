@@ -42,16 +42,4 @@ extension NavigationBarTypicalUseSwiftExample {
     return false
   }
 
-  override open func setupExampleViews() {
-    /// Both self.viewDidLoad() and super.viewDidLoad() will add NavigationBars to the hierarchy.
-    /// We only want to keep one.
-
-    for subview in view.subviews {
-      if let navBarSubview = subview as? MDCNavigationBar, navBarSubview != self.navBar {
-        navBarSubview.removeFromSuperview()
-      }
-    }
-    super.setupExampleViews()
-  }
-
 }
