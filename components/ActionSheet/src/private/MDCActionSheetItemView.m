@@ -25,6 +25,9 @@ static const CGFloat kStandardPadding = 16.f;
 static const CGFloat kTitleOnlyPadding = 18.f;
 static const CGFloat kMessageOnlyPadding = 23.f;
 static const CGFloat kEmptyPadding = 0.f;
+static const CGFloat kLeadingPadding = 16.f;
+static const CGFloat kTrailingPadding = 16.f;
+static const CGFloat kMiddlePadding = 8.f;
 
 @interface MDCActionSheetItemView ()
 @end
@@ -194,6 +197,7 @@ static const CGFloat kEmptyPadding = 0.f;
 
 @interface MDCActionSheetHeaderView ()
 
+@property(nonatomic, nonnull, strong) UIScrollView *scrollView;
 @property(nonatomic, strong) NSLayoutConstraint *topConstraint;
 @property(nonatomic, strong) NSLayoutConstraint *middleConstraint;
 @property(nonatomic, strong) NSLayoutConstraint *bottomConstraint;
@@ -213,6 +217,7 @@ static const CGFloat kEmptyPadding = 0.f;
 - (nonnull instancetype)initWithTitle:(NSString *)title message:(NSString *)message {
   self = [super init];
   if (self) {
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     self.title = title;
     messageLabel = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -223,8 +228,8 @@ static const CGFloat kEmptyPadding = 0.f;
 }
 
 -(void)commonMDCActionSheetHeaderViewInit {
-  [titleLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
-  [self addSubview:titleLabel];
+  [self addSubview:self.scrollView];
+  [self.scrollView addSubview:titleLabel];
   if (self.mdc_adjustsFontForContentSizeCategory) {
     titleLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
   } else {
@@ -237,6 +242,62 @@ static const CGFloat kEmptyPadding = 0.f;
   } else {
     titleLabel.alpha = kTitleLabelAlpha;
   }
+
+  [self.scrollView addSubview:messageLabel];
+  if (self.mdc_adjustsFontForContentSizeCategory) {
+    messageLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
+  } else {
+    messageLabel.font = [MDCTypography body1Font];
+  }
+  messageLabel.numberOfLines = 2;
+  messageLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
+  messageLabel.alpha = kMessageLabelAlpha;
+  [self layoutCheck];
+}
+
+- (void)layoutCheck {
+  BOOL addTitle = (titleLabel.text != nil) && (![titleLabel.text  isEqual:@""]);
+  BOOL addMessage = (messageLabel.text != nil) && (![messageLabel.text isEqual:@""]);
+  if (addTitle && addMessage) {
+    _topConstraint.constant = kStandardPadding;
+    _middleConstraint.constant = -8.f;
+    _bottomConstraint.constant = -kStandardPadding;
+  } else if (addTitle) {
+    _topConstraint.constant = kTitleOnlyPadding;
+    _middleConstraint.constant = 0.f;
+    _bottomConstraint.constant = -kTitleOnlyPadding;
+  } else if (addMessage) {
+    _topConstraint.constant = kMessageOnlyPadding;
+    _middleConstraint.constant = 0.f;
+    _bottomConstraint.constant = -kMessageOnlyPadding;
+  } else {
+    _topConstraint.constant = kEmptyPadding;
+    _middleConstraint.constant = 0.f;
+    _bottomConstraint.constant = kEmptyPadding;
+  }
+}
+
+- (void)layoutSubviews {
+  [super layoutSubviews];
+
+  CGSize boundsSize = CGRectInfinite.size;
+  boundsSize.width = CGRectGetWidth(self.bounds);
+
+  CGSize contentSize = [self calculateContentSizeThatFitsWidth:boundsSize.width];
+  self.scrollView.contentSize = contentSize;
+
+  boundsSize.width -= kLeadingPadding - kTrailingPadding;
+  CGSize titleSize = [titleLabel sizeThatFits:boundsSize];
+  titleSize.width = boundsSize.width;
+  CGSize messageSize = [messageLabel sizeThatFits:boundsSize];
+  messageSize.width = boundsSize.width;
+  boundsSize.width += kLeadingPadding + kTrailingPadding;
+
+  CGRect titleFrame = CGRectMake(kLeadingPadding, kStandardPadding,
+                                 titleSize.width, titleSize.height);
+  CGRect messageFrame = CGRectMake(kLeadingPadding, CGRectGetMaxY(titleFrame) + kMiddlePadding,
+                                   messageSize.width, messageSize.height);
+  NSLog(@"%f", messageFrame.size.width);
   [NSLayoutConstraint constraintWithItem:titleLabel
                                attribute:NSLayoutAttributeLeading
                                relatedBy:NSLayoutRelationEqual
@@ -260,16 +321,6 @@ static const CGFloat kEmptyPadding = 0.f;
                                                  constant:0.f];
   _topConstraint.active = YES;
 
-  [messageLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
-  [self addSubview:messageLabel];
-  if (self.mdc_adjustsFontForContentSizeCategory) {
-    messageLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
-  } else {
-    messageLabel.font = [MDCTypography body1Font];
-  }
-  messageLabel.numberOfLines = 2;
-  messageLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
-  messageLabel.alpha = kMessageLabelAlpha;
   [NSLayoutConstraint constraintWithItem:messageLabel
                                attribute:NSLayoutAttributeLeading
                                relatedBy:NSLayoutRelationEqual
@@ -301,33 +352,6 @@ static const CGFloat kEmptyPadding = 0.f;
                                                   multiplier:1
                                                     constant:0.f];
   _middleConstraint.active = YES;
-  [self layoutCheck];
-}
-
-- (void)layoutCheck {
-  BOOL addTitle = (titleLabel.text != nil) && (![titleLabel.text  isEqual:@""]);
-  BOOL addMessage = (messageLabel.text != nil) && (![messageLabel.text isEqual:@""]);
-  if (addTitle && addMessage) {
-    _topConstraint.constant = kStandardPadding;
-    _middleConstraint.constant = -8.f;
-    _bottomConstraint.constant = -kStandardPadding;
-  } else if (addTitle) {
-    _topConstraint.constant = kTitleOnlyPadding;
-    _middleConstraint.constant = 0.f;
-    _bottomConstraint.constant = -kTitleOnlyPadding;
-  } else if (addMessage) {
-    _topConstraint.constant = kMessageOnlyPadding;
-    _middleConstraint.constant = 0.f;
-    _bottomConstraint.constant = -kMessageOnlyPadding;
-  } else {
-    _topConstraint.constant = kEmptyPadding;
-    _middleConstraint.constant = 0.f;
-    _bottomConstraint.constant = kEmptyPadding;
-  }
-}
-
-- (void)layoutSubviews {
-  [super layoutSubviews];
   [self layoutCheck];
 }
 
@@ -409,6 +433,23 @@ static const CGFloat kEmptyPadding = 0.f;
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
   _mdc_adjustsFontForContentSizeCategory = adjusts;
   [self updateFonts];
+}
+
+- (CGSize)calculateContentSizeThatFitsWidth:(CGFloat)boundingWidth {
+  CGSize boundsSize = CGRectInfinite.size;
+  boundsSize.width = boundingWidth - kLeadingPadding - kTrailingPadding;
+
+  CGSize titleSize = [titleLabel sizeThatFits:boundsSize];
+  CGSize messageSize = [messageLabel sizeThatFits:boundsSize];
+
+  CGFloat contentWidth = MAX(titleSize.width, messageSize.width);
+  contentWidth += kLeadingPadding + kTrailingPadding;
+
+  CGFloat contentHeight = titleSize.height + messageSize.height + kMiddlePadding;
+  CGSize contentSize;
+  contentSize.width = (CGFloat)ceil(contentWidth);
+  contentSize.height = (CGFloat)ceil(contentHeight);
+  return contentSize;
 }
 
 @end
