@@ -51,7 +51,7 @@ BOOL mdc_adjustsFontForContentSizeCategory;
 - (nonnull instancetype)initWithTitle:(NSString *)title message:(NSString *)message;
 
 /** Header must be created with either headerWithTitle: */
-- (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
+- (instancetype)initWithFrame:(CGRect)frame;
 
 /** Header must be created with either headerWithTitle: */
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;

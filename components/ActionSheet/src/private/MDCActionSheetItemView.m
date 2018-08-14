@@ -1,3 +1,4 @@
+
 /*
  Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
 
@@ -24,7 +25,6 @@ static const CGFloat kCellLabelAlpha = 0.87f;
 static const CGFloat kStandardPadding = 16.f;
 static const CGFloat kTitleOnlyPadding = 18.f;
 static const CGFloat kMessageOnlyPadding = 23.f;
-static const CGFloat kEmptyPadding = 0.f;
 static const CGFloat kLeadingPadding = 16.f;
 static const CGFloat kTrailingPadding = 16.f;
 static const CGFloat kMiddlePadding = 8.f;
@@ -198,9 +198,6 @@ static const CGFloat kMiddlePadding = 8.f;
 @interface MDCActionSheetHeaderView ()
 
 @property(nonatomic, nonnull, strong) UIScrollView *scrollView;
-@property(nonatomic, strong) NSLayoutConstraint *topConstraint;
-@property(nonatomic, strong) NSLayoutConstraint *middleConstraint;
-@property(nonatomic, strong) NSLayoutConstraint *bottomConstraint;
 
 @end
 
@@ -210,6 +207,14 @@ static const CGFloat kMiddlePadding = 8.f;
   BOOL _mdc_adjustsFontForContentSizeCategory;
 }
 
+- (instancetype)initWithFrame:(CGRect)frame {
+  self = [super initWithFrame:frame];
+  if (self) {
+    [self commonMDCActionSheetHeaderViewInit];
+  }
+  return self;
+}
+
 - (instancetype)initWithTitle:(NSString *)title {
   return [[MDCActionSheetHeaderView alloc] initWithTitle:title message:nil];
 }
@@ -217,10 +222,7 @@ static const CGFloat kMiddlePadding = 8.f;
 - (nonnull instancetype)initWithTitle:(NSString *)title message:(NSString *)message {
   self = [super init];
   if (self) {
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
-    titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     self.title = title;
-    messageLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     self.message = message;
     [self commonMDCActionSheetHeaderViewInit];
   }
@@ -228,6 +230,9 @@ static const CGFloat kMiddlePadding = 8.f;
 }
 
 -(void)commonMDCActionSheetHeaderViewInit {
+  self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
+  titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+  messageLabel = [[UILabel alloc] initWithFrame:CGRectZero];
   [self addSubview:self.scrollView];
   [self.scrollView addSubview:titleLabel];
   if (self.mdc_adjustsFontForContentSizeCategory) {
@@ -237,11 +242,6 @@ static const CGFloat kMiddlePadding = 8.f;
   }
   titleLabel.numberOfLines = 0;
   titleLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
-  if (self.message == nil || [self.message isEqualToString:@""]) {
-    titleLabel.alpha = kMessageLabelAlpha;
-  } else {
-    titleLabel.alpha = kTitleLabelAlpha;
-  }
 
   [self.scrollView addSubview:messageLabel];
   if (self.mdc_adjustsFontForContentSizeCategory) {
@@ -252,107 +252,48 @@ static const CGFloat kMiddlePadding = 8.f;
   messageLabel.numberOfLines = 2;
   messageLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
   messageLabel.alpha = kMessageLabelAlpha;
-  [self layoutCheck];
-}
-
-- (void)layoutCheck {
-  BOOL addTitle = (titleLabel.text != nil) && (![titleLabel.text  isEqual:@""]);
-  BOOL addMessage = (messageLabel.text != nil) && (![messageLabel.text isEqual:@""]);
-  if (addTitle && addMessage) {
-    _topConstraint.constant = kStandardPadding;
-    _middleConstraint.constant = -8.f;
-    _bottomConstraint.constant = -kStandardPadding;
-  } else if (addTitle) {
-    _topConstraint.constant = kTitleOnlyPadding;
-    _middleConstraint.constant = 0.f;
-    _bottomConstraint.constant = -kTitleOnlyPadding;
-  } else if (addMessage) {
-    _topConstraint.constant = kMessageOnlyPadding;
-    _middleConstraint.constant = 0.f;
-    _bottomConstraint.constant = -kMessageOnlyPadding;
-  } else {
-    _topConstraint.constant = kEmptyPadding;
-    _middleConstraint.constant = 0.f;
-    _bottomConstraint.constant = kEmptyPadding;
-  }
 }
 
 - (void)layoutSubviews {
   [super layoutSubviews];
 
+  if (self.message == nil || [self.message isEqualToString:@""]) {
+    titleLabel.alpha = kMessageLabelAlpha;
+  } else {
+    titleLabel.alpha = kTitleLabelAlpha;
+  }
   CGSize boundsSize = CGRectInfinite.size;
   boundsSize.width = CGRectGetWidth(self.bounds);
 
   CGSize contentSize = [self calculateContentSizeThatFitsWidth:boundsSize.width];
   self.scrollView.contentSize = contentSize;
 
-  boundsSize.width -= kLeadingPadding - kTrailingPadding;
+  boundsSize.width = boundsSize.width - kLeadingPadding - kTrailingPadding;
   CGSize titleSize = [titleLabel sizeThatFits:boundsSize];
   titleSize.width = boundsSize.width;
   CGSize messageSize = [messageLabel sizeThatFits:boundsSize];
   messageSize.width = boundsSize.width;
-  boundsSize.width += kLeadingPadding + kTrailingPadding;
+  boundsSize.width = boundsSize.width + kLeadingPadding + kTrailingPadding;
 
   CGRect titleFrame = CGRectMake(kLeadingPadding, kStandardPadding,
                                  titleSize.width, titleSize.height);
   CGRect messageFrame = CGRectMake(kLeadingPadding, CGRectGetMaxY(titleFrame) + kMiddlePadding,
                                    messageSize.width, messageSize.height);
-  NSLog(@"%f", messageFrame.size.width);
-  [NSLayoutConstraint constraintWithItem:titleLabel
-                               attribute:NSLayoutAttributeLeading
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self
-                               attribute:NSLayoutAttributeLeading
-                              multiplier:1
-                                constant:16.f].active = YES;
-  [NSLayoutConstraint constraintWithItem:titleLabel
-                               attribute:NSLayoutAttributeTrailing
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self
-                               attribute:NSLayoutAttributeTrailing
-                              multiplier:1
-                                constant:-16.f];
-  _topConstraint = [NSLayoutConstraint constraintWithItem:titleLabel
-                                                attribute:NSLayoutAttributeTop
-                                                relatedBy:NSLayoutRelationEqual
-                                                   toItem:self
-                                                attribute:NSLayoutAttributeTop
-                                               multiplier:1
-                                                 constant:0.f];
-  _topConstraint.active = YES;
 
-  [NSLayoutConstraint constraintWithItem:messageLabel
-                               attribute:NSLayoutAttributeLeading
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self
-                               attribute:NSLayoutAttributeLeading
-                              multiplier:1
-                                constant:16.f].active = YES;
-  [NSLayoutConstraint constraintWithItem:messageLabel
-                               attribute:NSLayoutAttributeTrailing
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self
-                               attribute:NSLayoutAttributeTrailing
-                              multiplier:1
-                                constant:-16.f].active = YES;
-  _bottomConstraint = [NSLayoutConstraint constraintWithItem:messageLabel
-                                                   attribute:NSLayoutAttributeBottom
-                                                   relatedBy:NSLayoutRelationEqual
-                                                      toItem:self
-                                                   attribute:NSLayoutAttributeBottom
-                                                  multiplier:1
-                                                    constant:0.f];
-  _bottomConstraint.active = YES;
+  titleLabel.frame = titleFrame;
+  messageLabel.frame = messageFrame;
 
-  _middleConstraint = [NSLayoutConstraint constraintWithItem:titleLabel
-                                                   attribute:NSLayoutAttributeBottom
-                                                   relatedBy:NSLayoutRelationEqual
-                                                      toItem:messageLabel
-                                                   attribute:NSLayoutAttributeTop
-                                                  multiplier:1
-                                                    constant:0.f];
-  _middleConstraint.active = YES;
-  [self layoutCheck];
+  CGRect scrollViewRect = CGRectZero;
+  scrollViewRect.size = self.scrollView.contentSize;
+  /**
+
+   Check weither scroll views are too tall or not
+
+   */
+  self.scrollView.frame = scrollViewRect;
+  CGRect originalFrame = self.frame;
+  originalFrame.size.height = scrollViewRect.size.height;
+  self.frame = originalFrame;
 }
 
 - (void)setTitle:(NSString *)title {
@@ -443,9 +384,23 @@ static const CGFloat kMiddlePadding = 8.f;
   CGSize messageSize = [messageLabel sizeThatFits:boundsSize];
 
   CGFloat contentWidth = MAX(titleSize.width, messageSize.width);
-  contentWidth += kLeadingPadding + kTrailingPadding;
 
-  CGFloat contentHeight = titleSize.height + messageSize.height + kMiddlePadding;
+
+  contentWidth = contentWidth + kLeadingPadding + kTrailingPadding;
+
+  CGFloat contentHeight;
+  BOOL messageCheck = (self.message == nil) || ([self.message isEqualToString:@""]);
+  BOOL titleCheck = (self.title == nil) || ([self.title  isEqualToString:@""]);
+  if (titleCheck && messageCheck) {
+    contentHeight = 0;
+  } else if (titleCheck) {
+    contentHeight = messageSize.height + (kMessageOnlyPadding * 2);
+  } else if (messageCheck) {
+    contentHeight = titleSize.height + (kTitleOnlyPadding * 2);
+  } else {
+    contentHeight = titleSize.height + messageSize.height +
+        (kStandardPadding * 2) + kMiddlePadding;
+  }
   CGSize contentSize;
   contentSize.width = (CGFloat)ceil(contentWidth);
   contentSize.height = (CGFloat)ceil(contentHeight);
