@@ -15,7 +15,14 @@ Before embarking on the deprecation of any API we should collaboratively answer 
 1. What is a good deprecation timeline?
 1. Who is responsible for the deprecation plan?
 
-## Our deprecation process
+## Our deprecation process (Non-Googlers)
+
+If you would like to propose that an API be deprecated please
+[file a bug](https://github.com/material-components/material-components-ios/issues/new/choose)
+explaining which API you'd like deprecated. A Googler will take the issue from there by following
+the deprecation process below.
+
+## Our deprecation process (Googlers)
 
 1. Measure internal usage of the API.
 2. Create a GitHub project.
