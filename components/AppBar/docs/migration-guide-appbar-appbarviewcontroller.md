@@ -1,5 +1,10 @@
 ### Migration guide: MDCAppBar to MDCAppBarViewController
 
+Deprecation schedule:
+
+- October 15, 2018: MDCAppBar and any references to it in MDC will deprecated.
+- November 15, 2018: MDCAppBar and any references to it in MDC will be deleted.
+
 `MDCAppBarViewController` is a direct replacement for `MDCAppBar`. The migration essentially looks
 like so:
 
