@@ -30,7 +30,43 @@ guide.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
-// No swift example available. See the Objective-C example instead.
+if #available(iOS 11.0, *) {
+  // No need to do anything - additionalSafeAreaInsets will inset our content.
+  webView.autoresizingMask = [.width | .height]
+} else {
+  // Fixes the WKWebView contentSize.height bug pre-iOS 11.
+  webView.translatesAutoresizingMaskIntoConstraints = false
+  NSLayoutConstraint.activate([
+    NSLayoutConstraint(item: webView,
+                       attribute: .top,
+                       relatedBy: .equal,
+                       toItem: topLayoutGuide,
+                       attribute: .bottom,
+                       multiplier: 1,
+                       constant: 0),
+    NSLayoutConstraint(item: webView,
+                       attribute: .bottom,
+                       relatedBy: .equal,
+                       toItem: view,
+                       attribute: .bottom,
+                       multiplier: 1,
+                       constant: 0),
+    NSLayoutConstraint(item: webView,
+                       attribute: .left,
+                       relatedBy: .equal,
+                       toItem: view,
+                       attribute: .left,
+                       multiplier: 1,
+                       constant: 0),
+    NSLayoutConstraint(item: webView,
+                       attribute: .right,
+                       relatedBy: .equal,
+                       toItem: view,
+                       attribute: .right,
+                       multiplier: 1,
+                       constant: 0),
+  ])
+}
 ```
 
 #### Objective-C
