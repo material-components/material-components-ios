@@ -303,7 +303,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 #pragma mark - Helper methods
 
 - (BOOL)isSnackbarTransient:(MDCSnackbarMessageView *)snackbarView {
-  if (UIAccessibilityIsVoiceOverRunning()) {
+  if (UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning()) {
     return ![snackbarView shouldWaitForDismissalDuringVoiceover];
   }
 
