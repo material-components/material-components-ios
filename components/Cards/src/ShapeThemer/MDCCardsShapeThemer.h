@@ -25,19 +25,13 @@
 @interface MDCCardsShapeThemer : NSObject
 
 /**
- Applies a color scheme's properties to an MDCCard.
 
- @param colorScheme The color scheme to apply to the component instance.
- @param card A component instance to which the color scheme should be applied.
  */
 + (void)applySemanticShapeScheme:(nonnull id<MDCShapeScheming>)shapeScheme
                           toCard:(nonnull MDCCard *)card;
 
 /**
- Applies a color scheme's properties to an MDCCardCollectionCell.
 
- @param colorScheme The color scheme to apply to the component instance.
- @param cardCell A component instance to which the color scheme should be applied.
  */
 + (void)applySemanticShapeScheme:(nonnull id<MDCShapeScheming>)shapeScheme
                       toCardCell:(nonnull MDCCardCollectionCell *)cardCell;

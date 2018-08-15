@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
+#import "MaterialShapeLibrary.h"
 
 typedef NS_ENUM(NSInteger, MDCShapeFamily) {
   MDCShapeFamilyRoundedCorner,
@@ -25,4 +26,6 @@ typedef NS_ENUM(NSInteger, MDCShapeFamily) {
 @property(assign, nonatomic) NSUInteger shapeValue;
 
 - (instancetype)initWithShapeFamily:(MDCShapeFamily)shapeFamily andValue:(NSUInteger)shapeValue;
+
+- (MDCCornerTreatment *)cornerTreatmentValue;
 @end

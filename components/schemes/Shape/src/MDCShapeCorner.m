@@ -30,4 +30,22 @@
   return self;
 }
 
+
+- (MDCCornerTreatment *)cornerTreatmentValue {
+  MDCCornerTreatment *cornerTreatment;
+  NSNumber *value = [[NSNumber alloc] initWithFloat:_shapeValue];
+  switch (_shapeFamily) {
+    case MDCShapeFamilyAngledCorner: {
+      cornerTreatment =
+          [[MDCCornerTreatment alloc] initWithCornerType:MDCCornerTypeCut
+                                                andValue:value];
+    }
+    case MDCShapeFamilyRoundedCorner: {
+      cornerTreatment =
+          [[MDCCornerTreatment alloc] initWithCornerType:MDCCornerTypeRounded
+                                                andValue:value];
+    }
+  }
+  return cornerTreatment;
+  }
 @end

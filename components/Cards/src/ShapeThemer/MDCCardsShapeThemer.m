@@ -14,54 +14,27 @@
  limitations under the License.
  */
 
-#import "MDCCardsColorThemer.h"
+#import "MDCCardsShapeThemer.h"
 #import "MaterialShapes.h"
 #import "MaterialShapeLibrary.h"
 
-static const CGFloat kStrokeVariantBorderOpacity = 0.37f;
-
-@implementation MDCCardsColorThemer
+@implementation MDCCardsShapeThemer
 
 + (void)applySemanticShapeScheme:(nonnull id<MDCShapeScheming>)shapeScheme
                           toCard:(nonnull MDCCard *)card {
   MDCRectangleShapeGenerator *rectangleShape = [[MDCRectangleShapeGenerator alloc] init];
-  MDCCornerTreatment *cornerTreatment = [[MDC]]
-  rectangleShape setCorners:<#(MDCCornerTreatment *)#>
+  MDCCornerTreatment *cornerTreatment =
+      [shapeScheme.mediumSurfaceShape.topLeftCorner cornerTreatmentValue];
+  [rectangleShape setCorners:cornerTreatment];
+  card.shapeGenerator = rectangleShape;
 }
 
 + (void)applySemanticShapeScheme:(nonnull id<MDCShapeScheming>)shapeScheme
                       toCardCell:(nonnull MDCCardCollectionCell *)cardCell {
-  cardCell.backgroundColor = colorScheme.surfaceColor;
-}
-
-+ (void)applyOutlinedVariantWithColorScheme:(nonnull id<MDCColorScheming>)colorScheme
-                                     toCard:(nonnull MDCCard *)card {
-  NSUInteger maximumStateValue =
-      UIControlStateNormal | UIControlStateSelected | UIControlStateHighlighted |
-          UIControlStateDisabled;
-  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
-    [card setBorderColor:nil forState:state];
-  }
-  
-  card.backgroundColor = colorScheme.surfaceColor;
-  UIColor *borderColor =
-      [colorScheme.onSurfaceColor colorWithAlphaComponent:kStrokeVariantBorderOpacity];
-  [card setBorderColor:borderColor forState:UIControlStateNormal];
-}
-
-+ (void)applyOutlinedVariantWithColorScheme:(id<MDCColorScheming>)colorScheme
-                                 toCardCell:(MDCCardCollectionCell *)cardCell {
-  NSUInteger maximumStateValue =
-      UIControlStateNormal | UIControlStateSelected | UIControlStateHighlighted |
-          UIControlStateDisabled;
-  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
-    [cardCell setBorderColor:nil forState:state];
-  }
-  
-  cardCell.backgroundColor = colorScheme.surfaceColor;
-  UIColor *borderColor =
-      [colorScheme.onSurfaceColor colorWithAlphaComponent:kStrokeVariantBorderOpacity];
-  [cardCell setBorderColor:borderColor forState:MDCCardCellStateNormal];
-}
+  MDCRectangleShapeGenerator *rectangleShape = [[MDCRectangleShapeGenerator alloc] init];
+  MDCCornerTreatment *cornerTreatment =
+      [shapeScheme.mediumSurfaceShape.topLeftCorner cornerTreatmentValue];
+  [rectangleShape setCorners:cornerTreatment];
+  cardCell.shapeGenerator = rectangleShape;}
 
 @end
