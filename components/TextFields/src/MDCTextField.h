@@ -22,7 +22,7 @@
 extern NSString *_Nonnull const MDCTextFieldTextDidSetTextNotification;
 
 /** When the value of `enabled` changes on the text input, this notification fires. */
-extern NSString *_Nonnull const MDCTextInputDidToggleEnabled;
+extern NSString *_Nonnull const MDCTextInputDidToggleEnabledNotification;
 
 /**
   Material Design compliant single-line text input.

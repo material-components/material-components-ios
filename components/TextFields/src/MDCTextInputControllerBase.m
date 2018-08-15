@@ -280,7 +280,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
   [defaultCenter addObserver:self
                     selector:@selector(textInputDidToggleEnabled:)
-                        name:MDCTextInputDidToggleEnabled
+                        name:MDCTextInputDidToggleEnabledNotification
                       object:_textInput];
 
   if ([_textInput isKindOfClass:[UITextField class]]) {
