@@ -196,6 +196,9 @@ class MDCCatalogDebugDismissCell: UICollectionViewCell {
     super.init(frame: frame)
     label.text = "DISMISS"
     label.textAlignment = .center
+    isAccessibilityElement = true
+    accessibilityTraits = UIAccessibilityTraitButton
+    accessibilityLabel = label.text
     contentView.addSubview(label)
   }
 
