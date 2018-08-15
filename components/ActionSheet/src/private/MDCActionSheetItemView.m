@@ -1,4 +1,3 @@
-
 /*
  Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
 
@@ -19,7 +18,7 @@
 #import "MaterialTypography.h"
 
 static const CGFloat kTitleLabelAlpha = 0.87f;
-static const CGFloat kMessageLabelAlpha = 0.54f;
+static const CGFloat kMessageLabelAlpha = 0.6f;
 static const CGFloat kImageAlpha = 0.54f;
 static const CGFloat kCellLabelAlpha = 0.87f;
 static const CGFloat kStandardPadding = 16.f;
@@ -28,6 +27,7 @@ static const CGFloat kMessageOnlyPadding = 23.f;
 static const CGFloat kLeadingPadding = 16.f;
 static const CGFloat kTrailingPadding = 16.f;
 static const CGFloat kMiddlePadding = 8.f;
+static const CGFloat kActionItemTitleVerticalPadding = 18.f;
 
 @interface MDCActionSheetItemView ()
 @end
@@ -79,14 +79,14 @@ static const CGFloat kMiddlePadding = 8.f;
                                   toItem:self.contentView
                                attribute:NSLayoutAttributeTop
                               multiplier:1
-                                constant:18.f].active = YES;
+                                constant:kActionItemTitleVerticalPadding].active = YES;
   [NSLayoutConstraint constraintWithItem:_textLabel
                                attribute:NSLayoutAttributeBottom
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self.contentView
                                attribute:NSLayoutAttributeBottom
                               multiplier:1
-                                constant:-18.f].active = YES;
+                                constant:-kActionItemTitleVerticalPadding].active = YES;
   CGFloat leadingConstant;
   if (_itemAction.image == nil) {
     leadingConstant = 16.f;
@@ -364,6 +364,7 @@ static const CGFloat kMiddlePadding = 8.f;
   } else {
     messageLabel.font = messageFont;
   }
+  
   [self setNeedsLayout];
 }
 

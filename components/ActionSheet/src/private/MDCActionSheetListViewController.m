@@ -20,6 +20,7 @@
 #import "MaterialTypography.h"
 
 NSString *const kReuseIdentifier = @"BaseCell";
+static const CGFloat kActionItemLabelPadding = 18.f;
 
 @interface MDCActionSheetListViewController () <UITableViewDataSource>
 @end
@@ -51,6 +52,7 @@ NSString *const kReuseIdentifier = @"BaseCell";
   self.tableView.scrollEnabled = NO;
   self.tableView.dataSource = self;
   [self.tableView setTranslatesAutoresizingMaskIntoConstraints:NO];
+  self.actionsFont = [[self class] actionsFontDefault];
   [self.tableView registerClass:[MDCActionSheetItemView class]
          forCellReuseIdentifier:kReuseIdentifier];
 }
@@ -115,6 +117,20 @@ NSString *const kReuseIdentifier = @"BaseCell";
 - (void)setActionsFont:(UIFont *)actionsFont {
   _actionsFont = actionsFont;
   [self updateFonts];
+}
+
+- (CGFloat)tableHeight {
+  CGFloat height = 0.f;
+  UILabel *mockLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+  mockLabel.font = _actionsFont;
+  for (MDCActionSheetAction *action in _actions) {
+    mockLabel.text = action.title;
+    CGSize labelSize = CGRectInfinite.size;
+    labelSize.width = CGRectGetWidth(self.view.frame);
+    CGFloat labelHeight = [mockLabel sizeThatFits:labelSize].height;
+    height = height + labelHeight + (2 * kActionItemLabelPadding);
+  }
+  return height;
 }
 
 @end

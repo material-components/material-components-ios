@@ -132,7 +132,11 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  _header = [self headerView];
+  
+  if (self.header == nil) {
+    self.header = [self headerView];
+  }
+
   contentViewController.view.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   contentViewController.view.frame = self.view.bounds;
@@ -141,23 +145,21 @@
   [contentViewController didMoveToParentViewController:self];
   contentViewController.view.backgroundColor = [UIColor whiteColor];
   [contentViewController.view addSubview:_tableView.view];
-  [contentViewController.view addSubview:_header];
-
-  //[contentViewController.view addSubview:_tableView.view];
+  [contentViewController.view addSubview:self.header];
 }
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
-
-  [_header layoutIfNeeded];
+  [self.header setNeedsLayout];
+  [self.header layoutIfNeeded];
   
-  CGFloat height = CGRectGetHeight(_header.frame) + (self.actions.count * 56);
-  CGFloat tableYOrigin = CGRectGetHeight(_header.frame) + _header.frame.origin.y;
+  CGFloat height = CGRectGetHeight(self.header.frame) + [_tableView tableHeight];
   CGRect tableFrame = _tableView.tableView.frame;
-  tableFrame.origin.y = tableYOrigin;
+  tableFrame.origin.y = CGRectGetHeight(self.header.frame);
   _tableView.tableView.frame = tableFrame;
   contentViewController.preferredContentSize =
       CGSizeMake(CGRectGetWidth(self.view.bounds), height);
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -229,10 +231,10 @@
 - (MDCActionSheetHeaderView *)headerView {
   CGRect headerRect = CGRectZero;
   headerRect.size.width = CGRectGetWidth(self.view.frame);
-  MDCActionSheetHeaderView *header =
-      [[MDCActionSheetHeaderView alloc] initWithFrame:headerRect];
+  MDCActionSheetHeaderView *header = [[MDCActionSheetHeaderView alloc] initWithFrame:headerRect];
   header.title = _actionSheetTitle;
   header.message = _message;
+  header.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
   return header;
 }
 
@@ -271,12 +273,16 @@
 
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
   _mdc_adjustsFontForContentSizeCategory = adjusts;
+  [self loadViewIfNeeded];
+  if (self.header == nil) {
+    self.header = [self headerView];
+  }
   self.header.mdc_adjustsFontForContentSizeCategory = adjusts;
   self.tableView.mdc_adjustsFontForContentSizeCategory = adjusts;
   [self updateFontsForDynamicType];
   if (_mdc_adjustsFontForContentSizeCategory) {
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(contentSizeCategoryDidChange:)
+                                             selector:@selector(updateFontsForDynamicType)
                                                  name:UIContentSizeCategoryDidChangeNotification
                                                object:nil];
   } else {
@@ -284,10 +290,7 @@
                                                     name:UIContentSizeCategoryDidChangeNotification
                                                   object:nil];
   }
-}
-
-- (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
-  [self updateFontsForDynamicType];
+  [self.view setNeedsLayout];
 }
 
 - (void)updateFontsForDynamicType {

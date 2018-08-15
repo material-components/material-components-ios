@@ -19,15 +19,15 @@ class ActionSheetSwiftExample: UIViewController {
   var typographyScheme = MDCTypographyScheme()
   let tableView = UITableView()
   enum ActionSheetExampleType {
-    case typical, missingTitle, missingMessage, missingIcons, missingHeading, dynamicType
+    case typical, title, message, noIcons, titleAndMessage, dynamicType
   }
   typealias ExamplesTuple = (label: String, type: ActionSheetExampleType)
   let data: [ExamplesTuple] = [
     ("Typical Use", .typical),
-    ("No Title", .missingTitle),
-    ("No Message", .missingMessage),
-    ("No Icons", .missingIcons),
-    ("No Heading", .missingHeading),
+    ("Title only", .title),
+    ("Message only", .message),
+    ("No Icons", .noIcons),
+    ("With Title and Message", .titleAndMessage),
     ("Dynamic Type Enabled", .dynamicType)
   ]
   let cellIdentifier = "BaseCell"
@@ -37,7 +37,6 @@ class ActionSheetSwiftExample: UIViewController {
     tableView.delegate = self
     tableView.dataSource = self
     tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
-
   }
 
   override func viewDidLayoutSubviews() {
@@ -53,14 +52,14 @@ class ActionSheetSwiftExample: UIViewController {
     switch type {
     case .typical:
       actionSheet = MDCActionSheetSwiftSupplemental.typical()
-    case .missingTitle:
-      actionSheet = MDCActionSheetSwiftSupplemental.missingTitle()
-    case .missingMessage:
-      actionSheet = MDCActionSheetSwiftSupplemental.missingMessage()
-    case .missingIcons:
-      actionSheet = MDCActionSheetSwiftSupplemental.missingIcons()
-    case .missingHeading:
-      actionSheet = MDCActionSheetSwiftSupplemental.missingHeading()
+    case .title:
+      actionSheet = MDCActionSheetSwiftSupplemental.title()
+    case .message:
+      actionSheet = MDCActionSheetSwiftSupplemental.message()
+    case .noIcons:
+      actionSheet = MDCActionSheetSwiftSupplemental.noIcons()
+    case .titleAndMessage:
+      actionSheet = MDCActionSheetSwiftSupplemental.titleAndMessage()
     case .dynamicType:
       actionSheet = MDCActionSheetSwiftSupplemental.dynamic()
     }

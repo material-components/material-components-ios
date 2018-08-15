@@ -70,4 +70,6 @@ BOOL mdc_adjustsFontForContentSizeCategory;
 
 - (void)updateFonts;
 
+- (CGFloat)tableHeight;
+
 @end

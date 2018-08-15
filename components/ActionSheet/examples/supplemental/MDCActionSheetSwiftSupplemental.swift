@@ -33,7 +33,7 @@ class MDCActionSheetSwiftSupplemental {
                                   print("Email action") }
   }
 
-  static var message: String =
+  static var messageString: String =
   """
   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ultricies diam libero, eget
   porta arcu feugiat sit amet. Maecenas placerat felis sed risusnmaximus tempus. Integer feugiat,
@@ -42,25 +42,14 @@ class MDCActionSheetSwiftSupplemental {
   """
 
   static func typical() -> MDCActionSheetController {
-    let actionSheet = MDCActionSheetController(title: "Action Sheet",
-                                               message: message)
+    let actionSheet = MDCActionSheetController()
     actionSheet.addAction(actionOne)
     actionSheet.addAction(actionTwo)
     actionSheet.addAction(actionThree)
     return actionSheet
   }
-
-  static func missingTitle() -> MDCActionSheetController {
-    let actionSheet = MDCActionSheetController(title: nil,
-                                               message: message)
-
-    actionSheet.addAction(actionOne)
-    actionSheet.addAction(actionTwo)
-    actionSheet.addAction(actionThree)
-    return actionSheet
-  }
-
-  static func missingMessage() -> MDCActionSheetController {
+  
+  static func title() -> MDCActionSheetController {
     let actionSheet: MDCActionSheetController = MDCActionSheetController(title: "Action Sheet")
     actionSheet.addAction(actionOne)
     actionSheet.addAction(actionTwo)
@@ -68,16 +57,26 @@ class MDCActionSheetSwiftSupplemental {
     return actionSheet
   }
 
-  static func missingHeading() -> MDCActionSheetController {
-    let actionSheet = MDCActionSheetController()
+  static func message() -> MDCActionSheetController {
+    let actionSheet = MDCActionSheetController(title: nil,
+                                               message: messageString)
     actionSheet.addAction(actionOne)
     actionSheet.addAction(actionTwo)
     actionSheet.addAction(actionThree)
     return actionSheet
   }
 
-  static func missingIcons() -> MDCActionSheetController {
-    let actionSheet = MDCActionSheetController(title: "Action Sheet", message: message)
+  static func titleAndMessage() -> MDCActionSheetController {
+    let actionSheet = MDCActionSheetController(title: "Action Sheet",
+                                               message: messageString)
+    actionSheet.addAction(actionOne)
+    actionSheet.addAction(actionTwo)
+    actionSheet.addAction(actionThree)
+    return actionSheet
+  }
+
+  static func noIcons() -> MDCActionSheetController {
+    let actionSheet = MDCActionSheetController(title: "Action Sheet", message: messageString)
     let action1 = MDCActionSheetAction(title: "Home", image: nil, handler: { _ in
       print("Home action")
       })
@@ -94,10 +93,10 @@ class MDCActionSheetSwiftSupplemental {
   }
 
   static func dynamic() -> MDCActionSheetController {
-    let actionSheet = MDCActionSheetController(title: "Action sheet", message: message)
+    let actionSheet = MDCActionSheetController(title: "Action sheet", message: messageString)
     actionSheet.mdc_adjustsFontForContentSizeCategory = true
-    let title = "reallyLongItemActionTitleThatIsLongerThanOneLine"
-    let actionThree = MDCActionSheetAction(title: title,
+    let actionTitle = "reallyLongItemActionTitleThatIsLongerThanOneLine"
+    let actionThree = MDCActionSheetAction(title: actionTitle,
                                            image: UIImage(named: "Email")!,
                                            handler: nil)
     actionSheet.addAction(actionOne)
