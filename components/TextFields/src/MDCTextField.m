@@ -30,6 +30,7 @@
 #import "MaterialTypography.h"
 
 NSString *const MDCTextFieldTextDidSetTextNotification = @"MDCTextFieldTextDidSetTextNotification";
+NSString *const MDCTextInputDidToggleEnabled = @"MDCTextInputDidToggleEnabled";
 
 // The image we use for the clear button has a little too much air around it. So we have to shrink
 // by this amount on each side.
@@ -427,6 +428,8 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1.f;
 - (void)setEnabled:(BOOL)enabled {
   [super setEnabled:enabled];
   _fundament.enabled = enabled;
+  [[NSNotificationCenter defaultCenter] postNotificationName:MDCTextInputDidToggleEnabled
+                                                      object:self];
 }
 
 // In iOS 8, .leftView and .rightView are not swapped in RTL so we have to do that manually.
