@@ -152,7 +152,7 @@
   [super viewWillLayoutSubviews];
   [self.header setNeedsLayout];
   [self.header layoutIfNeeded];
-  //
+  
   CGFloat height = CGRectGetHeight(self.header.frame) + [_tableView tableHeight];
   CGRect tableFrame = _tableView.tableView.frame;
   tableFrame.origin.y = CGRectGetHeight(self.header.frame);
