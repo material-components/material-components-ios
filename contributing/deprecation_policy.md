@@ -39,7 +39,7 @@ the deprecation process below.
 Read [go/mdc-ios-measuring-api-usage](http://go/mdc-ios-measuring-api-usage) to learn how to measure
 API usage internally.
 
-If there is zero API usage beyond our own library: skip to step 9 (Delete the API).
+If there is zero API usage beyond our own library: skip to step 7 (Deprecate the API).
 Otherwise, proceed to step 2.
 
 ### Step 2: Create a GitHub project
@@ -169,13 +169,16 @@ concise message with a recommendation for an alternative API, if any is availabl
 
 ### Step 8: After the deletion date, re-evaluate usage of the API
 
-Once the deletion date has passed you can now consider deleting the API, but first you must
-evaluate whether the API is being used by any internal clients.
+Once the deletion date has passed and at least one release has been cut since the API was marked as
+deprecated, you can now consider deleting the API. But first: you must evaluate whether the API is
+being used by any internal clients.
 
 If the API is still being used by clients, you have a few options:
 
 - Reach out to the client teams directly, reminding them of the deprecation.
 - Help the client teams migrate.
+
+Proceed to step 9 once you've confirmed that there are zero internal usages of the API.
 
 ### Step 9: Delete the API and migration guide
 
