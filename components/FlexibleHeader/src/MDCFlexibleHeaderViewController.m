@@ -458,6 +458,10 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 - (void)updateTopLayoutGuide {
   NSAssert([NSThread isMainThread],
            @"updateTopLayoutGuide must be called from the main thread.");
+  NSAssert(!self.useAdditionalSafeAreaInsetsForWebKitScrollViews
+           || (self.topLayoutGuideViewController != nil),
+           @"If useAdditionalSafeAreaInsetsForWebKitScrollViews is enabled you must also set a"
+           @"topLayoutGuideViewController.");
   // We observe (using KVO) the top layout guide's constant and re-invoke updateTopLayoutGuide
   // whenever it changes. We also change the constant in this method. So, to avoid a recursive
   // infinite loop we bail out early here if we're the ones that initiated the top layout guide
@@ -486,12 +490,18 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
+    BOOL alwaysUseAdditionalSafeAreaInsets = NO;
+    if (self.useAdditionalSafeAreaInsetsForWebKitScrollViews
+        && [self.headerView trackingScrollViewIsWebKit]) {
+      alwaysUseAdditionalSafeAreaInsets = YES;
+    }
+
     UIViewController *topLayoutGuideViewController = [self fhv_topLayoutGuideViewControllerWithFallback];
     // If there is a tracking scroll view then the flexible header will manage safe area insets via
     // the tracking scroll view's contentInsets. Some day - in the long distant future when we only
     // support iOS 11 and up - we can probably drop the content inset adjustment behavior in favor
     // of modifying additionalSafeAreaInsets instead.
-    if (self.headerView.trackingScrollView != nil) {
+    if (self.headerView.trackingScrollView != nil && !alwaysUseAdditionalSafeAreaInsets) {
       // Reset the additional safe area insets if we are now tracking a scroll view.
       if (topLayoutGuideViewController != nil) {
         UIEdgeInsets additionalSafeAreaInsets =
@@ -555,6 +565,16 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 
 - (BOOL)inferTopSafeAreaInsetFromViewController {
   return _headerView.inferTopSafeAreaInsetFromViewController;
+}
+
+- (void)setUseAdditionalSafeAreaInsetsForWebKitScrollViews:
+    (BOOL)useAdditionalSafeAreaInsetsForWebKitScrollViews {
+  _headerView.useAdditionalSafeAreaInsetsForWebKitScrollViews =
+      useAdditionalSafeAreaInsetsForWebKitScrollViews;
+}
+
+- (BOOL)useAdditionalSafeAreaInsetsForWebKitScrollViews {
+  return _headerView.useAdditionalSafeAreaInsetsForWebKitScrollViews;
 }
 
 #pragma mark - Top safe area inset extraction
