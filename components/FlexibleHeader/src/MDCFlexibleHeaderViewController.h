@@ -102,6 +102,37 @@
  */
 @property(nonatomic) BOOL inferTopSafeAreaInsetFromViewController;
 
+/**
+ When a WKWebView's scroll view is the tracking scroll view, this behavioral flag affects whether
+ the flexible header uses additionalSafeAreaInsets or contentInset to adjust the tracking scroll
+ view's content.
+
+ Enabling this behavioral flag will fix a bug with small WKWebView content where the contentSize
+ would be improperly set, allowing the content to be scrolled when it shouldn't be.
+
+ This behavior will eventually be enabled by default.
+
+ Default is NO.
+
+ @note If you enable this flag you must also set a topLayoutGuideViewController. Failure to do so
+ will result in a runtime assertion failure.
+
+ @note If you support devices running an OS older than iOS 11 and you've enabled this flag, you
+ must also adjust the frame of your WKWebView to be positioned below the header using the
+ topLayoutGuide, like so:
+
+@code
+ [NSLayoutConstraint constraintWithItem:webView
+                              attribute:NSLayoutAttributeTop
+                              relatedBy:NSLayoutRelationEqual
+                                 toItem:self.topLayoutGuide
+                              attribute:NSLayoutAttributeBottom
+                             multiplier:1.0
+                               constant:0]
+@endcode
+ */
+@property(nonatomic) BOOL useAdditionalSafeAreaInsetsForWebKitScrollViews;
+
 #pragma mark UIViewController methods
 
 /**
