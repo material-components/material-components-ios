@@ -25,7 +25,7 @@ the deprecation process below.
 ## Our deprecation process (Googlers)
 
 1. Measure internal usage of the API.
-2. Create a GitHub project.
+2. Create a GitHub issue.
 3. Write a migration guide.
 4. Annotate the API as "ToBeDeprecated".
 5. Determine a schedule for the API deletion.
@@ -42,23 +42,13 @@ API usage internally.
 If there is zero API usage beyond our own library: skip to step 7 (Deprecate the API).
 Otherwise, proceed to step 2.
 
-### Step 2: Create a GitHub project
+### Step 2: Create a GitHub issue
 
-Visit [go/mdc-ios-project-template](http://go/mdc-ios-project-template) or this
-[GitHub search](https://github.com/material-components/material-components-ios/projects?utf8=%E2%9C%93&query=is%3Aopen+Template+project)
-to access the template GitHub project.
-
-Name the project "Deprecate YYY". Use this project to organize any work related to this deprecation.
-
-Create at least one issue in the project titled "Delete YYY". This will be the last issue you close
-once the API is deleted.
-
-If you'd like, you can create a card for your project with the following checklist to help keep track
-of the progress of the API through the deprecation process:
+Create a GitHub issue with the following template:
 
 ```
-- [ ] Measure internal usage of the API.
-- [ ] Create a GitHub project.
+- [x] Measure internal usage of the API.
+- [x] Create a GitHub issue.
 - [ ] Write a migration guide.
 - [ ] Annotate the API as "ToBeDeprecated".
 - [ ] Determine a schedule for the API deletion.
