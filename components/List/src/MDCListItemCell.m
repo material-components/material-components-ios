@@ -31,10 +31,20 @@ static const CGFloat kDetailColorOpacity = 0.6f;
 
 @property (nonatomic, strong) UIView *textContainer;
 @property (nonatomic, assign) CGRect textContainerFrame;
+
+@property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, assign) CGRect titleLabelFrame;
+
+@property (nonatomic, strong) UILabel *detailLabel;
 @property (nonatomic, assign) CGRect detailLabelFrame;
+
+@property (nonatomic, strong) UIImageView *leadingImageView;
 @property (nonatomic, assign) CGRect leadingImageViewFrame;
+
+@property (nonatomic, strong) UIImageView *trailingImageView;
 @property (nonatomic, assign) CGRect trailingImageViewFrame;
+
+@property (nonatomic, assign) CGFloat cellWidth;
 
 @end
 

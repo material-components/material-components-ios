@@ -19,28 +19,22 @@ limitations under the License.
 /**
  The UIImageView responsible for displaying the leading image.
  */
-@property (nonatomic, strong) UIImageView *leadingImageView;
+@property (nonatomic, strong, readonly) UIImageView *leadingImageView;
 
 /**
  The UIImageView responsible for displaying the trailing image.
  */
-@property (nonatomic, strong) UIImageView *trailingImageView;
+@property (nonatomic, strong, readonly) UIImageView *trailingImageView;
 
 /**
  The UILabel responsible for displaying the title text.
  */
-@property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic, strong, readonly) UILabel *titleLabel;
 
 /**
  The UILabel responsible for displaying the detail text.
  */
-@property (nonatomic, strong) UILabel *detailLabel;
-
-/**
- Sets the cell width for the self-sizing cell.
- Note: The self-sizing is only applied to the height, and the width is set using this method.
- */
-@property (nonatomic, assign) CGFloat cellWidth;
+@property (nonatomic, strong, readonly) UILabel *detailLabel;
 
 /**
  Indicates whether the view's contents should automatically update their font when the device’s
