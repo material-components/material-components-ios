@@ -21,6 +21,9 @@
 /** When text is manually set via .text or setText:, this notification fires. */
 extern NSString *_Nonnull const MDCTextFieldTextDidSetTextNotification;
 
+/** When the value of `enabled` changes on the text input, this notification fires. */
+extern NSString *_Nonnull const MDCTextInputDidToggleEnabledNotification;
+
 /**
   Material Design compliant single-line text input.
   https://www.google.com/design/spec/components/text-fields.html#text-fields-single-line-text-field
