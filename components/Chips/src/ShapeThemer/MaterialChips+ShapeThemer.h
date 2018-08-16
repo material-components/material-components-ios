@@ -14,17 +14,5 @@
  limitations under the License.
  */
 
-#import "MDCCardScheme.h"
-
-@implementation MDCCardScheme
-
-- (instancetype)init {
-  self = [super init];
-  if (self) {
-    _colorScheme = [[MDCSemanticColorScheme alloc] init];
-    _shapeScheme = [[MDCSemanticShapeScheme alloc] init];
-  }
-  return self;
-}
-@end
-
+#import "MDCChipViewShapeThemer.h"
+#import "MDCChipView50RoundedShapeThemer.h"

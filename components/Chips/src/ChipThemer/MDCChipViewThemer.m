@@ -17,6 +17,7 @@
 #import "MaterialChips+ChipThemer.h"
 
 #import "MaterialChips+ColorThemer.h"
+#import "MaterialChips+ShapeThemer.h"
 #import "MaterialChips+TypographyThemer.h"
 
 @implementation MDCChipViewThemer
@@ -31,6 +32,7 @@
   }
   [MDCChipViewColorThemer applySemanticColorScheme:scheme.colorScheme toChipView:chip];
   [MDCChipViewTypographyThemer applyTypographyScheme:scheme.typographyScheme toChipView:chip];
+  [MDCChipViewShapeThemer applySemanticShapeScheme:scheme.shapeScheme toChipView:chip];
 }
 
 + (void)applyOutlinedVariantWithScheme:(nonnull id<MDCChipViewScheming>)scheme
@@ -43,6 +45,7 @@
   }
   [MDCChipViewColorThemer applyOutlinedVariantWithColorScheme:scheme.colorScheme toChipView:chip];
   [MDCChipViewTypographyThemer applyTypographyScheme:scheme.typographyScheme toChipView:chip];
+  [MDCChipViewShapeThemer applySemanticShapeScheme:scheme.shapeScheme toChipView:chip];
 }
 
 @end

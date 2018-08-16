@@ -14,17 +14,22 @@
  limitations under the License.
  */
 
-#import "MDCCardScheme.h"
+#import <UIKit/UIKit.h>
 
-@implementation MDCCardScheme
+#import "MaterialChips.h"
+#import "MaterialShapeScheme.h"
+#import "MaterialShapes.h"
+#import "MaterialShapeLibrary.h"
 
-- (instancetype)init {
-  self = [super init];
-  if (self) {
-    _colorScheme = [[MDCSemanticColorScheme alloc] init];
-    _shapeScheme = [[MDCSemanticShapeScheme alloc] init];
-  }
-  return self;
-}
+/**
+ The Material Design color system's themer for instances of MDCCard and MDCCardCollectionCell.
+ */
+@interface MDCChipViewShapeThemer : NSObject
+
+/**
+
+ */
++ (void)applySemanticShapeScheme:(nonnull id<MDCShapeScheming>)shapeScheme
+                      toChipView:(nonnull MDCChipView *)chipView;
+
 @end
-

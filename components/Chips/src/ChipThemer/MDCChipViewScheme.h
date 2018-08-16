@@ -16,6 +16,7 @@
 
 #import "MaterialChips.h"
 #import "MaterialColorScheme.h"
+#import "MaterialShapeScheme.h"
 #import "MaterialTypographyScheme.h"
 
 #import <Foundation/Foundation.h>
@@ -38,6 +39,9 @@
  */
 @property(nonnull, readonly, nonatomic) id<MDCTypographyScheming> typographyScheme;
 
+@property(nonnull, readonly, nonatomic) id<MDCShapeScheming> shapeScheme;
+
+
 @end
 
 /**
@@ -58,5 +62,8 @@
  By default, this is initialized with the latest typography scheme defaults.
  */
 @property(nonnull, readwrite, nonatomic) id<MDCTypographyScheming> typographyScheme;
+
+@property(nonnull, readwrite, nonatomic) id<MDCShapeScheming> shapeScheme;
+
 
 @end

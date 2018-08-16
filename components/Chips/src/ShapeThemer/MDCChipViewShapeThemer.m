@@ -14,17 +14,17 @@
  limitations under the License.
  */
 
-#import "MDCCardScheme.h"
+#import "MDCChipViewShapeThemer.h"
 
-@implementation MDCCardScheme
+@implementation MDCChipViewShapeThemer
 
-- (instancetype)init {
-  self = [super init];
-  if (self) {
-    _colorScheme = [[MDCSemanticColorScheme alloc] init];
-    _shapeScheme = [[MDCSemanticShapeScheme alloc] init];
-  }
-  return self;
++ (void)applySemanticShapeScheme:(nonnull id<MDCShapeScheming>)shapeScheme
+                      toChipView:(nonnull MDCChipView *)chipView {
+  MDCRectangleShapeGenerator *rectangleShape = [[MDCRectangleShapeGenerator alloc] init];
+  MDCCornerTreatment *cornerTreatment =
+      [shapeScheme.smallSurfaceShape.topLeftCorner cornerTreatmentValue];
+  [rectangleShape setCorners:cornerTreatment];
+  chipView.shapeGenerator = rectangleShape;
 }
-@end
 
+@end

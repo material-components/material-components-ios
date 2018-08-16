@@ -18,6 +18,7 @@
 
 #import "MaterialChips.h"
 #import "MaterialChips+ChipThemer.h"
+#import "MaterialChips+ShapeThemer.h"
 
 @implementation ChipsActionExampleViewController {
   UICollectionView *_collectionView;
@@ -116,6 +117,7 @@
   } else {
     [MDCChipViewThemer applyScheme:scheme toChipView:chipView];
   }
+  [MDCChipView50RoundedShapeThemer applySemanticShapeScheme:scheme.shapeScheme toChipView:chipView];
 
   return cell;
 }

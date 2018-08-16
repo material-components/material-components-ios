@@ -32,17 +32,19 @@ class EditReorderCollectionViewController: UIViewController,
   var toggle = ToggleMode.reorder
   var toggleButton: UIButton!
   var colorScheme = MDCSemanticColorScheme()
-  let cardScheme = MDCCardScheme();
+  var shapeScheme = MDCSemanticShapeScheme()
+  let cardScheme = MDCCardScheme()
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
     cardScheme.colorScheme = colorScheme
+    cardScheme.shapeScheme = shapeScheme
     collectionView.frame = view.bounds
     collectionView.dataSource = self
     collectionView.delegate = self
     collectionView.backgroundColor = UIColor(white: 0.9, alpha: 1)
-    collectionView.alwaysBounceVertical = true;
+    collectionView.alwaysBounceVertical = true
     collectionView.register(MDCCardCollectionCell.self, forCellWithReuseIdentifier: "Cell")
     collectionView.translatesAutoresizingMaskIntoConstraints = false
     collectionView.allowsMultipleSelection = true
