@@ -14,7 +14,6 @@
  limitations under the License.
  */
 
-#import "MaterialApplication.h"
 #import "MDCFeatureHighlightAnimationController.h"
 
 #import "MDCFeatureHighlightView+Private.h"
@@ -67,38 +66,26 @@ const NSTimeInterval kMDCFeatureHighlightDismissalDuration = 0.2f;
         break;
     }
   }
-
-  BOOL presenting = self.presenting;
-  void (^animations)(void) = ^void(void) {
-    // We have to perform an animation on highlightView in this block or else UIKit
-    // will not know we are performing an animation and will call the completion block
-    // immediately, causing our CAAnimations to be cut short.
-    if (presenting) {
-      [highlightView layoutAppearing];
-    } else {
-      [highlightView layoutDisappearing];
-    }
-  };
-
-  void (^completion)(BOOL finished) = ^void(BOOL finished) {
-    // If we're dismissing, remove the highlight view from the hierarchy
-    if (!presenting) {
-      [fromView removeFromSuperview];
-    }
-    [transitionContext completeTransition:YES];
-  };
-
-  UIApplicationState applicationState = [UIApplication mdc_safeSharedApplication].applicationState;
-  if (applicationState == UIApplicationStateActive) {
-    [UIView animateWithDuration:transitionDuration
-                          delay:0.0
-                        options:UIViewAnimationOptionBeginFromCurrentState
-                     animations:animations
-                     completion:completion];
-  } else {
-    animations();
-    completion(YES);
-  }
+  [UIView animateWithDuration:transitionDuration
+      delay:0.0
+      options:UIViewAnimationOptionBeginFromCurrentState
+      animations:^{
+        // We have to perform an animation on highlightView in this block or else UIKit
+        // will not know we are performing an animation and will call the completion block
+        // immediately, causing our CAAnimations to be cut short.
+        if (self.presenting) {
+          [highlightView layoutAppearing];
+        } else {
+          [highlightView layoutDisappearing];
+        }
+      }
+      completion:^(__unused BOOL finished) {
+        // If we're dismissing, remove the highlight view from the hierarchy
+        if (!self.presenting) {
+          [fromView removeFromSuperview];
+        }
+        [transitionContext completeTransition:YES];
+      }];
 }
 
 @end

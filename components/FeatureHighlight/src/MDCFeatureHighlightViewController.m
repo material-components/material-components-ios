@@ -168,27 +168,22 @@ static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 - (void)viewWillTransitionToSize:(CGSize)size
        withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-  UIViewController *presenter = self.presentingViewController;
-  UIViewController *presentedViewController = self;
-  [self dismissViewControllerAnimated:NO completion:nil];
-
-  [coordinator animateAlongsideTransition:nil
+  [coordinator animateAlongsideTransition:
+   ^(__unused id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
+     [self resetHighlightPoint];
+   }
                                completion:
-      ^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
-        BOOL presentedIsNonNilDueToRaceCondition = presenter.presentedViewController;
-        void (^presentAgain)(void) = ^void(void) {
-          [presenter presentViewController:presentedViewController
-                                  animated:YES
-                                completion:nil];
-        };
-        if (presentedIsNonNilDueToRaceCondition) {
-          dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)),
-                         dispatch_get_main_queue(),
-                         presentAgain);
-        } else {
-          presentAgain();
-        }
-  }];
+   ^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+     [self resetHighlightPoint];
+   }];
+}
+
+- (void)resetHighlightPoint {
+  CGPoint point = [_highlightedView.superview convertPoint:_highlightedView.center
+                                                    toView:self.featureHighlightView];
+  self.featureHighlightView.highlightPoint = point;
+  [self.featureHighlightView layoutIfNeeded];
+  [self.featureHighlightView updateOuterHighlight];
 }
 
 - (void)setOuterHighlightColor:(UIColor *)outerHighlightColor {
