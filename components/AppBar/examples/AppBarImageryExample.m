@@ -34,7 +34,17 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    _colorScheme = [[MDCSemanticColorScheme alloc] init];
+
+    _appBarViewController = [[MDCAppBarViewController alloc] init];
+
+    // Behavioral flags.
+    _appBarViewController.inferTopSafeAreaInsetFromViewController = YES;
+    _appBarViewController.headerView.minMaxHeightIncludesSafeArea = NO;
+
+    self.title = @"Imagery";
+
+    [self addChildViewController:_appBarViewController];
   }
   return self;
 }
@@ -89,22 +99,6 @@
 @end
 
 @implementation AppBarImageryExample (TypicalUse)
-
-- (id)init {
-  self = [super init];
-  if (self) {
-    _appBarViewController = [[MDCAppBarViewController alloc] init];
-
-    // Behavioral flags.
-    _appBarViewController.inferTopSafeAreaInsetFromViewController = YES;
-    _appBarViewController.headerView.minMaxHeightIncludesSafeArea = NO;
-
-    self.title = @"Imagery";
-
-    [self addChildViewController:_appBarViewController];
-  }
-  return self;
-}
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
