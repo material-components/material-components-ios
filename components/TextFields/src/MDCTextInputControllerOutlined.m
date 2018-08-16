@@ -168,6 +168,10 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
   self.textInput.clipsToBounds = NO;
 }
 
+-(void)updateUnderline {
+  self.textInput.underline.hidden = YES;
+}
+
 - (void)updateBorder {
   [super updateBorder];
 
@@ -194,6 +198,9 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
   self.textInput.borderPath = path;
 
   UIColor *borderColor = self.textInput.isEditing ? self.activeColor : self.normalColor;
+  if (!self.textInput.isEnabled) {
+    borderColor = self.disabledColor;
+  }
   self.textInput.borderView.borderStrokeColor =
       (self.isDisplayingCharacterCountError || self.isDisplayingErrorText) ? self.errorColor
                                                                            : borderColor;

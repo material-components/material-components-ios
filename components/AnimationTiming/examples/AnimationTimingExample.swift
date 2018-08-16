@@ -18,6 +18,7 @@
 
 import UIKit
 import MaterialComponents.MaterialAnimationTiming
+import MaterialComponents.MaterialTypography
 
 struct Constants {
    struct AnimationTime {

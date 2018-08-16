@@ -32,6 +32,8 @@
   if (self) {
     self.colorScheme = [[MDCSemanticColorScheme alloc] init];
     self.typographyScheme = [[MDCTypographyScheme alloc] init];
+    
+    self.title = @"Button Bar";
   }
   return self;
 }
@@ -96,16 +98,3 @@
 
 @end
 
-#pragma mark - Typical application code (not Material-specific)
-
-@implementation ButtonBarCustomizedFontExample (GeneralApplicationLogic)
-
-- (id)init {
-  self = [super init];
-  if (self) {
-    self.title = @"Button Bar";
-  }
-  return self;
-}
-
-@end

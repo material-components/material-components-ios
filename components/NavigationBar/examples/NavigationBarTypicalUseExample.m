@@ -35,7 +35,7 @@
 }
 
 - (void)viewDidLoad {
-  [super viewDidLoad];
+  [super viewDidLoad]; 
   self.view.backgroundColor = [UIColor whiteColor];
 
   self.title = @"Navigation Bar";

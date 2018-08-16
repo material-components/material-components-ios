@@ -90,12 +90,13 @@ class MDCDragonsController: UIViewController,
     tableView.backgroundColor = Constants.bgColor
     tableView.delegate = self
     tableView.dataSource = self
-    tableView.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(tableView)
     view.backgroundColor = Constants.bgColor
 
     #if swift(>=3.2)
       if #available(iOS 11, *) {
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+
         let guide = view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([tableView.leftAnchor.constraint(equalTo: guide.leftAnchor),
                                     tableView.rightAnchor.constraint(equalTo: guide.rightAnchor),
@@ -121,14 +122,7 @@ class MDCDragonsController: UIViewController,
   }
   
   func preiOS11Constraints() {
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]|",
-                                                       options: [],
-                                                       metrics: nil,
-                                                       views: ["view": tableView]));
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[view]|",
-                                                       options: [],
-                                                       metrics: nil,
-                                                       views: ["view": tableView]));
+    tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
   }
   
   func setupHeaderView() {

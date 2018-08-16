@@ -15,7 +15,8 @@
  */
 
 import Foundation
-import MaterialComponents
+import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialDialogs
 
 
 /// This interface allows a user to present a UIKit Alert Controller and a Material Alert

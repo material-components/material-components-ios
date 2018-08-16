@@ -16,6 +16,8 @@
 
 import UIKit
 
+import MaterialComponents.MaterialButtons
+
 class FloatingButtonExampleSwiftViewController: UIViewController {
 
   let miniFloatingButton = MDCFloatingButton(frame: .zero, shape: .mini)

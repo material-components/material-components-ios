@@ -15,7 +15,8 @@
 */
 
 import Foundation
-import MaterialComponents
+import MaterialComponents.MaterialAppBar
+import MaterialComponents.MaterialBottomNavigation_ColorThemer
 
 class BottomNavigationNilBadges : UIViewController {
 

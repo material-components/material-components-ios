@@ -66,8 +66,9 @@
  controller. If a flexible header is already present in the view controller, this method will not
  be invoked.
 
- This method will soon be deprecated. Please use
- -appBarNavigationController:willAddAppBarViewController:asChildOfViewController: instead.
+ @warning This method will soon be deprecated. Please use
+ -appBarNavigationController:willAddAppBarViewController:asChildOfViewController: instead. Learn
+ more at components/AppBar/docs/migration-guide-appbar-appbarviewcontroller.md
  */
 - (void)appBarNavigationController:(nonnull MDCAppBarNavigationController *)navigationController
                      willAddAppBar:(nonnull MDCAppBar *)appBar
@@ -108,12 +109,15 @@ MDC_SUBCLASSING_RESTRICTED
 - (nullable MDCAppBarViewController *)appBarViewControllerForViewController:
     (nonnull UIViewController *)viewController;
 
-#pragma mark - To be deprecated
+@end
+
+@interface MDCAppBarNavigationController (ToBeDeprecated)
 
 /**
  Returns the injected App Bar for a given view controller, if an App Bar was injected.
 
- This method will eventually be deprecated. Use -appBarViewControllerForViewController: instead.
+ @warning This method will eventually be deprecated. Use -appBarViewControllerForViewController:
+ instead. Learn more at components/AppBar/docs/migration-guide-appbar-appbarviewcontroller.md
  */
 - (nullable MDCAppBar *)appBarForViewController:(nonnull UIViewController *)viewController;
 

@@ -129,6 +129,14 @@
                                        style:UIBarButtonItemStyleDone
                                       target:self
                                       action:@selector(presentModal)];
+
+  [MDCAppBarColorThemer applyColorScheme:self.colorScheme toAppBarViewController:self.appBarViewController];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+
+  [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
 - (void)presentModal {
@@ -206,24 +214,12 @@
   return self;
 }
 
-- (void)viewDidLoad {
-  [super viewDidLoad];
-  
-  [MDCAppBarColorThemer applyColorScheme:self.colorScheme toAppBarViewController:self.appBarViewController];
-}
-
 - (UIViewController *)childViewControllerForStatusBarHidden {
   return self.appBarViewController;
 }
 
 - (UIViewController *)childViewControllerForStatusBarStyle {
   return self.appBarViewController;
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
-
-  [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
 @end

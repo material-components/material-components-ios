@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import MaterialComponents
+import MaterialComponents.MaterialPalettes
+import MDFTextAccessibility
 
 /**
  Returns a high-contrast color for text against @c backgroundColor. If no such color can be found,
