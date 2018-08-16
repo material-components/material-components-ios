@@ -278,6 +278,11 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   }
   NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
 
+  [defaultCenter addObserver:self
+                    selector:@selector(textInputDidToggleEnabled:)
+                        name:MDCTextInputDidToggleEnabledNotification
+                      object:_textInput];
+
   if ([_textInput isKindOfClass:[UITextField class]]) {
     [defaultCenter addObserver:self
                       selector:@selector(textInputDidBeginEditing:)
@@ -433,6 +438,9 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                            : nonErrorColor;
   } else {
     placeholderColor = self.textInput.isEditing ? self.activeColor : self.inlinePlaceholderColor;
+  }
+  if (!self.textInput.isEnabled) {
+    placeholderColor = self.disabledColor;
   }
   self.textInput.placeholderLabel.textColor = placeholderColor;
 }
@@ -1124,7 +1132,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 - (void)setNormalColor:(UIColor *)normalColor {
   if (![_normalColor isEqual:normalColor]) {
     _normalColor = normalColor;
-    [self updateUnderline];
+    [self updateLayout];
   }
 }
 
@@ -1455,6 +1463,13 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     // Simply sending a layout change notification does not seem to
     UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, announcementString);
   }
+}
+
+- (void)textInputDidToggleEnabled:(NSNotification *)notification {
+  if (notification.object != self.textInput) {
+    return;
+  }
+  [self updateLayout];
 }
 
 - (void)textInputDidChange:(NSNotification *)note {
