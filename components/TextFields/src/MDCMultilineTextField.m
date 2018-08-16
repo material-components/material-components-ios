@@ -571,6 +571,9 @@
 - (void)setEnabled:(BOOL)enabled {
   self.fundament.enabled = enabled;
   self.textView.editable = enabled;
+  [[NSNotificationCenter defaultCenter]
+      postNotificationName:MDCTextInputDidToggleEnabledNotification
+                    object:self];
 }
 
 - (void)setExpandsOnOverflow:(BOOL)expandsOnOverflow {

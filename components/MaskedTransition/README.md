@@ -68,22 +68,28 @@ import MaterialComponents.MaterialMaskedTransition
 ```
 <!--</div>-->
 
-### Using MDCMaskedTransition to present a view controller
+### Using MDCMaskedTransitionController to present a view controller
 
-Create an instance of MDCMaskedTransition and assign it to the view controller's
-`mdm_transitionController.transition` property prior to presenting the view controller:
+Create an instance of MDCMaskedTransitionController and assign it to the view controller's
+`transitioningDelegate` property prior to presenting the view controller:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
-vc.transitionController.transition = MDCMaskedTransition(sourceView: button)
+let transitionController = MDCMaskedTransitionController(sourceView: button)
+vc.transitioningDelegate = transitionController
+// Must keep a reference to the transition controller
+self.transitionController = transitionController
 present(vc, animated: true)
 ```
 
 #### Objective-C
 
 ```objc
-vc.mdm_transitionController.transition = [[MDCMaskedTransition alloc] initWithSourceView:button];
+MDCMaskedTransitionController *transitionController = [[MDCMaskedTransitionController alloc] initWithSourceView:button];
+vc.transitioningDelegate = transitionController;
+// Must keep a reference to the transition controller
+self.transitionController = transitionController;
 [self presentViewController:vc animated:YES completion:nil];
 ```
 <!--</div>-->
@@ -91,36 +97,42 @@ vc.mdm_transitionController.transition = [[MDCMaskedTransition alloc] initWithSo
 ### Customizing the presented frame
 
 You can customize the presented frame of the view controller by assigning a
-`calculateFrameOfPresentedView` block on the transition instance. For example, to present a modal
+`calculateFrameOfPresentedView` block on the transition controller instance. For example, to present a modal
 dialog centered in the screen you can use the following examples:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
-let transition = MDCMaskedTransition(sourceView: button)
-transition.calculateFrameOfPresentedView = { info in
+let transitionController = MDCMaskedTransitionController(sourceView: button)
+transitionController.calculateFrameOfPresentedView = { info in
   let size = CGSize(width: 200, height: 200)
   return CGRect(x: (info.containerView!.bounds.width - size.width) / 2,
                 y: (info.containerView!.bounds.height - size.height) / 2,
                 width: size.width,
                 height: size.height)
 }
-vc.transitionController.transition = transition
+vc.transitioningDelegate = transitionController
+vc.modalPresentationStyle = UIModalPresentationCustom;
+// Must keep a reference to the transition controller
+self.transitionController = transitionController
 present(vc, animated: true)
 ```
 
 #### Objective-C
 
 ```objc
-MDCMaskedTransition *transition = [[MDCMaskedTransition alloc] initWithSourceView:button];
-transition.calculateFrameOfPresentedView = ^(UIPresentationController *info) {
+MDCMaskedTransitionController *transitionController = [[MDCMaskedTransitionController alloc] initWithSourceView:button];
+transitionController.calculateFrameOfPresentedView = ^(UIPresentationController *info) {
   CGSize size = CGSizeMake(200, 200);
   return CGRectMake((info.containerView.bounds.size.width - size.width) / 2,
                     (info.containerView.bounds.size.height - size.height) / 2,
                     size.width,
                     size.height);
 };
-vc.mdm_transitionController.transition = transition;
+vc.transitioningDelegate = transitionController;
+vc.modalPresentationStyle = .custom
+// Must keep a reference to the transition controller
+self.transitionController = transitionController;
 [self presentViewController:vc animated:YES completion:nil];
 ```
 <!--</div>-->

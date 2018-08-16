@@ -15,7 +15,8 @@
 */
 
 import Foundation
-import MaterialComponents
+import MaterialComponents.MaterialBottomNavigation_ColorThemer
+import MaterialComponents.MaterialColorScheme
 
 class BottomNavigationTypicalUseSwiftExample: UIViewController {
 

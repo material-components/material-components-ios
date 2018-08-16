@@ -93,8 +93,10 @@
 /**
  The App Bar views that will be presented in front of the contentViewController's view.
 
- This API will eventually be deprecated. Use appBarViewController instead.
+ @warning This API will eventually be deprecated. Use appBarViewController instead. Learn more at
+ components/AppBar/docs/migration-guide-appbar-appbarviewcontroller.md
  */
 @property(nonatomic, strong, nonnull, readonly) MDCAppBar *appBar;
 
 @end
+

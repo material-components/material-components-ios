@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import MaterialComponents
+import MaterialComponents.MaterialPalettes
 
 private func randomFloat() -> CGFloat {
   return CGFloat(arc4random()) / CGFloat(UInt32.max)

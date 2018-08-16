@@ -16,7 +16,8 @@
 
 // swiftlint:disable function_body_length
 
-import MaterialComponents.MaterialTextFields
+import MaterialComponents.MaterialTextFields_ColorThemer
+import MaterialComponents.MaterialTextFields_TypographyThemer
 
 final class TextFieldFilledSwiftExample: UIViewController {
 

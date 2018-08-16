@@ -222,7 +222,6 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
                                     snackbarManager:self.manager];
   [self.delegate willPresentSnackbarWithMessageView:snackbarView];
   self.currentSnackbar = snackbarView;
-  self.overlayView.accessibilityViewIsModal = ![self isSnackbarTransient:snackbarView];
   self.overlayView.hidden = NO;
   [self activateOverlay:self.overlayView];
 
@@ -303,7 +302,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 #pragma mark - Helper methods
 
 - (BOOL)isSnackbarTransient:(MDCSnackbarMessageView *)snackbarView {
-  if (UIAccessibilityIsVoiceOverRunning()) {
+  if (UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning()) {
     return ![snackbarView shouldWaitForDismissalDuringVoiceover];
   }
 

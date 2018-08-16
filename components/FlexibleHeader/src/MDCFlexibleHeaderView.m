@@ -18,6 +18,7 @@
 
 #import "MaterialApplication.h"
 #import "MaterialUIMetrics.h"
+#import "MDCFlexibleHeaderView+ShiftBehavior.h"
 #import "private/MDCStatusBarShifter.h"
 #import "private/MDCFlexibleHeaderView+Private.h"
 
@@ -178,6 +179,8 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   // The block executed when shadow intensity changes.
   MDCFlexibleHeaderShadowIntensityChangeBlock _shadowIntensityChangeBlock;
 
+  Class _wkWebViewClass;
+
 #if DEBUG
   // Keeps track of whether the client called ...WillEndDraggingWithVelocity:...
   BOOL _didAdjustTargetContentOffset;
@@ -230,6 +233,8 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 }
 
 - (void)commonMDCFlexibleHeaderViewInit {
+  _wkWebViewClass = NSClassFromString(@"WKWebView");
+
   _statusBarShifter = [[MDCStatusBarShifter alloc] init];
   _statusBarShifter.delegate = self;
   _statusBarShifter.enabled = [self fhv_shouldAllowShifting];
@@ -547,6 +552,10 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   return _topSafeAreaGuide.frame.size.height;
 }
 
+- (BOOL)trackingScrollViewIsWebKit {
+  return [self.trackingScrollView.superview.class isSubclassOfClass:_wkWebViewClass];
+}
+
 #pragma mark - Private (fhv_ prefix)
 
 - (void)fhv_setContentOffset:(CGPoint)contentOffset {
@@ -630,7 +639,8 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 // This ensures that when our scroll view is scrolled to its top that our header is able to be fully
 // expanded.
 - (CGFloat)fhv_enforceInsetsForScrollView:(UIScrollView *)scrollView {
-  if (!scrollView) {
+  if (!scrollView || (self.useAdditionalSafeAreaInsetsForWebKitScrollViews
+                      && [self trackingScrollViewIsWebKit])) {
     return 0;
   }
 
@@ -1140,7 +1150,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
       // focusing.
       CGPoint offset = self.trackingScrollView.contentOffset;
       offset.y = MAX(offset.y, -self.maximumHeight);
-      self.trackingScrollView.contentOffset = offset;
+      [self fhv_setContentOffset:offset];
       // Setting the transform on the same run loop as the accessibility scroll can cause additional
       // incorrect scrolling as the scrollview attempts to resolve to a position that will place
       // the header in the center of the scroll. Punting to the next loop prevents this.
@@ -1410,7 +1420,7 @@ static BOOL isRunningiOS10_3OrAbove() {
           !_trackingScrollView.pagingEnabled);
 }
 
-- (void)setstatusBarHintCanOverlapHeader:(BOOL)statusBarHintCanOverlapHeader {
+- (void)setStatusBarHintCanOverlapHeader:(BOOL)statusBarHintCanOverlapHeader {
   if (_statusBarHintCanOverlapHeader == statusBarHintCanOverlapHeader) {
     return;
   }

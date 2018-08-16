@@ -126,6 +126,7 @@ extension AppBarImagerySwiftExample {
       if cell == nil {
         cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
       }
+      cell!.selectionStyle = .none
       return cell!
   }
 }
