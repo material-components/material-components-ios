@@ -1,5 +1,11 @@
 ### Migration guide: minMaxHeightIncludesSafeArea
 
+Deprecation schedule:
+
+- October 16, 2018: minMaxHeightIncludesSafeArea will be disabled by default.
+- October 23, 2018: minMaxHeightIncludesSafeArea will be marked deprecated.
+- November 23, 2018: minMaxHeightIncludesSafeArea will be deleted.
+
 `minMaxHeightIncludesSafeArea` is a behavioral flag on `MDCFlexibleHeaderView that must be disabled
 to ensure iPhone X compatibility.
 
