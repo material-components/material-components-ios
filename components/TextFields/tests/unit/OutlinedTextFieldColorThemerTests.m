@@ -47,7 +47,6 @@
                         controller.trailingUnderlineLabelTextColor);
   XCTAssertEqualObjects(controller.normalColor,
                         [colorScheme.onSurfaceColor colorWithAlphaComponent:0.6f]);
-  XCTAssertEqualObjects(textField.underline.color, controller.normalColor);
   XCTAssertEqualObjects(textField.borderView.borderStrokeColor, controller.normalColor);
   XCTAssertEqualObjects(controller.inlinePlaceholderColor,
                         [colorScheme.onSurfaceColor colorWithAlphaComponent:0.6f]);
