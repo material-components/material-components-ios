@@ -63,7 +63,6 @@ class ActionSheetSwiftExample: UIViewController {
     case .dynamicType:
       actionSheet = MDCActionSheetSwiftSupplemental.dynamic()
     }
-
     present(actionSheet, animated: true, completion: nil)
   }
 }

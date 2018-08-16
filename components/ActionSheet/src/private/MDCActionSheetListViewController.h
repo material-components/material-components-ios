@@ -68,8 +68,10 @@ BOOL mdc_adjustsFontForContentSizeCategory;
 
 @property (nonatomic, nonnull, strong) UIFont *actionsFont;
 
+@property (nonatomic, nonnull, strong) UIColor *backgroundColor;
+
 - (void)updateFonts;
 
-- (CGFloat)tableHeight;
+- (CGFloat)tableHeightForWidth:(CGFloat)width;
 
 @end

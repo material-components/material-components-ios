@@ -74,8 +74,8 @@
 @implementation MDCActionSheetController {
   NSString *_actionSheetTitle;
   NSMutableArray<MDCActionSheetAction *> *_actions;
+  MDCBottomSheetController *_bottomSheet;
   MDCBottomSheetTransitionController *_transitionController;
-  UIViewController *contentViewController;
   BOOL mdc_adjustFontForContentSizeCategory;
 }
 
@@ -106,7 +106,7 @@
 }
 
 - (void)commonMDCActionSheetControllerInit {
-  contentViewController = [[UIViewController alloc] initWithNibName:nil bundle:nil];
+  _bottomSheet = [[MDCBottomSheetController alloc] initWithContentViewController:self];
   _transitionController = [[MDCBottomSheetTransitionController alloc] init];
   _transitionController.dismissOnBackgroundTap = YES;
   super.transitioningDelegate = _transitionController;
@@ -115,11 +115,11 @@
   _tableView = [[MDCActionSheetListViewController alloc] initWithTitle:_actionSheetTitle
                                                                message:_message
                                                                actions:_actions];
-  
   _tableView.tableView.delegate = self;
   [_tableView.tableView setTranslatesAutoresizingMaskIntoConstraints:NO];
   _tableView.tableView.estimatedRowHeight = 56.f;
   _tableView.tableView.rowHeight = UITableViewAutomaticDimension;
+  self.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)addAction:(MDCActionSheetAction *)action {
@@ -137,29 +137,21 @@
     self.header = [self headerView];
   }
 
-  contentViewController.view.autoresizingMask =
-      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  contentViewController.view.frame = self.view.bounds;
-  [self addChildViewController:contentViewController];
-  [self.view addSubview:contentViewController.view];
-  [contentViewController didMoveToParentViewController:self];
-  contentViewController.view.backgroundColor = [UIColor whiteColor];
-  [contentViewController.view addSubview:_tableView.view];
-  [contentViewController.view addSubview:self.header];
+  [self.view addSubview:_tableView.tableView];
+  [self.view addSubview:self.header];
 }
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
   [self.header setNeedsLayout];
   [self.header layoutIfNeeded];
-  
-  CGFloat height = CGRectGetHeight(self.header.frame) + [_tableView tableHeight];
+
+  CGFloat width = CGRectGetWidth(self.view.bounds);
+  CGFloat height = CGRectGetHeight(self.header.frame) + [_tableView tableHeightForWidth:width];
   CGRect tableFrame = _tableView.tableView.frame;
   tableFrame.origin.y = CGRectGetHeight(self.header.frame);
   _tableView.tableView.frame = tableFrame;
-  contentViewController.preferredContentSize =
-      CGSizeMake(CGRectGetWidth(self.view.bounds), height);
-
+  self.preferredContentSize = CGSizeMake(width, height);
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -172,11 +164,7 @@
 
   self.mdc_bottomSheetPresentationController.dismissOnBackgroundTap =
       _transitionController.dismissOnBackgroundTap;
-  [contentViewController.view layoutIfNeeded];
-}
-
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-  return contentViewController.supportedInterfaceOrientations;
+  [self.view layoutIfNeeded];
 }
 
 - (BOOL)accessibilityPerformEscape {
@@ -185,14 +173,6 @@
   }
   [self dismissViewControllerAnimated:YES completion:nil];
   return YES;
-}
-
-- (CGSize)preferredContentSize {
-  return contentViewController.preferredContentSize;
-}
-
-- (void)setPreferredContentSize:(CGSize)preferredContentSize {
-  contentViewController.preferredContentSize = preferredContentSize;
 }
 
 - (void)preferredContentSizeDidChangeForChildContentContainer:(id<UIContentContainer>)container {
@@ -216,6 +196,20 @@
 -(void)setDismissOnBackgroundTap:(BOOL)dismissOnBackgroundTap {
   _transitionController.dismissOnBackgroundTap = dismissOnBackgroundTap;
   self.mdc_bottomSheetPresentationController.dismissOnBackgroundTap = dismissOnBackgroundTap;
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:
+    (id<UIViewControllerTransitionCoordinator>)coordinator {
+  [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+  CGRect headerFrame = self.header.frame;
+  headerFrame.size.width = size.width;
+  self.header.frame = headerFrame;
+  [self.header setNeedsLayout];
+  [self.header layoutIfNeeded];
+
+  CGFloat height = CGRectGetHeight(self.header.frame) + [_tableView tableHeightForWidth:size.width];
+  CGSize updatedSize = CGSizeMake(size.width, height);
+  self.preferredContentSize = updatedSize;
 }
 
 -(void)setTransitioningDelegate:(id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
@@ -267,6 +261,16 @@
 - (void)setMessageFont:(UIFont *)messageFont {
   _messageFont = messageFont;
   self.header.messageFont = messageFont;
+}
+
+- (void)setBackgroundColor:(UIColor *)backgroundColor {
+  self.view.backgroundColor = backgroundColor;
+  _tableView.backgroundColor = backgroundColor;
+  self.header.backgroundColor = backgroundColor;
+}
+
+- (UIColor *)backgroundColor {
+  return self.view.backgroundColor;
 }
 
 #pragma mark - Dynamic Type

@@ -21,6 +21,7 @@
 
 NSString *const kReuseIdentifier = @"BaseCell";
 static const CGFloat kActionItemLabelPadding = 18.f;
+static const CGFloat kActionItemTrailingPadding = 16.f;
 
 @interface MDCActionSheetListViewController () <UITableViewDataSource>
 @end
@@ -55,6 +56,7 @@ static const CGFloat kActionItemLabelPadding = 18.f;
   self.actionsFont = [[self class] actionsFontDefault];
   [self.tableView registerClass:[MDCActionSheetItemView class]
          forCellReuseIdentifier:kReuseIdentifier];
+  self.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)addAction:(MDCActionSheetAction *)action {
@@ -77,6 +79,7 @@ static const CGFloat kActionItemLabelPadding = 18.f;
   MDCActionSheetItemView *cell =
   [[MDCActionSheetItemView alloc] initWithAction:self.actions[indexPath.row]
                                  reuseIdentifier:kReuseIdentifier];
+  cell.backgroundColor = self.backgroundColor;
   cell.actionsFont = _actionsFont;
   return cell;
 }
@@ -112,6 +115,16 @@ static const CGFloat kActionItemLabelPadding = 18.f;
   [self.view setNeedsLayout];
 }
 
+- (void)setBackgroundColor:(UIColor *)backgroundColor {
+  self.view.backgroundColor = backgroundColor;
+  self.tableView.backgroundColor = backgroundColor;
+  [self.view setNeedsLayout];
+}
+
+- (UIColor *)backgroundColor {
+  return self.view.backgroundColor;
+}
+
 #pragma mark - Setters / Getters
 
 - (void)setActionsFont:(UIFont *)actionsFont {
@@ -119,14 +132,15 @@ static const CGFloat kActionItemLabelPadding = 18.f;
   [self updateFonts];
 }
 
-- (CGFloat)tableHeight {
+- (CGFloat)tableHeightForWidth:(CGFloat)width {
   CGFloat height = 0.f;
   UILabel *mockLabel = [[UILabel alloc] initWithFrame:CGRectZero];
   mockLabel.font = _actionsFont;
   for (MDCActionSheetAction *action in _actions) {
+    CGFloat leadingPadding = (action.image == nil) ? 16.f : 72.f;
     mockLabel.text = action.title;
     CGSize labelSize = CGRectInfinite.size;
-    labelSize.width = CGRectGetWidth(self.view.frame);
+    labelSize.width = width - kActionItemTrailingPadding - leadingPadding;
     CGFloat labelHeight = [mockLabel sizeThatFits:labelSize].height;
     height = height + labelHeight + (2 * kActionItemLabelPadding);
   }

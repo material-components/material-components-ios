@@ -138,17 +138,19 @@ MDC_SUBCLASSING_RESTRICTED
 /**
   The font applied to the title of the action sheet controller.
  */
-@property (nonatomic, nonnull, strong) UIFont *titleFont;
+@property(nonatomic, nonnull, strong) UIFont *titleFont;
 
 /**
   The font applied to the message of the action sheet controller.
  */
-@property (nonatomic, nonnull, strong) UIFont *messageFont;
+@property(nonatomic, nonnull, strong) UIFont *messageFont;
 
 /**
    The font applied to the action items of the action sheet controller.
  */
-@property (nonatomic, nonnull, strong) UIFont *actionsFont;
+@property(nonatomic, nonnull, strong) UIFont *actionsFont;
+
+@property(nonatomic, nonnull, strong) UIColor *backgroundColor;
 
 @end
 
