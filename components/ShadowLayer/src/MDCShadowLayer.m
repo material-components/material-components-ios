@@ -194,13 +194,6 @@ static const float kAmbientShadowOpacity = 0.08f;
   }
 }
 
-- (void)setCornerRadius:(CGFloat)cornerRadius {
-  [super setCornerRadius:cornerRadius];
-
-  _shadowPathIsInvalid = YES;
-  [self setNeedsLayout];
-}
-
 #pragma mark - CALayer change monitoring.
 
 /** Returns a shadowPath based on the layer properties. */
