@@ -1,3 +1,156 @@
+# #develop#
+
+## Breaking changes
+
+## New deprecations
+
+## New features
+
+## API changes
+
+## Component changes
+
+### Tabs
+
+#### Changes
+
+* [[Catalog] Fix Swift example imports (#4780)](https://github.com/material-components/material-components-ios/commit/175942d9e0284b32041701fc545c21ef2240afe9) (Robert Moore)
+
+### MaskedTransition
+
+#### Changes
+
+* [Update README.md (#4758)](https://github.com/material-components/material-components-ios/commit/2856ce9168a35eec9928730d8609f70735abc5bc) (trungducc)
+
+### schemes/Color
+
+#### Changes
+
+* [Add schedule to the migration guide. (#4768)](https://github.com/material-components/material-components-ios/commit/1cec879955b81affe5c901c53bc6519e6449d30b) (featherless)
+* [[automated] Regenerate schemes/Color readme.](https://github.com/material-components/material-components-ios/commit/512cbe3725813075f08c8f669b9af9f5864a42e5) (Jeff Verkoeyen)
+
+### FeatureHighlight
+
+#### Changes
+
+* [[Catalog] Fix Swift example imports (#4780)](https://github.com/material-components/material-components-ios/commit/175942d9e0284b32041701fc545c21ef2240afe9) (Robert Moore)
+
+### AppBar
+
+#### Changes
+
+* [ Add MDCAppBar migration guide. (#4762)](https://github.com/material-components/material-components-ios/commit/afca8fa6aaee07e13169a288b083c08547aa8357) (featherless)
+* [Add deprecation schedule to the MDCAppBar migration guide. (#4802)](https://github.com/material-components/material-components-ios/commit/7cfd859f190997ed312ff353cf27fae34461dcc2) (featherless)
+* [Annotate APIs as to-be-deprecated. (#4763)](https://github.com/material-components/material-components-ios/commit/d3faf7f4b7941b78185429efab3e89f34d7bc9ca) (featherless)
+* [[Catalog] set cell selection style to none in several examples (#3870) (#4776)](https://github.com/material-components/material-components-ios/commit/980443d994d3ddc2aff779944aeaeb0e813dab20) (Wenyu Zhang)
+* [[FlexibleHeader] Fix a bug with WKWebView as a tracking scroll view. (#4701)](https://github.com/material-components/material-components-ios/commit/4e658a5aee98b6d9664d6e890e40de5f68125494) (featherless)
+
+### Buttons
+
+#### Changes
+
+* [Fix `safeAreaInsets` availability check (#4775)](https://github.com/material-components/material-components-ios/commit/c43677ace0c8610e40d025152c3d57cb44ccdf11) (Robert Moore)
+* [[Catalog] Fix Swift example imports (#4780)](https://github.com/material-components/material-components-ios/commit/175942d9e0284b32041701fc545c21ef2240afe9) (Robert Moore)
+
+### ButtonBar
+
+#### Changes
+
+* [[Catalog] Fix Swift example imports (#4780)](https://github.com/material-components/material-components-ios/commit/175942d9e0284b32041701fc545c21ef2240afe9) (Robert Moore)
+
+### TextFields
+
+#### Changes
+
+* [Update placeholder and outline border color when enabling/disabling text fields with outline controllers (#4779)](https://github.com/material-components/material-components-ios/commit/efc3a86c5ec98789c0918545ab6ce1c184125196) (Andrew Overton)
+* [[Catalog] Fix Swift example imports (#4780)](https://github.com/material-components/material-components-ios/commit/175942d9e0284b32041701fc545c21ef2240afe9) (Robert Moore)
+
+### Snackbar
+
+#### Changes
+
+* [VoiceOver users can exit the snackbar (#4799)](https://github.com/material-components/material-components-ios/commit/acfbd580f48b661c990b609ced3327bda875d9a2) (Robert Moore)
+* [[Catalog] Fix Snackbar crash after switching between LEGACY and NEW (#4700)](https://github.com/material-components/material-components-ios/commit/4ccb93cba97679a0b3debd0c46451296230e2371) (trungducc)
+* [added switch control focus control to snackbar when an action is in it (#4795)](https://github.com/material-components/material-components-ios/commit/2bfbe053c46d83d82fc899b12d815207f94c2010) (Yarden Eitan)
+
+### NavigationBar
+
+#### Changes
+
+* [Update swift example to not depend on objc (#4784)](https://github.com/material-components/material-components-ios/commit/e018f4ab40039169c4eadb660b82283c5ec5256d) (Cody Weaver)
+* [[Catalog] Fix Swift example imports (#4780)](https://github.com/material-components/material-components-ios/commit/175942d9e0284b32041701fc545c21ef2240afe9) (Robert Moore)
+* [{Swift} Fix remaining imports (#4792)](https://github.com/material-components/material-components-ios/commit/8aeb618d1a96ebd22a6db4dcf99f269a7fbe0816) (Robert Moore)
+
+### ShadowLayer
+
+#### Changes
+
+* [Setting the corner radius should recalculate the shadowPath (#4804)](https://github.com/material-components/material-components-ios/commit/0bf8f0d346eb131aee5f83944dcb1a380edcf1d0) (ianegordon)
+
+### ActivityIndicator
+
+#### Changes
+
+* [[Catalog] set cell selection style to none in several examples (#3870) (#4776)](https://github.com/material-components/material-components-ios/commit/980443d994d3ddc2aff779944aeaeb0e813dab20) (Wenyu Zhang)
+
+### Dialogs
+
+#### Changes
+
+* [[Catalog] Fix Swift example imports (#4780)](https://github.com/material-components/material-components-ios/commit/175942d9e0284b32041701fc545c21ef2240afe9) (Robert Moore)
+
+### BottomNavigation
+
+#### Changes
+
+* [[Catalog] Fix Swift example imports (#4780)](https://github.com/material-components/material-components-ios/commit/175942d9e0284b32041701fc545c21ef2240afe9) (Robert Moore)
+
+### PageControl
+
+#### Changes
+
+* [[Catalog] Fix Swift example imports (#4780)](https://github.com/material-components/material-components-ios/commit/175942d9e0284b32041701fc545c21ef2240afe9) (Robert Moore)
+
+### AnimationTiming
+
+#### Changes
+
+* [[Catalog] Fix Swift example imports (#4780)](https://github.com/material-components/material-components-ios/commit/175942d9e0284b32041701fc545c21ef2240afe9) (Robert Moore)
+
+### HeaderStackView
+
+#### Changes
+
+* [Update swift example to not depend on obj-c example (#4783)](https://github.com/material-components/material-components-ios/commit/4c3814c2ab80ecbdeb1c153494b8e41ad3a6ad17) (Cody Weaver)
+* [[Catalog] Fix Swift example imports (#4780)](https://github.com/material-components/material-components-ios/commit/175942d9e0284b32041701fc545c21ef2240afe9) (Robert Moore)
+* [{Swift} Fix remaining imports (#4792)](https://github.com/material-components/material-components-ios/commit/8aeb618d1a96ebd22a6db4dcf99f269a7fbe0816) (Robert Moore)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Add minMaxHeightIncludesSafeArea migration guide. (#4767)](https://github.com/material-components/material-components-ios/commit/c1c2ddebbd493f4e3073d02133b509dfccb92ebc) (featherless)
+* [Fix a bug with WKWebView as a tracking scroll view. (#4701)](https://github.com/material-components/material-components-ios/commit/4e658a5aee98b6d9664d6e890e40de5f68125494) (featherless)
+* [Fix infinite recursion when VoiceOver is enabled. (#4769)](https://github.com/material-components/material-components-ios/commit/f9304930ecf903457b1d7e317dbaf24dabf9a6c2) (featherless)
+* [Fix property setter (#4771)](https://github.com/material-components/material-components-ios/commit/b2160889af2bbb9ee1e566614c2690edb54cb6ad) (ianegordon)
+* [Move all shift behavior APIs to their own header. (#4778)](https://github.com/material-components/material-components-ios/commit/b49031be34b9031861362b99bb5a4e583658ad62) (featherless)
+
+### ShadowElevations
+
+#### Changes
+
+* [Rewrite ShadowElevationsPointsLabel in Swift (#4782)](https://github.com/material-components/material-components-ios/commit/ac038bf996154e369c21a0efcc45221040e9afc0) (Robert Moore)
+* [[Catalog] Fix Swift example imports (#4780)](https://github.com/material-components/material-components-ios/commit/175942d9e0284b32041701fc545c21ef2240afe9) (Robert Moore)
+* [{Swift} Fix remaining imports (#4792)](https://github.com/material-components/material-components-ios/commit/8aeb618d1a96ebd22a6db4dcf99f269a7fbe0816) (Robert Moore)
+
+### Palettes
+
+#### Changes
+
+* [[Catalog] Fix Swift example imports (#4780)](https://github.com/material-components/material-components-ios/commit/175942d9e0284b32041701fc545c21ef2240afe9) (Robert Moore)
+
+---
+
 # 60.0.0
 
 This major release introduces a breaking change for Swift libraries using FlexibleHeader. This
