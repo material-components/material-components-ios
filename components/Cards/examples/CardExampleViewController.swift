@@ -19,7 +19,6 @@ import MaterialComponents.MaterialButtons_ButtonThemer
 import MaterialComponents.MaterialCards_CardThemer
 
 class CardExampleViewController: UIViewController {
-  @IBOutlet var contentView: UIView!
   @IBOutlet weak var imageView: CardImageView!
   @IBOutlet weak var card: MDCCard!
   @IBOutlet weak var button: MDCButton!
@@ -34,8 +33,7 @@ class CardExampleViewController: UIViewController {
     // License details: https://unsplash.com/license
     let bundle = Bundle(for: CardExampleViewController.self)
     bundle.loadNibNamed("CardExampleViewController", owner: self, options: nil)
-    contentView.frame = self.view.bounds
-    self.view.addSubview(contentView)
+    view.frame = self.view.bounds
 
     let buttonScheme = MDCButtonScheme();
     buttonScheme.colorScheme = colorScheme
