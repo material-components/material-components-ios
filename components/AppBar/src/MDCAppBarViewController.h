@@ -56,7 +56,8 @@
 
  AppBar depends on the FlexibleHeader, HeaderStackView, and NavigationBar Material Components.
 
- @note This API will be deprecated in favor of MDCAppBarViewController.
+ @warning This API will be deprecated in favor of MDCAppBarViewController. Learn more at
+ https://github.com/material-components/material-components-ios/blob/develop/components/AppBar/docs/migration-guide-appbar-appbarviewcontroller.md
  */
 @interface MDCAppBar : NSObject
 
