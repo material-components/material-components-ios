@@ -138,9 +138,16 @@ static const CGFloat kActionItemTrailingPadding = 16.f;
   mockLabel.font = _actionsFont;
   for (MDCActionSheetAction *action in _actions) {
     CGFloat leadingPadding = (action.image == nil) ? 16.f : 72.f;
-    mockLabel.text = action.title;
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.hyphenationFactor = 1.f;
+    NSDictionary<NSAttributedStringKey, id> *attributes =
+        @{ NSParagraphStyleAttributeName : paragraphStyle };
+    NSMutableAttributedString *attributedString =
+    [[NSMutableAttributedString alloc] initWithString:action.title attributes:attributes];
+    mockLabel.attributedText = attributedString;
     CGSize labelSize = CGRectInfinite.size;
     labelSize.width = width - kActionItemTrailingPadding - leadingPadding;
+
     CGFloat labelHeight = [mockLabel sizeThatFits:labelSize].height;
     height = height + labelHeight + (2 * kActionItemLabelPadding);
   }

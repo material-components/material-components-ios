@@ -325,6 +325,7 @@
 - (void)updateFontsForDynamicType {
   [self.header updateFonts];
   [self.tableView updateFonts];
+  initialLayout = false;
 }
 
 @end

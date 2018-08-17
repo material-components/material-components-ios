@@ -39,6 +39,7 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
   UIImageView *_imageView;
   MDCInkTouchController *_inkTouchController;
   BOOL _mdc_adjustsFontForContentSizeCategory;
+  NSLayoutConstraint *_widthConstraint;
 }
 
 - (instancetype)initWithAction:(MDCActionSheetAction *)action
@@ -58,10 +59,11 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
   _textLabel = [[UILabel alloc] init];
   NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
   paragraphStyle.hyphenationFactor = 1.f;
-  NSDictionary<NSAttributedStringKey, id> *dict = @{ NSParagraphStyleAttributeName : paragraphStyle };
-  NSMutableAttributedString *attrString =
-      [[NSMutableAttributedString alloc] initWithString:_itemAction.title attributes:dict];
-  _textLabel.attributedText = attrString;
+  NSDictionary<NSAttributedStringKey, id> *attributes =
+      @{ NSParagraphStyleAttributeName : paragraphStyle };
+  NSMutableAttributedString *attributedString =
+      [[NSMutableAttributedString alloc] initWithString:_itemAction.title attributes:attributes];
+  _textLabel.attributedText = attributedString;
   [_textLabel sizeToFit];
   [self.contentView addSubview:_textLabel];
   _textLabel.numberOfLines = 0;
@@ -100,13 +102,14 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
                                attribute:NSLayoutAttributeLeading
                               multiplier:1
                                 constant:leadingConstant].active = YES;
-//  [NSLayoutConstraint constraintWithItem:_textLabel
-//                               attribute:NSLayoutAttributeTrailing
-//                               relatedBy:NSLayoutRelationEqual
-//                                  toItem:self.contentView
-//                               attribute:NSLayoutAttributeTrailing
-//                              multiplier:1
-//                                constant:-16.f].active = YES;
+  CGFloat width = CGRectGetWidth(self.contentView.frame) - (kLeadingPadding * 2);
+  [NSLayoutConstraint constraintWithItem:_textLabel
+                               attribute:NSLayoutAttributeWidth
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:nil
+                               attribute:NSLayoutAttributeNotAnAttribute
+                              multiplier:1
+                                constant:width].active = YES;
   if (!_inkTouchController) {
     _inkTouchController = [[MDCInkTouchController alloc] initWithView:self];
     [_inkTouchController addInkView];
@@ -147,6 +150,11 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
                                attribute:NSLayoutAttributeNotAnAttribute
                               multiplier:1
                                 constant:24.f].active = YES;
+}
+
+- (void)layoutSubviews {
+  [super layoutSubviews];
+  _widthConstraint.constant = CGRectGetWidth(self.contentView.frame) - (kLeadingPadding * 2);
 }
 
 - (void)setAction:(MDCActionSheetAction *)action {

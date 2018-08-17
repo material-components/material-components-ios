@@ -76,8 +76,6 @@ class ActionSheetSwiftExample: UIViewController {
         actionSheet.addAction(action)
       }
     }
-
-
     present(actionSheet, animated: true, completion: nil)
   }
 }
