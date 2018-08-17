@@ -126,6 +126,9 @@
 
 - (void)addAction:(MDCActionSheetAction *)action {
   [_tableView addAction:action];
+  [_tableView.tableView setNeedsLayout];
+  initialLayout = false;
+  [self.view setNeedsLayout];
 }
 
 - (NSArray<MDCActionSheetAction *> *)actions {
@@ -260,10 +263,19 @@
 - (void)setTitle:(NSString *)title {
   _actionSheetTitle = title;
   _header.title = title;
+  initialLayout = false;
+  [self.view setNeedsLayout];
 }
 
 - (NSString *)title {
   return _actionSheetTitle;
+}
+
+- (void)setMessage:(NSString *)message {
+  _message = message;
+  _header.message = message;
+  initialLayout = false;
+  [self.view setNeedsLayout];
 }
 
 - (void)setTitleFont:(UIFont *)titleFont {

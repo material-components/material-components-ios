@@ -19,7 +19,7 @@ class ActionSheetSwiftExample: UIViewController {
   var typographyScheme = MDCTypographyScheme()
   let tableView = UITableView()
   enum ActionSheetExampleType {
-    case typical, title, message, noIcons, titleAndMessage, dynamicType
+    case typical, title, message, noIcons, titleAndMessage, dynamicType, delayed
   }
   typealias ExamplesTuple = (label: String, type: ActionSheetExampleType)
   let data: [ExamplesTuple] = [
@@ -28,7 +28,8 @@ class ActionSheetSwiftExample: UIViewController {
     ("Message only", .message),
     ("No Icons", .noIcons),
     ("With Title and Message", .titleAndMessage),
-    ("Dynamic Type Enabled", .dynamicType)
+    ("Dynamic Type Enabled", .dynamicType),
+    ("Delayed", .delayed)
   ]
   let cellIdentifier = "BaseCell"
 
@@ -62,7 +63,19 @@ class ActionSheetSwiftExample: UIViewController {
       actionSheet = MDCActionSheetSwiftSupplemental.titleAndMessage()
     case .dynamicType:
       actionSheet = MDCActionSheetSwiftSupplemental.dynamic()
+    case .delayed:
+      actionSheet = MDCActionSheetSwiftSupplemental.titleAndMessage()
+      let action = MDCActionSheetAction(title: "Home", image: UIImage(named: "Home")) { _ in
+        print("Second home action")
+      }
+      DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+        actionSheet.title = "New title"
+        actionSheet.message = "New Message"
+        actionSheet.addAction(action)
+      }
     }
+
+
     present(actionSheet, animated: true, completion: nil)
   }
 }
