@@ -295,11 +295,7 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   scrollViewRect.origin.x = scrollViewRect.origin.x + self.safeAreaInsets.left;
 #endif
-  /**
-
-   Check weither scroll views are too tall or not
-
-   */
+  
   self.scrollView.frame = scrollViewRect;
   CGRect originalFrame = self.frame;
   originalFrame.size.height = scrollViewRect.size.height;
