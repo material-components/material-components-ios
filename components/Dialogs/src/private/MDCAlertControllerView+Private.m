@@ -128,6 +128,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     [actionButton setTitleColor:_buttonColor forState:UIControlStateNormal];
   }
   [actionButton setTitleFont:_buttonFont forState:UIControlStateNormal];
+  actionButton.inkColor = self.buttonInkColor;
   // TODO(#1726): Determine default text color values for Normal and Disabled
   CGRect buttonRect = actionButton.bounds;
   buttonRect.size.height = MAX(buttonRect.size.height, MDCDialogActionButtonHeight);
@@ -246,6 +247,14 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
   for (MDCButton *button in self.actionButtons) {
     [button setTitleColor:_buttonColor forState:UIControlStateNormal];
+  }
+}
+
+- (void)setButtonInkColor:(UIColor *)color {
+  _buttonInkColor = color;
+
+  for (MDCButton *button in self.actionButtons) {
+    button.inkColor = color;
   }
 }
 
