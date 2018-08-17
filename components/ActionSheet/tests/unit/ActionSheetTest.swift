@@ -21,6 +21,7 @@ class ActionSheetTest: XCTestCase {
   func testNumberOfActions() {
     // Given
     let actionSheet = MDCActionSheetController(title: nil)
+
     // Then
     XCTAssertEqual(actionSheet.actions.count, 0)
 
@@ -31,5 +32,19 @@ class ActionSheetTest: XCTestCase {
     }
     // Then
     XCTAssertEqual(actionSheet.actions.count, 4)
+  }
+
+  func testTitleChange() {
+    // Given
+    let actionSheet = MDCActionSheetController(title: nil)
+
+    // Then
+    XCTAssertEqual(actionSheet.title, nil)
+
+    // When
+    actionSheet.title = "New title"
+
+    // Then
+    XCTAssertEqual(actionSheet.title, "New title")
   }
 }
