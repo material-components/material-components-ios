@@ -16,6 +16,7 @@
 
 import UIKit
 import MaterialComponents.MaterialButtons_ButtonThemer
+import MaterialComponents.MaterialCards_CardThemer
 
 class CardExampleViewController: UIViewController {
   @IBOutlet var contentView: UIView!
