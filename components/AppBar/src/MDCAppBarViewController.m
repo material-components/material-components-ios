@@ -329,6 +329,8 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
 
 @end
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 @implementation MDCAppBarTextColorAccessibilityMutator
 
 - (void)mutate:(nonnull MDCAppBar *)appBar {
@@ -362,3 +364,4 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
 }
 
 @end
+#pragma clang diagnostic pop

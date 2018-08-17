@@ -120,13 +120,14 @@
 
  @note This API will be deprecated with no replacement.
  */
-
+__deprecated_msg("Use themers and MDFTextAccessibility directly instead.")
 @interface MDCAppBarTextColorAccessibilityMutator : NSObject
 
 /**
  Mutates title text color and navigation items' tint colors based on background color of
  app bar's navigation bar or header view background color.
  */
-- (void)mutate:(nonnull MDCAppBar *)appBar;
+- (void)mutate:(nonnull MDCAppBar *)appBar
+__deprecated_msg("Use themers and MDFTextAccessibility instead.");
 
 @end
