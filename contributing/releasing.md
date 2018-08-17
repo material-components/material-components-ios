@@ -13,10 +13,16 @@ Each release is driven by a single **release engineer**, who is also a Googler. 
 is expected to do the following, in order of priority:
 
 - Do not break Google.
+- Cut a release every Wednesday morning, without exception.
 - Land a release at least once a week.
 
-If something is stopping the release engineer from achieving either of the above goals, the
-culprit code should be removed immediately from the release.
+If something is stopping the release engineer from achieving any of the above goals, the culprit
+code should be removed immediately from the release.
+
+Importantly: **do not** block the cutting of the weekly release on a PR or a piece of functionality
+you'd like to land. If it hasn't landed by 10am EST on Wednesday, it's not making it into that
+week's release. If your PR is important, cut a hotfix release in addition to the typical weekly
+release cadence.
 
 ## Before you start
 
