@@ -13,7 +13,7 @@ Each release is driven by a single **release engineer**, who is also a Googler. 
 is expected to do the following, in order of priority:
 
 - Do not break Google.
-- Cut a release every Wednesday morning, without exception.
+- Cut a release every Wednesday morning before 10am EST, without exception.
 - Land a release at least once a week.
 
 If something is stopping the release engineer from achieving any of the above goals, the culprit
@@ -23,6 +23,9 @@ Importantly: **do not** block the cutting of the weekly release on a PR or a pie
 you'd like to land. If it hasn't landed by 10am EST on Wednesday, it's not making it into that
 week's release. If your PR is important, cut a hotfix release in addition to the typical weekly
 release cadence.
+
+If you are not able to cut a release Wednesday morning, cut it Tuesday evening before you leave the
+office.
 
 ## Before you start
 
