@@ -72,6 +72,8 @@ class ActionSheetSwiftExample: UIViewController {
         actionSheet.title = "New title"
         actionSheet.message = "New Message"
         actionSheet.addAction(action)
+        actionSheet.addAction(action)
+        actionSheet.addAction(action)
       }
     }
 

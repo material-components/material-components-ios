@@ -33,20 +33,11 @@ class MDCActionSheetSwiftSupplemental {
                                   print("Email action") }
   }
 
-  static var messageString: String =
-  """
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ultricies diam libero, eget
-  porta arcu feugiat sit amet. Maecenas placerat felis sed risusnmaximus tempus. Integer feugiat,
-  augue in pellentesque dictum, justo erat ultricies leo, quis eleifend nisi eros dictum mi. In
-  finibus vulputate eros, in luctus diam auctor in.
-  """
-
-  static var m: String {
-    var str: String = "l "
-    for _ in 0..<1000 {
-      str += "l "
-    }
-    return str
+  static var messageString: String {
+    return "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ultricies diam " +
+    "libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risusnmaximus tempus. " +
+    "Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, quis eleifend nisi " +
+    "eros dictum mi. In finibus vulputate eros, in luctus diam auctor in."
   }
 
   static func typical() -> MDCActionSheetController {
@@ -76,7 +67,7 @@ class MDCActionSheetSwiftSupplemental {
 
   static func titleAndMessage() -> MDCActionSheetController {
     let actionSheet = MDCActionSheetController(title: "Action Sheet",
-                                               message: m)
+                                               message: messageString)
     actionSheet.addAction(actionOne)
     actionSheet.addAction(actionTwo)
     actionSheet.addAction(actionThree)
