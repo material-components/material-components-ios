@@ -77,6 +77,7 @@
   MDCBottomSheetController *_bottomSheet;
   MDCBottomSheetTransitionController *_transitionController;
   BOOL mdc_adjustFontForContentSizeCategory;
+  BOOL initialLayout;
 }
 
 + (instancetype)actionSheetControllerWithTitle:(NSString *)title message:(NSString *)message {
@@ -106,6 +107,7 @@
 }
 
 - (void)commonMDCActionSheetControllerInit {
+  initialLayout = false;
   _bottomSheet = [[MDCBottomSheetController alloc] initWithContentViewController:self];
   _transitionController = [[MDCBottomSheetTransitionController alloc] init];
   _transitionController.dismissOnBackgroundTap = YES;
@@ -143,6 +145,13 @@
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
+
+  if (initialLayout == false) {
+    [self firstLayout];
+  }
+}
+
+-(void)firstLayout {
   [self.header setNeedsLayout];
   [self.header layoutIfNeeded];
 
@@ -152,6 +161,7 @@
   tableFrame.origin.y = CGRectGetHeight(self.header.frame);
   _tableView.tableView.frame = tableFrame;
   self.preferredContentSize = CGSizeMake(width, height);
+  initialLayout = true;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -201,6 +211,9 @@
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:
     (id<UIViewControllerTransitionCoordinator>)coordinator {
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+  CGRect frame = self.view.frame;
+  frame.size = size;
+  self.view.frame = frame;
   CGRect headerFrame = self.header.frame;
   headerFrame.size.width = size.width;
   self.header.frame = headerFrame;

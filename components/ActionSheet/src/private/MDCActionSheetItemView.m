@@ -296,6 +296,25 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
   self.frame = originalFrame;
 }
 
+- (void)safeAreaInsetsDidChange {
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    [super safeAreaInsetsDidChange];
+
+    /*_preferredSheetHeight = self.originalPreferredSheetHeight + self.safeAreaInsets.bottom;
+
+    UIEdgeInsets contentInset = self.sheet.scrollView.contentInset;
+    contentInset.bottom = MAX(contentInset.bottom, self.safeAreaInsets.bottom);
+    self.sheet.scrollView.contentInset = contentInset;
+
+    CGRect scrollViewFrame = CGRectStandardize(self.sheet.scrollView.frame);
+    scrollViewFrame.size = CGSizeMake(scrollViewFrame.size.width,
+                                      CGRectGetHeight(self.frame) - self.safeAreaInsets.top);
+    self.sheet.scrollView.frame = scrollViewFrame;*/
+  }
+#endif
+}
+
 - (void)setTitle:(NSString *)title {
   titleLabel.text = title;
   [self setNeedsLayout];
