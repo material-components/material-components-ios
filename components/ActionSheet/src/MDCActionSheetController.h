@@ -119,8 +119,8 @@ MDC_SUBCLASSING_RESTRICTED
 @property (nonatomic, nullable, copy) NSString *message;
 
 /*
- Indicates whether the button should automatically update its font when the device’s
- UIContentSizeCategory is changed.
+ Indicates whether the title, message, and action items should automatically update its font when
+ the device’s UIContentSizeCategory is changed.
 
  This property is modeled after the adjustsFontForContentSizeCategory property in the
  UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
