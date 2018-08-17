@@ -250,7 +250,7 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
     messageLabel.font = [MDCTypography body1Font];
   }
   messageLabel.numberOfLines = 2;
-  messageLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
+  messageLabel.lineBreakMode = NSLineBreakByWordWrapping;
   messageLabel.alpha = kMessageLabelAlpha;
 }
 
@@ -269,7 +269,6 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
   self.scrollView.contentSize = contentSize;
 
   boundsSize.width = boundsSize.width - kLeadingPadding - kTrailingPadding;
-  boundsSize.width = [self accomodateSafeAreaInWidth:boundsSize.width];
   CGSize titleSize = [titleLabel sizeThatFits:boundsSize];
   titleSize.width = boundsSize.width;
   CGSize messageSize = [messageLabel sizeThatFits:boundsSize];
@@ -280,12 +279,6 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
                                  titleSize.width, titleSize.height);
   CGRect messageFrame = CGRectMake(kLeadingPadding, CGRectGetMaxY(titleFrame) + kMiddlePadding,
                                    messageSize.width, messageSize.height);
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-  if (@available(iOS 11.0, *)) {
-    titleFrame.size.width = [self accomodateSafeAreaInWidth:CGRectGetWidth(titleFrame)];
-    messageFrame.size.width = [self accomodateSafeAreaInWidth:CGRectGetWidth(messageFrame)];
-  }
-#endif
   titleLabel.frame = titleFrame;
   messageLabel.frame = messageFrame;
 
@@ -314,26 +307,6 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
 #endif
   return newWidth;
 }
-
-//- (void)safeAreaInsetsDidChange {
-//#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-//  if (@available(iOS 11.0, *)) {
-//    [super safeAreaInsetsDidChange];
-//
-//    //[self setNeedsLayout];
-//    /*_preferredSheetHeight = self.originalPreferredSheetHeight + self.safeAreaInsets.bottom;
-//
-//    UIEdgeInsets contentInset = self.sheet.scrollView.contentInset;
-//    contentInset.bottom = MAX(contentInset.bottom, self.safeAreaInsets.bottom);
-//    self.sheet.scrollView.contentInset = contentInset;
-//
-//    CGRect scrollViewFrame = CGRectStandardize(self.sheet.scrollView.frame);
-//    scrollViewFrame.size = CGSizeMake(scrollViewFrame.size.width,
-//                                      CGRectGetHeight(self.frame) - self.safeAreaInsets.top);
-//    self.sheet.scrollView.frame = scrollViewFrame;*/
-//  }
-//#endif
-//}
 
 - (void)setTitle:(NSString *)title {
   titleLabel.text = title;
@@ -442,7 +415,7 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
         (kStandardPadding * 2) + kMiddlePadding;
   }
   CGSize contentSize;
-  contentSize.width = (CGFloat)ceil(contentWidth);
+  contentSize.width = (CGFloat)ceil(boundingWidth);
   contentSize.height = (CGFloat)ceil(contentHeight);
   return contentSize;
 }

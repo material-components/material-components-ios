@@ -41,6 +41,14 @@ class MDCActionSheetSwiftSupplemental {
   finibus vulputate eros, in luctus diam auctor in.
   """
 
+  static var m: String {
+    var str: String = "l "
+    for _ in 0..<1000 {
+      str += "l "
+    }
+    return str
+  }
+
   static func typical() -> MDCActionSheetController {
     let actionSheet = MDCActionSheetController()
     actionSheet.addAction(actionOne)
@@ -68,7 +76,7 @@ class MDCActionSheetSwiftSupplemental {
 
   static func titleAndMessage() -> MDCActionSheetController {
     let actionSheet = MDCActionSheetController(title: "Action Sheet",
-                                               message: messageString)
+                                               message: m)
     actionSheet.addAction(actionOne)
     actionSheet.addAction(actionTwo)
     actionSheet.addAction(actionThree)
