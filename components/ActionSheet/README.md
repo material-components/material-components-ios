@@ -7,8 +7,7 @@
 Material design action sheets should be used as an overflow menu. An Action Sheet comes up from the bottom of
 the screen and displays actions a user can take.
 
-# Update the gifs!
-<img src="docs/assets/actionSheetPortrait.gif" alt="An animation showing a Material Design Action Sheet." width="75"> <img src="docs/assets/actionSheetLandscape.gif" alt="An animation showing a Material Design Action Sheet." width="162">
+<img src="docs/assets/actionSheetPortrait.gif" alt="An animation showing a Material Design Action Sheet." width="150"> <img src="docs/assets/actionSheetLandscape.gif" alt="An animation showing a Material Design Action Sheet." width="324">
 
 ## Design & API documentation
 
