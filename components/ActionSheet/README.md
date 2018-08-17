@@ -11,10 +11,6 @@ the screen and displays actions a user can take.
 
 ## Design & API documentation
 
-<ui class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/design/components/lists.html">Material Design guidelines: Bottom Sheet</a></li>
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/design/components/sheets-bottom.html">Material Design guidelines: List</a></li>
-</ul>
 
 ## Table of contents
 
@@ -40,7 +36,7 @@ the screen and displays actions a user can take.
 Add the following to your `Podfile`:
 
 ```bash
-pod 'MaterialComponents/'
+pod 'MaterialComponents/ActionSheet'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
@@ -57,13 +53,13 @@ To import the component:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
-import MaterialComponents.Material
+import MaterialComponents.MaterialActionSheet
 ```
 
 #### Objective-C
 
 ```objc
-#import "Material.h"
+#import "MaterialActionSheet.h"
 ```
 <!--</div>-->
 
