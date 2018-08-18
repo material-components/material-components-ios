@@ -15,8 +15,9 @@
  */
 
 #import "MDCActionSheetListViewController.h"
+
 #import "MDCActionSheetItemView.h"
-#import "../MDCActionSheetController.h"
+#import "MDCActionSheetController.h"
 #import "MaterialTypography.h"
 
 NSString *const kReuseIdentifier = @"BaseCell";
@@ -48,7 +49,7 @@ static const CGFloat kActionItemTrailingPadding = 16.f;
                                                          actions:actions];
 }
 
--(void)commonMDCActionSheetListInit {
+- (void)commonMDCActionSheetListInit {
   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   self.tableView.scrollEnabled = NO;
   self.tableView.dataSource = self;

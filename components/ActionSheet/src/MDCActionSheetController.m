@@ -15,13 +15,12 @@
  */
 
 #import "MDCActionSheetController.h"
+
 #import "MDCActionSheetItemView.h"
 #import "MDCActionSheetListViewController.h"
 #import "MaterialBottomSheet.h"
 #import "MaterialApplication.h"
 #import "MaterialTypography.h"
-
-//NSString *const kTableReuseIdentifier = @"BaseCell";
 
 @interface MDCActionSheetAction ()
 
@@ -51,7 +50,7 @@
   return self;
 }
 
--(id)copyWithZone:(__unused NSZone *)zone {
+- (id)copyWithZone:(__unused NSZone *)zone {
   MDCActionSheetAction *action = [[self class] actionWithTitle:self.title
                                                          image:self.image
                                                        handler:self.completionHandler];
@@ -74,17 +73,13 @@
 @implementation MDCActionSheetController {
   NSString *_actionSheetTitle;
   NSMutableArray<MDCActionSheetAction *> *_actions;
-  MDCBottomSheetController *_bottomSheet;
   MDCBottomSheetTransitionController *_transitionController;
   BOOL mdc_adjustFontForContentSizeCategory;
   BOOL initialLayout;
 }
 
 + (instancetype)actionSheetControllerWithTitle:(NSString *)title message:(NSString *)message {
-  MDCActionSheetController *actionSheet = [[MDCActionSheetController alloc] initWithTitle:title
-                                                                                  message:message];
-  
-  return actionSheet;
+  return [[MDCActionSheetController alloc] initWithTitle:title message:message];
 }
 
 + (instancetype)actionSheetControllerWithTitle:(NSString *)title {
@@ -108,7 +103,6 @@
 
 - (void)commonMDCActionSheetControllerInit {
   initialLayout = false;
-  _bottomSheet = [[MDCBottomSheetController alloc] initWithContentViewController:self];
   _transitionController = [[MDCBottomSheetTransitionController alloc] init];
   _transitionController.dismissOnBackgroundTap = YES;
   super.transitioningDelegate = _transitionController;
@@ -154,7 +148,7 @@
   }
 }
 
--(void)firstLayout {
+- (void)firstLayout {
   [self.header setNeedsLayout];
   [self.header layoutIfNeeded];
 
@@ -206,7 +200,7 @@
   return _transitionController.dismissOnBackgroundTap;
 }
 
--(void)setDismissOnBackgroundTap:(BOOL)dismissOnBackgroundTap {
+- (void)setDismissOnBackgroundTap:(BOOL)dismissOnBackgroundTap {
   _transitionController.dismissOnBackgroundTap = dismissOnBackgroundTap;
   self.mdc_bottomSheetPresentationController.dismissOnBackgroundTap = dismissOnBackgroundTap;
 }
@@ -228,12 +222,12 @@
   self.preferredContentSize = updatedSize;
 }
 
--(void)setTransitioningDelegate:(id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
+- (void)setTransitioningDelegate:(id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
   NSAssert(NO, @"MDCActionSheetController.transitionDelegate cannot be changed");
   return;
 }
 
--(void)setModalPresentationStyle:(__unused UIModalPresentationStyle)modalPresentationStyle {
+- (void)setModalPresentationStyle:(__unused UIModalPresentationStyle)modalPresentationStyle {
   NSAssert(NO, @"MDCActionSheetController.modalPresentationStyle cannot be changed.");
   return;
 }

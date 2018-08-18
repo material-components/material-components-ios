@@ -15,6 +15,7 @@
  */
 
 #import "MDCActionSheetItemView.h"
+
 #import "MaterialTypography.h"
 
 static const CGFloat kTitleLabelAlpha = 0.87f;
@@ -237,7 +238,7 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
   return self;
 }
 
--(void)commonMDCActionSheetHeaderViewInit {
+- (void)commonMDCActionSheetHeaderViewInit {
   self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
   titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
   messageLabel = [[UILabel alloc] initWithFrame:CGRectZero];
