@@ -879,10 +879,10 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   _shiftAccumulator = MIN([self fhv_accumulatorMax], _shiftAccumulator);
 
   CGFloat destination;
-  if (_shiftAccumulator > 0) { // Shifted
+  if (_shiftAccumulator > 0) {  // Shifted
     destination = _wantsToBeHidden ? [self fhv_accumulatorMax] : 0;
 
-  } else if (_shiftAccumulator < 0) { // Expanded
+  } else if (_shiftAccumulator < 0) {  // Expanded
     destination = _wantsToBeHidden ? 0 : [self fhv_accumulatorMin];
 
   } else {
@@ -899,8 +899,8 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 
   // This is a simple "force" that's stronger the further we are from the destination.
   _shiftAccumulator += kAttachmentCoefficient * distanceToDestination * duration;
-  _shiftAccumulator = MAX([self fhv_accumulatorMin],
-                          MIN([self fhv_accumulatorMax], _shiftAccumulator));
+  _shiftAccumulator =
+      MAX([self fhv_accumulatorMin], MIN([self fhv_accumulatorMax], _shiftAccumulator));
 
   [_statusBarShifter setOffset:_shiftAccumulator];
 
@@ -1148,9 +1148,9 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
     bounds.size.height = MAX(self.computedMinimumHeight, headerHeight) + additionalHeightInjection;
 
   } else {
-    bounds.size.height = MAX(self.computedMinimumHeight,
-                             MIN(self.computedMaximumHeight,
-                                 headerHeight)) + additionalHeightInjection;
+    bounds.size.height =
+        MAX(self.computedMinimumHeight, MIN(self.computedMaximumHeight, headerHeight)) +
+        additionalHeightInjection;
   }
 
   // Avoid excessive writes - the default behavior of the flexible header has minimal height
