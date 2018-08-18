@@ -37,7 +37,7 @@
 @property(nonatomic, nonnull) MDCActionSheetAction *action;
 
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
-BOOL mdc_adjustsFontForContentSizeCategory;
+    BOOL mdc_adjustsFontForContentSizeCategory;
 
 @property(nonatomic, nonnull, strong) UIFont *actionsFont;
 
