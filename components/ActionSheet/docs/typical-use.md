@@ -1,6 +1,7 @@
-### Typical use: themed buttons
+### Typical use
 
-Create an instance of `MDCActionSheetController` and add actions to it, once actions are added, just present it.
+Create an instance of `MDCActionSheetController` and add actions to it, once actions are added. You can now 
+present the action sheet controller.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift

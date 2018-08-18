@@ -19,7 +19,7 @@ the screen and displays actions a user can take.
   - [Installation with CocoaPods](#installation-with-cocoapods)
   - [Importing](#importing)
 - [Usage](#usage)
-  - [Typical use: themed buttons](#typical-use-themed-buttons)
+  - [Typical use](#typical-use)
 
 - - -
 
@@ -68,9 +68,10 @@ import MaterialComponents.MaterialActionSheet
 
 <!-- Extracted from docs/typical-use.md -->
 
-### Typical use: themed buttons
+### Typical use
 
-Create an instance of `MDCActionSheetController` and add actions to it, once actions are added, just present it.
+Create an instance of `MDCActionSheetController` and add actions to it, once actions are added. You can now 
+present the action sheet controller.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift

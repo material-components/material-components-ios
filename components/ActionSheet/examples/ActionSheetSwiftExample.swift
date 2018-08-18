@@ -52,19 +52,19 @@ class ActionSheetSwiftExample: UIViewController {
     let actionSheet: MDCActionSheetController
     switch type {
     case .typical:
-      actionSheet = MDCActionSheetSwiftSupplemental.typical()
+      actionSheet = ActionSheetSwiftExample.typical()
     case .title:
-      actionSheet = MDCActionSheetSwiftSupplemental.title()
+      actionSheet = ActionSheetSwiftExample.title()
     case .message:
-      actionSheet = MDCActionSheetSwiftSupplemental.message()
+      actionSheet = ActionSheetSwiftExample.message()
     case .noIcons:
-      actionSheet = MDCActionSheetSwiftSupplemental.noIcons()
+      actionSheet = ActionSheetSwiftExample.noIcons()
     case .titleAndMessage:
-      actionSheet = MDCActionSheetSwiftSupplemental.titleAndMessage()
+      actionSheet = ActionSheetSwiftExample.titleAndMessage()
     case .dynamicType:
-      actionSheet = MDCActionSheetSwiftSupplemental.dynamic()
+      actionSheet = ActionSheetSwiftExample.dynamic()
     case .delayed:
-      actionSheet = MDCActionSheetSwiftSupplemental.titleAndMessage()
+      actionSheet = ActionSheetSwiftExample.titleAndMessage()
       let action = MDCActionSheetAction(title: "Home", image: UIImage(named: "Home")) { _ in
         print("Second home action")
       }
@@ -106,5 +106,96 @@ extension ActionSheetSwiftExample : UITableViewDataSource {
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return data.count
+  }
+}
+
+extension ActionSheetSwiftExample {
+  static var actionOne: MDCActionSheetAction {
+    return MDCActionSheetAction(title: "Home",
+                                image: UIImage(named: "Home")!) { (_) in
+                                  print("Home action") }
+  }
+
+  static var actionTwo: MDCActionSheetAction {
+    return MDCActionSheetAction(title: "Favorite",
+                                image: UIImage(named: "Favorite")!) { (_) in
+                                  print("Favorite action") }
+  }
+
+  static var actionThree: MDCActionSheetAction {
+    return MDCActionSheetAction(title: "Email",
+                                image: UIImage(named: "Email")!) { (_) in
+                                  print("Email action") }
+  }
+
+  static var messageString: String {
+    return "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ultricies diam " +
+      "libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risusnmaximus tempus. " +
+      "Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, quis eleifend nisi " +
+    "eros dictum mi. In finibus vulputate eros, in luctus diam auctor in."
+  }
+
+  static func typical() -> MDCActionSheetController {
+    let actionSheet = MDCActionSheetController()
+    actionSheet.addAction(actionOne)
+    actionSheet.addAction(actionTwo)
+    actionSheet.addAction(actionThree)
+    return actionSheet
+  }
+
+  static func title() -> MDCActionSheetController {
+    let actionSheet: MDCActionSheetController = MDCActionSheetController(title: "Action Sheet")
+    actionSheet.addAction(actionOne)
+    actionSheet.addAction(actionTwo)
+    actionSheet.addAction(actionThree)
+    return actionSheet
+  }
+
+  static func message() -> MDCActionSheetController {
+    let actionSheet = MDCActionSheetController(title: nil,
+                                               message: messageString)
+    actionSheet.addAction(actionOne)
+    actionSheet.addAction(actionTwo)
+    actionSheet.addAction(actionThree)
+    return actionSheet
+  }
+
+  static func titleAndMessage() -> MDCActionSheetController {
+    let actionSheet = MDCActionSheetController(title: "Action Sheet",
+                                               message: messageString)
+    actionSheet.addAction(actionOne)
+    actionSheet.addAction(actionTwo)
+    actionSheet.addAction(actionThree)
+    return actionSheet
+  }
+
+  static func noIcons() -> MDCActionSheetController {
+    let actionSheet = MDCActionSheetController(title: "Action Sheet", message: messageString)
+    let action1 = MDCActionSheetAction(title: "Home", image: nil, handler: { _ in
+      print("Home action")
+    })
+    let action2 = MDCActionSheetAction(title: "Favorite", image: nil, handler: { _ in
+      print("Favorite action")
+    })
+    let action3 = MDCActionSheetAction(title: "Email", image: nil, handler: { _ in
+      print("Email action")
+    })
+    actionSheet.addAction(action1)
+    actionSheet.addAction(action2)
+    actionSheet.addAction(action3)
+    return actionSheet
+  }
+
+  static func dynamic() -> MDCActionSheetController {
+    let actionSheet = MDCActionSheetController(title: "Action sheet", message: messageString)
+    actionSheet.mdc_adjustsFontForContentSizeCategory = true
+    let actionTitle = "reallyLongItemActionTitleThatIsLongerThanOneLine"
+    let actionThree = MDCActionSheetAction(title: actionTitle,
+                                           image: UIImage(named: "Email")!,
+                                           handler: nil)
+    actionSheet.addAction(actionOne)
+    actionSheet.addAction(actionTwo)
+    actionSheet.addAction(actionThree)
+    return actionSheet
   }
 }
