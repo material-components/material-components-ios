@@ -184,6 +184,7 @@
 
 - (void)preferredContentSizeDidChangeForChildContentContainer:(id<UIContentContainer>)container {
   [super preferredContentSizeDidChangeForChildContentContainer:container];
+
   [self.presentationController
       preferredContentSizeDidChangeForChildContentContainer:self];
 }
@@ -208,6 +209,7 @@
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:
     (id<UIViewControllerTransitionCoordinator>)coordinator {
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+  
   CGRect frame = self.view.frame;
   frame.size = size;
   self.view.frame = frame;

@@ -155,6 +155,7 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
 
 - (void)layoutSubviews {
   [super layoutSubviews];
+  
   _widthConstraint.constant = CGRectGetWidth(self.contentView.frame) - (kLeadingPadding * 2);
 }
 
