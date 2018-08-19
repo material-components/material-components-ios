@@ -43,9 +43,6 @@
  MDCActionSheetController does not support UIPopoverController, instead it will always be presented
  in a sheet from the bottom.
 
- ### Dependencies
-
- MDCActionSheetController depends on BottomSheet Component.
  */
 MDC_SUBCLASSING_RESTRICTED
 @interface MDCActionSheetController : UIViewController

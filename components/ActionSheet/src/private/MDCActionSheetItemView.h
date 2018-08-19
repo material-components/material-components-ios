@@ -18,7 +18,7 @@
 #import "MaterialInk.h"
 #import "../MDCActionSheetController.h"
 
-@interface MDCActionSheetItemView : UITableViewCell
+@interface MDCActionSheetItemTableViewCell : UITableViewCell
 
 /** Cells must be created with cellWithAction: */
 - (nonnull instancetype)initWithAction:(MDCActionSheetAction *)action

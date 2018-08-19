@@ -55,7 +55,7 @@ static const CGFloat kActionItemTrailingPadding = 16.f;
   self.tableView.dataSource = self;
   [self.tableView setTranslatesAutoresizingMaskIntoConstraints:NO];
   self.actionsFont = [[self class] actionsFontDefault];
-  [self.tableView registerClass:[MDCActionSheetItemView class]
+  [self.tableView registerClass:[MDCActionSheetItemTableViewCell class]
          forCellReuseIdentifier:kReuseIdentifier];
   self.backgroundColor = [UIColor whiteColor];
 }
@@ -77,8 +77,8 @@ static const CGFloat kActionItemTrailingPadding = 16.f;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  MDCActionSheetItemView *cell =
-  [[MDCActionSheetItemView alloc] initWithAction:self.actions[indexPath.row]
+  MDCActionSheetItemTableViewCell *cell =
+  [[MDCActionSheetItemTableViewCell alloc] initWithAction:self.actions[indexPath.row]
                                  reuseIdentifier:kReuseIdentifier];
   cell.backgroundColor = self.backgroundColor;
   cell.actionsFont = _actionsFont;

@@ -30,11 +30,11 @@ static const CGFloat kTrailingPadding = 16.f;
 static const CGFloat kMiddlePadding = 8.f;
 static const CGFloat kActionItemTitleVerticalPadding = 18.f;
 
-@interface MDCActionSheetItemView ()
+@interface MDCActionSheetItemTableViewCell ()
 @end
 
 
-@implementation MDCActionSheetItemView {
+@implementation MDCActionSheetItemTableViewCell {
   MDCActionSheetAction *_itemAction;
   UILabel *_textLabel;
   UIImageView *_imageView;
