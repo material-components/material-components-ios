@@ -108,25 +108,25 @@
   super.transitioningDelegate = _transitionController;
   super.modalPresentationStyle = UIModalPresentationCustom;
   _actions = [[NSMutableArray alloc] init];
-  _tableView = [[MDCActionSheetListViewController alloc] initWithTitle:_actionSheetTitle
+  self.tableView = [[MDCActionSheetListViewController alloc] initWithTitle:_actionSheetTitle
                                                                message:_message
                                                                actions:_actions];
-  _tableView.tableView.delegate = self;
-  [_tableView.tableView setTranslatesAutoresizingMaskIntoConstraints:NO];
-  _tableView.tableView.estimatedRowHeight = 56.f;
-  _tableView.tableView.rowHeight = UITableViewAutomaticDimension;
+  self.tableView.tableView.delegate = self;
+  self.tableView.tableView.translatesAutoresizingMaskIntoConstraints = NO;
+  self.tableView.tableView.estimatedRowHeight = 56.f;
+  self.tableView.tableView.rowHeight = UITableViewAutomaticDimension;
   self.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)addAction:(MDCActionSheetAction *)action {
-  [_tableView addAction:action];
-  [_tableView.tableView setNeedsLayout];
+  [self.tableView addAction:action];
+  [self.tableView.tableView setNeedsLayout];
   initialLayout = false;
   [self.view setNeedsLayout];
 }
 
 - (NSArray<MDCActionSheetAction *> *)actions {
-  return _tableView.actions;
+  return self.tableView.actions;
 }
 
 - (void)viewDidLoad {
@@ -136,7 +136,7 @@
     self.header = [self headerView];
   }
 
-  [self.view addSubview:_tableView.tableView];
+  [self.view addSubview:self.tableView.tableView];
   [self.view addSubview:self.header];
 }
 
@@ -153,10 +153,10 @@
   [self.header layoutIfNeeded];
 
   CGFloat width = CGRectGetWidth(self.view.bounds);
-  CGFloat height = CGRectGetHeight(self.header.frame) + [_tableView tableHeightForWidth:width];
-  CGRect tableFrame = _tableView.tableView.frame;
+  CGFloat height = CGRectGetHeight(self.header.frame) + [self.tableView tableHeightForWidth:width];
+  CGRect tableFrame = self.tableView.tableView.frame;
   tableFrame.origin.y = CGRectGetHeight(self.header.frame);
-  _tableView.tableView.frame = tableFrame;
+  self.tableView.tableView.frame = tableFrame;
   self.preferredContentSize = CGSizeMake(width, height);
   initialLayout = true;
 }
@@ -219,7 +219,7 @@
   [self.header setNeedsLayout];
   [self.header layoutIfNeeded];
 
-  CGFloat height = CGRectGetHeight(self.header.frame) + [_tableView tableHeightForWidth:size.width];
+  CGFloat height = CGRectGetHeight(self.header.frame) + [self.tableView tableHeightForWidth:size.width];
   CGSize updatedSize = CGSizeMake(size.width, height);
   self.preferredContentSize = updatedSize;
 }
@@ -258,7 +258,7 @@
 
 - (void)setTitle:(NSString *)title {
   _actionSheetTitle = title;
-  _header.title = title;
+  self.header.title = title;
   initialLayout = false;
   [self.view setNeedsLayout];
 }
@@ -269,7 +269,7 @@
 
 - (void)setMessage:(NSString *)message {
   _message = message;
-  _header.message = message;
+  self.header.message = message;
   initialLayout = false;
   [self.view setNeedsLayout];
 }
@@ -286,7 +286,7 @@
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
   self.view.backgroundColor = backgroundColor;
-  _tableView.backgroundColor = backgroundColor;
+  self.tableView.backgroundColor = backgroundColor;
   self.header.backgroundColor = backgroundColor;
 }
 
