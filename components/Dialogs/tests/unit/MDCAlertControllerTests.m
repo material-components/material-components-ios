@@ -130,11 +130,11 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
 }
 
 - (void)testAlertControllerColorSettingBeforeActions {
-  //Given
+  // Given
   UIColor *testColor = [UIColor redColor];
   MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:@"title"
                                                                    message:@"message"];
-  //When
+  // When
   alert.titleColor = testColor;
   alert.messageColor = testColor;
   alert.buttonTitleColor = testColor;
@@ -143,7 +143,7 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
   [alert addAction:[MDCAlertAction actionWithTitle:@"action1" handler:nil]];
   [alert addAction:[MDCAlertAction actionWithTitle:@"action2" handler:nil]];
 
-  //Then
+  // Then
   MDCAlertControllerView *view = (MDCAlertControllerView *)alert.view;
   XCTAssertEqual(view.titleLabel.textColor, testColor);
   XCTAssertEqual(view.messageLabel.textColor, testColor);
@@ -156,11 +156,11 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
 }
 
 - (void)testAlertControllerColorSettingAfterActions {
-  //Given
+  // Given
   UIColor *testColor = [UIColor redColor];
   MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:@"title"
                                                                    message:@"message"];
-  //When
+  // When
   [alert addAction:[MDCAlertAction actionWithTitle:@"action1" handler:nil]];
   [alert addAction:[MDCAlertAction actionWithTitle:@"action2" handler:nil]];
 
@@ -169,7 +169,7 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
   alert.buttonTitleColor = testColor;
   alert.buttonInkColor = testColor;
 
-  //Then
+  // Then
   MDCAlertControllerView *view = (MDCAlertControllerView *)alert.view;
   XCTAssertEqual(view.titleLabel.textColor, testColor);
   XCTAssertEqual(view.messageLabel.textColor, testColor);
@@ -182,11 +182,11 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
 }
 
 - (void)testAlertControllerColorSettingBetweenActions {
-  //Given
+  // Given
   UIColor *testColor = [UIColor redColor];
   MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:@"title"
                                                                    message:@"message"];
-  //When
+  // When
   [alert addAction:[MDCAlertAction actionWithTitle:@"action1" handler:nil]];
 
   alert.titleColor = testColor;
@@ -196,7 +196,7 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
 
   [alert addAction:[MDCAlertAction actionWithTitle:@"action2" handler:nil]];
 
-  //Then
+  // Then
   MDCAlertControllerView *view = (MDCAlertControllerView *)alert.view;
   XCTAssertEqual(view.titleLabel.textColor, testColor);
   XCTAssertEqual(view.messageLabel.textColor, testColor);
