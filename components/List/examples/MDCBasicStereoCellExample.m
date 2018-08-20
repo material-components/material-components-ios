@@ -11,14 +11,14 @@
  limitations under the License.
  */
 
-#import "MDCListItemCellExample.h"
+#import "MDCBasicStereoCellExample.h"
 
-#import "MDCListItemCell.h"
+#import "MDCBasicStereoCell.h"
 
 static CGFloat const kArbitraryCellHeight = 75.f;
-static NSString *const kListItemCellIdentifier = @"kListItemCellIdentifier";
+static NSString *const kBasicStereoCellIdentifier = @"kBasicStereoCellIdentifier";
 
-@interface MDCListItemCellExample () <UICollectionViewDelegate,
+@interface MDCBasicStereoCellExample () <UICollectionViewDelegate,
                                       UICollectionViewDataSource>
 
 @property (strong, nonatomic) UICollectionView *collectionView;
@@ -27,7 +27,7 @@ static NSString *const kListItemCellIdentifier = @"kListItemCellIdentifier";
 @property (nonatomic, assign) NSInteger numberOfCells;
 @end
 
-@implementation MDCListItemCellExample
+@implementation MDCBasicStereoCellExample
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -53,14 +53,15 @@ static NSString *const kListItemCellIdentifier = @"kListItemCellIdentifier";
 
 - (void)createCollectionView {
   self.collectionViewLayout = [[UICollectionViewFlowLayout alloc] init];
-  self.collectionViewLayout.estimatedItemSize = CGSizeMake(self.collectionView.bounds.size.width, kArbitraryCellHeight);
+  self.collectionViewLayout.estimatedItemSize =
+      CGSizeMake(self.collectionView.bounds.size.width, kArbitraryCellHeight);
   self.collectionViewLayout.minimumInteritemSpacing = 1;
   self.collectionViewLayout.minimumLineSpacing = 0;
   self.collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds
                                            collectionViewLayout:self.collectionViewLayout];
   self.collectionView.backgroundColor = [UIColor whiteColor];
-  [self.collectionView registerClass:[MDCListItemCell class]
-          forCellWithReuseIdentifier:kListItemCellIdentifier];
+  [self.collectionView registerClass:[MDCBasicStereoCell class]
+          forCellWithReuseIdentifier:kBasicStereoCellIdentifier];
   self.collectionView.delegate = self;
   self.collectionView.dataSource = self;
   [self.view addSubview:self.collectionView];
@@ -81,7 +82,8 @@ static NSString *const kListItemCellIdentifier = @"kListItemCellIdentifier";
 #endif
   CGRect frame = CGRectMake(originX, originY, width, height);
   self.collectionView.frame = frame;
-  self.collectionViewLayout.estimatedItemSize = CGSizeMake(self.collectionView.bounds.size.width, kArbitraryCellHeight);
+  self.collectionViewLayout.estimatedItemSize =
+      CGSizeMake(self.collectionView.bounds.size.width, kArbitraryCellHeight);
   [self.collectionViewLayout invalidateLayout];
   [self.collectionView reloadData];
 }
@@ -90,19 +92,24 @@ static NSString *const kListItemCellIdentifier = @"kListItemCellIdentifier";
   return 1;
 }
 
--(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+-(NSInteger)collectionView:(UICollectionView *)collectionView
+    numberOfItemsInSection:(NSInteger)section {
   return self.numberOfCells;
 }
 
--(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-  MDCListItemCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kListItemCellIdentifier
-                                                                       forIndexPath:indexPath];
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                 cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+  MDCBasicStereoCell *cell =
+      [collectionView dequeueReusableCellWithReuseIdentifier:kBasicStereoCellIdentifier
+                                                forIndexPath:indexPath];
   cell.titleLabel.text = self.randomStrings[indexPath.item];
   cell.detailLabel.text = self.randomStrings[(indexPath.item + 1) % self.randomStrings.count];
   cell.titleLabel.textColor = [UIColor darkGrayColor];
   cell.detailLabel.textColor = [UIColor darkGrayColor];
-  cell.leadingImageView.image = [[UIImage imageNamed:@"Cake"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  cell.trailingImageView.image = [[UIImage imageNamed:@"Favorite"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  cell.leadingImageView.image =
+      [[UIImage imageNamed:@"Cake"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  cell.trailingImageView.image =
+      [[UIImage imageNamed:@"Favorite"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   cell.leadingImageView.tintColor = [UIColor darkGrayColor];
   cell.trailingImageView.tintColor = [UIColor darkGrayColor];
   cell.mdc_adjustsFontForContentSizeCategory = YES;
@@ -118,7 +125,7 @@ static NSString *const kListItemCellIdentifier = @"kListItemCellIdentifier";
     NSMutableArray *letterArray = [[NSMutableArray alloc] initWithCapacity:lengthOfWord];
     for (NSInteger j = 0; j < lengthOfWord; j++) {
       int asciiCode = 97 + arc4random() % (122 - 97);
-      NSString *characterString = [NSString stringWithFormat:@"%c", asciiCode]; // A
+      NSString *characterString = [NSString stringWithFormat:@"%c", asciiCode];
       [letterArray addObject:characterString];
     }
     NSString *word = [letterArray componentsJoinedByString:@""];

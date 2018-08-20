@@ -13,6 +13,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MDCListItemCellExample : UIViewController
+@interface MDCBasicStereoCellExample : UIViewController
 
 @end

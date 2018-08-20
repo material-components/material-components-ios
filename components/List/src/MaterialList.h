@@ -13,4 +13,4 @@
 // limitations under the License.
 
 #import "MDCBaseCell.h"
-#import "MDCListItemCell.h"
+#import "MDCBasicStereoCell.h"
