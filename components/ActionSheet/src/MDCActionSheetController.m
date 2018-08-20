@@ -133,10 +133,12 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  
-  if (self.header == nil) {
-    self.header = [self headerView];
-  }
+  CGRect headerRect = CGRectZero;
+  headerRect.size.width = CGRectGetWidth(self.view.frame);
+  self.header = [[MDCActionSheetHeaderView alloc] initWithFrame:headerRect];
+  self.header.title = _actionSheetTitle;
+  self.header.message = _message;
+  self.header.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
 
   [self.view addSubview:self.tableView.tableView];
   [self.view addSubview:self.header];
@@ -246,16 +248,6 @@
   return;
 }
 
-- (MDCActionSheetHeaderView *)headerView {
-  CGRect headerRect = CGRectZero;
-  headerRect.size.width = CGRectGetWidth(self.view.frame);
-  MDCActionSheetHeaderView *header = [[MDCActionSheetHeaderView alloc] initWithFrame:headerRect];
-  header.title = _actionSheetTitle;
-  header.message = _message;
-  header.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
-  return header;
-}
-
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -310,10 +302,8 @@
 
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
   _mdc_adjustsFontForContentSizeCategory = adjusts;
-  [self loadViewIfNeeded];
-  if (self.header == nil) {
-    self.header = [self headerView];
-  }
+  [self view];
+
   self.header.mdc_adjustsFontForContentSizeCategory = adjusts;
   self.tableView.mdc_adjustsFontForContentSizeCategory = adjusts;
   [self updateFontsForDynamicType];
