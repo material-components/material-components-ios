@@ -31,22 +31,13 @@ static const CGFloat kActionItemTrailingPadding = 16.f;
   BOOL _mdc_adjustsFontForContentSizeCategory;
 }
 
-- (instancetype)initWithTitle:(NSString *)title
-                      message:(NSString *)message
-                      actions:(NSArray<MDCActionSheetAction *> *)actions {
+- (instancetype)initWithActions:(NSArray<MDCActionSheetAction *> *)actions {
   self = [super initWithStyle:UITableViewStylePlain];
   if (self) {
     self.actions = [NSMutableArray arrayWithArray:[actions copy]];
     [self commonMDCActionSheetListInit];
   }
   return self;
-}
-
-- (instancetype)initWithTitle:(NSString *) title
-                      actions:(NSArray<MDCActionSheetAction *> *)actions {
-  return [[MDCActionSheetListViewController alloc] initWithTitle:title
-                                                         message:nil
-                                                         actions:actions];
 }
 
 - (void)commonMDCActionSheetListInit {

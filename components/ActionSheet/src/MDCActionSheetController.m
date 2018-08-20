@@ -110,9 +110,7 @@
   super.transitioningDelegate = _transitionController;
   super.modalPresentationStyle = UIModalPresentationCustom;
   _actions = [[NSMutableArray alloc] init];
-  self.tableView = [[MDCActionSheetListViewController alloc] initWithTitle:_actionSheetTitle
-                                                               message:_message
-                                                               actions:_actions];
+  self.tableView = [[MDCActionSheetListViewController alloc] initWithActions:_actions];
   self.tableView.tableView.delegate = self;
   self.tableView.tableView.translatesAutoresizingMaskIntoConstraints = NO;
   self.tableView.tableView.estimatedRowHeight = 56.f;
