@@ -80,6 +80,7 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27.0f;
   return [NSString stringWithFormat:@"%ld pt", (long)points];
 }
 
+// TODO: (#4848) [ShadowLayer] cornerRadius changes don't render
 - (void)sliderValueChanged:(MDCSlider *)slider {
   NSInteger points = (NSInteger)round(slider.value);
   _paper.text = [NSString stringWithFormat:@"%ld pt", (long)points];
