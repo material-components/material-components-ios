@@ -41,19 +41,12 @@ static const CGFloat kActionItemTrailingPadding = 16.f;
 }
 
 - (void)commonMDCActionSheetListInit {
-  self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-  self.tableView.scrollEnabled = NO;
-  self.tableView.dataSource = self;
-  [self.tableView setTranslatesAutoresizingMaskIntoConstraints:NO];
   self.actionsFont = [[self class] actionsFontDefault];
-  [self.tableView registerClass:[MDCActionSheetItemTableViewCell class]
-         forCellReuseIdentifier:kReuseIdentifier];
   self.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)addAction:(MDCActionSheetAction *)action {
   [self.actions addObject:action];
-  [self.tableView reloadData];
 }
 
 #pragma mark - Table view data source
@@ -107,16 +100,6 @@ static const CGFloat kActionItemTrailingPadding = 16.f;
   [self.view setNeedsLayout];
 }
 
-- (void)setBackgroundColor:(UIColor *)backgroundColor {
-  self.view.backgroundColor = backgroundColor;
-  self.tableView.backgroundColor = backgroundColor;
-  [self.view setNeedsLayout];
-}
-
-- (UIColor *)backgroundColor {
-  return self.view.backgroundColor;
-}
-
 #pragma mark - Setters / Getters
 
 - (void)setActionsFont:(UIFont *)actionsFont {
@@ -124,7 +107,7 @@ static const CGFloat kActionItemTrailingPadding = 16.f;
   [self updateFonts];
 }
 
-- (CGFloat)tableHeightForWidth:(CGFloat)width {
+- (CGFloat)calculateHeightForWidth:(CGFloat)width {
   CGFloat height = 0.f;
   UILabel *mockLabel = [[UILabel alloc] initWithFrame:CGRectZero];
   mockLabel.font = _actionsFont;

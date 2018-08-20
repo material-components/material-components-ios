@@ -1,13 +1,13 @@
 ### Typical use
 
-Create an instance of `MDCActionSheetController` and add actions to it, once actions are added. You can now 
+Create an instance of `MDCActionSheetController` and add actions to it. You can now 
 present the action sheet controller.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
 let actionSheet = MDCActionSheetController(title: "Action Sheet", 
-                                         message: "Secondary line text")
+                                           message: "Secondary line text")
 let actionOne = MDCActionSheetAction(title: "Home", 
                                      image: UIImage(named: "Home"), 
                                      handler: { print("Home action" })

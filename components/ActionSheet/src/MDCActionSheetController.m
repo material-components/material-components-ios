@@ -22,6 +22,8 @@
 #import "MaterialApplication.h"
 #import "MaterialTypography.h"
 
+NSString *const kReuseIdentifier = @"BaseCell";
+
 @interface MDCActionSheetAction ()
 
 @property(nonatomic, nullable, copy) MDCActionSheetHandler completionHandler;
@@ -64,7 +66,8 @@
 
 @implementation MDCActionSheetController {
   MDCActionSheetHeaderView *_header;
-  MDCActionSheetListViewController *_tableView;
+  UITableViewController *_tableView;
+  MDCActionSheetListViewController *_dataSource;
   NSString *_actionSheetTitle;
   NSMutableArray<MDCActionSheetAction *> *_actions;
   MDCBottomSheetTransitionController *_transitionController;
@@ -107,23 +110,30 @@
   super.transitioningDelegate = _transitionController;
   super.modalPresentationStyle = UIModalPresentationCustom;
   _actions = [[NSMutableArray alloc] init];
-  _tableView = [[MDCActionSheetListViewController alloc] initWithActions:_actions];
+  _dataSource = [[MDCActionSheetListViewController alloc] initWithActions:_actions];
+  _tableView = [[UITableViewController alloc] initWithStyle:UITableViewStylePlain];
   _tableView.tableView.delegate = self;
   _tableView.tableView.translatesAutoresizingMaskIntoConstraints = NO;
   _tableView.tableView.estimatedRowHeight = 56.f;
   _tableView.tableView.rowHeight = UITableViewAutomaticDimension;
+  _tableView.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+  _tableView.tableView.scrollEnabled = NO;
+  _tableView.tableView.dataSource = _dataSource;
+  [_tableView.tableView registerClass:[MDCActionSheetItemTableViewCell class]
+               forCellReuseIdentifier:kReuseIdentifier];
   self.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)addAction:(MDCActionSheetAction *)action {
-  [_tableView addAction:action];
+  [_dataSource addAction:action];
+  [_tableView.tableView reloadData];
   [_tableView.tableView setNeedsLayout];
   initialLayout = false;
   [self.view setNeedsLayout];
 }
 
 - (NSArray<MDCActionSheetAction *> *)actions {
-  return _tableView.actions;
+  return _dataSource.actions;
 }
 
 - (void)viewDidLoad {
@@ -157,7 +167,7 @@
   [_header layoutIfNeeded];
 
   CGFloat width = CGRectGetWidth(self.view.bounds);
-  CGFloat height = CGRectGetHeight(_header.frame) + [_tableView tableHeightForWidth:width];
+  CGFloat height = CGRectGetHeight(_header.frame) + [_dataSource calculateHeightForWidth:width];
   CGRect tableFrame = _tableView.tableView.frame;
   tableFrame.origin.y = CGRectGetHeight(_header.frame);
   _tableView.tableView.frame = tableFrame;
@@ -228,7 +238,7 @@
    */
   [_header layoutIfNeeded];
 
-  CGFloat height = CGRectGetHeight(_header.frame) + [_tableView tableHeightForWidth:size.width];
+  CGFloat height = CGRectGetHeight(_header.frame) + [_dataSource calculateHeightForWidth:size.width];
   CGSize updatedSize = CGSizeMake(size.width, height);
   self.preferredContentSize = updatedSize;
 }
@@ -285,7 +295,9 @@
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
   self.view.backgroundColor = backgroundColor;
-  _tableView.backgroundColor = backgroundColor;
+  _tableView.view.backgroundColor = backgroundColor;
+  _tableView.tableView.backgroundColor = backgroundColor;
+  [_tableView.view setNeedsLayout];
   _header.backgroundColor = backgroundColor;
 }
 
@@ -300,7 +312,7 @@
   [self view];
 
   _header.mdc_adjustsFontForContentSizeCategory = adjusts;
-  _tableView.mdc_adjustsFontForContentSizeCategory = adjusts;
+  _dataSource.mdc_adjustsFontForContentSizeCategory = adjusts;
   [self updateFontsForDynamicType];
   if (_mdc_adjustsFontForContentSizeCategory) {
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -317,7 +329,7 @@
 
 - (void)updateFontsForDynamicType {
   [_header updateFonts];
-  [_tableView updateFonts];
+  [_dataSource updateFonts];
   initialLayout = false;
 }
 

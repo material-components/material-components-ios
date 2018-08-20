@@ -35,6 +35,7 @@ class ActionSheetSwiftExample: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+
     tableView.delegate = self
     tableView.dataSource = self
     tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
@@ -42,6 +43,7 @@ class ActionSheetSwiftExample: UIViewController {
 
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
+    
     view.backgroundColor = colorScheme.backgroundColor
     tableView.frame = view.frame
     tableView.frame.origin.y = 0.0

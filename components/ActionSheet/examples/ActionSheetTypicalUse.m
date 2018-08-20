@@ -43,6 +43,7 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  
   self.view.backgroundColor = _colorScheme.backgroundColor;
   [_showButton setTitle:@"Show action sheet" forState:UIControlStateNormal];
   [_showButton sizeToFit];
@@ -57,6 +58,7 @@
 
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
+
   _showButton.center = CGPointMake(self.view.center.x, self.view.center.y - 80);
 }
 
