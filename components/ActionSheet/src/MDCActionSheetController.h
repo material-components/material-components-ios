@@ -148,6 +148,11 @@ MDC_SUBCLASSING_RESTRICTED
 
 @property(nonatomic, nonnull, strong) UIColor *backgroundColor;
 
+- (void)setTransitioningDelegate:
+    (id<UIViewControllerTransitioningDelegate>)transitioningDelegate NS_UNAVAILABLE;
+
+- (void)setModalPresentationStyle:(UIModalPresentationStyle)modalPresentationStyle NS_UNAVAILABLE;
+
 @end
 
 /**

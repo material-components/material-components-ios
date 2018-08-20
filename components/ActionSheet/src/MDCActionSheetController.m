@@ -252,16 +252,6 @@ static NSString *const kReuseIdentifer = @"BaseCell";
   self.preferredContentSize = updatedSize;
 }
 
-- (void)setTransitioningDelegate:(id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
-  NSAssert(NO, @"MDCActionSheetController.transitionDelegate cannot be changed");
-  return;
-}
-
-- (void)setModalPresentationStyle:(__unused UIModalPresentationStyle)modalPresentationStyle {
-  NSAssert(NO, @"MDCActionSheetController.modalPresentationStyle cannot be changed.");
-  return;
-}
-
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
