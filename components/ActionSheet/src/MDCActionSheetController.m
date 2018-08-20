@@ -22,8 +22,6 @@
 #import "MaterialApplication.h"
 #import "MaterialTypography.h"
 
-// needsPreferredContentSizeUpdate
-
 NSString *const kReuseId = @"BaseCell";
 
 @interface MDCActionSheetAction ()
