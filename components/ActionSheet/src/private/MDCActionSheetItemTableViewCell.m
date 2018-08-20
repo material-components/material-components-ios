@@ -119,28 +119,6 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
   _imageView = [[UIImageView alloc] init];
   [self.contentView addSubview:_imageView];
   _imageView.translatesAutoresizingMaskIntoConstraints = NO;
-
-}
-
-- (void)layoutSubviews {
-  [super layoutSubviews];
-  NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-  paragraphStyle.hyphenationFactor = 1.f;
-  NSDictionary<NSAttributedStringKey, id> *attributes =
-  @{ NSParagraphStyleAttributeName : paragraphStyle };
-  NSMutableAttributedString *attributedString =
-  [[NSMutableAttributedString alloc] initWithString:_itemAction.title attributes:attributes];
-  _textLabel.attributedText = attributedString;
-
-  CGFloat leadingConstant;
-  if (_itemAction.image == nil) {
-    leadingConstant = 16.f;
-  } else {
-    leadingConstant = 72.f;
-  }
-  _leadingTitleConstraint.constant = leadingConstant;
-
-  _imageView.image = _itemAction.image;
   _imageView.alpha = kImageAlpha;
   [NSLayoutConstraint constraintWithItem:_imageView
                                attribute:NSLayoutAttributeTop
@@ -173,10 +151,31 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
   _widthConstraint.constant = CGRectGetWidth(self.contentView.frame) - (kLeadingPadding * 2);
 }
 
+- (void)layoutSubviews {
+  [super layoutSubviews];
+
+  NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+  paragraphStyle.hyphenationFactor = 1.f;
+  NSDictionary<NSAttributedStringKey, id> *attributes =
+  @{ NSParagraphStyleAttributeName : paragraphStyle };
+  NSMutableAttributedString *attributedString =
+  [[NSMutableAttributedString alloc] initWithString:_itemAction.title attributes:attributes];
+  _textLabel.attributedText = attributedString;
+
+  CGFloat leadingConstant;
+  if (_itemAction.image == nil) {
+    leadingConstant = 16.f;
+  } else {
+    leadingConstant = 72.f;
+  }
+  _leadingTitleConstraint.constant = leadingConstant;
+
+  _imageView.image = _itemAction.image;
+}
+
 - (void)setAction:(MDCActionSheetAction *)action {
   _itemAction = [action copy];
   _textLabel.text = _itemAction.title;
-  [_textLabel setNeedsLayout];
   _imageView.image = _itemAction.image;
   [self setNeedsLayout];
 }
