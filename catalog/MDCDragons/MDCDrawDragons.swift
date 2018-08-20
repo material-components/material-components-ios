@@ -18,15 +18,15 @@ import Foundation
 import UIKit
 
 class MDCDrawDragons {
-  static func image(with drawer: ((UIColor, CGSize) -> ()), size: CGSize, fillColor: UIColor) -> UIImage? {
+  static func image(with drawer: ((UIColor, CGSize) -> Void), size: CGSize, fillColor: UIColor) -> UIImage? {
     UIGraphicsBeginImageContextWithOptions(size, false, UIScreen.main.scale)
     drawer(fillColor, size)
     let image = UIGraphicsGetImageFromCurrentImageContext()
     UIGraphicsEndImageContext()
     return image
   }
-  
-  static func drawDragon(fillColor: UIColor, size: CGSize) -> () {
+
+  static func drawDragon(fillColor: UIColor, size: CGSize) {
     let bezierPath = UIBezierPath()
     bezierPath.move(to: CGPoint(x: 96.72, y: 63.07))
     bezierPath.addCurve(to: CGPoint(x: 92.22, y: 56.75), controlPoint1: CGPoint(x: 96.17, y: 60.32), controlPoint2: CGPoint(x: 94.44, y: 58.18))

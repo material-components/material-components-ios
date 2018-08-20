@@ -109,7 +109,7 @@ class NodeViewTableViewPrimaryDemoCell: UITableViewCell {
   func setupContainedButton() {
     containedButton.setTitle("Start Demo", for: .normal)
     containedButton.translatesAutoresizingMaskIntoConstraints = false
-    containedButton.accessibilityIdentifier = "start.demo";
+    containedButton.accessibilityIdentifier = "start.demo"
     contentView.addSubview(containedButton)
 
     // constraints
@@ -145,19 +145,17 @@ class NodeViewTableViewPrimaryDemoCell: UITableViewCell {
 
 }
 
-
-
 class MDCNodeListViewController: CBCNodeListViewController {
-  var mainSectionHeader : UIView?
-  var mainSectionHeaderTitleLabel : UILabel?
-  var mainSectionHeaderDescriptionLabel : UILabel?
-  var additionalExamplesSectionHeader : UIView?
+  var mainSectionHeader: UIView?
+  var mainSectionHeaderTitleLabel: UILabel?
+  var mainSectionHeaderDescriptionLabel: UILabel?
+  var additionalExamplesSectionHeader: UIView?
   let sectionNames = ["Description", "Additional Examples"]
   let estimadedDescriptionSectionHeight = CGFloat(100)
   let estimadedAdditionalExamplesSectionHeight = CGFloat(50)
   let padding = CGFloat(16)
   var componentDescription = ""
-  var selectedNode: CBCNode? = nil
+  var selectedNode: CBCNode?
   var titleMaxY = CGFloat(36)
   var titleDescriptionMargin = CGFloat(34)
   var descriptionLineHeight = CGFloat(24)
@@ -416,7 +414,7 @@ extension MDCNodeListViewController {
     let attrs = [NSParagraphStyleAttributeName: paragraphStyle]
 
     descriptionLabel.attributedText =
-        NSAttributedString(string:componentDescription, attributes:attrs)
+        NSAttributedString(string: componentDescription, attributes: attrs)
     descriptionLabel.alpha = MDCTypography.body1FontOpacity()
     descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
     descriptionLabel.numberOfLines = 0
@@ -509,7 +507,6 @@ extension MDCNodeListViewController {
     return sectionView
   }
 
-
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     if section == Section.description.rawValue {
       return 1
@@ -519,14 +516,14 @@ extension MDCNodeListViewController {
 
   override func tableView(_ tableView: UITableView,
                           cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    var cell : UITableViewCell?
+    var cell: UITableViewCell?
     if indexPath.section == Section.description.rawValue {
       cell = tableView.dequeueReusableCell(withIdentifier: "NodeViewTableViewPrimaryDemoCell")
       cell?.selectionStyle = .none
       let primaryDemoCell = cell as! NodeViewTableViewPrimaryDemoCell
       let button = primaryDemoCell.containedButton
       let buttonScheme = AppTheme.globalTheme.buttonScheme
-      MDCContainedButtonThemer.applyScheme(buttonScheme, to:button)
+      MDCContainedButtonThemer.applyScheme(buttonScheme, to: button)
       button.addTarget(self, action: #selector(primaryDemoButtonClicked), for: .touchUpInside)
     } else {
       cell = tableView.dequeueReusableCell(withIdentifier: "NodeViewTableViewDemoCell")
@@ -588,11 +585,11 @@ extension MDCNodeListViewController {
   }
 
   func themeExample(vc: UIViewController) {
-    let colorSel = NSSelectorFromString("setColorScheme:");
+    let colorSel = NSSelectorFromString("setColorScheme:")
     if vc.responds(to: colorSel) {
       vc.perform(colorSel, with: AppTheme.globalTheme.colorScheme)
     }
-    let typoSel = NSSelectorFromString("setTypographyScheme:");
+    let typoSel = NSSelectorFromString("setTypographyScheme:")
     if vc.responds(to: typoSel) {
       vc.perform(typoSel, with: AppTheme.globalTheme.typographyScheme)
     }

@@ -109,7 +109,7 @@ class MDCCatalogDebugAlert: UICollectionViewController {
   }
 }
 
-fileprivate class MDCCatalogDebugToggleCell: UICollectionViewCell {
+private class MDCCatalogDebugToggleCell: UICollectionViewCell {
   private var _setting: MDCCatalogDebugSetting?
   var setting: MDCCatalogDebugSetting? {
     get {
@@ -137,7 +137,7 @@ fileprivate class MDCCatalogDebugToggleCell: UICollectionViewCell {
     contentView.addSubview(label)
     contentView.addSubview(toggleSwitch)
 
-    toggleSwitch.addTarget(self, action:#selector(switchToggled(sender:)), for: .touchUpInside)
+    toggleSwitch.addTarget(self, action: #selector(switchToggled(sender:)), for: .touchUpInside)
   }
 
   override func layoutSubviews() {

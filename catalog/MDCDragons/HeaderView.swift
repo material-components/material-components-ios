@@ -21,17 +21,17 @@ class HeaderView: UIView {
   @IBOutlet weak var imageView: UIImageView!
   @IBOutlet weak var title: UILabel!
   @IBOutlet weak var searchBar: UISearchBar!
-  
+
   override init(frame: CGRect) {
     super.init(frame: frame)
     commonInit()
   }
-  
+
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
     commonInit()
   }
-  
+
   func commonInit() {
     Bundle.main.loadNibNamed("HeaderView", owner: self, options: nil)
     addSubview(containerView)
@@ -57,5 +57,5 @@ class HeaderView: UIView {
     searchBar.scopeBarBackgroundImage = UIImage()
 
   }
-  
+
 }

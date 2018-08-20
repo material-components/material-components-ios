@@ -67,7 +67,6 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     return button
   }()
 
-
   private let node: CBCNode
   private lazy var titleLabel: UILabel = {
     let titleLabel = UILabel()
@@ -168,11 +167,10 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
 
     let colorScheme = AppTheme.globalTheme.colorScheme
 
-    let image = MDCDrawImage(CGRect(x:0,
-                                    y:0,
+    let image = MDCDrawImage(CGRect(x: 0,
+                                    y: 0,
                                     width: Constants.logoWidthHeight,
-                                    height: Constants.logoWidthHeight),
-                             { MDCCatalogDrawMDCLogoLight($0, $1) },
+                                    height: Constants.logoWidthHeight), { MDCCatalogDrawMDCLogoLight($0, $1) },
                              colorScheme)
     logo.image = image
 
@@ -322,7 +320,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
   func inkViewForView(_ view: UIView) -> MDCInkView {
     let foundInkView = MDCInkView.injectedInkView(for: view)
     foundInkView.inkStyle = .bounded
-    foundInkView.inkColor = UIColor(white:0.957, alpha: 0.2)
+    foundInkView.inkColor = UIColor(white: 0.957, alpha: 0.2)
     return foundInkView
   }
 
