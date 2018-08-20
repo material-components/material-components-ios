@@ -47,7 +47,7 @@ typedef struct MDCActivityIndicatorMotionSpecProgress {
 } MDCActivityIndicatorMotionSpecProgress;
 
 MDC_SUBCLASSING_RESTRICTED
-@interface MDCActivityIndicatorMotionSpec: NSObject
+@interface MDCActivityIndicatorMotionSpec : NSObject
 
 @property(nonatomic, class, readonly) NSTimeInterval pointCycleDuration;
 @property(nonatomic, class, readonly) NSTimeInterval pointCycleMinimumVariableDuration;
@@ -63,4 +63,3 @@ MDC_SUBCLASSING_RESTRICTED
 - (instancetype)init NS_UNAVAILABLE;
 
 @end
-

@@ -77,7 +77,7 @@ class ActivityIndicatorSwiftController: UIViewController {
    }
 }
 
-extension ActivityIndicatorSwiftController : MDCActivityIndicatorDelegate {
+extension ActivityIndicatorSwiftController: MDCActivityIndicatorDelegate {
    func activityIndicatorAnimationDidFinish(_ activityIndicator: MDCActivityIndicator) {
       return
    }
