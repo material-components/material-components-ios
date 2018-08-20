@@ -63,10 +63,7 @@
 
 
 - (void)showActionSheet {
-  NSString *messageString = @"The supporting message for this action sheet this can be mutliple lines but never more than two";
-  MDCActionSheetController *actionSheet =
-      [MDCActionSheetController actionSheetControllerWithTitle:@"Action sheet"
-                                                       message:messageString];
+  MDCActionSheetController *actionSheet = [[MDCActionSheetController alloc] init];
   MDCActionSheetAction *homeAction = [MDCActionSheetAction actionWithTitle:@"Home"
                                                                  image:[UIImage imageNamed:@"Home"]
                                                                handler:nil];
@@ -76,8 +73,15 @@
                                     handler:^(MDCActionSheetAction *action){
                                       NSLog(@"Favorite Action");
                                     }];
+  MDCActionSheetAction *emailAction =
+      [MDCActionSheetAction actionWithTitle:@"Email"
+                                      image:[UIImage imageNamed:@"Email"]
+                                    handler:^(MDCActionSheetAction *action){
+                                      NSLog(@"Email Action");
+                                    }];
   [actionSheet addAction:homeAction];
   [actionSheet addAction:favoriteAction];
+  [actionSheet addAction:emailAction];
   [self presentViewController:actionSheet animated:YES completion:nil];
 }
 
@@ -90,7 +94,7 @@
 }
 
 + (BOOL)catalogIsPresentable {
-  return NO;
+  return YES;
 }
 
 + (BOOL)catalogIsPrimaryDemo {
