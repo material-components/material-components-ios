@@ -80,6 +80,10 @@
   [self.view setNeedsDisplay];
 }
 
+- (UIViewController *)childViewControllerForStatusBarStyle {
+  return self.appBarViewController;
+}
+
 + (nonnull instancetype)sampleWithTitle:(nonnull NSString *)title color:(nonnull UIColor *)color {
   return [self sampleWithTitle:title color:color icon:nil];
 }
