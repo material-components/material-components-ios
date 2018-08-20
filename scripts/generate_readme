@@ -72,6 +72,11 @@ SITE_URL_BASE="https://material.io/components/ios"
 
 touch "$TMP_README_PATH"
 
+if [ ! -f "$VARS_PATH" ]; then
+  echo "No .vars file found at $VARS_PATH. Please create one."
+  exit 1
+fi
+
 echo "Generating template readme..."
 if [[ $(grep -e "^root_path=" "$VARS_PATH") ]]; then
   ./scripts/apply_template "$COMPONENT" scripts/templates/component/README.md.template "$TMP_README_PATH" >> /dev/null
