@@ -74,14 +74,14 @@ MDC_SUBCLASSING_RESTRICTED
  Action sheet controllers must be created with actionSheetControllerWithTitle: or
  with actionSheetControllerWithTitle:message:
  */
-- (nonnull instancetype)initWithNibName:(NSString *)nibNameOrNil
-                                 bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
+- (nonnull instancetype)initWithNibName:(nullable NSString *)nibNameOrNil
+                                 bundle:(nullable NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
 
 /**
  Action sheet controllers must be created with actionSheetControllerwithTitle:
  or with actionSheetControllerWithTitle:message:
  */
-- (nullable instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
+- (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;
 
 /**
  Adds an action to the action sheet.

@@ -21,11 +21,11 @@
 @interface MDCActionSheetItemTableViewCell : UITableViewCell
 
 /** Cells must be created with cellWithAction: */
-- (nonnull instancetype)initWithAction:(MDCActionSheetAction *)action
-                       reuseIdentifier:(NSString *)reuseIdentifier;
+- (nonnull instancetype)initWithAction:(nonnull MDCActionSheetAction *)action
+                       reuseIdentifier:(nullable NSString *)reuseIdentifier;
 
 /** Cells must be created with cellWithAction: */
-- (nonnull instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
+- (nullable instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 
 /** Cells must be created with cellWithAction: */
 - (nonnull instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
