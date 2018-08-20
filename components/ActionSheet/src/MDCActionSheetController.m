@@ -60,14 +60,11 @@
 @end
 
 @interface MDCActionSheetController () <MDCBottomSheetPresentationControllerDelegate, UITableViewDelegate>
-
-@property(nonatomic, nonnull) MDCActionSheetHeaderView *header;
-
-@property(nonatomic, nullable) MDCActionSheetListViewController *tableView;
-
 @end
 
 @implementation MDCActionSheetController {
+  MDCActionSheetHeaderView *_header;
+  MDCActionSheetListViewController *_tableView;
   NSString *_actionSheetTitle;
   NSMutableArray<MDCActionSheetAction *> *_actions;
   MDCBottomSheetTransitionController *_transitionController;
@@ -110,36 +107,36 @@
   super.transitioningDelegate = _transitionController;
   super.modalPresentationStyle = UIModalPresentationCustom;
   _actions = [[NSMutableArray alloc] init];
-  self.tableView = [[MDCActionSheetListViewController alloc] initWithActions:_actions];
-  self.tableView.tableView.delegate = self;
-  self.tableView.tableView.translatesAutoresizingMaskIntoConstraints = NO;
-  self.tableView.tableView.estimatedRowHeight = 56.f;
-  self.tableView.tableView.rowHeight = UITableViewAutomaticDimension;
+  _tableView = [[MDCActionSheetListViewController alloc] initWithActions:_actions];
+  _tableView.tableView.delegate = self;
+  _tableView.tableView.translatesAutoresizingMaskIntoConstraints = NO;
+  _tableView.tableView.estimatedRowHeight = 56.f;
+  _tableView.tableView.rowHeight = UITableViewAutomaticDimension;
   self.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)addAction:(MDCActionSheetAction *)action {
-  [self.tableView addAction:action];
-  [self.tableView.tableView setNeedsLayout];
+  [_tableView addAction:action];
+  [_tableView.tableView setNeedsLayout];
   initialLayout = false;
   [self.view setNeedsLayout];
 }
 
 - (NSArray<MDCActionSheetAction *> *)actions {
-  return self.tableView.actions;
+  return _tableView.actions;
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
   CGRect headerRect = CGRectZero;
   headerRect.size.width = CGRectGetWidth(self.view.frame);
-  self.header = [[MDCActionSheetHeaderView alloc] initWithFrame:headerRect];
-  self.header.title = _actionSheetTitle;
-  self.header.message = _message;
-  self.header.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
+  _header = [[MDCActionSheetHeaderView alloc] initWithFrame:headerRect];
+  _header.title = _actionSheetTitle;
+  _header.message = _message;
+  _header.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
 
-  [self.view addSubview:self.tableView.tableView];
-  [self.view addSubview:self.header];
+  [self.view addSubview:_tableView.tableView];
+  [self.view addSubview:_header];
 }
 
 - (void)viewWillLayoutSubviews {
@@ -151,19 +148,19 @@
 }
 
 - (void)firstLayout {
-  [self.header setNeedsLayout];
+  [_header setNeedsLayout];
   /**
    We need this call to `layoutIfNeeded` to make sure the header is layed out and therefore the
    height is calculated, if this is removed then the header's height is 0 and we don't get the
    correct height for the sheet.
    */
-  [self.header layoutIfNeeded];
+  [_header layoutIfNeeded];
 
   CGFloat width = CGRectGetWidth(self.view.bounds);
-  CGFloat height = CGRectGetHeight(self.header.frame) + [self.tableView tableHeightForWidth:width];
-  CGRect tableFrame = self.tableView.tableView.frame;
-  tableFrame.origin.y = CGRectGetHeight(self.header.frame);
-  self.tableView.tableView.frame = tableFrame;
+  CGFloat height = CGRectGetHeight(_header.frame) + [_tableView tableHeightForWidth:width];
+  CGRect tableFrame = _tableView.tableView.frame;
+  tableFrame.origin.y = CGRectGetHeight(_header.frame);
+  _tableView.tableView.frame = tableFrame;
   self.preferredContentSize = CGSizeMake(width, height);
   initialLayout = true;
 }
@@ -220,18 +217,18 @@
   CGRect frame = self.view.frame;
   frame.size = size;
   self.view.frame = frame;
-  CGRect headerFrame = self.header.frame;
+  CGRect headerFrame = _header.frame;
   headerFrame.size.width = size.width;
-  self.header.frame = headerFrame;
-  [self.header setNeedsLayout];
+  _header.frame = headerFrame;
+  [_header setNeedsLayout];
   /**
    We need this call to `layoutIfNeeded` to make sure the header is layed out and therefore the
    height is calculated, if this is removed then the header's height is 0 and we don't get the
    correct height for the sheet.
    */
-  [self.header layoutIfNeeded];
+  [_header layoutIfNeeded];
 
-  CGFloat height = CGRectGetHeight(self.header.frame) + [self.tableView tableHeightForWidth:size.width];
+  CGFloat height = CGRectGetHeight(_header.frame) + [_tableView tableHeightForWidth:size.width];
   CGSize updatedSize = CGSizeMake(size.width, height);
   self.preferredContentSize = updatedSize;
 }
@@ -260,7 +257,7 @@
 
 - (void)setTitle:(NSString *)title {
   _actionSheetTitle = title;
-  self.header.title = title;
+  _header.title = title;
   initialLayout = false;
   [self.view setNeedsLayout];
 }
@@ -271,25 +268,25 @@
 
 - (void)setMessage:(NSString *)message {
   _message = message;
-  self.header.message = message;
+  _header.message = message;
   initialLayout = false;
   [self.view setNeedsLayout];
 }
 
 - (void)setTitleFont:(UIFont *)titleFont {
   _titleFont = titleFont;
-  self.header.titleFont = titleFont;
+  _header.titleFont = titleFont;
 }
 
 - (void)setMessageFont:(UIFont *)messageFont {
   _messageFont = messageFont;
-  self.header.messageFont = messageFont;
+  _header.messageFont = messageFont;
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
   self.view.backgroundColor = backgroundColor;
-  self.tableView.backgroundColor = backgroundColor;
-  self.header.backgroundColor = backgroundColor;
+  _tableView.backgroundColor = backgroundColor;
+  _header.backgroundColor = backgroundColor;
 }
 
 - (UIColor *)backgroundColor {
@@ -302,8 +299,8 @@
   _mdc_adjustsFontForContentSizeCategory = adjusts;
   [self view];
 
-  self.header.mdc_adjustsFontForContentSizeCategory = adjusts;
-  self.tableView.mdc_adjustsFontForContentSizeCategory = adjusts;
+  _header.mdc_adjustsFontForContentSizeCategory = adjusts;
+  _tableView.mdc_adjustsFontForContentSizeCategory = adjusts;
   [self updateFontsForDynamicType];
   if (_mdc_adjustsFontForContentSizeCategory) {
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -319,8 +316,8 @@
 }
 
 - (void)updateFontsForDynamicType {
-  [self.header updateFonts];
-  [self.tableView updateFonts];
+  [_header updateFonts];
+  [_tableView updateFonts];
   initialLayout = false;
 }
 
