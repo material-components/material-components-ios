@@ -18,21 +18,16 @@
 
 #import "MDCActionSheetItemTableViewCell.h"
 #import "MDCActionSheetController.h"
-#import "MaterialTypography.h"
 
 NSString *const kReuseIdentifier = @"BaseCell";
-static const CGFloat kActionItemLabelPadding = 18.f;
-static const CGFloat kActionItemTrailingPadding = 16.f;
 
-@interface MDCActionSheetListViewController () <UITableViewDataSource>
+@interface MDCActionSheetDataSource ()
 @end
 
-@implementation MDCActionSheetListViewController {
-  BOOL _mdc_adjustsFontForContentSizeCategory;
-}
+@implementation MDCActionSheetDataSource
 
 - (instancetype)initWithActions:(NSArray<MDCActionSheetAction *> *)actions {
-  self = [super initWithStyle:UITableViewStylePlain];
+  self = [super init];
   if (self) {
     self.actions = [NSMutableArray arrayWithArray:[actions copy]];
     [self commonMDCActionSheetListInit];
@@ -40,8 +35,16 @@ static const CGFloat kActionItemTrailingPadding = 16.f;
   return self;
 }
 
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    self.actions = [[NSMutableArray alloc] init];
+    [self commonMDCActionSheetListInit];
+  }
+  return self;
+}
+
 - (void)commonMDCActionSheetListInit {
-  self.actionsFont = [[self class] actionsFontDefault];
   self.backgroundColor = [UIColor whiteColor];
 }
 
@@ -67,66 +70,6 @@ static const CGFloat kActionItemTrailingPadding = 16.f;
   cell.backgroundColor = self.backgroundColor;
   cell.actionsFont = _actionsFont;
   return cell;
-}
-
-#pragma mark - Dynamic type
-
-+ (UIFont *)actionsFontDefault {
-  if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-    return [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
-  }
-  return [MDCTypography subheadFont];
-}
-
-- (BOOL)mdc_adjustFontForContentSizeCategory {
-  return _mdc_adjustsFontForContentSizeCategory;
-}
-
-- (void)mdc_setAdjustFontForContentSizeCategory:(BOOL)adjusts {
-  _mdc_adjustsFontForContentSizeCategory = adjusts;
-  [self updateFonts];
-}
-
-
-- (void)updateFonts {
-  UIFont *finalFont = _actionsFont ?: [[self class] actionsFontDefault];
-  if (_mdc_adjustsFontForContentSizeCategory) {
-    finalFont =
-        [finalFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
-                              scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
-  }
-  _actionsFont = finalFont;
-  [self.tableView reloadData];
-  [self.view setNeedsLayout];
-}
-
-#pragma mark - Setters / Getters
-
-- (void)setActionsFont:(UIFont *)actionsFont {
-  _actionsFont = actionsFont;
-  [self updateFonts];
-}
-
-- (CGFloat)calculateHeightForWidth:(CGFloat)width {
-  CGFloat height = 0.f;
-  UILabel *mockLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-  mockLabel.font = _actionsFont;
-  for (MDCActionSheetAction *action in _actions) {
-    CGFloat leadingPadding = (action.image == nil) ? 16.f : 72.f;
-    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-    paragraphStyle.hyphenationFactor = 1.f;
-    NSDictionary<NSAttributedStringKey, id> *attributes =
-        @{ NSParagraphStyleAttributeName : paragraphStyle };
-    NSMutableAttributedString *attributedString =
-    [[NSMutableAttributedString alloc] initWithString:action.title attributes:attributes];
-    mockLabel.attributedText = attributedString;
-    CGSize labelSize = CGRectInfinite.size;
-    labelSize.width = width - kActionItemTrailingPadding - leadingPadding;
-
-    CGFloat labelHeight = [mockLabel sizeThatFits:labelSize].height;
-    height = height + labelHeight + (2 * kActionItemLabelPadding);
-  }
-  return height;
 }
 
 @end

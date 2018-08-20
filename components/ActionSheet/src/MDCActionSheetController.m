@@ -64,12 +64,13 @@ NSString *const kReuseId = @"BaseCell";
 @end
 
 @interface MDCActionSheetController () <MDCBottomSheetPresentationControllerDelegate, UITableViewDelegate>
+
 @end
 
 @implementation MDCActionSheetController {
   MDCActionSheetHeaderView *_header;
   UITableViewController *_tableView;
-  MDCActionSheetListViewController *_dataSource;
+  MDCActionSheetDataSource *_dataSource;
   NSString *_actionSheetTitle;
   NSMutableArray<MDCActionSheetAction *> *_actions;
   MDCBottomSheetTransitionController *_transitionController;
@@ -112,7 +113,7 @@ NSString *const kReuseId = @"BaseCell";
   super.transitioningDelegate = _transitionController;
   super.modalPresentationStyle = UIModalPresentationCustom;
   _actions = [[NSMutableArray alloc] init];
-  _dataSource = [[MDCActionSheetListViewController alloc] initWithActions:_actions];
+  _dataSource = [[MDCActionSheetDataSource alloc] initWithActions:_actions];
   _tableView = [[UITableViewController alloc] initWithStyle:UITableViewStylePlain];
   _tableView.tableView.delegate = self;
   _tableView.tableView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -160,6 +161,9 @@ NSString *const kReuseId = @"BaseCell";
 
 - (void)firstLayout {
   [_header setNeedsLayout];
+
+  CGFloat headerHeight = [_header intrinsicContentSize].height;
+  NSLog(@"%f", headerHeight);
   /**
    We need this call to `layoutIfNeeded` to make sure the header is layed out and therefore the
    height is calculated, if this is removed then the header's height is 0 and we don't get the
@@ -168,8 +172,17 @@ NSString *const kReuseId = @"BaseCell";
   [_header layoutIfNeeded];
 
   CGFloat width = CGRectGetWidth(self.view.bounds);
-  CGFloat height = CGRectGetHeight(_header.frame) + [_dataSource calculateHeightForWidth:width];
   CGRect tableFrame = _tableView.tableView.frame;
+  tableFrame.size.width = width;
+  _tableView.tableView.frame = tableFrame;
+  [_tableView.tableView reloadData];
+  [_tableView.tableView setNeedsLayout];
+
+  /// We need this call to `layoutIfNeeded` to get the correct contentSize for the table
+  [_tableView.tableView layoutIfNeeded];
+  CGFloat tableHeight = _tableView.tableView.contentSize.height;
+  CGFloat height = CGRectGetHeight(_header.frame) + tableHeight;
+  tableFrame = _tableView.tableView.frame;
   tableFrame.origin.y = CGRectGetHeight(_header.frame);
   _tableView.tableView.frame = tableFrame;
   self.preferredContentSize = CGSizeMake(width, height);
@@ -232,6 +245,10 @@ NSString *const kReuseId = @"BaseCell";
   headerFrame.size.width = size.width;
   _header.frame = headerFrame;
   [_header setNeedsLayout];
+  CGSize headerSize = CGRectInfinite.size;
+  headerSize.width = headerFrame.size.width;
+  CGFloat headerHeight = [_header sizeThatFits:headerSize].height;
+  NSLog(@"Header height = %f", headerHeight);
   /**
    We need this call to `layoutIfNeeded` to make sure the header is layed out and therefore the
    height is calculated, if this is removed then the header's height is 0 and we don't get the
@@ -239,7 +256,15 @@ NSString *const kReuseId = @"BaseCell";
    */
   [_header layoutIfNeeded];
 
-  CGFloat height = CGRectGetHeight(_header.frame) + [_dataSource calculateHeightForWidth:size.width];
+  CGRect tableFrame = _tableView.tableView.frame;
+  tableFrame.size.width = size.width;
+  _tableView.tableView.frame = tableFrame;
+  [_tableView.tableView reloadData];
+  [_tableView.tableView setNeedsLayout];
+  /// We need this call to `layoutIfNeeded` to get the correct contentSize for the table.
+  [_tableView.tableView layoutIfNeeded];
+  CGFloat tableHeight = _tableView.tableView.contentSize.height;
+  CGFloat height = CGRectGetHeight(_header.frame) + tableHeight;
   CGSize updatedSize = CGSizeMake(size.width, height);
   self.preferredContentSize = updatedSize;
 }
@@ -311,7 +336,6 @@ NSString *const kReuseId = @"BaseCell";
   [self view];
 
   _header.mdc_adjustsFontForContentSizeCategory = adjusts;
-  _dataSource.mdc_adjustsFontForContentSizeCategory = adjusts;
   [self updateFontsForDynamicType];
   if (_mdc_adjustsFontForContentSizeCategory) {
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -326,9 +350,33 @@ NSString *const kReuseId = @"BaseCell";
   [self.view setNeedsLayout];
 }
 
++ (UIFont *)actionsFontDefault {
+  if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
+    return [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
+  }
+  return [MDCTypography subheadFont];
+}
+
+- (BOOL)mdc_adjustFontForContentSizeCategory {
+  return _mdc_adjustsFontForContentSizeCategory;
+}
+
+- (void)updateTableFonts {
+  UIFont *finalActionsFont = _actionsFont ?: [[self class] actionsFontDefault];
+  if (_mdc_adjustsFontForContentSizeCategory) {
+    finalActionsFont =
+        [finalActionsFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
+                                       scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+  }
+  _actionsFont = finalActionsFont;
+  _dataSource.actionsFont = _actionsFont;
+  [_tableView.tableView reloadData];
+  [_tableView.view setNeedsLayout];
+}
+
 - (void)updateFontsForDynamicType {
   [_header updateFonts];
-  [_dataSource updateFonts];
+  [self updateTableFonts];
   [self setPreferredContentSizeUpdate];
 }
 
