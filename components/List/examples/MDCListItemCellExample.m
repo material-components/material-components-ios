@@ -99,9 +99,14 @@ static NSString *const kListItemCellIdentifier = @"kListItemCellIdentifier";
                                                                        forIndexPath:indexPath];
   cell.titleLabel.text = self.randomStrings[indexPath.item];
   cell.detailLabel.text = self.randomStrings[(indexPath.item + 1) % self.randomStrings.count];
-  cell.leadingImageView.image = [UIImage imageNamed:@"Cake"];
-  cell.trailingImageView.image = [UIImage imageNamed:@"Favorite"];
+  cell.titleLabel.textColor = [UIColor darkGrayColor];
+  cell.detailLabel.textColor = [UIColor darkGrayColor];
+  cell.leadingImageView.image = [[UIImage imageNamed:@"Cake"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  cell.trailingImageView.image = [[UIImage imageNamed:@"Favorite"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  cell.leadingImageView.tintColor = [UIColor darkGrayColor];
+  cell.trailingImageView.tintColor = [UIColor darkGrayColor];
   cell.mdc_adjustsFontForContentSizeCategory = YES;
+  cell.cellWidth = collectionView.bounds.size.width;
   return cell;
 }
 

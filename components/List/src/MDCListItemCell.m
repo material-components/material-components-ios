@@ -44,7 +44,8 @@ static const CGFloat kDetailColorOpacity = 0.6f;
 @property (nonatomic, strong) UIImageView *trailingImageView;
 @property (nonatomic, assign) CGRect trailingImageViewFrame;
 
-@property (nonatomic, assign) CGFloat cellWidth;
+@property (nonatomic, assign) CGFloat calculatedHeight;
+@property (nonatomic, assign) BOOL cellIsReadyToBeDisplayed;
 
 @end
 
@@ -144,9 +145,16 @@ static const CGFloat kDetailColorOpacity = 0.6f;
 }
 
 -(CGSize)systemLayoutSizeFittingSize:(CGSize)targetSize {
-  self.cellWidth = targetSize.width;
-  [self calculateSubviewFrames];
-  return CGSizeMake(self.cellWidth, [self calculateHeight]);
+  if (!self.cellIsReadyToBeDisplayed) {
+    [self calculateSubviewFrames];
+    self.calculatedHeight = [self calculateHeight];
+    self.cellIsReadyToBeDisplayed = YES;
+  }
+  return CGSizeMake(self.cellWidth, self.calculatedHeight);
+}
+
+-(CGSize)sizeThatFits:(CGSize)size {
+  return [super sizeThatFits:size];
 }
 
 - (void)calculateSubviewFrames {
@@ -363,7 +371,15 @@ static const CGFloat kDetailColorOpacity = 0.6f;
   }
   self.titleLabel.font = titleFont;
   self.detailLabel.font = detailFont;
-  [self calculateSubviewFrames];
+  self.cellIsReadyToBeDisplayed = NO;
+}
+
+-(void)setCellWidth:(CGFloat)cellWidth {
+  if (_cellWidth == cellWidth) {
+    return;
+  }
+  _cellWidth = cellWidth;
+  self.cellIsReadyToBeDisplayed = NO;
 }
 
 - (UIFont *)defaultTitleLabelFont {
