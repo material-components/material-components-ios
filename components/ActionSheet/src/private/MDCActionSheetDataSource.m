@@ -14,38 +14,25 @@
  limitations under the License.
  */
 
-#import "MDCActionSheetListViewController.h"
+#import "MDCActionSheetDataSource.h"
 
 #import "MDCActionSheetItemTableViewCell.h"
 #import "MDCActionSheetController.h"
 
-NSString *const kReuseIdentifier = @"BaseCell";
+static NSString *const kReuseIdentifier = @"BaseCell";
 
 @interface MDCActionSheetDataSource ()
 @end
 
 @implementation MDCActionSheetDataSource
 
-- (instancetype)initWithActions:(NSArray<MDCActionSheetAction *> *)actions {
-  self = [super init];
-  if (self) {
-    self.actions = [NSMutableArray arrayWithArray:[actions copy]];
-    [self commonMDCActionSheetListInit];
-  }
-  return self;
-}
-
 - (instancetype)init {
   self = [super init];
   if (self) {
     self.actions = [[NSMutableArray alloc] init];
-    [self commonMDCActionSheetListInit];
+    self.backgroundColor = [UIColor whiteColor];
   }
   return self;
-}
-
-- (void)commonMDCActionSheetListInit {
-  self.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)addAction:(MDCActionSheetAction *)action {
@@ -65,8 +52,7 @@ NSString *const kReuseIdentifier = @"BaseCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   MDCActionSheetItemTableViewCell *cell =
-  [[MDCActionSheetItemTableViewCell alloc] initWithAction:self.actions[indexPath.row]
-                                 reuseIdentifier:kReuseIdentifier];
+      [tableView dequeueReusableCellWithIdentifier:kReuseIdentifier forIndexPath:indexPath];
   cell.backgroundColor = self.backgroundColor;
   cell.actionsFont = _actionsFont;
   return cell;

@@ -42,31 +42,3 @@
 @property(nonatomic, nonnull, strong) UIFont *actionsFont;
 
 @end
-
-@interface MDCActionSheetHeaderView : UIView
-
-- (instancetype)initWithTitle:(NSString *)title;
-
-- (nonnull instancetype)initWithTitle:(NSString *)title message:(NSString *)message;
-
-/** Header must be created with either headerWithTitle: */
-- (instancetype)initWithFrame:(CGRect)frame;
-
-/** Header must be created with either headerWithTitle: */
-- (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
-
-@property (nonatomic, nullable, strong) NSString *title;
-
-@property (nonatomic, nullable, strong) NSString *message;
-
-@property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
-BOOL mdc_adjustsFontForContentSizeCategory;
-
-@property (nonatomic, strong, nonnull) UIFont *titleFont;
-
-@property (nonatomic, strong, nonnull) UIFont *messageFont;
-
-- (void)updateFonts;
-
-
-@end

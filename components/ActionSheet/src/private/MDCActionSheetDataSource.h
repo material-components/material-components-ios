@@ -20,8 +20,6 @@
 
 @interface MDCActionSheetDataSource : NSObject <UITableViewDataSource>
 
-- (nonnull instancetype)initWithActions:(NSArray<MDCActionSheetAction *> *)actions;
-
 /**
  Adds an action to the table view.
 
