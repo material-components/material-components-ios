@@ -11,7 +11,7 @@
  limitations under the License.
  */
 
-#import "MDCBasicStereoCell.h"
+#import "MDCSelfSizingStereoCell.h"
 
 #import <MDFInternationalization/MDFInternationalization.h>
 #import "MaterialInk.h"
@@ -27,7 +27,7 @@ static const CGFloat kImageSideLengthMax = 56.0;
 static const CGFloat kTitleColorOpacity = 0.87f;
 static const CGFloat kDetailColorOpacity = 0.6f;
 
-@interface MDCBasicStereoCell ()
+@interface MDCSelfSizingStereoCell ()
 
 @property (nonatomic, strong) UIView *textContainer;
 @property (nonatomic, assign) CGRect textContainerFrame;
@@ -49,13 +49,13 @@ static const CGFloat kDetailColorOpacity = 0.6f;
 
 @end
 
-@implementation MDCBasicStereoCell
+@implementation MDCSelfSizingStereoCell
 @synthesize mdc_adjustsFontForContentSizeCategory = _mdc_adjustsFontForContentSizeCategory;
 
 -(instancetype)init {
   self = [super init];
   if (self) {
-    [self baseMDCBasicStereoCellInit];
+    [self baseMDCSelfSizingStereoCellInit];
     return self;
   }
   return nil;
@@ -64,7 +64,7 @@ static const CGFloat kDetailColorOpacity = 0.6f;
 -(instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    [self baseMDCBasicStereoCellInit];
+    [self baseMDCSelfSizingStereoCellInit];
     return self;
   }
   return nil;
@@ -73,12 +73,12 @@ static const CGFloat kDetailColorOpacity = 0.6f;
 -(instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    [self baseMDCBasicStereoCellInit];
+    [self baseMDCSelfSizingStereoCellInit];
     return self;
   }
   return nil;
 }
-- (void)baseMDCBasicStereoCellInit {
+- (void)baseMDCSelfSizingStereoCellInit {
   [self createSubviews];
 }
 

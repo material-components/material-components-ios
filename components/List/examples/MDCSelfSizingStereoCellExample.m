@@ -11,14 +11,14 @@
  limitations under the License.
  */
 
-#import "MDCBasicStereoCellExample.h"
+#import "MDCSelfSizingStereoCellExample.h"
 
-#import "MDCBasicStereoCell.h"
+#import "MDCSelfSizingStereoCell.h"
 
 static CGFloat const kArbitraryCellHeight = 75.f;
-static NSString *const kBasicStereoCellIdentifier = @"kBasicStereoCellIdentifier";
+static NSString *const kSelfSizingStereoCellIdentifier = @"kSelfSizingStereoCellIdentifier";
 
-@interface MDCBasicStereoCellExample () <UICollectionViewDelegate,
+@interface MDCSelfSizingStereoCellExample () <UICollectionViewDelegate,
                                       UICollectionViewDataSource>
 
 @property (strong, nonatomic) UICollectionView *collectionView;
@@ -27,7 +27,7 @@ static NSString *const kBasicStereoCellIdentifier = @"kBasicStereoCellIdentifier
 @property (nonatomic, assign) NSInteger numberOfCells;
 @end
 
-@implementation MDCBasicStereoCellExample
+@implementation MDCSelfSizingStereoCellExample
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -60,8 +60,8 @@ static NSString *const kBasicStereoCellIdentifier = @"kBasicStereoCellIdentifier
   self.collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds
                                            collectionViewLayout:self.collectionViewLayout];
   self.collectionView.backgroundColor = [UIColor whiteColor];
-  [self.collectionView registerClass:[MDCBasicStereoCell class]
-          forCellWithReuseIdentifier:kBasicStereoCellIdentifier];
+  [self.collectionView registerClass:[MDCSelfSizingStereoCell class]
+          forCellWithReuseIdentifier:kSelfSizingStereoCellIdentifier];
   self.collectionView.delegate = self;
   self.collectionView.dataSource = self;
   [self.view addSubview:self.collectionView];
@@ -99,8 +99,8 @@ static NSString *const kBasicStereoCellIdentifier = @"kBasicStereoCellIdentifier
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-  MDCBasicStereoCell *cell =
-      [collectionView dequeueReusableCellWithReuseIdentifier:kBasicStereoCellIdentifier
+  MDCSelfSizingStereoCell *cell =
+      [collectionView dequeueReusableCellWithReuseIdentifier:kSelfSizingStereoCellIdentifier
                                                 forIndexPath:indexPath];
   cell.titleLabel.text = self.randomStrings[indexPath.item];
   cell.detailLabel.text = self.randomStrings[(indexPath.item + 1) % self.randomStrings.count];

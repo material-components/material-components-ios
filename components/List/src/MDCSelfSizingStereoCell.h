@@ -14,7 +14,7 @@ limitations under the License.
 #import <UIKit/UIKit.h>
 #import "MDCBaseCell.h"
 
-@interface MDCBasicStereoCell : MDCBaseCell
+@interface MDCSelfSizingStereoCell : MDCBaseCell
 
 /**
  The UIImageView responsible for displaying the leading image.
