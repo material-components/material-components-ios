@@ -15,7 +15,7 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "../MDCActionSheetController.h"
+#import "MDCActionSheetController.h"
 #import "MDCActionSheetItemTableViewCell.h"
 
 @interface MDCActionSheetListViewController : UITableViewController

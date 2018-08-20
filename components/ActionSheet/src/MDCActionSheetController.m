@@ -30,16 +30,16 @@
 
 @implementation MDCActionSheetAction
 
-+ (instancetype)actionWithTitle:(nonnull NSString *)title
-                          image:(nullable UIImage *)image
++ (instancetype)actionWithTitle:(NSString *)title
+                          image:(UIImage *)image
                           handler:(void (^__nullable)(MDCActionSheetAction *action))handler {
     return [[MDCActionSheetAction alloc] initWithTitle:title
                                                  image:image
                                                handler:handler];
 }
 
-- (instancetype)initWithTitle:(nonnull NSString *)title
-                        image:(nullable UIImage *)image
+- (instancetype)initWithTitle:(NSString *)title
+                        image:(UIImage *)image
                       handler:(void (^__nullable)(MDCActionSheetAction *action))handler {
   self = [super init];
   if (self) {
@@ -92,7 +92,7 @@
   return [MDCActionSheetController actionSheetControllerWithTitle:nil message:nil];
 }
 
-- (nonnull instancetype)initWithTitle:(NSString *)title message:(NSString *)message {
+- (instancetype)initWithTitle:(NSString *)title message:(NSString *)message {
   self = [super initWithNibName:nil bundle:nil];
   if (self) {
     _actionSheetTitle = [title copy];

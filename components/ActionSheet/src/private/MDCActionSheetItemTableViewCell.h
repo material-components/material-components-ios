@@ -16,7 +16,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MaterialInk.h"
-#import "../MDCActionSheetController.h"
+#import "MDCActionSheetController.h"
 
 @interface MDCActionSheetItemTableViewCell : UITableViewCell
 
