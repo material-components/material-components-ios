@@ -20,6 +20,7 @@ the screen and displays actions a user can take.
   - [Importing](#importing)
 - [Usage](#usage)
   - [Typical use](#typical-use)
+- [MDCActionSheetController vs. UIAlertControllerStyleActionSheet](#mdcactionsheetcontroller-vs.-uialertcontrollerstyleactionsheet)
 
 - - -
 
@@ -110,3 +111,24 @@ MDCActionSheetAction *favoriteAction =
 ```
 <!--</div>-->
 
+
+## MDCActionSheetController vs. UIAlertControllerStyleActionSheet
+
+MDCActionSheetController is intended to mirror UIAlertControllerStyleActionSheet API.  
+
+#### Similarities
+1. Both classes are presented from the bottom of the screen on an iPhone and have a list of actions.
+
+2. Both classes support both a title and message but both are optional properties.
+
+#### Differences
+1. UIAlertControllerActionSheetStyle requires that you set the popoverPresentationController on larger devices, 
+MDCActionSheetController doesn't support popoverPresentationController but instead always comes up from the 
+bottom of the screen.
+
+2. UIAlertControllerStyleActionSheet is a style of UIAlertController and not its own class. If you would need an 
+AlertController please see `MDCDialog` class. 
+
+3. MDCActionSheetController does not support text fields.
+
+4. MDCActionSheetController does not have a preferredAction.
