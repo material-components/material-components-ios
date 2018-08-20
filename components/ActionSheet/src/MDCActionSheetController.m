@@ -22,7 +22,9 @@
 #import "MaterialApplication.h"
 #import "MaterialTypography.h"
 
-NSString *const kReuseIdentifier = @"BaseCell";
+// needsPreferredContentSizeUpdate
+
+NSString *const kReuseId = @"BaseCell";
 
 @interface MDCActionSheetAction ()
 
@@ -77,7 +79,7 @@ NSString *const kReuseIdentifier = @"BaseCell";
     Because we are setting the preferredContentSize we can no longer get the frame to set the sheet
     and headers sizes after a transition. 
    */
-  BOOL initialLayout;
+  BOOL needsPreferredContentSizeUpdate;
 }
 
 + (instancetype)actionSheetControllerWithTitle:(NSString *)title message:(NSString *)message {
@@ -104,7 +106,7 @@ NSString *const kReuseIdentifier = @"BaseCell";
 }
 
 - (void)commonMDCActionSheetControllerInit {
-  initialLayout = false;
+  needsPreferredContentSizeUpdate = false;
   _transitionController = [[MDCBottomSheetTransitionController alloc] init];
   _transitionController.dismissOnBackgroundTap = YES;
   super.transitioningDelegate = _transitionController;
@@ -120,7 +122,7 @@ NSString *const kReuseIdentifier = @"BaseCell";
   _tableView.tableView.scrollEnabled = NO;
   _tableView.tableView.dataSource = _dataSource;
   [_tableView.tableView registerClass:[MDCActionSheetItemTableViewCell class]
-               forCellReuseIdentifier:kReuseIdentifier];
+               forCellReuseIdentifier:kReuseId];
   self.backgroundColor = [UIColor whiteColor];
 }
 
@@ -128,8 +130,7 @@ NSString *const kReuseIdentifier = @"BaseCell";
   [_dataSource addAction:action];
   [_tableView.tableView reloadData];
   [_tableView.tableView setNeedsLayout];
-  initialLayout = false;
-  [self.view setNeedsLayout];
+  [self setPreferredContentSizeUpdate];
 }
 
 - (NSArray<MDCActionSheetAction *> *)actions {
@@ -152,7 +153,7 @@ NSString *const kReuseIdentifier = @"BaseCell";
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
 
-  if (initialLayout == false) {
+  if (needsPreferredContentSizeUpdate == false) {
     [self firstLayout];
   }
 }
@@ -172,7 +173,7 @@ NSString *const kReuseIdentifier = @"BaseCell";
   tableFrame.origin.y = CGRectGetHeight(_header.frame);
   _tableView.tableView.frame = tableFrame;
   self.preferredContentSize = CGSizeMake(width, height);
-  initialLayout = true;
+  needsPreferredContentSizeUpdate = true;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -268,8 +269,7 @@ NSString *const kReuseIdentifier = @"BaseCell";
 - (void)setTitle:(NSString *)title {
   _actionSheetTitle = title;
   _header.title = title;
-  initialLayout = false;
-  [self.view setNeedsLayout];
+  [self setPreferredContentSizeUpdate];
 }
 
 - (NSString *)title {
@@ -279,8 +279,7 @@ NSString *const kReuseIdentifier = @"BaseCell";
 - (void)setMessage:(NSString *)message {
   _message = message;
   _header.message = message;
-  initialLayout = false;
-  [self.view setNeedsLayout];
+  [self setPreferredContentSizeUpdate];
 }
 
 - (void)setTitleFont:(UIFont *)titleFont {
@@ -330,7 +329,12 @@ NSString *const kReuseIdentifier = @"BaseCell";
 - (void)updateFontsForDynamicType {
   [_header updateFonts];
   [_dataSource updateFonts];
-  initialLayout = false;
+  [self setPreferredContentSizeUpdate];
+}
+
+- (void)setPreferredContentSizeUpdate {
+  needsPreferredContentSizeUpdate = false;
+  [self.view setNeedsLayout];
 }
 
 @end

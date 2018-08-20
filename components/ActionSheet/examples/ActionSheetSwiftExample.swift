@@ -70,7 +70,7 @@ class ActionSheetSwiftExample: UIViewController {
       let action = MDCActionSheetAction(title: "Home", image: UIImage(named: "Home")) { _ in
         print("Second home action")
       }
-      DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+      DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
         actionSheet.title = "New title"
         actionSheet.message = "New Message"
         actionSheet.addAction(action)
