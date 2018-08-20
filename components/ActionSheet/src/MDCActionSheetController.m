@@ -157,22 +157,12 @@ NSString *const kReuseId = @"BaseCell";
   [super viewWillLayoutSubviews];
 
   if (needsPreferredContentSizeUpdate == false) {
-    [self firstLayout];
+    [self layoutViews];
   }
 }
 
-- (void)firstLayout {
-  [_header setNeedsLayout];
-
-  CGFloat headerHeight = [_header intrinsicContentSize].height;
-  NSLog(@"%f", headerHeight);
-  /**
-   We need this call to `layoutIfNeeded` to make sure the header is layed out and therefore the
-   height is calculated, if this is removed then the header's height is 0 and we don't get the
-   correct height for the sheet.
-   */
-  [_header layoutIfNeeded];
-
+- (void)layoutViews {
+  CGFloat headerHeight = [_header sizeThatFits:self.view.bounds.size].height;
   CGFloat width = CGRectGetWidth(self.view.bounds);
   CGRect tableFrame = _tableView.tableView.frame;
   tableFrame.size.width = width;
@@ -183,9 +173,9 @@ NSString *const kReuseId = @"BaseCell";
   /// We need this call to `layoutIfNeeded` to get the correct contentSize for the table
   [_tableView.tableView layoutIfNeeded];
   CGFloat tableHeight = _tableView.tableView.contentSize.height;
-  CGFloat height = CGRectGetHeight(_header.frame) + tableHeight;
+  CGFloat height = headerHeight + tableHeight;
   tableFrame = _tableView.tableView.frame;
-  tableFrame.origin.y = CGRectGetHeight(_header.frame);
+  tableFrame.origin.y = headerHeight;
   _tableView.tableView.frame = tableFrame;
   self.preferredContentSize = CGSizeMake(width, height);
   needsPreferredContentSizeUpdate = true;
@@ -246,17 +236,6 @@ NSString *const kReuseId = @"BaseCell";
   CGRect headerFrame = _header.frame;
   headerFrame.size.width = size.width;
   _header.frame = headerFrame;
-  [_header setNeedsLayout];
-  CGSize headerSize = CGRectInfinite.size;
-  headerSize.width = headerFrame.size.width;
-  CGFloat headerHeight = [_header sizeThatFits:headerSize].height;
-  NSLog(@"Header height = %f", headerHeight);
-  /**
-   We need this call to `layoutIfNeeded` to make sure the header is layed out and therefore the
-   height is calculated, if this is removed then the header's height is 0 and we don't get the
-   correct height for the sheet.
-   */
-  [_header layoutIfNeeded];
 
   CGRect tableFrame = _tableView.tableView.frame;
   tableFrame.size.width = size.width;
@@ -266,7 +245,7 @@ NSString *const kReuseId = @"BaseCell";
   /// We need this call to `layoutIfNeeded` to get the correct contentSize for the table.
   [_tableView.tableView layoutIfNeeded];
   CGFloat tableHeight = _tableView.tableView.contentSize.height;
-  CGFloat height = CGRectGetHeight(_header.frame) + tableHeight;
+  CGFloat height = CGRectGetHeight(headerFrame) + tableHeight;
   CGSize updatedSize = CGSizeMake(size.width, height);
   self.preferredContentSize = updatedSize;
 }

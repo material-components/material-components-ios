@@ -389,6 +389,14 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
   [self updateFonts];
 }
 
+- (CGSize)sizeThatFits:(CGSize)size {
+  CGSize boundsSize = CGRectInfinite.size;
+  boundsSize.width = [self accomodateSafeAreaInWidth:size.width];
+
+  CGSize contentSize = [self calculateContentSizeThatFitsWidth:boundsSize.width];
+  return contentSize;
+}
+
 - (CGSize)calculateContentSizeThatFitsWidth:(CGFloat)boundingWidth {
   CGSize boundsSize = CGRectInfinite.size;
   boundsSize.width = boundingWidth - kLeadingPadding - kTrailingPadding;
