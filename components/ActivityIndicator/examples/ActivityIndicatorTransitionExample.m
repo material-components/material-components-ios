@@ -1,12 +1,12 @@
 /*
  Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
- 
+
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
- 
+
  http://www.apache.org/licenses/LICENSE-2.0
- 
+
  Unless required by applicable law or agreed to in writing, software
  distributed under the License is distributed on an "AS IS" BASIS,
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,8 +17,8 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialActivityIndicator.h"
-#import "MaterialButtons.h"
 #import "MaterialButtons+ButtonThemer.h"
+#import "MaterialButtons.h"
 
 static const CGFloat kActivityIndicatorExampleArrowHeadSize = 5.0f;
 static const CGFloat kActivityIndicatorExampleStrokeWidth = 2.0f;
@@ -67,8 +67,8 @@ static const NSTimeInterval kActivityIndicatorExampleAnimationDuration = 2.0 / 3
   buttonScheme.typographyScheme = self.typographyScheme;
   [MDCContainedButtonThemer applyScheme:buttonScheme toButton:_button];
   [_button addTarget:self
-              action:@selector(startRefreshing)
-    forControlEvents:UIControlEventTouchUpInside];
+                action:@selector(startRefreshing)
+      forControlEvents:UIControlEventTouchUpInside];
   [_button setTitle:@"Refresh" forState:UIControlStateNormal];
   [_button sizeToFit];
   _button.center = CGPointMake(self.view.bounds.size.width / 2, 200);
@@ -153,15 +153,13 @@ static const NSTimeInterval kActivityIndicatorExampleAnimationDuration = 2.0 / 3
     [self->_refreshArrowPoint removeAllAnimations];
     [CATransaction commit];
 
-    dispatch_time_t stopTime =
-        dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC));
+    dispatch_time_t stopTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC));
     dispatch_after(stopTime, dispatch_get_main_queue(), ^{
       [self stopRefreshing];
     });
   };
 
-  [_activityIndicator startAnimatingWithTransition:transition
-                                   cycleStartIndex:1];
+  [_activityIndicator startAnimatingWithTransition:transition cycleStartIndex:1];
 }
 
 - (void)stopRefreshing {
