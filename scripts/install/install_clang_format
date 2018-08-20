@@ -25,8 +25,9 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 set -o errexit
 
 if ! clang-format -version >/dev/null 2>&1; then
-  echo "Installing clang-format..."
+  echo "Fixing permissions for brew install..."
   sudo chown -R $(whoami) /usr/local/share /usr/local/bin
+  echo "Installing clang-format..."
   brew install clang-format
 fi
 
