@@ -37,7 +37,11 @@ const NSTimeInterval kAnimationTimeDelay = 0.5f;
   [super viewDidLoad];
   [self setupExampleViews];
 
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Animate" style:UIBarButtonItemStylePlain target:self action:@selector(didTapAnimateButton:)];
+  self.navigationItem.rightBarButtonItem =
+      [[UIBarButtonItem alloc] initWithTitle:@"Animate"
+                                       style:UIBarButtonItemStylePlain
+                                      target:self
+                                      action:@selector(didTapAnimateButton:)];
 }
 
 - (void)playAnimations:(void (^)(BOOL))completion {
@@ -47,19 +51,27 @@ const NSTimeInterval kAnimationTimeDelay = 0.5f;
 
   CAMediaTimingFunction *materialStandardCurve =
       [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionStandard];
-  [self applyAnimationToView:_materialStandardView withTimingFunction:materialStandardCurve completion:nil];
+  [self applyAnimationToView:_materialStandardView
+          withTimingFunction:materialStandardCurve
+                  completion:nil];
 
   CAMediaTimingFunction *materialDecelerationCurve =
       [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionDeceleration];
-  [self applyAnimationToView:_materialDecelerationView withTimingFunction:materialDecelerationCurve completion:nil];
+  [self applyAnimationToView:_materialDecelerationView
+          withTimingFunction:materialDecelerationCurve
+                  completion:nil];
 
   CAMediaTimingFunction *materialAccelerationCurve =
       [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionAcceleration];
-  [self applyAnimationToView:_materialAccelerationView withTimingFunction:materialAccelerationCurve completion:nil];
+  [self applyAnimationToView:_materialAccelerationView
+          withTimingFunction:materialAccelerationCurve
+                  completion:nil];
    
   CAMediaTimingFunction *materialSharpCurve =
       [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionSharp];
-   [self applyAnimationToView:_materialSharpView withTimingFunction:materialSharpCurve completion:completion];
+   [self applyAnimationToView:_materialSharpView
+           withTimingFunction:materialSharpCurve
+                   completion:completion];
 }
 
 - (void)applyAnimationToView:(UIView *)view
