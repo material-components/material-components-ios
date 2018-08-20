@@ -52,11 +52,12 @@
 
 @implementation TBVCSampleViewController
 
+- (void)loadView {
+  self.view = [[TBVCSampleView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
-
-  TBVCSampleView *sampleView = [[TBVCSampleView alloc] initWithFrame:self.view.bounds];
-  [self.view addSubview:sampleView];
 
   self.appBarViewController = [[MDCAppBarViewController alloc] init];
 
