@@ -27,10 +27,10 @@ the deprecation process below.
 1. Measure internal usage of the API.
 2. Create a GitHub issue.
 3. Write a migration guide.
-4. Annotate the API as "ToBeDeprecated".
+4. Add a comment to the API indicating that it will be deprecated.
 5. Determine a schedule for the API deletion.
 6. Announce that the API will be deprecated
-7. After the deprecation date, deprecate the API.
+7. After the deprecation date, annotate the API as deprecated.
 8. After the deletion date, re-evaluate usage of the API.
 9. Delete the API and migration guide.
 
@@ -67,7 +67,7 @@ MDCAppBarViewController.
 
 Send this migration guide out for review as a standalone pull request.
 
-### Step 4: Annotate the API as "ToBeDeprecated"
+### Step 4: Add a comment to the API indicating that it will be deprecated.
 
 Add a `@warning` annotation to the API's public documentation indicating the intent for this API to
 eventually be deprecated. This warning should also provide a short suggested alternative, if one
@@ -152,7 +152,7 @@ The timeline for this deprecation is as follows:
 - <Deletion date>: The API will be deleted.
 ```
 
-### Step 7: After the deprecation date, deprecate the API
+### Step 7: After the deprecation date, annotate the API as deprecated
 
 Send a pull request annotating the API as deprecated. Use `__deprecated_msg("")` and provide a
 concise message with a recommendation for an alternative API, if any is available.
