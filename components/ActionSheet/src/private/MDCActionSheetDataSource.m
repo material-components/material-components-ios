@@ -53,6 +53,7 @@ static NSString *const kReuseIdentifier = @"BaseCell";
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   MDCActionSheetItemTableViewCell *cell =
       [tableView dequeueReusableCellWithIdentifier:kReuseIdentifier forIndexPath:indexPath];
+  cell.action = self.actions[indexPath.row];
   cell.backgroundColor = self.backgroundColor;
   cell.actionsFont = _actionsFont;
   return cell;

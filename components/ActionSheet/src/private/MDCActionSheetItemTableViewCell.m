@@ -31,6 +31,7 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
   MDCActionSheetAction *_itemAction;
   UILabel *_textLabel;
   UIImageView *_imageView;
+  NSLayoutConstraint *_leadingTitleConstraint;
   MDCInkTouchController *_inkTouchController;
   NSLayoutConstraint *_widthConstraint;
 }
@@ -47,22 +48,25 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
   return self;
 }
 
+- (instancetype)initWithStyle:(UITableViewCellStyle)style
+              reuseIdentifier:(NSString *)reuseIdentifier {
+  self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+  if (self) {
+    [self commonMDCActionSheetItemViewInit];
+  }
+  return self;
+}
+
 - (void)commonMDCActionSheetItemViewInit {
-  [self setTranslatesAutoresizingMaskIntoConstraints:NO];
+  self.translatesAutoresizingMaskIntoConstraints = NO;
   self.selectionStyle = UITableViewCellSelectionStyleNone;
   self.accessibilityTraits = UIAccessibilityTraitButton;
   _textLabel = [[UILabel alloc] init];
-  NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-  paragraphStyle.hyphenationFactor = 1.f;
-  NSDictionary<NSAttributedStringKey, id> *attributes =
-      @{ NSParagraphStyleAttributeName : paragraphStyle };
-  NSMutableAttributedString *attributedString =
-      [[NSMutableAttributedString alloc] initWithString:_itemAction.title attributes:attributes];
-  _textLabel.attributedText = attributedString;
-  [_textLabel sizeToFit];
   [self.contentView addSubview:_textLabel];
   _textLabel.numberOfLines = 0;
-  [_textLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+  _textLabel.translatesAutoresizingMaskIntoConstraints = NO;
+  [_textLabel sizeToFit];
+
   if (self.mdc_adjustsFontForContentSizeCategory) {
     _textLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
   } else {
@@ -70,6 +74,12 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
   }
   _textLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
   _textLabel.alpha = kCellLabelAlpha;
+  CGFloat leadingConstant;
+  if (_itemAction.image == nil) {
+    leadingConstant = 16.f;
+  } else {
+    leadingConstant = 72.f;
+  }
   [NSLayoutConstraint constraintWithItem:_textLabel
                                attribute:NSLayoutAttributeTop
                                relatedBy:NSLayoutRelationEqual
@@ -84,19 +94,14 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
                                attribute:NSLayoutAttributeBottom
                               multiplier:1
                                 constant:-kActionItemTitleVerticalPadding].active = YES;
-  CGFloat leadingConstant;
-  if (_itemAction.image == nil) {
-    leadingConstant = 16.f;
-  } else {
-    leadingConstant = 72.f;
-  }
-  [NSLayoutConstraint constraintWithItem:_textLabel
-                               attribute:NSLayoutAttributeLeading
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self.contentView
-                               attribute:NSLayoutAttributeLeading
-                              multiplier:1
-                                constant:leadingConstant].active = YES;
+  _leadingTitleConstraint = [NSLayoutConstraint constraintWithItem:_textLabel
+                                                         attribute:NSLayoutAttributeLeading
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:self.contentView
+                                                         attribute:NSLayoutAttributeLeading
+                                                        multiplier:1
+                                                          constant:leadingConstant];
+  _leadingTitleConstraint.active = YES;
   CGFloat width = CGRectGetWidth(self.contentView.frame) - (kLeadingPadding * 2);
   [NSLayoutConstraint constraintWithItem:_textLabel
                                attribute:NSLayoutAttributeWidth
@@ -105,16 +110,36 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
                                attribute:NSLayoutAttributeNotAnAttribute
                               multiplier:1
                                 constant:width].active = YES;
+
   if (!_inkTouchController) {
     _inkTouchController = [[MDCInkTouchController alloc] initWithView:self];
     [_inkTouchController addInkView];
   }
-  if (_itemAction.image == nil) {
-    return;
-  }
+
   _imageView = [[UIImageView alloc] init];
   [self.contentView addSubview:_imageView];
-  [_imageView setTranslatesAutoresizingMaskIntoConstraints:NO];
+  _imageView.translatesAutoresizingMaskIntoConstraints = NO;
+
+}
+
+- (void)layoutSubviews {
+  [super layoutSubviews];
+  NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+  paragraphStyle.hyphenationFactor = 1.f;
+  NSDictionary<NSAttributedStringKey, id> *attributes =
+  @{ NSParagraphStyleAttributeName : paragraphStyle };
+  NSMutableAttributedString *attributedString =
+  [[NSMutableAttributedString alloc] initWithString:_itemAction.title attributes:attributes];
+  _textLabel.attributedText = attributedString;
+
+  CGFloat leadingConstant;
+  if (_itemAction.image == nil) {
+    leadingConstant = 16.f;
+  } else {
+    leadingConstant = 72.f;
+  }
+  _leadingTitleConstraint.constant = leadingConstant;
+
   _imageView.image = _itemAction.image;
   _imageView.alpha = kImageAlpha;
   [NSLayoutConstraint constraintWithItem:_imageView
@@ -145,19 +170,15 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
                                attribute:NSLayoutAttributeNotAnAttribute
                               multiplier:1
                                 constant:24.f].active = YES;
-}
-
-- (void)layoutSubviews {
-  [super layoutSubviews];
-  
   _widthConstraint.constant = CGRectGetWidth(self.contentView.frame) - (kLeadingPadding * 2);
 }
 
 - (void)setAction:(MDCActionSheetAction *)action {
-  if (_itemAction != action) {
-    _itemAction = [action copy];
-    [self setNeedsLayout];
-  }
+  _itemAction = [action copy];
+  _textLabel.text = _itemAction.title;
+  [_textLabel setNeedsLayout];
+  _imageView.image = _itemAction.image;
+  [self setNeedsLayout];
 }
 
 - (MDCActionSheetAction *)action {

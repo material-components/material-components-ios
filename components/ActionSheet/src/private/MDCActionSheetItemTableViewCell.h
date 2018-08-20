@@ -21,10 +21,6 @@
 @interface MDCActionSheetItemTableViewCell : UITableViewCell
 
 /** Cells must be created with cellWithAction: */
-- (nonnull instancetype)initWithAction:(nonnull MDCActionSheetAction *)action
-                       reuseIdentifier:(nullable NSString *)reuseIdentifier;
-
-/** Cells must be created with cellWithAction: */
 - (nullable instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 
 /** Cells must be created with cellWithAction: */
