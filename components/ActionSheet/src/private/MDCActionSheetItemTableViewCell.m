@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "MDCActionSheetItemView.h"
+#import "MDCActionSheetItemTableViewCell.h"
 
 #import "MaterialTypography.h"
 

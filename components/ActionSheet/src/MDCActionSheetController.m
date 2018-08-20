@@ -16,7 +16,7 @@
 
 #import "MDCActionSheetController.h"
 
-#import "MDCActionSheetItemView.h"
+#import "MDCActionSheetItemTableViewCell.h"
 #import "MDCActionSheetListViewController.h"
 #import "MaterialBottomSheet.h"
 #import "MaterialApplication.h"
@@ -64,9 +64,6 @@
 @property(nonatomic, nonnull) MDCActionSheetHeaderView *header;
 
 @property(nonatomic, nullable) MDCActionSheetListViewController *tableView;
-
-- (nonnull instancetype)initWithTitle:(nullable NSString *)title
-                              message:(nullable NSString *)message;
 
 @end
 

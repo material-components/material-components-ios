@@ -16,7 +16,7 @@
 
 #import "MDCActionSheetListViewController.h"
 
-#import "MDCActionSheetItemView.h"
+#import "MDCActionSheetItemTableViewCell.h"
 #import "MDCActionSheetController.h"
 #import "MaterialTypography.h"
 
