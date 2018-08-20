@@ -100,8 +100,8 @@ class MDCThemePickerViewController: UIViewController, UICollectionViewDataSource
                                     return createSchemeWithPalette(MDCPalette.orange)
     })
   ]
-  private let cellSize : CGFloat = 48.0 // minimum touch target
-  private let cellSpacing : CGFloat = 8.0
+  private let cellSize: CGFloat = 48.0 // minimum touch target
+  private let cellSpacing: CGFloat = 8.0
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -245,7 +245,7 @@ class MDCThemePickerViewController: UIViewController, UICollectionViewDataSource
 
 }
 
-class PaletteCell : UICollectionViewCell {
+class PaletteCell: UICollectionViewCell {
   let imageView = UIImageView()
 
   override init(frame: CGRect) {
