@@ -75,6 +75,11 @@
   NSMutableArray<MDCActionSheetAction *> *_actions;
   MDCBottomSheetTransitionController *_transitionController;
   BOOL mdc_adjustFontForContentSizeCategory;
+  /**
+    Used to determine if we need to do a layout within viewWillLayoutSubviews,
+    Because we are setting the preferredContentSize we can no longer get the frame to set the sheet
+    and headers sizes after a transition. 
+   */
   BOOL initialLayout;
 }
 
@@ -150,6 +155,11 @@
 
 - (void)firstLayout {
   [self.header setNeedsLayout];
+  /**
+   We need this call to `layoutIfNeeded` to make sure the header is layed out and therefore the
+   height is calculated, if this is removed then the header's height is 0 and we don't get the
+   correct height for the sheet.
+   */
   [self.header layoutIfNeeded];
 
   CGFloat width = CGRectGetWidth(self.view.bounds);
@@ -217,6 +227,11 @@
   headerFrame.size.width = size.width;
   self.header.frame = headerFrame;
   [self.header setNeedsLayout];
+  /**
+   We need this call to `layoutIfNeeded` to make sure the header is layed out and therefore the
+   height is calculated, if this is removed then the header's height is 0 and we don't get the
+   correct height for the sheet.
+   */
   [self.header layoutIfNeeded];
 
   CGFloat height = CGRectGetHeight(self.header.frame) + [self.tableView tableHeightForWidth:size.width];

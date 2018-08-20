@@ -45,7 +45,6 @@
 
 @interface MDCActionSheetHeaderView : UIView
 
-/** */
 - (instancetype)initWithTitle:(NSString *)title;
 
 - (nonnull instancetype)initWithTitle:(NSString *)title message:(NSString *)message;
