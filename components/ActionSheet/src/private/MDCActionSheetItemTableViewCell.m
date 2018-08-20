@@ -39,9 +39,10 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
   UILabel *_textLabel;
   UIImageView *_imageView;
   MDCInkTouchController *_inkTouchController;
-  BOOL _mdc_adjustsFontForContentSizeCategory;
   NSLayoutConstraint *_widthConstraint;
 }
+
+@synthesize mdc_adjustsFontForContentSizeCategory;
 
 - (instancetype)initWithAction:(MDCActionSheetAction *)action
                reuseIdentifier:(NSString *)reuseIdentifier {
@@ -184,22 +185,18 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
 
 - (void)updateTitleFont {
   UIFont *titleFont = _actionsFont ?: [[self class] titleFontDefault];
-  if (_mdc_adjustsFontForContentSizeCategory) {
+  if (self.mdc_adjustsFontForContentSizeCategory) {
     _textLabel.font =
         [titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
-                                scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+                                scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
   } else {
     _textLabel.font = titleFont;
   }
   [self setNeedsLayout];
 }
 
-- (BOOL)mdc_adjustsFontForContentSizeCategory {
-  return _mdc_adjustsFontForContentSizeCategory;
-}
-
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
-  _mdc_adjustsFontForContentSizeCategory = adjusts;
+  mdc_adjustsFontForContentSizeCategory = adjusts;
   [self updateTitleFont];
 }
 
@@ -214,8 +211,9 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
 @implementation MDCActionSheetHeaderView {
   UILabel *titleLabel;
   UILabel *messageLabel;
-  BOOL _mdc_adjustsFontForContentSizeCategory;
 }
+
+@synthesize mdc_adjustsFontForContentSizeCategory;
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -363,10 +361,10 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
 
 - (void)updateTitleFont {
   UIFont *titleFont = _titleFont ?: [[self class] titleFontDefault];
-  if (_mdc_adjustsFontForContentSizeCategory) {
+  if (self.mdc_adjustsFontForContentSizeCategory) {
     titleLabel.font =
         [titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
-                                scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+                                scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
   } else {
     titleLabel.font = titleFont;
   }
@@ -375,10 +373,10 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
 
 - (void)updateMessageFont {
   UIFont *messageFont = _messageFont ?: [[self class] messageFontDefault];
-  if (_mdc_adjustsFontForContentSizeCategory) {
+  if (self.mdc_adjustsFontForContentSizeCategory) {
     messageLabel.font =
         [messageFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleBody1
-                                  scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+                                  scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
   } else {
     messageLabel.font = messageFont;
   }
@@ -386,12 +384,8 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
   [self setNeedsLayout];
 }
 
-- (BOOL)mdc_adjustsFontForContentSizeCategory {
-  return _mdc_adjustsFontForContentSizeCategory;
-}
-
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
-  _mdc_adjustsFontForContentSizeCategory = adjusts;
+  mdc_adjustsFontForContentSizeCategory = adjusts;
   [self updateFonts];
 }
 

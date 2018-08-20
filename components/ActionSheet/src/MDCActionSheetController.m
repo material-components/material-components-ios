@@ -83,6 +83,8 @@ NSString *const kReuseId = @"BaseCell";
   BOOL needsPreferredContentSizeUpdate;
 }
 
+@synthesize mdc_adjustsFontForContentSizeCategory;
+
 + (instancetype)actionSheetControllerWithTitle:(NSString *)title message:(NSString *)message {
   return [[MDCActionSheetController alloc] initWithTitle:title message:message];
 }
@@ -332,12 +334,12 @@ NSString *const kReuseId = @"BaseCell";
 #pragma mark - Dynamic Type
 
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
-  _mdc_adjustsFontForContentSizeCategory = adjusts;
+  mdc_adjustsFontForContentSizeCategory = adjusts;
   [self view];
 
   _header.mdc_adjustsFontForContentSizeCategory = adjusts;
   [self updateFontsForDynamicType];
-  if (_mdc_adjustsFontForContentSizeCategory) {
+  if (self.mdc_adjustsFontForContentSizeCategory) {
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updateFontsForDynamicType)
                                                  name:UIContentSizeCategoryDidChangeNotification
@@ -357,16 +359,12 @@ NSString *const kReuseId = @"BaseCell";
   return [MDCTypography subheadFont];
 }
 
-- (BOOL)mdc_adjustFontForContentSizeCategory {
-  return _mdc_adjustsFontForContentSizeCategory;
-}
-
 - (void)updateTableFonts {
   UIFont *finalActionsFont = _actionsFont ?: [[self class] actionsFontDefault];
-  if (_mdc_adjustsFontForContentSizeCategory) {
+  if (self.mdc_adjustsFontForContentSizeCategory) {
     finalActionsFont =
         [finalActionsFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
-                                       scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+                                       scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
   }
   _actionsFont = finalActionsFont;
   _dataSource.actionsFont = _actionsFont;
