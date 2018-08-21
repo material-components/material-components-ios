@@ -177,8 +177,8 @@ Pod::Spec.new do |mdc|
 
   mdc.subspec "BottomSheet+ShapeThemer" do |extension|
     extension.ios.deployment_target = '8.0'
-    component.public_header_files = "components/#{component.base_name}/src/*.h"
-    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
 
     extension.dependency "MaterialComponents/schemes/Shape"
   end

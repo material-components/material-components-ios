@@ -14,17 +14,4 @@
  limitations under the License.
  */
 
-#import "MDCButtonShapeThemer.h"
-
-@implementation MDCButtonShapeThemer
-
-+ (void)applyShapeScheme:(nonnull id<MDCShapeScheming>)shapeScheme
-                toButton:(nonnull MDCButton *)button {
-  MDCRectangleShapeGenerator *rectangleShape = [[MDCRectangleShapeGenerator alloc] init];
-  MDCCornerTreatment *cornerTreatment =
-      [shapeScheme.smallSurfaceShape.topLeftCorner cornerTreatmentValueWithViewBounds:button.bounds];
-  [rectangleShape setCorners:cornerTreatment];
-  button.shapeGenerator = rectangleShape;
-}
-
-@end
+#import "MDCBottomSheetShapeThemer.h"

@@ -16,7 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialChips.h"
+#import "MaterialButtons.h"
 #import "MaterialShapeScheme.h"
 #import "MaterialShapes.h"
 #import "MaterialShapeLibrary.h"
@@ -24,12 +24,12 @@
 /**
  The Material Design color system's themer for instances of MDCCard and MDCCardCollectionCell.
  */
-@interface MDCChipViewShapeThemer : NSObject
+@interface MDCButtonShapeThemer : NSObject
 
 /**
 
  */
 + (void)applyShapeScheme:(nonnull id<MDCShapeScheming>)shapeScheme
-              toChipView:(nonnull MDCChipView *)chipView;
+                toButton:(nonnull MDCButton *)button;
 
 @end

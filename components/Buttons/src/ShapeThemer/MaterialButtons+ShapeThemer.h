@@ -14,5 +14,4 @@
  limitations under the License.
  */
 
-#import "MDCChipViewShapeThemer.h"
-#import "MDCChipViewBaselineShapeThemer.h"
+#import "MDCButtonShapeThemer.h"

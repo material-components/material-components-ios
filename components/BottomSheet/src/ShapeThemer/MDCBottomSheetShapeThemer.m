@@ -14,17 +14,17 @@
  limitations under the License.
  */
 
-#import "MDCButtonShapeThemer.h"
+#import "MDCChipViewShapeThemer.h"
 
-@implementation MDCButtonShapeThemer
+@implementation MDCChipViewShapeThemer
 
 + (void)applyShapeScheme:(nonnull id<MDCShapeScheming>)shapeScheme
-                toButton:(nonnull MDCButton *)button {
+ toBottomSheetController:(nonnull MDCBottomSheetController *)bottomSheetController {
   MDCRectangleShapeGenerator *rectangleShape = [[MDCRectangleShapeGenerator alloc] init];
   MDCCornerTreatment *cornerTreatment =
-      [shapeScheme.smallSurfaceShape.topLeftCorner cornerTreatmentValueWithViewBounds:button.bounds];
+      [shapeScheme.smallSurfaceShape.topLeftCorner cornerTreatmentValue];
   [rectangleShape setCorners:cornerTreatment];
-  button.shapeGenerator = rectangleShape;
+  bottomSheetController.shapeGenerator = rectangleShape;
 }
 
 @end

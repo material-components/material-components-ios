@@ -14,17 +14,21 @@
  limitations under the License.
  */
 
-#import "MDCButtonShapeThemer.h"
+#import <UIKit/UIKit.h>
 
-@implementation MDCButtonShapeThemer
+#import "MaterialBottomSheet.h"
+#import "MaterialShapeScheme.h"
+#import "MaterialShapes.h"
+#import "MaterialShapeLibrary.h"
 
+/**
+ */
+@interface MDCBottomSheetControllerShapeThemer : NSObject
+
+/**
+
+ */
 + (void)applyShapeScheme:(nonnull id<MDCShapeScheming>)shapeScheme
-                toButton:(nonnull MDCButton *)button {
-  MDCRectangleShapeGenerator *rectangleShape = [[MDCRectangleShapeGenerator alloc] init];
-  MDCCornerTreatment *cornerTreatment =
-      [shapeScheme.smallSurfaceShape.topLeftCorner cornerTreatmentValueWithViewBounds:button.bounds];
-  [rectangleShape setCorners:cornerTreatment];
-  button.shapeGenerator = rectangleShape;
-}
+    toBottomSheetController:(nonnull MDCBottomSheetController *)bottomSheetController;
 
 @end
