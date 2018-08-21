@@ -245,6 +245,9 @@ IB_DESIGNABLE
  Clients are recommended to set this to NO, and set the min and max heights to values that don't
  include the status bar or Safe Area insets.
 
+ @warning This API will soon be disabled by default and then deprecated. Learn more at
+ https://github.com/material-components/material-components-ios/blob/develop/components/FlexibleHeader/docs/migration-guide-minMaxHeightIncludesSafeArea.md
+
  Default is YES.
  */
 @property(nonatomic) BOOL minMaxHeightIncludesSafeArea;

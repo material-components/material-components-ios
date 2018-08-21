@@ -94,7 +94,7 @@
  The App Bar views that will be presented in front of the contentViewController's view.
 
  @warning This API will eventually be deprecated. Use appBarViewController instead. Learn more at
- components/AppBar/docs/migration-guide-appbar-appbarviewcontroller.md
+ https://github.com/material-components/material-components-ios/blob/develop/components/AppBar/docs/migration-guide-appbar-appbarviewcontroller.md
  */
 @property(nonatomic, strong, nonnull, readonly) MDCAppBar *appBar;
 
