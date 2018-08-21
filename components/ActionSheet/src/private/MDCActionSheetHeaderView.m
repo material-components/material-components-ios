@@ -118,7 +118,9 @@ static const CGFloat kMiddlePadding = 8.f;
   CGRect scrollViewRect = CGRectZero;
   scrollViewRect.size = self.scrollView.contentSize;
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-  scrollViewRect.origin.x = scrollViewRect.origin.x + self.safeAreaInsets.left;
+  if (@available(iOS 11.0, *)) {
+    scrollViewRect.origin.x = scrollViewRect.origin.x + self.safeAreaInsets.left;
+  }
 #endif
 
   self.scrollView.frame = scrollViewRect;
