@@ -31,6 +31,8 @@
       [[MDCBottomSheetController alloc] initWithContentViewController:viewController];
   [MDCBottomSheetControllerShapeThemer applyShapeScheme:self.shapeScheme
                                 toBottomSheetController:bottomSheet];
+  [MDCBottomSheetControllerBaselineShapeThemer
+      applyShapeBaselineToBottomSheetController:bottomSheet];
   [self presentViewController:bottomSheet animated:YES completion:nil];
 }
 
@@ -47,6 +49,8 @@
       [[MDCBottomSheetController alloc] initWithContentViewController:viewController];
   [MDCBottomSheetControllerShapeThemer applyShapeScheme:self.shapeScheme
                                 toBottomSheetController:bottomSheet];
+  [MDCBottomSheetControllerBaselineShapeThemer
+      applyShapeBaselineToBottomSheetController:bottomSheet];
   [self presentViewController:bottomSheet animated:YES completion:nil];
 }
 

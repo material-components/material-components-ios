@@ -31,6 +31,8 @@
       [[MDCBottomSheetController alloc] initWithContentViewController:viewController];
   [MDCBottomSheetControllerShapeThemer applyShapeScheme:self.shapeScheme
                                 toBottomSheetController:bottomSheet];
+  [MDCBottomSheetControllerBaselineShapeThemer
+      applyShapeBaselineToBottomSheetController:bottomSheet];
   bottomSheet.trackingScrollView = viewController.collectionView;
   [self presentViewController:bottomSheet animated:YES completion:nil];
 }

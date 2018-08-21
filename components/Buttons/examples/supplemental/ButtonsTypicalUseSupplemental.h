@@ -22,6 +22,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialColorScheme.h"
+#import "MaterialShapeScheme.h"
 #import "MaterialTypographyScheme.h"
 
 @interface ButtonsTypicalUseViewController : UIViewController
@@ -29,6 +30,7 @@
 @property(nonatomic, strong) NSArray *buttons;
 @property(nonatomic, strong) NSArray *labels;
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong) MDCShapeScheme *shapeScheme;
 @property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 
 - (UILabel *)addLabelWithText:(NSString *)text;

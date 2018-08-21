@@ -67,6 +67,7 @@ class BottomSheetTableViewExample: UIViewController {
     let bottomSheet = MDCBottomSheetController(contentViewController: menu)
     bottomSheet.trackingScrollView = menu.tableView
     MDCBottomSheetControllerShapeThemer.applyShapeScheme(shapeScheme, to: bottomSheet)
+    MDCBottomSheetControllerBaselineShapeThemer.applyShapeBaseline(to: bottomSheet)
     present(bottomSheet, animated: true)
   }
 }

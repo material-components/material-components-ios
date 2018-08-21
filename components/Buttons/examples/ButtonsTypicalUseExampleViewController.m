@@ -17,6 +17,7 @@
 #import "MaterialButtons.h"
 #import "MaterialButtons+ButtonThemer.h"
 #import "MaterialButtons+ColorThemer.h"
+#import "MaterialButtons+ShapeThemer.h"
 #import "MaterialButtons+TypographyThemer.h"
 #import "MaterialTypography.h"
 #import "MDCTextButtonThemer.h"
@@ -36,6 +37,7 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
   if (self) {
     self.colorScheme = [[MDCSemanticColorScheme alloc] init];
     self.typographyScheme = [[MDCTypographyScheme alloc] init];
+    self.shapeScheme = [[MDCShapeScheme alloc] init];
   }
   return self;
 }

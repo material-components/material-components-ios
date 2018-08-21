@@ -15,3 +15,4 @@
  */
 
 #import "MDCBottomSheetControllerShapeThemer.h"
+#import "MDCBottomSheetControllerBaselineShapeThemer.h"
