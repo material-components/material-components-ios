@@ -17,6 +17,7 @@
 #import "MDCFlexibleHeaderView.h"
 
 #import "MaterialApplication.h"
+#import "MaterialFlexibleHeader+CanAlwaysExpandToMaximumHeight.h"
 #import "MaterialUIMetrics.h"
 #import "MDCFlexibleHeaderView+ShiftBehavior.h"
 #import "private/MDCStatusBarShifter.h"
@@ -93,9 +94,6 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 //
 // This property is ignored if inferTopSafeAreaInsetFromViewController is NO.
 @property(nonatomic) CGFloat topSafeAreaInset;
-
-// Exposed via the FlexibleHeader+CanAlwaysExpandToMaximumHeight target.
-@property(nonatomic) BOOL canAlwaysExpandToMaximumHeight;
 
 @end
 
@@ -995,14 +993,16 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   CGFloat lowerBound;
 
   if (self.canAlwaysExpandToMaximumHeight) {
+    CGFloat maxExpansion;
     if (headerHeight < self.computedMinimumHeight) {
       // The header is detached from the content and able to fully expand.
-      lowerBound = MIN(0, -(self.maximumHeight - self.minimumHeight));
+      maxExpansion = self.minimumHeight - self.maximumHeight;
     } else {
       // We're now attached to the content and need to constrain our possible expansion.
-      lowerBound = MIN(0, -(self.computedMaximumHeight - headerHeight));
+      maxExpansion = self.computedMaximumHeight - headerHeight;
     }
-
+    // Expansion is tracked via negative accumulation.
+    lowerBound = MIN(0, -maxExpansion);
   } else {
     lowerBound = 0;
   }
@@ -1146,11 +1146,10 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 
   if (_canOverExtend && !UIAccessibilityIsVoiceOverRunning()) {
     bounds.size.height = MAX(self.computedMinimumHeight, headerHeight) + additionalHeightInjection;
-
   } else {
     bounds.size.height =
-        MAX(self.computedMinimumHeight, MIN(self.computedMaximumHeight, headerHeight)) +
-        additionalHeightInjection;
+        (MAX(self.computedMinimumHeight, MIN(self.computedMaximumHeight, headerHeight))
+         + additionalHeightInjection);
   }
 
   // Avoid excessive writes - the default behavior of the flexible header has minimal height
