@@ -2,7 +2,7 @@
 # Each line is a file pattern followed by one or more owners.
 
 # These owners will be the default owners for everything in the repo.
-**       @ianegordon
+**       @material-components/core-ios-team
 
 # Order is important. The last matching pattern has the most precedence.
 # So if a pull request only touches javascript files, only these owners
@@ -39,7 +39,7 @@
 /components/ShadowLayer/          @ianegordon
 /components/Slider/               @romoore
 /components/Snackbar/             @yarneo
-/components/Tabs/                 @brianjmoore
+/components/Tabs/                 @romoore
 /components/TextFields/           @andrewoverton
 /components/Themes/               @featherless
 /components/Typography/           @ianegordon

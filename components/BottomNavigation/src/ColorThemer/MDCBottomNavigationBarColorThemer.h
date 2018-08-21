@@ -31,13 +31,16 @@
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
               toBottomNavigation:(nonnull MDCBottomNavigationBar *)bottomNavigation;
 
-#pragma mark - Soon to be deprecated
+@end
+
+@interface MDCBottomNavigationBarColorThemer (ToBeDeprecated)
 
 /**
  Applies a color scheme to theme a MDCBottomNavigationBar.
 
  @warning This method will soon be deprecated. Consider using
- @c +applySemanticColorScheme:toBottomNavigation: instead.
+ @c +applySemanticColorScheme:toBottomNavigation: instead. Learn more at
+ components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
 
  @param colorScheme The color scheme to apply to MDCBottomNavigationBar.
  @param bottomNavigationBar A MDCBottomNavigationBar instance to apply a color scheme.

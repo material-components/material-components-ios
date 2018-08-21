@@ -23,12 +23,17 @@
 #import "MaterialButtons+ButtonThemer.h"
 
 @interface PresentedDemoViewController : UICollectionViewController
-@property(nonatomic, strong) MDCAppBar *appBar;
+@property(nonatomic, strong) MDCAppBarViewController *appBarViewController;
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 @end
 
 @implementation PresentedDemoViewController
+
+- (void)dealloc {
+  // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
+  self.appBarViewController.headerView.trackingScrollView = nil;
+}
 
 - (id)init {
   UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
@@ -39,8 +44,13 @@
   if (self) {
     self.title = @"Presented App Bar";
 
-    _appBar = [[MDCAppBar alloc] init];
-    [self addChildViewController:_appBar.headerViewController];
+    _appBarViewController = [[MDCAppBarViewController alloc] init];
+
+    // Behavioral flags.
+    _appBarViewController.inferTopSafeAreaInsetFromViewController = YES;
+    _appBarViewController.headerView.minMaxHeightIncludesSafeArea = NO;
+
+    [self addChildViewController:_appBarViewController];
 
     self.colorScheme = [[MDCSemanticColorScheme alloc] init];
     self.typographyScheme = [[MDCTypographyScheme alloc] init];
@@ -51,21 +61,21 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  _appBar.headerViewController.headerView.shiftBehavior = MDCFlexibleHeaderShiftBehaviorEnabled;
-  [_appBar.headerViewController.headerView hideViewWhenShifted:_appBar.headerStackView];
+  // Allows us to avoid forwarding events, but means we can't enable shift behaviors.
+  self.appBarViewController.headerView.observesTrackingScrollViewScrollEvents = YES;
 
-  _appBar.navigationBar.useFlexibleTopBottomInsets = YES;
-
-  [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme
-                                        toAppBar:_appBar];
+  [MDCAppBarColorThemer applyColorScheme:self.colorScheme
+                  toAppBarViewController:_appBarViewController];
   [MDCAppBarTypographyThemer applyTypographyScheme:self.typographyScheme
-                                          toAppBar:_appBar];
+                            toAppBarViewController:_appBarViewController];
 
   // Need to update the status bar style after applying the theme.
   [self setNeedsStatusBarAppearanceUpdate];
 
-  _appBar.headerViewController.headerView.trackingScrollView = self.collectionView;
-  [_appBar addSubviewsToParent];
+  _appBarViewController.headerView.trackingScrollView = self.collectionView;
+
+  [self.view addSubview:_appBarViewController.view];
+  [_appBarViewController didMoveToParentViewController:self];
 
   [self.collectionView registerClass:[UICollectionViewCell class]
           forCellWithReuseIdentifier:@"Cell"];
@@ -115,37 +125,6 @@
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
   CGRect collectionViewFrame = collectionView.frame;
   return CGSizeMake(collectionViewFrame.size.width/2.f - 14.f, 40.f);
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-  MDCFlexibleHeaderView *headerView = self.appBar.headerViewController.headerView;
-  if (scrollView == headerView.trackingScrollView) {
-    [headerView trackingScrollViewDidScroll];
-  }
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-  MDCFlexibleHeaderView *headerView = self.appBar.headerViewController.headerView;
-  if (scrollView == headerView.trackingScrollView) {
-    [headerView trackingScrollViewDidEndDraggingWillDecelerate:decelerate];
-  }
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-  MDCFlexibleHeaderView *headerView = self.appBar.headerViewController.headerView;
-  if (scrollView == headerView.trackingScrollView) {
-    [headerView trackingScrollViewDidEndDecelerating];
-  }
-}
-
-- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView
-                     withVelocity:(CGPoint)velocity
-              targetContentOffset:(inout CGPoint *)targetContentOffset {
-  MDCFlexibleHeaderView *headerView = self.appBar.headerViewController.headerView;
-  if (scrollView == headerView.trackingScrollView) {
-    [headerView trackingScrollViewWillEndDraggingWithVelocity:velocity
-                                          targetContentOffset:targetContentOffset];
-  }
 }
 
 @end

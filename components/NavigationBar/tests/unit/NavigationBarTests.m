@@ -189,7 +189,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
   UIFont *resultFont = navBar.titleLabel.font;
   XCTAssertEqualObjects(resultFont.fontName, font.fontName);
-  XCTAssertEqualWithAccuracy(resultFont.pointSize, 20, 0.01);
+  XCTAssertEqualWithAccuracy(resultFont.pointSize, 24, 0.01);
 
   NSDictionary <NSString *, NSNumber *> *fontTraits =
       [[font fontDescriptor] objectForKey:UIFontDescriptorTraitsAttribute];
@@ -198,57 +198,6 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
   XCTAssertEqual(fontTraits, resultTraits);
 }
-
-- (void)testEncoding {
-  // Given
-  MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
-  navBar.title = @"A title";
-  navBar.titleView = [[UIView alloc] init];
-  navBar.titleView.contentMode = UIViewContentModeTop;
-  navBar.titleTextAttributes = @{NSFontAttributeName : [UIFont systemFontOfSize:12]};
-  UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
-  backItem.title = @"Go back!";
-  navBar.backItem = backItem;
-  navBar.hidesBackButton = YES;
-  UIBarButtonItem *item1 = [[UIBarButtonItem alloc] init];
-  item1.title = @"Item 1";
-  UIBarButtonItem *item2 = [[UIBarButtonItem alloc] init];
-  item2.title = @"Item 2";
-  navBar.leadingBarButtonItems = @[item1, item2];
-  navBar.trailingBarButtonItems = @[item2, item1];
-  navBar.leadingItemsSupplementBackButton = YES;
-  navBar.titleAlignment = MDCNavigationBarTitleAlignmentCenter;
-
-  // When
-  NSData *archive = [NSKeyedArchiver archivedDataWithRootObject:navBar];
-  MDCNavigationBar *unarchivedBar =
-      (MDCNavigationBar *)[NSKeyedUnarchiver unarchiveObjectWithData:archive];
-
-  // Then
-  XCTAssertEqualObjects(navBar.title, unarchivedBar.title);
-  XCTAssertNotNil(unarchivedBar.titleView);
-  XCTAssertEqual(navBar.titleView.contentMode, unarchivedBar.titleView.contentMode);
-  XCTAssertEqualObjects(navBar.titleTextAttributes, unarchivedBar.titleTextAttributes);
-  XCTAssertNotNil(unarchivedBar.backItem);
-  XCTAssertEqualObjects(navBar.backItem.title, unarchivedBar.backItem.title);
-  XCTAssertEqual(navBar.hidesBackButton, unarchivedBar.hidesBackButton);
-  XCTAssertEqual(2U, unarchivedBar.leadingBarButtonItems.count);
-  XCTAssertEqual(navBar.leadingBarButtonItems.count, unarchivedBar.leadingBarButtonItems.count);
-  for (NSUInteger i = 0; i < navBar.leadingBarButtonItems.count; ++i) {
-    XCTAssertEqualObjects(navBar.leadingBarButtonItems[i].title,
-                          unarchivedBar.leadingBarButtonItems[i].title);
-  }
-  XCTAssertEqual(2U, unarchivedBar.trailingBarButtonItems.count);
-  XCTAssertEqual(navBar.trailingBarButtonItems.count, unarchivedBar.trailingBarButtonItems.count);
-  for (NSUInteger i = 0; i < navBar.trailingBarButtonItems.count; ++i) {
-    XCTAssertEqualObjects(navBar.trailingBarButtonItems[i].title,
-                          unarchivedBar.trailingBarButtonItems[i].title);
-  }
-  XCTAssertEqual(navBar.leadingItemsSupplementBackButton,
-                unarchivedBar.leadingItemsSupplementBackButton);
-  XCTAssertEqual(navBar.titleAlignment, unarchivedBar.titleAlignment);
-}
-
 
 #pragma mark - Accessibility
 

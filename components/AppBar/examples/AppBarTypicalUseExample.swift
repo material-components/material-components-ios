@@ -22,17 +22,26 @@ import MaterialComponents.MaterialAppBar_TypographyThemer
 class AppBarTypicalUseSwiftExample: UITableViewController {
 
   // Step 1: Create and initialize an App Bar.
-  let appBar = MDCAppBar()
+  let appBarViewController = MDCAppBarViewController()
   var colorScheme = MDCSemanticColorScheme()
   var typographyScheme = MDCTypographyScheme()
+
+  deinit {
+    // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
+    appBarViewController.headerView.trackingScrollView = nil
+  }
 
   init() {
     super.init(nibName: nil, bundle: nil)
 
     self.title = "App Bar (Swift)"
 
+    // Behavioral flags.
+    appBarViewController.inferTopSafeAreaInsetFromViewController = true
+    appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
+
     // Step 2: Add the headerViewController as a child.
-    self.addChildViewController(appBar.headerViewController)
+    self.addChildViewController(appBarViewController)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -42,17 +51,18 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
-    MDCAppBarTypographyThemer.applyTypographyScheme(typographyScheme, to: appBar)
-    
+    MDCAppBarColorThemer.applyColorScheme(colorScheme, to: appBarViewController)
+    MDCAppBarTypographyThemer.applyTypographyScheme(typographyScheme, to: appBarViewController)
+
+    // Allows us to avoid forwarding events, but means we can't enable shift behaviors.
+    appBarViewController.headerView.observesTrackingScrollViewScrollEvents = true
+
     // Recommended step: Set the tracking scroll view.
-    appBar.headerViewController.headerView.trackingScrollView = self.tableView
+    appBarViewController.headerView.trackingScrollView = self.tableView
 
     // Step 2: Register the App Bar views.
-    appBar.addSubviewsToParent()
-
-    self.tableView.layoutMargins = UIEdgeInsets.zero
-    self.tableView.separatorInset = UIEdgeInsets.zero
+    view.addSubview(appBarViewController.view)
+    appBarViewController.didMove(toParentViewController: self)
 
     self.navigationItem.rightBarButtonItem =
       UIBarButtonItem(title: "Right", style: .done, target: nil, action: nil)
@@ -61,13 +71,13 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
   // Optional step: If you allow the header view to hide the status bar you must implement this
   //                method and return the headerViewController.
   override var childViewControllerForStatusBarHidden: UIViewController? {
-    return appBar.headerViewController
+    return appBarViewController
   }
 
   // Optional step: The Header View Controller does basic inspection of the header view's background
   //                color to identify whether the status bar should be light or dark-themed.
   override var childViewControllerForStatusBarStyle: UIViewController? {
-    return appBar.headerViewController
+    return appBarViewController
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -75,33 +85,6 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
 
     self.navigationController?.setNavigationBarHidden(true, animated: animated)
   }
-
-  override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
-      appBar.headerViewController.headerView.trackingScrollDidScroll()
-    }
-  }
-
-  override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
-      appBar.headerViewController.headerView.trackingScrollDidEndDecelerating()
-    }
-  }
-
-  override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-    let headerView = appBar.headerViewController.headerView
-    if scrollView == headerView.trackingScrollView {
-      headerView.trackingScrollDidEndDraggingWillDecelerate(decelerate)
-    }
-  }
-
-  override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-    let headerView = appBar.headerViewController.headerView
-    if scrollView == headerView.trackingScrollView {
-      headerView.trackingScrollWillEndDragging(withVelocity: velocity, targetContentOffset: targetContentOffset)
-    }
-  }
-
 }
 
 // MARK: Catalog by convention
@@ -136,6 +119,7 @@ extension AppBarTypicalUseSwiftExample {
         cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
       }
       cell!.layoutMargins = UIEdgeInsets.zero
+      cell!.selectionStyle = .none
       return cell!
   }
 

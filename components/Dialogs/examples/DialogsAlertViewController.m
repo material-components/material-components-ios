@@ -38,7 +38,7 @@
     @[ @"Show Alert",
        @"Show Long Alert",
        @"Non-Dismissable Alert",
-       @"Dynamic Alert",
+       @"Alert (Dynamic Type enabled)",
        @"Overpopulated Alert",
        @"Style Alert",
        @"Un-style Alert"]];
@@ -299,6 +299,24 @@
                                                       NSLog(@"%@", @"OK pressed");
                                                     }];
   [materialAlertController addAction:action6];
+
+  MDCAlertAction *action7 = [MDCAlertAction actionWithTitle:@"OK - 7"
+                                                    handler:^(MDCAlertAction *action) {
+                                                      NSLog(@"%@", @"OK pressed");
+                                                    }];
+  [materialAlertController addAction:action7];
+
+  MDCAlertAction *action8 = [MDCAlertAction actionWithTitle:@"OK - 8"
+                                                    handler:^(MDCAlertAction *action) {
+                                                      NSLog(@"%@", @"OK pressed");
+                                                    }];
+  [materialAlertController addAction:action8];
+
+  MDCAlertAction *action9 = [MDCAlertAction actionWithTitle:@"OK - 9"
+                                                    handler:^(MDCAlertAction *action) {
+                                                      NSLog(@"%@", @"OK pressed");
+                                                    }];
+  [materialAlertController addAction:action9];
 
   [self presentViewController:materialAlertController animated:YES completion:NULL];
 }

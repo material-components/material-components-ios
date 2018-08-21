@@ -145,6 +145,18 @@ static CGFloat randomNumber() {
   XCTAssertEqual(indicator.strokeLayer.strokeEnd, 0.55f);
 }
 
+- (void)testSetAccessibiltyLabelProperty {
+  // Given
+  MDCActivityIndicator *indicator = [[MDCActivityIndicator alloc] init];
+  NSString *testString = @"test this label";
+
+  // When
+  indicator.accessibilityLabel = testString;
+
+  // Then
+  XCTAssertEqualObjects(indicator.accessibilityLabel, testString);
+}
+
 #pragma mark - Helpers
 
 - (void)verifySettingProgressOnIndicator:(MDCActivityIndicator *)indicator animated:(BOOL)animated {

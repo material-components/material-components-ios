@@ -371,18 +371,18 @@ static const CGFloat kMaximumHeight = 80.0f;
       }
       [container addConstraint:_snackbarOnscreenConstraint];
 
-      if (MDCSnackbarMessage.usesLegacySnackbar) {
-        _snackbarOffscreenConstraint =
-            [NSLayoutConstraint constraintWithItem:snackbarView
-                                         attribute:NSLayoutAttributeTop
-                                         relatedBy:NSLayoutRelationEqual
-                                            toItem:container
-                                         attribute:NSLayoutAttributeBottom
-                                        multiplier:1.0
-                                          constant:-bottomMargin];
-        _snackbarOffscreenConstraint.active = YES;
-        [container addConstraint:_snackbarOffscreenConstraint];
+      _snackbarOffscreenConstraint = [NSLayoutConstraint constraintWithItem:snackbarView
+                                                                  attribute:NSLayoutAttributeTop
+                                                                  relatedBy:NSLayoutRelationEqual
+                                                                     toItem:container
+                                                                  attribute:NSLayoutAttributeBottom
+                                                                 multiplier:1.0
+                                                                   constant:-bottomMargin];
+      _snackbarOffscreenConstraint.active = MDCSnackbarMessage.usesLegacySnackbar;
+      if (!MDCSnackbarMessage.usesLegacySnackbar) {
+        _snackbarOffscreenConstraint.priority = UILayoutPriorityDefaultLow;
       }
+      [container addConstraint:_snackbarOffscreenConstraint];
 
       // Always limit the height of the Snackbar.
       self.maximumHeightConstraint =

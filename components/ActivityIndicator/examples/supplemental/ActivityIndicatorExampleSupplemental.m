@@ -78,6 +78,7 @@ static NSString * const kCell = @"Cell";
           forControlEvents:UIControlEventValueChanged];
 
   self.modeSwitch = [[UISwitch alloc] init];
+  [self.modeSwitch setOn:YES];
   [self.modeSwitch addTarget:self
                       action:@selector(didChangeModeSwitch:)
             forControlEvents:UIControlEventValueChanged];
@@ -89,8 +90,13 @@ static NSString * const kCell = @"Cell";
                   action:@selector(didChangeSliderValue:)
         forControlEvents:UIControlEventValueChanged];
 
+  self.activityIndicator1.progress = self.slider.value;
   self.activityIndicator2.progress = self.slider.value;
   self.activityIndicator3.progress = self.slider.value;
+
+  [self.activityIndicator1 startAnimating];
+  [self.activityIndicator2 startAnimating];
+  [self.activityIndicator3 startAnimating];
 
   self.tableView.layoutMargins = UIEdgeInsetsZero;
   self.tableView.separatorInset = UIEdgeInsetsZero;
@@ -135,7 +141,10 @@ static NSString * const kCell = @"Cell";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-  if (indexPath.row == 0) return 160;
+  if (indexPath.row == 0) {
+    return 160;
+  }
+  
   return 56;
 }
 
@@ -144,6 +153,7 @@ static NSString * const kCell = @"Cell";
   UITableViewCell *cell =
       [tableView dequeueReusableCellWithIdentifier:kCell forIndexPath:indexPath];
   cell.textLabel.text = @"";
+  cell.selectionStyle = UITableViewCellSelectionStyleNone;
   switch (indexPath.row) {
     case 0:
       cell.accessoryView = nil;

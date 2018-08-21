@@ -30,6 +30,12 @@
 
 @implementation AppBarWrappingUITableViewControllerExample
 
+- (void)dealloc {
+  // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
+  self.appBarContainerViewController.appBarViewController.headerView.trackingScrollView
+      = nil;
+}
+
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
@@ -47,21 +53,29 @@
   tableViewController.title = @"Wrapped table view";
   self.appBarContainerViewController =
       [[MDCAppBarContainerViewController alloc] initWithContentViewController:tableViewController];
+
+  // Behavioral flags.
+  MDCAppBarViewController *appBarViewController = self.appBarContainerViewController.appBarViewController;
+  appBarViewController.inferTopSafeAreaInsetFromViewController = YES;
+  appBarViewController.headerView.minMaxHeightIncludesSafeArea = NO;
   self.appBarContainerViewController.topLayoutGuideAdjustmentEnabled = YES;
 
   tableViewController.tableView.dataSource = self;
-  tableViewController.tableView.delegate =
-      self.appBarContainerViewController.appBar.headerViewController;
   [tableViewController.tableView registerClass:[UITableViewCell class]
                         forCellReuseIdentifier:@"cell"];
 
-  self.appBarContainerViewController.appBar.headerViewController.headerView.trackingScrollView =
-      tableViewController.tableView;
+  MDCFlexibleHeaderView *headerView =
+      self.appBarContainerViewController.appBarViewController.headerView;
 
-  [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme
-                                        toAppBar:self.appBarContainerViewController.appBar];
+  // Allows us to avoid forwarding events, but means we can't enable shift behaviors.
+  headerView.observesTrackingScrollViewScrollEvents = YES;
+
+  headerView.trackingScrollView = tableViewController.tableView;
+
+  [MDCAppBarColorThemer applyColorScheme:self.colorScheme
+                  toAppBarViewController:self.appBarContainerViewController.appBarViewController];
   [MDCAppBarTypographyThemer applyTypographyScheme:self.typographyScheme
-                                          toAppBar:self.appBarContainerViewController.appBar];
+                            toAppBarViewController:self.appBarContainerViewController.appBarViewController];
 
   // Need to update the status bar style after applying the theme.
   [self setNeedsStatusBarAppearanceUpdate];

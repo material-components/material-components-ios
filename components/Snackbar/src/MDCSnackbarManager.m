@@ -47,6 +47,12 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 @interface MDCSnackbarManagerInternal : NSObject
 
 /**
+ The instance of MDCSnackbarManager that "owns" this internal manager.  Used to get theming
+ properties. Can be refactored away in the future.
+ */
+@property(nonatomic, weak) MDCSnackbarManager *manager;
+
+/**
  The list of messages waiting to be displayed.
  */
 @property(nonatomic) NSMutableArray *pendingMessages;
@@ -84,6 +90,8 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
  */
 @property(nonatomic, weak) id<MDCSnackbarManagerDelegate> delegate;
 
+- (instancetype)initWithSnackbarManager:(__weak MDCSnackbarManager *)manager;
+
 @end
 
 @interface MDCSnackbarManagerSuspensionToken : NSObject <MDCSnackbarSuspensionToken>
@@ -98,33 +106,16 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
  */
 @property(nonatomic) NSString *category;
 
+- (instancetype)initWithManager:(nonnull MDCSnackbarManager *)manager;
+
 @end
 
 @implementation MDCSnackbarManagerInternal
 
-static UIColor *_snackbarMessageViewBackgroundColor;
-static UIColor *_snackbarMessageViewShadowColor;
-static UIColor *_messageTextColor;
-static UIFont *_messageFont;
-static UIFont *_buttonFont;
-static NSMutableDictionary<NSNumber *, UIColor *> *_buttonTitleColors;
-static BOOL _mdc_adjustsFontForContentSizeCategory;
-static BOOL _shouldApplyStyleChangesToVisibleSnackbars;
-
-+ (MDCSnackbarManagerInternal *)sharedInstance {
-  static MDCSnackbarManagerInternal *manager = nil;
-  static dispatch_once_t onceToken;
-
-  dispatch_once(&onceToken, ^{
-    manager = [[MDCSnackbarManagerInternal alloc] init];
-  });
-
-  return manager;
-}
-
-- (instancetype)init {
+- (instancetype)initWithSnackbarManager:(MDCSnackbarManager *__weak)manager {
   self = [super init];
   if (self) {
+    _manager = manager;
     _pendingMessages = [[NSMutableArray alloc] init];
     _suspensionTokens = [NSMutableDictionary dictionary];
     _overlayView = [[MDCSnackbarOverlayView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -226,10 +217,11 @@ static BOOL _shouldApplyStyleChangesToVisibleSnackbars;
       };
 
   Class viewClass = [message viewClass];
-  snackbarView = [[viewClass alloc] initWithMessage:message dismissHandler:dismissHandler];
+  snackbarView = [[viewClass alloc] initWithMessage:message
+                                     dismissHandler:dismissHandler
+                                    snackbarManager:self.manager];
   [self.delegate willPresentSnackbarWithMessageView:snackbarView];
   self.currentSnackbar = snackbarView;
-  self.overlayView.accessibilityViewIsModal = ![self isSnackbarTransient:snackbarView];
   self.overlayView.hidden = NO;
   [self activateOverlay:self.overlayView];
 
@@ -310,7 +302,7 @@ static BOOL _shouldApplyStyleChangesToVisibleSnackbars;
 #pragma mark - Helper methods
 
 - (BOOL)isSnackbarTransient:(MDCSnackbarMessageView *)snackbarView {
-  if (UIAccessibilityIsVoiceOverRunning()) {
+  if (UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning()) {
     return ![snackbarView shouldWaitForDismissalDuringVoiceover];
   }
 
@@ -498,19 +490,48 @@ static BOOL _shouldApplyStyleChangesToVisibleSnackbars;
 
 #pragma mark - Public API
 
-@implementation MDCSnackbarManager
+@interface MDCSnackbarManager ()
+@property(nonnull, nonatomic, strong) MDCSnackbarManagerInternal *internalManager;
+@end
 
-+ (void)setDelegate:(id<MDCSnackbarManagerDelegate>)delegate {
-  MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
-  manager.delegate = delegate;
+@implementation MDCSnackbarManager {
+  UIColor *_snackbarMessageViewBackgroundColor;
+  UIColor *_snackbarMessageViewShadowColor;
+  UIColor *_messageTextColor;
+  UIFont *_messageFont;
+  UIFont *_buttonFont;
+  NSMutableDictionary<NSNumber *, UIColor *> *_buttonTitleColors;
+  BOOL _mdc_adjustsFontForContentSizeCategory;
+  BOOL _shouldApplyStyleChangesToVisibleSnackbars;
 }
 
-+ (id<MDCSnackbarManagerDelegate>)delegate {
-  MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
-  return manager.delegate;
+
++ (instancetype)defaultManager {
+  static MDCSnackbarManager *defaultManager;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    defaultManager = [[MDCSnackbarManager alloc] init];
+  });
+  return defaultManager;
 }
 
-+ (void)showMessage:(MDCSnackbarMessage *)inputMessage {
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    _internalManager = [[MDCSnackbarManagerInternal alloc] initWithSnackbarManager:self];
+  }
+  return self;
+}
+
+- (void)setDelegate:(id<MDCSnackbarManagerDelegate>)delegate {
+  self.internalManager.delegate = delegate;
+}
+
+- (id<MDCSnackbarManagerDelegate>)delegate {
+  return self.internalManager.delegate;
+}
+
+- (void)showMessage:(MDCSnackbarMessage *)inputMessage {
   if (!inputMessage) {
     return;
   }
@@ -520,84 +541,76 @@ static BOOL _shouldApplyStyleChangesToVisibleSnackbars;
 
   // Ensure that all of our work happens on the main thread.
   dispatch_async(dispatch_get_main_queue(), ^{
-    MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
-    [manager showMessageMainThread:message];
+    [self.internalManager showMessageMainThread:message];
   });
 }
 
-+ (void)setPresentationHostView:(UIView *)hostView {
+- (void)setPresentationHostView:(UIView *)hostView {
   NSAssert([NSThread isMainThread], @"setPresentationHostView must be called on main thread.");
 
-  MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
-  manager.presentationHostView = hostView;
+  self.internalManager.presentationHostView = hostView;
 }
 
-+ (BOOL)hasMessagesShowingOrQueued {
+- (BOOL)hasMessagesShowingOrQueued {
   NSAssert([NSThread isMainThread], @"hasMessagesShowingOrQueued must be called on main thread.");
 
-  MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
-
-  return (manager.showingMessage || manager.pendingMessages.count != 0);
+  return (self.internalManager.showingMessage || self.internalManager.pendingMessages.count != 0);
 }
 
-+ (void)dismissAndCallCompletionBlocksWithCategory:(NSString *)category {
+- (void)dismissAndCallCompletionBlocksWithCategory:(NSString *)category {
   // Snag a copy now, we'll use that internally.
   NSString *categoryToDismiss = [category copy];
 
   // Ensure that all of our work happens on the main thread.
   dispatch_async(dispatch_get_main_queue(), ^{
-    MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
-    [manager dismissAndCallCompletionBlocksOnMainThreadWithCategory:categoryToDismiss];
+    [self.internalManager dismissAndCallCompletionBlocksOnMainThreadWithCategory:categoryToDismiss];
   });
 }
 
-+ (void)setBottomOffset:(CGFloat)offset {
+- (void)setBottomOffset:(CGFloat)offset {
   NSAssert([NSThread isMainThread], @"setBottomOffset must be called on main thread.");
 
-  MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
-  manager.overlayView.bottomOffset = offset;
+  self.internalManager.overlayView.bottomOffset = offset;
 }
 
-+ (void)setAlignment:(MDCSnackbarAlignment)alignment {
+- (void)setAlignment:(MDCSnackbarAlignment)alignment {
   NSAssert([NSThread isMainThread], @"setAlignment must be called on main thread.");
 
-  MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
-  manager.overlayView.alignment = alignment;
+  self.internalManager.overlayView.alignment = alignment;
 }
 
-+ (MDCSnackbarAlignment)alignment {
-  MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
-  return manager.overlayView.alignment;
+- (MDCSnackbarAlignment)alignment {
+  return self.internalManager.overlayView.alignment;
 }
 
 #pragma mark - Suspension
 
-+ (id<MDCSnackbarSuspensionToken>)suspendMessagesWithCategory:(NSString *)category {
-  MDCSnackbarManagerSuspensionToken *token = [[MDCSnackbarManagerSuspensionToken alloc] init];
+- (id<MDCSnackbarSuspensionToken>)suspendMessagesWithCategory:(NSString *)category {
+  MDCSnackbarManagerSuspensionToken *token =
+      [[MDCSnackbarManagerSuspensionToken alloc] initWithManager:self];
   token.category = category;
 
   // Ensure that all of our work happens on the main thread.
   dispatch_async(dispatch_get_main_queue(), ^{
-    MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
-    [manager addSuspensionIdentifierMainThread:token.identifier forCategory:token.category];
+    [self.internalManager addSuspensionIdentifierMainThread:token.identifier
+                                                forCategory:token.category];
   });
 
   return token;
 }
 
-+ (id<MDCSnackbarSuspensionToken>)suspendAllMessages {
+- (id<MDCSnackbarSuspensionToken>)suspendAllMessages {
   return [self suspendMessagesWithCategory:kAllMessagesCategory];
 }
 
-+ (void)handleInvalidatedIdentifier:(NSUUID *)identifier forCategory:(NSString *)category {
+- (void)handleInvalidatedIdentifier:(NSUUID *)identifier forCategory:(NSString *)category {
   // Ensure that all of our work happens on the main thread.
   dispatch_async(dispatch_get_main_queue(), ^{
-    MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
-    [manager removeSuspensionIdentifierMainThread:identifier forCategory:category];
+    [self.internalManager removeSuspensionIdentifierMainThread:identifier forCategory:category];
   });
 }
 
-+ (void)resumeMessagesWithToken:(id<MDCSnackbarSuspensionToken>)inToken {
+- (void)resumeMessagesWithToken:(id<MDCSnackbarSuspensionToken>)inToken {
   if (![inToken isKindOfClass:[MDCSnackbarManagerSuspensionToken class]]) {
     return;
   }
@@ -608,7 +621,7 @@ static BOOL _shouldApplyStyleChangesToVisibleSnackbars;
 
 #pragma mark - Styling
 
-+ (void)runSnackbarUpdatesOnMainThread:(void (^)(void))block {
+- (void)runSnackbarUpdatesOnMainThread:(void (^)(void))block {
   if (_shouldApplyStyleChangesToVisibleSnackbars) {
     if ([NSThread isMainThread]) {
       block();
@@ -618,132 +631,252 @@ static BOOL _shouldApplyStyleChangesToVisibleSnackbars;
   }
 }
 
-+ (void)setSnackbarMessageViewBackgroundColor:(UIColor *)snackbarMessageViewBackgroundColor {
+- (void)setSnackbarMessageViewBackgroundColor:(UIColor *)snackbarMessageViewBackgroundColor {
   if (snackbarMessageViewBackgroundColor != _snackbarMessageViewBackgroundColor) {
     _snackbarMessageViewBackgroundColor = snackbarMessageViewBackgroundColor;
     [self runSnackbarUpdatesOnMainThread:^{
-      MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
-      [manager.currentSnackbar
+      [self.internalManager.currentSnackbar
           setSnackbarMessageViewBackgroundColor:snackbarMessageViewBackgroundColor];
     }];
   }
 }
 
-+ (UIColor *)snackbarMessageViewBackgroundColor {
+- (UIColor *)snackbarMessageViewBackgroundColor {
   return _snackbarMessageViewBackgroundColor;
 }
 
-+ (void)setSnackbarMessageViewShadowColor:(UIColor *)snackbarMessageViewShadowColor {
+- (void)setSnackbarMessageViewShadowColor:(UIColor *)snackbarMessageViewShadowColor {
   if (snackbarMessageViewShadowColor != _snackbarMessageViewShadowColor) {
     _snackbarMessageViewShadowColor = snackbarMessageViewShadowColor;
     [self runSnackbarUpdatesOnMainThread:^{
-      MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
-      [manager.currentSnackbar setSnackbarMessageViewShadowColor:snackbarMessageViewShadowColor];
+      [self.internalManager.currentSnackbar
+          setSnackbarMessageViewShadowColor:snackbarMessageViewShadowColor];
     }];
   }
 }
 
-+ (UIColor *)snackbarMessageViewShadowColor {
+- (UIColor *)snackbarMessageViewShadowColor {
   return _snackbarMessageViewShadowColor;
 }
 
-+ (void)setMessageTextColor:(UIColor *)messageTextColor {
+- (void)setMessageTextColor:(UIColor *)messageTextColor {
   if (messageTextColor != _messageTextColor) {
     _messageTextColor = messageTextColor;
     [self runSnackbarUpdatesOnMainThread:^{
-      MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
-      [manager.currentSnackbar setMessageTextColor:messageTextColor];
+      [self.internalManager.currentSnackbar setMessageTextColor:messageTextColor];
     }];
   }
 }
 
-+ (UIColor *)messageTextColor {
+- (UIColor *)messageTextColor {
   return _messageTextColor;
 }
 
-+ (void)setMessageFont:(UIFont *)messageFont {
+- (void)setMessageFont:(UIFont *)messageFont {
   if (messageFont != _messageFont) {
     _messageFont = messageFont;
     [self runSnackbarUpdatesOnMainThread:^{
-      MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
-      [manager.currentSnackbar setMessageFont:messageFont];
+      [self.internalManager.currentSnackbar setMessageFont:messageFont];
     }];
   }
 }
 
-+ (UIFont *)messageFont {
+- (UIFont *)messageFont {
   return _messageFont;
 }
 
-+ (void)setButtonFont:(UIFont *)buttonFont {
+- (void)setButtonFont:(UIFont *)buttonFont {
   if (buttonFont != _buttonFont) {
     _buttonFont = buttonFont;
     [self runSnackbarUpdatesOnMainThread:^{
-      MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
-      [manager.currentSnackbar setButtonFont:buttonFont];
+      [self.internalManager.currentSnackbar setButtonFont:buttonFont];
     }];
   }
 }
 
-+ (UIFont *)buttonFont {
+- (UIFont *)buttonFont {
   return _buttonFont;
 }
 
-+ (void)setButtonTitleColor:(UIColor *)titleColor forState:(UIControlState)state {
+- (void)setButtonTitleColor:(UIColor *)titleColor forState:(UIControlState)state {
   if (_buttonTitleColors == nil) {
     _buttonTitleColors = [NSMutableDictionary dictionary];
   }
   if (titleColor != _buttonTitleColors[@(state)]) {
     _buttonTitleColors[@(state)] = titleColor;
     [self runSnackbarUpdatesOnMainThread:^{
-      MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
-      [manager.currentSnackbar setButtonTitleColor:titleColor forState:state];
+      [self.internalManager.currentSnackbar setButtonTitleColor:titleColor forState:state];
     }];
   }
 }
 
-+ (UIColor *)buttonTitleColorForState:(UIControlState)state {
+- (UIColor *)buttonTitleColorForState:(UIControlState)state {
   return _buttonTitleColors[@(state)];
 }
 
-+ (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)mdc_adjustsFontForContentSizeCategory {
+- (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)mdc_adjustsFontForContentSizeCategory {
   if (mdc_adjustsFontForContentSizeCategory != _mdc_adjustsFontForContentSizeCategory) {
     _mdc_adjustsFontForContentSizeCategory = mdc_adjustsFontForContentSizeCategory;
     [self runSnackbarUpdatesOnMainThread:^{
-      MDCSnackbarManagerInternal *manager = [MDCSnackbarManagerInternal sharedInstance];
-      [manager.currentSnackbar
+      [self.internalManager.currentSnackbar
           mdc_setAdjustsFontForContentSizeCategory:mdc_adjustsFontForContentSizeCategory];
     }];
   }
 }
 
-+ (BOOL)mdc_adjustsFontForContentSizeCategory {
+- (BOOL)mdc_adjustsFontForContentSizeCategory {
   return _mdc_adjustsFontForContentSizeCategory;
 }
 
-+ (void)setShouldApplyStyleChangesToVisibleSnackbars:
+- (void)setShouldApplyStyleChangesToVisibleSnackbars:
     (BOOL)shouldApplyStyleChangesToVisibleSnackbars {
   _shouldApplyStyleChangesToVisibleSnackbars = shouldApplyStyleChangesToVisibleSnackbars;
 }
 
-+ (BOOL)shouldApplyStyleChangesToVisibleSnackbars {
+- (BOOL)shouldApplyStyleChangesToVisibleSnackbars {
   return _shouldApplyStyleChangesToVisibleSnackbars;
 }
 
 @end
 
+@interface MDCSnackbarManagerSuspensionToken ()
+@property(nonatomic, weak) MDCSnackbarManager *manager;
+@end
+
 @implementation MDCSnackbarManagerSuspensionToken
 
-- (instancetype)init {
+- (instancetype)initWithManager:(MDCSnackbarManager *)manager {
   self = [super init];
   if (self != nil) {
     _identifier = [NSUUID UUID];
+    _manager = manager;
   }
   return self;
 }
 
 - (void)dealloc {
-  [MDCSnackbarManager resumeMessagesWithToken:self];
+  [_manager resumeMessagesWithToken:self];
+}
+
+@end
+
+@implementation MDCSnackbarManager (LegacyAPI)
+
++ (MDCSnackbarAlignment)alignment {
+  return MDCSnackbarManager.defaultManager.alignment;
+}
+
++ (void)setAlignment:(MDCSnackbarAlignment)alignment {
+  MDCSnackbarManager.defaultManager.alignment = alignment;
+}
+
++ (void)showMessage:(nullable MDCSnackbarMessage *)message {
+  [MDCSnackbarManager.defaultManager showMessage:message];
+}
+
++ (void)setPresentationHostView:(nullable UIView *)hostView {
+  [MDCSnackbarManager.defaultManager setPresentationHostView:hostView];
+}
+
++ (BOOL)hasMessagesShowingOrQueued {
+  return MDCSnackbarManager.defaultManager.hasMessagesShowingOrQueued;
+}
+
++ (void)dismissAndCallCompletionBlocksWithCategory:(nullable NSString *)category {
+  [MDCSnackbarManager.defaultManager dismissAndCallCompletionBlocksWithCategory:category];
+}
+
++ (void)setBottomOffset:(CGFloat)offset {
+  [MDCSnackbarManager.defaultManager setBottomOffset:offset];
+}
+
++ (nullable id <MDCSnackbarSuspensionToken>)suspendAllMessages {
+  return MDCSnackbarManager.defaultManager.suspendAllMessages;
+}
+
++ (nullable id <MDCSnackbarSuspensionToken>)
+    suspendMessagesWithCategory:(nullable NSString *)category {
+  return [MDCSnackbarManager.defaultManager suspendMessagesWithCategory:category];
+}
+
++ (void)resumeMessagesWithToken:(nullable id <MDCSnackbarSuspensionToken>)token {
+  [MDCSnackbarManager.defaultManager resumeMessagesWithToken:token];
+}
+
++ (UIColor *)snackbarMessageViewBackgroundColor {
+  return MDCSnackbarManager.defaultManager.snackbarMessageViewBackgroundColor;
+}
+
++ (void)setSnackbarMessageViewBackgroundColor:(UIColor *)snackbarMessageViewBackgroundColor {
+  MDCSnackbarManager.defaultManager.snackbarMessageViewBackgroundColor =
+      snackbarMessageViewBackgroundColor;
+}
+
++ (UIColor *)snackbarMessageViewShadowColor {
+  return MDCSnackbarManager.defaultManager.snackbarMessageViewShadowColor;
+}
+
++ (void)setSnackbarMessageViewShadowColor:(UIColor *)snackbarMessageViewShadowColor {
+  MDCSnackbarManager.defaultManager.snackbarMessageViewShadowColor = snackbarMessageViewShadowColor;
+}
+
++ (UIColor *)messageTextColor {
+  return MDCSnackbarManager.defaultManager.messageTextColor;
+}
+
++ (void)setMessageTextColor:(UIColor *)messageTextColor {
+  MDCSnackbarManager.defaultManager.messageTextColor = messageTextColor;
+}
+
++ (UIFont *)messageFont {
+  return MDCSnackbarManager.defaultManager.messageFont;
+}
+
++ (void)setMessageFont:(UIFont *)messageFont {
+  MDCSnackbarManager.defaultManager.messageFont = messageFont;
+}
+
++ (UIFont *)buttonFont {
+  return MDCSnackbarManager.defaultManager.buttonFont;
+}
+
++ (void)setButtonFont:(UIFont *)buttonFont {
+  MDCSnackbarManager.defaultManager.buttonFont = buttonFont;
+}
+
++ (BOOL)shouldApplyStyleChangesToVisibleSnackbars {
+  return MDCSnackbarManager.defaultManager.shouldApplyStyleChangesToVisibleSnackbars;
+}
+
++ (void)setShouldApplyStyleChangesToVisibleSnackbars:(BOOL)shouldApplyStyleChangesToVisibleSnackbars
+    {
+  MDCSnackbarManager.defaultManager.shouldApplyStyleChangesToVisibleSnackbars =
+      shouldApplyStyleChangesToVisibleSnackbars;
+}
+
++ (UIColor *)buttonTitleColorForState:(UIControlState)state {
+  return [MDCSnackbarManager.defaultManager buttonTitleColorForState:state];
+}
+
++ (void)setButtonTitleColor:(nullable UIColor *)titleColor forState:(UIControlState)state {
+  [MDCSnackbarManager.defaultManager setButtonTitleColor:titleColor forState:state];
+}
+
++ (BOOL)mdc_adjustsFontForContentSizeCategory {
+  return MDCSnackbarManager.defaultManager.mdc_adjustsFontForContentSizeCategory;
+}
+
++ (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)mdc_adjustsFontForContentSizeCategory {
+  [MDCSnackbarManager.defaultManager
+      mdc_setAdjustsFontForContentSizeCategory:mdc_adjustsFontForContentSizeCategory];
+}
+
++ (id<MDCSnackbarManagerDelegate>)delegate {
+  return MDCSnackbarManager.defaultManager.delegate;
+}
+
++ (void)setDelegate:(id<MDCSnackbarManagerDelegate>)delegate {
+  MDCSnackbarManager.defaultManager.delegate = delegate;
 }
 
 @end

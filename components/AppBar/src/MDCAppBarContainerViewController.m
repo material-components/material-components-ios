@@ -16,7 +16,7 @@
 
 #import "MDCAppBarContainerViewController.h"
 
-#import "MDCAppBar.h"
+#import "MDCAppBarViewController.h"
 #import "MaterialFlexibleHeader.h"
 
 @implementation MDCAppBarContainerViewController {
@@ -28,7 +28,7 @@
   if (self) {
     _appBar = [[MDCAppBar alloc] init];
 
-    [self addChildViewController:_appBar.headerViewController];
+    [self addChildViewController:_appBar.appBarViewController];
 
     _contentViewController = contentViewController;
     [self addChildViewController:contentViewController];
@@ -53,16 +53,16 @@
   [super viewWillLayoutSubviews];
 
   if (!self.topLayoutGuideAdjustmentEnabled) {
-    [_appBar.headerViewController updateTopLayoutGuide];
+    [_appBar.appBarViewController updateTopLayoutGuide];
   }
 }
 
 - (BOOL)prefersStatusBarHidden {
-  return self.appBar.headerViewController.prefersStatusBarHidden;
+  return self.appBar.appBarViewController.prefersStatusBarHidden;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
-  return self.appBar.headerViewController.preferredStatusBarStyle;
+  return self.appBar.appBarViewController.preferredStatusBarStyle;
 }
 
 - (BOOL)shouldAutorotate {
@@ -75,6 +75,10 @@
 
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
   return self.contentViewController.preferredInterfaceOrientationForPresentation;
+}
+
+- (MDCAppBarViewController *)appBarViewController {
+  return _appBar.appBarViewController;
 }
 
 #pragma mark - Enabling top layout guide adjustment behavior
@@ -95,10 +99,10 @@
     // make two top layout guides constrain to one other
     // (e.g. self.topLayoutGuide == self.contentViewController.topLayoutGuide) so instead we must
     // tell the flexible header controller which view controller it should modify.
-    self.appBar.headerViewController.topLayoutGuideViewController = self.contentViewController;
+    self.appBar.appBarViewController.topLayoutGuideViewController = self.contentViewController;
 
   } else {
-    self.appBar.headerViewController.topLayoutGuideViewController = nil;
+    self.appBar.appBarViewController.topLayoutGuideViewController = nil;
   }
 }
 

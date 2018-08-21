@@ -132,7 +132,9 @@
 
 /**
  Called when the user taps the dimmed background or swipes the bottom sheet off to dismiss the
- bottom sheet. This method is not called if the bottom sheet is dismissed programatically.
+ bottom sheet. Also called with accessibility escape "two finger Z" gestures.
+
+ This method is not called if the bottom sheet is dismissed programatically.
 
  @param controller The MDCBottomSheetController that was dismissed.
  */

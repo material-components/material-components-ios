@@ -30,6 +30,7 @@
   self = [super init];
   if (self) {
     self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.title = @"Button Bar";
   }
   return self;
 }
@@ -92,20 +93,6 @@
 + (NSString *)catalogDescription {
   return @"The Button Bar is a view that represents a list of UIBarButtonItems as"
           " horizontally-aligned buttons.";
-}
-
-@end
-
-#pragma mark - Typical application code (not Material-specific)
-
-@implementation ButtonBarTypicalUseExample (GeneralApplicationLogic)
-
-- (id)init {
-  self = [super init];
-  if (self) {
-    self.title = @"Button Bar";
-  }
-  return self;
 }
 
 @end

@@ -23,13 +23,18 @@
 @interface AppBarTypicalCollectionViewExample : UICollectionViewController
 
 // Step 1: Create an App Bar.
-@property(nonatomic, strong) MDCAppBar *appBar;
+@property(nonatomic, strong) MDCAppBarViewController *appBarViewController;
 
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 
 @end
 @implementation AppBarTypicalCollectionViewExample
+
+- (void)dealloc {
+  // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
+  self.appBarViewController.headerView.trackingScrollView = nil;
+}
 
 - (id)init {
   UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
@@ -41,8 +46,14 @@
     self.title = @"App Bar";
 
     // Step 2: Initialize the App Bar and add the headerViewController as a child.
-    _appBar = [[MDCAppBar alloc] init];
-    [self addChildViewController:_appBar.headerViewController];
+    _appBarViewController = [[MDCAppBarViewController alloc] init];
+
+    // Behavioral flags.
+    _appBarViewController.inferTopSafeAreaInsetFromViewController = YES;
+    _appBarViewController.headerView.minMaxHeightIncludesSafeArea = NO;
+
+    [self addChildViewController:_appBarViewController];
+    _appBarViewController.headerView.observesTrackingScrollViewScrollEvents = YES;
 
     self.colorScheme = [[MDCSemanticColorScheme alloc] init];
     self.typographyScheme = [[MDCTypographyScheme alloc] init];
@@ -61,14 +72,16 @@
           forCellWithReuseIdentifier:@"Cell"];
 
   // Recommended step: Set the tracking scroll view.
-  MDCFlexibleHeaderView *headerView = self.appBar.headerViewController.headerView;
+  MDCFlexibleHeaderView *headerView = self.appBarViewController.headerView;
   headerView.trackingScrollView = self.collectionView;
   headerView.minimumHeight = 64;
   headerView.maximumHeight = 200;
 
-  [self.appBar addSubviewsToParent];
-  [MDCAppBarTypographyThemer applyTypographyScheme:self.typographyScheme toAppBar:_appBar];
-  [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme toAppBar:_appBar];
+  [self.view addSubview:self.appBarViewController.view];
+  [self.appBarViewController didMoveToParentViewController:self];
+  [MDCAppBarTypographyThemer applyTypographyScheme:self.typographyScheme
+                            toAppBarViewController:_appBarViewController];
+  [MDCAppBarColorThemer applyColorScheme:self.colorScheme toAppBarViewController:self.appBarViewController];
 }
 
 
@@ -103,38 +116,6 @@
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
   CGRect collectionViewFrame = collectionView.frame;
   return CGSizeMake(collectionViewFrame.size.width/2.f - 14.f, 40.f);
-}
-
-#pragma mark - UIScrollViewDelegate
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-  MDCFlexibleHeaderView *headerView = self.appBar.headerViewController.headerView;
-  if (scrollView == headerView.trackingScrollView) {
-    [headerView trackingScrollViewDidScroll];
-  }
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-  MDCFlexibleHeaderView *headerView = self.appBar.headerViewController.headerView;
-  if (scrollView == headerView.trackingScrollView) {
-    [headerView trackingScrollViewDidEndDraggingWillDecelerate:decelerate];
-  }
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-  MDCFlexibleHeaderView *headerView = self.appBar.headerViewController.headerView;
-  if (scrollView == headerView.trackingScrollView) {
-    [headerView trackingScrollViewDidEndDecelerating];
-  }
-}
-- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView
-                     withVelocity:(CGPoint)velocity
-              targetContentOffset:(inout CGPoint *)targetContentOffset {
-  MDCFlexibleHeaderView *headerView = self.appBar.headerViewController.headerView;
-  if (scrollView == headerView.trackingScrollView) {
-    [headerView trackingScrollViewWillEndDraggingWithVelocity:velocity
-                                          targetContentOffset:targetContentOffset];
-  }
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

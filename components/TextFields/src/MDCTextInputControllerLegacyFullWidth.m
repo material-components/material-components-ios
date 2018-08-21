@@ -72,10 +72,4 @@ static const CGFloat MDCTextInputControllerLegacyFullWidthClearButtonImageSquare
   return image;
 }
 
-#pragma mark - NSSecureCoding
-
-+ (BOOL)supportsSecureCoding {
-  return YES;
-}
-
 @end

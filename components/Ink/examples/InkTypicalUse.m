@@ -32,7 +32,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  UIColor *blueColor = [MDCPalette.bluePalette.tint500 colorWithAlphaComponent:0.5f];
+  UIColor *blueColor = MDCPalette.bluePalette.tint500;
   CGFloat spacing = 16;
   CGRect customFrame = CGRectMake(0, 0, 200, 200);
   CGRect legacyFrame = CGRectMake(spacing / 2, spacing / 2, CGRectGetWidth(customFrame) - spacing,

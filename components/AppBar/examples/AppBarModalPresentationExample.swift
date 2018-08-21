@@ -20,15 +20,24 @@ import MaterialComponents.MaterialAppBar_ColorThemer
 
 class AppBarModalPresentationSwiftExamplePresented: UITableViewController {
 
-  let appBar = MDCAppBar()
+  let appBarViewController = MDCAppBarViewController()
   var colorScheme = MDCSemanticColorScheme()
+
+  deinit {
+    // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
+    appBarViewController.headerView.trackingScrollView = nil
+  }
 
   init() {
     super.init(nibName: nil, bundle: nil)
 
     self.title = "Modal Presentation (Swift)"
 
-    self.addChildViewController(appBar.headerViewController)
+    // Behavioral flags.
+    appBarViewController.inferTopSafeAreaInsetFromViewController = true
+    appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
+
+    self.addChildViewController(appBarViewController)
     self.modalPresentationStyle = .formSheet
     self.modalTransitionStyle = .coverVertical
   }
@@ -40,15 +49,15 @@ class AppBarModalPresentationSwiftExamplePresented: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
+    MDCAppBarColorThemer.applyColorScheme(colorScheme, to: appBarViewController)
 
-    appBar.headerViewController.headerView.trackingScrollView = self.tableView
-    self.tableView.delegate = appBar.headerViewController
+    // Allows us to avoid forwarding events, but means we can't enable shift behaviors.
+    appBarViewController.headerView.observesTrackingScrollViewScrollEvents = true
 
-    appBar.addSubviewsToParent()
+    appBarViewController.headerView.trackingScrollView = self.tableView
 
-    self.tableView.layoutMargins = UIEdgeInsets.zero
-    self.tableView.separatorInset = UIEdgeInsets.zero
+    view.addSubview(appBarViewController.view)
+    appBarViewController.didMove(toParentViewController: self)
 
     self.navigationItem.rightBarButtonItem =
       UIBarButtonItem(title: "Touch", style: .done, target: nil, action: nil)
@@ -58,11 +67,11 @@ class AppBarModalPresentationSwiftExamplePresented: UITableViewController {
   }
 
   override var childViewControllerForStatusBarHidden: UIViewController? {
-    return appBar.headerViewController
+    return appBarViewController
   }
 
   override var childViewControllerForStatusBarStyle: UIViewController? {
-    return appBar.headerViewController
+    return appBarViewController
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -93,7 +102,7 @@ class AppBarModalPresentationSwiftExamplePresented: UITableViewController {
 
 class AppBarModalPresentationSwiftExample: UITableViewController {
 
-  let appBar = MDCAppBar()
+  let appBarViewController = MDCAppBarViewController()
   var colorScheme = MDCSemanticColorScheme()
 
   init() {
@@ -101,7 +110,7 @@ class AppBarModalPresentationSwiftExample: UITableViewController {
 
     self.title = "Modal Presentation (Swift)"
 
-    self.addChildViewController(appBar.headerViewController)
+    self.addChildViewController(appBarViewController)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -111,26 +120,24 @@ class AppBarModalPresentationSwiftExample: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
+    MDCAppBarColorThemer.applyColorScheme(colorScheme, to: appBarViewController)
 
-    appBar.headerViewController.headerView.trackingScrollView = self.tableView
-    self.tableView.delegate = appBar.headerViewController
+    appBarViewController.headerView.trackingScrollView = self.tableView
+    self.tableView.delegate = appBarViewController
 
-    appBar.addSubviewsToParent()
-
-    self.tableView.layoutMargins = UIEdgeInsets.zero
-    self.tableView.separatorInset = UIEdgeInsets.zero
+    view.addSubview(appBarViewController.view)
+    appBarViewController.didMove(toParentViewController: self)
 
     self.navigationItem.rightBarButtonItem =
       UIBarButtonItem(title: "Detail", style: .done, target: self, action: #selector(presentModal))
   }
 
   override var childViewControllerForStatusBarHidden: UIViewController? {
-    return appBar.headerViewController
+    return appBarViewController
   }
 
   override var childViewControllerForStatusBarStyle: UIViewController? {
-    return appBar.headerViewController
+    return appBarViewController
   }
 
   override func viewWillAppear(_ animated: Bool) {

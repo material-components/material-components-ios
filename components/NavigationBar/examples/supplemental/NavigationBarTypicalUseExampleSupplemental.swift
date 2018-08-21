@@ -19,8 +19,8 @@ This file contains supplemental code used to populate the examples with dummy da
 instructions. It is not necessary to import this file to use Material Components for iOS.
 */
 
-import Foundation
-import MaterialComponents
+import UIKit
+import MaterialComponents.MaterialNavigationBar
 
 extension NavigationBarTypicalUseSwiftExample {
 
@@ -40,18 +40,6 @@ extension NavigationBarTypicalUseSwiftExample {
 
   @objc class func catalogIsPresentable() -> Bool {
     return false
-  }
-
-  override open func setupExampleViews() {
-    /// Both self.viewDidLoad() and super.viewDidLoad() will add NavigationBars to the hierarchy.
-    /// We only want to keep one.
-
-    for subview in view.subviews {
-      if let navBarSubview = subview as? MDCNavigationBar, navBarSubview != self.navBar {
-        navBarSubview.removeFromSuperview()
-      }
-    }
-    super.setupExampleViews()
   }
 
 }

@@ -49,7 +49,7 @@ many distinct button styles including text buttons, contained buttons, and float
   - [Theming](#theming)
   - [Color Theming](#color-theming)
   - [Typography Theming](#typography-theming)
-- [Accessibility {a11y}](#accessibility-{a11y})
+- [Accessibility](#accessibility)
   - [Set `-accessibilityLabel`](#set-`-accessibilitylabel`)
   - [Minimum touch size](#minimum-touch-size)
 
@@ -425,10 +425,9 @@ id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
 <!--</div>-->
 
 
-## Accessibility {#a11y}
 <!-- Extracted from docs/accessibility.md -->
 
-## Accessibility {a11y}
+## Accessibility
 
 To help ensure your buttons are accessible to as many users as possible, please
 be sure to review the following recommendations:
@@ -454,9 +453,9 @@ button.accessibilityLabel = "Create"
 
 ### Minimum touch size
 
-Make sure that your buttons have a minimum touch area. The Google Material spec
+Make sure that your buttons have a minimum touch area. The Material spec
 for buttons calls for buttons that have a [visual height of
-36](https://guidelines.googleplex.com/googlematerial/components/buttons.html#style)
+36](https://material.io/design/components/buttons.html#specs)
 and that [touch areas should be at least 48 points high and 48
 wide](https://material.io/design/layout/spacing-methods.html#touch-click-targets).
 
@@ -467,8 +466,8 @@ To keep a button's visual sizes small with larger touchable areas, set the
 between the button touch targets. This will allow your button to have [a large
 enough touch
 target](https://material.io/design/layout/spacing-methods.html#touch-click-targets)
-while maintaining the desired visual appearance. For more see the [layout
-guidance](https://guidelines.googleplex.com/googlematerial/layout/#principles)
+while maintaining the desired visual appearance. For more see the [Touch and click
+targets](https://material.io/design/layout/spacing-methods.html#touch-click-targets)
 in the spec.
 
 ##### Objective-C
@@ -493,8 +492,8 @@ buttonVerticalInset, buttonHorizontalInset);
 
 #### Set the minimum visual size of the button
 
-Set your buttons to have a minimum size. [Google Material Buttons
-guidelines](https://guidelines.googleplex.com/googlematerial/components/buttons.html#style)
+Set your buttons to have a minimum size. [Material Buttons
+guidelines](https://material.io/design/components/buttons.html#specs)
 typically recommend [a minimum height of 36 points and a minimum width of 64
 points](https://material.io/design/components/buttons.html#specs).
 

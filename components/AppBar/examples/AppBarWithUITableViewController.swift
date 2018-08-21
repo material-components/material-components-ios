@@ -26,34 +26,52 @@ import MaterialComponents.MaterialAppBar_ColorThemer
 
 class AppBarWithUITableViewController: UITableViewController {
 
-  let appBar = MDCAppBar()
+  let appBarViewController = MDCAppBarViewController()
   var numberOfRows = 50
   var colorScheme = MDCSemanticColorScheme()
 
+  deinit {
+    // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
+    appBarViewController.headerView.trackingScrollView = nil
+  }
+
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    self.addChildViewController(appBar.headerViewController)
+    commonInit()
   }
 
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
-    self.addChildViewController(appBar.headerViewController)
+    commonInit()
   }
 
   override init(style: UITableViewStyle) {
     super.init(style: style)
-    self.addChildViewController(appBar.headerViewController)
+    commonInit()
+  }
+
+  func commonInit() {
+
+    // Behavioral flags.
+    appBarViewController.inferTopSafeAreaInsetFromViewController = true
+    appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
+
+    self.addChildViewController(appBarViewController)
   }
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-    appBar.addSubviewsToParent()
 
-    MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
+    // Allows us to avoid forwarding events, but means we can't enable shift behaviors.
+    appBarViewController.headerView.observesTrackingScrollViewScrollEvents = true
+
+    view.addSubview(appBarViewController.view)
+    appBarViewController.didMove(toParentViewController: self)
+
+    MDCAppBarColorThemer.applyColorScheme(colorScheme, to: appBarViewController)
     
     self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-    let headerView = appBar.headerViewController.headerView
+    let headerView = appBarViewController.headerView
     headerView.trackingScrollView = self.tableView
     headerView.maximumHeight = 300
     headerView.minimumHeight = 100
@@ -86,35 +104,6 @@ class AppBarWithUITableViewController: UITableViewController {
     numberOfRows += 1
     tableView.endUpdates()
   }
-
-  // MARK: UIScrollViewDelegate
-
-  override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
-      appBar.headerViewController.headerView.trackingScrollDidScroll()
-    }
-  }
-
-  override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
-      appBar.headerViewController.headerView.trackingScrollDidEndDecelerating()
-    }
-  }
-
-  override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-    let headerView = appBar.headerViewController.headerView
-    if scrollView == headerView.trackingScrollView {
-      headerView.trackingScrollDidEndDraggingWillDecelerate(decelerate)
-    }
-  }
-
-  override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-    let headerView = appBar.headerViewController.headerView
-    if scrollView == headerView.trackingScrollView {
-      headerView.trackingScrollWillEndDragging(withVelocity: velocity, targetContentOffset: targetContentOffset)
-    }
-  }
-
 }
 
 extension AppBarWithUITableViewController {

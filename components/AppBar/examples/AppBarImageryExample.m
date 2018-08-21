@@ -20,16 +20,31 @@
 #import "MaterialAppBar+ColorThemer.h"
 
 @interface AppBarImageryExample : UITableViewController
-@property(nonatomic, strong) MDCAppBar *appBar;
+@property(nonatomic, strong) MDCAppBarViewController *appBarViewController;
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @end
 
 @implementation AppBarImageryExample
 
+- (void)dealloc {
+  // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
+  self.appBarViewController.headerView.trackingScrollView = nil;
+}
+
 - (id)init {
   self = [super init];
   if (self) {
-    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    _colorScheme = [[MDCSemanticColorScheme alloc] init];
+
+    _appBarViewController = [[MDCAppBarViewController alloc] init];
+
+    // Behavioral flags.
+    _appBarViewController.inferTopSafeAreaInsetFromViewController = YES;
+    _appBarViewController.headerView.minMaxHeightIncludesSafeArea = NO;
+
+    self.title = @"Imagery";
+
+    [self addChildViewController:_appBarViewController];
   }
   return self;
 }
@@ -43,13 +58,13 @@
           [UIImage imageNamed:@"mdc_theme"
                                    inBundle:[NSBundle bundleForClass:[AppBarImageryExample class]]
               compatibleWithTraitCollection:nil]];
-  imageView.frame = self.appBar.headerViewController.headerView.bounds;
+  imageView.frame = self.appBarViewController.headerView.bounds;
 
   // Ensure that the image view resizes in reaction to the header view bounds changing.
   imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
   // Ensure that the image view is below other App Bar views (headerStackView).
-  [self.appBar.headerViewController.headerView insertSubview:imageView atIndex:0];
+  [self.appBarViewController.headerView insertSubview:imageView atIndex:0];
 
   // Scales up the image while the header is over-extending.
   imageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -57,26 +72,23 @@
   // The header view does not clip to bounds by default so we ensure that the image is clipped.
   imageView.clipsToBounds = YES;
 
-  [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme toAppBar:_appBar];
+  [MDCAppBarColorThemer applyColorScheme:self.colorScheme
+                  toAppBarViewController:self.appBarViewController];
 
   // Make sure navigation bar background color is clear so the image view is visible.
-  self.appBar.navigationBar.backgroundColor = [UIColor clearColor];
+  self.appBarViewController.navigationBar.backgroundColor = [UIColor clearColor];
 
   // Allow the header to show more of the image.
-  self.appBar.headerViewController.headerView.maximumHeight = 300;
+  self.appBarViewController.headerView.maximumHeight = 300;
+
+  // Allows us to avoid forwarding events, but means we can't enable shift behaviors.
+  self.appBarViewController.headerView.observesTrackingScrollViewScrollEvents = YES;
 
   // Typical use
-  self.appBar.headerViewController.headerView.trackingScrollView = self.tableView;
+  self.appBarViewController.headerView.trackingScrollView = self.tableView;
 
-  // Choice: If you do not need to implement any delegate methods and you are not using a
-  //         collection view, you can use the headerViewController as the delegate.
-  // Alternative: See AppBarTypicalUseExample.
-  self.tableView.delegate = self.appBar.headerViewController;
-
-  [self.appBar addSubviewsToParent];
-
-  self.tableView.layoutMargins = UIEdgeInsetsZero;
-  self.tableView.separatorInset = UIEdgeInsetsZero;
+  [self.view addSubview:self.appBarViewController.view];
+  [self.appBarViewController didMoveToParentViewController:self];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -87,18 +99,6 @@
 @end
 
 @implementation AppBarImageryExample (TypicalUse)
-
-- (id)init {
-  self = [super init];
-  if (self) {
-    _appBar = [[MDCAppBar alloc] init];
-
-    self.title = @"Imagery";
-
-    [self addChildViewController:_appBar.headerViewController];
-  }
-  return self;
-}
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
@@ -143,7 +143,7 @@
     cell =
         [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
   }
-  cell.layoutMargins = UIEdgeInsetsZero;
+  cell.selectionStyle = UITableViewCellSelectionStyleNone;
   return cell;
 }
 

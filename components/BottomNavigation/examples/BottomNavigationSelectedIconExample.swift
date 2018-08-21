@@ -15,7 +15,8 @@
  */
 
 import Foundation
-import MaterialComponents
+import MaterialComponents.MaterialBottomNavigation_ColorThemer
+import MaterialComponents.MaterialTypographyScheme
 
 // Example to show different icons for selected and unselected states
 class BottomNavigationSelectedIconExample: UIViewController {

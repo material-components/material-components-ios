@@ -21,6 +21,7 @@
 
 #import "InkTypicalUseSupplemental.h"
 
+#import "MaterialPalettes.h"
 #import "MaterialTypography.h"
 
 // A set of UILabels in an variety of shapes to tap on.
@@ -38,7 +39,7 @@
     CGRect bigViewFrame =
         CGRectMake(padding, padding, CGRectGetWidth(frame) - 2 * padding, bigViewFrameHeight);
     UIView *bigView = [[UIView alloc] initWithFrame:bigViewFrame];
-    bigView.backgroundColor = [UIColor whiteColor];
+    bigView.backgroundColor = MDCPalette.greyPalette.tint800;
     [self addSubview:bigView];
 
     CGFloat buttonViewDim = 50;
@@ -48,7 +49,7 @@
         padding, padding + bigViewFrameHeight + fabPadding + padding,
         frame.size.width - 2 * padding - buttonViewDim - fabPadding * 3, pseudoButtonViewHeight);
     UIView *pseudoButtonView = [[UIView alloc] initWithFrame:pseudoButtonViewFrame];
-    pseudoButtonView.backgroundColor = [UIColor whiteColor];
+    pseudoButtonView.backgroundColor = MDCPalette.greyPalette.tint800;
     pseudoButtonView.layer.cornerRadius = 5;
     pseudoButtonView.clipsToBounds = YES;
     [self addSubview:pseudoButtonView];
@@ -59,7 +60,7 @@
         CGRectMake(pseudoFABViewFrameLeft, padding + bigViewFrameHeight + padding,
                    buttonViewDim + fabPadding, buttonViewDim + fabPadding);
     UIView *pseudoFABView = [[UIView alloc] initWithFrame:pseudoFABViewFrame];
-    pseudoFABView.backgroundColor = [UIColor whiteColor];
+    pseudoFABView.backgroundColor = MDCPalette.greyPalette.tint800;
     pseudoFABView.layer.cornerRadius = 28;
     pseudoFABView.clipsToBounds = YES;
     [self addSubview:pseudoFABView];
@@ -99,7 +100,7 @@
 @implementation InkTypicalUseViewController (Supplemental)
 
 - (void)setupExampleViews {
-  self.view.backgroundColor = [UIColor colorWithWhite:0.5f alpha:1];
+  self.view.backgroundColor = UIColor.whiteColor;
 
   CGRect boundedTitleLabelFrame =
       CGRectMake(0, CGRectGetHeight(self.shapes.frame), CGRectGetWidth(self.shapes.frame), 24);
@@ -113,7 +114,8 @@
   self.legacyShape.autoresizingMask =
       UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin |
       UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin;
-  self.legacyShape.backgroundColor = [UIColor whiteColor];
+
+  self.legacyShape.backgroundColor = MDCPalette.greyPalette.tint800;
 
   CGRect legacyTitleLabelFrame = CGRectMake(0,
                                             CGRectGetHeight(self.legacyShape.frame),

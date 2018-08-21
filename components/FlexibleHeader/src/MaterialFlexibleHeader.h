@@ -16,4 +16,5 @@
 
 #import "MDCFlexibleHeaderContainerViewController.h"
 #import "MDCFlexibleHeaderView.h"
+#import "MDCFlexibleHeaderView+ShiftBehavior.h"
 #import "MDCFlexibleHeaderViewController.h"

@@ -57,7 +57,13 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 
 - (void)commonMDCFlexibleHeaderViewControllerInit {
   _fhvc = [[MDCFlexibleHeaderViewController alloc] initWithNibName:nil bundle:nil];
-  _fhvc.headerView.minimumHeight = kFlexibleHeaderMinHeight;
+  
+  // Behavioral flags.
+  _fhvc.topLayoutGuideAdjustmentEnabled = YES;
+  _fhvc.inferTopSafeAreaInsetFromViewController = YES;
+  _fhvc.headerView.minMaxHeightIncludesSafeArea = NO;
+
+  _fhvc.headerView.maximumHeight = kFlexibleHeaderMinHeight;
   [self addChildViewController:_fhvc];
 
   // Use a standard UINavigationBar in the flexible header.
@@ -66,10 +72,41 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
   [navBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
   navBar.shadowImage = [[UIImage alloc] init];
   navBar.translucent = YES;
-  navBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   navBar.tintColor = [UIColor whiteColor];
 
   [self.fhvc.headerView addSubview:navBar];
+
+  navBar.translatesAutoresizingMaskIntoConstraints = NO;
+  [NSLayoutConstraint activateConstraints:
+   @[[NSLayoutConstraint constraintWithItem:navBar
+                                  attribute:NSLayoutAttributeTop
+                                  relatedBy:NSLayoutRelationEqual
+                                     toItem:self.fhvc.headerView.topSafeAreaGuide
+                                  attribute:NSLayoutAttributeBottom
+                                 multiplier:1.0
+                                   constant:0],
+     [NSLayoutConstraint constraintWithItem:navBar
+                                  attribute:NSLayoutAttributeBottom
+                                  relatedBy:NSLayoutRelationEqual
+                                     toItem:self.fhvc.headerView
+                                  attribute:NSLayoutAttributeBottom
+                                 multiplier:1.0
+                                   constant:0],
+     [NSLayoutConstraint constraintWithItem:navBar
+                                  attribute:NSLayoutAttributeLeft
+                                  relatedBy:NSLayoutRelationEqual
+                                     toItem:self.fhvc.headerView
+                                  attribute:NSLayoutAttributeLeft
+                                 multiplier:1.0
+                                   constant:0],
+     [NSLayoutConstraint constraintWithItem:navBar
+                                  attribute:NSLayoutAttributeRight
+                                  relatedBy:NSLayoutRelationEqual
+                                     toItem:self.fhvc.headerView
+                                  attribute:NSLayoutAttributeRight
+                                 multiplier:1.0
+                                   constant:0]
+     ]];
 
   UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:@"Back"
                                                                style:UIBarButtonItemStylePlain

@@ -20,6 +20,7 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
+#import "MaterialMath.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
@@ -30,29 +31,10 @@
 // The Bundle for string resources.
 static NSString *const kMaterialBottomNavigationBundle = @"MaterialBottomNavigation.bundle";
 
-static NSString *const kMDCBottomNavigationBarDelegateKey = @"kMDCBottomNavigationBarDelegateKey";
-static NSString *const kMDCBottomNavigationBarTitleVisibilityKey =
-    @"kMDCBottomNavigationBarTitleVisibilityKey";
-static NSString *const kMDCBottomNavigationBarAlignmentKey = @"kMDCBottomNavigationBarAlignmentKey";
-static NSString *const KMDCBottomNavigationBarItemsKey = @"KMDCBottomNavigationBarItemsKey";
-static NSString *const kMDCBottomNavigationBarSelectedItemKey =
-    @"kMDCBottomNavigationBarSelectedItemKey";
-static NSString *const kMDCBottomNavigationBarItemTitleFontKey =
-    @"kMDCBottomNavigationBarItemTitleFontKey";
-static NSString *const kMDCBottomNavigationBarSelectedItemTintColorKey =
-    @"kMDCBottomNavigationBarSelectedItemTintColorKey";
-static NSString *const kMDCBottomNavigationBarUnselectedItemTintColorKey =
-    @"kMDCBottomNavigationBarUnselectedItemTintColorKey";
-static NSString *const kMDCBottomNavigationBarItemsDistributedKey =
-    @"kMDCBottomNavigationBarItemsDistributedKey";
-static NSString *const kMDCBottomNavigationBarTitleBelowItemKey =
-    @"kMDCBottomNavigationBarTitleBelowItemKey";
-static NSString *const kMDCBottomNavigationBarBarTintColorKey =
-    @"kMDCBottomNavigationBarBarTintColorKey";
-
 static const CGFloat kMDCBottomNavigationBarHeight = 56.f;
 static const CGFloat kMDCBottomNavigationBarHeightAdjacentTitles = 40.f;
 static const CGFloat kMDCBottomNavigationBarLandscapeContainerWidth = 320.f;
+static const CGFloat kMDCBottomNavigationBarItemsHorizontalMargin = 12.f;
 static NSString *const kMDCBottomNavigationBarBadgeColorString = @"badgeColor";
 static NSString *const kMDCBottomNavigationBarBadgeValueString = @"badgeValue";
 static NSString *const kMDCBottomNavigationBarAccessibilityValueString =
@@ -62,12 +44,13 @@ static NSString *const kMDCBottomNavigationBarSelectedImageString = @"selectedIm
 // TODO: - Change to NSKeyValueChangeNewKey
 static NSString *const kMDCBottomNavigationBarNewString = @"new";
 static NSString *const kMDCBottomNavigationBarTitleString = @"title";
+static NSString *const kMDCBottomNavigationBarAccessibilityIdentifier = @"accessibilityIdentifier";
 
 
 static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 
 
-@interface MDCBottomNavigationBar ()
+@interface MDCBottomNavigationBar () <MDCInkTouchControllerDelegate>
 
 @property(nonatomic, assign) BOOL itemsDistributed;
 @property(nonatomic, assign) BOOL titleBelowItem;
@@ -75,6 +58,8 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 @property(nonatomic, strong) NSMutableArray<MDCBottomNavigationItemView *> *itemViews;
 @property(nonatomic, readonly) UIEdgeInsets mdc_safeAreaInsets;
 @property(nonatomic, strong) UIView *containerView;
+@property(nonatomic, strong) NSMutableArray *inkControllers;
+@property(nonatomic) BOOL shouldPretendToBeATabBar;
 
 @end
 
@@ -94,80 +79,12 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
   self = [super initWithCoder:aDecoder];
   if (self) {
     [self commonMDCBottomNavigationBarInit];
-
-    if ([aDecoder containsValueForKey:kMDCBottomNavigationBarDelegateKey]) {
-      _delegate = [aDecoder decodeObjectForKey:kMDCBottomNavigationBarDelegateKey];
-    }
-    if ([aDecoder containsValueForKey:kMDCBottomNavigationBarTitleVisibilityKey]) {
-      _titleVisibility = [aDecoder decodeIntegerForKey:kMDCBottomNavigationBarTitleVisibilityKey];
-    }
-    if ([aDecoder containsValueForKey:kMDCBottomNavigationBarAlignmentKey]) {
-      _alignment = [aDecoder decodeIntegerForKey:kMDCBottomNavigationBarAlignmentKey];
-    }
-    if ([aDecoder containsValueForKey:kMDCBottomNavigationBarItemTitleFontKey]) {
-      _itemTitleFont = [aDecoder decodeObjectOfClass:[UIFont class]
-                                              forKey:kMDCBottomNavigationBarItemTitleFontKey];
-    }
-    if ([aDecoder containsValueForKey:kMDCBottomNavigationBarSelectedItemTintColorKey]) {
-      _selectedItemTintColor =
-          [aDecoder decodeObjectOfClass:[UIColor class]
-                                 forKey:kMDCBottomNavigationBarSelectedItemTintColorKey];
-    }
-    if ([aDecoder containsValueForKey:kMDCBottomNavigationBarUnselectedItemTintColorKey]) {
-      _unselectedItemTintColor =
-          [aDecoder decodeObjectOfClass:[UIColor class]
-                                 forKey:kMDCBottomNavigationBarUnselectedItemTintColorKey];
-    }
-    if ([aDecoder containsValueForKey:kMDCBottomNavigationBarItemsDistributedKey]) {
-      _itemsDistributed = [aDecoder decodeBoolForKey:kMDCBottomNavigationBarItemsDistributedKey];
-    }
-    if ([aDecoder containsValueForKey:kMDCBottomNavigationBarTitleBelowItemKey]) {
-      _titleBelowItem = [aDecoder decodeBoolForKey:kMDCBottomNavigationBarTitleBelowItemKey];
-    }
-
-    // Should be second-last due to KVO
-    if ([aDecoder containsValueForKey:KMDCBottomNavigationBarItemsKey]) {
-      self.items = [aDecoder decodeObjectOfClass:[NSArray class]
-                                          forKey:KMDCBottomNavigationBarItemsKey];
-    }
-    // Should be last due to updating views
-    if ([aDecoder containsValueForKey:kMDCBottomNavigationBarSelectedItemKey]) {
-      self.selectedItem = [aDecoder decodeObjectOfClass:[UITabBarItem class]
-                                                 forKey:kMDCBottomNavigationBarSelectedItemKey];
-    }
-    if ([aDecoder containsValueForKey:kMDCBottomNavigationBarBarTintColorKey]) {
-      self.barTintColor = [aDecoder decodeObjectOfClass:[UIColor class]
-                                                 forKey:kMDCBottomNavigationBarBarTintColorKey];
-    }
   }
   return self;
 }
 
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [super encodeWithCoder:aCoder];
-  if (self.delegate) {
-    [aCoder encodeObject:self.delegate forKey:kMDCBottomNavigationBarDelegateKey];
-  }
-  [aCoder encodeInteger:self.titleVisibility forKey:kMDCBottomNavigationBarTitleVisibilityKey];
-  [aCoder encodeInteger:self.alignment forKey:kMDCBottomNavigationBarAlignmentKey];
-  [aCoder encodeObject:self.items forKey:KMDCBottomNavigationBarItemsKey];
-  [aCoder encodeObject:self.selectedItem forKey:kMDCBottomNavigationBarSelectedItemKey];
-  if (self.itemTitleFont) {
-    [aCoder encodeObject:self.itemTitleFont forKey:kMDCBottomNavigationBarItemTitleFontKey];
-  }
-  if (self.selectedItemTintColor) {
-    [aCoder encodeObject:self.selectedItemTintColor
-                  forKey:kMDCBottomNavigationBarSelectedItemTintColorKey];
-  }
-  if (self.unselectedItemTintColor) {
-    [aCoder encodeObject:self.unselectedItemTintColor
-                  forKey:kMDCBottomNavigationBarUnselectedItemTintColorKey];
-  }
-  [aCoder encodeBool:self.itemsDistributed forKey:kMDCBottomNavigationBarItemsDistributedKey];
-  [aCoder encodeBool:self.titleBelowItem forKey:kMDCBottomNavigationBarTitleBelowItemKey];
-}
-
 - (void)commonMDCBottomNavigationBarInit {
+  _itemsContentHorizontalMargin = kMDCBottomNavigationBarItemsHorizontalMargin;
   _selectedItemTintColor = [UIColor blackColor];
   _unselectedItemTintColor = [UIColor grayColor];
   _selectedItemTitleColor = _selectedItemTintColor;
@@ -194,10 +111,15 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 #if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunguarded-availability"
+#pragma clang diagnostic ignored "-Wtautological-pointer-compare"
   if (&UIAccessibilityTraitTabBar != NULL) {
     _containerView.accessibilityTraits = UIAccessibilityTraitTabBar;
+  } else {
+    _shouldPretendToBeATabBar = YES;
   }
 #pragma clang diagnostic pop
+#else
+  _shouldPretendToBeATabBar = YES;
 #endif
   [self setElevation:MDCShadowElevationBottomNavigationBar];
   _itemViews = [NSMutableArray array];
@@ -330,6 +252,10 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
            forKeyPath:kMDCBottomNavigationBarTitleString
               options:NSKeyValueObservingOptionNew
               context:nil];
+    [item addObserver:self
+           forKeyPath:kMDCBottomNavigationBarAccessibilityIdentifier
+              options:NSKeyValueObservingOptionNew
+              context:nil];
   }
 }
 
@@ -344,6 +270,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
       [item removeObserver:self
                 forKeyPath:kMDCBottomNavigationBarSelectedImageString];
       [item removeObserver:self forKeyPath:kMDCBottomNavigationBarTitleString];
+      [item removeObserver:self forKeyPath:kMDCBottomNavigationBarAccessibilityIdentifier];
     }
     @catch (NSException *exception) {
       if (exception) {
@@ -380,6 +307,8 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
       itemView.selectedImage = change[kMDCBottomNavigationBarNewString];
     } else if ([keyPath isEqualToString:kMDCBottomNavigationBarTitleString]) {
       itemView.title = change[kMDCBottomNavigationBarNewString];
+    } else if ([keyPath isEqualToString:kMDCBottomNavigationBarAccessibilityIdentifier]) {
+      itemView.accessibilityIdentifier = change[kMDCBottomNavigationBarNewString];
     }
   }
 }
@@ -419,7 +348,6 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
           [self.delegate bottomNavigationBar:self didSelectItem:item];
         }
       }
-      [itemView.inkView startTouchEndedAnimationAtPoint:CGPointZero completion:nil];
     }
   }
 }
@@ -446,6 +374,10 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
     [itemView removeFromSuperview];
   }
   [self.itemViews removeAllObjects];
+  [self.inkControllers removeAllObjects];
+  if (!self.inkControllers) {
+    _inkControllers = [@[] mutableCopy];
+  }
   [self removeObserversFromTabBarItems];
 
   _items = [items copy];
@@ -462,17 +394,27 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
     itemView.titleVisibility = self.titleVisibility;
     itemView.titleBelowIcon = self.titleBelowItem;
     itemView.accessibilityValue = item.accessibilityValue;
+    itemView.accessibilityIdentifier = item.accessibilityIdentifier;
+    itemView.contentInsets = self.itemsContentInsets;
+    itemView.contentVerticalMargin = self.itemsContentVerticalMargin;
+    itemView.contentHorizontalMargin = self.itemsContentHorizontalMargin;
+    MDCInkTouchController *controller = [[MDCInkTouchController alloc] initWithView:itemView];
+    controller.delegate = self;
+    [self.inkControllers addObject:controller];
 
-    NSString *key =
-        kMaterialBottomNavigationStringTable[kStr_MaterialBottomNavigationItemCountAccessibilityHint];
-    NSString *itemOfTotalString =
-        NSLocalizedStringFromTableInBundle(key,
-                                           kMaterialBottomNavigationStringsTableName,
-                                           [[self class] bundle],
-                                           kMDCBottomNavigationBarOfString);
-   NSString *localizedPosition =
-        [NSString localizedStringWithFormat:itemOfTotalString, (i + 1), (int)items.count];
-    itemView.button.accessibilityHint = localizedPosition;
+    if (self.shouldPretendToBeATabBar) {
+      NSString *key = kMaterialBottomNavigationStringTable[
+        kStr_MaterialBottomNavigationItemCountAccessibilityHint
+      ];
+      NSString *itemOfTotalString =
+          NSLocalizedStringFromTableInBundle(key,
+                                             kMaterialBottomNavigationStringsTableName,
+                                             [[self class] bundle],
+                                             kMDCBottomNavigationBarOfString);
+      NSString *localizedPosition =
+          [NSString localizedStringWithFormat:itemOfTotalString, (i + 1), (int)items.count];
+      itemView.button.accessibilityHint = localizedPosition;
+    }
     if (item.image) {
       itemView.image = item.image;
     }
@@ -495,17 +437,8 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 #endif
     itemView.selected = NO;
     [itemView.button addTarget:self
-                        action:@selector(didTouchDownButton:)
-              forControlEvents:UIControlEventTouchDown];
-    [itemView.button addTarget:self
                         action:@selector(didTouchUpInsideButton:)
               forControlEvents:UIControlEventTouchUpInside];
-    [itemView.button addTarget:self
-                        action:@selector(didTouchUpOutsideButton:)
-              forControlEvents:UIControlEventTouchUpOutside];
-    [itemView.button addTarget:self
-                        action:@selector(didCancelTouchesForButton:)
-              forControlEvents:UIControlEventTouchCancel];
     [self.itemViews addObject:itemView];
     [self.containerView addSubview:itemView];
   }
@@ -532,6 +465,42 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
       [itemView setSelected:NO animated:animated];
     }
   }
+}
+
+- (void)setItemsContentInsets:(UIEdgeInsets)itemsContentInsets {
+  if (UIEdgeInsetsEqualToEdgeInsets(_itemsContentInsets, itemsContentInsets)) {
+    return;
+  }
+  _itemsContentInsets = itemsContentInsets;
+  for (NSUInteger i = 0; i < self.items.count; i++) {
+    MDCBottomNavigationItemView *itemView = self.itemViews[i];
+    itemView.contentInsets = itemsContentInsets;
+  }
+  [self setNeedsLayout];
+}
+
+- (void)setItemsContentVerticalMargin:(CGFloat)itemsContentsVerticalMargin {
+  if (MDCCGFloatEqual(_itemsContentVerticalMargin, itemsContentsVerticalMargin)) {
+    return;
+  }
+  _itemsContentVerticalMargin = itemsContentsVerticalMargin;
+  for (NSUInteger i = 0; i < self.items.count; i++) {
+    MDCBottomNavigationItemView *itemView = self.itemViews[i];
+    itemView.contentVerticalMargin = itemsContentsVerticalMargin;
+  }
+  [self setNeedsLayout];
+}
+
+- (void)setItemsContentHorizontalMargin:(CGFloat)itemsContentHorizontalMargin {
+  if (MDCCGFloatEqual(_itemsContentHorizontalMargin, itemsContentHorizontalMargin)) {
+    return;
+  }
+  _itemsContentHorizontalMargin = itemsContentHorizontalMargin;
+  for (NSUInteger i = 0; i < self.items.count; i++) {
+    MDCBottomNavigationItemView *itemView = self.itemViews[i];
+    itemView.contentHorizontalMargin = itemsContentHorizontalMargin;
+  }
+  [self setNeedsLayout];
 }
 
 - (void)setTitleBelowItem:(BOOL)titleBelowItem {
@@ -608,6 +577,16 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
   NSBundle *bundle = [NSBundle bundleForClass:[MDCBottomNavigationBar class]];
   NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle) resourcePath];
   return [resourcePath stringByAppendingPathComponent:bundleName];
+}
+
+#pragma mark - MDCInkTouchControllerDelegate methods
+
+- (MDCInkView *)inkTouchController:(MDCInkTouchController *)inkTouchController
+            inkViewAtTouchLocation:(CGPoint)location {
+  if ([inkTouchController.view isKindOfClass:[MDCBottomNavigationItemView class]]) {
+    return ((MDCBottomNavigationItemView *)inkTouchController.view).inkView;
+  }
+  return nil;
 }
 
 @end

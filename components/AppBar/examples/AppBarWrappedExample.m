@@ -59,12 +59,17 @@
   WrappedDemoViewController *demoVC = [[WrappedDemoViewController alloc] init];
   self.appBarContainerViewController =
       [[MDCAppBarContainerViewController alloc] initWithContentViewController:demoVC];
+
+  // Behavioral flags.
+  MDCAppBarViewController *appBarViewController = self.appBarContainerViewController.appBarViewController;
+  appBarViewController.inferTopSafeAreaInsetFromViewController = YES;
+  appBarViewController.headerView.minMaxHeightIncludesSafeArea = NO;
   self.appBarContainerViewController.topLayoutGuideAdjustmentEnabled = YES;
 
-  [MDCAppBarColorThemer applySemanticColorScheme:self.colorScheme
-                                        toAppBar:self.appBarContainerViewController.appBar];
+  [MDCAppBarColorThemer applyColorScheme:self.colorScheme
+                  toAppBarViewController:self.appBarContainerViewController.appBarViewController];
   [MDCAppBarTypographyThemer applyTypographyScheme:self.typographyScheme
-                                          toAppBar:self.appBarContainerViewController.appBar];
+                            toAppBarViewController:self.appBarContainerViewController.appBarViewController];
 
   // Need to update the status bar style after applying the theme.
   [self setNeedsStatusBarAppearanceUpdate];

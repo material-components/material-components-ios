@@ -29,12 +29,9 @@
 #import "MaterialMath.h"
 #import "MaterialTypography.h"
 
-static NSString *const MDCTextFieldCursorColorKey = @"MDCTextFieldCursorColorKey";
-static NSString *const MDCTextFieldFundamentKey = @"MDCTextFieldFundamentKey";
-static NSString *const MDCTextFieldLeftViewModeKey = @"MDCTextFieldLeftViewModeKey";
-static NSString *const MDCTextFieldRightViewModeKey = @"MDCTextFieldRightViewModeKey";
-
 NSString *const MDCTextFieldTextDidSetTextNotification = @"MDCTextFieldTextDidSetTextNotification";
+NSString *const MDCTextInputDidToggleEnabledNotification =
+    @"MDCTextInputDidToggleEnabledNotification";
 
 // The image we use for the clear button has a little too much air around it. So we have to shrink
 // by this amount on each side.
@@ -79,20 +76,9 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1.f;
   if (self) {
     NSString *interfaceBuilderPlaceholder = super.placeholder;
 
-    if ([aDecoder containsValueForKey:MDCTextFieldFundamentKey]) {
-      _fundament = [aDecoder decodeObjectOfClass:[MDCTextInputCommonFundament class]
-                                          forKey:MDCTextFieldFundamentKey];
-    } else {
-      _fundament = [[MDCTextInputCommonFundament alloc] initWithTextInput:self];
-    }
+    _fundament = [[MDCTextInputCommonFundament alloc] initWithTextInput:self];
 
     [self commonMDCTextFieldInitialization];
-    _cursorColor = [aDecoder decodeObjectForKey:MDCTextFieldCursorColorKey];
-
-    self.leftViewMode =
-        (UITextFieldViewMode)[aDecoder decodeIntegerForKey:MDCTextFieldLeftViewModeKey];
-    self.rightViewMode =
-        (UITextFieldViewMode)[aDecoder decodeIntegerForKey:MDCTextFieldRightViewModeKey];
 
     if (interfaceBuilderPlaceholder.length) {
       self.placeholder = interfaceBuilderPlaceholder;
@@ -107,14 +93,6 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1.f;
 - (void)dealloc {
   NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
   [defaultCenter removeObserver:self];
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [super encodeWithCoder:aCoder];
-  [aCoder encodeObject:self.cursorColor forKey:MDCTextFieldCursorColorKey];
-  [aCoder encodeObject:self.fundament forKey:MDCTextFieldFundamentKey];
-  [aCoder encodeInteger:self.leftViewMode forKey:MDCTextFieldLeftViewModeKey];
-  [aCoder encodeInteger:self.rightViewMode forKey:MDCTextFieldRightViewModeKey];
 }
 
 - (instancetype)copyWithZone:(__unused NSZone *)zone {
@@ -451,6 +429,9 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1.f;
 - (void)setEnabled:(BOOL)enabled {
   [super setEnabled:enabled];
   _fundament.enabled = enabled;
+  [[NSNotificationCenter defaultCenter]
+      postNotificationName:MDCTextInputDidToggleEnabledNotification
+                    object:self];
 }
 
 // In iOS 8, .leftView and .rightView are not swapped in RTL so we have to do that manually.

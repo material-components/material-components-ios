@@ -39,3 +39,7 @@ Transitions between floating action button position, elevation and visibility st
 ## Extensions
 
 - [Color Theming](color-theming.md)
+
+## Accessibility
+
+- [Accessibility](accessibility.md)

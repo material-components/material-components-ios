@@ -15,7 +15,7 @@
  */
 
 import Foundation
-import MaterialComponents
+import MaterialComponents.MaterialMaskedTransition
 
 open class MaskedTransitionTypicalUseSwiftExample: UIViewController {
 

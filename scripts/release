@@ -480,12 +480,14 @@ generate_release_apidiff() {
   echo "Errors=$ALL_ERROR_LOG_PATH"
 
   # Run new pathdiff script on each umbrella header in array
-  for path_to_component in $(generate_release_components "$old_commit" | grep -v "private"); do
-    component=$(basename $path_to_component)
+  for umbrella_header_path in $(generate_release_umbrella_headers "$old_commit" | grep -v "private"); do
+    umbrella_header=$(basename "$umbrella_header_path")
+    component=$(echo "$umbrella_header" | cut -d'.' -f1 | sed 's:^Material::')
+    component_path=$(dirname "$umbrella_header_path")
 
-    echo -n "Diffing $component..."
+    echo -n "Diffing $component ($component_path)..."
 
-    if [ ! -d "$OLD_ROOT_PATH/components/$path_to_component/src" ]; then
+    if [ ! -f "$OLD_ROOT_PATH/$umbrella_header_path" ]; then
       echo >> $ALL_CHANGELOG_PATH
       echo "### $component" >> $ALL_CHANGELOG_PATH
       echo >> $ALL_CHANGELOG_PATH
@@ -499,7 +501,7 @@ generate_release_apidiff() {
     ERROR_PATH="$TMP_PATH/${component}errlog"
 
     "$dir/external/material-motion-apidiff/src/pathapidiff" \
-       "$OLD_ROOT_PATH" "$NEW_ROOT_PATH" objc "/components/$component/src/Material$component.h" \
+       "$OLD_ROOT_PATH" "$NEW_ROOT_PATH" objc "/$umbrella_header_path" \
        >> "$CHANGES_PATH" \
        2>> "$ERROR_PATH"
 
@@ -536,6 +538,15 @@ generate_release_components() {
 
 generate_release_files() {
   git diff --name-only origin/stable..$(get_latest_branch) components/
+}
+
+generate_release_umbrella_headers() {
+  for file in $(generate_release_files); do
+    file_dir=$(dirname $file)
+    if ls "$file_dir"/Material*.h 1> /dev/null 2>&1; then
+      ls "$file_dir"/Material*.h | grep -v "_table"
+    fi
+  done | sort | uniq
 }
 
 generate_release_headers() {
@@ -661,6 +672,7 @@ case "$1" in
   notes)      generate_release_notes ${@:2} ;;
   source)     generate_release_source ${@:2} ;;
   stories)    generate_release_stories ${@:2} ;;
+  umbrellas)  generate_release_umbrella_headers ${@:2} ;;
 
   abort)      abort_release ${@:2} ;;
 

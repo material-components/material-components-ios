@@ -25,6 +25,7 @@ Chips are compact elements that represent an input, attribute, or action.
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/chips/api-docs/Classes/MDCChipField.html">MDCChipField</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/chips/api-docs/Classes/MDCChipView.html">MDCChipView</a></li>
   <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/chips/api-docs/Protocols/MDCChipFieldDelegate.html">MDCChipFieldDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/chips/api-docs/Enums.html">Enumerations</a></li>
   <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/chips/api-docs/Enums/MDCChipFieldDelimiter.html">MDCChipFieldDelimiter</a></li>
 </ul>
 

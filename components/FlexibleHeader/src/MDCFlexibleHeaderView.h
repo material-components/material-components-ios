@@ -20,49 +20,6 @@ typedef void (^MDCFlexibleHeaderChangeContentInsetsBlock)(void);
 typedef void (^MDCFlexibleHeaderShadowIntensityChangeBlock)(CALayer *_Nonnull shadowLayer,
                                                             CGFloat intensity);
 
-/**
- The possible translation (shift) behaviors of a flexible header view.
-
- Enabling shifting allows the header to enter the
- @c MDCFlexibleHeaderScrollPhaseShifting scroll phase.
- */
-typedef NS_ENUM(NSInteger, MDCFlexibleHeaderShiftBehavior) {
-
-  /** Header's y position never changes in reaction to scroll events. */
-  MDCFlexibleHeaderShiftBehaviorDisabled,
-
-  /** When fully-collapsed, the header translates vertically in reaction to scroll events. */
-  MDCFlexibleHeaderShiftBehaviorEnabled,
-
-  /**
-   When fully-collapsed, the header translates vertically in reaction to scroll events along with
-   the status bar.
-
-   If used with a vertically-paging scroll view, this behavior acts like
-   MDCFlexibleHeaderShiftBehaviorEnabled.
-   */
-  MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar,
-};
-
-/** The importance of content contained within the flexible header view. */
-typedef NS_ENUM(NSInteger, MDCFlexibleHeaderContentImportance) {
-
-  /**
-   Default behavior requires at most approximately a single swipe before the header re-appears.
-   */
-  MDCFlexibleHeaderContentImportanceDefault,
-
-  /**
-   Highly-important header content will re-appear faster than default importance.
-
-   Examples of important content:
-
-   - Search bar.
-   - Non-navigational actions.
-   */
-  MDCFlexibleHeaderContentImportanceHigh,
-};
-
 /** Mutually exclusive phases that the flexible header view can be in. */
 typedef NS_ENUM(NSInteger, MDCFlexibleHeaderScrollPhase) {
 
@@ -122,39 +79,10 @@ IB_DESIGNABLE
 
  Must be called from the trackingScrollView delegate's UIScrollViewDelegate::scrollViewDidScroll:
  implementor.
+
+ @note Do not invoke this method if self.observesTrackingScrollViewScrollEvents is YES.
  */
 - (void)trackingScrollViewDidScroll;
-
-/**
- Informs the receiver that the tracking scroll view has finished dragging.
-
- Must be called from the trackingScrollView delegate's
- UIScrollViewDelegate::scrollViewDidEndDragging:willDecelerate: implementor.
- */
-- (void)trackingScrollViewDidEndDraggingWillDecelerate:(BOOL)willDecelerate;
-
-/**
- Informs the receiver that the tracking scroll view has finished decelerating.
-
- Must be called from the trackingScrollView delegate's
- UIScrollViewDelegate::scrollViewDidEndDecelerating: implementor.
- */
-- (void)trackingScrollViewDidEndDecelerating;
-
-/**
- Potentially modifies the target content offset in order to ensure that the header view is either
- visible or hidden depending on its current position.
-
- Must be called from the trackingScrollView delegate's
- -scrollViewWillEndDragging:withVelocity:targetContentOffset: implementor.
-
- If your scroll view is vertically paging then this method will do nothing. You should also
- disable hidesStatusBarWhenCollapsed.
-
- @return A Boolean value indicating whether the target content offset was modified.
- */
-- (BOOL)trackingScrollViewWillEndDraggingWithVelocity:(CGPoint)velocity
-                                  targetContentOffset:(inout nonnull CGPoint *)targetContentOffset;
 
 #pragma mark Changing the tracking scroll view
 
@@ -163,14 +91,6 @@ IB_DESIGNABLE
  scroll view.
  */
 - (void)trackingScrollWillChangeToScrollView:(nullable UIScrollView *)scrollView;
-
-#pragma mark Shifting the tracking scroll view on-screen
-
-/** Asks the receiver to bring the header on-screen if it's currently off-screen. */
-- (void)shiftHeaderOnScreenAnimated:(BOOL)animated;
-
-/** Asks the receiver to take the header off-screen if it's currently on-screen. */
-- (void)shiftHeaderOffScreenAnimated:(BOOL)animated;
 
 #pragma mark UIKit Hooks
 
@@ -325,33 +245,24 @@ IB_DESIGNABLE
  Clients are recommended to set this to NO, and set the min and max heights to values that don't
  include the status bar or Safe Area insets.
 
+ @warning This API will soon be disabled by default and then deprecated. Learn more at
+ https://github.com/material-components/material-components-ios/blob/develop/components/FlexibleHeader/docs/migration-guide-minMaxHeightIncludesSafeArea.md
+
  Default is YES.
  */
 @property(nonatomic) BOOL minMaxHeightIncludesSafeArea;
 
+/**
+ A layout guide that equates to the top safe area inset of the flexible header view.
+
+ Use this layout guide to position subviews in the flexible header in relation to the top safe area
+ insets.
+
+ This object is intended to be used as a constraint item.
+ */
+@property(nonatomic, nonnull, readonly) id topSafeAreaGuide;
+
 #pragma mark Behaviors
-
-/** The behavior of the header in response to the user interacting with the tracking scroll view. */
-@property(nonatomic) MDCFlexibleHeaderShiftBehavior shiftBehavior;
-
-/**
- Hides the view by changing its alpha when the header shifts. Note that this only happens when the
- header shifting behavior is set to MDCFlexibleHeaderShiftBehaviorEnabled.
- */
-- (void)hideViewWhenShifted:(nonnull UIView *)view;
-
-/** Stops hiding the view when the header shifts. */
-- (void)stopHidingViewWhenShifted:(nonnull UIView *)view;
-
-/**
- If shiftBehavior is enabled, this property affects the manner in which the Header reappears when
- pulling content down in the tracking scroll view.
-
- Ignored if shiftBehavior == MDCFlexibleHeaderShiftBehaviorDisabled.
-
- Default: MDCFlexibleHeaderContentImportanceDefault
- */
-@property(nonatomic) MDCFlexibleHeaderContentImportance headerContentImportance;
 
 /**
  Whether or not the header view is allowed to expand past its maximum height when the tracking
@@ -360,21 +271,6 @@ IB_DESIGNABLE
  Default: YES
  */
 @property(nonatomic) BOOL canOverExtend;
-
-/**
- A hint stating whether or not the operating system's status bar frame can ever overlap the header's
- frame.
-
- This property is enabled by default with the expectation that the flexible header will primarily
- be used in full-screen settings on the phone.
-
- Disabling this property informs the flexible header that it should not concern itself with the
- status bar in any manner. shiftBehavior .EnabledWithStatusBar will be treated simply as .Enabled
- in this case.
-
- Default: YES
- */
-@property(nonatomic) BOOL statusBarHintCanOverlapHeader;
 
 @property(nonatomic) float visibleShadowOpacity;  ///< The visible shadow opacity. Default: 0.4
 
@@ -400,13 +296,29 @@ IB_DESIGNABLE
 @property(nonatomic, weak, nullable) UIScrollView *trackingScrollView;
 
 /**
- When enabled, the header view will prioritize shifting off-screen and collapsing over shifting
- on-screen and expanding.
+ Whether to automatically observe the trackingScrollView's content offset changes.
 
- This should only be enabled when the user is scrubbing the tracking scroll view, i.e. they're
- able to jump large distances using a scrubber control.
+ When enabled, the header view will observe the contentOffset property of the tracking scroll view
+ and react to changes accordingly.
+
+ You must not forward any scroll view events to the header view if this property is enabled. Any
+ attempts to do so will result in an assertion.
+
+ If you attempt to enable this property when shiftBehavior is set to anything other than
+ MDCFlexibleHeaderShiftBehaviorDisabled, an assertion will be thrown. If you intend to use any
+ shifting behavior you must manually forward the necessary scroll view events.
+
+ @note If you enable this property and you support iOS 10.3 or below, you are responsible for
+ explicitly nilling out the tracking scroll view before it is deallocated. This is not required if
+ your minimum OS is iOS 11 or above. Failure to nil out the tracking scroll view may lead to runtime
+ crashes due to dangling observers on the tracking scroll view. Most commonly, the tracking scroll
+ view can be nil'd out in the view controller's dealloc method. An example of the error you might
+ see is: "An instance of class UITableView was deallocated while key value observers were still
+ registered with it."
+
+ Default: NO
  */
-@property(nonatomic) BOOL trackingScrollViewIsBeingScrubbed;
+@property(nonatomic) BOOL observesTrackingScrollViewScrollEvents;
 
 /**
  Whether or not the header is floating in front of an infinite stream of content.
@@ -426,16 +338,6 @@ IB_DESIGNABLE
  Default: NO
  */
 @property(nonatomic) BOOL sharedWithManyScrollViews;
-
-#pragma mark Configuring Status Bar Behaviors
-
-/**
- Whether this header view's content is translucent/transparent. Provides a hint to status bar
- rendering, to correctly display contents scrolling under the status bar as it shifts on/off screen.
-
- Default: NO
- */
-@property(nonatomic) BOOL contentIsTranslucent;
 
 #pragma mark Header View Delegate
 
@@ -472,10 +374,6 @@ IB_DESIGNABLE
 
 // clang-format off
 @interface MDCFlexibleHeaderView ()
-
-/** @see shiftBehavior */
-@property(nonatomic) MDCFlexibleHeaderShiftBehavior behavior
-__deprecated_msg("Use shiftBehavior instead.");
 
 #pragma mark Accessing the header's views
 
