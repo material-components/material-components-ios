@@ -16,9 +16,10 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialColorScheme.h"
 #import "MaterialPalettes.h"
 #import "MaterialProgressView.h"
-#import "MaterialTypography.h"
+#import "MaterialTypographyScheme.h"
 
 static const CGFloat MDCProgressViewAnimationDuration = 1.f;
 
@@ -39,6 +40,9 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
 @property(nonatomic, strong) MDCProgressView *backwardProgressAnimateView;
 @property(nonatomic, strong) UILabel *backwardProgressAnimateLabel;
 
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
+
 @end
 
 @implementation ProgressViewExample
@@ -53,9 +57,9 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
   _tintedProgressView = [[MDCProgressView alloc] init];
   _tintedProgressView.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:_tintedProgressView];
-  _tintedProgressView.progressTintColor = MDCPalette.redPalette.tint500;
-  // Reset the track tint color to be based off of the progress tint color.
-  _tintedProgressView.trackTintColor = nil;
+  _tintedProgressView.progressTintColor = self.colorScheme.primaryColor;
+  _tintedProgressView.trackTintColor =
+      [self.colorScheme.primaryColor colorWithAlphaComponent:(CGFloat)0.24];
   // Hide the progress view at setup time.
   _tintedProgressView.hidden = YES;
 
@@ -92,8 +96,16 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+
+  if (!self.colorScheme) {
+    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+  }
+  if (!self.typographyScheme) {
+    self.typographyScheme = [[MDCTypographyScheme alloc] init];
+  }
+
   self.title = @"Progress View";
-  self.view.backgroundColor = [UIColor whiteColor];
+  self.view.backgroundColor = self.colorScheme.backgroundColor;
 
   [self setupProgressViews];
   [self setupLabels];
@@ -103,36 +115,36 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
 - (void)setupLabels {
   _stockProgressLabel = [[UILabel alloc] init];
   _stockProgressLabel.text = @"Progress";
-  _stockProgressLabel.font = [MDCTypography captionFont];
-  _stockProgressLabel.alpha = [MDCTypography captionFontOpacity];
+  _stockProgressLabel.font = self.typographyScheme.caption;
+  _stockProgressLabel.textColor = self.colorScheme.onBackgroundColor;
   _stockProgressLabel.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:_stockProgressLabel];
 
   _tintedProgressLabel = [[UILabel alloc] init];
   _tintedProgressLabel.text = @"Progress with progress tint";
-  _tintedProgressLabel.font = [MDCTypography captionFont];
-  _tintedProgressLabel.alpha = [MDCTypography captionFontOpacity];
+  _tintedProgressLabel.font = self.typographyScheme.caption;
+  _tintedProgressLabel.textColor = self.colorScheme.onBackgroundColor;
   _tintedProgressLabel.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:_tintedProgressLabel];
 
   _fullyColoredProgressLabel = [[UILabel alloc] init];
   _fullyColoredProgressLabel.text = @"Progress with custom colors";
-  _fullyColoredProgressLabel.font = [MDCTypography captionFont];
-  _fullyColoredProgressLabel.alpha = [MDCTypography captionFontOpacity];
+  _fullyColoredProgressLabel.font = self.typographyScheme.caption;
+  _fullyColoredProgressLabel.textColor = self.colorScheme.onBackgroundColor;
   _fullyColoredProgressLabel.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:_fullyColoredProgressLabel];
 
   _backwardProgressResetLabel = [[UILabel alloc] init];
   _backwardProgressResetLabel.text = @"Backward progress (reset)";
-  _backwardProgressResetLabel.font = [MDCTypography captionFont];
-  _backwardProgressResetLabel.alpha = [MDCTypography captionFontOpacity];
+  _backwardProgressResetLabel.font = self.typographyScheme.caption;
+  _backwardProgressResetLabel.textColor = self.colorScheme.onBackgroundColor;
   _backwardProgressResetLabel.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:_backwardProgressResetLabel];
 
   _backwardProgressAnimateLabel = [[UILabel alloc] init];
   _backwardProgressAnimateLabel.text = @"Backward progress (animate)";
-  _backwardProgressAnimateLabel.font = [MDCTypography captionFont];
-  _backwardProgressAnimateLabel.alpha = [MDCTypography captionFontOpacity];
+  _backwardProgressAnimateLabel.font = self.typographyScheme.caption;
+  _backwardProgressAnimateLabel.textColor = self.colorScheme.onBackgroundColor;
   _backwardProgressAnimateLabel.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:_backwardProgressAnimateLabel];
 }
