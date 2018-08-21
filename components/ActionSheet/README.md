@@ -114,14 +114,17 @@ MDCActionSheetAction *favoriteAction =
 
 ## MDCActionSheetController vs. UIAlertControllerStyleActionSheet
 
-MDCActionSheetController is intended to mirror UIAlertControllerStyleActionSheet API.  
+MDCActionSheetController is intended to mirror a [UIAlertController](https://developer.apple.com/documentation/uikit/uialertcontroller?language=objc)
+with the [UIAlertControllerStyleActionSheet](https://developer.apple.com/documentation/uikit/uialertcontrollerstyle/uialertcontrollerstyleactionsheet) style.  
 
 #### Similarities
+
 1. Both classes are presented from the bottom of the screen on an iPhone and have a list of actions.
 
 2. Both classes support both a title and message but both are optional properties.
 
 #### Differences
+
 1. UIAlertControllerActionSheetStyle requires that you set the popoverPresentationController on larger devices, 
 MDCActionSheetController doesn't support popoverPresentationController but instead always comes up from the 
 bottom of the screen.
