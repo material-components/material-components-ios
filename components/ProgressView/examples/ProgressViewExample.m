@@ -250,7 +250,9 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
                                  animated:YES
                                completion:nil];
   if (remainingCounts > 0) {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(MDCProgressViewAnimationDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
+                                 (int64_t)(MDCProgressViewAnimationDuration * NSEC_PER_SEC)),
+                   dispatch_get_main_queue(), ^{
       [weakSelf animateBackwardProgressResetViewWithCountdown:remainingCounts];
     });
   }
@@ -265,8 +267,11 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
                                    animated:YES
                                  completion:remainingCounts == 0 ? completion : nil];
   if (remainingCounts) {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(MDCProgressViewAnimationDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-      [weakSelf animateBackwardProgressAnimateViewWithCountdown:remainingCounts completion:completion];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
+                                 (int64_t)(MDCProgressViewAnimationDuration * NSEC_PER_SEC)),
+                   dispatch_get_main_queue(), ^{
+      [weakSelf animateBackwardProgressAnimateViewWithCountdown:remainingCounts
+                                                     completion:completion];
     });
   }
 }
