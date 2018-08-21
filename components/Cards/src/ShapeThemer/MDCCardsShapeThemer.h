@@ -27,13 +27,13 @@
 /**
 
  */
-+ (void)applySemanticShapeScheme:(nonnull id<MDCShapeScheming>)shapeScheme
-                          toCard:(nonnull MDCCard *)card;
++ (void)applyShapeScheme:(nonnull id<MDCShapeScheming>)shapeScheme
+                  toCard:(nonnull MDCCard *)card;
 
 /**
 
  */
-+ (void)applySemanticShapeScheme:(nonnull id<MDCShapeScheming>)shapeScheme
-                      toCardCell:(nonnull MDCCardCollectionCell *)cardCell;
++ (void)applyShapeScheme:(nonnull id<MDCShapeScheming>)shapeScheme
+              toCardCell:(nonnull MDCCardCollectionCell *)cardCell;
 
 @end

@@ -24,7 +24,7 @@ class CardExampleViewController: UIViewController {
   @IBOutlet weak var button: MDCButton!
 
   var colorScheme = MDCSemanticColorScheme()
-  var shapeScheme = MDCSemanticShapeScheme()
+  var shapeScheme = MDCShapeScheme()
   var typographyScheme = MDCTypographyScheme()
 
   override func viewDidLoad() {

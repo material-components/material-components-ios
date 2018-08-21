@@ -117,7 +117,7 @@
   } else {
     [MDCChipViewThemer applyScheme:scheme toChipView:chipView];
   }
-  [MDCChipView50RoundedShapeThemer applySemanticShapeScheme:scheme.shapeScheme toChipView:chipView];
+  [MDCChipViewBaselineShapeThemer applyShapeBaselineToChipView:chipView];
 
   return cell;
 }

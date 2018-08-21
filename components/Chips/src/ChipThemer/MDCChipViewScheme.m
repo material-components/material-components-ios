@@ -23,7 +23,7 @@
   if (self) {
     _colorScheme = [[MDCSemanticColorScheme alloc] init];
     _typographyScheme = [[MDCTypographyScheme alloc] init];
-    _shapeScheme = [[MDCSemanticShapeScheme alloc] init];
+    _shapeScheme = [[MDCShapeScheme alloc] init];
   }
   return self;
 }

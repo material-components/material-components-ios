@@ -14,4 +14,4 @@
  limitations under the License.
  */
 
-#import "MDCSemanticShapeScheme.h"
+#import "MDCShapeScheme.h"

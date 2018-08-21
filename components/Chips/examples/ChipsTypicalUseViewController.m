@@ -18,6 +18,7 @@
 
 #import "MaterialChips.h"
 #import "MaterialChips+TypographyThemer.h"
+#import "MaterialChips+ShapeThemer.h"
 
 @implementation ChipsTypicalUseViewController {
   MDCChipView *_sizingChip;
@@ -47,7 +48,7 @@
 
   [MDCChipViewTypographyThemer applyTypographyScheme:self.typographyScheme
                                           toChipView:_sizingChip];
-  
+  [MDCChipViewBaselineShapeThemer applyShapeBaselineToChipView:_sizingChip];
   self.collectionView.backgroundColor = [UIColor whiteColor];
   self.collectionView.delaysContentTouches = NO;
   self.collectionView.contentInset = UIEdgeInsetsMake(20, 20, 20, 20);

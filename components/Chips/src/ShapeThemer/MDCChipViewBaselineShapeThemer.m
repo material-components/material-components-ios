@@ -12,16 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCChipView50RoundedShapeThemer.h"
+#import "MDCChipViewBaselineShapeThemer.h"
 
-@implementation MDCChipView50RoundedShapeThemer
+static const CGFloat kChipBaselineShapeValuePercentage = 0.5f;
 
-+ (void)applySemanticShapeScheme:(nonnull id<MDCShapeScheming>)shapeScheme
-                      toChipView:(nonnull MDCChipView *)chipView {
-  [super applySemanticShapeScheme:shapeScheme toChipView:chipView];
+@implementation MDCChipViewBaselineShapeThemer
+
++ (void)applyShapeBaselineToChipView:(MDCChipView *)chipView {
+  CGFloat chipHeight = chipView.bounds.size.height;
+  CGFloat cornerValue = chipHeight * kChipBaselineShapeValuePercentage;
   MDCRectangleShapeGenerator *rectangleShape = [[MDCRectangleShapeGenerator alloc] init];
-  MDCCornerTreatment *cornerTreatment = [[MDCRoundedCornerTreatment alloc] initWithRadius:16.f];
+  MDCCornerTreatment *cornerTreatment =
+      [[MDCRoundedCornerTreatment alloc] initWithRadius:cornerValue];
   [rectangleShape setCorners:cornerTreatment];
   chipView.shapeGenerator = rectangleShape;
 }
+
 @end

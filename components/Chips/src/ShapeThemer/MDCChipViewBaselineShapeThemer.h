@@ -14,5 +14,8 @@
 
 #import "MDCChipViewShapeThemer.h"
 
-@interface MDCChipView50RoundedShapeThemer : MDCChipViewShapeThemer
+@interface MDCChipViewBaselineShapeThemer : NSObject
+
++ (void)applyShapeBaselineToChipView:(MDCChipView *)chipView;
+
 @end

@@ -32,7 +32,7 @@ class EditReorderCollectionViewController: UIViewController,
   var toggle = ToggleMode.reorder
   var toggleButton: UIButton!
   var colorScheme = MDCSemanticColorScheme()
-  var shapeScheme = MDCSemanticShapeScheme()
+  var shapeScheme = MDCShapeScheme()
   let cardScheme = MDCCardScheme()
 
   override func viewDidLoad() {

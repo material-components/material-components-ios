@@ -18,22 +18,49 @@
 
 - (instancetype)init
 {
+  _isPercentage = NO;
   return [self initWithShapeFamily:MDCShapeFamilyRoundedCorner andValue:0];
 }
 
-- (instancetype)initWithShapeFamily:(MDCShapeFamily)shapeFamily andValue:(NSUInteger)shapeValue
+- (instancetype)initWithShapeFamily:(MDCShapeFamily)shapeFamily andValue:(CGFloat)shapeValue
 {
   if (self = [super init]) {
+    _isPercentage = NO;
     _shapeFamily = shapeFamily;
     _shapeValue = shapeValue;
   }
   return self;
 }
 
+- (instancetype)initWithShapeFamily:(MDCShapeFamily)shapeFamily
+                 andPercentageValue:(NSUInteger)shapeValue
+{
+  if (self = [super init]) {
+    _isPercentage = YES;
+    _shapeFamily = shapeFamily;
+    _shapeValue = shapeValue;
+  }
+  return self;
+}
 
 - (MDCCornerTreatment *)cornerTreatmentValue {
+  return [self cornerTreatmentValueWithNormalizedShapeValue:_shapeValue];
+}
+
+- (MDCCornerTreatment *)cornerTreatmentValueWithViewBounds:(CGRect)bounds {
   MDCCornerTreatment *cornerTreatment;
-  NSNumber *value = [[NSNumber alloc] initWithFloat:_shapeValue];
+  if (_isPercentage && _shapeValue <= 1) {
+    CGFloat normalizedShapeValue = bounds.size.height * _shapeValue;
+    cornerTreatment = [self cornerTreatmentValueWithNormalizedShapeValue:normalizedShapeValue];
+  } else {
+    cornerTreatment = [self cornerTreatmentValue];
+  }
+  return cornerTreatment;
+}
+
+- (MDCCornerTreatment *)cornerTreatmentValueWithNormalizedShapeValue:(CGFloat)shapeValue {
+  MDCCornerTreatment *cornerTreatment;
+  NSNumber *value = @(shapeValue);
   switch (_shapeFamily) {
     case MDCShapeFamilyAngledCorner: {
       cornerTreatment =
@@ -47,5 +74,5 @@
     }
   }
   return cornerTreatment;
-  }
+}
 @end

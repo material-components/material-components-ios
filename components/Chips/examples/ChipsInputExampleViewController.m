@@ -69,6 +69,7 @@
   } else {
     [MDCChipViewThemer applyScheme:scheme toChipView:chip];
   }
+  [MDCChipViewBaselineShapeThemer applyShapeBaselineToChipView:chip];
   [chip sizeToFit];
   CGFloat chipVerticalInset = MIN(0, (CGRectGetHeight(chip.bounds) - 48) / 2);
   chip.hitAreaInsets = UIEdgeInsetsMake(chipVerticalInset, 0, chipVerticalInset, 0);

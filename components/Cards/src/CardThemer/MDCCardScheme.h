@@ -37,7 +37,7 @@
 // Redeclare protocol properties as readwrite
 @property(nonnull, readwrite, nonatomic) MDCSemanticColorScheme *colorScheme;
 
-@property(nonnull, readwrite, nonatomic) MDCSemanticShapeScheme *shapeScheme;
+@property(nonnull, readwrite, nonatomic) MDCShapeScheme *shapeScheme;
 
 
 @end

@@ -32,7 +32,7 @@ static const CGFloat kBorderWidth = 1.f;
   [card setShadowElevation:kHighlightedElevation forState:UIControlStateHighlighted];
   card.interactable = YES;
   [MDCCardsColorThemer applySemanticColorScheme:scheme.colorScheme toCard:card];
-  [MDCCardsShapeThemer applySemanticShapeScheme:scheme.shapeScheme toCard:card];
+  [MDCCardsShapeThemer applyShapeScheme:scheme.shapeScheme toCard:card];
 }
 
 + (void)applyScheme:(nonnull id<MDCCardScheming>)scheme
@@ -42,7 +42,7 @@ static const CGFloat kBorderWidth = 1.f;
   [cardCell setShadowElevation:kSelectedElevation forState:MDCCardCellStateSelected];
   cardCell.interactable = YES;
   [MDCCardsColorThemer applySemanticColorScheme:scheme.colorScheme toCardCell:cardCell];
-  [MDCCardsShapeThemer applySemanticShapeScheme:scheme.shapeScheme toCardCell:cardCell];
+  [MDCCardsShapeThemer applyShapeScheme:scheme.shapeScheme toCardCell:cardCell];
 }
 
 + (void)applyOutlinedVariantWithScheme:(nonnull id<MDCCardScheming>)scheme
@@ -55,7 +55,7 @@ static const CGFloat kBorderWidth = 1.f;
   }
   [card setShadowElevation:kHighlightedElevation forState:UIControlStateHighlighted];
   [MDCCardsColorThemer applyOutlinedVariantWithColorScheme:scheme.colorScheme toCard:card];
-  [MDCCardsShapeThemer applySemanticShapeScheme:scheme.shapeScheme toCard:card];
+  [MDCCardsShapeThemer applyShapeScheme:scheme.shapeScheme toCard:card];
 }
 
 + (void)applyOutlinedVariantWithScheme:(nonnull id<MDCCardScheming>)scheme
@@ -69,7 +69,7 @@ static const CGFloat kBorderWidth = 1.f;
 
 
   [MDCCardsColorThemer applyOutlinedVariantWithColorScheme:scheme.colorScheme toCardCell:cardCell];
-  [MDCCardsShapeThemer applySemanticShapeScheme:scheme.shapeScheme toCardCell:cardCell];
+  [MDCCardsShapeThemer applyShapeScheme:scheme.shapeScheme toCardCell:cardCell];
 }
 
 @end

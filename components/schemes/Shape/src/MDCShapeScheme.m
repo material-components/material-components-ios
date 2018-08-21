@@ -14,9 +14,9 @@
  limitations under the License.
  */
 
-#import "MDCSemanticShapeScheme.h"
+#import "MDCShapeScheme.h"
 
-@implementation MDCSemanticShapeScheme
+@implementation MDCShapeScheme
 
 - (instancetype)init {
   return [self initWithDefaults:MDCShapeSchemeDefaultsMaterial201808];

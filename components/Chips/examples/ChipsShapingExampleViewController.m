@@ -65,6 +65,7 @@
   chipScheme.colorScheme = _colorScheme;
   chipScheme.typographyScheme = _typographyScheme;
   [MDCChipViewThemer applyScheme:chipScheme toChipView:_chipView];
+  [MDCChipViewBaselineShapeThemer applyShapeBaselineToChipView:_chipView];
   [self.view addSubview:_chipView];
 
   _cornerSlider = [[MDCSlider alloc] initWithFrame:CGRectZero];

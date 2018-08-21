@@ -54,7 +54,7 @@ typedef NS_ENUM(NSInteger, MDCShapeSchemeDefaults) {
 /**
 
  */
-@interface MDCSemanticShapeScheme : NSObject <MDCShapeScheming>
+@interface MDCShapeScheme : NSObject <MDCShapeScheming>
 
 // Redeclare protocol properties as readwrite
 @property(nonnull, readwrite, nonatomic) MDCShapeCategory *smallSurfaceShape;

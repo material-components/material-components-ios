@@ -122,6 +122,7 @@
   } else {
     [MDCChipViewThemer applyScheme:scheme toChipView:chipView];
   }
+  [MDCChipViewBaselineShapeThemer applyShapeBaselineToChipView:chipView];
 
   return cell;
 }

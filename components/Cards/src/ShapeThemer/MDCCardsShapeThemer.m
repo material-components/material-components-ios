@@ -20,21 +20,23 @@
 
 @implementation MDCCardsShapeThemer
 
-+ (void)applySemanticShapeScheme:(nonnull id<MDCShapeScheming>)shapeScheme
-                          toCard:(nonnull MDCCard *)card {
++ (void)applyShapeScheme:(nonnull id<MDCShapeScheming>)shapeScheme
+                  toCard:(nonnull MDCCard *)card {
+  MDCShapeCorner *shapeCorner = shapeScheme.mediumSurfaceShape.topLeftCorner;
   MDCRectangleShapeGenerator *rectangleShape = [[MDCRectangleShapeGenerator alloc] init];
   MDCCornerTreatment *cornerTreatment =
-      [shapeScheme.mediumSurfaceShape.topLeftCorner cornerTreatmentValue];
+      [shapeCorner cornerTreatmentValue];
   [rectangleShape setCorners:cornerTreatment];
   card.shapeGenerator = rectangleShape;
 }
 
-+ (void)applySemanticShapeScheme:(nonnull id<MDCShapeScheming>)shapeScheme
-                      toCardCell:(nonnull MDCCardCollectionCell *)cardCell {
++ (void)applyShapeScheme:(nonnull id<MDCShapeScheming>)shapeScheme
+              toCardCell:(nonnull MDCCardCollectionCell *)cardCell {
+  MDCShapeCorner *shapeCorner = shapeScheme.mediumSurfaceShape.topLeftCorner;
   MDCRectangleShapeGenerator *rectangleShape = [[MDCRectangleShapeGenerator alloc] init];
-  MDCCornerTreatment *cornerTreatment =
-      [shapeScheme.mediumSurfaceShape.topLeftCorner cornerTreatmentValue];
+  MDCCornerTreatment *cornerTreatment = [shapeCorner cornerTreatmentValue];
   [rectangleShape setCorners:cornerTreatment];
-  cardCell.shapeGenerator = rectangleShape;}
+  cardCell.shapeGenerator = rectangleShape;
+}
 
 @end

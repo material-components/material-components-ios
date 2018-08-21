@@ -17,6 +17,7 @@
 #import "MDCChipViewScheme.h"
 
 #import "MaterialChips.h"
+#import "MaterialChips+ShapeThemer.h"
 
 #import <Foundation/Foundation.h>
 
