@@ -40,7 +40,7 @@ MDCActionSheetController doesn't support popoverPresentationController but inste
 bottom of the screen.
 
 2. UIAlertControllerStyleActionSheet is a style of UIAlertController and not its own class. If you need a
-Material UIAlertController please see the `MDCDAlertController` class. 
+Material UIAlertController please see the `MDCAlertController` class. 
 
 3. MDCActionSheetController does not support text fields.
 
