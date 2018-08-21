@@ -96,7 +96,9 @@ move_derived_data_to_tmp() {
 run_bazel() {
   echo "Running bazel builds..."
 
-  move_derived_data_to_tmp
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    move_derived_data_to_tmp
+  fi
 
   fix_bazel_imports
 
@@ -131,7 +133,9 @@ run_bazel() {
 run_cocoapods() {
   echo "Running cocoapods builds..."
 
-  move_derived_data_to_tmp
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    move_derived_data_to_tmp
+  fi
 
   xcode_min_version_as_number="$(version_as_number $XCODE_MINIMUM_VERSION)"
 
