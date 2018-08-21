@@ -307,6 +307,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   self.alertView.messageColor = self.messageColor;
   self.alertView.buttonColor = self.buttonTitleColor;
   self.alertView.buttonFont = self.buttonFont;
+  self.alertView.buttonInkColor = self.buttonInkColor;
 
   for (MDCAlertAction *action in self.actions) {
     [self addActionToAlertView:action];
