@@ -87,6 +87,10 @@
                                        style:UIBarButtonItemStylePlain
                                       target:self
                                       action:@selector(updateBadgeItemCount)];
+  self.navigationItem.rightBarButtonItem.accessibilityLabel = @"Add a message";
+  self.navigationItem.rightBarButtonItem.accessibilityHint =
+      @"Increases the badge on the \"Messages\" tab.";
+  self.navigationItem.rightBarButtonItem.accessibilityIdentifier = @"messages-increment-badge";
 }
 
 - (void)layoutBottomNavBar {
