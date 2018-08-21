@@ -23,6 +23,32 @@
 
 @implementation MDCMathTests
 
+#pragma mark - MDCCeilScaled and MDCFloorScaled
+
+- (void)testMDCFloorScaled {
+  CGFloat inputNumber = 1.3f;
+
+  CGFloat scale1 = 2.0f;
+  CGFloat expectedOutputNumber1 = 1.0f;
+  XCTAssertEqual(MDCFloorScaled(inputNumber, scale1), expectedOutputNumber1);
+
+  CGFloat scale2 = 4.0f;
+  CGFloat expectedOutputNumber2 = 1.25f;
+  XCTAssertEqual(MDCFloorScaled(inputNumber, scale2), expectedOutputNumber2);
+}
+
+- (void)testMDCCeilScaled {
+  CGFloat inputNumber = 1.3f;
+
+  CGFloat scale1 = 2.0f;
+  CGFloat expectedOutputNumber1 = 1.5f;
+  XCTAssertEqual(MDCCeilScaled(inputNumber, scale1), expectedOutputNumber1);
+
+  CGFloat scale2 = 4.0f;
+  CGFloat expectedOutputNumber2 = 1.5f;
+  XCTAssertEqual(MDCCeilScaled(inputNumber, scale2), expectedOutputNumber2);
+}
+
 #pragma mark - MDCRect
 
 /**
