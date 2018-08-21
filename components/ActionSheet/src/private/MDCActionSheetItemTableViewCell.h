@@ -20,10 +20,8 @@
 
 @interface MDCActionSheetItemTableViewCell : UITableViewCell
 
-/** Cells must be created with cellWithAction: */
-- (nullable instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
+- (nullable instancetype)initWithCoder:(nullable NSCoder *)aDecoder NS_UNAVAILABLE;
 
-/** Cells must be created with cellWithAction: */
 - (nonnull instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
 
 /**

@@ -18,15 +18,15 @@
 
 @interface MDCActionSheetHeaderView : UIView
 
-- (instancetype)initWithTitle:(NSString *)title;
+- (nonnull instancetype)initWithTitle:(nullable NSString *)title;
 
-- (nonnull instancetype)initWithTitle:(NSString *)title message:(NSString *)message;
-
-/** Header must be created with either headerWithTitle: */
-- (instancetype)initWithFrame:(CGRect)frame;
+- (nonnull instancetype)initWithTitle:(nullable NSString *)title message:(nullable NSString *)message;
 
 /** Header must be created with either headerWithTitle: */
-- (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
+- (nonnull instancetype)initWithFrame:(CGRect)frame;
+
+/** Header must be created with either headerWithTitle: */
+- (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;
 
 @property (nonatomic, nullable, strong) NSString *title;
 
