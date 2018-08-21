@@ -131,6 +131,14 @@ static inline CGFloat MDCSqrt(CGFloat value) {
 #endif
 }
 
+/**
+ Round the given value to ceiling with provided scale factor.
+ If @c scale is zero, then the rounded value will be zero.
+
+ @param value The value to round
+ @param scale The scale factor
+ @return The ceiling value calculated using the provided scale factor
+ */
 static inline CGFloat MDCCeilScaled(CGFloat value, CGFloat scale) {
   if (MDCCGFloatEqual(scale, 0)) {
     return 0.0f;
@@ -139,6 +147,14 @@ static inline CGFloat MDCCeilScaled(CGFloat value, CGFloat scale) {
   return MDCCeil(value * scale) / scale;
 }
 
+/**
+ Round the given value to floor with provided scale factor.
+ If @c scale is zero, then the rounded value will be zero.
+
+ @param value The value to round
+ @param scale The scale factor
+ @return The floor value calculated using the provided scale factor
+ */
 static inline CGFloat MDCFloorScaled(CGFloat value, CGFloat scale) {
   if (MDCCGFloatEqual(scale, 0)) {
     return 0.0f;

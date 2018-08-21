@@ -28,25 +28,33 @@
 - (void)testMDCFloorScaled {
   CGFloat inputNumber = 1.3f;
 
-  CGFloat scale1 = 2.0f;
-  CGFloat expectedOutputNumber1 = 1.0f;
-  XCTAssertEqual(MDCFloorScaled(inputNumber, scale1), expectedOutputNumber1);
+  CGFloat scale = 4.0f;
+  CGFloat expectedOutputNumber = 1.25f;
+  XCTAssertEqualWithAccuracy(MDCFloorScaled(inputNumber, scale), expectedOutputNumber, 0.001f);
+}
 
-  CGFloat scale2 = 4.0f;
-  CGFloat expectedOutputNumber2 = 1.25f;
-  XCTAssertEqual(MDCFloorScaled(inputNumber, scale2), expectedOutputNumber2);
+- (void)testMDCFloorScaledWhenScaleIsZero {
+  CGFloat inputNumber = 1.3f;
+
+  CGFloat scale = 0.0f;
+  CGFloat expectedOutputNumber = 0.0f;
+  XCTAssertEqualWithAccuracy(MDCFloorScaled(inputNumber, scale), expectedOutputNumber, 0.001f);
 }
 
 - (void)testMDCCeilScaled {
   CGFloat inputNumber = 1.3f;
 
-  CGFloat scale1 = 2.0f;
-  CGFloat expectedOutputNumber1 = 1.5f;
-  XCTAssertEqual(MDCCeilScaled(inputNumber, scale1), expectedOutputNumber1);
+  CGFloat scale = 4.0f;
+  CGFloat expectedOutputNumber = 1.5f;
+  XCTAssertEqualWithAccuracy(MDCCeilScaled(inputNumber, scale), expectedOutputNumber, 0.001f);
+}
 
-  CGFloat scale2 = 4.0f;
-  CGFloat expectedOutputNumber2 = 1.5f;
-  XCTAssertEqual(MDCCeilScaled(inputNumber, scale2), expectedOutputNumber2);
+- (void)testMDCCeilScaledWhenScaleIsZero {
+  CGFloat inputNumber = 1.3f;
+
+  CGFloat scale = 0.0f;
+  CGFloat expectedOutputNumber = 0.0f;
+  XCTAssertEqualWithAccuracy(MDCCeilScaled(inputNumber, scale), expectedOutputNumber, 0.001f);
 }
 
 #pragma mark - MDCRect
