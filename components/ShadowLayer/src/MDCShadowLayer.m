@@ -16,6 +16,8 @@
 
 #import "MDCShadowLayer.h"
 
+#import "MDCMath.h"
+
 static const CGFloat kShadowElevationDialog = 24.0;
 static const float kKeyShadowOpacity = 0.26f;
 static const float kAmbientShadowOpacity = 0.08f;
@@ -189,6 +191,17 @@ static const float kAmbientShadowOpacity = 0.08f;
   BOOL sizeChanged = !CGSizeEqualToSize(self.bounds.size, bounds.size);
   [super setBounds:bounds];
   if (sizeChanged) {
+    _shadowPathIsInvalid = YES;
+    [self setNeedsLayout];
+  }
+}
+
+- (void)setCornerRadius:(CGFloat)cornerRadius {
+  BOOL radiusChanged = !MDCCGFloatEqual(self.cornerRadius, cornerRadius);
+  [super setCornerRadius:cornerRadius];
+  // We MUST check if we are changing the value before we invalidate the shadowPath to
+  // avoid and endless loop
+  if (radiusChanged) {
     _shadowPathIsInvalid = YES;
     [self setNeedsLayout];
   }
