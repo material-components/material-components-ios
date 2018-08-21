@@ -110,6 +110,13 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
   [self setupProgressViews];
   [self setupLabels];
   [self setupConstraints];
+
+  self.navigationItem.rightBarButtonItem =
+      [[UIBarButtonItem alloc] initWithTitle:@"Animate"
+                                       style:UIBarButtonItemStylePlain
+                                      target:self
+                                      action:@selector(didPressAnimateButton:)];
+  self.navigationItem.rightBarButtonItem.accessibilityIdentifier = @"animate_button";
 }
 
 - (void)setupLabels {
@@ -203,13 +210,16 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
   [self.view addConstraints:horizontalConstraints];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-  [super viewDidAppear:animated];
+- (void)didPressAnimateButton:(UIButton *)sender {
+  sender.enabled = NO;
   [self animateStep1:_stockProgressView];
   [self animateStep1:_tintedProgressView];
   [self animateStep1:_fullyColoredProgressView];
-  [self animateBackwardProgressResetView];
-  [self animateBackwardProgressAnimateView];
+  [self animateBackwardProgressResetViewWithCountdown:4];
+  [self animateBackwardProgressAnimateViewWithCountdown:4 completion:^(BOOL ignored) {
+    sender.enabled = YES;
+  }];
+
 }
 
 - (void)animateStep1:(MDCProgressView *)progressView {
@@ -239,40 +249,43 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
 }
 
 - (void)animateStep4:(MDCProgressView *)progressView {
-  __weak MDCProgressView *weakProgressView = progressView;
   [progressView setHidden:YES
                  animated:YES
-               completion:^(BOOL finished) {
-                 [self performSelector:@selector(animateStep1:)
-                            withObject:weakProgressView
-                            afterDelay:MDCProgressViewAnimationDuration];
-               }];
+               completion:nil];
 }
 
-- (void)animateBackwardProgressResetView {
+- (void)animateBackwardProgressResetViewWithCountdown:(NSInteger)remainingCounts {
+  --remainingCounts;
   __weak ProgressViewExample *weakSelf = self;
 
   [_backwardProgressResetView setProgress:1 - _backwardProgressResetView.progress
                                  animated:YES
-                               completion:^(BOOL finished) {
-                                 [weakSelf
-                                     performSelector:@selector(animateBackwardProgressResetView)
-                                          withObject:nil
-                                          afterDelay:MDCProgressViewAnimationDuration];
-                               }];
+                               completion:nil];
+  if (remainingCounts > 0) {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
+                                 (int64_t)(MDCProgressViewAnimationDuration * NSEC_PER_SEC)),
+                   dispatch_get_main_queue(), ^{
+      [weakSelf animateBackwardProgressResetViewWithCountdown:remainingCounts];
+    });
+  }
 }
 
-- (void)animateBackwardProgressAnimateView {
+- (void)animateBackwardProgressAnimateViewWithCountdown:(NSInteger)remainingCounts
+                                             completion:(void (^)(BOOL))completion {
+  --remainingCounts;
   __weak ProgressViewExample *weakSelf = self;
 
-  [_backwardProgressAnimateView setProgress:1 - _backwardProgressResetView.progress
+  [_backwardProgressAnimateView setProgress:1 - _backwardProgressAnimateView.progress
                                    animated:YES
-                                 completion:^(BOOL finished) {
-                                   [weakSelf
-                                       performSelector:@selector(animateBackwardProgressAnimateView)
-                                            withObject:nil
-                                            afterDelay:MDCProgressViewAnimationDuration];
-                                 }];
+                                 completion:remainingCounts == 0 ? completion : nil];
+  if (remainingCounts) {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
+                                 (int64_t)(MDCProgressViewAnimationDuration * NSEC_PER_SEC)),
+                   dispatch_get_main_queue(), ^{
+      [weakSelf animateBackwardProgressAnimateViewWithCountdown:remainingCounts
+                                                     completion:completion];
+    });
+  }
 }
 
 #pragma mark - CatalogByConvention
