@@ -14,4 +14,4 @@
  limitations under the License.
  */
 
-#import "MDCBottomSheetShapeThemer.h"
+#import "MDCBottomSheetControllerShapeThemer.h"

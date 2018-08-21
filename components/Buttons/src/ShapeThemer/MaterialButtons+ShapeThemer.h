@@ -15,3 +15,4 @@
  */
 
 #import "MDCButtonShapeThemer.h"
+#import "MDCFloatingActionButtonBaselineShapeThemer.h"

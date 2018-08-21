@@ -15,6 +15,7 @@
  */
 
 #import "MaterialColorScheme.h"
+#import "MaterialShapeScheme.h"
 #import "MaterialTypographyScheme.h"
 
 #import <Foundation/Foundation.h>
@@ -31,6 +32,9 @@
  The color scheme to be applied to a button.
  */
 @property(nonnull, readonly, nonatomic) id<MDCColorScheming> colorScheme;
+
+@property(nonnull, readonly, nonatomic) id<MDCShapeScheming> shapeScheme;
+
 
 /**
  The typography scheme to be applied to a button.
@@ -60,6 +64,9 @@
  By default, this is initialized with the latest color scheme defaults.
  */
 @property(nonnull, readwrite, nonatomic) id<MDCColorScheming> colorScheme;
+
+@property(nonnull, readwrite, nonatomic) id<MDCShapeScheming> shapeScheme;
+
 
 /**
  A mutable representation of a typography scheme.

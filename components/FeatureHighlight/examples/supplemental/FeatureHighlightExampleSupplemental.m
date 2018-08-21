@@ -223,7 +223,8 @@ static NSString *const reuseIdentifier = @"Cell";
   [self.view addSubview:self.button];
 
   [MDCFloatingActionButtonThemer applyScheme:buttonScheme toButton:fab];
-
+  [MDCFloatingActionButtonBaselineShapeThemer
+      applyShapeBaselineToFloatingActionButton:fab];
 
   MDCButton *actionButton = [[MDCButton alloc] init];
   self.actionButton = actionButton;

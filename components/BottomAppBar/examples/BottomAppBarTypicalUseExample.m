@@ -75,6 +75,8 @@
   buttonScheme.typographyScheme = self.typographyScheme;
   [MDCFloatingActionButtonThemer applyScheme:buttonScheme
                                     toButton:self.bottomBarView.floatingButton];
+  [MDCFloatingActionButtonBaselineShapeThemer
+      applyShapeBaselineToFloatingActionButton:self.bottomBarView.floatingButton];
 }
 - (void)didTapFloatingButton:(id)sender {
   [self.bottomBarView setFloatingButtonHidden:YES animated:YES];

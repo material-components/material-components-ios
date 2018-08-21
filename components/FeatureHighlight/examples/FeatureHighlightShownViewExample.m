@@ -44,7 +44,8 @@
   fab.center = _button.center;
 
   [MDCFloatingActionButtonThemer applyScheme:buttonScheme toButton:fab];
-
+  [MDCFloatingActionButtonBaselineShapeThemer
+      applyShapeBaselineToFloatingActionButton:fab];
   MDCFeatureHighlightViewController *vc =
       [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:_button
                                                              andShowView:fab

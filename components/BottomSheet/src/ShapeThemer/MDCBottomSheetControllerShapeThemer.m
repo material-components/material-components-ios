@@ -14,9 +14,9 @@
  limitations under the License.
  */
 
-#import "MDCChipViewShapeThemer.h"
+#import "MDCBottomSheetControllerShapeThemer.h"
 
-@implementation MDCChipViewShapeThemer
+@implementation MDCBottomSheetControllerShapeThemer
 
 + (void)applyShapeScheme:(nonnull id<MDCShapeScheming>)shapeScheme
  toBottomSheetController:(nonnull MDCBottomSheetController *)bottomSheetController {
@@ -24,7 +24,7 @@
   MDCCornerTreatment *cornerTreatment =
       [shapeScheme.smallSurfaceShape.topLeftCorner cornerTreatmentValue];
   [rectangleShape setCorners:cornerTreatment];
-  bottomSheetController.shapeGenerator = rectangleShape;
+//  bottomSheetController.shapeGenerator = rectangleShape;
 }
 
 @end

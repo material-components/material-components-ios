@@ -151,6 +151,8 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
       [[UIImage imageNamed:@"Plus"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [self.floatingButton setImage:plusImage forState:UIControlStateNormal];
   [MDCFloatingActionButtonThemer applyScheme:buttonScheme toButton:self.floatingButton];
+  [MDCFloatingActionButtonBaselineShapeThemer
+      applyShapeBaselineToFloatingActionButton:self.floatingButton];
   self.floatingButton.accessibilityLabel = @"Create";
   [self.view addSubview:self.floatingButton];
 

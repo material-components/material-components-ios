@@ -17,6 +17,7 @@
 #import "MDCContainedButtonThemer.h"
 
 #import "MaterialButtons+ColorThemer.h"
+#import "MaterialButtons+ShapeThemer.h"
 #import "MaterialButtons+TypographyThemer.h"
 
 @implementation MDCContainedButtonThemer
@@ -25,6 +26,7 @@
            toButton:(nonnull MDCButton *)button {
   [MDCContainedButtonColorThemer applySemanticColorScheme:scheme.colorScheme toButton:button];
   [MDCButtonTypographyThemer applyTypographyScheme:scheme.typographyScheme toButton:button];
+  [MDCButtonShapeThemer applyShapeScheme:scheme.shapeScheme toButton:button];
   button.minimumSize = CGSizeMake(0, scheme.minimumHeight);
   button.layer.cornerRadius = scheme.cornerRadius;
   [button setElevation:(CGFloat)2 forState:UIControlStateNormal];

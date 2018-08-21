@@ -22,6 +22,7 @@
   self = [super init];
   if (self) {
     _colorScheme = [[MDCSemanticColorScheme alloc] init];
+    _shapeScheme = [[MDCShapeScheme alloc] init];
     _typographyScheme = [[MDCTypographyScheme alloc] init];
     _minimumHeight = 36;
     _cornerRadius = (CGFloat)4;

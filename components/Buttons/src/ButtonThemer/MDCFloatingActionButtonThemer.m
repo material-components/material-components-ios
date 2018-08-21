@@ -25,6 +25,7 @@
            toButton:(nonnull MDCFloatingButton *)button {
   [MDCFloatingButtonColorThemer applySemanticColorScheme:scheme.colorScheme toButton:button];
   [MDCButtonTypographyThemer applyTypographyScheme:scheme.typographyScheme toButton:button];
+  [MDCButtonShapeThemer applyShapeScheme:scheme.shapeScheme toButton:button];
   [button setElevation:(CGFloat)6 forState:UIControlStateNormal];
   [button setElevation:(CGFloat)12 forState:UIControlStateHighlighted];
   [button setElevation:(CGFloat)0 forState:UIControlStateDisabled];
