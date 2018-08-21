@@ -17,12 +17,14 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialColorScheme.h"
+#import "MaterialShapeScheme.h"
 #import "MaterialTypographyScheme.h"
 
 @interface BottomSheetPresenterViewController : UIViewController
 
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
+@property(nonatomic, strong) MDCShapeScheme *shapeScheme;
 
 - (void)presentBottomSheet;
 

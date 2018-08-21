@@ -20,6 +20,7 @@
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
 #import "MaterialBottomSheet.h"
+#import "MaterialBottomSheet+ShapeThemer.h"
 #import "supplemental/BottomSheetDummyCollectionViewController.h"
 #import "supplemental/BottomSheetSupplemental.h"
 
@@ -42,6 +43,8 @@
 
   MDCBottomSheetController *bottomSheet =
       [[MDCBottomSheetController alloc] initWithContentViewController:container];
+  [MDCBottomSheetControllerShapeThemer applyShapeScheme:self.shapeScheme
+                                toBottomSheetController:bottomSheet];
   bottomSheet.trackingScrollView = viewController.collectionView;
   [self presentViewController:bottomSheet animated:YES completion:nil];
 }

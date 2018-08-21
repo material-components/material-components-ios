@@ -20,6 +20,7 @@
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
 #import "MaterialBottomSheet.h"
+#import "MaterialBottomSheet+ShapeThemer.h"
 #import "MaterialShapes.h"
 #import "MaterialShapeLibrary.h"
 #import "supplemental/BottomSheetDummyStaticViewController.h"

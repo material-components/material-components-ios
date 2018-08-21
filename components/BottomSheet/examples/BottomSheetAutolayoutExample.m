@@ -17,6 +17,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialBottomSheet.h"
+#import "MaterialBottomSheet+ShapeThemer.h"
 #import "supplemental/BottomSheetDummyStaticViewController.h"
 #import "supplemental/BottomSheetSupplemental.h"
 
@@ -32,6 +33,8 @@
 
   MDCBottomSheetController *bottomSheet =
       [[MDCBottomSheetController alloc] initWithContentViewController:viewController];
+  [MDCBottomSheetControllerShapeThemer applyShapeScheme:self.shapeScheme
+                                toBottomSheetController:bottomSheet];
   [self presentViewController:bottomSheet animated:YES completion:nil];
 }
 

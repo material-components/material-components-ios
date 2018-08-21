@@ -22,6 +22,7 @@ import MaterialComponents.MaterialButtons_ButtonThemer
 class BottomSheetTableViewExample: UIViewController {
   var colorScheme = MDCSemanticColorScheme()
   var typographyScheme = MDCTypographyScheme()
+  var shapeScheme = MDCShapeScheme()
 
   init() {
     super.init(nibName: nil, bundle: nil)
@@ -65,6 +66,7 @@ class BottomSheetTableViewExample: UIViewController {
     let menu = BottomSheetTableViewMenu(style: .plain)
     let bottomSheet = MDCBottomSheetController(contentViewController: menu)
     bottomSheet.trackingScrollView = menu.tableView
+    MDCBottomSheetControllerShapeThemer.applyShapeScheme(shapeScheme, to: bottomSheet)
     present(bottomSheet, animated: true)
   }
 }

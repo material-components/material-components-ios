@@ -24,7 +24,8 @@
   MDCCornerTreatment *cornerTreatment =
       [shapeScheme.smallSurfaceShape.topLeftCorner cornerTreatmentValue];
   [rectangleShape setCorners:cornerTreatment];
-//  bottomSheetController.shapeGenerator = rectangleShape;
+  [bottomSheetController setShapeGenerator:rectangleShape forState:MDCSheetStateExtended];
+  [bottomSheetController setShapeGenerator:rectangleShape forState:MDCSheetStatePreferred];
 }
 
 @end
