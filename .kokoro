@@ -96,8 +96,6 @@ move_derived_data_to_tmp() {
 run_bazel() {
   echo "Running bazel builds..."
 
-  move
-
   move_derived_data_to_tmp
 
   fix_bazel_imports
