@@ -32,15 +32,15 @@ MDCActionSheetController is intended to mirror UIAlertControllerStyleActionSheet
 #### Similarities
 1. Both classes are presented from the bottom of the screen on an iPhone and have a list of actions.
 
-2. Both classes support both a title and message but both are optional properties.
+2. Both classes support optional title and message properties.
 
 #### Differences
 1. UIAlertControllerActionSheetStyle requires that you set the popoverPresentationController on larger devices, 
 MDCActionSheetController doesn't support popoverPresentationController but instead always comes up from the 
 bottom of the screen.
 
-2. UIAlertControllerStyleActionSheet is a style of UIAlertController and not its own class. If you would need an 
-AlertController please see `MDCDialog` class. 
+2. UIAlertControllerStyleActionSheet is a style of UIAlertController and not its own class. If you need a
+Material UIAlertController please see the `MDCDAlertController` class. 
 
 3. MDCActionSheetController does not support text fields.
 
