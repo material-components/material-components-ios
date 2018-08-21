@@ -46,7 +46,7 @@ Pod::Spec.new do |mdc|
 
     component.dependency "MaterialComponents/Typography"
     component.dependency "MaterialComponents/Ink"
-    component.dependency "MaterialComponents/BottomSheet"g
+    component.dependency "MaterialComponents/BottomSheet"
   end
 
   # ActivityIndicator
