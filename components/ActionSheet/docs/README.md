@@ -15,7 +15,7 @@ the screen and displays actions a user can take.
 
 ## Overview
 
-`MDCActionSheetController` is a material design implemenation of UIAlertControllerStyleActionSheet.
+`MDCActionSheetController` is a material design implementation of UIAlertControllerStyleActionSheet.
 
 ## Installation
 
