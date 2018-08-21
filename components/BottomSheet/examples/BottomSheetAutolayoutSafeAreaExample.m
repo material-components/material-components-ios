@@ -20,8 +20,8 @@
 #import "supplemental/BottomSheetSupplemental.h"
 #import "UIApplication+AppExtensions.h"
 
-#define SafeContentHeight 150
-#define SafeContentWidth 300
+static const CGFloat kSafeContentHeight = 150;
+static const CGFloat kSafeContentWidth = 300;
 
 @interface SafeAreaReportingViewController : UIViewController
 
@@ -100,27 +100,28 @@
                                   toItem:nil
                                attribute:NSLayoutAttributeNotAnAttribute
                               multiplier:0.0f
-                                constant:SafeContentHeight].active = YES;
+                                constant:kSafeContentHeight].active = YES;
   [NSLayoutConstraint constraintWithItem:self.withinSafeAreaView
                                attribute:NSLayoutAttributeHeight
                                relatedBy:NSLayoutRelationEqual
                                   toItem:nil
                                attribute:NSLayoutAttributeNotAnAttribute
                               multiplier:0.0f
-                                constant:SafeContentHeight].active = YES;
+                                constant:kSafeContentHeight].active = YES;
 
-  self.preferredContentSize = CGSizeMake(SafeContentWidth, SafeContentHeight);
+  self.preferredContentSize = CGSizeMake(kSafeContentWidth, kSafeContentHeight);
 }
 
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
-  CGPoint origin = self.withinSafeAreaView.frame.origin;
+  CGPoint origin = CGRectStandardize(self.withinSafeAreaView.frame).origin;
   UIWindow *keyWindow = [UIApplication mdc_safeSharedApplication].keyWindow;
   CGPoint safeAreaViewAbsoluteOrigin = [keyWindow convertPoint:origin
                                                       fromView:self.view];
   CGFloat safeAreaBottomAbsoluteY =
-      safeAreaViewAbsoluteOrigin.y + self.withinSafeAreaView.bounds.size.height;
-  CGFloat safeAreaBottomInset = keyWindow.bounds.size.height - safeAreaBottomAbsoluteY;
+      safeAreaViewAbsoluteOrigin.y + CGRectStandardize(self.withinSafeAreaView.bounds).size.height;
+  CGFloat safeAreaBottomInset =
+      CGRectStandardize(keyWindow.bounds).size.height - safeAreaBottomAbsoluteY;
   self.safeAreaLabel.text =
       [NSString stringWithFormat:@"Safe Area Bottom Inset: %0.0f", safeAreaBottomInset];
 }
