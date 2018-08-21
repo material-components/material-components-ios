@@ -156,8 +156,7 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
 
   NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
   paragraphStyle.hyphenationFactor = 1.f;
-  NSDictionary<NSAttributedStringKey, id> *attributes =
-  @{ NSParagraphStyleAttributeName : paragraphStyle };
+  NSDictionary<NSString *, id> *attributes = @{ NSParagraphStyleAttributeName : paragraphStyle };
   NSMutableAttributedString *attributedString =
   [[NSMutableAttributedString alloc] initWithString:_itemAction.title attributes:attributes];
   _textLabel.attributedText = attributedString;
