@@ -189,7 +189,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
   UIFont *resultFont = navBar.titleLabel.font;
   XCTAssertEqualObjects(resultFont.fontName, font.fontName);
-  XCTAssertEqualWithAccuracy(resultFont.pointSize, 20, 0.01);
+  XCTAssertEqualWithAccuracy(resultFont.pointSize, 24, 0.01);
 
   NSDictionary <NSString *, NSNumber *> *fontTraits =
       [[font fontDescriptor] objectForKey:UIFontDescriptorTraitsAttribute];

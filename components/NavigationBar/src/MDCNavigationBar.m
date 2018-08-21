@@ -25,7 +25,6 @@
 #import "MaterialTypography.h"
 
 
-static const NSUInteger kTitleFontSize = 20;
 static const CGFloat kNavigationBarDefaultHeight = 56;
 static const CGFloat kNavigationBarPadDefaultHeight = 64;
 static const CGFloat kNavigationBarMinHeight = 24;
@@ -176,7 +175,7 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 }
 
 - (void)setTitleFont:(UIFont *)titleFont {
-  _titleFont = [UIFont fontWithDescriptor:titleFont.fontDescriptor size:kTitleFontSize];
+  _titleFont = titleFont;
   if (!_titleFont) {
     _titleFont = [MDCTypography titleFont];
   }
