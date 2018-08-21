@@ -53,28 +53,26 @@
   [MDCActivityIndicatorColorThemer applySemanticColorScheme:self.colorScheme
                                         toActivityIndicator:self.activityIndicator1];
   self.activityIndicator1.delegate = self;
-  self.activityIndicator1.progress = 0.6f;
   self.activityIndicator1.indicatorMode = MDCActivityIndicatorModeDeterminate;
   [self.activityIndicator1 sizeToFit];
-  [self.activityIndicator1 startAnimating];
 
   // Themed indeterminate activity indicator
   self.activityIndicator2 = [[MDCActivityIndicator alloc] init];
   self.activityIndicator2.delegate = self;
+  self.activityIndicator2.indicatorMode = MDCActivityIndicatorModeDeterminate;
   [MDCActivityIndicatorColorThemer applySemanticColorScheme:self.colorScheme
                                         toActivityIndicator:self.activityIndicator2];
   [self.activityIndicator2 sizeToFit];
-  [self.activityIndicator2 startAnimating];
 
   // Indeterminate activity indicator with custom colors.
   self.activityIndicator3 = [[MDCActivityIndicator alloc] init];
   self.activityIndicator3.delegate = self;
+  self.activityIndicator3.indicatorMode = MDCActivityIndicatorModeDeterminate;
   self.activityIndicator3.cycleColors =  @[ [MDCPalette bluePalette].tint500,
                                             [MDCPalette redPalette].tint500,
                                             [MDCPalette greenPalette].tint500,
                                             [MDCPalette yellowPalette].tint500 ];
   [self.activityIndicator3 sizeToFit];
-  [self.activityIndicator3 startAnimating];
 
   [self setupExampleViews];
 }
