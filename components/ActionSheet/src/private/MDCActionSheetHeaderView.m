@@ -18,14 +18,14 @@
 
 #import "MaterialTypography.h"
 
-static const CGFloat kTitleLabelAlpha = 0.87f;
-static const CGFloat kMessageLabelAlpha = 0.6f;
-static const CGFloat kMessageOnlyPadding = 23.f;
-static const CGFloat kLeadingPadding = 16.f;
-static const CGFloat kStandardPadding = 16.f;
-static const CGFloat kTrailingPadding = 16.f;
-static const CGFloat kTitleOnlyPadding = 18.f;
-static const CGFloat kMiddlePadding = 8.f;
+static const CGFloat TitleLabelAlpha = 0.87f;
+static const CGFloat MessageLabelAlpha = 0.6f;
+static const CGFloat MessageOnlyPadding = 23.f;
+static const CGFloat LeadingPadding = 16.f;
+static const CGFloat StandardPadding = 16.f;
+static const CGFloat TrailingPadding = 16.f;
+static const CGFloat TitleOnlyPadding = 18.f;
+static const CGFloat MiddlePadding = 8.f;
 
 @interface MDCActionSheetHeaderView ()
 

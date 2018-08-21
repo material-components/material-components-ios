@@ -19,7 +19,7 @@
 #import "MDCActionSheetItemTableViewCell.h"
 #import "MDCActionSheetController.h"
 
-static NSString *const kReuseIdentifier = @"BaseCell";
+static NSString *const ReuseIdentifier = @"BaseCell";
 
 @interface MDCActionSheetDataSource ()
 @end
@@ -29,14 +29,14 @@ static NSString *const kReuseIdentifier = @"BaseCell";
 - (instancetype)init {
   self = [super init];
   if (self) {
-    self.actions = [[NSMutableArray alloc] init];
-    self.backgroundColor = [UIColor whiteColor];
+    _actions = [[NSMutableArray alloc] init];
+    _backgroundColor = [UIColor whiteColor];
   }
   return self;
 }
 
 - (void)addAction:(MDCActionSheetAction *)action {
-  [self.actions addObject:action];
+  [_actions addObject:action];
 }
 
 #pragma mark - Table view data source

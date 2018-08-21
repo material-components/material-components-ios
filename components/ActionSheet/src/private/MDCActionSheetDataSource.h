@@ -30,7 +30,7 @@
 /**
  The actions that the table will display
 */
-@property(nonatomic, readwrite, strong, nullable) NSMutableArray<MDCActionSheetAction *> *actions;
+@property(nonatomic, readwrite, strong, nonnull) NSMutableArray<MDCActionSheetAction *> *actions;
 
 @property (nonatomic, nonnull, strong) UIFont *actionsFont;
 

@@ -23,7 +23,7 @@
 #import "MaterialApplication.h"
 #import "MaterialTypography.h"
 
-static NSString *const kReuseIdentifer = @"BaseCell";
+static NSString *const ReuseIdentifer = @"BaseCell";
 
 @interface MDCActionSheetAction ()
 
@@ -35,7 +35,7 @@ static NSString *const kReuseIdentifer = @"BaseCell";
 
 + (instancetype)actionWithTitle:(NSString *)title
                           image:(UIImage *)image
-                          handler:(void (^__nullable)(MDCActionSheetAction *action))handler {
+                        handler:(void (^__nullable)(MDCActionSheetAction *action))handler {
     return [[MDCActionSheetAction alloc] initWithTitle:title
                                                  image:image
                                                handler:handler];
@@ -68,7 +68,7 @@ static NSString *const kReuseIdentifer = @"BaseCell";
 
 @implementation MDCActionSheetController {
   MDCActionSheetHeaderView *_header;
-  UITableViewController *_tableViewController;
+  UITableView *_tableView;
   MDCActionSheetDataSource *_dataSource;
   NSString *_actionSheetTitle;
   MDCBottomSheetTransitionController *_transitionController;
@@ -78,7 +78,7 @@ static NSString *const kReuseIdentifer = @"BaseCell";
     Because we are setting the preferredContentSize we can no longer get the frame to set the sheet
     and headers sizes after a transition. 
    */
-  BOOL needsPreferredContentSizeUpdate;
+  BOOL _needsPreferredContentSizeUpdate;
 }
 
 @synthesize mdc_adjustsFontForContentSizeCategory;
@@ -100,40 +100,35 @@ static NSString *const kReuseIdentifer = @"BaseCell";
   if (self) {
     _actionSheetTitle = [title copy];
     _message = [message copy];
-    [self commonMDCActionSheetControllerInit];
+    _needsPreferredContentSizeUpdate = true;
+    _transitionController = [[MDCBottomSheetTransitionController alloc] init];
+    _transitionController.dismissOnBackgroundTap = YES;
+    /**
+     "We must call super because we've made the setters on this class unavailable and overridden
+     their implementations to throw assertions."
+     */
+    super.transitioningDelegate = _transitionController;
+    super.modalPresentationStyle = UIModalPresentationCustom;
+    _dataSource = [[MDCActionSheetDataSource alloc] init];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+    _tableView.delegate = self;
+    _tableView.translatesAutoresizingMaskIntoConstraints = NO;
+    _tableView.estimatedRowHeight = 56.f;
+    _tableView.rowHeight = UITableViewAutomaticDimension;
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _tableView.scrollEnabled = NO;
+    [_tableView registerClass:[MDCActionSheetItemTableViewCell class]
+       forCellReuseIdentifier:kReuseIdentifer];
+    _tableView.dataSource = _dataSource;
+    self.backgroundColor = [UIColor whiteColor];
   }
 
   return self;
 }
 
-- (void)commonMDCActionSheetControllerInit {
-  needsPreferredContentSizeUpdate = false;
-  _transitionController = [[MDCBottomSheetTransitionController alloc] init];
-  _transitionController.dismissOnBackgroundTap = YES;
-  /**
-   We have overriden the self implementation so we don't want others to change the values so we
-  have to call super
-   */
-  super.transitioningDelegate = _transitionController;
-  super.modalPresentationStyle = UIModalPresentationCustom;
-  _dataSource = [[MDCActionSheetDataSource alloc] init];
-  _tableViewController = [[UITableViewController alloc] initWithStyle:UITableViewStylePlain];
-  _tableViewController.tableView.delegate = self;
-  _tableViewController.tableView.translatesAutoresizingMaskIntoConstraints = NO;
-  _tableViewController.tableView.estimatedRowHeight = 56.f;
-  _tableViewController.tableView.rowHeight = UITableViewAutomaticDimension;
-  _tableViewController.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-  _tableViewController.tableView.scrollEnabled = NO;
-  _tableViewController.tableView.dataSource = _dataSource;
-  [_tableViewController.tableView registerClass:[MDCActionSheetItemTableViewCell class]
-                         forCellReuseIdentifier:kReuseIdentifer];
-  self.backgroundColor = [UIColor whiteColor];
-}
-
 - (void)addAction:(MDCActionSheetAction *)action {
   [_dataSource addAction:action];
-  [_tableViewController.tableView reloadData];
-  [_tableViewController.tableView setNeedsLayout];
+  [self updateTable];
   [self setPreferredContentSizeUpdate];
 }
 
@@ -151,14 +146,14 @@ static NSString *const kReuseIdentifer = @"BaseCell";
   _header.message = _message;
   _header.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
 
-  [self.view addSubview:_tableViewController.tableView];
+  [self.view addSubview:_tableView];
   [self.view addSubview:_header];
 }
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
 
-  if (needsPreferredContentSizeUpdate == false) {
+  if (_needsPreferredContentSizeUpdate == true) {
     [self layoutViews];
   }
 }
@@ -166,21 +161,20 @@ static NSString *const kReuseIdentifer = @"BaseCell";
 - (void)layoutViews {
   CGFloat headerHeight = [_header sizeThatFits:self.view.bounds.size].height;
   CGFloat width = CGRectGetWidth(self.view.bounds);
-  CGRect tableFrame = _tableViewController.tableView.frame;
+  CGRect tableFrame = _tableView.frame;
   tableFrame.size.width = width;
-  _tableViewController.tableView.frame = tableFrame;
-  [_tableViewController.tableView reloadData];
-  [_tableViewController.tableView setNeedsLayout];
+  _tableView.frame = tableFrame;
+  [self updateTable];
 
   /// We need this call to `layoutIfNeeded` to get the correct contentSize for the table
-  [_tableViewController.tableView layoutIfNeeded];
-  CGFloat tableHeight = _tableViewController.tableView.contentSize.height;
+  [_tableView layoutIfNeeded];
+  CGFloat tableHeight = _tableView.contentSize.height;
   CGFloat height = headerHeight + tableHeight;
-  tableFrame = _tableViewController.tableView.frame;
+  tableFrame = _tableView.frame;
   tableFrame.origin.y = headerHeight;
-  _tableViewController.tableView.frame = tableFrame;
+  _tableView.frame = tableFrame;
   self.preferredContentSize = CGSizeMake(width, height);
-  needsPreferredContentSizeUpdate = true;
+  _needsPreferredContentSizeUpdate = false;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -228,6 +222,19 @@ static NSString *const kReuseIdentifer = @"BaseCell";
   self.mdc_bottomSheetPresentationController.dismissOnBackgroundTap = dismissOnBackgroundTap;
 }
 
+/* Disable setter. Always use internal transition controller */
+- (void)setTransitioningDelegate:
+(__unused id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
+  NSAssert(NO, @"MDCActionSheetController.transitioningDelegate cannot be changed.");
+  return;
+}
+
+/* Disable setter. Always use custom presentation style */
+- (void)setModalPresentationStyle:(__unused UIModalPresentationStyle)modalPresentationStyle {
+  NSAssert(NO, @"MDCActionSheetController.modalPresentationStyle cannot be changed.");
+  return;
+}
+
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:
     (id<UIViewControllerTransitionCoordinator>)coordinator {
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
@@ -239,20 +246,24 @@ static NSString *const kReuseIdentifer = @"BaseCell";
   headerFrame.size.width = size.width;
   _header.frame = headerFrame;
 
-  CGRect tableFrame = _tableViewController.tableView.frame;
+  CGRect tableFrame = _tableView.frame;
   tableFrame.size.width = size.width;
-  _tableViewController.tableView.frame = tableFrame;
-  [_tableViewController.tableView reloadData];
-  [_tableViewController.tableView setNeedsLayout];
+  _tableView.frame = tableFrame;
+  [self updateTable];
   /// We need this call to `layoutIfNeeded` to get the correct contentSize for the table.
-  [_tableViewController.tableView layoutIfNeeded];
-  CGFloat tableHeight = _tableViewController.tableView.contentSize.height;
+  [_tableView layoutIfNeeded];
+  CGFloat tableHeight = _tableView.contentSize.height;
   CGFloat height = CGRectGetHeight(headerFrame) + tableHeight;
   CGSize updatedSize = CGSizeMake(size.width, height);
   self.preferredContentSize = updatedSize;
 }
 
 #pragma mark - Table view delegate
+
+- (void)updateTable {
+  [_tableView reloadData];
+  [_tableView setNeedsLayout];
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   MDCActionSheetAction *action = self.actions[indexPath.row];
@@ -292,9 +303,8 @@ static NSString *const kReuseIdentifer = @"BaseCell";
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
   self.view.backgroundColor = backgroundColor;
-  _tableViewController.view.backgroundColor = backgroundColor;
-  _tableViewController.tableView.backgroundColor = backgroundColor;
-  [_tableViewController.view setNeedsLayout];
+  _tableView.backgroundColor = backgroundColor;
+  [_tableView setNeedsLayout];
   _header.backgroundColor = backgroundColor;
 }
 
@@ -339,8 +349,7 @@ static NSString *const kReuseIdentifer = @"BaseCell";
   }
   _actionsFont = finalActionsFont;
   _dataSource.actionsFont = _actionsFont;
-  [_tableViewController.tableView reloadData];
-  [_tableViewController.view setNeedsLayout];
+  [self updateTable];
 }
 
 - (void)updateFontsForDynamicType {
@@ -350,7 +359,7 @@ static NSString *const kReuseIdentifer = @"BaseCell";
 }
 
 - (void)setPreferredContentSizeUpdate {
-  needsPreferredContentSizeUpdate = false;
+  _needsPreferredContentSizeUpdate = true;
   [self.view setNeedsLayout];
 }
 

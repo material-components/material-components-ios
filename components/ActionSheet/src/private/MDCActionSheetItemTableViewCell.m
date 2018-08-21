@@ -18,10 +18,10 @@
 
 #import "MaterialTypography.h"
 
-static const CGFloat kImageAlpha = 0.54f;
-static const CGFloat kCellLabelAlpha = 0.87f;
-static const CGFloat kLeadingPadding = 16.f;
-static const CGFloat kActionItemTitleVerticalPadding = 18.f;
+static const CGFloat ImageAlpha = 0.54f;
+static const CGFloat CellLabelAlpha = 0.87f;
+static const CGFloat LeadingPadding = 16.f;
+static const CGFloat ActionItemTitleVerticalPadding = 18.f;
 
 @interface MDCActionSheetItemTableViewCell ()
 @end
