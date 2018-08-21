@@ -32,6 +32,22 @@
 
 @end
 
+@implementation BottomSheetAutolayoutSafeAreaExample (CatalogByConvention)
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Bottom Sheet", @"Autolayout Safe Area Content" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
++ (BOOL)catalogIsPresentable {
+  return NO;
+}
+
+@end
+
 @implementation BottomSheetShortCollectionExample (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
