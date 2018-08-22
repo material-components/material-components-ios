@@ -1,3 +1,178 @@
+# #develop#
+
+## Breaking changes
+
+## New deprecations
+
+## New features
+
+## API changes
+
+### AppBar
+
+#### MDCAppBarTextColorAccessibilityMutator
+
+*removed* class: `MDCAppBarTextColorAccessibilityMutator`
+
+*removed* method: `-mutate:` in `MDCAppBarTextColorAccessibilityMutator`
+
+### Dialogs
+
+#### MDCAlertController
+
+*new* property: `buttonInkColor` in `MDCAlertController`
+
+#### MDCAlertControllerView
+
+*new* property: `buttonInkColor` in `MDCAlertControllerView`
+
+*modified* class: `MDCAlertControllerView`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCAlertControllerView : UIView  @property(nonatomic, strong, nullable) UIFont *titleFont UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *titleColor UI_APPEARANCE_SELECTOR;  @property(nonatomic, strong, nullable) UIFont *messageFont UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *messageColor UI_APPEARANCE_SELECTOR;  @property(nonatomic, strong, nullable) UIFont *buttonFont UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *buttonColor UI_APPEARANCE_SELECTOR;  /*  Indicates whether the view's contents should automatically update their font when the device’s  UIContentSizeCategory changes.   This property is modeled after the adjustsFontForContentSizeCategory property in the  UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.   Default value is NO.  */ @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;  @end` |
+| To: | `@interface MDCAlertControllerView : UIView  @property(nonatomic, strong, nullable) UIFont *titleFont UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *titleColor UI_APPEARANCE_SELECTOR;  @property(nonatomic, strong, nullable) UIFont *messageFont UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *messageColor UI_APPEARANCE_SELECTOR;  @property(nonatomic, strong, nullable) UIFont *buttonFont UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *buttonColor UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *buttonInkColor UI_APPEARANCE_SELECTOR;  /*  Indicates whether the view's contents should automatically update their font when the device’s  UIContentSizeCategory changes.   This property is modeled after the adjustsFontForContentSizeCategory property in the  UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.   Default value is NO.  */ @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;  @end` |
+
+### FlexibleHeader
+
+#### MDCFlexibleHeaderView()
+
+*new* category: `MDCFlexibleHeaderView()`
+
+*removed* category: `MDCFlexibleHeaderView()`
+
+*modified* property: `contentView` in `MDCFlexibleHeaderView()`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(ext)MDCFlexibleHeaderView@MDCFlexibleHeaderView.h@13746` |
+| To: | `c:objc(ext)MDCFlexibleHeaderView@MDCFlexibleHeaderView.h@13990` |
+
+## Component changes
+
+### MaskedTransition
+
+#### Changes
+
+* [[List] Fix Swift imports (#4828)](https://github.com/material-components/material-components-ios/commit/b917bf24d60029d76bf29114a2c1526793dfe6b1) (Robert Moore)
+
+### FeatureHighlight
+
+#### Changes
+
+* [Fix crash when backgrounding and re-opening app. (#4796)](https://github.com/material-components/material-components-ios/commit/44bed97140da63cee922b70bcfd152ebfc984c13) (Andrew Overton)
+
+### AppBar
+
+#### Changes
+
+* [Make migration links be actual links (#4808)](https://github.com/material-components/material-components-ios/commit/4efe02d07a4d49a474acb3e4495fa61073550d57) (featherless)
+* [Mark MDCAppBarTextColorAccessibilityMutator as deprecated. (#4807)](https://github.com/material-components/material-components-ios/commit/8c394dc2728eb9d107fbed705932acb4fed8aa80) (featherless)
+
+### Buttons
+
+#### Changes
+
+* [fix the text overlapping safeArea issue on](https://github.com/material-components/material-components-ios/commit/2444107e30b81d921b650208373fa4c6c4239ae1) (Wenyu Zhang)
+
+### TextFields
+
+#### Changes
+
+* [Trigger layout pass to update borderView.borderLayer (#4815)](https://github.com/material-components/material-components-ios/commit/13bff72b262ffb521432a80665db3727fc4dcbe5) (Andrew Overton)
+
+### Chips
+
+#### Changes
+
+* [Example respects safe area (#4856)](https://github.com/material-components/material-components-ios/commit/6e6a6bf827908b7b78cb776c038b23d159d2996d) (Joe Aguilar)
+
+### Cards
+
+#### Changes
+
+* [Fix Swift imports (#4826)](https://github.com/material-components/material-components-ios/commit/ae8fcb4e473a2beb9a55d1c3f99442c718244792) (Robert Moore)
+* [Fix example IBOutlet (#4827)](https://github.com/material-components/material-components-ios/commit/bf099ab14fcf0d9222534cbf67f37ef7250c9a42) (Robert Moore)
+
+### BottomAppBar
+
+#### Changes
+
+* [Fix typo in the readme (#4869)](https://github.com/material-components/material-components-ios/commit/215011b3866b47724553cde55b5239d057dc5455) (Brad Mallow)
+
+### NavigationBar
+
+#### Changes
+
+* [Remove restriction for 20pt fonts. (#4851)](https://github.com/material-components/material-components-ios/commit/2c3f97a98f20645d780aa1b3bccd78646f224059) (featherless)
+
+### ShadowLayer
+
+#### Changes
+
+* [Revert "Setting the corner radius should recalculate the shadowPath (#4804)"](https://github.com/material-components/material-components-ios/commit/bd8a8153bc318365e2e76c42a7f6e16e76267ac0) (Ian Gordon)
+
+### List
+
+#### Changes
+
+* [[MaskedTransition] Fix Swift imports (#4828)](https://github.com/material-components/material-components-ios/commit/b917bf24d60029d76bf29114a2c1526793dfe6b1) (Robert Moore)
+
+### ActivityIndicator
+
+#### Changes
+
+* [Default demo to .determinate (#4855)](https://github.com/material-components/material-components-ios/commit/7c6e16fe2569e9090bdfa4faa46e7d28df64ffd6) (Robert Moore)
+* [Fix example conditional (#4843)](https://github.com/material-components/material-components-ios/commit/a3c3e78ebba6bf7613240667a9dc6314d8dae760) (Robert Moore)
+
+### BottomSheet
+
+#### Changes
+
+* [Add Safe Area Handling Example (#4870)](https://github.com/material-components/material-components-ios/commit/1fea42b984a110ce2ea56d2becde8f87c726443b) (danblakemore)
+
+### Dialogs
+
+#### Changes
+
+* [Adding 'buttonInkColor'  (#4847)](https://github.com/material-components/material-components-ios/commit/cce878a837097dc70526372e20b16ee2b1b13736) (Robert Moore)
+
+### BottomNavigation
+
+#### Changes
+
+* [ Button for badge increment. (#4857)](https://github.com/material-components/material-components-ios/commit/7307a8c5c05e5f2a4e196267e34ccb9d65f22b54) (Robert Moore)
+
+### AnimationTiming
+
+#### Changes
+
+* [Add button to start animation. (#4852)](https://github.com/material-components/material-components-ios/commit/f9515494f141c9d1be0be40a3b92c67b84004d64) (Robert Moore)
+
+### HeaderStackView
+
+#### Changes
+
+* [Remove the header stack view examples. (#4811)](https://github.com/material-components/material-components-ios/commit/7a935a97221c3c1dadf345bb6d25d29abf5ffdd7) (featherless)
+
+### FlexibleHeader
+
+#### Changes
+
+* [Add WKWebView considerations docs. (#4801)](https://github.com/material-components/material-components-ios/commit/70229421da62cc53a4cf7444e51d6c1f9f1a9d7e) (featherless)
+* [Add a deprecation schedule for minMaxHeightIncludesSafeArea. (#4810)](https://github.com/material-components/material-components-ios/commit/caad377fc45fc5cf7e275bfa48014d38d2844b72) (featherless)
+* [Fix bug where orientation changes would result in incorrect contentOffset. (#4860)](https://github.com/material-components/material-components-ios/commit/0fd07657752b600aa6512cfe0a0c5233802e5a19) (featherless)
+* [Mark minMaxHeightIncludesSafeArea as to be deprecated. (#4809)](https://github.com/material-components/material-components-ios/commit/7cb8525e0ce77c4c511db034bf7494aac98f4a54) (featherless)
+
+### ProgressView
+
+#### Changes
+
+* [Add 'animate' button to example. (#4863)](https://github.com/material-components/material-components-ios/commit/43b4f6dcd2d1c4178b0694c09e0d8ad677edc4b1) (Robert Moore)
+* [Use schemes in example. (#4859)](https://github.com/material-components/material-components-ios/commit/5a10eeef514025023189a0e56b1f4b38e048120e) (Robert Moore)
+
+---
+
 # 60.1.0
 
 ## Component changes
