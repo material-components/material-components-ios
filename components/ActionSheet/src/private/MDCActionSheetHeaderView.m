@@ -16,8 +16,8 @@
 
 #import "MDCActionSheetHeaderView.h"
 
+#import "MaterialMath.h"
 #import "MaterialTypography.h"
-#import "MDCMath.h"
 
 static const CGFloat TitleLabelAlpha = 0.87f;
 static const CGFloat MessageLabelAlpha = 0.6f;
