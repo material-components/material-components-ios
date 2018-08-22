@@ -247,16 +247,20 @@ static NSString *const ReuseIdentifier = @"BaseCell";
     (id<UIViewControllerTransitionCoordinator>)coordinator {
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 
-  CGRect frame = self.view.bounds;
-  frame.size = size;
-  self.view.bounds = frame;
-  CGRect headerFrame = _header.frame;
-  headerFrame.size.width = size.width;
-  _header.frame = headerFrame;
-  CGFloat height = CGRectGetHeight(headerFrame) + _tableView.contentSize.height;
-  [self layoutTableWithHeader:CGRectGetHeight(headerFrame)];
-  CGSize updatedSize = CGSizeMake(size.width, height);
-  self.preferredContentSize = updatedSize;
+  [coordinator animateAlongsideTransition:
+      ^(__unused id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
+        CGRect frame = self.view.bounds;
+        frame.size = size;
+        frame.origin = CGPointZero;
+        self.view.frame = frame;
+        CGRect headerFrame = self->_header.frame;
+        headerFrame.size.width = size.width;
+        self->_header.frame = headerFrame;
+        CGFloat height = CGRectGetHeight(headerFrame) + self->_tableView.contentSize.height;
+        [self layoutTableWithHeader:CGRectGetHeight(headerFrame)];
+        CGSize updatedSize = CGSizeMake(size.width, height);
+        self.preferredContentSize = updatedSize;
+      }                        completion:nil];
 }
 
 #pragma mark - Table view
@@ -314,7 +318,6 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 }
 
 - (void)setTitleFont:(UIFont *)titleFont {
-  _titleFont = titleFont;
   _header.titleFont = titleFont;
 }
 
@@ -323,7 +326,6 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 }
 
 - (void)setMessageFont:(UIFont *)messageFont {
-  _messageFont = messageFont;
   _header.messageFont = messageFont;
 }
 

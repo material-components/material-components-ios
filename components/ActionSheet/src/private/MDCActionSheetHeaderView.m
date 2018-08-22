@@ -148,7 +148,7 @@ static const CGFloat MiddlePadding = 8.f;
 }
 
 - (void)setTitleFont:(UIFont *)titleFont {
-  _titleFont = titleFont;
+  _titleLabel.font = titleFont;
   [self updateTitleFont];
 }
 
@@ -157,7 +157,7 @@ static const CGFloat MiddlePadding = 8.f;
 }
 
 - (void)setMessageFont:(UIFont *)messageFont {
-  _messageFont = messageFont;
+  _messageLabel.font = messageFont;
   [self updateMessageFont];
 }
 
@@ -185,7 +185,7 @@ static const CGFloat MiddlePadding = 8.f;
 }
 
 - (void)updateTitleFont {
-  UIFont *titleFont = _titleFont ?: [[self class] titleFontDefault];
+  UIFont *titleFont = self.titleFont ?: [[self class] titleFontDefault];
   if (self.mdc_adjustsFontForContentSizeCategory) {
     _titleLabel.font =
         [titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
@@ -197,7 +197,7 @@ static const CGFloat MiddlePadding = 8.f;
 }
 
 - (void)updateMessageFont {
-  UIFont *messageFont = _messageFont ?: [[self class] messageFontDefault];
+  UIFont *messageFont = self.messageFont ?: [[self class] messageFontDefault];
   if (self.mdc_adjustsFontForContentSizeCategory) {
     _messageLabel.font =
         [messageFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleBody1
@@ -231,7 +231,6 @@ static const CGFloat MiddlePadding = 8.f;
   CGSize titleSize = [_titleLabel sizeThatFits:boundsSize];
   CGSize messageSize = [_messageLabel sizeThatFits:boundsSize];
 
-  CGFloat contentWidth = MAX(titleSize.width, messageSize.width) + LeadingPadding + TrailingPadding;
   CGFloat contentHeight;
   BOOL messageCheck = (self.message == nil) || ([self.message  isEqualToString:@""]);
   BOOL titleCheck = (self.title == nil) || ([self.title  isEqualToString:@""]);
