@@ -154,13 +154,7 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-  paragraphStyle.hyphenationFactor = 1.f;
-  NSDictionary<NSString *, id> *attributes = @{ NSParagraphStyleAttributeName : paragraphStyle };
-  NSMutableAttributedString *attributedString =
-  [[NSMutableAttributedString alloc] initWithString:_itemAction.title attributes:attributes];
-  _textLabel.attributedText = attributedString;
-
+  _textLabel.text = _itemAction.title;
   CGFloat leadingConstant;
   if (_itemAction.image) {
     leadingConstant = 16.f;
