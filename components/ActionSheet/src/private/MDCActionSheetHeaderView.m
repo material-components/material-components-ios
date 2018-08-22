@@ -135,10 +135,10 @@ static const CGFloat MiddlePadding = 8.f;
   _messageLabel.text = message;
   // If message is empty or nil then the title label's alpha value should be lighter, if there is both
   // then the title label's alpha should be darker.
-  if (self.message == nil || [self.message isEqualToString:@""]) {
-    _titleLabel.alpha = MessageLabelAlpha;
-  } else {
+  if (self.message) && (![self.message isEqualToString:@""]) {
     _titleLabel.alpha = TitleLabelAlpha;
+  } else {
+    _titleLabel.alpha = MessageLabelAlpha;
   }
   [self setNeedsLayout];
 }
