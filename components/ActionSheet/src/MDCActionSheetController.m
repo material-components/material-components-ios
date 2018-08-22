@@ -97,7 +97,7 @@ static NSString *const ReuseIdentifier = @"BaseCell";
   self = [super initWithNibName:nil bundle:nil];
   if (self) {
     _actions = [[NSMutableArray alloc] init];
-    _invalidPreferredContentSize = true;
+    _invalidPreferredContentSize = YES;
     _transitionController = [[MDCBottomSheetTransitionController alloc] init];
     _transitionController.dismissOnBackgroundTap = YES;
     /**
@@ -154,13 +154,21 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
 
-  if (_invalidPreferredContentSize == true) {
+  if (_invalidPreferredContentSize == YES) {
     [self layoutViews];
   }
 }
 
 - (void)layoutViews {
   CGFloat headerHeight = [_header sizeThatFits:self.view.bounds.size].height;
+  CGFloat width = CGRectGetWidth(self.view.bounds);
+  CGFloat height = headerHeight + _tableView.contentSize.height;
+  [self layoutTableWithHeader:headerHeight];
+  self.preferredContentSize = CGSizeMake(width, height);
+  _invalidPreferredContentSize = NO;
+}
+
+- (void)layoutTableWithHeader:(CGFloat)headerHeight {
   CGFloat width = CGRectGetWidth(self.view.bounds);
   CGRect tableFrame = _tableView.frame;
   tableFrame.size.width = width;
@@ -170,14 +178,11 @@ static NSString *const ReuseIdentifier = @"BaseCell";
   /// We need this call to `layoutIfNeeded` to get the correct contentSize for the table
   [_tableView layoutIfNeeded];
   CGFloat tableHeight = _tableView.contentSize.height;
-  CGFloat height = headerHeight + tableHeight;
   tableFrame = _tableView.frame;
   tableFrame.origin.y = headerHeight;
   tableFrame.size.height = tableHeight;
   _tableView.frame = tableFrame;
   [_tableView setNeedsLayout];
-  self.preferredContentSize = CGSizeMake(width, height);
-  _invalidPreferredContentSize = false;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -242,23 +247,14 @@ static NSString *const ReuseIdentifier = @"BaseCell";
     (id<UIViewControllerTransitionCoordinator>)coordinator {
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 
-  CGRect frame = self.view.frame;
+  CGRect frame = self.view.bounds;
   frame.size = size;
-  self.view.frame = frame;
+  self.view.bounds = frame;
   CGRect headerFrame = _header.frame;
   headerFrame.size.width = size.width;
   _header.frame = headerFrame;
-
-  CGRect tableFrame = _tableView.frame;
-  tableFrame.size.width = size.width;
-  _tableView.frame = tableFrame;
-  [self updateTable];
-  /// We need this call to `layoutIfNeeded` to get the correct contentSize for the table.
-  [_tableView layoutIfNeeded];
-  CGFloat tableHeight = _tableView.contentSize.height;
-  tableFrame.size.height = tableHeight;
-  _tableView.frame = tableFrame;
-  CGFloat height = CGRectGetHeight(headerFrame) + tableHeight;
+  CGFloat height = CGRectGetHeight(headerFrame) + _tableView.contentSize.height;
+  [self layoutTableWithHeader:CGRectGetHeight(headerFrame)];
   CGSize updatedSize = CGSizeMake(size.width, height);
   self.preferredContentSize = updatedSize;
 }
@@ -322,9 +318,17 @@ static NSString *const ReuseIdentifier = @"BaseCell";
   _header.titleFont = titleFont;
 }
 
+- (UIFont *)titleFont {
+  return _header.titleFont;
+}
+
 - (void)setMessageFont:(UIFont *)messageFont {
   _messageFont = messageFont;
   _header.messageFont = messageFont;
+}
+
+- (UIFont *)messageFont {
+  return _header.messageFont;
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
@@ -381,7 +385,7 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 }
 
 - (void)setInvalidPreferredContentSize {
-  _invalidPreferredContentSize = true;
+  _invalidPreferredContentSize = YES;
   [self.view setNeedsLayout];
 }
 

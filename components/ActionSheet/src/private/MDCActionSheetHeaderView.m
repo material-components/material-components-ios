@@ -150,9 +150,17 @@ static const CGFloat MiddlePadding = 8.f;
   [self updateTitleFont];
 }
 
+- (UIFont *)titleFont {
+  return _titleLabel.font;
+}
+
 - (void)setMessageFont:(UIFont *)messageFont {
   _messageFont = messageFont;
   [self updateMessageFont];
+}
+
+- (UIFont *)messageFont {
+  return _messageLabel.font;
 }
 
 + (UIFont *)titleFontDefault {

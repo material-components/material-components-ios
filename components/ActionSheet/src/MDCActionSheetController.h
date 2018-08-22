@@ -144,7 +144,7 @@ MDC_SUBCLASSING_RESTRICTED
 /**
    The font applied to the action items of the action sheet controller.
  */
-@property(nonatomic, nonnull, strong) UIFont *actionFont;
+@property(nonatomic, nullable, strong) UIFont *actionFont;
 
 @property(nonatomic, nonnull, strong) UIColor *backgroundColor;
 
