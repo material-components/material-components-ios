@@ -232,17 +232,17 @@ static const CGFloat MiddlePadding = 8.f;
   CGSize messageSize = [_messageLabel sizeThatFits:boundsSize];
 
   CGFloat contentHeight;
-  BOOL messageCheck = (self.message == nil) || ([self.message  isEqualToString:@""]);
-  BOOL titleCheck = (self.title == nil) || ([self.title  isEqualToString:@""]);
-  if (titleCheck && messageCheck) {
-    contentHeight = 0;
-  } else if (titleCheck) {
+  BOOL messageExist = (self.message == nil) || ([self.message  isEqualToString:@""]);
+  BOOL titleExist = (self.title == nil) || ([self.title  isEqualToString:@""]);
+  if (titleExist && messageExist) {
+    contentHeight = titleSize.height + messageSize.height +
+        (TopStandardPadding * 2) + MiddlePadding;
+  } else if (messageExist) {
     contentHeight = messageSize.height + (MessageOnlyPadding * 2);
-  } else if (messageCheck) {
+  } else if (titleExist) {
     contentHeight = titleSize.height + (TitleOnlyPadding * 2);
   } else {
-    contentHeight = titleSize.height + messageSize.height +
-    (TopStandardPadding * 2) + MiddlePadding;
+    contentHeight = 0;
   }
   CGSize contentSize;
   contentSize.width = MDCCeil(boundingWidth);
