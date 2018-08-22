@@ -16,14 +16,6 @@
 
 #import <UIKit/UIKit.h>
 
-#ifndef MDC_SUBCLASSING_RESTRICTED
-#if defined(__has_attribute) && __has_attribute(objc_subclassing_restricted)
-#define MDC_SUBCLASSING_RESTRICTED __attribute__((objc_subclassing_restricted))
-#else
-#define MDC_SUBCLASSING_RESTRICTED
-#endif
-#endif  // #ifndef MDC_SUBCLASSING_RESTRICTED
-
 @class MDCAppBar;
 @class MDCAppBarViewController;
 @class MDCAppBarNavigationController;
@@ -90,7 +82,7 @@
  delegate yet. In this case, use the -appBarForViewController: API to retrieve the injected App Bar
  for your root view controller and execute your delegate logic on the returned result, if any.
  */
-MDC_SUBCLASSING_RESTRICTED
+__attribute__((objc_subclassing_restricted))
 @interface MDCAppBarNavigationController : UINavigationController
 
 #pragma mark - Reacting to state changes
