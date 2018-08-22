@@ -176,7 +176,9 @@ static NSString *const ReuseIdentifier = @"BaseCell";
   CGFloat height = headerHeight + tableHeight;
   tableFrame = _tableView.frame;
   tableFrame.origin.y = headerHeight;
+  tableFrame.size.height = tableHeight;
   _tableView.frame = tableFrame;
+  [_tableView setNeedsLayout];
   self.preferredContentSize = CGSizeMake(width, height);
   _needsPreferredContentSizeUpdate = false;
 }
@@ -257,6 +259,8 @@ static NSString *const ReuseIdentifier = @"BaseCell";
   /// We need this call to `layoutIfNeeded` to get the correct contentSize for the table.
   [_tableView layoutIfNeeded];
   CGFloat tableHeight = _tableView.contentSize.height;
+  tableFrame.size.height = tableHeight;
+  _tableView.frame = tableFrame;
   CGFloat height = CGRectGetHeight(headerFrame) + tableHeight;
   CGSize updatedSize = CGSizeMake(size.width, height);
   self.preferredContentSize = updatedSize;
@@ -292,6 +296,7 @@ static NSString *const ReuseIdentifier = @"BaseCell";
   MDCActionSheetItemTableViewCell *cell =
       [tableView dequeueReusableCellWithIdentifier:ReuseIdentifier forIndexPath:indexPath];
   cell.action = _actions[indexPath.row];
+  cell.mdc_adjustsFontForContentSizeCategory = mdc_adjustsFontForContentSizeCategory;
   cell.backgroundColor = self.backgroundColor;
   cell.actionFont = self.actionFont;
   return cell;
@@ -373,7 +378,6 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 }
 
 - (void)updateFontsForDynamicType {
-  //[_header updateFonts];
   [self updateTableFonts];
   [self setPreferredContentSizeUpdate];
 }
