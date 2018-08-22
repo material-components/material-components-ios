@@ -135,7 +135,7 @@ while [ $# -gt 0 ]; do
       echo "By default the codelabs are tested against the remote branch tracking your current branch."
       echo "Your current branch is: $DEFAULT_BRANCH"
       echo
-      echo "By default the Swift and Objective-C Codelab 104 and Codelab 111 targets will be built."
+      echo "By default the Swift and Objective-C Google I/O 2018 Codelab 104 and Codelab 111 targets will be built."
       echo "You can build all codelabs by specifying --all."
       echo
       echo "Options:"
