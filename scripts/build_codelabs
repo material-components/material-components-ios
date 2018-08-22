@@ -40,6 +40,7 @@ function is_xcpretty_available() {
 function check_arguments() {
   if [ -z $1 ]; then
     echo "Argument must be provided to flag."
+    echo "$(basename $0) -h for help"
     exit 1
   fi
 }
@@ -50,7 +51,8 @@ function check_arguments() {
 function check_reference() {
   reference=$(git ls-remote https://github.com/material-components/material-components-ios.git $1 | wc -l)
   if [ $reference -eq 0 ]; then
-    echo "Invalid reference name."
+    echo "Unable to find $1 on GitHub."
+    echo "$(basename $0) -h for help"
     exit 1
   fi
 }
@@ -61,6 +63,7 @@ function check_reference() {
 function check_commit() {
   if [ ! $(git cat-file commit $1) ]; then
     echo "Invalid commit SHA."
+    echo "$(basename $0) -h for help"
     exit 1
   fi
 }
@@ -88,6 +91,7 @@ while [ $# -gt 0 ]; do
       check_reference $1
       if [ $has_source -eq 1 ]; then
         echo "Only one of --remote-branch/--commit/--tag allowed."
+        echo "$(basename $0) -h for help"
         exit -1
       fi
       export TEST_BRANCH=$1
@@ -100,6 +104,7 @@ while [ $# -gt 0 ]; do
       check_commit $1
       if [ $has_source -eq 1 ];then
         echo "Only one of --remote-branch/--commit/--tag allowed."
+        echo "$(basename $0) -h for help"
         exit -1
       fi
       export TEST_COMMIT=$1
@@ -112,6 +117,7 @@ while [ $# -gt 0 ]; do
       check_reference $1
       if [ $has_source -eq 1 ];then
         echo "Only one of --remote-branch/--commit/--tag allowed."
+        echo "$(basename $0) -h for help"
         exit -1
       fi
       export TEST_TAG=$1
@@ -126,10 +132,11 @@ while [ $# -gt 0 ]; do
       echo
       echo "Builds MDC iOS Codelabs."
       echo
-      echo "The default branch of MDC iOS that is used for testing is your current branch."
+      echo "By default the codelabs are tested against the remote branch tracking your current branch."
       echo "Your current branch is: $DEFAULT_BRANCH"
       echo
-      echo "The default codelabs built are 104 Complete and 111 Complete. You can build all with -a."
+      echo "By default the Swift and Objective-C Codelab 104 and Codelab 111 targets will be built."
+      echo "You can build all codelabs by specifying --all."
       echo
       echo "Options:"
       echo "-v,  --verbose              Verbose logging."
@@ -137,6 +144,7 @@ while [ $# -gt 0 ]; do
       echo "-c,  --commit               Commit SHA of MDC-iOS with which to test codelabs."
       echo "-t,  --tag                  Tag of MDC-iOS with which to test codelabs."
       echo "-a,  --all                  Build all the codelabs."
+      echo "-h,  --help                 Print this usage information."
       echo
       echo "Note: Only one of --remote-branch/--commit/--tag is allowed."
       echo
