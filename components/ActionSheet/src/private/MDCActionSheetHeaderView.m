@@ -65,11 +65,6 @@ static const CGFloat MiddlePadding = 8.f;
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  if (self.message == nil || [self.message  isEqualToString:@""]) {
-    _titleLabel.alpha = MessageLabelAlpha;
-  } else {
-    _titleLabel.alpha = TitleLabelAlpha;
-  }
   [self sizeOfContentsWithSize:self.bounds.size shouldLayout:YES];
 }
 
@@ -138,6 +133,13 @@ static const CGFloat MiddlePadding = 8.f;
 
 - (void)setMessage:(NSString *)message {
   _messageLabel.text = message;
+  // If message is empty or nil then the title label's alpha value should be lighter, if there is both
+  // then the title label's alpha should be darker.
+  if (self.message == nil || [self.message  isEqualToString:@""]) {
+    _titleLabel.alpha = MessageLabelAlpha;
+  } else {
+    _titleLabel.alpha = TitleLabelAlpha;
+  }
   [self setNeedsLayout];
 }
 
@@ -229,9 +231,7 @@ static const CGFloat MiddlePadding = 8.f;
   CGSize titleSize = [_titleLabel sizeThatFits:boundsSize];
   CGSize messageSize = [_messageLabel sizeThatFits:boundsSize];
 
-  CGFloat contentWidth = MAX(titleSize.width, messageSize.width);
-  contentWidth = contentWidth + LeadingPadding + TrailingPadding;
-
+  CGFloat contentWidth = MAX(titleSize.width, messageSize.width) + LeadingPadding + TrailingPadding;
   CGFloat contentHeight;
   BOOL messageCheck = (self.message == nil) || ([self.message  isEqualToString:@""]);
   BOOL titleCheck = (self.title == nil) || ([self.title  isEqualToString:@""]);
