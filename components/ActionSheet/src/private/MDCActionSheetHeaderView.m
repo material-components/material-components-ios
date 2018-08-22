@@ -232,8 +232,8 @@ static const CGFloat MiddlePadding = 8.f;
   CGSize messageSize = [_messageLabel sizeThatFits:boundsSize];
 
   CGFloat contentHeight;
-  BOOL messageExist = (self.message == nil) || ([self.message  isEqualToString:@""]);
-  BOOL titleExist = (self.title == nil) || ([self.title  isEqualToString:@""]);
+  BOOL messageExist = (self.message) && (![self.message  isEqualToString:@""]);
+  BOOL titleExist = (self.title) && (![self.title  isEqualToString:@""]);
   if (titleExist && messageExist) {
     contentHeight = titleSize.height + messageSize.height +
         (TopStandardPadding * 2) + MiddlePadding;
