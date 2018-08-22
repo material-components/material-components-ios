@@ -17,6 +17,9 @@
 
 static CGFloat const kArbitraryCellHeight = 75.f;
 static NSString *const kSelfSizingStereoCellIdentifier = @"kSelfSizingStereoCellIdentifier";
+static NSString *const kSelfSizingStereoCellExampleComponent = @"List";
+static NSString *const kSelfSizingStereoCellExampleDescription =
+    @"Self Sizing Stereo Cell Typical Use";
 
 @interface MDCSelfSizingStereoCellExample () <UICollectionViewDelegate,
                                       UICollectionViewDataSource>
@@ -48,7 +51,7 @@ static NSString *const kSelfSizingStereoCellIdentifier = @"kSelfSizingStereoCell
   for (NSInteger i = 0; i < self.numberOfCells; i++) {
     [randomStrings addObject:[self generateRandomString]];
   }
-  self.randomStrings = [randomStrings mutableCopy];
+  self.randomStrings = [randomStrings copy];
 }
 
 - (void)createCollectionView {
@@ -137,7 +140,7 @@ static NSString *const kSelfSizingStereoCellIdentifier = @"kSelfSizingStereoCell
 #pragma mark - CatalogByConvention
 
 + (NSArray *)catalogBreadcrumbs {
-  return @[ @"Lists", @"List Item Example 1" ];
+  return @[ kSelfSizingStereoCellExampleComponent, kSelfSizingStereoCellExampleDescription ];
 }
 
 + (BOOL)catalogIsPrimaryDemo {
@@ -145,7 +148,7 @@ static NSString *const kSelfSizingStereoCellIdentifier = @"kSelfSizingStereoCell
 }
 
 + (NSString *)catalogDescription {
-  return @"List Item Example 1";
+  return kSelfSizingStereoCellExampleDescription;
 }
 
 + (BOOL)catalogIsPresentable {

@@ -14,6 +14,19 @@ limitations under the License.
 #import <UIKit/UIKit.h>
 #import "MDCBaseCell.h"
 
+/**
+ MDCSelfSizingStereoCell is intended to be an easy to use readymade implementation of a basic
+ "Stereo" cell. A stereo cell can be thought of as a roughly symmetrical cell with image views on
+ either side--like the speakers in an old fashioned boombox stereo.
+
+ The client is expected to configure the exposed subviews in any way they like from within
+ `-collectionView:cellForItemAtIndexPath:`. At the end of that method, the client should set the
+ cellWidth property so the cell has the information it needs to calculate the frames of its subviews
+ and its height.
+
+ The client is expected NOT to manually set the frames of the view themselves or manipulate the
+ view hierarchy in any way.
+ */
 @interface MDCSelfSizingStereoCell : MDCBaseCell
 
 /**

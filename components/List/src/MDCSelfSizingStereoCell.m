@@ -45,7 +45,7 @@ static const CGFloat kDetailColorOpacity = 0.6f;
 @property (nonatomic, assign) CGRect trailingImageViewFrame;
 
 @property (nonatomic, assign) CGFloat calculatedHeight;
-@property (nonatomic, assign) BOOL cellIsReadyToBeDisplayed;
+@property (nonatomic, assign) BOOL hasDeterminedLayout;
 
 @end
 
@@ -113,6 +113,9 @@ static const CGFloat kDetailColorOpacity = 0.6f;
 
 -(void)layoutSubviews {
   [super layoutSubviews];
+  if (!self.hasDeterminedLayout) {
+    [self determineLayout];
+  }
   self.textContainer.frame = self.textContainerFrame;
   self.titleLabel.frame = self.titleLabelFrame;
   self.detailLabel.frame = self.detailLabelFrame;
@@ -126,6 +129,11 @@ static const CGFloat kDetailColorOpacity = 0.6f;
     self.textContainer.frame =
     MDFRectFlippedHorizontally(self.textContainer.frame, self.cellWidth);
   }
+}
+
+-(void)setNeedsLayout {
+  self.hasDeterminedLayout = NO;
+  [super setNeedsLayout];
 }
 
 #pragma mark UICollectionViewCell Overrides
@@ -144,17 +152,27 @@ static const CGFloat kDetailColorOpacity = 0.6f;
   self.trailingImageViewFrame = CGRectZero;
 }
 
+- (void)determineLayout {
+  [self calculateSubviewFrames];
+  self.calculatedHeight = [self calculateHeight];
+  self.hasDeterminedLayout = YES;
+}
+
 -(CGSize)systemLayoutSizeFittingSize:(CGSize)targetSize {
-  if (!self.cellIsReadyToBeDisplayed) {
-    [self calculateSubviewFrames];
-    self.calculatedHeight = [self calculateHeight];
-    self.cellIsReadyToBeDisplayed = YES;
+  if (!self.hasDeterminedLayout) {
+    [self determineLayout];
   }
   return CGSizeMake(self.cellWidth, self.calculatedHeight);
 }
 
--(CGSize)sizeThatFits:(CGSize)size {
-  return [super sizeThatFits:size];
+#pragma mark Layout
+
+-(void)setCellWidth:(CGFloat)cellWidth {
+  if (_cellWidth == cellWidth) {
+    return;
+  }
+  _cellWidth = cellWidth;
+  self.hasDeterminedLayout = NO;
 }
 
 - (void)calculateSubviewFrames {
@@ -210,9 +228,9 @@ static const CGFloat kDetailColorOpacity = 0.6f;
     return;
   }
 
-    CGFloat leadingImageViewMaxX = self.leadingImageView.image ?
-        CGRectGetMaxX(self.leadingImageViewFrame) : 0;
-    CGFloat textContainerMinX = leadingImageViewMaxX + kDefaultHorizontalMargin;
+  CGFloat leadingImageViewMaxX = self.leadingImageView.image ?
+  CGRectGetMaxX(self.leadingImageViewFrame) : 0;
+  CGFloat textContainerMinX = leadingImageViewMaxX + kDefaultHorizontalMargin;
   CGFloat trailingImageViewMinX = self.trailingImageView.image ?
   CGRectGetMinX(self.trailingImageViewFrame) : self.cellWidth;
   CGFloat textContainerMaxX = trailingImageViewMinX - kDefaultHorizontalMargin;
@@ -353,6 +371,8 @@ static const CGFloat kDetailColorOpacity = 0.6f;
   [self adjustFontsForContentSizeCategory];
 }
 
+#pragma mark Dynamic Type
+
 // Handles UIContentSizeCategoryDidChangeNotifications
 - (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
   [self adjustFontsForContentSizeCategory];
@@ -371,16 +391,10 @@ static const CGFloat kDetailColorOpacity = 0.6f;
   }
   self.titleLabel.font = titleFont;
   self.detailLabel.font = detailFont;
-  self.cellIsReadyToBeDisplayed = NO;
+  self.hasDeterminedLayout = NO;
 }
 
--(void)setCellWidth:(CGFloat)cellWidth {
-  if (_cellWidth == cellWidth) {
-    return;
-  }
-  _cellWidth = cellWidth;
-  self.cellIsReadyToBeDisplayed = NO;
-}
+#pragma mark Font Defaults
 
 - (UIFont *)defaultTitleLabelFont {
   return [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleTitle];
