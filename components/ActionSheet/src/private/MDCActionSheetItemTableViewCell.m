@@ -73,9 +73,9 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
     _textLabel.font = [MDCTypography subheadFont];
   }
   _textLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
-  _textLabel.alpha = kCellLabelAlpha;
+  _textLabel.alpha = CellLabelAlpha;
   CGFloat leadingConstant;
-  if (_itemAction.image == nil) {
+  if (_itemAction.image) {
     leadingConstant = 16.f;
   } else {
     leadingConstant = 72.f;
@@ -86,14 +86,14 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
                                   toItem:self.contentView
                                attribute:NSLayoutAttributeTop
                               multiplier:1
-                                constant:kActionItemTitleVerticalPadding].active = YES;
+                                constant:ActionItemTitleVerticalPadding].active = YES;
   [NSLayoutConstraint constraintWithItem:_textLabel
                                attribute:NSLayoutAttributeBottom
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self.contentView
                                attribute:NSLayoutAttributeBottom
                               multiplier:1
-                                constant:-kActionItemTitleVerticalPadding].active = YES;
+                                constant:-ActionItemTitleVerticalPadding].active = YES;
   _leadingTitleConstraint = [NSLayoutConstraint constraintWithItem:_textLabel
                                                          attribute:NSLayoutAttributeLeading
                                                          relatedBy:NSLayoutRelationEqual
@@ -102,7 +102,7 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
                                                         multiplier:1
                                                           constant:leadingConstant];
   _leadingTitleConstraint.active = YES;
-  CGFloat width = CGRectGetWidth(self.contentView.frame) - (kLeadingPadding * 2);
+  CGFloat width = CGRectGetWidth(self.contentView.frame) - (LeadingPadding * 2);
   [NSLayoutConstraint constraintWithItem:_textLabel
                                attribute:NSLayoutAttributeWidth
                                relatedBy:NSLayoutRelationEqual
@@ -119,7 +119,7 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
   _imageView = [[UIImageView alloc] init];
   [self.contentView addSubview:_imageView];
   _imageView.translatesAutoresizingMaskIntoConstraints = NO;
-  _imageView.alpha = kImageAlpha;
+  _imageView.alpha = ImageAlpha;
   [NSLayoutConstraint constraintWithItem:_imageView
                                attribute:NSLayoutAttributeTop
                                relatedBy:NSLayoutRelationEqual
@@ -148,7 +148,7 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
                                attribute:NSLayoutAttributeNotAnAttribute
                               multiplier:1
                                 constant:24.f].active = YES;
-  _widthConstraint.constant = CGRectGetWidth(self.contentView.frame) - (kLeadingPadding * 2);
+  _widthConstraint.constant = CGRectGetWidth(self.contentView.frame) - (LeadingPadding * 2);
 }
 
 - (void)layoutSubviews {
@@ -162,7 +162,7 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
   _textLabel.attributedText = attributedString;
 
   CGFloat leadingConstant;
-  if (_itemAction.image == nil) {
+  if (_itemAction.image) {
     leadingConstant = 16.f;
   } else {
     leadingConstant = 72.f;

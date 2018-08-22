@@ -17,13 +17,12 @@
 #import "MDCActionSheetController.h"
 
 #import "MDCActionSheetItemTableViewCell.h"
-#import "MDCActionSheetDataSource.h"
 #import "MDCActionSheetHeaderView.h"
 #import "MaterialBottomSheet.h"
 #import "MaterialApplication.h"
 #import "MaterialTypography.h"
 
-static NSString *const ReuseIdentifer = @"BaseCell";
+static NSString *const ReuseIdentifier = @"BaseCell";
 
 @interface MDCActionSheetAction ()
 
@@ -62,17 +61,18 @@ static NSString *const ReuseIdentifer = @"BaseCell";
 
 @end
 
-@interface MDCActionSheetController () <MDCBottomSheetPresentationControllerDelegate, UITableViewDelegate>
+@interface MDCActionSheetController () <MDCBottomSheetPresentationControllerDelegate,
+    UITableViewDelegate, UITableViewDataSource>
 
 @end
 
 @implementation MDCActionSheetController {
   MDCActionSheetHeaderView *_header;
   UITableView *_tableView;
-  MDCActionSheetDataSource *_dataSource;
   NSString *_actionSheetTitle;
   MDCBottomSheetTransitionController *_transitionController;
   BOOL mdc_adjustFontForContentSizeCategory;
+  NSMutableArray<MDCActionSheetAction *> *_actions;
   /**
     Used to determine if we need to do a layout within viewWillLayoutSubviews,
     Because we are setting the preferredContentSize we can no longer get the frame to set the sheet
@@ -98,6 +98,7 @@ static NSString *const ReuseIdentifer = @"BaseCell";
 - (instancetype)initWithTitle:(NSString *)title message:(NSString *)message {
   self = [super initWithNibName:nil bundle:nil];
   if (self) {
+    _actions = [[NSMutableArray alloc] init];
     _actionSheetTitle = [title copy];
     _message = [message copy];
     _needsPreferredContentSizeUpdate = true;
@@ -109,17 +110,16 @@ static NSString *const ReuseIdentifer = @"BaseCell";
      */
     super.transitioningDelegate = _transitionController;
     super.modalPresentationStyle = UIModalPresentationCustom;
-    _dataSource = [[MDCActionSheetDataSource alloc] init];
     _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     _tableView.delegate = self;
+    _tableView.dataSource = self;
     _tableView.translatesAutoresizingMaskIntoConstraints = NO;
     _tableView.estimatedRowHeight = 56.f;
     _tableView.rowHeight = UITableViewAutomaticDimension;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.scrollEnabled = NO;
     [_tableView registerClass:[MDCActionSheetItemTableViewCell class]
-       forCellReuseIdentifier:kReuseIdentifer];
-    _tableView.dataSource = _dataSource;
+       forCellReuseIdentifier:ReuseIdentifier];
     self.backgroundColor = [UIColor whiteColor];
   }
 
@@ -127,13 +127,13 @@ static NSString *const ReuseIdentifer = @"BaseCell";
 }
 
 - (void)addAction:(MDCActionSheetAction *)action {
-  [_dataSource addAction:action];
+  [_actions addObject:action];
   [self updateTable];
   [self setPreferredContentSizeUpdate];
 }
 
 - (NSArray<MDCActionSheetAction *> *)actions {
-  return _dataSource.actions;
+  return [_actions copy];
 }
 
 - (void)viewDidLoad {
@@ -145,7 +145,11 @@ static NSString *const ReuseIdentifer = @"BaseCell";
   _header.title = _actionSheetTitle;
   _header.message = _message;
   _header.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
-
+  CGFloat width = CGRectGetWidth(self.view.bounds);
+  CGRect tableFrame = _tableView.frame;
+  tableFrame.size.width = width;
+  _tableView.frame = tableFrame;
+  
   [self.view addSubview:_tableView];
   [self.view addSubview:_header];
 }
@@ -258,7 +262,7 @@ static NSString *const ReuseIdentifer = @"BaseCell";
   self.preferredContentSize = updatedSize;
 }
 
-#pragma mark - Table view delegate
+#pragma mark - Table view
 
 - (void)updateTable {
   [_tableView reloadData];
@@ -273,6 +277,24 @@ static NSString *const ReuseIdentifer = @"BaseCell";
       action.completionHandler(action);
     }
   }];
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+  return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+  return _actions.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+  MDCActionSheetItemTableViewCell *cell =
+      [tableView dequeueReusableCellWithIdentifier:ReuseIdentifier forIndexPath:indexPath];
+  cell.action = _actions[indexPath.row];
+  cell.backgroundColor = self.backgroundColor;
+  cell.actionsFont = self.actionsFont;
+  return cell;
 }
 
 - (void)setTitle:(NSString *)title {
@@ -317,7 +339,6 @@ static NSString *const ReuseIdentifer = @"BaseCell";
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
   mdc_adjustsFontForContentSizeCategory = adjusts;
   [self view];
-
   _header.mdc_adjustsFontForContentSizeCategory = adjusts;
   [self updateFontsForDynamicType];
   if (self.mdc_adjustsFontForContentSizeCategory) {
@@ -348,12 +369,11 @@ static NSString *const ReuseIdentifer = @"BaseCell";
                                        scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
   }
   _actionsFont = finalActionsFont;
-  _dataSource.actionsFont = _actionsFont;
   [self updateTable];
 }
 
 - (void)updateFontsForDynamicType {
-  [_header updateFonts];
+  //[_header updateFonts];
   [self updateTableFonts];
   [self setPreferredContentSizeUpdate];
 }

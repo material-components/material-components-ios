@@ -18,27 +18,20 @@
 
 @interface MDCActionSheetHeaderView : UIView
 
-- (nonnull instancetype)initWithTitle:(nullable NSString *)title;
-
-- (nonnull instancetype)initWithTitle:(nullable NSString *)title message:(nullable NSString *)message;
-
-/** Header must be created with either headerWithTitle: */
 - (nonnull instancetype)initWithFrame:(CGRect)frame;
 
-/** Header must be created with either headerWithTitle: */
+/** Header must be created with initWithFrame */
 - (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;
 
-@property (nonatomic, nullable, strong) NSString *title;
+@property (nonatomic, nullable, copy) NSString *title;
 
-@property (nonatomic, nullable, strong) NSString *message;
+@property (nonatomic, nullable, copy) NSString *message;
 
-@property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
-BOOL mdc_adjustsFontForContentSizeCategory;
+@property(nonatomic, setter=mdc_setAdjustsFontForContentSizeCategory:)
+    BOOL mdc_adjustsFontForContentSizeCategory;
 
 @property (nonatomic, strong, nonnull) UIFont *titleFont;
 
 @property (nonatomic, strong, nonnull) UIFont *messageFont;
-
-- (void)updateFonts;
 
 @end

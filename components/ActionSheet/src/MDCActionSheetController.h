@@ -128,7 +128,7 @@ MDC_SUBCLASSING_RESTRICTED
 
  Defaults value is NO.
  */
-@property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
+@property(nonatomic, setter=mdc_setAdjustsFontForContentSizeCategory:)
     BOOL mdc_adjustsFontForContentSizeCategory;
 
 /**

@@ -22,7 +22,7 @@ static const CGFloat TitleLabelAlpha = 0.87f;
 static const CGFloat MessageLabelAlpha = 0.6f;
 static const CGFloat MessageOnlyPadding = 23.f;
 static const CGFloat LeadingPadding = 16.f;
-static const CGFloat StandardPadding = 16.f;
+static const CGFloat TopStandardPadding = 16.f;
 static const CGFloat TrailingPadding = 16.f;
 static const CGFloat TitleOnlyPadding = 18.f;
 static const CGFloat MiddlePadding = 8.f;
@@ -34,8 +34,8 @@ static const CGFloat MiddlePadding = 8.f;
 @end
 
 @implementation MDCActionSheetHeaderView {
-  UILabel *titleLabel;
-  UILabel *messageLabel;
+  UILabel *_titleLabel;
+  UILabel *_messageLabel;
 }
 
 @synthesize mdc_adjustsFontForContentSizeCategory;
@@ -43,57 +43,31 @@ static const CGFloat MiddlePadding = 8.f;
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    [self commonMDCActionSheetHeaderViewInit];
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
+    _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    _messageLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    [self addSubview:self.scrollView];
+    [self.scrollView addSubview:_titleLabel];
+    _titleLabel.font = [MDCTypography subheadFont];
+    _titleLabel.numberOfLines = 0;
+    _titleLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
+
+    [self.scrollView addSubview:_messageLabel];
+    _messageLabel.font = [MDCTypography body1Font];
+    _messageLabel.numberOfLines = 2;
+    _messageLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    _messageLabel.alpha = MessageLabelAlpha;
   }
   return self;
-}
-
-- (instancetype)initWithTitle:(NSString *)title {
-  return [[MDCActionSheetHeaderView alloc] initWithTitle:title message:nil];
-}
-
-- (nonnull instancetype)initWithTitle:(NSString *)title message:(NSString *)message {
-  self = [super init];
-  if (self) {
-    self.title = title;
-    self.message = message;
-    [self commonMDCActionSheetHeaderViewInit];
-  }
-  return self;
-}
-
-- (void)commonMDCActionSheetHeaderViewInit {
-  self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
-  titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-  messageLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-  [self addSubview:self.scrollView];
-  [self.scrollView addSubview:titleLabel];
-  if (self.mdc_adjustsFontForContentSizeCategory) {
-    titleLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
-  } else {
-    titleLabel.font = [MDCTypography subheadFont];
-  }
-  titleLabel.numberOfLines = 0;
-  titleLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
-
-  [self.scrollView addSubview:messageLabel];
-  if (self.mdc_adjustsFontForContentSizeCategory) {
-    messageLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
-  } else {
-    messageLabel.font = [MDCTypography body1Font];
-  }
-  messageLabel.numberOfLines = 2;
-  messageLabel.lineBreakMode = NSLineBreakByWordWrapping;
-  messageLabel.alpha = kMessageLabelAlpha;
 }
 
 - (void)layoutSubviews {
   [super layoutSubviews];
 
   if (self.message == nil || [self.message isEqualToString:@""]) {
-    titleLabel.alpha = kMessageLabelAlpha;
+    _titleLabel.alpha = MessageLabelAlpha;
   } else {
-    titleLabel.alpha = kTitleLabelAlpha;
+    _titleLabel.alpha = TitleLabelAlpha;
   }
   CGSize boundsSize = CGRectInfinite.size;
   boundsSize.width = [self accomodateSafeAreaInWidth:CGRectGetWidth(self.bounds)];
@@ -101,19 +75,19 @@ static const CGFloat MiddlePadding = 8.f;
   CGSize contentSize = [self calculateContentSizeThatFitsWidth:boundsSize.width];
   self.scrollView.contentSize = contentSize;
 
-  boundsSize.width = boundsSize.width - kLeadingPadding - kTrailingPadding;
-  CGSize titleSize = [titleLabel sizeThatFits:boundsSize];
+  boundsSize.width = boundsSize.width - LeadingPadding - TrailingPadding;
+  CGSize titleSize = [_titleLabel sizeThatFits:boundsSize];
   titleSize.width = boundsSize.width;
-  CGSize messageSize = [messageLabel sizeThatFits:boundsSize];
+  CGSize messageSize = [_messageLabel sizeThatFits:boundsSize];
   messageSize.width = boundsSize.width;
-  boundsSize.width = boundsSize.width + kLeadingPadding + kTrailingPadding;
+  boundsSize.width = boundsSize.width + LeadingPadding + TrailingPadding;
 
-  CGRect titleFrame = CGRectMake(kLeadingPadding, kStandardPadding,
+  CGRect titleFrame = CGRectMake(LeadingPadding, TopStandardPadding,
                                  titleSize.width, titleSize.height);
-  CGRect messageFrame = CGRectMake(kLeadingPadding, CGRectGetMaxY(titleFrame) + kMiddlePadding,
+  CGRect messageFrame = CGRectMake(LeadingPadding, CGRectGetMaxY(titleFrame) + MiddlePadding,
                                    messageSize.width, messageSize.height);
-  titleLabel.frame = titleFrame;
-  messageLabel.frame = messageFrame;
+  _titleLabel.frame = titleFrame;
+  _messageLabel.frame = messageFrame;
 
   CGRect scrollViewRect = CGRectZero;
   scrollViewRect.size = self.scrollView.contentSize;
@@ -140,21 +114,21 @@ static const CGFloat MiddlePadding = 8.f;
 }
 
 - (void)setTitle:(NSString *)title {
-  titleLabel.text = title;
+  _titleLabel.text = title;
   [self setNeedsLayout];
 }
 
 - (NSString *)title {
-  return titleLabel.text;
+  return _titleLabel.text;
 }
 
 - (void)setMessage:(NSString *)message {
-  messageLabel.text = message;
+  _messageLabel.text = message;
   [self setNeedsLayout];
 }
 
 - (NSString *)message {
-  return messageLabel.text;
+  return _messageLabel.text;
 }
 
 - (void)setTitleFont:(UIFont *)titleFont {
@@ -189,11 +163,11 @@ static const CGFloat MiddlePadding = 8.f;
 - (void)updateTitleFont {
   UIFont *titleFont = _titleFont ?: [[self class] titleFontDefault];
   if (self.mdc_adjustsFontForContentSizeCategory) {
-    titleLabel.font =
-    [titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
-                            scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
+    _titleLabel.font =
+        [titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
+                                scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
   } else {
-    titleLabel.font = titleFont;
+    _titleLabel.font = titleFont;
   }
   [self setNeedsLayout];
 }
@@ -201,11 +175,11 @@ static const CGFloat MiddlePadding = 8.f;
 - (void)updateMessageFont {
   UIFont *messageFont = _messageFont ?: [[self class] messageFontDefault];
   if (self.mdc_adjustsFontForContentSizeCategory) {
-    messageLabel.font =
-    [messageFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleBody1
-                              scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
+    _messageLabel.font =
+        [messageFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleBody1
+                                  scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
   } else {
-    messageLabel.font = messageFont;
+    _messageLabel.font = messageFont;
   }
 
   [self setNeedsLayout];
@@ -213,6 +187,16 @@ static const CGFloat MiddlePadding = 8.f;
 
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
   mdc_adjustsFontForContentSizeCategory = adjusts;
+  if (self.mdc_adjustsFontForContentSizeCategory) {
+      [[NSNotificationCenter defaultCenter] addObserver:self
+                                               selector:@selector(updateFonts)
+                                                   name:UIContentSizeCategoryDidChangeNotification
+                                                 object:nil];
+  } else {
+      [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                      name:UIContentSizeCategoryDidChangeNotification
+                                                    object:nil];
+  }
   [self updateFonts];
 }
 
@@ -226,15 +210,13 @@ static const CGFloat MiddlePadding = 8.f;
 
 - (CGSize)calculateContentSizeThatFitsWidth:(CGFloat)boundingWidth {
   CGSize boundsSize = CGRectInfinite.size;
-  boundsSize.width = boundingWidth - kLeadingPadding - kTrailingPadding;
+  boundsSize.width = boundingWidth - LeadingPadding - TrailingPadding;
 
-  CGSize titleSize = [titleLabel sizeThatFits:boundsSize];
-  CGSize messageSize = [messageLabel sizeThatFits:boundsSize];
+  CGSize titleSize = [_titleLabel sizeThatFits:boundsSize];
+  CGSize messageSize = [_messageLabel sizeThatFits:boundsSize];
 
   CGFloat contentWidth = MAX(titleSize.width, messageSize.width);
-
-
-  contentWidth = contentWidth + kLeadingPadding + kTrailingPadding;
+  contentWidth = contentWidth + LeadingPadding + TrailingPadding;
 
   CGFloat contentHeight;
   BOOL messageCheck = (self.message == nil) || ([self.message isEqualToString:@""]);
@@ -242,12 +224,12 @@ static const CGFloat MiddlePadding = 8.f;
   if (titleCheck && messageCheck) {
     contentHeight = 0;
   } else if (titleCheck) {
-    contentHeight = messageSize.height + (kMessageOnlyPadding * 2);
+    contentHeight = messageSize.height + (MessageOnlyPadding * 2);
   } else if (messageCheck) {
-    contentHeight = titleSize.height + (kTitleOnlyPadding * 2);
+    contentHeight = titleSize.height + (TitleOnlyPadding * 2);
   } else {
     contentHeight = titleSize.height + messageSize.height +
-    (kStandardPadding * 2) + kMiddlePadding;
+    (TopStandardPadding * 2) + MiddlePadding;
   }
   CGSize contentSize;
   contentSize.width = (CGFloat)ceil(boundingWidth);
