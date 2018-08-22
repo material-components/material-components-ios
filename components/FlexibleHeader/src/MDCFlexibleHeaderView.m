@@ -17,7 +17,6 @@
 #import "MDCFlexibleHeaderView.h"
 
 #import "MaterialApplication.h"
-#import "MaterialFlexibleHeader+CanAlwaysExpandToMaximumHeight.h"
 #import "MaterialUIMetrics.h"
 #import "MDCFlexibleHeaderView+ShiftBehavior.h"
 #import "private/MDCStatusBarShifter.h"
@@ -94,6 +93,9 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 //
 // This property is ignored if inferTopSafeAreaInsetFromViewController is NO.
 @property(nonatomic) CGFloat topSafeAreaInset;
+
+// Exposed via the FlexibleHeader+CanAlwaysExpandToMaximumHeight target.
+@property(nonatomic) BOOL canAlwaysExpandToMaximumHeight;
 
 @end
 
