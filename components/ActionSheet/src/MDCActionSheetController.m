@@ -120,7 +120,6 @@ static NSString *const ReuseIdentifier = @"BaseCell";
     _header = [[MDCActionSheetHeaderView alloc] initWithFrame:CGRectZero];
     _header.title = [title copy];
     _header.message = [message copy];
-    _header.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
     self.backgroundColor = [UIColor whiteColor];
   }
 
@@ -143,7 +142,6 @@ static NSString *const ReuseIdentifier = @"BaseCell";
   CGRect headerFrame = _header.frame;
   headerFrame.size.width = CGRectGetWidth(self.view.bounds);
   _header.frame = headerFrame;
-
   CGFloat width = CGRectGetWidth(self.view.bounds);
   CGRect tableFrame = _tableView.frame;
   tableFrame.size.width = width;
@@ -167,7 +165,7 @@ static NSString *const ReuseIdentifier = @"BaseCell";
   CGRect tableFrame = _tableView.frame;
   tableFrame.size.width = width;
   _tableView.frame = tableFrame;
-  [self updateTable];
+  [_tableView setNeedsLayout];
 
   /// We need this call to `layoutIfNeeded` to get the correct contentSize for the table
   [_tableView layoutIfNeeded];
@@ -243,7 +241,7 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:
     (id<UIViewControllerTransitionCoordinator>)coordinator {
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-  
+
   CGRect frame = self.view.frame;
   frame.size = size;
   self.view.frame = frame;
@@ -344,6 +342,7 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
   _mdc_adjustsFontForContentSizeCategory = adjusts;
+  _header.mdc_adjustsFontForContentSizeCategory = adjusts;
   [self updateFontsForDynamicType];
   if (_mdc_adjustsFontForContentSizeCategory) {
     [[NSNotificationCenter defaultCenter] addObserver:self
