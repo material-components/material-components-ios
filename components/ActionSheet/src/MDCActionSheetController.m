@@ -69,19 +69,17 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 @implementation MDCActionSheetController {
   MDCActionSheetHeaderView *_header;
   UITableView *_tableView;
-  NSString *_actionSheetTitle;
   MDCBottomSheetTransitionController *_transitionController;
-  BOOL mdc_adjustFontForContentSizeCategory;
   NSMutableArray<MDCActionSheetAction *> *_actions;
   /**
     Used to determine if we need to do a layout within viewWillLayoutSubviews,
     Because we are setting the preferredContentSize we can no longer get the frame to set the sheet
     and headers sizes after a transition. 
    */
-  BOOL _needsPreferredContentSizeUpdate;
+  BOOL _invalidPreferredContentSize;
 }
 
-@synthesize mdc_adjustsFontForContentSizeCategory;
+@synthesize mdc_adjustsFontForContentSizeCategory = _mdc_adjustsFontForContentSizeCategory;
 
 + (instancetype)actionSheetControllerWithTitle:(NSString *)title message:(NSString *)message {
   return [[MDCActionSheetController alloc] initWithTitle:title message:message];
@@ -99,9 +97,7 @@ static NSString *const ReuseIdentifier = @"BaseCell";
   self = [super initWithNibName:nil bundle:nil];
   if (self) {
     _actions = [[NSMutableArray alloc] init];
-    _actionSheetTitle = [title copy];
-    _message = [message copy];
-    _needsPreferredContentSizeUpdate = true;
+    _invalidPreferredContentSize = true;
     _transitionController = [[MDCBottomSheetTransitionController alloc] init];
     _transitionController.dismissOnBackgroundTap = YES;
     /**
@@ -120,6 +116,11 @@ static NSString *const ReuseIdentifier = @"BaseCell";
     _tableView.scrollEnabled = NO;
     [_tableView registerClass:[MDCActionSheetItemTableViewCell class]
        forCellReuseIdentifier:ReuseIdentifier];
+
+    _header = [[MDCActionSheetHeaderView alloc] initWithFrame:CGRectZero];
+    _header.title = [title copy];
+    _header.message = [message copy];
+    _header.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
     self.backgroundColor = [UIColor whiteColor];
   }
 
@@ -129,7 +130,7 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 - (void)addAction:(MDCActionSheetAction *)action {
   [_actions addObject:action];
   [self updateTable];
-  [self setPreferredContentSizeUpdate];
+  [self setInvalidPreferredContentSize];
 }
 
 - (NSArray<MDCActionSheetAction *> *)actions {
@@ -139,12 +140,10 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  CGRect headerRect = CGRectZero;
-  headerRect.size.width = CGRectGetWidth(self.view.bounds);
-  _header = [[MDCActionSheetHeaderView alloc] initWithFrame:headerRect];
-  _header.title = _actionSheetTitle;
-  _header.message = _message;
-  _header.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
+  CGRect headerFrame = _header.frame;
+  headerFrame.size.width = CGRectGetWidth(self.view.bounds);
+  _header.frame = headerFrame;
+
   CGFloat width = CGRectGetWidth(self.view.bounds);
   CGRect tableFrame = _tableView.frame;
   tableFrame.size.width = width;
@@ -157,7 +156,7 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
 
-  if (_needsPreferredContentSizeUpdate == true) {
+  if (_invalidPreferredContentSize == true) {
     [self layoutViews];
   }
 }
@@ -180,7 +179,7 @@ static NSString *const ReuseIdentifier = @"BaseCell";
   _tableView.frame = tableFrame;
   [_tableView setNeedsLayout];
   self.preferredContentSize = CGSizeMake(width, height);
-  _needsPreferredContentSizeUpdate = false;
+  _invalidPreferredContentSize = false;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -296,26 +295,28 @@ static NSString *const ReuseIdentifier = @"BaseCell";
   MDCActionSheetItemTableViewCell *cell =
       [tableView dequeueReusableCellWithIdentifier:ReuseIdentifier forIndexPath:indexPath];
   cell.action = _actions[indexPath.row];
-  cell.mdc_adjustsFontForContentSizeCategory = mdc_adjustsFontForContentSizeCategory;
+  cell.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
   cell.backgroundColor = self.backgroundColor;
   cell.actionFont = self.actionFont;
   return cell;
 }
 
 - (void)setTitle:(NSString *)title {
-  _actionSheetTitle = title;
   _header.title = title;
-  [self setPreferredContentSizeUpdate];
+  [self setInvalidPreferredContentSize];
 }
 
 - (NSString *)title {
-  return _actionSheetTitle;
+  return _header.title;
 }
 
 - (void)setMessage:(NSString *)message {
-  _message = message;
   _header.message = message;
-  [self setPreferredContentSizeUpdate];
+  [self setInvalidPreferredContentSize];
+}
+
+- (NSString *)message {
+  return _header.message;
 }
 
 - (void)setTitleFont:(UIFont *)titleFont {
@@ -342,11 +343,9 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 #pragma mark - Dynamic Type
 
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
-  mdc_adjustsFontForContentSizeCategory = adjusts;
-  [self view];
-  _header.mdc_adjustsFontForContentSizeCategory = adjusts;
+  _mdc_adjustsFontForContentSizeCategory = adjusts;
   [self updateFontsForDynamicType];
-  if (self.mdc_adjustsFontForContentSizeCategory) {
+  if (_mdc_adjustsFontForContentSizeCategory) {
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updateFontsForDynamicType)
                                                  name:UIContentSizeCategoryDidChangeNotification
@@ -379,11 +378,11 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 
 - (void)updateFontsForDynamicType {
   [self updateTableFonts];
-  [self setPreferredContentSizeUpdate];
+  [self setInvalidPreferredContentSize];
 }
 
-- (void)setPreferredContentSizeUpdate {
-  _needsPreferredContentSizeUpdate = true;
+- (void)setInvalidPreferredContentSize {
+  _invalidPreferredContentSize = true;
   [self.view setNeedsLayout];
 }
 

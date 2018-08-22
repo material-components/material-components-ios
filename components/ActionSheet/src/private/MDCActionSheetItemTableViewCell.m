@@ -32,7 +32,7 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
   NSLayoutConstraint *_widthConstraint;
 }
 
-@synthesize mdc_adjustsFontForContentSizeCategory;
+@synthesize mdc_adjustsFontForContentSizeCategory = _mdc_adjustsFontForContentSizeCategory;
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style
               reuseIdentifier:(NSString *)reuseIdentifier {
@@ -53,7 +53,7 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
   _textLabel.translatesAutoresizingMaskIntoConstraints = NO;
   [_textLabel sizeToFit];
 
-  if (self.mdc_adjustsFontForContentSizeCategory) {
+  if (_mdc_adjustsFontForContentSizeCategory) {
     _textLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
   } else {
     _textLabel.font = [MDCTypography subheadFont];
@@ -188,7 +188,7 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
 }
 
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
-  mdc_adjustsFontForContentSizeCategory = adjusts;
+  _mdc_adjustsFontForContentSizeCategory = adjusts;
   [self updateTitleFont];
 }
 
