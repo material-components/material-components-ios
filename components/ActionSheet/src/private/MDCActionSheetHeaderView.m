@@ -17,6 +17,7 @@
 #import "MDCActionSheetHeaderView.h"
 
 #import "MaterialTypography.h"
+#import "MDCMath.h"
 
 static const CGFloat TitleLabelAlpha = 0.87f;
 static const CGFloat MessageLabelAlpha = 0.6f;
@@ -64,7 +65,7 @@ static const CGFloat MiddlePadding = 8.f;
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  if (self.message == nil || [self.message isEqualToString:@""]) {
+  if (self.message == nil || [self.message  isEqualToString:@""]) {
     _titleLabel.alpha = MessageLabelAlpha;
   } else {
     _titleLabel.alpha = TitleLabelAlpha;
@@ -219,7 +220,7 @@ static const CGFloat MiddlePadding = 8.f;
   contentWidth = contentWidth + LeadingPadding + TrailingPadding;
 
   CGFloat contentHeight;
-  BOOL messageCheck = (self.message == nil) || ([self.message isEqualToString:@""]);
+  BOOL messageCheck = (self.message == nil) || ([self.message  isEqualToString:@""]);
   BOOL titleCheck = (self.title == nil) || ([self.title  isEqualToString:@""]);
   if (titleCheck && messageCheck) {
     contentHeight = 0;
@@ -232,8 +233,8 @@ static const CGFloat MiddlePadding = 8.f;
     (TopStandardPadding * 2) + MiddlePadding;
   }
   CGSize contentSize;
-  contentSize.width = (CGFloat)ceil(boundingWidth);
-  contentSize.height = (CGFloat)ceil(contentHeight);
+  contentSize.width = MDCCeil(boundingWidth);
+  contentSize.height = MDCCeil(contentHeight);
   return contentSize;
 }
 

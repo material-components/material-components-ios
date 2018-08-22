@@ -23,10 +23,6 @@ static const CGFloat CellLabelAlpha = 0.87f;
 static const CGFloat LeadingPadding = 16.f;
 static const CGFloat ActionItemTitleVerticalPadding = 18.f;
 
-@interface MDCActionSheetItemTableViewCell ()
-@end
-
-
 @implementation MDCActionSheetItemTableViewCell {
   MDCActionSheetAction *_itemAction;
   UILabel *_textLabel;
@@ -37,16 +33,6 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
 }
 
 @synthesize mdc_adjustsFontForContentSizeCategory;
-
-- (instancetype)initWithAction:(MDCActionSheetAction *)action
-               reuseIdentifier:(NSString *)reuseIdentifier {
-  self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
-  if (self) {
-    _itemAction = action;
-    [self commonMDCActionSheetItemViewInit];
-  }
-  return self;
-}
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style
               reuseIdentifier:(NSString *)reuseIdentifier {
@@ -157,9 +143,9 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
   _textLabel.text = _itemAction.title;
   CGFloat leadingConstant;
   if (_itemAction.image) {
-    leadingConstant = 16.f;
-  } else {
     leadingConstant = 72.f;
+  } else {
+    leadingConstant = 16.f;
   }
   _leadingTitleConstraint.constant = leadingConstant;
 
@@ -177,8 +163,8 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
   return _itemAction;
 }
 
-- (void)setActionsFont:(UIFont *)actionsFont {
-  _actionsFont = actionsFont;
+- (void)setActionsFont:(UIFont *)actionFont {
+  _actionFont = actionFont;
   [self updateTitleFont];
 }
 
@@ -190,7 +176,7 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
 }
 
 - (void)updateTitleFont {
-  UIFont *titleFont = _actionsFont ?: [[self class] titleFontDefault];
+  UIFont *titleFont = _actionFont ?: [[self class] titleFontDefault];
   if (self.mdc_adjustsFontForContentSizeCategory) {
     _textLabel.font =
         [titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline

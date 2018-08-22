@@ -19,11 +19,6 @@
 #import "MDCActionSheetController.h"
 
 @interface MDCActionSheetItemTableViewCell : UITableViewCell
-
-- (nullable instancetype)initWithCoder:(nullable NSCoder *)aDecoder NS_UNAVAILABLE;
-
-- (nonnull instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
-
 /**
   The action contains the title, image, and handler
   If you need to change any of the three you must pass a new action in.
@@ -33,6 +28,6 @@
 @property(nonatomic, setter=mdc_setAdjustsFontForContentSizeCategory:)
     BOOL mdc_adjustsFontForContentSizeCategory;
 
-@property(nonatomic, nonnull, strong) UIFont *actionsFont;
+@property(nonatomic, nonnull, strong) UIFont *actionFont;
 
 @end

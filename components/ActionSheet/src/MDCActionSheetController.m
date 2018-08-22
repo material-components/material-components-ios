@@ -293,7 +293,7 @@ static NSString *const ReuseIdentifier = @"BaseCell";
       [tableView dequeueReusableCellWithIdentifier:ReuseIdentifier forIndexPath:indexPath];
   cell.action = _actions[indexPath.row];
   cell.backgroundColor = self.backgroundColor;
-  cell.actionsFont = self.actionsFont;
+  cell.actionFont = self.actionFont;
   return cell;
 }
 
@@ -354,7 +354,7 @@ static NSString *const ReuseIdentifier = @"BaseCell";
   [self.view setNeedsLayout];
 }
 
-+ (UIFont *)actionsFontDefault {
++ (UIFont *)actionFontDefault {
   if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
     return [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
   }
@@ -362,13 +362,13 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 }
 
 - (void)updateTableFonts {
-  UIFont *finalActionsFont = _actionsFont ?: [[self class] actionsFontDefault];
+  UIFont *finalActionsFont = _actionFont ?: [[self class] actionFontDefault];
   if (self.mdc_adjustsFontForContentSizeCategory) {
     finalActionsFont =
         [finalActionsFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
                                        scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
   }
-  _actionsFont = finalActionsFont;
+  _actionFont = finalActionsFont;
   [self updateTable];
 }
 
