@@ -17,14 +17,6 @@
 #import <Foundation/Foundation.h>
 #import <MotionInterchange/MotionInterchange.h>
 
-#ifndef MDC_SUBCLASSING_RESTRICTED
-#if defined(__has_attribute) && __has_attribute(objc_subclassing_restricted)
-#define MDC_SUBCLASSING_RESTRICTED __attribute__((objc_subclassing_restricted))
-#else
-#define MDC_SUBCLASSING_RESTRICTED
-#endif
-#endif  // #ifndef MDC_SUBCLASSING_RESTRICTED
-
 typedef struct MDCActivityIndicatorMotionSpecIndeterminate {
   MDMMotionTiming outerRotation;
   MDMMotionTiming innerRotation;
@@ -46,7 +38,7 @@ typedef struct MDCActivityIndicatorMotionSpecProgress {
   MDMMotionTiming strokeEnd;
 } MDCActivityIndicatorMotionSpecProgress;
 
-MDC_SUBCLASSING_RESTRICTED
+__attribute__((objc_subclassing_restricted))
 @interface MDCActivityIndicatorMotionSpec: NSObject
 
 @property(nonatomic, class, readonly) NSTimeInterval pointCycleDuration;
