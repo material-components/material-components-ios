@@ -24,10 +24,6 @@
   return [MDCShadowLayer class];
 }
 
-//- (CGSize)intrinsicContentSize {
-//  return self.frame.size;
-//}
-
 - (void)setElevation:(MDCShadowElevation)elevation {
   [(MDCShadowLayer *)self.layer setElevation:elevation];
 }
