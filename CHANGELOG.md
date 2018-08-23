@@ -12,6 +12,8 @@
 
 ## New features
 
+* AlertController got a new buttonInkColor property.
+
 ## API changes
 
 ### AppBar
