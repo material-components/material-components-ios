@@ -174,11 +174,38 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
                              kEpsilonAccuracy);
 }
 
-- (void)testTitleFontProperty {
+- (void)testTitleFontPropertyWithAllowAnyTitleFontSizeDisabled {
   MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
   navBar.frame = CGRectMake(0, 0, 300, 25);
   navBar.title = @"this is a Title";
   navBar.titleAlignment = MDCNavigationBarTitleAlignmentCenter;
+  navBar.allowAnyTitleFontSize = NO;
+  [navBar layoutIfNeeded];
+
+  XCTAssertNotNil(navBar.titleFont);
+  XCTAssertEqual(navBar.titleLabel.font, navBar.titleFont);
+
+  UIFont *font = [UIFont systemFontOfSize:24];
+  navBar.titleFont = font;
+
+  UIFont *resultFont = navBar.titleLabel.font;
+  XCTAssertEqualObjects(resultFont.fontName, font.fontName);
+  XCTAssertEqualWithAccuracy(resultFont.pointSize, 20, 0.01);
+
+  NSDictionary <NSString *, NSNumber *> *fontTraits =
+      [[font fontDescriptor] objectForKey:UIFontDescriptorTraitsAttribute];
+  NSDictionary <NSString *, NSNumber *> *resultTraits =
+      [[resultFont fontDescriptor] objectForKey:UIFontDescriptorTraitsAttribute];
+
+  XCTAssertEqual(fontTraits, resultTraits);
+}
+
+- (void)testTitleFontPropertyWithAllowAnyTitleFontSizeEnabled {
+  MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
+  navBar.frame = CGRectMake(0, 0, 300, 25);
+  navBar.title = @"this is a Title";
+  navBar.titleAlignment = MDCNavigationBarTitleAlignmentCenter;
+  navBar.allowAnyTitleFontSize = YES;
   [navBar layoutIfNeeded];
 
   XCTAssertNotNil(navBar.titleFont);
