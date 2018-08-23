@@ -16,7 +16,7 @@
 
 #import "MDCBottomDrawerContainerViewController.h"
 
-#import "MDCBottomDrawerHeader.h"
+#import "../MDCBottomDrawerHeader.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialUIMetrics.h"
 
