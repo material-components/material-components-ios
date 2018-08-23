@@ -68,7 +68,7 @@
 
  @warning This method will soon be deprecated. Please use
  -appBarNavigationController:willAddAppBarViewController:asChildOfViewController: instead. Learn
- more at components/AppBar/docs/migration-guide-appbar-appbarviewcontroller.md
+ more at https://github.com/material-components/material-components-ios/blob/develop/components/AppBar/docs/migration-guide-appbar-appbarviewcontroller.md
  */
 - (void)appBarNavigationController:(nonnull MDCAppBarNavigationController *)navigationController
                      willAddAppBar:(nonnull MDCAppBar *)appBar
@@ -117,7 +117,7 @@ MDC_SUBCLASSING_RESTRICTED
  Returns the injected App Bar for a given view controller, if an App Bar was injected.
 
  @warning This method will eventually be deprecated. Use -appBarViewControllerForViewController:
- instead. Learn more at components/AppBar/docs/migration-guide-appbar-appbarviewcontroller.md
+ instead. Learn more at https://github.com/material-components/material-components-ios/blob/develop/components/AppBar/docs/migration-guide-appbar-appbarviewcontroller.md
  */
 - (nullable MDCAppBar *)appBarForViewController:(nonnull UIViewController *)viewController;
 

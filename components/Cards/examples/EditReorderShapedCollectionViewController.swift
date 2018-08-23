@@ -16,6 +16,9 @@
 
 import UIKit
 
+import MaterialComponents.MaterialCards
+import MaterialComponents.MaterialShapeLibrary
+
 class ShapedCardCollectionCell: MDCCardCollectionCell {
   override init(frame: CGRect) {
     super.init(frame: frame)

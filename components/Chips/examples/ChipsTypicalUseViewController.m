@@ -47,7 +47,13 @@
 
   [MDCChipViewTypographyThemer applyTypographyScheme:self.typographyScheme
                                           toChipView:_sizingChip];
-  
+
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
+  }
+#endif
+
   self.collectionView.backgroundColor = [UIColor whiteColor];
   self.collectionView.delaysContentTouches = NO;
   self.collectionView.contentInset = UIEdgeInsetsMake(20, 20, 20, 20);
