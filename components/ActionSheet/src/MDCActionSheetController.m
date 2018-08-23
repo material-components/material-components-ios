@@ -71,12 +71,6 @@ static NSString *const ReuseIdentifier = @"BaseCell";
   UITableView *_tableView;
   MDCBottomSheetTransitionController *_transitionController;
   NSMutableArray<MDCActionSheetAction *> *_actions;
-  /**
-    Used to determine if we need to do a layout within viewWillLayoutSubviews,
-    Because we are setting the preferredContentSize we can no longer get the frame to set the sheet
-    and headers sizes after a transition. 
-   */
-  BOOL _invalidPreferredContentSize;
 }
 
 @synthesize mdc_adjustsFontForContentSizeCategory = _mdc_adjustsFontForContentSizeCategory;
@@ -107,13 +101,14 @@ static NSString *const ReuseIdentifier = @"BaseCell";
     super.transitioningDelegate = _transitionController;
     super.modalPresentationStyle = UIModalPresentationCustom;
     _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+    _transitionController.trackingScrollView = _tableView;
+    _tableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth
+                                   | UIViewAutoresizingFlexibleHeight);
     _tableView.delegate = self;
     _tableView.dataSource = self;
-    _tableView.translatesAutoresizingMaskIntoConstraints = NO;
     _tableView.estimatedRowHeight = 56.f;
     _tableView.rowHeight = UITableViewAutomaticDimension;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    _tableView.scrollEnabled = NO;
     [_tableView registerClass:[MDCActionSheetItemTableViewCell class]
        forCellReuseIdentifier:ReuseIdentifier];
 
@@ -129,7 +124,7 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 - (void)addAction:(MDCActionSheetAction *)action {
   [_actions addObject:action];
   [self updateTable];
-  [self setInvalidPreferredContentSize];
+  //[self setInvalidPreferredContentSize];
 }
 
 - (NSArray<MDCActionSheetAction *> *)actions {
@@ -139,14 +134,6 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  CGRect headerFrame = _header.frame;
-  headerFrame.size.width = CGRectGetWidth(self.view.bounds);
-  _header.frame = headerFrame;
-  CGFloat width = CGRectGetWidth(self.view.bounds);
-  CGRect tableFrame = _tableView.frame;
-  tableFrame.size.width = width;
-  _tableView.frame = tableFrame;
-  
   [self.view addSubview:_tableView];
   [self.view addSubview:_header];
 }
@@ -154,36 +141,10 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
 
-  //if (_invalidPreferredContentSize == YES) {
-    [self layoutViews];
-  //}
-}
-
-- (void)layoutViews {
   CGSize size = [_header sizeThatFits:self.view.bounds.size];
   _header.frame = CGRectMake(0, 0, size.width, size.height);
-  CGFloat width = CGRectGetWidth(self.view.bounds);
-  CGFloat height = size.height + _tableView.contentSize.height;
-  [self layoutTableWithHeader:size.height];
-  self.preferredContentSize = CGSizeMake(width, height);
-  _invalidPreferredContentSize = NO;
-}
-
-- (void)layoutTableWithHeader:(CGFloat)headerHeight {
-  CGFloat width = CGRectGetWidth(self.view.bounds);
-  CGRect tableFrame = _tableView.frame;
-  tableFrame.size.width = width;
-  _tableView.frame = tableFrame;
-  [_tableView setNeedsLayout];
-
-  /// We need this call to `layoutIfNeeded` to get the correct contentSize for the table
-  [_tableView layoutIfNeeded];
-  CGFloat tableHeight = _tableView.contentSize.height;
-  tableFrame = _tableView.frame;
-  tableFrame.origin.y = headerHeight;
-  tableFrame.size.height = tableHeight;
-  _tableView.frame = tableFrame;
-  [_tableView setNeedsLayout];
+  _tableView.frame = self.view.bounds;
+  _tableView.contentInset = UIEdgeInsetsMake(_header.frame.size.height, 0, 0, 0);
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -254,15 +215,8 @@ static NSString *const ReuseIdentifier = @"BaseCell";
         frame.size = size;
         frame.origin = CGPointZero;
         self.view.frame = frame;
-//        //CGRect headerFrame = self->_header.frame;
-//        headerFrame.size.width = size.width;
-//        self->_header.frame = headerFrame;
-//        CGFloat height = CGRectGetHeight(headerFrame) + self->_tableView.contentSize.height;
-//        [self layoutTableWithHeader:CGRectGetHeight(headerFrame)];
-//        CGSize updateSize = CGSizeMake(size.width, height);
         [self.view setNeedsLayout];
         [self.view layoutIfNeeded];
-        //self.preferredContentSize = updateSize;
       }                        completion:nil];
 }
 
@@ -304,7 +258,7 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 
 - (void)setTitle:(NSString *)title {
   _header.title = title;
-  [self setInvalidPreferredContentSize];
+  [self.view setNeedsLayout];
 }
 
 - (NSString *)title {
@@ -313,7 +267,7 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 
 - (void)setMessage:(NSString *)message {
   _header.message = message;
-  [self setInvalidPreferredContentSize];
+  [self.view setNeedsLayout];
 }
 
 - (NSString *)message {
@@ -386,11 +340,6 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 
 - (void)updateFontsForDynamicType {
   [self updateTableFonts];
-  [self setInvalidPreferredContentSize];
-}
-
-- (void)setInvalidPreferredContentSize {
-  _invalidPreferredContentSize = YES;
   [self.view setNeedsLayout];
 }
 
