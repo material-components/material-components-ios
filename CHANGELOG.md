@@ -1,6 +1,7 @@
 # 60.2.0
 
-## Breaking changes
+In this minor release we updated examples imports and added an API to set the ink color of buttons
+and started the deprecation of some AppBar APIs.
 
 ## New deprecations
 
@@ -14,7 +15,12 @@
 
 ## New features
 
-* AlertController got a new buttonInkColor property.
+* AlertController got a new buttonInkColor property so you can specify the color of the ink.
+```
+  MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:@"title"
+                                                                   message:@"message"];
+  alert.buttonInkColor = testColor;
+```
 
 ## API changes
 
@@ -50,7 +56,7 @@
 
 #### Changes
 
-* [[List] Fix Swift imports (#4828)](https://github.com/material-components/material-components-ios/commit/b917bf24d60029d76bf29114a2c1526793dfe6b1) (Robert Moore)
+* [Fix Swift imports (#4828)](https://github.com/material-components/material-components-ios/commit/b917bf24d60029d76bf29114a2c1526793dfe6b1) (Robert Moore)
 
 ### FeatureHighlight
 
@@ -106,7 +112,7 @@
 
 #### Changes
 
-* [[MaskedTransition] Fix Swift imports (#4828)](https://github.com/material-components/material-components-ios/commit/b917bf24d60029d76bf29114a2c1526793dfe6b1) (Robert Moore)
+* [Fix Swift imports (#4828)](https://github.com/material-components/material-components-ios/commit/b917bf24d60029d76bf29114a2c1526793dfe6b1) (Robert Moore)
 
 ### ActivityIndicator
 
