@@ -6,6 +6,8 @@
 
 * Deprecated `MDCAppBarTextColorAccessibilityMutator`.
 
+## Will be deprecated
+
 ### FlexibleHeader
 
 * [minMaxHeightIncludesSafeArea](https://github.com/material-components/material-components-ios/issues/4764)
@@ -41,11 +43,6 @@
 *moved* category: `MDCFlexibleHeaderView()`
 
 *modified* property: `contentView` in `MDCFlexibleHeaderView()`
-
-| Type of change: | parent.usr |
-|---|---|
-| From: | `c:objc(ext)MDCFlexibleHeaderView@MDCFlexibleHeaderView.h@13746` |
-| To: | `c:objc(ext)MDCFlexibleHeaderView@MDCFlexibleHeaderView.h@13990` |
 
 ## Component changes
 
