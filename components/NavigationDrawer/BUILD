@@ -41,8 +41,8 @@ mdc_objc_library(
     ],
     deps = [
         ":NavigationDrawerHeaderProtocol",
-        "//third_party/objective_c/material_components_ios/components/ShadowLayer",
-        "//third_party/objective_c/material_components_ios/components/private/UIMetrics",
+        "//components/ShadowLayer",
+        "//components/private/UIMetrics",
     ],
 )
 
