@@ -682,9 +682,9 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
     scrollView.contentInset = insets;
   }
 
-  BOOL statusBarIsHidden = [UIApplication mdc_safeSharedApplication].statusBarHidden;
+  BOOL statusBarIsHidden = [UIApplication mdc_safeSharedApplication].statusBarHidden ? YES : NO;
   if (_wasStatusBarHiddenIsValid && _wasStatusBarHidden != statusBarIsHidden
-      && !_isChangingStatusBarVisibility) {
+      && !_isChangingStatusBarVisibility && !self.inferTopSafeAreaInsetFromViewController) {
     // Our status bar state has changed without our knowledge. UIKit will have already adjusted our
     // content offset by now, so we want to counteract this. This logic is similar to that found in
     // statusBarShifterNeedsStatusBarAppearanceUpdate:

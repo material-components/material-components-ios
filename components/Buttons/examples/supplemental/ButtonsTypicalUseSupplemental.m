@@ -24,6 +24,8 @@
 #import "MaterialMath.h"
 #import "MaterialTypography.h"
 
+static const CGFloat kViewOffsetToCenter = 20.0f;
+
 #pragma mark - ButtonsTypicalUseViewController
 
 @implementation ButtonsTypicalUseExampleViewController (CatalogByConvention)
@@ -136,10 +138,10 @@
     MDCButton *button = self.buttons[i];
     UILabel *label = self.labels[i];
 
-    button.center = CGPointMake(centerX + 20 + (CGRectGetWidth(button.bounds) / 2),
+    button.center = CGPointMake(centerX + kViewOffsetToCenter + (CGRectGetWidth(button.bounds) / 2),
                                 heightSum + (CGRectGetHeight(button.bounds) / 2));
     CGFloat labelOffset = (CGRectGetHeight(button.bounds) - CGRectGetHeight(label.bounds)) / 2;
-    label.center = CGPointMake(centerX - (CGRectGetWidth(label.bounds) / 2) - 20,
+    label.center = CGPointMake(centerX - (CGRectGetWidth(label.bounds) / 2) - kViewOffsetToCenter,
                                heightSum + labelOffset + (CGRectGetHeight(label.bounds) / 2));
     heightSum += CGRectGetHeight(button.bounds);
     if (i < self.buttons.count - 1) {
@@ -168,6 +170,19 @@
         (CGRect){labelOrigin, CGSizeMake(labelWidth, labelHeight)}, [UIScreen mainScreen].scale);
     label.center = CGPointMake(CGRectGetMidX(alignedFrame), CGRectGetMidY(alignedFrame));
     label.bounds = (CGRect){label.bounds.origin, alignedFrame.size};
+
+    // Adjust the label's center and bounds so it doesn't exceed the safe area on the left side of the screen, the situation that
+    // button exceeds the safe area on the right side is not considered yet
+    CGFloat labelOriginX = label.center.x - label.bounds.size.width / 2;
+    if (labelOriginX < contentBounds.origin.x) {
+      CGFloat labelXOffset = contentBounds.origin.x - labelOriginX;
+      CGFloat maxLabelWidth = label.bounds.size.width - labelXOffset;
+      label.numberOfLines = 0;
+      CGSize newSizeToFitLabel = [label sizeThatFits:CGSizeMake(maxLabelWidth, CGFLOAT_MAX)];
+      label.center = CGPointMake(centerX - newSizeToFitLabel.width / 2 - kViewOffsetToCenter, label.center.y);
+      label.bounds = CGRectMake(label.center.x - newSizeToFitLabel.width / 2, label.center.y, newSizeToFitLabel.width, newSizeToFitLabel.height);
+      label.textAlignment = NSTextAlignmentRight;
+    }
   }
 }
 

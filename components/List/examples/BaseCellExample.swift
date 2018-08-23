@@ -13,6 +13,9 @@
 
 import Foundation
 
+import MaterialComponents.MaterialList
+import MaterialComponents.MaterialShadowElevations
+
 class BaseCellExample : UIViewController {
   private let arbitraryCellHeight: CGFloat = 75
   fileprivate let baseCellIdentifier: String = "baseCellIdentifier"

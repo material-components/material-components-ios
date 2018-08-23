@@ -56,7 +56,8 @@
 
  AppBar depends on the FlexibleHeader, HeaderStackView, and NavigationBar Material Components.
 
- @note This API will be deprecated in favor of MDCAppBarViewController.
+ @warning This API will be deprecated in favor of MDCAppBarViewController. Learn more at
+ https://github.com/material-components/material-components-ios/blob/develop/components/AppBar/docs/migration-guide-appbar-appbarviewcontroller.md
  */
 @interface MDCAppBar : NSObject
 
@@ -120,13 +121,14 @@
 
  @note This API will be deprecated with no replacement.
  */
-
+__deprecated_msg("Use themers and MDFTextAccessibility directly instead.")
 @interface MDCAppBarTextColorAccessibilityMutator : NSObject
 
 /**
  Mutates title text color and navigation items' tint colors based on background color of
  app bar's navigation bar or header view background color.
  */
-- (void)mutate:(nonnull MDCAppBar *)appBar;
+- (void)mutate:(nonnull MDCAppBar *)appBar
+__deprecated_msg("Use themers and MDFTextAccessibility instead.");
 
 @end
