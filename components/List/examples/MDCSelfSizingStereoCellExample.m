@@ -88,7 +88,6 @@ static NSString *const kSelfSizingStereoCellExampleDescription =
   self.collectionViewLayout.estimatedItemSize =
       CGSizeMake(self.collectionView.bounds.size.width, kArbitraryCellHeight);
   [self.collectionViewLayout invalidateLayout];
-  [self.collectionView reloadData];
 }
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -109,6 +108,8 @@ static NSString *const kSelfSizingStereoCellExampleDescription =
   cell.detailLabel.text = self.randomStrings[(indexPath.item + 1) % self.randomStrings.count];
   cell.titleLabel.textColor = [UIColor darkGrayColor];
   cell.detailLabel.textColor = [UIColor darkGrayColor];
+  cell.titleLabel.numberOfLines = 0;
+  cell.detailLabel.numberOfLines = 0;
   cell.leadingImageView.image =
       [[UIImage imageNamed:@"Cake"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   cell.trailingImageView.image =

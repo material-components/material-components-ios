@@ -50,12 +50,6 @@ limitations under the License.
 @property (nonatomic, strong, readonly) UILabel *detailLabel;
 
 /**
- Sepcifies the width of the cell. The layout of the views and the height of the cell are determined
- by the value of this property.
- */
-@property (nonatomic, assign) CGFloat cellWidth;
-
-/**
  Indicates whether the view's contents should automatically update their font when the device’s
  UIContentSizeCategory changes.
  This property is modeled after the adjustsFontForContentSizeCategory property in the
