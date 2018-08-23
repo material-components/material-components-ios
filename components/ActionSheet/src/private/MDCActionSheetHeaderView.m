@@ -59,8 +59,8 @@ static const CGFloat MiddlePadding = 8.f;
 
   CGSize size = CGRectInfinite.size;
   size.width = CGRectGetWidth(self.bounds);
-  CGFloat newHeight = [self sizeThatFits:size].height;
-  CGRect labelFrame = [self frameWithSafeAreaInsets:CGRectMake(0, 0, size.width, newHeight)];
+//  CGFloat newHeight = [self sizeThatFits:size].height;
+  CGRect labelFrame = [self frameWithSafeAreaInsets:self.bounds];
   labelFrame.size.width = labelFrame.size.width - LeadingPadding - TrailingPadding;
   CGSize titleSize = [_titleLabel sizeThatFits:labelFrame.size];
   CGSize messageSize = [_messageLabel sizeThatFits:labelFrame.size];
@@ -71,7 +71,7 @@ static const CGFloat MiddlePadding = 8.f;
                                    messageSize.width, messageSize.height);
   _titleLabel.frame = titleFrame;
   _messageLabel.frame = messageFrame;
-  self.frame = CGRectMake(0, 0, CGRectGetWidth(self.bounds), newHeight);
+  //self.frame = CGRectMake(0, 0, CGRectGetWidth(self.bounds), newHeight);
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
@@ -83,7 +83,7 @@ static const CGFloat MiddlePadding = 8.f;
   BOOL titleExist = (self.title) && (![self.title isEqualToString:@""]);
   if (titleExist && messageExist) {
     contentHeight = titleSize.height + messageSize.height +
-    (TopStandardPadding * 2) + MiddlePadding;
+        (TopStandardPadding * 2) + MiddlePadding;
   } else if (messageExist) {
     contentHeight = messageSize.height + (MessageOnlyPadding * 2);
   } else if (titleExist) {
@@ -92,7 +92,7 @@ static const CGFloat MiddlePadding = 8.f;
     contentHeight = 0;
   }
   CGSize contentSize;
-  contentSize.width = MDCCeil(self.bounds.size.width);
+  contentSize.width = MDCCeil(size.width);
   contentSize.height = MDCCeil(contentHeight);
   return contentSize;
 }

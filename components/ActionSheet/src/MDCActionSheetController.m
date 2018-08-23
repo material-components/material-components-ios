@@ -154,16 +154,17 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
 
-  if (_invalidPreferredContentSize == YES) {
+  //if (_invalidPreferredContentSize == YES) {
     [self layoutViews];
-  }
+  //}
 }
 
 - (void)layoutViews {
-  CGFloat headerHeight = [_header sizeThatFits:self.view.bounds.size].height;
+  CGSize size = [_header sizeThatFits:self.view.bounds.size];
+  _header.frame = CGRectMake(0, 0, size.width, size.height);
   CGFloat width = CGRectGetWidth(self.view.bounds);
-  CGFloat height = headerHeight + _tableView.contentSize.height;
-  [self layoutTableWithHeader:headerHeight];
+  CGFloat height = size.height + _tableView.contentSize.height;
+  [self layoutTableWithHeader:size.height];
   self.preferredContentSize = CGSizeMake(width, height);
   _invalidPreferredContentSize = NO;
 }
@@ -253,13 +254,15 @@ static NSString *const ReuseIdentifier = @"BaseCell";
         frame.size = size;
         frame.origin = CGPointZero;
         self.view.frame = frame;
-        CGRect headerFrame = self->_header.frame;
-        headerFrame.size.width = size.width;
-        self->_header.frame = headerFrame;
-        CGFloat height = CGRectGetHeight(headerFrame) + self->_tableView.contentSize.height;
-        [self layoutTableWithHeader:CGRectGetHeight(headerFrame)];
-        CGSize updatedSize = CGSizeMake(size.width, height);
-        self.preferredContentSize = updatedSize;
+//        //CGRect headerFrame = self->_header.frame;
+//        headerFrame.size.width = size.width;
+//        self->_header.frame = headerFrame;
+//        CGFloat height = CGRectGetHeight(headerFrame) + self->_tableView.contentSize.height;
+//        [self layoutTableWithHeader:CGRectGetHeight(headerFrame)];
+//        CGSize updateSize = CGSizeMake(size.width, height);
+        [self.view setNeedsLayout];
+        [self.view layoutIfNeeded];
+        //self.preferredContentSize = updateSize;
       }                        completion:nil];
 }
 
