@@ -43,13 +43,9 @@ static const CGFloat kMDCBottomDrawerOpenAnimationSpringDampingRatio = 0.85f;
                             presentingViewController:(UIViewController *)presenting
                                 sourceViewController:(UIViewController *)source {
   BOOL voiceOverIsRunning = UIAccessibilityIsVoiceOverRunning();
-  UIUserInterfaceSizeClass verticalSizeClass = source.traitCollection.verticalSizeClass;
-  BOOL compactHeight = verticalSizeClass == UIUserInterfaceSizeClassCompact;
-  BOOL showFullscreen = compactHeight || voiceOverIsRunning;
 
-  if (showFullscreen) {
-    // TODO(yar): Display the presented view controller and header within a flexible header
-    // container.
+  if (voiceOverIsRunning) {
+    // TODO(yar): Display drawer in full screen. To be done in a follow up PR.
     return nil;
   } else {
     MDCBottomDrawerPresentationController *presentationController =

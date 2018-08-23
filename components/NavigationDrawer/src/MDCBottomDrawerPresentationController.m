@@ -26,12 +26,12 @@ static UIColor *MDCBottomDrawerOverlayBackgroundColor(void) {
 @interface MDCBottomDrawerPresentationController () <UIGestureRecognizerDelegate>
 
 /**
- * A semi-transparent view that darkens the visible main view when the drawer is displayed.
+ A semi-transparent view that darkens the visible main view when the drawer is displayed.
  */
 @property(nonatomic) UIView *dimmingView;
 
 /**
- * The bottom drawer container view controller.
+ The bottom drawer container view controller.
  */
 @property(nonatomic) MDCBottomDrawerContainerViewController *bottomDrawerContainerViewController;
 

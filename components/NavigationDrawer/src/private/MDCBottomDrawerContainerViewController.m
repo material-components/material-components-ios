@@ -35,41 +35,42 @@ static UIColor *MDCBottomDrawerShadowColor(void) {
 @interface MDCBottomDrawerContainerViewController (LayoutCalculations)
 
 /**
- * The vertical distance of the content header from the top of the window when the drawer is first
- * displayed. When no content header is displayed, equal to the top inset of the content.
+ The vertical distance of the content header from the top of the window
+ when the drawer is first displayed.
+ When no content header is displayed, equal to the top inset of the content.
  */
 @property(nonatomic, readonly) CGFloat contentHeaderTopInset;
 
-/** The content height surplus at the moment the drawer is first displayed. */
+// The content height surplus at the moment the drawer is first displayed.
 @property(nonatomic, readonly) CGFloat contentHeightSurplus;
 
-/** An added height for the scroll view bottom inset. */
+// An added height for the scroll view bottom inset.
 @property(nonatomic, readonly) CGFloat addedContentHeight;
 
-/** Updates and caches the layout calculations. */
+// Updates and caches the layout calculations.
 - (void)cacheLayoutCalculations;
 
 /**
- * Returns the percentage of the transition animation for a given content offset.
- * The transition animation, as defined here, occurs either when the content reaches fullscreen or
- * when the entire content is displayed, whichever comes first.
- *
- * @param contentOffset The content offset.
- * @param offset A value by which the triggering point of the animation should be shifted. A
- *     positive value will cause the animation to start earlier, while a negative value will cause
- *     the animation to start later.
- * @param distance The distance the scroll view scrolls from the moment the animation starts and
- *     until it completes.
+ Returns the percentage of the transition animation for a given content offset.
+ The transition animation, as defined here, occurs either when the content reaches fullscreen or
+ when the entire content is displayed, whichever comes first.
+
+ @param contentOffset The content offset.
+ @param offset A value by which the triggering point of the animation should be shifted.
+ A positive value will cause the animation to start earlier, while a negative value will cause
+ the animation to start later.
+ @param distance The distance the scroll view scrolls from the moment the animation starts
+ and until it completes.
  */
 - (CGFloat)transitionPercentageForContentOffset:(CGPoint)contentOffset
                                          offset:(CGFloat)offset
                                        distance:(CGFloat)distance;
 
 /**
- * Checks the given target content offset to ensure the target offset will not cause the drawer to
- * end up in the middle of the header animation when the dragging ends. When needed, returns an
- * updated vertical target content offset that ensures the header animation is in a defined state.
- * Otherwise, returns NSNotFound.
+ Checks the given target content offset to ensure the target offset will not cause the drawer to
+ end up in the middle of the header animation when the dragging ends. When needed, returns an
+ updated vertical target content offset that ensures the header animation is in a defined state.
+ Otherwise, returns NSNotFound.
  */
 - (CGFloat)midAnimationScrollToPositionForOffset:(CGPoint)targetContentOffset;
 
@@ -77,56 +78,55 @@ static UIColor *MDCBottomDrawerShadowColor(void) {
 
 @interface MDCBottomDrawerContainerViewController (LayoutValues)
 
-/** The presenting view's bounds. */
+// The presenting view's bounds.
 @property(nonatomic, readonly) CGRect presentingViewBounds;
 
-/** Whether the content reaches to fullscreen. */
+// Whether the content reaches to fullscreen.
 @property(nonatomic, readonly) BOOL contentReachesFullscreen;
 
-/** Whether the content height exceeds the visible height when it's first displayed. */
+// Whether the content height exceeds the visible height when it's first displayed.
 @property(nonatomic, readonly) BOOL contentScrollsToReveal;
 
-/** The top header height when the drawer is displayed in fullscreen. */
+// The top header height when the drawer is displayed in fullscreen.
 @property(nonatomic, readonly) CGFloat topHeaderHeight;
 
-/** The content header height when the drawer is first displayed. */
+// The content header height when the drawer is first displayed.
 @property(nonatomic, readonly) CGFloat contentHeaderHeight;
 
-/** The vertical content offset where the transition animation completes.  */
+// The vertical content offset where the transition animation completes.
 @property(nonatomic, readonly) CGFloat transitionCompleteContentOffset;
 
-/** The headers animation distance. */
+// The headers animation distance.
 @property(nonatomic, readonly) CGFloat headerAnimationDistance;
 
-/** The distance to top threshold for adding extra content height. */
+// The distance to top threshold for adding extra content height.
 @property(nonatomic, readonly) CGFloat addedContentHeightThreshold;
 
 @end
 
 @interface MDCBottomDrawerContainerViewController () <UIScrollViewDelegate>
 
-/** Whether the scroll view is observed via KVO. */
+// Whether the scroll view is observed via KVO.
 @property(nonatomic) BOOL scrollViewObserved;
 
-/** The scroll view is currently being dragged towards bottom. */
+// The scroll view is currently being dragged towards bottom.
 @property(nonatomic) BOOL scrollViewIsDraggedToBottom;
 
-/** The scroll view has started its current drag from fullscreen. */
+// The scroll view has started its current drag from fullscreen.
 @property(nonatomic) BOOL scrollViewBeganDraggingFromFullscreen;
 
-/** Whether the drawer is currently shown in fullscreen. */
+// Whether the drawer is currently shown in fullscreen.
 @property(nonatomic) BOOL currentlyFullscreen;
 
 // Views:
 
-/** The main scroll view. */
+// The main scroll view.
 @property(nonatomic, readonly) UIScrollView *scrollView;
 
-/** View that functions as the superview of |scrollView|. Used to clip the top of the scroll view.
- */
+// View that functions as the superview of |scrollView|. Used to clip the top of the scroll view.
 @property(nonatomic, readonly) UIView *scrollViewClippingView;
 
-/** The top header bottom shadow layer. */
+// The top header bottom shadow layer.
 @property(nonatomic) MDCShadowLayer *headerShadowLayer;
 
 @end
