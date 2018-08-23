@@ -28,6 +28,9 @@
  When disabled, the flexible header will only expand to its maximum height once the scroll view
  reaches the top of its content.
 
+ @note This is an experimental feature. Please do not enable it without first consulting the MDC
+ team about your intended use case.
+
  Default is NO.
  */
 @property(nonatomic) BOOL canAlwaysExpandToMaximumHeight;
