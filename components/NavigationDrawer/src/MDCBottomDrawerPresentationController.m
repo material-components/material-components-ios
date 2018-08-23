@@ -16,8 +16,8 @@
 
 #import "MDCBottomDrawerPresentationController.h"
 
-#import "MDCBottomDrawerContainerViewController.h"
 #import "MDCBottomDrawerViewController.h"
+#import "private/MDCBottomDrawerContainerViewController.h"
 
 static UIColor *MDCBottomDrawerOverlayBackgroundColor(void) {
   return [UIColor colorWithWhite:0 alpha:0.4f];

@@ -16,8 +16,6 @@
 
 #import <UIKit/UIKit.h>
 
-NS_ASSUME_NONNULL_BEGIN
-
 /**
  A protocol view controllers should conform to for enabling the view controller to be
  used as a drawer header view controller.
@@ -32,5 +30,3 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)updateDrawerHeaderTransitionRatio:(CGFloat)transitionToTopRatio;
 
 @end
-
-NS_ASSUME_NONNULL_END

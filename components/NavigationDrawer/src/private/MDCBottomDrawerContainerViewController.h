@@ -16,8 +16,6 @@
 
 #import <UIKit/UIKit.h>
 
-NS_ASSUME_NONNULL_BEGIN
-
 @protocol MDCBottomDrawerHeader;
 
 /**
@@ -30,15 +28,14 @@ NS_ASSUME_NONNULL_BEGIN
 
  @param originalPresentingViewController The original presenting view controller.
  */
-- (instancetype)initWithOriginalPresentingViewController:
-                    (UIViewController *)originalPresentingViewController
-                                      trackingScrollView:(UIScrollView *)trackingScrollView
-    NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithOriginalPresentingViewController:
+    (nonnull UIViewController *)originalPresentingViewController
+    trackingScrollView:(nullable UIScrollView *)trackingScrollView NS_DESIGNATED_INITIALIZER;
 
-- (instancetype)init NS_UNAVAILABLE;
-- (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
-- (instancetype)initWithNibName:(nullable NSString *)nibNameOrNil
-                         bundle:(nullable NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
+- (nonnull instancetype)init NS_UNAVAILABLE;
+- (nonnull instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;
+- (nonnull instancetype)initWithNibName:(nullable NSString *)nibNameOrNil
+                                 bundle:(nullable NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
 
 /**
  The main content displayed by the drawer.
@@ -53,7 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, nullable) UIViewController<MDCBottomDrawerHeader> *headerViewController;
 
 // The original presenting view controller.
-@property(nonatomic, readonly) UIViewController *originalPresentingViewController;
+@property(nonatomic, readonly, nonnull) UIViewController *originalPresentingViewController;
 
 /**
  Setting the tracking scroll view allows the drawer scroll the content seamlessly as part of
@@ -67,5 +64,3 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic) BOOL animatingPresentation;
 
 @end
-
-NS_ASSUME_NONNULL_END
