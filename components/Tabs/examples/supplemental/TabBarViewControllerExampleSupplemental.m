@@ -52,11 +52,12 @@
 
 @implementation TBVCSampleViewController
 
+- (void)loadView {
+  self.view = [[TBVCSampleView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
-
-  TBVCSampleView *sampleView = [[TBVCSampleView alloc] initWithFrame:self.view.bounds];
-  [self.view addSubview:sampleView];
 
   self.appBarViewController = [[MDCAppBarViewController alloc] init];
 
@@ -78,6 +79,10 @@
   [super viewDidLayoutSubviews];
   _titleLabel.center = self.view.center;
   [self.view setNeedsDisplay];
+}
+
+- (UIViewController *)childViewControllerForStatusBarStyle {
+  return self.appBarViewController;
 }
 
 + (nonnull instancetype)sampleWithTitle:(nonnull NSString *)title color:(nonnull UIColor *)color {
@@ -145,7 +150,7 @@
 }
 
 + (BOOL)catalogIsPresentable {
-  return YES;
+  return NO;
 }
 
 @end
