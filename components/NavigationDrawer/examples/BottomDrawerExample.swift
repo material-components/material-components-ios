@@ -259,7 +259,7 @@ extension DrawerHeaderViewController : MDCBottomDrawerHeader {
 extension BottomDrawerInfiniteScrollingExample {
 
   @objc class func catalogDescription() -> String {
-    return "Navigation Drawer is in alpha (go/gm-ios-readiness#Alpha) and should not be used yet."
+    return "Navigation Drawer"
   }
 
   @objc class func catalogIsPrimaryDemo() -> Bool {
@@ -279,7 +279,7 @@ extension BottomDrawerInfiniteScrollingExample {
 extension BottomDrawerWithScrollableContentExample {
 
   @objc class func catalogDescription() -> String {
-    return "Navigation Drawer is in alpha (go/gm-ios-readiness#Alpha) and should not be used yet."
+    return "Navigation Drawer "
   }
 
   @objc class func catalogIsPrimaryDemo() -> Bool {
@@ -291,7 +291,7 @@ extension BottomDrawerWithScrollableContentExample {
   }
 
   @objc class func catalogIsPresentable() -> Bool {
-    return true
+    return false
   }
 
 }
@@ -299,7 +299,7 @@ extension BottomDrawerWithScrollableContentExample {
 extension BottomDrawerWithHeaderExample {
 
   @objc class func catalogDescription() -> String {
-    return "Navigation Drawer is in alpha (go/gm-ios-readiness#Alpha) and should not be used yet."
+    return "Navigation Drawer"
   }
 
   @objc class func catalogIsPrimaryDemo() -> Bool {
@@ -311,7 +311,7 @@ extension BottomDrawerWithHeaderExample {
   }
 
   @objc class func catalogIsPresentable() -> Bool {
-    return true
+    return false
   }
 
 }
@@ -319,7 +319,7 @@ extension BottomDrawerWithHeaderExample {
 extension BottomDrawerNoHeaderExample {
 
   @objc class func catalogDescription() -> String {
-    return "Navigation Drawer is in alpha (go/gm-ios-readiness#Alpha) and should not be used yet."
+    return "Navigation Drawer"
   }
 
   @objc class func catalogIsPrimaryDemo() -> Bool {
@@ -331,7 +331,7 @@ extension BottomDrawerNoHeaderExample {
   }
 
   @objc class func catalogIsPresentable() -> Bool {
-    return true
+    return false
   }
 
 }
