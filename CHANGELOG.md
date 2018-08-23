@@ -4,6 +4,12 @@
 
 ## New deprecations
 
+* Deprecated `MDCAppBarTextColorAccessibilityMutator`.
+
+### FlexibleHeader
+
+* [minMaxHeightIncludesSafeArea](https://github.com/material-components/material-components-ios/issues/4764)
+
 ## New features
 
 ## API changes
@@ -12,9 +18,9 @@
 
 #### MDCAppBarTextColorAccessibilityMutator
 
-*removed* class: `MDCAppBarTextColorAccessibilityMutator`
+*deprecated* class: `MDCAppBarTextColorAccessibilityMutator`
 
-*removed* method: `-mutate:` in `MDCAppBarTextColorAccessibilityMutator`
+*deprecated* method: `-mutate:` in `MDCAppBarTextColorAccessibilityMutator`
 
 ### Dialogs
 
@@ -26,20 +32,11 @@
 
 *new* property: `buttonInkColor` in `MDCAlertControllerView`
 
-*modified* class: `MDCAlertControllerView`
-
-| Type of change: | Declaration |
-|---|---|
-| From: | `@interface MDCAlertControllerView : UIView  @property(nonatomic, strong, nullable) UIFont *titleFont UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *titleColor UI_APPEARANCE_SELECTOR;  @property(nonatomic, strong, nullable) UIFont *messageFont UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *messageColor UI_APPEARANCE_SELECTOR;  @property(nonatomic, strong, nullable) UIFont *buttonFont UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *buttonColor UI_APPEARANCE_SELECTOR;  /*  Indicates whether the view's contents should automatically update their font when the device’s  UIContentSizeCategory changes.   This property is modeled after the adjustsFontForContentSizeCategory property in the  UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.   Default value is NO.  */ @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;  @end` |
-| To: | `@interface MDCAlertControllerView : UIView  @property(nonatomic, strong, nullable) UIFont *titleFont UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *titleColor UI_APPEARANCE_SELECTOR;  @property(nonatomic, strong, nullable) UIFont *messageFont UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *messageColor UI_APPEARANCE_SELECTOR;  @property(nonatomic, strong, nullable) UIFont *buttonFont UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *buttonColor UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *buttonInkColor UI_APPEARANCE_SELECTOR;  /*  Indicates whether the view's contents should automatically update their font when the device’s  UIContentSizeCategory changes.   This property is modeled after the adjustsFontForContentSizeCategory property in the  UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.   Default value is NO.  */ @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;  @end` |
-
 ### FlexibleHeader
 
 #### MDCFlexibleHeaderView()
 
-*new* category: `MDCFlexibleHeaderView()`
-
-*removed* category: `MDCFlexibleHeaderView()`
+*moved* category: `MDCFlexibleHeaderView()`
 
 *modified* property: `contentView` in `MDCFlexibleHeaderView()`
 
@@ -99,12 +96,6 @@
 #### Changes
 
 * [Fix typo in the readme (#4869)](https://github.com/material-components/material-components-ios/commit/215011b3866b47724553cde55b5239d057dc5455) (Brad Mallow)
-
-### NavigationBar
-
-#### Changes
-
-* [Remove restriction for 20pt fonts. (#4851)](https://github.com/material-components/material-components-ios/commit/2c3f97a98f20645d780aa1b3bccd78646f224059) (featherless)
 
 ### ShadowLayer
 
