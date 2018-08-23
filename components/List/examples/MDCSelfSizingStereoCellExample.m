@@ -116,7 +116,6 @@ static NSString *const kSelfSizingStereoCellExampleDescription =
   cell.leadingImageView.tintColor = [UIColor darkGrayColor];
   cell.trailingImageView.tintColor = [UIColor darkGrayColor];
   cell.mdc_adjustsFontForContentSizeCategory = YES;
-  cell.cellWidth = collectionView.bounds.size.width;
   return cell;
 }
 

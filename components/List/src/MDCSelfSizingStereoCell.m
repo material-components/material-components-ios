@@ -45,7 +45,7 @@ static const CGFloat kDetailColorOpacity = 0.6f;
 @property (nonatomic, assign) CGRect trailingImageViewFrame;
 
 @property (nonatomic, assign) CGFloat calculatedHeight;
-@property (nonatomic, assign) BOOL hasDeterminedLayout;
+@property (nonatomic, assign) BOOL hasCalculatedLayout;
 
 @end
 
@@ -113,8 +113,8 @@ static const CGFloat kDetailColorOpacity = 0.6f;
 
 -(void)layoutSubviews {
   [super layoutSubviews];
-  if (!self.hasDeterminedLayout) {
-    [self determineLayout];
+  if (!self.hasCalculatedLayout) {
+    [self calculateLayout];
   }
   self.textContainer.frame = self.textContainerFrame;
   self.titleLabel.frame = self.titleLabelFrame;
@@ -132,7 +132,7 @@ static const CGFloat kDetailColorOpacity = 0.6f;
 }
 
 -(void)setNeedsLayout {
-  self.hasDeterminedLayout = NO;
+  self.hasCalculatedLayout = NO;
   [super setNeedsLayout];
 }
 
@@ -152,17 +152,25 @@ static const CGFloat kDetailColorOpacity = 0.6f;
   self.trailingImageViewFrame = CGRectZero;
 }
 
-- (void)determineLayout {
+- (void)calculateLayout {
   [self calculateSubviewFrames];
   self.calculatedHeight = [self calculateHeight];
-  self.hasDeterminedLayout = YES;
+  self.hasCalculatedLayout = YES;
 }
 
 -(CGSize)systemLayoutSizeFittingSize:(CGSize)targetSize {
-  if (!self.hasDeterminedLayout) {
-    [self determineLayout];
+  if (!self.hasCalculatedLayout) {
+    [self calculateLayout];
   }
   return CGSizeMake(self.cellWidth, self.calculatedHeight);
+}
+
+-(UICollectionViewLayoutAttributes *)preferredLayoutAttributesFittingAttributes:
+    (UICollectionViewLayoutAttributes *)layoutAttributes {
+  self.cellWidth = layoutAttributes.size.width;
+  UICollectionViewLayoutAttributes *attributes =
+      [super preferredLayoutAttributesFittingAttributes:layoutAttributes];
+  return attributes;
 }
 
 #pragma mark Layout
@@ -172,7 +180,7 @@ static const CGFloat kDetailColorOpacity = 0.6f;
     return;
   }
   _cellWidth = cellWidth;
-  self.hasDeterminedLayout = NO;
+  self.hasCalculatedLayout = NO;
 }
 
 - (void)calculateSubviewFrames {
@@ -347,7 +355,7 @@ static const CGFloat kDetailColorOpacity = 0.6f;
       maxHeight = textContainerRequiredVerticalSpace;
     }
   }
-  return maxHeight;
+  return (CGFloat)ceil((double)maxHeight);
 }
 
 - (BOOL)mdc_adjustsFontForContentSizeCategory {
@@ -391,7 +399,7 @@ static const CGFloat kDetailColorOpacity = 0.6f;
   }
   self.titleLabel.font = titleFont;
   self.detailLabel.font = detailFont;
-  self.hasDeterminedLayout = NO;
+  self.hasCalculatedLayout = NO;
 }
 
 #pragma mark Font Defaults
