@@ -26,10 +26,8 @@
 
 
 static const CGFloat kNavigationBarDefaultHeight = 56;
-static const CGFloat kNavigationBarPadDefaultHeight = 64;
 static const CGFloat kNavigationBarMinHeight = 24;
 static const UIEdgeInsets kTextInsets = {0, 16, 0, 16};
-static const UIEdgeInsets kTextPadInsets = {0, 16, 0, 16};
 
 // KVO contexts
 static char *const kKVOContextMDCNavigationBar = "kKVOContextMDCNavigationBar";
@@ -252,7 +250,7 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   _leadingButtonBar.frame = leadingButtonBarFrame;
   _trailingButtonBar.frame = trailingButtonBarFrame;
 
-  UIEdgeInsets textInsets = [self usePadInsets] ? kTextPadInsets : kTextInsets;
+  UIEdgeInsets textInsets = kTextInsets;
 
   // textFrame is used to determine layout of both TitleLabel and TitleView
   CGRect textFrame = UIEdgeInsetsInsetRect(self.bounds, textInsets);
@@ -319,8 +317,7 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   // No insets for the titleView, and a height that is the same as the button bars. Clients
   // can vertically center their titleView subviews to align them with buttons.
   titleViewFrame.origin.y = 0;
-  CGFloat maxHeight =
-      [self usePadInsets] ? kNavigationBarPadDefaultHeight : kNavigationBarDefaultHeight;
+  CGFloat maxHeight = kNavigationBarDefaultHeight;
   CGFloat minHeight = kNavigationBarMinHeight;
   titleViewFrame.size.height = MIN(MAX(self.bounds.size.height, minHeight), maxHeight);
   self.titleView.frame = titleViewFrame;
@@ -344,14 +341,13 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  CGFloat maxHeight =
-      [self usePadInsets] ? kNavigationBarPadDefaultHeight : kNavigationBarDefaultHeight;
+  CGFloat maxHeight = kNavigationBarDefaultHeight;
   CGFloat height = MIN(MAX(size.height, kNavigationBarMinHeight), maxHeight);
   return CGSizeMake(size.width, height);
 }
 
 - (CGSize)intrinsicContentSize {
-  CGFloat height = [self usePadInsets] ? kNavigationBarPadDefaultHeight : kNavigationBarDefaultHeight;
+  CGFloat height = kNavigationBarDefaultHeight;
   return CGSizeMake(UIViewNoIntrinsicMetric, height);
 }
 
@@ -365,17 +361,6 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 }
 
 #pragma mark Private
-
-// Used to determine whether or not to apply insets relevant for iPad or use smaller iPhone size.
-// As the difference between iPad/iPhone is only in top & bottom insets, we should use vertical
-// size class to determine
-- (BOOL)usePadInsets {
-  const BOOL isPad = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
-  if (isPad && self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular) {
-    return YES;
-  }
-  return NO;
-}
 
 + (NSTextAlignment)textAlignmentFromTitleAlignment:(MDCNavigationBarTitleAlignment)titleAlignment {
   switch (titleAlignment) {
@@ -466,8 +451,7 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
     case UIControlContentVerticalAlignmentTop: {
       // The title frame is vertically centered with the back button but will stick to the top of
       // the header regardless of the header's height.
-      CGFloat maxHeight =
-          [self usePadInsets] ? kNavigationBarPadDefaultHeight : kNavigationBarDefaultHeight;
+      CGFloat maxHeight = kNavigationBarDefaultHeight;
       CGFloat height = MIN(CGRectGetHeight(bounds), maxHeight);
       CGFloat navigationBarCenteredY = MDCFloor((height - CGRectGetHeight(frame)) / 2);
       navigationBarCenteredY = MAX(0, navigationBarCenteredY);
@@ -491,7 +475,7 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 
       MDCButtonBar *leftButtonBar = self.leadingButtonBar;
       MDCButtonBar *rightButtonBar = self.trailingButtonBar;
-      UIEdgeInsets textInsets = [self usePadInsets] ? kTextPadInsets : kTextInsets;
+      UIEdgeInsets textInsets = kTextInsets;
       CGFloat titleLeftInset = textInsets.left;
       CGFloat titleRightInset = textInsets.right;
 
