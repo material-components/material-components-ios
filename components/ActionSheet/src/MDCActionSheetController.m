@@ -91,7 +91,6 @@ static NSString *const ReuseIdentifier = @"BaseCell";
   self = [super initWithNibName:nil bundle:nil];
   if (self) {
     _actions = [[NSMutableArray alloc] init];
-    _invalidPreferredContentSize = YES;
     _transitionController = [[MDCBottomSheetTransitionController alloc] init];
     _transitionController.dismissOnBackgroundTap = YES;
     /**
@@ -124,7 +123,6 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 - (void)addAction:(MDCActionSheetAction *)action {
   [_actions addObject:action];
   [self updateTable];
-  //[self setInvalidPreferredContentSize];
 }
 
 - (NSArray<MDCActionSheetAction *> *)actions {
@@ -134,6 +132,7 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  _tableView.frame = self.view.bounds;
   [self.view addSubview:_tableView];
   [self.view addSubview:_header];
 }
@@ -142,9 +141,15 @@ static NSString *const ReuseIdentifier = @"BaseCell";
   [super viewWillLayoutSubviews];
 
   CGSize size = [_header sizeThatFits:self.view.bounds.size];
-  _header.frame = CGRectMake(0, 0, size.width, size.height);
-  _tableView.frame = self.view.bounds;
-  _tableView.contentInset = UIEdgeInsetsMake(_header.frame.size.height, 0, 0, 0);
+  _header.frame = CGRectMake(0, 0, self.view.bounds.size.width, size.height);
+  UIEdgeInsets insets = UIEdgeInsetsMake(_header.frame.size.height, 0, 0, 0);
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    insets.bottom = self.view.safeAreaInsets.bottom;
+  }
+#endif
+  _tableView.contentInset = insets;
+//  self.preferredContentSize = CGSizeMake(self.view.bounds.size.width, 100);
 }
 
 - (void)viewWillAppear:(BOOL)animated {
