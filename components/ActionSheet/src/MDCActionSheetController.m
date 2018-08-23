@@ -149,7 +149,6 @@ static NSString *const ReuseIdentifier = @"BaseCell";
   }
 #endif
   _tableView.contentInset = insets;
-//  self.preferredContentSize = CGSizeMake(self.view.bounds.size.width, 100);
 }
 
 - (void)viewWillAppear:(BOOL)animated {
