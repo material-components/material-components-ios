@@ -18,7 +18,7 @@
 
 #import "MaterialBottomSheet.h"
 #import "supplemental/BottomSheetSupplemental.h"
-#import "UIApplication+AppExtensions.h"
+#import "MaterialApplication.h"
 
 static const CGFloat kSafeContentHeight = 150;
 static const CGFloat kSafeContentWidth = 300;
