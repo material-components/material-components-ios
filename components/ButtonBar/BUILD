@@ -29,6 +29,7 @@ mdc_public_objc_library(
     ],
     deps = [
         "//components/Buttons",
+        "//components/private/Application",
         "@material_internationalization_ios//:MDFInternationalization",
     ],
 )

@@ -236,6 +236,7 @@ Pod::Spec.new do |mdc|
 
     component.dependency "MDFInternationalization"
     component.dependency "MaterialComponents/Buttons"
+    component.dependency "MaterialComponents/private/Application"
   end
 
   mdc.subspec "ButtonBar+ColorThemer" do |extension|
