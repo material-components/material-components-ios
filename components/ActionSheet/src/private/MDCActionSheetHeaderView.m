@@ -28,12 +28,6 @@ static const CGFloat TrailingPadding = 16.f;
 static const CGFloat TitleOnlyPadding = 18.f;
 static const CGFloat MiddlePadding = 8.f;
 
-@interface MDCActionSheetHeaderView ()
-
-@property(nonatomic, nonnull, strong) UIScrollView *scrollView;
-
-@end
-
 @implementation MDCActionSheetHeaderView {
   UILabel *_titleLabel;
   UILabel *_messageLabel;
@@ -44,16 +38,14 @@ static const CGFloat MiddlePadding = 8.f;
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     _messageLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    [self addSubview:self.scrollView];
-    [self.scrollView addSubview:_titleLabel];
+    [self addSubview:_titleLabel];
     _titleLabel.font = [MDCTypography subheadFont];
     _titleLabel.numberOfLines = 0;
     _titleLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
 
-    [self.scrollView addSubview:_messageLabel];
+    [self addSubview:_messageLabel];
     _messageLabel.font = [MDCTypography body1Font];
     _messageLabel.numberOfLines = 2;
     _messageLabel.lineBreakMode = NSLineBreakByWordWrapping;
@@ -65,61 +57,55 @@ static const CGFloat MiddlePadding = 8.f;
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  [self sizeOfContentsWithSize:self.bounds.size shouldLayout:YES];
-}
-
-- (CGSize)sizeOfContentsWithSize:(CGSize)size
-                    shouldLayout:(BOOL)shouldLayout {
-  CGSize boundsSize = CGRectInfinite.size;
-  boundsSize.width = CGRectGetWidth([self boundsWithSafeAreaInsets]);
-
-  CGSize contentSize = [self calculateContentSizeThatFitsWidth:boundsSize.width];
-
-  if (shouldLayout) {
-    self.scrollView.contentSize = contentSize;
-
-    boundsSize.width = boundsSize.width - LeadingPadding - TrailingPadding;
-    CGSize titleSize = [_titleLabel sizeThatFits:boundsSize];
-    titleSize.width = boundsSize.width;
-    CGSize messageSize = [_messageLabel sizeThatFits:boundsSize];
-    messageSize.width = boundsSize.width;
-    boundsSize.width = boundsSize.width + LeadingPadding + TrailingPadding;
-
-    CGRect titleFrame = CGRectMake(LeadingPadding, TopStandardPadding,
-                                   titleSize.width, titleSize.height);
-    CGRect messageFrame = CGRectMake(LeadingPadding, CGRectGetMaxY(titleFrame) + MiddlePadding,
-                                     messageSize.width, messageSize.height);
-    _titleLabel.frame = titleFrame;
-    _messageLabel.frame = messageFrame;
-
-    CGRect scrollViewRect = CGRectZero;
-    scrollViewRect.size = self.scrollView.contentSize;
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-    if (@available(iOS 11.0, *)) {
-      scrollViewRect.origin.x = scrollViewRect.origin.x + self.safeAreaInsets.left;
-    }
-#endif
-
-    self.scrollView.frame = scrollViewRect;
-    CGRect originalFrame = self.frame;
-    originalFrame.size.height = scrollViewRect.size.height;
-    self.frame = originalFrame;
-  }
-  return contentSize;
+  CGSize size = CGRectInfinite.size;
+  size.width = CGRectGetWidth(self.bounds);
+  CGFloat newHeight = [self sizeThatFits:size].height;
+  CGRect labelFrame = [self frameWithSafeAreaInsets:CGRectMake(0, 0, size.width, newHeight)];
+  labelFrame.size.width = labelFrame.size.width - LeadingPadding - TrailingPadding;
+  CGSize titleSize = [_titleLabel sizeThatFits:labelFrame.size];
+  CGSize messageSize = [_messageLabel sizeThatFits:labelFrame.size];
+  CGRect titleFrame = CGRectMake(LeadingPadding + labelFrame.origin.x, TopStandardPadding,
+                                 titleSize.width, titleSize.height);
+  CGRect messageFrame = CGRectMake(LeadingPadding + labelFrame.origin.x,
+                                   CGRectGetMaxY(titleFrame) + MiddlePadding,
+                                   messageSize.width, messageSize.height);
+  _titleLabel.frame = titleFrame;
+  _messageLabel.frame = messageFrame;
+  self.frame = CGRectMake(0, 0, CGRectGetWidth(self.bounds), newHeight);
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  return [self sizeOfContentsWithSize:size shouldLayout:NO];
+  size.width = size.width - LeadingPadding - TrailingPadding;
+  CGSize titleSize = [_titleLabel sizeThatFits:size];
+  CGSize messageSize = [_messageLabel sizeThatFits:size];
+  CGFloat contentHeight;
+  BOOL messageExist = (self.message) && (![self.message isEqualToString:@""]);
+  BOOL titleExist = (self.title) && (![self.title isEqualToString:@""]);
+  if (titleExist && messageExist) {
+    contentHeight = titleSize.height + messageSize.height +
+    (TopStandardPadding * 2) + MiddlePadding;
+  } else if (messageExist) {
+    contentHeight = messageSize.height + (MessageOnlyPadding * 2);
+  } else if (titleExist) {
+    contentHeight = titleSize.height + (TitleOnlyPadding * 2);
+  } else {
+    contentHeight = 0;
+  }
+  CGSize contentSize;
+  contentSize.width = MDCCeil(self.bounds.size.width);
+  contentSize.height = MDCCeil(contentHeight);
+  return contentSize;
 }
 
-- (CGRect)boundsWithSafeAreaInsets {
+- (CGRect)frameWithSafeAreaInsets:(CGRect)frame {
   UIEdgeInsets safeAreaInsets = UIEdgeInsetsZero;
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     safeAreaInsets = self.safeAreaInsets;
+    safeAreaInsets.top = 0.f;
   }
 #endif
-  return UIEdgeInsetsInsetRect(self.bounds, safeAreaInsets);
+  return UIEdgeInsetsInsetRect(frame, safeAreaInsets);
 }
 
 - (void)setTitle:(NSString *)title {
@@ -135,7 +121,7 @@ static const CGFloat MiddlePadding = 8.f;
   _messageLabel.text = message;
   // If message is empty or nil then the title label's alpha value should be lighter, if there is both
   // then the title label's alpha should be darker.
-  if (self.message) && (![self.message isEqualToString:@""]) {
+  if (self.message && ![self.message isEqualToString:@""]) {
     _titleLabel.alpha = TitleLabelAlpha;
   } else {
     _titleLabel.alpha = MessageLabelAlpha;
@@ -222,32 +208,6 @@ static const CGFloat MiddlePadding = 8.f;
                                                     object:nil];
   }
   [self updateFonts];
-}
-
-- (CGSize)calculateContentSizeThatFitsWidth:(CGFloat)boundingWidth {
-  CGSize boundsSize = CGRectInfinite.size;
-  boundsSize.width = boundingWidth - LeadingPadding - TrailingPadding;
-
-  CGSize titleSize = [_titleLabel sizeThatFits:boundsSize];
-  CGSize messageSize = [_messageLabel sizeThatFits:boundsSize];
-
-  CGFloat contentHeight;
-  BOOL messageExist = (self.message) && (![self.message isEqualToString:@""]);
-  BOOL titleExist = (self.title) && (![self.title isEqualToString:@""]);
-  if (titleExist && messageExist) {
-    contentHeight = titleSize.height + messageSize.height +
-        (TopStandardPadding * 2) + MiddlePadding;
-  } else if (messageExist) {
-    contentHeight = messageSize.height + (MessageOnlyPadding * 2);
-  } else if (titleExist) {
-    contentHeight = titleSize.height + (TitleOnlyPadding * 2);
-  } else {
-    contentHeight = 0;
-  }
-  CGSize contentSize;
-  contentSize.width = MDCCeil(boundingWidth);
-  contentSize.height = MDCCeil(contentHeight);
-  return contentSize;
 }
 
 @end

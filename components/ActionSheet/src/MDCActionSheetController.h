@@ -16,14 +16,6 @@
 
 #import <UIKit/UIKit.h>
 
-#ifndef MDC_SUBCLASSING_RESTRICTED
-#if defined(__has_attribute) && __has_attribute(objc_subclassing_restricted)
-#define MDC_SUBCLASSING_RESTRICTED __attribute__((objc_subclassing_restricted))
-#else
-#define MDC_SUBCLASSING_RESTRICTED
-#endif
-#endif  // #ifndef MDC_SUBCLASSING_RESTRICTED
-
 @class MDCActionSheetAction;
 
 /**
@@ -43,7 +35,7 @@
  MDCActionSheetController does not support UIPopoverController, instead it will always be presented in a sheet from the bottom.
 
  */
-MDC_SUBCLASSING_RESTRICTED
+__attribute__((objc_subclassing_restricted))
 @interface MDCActionSheetController : UIViewController
 
 /**
@@ -165,7 +157,6 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
  An instance of MDCActionSheetAction is passed to MDCActionSheetController to
  add an action to the action sheet.
  */
-MDC_SUBCLASSING_RESTRICTED
 @interface MDCActionSheetAction : NSObject <NSCopying>
 
 
