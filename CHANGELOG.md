@@ -1,6 +1,6 @@
 # 60.2.0
 
-In this minor release we updated examples imports and added an API to set the ink color of buttons
+In this minor release we updated examples imports, added an API to set the ink color of buttons
 and started the deprecation of some AppBar APIs.
 
 ## New deprecations
