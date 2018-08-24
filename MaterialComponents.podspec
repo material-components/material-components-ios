@@ -37,18 +37,6 @@ Pod::Spec.new do |mdc|
   #  end
   #
 
-  # ActionSheet
-
-  mdc.subspec "ActionSheet" do |component|
-    component.ios.deployment_target = '8.0'
-    component.public_header_files = "components/#{component.base_name}/src/*.h"
-    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
-
-    component.dependency "MaterialComponents/BottomSheet"
-    component.dependency "MaterialComponents/Ink"
-    component.dependency "MaterialComponents/Typography"
-  end
-
   # ActivityIndicator
 
   mdc.subspec "ActivityIndicator" do |component|
