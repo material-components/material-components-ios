@@ -41,6 +41,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   NSMutableDictionary *_trackBackgroundColorsForState;
   NSMutableDictionary *_filledTickColorsForState;
   NSMutableDictionary *_backgroundTickColorsForState;
+  NSMutableDictionary *_thumbRadiusesForState;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -103,7 +104,8 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   _filledTickColorsForState[@(UIControlStateNormal)] = UIColor.blackColor;
   _backgroundTickColorsForState = [@{} mutableCopy];
   _backgroundTickColorsForState[@(UIControlStateNormal)] = UIColor.blackColor;
-
+  _thumbRadiusesForState = [@{} mutableCopy];
+  _thumbRadiusesForState[@(UIControlStateNormal)] = [[self class] defaultThumbRadius];
   [self addSubview:_thumbTrack];
 }
 
@@ -207,6 +209,24 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
     color = _backgroundTickColorsForState[@(UIControlStateNormal)];
   }
   return color;
+}
+
+- (void)setThumbRadius:(CGFloat)thumbRadius forState:(UIControlState)state {
+  _thumbRadiusesForState[@(state)] = thumbRadius;
+  if (self.state == state) {
+    [self updateThumbForState];
+  }
+}
+
+- (CGFloat)thumbRadiusForState:(UIControlState)state {
+  CGFloat *radius = _thumbRadiusesForState[@(state)];
+  if (radius) {
+    return radius;
+  }
+  if (state != UIControlStateNormal) {
+    radius = _thumbRadiusesForState[@(UIControlStateNormal)];
+  }
+  return radius;
 }
 
 - (void)updateColorsForState {
