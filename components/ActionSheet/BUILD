@@ -44,6 +44,7 @@ swift_library(
     srcs = glob(["tests/unit/*.swift"]),
     deps = [
         ":ActionSheet",
+        ":private",
     ],
     visibility = ["//visibility:private"],
 )
