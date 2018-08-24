@@ -176,7 +176,11 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 }
 
 - (void)setTitleFont:(UIFont *)titleFont {
-  _titleFont = [UIFont fontWithDescriptor:titleFont.fontDescriptor size:kTitleFontSize];
+  if (self.allowAnyTitleFontSize) {
+    _titleFont = titleFont;
+  } else {
+    _titleFont = [UIFont fontWithDescriptor:titleFont.fontDescriptor size:kTitleFontSize];
+  }
   if (!_titleFont) {
     _titleFont = [MDCTypography titleFont];
   }
