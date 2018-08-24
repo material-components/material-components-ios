@@ -17,12 +17,14 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialColorScheme.h"
+#import "MaterialTypographyScheme.h"
 #import "MaterialMath.h"
 #import "MaterialSlider.h"
 #import "MaterialSlider+ColorThemer.h"
 
 @interface SliderCompareExampleViewController : UIViewController
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 @end
 
 @implementation SliderCompareExampleViewController {
