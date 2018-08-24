@@ -143,6 +143,7 @@ static UIColor *MDCBottomDrawerShadowColor(void) {
                     (UIViewController *)originalPresentingViewController
                                       trackingScrollView:(UIScrollView *)trackingScrollView {
   self = [super initWithNibName:nil bundle:nil];
+
   if (self) {
     _originalPresentingViewController = originalPresentingViewController;
     _contentHeaderTopInset = NSNotFound;
@@ -169,9 +170,9 @@ static UIColor *MDCBottomDrawerShadowColor(void) {
   CGFloat locationInView = [touch locationInView:nil].y;
   CGFloat contentOriginY = self.headerViewController.view != nil
                                ? self.headerViewController.view.frame.origin.y
-                               : self.mainContentViewController.view.frame.origin.y;
+                               : self.contentViewController.view.frame.origin.y;
   CGFloat contentOriginYConverted =
-      [(self.headerViewController.view.superview ?: self.mainContentViewController.view.superview)
+      [(self.headerViewController.view.superview ?: self.contentViewController.view.superview)
           convertPoint:CGPointMake(0, contentOriginY)
                 toView:nil]
           .y;
@@ -210,10 +211,10 @@ static UIColor *MDCBottomDrawerShadowColor(void) {
   BOOL scrollingUpInFull = contentDiff < 0 && self.trackingScrollView.bounds.origin.y > 0;
   if (self.scrollView.bounds.origin.y >= drawerOffset || scrollingUpInFull) {
     // Update the main content view's scrollView offset
-    CGRect mainContentViewBounds = self.trackingScrollView.bounds;
-    mainContentViewBounds.origin.y += contentDiff;
-    mainContentViewBounds.origin.y = MIN(maxScrollOrigin, MAX(mainContentViewBounds.origin.y, 0));
-    self.trackingScrollView.bounds = mainContentViewBounds;
+    CGRect contentViewBounds = self.trackingScrollView.bounds;
+    contentViewBounds.origin.y += contentDiff;
+    contentViewBounds.origin.y = MIN(maxScrollOrigin, MAX(contentViewBounds.origin.y, 0));
+    self.trackingScrollView.bounds = contentViewBounds;
 
     // If we reach full screen or if we are scrolling up after being in full screen.
     if (self.trackingScrollView.bounds.origin.y < maxScrollOrigin || scrollingUpInFull) {
@@ -263,6 +264,7 @@ static UIColor *MDCBottomDrawerShadowColor(void) {
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+
   [self setUpContentHeader];
 
   self.view.backgroundColor = [UIColor clearColor];
@@ -273,16 +275,17 @@ static UIColor *MDCBottomDrawerShadowColor(void) {
   // Top header shadow layer starts as hidden.
   self.headerShadowLayer.hidden = YES;
 
-  // Set up the main content.
-  if (self.mainContentViewController) {
-    [self addChildViewController:self.mainContentViewController];
-    [self.scrollView addSubview:self.mainContentViewController.view];
-    [self.mainContentViewController didMoveToParentViewController:self];
+  // Set up the content.
+  if (self.contentViewController) {
+    [self addChildViewController:self.contentViewController];
+    [self.scrollView addSubview:self.contentViewController.view];
+    [self.contentViewController didMoveToParentViewController:self];
   }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
+
   [self addScrollViewObserver];
 
   // Scroll view should not update its content insets implicitly.
@@ -327,18 +330,18 @@ static UIColor *MDCBottomDrawerShadowColor(void) {
   self.scrollView.contentSize = scrollViewContentSize;
 
   // Layout the main content view.
-  CGRect mainContentViewFrame = self.scrollView.bounds;
-  mainContentViewFrame.origin.y = self.contentHeaderTopInset + self.contentHeaderHeight;
+  CGRect contentViewFrame = self.scrollView.bounds;
+  contentViewFrame.origin.y = self.contentHeaderTopInset + self.contentHeaderHeight;
   if (self.trackingScrollView != nil) {
-    mainContentViewFrame.size.height -=
+    contentViewFrame.size.height -=
         (self.contentHeaderHeight - (self.headerViewController ? MDCDeviceTopSafeAreaInset() : 0));
   } else {
-    mainContentViewFrame.size.height = self.mainContentViewController.preferredContentSize.height;
+    contentViewFrame.size.height = self.contentViewController.preferredContentSize.height;
   }
-  self.mainContentViewController.view.frame = mainContentViewFrame;
+  self.contentViewController.view.frame = contentViewFrame;
   if (self.trackingScrollView != nil) {
-    mainContentViewFrame.origin.y = self.trackingScrollView.frame.origin.y;
-    self.trackingScrollView.frame = mainContentViewFrame;
+    contentViewFrame.origin.y = self.trackingScrollView.frame.origin.y;
+    self.trackingScrollView.frame = contentViewFrame;
   }
 
   [self.headerViewController.view.superview bringSubviewToFront:self.headerViewController.view];
@@ -347,6 +350,7 @@ static UIColor *MDCBottomDrawerShadowColor(void) {
 
 - (void)viewDidDisappear:(BOOL)animated {
   [super viewDidDisappear:animated];
+
   [self removeScrollViewObserver];
   [self.headerShadowLayer removeFromSuperlayer];
   self.headerShadowLayer = nil;
@@ -539,14 +543,14 @@ static UIColor *MDCBottomDrawerShadowColor(void) {
 }
 
 - (void)cacheLayoutCalculationsWithAddedContentHeight:(CGFloat)addedContentHeight {
-  CGFloat mainContentHeight = self.mainContentViewController.preferredContentSize.height;
+  CGFloat contentHeight = self.contentViewController.preferredContentSize.height;
   CGFloat contentHeaderHeight = self.contentHeaderHeight;
   CGFloat containerHeight = self.presentingViewBounds.size.height;
 
-  mainContentHeight += addedContentHeight;
+  contentHeight += addedContentHeight;
   _addedContentHeight = addedContentHeight;
 
-  CGFloat totalHeight = mainContentHeight + contentHeaderHeight;
+  CGFloat totalHeight = contentHeight + contentHeaderHeight;
   CGFloat contentHeightThresholdForScrollability =
       containerHeight * kMDCBottomDrawerInitialDrawerHeightFactor + contentHeaderHeight;
   BOOL contentScrollsToReveal = totalHeight > contentHeightThresholdForScrollability;
@@ -560,7 +564,7 @@ static UIColor *MDCBottomDrawerShadowColor(void) {
     }
   }
 
-  CGFloat scrollingDistance = _contentHeaderTopInset + contentHeaderHeight + mainContentHeight;
+  CGFloat scrollingDistance = _contentHeaderTopInset + contentHeaderHeight + contentHeight;
   _contentHeightSurplus = scrollingDistance - containerHeight;
 
   if (addedContentHeight < FLT_EPSILON && (_contentHeaderTopInset > _contentHeightSurplus) &&
@@ -651,6 +655,7 @@ static UIColor *MDCBottomDrawerShadowColor(void) {
 }
 
 - (CGFloat)addedContentHeightThreshold {
+  // TODO(yar): change this to use safeAreaInsets as this is a soon to be deprecated API.
   return MDCDeviceTopSafeAreaInset();
 }
 

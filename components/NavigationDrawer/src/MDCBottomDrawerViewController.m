@@ -29,6 +29,7 @@
 
 - (instancetype)init {
   self = [super init];
+
   if (self) {
     _transitionController = [[MDCBottomDrawerTransitionController alloc] init];
   }

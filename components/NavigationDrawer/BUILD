@@ -19,14 +19,14 @@ load("//:material_components_ios.bzl",
 
 licenses(["notice"])  # Apache 2.0
 
-mdc_public_objc_library(
+mdc_objc_library(
     name = "NavigationDrawer",
     sdk_frameworks = [
         "Foundation",
         "UIKit",
     ],
+    hdrs = glob(include=[], exclude=["src/MDCBottomDrawerHeader.h"]),
     deps = [
-        ":NavigationDrawerHeaderProtocol",
         ":NavigationDrawerPrivate",
     ],
 )

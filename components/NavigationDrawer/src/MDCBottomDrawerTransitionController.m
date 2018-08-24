@@ -42,9 +42,10 @@ static const CGFloat kMDCBottomDrawerOpenAnimationSpringDampingRatio = 0.85f;
     presentationControllerForPresentedViewController:(UIViewController *)presented
                             presentingViewController:(UIViewController *)presenting
                                 sourceViewController:(UIViewController *)source {
-  BOOL voiceOverIsRunning = UIAccessibilityIsVoiceOverRunning();
+  BOOL enableAccessibilityMode =
+      UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning();
 
-  if (voiceOverIsRunning) {
+  if (enableAccessibilityMode) {
     // TODO(yar): Display drawer in full screen. To be done in a follow up PR.
     return nil;
   } else {

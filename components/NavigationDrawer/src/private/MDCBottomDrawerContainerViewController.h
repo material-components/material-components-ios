@@ -38,10 +38,10 @@
                                  bundle:(nullable NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
 
 /**
- The main content displayed by the drawer.
+ The content displayed by the drawer.
  Its height is determined by the returned preferred content size.
  */
-@property(nonatomic, nullable) UIViewController *mainContentViewController;
+@property(nonatomic, nullable) UIViewController *contentViewController;
 
 /**
  A header to display above the drawer's main content.

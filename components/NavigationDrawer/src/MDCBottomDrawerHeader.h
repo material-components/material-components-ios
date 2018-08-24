@@ -26,6 +26,12 @@
  The drawer header transition to top ratio: zero represents the drawer being
  fully displayed as part of the content, one represents the drawer being fully
  displayed as a top header.
+
+ @param transitionToTopRatio moves between 0 to 1 as the transition of the header view
+ transforms from being above the content to becoming sticky on the top. It is 0 when the drawer
+ is above the content and starts changing as the header view expands to cover the status bar and
+ safe area based on the completion rate. It is 1 once the header finishes its transition to become
+ sticky on the top and it's height is at the size of its preferredContentSize + the safe area.
  */
 - (void)updateDrawerHeaderTransitionRatio:(CGFloat)transitionToTopRatio;
 

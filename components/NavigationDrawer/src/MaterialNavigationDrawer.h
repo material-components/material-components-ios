@@ -18,4 +18,3 @@
 #import "MDCBottomDrawerViewController.h"
 #import "MDCBottomDrawerTransitionController.h"
 #import "MDCBottomDrawerPresentationController.h"
-

@@ -26,9 +26,9 @@ static UIColor *MDCBottomDrawerOverlayBackgroundColor(void) {
 @interface MDCBottomDrawerPresentationController () <UIGestureRecognizerDelegate>
 
 /**
- A semi-transparent view that darkens the visible main view when the drawer is displayed.
+ A semi-transparent scrim view that darkens the visible main view when the drawer is displayed.
  */
-@property(nonatomic) UIView *dimmingView;
+@property(nonatomic) UIView *scrimView;
 
 /**
  The bottom drawer container view controller.
@@ -53,25 +53,24 @@ static UIColor *MDCBottomDrawerOverlayBackgroundColor(void) {
   if ([self.presentedViewController isKindOfClass:[MDCBottomDrawerViewController class]]) {
     MDCBottomDrawerViewController *bottomDrawerViewController =
         (MDCBottomDrawerViewController *)self.presentedViewController;
-    bottomDrawerContainerViewController.mainContentViewController =
-        bottomDrawerViewController.mainContentViewController;
+    bottomDrawerContainerViewController.contentViewController =
+        bottomDrawerViewController.contentViewController;
     bottomDrawerContainerViewController.headerViewController =
         bottomDrawerViewController.headerViewController;
   } else {
-    bottomDrawerContainerViewController.mainContentViewController = self.presentedViewController;
+    bottomDrawerContainerViewController.contentViewController = self.presentedViewController;
   }
   bottomDrawerContainerViewController.animatingPresentation = YES;
   self.bottomDrawerContainerViewController = bottomDrawerContainerViewController;
 
-  self.dimmingView = [[UIView alloc] initWithFrame:self.containerView.bounds];
-  self.dimmingView.backgroundColor = MDCBottomDrawerOverlayBackgroundColor();
-  self.dimmingView.translatesAutoresizingMaskIntoConstraints = NO;
-  self.dimmingView.autoresizingMask =
+  self.scrimView = [[UIView alloc] initWithFrame:self.containerView.bounds];
+  self.scrimView.backgroundColor = MDCBottomDrawerOverlayBackgroundColor();
+  self.scrimView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  self.dimmingView.accessibilityIdentifier = @"Close drawer";
-  self.dimmingView.accessibilityTraits |= UIAccessibilityTraitButton;
+  self.scrimView.accessibilityIdentifier = @"Close drawer";
+  self.scrimView.accessibilityTraits |= UIAccessibilityTraitButton;
 
-  [containerView addSubview:self.dimmingView];
+  [containerView addSubview:self.scrimView];
   [containerView addSubview:self.bottomDrawerContainerViewController.view];
 
   // Set up the tap recognizer to dimiss the drawer by.
@@ -83,11 +82,11 @@ static UIColor *MDCBottomDrawerOverlayBackgroundColor(void) {
   id<UIViewControllerTransitionCoordinator> transitionCoordinator =
       [[self presentingViewController] transitionCoordinator];
 
-  // Fade in the dimming view during the transition.
-  self.dimmingView.alpha = 0.0;
+  // Fade in the scrim view during the transition.
+  self.scrimView.alpha = 0.0;
   [transitionCoordinator
       animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        self.dimmingView.alpha = 1.0;
+        self.scrimView.alpha = 1.0;
       }
                       completion:nil];
 }
@@ -96,7 +95,7 @@ static UIColor *MDCBottomDrawerOverlayBackgroundColor(void) {
   self.bottomDrawerContainerViewController.animatingPresentation = NO;
   [self.bottomDrawerContainerViewController.view setNeedsLayout];
   if (!completed) {
-    [self.dimmingView removeFromSuperview];
+    [self.scrimView removeFromSuperview];
   }
 }
 
@@ -105,19 +104,20 @@ static UIColor *MDCBottomDrawerOverlayBackgroundColor(void) {
       [[self presentingViewController] transitionCoordinator];
   [transitionCoordinator
       animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        self.dimmingView.alpha = 0.0;
+        self.scrimView.alpha = 0.0;
       }
                       completion:nil];
 }
 
 - (void)dismissalTransitionDidEnd:(BOOL)completed {
   if (completed) {
-    [self.dimmingView removeFromSuperview];
+    [self.scrimView removeFromSuperview];
   }
 }
 
 - (void)preferredContentSizeDidChangeForChildContentContainer:(id<UIContentContainer>)container {
   [super preferredContentSizeDidChangeForChildContentContainer:container];
+
   [self.bottomDrawerContainerViewController.view layoutIfNeeded];
 }
 
