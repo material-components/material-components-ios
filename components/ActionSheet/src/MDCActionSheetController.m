@@ -120,6 +120,10 @@ static NSString *const ReuseIdentifier = @"BaseCell";
   return self;
 }
 
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)addAction:(MDCActionSheetAction *)action {
   [_actions addObject:action];
   [self updateTable];

@@ -54,6 +54,10 @@ static const CGFloat MiddlePadding = 8.f;
   return self;
 }
 
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)layoutSubviews {
   [super layoutSubviews];
 
