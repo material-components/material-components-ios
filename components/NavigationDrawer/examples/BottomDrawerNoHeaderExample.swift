@@ -31,6 +31,10 @@ class BottomDrawerNoHeaderExample: UIViewController {
 
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
+    // This shows that it is possible to present the content view controller directly without
+    // the need of the MDCBottomDrawerViewController wrapper. To present the view controller
+    // inside the drawer, both the transition controller and the custom presentation controller
+    // of the drawer need to be set.
     contentViewController.transitioningDelegate = bottomDrawerTransitionController
     contentViewController.modalPresentationStyle = .custom
     present(contentViewController, animated: true, completion: nil)
