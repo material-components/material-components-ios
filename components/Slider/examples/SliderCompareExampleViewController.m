@@ -25,7 +25,12 @@
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @end
 
-@implementation SliderCompareExampleViewController
+@implementation SliderCompareExampleViewController {
+  MDCSlider *_slider;
+  UILabel *_label;
+  UISlider *_uiSlider;
+  UILabel *_uiSliderLabel;
+}
 
 - (id)init {
   self = [super init];
@@ -40,37 +45,45 @@
   self.view.backgroundColor = [UIColor whiteColor];
 
   // Load your Material Component here.
-  MDCSlider *slider = [[MDCSlider alloc] initWithFrame:CGRectMake(0, 0, 100, 27)];
-  slider.statefulAPIEnabled = YES;
-  [MDCSliderColorThemer applySemanticColorScheme:self.colorScheme toSlider:slider];
-  [slider addTarget:self
+  _slider = [[MDCSlider alloc] initWithFrame:CGRectMake(0, 0, 100, 27)];
+  _slider.statefulAPIEnabled = YES;
+  [MDCSliderColorThemer applySemanticColorScheme:self.colorScheme toSlider:_slider];
+  [_slider addTarget:self
                 action:@selector(didChangeMDCSliderValue:)
       forControlEvents:UIControlEventValueChanged];
-  [self.view addSubview:slider];
-  slider.center = CGPointMake(CGRectGetMidX(self.view.bounds), 46);
+  [self.view addSubview:_slider];
 
-  UILabel *label = [[UILabel alloc] init];
-  label.text = @"MDCSlider";
-  [label sizeToFit];
-  [self.view addSubview:label];
-  label.center = CGPointMake(slider.center.x, slider.center.y + 2 * label.frame.size.height);
-  label.frame = MDCRectAlignToScale(label.frame, [UIScreen mainScreen].scale);
+  _label = [[UILabel alloc] init];
+  _label.text = @"MDCSlider";
+  [_label sizeToFit];
+  [self.view addSubview:_label];
 
   // Vanilla  UISlider for comparison.
-  UISlider *uiSlider = [[UISlider alloc] initWithFrame:CGRectMake(0, 0, 100, 27)];
-  [uiSlider addTarget:self
+  _uiSlider = [[UISlider alloc] initWithFrame:CGRectMake(0, 0, 100, 27)];
+  [_uiSlider addTarget:self
                 action:@selector(didChangeUISliderValue:)
       forControlEvents:UIControlEventValueChanged];
-  [self.view addSubview:uiSlider];
-  uiSlider.center = CGPointMake(CGRectGetMidX(self.view.bounds), 184);
+  [self.view addSubview:_uiSlider];
 
-  UILabel *uiSliderLabel = [[UILabel alloc] init];
-  uiSliderLabel.text = @"UISlider";
-  [uiSliderLabel sizeToFit];
-  [self.view addSubview:uiSliderLabel];
-  uiSliderLabel.center =
-      CGPointMake(uiSlider.center.x, uiSlider.center.y + 2 * uiSliderLabel.frame.size.height);
-  uiSliderLabel.frame = MDCRectAlignToScale(uiSliderLabel.frame, [UIScreen mainScreen].scale);
+  _uiSliderLabel = [[UILabel alloc] init];
+  _uiSliderLabel.text = @"UISlider";
+  [_uiSliderLabel sizeToFit];
+  [self.view addSubview:_uiSliderLabel];
+}
+
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+
+  _slider.center = CGPointMake(CGRectGetMidX(self.view.bounds),
+                              CGRectGetMidY(self.view.bounds) - 50);
+  _label.center = CGPointMake(_slider.center.x, _slider.center.y + 2 * _label.frame.size.height);
+  _label.frame = MDCRectAlignToScale(_label.frame, [UIScreen mainScreen].scale);
+
+  _uiSlider.center = CGPointMake(CGRectGetMidX(self.view.bounds),
+                                 CGRectGetMidY(self.view.bounds) + 50);
+  _uiSliderLabel.center = CGPointMake(_uiSlider.center.x,
+                                      _uiSlider.center.y + 2 * _uiSliderLabel.frame.size.height);
+  _uiSliderLabel.frame = MDCRectAlignToScale(_uiSliderLabel.frame, [UIScreen mainScreen].scale);
 }
 
 - (void)didChangeMDCSliderValue:(MDCSlider *)slider {
