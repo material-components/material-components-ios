@@ -297,7 +297,6 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
   self.view.backgroundColor = backgroundColor;
   _tableView.backgroundColor = backgroundColor;
-  [_tableView setNeedsLayout];
   _header.backgroundColor = backgroundColor;
 }
 
