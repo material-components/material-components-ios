@@ -132,6 +132,20 @@ IB_DESIGNABLE
 @property(nonatomic, strong, null_resettable) UIFont *titleFont;
 
 /**
+ A behavioral flag that affects whether titleFont can be set to a font of any size or not.
+
+ If enabled, titleFont can be set to a font of any size.
+
+ If disabled, titleFont's size will be adjusted to 20 regardless of the provided font size.
+
+ We intend to enable this property by default in the future and to remote this flag entirely.
+ Consider enabling this flag on your navigation bar instances.
+
+ Default is NO.
+ */
+@property(nonatomic) BOOL allowAnyTitleFontSize;
+
+/**
  The title label's text color.
 
  Default is nil (text draws black).
