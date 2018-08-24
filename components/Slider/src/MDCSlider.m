@@ -105,7 +105,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   _backgroundTickColorsForState = [@{} mutableCopy];
   _backgroundTickColorsForState[@(UIControlStateNormal)] = UIColor.blackColor;
   _thumbRadiusesForState = [@{} mutableCopy];
-  _thumbRadiusesForState[@(UIControlStateNormal)] = [[self class] defaultThumbRadius];
+  _thumbRadiusesForState[@(UIControlStateNormal)] = @(kSliderDefaultThumbRadius);
   [self addSubview:_thumbTrack];
 }
 
@@ -115,6 +115,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   _statefulAPIEnabled = statefulAPIEnabled;
   if (statefulAPIEnabled) {
     [self updateColorsForState];
+    [self updateThumbForState];
   }
 }
 
@@ -212,19 +213,19 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 }
 
 - (void)setThumbRadius:(CGFloat)thumbRadius forState:(UIControlState)state {
-  _thumbRadiusesForState[@(state)] = thumbRadius;
+  _thumbRadiusesForState[@(state)] = @(thumbRadius);
   if (self.state == state) {
     [self updateThumbForState];
   }
 }
 
 - (CGFloat)thumbRadiusForState:(UIControlState)state {
-  CGFloat *radius = _thumbRadiusesForState[@(state)];
-  if (radius) {
-    return radius;
+  if ([_thumbRadiusesForState objectForKey:@(state)]) {
+    return [_thumbRadiusesForState[@(state)] doubleValue];
   }
+  CGFloat radius = 0.f;
   if (state != UIControlStateNormal) {
-    radius = _thumbRadiusesForState[@(UIControlStateNormal)];
+    radius = [_thumbRadiusesForState[@(UIControlStateNormal)] doubleValue];
   }
   return radius;
 }
@@ -247,6 +248,14 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   _thumbTrack.inkColor = self.inkColor;
   _thumbTrack.trackOnTickColor = [self filledTrackTickColorForState:self.state];
   _thumbTrack.trackOffTickColor = [self backgroundTrackTickColorForState:self.state];
+}
+
+- (void)updateThumbForState {
+  if (!self.isStatefulAPIEnabled) {
+    return;
+  }
+
+  _thumbTrack.thumbRadius = [self thumbRadiusForState:self.state];
 }
 
 #pragma mark - ThumbTrack passthrough methods
