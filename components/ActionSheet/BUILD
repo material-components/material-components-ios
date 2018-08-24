@@ -42,7 +42,7 @@ swift_library(
 )
 
 mdc_objc_library(
-    name = "unit_test_source",
+    name = "unit_test_sources",
     testonly = 1,
     srcs = native.glob([
         "test/unit/*.m",
