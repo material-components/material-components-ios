@@ -24,15 +24,13 @@ class BottomDrawerNoHeaderExample: UIViewController {
   let bottomDrawerTransitionController = MDCBottomDrawerTransitionController()
 
   override func viewDidLoad() {
+    super.viewDidLoad()
     view.backgroundColor = colorScheme.backgroundColor
     contentViewController.colorScheme = colorScheme
   }
 
   override func viewDidAppear(_ animated: Bool) {
-    showContentViewControllerOnly()
-  }
-
-  func showContentViewControllerOnly() {
+    super.viewDidAppear(animated)
     contentViewController.transitioningDelegate = bottomDrawerTransitionController
     contentViewController.modalPresentationStyle = .custom
     present(contentViewController, animated: true, completion: nil)

@@ -24,21 +24,20 @@ class BottomDrawerInfiniteScrollingExample: UIViewController {
   let contentViewController = DrawerContentTableViewController()
 
   override func viewDidLoad() {
+    super.viewDidLoad()
     view.backgroundColor = colorScheme.backgroundColor
     contentViewController.colorScheme = colorScheme
   }
 
   override func viewDidAppear(_ animated: Bool) {
-    showWrappedViewController();
-  }
-
-  func showWrappedViewController() {
+    super.viewDidAppear(animated)
     let bottomDrawerViewController = MDCBottomDrawerViewController()
     bottomDrawerViewController.contentViewController = contentViewController
     bottomDrawerViewController.headerViewController = headerViewController
     bottomDrawerViewController.trackingScrollView = contentViewController.tableView
     present(bottomDrawerViewController, animated: true, completion: nil)
   }
+
 }
 
 class DrawerContentTableViewController: UITableViewController {

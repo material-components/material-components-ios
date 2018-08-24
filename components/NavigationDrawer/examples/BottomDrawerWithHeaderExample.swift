@@ -24,16 +24,14 @@ class BottomDrawerWithHeaderExample: UIViewController {
   let contentViewController = DrawerContentViewController()
 
   override func viewDidLoad() {
+    super.viewDidLoad()
     view.backgroundColor = colorScheme.backgroundColor
     headerViewController.colorScheme = colorScheme
     contentViewController.colorScheme = colorScheme
   }
 
   override func viewDidAppear(_ animated: Bool) {
-    showWrappedViewController()
-  }
-
-  func showWrappedViewController() {
+    super.viewDidAppear(animated)
     let bottomDrawerViewController = MDCBottomDrawerViewController()
     bottomDrawerViewController.contentViewController = contentViewController
     bottomDrawerViewController.headerViewController = headerViewController

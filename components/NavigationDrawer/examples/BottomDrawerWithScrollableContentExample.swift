@@ -24,22 +24,21 @@ class BottomDrawerWithScrollableContentExample: UIViewController {
   let contentViewController = DrawerContentWithScrollViewController()
 
   override func viewDidLoad() {
+    super.viewDidLoad()
     view.backgroundColor = colorScheme.backgroundColor
     headerViewController.colorScheme = colorScheme
     contentViewController.colorScheme = colorScheme
   }
 
   override func viewDidAppear(_ animated: Bool) {
-    showWrappedViewController();
-  }
-
-  func showWrappedViewController() {
+    super.viewDidAppear(animated)
     let bottomDrawerViewController = MDCBottomDrawerViewController()
     bottomDrawerViewController.contentViewController = contentViewController
     bottomDrawerViewController.headerViewController = headerViewController
     bottomDrawerViewController.trackingScrollView = contentViewController.collectionView
     present(bottomDrawerViewController, animated: true, completion: nil)
   }
+
 }
 
 class DrawerContentWithScrollViewController: UIViewController,
@@ -83,6 +82,7 @@ class DrawerContentWithScrollViewController: UIViewController,
   }
 
   override func viewWillLayoutSubviews() {
+    super.viewWillLayoutSubviews()
     let s = self.view.frame.size.width / 3
     layout.itemSize = CGSize(width: s, height: s)
   }
