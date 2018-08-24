@@ -18,6 +18,8 @@ manually clone the repo and add the code to their project. This is by design.
 Alpha components are not subject to our deprecation policy and we will not provide behavioral flags
 for gradual migration of runtime behaviors.
 
+Changes to Alpha components will have **no** effect on our release version numbers.
+
 Once a component is ready for general production use, we will graduate the component to the
 `MaterialComponents.podspec`. At this point the component will be subject to all of the processes
 and expectations that any other production component.
