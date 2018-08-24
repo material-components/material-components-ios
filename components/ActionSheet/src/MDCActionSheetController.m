@@ -16,8 +16,8 @@
 
 #import "MDCActionSheetController.h"
 
-#import "MDCActionSheetItemTableViewCell.h"
-#import "MDCActionSheetHeaderView.h"
+#import "private/MDCActionSheetItemTableViewCell.h"
+#import "private/MDCActionSheetHeaderView.h"
 #import "MaterialBottomSheet.h"
 #import "MaterialApplication.h"
 #import "MaterialTypography.h"
