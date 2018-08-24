@@ -41,12 +41,12 @@ static const CGFloat MiddlePadding = 8.f;
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     _messageLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     [self addSubview:_titleLabel];
-    _titleLabel.font = [MDCTypography subheadFont];
+    _titleLabel.font = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
     _titleLabel.numberOfLines = 0;
     _titleLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
 
     [self addSubview:_messageLabel];
-    _messageLabel.font = [MDCTypography body1Font];
+    _messageLabel.font = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody1];
     _messageLabel.numberOfLines = 2;
     _messageLabel.lineBreakMode = NSLineBreakByWordWrapping;
     _messageLabel.alpha = MessageLabelAlpha;
@@ -149,27 +149,14 @@ static const CGFloat MiddlePadding = 8.f;
   return _messageLabel.font;
 }
 
-+ (UIFont *)titleFontDefault {
-  if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-    return [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
-  }
-  return [MDCTypography subheadFont];
-}
-
-+ (UIFont *)messageFontDefault {
-  if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-    return [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody1];
-  }
-  return [MDCTypography body1Font];
-}
-
 - (void)updateFonts {
   [self updateTitleFont];
   [self updateMessageFont];
 }
 
 - (void)updateTitleFont {
-  UIFont *titleFont = self.titleFont ?: [[self class] titleFontDefault];
+  UIFont *titleFont = self.titleFont ?:
+      [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
   if (self.mdc_adjustsFontForContentSizeCategory) {
     _titleLabel.font =
         [titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
@@ -181,7 +168,8 @@ static const CGFloat MiddlePadding = 8.f;
 }
 
 - (void)updateMessageFont {
-  UIFont *messageFont = self.messageFont ?: [[self class] messageFontDefault];
+  UIFont *messageFont = self.messageFont ?:
+      [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody1];
   if (self.mdc_adjustsFontForContentSizeCategory) {
     _messageLabel.font =
         [messageFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleBody1

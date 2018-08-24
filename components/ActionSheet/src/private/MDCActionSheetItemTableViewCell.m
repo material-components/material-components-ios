@@ -52,12 +52,7 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
   _textLabel.numberOfLines = 0;
   _textLabel.translatesAutoresizingMaskIntoConstraints = NO;
   [_textLabel sizeToFit];
-
-  if (_mdc_adjustsFontForContentSizeCategory) {
-    _textLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
-  } else {
-    _textLabel.font = [MDCTypography subheadFont];
-  }
+  _textLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
   _textLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
   _textLabel.alpha = CellLabelAlpha;
   CGFloat leadingConstant;
@@ -168,15 +163,9 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
   [self updateTitleFont];
 }
 
-+ (UIFont *)titleFontDefault {
-  if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-    return [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
-  }
-  return [MDCTypography subheadFont];
-}
-
 - (void)updateTitleFont {
-  UIFont *titleFont = _actionFont ?: [[self class] titleFontDefault];
+  UIFont *titleFont = _actionFont ?:
+      [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
   if (self.mdc_adjustsFontForContentSizeCategory) {
     _textLabel.font =
         [titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline

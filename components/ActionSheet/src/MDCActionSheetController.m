@@ -140,7 +140,7 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
 
-  CGSize size = [_header sizeThatFits:self.view.bounds.size];
+  CGSize size = [_header sizeThatFits:CGRectStandardize(self.view.bounds).size];
   _header.frame = CGRectMake(0, 0, self.view.bounds.size.width, size.height);
   UIEdgeInsets insets = UIEdgeInsetsMake(_header.frame.size.height, 0, 0, 0);
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
@@ -324,15 +324,9 @@ static NSString *const ReuseIdentifier = @"BaseCell";
   [self.view setNeedsLayout];
 }
 
-+ (UIFont *)actionFontDefault {
-  if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-    return [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
-  }
-  return [MDCTypography subheadFont];
-}
-
 - (void)updateTableFonts {
-  UIFont *finalActionsFont = _actionFont ?: [[self class] actionFontDefault];
+  UIFont *finalActionsFont = _actionFont ?:
+      [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
   if (self.mdc_adjustsFontForContentSizeCategory) {
     finalActionsFont =
         [finalActionsFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
