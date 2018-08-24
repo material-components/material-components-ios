@@ -18,6 +18,7 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
+#import "MaterialApplication.h"
 #import "MaterialButtons.h"
 #import "private/MDCAppBarButtonBarBuilder.h"
 
@@ -319,6 +320,14 @@ static NSString *const kEnabledSelector = @"enabled";
   }
 
   if (![target respondsToSelector:item.action]) {
+    return;
+  }
+
+  if (![target respondsToSelector:@selector(methodSignatureForSelector:)]) {
+    UIApplication *application = [UIApplication mdc_safeSharedApplication];
+    NSAssert(application != nil,
+             @"No UIApplication is available to send an event from; it will be lost.");
+    [application sendAction:item.action to:target from:item forEvent:event];
     return;
   }
 
