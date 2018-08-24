@@ -162,28 +162,6 @@ IB_DESIGNABLE
 - (nullable UIColor *)backgroundTrackTickColorForState:(UIControlState)state;
 
 /**
- Sets the thumb radius to use for the specified state.
-
- In general, if a property is not specified for a state, the default is to use the @c
- UIControlStateNormal value. If the @c UIControlStateNormal value is not set, then the property
- defaults to a default value. Therefore, at a minimum, you should set the value for the normal
- state.
-
- @param thumbRadius The radius of the thumb.
- @param state The state of the slider.
- */
-- (void)setThumbRadius:(CGFloat)thumbRadius forState:(UIControlState)state;
-
-/**
- Returns the thumb radius associated with the specified state.
-
- @params state The state that uses the thumb radius.
- @returns The thumb radius for the specified state. If no radius has been set for the specific
-          state, this method returns the radius associated with the @c UIControlStateNormal state.
- */
-- (CGFloat)thumbRadiusForState:(UIControlState)state;
-
-/**
  The color of the Ink ripple.
 
  Defaults to transparent blue.
