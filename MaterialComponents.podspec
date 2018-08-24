@@ -605,18 +605,6 @@ Pod::Spec.new do |mdc|
     extension.dependency "MaterialComponents/schemes/Typography"
   end
 
-  # NavigationDrawer
-
-  mdc.subspec "NavigationDrawer" do |component|
-    component.ios.deployment_target = '8.0'
-    component.public_header_files = "components/#{component.base_name}/src/*.h"
-    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
-
-    component.dependency "MaterialComponents/ShadowLayer"
-    component.dependency "MaterialComponents/private/UIMetrics"
-
-  end
-
   # OverlayWindow
 
   mdc.subspec "OverlayWindow" do |component|

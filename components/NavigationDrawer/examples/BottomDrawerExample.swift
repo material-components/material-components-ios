@@ -15,6 +15,7 @@
  */
 
 import UIKit
+import MaterialComponentsAlpha.MaterialNavigationDrawer
 
 class BottomDrawerInfiniteScrollingExample: UIViewController {
 
