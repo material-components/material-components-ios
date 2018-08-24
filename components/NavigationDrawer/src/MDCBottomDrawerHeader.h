@@ -22,6 +22,7 @@
  */
 @protocol MDCBottomDrawerHeader
 
+@optional
 /**
  The drawer header transition to top ratio: zero represents the drawer being
  fully displayed as part of the content, one represents the drawer being fully

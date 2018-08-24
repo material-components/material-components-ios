@@ -364,7 +364,9 @@ static UIColor *MDCBottomDrawerShadowColor(void) {
   }
 
   [self addChildViewController:self.headerViewController];
-  [self.headerViewController updateDrawerHeaderTransitionRatio:0];
+  if ([self.headerViewController respondsToSelector:@selector(updateDrawerHeaderTransitionRatio:)]) {
+    [self.headerViewController updateDrawerHeaderTransitionRatio:0];
+  }
 
   // Ensures the content header view has a sensible size so its subview layout correctly
   // before the drawer presentation animation.
@@ -416,8 +418,11 @@ static UIColor *MDCBottomDrawerShadowColor(void) {
   UIView *contentHeaderView = self.headerViewController.view;
   BOOL contentReachesFullscreen = self.contentReachesFullscreen;
 
-  [self.headerViewController
-      updateDrawerHeaderTransitionRatio:contentReachesFullscreen ? headerTransitionToTop : 0.f];
+  if ([self.headerViewController
+       respondsToSelector:@selector(updateDrawerHeaderTransitionRatio:)]) {
+    [self.headerViewController
+        updateDrawerHeaderTransitionRatio:contentReachesFullscreen ? headerTransitionToTop : 0.f];
+  }
   CGFloat contentHeaderHeight = self.contentHeaderHeight;
   CGFloat headersDiff = fullscreenHeaderHeight - contentHeaderHeight;
   CGFloat contentHeaderViewHeight = contentHeaderHeight + headerTransitionToTop * headersDiff;
