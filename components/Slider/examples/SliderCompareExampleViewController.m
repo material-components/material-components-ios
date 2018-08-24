@@ -42,7 +42,7 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  self.view.backgroundColor = [UIColor whiteColor];
+  self.view.backgroundColor = self.colorScheme.backgroundColor;
 
   // Load your Material Component here.
   _slider = [[MDCSlider alloc] initWithFrame:CGRectMake(0, 0, 100, 27)];
@@ -55,6 +55,7 @@
 
   _label = [[UILabel alloc] init];
   _label.text = @"MDCSlider";
+  
   [_label sizeToFit];
   [self.view addSubview:_label];
 
