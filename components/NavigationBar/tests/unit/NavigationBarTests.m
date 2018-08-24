@@ -175,28 +175,60 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 }
 
 - (void)testTitleFontProperty {
+  // Given
   MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
-  navBar.frame = CGRectMake(0, 0, 300, 25);
   navBar.title = @"this is a Title";
-  navBar.titleAlignment = MDCNavigationBarTitleAlignmentCenter;
-  [navBar layoutIfNeeded];
 
+  // Then
   XCTAssertNotNil(navBar.titleFont);
-  XCTAssertEqual(navBar.titleLabel.font, navBar.titleFont);
+  XCTAssertEqualObjects(navBar.titleLabel.font, navBar.titleFont);
 
+  // When
   UIFont *font = [UIFont systemFontOfSize:24];
   navBar.titleFont = font;
 
+  // Then
   UIFont *resultFont = navBar.titleLabel.font;
   XCTAssertEqualObjects(resultFont.fontName, font.fontName);
   XCTAssertEqualWithAccuracy(resultFont.pointSize, 20, 0.01);
 
+  // When
   NSDictionary <NSString *, NSNumber *> *fontTraits =
       [[font fontDescriptor] objectForKey:UIFontDescriptorTraitsAttribute];
   NSDictionary <NSString *, NSNumber *> *resultTraits =
       [[resultFont fontDescriptor] objectForKey:UIFontDescriptorTraitsAttribute];
 
-  XCTAssertEqual(fontTraits, resultTraits);
+  // Then
+  XCTAssertEqualObjects(fontTraits, resultTraits);
+}
+
+- (void)testTitleFontPropertyWithAllowAnyTitleFontSizeEnabled {
+  // Given
+  MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
+  navBar.title = @"this is a Title";
+  navBar.allowAnyTitleFontSize = YES;
+
+  // Then
+  XCTAssertNotNil(navBar.titleFont);
+  XCTAssertEqualObjects(navBar.titleLabel.font, navBar.titleFont);
+
+  // When
+  UIFont *font = [UIFont systemFontOfSize:24];
+  navBar.titleFont = font;
+
+  // Then
+  UIFont *resultFont = navBar.titleLabel.font;
+  XCTAssertEqualObjects(resultFont.fontName, font.fontName);
+  XCTAssertEqualWithAccuracy(resultFont.pointSize, 24, 0.01);
+
+  // When
+  NSDictionary <NSString *, NSNumber *> *fontTraits =
+      [[font fontDescriptor] objectForKey:UIFontDescriptorTraitsAttribute];
+  NSDictionary <NSString *, NSNumber *> *resultTraits =
+      [[resultFont fontDescriptor] objectForKey:UIFontDescriptorTraitsAttribute];
+
+  // Then
+  XCTAssertEqualObjects(fontTraits, resultTraits);
 }
 
 #pragma mark - Accessibility
