@@ -24,5 +24,4 @@
 
 @interface SliderCollectionViewController : UICollectionViewController
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
-
 @end

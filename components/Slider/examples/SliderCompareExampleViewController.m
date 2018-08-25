@@ -38,6 +38,7 @@
   self = [super init];
   if (self) {
     self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;
 }
@@ -54,10 +55,10 @@
                 action:@selector(didChangeMDCSliderValue:)
       forControlEvents:UIControlEventValueChanged];
   [self.view addSubview:_slider];
-
+  _label.font = self.typographyScheme.body1;
   _label = [[UILabel alloc] init];
   _label.text = @"MDCSlider";
-  
+
   [_label sizeToFit];
   [self.view addSubview:_label];
 
@@ -70,6 +71,7 @@
 
   _uiSliderLabel = [[UILabel alloc] init];
   _uiSliderLabel.text = @"UISlider";
+  _uiSliderLabel.font = self.typographyScheme.body1;
   [_uiSliderLabel sizeToFit];
   [self.view addSubview:_uiSliderLabel];
 }

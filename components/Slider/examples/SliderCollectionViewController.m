@@ -16,9 +16,9 @@
 
 #import "MaterialCollections.h"
 #import "MaterialColorScheme.h"
+#import "MaterialTypographyScheme.h"
 #import "MaterialPalettes.h"
 #import "MaterialSlider.h"
-#import "MaterialTypography.h"
 #import "MaterialSlider+ColorThemer.h"
 #import "supplemental/SliderCollectionSupplemental.h"
 
@@ -82,12 +82,14 @@ static CGFloat const kSliderVerticalMargin = 12.f;
 @implementation MDCSliderExampleCollectionViewCell {
   UILabel *_label;
   MDCSlider *_slider;
+  MDCTypographyScheme *_typographyScheme;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
   if (self = [super initWithFrame:frame]) {
+    _typographyScheme = [[MDCTypographyScheme alloc] init];
     _label = [[UILabel alloc] init];
-    _label.font = [MDCTypography body1Font];
+    _label.font = _typographyScheme.subtitle2;
     [self.contentView addSubview:_label];
 
     _slider = [[MDCSlider alloc] initWithFrame:CGRectZero];
@@ -162,16 +164,17 @@ static CGFloat const kSliderVerticalMargin = 12.f;
 
 @implementation MDCSliderFlowLayout
 
-- (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds {
+/*- (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds {
   if (!CGSizeEqualToSize(self.collectionView.bounds.size, newBounds.size)) {
     [self invalidateLayout];
     return YES;
   }
   return NO;
-}
+}*/
 
 - (void)invalidateLayout {
   [super invalidateLayout];
+  
   [self.collectionView setNeedsLayout];
 }
 
@@ -254,6 +257,17 @@ static CGFloat const kSliderVerticalMargin = 12.f;
   }
 
   return self;
+}
+
+-(void)viewDidLoad {
+  [super viewDidLoad];
+
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
+  }
+#endif
+  self.collectionView.contentInset = UIEdgeInsetsMake(20, 120, 20, 120);
 }
 
 #pragma mark - <UICollectionViewDataSource>
