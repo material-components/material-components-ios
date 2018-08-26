@@ -24,4 +24,4 @@ Once a component is ready for general production use, we will graduate the compo
 `MaterialComponents.podspec`. At this point the component will be subject to all of the processes
 and expectations that any other production component.
 
-All of your Swift example or test files must import `MaterialComponentsAlpha.$ComponentName`.
+All of your Swift example or test files must import `MaterialComponentsAlpha.ComponentName`.
