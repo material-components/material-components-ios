@@ -85,8 +85,20 @@ version_as_number() {
   echo "${padded_version//.}"
 }
 
+move_derived_data_to_tmp() {
+  targetDir="${HOME}/Library/Developer/Xcode/DerivedData"
+  if [[ -d "$targetDir" ]]; then
+    mv "$targetDir" /tmpfs/
+    ln -sf /tmpfs/DerivedData "$targetDir"
+  fi
+}
+
 run_bazel() {
   echo "Running bazel builds..."
+
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    move_derived_data_to_tmp
+  fi
 
   fix_bazel_imports
 
@@ -120,6 +132,10 @@ run_bazel() {
 
 run_cocoapods() {
   echo "Running cocoapods builds..."
+
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    move_derived_data_to_tmp
+  fi
 
   xcode_min_version_as_number="$(version_as_number $XCODE_MINIMUM_VERSION)"
 

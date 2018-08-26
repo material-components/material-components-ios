@@ -29,6 +29,7 @@ mdc_public_objc_library(
     ],
     deps = [
         "//components/Buttons",
+        "//components/private/Application",
         "@material_internationalization_ios//:MDFInternationalization",
     ],
 )
@@ -43,7 +44,6 @@ mdc_objc_library(
     ],
     deps = [
         ":ButtonBar",
-        "//components/NavigationBar",
         "//components/Themes",
     ],
     visibility = ["//visibility:public"],

@@ -13,10 +13,19 @@ Each release is driven by a single **release engineer**, who is also a Googler. 
 is expected to do the following, in order of priority:
 
 - Do not break Google.
+- Cut a release by first thing Wednesday morning, NYC time, without exception.
 - Land a release at least once a week.
 
-If something is stopping the release engineer from achieving either of the above goals, the
-culprit code should be removed immediately from the release.
+If something is stopping the release engineer from achieving any of the above goals, the culprit
+code should be removed immediately from the release.
+
+Importantly: **do not** block the cutting of the weekly release on a PR or a piece of functionality
+you'd like to land. If your PR hasn't landed by the time the release is cut, it's not making it into
+that week's release. If your PR is important, cut a [hotfix release](hotfixing.md) in addition to the
+typical weekly release.
+
+If you are not able to cut a release Wednesday morning, cut it Tuesday evening before you leave the
+office.
 
 ## Before you start
 
@@ -231,6 +240,9 @@ synchronization within Google.
 
     git push origin stable develop
 
+You can now sync to the desired stable release. [go/mdc-releasing#re-run-the-import-script-against-githubstable](http://go/mdc-releasing#re-run-the-import-script-against-githubstable). Once you've submitted
+the internal CL, continue below to tag and publish the release.
+
 ## Publish the official release
 
 > Have all release-blocking clients given the go-ahead? **Do not create the official release
@@ -240,8 +252,6 @@ synchronization within Google.
 You can now publish the release to GitHub:
 
     scripts/release publish <version>
-
-- Google: You can now sync the internal cl to the tagged stable release. [go/mdc-releasing#re-run-the-import-script-against-githubstable](http://go/mdc-releasing#re-run-the-import-script-against-githubstable). The release must be tagged in GitHub before you sync internally.
 
 ## Publish to Cocoapods
 

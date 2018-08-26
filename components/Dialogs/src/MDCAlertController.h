@@ -87,6 +87,9 @@
 /** The color applied to the button title text of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIColor *buttonTitleColor;
 
+/** The color applied to the button ink effect of Alert Controller.*/
+@property(nonatomic, strong, nullable) UIColor *buttonInkColor;
+
 // TODO(iangordon): Add support for preferredAction to match UIAlertController.
 // TODO(iangordon): Consider adding support for UITextFields to match UIAlertController.
 
