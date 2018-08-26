@@ -16,7 +16,7 @@
 
 #import "MDCBottomDrawerContainerViewController.h"
 
-#import "../MDCBottomDrawerHeader.h"
+#import "MDCBottomDrawerHeader.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialUIMetrics.h"
 
@@ -78,7 +78,7 @@ static UIColor *MDCBottomDrawerShadowColor(void) {
 
 @interface MDCBottomDrawerContainerViewController (LayoutValues)
 
-// The presenting view's bounds.
+// The presenting view's bounds after it has been standardized.
 @property(nonatomic, readonly) CGRect presentingViewBounds;
 
 // Whether the content reaches to fullscreen.
@@ -140,10 +140,9 @@ static UIColor *MDCBottomDrawerShadowColor(void) {
 }
 
 - (instancetype)initWithOriginalPresentingViewController:
-                    (UIViewController *)originalPresentingViewController
+    (UIViewController *)originalPresentingViewController
                                       trackingScrollView:(UIScrollView *)trackingScrollView {
   self = [super initWithNibName:nil bundle:nil];
-
   if (self) {
     _originalPresentingViewController = originalPresentingViewController;
     _contentHeaderTopInset = NSNotFound;
@@ -331,6 +330,7 @@ static UIColor *MDCBottomDrawerShadowColor(void) {
 
   // Layout the main content view.
   CGRect contentViewFrame = self.scrollView.bounds;
+  NSLog(@"%f", self.contentHeaderTopInset);
   contentViewFrame.origin.y = self.contentHeaderTopInset + self.contentHeaderHeight;
   if (self.trackingScrollView != nil) {
     contentViewFrame.size.height -=
@@ -503,6 +503,13 @@ static UIColor *MDCBottomDrawerShadowColor(void) {
   return _addedContentHeight;
 }
 
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+  [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+  _contentHeaderTopInset = NSNotFound;
+  _contentHeightSurplus = NSNotFound;
+  _addedContentHeight = NSNotFound;
+}
+
 #pragma mark UIScrollViewDelegate (Private)
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
@@ -614,7 +621,7 @@ static UIColor *MDCBottomDrawerShadowColor(void) {
 @implementation MDCBottomDrawerContainerViewController (LayoutValues)
 
 - (CGRect)presentingViewBounds {
-  return self.originalPresentingViewController.view.bounds;
+  return CGRectStandardize(self.originalPresentingViewController.view.bounds);
 }
 
 - (BOOL)contentReachesFullscreen {
@@ -660,7 +667,7 @@ static UIColor *MDCBottomDrawerShadowColor(void) {
 }
 
 - (CGFloat)addedContentHeightThreshold {
-  // TODO(yar): change this to use safeAreaInsets as this is a soon to be deprecated API.
+  // TODO: (#4900) change this to use safeAreaInsets as this is a soon to be deprecated API.
   return MDCDeviceTopSafeAreaInset();
 }
 

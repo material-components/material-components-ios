@@ -46,7 +46,7 @@ static const CGFloat kMDCBottomDrawerOpenAnimationSpringDampingRatio = 0.85f;
       UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning();
 
   if (enableAccessibilityMode) {
-    // TODO(yar): Display drawer in full screen. To be done in a follow up PR.
+    // TODO: (#4899) Display drawer in full screen. To be done in a follow up PR.
     return nil;
   } else {
     MDCBottomDrawerPresentationController *presentationController =
@@ -92,7 +92,7 @@ static const CGFloat kMDCBottomDrawerOpenAnimationSpringDampingRatio = 0.85f;
   if (presenting) {
     [containerView addSubview:animatingView];
     CGRect initialFrame = containerView.bounds;
-    initialFrame.origin.y = containerView.bounds.size.height;
+    initialFrame.origin.y = CGRectGetHeight(containerView.bounds);
     animatingView.frame = initialFrame;
     [UIView animateWithDuration:kMDCBottomDrawerOpenAnimationDuration
         delay:0
@@ -100,8 +100,7 @@ static const CGFloat kMDCBottomDrawerOpenAnimationSpringDampingRatio = 0.85f;
         initialSpringVelocity:0.f
         options:UIViewAnimationOptionCurveEaseOut
         animations:^{
-          CGRect finalFrame = containerView.bounds;
-          animatingView.frame = finalFrame;
+          animatingView.frame = containerView.bounds;
         }
         completion:^(BOOL finished) {
           [transitionContext completeTransition:YES];
@@ -110,7 +109,7 @@ static const CGFloat kMDCBottomDrawerOpenAnimationSpringDampingRatio = 0.85f;
     [UIView animateWithDuration:kMDCBottomDrawerCloseAnimationDuration
         animations:^{
           CGRect finalFrame = containerView.bounds;
-          finalFrame.origin.y = containerView.bounds.size.height;
+          finalFrame.origin.y = CGRectGetHeight(containerView.bounds);
           animatingView.frame = finalFrame;
         }
         completion:^(BOOL finished) {

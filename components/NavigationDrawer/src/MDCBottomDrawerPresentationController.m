@@ -39,18 +39,22 @@ static UIColor *MDCBottomDrawerOverlayBackgroundColor(void) {
 
 @implementation MDCBottomDrawerPresentationController
 
+// Override the presentedView property getter to return our container view controller's
+// view instead of the default.
 - (UIView *)presentedView {
   return self.bottomDrawerContainerViewController.view;
 }
 
 - (void)presentationTransitionWillBegin {
-  UIView *containerView = [self containerView];
-
   MDCBottomDrawerContainerViewController *bottomDrawerContainerViewController =
       [[MDCBottomDrawerContainerViewController alloc]
           initWithOriginalPresentingViewController:self.presentingViewController
                                 trackingScrollView:self.trackingScrollView];
   if ([self.presentedViewController isKindOfClass:[MDCBottomDrawerViewController class]]) {
+    // If in fact the presentedViewController is an MDCBottomDrawerViewController,
+    // we then know there is a content and an (optional) header view controller.
+    // We pass those view controllers to the MDCBottomDrawerContainerViewController that
+    // consists of the drawer logic.
     MDCBottomDrawerViewController *bottomDrawerViewController =
         (MDCBottomDrawerViewController *)self.presentedViewController;
     bottomDrawerContainerViewController.contentViewController =
@@ -70,14 +74,8 @@ static UIColor *MDCBottomDrawerOverlayBackgroundColor(void) {
   self.scrimView.accessibilityIdentifier = @"Close drawer";
   self.scrimView.accessibilityTraits |= UIAccessibilityTraitButton;
 
-  [containerView addSubview:self.scrimView];
-  [containerView addSubview:self.bottomDrawerContainerViewController.view];
-
-  // Set up the tap recognizer to dimiss the drawer by.
-  UITapGestureRecognizer *tapGestureRecognizer =
-      [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideDrawer)];
-  [containerView addGestureRecognizer:tapGestureRecognizer];
-  tapGestureRecognizer.delegate = self;
+  [self.containerView addSubview:self.scrimView];
+  [self.containerView addSubview:self.bottomDrawerContainerViewController.view];
 
   id<UIViewControllerTransitionCoordinator> transitionCoordinator =
       [[self presentingViewController] transitionCoordinator];
@@ -92,6 +90,12 @@ static UIColor *MDCBottomDrawerOverlayBackgroundColor(void) {
 }
 
 - (void)presentationTransitionDidEnd:(BOOL)completed {
+  // Set up the tap recognizer to dimiss the drawer by.
+  UITapGestureRecognizer *tapGestureRecognizer =
+  [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideDrawer)];
+  [self.containerView addGestureRecognizer:tapGestureRecognizer];
+  tapGestureRecognizer.delegate = self;
+
   self.bottomDrawerContainerViewController.animatingPresentation = NO;
   [self.bottomDrawerContainerViewController.view setNeedsLayout];
   if (!completed) {
@@ -122,11 +126,10 @@ static UIColor *MDCBottomDrawerOverlayBackgroundColor(void) {
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size
-       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+       withTransitionCoordinator:(id <UIViewControllerTransitionCoordinator>)coordinator {
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-
-  // We close the drawer on rotation or window splitting.
-  [self.presentingViewController dismissViewControllerAnimated:NO completion:nil];
+  [self.bottomDrawerContainerViewController viewWillTransitionToSize:size
+                                           withTransitionCoordinator:coordinator];
 }
 
 #pragma mark - Private
