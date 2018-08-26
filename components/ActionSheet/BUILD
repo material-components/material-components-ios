@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("//:material_components_alpha_ios.bzl",
+load("//:material_components_ios.bzl",
      "mdc_public_objc_library",
      "mdc_objc_library",
      "mdc_unit_test_suite")
