@@ -15,6 +15,7 @@
  */
 
 import UIKit
+import MaterialComponentsAlpha.MaterialActionSheet
 
 class ActionSheetSwiftExample: UIViewController {
 

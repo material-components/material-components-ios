@@ -15,7 +15,7 @@
  */
 
 import XCTest
-import MaterialComponents.MaterialActionSheet
+import MaterialComponentsAlpha.MaterialActionSheet
 
 class ActionSheetTest: XCTestCase {
   func testNumberOfActions() {
