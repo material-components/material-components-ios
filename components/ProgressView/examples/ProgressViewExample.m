@@ -122,15 +122,25 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
   self.navigationItem.rightBarButtonItem.accessibilityIdentifier = @"animate_button";
 }
 
+-(void)viewDidLayoutSubviews {
+  [super viewDidLayoutSubviews];
+  [self positionContainer];
+}
+
 -(void)setupContainer {
   self.container = [[UIView alloc] initWithFrame:self.view.bounds];
-  self.container.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:self.container];
-  UILayoutGuide *layoutGuide = self.view.layoutMarginsGuide;
-  [self.container.leadingAnchor constraintEqualToAnchor:layoutGuide.leadingAnchor].active = YES;
-  [self.container.topAnchor constraintEqualToAnchor:layoutGuide.topAnchor].active = YES;
-  [self.container.trailingAnchor constraintEqualToAnchor:layoutGuide.trailingAnchor].active = YES;
-  [self.container.bottomAnchor constraintEqualToAnchor:layoutGuide.bottomAnchor].active = YES;
+}
+
+- (void)positionContainer {
+  CGFloat originX = self.view.bounds.origin.x + self.view.layoutMargins.left;
+  CGFloat originY = self.view.bounds.origin.y + self.view.layoutMargins.top;
+  CGFloat width = self.view.bounds.size.width
+  - (self.view.layoutMargins.left + self.view.layoutMargins.right);
+  CGFloat height = self.view.bounds.size.height
+  - (self.view.layoutMargins.top + self.view.layoutMargins.bottom);
+  CGRect frame = CGRectMake(originX, originY, width, height);
+  self.container.frame = frame;
 }
 
 - (void)setupLabels {
