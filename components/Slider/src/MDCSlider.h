@@ -194,6 +194,7 @@ IB_DESIGNABLE
  The radius of the cursor (thumb).
 
  Default value is 6 points.
+ @note Has no effect if @c statefulAPIEnabled is @c YES.
  */
 @property(nonatomic, assign) CGFloat thumbRadius UI_APPEARANCE_SELECTOR;
 

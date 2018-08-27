@@ -949,6 +949,19 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   XCTAssertEqual(self.slider.thumbRadius, selected);
 }
 
+- (void)testThumbRadiusStatefulAPI {
+  // Given
+  self.slider.statefulAPIEnabled = YES;
+
+  // When
+  CGFloat defaultThumbRadius = self.slider.thumbRadius;
+  CGFloat thumbRadius = 100.f;
+  self.slider.thumbRadius = thumbRadius;
+
+  XCTAssertEqual(self.slider.thumbRadius, defaultThumbRadius);
+
+}
+
 - (void)testThumbRadius {
   // Given
   CGFloat thumbRadius = 15.f;
