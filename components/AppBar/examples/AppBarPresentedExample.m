@@ -197,11 +197,9 @@
 
 - (void)presentDemoPopover {
   CGRect rect = CGRectMake(self.view.bounds.size.width / 2, self.topLayoutGuide.length, 1, 1);
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     rect = CGRectMake(self.view.bounds.size.width / 2, self.view.safeAreaInsets.top, 1, 1);
   }
-#endif
   
   self.demoViewController.modalPresentationStyle = UIModalPresentationPopover;
   self.demoViewController.popoverPresentationController.sourceView = self.view;

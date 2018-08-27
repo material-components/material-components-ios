@@ -91,16 +91,13 @@ static const CGFloat kViewOffsetToCenter = 20.0f;
                  self.topLayoutGuide.length,
                  CGRectMinYEdge);
   };
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
       UIEdgeInsets safeAreaInsets = self.view.safeAreaInsets;
       contentBounds = UIEdgeInsetsInsetRect(bounds, safeAreaInsets);
   } else {
     preiOS11Behavior();
   }
-#else
-  preiOS11Behavior();
-#endif
+
 
   return contentBounds;
 }

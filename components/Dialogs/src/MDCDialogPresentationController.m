@@ -91,11 +91,9 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
 
   // For pre iOS 11 devices, we are assuming a safeAreaInset of UIEdgeInsetsZero
   UIEdgeInsets containerSafeAreaInsets = UIEdgeInsetsZero;
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     containerSafeAreaInsets = self.containerView.safeAreaInsets;
   }
-#endif
 
   // Take the larger of the Safe Area insets and the Material specified insets.
   containerSafeAreaInsets.top = MAX(containerSafeAreaInsets.top, MDCDialogEdgeInsets.top);

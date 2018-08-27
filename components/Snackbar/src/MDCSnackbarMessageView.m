@@ -943,11 +943,9 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   if (!self.anchoredToScreenBottom || !MDCSnackbarMessage.usesLegacySnackbar) {
     return 0;
   }
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     return self.window.safeAreaInsets.bottom;
   }
-#endif
   return 0;
 }
 
@@ -956,11 +954,9 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
       MDCSnackbarMessage.usesLegacySnackbar ? kLegacyContentMargin : kContentMargin;
 
   UIEdgeInsets safeAreaInsets = UIEdgeInsetsZero;
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     safeAreaInsets = self.window.safeAreaInsets;
   }
-#endif
 
   // We only take the left and right safeAreaInsets in to account because the bottom is
   // handled by contentSafeBottomInset and we will never overlap the top inset.

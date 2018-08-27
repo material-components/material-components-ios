@@ -222,11 +222,9 @@ static const CGFloat kMaximumHeight = 80.0f;
   CGFloat keyboardHeight = self.watcher.visibleKeyboardHeight;
   CGFloat userHeight = self.bottomOffset;
   if (!MDCSnackbarMessage.usesLegacySnackbar) {
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
     if (@available(iOS 11.0, *)) {
       userHeight = MAX(userHeight, self.safeAreaInsets.bottom);
     }
-#endif
   }
 
   return MAX(keyboardHeight, userHeight);
@@ -328,7 +326,6 @@ static const CGFloat kMaximumHeight = 80.0f;
                                                       multiplier:1.0
                                                         constant:[snackbarView maximumWidth]]];
       } else {
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
         if (@available(iOS 11.0, *)) {
           if (self.mdf_effectiveUserInterfaceLayoutDirection ==
               UIUserInterfaceLayoutDirectionLeftToRight) {
@@ -339,7 +336,6 @@ static const CGFloat kMaximumHeight = 80.0f;
             rightMargin += self.mdc_safeAreaInsets.left;
           }
         }
-#endif
 
         [container addConstraint:[NSLayoutConstraint constraintWithItem:snackbarView
                                                               attribute:NSLayoutAttributeLeading
@@ -437,13 +433,11 @@ static const CGFloat kMaximumHeight = 80.0f;
 - (CGFloat)maximumHeight {
   // Maximum height must be extended to include the bottom content safe area.
   CGFloat maximumHeight = kMaximumHeight;
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (self.anchoredToScreenBottom && MDCSnackbarMessage.usesLegacySnackbar) {
     if (@available(iOS 11.0, *)) {
       maximumHeight += self.safeAreaInsets.bottom;
     }
   }
-#endif
   return maximumHeight;
 }
 
@@ -460,12 +454,10 @@ static const CGFloat kMaximumHeight = 80.0f;
 
 - (UIEdgeInsets)mdc_safeAreaInsets {
   UIEdgeInsets insets = UIEdgeInsetsZero;
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     // Accommodate insets for iPhone X.
     insets = self.safeAreaInsets;
   }
-#endif
   return insets;
 }
 

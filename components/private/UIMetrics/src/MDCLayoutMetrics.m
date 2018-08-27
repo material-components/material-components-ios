@@ -20,7 +20,6 @@
 
 static const CGFloat kFixedStatusBarHeightOnPreiPhoneXDevices = 20;
 
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
 static BOOL HasHardwareSafeAreas(void) {
   static BOOL hasHardwareSafeAreas = NO;
   if (@available(iOS 11.0, *)) {
@@ -40,11 +39,9 @@ static BOOL HasHardwareSafeAreas(void) {
   }
   return hasHardwareSafeAreas;
 }
-#endif
 
 CGFloat MDCDeviceTopSafeAreaInset(void) {
   CGFloat topInset = kFixedStatusBarHeightOnPreiPhoneXDevices;
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     // Devices with hardware safe area insets have fixed insets that depend on the device
     // orientation. On such devices, we aren't interested in the status bar's height because the
@@ -57,6 +54,5 @@ CGFloat MDCDeviceTopSafeAreaInset(void) {
       topInset = insets.top;
     }
   }
-#endif
   return topInset;
 }

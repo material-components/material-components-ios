@@ -114,7 +114,6 @@
                                   metrics:nil
                                     views:views]];
 
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     [NSLayoutConstraint constraintWithItem:self.enabled
                                  attribute:NSLayoutAttributeTop
@@ -151,24 +150,7 @@
                                   constant:-20]
         .active = YES;
   }
-#else
-  [NSLayoutConstraint constraintWithItem:self.enabled
-                               attribute:NSLayoutAttributeTop
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self.scrollView
-                               attribute:NSLayoutAttributeTop
-                              multiplier:1
-                                constant:20]
-      .active = YES;
-  [NSLayoutConstraint constraintWithItem:self.erroredDisabled
-                               attribute:NSLayoutAttributeBottom
-                               relatedBy:NSLayoutRelationEqual
-                                  toItem:self.scrollView
-                               attribute:NSLayoutAttributeBottomMargin
-                              multiplier:1
-                                constant:-20]
-      .active = YES;
-#endif
+
 }
 
 - (void)setupControllers {
