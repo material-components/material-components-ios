@@ -16,6 +16,7 @@
 
 #import "SliderAutolayoutExampleViewController.h"
 
+#import "MaterialColorScheme.h"
 #import "MaterialSlider.h"
 #import "MaterialSlider+ColorThemer.h"
 
@@ -23,8 +24,6 @@
 @property(weak, nonatomic) IBOutlet MDCSlider *materialSlider;
 @property(weak, nonatomic) IBOutlet UISlider *vanillaSlider;
 @property(weak, nonatomic) IBOutlet UISwitch *enabledSwitch;
-@property (weak, nonatomic) IBOutlet UILabel *materialLabel;
-@property (weak, nonatomic) IBOutlet UILabel *uiLabel;
 
 @end
 
@@ -34,13 +33,13 @@
   self = [super init];
   if (self) {
     self.colorScheme = [[MDCSemanticColorScheme alloc] init];
-    self.typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  // Do any additional setup after loading the view, typically from a nib.
 
   // Ensure a consistent starting state
   _materialSlider.enabled = YES;
@@ -51,9 +50,6 @@
   self.materialSlider.statefulAPIEnabled = YES;
   
   [MDCSliderColorThemer applySemanticColorScheme:self.colorScheme toSlider:self.materialSlider];
-
-  _materialLabel.font = self.typographyScheme.body1;
-  _uiLabel.font = self.typographyScheme.body1;
 }
 
 - (IBAction)materialSliderDidChange:(id)sender {

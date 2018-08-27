@@ -16,9 +16,9 @@
 
 #import "MaterialCollections.h"
 #import "MaterialColorScheme.h"
-#import "MaterialTypographyScheme.h"
 #import "MaterialPalettes.h"
 #import "MaterialSlider.h"
+#import "MaterialTypography.h"
 #import "MaterialSlider+ColorThemer.h"
 #import "supplemental/SliderCollectionSupplemental.h"
 
@@ -82,14 +82,12 @@ static CGFloat const kSliderVerticalMargin = 12.f;
 @implementation MDCSliderExampleCollectionViewCell {
   UILabel *_label;
   MDCSlider *_slider;
-  MDCTypographyScheme *_typographyScheme;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
   if (self = [super initWithFrame:frame]) {
-    _typographyScheme = [[MDCTypographyScheme alloc] init];
     _label = [[UILabel alloc] init];
-    _label.font = _typographyScheme.subtitle2;
+    _label.font = [MDCTypography body1Font];
     [self.contentView addSubview:_label];
 
     _slider = [[MDCSlider alloc] initWithFrame:CGRectZero];
@@ -147,26 +145,14 @@ static CGFloat const kSliderVerticalMargin = 12.f;
 
 - (void)layoutSubviews {
   [super layoutSubviews];
-
-  UIEdgeInsets safeArea = UIEdgeInsetsZero;
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-  if (@available(iOS 11.0, *)) {
-    // Accommodate insets for iPhone X.
-    safeArea = self.safeAreaInsets;
-    safeArea.top = 0;
-  }
-#endif
-  CGRect labelFrame = CGRectMake(kSliderHorizontalMargin + 6, kSliderVerticalMargin,
-                                 self.contentView.frame.size.width - (2 * kSliderHorizontalMargin), 20);
-
-  _label.frame = UIEdgeInsetsInsetRect(labelFrame, safeArea);
+  _label.frame = CGRectMake(kSliderHorizontalMargin + 6, kSliderVerticalMargin,
+                            self.contentView.frame.size.width - (2 * kSliderHorizontalMargin), 20);
 
   CGSize intrinsicSize = [_slider intrinsicContentSize];
-  CGRect sliderFrame = CGRectMake(
+  _slider.frame = CGRectMake(
       kSliderHorizontalMargin,
       self.contentView.frame.size.height - kSliderVerticalMargin - intrinsicSize.height,
       self.contentView.frame.size.width - (2 * kSliderHorizontalMargin), intrinsicSize.height);
-  _slider.frame = UIEdgeInsetsInsetRect(sliderFrame, safeArea);
 }
 
 @end
@@ -186,7 +172,6 @@ static CGFloat const kSliderVerticalMargin = 12.f;
 
 - (void)invalidateLayout {
   [super invalidateLayout];
-  
   [self.collectionView setNeedsLayout];
 }
 
