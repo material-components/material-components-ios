@@ -8,7 +8,7 @@ MDCNavigationBar.
 MDCNavigationBar has a new flag that, once enabled, allows you to set a font with any size.
 
 ```objc
-MDCNavigationBar *navigationBar = [[MDCNavigationBar alloc] init];;
+MDCNavigationBar *navigationBar = [[MDCNavigationBar alloc] init];
 navigationBar.allowAnyTitleFontSize = YES;
 UIFont *font = [UIFont systemFontOfSize:24];
 navigationBar.titleFont = font; // Font size will actually be 24
