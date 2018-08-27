@@ -1,5 +1,8 @@
 # 60.3.0
 
+This minor release introduces a new behavioral flag for changing the title font size on
+MDCNavigationBar.
+
 ## New features
 
 MDCNavigationBar has a new flag that, once enabled, allows you to set a font with any size.
