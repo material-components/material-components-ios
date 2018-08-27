@@ -14,13 +14,13 @@
  limitations under the License.
  */
 
+#import "supplemental/SliderCollectionSupplemental.h"
 #import "MaterialCollections.h"
 #import "MaterialColorScheme.h"
-#import "MaterialTypographyScheme.h"
 #import "MaterialPalettes.h"
 #import "MaterialSlider.h"
 #import "MaterialSlider+ColorThemer.h"
-#import "supplemental/SliderCollectionSupplemental.h"
+#import "MaterialTypographyScheme.h"
 
 static NSString *const kReusableIdentifierItem = @"sliderItemCellIdentifier";
 static CGFloat const kSliderHorizontalMargin = 16.f;
@@ -76,20 +76,17 @@ static CGFloat const kSliderVerticalMargin = 12.f;
 
 @interface MDCSliderExampleCollectionViewCell : UICollectionViewCell
 - (void)applyModel:(MDCSliderModel *)model withColorScheme:(MDCSemanticColorScheme *)colorScheme;
-
+@property (nonatomic, strong, nullable) UIFont *labelFont;
 @end
 
 @implementation MDCSliderExampleCollectionViewCell {
   UILabel *_label;
   MDCSlider *_slider;
-  MDCTypographyScheme *_typographyScheme;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
   if (self = [super initWithFrame:frame]) {
-    _typographyScheme = [[MDCTypographyScheme alloc] init];
     _label = [[UILabel alloc] init];
-    _label.font = _typographyScheme.subtitle2;
     [self.contentView addSubview:_label];
 
     _slider = [[MDCSlider alloc] initWithFrame:CGRectZero];
@@ -157,6 +154,14 @@ static CGFloat const kSliderVerticalMargin = 12.f;
       self.contentView.frame.size.width - (2 * kSliderHorizontalMargin), intrinsicSize.height);
 }
 
+- (void)setLabelFont:(UIFont *)labelFont {
+  _label.font = labelFont;
+}
+
+- (UIFont *)labelFont {
+  return _label.font;
+}
+
 @end
 
 @interface MDCSliderFlowLayout : UICollectionViewFlowLayout
@@ -190,6 +195,7 @@ static CGFloat const kSliderVerticalMargin = 12.f;
 
 @implementation SliderCollectionViewController {
   NSMutableArray<MDCSliderModel *> *_sliders;
+  MDCTypographyScheme *_typographyScheme;
 }
 
 - (instancetype)init {
@@ -201,6 +207,8 @@ static CGFloat const kSliderVerticalMargin = 12.f;
 
     self.collectionView.alwaysBounceVertical = YES;
     self.collectionView.backgroundColor = [UIColor whiteColor];
+
+    _typographyScheme = [[MDCTypographyScheme alloc] init];
 
     // Init the sliders
     _sliders = [[NSMutableArray alloc] init];
@@ -273,6 +281,7 @@ static CGFloat const kSliderVerticalMargin = 12.f;
                                                 forIndexPath:indexPath];
   MDCSliderModel *model = [_sliders objectAtIndex:indexPath.item];
   [cell applyModel:model withColorScheme:self.colorScheme];
+  cell.labelFont = _typographyScheme.subtitle2;
   return cell;
 }
 

@@ -60,11 +60,14 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DLx-bj-gPu" customClass="MDCSlider">
-                                <rect key="frame" x="40" y="95" width="100" height="27"/>
+                                <rect key="frame" x="40" y="95" width="295" height="27"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="27" id="VZF-6k-Ots"/>
                                 </constraints>
+                                <connections>
+                                    <action selector="materialSliderDidChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="SkK-Kw-F3G"/>
+                                </connections>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

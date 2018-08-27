@@ -54,7 +54,7 @@
   _uiLabel.font = self.typographyScheme.body1;
 }
 
-- (IBAction)mdcSliderDidChange:(id)sender {
+- (IBAction)materialSliderDidChange:(id)sender {
   NSLog(@"Material Slider : %.2f", self.materialSlider.value);
 
   self.vanillaSlider.value = (float)self.materialSlider.value;
