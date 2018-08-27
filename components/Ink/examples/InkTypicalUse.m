@@ -32,6 +32,10 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  UIView *containerView = [[UIView alloc] initWithFrame:self.view.frame];
+  [self.view addSubview:containerView];
+  self.containerView = containerView;
+
   UIColor *blueColor = MDCPalette.bluePalette.tint500;
   CGFloat spacing = 16;
   CGRect customFrame = CGRectMake(0, 0, 200, 200);
@@ -54,7 +58,7 @@
     [inkTouchController addInkView];
     [_inkTouchControllers addObject:inkTouchController];
   }
-  [self.view addSubview:self.shapes];
+  [containerView addSubview:self.shapes];
 
   MDCInkTouchController *inkTouchController =
       [[MDCInkTouchController alloc] initWithView:self.legacyShape];
@@ -62,7 +66,7 @@
   inkTouchController.defaultInkView.inkColor = blueColor;
   [inkTouchController addInkView];
   [_inkTouchControllers addObject:inkTouchController];
-  [self.view addSubview:self.legacyShape];
+  [containerView addSubview:self.legacyShape];
 }
 
 #pragma mark - Private
