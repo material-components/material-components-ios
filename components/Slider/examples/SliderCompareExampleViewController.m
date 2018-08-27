@@ -17,78 +17,60 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialColorScheme.h"
-#import "MaterialTypographyScheme.h"
 #import "MaterialMath.h"
 #import "MaterialSlider.h"
 #import "MaterialSlider+ColorThemer.h"
 
 @interface SliderCompareExampleViewController : UIViewController
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
-@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 @end
 
-@implementation SliderCompareExampleViewController {
-  MDCSlider *_slider;
-  UILabel *_label;
-  UISlider *_uiSlider;
-  UILabel *_uiSliderLabel;
-}
+@implementation SliderCompareExampleViewController
 
 - (id)init {
   self = [super init];
   if (self) {
     self.colorScheme = [[MDCSemanticColorScheme alloc] init];
-    self.typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  self.view.backgroundColor = self.colorScheme.backgroundColor;
+  self.view.backgroundColor = [UIColor whiteColor];
 
   // Load your Material Component here.
-  _slider = [[MDCSlider alloc] initWithFrame:CGRectMake(0, 0, 100, 27)];
-  _slider.statefulAPIEnabled = YES;
-  [MDCSliderColorThemer applySemanticColorScheme:self.colorScheme toSlider:_slider];
-  [_slider addTarget:self
+  MDCSlider *slider = [[MDCSlider alloc] initWithFrame:CGRectMake(0, 0, 100, 27)];
+  slider.statefulAPIEnabled = YES;
+  [MDCSliderColorThemer applySemanticColorScheme:self.colorScheme toSlider:slider];
+  [slider addTarget:self
                 action:@selector(didChangeMDCSliderValue:)
       forControlEvents:UIControlEventValueChanged];
-  [self.view addSubview:_slider];
-  _label.font = self.typographyScheme.body1;
-  _label = [[UILabel alloc] init];
-  _label.text = @"MDCSlider";
+  [self.view addSubview:slider];
+  slider.center = CGPointMake(CGRectGetMidX(self.view.bounds), 46);
 
-  [_label sizeToFit];
-  [self.view addSubview:_label];
+  UILabel *label = [[UILabel alloc] init];
+  label.text = @"MDCSlider";
+  [label sizeToFit];
+  [self.view addSubview:label];
+  label.center = CGPointMake(slider.center.x, slider.center.y + 2 * label.frame.size.height);
+  label.frame = MDCRectAlignToScale(label.frame, [UIScreen mainScreen].scale);
 
   // Vanilla  UISlider for comparison.
-  _uiSlider = [[UISlider alloc] initWithFrame:CGRectMake(0, 0, 100, 27)];
-  [_uiSlider addTarget:self
+  UISlider *uiSlider = [[UISlider alloc] initWithFrame:CGRectMake(0, 0, 100, 27)];
+  [uiSlider addTarget:self
                 action:@selector(didChangeUISliderValue:)
       forControlEvents:UIControlEventValueChanged];
-  [self.view addSubview:_uiSlider];
+  [self.view addSubview:uiSlider];
+  uiSlider.center = CGPointMake(CGRectGetMidX(self.view.bounds), 184);
 
-  _uiSliderLabel = [[UILabel alloc] init];
-  _uiSliderLabel.text = @"UISlider";
-  _uiSliderLabel.font = self.typographyScheme.body1;
-  [_uiSliderLabel sizeToFit];
-  [self.view addSubview:_uiSliderLabel];
-}
-
-- (void)viewWillLayoutSubviews {
-  [super viewWillLayoutSubviews];
-
-  _slider.center = CGPointMake(CGRectGetMidX(self.view.bounds),
-                              CGRectGetMidY(self.view.bounds) - 50);
-  _label.center = CGPointMake(_slider.center.x, _slider.center.y + 2 * _label.frame.size.height);
-  _label.frame = MDCRectAlignToScale(_label.frame, [UIScreen mainScreen].scale);
-
-  _uiSlider.center = CGPointMake(CGRectGetMidX(self.view.bounds),
-                                 CGRectGetMidY(self.view.bounds) + 50);
-  _uiSliderLabel.center = CGPointMake(_uiSlider.center.x,
-                                      _uiSlider.center.y + 2 * _uiSliderLabel.frame.size.height);
-  _uiSliderLabel.frame = MDCRectAlignToScale(_uiSliderLabel.frame, [UIScreen mainScreen].scale);
+  UILabel *uiSliderLabel = [[UILabel alloc] init];
+  uiSliderLabel.text = @"UISlider";
+  [uiSliderLabel sizeToFit];
+  [self.view addSubview:uiSliderLabel];
+  uiSliderLabel.center =
+      CGPointMake(uiSlider.center.x, uiSlider.center.y + 2 * uiSliderLabel.frame.size.height);
+  uiSliderLabel.frame = MDCRectAlignToScale(uiSliderLabel.frame, [UIScreen mainScreen].scale);
 }
 
 - (void)didChangeMDCSliderValue:(MDCSlider *)slider {

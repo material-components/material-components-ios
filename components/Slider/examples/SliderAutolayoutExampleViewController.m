@@ -16,15 +16,14 @@
 
 #import "SliderAutolayoutExampleViewController.h"
 
+#import "MaterialColorScheme.h"
 #import "MaterialSlider.h"
 #import "MaterialSlider+ColorThemer.h"
 
 @interface SliderAutolayoutExampleViewController ()
+@property(weak, nonatomic) IBOutlet MDCSlider *materialSlider;
 @property(weak, nonatomic) IBOutlet UISlider *vanillaSlider;
 @property(weak, nonatomic) IBOutlet UISwitch *enabledSwitch;
-@property (weak, nonatomic) IBOutlet UILabel *materialLabel;
-@property (weak, nonatomic) IBOutlet UILabel *uiLabel;
-@property (weak, nonatomic) IBOutlet MDCSlider *materialSlider;
 
 @end
 
@@ -34,27 +33,26 @@
   self = [super init];
   if (self) {
     self.colorScheme = [[MDCSemanticColorScheme alloc] init];
-    self.typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  // Do any additional setup after loading the view, typically from a nib.
 
   // Ensure a consistent starting state
   _materialSlider.enabled = YES;
   _vanillaSlider.enabled = _materialSlider.enabled;
   _enabledSwitch.on = _materialSlider.enabled;
   _materialSlider.value = _vanillaSlider.value;
-    
+  
+  self.materialSlider.statefulAPIEnabled = YES;
+  
   [MDCSliderColorThemer applySemanticColorScheme:self.colorScheme toSlider:self.materialSlider];
-
-  _materialLabel.font = self.typographyScheme.body1;
-  _uiLabel.font = self.typographyScheme.body1;
 }
 
-- (IBAction)mdcSliderDidChange:(id)sender {
+- (IBAction)materialSliderDidChange:(id)sender {
   NSLog(@"Material Slider : %.2f", self.materialSlider.value);
 
   self.vanillaSlider.value = (float)self.materialSlider.value;
