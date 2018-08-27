@@ -91,6 +91,7 @@
                     <connections>
                         <outlet property="enabledSwitch" destination="sRN-CT-bsJ" id="FOJ-vF-clM"/>
                         <outlet property="materialLabel" destination="9LH-Og-CEr" id="9SU-fx-gXK"/>
+                        <outlet property="materialSlider" destination="DLx-bj-gPu" id="Bc6-Wp-Isb"/>
                         <outlet property="uiLabel" destination="iTg-0Z-cww" id="iL1-Ls-hu9"/>
                         <outlet property="vanillaSlider" destination="tBL-wo-dn8" id="gL0-lL-mOk"/>
                     </connections>
