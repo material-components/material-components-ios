@@ -913,6 +913,42 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   XCTAssertEqual(self.slider.thumbElevation, MDCShadowElevationNone);
 }
 
+- (void)testThumbRadiusForState {
+  // Given
+  self.slider.statefulAPIEnabled = YES;
+  CGFloat normal = 12.f;
+  CGFloat disabled = 10.f;
+  CGFloat highlighted = 8.f;
+  CGFloat selected = 16.f;
+
+  // When
+  [self.slider setThumbRadius:normal forState:UIControlStateNormal];
+  [self.slider setThumbRadius:disabled forState:UIControlStateDisabled];
+  [self.slider setThumbRadius:highlighted forState:UIControlStateHighlighted];
+  [self.slider setThumbRadius:selected forState:UIControlStateSelected];
+
+  // Then
+  self.slider.enabled = YES;
+  self.slider.selected = NO;
+  self.slider.highlighted = NO;
+  XCTAssertEqual(self.slider.thumbRadius, normal);
+
+  self.slider.enabled = NO;
+  self.slider.selected = NO;
+  self.slider.highlighted = NO;
+  XCTAssertEqual(self.slider.thumbRadius, disabled);
+
+  self.slider.enabled = YES;
+  self.slider.selected = NO;
+  self.slider.highlighted = YES;
+  XCTAssertEqual(self.slider.thumbRadius, highlighted);
+
+  self.slider.enabled = YES;
+  self.slider.selected = YES;
+  self.slider.highlighted = NO;
+  XCTAssertEqual(self.slider.thumbRadius, selected);
+}
+
 #pragma mark Numeric value label
 
 - (void)testNumericValueLabelString {
