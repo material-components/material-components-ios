@@ -130,19 +130,36 @@
 }
 
 - (void)viewWillLayoutSubviews {
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    UIEdgeInsets safeAreaInsets = self.view.safeAreaInsets;
+    self.containerView.frame = CGRectMake(safeAreaInsets.left,
+                                          safeAreaInsets.top,
+                                          CGRectGetWidth(self.view.frame) - safeAreaInsets.left - safeAreaInsets.right,
+                                          CGRectGetHeight(self.view.frame) - safeAreaInsets.top - safeAreaInsets.bottom);
+  } else {
+#endif
+    self.containerView.frame = CGRectMake(0,
+                                          self.topLayoutGuide.length,
+                                          CGRectGetWidth(self.view.frame),
+                                          CGRectGetHeight(self.view.frame) - self.topLayoutGuide.length);
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  }
+#endif
+
   CGFloat offset = 8;
   CGFloat shapeDimension = 200;
   CGFloat spacing = 16;
-  if (CGRectGetHeight(self.view.frame) > CGRectGetWidth(self.view.frame)) {
+  if (CGRectGetHeight(self.containerView.frame) > CGRectGetWidth(self.containerView.frame)) {
     self.shapes.center =
-        CGPointMake(self.view.center.x, self.view.center.y - shapeDimension - offset);
+        CGPointMake(self.containerView.center.x, self.containerView.center.y - shapeDimension - offset);
     self.legacyShape.center =
-        CGPointMake(self.view.center.x, self.view.center.y + spacing * 2 + offset);
+        CGPointMake(self.containerView.center.x, self.containerView.center.y + spacing * 2 + offset);
   } else {
-    self.shapes.center = CGPointMake(self.view.center.x - shapeDimension / 2 - spacing * 2,
-                                     self.view.center.y / 2 + spacing * 2);
-    self.legacyShape.center = CGPointMake(self.view.center.x + shapeDimension / 2 + spacing * 2,
-                                          self.view.center.y / 2 + spacing * 2);
+    self.shapes.center = CGPointMake(self.containerView.center.x - shapeDimension / 2 - spacing * 2,
+                                     self.containerView.center.y / 2 + spacing * 2);
+    self.legacyShape.center = CGPointMake(self.containerView.center.x + shapeDimension / 2 + spacing * 2,
+                                          self.containerView.center.y / 2 + spacing * 2);
   }
 }
 
