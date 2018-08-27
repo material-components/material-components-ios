@@ -12,16 +12,6 @@ Pod::Spec.new do |mdc|
 
   # See MaterialComponents.podspec for the subspec structure and template.
 
-  mdc.subspec "private" do |private_spec|
-    # CocoaPods requires at least one file to show up in a subspec, so we depend on the fake
-    # "Alpha" component as a baseline.
-    private_spec.subspec "Alpha" do |component|
-      component.ios.deployment_target = '8.0'
-      component.public_header_files = "components/private/#{component.base_name}/src/*.h"
-      component.source_files = "components/private/#{component.base_name}/src/*.{h,m}"
-    end
-  end
-
   # NavigationDrawer
 
   mdc.subspec "NavigationDrawer" do |component|
@@ -31,6 +21,16 @@ Pod::Spec.new do |mdc|
 
     component.dependency "MaterialComponents/ShadowLayer"
     component.dependency "MaterialComponents/private/UIMetrics"
+  end
+
+  mdc.subspec "private" do |private_spec|
+    # CocoaPods requires at least one file to show up in a subspec, so we depend on the fake
+    # "Alpha" component as a baseline.
+    private_spec.subspec "Alpha" do |component|
+      component.ios.deployment_target = '8.0'
+      component.public_header_files = "components/private/#{component.base_name}/src/*.h"
+      component.source_files = "components/private/#{component.base_name}/src/*.{h,m}"
+    end
   end
 
 end

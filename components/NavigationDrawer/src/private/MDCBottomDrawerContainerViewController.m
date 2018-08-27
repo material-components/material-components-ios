@@ -20,15 +20,15 @@
 #import "MaterialShadowLayer.h"
 #import "MaterialUIMetrics.h"
 
-static const CGFloat kMDCBottomDrawerVerticalShadowAnimationDistance = 10.f;
-static const CGFloat kMDCBottomDrawerVerticalDistanceThresholdForDismissal = 40.f;
-static const CGFloat kMDCBottomDrawerInitialDrawerHeightFactor = 0.5f;
-static const CGFloat kMDCBottomDrawerHeaderAnimationDistanceAddedDistanceFromTopSafeAreaInset =
+static const CGFloat kVerticalShadowAnimationDistance = 10.f;
+static const CGFloat kVerticalDistanceThresholdForDismissal = 40.f;
+static const CGFloat kInitialDrawerHeightFactor = 0.5f;
+static const CGFloat kHeaderAnimationDistanceAddedDistanceFromTopSafeAreaInset =
     20.f;
-static const CGFloat kMDCBottomDrawerDragVelocityThresholdForHidingDrawer = -2.f;
-static NSString *const kMDCBottomDrawerContentOffsetKeyPath = @"contentOffset";
+static const CGFloat kDragVelocityThresholdForHidingDrawer = -2.f;
+static NSString *const kContentOffsetKeyPath = @"contentOffset";
 
-static UIColor *MDCBottomDrawerShadowColor(void) {
+static UIColor *DrawerShadowColor(void) {
   return [[UIColor blackColor] colorWithAlphaComponent:0.2f];
 }
 
@@ -246,7 +246,7 @@ static UIColor *MDCBottomDrawerShadowColor(void) {
   }
   self.scrollViewObserved = YES;
   [self.scrollView addObserver:self
-                    forKeyPath:kMDCBottomDrawerContentOffsetKeyPath
+                    forKeyPath:kContentOffsetKeyPath
                        options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
                        context:nil];
 }
@@ -256,7 +256,7 @@ static UIColor *MDCBottomDrawerShadowColor(void) {
     return;
   }
   self.scrollViewObserved = NO;
-  [self.scrollView removeObserver:self forKeyPath:kMDCBottomDrawerContentOffsetKeyPath];
+  [self.scrollView removeObserver:self forKeyPath:kContentOffsetKeyPath];
 }
 
 #pragma mark UIViewController
@@ -385,7 +385,7 @@ static UIColor *MDCBottomDrawerShadowColor(void) {
 
   self.headerShadowLayer = [[MDCShadowLayer alloc] init];
   self.headerShadowLayer.elevation = MDCShadowElevationNavDrawer;
-  self.headerShadowLayer.shadowColor = MDCBottomDrawerShadowColor().CGColor;
+  self.headerShadowLayer.shadowColor = DrawerShadowColor().CGColor;
   [self.headerViewController.view.layer addSublayer:self.headerShadowLayer];
   self.headerShadowLayer.hidden = YES;
 }
@@ -455,8 +455,8 @@ static UIColor *MDCBottomDrawerShadowColor(void) {
   if (!self.headerShadowLayer.hidden) {
     self.headerShadowLayer.opacity = (float)[self
         transitionPercentageForContentOffset:contentOffset
-                                      offset:-kMDCBottomDrawerVerticalShadowAnimationDistance
-                                    distance:kMDCBottomDrawerVerticalShadowAnimationDistance];
+                                      offset:-kVerticalShadowAnimationDistance
+                                    distance:kVerticalShadowAnimationDistance];
   }
 }
 
@@ -523,13 +523,13 @@ static UIColor *MDCBottomDrawerShadowColor(void) {
   self.scrollViewBeganDraggingFromFullscreen = NO;
 
   if (!scrollViewBeganDraggingFromFullscreen &&
-      velocity.y < kMDCBottomDrawerDragVelocityThresholdForHidingDrawer) {
+      velocity.y < kDragVelocityThresholdForHidingDrawer) {
     [self hideDrawer];
     return;
   }
 
   if (self.scrollView.contentOffset.y < 0.f) {
-    if (self.scrollView.contentOffset.y < -kMDCBottomDrawerVerticalDistanceThresholdForDismissal) {
+    if (self.scrollView.contentOffset.y < -kVerticalDistanceThresholdForDismissal) {
       [self hideDrawer];
     } else {
       targetContentOffset->y = 0.f;
@@ -564,13 +564,13 @@ static UIColor *MDCBottomDrawerShadowColor(void) {
 
   CGFloat totalHeight = contentHeight + contentHeaderHeight;
   CGFloat contentHeightThresholdForScrollability =
-      containerHeight * kMDCBottomDrawerInitialDrawerHeightFactor + contentHeaderHeight;
+      containerHeight * kInitialDrawerHeightFactor + contentHeaderHeight;
   BOOL contentScrollsToReveal = totalHeight > contentHeightThresholdForScrollability;
 
   if (_contentHeaderTopInset == NSNotFound) {
     // The content header top inset is only set once.
     if (contentScrollsToReveal) {
-      _contentHeaderTopInset = containerHeight * (1.f - kMDCBottomDrawerInitialDrawerHeightFactor);
+      _contentHeaderTopInset = containerHeight * (1.f - kInitialDrawerHeightFactor);
     } else {
       _contentHeaderTopInset = containerHeight - totalHeight;
     }
@@ -659,7 +659,7 @@ static UIColor *MDCBottomDrawerShadowColor(void) {
 
 - (CGFloat)headerAnimationDistance {
   CGFloat headerAnimationDistance =
-      kMDCBottomDrawerHeaderAnimationDistanceAddedDistanceFromTopSafeAreaInset;
+      kHeaderAnimationDistanceAddedDistanceFromTopSafeAreaInset;
   if (self.contentReachesFullscreen) {
     headerAnimationDistance += MDCDeviceTopSafeAreaInset();
   }

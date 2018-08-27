@@ -16,8 +16,6 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol MDCBottomDrawerHeader;
-
 /**
  The transitioning delegate to use for presenting a view controller as a MDC bottom drawer.
  */

@@ -18,9 +18,9 @@
 
 #import "MDCBottomDrawerPresentationController.h"
 
-static const NSTimeInterval kMDCBottomDrawerOpenAnimationDuration = 0.34;
-static const NSTimeInterval kMDCBottomDrawerCloseAnimationDuration = 0.3;
-static const CGFloat kMDCBottomDrawerOpenAnimationSpringDampingRatio = 0.85f;
+static const NSTimeInterval kOpenAnimationDuration = 0.34;
+static const NSTimeInterval kCloseAnimationDuration = 0.3;
+static const CGFloat kOpenAnimationSpringDampingRatio = 0.85f;
 
 @implementation MDCBottomDrawerTransitionController
 
@@ -63,9 +63,9 @@ static const CGFloat kMDCBottomDrawerOpenAnimationSpringDampingRatio = 0.85f;
     (nullable id<UIViewControllerContextTransitioning>)transitionContext {
   BOOL presenting = [self isPresentingFromContext:transitionContext];
   if (presenting) {
-    return kMDCBottomDrawerOpenAnimationDuration;
+    return kOpenAnimationDuration;
   }
-  return kMDCBottomDrawerCloseAnimationDuration;
+  return kCloseAnimationDuration;
 }
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
@@ -94,9 +94,9 @@ static const CGFloat kMDCBottomDrawerOpenAnimationSpringDampingRatio = 0.85f;
     CGRect initialFrame = containerView.bounds;
     initialFrame.origin.y = CGRectGetHeight(containerView.bounds);
     animatingView.frame = initialFrame;
-    [UIView animateWithDuration:kMDCBottomDrawerOpenAnimationDuration
+    [UIView animateWithDuration:kOpenAnimationDuration
         delay:0
-        usingSpringWithDamping:kMDCBottomDrawerOpenAnimationSpringDampingRatio
+        usingSpringWithDamping:kOpenAnimationSpringDampingRatio
         initialSpringVelocity:0.f
         options:UIViewAnimationOptionCurveEaseOut
         animations:^{
@@ -106,7 +106,7 @@ static const CGFloat kMDCBottomDrawerOpenAnimationSpringDampingRatio = 0.85f;
           [transitionContext completeTransition:YES];
         }];
   } else {
-    [UIView animateWithDuration:kMDCBottomDrawerCloseAnimationDuration
+    [UIView animateWithDuration:kCloseAnimationDuration
         animations:^{
           CGRect finalFrame = containerView.bounds;
           finalFrame.origin.y = CGRectGetHeight(containerView.bounds);
