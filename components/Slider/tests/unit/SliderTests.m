@@ -949,6 +949,15 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   XCTAssertEqual(self.slider.thumbRadius, selected);
 }
 
+- (void)testThumbRadius {
+  // Given
+  CGFloat thumbRadius = 15.f;
+  // When
+  self.slider.thumbRadius = thumbRadius;
+  // Then
+  XCTAssertEqual(self.slider.thumbRadius, thumbRadius);
+}
+
 #pragma mark Numeric value label
 
 - (void)testNumericValueLabelString {
