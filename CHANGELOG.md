@@ -1,3 +1,37 @@
+# 60.3.0
+
+This minor release introduces a new behavioral flag for changing the title font size on
+MDCNavigationBar.
+
+## New features
+
+MDCNavigationBar has a new flag that, once enabled, allows you to set a font with any size.
+
+```objc
+MDCNavigationBar *navigationBar = [[MDCNavigationBar alloc] init];
+navigationBar.allowAnyTitleFontSize = YES;
+UIFont *font = [UIFont systemFontOfSize:24];
+navigationBar.titleFont = font; // Font size will actually be 24
+```
+
+## API changes
+
+### NavigationBar
+
+#### MDCNavigationBar
+
+*new* property: `allowAnyTitleFontSize` in `MDCNavigationBar`
+
+## Component changes
+
+### NavigationBar
+
+#### Changes
+
+* [Add a flag that makes it possible to set any font size. (#4879)](https://github.com/material-components/material-components-ios/commit/86f7e7a405e4f7ac7bd6948f4c661abf3e27e249) (featherless)
+
+---
+
 # 60.2.0
 
 In this minor release we updated examples imports, added an API to set the ink color of buttons
