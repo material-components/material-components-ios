@@ -130,7 +130,6 @@
 }
 
 - (void)viewWillLayoutSubviews {
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     UIEdgeInsets safeAreaInsets = self.view.safeAreaInsets;
     self.containerView.frame = CGRectMake(safeAreaInsets.left,
@@ -138,14 +137,11 @@
                                           CGRectGetWidth(self.view.frame) - safeAreaInsets.left - safeAreaInsets.right,
                                           CGRectGetHeight(self.view.frame) - safeAreaInsets.top - safeAreaInsets.bottom);
   } else {
-#endif
     self.containerView.frame = CGRectMake(0,
                                           self.topLayoutGuide.length,
                                           CGRectGetWidth(self.view.frame),
                                           CGRectGetHeight(self.view.frame) - self.topLayoutGuide.length);
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   }
-#endif
 
   CGFloat offset = 8;
   CGFloat shapeDimension = 200;
