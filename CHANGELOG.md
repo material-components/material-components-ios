@@ -1,14 +1,24 @@
-# #develop#
-
-## Breaking changes
-
-## New deprecations
+# 60.3.0
 
 ## New features
 
+MDCNavigationBar has a new flag that, once enabled, allows you to set a font with any size.
+
 ## API changes
 
+### NavigationBar
+
+#### MDCNavigationBar
+
+*new* property: `allowAnyTitleFontSize` in `MDCNavigationBar`
+
 ## Component changes
+
+### NavigationBar
+
+#### Changes
+
+* [Add a flag that makes it possible to set any font size. (#4879)](https://github.com/material-components/material-components-ios/commit/86f7e7a405e4f7ac7bd6948f4c661abf3e27e249) (featherless)
 
 ---
 
