@@ -136,9 +136,9 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
   CGFloat originX = self.view.bounds.origin.x + self.view.layoutMargins.left;
   CGFloat originY = self.view.bounds.origin.y + self.view.layoutMargins.top;
   CGFloat width = self.view.bounds.size.width
-  - (self.view.layoutMargins.left + self.view.layoutMargins.right);
+      - (self.view.layoutMargins.left + self.view.layoutMargins.right);
   CGFloat height = self.view.bounds.size.height
-  - (self.view.layoutMargins.top + self.view.layoutMargins.bottom);
+      - (self.view.layoutMargins.top + self.view.layoutMargins.bottom);
   CGRect frame = CGRectMake(originX, originY, width, height);
   self.container.frame = frame;
 }
@@ -220,11 +220,11 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
     @"H:|-(p)-[coloredView]-(p)-|",
     @"H:|-(p)-[backwardResetView]-(p)-|",
     @"H:|-(p)-[backwardAnimateView]-(p)-|",
-    @"H:|-(p)-[stockLabel]-|",
-    @"H:|-(p)-[tintedLabel]-|",
-    @"H:|-(p)-[coloredLabel]-|",
-    @"H:|-(p)-[backwardResetLabel]-|",
-    @"H:|-(p)-[backwardAnimateLabel]-|",
+    @"H:|-(p)-[stockLabel]-(p)-|",
+    @"H:|-(p)-[tintedLabel]-(p)-|",
+    @"H:|-(p)-[coloredLabel]-(p)-|",
+    @"H:|-(p)-[backwardResetLabel]-(p)-|",
+    @"H:|-(p)-[backwardAnimateLabel]-(p)-|",
   ];
   for (NSString *format in horizontalVisualFormats) {
     [horizontalConstraints
