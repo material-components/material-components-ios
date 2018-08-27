@@ -105,7 +105,8 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   _backgroundTickColorsForState = [@{} mutableCopy];
   _backgroundTickColorsForState[@(UIControlStateNormal)] = UIColor.blackColor;
   _thumbRadiusesForState = [@{} mutableCopy];
-  _thumbRadiusesForState[@(UIControlStateNormal)] = @(kSliderDefaultThumbRadius);
+  _thumbRadiusesForState[@(UIControlStateNormal)] =
+      [NSNumber numberWithFloat:kSliderDefaultThumbRadius];
   [self addSubview:_thumbTrack];
 }
 
@@ -213,7 +214,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 }
 
 - (void)setThumbRadius:(CGFloat)thumbRadius forState:(UIControlState)state {
-  _thumbRadiusesForState[@(state)] = @(thumbRadius);
+  _thumbRadiusesForState[@(state)] = [NSNumber numberWithFloat:thumbRadius];
   if (self.state == state) {
     [self updateThumbForState];
   }
@@ -221,11 +222,11 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 
 - (CGFloat)thumbRadiusForState:(UIControlState)state {
   if ([_thumbRadiusesForState objectForKey:@(state)]) {
-    return [_thumbRadiusesForState[@(state)] doubleValue];
+    return [_thumbRadiusesForState[@(state)] floatValue];
   }
   CGFloat radius = 0.f;
   if (state != UIControlStateNormal) {
-    radius = [_thumbRadiusesForState[@(UIControlStateNormal)] doubleValue];
+    radius = [_thumbRadiusesForState[@(UIControlStateNormal)] floatValue];
   }
   return radius;
 }
