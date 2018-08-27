@@ -22,16 +22,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qdS-Bz-QVZ" customClass="MDCSlider">
-                                <rect key="frame" x="40" y="95" width="295" height="27"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="27" id="maf-9z-6YY"/>
-                                </constraints>
-                                <connections>
-                                    <action selector="materialSliderDidChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="zDd-ZF-DsD"/>
-                                </connections>
-                            </view>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="tBL-wo-dn8">
                                 <rect key="frame" x="38" y="196.33333333333334" width="299" height="31"/>
                                 <connections>
@@ -69,24 +59,31 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DLx-bj-gPu" customClass="MDCSlider">
+                                <rect key="frame" x="40" y="95" width="100" height="27"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="27" id="VZF-6k-Ots"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="tBL-wo-dn8" firstAttribute="top" secondItem="9LH-Og-CEr" secondAttribute="bottom" constant="46" id="1V5-uf-Yke"/>
                             <constraint firstItem="9LH-Og-CEr" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="86" id="1wg-fg-p1a"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="qdS-Bz-QVZ" secondAttribute="trailing" constant="24" id="5e5-N6-Bwc"/>
+                            <constraint firstItem="9LH-Og-CEr" firstAttribute="top" secondItem="DLx-bj-gPu" secondAttribute="bottom" constant="8" id="6BJ-UU-79x"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="sRN-CT-bsJ" secondAttribute="bottom" constant="20" id="8Nf-sO-Q5y"/>
                             <constraint firstItem="tBL-wo-dn8" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="24" id="AgX-yL-qRy"/>
                             <constraint firstItem="iTg-0Z-cww" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Bzx-rh-qfj"/>
                             <constraint firstItem="QTE-kf-OF9" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="24" id="Hbw-bS-4md"/>
-                            <constraint firstItem="qdS-Bz-QVZ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="24" id="Mwt-mS-ekL"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="DLx-bj-gPu" secondAttribute="trailing" constant="24" id="SUd-ic-aTC"/>
                             <constraint firstItem="9LH-Og-CEr" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="TGI-re-DCn"/>
+                            <constraint firstItem="DLx-bj-gPu" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="24" id="UlK-Zd-Zd9"/>
                             <constraint firstItem="V5P-iu-de5" firstAttribute="centerY" secondItem="sRN-CT-bsJ" secondAttribute="centerY" id="cDD-wr-LNY"/>
                             <constraint firstAttribute="trailingMargin" secondItem="QTE-kf-OF9" secondAttribute="trailing" constant="24" id="cva-ic-aNF"/>
                             <constraint firstItem="sRN-CT-bsJ" firstAttribute="leading" secondItem="V5P-iu-de5" secondAttribute="trailing" constant="24" id="dTX-oP-e8e"/>
                             <constraint firstItem="sRN-CT-bsJ" firstAttribute="top" secondItem="QTE-kf-OF9" secondAttribute="bottom" constant="7.5" id="efG-FK-iC0"/>
                             <constraint firstItem="V5P-iu-de5" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="24" id="f4i-vH-mai"/>
-                            <constraint firstItem="9LH-Og-CEr" firstAttribute="top" secondItem="qdS-Bz-QVZ" secondAttribute="bottom" constant="8" id="pCi-1V-Soo"/>
                             <constraint firstItem="iTg-0Z-cww" firstAttribute="top" secondItem="tBL-wo-dn8" secondAttribute="bottom" constant="8" id="tfs-s9-r76"/>
                             <constraint firstAttribute="trailingMargin" secondItem="tBL-wo-dn8" secondAttribute="trailing" constant="24" id="xxv-YU-aKj"/>
                         </constraints>
@@ -94,14 +91,13 @@
                     <connections>
                         <outlet property="enabledSwitch" destination="sRN-CT-bsJ" id="FOJ-vF-clM"/>
                         <outlet property="materialLabel" destination="9LH-Og-CEr" id="9SU-fx-gXK"/>
-                        <outlet property="materialSlider" destination="qdS-Bz-QVZ" id="W1G-JX-mev"/>
                         <outlet property="uiLabel" destination="iTg-0Z-cww" id="iL1-Ls-hu9"/>
                         <outlet property="vanillaSlider" destination="tBL-wo-dn8" id="gL0-lL-mOk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="283" y="173"/>
+            <point key="canvasLocation" x="282.39999999999998" y="172.90640394088672"/>
         </scene>
     </scenes>
 </document>
