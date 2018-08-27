@@ -13,5 +13,6 @@ Pod::Spec.new do |s|
   s.resources = ['components/*/tests/unit/resources/*', 'components/private/*/tests/unit/resources/*']
   s.framework    = 'XCTest'
   s.dependency 'MaterialComponents'
+  s.dependency 'MaterialComponentsAlpha'
   s.dependency 'MDFTextAccessibility'
 end
