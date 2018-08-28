@@ -98,7 +98,6 @@ static const CGFloat kViewOffsetToCenter = 20.0f;
     preiOS11Behavior();
   }
 
-
   return contentBounds;
 }
 

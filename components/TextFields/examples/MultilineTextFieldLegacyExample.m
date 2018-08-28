@@ -197,7 +197,6 @@
     ]];
   }
 
-
   [NSLayoutConstraint constraintWithItem:multilineTextFieldCharMaxFullWidth
                                attribute:NSLayoutAttributeLeading
                                relatedBy:NSLayoutRelationEqual

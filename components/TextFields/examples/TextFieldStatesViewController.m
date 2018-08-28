@@ -150,7 +150,6 @@
                                   constant:-20]
         .active = YES;
   }
-
 }
 
 - (void)setupControllers {

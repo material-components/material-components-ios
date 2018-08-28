@@ -246,7 +246,6 @@
     ]];
   }
 
-
   [constraints
       addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[state(80)]-[zip]|"
                                                                   options:0

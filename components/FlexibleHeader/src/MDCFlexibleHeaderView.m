@@ -393,7 +393,6 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
     } else {
       self.topSafeAreaInset = viewController.topLayoutGuide.length;
     }
-
   }
 }
 
@@ -621,7 +620,6 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
     existingContentInsetAdjustment = (scrollView.adjustedContentInset.top
                                       - scrollView.contentInset.top);
   }
-
 
   return existingContentInsetAdjustment;
 }
