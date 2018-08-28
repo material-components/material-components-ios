@@ -188,11 +188,12 @@ typedef NS_OPTIONS(NSUInteger, MDCBarButtonItemLayoutHints) {
  @seealso MDCBarButtonItemLayoutHints
  */
 @protocol MDCButtonBarDelegate <NSObject>
-@required
+@optional
 
 /** Asks the receiver to return a view that represents the given bar button item. */
 - (nonnull UIView *)buttonBar:(nonnull MDCButtonBar *)buttonBar
                   viewForItem:(nonnull UIBarButtonItem *)barButtonItem
-                  layoutHints:(MDCBarButtonItemLayoutHints)layoutHints;
+                  layoutHints:(MDCBarButtonItemLayoutHints)layoutHints
+    __deprecated_msg("There will be no replacement for this API.");
 
 @end

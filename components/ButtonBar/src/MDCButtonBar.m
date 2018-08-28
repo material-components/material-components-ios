@@ -190,7 +190,6 @@ static NSString *const kEnabledSelector = @"enabled";
   if (![barButtonItems count]) {
     return nil;
   }
-  id<MDCButtonBarDelegate> delegate = _defaultBuilder;
 
   NSMutableArray<UIView *> *views = [NSMutableArray array];
   [barButtonItems enumerateObjectsUsingBlock:^(UIBarButtonItem *item,
@@ -203,7 +202,7 @@ static NSString *const kEnabledSelector = @"enabled";
     if (idx == [barButtonItems count] - 1) {
       hints |= MDCBarButtonItemLayoutHintsIsLastButton;
     }
-    UIView *view = [delegate buttonBar:self viewForItem:item layoutHints:hints];
+    UIView *view = [self->_defaultBuilder buttonBar:self viewForItem:item layoutHints:hints];
     if (!view) {
       return;
     }
