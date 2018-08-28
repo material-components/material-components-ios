@@ -17,7 +17,14 @@
 #import "MDCButtonBar.h"
 
 /** MDCBarButtonItemBuilder is an implementation of a Material button item factory. */
-@interface MDCAppBarButtonBarBuilder : NSObject <MDCButtonBarDelegate>
+@interface MDCAppBarButtonBarBuilder : NSObject
+
+/**
+ Returns a view that represents the given bar button item.
+ */
+- (UIView *)buttonBar:(MDCButtonBar *)buttonBar
+          viewForItem:(UIBarButtonItem *)barButtonItem
+          layoutHints:(MDCBarButtonItemLayoutHints)layoutHints;
 
 /** The title color for the bar button items. */
 @property(nonatomic, strong) UIColor *buttonTitleColor;
