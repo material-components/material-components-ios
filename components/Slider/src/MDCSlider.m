@@ -255,7 +255,6 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 
 - (void)updateThumbForState {
   if (!self.isStatefulAPIEnabled) {
-    _thumbTrack.thumbRadius = kSliderDefaultThumbRadius;
     return;
   }
 

@@ -191,14 +191,6 @@ IB_DESIGNABLE
 @property(nonatomic, strong, nullable) UIColor *inkColor;
 
 /**
- The radius of the cursor (thumb).
-
- Default value is 6 points.
- @note Has no effect if @c statefulAPIEnabled is @c YES.
- */
-@property(nonatomic, assign) CGFloat thumbRadius UI_APPEARANCE_SELECTOR;
-
-/**
  The elevation of the cursor (thumb).
 
  Default value is MDCElevationNone.
@@ -316,6 +308,15 @@ IB_DESIGNABLE
 @property(nonatomic, assign, getter=isThumbHollowAtStart) BOOL thumbHollowAtStart;
 
 #pragma mark - To be deprecated
+
+/**
+ The radius of the cursor (thumb).
+
+ Default value is 6 points.
+ @note This API is planned for deprecation. Use @c setThumbRadius:forState: instead.
+ @note Has no effect if @c statefulAPIEnabled is @c YES.
+ */
+@property(nonatomic, assign) CGFloat thumbRadius UI_APPEARANCE_SELECTOR;
 
 /**
  The color of the cursor (thumb) and track while the slider is disabled.
