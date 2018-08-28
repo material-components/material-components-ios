@@ -117,7 +117,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   [self setNeedsLayout];
 }
 
-- (void)addActionButtonTitle:(NSString *)actionTitle target:(id)target selector:(SEL)selector {
+- (MDCButton *)addActionButtonTitle:(NSString *)actionTitle target:(id)target selector:(SEL)selector {
   MDCButton *actionButton = [[MDCButton alloc] initWithFrame:CGRectZero];
   [MDCTextButtonThemer applyScheme:buttonScheme toButton:actionButton];
   actionButton.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
@@ -140,6 +140,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   [self.actionsScrollView addSubview:actionButton];
 
   [_actionButtons addObject:actionButton];
+  return actionButton;
 }
 
 - (void)setTitleFont:(UIFont *)font {
