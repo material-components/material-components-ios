@@ -105,7 +105,7 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
   [self.contentView addSubview:_imageView];
   _imageView.translatesAutoresizingMaskIntoConstraints = NO;
   _imageView.alpha = ImageAlpha;
-  _imageView.tintColor = [UIColor greenColor];
+  [_imageView setTintColor:[UIColor blackColor]];
   [NSLayoutConstraint constraintWithItem:_imageView
                                attribute:NSLayoutAttributeTop
                                relatedBy:NSLayoutRelationEqual
@@ -152,12 +152,14 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
 
   _imageView.image =
       [_itemAction.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  _imageView.tintColor = self.imageColor;
 }
 
 - (void)setAction:(MDCActionSheetAction *)action {
   _itemAction = [action copy];
   _textLabel.text = _itemAction.title;
-  _imageView.image = _itemAction.image;
+  _imageView.image = [_itemAction.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  _imageView.tintColor = self.imageColor;
   [self setNeedsLayout];
 }
 
