@@ -70,24 +70,7 @@ Lastly, your headerViewController conforms to the `MDCBottomDrawerHeader` protoc
 
 ## Installation
 
-*This component is an [alpha component](docs/https://github.com/material-components/material-components-ios/blob/develop/contributing/alpha_components.md) and therefore doesn't support installation via CocoaPods. This is intended.*
-
-<!-- Extracted from docs/../../../docs/component-installation.md -->
-
-### Installation with CocoaPods
-
-Add the following to your `Podfile`:
-
-```bash
-pod 'MaterialComponents/NavigationDrawer'
-```
-<!--{: .code-renderer.code-renderer--install }-->
-
-Then, run the following command:
-
-```bash
-pod install
-```
+**This component is an [alpha component](docs/https://github.com/material-components/material-components-ios/blob/develop/contributing/alpha_components.md) and therefore doesn't support installation via CocoaPods. To install this component you will need to manually clone the repo and add the code to your project. This is intended.**
 
 ### Importing
 
@@ -96,7 +79,7 @@ To import the component:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
-import MaterialComponents.MaterialNavigationDrawer
+import MaterialComponentsAlpha.MaterialNavigationDrawer
 ```
 
 #### Objective-C
