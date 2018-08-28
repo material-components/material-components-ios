@@ -42,6 +42,8 @@ class NavigationBarButtonTitleCasingTests: XCTestCase {
   func testLeadingButtonTitlesAreUppercasedByDefault() {
     // Given
     let items = [UIBarButtonItem(title: "Text", style: .plain, target: nil, action: nil)]
+
+    // When
     navigationBar.leadingBarButtonItems = items
 
     // Then
@@ -56,6 +58,8 @@ class NavigationBarButtonTitleCasingTests: XCTestCase {
   func testLeadingButtonTitlesAreNotUppercasedWhenFlagIsDisabledBeforeAssignment() {
     // Given
     let items = [UIBarButtonItem(title: "Text", style: .plain, target: nil, action: nil)]
+
+    // When
     navigationBar.uppercasesButtonTitles = false
     navigationBar.leadingBarButtonItems = items
 
@@ -71,6 +75,8 @@ class NavigationBarButtonTitleCasingTests: XCTestCase {
     // Given
     let items = [UIBarButtonItem(title: "Text", style: .plain, target: nil, action: nil)]
     navigationBar.leadingBarButtonItems = items
+
+    // When
     navigationBar.uppercasesButtonTitles = false
 
     // Then
@@ -98,6 +104,8 @@ class NavigationBarButtonTitleCasingTests: XCTestCase {
   func testTrailingButtonTitlesAreNotUppercasedWhenFlagIsDisabledBeforeAssignment() {
     // Given
     let items = [UIBarButtonItem(title: "Text", style: .plain, target: nil, action: nil)]
+
+    // When
     navigationBar.uppercasesButtonTitles = false
     navigationBar.trailingBarButtonItems = items
 
@@ -113,6 +121,8 @@ class NavigationBarButtonTitleCasingTests: XCTestCase {
     // Given
     let items = [UIBarButtonItem(title: "Text", style: .plain, target: nil, action: nil)]
     navigationBar.trailingBarButtonItems = items
+
+    // When
     navigationBar.uppercasesButtonTitles = false
 
     // Then
