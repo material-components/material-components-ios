@@ -138,12 +138,11 @@ __attribute__((objc_subclassing_restricted))
  */
 @property(nonatomic, nullable, strong) UIFont *actionFont;
 
-
 @property(nonatomic, nonnull, strong) UIColor *backgroundColor;
 
 /**
  If @c YES, then the dimmed scrim view will act as an accessibility element for dismissing the
- bottom sheet.
+ action sheet.
 
  Defaults to @c NO.
  */
