@@ -201,4 +201,20 @@ static const CGFloat MiddlePadding = 8.f;
   [self updateFonts];
 }
 
+- (void)setTitleColor:(UIColor *)titleColor {
+  _titleLabel.textColor = titleColor;
+}
+
+- (UIColor *)titleColor {
+  return _titleLabel.textColor;
+}
+
+- (void)setMessageColor:(UIColor *)messageColor {
+  _messageLabel.textColor = messageColor;
+}
+
+- (UIColor *)messageColor {
+  return _messageLabel.textColor;
+}
+
 @end

@@ -140,7 +140,30 @@ __attribute__((objc_subclassing_restricted))
  */
 @property(nonatomic, nullable, strong) UIFont *actionFont;
 
+/**
+ The color applied to the sheet view of the action sheet controller.
+ */
 @property(nonatomic, nonnull, strong) UIColor *backgroundColor;
+
+/**
+ The color applied to the title of Alert Controller.
+ */
+@property(nonatomic, strong, nullable) UIColor *titleColor;
+
+/**
+ The color applied to the message of Alert Controller.
+ */
+@property(nonatomic, strong, nullable) UIColor *messageColor;
+
+/**
+ The color applied to the item list labels of Alert Controller.
+ */
+@property(nonatomic, strong, nullable) UIColor *actionColor;
+
+/**
+ The color applied to the icon items of Alert Controller.
+ */
+@property(nonatomic, strong, nullable) UIColor *imageColor;
 
 @property(nonatomic, strong, readonly, nonnull)
     MDCBottomSheetTransitionController *transitionController;

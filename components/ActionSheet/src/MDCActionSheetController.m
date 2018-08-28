@@ -263,6 +263,13 @@ static NSString *const ReuseIdentifier = @"BaseCell";
   cell.backgroundColor = self.backgroundColor;
   cell.actionFont = self.actionFont;
   cell.accessibilityIdentifier = action.accessibilityIdentifier;
+  cell.actionColor = self.actionColor;
+  for (UIView *view in cell.contentView.subviews) {
+    if ([view isKindOfClass:[UIImageView class]]) {
+      UIImageView *imageView = (UIImageView *)view;
+      imageView.tintColor = self.imageColor;
+    }
+  }
   return cell;
 }
 
@@ -308,6 +315,22 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 
 - (UIColor *)backgroundColor {
   return self.view.backgroundColor;
+}
+
+- (void)setTitleColor:(UIColor *)titleColor {
+  _header.titleColor = titleColor;
+}
+
+- (UIColor *)titleColor {
+  return _header.titleColor;
+}
+
+- (void)setMessageColor:(UIColor *)messageColor {
+  _header.messageColor = messageColor;
+}
+
+- (UIColor *)messageColor {
+  return _header.messageColor;
 }
 
 #pragma mark - Dynamic Type
