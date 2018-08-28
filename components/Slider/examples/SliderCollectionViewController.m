@@ -75,8 +75,8 @@ static CGFloat const kSliderVerticalMargin = 12.f;
 @end
 
 @interface MDCSliderExampleCollectionViewCell : UICollectionViewCell
-- (void)applyModel:(MDCSliderModel *)model withColorScheme:(MDCSemanticColorScheme *)colorScheme;
 @property (nonatomic, strong, nullable) UIFont *labelFont;
+- (void)applyModel:(MDCSliderModel *)model withColorScheme:(MDCSemanticColorScheme *)colorScheme;
 @end
 
 @implementation MDCSliderExampleCollectionViewCell {

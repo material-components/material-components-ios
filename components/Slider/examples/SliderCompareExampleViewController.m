@@ -23,8 +23,8 @@
 #import "MaterialTypographyScheme.h"
 
 @interface SliderCompareExampleViewController : UIViewController
-@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
-@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
+@property(nonatomic, strong, nullable) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong, nullable) MDCTypographyScheme *typographyScheme;
 @property(nonatomic, strong, nullable) MDCSlider *slider;
 @property(nonatomic, strong, nullable) UILabel *label;
 @property(nonatomic, strong, nullable) UISlider *uiSlider;
@@ -36,8 +36,8 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
-    self.typographyScheme = [[MDCTypographyScheme alloc] init];
+    _colorScheme = [[MDCSemanticColorScheme alloc] init];
+    _typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;
 }
@@ -80,13 +80,15 @@
 
   self.slider.center = CGPointMake(CGRectGetMidX(self.view.bounds),
                               CGRectGetMidY(self.view.bounds) - 50);
-  self.label.center = CGPointMake(self.slider.center.x, self.slider.center.y + 2 * self.label.frame.size.height);
+  CGFloat labelHeight = CGRectGetHeight(self.label.bounds);
+  self.label.center = CGPointMake(self.slider.center.x, self.slider.center.y + 2 * labelHeight);
   self.label.frame = MDCRectAlignToScale(self.label.frame, [UIScreen mainScreen].scale);
 
   self.uiSlider.center = CGPointMake(CGRectGetMidX(self.view.bounds),
                                  CGRectGetMidY(self.view.bounds) + 50);
+  CGFloat uiLabelHeight = CGRectGetHeight(self.uiSliderLabel.bounds);
   self.uiSliderLabel.center = CGPointMake(self.uiSlider.center.x,
-                                      self.uiSlider.center.y + 2 * self.uiSliderLabel.frame.size.height);
+                                      self.uiSlider.center.y + 2 * uiLabelHeight);
   self.uiSliderLabel.frame = MDCRectAlignToScale(self.uiSliderLabel.frame, [UIScreen mainScreen].scale);
 }
 
