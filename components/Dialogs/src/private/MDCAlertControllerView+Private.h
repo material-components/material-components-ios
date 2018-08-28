@@ -25,7 +25,7 @@
 
 @property(nonatomic, nonnull, strong, readonly) NSArray<MDCButton *> *actionButtons;
 
-- (MDCButton *)addActionButtonTitle:(NSString *_Nonnull)actionTitle
+- (nonnull MDCButton *)addActionButtonTitle:(NSString *_Nonnull)actionTitle
                              target:(nullable id)target
                            selector:(SEL _Nonnull)selector;
 
