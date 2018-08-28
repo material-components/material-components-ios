@@ -80,7 +80,9 @@ class ActionSheetSwiftExample: UIViewController {
         actionSheet.addAction(action)
         actionSheet.addAction(action)
         actionSheet.addAction(action)
-        actionSheet.backgroundColor = .green
+        actionSheet.actionColor = .purple
+        actionSheet.imageColor = .blue
+        actionSheet.backgroundColor = .lightGray
       }
     }
     present(actionSheet, animated: true, completion: nil)

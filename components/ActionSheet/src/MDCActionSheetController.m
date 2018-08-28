@@ -261,6 +261,8 @@ static NSString *const ReuseIdentifier = @"BaseCell";
   cell.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
   cell.backgroundColor = self.backgroundColor;
   cell.actionFont = self.actionFont;
+  cell.actionColor = self.actionColor;
+  cell.imageColor = self.imageColor;
   return cell;
 }
 
@@ -306,6 +308,22 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 
 - (UIColor *)backgroundColor {
   return self.view.backgroundColor;
+}
+
+- (void)setTitleColor:(UIColor *)titleColor {
+  _header.titleColor = titleColor;
+}
+
+- (UIColor *)titleColor {
+  return _header.titleColor;
+}
+
+- (void)setMessageColor:(UIColor *)messageColor {
+  _header.messageColor = messageColor;
+}
+
+- (UIColor *)messageColor {
+  return _header.messageColor;
 }
 
 #pragma mark - Dynamic Type
