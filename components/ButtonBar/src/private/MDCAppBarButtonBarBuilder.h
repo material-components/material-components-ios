@@ -22,9 +22,9 @@
 /**
  Returns a view that represents the given bar button item.
  */
-- (nonnull UIView *)buttonBar:(nonnull MDCButtonBar *)buttonBar
-                  viewForItem:(nonnull UIBarButtonItem *)barButtonItem
-                  layoutHints:(MDCBarButtonItemLayoutHints)layoutHints;
+- (UIView *)buttonBar:(MDCButtonBar *)buttonBar
+          viewForItem:(UIBarButtonItem *)barButtonItem
+          layoutHints:(MDCBarButtonItemLayoutHints)layoutHints;
 
 /** The title color for the bar button items. */
 @property(nonatomic, strong) UIColor *buttonTitleColor;
