@@ -23,6 +23,7 @@ licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
     name = "Snackbar",
+    bundles = [":Bundle"],
     sdk_frameworks = [
         "CoreGraphics",
         "QuartzCore",
@@ -36,7 +37,20 @@ mdc_public_objc_library(
         "//components/private/Application",
         "//components/private/KeyboardWatcher",
         "//components/private/Overlay",
+        "@material_internationalization_ios//:MDFInternationalization",
     ],
+)
+
+filegroup(
+    name = "BundleFiles",
+    srcs = glob([
+        "src/MaterialSnackbar.bundle/**",
+    ]),
+)
+
+objc_bundle(
+    name = "Bundle",
+    bundle_imports = [":BundleFiles"],
 )
 
 mdc_objc_library(
