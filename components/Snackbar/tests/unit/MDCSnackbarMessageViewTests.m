@@ -19,6 +19,10 @@
 #import "MaterialSnackbar.h"
 #import "supplemental/MDCFakeMDCSnackbarManagerDelegate.h"
 
+@interface MDCSnackbarMessageView (Testing)
+@property(nonatomic, strong) UILabel *label;
+@end
+
 @interface MDCSnackbarMessageViewTests : XCTestCase
 @property(nonatomic, strong) MDCSnackbarManager *manager;
 @property(nonatomic, strong) FakeMDCSnackbarManagerDelegate *delegate;
@@ -29,6 +33,7 @@
 
 - (void)setUp {
   [super setUp];
+
   self.manager = [[MDCSnackbarManager alloc] init];
   self.delegate = [[FakeMDCSnackbarManagerDelegate alloc] init];
   self.manager.delegate = self.delegate;
@@ -54,35 +59,37 @@
   [self.manager showMessage:self.message];
 
   // Then
-  XCTAssertNil(self.delegate.presentedView.accessibilityLabel);
+  XCTAssertNil(self.delegate.presentedView.label.accessibilityLabel);
 }
 
 - (void)testAccessibilityLabelSetFromSnackbarMessageProperty {
   // When
   self.message.accessibilityLabel = @"not message text";
   [self.manager showMessage:self.message];
-  [NSRunLoop.mainRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+  [NSRunLoop.mainRunLoop runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1]];
 
   // Then
-  XCTAssertEqualObjects(self.delegate.presentedView.accessibilityLabel,
+  XCTAssertEqualObjects(self.delegate.presentedView.label.accessibilityLabel,
                         self.message.accessibilityLabel);
 }
 
 - (void)testAccessibilityHintDefaultIsNotNil {
   // When
   [self.manager showMessage:self.message];
+  [NSRunLoop.mainRunLoop runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1]];
 
   // Then
-  XCTAssertNotNil(self.delegate.presentedView.accessibilityHint);
+  XCTAssertNotNil(self.delegate.presentedView.label.accessibilityHint);
 }
 
 - (void)testAccessibilityHintSetFromSnackbarMessageProperty {
   // When
   self.message.accessibilityHint = @"a hint";
   [self.manager showMessage:self.message];
+  [NSRunLoop.mainRunLoop runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1]];
 
   // Then
-  XCTAssertEqualObjects(self.delegate.presentedView.accessibilityHint,
+  XCTAssertEqualObjects(self.delegate.presentedView.label.accessibilityHint,
                         self.message.accessibilityHint);
 }
 

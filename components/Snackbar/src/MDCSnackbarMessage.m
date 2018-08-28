@@ -66,6 +66,7 @@ static BOOL _usesLegacySnackbar = YES;
   copy.duration = self.duration;
   copy.category = self.category;
   copy.accessibilityLabel = self.accessibilityLabel;
+  copy.accessibilityHint = self.accessibilityHint;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
   copy.buttonTextColor = self.buttonTextColor;
