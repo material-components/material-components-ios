@@ -24,6 +24,17 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/Typography"
   end
 
+  # NavigationDrawer
+
+  mdc.subspec "NavigationDrawer" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+
+    component.dependency "MaterialComponents/ShadowLayer"
+    component.dependency "MaterialComponents/private/UIMetrics"
+  end
+
   mdc.subspec "private" do |private_spec|
     # CocoaPods requires at least one file to show up in a subspec, so we depend on the fake
     # "Alpha" component as a baseline.
