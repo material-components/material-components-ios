@@ -142,7 +142,7 @@ __attribute__((objc_subclassing_restricted))
 
 @property(nonatomic, nonnull, strong) UIColor *backgroundColor;
 
-@property(nonatomic, strong) MDCBottomSheetTransitionController *transitionController;
+@property(nonatomic, strong, nonnull) MDCBottomSheetTransitionController *transitionController;
 
 - (void)setTransitioningDelegate:
     (nullable id<UIViewControllerTransitioningDelegate>)transitioningDelegate NS_UNAVAILABLE;
