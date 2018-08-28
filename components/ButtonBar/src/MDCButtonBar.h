@@ -54,6 +54,13 @@ typedef NS_OPTIONS(NSUInteger, MDCButtonBarLayoutPosition) {
 IB_DESIGNABLE
 @interface MDCButtonBar : UIView
 
+#pragma mark Delegating
+
+/**
+ The delegate will be informed of events related to the layout of the button bar.
+ */
+@property(nonatomic, weak) id<MDCButtonBarDelegate> delegate;
+
 #pragma mark Button Items
 
 /**
@@ -196,6 +203,17 @@ typedef NS_OPTIONS(NSUInteger, MDCBarButtonItemLayoutHints) {
  */
 @protocol MDCButtonBarDelegate <NSObject>
 @optional
+
+/**
+ Informs the receiver that the button bar requires a layout pass.
+
+ The receiver is expected to call propagate this setNeedsLayout call to the view responsible for
+ setting the frame of the button bar so that the button bar can expand or contract as necessary.
+
+ This method is typically called as a result of a UIBarButtonItem property changing or as a result
+ of the items property being changed.
+ */
+- (void)buttonBarDidInvalidateIntrinsicContentSize:(nonnull MDCButtonBar *)buttonBar;
 
 /** Asks the receiver to return a view that represents the given bar button item. */
 - (nonnull UIView *)buttonBar:(nonnull MDCButtonBar *)buttonBar
