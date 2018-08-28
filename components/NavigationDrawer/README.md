@@ -18,7 +18,7 @@ Navigation drawers are recommended for:
 ## Table of contents
 
 - [Overview](#overview)
-  - [Cards Classes](#cards-classes)
+  - [Navigation Drawer Classes](#navigation-drawer-classes)
 - [Installation](#installation)
   - [Installation with CocoaPods](#installation-with-cocoapods)
   - [Importing](#importing)
