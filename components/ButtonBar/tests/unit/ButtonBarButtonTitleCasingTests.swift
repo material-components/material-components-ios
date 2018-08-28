@@ -34,6 +34,8 @@ class ButtonBarButtonTitleCasingTests: XCTestCase {
   func testButtonTitlesAreUppercasedByDefault() {
     // Given
     let items = [UIBarButtonItem(title: "Text", style: .plain, target: nil, action: nil)]
+
+    // When
     buttonBar.items = items
 
     // Then
@@ -48,6 +50,8 @@ class ButtonBarButtonTitleCasingTests: XCTestCase {
   func testButtonTitlesAreNotUppercasedWhenFlagIsDisabledBeforeAssignment() {
     // Given
     let items = [UIBarButtonItem(title: "Text", style: .plain, target: nil, action: nil)]
+
+    // When
     buttonBar.uppercasesButtonTitles = false
     buttonBar.items = items
 
@@ -63,6 +67,8 @@ class ButtonBarButtonTitleCasingTests: XCTestCase {
     // Given
     let items = [UIBarButtonItem(title: "Text", style: .plain, target: nil, action: nil)]
     buttonBar.items = items
+
+    // When
     buttonBar.uppercasesButtonTitles = false
 
     // Then
