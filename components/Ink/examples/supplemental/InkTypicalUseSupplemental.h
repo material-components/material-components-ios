@@ -31,6 +31,7 @@
 
 @property(nonatomic, strong) ExampleShapes *shapes;
 @property(nonatomic, strong) UIView *legacyShape;
+@property(nonatomic, weak) UIView *containerView;
 
 @end
 
