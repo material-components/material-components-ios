@@ -64,6 +64,7 @@ static const CGFloat MiddlePadding = 8.f;
   CGSize size = CGRectInfinite.size;
   size.width = CGRectGetWidth(self.bounds);
   CGRect labelFrame = [self frameWithSafeAreaInsets:self.bounds];
+  labelFrame = CGRectStandardize(labelFrame);
   labelFrame.size.width = labelFrame.size.width - LeadingPadding - TrailingPadding;
   CGSize titleSize = [_titleLabel sizeThatFits:labelFrame.size];
   CGSize messageSize = [_messageLabel sizeThatFits:labelFrame.size];
