@@ -31,14 +31,6 @@ matrix:
       # its size category trait on rotation.
       # 10.3 was chosen to represent iOS 10.
       env: DESTINATION="platform=iOS Simulator,name=iPhone 7 Plus,OS=10.3.1" SDK="iphonesimulator10.3.1"
-    - osx_image: xcode8.3
-      # The iPad Pro 12.9 was chosen because it is the largest resolution we can test on.
-      # 9.3 was chosen to round out the range of iOS versions we are testing on.
-      env: DESTINATION="platform=iOS Simulator,name=iPad Pro (12.9-inch),OS=9.3" SDK="iphonesimulator9.3"
-    - osx_image: xcode8.3
-      # The iPhone 5 was chosen because it is a 32-bit device.
-      # 8.1 was chosen because it is the earliest iOS offered here.
-      env: DESTINATION="platform=iOS Simulator,name=iPhone 5,OS=8.1" SDK="iphonesimulator8.1
 
 before_install:
   - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
