@@ -39,11 +39,9 @@ Lastly, your headerViewController conforms to the `MDCBottomDrawerHeader` protoc
 
 ## Installation
 
-- [Typical installation](../../../docs/component-installation.md)
+*This component is an [alpha component](https://github.com/material-components/material-components-ios/blob/develop/contributing/alpha_components.md) and therefore doesn't support installation via CocoaPods. This is intended.*
 
-<aside class="notice">
-Currently this component is an [alpha component](https://github.com/material-components/material-components-ios/blob/develop/contributing/alpha_components.md) and therefore doesn't support installation via CocoaPods. This is intended.
-</aside>
+- [Typical installation](../../../docs/component-installation.md)
 
 ## Usage
 
