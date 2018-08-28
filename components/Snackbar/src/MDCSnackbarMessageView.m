@@ -349,16 +349,19 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
                                            [[self class] bundle],
                                            @"Dismissal accessibility hint for Snackbar");
 
-    // For VoiceOver purposes, the label is the primary 'button' for dismissing the Snackbar, so
-    // we'll make sure the label looks like a button.
+    // For UIAccessibility purposes, the label is the primary 'button' for dismissing the Snackbar,
+    // so we'll make sure the label is treated like a button.
     _label.accessibilityTraits = UIAccessibilityTraitButton;
     _label.accessibilityIdentifier = MDCSnackbarMessageTitleAutomationIdentifier;
     _label.accessibilityHint = accessibilityHint;
 
-    // If an accessibility label was set on the message model object, use that instead of the text
-    // in the label.
+    // If an accessibility label or hint was set on the message model object, use that instead of
+    // the text in the label or the default hint.
     if ([message.accessibilityLabel length]) {
       _label.accessibilityLabel = message.accessibilityLabel;
+    }
+    if (message.accessibilityHint.length) {
+      _label.accessibilityHint = message.accessibilityHint;
     }
 
     _label.textColor = _messageTextColor;

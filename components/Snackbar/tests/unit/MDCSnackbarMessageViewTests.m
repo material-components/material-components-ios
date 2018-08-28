@@ -17,12 +17,23 @@
 #import <XCTest/XCTest.h>
 
 #import "MaterialSnackbar.h"
+#import "supplemental/MDCFakeMDCSnackbarManagerDelegate.h"
 
 @interface MDCSnackbarMessageViewTests : XCTestCase
-
+@property(nonatomic, strong) MDCSnackbarManager *manager;
+@property(nonatomic, strong) FakeMDCSnackbarManagerDelegate *delegate;
+@property(nonatomic, strong) MDCSnackbarMessage *message;
 @end
 
 @implementation MDCSnackbarMessageViewTests
+
+- (void)setUp {
+  [super setUp];
+  self.manager = [[MDCSnackbarManager alloc] init];
+  self.delegate = [[FakeMDCSnackbarManagerDelegate alloc] init];
+  self.manager.delegate = self.delegate;
+  self.message = [MDCSnackbarMessage messageWithText:@"message text"];
+}
 
 - (void)testDefaultColors {
   // Given
@@ -36,6 +47,43 @@
                                         alpha:1]);
   XCTAssertEqualObjects(messageView.snackbarMessageViewShadowColor, UIColor.blackColor);
   XCTAssertEqualObjects(messageView.messageTextColor, UIColor.whiteColor);
+}
+
+- (void)testAccessibilityLabelDefaultIsNil {
+  // When
+  [self.manager showMessage:self.message];
+
+  // Then
+  XCTAssertNil(self.delegate.presentedView.accessibilityLabel);
+}
+
+- (void)testAccessibilityLabelSetFromSnackbarMessageProperty {
+  // When
+  self.message.accessibilityLabel = @"not message text";
+  [self.manager showMessage:self.message];
+  [NSRunLoop.mainRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+
+  // Then
+  XCTAssertEqualObjects(self.delegate.presentedView.accessibilityLabel,
+                        self.message.accessibilityLabel);
+}
+
+- (void)testAccessibilityHintDefaultIsNotNil {
+  // When
+  [self.manager showMessage:self.message];
+
+  // Then
+  XCTAssertNotNil(self.delegate.presentedView.accessibilityHint);
+}
+
+- (void)testAccessibilityHintSetFromSnackbarMessageProperty {
+  // When
+  self.message.accessibilityHint = @"a hint";
+  [self.manager showMessage:self.message];
+
+  // Then
+  XCTAssertEqualObjects(self.delegate.presentedView.accessibilityHint,
+                        self.message.accessibilityHint);
 }
 
 @end
