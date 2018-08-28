@@ -3,7 +3,28 @@
 To help ensure your Action Sheet is accessible to as many users as possible, please be sure to reivew the following
 recommendations:
 
-The scrim by default enables the "Z" gesture to dismiss.
+The scrim by default enables the "Z" gesture to dismiss. If `isScrimAccessibilityElement` is not set or is set to
+`false` then `scrimAccessibilityLabel`, `scrimAccessibilityHint`, and `scrimAccessibilityTraits` will
+have any effect.
+
+<!--</div>-->
+
+### Set `-isScrimAccessibilityElement`
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+let actionSheet = MDCActionSheetController()
+actionSheet.transitionController.isScrimAccessibilityElement = true
+```
+
+#### Objective-C
+
+```objc
+MDCActionSheetController *actionSheet = [MDCActionSheetController alloc] init];
+actionSheet.isScrimAccessibilityElement = YES;
+```
+<!--</div>-->
 
 ### Set `-scrimAccessibilityLabel`
 
@@ -37,24 +58,6 @@ actionSheet.transitionController.scrimAccessibilityHint = "Dismiss the action sh
 MDCActionSheetController *actionSheet = [MDCActionSheetController alloc] init];
 actionSheet.scrimAccessibilityHint = @"Dismiss the action sheet";
 ```
-<!--</div>-->
-
-### Set `-isScrimAccessibilityElement`
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-let actionSheet = MDCActionSheetController()
-actionSheet.transitionController.isScrimAccessibilityElement = true
-```
-
-#### Objective-C
-
-```objc
-MDCActionSheetController *actionSheet = [MDCActionSheetController alloc] init];
-actionSheet.isScrimAccessibilityElement = YES;
-```
-<!--</div>-->
 
 ### Set `-scrimAccessibilityTraits`
 
