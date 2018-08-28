@@ -1,3 +1,15 @@
+<!--docs:
+title: "NavigationDrawer"
+layout: detail
+section: components
+excerpt: "Navigation drawers provide access to destinations and app functionality, such as switching accounts."
+iconId: list
+path: /catalog/navigation-drawer/
+api_doc_root: true
+-->
+
+<!-- This file was auto-generated using scripts/generate_readme NavigationDrawer -->
+
 # Navigation Drawer
 
 [![Open bugs badge](https://img.shields.io/badge/dynamic/json.svg?label=open%20bugs&url=https%3A%2F%2Fapi.github.com%2Fsearch%2Fissues%3Fq%3Dis%253Aopen%2Blabel%253Atype%253ABug%2Blabel%253A%255BNavigationDrawer%255D&query=%24.total_count)](https://github.com/material-components/material-components-ios/issues?q=is%3Aopen+is%3Aissue+label%3Atype%3ABug+label%3A%5BNavigationDrawer%5D)
@@ -5,14 +17,19 @@
 Navigation drawers provide access to destinations and app functionality, such as switching accounts. They can either be permanently on-screen or controlled by a navigation menu icon.
 
 Navigation drawers are recommended for:
-* Apps with five or more top-level destinations.
-* Apps with two or more levels of navigation hierarchy.
-* Quick navigation between unrelated destinations.
+  <li class="icon-list-item icon-list-item">Apps with five or more top-level destinations.</li>
+  <li class="icon-list-item icon-list-item">Apps with two or more levels of navigation hierarchy.</li>
+  <li class="icon-list-item icon-list-item">Quick navigation between unrelated destinations.</li>
+</ul>
 
 ## Design & API documentation
 
 <ul class="icon-list">
   <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-navigation-drawer">Material Design guidelines: Navigation Drawer</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/navigation-drawer/api-docs/Classes/MDCBottomDrawerPresentationController.html">MDCBottomDrawerPresentationController</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/navigation-drawer/api-docs/Classes/MDCBottomDrawerTransitionController.html">MDCBottomDrawerTransitionController</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/navigation-drawer/api-docs/Classes/MDCBottomDrawerViewController.html">MDCBottomDrawerViewController</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/navigation-drawer/api-docs/Protocols/MDCBottomDrawerHeader.html">MDCBottomDrawerHeader</a></li>
 </ul>
 
 ## Table of contents
@@ -23,12 +40,15 @@ Navigation drawers are recommended for:
   - [Installation with CocoaPods](#installation-with-cocoapods)
   - [Importing](#importing)
 - [Usage](#usage)
+  - [Typical use: using the `MDCBottomDrawerViewController` with/without a header.](#typical-use-using-the-`mdcbottomdrawerviewcontroller`-withwithout-a-header.)
+  - [Typical use: presenting in a drawer without a header.](#typical-use-presenting-in-a-drawer-without-a-header.)
+  - [Typical use: using the `MDCBottomDrawerViewController` with a need for performant scrolling.](#typical-use-using-the-`mdcbottomdrawerviewcontroller`-with-a-need-for-performant-scrolling.)
 
 - - -
 
 ## Overview
 
-Navigation Drawer is currently an [alpha component](https://github.com/material-components/material-components-ios/blob/develop/contributing/alpha_components.md). Therefore, clients that wish to use Navigation Drawer in their app will need to manually clone the repo and add the code to their project.
+Navigation Drawer is currently an [alpha component](docs/https://github.com/material-components/material-components-ios/blob/develop/contributing/alpha_components.md). Therefore, clients that wish to use Navigation Drawer in their app will need to manually clone the repo and add the code to their project.
 
 Navigation Drawer currently provides the [Bottom Drawer](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619577-accessibilitylabel) presentation style.
 
@@ -54,7 +74,18 @@ Lastly, your headerViewController conforms to the `MDCBottomDrawerHeader` protoc
 
 ### Installation with CocoaPods
 
-Currently this component is an [alpha component](https://github.com/material-components/material-components-ios/blob/develop/contributing/alpha_components.md) and therefore doesn't support installation via CocoaPods. This is intended. 
+Add the following to your `Podfile`:
+
+```bash
+pod 'MaterialComponents/NavigationDrawer'
+```
+<!--{: .code-renderer.code-renderer--install }-->
+
+Then, run the following command:
+
+```bash
+pod install
+```
 
 ### Importing
 
@@ -74,9 +105,13 @@ import MaterialComponents.MaterialNavigationDrawer
 <!--</div>-->
 
 
+<aside class="notice">
+Currently this component is an [alpha component](docs/https://github.com/material-components/material-components-ios/blob/develop/contributing/alpha_components.md) and therefore doesn't support installation via CocoaPods. This is intended.
+</aside>
+
 ## Usage
 
-<!-- Extracted from docs/typical-use-view.md -->
+<!-- Extracted from docs/typical-use-drawer.md -->
 
 ### Typical use: using the `MDCBottomDrawerViewController` with/without a header.
 
@@ -100,6 +135,8 @@ bottomDrawerViewController.headerViewController = [UIViewController new];
 ```
 <!--</div>-->
 
+<!-- Extracted from docs/typical-use-drawer-no-header.md -->
+
 ### Typical use: presenting in a drawer without a header.
 
 <!--<div class="material-code-render" markdown="1">-->
@@ -121,6 +158,8 @@ contentViewController.modalPresentationStyle = UIModalPresentationCustom;
 [self presentViewController:contentViewController animated:YES completion:nil];
 ```
 <!--</div>-->
+
+<!-- Extracted from docs/typical-use-performant-drawer.md -->
 
 ### Typical use: using the `MDCBottomDrawerViewController` with a need for performant scrolling.
 
@@ -147,3 +186,5 @@ bottomDrawerViewController.trackingScrollView = contentViewController.view;
 [self presentViewController:bottomDrawerViewController animated:YES completion:nil];
 ```
 <!--</div>-->
+
+
