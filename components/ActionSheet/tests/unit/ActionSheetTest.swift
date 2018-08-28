@@ -47,4 +47,14 @@ class ActionSheetTest: XCTestCase {
     // Then
     XCTAssertEqual(actionSheet.title, "New title")
   }
+
+  func testAccessibilityIdentifiers() {
+    // Given
+    let testIdentifier = "Test"
+    let actionSheet = MDCActionSheetController(title: nil)
+    let action = MDCActionSheetAction(title: "Title", image: nil, handler: nil)
+    action.accessibilityIdentifier = testIdentifier
+
+    
+  }
 }
