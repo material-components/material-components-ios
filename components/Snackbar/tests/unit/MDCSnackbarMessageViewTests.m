@@ -66,7 +66,7 @@
   // When
   self.message.accessibilityLabel = @"not message text";
   [self.manager showMessage:self.message];
-  [NSRunLoop.mainRunLoop runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1]];
+  [NSRunLoop.mainRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
 
   // Then
   XCTAssertEqualObjects(self.delegate.presentedView.label.accessibilityLabel,
@@ -76,7 +76,7 @@
 - (void)testAccessibilityHintDefaultIsNotNil {
   // When
   [self.manager showMessage:self.message];
-  [NSRunLoop.mainRunLoop runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1]];
+  [NSRunLoop.mainRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
 
   // Then
   XCTAssertNotNil(self.delegate.presentedView.label.accessibilityHint);
@@ -86,7 +86,7 @@
   // When
   self.message.accessibilityHint = @"a hint";
   [self.manager showMessage:self.message];
-  [NSRunLoop.mainRunLoop runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1]];
+  [NSRunLoop.mainRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
 
   // Then
   XCTAssertEqualObjects(self.delegate.presentedView.label.accessibilityHint,
