@@ -145,14 +145,24 @@ static CGFloat const kSliderVerticalMargin = 12.f;
 
 - (void)layoutSubviews {
   [super layoutSubviews];
-  _label.frame = CGRectMake(kSliderHorizontalMargin + 6, kSliderVerticalMargin,
-                            self.contentView.frame.size.width - (2 * kSliderHorizontalMargin), 20);
+
+  UIEdgeInsets safeArea = UIEdgeInsetsZero;
+  if (@available(iOS 11.0, *)) {
+    // Accommodate insets for iPhone X.
+    safeArea = self.safeAreaInsets;
+    safeArea.top = 0;
+  }
+  CGRect labelFrame = CGRectMake(kSliderHorizontalMargin + 6, kSliderVerticalMargin,
+                                 self.contentView.frame.size.width - (2 * kSliderHorizontalMargin), 20);
+
+  _label.frame = UIEdgeInsetsInsetRect(labelFrame, safeArea);
 
   CGSize intrinsicSize = [_slider intrinsicContentSize];
-  _slider.frame = CGRectMake(
+  CGRect sliderFrame = CGRectMake(
       kSliderHorizontalMargin,
       self.contentView.frame.size.height - kSliderVerticalMargin - intrinsicSize.height,
       self.contentView.frame.size.width - (2 * kSliderHorizontalMargin), intrinsicSize.height);
+  _slider.frame = UIEdgeInsetsInsetRect(sliderFrame, safeArea);
 }
 
 @end
