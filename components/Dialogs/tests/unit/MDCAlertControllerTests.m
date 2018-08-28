@@ -243,7 +243,8 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
 
 - (void)testAccessibilityIdentifiersAppliesToAlertControllerViewButtons {
   // Given
-  MDCAlertController *alertController = [MDCAlertController alertControllerWithTitle:@"Title" message:@"message"];
+  MDCAlertController *alertController = [MDCAlertController alertControllerWithTitle:@"Title"
+                                                                             message:@"message"];
   MDCAlertAction *action1 = [MDCAlertAction actionWithTitle:@"button1" handler:nil];
   action1.accessibilityIdentifier = @"1";
   MDCAlertAction *action2 = [MDCAlertAction actionWithTitle:@"buttonA" handler:nil];
@@ -252,6 +253,7 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
   // When
   [alertController addAction:action1];
   [alertController addAction:action2];
+  
   // Force the view to load
   if (@available(iOS 9.0, *)) {
     [alertController loadViewIfNeeded];
