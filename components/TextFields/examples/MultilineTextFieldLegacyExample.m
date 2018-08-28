@@ -161,7 +161,6 @@
                                                       @"charMax" : multilineTextFieldCharMaxDefault
                                                     }]];
 
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     [NSLayoutConstraint activateConstraints:@[
       [NSLayoutConstraint constraintWithItem:multilineTextFieldUnstyled
@@ -197,24 +196,6 @@
                                     constant:-20]
     ]];
   }
-#else
-  [NSLayoutConstraint activateConstraints:@[
-    [NSLayoutConstraint constraintWithItem:multilineTextFieldUnstyled
-                                 attribute:NSLayoutAttributeTop
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self.scrollView
-                                 attribute:NSLayoutAttributeTop
-                                multiplier:1
-                                  constant:20],
-    [NSLayoutConstraint constraintWithItem:multilineTextFieldCharMaxFullWidth
-                                 attribute:NSLayoutAttributeBottom
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self.scrollView
-                                 attribute:NSLayoutAttributeBottomMargin
-                                multiplier:1
-                                  constant:-20]
-  ]];
-#endif
 
   [NSLayoutConstraint constraintWithItem:multilineTextFieldCharMaxFullWidth
                                attribute:NSLayoutAttributeLeading

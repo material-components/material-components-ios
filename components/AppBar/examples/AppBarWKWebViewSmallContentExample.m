@@ -77,12 +77,10 @@
 
   [webView loadHTMLString:@"<html>\n<head></head><body>Hi</body></html>" baseURL:nil];
 
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     // No need to do anything - additionalSafeAreaInsets will inset our content.
     webView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
   } else {
-#endif
   // Fixes the WKWebView contentSize.height bug pre-iOS 11.
   webView.translatesAutoresizingMaskIntoConstraints = NO;
   [NSLayoutConstraint activateConstraints:
@@ -115,9 +113,7 @@
                                  multiplier:1.0
                                    constant:0]
      ]];
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   }
-#endif
 
   self.appBar.headerViewController.headerView.trackingScrollView = webView.scrollView;
   [self.appBar addSubviewsToParent];

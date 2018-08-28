@@ -289,13 +289,8 @@ IB_DESIGNABLE
 
  Note: this property will be deprecated in future, please use titleFont and titleTextColor instead.
  */
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
 @property(nonatomic, copy, nullable)
     NSDictionary<NSAttributedStringKey, id> *titleTextAttributes UI_APPEARANCE_SELECTOR;
-#else
-@property(nonatomic, copy, nullable)
-    NSDictionary<NSString *, id> *titleTextAttributes UI_APPEARANCE_SELECTOR;
-#endif
 
 #pragma mark - Deprecated
 

@@ -104,11 +104,9 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
 
     // Since we handle the SafeAreaInsets ourselves through the contentInset property, we disable
     // the adjustment behavior to prevent accounting for it twice.
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
     if (@available(iOS 11.0, *)) {
       scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     }
-#endif
   }
   return self;
 }
@@ -155,7 +153,6 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
 }
 
 - (void)safeAreaInsetsDidChange {
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     [super safeAreaInsetsDidChange];
 
@@ -170,7 +167,6 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
                                       CGRectGetHeight(self.frame) - self.safeAreaInsets.top);
     self.sheet.scrollView.frame = scrollViewFrame;
   }
-#endif
 }
 
 #pragma mark - KVO
@@ -204,11 +200,9 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
   self.originalPreferredSheetHeight = preferredSheetHeight;
 
   CGFloat adjustedPreferredSheetHeight = self.originalPreferredSheetHeight;
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     adjustedPreferredSheetHeight += self.safeAreaInsets.bottom;
   }
-#endif
 
   if (_preferredSheetHeight == adjustedPreferredSheetHeight) {
     return;
@@ -263,11 +257,9 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
 // Returns the maximum allowable height that the sheet can be dragged to.
 - (CGFloat)maximumSheetHeight {
   CGFloat boundsHeight = CGRectGetHeight(self.bounds);
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     boundsHeight -= self.safeAreaInsets.top;
   }
-#endif
   CGFloat scrollViewContentHeight = self.sheet.scrollView.contentInset.top +
       self.sheet.scrollView.contentSize.height + self.sheet.scrollView.contentInset.bottom;
 

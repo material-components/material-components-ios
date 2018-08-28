@@ -223,7 +223,6 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   // For pre iOS 11 devices, it's safe to assume that the Safe Area insets' left and right
   // values are zero. DO NOT use this to get the top or bottom Safe Area insets.
   UIEdgeInsets RTLFriendlySafeAreaInsets = UIEdgeInsetsZero;
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     RTLFriendlySafeAreaInsets =
         MDFInsetsMakeWithLayoutDirection(self.safeAreaInsets.top,
@@ -232,7 +231,6 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
                                          self.safeAreaInsets.right,
                                          self.mdf_effectiveUserInterfaceLayoutDirection);
   }
-#endif
 
   CGSize leadingButtonBarSize = [_leadingButtonBar sizeThatFits:self.bounds.size];
   CGRect leadingButtonBarFrame = CGRectMake(RTLFriendlySafeAreaInsets.left,
@@ -261,12 +259,10 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   CGRect textFrame = UIEdgeInsetsInsetRect(self.bounds, textInsets);
   textFrame.origin.x += _leadingButtonBar.frame.size.width;
   textFrame.size.width -= _leadingButtonBar.frame.size.width + _trailingButtonBar.frame.size.width;
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     textFrame.origin.x += self.safeAreaInsets.left;
     textFrame.size.width -= self.safeAreaInsets.left + self.safeAreaInsets.right;
   }
-#endif
 
   // Layout TitleLabel
   NSMutableParagraphStyle *paraStyle = [[NSMutableParagraphStyle alloc] init];
@@ -308,11 +304,9 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
       CGFloat availableWidth = UIEdgeInsetsInsetRect(self.bounds, textInsets).size.width;
       availableWidth -= MAX(_leadingButtonBar.frame.size.width,
                             _trailingButtonBar.frame.size.width) * 2;
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
       if (@available(iOS 11.0, *)) {
         availableWidth -= self.safeAreaInsets.left + self.safeAreaInsets.right;
       }
-#endif
       titleViewFrame.size.width = availableWidth;
       titleViewFrame = [self mdc_frameAlignedHorizontally:titleViewFrame
                                                 alignment:MDCNavigationBarTitleAlignmentCenter];

@@ -40,11 +40,9 @@ static const NSUInteger kNumberOfPages = 10;
   _pagingScrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
   _pagingScrollView.pagingEnabled = YES;
   _pagingScrollView.delegate = self;
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     _pagingScrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
   }
-#endif
   _pagingScrollView.autoresizingMask =
       (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
   _pagingScrollView.scrollsToTop = NO;

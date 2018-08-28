@@ -388,15 +388,11 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   if (![viewController isViewLoaded]) {
     self.topSafeAreaInset = 0;
   } else {
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
     if (@available(iOS 11.0, *)) {
       self.topSafeAreaInset = viewController.view.safeAreaInsets.top;
     } else {
       self.topSafeAreaInset = viewController.topLayoutGuide.length;
     }
-#else
-    self.topSafeAreaInset = viewController.topLayoutGuide.length;
-#endif
   }
 }
 
@@ -436,7 +432,6 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 }
 
 - (void)safeAreaInsetsDidChange {
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     [super safeAreaInsetsDidChange];
 
@@ -448,7 +443,6 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
       [self fhv_topSafeAreaInsetDidChange];
     }
   }
-#endif
 }
 
 #pragma mark - Top Safe Area Inset
@@ -586,11 +580,9 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   // the scroll view's been created, but not in any further runloops.
   if (CGPointEqualToPoint(offsetPriorToInsetAdjustment, _trackingScrollView.contentOffset)) {
     CGFloat scrollViewAdjustedContentInsetTop = _trackingScrollView.contentInset.top;
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
     if (@available(iOS 11.0, *)) {
       scrollViewAdjustedContentInsetTop = _trackingScrollView.adjustedContentInset.top;
     }
-#endif
     offsetPriorToInsetAdjustment.y = MAX(offsetPriorToInsetAdjustment.y,
                                          -scrollViewAdjustedContentInsetTop);
     [self fhv_setContentOffset:offsetPriorToInsetAdjustment];
@@ -624,14 +616,10 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 - (CGFloat)fhv_existingContentInsetAdjustmentForScrollView:(UIScrollView *)scrollView {
   CGFloat existingContentInsetAdjustment = 0;
 
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     existingContentInsetAdjustment = (scrollView.adjustedContentInset.top
                                       - scrollView.contentInset.top);
   }
-#else
-  (void)scrollView; // To silence unused variable warnings.
-#endif
 
   return existingContentInsetAdjustment;
 }
