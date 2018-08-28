@@ -81,7 +81,9 @@ static NSString *const kCellIdentifier = @"cell";
                                         @"Trailing Floating Button",
                                         @"Primary Elevation Floating Button",
                                         @"Secondary Elevation Floating Button",
-                                        @"Visible FAB" ];
+                                        @"Visible FAB",
+                                        @"",
+                                        @""]; // the last two empty items are used for offset
     _listItems = listItems;
     
     self.title = @"Bottom App Bar";
@@ -130,7 +132,7 @@ static NSString *const kCellIdentifier = @"cell";
   cell.layoutMargins = UIEdgeInsetsZero;
   cell.textLabel.text = self.listItems[indexPath.item];
   [self.fabVisibilitySwitch removeFromSuperview];
-  if (indexPath.row == (NSInteger)(self.listItems.count - 1)) {
+  if ([self.listItems[indexPath.row] isEqualToString:@"Visible FAB"]) {
     cell.accessoryView = self.fabVisibilitySwitch;
   } else {
     cell.accessoryView = nil;
