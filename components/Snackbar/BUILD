@@ -106,6 +106,8 @@ mdc_objc_library(
     srcs = native.glob([
         "tests/unit/*.m",
         "tests/unit/*.h",
+        "tests/unit/supplemental/*.m",
+        "tests/unit/supplemental/*.h",
     ]),
     sdk_frameworks = [
         "UIKit",
