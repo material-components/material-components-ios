@@ -133,7 +133,7 @@ typedef void (^MDCActionHandler)(MDCAlertAction *_Nonnull action);
 /**
  MDCAlertAction is passed to an MDCAlertController to add a button to the alert dialog.
  */
-@interface MDCAlertAction : NSObject <NSCopying>
+@interface MDCAlertAction : NSObject <NSCopying, UIAccessibilityIdentification>
 
 /**
  Action alerts control the buttons that will be displayed on the bottom of an alert controller.
@@ -156,5 +156,10 @@ typedef void (^MDCActionHandler)(MDCAlertAction *_Nonnull action);
 @property(nonatomic, nullable, readonly) NSString *title;
 
 // TODO(iangordon): Add support for enabled property to match UIAlertAction
+
+/**
+ The @c accessibilityIdentifier for the view associated with this action.
+ */
+@property(nonatomic, nullable, copy) NSString *accessibilityIdentifier;
 
 @end

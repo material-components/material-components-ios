@@ -24,6 +24,10 @@
 
 static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertControllerSubclassValueKey";
 
+@interface MDCAlertController (Testing)
+@property(nonatomic, nullable, weak) MDCAlertControllerView *alertView;
+@end
+
 @interface MDCAlertControllerSubclass : MDCAlertController
 @property(nonatomic, assign) NSInteger value;
 @end
@@ -235,6 +239,38 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
                                            handler:^(MDCAlertAction * _Nonnull action) {
                                            }]];
   XCTAssertFalse(alert.isViewLoaded);
+}
+
+- (void)testAccessibilityIdentifiersAppliesToAlertControllerViewButtons {
+  // Given
+  MDCAlertController *alertController = [MDCAlertController alertControllerWithTitle:@"Title" message:@"message"];
+  MDCAlertAction *action1 = [MDCAlertAction actionWithTitle:@"button1" handler:nil];
+  action1.accessibilityIdentifier = @"1";
+  MDCAlertAction *action2 = [MDCAlertAction actionWithTitle:@"buttonA" handler:nil];
+  action2.accessibilityIdentifier = @"A";
+
+  // When
+  [alertController addAction:action1];
+  [alertController addAction:action2];
+  // Force the view to load
+  if (@available(iOS 9.0, *)) {
+    [alertController loadViewIfNeeded];
+  } else {
+    (void)alertController.view;
+  }
+
+  // Then
+  NSArray<UIButton *> *buttons = alertController.alertView.actionButtons;
+  XCTAssertEqual(buttons.count, 2U);
+  UIButton *button1 = buttons.firstObject;
+  UIButton *button2 = buttons.lastObject;
+
+  if (![[button1.titleLabel.text lowercaseString] isEqualToString:action1.title]) {
+    button1 = buttons.lastObject;
+    button2 = buttons.firstObject;
+  }
+  XCTAssertEqualObjects(button1.accessibilityIdentifier, @"1");
+  XCTAssertEqualObjects(button2.accessibilityIdentifier, @"A");
 }
 
 @end
