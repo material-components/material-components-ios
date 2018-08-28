@@ -115,12 +115,10 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   collectionView.showsHorizontalScrollIndicator = NO;
   collectionView.showsVerticalScrollIndicator = NO;
 
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     collectionView.contentInsetAdjustmentBehavior =
         UIScrollViewContentInsetAdjustmentScrollableAxes;
   }
-#endif
 
   collectionView.dataSource = self;
   collectionView.delegate = self;
@@ -306,11 +304,9 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 }
 
 - (void)safeAreaInsetsDidChange {
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     [super safeAreaInsetsDidChange];
   }
-#endif
   [self setNeedsLayout];
 }
 
@@ -434,12 +430,10 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 #pragma mark - Private
 
 - (CGFloat)adjustedCollectionViewWidth {
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     return CGRectGetWidth(UIEdgeInsetsInsetRect(_collectionView.bounds,
                                                 _collectionView.adjustedContentInset));
   }
-#endif
   return CGRectGetWidth(_collectionView.bounds);
 }
 
@@ -679,13 +673,11 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   const BOOL isRegular = (sizeClass == UIUserInterfaceSizeClassRegular);
   CGFloat inset = isRegular ? kRegularInset : kCompactInset;
   // If the collection view has Safe Area insets, we don't want to add an extra horizontal inset.
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     if (_collectionView.safeAreaInsets.left > 0 || _collectionView.safeAreaInsets.right > 0) {
       inset = 0;
     }
   }
-#endif
   return UIEdgeInsetsMake(0.0f, inset, 0.0f, inset);
 }
 
@@ -984,12 +976,10 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 }
 
 - (CGRect)adjustedCollectionViewBounds {
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     return UIEdgeInsetsInsetRect(self.collectionView.bounds,
                                  self.collectionView.adjustedContentInset);
   }
-#endif
   return self.collectionView.bounds;
 }
 
