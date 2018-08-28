@@ -68,6 +68,10 @@ class ActionSheetSwiftExample: UIViewController {
       actionSheet = ActionSheetSwiftExample.noIcons()
     case .titleAndMessage:
       actionSheet = ActionSheetSwiftExample.titleAndMessage()
+      actionSheet.transitionController.isScrimAccessibilityElement = true
+      actionSheet.transitionController.scrimAccessibilityLabel = "Cancel"
+      actionSheet.transitionController.scrimAccessibilityHint = "Hint"
+      actionSheet.transitionController.scrimAccessibilityTraits = UIAccessibilityTraitButton
     case .dynamicType:
       actionSheet = ActionSheetSwiftExample.dynamic()
     case .delayed:

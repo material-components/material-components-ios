@@ -18,7 +18,6 @@
 
 #import "private/MDCActionSheetItemTableViewCell.h"
 #import "private/MDCActionSheetHeaderView.h"
-#import "MaterialBottomSheet.h"
 #import "MaterialApplication.h"
 #import "MaterialTypography.h"
 
@@ -69,7 +68,6 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 @implementation MDCActionSheetController {
   MDCActionSheetHeaderView *_header;
   UITableView *_tableView;
-  MDCBottomSheetTransitionController *_transitionController;
   NSMutableArray<MDCActionSheetAction *> *_actions;
 }
 
@@ -164,7 +162,7 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 #pragma clang diagnostic pop
 
   self.mdc_bottomSheetPresentationController.dismissOnBackgroundTap =
-      _transitionController.dismissOnBackgroundTap;
+      self.transitionController.dismissOnBackgroundTap;
   [self.view layoutIfNeeded];
 }
 
@@ -184,15 +182,15 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 }
 
 - (UIScrollView *)trackingScrollView {
-  return _transitionController.trackingScrollView;
+  return self.transitionController.trackingScrollView;
 }
 
 - (void)setTrackingScrollView:(UIScrollView *)trackingScrollView {
-  _transitionController.trackingScrollView = trackingScrollView;
+  self.transitionController.trackingScrollView = trackingScrollView;
 }
 
 - (BOOL)dismissOnBackgroundTap {
-  return _transitionController.dismissOnBackgroundTap;
+  return self.transitionController.dismissOnBackgroundTap;
 }
 
 - (void)setDismissOnBackgroundTap:(BOOL)dismissOnBackgroundTap {
@@ -342,40 +340,6 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 - (void)updateFontsForDynamicType {
   [self updateTableFonts];
   [self.view setNeedsLayout];
-}
-
-#pragma mark Accessibility
-
--(void)setIsScrimAccessibilityElement:(BOOL)isScrimAccessibilityElement {
-  _transitionController.isScrimAccessibilityElement = isScrimAccessibilityElement;
-}
-
-- (BOOL)isScrimAccessibilityElement {
-  return _transitionController.isScrimAccessibilityElement;
-}
-
-- (void)setScrimAccessibilityLabel:(NSString *)scrimAccessibilityLabel {
-  _transitionController.scrimAccessibilityLabel = scrimAccessibilityLabel;
-}
-
-- (NSString *)scrimAccessibilityLabel {
-  return _transitionController.scrimAccessibilityLabel;
-}
-
-- (void)setScrimAccessibilityHint:(NSString *)scrimAccessibilityHint {
-  _transitionController.scrimAccessibilityHint = scrimAccessibilityHint;
-}
-
-- (NSString *)scrimAccessibilityHint {
-  return _transitionController.scrimAccessibilityHint;
-}
-
-- (void)setScrimAccessibilityTraits:(UIAccessibilityTraits)scrimAccessibilityTraits {
-  _transitionController.scrimAccessibilityTraits = scrimAccessibilityTraits;
-}
-
-- (UIAccessibilityTraits)scrimAccessibilityTraits {
-  return _transitionController.scrimAccessibilityTraits;
 }
 
 @end
