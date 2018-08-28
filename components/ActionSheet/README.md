@@ -158,8 +158,6 @@ The scrim by default enables the "Z" gesture to dismiss. If `isScrimAccessibilit
 `false` then `scrimAccessibilityLabel`, `scrimAccessibilityHint`, and `scrimAccessibilityTraits` will
 have any effect.
 
-<!--</div>-->
-
 ### Set `-isScrimAccessibilityElement`
 
 <!--<div class="material-code-render" markdown="1">-->
@@ -209,6 +207,8 @@ actionSheet.transitionController.scrimAccessibilityHint = "Dismiss the action sh
 MDCActionSheetController *actionSheet = [MDCActionSheetController alloc] init];
 actionSheet.scrimAccessibilityHint = @"Dismiss the action sheet";
 ```
+
+<!--</div>-->
 
 ### Set `-scrimAccessibilityTraits`
 
