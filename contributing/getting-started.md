@@ -1,15 +1,10 @@
 # Getting started with contributing to MDC iOS
 
-## All contributors
-
-Checklist:
-
-- [ ] [Install git-clang-format](#git-clang-format).
-
 ## Core contributors
 
 Checklist:
 
+- [ ] [Install git-clang-format](#git-clang-format).
 - [ ] Install https://github.com/material-foundation/github-squash-and-merge-pr-descriptions. This ensures that your pull request's merge commit matches your PR description.
 
 ## Installation guides
