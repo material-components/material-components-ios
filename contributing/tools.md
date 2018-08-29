@@ -6,11 +6,11 @@ This tool allows you to run clang-format on your local changes before they're se
 This will minimize the amount of style feedback you get from the team and saves everyone time.
 
 ```bash
-# First check to see if you have clang-format command installed.
+# Check to see if you have clang-format command installed.
 # If not, get the latest release from https://github.com/material-foundation/clang-format/releases
 clang-format -version
 
-# First check to see if you have git's clang-format command installed.
+# Check to see if you have git's clang-format command installed.
 git clang-format -h
 
 # Download the script
