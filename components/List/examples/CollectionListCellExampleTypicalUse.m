@@ -12,11 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "CollectionListCellExampleTypicalUse.h"
-
-#import "CollectionViewListCell.h"
 #import "MaterialIcons+ic_info.h"
 #import "MaterialTypographyScheme.h"
+#import "supplemental/CollectionListCellExampleTypicalUse.h"
+#import "supplemental/CollectionViewListCell.h"
 
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 static NSString *const kExampleDetailText =
@@ -122,7 +121,7 @@ static const CGFloat kSmallArbitraryCellWidth = 100.f;
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
-  return 100;
+  return [_content count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
@@ -138,10 +137,10 @@ static const CGFloat kSmallArbitraryCellWidth = 100.f;
         (collectionView.adjustedContentInset.left + collectionView.adjustedContentInset.right);
   }
   [cell setCellWidth:cellWidth];
-  cell.titleLabel.text = _content[indexPath.item % _content.count][0];
-  cell.titleLabel.textAlignment = [_content[indexPath.item % _content.count][1] integerValue];
-  cell.detailsTextLabel.text = _content[indexPath.item % _content.count][2];
-  cell.detailsTextLabel.textAlignment = [_content[indexPath.item % _content.count][3] integerValue];
+  cell.titleLabel.text = _content[indexPath.item][0];
+  cell.titleLabel.textAlignment = [_content[indexPath.item][1] integerValue];
+  cell.detailsTextLabel.text = _content[indexPath.item][2];
+  cell.detailsTextLabel.textAlignment = [_content[indexPath.item][3] integerValue];
   if (indexPath.item % 3 == 0) {
     [cell setImage:[MDCIcons imageFor_ic_info]];
   }

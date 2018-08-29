@@ -17,7 +17,7 @@
 
 static CGFloat const kArbitraryCellHeight = 75.f;
 static NSString *const kSelfSizingStereoCellIdentifier = @"kSelfSizingStereoCellIdentifier";
-static NSString *const kSelfSizingStereoCellExampleComponent = @"List";
+static NSString *const kSelfSizingStereoCellExampleComponent = @"List Items";
 static NSString *const kSelfSizingStereoCellExampleDescription =
     @"Self Sizing Stereo Cell Typical Use";
 
