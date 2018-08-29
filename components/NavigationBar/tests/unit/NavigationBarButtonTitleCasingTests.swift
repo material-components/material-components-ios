@@ -35,7 +35,7 @@ class NavigationBarButtonTitleCasingTests: XCTestCase {
   }
 
   func testDefaultCasingIsUppercase() {
-    // Given
+    // Then
     XCTAssertTrue(navigationBar.uppercasesButtonTitles)
   }
 
