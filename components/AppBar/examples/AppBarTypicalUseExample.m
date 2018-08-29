@@ -80,8 +80,12 @@
   self.navigationItem.rightBarButtonItem =
       [[UIBarButtonItem alloc] initWithTitle:@"Right"
                                        style:UIBarButtonItemStyleDone
-                                      target:nil
-                                      action:nil];
+                                      target:self
+                                      action:@selector(didTap)];
+}
+
+- (void)didTap {
+  self.navigationItem.rightBarButtonItem.title = @"Left boo";
 }
 
 // Optional step: If you allow the header view to hide the status bar you must implement this
