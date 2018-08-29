@@ -50,11 +50,25 @@ class ActionSheetTest: XCTestCase {
 
   func testAccessibilityIdentifiers() {
     // Given
-    let testIdentifier = "Test"
+    let testIdentifierOne = "Test One"
+    let testIdentifierTwo = "Test Two"
     let actionSheet = MDCActionSheetController(title: nil)
-    let action = MDCActionSheetAction(title: "Title", image: nil, handler: nil)
-    action.accessibilityIdentifier = testIdentifier
 
-    
+    // When
+    let actionOne = MDCActionSheetAction(title: "Title", image: nil, handler: nil)
+    actionOne.accessibilityIdentifier = testIdentifierOne
+    actionSheet.addAction(actionOne)
+
+    let actionTwo = MDCActionSheetAction(title: "Title", image: nil, handler: nil)
+    actionTwo.accessibilityIdentifier = testIdentifierTwo
+    actionSheet.addAction(actionTwo)
+
+    // Then
+    if let first = actionSheet.actions.first {
+      XCTAssertEqual(testIdentifierOne, first.accessibilityIdentifier)
+    }
+    if let last = actionSheet.actions.last {
+      XCTAssertEqual(testIdentifierTwo, last.accessibilityIdentifier)
+    }
   }
 }
