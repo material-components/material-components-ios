@@ -160,6 +160,15 @@ IB_DESIGNABLE
 @property(nonatomic, strong, nullable) UIColor *inkColor;
 
 /**
+ If true, all button titles will be converted to uppercase.
+
+ Changing this property to NO will update the current title string for all buttons.
+
+ Default is YES.
+ */
+@property(nonatomic) BOOL uppercasesButtonTitles;
+
+/**
  Sets the title font for the given state for all buttons.
 
  @param font The font that should be displayed on text buttons for the given state.

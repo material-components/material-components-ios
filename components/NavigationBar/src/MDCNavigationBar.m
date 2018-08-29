@@ -137,6 +137,7 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 }
 
 - (void)commonMDCNavigationBarInit {
+  _uppercasesButtonTitles = YES;
   _observedNavigationItemLock = [[NSObject alloc] init];
   _titleFont = [MDCTypography titleFont];
 
@@ -171,6 +172,13 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
     _trailingButtonBar.backgroundColor = nil;
   }
   return self;
+}
+
+- (void)setUppercasesButtonTitles:(BOOL)uppercasesButtonTitles {
+  _uppercasesButtonTitles = uppercasesButtonTitles;
+
+  _leadingButtonBar.uppercasesButtonTitles = uppercasesButtonTitles;
+  _trailingButtonBar.uppercasesButtonTitles = uppercasesButtonTitles;
 }
 
 - (void)setTitleFont:(UIFont *)titleFont {
