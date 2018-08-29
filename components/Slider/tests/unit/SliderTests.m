@@ -970,32 +970,12 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   CGFloat thumbRadius = 40.f;
   [self.slider setThumbRadius:thumbRadius];
 
-  CGFloat statefulThumbRadius = 25.f;
-  [self.slider setThumbRadius:statefulThumbRadius forState:UIControlStateNormal];
-  [self.slider setThumbRadius:statefulThumbRadius forState:UIControlStateDisabled];
-  [self.slider setThumbRadius:statefulThumbRadius forState:UIControlStateHighlighted];
-  [self.slider setThumbRadius:statefulThumbRadius forState:UIControlStateSelected];
+  NSUInteger maxState = UIControlStateNormal | UIControlStateSelected | UIControlStateDisabled |
+      UIControlStateHighlighted;
 
-  // Then
-  self.slider.enabled = YES;
-  self.slider.selected = NO;
-  self.slider.highlighted = NO;
-  XCTAssertEqual(self.slider.thumbRadius, thumbRadius);
-
-  self.slider.enabled = NO;
-  self.slider.selected = NO;
-  self.slider.highlighted = NO;
-  XCTAssertEqual(self.slider.thumbRadius, thumbRadius);
-
-  self.slider.enabled = YES;
-  self.slider.selected = NO;
-  self.slider.highlighted = YES;
-  XCTAssertEqual(self.slider.thumbRadius, thumbRadius);
-
-  self.slider.enabled = YES;
-  self.slider.selected = YES;
-  self.slider.highlighted = NO;
-  XCTAssertEqual(self.slider.thumbRadius, thumbRadius);
+  for (NSUInteger state = 0; state <= maxState; ++state) {
+    XCTAssertEqual([self.slider thumbRadiusForState:state], thumbRadius);
+  }
 }
 
 - (void)testThumbRadius {

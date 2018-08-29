@@ -226,11 +226,10 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   if ([_thumbRadiusesForState objectForKey:@(state)]) {
     return [_thumbRadiusesForState[@(state)] floatValue];
   }
-  CGFloat radius = kSliderDefaultThumbRadius;
-  if (state != UIControlStateNormal) {
-    radius = [_thumbRadiusesForState[@(UIControlStateNormal)] floatValue];
+  if ([_thumbRadiusesForState objectForKey:@(UIControlStateNormal)]) {
+    return [_thumbRadiusesForState[@(UIControlStateNormal)] floatValue];
   }
-  return radius;
+  return kSliderDefaultThumbRadius;
 }
 
 - (void)updateColorsForState {
@@ -267,6 +266,8 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   if (self.statefulAPIEnabled) {
     return;
   }
+  float radius = (float)thumbRadius;
+  _thumbRadiusesForState[@(UIControlStateNormal)] = [NSNumber numberWithFloat:radius];
   _thumbTrack.thumbRadius = thumbRadius;
 }
 
