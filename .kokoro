@@ -197,8 +197,6 @@ run_cocoapods() {
       pod lib lint MaterialComponents.podspec
     fi
   done
-
-  bash <(curl -s https://codecov.io/bash)
 }
 
 # For local runs, you must set the following environment variables:
