@@ -28,14 +28,14 @@
     switch (defaults) {
       case MDCShapeSchemeDefaultsMaterial201808:
         _smallSurfaceShape =
-            [[MDCShapeCategory alloc] initCornersWithShapeFamily:MDCShapeFamilyAngledCorner
-                                                        andValue:8.f];
+            [[MDCShapeCategory alloc] initCornersWithShapeFamily:MDCShapeFamilyRoundedCorner
+                                                        andValue:4.f];
         _mediumSurfaceShape =
             [[MDCShapeCategory alloc] initCornersWithShapeFamily:MDCShapeFamilyRoundedCorner
-                                                        andValue:40.f];
+                                                        andValue:4.f];
         _largeSurfaceShape =
-            [[MDCShapeCategory alloc] initCornersWithShapeFamily:MDCShapeFamilyAngledCorner
-                                                        andValue:8.f];
+            [[MDCShapeCategory alloc] initCornersWithShapeFamily:MDCShapeFamilyRoundedCorner
+                                                        andValue:0.f];
         break;
     }
   }
