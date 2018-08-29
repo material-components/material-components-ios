@@ -103,6 +103,19 @@ static NSString *const kEnabledSelector = @"enabled";
 
   for (UIView *view in positionedButtonViews) {
     CGFloat width = view.frame.size.width;
+
+    // There's a finite number of buttons that can reasonably be shown in a button bar, so this
+    // linear-time lookup cost is minimal.
+    NSUInteger index = [_buttonViews indexOfObject:view];
+    if (index < [_items count]) {
+      UIBarButtonItem *item = _items[index];
+      if (item.width > 0) {
+        width = item.width;
+      } else {
+        width = [view sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)].width;
+      }
+    }
+
     switch (self.mdf_effectiveUserInterfaceLayoutDirection) {
       case UIUserInterfaceLayoutDirectionLeftToRight:
         break;
@@ -488,7 +501,6 @@ static NSString *const kEnabledSelector = @"enabled";
 - (void)setButtonTitleBaseline:(CGFloat)buttonTitleBaseline {
   _buttonTitleBaseline = buttonTitleBaseline;
 
-  [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];
 }
 
