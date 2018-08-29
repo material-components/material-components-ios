@@ -129,6 +129,7 @@ static const UIEdgeInsets kButtonInset = {0, 12.0f, 0, 12.0f};
 
   [MDCAppBarButtonBarBuilder configureButton:button fromButtonItem:buttonItem];
 
+  button.uppercaseTitle = buttonBar.uppercasesButtonTitles;
   [button setTitleColor:self.buttonTitleColor forState:UIControlStateNormal];
   [button setUnderlyingColorHint:self.buttonUnderlyingColor];
   for (NSNumber *state in _fonts) {

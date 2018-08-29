@@ -43,6 +43,7 @@ static NSString *const kEnabledSelector = @"enabled";
 }
 
 - (void)commonMDCButtonBarInit {
+  _uppercasesButtonTitles = YES;
   _buttonItemsLock = [[NSObject alloc] init];
   _layoutPosition = MDCButtonBarLayoutPositionNone;
 
@@ -400,6 +401,18 @@ static NSString *const kEnabledSelector = @"enabled";
     }
 
     [self reloadButtonViews];
+  }
+}
+
+- (void)setUppercasesButtonTitles:(BOOL)uppercasesButtonTitles {
+  _uppercasesButtonTitles = uppercasesButtonTitles;
+
+  for (NSUInteger i = 0; i < [_buttonViews count]; ++i) {
+    UIView *viewObj = _buttonViews[i];
+    if ([viewObj isKindOfClass:[MDCButton class]]) {
+      MDCButton *button = (MDCButton *)viewObj;
+      button.uppercaseTitle = uppercasesButtonTitles;
+    }
   }
 }
 
