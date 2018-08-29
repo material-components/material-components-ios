@@ -48,3 +48,7 @@ Material UIAlertController please see the `MDCAlertController` class.
 3. MDCActionSheetController does not support text fields.
 
 4. MDCActionSheetController does not have a preferredAction.
+
+## Extensions
+
+- [Accessibility](accessibility.md)
