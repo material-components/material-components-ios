@@ -34,7 +34,7 @@ class ActionSheetSwiftExample: UIViewController {
     ("With Title and Message", .titleAndMessage),
     ("Dynamic Type Enabled", .dynamicType),
     ("Delayed", .delayed),
-    ("Thirty options", .thirtyOptions)
+    ("Thirty Options", .thirtyOptions)
   ]
   let cellIdentifier = "BaseCell"
 
@@ -212,10 +212,10 @@ extension ActionSheetSwiftExample {
     let actionSheet = MDCActionSheetController(title: "Action sheet", message: messageString)
     for i in 1...30 {
       let action = MDCActionSheetAction(title: "Action \(i)",
-                                        image: UIImage(named: "Home")!,
+                                        image: UIImage(named: "Home"),
                                         handler: nil)
       actionSheet.addAction(action)
-      }
+    }
     return actionSheet
   }
 
