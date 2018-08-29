@@ -168,39 +168,6 @@ cut_release() {
   git push origin release-candidate -u
 
   RELEASE_SHA=$(git merge-base --fork-point release-candidate $branch)
-
-  today=$(date +'%B%%20%d,%%20%Y')
-
-  echo
-  echo
-  echo "${B}If you have not already, please send the following email:$N"
-  echo
-  echo "> Consider setting up Gmail or Inbox as your default mailto handler:"
-  echo "> https://productforums.google.com/forum/#!topic/chrome/oxPLcXhbt9w"
-  echo
-  echo "Copy and paste the following into a browser to compose the email:"
-  echo
-  echo "    mailto:material-components-ios-discuss%40googlegroups.com?subject=State%20of%20material-components-ios'%20$today%20release&body=I%20am%20about%20to%20cut%20the%20release%20for%20$today.%0A%0AThe%20release%20is%20being%20cut%20at%20$RELEASE_SHA.%0AView%20this%20SHA%20on%20GitHub%20at%20https%3A%2F%2Fgithub.com%2Fmaterial-components%2Fmaterial-components-ios%2Fcommit%2F$RELEASE_SHA%0A%0AWe%20encourage%20clients%20to%20test%20this%20release.%20To%20do%20so%2C%20check%20out%20the%0Arelease-candidate%20branch%20like%20so%3A%0A%0A%20%20%20%20git%20fetch%0A%20%20%20%20git%20checkout%20origin%2Frelease-candidate%0A"
-  echo
-  echo "Or compose the email by hand using the following template:"
-  echo
-  echo "To: material-components-ios-discuss@googlegroups.com"
-  echo "Subject: State of material-components-ios's $today release"
-  echo "Body:"
-  echo "I am about to cut the release for $today."
-  echo
-  echo "The release is being cut at $RELEASE_SHA."
-  echo "View this SHA on GitHub at https://github.com/material-components/material-components-ios/commit/$RELEASE_SHA"
-  echo
-  echo "We encourage clients to test this release. To do so, check out the"
-  echo "release-candidate branch like so:"
-  echo
-  echo "    git fetch"
-  echo "    git checkout origin/release-candidate"
-  echo
-  echo "<end of email body>"
-  echo
-  echo
   PULL_REQUEST_URL="https://github.com/material-components/material-components-ios/compare/stable...release-candidate"
   echo "${B}You can now start the release-candidate pull request:${N}"
   echo
