@@ -164,7 +164,7 @@ cut_release() {
   git push origin release-candidate -u
 
   RELEASE_SHA=$(git merge-base --fork-point release-candidate $branch)
- PULL_REQUEST_URL="https://github.com/material-components/material-components-ios/compare/stable...release-candidate"
+  PULL_REQUEST_URL="https://github.com/material-components/material-components-ios/compare/stable...release-candidate"
   echo "${B}You can now start the release-candidate pull request:${N}"
   echo
   echo "    $PULL_REQUEST_URL"
