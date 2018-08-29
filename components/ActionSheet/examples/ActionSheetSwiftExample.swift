@@ -23,7 +23,7 @@ class ActionSheetSwiftExample: UIViewController {
   var typographyScheme = MDCTypographyScheme()
   let tableView = UITableView()
   enum ActionSheetExampleType {
-    case typical, title, message, noIcons, titleAndMessage, dynamicType, delayed
+    case typical, title, message, noIcons, titleAndMessage, dynamicType, delayed, thirtyOptions
   }
   typealias ExamplesTuple = (label: String, type: ActionSheetExampleType)
   let data: [ExamplesTuple] = [
@@ -33,7 +33,8 @@ class ActionSheetSwiftExample: UIViewController {
     ("No Icons", .noIcons),
     ("With Title and Message", .titleAndMessage),
     ("Dynamic Type Enabled", .dynamicType),
-    ("Delayed", .delayed)
+    ("Delayed", .delayed),
+    ("Thirty Options", .thirtyOptions)
   ]
   let cellIdentifier = "BaseCell"
 
@@ -82,6 +83,8 @@ class ActionSheetSwiftExample: UIViewController {
         actionSheet.addAction(action)
         actionSheet.backgroundColor = .green
       }
+    case .thirtyOptions:
+      actionSheet = ActionSheetSwiftExample.thirtyOptions()
     }
     present(actionSheet, animated: true, completion: nil)
   }
@@ -204,4 +207,16 @@ extension ActionSheetSwiftExample {
     actionSheet.addAction(actionThree)
     return actionSheet
   }
+
+  static func thirtyOptions() -> MDCActionSheetController {
+    let actionSheet = MDCActionSheetController(title: "Action sheet", message: messageString)
+    for i in 1...30 {
+      let action = MDCActionSheetAction(title: "Action \(i)",
+                                        image: UIImage(named: "Home"),
+                                        handler: nil)
+      actionSheet.addAction(action)
+    }
+    return actionSheet
+  }
+
 }
