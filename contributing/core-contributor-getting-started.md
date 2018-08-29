@@ -12,7 +12,11 @@ This will minimize the amount of style feedback you get from the team and saves 
 git clang-format -h
 
 # Download the script
-curl -s https://raw.githubusercontent.com/llvm-mirror/clang/master/tools/clang-format/git-clang-format -o "git-clang-format"
+curl -s https://raw.githubusercontent.com/llvm-mirror/clang/c510fac5695e904b43d5bf0feee31cc9550f110e/tools/clang-format/git-clang-format -o "git-clang-format"
+
+# The expected SHA is 1f6cfad79f90ea202dcf2d52a360186341a589cdbfdee05b0e7694f912aa9820
+# Verify the SHA by running the following:
+openssl sha -sha256 git-clang-format
 
 # Move the script somewhere in your PATH. /usr/local/bin is the recommended default.
 sudo mv "git-clang-format" "/usr/local/bin/git-clang-format"
