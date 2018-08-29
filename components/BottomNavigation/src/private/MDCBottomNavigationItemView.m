@@ -314,9 +314,10 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   if (self.selected) {
     self.iconImageView.tintColor = self.selectedItemTintColor;
     self.label.textColor = self.selectedItemTitleColor;
-    self.inkView.inkColor =
-        [self.selectedItemTintColor colorWithAlphaComponent:MDCBottomNavigationItemViewInkOpacity];
   }
+  self.inkView.inkColor =
+      [self.selectedItemTintColor colorWithAlphaComponent:MDCBottomNavigationItemViewInkOpacity];
+
 }
 
 - (void)setUnselectedItemTintColor:(UIColor *)unselectedItemTintColor {
@@ -324,8 +325,6 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   if (!self.selected) {
     self.iconImageView.tintColor = self.unselectedItemTintColor;
     self.label.textColor = self.unselectedItemTintColor;
-    self.inkView.inkColor =
-        [self.selectedItemTintColor colorWithAlphaComponent:MDCBottomNavigationItemViewInkOpacity];
   }
 }
 

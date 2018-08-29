@@ -112,4 +112,21 @@ static UIImage *fakeImage(void) {
                              0.001f);
 }
 
+- (void)testSetSelectedItemTintColorUpdatesInkColor {
+  // Given
+  MDCBottomNavigationItemView *item1 = [[MDCBottomNavigationItemView alloc] init];
+  MDCBottomNavigationItemView *item2 = [[MDCBottomNavigationItemView alloc] init];
+  item1.selected = YES;
+  UIColor *item1DefaultInkColor = item1.inkView.inkColor;
+  UIColor *item2DefaultInkColor = item2.inkView.inkColor;
+
+  // When
+  item1.selectedItemTintColor = UIColor.cyanColor;
+  item2.selectedItemTintColor = UIColor.cyanColor;
+
+  // Then
+  XCTAssertNotEqualObjects(item1.inkView.inkColor, item1DefaultInkColor);
+  XCTAssertNotEqualObjects(item2.inkView.inkColor, item2DefaultInkColor);
+}
+
 @end
