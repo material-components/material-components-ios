@@ -1,13 +1,11 @@
 # Getting started with being a core contributor to MDC iOS
 
-Checklist:
-
-- [ ] [Install git-clang-format](#git-clang-format).
-- [ ] Install https://github.com/material-foundation/github-squash-and-merge-pr-descriptions. This ensures that your pull request's merge commit matches your PR description.
-
-## Installation guides
+## Tools that may save you and the team some time
 
 ### git-clang-format
+
+This tool allows you to run clang-format on your local changes before they're sent out for review.
+This will minimize the amount of style feedback you get from the team and saves everyone time.
 
 ```bash
 # First check to see if you have clang-format installed.
@@ -25,3 +23,9 @@ sudo chmod +x "/usr/local/bin/git-clang-format"
 # Verify that the command works.
 git clang-format -h
 ```
+
+### PR description chrome plugin
+
+https://github.com/material-foundation/github-squash-and-merge-pr-descriptions.
+
+This tool ensures that your pull request's merge commit matches your PR description.
