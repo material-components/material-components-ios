@@ -66,8 +66,10 @@ class ActionSheetTest: XCTestCase {
     }
 
     // Then
+    XCTAssertEqual(actionSheet.view.subviews.count, 2)
     for views in actionSheet.view.subviews {
       if let table = views as? UITableView {
+        XCTAssertEqual(table.numberOfRows(inSection: section), actionCount)
         for row in 0..<table.numberOfRows(inSection: section) {
           let cell = table.cellForRow(at: IndexPath(row: row, section: section))
           XCTAssertEqual(cell?.accessibilityIdentifier, testIdentifiers[row])
