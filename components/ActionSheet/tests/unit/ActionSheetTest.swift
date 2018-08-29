@@ -50,25 +50,29 @@ class ActionSheetTest: XCTestCase {
 
   func testAccessibilityIdentifiers() {
     // Given
-    let testIdentifierOne = "Test One"
-    let testIdentifierTwo = "Test Two"
+    var testIdentifiers: [String] = []
+    let section = 0
+    let actionCount = 10
+    for i in 0..<actionCount {
+      testIdentifiers += ["Test \(i)"]
+    }
     let actionSheet = MDCActionSheetController(title: nil)
 
     // When
-    let actionOne = MDCActionSheetAction(title: "Title", image: nil, handler: nil)
-    actionOne.accessibilityIdentifier = testIdentifierOne
-    actionSheet.addAction(actionOne)
-
-    let actionTwo = MDCActionSheetAction(title: "Title", image: nil, handler: nil)
-    actionTwo.accessibilityIdentifier = testIdentifierTwo
-    actionSheet.addAction(actionTwo)
+    for i in 0..<actionCount {
+      let action = MDCActionSheetAction(title: "Title", image: nil, handler: nil)
+      action.accessibilityIdentifier = testIdentifiers[i]
+      actionSheet.addAction(action)
+    }
 
     // Then
-    if let first = actionSheet.actions.first {
-      XCTAssertEqual(testIdentifierOne, first.accessibilityIdentifier)
-    }
-    if let last = actionSheet.actions.last {
-      XCTAssertEqual(testIdentifierTwo, last.accessibilityIdentifier)
+    for views in actionSheet.view.subviews {
+      if let table = views as? UITableView {
+        for row in 0..<table.numberOfRows(inSection: section) {
+          let cell = table.cellForRow(at: IndexPath(row: row, section: section))
+          XCTAssertEqual(cell?.accessibilityIdentifier, testIdentifiers[row])
+        }
+      }
     }
   }
 }
