@@ -194,16 +194,12 @@
 
 #pragma mark - CatalogByConvention
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Typography and Fonts", @"Material Font Styles" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Typography and Fonts", @"Material Font Styles" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
 
 @end

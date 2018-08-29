@@ -280,24 +280,14 @@
 
 @implementation TabBarIconExample (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Tab Bar", @"Tabs with Icons" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
-}
-
-+ (NSString *)catalogDescription {
-  return @"Tabs organize content across different screens, data sets, and other interactions.";
-}
-
-- (BOOL)catalogShouldHideNavigation {
-  return YES;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return YES;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Tab Bar", @"Tabs with Icons" ],
+    @"description": @"Tabs organize content across different screens, data sets, and "
+    @"other interactions.",
+    @"primaryDemo": @YES,
+    @"presentable": @YES,
+  };
 }
 
 @end

@@ -192,16 +192,12 @@
 
 #pragma mark - CatalogByConvention
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Page Control", @"Page Control with animation block" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Page Control", @"Page Control with animation block" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
 
 @end

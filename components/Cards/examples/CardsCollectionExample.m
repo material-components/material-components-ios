@@ -117,20 +117,12 @@ canMoveItemAtIndexPath:(NSIndexPath *)indexPath {
 
 #pragma mark - CatalogByConvention
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Cards", @"Collection Card Cells" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return NO;
-}
-
-+ (BOOL)catalogIsDebug {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Cards", @"Collection Card Cells" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
 
 - (BOOL)catalogShouldHideNavigation {

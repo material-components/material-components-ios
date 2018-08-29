@@ -56,21 +56,14 @@ static NSString * const kReusableIdentifierItem = @"cell";
 
 @implementation DialogsTypicalUseViewController (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Dialogs", @"Dialogs" ];
-}
-
-+ (NSString *)catalogDescription {
-  return @"Dialogs inform users about a task and can contain critical information, require"
-          " decisions, or involve multiple tasks.";
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return YES;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Dialogs", @"Dialogs" ],
+    @"description": @"Dialogs inform users about a task and can contain critical information, "
+    @"require decisions, or involve multiple tasks.",
+    @"primaryDemo": @YES,
+    @"presentable": @YES,
+  };
 }
 
 @end

@@ -102,6 +102,17 @@
 
 @implementation NavigationBarWithBarItemsExample (CatalogByConvention)
 
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"App Bar", @"Modal Presentation" ],
+    @"description": @"Animation timing easing curves create smooth and consistent motion. "
+    @"Easing curves allow elements to move between positions or states.",
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+    @"storyboardName": @"AppBarInterfaceBuilderExampleController"
+  };
+}
+
 + (NSArray *)catalogBreadcrumbs {
   return @[ @"Navigation Bar", @"Navigation Bar with Items" ];
 }

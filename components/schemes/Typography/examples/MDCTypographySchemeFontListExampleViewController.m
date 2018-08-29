@@ -187,21 +187,15 @@ static NSArray<UIFont *> *Fonts() {
 
 #pragma mark - Catalog by convention
 @implementation MDCTypographySchemeFontListExampleViewController (CatlogByConvention)
-+ (NSArray<NSString *> *)catalogBreadcrumbs {
-  return @[ @"Typography", @"TypographyScheme" ];
-}
 
-+ (NSString *)catalogDescription {
-  return @"The Typography component provides methods for displaying text using the type sizes and"
-          " opacities from the Material Design specifications.";
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return YES;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Typography", @"TypographyScheme" ],
+    @"description": @"The Typography component provides methods for displaying text using the "
+    @"type sizes and opacities from the Material Design specifications.",
+    @"primaryDemo": @YES,
+    @"presentable": @YES,
+  };
 }
 
 @end

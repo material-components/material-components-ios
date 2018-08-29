@@ -20,16 +20,12 @@
 
 #pragma mark - CatalogByConvention
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Collections", @"Cell Editing Example (1000+)" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Collections", @"Cell Editing Example (1000+)" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
 
 #pragma mark - <UICollectionViewDataSource>

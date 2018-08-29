@@ -185,16 +185,12 @@ NSString *kMiniButtonLabel = @"Add";
 
 #pragma mark - Catalog by Convention
 
-+ (NSArray<NSString *> *)catalogBreadcrumbs {
-  return @[ @"Buttons", @"Floating Action Button" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return YES;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Buttons", @"Floating Action Button" ],
+    @"primaryDemo": @NO,
+    @"presentable": @YES,
+  };
 }
 
 @end

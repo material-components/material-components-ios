@@ -25,20 +25,16 @@
 
 @implementation FlexibleHeaderFABExample (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Flexible Header", @"Floating Action Button" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Flexible Header", @"Floating Action Button" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
 
 - (BOOL)catalogShouldHideNavigation {
   return YES;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return NO;
 }
 
 @end

@@ -137,20 +137,16 @@
 
 @implementation TabBarViewControllerExample (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Tab Bar", @"TabBarViewController" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Tab Bar", @"TabBarViewController" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
 
 - (BOOL)catalogShouldHideNavigation {
   return YES;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return NO;
 }
 
 @end

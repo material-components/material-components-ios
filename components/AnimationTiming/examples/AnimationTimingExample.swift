@@ -179,11 +179,12 @@ extension AnimationTimingExample {
       scrollView.addSubview(materialSharpView)
    }
 
-   @objc class func catalogBreadcrumbs() -> [String] {
-      return ["Animation Timing", "Animation Timing (Swift)"]
-   }
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Animation Timing", "Animation Timing (Swift)"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
+  }
 
-   @objc class func catalogIsPrimaryDemo() -> Bool {
-      return false
-   }
 }

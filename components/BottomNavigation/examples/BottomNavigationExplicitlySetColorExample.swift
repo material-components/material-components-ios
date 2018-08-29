@@ -118,15 +118,12 @@ class BottomNavigationExplicitlySetColorExample: UIViewController {
 
 // MARK: Catalog by convention
 extension BottomNavigationExplicitlySetColorExample {
-  class func catalogBreadcrumbs() -> [String] {
-    return ["Bottom Navigation", "Bottom Navigation Set Color (Swift)"]
-  }
 
-  class func catalogIsPrimaryDemo() -> Bool {
-    return false
-  }
-
-  @objc class func catalogIsPresentable() -> Bool {
-    return false
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Bottom Navigation", "Bottom Navigation Set Color (Swift)"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
   }
 }

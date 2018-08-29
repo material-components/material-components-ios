@@ -109,19 +109,16 @@ class BottomNavigationNilBadges : UIViewController {
 
 // MARK: Catalog by convention
 extension BottomNavigationNilBadges {
-  class func catalogBreadcrumbs() -> [String] {
-    return ["Bottom Navigation", "Badge Value Test"]
-  }
 
-  class func catalogIsPrimaryDemo() -> Bool {
-    return false
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Bottom Navigation", "Badge Value Test"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
   }
 
   func catalogShouldHideNavigation() -> Bool {
     return true
-  }
-
-  @objc class func catalogIsPresentable() -> Bool {
-    return false
   }
 }

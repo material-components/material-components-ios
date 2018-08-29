@@ -107,24 +107,12 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
 
 #pragma mark - CatalogByConvention
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Cards", @"Collection Card Tinting" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return NO;
-}
-
-+ (BOOL)catalogIsDebug {
-  return NO;
-}
-
-- (BOOL)catalogShouldHideNavigation {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Cards", @"Collection Card Tinting" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
 
 @end

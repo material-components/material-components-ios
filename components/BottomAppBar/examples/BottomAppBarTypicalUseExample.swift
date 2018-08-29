@@ -127,12 +127,13 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
 
 // MARK: Catalog by convention
 extension BottomAppBarTypicalUseSwiftExample {
-  @objc class func catalogBreadcrumbs() -> [String] {
-    return ["Bottom App Bar", "Bottom App Bar (Swift)"]
-  }
 
-  @objc class func catalogIsPrimaryDemo() -> Bool {
-    return false
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Bottom App Bar", "Bottom App Bar (Swift)"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
   }
 
   func catalogShouldHideNavigation() -> Bool {

@@ -63,16 +63,12 @@
 
 @implementation TextFieldControllerStylesExample (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Text Field", @"Controller Styles" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return YES;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Text Field", @"Controller Styles" ],
+    @"primaryDemo": @NO,
+    @"presentable": @YES,
+  };
 }
 
 @end

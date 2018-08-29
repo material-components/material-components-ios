@@ -63,20 +63,13 @@
 
 @implementation TabBarViewControllerInterfaceBuilderExample (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Tab Bar", @"TabBarViewController Interface Builder" ];
-}
-
-+ (NSString *)catalogStoryboardName {
-  return @"TabBarViewControllerInterfaceBuilderExample";
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Tab Bar", @"TabBarViewController Interface Builder" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+    @"storyboardName": @"TabBarViewControllerInterfaceBuilderExample"
+  };
 }
 
 @end

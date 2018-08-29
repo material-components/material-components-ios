@@ -23,20 +23,16 @@
 
 @implementation FlexibleHeaderHorizontalPagingViewController (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Flexible Header", @"Horizontal Paging" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Flexible Header", @"Horizontal Paging" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
 
 - (BOOL)catalogShouldHideNavigation {
   return YES;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return NO;
 }
 
 @end

@@ -72,16 +72,14 @@ class AppBarInterfaceBuilderSwiftExample: UIViewController, UIScrollViewDelegate
 
 // MARK: Catalog by convention
 extension AppBarInterfaceBuilderSwiftExample {
-  @objc class func catalogBreadcrumbs() -> [String] {
-    return ["App Bar", "Interface Builder (Swift)"]
-  }
 
-  @objc class func catalogStoryboardName() -> String {
-    return "AppBarInterfaceBuilderSwiftExampleController"
-  }
-
-  @objc class func catalogIsPrimaryDemo() -> Bool {
-    return false
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["App Bar", "Interface Builder (Swift)"],
+      "primaryDemo": false,
+      "presentable": false,
+      "storyboardName": "AppBarInterfaceBuilderSwiftExampleController",
+    ]
   }
 
   func catalogShouldHideNavigation() -> Bool {

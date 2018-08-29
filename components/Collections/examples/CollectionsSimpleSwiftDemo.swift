@@ -55,15 +55,12 @@ class CollectionsSimpleSwiftDemo: MDCCollectionViewController {
 
 // MARK: Catalog by convention
 extension CollectionsSimpleSwiftDemo {
-  @objc class func catalogBreadcrumbs() -> [String] {
-    return [ "Collections", "Simple Swift Demo"]
-  }
 
-  @objc class func catalogIsPrimaryDemo() -> Bool {
-    return false
-  }
-
-  @objc class func catalogIsPresentable() -> Bool {
-    return false
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": [ "Collections", "Simple Swift Demo"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
   }
 }

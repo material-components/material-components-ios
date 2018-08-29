@@ -26,20 +26,16 @@
 
 @implementation FlexibleHeaderTopLayoutGuideExample (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Flexible Header", @"Utilizing Top Layout Guide" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Flexible Header", @"Utilizing Top Layout Guide" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
 
 - (BOOL)catalogShouldHideNavigation {
   return YES;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return NO;
 }
 
 @end

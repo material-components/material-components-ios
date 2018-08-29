@@ -72,23 +72,14 @@ class ShadowDragSquareExampleViewController: UIViewController {
 
   // MARK: - CatalogByConvention
 
-  @objc class func catalogBreadcrumbs() -> [String] {
-    return [ "Shadow", "Shadow Layer"]
-  }
-
-  @objc class func catalogStoryboardName() -> String {
-    return "ShadowDragSquareExample"
-  }
-
-  @objc class func catalogDescription() -> String {
-    return "Shadow Layer implements the Material Design specifications for elevation and shadows."
-  }
-
-  @objc class func catalogIsPrimaryDemo() -> Bool {
-    return true
-  }
-
-  @objc class func catalogIsPresentable() -> Bool {
-    return true
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": [ "Shadow", "Shadow Layer"],
+      "description": "Shadow Layer implements the Material Design specifications for "
+        + "elevation and shadows.",
+      "primaryDemo": true,
+      "presentable": true,
+      "storyboardName": "ShadowDragSquareExample",
+    ]
   }
 }

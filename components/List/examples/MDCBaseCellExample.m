@@ -99,24 +99,13 @@
 
 #pragma mark - CatalogByConvention
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"List Items", @"MDCBaseCell Example" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
-}
-
-+ (NSString *)catalogDescription {
-  return @"MDCBaseCell Example";
-}
-
-+ (BOOL)catalogIsPresentable {
-  return YES;
-}
-
-+ (BOOL)catalogIsDebug {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"List Items", @"MDCBaseCell Example" ],
+    @"description": @"MDCBaseCell Example",
+    @"primaryDemo": @YES,
+    @"presentable": @YES,
+  };
 }
 
 @end

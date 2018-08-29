@@ -142,20 +142,16 @@
 
 @implementation AppBarWKWebViewLargeContentExample (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"App Bar", @"WKWebView large content" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"App Bar", @"WKWebView large content" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
 
 - (BOOL)catalogShouldHideNavigation {
   return YES;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return NO;
 }
 
 @end

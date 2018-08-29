@@ -76,12 +76,13 @@ class ButtonBarTypicalUseSwiftExample: UIViewController {
 
 // MARK: Catalog by convention
 extension ButtonBarTypicalUseSwiftExample {
-  @objc class func catalogBreadcrumbs() -> [String] {
-    return ["Button Bar", "Button Bar (Swift)"]
-  }
 
-  @objc class func catalogIsPrimaryDemo() -> Bool {
-    return false
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Button Bar", "Button Bar (Swift)"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
   }
 }
 

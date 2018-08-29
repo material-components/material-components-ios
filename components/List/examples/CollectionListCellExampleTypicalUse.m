@@ -168,24 +168,14 @@ static const CGFloat kSmallArbitraryCellWidth = 100.f;
 
 #pragma mark - CatalogByConvention
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Lists", @"List Cell Example" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
-}
-
-+ (NSString *)catalogDescription {
-  return @"Material Collection Lists are continuous, vertical indexes of text or images.";
-}
-
-+ (BOOL)catalogIsPresentable {
-  return YES;
-}
-
-+ (BOOL)catalogIsDebug {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Lists", @"List Cell Example" ],
+    @"description": @"Material Collection Lists are continuous, vertical indexes of text "
+    @"or images.",
+    @"primaryDemo": @NO,
+    @"presentable": @YES,
+  };
 }
 
 @end

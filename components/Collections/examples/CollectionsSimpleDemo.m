@@ -70,22 +70,15 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 #pragma mark - CatalogByConvention
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Collections", @"Simple Demo" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
-}
-
-+ (NSString *)catalogDescription {
-  return @"Material Collections enables a native collection view controller to have Material "
-          "design layout and styling. It also provides editing and extensive customization "
-          "capabilities.";
-}
-
-+ (BOOL)catalogIsPresentable {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Collections", @"Simple Demo" ],
+    @"description": @"Material Collections enables a native collection view controller to have "
+    @"Material design layout and styling. It also provides editing and extensive customization "
+    @"capabilities.",
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
 
 @end

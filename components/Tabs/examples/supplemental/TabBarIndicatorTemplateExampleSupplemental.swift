@@ -126,19 +126,16 @@ extension TabBarIndicatorTemplateExample {
 
 // MARK: - Catalog by convention
 extension TabBarIndicatorTemplateExample {
-  @objc class func catalogBreadcrumbs() -> [String] {
-    return ["Tab Bar", "Custom Selection Indicator"]
-  }
 
-  @objc class func catalogIsPrimaryDemo() -> Bool {
-    return false
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Tab Bar", "Custom Selection Indicator"],
+      "primaryDemo": false,
+      "presentable": true,
+    ]
   }
 
   func catalogShouldHideNavigation() -> Bool {
-    return true
-  }
-
-  @objc class func catalogIsPresentable() -> Bool {
     return true
   }
 }

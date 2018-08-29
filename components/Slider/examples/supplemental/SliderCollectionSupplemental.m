@@ -23,20 +23,13 @@
 
 @implementation SliderCollectionViewController (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Slider", @"Slider" ];
-}
-
-+ (NSString *)catalogDescription {
-  return @"Sliders allow users to make selections from a range of values.";
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return YES;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Slider", @"Slider" ],
+    @"description": @"Sliders allow users to make selections from a range of values.",
+    @"primaryDemo": @YES,
+    @"presentable": @YES,
+  };
 }
 
 @end

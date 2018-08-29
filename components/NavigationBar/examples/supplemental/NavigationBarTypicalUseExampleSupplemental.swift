@@ -25,21 +25,15 @@ import MaterialComponents.MaterialNavigationBar
 extension NavigationBarTypicalUseSwiftExample {
 
   // (CatalogByConvention)
-
-  @objc class func catalogBreadcrumbs() -> [String] {
-    return [ "Navigation Bar", "Navigation Bar (Swift)" ]
-  }
-
-  @objc class func catalogIsPrimaryDemo() -> Bool {
-    return false
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Navigation Bar", "Navigation Bar (Swift)"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
   }
 
   func catalogShouldHideNavigation() -> Bool {
     return true
   }
-
-  @objc class func catalogIsPresentable() -> Bool {
-    return false
-  }
-
 }

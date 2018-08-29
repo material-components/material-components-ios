@@ -68,11 +68,12 @@ class BottomNavigationSelectedIconExample: UIViewController {
 
 // MARK: - Catalog by Conventions
 extension BottomNavigationSelectedIconExample {
-  class func catalogBreadcrumbs() -> [String] {
-    return ["Bottom Navigation", "Bottom Navigation Selected"]
-  }
 
-  class func catalogIsPrimaryDemo() -> Bool {
-    return false
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Bottom Navigation", "Bottom Navigation Selected"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
   }
 }
