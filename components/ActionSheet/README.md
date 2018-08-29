@@ -1,3 +1,13 @@
+<!--docs:
+title: "Action Sheet"
+layout: detail
+section: components
+excerpt: "Material design action sheet displays a list of actions."
+iconId: <#icon_id#>
+path: /catalog/action-sheet/
+api_doc_root: true
+-->
+
 <!-- This file was auto-generated using ./scripts/generate_readme ActionSheet -->
 
 # Action Sheet
@@ -13,6 +23,8 @@ the screen and displays actions a user can take.
 
 <ul class="icon-list">
   <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-action-sheet">Material Design guidelines: ActionSheet</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/action-sheet/api-docs/Classes/MDCActionSheetAction.html">MDCActionSheetAction</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/action-sheet/api-docs/Classes/MDCActionSheetController.html">MDCActionSheetController</a></li>
 </ul>
 
 ## Table of contents
@@ -226,3 +238,4 @@ MDCActionSheetController *actionSheet = [MDCActionSheetController alloc] init];
 actionSheet.scrimAccessibilityTraits = UIAccessibilityTraitButton;
 ```
 <!--</div>-->
+
