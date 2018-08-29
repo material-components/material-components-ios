@@ -1,6 +1,4 @@
-# Getting started with contributing to MDC iOS
-
-## Core contributors
+# Getting started with being a core contributor to MDC iOS
 
 Checklist:
 
