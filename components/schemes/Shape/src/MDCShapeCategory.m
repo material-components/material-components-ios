@@ -24,10 +24,10 @@
 - (instancetype)initCornersWithShapeFamily:(MDCShapeFamily)shapeFamily
                                   andValue:(NSUInteger)shapeValue {
   if (self = [super init]) {
-    _topLeftCorner = [[MDCShapeCorner alloc] initWithShapeFamily:shapeFamily andValue:shapeValue];
-    _topRightCorner = [[MDCShapeCorner alloc] initWithShapeFamily:shapeFamily andValue:shapeValue];
-    _bottomLeftCorner = [[MDCShapeCorner alloc] initWithShapeFamily:shapeFamily andValue:shapeValue];
-    _bottomRightCorner = [[MDCShapeCorner alloc] initWithShapeFamily:shapeFamily andValue:shapeValue];
+    _topLeftCorner = [[MDCShapeCorner alloc] initWithShapeFamily:shapeFamily andSize:shapeValue];
+    _topRightCorner = [[MDCShapeCorner alloc] initWithShapeFamily:shapeFamily andSize:shapeValue];
+    _bottomLeftCorner = [[MDCShapeCorner alloc] initWithShapeFamily:shapeFamily andSize:shapeValue];
+    _bottomRightCorner = [[MDCShapeCorner alloc] initWithShapeFamily:shapeFamily andSize:shapeValue];
   }
   return self;
 }

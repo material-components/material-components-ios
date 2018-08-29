@@ -20,22 +20,22 @@
 
 @implementation MDCCornerTreatment (CornerTypeInitalizer)
 
-- (instancetype)initWithCornerType:(MDCCornerType)cornerType andValue:(NSNumber *)value {
+- (instancetype)initWithCornerType:(MDCCornerType)cornerType andSize:(NSNumber *)size {
     self = [self init];
     switch(cornerType) {
       case MDCCornerTypeCurved: {
-        CGSize size = [value CGSizeValue];
-        self = [[MDCCurvedCornerTreatment alloc] initWithSize:size];
+        CGSize curvedSize = [size CGSizeValue];
+        self = [[MDCCurvedCornerTreatment alloc] initWithSize:curvedSize];
         break;
       }
       case MDCCornerTypeCut: {
-        CGFloat cut = [value floatValue];
-        self = [[MDCCutCornerTreatment alloc] initWithCut:cut];
+        CGFloat cutSize = [size floatValue];
+        self = [[MDCCutCornerTreatment alloc] initWithCut:cutSize];
         break;
       }
       case MDCCornerTypeRounded: {
-        CGFloat radius = [value floatValue];
-        self = [[MDCRoundedCornerTreatment alloc] initWithRadius:radius];
+        CGFloat radiusSize = [size floatValue];
+        self = [[MDCRoundedCornerTreatment alloc] initWithRadius:radiusSize];
         break;
       }
     }

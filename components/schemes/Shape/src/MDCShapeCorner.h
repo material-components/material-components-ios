@@ -20,13 +20,18 @@ typedef NS_ENUM(NSInteger, MDCShapeFamily) {
   MDCShapeFamilyAngledCorner
 };
 
+typedef NS_ENUM(NSInteger, MDCShapeSizeType) {
+  MDCShapeSizeTypeAbsolute,
+  MDCShapeSizeTypePercentage
+};
+
 @interface MDCShapeCorner : NSObject
 
 @property(assign, nonatomic) MDCShapeFamily shapeFamily;
-@property(assign, nonatomic) BOOL isPercentage;
-@property(assign, nonatomic) CGFloat shapeValue;
+@property(assign, nonatomic) MDCShapeSizeType isPercentage;
+@property(assign, nonatomic) CGFloat shapeSize;
 
-- (instancetype)initWithShapeFamily:(MDCShapeFamily)shapeFamily andValue:(CGFloat)shapeValue;
+- (instancetype)initWithShapeFamily:(MDCShapeFamily)shapeFamily andSize:(CGFloat)shapeSize;
 
 - (MDCCornerTreatment *)cornerTreatmentValue;
 - (MDCCornerTreatment *)cornerTreatmentValueWithViewBounds:(CGRect)bounds;

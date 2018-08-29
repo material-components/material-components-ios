@@ -22,6 +22,6 @@ typedef NS_ENUM(NSInteger, MDCCornerType) {
 
 @interface MDCCornerTreatment (CornerTypeInitalizer)
 
-- (instancetype)initWithCornerType:(MDCCornerType)cornerType andValue:(NSNumber *)value;
+- (instancetype)initWithCornerType:(MDCCornerType)cornerType andSize:(NSNumber *)size;
 
 @end

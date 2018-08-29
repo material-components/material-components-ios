@@ -19,58 +19,58 @@
 - (instancetype)init
 {
   _isPercentage = NO;
-  return [self initWithShapeFamily:MDCShapeFamilyRoundedCorner andValue:0];
+  return [self initWithShapeFamily:MDCShapeFamilyRoundedCorner andSize:0];
 }
 
-- (instancetype)initWithShapeFamily:(MDCShapeFamily)shapeFamily andValue:(CGFloat)shapeValue
+- (instancetype)initWithShapeFamily:(MDCShapeFamily)shapeFamily andSize:(CGFloat)shapeSize
 {
   if (self = [super init]) {
     _isPercentage = NO;
     _shapeFamily = shapeFamily;
-    _shapeValue = shapeValue;
+    _shapeSize = shapeSize;
   }
   return self;
 }
 
 - (instancetype)initWithShapeFamily:(MDCShapeFamily)shapeFamily
-                 andPercentageValue:(NSUInteger)shapeValue
+                  andPercentageSize:(NSUInteger)shapeSize
 {
   if (self = [super init]) {
     _isPercentage = YES;
     _shapeFamily = shapeFamily;
-    _shapeValue = shapeValue;
+    _shapeSize = shapeSize;
   }
   return self;
 }
 
 - (MDCCornerTreatment *)cornerTreatmentValue {
-  return [self cornerTreatmentValueWithNormalizedShapeValue:_shapeValue];
+  return [self cornerTreatmentSizeWithNormalizedShapeSize:_shapeSize];
 }
 
 - (MDCCornerTreatment *)cornerTreatmentValueWithViewBounds:(CGRect)bounds {
   MDCCornerTreatment *cornerTreatment;
-  if (_isPercentage && _shapeValue <= 1) {
-    CGFloat normalizedShapeValue = bounds.size.height * _shapeValue;
-    cornerTreatment = [self cornerTreatmentValueWithNormalizedShapeValue:normalizedShapeValue];
+  if (_isPercentage && _shapeSize <= 1) {
+    CGFloat normalizedShapeSize = bounds.size.height * _shapeSize;
+    cornerTreatment = [self cornerTreatmentSizeWithNormalizedShapeSize:normalizedShapeSize];
   } else {
     cornerTreatment = [self cornerTreatmentValue];
   }
   return cornerTreatment;
 }
 
-- (MDCCornerTreatment *)cornerTreatmentValueWithNormalizedShapeValue:(CGFloat)shapeValue {
+- (MDCCornerTreatment *)cornerTreatmentSizeWithNormalizedShapeSize:(CGFloat)shapeSize {
   MDCCornerTreatment *cornerTreatment;
-  NSNumber *value = @(shapeValue);
+  NSNumber *size = @(shapeSize);
   switch (_shapeFamily) {
     case MDCShapeFamilyAngledCorner:
       cornerTreatment =
           [[MDCCornerTreatment alloc] initWithCornerType:MDCCornerTypeCut
-                                                andValue:value];
+                                                 andSize:size];
       break;
     case MDCShapeFamilyRoundedCorner:
       cornerTreatment =
           [[MDCCornerTreatment alloc] initWithCornerType:MDCCornerTypeRounded
-                                                andValue:value];
+                                                 andSize:size];
       break;
   }
   return cornerTreatment;
