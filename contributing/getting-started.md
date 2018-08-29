@@ -16,7 +16,7 @@ Checklist:
 
 ### git-clang-format
 
-```
+```bash
 # First check to see if you have clang-format installed.
 git clang-format -h
 
