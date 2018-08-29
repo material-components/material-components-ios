@@ -26,3 +26,13 @@ knowledge is currently less common than advanced Python scripting knowledge.
 
 The intent is that the scripts will run on relatively current OS X machines with (only) Xcode installed.
 
+## iOS Codelabs Build Tests
+
+iOS codelabs build tests ensure that the Objective C and Swift versions of Codelab 104 Complete
+and Codelab 111 Complete can be built. If a release fails the codelabs build tests, follow these steps:
+1. If the release changes a component that the codelabs use, submit a PR to the codelabs repo
+with the appropriate changes for the adjusted component. Address each codelab and language
+that is affected by the change (it may be helpful to run ./build_codelabs -a to determine which
+codelabs are affected).
+2. Merge the PR into the codelabs repo, and then rerun the codelabs build tests.
+3. Continue with the release process.
