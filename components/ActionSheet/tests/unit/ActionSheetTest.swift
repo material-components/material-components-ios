@@ -71,8 +71,11 @@ class ActionSheetTest: XCTestCase {
     if let table = tableView {
       XCTAssertEqual(table.numberOfRows(inSection: section), actionCount)
       for row in 0..<table.numberOfRows(inSection: section) {
-        let cell = table.cellForRow(at: IndexPath(row: row, section: section))
-        XCTAssertEqual(cell?.accessibilityIdentifier, testIdentifiers[row])
+        if let cell = table.cellForRow(at: IndexPath(row: row, section: section)) {
+          XCTAssertEqual(cell.accessibilityIdentifier, testIdentifiers[row])
+        } else {
+          XCTFail()
+        }
       }
     }
   }
