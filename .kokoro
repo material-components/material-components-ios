@@ -381,6 +381,160 @@ generate_apidiff() {
   fi
 }
 
+# Will run git clang-format on the branch's changes, reporting a failure if the linter generated any
+# stylistic changes.
+#
+# For local runs, you must set the following environment variables:
+#
+#   GITHUB_API_TOKEN -> Create a token here: https://github.com/settings/tokens.
+#                       Must have public_repo scope.
+#   KOKORO_GITHUB_PULL_REQUEST_NUMBER="###" -> The PR # you want to post the API diff results to.
+#   KOKORO_GITHUB_PULL_REQUEST_COMMIT="..." -> The PR commit you want to post to.
+#
+# And install the following tools:
+#
+# - clang-format
+# - git-clang-format
+lint_clang_format() {
+  usage() {
+    echo "Usage: $0 -d clang-format"
+    echo
+    echo "Will apply clang-format to changes made on the current branch from the merge-base of develop."
+    echo "The result will be posted to GitHub as a series of inline comments."
+    echo
+    echo "Must set the following environment variables to run locally:"
+    echo
+    echo "GITHUB_API_TOKEN -> Create a token here: https://github.com/settings/tokens."
+    echo "                    Must have public_repo scope."
+    echo "KOKORO_GITHUB_PULL_REQUEST_NUMBER=\"###\" -> The PR # you want to post the API diff results to."
+  }
+
+  if [ -z "$GITHUB_API_TOKEN" ]; then
+    echo "GITHUB_API_TOKEN must be set to a github token with public_repo scope."
+    usage
+    exit 1
+  fi
+
+  if [ -z "$KOKORO_GITHUB_PULL_REQUEST_NUMBER" ]; then
+    echo "KOKORO_GITHUB_PULL_REQUEST_NUMBER must be set to a github pull request number."
+    usage
+    exit 1
+  fi
+
+  if [ -z "$KOKORO_GITHUB_PULL_REQUEST_COMMIT" ]; then
+    echo "KOKORO_GITHUB_PULL_REQUEST_COMMIT must be set to a commit."
+    usage
+    exit 1
+  fi
+
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    select_xcode "$XCODE_VERSION"
+
+    mkdir bin
+    pushd bin >> /dev/null
+
+    # Install clang-format
+    echo "Downloading clang-format..."
+    CLANG_FORMAT_SHA="f2917c1235f32617e5819bb2a7ec0a4f163fbb82f305b5639c540fafa6622d12"
+    curl -Ls "https://github.com/material-foundation/clang-format/releases/download/r340070/clang-format" -o "clang-format"
+    if openssl sha -sha256 "clang-format" | grep -q "$CLANG_FORMAT_SHA"; then
+      echo "SHAs match. Proceeding."
+    else
+      echo "clang-format does not match sha. Aborting."
+      exit 1
+    fi
+    chmod +x "clang-format"
+
+    echo "Downloading git-clang-format..."
+    # Install git-clang-format
+    GIT_CLANG_FORMAT_SHA="1f6cfad79f90ea202dcf2d52a360186341a589cdbfdee05b0e7694f912aa9820"
+    curl -Ls https://raw.githubusercontent.com/llvm-mirror/clang/c510fac5695e904b43d5bf0feee31cc9550f110e/tools/clang-format/git-clang-format -o "git-clang-format"
+    if openssl sha -sha256 "git-clang-format" | grep -q "$GIT_CLANG_FORMAT_SHA"; then
+      echo "SHAs match. Proceeding."
+    else
+      echo "git-clang-format does not match sha. Aborting."
+      exit 1
+    fi
+    chmod +x "git-clang-format"
+
+    export PATH="$(pwd):$PATH"
+
+    popd >> /dev/null
+
+    # Move into our cloned repo
+    cd github/repo
+  fi
+
+  if ! git clang-format -h > /dev/null 2> /dev/null; then
+    echo
+    echo "git clang-format is not configured correctly."
+    echo "Please ensure that the git-clang-format command is in your PATH and that it is executable."
+    exit 1
+  fi
+
+  base_sha=$(git merge-base origin/develop HEAD)
+
+  echo "Running clang-format on changes from $base_sha to HEAD..."
+  git clang-format "$base_sha"
+  if ! git diff-index --quiet HEAD --; then
+    echo
+    echo "clang-format requires the following stylistic changes to be made:"
+    echo
+    git --no-pager diff
+
+    COMMENT_TMP_PATH=$(mktemp -d)
+    COMMENT_TMP_FILE="$COMMENT_TMP_PATH/comment"
+    DIFF_TMP_FILE="$COMMENT_TMP_PATH/diff"
+
+    echo "clang-format suggested the following change:" > "$COMMENT_TMP_FILE"
+    git --no-pager diff -U0 > "$DIFF_TMP_FILE"
+
+    echo "Posting results to GitHub..."
+
+    pushd scripts/github-comment >> /dev/null
+
+    swift run github-comment \
+      --repo=material-components/material-components-ios \
+      --github_token="$GITHUB_API_TOKEN" \
+      --pull_request_number="$KOKORO_GITHUB_PULL_REQUEST_NUMBER" \
+      --commit="$KOKORO_GITHUB_PULL_REQUEST_COMMIT" \
+      --identifier=clang-format \
+      --comment_body="$COMMENT_TMP_FILE" \
+      --diff="$DIFF_TMP_FILE"
+
+    cat > "$COMMENT_TMP_FILE" <<EOL
+clang-format recommended changes.
+
+Consider installing [git-clang-format](https://github.com/llvm-mirror/clang/blob/master/tools/clang-format/git-clang-format) and running the following command:
+
+\`\`\`bash
+git clang-format \$(git merge-base origin/develop HEAD)
+\`\`\`
+EOL
+
+    swift run github-comment \
+      --repo=material-components/material-components-ios \
+      --github_token="$GITHUB_API_TOKEN" \
+      --pull_request_number="$KOKORO_GITHUB_PULL_REQUEST_NUMBER" \
+      --identifier=clang-format \
+      --comment_body="$COMMENT_TMP_FILE"
+
+    popd >> /dev/null
+
+    exit 1
+  else
+    pushd scripts/github-comment >> /dev/null
+    # No recommended changes, so delete any existing comment
+    swift run github-comment \
+      --repo=material-components/material-components-ios \
+      --github_token="$GITHUB_API_TOKEN" \
+      --pull_request_number="$KOKORO_GITHUB_PULL_REQUEST_NUMBER" \
+      --identifier=clang-format \
+      --delete
+    popd >> /dev/null
+  fi
+}
+
 POSITIONAL=()
 while [[ $# -gt 0 ]]; do
   key="$1"
@@ -430,6 +584,7 @@ popd
 
 case "$DEPENDENCY_SYSTEM" in
   "bazel")      run_bazel ;;
+  "clang-format")  lint_clang_format ;;
   "cocoapods")  run_cocoapods ;;
   "cocoapods-podspec")  run_cocoapods ;;
   "website")    generate_website ;;
