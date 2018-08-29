@@ -27,7 +27,7 @@ class ButtonBarButtonTitleCasingTests: XCTestCase {
   }
 
   func testDefaultCasingIsUppercase() {
-    // Given
+    // Then
     XCTAssertTrue(buttonBar.uppercasesButtonTitles)
   }
 
