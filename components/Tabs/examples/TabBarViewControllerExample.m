@@ -45,7 +45,7 @@
 - (void)loadTabBar {
   NSArray *viewControllers = [self constructExampleViewControllers];
   self.viewControllers = viewControllers;
-  self.selectedViewController = [self.viewControllers firstObject];
+  self.selectedViewController = self.viewControllers.firstObject;
   [MDCTabBarColorThemer applySemanticColorScheme:self.colorScheme toTabs:self.tabBar];
 }
 

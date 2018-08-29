@@ -47,9 +47,8 @@ typedef void (^MDCButtonActionBlock)(void);
 
 + (nonnull instancetype)sampleWithTitle:(nonnull NSString *)title color:(nonnull UIColor *)color;
 
-- (void)addMDCButtonWithFrame:(CGRect)frame
-                 buttonScheme:(id<MDCButtonScheming>)buttonScheme
-                        title:(NSString *)title
-                  actionBlock:(MDCButtonActionBlock)actionBlock;
-
+- (void)setMDCButtonWithFrame:(CGRect)frame
+                 buttonScheme:(nonnull id<MDCButtonScheming>)buttonScheme
+                        title:(nonnull NSString *)title
+                  actionBlock:(nullable MDCButtonActionBlock)actionBlock;
 @end
