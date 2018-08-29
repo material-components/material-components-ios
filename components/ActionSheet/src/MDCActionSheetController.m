@@ -258,11 +258,12 @@ static NSString *const ReuseIdentifier = @"BaseCell";
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   MDCActionSheetItemTableViewCell *cell =
       [tableView dequeueReusableCellWithIdentifier:ReuseIdentifier forIndexPath:indexPath];
-  cell.action = _actions[indexPath.row];
+  MDCActionSheetAction *action = _actions[indexPath.row];
+  cell.action = action;
   cell.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
   cell.backgroundColor = self.backgroundColor;
   cell.actionFont = self.actionFont;
-  cell.accessibilityIdentifier = _actions[indexPath.row].accessibilityIdentifier;
+  cell.accessibilityIdentifier = action.accessibilityIdentifier;
   return cell;
 }
 
