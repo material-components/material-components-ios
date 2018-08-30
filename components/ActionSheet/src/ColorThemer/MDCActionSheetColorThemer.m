@@ -15,15 +15,26 @@
 #import "MDCActionSheetColorThemer.h"
 #import "MaterialActionSheet.h"
 
+static const CGFloat primaryAlpha = 0.87f;
+static const CGFloat secondaryAlpha = 0.6f;
+
 @implementation MDCActionSheetColorThemer
 
 + (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
          toActionSheetController:(MDCActionSheetController *)actionSheetController {
-  actionSheetController.titleColor =
-      [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87];
-  actionSheetController.messageColor = [colorScheme.onSecondaryColor colorWithAlphaComponent:(CGFloat)0.60];
-  actionSheetController.imageColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87];
-  actionSheetController.actionColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87];
+  if (!actionSheetController.message) {
+    actionSheetController.titleColor =
+        [colorScheme.onSurfaceColor colorWithAlphaComponent:secondaryAlpha];
+  } else {
+    actionSheetController.titleColor =
+        [colorScheme.onSurfaceColor colorWithAlphaComponent:primaryAlpha];
+  }
+  actionSheetController.messageColor =
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:secondaryAlpha];
+  actionSheetController.imageColor =
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:secondaryAlpha];
+  actionSheetController.actionColor =
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:primaryAlpha;
 }
 
 @end
