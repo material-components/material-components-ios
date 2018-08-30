@@ -16,7 +16,8 @@
 
 @implementation MDCActionSheetTypographyThemer
 
-+ (void)applyTypographyScheme:(id<MDCTypographyScheming>)typographyScheme toActionSheetController:(MDCActionSheetController *)actionSheetController {
++ (void)applyTypographyScheme:(id<MDCTypographyScheming>)typographyScheme
+      toActionSheetController:(MDCActionSheetController *)actionSheetController {
   actionSheetController.titleFont = typographyScheme.subtitle1;
   actionSheetController.messageFont = typographyScheme.body2;
   actionSheetController.actionFont = typographyScheme.body1;
