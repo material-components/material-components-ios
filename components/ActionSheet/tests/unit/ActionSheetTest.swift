@@ -51,32 +51,26 @@ class ActionSheetTest: XCTestCase {
 
   func testAccessibilityIdentifiers() {
     // Given
-    var testIdentifiers: [String] = []
+    let rowCount = 1
     let section = 0
-    let actionCount = 10
-    for i in 0..<actionCount {
-      testIdentifiers += ["Test \(i)"]
-    }
+    let testIdentifier = "Test"
 
     // When
-    for i in 0..<actionCount {
-      let action = MDCActionSheetAction(title: "Title", image: nil, handler: nil)
-      action.accessibilityIdentifier = testIdentifiers[i]
-      actionSheet.addAction(action)
-    }
+    let action = MDCActionSheetAction(title: "Title", image: nil, handler: nil)
+    action.accessibilityIdentifier = testIdentifier
+    actionSheet.addAction(action)
 
     // Then
     XCTAssertEqual(actionSheet.view.subviews.count, 2)
     let tableView = actionSheet.view.subviews.flatMap{ $0 as? UITableView }.first
     if let table = tableView {
-      XCTAssertEqual(table.numberOfRows(inSection: section), actionCount)
-      for row in 0..<actionCount {
-        if let cell = table.cellForRow(at: IndexPath(row: row, section: section)) {
-          XCTAssertEqual(cell.accessibilityIdentifier, testIdentifiers[row])
-        } else {
-          XCTFail()
-        }
+      XCTAssertEqual(table.numberOfRows(inSection: section), rowCount)
+      if let cell = table.cellForRow(at: IndexPath(row: rowCount - 1, section: section)) {
+        XCTAssertEqual(cell.accessibilityIdentifier, testIdentifier)
+      } else {
+        XCTFail("Cell wasn't loaded")
       }
     }
+    
   }
 }
