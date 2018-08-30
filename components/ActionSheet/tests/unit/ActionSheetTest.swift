@@ -22,6 +22,8 @@ class ActionSheetTest: XCTestCase {
   var actionSheet: MDCActionSheetController!
 
   override func setUp() {
+    super.setUp()
+
     actionSheet = MDCActionSheetController()
   }
 
@@ -61,7 +63,6 @@ class ActionSheetTest: XCTestCase {
     actionSheet.addAction(action)
 
     // Then
-    XCTAssertEqual(actionSheet.view.subviews.count, 2)
     let tableView = actionSheet.view.subviews.flatMap{ $0 as? UITableView }.first
     if let table = tableView {
       XCTAssertEqual(table.numberOfRows(inSection: section), rowCount)
@@ -70,6 +71,8 @@ class ActionSheetTest: XCTestCase {
       } else {
         XCTFail("Cell wasn't loaded")
       }
+    } else {
+      XCTFail("No table was loaded")
     }
     
   }
