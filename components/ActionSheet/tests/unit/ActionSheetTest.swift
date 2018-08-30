@@ -18,10 +18,14 @@ import XCTest
 import MaterialComponentsAlpha.MaterialActionSheet
 
 class ActionSheetTest: XCTestCase {
-  func testNumberOfActions() {
-    // Given
-    let actionSheet = MDCActionSheetController(title: nil)
 
+  var actionSheet: MDCActionSheetController!
+
+  override func setUp() {
+    actionSheet = MDCActionSheetController()
+  }
+
+  func testNumberOfActions() {
     // Then
     XCTAssertEqual(actionSheet.actions.count, 0)
 
@@ -35,9 +39,6 @@ class ActionSheetTest: XCTestCase {
   }
 
   func testTitleChange() {
-    // Given
-    let actionSheet = MDCActionSheetController(title: nil)
-
     // Then
     XCTAssertEqual(actionSheet.title, nil)
 
@@ -56,7 +57,6 @@ class ActionSheetTest: XCTestCase {
     for i in 0..<actionCount {
       testIdentifiers += ["Test \(i)"]
     }
-    let actionSheet = MDCActionSheetController(title: nil)
 
     // When
     for i in 0..<actionCount {
@@ -70,7 +70,7 @@ class ActionSheetTest: XCTestCase {
     let tableView = actionSheet.view.subviews.flatMap{ $0 as? UITableView }.first
     if let table = tableView {
       XCTAssertEqual(table.numberOfRows(inSection: section), actionCount)
-      for row in 0..<table.numberOfRows(inSection: section) {
+      for row in 0..<actionCount {
         if let cell = table.cellForRow(at: IndexPath(row: row, section: section)) {
           XCTAssertEqual(cell.accessibilityIdentifier, testIdentifiers[row])
         } else {
