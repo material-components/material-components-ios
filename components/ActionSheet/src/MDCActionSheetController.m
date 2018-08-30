@@ -115,6 +115,7 @@ static NSString *const ReuseIdentifier = @"BaseCell";
     _header.title = [title copy];
     _header.message = [message copy];
     self.backgroundColor = [UIColor whiteColor];
+    self.imageColor = [UIColor blackColor];
   }
 
   return self;
@@ -262,7 +263,12 @@ static NSString *const ReuseIdentifier = @"BaseCell";
   cell.backgroundColor = self.backgroundColor;
   cell.actionFont = self.actionFont;
   cell.actionColor = self.actionColor;
-  cell.imageColor = self.imageColor;
+  for (UIView *view in cell.contentView.subviews) {
+    if ([view isKindOfClass:[UIImageView class]]) {
+      UIImageView *imageView = (UIImageView *)view;
+      imageView.tintColor = self.imageColor;
+    }
+  }
   return cell;
 }
 

@@ -152,14 +152,12 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
 
   _imageView.image =
       [_itemAction.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  _imageView.tintColor = self.imageColor;
 }
 
 - (void)setAction:(MDCActionSheetAction *)action {
   _itemAction = [action copy];
   _textLabel.text = _itemAction.title;
   _imageView.image = [_itemAction.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  _imageView.tintColor = self.imageColor;
   [self setNeedsLayout];
 }
 
@@ -196,14 +194,6 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
 
 - (UIColor *)actionColor {
   return _textLabel.textColor;
-}
-
-- (void)setImageColor:(UIColor *)imageColor {
-  _imageView.tintColor = imageColor;
-}
-
-- (UIColor *)imageColor {
-  return _imageView.tintColor;
 }
 
 @end
