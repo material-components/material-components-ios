@@ -20,11 +20,6 @@ import PackageDescription
 
 let package = Package(
   name: "github-comment",
-  products: [
-    .library(
-      name: "github-comment",
-      targets: ["github-comment"]),
-  ],
   dependencies: [
     .package(url: "https://github.com/apple/swift-package-manager.git", from: "0.1.0"),
   ],
