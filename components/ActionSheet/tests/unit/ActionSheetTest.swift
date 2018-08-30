@@ -66,10 +66,12 @@ class ActionSheetTest: XCTestCase {
     let tableView = actionSheet.view.subviews.flatMap{ $0 as? UITableView }.first
     if let table = tableView {
       XCTAssertEqual(table.numberOfRows(inSection: section), rowCount)
-      if let cell = table.cellForRow(at: IndexPath(row: rowCount - 1, section: section)) {
+      if let dataSource = table.dataSource {
+        let cell = dataSource.tableView(table, cellForRowAt: IndexPath(row: rowCount - 1,
+                                                                       section: section))
         XCTAssertEqual(cell.accessibilityIdentifier, testIdentifier)
       } else {
-        XCTFail("Cell wasn't loaded")
+        XCTFail("No data source")
       }
     } else {
       XCTFail("No table was loaded")
