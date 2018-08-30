@@ -81,9 +81,7 @@ static NSString *const kCellIdentifier = @"cell";
                                         @"Trailing Floating Button",
                                         @"Primary Elevation Floating Button",
                                         @"Secondary Elevation Floating Button",
-                                        @"Visible FAB",
-                                        @"",
-                                        @""]; // the last two empty items are used for offset
+                                        @"Visible FAB" ];
     _listItems = listItems;
     
     self.title = @"Bottom App Bar";
@@ -114,6 +112,15 @@ static NSString *const kCellIdentifier = @"cell";
   [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kCellIdentifier];
   self.tableView.layoutMargins = UIEdgeInsetsZero;
   self.tableView.separatorInset = UIEdgeInsetsZero;
+}
+
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+
+  CGRect bottomAppBarFrame = self.bottomBarView.frame;
+  UIEdgeInsets contentInset = self.tableView.contentInset;
+  contentInset.bottom = bottomAppBarFrame.size.height;
+  self.tableView.contentInset = contentInset;
 }
 
 #pragma mark - Table view data source
