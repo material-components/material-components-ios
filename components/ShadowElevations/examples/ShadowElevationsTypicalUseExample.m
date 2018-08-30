@@ -203,17 +203,13 @@ static const CGFloat kShadowElevationsPaperBottomMargin = 20.0f;
   _shadowsView = [[ShadowElevationsPointsView alloc] initWithFrame:self.view.bounds];
   [self.view addSubview:_shadowsView];
   
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     self.shadowsView.autoresizingMask =
     UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   } else {
-#endif
     _shadowsView.translatesAutoresizingMaskIntoConstraints = NO;
     [self setupShadowsViewConstraints];
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   }
-#endif
 }
 
 - (void)setupShadowsViewConstraints {
@@ -250,7 +246,6 @@ static const CGFloat kShadowElevationsPaperBottomMargin = 20.0f;
                                 constant:0].active = YES;
 }
 
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
 - (void)viewSafeAreaInsetsDidChange {
   [super viewSafeAreaInsetsDidChange];
   CGRect insetedShadowViewFrame = CGRectMake(self.view.bounds.origin.x,
@@ -259,7 +254,6 @@ static const CGFloat kShadowElevationsPaperBottomMargin = 20.0f;
                                              self.view.bounds.size.height - self.view.safeAreaInsets.top - self.view.safeAreaInsets.bottom);
   self.shadowsView.frame = insetedShadowViewFrame;
 }
-#endif
 
 #pragma mark catalog by convention
 
