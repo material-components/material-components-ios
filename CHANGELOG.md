@@ -1,18 +1,12 @@
-# #develop#
+# 62.0.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This major release reverts the addition of the new canAlwaysExpandToMaximumHeight behavior for the FlexibleHeader introduced in v61.0.0. More details on the commit that was reverted: https://github.com/material-components/material-components-ios/commit/2b3722f7b8cc7df131a8b33695990c99931c0e1b 
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+### FlexibleHeader
 
-Replace this text with links to deprecation guides.
-## New features
+#### Changes
 
-Replace this text with example code for each new feature.
-## API changes
-
-## Component changes
+* [Revert "Add new canAlwaysExpandToMaximumHeight behavior. (#4794)"](https://github.com/material-components/material-components-ios/commit/0ea7bf01ee434388b7d047306a3df390c944e49a) (Yarden Eitan)
 
 ---
 
