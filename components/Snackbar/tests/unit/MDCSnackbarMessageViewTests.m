@@ -73,6 +73,15 @@
                         self.message.accessibilityLabel);
 }
 
+- (void)testAccessibilityHintDefaultIsNotNil {
+  // When
+  [self.manager showMessage:self.message];
+  [NSRunLoop.mainRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+
+  // Then
+  XCTAssertNotNil(self.delegate.presentedView.label.accessibilityHint);
+}
+
 - (void)testAccessibilityHintSetFromSnackbarMessageProperty {
   // When
   self.message.accessibilityHint = @"a hint";
