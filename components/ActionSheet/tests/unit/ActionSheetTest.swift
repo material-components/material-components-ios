@@ -18,10 +18,14 @@ import XCTest
 import MaterialComponentsAlpha.MaterialActionSheet
 
 class ActionSheetTest: XCTestCase {
-  func testNumberOfActions() {
-    // Given
-    let actionSheet = MDCActionSheetController(title: nil)
 
+  var actionSheet: MDCActionSheetController!
+
+  override func setUp() {
+    actionSheet = MDCActionSheetController()
+  }
+
+  func testNumberOfActions() {
     // Then
     XCTAssertEqual(actionSheet.actions.count, 0)
 
@@ -35,9 +39,6 @@ class ActionSheetTest: XCTestCase {
   }
 
   func testTitleChange() {
-    // Given
-    let actionSheet = MDCActionSheetController(title: nil)
-
     // Then
     XCTAssertEqual(actionSheet.title, nil)
 
@@ -46,5 +47,30 @@ class ActionSheetTest: XCTestCase {
 
     // Then
     XCTAssertEqual(actionSheet.title, "New title")
+  }
+
+  func testAccessibilityIdentifiers() {
+    // Given
+    let rowCount = 1
+    let section = 0
+    let testIdentifier = "Test"
+
+    // When
+    let action = MDCActionSheetAction(title: "Title", image: nil, handler: nil)
+    action.accessibilityIdentifier = testIdentifier
+    actionSheet.addAction(action)
+
+    // Then
+    XCTAssertEqual(actionSheet.view.subviews.count, 2)
+    let tableView = actionSheet.view.subviews.flatMap{ $0 as? UITableView }.first
+    if let table = tableView {
+      XCTAssertEqual(table.numberOfRows(inSection: section), rowCount)
+      if let cell = table.cellForRow(at: IndexPath(row: rowCount - 1, section: section)) {
+        XCTAssertEqual(cell.accessibilityIdentifier, testIdentifier)
+      } else {
+        XCTFail("Cell wasn't loaded")
+      }
+    }
+    
   }
 }
