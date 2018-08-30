@@ -250,13 +250,11 @@ static const int kMDCButtonAnimationDuration = 200;
 
 - (UIEdgeInsets)mdc_safeAreaInsets {
   UIEdgeInsets insets = UIEdgeInsetsZero;
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
 
     // Accommodate insets for iPhone X.
     insets = self.safeAreaInsets;
   }
-#endif
   return insets;
 }
 

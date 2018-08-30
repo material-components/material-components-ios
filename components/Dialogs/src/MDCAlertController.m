@@ -56,6 +56,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 - (id)copyWithZone:(__unused NSZone *)zone {
   MDCAlertAction *action = [[self class] actionWithTitle:self.title handler:self.completionHandler];
+  action.accessibilityIdentifier = self.accessibilityIdentifier;
 
   return action;
 }
@@ -161,9 +162,10 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 - (void)addActionToAlertView:(MDCAlertAction *)action {
   if (self.alertView) {
-    [self.alertView addActionButtonTitle:action.title
-                                  target:self
-                                selector:@selector(actionButtonPressed:)];
+    MDCButton *addedAction = [self.alertView addActionButtonTitle:action.title
+                                                           target:self
+                                                         selector:@selector(actionButtonPressed:)];
+    addedAction.accessibilityIdentifier = action.accessibilityIdentifier;
     self.preferredContentSize =
         [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
     [self.alertView setNeedsLayout];

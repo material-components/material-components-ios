@@ -139,6 +139,11 @@ extern NSString * __nonnull const MDCSnackbarMessageBoldAttributeName;
 @property(nonatomic, copy, nullable) NSString *accessibilityLabel;
 
 /**
+ Redeclaration from UIAccessibility to make clear that this class supports accessibility hints.
+ */
+@property(nonatomic, copy, nullable) NSString *accessibilityHint;
+
+/**
  Text that should be read when the message appears on screen and VoiceOver is enabled.
  */
 @property(nonatomic, readonly, nullable) NSString *voiceNotificationText;

@@ -61,6 +61,16 @@
 @property(nonatomic, strong, nullable) NSMutableArray<MDCButton *> *actionButtons;
 
 /**
+ The @c accessibilityLabel to apply to the message of the Snackbar.
+ */
+@property(nullable, nonatomic, copy) NSString *accessibilityLabel;
+
+/**
+ The @c accessibilityHint to apply to the message of the Snackbar.
+ */
+@property(nullable, nonatomic, copy) NSString *accessibilityHint;
+
+/**
  Returns the button title color for a particular control state.
 
  Default for UIControlStateNormal is MDCRGBAColor(0xFF, 0xFF, 0xFF, 0.6f).

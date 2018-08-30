@@ -437,7 +437,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                            ? self.errorColor
                            : nonErrorColor;
   } else {
-    placeholderColor = self.textInput.isEditing ? self.activeColor : self.inlinePlaceholderColor;
+    placeholderColor = self.inlinePlaceholderColor;
   }
   if (!self.textInput.isEnabled) {
     placeholderColor = self.disabledColor;

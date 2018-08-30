@@ -50,9 +50,9 @@ The component implementations can be found in Xcode within `Pods > Development P
 
 ## Requirements
 
-- Xcode 8.3.3 or higher.
+- Xcode 9 or higher
 - Minimum iOS deployment target of 8.0 or higher
-- CocoaPods
+- CocoaPods 1.5 or higher
 
 ## Attributions
 

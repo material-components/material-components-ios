@@ -150,7 +150,6 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
   [super willMoveToParentViewController:parent];
 
   BOOL shouldDisableAutomaticInsetting = YES;
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   // Prior to iOS 11 there was no way to know whether UIKit had injected insets into our
   // UIScrollView, so we disable automatic insetting on these devices. iOS 11 provides
   // the adjustedContentInset API which allows us to respond to changes in the safe area
@@ -158,7 +157,6 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
   if (@available(iOS 11.0, *)) {
     shouldDisableAutomaticInsetting = NO;
   }
-#endif
   if (shouldDisableAutomaticInsetting) {
     parent.automaticallyAdjustsScrollViewInsets = NO;
   }
@@ -385,11 +383,9 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
    the top layout guide constant (and clients should be relying on additionalSafeAreaInsets anyway).
    */
   BOOL shouldObserveLayoutGuideConstant = YES;
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     shouldObserveLayoutGuideConstant = NO;
   }
-#endif
 
   if (shouldObserveLayoutGuideConstant) {
     [_topLayoutGuideConstraint removeObserver:self
@@ -488,7 +484,6 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
     [self fhv_setTopLayoutGuideConstraintConstant:topInset];
   }
 
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     BOOL alwaysUseAdditionalSafeAreaInsets = NO;
     if (self.useAdditionalSafeAreaInsetsForWebKitScrollViews
@@ -524,7 +519,6 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
       topLayoutGuideViewController.additionalSafeAreaInsets = additionalSafeAreaInsets;
     }
   }
-#endif
 }
 
 - (CGFloat)headerViewControllerHeight {
@@ -637,11 +631,9 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
     _headerView.topSafeAreaSourceViewController = ancestor;
 
     BOOL shouldObserveLayoutGuide = YES;
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
     if (@available(iOS 11.0, *)) {
       shouldObserveLayoutGuide = NO;
     }
-#endif
     if (shouldObserveLayoutGuide) {
       self.topSafeAreaConstraint = [self fhv_topLayoutGuideConstraintForViewController:ancestor];
     } else {

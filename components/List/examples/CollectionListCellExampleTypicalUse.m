@@ -58,11 +58,9 @@ static const CGFloat kSmallArbitraryCellWidth = 100.f;
   self.collectionView.alwaysBounceVertical = YES;
   self.automaticallyAdjustsScrollViewInsets = NO;
   self.parentViewController.automaticallyAdjustsScrollViewInsets = NO;
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
   }
-#endif
   // Register cell class.
   [self.collectionView registerClass:[CollectionViewListCell class]
           forCellWithReuseIdentifier:kReusableIdentifierItem];
@@ -136,12 +134,10 @@ static const CGFloat kSmallArbitraryCellWidth = 100.f;
   [cell applyTypographyScheme:_typographyScheme];
   cell.mdc_adjustsFontForContentSizeCategory = YES;
   CGFloat cellWidth = CGRectGetWidth(collectionView.bounds);
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     cellWidth -=
         (collectionView.adjustedContentInset.left + collectionView.adjustedContentInset.right);
   }
-#endif
   [cell setCellWidth:cellWidth];
   cell.titleLabel.text = _content[indexPath.item][0];
   cell.titleLabel.textAlignment = [_content[indexPath.item][1] integerValue];
