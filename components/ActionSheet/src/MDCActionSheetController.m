@@ -151,6 +151,7 @@ static NSString *const ReuseIdentifier = @"BaseCell";
   }
 #endif
   _tableView.contentInset = insets;
+  _tableView.contentOffset = CGPointMake(0, -size.height);
 }
 
 - (void)viewWillAppear:(BOOL)animated {
