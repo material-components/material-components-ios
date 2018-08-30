@@ -103,12 +103,10 @@
 
   // We want the page control to hug the bottom of the screen.
   UIEdgeInsets edgeInsets = UIEdgeInsetsZero;
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     // Accommodate insets for iPhone X.
     edgeInsets = self.view.safeAreaInsets;
   }
-#endif
   [_pageControl sizeToFit];
   CGFloat yOffset =
       CGRectGetHeight(self.view.frame) - CGRectGetHeight(_pageControl.frame) - edgeInsets.bottom;

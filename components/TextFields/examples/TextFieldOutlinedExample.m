@@ -210,7 +210,6 @@
                                                       attribute:NSLayoutAttributeTrailingMargin
                                                      multiplier:1
                                                        constant:0]];
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     [NSLayoutConstraint activateConstraints:@[
       [NSLayoutConstraint constraintWithItem:textFieldName
@@ -246,24 +245,6 @@
                                     constant:-20]
     ]];
   }
-#else
-  [NSLayoutConstraint activateConstraints:@[
-    [NSLayoutConstraint constraintWithItem:textFieldName
-                                 attribute:NSLayoutAttributeTop
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self.scrollView
-                                 attribute:NSLayoutAttributeTop
-                                multiplier:1
-                                  constant:20],
-    [NSLayoutConstraint constraintWithItem:textFieldMessage
-                                 attribute:NSLayoutAttributeBottom
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self.scrollView
-                                 attribute:NSLayoutAttributeBottomMargin
-                                multiplier:1
-                                  constant:-20]
-  ]];
-#endif
 
   [constraints
       addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[state(80)]-[zip]|"

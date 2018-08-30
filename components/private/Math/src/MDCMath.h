@@ -132,6 +132,38 @@ static inline CGFloat MDCSqrt(CGFloat value) {
 }
 
 /**
+ Round the given value to ceiling with provided scale factor.
+ If @c scale is zero, then the rounded value will be zero.
+
+ @param value The value to round
+ @param scale The scale factor
+ @return The ceiling value calculated using the provided scale factor
+ */
+static inline CGFloat MDCCeilScaled(CGFloat value, CGFloat scale) {
+  if (MDCCGFloatEqual(scale, 0)) {
+    return 0.0f;
+  }
+
+  return MDCCeil(value * scale) / scale;
+}
+
+/**
+ Round the given value to floor with provided scale factor.
+ If @c scale is zero, then the rounded value will be zero.
+
+ @param value The value to round
+ @param scale The scale factor
+ @return The floor value calculated using the provided scale factor
+ */
+static inline CGFloat MDCFloorScaled(CGFloat value, CGFloat scale) {
+  if (MDCCGFloatEqual(scale, 0)) {
+    return 0.0f;
+  }
+
+  return MDCFloor(value * scale) / scale;
+}
+
+/**
  Expand `rect' to the smallest standardized rect containing it with pixel-aligned origin and size.
  If @c scale is zero, then a scale of 1 will be used instead.
 

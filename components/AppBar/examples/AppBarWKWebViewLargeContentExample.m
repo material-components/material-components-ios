@@ -84,12 +84,10 @@
   [content addObject:@"</body></html>"];
   [webView loadHTMLString:[content componentsJoinedByString:@"\n"] baseURL:nil];
 
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     // No need to do anything - additionalSafeAreaInsets will inset our content.
     webView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
   } else {
-#endif
   webView.translatesAutoresizingMaskIntoConstraints = NO;
   [NSLayoutConstraint activateConstraints:
    @[[NSLayoutConstraint constraintWithItem:webView
@@ -121,9 +119,7 @@
                                  multiplier:1.0
                                    constant:0]
      ]];
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   }
-#endif
   self.appBar.headerViewController.headerView.trackingScrollView = webView.scrollView;
   [self.appBar addSubviewsToParent];
 }

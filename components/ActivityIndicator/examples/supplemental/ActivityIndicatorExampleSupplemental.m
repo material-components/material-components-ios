@@ -57,6 +57,7 @@ static NSString * const kCell = @"Cell";
   // Set up container view of three activity indicators.
   UIView *indicators =
       [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 160)];
+  indicators.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
   [indicators addSubview:self.activityIndicator1];
   [indicators addSubview:self.activityIndicator2];
@@ -64,10 +65,16 @@ static NSString * const kCell = @"Cell";
 
   self.activityIndicator1.center =
       CGPointMake(indicators.bounds.size.width / 3, indicators.bounds.size.height / 2);
+  self.activityIndicator1.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin |
+                                              UIViewAutoresizingFlexibleRightMargin);
   self.activityIndicator2.center =
       CGPointMake(indicators.bounds.size.width / 2, indicators.bounds.size.height / 2);
+  self.activityIndicator2.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin |
+                                              UIViewAutoresizingFlexibleRightMargin);
   self.activityIndicator3.center =
       CGPointMake(2 * indicators.bounds.size.width / 3, indicators.bounds.size.height / 2);
+  self.activityIndicator3.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin |
+                                              UIViewAutoresizingFlexibleRightMargin);
 
   self.indicators = indicators;
 

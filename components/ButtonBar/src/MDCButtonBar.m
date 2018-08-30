@@ -18,11 +18,11 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
+#import "MaterialApplication.h"
 #import "MaterialButtons.h"
 #import "private/MDCAppBarButtonBarBuilder.h"
 
 static const CGFloat kButtonBarMaxHeight = 56;
-static const CGFloat kButtonBarMaxPadHeight = 64;
 static const CGFloat kButtonBarMinHeight = 24;
 
 // KVO contexts
@@ -130,7 +130,7 @@ static NSString *const kEnabledSelector = @"enabled";
     totalWidth += width;
   }
 
-  CGFloat maxHeight = [self usePadHeight] ? kButtonBarMaxPadHeight : kButtonBarMaxHeight;
+  CGFloat maxHeight = kButtonBarMaxHeight;
   CGFloat minHeight = kButtonBarMinHeight;
   CGFloat height = MIN(MAX(size.height, minHeight), maxHeight);
   return CGSizeMake(totalWidth, height);
@@ -168,16 +168,6 @@ static NSString *const kEnabledSelector = @"enabled";
 
 #pragma mark - Private
 
-// Used to determine whether or not to apply height relevant for iPad or use smaller iPhone size
-// Only the height is affected so we use the verticalSizeClass
-- (BOOL)usePadHeight {
-  const BOOL isPad = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
-  if (isPad && self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular) {
-    return YES;
-  }
-  return NO;
-}
-
 - (void)updateButtonTitleColors {
   for (UIView *viewObj in _buttonViews) {
     if ([viewObj isKindOfClass:[MDCButton class]]) {
@@ -200,7 +190,6 @@ static NSString *const kEnabledSelector = @"enabled";
   if (![barButtonItems count]) {
     return nil;
   }
-  id<MDCButtonBarDelegate> delegate = _defaultBuilder;
 
   NSMutableArray<UIView *> *views = [NSMutableArray array];
   [barButtonItems enumerateObjectsUsingBlock:^(UIBarButtonItem *item,
@@ -213,7 +202,7 @@ static NSString *const kEnabledSelector = @"enabled";
     if (idx == [barButtonItems count] - 1) {
       hints |= MDCBarButtonItemLayoutHintsIsLastButton;
     }
-    UIView *view = [delegate buttonBar:self viewForItem:item layoutHints:hints];
+    UIView *view = [self->_defaultBuilder buttonBar:self viewForItem:item layoutHints:hints];
     if (!view) {
       return;
     }
@@ -330,6 +319,14 @@ static NSString *const kEnabledSelector = @"enabled";
   }
 
   if (![target respondsToSelector:item.action]) {
+    return;
+  }
+
+  if (![target respondsToSelector:@selector(methodSignatureForSelector:)]) {
+    UIApplication *application = [UIApplication mdc_safeSharedApplication];
+    NSAssert(application != nil,
+             @"No UIApplication is available to send an event from; it will be lost.");
+    [application sendAction:item.action to:target from:item forEvent:event];
     return;
   }
 

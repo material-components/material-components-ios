@@ -60,11 +60,9 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
                                                  collectionViewLayout:self.collectionViewLayout];
   self.collectionView = _customCollectionView;
 
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     _customCollectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
   }
-#endif
 
   // Register cell class.
   [self.collectionView registerClass:[MDCCollectionViewTextCell class]

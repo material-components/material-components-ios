@@ -64,11 +64,9 @@
 
   self.navBar.translatesAutoresizingMaskIntoConstraints = NO;
 
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     [self.view.safeAreaLayoutGuide.topAnchor constraintEqualToAnchor:self.navBar.topAnchor].active = YES;
   } else {
-#endif
     [NSLayoutConstraint constraintWithItem:self.topLayoutGuide
                                  attribute:NSLayoutAttributeBottom
                                  relatedBy:NSLayoutRelationEqual
@@ -76,9 +74,7 @@
                                  attribute:NSLayoutAttributeTop
                                 multiplier:1.0
                                   constant:0].active = YES;
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   }
-#endif
 
   NSDictionary *viewsBindings = @{@"navBar": self.navBar};
 
