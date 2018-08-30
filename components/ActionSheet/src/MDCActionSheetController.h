@@ -162,7 +162,7 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
  An instance of MDCActionSheetAction is passed to MDCActionSheetController to
  add an action to the action sheet.
  */
-@interface MDCActionSheetAction : NSObject <NSCopying>
+@interface MDCActionSheetAction : NSObject <NSCopying, UIAccessibilityIdentification>
 
 
 /**
@@ -197,5 +197,10 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
  method.
 */
 @property (nonatomic, nullable, readonly) UIImage *image;
+
+/**
+ The @c accessibilityIdentifier for the view associated with this action.
+ */
+@property(nonatomic, nullable, copy) NSString *accessibilityIdentifier;
 
 @end

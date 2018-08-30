@@ -55,6 +55,7 @@ static NSString *const ReuseIdentifier = @"BaseCell";
   MDCActionSheetAction *action = [[self class] actionWithTitle:self.title
                                                          image:self.image
                                                        handler:self.completionHandler];
+  action.accessibilityIdentifier = self.accessibilityIdentifier;
   return action;
 }
 
@@ -256,10 +257,12 @@ static NSString *const ReuseIdentifier = @"BaseCell";
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   MDCActionSheetItemTableViewCell *cell =
       [tableView dequeueReusableCellWithIdentifier:ReuseIdentifier forIndexPath:indexPath];
-  cell.action = _actions[indexPath.row];
+  MDCActionSheetAction *action = _actions[indexPath.row];
+  cell.action = action;
   cell.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
   cell.backgroundColor = self.backgroundColor;
   cell.actionFont = self.actionFont;
+  cell.accessibilityIdentifier = action.accessibilityIdentifier;
   return cell;
 }
 
