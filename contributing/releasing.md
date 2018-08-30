@@ -19,7 +19,7 @@ is expected to do the following, in order of priority:
 If something is stopping the release engineer from achieving any of the above goals, the culprit
 code should be removed immediately from the release.
 
-If you are not able to cut a release by end of day Wednesday this is *cause for concern*. Remember:
+If you are not able to cut a release by Wednesday afternoon this is *cause for concern*. Remember:
 landing the release is more important than landing any individual change. Revert suspect changes
 aggressively if something might be holding back the release.
 
