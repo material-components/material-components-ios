@@ -173,9 +173,7 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
     sliderItem(@"Minimum", FlexibleHeaderConfiguratorFieldMinimumHeight),
     sliderItem(@"Maximum", FlexibleHeaderConfiguratorFieldMaximumHeight),
     switchItem(@"Min / max height includes Safe Area",
-               FlexibleHeaderConfiguratorFieldMinMaxHeightIncludeSafeArea),
-    switchItem(@"Can always expand to maximum height",
-               FlexibleHeaderConfiguratorFieldCanAlwaysExpandToMaximumHeight)
+               FlexibleHeaderConfiguratorFieldMinMaxHeightIncludeSafeArea)
   ]);
 
   NSMutableArray *fillerItems = [NSMutableArray array];
