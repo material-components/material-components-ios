@@ -27,9 +27,9 @@ static NSString *const kSelfSizingStereoCellExampleDescription =
 @interface MDCSelfSizingStereoCellExample () <UICollectionViewDelegate,
                                       UICollectionViewDataSource>
 
-@property (strong, nonatomic) UICollectionView *collectionView;
-@property (strong, nonatomic) UICollectionViewFlowLayout *collectionViewLayout;
-@property (strong, nonatomic) NSArray *randomStrings;
+@property (nonatomic, strong) UICollectionView *collectionView;
+@property (nonatomic, strong) UICollectionViewFlowLayout *collectionViewLayout;
+@property (nonatomic, strong) NSArray *randomStrings;
 @property (nonatomic, assign) NSInteger numberOfCells;
 @end
 
