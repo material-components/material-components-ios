@@ -114,6 +114,7 @@ static NSString *const ReuseIdentifier = @"BaseCell";
     _header.title = [title copy];
     _header.message = [message copy];
     self.backgroundColor = [UIColor whiteColor];
+    self.imageColor = [UIColor blackColor];
   }
 
   return self;

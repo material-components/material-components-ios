@@ -32,6 +32,4 @@
 
 @property(nonatomic, strong, nullable) UIColor *actionColor;
 
-@property(nonatomic, strong, nullable) UIColor *imageColor;
-
 @end
