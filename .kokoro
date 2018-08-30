@@ -95,6 +95,39 @@ move_derived_data_to_tmp() {
   fi
 }
 
+# xcode-select's the provided xcode version.
+# Usage example:
+#     select_xcode 9.2.0
+select_xcode() {
+  desired_version="$1"
+  if [ -z "$desired_version" ]; then
+    return # No Xcode version to select.
+  fi
+
+  xcodes=$(ls /Applications/ | grep "Xcode")
+  for xcode_path in $xcodes; do
+    xcode_version=$(cat /Applications/$xcode_path/Contents/version.plist \
+      | grep "CFBundleShortVersionString" -A1 \
+      | grep string \
+      | cut -d'>' -f2 \
+      | cut -d'<' -f1)
+    xcode_version_as_number="$(version_as_number $xcode_version)"
+
+    if [ "$xcode_version_as_number" -ne "$(version_as_number $desired_version)" ]; then
+      continue
+    fi
+
+    sudo xcode-select --switch /Applications/$xcode_path/Contents/Developer
+    xcodebuild -version
+
+    # Resolves the following crash when switching Xcode versions:
+    # "Failed to locate a valid instance of CoreSimulatorService in the bootstrap"
+    launchctl remove com.apple.CoreSimulator.CoreSimulatorService || true
+
+    break
+  done
+}
+
 run_bazel() {
   echo "Running bazel builds..."
 
@@ -272,6 +305,8 @@ generate_website() {
 #
 generate_apidiff() {
   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    select_xcode "$XCODE_VERSION"
+
     # Move into our cloned repo
     cd github/repo
 
@@ -305,75 +340,45 @@ generate_apidiff() {
   fi
 
   BUILDS_TMP_PATH=$(mktemp -d)
-  SEEN_XCODES_FILE_PATH="$BUILDS_TMP_PATH/seen_xcodes"
-  touch "$SEEN_XCODES_FILE_PATH"
-  xcodes=$(ls /Applications/ | grep "Xcode")
-  for xcode_path in $xcodes; do
-    xcode_version=$(cat /Applications/$xcode_path/Contents/version.plist \
-      | grep "CFBundleShortVersionString" -A1 \
-      | grep string \
-      | cut -d'>' -f2 \
-      | cut -d'<' -f1)
-    xcode_version_as_number="$(version_as_number $xcode_version)"
+  base_sha=$(git merge-base origin/develop HEAD)
 
-    # Ignore duplicate Xcode installations
-    if grep -xq "$xcode_version_as_number" "$SEEN_XCODES_FILE_PATH"; then
-      continue
+  ./scripts/release apidiff "$base_sha" | tee "$BUILDS_TMP_PATH/api_diff"
+  changelog_path=$(cat "$BUILDS_TMP_PATH/api_diff" | grep "Changelog=" | cut -d'=' -f2)
+  error_path=$(cat "$BUILDS_TMP_PATH/api_diff" | grep "Errors=" | cut -d'=' -f2)
+
+  pushd scripts/github-comment >> /dev/null
+
+  if [ -f "$changelog_path" ]; then
+    echo "## API diff detected the following changes" > "$changelog_path.tmp"
+    cat "$changelog_path" >> "$changelog_path.tmp"
+
+    swift run github-comment \
+      --repo=material-components/material-components-ios \
+      --github_token="$GITHUB_API_TOKEN" \
+      --pull_request_number="$KOKORO_GITHUB_PULL_REQUEST_NUMBER" \
+      --identifier=apidiff \
+      --comment_body="$changelog_path.tmp"
+
+  else
+    # No changelog, so delete any existing comment
+    swift run github-comment \
+      --repo=material-components/material-components-ios \
+      --github_token="$GITHUB_API_TOKEN" \
+      --pull_request_number="$KOKORO_GITHUB_PULL_REQUEST_NUMBER" \
+      --identifier=apidiff \
+      --delete
+  fi
+
+  popd >> /dev/null
+
+  if [ -f "$error_path" ]; then
+    nested_error_path=$(cat "$error_path" | grep "stderr output is available in" | cut -d' ' -f6)
+    if [ -f "$nested_error_path" ]; then
+      echo
+      echo "Potential build errors:"
+      cat "$nested_error_path"
     fi
-
-    echo "$xcode_version_as_number" >> "$SEEN_XCODES_FILE_PATH"
-
-    if [ "$xcode_version_as_number" -ne "$(version_as_number $XCODE_VERSION)" ]; then
-      continue
-    fi
-
-    sudo xcode-select --switch /Applications/$xcode_path/Contents/Developer
-    xcodebuild -version
-
-    # Resolves the following crash when switching Xcode versions:
-    # "Failed to locate a valid instance of CoreSimulatorService in the bootstrap"
-    launchctl remove com.apple.CoreSimulator.CoreSimulatorService || true
-
-    base_sha=$(git merge-base origin/develop HEAD)
-
-    ./scripts/release apidiff "$base_sha" | tee "$BUILDS_TMP_PATH/api_diff"
-    changelog_path=$(cat "$BUILDS_TMP_PATH/api_diff" | grep "Changelog=" | cut -d'=' -f2)
-    error_path=$(cat "$BUILDS_TMP_PATH/api_diff" | grep "Errors=" | cut -d'=' -f2)
- 
-    pushd scripts/github-comment >> /dev/null
-
-    if [ -f "$changelog_path" ]; then
-      echo "## API diff detected the following changes" > "$changelog_path.tmp"
-      cat "$changelog_path" >> "$changelog_path.tmp"
-
-      swift run github-comment \
-        --repo=material-components/material-components-ios \
-        --github_token="$GITHUB_API_TOKEN" \
-        --pull_request_number="$KOKORO_GITHUB_PULL_REQUEST_NUMBER" \
-        --identifier=apidiff \
-        --comment_body="$changelog_path.tmp"
-
-    else
-      # No changelog, so delete any existing comment
-      swift run github-comment \
-        --repo=material-components/material-components-ios \
-        --github_token="$GITHUB_API_TOKEN" \
-        --pull_request_number="$KOKORO_GITHUB_PULL_REQUEST_NUMBER" \
-        --identifier=apidiff \
-        --delete
-    fi
-
-    popd >> /dev/null
-
-    if [ -f "$error_path" ]; then
-      nested_error_path=$(cat "$error_path" | grep "stderr output is available in" | cut -d' ' -f6)
-      if [ -f "$nested_error_path" ]; then
-        echo
-        echo "Potential build errors:"
-        cat "$nested_error_path"
-      fi
-    fi
-  done
+  fi
 }
 
 POSITIONAL=()
