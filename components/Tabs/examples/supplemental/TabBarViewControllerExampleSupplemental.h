@@ -20,9 +20,12 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialButtons+ButtonThemer.h"
 #import "MaterialColorScheme.h"
 #import "MaterialTypographyScheme.h"
 #import "MaterialTabs.h"
+
+typedef void (^MDCButtonActionBlock)(void);
 
 @interface TabBarViewControllerExample : MDCTabBarViewController
 @property(nonatomic, strong, nullable) MDCSemanticColorScheme *colorScheme;
@@ -38,7 +41,14 @@
 @end
 
 @interface TBVCSampleViewController : UIViewController
-+ (nonnull instancetype)sampleWithTitle:(nonnull NSString *)title color:(nonnull UIColor *)color;
+
 @property(nonatomic, nullable) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, nullable) MDCTypographyScheme *typographyScheme;
+
++ (nonnull instancetype)sampleWithTitle:(nonnull NSString *)title color:(nonnull UIColor *)color;
+
+- (void)setMDCButtonWithFrame:(CGRect)frame
+                 buttonScheme:(nonnull id<MDCButtonScheming>)buttonScheme
+                        title:(nonnull NSString *)title
+                  actionBlock:(nullable MDCButtonActionBlock)actionBlock;
 @end

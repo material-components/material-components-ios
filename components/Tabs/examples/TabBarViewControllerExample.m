@@ -16,8 +16,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialButtons.h"
-#import "MaterialButtons+ButtonThemer.h"
 #import "MaterialColorScheme.h"
 #import "MaterialSlider.h"
 #import "MaterialTabs.h"
@@ -42,54 +40,12 @@
   [self loadTabBar];
 }
 
-#pragma mark - Action
-
-- (void)toggleTabBar {
-  [self setTabBarHidden:!self.tabBarHidden animated:YES];
-}
-
-- (void)pushHidesNavigation {
-  TBVCSampleViewController *vc =
-      [TBVCSampleViewController sampleWithTitle:@"Push&Hide" color:UIColor.grayColor];
-  vc.colorScheme = self.colorScheme;
-  vc.typographyScheme = self.typographyScheme;
-  [self.navigationController pushViewController:vc animated:YES];
-}
-
 #pragma mark - Private
 
 - (void)loadTabBar {
   NSArray *viewControllers = [self constructExampleViewControllers];
   self.viewControllers = viewControllers;
-  UIViewController *child0 = viewControllers[0];
-  self.selectedViewController = child0;
-  UIViewController *child1 = viewControllers[1];
-
-  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
-  buttonScheme.colorScheme = self.colorScheme;
-  buttonScheme.typographyScheme = self.typographyScheme;
-
-  // Put the button under the header.
-  MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectMake(10, 120, 300, 40)];
-  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:button];
-  [button setTitle:@"Push and Hide Tab" forState:UIControlStateNormal];
-  [button sizeToFit];
-  [child1.view addSubview:button];
-  [button addTarget:self
-                action:@selector(pushHidesNavigation)
-      forControlEvents:UIControlEventTouchUpInside];
-
-  UIViewController *child2 = viewControllers[2];
-  // Put the button under the header.
-  button = [[MDCButton alloc] initWithFrame:CGRectMake(10, 120, 300, 40)];
-  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:button];
-  [button setTitle:@"Toggle Tab Bar" forState:UIControlStateNormal];
-  [button sizeToFit];
-  [child2.view addSubview:button];
-  [button addTarget:self
-                action:@selector(toggleTabBar)
-      forControlEvents:UIControlEventTouchUpInside];
-  
+  self.selectedViewController = self.viewControllers.firstObject;
   [MDCTabBarColorThemer applySemanticColorScheme:self.colorScheme toTabs:self.tabBar];
 }
 

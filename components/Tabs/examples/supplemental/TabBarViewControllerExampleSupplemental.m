@@ -23,6 +23,7 @@
 #import "MaterialAppBar.h"
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
+#import "MaterialButtons.h"
 #import "MaterialPalettes.h"
 
 @interface TBVCSampleView : UIView
@@ -46,8 +47,13 @@
 @end
 
 @interface TBVCSampleViewController ()
+
 @property(nonatomic) MDCAppBarViewController *appBarViewController;
 @property(nonatomic) UILabel *titleLabel;
+@property(nonatomic) CGRect buttonFrame; // The desired frame of the button
+@property(nonatomic) MDCButton *button;
+@property(nonatomic, copy) MDCButtonActionBlock buttonActionBlock;
+
 @end
 
 @implementation TBVCSampleViewController
@@ -78,6 +84,14 @@
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
   _titleLabel.center = self.view.center;
+  UIEdgeInsets safeAreaInsets = UIEdgeInsetsZero;
+  if (@available(iOS 11.0, *)) {
+    safeAreaInsets = self.view.safeAreaInsets;
+  }
+  CGRect buttonFrame = self.buttonFrame;
+  self.button.frame = CGRectOffset(buttonFrame, safeAreaInsets.left, safeAreaInsets.top);
+  [self.button sizeToFit];
+
   [self.view setNeedsDisplay];
 }
 
@@ -106,6 +120,28 @@
   return sample;
 }
 
+- (void)setMDCButtonWithFrame:(CGRect)frame
+                 buttonScheme:(nonnull id<MDCButtonScheming>)buttonScheme
+                        title:(nonnull NSString *)title
+                  actionBlock:(nullable MDCButtonActionBlock)actionBlock {
+  MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectZero];
+  [button setTitle:title forState:UIControlStateNormal];
+  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:button];
+  [self.view addSubview:button];
+  self.button = button;
+  self.buttonFrame = CGRectStandardize(frame);
+  self.buttonActionBlock = actionBlock;
+  [button addTarget:self
+             action:@selector(triggerButtonActionHandler)
+   forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)triggerButtonActionHandler {
+  if (self.buttonActionBlock) {
+    self.buttonActionBlock();
+  }
+}
+
 @end
 
 @implementation TabBarViewControllerExample (Supplemental)
@@ -117,14 +153,40 @@
 
 - (nonnull NSArray *)constructExampleViewControllers {
   NSBundle *bundle = [NSBundle bundleForClass:[TabBarViewControllerExample class]];
+  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
+  buttonScheme.colorScheme = self.colorScheme;
+  buttonScheme.typographyScheme = self.typographyScheme;
+
   TBVCSampleViewController *child1 =
       [TBVCSampleViewController sampleWithTitle:@"One" color:UIColor.redColor];
+
   UIColor *blue = [UIColor colorWithRed:0x3A / 255.f green:0x56 / 255.f blue:0xFF / 255.f alpha:1];
   TBVCSampleViewController *child2 = [TBVCSampleViewController sampleWithTitle:@"Two" color:blue];
+  __weak TabBarViewControllerExample *weakSelf = self;
+  [child2 setMDCButtonWithFrame:CGRectMake(10, 120, 300, 40)
+                   buttonScheme:buttonScheme
+                          title:@"Push and Hide Tab"
+                    actionBlock:^{
+                      TabBarViewControllerExample *strongSelf = weakSelf;
+                      TBVCSampleViewController *vc =
+                      [TBVCSampleViewController sampleWithTitle:@"Push&Hide" color:UIColor.grayColor];
+                      vc.colorScheme = strongSelf.colorScheme;
+                      vc.typographyScheme = strongSelf.typographyScheme;
+                      [strongSelf.navigationController pushViewController:vc animated:YES];
+                    }];
+
   UIImage *starImage =
       [UIImage imageNamed:@"TabBarDemo_ic_star" inBundle:bundle compatibleWithTraitCollection:nil];
   TBVCSampleViewController *child3 =
       [TBVCSampleViewController sampleWithTitle:@"Three" color:UIColor.blueColor icon:starImage];
+  [child3 setMDCButtonWithFrame:CGRectMake(10, 120, 300, 40)
+                   buttonScheme:buttonScheme
+                          title:@"Toggle Tab Bar"
+                    actionBlock:^{
+                      TabBarViewControllerExample *strongSelf = weakSelf;
+                      [strongSelf setTabBarHidden:!strongSelf.tabBarHidden animated:YES];
+                    }];
+
   NSArray *viewControllers = @[ child1, child2, child3 ];
   for (TBVCSampleViewController *vc in viewControllers) {
     vc.colorScheme = self.colorScheme;
