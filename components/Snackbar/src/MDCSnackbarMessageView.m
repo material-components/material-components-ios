@@ -143,7 +143,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 /**
  The view containing all of the visual content. Inset by @c kBorderWidth from the view.
  */
-@property(nonatomic, strong) UIControl *containerView;
+@property(nonatomic, strong) UIView *containerView;
 
 /**
  The view containing all of the buttons.
@@ -263,7 +263,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     // Borders are drawn inside of the bounds of a layer. Because our border is translucent, we need
     // to have a view with transparent background and border only (@c self). Inside will be a
     // content view that has the dark grey color.
-    _containerView = [[UIControl alloc] init];
+    _containerView = [[UIView alloc] init];
     [self addSubview:_containerView];
 
     [_containerView setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -271,11 +271,6 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     _containerView.layer.cornerRadius =
         MDCSnackbarMessage.usesLegacySnackbar ? kLegacyCornerRadius : kCornerRadius;
     _containerView.layer.masksToBounds = YES;
-
-    // Listen for taps on the background of the view.
-    [_containerView addTarget:self
-                       action:@selector(handleBackgroundTapped:)
-             forControlEvents:UIControlEventTouchUpInside];
 
     if (MDCSnackbarMessage.usesLegacySnackbar) {
       UISwipeGestureRecognizer *swipeRightGesture =
@@ -995,10 +990,6 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   translationAnimation.fillMode = kCAFillModeForwards;
   translationAnimation.removedOnCompletion = NO;
   [self.layer addAnimation:translationAnimation forKey:@"transform.translation.x"];
-}
-
-- (void)handleBackgroundTapped:(__unused UIButton *)sender {
-  [self dismissWithAction:nil userInitiated:YES];
 }
 
 - (void)handleButtonTapped:(__unused UIButton *)sender {
