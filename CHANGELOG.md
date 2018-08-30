@@ -12,6 +12,8 @@ No longer support Xcode 8.
 
 ## New features
 
+### More accessibility APIs
+
 *new* property:  `accessibilityIdentifier` in `MDCAlertAction` 
 *new* property: `accessibilityHint` in `MDCSnackbarMessageView`
 *new* property: `accessibilityLabel` in `MDCSnackbarMessageView`
