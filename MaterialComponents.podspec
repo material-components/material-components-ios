@@ -557,6 +557,9 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/Ink"
     component.dependency "MaterialComponents/ShadowElevations"
     component.dependency "MaterialComponents/ShadowLayer"
+    component.dependency "MaterialComponents/Typography"
+    component.dependency "MDFInternationalization"
+    component.dependency "MaterialComponents/private/Math"
   end
 
   # MaskedTransition
