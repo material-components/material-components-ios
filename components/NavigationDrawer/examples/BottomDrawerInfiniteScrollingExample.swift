@@ -86,20 +86,12 @@ class DrawerContentTableViewController: UITableViewController {
 
 extension BottomDrawerInfiniteScrollingExample {
 
-  @objc class func catalogDescription() -> String {
-    return "Navigation Drawer"
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Navigation Drawer", "Bottom Drawer Infinite Scrolling"],
+      "description": "Navigation Drawer",
+      "primaryDemo": true,
+      "presentable": true,
+    ]
   }
-
-  @objc class func catalogIsPrimaryDemo() -> Bool {
-    return true
-  }
-
-  @objc class func catalogBreadcrumbs() -> [String] {
-    return ["Navigation Drawer", "Bottom Drawer Infinite Scrolling"]
-  }
-
-  @objc class func catalogIsPresentable() -> Bool {
-    return true
-  }
-
 }

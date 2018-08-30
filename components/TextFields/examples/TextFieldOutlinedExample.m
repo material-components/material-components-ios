@@ -438,16 +438,12 @@
 
 @implementation TextFieldOutlinedObjectiveCExample (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Text Field", @"Outlined text fields" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return YES;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Text Field", @"Outlined text fields" ],
+    @"primaryDemo": @YES,
+    @"presentable": @YES,
+  };
 }
 
 @end

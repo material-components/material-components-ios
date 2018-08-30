@@ -229,8 +229,12 @@ extension TextFieldSemanticColorThemer {
 // MARK: - Status Bar Style
 
 extension TextFieldSemanticColorThemer {
-  @objc class func catalogBreadcrumbs() -> [String] {
-    return ["Text Field", "Theming Text Fields"]
-  }
 
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Text Field", "Theming Text Fields"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
+  }
 }

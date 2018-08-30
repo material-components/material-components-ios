@@ -99,19 +99,15 @@
 
 @implementation AppBarSectionHeadersExample (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"App Bar", @"UITableView with section headers" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"App Bar", @"UITableView with section headers" ],
+    @"primaryDemo": @NO,
+    @"presentable": @YES,
+  };
 }
 
 - (BOOL)catalogShouldHideNavigation {
-  return YES;
-}
-
-+ (BOOL)catalogIsPresentable {
   return YES;
 }
 

@@ -92,13 +92,15 @@ class ActionSheetSwiftExample: UIViewController {
 
 // MARK: Catalog by Convensions
 extension ActionSheetSwiftExample {
-  class func catalogIsPrimaryDemo() -> Bool {
-    return false
+
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Action Sheet", "Action Sheet (Swift)"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
   }
 
-  class func catalogBreadcrumbs() -> [String] {
-    return ["Action Sheet", "Action Sheet (Swift)"]
-  }
 }
 
 extension ActionSheetSwiftExample : UITableViewDelegate {

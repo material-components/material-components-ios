@@ -108,23 +108,17 @@
 
 @implementation AppBarTypicalUseExample (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"App Bar", @"App Bar" ];
-}
-
-+ (NSString *)catalogDescription {
-  return @"The top app bar displays information and actions relating to the current view.";
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"App Bar", @"App Bar" ],
+    @"description": @"The top app bar displays information and actions relating to "
+    @"the current view.",
+    @"primaryDemo": @YES,
+    @"presentable": @YES,
+  };
 }
 
 - (BOOL)catalogShouldHideNavigation {
-  return YES;
-}
-
-+ (BOOL)catalogIsPresentable {
   return YES;
 }
 

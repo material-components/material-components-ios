@@ -104,15 +104,12 @@ class DialogsCustomShadowViewController: UIViewController {
   }
 
   // MARK: Catalog by convention
-  @objc class func catalogBreadcrumbs() -> [String] {
-    return [ "Dialogs", "View with Corner Radius"]
-  }
 
-  @objc class func catalogIsPrimaryDemo() -> Bool {
-    return false
-  }
-
-  @objc class func catalogIsPresentable() -> Bool {
-    return false
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Dialogs", "View with Corner Radius"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
   }
 }

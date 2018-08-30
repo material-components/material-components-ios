@@ -30,21 +30,14 @@ static NSString * const kCell = @"Cell";
 
 @implementation ActivityIndicatorExample (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Activity Indicator", @"Activity Indicator" ];
-}
-
-+ (NSString *)catalogDescription {
-  return @"Activity Indicator is a visual indication of an app loading content. It can display how "
-         @"long an operation will take or visualize an unspecified wait time.";
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return YES;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Activity Indicator", @"Activity Indicator" ],
+    @"description": @"Activity Indicator is a visual indication of an app loading content. "
+    @"It can display how long an operation will take or visualize an unspecified wait time.",
+    @"primaryDemo": @YES,
+    @"presentable": @YES
+  };
 }
 
 @end

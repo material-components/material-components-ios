@@ -60,24 +60,14 @@ class CardExampleViewController: UIViewController {
 }
 
 extension CardExampleViewController {
-  @objc class func catalogBreadcrumbs() -> [String] {
-    return ["Cards", "Card (Swift)"]
-  }
 
-  @objc class func catalogIsPresentable() -> Bool {
-    return true
-  }
-
-  @objc class func catalogIsDebug() -> Bool {
-    return false
-  }
-
-  @objc class func catalogIsPrimaryDemo() -> Bool {
-    return true
-  }
-
-  @objc class func catalogDescription() -> String {
-    return "Cards contain content and actions about a single subject."
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Cards", "Card (Swift)"],
+      "description": "Cards contain content and actions about a single subject.",
+      "primaryDemo": true,
+      "presentable": true,
+    ]
   }
 }
 

@@ -68,16 +68,13 @@ class ShapesShadowsController: UIViewController {
 extension ShapesShadowsController {
   
   // MARK: Catalog by convention
-  @objc class func catalogBreadcrumbs() -> [String] {
-    return [ "Shadow", "Shape & Shadow" ]
-  }
-  
-  @objc class func catalogIsPrimaryDemo() -> Bool {
-    return false
-  }
 
-  @objc class func catalogIsPresentable() -> Bool {
-    return false
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Shadow", "Shape & Shadow"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
   }
 }
 

@@ -118,11 +118,12 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
 }
 
 extension ButtonsSimpleExampleSwiftViewController {
-   @objc class func catalogBreadcrumbs() -> [String] {
-      return ["Buttons", "Buttons (Swift)"]
-   }
-   
-   @objc class func catalogIsPrimaryDemo() -> Bool {
-      return false
-   }
+
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Buttons", "Buttons (Swift)"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
+  }
 }

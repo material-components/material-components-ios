@@ -146,20 +146,14 @@ class TypographyFontListExampleViewController: UITableViewController {
 
 // MARK: - CatalogByConvention
 extension TypographyFontListExampleViewController {
-  @objc class func catalogBreadcrumbs() -> [String] {
-    return ["Typography and Fonts", "Typography"]
-  }
 
-  @objc class func catalogDescription() -> String {
-    return "The Typography component provides methods for displaying text using the type sizes and"
-      + " opacities from the Material Design specifications."
-  }
-
-  @objc class func catalogIsPrimaryDemo() -> Bool {
-    return false
-  }
-
-  @objc class func catalogIsPresentable() -> Bool {
-    return false
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Typography and Fonts", "Typography"],
+      "description": "The Typography component provides methods for displaying text using the "
+        + "type sizes and opacities from the Material Design specifications.",
+      "primaryDemo": false,
+      "presentable": false,
+    ]
   }
 }

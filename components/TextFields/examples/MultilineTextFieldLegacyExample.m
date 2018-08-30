@@ -236,16 +236,12 @@
 
 #pragma mark - CatalogByConvention
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Text Field", @"[Legacy] Multi-line" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Text Field", @"[Legacy] Multi-line" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
 
 #pragma mark - Keyboard Handling

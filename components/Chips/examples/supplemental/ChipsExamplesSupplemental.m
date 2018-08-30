@@ -74,16 +74,12 @@ static UIButton *DeleteButton() {
 
 @implementation ChipsChoiceExampleViewController (Supplemental)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Chips", @"Choice" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return YES;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Chips", @"Choice" ],
+    @"primaryDemo": @NO,
+    @"presentable": @YES,
+  };
 }
 
 @end
@@ -93,16 +89,12 @@ static UIButton *DeleteButton() {
 
 @implementation ChipsActionExampleViewController (Supplemental)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Chips", @"Action" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return YES;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Chips", @"Action" ],
+    @"primaryDemo": @NO,
+    @"presentable": @YES,
+  };
 }
 
 @end
@@ -112,76 +104,60 @@ static UIButton *DeleteButton() {
 
 @implementation ChipsCollectionExampleViewController (Supplemental)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Chips", @"Collections" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Chips", @"Collections" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
 
 @end
 
 @implementation ChipsCustomizedExampleViewController (Supplemental)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Chips", @"Customized" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Chips", @"Customized" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
 
 - (UIImage *)doneImage {
   return DoneImage();
-}
-
-+ (BOOL)catalogIsPresentable {
-  return NO;
 }
 
 @end
 
 @implementation ChipsFilterExampleViewController (Supplemental)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Chips", @"Filter" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Chips", @"Filter" ],
+    @"primaryDemo": @NO,
+    @"presentable": @YES,
+  };
 }
 
 - (UIImage *)doneImage {
   return DoneImage();
-}
-
-+ (BOOL)catalogIsPresentable {
-  return YES;
 }
 
 @end
 
 @implementation ChipsFilterAnimatedExampleViewController (Supplemental)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Chips", @"Filter Animated" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Chips", @"Filter Animated" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
 
 - (UIImage *)doneImage {
   return DoneImage();
-}
-
-+ (BOOL)catalogIsPresentable {
-  return NO;
 }
 
 @end
@@ -191,28 +167,24 @@ static UIButton *DeleteButton() {
 
 @implementation ChipsInputExampleViewController (Supplemental)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Chips", @"Input" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return YES;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Chips", @"Input" ],
+    @"primaryDemo": @NO,
+    @"presentable": @YES,
+  };
 }
 
 @end
 
 @implementation ChipsSizingExampleViewController (Supplemental)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Chips", @"Sizing" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Chips", @"Sizing" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
 
 - (UIImage *)faceImage {
@@ -221,46 +193,35 @@ static UIButton *DeleteButton() {
 
 - (UIButton *)deleteButton {
   return DeleteButton();
-}
-
-+ (BOOL)catalogIsPresentable {
-  return NO;
 }
 
 @end
 
 @implementation ChipsTypicalUseViewController (Supplemental)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Chips", @"Chips" ];
-}
-
-+ (NSString *)catalogDescription {
-  return @"Chips are compact elements that represent an input, attribute, or action.";
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Chips", @"Chips" ],
+    @"description": @"Chips are compact elements that represent an input, attribute, or action.",
+    @"primaryDemo": @YES,
+    @"presentable": @YES,
+  };
 }
 
 - (UIImage *)doneImage {
   return DoneImage();
 }
 
-+ (BOOL)catalogIsPresentable {
-  return YES;
-}
-
 @end
 
 @implementation ChipsShapingExampleViewController (Supplemental)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Chips", @"Shaped Chip" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Chips", @"Shaped Chip" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
 
 - (UIImage *)faceImage {
@@ -269,10 +230,6 @@ static UIButton *DeleteButton() {
 
 - (UIButton *)deleteButton {
   return DeleteButton();
-}
-
-+ (BOOL)catalogIsPresentable {
-  return NO;
 }
 
 @end

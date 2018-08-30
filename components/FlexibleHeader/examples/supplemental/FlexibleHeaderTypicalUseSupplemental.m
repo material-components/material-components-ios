@@ -23,25 +23,18 @@
 
 @implementation FlexibleHeaderTypicalUseViewController (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Flexible Header", @"Flexible Header" ];
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Flexible Header", @"Flexible Header" ],
+    @"description": @"The Flexible Header is a container view whose height and vertical offset "
+    @"react to UIScrollViewDelegate events.",
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
 
 - (BOOL)catalogShouldHideNavigation {
   return YES;
-}
-
-+ (NSString *)catalogDescription {
-  return @"The Flexible Header is a container view whose height and vertical offset react to"
-          " UIScrollViewDelegate events.";
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return NO;
 }
 
 @end

@@ -150,16 +150,12 @@ static inline UIFont *customFont(MDCFontTextStyle style) {
 
 #pragma mark - CatalogByConvention
 
-+ (NSArray *)catalogBreadcrumbs {
-   return @[ @"Typography and Fonts", @"Custom Font Example" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-   return NO;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Typography and Fonts", @"Custom Font Example" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
 
 @end

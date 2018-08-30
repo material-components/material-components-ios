@@ -30,21 +30,14 @@ static const CGFloat kViewOffsetToCenter = 20.0f;
 
 @implementation ButtonsTypicalUseExampleViewController (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Buttons", @"Buttons" ];
-}
-
-+ (NSString *)catalogDescription {
-  return @"Buttons allow users to take actions, and make choices, with a single tap.\nA floating"
-          " action button (FAB) represents the primary action of a screen.";
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return YES;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Buttons", @"Buttons" ],
+    @"description": @"Buttons allow users to take actions, and make choices, with a single tap."
+    @"\nA floating action button (FAB) represents the primary action of a screen.",
+    @"primaryDemo": @YES,
+    @"presentable": @YES,
+  };
 }
 
 @end
@@ -52,16 +45,12 @@ static const CGFloat kViewOffsetToCenter = 20.0f;
 
 @implementation ButtonsShapesExampleViewController (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Buttons", @"Shaped Buttons" ];
-}
-
-+ (BOOL)catalogIsPresentable {
-  return YES;
-}
-
-+ (BOOL)catalogIsDebug {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Buttons", @"Shaped Buttons" ],
+    @"primaryDemo": @NO,
+    @"presentable": @YES,
+  };
 }
 
 @end

@@ -44,20 +44,12 @@ class BottomDrawerNoHeaderExample: UIViewController {
 
 extension BottomDrawerNoHeaderExample {
 
-  @objc class func catalogDescription() -> String {
-    return "Navigation Drawer"
-  }
-
-  @objc class func catalogIsPrimaryDemo() -> Bool {
-    return false
-  }
-
-  @objc class func catalogBreadcrumbs() -> [String] {
-    return ["Navigation Drawer", "Bottom Drawer No Header"]
-  }
-
-  @objc class func catalogIsPresentable() -> Bool {
-    return false
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Navigation Drawer", "Bottom Drawer No Header"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
   }
 
 }

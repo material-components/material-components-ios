@@ -107,16 +107,13 @@ class AppBarWithUITableViewController: UITableViewController {
 }
 
 extension AppBarWithUITableViewController {
-  @objc class func catalogBreadcrumbs() -> [String] {
-    return ["App Bar", "AppBar+UITableViewController"]
-  }
 
-  @objc class func catalogIsPrimaryDemo() -> Bool {
-    return true
-  }
-
-  @objc class func catalogIsPresentable() -> Bool {
-    return false
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["App Bar", "AppBar+UITableViewController"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
   }
 
   func catalogShouldHideNavigation() -> Bool {

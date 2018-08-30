@@ -439,21 +439,14 @@ extension TextFieldUnderlineSwiftExample {
 // MARK: - CatalogByConvention
 
 extension TextFieldUnderlineSwiftExample {
-  @objc class func catalogBreadcrumbs() -> [String] {
-    return ["Text Field", "Underline Style"]
-  }
 
-  @objc class func catalogDescription() -> String {
-    // swiftlint:disable:next line_length
-    return "Text fields let users enter and edit text."
-  }
-
-  @objc class func catalogIsPrimaryDemo() -> Bool {
-    return false
-  }
-
-  @objc class func catalogIsPresentable() -> Bool {
-    return false
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Text Field", "Underline Style"],
+      "description": "Text fields let users enter and edit text.",
+      "primaryDemo": false,
+      "presentable": false,
+    ]
   }
 }
 

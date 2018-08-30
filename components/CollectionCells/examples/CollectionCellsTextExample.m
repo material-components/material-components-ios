@@ -107,22 +107,15 @@ static NSString *const kExampleDetailText =
 
 #pragma mark - CatalogByConvention
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Collection Cells", @"Cell Text Example" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
-}
-
-+ (NSString *)catalogDescription {
-  return @"Material Collection Cells enables a native collection view cell to have Material "
-  "design layout and styling. It also provides editing and extensive customization "
-  "capabilities.";
-}
-
-+ (BOOL)catalogIsPresentable {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Collection Cells", @"Cell Text Example" ],
+    @"description": @"Material Collection Cells enables a native collection view cell to have "
+    @"Material design layout and styling. It also provides editing and extensive customization "
+    @"capabilities.",
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
 
 @end

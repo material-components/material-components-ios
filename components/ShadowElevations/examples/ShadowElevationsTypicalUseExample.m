@@ -131,16 +131,12 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27.0f;
 
 #pragma mark catalog by convention
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Shadow", @"Shadow Elevations" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return YES;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Shadow", @"Shadow Elevations" ],
+    @"primaryDemo": @NO,
+    @"presentable": @YES,
+  };
 }
 
 @end

@@ -89,12 +89,13 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
 
 // MARK: Catalog by convention
 extension AppBarTypicalUseSwiftExample {
-  @objc class func catalogBreadcrumbs() -> [String] {
-    return ["App Bar", "App Bar (Swift)"]
-  }
 
-  @objc class func catalogIsPrimaryDemo() -> Bool {
-    return false
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["App Bar", "App Bar (Swift)"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
   }
 
   func catalogShouldHideNavigation() -> Bool {

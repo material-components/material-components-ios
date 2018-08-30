@@ -123,11 +123,11 @@ class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDeleg
 
   // MARK: - CatalogByConvention
 
-  @objc class func catalogBreadcrumbs() -> [String] {
-    return [ "Page Control", "Swift example"]
-  }
-
-  @objc class func catalogIsPrimaryDemo() -> Bool {
-    return false
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Page Control", "Swift example"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
   }
 }

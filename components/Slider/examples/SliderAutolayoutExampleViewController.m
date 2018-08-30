@@ -74,16 +74,13 @@
 
 #pragma mark - CatalogByConvention
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Slider", @"Slider Autolayout" ];
-}
-
-+ (NSString *)catalogStoryboardName {
-  return @"SliderAutolayoutExample";
-}
-
-+ (BOOL)catalogIsPresentable {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Slider", @"Slider Autolayout" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+    @"storyboardName": @"SliderAutolayoutExample"
+  };
 }
 
 @end

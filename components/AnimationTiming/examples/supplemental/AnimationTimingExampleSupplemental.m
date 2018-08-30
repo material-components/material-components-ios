@@ -27,21 +27,14 @@ static const CGSize kAnimationCircleSize = {48.f, 48.f};
 
 @implementation AnimationTimingExample (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Animation Timing", @"Animation Timing" ];
-}
-
-+ (NSString *)catalogDescription {
-  return @"Animation timing easing curves create smooth and consistent motion. Easing curves allow"
-          " elements to move between positions or states.";
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return YES;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Animation Timing", @"Animation Timing" ],
+    @"description": @"Animation timing easing curves create smooth and consistent motion. "
+    @"Easing curves allow elements to move between positions or states.",
+    @"primaryDemo": @YES,
+    @"presentable": @YES
+  };
 }
 
 @end

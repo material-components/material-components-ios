@@ -97,12 +97,13 @@ class AppBarImagerySwiftExample: UITableViewController {
 
 // MARK: Catalog by convention
 extension AppBarImagerySwiftExample {
-  @objc class func catalogBreadcrumbs() -> [String] {
-    return ["App Bar", "Imagery (Swift)"]
-  }
 
-  @objc class func catalogIsPrimaryDemo() -> Bool {
-    return false
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["App Bar", "Imagery (Swift)"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
   }
 
   func catalogShouldHideNavigation() -> Bool {
