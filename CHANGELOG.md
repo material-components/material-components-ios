@@ -1,10 +1,32 @@
-# #develop#
+# 61.0.0
+
+In this breaking release we drop support for Xcode 8 and landed two new components in an Alpha state (not ready for clients to use yet).
 
 ## Breaking changes
 
+No longer support Xcode 8.
+
 ## New deprecations
 
+* `-buttonBar:viewForItem:layoutHints:` in `MDCButtonBarDelegate`
+
 ## New features
+
+*new* property:  `accessibilityIdentifier` in `MDCAlertAction` 
+*new* property: `accessibilityHint` in `MDCSnackbarMessageView`
+*new* property: `accessibilityLabel` in `MDCSnackbarMessageView`
+*new* property: `accessibilityHint` in `MDCSnackbarMessage`
+
+### Alpha components
+
+* ActionSheets
+
+ActionSheets present a list of actions from the bottom of the screen.
+
+* NavigationDrawer
+
+NavigationDrawer provides a container that presents from the bottom of the screen and also responds
+to drag gestures to flick to full screen, half screen or off screen.
 
 ## API changes
 
@@ -29,13 +51,6 @@
 |---|---|
 | From: | `func buttonBar(_ buttonBar: MDCButtonBar, viewForItem barButtonItem: Any!, layoutHints: Any!) -> Any!` |
 | To: | `optional func buttonBar(_ buttonBar: MDCButtonBar, viewForItem barButtonItem: Any!, layoutHints: Any!) -> Any!` |
-
-*modified* method: `-buttonBar:viewForItem:layoutHints:` in `MDCButtonBarDelegate`
-
-| Type of change: | Deprecation |
-|---|---|
-| From: | `0` |
-| To: | `1` |
 
 ### Dialogs
 
