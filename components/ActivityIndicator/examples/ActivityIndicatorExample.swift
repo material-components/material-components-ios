@@ -82,12 +82,13 @@ extension ActivityIndicatorSwiftController : MDCActivityIndicatorDelegate {
       return
    }
 
-   // MARK: Catalog by convention
-   @objc class func catalogBreadcrumbs() -> [String] {
-      return ["Activity Indicator", "Activity Indicator (Swift)"]
-   }
+  // MARK: Catalog by convention
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Activity Indicator", "Activity Indicator (Swift)"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
+  }
 
-   @objc class func catalogIsPrimaryDemo() -> Bool {
-      return false
-   }
 }

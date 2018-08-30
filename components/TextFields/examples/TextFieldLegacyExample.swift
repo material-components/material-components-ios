@@ -416,7 +416,12 @@ extension TextFieldLegacySwiftExample {
 }
 
 extension TextFieldLegacySwiftExample {
-  @objc class func catalogBreadcrumbs() -> [String] {
-    return ["Text Field", "[Legacy] Typical Use"]
+
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Text Field", "[Legacy] Typical Use"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
   }
 }

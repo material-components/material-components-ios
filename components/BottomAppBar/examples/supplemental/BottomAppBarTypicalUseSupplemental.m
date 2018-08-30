@@ -31,23 +31,17 @@ static NSString *const kCellIdentifier = @"cell";
 
 @implementation BottomAppBarTypicalUseExample (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Bottom App Bar", @"Bottom App Bar" ];
-}
-
-+ (NSString *)catalogDescription {
-  return @"A bottom app bar displays navigation and key actions at the bottom of the screen.";
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Bottom App Bar", @"Bottom App Bar" ],
+    @"description": @"A bottom app bar displays navigation and key actions at the "
+    @"bottom of the screen.",
+    @"primaryDemo": @YES,
+    @"presentable": @YES,
+  };
 }
 
 - (BOOL)catalogShouldHideNavigation {
-  return YES;
-}
-
-+ (BOOL)catalogIsPresentable {
   return YES;
 }
 

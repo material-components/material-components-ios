@@ -159,20 +159,12 @@ class DialogsAlertComparison: UIViewController {
 
 // MARK: Catalog by convention
 extension DialogsAlertComparison {
-  @objc class func catalogBreadcrumbs() -> [String] {
-    return [ "Dialogs", "Alert Comparison"]
-  }
 
-  @objc class func catalogIsPrimaryDemo() -> Bool {
-    return false
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Dialogs", "Alert Comparison"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
   }
-
-  @objc class func catalogIsPresentable() -> Bool {
-    return false
-  }
-
-  @objc class func catalogIsDebug() -> Bool {
-    return false
-  }
-
 }

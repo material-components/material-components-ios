@@ -110,19 +110,15 @@
 
 @implementation AppBarImageryExample (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"App Bar", @"Imagery" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"App Bar", @"Imagery" ],
+    @"primaryDemo": @NO,
+    @"presentable": @YES
+  };
 }
 
 - (BOOL)catalogShouldHideNavigation {
-  return YES;
-}
-
-+ (BOOL)catalogIsPresentable {
   return YES;
 }
 

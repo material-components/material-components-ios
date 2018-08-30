@@ -106,20 +106,11 @@ class DrawerContentWithScrollViewController: UIViewController,
 
 extension BottomDrawerWithScrollableContentExample {
 
-  @objc class func catalogDescription() -> String {
-    return "Navigation Drawer "
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Navigation Drawer", "Bottom Drawer Scrollable Content"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
   }
-
-  @objc class func catalogIsPrimaryDemo() -> Bool {
-    return true
-  }
-
-  @objc class func catalogBreadcrumbs() -> [String] {
-    return ["Navigation Drawer", "Bottom Drawer Scrollable Content"]
-  }
-
-  @objc class func catalogIsPresentable() -> Bool {
-    return false
-  }
-
 }

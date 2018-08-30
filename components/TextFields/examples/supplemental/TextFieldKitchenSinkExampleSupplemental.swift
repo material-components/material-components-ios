@@ -494,15 +494,12 @@ extension TextFieldKitchenSinkSwiftExample {
 }
 
 extension TextFieldKitchenSinkSwiftExample {
-  @objc class func catalogBreadcrumbs() -> [String] {
-    return ["Text Field", "Kitchen Sink"]
-  }
 
-  @objc class func catalogIsPrimaryDemo() -> Bool {
-    return false
-  }
-
-  @objc class func catalogIsPresentable() -> Bool {
-    return false
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Text Field", "Kitchen Sink"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
   }
 }

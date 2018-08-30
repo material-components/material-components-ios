@@ -111,20 +111,13 @@
 
 @implementation TabBarInterfaceBuilderExample (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Tab Bar", @"Interface Builder" ];
-}
-
-+ (NSString *)catalogStoryboardName {
-  return @"TabBarInterfaceBuilderExample";
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Tab Bar", @"Interface Builder" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+    @"storyboardName": @"TabBarInterfaceBuilderExample"
+  };
 }
 
 @end

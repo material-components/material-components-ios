@@ -21,12 +21,12 @@ import MaterialComponents.MaterialButtons_ButtonThemer
 
 class ButtonsCustomFontViewController: UIViewController {
 
-  @objc class func catalogBreadcrumbs() -> [String] {
-    return ["Buttons", "Buttons (Custom Font)"]
-  }
-
-  @objc class func catalogIsPrimaryDemo() -> Bool {
-    return false
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Buttons", "Buttons (Custom Font)"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
   }
 
   override func viewDidLoad() {

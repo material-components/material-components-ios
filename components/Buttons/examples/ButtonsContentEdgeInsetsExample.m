@@ -30,16 +30,13 @@
 
 #pragma mark - Catalog by Convention
 
-+ (NSArray<NSString *> *)catalogBreadcrumbs {
-  return @[ @"Buttons", @"Buttons (Content Edge Insets)" ];
-}
-
-+ (NSString *)catalogStoryboardName {
-  return @"ButtonsContentEdgeInsets";
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Buttons", @"Buttons (Content Edge Insets)" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+    @"storyboardName": @"ButtonsContentEdgeInsets",
+  };
 }
 
 #pragma mark - UIViewController

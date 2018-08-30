@@ -95,21 +95,14 @@ static NSString *const reuseIdentifier = @"Cell";
 
 #pragma mark - CatalogByConvention
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Feature Highlight", @"Feature Highlight" ];
-}
-
-+ (NSString *)catalogDescription {
-  return @"The Feature Highlight component is used to introduce users to new features and"
-  " functionality at contextually relevant moments.";
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return YES;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Feature Highlight", @"Feature Highlight" ],
+    @"description": @"The Feature Highlight component is used to introduce users to new features "
+    @"and functionality at contextually relevant moments.",
+    @"primaryDemo": @YES,
+    @"presentable": @YES,
+  };
 }
 
 @end
@@ -160,16 +153,12 @@ static NSString *const reuseIdentifier = @"Cell";
 
 #pragma mark - CatalogByConvention
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Feature Highlight", @"Colors" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Feature Highlight", @"Colors" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
 
 @end
@@ -195,12 +184,12 @@ static NSString *const reuseIdentifier = @"Cell";
 
 #pragma mark - CatalogByConvention
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Feature Highlight", @"Custom Fonts" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Feature Highlight", @"Custom Fonts" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
 
 @end
@@ -255,16 +244,12 @@ static NSString *const reuseIdentifier = @"Cell";
 
 #pragma mark - CatalogByConvention
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Feature Highlight", @"Shown Views" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return YES;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Feature Highlight", @"Shown Views" ],
+    @"primaryDemo": @NO,
+    @"presentable": @YES,
+  };
 }
 
 @end

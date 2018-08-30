@@ -26,20 +26,13 @@
 
 @implementation TextFieldInterfaceBuilderExample (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Text Field", @"Storyboard" ];
-}
-
-+ (NSString *)catalogStoryboardName {
-  return @"TextFieldInterfaceBuilderExample";
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Text Field", @"Storyboard" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+    @"storyboardName": @"TextFieldInterfaceBuilderExample"
+  };
 }
 
 @end
@@ -54,20 +47,13 @@
 
 @implementation TextFieldInterfaceBuilderLegacyExample (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Text Field", @"[Legacy] Storyboard" ];
-}
-
-+ (NSString *)catalogStoryboardName {
-  return @"TextFieldInterfaceBuilderLegacyExample";
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Text Field", @"[Legacy] Storyboard" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+    @"storyboardName": @"TextFieldInterfaceBuilderLegacyExample"
+  };
 }
 
 @end

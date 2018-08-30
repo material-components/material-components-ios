@@ -91,16 +91,12 @@
 
 @implementation ActionSheetTypicalUse (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Action Sheet", @"Action Sheet"];
-}
-
-+ (BOOL)catalogIsPresentable {
-  return YES;
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Action Sheet", @"Action Sheet" ],
+    @"primaryDemo": @YES,
+    @"presentable": @YES
+  };
 }
 
 @end

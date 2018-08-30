@@ -290,21 +290,14 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
 
 #pragma mark - CatalogByConvention
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Progress View", @"Progress View" ];
-}
-
-+ (NSString *)catalogDescription {
-  return @"Progress indicators display the length of a process or express an unspecified wait "
-          "time.";
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return YES;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Progress View", @"Progress View" ],
+    @"description": @"Progress indicators display the length of a process or express an "
+    @"unspecified wait time.",
+    @"primaryDemo": @YES,
+    @"presentable": @YES,
+  };
 }
 
 @end

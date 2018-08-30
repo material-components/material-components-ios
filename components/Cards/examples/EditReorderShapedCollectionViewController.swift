@@ -204,20 +204,13 @@ class EditReorderShapedCollectionViewController: UIViewController,
 }
 
 extension EditReorderShapedCollectionViewController {
-  @objc class func catalogBreadcrumbs() -> [String] {
-    return ["Cards", "Shaped Edit/Reorder"]
-  }
 
-  @objc class func catalogIsPresentable() -> Bool {
-    return false
-  }
-
-  @objc class func catalogIsDebug() -> Bool {
-    return false
-  }
-
-  @objc class func catalogIsPrimaryExample() -> Bool {
-    return true
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Cards", "Shaped Edit/Reorder"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
   }
 }
 

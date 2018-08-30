@@ -96,16 +96,13 @@ class ZShadowViewController: UIViewController {
 extension ZShadowViewController {
   
   // MARK: Catalog by convention
-  @objc class func catalogBreadcrumbs() -> [String] {
-    return ["ZShadow"]
-  }
-  
-  @objc class func catalogIsPrimaryDemo() -> Bool {
-    return true
-  }
 
-  @objc class func catalogIsPresentable() -> Bool {
-    return false
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["ZShadow"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
   }
 }
 

@@ -154,12 +154,13 @@ class AppBarModalPresentationSwiftExample: UITableViewController {
 
 // MARK: Catalog by convention
 extension AppBarModalPresentationSwiftExample {
-  @objc class func catalogBreadcrumbs() -> [String] {
-    return ["App Bar", "Modal Presentation (Swift)"]
-  }
 
-  @objc class func catalogIsPrimaryDemo() -> Bool {
-    return false
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["App Bar", "Modal Presentation (Swift)"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
   }
 
   func catalogShouldHideNavigation() -> Bool {

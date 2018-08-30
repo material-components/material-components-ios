@@ -117,16 +117,13 @@ class BottomNavigationResetExample: UIViewController {
 
 // MARK: Catalog by convention
 extension BottomNavigationResetExample {
-  class func catalogBreadcrumbs() -> [String] {
-    return ["Bottom Navigation", "Bottom Navigation Reorder (Swift)"]
-  }
 
-  class func catalogIsPrimaryDemo() -> Bool {
-    return false
-  }
-
-  @objc class func catalogIsPresentable() -> Bool {
-    return false
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Bottom Navigation", "Bottom Navigation Reorder (Swift)"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
   }
 
   class func catalogShouldHideNavigation() -> Bool {

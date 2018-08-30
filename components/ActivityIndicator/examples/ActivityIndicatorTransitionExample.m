@@ -277,16 +277,12 @@ static const NSTimeInterval kActivityIndicatorExampleAnimationDuration = 2.0 / 3
 
 #pragma mark - Catalog by Convention
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Activity Indicator", @"Activity Indicator Transition" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return YES;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Activity Indicator", @"Activity Indicator Transition" ],
+    @"primaryDemo": @NO,
+    @"presentable": @YES
+  };
 }
 
 @end

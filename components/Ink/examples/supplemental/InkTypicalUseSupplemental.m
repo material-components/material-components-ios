@@ -78,21 +78,14 @@
 
 @implementation InkTypicalUseViewController (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Ink", @"Ink" ];
-}
-
-+ (NSString *)catalogDescription {
-  return @"The Ink component provides a radial action in the form of a visual ripple of ink"
-          " expanding outward from the user's touch.";
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return YES;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Ink", @"Ink" ],
+    @"description": @"The Ink component provides a radial action in the form of a visual ripple "
+    @" of ink expanding outward from the user's touch.",
+    @"primaryDemo": @YES,
+    @"presentable": @YES,
+  };
 }
 
 @end

@@ -86,11 +86,12 @@ class BottomNavigationTypicalUseSwiftExample: UIViewController {
 
 // MARK: Catalog by convention
 extension BottomNavigationTypicalUseSwiftExample {
-  class func catalogBreadcrumbs() -> [String] {
-    return ["Bottom Navigation", "Bottom Navigation (Swift)"]
-  }
 
-  class func catalogIsPrimaryDemo() -> Bool {
-    return false
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Bottom Navigation", "Bottom Navigation (Swift)"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
   }
 }

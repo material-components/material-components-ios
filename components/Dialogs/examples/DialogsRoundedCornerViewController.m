@@ -116,17 +116,14 @@
   [self presentViewController:viewController animated:YES completion:NULL];
 }
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Dialogs", @"Dialog with Rounded Corners" ];
-}
+#pragma mark - CatalogByConvention
 
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Dialogs", @"Dialog with Rounded Corners" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
-
-+ (BOOL)catalogIsPresentable {
-  return NO;
-}
-
 
 @end

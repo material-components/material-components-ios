@@ -214,15 +214,12 @@ class ShapedCardViewController: UIViewController {
 
 @available(iOS 9.0, *)
 extension ShapedCardViewController {
-  @objc class func catalogBreadcrumbs() -> [String] {
-    return ["Cards", "Shaped Card"]
-  }
 
-  @objc class func catalogIsPresentable() -> Bool {
-    return false
-  }
-
-  @objc class func catalogIsDebug() -> Bool {
-    return false
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Cards", "Shaped Card"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
   }
 }

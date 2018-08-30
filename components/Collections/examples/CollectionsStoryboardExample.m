@@ -70,20 +70,13 @@ static NSString *const kReusableIdentifierItem = @"customCell";
 
 #pragma mark - CatalogByConvention
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Collections", @"Storyboard Example" ];
-}
-
-+ (NSString *)catalogStoryboardName {
-  return @"CollectionsStoryboardExample";
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Collections", @"Storyboard Example" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+    @"storyboardName": @"CollectionsStoryboardExample"
+  };
 }
 
 @end

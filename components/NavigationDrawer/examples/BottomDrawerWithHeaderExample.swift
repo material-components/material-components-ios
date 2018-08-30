@@ -42,20 +42,11 @@ class BottomDrawerWithHeaderExample: UIViewController {
 
 extension BottomDrawerWithHeaderExample {
 
-  @objc class func catalogDescription() -> String {
-    return "Navigation Drawer"
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Navigation Drawer", "Bottom Drawer"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
   }
-
-  @objc class func catalogIsPrimaryDemo() -> Bool {
-    return true
-  }
-
-  @objc class func catalogBreadcrumbs() -> [String] {
-    return ["Navigation Drawer", "Bottom Drawer"]
-  }
-
-  @objc class func catalogIsPresentable() -> Bool {
-    return false
-  }
-
 }

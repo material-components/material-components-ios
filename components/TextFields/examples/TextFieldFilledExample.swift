@@ -456,11 +456,12 @@ extension TextFieldFilledSwiftExample {
 }
 
 extension TextFieldFilledSwiftExample {
-  @objc class func catalogBreadcrumbs() -> [String] {
-    return ["Text Field", "Filled Text Fields"]
-  }
 
-  @objc class func catalogIsPresentable() -> Bool {
-    return true
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Text Field", "Filled Text Fields"],
+      "primaryDemo": false,
+      "presentable": true,
+    ]
   }
 }

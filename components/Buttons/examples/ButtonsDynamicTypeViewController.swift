@@ -20,12 +20,12 @@ import MaterialComponents.MaterialButtons
 
 class ButtonsDynamicTypeViewController: UIViewController {
 
-  @objc class func catalogBreadcrumbs() -> [String] {
-    return ["Buttons", "Buttons (DynamicType)"]
-  }
-
-  @objc class func catalogIsPrimaryDemo() -> Bool {
-    return false
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Buttons", "Buttons (DynamicType)"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
   }
 
   override func viewDidLoad() {
