@@ -377,6 +377,25 @@ publish_release() {
 }
 
 publish_podspec() {
+  cat <<EOL
+          |\\___/|
+         (,\\  /,)\\
+         /     /  \\       DRAGON SAYS HALT:
+        (@_^_@)/   \\      HAS THE INTERNAL CL LANDED?
+         W//W_/     \\     DO NOT PUBLISH THIS RELEASE UNTIL
+       (//) |        \\    IT HAS LANDED.
+     (/ /) _|_ /   )  \\
+   (// /) '/,_ _ _/  (~^-.
+ (( // )) ,-{        _    \`.
+(( /// ))  '/\\      /       \\
+(( ///))     \`.   {       }  \\
+ ((/ ))    .----~-.\\   \\-'    ~-__
+          ///.----..>   \\ \\_      ~--____
+           ///-._ _  _ _}    ~--------------
+EOL
+  echo "Press enter to confirm that the internal CL has landed."
+  read
+
   cd "$rootdir"
   echo "Verifying Cocoapod trunk permissions"
   pod trunk me > cocoapods_permissions.log
