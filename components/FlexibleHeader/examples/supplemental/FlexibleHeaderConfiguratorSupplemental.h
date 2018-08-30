@@ -35,7 +35,6 @@ typedef enum : NSUInteger {
   FlexibleHeaderConfiguratorFieldMinimumHeight,
   FlexibleHeaderConfiguratorFieldMaximumHeight,
   FlexibleHeaderConfiguratorFieldMinMaxHeightIncludeSafeArea,
-  FlexibleHeaderConfiguratorFieldCanAlwaysExpandToMaximumHeight,
 } FlexibleHeaderConfiguratorField;
 
 @interface FlexibleHeaderConfiguratorExample : UITableViewController
