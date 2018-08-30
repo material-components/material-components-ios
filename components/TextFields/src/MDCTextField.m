@@ -484,7 +484,11 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1.f;
 
   // Standard textRect calculation
   UIEdgeInsets textInsets = self.textInsets;
-  textRect.origin.x += textInsets.left;
+  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    textRect.origin.x += textInsets.right;
+  } else {
+    textRect.origin.x += textInsets.left;
+  }
   textRect.size.width -= textInsets.left + textInsets.right;
 
   // Adjustments for .leftView, .rightView
