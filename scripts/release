@@ -508,11 +508,16 @@ generate_release_components() {
 }
 
 generate_release_files() {
-  git diff --name-only origin/stable..$(get_latest_branch) components/
+  if [ -n "$1" ]; then
+    old_commit="$1"
+  else
+    old_commit=origin/stable
+  fi
+  git diff --name-only "$old_commit"..$(get_latest_branch) components/
 }
 
 generate_release_umbrella_headers() {
-  for file in $(generate_release_files); do
+  for file in $(generate_release_files "$@"); do
     file_dir=$(dirname $file)
     if ls "$file_dir"/Material*.h 1> /dev/null 2>&1; then
       ls "$file_dir"/Material*.h | grep -v "_table"
@@ -637,13 +642,13 @@ case "$1" in
   authors)    generate_release_authors ${@:2} ;;
   components) generate_release_components ${@:2} ;; # args: [base sha]
   diff)       generate_release_diff ${@:2} ;;
-  files)      generate_release_files ${@:2} ;;
+  files)      generate_release_files ${@:2} ;; # args: [base sha]
   headers)    generate_release_headers ${@:2} ;;
   log)        generate_release_log ${@:2} ;;
   notes)      generate_release_notes ${@:2} ;;
   source)     generate_release_source ${@:2} ;;
   stories)    generate_release_stories ${@:2} ;;
-  umbrellas)  generate_release_umbrella_headers ${@:2} ;;
+  umbrellas)  generate_release_umbrella_headers ${@:2} ;; # args: [base sha]
 
   abort)      abort_release ${@:2} ;;
 
