@@ -81,14 +81,18 @@ class ActionSheetSwiftExample: UIViewController {
         actionSheet.addAction(action)
         actionSheet.addAction(action)
         actionSheet.addAction(action)
-        actionSheet.backgroundColor = .green
+        actionSheet.backgroundColor = .lightGray
       }
     case .thirtyOptions:
       actionSheet = ActionSheetSwiftExample.thirtyOptions()
-    }
+        actionSheet.backgroundColor = .green
+      }
+
     MDCActionSheetTypographyThemer.applyTypographyScheme(typographyScheme, to: actionSheet)
     present(actionSheet, animated: true, completion: nil)
   }
+
+
 }
 
 // MARK: Catalog by Convensions

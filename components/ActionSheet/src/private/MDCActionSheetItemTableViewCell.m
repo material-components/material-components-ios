@@ -105,6 +105,7 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
   [self.contentView addSubview:_imageView];
   _imageView.translatesAutoresizingMaskIntoConstraints = NO;
   _imageView.alpha = ImageAlpha;
+  [_imageView setTintColor:[UIColor blackColor]];
   [NSLayoutConstraint constraintWithItem:_imageView
                                attribute:NSLayoutAttributeTop
                                relatedBy:NSLayoutRelationEqual
@@ -149,13 +150,14 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
   CGFloat width = CGRectGetWidth(self.contentView.frame) - leadingConstant - TitleTrailingPadding;
   _titleWidthConstraint.constant = width;
 
-  _imageView.image = _itemAction.image;
+  _imageView.image =
+      [_itemAction.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 }
 
 - (void)setAction:(MDCActionSheetAction *)action {
   _itemAction = [action copy];
   _textLabel.text = _itemAction.title;
-  _imageView.image = _itemAction.image;
+  _imageView.image = [_itemAction.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [self setNeedsLayout];
 }
 
@@ -184,6 +186,14 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
   _mdc_adjustsFontForContentSizeCategory = adjusts;
   [self updateTitleFont];
+}
+
+- (void)setActionColor:(UIColor *)actionColor {
+  _textLabel.textColor = actionColor;
+}
+
+- (UIColor *)actionColor {
+  return _textLabel.textColor;
 }
 
 @end

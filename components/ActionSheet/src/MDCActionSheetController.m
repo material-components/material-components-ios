@@ -114,6 +114,7 @@ static NSString *const ReuseIdentifier = @"BaseCell";
     _header.title = [title copy];
     _header.message = [message copy];
     self.backgroundColor = [UIColor whiteColor];
+    self.imageColor = [UIColor blackColor];
   }
 
   return self;
@@ -262,7 +263,17 @@ static NSString *const ReuseIdentifier = @"BaseCell";
   cell.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
   cell.backgroundColor = self.backgroundColor;
   cell.actionFont = self.actionFont;
+<<<<<<< HEAD
   cell.accessibilityIdentifier = action.accessibilityIdentifier;
+=======
+>>>>>>> 87c1286851dd9a04af5d722ec54e68b8c385a2cd
+  cell.actionColor = self.actionColor;
+  for (UIView *view in cell.contentView.subviews) {
+    if ([view isKindOfClass:[UIImageView class]]) {
+      UIImageView *imageView = (UIImageView *)view;
+      imageView.tintColor = self.imageColor;
+    }
+  }
   return cell;
 }
 
@@ -308,6 +319,22 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 
 - (UIColor *)backgroundColor {
   return self.view.backgroundColor;
+}
+
+- (void)setPrimaryTextColor:(UIColor *)primaryTextColor {
+  _header.primaryColor = primaryTextColor;
+}
+
+- (UIColor *)primaryTextColor {
+  return _header.primaryColor;
+}
+
+- (void)setSecondaryTextColor:(UIColor *)secondaryTextColor {
+  _header.secondaryColor = secondaryTextColor;
+}
+
+- (UIColor *)secondaryTextColor {
+  return _header.secondaryColor;
 }
 
 #pragma mark - Dynamic Type
