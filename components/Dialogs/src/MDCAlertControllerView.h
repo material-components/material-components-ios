@@ -26,6 +26,8 @@
 @property(nonatomic, strong, nullable) UIColor *buttonColor UI_APPEARANCE_SELECTOR;
 @property(nonatomic, strong, nullable) UIColor *buttonInkColor UI_APPEARANCE_SELECTOR;
 
+@property(nonatomic, assign) CGFloat cornerRadius UI_APPEARANCE_SELECTOR;
+
 /*
  Indicates whether the view's contents should automatically update their font when the device’s
  UIContentSizeCategory changes.
