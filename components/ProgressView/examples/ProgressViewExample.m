@@ -133,8 +133,8 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
 }
 
 - (void)positionContainer {
-  CGFloat originX = self.view.bounds.origin.x + self.view.layoutMargins.left;
-  CGFloat originY = self.view.bounds.origin.y + self.view.layoutMargins.top;
+  CGFloat originX = CGRectGetMinX(self.view.bounds) + self.view.layoutMargins.left;
+  CGFloat originY = CGRectGetMinY(self.view.bounds) + self.view.layoutMargins.top;
   CGFloat width = self.view.bounds.size.width
       - (self.view.layoutMargins.left + self.view.layoutMargins.right);
   CGFloat height = self.view.bounds.size.height
