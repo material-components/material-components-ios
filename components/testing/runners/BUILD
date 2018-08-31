@@ -19,15 +19,10 @@ ios_test_runner(
     visibility = ["//visibility:public"],
 )
 ios_test_runner(
-    name = "DYNAMIC_RUNNER",
-    device_type = select({ ":xcode8_3_3": "iPad 2", ":xcode_9_0": "iPhone2017-C", "//conditions:default": "iPhone X" }),
-    os_version = select({ ":xcode8_3_3": "8.4", "//conditions:default": "11.0" }),
+    name = "IPHONE_X_IN_11_0",
+    device_type = select({":xcode_9_0": "iPhone2017-C", "//conditions:default": "iPhone X" }),
+    os_version = "11.0",
     visibility = ["//visibility:public"],
-)
-
-native.config_setting(
-    name = "xcode8_3_3",
-    values = {"xcode_version": "8.3.3"},
 )
 
 native.config_setting(
