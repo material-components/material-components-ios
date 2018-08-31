@@ -16,6 +16,8 @@
 
 import UIKit
 import MaterialComponentsAlpha.MaterialActionSheet
+import MaterialComponentsAlpha.MaterialActionSheet_ColorThemer
+import MaterialComponentsAlpha.MaterialActionSheet_TypographyThemer
 
 class ActionSheetSwiftExample: UIViewController {
 
@@ -86,6 +88,7 @@ class ActionSheetSwiftExample: UIViewController {
     case .thirtyOptions:
       actionSheet = ActionSheetSwiftExample.thirtyOptions()
     }
+    MDCActionSheetColorThemer.applySemanticColorScheme(colorScheme, to: actionSheet)
     MDCActionSheetTypographyThemer.applyTypographyScheme(typographyScheme, to: actionSheet)
     present(actionSheet, animated: true, completion: nil)
   }
