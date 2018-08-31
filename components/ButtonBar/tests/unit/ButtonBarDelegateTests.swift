@@ -18,9 +18,9 @@ import XCTest
 import MaterialComponents.MaterialButtonBar
 
 private class ButtonBarDelegate: NSObject, MDCButtonBarDelegate {
-  var didSetNeedsLayout = false
-  @objc func buttonBarDidSetNeedsLayout(_ buttonBar: MDCButtonBar) {
-    didSetNeedsLayout = true
+  var didInvalidateIntrinsicContentSize = false
+  func buttonBarDidInvalidateIntrinsicContentSize(_ buttonBar: MDCButtonBar) {
+    didInvalidateIntrinsicContentSize = true
   }
 }
 
@@ -40,7 +40,7 @@ class ButtonBarDelegateTests: XCTestCase {
     // Given setUp conditions
 
     // Then
-    XCTAssertFalse(delegate.didSetNeedsLayout)
+    XCTAssertFalse(delegate.didInvalidateIntrinsicContentSize)
   }
 
   func testDelegateNotInvokedAfterItemsSetToEqualArrayOfItems() {
@@ -48,13 +48,13 @@ class ButtonBarDelegateTests: XCTestCase {
     let item = UIBarButtonItem(title: "LEFT", style: .plain, target: nil, action: nil)
     buttonBar.items = [item]
     // Forcefully clear the flag
-    delegate.didSetNeedsLayout = false
+    delegate.didInvalidateIntrinsicContentSize = false
 
     // When
     buttonBar.items = [item]
 
     // Then
-    XCTAssertFalse(delegate.didSetNeedsLayout)
+    XCTAssertFalse(delegate.didInvalidateIntrinsicContentSize)
   }
 
   func testDelegateInvokedAfterItemsSet() {
@@ -65,7 +65,7 @@ class ButtonBarDelegateTests: XCTestCase {
     buttonBar.items = [item]
 
     // Then
-    XCTAssertTrue(delegate.didSetNeedsLayout)
+    XCTAssertTrue(delegate.didInvalidateIntrinsicContentSize)
   }
 
   func testDelegateInvokedAfterItemsChange() {
@@ -73,13 +73,13 @@ class ButtonBarDelegateTests: XCTestCase {
     let item = UIBarButtonItem(title: "LEFT", style: .plain, target: nil, action: nil)
     buttonBar.items = [item]
     // Forcefully clear the flag
-    delegate.didSetNeedsLayout = false
+    delegate.didInvalidateIntrinsicContentSize = false
 
     // When
     buttonBar.items = [UIBarButtonItem(title: "RIGHT", style: .plain, target: nil, action: nil)]
 
     // Then
-    XCTAssertTrue(delegate.didSetNeedsLayout)
+    XCTAssertTrue(delegate.didInvalidateIntrinsicContentSize)
   }
 
   func testDelegateInvokedAfterTitleChanges() {
@@ -87,13 +87,13 @@ class ButtonBarDelegateTests: XCTestCase {
     let item = UIBarButtonItem(title: "LEFT", style: .plain, target: nil, action: nil)
     buttonBar.items = [item]
     // Forcefully clear the flag
-    delegate.didSetNeedsLayout = false
+    delegate.didInvalidateIntrinsicContentSize = false
 
     // When
     item.title = "New title"
 
     // Then
-    XCTAssertTrue(delegate.didSetNeedsLayout)
+    XCTAssertTrue(delegate.didInvalidateIntrinsicContentSize)
   }
 
   func testDelegateInvokedAfterImageChanges() {
@@ -101,13 +101,13 @@ class ButtonBarDelegateTests: XCTestCase {
     let item = UIBarButtonItem(title: "LEFT", style: .plain, target: nil, action: nil)
     buttonBar.items = [item]
     // Forcefully clear the flag
-    delegate.didSetNeedsLayout = false
+    delegate.didInvalidateIntrinsicContentSize = false
 
     // When
     item.image = createImage(colored: .blue)
 
     // Then
-    XCTAssertTrue(delegate.didSetNeedsLayout)
+    XCTAssertTrue(delegate.didInvalidateIntrinsicContentSize)
   }
 
   func testDelegateInvokedAfterTitleFontChanges() {
@@ -115,28 +115,28 @@ class ButtonBarDelegateTests: XCTestCase {
     let item = UIBarButtonItem(title: "LEFT", style: .plain, target: nil, action: nil)
     buttonBar.items = [item]
     // Forcefully clear the flag
-    delegate.didSetNeedsLayout = false
+    delegate.didInvalidateIntrinsicContentSize = false
 
     // When
     buttonBar.setButtonsTitleFont(UIFont.systemFont(ofSize: 12), for: .normal)
 
     // Then
-    XCTAssertTrue(delegate.didSetNeedsLayout)
+    XCTAssertTrue(delegate.didInvalidateIntrinsicContentSize)
   }
 
-  func testDelegateInvokedAfterTitleBaselineChanges() {
+  func testDelegateNotInvokedAfterTitleBaselineChanges() {
     // Given
     let item = UIBarButtonItem(title: "LEFT", style: .plain, target: nil, action: nil)
     buttonBar.items = [item]
     buttonBar.buttonTitleBaseline = 0
     // Forcefully clear the flag
-    delegate.didSetNeedsLayout = false
+    delegate.didInvalidateIntrinsicContentSize = false
 
     // When
     buttonBar.buttonTitleBaseline = 5
 
     // Then
-    XCTAssertTrue(delegate.didSetNeedsLayout)
+    XCTAssertFalse(delegate.didInvalidateIntrinsicContentSize)
   }
 
   // Create a solid color image for testing purposes.
