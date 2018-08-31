@@ -82,16 +82,15 @@ class ActionSheetTest: XCTestCase {
     
   }
 
-  func testColors() {
+  func testColorThemer() {
     // Given
     let titleTest = "Title"
 
     // When
-    actionSheet.title = testStringOne
+    actionSheet.title = titleTest
 
     // Then
-    let titleLabel: UILabel? = getLabel(with: testStringOne)
-    if let title = titleLabel {
+    if let title = getLabel(with: titleTest) {
       XCTAssertEqual(title.textColor, .black)
     } else {
       XCTFail("No title label")
@@ -104,8 +103,7 @@ class ActionSheetTest: XCTestCase {
     actionSheet.message = messageTest
 
     // Then
-    let messageLabel: UILabel? = getLabel(with: messageTest)
-    if let message = messageLabel {
+    if let message = getLabel(with: messageTest) {
       XCTAssertEqual(message.textColor, .black)
     } else {
       XCTFail("No message label was created")
@@ -114,9 +112,27 @@ class ActionSheetTest: XCTestCase {
     // Given
     actionSheet.message = nil
     var colorScheme = MDCSemanticColorScheme()
-    colorScheme.primaryColor
+    colorScheme.onSurfaceColor = .blue
 
     // When
+    MDCActionSheetColorThemer.applySemanticColorScheme(colorScheme, to: actionSheet)
+
+    // Then
+    if let title = getLabel(with: titleTest) {
+      XCTAssertEqual(title.textColor, colorScheme.onSurfaceColor.withAlphaComponent(0.6))
+    } else {
+      XCTFail("No title label")
+    }
+
+    // Given
+    actionSheet.message = messageTest
+    if let title = getLabel(with: titleTest), let message = getLabel(with: messageTest) {
+      XCTAssertEqual(title.textColor, colorScheme.onSurfaceColor.withAlphaComponent(0.87))
+      XCTAssertEqual(message.textColor, colorScheme.onSurfaceColor.withAlphaComponent(0.6))
+    } else {
+      XCTFail("One of the labels wasn't set correctly")
+    }
+
   }
 
   func getLabel(with text: String) -> UILabel? {
@@ -132,16 +148,5 @@ class ActionSheetTest: XCTestCase {
     } else {
       return nil
     }
-  }
-
-  func testColorThemer() {
-    // Given
-    var colorThemer = MDCActionSheetColorThemer()
-
-    // When
-    colorThemer.onSurface = .blue
-
-    // Then
-
   }
 }
