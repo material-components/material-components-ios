@@ -235,7 +235,7 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
   }
 
   // Bound the status bar range to [0..._originalStatusBarHeight].
-  CGFloat statusOffsetY = MIN(_originalStatusBarHeight, offset);
+  CGFloat statusOffsetY = MAX(0, MIN(_originalStatusBarHeight, offset));
 
   // Adjust the frame of the status bar.
   if (statusOffsetY > 0) {
