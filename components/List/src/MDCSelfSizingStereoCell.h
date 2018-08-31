@@ -26,8 +26,8 @@
  The cell is intended to be used with a UICollectionViewFlowLayout with an estimatedItemSize.
  Setting estimatedItemSize on the layout tells the collection view and the layout to query the cell
  for a size that best fits the estimated size. The cell lays out its contents according to the width
- provided in the estimated size and then calculates a height based off of its laid out contents.
- For any given width there is only one correct height.
+ provided in the estimated size and then calculates a height based off the layout. For any given
+ width there is only one correct height.
 
  The client is expected to configure the exposed subviews in any way they like from within
  `-collectionView:cellForItemAtIndexPath:`. If changes that might have ramifications to the cell's
@@ -51,12 +51,14 @@ __attribute__((objc_subclassing_restricted))
 @property (nonatomic, strong, readonly) UIImageView *trailingImageView;
 
 /**
- The UILabel responsible for displaying the title text.
+ The UILabel responsible for displaying the title text. By default, `numberOfLines` is set to 0 so
+ the label wraps and the self-sizing capabilities of the cell are best utilized.
  */
 @property (nonatomic, strong, readonly) UILabel *titleLabel;
 
 /**
- The UILabel responsible for displaying the detail text.
+ The UILabel responsible for displaying the detail text. By default, `numberOfLines` is set to 0 so
+ the label wraps and the self-sizing capabilities of the cell are best utilized.
  */
 @property (nonatomic, strong, readonly) UILabel *detailLabel;
 
