@@ -34,8 +34,8 @@
 
 @property (nonatomic, strong, nonnull) UIFont *messageFont;
 
-@property(nonatomic, strong, nullable) UIColor *titleColor;
+@property(nonatomic, strong, nullable) UIColor *primaryColor;
 
-@property(nonatomic, strong, nullable) UIColor *messageColor;
+@property(nonatomic, strong, nullable) UIColor *secondaryColor;
 
 @end

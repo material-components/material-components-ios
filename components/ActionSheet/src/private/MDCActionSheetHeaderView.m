@@ -201,20 +201,28 @@ static const CGFloat MiddlePadding = 8.f;
   [self updateFonts];
 }
 
-- (void)setTitleColor:(UIColor *)titleColor {
-  _titleLabel.textColor = titleColor;
+- (void)setPrimaryColor:(UIColor *)primaryColor {
+  if (_messageLabel.text && ![_messageLabel.text isEqualToString:@""]) {
+    _messageLabel.textColor = primaryColor;
+  } else {
+    _titleLabel.textColor = primaryColor;
+  }
 }
 
-- (UIColor *)titleColor {
+- (UIColor *)primaryColor {
+  if (_messageLabel.text && ![_messageLabel.text isEqualToString:@""]) {
+    return _messageLabel.textColor;
+  } else {
+    return _titleLabel.textColor;
+  }
+}
+
+- (void)setSecondaryColor:(UIColor *)secondaryColor {
+  _titleLabel.textColor = secondaryColor;
+}
+
+- (UIColor *)secondaryColor {
   return _titleLabel.textColor;
-}
-
-- (void)setMessageColor:(UIColor *)messageColor {
-  _messageLabel.textColor = messageColor;
-}
-
-- (UIColor *)messageColor {
-  return _messageLabel.textColor;
 }
 
 @end

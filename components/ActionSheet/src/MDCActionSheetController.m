@@ -318,20 +318,20 @@ static NSString *const ReuseIdentifier = @"BaseCell";
   return self.view.backgroundColor;
 }
 
-- (void)setTitleColor:(UIColor *)titleColor {
-  _header.titleColor = titleColor;
+- (void)setPrimaryTextColor:(UIColor *)titleColor {
+  _header.primaryColor = titleColor;
 }
 
-- (UIColor *)titleColor {
-  return _header.titleColor;
+- (UIColor *)primaryTextColor {
+  return _header.primaryColor;
 }
 
-- (void)setMessageColor:(UIColor *)messageColor {
-  _header.messageColor = messageColor;
+- (void)setSecondaryTextColor:(UIColor *)messageColor {
+  _header.secondaryColor = messageColor;
 }
 
-- (UIColor *)messageColor {
-  return _header.messageColor;
+- (UIColor *)secondaryTextColor {
+  return _header.secondaryColor;
 }
 
 #pragma mark - Dynamic Type

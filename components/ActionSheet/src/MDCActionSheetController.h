@@ -148,12 +148,12 @@ __attribute__((objc_subclassing_restricted))
 /**
  The color applied to the title of Alert Controller.
  */
-@property(nonatomic, strong, nullable) UIColor *titleColor;
+@property(nonatomic, strong, nullable) UIColor *primaryTextColor;
 
 /**
  The color applied to the message of Alert Controller.
  */
-@property(nonatomic, strong, nullable) UIColor *messageColor;
+@property(nonatomic, strong, nullable) UIColor *secondaryTextColor;
 
 /**
  The color applied to the item list labels of Alert Controller.
