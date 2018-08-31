@@ -281,7 +281,7 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
   id item = self.sections[indexPath.section][indexPath.row];
   if ([item isKindOfClass:[FlexibleHeaderConfiguratorControlItem class]]) {
     FlexibleHeaderConfiguratorControlItem *fieldItem =
-    (FlexibleHeaderConfiguratorControlItem *)item;
+        (FlexibleHeaderConfiguratorControlItem *)item;
     if (fieldItem.controlType == FlexibleHeaderConfiguratorControlTypeButton) {
       [self field:(FlexibleHeaderConfiguratorField)fieldItem.field didChangeValue:nil];
       [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -293,7 +293,7 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
   id item = self.sections[indexPath.section][indexPath.row];
   if ([item isKindOfClass:[FlexibleHeaderConfiguratorControlItem class]]) {
     FlexibleHeaderConfiguratorControlItem *fieldItem =
-    (FlexibleHeaderConfiguratorControlItem *)item;
+        (FlexibleHeaderConfiguratorControlItem *)item;
     if (fieldItem.controlType == FlexibleHeaderConfiguratorControlTypeButton) {
       return YES;
     }

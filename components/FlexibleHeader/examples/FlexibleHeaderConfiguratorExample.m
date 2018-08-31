@@ -95,7 +95,7 @@
       break;
     }
 
-    // Header height
+      // Header height
 
     case FlexibleHeaderConfiguratorFieldMinimumHeight:
       headerView.minimumHeight = [self heightDenormalized:[value floatValue]];
