@@ -17,8 +17,9 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialFlexibleHeader.h"
-#import "MaterialFlexibleHeader+CanAlwaysExpandToMaximumHeight.h"
 #import "supplemental/FlexibleHeaderConfiguratorSupplemental.h"
+
+#import "MaterialFlexibleHeader+CanAlwaysExpandToMaximumHeight.h"
 
 @interface FlexibleHeaderConfiguratorExample ()
 @property(nonatomic) BOOL overrideStatusBarHidden;

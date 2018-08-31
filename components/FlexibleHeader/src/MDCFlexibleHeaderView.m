@@ -1139,8 +1139,8 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
     if (_canOverExtend && !UIAccessibilityIsVoiceOverRunning()) {
       bounds.size.height = MAX(self.computedMinimumHeight, headerHeight);
     } else {
-      bounds.size.height = MAX(self.computedMinimumHeight,
-                               MIN(self.computedMaximumHeight, headerHeight));
+      bounds.size.height =
+          MAX(self.computedMinimumHeight, MIN(self.computedMaximumHeight, headerHeight));
     }
     self.bounds = bounds;
   }
@@ -1171,11 +1171,12 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
     CGFloat additionalHeightInjection = MAX(0, -_shiftAccumulator);
 
     if (_canOverExtend && !UIAccessibilityIsVoiceOverRunning()) {
-      bounds.size.height = MAX(self.computedMinimumHeight, headerHeight) + additionalHeightInjection;
+      bounds.size.height =
+          MAX(self.computedMinimumHeight, headerHeight) + additionalHeightInjection;
     } else {
       bounds.size.height =
-      (MAX(self.computedMinimumHeight, MIN(self.computedMaximumHeight, headerHeight))
-       + additionalHeightInjection);
+          (MAX(self.computedMinimumHeight, MIN(self.computedMaximumHeight, headerHeight)) +
+           additionalHeightInjection);
     }
 
     // Avoid excessive writes - the default behavior of the flexible header has minimal height
