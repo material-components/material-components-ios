@@ -113,6 +113,7 @@ static const CGFloat MiddlePadding = 8.f;
 
 - (void)setTitle:(NSString *)title {
   _titleLabel.text = title;
+  [self styleTitleAndMessage];
   [self setNeedsLayout];
 }
 
@@ -122,14 +123,21 @@ static const CGFloat MiddlePadding = 8.f;
 
 - (void)setMessage:(NSString *)message {
   _messageLabel.text = message;
-  // If message is empty or nil then the title label's alpha value should be lighter, if there is both
-  // then the title label's alpha should be darker.
+  [self styleTitleAndMessage];
+  [self setNeedsLayout];
+}
+
+- (void)styleTitleAndMessage {
+  // If message is empty or nil then the title label's alpha value should be lighter and primary
+  // color, if there is both then the title label's alpha should be darker secondary color.
   if (self.message && ![self.message isEqualToString:@""]) {
     _titleLabel.alpha = TitleLabelAlpha;
+    _messageLabel.textColor = self.primaryColor;
+    _titleLabel.textColor = self.secondaryColor;
   } else {
     _titleLabel.alpha = MessageLabelAlpha;
+    _titleLabel.textColor = self.primaryColor;
   }
-  [self setNeedsLayout];
 }
 
 - (NSString *)message {

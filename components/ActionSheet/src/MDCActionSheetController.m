@@ -318,16 +318,16 @@ static NSString *const ReuseIdentifier = @"BaseCell";
   return self.view.backgroundColor;
 }
 
-- (void)setPrimaryTextColor:(UIColor *)titleColor {
-  _header.primaryColor = titleColor;
+- (void)setPrimaryTextColor:(UIColor *)primaryTextColor {
+  _header.primaryColor = primaryTextColor;
 }
 
 - (UIColor *)primaryTextColor {
   return _header.primaryColor;
 }
 
-- (void)setSecondaryTextColor:(UIColor *)messageColor {
-  _header.secondaryColor = messageColor;
+- (void)setSecondaryTextColor:(UIColor *)secondaryTextColor {
+  _header.secondaryColor = secondaryTextColor;
 }
 
 - (UIColor *)secondaryTextColor {
