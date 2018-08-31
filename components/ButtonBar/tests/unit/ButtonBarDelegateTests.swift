@@ -19,7 +19,7 @@ import MaterialComponents.MaterialButtonBar
 
 private class ButtonBarDelegate: NSObject, MDCButtonBarDelegate {
   var didSetNeedsLayout = false
-  func buttonBarDidSetNeedsLayout(_ buttonBar: MDCButtonBar) {
+  @objc func buttonBarDidSetNeedsLayout(_ buttonBar: MDCButtonBar) {
     didSetNeedsLayout = true
   }
 }
@@ -36,14 +36,14 @@ class ButtonBarDelegateTests: XCTestCase {
     buttonBar.delegate = delegate
   }
 
-  func testNotInvokedDuringInitialization() {
+  func testDelegateNotInvokedDuringInitialization() {
     // Given setUp conditions
 
     // Then
     XCTAssertFalse(delegate.didSetNeedsLayout)
   }
 
-  func testNotInvokedAfterItemsSetToEqualArrayOfItems() {
+  func testDelegateNotInvokedAfterItemsSetToEqualArrayOfItems() {
     // Given
     let item = UIBarButtonItem(title: "LEFT", style: .plain, target: nil, action: nil)
     buttonBar.items = [item]
@@ -57,7 +57,7 @@ class ButtonBarDelegateTests: XCTestCase {
     XCTAssertFalse(delegate.didSetNeedsLayout)
   }
 
-  func testInvokedAfterItemsSet() {
+  func testDelegateInvokedAfterItemsSet() {
     // Given
     let item = UIBarButtonItem(title: "LEFT", style: .plain, target: nil, action: nil)
 
@@ -68,7 +68,7 @@ class ButtonBarDelegateTests: XCTestCase {
     XCTAssertTrue(delegate.didSetNeedsLayout)
   }
 
-  func testInvokedAfterItemsChange() {
+  func testDelegateInvokedAfterItemsChange() {
     // Given
     let item = UIBarButtonItem(title: "LEFT", style: .plain, target: nil, action: nil)
     buttonBar.items = [item]
@@ -82,7 +82,7 @@ class ButtonBarDelegateTests: XCTestCase {
     XCTAssertTrue(delegate.didSetNeedsLayout)
   }
 
-  func testInvokedAfterTitleChanges() {
+  func testDelegateInvokedAfterTitleChanges() {
     // Given
     let item = UIBarButtonItem(title: "LEFT", style: .plain, target: nil, action: nil)
     buttonBar.items = [item]
@@ -96,7 +96,7 @@ class ButtonBarDelegateTests: XCTestCase {
     XCTAssertTrue(delegate.didSetNeedsLayout)
   }
 
-  func testInvokedAfterImageChanges() {
+  func testDelegateInvokedAfterImageChanges() {
     // Given
     let item = UIBarButtonItem(title: "LEFT", style: .plain, target: nil, action: nil)
     buttonBar.items = [item]
@@ -110,7 +110,7 @@ class ButtonBarDelegateTests: XCTestCase {
     XCTAssertTrue(delegate.didSetNeedsLayout)
   }
 
-  func testInvokedAfterTitleFontChanges() {
+  func testDelegateInvokedAfterTitleFontChanges() {
     // Given
     let item = UIBarButtonItem(title: "LEFT", style: .plain, target: nil, action: nil)
     buttonBar.items = [item]
@@ -124,7 +124,7 @@ class ButtonBarDelegateTests: XCTestCase {
     XCTAssertTrue(delegate.didSetNeedsLayout)
   }
 
-  func testInvokedAfterTitleBaselineChanges() {
+  func testDelegateInvokedAfterTitleBaselineChanges() {
     // Given
     let item = UIBarButtonItem(title: "LEFT", style: .plain, target: nil, action: nil)
     buttonBar.items = [item]
