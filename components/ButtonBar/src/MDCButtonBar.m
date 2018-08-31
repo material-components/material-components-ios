@@ -103,6 +103,19 @@ static NSString *const kEnabledSelector = @"enabled";
 
   for (UIView *view in positionedButtonViews) {
     CGFloat width = view.frame.size.width;
+
+    // There's a finite number of buttons that can reasonably be shown in a button bar, so this
+    // linear-time lookup cost is minimal.
+    NSUInteger index = [_buttonViews indexOfObject:view];
+    if (index < [_items count]) {
+      UIBarButtonItem *item = _items[index];
+      if (item.width > 0) {
+        width = item.width;
+      } else {
+        width = [view sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)].width;
+      }
+    }
+
     switch (self.mdf_effectiveUserInterfaceLayoutDirection) {
       case UIUserInterfaceLayoutDirectionLeftToRight:
         break;
@@ -139,6 +152,10 @@ static NSString *const kEnabledSelector = @"enabled";
   return [self sizeThatFits:size shouldLayout:NO];
 }
 
+- (CGSize)intrinsicContentSize {
+  return [self sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX) shouldLayout:NO];
+}
+
 - (void)layoutSubviews {
   [super layoutSubviews];
 
@@ -162,6 +179,14 @@ static NSString *const kEnabledSelector = @"enabled";
     return;
   } else {
     [self reloadButtonViews];
+  }
+}
+
+- (void)invalidateIntrinsicContentSize {
+  [super invalidateIntrinsicContentSize];
+
+  if ([self.delegate respondsToSelector:@selector(buttonBarDidInvalidateIntrinsicContentSize:)]) {
+    [self.delegate buttonBarDidInvalidateIntrinsicContentSize:self];
   }
 }
 
@@ -259,6 +284,7 @@ static NSString *const kEnabledSelector = @"enabled";
 
         } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(image))]) {
           [button setImage:newValue forState:UIControlStateNormal];
+          [self invalidateIntrinsicContentSize];
 
         } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(tag))]) {
           button.tag = [newValue integerValue];
@@ -268,6 +294,7 @@ static NSString *const kEnabledSelector = @"enabled";
 
         } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(title))]) {
           [button setTitle:newValue forState:UIControlStateNormal];
+          [self invalidateIntrinsicContentSize];
 
         } else {
           NSLog(@"Unknown key path notification received by %@ for %@.",
@@ -434,6 +461,7 @@ static NSString *const kEnabledSelector = @"enabled";
         }
         button.frame = frame;
 
+        [self invalidateIntrinsicContentSize];
         [self setNeedsLayout];
       }
     }
@@ -491,6 +519,7 @@ static NSString *const kEnabledSelector = @"enabled";
   }
   _buttonViews = [self viewsForItems:_items];
 
+  [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];
 }
 
