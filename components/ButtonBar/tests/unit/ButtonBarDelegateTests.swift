@@ -29,6 +29,8 @@ class ButtonBarDelegateTests: XCTestCase {
   private var delegate: ButtonBarDelegate!
 
   override func setUp() {
+    super.setUp()
+
     buttonBar = MDCButtonBar()
     delegate = ButtonBarDelegate()
     buttonBar.delegate = delegate

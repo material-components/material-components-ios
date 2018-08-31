@@ -59,7 +59,7 @@ IB_DESIGNABLE
 /**
  The delegate will be informed of events related to the layout of the button bar.
  */
-@property(nonatomic, weak) id<MDCButtonBarDelegate> delegate;
+@property(nonatomic, weak, nullable) id<MDCButtonBarDelegate> delegate;
 
 #pragma mark Button Items
 
