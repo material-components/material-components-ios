@@ -133,6 +133,11 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
 
   [self.fhvc.headerView hideViewWhenShifted:self.titleLabel];
 
+  id (^buttonItem)(NSString *, FlexibleHeaderConfiguratorField) = ^(
+      NSString *title, FlexibleHeaderConfiguratorField field) {
+    FlexibleHeaderConfiguratorControlType type = FlexibleHeaderConfiguratorControlTypeButton;
+    return [FlexibleHeaderConfiguratorControlItem itemWithTitle:title controlType:type field:field];
+  };
   id (^switchItem)(NSString *, FlexibleHeaderConfiguratorField) = ^(
       NSString *title, FlexibleHeaderConfiguratorField field) {
     FlexibleHeaderConfiguratorControlType type = FlexibleHeaderConfiguratorControlTypeSwitch;
@@ -166,7 +171,9 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
     switchItem(@"Enabled", FlexibleHeaderConfiguratorFieldShiftBehaviorEnabled),
     switchItem(@"Enabled with status bar",
                FlexibleHeaderConfiguratorFieldShiftBehaviorEnabledWithStatusBar),
-    switchItem(@"Header content is important", FlexibleHeaderConfiguratorFieldContentImportance)
+    switchItem(@"Header content is important", FlexibleHeaderConfiguratorFieldContentImportance),
+    buttonItem(@"Shift header off-screen", FlexibleHeaderConfiguratorFieldShiftOffscreen),
+    buttonItem(@"Shift header on-screen", FlexibleHeaderConfiguratorFieldShiftOnscreen)
   ]);
 
   createSection(@"Header height", @[
@@ -190,6 +197,9 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
 
 - (UIControl *)controlForControlType:(FlexibleHeaderConfiguratorControlType)controlType {
   switch (controlType) {
+    case FlexibleHeaderConfiguratorControlTypeButton:
+      return nil;
+
     case FlexibleHeaderConfiguratorControlTypeSwitch:
       return [[UISwitch alloc] init];
 
@@ -267,7 +277,27 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
   return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+  id item = self.sections[indexPath.section][indexPath.row];
+  if ([item isKindOfClass:[FlexibleHeaderConfiguratorControlItem class]]) {
+    FlexibleHeaderConfiguratorControlItem *fieldItem =
+    (FlexibleHeaderConfiguratorControlItem *)item;
+    if (fieldItem.controlType == FlexibleHeaderConfiguratorControlTypeButton) {
+      [self field:(FlexibleHeaderConfiguratorField)fieldItem.field didChangeValue:nil];
+      [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
+  }
+}
+
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+  id item = self.sections[indexPath.section][indexPath.row];
+  if ([item isKindOfClass:[FlexibleHeaderConfiguratorControlItem class]]) {
+    FlexibleHeaderConfiguratorControlItem *fieldItem =
+    (FlexibleHeaderConfiguratorControlItem *)item;
+    if (fieldItem.controlType == FlexibleHeaderConfiguratorControlTypeButton) {
+      return YES;
+    }
+  }
   return NO;
 }
 
