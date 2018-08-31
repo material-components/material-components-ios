@@ -171,7 +171,7 @@ if let diffFilename = diffFilename {
 ```
 
 \(commentIdentifier)
-<!-- Hunk: \(file) \(suggestedHunk.afterRange.lowerBound),\(suggestedHunk.afterRange.count) -->
+<!-- File: \(file) -->
 """
       if existingComments.contains(desiredBody) {
         print("Already posted comment, skipping...")
