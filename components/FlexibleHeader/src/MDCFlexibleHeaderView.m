@@ -991,8 +991,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 #pragma mark Layout
 
 - (CGFloat)fhv_accumulatorMin {
-  CGFloat offsetWithoutInset = [self fhv_contentOffsetWithoutInjectedTopInset];
-  CGFloat headerHeight = -offsetWithoutInset;
+  CGFloat headerHeight = -[self fhv_contentOffsetWithoutInjectedTopInset];
 
   CGFloat lowerBound;
 
