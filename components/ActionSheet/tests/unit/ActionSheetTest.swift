@@ -16,6 +16,9 @@
 
 import XCTest
 import MaterialComponentsAlpha.MaterialActionSheet
+import MaterialComponentsAlpha.MaterialActionSheet_ColorThemer
+import MaterialComponentsAlpha.MaterialActionSheet_TypographyThemer
+import MaterialComponents.MaterialColorScheme
 
 class ActionSheetTest: XCTestCase {
 
@@ -77,5 +80,68 @@ class ActionSheetTest: XCTestCase {
       XCTFail("No table was loaded")
     }
     
+  }
+
+  func testColors() {
+    // Given
+    let titleTest = "Title"
+
+    // When
+    actionSheet.title = testStringOne
+
+    // Then
+    let titleLabel: UILabel? = getLabel(with: testStringOne)
+    if let title = titleLabel {
+      XCTAssertEqual(title.textColor, .black)
+    } else {
+      XCTFail("No title label")
+    }
+
+    // Given
+    let messageTest = "Message"
+
+    // When
+    actionSheet.message = messageTest
+
+    // Then
+    let messageLabel: UILabel? = getLabel(with: messageTest)
+    if let message = messageLabel {
+      XCTAssertEqual(message.textColor, .black)
+    } else {
+      XCTFail("No message label was created")
+    }
+
+    // Given
+    actionSheet.message = nil
+    var colorScheme = MDCSemanticColorScheme()
+    colorScheme.primaryColor
+
+    // When
+  }
+
+  func getLabel(with text: String) -> UILabel? {
+    let headerArray = actionSheet.view.subviews.filter{ !($0 is UITableView) }
+    if let header = headerArray.first {
+      var labels: [UILabel] = header.subviews.flatMap{ $0 as UILabel }
+                                             .filter{ $0.text = text }
+      if let label = labels.first {
+        return label
+      } else {
+        return nil
+      }
+    } else {
+      return nil
+    }
+  }
+
+  func testColorThemer() {
+    // Given
+    var colorThemer = MDCActionSheetColorThemer()
+
+    // When
+    colorThemer.onSurface = .blue
+
+    // Then
+
   }
 }
