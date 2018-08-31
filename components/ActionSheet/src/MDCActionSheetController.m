@@ -263,7 +263,10 @@ static NSString *const ReuseIdentifier = @"BaseCell";
   cell.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
   cell.backgroundColor = self.backgroundColor;
   cell.actionFont = self.actionFont;
+<<<<<<< HEAD
   cell.accessibilityIdentifier = action.accessibilityIdentifier;
+=======
+>>>>>>> 87c1286851dd9a04af5d722ec54e68b8c385a2cd
   cell.actionColor = self.actionColor;
   for (UIView *view in cell.contentView.subviews) {
     if ([view isKindOfClass:[UIImageView class]]) {
