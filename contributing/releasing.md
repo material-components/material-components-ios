@@ -27,7 +27,7 @@ If you are going to be unavailable on the next working day and the release has n
 Wednesday afternoon, you must hand the release off to the next release engineer before the end
 of the working day.
 
-Never land a release after work hours on any work day. If the release has to roll back then the
+Never land a release after 3pm New York time on any work day. If the release has to roll back then the
 entire team is on the hook for any rollbacks that might be required.
 
 Importantly: **do not** block the cutting of the weekly release on a PR or a piece of functionality
