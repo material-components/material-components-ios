@@ -31,6 +31,8 @@ typedef enum : NSUInteger {
   FlexibleHeaderConfiguratorFieldContentImportance,
   FlexibleHeaderConfiguratorFieldShiftBehaviorEnabled,
   FlexibleHeaderConfiguratorFieldShiftBehaviorEnabledWithStatusBar,
+  FlexibleHeaderConfiguratorFieldShiftOffscreen,
+  FlexibleHeaderConfiguratorFieldShiftOnscreen,
 
   FlexibleHeaderConfiguratorFieldMinimumHeight,
   FlexibleHeaderConfiguratorFieldMaximumHeight,

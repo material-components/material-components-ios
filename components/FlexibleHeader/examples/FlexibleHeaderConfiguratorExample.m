@@ -85,7 +85,17 @@
                              : MDCFlexibleHeaderContentImportanceDefault);
       break;
 
-    // Header height
+    case FlexibleHeaderConfiguratorFieldShiftOffscreen: {
+      [headerView shiftHeaderOffScreenAnimated:YES];
+      break;
+    }
+
+    case FlexibleHeaderConfiguratorFieldShiftOnscreen: {
+      [headerView shiftHeaderOnScreenAnimated:YES];
+      break;
+    }
+
+      // Header height
 
     case FlexibleHeaderConfiguratorFieldMinimumHeight:
       headerView.minimumHeight = [self heightDenormalized:[value floatValue]];
@@ -183,6 +193,11 @@ static const CGFloat kHeightScalar = 300;
       BOOL enabled = (behavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar);
       return @(enabled);
     }
+
+    // Buttons have no value
+    case FlexibleHeaderConfiguratorFieldShiftOffscreen:
+    case FlexibleHeaderConfiguratorFieldShiftOnscreen:
+      return nil;
 
     case FlexibleHeaderConfiguratorFieldInFrontOfInfiniteContent:
       return @(self.fhvc.headerView.inFrontOfInfiniteContent);
