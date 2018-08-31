@@ -892,14 +892,15 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 
   // This is a simple "force" that's stronger the further we are from the destination.
   _shiftAccumulator += kAttachmentCoefficient * distanceToDestination * duration;
+
   if (self.canAlwaysExpandToMaximumHeight) {
     _shiftAccumulator =
         MAX([self fhv_accumulatorMin], MIN([self fhv_accumulatorMax], _shiftAccumulator));
+    [_statusBarShifter setOffset:MAX(0, _shiftAccumulator)];
   } else {
     _shiftAccumulator = MAX(0, MIN([self fhv_accumulatorMax], _shiftAccumulator));
+    [_statusBarShifter setOffset:_shiftAccumulator];
   }
-
-  [_statusBarShifter setOffset:_shiftAccumulator];
 
   // Have we reached our destination?
   if (fabs(destination - _shiftAccumulator) <= kShiftEpsilon) {
@@ -1119,14 +1120,13 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
         upperBound = 0;
       }
 
-      CGFloat lowerBound = [self fhv_accumulatorMin];
-
       // Ensure that we don't lose any deltaY by first capping the accumulator within its valid
       // range.
       _shiftAccumulator = MIN(upperBound, _shiftAccumulator);
 
       // Accumulate the deltaY.
       if (self.canAlwaysExpandToMaximumHeight) {
+        CGFloat lowerBound = [self fhv_accumulatorMin];
         _shiftAccumulator = MAX(lowerBound, MIN(upperBound, _shiftAccumulator + deltaY));
       } else {
         _shiftAccumulator = MAX(0, MIN(upperBound, _shiftAccumulator + deltaY));
