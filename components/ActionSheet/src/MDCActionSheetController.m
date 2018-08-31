@@ -114,6 +114,7 @@ static NSString *const ReuseIdentifier = @"BaseCell";
     _header.title = [title copy];
     _header.message = [message copy];
     self.backgroundColor = [UIColor whiteColor];
+    self.imageColor = [UIColor blackColor];
   }
 
   return self;
@@ -262,6 +263,8 @@ static NSString *const ReuseIdentifier = @"BaseCell";
   cell.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
   cell.backgroundColor = self.backgroundColor;
   cell.actionFont = self.actionFont;
+  cell.actionColor = self.actionColor;
+  cell.contentView.tintColor = self.imageColor;
   cell.accessibilityIdentifier = action.accessibilityIdentifier;
   return cell;
 }
@@ -308,6 +311,19 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 
 - (UIColor *)backgroundColor {
   return self.view.backgroundColor;
+}
+
+- (void)setPrimaryTextColor:(UIColor *)primaryTextColor {
+  _header.primaryColor = primaryTextColor;
+}
+- (UIColor *)primaryTextColor {
+  return _header.primaryColor;
+}
+- (void)setSecondaryTextColor:(UIColor *)secondaryTextColor {
+  _header.secondaryColor = secondaryTextColor;
+}
+- (UIColor *)secondaryTextColor {
+  return _header.secondaryColor;
 }
 
 #pragma mark - Dynamic Type
