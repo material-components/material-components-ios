@@ -22,13 +22,12 @@ static NSString *const kSelfSizingStereoCellExampleComponent = @"List Items";
 static NSString *const kSelfSizingStereoCellExampleDescription =
     @"Self Sizing Stereo Cell Typical Use";
 
-@interface MDCSelfSizingStereoCellExample () <UICollectionViewDelegate,
-                                      UICollectionViewDataSource>
+@interface MDCSelfSizingStereoCellExample () <UICollectionViewDelegate, UICollectionViewDataSource>
 
-@property (nonatomic, strong) UICollectionView *collectionView;
-@property (nonatomic, strong) UICollectionViewFlowLayout *collectionViewLayout;
-@property (nonatomic, strong) NSArray *randomStrings;
-@property (nonatomic, assign) NSInteger numberOfCells;
+@property(nonatomic, strong) UICollectionView *collectionView;
+@property(nonatomic, strong) UICollectionViewFlowLayout *collectionViewLayout;
+@property(nonatomic, strong) NSArray *randomStrings;
+@property(nonatomic, assign) NSInteger numberOfCells;
 @end
 
 @implementation MDCSelfSizingStereoCellExample
@@ -41,7 +40,7 @@ static NSString *const kSelfSizingStereoCellExampleDescription =
   [self createCollectionView];
 }
 
--(void)viewDidLayoutSubviews {
+- (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
   [self positionCollectionView];
 }
@@ -89,17 +88,17 @@ static NSString *const kSelfSizingStereoCellExampleDescription =
   [self.collectionViewLayout invalidateLayout];
 }
 
--(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
   return 1;
 }
 
--(NSInteger)collectionView:(UICollectionView *)collectionView
-    numberOfItemsInSection:(NSInteger)section {
+- (NSInteger)collectionView:(UICollectionView *)collectionView
+     numberOfItemsInSection:(NSInteger)section {
   return self.numberOfCells;
 }
 
--(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
-                 cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   MDCSelfSizingStereoCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:kSelfSizingStereoCellIdentifier
                                                 forIndexPath:indexPath];

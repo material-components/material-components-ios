@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #import "MDCSelfSizingStereoCell.h"
 
 #import <Foundation/Foundation.h>
@@ -30,13 +29,13 @@ static const CGFloat kDetailColorOpacity = 0.6f;
 
 @interface MDCSelfSizingStereoCell ()
 
-@property (nonatomic, strong) UIView *textContainer;
-@property (nonatomic, strong) UILabel *titleLabel;
-@property (nonatomic, strong) UILabel *detailLabel;
-@property (nonatomic, strong) UIImageView *leadingImageView;
-@property (nonatomic, strong) UIImageView *trailingImageView;
+@property(nonatomic, strong) UIView *textContainer;
+@property(nonatomic, strong) UILabel *titleLabel;
+@property(nonatomic, strong) UILabel *detailLabel;
+@property(nonatomic, strong) UIImageView *leadingImageView;
+@property(nonatomic, strong) UIImageView *trailingImageView;
 
-@property (nonatomic, strong)
+@property(nonatomic, strong)
     NSMutableDictionary<NSNumber *, MDCSelfSizingStereoCellLayout *> *cachedLayouts;
 
 @end
@@ -161,13 +160,12 @@ static const CGFloat kDetailColorOpacity = 0.6f;
   CGFloat flooredCellWidth = MDCFloor(cellWidth);
   MDCSelfSizingStereoCellLayout *layout = self.cachedLayouts[@(flooredCellWidth)];
   if (!layout) {
-    layout =
-        [[MDCSelfSizingStereoCellLayout alloc] initWithLeadingImageView:self.leadingImageView
-                                                      trailingImageView:self.trailingImageView
-                                                          textContainer:self.textContainer
-                                                             titleLabel:self.titleLabel
-                                                            detailLabel:self.detailLabel
-                                                              cellWidth:flooredCellWidth];
+    layout = [[MDCSelfSizingStereoCellLayout alloc] initWithLeadingImageView:self.leadingImageView
+                                                           trailingImageView:self.trailingImageView
+                                                               textContainer:self.textContainer
+                                                                  titleLabel:self.titleLabel
+                                                                 detailLabel:self.detailLabel
+                                                                   cellWidth:flooredCellWidth];
     self.cachedLayouts[@(flooredCellWidth)] = layout;
   }
   return layout;

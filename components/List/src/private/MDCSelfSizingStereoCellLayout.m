@@ -25,13 +25,13 @@ static const CGFloat kImageSideLengthMax = 56.0;
 
 @interface MDCSelfSizingStereoCellLayout ()
 
-@property (nonatomic, assign) CGFloat cellWidth;
-@property (nonatomic, assign) CGFloat calculatedHeight;
-@property (nonatomic, assign) CGRect textContainerFrame;
-@property (nonatomic, assign) CGRect titleLabelFrame;
-@property (nonatomic, assign) CGRect detailLabelFrame;
-@property (nonatomic, assign) CGRect leadingImageViewFrame;
-@property (nonatomic, assign) CGRect trailingImageViewFrame;
+@property(nonatomic, assign) CGFloat cellWidth;
+@property(nonatomic, assign) CGFloat calculatedHeight;
+@property(nonatomic, assign) CGRect textContainerFrame;
+@property(nonatomic, assign) CGRect titleLabelFrame;
+@property(nonatomic, assign) CGRect detailLabelFrame;
+@property(nonatomic, assign) CGRect leadingImageViewFrame;
+@property(nonatomic, assign) CGRect trailingImageViewFrame;
 
 @end
 
@@ -48,9 +48,7 @@ static const CGFloat kImageSideLengthMax = 56.0;
     self.cellWidth = cellWidth;
     [self assignFrameForLeadingImageView:leadingImageView];
     [self assignFrameForTrailingImageView:trailingImageView];
-    [self assignFramesForTextContainer:textContainer
-                            titleLabel:titleLabel
-                           detailLabel:detailLabel];
+    [self assignFramesForTextContainer:textContainer titleLabel:titleLabel detailLabel:detailLabel];
     self.calculatedHeight = [self calculateHeight];
   }
   return self;
@@ -99,11 +97,10 @@ static const CGFloat kImageSideLengthMax = 56.0;
 
   BOOL hasLeadingImage = !CGRectEqualToRect(self.leadingImageViewFrame, CGRectZero);
   BOOL hasTrailingImage = !CGRectEqualToRect(self.trailingImageViewFrame, CGRectZero);
-  CGFloat leadingImageViewMaxX = (hasLeadingImage ?
-                                  CGRectGetMaxX(self.leadingImageViewFrame) : 0);
+  CGFloat leadingImageViewMaxX = (hasLeadingImage ? CGRectGetMaxX(self.leadingImageViewFrame) : 0);
   CGFloat textContainerMinX = leadingImageViewMaxX + kHorizontalMargin;
-  CGFloat trailingImageViewMinX = (hasTrailingImage ?
-                                   CGRectGetMinX(self.trailingImageViewFrame) : self.cellWidth);
+  CGFloat trailingImageViewMinX =
+      (hasTrailingImage ? CGRectGetMinX(self.trailingImageViewFrame) : self.cellWidth);
   CGFloat textContainerMaxX = trailingImageViewMinX - kHorizontalMargin;
   CGFloat textContainerMinY = kVerticalMarginMax;
   CGFloat textContainerWidth = textContainerMaxX - textContainerMinX;
@@ -130,7 +127,8 @@ static const CGFloat kImageSideLengthMax = 56.0;
   const CGFloat detailLabelMinX = 0;
   CGFloat detailLabelMinY = CGRectGetMaxY(titleFrame);
   if (titleLabel.text.length > 0 && detailLabel.text.length > 0) {
-    detailLabelMinY += [self dynamicInterLabelVerticalPaddingWithTitleLabel:titleLabel detailLabel:detailLabel];
+    detailLabelMinY += [self dynamicInterLabelVerticalPaddingWithTitleLabel:titleLabel
+                                                                detailLabel:detailLabel];
   }
   CGPoint detailOrigin = CGPointMake(detailLabelMinX, detailLabelMinY);
   CGRect detailFrame = CGRectZero;
@@ -167,22 +165,24 @@ static const CGFloat kImageSideLengthMax = 56.0;
   CGFloat trailingImageViewRequiredVerticalSpace = 0;
   CGFloat textContainerRequiredVerticalSpace = 0;
   if (!CGRectEqualToRect(self.leadingImageViewFrame, CGRectZero)) {
-    leadingImageViewRequiredVerticalSpace = CGRectGetMaxY(self.leadingImageViewFrame) +
-    [self verticalMarginForImageViewOfSize:self.leadingImageViewFrame.size];
+    leadingImageViewRequiredVerticalSpace =
+        CGRectGetMaxY(self.leadingImageViewFrame) +
+        [self verticalMarginForImageViewOfSize:self.leadingImageViewFrame.size];
     if (leadingImageViewRequiredVerticalSpace > maxHeight) {
       maxHeight = leadingImageViewRequiredVerticalSpace;
     }
   }
   if (!CGRectEqualToRect(self.trailingImageViewFrame, CGRectZero)) {
-    trailingImageViewRequiredVerticalSpace = CGRectGetMaxY(self.trailingImageViewFrame) +
-    [self verticalMarginForImageViewOfSize:self.trailingImageViewFrame.size];
+    trailingImageViewRequiredVerticalSpace =
+        CGRectGetMaxY(self.trailingImageViewFrame) +
+        [self verticalMarginForImageViewOfSize:self.trailingImageViewFrame.size];
     if (trailingImageViewRequiredVerticalSpace > maxHeight) {
       maxHeight = trailingImageViewRequiredVerticalSpace;
     }
   }
   if (!CGRectEqualToRect(self.textContainerFrame, CGRectZero)) {
-    textContainerRequiredVerticalSpace = CGRectGetMaxY(self.textContainerFrame) +
-    kVerticalMarginMax;
+    textContainerRequiredVerticalSpace =
+        CGRectGetMaxY(self.textContainerFrame) + kVerticalMarginMax;
     if (textContainerRequiredVerticalSpace > maxHeight) {
       maxHeight = textContainerRequiredVerticalSpace;
     }

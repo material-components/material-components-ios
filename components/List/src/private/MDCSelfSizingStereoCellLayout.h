@@ -14,18 +14,18 @@
  limitations under the License.
  */
 
-#import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface MDCSelfSizingStereoCellLayout : NSObject
 
-@property (nonatomic, assign, readonly) CGFloat cellWidth;
-@property (nonatomic, assign, readonly) CGFloat calculatedHeight;
-@property (nonatomic, assign, readonly) CGRect textContainerFrame;
-@property (nonatomic, assign, readonly) CGRect titleLabelFrame;
-@property (nonatomic, assign, readonly) CGRect detailLabelFrame;
-@property (nonatomic, assign, readonly) CGRect leadingImageViewFrame;
-@property (nonatomic, assign, readonly) CGRect trailingImageViewFrame;
+@property(nonatomic, assign, readonly) CGFloat cellWidth;
+@property(nonatomic, assign, readonly) CGFloat calculatedHeight;
+@property(nonatomic, assign, readonly) CGRect textContainerFrame;
+@property(nonatomic, assign, readonly) CGRect titleLabelFrame;
+@property(nonatomic, assign, readonly) CGRect detailLabelFrame;
+@property(nonatomic, assign, readonly) CGRect leadingImageViewFrame;
+@property(nonatomic, assign, readonly) CGRect trailingImageViewFrame;
 
 - (instancetype)initWithLeadingImageView:(UIImageView *)leadingImageView
                        trailingImageView:(UIImageView *)trailingImageView
