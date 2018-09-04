@@ -209,4 +209,50 @@ static const CGFloat MiddlePadding = 8.f;
   [self updateFonts];
 }
 
+- (void)setTitleTextColor:(UIColor *)titleTextColor {
+  _titleLabel.textColor = titleTextColor;
+}
+
+- (UIColor *)titleTextColor {
+  return _titleLabel.textColor;
+}
+
+- (void)setMessageTextColor:(UIColor *)messageTextColor {
+  _messageLabel.textColor = messageTextColor;
+}
+
+- (UIColor *)messageTextColor {
+  return _messageLabel.textColor;
+}
+
+- (BOOL)labelExist:(UILabel *)label {
+  return ((label.text) && ![label.text isEqualToString:@""]);
+}
+
+
+
+- (UIColor *)primaryColor {
+  /**
+   If both labels exist or only the message label exist then we need the message label's text color,
+   if only the title exist then we need the title's text color, and if non exist then return nil.
+   */
+  if ([self labelExist:_messageLabel]) {
+    return _messageLabel.textColor;
+  } else if ([self labelExist:_titleLabel]) {
+    return _titleLabel.textColor;
+  } else {
+    return nil;
+  }
+}
+
+- (UIColor *)secondaryColor {
+  BOOL messageExist = [self labelExist:_messageLabel];
+  BOOL titleExist = [self labelExist:_titleLabel];
+  if (messageExist && titleExist) {
+    return _titleLabel.textColor;
+  } else {
+    return nil;
+  }
+}
+
 @end

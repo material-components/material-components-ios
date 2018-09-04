@@ -36,6 +36,10 @@
 
 @property(nonatomic, strong, nullable) UIColor *primaryColor;
 
+@property(nonatomic, strong, nullable) UIColor *titleTextColor;
+
 @property(nonatomic, strong, nullable) UIColor *secondaryColor;
+
+@property(nonatomic, strong, nullable) UIColor *messageTextColor;
 
 @end
