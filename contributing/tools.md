@@ -7,7 +7,8 @@ This will minimize the amount of style feedback you get from the team and saves 
 
 ```bash
 # Check to see if you have clang-format command installed.
-# If not, get the latest release from https://github.com/material-foundation/clang-format/releases
+# If you are a Googler then ask someone on the team how to install clang-format.
+# Otherwise, get the latest release from https://github.com/material-foundation/clang-format/releases
 clang-format -version
 
 # Check to see if you have git's clang-format command installed.
