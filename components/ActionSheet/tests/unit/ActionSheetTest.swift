@@ -66,7 +66,7 @@ class ActionSheetTest: XCTestCase {
     actionSheet.addAction(action)
 
     // Then
-    let tableView = actionSheet.view.subviews.flatMap{ $0 as? UITableView }.first
+    let tableView = actionSheet.view.subviews.flatMap { $0 as? UITableView }.first
     if let table = tableView {
       XCTAssertEqual(table.numberOfRows(inSection: section), rowCount)
       if let dataSource = table.dataSource {
@@ -136,10 +136,10 @@ class ActionSheetTest: XCTestCase {
   }
 
   func getLabel(with text: String) -> UILabel? {
-    let headerArray = actionSheet.view.subviews.filter{ !($0 is UITableView) }
+    let headerArray = actionSheet.view.subviews.filter { !($0 is UITableView) }
     if let header = headerArray.first {
-      var labels: [UILabel] = header.subviews.flatMap{ $0 as UILabel }
-                                             .filter{ $0.text = text }
+      var labels: [UILabel] = header.subviews.flatMap { $0 as UILabel }
+                                             .filter { $0.text = text }
       if let label = labels.first {
         return label
       } else {
