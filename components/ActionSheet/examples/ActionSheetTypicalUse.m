@@ -91,9 +91,9 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Action Sheet", @"Action Sheet" ],
-    @"primaryDemo": @YES,
-    @"presentable": @NO
+    @"breadcrumbs" : @[ @"Action Sheet", @"Action Sheet" ],
+    @"primaryDemo" : @YES,
+    @"presentable" : @NO
   };
 }
 
