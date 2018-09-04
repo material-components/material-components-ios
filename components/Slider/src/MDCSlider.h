@@ -171,8 +171,9 @@ IB_DESIGNABLE
 
  @param thumbRadius The radius of the thumb.
  @param state The state of the slider.
+ @note If a negative value is passed the absolute value will be used.
  */
-- (void)setThumbRadius:(CGFloat)thumbRadius forState:(UIControlState)state;
+- (void)setThumbRadius:(float)thumbRadius forState:(UIControlState)state;
 
 /**
  Returns the thumb radius associated with the specified state.
@@ -181,7 +182,7 @@ IB_DESIGNABLE
  @returns The thumb radius for the specified state. If no radius has been set for the specific
           state, this method returns the radius associated with the @c UIControlStateNormal state.
  */
-- (CGFloat)thumbRadiusForState:(UIControlState)state;
+- (float)thumbRadiusForState:(UIControlState)state;
 
 /**
  The color of the Ink ripple.

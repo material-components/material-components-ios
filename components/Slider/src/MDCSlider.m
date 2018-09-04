@@ -24,7 +24,7 @@
 static const CGFloat kSliderDefaultWidth = 100.0f;
 static const CGFloat kSliderFrameHeight = 27.0f;
 static const CGFloat kSliderMinTouchSize = 48.0f;
-static const CGFloat kSliderDefaultThumbRadius = 6.0f;
+static const float kSliderDefaultThumbRadius = 6.0f;
 static const CGFloat kSliderAccessibilityIncrement = 0.1f;  // Matches UISlider's percent increment.
 static const CGFloat kSliderLightThemeTrackAlpha = 0.26f;
 
@@ -213,18 +213,16 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   return color;
 }
 
-- (void)setThumbRadius:(CGFloat)thumbRadius forState:(UIControlState)state {
-  NSAssert(thumbRadius >= 0, @"Thumb radius must be a positive value");
-  float radius = (float)thumbRadius;
+- (void)setThumbRadius:(float)thumbRadius forState:(UIControlState)state {
+  float radius = (float)fabs(thumbRadius);
   _thumbRadiusesForState[@(state)] = [NSNumber numberWithFloat:radius];
-  if (self.state == state) {
-    [self updateThumbForState];
-  }
+  [self updateThumbForState];
 }
 
-- (CGFloat)thumbRadiusForState:(UIControlState)state {
-  if ([_thumbRadiusesForState objectForKey:@(state)]) {
-    return [_thumbRadiusesForState[@(state)] floatValue];
+- (float)thumbRadiusForState:(UIControlState)state {
+  NSNumber *radiusValue = [_thumbRadiusesForState objectForKey:@(state)];
+  if (radiusValue) {
+    return [radiusValue floatValue];
   }
   if ([_thumbRadiusesForState objectForKey:@(UIControlStateNormal)]) {
     return [_thumbRadiusesForState[@(UIControlStateNormal)] floatValue];
@@ -257,7 +255,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
     return;
   }
 
-  _thumbTrack.thumbRadius = [self thumbRadiusForState:self.state];
+  _thumbTrack.thumbRadius = (CGFloat)[self thumbRadiusForState:self.state];
 }
 
 #pragma mark - ThumbTrack passthrough methods
