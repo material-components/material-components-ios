@@ -13,6 +13,8 @@ clang-format -version
 # Check to see if you have git's clang-format command installed.
 git clang-format -h
 
+# If you already have git's clang-format command configured, you're ready to use the tool.
+
 # Download the script
 curl -s https://raw.githubusercontent.com/llvm-mirror/clang/c510fac5695e904b43d5bf0feee31cc9550f110e/tools/clang-format/git-clang-format -o "git-clang-format"
 
@@ -28,6 +30,12 @@ sudo chmod +x "/usr/local/bin/git-clang-format"
 
 # Verify that the command works.
 git clang-format -h
+```
+
+To run the command from origin/develop to HEAD:
+
+```bash
+git clang-format origin/develop
 ```
 
 ## PR description chrome plugin
