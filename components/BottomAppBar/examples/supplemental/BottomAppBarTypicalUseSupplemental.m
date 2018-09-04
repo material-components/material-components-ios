@@ -139,7 +139,7 @@ static NSString *const kCellIdentifier = @"cell";
   cell.layoutMargins = UIEdgeInsetsZero;
   cell.textLabel.text = self.listItems[indexPath.item];
   [self.fabVisibilitySwitch removeFromSuperview];
-  if ([self.listItems[indexPath.row] isEqualToString:@"Visible FAB"]) {
+  if (indexPath.row == (NSInteger)(self.listItems.count - 1)) {
     cell.accessoryView = self.fabVisibilitySwitch;
   } else {
     cell.accessoryView = nil;
