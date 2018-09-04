@@ -916,10 +916,10 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 - (void)testThumbRadiusForState {
   // Given
   self.slider.statefulAPIEnabled = YES;
-  CGFloat normalRadius = 12.f;
-  CGFloat disabledRadius = 10.f;
-  CGFloat highlightedRadius = 8.f;
-  CGFloat selectedRadius = 16.f;
+  float normalRadius = 12.f;
+  float disabledRadius = 10.f;
+  float highlightedRadius = 8.f;
+  float selectedRadius = 16.f;
 
   // When
   [self.slider setThumbRadius:normalRadius forState:UIControlStateNormal];
@@ -954,8 +954,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   self.slider.statefulAPIEnabled = YES;
 
   // When
-  CGFloat defaultThumbRadius = self.slider.thumbRadius;
-  CGFloat thumbRadius = 100.f;
+  float defaultThumbRadius = self.slider.thumbRadius;
+  float thumbRadius = 100.f;
   self.slider.thumbRadius = thumbRadius;
 
   // Then
@@ -967,7 +967,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   self.slider.statefulAPIEnabled = NO;
 
   // When
-  CGFloat thumbRadius = 40.f;
+  float thumbRadius = 40.f;
   self.slider.thumbRadius = thumbRadius;
 
   NSUInteger maxState = UIControlStateNormal | UIControlStateSelected | UIControlStateDisabled |
@@ -980,32 +980,11 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testThumbRadius {
   // Given
-  CGFloat thumbRadius = 15.f;
+  float thumbRadius = 15.f;
   // When
   self.slider.thumbRadius = thumbRadius;
   // Then
   XCTAssertEqual(self.slider.thumbRadius, thumbRadius);
-}
-
-- (void)testThumbRadiusSwitchingStatefulEnabled {
-  // Given
-  float originalThumbRadius = (float)self.slider.thumbRadius;
-
-  // When
-  self.slider.statefulAPIEnabled = NO;
-  float statefulRadius = 25.f;
-  self.slider.statefulAPIEnabled = YES;
-  [self.slider setThumbRadius:statefulRadius forState:UIControlStateNormal];
-  self.slider.statefulAPIEnabled = NO;
-
-  // Then
-  XCTAssertEqual(self.slider.thumbRadius, statefulRadius);
-
-  // When
-  self.slider.statefulAPIEnabled = YES;
-
-  // Then
-  XCTAssertEqual(self.slider.thumbRadius, statefulRadius);
 }
 
 #pragma mark Numeric value label
