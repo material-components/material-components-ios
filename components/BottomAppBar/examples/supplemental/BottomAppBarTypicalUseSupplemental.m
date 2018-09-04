@@ -106,6 +106,15 @@ static NSString *const kCellIdentifier = @"cell";
   self.tableView.separatorInset = UIEdgeInsetsZero;
 }
 
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+
+  CGRect bottomAppBarFrame = self.bottomBarView.frame;
+  UIEdgeInsets contentInset = self.tableView.contentInset;
+  contentInset.bottom = bottomAppBarFrame.size.height;
+  self.tableView.contentInset = contentInset;
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
