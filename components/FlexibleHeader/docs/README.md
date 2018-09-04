@@ -67,6 +67,7 @@ It also has some technical disadvantages:
 - [Background images](background-images.md)
 - [Touch forwarding](touch-forwarding.md)
 - [Tracking a parent view](tracking-a-parent-view.md)
+- [WKWebView considerations](wkwebview-considerations.md)
 
 ## Behavioral flags
 
@@ -86,3 +87,7 @@ cycle:
 ## Extensions
 
 - [Color Theming](color-theming.md)
+
+## Migration guides
+
+- [Migration guide: minMaxHeightIncludesSafeArea](migration-guide-minMaxHeightIncludesSafeArea.md)

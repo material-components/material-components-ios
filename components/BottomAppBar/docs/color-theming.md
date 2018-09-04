@@ -4,4 +4,4 @@ Bottom App Bar does not yet have a Material Design color system themer. The foll
 tracking its development:
 
 - Task: [Implement a color themer](https://www.pivotaltracker.com/story/show/157095394)
-- Task: [Impement a surface variant themer](https://www.pivotaltracker.com/story/show/156933141)
+- Task: [Implement a surface variant themer](https://www.pivotaltracker.com/story/show/156933141)

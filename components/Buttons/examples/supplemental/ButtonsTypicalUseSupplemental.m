@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 /* IMPORTANT:
  This file contains supplemental code used to populate the examples with dummy data and/or
@@ -24,25 +22,20 @@
 #import "MaterialMath.h"
 #import "MaterialTypography.h"
 
+static const CGFloat kViewOffsetToCenter = 20.0f;
+
 #pragma mark - ButtonsTypicalUseViewController
 
 @implementation ButtonsTypicalUseExampleViewController (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Buttons", @"Buttons" ];
-}
-
-+ (NSString *)catalogDescription {
-  return @"Buttons allow users to take actions, and make choices, with a single tap.\nA floating"
-          " action button (FAB) represents the primary action of a screen.";
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return YES;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Buttons", @"Buttons" ],
+    @"description": @"Buttons allow users to take actions, and make choices, with a single tap."
+    @"\nA floating action button (FAB) represents the primary action of a screen.",
+    @"primaryDemo": @YES,
+    @"presentable": @YES,
+  };
 }
 
 @end
@@ -50,16 +43,12 @@
 
 @implementation ButtonsShapesExampleViewController (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Buttons", @"Shaped Buttons" ];
-}
-
-+ (BOOL)catalogIsPresentable {
-  return YES;
-}
-
-+ (BOOL)catalogIsDebug {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Buttons", @"Shaped Buttons" ],
+    @"primaryDemo": @NO,
+    @"presentable": @YES,
+  };
 }
 
 @end
@@ -89,17 +78,12 @@
                  self.topLayoutGuide.length,
                  CGRectMinYEdge);
   };
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-  if ([self.view respondsToSelector:@selector(safeAreaInsets)]) {
-    UIEdgeInsets safeAreaInsets = self.view.safeAreaInsets;
-    contentBounds = UIEdgeInsetsInsetRect(bounds, safeAreaInsets);
-
+  if (@available(iOS 11.0, *)) {
+      UIEdgeInsets safeAreaInsets = self.view.safeAreaInsets;
+      contentBounds = UIEdgeInsetsInsetRect(bounds, safeAreaInsets);
   } else {
     preiOS11Behavior();
   }
-#else
-  preiOS11Behavior();
-#endif
 
   return contentBounds;
 }
@@ -137,10 +121,10 @@
     MDCButton *button = self.buttons[i];
     UILabel *label = self.labels[i];
 
-    button.center = CGPointMake(centerX + 20 + (CGRectGetWidth(button.bounds) / 2),
+    button.center = CGPointMake(centerX + kViewOffsetToCenter + (CGRectGetWidth(button.bounds) / 2),
                                 heightSum + (CGRectGetHeight(button.bounds) / 2));
     CGFloat labelOffset = (CGRectGetHeight(button.bounds) - CGRectGetHeight(label.bounds)) / 2;
-    label.center = CGPointMake(centerX - (CGRectGetWidth(label.bounds) / 2) - 20,
+    label.center = CGPointMake(centerX - (CGRectGetWidth(label.bounds) / 2) - kViewOffsetToCenter,
                                heightSum + labelOffset + (CGRectGetHeight(label.bounds) / 2));
     heightSum += CGRectGetHeight(button.bounds);
     if (i < self.buttons.count - 1) {
@@ -169,6 +153,19 @@
         (CGRect){labelOrigin, CGSizeMake(labelWidth, labelHeight)}, [UIScreen mainScreen].scale);
     label.center = CGPointMake(CGRectGetMidX(alignedFrame), CGRectGetMidY(alignedFrame));
     label.bounds = (CGRect){label.bounds.origin, alignedFrame.size};
+
+    // Adjust the label's center and bounds so it doesn't exceed the safe area on the left side of the screen, the situation that
+    // button exceeds the safe area on the right side is not considered yet
+    CGFloat labelOriginX = label.center.x - label.bounds.size.width / 2;
+    if (labelOriginX < contentBounds.origin.x) {
+      CGFloat labelXOffset = contentBounds.origin.x - labelOriginX;
+      CGFloat maxLabelWidth = label.bounds.size.width - labelXOffset;
+      label.numberOfLines = 0;
+      CGSize newSizeToFitLabel = [label sizeThatFits:CGSizeMake(maxLabelWidth, CGFLOAT_MAX)];
+      label.center = CGPointMake(centerX - newSizeToFitLabel.width / 2 - kViewOffsetToCenter, label.center.y);
+      label.bounds = CGRectMake(label.center.x - newSizeToFitLabel.width / 2, label.center.y, newSizeToFitLabel.width, newSizeToFitLabel.height);
+      label.textAlignment = NSTextAlignmentRight;
+    }
   }
 }
 

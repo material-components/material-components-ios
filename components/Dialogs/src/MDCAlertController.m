@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCAlertController.h"
 
@@ -56,6 +54,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 - (id)copyWithZone:(__unused NSZone *)zone {
   MDCAlertAction *action = [[self class] actionWithTitle:self.title handler:self.completionHandler];
+  action.accessibilityIdentifier = self.accessibilityIdentifier;
 
   return action;
 }
@@ -161,9 +160,10 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 - (void)addActionToAlertView:(MDCAlertAction *)action {
   if (self.alertView) {
-    [self.alertView addActionButtonTitle:action.title
-                                  target:self
-                                selector:@selector(actionButtonPressed:)];
+    MDCButton *addedAction = [self.alertView addActionButtonTitle:action.title
+                                                           target:self
+                                                         selector:@selector(actionButtonPressed:)];
+    addedAction.accessibilityIdentifier = action.accessibilityIdentifier;
     self.preferredContentSize =
         [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
     [self.alertView setNeedsLayout];
@@ -307,6 +307,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   self.alertView.messageColor = self.messageColor;
   self.alertView.buttonColor = self.buttonTitleColor;
   self.alertView.buttonFont = self.buttonFont;
+  self.alertView.buttonInkColor = self.buttonInkColor;
 
   for (MDCAlertAction *action in self.actions) {
     [self addActionToAlertView:action];

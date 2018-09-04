@@ -75,3 +75,7 @@ See the [FlexibleHeader](../../FlexibleHeader) documentation for additional usag
 ## Accessibility
 
 - [Accessibility](accessibility.md)
+
+## Migration guides
+
+- [Migration guide: MDCAppBar to MDCAppBarViewController](migration-guide-appbar-appbarviewcontroller.md)

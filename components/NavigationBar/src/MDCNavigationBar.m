@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCNavigationBar.h"
 
@@ -27,10 +25,8 @@
 
 static const NSUInteger kTitleFontSize = 20;
 static const CGFloat kNavigationBarDefaultHeight = 56;
-static const CGFloat kNavigationBarPadDefaultHeight = 64;
 static const CGFloat kNavigationBarMinHeight = 24;
 static const UIEdgeInsets kTextInsets = {0, 16, 0, 16};
-static const UIEdgeInsets kTextPadInsets = {0, 16, 0, 16};
 
 // KVO contexts
 static char *const kKVOContextMDCNavigationBar = "kKVOContextMDCNavigationBar";
@@ -139,6 +135,7 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 }
 
 - (void)commonMDCNavigationBarInit {
+  _uppercasesButtonTitles = YES;
   _observedNavigationItemLock = [[NSObject alloc] init];
   _titleFont = [MDCTypography titleFont];
 
@@ -175,8 +172,19 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   return self;
 }
 
+- (void)setUppercasesButtonTitles:(BOOL)uppercasesButtonTitles {
+  _uppercasesButtonTitles = uppercasesButtonTitles;
+
+  _leadingButtonBar.uppercasesButtonTitles = uppercasesButtonTitles;
+  _trailingButtonBar.uppercasesButtonTitles = uppercasesButtonTitles;
+}
+
 - (void)setTitleFont:(UIFont *)titleFont {
-  _titleFont = [UIFont fontWithDescriptor:titleFont.fontDescriptor size:kTitleFontSize];
+  if (self.allowAnyTitleFontSize) {
+    _titleFont = titleFont;
+  } else {
+    _titleFont = [UIFont fontWithDescriptor:titleFont.fontDescriptor size:kTitleFontSize];
+  }
   if (!_titleFont) {
     _titleFont = [MDCTypography titleFont];
   }
@@ -221,7 +229,6 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   // For pre iOS 11 devices, it's safe to assume that the Safe Area insets' left and right
   // values are zero. DO NOT use this to get the top or bottom Safe Area insets.
   UIEdgeInsets RTLFriendlySafeAreaInsets = UIEdgeInsetsZero;
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     RTLFriendlySafeAreaInsets =
         MDFInsetsMakeWithLayoutDirection(self.safeAreaInsets.top,
@@ -230,7 +237,6 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
                                          self.safeAreaInsets.right,
                                          self.mdf_effectiveUserInterfaceLayoutDirection);
   }
-#endif
 
   CGSize leadingButtonBarSize = [_leadingButtonBar sizeThatFits:self.bounds.size];
   CGRect leadingButtonBarFrame = CGRectMake(RTLFriendlySafeAreaInsets.left,
@@ -253,18 +259,16 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   _leadingButtonBar.frame = leadingButtonBarFrame;
   _trailingButtonBar.frame = trailingButtonBarFrame;
 
-  UIEdgeInsets textInsets = [self usePadInsets] ? kTextPadInsets : kTextInsets;
+  UIEdgeInsets textInsets = kTextInsets;
 
   // textFrame is used to determine layout of both TitleLabel and TitleView
   CGRect textFrame = UIEdgeInsetsInsetRect(self.bounds, textInsets);
   textFrame.origin.x += _leadingButtonBar.frame.size.width;
   textFrame.size.width -= _leadingButtonBar.frame.size.width + _trailingButtonBar.frame.size.width;
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     textFrame.origin.x += self.safeAreaInsets.left;
     textFrame.size.width -= self.safeAreaInsets.left + self.safeAreaInsets.right;
   }
-#endif
 
   // Layout TitleLabel
   NSMutableParagraphStyle *paraStyle = [[NSMutableParagraphStyle alloc] init];
@@ -306,11 +310,9 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
       CGFloat availableWidth = UIEdgeInsetsInsetRect(self.bounds, textInsets).size.width;
       availableWidth -= MAX(_leadingButtonBar.frame.size.width,
                             _trailingButtonBar.frame.size.width) * 2;
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
       if (@available(iOS 11.0, *)) {
         availableWidth -= self.safeAreaInsets.left + self.safeAreaInsets.right;
       }
-#endif
       titleViewFrame.size.width = availableWidth;
       titleViewFrame = [self mdc_frameAlignedHorizontally:titleViewFrame
                                                 alignment:MDCNavigationBarTitleAlignmentCenter];
@@ -320,8 +322,7 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   // No insets for the titleView, and a height that is the same as the button bars. Clients
   // can vertically center their titleView subviews to align them with buttons.
   titleViewFrame.origin.y = 0;
-  CGFloat maxHeight =
-      [self usePadInsets] ? kNavigationBarPadDefaultHeight : kNavigationBarDefaultHeight;
+  CGFloat maxHeight = kNavigationBarDefaultHeight;
   CGFloat minHeight = kNavigationBarMinHeight;
   titleViewFrame.size.height = MIN(MAX(self.bounds.size.height, minHeight), maxHeight);
   self.titleView.frame = titleViewFrame;
@@ -345,14 +346,13 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  CGFloat maxHeight =
-      [self usePadInsets] ? kNavigationBarPadDefaultHeight : kNavigationBarDefaultHeight;
+  CGFloat maxHeight = kNavigationBarDefaultHeight;
   CGFloat height = MIN(MAX(size.height, kNavigationBarMinHeight), maxHeight);
   return CGSizeMake(size.width, height);
 }
 
 - (CGSize)intrinsicContentSize {
-  CGFloat height = [self usePadInsets] ? kNavigationBarPadDefaultHeight : kNavigationBarDefaultHeight;
+  CGFloat height = kNavigationBarDefaultHeight;
   return CGSizeMake(UIViewNoIntrinsicMetric, height);
 }
 
@@ -366,17 +366,6 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 }
 
 #pragma mark Private
-
-// Used to determine whether or not to apply insets relevant for iPad or use smaller iPhone size.
-// As the difference between iPad/iPhone is only in top & bottom insets, we should use vertical
-// size class to determine
-- (BOOL)usePadInsets {
-  const BOOL isPad = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
-  if (isPad && self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular) {
-    return YES;
-  }
-  return NO;
-}
 
 + (NSTextAlignment)textAlignmentFromTitleAlignment:(MDCNavigationBarTitleAlignment)titleAlignment {
   switch (titleAlignment) {
@@ -467,8 +456,7 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
     case UIControlContentVerticalAlignmentTop: {
       // The title frame is vertically centered with the back button but will stick to the top of
       // the header regardless of the header's height.
-      CGFloat maxHeight =
-          [self usePadInsets] ? kNavigationBarPadDefaultHeight : kNavigationBarDefaultHeight;
+      CGFloat maxHeight = kNavigationBarDefaultHeight;
       CGFloat height = MIN(CGRectGetHeight(bounds), maxHeight);
       CGFloat navigationBarCenteredY = MDCFloor((height - CGRectGetHeight(frame)) / 2);
       navigationBarCenteredY = MAX(0, navigationBarCenteredY);
@@ -492,7 +480,7 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 
       MDCButtonBar *leftButtonBar = self.leadingButtonBar;
       MDCButtonBar *rightButtonBar = self.trailingButtonBar;
-      UIEdgeInsets textInsets = [self usePadInsets] ? kTextPadInsets : kTextInsets;
+      UIEdgeInsets textInsets = kTextInsets;
       CGFloat titleLeftInset = textInsets.left;
       CGFloat titleRightInset = textInsets.right;
 

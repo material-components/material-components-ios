@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponents"
-  mdc.version      = "60.0.0"
+  mdc.version      = "61.0.0"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -236,6 +236,7 @@ Pod::Spec.new do |mdc|
 
     component.dependency "MDFInternationalization"
     component.dependency "MaterialComponents/Buttons"
+    component.dependency "MaterialComponents/private/Application"
   end
 
   mdc.subspec "ButtonBar+ColorThemer" do |extension|
@@ -485,6 +486,14 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/private/UIMetrics"
   end
 
+  mdc.subspec "FlexibleHeader+CanAlwaysExpandToMaximumHeight" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+  end
+
   mdc.subspec "FlexibleHeader+ColorThemer" do |extension|
     extension.ios.deployment_target = '8.0'
     extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
@@ -548,6 +557,9 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/Ink"
     component.dependency "MaterialComponents/ShadowElevations"
     component.dependency "MaterialComponents/ShadowLayer"
+    component.dependency "MaterialComponents/Typography"
+    component.dependency "MDFInternationalization"
+    component.dependency "MaterialComponents/private/Math"
   end
 
   # MaskedTransition

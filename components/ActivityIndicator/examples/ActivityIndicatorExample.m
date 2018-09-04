@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <UIKit/UIKit.h>
 
@@ -53,28 +51,26 @@
   [MDCActivityIndicatorColorThemer applySemanticColorScheme:self.colorScheme
                                         toActivityIndicator:self.activityIndicator1];
   self.activityIndicator1.delegate = self;
-  self.activityIndicator1.progress = 0.6f;
   self.activityIndicator1.indicatorMode = MDCActivityIndicatorModeDeterminate;
   [self.activityIndicator1 sizeToFit];
-  [self.activityIndicator1 startAnimating];
 
   // Themed indeterminate activity indicator
   self.activityIndicator2 = [[MDCActivityIndicator alloc] init];
   self.activityIndicator2.delegate = self;
+  self.activityIndicator2.indicatorMode = MDCActivityIndicatorModeDeterminate;
   [MDCActivityIndicatorColorThemer applySemanticColorScheme:self.colorScheme
                                         toActivityIndicator:self.activityIndicator2];
   [self.activityIndicator2 sizeToFit];
-  [self.activityIndicator2 startAnimating];
 
   // Indeterminate activity indicator with custom colors.
   self.activityIndicator3 = [[MDCActivityIndicator alloc] init];
   self.activityIndicator3.delegate = self;
+  self.activityIndicator3.indicatorMode = MDCActivityIndicatorModeDeterminate;
   self.activityIndicator3.cycleColors =  @[ [MDCPalette bluePalette].tint500,
                                             [MDCPalette redPalette].tint500,
                                             [MDCPalette greenPalette].tint500,
                                             [MDCPalette yellowPalette].tint500 ];
   [self.activityIndicator3 sizeToFit];
-  [self.activityIndicator3 startAnimating];
 
   [self setupExampleViews];
 }

@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCTextField.h"
 
@@ -30,6 +28,8 @@
 #import "MaterialTypography.h"
 
 NSString *const MDCTextFieldTextDidSetTextNotification = @"MDCTextFieldTextDidSetTextNotification";
+NSString *const MDCTextInputDidToggleEnabledNotification =
+    @"MDCTextInputDidToggleEnabledNotification";
 
 // The image we use for the clear button has a little too much air around it. So we have to shrink
 // by this amount on each side.
@@ -427,6 +427,9 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1.f;
 - (void)setEnabled:(BOOL)enabled {
   [super setEnabled:enabled];
   _fundament.enabled = enabled;
+  [[NSNotificationCenter defaultCenter]
+      postNotificationName:MDCTextInputDidToggleEnabledNotification
+                    object:self];
 }
 
 // In iOS 8, .leftView and .rightView are not swapped in RTL so we have to do that manually.
@@ -479,7 +482,11 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1.f;
 
   // Standard textRect calculation
   UIEdgeInsets textInsets = self.textInsets;
-  textRect.origin.x += textInsets.left;
+  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    textRect.origin.x += textInsets.right;
+  } else {
+    textRect.origin.x += textInsets.left;
+  }
   textRect.size.width -= textInsets.left + textInsets.right;
 
   // Adjustments for .leftView, .rightView

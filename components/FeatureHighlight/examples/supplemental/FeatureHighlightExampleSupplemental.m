@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "FeatureHighlightExampleSupplemental.h"
 
@@ -95,21 +93,14 @@ static NSString *const reuseIdentifier = @"Cell";
 
 #pragma mark - CatalogByConvention
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Feature Highlight", @"Feature Highlight" ];
-}
-
-+ (NSString *)catalogDescription {
-  return @"The Feature Highlight component is used to introduce users to new features and"
-  " functionality at contextually relevant moments.";
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return YES;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Feature Highlight", @"Feature Highlight" ],
+    @"description": @"The Feature Highlight component is used to introduce users to new features "
+    @"and functionality at contextually relevant moments.",
+    @"primaryDemo": @YES,
+    @"presentable": @YES,
+  };
 }
 
 @end
@@ -160,16 +151,12 @@ static NSString *const reuseIdentifier = @"Cell";
 
 #pragma mark - CatalogByConvention
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Feature Highlight", @"Colors" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Feature Highlight", @"Colors" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
 
 @end
@@ -195,12 +182,12 @@ static NSString *const reuseIdentifier = @"Cell";
 
 #pragma mark - CatalogByConvention
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Feature Highlight", @"Custom Fonts" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Feature Highlight", @"Custom Fonts" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
 
 @end
@@ -255,16 +242,12 @@ static NSString *const reuseIdentifier = @"Cell";
 
 #pragma mark - CatalogByConvention
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Feature Highlight", @"Shown Views" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return YES;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Feature Highlight", @"Shown Views" ],
+    @"primaryDemo": @NO,
+    @"presentable": @YES,
+  };
 }
 
 @end

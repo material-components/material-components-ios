@@ -15,20 +15,7 @@
 #import <XCTest/XCTest.h>
 
 #import "MaterialSnackbar.h"
-
-@interface FakeMDCSnackbarManagerDelegate : NSObject <MDCSnackbarManagerDelegate>
-
-- (void)willPresentSnackbarWithMessageView:(MDCSnackbarMessageView *)messageView;
-
-@end
-
-@implementation FakeMDCSnackbarManagerDelegate
-
-- (void)willPresentSnackbarWithMessageView:(__unused MDCSnackbarMessageView *)messageView {
-  // Nothing
-}
-
-@end
+#import "supplemental/MDCFakeMDCSnackbarManagerDelegate.h"
 
 @interface MDCSnackbarManagerInstanceTests : XCTestCase
 

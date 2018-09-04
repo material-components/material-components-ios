@@ -1,18 +1,16 @@
-/*
- Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <UIKit/UIKit.h>
 
@@ -101,6 +99,37 @@
  header height infinitely.
  */
 @property(nonatomic) BOOL inferTopSafeAreaInsetFromViewController;
+
+/**
+ When a WKWebView's scroll view is the tracking scroll view, this behavioral flag affects whether
+ the flexible header uses additionalSafeAreaInsets or contentInset to adjust the tracking scroll
+ view's content.
+
+ Enabling this behavioral flag will fix a bug with small WKWebView content where the contentSize
+ would be improperly set, allowing the content to be scrolled when it shouldn't be.
+
+ This behavior will eventually be enabled by default.
+
+ Default is NO.
+
+ @note If you enable this flag you must also set a topLayoutGuideViewController. Failure to do so
+ will result in a runtime assertion failure.
+
+ @note If you support devices running an OS older than iOS 11 and you've enabled this flag, you
+ must also adjust the frame of your WKWebView to be positioned below the header using the
+ topLayoutGuide, like so:
+
+@code
+ [NSLayoutConstraint constraintWithItem:webView
+                              attribute:NSLayoutAttributeTop
+                              relatedBy:NSLayoutRelationEqual
+                                 toItem:self.topLayoutGuide
+                              attribute:NSLayoutAttributeBottom
+                             multiplier:1.0
+                               constant:0]
+@endcode
+ */
+@property(nonatomic) BOOL useAdditionalSafeAreaInsetsForWebKitScrollViews;
 
 #pragma mark UIViewController methods
 

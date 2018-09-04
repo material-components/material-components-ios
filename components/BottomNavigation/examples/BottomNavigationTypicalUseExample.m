@@ -1,18 +1,16 @@
-/*
- Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <UIKit/UIKit.h>
 
@@ -81,7 +79,16 @@
 #endif
   _bottomNavBar.items = @[ tabBarItem1, tabBarItem2, tabBarItem3, tabBarItem4, tabBarItem5 ];
   _bottomNavBar.selectedItem = tabBarItem2;
-  [self updateBadgeItemCount];
+
+  self.navigationItem.rightBarButtonItem =
+      [[UIBarButtonItem alloc] initWithTitle:@"+Message"
+                                       style:UIBarButtonItemStylePlain
+                                      target:self
+                                      action:@selector(updateBadgeItemCount)];
+  self.navigationItem.rightBarButtonItem.accessibilityLabel = @"Add a message";
+  self.navigationItem.rightBarButtonItem.accessibilityHint =
+      @"Increases the badge on the \"Messages\" tab.";
+  self.navigationItem.rightBarButtonItem.accessibilityIdentifier = @"messages-increment-badge";
 }
 
 - (void)layoutBottomNavBar {
@@ -110,14 +117,12 @@
   [self layoutBottomNavBar];
 }
 
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
 - (void)viewSafeAreaInsetsDidChange {
   if (@available(iOS 11.0, *)) {
     [super viewSafeAreaInsetsDidChange];
   }
   [self layoutBottomNavBar];
 }
-#endif
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
@@ -131,11 +136,6 @@
   }
   self.badgeCount++;
   self.bottomNavBar.items[1].badgeValue = [NSNumber numberWithInt:self.badgeCount].stringValue;
-
-  __weak BottomNavigationTypicalUseExample *weakSelf = self;
-  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-    [weakSelf updateBadgeItemCount];
-  });
 }
 
 #pragma mark - MDCBottomNavigationBarDelegate

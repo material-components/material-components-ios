@@ -154,9 +154,13 @@ cut_release() {
     echo -e "\n## Component changes" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
     cat "$CHANGELOG_PATH" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
     echo -e "## API changes" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
+    echo -e "Replace this text with example code for each new feature." | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
     echo -e "## New features\n" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
+    echo -e "Replace this text with links to deprecation guides." | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
     echo -e "## New deprecations\n" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
+    echo -e "Replace this explanations for how to resolve the breaking changes." | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
     echo -e "## Breaking changes\n" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
+    echo -e "Replace this text with a summarized description of this release's contents." | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
     echo -e "# #develop#\n" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
   fi
   git add "$rootdir/CHANGELOG.md"
@@ -164,39 +168,6 @@ cut_release() {
   git push origin release-candidate -u
 
   RELEASE_SHA=$(git merge-base --fork-point release-candidate $branch)
-
-  today=$(date +'%B%%20%d,%%20%Y')
-
-  echo
-  echo
-  echo "${B}If you have not already, please send the following email:$N"
-  echo
-  echo "> Consider setting up Gmail or Inbox as your default mailto handler:"
-  echo "> https://productforums.google.com/forum/#!topic/chrome/oxPLcXhbt9w"
-  echo
-  echo "Copy and paste the following into a browser to compose the email:"
-  echo
-  echo "    mailto:material-components-ios-discuss%40googlegroups.com?subject=State%20of%20material-components-ios'%20$today%20release&body=I%20am%20about%20to%20cut%20the%20release%20for%20$today.%0A%0AThe%20release%20is%20being%20cut%20at%20$RELEASE_SHA.%0AView%20this%20SHA%20on%20GitHub%20at%20https%3A%2F%2Fgithub.com%2Fmaterial-components%2Fmaterial-components-ios%2Fcommit%2F$RELEASE_SHA%0A%0AWe%20encourage%20clients%20to%20test%20this%20release.%20To%20do%20so%2C%20check%20out%20the%0Arelease-candidate%20branch%20like%20so%3A%0A%0A%20%20%20%20git%20fetch%0A%20%20%20%20git%20checkout%20origin%2Frelease-candidate%0A"
-  echo
-  echo "Or compose the email by hand using the following template:"
-  echo
-  echo "To: material-components-ios-discuss@googlegroups.com"
-  echo "Subject: State of material-components-ios's $today release"
-  echo "Body:"
-  echo "I am about to cut the release for $today."
-  echo
-  echo "The release is being cut at $RELEASE_SHA."
-  echo "View this SHA on GitHub at https://github.com/material-components/material-components-ios/commit/$RELEASE_SHA"
-  echo
-  echo "We encourage clients to test this release. To do so, check out the"
-  echo "release-candidate branch like so:"
-  echo
-  echo "    git fetch"
-  echo "    git checkout origin/release-candidate"
-  echo
-  echo "<end of email body>"
-  echo
-  echo
   PULL_REQUEST_URL="https://github.com/material-components/material-components-ios/compare/stable...release-candidate"
   echo "${B}You can now start the release-candidate pull request:${N}"
   echo
@@ -406,6 +377,25 @@ publish_release() {
 }
 
 publish_podspec() {
+  cat <<EOL
+          |\\___/|
+         (,\\  /,)\\
+         /     /  \\       DRAGON SAYS HALT:
+        (@_^_@)/   \\      HAS THE INTERNAL CL LANDED?
+         W//W_/     \\     DO NOT PUBLISH THIS RELEASE UNTIL
+       (//) |        \\    IT HAS LANDED.
+     (/ /) _|_ /   )  \\
+   (// /) '/,_ _ _/  (~^-.
+ (( // )) ,-{        _    \`.
+(( /// ))  '/\\      /       \\
+(( ///))     \`.   {       }  \\
+ ((/ ))    .----~-.\\   \\-'    ~-__
+          ///.----..>   \\ \\_      ~--____
+           ///-._ _  _ _}    ~--------------
+EOL
+  echo "Press enter to confirm that the internal CL has landed."
+  read
+
   cd "$rootdir"
   echo "Verifying Cocoapod trunk permissions"
   pod trunk me > cocoapods_permissions.log
@@ -537,11 +527,16 @@ generate_release_components() {
 }
 
 generate_release_files() {
-  git diff --name-only origin/stable..$(get_latest_branch) components/
+  if [ -n "$1" ]; then
+    old_commit="$1"
+  else
+    old_commit=origin/stable
+  fi
+  git diff --name-only "$old_commit"..$(get_latest_branch) components/
 }
 
 generate_release_umbrella_headers() {
-  for file in $(generate_release_files); do
+  for file in $(generate_release_files "$@"); do
     file_dir=$(dirname $file)
     if ls "$file_dir"/Material*.h 1> /dev/null 2>&1; then
       ls "$file_dir"/Material*.h | grep -v "_table"
@@ -666,13 +661,13 @@ case "$1" in
   authors)    generate_release_authors ${@:2} ;;
   components) generate_release_components ${@:2} ;; # args: [base sha]
   diff)       generate_release_diff ${@:2} ;;
-  files)      generate_release_files ${@:2} ;;
+  files)      generate_release_files ${@:2} ;; # args: [base sha]
   headers)    generate_release_headers ${@:2} ;;
   log)        generate_release_log ${@:2} ;;
   notes)      generate_release_notes ${@:2} ;;
   source)     generate_release_source ${@:2} ;;
   stories)    generate_release_stories ${@:2} ;;
-  umbrellas)  generate_release_umbrella_headers ${@:2} ;;
+  umbrellas)  generate_release_umbrella_headers ${@:2} ;; # args: [base sha]
 
   abort)      abort_release ${@:2} ;;
 
