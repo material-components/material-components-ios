@@ -82,7 +82,7 @@ class ActionSheetTest: XCTestCase {
     
   }
 
-  func testColorThemer() {
+  func testDefaultColors() {
     // Given
     let titleTest = "Title"
 
@@ -108,8 +108,13 @@ class ActionSheetTest: XCTestCase {
     } else {
       XCTFail("No message label was created")
     }
+  }
 
+  func testColorThemer() {
     // Given
+    let titleTest = "Title"
+    let messageTest = "Message"
+    actionSheet.title = titleTest
     actionSheet.message = nil
     var colorScheme = MDCSemanticColorScheme()
     colorScheme.onSurfaceColor = .blue
