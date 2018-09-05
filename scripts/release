@@ -583,7 +583,7 @@ generate_release_notes() {
         --pretty="* [%s](https://github.com/material-components/material-components-ios/commit/%H) (%an)" \
         --no-merges \
         origin/stable..$(get_latest_branch) \
-        $folder
+        $folder | grep -v "\[automated\]"
     }
 
     if [[ $(componentdiff) ]]; then
