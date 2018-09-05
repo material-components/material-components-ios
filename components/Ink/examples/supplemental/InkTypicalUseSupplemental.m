@@ -80,7 +80,7 @@
   return @{
     @"breadcrumbs": @[ @"Ink", @"Ink" ],
     @"description": @"The Ink component provides a radial action in the form of a visual ripple "
-    @" of ink expanding outward from the user's touch.",
+    @"of ink expanding outward from the user's touch.",
     @"primaryDemo": @YES,
     @"presentable": @YES,
   };
