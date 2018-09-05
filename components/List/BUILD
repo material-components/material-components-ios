@@ -27,5 +27,7 @@ mdc_public_objc_library(
         "//components/Ink",
         "//components/ShadowLayer",
         "//components/ShadowElevations",
+        "//components/Typography",
+        "@material_internationalization_ios//:MDFInternationalization",
     ],
 )

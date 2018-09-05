@@ -56,25 +56,18 @@
 
 @implementation NavigationBarTypicalUseExample (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Navigation Bar", @"Navigation Bar" ];
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Navigation Bar", @"Navigation Bar" ],
+    @"description": @"The Navigation Bar component is a view composed of a left and right Button "
+    @"Bar and either a title label or a custom title view.",
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
 
 - (BOOL)catalogShouldHideNavigation {
   return YES;
-}
-
-+ (NSString *)catalogDescription {
-  return @"The Navigation Bar component is a view composed of a left and right Button Bar and"
-          " either a title label or a custom title view.";
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return NO;
 }
 
 @end

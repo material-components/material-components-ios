@@ -1,3 +1,13 @@
+<!--docs:
+title: "Action Sheet"
+layout: detail
+section: components
+excerpt: "Material design action sheet displays a list of actions."
+iconId: <#icon_id#>
+path: /catalog/action-sheet/
+api_doc_root: true
+-->
+
 <!-- This file was auto-generated using ./scripts/generate_readme ActionSheet -->
 
 # Action Sheet
@@ -11,6 +21,11 @@ the screen and displays actions a user can take.
 
 ## Design & API documentation
 
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-action-sheet">Material Design guidelines: ActionSheet</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/action-sheet/api-docs/Classes/MDCActionSheetAction.html">MDCActionSheetAction</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/action-sheet/api-docs/Classes/MDCActionSheetController.html">MDCActionSheetController</a></li>
+</ul>
 
 ## Table of contents
 
@@ -21,12 +36,18 @@ the screen and displays actions a user can take.
 - [Usage](#usage)
   - [Typical use](#typical-use)
 - [MDCActionSheetController vs. UIAlertControllerStyleActionSheet](#mdcactionsheetcontroller-vs.-uialertcontrollerstyleactionsheet)
+- [Extensions](#extensions)
+- [Accessibility](#accessibility)
+  - [Set `-isScrimAccessibilityElement`](#set-`-isscrimaccessibilityelement`)
+  - [Set `-scrimAccessibilityLabel`](#set-`-scrimaccessibilitylabel`)
+  - [Set `-scrimAccessibilityHint`](#set-`-scrimaccessibilityhint`)
+  - [Set `-scrimAccessibilityTraits`](#set-`-scrimaccessibilitytraits`)
 
 - - -
 
 ## Overview
 
-`MDCActionSheetController` is a material design implemenation of UIAlertControllerStyleActionSheet.
+`MDCActionSheetController` is a material design implementation of UIAlertControllerStyleActionSheet.
 
 ## Installation
 
@@ -121,7 +142,7 @@ with the [UIAlertControllerStyleActionSheet](https://developer.apple.com/documen
 
 1. Both classes are presented from the bottom of the screen on an iPhone and have a list of actions.
 
-2. Both classes support both a title and message but both are optional properties.
+2. Both classes support optional title and message properties.
 
 #### Differences
 
@@ -129,9 +150,92 @@ with the [UIAlertControllerStyleActionSheet](https://developer.apple.com/documen
 MDCActionSheetController doesn't support popoverPresentationController but instead always comes up from the 
 bottom of the screen.
 
-2. UIAlertControllerStyleActionSheet is a style of UIAlertController and not its own class. If you would need an 
-AlertController please see `MDCDialog` class. 
+2. UIAlertControllerStyleActionSheet is a style of UIAlertController and not its own class. If you need a
+Material UIAlertController please see the `MDCAlertController` class. 
 
 3. MDCActionSheetController does not support text fields.
 
 4. MDCActionSheetController does not have a preferredAction.
+
+## Extensions
+
+<!-- Extracted from docs/accessibility.md -->
+
+## Accessibility
+
+To help ensure your Action Sheet is accessible to as many users as possible, please be sure to reivew the following
+recommendations:
+
+The scrim by default enables the "Z" gesture to dismiss. If `isScrimAccessibilityElement` is not set or is set to
+`false` then `scrimAccessibilityLabel`, `scrimAccessibilityHint`, and `scrimAccessibilityTraits` will
+have any effect.
+
+### Set `-isScrimAccessibilityElement`
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+let actionSheet = MDCActionSheetController()
+actionSheet.transitionController.isScrimAccessibilityElement = true
+```
+
+#### Objective-C
+
+```objc
+MDCActionSheetController *actionSheet = [MDCActionSheetController alloc] init];
+actionSheet.isScrimAccessibilityElement = YES;
+```
+<!--</div>-->
+
+### Set `-scrimAccessibilityLabel`
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+let actionSheet = MDCActionSheetController()
+actionSheet.transitionController.scrimAccessibilityLabel = "Cancel"
+```
+
+#### Objective-C
+
+```objc
+MDCActionSheetController *actionSheet = [MDCActionSheetController alloc] init];
+actionSheet.scrimAccessibilityLabel = @"Cancel";
+```
+<!--</div>-->
+
+### Set `-scrimAccessibilityHint`
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+let actionSheet = MDCActionSheetController()
+actionSheet.transitionController.scrimAccessibilityHint = "Dismiss the action sheet"
+```
+
+#### Objective-C
+
+```objc
+MDCActionSheetController *actionSheet = [MDCActionSheetController alloc] init];
+actionSheet.scrimAccessibilityHint = @"Dismiss the action sheet";
+```
+
+<!--</div>-->
+
+### Set `-scrimAccessibilityTraits`
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+let actionSheet = MDCActionSheetController()
+actionSheet.transitionController.scrimAccessibilityTraits = UIAccessibilityTraitButton
+```
+
+#### Objective-C
+
+```objc
+MDCActionSheetController *actionSheet = [MDCActionSheetController alloc] init];
+actionSheet.scrimAccessibilityTraits = UIAccessibilityTraitButton;
+```
+<!--</div>-->
+

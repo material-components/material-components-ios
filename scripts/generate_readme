@@ -68,12 +68,18 @@ TOC_STRING="<!-- toc -->"
 DESIGN_AND_API_STRING="<!-- design-and-api -->"
 BADGES_STRING="<!-- badges -->"
 VARS_PATH="$COMPONENT_PATH/.vars"
+JAZZY_PATH="$COMPONENT_PATH/.jazzy.yaml"
 SITE_URL_BASE="https://material.io/components/ios"
 
 touch "$TMP_README_PATH"
 
 if [ ! -f "$VARS_PATH" ]; then
   echo "No .vars file found at $VARS_PATH. Please create one."
+  exit 1
+fi
+
+if [ ! -f "$JAZZY_PATH" ]; then
+  echo "No .jazzy.yaml file found at $JAZZY_PATH. Please create one. Note: it's .yaml - not .yml."
   exit 1
 fi
 

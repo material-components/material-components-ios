@@ -1,18 +1,16 @@
-/*
- Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
- 
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 import UIKit
 import MaterialComponentsAlpha.MaterialActionSheet
@@ -23,7 +21,7 @@ class ActionSheetSwiftExample: UIViewController {
   var typographyScheme = MDCTypographyScheme()
   let tableView = UITableView()
   enum ActionSheetExampleType {
-    case typical, title, message, noIcons, titleAndMessage, dynamicType, delayed
+    case typical, title, message, noIcons, titleAndMessage, dynamicType, delayed, thirtyOptions
   }
   typealias ExamplesTuple = (label: String, type: ActionSheetExampleType)
   let data: [ExamplesTuple] = [
@@ -33,7 +31,8 @@ class ActionSheetSwiftExample: UIViewController {
     ("No Icons", .noIcons),
     ("With Title and Message", .titleAndMessage),
     ("Dynamic Type Enabled", .dynamicType),
-    ("Delayed", .delayed)
+    ("Delayed", .delayed),
+    ("Thirty Options", .thirtyOptions)
   ]
   let cellIdentifier = "BaseCell"
 
@@ -82,20 +81,25 @@ class ActionSheetSwiftExample: UIViewController {
         actionSheet.addAction(action)
         actionSheet.backgroundColor = .green
       }
+    case .thirtyOptions:
+      actionSheet = ActionSheetSwiftExample.thirtyOptions()
     }
+    MDCActionSheetTypographyThemer.applyTypographyScheme(typographyScheme, to: actionSheet)
     present(actionSheet, animated: true, completion: nil)
   }
 }
 
 // MARK: Catalog by Convensions
 extension ActionSheetSwiftExample {
-  class func catalogIsPrimaryDemo() -> Bool {
-    return false
+
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Action Sheet", "Action Sheet (Swift)"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
   }
 
-  class func catalogBreadcrumbs() -> [String] {
-    return ["Action Sheet", "Action Sheet (Swift)"]
-  }
 }
 
 extension ActionSheetSwiftExample : UITableViewDelegate {
@@ -204,4 +208,16 @@ extension ActionSheetSwiftExample {
     actionSheet.addAction(actionThree)
     return actionSheet
   }
+
+  static func thirtyOptions() -> MDCActionSheetController {
+    let actionSheet = MDCActionSheetController(title: "Action sheet", message: messageString)
+    for i in 1...30 {
+      let action = MDCActionSheetAction(title: "Action \(i)",
+                                        image: UIImage(named: "Home"),
+                                        handler: nil)
+      actionSheet.addAction(action)
+    }
+    return actionSheet
+  }
+
 }
