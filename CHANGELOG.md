@@ -19,6 +19,9 @@ ButtonBar now provides a mechanism for reacting to size changes of its buttons v
 
 There is a new [self-sizing collection view cell](https://github.com/material-components/material-components-ios/pull/4953).
 
+NavigationBar exposes a new `uppercasesButtonTitles` property that can be used to change the
+auto-uppercasing behavior of the buttons. By default this property is enabled.
+
 ## API changes
 
 ### ActionSheet
