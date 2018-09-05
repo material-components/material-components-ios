@@ -46,7 +46,7 @@
 
 - (MDCCornerTreatment *)cornerTreatmentValueWithViewBounds:(CGRect)bounds {
   MDCCornerTreatment *cornerTreatment;
-  if (_sizeType == MDCShapeCornerSizeTypePercentage && _size <= 1) {
+  if (_sizeType == MDCShapeCornerSizeTypePercentage) {
     CGFloat normalizedShapeSize = bounds.size.height * _size;
     cornerTreatment = [self cornerTreatmentSizeWithNormalizedShapeSize:normalizedShapeSize];
   } else {
