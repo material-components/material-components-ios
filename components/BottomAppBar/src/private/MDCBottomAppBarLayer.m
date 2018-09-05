@@ -45,6 +45,11 @@
   static CGFloat kEndAngle;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
+    // Since we know the hypotenuse (radius) and opposite side (height above the line) we can
+    // compute the angle.
+    // sin( θ ) = opposite / hypotenuse
+    // θ = arcsin( opposite / hypotenuse )
+    // More reading: https://www.mathsisfun.com/algebra/trig-finding-angle-right-triangle.html
     kEndAngle = (CGFloat)asin(kMDCBottomAppBarFloatingButtonPositionY /
                               kMDCBottomAppBarFloatingButtonRadius);
     kStartAngle = M_PI - kEndAngle;
