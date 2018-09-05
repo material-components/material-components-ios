@@ -89,6 +89,35 @@ extension GitHub {
   }
 
   /**
+   Fetches a string.
+
+   @param urlAsString An API url to request. Should be relative to https://api.github.com/
+   @param additionalHeaders Optional additional request headers.
+   */
+  func get(from urlAsString: String, additionalHeaders: [String: String]? = nil) -> String? {
+    guard let url = URL(string: apiUrlBase + urlAsString) else {
+      return nil
+    }
+    var request = authenticated(request: URLRequest(url: url))
+    if let additionalHeaders = additionalHeaders {
+      for (field, value) in additionalHeaders {
+        request.addValue(value, forHTTPHeaderField: field)
+      }
+    }
+    let result = synchronousRequest(with: request)
+    if result.response?.statusCode == 200, let data = result.data {
+      return String(data: data, encoding: .utf8)
+
+    } else {
+      if let error = result.error {
+        print("Error: \(error.localizedDescription)")
+      }
+      exit(1)
+    }
+    return nil
+  }
+
+  /**
    Patches a single object.
 
    @param urlAsString An API url to request. Should be relative to https://api.github.com/
