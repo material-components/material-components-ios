@@ -868,6 +868,7 @@ Pod::Spec.new do |mdc|
       scheme.ios.deployment_target = '8.0'
       scheme.public_header_files = "components/schemes/#{scheme.base_name}/src/*.h"
       scheme.source_files = "components/schemes/#{scheme.base_name}/src/*.{h,m}"
+      scheme.dependency "MaterialComponents/private/ShapeLibrary"
     end
     scheme_spec.subspec "Typography" do |scheme|
       scheme.ios.deployment_target = '8.0'
