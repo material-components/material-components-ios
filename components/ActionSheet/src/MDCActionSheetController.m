@@ -140,7 +140,8 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
-
+  
+  [self correctSheetHeight];
   CGSize size = [_header sizeThatFits:CGRectStandardize(self.view.bounds).size];
   _header.frame = CGRectMake(0, 0, self.view.bounds.size.width, size.height);
   UIEdgeInsets insets = UIEdgeInsetsMake(_header.frame.size.height, 0, 0, 0);
@@ -153,13 +154,7 @@ static NSString *const ReuseIdentifier = @"BaseCell";
   _tableView.contentOffset = CGPointMake(0, -size.height);
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
-
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-  self.mdc_bottomSheetPresentationController.delegate = self;
-#pragma clang diagnostic pop
+- (void)correctSheetHeight {
   // If there are too many options to fit on half of the screen then show as many options as
   // possible minus half a cell, to allow for bleeding and signal to the user that the sheet is
   // scrollable content.
@@ -171,6 +166,16 @@ static NSString *const ReuseIdentifier = @"BaseCell";
     CGFloat preferredHeight = (((CGFloat)amountOfCellsToShow - 0.5f) * cellHeight) + headerHeight;
     self.mdc_bottomSheetPresentationController.preferredSheetHeight = preferredHeight;
   }
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+  self.mdc_bottomSheetPresentationController.delegate = self;
+#pragma clang diagnostic pop
+
   self.mdc_bottomSheetPresentationController.dismissOnBackgroundTap =
       self.transitionController.dismissOnBackgroundTap;
   [self.view layoutIfNeeded];
