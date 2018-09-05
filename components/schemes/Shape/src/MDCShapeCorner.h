@@ -31,6 +31,8 @@ typedef NS_ENUM(NSInteger, MDCShapeCornerFamily) {
 
  - MDCShapeCornerSizeTypeAbsolute: If an absolute shape size is provided.
  - MDCShapeCornerSizeTypePercentage: If a relative shape size is provided.
+
+ See MDCShapeCorner's @c size property for additional details.
  */
 typedef NS_ENUM(NSInteger, MDCShapeCornerSizeType) {
   MDCShapeCornerSizeTypeAbsolute,
@@ -58,8 +60,8 @@ typedef NS_ENUM(NSInteger, MDCShapeCornerSizeType) {
  When MDCShapeSizeType is MDCShapeCornerSizeTypeAbsolute, this accepts absolute values
  that are positive.
 
- When MDCShapeSizeType is MDCShapeCornerSizeTypePercentage, this accepts percentage values
- from 0 to 1 (0% - 100%). These values are percentages based on the height of the surface.
+ When MDCShapeSizeType is MDCShapeCornerSizeTypePercentage, values are expected to be in the range
+ of 0 to 1 (0% - 100%). These values are percentages based on the height of the surface.
  */
 @property(assign, nonatomic) CGFloat size;
 

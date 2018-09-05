@@ -23,6 +23,9 @@ licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
     name = "Shape",
+    deps = [
+        "//components/private/ShapeLibrary",
+    ],
 )
 
 package_group(

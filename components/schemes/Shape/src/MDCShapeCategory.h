@@ -20,8 +20,6 @@
  MDCShapeScheme.
 
  MDCShapeCategory is built from 4 corners, that can be set to alter the shape value.
-
- This takes on the assumption that our settable shapes are made of 4 corners.
  */
 @interface MDCShapeCategory : NSObject
 
@@ -45,9 +43,19 @@
  */
 @property(strong, nonatomic) MDCShapeCorner *bottomRightCorner;
 
+
 /**
- This method is a convenience method of setting the shape value of all our corners at once to the
- provided cornerFamily and cornerSize.
+ The default init of the class. It sets all 4 corners with a corner family of
+ MDCShapeCornerFamilyRounded and size of 0. This is equivalent to a "sharp" corner, or in terms of
+ Apple's API it is the same as setting the cornerRadius to 0.
+
+ @return returns an initialized MDCShapeCategory instance.
+ */
+- (instancetype)init;
+
+/**
+ This method is a convenience initializer of setting the shape value of all our corners at once
+ to the provided cornerFamily and cornerSize.
 
  The outcome is a symmetrical shape that has the same values for all its corners.
 
