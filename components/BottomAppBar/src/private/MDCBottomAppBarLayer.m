@@ -46,7 +46,7 @@
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
     kEndAngle = (CGFloat)asin(kMDCBottomAppBarFloatingButtonPositionY /
-                             kMDCBottomAppBarFloatingButtonRadius);
+                              kMDCBottomAppBarFloatingButtonRadius);
     kStartAngle = M_PI - kEndAngle;
   });
 
@@ -91,10 +91,10 @@
     case MDCBottomAppBarFloatingButtonPositionTrailing: {
       if (layoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
         [self pathWithCutLeft:bottomBarPath
-                         width:width
-                        height:height
-                    startAngle:kStartAngle
-                      endAngle:kEndAngle];
+                        width:width
+                       height:height
+                   startAngle:kStartAngle
+                     endAngle:kEndAngle];
       } else {
         [self pathWithCutRight:bottomBarPath
                          width:width
