@@ -89,4 +89,5 @@ typedef NS_ENUM(NSInteger, MDCShapeCornerSizeType) {
  @return an MDCCornerTreatment.
  */
 - (MDCCornerTreatment *)cornerTreatmentValueWithViewBounds:(CGRect)bounds;
+
 @end
