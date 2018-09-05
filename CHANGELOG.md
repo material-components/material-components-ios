@@ -1,3 +1,135 @@
+# 62.1.0
+
+This minor release introduces a new auto-sizing List cell implementation, improvements to
+ActionSheet, the ability to modify casing behavior on NavigationBar, and bug fixes.
+
+## New features
+
+You can now set an accessibilityIdentifier on ActionSheet actions:
+
+```swift
+let action = MDCActionSheetAction(title: "Title", image: nil, handler: nil)
+action.accessibilityIdentifier = "Some identifier"
+actionSheet.addAction(action)
+```
+
+ActionSheet now has a typography themer.
+
+ButtonBar now provides a mechanism for reacting to size changes of its buttons via its delegate.
+
+There is a new [self-sizing collection view cell](https://github.com/material-components/material-components-ios/pull/4953).
+
+NavigationBar exposes a new `uppercasesButtonTitles` property that can be used to change the
+auto-uppercasing behavior of the buttons. By default this property is enabled.
+
+## API changes
+
+### ActionSheet
+
+#### MDCActionSheetAction
+
+*new* property: `accessibilityIdentifier` in `MDCActionSheetAction`
+
+*modified* class: `MDCActionSheetAction`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `class MDCActionSheetAction : NSObject, NSCopying` |
+| To: | `class MDCActionSheetAction : NSObject, NSCopying, UIAccessibilityIdentification` |
+
+*modified* class: `MDCActionSheetAction`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCActionSheetAction : NSObject <NSCopying>` |
+| To: | `@interface MDCActionSheetAction     : NSObject <NSCopying, UIAccessibilityIdentification>` |
+
+#### MDCActionSheetController
+
+*new* property: `transitionController` in `MDCActionSheetController`
+
+### ActionSheet+TypographyThemer
+
+**New component.**
+
+### ButtonBar
+
+#### MDCButtonBarDelegate
+
+*new* method: `-buttonBarDidInvalidateIntrinsicContentSize:` in `MDCButtonBarDelegate`
+
+#### MDCButtonBar
+
+*new* property: `uppercasesButtonTitles` in `MDCButtonBar`
+
+*new* property: `delegate` in `MDCButtonBar`
+
+### FlexibleHeader+CanAlwaysExpandToMaximumHeight
+
+**New component.**
+
+## General changes
+
+* [updated to newest CbC standard (#4956)](https://github.com/material-components/material-components-ios/commit/3480c50c67205018688e2a24d76cf19474d5dfee) (Yarden Eitan)
+
+## Component changes
+
+### ActionSheet
+
+* [Add accessibility identifier (#4944)](https://github.com/material-components/material-components-ios/commit/6cd0f771a6f17255276810baa2fc4f5c8625793e) (Cody Weaver)
+* [Add example with too many options to fit on screen (#4946)](https://github.com/material-components/material-components-ios/commit/77fc2f759c948d067353d4abaabc9692b6521fbd) (Cody Weaver)
+* [Add scrim accessibility properties. (#4919)](https://github.com/material-components/material-components-ios/commit/f76df19f1288448c5459419cbbd334fb91203c55) (Cody Weaver)
+* [Add typography themer (#4966)](https://github.com/material-components/material-components-ios/commit/05d4be9e43aad09706cab49f04085802f6ec12d5) (Cody Weaver)
+* [Always show first option (#4963)](https://github.com/material-components/material-components-ios/commit/0d1f5148e83477927caa5cec2d0b15f05d1afc24) (Cody Weaver)
+* [Make ActionSheet not presentable. (#4995)](https://github.com/material-components/material-components-ios/commit/a2b6a606590bcb00e76c775d3be87622d6eccf9f) (Robert Moore)
+* [Update test to guard against silent fail (#4969)](https://github.com/material-components/material-components-ios/commit/e8c688617b98d6cb6d3b22944d4bc6a8fae87d3b) (Cody Weaver)
+
+### BottomAppBar
+
+* [Use the height of bottom app bar as the contentInset of table view (#4928)](https://github.com/material-components/material-components-ios/commit/53fe4771d07f7eb55cd00ced4ea26379f71d5617) (Wenyu Zhang)
+
+### BottomNavigation
+
+* [Update ripple color for unselected items. (#4950)](https://github.com/material-components/material-components-ios/commit/09505ec92096171c4735855acf9a19c6a955aaae) (Robert Moore)
+
+### ButtonBar
+
+* [Add a buttonBarDidInvalidateIntrinsicContentSize API to the delegate. (#4932)](https://github.com/material-components/material-components-ios/commit/471936b842e7473e51b5dc02df619a7e67a0c5b2) (featherless)
+* [Add uppercasesButtonTitles API for modifying title casing behavior. (#4935)](https://github.com/material-components/material-components-ios/commit/5d0e7ccfa8c9ed2e7258b5d8b94cba6141f4ec77) (featherless)
+
+### FlexibleHeader
+
+* [Add buttons to the configurator demo for shifting the header on/off-screen. (#4979)](https://github.com/material-components/material-components-ios/commit/349c1915a37f8b2275f270fccce4f5567a47cee1) (featherless)
+* [Add new canAlwaysExpandToMaximumHeight behavior. (#4978)](https://github.com/material-components/material-components-ios/commit/3b34e97f5b9ac335364933e96e1d5e57f04fd3a3) (featherless)
+* [Revert "Add new canAlwaysExpandToMaximumHeight behavior. (#4794)" (#4976)](https://github.com/material-components/material-components-ios/commit/66b8a7edfe65eb57b19e11e06155c4d6179622a0) (featherless)
+* [updated to newest CbC standard (#4956)](https://github.com/material-components/material-components-ios/commit/3480c50c67205018688e2a24d76cf19474d5dfee) (Yarden Eitan)
+
+### List
+
+* [Add Self Sizing Stereo Cell (#4953)](https://github.com/material-components/material-components-ios/commit/cf0997183147a595d363adfaae9aa8086fda9ad9) (Andrew Overton)
+
+### NavigationBar
+
+* [Add uppercasesButtonTitles API for modifying title casing behavior. (#4936)](https://github.com/material-components/material-components-ios/commit/059cbfaebb726a9fa2a91c3da78de460ce8c0434) (featherless)
+
+### ProgressView
+
+* [Address progress view example problems with safe area insets and impr… (#4895)](https://github.com/material-components/material-components-ios/commit/19372e3cdec5f426359a7ce6a351b85ed09c1e75) (Andrew Overton)
+
+### ShadowElevations
+
+* [[Catalog] Avoid cropping on the ShadowLayer example (#4884)](https://github.com/material-components/material-components-ios/commit/5986e38b84e60f4c5a8d3b44993dd2a7685a3e0d) (Wenyu Zhang)
+
+### Tabs
+
+* [fix TabBarViewControllerExample to respect safe area (#4949)](https://github.com/material-components/material-components-ios/commit/4b00a6c745c853114769a0de5773e5b28183a279) (Wenyu Zhang)
+
+### TextFields
+
+* [Specify textRect origin according to UIUserInterfaceLayoutDirection (#4974)](https://github.com/material-components/material-components-ios/commit/adc0a4c3c6b529d04f4dc4c301d6d8867267f6fe) (Andrew Overton)
+
+---
+
 # 62.0.0
 
 This major release reverts the addition of the new canAlwaysExpandToMaximumHeight behavior for the FlexibleHeader introduced in v61.0.0. More details on the commit that was reverted: https://github.com/material-components/material-components-ios/commit/2b3722f7b8cc7df131a8b33695990c99931c0e1b 
