@@ -27,12 +27,6 @@ static const CGFloat kMDCBottomAppBarFloatingButtonPositionX = 64.f;
 // The vertical position of the center of the floating button.
 static const CGFloat kMDCBottomAppBarFloatingButtonPositionY = 10.f;
 
-// The starting angle of the path cut for the floating button.
-static const CGFloat kMDCBottomAppBarFloatingButtonStartAngle = 161.f;
-
-// Then ending angle of the path cut for the floating button.
-static const CGFloat kMDCBottomAppBarFloatingButtonEndAngle = 19.f;
-
 // The radius of the path cut for the floating button.
 static const CGFloat kMDCBottomAppBarFloatingButtonRadius = 32.f;
 
