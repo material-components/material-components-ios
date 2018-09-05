@@ -140,7 +140,7 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
-  
+
   [self correctSheetHeight];
   CGSize size = [_header sizeThatFits:CGRectStandardize(self.view.bounds).size];
   _header.frame = CGRectMake(0, 0, self.view.bounds.size.width, size.height);
