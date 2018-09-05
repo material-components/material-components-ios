@@ -41,12 +41,18 @@
                  layoutDirection:(UIUserInterfaceLayoutDirection)layoutDirection {
   UIBezierPath *bottomBarPath = [UIBezierPath bezierPath];
 
+  static CGFloat kStartAngle;
+  static CGFloat kEndAngle;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    kEndAngle = (CGFloat)asin(kMDCBottomAppBarFloatingButtonPositionY /
+                             kMDCBottomAppBarFloatingButtonRadius);
+    kStartAngle = M_PI - kEndAngle;
+  });
+
   CGFloat width = CGRectGetWidth(rect);
   CGFloat height = CGRectGetHeight(rect);
   CGFloat midX = CGRectGetMidX(rect);
-
-  CGFloat startAngle = MDCDegreesToRadians(kMDCBottomAppBarFloatingButtonStartAngle);
-  CGFloat endAngle = MDCDegreesToRadians(kMDCBottomAppBarFloatingButtonEndAngle);
 
   // Paths generated below differ based on the placement of the floating button.
   switch (floatingButtonPosition) {
@@ -55,14 +61,14 @@
         [self pathWithCutRight:bottomBarPath
                          width:width
                         height:height
-                    startAngle:startAngle
-                      endAngle:endAngle];
+                    startAngle:kStartAngle
+                      endAngle:kEndAngle];
       } else {
         [self pathWithCutLeft:bottomBarPath
                         width:width
                        height:height
-                   startAngle:startAngle
-                     endAngle:endAngle];
+                   startAngle:kStartAngle
+                     endAngle:kEndAngle];
       }
       break;
     }
@@ -73,8 +79,8 @@
                                        kMDCBottomAppBarFloatingButtonPositionY);
       [bottomBarPath addArcWithCenter:centerPath
                                radius:kMDCBottomAppBarFloatingButtonRadius
-                           startAngle:startAngle
-                             endAngle:endAngle
+                           startAngle:kStartAngle
+                             endAngle:kEndAngle
                             clockwise:NO];
       [bottomBarPath addLineToPoint:CGPointMake(width, kMDCBottomAppBarYOffset)];
       [bottomBarPath addLineToPoint:CGPointMake(width, height * 2)];
@@ -87,14 +93,14 @@
         [self pathWithCutLeft:bottomBarPath
                          width:width
                         height:height
-                    startAngle:startAngle
-                      endAngle:endAngle];
+                    startAngle:kStartAngle
+                      endAngle:kEndAngle];
       } else {
         [self pathWithCutRight:bottomBarPath
                          width:width
                         height:height
-                    startAngle:startAngle
-                      endAngle:endAngle];
+                    startAngle:kStartAngle
+                      endAngle:kEndAngle];
       }
       break;
     }
