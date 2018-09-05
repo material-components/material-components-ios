@@ -45,6 +45,11 @@
  */
 @property(nonatomic, assign) BOOL dismissOnBackgroundTap;
 
+/**
+ The height of the content view.
+ */
+@property(nonatomic) CGFloat preferredSheetHeight;
+
 @end
 
 @interface MDCBottomSheetTransitionController (ScrimAccessibility)
