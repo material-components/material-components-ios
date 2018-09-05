@@ -166,7 +166,7 @@ static NSString *const ReuseIdentifier = @"BaseCell";
     CGFloat preferredHeight = (((CGFloat)amountOfCellsToShow - 0.5f) * cellHeight) + headerHeight;
     // When updating the preferredSheetHeight the presentation controller takes into account the
     // safe area so we have to remove that.
-    if (@available (iOS 11.0, *)) {
+    if (@available(iOS 11.0, *)) {
       preferredHeight = preferredHeight - self.view.safeAreaInsets.bottom;
     }
     self.mdc_bottomSheetPresentationController.preferredSheetHeight = preferredHeight;
