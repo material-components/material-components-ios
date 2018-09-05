@@ -43,7 +43,6 @@
  */
 @property(strong, nonatomic) MDCShapeCorner *bottomRightCorner;
 
-
 /**
  The default init of the class. It sets all 4 corners with a corner family of
  MDCShapeCornerFamilyRounded and size of 0. This is equivalent to a "sharp" corner, or in terms of
