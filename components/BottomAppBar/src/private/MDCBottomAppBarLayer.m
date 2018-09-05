@@ -52,7 +52,7 @@
     // More reading: https://www.mathsisfun.com/algebra/trig-finding-angle-right-triangle.html
     kEndAngle = (CGFloat)asin(kMDCBottomAppBarFloatingButtonPositionY /
                               kMDCBottomAppBarFloatingButtonRadius);
-    kStartAngle = M_PI - kEndAngle;
+    kStartAngle = (CGFloat)(M_PI - kEndAngle);
   });
 
   CGFloat width = CGRectGetWidth(rect);
