@@ -954,7 +954,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   self.slider.statefulAPIEnabled = YES;
 
   // When
-  float defaultThumbRadius = self.slider.thumbRadius;
+  float defaultThumbRadius = (float)self.slider.thumbRadius;
   float thumbRadius = 100.f;
   self.slider.thumbRadius = thumbRadius;
 
