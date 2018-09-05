@@ -160,7 +160,17 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
   self.mdc_bottomSheetPresentationController.delegate = self;
 #pragma clang diagnostic pop
-
+  // If there are too many options to fit on half of the screen then show as many options as
+  // possible minus half a cell, to allow for bleeding and signal to the user that the sheet is
+  // scrollable content.
+  if (_tableView.contentSize.height > (CGRectGetHeight(self.view.bounds) / 2)) {
+    CGFloat maxHeight = CGRectGetHeight(self.view.bounds) / 2;
+    CGFloat headerHeight = [_header sizeThatFits:CGRectStandardize(self.view.bounds).size].height;
+    CGFloat cellHeight = _tableView.contentSize.height / (CGFloat)_actions.count;
+    int amountOfCellsToShow = (int)(maxHeight - headerHeight) / (int)cellHeight;
+    CGFloat preferredHeight = (((CGFloat)amountOfCellsToShow - 0.5f) * cellHeight) + headerHeight;
+    self.mdc_bottomSheetPresentationController.preferredSheetHeight = preferredHeight;
+  }
   self.mdc_bottomSheetPresentationController.dismissOnBackgroundTap =
       self.transitionController.dismissOnBackgroundTap;
   [self.view layoutIfNeeded];
