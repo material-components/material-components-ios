@@ -1,18 +1,23 @@
-# #develop#
+# 62.1.0
 
-Replace this text with a summarized description of this release's contents.
-
-## Breaking changes
-
-Replace this explanations for how to resolve the breaking changes.
-
-## New deprecations
-
-Replace this text with links to deprecation guides.
+This minor release introduces a new auto-sizing List cell implementation, improvements to
+ActionSheet, the ability to modify casing behavior on NavigationBar, and bug fixes.
 
 ## New features
 
-Replace this text with example code for each new feature.
+You can now set an accessibilityIdentifier on ActionSheet actions:
+
+```swift
+let action = MDCActionSheetAction(title: "Title", image: nil, handler: nil)
+action.accessibilityIdentifier = "Some identifier"
+actionSheet.addAction(action)
+```
+
+ActionSheet now has a typography themer.
+
+ButtonBar now provides a mechanism for reacting to size changes of its buttons via its delegate.
+
+There is a new [self-sizing collection view cell](https://github.com/material-components/material-components-ios/pull/4953).
 
 ## API changes
 
