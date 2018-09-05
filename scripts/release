@@ -603,8 +603,6 @@ generate_release_notes() {
 
       if [[ $(componentdiff | grep -v "\[$component\]\!") ]]; then
         echo
-        echo "#### Changes"
-        echo
 
         componentdiff \
           | grep -v "\[$component\]!" \
