@@ -148,13 +148,13 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
   _titleLeadingConstraint.constant = leadingConstant;
   CGFloat width = CGRectGetWidth(self.contentView.frame) - leadingConstant - TitleTrailingPadding;
   _titleWidthConstraint.constant = width;
-  _imageView.image = [_itemAction.image imageWithRenderingMode:*(self.imageRenderingMode)];
+  _imageView.image = [_itemAction.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 }
 
 - (void)setAction:(MDCActionSheetAction *)action {
   _itemAction = [action copy];
   _textLabel.text = _itemAction.title;
-  //_imageView.image = [_itemAction.image imageWithRenderingMode:self.imageRenderingMode];
+  _imageView.image = [_itemAction.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [self setNeedsLayout];
 }
 
@@ -191,14 +191,5 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
 - (UIColor *)actionTextColor {
   return _textLabel.textColor;
 }
-
-/*- (void)setImageRenderingMode:(UIImageRenderingMode *)imageRenderingMode {
-  _imageRenderingMode = imageRenderingMode;
-  [self setNeedsLayout];
-}
-
-- (UIImageRenderingMode *)imageRenderingMode {
-  return self.imageRenderingMode;
-}*/
 
 @end

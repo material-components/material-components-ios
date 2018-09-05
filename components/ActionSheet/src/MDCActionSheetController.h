@@ -176,11 +176,6 @@ __attribute__((objc_subclassing_restricted))
  */
 @property(nonatomic, strong, nullable) UIColor *actionTintColor;
 
-/**
- The rendering mode that will be applied to the image.
- */
-@property(nonatomic, nonnull) UIImageRenderingMode *imageRenderingMode;
-
 @property(nonatomic, strong, readonly, nonnull)
     MDCBottomSheetTransitionController *transitionController;
 

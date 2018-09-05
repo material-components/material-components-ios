@@ -265,7 +265,6 @@ static NSString *const ReuseIdentifier = @"BaseCell";
   cell.actionFont = self.actionFont;
   cell.actionTextColor = self.actionTextColor;
   cell.contentView.tintColor = self.actionTintColor;
-  cell.imageRenderingMode = self.imageRenderingMode;
   cell.accessibilityIdentifier = action.accessibilityIdentifier;
   return cell;
 }
@@ -345,15 +344,6 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 - (UIColor *)messageTextColor {
   return _header.messageTextColor;
 }
-
-/*- (void)setImageRenderingMode:(UIImageRenderingMode *)imageRenderingMode {
-  //_imageRenderingMode = imageRenderingMode;
-  [self.view setNeedsLayout];
-}
-
-- (UIImageRenderingMode *)imageRenderingMode {
-  return self.imageRenderingMode;
-}*/
 
 #pragma mark - Dynamic Type
 
