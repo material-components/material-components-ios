@@ -49,7 +49,15 @@ Run the following command to cut a release:
 
     scripts/release cut
 
-Note: if for some reason this fails, first ensure that nobody else is in the middle of cutting a release by visiting the repo and verifying that a release-candidate does not already exist because aborting the release will delete the remote release candidate. If that isn't the case, then please run `scripts/release abort` and try again.
+If you need to cut a hotfix release, run the following command instead:
+
+    scripts/release cut --hotfix
+
+A hotfix release is like a regular release, but its scope is limited specifically to the fix. Hotfix
+release candidates start from origin/stable rather than origin/develop, but otherwise the entire
+process is the same.
+
+Note: if for some reason `cut` fails, first ensure that nobody else is in the middle of cutting a release by visiting the repo and verifying that a release-candidate does not already exist because aborting the release will delete the remote release candidate. If that isn't the case, then please run `scripts/release abort` and try again.
 
 You will now have a local `release-candidate` branch, a new section in CHANGELOG.md titled
 "release-candidate", and the `release-candidate` branch will have been pushed to GitHub.
