@@ -28,7 +28,7 @@
  The navigation bar often represents the information stored in a view controller's navigationItem
  propoerty, but it can also be directly configured.
  */
-@property(nonatomic, strong, nonnull) MDCNavigationBar *navigationBar;
+@property   (nonatomic, strong, nonnull) MDCNavigationBar * navigationBar;
 
 /**
  The header stack view owns the navigationBar (as the top bar) and an optional bottom bar (typically
