@@ -233,6 +233,9 @@ exception to our normal squash-and-merge procedure.
 Once you've resolved any merge conflicts your local `develop` and `stable` branches will both
 include the latest changes from `release-candidate`.
 
+You must merge to **both** develop and stable. This is the mechanism by which we ensure that
+stable matches develop.
+
 ## Push the branches to GitHub
 
 You can now push the merged release candidate to GitHub so that you can complete the final
