@@ -565,7 +565,7 @@ generate_release_diff() {
 }
 
 generate_release_notes() {
-  find components -type d -name 'src' | while read path; do
+  find components -type d -name 'src' | sort | while read path; do
     folder=$(dirname $path)
     component=$(echo $folder | cut -d'/' -f2-)
 
