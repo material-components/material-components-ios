@@ -46,10 +46,6 @@ Since PRs on github permanently stay in the `Changes requested` state it is hard
 
 See [deprecation_policy.md](deprecation_policy.md) for details.
 
-### Hotfixing
-
-Occasionally it is necessary to hotfix the framework. See [hotfixing.md](hotfixing.md) for details.
-
 ## Finding an issue to work on
 
 MDC-iOS uses GitHub to file and track issues.
