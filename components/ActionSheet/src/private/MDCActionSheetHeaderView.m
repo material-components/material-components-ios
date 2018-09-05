@@ -229,30 +229,14 @@ static const CGFloat MiddlePadding = 8.f;
   return ((label.text) && ![label.text isEqualToString:@""]);
 }
 
-
-
-- (UIColor *)primaryColor {
-  /**
-   If both labels exist or only the message label exist then we need the message label's text color,
-   if only the title exist then we need the title's text color, and if non exist then return nil.
-   */
-  if ([self labelExist:_messageLabel]) {
-    return _messageLabel.textColor;
-  } else if ([self labelExist:_titleLabel]) {
-    return _titleLabel.textColor;
-  } else {
-    return nil;
-  }
+- (void)setPrimaryColor:(UIColor *)primaryColor {
+  _primaryColor = primaryColor;
+  [self styleTitleAndMessage];
 }
 
-- (UIColor *)secondaryColor {
-  BOOL messageExist = [self labelExist:_messageLabel];
-  BOOL titleExist = [self labelExist:_titleLabel];
-  if (messageExist && titleExist) {
-    return _titleLabel.textColor;
-  } else {
-    return nil;
-  }
+- (void)setSecondaryColor:(UIColor *)secondaryColor {
+  _secondaryColor = secondaryColor;
+  [self styleTitleAndMessage];
 }
 
 @end
