@@ -45,7 +45,6 @@
  */
 @property(strong, nonatomic) MDCShapeCorner *bottomRightCorner;
 
-
 /**
  This method is a convenience method of setting the shape value of all our corners at once to the
  provided cornerFamily and cornerSize.

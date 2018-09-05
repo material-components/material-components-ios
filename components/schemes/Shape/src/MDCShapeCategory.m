@@ -16,22 +16,17 @@
 
 @implementation MDCShapeCategory
 
-- (instancetype)init
-{
+- (instancetype)init {
   return [self initCornersWithFamily:MDCShapeCornerFamilyRounded andSize:0];
 }
 
 - (instancetype)initCornersWithFamily:(MDCShapeCornerFamily)cornerFamily
-                             andSize:(CGFloat)cornerSize {
+                              andSize:(CGFloat)cornerSize {
   if (self = [super init]) {
-    _topLeftCorner = [[MDCShapeCorner alloc] initWithFamily:cornerFamily
-                                                    andSize:cornerSize];
-    _topRightCorner = [[MDCShapeCorner alloc] initWithFamily:cornerFamily
-                                                     andSize:cornerSize];
-    _bottomLeftCorner = [[MDCShapeCorner alloc] initWithFamily:cornerFamily
-                                                       andSize:cornerSize];
-    _bottomRightCorner = [[MDCShapeCorner alloc] initWithFamily:cornerFamily
-                                                        andSize:cornerSize];
+    _topLeftCorner = [[MDCShapeCorner alloc] initWithFamily:cornerFamily andSize:cornerSize];
+    _topRightCorner = [[MDCShapeCorner alloc] initWithFamily:cornerFamily andSize:cornerSize];
+    _bottomLeftCorner = [[MDCShapeCorner alloc] initWithFamily:cornerFamily andSize:cornerSize];
+    _bottomRightCorner = [[MDCShapeCorner alloc] initWithFamily:cornerFamily andSize:cornerSize];
   }
   return self;
 }

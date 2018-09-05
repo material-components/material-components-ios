@@ -37,7 +37,6 @@ typedef NS_ENUM(NSInteger, MDCShapeCornerSizeType) {
   MDCShapeCornerSizeTypePercentage,
 };
 
-
 /**
  An MDCShapeCorner is the shape value of a corner. It takes a family, a size type, and a size.
  */
@@ -71,8 +70,7 @@ typedef NS_ENUM(NSInteger, MDCShapeCornerSizeType) {
  @param cornerSize The shape size.
  @return an MDCShapeCorner.
  */
-- (instancetype)initWithFamily:(MDCShapeCornerFamily)cornerFamily
-                       andSize:(CGFloat)cornerSize;
+- (instancetype)initWithFamily:(MDCShapeCornerFamily)cornerFamily andSize:(CGFloat)cornerSize;
 
 /**
  This method returns an MDCCornerTreament representation of the MDCShapeCorner.

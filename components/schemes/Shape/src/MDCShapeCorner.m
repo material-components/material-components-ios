@@ -16,14 +16,12 @@
 
 @implementation MDCShapeCorner
 
-- (instancetype)init
-{
+- (instancetype)init {
   _sizeType = MDCShapeCornerSizeTypeAbsolute;
   return [self initWithFamily:MDCShapeCornerFamilyRounded andSize:0];
 }
 
-- (instancetype)initWithFamily:(MDCShapeCornerFamily)cornerFamily
-                       andSize:(CGFloat)cornerSize {
+- (instancetype)initWithFamily:(MDCShapeCornerFamily)cornerFamily andSize:(CGFloat)cornerSize {
   if (self = [super init]) {
     _sizeType = MDCShapeCornerSizeTypeAbsolute;
     _family = cornerFamily;
@@ -62,14 +60,12 @@
   NSNumber *size = @(shapeSize);
   switch (_family) {
     case MDCShapeCornerFamilyAngled:
-      cornerTreatment =
-          [[MDCCornerTreatment alloc] initWithCornerType:MDCCornerTypeCut
-                                                 andSize:size];
+      cornerTreatment = [[MDCCornerTreatment alloc] initWithCornerType:MDCCornerTypeCut
+                                                               andSize:size];
       break;
     case MDCShapeCornerFamilyRounded:
-      cornerTreatment =
-          [[MDCCornerTreatment alloc] initWithCornerType:MDCCornerTypeRounded
-                                                 andSize:size];
+      cornerTreatment = [[MDCCornerTreatment alloc] initWithCornerType:MDCCornerTypeRounded
+                                                               andSize:size];
       break;
   }
   return cornerTreatment;
