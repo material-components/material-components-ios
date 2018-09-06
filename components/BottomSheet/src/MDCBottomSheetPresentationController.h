@@ -65,6 +65,11 @@
 @property(nonatomic, assign) BOOL dismissOnBackgroundTap;
 
 /**
+ This is used to set a custom height on the sheet view.
+ */
+@property(nonatomic) CGFloat preferredSheetHeight;
+
+/**
  If @c YES, then the dimmed scrim view will act as an accessibility element for dismissing the
  bottom sheet.
 
