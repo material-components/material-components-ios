@@ -14,6 +14,7 @@
 
 #import "MaterialCards.h"
 #import "MaterialColorScheme.h"
+#import "MaterialShapeScheme.h"
 
 #import <Foundation/Foundation.h>
 
@@ -23,6 +24,9 @@
 /** The color scheme to apply to cards. */
 @property(nonnull, readonly, nonatomic) id <MDCColorScheming> colorScheme;
 
+/** The shape scheme to apply to cards. */
+@property(nonnull, readonly, nonatomic) id<MDCShapeScheming> shapeScheme;
+
 @end
 
 /** Defines the cards style data that will be applied to a card by a themer. */
@@ -30,6 +34,7 @@
 
 // Redeclare protocol properties as readwrite
 @property(nonnull, readwrite, nonatomic) MDCSemanticColorScheme *colorScheme;
+@property(nonnull, readwrite, nonatomic) MDCShapeScheme *shapeScheme;
 
 @end
 
