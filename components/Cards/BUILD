@@ -86,6 +86,7 @@ swift_library(
     deps = [
         ":Cards",
         ":ColorThemer",
+        ":ShapeThemer",
     ],
     visibility = ["//visibility:private"],
 )
