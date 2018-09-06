@@ -954,8 +954,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   self.slider.statefulAPIEnabled = YES;
 
   // When
-  float defaultThumbRadius = (float)self.slider.thumbRadius;
-  float thumbRadius = 100.f;
+  double defaultThumbRadius = (double)self.slider.thumbRadius;
+  double thumbRadius = 100.f;
   self.slider.thumbRadius = thumbRadius;
 
   // Then
@@ -967,7 +967,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   self.slider.statefulAPIEnabled = NO;
 
   // When
-  float thumbRadius = 40.f;
+  double thumbRadius = 40.f;
   self.slider.thumbRadius = thumbRadius;
 
   NSUInteger maxState = UIControlStateNormal | UIControlStateSelected | UIControlStateDisabled |
@@ -978,9 +978,25 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   }
 }
 
+- (void)testThumbRadiusDefaultWhenStatefulAPIEnabled {
+  // Given
+  self.slider.statefulAPIEnabled = YES;
+
+  // When
+  double thumbRadius = 40.f;
+  [self.slider setThumbRadius:thumbRadius forState:UIControlStateNormal];
+
+  NSUInteger maxState = UIControlStateNormal | UIControlStateSelected | UIControlStateDisabled |
+  UIControlStateHighlighted;
+
+  for (NSUInteger state = 0; state <= maxState; ++state) {
+    XCTAssertEqual([self.slider thumbRadiusForState:state], thumbRadius);
+  }
+}
+
 - (void)testThumbRadius {
   // Given
-  float thumbRadius = 15.f;
+  double thumbRadius = 15.f;
   // When
   self.slider.thumbRadius = thumbRadius;
   // Then
