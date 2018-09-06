@@ -62,19 +62,3 @@ class CardShapeThemerTests: XCTestCase {
                    shapeScheme.mediumSurfaceShape.bottomRightCorner.cornerTreatmentValue())
   }
 }
-
-extension MDCCornerTreatment {
-  override open func isEqual(_ object: Any?) -> Bool {
-    if let cutCorner = self as? MDCCutCornerTreatment,
-      let cutCorner2 = object as? MDCCutCornerTreatment {
-      return cutCorner.cut == cutCorner2.cut
-    } else if let roundedCorner = self as? MDCRoundedCornerTreatment,
-      let roundedCorner2 = object as? MDCRoundedCornerTreatment {
-      return roundedCorner.radius == roundedCorner2.radius
-    } else if let curvedCorner = self as? MDCCurvedCornerTreatment,
-      let curvedCorner2 = object as? MDCCurvedCornerTreatment {
-      return curvedCorner.size == curvedCorner2.size
-    }
-    return false
-  }
-}
