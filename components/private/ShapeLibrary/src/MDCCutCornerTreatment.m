@@ -51,5 +51,16 @@ static NSString *const MDCCutCornerTreatmentCutKey = @"MDCCutCornerTreatmentCutK
   return path;
 }
 
+- (BOOL)isEqual:(id)object {
+  if (object == self) {
+    return YES;
+  }
+  if (!object || ![[object class] isEqual:[self class]]) {
+    return NO;
+  }
+  MDCCutCornerTreatment *otherCutCorner = (MDCCutCornerTreatment *)object;
+  return self.cut == otherCutCorner.cut;
+}
+
 @end
 
