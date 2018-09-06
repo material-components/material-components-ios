@@ -45,6 +45,7 @@ mdc_objc_library(
     deps = [
         ":Cards",
         ":ColorThemer",
+        ":ShapeThemer",
     ],
     visibility = ["//visibility:public"],
 )
@@ -60,6 +61,21 @@ mdc_objc_library(
     deps = [
         ":Cards",
         "//components/schemes/Color",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
+    name = "ShapeThemer",
+    srcs = native.glob(["src/ShapeThemer/*.m"]),
+    hdrs = native.glob(["src/ShapeThemer/*.h"]),
+    includes = ["src/ShapeThemer"],
+    sdk_frameworks = [
+        "UIKit",
+    ],
+    deps = [
+        ":Cards",
+        "//components/schemes/Shape",
     ],
     visibility = ["//visibility:public"],
 )

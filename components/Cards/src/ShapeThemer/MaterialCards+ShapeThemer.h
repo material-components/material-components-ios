@@ -12,17 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCCardScheme.h"
-
-@implementation MDCCardScheme
-
-- (instancetype)init {
-  self = [super init];
-  if (self) {
-    _colorScheme = [[MDCSemanticColorScheme alloc] init];
-    _shapeScheme = [[MDCShapeScheme alloc] init];
-  }
-  return self;
-}
-@end
-
+#import "MDCCardsShapeThemer.h"
