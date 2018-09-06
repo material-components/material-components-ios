@@ -28,8 +28,7 @@
  @param shapeScheme The shape scheme to apply to the component instance.
  @param card A component instance to which the shape scheme should be applied.
  */
-+ (void)applyShapeScheme:(nonnull id<MDCShapeScheming>)shapeScheme
-                  toCard:(nonnull MDCCard *)card;
++ (void)applyShapeScheme:(nonnull id<MDCShapeScheming>)shapeScheme toCard:(nonnull MDCCard *)card;
 
 /**
  Applies a shape scheme's properties to an MDCCardCollectionCell.

@@ -16,8 +16,7 @@
 
 @implementation MDCCardsShapeThemer
 
-+ (void)applyShapeScheme:(id<MDCShapeScheming>)shapeScheme
-                  toCard:(MDCCard *)card {
++ (void)applyShapeScheme:(id<MDCShapeScheming>)shapeScheme toCard:(MDCCard *)card {
   card.shapeGenerator = [self cardShapeGeneratorFromScheme:shapeScheme];
 }
 
