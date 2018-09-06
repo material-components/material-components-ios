@@ -168,7 +168,12 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 }
 
 - (void)updatePreferredSheetHeight {
-  CGFloat preferredContentHeight = self.presentedViewController.preferredContentSize.height;
+  CGFloat preferredContentHeight;
+  if (self.preferredSheetHeight == 0.f) {
+    preferredContentHeight = self.presentedViewController.preferredContentSize.height;
+  } else {
+    preferredContentHeight = self.preferredSheetHeight;
+  }
 
   // If |preferredSheetHeight| has not been specified, use half of the current height.
   if (MDCCGFloatEqual(preferredContentHeight, 0)) {
@@ -232,6 +237,11 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 
 - (UIAccessibilityTraits)scrimAccessibilityTraits {
   return _scrimAccessibilityTraits;
+}
+
+- (void)setPreferredSheetHeight:(CGFloat)preferredSheetHeight {
+  _preferredSheetHeight = preferredSheetHeight;
+  [self updatePreferredSheetHeight];
 }
 
 #pragma mark - MDCSheetContainerViewDelegate
