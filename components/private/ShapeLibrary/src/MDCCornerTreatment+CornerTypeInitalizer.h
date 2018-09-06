@@ -12,11 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCCornerTreatment+CornerTypeInitalizer.h"
-#import "MDCCurvedCornerTreatment.h"
-#import "MDCCurvedRectShapeGenerator.h"
-#import "MDCCutCornerTreatment.h"
-#import "MDCPillShapeGenerator.h"
-#import "MDCRoundedCornerTreatment.h"
-#import "MDCSlantedRectShapeGenerator.h"
-#import "MDCTriangleEdgeTreatment.h"
+#import "MaterialShapes.h"
+
+typedef NS_ENUM(NSInteger, MDCCornerType) {
+  MDCCornerTypeCurved,
+  MDCCornerTypeCut,
+  MDCCornerTypeRounded
+};
+
+@interface MDCCornerTreatment (CornerTypeInitalizer)
+
+- (instancetype)initWithCornerType:(MDCCornerType)cornerType andSize:(NSNumber *)size;
+
+@end

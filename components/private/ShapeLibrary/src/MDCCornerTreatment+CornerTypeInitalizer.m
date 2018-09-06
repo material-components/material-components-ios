@@ -13,10 +13,33 @@
 // limitations under the License.
 
 #import "MDCCornerTreatment+CornerTypeInitalizer.h"
+
 #import "MDCCurvedCornerTreatment.h"
-#import "MDCCurvedRectShapeGenerator.h"
 #import "MDCCutCornerTreatment.h"
-#import "MDCPillShapeGenerator.h"
 #import "MDCRoundedCornerTreatment.h"
-#import "MDCSlantedRectShapeGenerator.h"
-#import "MDCTriangleEdgeTreatment.h"
+
+@implementation MDCCornerTreatment (CornerTypeInitalizer)
+
+- (instancetype)initWithCornerType:(MDCCornerType)cornerType andSize:(NSNumber *)size {
+  self = [self init];
+  switch (cornerType) {
+    case MDCCornerTypeCurved: {
+      CGSize curvedSize = [size CGSizeValue];
+      self = [[MDCCurvedCornerTreatment alloc] initWithSize:curvedSize];
+      break;
+    }
+    case MDCCornerTypeCut: {
+      CGFloat cutSize = [size floatValue];
+      self = [[MDCCutCornerTreatment alloc] initWithCut:cutSize];
+      break;
+    }
+    case MDCCornerTypeRounded: {
+      CGFloat radiusSize = [size floatValue];
+      self = [[MDCRoundedCornerTreatment alloc] initWithRadius:radiusSize];
+      break;
+    }
+  }
+  return self;
+}
+
+@end
