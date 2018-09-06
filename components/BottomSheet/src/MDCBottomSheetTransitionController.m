@@ -48,6 +48,7 @@ static const NSTimeInterval MDCBottomSheetTransitionDuration = 0.25;
   presentationController.isScrimAccessibilityElement = _isScrimAccessibilityElement;
   presentationController.scrimAccessibilityHint = _scrimAccessibilityHint;
   presentationController.scrimAccessibilityLabel = _scrimAccessibilityLabel;
+  presentationController.preferredSheetHeight = _preferredSheetHeight;
   return presentationController;
 }
 
