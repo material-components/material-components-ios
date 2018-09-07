@@ -49,6 +49,8 @@ Run the following command to cut a release:
 
     scripts/release cut
 
+#### Hotfixing
+
 If you need to cut a hotfix release, run the following command instead:
 
     scripts/release cut --hotfix
