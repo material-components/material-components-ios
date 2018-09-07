@@ -257,8 +257,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   }
 }
 
-
-- (CGFloat) cornerRadius {
+- (CGFloat)cornerRadius {
   return self.layer.cornerRadius;
 }
 

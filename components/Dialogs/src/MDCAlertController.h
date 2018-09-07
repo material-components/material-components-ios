@@ -88,7 +88,7 @@
 /** The color applied to the button ink effect of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIColor *buttonInkColor;
 
-/** The corner radius of Alert Controller. Default radius is CALayer's default radius (0.0).*/
+/** The corner radius applied to the Alert Controller shape. Default to 0 (no round corners) */
 @property(nonatomic, assign) CGFloat cornerRadius;
 
 // TODO(iangordon): Add support for preferredAction to match UIAlertController.
