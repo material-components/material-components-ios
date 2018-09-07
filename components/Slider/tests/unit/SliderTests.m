@@ -954,8 +954,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   self.slider.statefulAPIEnabled = YES;
 
   // When
-  double defaultThumbRadius = (double)self.slider.thumbRadius;
-  double thumbRadius = 100.f;
+  CGFloat defaultThumbRadius = self.slider.thumbRadius;
+  CGFloat thumbRadius = 100.f;
   self.slider.thumbRadius = thumbRadius;
 
   // Then
@@ -967,7 +967,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   self.slider.statefulAPIEnabled = NO;
 
   // When
-  double thumbRadius = 40.f;
+  CGFloat thumbRadius = 40.f;
   self.slider.thumbRadius = thumbRadius;
 
   NSUInteger maxState = UIControlStateNormal | UIControlStateSelected | UIControlStateDisabled |
@@ -996,7 +996,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testThumbRadius {
   // Given
-  double thumbRadius = 15.f;
+  CGFloat thumbRadius = 15.f;
   // When
   self.slider.thumbRadius = thumbRadius;
   // Then
