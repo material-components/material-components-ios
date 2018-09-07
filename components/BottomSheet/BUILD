@@ -35,6 +35,21 @@ mdc_public_objc_library(
 )
 
 mdc_objc_library(
+    name = "ShapeThemer",
+    srcs = native.glob(["src/ShapeThemer/*.m"]),
+    hdrs = native.glob(["src/ShapeThemer/*.h"]),
+    includes = ["src/ShapeThemer"],
+    sdk_frameworks = [
+        "UIKit",
+    ],
+    deps = [
+        ":BottomSheet",
+        "//components/schemes/Shape",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
     srcs = glob(["tests/unit/*.m"]),
@@ -43,7 +58,10 @@ mdc_objc_library(
         "UIKit",
         "XCTest",
     ],
-    deps = [":BottomSheet"],
+    deps = [
+        ":BottomSheet",
+        ":ShapeThemer",
+    ],
     visibility = ["//visibility:private"],
 )
 
