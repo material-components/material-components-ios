@@ -30,15 +30,18 @@ class BottomSheetShapeThemerTests: XCTestCase {
 
     // Then
     let extendedShapeGenerator = bottomSheet.shapeGenerator(for: .extended)
-    XCTAssert(extendedShapeGenerator is MDCRectangleShapeGenerator);
-    XCTAssertEqual((extendedShapeGenerator as! MDCRectangleShapeGenerator).topLeftCorner,
-                   shapeScheme.largeSurfaceShape.topLeftCorner.cornerTreatmentValue())
-    XCTAssertEqual((extendedShapeGenerator as! MDCRectangleShapeGenerator).topRightCorner,
-                   shapeScheme.largeSurfaceShape.topRightCorner.cornerTreatmentValue())
-    XCTAssertEqual((extendedShapeGenerator as! MDCRectangleShapeGenerator).bottomLeftCorner,
-                   shapeScheme.largeSurfaceShape.bottomLeftCorner.cornerTreatmentValue())
-    XCTAssertEqual((extendedShapeGenerator as! MDCRectangleShapeGenerator).bottomRightCorner,
-                   shapeScheme.largeSurfaceShape.bottomRightCorner.cornerTreatmentValue())
+    XCTAssert(extendedShapeGenerator is MDCRectangleShapeGenerator)
+    if let rectangleGenerator = extendedShapeGenerator as? MDCRectangleShapeGenerator {
+      XCTAssertEqual(rectangleGenerator.topLeftCorner,
+                     shapeScheme.largeSurfaceShape.topLeftCorner.cornerTreatmentValue())
+      XCTAssertEqual(rectangleGenerator.topRightCorner,
+                     shapeScheme.largeSurfaceShape.topRightCorner.cornerTreatmentValue())
+      XCTAssertEqual(rectangleGenerator.bottomLeftCorner,
+                     shapeScheme.largeSurfaceShape.bottomLeftCorner.cornerTreatmentValue())
+      XCTAssertEqual(rectangleGenerator.bottomRightCorner,
+                     shapeScheme.largeSurfaceShape.bottomRightCorner.cornerTreatmentValue())
+    }
+
   }
 
   func testBottomSheetShapeThemerPreferred() {
@@ -56,15 +59,13 @@ class BottomSheetShapeThemerTests: XCTestCase {
 
     // Then
     let preferredShapeGenerator = bottomSheet.shapeGenerator(for: .preferred)
-    XCTAssert(preferredShapeGenerator is MDCRectangleShapeGenerator);
-    XCTAssertEqual((preferredShapeGenerator as! MDCRectangleShapeGenerator).topLeftCorner,
-                   generatedCorner)
-    XCTAssertEqual((preferredShapeGenerator as! MDCRectangleShapeGenerator).topRightCorner,
-                   generatedCorner)
-    XCTAssertEqual((preferredShapeGenerator as! MDCRectangleShapeGenerator).bottomLeftCorner,
-                   generatedCorner)
-    XCTAssertEqual((preferredShapeGenerator as! MDCRectangleShapeGenerator).bottomRightCorner,
-                   generatedCorner)
+    XCTAssert(preferredShapeGenerator is MDCRectangleShapeGenerator)
+    if let rectangleGenerator = preferredShapeGenerator as? MDCRectangleShapeGenerator {
+      XCTAssertEqual(rectangleGenerator.topLeftCorner, generatedCorner)
+      XCTAssertEqual(rectangleGenerator.topRightCorner, generatedCorner)
+      XCTAssertEqual(rectangleGenerator.bottomLeftCorner, generatedCorner)
+      XCTAssertEqual(rectangleGenerator.bottomRightCorner, generatedCorner)
+    }
   }
 
 }
