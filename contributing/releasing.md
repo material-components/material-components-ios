@@ -64,6 +64,8 @@ After that PR is merged, you should cherry-pick the revert commit into the `rele
 
 Other than the steps above regarding hotfixing, the entire release process stays the same.
 
+---
+
 Note: if for some reason `cut` fails, first ensure that nobody else is in the middle of cutting a release by visiting the repo and verifying that a release-candidate does not already exist because aborting the release will delete the remote release candidate. If that isn't the case, then please run `scripts/release abort` and try again.
 
 You will now have a local `release-candidate` branch, a new section in CHANGELOG.md titled
