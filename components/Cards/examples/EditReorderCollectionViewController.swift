@@ -32,6 +32,7 @@ class EditReorderCollectionViewController: UIViewController,
   var toggle = ToggleMode.edit
 
   var colorScheme = MDCSemanticColorScheme()
+  var shapeScheme = MDCShapeScheme()
   var typographyScheme = MDCTypographyScheme()
   let cardScheme = MDCCardScheme()
 
@@ -48,6 +49,7 @@ class EditReorderCollectionViewController: UIViewController,
     super.viewDidLoad()
 
     cardScheme.colorScheme = colorScheme
+    cardScheme.shapeScheme = shapeScheme
     collectionView.frame = view.bounds
     collectionView.dataSource = self
     collectionView.delegate = self
@@ -100,11 +102,11 @@ class EditReorderCollectionViewController: UIViewController,
     self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]|",
                                                             options: [],
                                                             metrics: nil,
-                                                            views: ["view": collectionView]));
+                                                            views: ["view": collectionView]))
     self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[view]|",
                                                             options: [],
                                                             metrics: nil,
-                                                            views: ["view": collectionView]));
+                                                            views: ["view": collectionView]))
   }
 
   func updateTitle() {
