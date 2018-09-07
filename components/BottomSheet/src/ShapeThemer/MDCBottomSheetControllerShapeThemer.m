@@ -28,7 +28,7 @@ static const CGFloat kBottomSheetCollapsedBaselineShapeValue = 24.0f;
   [bottomSheetController setShapeGenerator:rectangleShapeExtended forState:MDCSheetStateExtended];
 
   // Shape Generator for the Preferred state of the Bottom Sheet.
-  // This is an override of the scheme to fit the baseline values.
+  // This is an override of the default scheme to fit the baseline values.
   MDCRectangleShapeGenerator *rectangleShapePreferred = [[MDCRectangleShapeGenerator alloc] init];
   MDCCornerTreatment *cornerTreatmentPreferred =
       [[MDCRoundedCornerTreatment alloc] initWithRadius:kBottomSheetCollapsedBaselineShapeValue];

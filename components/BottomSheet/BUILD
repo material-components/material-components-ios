@@ -60,7 +60,6 @@ mdc_objc_library(
     ],
     deps = [
         ":BottomSheet",
-        ":ShapeThemer",
     ],
     visibility = ["//visibility:private"],
 )
@@ -68,5 +67,16 @@ mdc_objc_library(
 mdc_unit_test_suite(
     deps = [
       ":unit_test_sources",
+      ":unit_test_swift_sources",
     ],
+)
+
+swift_library(
+    name = "unit_test_swift_sources",
+    srcs = glob(["tests/unit/*.swift"]),
+    deps = [
+        ":BottomSheet",
+        ":ShapeThemer",
+    ],
+    visibility = ["//visibility:private"],
 )
