@@ -58,4 +58,15 @@ static NSString *const MDCCurvedCornerTreatmentSizeKey = @"MDCCurvedCornerTreatm
   return YES;
 }
 
+- (BOOL)isEqual:(id)object {
+  if (object == self) {
+    return YES;
+  }
+  if (!object || ![[object class] isEqual:[self class]]) {
+    return NO;
+  }
+  MDCCurvedCornerTreatment *otherCurvedCorner = (MDCCurvedCornerTreatment *)object;
+  return CGSizeEqualToSize(self.size, otherCurvedCorner.size);
+}
+
 @end
