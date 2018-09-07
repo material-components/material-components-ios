@@ -26,6 +26,7 @@
     : NSObject <MDCFlexibleHeaderSafeAreaDelegate>
 @property(nonatomic) BOOL isStatusBarShifted;
 @property(nonatomic) BOOL topSafeAreaInsetDidChangeWasCalled;
+@property(nonatomic) CGFloat deviceTopSafeAreaInset;
 @end
 
 @interface FlexibleHeaderTopSafeAreaTestsFakeViewController : UIViewController
@@ -51,15 +52,39 @@
   [super tearDown];
 }
 
-#pragma mark - inferTopSafeAreaInsetFromViewController disabled
+#pragma mark - When inferTopSafeAreaInsetFromViewController is disabled
 
-- (void)testDefaultConfiguration {
+- (void)testDeviceSafeAreaInsetIsDefaultTopSafeAreaInset {
+  // Given
+  const CGFloat deviceTopSafeAreaInset = 123;
+  _delegate.deviceTopSafeAreaInset = deviceTopSafeAreaInset;
+  _topSafeArea.delegate = _delegate;
+
   // Then
   XCTAssertNil(_topSafeArea.topSafeAreaSourceViewController);
-  XCTAssertEqualWithAccuracy(_topSafeArea.topSafeAreaInset, 20, 0.0001);
+  XCTAssertEqualWithAccuracy(_topSafeArea.topSafeAreaInset,
+                             deviceTopSafeAreaInset,
+                             0.0001);
   XCTAssertFalse(_topSafeArea.inferTopSafeAreaInsetFromViewController);
-  XCTAssertNil(_topSafeArea.delegate);
 }
+
+- (void)testIgnoresViewControllerTopSafeAreaInset {
+  // Given
+  const CGFloat deviceTopSafeAreaInset = 123;
+  FlexibleHeaderTopSafeAreaTestsFakeViewController *viewController =
+      [[FlexibleHeaderTopSafeAreaTestsFakeViewController alloc] init];
+  viewController.topSafeAreaInset = 44;
+  _delegate.deviceTopSafeAreaInset = deviceTopSafeAreaInset;
+  _topSafeArea.delegate = _delegate;
+
+  // When
+  _topSafeArea.topSafeAreaSourceViewController = viewController;
+
+  // Then
+  XCTAssertEqualWithAccuracy(_topSafeArea.topSafeAreaInset, deviceTopSafeAreaInset, 0.0001);
+}
+
+#pragma mark - Delegate invocations
 
 - (void)testDidChangeInvokesDelegate {
   // Given
@@ -83,19 +108,6 @@
 
   // Then
   XCTAssertFalse(_delegate.topSafeAreaInsetDidChangeWasCalled);
-}
-
-- (void)testIgnoresViewControllerTopSafeAreaInset {
-  // Given
-  FlexibleHeaderTopSafeAreaTestsFakeViewController *viewController =
-      [[FlexibleHeaderTopSafeAreaTestsFakeViewController alloc] init];
-  viewController.topSafeAreaInset = 44;
-
-  // When
-  _topSafeArea.topSafeAreaSourceViewController = viewController;
-
-  // Then
-  XCTAssertEqualWithAccuracy(_topSafeArea.topSafeAreaInset, 20, 0.0001);
 }
 
 #pragma mark - inferTopSafeAreaInsetFromViewController enabled
@@ -235,6 +247,10 @@
 
 - (void)flexibleHeaderSafeAreaTopSafeAreaInsetDidChange:(MDCFlexibleHeaderTopSafeArea *)safeAreas {
   self.topSafeAreaInsetDidChangeWasCalled = YES;
+}
+
+- (CGFloat)flexibleHeaderSafeAreaDeviceTopSafeAreaInset:(MDCFlexibleHeaderTopSafeArea *)safeAreas {
+  return self.deviceTopSafeAreaInset;
 }
 
 @end

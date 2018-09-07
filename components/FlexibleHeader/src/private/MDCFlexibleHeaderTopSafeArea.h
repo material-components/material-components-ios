@@ -94,4 +94,10 @@
  */
 - (BOOL)flexibleHeaderSafeAreaIsStatusBarShifted:(nonnull MDCFlexibleHeaderTopSafeArea *)safeAreas;
 
+/**
+ Asks the receiver to return the device's top safe area inset.
+ */
+- (CGFloat)flexibleHeaderSafeAreaDeviceTopSafeAreaInset:
+    (nonnull MDCFlexibleHeaderTopSafeArea *)safeAreas;
+
 @end

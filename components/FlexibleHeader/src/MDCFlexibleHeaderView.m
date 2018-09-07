@@ -487,6 +487,10 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
           _statusBarShifter.prefersStatusBarHidden);
 }
 
+- (CGFloat)flexibleHeaderSafeAreaDeviceTopSafeAreaInset:(MDCFlexibleHeaderTopSafeArea *)safeAreas {
+  return MDCDeviceTopSafeAreaInset();
+}
+
 #pragma mark - Private (fhv_ prefix)
 
 - (void)fhv_setContentOffset:(CGPoint)contentOffset {

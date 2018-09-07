@@ -78,7 +78,7 @@ static const CGFloat kNonXStatusBarHeight = 20;
       return self.extractedTopSafeAreaInset;
     }
   } else {
-    return MDCDeviceTopSafeAreaInset();
+    return [self.delegate flexibleHeaderSafeAreaDeviceTopSafeAreaInset:self];
   }
 }
 
