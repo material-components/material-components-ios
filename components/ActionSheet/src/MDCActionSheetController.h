@@ -162,7 +162,7 @@ __attribute__((objc_subclassing_restricted))
 @property(nonatomic, strong, nullable) UIColor *titleTextColor;
 
 /**
- The color applied to the message of the actio sheet controller.
+ The color applied to the message of the action sheet controller.
  */
 @property(nonatomic, strong, nullable) UIColor *messageTextColor;
 

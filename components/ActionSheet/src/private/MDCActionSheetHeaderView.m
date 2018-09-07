@@ -225,10 +225,6 @@ static const CGFloat MiddlePadding = 8.f;
   return _messageLabel.textColor;
 }
 
-- (BOOL)labelExist:(UILabel *)label {
-  return ((label.text) && ![label.text isEqualToString:@""]);
-}
-
 - (void)setPrimaryColor:(UIColor *)primaryColor {
   _primaryColor = primaryColor;
   [self styleTitleAndMessage];
