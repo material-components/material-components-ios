@@ -14,14 +14,14 @@
 
 #import <UIKit/UIKit.h>
 
-@class MDCButton;
+@class MDCFlatButton;
 
 @interface MDCAlertControllerView ()
 
 @property(nonatomic, nonnull, strong) UILabel *titleLabel;
 @property(nonatomic, nonnull, strong) UILabel *messageLabel;
 
-@property(nonatomic, nonnull, strong, readonly) NSArray<MDCButton *> *actionButtons;
+@property(nonatomic, nonnull, strong, readonly) NSArray<MDCFlatButton *> *actionButtons;
 
 - (nonnull MDCButton *)addActionButtonTitle:(NSString *_Nonnull)actionTitle
                              target:(nullable id)target
