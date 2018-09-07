@@ -162,7 +162,7 @@ static NSString *const ReuseIdentifier = @"BaseCell";
     CGFloat maxHeight = CGRectGetHeight(self.view.bounds) / 2;
     CGFloat headerHeight = [_header sizeThatFits:CGRectStandardize(self.view.bounds).size].height;
     CGFloat cellHeight = _tableView.contentSize.height / (CGFloat)_actions.count;
-    int amountOfCellsToShow = (int)(maxHeight - headerHeight) / (int)cellHeight;
+    NSInteger amountOfCellsToShow = (NSInteger)(maxHeight - headerHeight) / (NSInteger)cellHeight;
     CGFloat preferredHeight = (((CGFloat)amountOfCellsToShow - 0.5f) * cellHeight) + headerHeight;
     // When updating the preferredSheetHeight the presentation controller takes into account the
     // safe area so we have to remove that.
