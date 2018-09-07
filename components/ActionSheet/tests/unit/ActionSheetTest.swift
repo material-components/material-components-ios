@@ -14,6 +14,9 @@
 
 import XCTest
 import MaterialComponentsAlpha.MaterialActionSheet
+import MaterialComponentsAlpha.MaterialActionSheet_ColorThemer
+import MaterialComponentsAlpha.MaterialActionSheet_TypographyThemer
+import MaterialComponents.MaterialColorScheme
 
 class ActionSheetTest: XCTestCase {
 
@@ -61,7 +64,7 @@ class ActionSheetTest: XCTestCase {
     actionSheet.addAction(action)
 
     // Then
-    let tableView = actionSheet.view.subviews.flatMap{ $0 as? UITableView }.first
+    let tableView = actionSheet.view.subviews.flatMap { $0 as? UITableView }.first
     if let table = tableView {
       XCTAssertEqual(table.numberOfRows(inSection: section), rowCount)
       if let dataSource = table.dataSource {
@@ -75,5 +78,78 @@ class ActionSheetTest: XCTestCase {
       XCTFail("No table was loaded")
     }
     
+  }
+
+  func testDefaultColors() {
+    // Given
+    let titleTest = "Title"
+
+    // When
+    actionSheet.title = titleTest
+
+    // Then
+    if let title = getLabel(with: titleTest) {
+      XCTAssertEqual(title.textColor, .black)
+    } else {
+      XCTFail("No title label")
+    }
+
+    // Given
+    let messageTest = "Message"
+
+    // When
+    actionSheet.message = messageTest
+
+    // Then
+    if let message = getLabel(with: messageTest) {
+      XCTAssertEqual(message.textColor, .black)
+    } else {
+      XCTFail("No message label was created")
+    }
+  }
+
+  func testColorThemer() {
+    // Given
+    let titleTest = "Title"
+    let messageTest = "Message"
+    actionSheet.title = titleTest
+    actionSheet.message = nil
+    var colorScheme = MDCSemanticColorScheme()
+    colorScheme.onSurfaceColor = .blue
+
+    // When
+    MDCActionSheetColorThemer.applySemanticColorScheme(colorScheme, to: actionSheet)
+
+    // Then
+    if let title = getLabel(with: titleTest) {
+      XCTAssertEqual(title.textColor, colorScheme.onSurfaceColor.withAlphaComponent(0.6))
+    } else {
+      XCTFail("No title label")
+    }
+
+    // Given
+    actionSheet.message = messageTest
+    if let title = getLabel(with: titleTest), let message = getLabel(with: messageTest) {
+      XCTAssertEqual(title.textColor, colorScheme.onSurfaceColor.withAlphaComponent(0.87))
+      XCTAssertEqual(message.textColor, colorScheme.onSurfaceColor.withAlphaComponent(0.6))
+    } else {
+      XCTFail("One of the labels wasn't set correctly")
+    }
+
+  }
+
+  func getLabel(with text: String) -> UILabel? {
+    let headerArray = actionSheet.view.subviews.filter { !($0 is UITableView) }
+    if let header = headerArray.first {
+      var labels: [UILabel] = header.subviews.flatMap { $0 as UILabel }
+                                             .filter { $0.text = text }
+      if let label = labels.first {
+        return label
+      } else {
+        return nil
+      }
+    } else {
+      return nil
+    }
   }
 }
