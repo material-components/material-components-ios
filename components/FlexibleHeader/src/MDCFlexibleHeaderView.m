@@ -74,7 +74,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 }
 
 @interface MDCFlexibleHeaderView () <MDCStatusBarShifterDelegate,
-                                     MDCFlexibleHeaderSafeAreasDelegate>
+                                     MDCFlexibleHeaderSafeAreaDelegate>
 
 // The intensity strength of the shadow being displayed under the flexible header. Use this property
 // to check what the intensity of a custom shadow should be depending on a scroll position. Valid
@@ -445,9 +445,9 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   [_topSafeArea safeAreaInsetsDidChange];
 }
 
-#pragma mark MDCFlexibleHeaderSafeAreasDelegate
+#pragma mark MDCFlexibleHeaderSafeAreaDelegate
 
-- (void)flexibleHeaderSafeAreasTopSafeAreaInsetDidChange:(MDCFlexibleHeaderTopSafeArea *)safeAreas {
+- (void)flexibleHeaderSafeAreaTopSafeAreaInsetDidChange:(MDCFlexibleHeaderTopSafeArea *)safeAreas {
   // If the min or max height have been explicitly set, don't adjust anything if the values
   // already include a Safe Area inset.
   BOOL hasSetMinOrMaxHeight = _hasExplicitlySetMinHeight || _hasExplicitlySetMaxHeight;
@@ -481,7 +481,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   }
 }
 
-- (BOOL)flexibleHeaderSafeAreasIsStatusBarShifted:(MDCFlexibleHeaderTopSafeArea *)safeAreas {
+- (BOOL)flexibleHeaderSafeAreaIsStatusBarShifted:(MDCFlexibleHeaderTopSafeArea *)safeAreas {
   return ([self fhv_canShiftOffscreen] &&
           _shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar &&
           _statusBarShifter.prefersStatusBarHidden);

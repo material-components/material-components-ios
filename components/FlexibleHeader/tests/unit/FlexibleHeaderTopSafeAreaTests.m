@@ -23,7 +23,7 @@
 @end
 
 @interface FlexibleHeaderTopSafeAreaTestsFakeTopSafeAreaDelegate
-    : NSObject <MDCFlexibleHeaderSafeAreasDelegate>
+    : NSObject <MDCFlexibleHeaderSafeAreaDelegate>
 @property(nonatomic) BOOL isStatusBarShifted;
 @property(nonatomic) BOOL topSafeAreaInsetDidChangeWasCalled;
 @end
@@ -229,11 +229,11 @@
 
 #pragma mark MDCFlexibleHeaderTopSafeAreaDelegate
 
-- (BOOL)flexibleHeaderSafeAreasIsStatusBarShifted:(MDCFlexibleHeaderTopSafeArea *)safeAreas {
+- (BOOL)flexibleHeaderSafeAreaIsStatusBarShifted:(MDCFlexibleHeaderTopSafeArea *)safeAreas {
   return self.isStatusBarShifted;
 }
 
-- (void)flexibleHeaderSafeAreasTopSafeAreaInsetDidChange:(MDCFlexibleHeaderTopSafeArea *)safeAreas {
+- (void)flexibleHeaderSafeAreaTopSafeAreaInsetDidChange:(MDCFlexibleHeaderTopSafeArea *)safeAreas {
   self.topSafeAreaInsetDidChangeWasCalled = YES;
 }
 

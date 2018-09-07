@@ -17,7 +17,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@protocol MDCFlexibleHeaderSafeAreasDelegate;
+@protocol MDCFlexibleHeaderSafeAreaDelegate;
 
 /**
  Extracts the top safe area for a given view controller.
@@ -72,26 +72,26 @@
 /**
  The delegate may react to changes in the top safe area inset.
  */
-@property(nonatomic, weak, nullable) id<MDCFlexibleHeaderSafeAreasDelegate> delegate;
+@property(nonatomic, weak, nullable) id<MDCFlexibleHeaderSafeAreaDelegate> delegate;
 
 @end
 
 /**
- The delegate protocol through which MDCFlexibleHeaderSafeAreas communicates changes in the top
+ The delegate protocol through which MDCFlexibleHeaderTopSafeArea communicates changes in the top
  safe area inset.
  */
-@protocol MDCFlexibleHeaderSafeAreasDelegate
+@protocol MDCFlexibleHeaderSafeAreaDelegate
 @required
 
 /**
  Informs the receiver that the topSafeAreaInset value has changed.
  */
-- (void)flexibleHeaderSafeAreasTopSafeAreaInsetDidChange:
+- (void)flexibleHeaderSafeAreaTopSafeAreaInsetDidChange:
     (nonnull MDCFlexibleHeaderTopSafeArea *)safeAreas;
 
 /**
  Asks the receiver whether the status bar is likely shifted off-screen by the owner.
  */
-- (BOOL)flexibleHeaderSafeAreasIsStatusBarShifted:(nonnull MDCFlexibleHeaderTopSafeArea *)safeAreas;
+- (BOOL)flexibleHeaderSafeAreaIsStatusBarShifted:(nonnull MDCFlexibleHeaderTopSafeArea *)safeAreas;
 
 @end
