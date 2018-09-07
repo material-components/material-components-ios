@@ -18,8 +18,6 @@
 
 #import "MDCFlexibleHeaderView.h"
 
-#import "MaterialUIMetrics.h"
-
 // The default status bar height for non-X devices.
 static const CGFloat kNonXStatusBarHeight = 20;
 
