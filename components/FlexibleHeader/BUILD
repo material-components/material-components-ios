@@ -76,7 +76,11 @@ swift_library(
 mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
-    srcs = glob(["tests/unit/*.m"]),
+    srcs = glob([
+        "tests/unit/*.m",
+        "tests/unit/supplemental/*.m",
+        "tests/unit/supplemental/*.h",
+    ]),
     hdrs = glob(["tests/unit/*.h"]),
     sdk_frameworks = [
         "UIKit",

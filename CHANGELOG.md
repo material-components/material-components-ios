@@ -1,3 +1,15 @@
+# 62.2.0
+
+This hotfix minor release rolls back a behavioral change in Dialogs that was introduced in v60.0.0.
+
+## Component changes
+
+### Dialogs
+
+* [Revert "Remove use of MDCFlatButton for MDCButton and MDCTextButtonThemer (#4739)" (#5040)](https://github.com/material-components/material-components-ios/commit/93c73b9052fd1fbb565583cf76fdf0ac3fccc2b3) (Cody Weaver)
+
+---
+
 # 62.1.0
 
 This minor release introduces a new auto-sizing List cell implementation, improvements to
