@@ -21,7 +21,7 @@ code should be removed immediately from the release.
 
 Importantly: **do not** block the cutting of the weekly release on a PR or a piece of functionality
 you'd like to land. If your PR hasn't landed by the time the release is cut, it's not making it into
-that week's release. If your PR is important, cut a [hotfix release](hotfixing.md) in addition to the
+that week's release. If your PR is important, cut a hotfix release in addition to the
 typical weekly release.
 
 If you are not able to cut a release Wednesday morning, cut it Tuesday evening before you leave the
@@ -54,8 +54,13 @@ If you need to cut a hotfix release, run the following command instead:
     scripts/release cut --hotfix
 
 A hotfix release is like a regular release, but its scope is limited specifically to the fix. Hotfix
-release candidates start from origin/stable rather than origin/develop, but otherwise the entire
-process is the same.
+release candidates start from origin/stable rather than origin/develop. 
+
+If the hotfix is to fix a regression or a problematic commit in a recent release, the ideal
+path forward is to revert that commit using the `git revert <commit-hash>` command and opening a PR with that change to the develop branch.
+After that PR is merged, you should cherry-pick the revert commit into the `release-candidate` branch: `git cherry-pick <commit-hash>`.
+
+Other than the steps above regarding hotfixing, the entire release process stays the same.
 
 Note: if for some reason `cut` fails, first ensure that nobody else is in the middle of cutting a release by visiting the repo and verifying that a release-candidate does not already exist because aborting the release will delete the remote release candidate. If that isn't the case, then please run `scripts/release abort` and try again.
 
