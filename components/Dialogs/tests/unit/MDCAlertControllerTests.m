@@ -273,4 +273,21 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
   XCTAssertEqualObjects(button2.accessibilityIdentifier, @"A");
 }
 
+- (void)testCornerRadius {
+  // Given
+  CGFloat cornerRadius = 36.0;
+  MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:@"title"
+                                                                   message:@"message"];
+  [alert addAction:[MDCAlertAction actionWithTitle:@"action1" handler:nil]];
+  [alert addAction:[MDCAlertAction actionWithTitle:@"action2" handler:nil]];
+
+  // When
+  alert.cornerRadius = cornerRadius;
+
+  // Then
+  MDCAlertControllerView *view = (MDCAlertControllerView *)alert.view;
+  XCTAssertEqual(view.layer.cornerRadius, cornerRadius);
+  XCTAssertEqual(alert.mdc_dialogPresentationController.dialogCornerRadius, cornerRadius);
+}
+
 @end
