@@ -163,19 +163,35 @@
   XCTAssert(self.bottomNavBar.itemViews.lastObject.label.isHidden);
 }
 
--(void)testViewForItem {
+-(void)testViewForItemFound {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:0];
+
+  // When
+  self.bottomNavBar.items = @[item1, item2];
+
+  // Then
+  MDCBottomNavigationItemView *viewForItem1 =
+      (MDCBottomNavigationItemView *)[self.bottomNavBar viewForItem:item1];
+  MDCBottomNavigationItemView *viewForItem2 =
+      (MDCBottomNavigationItemView *)[self.bottomNavBar viewForItem:item2];
+  XCTAssertNotEqual(viewForItem1, viewForItem2);
+  XCTAssertTrue([self.bottomNavBar.itemViews containsObject:viewForItem1], @"BottomNavBar.itemViews did not contain the view (%@) returned for UITabBarItem (%@)", viewForItem1, item1);
+  XCTAssertTrue([self.bottomNavBar.itemViews containsObject:viewForItem2], @"BottomNavBar.itemViews did not contain the view (%@) returned for UITabBarItem (%@)", viewForItem2, item2);
+}
+
+-(void)testViewForItemNotFound {
+  // Given
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
   UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:0];
   UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"3" image:nil tag:0];
-  self.bottomNavBar.items = @[item1, item2, item3];
 
-  XCTAssertEqual([self.bottomNavBar viewForItem:item1], self.bottomNavBar.itemViews[0]);
-  XCTAssertEqual([self.bottomNavBar viewForItem:item2], self.bottomNavBar.itemViews[1]);
-  XCTAssertEqual([self.bottomNavBar viewForItem:item3], self.bottomNavBar.itemViews[2]);
+  // When
+  self.bottomNavBar.items = @[item1, item2];
 
-  // Test when tab bar item is not in navigation bar
-  UITabBarItem *item4 = [[UITabBarItem alloc] initWithTitle:@"4" image:nil tag:0];
-  XCTAssert([self.bottomNavBar viewForItem:item4] == nil);
+  // Then
+  XCTAssert([self.bottomNavBar viewForItem:item3] == nil);
 }
 
 @end
