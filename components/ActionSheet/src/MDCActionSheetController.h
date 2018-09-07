@@ -222,7 +222,7 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
  Action sheet actions must have a title that will be set within actionWithTitle:image:handler:
  method.
  */
-@property(nonatomic, nonnull, readonly) NSString *title;
+@property(nonatomic, nonnull, copy, readonly) NSString *title;
 
 /**
  Image of the list item shown on the action sheet.
