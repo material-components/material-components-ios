@@ -1,18 +1,12 @@
-# #develop#
+# 62.1.1
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
-
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
-## API changes
+This hotfix patch release rolls back a behavioral change in Dialogs that was introduced in v60.0.0.
 
 ## Component changes
+
+### Dialogs
+
+* [Revert "Remove use of MDCFlatButton for MDCButton and MDCTextButtonThemer (#4739)" (#5040)](https://github.com/material-components/material-components-ios/commit/93c73b9052fd1fbb565583cf76fdf0ac3fccc2b3) (Cody Weaver)
 
 ---
 
