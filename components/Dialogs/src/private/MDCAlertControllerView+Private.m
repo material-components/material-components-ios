@@ -112,7 +112,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   [self setNeedsLayout];
 }
 
-- (MDCButton *)addActionButtonTitle:(NSString *)actionTitle target:(id)target selector:(SEL)selector {
+- (MDCFlatButton *)addActionButtonTitle:(NSString *)actionTitle target:(id)target selector:(SEL)selector {
   MDCFlatButton *actionButton = [[MDCFlatButton alloc] initWithFrame:CGRectZero];
   actionButton.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
   [actionButton setTitle:actionTitle forState:UIControlStateNormal];
