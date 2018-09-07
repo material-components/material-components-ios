@@ -14,16 +14,26 @@
 
 #import "MDCBottomSheetControllerShapeThemer.h"
 
+static const CGFloat kBottomSheetCollapsedBaselineShapeValue = 24.0f;
+
 @implementation MDCBottomSheetControllerShapeThemer
 
 + (void)applyShapeScheme:(id<MDCShapeScheming>)shapeScheme
  toBottomSheetController:(MDCBottomSheetController *)bottomSheetController {
-  MDCRectangleShapeGenerator *rectangleShape = [[MDCRectangleShapeGenerator alloc] init];
-  MDCCornerTreatment *cornerTreatment =
-      [shapeScheme.smallSurfaceShape.topLeftCorner cornerTreatmentValue];
-  [rectangleShape setCorners:cornerTreatment];
-  [bottomSheetController setShapeGenerator:rectangleShape forState:MDCSheetStateExtended];
-  [bottomSheetController setShapeGenerator:rectangleShape forState:MDCSheetStatePreferred];
+  // Shape Generator for the Extended state of the Bottom Sheet.
+  MDCRectangleShapeGenerator *rectangleShapeExtended = [[MDCRectangleShapeGenerator alloc] init];
+  MDCCornerTreatment *cornerTreatmentExtended =
+      [shapeScheme.largeSurfaceShape.topLeftCorner cornerTreatmentValue];
+  [rectangleShapeExtended setCorners:cornerTreatmentExtended];
+  [bottomSheetController setShapeGenerator:rectangleShapeExtended forState:MDCSheetStateExtended];
+
+  // Shape Generator for the Preferred state of the Bottom Sheet.
+  // This is an override of the scheme to fit the baseline values.
+  MDCRectangleShapeGenerator *rectangleShapePreferred = [[MDCRectangleShapeGenerator alloc] init];
+  MDCCornerTreatment *cornerTreatmentPreferred =
+      [[MDCRoundedCornerTreatment alloc] initWithRadius:kBottomSheetCollapsedBaselineShapeValue];
+  [rectangleShapePreferred setCorners:cornerTreatmentPreferred];
+  [bottomSheetController setShapeGenerator:rectangleShapePreferred forState:MDCSheetStatePreferred];
 }
 
 @end
