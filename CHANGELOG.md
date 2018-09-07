@@ -1,6 +1,6 @@
-# 62.1.1
+# 62.2.0
 
-This hotfix patch release rolls back a behavioral change in Dialogs that was introduced in v60.0.0.
+This hotfix minor release rolls back a behavioral change in Dialogs that was introduced in v60.0.0.
 
 ## Component changes
 
