@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "MaterialComponentsUnitTests"
-  s.version      = "62.1.0"
+  s.version      = "62.1.1"
   s.authors      = "The Material Components authors."
   s.summary      = "This spec is an aggregate of all the Material Components unit tests."
   s.description  = "This spec is made for use in the MDC Catalog."
