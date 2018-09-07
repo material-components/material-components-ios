@@ -101,6 +101,12 @@ open class MaskedTransitionTypicalUseSwiftExample: UIViewController {
 
     leftFAB.sizeToFit()
     leftFAB.center = CGPoint(x: view.bounds.width - padding, y: view.bounds.height - padding)
+    if #available(iOS 11.0, *) {
+      rightFAB.center.x += view.safeAreaInsets.right
+      rightFAB.center.y -= view.safeAreaInsets.bottom
+      leftFAB.center.x -= view.safeAreaInsets.left
+      leftFAB.center.y -= view.safeAreaInsets.bottom
+    }
   }
 
   var transitionController: MDCMaskedTransitionController? = nil
