@@ -37,8 +37,7 @@
       [[MDCCurvedCornerTreatment alloc] initWithSize:CGSizeMake(1, 3)];
   NSNumber *value = (NSNumber *)[NSValue valueWithCGSize:CGSizeMake(2, 5)];
   MDCCornerTreatment *cornerTreatment =
-      [[MDCCornerTreatment alloc] initWithCornerType:MDCCornerTypeCurved
-                                             andSize:value];
+      [[MDCCornerTreatment alloc] initWithCornerType:MDCCornerTypeCurved andSize:value];
 
   // When
   XCTAssertNotEqualObjects(curvedCorner, curvedCorner2);
@@ -58,8 +57,7 @@
       [[MDCRoundedCornerTreatment alloc] initWithRadius:4.3f];
   NSNumber *value = @(3.2f);
   MDCCornerTreatment *cornerTreatment =
-      [[MDCCornerTreatment alloc] initWithCornerType:MDCCornerTypeRounded
-                                             andSize:value];
+      [[MDCCornerTreatment alloc] initWithCornerType:MDCCornerTypeRounded andSize:value];
 
   // When
   XCTAssertNotEqualObjects(roundedCorner, roundedCorner2);
@@ -73,14 +71,11 @@
 
 - (void)testCutCornerEquality {
   // Given
-  MDCCutCornerTreatment *cutCorner =
-      [[MDCCutCornerTreatment alloc] initWithCut:3.2f];
-  MDCCutCornerTreatment *cutCorner2 =
-      [[MDCCutCornerTreatment alloc] initWithCut:4.3f];
+  MDCCutCornerTreatment *cutCorner = [[MDCCutCornerTreatment alloc] initWithCut:3.2f];
+  MDCCutCornerTreatment *cutCorner2 = [[MDCCutCornerTreatment alloc] initWithCut:4.3f];
   NSNumber *value = @(3.2f);
   MDCCornerTreatment *cornerTreatment =
-      [[MDCCornerTreatment alloc] initWithCornerType:MDCCornerTypeCut
-                                             andSize:value];
+      [[MDCCornerTreatment alloc] initWithCornerType:MDCCornerTypeCut andSize:value];
 
   // When
   XCTAssertNotEqualObjects(cutCorner, cutCorner2);

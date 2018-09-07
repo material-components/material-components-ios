@@ -27,6 +27,4 @@
   XCTAssertNotNil(view);
 }
 
-
-
 @end
