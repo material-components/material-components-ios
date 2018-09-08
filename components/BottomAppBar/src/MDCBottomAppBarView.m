@@ -96,7 +96,8 @@ static const int kMDCButtonAnimationDuration = 200;
   [self addSubview:_navBar];
 
   _navBar.backgroundColor = [UIColor clearColor];
-  _navBar.tintColor = [UIColor blackColor];
+  _navBar.leadingBarItemsTintColor = UIColor.blackColor;
+  _navBar.trailingBarItemsTintColor = UIColor.blackColor;
 }
 
 - (void)addBottomBarLayer {
@@ -382,6 +383,30 @@ static const int kMDCButtonAnimationDuration = 200;
 
 - (UIColor *)barTintColor {
   return [UIColor colorWithCGColor:_bottomBarLayer.fillColor];
+}
+
+- (void)setLeadingBarItemsTintColor:(UIColor *)leadingBarItemsTintColor {
+  NSParameterAssert(leadingBarItemsTintColor);
+  if (!leadingBarItemsTintColor) {
+    leadingBarItemsTintColor = UIColor.blackColor;
+  }
+  self.navBar.leadingBarItemsTintColor = leadingBarItemsTintColor;
+}
+
+- (UIColor *)leadingBarItemsTintColor {
+  return self.navBar.leadingBarItemsTintColor;
+}
+
+- (void)setTrailingBarItemsTintColor:(UIColor *)trailingBarItemsTintColor {
+  NSParameterAssert(trailingBarItemsTintColor);
+  if (!trailingBarItemsTintColor) {
+    trailingBarItemsTintColor = UIColor.blackColor;
+  }
+  self.navBar.trailingBarItemsTintColor = trailingBarItemsTintColor;
+}
+
+- (UIColor *)trailingBarItemsTintColor {
+  return self.navBar.trailingBarItemsTintColor;
 }
 
 - (void)setShadowColor:(UIColor *)shadowColor {

@@ -79,6 +79,16 @@ typedef NS_ENUM(NSInteger, MDCBottomAppBarFloatingButtonPosition) {
 @property(nullable, nonatomic, strong) UIColor *barTintColor UI_APPEARANCE_SELECTOR;
 
 /**
+ The @c tintColor applied to the bar items on the leading side of the BottomAppBar.
+ */
+@property(nonnull, nonatomic, strong) UIColor *leadingBarItemsTintColor;
+
+/**
+ The @c tintColor applied to the bar items on the trailing side of the BottomAppBar.
+ */
+@property(nonnull, nonatomic, strong) UIColor *trailingBarItemsTintColor;
+
+/**
  To color the background of the view use -barTintColor instead.
  */
 @property(nullable, nonatomic, copy) UIColor *backgroundColor NS_UNAVAILABLE;
