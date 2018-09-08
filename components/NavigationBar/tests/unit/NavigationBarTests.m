@@ -109,9 +109,9 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   self.navBar.titleView = [[UIView alloc] init];
   self.navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorFill;
   self.navBar.leadingBarButtonItems =
-      @[[[UIBarButtonItem alloc] initWithTitle:@"Button"
-                                         style:UIBarButtonItemStylePlain
-                                        target:nil action:nil]];
+      @[ [[UIBarButtonItem alloc] initWithTitle:@"Button"
+                                          style:UIBarButtonItemStylePlain
+                                         target:nil action:nil] ];
 
   // When
   [self.navBar layoutIfNeeded];
@@ -126,9 +126,9 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   self.navBar.titleView = [[UIView alloc] init];
   self.navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorFill;
   self.navBar.trailingBarButtonItems =
-      @[[[UIBarButtonItem alloc] initWithTitle:@"Button"
-                                         style:UIBarButtonItemStylePlain
-                                        target:nil action:nil]];
+      @[ [[UIBarButtonItem alloc] initWithTitle:@"Button"
+                                          style:UIBarButtonItemStylePlain
+                                         target:nil action:nil] ];
 
   // When
   [self.navBar layoutIfNeeded];
@@ -143,9 +143,9 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   self.navBar.titleView = [[UIView alloc] init];
   self.navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorCenter;
   self.navBar.leadingBarButtonItems =
-      @[[[UIBarButtonItem alloc] initWithTitle:@"Button"
-                                         style:UIBarButtonItemStylePlain
-                                        target:nil action:nil]];
+      @[ [[UIBarButtonItem alloc] initWithTitle:@"Button"
+                                          style:UIBarButtonItemStylePlain
+                                         target:nil action:nil] ];
 
   // When
   [self.navBar layoutIfNeeded];
@@ -161,9 +161,9 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   self.navBar.titleView = [[UIView alloc] init];
   self.navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorCenter;
   self.navBar.trailingBarButtonItems =
-      @[[[UIBarButtonItem alloc] initWithTitle:@"Button"
-                                         style:UIBarButtonItemStylePlain
-                                        target:nil action:nil]];
+      @[ [[UIBarButtonItem alloc] initWithTitle:@"Button"
+                                          style:UIBarButtonItemStylePlain
+                                         target:nil action:nil] ];
 
   // When
   [self.navBar layoutIfNeeded];
@@ -282,7 +282,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
   // When
   self.navBar.leadingBarButtonItem = leadingItem;
-  self.navBar.trailingBarButtonItems = @[leadingItem, trailingItem];
+  self.navBar.trailingBarButtonItems = @[ leadingItem, trailingItem ];
 
   // Then
   NSArray *elements = self.navBar.accessibilityElements;
@@ -313,7 +313,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   // When
   self.navBar.titleView = [[UIView alloc] init];
   self.navBar.leadingBarButtonItem = leadingItem;
-  self.navBar.trailingBarButtonItems = @[leadingItem, trailingItem];
+  self.navBar.trailingBarButtonItems = @[ leadingItem, trailingItem ];
 
   // Then
   NSArray *elements = self.navBar.accessibilityElements;
@@ -387,7 +387,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   self.navBar.leadingBarItemsTintColor = UIColor.orangeColor;
 
   // Then
-  XCTAssertEqualObjects([self.navBar leadingButtonBar].tintColor , UIColor.orangeColor);
+  XCTAssertEqualObjects([self.navBar leadingButtonBar].tintColor, UIColor.orangeColor);
 }
 
 - (void)testSetLeadingButtonBarItemsTintColorToNilRevertsToTintColor {
@@ -399,7 +399,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   self.navBar.leadingBarItemsTintColor = nil;
 
   // Then
-  XCTAssertEqualObjects([self.navBar leadingButtonBar].tintColor , UIColor.purpleColor);
+  XCTAssertEqualObjects([self.navBar leadingButtonBar].tintColor, UIColor.purpleColor);
 }
 
 - (void)testTrailingButtonBarItemsTintColorDefaultsToNil {

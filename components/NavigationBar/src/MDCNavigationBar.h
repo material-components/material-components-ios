@@ -193,7 +193,6 @@ IB_DESIGNABLE
  */
 - (void)setButtonsTitleColor:(nullable UIColor *)color forState:(UIControlState)state;
 
-
 /**
  The tint color applied to the bar items on the leading side of the BottomAppBar. If unset, then
  defaults to using this Navigation Bar's @c tintColor.
