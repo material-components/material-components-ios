@@ -111,7 +111,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   self.navBar.leadingBarButtonItems =
       @[ [[UIBarButtonItem alloc] initWithTitle:@"Button"
                                           style:UIBarButtonItemStylePlain
-                                         target:nil action:nil] ];
+                                         target:nil
+                                         action:nil] ];
 
   // When
   [self.navBar layoutIfNeeded];
@@ -128,7 +129,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   self.navBar.trailingBarButtonItems =
       @[ [[UIBarButtonItem alloc] initWithTitle:@"Button"
                                           style:UIBarButtonItemStylePlain
-                                         target:nil action:nil] ];
+                                         target:nil
+                                         action:nil] ];
 
   // When
   [self.navBar layoutIfNeeded];
@@ -145,7 +147,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   self.navBar.leadingBarButtonItems =
       @[ [[UIBarButtonItem alloc] initWithTitle:@"Button"
                                           style:UIBarButtonItemStylePlain
-                                         target:nil action:nil] ];
+                                         target:nil
+                                         action:nil] ];
 
   // When
   [self.navBar layoutIfNeeded];
@@ -163,7 +166,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   self.navBar.trailingBarButtonItems =
       @[ [[UIBarButtonItem alloc] initWithTitle:@"Button"
                                           style:UIBarButtonItemStylePlain
-                                         target:nil action:nil] ];
+                                         target:nil
+                                         action:nil] ];
 
   // When
   [self.navBar layoutIfNeeded];
