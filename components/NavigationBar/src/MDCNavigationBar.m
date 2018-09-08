@@ -542,8 +542,8 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   [super tintColorDidChange];
 
   // Tint color should only modify interactive elements
-  _leadingButtonBar.tintColor = self.tintColor;
-  _trailingButtonBar.tintColor = self.tintColor;
+  _leadingButtonBar.tintColor = self.leadingBarItemsTintColor ?: self.tintColor;
+  _trailingButtonBar.tintColor = self.trailingBarItemsTintColor ?: self.tintColor;
 }
 
 #pragma mark Public
@@ -631,6 +631,16 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 
 - (UIColor *)buttonsTitleColorForState:(UIControlState)state {
   return [_leadingButtonBar buttonsTitleColorForState:state];
+}
+
+- (void)setLeadingBarItemsTintColor:(UIColor *)leadingBarItemsTintColor {
+  _leadingBarItemsTintColor = leadingBarItemsTintColor;
+  self.leadingButtonBar.tintColor = leadingBarItemsTintColor;
+}
+
+- (void)setTrailingBarItemsTintColor:(UIColor *)trailingBarItemsTintColor {
+  _trailingBarItemsTintColor = trailingBarItemsTintColor;
+  self.trailingButtonBar.tintColor = trailingBarItemsTintColor;
 }
 
 - (void)setLeadingBarButtonItems:(NSArray<UIBarButtonItem *> *)leadingBarButtonItems {
