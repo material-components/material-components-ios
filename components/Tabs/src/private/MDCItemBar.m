@@ -385,6 +385,10 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   [self configureCell:itemCell];
   [itemCell updateWithItem:item atIndex:indexPath.item count:_items.count];
 
+  BOOL shouldSelectItem = [self collectionView:collectionView
+                   shouldSelectItemAtIndexPath:indexPath];
+  itemCell.userInteractionEnabled = shouldSelectItem;
+
   return itemCell;
 }
 
