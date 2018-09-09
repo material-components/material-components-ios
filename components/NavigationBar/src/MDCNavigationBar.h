@@ -206,18 +206,6 @@ IB_DESIGNABLE
 @property(nullable, nonatomic, strong) UIColor *trailingBarItemsTintColor;
 
 /**
- The tint color applied to the bar items on the leading side of the BottomAppBar. If unset, then
- defaults to using this Navigation Bar's @c tintColor.
- */
-@property(nullable, nonatomic, strong) UIColor *leadingBarItemsTintColor;
-
-/**
- The tint color applied to the bar items on the trailing side of the BottomAppBar. If unset, then
- defaults to using this NavigationBar's @c tintColor.
- */
-@property(nullable, nonatomic, strong) UIColor *trailingBarItemsTintColor;
-
-/**
  Returns the color set for @c state that was set by setButtonsTitleColor:forState:.
 
  If no value has been set for a given state, the returned value will fall back to the value
