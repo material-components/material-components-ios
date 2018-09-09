@@ -15,6 +15,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialBottomAppBar.h"
+#import "MaterialBottomAppBar+ColorThemer.h"
 #import "MaterialButtons+ButtonThemer.h"
 
 #import "supplemental/BottomAppBarTypicalUseSupplemental.h"
@@ -25,6 +26,8 @@
   self = [super init];
   if (self) {
     self.title = @"Bottom App Bar";
+    _colorScheme = [[MDCSemanticColorScheme alloc] init];
+    _typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;
 }
@@ -48,7 +51,8 @@
                                        style:UIBarButtonItemStylePlain
                                       target:self
                                       action:@selector(didTapMenu:)];
-  UIImage *menuImage = [UIImage imageNamed:@"Menu"];
+  UIImage *menuImage =
+      [[UIImage imageNamed:@"Menu"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [barButtonLeadingItem setImage:menuImage];
 
   UIBarButtonItem *barButtonTrailingItem =
@@ -56,7 +60,8 @@
                                        style:UIBarButtonItemStylePlain
                                       target:self
                                       action:@selector(didTapSearch:)];
-  UIImage *searchImage = [UIImage imageNamed:@"Search"];
+  UIImage *searchImage =
+      [[UIImage imageNamed:@"Search"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [barButtonTrailingItem setImage:searchImage];
 
   [self.bottomBarView setLeadingBarButtonItems:@[ barButtonLeadingItem ]];
@@ -73,6 +78,8 @@
   buttonScheme.typographyScheme = self.typographyScheme;
   [MDCFloatingActionButtonThemer applyScheme:buttonScheme
                                     toButton:self.bottomBarView.floatingButton];
+  [MDCBottomAppBarColorThemer applySurfaceVariantWithSemanticColorScheme:self.colorScheme
+                                                      toBottomAppBarView:self.bottomBarView];
 }
 - (void)didTapFloatingButton:(id)sender {
   [self.bottomBarView setFloatingButtonHidden:YES animated:YES];
