@@ -43,8 +43,8 @@
 #pragma mark - Utility methods
 
 + (void)resetUIStatesForTheming:(MDCButton *)button {
-  UIControlState maxState =
-  UIControlStateNormal | UIControlStateFocused | UIControlStateDisabled | UIControlStateSelected;
+  UIControlState maxState = UIControlStateNormal | UIControlStateFocused | UIControlStateDisabled |
+                            UIControlStateSelected;
   for (UIControlState state = 0; state <= maxState; ++state) {
     [button setImageTintColor:nil forState:state];
     [button setTitleColor:nil forState:state];
