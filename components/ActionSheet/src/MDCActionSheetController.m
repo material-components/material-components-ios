@@ -314,7 +314,7 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 }
 
 - (UIColor *)backgroundColor {
-  return self.view.backgroundColor;
+  return _backgroundColor;
 }
 
 - (void)setTitleTextColor:(UIColor *)titleTextColor {
