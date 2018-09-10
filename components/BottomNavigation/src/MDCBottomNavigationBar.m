@@ -320,6 +320,18 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
   return insets;
 }
 
+- (UIView *)viewForItem:(UITabBarItem *)item {
+  NSUInteger itemIndex = [_items indexOfObject:item];
+  if (itemIndex == NSNotFound) {
+    return nil;
+  }
+  if (itemIndex >= _itemViews.count) {
+    NSAssert(NO, @"Item index should not be out of item view bounds");
+    return nil;
+  }
+  return _itemViews[itemIndex];
+}
+
 #pragma mark - Touch handlers
 
 - (void)didTouchDownButton:(UIButton *)button {
