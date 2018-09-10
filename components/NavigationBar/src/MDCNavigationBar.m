@@ -103,7 +103,7 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 @implementation MDCNavigationBarSandbagView
 @end
 
-@interface MDCNavigationBar (PrivateAPIs)
+@interface MDCNavigationBar (PrivateAPIs) <MDCButtonBarDelegate>
 
 /// titleLabel is hidden if there is a titleView. When not hidden, displays self.title.
 - (UILabel *)titleLabel;
@@ -146,8 +146,10 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   _titleLabel.textAlignment = NSTextAlignmentCenter;
   _leadingButtonBar = [[MDCButtonBar alloc] init];
   _leadingButtonBar.layoutPosition = MDCButtonBarLayoutPositionLeading;
+  _leadingButtonBar.delegate = self;
   _trailingButtonBar = [[MDCButtonBar alloc] init];
   _trailingButtonBar.layoutPosition = MDCButtonBarLayoutPositionTrailing;
+  _trailingButtonBar.delegate = self;
 
   [self addSubview:_titleLabel];
   [self addSubview:_leadingButtonBar];
@@ -219,6 +221,12 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 
 - (NSInteger)indexOfAccessibilityElement:(id)element {
   return [self.accessibilityElements indexOfObject:element];
+}
+
+#pragma mark - MDCButtonBarDelegate
+
+- (void)buttonBarDidInvalidateIntrinsicContentSize:(MDCButtonBar *)buttonBar {
+  [self setNeedsLayout];
 }
 
 #pragma mark UIView Overrides
