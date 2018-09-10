@@ -14,14 +14,30 @@
 
 #import "MaterialShapes.h"
 
-typedef NS_ENUM(NSInteger, MDCCornerType) {
-  MDCCornerTypeCurved,
-  MDCCornerTypeCut,
-  MDCCornerTypeRounded
-};
-
 @interface MDCCornerTreatment (CornerTypeInitalizer)
 
-- (instancetype)initWithCornerType:(MDCCornerType)cornerType andSize:(NSNumber *)size;
+/**
+ Initialize and return an MDCCornerTreatment as an MDCRoundedCornerTreatment.
+
+ @param value The radius to set the rounded corner to.
+ @return an MDCRoundedCornerTreatment.
+ */
++ (MDCCornerTreatment *)cornerWithRadius:(CGFloat)value;
+
+/**
+ Initialize and return an MDCCornerTreatment as an MDCCutCornerTreatment.
+
+ @param value The cut to set the cut corner to.
+ @return an MDCCutCornerTreatment.
+ */
++ (MDCCornerTreatment *)cornerWithCut:(CGFloat)value;
+
+/**
+ Initialize and return an MDCCornerTreatment as an MDCCurvedCornerTreatment.
+
+ @param value The size to set the curved corner to.
+ @return an MDCCurvedCornerTreatment.
+ */
++ (MDCCornerTreatment *)cornerWithCurve:(CGSize)value;
 
 @end
