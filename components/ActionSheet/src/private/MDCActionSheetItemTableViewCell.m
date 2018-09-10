@@ -148,13 +148,13 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
   _titleLeadingConstraint.constant = leadingConstant;
   CGFloat width = CGRectGetWidth(self.contentView.frame) - leadingConstant - TitleTrailingPadding;
   _titleWidthConstraint.constant = width;
-  _imageView.image = [_itemAction.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  _imageView.image = _itemAction.image;
 }
 
 - (void)setAction:(MDCActionSheetAction *)action {
   _itemAction = [action copy];
   _textLabel.text = _itemAction.title;
-  _imageView.image = [_itemAction.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  _imageView.image = _itemAction.image;
   [self setNeedsLayout];
 }
 

@@ -86,6 +86,8 @@ class ActionSheetSwiftExample: UIViewController {
     case .thirtyOptions:
       actionSheet = ActionSheetSwiftExample.thirtyOptions()
     }
+    actionSheet.actionTintColor = .green
+    actionSheet.actionTextColor = .blue
     MDCActionSheetTypographyThemer.applyTypographyScheme(typographyScheme, to: actionSheet)
     present(actionSheet, animated: true, completion: nil)
   }
