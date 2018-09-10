@@ -14,6 +14,9 @@
 
 import UIKit
 import MaterialComponentsAlpha.MaterialActionSheet
+import MaterialComponentsAlpha.MaterialActionSheet_TypographyThemer
+import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialTypographyScheme
 
 class ActionSheetSwiftExample: UIViewController {
 
