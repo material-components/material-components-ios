@@ -18,10 +18,24 @@
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
 #import "MaterialBottomSheet.h"
+#import "MaterialBottomSheet+ShapeThemer.h"
 #import "supplemental/BottomSheetDummyCollectionViewController.h"
 #import "supplemental/BottomSheetSupplemental.h"
 
+@interface BottomSheetTypicalUseExample ()
+@property(nonatomic, strong) MDCShapeScheme *shapeScheme;
+@end
+
 @implementation BottomSheetTypicalUseExample
+
+- (instancetype)init
+{
+  self = [super init];
+  if (self) {
+    _shapeScheme = [[MDCShapeScheme alloc] init];
+  }
+  return self;
+}
 
 - (void)presentBottomSheet {
   BottomSheetDummyCollectionViewController *viewController =
@@ -42,6 +56,8 @@
 
   MDCBottomSheetController *bottomSheet =
       [[MDCBottomSheetController alloc] initWithContentViewController:container];
+  [MDCBottomSheetControllerShapeThemer applyShapeScheme:self.shapeScheme
+                                toBottomSheetController:bottomSheet];
   bottomSheet.isScrimAccessibilityElement = YES;
   bottomSheet.scrimAccessibilityLabel = @"Close";
   bottomSheet.trackingScrollView = viewController.collectionView;
