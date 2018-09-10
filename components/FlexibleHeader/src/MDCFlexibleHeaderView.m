@@ -635,6 +635,13 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
                       && [self trackingScrollViewIsWebKit])) {
     return 0;
   }
+  if (@available(iOS 11.0, *)) {
+    // Don't adjust the contentInset if scrollView's behavior doesn't want it.
+    // Compatible to iOS 11 and above
+    if (scrollView.contentInsetAdjustmentBehavior == UIScrollViewContentInsetAdjustmentNever) {
+      return 0;
+    }
+  }
 
   MDCFlexibleHeaderScrollViewInfo *info = [_trackedScrollViews objectForKey:scrollView];
   if (!info) {
