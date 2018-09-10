@@ -72,16 +72,6 @@ typedef NS_ENUM(NSInteger, MDCBottomAppBarFloatingButtonPosition) {
  */
 @property(nonatomic, copy, nullable) NSArray<UIBarButtonItem *> *trailingBarButtonItems;
 
-// Redeclaring to document the leading/trailing items' behavior.
-/**
- To tint the leading and trailing buttons, use @c leadingBarItemsTintColor or
- @c trailingBarItemsTintColor instead.
- */
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wnullability"
-@property(null_resettable, nonatomic, strong) UIColor *tintColor NS_AVAILABLE_IOS(7_0);
-#pragma clang diagnostic pop
-
 /**
  Color of the background of the bottom app bar.
  */
