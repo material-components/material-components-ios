@@ -54,6 +54,7 @@ mdc_objc_library(
     deps = [
         ":BottomAppBar",
         "//components/Themes",
+        "//components/schemes/Color",
     ],
     visibility = ["//visibility:public"],
 )
