@@ -14,6 +14,10 @@
 
 #import "MaterialShapes.h"
 
+#import "MDCCurvedCornerTreatment.h"
+#import "MDCCutCornerTreatment.h"
+#import "MDCRoundedCornerTreatment.h"
+
 @interface MDCCornerTreatment (CornerTypeInitalizer)
 
 /**
@@ -22,7 +26,7 @@
  @param value The radius to set the rounded corner to.
  @return an MDCRoundedCornerTreatment.
  */
-+ (MDCCornerTreatment *)cornerWithRadius:(CGFloat)value;
++ (MDCRoundedCornerTreatment *)cornerWithRadius:(CGFloat)value;
 
 /**
  Initialize and return an MDCCornerTreatment as an MDCCutCornerTreatment.
@@ -30,7 +34,7 @@
  @param value The cut to set the cut corner to.
  @return an MDCCutCornerTreatment.
  */
-+ (MDCCornerTreatment *)cornerWithCut:(CGFloat)value;
++ (MDCCutCornerTreatment *)cornerWithCut:(CGFloat)value;
 
 /**
  Initialize and return an MDCCornerTreatment as an MDCCurvedCornerTreatment.
@@ -38,6 +42,6 @@
  @param value The size to set the curved corner to.
  @return an MDCCurvedCornerTreatment.
  */
-+ (MDCCornerTreatment *)cornerWithCurve:(CGSize)value;
++ (MDCCurvedCornerTreatment *)cornerWithCurve:(CGSize)value;
 
 @end

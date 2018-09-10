@@ -14,21 +14,17 @@
 
 #import "MDCCornerTreatment+CornerTypeInitalizer.h"
 
-#import "MDCCurvedCornerTreatment.h"
-#import "MDCCutCornerTreatment.h"
-#import "MDCRoundedCornerTreatment.h"
-
 @implementation MDCCornerTreatment (CornerTypeInitalizer)
 
-+ (MDCCornerTreatment *)cornerWithRadius:(CGFloat)value {
++ (MDCRoundedCornerTreatment *)cornerWithRadius:(CGFloat)value {
   return [[MDCRoundedCornerTreatment alloc] initWithRadius:value];
 }
 
-+ (MDCCornerTreatment *)cornerWithCut:(CGFloat)value {
++ (MDCCutCornerTreatment *)cornerWithCut:(CGFloat)value {
   return [[MDCCutCornerTreatment alloc] initWithCut:value];
 }
 
-+ (MDCCornerTreatment *)cornerWithCurve:(CGSize)value {
++ (MDCCurvedCornerTreatment *)cornerWithCurve:(CGSize)value {
   return [[MDCCurvedCornerTreatment alloc] initWithSize:value];
 }
 
