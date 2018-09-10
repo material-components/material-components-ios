@@ -147,7 +147,6 @@
 }
 
 - (void)updateShapeGenerator {
-  NSLog(@"lala");
   id<MDCShapeGenerating> shapeGenerator = [self shapeGeneratorForState:_state];
   if (self.view.shapeGenerator != shapeGenerator) {
     self.view.shapeGenerator = shapeGenerator;
