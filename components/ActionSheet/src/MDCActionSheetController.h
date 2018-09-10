@@ -146,17 +146,6 @@ __attribute__((objc_subclassing_restricted))
 @property(nonatomic, nonnull, strong) UIColor *backgroundColor;
 
 /**
- The color applied that will be applied to message if there is a message. If there is no message
- then this color will be applied to the title.
- */
-@property(nonatomic, strong, nullable) UIColor *primaryTextColor;
-
-/**
- The color applied to the title if there is both a title and a message.
- */
-@property(nonatomic, strong, nullable) UIColor *secondaryTextColor;
-
-/**
  The color applied to the title of the action sheet controller.
  */
 @property(nonatomic, strong, nullable) UIColor *titleTextColor;

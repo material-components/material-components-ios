@@ -132,12 +132,11 @@ static const CGFloat MiddlePadding = 8.f;
   // color, if there is both then the title label's alpha should be darker secondary color.
   if (self.message && ![self.message isEqualToString:@""]) {
     _titleLabel.alpha = TitleLabelAlpha;
-    _messageLabel.textColor = self.primaryColor;
-    _titleLabel.textColor = self.secondaryColor;
   } else {
     _titleLabel.alpha = MessageLabelAlpha;
-    _titleLabel.textColor = self.primaryColor;
   }
+  _messageLabel.textColor = self.messageTextColor;
+  _titleLabel.textColor = self.titleTextColor;
 }
 
 - (NSString *)message {
@@ -210,29 +209,13 @@ static const CGFloat MiddlePadding = 8.f;
 }
 
 - (void)setTitleTextColor:(UIColor *)titleTextColor {
+  _titleTextColor = titleTextColor;
   _titleLabel.textColor = titleTextColor;
 }
 
-- (UIColor *)titleTextColor {
-  return _titleLabel.textColor;
-}
-
 - (void)setMessageTextColor:(UIColor *)messageTextColor {
+  _messageTextColor = messageTextColor;
   _messageLabel.textColor = messageTextColor;
-}
-
-- (UIColor *)messageTextColor {
-  return _messageLabel.textColor;
-}
-
-- (void)setPrimaryColor:(UIColor *)primaryColor {
-  _primaryColor = primaryColor;
-  [self styleTitleAndMessage];
-}
-
-- (void)setSecondaryColor:(UIColor *)secondaryColor {
-  _secondaryColor = secondaryColor;
-  [self styleTitleAndMessage];
 }
 
 @end
