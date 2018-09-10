@@ -17,12 +17,15 @@ import UIKit
 
 import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialBottomAppBar
-import MaterialComponents.MaterialButtons_ColorThemer
+import MaterialComponents.MaterialBottomAppBar_ColorThemer
+import MaterialComponents.MaterialButtons_ButtonThemer
 
 class BottomAppBarTypicalUseSwiftExample: UIViewController {
 
   let appBarViewController = MDCAppBarViewController()
   let bottomBarView = MDCBottomAppBarView()
+  var colorScheme = MDCSemanticColorScheme()
+  var typographyScheme = MDCTypographyScheme()
 
   init() {
     super.init(nibName: nil, bundle: nil)
@@ -59,23 +62,27 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
                                            for: .touchUpInside)
 
     // Set the image on the floating button.
-    let addImage = UIImage(named:"Add")
+    let addImage = UIImage(named:"Add")?.withRenderingMode(.alwaysTemplate)
     bottomBarView.floatingButton.setImage(addImage, for: .normal)
 
     // Set the position of the floating button.
     bottomBarView.floatingButtonPosition = .center
 
     // Theme the floating button.
-    let colorScheme = MDCBasicColorScheme(primaryColor: .white)
-    MDCButtonColorThemer.apply(colorScheme, to: bottomBarView.floatingButton)
+    let buttonScheme = MDCButtonScheme()
+    buttonScheme.colorScheme = colorScheme
+    buttonScheme.typographyScheme = typographyScheme
+    MDCFloatingActionButtonThemer.applyScheme(buttonScheme, to: bottomBarView.floatingButton)
+    MDCBottomAppBarColorThemer.applySurfaceVariant(withSemanticColorScheme: colorScheme,
+                                                   to: bottomBarView)
 
     // Configure the navigation buttons to be shown on the bottom app bar.
     let barButtonLeadingItem = UIBarButtonItem()
-    let menuImage = UIImage(named:"Menu")
+    let menuImage = UIImage(named:"Menu")?.withRenderingMode(.alwaysTemplate)
     barButtonLeadingItem.image = menuImage
 
     let barButtonTrailingItem = UIBarButtonItem()
-    let searchImage = UIImage(named:"Search")
+    let searchImage = UIImage(named:"Search")?.withRenderingMode(.alwaysTemplate)
     barButtonTrailingItem.image = searchImage
 
     bottomBarView.leadingBarButtonItems = [ barButtonLeadingItem ]
