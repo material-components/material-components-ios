@@ -160,18 +160,34 @@ IB_DESIGNABLE
 - (nullable UIColor *)backgroundTrackTickColorForState:(UIControlState)state;
 
 /**
+ Sets the thumb radius to use for the specified state.
+
+ In general, if a property is not specified for a state, the default is to use the @c
+ UIControlStateNormal value. If the @c UIControlStateNormal value is not set, then the property
+ defaults to a default value. Therefore, at a minimum, you should set the value for the normal
+ state.
+
+ @param thumbRadius The radius of the thumb.
+ @param state The state of the slider.
+ @note If a negative value is passed the absolute value will be used.
+ */
+- (void)setThumbRadius:(double)thumbRadius forState:(UIControlState)state;
+
+/**
+ Returns the thumb radius associated with the specified state.
+
+ @params state The state that uses the thumb radius.
+ @returns The thumb radius for the specified state. If no radius has been set for the specific
+          state, this method returns the radius associated with the @c UIControlStateNormal state.
+ */
+- (double)thumbRadiusForState:(UIControlState)state;
+
+/**
  The color of the Ink ripple.
 
  Defaults to transparent blue.
  */
 @property(nonatomic, strong, nullable) UIColor *inkColor;
-
-/**
- The radius of the cursor (thumb).
-
- Default value is 6 points.
- */
-@property(nonatomic, assign) CGFloat thumbRadius UI_APPEARANCE_SELECTOR;
 
 /**
  The elevation of the cursor (thumb).
@@ -291,6 +307,15 @@ IB_DESIGNABLE
 @property(nonatomic, assign, getter=isThumbHollowAtStart) BOOL thumbHollowAtStart;
 
 #pragma mark - To be deprecated
+
+/**
+ The radius of the cursor (thumb).
+
+ Default value is 6 points.
+ @note This API is planned for deprecation. Use @c setThumbRadius:forState: instead.
+ @note Has no effect if @c statefulAPIEnabled is @c YES.
+ */
+@property(nonatomic, assign) CGFloat thumbRadius UI_APPEARANCE_SELECTOR;
 
 /**
  The color of the cursor (thumb) and track while the slider is disabled.

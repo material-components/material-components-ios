@@ -911,6 +911,96 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   XCTAssertEqual(self.slider.thumbElevation, MDCShadowElevationNone);
 }
 
+- (void)testThumbRadiusForState {
+  // Given
+  self.slider.statefulAPIEnabled = YES;
+  float normalRadius = 12.f;
+  float disabledRadius = 10.f;
+  float highlightedRadius = 8.f;
+  float selectedRadius = 16.f;
+
+  // When
+  [self.slider setThumbRadius:normalRadius forState:UIControlStateNormal];
+  [self.slider setThumbRadius:disabledRadius forState:UIControlStateDisabled];
+  [self.slider setThumbRadius:highlightedRadius forState:UIControlStateHighlighted];
+  [self.slider setThumbRadius:selectedRadius forState:UIControlStateSelected];
+
+  // Then
+  self.slider.enabled = YES;
+  self.slider.selected = NO;
+  self.slider.highlighted = NO;
+  XCTAssertEqual(self.slider.thumbRadius, normalRadius);
+
+  self.slider.enabled = NO;
+  self.slider.selected = NO;
+  self.slider.highlighted = NO;
+  XCTAssertEqual(self.slider.thumbRadius, disabledRadius);
+
+  self.slider.enabled = YES;
+  self.slider.selected = NO;
+  self.slider.highlighted = YES;
+  XCTAssertEqual(self.slider.thumbRadius, highlightedRadius);
+
+  self.slider.enabled = YES;
+  self.slider.selected = YES;
+  self.slider.highlighted = NO;
+  XCTAssertEqual(self.slider.thumbRadius, selectedRadius);
+}
+
+- (void)testThumbRadiusHasNoEffectWhenStatefulAPIIsEnabled {
+  // Given
+  self.slider.statefulAPIEnabled = YES;
+
+  // When
+  CGFloat defaultThumbRadius = self.slider.thumbRadius;
+  CGFloat thumbRadius = 100.f;
+  self.slider.thumbRadius = thumbRadius;
+
+  // Then
+  XCTAssertEqual(self.slider.thumbRadius, defaultThumbRadius);
+}
+
+- (void)testThumbRadiusDefaultWhenStatefulAPIIsDisabled {
+  // Given
+  self.slider.statefulAPIEnabled = NO;
+
+  // When
+  CGFloat thumbRadius = 40.f;
+  self.slider.thumbRadius = thumbRadius;
+
+  NSUInteger maxState = UIControlStateNormal | UIControlStateSelected | UIControlStateDisabled |
+      UIControlStateHighlighted;
+
+  for (NSUInteger state = 0; state <= maxState; ++state) {
+    XCTAssertEqual([self.slider thumbRadiusForState:state], thumbRadius);
+  }
+}
+
+- (void)testThumbRadiusDefaultWhenStatefulAPIEnabled {
+  // Given
+  self.slider.statefulAPIEnabled = YES;
+
+  // When
+  double thumbRadius = 40.f;
+  [self.slider setThumbRadius:thumbRadius forState:UIControlStateNormal];
+
+  NSUInteger maxState = UIControlStateNormal | UIControlStateSelected | UIControlStateDisabled |
+  UIControlStateHighlighted;
+
+  for (NSUInteger state = 0; state <= maxState; ++state) {
+    XCTAssertEqual([self.slider thumbRadiusForState:state], thumbRadius);
+  }
+}
+
+- (void)testThumbRadius {
+  // Given
+  CGFloat thumbRadius = 15.f;
+  // When
+  self.slider.thumbRadius = thumbRadius;
+  // Then
+  XCTAssertEqual(self.slider.thumbRadius, thumbRadius);
+}
+
 #pragma mark Numeric value label
 
 - (void)testNumericValueLabelString {
