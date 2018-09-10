@@ -31,14 +31,17 @@ class BottomSheetPresentationTest: XCTestCase {
 
   func testSetPreferredSheetHeight() {
     // Given
-    let preferredSheetHeight: CGFloat = 150.0
+    let preferredSheetHeight: CGFloat = 125.0
 
     // When
     presentationController.preferredSheetHeight = preferredSheetHeight
+    presentationController.presentedViewController.view.setNeedsLayout()
+    presentationController.presentedViewController.view.layoutIfNeeded()
+    print(presentationController.frameOfPresentedViewInContainerView)
 
     // Then
     let sheetView = getSheetView()
-    XCTAssertEqual(sheetView.frame.height, preferredSheetHeight)
+    XCTAssertEqual(sheetView.bounds.height, preferredSheetHeight)
   }
 
   func testSetPreferredContentSizeThenSheetHeight() {
@@ -47,12 +50,12 @@ class BottomSheetPresentationTest: XCTestCase {
     let preferredSheetHeight: CGFloat = 150.0
 
     // When
-    presentationController.presentingViewController.preferredContentSize = preferredContentSize
+    presentationController.presentedViewController.preferredContentSize = preferredContentSize
     presentationController.preferredSheetHeight = preferredSheetHeight
 
     // Then
     let sheetView = getSheetView()
-    XCTAssertEqual(sheetView.frame.height, preferredSheetHeight)
+    XCTAssertEqual(sheetView.bounds.height, preferredSheetHeight)
   }
 
   private func getSheetView() -> UIView {
