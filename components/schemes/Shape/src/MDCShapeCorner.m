@@ -57,15 +57,12 @@
 
 - (MDCCornerTreatment *)cornerTreatmentSizeWithNormalizedShapeSize:(CGFloat)shapeSize {
   MDCCornerTreatment *cornerTreatment;
-  NSNumber *size = @(shapeSize);
   switch (_family) {
     case MDCShapeCornerFamilyAngled:
-      cornerTreatment = [[MDCCornerTreatment alloc] initWithCornerType:MDCCornerTypeCut
-                                                               andSize:size];
+      cornerTreatment = [MDCCornerTreatment cornerWithCut:shapeSize];
       break;
     case MDCShapeCornerFamilyRounded:
-      cornerTreatment = [[MDCCornerTreatment alloc] initWithCornerType:MDCCornerTypeRounded
-                                                               andSize:size];
+      cornerTreatment = [MDCCornerTreatment cornerWithRadius:shapeSize];
       break;
   }
   return cornerTreatment;

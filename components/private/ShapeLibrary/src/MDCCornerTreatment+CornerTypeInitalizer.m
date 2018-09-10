@@ -14,32 +14,18 @@
 
 #import "MDCCornerTreatment+CornerTypeInitalizer.h"
 
-#import "MDCCurvedCornerTreatment.h"
-#import "MDCCutCornerTreatment.h"
-#import "MDCRoundedCornerTreatment.h"
-
 @implementation MDCCornerTreatment (CornerTypeInitalizer)
 
-- (instancetype)initWithCornerType:(MDCCornerType)cornerType andSize:(NSNumber *)size {
-  self = [self init];
-  switch (cornerType) {
-    case MDCCornerTypeCurved: {
-      CGSize curvedSize = [size CGSizeValue];
-      self = [[MDCCurvedCornerTreatment alloc] initWithSize:curvedSize];
-      break;
-    }
-    case MDCCornerTypeCut: {
-      CGFloat cutSize = [size floatValue];
-      self = [[MDCCutCornerTreatment alloc] initWithCut:cutSize];
-      break;
-    }
-    case MDCCornerTypeRounded: {
-      CGFloat radiusSize = [size floatValue];
-      self = [[MDCRoundedCornerTreatment alloc] initWithRadius:radiusSize];
-      break;
-    }
-  }
-  return self;
++ (MDCRoundedCornerTreatment *)cornerWithRadius:(CGFloat)value {
+  return [[MDCRoundedCornerTreatment alloc] initWithRadius:value];
+}
+
++ (MDCCutCornerTreatment *)cornerWithCut:(CGFloat)value {
+  return [[MDCCutCornerTreatment alloc] initWithCut:value];
+}
+
++ (MDCCurvedCornerTreatment *)cornerWithCurve:(CGSize)value {
+  return [[MDCCurvedCornerTreatment alloc] initWithSize:value];
 }
 
 @end

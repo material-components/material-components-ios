@@ -96,6 +96,7 @@ static const int kMDCButtonAnimationDuration = 200;
   [self addSubview:_navBar];
 
   _navBar.backgroundColor = [UIColor clearColor];
+  _navBar.tintColor = [UIColor blackColor];
   _navBar.leadingBarItemsTintColor = UIColor.blackColor;
   _navBar.trailingBarItemsTintColor = UIColor.blackColor;
 }

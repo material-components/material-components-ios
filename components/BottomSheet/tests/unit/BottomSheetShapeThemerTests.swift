@@ -46,11 +46,10 @@ class BottomSheetShapeThemerTests: XCTestCase {
 
   func testBottomSheetShapeThemerPreferred() {
     // Given
-    let bottomSheetCollapsedBaselineShapeValue = NSNumber(value: 24)
+    let collapsedBaselineShapeValue = CGFloat(24)
     let shapeScheme = MDCShapeScheme()
     let bottomSheet = MDCBottomSheetController(contentViewController: UIViewController())
-    let generatedCorner = MDCRoundedCornerTreatment(cornerType: .rounded,
-                                                    andSize: bottomSheetCollapsedBaselineShapeValue)
+    let generatedCorner = MDCCornerTreatment.corner(withRadius: collapsedBaselineShapeValue)
     shapeScheme.largeSurfaceShape = MDCShapeCategory(cornersWith: .angled, andSize: 10)
     bottomSheet.setShapeGenerator(MDCRectangleShapeGenerator(), for: .preferred)
 

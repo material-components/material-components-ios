@@ -72,7 +72,6 @@ typedef NS_ENUM(NSInteger, MDCBottomAppBarFloatingButtonPosition) {
  */
 @property(nonatomic, copy, nullable) NSArray<UIBarButtonItem *> *trailingBarButtonItems;
 
-
 /**
  Color of the background of the bottom app bar.
  */

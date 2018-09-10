@@ -19,22 +19,53 @@
 #import "MaterialThemes.h"
 
 @interface BottomAppBarColorThemerTests : XCTestCase
-
+@property(nonatomic, strong) MDCBottomAppBarView *bottomAppBar;
 @end
 
 @implementation BottomAppBarColorThemerTests
 
+- (void)setUp {
+  [super setUp];
+  self.bottomAppBar = [[MDCBottomAppBarView alloc] init];
+}
+
 - (void)testPrimaryColorAppliedToBarTintColor {
   // Given
-  MDCBottomAppBarView *bottomAppBar = [[MDCBottomAppBarView alloc] init];
   MDCBasicColorScheme *scheme =
       [[MDCBasicColorScheme alloc] initWithPrimaryColor:UIColor.cyanColor];
 
   // When
-  [MDCBottomAppBarColorThemer applyColorScheme:scheme toBottomAppBarView:bottomAppBar];
+  [MDCBottomAppBarColorThemer applyColorScheme:scheme toBottomAppBarView:self.bottomAppBar];
 
   // Then
-  XCTAssertEqualObjects(bottomAppBar.barTintColor, scheme.primaryColor);
+  XCTAssertEqualObjects(self.bottomAppBar.barTintColor, scheme.primaryColor);
+}
+
+- (void)testSurfaceVariantColorThemer {
+  // Given
+  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  colorScheme.primaryColor = UIColor.orangeColor;
+  colorScheme.onPrimaryColor = UIColor.cyanColor;
+  colorScheme.surfaceColor = UIColor.blueColor;
+  colorScheme.onSurfaceColor = UIColor.purpleColor;
+
+  // When
+  [MDCBottomAppBarColorThemer applySurfaceVariantWithSemanticColorScheme:colorScheme
+                                                      toBottomAppBarView:self.bottomAppBar];
+
+  // Then
+  UIColor *barItemTintColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.6];
+  XCTAssertEqualObjects(self.bottomAppBar.barTintColor, colorScheme.surfaceColor);
+  XCTAssertEqualObjects(self.bottomAppBar.leadingBarItemsTintColor, barItemTintColor);
+  XCTAssertEqualObjects(self.bottomAppBar.trailingBarItemsTintColor, barItemTintColor);
+  XCTAssertEqualObjects(
+      [self.bottomAppBar.floatingButton backgroundColorForState:UIControlStateNormal],
+      colorScheme.primaryColor);
+  XCTAssertEqualObjects([self.bottomAppBar.floatingButton titleColorForState:UIControlStateNormal],
+                        colorScheme.onPrimaryColor);
+  XCTAssertEqualObjects(
+      [self.bottomAppBar.floatingButton imageTintColorForState:UIControlStateNormal],
+      colorScheme.onPrimaryColor);
 }
 
 @end
