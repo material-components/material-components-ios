@@ -593,6 +593,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   if (state == UIControlStateNormal) {
     [self updateAlphaAndBackgroundColorAnimated:NO];
   }
+  NSLog(@"hahah");
 }
 
 #pragma mark - Border Color
