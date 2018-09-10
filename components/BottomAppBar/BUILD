@@ -73,6 +73,7 @@ mdc_objc_library(
         ":BottomAppBar",
         ":ColorThemer",
         ":private",
+        "//components/NavigationBar",
     ],
     visibility = ["//visibility:private"],
 )
