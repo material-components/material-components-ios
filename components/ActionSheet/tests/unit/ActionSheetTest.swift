@@ -80,6 +80,10 @@ class ActionSheetTest: XCTestCase {
   func testDefaultBackgroundColor() {
     // Then
     XCTAssertEqual(actionSheet.backgroundColor, .white)
+    let subviewsArray = actionSheet.view.subviews
+    for view in subviewsArray {
+      XCTAssertEqual(view.backgroundColor, .white)
+    }
   }
 
   func testSetBackgroundColor() {
