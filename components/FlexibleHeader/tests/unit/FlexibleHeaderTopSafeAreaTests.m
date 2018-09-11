@@ -20,7 +20,7 @@
 
 #import "../../src/private/MDCFlexibleHeaderTopSafeArea.h"
 
-#import "FlexibleHeaderTopSafeAreaTestsFakeViewController.h"
+#import "supplemental/FlexibleHeaderTopSafeAreaTestsFakeViewController.h"
 
 @interface FlexibleHeaderTopSafeAreaTests : XCTestCase
 @end
