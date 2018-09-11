@@ -96,7 +96,7 @@
   MDCRoundedCornerTreatment *corner = [[MDCRoundedCornerTreatment alloc] initWithRadius:1.2f];
   corner.valueType = MDCCornerTreatmentValueTypePercentage;
   MDCCornerTreatment *cornerTreatment =
-      [MDCCornerTreatment cornerWithRadius:1.2f andValueType:MDCCornerTreatmentValueTypePercentage];
+      [MDCCornerTreatment cornerWithRadius:1.2f valueType:MDCCornerTreatmentValueTypePercentage];
 
   // Then
   XCTAssertEqualObjects(corner, cornerTreatment);
