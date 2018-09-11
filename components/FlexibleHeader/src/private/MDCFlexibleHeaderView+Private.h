@@ -32,7 +32,7 @@
  Forces an extraction of the top safe area inset. Intended to be called any time the top safe area
  inset is known to have changed.
  */
-- (void)extractTopSafeAreaInset;
+- (void)topSafeAreaInsetDidChange;
 
 /**
  The height of the top safe area guide.
