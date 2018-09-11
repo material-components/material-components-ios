@@ -1,18 +1,22 @@
 # List
 
-Material Design Lists are a continuous group of text or images. The elements comprising Lists are referred to as List Items. The MDCBaseCell is a List Item at its simplest--a basic UICollectionViewCell subclass with Material Ink Ripple and Elevation.
+Material Design Lists are continuous groups of text and/or images. The [Material guidelines](https://material.io/go/design-lists) for Lists are extensive, and there is no class at this time for implementing any one of them, let alone all of them. However, we are starting to add classes that represent individual List Items. We currently offer two List Item Cells:
 
-## Description
+### MDCBaseCell
 
-The [Material guidelines](https://material.io/go/design-lists) for Lists are extensive, and there is no class at this time for implementing any one of them, let alone all of them. However, the MDCBaseCell provides a starting point to build anything the guidelines provide.
-
-To build a List using the MDCBaseCell simply treat it like you would any other UICollectionViewCell.
-
-The MDCBaseCell has two configurable properties--Ink Ripple color (`currentInkColor`) and Elevation (`elevation`).
+The MDCBaseCell is a List Item at its simplest--a basic UICollectionViewCell subclass with Material Ink Ripple and Elevation. The MDCBaseCell provides a starting point to build anything the guidelines provide. To build a List using the MDCBaseCell simply treat it like you would any other UICollectionViewCell.
 
 Below is an example:
 
 ![MDCBaseCell Example](https://user-images.githubusercontent.com/8020010/42164205-3a7f699a-7dfd-11e8-9109-a7a6040996db.gif)
+
+### MDCSelfSizingStereoCell
+
+The MDCSelfSizingStereoCell is a subclass of MDCBaseCell. It exposes two image views (trailing and leading) and two labels (title and detail) that the user can configure however they like.
+
+Below is an example:
+
+![MDCSelfSizingStereoCell Example](https://user-images.githubusercontent.com/8020010/44807557-dcf11a80-ab97-11e8-83a6-6d7b69e59ecd.gif)
 
 ## Example Walkthrough / How to implement your own List Cell
 
