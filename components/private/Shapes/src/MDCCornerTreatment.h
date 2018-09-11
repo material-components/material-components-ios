@@ -59,7 +59,6 @@ typedef NS_ENUM(NSInteger, MDCCornerTreatmentValueType) {
  */
 - (nonnull MDCPathGenerator *)pathGeneratorForCornerWithAngle:(CGFloat)angle;
 
-
 /**
  Generates an MDCPathGenerator object for a corner with the provided angle.
  Given that the provided valueType is MDCCornerTreatmentValueTypePercentage, we also need
@@ -71,6 +70,5 @@ typedef NS_ENUM(NSInteger, MDCCornerTreatmentValueType) {
  */
 - (nonnull MDCPathGenerator *)pathGeneratorForCornerWithAngle:(CGFloat)angle
                                                   forViewSize:(CGSize)size;
-
 
 @end
