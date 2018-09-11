@@ -42,7 +42,9 @@ static NSString *const MDCCutCornerTreatmentCutKey = @"MDCCutCornerTreatmentCutK
 }
 
 - (id)copyWithZone:(NSZone *)__unused zone {
-  return [[[self class] alloc] initWithCut:_cut];
+  MDCCutCornerTreatment *copy = [super copyWithZone:zone];
+  copy.cut = _cut;
+  return copy;
 }
 
 - (MDCPathGenerator *)pathGeneratorForCornerWithAngle:(CGFloat)angle {
