@@ -19,6 +19,7 @@
 @implementation MDCCornerTreatment
 
 - (instancetype)init {
+  _valueType = MDCCornerTreatmentValueTypeAbsolute;
   return [super init];
 }
 
