@@ -46,8 +46,17 @@ static NSString *const MDCCutCornerTreatmentCutKey = @"MDCCutCornerTreatmentCutK
 }
 
 - (MDCPathGenerator *)pathGeneratorForCornerWithAngle:(CGFloat)angle {
-  MDCPathGenerator *path = [MDCPathGenerator pathGeneratorWithStartPoint:CGPointMake(0, _cut)];
-  [path addLineToPoint:CGPointMake(_cut, 0)];
+  return [self pathGeneratorForCornerWithAngle:angle andCut:_cut];
+}
+
+- (MDCPathGenerator *)pathGeneratorForCornerWithAngle:(CGFloat)angle forViewSize:(CGSize)viewSize {
+  CGFloat normalizedCut = _cut * viewSize.height;
+  return [self pathGeneratorForCornerWithAngle:angle andCut:normalizedCut];
+}
+
+- (MDCPathGenerator *)pathGeneratorForCornerWithAngle:(CGFloat)angle andCut:(CGFloat)cut {
+  MDCPathGenerator *path = [MDCPathGenerator pathGeneratorWithStartPoint:CGPointMake(0, cut)];
+  [path addLineToPoint:CGPointMake(cut, 0)];
   return path;
 }
 

@@ -34,6 +34,11 @@
   return [MDCPathGenerator pathGeneratorWithStartPoint:CGPointZero];
 }
 
+- (MDCPathGenerator *)pathGeneratorForCornerWithAngle:(CGFloat)__unused angle
+                                          forViewSize:(CGSize)__unused viewSize {
+  return [MDCPathGenerator pathGeneratorWithStartPoint:CGPointZero];
+}
+
 - (void)encodeWithCoder:(NSCoder *)__unused aCoder {
   // MDCCornerTreatment has no params, so nothing to encode here.
 }
