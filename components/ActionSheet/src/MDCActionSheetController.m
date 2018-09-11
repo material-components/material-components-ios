@@ -135,7 +135,7 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = _backgroundColor;
+  self.view.backgroundColor = self.backgroundColor;
   _tableView.frame = self.view.bounds;
   [self.view addSubview:_tableView];
   [self.view addSubview:_header];
