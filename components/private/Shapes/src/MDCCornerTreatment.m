@@ -19,6 +19,7 @@
 @implementation MDCCornerTreatment
 
 - (instancetype)init {
+  _valueType = MDCCornerTreatmentValueTypeAbsolute;
   return [super init];
 }
 
@@ -43,6 +44,17 @@
 
 + (BOOL)supportsSecureCoding {
   return YES;
+}
+
+- (BOOL)isEqual:(id)object {
+  if (object == self) {
+    return YES;
+  }
+  if (!object || ![[object class] isEqual:[self class]]) {
+    return NO;
+  }
+  MDCCornerTreatment *otherCorner = (MDCCornerTreatment *)object;
+  return self.valueType == otherCorner.valueType;
 }
 
 @end
