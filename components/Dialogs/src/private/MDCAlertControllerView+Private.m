@@ -74,6 +74,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     } else {
       self.titleLabel.font = [MDCTypography titleFont];
     }
+    self.titleLabel.accessibilityTraits |= UIAccessibilityTraitHeader;
     [self.contentScrollView addSubview:self.titleLabel];
 
     self.messageLabel = [[UILabel alloc] initWithFrame:CGRectZero];
