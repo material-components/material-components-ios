@@ -40,15 +40,10 @@
 @end
 
 @interface MDCFakeBottomSheetPresentationController : MDCBottomSheetPresentationController
-@property(nonatomic, strong) UIViewController *test_PresentedViewController;
 @property(nonatomic, strong) UIView *test_sheetView;
 @end
 
 @implementation MDCFakeBottomSheetPresentationController
-
-- (UIViewController *)presentedViewController {
-  return self.test_PresentedViewController;
-}
 
 - (void)setTest_sheetView:(UIView *)test_sheetView {
   [self setValue:test_sheetView forKey:@"_sheetView"];
@@ -65,22 +60,26 @@
 @end
 
 @implementation MDCBottomSheetPresentationControllerTests
-/*
-- (void)updatePreferredSheetHeight {
-  CGFloat preferredContentHeight;
-  if (self.preferredSheetHeight > 0.f) {
-    preferredContentHeight = self.preferredSheetHeight;
-  } else {
-    preferredContentHeight = self.presentedViewController.preferredContentSize.height;
-  }
 
-  // If |preferredSheetHeight| has not been specified, use half of the current height.
-  if (MDCCGFloatEqual(preferredContentHeight, 0)) {
-    preferredContentHeight = MDCRound(_sheetView.frame.size.height / 2);
-  }
-  _sheetView.preferredSheetHeight = preferredContentHeight;
+- (void)testPreferredSheetHeightWhenPreferredSheetHeightNonZero {
+  // Given
+  FakeSheetView *sheetView = [[FakeSheetView alloc] init];
+  UIViewController *presentingViewController = [[UIViewController alloc] init];
+  MDCFakePresentedViewController *presentedViewController = [[MDCFakePresentedViewController alloc] init];
+  MDCFakeBottomSheetPresentationController *presentationController =
+  [[MDCFakeBottomSheetPresentationController alloc]
+   initWithPresentedViewController:presentedViewController
+   presentingViewController:presentingViewController];
+  presentationController.preferredSheetHeight = 99;
+  presentationController.test_sheetView = sheetView;
+  presentedViewController.test_preferredContentSize = CGSizeMake(50, 60);
+
+  // When
+  [presentationController updatePreferredSheetHeight];
+
+  // Then
+  XCTAssertEqualWithAccuracy(sheetView.preferredSheetHeight, 99, 0.001);
 }
-*/
 
 - (void)testPreferredSheetHeightWhenPreferredContentSizeNonZero {
   // Given
@@ -91,7 +90,6 @@
       [[MDCFakeBottomSheetPresentationController alloc]
           initWithPresentedViewController:presentedViewController
           presentingViewController:presentingViewController];
-  presentationController.test_PresentedViewController = presentedViewController;
   presentationController.test_sheetView = sheetView;
   presentedViewController.test_preferredContentSize = CGSizeMake(50, 60);
 
