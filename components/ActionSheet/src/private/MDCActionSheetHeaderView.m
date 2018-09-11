@@ -210,6 +210,7 @@ static const CGFloat MiddlePadding = 8.f;
   _titleTextColor = titleTextColor;
   _titleLabel.textColor = titleTextColor;
 }
+
 - (void)setMessageTextColor:(UIColor *)messageTextColor {
   _messageTextColor = messageTextColor;
   _messageLabel.textColor = messageTextColor;
