@@ -71,6 +71,7 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 }
 
 @synthesize mdc_adjustsFontForContentSizeCategory = _mdc_adjustsFontForContentSizeCategory;
+@synthesize backgroundColor = _backgroundColor;
 
 + (instancetype)actionSheetControllerWithTitle:(NSString *)title message:(NSString *)message {
   return [[MDCActionSheetController alloc] initWithTitle:title message:message];
@@ -111,7 +112,9 @@ static NSString *const ReuseIdentifier = @"BaseCell";
     _header = [[MDCActionSheetHeaderView alloc] initWithFrame:CGRectZero];
     _header.title = [title copy];
     _header.message = [message copy];
-    self.backgroundColor = [UIColor whiteColor];
+    _backgroundColor = UIColor.whiteColor;
+    _header.backgroundColor = UIColor.whiteColor;
+    _tableView.backgroundColor = UIColor.whiteColor;
   }
 
   return self;
@@ -299,13 +302,14 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
+  _backgroundColor = backgroundColor;
   self.view.backgroundColor = backgroundColor;
   _tableView.backgroundColor = backgroundColor;
   _header.backgroundColor = backgroundColor;
 }
 
 - (UIColor *)backgroundColor {
-  return self.view.backgroundColor;
+  return _backgroundColor;
 }
 
 #pragma mark - Dynamic Type
