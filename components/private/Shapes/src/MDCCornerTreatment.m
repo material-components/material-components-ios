@@ -46,4 +46,15 @@
   return YES;
 }
 
+- (BOOL)isEqual:(id)object {
+  if (object == self) {
+    return YES;
+  }
+  if (!object || ![[object class] isEqual:[self class]]) {
+    return NO;
+  }
+  MDCCornerTreatment *otherCorner = (MDCCornerTreatment *)object;
+  return self.valueType == otherCorner.valueType;
+}
+
 @end

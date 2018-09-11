@@ -61,6 +61,8 @@ static NSString *const MDCCurvedCornerTreatmentSizeKey = @"MDCCurvedCornerTreatm
 - (BOOL)isEqual:(id)object {
   if (object == self) {
     return YES;
+  } else if (![super isEqual:object]) {
+    return NO;
   }
   if (!object || ![[object class] isEqual:[self class]]) {
     return NO;
