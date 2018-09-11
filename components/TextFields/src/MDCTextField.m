@@ -797,8 +797,8 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1.f;
   if (self.leadingUnderlineLabel.accessibilityLabel.length > 0) {
     [accessibilityStrings addObject:self.leadingUnderlineLabel.accessibilityLabel];
   }
-  return accessibilityStrings.count > 0 ?
-      [accessibilityStrings componentsJoinedByString:@", "] : nil;
+  return accessibilityStrings.count > 0 ? [accessibilityStrings componentsJoinedByString:@" "]
+                                        : nil;
 }
 
 #pragma mark - Testing

@@ -17,6 +17,19 @@
 @class MDCPathGenerator;
 
 /**
+ This enum consists of the different types of shape values that can be provided.
+
+ - MDCCornerTreatmentValueTypeAbsolute: If an absolute corner value is provided.
+ - MDCCornerTreatmentValueTypePercentage: If a relative corner value is provided.
+
+ See MDCShapeCorner's @c size property for additional details.
+ */
+typedef NS_ENUM(NSInteger, MDCCornerTreatmentValueType) {
+  MDCCornerTreatmentValueTypeAbsolute,
+  MDCCornerTreatmentValueTypePercentage,
+};
+
+/**
  MDCCornerTreatment is a factory for creating MDCPathGenerators that represent
  the path of a corner.
 
@@ -25,6 +38,16 @@
  MDCPathGenerator to the expected position and rotation.
  */
 @interface MDCCornerTreatment : NSObject <NSCopying, NSSecureCoding>
+
+/**
+ The value type of our corner treatment.
+
+ When MDCCornerTreatmentValueType is MDCCornerTreatmentValueTypeAbsolute, then the accepted corner
+ values are an absolute size.
+ When MDCShapeSizeType is MDCCornerTreatmentValueTypePercentage, values are expected to be in the
+ range of 0 to 1 (0% - 100%). These values are percentages based on the height of the surface.
+ */
+@property(assign, nonatomic) MDCCornerTreatmentValueType valueType;
 
 - (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init NS_DESIGNATED_INITIALIZER;

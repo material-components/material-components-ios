@@ -29,6 +29,17 @@
 + (MDCRoundedCornerTreatment *)cornerWithRadius:(CGFloat)value;
 
 /**
+ Initialize and return an MDCCornerTreatment as an MDCRoundedCornerTreatment.
+
+ @param value The radius to set the rounded corner to.
+ @param valueType The value type in which the value is set as. It can be sent either as an
+ absolute value, or a percentage value (0.0 - 1.0) of the height of the surface.
+ @return an MDCRoundedCornerTreatment.
+ */
++ (MDCRoundedCornerTreatment *)cornerWithRadius:(CGFloat)value
+                                      valueType:(MDCCornerTreatmentValueType)valueType;
+
+/**
  Initialize and return an MDCCornerTreatment as an MDCCutCornerTreatment.
 
  @param value The cut to set the cut corner to.
@@ -37,11 +48,33 @@
 + (MDCCutCornerTreatment *)cornerWithCut:(CGFloat)value;
 
 /**
+ Initialize and return an MDCCornerTreatment as an MDCRoundedCornerTreatment.
+
+ @param value The cut to set the cut corner to.
+ @param valueType The value type in which the value is set as. It can be sent either as an
+ absolute value, or a percentage value (0.0 - 1.0) of the height of the surface.
+ @return an MDCCutCornerTreatment.
+ */
++ (MDCCutCornerTreatment *)cornerWithCut:(CGFloat)value
+                               valueType:(MDCCornerTreatmentValueType)valueType;
+
+/**
  Initialize and return an MDCCornerTreatment as an MDCCurvedCornerTreatment.
 
  @param value The size to set the curved corner to.
  @return an MDCCurvedCornerTreatment.
  */
 + (MDCCurvedCornerTreatment *)cornerWithCurve:(CGSize)value;
+
+/**
+ Initialize and return an MDCCornerTreatment as an MDCCurvedCornerTreatment.
+
+ @param value The curve to set the curved corner to.
+ @param valueType The value type in which the value is set as. It can be sent either as an
+ absolute value, or a percentage value (0.0 - 1.0) of the height of the surface.
+ @return an MDCCurvedCornerTreatment.
+ */
++ (MDCCurvedCornerTreatment *)cornerWithCurve:(CGSize)value
+                                    valueType:(MDCCornerTreatmentValueType)valueType;
 
 @end

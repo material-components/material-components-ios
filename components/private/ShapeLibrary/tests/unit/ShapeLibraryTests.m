@@ -81,6 +81,27 @@
   XCTAssertEqualObjects(cutCorner, cutCorner);
 }
 
+- (void)testPercentageValueInequalityForCorners {
+  // Given
+  MDCCutCornerTreatment *corner = [[MDCCutCornerTreatment alloc] initWithCut:3.2f];
+  corner.valueType = MDCCornerTreatmentValueTypePercentage;
+  MDCCornerTreatment *cornerTreatment = [MDCCornerTreatment cornerWithCut:3.2f];
+
+  // Then
+  XCTAssertNotEqualObjects(corner, cornerTreatment);
+}
+
+- (void)testPercentageValueEqualityForCorners {
+  // Given
+  MDCRoundedCornerTreatment *corner = [[MDCRoundedCornerTreatment alloc] initWithRadius:1.2f];
+  corner.valueType = MDCCornerTreatmentValueTypePercentage;
+  MDCCornerTreatment *cornerTreatment =
+      [MDCCornerTreatment cornerWithRadius:1.2f valueType:MDCCornerTreatmentValueTypePercentage];
+
+  // Then
+  XCTAssertEqualObjects(corner, cornerTreatment);
+}
+
 - (void)testCurvedCornerInit {
   MDCCurvedCornerTreatment *treatment = [[MDCCurvedCornerTreatment alloc] init];
   XCTAssertNotNil(treatment);

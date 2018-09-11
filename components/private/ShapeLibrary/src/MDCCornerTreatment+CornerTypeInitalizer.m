@@ -20,12 +20,35 @@
   return [[MDCRoundedCornerTreatment alloc] initWithRadius:value];
 }
 
++ (MDCRoundedCornerTreatment *)cornerWithRadius:(CGFloat)value
+                                      valueType:(MDCCornerTreatmentValueType)valueType {
+  MDCRoundedCornerTreatment *roundedCornerTreatment =
+      [MDCRoundedCornerTreatment cornerWithRadius:value];
+  roundedCornerTreatment.valueType = valueType;
+  return roundedCornerTreatment;
+}
+
 + (MDCCutCornerTreatment *)cornerWithCut:(CGFloat)value {
   return [[MDCCutCornerTreatment alloc] initWithCut:value];
 }
 
++ (MDCCutCornerTreatment *)cornerWithCut:(CGFloat)value
+                               valueType:(MDCCornerTreatmentValueType)valueType {
+  MDCCutCornerTreatment *cutCornerTreatment = [MDCCutCornerTreatment cornerWithCut:value];
+  cutCornerTreatment.valueType = valueType;
+  return cutCornerTreatment;
+}
+
 + (MDCCurvedCornerTreatment *)cornerWithCurve:(CGSize)value {
   return [[MDCCurvedCornerTreatment alloc] initWithSize:value];
+}
+
++ (MDCCurvedCornerTreatment *)cornerWithCurve:(CGSize)value
+                                    valueType:(MDCCornerTreatmentValueType)valueType {
+  MDCCurvedCornerTreatment *curvedCornerTreatment =
+      [MDCCurvedCornerTreatment cornerWithCurve:value];
+  curvedCornerTreatment.valueType = valueType;
+  return curvedCornerTreatment;
 }
 
 @end

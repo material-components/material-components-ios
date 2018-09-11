@@ -13,7 +13,18 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
-#import "MDCShapeCorner.h"
+#import "MaterialShapes.h"
+
+/**
+ This enum consists of the different types of shape corners.
+
+ - MDCShapeCornerFamilyRounded: A rounded corner.
+ - MDCShapeCornerFamilyAngled: An angled/cut corner.
+ */
+typedef NS_ENUM(NSInteger, MDCShapeCornerFamily) {
+  MDCShapeCornerFamilyRounded,
+  MDCShapeCornerFamilyAngled,
+};
 
 /**
  The MDCShapeCategory is the class containing the shape value as part of our shape scheme,
@@ -26,22 +37,22 @@
 /**
  This property represents the shape of the top left corner of the shape.
  */
-@property(strong, nonatomic) MDCShapeCorner *topLeftCorner;
+@property(strong, nonatomic) MDCCornerTreatment *topLeftCorner;
 
 /**
  This property represents the shape of the top right corner of the shape.
  */
-@property(strong, nonatomic) MDCShapeCorner *topRightCorner;
+@property(strong, nonatomic) MDCCornerTreatment *topRightCorner;
 
 /**
  This property represents the shape of the bottom left corner of the shape.
  */
-@property(strong, nonatomic) MDCShapeCorner *bottomLeftCorner;
+@property(strong, nonatomic) MDCCornerTreatment *bottomLeftCorner;
 
 /**
  This property represents the shape of the bottom right corner of the shape.
  */
-@property(strong, nonatomic) MDCShapeCorner *bottomRightCorner;
+@property(strong, nonatomic) MDCCornerTreatment *bottomRightCorner;
 
 /**
  The default init of the class. It sets all 4 corners with a corner family of

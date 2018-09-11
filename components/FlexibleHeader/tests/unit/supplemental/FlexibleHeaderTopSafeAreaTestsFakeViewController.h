@@ -12,5 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCShapeCategory.h"
-#import "MDCShapeScheme.h"
+#import <UIKit/UIKit.h>
+
+@interface FlexibleHeaderTopSafeAreaTestsFakeViewController : UIViewController
+@property(nonatomic) CGFloat topSafeAreaInset;
+@end

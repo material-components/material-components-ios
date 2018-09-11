@@ -27,8 +27,7 @@
 
 + (id<MDCShapeGenerating>)cardShapeGeneratorFromScheme:(id<MDCShapeScheming>)shapeScheme {
   MDCRectangleShapeGenerator *rectangleShape = [[MDCRectangleShapeGenerator alloc] init];
-  MDCCornerTreatment *cornerTreatment =
-      shapeScheme.mediumSurfaceShape.topLeftCorner.cornerTreatmentValue;
+  MDCCornerTreatment *cornerTreatment = shapeScheme.mediumSurfaceShape.topLeftCorner;
   [rectangleShape setCorners:cornerTreatment];
   return rectangleShape;
 }
