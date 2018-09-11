@@ -15,7 +15,7 @@
 /components/AppBar/               @jverkoey
 /components/BottomAppBar/         @wenyuzhang666
 /components/BottomNavigation/     @romoore
-/components/BottomSheet/          # TBD
+/components/BottomSheet/          @yarneo
 /components/ButtonBar/            @romoore
 /components/Buttons/              @randallli
 /components/Cards/                @yarneo
