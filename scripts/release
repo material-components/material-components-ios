@@ -196,6 +196,7 @@ test_release() {
   "$dir/prep_all"
   "$dir/build_all" --verbose
   "$dir/test_all"
+  "$dir/build_codelabs"
 }
 
 bump_release() {
