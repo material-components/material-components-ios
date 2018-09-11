@@ -92,4 +92,17 @@ class ActionSheetTest: XCTestCase {
     // Then
     XCTAssertEqual(actionSheet.backgroundColor, newBackgroundColor)
   }
+
+  func testBackgroundColorMatchesViewBackgroundColor() {
+    // Given
+    let newBackgroundColor: UIColor = .green
+    actionSheet.backgroundColor = newBackgroundColor
+
+    // When
+    let _ = actionSheet.view
+
+    // Then
+    XCTAssertEqual(actionSheet.view.backgroundColor, actionSheet.backgroundColor)
+    XCTAssertEqual(actionSheet.view.backgroundColor, newBackgroundColor)
+  }
 }

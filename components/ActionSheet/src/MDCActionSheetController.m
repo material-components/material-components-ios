@@ -113,8 +113,8 @@ static NSString *const ReuseIdentifier = @"BaseCell";
     _header.title = [title copy];
     _header.message = [message copy];
     _backgroundColor = UIColor.whiteColor;
-    _header.backgroundColor = UIColor.whiteColor;
-    _tableView.backgroundColor = UIColor.whiteColor;
+    _header.backgroundColor = _backgroundColor;
+    _tableView.backgroundColor = _backgroundColor;
   }
 
   return self;
