@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import "MDCShapeCategory.h"
+#import "MaterialShapeLibrary.h"
 
 @implementation MDCShapeCategory
 
@@ -23,10 +24,19 @@
 - (instancetype)initCornersWithFamily:(MDCShapeCornerFamily)cornerFamily
                               andSize:(CGFloat)cornerSize {
   if (self = [super init]) {
-    _topLeftCorner = [[MDCShapeCorner alloc] initWithFamily:cornerFamily andSize:cornerSize];
-    _topRightCorner = [[MDCShapeCorner alloc] initWithFamily:cornerFamily andSize:cornerSize];
-    _bottomLeftCorner = [[MDCShapeCorner alloc] initWithFamily:cornerFamily andSize:cornerSize];
-    _bottomRightCorner = [[MDCShapeCorner alloc] initWithFamily:cornerFamily andSize:cornerSize];
+    MDCCornerTreatment *cornerTreatment;
+    switch (cornerFamily) {
+      case MDCShapeCornerFamilyAngled:
+        cornerTreatment = [MDCCornerTreatment cornerWithCut:cornerSize];
+        break;
+      case MDCShapeCornerFamilyRounded:
+        cornerTreatment = [MDCCornerTreatment cornerWithRadius:cornerSize];
+        break;
+    }
+    _topLeftCorner = cornerTreatment;
+    _topRightCorner = cornerTreatment;
+    _bottomLeftCorner = cornerTreatment;
+    _bottomRightCorner = cornerTreatment;
   }
   return self;
 }

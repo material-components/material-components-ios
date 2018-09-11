@@ -13,5 +13,4 @@
 // limitations under the License.
 
 #import "MDCShapeCategory.h"
-#import "MDCShapeCorner.h"
 #import "MDCShapeScheme.h"
