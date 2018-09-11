@@ -33,13 +33,13 @@ class BottomSheetShapeThemerTests: XCTestCase {
     XCTAssert(extendedShapeGenerator is MDCRectangleShapeGenerator)
     if let rectangleGenerator = extendedShapeGenerator as? MDCRectangleShapeGenerator {
       XCTAssertEqual(rectangleGenerator.topLeftCorner,
-                     shapeScheme.largeSurfaceShape.topLeftCorner.cornerTreatmentValue())
+                     shapeScheme.largeSurfaceShape.topLeftCorner)
       XCTAssertEqual(rectangleGenerator.topRightCorner,
-                     shapeScheme.largeSurfaceShape.topRightCorner.cornerTreatmentValue())
+                     shapeScheme.largeSurfaceShape.topRightCorner)
       XCTAssertEqual(rectangleGenerator.bottomLeftCorner,
-                     shapeScheme.largeSurfaceShape.bottomLeftCorner.cornerTreatmentValue())
+                     shapeScheme.largeSurfaceShape.bottomLeftCorner)
       XCTAssertEqual(rectangleGenerator.bottomRightCorner,
-                     shapeScheme.largeSurfaceShape.bottomRightCorner.cornerTreatmentValue())
+                     shapeScheme.largeSurfaceShape.bottomRightCorner)
     }
 
   }
