@@ -25,6 +25,33 @@ class ActionSheetTest: XCTestCase {
     actionSheet = MDCActionSheetController()
   }
 
+  private func getLabel(with text: String) -> UILabel? {
+    let subviewsArray = actionSheet.view.subviews.filter { !($0 is UITableView) }
+    if let header = subviewsArray.first {
+      var labels: [UILabel] = header.subviews.flatMap { $0 as? UILabel }
+      labels = labels.filter { $0.text == text }
+      if let label = labels.first {
+        return label
+      } else {
+        return nil
+      }
+    } else {
+      return nil
+    }
+  }
+
+  private func setupTitle() -> String {
+    let testTitleString: String = "Title test"
+    actionSheet.title = testTitleString
+    return testTitleString
+  }
+
+  private func setupMessage() -> String {
+    let testMessageString: String = "Message test"
+    actionSheet.message = testMessageString
+    return testMessageString
+  }
+
   func testNumberOfActions() {
     // Then
     XCTAssertEqual(actionSheet.actions.count, 0)
@@ -75,5 +102,81 @@ class ActionSheetTest: XCTestCase {
       XCTFail("No table was loaded")
     }
     
+  }
+
+  func testDefaultHeaderTitleColor() {
+    // When
+    let titleString = setupTitle()
+    let titleLabel = getLabel(with: titleString)
+
+    // Then
+    XCTAssertNotNil(titleLabel)
+    XCTAssertEqual(titleLabel?.textColor, .black)
+  }
+
+  func testDefaultHeaderMessageColor() {
+    // When
+    let messageString = setupMessage()
+    let messageLabel = getLabel(with: messageString)
+
+    // Then
+    XCTAssertNotNil(messageLabel)
+    XCTAssertEqual(messageLabel?.textColor, .black)
+  }
+
+  func testSetHeaderTitleColor() {
+    // Given
+    let titleString = setupTitle()
+    var titleColor: UIColor = .blue
+
+    // When
+    actionSheet.titleTextColor = titleColor
+    var titleLabel = getLabel(with: titleString)
+
+    // Then
+    XCTAssertNotNil(titleLabel)
+    XCTAssertEqual(titleLabel?.textColor, actionSheet.titleTextColor)
+
+    // Given
+    actionSheet.title = nil
+    titleColor = .green
+    let newTitle = "Test"
+
+    // When
+    actionSheet.titleTextColor = titleColor
+    actionSheet.title = newTitle
+    titleLabel = getLabel(with: newTitle)
+
+    // Then
+    XCTAssertNotNil(titleLabel)
+    XCTAssertEqual(titleLabel?.textColor, titleColor)
+  }
+
+  func testSetHeaderMessageColor() {
+    // Given
+    let messageString = setupMessage()
+    var messageColor: UIColor = .blue
+
+    // When
+    actionSheet.messageTextColor = messageColor
+    var messageLabel = getLabel(with: messageString)
+
+    // Then
+    XCTAssertNotNil(messageLabel)
+    XCTAssertEqual(messageLabel?.textColor, actionSheet.messageTextColor)
+
+    // Given
+    actionSheet.message = nil
+    messageColor = .green
+    let newMessage = "Test"
+
+    // When
+    actionSheet.messageTextColor = messageColor
+    actionSheet.message = newMessage
+    messageLabel = getLabel(with: newMessage)
+
+    // Then
+    XCTAssertNotNil(messageLabel)
+    XCTAssertEqual(messageLabel?.textColor, messageColor)
   }
 }
