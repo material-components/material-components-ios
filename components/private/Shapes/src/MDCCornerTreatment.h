@@ -49,7 +49,6 @@ typedef NS_ENUM(NSInteger, MDCCornerTreatmentValueType) {
  */
 @property(assign, nonatomic) MDCCornerTreatmentValueType valueType;
 
-
 - (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init NS_DESIGNATED_INITIALIZER;
 

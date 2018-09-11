@@ -34,8 +34,7 @@
 
 + (MDCCutCornerTreatment *)cornerWithCut:(CGFloat)value
                             andValueType:(MDCCornerTreatmentValueType)valueType {
-  MDCCutCornerTreatment *cutCornerTreatment =
-      [MDCCutCornerTreatment cornerWithCut:value];
+  MDCCutCornerTreatment *cutCornerTreatment = [MDCCutCornerTreatment cornerWithCut:value];
   cutCornerTreatment.valueType = valueType;
   return cutCornerTreatment;
 }

@@ -28,7 +28,6 @@
  */
 + (MDCRoundedCornerTreatment *)cornerWithRadius:(CGFloat)value;
 
-
 /**
  Initialize and return an MDCCornerTreatment as an MDCRoundedCornerTreatment.
 
