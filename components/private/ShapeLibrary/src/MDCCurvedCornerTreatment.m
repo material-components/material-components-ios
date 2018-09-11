@@ -48,7 +48,7 @@ static NSString *const MDCCurvedCornerTreatmentSizeKey = @"MDCCurvedCornerTreatm
   [aCoder encodeCGSize:_size forKey:MDCCurvedCornerTreatmentSizeKey];
 }
 
-- (id)copyWithZone:(NSZone *)__unused zone {
+- (id)copyWithZone:(NSZone *)zone {
   MDCCurvedCornerTreatment *copy = [super copyWithZone:zone];
   copy.size = _size;
   return copy;

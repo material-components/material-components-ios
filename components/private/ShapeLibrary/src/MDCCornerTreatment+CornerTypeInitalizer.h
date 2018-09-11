@@ -37,7 +37,7 @@
  @return an MDCRoundedCornerTreatment.
  */
 + (MDCRoundedCornerTreatment *)cornerWithRadius:(CGFloat)value
-                                   andValueType:(MDCCornerTreatmentValueType)valueType;
+                                      valueType:(MDCCornerTreatmentValueType)valueType;
 
 /**
  Initialize and return an MDCCornerTreatment as an MDCCutCornerTreatment.
@@ -56,7 +56,7 @@
  @return an MDCCutCornerTreatment.
  */
 + (MDCCutCornerTreatment *)cornerWithCut:(CGFloat)value
-                            andValueType:(MDCCornerTreatmentValueType)valueType;
+                               valueType:(MDCCornerTreatmentValueType)valueType;
 
 /**
  Initialize and return an MDCCornerTreatment as an MDCCurvedCornerTreatment.
@@ -75,6 +75,6 @@
  @return an MDCCurvedCornerTreatment.
  */
 + (MDCCurvedCornerTreatment *)cornerWithCurve:(CGSize)value
-                                 andValueType:(MDCCornerTreatmentValueType)valueType;
+                                    valueType:(MDCCornerTreatmentValueType)valueType;
 
 @end

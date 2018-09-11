@@ -43,7 +43,7 @@ static NSString *const MDCRoundedCornerTreatmentRadiusKey = @"MDCRoundedCornerTr
   [aCoder encodeDouble:_radius forKey:MDCRoundedCornerTreatmentRadiusKey];
 }
 
-- (id)copyWithZone:(NSZone *)__unused zone {
+- (id)copyWithZone:(NSZone *)zone {
   MDCRoundedCornerTreatment *copy = [super copyWithZone:zone];
   copy.radius = _radius;
   return copy;
