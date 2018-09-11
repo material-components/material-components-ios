@@ -18,12 +18,23 @@
 #import <Foundation/Foundation.h>
 
 /**
- A color themer for MDCBottomAppBarView. This API does not yet implement the Material Design color
+ A color themer for MDCBottomAppBarView. This API does not fully implement the Material Design color
  system.
 
- @seealso https://www.pivotaltracker.com/story/show/157095394
+ @seealso https://github.com/material-components/material-components-ios/issues/3929
  */
 @interface MDCBottomAppBarColorThemer : NSObject
+
+/**
+ Applies a color scheme to theme an MDCBottomAppBarView using the "surface" variant theming. The
+ "surface" variant applies the @c surfaceColor of the color scheme as the @c barTintColor instead
+ of @c primaryColor.
+
+ @param colorScheme a color scheme to apply to the bottom app bar.
+ @param bottomAppBarView the bottom app bar to theme.
+ */
++ (void)applySurfaceVariantWithSemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+                                toBottomAppBarView:(nonnull MDCBottomAppBarView *)bottomAppBarView;
 
 @end
 
@@ -32,8 +43,9 @@
 /**
  Applies a color scheme to theme a MDCBottomAppBarView.
 
- @warning This method will soon be deprecated. There is no replacement yet.
- Learn more at components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
+ @warning This method will soon be deprecated. Use
+ @c applySurfaceVariantWithSemanticColorScheme:toBottomAppBarView: instead. Learn more at
+ components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
 
  @param colorScheme The color scheme to apply to the component instance.
  @param bottomAppBarView A component instance to which the color scheme should be applied.

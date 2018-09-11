@@ -23,6 +23,9 @@ class CardEditReorderCollectionCell: MDCCardCollectionCell {
     imageView.contentMode = .scaleAspectFill
     imageView.clipsToBounds = true
     imageView.translatesAutoresizingMaskIntoConstraints = false
+    if let shapedShadowLayer = self.layer as? MDCShapedShadowLayer {
+      imageView.layer.mask = shapedShadowLayer.shapeLayer
+    }
     return imageView
   }()
 
@@ -42,9 +45,8 @@ class CardEditReorderCollectionCell: MDCCardCollectionCell {
     self.imageView.image  = UIImage(named: imageName, in: bundle, compatibleWith: nil)
     self.titleLabel.text = title
 
-    self.insertSubview(imageView, at: 0)
-    self.insertSubview(titleLabel, at: 0)
-
+    self.contentView.addSubview(imageView)
+    self.contentView.addSubview(titleLabel)
     titleLabel.setContentCompressionResistancePriority(800, for: .vertical)
 
     addConstraints()

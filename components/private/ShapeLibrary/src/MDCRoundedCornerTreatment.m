@@ -55,4 +55,15 @@ static NSString *const MDCRoundedCornerTreatmentRadiusKey = @"MDCRoundedCornerTr
   return path;
 }
 
+- (BOOL)isEqual:(id)object {
+  if (object == self) {
+    return YES;
+  }
+  if (!object || ![[object class] isEqual:[self class]]) {
+    return NO;
+  }
+  MDCRoundedCornerTreatment *otherRoundedCorner = (MDCRoundedCornerTreatment *)object;
+  return self.radius == otherRoundedCorner.radius;
+}
+
 @end

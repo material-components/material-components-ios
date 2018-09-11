@@ -12,25 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <UIKit/UIKit.h>
-
-#import "MaterialButtons.h"
-
-@class MDCFlatButton;
-
-@interface MDCAlertControllerView ()
-
-@property(nonatomic, nonnull, strong) UILabel *titleLabel;
-@property(nonatomic, nonnull, strong) UILabel *messageLabel;
-
-@property(nonatomic, nonnull, strong, readonly) NSArray<MDCFlatButton *> *actionButtons;
-
-- (nonnull MDCButton *)addActionButtonTitle:(NSString *_Nonnull)actionTitle
-                                     target:(nullable id)target
-                                   selector:(SEL _Nonnull)selector;
-
-- (CGSize)calculatePreferredContentSizeForBounds:(CGSize)boundsSize;
-
-- (void)updateFonts;
-
-@end
+#import "MDCCardsShapeThemer.h"
