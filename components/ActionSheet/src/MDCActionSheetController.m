@@ -16,7 +16,6 @@
 
 #import "private/MDCActionSheetItemTableViewCell.h"
 #import "private/MDCActionSheetHeaderView.h"
-#import "MaterialApplication.h"
 #import "MaterialTypography.h"
 
 static NSString *const ReuseIdentifier = @"BaseCell";
