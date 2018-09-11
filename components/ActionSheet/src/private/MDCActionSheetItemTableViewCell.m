@@ -146,7 +146,6 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
   _titleLeadingConstraint.constant = leadingConstant;
   CGFloat width = CGRectGetWidth(self.contentView.frame) - leadingConstant - TitleTrailingPadding;
   _titleWidthConstraint.constant = width;
-
   _imageView.image = _itemAction.image;
 }
 
@@ -182,6 +181,13 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
   _mdc_adjustsFontForContentSizeCategory = adjusts;
   [self updateTitleFont];
+}
+
+- (void)setActionTextColor:(UIColor *)actionTextColor {
+  _textLabel.textColor = actionTextColor;
+}
+- (UIColor *)actionTextColor {
+  return _textLabel.textColor;
 }
 
 @end

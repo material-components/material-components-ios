@@ -28,4 +28,6 @@
 
 @property(nonatomic, nonnull, strong) UIFont *actionFont;
 
+@property(nonatomic, strong, nullable) UIColor *actionTextColor;
+
 @end

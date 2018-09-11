@@ -138,7 +138,30 @@ __attribute__((objc_subclassing_restricted))
  */
 @property(nonatomic, nullable, strong) UIFont *actionFont;
 
+/**
+ The color applied to the sheet view of the action sheet controller.
+ */
 @property(nonatomic, nonnull, strong) UIColor *backgroundColor;
+
+/**
+ The color applied to the title of the action sheet controller.
+ */
+@property(nonatomic, strong, nullable) UIColor *titleTextColor;
+
+/**
+ The color applied to the message of the action sheet controller.
+ */
+@property(nonatomic, strong, nullable) UIColor *messageTextColor;
+
+/**
+ The color applied to the item list labels of action sheet controller.
+ */
+@property(nonatomic, strong, nullable) UIColor *actionTextColor;
+
+/**
+ The color applied to the icon items of action sheet controller.
+ */
+@property(nonatomic, strong, nullable) UIColor *actionTintColor;
 
 @property(nonatomic, strong, readonly, nonnull)
     MDCBottomSheetTransitionController *transitionController;
@@ -186,7 +209,7 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
  Action sheet actions must have a title that will be set within actionWithTitle:image:handler:
  method.
  */
-@property (nonatomic, nonnull, readonly) NSString *title;
+@property(nonatomic, nonnull, copy, readonly) NSString *title;
 
 /**
  Image of the list item shown on the action sheet.
@@ -194,7 +217,7 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
  Action sheet actions must have an image that will be set within actionWithTitle:image:handler:
  method.
 */
-@property (nonatomic, nullable, readonly) UIImage *image;
+@property(nonatomic, nullable, readonly) UIImage *image;
 
 /**
  The @c accessibilityIdentifier for the view associated with this action.

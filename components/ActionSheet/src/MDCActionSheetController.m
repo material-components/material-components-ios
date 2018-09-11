@@ -71,6 +71,7 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 }
 
 @synthesize mdc_adjustsFontForContentSizeCategory = _mdc_adjustsFontForContentSizeCategory;
+@synthesize backgroundColor = _backgroundColor;
 
 + (instancetype)actionSheetControllerWithTitle:(NSString *)title message:(NSString *)message {
   return [[MDCActionSheetController alloc] initWithTitle:title message:message];
@@ -111,7 +112,10 @@ static NSString *const ReuseIdentifier = @"BaseCell";
     _header = [[MDCActionSheetHeaderView alloc] initWithFrame:CGRectZero];
     _header.title = [title copy];
     _header.message = [message copy];
-    self.backgroundColor = [UIColor whiteColor];
+    _backgroundColor = UIColor.whiteColor;
+    _header.backgroundColor = UIColor.whiteColor;
+    _tableView.backgroundColor = UIColor.whiteColor;
+    _actionTintColor = UIColor.blackColor;
   }
 
   return self;
@@ -260,6 +264,8 @@ static NSString *const ReuseIdentifier = @"BaseCell";
   cell.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
   cell.backgroundColor = self.backgroundColor;
   cell.actionFont = self.actionFont;
+  cell.actionTextColor = self.actionTextColor;
+  cell.contentView.tintColor = self.actionTintColor;
   cell.accessibilityIdentifier = action.accessibilityIdentifier;
   return cell;
 }
@@ -299,13 +305,30 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
+  _backgroundColor = backgroundColor;
   self.view.backgroundColor = backgroundColor;
   _tableView.backgroundColor = backgroundColor;
   _header.backgroundColor = backgroundColor;
 }
 
 - (UIColor *)backgroundColor {
-  return self.view.backgroundColor;
+  return _backgroundColor;
+}
+
+- (void)setTitleTextColor:(UIColor *)titleTextColor {
+  _header.titleTextColor = titleTextColor;
+}
+
+- (UIColor *)titleTextColor {
+  return _header.titleTextColor;
+}
+
+- (void)setMessageTextColor:(UIColor *)messageTextColor {
+  _header.messageTextColor = messageTextColor;
+}
+
+- (UIColor *)messageTextColor {
+  return _header.messageTextColor;
 }
 
 #pragma mark - Dynamic Type
