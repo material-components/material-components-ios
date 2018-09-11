@@ -140,6 +140,15 @@ __attribute__((objc_subclassing_restricted))
 
 @property(nonatomic, nonnull, strong) UIColor *backgroundColor;
 
+/**
+ The color applied to the title of the action sheet controller.
+ */
+@property(nonatomic, strong, nullable) UIColor *titleTextColor;
+/**
+ The color applied to the message of the action sheet controller.
+ */
+@property(nonatomic, strong, nullable) UIColor *messageTextColor;
+
 @property(nonatomic, strong, readonly, nonnull)
     MDCBottomSheetTransitionController *transitionController;
 
