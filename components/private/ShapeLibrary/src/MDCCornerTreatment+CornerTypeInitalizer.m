@@ -21,7 +21,7 @@
 }
 
 + (MDCRoundedCornerTreatment *)cornerWithRadius:(CGFloat)value
-                                   andValueType:(MDCCornerTreatmentValueType)valueType {
+                                      valueType:(MDCCornerTreatmentValueType)valueType {
   MDCRoundedCornerTreatment *roundedCornerTreatment =
       [MDCRoundedCornerTreatment cornerWithRadius:value];
   roundedCornerTreatment.valueType = valueType;
@@ -33,7 +33,7 @@
 }
 
 + (MDCCutCornerTreatment *)cornerWithCut:(CGFloat)value
-                            andValueType:(MDCCornerTreatmentValueType)valueType {
+                               valueType:(MDCCornerTreatmentValueType)valueType {
   MDCCutCornerTreatment *cutCornerTreatment = [MDCCutCornerTreatment cornerWithCut:value];
   cutCornerTreatment.valueType = valueType;
   return cutCornerTreatment;
@@ -44,7 +44,7 @@
 }
 
 + (MDCCurvedCornerTreatment *)cornerWithCurve:(CGSize)value
-                                 andValueType:(MDCCornerTreatmentValueType)valueType {
+                                    valueType:(MDCCornerTreatmentValueType)valueType {
   MDCCurvedCornerTreatment *curvedCornerTreatment =
       [MDCCurvedCornerTreatment cornerWithCurve:value];
   curvedCornerTreatment.valueType = valueType;

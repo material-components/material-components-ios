@@ -15,7 +15,7 @@
 /components/AppBar/               @jverkoey
 /components/BottomAppBar/         @wenyuzhang666
 /components/BottomNavigation/     @romoore
-/components/BottomSheet/          # TBD
+/components/BottomSheet/          @yarneo
 /components/ButtonBar/            @romoore
 /components/Buttons/              @randallli
 /components/Cards/                @yarneo
@@ -31,6 +31,7 @@
 /components/LibraryInfo/          @ajsecord
 /components/MaskedTransition/     @jverkoey
 /components/NavigationBar/        @yarneo @jverkoey
+/components/NavigationDrawer/     @yarneo
 /components/OverlayWindow/        @yarneo
 /components/PageControl/          @randallli
 /components/Palettes/             @ajsecord
