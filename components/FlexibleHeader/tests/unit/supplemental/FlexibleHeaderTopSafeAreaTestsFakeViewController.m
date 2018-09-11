@@ -67,10 +67,17 @@
 
 @implementation FlexibleHeaderTopSafeAreaTestsFakeLayoutGuide
 
-@synthesize bottomAnchor;
-@synthesize heightAnchor;
-@synthesize length;
-@synthesize topAnchor;
+- (NSLayoutYAxisAnchor *)bottomAnchor API_AVAILABLE(ios(9.0)) {
+  return nil;
+}
+
+- (NSLayoutDimension *)heightAnchor API_AVAILABLE(ios(9.0)) {
+  return nil;
+}
+
+- (NSLayoutYAxisAnchor *)topAnchor API_AVAILABLE(ios(9.0)) {
+  return nil;
+}
 
 - (CGFloat)length {
   return self.topSafeAreaInset;
