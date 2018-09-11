@@ -102,6 +102,18 @@
   XCTAssertEqualObjects(corner, cornerTreatment);
 }
 
+- (void)testCopyForCorners {
+  // Given
+  MDCRoundedCornerTreatment *corner = [[MDCRoundedCornerTreatment alloc] initWithRadius:1.2f];
+  corner.valueType = MDCCornerTreatmentValueTypePercentage;
+
+  // When
+  MDCCornerTreatment *copy = [corner copy];
+
+  // Then
+  XCTAssertEqualObjects(corner, copy);
+}
+
 - (void)testCurvedCornerInit {
   MDCCurvedCornerTreatment *treatment = [[MDCCurvedCornerTreatment alloc] init];
   XCTAssertNotNil(treatment);
