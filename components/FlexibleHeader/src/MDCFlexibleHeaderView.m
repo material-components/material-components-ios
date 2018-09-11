@@ -73,8 +73,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   return intendedShiftBehavior;
 }
 
-@interface MDCFlexibleHeaderView () <MDCStatusBarShifterDelegate,
-                                     MDCFlexibleHeaderSafeAreaDelegate>
+@interface MDCFlexibleHeaderView () <MDCStatusBarShifterDelegate, MDCFlexibleHeaderSafeAreaDelegate>
 
 // The intensity strength of the shadow being displayed under the flexible header. Use this property
 // to check what the intensity of a custom shadow should be depending on a scroll position. Valid
@@ -250,8 +249,10 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   _headerContentImportance = MDCFlexibleHeaderContentImportanceDefault;
   _statusBarHintCanOverlapHeader = YES;
 
+  const CGFloat topSafeAreaInset = [_topSafeArea topSafeAreaInset];
+
   _minMaxHeightIncludesSafeArea = YES;
-  _minimumHeight = kFlexibleHeaderDefaultHeight + [_topSafeArea topSafeAreaInset];
+  _minimumHeight = kFlexibleHeaderDefaultHeight + topSafeAreaInset;
   _maximumHeight = _minimumHeight;
 
   _visibleShadowOpacity = kDefaultVisibleShadowOpacity;
@@ -271,7 +272,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   [self.layer addSublayer:_customShadowLayer];
 
   _topSafeAreaGuide = [[UIView alloc] init];
-  _topSafeAreaGuide.frame = CGRectMake(0, 0, 0, [_topSafeArea topSafeAreaInset]);
+  _topSafeAreaGuide.frame = CGRectMake(0, 0, 0, topSafeAreaInset);
   [self addSubview:_topSafeAreaGuide];
 
   _contentView = [[UIView alloc] initWithFrame:self.bounds];
@@ -448,17 +449,18 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 #pragma mark MDCFlexibleHeaderSafeAreaDelegate
 
 - (void)flexibleHeaderSafeAreaTopSafeAreaInsetDidChange:(MDCFlexibleHeaderTopSafeArea *)safeAreas {
+  const CGFloat topSafeAreaInset = [_topSafeArea topSafeAreaInset];
+
   // If the min or max height have been explicitly set, don't adjust anything if the values
   // already include a Safe Area inset.
   BOOL hasSetMinOrMaxHeight = _hasExplicitlySetMinHeight || _hasExplicitlySetMaxHeight;
   if (!hasSetMinOrMaxHeight && _minMaxHeightIncludesSafeArea) {
     // If we're using the defaults we need to update them to account for the new Safe Area inset.
-    _minimumHeight = kFlexibleHeaderDefaultHeight + [_topSafeArea topSafeAreaInset];
+    _minimumHeight = kFlexibleHeaderDefaultHeight + topSafeAreaInset;
     _maximumHeight = _minimumHeight;
   }
 
-  _topSafeAreaGuide.frame =
-      CGRectMake(0, 0, self.bounds.size.width, [_topSafeArea topSafeAreaInset]);
+  _topSafeAreaGuide.frame = CGRectMake(0, 0, self.bounds.size.width, topSafeAreaInset);
 
   // Adjust the scroll view insets to account for the new Safe Area inset.
   [self fhv_enforceInsetsForScrollView:_trackingScrollView];

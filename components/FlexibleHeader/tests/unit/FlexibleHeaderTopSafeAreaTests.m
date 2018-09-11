@@ -16,8 +16,11 @@
 
 #import <XCTest/XCTest.h>
 
-#import "../../src/private/MDCFlexibleHeaderTopSafeArea.h"
 #import "MaterialFlexibleHeader.h"
+
+#import "../../src/private/MDCFlexibleHeaderTopSafeArea.h"
+
+#import "FlexibleHeaderTopSafeAreaTestsFakeViewController.h"
 
 @interface FlexibleHeaderTopSafeAreaTests : XCTestCase
 @end
@@ -27,10 +30,6 @@
 @property(nonatomic) BOOL isStatusBarShifted;
 @property(nonatomic) BOOL topSafeAreaInsetDidChangeWasCalled;
 @property(nonatomic) CGFloat deviceTopSafeAreaInset;
-@end
-
-@interface FlexibleHeaderTopSafeAreaTestsFakeViewController : UIViewController
-@property(nonatomic) CGFloat topSafeAreaInset;
 @end
 
 @implementation FlexibleHeaderTopSafeAreaTests {
@@ -45,13 +44,6 @@
   _delegate = [[FlexibleHeaderTopSafeAreaTestsFakeTopSafeAreaDelegate alloc] init];
 }
 
-- (void)tearDown {
-  _topSafeArea = nil;
-  _delegate = nil;
-
-  [super tearDown];
-}
-
 #pragma mark - When inferTopSafeAreaInsetFromViewController is disabled
 
 - (void)testDeviceSafeAreaInsetIsDefaultTopSafeAreaInset {
@@ -62,9 +54,7 @@
 
   // Then
   XCTAssertNil(_topSafeArea.topSafeAreaSourceViewController);
-  XCTAssertEqualWithAccuracy(_topSafeArea.topSafeAreaInset,
-                             deviceTopSafeAreaInset,
-                             0.0001);
+  XCTAssertEqualWithAccuracy(_topSafeArea.topSafeAreaInset, deviceTopSafeAreaInset, 0.0001);
   XCTAssertFalse(_topSafeArea.inferTopSafeAreaInsetFromViewController);
 }
 
@@ -227,10 +217,11 @@
 
   // When
   _topSafeArea.topSafeAreaSourceViewController = nil;
+  viewController.topSafeAreaInset = 88;
   _topSafeArea.topSafeAreaSourceViewController = viewController;
 
   // Then
-  XCTAssertEqualWithAccuracy(_topSafeArea.topSafeAreaInset, 44, 0.0001);
+  XCTAssertEqualWithAccuracy(_topSafeArea.topSafeAreaInset, 88, 0.0001);
 }
 
 @end
@@ -251,80 +242,6 @@
 
 - (CGFloat)flexibleHeaderSafeAreaDeviceTopSafeAreaInset:(MDCFlexibleHeaderTopSafeArea *)safeAreas {
   return self.deviceTopSafeAreaInset;
-}
-
-@end
-
-@interface FlexibleHeaderTopSafeAreaTestsFakeView : UIView
-@property(nonatomic) CGFloat topSafeAreaInset;
-@end
-
-@interface FlexibleHeaderTopSafeAreaTestsFakeLayoutGuide : NSObject <UILayoutSupport>
-@property(nonatomic) CGFloat topSafeAreaInset;
-@end
-
-@interface FlexibleHeaderTopSafeAreaTestsFakeViewController ()
-@property(nonatomic, strong) FlexibleHeaderTopSafeAreaTestsFakeView *view;
-@end
-
-@implementation FlexibleHeaderTopSafeAreaTestsFakeViewController {
-  FlexibleHeaderTopSafeAreaTestsFakeLayoutGuide *_topLayoutGuide;
-}
-
-@dynamic view;
-
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-  if (self) {
-    _topLayoutGuide = [[FlexibleHeaderTopSafeAreaTestsFakeLayoutGuide alloc] init];
-  }
-  return self;
-}
-
-- (void)loadView {
-  [super loadView];
-
-  self.view = [[FlexibleHeaderTopSafeAreaTestsFakeView alloc] initWithFrame:self.view.bounds];
-}
-
-- (id<UILayoutSupport>)topLayoutGuide {
-  return _topLayoutGuide;
-}
-
-- (FlexibleHeaderTopSafeAreaTestsFakeView *)view {
-  return (FlexibleHeaderTopSafeAreaTestsFakeView *)[super view];
-}
-
-- (void)setTopSafeAreaInset:(CGFloat)topSafeAreaInset {
-  self.view.topSafeAreaInset = topSafeAreaInset;
-  _topLayoutGuide.topSafeAreaInset = topSafeAreaInset;
-}
-
-- (CGFloat)topSafeAreaInset {
-  return self.view.topSafeAreaInset;
-}
-
-@end
-
-@implementation FlexibleHeaderTopSafeAreaTestsFakeLayoutGuide
-
-@synthesize bottomAnchor;
-@synthesize heightAnchor;
-@synthesize length;
-@synthesize topAnchor;
-
-- (CGFloat)length {
-  return self.topSafeAreaInset;
-}
-
-@end
-
-@implementation FlexibleHeaderTopSafeAreaTestsFakeView
-
-- (UIEdgeInsets)safeAreaInsets {
-  UIEdgeInsets safeAreaInsets = [super safeAreaInsets];
-  safeAreaInsets.top = self.topSafeAreaInset;
-  return safeAreaInsets;
 }
 
 @end
