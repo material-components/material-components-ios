@@ -16,13 +16,13 @@ import Foundation
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialDialogs
 
-
 /// This interface allows a user to present a UIKit Alert Controller and a Material Alert
 /// Controller.
 class DialogsAlertComparison: UIViewController {
 
-  let materialButton = MDCFlatButton()
-  let uikitButton = MDCFlatButton()
+  private let materialButton = MDCFlatButton()
+  private let themedButton = MDCFlatButton()
+  private let uikitButton = MDCFlatButton()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -38,21 +38,44 @@ class DialogsAlertComparison: UIViewController {
 
     NSLayoutConstraint.activate([
       NSLayoutConstraint(item:materialButton,
-                       attribute:.centerX,
-                       relatedBy:.equal,
-                       toItem:self.view,
-                       attribute:.centerX,
-                       multiplier:1.0,
+                       attribute: .centerX,
+                       relatedBy: .equal,
+                       toItem: self.view,
+                       attribute: .centerX,
+                       multiplier: 1.0,
                        constant: 0.0),
-      NSLayoutConstraint(item:materialButton,
-                       attribute:.centerY,
-                       relatedBy:.equal,
-                       toItem:self.view,
-                       attribute:.centerY,
-                       multiplier:1.0,
+      NSLayoutConstraint(item: materialButton,
+                       attribute: .centerY,
+                       relatedBy: .equal,
+                       toItem: self.view,
+                       attribute: .centerY,
+                       multiplier: 1.0,
                        constant: 0.0)
       ])
 
+    themedButton.translatesAutoresizingMaskIntoConstraints = false
+    themedButton.setTitle("Material Alert (Themed)", for: .normal)
+    themedButton.setTitleColor(UIColor(white: 0.1, alpha:1), for: .normal)
+    themedButton.sizeToFit()
+    themedButton.addTarget(self, action: #selector(tapThemed), for: .touchUpInside)
+    self.view.addSubview(themedButton)
+
+    NSLayoutConstraint.activate([
+      NSLayoutConstraint(item: themedButton,
+                         attribute: .centerX,
+                         relatedBy: .equal,
+                         toItem: self.view,
+                         attribute: .centerX,
+                         multiplier: 1.0,
+                         constant: 0.0),
+      NSLayoutConstraint(item:themedButton,
+                         attribute: .top,
+                         relatedBy: .equal,
+                         toItem: materialButton,
+                         attribute: .bottom,
+                         multiplier: 1.0,
+                         constant: 8.0)
+      ])
 
       uikitButton.translatesAutoresizingMaskIntoConstraints = false
       uikitButton.setTitle("UIKit Alert", for: UIControlState())
@@ -62,24 +85,41 @@ class DialogsAlertComparison: UIViewController {
       self.view.addSubview(uikitButton)
 
       NSLayoutConstraint.activate([
-        NSLayoutConstraint(item:uikitButton,
-                           attribute:.centerX,
-                           relatedBy:.equal,
-                           toItem:self.view,
-                           attribute:.centerX,
-                           multiplier:1.0,
+        NSLayoutConstraint(item: uikitButton,
+                           attribute: .centerX,
+                           relatedBy: .equal,
+                           toItem: self.view,
+                           attribute: .centerX,
+                           multiplier: 1.0,
                            constant: 0.0),
-        NSLayoutConstraint(item:uikitButton,
-                           attribute:.top,
-                           relatedBy:.equal,
-                           toItem:materialButton,
-                           attribute:.bottom,
-                           multiplier:1.0,
+        NSLayoutConstraint(item: uikitButton,
+                           attribute: .top,
+                           relatedBy: .equal,
+                           toItem: themedButton,
+                           attribute: .bottom,
+                           multiplier: 1.0,
                            constant: 8.0)
         ])
   }
 
   @objc func tapMaterial(_ sender: Any) {
+    let alertController = createMDCAlertController()
+    self.present(alertController, animated: true, completion: nil)
+  }
+
+  @objc func tapThemed(_ sender: Any) {
+    let alertController = createMDCAlertController()
+    let scheme = MDCAlertScheme()
+    MDCAlertThemer.applyScheme(scheme, to: alertController)
+    self.present(alertController, animated: true, completion: nil)
+  }
+
+  @objc func tapUIKit(_ sender: Any) {
+    let alertController = createUIAlertController()
+    self.present(alertController, animated: true, completion: nil)
+  }
+
+  private func createMDCAlertController() -> MDCAlertController {
     let titleString = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur"
     let messageString = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur " +
       "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus " +
@@ -112,10 +152,11 @@ class DialogsAlertComparison: UIViewController {
     let rejectAction = MDCAlertAction(title:"Reject") { (_) in print("Reject") }
     alertController.addAction(rejectAction)
 
-    self.present(alertController, animated: true, completion: nil)
+    return alertController
   }
 
-  @objc func tapUIKit(_ sender: Any) {
+  private func createUIAlertController() -> UIAlertController {
+
     let titleString = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur"
     let messageString = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur " +
       "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus " +
@@ -151,7 +192,7 @@ class DialogsAlertComparison: UIViewController {
     let rejectAction = UIAlertAction(title:"Reject", style:.default) { (_) in print("Reject") }
     alertController.addAction(rejectAction)
 
-    self.present(alertController, animated: true, completion: nil)
+    return alertController
   }
 }
 

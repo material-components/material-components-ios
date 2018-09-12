@@ -64,6 +64,7 @@ class DialogsLongAlertViewController: UIViewController {
     "euismod libero. Aliquam commodo urna vitae massa convallis aliquet."
 
     let materialAlertController = MDCAlertController(title: nil, message: messageString)
+    MDCAlertThemer.applyScheme(MDCAlertScheme(), to: materialAlertController)
 
     let action = MDCAlertAction(title:"OK") { (_) in print("OK") }
 
