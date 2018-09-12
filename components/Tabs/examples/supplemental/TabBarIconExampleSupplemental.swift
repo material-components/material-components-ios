@@ -18,6 +18,8 @@
 import UIKit
 
 import MaterialComponents.MaterialAppBar
+import MaterialComponents.MaterialAppBar_ColorThemer
+import MaterialComponents.MaterialAppBar_TypographyThemer
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialButtons_ButtonThemer
 import MaterialComponents.MaterialPalettes
@@ -60,10 +62,11 @@ extension TabBarIconSwiftExample {
     let appBarViewController = MDCAppBarViewController()
 
     self.addChildViewController(appBarViewController)
-    appBarViewController.headerView.backgroundColor = UIColor.white
     appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
     appBarViewController.headerView.minimumHeight = 56 + 72
     appBarViewController.headerView.tintColor = MDCPalette.blue.tint500
+    MDCAppBarColorThemer.applyColorScheme(colorScheme, to: appBarViewController)
+    MDCAppBarTypographyThemer.applyTypographyScheme(typographyScheme, to: appBarViewController)
 
     appBarViewController.headerStackView.bottomBar = self.tabBar
     appBarViewController.headerStackView.setNeedsLayout()
@@ -71,7 +74,7 @@ extension TabBarIconSwiftExample {
   }
 
   func setupExampleViews() {
-    view.backgroundColor = UIColor.white
+    view.backgroundColor = colorScheme.backgroundColor
 
     view.addSubview(appBarViewController.view)
     appBarViewController.didMove(toParentViewController: self)
