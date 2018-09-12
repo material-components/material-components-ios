@@ -116,7 +116,7 @@
   MDCChipViewScheme *scheme = [[MDCChipViewScheme alloc] init];
   scheme.colorScheme = self.colorScheme;
   scheme.shapeScheme = self.shapeScheme;
-  
+
   if (_isOutlined) {
     [MDCChipViewThemer applyOutlinedVariantWithScheme:scheme toChipView:chipView];
   } else {
