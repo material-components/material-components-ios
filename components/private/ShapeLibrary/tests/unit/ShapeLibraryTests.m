@@ -102,6 +102,52 @@
   XCTAssertEqualObjects(corner, cornerTreatment);
 }
 
+- (void)testPathGeneratorForPercentages {
+
+
+//  [corner pathGeneratorForCornerWithAngle:0 forViewSize:CGSizeMake(100, 100)];
+
+  MDCRectangleShapeGenerator *shapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
+  MDCCutCornerTreatment *corner = [[MDCCutCornerTreatment alloc] initWithCut:0.5f];
+  corner.valueType = MDCCornerTreatmentValueTypePercentage;
+  [shapeGenerator setCorners:corner];
+  CGPathRef path = [shapeGenerator pathForSize:CGSizeMake(100, 100)];
+  NSMutableArray *bezierPoints = [NSMutableArray array];
+  CGPathApply(path, (__bridge void *)bezierPoints, MyCGPathApplierFunc);
+  NSLog(@"haha");
+}
+
+void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
+  NSMutableArray *bezierPoints = (__bridge NSMutableArray *)info;
+
+  CGPoint *points = element->points;
+  CGPathElementType type = element->type;
+
+  switch(type) {
+    case kCGPathElementMoveToPoint: // contains 1 point
+      [bezierPoints addObject:[NSValue valueWithCGPoint:points[0]]];
+      break;
+
+    case kCGPathElementAddLineToPoint: // contains 1 point
+      [bezierPoints addObject:[NSValue valueWithCGPoint:points[0]]];
+      break;
+
+    case kCGPathElementAddQuadCurveToPoint: // contains 2 points
+      [bezierPoints addObject:[NSValue valueWithCGPoint:points[0]]];
+      [bezierPoints addObject:[NSValue valueWithCGPoint:points[1]]];
+      break;
+
+    case kCGPathElementAddCurveToPoint: // contains 3 points
+      [bezierPoints addObject:[NSValue valueWithCGPoint:points[0]]];
+      [bezierPoints addObject:[NSValue valueWithCGPoint:points[1]]];
+      [bezierPoints addObject:[NSValue valueWithCGPoint:points[2]]];
+      break;
+
+    case kCGPathElementCloseSubpath: // contains no point
+      break;
+  }
+}
+
 - (void)testCurvedCornerInit {
   MDCCurvedCornerTreatment *treatment = [[MDCCurvedCornerTreatment alloc] init];
   XCTAssertNotNil(treatment);

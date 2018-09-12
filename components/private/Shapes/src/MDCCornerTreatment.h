@@ -53,14 +53,14 @@ typedef NS_ENUM(NSInteger, MDCCornerTreatmentValueType) {
 - (nonnull instancetype)init NS_DESIGNATED_INITIALIZER;
 
 /**
- Generates an MDCPathGenerator object for a corner with the provided angle.
+ Creates an MDCPathGenerator object for a corner with the provided angle.
 
  @param angle The internal angle of the corner in radians. Typically M_PI/2.
  */
 - (nonnull MDCPathGenerator *)pathGeneratorForCornerWithAngle:(CGFloat)angle;
 
 /**
- Generates an MDCPathGenerator object for a corner with the provided angle.
+ Creates an MDCPathGenerator object for a corner with the provided angle.
  Given that the provided valueType is MDCCornerTreatmentValueTypePercentage, we also need
  the size of the view to calculate the corner size percentage relative to the view height.
 
