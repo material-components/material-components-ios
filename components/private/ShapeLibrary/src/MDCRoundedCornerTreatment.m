@@ -43,8 +43,10 @@ static NSString *const MDCRoundedCornerTreatmentRadiusKey = @"MDCRoundedCornerTr
   [aCoder encodeDouble:_radius forKey:MDCRoundedCornerTreatmentRadiusKey];
 }
 
-- (id)copyWithZone:(NSZone *)__unused zone {
-  return [[[self class] alloc] initWithRadius:_radius];
+- (id)copyWithZone:(NSZone *)zone {
+  MDCRoundedCornerTreatment *copy = [super copyWithZone:zone];
+  copy.radius = _radius;
+  return copy;
 }
 
 - (MDCPathGenerator *)pathGeneratorForCornerWithAngle:(CGFloat)angle {

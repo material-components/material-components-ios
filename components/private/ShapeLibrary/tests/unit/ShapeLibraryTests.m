@@ -22,6 +22,7 @@
 #import "MDCRoundedCornerTreatment.h"
 #import "MDCSlantedRectShapeGenerator.h"
 #import "MDCTriangleEdgeTreatment.h"
+#import "MaterialMath.h"
 
 @interface ShapeLibraryTests : XCTestCase
 
@@ -103,49 +104,51 @@
 }
 
 - (void)testPathGeneratorForPercentages {
-
-
-//  [corner pathGeneratorForCornerWithAngle:0 forViewSize:CGSizeMake(100, 100)];
-
+  // Given
   MDCRectangleShapeGenerator *shapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
   MDCCutCornerTreatment *corner = [[MDCCutCornerTreatment alloc] initWithCut:0.5f];
   corner.valueType = MDCCornerTreatmentValueTypePercentage;
   [shapeGenerator setCorners:corner];
+
+  // When
   CGPathRef path = [shapeGenerator pathForSize:CGSizeMake(100, 100)];
-  NSMutableArray *bezierPoints = [NSMutableArray array];
-  CGPathApply(path, (__bridge void *)bezierPoints, MyCGPathApplierFunc);
-  NSLog(@"haha");
+  NSMutableArray *pathPoints = [NSMutableArray array];
+  CGPathApply(path, (__bridge void *)pathPoints, GetCGPathAddLineToPointValues);
+
+  // Then
+  // The outcome of an 100x100 square with 50% cut corners is a diamond with points at
+  // (0, 50), (50, 0), (100, 50), (50, 100)
+  XCTAssertEqual([pathPoints count], 8);
+  for (NSValue *value in pathPoints) {
+    CGPoint point = value.CGPointValue;
+    XCTAssert(MDCCGFloatEqual(MDCRound(point.x), 0.f) ||
+              MDCCGFloatEqual(MDCRound(point.x), 50.f) ||
+              MDCCGFloatEqual(MDCRound(point.x), 100.f));
+    XCTAssert(MDCCGFloatEqual(MDCRound(point.y), 0.f) ||
+              MDCCGFloatEqual(MDCRound(point.y), 50.f) ||
+              MDCCGFloatEqual(MDCRound(point.y), 100.f));
+  }
 }
 
-void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
-  NSMutableArray *bezierPoints = (__bridge NSMutableArray *)info;
-
+void GetCGPathAddLineToPointValues (void *info, const CGPathElement *element) {
+  NSMutableArray *pathPoints = (__bridge NSMutableArray *)info;
   CGPoint *points = element->points;
   CGPathElementType type = element->type;
-
-  switch(type) {
-    case kCGPathElementMoveToPoint: // contains 1 point
-      [bezierPoints addObject:[NSValue valueWithCGPoint:points[0]]];
-      break;
-
-    case kCGPathElementAddLineToPoint: // contains 1 point
-      [bezierPoints addObject:[NSValue valueWithCGPoint:points[0]]];
-      break;
-
-    case kCGPathElementAddQuadCurveToPoint: // contains 2 points
-      [bezierPoints addObject:[NSValue valueWithCGPoint:points[0]]];
-      [bezierPoints addObject:[NSValue valueWithCGPoint:points[1]]];
-      break;
-
-    case kCGPathElementAddCurveToPoint: // contains 3 points
-      [bezierPoints addObject:[NSValue valueWithCGPoint:points[0]]];
-      [bezierPoints addObject:[NSValue valueWithCGPoint:points[1]]];
-      [bezierPoints addObject:[NSValue valueWithCGPoint:points[2]]];
-      break;
-
-    case kCGPathElementCloseSubpath: // contains no point
-      break;
+  if (type == kCGPathElementAddLineToPoint) {
+    [pathPoints addObject:[NSValue valueWithCGPoint:points[0]]];
   }
+}
+
+- (void)testCopyForCorners {
+  // Given
+  MDCRoundedCornerTreatment *corner = [[MDCRoundedCornerTreatment alloc] initWithRadius:1.2f];
+  corner.valueType = MDCCornerTreatmentValueTypePercentage;
+
+  // When
+  MDCCornerTreatment *copy = [corner copy];
+
+  // Then
+  XCTAssertEqualObjects(corner, copy);
 }
 
 - (void)testCurvedCornerInit {

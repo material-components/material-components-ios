@@ -44,7 +44,9 @@
 }
 
 - (id)copyWithZone:(nullable NSZone *)__unused zone {
-  return [[[self class] alloc] init];
+  MDCCornerTreatment *copy = [[[self class] alloc] init];
+  copy.valueType = _valueType;
+  return copy;
 }
 
 + (BOOL)supportsSecureCoding {
