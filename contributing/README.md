@@ -36,8 +36,8 @@ Start the title with `[ComponentName]` to identify which component a change affe
 
 ### Pull request continuous integration for new contributors
 
-Continuous integration will only be initiated automatically for the core team and
-recognized collaborators.
+Continuous integration will only be initiated automatically for the [core team](https://github.com/orgs/material-components/teams/core-ios-team/members)
+and [recognized collaborators](https://github.com/orgs/material-components/teams/recognized-ios-collaborators/members).
 
 All other pull requests must be labeled with `kokoro:force-run` by a member of the repo
 in order for continuous integration to be initiated. This label must be added again each
