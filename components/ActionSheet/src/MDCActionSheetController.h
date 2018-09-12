@@ -138,6 +138,9 @@ __attribute__((objc_subclassing_restricted))
  */
 @property(nonatomic, nullable, strong) UIFont *actionFont;
 
+/**
+ The color applied to the sheet view of the action sheet controller.
+ */
 @property(nonatomic, nonnull, strong) UIColor *backgroundColor;
 
 @property(nonatomic, strong, readonly, nonnull)
