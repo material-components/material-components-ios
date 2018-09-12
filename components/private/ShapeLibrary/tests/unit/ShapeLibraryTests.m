@@ -121,16 +121,14 @@
   XCTAssertEqual([pathPoints count], 8);
   for (NSValue *value in pathPoints) {
     CGPoint point = value.CGPointValue;
-    XCTAssert(MDCCGFloatEqual(MDCRound(point.x), 0.f) ||
-              MDCCGFloatEqual(MDCRound(point.x), 50.f) ||
+    XCTAssert(MDCCGFloatEqual(MDCRound(point.x), 0.f) || MDCCGFloatEqual(MDCRound(point.x), 50.f) ||
               MDCCGFloatEqual(MDCRound(point.x), 100.f));
-    XCTAssert(MDCCGFloatEqual(MDCRound(point.y), 0.f) ||
-              MDCCGFloatEqual(MDCRound(point.y), 50.f) ||
+    XCTAssert(MDCCGFloatEqual(MDCRound(point.y), 0.f) || MDCCGFloatEqual(MDCRound(point.y), 50.f) ||
               MDCCGFloatEqual(MDCRound(point.y), 100.f));
   }
 }
 
-void GetCGPathAddLineToPointValues (void *info, const CGPathElement *element) {
+void GetCGPathAddLineToPointValues(void *info, const CGPathElement *element) {
   NSMutableArray *pathPoints = (__bridge NSMutableArray *)info;
   CGPoint *points = element->points;
   CGPathElementType type = element->type;
