@@ -37,7 +37,6 @@
  */
 @property(nonnull, readonly, nonatomic) id<MDCShapeScheming> shapeScheme;
 
-
 /**
  The typography scheme to apply to a chip view.
  */
