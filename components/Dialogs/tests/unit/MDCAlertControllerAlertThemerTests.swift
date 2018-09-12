@@ -20,9 +20,16 @@ import MaterialComponents.MDCAlertThemer
 class MDCAlertControllerAlertThemerTests: XCTestCase {
 
   let defaultCornerRadius: CGFloat = 4.0
+  var alertScheme: MDCAlertScheme = MDCAlertScheme()
+
+  override func setUp() {
+    super.setUp()
+
+    alertScheme = MDCAlertScheme()
+  }
 
   func testDefaultAlertScheme() {
-    // Given
+    // When
     let alertScheme = MDCAlertScheme()
 
     // Then
@@ -33,15 +40,15 @@ class MDCAlertControllerAlertThemerTests: XCTestCase {
 
   func testApplyingAlertSchemeWithCustomColor() {
     // Given
-    let alertScheme = MDCAlertScheme()
     let colorScheme = MDCSemanticColorScheme()
+
     let alert = MDCAlertController(title: "Title", message: "Message")
     let alertView = alert.view as! MDCAlertControllerView
 
-    // When
     colorScheme.onSurfaceColor = .orange
     alertScheme.colorScheme = colorScheme
 
+    // When
     MDCAlertThemer.applyScheme(alertScheme, to: alert)
 
     // Then
@@ -54,16 +61,15 @@ class MDCAlertControllerAlertThemerTests: XCTestCase {
     
   func testApplyingAlertSchemeWithCustomTypography() {
     // Given
-    let alertScheme = MDCAlertScheme()
     let typographyScheme = MDCTypographyScheme()
     let alert = MDCAlertController(title: "Title", message: "Message")
     let alertView = alert.view as! MDCAlertControllerView
 
-    // When
     let testFont = UIFont.boldSystemFont(ofSize: 55.0)
     typographyScheme.headline6 = testFont
     alertScheme.typographyScheme = typographyScheme
 
+    // When
     MDCAlertThemer.applyScheme(alertScheme, to: alert)
 
     // Then
@@ -75,13 +81,13 @@ class MDCAlertControllerAlertThemerTests: XCTestCase {
 
   func testApplyingAlertSchemeWithCustomShape() {
     // Given
-    let alertScheme = MDCAlertScheme()
     let cornerRadius: CGFloat = 33.3
     let alert = MDCAlertController(title: "Title", message: "Message")
     let alertView = alert.view as! MDCAlertControllerView
 
-    // When
     alertScheme.cornerRadius = cornerRadius
+
+    // When
     MDCAlertThemer.applyScheme(alertScheme, to: alert)
 
     // Then
