@@ -14,13 +14,13 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialChips.h"
 #import "MaterialChips+ShapeThemer.h"
+#import "MaterialChips.h"
 
 @interface ChipViewShapeThemerTests : XCTestCase
 
-@property (nonatomic, strong) MDCChipView *chip;
-@property (nonatomic, strong) MDCShapeScheme *shapeScheme;
+@property(nonatomic, strong) MDCChipView *chip;
+@property(nonatomic, strong) MDCShapeScheme *shapeScheme;
 
 @end
 
