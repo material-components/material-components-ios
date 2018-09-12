@@ -40,8 +40,8 @@ Continuous integration will only be initiated automatically for the [core team](
 and [recognized collaborators](https://github.com/orgs/material-components/teams/recognized-ios-collaborators/members).
 
 All other pull requests must be labeled with `kokoro:force-run` by a member of the repo
-in order for continuous integration to be initiated. This label must be added again each
-time the pull request has new commits pushed to it.
+with write access in order for continuous integration to be initiated. This label must
+be added again each time the pull request has new commits pushed to it.
 
 #### Using assignee to indicate who should action on a PR
 
