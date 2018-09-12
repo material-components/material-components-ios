@@ -43,6 +43,8 @@ All other pull requests must be labeled with `kokoro:force-run` by a member of t
 with write access in order for continuous integration to be initiated. This label must
 be added again each time the pull request has new commits pushed to it.
 
+For Googlers: [b/115490922](http://b/115490922) is tracking making the above work more streamlined for new contributors.
+
 #### Using assignee to indicate who should action on a PR
 
 Since PRs on github permanently stay in the `Changes requested` state it is hard to tell when the author has addressed the concerns. By change the assignee to whomever still needs to action (review or modify/justify) we can more easily keep track of what needs attention in our PR queues.
