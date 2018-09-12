@@ -16,20 +16,11 @@ protocol. If you have created a type that conforms to MDCCardScheming you will n
 
 ## New features
 
-ActionSheet's `backgroundColor` can now be customized.
-
-BottomAppBar has a new surface variant color themer. Example:
-
-```swift
-MDCBottomAppBarColorThemer.applySurfaceVariant(withSemanticColorScheme: colorScheme,
-                                               to: bottomBarView)
-```
-
-BottomNavigation now allows you to fetch a view for a given item using the new `viewForItem:` API.
-
-BottomSheet and Cards each now have a Shape themer.
-
-NavigationBar now allows you to set a different tint color for the leading and trailing items.
+1. ActionSheet's `backgroundColor` can now be customized.
+2. BottomAppBar has a new surface variant color themer API. [Documentation](https://github.com/material-components/material-components-ios/tree/v63.0.0/components/BottomAppBar#color-theming)
+3. BottomNavigation now allows you to fetch a view for a given item using the new `viewForItem:` API.
+4. BottomSheet and Cards each now have a Shape themer.
+5. NavigationBar now allows you to set a different tint color for the leading and trailing items.
 
 ## API changes
 
