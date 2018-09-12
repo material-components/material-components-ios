@@ -76,4 +76,41 @@ class ActionSheetTest: XCTestCase {
     }
     
   }
+
+  func testDefaultBackgroundColor() {
+    // When
+    let _ = actionSheet.view
+    
+    // Then
+    XCTAssertEqual(actionSheet.backgroundColor, .white)
+    XCTAssertEqual(actionSheet.view.backgroundColor, .white)
+    let subviewsArray = actionSheet.view.subviews
+    for view in subviewsArray {
+      XCTAssertEqual(view.backgroundColor, .white)
+    }
+  }
+
+  func testSetBackgroundColor() {
+    // Given
+    let newBackgroundColor: UIColor = .green
+
+    // When
+    actionSheet.backgroundColor = newBackgroundColor
+
+    // Then
+    XCTAssertEqual(actionSheet.backgroundColor, newBackgroundColor)
+  }
+
+  func testBackgroundColorMatchesViewBackgroundColor() {
+    // Given
+    let newBackgroundColor: UIColor = .green
+    actionSheet.backgroundColor = newBackgroundColor
+
+    // When
+    let _ = actionSheet.view
+
+    // Then
+    XCTAssertEqual(actionSheet.view.backgroundColor, actionSheet.backgroundColor)
+    XCTAssertEqual(actionSheet.view.backgroundColor, newBackgroundColor)
+  }
 }
