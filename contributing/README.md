@@ -36,7 +36,7 @@ Start the title with `[ComponentName]` to identify which component a change affe
 
 ### Pull request continuous integration for new contributors
 
-Continuous integration will only be initiated automatically for the core team and and
+Continuous integration will only be initiated automatically for the core team and
 recognized collaborators.
 
 All other pull requests must be labeled with `kokoro:force-run` by a member of the repo
