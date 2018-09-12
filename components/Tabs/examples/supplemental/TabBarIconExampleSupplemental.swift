@@ -74,7 +74,7 @@ extension TabBarIconSwiftExample {
   }
 
   func setupExampleViews() {
-    view.backgroundColor = colorScheme.backgroundColor
+    view.backgroundColor = UIColor.white
 
     view.addSubview(appBarViewController.view)
     appBarViewController.didMove(toParentViewController: self)
