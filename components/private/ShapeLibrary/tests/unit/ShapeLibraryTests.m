@@ -118,7 +118,7 @@ void GetCGPathAddLineToPointValues(void *info, const CGPathElement *element);
   // Then
   // The outcome of an 100x100 square with 50% cut corners is a diamond with points at
   // (0, 50), (50, 0), (100, 50), (50, 100)
-  XCTAssertEqual([pathPoints count], (NSUInteger) 8);
+  XCTAssertEqual([pathPoints count], (NSUInteger)8);
   NSArray<NSValue *> *points =
       [NSArray arrayWithObjects:[NSValue valueWithCGPoint:CGPointMake(50.f, 0.f)],
                                 [NSValue valueWithCGPoint:CGPointMake(100.f, 50.f)],
