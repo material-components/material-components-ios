@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
+
 #import "MaterialColorScheme.h"
-#import "MaterialShapeScheme.h"
 #import "MaterialTypographyScheme.h"
 
 /** Defines a readonly immutable interface for component style data to be applied by a themer. */

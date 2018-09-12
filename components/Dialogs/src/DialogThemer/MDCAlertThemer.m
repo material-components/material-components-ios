@@ -18,15 +18,15 @@
 
 @implementation MDCAlertThemer
 
-+ (void)applyScheme:(nonnull id<MDCAlertScheming>)dialogSchem
++ (void)applyScheme:(nonnull id<MDCAlertScheming>)alertScheme
     toAlertController:(nonnull MDCAlertController *)alertController {
-  [MDCAlertColorThemer applySemanticColorScheme:dialogSchem.colorScheme
+  [MDCAlertColorThemer applySemanticColorScheme:alertScheme.colorScheme
                               toAlertController:alertController];
 
-  [MDCAlertTypographyThemer applyTypographyScheme:dialogSchem.typographyScheme
+  [MDCAlertTypographyThemer applyTypographyScheme:alertScheme.typographyScheme
                                 toAlertController:alertController];
 
-  alertController.cornerRadius = dialogSchem.cornerRadius;
+  alertController.cornerRadius = alertScheme.cornerRadius;
 }
 
 @end
