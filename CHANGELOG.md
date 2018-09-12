@@ -16,7 +16,7 @@ protocol. If you have created a type that conforms to MDCCardScheming you will n
 
 ## New features
 
-ActionSheet backgroundColor can now be customized.
+ActionSheet's `backgroundColor` can now be customized.
 
 BottomAppBar has a new surface variant color themer. Example:
 
@@ -66,7 +66,7 @@ NavigationBar now allows you to set a different tint color for the leading and t
 
 ### BottomSheet+ShapeThemer
 
-**New component.**
+**New extension.**
 
 ### Cards+CardThemer
 
@@ -80,7 +80,7 @@ NavigationBar now allows you to set a different tint color for the leading and t
 
 ### Cards+ShapeThemer
 
-**New component.**
+**New extension.**
 
 ### NavigationBar
 
