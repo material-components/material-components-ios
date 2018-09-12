@@ -16,7 +16,6 @@
 
 #import "private/MDCActionSheetItemTableViewCell.h"
 #import "private/MDCActionSheetHeaderView.h"
-#import "MaterialApplication.h"
 #import "MaterialTypography.h"
 
 static NSString *const ReuseIdentifier = @"BaseCell";
@@ -111,7 +110,9 @@ static NSString *const ReuseIdentifier = @"BaseCell";
     _header = [[MDCActionSheetHeaderView alloc] initWithFrame:CGRectZero];
     _header.title = [title copy];
     _header.message = [message copy];
-    self.backgroundColor = [UIColor whiteColor];
+    _backgroundColor = UIColor.whiteColor;
+    _header.backgroundColor = _backgroundColor;
+    _tableView.backgroundColor = _backgroundColor;
   }
 
   return self;
@@ -133,6 +134,7 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  self.view.backgroundColor = self.backgroundColor;
   _tableView.frame = self.view.bounds;
   [self.view addSubview:_tableView];
   [self.view addSubview:_header];
@@ -299,13 +301,10 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
+  _backgroundColor = backgroundColor;
   self.view.backgroundColor = backgroundColor;
   _tableView.backgroundColor = backgroundColor;
   _header.backgroundColor = backgroundColor;
-}
-
-- (UIColor *)backgroundColor {
-  return self.view.backgroundColor;
 }
 
 #pragma mark - Dynamic Type

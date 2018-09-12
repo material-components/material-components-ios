@@ -36,10 +36,20 @@ static NSString *const MDCCurvedCornerTreatmentSizeKey = @"MDCCurvedCornerTreatm
   return self;
 }
 
-- (MDCPathGenerator *)pathGeneratorForCornerWithAngle:(CGFloat)__unused angle {
+- (MDCPathGenerator *)pathGeneratorForCornerWithAngle:(CGFloat)angle {
+  return [self pathGeneratorForCornerWithAngle:angle andCurve:_size];
+}
+
+- (MDCPathGenerator *)pathGeneratorForCornerWithAngle:(CGFloat)angle forViewSize:(CGSize)viewSize {
+  CGSize normalizedCurve =
+      CGSizeMake(_size.width * viewSize.height, _size.height * viewSize.height);
+  return [self pathGeneratorForCornerWithAngle:angle andCurve:normalizedCurve];
+}
+
+- (MDCPathGenerator *)pathGeneratorForCornerWithAngle:(CGFloat)angle andCurve:(CGSize)curve {
   MDCPathGenerator *path =
-      [MDCPathGenerator pathGeneratorWithStartPoint:CGPointMake(0, self.size.height)];
-  [path addQuadCurveWithControlPoint:CGPointZero toPoint:CGPointMake(self.size.width, 0)];
+      [MDCPathGenerator pathGeneratorWithStartPoint:CGPointMake(0, curve.height)];
+  [path addQuadCurveWithControlPoint:CGPointZero toPoint:CGPointMake(curve.width, 0)];
   return path;
 }
 
@@ -48,14 +58,27 @@ static NSString *const MDCCurvedCornerTreatmentSizeKey = @"MDCCurvedCornerTreatm
   [aCoder encodeCGSize:_size forKey:MDCCurvedCornerTreatmentSizeKey];
 }
 
-- (id)copyWithZone:(nullable NSZone *)__unused zone {
-  MDCCurvedCornerTreatment *copy = [[[self class] alloc] init];
-  copy.size = self.size;
+- (id)copyWithZone:(NSZone *)zone {
+  MDCCurvedCornerTreatment *copy = [super copyWithZone:zone];
+  copy.size = _size;
   return copy;
 }
 
 + (BOOL)supportsSecureCoding {
   return YES;
+}
+
+- (BOOL)isEqual:(id)object {
+  if (object == self) {
+    return YES;
+  } else if (![super isEqual:object]) {
+    return NO;
+  }
+  if (!object || ![[object class] isEqual:[self class]]) {
+    return NO;
+  }
+  MDCCurvedCornerTreatment *otherCurvedCorner = (MDCCurvedCornerTreatment *)object;
+  return CGSizeEqualToSize(self.size, otherCurvedCorner.size);
 }
 
 @end

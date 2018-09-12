@@ -14,6 +14,7 @@
 
 import UIKit
 import MaterialComponentsAlpha.MaterialNavigationDrawer
+import MaterialComponents.MaterialColorScheme
 
 class BottomDrawerInfiniteScrollingExample: UIViewController {
   var colorScheme = MDCSemanticColorScheme()

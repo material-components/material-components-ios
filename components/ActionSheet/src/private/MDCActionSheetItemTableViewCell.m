@@ -16,7 +16,7 @@
 
 #import "MaterialTypography.h"
 
-static const CGFloat ImageAlpha = 0.54f;
+static const CGFloat ImageAlpha = 0.6f;
 static const CGFloat LabelAlpha = 0.87f;
 static const CGFloat ImageLeadingPadding = 16.f;
 static const CGFloat ImageTopPadding = 16.f;
