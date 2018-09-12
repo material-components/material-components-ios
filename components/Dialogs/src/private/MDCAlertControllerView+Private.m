@@ -18,6 +18,7 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 
 #import "MaterialButtons.h"
+#import "MaterialMath.h"
 #import "MaterialTypography.h"
 
 // https://material.io/go/design-dialogs#dialogs-specs
@@ -260,6 +261,9 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 }
 
 - (void)setCornerRadius:(CGFloat)cornerRadius {
+  if (MDCCGFloatEqual(cornerRadius, self.layer.cornerRadius)) {
+    return;
+  }
   self.layer.cornerRadius = cornerRadius;
   [self setNeedsLayout];
 }

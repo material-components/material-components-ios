@@ -214,15 +214,11 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 - (void)setCornerRadius:(CGFloat)cornerRadius {
   _cornerRadius = cornerRadius;
-  if (self.alertView) {
-    self.alertView.cornerRadius = cornerRadius;
-  }
-  // make sure to pass through the new shape to the dialog's tracking & shadow layers
+  self.alertView.cornerRadius = cornerRadius;
+  // make sure to pass the new shape through to the dialog's tracking/shadow layer
   MDCDialogPresentationController *dialogPresentationController =
       self.mdc_dialogPresentationController;
-  if (dialogPresentationController) {
-    dialogPresentationController.dialogCornerRadius = cornerRadius;
-  }
+  dialogPresentationController.dialogCornerRadius = cornerRadius;
 }
 
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
