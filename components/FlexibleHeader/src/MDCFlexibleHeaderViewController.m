@@ -300,7 +300,7 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
       }
       if (self.inferTopSafeAreaInsetFromViewController
           && (object == self->_topSafeAreaConstraint || object == self->_topSafeAreaView)) {
-        [self->_headerView extractTopSafeAreaInset];
+        [self->_headerView topSafeAreaInsetDidChange];
       }
     };
 

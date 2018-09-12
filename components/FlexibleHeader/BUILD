@@ -49,6 +49,20 @@ mdc_objc_library(
 )
 
 mdc_objc_library(
+    name = "private",
+    hdrs = native.glob(["src/private/*.h"]),
+    includes = ["src/private"],
+    visibility = [":test_targets"],
+)
+
+package_group(
+    name = "test_targets",
+    packages = [
+        "//components/FlexibleHeader/...",
+    ],
+)
+
+mdc_objc_library(
     name = "CanAlwaysExpandToMaximumHeight",
     srcs = native.glob(["src/CanAlwaysExpandToMaximumHeight/*.m"]),
     hdrs = native.glob(["src/CanAlwaysExpandToMaximumHeight/*.h"]),
@@ -87,6 +101,7 @@ mdc_objc_library(
         "XCTest",
     ],
     deps = [
+        ":private",
         ":FlexibleHeader",
         ":ColorThemer",
         ":CanAlwaysExpandToMaximumHeight",

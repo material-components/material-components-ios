@@ -54,6 +54,7 @@ mdc_objc_library(
     deps = [
         ":BottomAppBar",
         "//components/Themes",
+        "//components/schemes/Color",
     ],
     visibility = ["//visibility:public"],
 )
@@ -73,6 +74,7 @@ mdc_objc_library(
         ":BottomAppBar",
         ":ColorThemer",
         ":private",
+        "//components/NavigationBar",
     ],
     visibility = ["//visibility:private"],
 )
