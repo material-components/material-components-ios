@@ -28,6 +28,7 @@
   self = [super init];
   if (self) {
     self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.shapeScheme = [[MDCShapeScheme alloc] init];
   }
   return self;
 }
@@ -108,6 +109,7 @@
 
   MDCChipViewScheme *scheme = [[MDCChipViewScheme alloc] init];
   scheme.colorScheme = self.colorScheme;
+  scheme.shapeScheme = self.shapeScheme;
   
   if (self.isOutlined) {
     [MDCChipViewThemer applyOutlinedVariantWithScheme:scheme toChipView:chipView];
