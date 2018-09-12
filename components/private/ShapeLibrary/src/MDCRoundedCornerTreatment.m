@@ -50,10 +50,19 @@ static NSString *const MDCRoundedCornerTreatmentRadiusKey = @"MDCRoundedCornerTr
 }
 
 - (MDCPathGenerator *)pathGeneratorForCornerWithAngle:(CGFloat)angle {
-  MDCPathGenerator *path = [MDCPathGenerator pathGeneratorWithStartPoint:CGPointMake(0, _radius)];
+  return [self pathGeneratorForCornerWithAngle:angle andRadius:_radius];
+}
+
+- (MDCPathGenerator *)pathGeneratorForCornerWithAngle:(CGFloat)angle forViewSize:(CGSize)viewSize {
+  CGFloat normalizedRadius = _radius * viewSize.height;
+  return [self pathGeneratorForCornerWithAngle:angle andRadius:normalizedRadius];
+}
+
+- (MDCPathGenerator *)pathGeneratorForCornerWithAngle:(CGFloat)angle andRadius:(CGFloat)radius {
+  MDCPathGenerator *path = [MDCPathGenerator pathGeneratorWithStartPoint:CGPointMake(0, radius)];
   [path addArcWithTangentPoint:CGPointZero
-                       toPoint:CGPointMake(MDCSin(angle) * _radius, MDCCos(angle) * _radius)
-                        radius:_radius];
+                       toPoint:CGPointMake(MDCSin(angle) * radius, MDCCos(angle) * radius)
+                        radius:radius];
   return path;
 }
 

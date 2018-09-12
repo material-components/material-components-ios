@@ -22,9 +22,10 @@
 #import "MDCRoundedCornerTreatment.h"
 #import "MDCSlantedRectShapeGenerator.h"
 #import "MDCTriangleEdgeTreatment.h"
+#import "MaterialMath.h"
 
 @interface ShapeLibraryTests : XCTestCase
-
+void GetCGPathAddLineToPointValues(void *info, const CGPathElement *element);
 @end
 
 @implementation ShapeLibraryTests
@@ -100,6 +101,48 @@
 
   // Then
   XCTAssertEqualObjects(corner, cornerTreatment);
+}
+
+- (void)testPathGeneratorForPercentages {
+  // Given
+  MDCRectangleShapeGenerator *shapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
+  MDCCutCornerTreatment *corner = [[MDCCutCornerTreatment alloc] initWithCut:0.5f];
+  corner.valueType = MDCCornerTreatmentValueTypePercentage;
+  [shapeGenerator setCorners:corner];
+
+  // When
+  CGPathRef path = [shapeGenerator pathForSize:CGSizeMake(100, 100)];
+  NSMutableArray<NSValue *> *pathPoints = [NSMutableArray array];
+  CGPathApply(path, (__bridge void *)pathPoints, GetCGPathAddLineToPointValues);
+
+  // Then
+  // The outcome of an 100x100 square with 50% cut corners is a diamond with points at
+  // (0, 50), (50, 0), (100, 50), (50, 100)
+  XCTAssertEqual([pathPoints count], (NSUInteger)8);
+  NSArray<NSValue *> *points =
+      [NSArray arrayWithObjects:[NSValue valueWithCGPoint:CGPointMake(50.f, 0.f)],
+                                [NSValue valueWithCGPoint:CGPointMake(100.f, 50.f)],
+                                [NSValue valueWithCGPoint:CGPointMake(50.f, 100.f)],
+                                [NSValue valueWithCGPoint:CGPointMake(0.f, 50.f)], nil];
+  for (NSUInteger i = 0; i < [pathPoints count]; i += 2) {
+    CGPoint point = points[i / 2].CGPointValue;
+    CGPoint p1 = pathPoints[i].CGPointValue;
+    XCTAssertEqualWithAccuracy(point.x, p1.x, 0.0001f);
+    XCTAssertEqualWithAccuracy(point.y, p1.y, 0.0001f);
+
+    CGPoint p2 = pathPoints[i + 1].CGPointValue;
+    XCTAssertEqualWithAccuracy(point.x, p2.x, 0.0001f);
+    XCTAssertEqualWithAccuracy(point.y, p2.y, 0.0001f);
+  }
+}
+
+void GetCGPathAddLineToPointValues(void *info, const CGPathElement *element) {
+  NSMutableArray *pathPoints = (__bridge NSMutableArray *)info;
+  CGPoint *points = element->points;
+  CGPathElementType type = element->type;
+  if (type == kCGPathElementAddLineToPoint) {
+    [pathPoints addObject:[NSValue valueWithCGPoint:points[0]]];
+  }
 }
 
 - (void)testCopyForCorners {

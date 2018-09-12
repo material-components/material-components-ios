@@ -36,10 +36,20 @@ static NSString *const MDCCurvedCornerTreatmentSizeKey = @"MDCCurvedCornerTreatm
   return self;
 }
 
-- (MDCPathGenerator *)pathGeneratorForCornerWithAngle:(CGFloat)__unused angle {
+- (MDCPathGenerator *)pathGeneratorForCornerWithAngle:(CGFloat)angle {
+  return [self pathGeneratorForCornerWithAngle:angle andCurve:_size];
+}
+
+- (MDCPathGenerator *)pathGeneratorForCornerWithAngle:(CGFloat)angle forViewSize:(CGSize)viewSize {
+  CGSize normalizedCurve =
+      CGSizeMake(_size.width * viewSize.height, _size.height * viewSize.height);
+  return [self pathGeneratorForCornerWithAngle:angle andCurve:normalizedCurve];
+}
+
+- (MDCPathGenerator *)pathGeneratorForCornerWithAngle:(CGFloat)angle andCurve:(CGSize)curve {
   MDCPathGenerator *path =
-      [MDCPathGenerator pathGeneratorWithStartPoint:CGPointMake(0, self.size.height)];
-  [path addQuadCurveWithControlPoint:CGPointZero toPoint:CGPointMake(self.size.width, 0)];
+      [MDCPathGenerator pathGeneratorWithStartPoint:CGPointMake(0, curve.height)];
+  [path addQuadCurveWithControlPoint:CGPointZero toPoint:CGPointMake(curve.width, 0)];
   return path;
 }
 
