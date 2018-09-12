@@ -223,7 +223,11 @@ typedef enum : NSUInteger {
   for (NSInteger i = 0; i < 4; i++) {
     MDCCornerTreatment *cornerShape = [self cornerTreatmentForPosition:i];
     CGFloat cornerAngle = [self angleOfCorner:i forViewSize:size];
-    cornerPaths[i] = [cornerShape pathGeneratorForCornerWithAngle:cornerAngle];
+    if (cornerShape.valueType == MDCCornerTreatmentValueTypeAbsolute) {
+      cornerPaths[i] = [cornerShape pathGeneratorForCornerWithAngle:cornerAngle];
+    } else if (cornerShape.valueType == MDCCornerTreatmentValueTypePercentage) {
+      cornerPaths[i] = [cornerShape pathGeneratorForCornerWithAngle:cornerAngle forViewSize:size];
+    }
     edgeAngles[i] = [self angleOfEdge:i forViewSize:size];
   }
 
