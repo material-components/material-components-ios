@@ -1,24 +1,94 @@
-# #develop#
+# 63.0.0
 
-Replace this text with a summarized description of this release's contents.
+This major release adds additional support for shape theming to BottomSheet and Cards and
+improvements to ActionSheets, BottomAppBar, BottomNavigation, Dialogs, NavigationBar, and
+TextFields.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+### Cards
 
-Replace this text with links to deprecation guides.
+* [**Breaking**:  Add a card shape themer (#5031)](https://github.com/material-components/material-components-ios/commit/c036e22a7dde0c2c970e380123334f870cdabaae) (Yarden Eitan)
+
+This is a breaking change due to the addition of the `shapeScheme` property to the MDCCardScheming
+protocol. If you have created a type that conforms to MDCCardScheming you will need to implement the
+`shapeScheme` property now as well.
+
 ## New features
 
-Replace this text with example code for each new feature.
+ActionSheet backgroundColor can now be customized.
+
+BottomAppBar has a new surface variant color themer. Example:
+
+```swift
+MDCBottomAppBarColorThemer.applySurfaceVariant(withSemanticColorScheme: colorScheme,
+                                               to: bottomBarView)
+```
+
+BottomNavigation now allows you to fetch a view for a given item using the new `viewForItem:` API.
+
+BottomSheet and Cards each now have a Shape themer.
+
+NavigationBar now allows you to set a different tint color for the leading and trailing items.
+
 ## API changes
+
+### ActionSheet
+
+#### MDCActionSheetController
+
+*modified* property: `backgroundColor` in `MDCActionSheetController`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@property(nonatomic, nonnull, strong) UIColor *backgroundColor` |
+| To: | `@property (readwrite, strong, nonatomic, nonnull) UIColor *backgroundColor;` |
+
+### BottomAppBar+ColorThemer
+
+#### MDCBottomAppBarColorThemer
+
+*new* class method: `+applySurfaceVariantWithSemanticColorScheme:toBottomAppBarView:` in `MDCBottomAppBarColorThemer`
+
+### BottomAppBar
+
+#### MDCBottomAppBarView
+
+*new* property: `trailingBarItemsTintColor` in `MDCBottomAppBarView`
+
+*new* property: `leadingBarItemsTintColor` in `MDCBottomAppBarView`
+
+### BottomNavigation
+
+#### MDCBottomNavigationBar
+
+*new* method: `-viewForItem:` in `MDCBottomNavigationBar`
 
 ### BottomSheet+ShapeThemer
 
 **New component.**
 
+### Cards+CardThemer
+
+#### MDCCardScheme
+
+*new* property: `shapeScheme` in `MDCCardScheme`
+
+#### MDCCardScheming
+
+*new* property: `shapeScheme` in `MDCCardScheming`
+
 ### Cards+ShapeThemer
 
 **New component.**
+
+### NavigationBar
+
+#### MDCNavigationBar
+
+*new* property: `leadingBarItemsTintColor` in `MDCNavigationBar`
+
+*new* property: `trailingBarItemsTintColor` in `MDCNavigationBar`
 
 ### ShapeScheme
 
@@ -35,10 +105,7 @@ Replace this text with example code for each new feature.
 
 ### BottomAppBar
 
-#### Breaking changes
-
-* [**Breaking**:  Examples use semantic color scheme. (#5070)](https://github.com/material-components/material-components-ios/commit/378f90dc6e4ef4b62fbda187b7b218fda9a49955) (Robert Moore)
-
+* [Examples use semantic color scheme. (#5070)](https://github.com/material-components/material-components-ios/commit/378f90dc6e4ef4b62fbda187b7b218fda9a49955) (Robert Moore)
 * [Add surface variant color themer. (#5068)](https://github.com/material-components/material-components-ios/commit/1ce4467321661243e984bb4dcf7a213d2120edfe) (Robert Moore)
 * [Correct cut-out arc angle. (#4997)](https://github.com/material-components/material-components-ios/commit/baa001b59bac15b046f6792d6c83fcda5d42c4b1) (Robert Moore)
 * [Tint leading, trailing bar items. (#5065)](https://github.com/material-components/material-components-ios/commit/1ae450095f19ed119d12a183cda98df628ff4733) (Robert Moore)
@@ -55,10 +122,6 @@ Replace this text with example code for each new feature.
 * [[Shapes] merge MDCShapeCorner and MDCCornerTreatment into one (#5090)](https://github.com/material-components/material-components-ios/commit/75ddb21ed0aab3a286663ab99fec79284b159ed5) (Yarden Eitan)
 
 ### Cards
-
-#### Breaking changes
-
-* [**Breaking**:  Add a card shape themer (#5031)](https://github.com/material-components/material-components-ios/commit/c036e22a7dde0c2c970e380123334f870cdabaae) (Yarden Eitan)
 
 * [[Shapes] merge MDCShapeCorner and MDCCornerTreatment into one (#5090)](https://github.com/material-components/material-components-ios/commit/75ddb21ed0aab3a286663ab99fec79284b159ed5) (Yarden Eitan)
 * [added shape theming to card examples (#5059)](https://github.com/material-components/material-components-ios/commit/16c384197856993f0c0f8d32491c2b9b55af05ae) (Yarden Eitan)
