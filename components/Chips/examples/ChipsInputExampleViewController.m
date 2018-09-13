@@ -38,7 +38,7 @@
   [super viewDidLoad];
 
   self.view.backgroundColor = self.colorScheme.backgroundColor;
-  
+
   _chipField = [[MDCChipField alloc] initWithFrame:CGRectZero];
   _chipField.delegate = self;
   _chipField.textField.placeholderLabel.text = @"This is a chip field.";
