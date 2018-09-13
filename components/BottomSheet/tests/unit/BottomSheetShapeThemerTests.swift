@@ -23,6 +23,7 @@ class BottomSheetShapeThemerTests: XCTestCase {
     let shapeScheme = MDCShapeScheme()
     let bottomSheet = MDCBottomSheetController(contentViewController: UIViewController())
     shapeScheme.largeSurfaceShape = MDCShapeCategory(cornersWith: .angled, andSize: 10)
+    shapeScheme.largeSurfaceShape.topRightCorner = MDCCornerTreatment.corner(withRadius: 3)
     bottomSheet.setShapeGenerator(MDCRectangleShapeGenerator(), for: .extended)
 
     // When
