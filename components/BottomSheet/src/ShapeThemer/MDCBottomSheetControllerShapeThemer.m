@@ -32,7 +32,9 @@ static const CGFloat kBottomSheetCollapsedBaselineShapeValue = 24.0f;
   MDCRectangleShapeGenerator *rectangleShapePreferred = [[MDCRectangleShapeGenerator alloc] init];
   MDCCornerTreatment *cornerTreatmentPreferred =
       [[MDCRoundedCornerTreatment alloc] initWithRadius:kBottomSheetCollapsedBaselineShapeValue];
-  [rectangleShapePreferred setCorners:cornerTreatmentPreferred];
+  // For a Bottom Sheet the corner values that can be set are the top corners.
+  rectangleShapePreferred.topLeftCorner = cornerTreatmentPreferred;
+  rectangleShapePreferred.topRightCorner = cornerTreatmentPreferred;
   [bottomSheetController setShapeGenerator:rectangleShapePreferred forState:MDCSheetStatePreferred];
 }
 

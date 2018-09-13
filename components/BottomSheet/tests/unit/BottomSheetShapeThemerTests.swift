@@ -61,8 +61,8 @@ class BottomSheetShapeThemerTests: XCTestCase {
     if let rectangleGenerator = preferredShapeGenerator as? MDCRectangleShapeGenerator {
       XCTAssertEqual(rectangleGenerator.topLeftCorner, generatedCorner)
       XCTAssertEqual(rectangleGenerator.topRightCorner, generatedCorner)
-      XCTAssertEqual(rectangleGenerator.bottomLeftCorner, generatedCorner)
-      XCTAssertEqual(rectangleGenerator.bottomRightCorner, generatedCorner)
+      XCTAssertEqual(rectangleGenerator.bottomLeftCorner, MDCCornerTreatment())
+      XCTAssertEqual(rectangleGenerator.bottomRightCorner, MDCCornerTreatment())
     }
   }
 
