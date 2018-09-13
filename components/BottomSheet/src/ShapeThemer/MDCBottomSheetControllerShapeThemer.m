@@ -22,10 +22,9 @@ static const CGFloat kBottomSheetCollapsedBaselineShapeValue = 24.0f;
     toBottomSheetController:(MDCBottomSheetController *)bottomSheetController {
   // Shape Generator for the Extended state of the Bottom Sheet.
   MDCRectangleShapeGenerator *rectangleShapeExtended = [[MDCRectangleShapeGenerator alloc] init];
+  // For a Bottom Sheet the corner values that can be set are the top corners.
   rectangleShapeExtended.topLeftCorner = shapeScheme.largeSurfaceShape.topLeftCorner;
   rectangleShapeExtended.topRightCorner = shapeScheme.largeSurfaceShape.topRightCorner;
-  rectangleShapeExtended.bottomLeftCorner = shapeScheme.largeSurfaceShape.bottomLeftCorner;
-  rectangleShapeExtended.bottomRightCorner = shapeScheme.largeSurfaceShape.bottomRightCorner;
   [bottomSheetController setShapeGenerator:rectangleShapeExtended forState:MDCSheetStateExtended];
 
   // Shape Generator for the Preferred state of the Bottom Sheet.

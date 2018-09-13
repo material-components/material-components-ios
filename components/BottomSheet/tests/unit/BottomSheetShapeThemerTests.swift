@@ -37,10 +37,8 @@ class BottomSheetShapeThemerTests: XCTestCase {
                      shapeScheme.largeSurfaceShape.topLeftCorner)
       XCTAssertEqual(rectangleGenerator.topRightCorner,
                      shapeScheme.largeSurfaceShape.topRightCorner)
-      XCTAssertEqual(rectangleGenerator.bottomLeftCorner,
-                     shapeScheme.largeSurfaceShape.bottomLeftCorner)
-      XCTAssertEqual(rectangleGenerator.bottomRightCorner,
-                     shapeScheme.largeSurfaceShape.bottomRightCorner)
+      XCTAssertEqual(rectangleGenerator.bottomLeftCorner, MDCCornerTreatment())
+      XCTAssertEqual(rectangleGenerator.bottomRightCorner, MDCCornerTreatment())
     }
 
   }
