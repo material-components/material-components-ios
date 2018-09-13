@@ -44,6 +44,7 @@
 
 - (void)setFrame:(CGRect)frame {
   [super setFrame:frame];
+
   _frame = frame;
 }
 @end
@@ -103,38 +104,43 @@
 
 - (void)testUpdatePreferredSheetHeightWhenPresentedVCHasZeroPreferredContentSize {
   // Given
+  CGFloat sheetFrameHeight = 80;
   self.presentationController.presentedViewController.preferredContentSize = CGSizeZero;
-  self.sheetView.frame = CGRectMake(0, 0, 75, 80);
+  self.sheetView.frame = CGRectMake(0, 0, 75, sheetFrameHeight);
 
   // When
   [self.presentationController updatePreferredSheetHeight];
 
   // Then
-  XCTAssertEqualWithAccuracy(self.sheetView.preferredSheetHeight, 40, 0.001);
+  XCTAssertEqualWithAccuracy(self.sheetView.preferredSheetHeight, sheetFrameHeight / 2, 0.001);
 }
 
 - (void)testUpdatePreferredSheetHeightWhenPresentedVCHasZeroPreferredContentSizeUnstandardFrame {
   // Given
+  CGFloat sheetFrameHeight = -80;
   self.presentationController.presentedViewController.preferredContentSize = CGSizeZero;
-  self.sheetView.frame = CGRectMake(75, 80, -75, -80);
+  self.sheetView.frame = CGRectMake(75, 80, -75, sheetFrameHeight);
 
   // When
   [self.presentationController updatePreferredSheetHeight];
 
   // Then
-  XCTAssertEqualWithAccuracy(self.sheetView.preferredSheetHeight, 40, 0.001);
+  XCTAssertEqualWithAccuracy(self.sheetView.preferredSheetHeight,
+                             (CGFloat)fabs(sheetFrameHeight / 2), 0.001);
 }
 
 - (void)testUpdatePreferredSheetHeightWhenPresentedVCHasPositivePreferredContentSize {
   // Given
-  self.presentationController.presentedViewController.preferredContentSize = CGSizeMake(100, 120);
+  CGFloat preferredSheetHeight = 120;
+  self.presentationController.presentedViewController.preferredContentSize =
+      CGSizeMake(100, preferredSheetHeight);
   self.sheetView.frame = CGRectMake(0, 0, 75, 80);
 
   // When
   [self.presentationController updatePreferredSheetHeight];
 
   // Then
-  XCTAssertEqualWithAccuracy(self.sheetView.preferredSheetHeight, 120, 0.001);
+  XCTAssertEqualWithAccuracy(self.sheetView.preferredSheetHeight, preferredSheetHeight, 0.001);
 }
 
 @end
