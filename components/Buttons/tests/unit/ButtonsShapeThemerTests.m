@@ -16,6 +16,7 @@
 
 #import "MaterialButtons.h"
 #import "MaterialButtons+ShapeThemer.h"
+#import "MaterialShapeLibrary.h"
 
 @interface ButtonsShapeThemerTests : XCTestCase
 
@@ -40,6 +41,7 @@
   // Given
   self.shapeScheme.smallSurfaceShape =
       [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyAngled andSize:10];
+  self.shapeScheme.smallSurfaceShape.topRightCorner = [MDCCornerTreatment cornerWithRadius:3.f];
   self.button.shapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
 
   // When

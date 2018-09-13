@@ -19,8 +19,10 @@
 + (void)applyShapeScheme:(nonnull id<MDCShapeScheming>)shapeScheme
                 toButton:(nonnull MDCButton *)button {
   MDCRectangleShapeGenerator *rectangleShape = [[MDCRectangleShapeGenerator alloc] init];
-  MDCCornerTreatment *cornerTreatment = shapeScheme.smallSurfaceShape.topLeftCorner;
-  [rectangleShape setCorners:cornerTreatment];
+  rectangleShape.topLeftCorner = shapeScheme.smallSurfaceShape.topLeftCorner;
+  rectangleShape.topRightCorner = shapeScheme.smallSurfaceShape.topRightCorner;
+  rectangleShape.bottomLeftCorner = shapeScheme.smallSurfaceShape.bottomLeftCorner;
+  rectangleShape.bottomRightCorner = shapeScheme.smallSurfaceShape.bottomRightCorner;
   button.shapeGenerator = rectangleShape;
 }
 
