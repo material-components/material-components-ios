@@ -66,6 +66,7 @@
 @end
 
 @interface ChipsInputExampleViewController : UIViewController
+@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @end
 
