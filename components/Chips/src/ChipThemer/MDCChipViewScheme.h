@@ -14,6 +14,7 @@
 
 #import "MaterialChips.h"
 #import "MaterialColorScheme.h"
+#import "MaterialShapeScheme.h"
 #import "MaterialTypographyScheme.h"
 
 #import <Foundation/Foundation.h>
@@ -30,6 +31,11 @@
  The color scheme to apply to a chip view.
  */
 @property(nonnull, readonly, nonatomic) id<MDCColorScheming> colorScheme;
+
+/**
+ The shape scheme to apply to a chip view.
+ */
+@property(nonnull, readonly, nonatomic) id<MDCShapeScheming> shapeScheme;
 
 /**
  The typography scheme to apply to a chip view.
@@ -49,6 +55,13 @@
  By default, this is initialized with the latest color scheme defaults.
  */
 @property(nonnull, readwrite, nonatomic) id<MDCColorScheming> colorScheme;
+
+/**
+ A mutable representation of a shape scheme.
+
+ By default, this is initialized with the latest shape scheme defaults.
+ */
+@property(nonnull, readwrite, nonatomic) id<MDCShapeScheming> shapeScheme;
 
 /**
  A mutable representation of a typography scheme.

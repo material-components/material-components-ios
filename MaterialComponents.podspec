@@ -329,6 +329,7 @@ Pod::Spec.new do |mdc|
 
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
     extension.dependency "MaterialComponents/Chips+ColorThemer"
+    extension.dependency "MaterialComponents/Chips+ShapeThemer"
     extension.dependency "MaterialComponents/Chips+TypographyThemer"
   end
 
