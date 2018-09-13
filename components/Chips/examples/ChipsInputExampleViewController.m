@@ -42,7 +42,7 @@
   _chipField = [[MDCChipField alloc] initWithFrame:CGRectZero];
   _chipField.delegate = self;
   _chipField.textField.placeholderLabel.text = @"This is a chip field.";
-  _chipField.backgroundColor = [UIColor whiteColor];
+  _chipField.backgroundColor = self.colorScheme.surfaceColor;
   [self.view addSubview:_chipField];
 }
 
