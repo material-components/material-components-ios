@@ -131,10 +131,18 @@ mdc_objc_library(
         ":ShapeThemer",
         ":TypographyThemer",
         ":private",
+        ":privateImplemenation",
         "//components/TextFields:private",
         "//components/private/ShapeLibrary",
     ],
     visibility = ["//visibility:private"],
+)
+
+mdc_objc_library(
+    name = "privateImplemenation",
+    srcs = glob(["src/*.m"]),
+    visibility = ["//visibility:private"],
+    deps = [":Chips"],
 )
 
 mdc_unit_test_suite(
