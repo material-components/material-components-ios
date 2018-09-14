@@ -17,8 +17,11 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 
+#import "../../src/private/MDCSheetContainerView.h"
+
 // Exposing internal methods for unit testing
 @interface MDCBottomSheetPresentationController (Testing)
+@property(nonatomic, strong) MDCSheetContainerView *sheetView;
 - (void)updatePreferredSheetHeight;
 @end
 
@@ -26,8 +29,7 @@
  A testing double for @c MDCSheetContainerView that allows inspecting the `preferredSheetHeight`
  property directly within the test.
  */
-@interface FakeSheetView : UIView
-@property(nonatomic, assign) CGFloat preferredSheetHeight;
+@interface FakeSheetView : MDCSheetContainerView
 @end
 
 @implementation FakeSheetView {
@@ -49,29 +51,9 @@
 }
 @end
 
-/**
- A testing double for @c MDCBottomSheetPresentationController that allows setting the `_sheetView`
- instance variable via KVC.
- */
-@interface MDCFakeBottomSheetPresentationController : MDCBottomSheetPresentationController
-@property(nonatomic, strong) UIView *test_sheetView;
-@end
-
-@implementation MDCFakeBottomSheetPresentationController
-
-- (void)setTest_sheetView:(UIView *)test_sheetView {
-  [self setValue:test_sheetView forKey:@"_sheetView"];
-}
-
-- (UIView *)test_sheetView {
-  return [self valueForKey:@"_sheetView"];
-}
-
-@end
-
 @interface MDCBottomSheetPresentationControllerPreferredSheetHeightTests : XCTestCase
 @property(nonatomic, strong) FakeSheetView *sheetView;
-@property(nonatomic, strong) MDCFakeBottomSheetPresentationController *presentationController;
+@property(nonatomic, strong) MDCBottomSheetPresentationController *presentationController;
 @end
 
 @implementation MDCBottomSheetPresentationControllerPreferredSheetHeightTests
@@ -82,7 +64,9 @@
   // The `_sheetView` is both an input and an output to `updatePreferredSheetHeight`. Its frame is
   // used to guess the preferredContentHeight of the sheet. Once calculated, it receives an updated
   // value for `preferredSheetHeight`.
-  self.sheetView = [[FakeSheetView alloc] init];
+  self.sheetView = [[FakeSheetView alloc] initWithFrame:CGRectZero
+                                            contentView:[[UIView alloc] init]
+                                             scrollView:[[UIScrollView alloc] init]];
 
   // Only used as a required `-init` parameter for MDCBottomSheetPresentationController
   UIViewController *stubPresentingViewController = [[UIViewController alloc] init];
@@ -96,10 +80,10 @@
   // of `-updatePreferredSheetHeight` in this test. Because `_sheetView` is an iVar and not a
   // property that can be exposed in a testing category, we have to write a subclass that employs
   // KVC to allow setting the value of `_sheetView` to our test double.
-  self.presentationController = [[MDCFakeBottomSheetPresentationController alloc]
+  self.presentationController = [[MDCBottomSheetPresentationController alloc]
       initWithPresentedViewController:presentedViewController
              presentingViewController:stubPresentingViewController];
-  self.presentationController.test_sheetView = self.sheetView;
+  self.presentationController.sheetView = self.sheetView;
 }
 
 - (void)testUpdatePreferredSheetHeightWhenPresentedVCHasZeroPreferredContentSize {
