@@ -17,7 +17,8 @@ the screen and displays actions a user can take.
 
 `MDCActionSheetController` is a material design implementation of UIAlertControllerStyleActionSheet.
 
-This is an [alpha](../../../contributing/alpha_components.md) component and it is not ready for use.
+Action Sheet is currently an [alpha component](../../../contributing/alpha_components.md). Therefore, clients that
+wish to use Action Sheet in their app will need to manually clone the repo and add the code to their project. 
 
 
 ## Installation
