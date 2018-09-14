@@ -52,9 +52,9 @@
 
   MDCShapeCategory *other = (MDCShapeCategory *)object;
   return [_topLeftCorner isEqual:other.topLeftCorner] &&
-      [_topRightCorner isEqual:other.topRightCorner] &&
-      [_bottomLeftCorner isEqual:other.bottomLeftCorner] &&
-      [_bottomRightCorner isEqual:other.bottomRightCorner];
+         [_topRightCorner isEqual:other.topRightCorner] &&
+         [_bottomLeftCorner isEqual:other.bottomLeftCorner] &&
+         [_bottomRightCorner isEqual:other.bottomRightCorner];
 }
 
 @end
