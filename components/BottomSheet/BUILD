@@ -35,6 +35,13 @@ mdc_public_objc_library(
 )
 
 mdc_objc_library(
+    name = "privateHeaders",
+    hdrs = glob(["src/private/*.h"]),
+    visibility = ["//visibility:private"],
+    deps = [":BottomSheet"],
+)
+
+mdc_objc_library(
     name = "ShapeThemer",
     srcs = native.glob(["src/ShapeThemer/*.m"]),
     hdrs = native.glob(["src/ShapeThemer/*.h"]),
@@ -60,6 +67,7 @@ mdc_objc_library(
     ],
     deps = [
         ":BottomSheet",
+        ":privateHeaders",
     ],
     visibility = ["//visibility:private"],
 )
