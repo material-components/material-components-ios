@@ -56,4 +56,16 @@
                         self.shapeScheme.smallSurfaceShape.bottomRightCorner);
 }
 
+- (void)testBackgroundColorAfterButtonTheming {
+  // Given
+  UIColor *bgColor = [UIColor blueColor];
+  self.button.backgroundColor = bgColor;
+
+  // When
+  [MDCButtonShapeThemer applyShapeScheme:self.shapeScheme toButton:self.button];
+
+  // Then
+  XCTAssertEqualObjects(bgColor, self.button.backgroundColor);
+}
+
 @end

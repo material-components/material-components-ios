@@ -126,6 +126,7 @@ mdc_objc_library(
     ],
     deps = [
         ":Chips",
+        ":ChipThemer",
         ":ColorThemer",
         ":FontThemer",
         ":ShapeThemer",

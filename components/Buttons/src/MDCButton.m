@@ -536,6 +536,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [self updateBackgroundColor];
 }
 
+- (UIColor *)backgroundColor {
+  return self.layer.shapedBackgroundColor;
+}
+
 - (UIColor *)backgroundColorForState:(UIControlState)state {
   return _backgroundColors[@(state)];
 }

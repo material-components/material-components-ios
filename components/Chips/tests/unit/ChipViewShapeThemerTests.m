@@ -14,6 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
+#import "MaterialChips+ChipThemer.h"
 #import "MaterialChips+ShapeThemer.h"
 #import "MaterialChips.h"
 
@@ -53,6 +54,12 @@
   XCTAssertEqualObjects(rect.topRightCorner, corner);
   XCTAssertEqualObjects(rect.bottomLeftCorner, corner);
   XCTAssertEqualObjects(rect.bottomRightCorner, corner);
+}
+
+- (void)testBackgroundColorAfterChipTheming {
+  MDCChipViewScheme *scheme = [[MDCChipViewScheme alloc] init];
+  [MDCChipViewThemer applyOutlinedVariantWithScheme:scheme toChipView:self.chip];
+  XCTAssertEqualObjects(scheme.colorScheme.surfaceColor, self.chip.backgroundColor);
 }
 
 @end
