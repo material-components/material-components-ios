@@ -14,8 +14,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialChips.h"
 #import "../../src/MDCChipField.m"
+#import "MaterialChips.h"
 
 static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   return [UIColor colorWithRed:((CGFloat)((rgbValue & 0xFF0000) >> 16)) / 255
