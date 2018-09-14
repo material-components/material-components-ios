@@ -26,17 +26,18 @@
 @end
 
 /**
- A testing double for @c MDCSheetContainerView that allows inspecting the `preferredSheetHeight`
- property directly within the test.
+ A testing double for @c MDCSheetContainerView that allows setting an explicitly-nonstandardized
+ @c frame value.
+
+ @note Although it is possible to retrieve a non-standardized frame or bounds from a UIView object,
+       UIView will standardize the CGRect passed to @c setFrame:. To aid in testing, we turn
+       @c frame into a simple get/set property. We still call up to the super implementation of
+       @c setFrame: in case there are side-effects in UIView.
  */
 @interface FakeSheetView : MDCSheetContainerView
 @end
 
 @implementation FakeSheetView {
-  // Although it is possible to retrieve a non-standardized frame or bounds from a UIView object,
-  // UIView will standardize the CGRect passed to `setFrame`. To aid in testing, we turn `frame`
-  // into a simple get/set property. We still call up to the super implementation of `setFrame`
-  // in case there are side-effects in UIView.
   CGRect _frame;
 }
 
@@ -61,9 +62,9 @@
 - (void)setUp {
   [super setUp];
 
-  // The `_sheetView` is both an input and an output to `setPreferredSheetHeight:`. Its frame is
-  // used to guess the preferredContentHeight of the sheet. Once calculated, it receives an updated
-  // value for `preferredSheetHeight`.
+  // The `sheetView` property is both an input and an output to `setPreferredSheetHeight:`. Its
+  // frame may be used to guess the preferredContentHeight of the sheet. Once calculated, it
+  // receives an updated value for `preferredSheetHeight`.
   self.sheetView = [[FakeSheetView alloc] initWithFrame:CGRectZero
                                             contentView:[[UIView alloc] init]
                                              scrollView:[[UIScrollView alloc] init]];
@@ -72,10 +73,6 @@
   UIViewController *stubPresentingViewController = [[UIViewController alloc] init];
   UIViewController *stubPresentedViewController = [[UIViewController alloc] init];
 
-  // Although we are testing MDCBottomSheetPresentationController, we only care about the behavior
-  // of `-setPreferredSheetHeight` in this test. Because `_sheetView` is an iVar and not a
-  // property that can be exposed in a testing category, we have to write a subclass that employs
-  // KVC to allow setting the value of `_sheetView` to our test double.
   self.presentationController = [[MDCBottomSheetPresentationController alloc]
       initWithPresentedViewController:stubPresentedViewController
              presentingViewController:stubPresentingViewController];
