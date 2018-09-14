@@ -16,6 +16,7 @@
 #import "MaterialButtons.h"
 #import "MaterialDialogs.h"
 #import "MaterialDialogs+DialogThemer.h"
+#import "MDCAlertScheme.h"
 #import "MDCAlertThemer.h"
 
 static const CGFloat kCornerRadius = 24.0f;
@@ -82,9 +83,21 @@ static const CGFloat kCornerRadius = 24.0f;
 @property(nonatomic, strong) MDCFlatButton *presentMDCButton;
 @property(nonatomic, strong) MDCDialogTransitionController *transitionController;
 
+@property(nonatomic, strong, nullable) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong, nullable) MDCTypographyScheme *typographyScheme;
+
 @end
 
 @implementation DialogsRoundedCornerViewController
+
+- (id)init {
+  self = [super init];
+  if (self) {
+    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.typographyScheme = [[MDCTypographyScheme alloc] init];
+  }
+  return self;
+}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -167,8 +180,10 @@ static const CGFloat kCornerRadius = 24.0f;
   MDCAlertController *mdcAlertController = [self createMDCAlertController];
 
   // Dialog Theming
-  MDCAlertScheme *scheme = [[MDCAlertScheme alloc] init];
-  [MDCAlertThemer applyScheme:scheme toAlertController:mdcAlertController];
+  MDCAlertScheme *alertScheme = [[MDCAlertScheme alloc] init];
+  alertScheme.colorScheme = self.colorScheme;
+  alertScheme.typographyScheme = self.typographyScheme;
+  [MDCAlertThemer applyScheme:alertScheme toAlertController:mdcAlertController];
   mdcAlertController.cornerRadius = kCornerRadius;
 
   [self presentViewController:mdcAlertController animated:YES completion:NULL];

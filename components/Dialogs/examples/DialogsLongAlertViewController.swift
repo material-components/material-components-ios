@@ -18,6 +18,9 @@ import MaterialComponents.MaterialDialogs
 
 class DialogsLongAlertViewController: UIViewController {
 
+  var colorScheme = MDCSemanticColorScheme()
+  var typographyScheme = MDCTypographyScheme()
+  
   let flatButton = MDCFlatButton()
 
   override func viewDidLoad() {
@@ -64,7 +67,10 @@ class DialogsLongAlertViewController: UIViewController {
     "euismod libero. Aliquam commodo urna vitae massa convallis aliquet."
 
     let materialAlertController = MDCAlertController(title: nil, message: messageString)
-    MDCAlertThemer.applyScheme(MDCAlertScheme(), to: materialAlertController)
+    let alertScheme = MDCAlertScheme()
+    alertScheme.colorScheme = self.colorScheme
+    alertScheme.typographyScheme = self.typographyScheme
+    MDCAlertThemer.applyScheme(alertScheme, to: materialAlertController)
 
     let action = MDCAlertAction(title:"OK") { (_) in print("OK") }
 
