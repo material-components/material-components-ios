@@ -14,6 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
+#import "MaterialButtons+ButtonThemer.h"
 #import "MaterialButtons+ShapeThemer.h"
 #import "MaterialButtons.h"
 #import "MaterialShapeLibrary.h"
@@ -54,6 +55,12 @@
   XCTAssertEqualObjects(rect.bottomLeftCorner, self.shapeScheme.smallSurfaceShape.bottomLeftCorner);
   XCTAssertEqualObjects(rect.bottomRightCorner,
                         self.shapeScheme.smallSurfaceShape.bottomRightCorner);
+}
+
+- (void)testBackgroundColorAfterButtonTheming {
+  MDCButtonScheme *scheme = [[MDCButtonScheme alloc] init];
+  [MDCTextButtonThemer applyScheme:scheme toButton:self.button];
+  XCTAssertEqualObjects([UIColor clearColor], self.button.backgroundColor);
 }
 
 @end
