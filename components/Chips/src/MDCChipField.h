@@ -117,7 +117,7 @@ typedef NS_OPTIONS(NSUInteger, MDCChipFieldDelimiter) {
 
 /**
  Enabling this property allows chips to be deleted by tapping on them.
- 
+
  @note This does not support the 48x48 touch targets that Google recommends. We recommend if this
  behavior is enabled that a snackbar or dialog are used as well to allow the user to confirm if they
  want to delete the chip.

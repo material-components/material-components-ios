@@ -300,7 +300,6 @@ static inline UIImage *TestImage(CGSize size) {
   // Then
   XCTAssertEqual(chipCount, 1);
 
-
   // Given
   NSUInteger controlViewCount = 0;
   MDCChipView *chip = field.chips[0];
