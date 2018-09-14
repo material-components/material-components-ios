@@ -30,6 +30,7 @@
   if (self) {
     _colorScheme = [[MDCSemanticColorScheme alloc] init];
     _typographyScheme = [[MDCTypographyScheme alloc] init];
+    _shapeScheme = [[MDCShapeScheme alloc] init];
   }
   return self;
 }
@@ -65,7 +66,8 @@
   MDCChipViewScheme *scheme = [[MDCChipViewScheme alloc] init];
   scheme.colorScheme = self.colorScheme;
   scheme.typographyScheme = self.typographyScheme;
-  
+  scheme.shapeScheme = self.shapeScheme;
+
   // Every other chip is stroked
   if (chipField.chips.count%2) {
     [MDCChipViewThemer applyOutlinedVariantWithScheme:scheme toChipView:chip];
