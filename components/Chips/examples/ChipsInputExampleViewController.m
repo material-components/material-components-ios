@@ -28,8 +28,9 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
-    self.shapeScheme = [[MDCShapeScheme alloc] init];
+    _colorScheme = [[MDCSemanticColorScheme alloc] init];
+    _typographyScheme = [[MDCTypographyScheme alloc] init];
+    _shapeScheme = [[MDCShapeScheme alloc] init];
   }
   return self;
 }
@@ -37,12 +38,12 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = [UIColor lightGrayColor];
-  
+  self.view.backgroundColor = self.colorScheme.backgroundColor;
+
   _chipField = [[MDCChipField alloc] initWithFrame:CGRectZero];
   _chipField.delegate = self;
   _chipField.textField.placeholderLabel.text = @"This is a chip field.";
-  _chipField.backgroundColor = [UIColor whiteColor];
+  _chipField.backgroundColor = self.colorScheme.surfaceColor;
   [self.view addSubview:_chipField];
 }
 
@@ -50,6 +51,9 @@
   [super viewWillLayoutSubviews];
 
   CGRect frame = CGRectInset(self.view.bounds, 10, 10);
+  if (@available(iOS 11.0, *)) {
+    frame = UIEdgeInsetsInsetRect(frame, self.view.safeAreaInsets);
+  }
   frame.size = [_chipField sizeThatFits:frame.size];
   _chipField.frame = frame;
 }
@@ -61,6 +65,7 @@
 - (void)chipField:(MDCChipField *)chipField didAddChip:(MDCChipView *)chip {
   MDCChipViewScheme *scheme = [[MDCChipViewScheme alloc] init];
   scheme.colorScheme = self.colorScheme;
+  scheme.typographyScheme = self.typographyScheme;
   scheme.shapeScheme = self.shapeScheme;
 
   // Every other chip is stroked
