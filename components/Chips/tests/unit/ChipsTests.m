@@ -301,9 +301,11 @@ static inline UIImage *TestImage(CGSize size) {
   XCTAssertEqual(chipCount, 1);
 
 
-  // When
+  // Given
   NSUInteger controlViewCount = 0;
   MDCChipView *chip = field.chips[0];
+
+  // When
   for (UIView *subview in chip.subviews) {
     if ([subview isKindOfClass:[UIControl class]]) {
       controlViewCount += 1;
@@ -327,9 +329,11 @@ static inline UIImage *TestImage(CGSize size) {
   // Then
   XCTAssertEqual(chipCount, 1);
 
-  // When
+  // Given
   NSUInteger controlViewCount = 0;
   MDCChipView *chip = field.chips[0];
+
+  // When
   for (UIView *subview in chip.subviews) {
     if ([subview isKindOfClass:[UIControl class]]) {
       controlViewCount += 1;
