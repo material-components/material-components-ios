@@ -15,6 +15,7 @@
 import XCTest
 import MaterialComponents.MaterialCards
 import MaterialComponents.MaterialCards_ShapeThemer
+import MaterialComponents.MaterialShapeLibrary
 
 class CardShapeThemerTests: XCTestCase {
 
@@ -23,6 +24,7 @@ class CardShapeThemerTests: XCTestCase {
     let shapeScheme = MDCShapeScheme()
     let card = MDCCard()
     shapeScheme.mediumSurfaceShape = MDCShapeCategory(cornersWith: .angled, andSize: 10)
+    shapeScheme.mediumSurfaceShape.topRightCorner = MDCCornerTreatment.corner(withRadius: 3)
     card.shapeGenerator = MDCRectangleShapeGenerator()
 
     // When

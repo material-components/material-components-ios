@@ -29,6 +29,7 @@
   self = [super init];
   if (self) {
     self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.shapeScheme = [[MDCShapeScheme alloc] init];
   }
   return self;
 }
@@ -60,7 +61,8 @@
 - (void)chipField:(MDCChipField *)chipField didAddChip:(MDCChipView *)chip {
   MDCChipViewScheme *scheme = [[MDCChipViewScheme alloc] init];
   scheme.colorScheme = self.colorScheme;
-  
+  scheme.shapeScheme = self.shapeScheme;
+
   // Every other chip is stroked
   if (chipField.chips.count%2) {
     [MDCChipViewThemer applyOutlinedVariantWithScheme:scheme toChipView:chip];

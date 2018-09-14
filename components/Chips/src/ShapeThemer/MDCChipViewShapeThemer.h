@@ -12,17 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCChipViewScheme.h"
+#import <UIKit/UIKit.h>
 
-@implementation MDCChipViewScheme
+#import "MaterialChips.h"
+#import "MaterialShapeLibrary.h"
+#import "MaterialShapeScheme.h"
+#import "MaterialShapes.h"
 
-- (instancetype)init {
-  self = [super init];
-  if (self) {
-    _colorScheme = [[MDCSemanticColorScheme alloc] init];
-    _shapeScheme = [[MDCShapeScheme alloc] init];
-    _typographyScheme = [[MDCTypographyScheme alloc] init];
-  }
-  return self;
-}
+/**
+ The Material Design shape system's themer for instances of MDCChipView.
+ */
+@interface MDCChipViewShapeThemer : NSObject
+
+/**
+ Applies a shape scheme's properties to an MDCChipView.
+
+ @param shapeScheme The shape scheme to apply to the component instance.
+ @param chipView A component instance to which the shape scheme should be applied.
+ */
++ (void)applyShapeScheme:(nonnull id<MDCShapeScheming>)shapeScheme
+              toChipView:(nonnull MDCChipView *)chipView;
+
 @end
