@@ -15,6 +15,7 @@
 #import <XCTest/XCTest.h>
 
 #import "MaterialChips.h"
+#import "../../src/MDCChipField.m"
 
 static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   return [UIColor colorWithRed:((CGFloat)((rgbValue & 0xFF0000) >> 16)) / 255
@@ -285,6 +286,58 @@ static inline UIImage *TestImage(CGSize size) {
   XCTAssertFalse([chip pointInside:CGPointMake(CGRectGetMaxX(chipBounds) - hitAreaInsets.right,
                                                CGRectGetMaxY(chipBounds) - hitAreaInsets.bottom)
                         withEvent:nil]);
+}
+
+- (void)testChipsWithoutDeleteEnabled {
+  // Given
+  MDCChipField *field = [[MDCChipField alloc] init];
+  field.textField.text = @"Test";
+
+  // When
+  [field createNewChipFromInput];
+  NSUInteger chipCount = field.chips.count;
+
+  // Then
+  XCTAssertEqual(chipCount, 1);
+
+
+  // When
+  NSUInteger controlViewCount = 0;
+  MDCChipView *chip = field.chips[0];
+  for (UIView *subview in chip.subviews) {
+    if ([subview isKindOfClass:[UIControl class]]) {
+      controlViewCount += 1;
+    }
+  }
+
+  // Then
+  XCTAssertEqual(controlViewCount, 0);
+}
+
+- (void)testChipsWithDeleteEnabled {
+  // Given
+  MDCChipField *field = [[MDCChipField alloc] init];
+  field.enableChipsThatDelete = YES;
+  field.textField.text = @"Test";
+
+  // When
+  [field createNewChipFromInput];
+  NSUInteger chipCount = field.chips.count;
+
+  // Then
+  XCTAssertEqual(chipCount, 1);
+
+  // When
+  NSUInteger controlViewCount = 0;
+  MDCChipView *chip = field.chips[0];
+  for (UIView *subview in chip.subviews) {
+    if ([subview isKindOfClass:[UIControl class]]) {
+      controlViewCount += 1;
+    }
+  }
+
+  // Then
+  XCTAssertEqual(controlViewCount, 1);
 }
 
 @end
