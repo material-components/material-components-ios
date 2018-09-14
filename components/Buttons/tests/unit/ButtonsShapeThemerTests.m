@@ -58,8 +58,8 @@
 
 - (void)testMDCFloatingButtonShapeThemer {
   // Given
-  MDCFloatingButton *FAB =
-      [[MDCFloatingButton alloc] initWithFrame:CGRectZero shape:MDCFloatingButtonShapeDefault];
+  MDCFloatingButton *FAB = [[MDCFloatingButton alloc] initWithFrame:CGRectZero
+                                                              shape:MDCFloatingButtonShapeDefault];
   self.shapeScheme.smallSurfaceShape =
       [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyAngled andSize:10];
   FAB.shapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
