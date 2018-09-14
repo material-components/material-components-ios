@@ -33,6 +33,7 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
   self = [super init];
   if (self) {
     self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.shapeScheme = [[MDCShapeScheme alloc] init];
     self.typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;
@@ -45,6 +46,7 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
 
   MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
   buttonScheme.colorScheme = self.colorScheme;
+  buttonScheme.shapeScheme = self.shapeScheme;
   buttonScheme.typographyScheme = self.typographyScheme;
 
   // Contained button
