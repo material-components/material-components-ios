@@ -164,11 +164,12 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 
   [coordinator
       animateAlongsideTransition:^(
-          __unused id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+          __unused id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
         self.sheetView.frame = [self frameOfPresentedViewInContainerView];
         [self.sheetView layoutIfNeeded];
         [self updatePreferredSheetHeight];
-      }               completion:nil];
+      }
+                      completion:nil];
 }
 
 - (void)updatePreferredSheetHeight {
