@@ -116,6 +116,15 @@ typedef NS_OPTIONS(NSUInteger, MDCChipFieldDelimiter) {
 @property(nonatomic, assign) UIEdgeInsets contentEdgeInsets;
 
 /**
+ Enabling this property allows chips to be deleted by tapping on them.
+ 
+ @note This does not support the 48x48 touch targets that Google recommends. We recommend if this
+ behavior is enabled that a snackbar or dialog are used as well to allow the user to confirm if they
+ want to delete the chip.
+ */
+@property(nonatomic) BOOL enableChipsThatDelete;
+
+/**
  Adds a chip to the chip field.
 
  @param chip The chip to add to the field.
