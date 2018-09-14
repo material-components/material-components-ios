@@ -12,17 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCChipViewScheme.h"
-
-@implementation MDCChipViewScheme
-
-- (instancetype)init {
-  self = [super init];
-  if (self) {
-    _colorScheme = [[MDCSemanticColorScheme alloc] init];
-    _shapeScheme = [[MDCShapeScheme alloc] init];
-    _typographyScheme = [[MDCTypographyScheme alloc] init];
-  }
-  return self;
-}
-@end
+#import "MDCChipViewShapeThemer.h"

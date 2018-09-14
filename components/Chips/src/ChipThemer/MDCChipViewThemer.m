@@ -15,6 +15,7 @@
 #import "MaterialChips+ChipThemer.h"
 
 #import "MaterialChips+ColorThemer.h"
+#import "MaterialChips+ShapeThemer.h"
 #import "MaterialChips+TypographyThemer.h"
 
 @implementation MDCChipViewThemer
@@ -28,6 +29,7 @@
     [chip setBorderWidth:0 forState:state];
   }
   [MDCChipViewColorThemer applySemanticColorScheme:scheme.colorScheme toChipView:chip];
+  [MDCChipViewShapeThemer applyShapeScheme:scheme.shapeScheme toChipView:chip];
   [MDCChipViewTypographyThemer applyTypographyScheme:scheme.typographyScheme toChipView:chip];
 }
 
@@ -40,6 +42,7 @@
     [chip setBorderWidth:1 forState:state];
   }
   [MDCChipViewColorThemer applyOutlinedVariantWithColorScheme:scheme.colorScheme toChipView:chip];
+  [MDCChipViewShapeThemer applyShapeScheme:scheme.shapeScheme toChipView:chip];
   [MDCChipViewTypographyThemer applyTypographyScheme:scheme.typographyScheme toChipView:chip];
 }
 
