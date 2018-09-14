@@ -100,8 +100,8 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   }
   CGRect sheetFrame = [self frameOfPresentedViewInContainerView];
   self.sheetView = [[MDCSheetContainerView alloc] initWithFrame:sheetFrame
-                                                contentView:self.presentedViewController.view
-                                                 scrollView:scrollView];
+                                                    contentView:self.presentedViewController.view
+                                                     scrollView:scrollView];
   self.sheetView.delegate = self;
   self.sheetView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
 
@@ -162,12 +162,13 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
        withTransitionCoordinator:(id <UIViewControllerTransitionCoordinator>)coordinator {
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 
-  [coordinator animateAlongsideTransition:
-      ^(__unused id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+  [coordinator
+      animateAlongsideTransition:^(
+          __unused id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
         self.sheetView.frame = [self frameOfPresentedViewInContainerView];
         [self.sheetView layoutIfNeeded];
         [self updatePreferredSheetHeight];
-      }                        completion:nil];
+      }               completion:nil];
 }
 
 - (void)updatePreferredSheetHeight {
