@@ -315,6 +315,10 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   [self updateBackgroundColor];
 }
 
+- (UIColor *)backgroundColor {
+  return self.layer.shapedBackgroundColor;
+}
+
 - (void)updateBackgroundColor {
   self.layer.shapedBackgroundColor = [self backgroundColorForState:self.state];
 }
