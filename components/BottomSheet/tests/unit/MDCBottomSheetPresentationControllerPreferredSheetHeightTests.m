@@ -79,7 +79,7 @@
   self.presentationController.sheetView = self.sheetView;
 }
 
-- (void)testSetPreferredSheetHeightWhenPresentedVCHasZeroPreferredContentSize {
+- (void)testSetPreferredSheetHeightZeroWhenSheetViewHasStandardizedFrame {
   // Given
   CGFloat sheetFrameHeight = 80;
   self.sheetView.frame = CGRectMake(0, 0, 75, sheetFrameHeight);
@@ -91,7 +91,7 @@
   XCTAssertEqualWithAccuracy(self.sheetView.preferredSheetHeight, sheetFrameHeight / 2, 0.001);
 }
 
-- (void)testSetPreferredSheetHeightWhenPresentedVCHasZeroPreferredContentSizeUnstandardFrame {
+- (void)testSetPreferredSheetHeightZeroWhenSheetViewHasUnstandardizedFrame {
   // Given
   CGFloat sheetFrameHeight = -80;
   self.sheetView.frame = CGRectMake(75, 80, -75, sheetFrameHeight);
@@ -104,7 +104,7 @@
                              (CGFloat)fabs(sheetFrameHeight / 2), 0.001);
 }
 
-- (void)testSetPreferredSheetHeightWhenPresentedVCHasPositivePreferredContentSize {
+- (void)testSetPreferredSheetHeightPositiveValue {
   // Given
   CGFloat preferredSheetHeight = 120;
   self.sheetView.frame = CGRectMake(0, 0, 75, 80);
@@ -116,7 +116,7 @@
   XCTAssertEqualWithAccuracy(self.sheetView.preferredSheetHeight, preferredSheetHeight, 0.001);
 }
 
-- (void)testSetPreferredSheetHeightWhenPresentedVCHasNegativePreferredContentSize {
+- (void)testSetPreferredSheetHeightNegativeValue {
   // Given
   CGFloat preferredSheetHeight = -120;
   self.sheetView.frame = CGRectMake(0, 0, 75, -80);
