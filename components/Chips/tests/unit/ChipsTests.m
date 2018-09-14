@@ -318,7 +318,7 @@ static inline UIImage *TestImage(CGSize size) {
 - (void)testChipsWithDeleteEnabled {
   // Given
   MDCChipField *field = [[MDCChipField alloc] init];
-  field.enableChipsThatDelete = YES;
+  field.showChipsDeleteButton = YES;
   field.textField.text = @"Test";
 
   // When

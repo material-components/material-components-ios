@@ -307,13 +307,13 @@ Enabling this flag will add 24x24 touch targets within the chip view. This goes 
 #### Swift
 ```swift
 let chipField = MDCChipField()
-chipField.enableChipsThatDelete = true
+chipField.showChipsDeleteButton = true
 ```
 
 #### Objective-C
 ```objc
 MDCChipField *chipField = [[MDCChipField alloc] init];
-chipField.enableChipsThatDelete = YES;
+chipField.showChipsDeleteButton = YES;
 ```
 <!--</div>-->
 

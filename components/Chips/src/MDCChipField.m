@@ -398,7 +398,7 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
   if (strippedTitle.length > 0) {
     MDCChipView *chip = [[MDCChipView alloc] init];
     chip.titleLabel.text = strippedTitle;
-    if (self.enableChipsThatDelete) {
+    if (self.showChipsDeleteButton) {
       [self addClearButtonToChip:chip];
     }
     BOOL shouldAddChip = YES;
