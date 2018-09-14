@@ -482,11 +482,7 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1.f;
 
   // Standard textRect calculation
   UIEdgeInsets textInsets = self.textInsets;
-  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
-    textRect.origin.x += textInsets.right;
-  } else {
-    textRect.origin.x += textInsets.left;
-  }
+  textRect.origin.x += textInsets.left;
   textRect.size.width -= textInsets.left + textInsets.right;
 
   // Adjustments for .leftView, .rightView
@@ -534,7 +530,7 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1.f;
     // If there is a rightView, the clearButton will not be shown.
   } else {
     CGFloat clearButtonWidth = CGRectGetWidth(self.clearButton.bounds);
-    clearButtonWidth += 2 * MDCTextInputClearButtonImageBuiltInPadding;
+    clearButtonWidth += 2 * (MDCTextInputClearButtonImageBuiltInPadding * -1);
 
     // Clear buttons are only shown if there is entered text or programatically set text to clear.
     if (self.text.length > 0) {
@@ -585,15 +581,21 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1.f;
       CGFloat clearButtonWidth = CGRectGetWidth(self.clearButton.bounds);
 
       // The width is adjusted by the padding twice: once for the right side, once for left.
-      clearButtonWidth += 2 * MDCTextInputClearButtonImageBuiltInPadding;
+      CGFloat padding = 2 * (-1 * MDCTextInputClearButtonImageBuiltInPadding);
 
       // The clear button's width is already subtracted from the textRect.width if .always or
       // .unlessEditing.
       switch (self.clearButtonMode) {
         case UITextFieldViewModeUnlessEditing:
+          clearButtonWidth += padding;
           editingRect.size.width += clearButtonWidth;
           break;
         case UITextFieldViewModeWhileEditing:
+          if (self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+            clearButtonWidth += padding;
+          } else {
+            clearButtonWidth -= padding;
+          }
           editingRect.size.width -= clearButtonWidth;
           break;
         default:
