@@ -15,6 +15,7 @@
 #import "MDCFloatingActionButtonThemer.h"
 
 #import "MaterialButtons+ColorThemer.h"
+#import "MaterialButtons+ShapeThemer.h"
 #import "MaterialButtons+TypographyThemer.h"
 
 @implementation MDCFloatingActionButtonThemer
@@ -22,6 +23,7 @@
 + (void)applyScheme:(nonnull id<MDCButtonScheming>)scheme
            toButton:(nonnull MDCFloatingButton *)button {
   [MDCFloatingButtonColorThemer applySemanticColorScheme:scheme.colorScheme toButton:button];
+  [MDCFloatingButtonShapeThemer applyShapeScheme:scheme.shapeScheme toButton:button];
   [MDCButtonTypographyThemer applyTypographyScheme:scheme.typographyScheme toButton:button];
   [button setElevation:(CGFloat)6 forState:UIControlStateNormal];
   [button setElevation:(CGFloat)12 forState:UIControlStateHighlighted];
