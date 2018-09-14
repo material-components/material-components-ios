@@ -44,6 +44,8 @@ Chips are compact elements that represent an input, attribute, or action.
   - [Stateful properties](#stateful-properties)
   - [Selected Image View](#selected-image-view)
   - [Padding](#padding)
+- [Behavioral flags](#behavioral-flags)
+  - [Accessibility](#accessibility)
 - [Examples](#examples)
   - [Create a single Chip](#create-a-single-chip)
 - [Extensions](#extensions)
@@ -287,6 +289,33 @@ ensure your chips look correct whether or not they have an image and/or accessor
 uses these property to determine `intrinsicContentSize` and `sizeThatFits`.
 
 - - -
+
+
+## Behavioral flags
+
+<!-- Extracted from docs/enable-chips-that-delete.md -->
+
+If within your `MDCChipField` you want chips that can be deleted follow these steps.
+
+### Accessibility
+
+Enabling this flag will add 24x24 touch targets within the chip view. This goes against Google's recommended 
+48x48 touch targets. We recommend if you enable this behavior your associate it with a `MDCSnackbar` or 
+`MDCDialog` to confirm allow the user to confirm their behavior.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+let chipField = MDCChipField()
+chipField.enableChipsThatDelete = true
+```
+
+#### Objective-C
+```objc
+MDCChipField *chipField = [[MDCChipField alloc] init];
+chipField.enableChipsThatDelete = YES;
+```
+<!--</div>-->
 
 
 ## Examples
