@@ -167,7 +167,7 @@ static const CGFloat kCornerRadius = 24.0f;
   MDCAlertController *mdcAlertController = [self createMDCAlertController];
 
   // Dialog Theming
-  MDCAlertScheme *scheme = [MDCAlertScheme new];
+  MDCAlertScheme *scheme = [[MDCAlertScheme alloc] init];
   [MDCAlertThemer applyScheme:scheme toAlertController:mdcAlertController];
   mdcAlertController.cornerRadius = kCornerRadius;
 

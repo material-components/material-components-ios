@@ -20,6 +20,9 @@ import MaterialComponents.MaterialDialogs
 /// Controller.
 class DialogsAlertComparison: UIViewController {
 
+  var colorScheme = MDCSemanticColorScheme()
+  var typographyScheme = MDCTypographyScheme()
+
   private let materialButton = MDCFlatButton()
   private let themedButton = MDCFlatButton()
   private let uikitButton = MDCFlatButton()
@@ -108,8 +111,13 @@ class DialogsAlertComparison: UIViewController {
   }
 
   @objc func tapThemed(_ sender: Any) {
+
     let alertController = createMDCAlertController()
+
     let scheme = MDCAlertScheme()
+    scheme.colorScheme = self.colorScheme
+    scheme.typographyScheme = self.typographyScheme
+
     MDCAlertThemer.applyScheme(scheme, to: alertController)
     self.present(alertController, animated: true, completion: nil)
   }
@@ -119,9 +127,9 @@ class DialogsAlertComparison: UIViewController {
     self.present(alertController, animated: true, completion: nil)
   }
 
-  private func createMDCAlertController() -> MDCAlertController {
-    let titleString = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur"
-    let messageString = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur " +
+  private var titleAndMessage: (title: String, message: String) {
+    return (title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur",
+            message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur " +
       "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus " +
       "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, " +
       "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. " +
@@ -140,8 +148,13 @@ class DialogsAlertComparison: UIViewController {
       "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus " +
       "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, " +
       "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. "
+    )
+  }
 
-    let alertController = MDCAlertController(title: titleString, message: messageString)
+  private func createMDCAlertController() -> MDCAlertController {
+
+    let texts = titleAndMessage
+    let alertController = MDCAlertController(title: texts.title, message: texts.message)
 
     let acceptAction = MDCAlertAction(title:"Accept") { (_) in print("Accept") }
     alertController.addAction(acceptAction)
@@ -157,29 +170,8 @@ class DialogsAlertComparison: UIViewController {
 
   private func createUIAlertController() -> UIAlertController {
 
-    let titleString = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur"
-    let messageString = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur " +
-      "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus " +
-      "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, " +
-      "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. " +
-      "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus " +
-      "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, " +
-      "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. " +
-      "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus " +
-      "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, " +
-      "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. " +
-      "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus " +
-      "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, " +
-      "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. " +
-      "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus " +
-      "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, " +
-      "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. " +
-      "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus " +
-      "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, " +
-      "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. "
-
-    let alertController = UIAlertController(title: titleString,
-                                            message: messageString,
+    let texts = titleAndMessage
+    let alertController = UIAlertController(title: texts.title, message: texts.message,
                                             preferredStyle:.alert)
 
     let acceptAction = UIAlertAction(title:"Accept", style:.default) { (_) in print("Accept") }

@@ -70,7 +70,9 @@
 }
 
 - (void)themeAlertController:(MDCAlertController *)alertController {
-  MDCAlertScheme *alertScheme = [MDCAlertScheme new];
+  MDCAlertScheme *alertScheme = [[MDCAlertScheme alloc] init];
+  alertScheme.colorScheme = self.colorScheme;
+  alertScheme.typographyScheme = self.typographyScheme;
   [MDCAlertThemer applyScheme:alertScheme toAlertController:alertController];
 }
 
