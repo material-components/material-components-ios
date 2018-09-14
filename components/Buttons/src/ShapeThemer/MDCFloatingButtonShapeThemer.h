@@ -12,5 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCButtonShapeThemer.h"
-#import "MDCFloatingButtonShapeThemer.h"
+#import <UIKit/UIKit.h>
+
+#import "MaterialButtons.h"
+#import "MaterialShapeLibrary.h"
+#import "MaterialShapeScheme.h"
+
+/**
+ The Material Design shape system's themer for instances of MDCFloatingButton.
+ */
+@interface MDCFloatingButtonShapeThemer : NSObject
+
+/**
+ Applies a shape scheme's properties to an MDCFloatingButton.
+
+ @param shapeScheme The shape scheme to apply to the component instance.
+ @param button A component instance to which the shape scheme should be applied.
+ */
++ (void)applyShapeScheme:(nonnull id<MDCShapeScheming>)shapeScheme
+                toButton:(nonnull MDCFloatingButton *)button;
+
+@end
