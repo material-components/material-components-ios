@@ -96,8 +96,9 @@ mdc_objc_library(
     includes = ["src/ButtonThemer"],
     deps = [
         ":Buttons",
-        ":TypographyThemer",
         ":ColorThemer",
+        ":ShapeThemer",
+        ":TypographyThemer",
     ],
     visibility = ["//visibility:public"],
 )
