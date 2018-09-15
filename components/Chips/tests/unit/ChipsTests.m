@@ -12,10 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import "MaterialChips.h"
+
 #import <XCTest/XCTest.h>
 
-#import "../../src/MDCChipField.m"
-#import "MaterialChips.h"
+#import "../../src/MDCChipField.h"
+
+// Expose internal methods for testing
+@interface MDCChipField (Testing)
+- (void)createNewChipFromInput;
+@end
 
 static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   return [UIColor colorWithRed:((CGFloat)((rgbValue & 0xFF0000) >> 16)) / 255
