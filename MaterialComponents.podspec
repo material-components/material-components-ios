@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponents"
-  mdc.version      = "60.2.0"
+  mdc.version      = "63.0.0"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -175,6 +175,14 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/private/Shapes"
   end
 
+  mdc.subspec "BottomSheet+ShapeThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}", "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/private/*.{h,m}"
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/schemes/Shape"
+  end
+
   # Buttons
 
   mdc.subspec "Buttons" do |component|
@@ -209,6 +217,15 @@ Pod::Spec.new do |mdc|
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
   end
 
+  mdc.subspec "Buttons+ShapeThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/schemes/Shape"
+  end
+
   mdc.subspec "Buttons+TypographyThemer" do |extension|
     extension.ios.deployment_target = '8.0'
     extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
@@ -224,6 +241,7 @@ Pod::Spec.new do |mdc|
     extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}", "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/private/*.{h,m}"
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
     extension.dependency "MaterialComponents/Buttons+ColorThemer"
+    extension.dependency "MaterialComponents/Buttons+ShapeThemer"
     extension.dependency "MaterialComponents/Buttons+TypographyThemer"
   end
 
@@ -279,12 +297,22 @@ Pod::Spec.new do |mdc|
     extension.dependency "MaterialComponents/schemes/Color"
   end
 
+  mdc.subspec "Cards+ShapeThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/schemes/Shape"
+  end
+
   mdc.subspec "Cards+CardThemer" do |extension|
     extension.ios.deployment_target = '8.0'
     extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
     extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
     extension.dependency "MaterialComponents/Cards+ColorThemer"
+    extension.dependency "MaterialComponents/Cards+ShapeThemer"
   end
 
   # Chips
@@ -311,6 +339,7 @@ Pod::Spec.new do |mdc|
 
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
     extension.dependency "MaterialComponents/Chips+ColorThemer"
+    extension.dependency "MaterialComponents/Chips+ShapeThemer"
     extension.dependency "MaterialComponents/Chips+TypographyThemer"
   end
 
@@ -330,6 +359,15 @@ Pod::Spec.new do |mdc|
 
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
     extension.dependency "MaterialComponents/Themes"
+  end
+
+  mdc.subspec "Chips+ShapeThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/schemes/Shape"
   end
 
   mdc.subspec "Chips+TypographyThemer" do |extension|
@@ -399,7 +437,6 @@ Pod::Spec.new do |mdc|
     component.resources = ["components/#{component.base_name}/src/Material#{component.base_name}.bundle"]
 
     component.dependency "MaterialComponents/Buttons"
-    component.dependency "MaterialComponents/Buttons+ButtonThemer"
     component.dependency "MaterialComponents/ShadowElevations"
     component.dependency "MaterialComponents/ShadowLayer"
     component.dependency "MaterialComponents/Typography"
@@ -557,6 +594,9 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/Ink"
     component.dependency "MaterialComponents/ShadowElevations"
     component.dependency "MaterialComponents/ShadowLayer"
+    component.dependency "MaterialComponents/Typography"
+    component.dependency "MDFInternationalization"
+    component.dependency "MaterialComponents/private/Math"
   end
 
   # MaskedTransition
@@ -860,6 +900,13 @@ Pod::Spec.new do |mdc|
       scheme.ios.deployment_target = '8.0'
       scheme.public_header_files = "components/schemes/#{scheme.base_name}/src/*.h"
       scheme.source_files = "components/schemes/#{scheme.base_name}/src/*.{h,m}"
+    end
+    scheme_spec.subspec "Shape" do |scheme|
+      scheme.ios.deployment_target = '8.0'
+      scheme.public_header_files = "components/schemes/#{scheme.base_name}/src/*.h"
+      scheme.source_files = "components/schemes/#{scheme.base_name}/src/*.{h,m}"
+      scheme.dependency "MaterialComponents/private/ShapeLibrary"
+      scheme.dependency "MaterialComponents/private/Shapes"
     end
     scheme_spec.subspec "Typography" do |scheme|
       scheme.ios.deployment_target = '8.0'

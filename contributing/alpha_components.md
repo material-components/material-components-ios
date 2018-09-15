@@ -23,3 +23,5 @@ Changes to Alpha components will have **no** effect on our release version numbe
 Once a component is ready for general production use, we will graduate the component to the
 `MaterialComponents.podspec`. At this point the component will be subject to all of the processes
 and expectations that any other production component.
+
+All of your Swift example or test files must import `MaterialComponentsAlpha.ComponentName`.

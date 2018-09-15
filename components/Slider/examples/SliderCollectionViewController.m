@@ -1,26 +1,24 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
-
+#import "supplemental/SliderCollectionSupplemental.h"
 #import "MaterialCollections.h"
 #import "MaterialColorScheme.h"
 #import "MaterialPalettes.h"
 #import "MaterialSlider.h"
-#import "MaterialTypography.h"
 #import "MaterialSlider+ColorThemer.h"
-#import "supplemental/SliderCollectionSupplemental.h"
+#import "MaterialTypographyScheme.h"
 
 static NSString *const kReusableIdentifierItem = @"sliderItemCellIdentifier";
 static CGFloat const kSliderHorizontalMargin = 16.f;
@@ -75,8 +73,8 @@ static CGFloat const kSliderVerticalMargin = 12.f;
 @end
 
 @interface MDCSliderExampleCollectionViewCell : UICollectionViewCell
+@property (nonatomic, strong, nullable) UIFont *labelFont;
 - (void)applyModel:(MDCSliderModel *)model withColorScheme:(MDCSemanticColorScheme *)colorScheme;
-
 @end
 
 @implementation MDCSliderExampleCollectionViewCell {
@@ -87,7 +85,6 @@ static CGFloat const kSliderVerticalMargin = 12.f;
 - (instancetype)initWithFrame:(CGRect)frame {
   if (self = [super initWithFrame:frame]) {
     _label = [[UILabel alloc] init];
-    _label.font = [MDCTypography body1Font];
     [self.contentView addSubview:_label];
 
     _slider = [[MDCSlider alloc] initWithFrame:CGRectZero];
@@ -145,14 +142,32 @@ static CGFloat const kSliderVerticalMargin = 12.f;
 
 - (void)layoutSubviews {
   [super layoutSubviews];
-  _label.frame = CGRectMake(kSliderHorizontalMargin + 6, kSliderVerticalMargin,
-                            self.contentView.frame.size.width - (2 * kSliderHorizontalMargin), 20);
+
+  UIEdgeInsets safeArea = UIEdgeInsetsZero;
+  if (@available(iOS 11.0, *)) {
+    // Accommodate insets for iPhone X.
+    safeArea = self.safeAreaInsets;
+    safeArea.top = 0;
+  }
+  CGRect labelFrame = CGRectMake(kSliderHorizontalMargin + 6, kSliderVerticalMargin,
+                                 self.contentView.frame.size.width - (2 * kSliderHorizontalMargin), 20);
+
+  _label.frame = UIEdgeInsetsInsetRect(labelFrame, safeArea);
 
   CGSize intrinsicSize = [_slider intrinsicContentSize];
-  _slider.frame = CGRectMake(
+  CGRect sliderFrame = CGRectMake(
       kSliderHorizontalMargin,
       self.contentView.frame.size.height - kSliderVerticalMargin - intrinsicSize.height,
       self.contentView.frame.size.width - (2 * kSliderHorizontalMargin), intrinsicSize.height);
+  _slider.frame = UIEdgeInsetsInsetRect(sliderFrame, safeArea);
+}
+
+- (void)setLabelFont:(UIFont *)labelFont {
+  _label.font = labelFont;
+}
+
+- (UIFont *)labelFont {
+  return _label.font;
 }
 
 @end
@@ -172,6 +187,7 @@ static CGFloat const kSliderVerticalMargin = 12.f;
 
 - (void)invalidateLayout {
   [super invalidateLayout];
+  
   [self.collectionView setNeedsLayout];
 }
 
@@ -187,6 +203,7 @@ static CGFloat const kSliderVerticalMargin = 12.f;
 
 @implementation SliderCollectionViewController {
   NSMutableArray<MDCSliderModel *> *_sliders;
+  MDCTypographyScheme *_typographyScheme;
 }
 
 - (instancetype)init {
@@ -198,6 +215,8 @@ static CGFloat const kSliderVerticalMargin = 12.f;
 
     self.collectionView.alwaysBounceVertical = YES;
     self.collectionView.backgroundColor = [UIColor whiteColor];
+
+    _typographyScheme = [[MDCTypographyScheme alloc] init];
 
     // Init the sliders
     _sliders = [[NSMutableArray alloc] init];
@@ -270,6 +289,7 @@ static CGFloat const kSliderVerticalMargin = 12.f;
                                                 forIndexPath:indexPath];
   MDCSliderModel *model = [_sliders objectAtIndex:indexPath.item];
   [cell applyModel:model withColorScheme:self.colorScheme];
+  cell.labelFont = _typographyScheme.subtitle2;
   return cell;
 }
 

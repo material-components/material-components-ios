@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 /* IMPORTANT:
  This file contains supplemental code used to populate the examples with dummy data and/or
@@ -30,21 +28,14 @@ static const CGFloat kViewOffsetToCenter = 20.0f;
 
 @implementation ButtonsTypicalUseExampleViewController (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Buttons", @"Buttons" ];
-}
-
-+ (NSString *)catalogDescription {
-  return @"Buttons allow users to take actions, and make choices, with a single tap.\nA floating"
-          " action button (FAB) represents the primary action of a screen.";
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return YES;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Buttons", @"Buttons" ],
+    @"description": @"Buttons allow users to take actions, and make choices, with a single tap."
+    @"\nA floating action button (FAB) represents the primary action of a screen.",
+    @"primaryDemo": @YES,
+    @"presentable": @YES,
+  };
 }
 
 @end
@@ -52,16 +43,12 @@ static const CGFloat kViewOffsetToCenter = 20.0f;
 
 @implementation ButtonsShapesExampleViewController (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Buttons", @"Shaped Buttons" ];
-}
-
-+ (BOOL)catalogIsPresentable {
-  return YES;
-}
-
-+ (BOOL)catalogIsDebug {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Buttons", @"Shaped Buttons" ],
+    @"primaryDemo": @NO,
+    @"presentable": @YES,
+  };
 }
 
 @end
@@ -91,16 +78,12 @@ static const CGFloat kViewOffsetToCenter = 20.0f;
                  self.topLayoutGuide.length,
                  CGRectMinYEdge);
   };
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
       UIEdgeInsets safeAreaInsets = self.view.safeAreaInsets;
       contentBounds = UIEdgeInsetsInsetRect(bounds, safeAreaInsets);
   } else {
     preiOS11Behavior();
   }
-#else
-  preiOS11Behavior();
-#endif
 
   return contentBounds;
 }

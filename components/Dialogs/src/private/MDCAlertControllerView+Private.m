@@ -1,18 +1,16 @@
-/*
- Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCAlertControllerView.h"
 #import "MDCAlertControllerView+Private.h"
@@ -20,7 +18,7 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 
 #import "MaterialButtons.h"
-#import "MaterialButtons+ButtonThemer.h"
+#import "MaterialMath.h"
 #import "MaterialTypography.h"
 
 // https://material.io/go/design-dialogs#dialogs-specs
@@ -50,9 +48,8 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 @end
 
 @implementation MDCAlertControllerView {
-    NSMutableArray<MDCButton *> *_actionButtons;
+    NSMutableArray<MDCFlatButton *> *_actionButtons;
     BOOL _mdc_adjustsFontForContentSizeCategory;
-    MDCButtonScheme *buttonScheme;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -78,6 +75,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     } else {
       self.titleLabel.font = [MDCTypography titleFont];
     }
+    self.titleLabel.accessibilityTraits |= UIAccessibilityTraitHeader;
     [self.contentScrollView addSubview:self.titleLabel];
 
     self.messageLabel = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -90,7 +88,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     }
     self.messageLabel.textColor = [UIColor colorWithWhite:0.0f alpha:MDCDialogMessageOpacity];
     [self.contentScrollView addSubview:self.messageLabel];
-    buttonScheme = [[MDCButtonScheme alloc] init];
+
     _actionButtons = [[NSMutableArray alloc] init];
 
     [self setNeedsLayout];
@@ -117,9 +115,8 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   [self setNeedsLayout];
 }
 
-- (void)addActionButtonTitle:(NSString *)actionTitle target:(id)target selector:(SEL)selector {
-  MDCButton *actionButton = [[MDCButton alloc] initWithFrame:CGRectZero];
-  [MDCTextButtonThemer applyScheme:buttonScheme toButton:actionButton];
+- (MDCButton *)addActionButtonTitle:(NSString *)actionTitle target:(id)target selector:(SEL)selector {
+  MDCFlatButton *actionButton = [[MDCFlatButton alloc] initWithFrame:CGRectZero];
   actionButton.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
   [actionButton setTitle:actionTitle forState:UIControlStateNormal];
   if (_buttonColor) {
@@ -140,6 +137,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   [self.actionsScrollView addSubview:actionButton];
 
   [_actionButtons addObject:actionButton];
+  return actionButton;
 }
 
 - (void)setTitleFont:(UIFont *)font {
@@ -227,7 +225,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
         [finalButtonFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
                                 scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
   }
-  for (MDCButton *button in self.actionButtons) {
+  for (MDCFlatButton *button in self.actionButtons) {
     [button setTitleFont:finalButtonFont forState:UIControlStateNormal];
   }
 
@@ -245,7 +243,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 - (void)setButtonColor:(UIColor *)color {
   _buttonColor = color;
 
-  for (MDCButton *button in self.actionButtons) {
+  for (MDCFlatButton *button in self.actionButtons) {
     [button setTitleColor:_buttonColor forState:UIControlStateNormal];
   }
 }
@@ -256,6 +254,18 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   for (MDCButton *button in self.actionButtons) {
     button.inkColor = color;
   }
+}
+
+- (CGFloat)cornerRadius {
+  return self.layer.cornerRadius;
+}
+
+- (void)setCornerRadius:(CGFloat)cornerRadius {
+  if (MDCCGFloatEqual(cornerRadius, self.layer.cornerRadius)) {
+    return;
+  }
+  self.layer.cornerRadius = cornerRadius;
+  [self setNeedsLayout];
 }
 
 #pragma mark - Internal
@@ -525,7 +535,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
   _mdc_adjustsFontForContentSizeCategory = adjusts;
 
-  for (MDCButton *button in _actionButtons) {
+  for (MDCFlatButton *button in _actionButtons) {
     button.mdc_adjustsFontForContentSizeCategory = adjusts;
   }
 

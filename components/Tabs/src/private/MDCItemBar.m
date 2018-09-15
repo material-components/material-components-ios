@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCItemBar.h"
 
@@ -115,12 +113,10 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   collectionView.showsHorizontalScrollIndicator = NO;
   collectionView.showsVerticalScrollIndicator = NO;
 
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     collectionView.contentInsetAdjustmentBehavior =
         UIScrollViewContentInsetAdjustmentScrollableAxes;
   }
-#endif
 
   collectionView.dataSource = self;
   collectionView.delegate = self;
@@ -306,11 +302,9 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 }
 
 - (void)safeAreaInsetsDidChange {
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     [super safeAreaInsetsDidChange];
   }
-#endif
   [self setNeedsLayout];
 }
 
@@ -434,12 +428,10 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 #pragma mark - Private
 
 - (CGFloat)adjustedCollectionViewWidth {
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     return CGRectGetWidth(UIEdgeInsetsInsetRect(_collectionView.bounds,
                                                 _collectionView.adjustedContentInset));
   }
-#endif
   return CGRectGetWidth(_collectionView.bounds);
 }
 
@@ -679,13 +671,11 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   const BOOL isRegular = (sizeClass == UIUserInterfaceSizeClassRegular);
   CGFloat inset = isRegular ? kRegularInset : kCompactInset;
   // If the collection view has Safe Area insets, we don't want to add an extra horizontal inset.
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     if (_collectionView.safeAreaInsets.left > 0 || _collectionView.safeAreaInsets.right > 0) {
       inset = 0;
     }
   }
-#endif
   return UIEdgeInsetsMake(0.0f, inset, 0.0f, inset);
 }
 
@@ -984,12 +974,10 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 }
 
 - (CGRect)adjustedCollectionViewBounds {
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     return UIEdgeInsetsInsetRect(self.collectionView.bounds,
                                  self.collectionView.adjustedContentInset);
   }
-#endif
   return self.collectionView.bounds;
 }
 

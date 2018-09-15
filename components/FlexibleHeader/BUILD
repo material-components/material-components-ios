@@ -49,6 +49,20 @@ mdc_objc_library(
 )
 
 mdc_objc_library(
+    name = "private",
+    hdrs = native.glob(["src/private/*.h"]),
+    includes = ["src/private"],
+    visibility = [":test_targets"],
+)
+
+package_group(
+    name = "test_targets",
+    packages = [
+        "//components/FlexibleHeader/...",
+    ],
+)
+
+mdc_objc_library(
     name = "CanAlwaysExpandToMaximumHeight",
     srcs = native.glob(["src/CanAlwaysExpandToMaximumHeight/*.m"]),
     hdrs = native.glob(["src/CanAlwaysExpandToMaximumHeight/*.h"]),
@@ -76,13 +90,18 @@ swift_library(
 mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
-    srcs = glob(["tests/unit/*.m"]),
+    srcs = glob([
+        "tests/unit/*.m",
+        "tests/unit/supplemental/*.m",
+        "tests/unit/supplemental/*.h",
+    ]),
     hdrs = glob(["tests/unit/*.h"]),
     sdk_frameworks = [
         "UIKit",
         "XCTest",
     ],
     deps = [
+        ":private",
         ":FlexibleHeader",
         ":ColorThemer",
         ":CanAlwaysExpandToMaximumHeight",

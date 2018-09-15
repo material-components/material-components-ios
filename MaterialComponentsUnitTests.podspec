@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "MaterialComponentsUnitTests"
-  s.version      = "60.2.0"
+  s.version      = "63.0.0"
   s.authors      = "The Material Components authors."
   s.summary      = "This spec is an aggregate of all the Material Components unit tests."
   s.description  = "This spec is made for use in the MDC Catalog."
@@ -13,5 +13,6 @@ Pod::Spec.new do |s|
   s.resources = ['components/*/tests/unit/resources/*', 'components/private/*/tests/unit/resources/*']
   s.framework    = 'XCTest'
   s.dependency 'MaterialComponents'
+  s.dependency 'MaterialComponentsAlpha'
   s.dependency 'MDFTextAccessibility'
 end

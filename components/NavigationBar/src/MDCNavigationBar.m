@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCNavigationBar.h"
 
@@ -105,7 +103,7 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 @implementation MDCNavigationBarSandbagView
 @end
 
-@interface MDCNavigationBar (PrivateAPIs)
+@interface MDCNavigationBar (PrivateAPIs) <MDCButtonBarDelegate>
 
 /// titleLabel is hidden if there is a titleView. When not hidden, displays self.title.
 - (UILabel *)titleLabel;
@@ -137,6 +135,7 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 }
 
 - (void)commonMDCNavigationBarInit {
+  _uppercasesButtonTitles = YES;
   _observedNavigationItemLock = [[NSObject alloc] init];
   _titleFont = [MDCTypography titleFont];
 
@@ -147,8 +146,10 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   _titleLabel.textAlignment = NSTextAlignmentCenter;
   _leadingButtonBar = [[MDCButtonBar alloc] init];
   _leadingButtonBar.layoutPosition = MDCButtonBarLayoutPositionLeading;
+  _leadingButtonBar.delegate = self;
   _trailingButtonBar = [[MDCButtonBar alloc] init];
   _trailingButtonBar.layoutPosition = MDCButtonBarLayoutPositionTrailing;
+  _trailingButtonBar.delegate = self;
 
   [self addSubview:_titleLabel];
   [self addSubview:_leadingButtonBar];
@@ -171,6 +172,13 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
     _trailingButtonBar.backgroundColor = nil;
   }
   return self;
+}
+
+- (void)setUppercasesButtonTitles:(BOOL)uppercasesButtonTitles {
+  _uppercasesButtonTitles = uppercasesButtonTitles;
+
+  _leadingButtonBar.uppercasesButtonTitles = uppercasesButtonTitles;
+  _trailingButtonBar.uppercasesButtonTitles = uppercasesButtonTitles;
 }
 
 - (void)setTitleFont:(UIFont *)titleFont {
@@ -215,6 +223,12 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   return [self.accessibilityElements indexOfObject:element];
 }
 
+#pragma mark - MDCButtonBarDelegate
+
+- (void)buttonBarDidInvalidateIntrinsicContentSize:(MDCButtonBar *)buttonBar {
+  [self setNeedsLayout];
+}
+
 #pragma mark UIView Overrides
 
 - (void)layoutSubviews {
@@ -223,7 +237,6 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   // For pre iOS 11 devices, it's safe to assume that the Safe Area insets' left and right
   // values are zero. DO NOT use this to get the top or bottom Safe Area insets.
   UIEdgeInsets RTLFriendlySafeAreaInsets = UIEdgeInsetsZero;
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     RTLFriendlySafeAreaInsets =
         MDFInsetsMakeWithLayoutDirection(self.safeAreaInsets.top,
@@ -232,7 +245,6 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
                                          self.safeAreaInsets.right,
                                          self.mdf_effectiveUserInterfaceLayoutDirection);
   }
-#endif
 
   CGSize leadingButtonBarSize = [_leadingButtonBar sizeThatFits:self.bounds.size];
   CGRect leadingButtonBarFrame = CGRectMake(RTLFriendlySafeAreaInsets.left,
@@ -261,12 +273,10 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   CGRect textFrame = UIEdgeInsetsInsetRect(self.bounds, textInsets);
   textFrame.origin.x += _leadingButtonBar.frame.size.width;
   textFrame.size.width -= _leadingButtonBar.frame.size.width + _trailingButtonBar.frame.size.width;
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     textFrame.origin.x += self.safeAreaInsets.left;
     textFrame.size.width -= self.safeAreaInsets.left + self.safeAreaInsets.right;
   }
-#endif
 
   // Layout TitleLabel
   NSMutableParagraphStyle *paraStyle = [[NSMutableParagraphStyle alloc] init];
@@ -308,11 +318,9 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
       CGFloat availableWidth = UIEdgeInsetsInsetRect(self.bounds, textInsets).size.width;
       availableWidth -= MAX(_leadingButtonBar.frame.size.width,
                             _trailingButtonBar.frame.size.width) * 2;
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
       if (@available(iOS 11.0, *)) {
         availableWidth -= self.safeAreaInsets.left + self.safeAreaInsets.right;
       }
-#endif
       titleViewFrame.size.width = availableWidth;
       titleViewFrame = [self mdc_frameAlignedHorizontally:titleViewFrame
                                                 alignment:MDCNavigationBarTitleAlignmentCenter];
@@ -542,8 +550,8 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   [super tintColorDidChange];
 
   // Tint color should only modify interactive elements
-  _leadingButtonBar.tintColor = self.tintColor;
-  _trailingButtonBar.tintColor = self.tintColor;
+  _leadingButtonBar.tintColor = self.leadingBarItemsTintColor ?: self.tintColor;
+  _trailingButtonBar.tintColor = self.trailingBarItemsTintColor ?: self.tintColor;
 }
 
 #pragma mark Public
@@ -631,6 +639,16 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 
 - (UIColor *)buttonsTitleColorForState:(UIControlState)state {
   return [_leadingButtonBar buttonsTitleColorForState:state];
+}
+
+- (void)setLeadingBarItemsTintColor:(UIColor *)leadingBarItemsTintColor {
+  _leadingBarItemsTintColor = leadingBarItemsTintColor;
+  self.leadingButtonBar.tintColor = leadingBarItemsTintColor;
+}
+
+- (void)setTrailingBarItemsTintColor:(UIColor *)trailingBarItemsTintColor {
+  _trailingBarItemsTintColor = trailingBarItemsTintColor;
+  self.trailingButtonBar.tintColor = trailingBarItemsTintColor;
 }
 
 - (void)setLeadingBarButtonItems:(NSArray<UIBarButtonItem *> *)leadingBarButtonItems {

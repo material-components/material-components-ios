@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCTextField.h"
 
@@ -484,7 +482,11 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1.f;
 
   // Standard textRect calculation
   UIEdgeInsets textInsets = self.textInsets;
-  textRect.origin.x += textInsets.left;
+  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    textRect.origin.x += textInsets.right;
+  } else {
+    textRect.origin.x += textInsets.left;
+  }
   textRect.size.width -= textInsets.left + textInsets.right;
 
   // Adjustments for .leftView, .rightView
@@ -795,8 +797,8 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1.f;
   if (self.leadingUnderlineLabel.accessibilityLabel.length > 0) {
     [accessibilityStrings addObject:self.leadingUnderlineLabel.accessibilityLabel];
   }
-  return accessibilityStrings.count > 0 ?
-      [accessibilityStrings componentsJoinedByString:@", "] : nil;
+  return accessibilityStrings.count > 0 ? [accessibilityStrings componentsJoinedByString:@" "]
+                                        : nil;
 }
 
 #pragma mark - Testing

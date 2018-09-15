@@ -1,18 +1,16 @@
-/*
- Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 import UIKit
 
@@ -34,6 +32,7 @@ class EditReorderCollectionViewController: UIViewController,
   var toggle = ToggleMode.edit
 
   var colorScheme = MDCSemanticColorScheme()
+  var shapeScheme = MDCShapeScheme()
   var typographyScheme = MDCTypographyScheme()
   let cardScheme = MDCCardScheme()
 
@@ -50,6 +49,7 @@ class EditReorderCollectionViewController: UIViewController,
     super.viewDidLoad()
 
     cardScheme.colorScheme = colorScheme
+    cardScheme.shapeScheme = shapeScheme
     collectionView.frame = view.bounds
     collectionView.dataSource = self
     collectionView.delegate = self
@@ -102,11 +102,11 @@ class EditReorderCollectionViewController: UIViewController,
     self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]|",
                                                             options: [],
                                                             metrics: nil,
-                                                            views: ["view": collectionView]));
+                                                            views: ["view": collectionView]))
     self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[view]|",
                                                             options: [],
                                                             metrics: nil,
-                                                            views: ["view": collectionView]));
+                                                            views: ["view": collectionView]))
   }
 
   func updateTitle() {
@@ -244,19 +244,12 @@ class EditReorderCollectionViewController: UIViewController,
 }
 
 extension EditReorderCollectionViewController {
-  @objc class func catalogBreadcrumbs() -> [String] {
-    return ["Cards", "Edit/Reorder"]
-  }
 
-  @objc class func catalogIsPresentable() -> Bool {
-    return true
-  }
-
-  @objc class func catalogIsDebug() -> Bool {
-    return false
-  }
-
-  @objc class func catalogIsPrimaryExample() -> Bool {
-    return true
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Cards", "Edit/Reorder"],
+      "primaryDemo": false,
+      "presentable": true,
+    ]
   }
 }
