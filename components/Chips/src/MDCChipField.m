@@ -36,7 +36,8 @@ static const CGFloat MDCChipFieldVerticalInset = 8.f;
 static const CGFloat MDCChipFieldIndent = 4.f;
 static const CGFloat MDCChipFieldHorizontalMargin = 4.f;
 static const CGFloat MDCChipFieldVerticalMargin = 5.f;
-static const CGFloat MDCChipFieldClearButtonImageSquareWidthHeight = 24.f;
+static const CGFloat MDCChipFieldClearButtonSquareWidthHeight = 24.f;
+static const CGFloat MDCChipFieldClearImageSquareWidthHeight = 18.f;
 static const UIKeyboardType MDCChipFieldDefaultKeyboardType = UIKeyboardTypeEmailAddress;
 
 const CGFloat MDCChipFieldDefaultMinTextFieldWidth = 60.f;
@@ -416,11 +417,14 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
 
 - (void)addClearButtonToChip:(MDCChipView *)chip {
   UIControl *clearButton = [[UIControl alloc] init];
-  CGFloat widthAndHeight = MDCChipFieldClearButtonImageSquareWidthHeight;
-  clearButton.frame = CGRectMake(0, 0, widthAndHeight, widthAndHeight);
-  clearButton.layer.cornerRadius = widthAndHeight / 2;
+  CGFloat clearButtonWidthAndHeight = MDCChipFieldClearButtonSquareWidthHeight;
+  clearButton.frame = CGRectMake(0, 0, clearButtonWidthAndHeight, clearButtonWidthAndHeight);
+  clearButton.layer.cornerRadius = clearButtonWidthAndHeight / 2;
   UIImageView *clearImageView = [[UIImageView alloc] initWithImage:[self drawClearButton]];
-  clearImageView.frame = clearButton.frame;
+  CGFloat widthAndHeight = MDCChipFieldClearImageSquareWidthHeight;
+  CGFloat padding =
+      (MDCChipFieldClearButtonSquareWidthHeight - MDCChipFieldClearImageSquareWidthHeight) / 2;
+  clearImageView.frame = CGRectMake(padding, padding, widthAndHeight, widthAndHeight);
   clearButton.tintColor = [UIColor.blackColor colorWithAlphaComponent:0.6f];
   [clearButton addSubview:clearImageView];
   chip.accessoryView = clearButton;
@@ -430,8 +434,8 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
 }
 
 - (UIImage *)drawClearButton {
-  CGSize clearButtonSize = CGSizeMake(MDCChipFieldClearButtonImageSquareWidthHeight,
-                                      MDCChipFieldClearButtonImageSquareWidthHeight);
+  CGSize clearButtonSize = CGSizeMake(MDCChipFieldClearImageSquareWidthHeight,
+                                      MDCChipFieldClearImageSquareWidthHeight);
 
   CGRect bounds = CGRectMake(0, 0, clearButtonSize.width, clearButtonSize.height);
   UIGraphicsBeginImageContextWithOptions(bounds.size, false, 0);
