@@ -434,8 +434,8 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
 }
 
 - (UIImage *)drawClearButton {
-  CGSize clearButtonSize = CGSizeMake(MDCChipFieldClearImageSquareWidthHeight,
-                                      MDCChipFieldClearImageSquareWidthHeight);
+  CGSize clearButtonSize =
+      CGSizeMake(MDCChipFieldClearImageSquareWidthHeight, MDCChipFieldClearImageSquareWidthHeight);
 
   CGRect bounds = CGRectMake(0, 0, clearButtonSize.width, clearButtonSize.height);
   UIGraphicsBeginImageContextWithOptions(bounds.size, false, 0);
