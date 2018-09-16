@@ -73,6 +73,9 @@
 /** The color applied to the title of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIColor *titleColor;
 
+/** The alignment applied to the title of the Alert Controller.*/
+@property(nonatomic, assign) NSTextAlignment titleAlignment;
+
 /** The font applied to the message of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIFont *messageFont;
 

@@ -91,6 +91,8 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
     _actionButtons = [[NSMutableArray alloc] init];
 
+    _titleAlignment = NSTextAlignmentNatural;
+
     [self setNeedsLayout];
   }
 
@@ -169,6 +171,11 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   _titleColor = titleColor;
 
   _titleLabel.textColor = titleColor;
+}
+
+- (void)setTitleAlignment:(NSTextAlignment)titleAlignment {
+  _titleAlignment = titleAlignment;
+  _titleLabel.textAlignment = titleAlignment;
 }
 
 - (NSString *)message {

@@ -212,6 +212,11 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   }
 }
 
+- (void)setTitleAlignment:(NSTextAlignment)titleAlignment {
+  _titleAlignment = titleAlignment;
+  self.alertView.titleAlignment = titleAlignment;
+}
+
 - (void)setCornerRadius:(CGFloat)cornerRadius {
   _cornerRadius = cornerRadius;
   self.alertView.cornerRadius = cornerRadius;
@@ -317,6 +322,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   self.alertView.buttonColor = self.buttonTitleColor;
   self.alertView.buttonFont = self.buttonFont;
   self.alertView.buttonInkColor = self.buttonInkColor;
+  self.alertView.titleAlignment = self.titleAlignment;
   self.alertView.cornerRadius = self.cornerRadius;
 
   for (MDCAlertAction *action in self.actions) {
