@@ -54,6 +54,13 @@ mdc_objc_library(
 )
 
 mdc_objc_library(
+    name = "privateHeaders",
+    hdrs = glob(["src/*.h"]),
+    visibility = ["//visibility:private"],
+    deps = [":Chips"],
+)
+
+mdc_objc_library(
     name = "FontThemer",
     srcs = native.glob(["src/FontThemer/*.m"]),
     hdrs = native.glob(["src/FontThemer/*.h"]),
@@ -91,7 +98,6 @@ mdc_objc_library(
     ],
     visibility = ["//visibility:public"],
 )
-
 
 mdc_objc_library(
     name = "TypographyThemer",
@@ -132,6 +138,7 @@ mdc_objc_library(
         ":ShapeThemer",
         ":TypographyThemer",
         ":private",
+        ":privateHeaders",
         "//components/TextFields:private",
         "//components/private/ShapeLibrary",
     ],
