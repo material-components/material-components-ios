@@ -304,7 +304,7 @@ static inline UIImage *TestImage(CGSize size) {
   NSUInteger chipCount = field.chips.count;
 
   // Then
-  XCTAssertEqual(chipCount, 1);
+  XCTAssertEqual(chipCount, (NSUInteger)1);
 
   // Given
   NSUInteger controlViewCount = 0;
@@ -318,7 +318,7 @@ static inline UIImage *TestImage(CGSize size) {
   }
 
   // Then
-  XCTAssertEqual(controlViewCount, 0);
+  XCTAssertEqual(controlViewCount, (NSUInteger)0);
 }
 
 - (void)testChipsWithDeleteEnabled {
@@ -332,7 +332,7 @@ static inline UIImage *TestImage(CGSize size) {
   NSUInteger chipCount = field.chips.count;
 
   // Then
-  XCTAssertEqual(chipCount, 1);
+  XCTAssertEqual(chipCount, (NSUInteger)1);
 
   // Given
   NSUInteger controlViewCount = 0;
@@ -346,7 +346,7 @@ static inline UIImage *TestImage(CGSize size) {
   }
 
   // Then
-  XCTAssertEqual(controlViewCount, 1);
+  XCTAssertEqual(controlViewCount, (NSUInteger)1);
 }
 
 @end
