@@ -338,7 +338,7 @@ IB_DESIGNABLE
 @property(nonatomic) BOOL sharedWithManyScrollViews;
 
 /**
- If the flag is set YES, the trackingScrollView doesn't adjust the content inset when its
+ If enabled, the trackingScrollView doesn't adjust the content inset when its
  contentInsetAdjustmentBehavior is set to be UIScrollViewContentInsetAdjustmentNever.
 
  Default: NO
