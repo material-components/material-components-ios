@@ -108,7 +108,7 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   [containerView addSubview:_dimmingView];
   [containerView addSubview:self.sheetView];
 
-  [self setPreferredSheetHeight:self.presentedViewController.preferredContentSize.height];
+  [self updatePreferredSheetHeight:self.presentedViewController.preferredContentSize.height];
 
   // Add tap handler to dismiss the sheet.
   UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
@@ -155,7 +155,7 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   [super preferredContentSizeDidChangeForChildContentContainer:container];
   self.sheetView.frame = [self frameOfPresentedViewInContainerView];
   [self.sheetView layoutIfNeeded];
-  [self setPreferredSheetHeight:self.presentedViewController.preferredContentSize.height];
+  [self updatePreferredSheetHeight:self.presentedViewController.preferredContentSize.height];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size
@@ -167,7 +167,7 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
           __unused id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
         self.sheetView.frame = [self frameOfPresentedViewInContainerView];
         [self.sheetView layoutIfNeeded];
-        [self setPreferredSheetHeight:self.presentedViewController.preferredContentSize.height];
+        [self updatePreferredSheetHeight:self.presentedViewController.preferredContentSize.height];
       }
                       completion:nil];
 }
@@ -179,9 +179,11 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 
  @param preferredSheetHeight If positive, the new value for @sheetView.preferredSheetHeight.
  */
-- (void)setPreferredSheetHeight:(CGFloat)preferredSheetHeight {
+- (void)updatePreferredSheetHeight:(CGFloat)preferredSheetHeight {
   // If |preferredSheetHeight| has not been specified, use half of the current height.
-  if (MDCCGFloatEqual(preferredSheetHeight, 0)) {
+  if (self.preferredSheetHeight > 0.f) {
+    preferredSheetHeight = self.preferredSheetHeight;
+  } else if (MDCCGFloatEqual(preferredSheetHeight, 0)) {
     preferredSheetHeight = MDCRound(CGRectGetHeight(self.sheetView.frame) / 2);
   }
   self.sheetView.preferredSheetHeight = preferredSheetHeight;
@@ -242,6 +244,13 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 
 - (UIAccessibilityTraits)scrimAccessibilityTraits {
   return _scrimAccessibilityTraits;
+}
+
+- (void)setPreferredSheetHeight:(CGFloat)preferredSheetHeight {
+  _preferredSheetHeight = preferredSheetHeight;
+  if (preferredSheetHeight > 0.f) {
+    [self updatePreferredSheetHeight:preferredSheetHeight];
+  }
 }
 
 #pragma mark - MDCSheetContainerViewDelegate
