@@ -61,6 +61,11 @@ typedef NS_ENUM(NSInteger, MDCBottomAppBarFloatingButtonPosition) {
 @property(nonatomic, strong, nonnull, readonly) MDCFloatingButton *floatingButton;
 
 /**
+ The offset from the center of the floating button to the top edge of the navigation bar
+ */
+@property(nonatomic, assign) CGFloat floatingButtonCenterToNavigationBarTopOffset;
+
+/**
  Navigation bar items that precede the floating action button. There is no limit to the number of
  buttons that can be added, but button bar width overflow is not handled.
  */
