@@ -36,8 +36,8 @@ The component's README.md should include the following near the top of the docum
 ## Alpha component
 
 This component is an [alpha component](../../contributing/alpha_components.md). This means the API is
-subject to change without notice. To use this component, you must manually clone the
-material-components-ios repo and add the following to your Podfile:
+subject to change without notice and without incrementing major/minor version numbers. To use this
+component, you must manually clone the material-components-ios repo and add the following to your Podfile:
 
     pod 'MaterialComponentsAlpha', :path => 'path/to/material-components-ios'
 ```
