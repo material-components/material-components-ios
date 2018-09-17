@@ -164,7 +164,9 @@
   self.presentationController.preferredSheetHeight = preferredSheetHeight;
 
   // When
-  [self.presentationController updatePreferredSheetHeight:self.presentationController.presentedViewController.preferredContentSize.height];
+  [self.presentationController
+      updatePreferredSheetHeight:self.presentationController.presentedViewController
+                                     .preferredContentSize.height];
 
   // Then
   XCTAssertEqualWithAccuracy(self.sheetView.preferredSheetHeight, preferredSheetHeight, 0.001);
@@ -178,7 +180,9 @@
   self.presentationController.preferredSheetHeight = preferredSheetHeight;
 
   // When
-  [self.presentationController updatePreferredSheetHeight:self.presentationController.presentedViewController.preferredContentSize.height];
+  [self.presentationController
+      updatePreferredSheetHeight:self.presentationController.presentedViewController
+                                     .preferredContentSize.height];
 
   // Then
   XCTAssertEqualWithAccuracy(self.sheetView.preferredSheetHeight, preferredContentSize.height,
