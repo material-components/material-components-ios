@@ -29,6 +29,7 @@ mdc_public_objc_library(
     ],
     deps = [
         "//components/ShadowElevations",
+        "//components/private/Math",
     ],
 )
 
