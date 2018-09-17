@@ -638,7 +638,8 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   if (@available(iOS 11.0, *)) {
     // Don't adjust the contentInset if scrollView's behavior doesn't want it.
     // Compatible to iOS 11 and above
-    if (scrollView.contentInsetAdjustmentBehavior == UIScrollViewContentInsetAdjustmentNever) {
+    if (self.disableContentInsetAdjustmentWhenContentInsetAdjustmentBehaviorIsNever &&
+        scrollView.contentInsetAdjustmentBehavior == UIScrollViewContentInsetAdjustmentNever) {
       return 0;
     }
   }

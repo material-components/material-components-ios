@@ -337,6 +337,16 @@ IB_DESIGNABLE
  */
 @property(nonatomic) BOOL sharedWithManyScrollViews;
 
+/**
+ If the flag is set YES, the trackingScrollView doesn't adjust the content inset when its
+ contentInsetAdjustmentBehavior is set to be UIScrollViewContentInsetAdjustmentNever.
+
+ Default: NO
+ */
+@property(nonatomic)
+    BOOL disableContentInsetAdjustmentWhenContentInsetAdjustmentBehaviorIsNever API_AVAILABLE(
+        ios(11.0), tvos(11.0));
+
 #pragma mark Header View Delegate
 
 /** The delegate for this header view. */
