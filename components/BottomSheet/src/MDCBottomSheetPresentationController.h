@@ -67,9 +67,12 @@
 /**
  This is used to set a custom height on the sheet view.
 
- @note This will override setting the preferredContentSize if a positive value is passed.
- @note If a non-positive value is passed then the sheet will open up to either half the screen
- height or the size of the contentViewController whatever value is smaller.
+ @note If a positive value is passed then the sheet view will be that height even if
+ perferredContentSize has been set. Otherwise the sheet will open up to half the screen height or
+ the size of the presentedViewController's preferredContentSize whatever value is smaller.
+ @note The preferredSheetHeight can never be taller than the height of the content, if the content
+ is smaller than the value passed to preferredSheetHeight then the sheet view will be the size of
+ the content height.
  */
 @property(nonatomic, assign) CGFloat preferredSheetHeight;
 
