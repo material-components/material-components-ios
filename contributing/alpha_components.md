@@ -24,4 +24,20 @@ Once a component is ready for general production use, we will graduate the compo
 `MaterialComponents.podspec`. At this point the component will be subject to all of the processes
 and expectations that any other production component.
 
-All of your Swift example or test files must import `MaterialComponentsAlpha.ComponentName`.
+## Import statements
+
+Swift import statements for alpha components follow the pattern `MaterialComponentsAlpha.<#ComponentName#>`.
+
+## Component README.md
+
+The component's README.md should include the following near the top of the document:
+
+```
+## Alpha component
+
+This component is an [alpha component](../../contributing/alpha_components.md). This means the API is
+subject to change without notice. To use this component, you must manually clone the
+material-components-ios repo and add the following to your Podfile:
+
+    pod 'MaterialComponentsAlpha', :path => 'path/to/material-components-ios'
+```
