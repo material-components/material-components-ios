@@ -305,7 +305,7 @@ static const float kAmbientShadowOpacity = 0.08f;
   BOOL radiusChanged = !MDCCGFloatEqual(self.cornerRadius, cornerRadius);
   [super setCornerRadius:cornerRadius];
   // We MUST check if we are changing the value before we invalidate the shadowPath to
-  // avoid and endless loop
+  // avoid an endless loop
   if (radiusChanged) {
     _shadowPathIsInvalid = YES;
     [self setNeedsLayout];
