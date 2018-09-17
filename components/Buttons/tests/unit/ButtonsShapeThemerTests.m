@@ -56,6 +56,27 @@
                         self.shapeScheme.smallSurfaceShape.bottomRightCorner);
 }
 
+- (void)testMDCFloatingButtonShapeThemer {
+  // Given
+  MDCFloatingButton *FAB = [[MDCFloatingButton alloc] initWithFrame:CGRectZero
+                                                              shape:MDCFloatingButtonShapeDefault];
+  self.shapeScheme.smallSurfaceShape =
+      [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyAngled andSize:10];
+  FAB.shapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
+
+  // When
+  [MDCFloatingButtonShapeThemer applyShapeScheme:self.shapeScheme toButton:FAB];
+
+  // Then
+  MDCRectangleShapeGenerator *rect = (MDCRectangleShapeGenerator *)FAB.shapeGenerator;
+  MDCCornerTreatment *corner = [MDCCornerTreatment cornerWithRadius:0.5f];
+  corner.valueType = MDCCornerTreatmentValueTypePercentage;
+  XCTAssertEqualObjects(rect.topLeftCorner, corner);
+  XCTAssertEqualObjects(rect.topRightCorner, corner);
+  XCTAssertEqualObjects(rect.bottomLeftCorner, corner);
+  XCTAssertEqualObjects(rect.bottomRightCorner, corner);
+}
+
 - (void)testBackgroundColorAfterButtonTheming {
   // Given
   UIColor *bgColor = [UIColor blueColor];
