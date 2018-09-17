@@ -719,6 +719,7 @@ Pod::Spec.new do |mdc|
     component.source_files = "components/#{component.base_name}/src/*.{h,m}"
 
     component.dependency "MaterialComponents/ShadowElevations"
+    component.dependency "MaterialComponents/private/Math"
   end
 
   # Slider
