@@ -189,4 +189,23 @@
                              0.001);
 }
 
+- (void)testPreferredSheetHeightNonZeroThenZero {
+  // Given
+  CGFloat preferredSheetHeight = 200;
+  self.presentationController.preferredSheetHeight = preferredSheetHeight;
+  CGFloat sheetHeight = 300;
+  self.sheetView.frame = CGRectMake(0, 0, 200, sheetHeight);
+
+  // When
+  [self.presentationController
+      updatePreferredSheetHeight:self.presentationController.preferredSheetHeight];
+  self.presentationController.preferredSheetHeight = 0;
+  [self.presentationController
+      updatePreferredSheetHeight:self.presentationController.preferredSheetHeight];
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.sheetView.preferredSheetHeight, (CGFloat)(sheetHeight / 2),
+                             0.001);
+}
+
 @end
