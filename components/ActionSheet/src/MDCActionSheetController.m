@@ -60,12 +60,11 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 
 @interface MDCActionSheetController () <MDCBottomSheetPresentationControllerDelegate,
     UITableViewDelegate, UITableViewDataSource>
-
+@property(nonatomic, strong) UITableView *tableView;
+@property(nonatomic, strong) MDCActionSheetHeaderView *header;
 @end
 
 @implementation MDCActionSheetController {
-  MDCActionSheetHeaderView *_header;
-  UITableView *_tableView;
   NSMutableArray<MDCActionSheetAction *> *_actions;
 }
 
@@ -135,24 +134,24 @@ static NSString *const ReuseIdentifier = @"BaseCell";
   [super viewDidLoad];
 
   self.view.backgroundColor = self.backgroundColor;
-  _tableView.frame = self.view.bounds;
-  [self.view addSubview:_tableView];
-  [self.view addSubview:_header];
+  self.tableView.frame = self.view.bounds;
+  [self.view addSubview:self.tableView];
+  [self.view addSubview:self.header];
 }
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
 
-  CGSize size = [_header sizeThatFits:CGRectStandardize(self.view.bounds).size];
-  _header.frame = CGRectMake(0, 0, self.view.bounds.size.width, size.height);
-  UIEdgeInsets insets = UIEdgeInsetsMake(_header.frame.size.height, 0, 0, 0);
+  CGSize size = [self.header sizeThatFits:CGRectStandardize(self.view.bounds).size];
+  self.header.frame = CGRectMake(0, 0, self.view.bounds.size.width, size.height);
+  UIEdgeInsets insets = UIEdgeInsetsMake(self.header.frame.size.height, 0, 0, 0);
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     insets.bottom = self.view.safeAreaInsets.bottom;
   }
 #endif
-  _tableView.contentInset = insets;
-  _tableView.contentOffset = CGPointMake(0, -size.height);
+  self.tableView.contentInset = insets;
+  self.tableView.contentOffset = CGPointMake(0, -size.height);
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -231,8 +230,8 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 #pragma mark - Table view
 
 - (void)updateTable {
-  [_tableView reloadData];
-  [_tableView setNeedsLayout];
+  [self.tableView reloadData];
+  [self.tableView setNeedsLayout];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -267,51 +266,51 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 }
 
 - (void)setTitle:(NSString *)title {
-  _header.title = title;
+  self.header.title = title;
   [self.view setNeedsLayout];
 }
 
 - (NSString *)title {
-  return _header.title;
+  return self.header.title;
 }
 
 - (void)setMessage:(NSString *)message {
-  _header.message = message;
+  self.header.message = message;
   [self.view setNeedsLayout];
 }
 
 - (NSString *)message {
-  return _header.message;
+  return self.header.message;
 }
 
 - (void)setTitleFont:(UIFont *)titleFont {
-  _header.titleFont = titleFont;
+  self.header.titleFont = titleFont;
 }
 
 - (UIFont *)titleFont {
-  return _header.titleFont;
+  return self.header.titleFont;
 }
 
 - (void)setMessageFont:(UIFont *)messageFont {
-  _header.messageFont = messageFont;
+  self.header.messageFont = messageFont;
 }
 
 - (UIFont *)messageFont {
-  return _header.messageFont;
+  return self.header.messageFont;
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
   _backgroundColor = backgroundColor;
   self.view.backgroundColor = backgroundColor;
-  _tableView.backgroundColor = backgroundColor;
-  _header.backgroundColor = backgroundColor;
+  self.tableView.backgroundColor = backgroundColor;
+  self.header.backgroundColor = backgroundColor;
 }
 
 #pragma mark - Dynamic Type
 
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
   _mdc_adjustsFontForContentSizeCategory = adjusts;
-  _header.mdc_adjustsFontForContentSizeCategory = adjusts;
+  self.header.mdc_adjustsFontForContentSizeCategory = adjusts;
   [self updateFontsForDynamicType];
   if (_mdc_adjustsFontForContentSizeCategory) {
     [[NSNotificationCenter defaultCenter] addObserver:self
