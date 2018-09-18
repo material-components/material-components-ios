@@ -39,20 +39,46 @@
   self.actionSheet = [[MDCActionSheetController alloc] init];
 }
 
-- (void)testHeaderColor {
+- (void)testTitleColor {
   // When
   self.actionSheet.title = @"Test";
 
   // Then
-  UIColor *expectedColor = [UIColor.blackColor colorWithAlphaComponent:0.6];
-  
-  XCTAssertEqual(self.actionSheet.header.titleLabel.textColor, expectedColor);
+  XCTAssertEqualObjects(self.actionSheet.header.titleLabel.textColor,
+                        [UIColor.blackColor colorWithAlphaComponent:0.6f]);
 }
 
 - (void)testMessageColor {
   // When
+  self.actionSheet.message = @"Test";
 
   // Then
+  XCTAssertEqualObjects(self.actionSheet.header.messageLabel.textColor,
+                        [UIColor.blackColor colorWithAlphaComponent:0.6f]);
+}
+
+- (void)testTitleAndMessageColor {
+  // When
+  self.actionSheet.title = @"Test title";
+  self.actionSheet.message = @"Test message";
+
+  // Then
+  XCTAssertEqualObjects(self.actionSheet.header.titleLabel.textColor,
+                        [UIColor.blackColor colorWithAlphaComponent:0.87f]);
+  XCTAssertEqualObjects(self.actionSheet.header.messageLabel.textColor,
+                        [UIColor.blackColor colorWithAlphaComponent:0.6f]);
+}
+
+- (void)testTitleAndMessageColorWhenMessageSetFirst {
+  // When
+  self.actionSheet.message = @"Test message";
+  self.actionSheet.title = @"Test title";
+
+  // Then
+  XCTAssertEqualObjects(self.actionSheet.header.titleLabel.textColor,
+                        [UIColor.blackColor colorWithAlphaComponent:0.87f]);
+  XCTAssertEqualObjects(self.actionSheet.header.messageLabel.textColor,
+                        [UIColor.blackColor colorWithAlphaComponent:0.6f]);
 }
 
 @end
