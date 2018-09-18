@@ -79,7 +79,7 @@
   self.presentationController.sheetView = self.sheetView;
 }
 
-- (void)testSetPreferredSheetHeightZeroWhenSheetViewHasStandardizedFrame {
+- (void)testUpdatePreferredSheetHeightZeroWhenSheetViewHasStandardizedFrame {
   // Given
   CGFloat sheetFrameHeight = 80;
   self.sheetView.frame = CGRectMake(0, 0, 75, sheetFrameHeight);
@@ -91,7 +91,7 @@
   XCTAssertEqualWithAccuracy(self.sheetView.preferredSheetHeight, sheetFrameHeight / 2, 0.001);
 }
 
-- (void)testSetPreferredSheetHeightZeroWhenSheetViewHasUnstandardizedFrame {
+- (void)testUpdatePreferredSheetHeightZeroWhenSheetViewHasUnstandardizedFrame {
   // Given
   CGFloat sheetFrameHeight = -80;
   self.sheetView.frame = CGRectMake(75, 80, -75, sheetFrameHeight);
@@ -104,7 +104,7 @@
                              (CGFloat)fabs(sheetFrameHeight / 2), 0.001);
 }
 
-- (void)testSetPreferredSheetHeightPositiveValue {
+- (void)testUpdatePreferredSheetHeightPositiveValue {
   // Given
   CGFloat preferredSheetHeight = 120;
   self.presentationController.presentedViewController.preferredContentSize =
@@ -118,7 +118,7 @@
   XCTAssertEqualWithAccuracy(self.sheetView.preferredSheetHeight, preferredSheetHeight, 0.001);
 }
 
-- (void)testSetPreferredSheetHeightNegativeValue {
+- (void)testUpdatePreferredSheetHeightNegativeValue {
   // Given
   CGFloat preferredSheetHeight = -120;
   self.presentationController.presentedViewController.preferredContentSize =
@@ -132,7 +132,7 @@
   XCTAssertEqualWithAccuracy(self.sheetView.preferredSheetHeight, preferredSheetHeight, 0.001);
 }
 
-- (void)testSetPreferredSheetHeight {
+- (void)testUpdatePreferredSheetHeight {
   // Given
   CGFloat preferredSheetHeight = 100;
   self.presentationController.preferredSheetHeight = preferredSheetHeight;
@@ -144,7 +144,7 @@
   XCTAssertEqualWithAccuracy(self.sheetView.preferredSheetHeight, preferredSheetHeight, 0.001);
 }
 
-- (void)testSetNegativePreferredSheetHeight {
+- (void)testUpdateNegativePreferredSheetHeight {
   // Given
   CGFloat preferrredSheetHeight = -100;
   self.presentationController.preferredSheetHeight = preferrredSheetHeight;
@@ -159,7 +159,7 @@
                              0.001);
 }
 
-- (void)testSetPreferredSheetHeightAndPreferredContentSize {
+- (void)testUpdatePreferredSheetHeightAndPreferredContentSize {
   // Given
   CGSize preferredContentSize = CGSizeMake(100, 100);
   CGFloat preferredSheetHeight = 200;
