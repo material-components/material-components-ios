@@ -205,35 +205,25 @@
                              0.001);
 }
 
-- (void)testVeryLargePreferredSheetHeight {
+- (void)testVeryLargePreferredSheetHeightAndSmallContent {
   // Given
-  CGRect standardFrame = CGRectMake(0, 0, 200, 300);
-  UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:standardFrame];
-  scrollView.contentSize = standardFrame.size;
+  CGFloat scrollViewHeight = 100;
+  CGRect smallFrame = CGRectMake(0, 0, 200, scrollViewHeight);
+  UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:smallFrame];
   FakeSheetView *sheetView =
-      [[FakeSheetView alloc] initWithFrame:standardFrame
-                               contentView:[[UIView alloc] initWithFrame:standardFrame]
+      [[FakeSheetView alloc] initWithFrame:smallFrame
+                               contentView:[[UIView alloc] initWithFrame:smallFrame]
                                 scrollView:scrollView];
 
-  UIViewController *stubPresentingViewController = [[UIViewController alloc] init];
-  stubPresentingViewController.view.frame = standardFrame;
-  UIViewController *stubPresentedViewController = [[UIViewController alloc] init];
-  stubPresentedViewController.view.frame = standardFrame;
-
-  MDCBottomSheetPresentationController *presentationController =
-      [[MDCBottomSheetPresentationController alloc]
-                                 initWithPresentedViewController:stubPresentedViewController
-                                 presentingViewController:stubPresentingViewController];
-  presentationController.sheetView = sheetView;
-  presentationController.preferredSheetHeight = 5000;
+  self.presentationController.sheetView = sheetView;
+  self.presentationController.preferredSheetHeight = 5000;
 
 
   // When
-  [presentationController updatePreferredSheetHeight];
+  [self.presentationController updatePreferredSheetHeight];
 
   // Then
-  CGFloat expectedHeight = CGRectGetHeight(standardFrame) / 2;
-  XCTAssertEqualWithAccuracy(sheetView.preferredSheetHeight, expectedHeight, 0.001);
+  XCTAssertEqualWithAccuracy(CGRectGetHeight(sheetView.frame), CGRectGetHeight(smallFrame), 0.001);
 }
 
 @end
