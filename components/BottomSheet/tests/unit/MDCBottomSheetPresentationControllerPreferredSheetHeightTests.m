@@ -207,20 +207,18 @@
 
 - (void)testVeryLargePreferredSheetHeight {
   // Given
-  CGRect sheetFrame = CGRectMake(0, 0, 200, 300);
-  CGRect contentViewFrame = CGRectMake(0, 0, 200, 300);
-  CGRect scrollViewFrame = CGRectMake(0, 0, 200, 300);
-  UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:scrollViewFrame];
-  scrollView.contentSize = CGSizeMake(200, 300);
+  CGRect standardFrame = CGRectMake(0, 0, 200, 300);
+  UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:standardFrame];
+  scrollView.contentSize = standardFrame.size;
   FakeSheetView *sheetView =
-      [[FakeSheetView alloc] initWithFrame:sheetFrame
-                               contentView:[[UIView alloc] initWithFrame:contentViewFrame]
+      [[FakeSheetView alloc] initWithFrame:standardFrame
+                               contentView:[[UIView alloc] initWithFrame:standardFrame]
                                 scrollView:scrollView];
 
   UIViewController *stubPresentingViewController = [[UIViewController alloc] init];
-  stubPresentingViewController.view.frame = CGRectMake(0, 0, 200, 300);
+  stubPresentingViewController.view.frame = standardFrame;
   UIViewController *stubPresentedViewController = [[UIViewController alloc] init];
-  stubPresentedViewController.view.frame = CGRectMake(0, 0, 200, 300);
+  stubPresentedViewController.view.frame = standardFrame;
 
   MDCBottomSheetPresentationController *presentationController =
       [[MDCBottomSheetPresentationController alloc]
@@ -234,7 +232,8 @@
   [presentationController updatePreferredSheetHeight];
 
   // Then
-  XCTAssertEqualWithAccuracy(sheetView.preferredSheetHeight, (CGFloat)(150), 0.001);
+  CGFloat expectedHeight = CGRectGetHeight(standardFrame) / 2;
+  XCTAssertEqualWithAccuracy(sheetView.preferredSheetHeight, expectedHeight, 0.001);
 }
 
 @end
