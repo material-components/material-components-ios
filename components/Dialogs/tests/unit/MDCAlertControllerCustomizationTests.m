@@ -25,19 +25,17 @@
 
 @implementation MDCAlertControllerCustomizationTests
 
+MDCAlertController *alert;
+MDCAlertControllerView *alertView;
+
 - (void)setUp {
   [super setUp];
-}
-
-- (void)tearDown {
-  [super tearDown];
+  alert = [MDCAlertController alertControllerWithTitle:@"Title" message:@"Message"];
+  alertView = (MDCAlertControllerView *)alert.view;
 }
 
 - (void)testApplyingTitleAlignment {
   // Given
-  MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:@"Title"
-                                                                   message:@"Message"];
-  MDCAlertControllerView *alertView = (MDCAlertControllerView *)alert.view;
   NSTextAlignment titleAlignment = NSTextAlignmentCenter;
 
   // When
@@ -46,6 +44,31 @@
   // Then
   XCTAssertEqual(alertView.titleAlignment, titleAlignment);
   XCTAssertEqual(alertView.titleLabel.textAlignment, titleAlignment);
+}
+
+- (void)testAddingTitleIconToAlert {
+  // Given
+  UIImage *icon = TestImage(CGSizeMake(24, 24));
+
+  // When
+  alert.titleIcon = icon;
+
+  // Then
+  XCTAssertNotNil(alert.titleIcon);
+  XCTAssertEqual(alertView.titleIcon, icon);
+  XCTAssertEqual(alertView.titleIconImageView.image, icon);
+}
+
+static inline UIImage *TestImage(CGSize size) {
+  CGFloat scale = [UIScreen mainScreen].scale;
+  UIGraphicsBeginImageContextWithOptions(size, false, scale);
+  [UIColor.redColor setFill];
+  CGRect fillRect = CGRectZero;
+  fillRect.size = size;
+  UIRectFill(fillRect);
+  UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+  UIGraphicsEndImageContext();
+  return image;
 }
 
 @end
