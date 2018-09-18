@@ -16,15 +16,23 @@
 
 #import <XCTest/XCTest.h>
 
-@interface MDCActionSheetTest : XCTestCase
+#import "../../src/private/MDCActionSheetHeaderView.h"
 
+@interface MDCActionSheetHeaderView (Testing)
+@property(nonatomic, strong) UILabel *titleLabel;
+@property(nonatomic, strong) UILabel *messageLabel;
+@end
+
+@interface MDCActionSheetTest : XCTestCase
+@property(nonatomic, strong) MDCActionSheetController *actionSheet;
 @end
 
 @implementation MDCActionSheetTest
 
 - (void)setUp {
-    [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+  [super setUp];
+
+  self.actionSheet = [[MDCActionSheetController alloc] init];
 }
 
 @end
