@@ -59,6 +59,38 @@ MDCAlertControllerView *alertView;
   XCTAssertEqual(alertView.titleIconImageView.image, icon);
 }
 
+- (void)testApplyingTintToTitleIcon {
+  // Given
+  UIImage *icon = TestImage(CGSizeMake(24, 24));
+  UIColor *tintColor = UIColor.orangeColor;
+
+  // When
+  alert.titleIcon = icon;
+  alert.titleIconTintColor = tintColor;
+
+  // Then
+  XCTAssertNotNil(alert.titleIcon);
+  XCTAssertEqualObjects(alertView.titleIcon, icon);
+  XCTAssertEqualObjects(alertView.titleIconTintColor, tintColor);
+  XCTAssertEqualObjects(alertView.titleIconImageView.tintColor, tintColor);
+}
+
+- (void)testApplyingTintToTitleIconInAnyOrder {
+  // Given
+  UIImage *icon = TestImage(CGSizeMake(24, 24));
+  UIColor *tintColor = UIColor.orangeColor;
+
+  // When
+  alert.titleIconTintColor = tintColor;
+  alert.titleIcon = icon;
+
+  // Then
+  XCTAssertNotNil(alert.titleIcon);
+  XCTAssertEqualObjects(alertView.titleIcon, icon);
+  XCTAssertEqualObjects(alertView.titleIconTintColor, tintColor);
+  XCTAssertEqualObjects(alertView.titleIconImageView.tintColor, tintColor);
+}
+
 static inline UIImage *TestImage(CGSize size) {
   CGFloat scale = [UIScreen mainScreen].scale;
   UIGraphicsBeginImageContextWithOptions(size, false, scale);
