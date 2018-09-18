@@ -57,9 +57,13 @@ private struct MDCColorThemeCellConfiguration {
 class MDCThemePickerViewController: UIViewController, UICollectionViewDataSource,
   UICollectionViewDelegateFlowLayout {
 
-  let paletteTitle = UILabel()
   let palettesCollectionView = UICollectionView(frame: .zero,
                                                 collectionViewLayout: UICollectionViewFlowLayout())
+
+  private var collectionViewLayout: UICollectionViewFlowLayout {
+    return palettesCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
+  }
+
   let titleColor = AppTheme.globalTheme.colorScheme.onSurfaceColor.withAlphaComponent(0.5)
   let titleFont = AppTheme.globalTheme.typographyScheme.button
   private let cellReuseIdentifier = "cell"
@@ -111,68 +115,39 @@ class MDCThemePickerViewController: UIViewController, UICollectionViewDataSource
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    title = "Material Palette-based themes"
+    view.backgroundColor = .white
+    setUpCollectionView()
+  }
 
-    paletteTitle.text = "Material Palette-based themes"
-    paletteTitle.font = titleFont
-    paletteTitle.textColor = titleColor
-    paletteTitle.translatesAutoresizingMaskIntoConstraints = false
-    view.addSubview(paletteTitle)
-    view.addConstraint(NSLayoutConstraint(item: paletteTitle,
-                                          attribute: .bottom,
-                                          relatedBy: .equal,
-                                          toItem: self.view,
-                                          attribute: .top,
-                                          multiplier: 1.0,
-                                          constant: 36))
-    view.addConstraint(NSLayoutConstraint(item: paletteTitle,
-                                          attribute: .left,
-                                          relatedBy: .equal,
-                                          toItem: self.view,
-                                          attribute: .left,
-                                          multiplier: 1.0,
-                                          constant: 16))
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    positionCollectionView()
+  }
 
+  func setUpCollectionView() {
     palettesCollectionView.register(PaletteCell.self,
                                     forCellWithReuseIdentifier: cellReuseIdentifier)
     palettesCollectionView.translatesAutoresizingMaskIntoConstraints = false
     palettesCollectionView.delegate = self
     palettesCollectionView.dataSource = self
     palettesCollectionView.backgroundColor = .white
-    palettesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0)
     view.addSubview(palettesCollectionView)
-    let rowWidth = view.bounds.width - cellSpacing * 2
-    let cellsPerRow = floor(rowWidth / (cellSize + cellSpacing))
-    let numberOfCells = CGFloat(colorSchemeConfigurations.count)
-    let numberOfRows = ceil(numberOfCells / cellsPerRow)
-    view.addConstraint(NSLayoutConstraint(item: palettesCollectionView,
-                                          attribute: .left,
-                                          relatedBy: .equal,
-                                          toItem: self.view,
-                                          attribute: .left,
-                                          multiplier: 1,
-                                          constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: palettesCollectionView,
-                                          attribute: .right,
-                                          relatedBy: .equal,
-                                          toItem: self.view,
-                                          attribute: .right,
-                                          multiplier: 1,
-                                          constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: palettesCollectionView,
-                                          attribute: .top,
-                                          relatedBy: .equal,
-                                          toItem: self.paletteTitle,
-                                          attribute: .bottom,
-                                          multiplier: 1,
-                                          constant: 10))
-    view.addConstraint(NSLayoutConstraint(item: palettesCollectionView,
-                                          attribute: .height,
-                                          relatedBy: .equal,
-                                          toItem: nil,
-                                          attribute: .notAnAttribute,
-                                          multiplier: 1,
-                                          constant: numberOfRows * (cellSize + (cellSpacing * 2))))
-    view.backgroundColor = .white
+  }
+
+  func positionCollectionView() {
+    var originX = view.bounds.origin.x
+    let originY = view.bounds.origin.y
+    var width = view.bounds.size.width
+    var height = view.bounds.size.height
+    if #available(iOS 11.0, *) {
+      originX += view.safeAreaInsets.left;
+      width -= (view.safeAreaInsets.left + view.safeAreaInsets.right);
+      height -= (view.safeAreaInsets.top + view.safeAreaInsets.bottom);
+    }
+    let frame = CGRect(x: originX, y: originY, width: width, height: height)
+    palettesCollectionView.frame = frame
+    palettesCollectionView.collectionViewLayout.invalidateLayout()
   }
 
   func collectionView(_ collectionView: UICollectionView,
