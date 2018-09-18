@@ -56,14 +56,16 @@ static const int kMDCButtonAnimationDuration = 200;
 @implementation MDCBottomAppBarView
 
 - (instancetype)initWithFrame:(CGRect)frame {
-  if (self = [super initWithFrame:frame]) {
+  self = [super initWithFrame:frame];
+  if (self) {
     [self commonMDCBottomAppBarViewInit];
   }
   return self;
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  if (self = [super initWithCoder:aDecoder]) {
+  self = [super initWithCoder:aDecoder];
+  if (self) {
     [self commonMDCBottomAppBarViewInit];
   }
   return self;
