@@ -360,8 +360,8 @@ static const int kMDCButtonAnimationDuration = 200;
     }];
   } else {
     _floatingButton.hidden = NO;
-    [_floatingButton expand:animated completion:nil];
     [self cutBottomAppBarViewAnimated:animated];
+    [_floatingButton expand:animated completion:nil];
   }
 }
 
