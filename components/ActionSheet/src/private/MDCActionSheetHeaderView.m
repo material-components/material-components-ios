@@ -26,10 +26,12 @@ static const CGFloat TrailingPadding = 16.f;
 static const CGFloat TitleOnlyPadding = 18.f;
 static const CGFloat MiddlePadding = 8.f;
 
-@implementation MDCActionSheetHeaderView {
-  UILabel *_titleLabel;
-  UILabel *_messageLabel;
-}
+@interface MDCActionSheetHeaderView ()
+@property(nonatomic, strong) UILabel *titleLabel;
+@property(nonatomic, strong) UILabel *messageLabel;
+@end
+
+@implementation MDCActionSheetHeaderView
 
 @synthesize mdc_adjustsFontForContentSizeCategory = _mdc_adjustsFontForContentSizeCategory;
 
@@ -64,21 +66,21 @@ static const CGFloat MiddlePadding = 8.f;
   CGRect labelFrame = [self frameWithSafeAreaInsets:self.bounds];
   labelFrame = CGRectStandardize(labelFrame);
   labelFrame.size.width = labelFrame.size.width - LeadingPadding - TrailingPadding;
-  CGSize titleSize = [_titleLabel sizeThatFits:labelFrame.size];
-  CGSize messageSize = [_messageLabel sizeThatFits:labelFrame.size];
+  CGSize titleSize = [self.titleLabel sizeThatFits:labelFrame.size];
+  CGSize messageSize = [self.messageLabel sizeThatFits:labelFrame.size];
   CGRect titleFrame = CGRectMake(LeadingPadding + labelFrame.origin.x, TopStandardPadding,
                                  labelFrame.size.width, titleSize.height);
   CGRect messageFrame = CGRectMake(LeadingPadding + labelFrame.origin.x,
                                    CGRectGetMaxY(titleFrame) + MiddlePadding,
                                    labelFrame.size.width, messageSize.height);
-  _titleLabel.frame = titleFrame;
-  _messageLabel.frame = messageFrame;
+  self.titleLabel.frame = titleFrame;
+  self.messageLabel.frame = messageFrame;
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
   size.width = size.width - LeadingPadding - TrailingPadding;
-  CGSize titleSize = [_titleLabel sizeThatFits:size];
-  CGSize messageSize = [_messageLabel sizeThatFits:size];
+  CGSize titleSize = [self.titleLabel sizeThatFits:size];
+  CGSize messageSize = [self.messageLabel sizeThatFits:size];
   CGFloat contentHeight;
   BOOL messageExist = (self.message) && (![self.message isEqualToString:@""]);
   BOOL titleExist = (self.title) && (![self.title isEqualToString:@""]);
@@ -110,46 +112,46 @@ static const CGFloat MiddlePadding = 8.f;
 }
 
 - (void)setTitle:(NSString *)title {
-  _titleLabel.text = title;
+  self.titleLabel.text = title;
   [self setNeedsLayout];
 }
 
 - (NSString *)title {
-  return _titleLabel.text;
+  return self.titleLabel.text;
 }
 
 - (void)setMessage:(NSString *)message {
-  _messageLabel.text = message;
+  self.messageLabel.text = message;
   // If message is empty or nil then the title label's alpha value should be lighter, if there is both
   // then the title label's alpha should be darker.
   if (self.message && ![self.message isEqualToString:@""]) {
-    _titleLabel.alpha = TitleLabelAlpha;
+    self.titleLabel.alpha = TitleLabelAlpha;
   } else {
-    _titleLabel.alpha = MessageLabelAlpha;
+    self.titleLabel.alpha = MessageLabelAlpha;
   }
   [self setNeedsLayout];
 }
 
 - (NSString *)message {
-  return _messageLabel.text;
+  return self.messageLabel.text;
 }
 
 - (void)setTitleFont:(UIFont *)titleFont {
-  _titleLabel.font = titleFont;
+  self.titleLabel.font = titleFont;
   [self updateTitleFont];
 }
 
 - (UIFont *)titleFont {
-  return _titleLabel.font;
+  return self.titleLabel.font;
 }
 
 - (void)setMessageFont:(UIFont *)messageFont {
-  _messageLabel.font = messageFont;
+  self.messageLabel.font = messageFont;
   [self updateMessageFont];
 }
 
 - (UIFont *)messageFont {
-  return _messageLabel.font;
+  return self.messageLabel.font;
 }
 
 - (void)updateFonts {
@@ -161,11 +163,11 @@ static const CGFloat MiddlePadding = 8.f;
   UIFont *titleFont = self.titleFont ?:
       [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
   if (self.mdc_adjustsFontForContentSizeCategory) {
-    _titleLabel.font =
+    self.titleLabel.font =
         [titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
                                 scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
   } else {
-    _titleLabel.font = titleFont;
+    self.titleLabel.font = titleFont;
   }
   [self setNeedsLayout];
 }
@@ -174,11 +176,11 @@ static const CGFloat MiddlePadding = 8.f;
   UIFont *messageFont = self.messageFont ?:
       [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody1];
   if (self.mdc_adjustsFontForContentSizeCategory) {
-    _messageLabel.font =
+    self.messageLabel.font =
         [messageFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleBody1
                                   scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
   } else {
-    _messageLabel.font = messageFont;
+    self.messageLabel.font = messageFont;
   }
 
   [self setNeedsLayout];
