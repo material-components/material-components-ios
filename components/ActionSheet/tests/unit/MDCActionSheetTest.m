@@ -23,6 +23,10 @@
 @property(nonatomic, strong) UILabel *messageLabel;
 @end
 
+@interface MDCActionSheetController (Testing)
+@property(nonatomic, strong) MDCActionSheetHeaderView *header;
+@end
+
 @interface MDCActionSheetTest : XCTestCase
 @property(nonatomic, strong) MDCActionSheetController *actionSheet;
 @end
@@ -33,6 +37,22 @@
   [super setUp];
 
   self.actionSheet = [[MDCActionSheetController alloc] init];
+}
+
+- (void)testHeaderColor {
+  // When
+  self.actionSheet.title = @"Test";
+
+  // Then
+  UIColor *expectedColor = [UIColor.blackColor colorWithAlphaComponent:0.6];
+  
+  XCTAssertEqual(self.actionSheet.header.titleLabel.textColor, expectedColor);
+}
+
+- (void)testMessageColor {
+  // When
+
+  // Then
 }
 
 @end
