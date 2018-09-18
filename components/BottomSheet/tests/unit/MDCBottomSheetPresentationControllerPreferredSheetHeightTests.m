@@ -205,4 +205,36 @@
                              0.001);
 }
 
+- (void)testVeryLargePreferredSheetHeight {
+  // Given
+  CGRect sheetFrame = CGRectMake(0, 0, 200, 300);
+  CGRect contentViewFrame = CGRectMake(0, 0, 200, 300);
+  CGRect scrollViewFrame = CGRectMake(0, 0, 200, 300);
+  UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:scrollViewFrame];
+  scrollView.contentSize = CGSizeMake(200, 300);
+  FakeSheetView *sheetView =
+      [[FakeSheetView alloc] initWithFrame:sheetFrame
+                               contentView:[[UIView alloc] initWithFrame:contentViewFrame]
+                                scrollView:scrollView];
+
+  UIViewController *stubPresentingViewController = [[UIViewController alloc] init];
+  stubPresentingViewController.view.frame = CGRectMake(0, 0, 200, 300);
+  UIViewController *stubPresentedViewController = [[UIViewController alloc] init];
+  stubPresentedViewController.view.frame = CGRectMake(0, 0, 200, 300);
+
+  MDCBottomSheetPresentationController *presentationController =
+      [[MDCBottomSheetPresentationController alloc]
+                                 initWithPresentedViewController:stubPresentedViewController
+                                 presentingViewController:stubPresentingViewController];
+  presentationController.sheetView = sheetView;
+  presentationController.preferredSheetHeight = 5000;
+
+
+  // When
+  [presentationController updatePreferredSheetHeight];
+
+  // Then
+  XCTAssertEqualWithAccuracy(sheetView.preferredSheetHeight, (CGFloat)(150), 0.001);
+}
+
 @end
