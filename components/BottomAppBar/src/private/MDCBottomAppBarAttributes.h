@@ -25,7 +25,7 @@ static const CGFloat kMDCBottomAppBarNavigationViewYOffset = 38.f;
 static const CGFloat kMDCBottomAppBarFloatingButtonPositionX = 64.f;
 
 // The delta radius of the path cut for the floating button to the floating button's radius.
-static const CGFloat kMDCBottomAppBarFloatingButtonRadiusOffset = 5.f;
+static const CGFloat kMDCBottomAppBarFloatingButtonRadiusOffset = 4.f;
 
 // The duration of the enter animation of the path cut, same as floating button enter animation.
 static const NSTimeInterval kMDCFloatingButtonEnterDuration = 0.270f;
