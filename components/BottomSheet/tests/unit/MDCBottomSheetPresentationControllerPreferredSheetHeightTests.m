@@ -218,7 +218,6 @@
   self.presentationController.sheetView = sheetView;
   self.presentationController.preferredSheetHeight = 5000;
 
-
   // When
   [self.presentationController updatePreferredSheetHeight];
 
