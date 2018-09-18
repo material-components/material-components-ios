@@ -44,8 +44,9 @@
   self.actionSheet.title = @"Test";
 
   // Then
-  XCTAssertEqualObjects(self.actionSheet.header.titleLabel.textColor,
-                        [UIColor.blackColor colorWithAlphaComponent:0.6f]);
+  UIColor *expectedColor = [UIColor.blackColor colorWithAlphaComponent:0.6f];
+  UIColor *titleColor = self.actionSheet.header.titleLabel.textColor;
+  XCTAssertEqualObjects(titleColor, expectedColor);
 }
 
 - (void)testMessageColor {
@@ -53,8 +54,9 @@
   self.actionSheet.message = @"Test";
 
   // Then
-  XCTAssertEqualObjects(self.actionSheet.header.messageLabel.textColor,
-                        [UIColor.blackColor colorWithAlphaComponent:0.6f]);
+  UIColor *expectedColor = [UIColor.blackColor colorWithAlphaComponent:0.6f];
+  UIColor *messageColor = self.actionSheet.header.messageLabel.textColor;
+  XCTAssertEqualObjects(messageColor, expectedColor);
 }
 
 - (void)testTitleAndMessageColor {
@@ -63,10 +65,13 @@
   self.actionSheet.message = @"Test message";
 
   // Then
-  XCTAssertEqualObjects(self.actionSheet.header.titleLabel.textColor,
-                        [UIColor.blackColor colorWithAlphaComponent:0.87f]);
-  XCTAssertEqualObjects(self.actionSheet.header.messageLabel.textColor,
-                        [UIColor.blackColor colorWithAlphaComponent:0.6f]);
+  UIColor *expectedTitleColor = [UIColor.blackColor colorWithAlphaComponent:0.87f];
+  UIColor *titleColor = self.actionSheet.header.titleLabel.textColor;
+  XCTAssertEqualObjects(titleColor, expectedTitleColor);
+
+  UIColor *expectedMessageColor = [UIColor.blackColor colorWithAlphaComponent:0.6f];
+  UIColor *messageColor = self.actionSheet.header.messageLabel.textColor;
+  XCTAssertEqualObjects(messageColor, expectedMessageColor);
 }
 
 - (void)testTitleAndMessageColorWhenMessageSetFirst {
@@ -75,10 +80,13 @@
   self.actionSheet.title = @"Test title";
 
   // Then
-  XCTAssertEqualObjects(self.actionSheet.header.titleLabel.textColor,
-                        [UIColor.blackColor colorWithAlphaComponent:0.87f]);
-  XCTAssertEqualObjects(self.actionSheet.header.messageLabel.textColor,
-                        [UIColor.blackColor colorWithAlphaComponent:0.6f]);
+  UIColor *expectedTitleColor = [UIColor.blackColor colorWithAlphaComponent:0.87f];
+  UIColor *titleColor = self.actionSheet.header.titleLabel.textColor;
+  XCTAssertEqualObjects(titleColor, expectedTitleColor);
+
+  UIColor *expectedMessageColor = [UIColor.blackColor colorWithAlphaComponent:0.6f];
+  UIColor *messageColor = self.actionSheet.header.messageLabel.textColor;
+  XCTAssertEqualObjects(messageColor, expectedMessageColor);
 }
 
 @end
