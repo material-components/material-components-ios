@@ -153,16 +153,16 @@ static const int kMDCButtonAnimationDuration = 200;
 }
 
 - (void)cutBottomAppBarViewAnimated:(BOOL)animated {
-  CGPathRef cutPath =
-      [self.bottomBarLayer pathWithCutFromRect:self.bounds
-                        floatingButtonPosition:self.floatingButtonPosition
-                               layoutDirection:self.layoutDirection];
+  CGPathRef pathWithCut = [self.bottomBarLayer pathFromRect:self.bounds
+                                             floatingButton:self.floatingButton
+                                         navigationBarFrame:self.navBar.frame
+                                                  shouldCut:YES];
   if (animated) {
     CABasicAnimation *pathAnimation =
         [CABasicAnimation animationWithKeyPath:kMDCBottomAppBarViewPathString];
     pathAnimation.duration = kMDCFloatingButtonExitDuration;
     pathAnimation.fromValue = (id)self.bottomBarLayer.presentationLayer.path;
-    pathAnimation.toValue = (__bridge id _Nullable)(cutPath);
+    pathAnimation.toValue = (__bridge id _Nullable)(pathWithCut);
     pathAnimation.fillMode = kCAFillModeForwards;
     pathAnimation.removedOnCompletion = NO;
     pathAnimation.delegate = self;
@@ -170,21 +170,21 @@ static const int kMDCButtonAnimationDuration = 200;
                      forKey:kMDCBottomAppBarViewAnimKeyString];
     [self.bottomBarLayer addAnimation:pathAnimation forKey:kMDCBottomAppBarViewPathString];
   } else {
-    self.bottomBarLayer.path = cutPath;
+    self.bottomBarLayer.path = pathWithCut;
   }
 }
 
 - (void)healBottomAppBarViewAnimated:(BOOL)animated  {
-  CGPathRef withoutCutPath =
-      [self.bottomBarLayer pathWithoutCutFromRect:self.bounds
-                           floatingButtonPosition:self.floatingButtonPosition
-                                  layoutDirection:self.layoutDirection];
+  CGPathRef pathWithoutCut = [self.bottomBarLayer pathFromRect:self.bounds
+                                                floatingButton:self.floatingButton
+                                            navigationBarFrame:self.navBar.frame
+                                                     shouldCut:NO];
   if (animated) {
     CABasicAnimation *pathAnimation =
         [CABasicAnimation animationWithKeyPath:kMDCBottomAppBarViewPathString];
     pathAnimation.duration = kMDCFloatingButtonEnterDuration;
     pathAnimation.fromValue = (id)self.bottomBarLayer.presentationLayer.path;
-    pathAnimation.toValue = (__bridge id _Nullable)(withoutCutPath);
+    pathAnimation.toValue = (__bridge id _Nullable)(pathWithoutCut);
     pathAnimation.fillMode = kCAFillModeForwards;
     pathAnimation.removedOnCompletion = NO;
     pathAnimation.delegate = self;
@@ -192,7 +192,7 @@ static const int kMDCButtonAnimationDuration = 200;
                      forKey:kMDCBottomAppBarViewAnimKeyString];
     [self.bottomBarLayer addAnimation:pathAnimation forKey:kMDCBottomAppBarViewPathString];
   } else {
-    self.bottomBarLayer.path = withoutCutPath;
+    self.bottomBarLayer.path = pathWithoutCut;
   }
 }
 
@@ -241,10 +241,9 @@ static const int kMDCButtonAnimationDuration = 200;
       [self getFloatingButtonCenterPositionForWidth:CGRectGetWidth(self.bounds)];
   [self renderPathBasedOnFloatingButtonVisibitlityAnimated:NO];
 
-  CGRect navBarFrame = CGRectMake(0,
-                                  kMDCBottomAppBarYOffset,
-                                  CGRectGetWidth(self.bounds),
-                                  kMDCBottomAppBarHeight - kMDCBottomAppBarYOffset);
+  CGRect navBarFrame =
+      CGRectMake(0, kMDCBottomAppBarNavigationViewYOffset, CGRectGetWidth(self.bounds),
+                 kMDCBottomAppBarHeight - kMDCBottomAppBarNavigationViewYOffset);
   self.navBar.frame = navBarFrame;
 }
 
