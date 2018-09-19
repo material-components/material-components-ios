@@ -40,9 +40,11 @@ static const CGFloat safeAreaAmount = 20.f;
 @end
 
 @implementation MDCFakeView
+
 - (UIEdgeInsets)safeAreaInsets {
   return UIEdgeInsetsMake(safeAreaAmount, safeAreaAmount, safeAreaAmount, safeAreaAmount);
 }
+
 @end
 
 @implementation MDCActionSheetTest
@@ -220,9 +222,10 @@ static const CGFloat safeAreaAmount = 20.f;
 
 #pragma mark - Opening height
 
-- (void)addActions:(NSUInteger)actions {
-  for (NSUInteger i = 0; i < actions; ++i) {
-    MDCActionSheetAction *action = [MDCActionSheetAction actionWithTitle:@"Title"
+- (void)addNumberOfActions:(NSUInteger)actionsCount {
+  for (NSUInteger actionIndex = 0; actionIndex < actionsCount; ++actionIndex) {
+    NSString *actionTitle = [NSString stringWithFormat:@"Action #%@", @(actionIndex)];
+    MDCActionSheetAction *action = [MDCActionSheetAction actionWithTitle:actionTitle
                                                                    image:nil
                                                                  handler:nil];
     [self.actionSheet addAction:action];
@@ -235,7 +238,7 @@ static const CGFloat safeAreaAmount = 20.f;
   self.actionSheet.view.bounds = CGRectMake(0, 0, 200, fakeHeight);
 
   // When
-  [self addActions:100];
+  [self addNumberOfActions:100];
   [self.actionSheet.view setNeedsLayout];
   [self.actionSheet.view layoutIfNeeded];
 
@@ -259,7 +262,7 @@ static const CGFloat safeAreaAmount = 20.f;
   self.actionSheet.title = @"Test title";
 
   // When
-  [self addActions:100];
+  [self addNumberOfActions:100];
   [self.actionSheet.view setNeedsLayout];
   [self.actionSheet.view layoutIfNeeded];
 
@@ -284,7 +287,7 @@ static const CGFloat safeAreaAmount = 20.f;
   self.actionSheet.message = @"Test message";
 
   // When
-  [self addActions:100];
+  [self addNumberOfActions:100];
   [self.actionSheet.view setNeedsLayout];
   [self.actionSheet.view layoutIfNeeded];
 
@@ -314,7 +317,7 @@ static const CGFloat safeAreaAmount = 20.f;
   self.actionSheet.message = messageString;
 
   // When
-  [self addActions:100];
+  [self addNumberOfActions:100];
   [self.actionSheet.view setNeedsLayout];
   [self.actionSheet.view layoutIfNeeded];
 
@@ -339,7 +342,7 @@ static const CGFloat safeAreaAmount = 20.f;
   self.actionSheet.view = [[MDCFakeView alloc] initWithFrame:viewRect];
 
   // When
-  [self addActions:100];
+  [self addNumberOfActions:100];
   [self.actionSheet.view setNeedsLayout];
   [self.actionSheet.view layoutIfNeeded];
 
