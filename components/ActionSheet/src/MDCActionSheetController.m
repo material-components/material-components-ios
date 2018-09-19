@@ -16,6 +16,7 @@
 
 #import "private/MDCActionSheetItemTableViewCell.h"
 #import "private/MDCActionSheetHeaderView.h"
+#import "MaterialMath.h"
 #import "MaterialTypography.h"
 
 static NSString *const ReuseIdentifier = @"BaseCell";
@@ -171,7 +172,7 @@ static NSString *const ReuseIdentifier = @"BaseCell";
   if (@available(iOS 11.0, *)) {
     preferredHeight = preferredHeight - self.view.safeAreaInsets.bottom;
   }
-  return preferredHeight;
+  return MDCCeil(preferredHeight);
 }
 
 - (void)viewWillAppear:(BOOL)animated {
