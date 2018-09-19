@@ -1308,6 +1308,46 @@ static BOOL isRunningiOS10_3OrAbove() {
 }
 #endif
 
+#pragma mark Multiple tracking scroll views
+
+// Given a tracking scroll view and a potential new tracking scroll view, updates the state of the
+// header and scroll view such that header's height will not change once the scroll view becomes the
+// new tracking scroll view.
+- (void)fhv_matchHeightWithScrollView:(UIScrollView *)scrollView {
+  if (self.trackingScrollView == nil) {
+    return;
+  }
+
+  MDCFlexibleHeaderScrollViewInfo *info = [_trackedScrollViews objectForKey:scrollView];
+
+  if (_shiftAccumulator >= [self fhv_accumulatorMax]) {
+    // We're shifted off-screen, make sure that this scroll view isn't expecting to show the header.
+
+    CGPoint offset = scrollView.contentOffset;
+    CGFloat rawTopInset = scrollView.contentInset.top - info.injectedTopContentInset;
+    if (offset.y < -rawTopInset) {
+      offset.y = -rawTopInset;
+      scrollView.contentOffset = offset;
+    }
+
+  } else if (self.trackingScrollView.contentOffset.y != scrollView.contentOffset.y &&
+             self.trackingScrollView.contentOffset.y <= 0 && scrollView.contentOffset.y <= 0) {
+    // Our content is expanding the header in both columns, let's match up the content offsets so
+    // that the header's height won't change.
+    CGPoint offset = scrollView.contentOffset;
+    offset.y = self.trackingScrollView.contentOffset.y;
+    scrollView.contentOffset = offset;
+
+  } else if (self.trackingScrollView.contentOffset.y > scrollView.contentOffset.y &&
+             scrollView.contentOffset.y < 0) {  // Destination is showing an expanded header.
+    // Our header is possibly smaller now than it will be when we move to the new content.
+    // Scroll the new content such that we collapse the header to the current height.
+    CGPoint offset = scrollView.contentOffset;
+    offset.y = MIN(self.trackingScrollView.contentOffset.y, 0);
+    scrollView.contentOffset = offset;
+  }
+}
+
 #pragma mark - MDCStatusBarShifterDelegate
 
 - (void)statusBarShifterNeedsStatusBarAppearanceUpdate:
@@ -1727,36 +1767,7 @@ static BOOL isRunningiOS10_3OrAbove() {
     scrollView.contentOffset = offset;
   }
 
-  if (self.trackingScrollView == nil) {
-    return;
-  }
-
-  if (_shiftAccumulator >= [self fhv_accumulatorMax]) {
-    // We're shifted off-screen, make sure that this scroll view isn't expecting to show the header.
-
-    CGPoint offset = scrollView.contentOffset;
-    CGFloat rawTopInset = scrollView.contentInset.top - info.injectedTopContentInset;
-    if (offset.y < -rawTopInset) {
-      offset.y = -rawTopInset;
-      scrollView.contentOffset = offset;
-    }
-
-  } else if (self.trackingScrollView.contentOffset.y != scrollView.contentOffset.y &&
-             self.trackingScrollView.contentOffset.y <= 0 && scrollView.contentOffset.y <= 0) {
-    // Our content is expanding the header in both columns, let's match up the content offsets so
-    // that the header's height won't change.
-    CGPoint offset = scrollView.contentOffset;
-    offset.y = self.trackingScrollView.contentOffset.y;
-    scrollView.contentOffset = offset;
-
-  } else if (self.trackingScrollView.contentOffset.y > scrollView.contentOffset.y
-             && scrollView.contentOffset.y < 0) { // Destination is showing an expanded header.
-    // Our header is possibly smaller now than it will be when we move to the new content.
-    // Scroll the new content such that we collapse the header to the current height.
-    CGPoint offset = scrollView.contentOffset;
-    offset.y = MIN(self.trackingScrollView.contentOffset.y, 0);
-    scrollView.contentOffset = offset;
-  }
+  [self fhv_matchHeightWithScrollView:scrollView];
 }
 
 - (void)shiftHeaderOnScreenAnimated:(BOOL)animated {
