@@ -1,3 +1,192 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+### BottomSheet
+
+#### MDCBottomSheetTransitionController
+
+*new* property: `preferredSheetHeight` in `MDCBottomSheetTransitionController`
+
+#### MDCBottomSheetPresentationController
+
+*new* property: `preferredSheetHeight` in `MDCBottomSheetPresentationController`
+
+### Buttons+ButtonThemer
+
+#### MDCButtonScheming
+
+*new* property: `shapeScheme` in `MDCButtonScheming`
+
+#### MDCButtonScheme
+
+*new* property: `shapeScheme` in `MDCButtonScheme`
+
+### Buttons+ShapeThemer
+
+**New component.**
+
+### Chips+ChipThemer
+
+#### MDCChipViewScheming
+
+*new* property: `shapeScheme` in `MDCChipViewScheming`
+
+#### MDCChipViewScheme
+
+*new* property: `shapeScheme` in `MDCChipViewScheme`
+
+### Chips
+
+#### MDCChipField
+
+*new* property: `showChipsDeleteButton` in `MDCChipField`
+
+*modified* class: `MDCChipField`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCChipField : UIView  /**  The text field used to enter new chips.   Do not set the delegate or positioningDelegate.   If you set a custom font, make sure to also set the custom font on textField.placeholderLabel and  on your MDCChipView instances.  */ @property(nonatomic, nonnull, readonly) MDCTextField *textField;  /**  The fixed height of all chip views.   Default is 32dp.  */ @property(nonatomic, assign) CGFloat chipHeight;  /**  Attribute to determine whether to show the placeholder text (if it exists) when chips are  present.   Default is YES.  */ @property(nonatomic, assign) BOOL showPlaceholderWithChips;  /**  The delimiter used to create chips in the text field. Uses default value  MDCChipFieldDelimiterDefault if no delimiter is set.  */ @property(nonatomic, assign) MDCChipFieldDelimiter delimiter;  /**  The minimum width of the text field.   Default is |kMDCChipFieldDefaultMinTextFieldWidth|.  */ @property(nonatomic, assign) CGFloat minTextFieldWidth;  /**  The chips that are visible in the input area.  */ @property(nonatomic, nonnull, copy) NSArray<MDCChipView *> *chips;  /**  Delegate to receive updates to the chip field view. Implement  |chipFieldHeightDidChange| to receive updates when the height of the chip field changes.  */ @property(nonatomic, nullable, weak) id<MDCChipFieldDelegate> delegate;  /**  The inset or outset margins for the rectangle surrounding all of the chip field's content.  Default is |kMDCChipFieldDefaultContentEdgeInsets|.  */ @property(nonatomic, assign) UIEdgeInsets contentEdgeInsets;  /**  Adds a chip to the chip field.   @param chip The chip to add to the field.   Note: Implementing |chipField:shouldAddChip| only affects whether user interface input entered into  the text field is changed into chips and will not affect use of this method.  */ - (void)addChip:(nonnull MDCChipView *)chip;  /**  Removes a chip from the chip field.   @param chip The chip to remove from the field.  */ - (void)removeChip:(nonnull MDCChipView *)chip;  /** Removes all selected chips from the chip field. */ - (void)removeSelectedChips;  /** Removes all text from the chip field text input area. */ - (void)clearTextInput;  /** Selects a chip in a chip field. */ - (void)selectChip:(nonnull MDCChipView *)chip;  /** Deselects all chips in a chip field. */ - (void)deselectAllChips;  /** Sets the VoiceOver focus on the text field. */ - (void)focusTextFieldForAccessibility;  @end` |
+| To: | `@interface MDCChipField : UIView  /**  The text field used to enter new chips.   Do not set the delegate or positioningDelegate.   If you set a custom font, make sure to also set the custom font on textField.placeholderLabel and  on your MDCChipView instances.  */ @property(nonatomic, nonnull, readonly) MDCTextField *textField;  /**  The fixed height of all chip views.   Default is 32dp.  */ @property(nonatomic, assign) CGFloat chipHeight;  /**  Attribute to determine whether to show the placeholder text (if it exists) when chips are  present.   Default is YES.  */ @property(nonatomic, assign) BOOL showPlaceholderWithChips;  /**  Enabling this property allows chips to be deleted by tapping on them.   @note This does not support the 48x48 touch targets that Google recommends. We recommend if this  behavior is enabled that a snackbar or dialog are used as well to allow the user to confirm if they  want to delete the chip.  */ @property(nonatomic) BOOL showChipsDeleteButton;  /**  The delimiter used to create chips in the text field. Uses default value  MDCChipFieldDelimiterDefault if no delimiter is set.  */ @property(nonatomic, assign) MDCChipFieldDelimiter delimiter;  /**  The minimum width of the text field.   Default is |kMDCChipFieldDefaultMinTextFieldWidth|.  */ @property(nonatomic, assign) CGFloat minTextFieldWidth;  /**  The chips that are visible in the input area.  */ @property(nonatomic, nonnull, copy) NSArray<MDCChipView *> *chips;  /**  Delegate to receive updates to the chip field view. Implement  |chipFieldHeightDidChange| to receive updates when the height of the chip field changes.  */ @property(nonatomic, nullable, weak) id<MDCChipFieldDelegate> delegate;  /**  The inset or outset margins for the rectangle surrounding all of the chip field's content.  Default is |kMDCChipFieldDefaultContentEdgeInsets|.  */ @property(nonatomic, assign) UIEdgeInsets contentEdgeInsets;  /**  Adds a chip to the chip field.   @param chip The chip to add to the field.   Note: Implementing |chipField:shouldAddChip| only affects whether user interface input entered into  the text field is changed into chips and will not affect use of this method.  */ - (void)addChip:(nonnull MDCChipView *)chip;  /**  Removes a chip from the chip field.   @param chip The chip to remove from the field.  */ - (void)removeChip:(nonnull MDCChipView *)chip;  /** Removes all selected chips from the chip field. */ - (void)removeSelectedChips;  /** Removes all text from the chip field text input area. */ - (void)clearTextInput;  /** Selects a chip in a chip field. */ - (void)selectChip:(nonnull MDCChipView *)chip;  /** Deselects all chips in a chip field. */ - (void)deselectAllChips;  /** Sets the VoiceOver focus on the text field. */ - (void)focusTextFieldForAccessibility;  @end` |
+
+### Chips+ShapeThemer
+
+**New component.**
+
+### Dialogs+DialogThemer
+
+**New component.**
+
+### Dialogs
+
+#### MDCAlertController
+
+*new* property: `cornerRadius` in `MDCAlertController`
+
+#### MDCAlertControllerView
+
+*new* property: `cornerRadius` in `MDCAlertControllerView`
+
+*modified* class: `MDCAlertControllerView`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCAlertControllerView : UIView  @property(nonatomic, strong, nullable) UIFont *titleFont UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *titleColor UI_APPEARANCE_SELECTOR;  @property(nonatomic, strong, nullable) UIFont *messageFont UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *messageColor UI_APPEARANCE_SELECTOR;  @property(nonatomic, strong, nullable) UIFont *buttonFont UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *buttonColor UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *buttonInkColor UI_APPEARANCE_SELECTOR;  /*  Indicates whether the view's contents should automatically update their font when the device’s  UIContentSizeCategory changes.   This property is modeled after the adjustsFontForContentSizeCategory property in the  UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.   Default value is NO.  */ @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;  @end` |
+| To: | `@interface MDCAlertControllerView : UIView  @property(nonatomic, strong, nullable) UIFont *titleFont UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *titleColor UI_APPEARANCE_SELECTOR;  @property(nonatomic, strong, nullable) UIFont *messageFont UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *messageColor UI_APPEARANCE_SELECTOR;  @property(nonatomic, strong, nullable) UIFont *buttonFont UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *buttonColor UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *buttonInkColor UI_APPEARANCE_SELECTOR;  @property(nonatomic, assign) CGFloat cornerRadius;  /*  Indicates whether the view's contents should automatically update their font when the device’s  UIContentSizeCategory changes.   This property is modeled after the adjustsFontForContentSizeCategory property in the  UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.   Default value is NO.  */ @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;  @end` |
+
+### FlexibleHeader
+
+#### MDCFlexibleHeaderView
+
+*new* property: `disableContentInsetAdjustmentWhenContentInsetAdjustmentBehaviorIsNever` in `MDCFlexibleHeaderView`
+
+#### MDCFlexibleHeaderView()
+
+*new* category: `MDCFlexibleHeaderView()`
+
+*removed* category: `MDCFlexibleHeaderView()`
+
+*modified* property: `contentView` in `MDCFlexibleHeaderView()`
+
+| Type of change: | parent.usr |
+|---|---|
+| From: | `c:objc(ext)MDCFlexibleHeaderView@MDCFlexibleHeaderView.h@14009` |
+| To: | `c:objc(ext)MDCFlexibleHeaderView@MDCFlexibleHeaderView.h@14344` |
+
+## Component changes
+
+### ActionSheet
+
+* [Initial commit (#5157)](https://github.com/material-components/material-components-ios/commit/c14604f16a587e2cd80d4a50f629d315c54a7210) (Cody Weaver)
+* [Labels use text color instead of alpha (#5142)](https://github.com/material-components/material-components-ios/commit/dc3b9619de1c7afad4d342ba315753c6cd31b944) (Cody Weaver)
+* [Make header and table properties](https://github.com/material-components/material-components-ios/commit/98ff77c0a74d3badc268439e558d68cb0fa615b4) (Cody Weaver)
+* [Update the docs (#5134)](https://github.com/material-components/material-components-ios/commit/99f8e4c27e6dfe137b1cbbef5e3e00136c8a0dbb) (Cody Weaver)
+
+### AppBar
+
+* [[FlexibleHeaderView] Make FexibleHeaderView respect contentInsetAdjustmentBehavior (#4970) (#5073)](https://github.com/material-components/material-components-ios/commit/2fee13665fdc0052d1c9df2f8c187109730a50a3) (Wenyu Zhang)
+
+### BottomSheet
+
+* [Add property so clients can set a custom height for bottom sheet (#5139)](https://github.com/material-components/material-components-ios/commit/553fb019e7399876a4c34bc417194ef6721af47a) (Cody Weaver)
+* [Add tests for `updatePreferredSheetHeight`. (#5115)](https://github.com/material-components/material-components-ios/commit/db3f1f287bd13c5357c33fce6b05e0e8599eca8e) (Robert Moore)
+* [Make `sheetView` a property. (#5122)](https://github.com/material-components/material-components-ios/commit/c906e41fe6797559363c44e5a6953ca1675be36e) (Robert Moore)
+* [Use setter for sheet view height. (#5125)](https://github.com/material-components/material-components-ios/commit/b5c096009f604061fb10a2208a0445bffb5df2b9) (Robert Moore)
+* [[Shape]! Provide more granularity for corner setting for the theming (#5116)](https://github.com/material-components/material-components-ios/commit/c741ba49044e613faa0925e8b817783631629573) (Yarden Eitan)
+
+### Buttons
+
+#### Breaking changes
+
+* [**Breaking**:  Integrate the shape themer into the MDCButton themer (#5120)](https://github.com/material-components/material-components-ios/commit/b27c6f5654add48315b5ad50361fdfa768b6229d) (Yarden Eitan)
+
+* [Add the Floating Button Shape themer to the Floating Button themer (#5132)](https://github.com/material-components/material-components-ios/commit/a7810bbc5e3cc19c32d861a5d8a42ab22e1b7efa) (Yarden Eitan)
+* [Addition of a FAB shape themer (#5131)](https://github.com/material-components/material-components-ios/commit/a87ad9a1214793afffcd422d7041c8e796dd05cd) (Yarden Eitan)
+* [Addition of a Shape Themer for MDCButton (#5119)](https://github.com/material-components/material-components-ios/commit/d884aeccf1ee70c493cb1a500200015bc323c816) (Yarden Eitan)
+* [Integrate the FAB shape themer into our examples (#5133)](https://github.com/material-components/material-components-ios/commit/4e456f88ce45cea64bd2ce329a3a39807884c110) (Yarden Eitan)
+* [Integration of the button shape themer into the examples (#5121)](https://github.com/material-components/material-components-ios/commit/08bb1d707ab76589da992fa190cc20f39fd84475) (Yarden Eitan)
+* [[Shapes] Bug fix for getting the wrong backgroundColor when shapeGenerator is set. (#5127)](https://github.com/material-components/material-components-ios/commit/e785745070762f6779c359a77801e5961e4092c8) (Yarden Eitan)
+
+### Cards
+
+* [[Shape]! Provide more granularity for corner setting for the theming (#5116)](https://github.com/material-components/material-components-ios/commit/c741ba49044e613faa0925e8b817783631629573) (Yarden Eitan)
+
+### Chips
+
+#### Breaking changes
+
+* [**Breaking**:  Integrate the shape themer into the chip themer (#5112)](https://github.com/material-components/material-components-ios/commit/67ddf9b6caf0cbb2f2051150f28d2a203ec1ad0b) (Yarden Eitan)
+
+* [Add client the ability to delete chips in a chip field (#5135)](https://github.com/material-components/material-components-ios/commit/f233981e2fbcfa40ef1573ff333eed2b22465080) (Cody Weaver)
+* [Addition of a Shape Themer (#5111)](https://github.com/material-components/material-components-ios/commit/9faa1295b87feaec96b8fc0a38cd018cb5a9ac47) (Yarden Eitan)
+* [Integration of the chip themer into the examples (#5113)](https://github.com/material-components/material-components-ios/commit/31e4007ec0e7e6dca4e9359a3f2e14d20ebbba15) (Yarden Eitan)
+* [Support RTL in MDCChipCollectionViewFlowLayout (#5079)](https://github.com/material-components/material-components-ios/commit/1d0153ad6c07c60088cd24b6ecbd1bad0e19caa0) (jsaletta)
+* [Update example (#5118)](https://github.com/material-components/material-components-ios/commit/d57e6b724f148eaec173944f082c2c0d7998b509) (Cody Weaver)
+* [[Shapes] Bug fix for getting the wrong backgroundColor when shapeGenerator is set. (#5127)](https://github.com/material-components/material-components-ios/commit/e785745070762f6779c359a77801e5961e4092c8) (Yarden Eitan)
+
+### Dialogs
+
+* [Add a dialog themer](https://github.com/material-components/material-components-ios/commit/faea5d127ba60c54cbf45f34d008889026adb861) (Galia Kaufman)
+* [Expose corner radius property (#4988)](https://github.com/material-components/material-components-ios/commit/fcd70cad6ec577e1fb4033b2fb2f72748bb56cad) (Galia Kaufman)
+
+### FlexibleHeader
+
+* [Avoid nil logic in multiple tracking scroll view setting. (#5163)](https://github.com/material-components/material-components-ios/commit/128e6fe66795221d4061fd240e2565228ee7dff5) (featherless)
+* [[FlexibleHeaderView] Make FexibleHeaderView respect contentInsetAdjustmentBehavior (#4970) (#5073)](https://github.com/material-components/material-components-ios/commit/2fee13665fdc0052d1c9df2f8c187109730a50a3) (Wenyu Zhang)
+
+### PageControl
+
+* [[FlexibleHeaderView] Make FexibleHeaderView respect contentInsetAdjustmentBehavior (#4970) (#5073)](https://github.com/material-components/material-components-ios/commit/2fee13665fdc0052d1c9df2f8c187109730a50a3) (Wenyu Zhang)
+
+### ShadowLayer
+
+* [Mark shadowPath invalid on cornerRadius change (#4921)](https://github.com/material-components/material-components-ios/commit/255541a4e5009daf57113fc7fcdac7d3aac4fe08) (ianegordon)
+
+### Tabs
+
+* [Fix an example bug (#5106)](https://github.com/material-components/material-components-ios/commit/a37d4a4f3a57ffca55adaa2904f9a5a4a4e8735f) (Cody Weaver)
+* [[MDCItemBar] Fix an issue where the protocol method `itemBar:shouldSelectItem:` does not behave correctly (#5071)](https://github.com/material-components/material-components-ios/commit/4bfc31efd851a35bb95c5f9f82541bbc4386b94a) (Ahmed Ibrahim)
+
+### TextFields
+
+* [Send .editingChanged control event on clear button touch (#5144)](https://github.com/material-components/material-components-ios/commit/fec74d5e0de26314d832dd43812be04caf77df77) (Andrew Overton)
+
+### schemes/Shape
+
+* [[Shape Scheme] Addition of Unit Tests for the Shape Scheme (#5137)](https://github.com/material-components/material-components-ios/commit/f43e3e73862a0840396b5b6bb8ff4992ba69bd31) (Yarden Eitan)
+
+---
+
 # 63.0.0
 
 This major release adds additional support for shape theming to BottomSheet and Cards and
