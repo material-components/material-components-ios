@@ -155,10 +155,8 @@
   self.actionSheet.messageTextColor = messageColorChangeAlpha;
 
   // Then
-  BOOL titleEqual = [titleColor isEqual:self.actionSheet.header.titleLabel.textColor];
-  BOOL messageEqual = [messageColor isEqual:self.actionSheet.header.messageLabel.textColor];
-  XCTAssertFalse(titleEqual);
-  XCTAssertFalse(messageEqual);
+  XCTAssertFalse([titleColor isEqual:self.actionSheet.header.titleLabel.textColor]);
+  XCTAssertFalse([messageColor isEqual:self.actionSheet.header.messageLabel.textColor]);
 }
 
 - (void)testSetTitleAndMessageAfterCustomColorsSet {

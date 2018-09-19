@@ -150,6 +150,7 @@ __attribute__((objc_subclassing_restricted))
  there is a distinction between the title and actions.
  */
 @property(nonatomic, strong, nullable) UIColor *titleTextColor;
+
 /**
  The color applied to the message of the action sheet controller.
 

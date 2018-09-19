@@ -122,9 +122,7 @@ static const CGFloat MiddlePadding = 8.f;
 
 - (void)setMessage:(NSString *)message {
   self.messageLabel.text = message;
-  self.titleLabel.textColor = self.titleTextColor ?: [self defaultTitleTextColor];
-  self.messageLabel.textColor =
-      self.messageTextColor ?: [UIColor.blackColor colorWithAlphaComponent:MessageLabelAlpha];
+  [self updateLabelColors];
   [self setNeedsLayout];
 }
 
@@ -207,15 +205,20 @@ static const CGFloat MiddlePadding = 8.f;
   }
 }
 
+- (void)updateLabelColors {
+  self.titleLabel.textColor = self.titleTextColor ?: [self defaultTitleTextColor];
+  self.messageLabel.textColor =
+      self.messageTextColor ?: [UIColor.blackColor colorWithAlphaComponent:MessageLabelAlpha];
+}
+
 - (void)setTitleTextColor:(UIColor *)titleTextColor {
   _titleTextColor = titleTextColor;
-  self.titleLabel.textColor = titleTextColor ?: [self defaultTitleTextColor];
+  [self updateLabelColors];
 }
 
 - (void)setMessageTextColor:(UIColor *)messageTextColor {
   _messageTextColor = messageTextColor;
-  self.messageLabel.textColor =
-      messageTextColor ?: [UIColor.blackColor colorWithAlphaComponent:MessageLabelAlpha];
+  [self updateLabelColors];
 }
 
 @end
