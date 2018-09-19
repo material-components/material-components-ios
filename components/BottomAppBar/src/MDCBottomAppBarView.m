@@ -74,7 +74,7 @@ static const int kMDCButtonAnimationDuration = 200;
 
 - (void)commonMDCBottomAppBarViewInit {
   self.cutView = [[MDCBottomAppBarCutView alloc] initWithFrame:self.bounds];
-  self.floatingButtonCenterToNavigationBarTopOffset =
+  self.floatingButtonVerticalOffset =
       kMDCBottomAppBarViewFloatingButtonCenterToNavigationBarTopOffset;
   [self addSubview:self.cutView];
 
@@ -128,7 +128,7 @@ static const int kMDCButtonAnimationDuration = 200;
   CGFloat midX = appBarWidth / 2;
 
   floatingButtonPoint.y =
-      MAX(0.0f, navigationBarTopEdgeYOffset - self.floatingButtonCenterToNavigationBarTopOffset);
+      MAX(0.0f, navigationBarTopEdgeYOffset - self.floatingButtonVerticalOffset);
   switch (self.floatingButtonPosition) {
     case MDCBottomAppBarFloatingButtonPositionLeading: {
       if (self.layoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
