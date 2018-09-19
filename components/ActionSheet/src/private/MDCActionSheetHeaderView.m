@@ -122,15 +122,7 @@ static const CGFloat MiddlePadding = 8.f;
 
 - (void)setMessage:(NSString *)message {
   self.messageLabel.text = message;
-  // If message is empty or nil then the title label's alpha value should be lighter, if there is both
-  // then the title label's alpha should be darker.
-  if (self.message && ![self.message isEqualToString:@""]) {
-    _titleLabel.textColor =
-        self.titleTextColor ?: [UIColor.blackColor colorWithAlphaComponent:TitleLabelAlpha];
-  } else {
-    _titleLabel.textColor =
-        self.titleTextColor ?: [UIColor.blackColor colorWithAlphaComponent:MessageLabelAlpha];
-  }
+  self.titleLabel.textColor = self.titleTextColor ?: [self defaultTitleTextColor];
   self.messageLabel.textColor =
       self.messageTextColor ?: [UIColor.blackColor colorWithAlphaComponent:MessageLabelAlpha];
   [self setNeedsLayout];
@@ -205,14 +197,25 @@ static const CGFloat MiddlePadding = 8.f;
   [self updateFonts];
 }
 
+- (UIColor *)defaultTitleTextColor {
+  // If message is empty or nil then the title label's alpha value should be lighter, if there is both
+  // then the title label's alpha should be darker.
+  if (self.message && ![self.message isEqualToString:@""]) {
+    return [UIColor.blackColor colorWithAlphaComponent:0.87f];
+  } else {
+    return [UIColor.blackColor colorWithAlphaComponent:0.6f];
+  }
+}
+
 - (void)setTitleTextColor:(UIColor *)titleTextColor {
   _titleTextColor = titleTextColor;
-  self.titleLabel.textColor = titleTextColor;
+  self.titleLabel.textColor = titleTextColor ?: [self defaultTitleTextColor];
 }
 
 - (void)setMessageTextColor:(UIColor *)messageTextColor {
   _messageTextColor = messageTextColor;
-  self.messageLabel.textColor = messageTextColor;
+  self.messageLabel.textColor =
+      messageTextColor ?: [UIColor.blackColor colorWithAlphaComponent:MessageLabelAlpha];
 }
 
 @end
