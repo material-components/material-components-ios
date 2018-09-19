@@ -40,7 +40,7 @@ static const CGFloat safeAreaAmount = 20.f;
 @end
 
 @implementation MDCFakeView
--(UIEdgeInsets)safeAreaInsets {
+- (UIEdgeInsets)safeAreaInsets {
   return UIEdgeInsetsMake(safeAreaAmount, safeAreaAmount, safeAreaAmount, safeAreaAmount);
 }
 @end
@@ -216,6 +216,7 @@ static const CGFloat safeAreaAmount = 20.f;
                         [UIColor.blackColor colorWithAlphaComponent:0.87f]);
   XCTAssertEqualObjects(self.actionSheet.header.messageLabel.textColor,
                         [UIColor.blackColor colorWithAlphaComponent:0.6f]);
+}
 
 #pragma mark - Opening height
 
