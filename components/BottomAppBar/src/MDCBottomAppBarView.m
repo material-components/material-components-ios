@@ -25,6 +25,7 @@
 static NSString *kMDCBottomAppBarViewAnimKeyString = @"AnimKey";
 static NSString *kMDCBottomAppBarViewPathString = @"path";
 static NSString *kMDCBottomAppBarViewPositionString = @"position";
+static const CGFloat kMDCBottomAppBarViewFloatingButtonCenterToNavigationBarTopOffset = 0.f;
 static const CGFloat kMDCBottomAppBarViewFloatingButtonElevationPrimary = 6.f;
 static const CGFloat kMDCBottomAppBarViewFloatingButtonElevationSecondary = 4.f;
 static const int kMDCButtonAnimationDuration = 200;
@@ -73,11 +74,15 @@ static const int kMDCButtonAnimationDuration = 200;
 
 - (void)commonMDCBottomAppBarViewInit {
   self.cutView = [[MDCBottomAppBarCutView alloc] initWithFrame:self.bounds];
+  self.floatingButtonVerticalOffset =
+      kMDCBottomAppBarViewFloatingButtonCenterToNavigationBarTopOffset;
   [self addSubview:self.cutView];
+
   self.autoresizingMask = (UIViewAutoresizingFlexibleWidth |
                            UIViewAutoresizingFlexibleLeftMargin |
                            UIViewAutoresizingFlexibleRightMargin);
   self.layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
+
   [self addFloatingButton];
   [self addBottomBarLayer];
   [self addNavBar];
@@ -117,38 +122,38 @@ static const int kMDCButtonAnimationDuration = 200;
   }
 }
 
-- (CGPoint)getFloatingButtonCenterPositionForWidth:(CGFloat)width {
+- (CGPoint)getFloatingButtonCenterPositionForAppBarWidth:(CGFloat)appBarWidth {
   CGPoint floatingButtonPoint = CGPointZero;
-  CGFloat halfDefaultDimension = CGRectGetMidX(self.floatingButton.bounds);
-  CGFloat midX = width / 2;
+  CGFloat navigationBarTopEdgeYOffset = CGRectGetMinY(self.navBar.frame);
+  CGFloat midX = appBarWidth / 2;
+
+  floatingButtonPoint.y =
+      MAX(0.0f, navigationBarTopEdgeYOffset - self.floatingButtonVerticalOffset);
   switch (self.floatingButtonPosition) {
     case MDCBottomAppBarFloatingButtonPositionLeading: {
       if (self.layoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
-        floatingButtonPoint = CGPointMake(kMDCBottomAppBarFloatingButtonPositionX,
-                                          halfDefaultDimension);
+        floatingButtonPoint.x = kMDCBottomAppBarFloatingButtonPositionX;
       } else {
-        floatingButtonPoint = CGPointMake(width - kMDCBottomAppBarFloatingButtonPositionX,
-                                          halfDefaultDimension);
+        floatingButtonPoint.x = appBarWidth - kMDCBottomAppBarFloatingButtonPositionX;
       }
       break;
     }
     case MDCBottomAppBarFloatingButtonPositionCenter: {
-      floatingButtonPoint = CGPointMake(midX, halfDefaultDimension);
+      floatingButtonPoint.x = midX;
       break;
     }
     case MDCBottomAppBarFloatingButtonPositionTrailing: {
       if (self.layoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
-        floatingButtonPoint = CGPointMake(width - kMDCBottomAppBarFloatingButtonPositionX,
-                                          halfDefaultDimension);
+        floatingButtonPoint.x = appBarWidth - kMDCBottomAppBarFloatingButtonPositionX;
       } else {
-        floatingButtonPoint = CGPointMake(kMDCBottomAppBarFloatingButtonPositionX,
-                                          halfDefaultDimension);
+        floatingButtonPoint.x = kMDCBottomAppBarFloatingButtonPositionX;
       }
       break;
     }
     default:
       break;
   }
+
   return floatingButtonPoint;
 }
 
@@ -197,7 +202,8 @@ static const int kMDCButtonAnimationDuration = 200;
 }
 
 - (void)moveFloatingButtonCenterAnimated:(BOOL)animated {
-  CGPoint endPoint = [self getFloatingButtonCenterPositionForWidth:CGRectGetWidth(self.bounds)];
+  CGPoint endPoint =
+      [self getFloatingButtonCenterPositionForAppBarWidth:CGRectGetWidth(self.bounds)];
   if (animated) {
     CABasicAnimation *animation =
         [CABasicAnimation animationWithKeyPath:kMDCBottomAppBarViewPositionString];
@@ -237,14 +243,15 @@ static const int kMDCButtonAnimationDuration = 200;
 
 - (void)layoutSubviews {
   [super layoutSubviews];
-  self.floatingButton.center =
-      [self getFloatingButtonCenterPositionForWidth:CGRectGetWidth(self.bounds)];
-  [self renderPathBasedOnFloatingButtonVisibitlityAnimated:NO];
 
   CGRect navBarFrame =
       CGRectMake(0, kMDCBottomAppBarNavigationViewYOffset, CGRectGetWidth(self.bounds),
                  kMDCBottomAppBarHeight - kMDCBottomAppBarNavigationViewYOffset);
   self.navBar.frame = navBarFrame;
+
+  self.floatingButton.center =
+      [self getFloatingButtonCenterPositionForAppBarWidth:CGRectGetWidth(self.bounds)];
+  [self renderPathBasedOnFloatingButtonVisibitlityAnimated:NO];
 }
 
 - (UIEdgeInsets)mdc_safeAreaInsets {
