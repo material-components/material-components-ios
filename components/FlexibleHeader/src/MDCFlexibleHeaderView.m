@@ -1433,13 +1433,11 @@ static BOOL isRunningiOS10_3OrAbove() {
   // correlates to the content offset - it's also augmented by the shift accumulator. In order to
   // keep the header's height constant when changing the tracking scroll view, we need to adjust
   // the shift accumulator accordingly.
-  if (self.canAlwaysExpandToMaximumHeight &&
-      self.sharedWithManyScrollViews && wasTrackingScrollView) {
-
+  if (self.canAlwaysExpandToMaximumHeight && self.sharedWithManyScrollViews &&
+      wasTrackingScrollView) {
     // What's our expected height now that we've changed the tracking scroll view?
     CGFloat headerHeight = -[self fhv_contentOffsetWithoutInjectedTopInset];
-    headerHeight =
-        MAX(self.computedMinimumHeight, MIN(self.computedMaximumHeight, headerHeight));
+    headerHeight = MAX(self.computedMinimumHeight, MIN(self.computedMaximumHeight, headerHeight));
 
     // How much will our height change if we do nothing right now?
     const CGFloat heightDelta = self.bounds.size.height - headerHeight;
@@ -1452,7 +1450,7 @@ static BOOL isRunningiOS10_3OrAbove() {
     if (headerHeight > self.computedMinimumHeight + DBL_EPSILON) {
       // We're attached to the content, so don't allow any height accumulation.
       accumulatorMin = 0;
-    } else{
+    } else {
       accumulatorMin = [self fhv_accumulatorMin];
     }
     _shiftAccumulator = MAX(accumulatorMin, MIN([self fhv_accumulatorMax], _shiftAccumulator));
