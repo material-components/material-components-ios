@@ -232,7 +232,7 @@ static const CGFloat safeAreaAmount = 20.f;
   }
 }
 
-- (CGRect)setUpActionSheetWithHeight:(CGFloat) height
+- (CGRect)setUpActionSheetWithHeight:(CGFloat)height
                             andTitle:(NSString *)title
                           andMessage:(NSString *)message {
   // Given
