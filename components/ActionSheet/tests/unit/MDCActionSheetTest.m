@@ -233,8 +233,8 @@ static const CGFloat safeAreaAmount = 20.f;
 }
 
 - (CGRect)setUpActionSheetWithHeight:(CGFloat) height
-                          andTitle:(NSString *)title
-                        andMessage:(NSString *)message {
+                            andTitle:(NSString *)title
+                          andMessage:(NSString *)message {
   // Given
   CGRect viewRect = CGRectMake(0, 0, 200, height);
   self.actionSheet.view.bounds = viewRect;
@@ -256,7 +256,7 @@ static const CGFloat safeAreaAmount = 20.f;
                                           andMessage:nil];
 
   CGFloat cellHeight =
-     self.actionSheet.tableView.contentSize.height / (CGFloat)self.actionSheet.actions.count;
+      self.actionSheet.tableView.contentSize.height / (CGFloat)self.actionSheet.actions.count;
   cellHeight = MDCCeil(cellHeight);
   CGFloat halfCellHeight = cellHeight * 0.5f;
   CGFloat headerHeight = CGRectGetHeight(self.actionSheet.header.frame);
@@ -373,7 +373,7 @@ static const CGFloat safeAreaAmount = 20.f;
   CGFloat fakeHeight = 500;
   CGRect viewRect = [self setUpActionSheetWithHeight:fakeHeight andTitle:nil andMessage:nil];
   CGFloat cellHeight =
-    self.actionSheet.tableView.contentSize.height / (CGFloat)self.actionSheet.actions.count;
+      self.actionSheet.tableView.contentSize.height / (CGFloat)self.actionSheet.actions.count;
   cellHeight = MDCCeil(cellHeight);
   CGFloat halfCellHeight = cellHeight * 0.5f;
   CGFloat headerHeight = CGRectGetHeight(self.actionSheet.header.frame);
