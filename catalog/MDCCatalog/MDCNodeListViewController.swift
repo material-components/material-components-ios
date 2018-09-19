@@ -576,6 +576,9 @@ extension MDCNodeListViewController {
       vc = MDCNodeListViewController(node: node)
     }
     self.navigationController?.pushViewController(vc, animated: true)
+    let MDCAppBarNavigationController = self.navigationController as? MDCAppBarNavigationController
+    let appBar = MDCAppBarNavigationController?.appBarViewController(for: vc)
+    appBar?.navigationBar.adjustsFontSizeToFitWidth = true
   }
 
   func createViewController(from node: CBCNode) -> UIViewController {

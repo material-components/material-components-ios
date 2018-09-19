@@ -723,6 +723,16 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   _trailingButtonBar.inkColor = inkColor;
 }
 
+- (void)setAdjustsFontSizeToFitWidth:(BOOL)adjustsFontSizeToFitWidth {
+  if (_titleLabel.adjustsFontSizeToFitWidth != adjustsFontSizeToFitWidth) {
+    _titleLabel.adjustsFontSizeToFitWidth = adjustsFontSizeToFitWidth;
+  }
+}
+
+- (BOOL)adjustsFontSizeToFitWidth {
+  return _titleLabel.adjustsFontSizeToFitWidth;
+}
+
 - (void)setObservedNavigationItem:(UINavigationItem *)navigationItem {
   @synchronized(_observedNavigationItemLock) {
     if (navigationItem == _observedNavigationItem) {

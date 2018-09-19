@@ -52,6 +52,8 @@ extension TabBarIndicatorTemplateExample {
 
     appBarViewController.headerStackView.bottomBar = self.tabBar
     appBarViewController.headerStackView.setNeedsLayout()
+
+    appBarViewController.navigationBar.adjustsFontSizeToFitWidth = true
     return appBarViewController
   }
 
