@@ -322,7 +322,6 @@ static NSString *const ReuseIdentifier = @"BaseCell";
   return self.header.messageTextColor;
 }
 
-
 #pragma mark - Dynamic Type
 
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {

@@ -198,8 +198,8 @@ static const CGFloat MiddlePadding = 8.f;
 }
 
 - (UIColor *)defaultTitleTextColor {
-  // If message is empty or nil then the title label's alpha value should be lighter, if there is both
-  // then the title label's alpha should be darker.
+  // If message is empty or nil then the title label's alpha value should be lighter, if there is
+  // both then the title label's alpha should be darker.
   if (self.message && ![self.message isEqualToString:@""]) {
     return [UIColor.blackColor colorWithAlphaComponent:TitleLabelAlpha];
   } else {
