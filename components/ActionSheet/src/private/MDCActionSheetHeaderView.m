@@ -49,7 +49,7 @@ static const CGFloat MiddlePadding = 8.f;
     _messageLabel.font = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody1];
     _messageLabel.numberOfLines = 2;
     _messageLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    _messageLabel.alpha = MessageLabelAlpha;
+    _messageLabel.textColor = [UIColor.blackColor colorWithAlphaComponent:MessageLabelAlpha];
   }
   return self;
 }
@@ -125,9 +125,9 @@ static const CGFloat MiddlePadding = 8.f;
   // If message is empty or nil then the title label's alpha value should be lighter, if there is both
   // then the title label's alpha should be darker.
   if (self.message && ![self.message isEqualToString:@""]) {
-    self.titleLabel.alpha = TitleLabelAlpha;
+    _titleLabel.textColor = [UIColor.blackColor colorWithAlphaComponent:TitleLabelAlpha];
   } else {
-    self.titleLabel.alpha = MessageLabelAlpha;
+    _titleLabel.textColor = [UIColor.blackColor colorWithAlphaComponent:MessageLabelAlpha];
   }
   [self setNeedsLayout];
 }
