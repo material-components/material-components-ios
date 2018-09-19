@@ -14,7 +14,7 @@
 
 #import "MDCShadowLayer.h"
 
-#import "MDCMath.h"
+#import "MaterialMath.h"
 
 static const CGFloat kShadowElevationDialog = 24.0;
 static const float kKeyShadowOpacity = 0.26f;
