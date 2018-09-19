@@ -64,17 +64,17 @@ class AppBarManualTabsExample: UIViewController {
     MDCAppBarTypographyThemer.applyTypographyScheme(typographyScheme, to: appBarViewController)
 
     // Need to update the status bar style after applying the theme.
-    self.setNeedsStatusBarAppearanceUpdate()
+    setNeedsStatusBarAppearanceUpdate()
 
-    view.backgroundColor = UIColor.white
+    view.backgroundColor = colorScheme.backgroundColor
     view.addSubview(appBarViewController.view)
     appBarViewController.didMove(toParentViewController: self)
 
-    self.switchToTab(firstTab)
+    switchToTab(firstTab)
   }
 
   fileprivate func switchToTab(_ tab: SimpleTableViewController) {
-    self.appBarViewController.headerView.trackingScrollWillChange(toScroll: tab.tableView)
+    appBarViewController.headerView.trackingScrollWillChange(toScroll: tab.tableView)
 
     if let currentTab = currentTab {
       currentTab.headerView = nil
@@ -85,16 +85,16 @@ class AppBarManualTabsExample: UIViewController {
 
     if let tabView = tab.view {
       tabView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-      tabView.frame = self.view.bounds
+      tabView.frame = view.bounds
     }
 
-    self.view.addSubview(tab.tableView)
-    self.view.sendSubview(toBack: tab.tableView)
+    view.addSubview(tab.tableView)
+    view.sendSubview(toBack: tab.tableView)
     tab.didMove(toParentViewController: self)
 
-    tab.headerView = self.appBarViewController.headerView
+    tab.headerView = appBarViewController.headerView
 
-    self.appBarViewController.headerView.trackingScrollView = tab.tableView
+    appBarViewController.headerView.trackingScrollView = tab.tableView
     currentTab = tab
   }
 
@@ -110,10 +110,10 @@ class AppBarManualTabsExample: UIViewController {
 
   // MARK: Private
 
-  func makeAppBar() -> MDCAppBarViewController {
+  private func makeAppBar() -> MDCAppBarViewController {
     let appBarViewController = MDCAppBarViewController()
 
-    self.addChildViewController(appBarViewController)
+    addChildViewController(appBarViewController)
 
     // Give the tab bar enough height to accomodate all possible item appearances.
     appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
@@ -124,7 +124,7 @@ class AppBarManualTabsExample: UIViewController {
     appBarViewController.headerView.minimumHeight = 56
     appBarViewController.headerView.maximumHeight = 128
 
-    appBarViewController.headerStackView.bottomBar = self.tabBar
+    appBarViewController.headerStackView.bottomBar = tabBar
 
     return appBarViewController
   }
@@ -137,9 +137,9 @@ class AppBarManualTabsExample: UIViewController {
 extension AppBarManualTabsExample: MDCTabBarDelegate {
   func tabBar(_ tabBar: MDCTabBar, didSelect item: UITabBarItem) {
     if item.tag == 0 {
-      self.switchToTab(firstTab)
+      switchToTab(firstTab)
     } else {
-      self.switchToTab(secondTab)
+      switchToTab(secondTab)
     }
   }
 }
@@ -166,9 +166,9 @@ private class SimpleTableViewController: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-    self.tableView.delegate = self
-    self.tableView.dataSource = self
+    tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+    tableView.delegate = self
+    tableView.dataSource = self
   }
 
   override func numberOfSections(in tableView: UITableView) -> Int {
@@ -181,7 +181,7 @@ private class SimpleTableViewController: UITableViewController {
 
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-    cell.textLabel!.text = "\(self.title!): Row \(indexPath.item)"
+    cell.textLabel!.text = "\(title!): Row \(indexPath.item)"
     return cell
   }
 
