@@ -222,8 +222,9 @@ static const CGFloat safeAreaAmount = 20.f;
 
 - (void)addActions:(NSUInteger)actions {
   for (NSUInteger i = 0; i < actions; ++i) {
-    MDCActionSheetAction *action =
-        [MDCActionSheetAction actionWithTitle:@"Title" image:nil handler:nil];
+    MDCActionSheetAction *action = [MDCActionSheetAction actionWithTitle:@"Title"
+                                                                   image:nil
+                                                                 handler:nil];
     [self.actionSheet addAction:action];
   }
 }
@@ -292,7 +293,7 @@ static const CGFloat safeAreaAmount = 20.f;
   CGFloat expectedHeight = [self.actionSheet openingSheetHeight];
   CGFloat expectedMinusHeader = expectedHeight - headerHeight;
   CGFloat cellHeight =
-  self.actionSheet.tableView.contentSize.height / (CGFloat)self.actionSheet.actions.count;
+      self.actionSheet.tableView.contentSize.height / (CGFloat)self.actionSheet.actions.count;
   cellHeight = MDCCeil(cellHeight);
   CGFloat halfCellHeight = cellHeight * 0.5f;
   // Action sheet should show half of the allowed actions but the full last action
