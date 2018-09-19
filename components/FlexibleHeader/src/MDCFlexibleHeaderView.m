@@ -1727,6 +1727,10 @@ static BOOL isRunningiOS10_3OrAbove() {
     scrollView.contentOffset = offset;
   }
 
+  if (self.trackingScrollView == nil) {
+    return;
+  }
+
   if (_shiftAccumulator >= [self fhv_accumulatorMax]) {
     // We're shifted off-screen, make sure that this scroll view isn't expecting to show the header.
 
