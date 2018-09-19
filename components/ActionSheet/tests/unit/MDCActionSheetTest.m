@@ -232,131 +232,166 @@ static const CGFloat safeAreaAmount = 20.f;
   }
 }
 
-- (void)testOpenningHeightWithNoHeader {
+- (CGRect)setUpActionSheetWithHeight:(CGFloat) height
+                          andTitle:(NSString *)title
+                        andMessage:(NSString *)message {
   // Given
-  CGFloat fakeHeight = 500;
-  self.actionSheet.view.bounds = CGRectMake(0, 0, 200, fakeHeight);
+  CGRect viewRect = CGRectMake(0, 0, 200, height);
+  self.actionSheet.view.bounds = viewRect;
+  self.actionSheet.title = title;
+  self.actionSheet.message = message;
 
   // When
   [self addNumberOfActions:100];
   [self.actionSheet.view setNeedsLayout];
   [self.actionSheet.view layoutIfNeeded];
-
-  // Then
-  CGFloat headerHeight = CGRectGetHeight(self.actionSheet.header.frame);
-  CGFloat expectedHeight = [self.actionSheet openingSheetHeight];
-  CGFloat expectedMinusHeader = expectedHeight - headerHeight;
-  CGFloat cellHeight =
-      self.actionSheet.tableView.contentSize.height / (CGFloat)self.actionSheet.actions.count;
-  cellHeight = MDCCeil(cellHeight);
-  CGFloat halfCellHeight = cellHeight * 0.5f;
-  // Action sheet should show half of the allowed actions but the full last action
-  XCTAssertEqual(fmod(expectedMinusHeader, halfCellHeight), 0);
-  XCTAssertNotEqual(fmod(expectedMinusHeader, cellHeight), 0);
+  return viewRect;
 }
 
 - (void)testOpeningHeightWithTitle {
   // Given
   CGFloat fakeHeight = 500;
-  self.actionSheet.view.bounds = CGRectMake(0, 0, 200, fakeHeight);
-  self.actionSheet.title = @"Test title";
+  CGRect viewRect = [self setUpActionSheetWithHeight:fakeHeight
+                                            andTitle:@"Test Title"
+                                          andMessage:nil];
 
-  // When
-  [self addNumberOfActions:100];
-  [self.actionSheet.view setNeedsLayout];
-  [self.actionSheet.view layoutIfNeeded];
-
-  // Then
-  CGFloat headerHeight = CGRectGetHeight(self.actionSheet.header.frame);
-  CGFloat expectedHeight = [self.actionSheet openingSheetHeight];
-  CGFloat expectedMinusHeader = expectedHeight - headerHeight;
   CGFloat cellHeight =
-      self.actionSheet.tableView.contentSize.height / (CGFloat)self.actionSheet.actions.count;
+     self.actionSheet.tableView.contentSize.height / (CGFloat)self.actionSheet.actions.count;
   cellHeight = MDCCeil(cellHeight);
   CGFloat halfCellHeight = cellHeight * 0.5f;
-  // Action sheet should show half of the allowed actions but the full last action
-  XCTAssertEqual(fmod(expectedMinusHeader, halfCellHeight), 0);
-  XCTAssertNotEqual(fmod(expectedMinusHeader, cellHeight), 0);
+  CGFloat headerHeight = CGRectGetHeight(self.actionSheet.header.frame);
+
+  for (NSInteger additionalHeight = 0; additionalHeight < cellHeight; ++additionalHeight) {
+    // When
+    viewRect.size.height = fakeHeight + additionalHeight;
+    self.actionSheet.view.bounds = viewRect;
+    [self.actionSheet.view setNeedsLayout];
+    [self.actionSheet.view layoutIfNeeded];
+
+    // Then
+    CGFloat expectedHeight = [self.actionSheet openingSheetHeight];
+    CGFloat expectedMinusHeader = expectedHeight - headerHeight;
+    // Action sheet should show half of the allowed actions but the full last action
+    XCTAssertEqualWithAccuracy(fmod(expectedMinusHeader, halfCellHeight), 0, 0.001);
+    XCTAssertNotEqualWithAccuracy(fmod(expectedMinusHeader, cellHeight), 0, 0.001);
+  }
 }
 
 - (void)testOpeningHeightWithtTitleAndSmallMessage {
   // Given
   CGFloat fakeHeight = 500;
-  self.actionSheet.view.bounds = CGRectMake(0, 0, 200, fakeHeight);
-  self.actionSheet.title = @"Test title";
-  self.actionSheet.message = @"Test message";
+  CGRect viewRect = [self setUpActionSheetWithHeight:fakeHeight
+                                            andTitle:@"Test title"
+                                          andMessage:@"Test message"];
 
-  // When
-  [self addNumberOfActions:100];
-  [self.actionSheet.view setNeedsLayout];
-  [self.actionSheet.view layoutIfNeeded];
-
-  // Then
-  CGFloat headerHeight = CGRectGetHeight(self.actionSheet.header.frame);
-  CGFloat expectedHeight = [self.actionSheet openingSheetHeight];
-  CGFloat expectedMinusHeader = expectedHeight - headerHeight;
   CGFloat cellHeight =
       self.actionSheet.tableView.contentSize.height / (CGFloat)self.actionSheet.actions.count;
   cellHeight = MDCCeil(cellHeight);
   CGFloat halfCellHeight = cellHeight * 0.5f;
-  // Action sheet should show half of the allowed actions but the full last action
-  XCTAssertEqual(fmod(expectedMinusHeader, halfCellHeight), 0);
-  XCTAssertNotEqual(fmod(expectedMinusHeader, cellHeight), 0);
+  CGFloat headerHeight = CGRectGetHeight(self.actionSheet.header.frame);
+
+  for (NSInteger additionalHeight = 0; additionalHeight < cellHeight; ++additionalHeight) {
+    // When
+    viewRect.size.height = fakeHeight + additionalHeight;
+    self.actionSheet.view.bounds = viewRect;
+    [self.actionSheet.view setNeedsLayout];
+    [self.actionSheet.view layoutIfNeeded];
+
+    // Then
+    CGFloat expectedHeight = [self.actionSheet openingSheetHeight];
+    CGFloat expectedMinusHeader = expectedHeight - headerHeight;
+    // Action sheet should show half of the allowed actions but the full last action
+    XCTAssertEqualWithAccuracy(fmod(expectedMinusHeader, halfCellHeight), 0, 0.001);
+    XCTAssertNotEqualWithAccuracy(fmod(expectedMinusHeader, cellHeight), 0, 0.001);
+  }
 }
 
 - (void)testOpeningHeightWithTitleAndLargeMessage {
   // Given
   CGFloat fakeHeight = 500;
-  self.actionSheet.view.bounds = CGRectMake(0, 0, 200, fakeHeight);
-  self.actionSheet.title = @"Test title";
   NSString *first = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ultricies";
   NSString *second = @"diam libero, eget porta arcu feugiat sit amet Maecenas placerat felis sed ";
   NSString *third = @"risusnmaximus tempus.Integer feugiat, augue in pellentesque dictum, justo ";
   NSString *fourth = @"erat ultricies leo, quis eros dictum mi. In finibus vulputate eros, auctor";
   NSString *messageString = [NSString stringWithFormat:@"%@%@%@%@", first, second, third, fourth];
   self.actionSheet.message = messageString;
+  CGRect viewRect = [self setUpActionSheetWithHeight:fakeHeight
+                                            andTitle:@"Test title"
+                                          andMessage:messageString];
 
-  // When
-  [self addNumberOfActions:100];
-  [self.actionSheet.view setNeedsLayout];
-  [self.actionSheet.view layoutIfNeeded];
-
-  // Then
-  CGFloat headerHeight = CGRectGetHeight(self.actionSheet.header.frame);
-  CGFloat expectedHeight = [self.actionSheet openingSheetHeight];
-  CGFloat expectedMinusHeader = expectedHeight - headerHeight;
   CGFloat cellHeight =
       self.actionSheet.tableView.contentSize.height / (CGFloat)self.actionSheet.actions.count;
   cellHeight = MDCCeil(cellHeight);
   CGFloat halfCellHeight = cellHeight * 0.5f;
-  // Action sheet should show half of the allowed actions but the full last action
-  XCTAssertEqual(fmod(expectedMinusHeader, halfCellHeight), 0);
-  XCTAssertNotEqual(fmod(expectedMinusHeader, cellHeight), 0);
+  CGFloat headerHeight = CGRectGetHeight(self.actionSheet.header.frame);
+
+  for (NSInteger additionalHeight = 0; additionalHeight < cellHeight; ++additionalHeight) {
+    // When
+    viewRect.size.height = fakeHeight + additionalHeight;
+    self.actionSheet.view.bounds = viewRect;
+    [self.actionSheet.view setNeedsLayout];
+    [self.actionSheet.view layoutIfNeeded];
+
+    // Then
+    CGFloat expectedHeight = [self.actionSheet openingSheetHeight];
+    CGFloat expectedMinusHeader = expectedHeight - headerHeight;
+    // Action sheet should show half of the allowed actions but the full last action
+    XCTAssertEqualWithAccuracy(fmod(expectedMinusHeader, halfCellHeight), 0, 0.001);
+    XCTAssertNotEqualWithAccuracy(fmod(expectedMinusHeader, cellHeight), 0, 0.001);
+  }
 }
 
 - (void)testOpeningHeightWithSafeArea {
   // Given
   CGFloat fakeHeight = 500;
-  CGRect viewRect = CGRectMake(0, 0, 200, fakeHeight);
-  self.actionSheet.view.bounds = viewRect;
-  self.actionSheet.view = [[MDCFakeView alloc] initWithFrame:viewRect];
+  CGRect viewRect = [self setUpActionSheetWithHeight:fakeHeight andTitle:nil andMessage:nil];
 
-  // When
-  [self addNumberOfActions:100];
-  [self.actionSheet.view setNeedsLayout];
-  [self.actionSheet.view layoutIfNeeded];
-
-  // Then
-  CGFloat headerHeight = CGRectGetHeight(self.actionSheet.header.frame);
-  CGFloat expectedHeight = [self.actionSheet openingSheetHeight] + safeAreaAmount;
-  CGFloat expectedMinusHeader = expectedHeight - headerHeight;
   CGFloat cellHeight =
       self.actionSheet.tableView.contentSize.height / (CGFloat)self.actionSheet.actions.count;
   cellHeight = MDCCeil(cellHeight);
   CGFloat halfCellHeight = cellHeight * 0.5f;
-  // Action sheet should show half of the allowed actions but the full last action
-  XCTAssertEqual(fmod(expectedMinusHeader, halfCellHeight), 0);
-  XCTAssertNotEqual(fmod(expectedMinusHeader, cellHeight), 0);
+  CGFloat headerHeight = CGRectGetHeight(self.actionSheet.header.frame);
+
+  for (NSInteger additionalHeight = 0; additionalHeight < cellHeight; ++additionalHeight) {
+    // When
+    viewRect.size.height = fakeHeight + additionalHeight;
+    self.actionSheet.view.bounds = viewRect;
+    [self.actionSheet.view setNeedsLayout];
+    [self.actionSheet.view layoutIfNeeded];
+
+    // Then
+    CGFloat expectedHeight = [self.actionSheet openingSheetHeight] + safeAreaAmount;
+    CGFloat expectedMinusHeader = expectedHeight - headerHeight;
+    // Action sheet should show half of the allowed actions but the full last action
+    XCTAssertEqualWithAccuracy(fmod(expectedMinusHeader, halfCellHeight), 0, 0.001);
+    XCTAssertNotEqualWithAccuracy(fmod(expectedMinusHeader, cellHeight), 0, 0.001);
+  }
+}
+
+- (void)testOpeningHeightNoHeader {
+  // Given
+  CGFloat fakeHeight = 500;
+  CGRect viewRect = [self setUpActionSheetWithHeight:fakeHeight andTitle:nil andMessage:nil];
+  CGFloat cellHeight =
+    self.actionSheet.tableView.contentSize.height / (CGFloat)self.actionSheet.actions.count;
+  cellHeight = MDCCeil(cellHeight);
+  CGFloat halfCellHeight = cellHeight * 0.5f;
+  CGFloat headerHeight = CGRectGetHeight(self.actionSheet.header.frame);
+
+  for (NSInteger additionalHeight = 0; additionalHeight < cellHeight; ++additionalHeight) {
+    // When
+    viewRect.size.height = fakeHeight + additionalHeight;
+    self.actionSheet.view.bounds = viewRect;
+    [self.actionSheet.view setNeedsLayout];
+    [self.actionSheet.view layoutIfNeeded];
+
+    // Then
+    CGFloat expectedHeight = [self.actionSheet openingSheetHeight];
+    CGFloat expectedMinusHeader = expectedHeight - headerHeight;
+    // Action sheet should show half of the allowed actions but the full last action
+    XCTAssertEqualWithAccuracy(fmod(expectedMinusHeader, halfCellHeight), 0, 0.001);
+    XCTAssertNotEqualWithAccuracy(fmod(expectedMinusHeader, cellHeight), 0, 0.001);
+  }
 }
 
 @end
