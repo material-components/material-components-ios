@@ -46,8 +46,8 @@
       CGRectGetHeight(floatingButton.bounds) / 2 + kMDCBottomAppBarFloatingButtonRadiusOffset;
   CGFloat navigationBarYOffset = CGRectGetMinY(navigationBarFrame);
   CGFloat halfAngle = acosf((float)((navigationBarYOffset - floatingButton.center.y) / arcRadius));
-  CGFloat startAngle = M_PI / 2.0f + halfAngle;
-  CGFloat endAngle = M_PI / 2.0f - halfAngle;
+  CGFloat startAngle = (float)M_PI / 2.0f + halfAngle;
+  CGFloat endAngle = (float)M_PI / 2.0f - halfAngle;
   CGFloat halfOfHypotenuseLength = sinf((float)halfAngle) * arcRadius;
 
   CGFloat width = CGRectGetWidth(rect);
