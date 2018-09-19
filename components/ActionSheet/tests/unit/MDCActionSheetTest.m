@@ -18,17 +18,30 @@
 
 #import "../../src/private/MDCActionSheetHeaderView.h"
 
+static const CGFloat safeAreaAmount = 20.f;
+
 @interface MDCActionSheetHeaderView (Testing)
 @property(nonatomic, strong) UILabel *titleLabel;
 @property(nonatomic, strong) UILabel *messageLabel;
 @end
 
 @interface MDCActionSheetController (Testing)
+@property(nonatomic, strong) UITableView *tableView;
 @property(nonatomic, strong) MDCActionSheetHeaderView *header;
+- (CGFloat)openingSheetHeight;
 @end
 
 @interface MDCActionSheetTest : XCTestCase
 @property(nonatomic, strong) MDCActionSheetController *actionSheet;
+@end
+
+@interface MDCFakeView : UIView
+@end
+
+@implementation MDCFakeView
+-(UIEdgeInsets)safeAreaInsets {
+  return UIEdgeInsetsMake(safeAreaAmount, safeAreaAmount, safeAreaAmount, safeAreaAmount);
+}
 @end
 
 @implementation MDCActionSheetTest
@@ -87,6 +100,64 @@
   UIColor *expectedMessageColor = [UIColor.blackColor colorWithAlphaComponent:0.6f];
   UIColor *messageColor = self.actionSheet.header.messageLabel.textColor;
   XCTAssertEqualObjects(messageColor, expectedMessageColor);
+}
+
+#pragma mark - Opening height
+
+- (void)addActions {
+  for (NSUInteger i = 0; i < 100; ++i) {
+    MDCActionSheetAction *action =
+        [MDCActionSheetAction actionWithTitle:@"Title" image:nil handler:nil];
+    [self.actionSheet addAction:action];
+  }
+}
+
+- (void)testOpenningHeightWithNoHeader {
+  // Given
+  CGFloat fakeHeight = 500;
+  self.actionSheet.view.bounds = CGRectMake(0, 0, 200, fakeHeight);
+
+  // When
+  [self addActions];
+  [self.actionSheet.view setNeedsLayout];
+  [self.actionSheet.view layoutIfNeeded];
+
+  // Then
+  CGFloat 
+  XCTAssertEqualWithAccuracy(self.actionSheet.mdc_bottomSheetPresentationController.preferredSheetHeight, (fakeHeight / 2) - cellHeight, 0.001);
+}
+
+- (void)testOpeningHeightWithTitle {
+  // Given
+  CGFloat fakeHeight = 500;
+  self.actionSheet.view.bounds = CGRectMake(0, 0, 200, fakeHeight);
+  self.actionSheet.title = @"Test title";
+
+  // When
+  [self addActions];
+  CGFloat cellHeight =
+      self.actionSheet.tableView.contentSize.height / (CGFloat)(self.actionSheet.actions.count);
+
+  // Then
+  CGFloat openingHeight = [self.actionSheet openingSheetHeight];
+  XCTAssertEqualWithAccuracy(openingHeight, (fakeHeight / 2) - cellHeight, 0.001);
+}
+
+- (void)testOpeningHeightWithSafeArea {
+  // Given
+  CGFloat fakeHeight = 500;
+  CGRect viewRect = CGRectMake(0, 0, 200, fakeHeight);
+  self.actionSheet.view.bounds = viewRect;
+  self.actionSheet.view = [[MDCFakeView alloc] initWithFrame:viewRect];
+
+  // When
+  [self addActions];
+  CGFloat cellHeight =
+      self.actionSheet.tableView.contentSize.height / (CGFloat)(self.actionSheet.actions.count);
+
+  // Then
+  CGFloat openingHeight = [self.actionSheet openingSheetHeight];
+  XCTAssertEqualWithAccuracy(openingHeight, (fakeHeight / 2) - cellHeight - safeAreaAmount, 0.001);
 }
 
 @end

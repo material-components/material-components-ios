@@ -142,6 +142,9 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
 
+  if (self.tableView.contentSize.height > (CGRectGetHeight(self.view.bounds) / 2)) {
+    self.mdc_bottomSheetPresentationController.preferredSheetHeight = [self openingSheetHeight];
+  }
   CGSize size = [self.header sizeThatFits:CGRectStandardize(self.view.bounds).size];
   self.header.frame = CGRectMake(0, 0, self.view.bounds.size.width, size.height);
   UIEdgeInsets insets = UIEdgeInsetsMake(self.header.frame.size.height, 0, 0, 0);
@@ -152,6 +155,23 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 #endif
   self.tableView.contentInset = insets;
   self.tableView.contentOffset = CGPointMake(0, -size.height);
+}
+
+- (CGFloat)openingSheetHeight {
+  // If there are too many options to fit on half of the screen then show as many options as
+  // possible minus half a cell, to allow for bleeding and signal to the user that the sheet is
+  // scrollable content.
+  CGFloat maxHeight = CGRectGetHeight(self.view.bounds) / 2;
+  CGFloat headerHeight = [self.header sizeThatFits:CGRectStandardize(self.view.bounds).size].height;
+  CGFloat cellHeight = self.tableView.contentSize.height / (CGFloat)_actions.count;
+  NSInteger amountOfCellsToShow = (NSInteger)(maxHeight - headerHeight) / (NSInteger)cellHeight;
+  CGFloat preferredHeight = (((CGFloat)amountOfCellsToShow - 0.5f) * cellHeight) + headerHeight;
+  // When updating the preferredSheetHeight the presentation controller takes into account the
+  // safe area so we have to remove that.
+  if (@available(iOS 11.0, *)) {
+    preferredHeight = preferredHeight - self.view.safeAreaInsets.bottom;
+  }
+  return preferredHeight;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
