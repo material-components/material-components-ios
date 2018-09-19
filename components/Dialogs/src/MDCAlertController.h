@@ -79,6 +79,9 @@
 /** An optional icon appearing above the title of the Alert Controller.*/
 @property(nonatomic, strong, nullable) UIImage *titleIcon;
 
+/** The tint color applied to the titleIcon. Leave empty to preserve original image color(s).*/
+@property(nonatomic, strong, nullable) UIColor *titleIconTintColor;
+
 /** The font applied to the message of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIFont *messageFont;
 

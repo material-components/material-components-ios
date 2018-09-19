@@ -227,6 +227,11 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   }
 }
 
+- (void)setTitleIconTintColor:(UIColor *)titleIconTintColor {
+  _titleIconTintColor = titleIconTintColor;
+  self.alertView.titleIconTintColor = titleIconTintColor;
+}
+
 - (void)setCornerRadius:(CGFloat)cornerRadius {
   _cornerRadius = cornerRadius;
   if (self.alertView) {
@@ -338,6 +343,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   self.alertView.buttonInkColor = self.buttonInkColor;
   self.alertView.titleAlignment = self.titleAlignment;
   self.alertView.titleIcon = self.titleIcon;
+  self.alertView.titleIconTintColor = self.titleIconTintColor;
   self.alertView.cornerRadius = self.cornerRadius;
 
   for (MDCAlertAction *action in self.actions) {
