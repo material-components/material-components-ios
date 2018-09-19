@@ -327,6 +327,22 @@ static NSString *const ReuseIdentifier = @"BaseCell";
   self.header.backgroundColor = backgroundColor;
 }
 
+- (void)setTitleTextColor:(UIColor *)titleTextColor {
+  self.header.titleTextColor = titleTextColor;
+}
+
+- (UIColor *)titleTextColor {
+  return self.header.titleTextColor;
+}
+
+- (void)setMessageTextColor:(UIColor *)messageTextColor {
+  self.header.messageTextColor = messageTextColor;
+}
+
+- (UIColor *)messageTextColor {
+  return self.header.messageTextColor;
+}
+
 #pragma mark - Dynamic Type
 
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {

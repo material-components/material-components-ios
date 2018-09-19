@@ -103,6 +103,120 @@ static const CGFloat safeAreaAmount = 20.f;
   XCTAssertEqualObjects(messageColor, expectedMessageColor);
 }
 
+- (void)testTitleAndMessageCustomRGBColor {
+  // Given
+  self.actionSheet.title = @"Test title";
+  self.actionSheet.message = @"Test message";
+
+  // When
+  UIColor *titleColor = [UIColor colorWithRed:0.5f green:0.7f blue:0.9f alpha:1.0f];
+  UIColor *messageColor = [UIColor colorWithRed:0.9f green:0.7f blue:0.5f alpha:1.0f];
+
+  self.actionSheet.titleTextColor = titleColor;
+  self.actionSheet.messageTextColor = messageColor;
+
+  // Then
+  XCTAssertEqualObjects(self.actionSheet.header.titleLabel.textColor, titleColor);
+  XCTAssertEqualObjects(self.actionSheet.header.messageLabel.textColor, messageColor);
+}
+
+- (void)testTitleAndMessageCustomHSBColor {
+  // Given
+  self.actionSheet.title = @"Test title";
+  self.actionSheet.message = @"Test message";
+
+  // When
+  UIColor *titleColor = [UIColor colorWithHue:0.5f saturation:0.7f brightness:0.9f alpha:1.0f];
+  UIColor *messageColor = [UIColor colorWithHue:0.9f saturation:0.7f brightness:0.5f alpha:1.0f];
+
+  self.actionSheet.titleTextColor = titleColor;
+  self.actionSheet.messageTextColor = messageColor;
+
+  // Then
+  XCTAssertEqualObjects(self.actionSheet.header.titleLabel.textColor, titleColor);
+  XCTAssertEqualObjects(self.actionSheet.header.messageLabel.textColor, messageColor);
+}
+
+- (void)testTitleAndMessageCustomColor {
+  // Given
+  self.actionSheet.title = @"Test title";
+  self.actionSheet.message = @"Test message";
+
+  // When
+  UIColor *titleColor = [UIColor.blackColor colorWithAlphaComponent:0.3f];
+  UIColor *messageColor = [UIColor.blackColor colorWithAlphaComponent:0.2f];
+
+  self.actionSheet.titleTextColor = titleColor;
+  self.actionSheet.messageTextColor = messageColor;
+
+  // Then
+  XCTAssertEqualObjects(self.actionSheet.header.titleLabel.textColor, titleColor);
+  XCTAssertEqualObjects(self.actionSheet.header.messageLabel.textColor, messageColor);
+}
+
+- (void)testTitleAndMessageColorCorrectAlpha {
+  // Given
+  self.actionSheet.title = @"Test title";
+  self.actionSheet.message = @"Test message";
+  UIColor *titleColor = UIColor.blackColor;
+  UIColor *messageColor = UIColor.blackColor;
+
+  // When
+  UIColor *titleColorChangeAlpha = [titleColor colorWithAlphaComponent:0.6f];
+  UIColor *messageColorChangeAlpha = [messageColor colorWithAlphaComponent:0.5f];
+
+  self.actionSheet.titleTextColor = titleColorChangeAlpha;
+  self.actionSheet.messageTextColor = messageColorChangeAlpha;
+
+  // Then
+  XCTAssertFalse([titleColor isEqual:self.actionSheet.header.titleLabel.textColor]);
+  XCTAssertFalse([messageColor isEqual:self.actionSheet.header.messageLabel.textColor]);
+}
+
+- (void)testSetTitleAndMessageAfterCustomColorsSet {
+  // Given
+  UIColor *titleColor = UIColor.blueColor;
+  UIColor *messageColor = UIColor.redColor;
+
+  // When
+  self.actionSheet.titleTextColor = titleColor;
+  self.actionSheet.messageTextColor = messageColor;
+  self.actionSheet.title = @"Test title";
+  self.actionSheet.message = @"Test message";
+
+  // Then
+  XCTAssertEqualObjects(self.actionSheet.header.titleLabel.textColor, titleColor);
+  XCTAssertEqualObjects(self.actionSheet.header.messageLabel.textColor, messageColor);
+}
+
+- (void)testTitleCustomDoesNotChangeAfterSetMessage {
+  // Given
+  UIColor *titleColor = [UIColor.blueColor colorWithAlphaComponent:0.6f];
+  self.actionSheet.title = @"Test title";
+
+  // When
+  self.actionSheet.titleTextColor = titleColor;
+  self.actionSheet.message = @"Test message";
+
+  // Then
+  XCTAssertEqualObjects(self.actionSheet.header.titleLabel.textColor, titleColor);
+}
+
+- (void)testSetNilTitleAndMessageColor {
+  // Given
+  self.actionSheet.title = @"Test title";
+  self.actionSheet.message = @"Test message";
+
+  // When
+  self.actionSheet.titleTextColor = nil;
+  self.actionSheet.messageTextColor = nil;
+
+  // Then
+  XCTAssertEqualObjects(self.actionSheet.header.titleLabel.textColor,
+                        [UIColor.blackColor colorWithAlphaComponent:0.87f]);
+  XCTAssertEqualObjects(self.actionSheet.header.messageLabel.textColor,
+                        [UIColor.blackColor colorWithAlphaComponent:0.6f]);
+
 #pragma mark - Opening height
 
 - (void)addActions:(NSUInteger)actions {
