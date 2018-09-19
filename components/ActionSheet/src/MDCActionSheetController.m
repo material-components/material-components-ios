@@ -145,6 +145,8 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 
   if (self.tableView.contentSize.height > (CGRectGetHeight(self.view.bounds) / 2)) {
     self.mdc_bottomSheetPresentationController.preferredSheetHeight = [self openingSheetHeight];
+  } else {
+    self.mdc_bottomSheetPresentationController.preferredSheetHeight = 0;
   }
   CGSize size = [self.header sizeThatFits:CGRectStandardize(self.view.bounds).size];
   self.header.frame = CGRectMake(0, 0, self.view.bounds.size.width, size.height);
@@ -165,7 +167,12 @@ static NSString *const ReuseIdentifier = @"BaseCell";
   CGFloat maxHeight = CGRectGetHeight(self.view.bounds) / 2;
   CGFloat headerHeight = [self.header sizeThatFits:CGRectStandardize(self.view.bounds).size].height;
   CGFloat cellHeight = self.tableView.contentSize.height / (CGFloat)_actions.count;
-  NSInteger amountOfCellsToShow = (NSInteger)((maxHeight - headerHeight) / cellHeight);
+  CGFloat maxTableHeight = maxHeight - headerHeight;
+  NSInteger amountOfCellsToShow = (NSInteger)(maxTableHeight / cellHeight);
+  // There is already a partially shown cell that is showing and more than half is visable
+  if (fmod(maxTableHeight, cellHeight) > (cellHeight * 0.5f)) {
+    amountOfCellsToShow += 1;
+  }
   CGFloat preferredHeight = (((CGFloat)amountOfCellsToShow - 0.5f) * cellHeight) + headerHeight;
   // When updating the preferredSheetHeight the presentation controller takes into account the
   // safe area so we have to remove that.
