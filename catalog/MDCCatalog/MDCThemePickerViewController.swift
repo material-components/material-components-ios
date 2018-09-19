@@ -107,6 +107,7 @@ class MDCThemePickerViewController: UIViewController, UICollectionViewDataSource
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -115,6 +116,7 @@ class MDCThemePickerViewController: UIViewController, UICollectionViewDataSource
 
   override func viewDidLoad() {
     super.viewDidLoad()
+
     title = "Material Palette-based themes"
     view.backgroundColor = .white
     setUpCollectionView()
@@ -122,6 +124,7 @@ class MDCThemePickerViewController: UIViewController, UICollectionViewDataSource
 
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
+
     positionCollectionView()
   }
 
@@ -137,7 +140,6 @@ class MDCThemePickerViewController: UIViewController, UICollectionViewDataSource
 
   func positionCollectionView() {
     var originX = view.bounds.origin.x
-    let originY = view.bounds.origin.y
     var width = view.bounds.size.width
     var height = view.bounds.size.height
     if #available(iOS 11.0, *) {
@@ -145,7 +147,7 @@ class MDCThemePickerViewController: UIViewController, UICollectionViewDataSource
       width -= (view.safeAreaInsets.left + view.safeAreaInsets.right);
       height -= (view.safeAreaInsets.top + view.safeAreaInsets.bottom);
     }
-    let frame = CGRect(x: originX, y: originY, width: width, height: height)
+    let frame = CGRect(x: originX, y: view.bounds.origin.y, width: width, height: height)
     palettesCollectionView.frame = frame
     palettesCollectionView.collectionViewLayout.invalidateLayout()
   }
@@ -223,6 +225,7 @@ class PaletteCell : UICollectionViewCell {
 
   override init(frame: CGRect) {
     super.init(frame: frame)
+
     imageView.image = MDCIcons.imageFor_ic_check()?.withRenderingMode(.alwaysTemplate)
     imageView.tintColor = .white
     imageView.contentMode = .center
