@@ -1,4 +1,4 @@
-# #64.0.0
+# 64.0.0
 
 In this release
   AlertControllers added a `cornerRadius` property to specify its shape.
@@ -26,6 +26,7 @@ alert.cornerRadius = cornerRadius;
 ```
 
 ### FlexibleHeader added `disableContentInsetAdjustmentWhenContentInsetAdjustmentBehaviorIsNever`
+
 To make it easier to support scrollviews and content insets
 
 ```objc
@@ -36,6 +37,7 @@ _scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentN
 ```
 
 ### ChipField added `showChipsDeleteButton` 
+
 Turns on the delete button on chips.
 
 ```swift
