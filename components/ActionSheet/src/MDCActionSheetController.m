@@ -20,6 +20,8 @@
 #import "private/MDCActionSheetItemTableViewCell.h"
 
 static NSString *const kReuseIdentifier = @"BaseCell";
+static const CGFloat kActionImageAlpha = 0.6f;
+static const CGFloat kActionTextAlpha = 0.87f;
 
 @interface MDCActionSheetAction ()
 
@@ -113,6 +115,9 @@ static NSString *const kReuseIdentifier = @"BaseCell";
     _backgroundColor = UIColor.whiteColor;
     _header.backgroundColor = _backgroundColor;
     _tableView.backgroundColor = _backgroundColor;
+    _actionTextColor = [UIColor.blackColor colorWithAlphaComponent:kActionTextAlpha];
+    _tintColor = [UIColor.blackColor colorWithAlphaComponent:kActionImageAlpha];
+    _imageRenderingMode = UIImageRenderingModeAlwaysTemplate;
   }
 
   return self;
@@ -290,6 +295,9 @@ static NSString *const kReuseIdentifier = @"BaseCell";
   cell.backgroundColor = self.backgroundColor;
   cell.actionFont = self.actionFont;
   cell.accessibilityIdentifier = action.accessibilityIdentifier;
+  cell.tintColor = self.tintColor;
+  cell.imageRenderingMode = self.imageRenderingMode;
+  cell.actionTextColor = self.actionTextColor;
   return cell;
 }
 
@@ -383,6 +391,23 @@ static NSString *const kReuseIdentifier = @"BaseCell";
 
 - (void)updateFontsForDynamicType {
   [self updateTableFonts];
+  [self.view setNeedsLayout];
+}
+
+#pragma mark - Table customization
+
+- (void)setActionTextColor:(UIColor *)actionTextColor {
+  _actionTextColor = actionTextColor;
+  [self.view setNeedsLayout];
+}
+
+- (void)setTintColor:(UIColor *)tintColor {
+  _tintColor = tintColor;
+  [self.view setNeedsLayout];
+}
+
+- (void)setImageRenderingMode:(UIImageRenderingMode)imageRenderingMode {
+  _imageRenderingMode = imageRenderingMode;
   [self.view setNeedsLayout];
 }
 
