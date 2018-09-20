@@ -19,7 +19,7 @@
 #import "private/MDCActionSheetHeaderView.h"
 #import "private/MDCActionSheetItemTableViewCell.h"
 
-static NSString *const ReuseIdentifier = @"BaseCell";
+static NSString *const kReuseIdentifier = @"BaseCell";
 
 @interface MDCActionSheetAction ()
 
@@ -105,7 +105,7 @@ static NSString *const ReuseIdentifier = @"BaseCell";
     _tableView.rowHeight = UITableViewAutomaticDimension;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [_tableView registerClass:[MDCActionSheetItemTableViewCell class]
-       forCellReuseIdentifier:ReuseIdentifier];
+       forCellReuseIdentifier:kReuseIdentifier];
 
     _header = [[MDCActionSheetHeaderView alloc] initWithFrame:CGRectZero];
     _header.title = [title copy];
@@ -283,7 +283,7 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   MDCActionSheetItemTableViewCell *cell =
-      [tableView dequeueReusableCellWithIdentifier:ReuseIdentifier forIndexPath:indexPath];
+      [tableView dequeueReusableCellWithIdentifier:kReuseIdentifier forIndexPath:indexPath];
   MDCActionSheetAction *action = _actions[indexPath.row];
   cell.action = action;
   cell.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
