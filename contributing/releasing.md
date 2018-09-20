@@ -43,7 +43,7 @@ will be working day-to-day with a fork, consider creating a separate clone just 
 Our entire release process is encoded into the `release` script in the scripts/ directory.
 Read the [tool's readme](../scripts/README-release.md) to learn more about the tool.
 
-### Cut a release branch and notify clients
+### Cut a release branch and create a pull request
 
 Run the following command to cut a release:
 
