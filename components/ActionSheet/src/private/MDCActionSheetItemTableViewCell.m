@@ -72,14 +72,16 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
                                   toItem:self.contentView
                                attribute:NSLayoutAttributeTop
                               multiplier:1
-                                constant:ActionItemTitleVerticalPadding].active = YES;
+                                constant:ActionItemTitleVerticalPadding]
+      .active = YES;
   [NSLayoutConstraint constraintWithItem:_actionLabel
                                attribute:NSLayoutAttributeBottom
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self.contentView
                                attribute:NSLayoutAttributeBottom
                               multiplier:1
-                                constant:-ActionItemTitleVerticalPadding].active = YES;
+                                constant:-ActionItemTitleVerticalPadding]
+      .active = YES;
   _titleLeadingConstraint = [NSLayoutConstraint constraintWithItem:_actionLabel
                                                          attribute:NSLayoutAttributeLeading
                                                          relatedBy:NSLayoutRelationEqual
@@ -112,28 +114,32 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
                                   toItem:self.contentView
                                attribute:NSLayoutAttributeTop
                               multiplier:1
-                                constant:ImageTopPadding].active = YES;
+                                constant:ImageTopPadding]
+      .active = YES;
   [NSLayoutConstraint constraintWithItem:_actionImageView
                                attribute:NSLayoutAttributeLeading
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self.contentView
                                attribute:NSLayoutAttributeLeading
                               multiplier:1
-                                constant:ImageLeadingPadding].active = YES;
+                                constant:ImageLeadingPadding]
+      .active = YES;
   [NSLayoutConstraint constraintWithItem:_actionImageView
                                attribute:NSLayoutAttributeWidth
                                relatedBy:NSLayoutRelationEqual
                                   toItem:nil
                                attribute:NSLayoutAttributeNotAnAttribute
                               multiplier:1
-                                constant:ImageHeightAndWidth].active = YES;
+                                constant:ImageHeightAndWidth]
+      .active = YES;
   [NSLayoutConstraint constraintWithItem:_actionImageView
                                attribute:NSLayoutAttributeHeight
                                relatedBy:NSLayoutRelationEqual
                                   toItem:nil
                                attribute:NSLayoutAttributeNotAnAttribute
                               multiplier:1
-                                constant:ImageHeightAndWidth].active = YES;
+                                constant:ImageHeightAndWidth]
+      .active = YES;
 }
 
 - (void)layoutSubviews {
