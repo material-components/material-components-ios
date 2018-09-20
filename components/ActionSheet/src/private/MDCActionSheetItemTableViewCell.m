@@ -25,9 +25,9 @@ static const CGFloat TitleLeadingPadding = 72.f;
 static const CGFloat TitleTrailingPadding = 16.f;
 static const CGFloat ActionItemTitleVerticalPadding = 18.f;
 
-@interface MDCActionSheetItemTableViewCell
-@property(nonatomic, strong) UILabel *textLabel;
-@property(nonatomic, strong) UIImageView *imageView;
+@interface MDCActionSheetItemTableViewCell ()
+@property(nonatomic, strong) UILabel *actionLabel;
+@property(nonatomic, strong) UIImageView *actionImageView;
 @end
 
 @implementation MDCActionSheetItemTableViewCell {
@@ -52,35 +52,35 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
   self.translatesAutoresizingMaskIntoConstraints = NO;
   self.selectionStyle = UITableViewCellSelectionStyleNone;
   self.accessibilityTraits = UIAccessibilityTraitButton;
-  _textLabel = [[UILabel alloc] init];
-  [self.contentView addSubview:_textLabel];
-  _textLabel.numberOfLines = 0;
-  _textLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  [_textLabel sizeToFit];
-  _textLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
-  _textLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
-  _textLabel.textColor = [UIColor.blackColor colorWithAlphaComponent:LabelAlpha];
+  _actionLabel = [[UILabel alloc] init];
+  [self.contentView addSubview:_actionLabel];
+  _actionLabel.numberOfLines = 0;
+  _actionLabel.translatesAutoresizingMaskIntoConstraints = NO;
+  [_actionLabel sizeToFit];
+  _actionLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
+  _actionLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
+  _actionLabel.textColor = [UIColor.blackColor colorWithAlphaComponent:LabelAlpha];
   CGFloat leadingConstant;
   if (_itemAction.image) {
     leadingConstant = TitleLeadingPadding;
   } else {
     leadingConstant = ImageLeadingPadding;
   }
-  [NSLayoutConstraint constraintWithItem:_textLabel
+  [NSLayoutConstraint constraintWithItem:_actionLabel
                                attribute:NSLayoutAttributeTop
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self.contentView
                                attribute:NSLayoutAttributeTop
                               multiplier:1
                                 constant:ActionItemTitleVerticalPadding].active = YES;
-  [NSLayoutConstraint constraintWithItem:_textLabel
+  [NSLayoutConstraint constraintWithItem:_actionLabel
                                attribute:NSLayoutAttributeBottom
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self.contentView
                                attribute:NSLayoutAttributeBottom
                               multiplier:1
                                 constant:-ActionItemTitleVerticalPadding].active = YES;
-  _titleLeadingConstraint = [NSLayoutConstraint constraintWithItem:_textLabel
+  _titleLeadingConstraint = [NSLayoutConstraint constraintWithItem:_actionLabel
                                                          attribute:NSLayoutAttributeLeading
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:self.contentView
@@ -89,7 +89,7 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
                                                           constant:leadingConstant];
   _titleLeadingConstraint.active = YES;
   CGFloat width = CGRectGetWidth(self.contentView.frame) - leadingConstant - TitleTrailingPadding;
-  _titleWidthConstraint = [NSLayoutConstraint constraintWithItem:_textLabel
+  _titleWidthConstraint = [NSLayoutConstraint constraintWithItem:_actionLabel
                                                        attribute:NSLayoutAttributeWidth
                                                        relatedBy:NSLayoutRelationEqual
                                                           toItem:nil
@@ -102,32 +102,32 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
     [_inkTouchController addInkView];
   }
 
-  _imageView = [[UIImageView alloc] init];
-  [self.contentView addSubview:_imageView];
-  _imageView.translatesAutoresizingMaskIntoConstraints = NO;
-  _imageView.alpha = ImageAlpha;
-  [NSLayoutConstraint constraintWithItem:_imageView
+  _actionImageView = [[UIImageView alloc] init];
+  [self.contentView addSubview:_actionImageView];
+  _actionImageView.translatesAutoresizingMaskIntoConstraints = NO;
+  _actionImageView.alpha = ImageAlpha;
+  [NSLayoutConstraint constraintWithItem:_actionImageView
                                attribute:NSLayoutAttributeTop
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self.contentView
                                attribute:NSLayoutAttributeTop
                               multiplier:1
                                 constant:ImageTopPadding].active = YES;
-  [NSLayoutConstraint constraintWithItem:_imageView
+  [NSLayoutConstraint constraintWithItem:_actionImageView
                                attribute:NSLayoutAttributeLeading
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self.contentView
                                attribute:NSLayoutAttributeLeading
                               multiplier:1
                                 constant:ImageLeadingPadding].active = YES;
-  [NSLayoutConstraint constraintWithItem:_imageView
+  [NSLayoutConstraint constraintWithItem:_actionImageView
                                attribute:NSLayoutAttributeWidth
                                relatedBy:NSLayoutRelationEqual
                                   toItem:nil
                                attribute:NSLayoutAttributeNotAnAttribute
                               multiplier:1
                                 constant:ImageHeightAndWidth].active = YES;
-  [NSLayoutConstraint constraintWithItem:_imageView
+  [NSLayoutConstraint constraintWithItem:_actionImageView
                                attribute:NSLayoutAttributeHeight
                                relatedBy:NSLayoutRelationEqual
                                   toItem:nil
@@ -139,7 +139,7 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  self.textLabel.text = _itemAction.title;
+  self.actionLabel.text = _itemAction.title;
   CGFloat leadingConstant;
   if (_itemAction.image) {
     leadingConstant = TitleLeadingPadding;
@@ -150,13 +150,13 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
   CGFloat width = CGRectGetWidth(self.contentView.frame) - leadingConstant - TitleTrailingPadding;
   _titleWidthConstraint.constant = width;
 
-  self.imageView.image = _itemAction.image;
+  self.actionImageView.image = _itemAction.image;
 }
 
 - (void)setAction:(MDCActionSheetAction *)action {
   _itemAction = [action copy];
-  self.textLabel.text = _itemAction.title;
-  self.imageView.image = _itemAction.image;
+  self.actionLabel.text = _itemAction.title;
+  self.actionImageView.image = _itemAction.image;
   [self setNeedsLayout];
 }
 
@@ -173,11 +173,11 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
   UIFont *titleFont = _actionFont ?:
       [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
   if (self.mdc_adjustsFontForContentSizeCategory) {
-    self.textLabel.font =
+    self.actionLabel.font =
         [titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
                                 scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
   } else {
-    self.textLabel.font = titleFont;
+    self.actionLabel.font = titleFont;
   }
   [self setNeedsLayout];
 }
