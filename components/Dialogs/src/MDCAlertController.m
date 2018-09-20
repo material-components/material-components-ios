@@ -221,7 +221,9 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 - (void)setTitleIcon:(UIImage *)titleIcon {
   _titleIcon = titleIcon;
-  self.alertView.titleIcon = titleIcon;
+  if (self.alertView) {
+    self.alertView.titleIcon = titleIcon;
+  }
 }
 
 - (void)setCornerRadius:(CGFloat)cornerRadius {
