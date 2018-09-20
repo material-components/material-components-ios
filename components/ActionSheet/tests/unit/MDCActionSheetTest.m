@@ -385,7 +385,7 @@ static const CGFloat safeAreaAmount = 20.f;
     self.actionSheet.view.bounds = viewRect;
     [self.actionSheet.view setNeedsLayout];
     [self.actionSheet.view layoutIfNeeded];
-    
+
     // Then
     CGFloat expectedHeight = [self.actionSheet openingSheetHeight];
     CGFloat expectedMinusHeader = expectedHeight - headerHeight;
