@@ -193,7 +193,8 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
 
 - (void)setActionTextColor:(UIColor *)actionTextColor {
   _actionTextColor = actionTextColor;
-  _actionLabel.textColor = actionTextColor ?: [UIColor.blackColor colorWithAlphaComponent:kLabelAlpha];
+  _actionLabel.textColor =
+      actionTextColor ?: [UIColor.blackColor colorWithAlphaComponent:kLabelAlpha];
 }
 
 - (void)setImageRenderingMode:(UIImageRenderingMode)imageRenderingMode {

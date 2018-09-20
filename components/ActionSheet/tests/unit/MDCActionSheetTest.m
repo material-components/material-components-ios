@@ -402,7 +402,7 @@ static const CGFloat kSafeAreaAmount = 20.f;
 }
 #pragma mark Table
 
-- (NSArray <MDCActionSheetItemTableViewCell *>*)setupActionSheetAndGetCells {
+- (NSArray<MDCActionSheetItemTableViewCell *> *)setupActionSheetAndGetCells {
   NSMutableArray *cellsArray = [[NSMutableArray alloc] init];
   [self addNumberOfActions:10];
   NSUInteger cellsCount = self.actionSheet.actions.count;
