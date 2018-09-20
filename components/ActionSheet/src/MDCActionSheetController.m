@@ -14,10 +14,10 @@
 
 #import "MDCActionSheetController.h"
 
-#import "private/MDCActionSheetHeaderView.h"
-#import "private/MDCActionSheetItemTableViewCell.h"
 #import "MaterialMath.h"
 #import "MaterialTypography.h"
+#import "private/MDCActionSheetHeaderView.h"
+#import "private/MDCActionSheetItemTableViewCell.h"
 
 static NSString *const ReuseIdentifier = @"BaseCell";
 
