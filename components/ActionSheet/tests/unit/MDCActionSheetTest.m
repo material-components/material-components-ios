@@ -18,7 +18,6 @@
 #import <XCTest/XCTest.h>
 
 #import "../../src/private/MDCActionSheetHeaderView.h"
-#import "../../src/private/MDCActionSheetItemTableViewCell.h"
 
 static const CGFloat kSafeAreaAmount = 20.f;
 
@@ -31,11 +30,6 @@ static const CGFloat kSafeAreaAmount = 20.f;
 @property(nonatomic, strong) UITableView *tableView;
 @property(nonatomic, strong) MDCActionSheetHeaderView *header;
 - (CGFloat)openingSheetHeight;
-@end
-
-@interface MDCActionSheetItemTableViewCell (Testing)
-@property(nonatomic, strong) UILabel *actionLabel;
-@property(nonatomic, strong) UIImageView *actionImageView;
 @end
 
 @interface MDCActionSheetTest : XCTestCase
@@ -398,93 +392,6 @@ static const CGFloat kSafeAreaAmount = 20.f;
     // Action sheet should show half of the allowed actions but the full last action
     XCTAssertEqualWithAccuracy(fmod(expectedMinusHeader, halfCellHeight), 0, 0.001);
     XCTAssertNotEqualWithAccuracy(fmod(expectedMinusHeader, cellHeight), 0, 0.001);
-  }
-}
-#pragma mark Table
-
-- (NSArray<MDCActionSheetItemTableViewCell *> *)setupActionSheetAndGetCells {
-  NSMutableArray *cellsArray = [[NSMutableArray alloc] init];
-  [self addNumberOfActions:10];
-  NSUInteger cellsCount = self.actionSheet.actions.count;
-  UITableView *table = self.actionSheet.tableView;
-  for (NSUInteger cellIndex = 0; cellIndex < cellsCount; ++cellIndex) {
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:cellIndex inSection:0];
-    UITableViewCell *cell = [table.dataSource tableView:table cellForRowAtIndexPath:indexPath];
-    MDCActionSheetItemTableViewCell *actionCell = (MDCActionSheetItemTableViewCell *)cell;
-    [cellsArray addObject:actionCell];
-  }
-  return cellsArray;
-}
-
-- (void)testDefaultRenderingMode {
-  // When
-  NSArray *cells = [self setupActionSheetAndGetCells];
-
-  // Then
-  for (MDCActionSheetItemTableViewCell *cell in cells) {
-    XCTAssertEqual(cell.imageRenderingMode, UIImageRenderingModeAlwaysTemplate);
-  }
-}
-
-- (void)testSetImageRenderingMode {
-  // When
-  UIImageRenderingMode imageMode = UIImageRenderingModeAlwaysOriginal;
-  self.actionSheet.imageRenderingMode = imageMode;
-  NSArray *cells = [self setupActionSheetAndGetCells];
-
-  // Then
-  for (MDCActionSheetItemTableViewCell *cell in cells) {
-    XCTAssertEqual(cell.imageRenderingMode, imageMode);
-  }
-}
-
-- (void)testDefaultCellActionTextColor {
-  // When
-  NSArray *cells = [self setupActionSheetAndGetCells];
-
-  // Then
-  for (MDCActionSheetItemTableViewCell *cell in cells) {
-    XCTAssertEqualObjects(cell.actionLabel.textColor,
-                          [UIColor.blackColor colorWithAlphaComponent:0.87f]);
-  }
-}
-
-- (void)testSetActionTextColor {
-  // When
-  NSArray *colors = [self colorsToTest];
-
-  for (UIColor *color in colors) {
-    self.actionSheet.actionTextColor = color;
-    NSArray *cells = [self setupActionSheetAndGetCells];
-    for (MDCActionSheetItemTableViewCell *cell in cells) {
-      // Then
-      XCTAssertEqualObjects(cell.actionLabel.textColor, color);
-    }
-  }
-}
-
-- (void)testDefaultCellTintColor {
-  // When
-  NSArray *cells = [self setupActionSheetAndGetCells];
-
-  // Then
-  for (MDCActionSheetItemTableViewCell *cell in cells) {
-    XCTAssertEqualObjects(cell.actionImageView.tintColor,
-                          [UIColor.blackColor colorWithAlphaComponent:0.6f]);
-  }
-}
-
-- (void)testSetTintColor {
-  // When
-  NSArray *colors = [self colorsToTest];
-
-  for (UIColor *color in colors) {
-    self.actionSheet.actionTintColor = color;
-    NSArray *cells = [self setupActionSheetAndGetCells];
-    for (MDCActionSheetItemTableViewCell *cell in cells) {
-      // Then
-      XCTAssertEqualObjects(cell.actionImageView.tintColor, color);
-    }
   }
 }
 
