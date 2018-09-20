@@ -1422,6 +1422,7 @@ static BOOL isRunningiOS10_3OrAbove() {
 
   _trackingInfo = [_trackedScrollViews objectForKey:_trackingScrollView];
   _trackingInfo.stashedHeightIsValid = NO;
+  _trackingInfo.stashedHeight = 0;
 
   [self fhv_enforceInsetsForScrollView:_trackingScrollView];
 
@@ -1442,9 +1443,6 @@ static BOOL isRunningiOS10_3OrAbove() {
     // How much will our height change if we do nothing right now?
     const CGFloat heightDelta = self.bounds.size.height - headerHeight;
 
-    // Adjust the accumulator so that our height won't change.
-    _shiftAccumulator -= heightDelta;
-
     // Cap the accumulator to ensure it's valid.
     CGFloat accumulatorMin;
     if (headerHeight > self.computedMinimumHeight + DBL_EPSILON) {
@@ -1453,7 +1451,9 @@ static BOOL isRunningiOS10_3OrAbove() {
     } else {
       accumulatorMin = [self fhv_accumulatorMin];
     }
-    _shiftAccumulator = MAX(accumulatorMin, MIN([self fhv_accumulatorMax], _shiftAccumulator));
+    // Adjust the accumulator so that our height won't change and cap it to the possible range.
+    _shiftAccumulator = MAX(accumulatorMin, MIN([self fhv_accumulatorMax],
+                                                _shiftAccumulator - heightDelta));
   }
 
   void (^animate)(void) = ^{
