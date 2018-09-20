@@ -18,6 +18,7 @@
 #import <XCTest/XCTest.h>
 
 #import "../../src/private/MDCActionSheetHeaderView.h"
+#import "../../src/private/MDCActionSheetItemTableViewCell.h"
 
 static const CGFloat safeAreaAmount = 20.f;
 
@@ -392,6 +393,22 @@ static const CGFloat safeAreaAmount = 20.f;
     // Action sheet should show half of the allowed actions but the full last action
     XCTAssertEqualWithAccuracy(fmod(expectedMinusHeader, halfCellHeight), 0, 0.001);
     XCTAssertNotEqualWithAccuracy(fmod(expectedMinusHeader, cellHeight), 0, 0.001);
+  }
+}
+#pragma mark Table
+
+- (void)testSetImageRenderingMode {
+  // Given
+  self.actionSheet.imageRenderingMode = UIImageRenderingModeAlwaysOriginal;
+
+  // Then
+  NSUInteger cellsCount = self.actionSheet.actions.count;
+  UITableView *table = self.actionSheet.tableView;
+  for (NSUInteger cellIndex = 0; cellIndex < cellsCount; ++cellIndex) {
+    NSIndexPath *indexPath = [[NSIndexPath alloc] initWithIndex:cellIndex];
+    UITableViewCell *cell = [table.dataSource tableView:table cellForRowAtIndexPath:indexPath];
+    MDCActionSheetItemTableViewCell *actionCell = (MDCActionSheetItemTableViewCell *)cell;
+    XCTAssertEqual(actionCell.imageRenderingMode, UIImageRenderingModeAlwaysOriginal);
   }
 }
 
