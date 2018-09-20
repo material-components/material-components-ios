@@ -20,7 +20,7 @@
 #import "../../src/private/MDCActionSheetHeaderView.h"
 #import "../../src/private/MDCActionSheetItemTableViewCell.h"
 
-static const CGFloat safeAreaAmount = 20.f;
+static const CGFloat kSafeAreaAmount = 20.f;
 
 @interface MDCActionSheetHeaderView (Testing)
 @property(nonatomic, strong) UILabel *titleLabel;
@@ -48,7 +48,7 @@ static const CGFloat safeAreaAmount = 20.f;
 @implementation MDCFakeView
 
 - (UIEdgeInsets)safeAreaInsets {
-  return UIEdgeInsetsMake(safeAreaAmount, safeAreaAmount, safeAreaAmount, safeAreaAmount);
+  return UIEdgeInsetsMake(kSafeAreaAmount, kSafeAreaAmount, kSafeAreaAmount, kSafeAreaAmount);
 }
 
 @end
@@ -404,7 +404,7 @@ static const CGFloat safeAreaAmount = 20.f;
 
 - (NSArray <MDCActionSheetItemTableViewCell *>*)setupActionSheetAndGetCells {
   NSMutableArray *cellsArray = [[NSMutableArray alloc] init];
-  [self addNumberOfActions:100];
+  [self addNumberOfActions:10];
   NSUInteger cellsCount = self.actionSheet.actions.count;
   UITableView *table = self.actionSheet.tableView;
   for (NSUInteger cellIndex = 0; cellIndex < cellsCount; ++cellIndex) {
@@ -438,7 +438,7 @@ static const CGFloat safeAreaAmount = 20.f;
   }
 }
 
-- (void)testDefaultColor {
+- (void)testDefaultCellActionTextColor {
   // When
   NSArray *cells = [self setupActionSheetAndGetCells];
 
@@ -446,6 +446,45 @@ static const CGFloat safeAreaAmount = 20.f;
   for (MDCActionSheetItemTableViewCell *cell in cells) {
     XCTAssertEqualObjects(cell.actionLabel.textColor,
                           [UIColor.blackColor colorWithAlphaComponent:0.87f]);
+  }
+}
+
+- (void)testSetActionTextColor {
+  // When
+  NSArray *colors = [self colorsToTest];
+
+  for (UIColor *color in colors) {
+    self.actionSheet.actionTextColor = color;
+    NSArray *cells = [self setupActionSheetAndGetCells];
+    for (MDCActionSheetItemTableViewCell *cell in cells) {
+      // Then
+      XCTAssertEqualObjects(cell.actionLabel.textColor, color);
+    }
+  }
+}
+
+- (void)testDefaultCellTintColor {
+  // When
+  NSArray *cells = [self setupActionSheetAndGetCells];
+
+  // Then
+  for (MDCActionSheetItemTableViewCell *cell in cells) {
+    XCTAssertEqualObjects(cell.actionImageView.tintColor,
+                          [UIColor.blackColor colorWithAlphaComponent:0.6f]);
+  }
+}
+
+- (void)testSetTintColor {
+  // When
+  NSArray *colors = [self colorsToTest];
+
+  for (UIColor *color in colors) {
+    self.actionSheet.tintColor = color;
+    NSArray *cells = [self setupActionSheetAndGetCells];
+    for (MDCActionSheetItemTableViewCell *cell in cells) {
+      // Then
+      XCTAssertEqualObjects(cell.actionImageView.tintColor, color);
+    }
   }
 }
 
