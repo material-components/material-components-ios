@@ -97,12 +97,6 @@ presentationController.preferredSheetHeight = 100;
 
 *new* property: `showChipsDeleteButton` in `MDCChipField`
 
-*modified* class: `MDCChipField`
-
-| Type of change: | Declaration |
-|---|---|
-| From: | `@interface MDCChipField : UIView  /**  The text field used to enter new chips.   Do not set the delegate or positioningDelegate.   If you set a custom font, make sure to also set the custom font on textField.placeholderLabel and  on your MDCChipView instances.  */ @property(nonatomic, nonnull, readonly) MDCTextField *textField;  /**  The fixed height of all chip views.   Default is 32dp.  */ @property(nonatomic, assign) CGFloat chipHeight;  /**  Attribute to determine whether to show the placeholder text (if it exists) when chips are  present.   Default is YES.  */ @property(nonatomic, assign) BOOL showPlaceholderWithChips;  /**  The delimiter used to create chips in the text field. Uses default value  MDCChipFieldDelimiterDefault if no delimiter is set.  */ @property(nonatomic, assign) MDCChipFieldDelimiter delimiter;  /**  The minimum width of the text field.   Default is |kMDCChipFieldDefaultMinTextFieldWidth|.  */ @property(nonatomic, assign) CGFloat minTextFieldWidth;  /**  The chips that are visible in the input area.  */ @property(nonatomic, nonnull, copy) NSArray<MDCChipView *> *chips;  /**  Delegate to receive updates to the chip field view. Implement  |chipFieldHeightDidChange| to receive updates when the height of the chip field changes.  */ @property(nonatomic, nullable, weak) id<MDCChipFieldDelegate> delegate;  /**  The inset or outset margins for the rectangle surrounding all of the chip field's content.  Default is |kMDCChipFieldDefaultContentEdgeInsets|.  */ @property(nonatomic, assign) UIEdgeInsets contentEdgeInsets;  /**  Adds a chip to the chip field.   @param chip The chip to add to the field.   Note: Implementing |chipField:shouldAddChip| only affects whether user interface input entered into  the text field is changed into chips and will not affect use of this method.  */ - (void)addChip:(nonnull MDCChipView *)chip;  /**  Removes a chip from the chip field.   @param chip The chip to remove from the field.  */ - (void)removeChip:(nonnull MDCChipView *)chip;  /** Removes all selected chips from the chip field. */ - (void)removeSelectedChips;  /** Removes all text from the chip field text input area. */ - (void)clearTextInput;  /** Selects a chip in a chip field. */ - (void)selectChip:(nonnull MDCChipView *)chip;  /** Deselects all chips in a chip field. */ - (void)deselectAllChips;  /** Sets the VoiceOver focus on the text field. */ - (void)focusTextFieldForAccessibility;  @end` |
-| To: | `@interface MDCChipField : UIView  /**  The text field used to enter new chips.   Do not set the delegate or positioningDelegate.   If you set a custom font, make sure to also set the custom font on textField.placeholderLabel and  on your MDCChipView instances.  */ @property(nonatomic, nonnull, readonly) MDCTextField *textField;  /**  The fixed height of all chip views.   Default is 32dp.  */ @property(nonatomic, assign) CGFloat chipHeight;  /**  Attribute to determine whether to show the placeholder text (if it exists) when chips are  present.   Default is YES.  */ @property(nonatomic, assign) BOOL showPlaceholderWithChips;  /**  Enabling this property allows chips to be deleted by tapping on them.   @note This does not support the 48x48 touch targets that Google recommends. We recommend if this  behavior is enabled that a snackbar or dialog are used as well to allow the user to confirm if they  want to delete the chip.  */ @property(nonatomic) BOOL showChipsDeleteButton;  /**  The delimiter used to create chips in the text field. Uses default value  MDCChipFieldDelimiterDefault if no delimiter is set.  */ @property(nonatomic, assign) MDCChipFieldDelimiter delimiter;  /**  The minimum width of the text field.   Default is |kMDCChipFieldDefaultMinTextFieldWidth|.  */ @property(nonatomic, assign) CGFloat minTextFieldWidth;  /**  The chips that are visible in the input area.  */ @property(nonatomic, nonnull, copy) NSArray<MDCChipView *> *chips;  /**  Delegate to receive updates to the chip field view. Implement  |chipFieldHeightDidChange| to receive updates when the height of the chip field changes.  */ @property(nonatomic, nullable, weak) id<MDCChipFieldDelegate> delegate;  /**  The inset or outset margins for the rectangle surrounding all of the chip field's content.  Default is |kMDCChipFieldDefaultContentEdgeInsets|.  */ @property(nonatomic, assign) UIEdgeInsets contentEdgeInsets;  /**  Adds a chip to the chip field.   @param chip The chip to add to the field.   Note: Implementing |chipField:shouldAddChip| only affects whether user interface input entered into  the text field is changed into chips and will not affect use of this method.  */ - (void)addChip:(nonnull MDCChipView *)chip;  /**  Removes a chip from the chip field.   @param chip The chip to remove from the field.  */ - (void)removeChip:(nonnull MDCChipView *)chip;  /** Removes all selected chips from the chip field. */ - (void)removeSelectedChips;  /** Removes all text from the chip field text input area. */ - (void)clearTextInput;  /** Selects a chip in a chip field. */ - (void)selectChip:(nonnull MDCChipView *)chip;  /** Deselects all chips in a chip field. */ - (void)deselectAllChips;  /** Sets the VoiceOver focus on the text field. */ - (void)focusTextFieldForAccessibility;  @end` |
 
 ### Chips+ShapeThemer
 
@@ -122,31 +116,11 @@ presentationController.preferredSheetHeight = 100;
 
 *new* property: `cornerRadius` in `MDCAlertControllerView`
 
-*modified* class: `MDCAlertControllerView`
-
-| Type of change: | Declaration |
-|---|---|
-| From: | `@interface MDCAlertControllerView : UIView  @property(nonatomic, strong, nullable) UIFont *titleFont UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *titleColor UI_APPEARANCE_SELECTOR;  @property(nonatomic, strong, nullable) UIFont *messageFont UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *messageColor UI_APPEARANCE_SELECTOR;  @property(nonatomic, strong, nullable) UIFont *buttonFont UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *buttonColor UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *buttonInkColor UI_APPEARANCE_SELECTOR;  /*  Indicates whether the view's contents should automatically update their font when the device’s  UIContentSizeCategory changes.   This property is modeled after the adjustsFontForContentSizeCategory property in the  UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.   Default value is NO.  */ @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;  @end` |
-| To: | `@interface MDCAlertControllerView : UIView  @property(nonatomic, strong, nullable) UIFont *titleFont UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *titleColor UI_APPEARANCE_SELECTOR;  @property(nonatomic, strong, nullable) UIFont *messageFont UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *messageColor UI_APPEARANCE_SELECTOR;  @property(nonatomic, strong, nullable) UIFont *buttonFont UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *buttonColor UI_APPEARANCE_SELECTOR; @property(nonatomic, strong, nullable) UIColor *buttonInkColor UI_APPEARANCE_SELECTOR;  @property(nonatomic, assign) CGFloat cornerRadius;  /*  Indicates whether the view's contents should automatically update their font when the device’s  UIContentSizeCategory changes.   This property is modeled after the adjustsFontForContentSizeCategory property in the  UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.   Default value is NO.  */ @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;  @end` |
-
 ### FlexibleHeader
 
 #### MDCFlexibleHeaderView
 
 *new* property: `disableContentInsetAdjustmentWhenContentInsetAdjustmentBehaviorIsNever` in `MDCFlexibleHeaderView`
-
-#### MDCFlexibleHeaderView()
-
-*new* category: `MDCFlexibleHeaderView()`
-
-*removed* category: `MDCFlexibleHeaderView()`
-
-*modified* property: `contentView` in `MDCFlexibleHeaderView()`
-
-| Type of change: | parent.usr |
-|---|---|
-| From: | `c:objc(ext)MDCFlexibleHeaderView@MDCFlexibleHeaderView.h@14009` |
-| To: | `c:objc(ext)MDCFlexibleHeaderView@MDCFlexibleHeaderView.h@14344` |
 
 ## Component changes
 
