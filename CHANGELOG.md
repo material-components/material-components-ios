@@ -1,19 +1,60 @@
 # #develop#
 
 In this release
-  AlertControllers added a corner radius API.
-  FlexibleHeader added disableContentInsetAdjustmentWhenContentInsetAdjustmentBehaviorIsNever to let clients choose if the scrollview can adjust the contentInsets
+  AlertControllers added a `cornerRadius` property to specify its shape.
+  FlexibleHeader added `disableContentInsetAdjustmentWhenContentInsetAdjustmentBehaviorIsNever` to let clients choose if the scrollview can adjust the contentInsets.
+  ChipField added `showChipsDeleteButton` to turn on the delete button on chips.
+  BottonSheet added `preferredSheetHeight` to let clients define a non half screen height.
+  Shape Subsystem integrated into many components including Button Cards and Chips.
 
-Replace this text with a summarized description of this release's contents.
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+Card Buttons and Chips all are using the shape subsystem, which subtly changed the way their corner
+radii are rendered.
 
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
+### AlertControllers added a `cornerRadius`
+
+A property to specify its shape.
+
+```objc
+MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:@"title"
+                                                               message:@"message"];
+[alert addAction:[MDCAlertAction actionWithTitle:@"action1" handler:nil]];
+alert.cornerRadius = cornerRadius;
+```
+
+### FlexibleHeader added `disableContentInsetAdjustmentWhenContentInsetAdjustmentBehaviorIsNever`
+To make it easier to support scrollviews and content insets
+
+```objc
+_scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+if (@available(iOS 11.0, *)) {
+_scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+}
+```
+
+### ChipField added `showChipsDeleteButton` 
+Turns on the delete button on chips.
+
+```swift
+var chipField = MDCChipField()
+chipField.frame = .zero
+chipField.delegate = self
+chipField.textField.placeholderLabel.text = "This is a chip field."
+chipField.showChipsDeleteButton = true
+```
+
+### BottonSheet added `preferredSheetHeight` to let clients define a non half screen height.
+
+```objc
+presentationController = [[MDCBottomSheetPresentationController alloc]
+      initWithPresentedViewController:stubPresentedViewController
+             presentingViewController:stubPresentingViewController];
+presentationController.preferredSheetHeight = 100;
+```
+
 ## API changes
 
 ### BottomSheet
