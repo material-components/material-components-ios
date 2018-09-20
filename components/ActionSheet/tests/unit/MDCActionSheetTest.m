@@ -94,15 +94,7 @@
   UIColor *hsbColor = [UIColor colorWithHue:0.8f saturation:0.8f brightness:0.8f alpha:0.8f];
   UIColor *blackWithAlpha = [UIColor.greenColor colorWithAlphaComponent:0.8f];
   UIColor *black = UIColor.blackColor;
-  CIColor *ciColor;
-  if (@available(iOS 10.0, *)) {
-    ciColor = [[CIColor alloc] initWithRed:0.9f
-                                     green:0.9f
-                                      blue:0.9f
-                                colorSpace:CGColorSpaceCreateDeviceCMYK()];
-  } else {
-    ciColor = [[CIColor alloc] initWithColor:UIColor.blackColor];
-  }
+  CIColor *ciColor = [[CIColor alloc] initWithColor:UIColor.blackColor];
   UIColor *uiColorFromCIColor = [UIColor colorWithCIColor:ciColor];
   UIColor *whiteColor = [UIColor colorWithWhite:0.5f alpha:0.5f];
   return @[ rgbColor, hsbColor, blackWithAlpha, black, uiColorFromCIColor, whiteColor ];
@@ -133,6 +125,18 @@
 
     // Then
     XCTAssertEqualObjects(self.actionSheet.header.titleLabel.textColor, color);
+  }
+}
+
+- (void)testCustomBackgroundColor {
+  // Given
+  NSArray *colors = [self colorsToTest];
+  for (UIColor *color in colors) {
+    // When
+    self.actionSheet.backgroundColor = color;
+
+    // Then
+    XCTAssertEqualObjects(self.actionSheet.backgroundColor, color);
   }
 }
 
