@@ -33,6 +33,11 @@ static const CGFloat safeAreaAmount = 20.f;
 - (CGFloat)openingSheetHeight;
 @end
 
+@interface MDCActionSheetItemTableViewCell (Testing)
+@property(nonatomic, strong) UILabel *actionLabel;
+@property(nonatomic, strong) UIImageView *actionImageView;
+@end
+
 @interface MDCActionSheetTest : XCTestCase
 @property(nonatomic, strong) MDCActionSheetController *actionSheet;
 @end
@@ -397,6 +402,9 @@ static const CGFloat safeAreaAmount = 20.f;
 }
 #pragma mark Table
 
+- (NSArray *)getCellsFromActionSheet {
+}
+
 - (void)testSetImageRenderingMode {
   // Given
   self.actionSheet.imageRenderingMode = UIImageRenderingModeAlwaysOriginal;
@@ -411,5 +419,7 @@ static const CGFloat safeAreaAmount = 20.f;
     XCTAssertEqual(actionCell.imageRenderingMode, UIImageRenderingModeAlwaysOriginal);
   }
 }
+
+- (void)testSetDefaultColor
 
 @end
