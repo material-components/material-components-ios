@@ -360,7 +360,7 @@ static const CGFloat safeAreaAmount = 20.f;
     [self.actionSheet.view layoutIfNeeded];
 
     // Then
-    CGFloat expectedHeight = [self.actionSheet openingSheetHeight] + safeAreaAmount;
+    CGFloat expectedHeight = [self.actionSheet openingSheetHeight];
     CGFloat expectedMinusHeader = expectedHeight - headerHeight;
     // Action sheet should show half of the allowed actions but the full last action
     XCTAssertEqualWithAccuracy(fmod(expectedMinusHeader, halfCellHeight), 0, 0.001);
