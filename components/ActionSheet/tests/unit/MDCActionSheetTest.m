@@ -479,7 +479,7 @@ static const CGFloat kSafeAreaAmount = 20.f;
   NSArray *colors = [self colorsToTest];
 
   for (UIColor *color in colors) {
-    self.actionSheet.tintColor = color;
+    self.actionSheet.actionTintColor = color;
     NSArray *cells = [self setupActionSheetAndGetCells];
     for (MDCActionSheetItemTableViewCell *cell in cells) {
       // Then

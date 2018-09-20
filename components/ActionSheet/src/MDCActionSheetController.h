@@ -167,7 +167,7 @@ __attribute__((objc_subclassing_restricted))
 /**
  The tint color for the action items within an action sheet.
  */
-@property(nonatomic, strong, nullable) UIColor *tintColor;
+@property(nonatomic, strong, nullable) UIColor *actionTintColor;
 
 /**
  The image rendering mode for all actions within an action sheet.

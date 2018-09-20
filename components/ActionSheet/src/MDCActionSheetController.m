@@ -116,7 +116,7 @@ static const CGFloat kActionTextAlpha = 0.87f;
     _header.backgroundColor = _backgroundColor;
     _tableView.backgroundColor = _backgroundColor;
     _actionTextColor = [UIColor.blackColor colorWithAlphaComponent:kActionTextAlpha];
-    _tintColor = [UIColor.blackColor colorWithAlphaComponent:kActionImageAlpha];
+    _actionTintColor = [UIColor.blackColor colorWithAlphaComponent:kActionImageAlpha];
     _imageRenderingMode = UIImageRenderingModeAlwaysTemplate;
   }
 
@@ -295,7 +295,7 @@ static const CGFloat kActionTextAlpha = 0.87f;
   cell.backgroundColor = self.backgroundColor;
   cell.actionFont = self.actionFont;
   cell.accessibilityIdentifier = action.accessibilityIdentifier;
-  cell.tintColor = self.tintColor;
+  cell.tintColor = self.actionTintColor;
   cell.imageRenderingMode = self.imageRenderingMode;
   cell.actionTextColor = self.actionTextColor;
   return cell;
@@ -398,17 +398,14 @@ static const CGFloat kActionTextAlpha = 0.87f;
 
 - (void)setActionTextColor:(UIColor *)actionTextColor {
   _actionTextColor = actionTextColor;
-  [self.view setNeedsLayout];
 }
 
-- (void)setTintColor:(UIColor *)tintColor {
-  _tintColor = tintColor;
-  [self.view setNeedsLayout];
+- (void)setActionTintColor:(UIColor *)actionTintColor {
+  _actionTintColor = actionTintColor;
 }
 
 - (void)setImageRenderingMode:(UIImageRenderingMode)imageRenderingMode {
   _imageRenderingMode = imageRenderingMode;
-  [self.view setNeedsLayout];
 }
 
 @end
