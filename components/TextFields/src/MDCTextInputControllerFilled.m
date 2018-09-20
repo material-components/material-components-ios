@@ -181,7 +181,7 @@ static CGFloat _underlineHeightNormalDefault =
 
   textInsets.bottom = [self beneathInputPadding] + [self underlineOffset];
 
-  if (self.textInput.effectiveUserInterfaceLayoutDirection ==
+  if (self.textInput.mdf_effectiveUserInterfaceLayoutDirection ==
       UIUserInterfaceLayoutDirectionRightToLeft) {
     textInsets.left = MDCTextInputControllerFilledHalfPadding;
     textInsets.right = MDCTextInputControllerFilledFullPadding;

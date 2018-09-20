@@ -591,7 +591,7 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1.f;
           editingRect.size.width += clearButtonWidth;
           break;
         case UITextFieldViewModeWhileEditing:
-          if (self.effectiveUserInterfaceLayoutDirection ==
+          if (self.mdf_effectiveUserInterfaceLayoutDirection ==
               UIUserInterfaceLayoutDirectionRightToLeft) {
             clearButtonWidth += padding;
           } else {
