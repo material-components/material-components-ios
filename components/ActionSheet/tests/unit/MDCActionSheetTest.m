@@ -402,24 +402,51 @@ static const CGFloat safeAreaAmount = 20.f;
 }
 #pragma mark Table
 
-- (NSArray *)getCellsFromActionSheet {
-}
-
-- (void)testSetImageRenderingMode {
-  // Given
-  self.actionSheet.imageRenderingMode = UIImageRenderingModeAlwaysOriginal;
-
-  // Then
+- (NSArray <MDCActionSheetItemTableViewCell *>*)setupActionSheetAndGetCells {
+  NSMutableArray *cellsArray = [[NSMutableArray alloc] init];
+  [self addNumberOfActions:100];
   NSUInteger cellsCount = self.actionSheet.actions.count;
   UITableView *table = self.actionSheet.tableView;
   for (NSUInteger cellIndex = 0; cellIndex < cellsCount; ++cellIndex) {
-    NSIndexPath *indexPath = [[NSIndexPath alloc] initWithIndex:cellIndex];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:cellIndex inSection:0];
     UITableViewCell *cell = [table.dataSource tableView:table cellForRowAtIndexPath:indexPath];
     MDCActionSheetItemTableViewCell *actionCell = (MDCActionSheetItemTableViewCell *)cell;
-    XCTAssertEqual(actionCell.imageRenderingMode, UIImageRenderingModeAlwaysOriginal);
+    [cellsArray addObject:actionCell];
+  }
+  return cellsArray;
+}
+
+- (void)testDefaultRenderingMode {
+  // When
+  NSArray *cells = [self setupActionSheetAndGetCells];
+
+  // Then
+  for (MDCActionSheetItemTableViewCell *cell in cells) {
+    XCTAssertEqual(cell.imageRenderingMode, UIImageRenderingModeAlwaysTemplate);
   }
 }
 
-- (void)testSetDefaultColor
+- (void)testSetImageRenderingMode {
+  // When
+  UIImageRenderingMode imageMode = UIImageRenderingModeAlwaysOriginal;
+  self.actionSheet.imageRenderingMode = imageMode;
+  NSArray *cells = [self setupActionSheetAndGetCells];
+
+  // Then
+  for (MDCActionSheetItemTableViewCell *cell in cells) {
+    XCTAssertEqual(cell.imageRenderingMode, imageMode);
+  }
+}
+
+- (void)testDefaultColor {
+  // When
+  NSArray *cells = [self setupActionSheetAndGetCells];
+
+  // Then
+  for (MDCActionSheetItemTableViewCell *cell in cells) {
+    XCTAssertEqualObjects(cell.actionLabel.textColor,
+                          [UIColor.blackColor colorWithAlphaComponent:0.87f]);
+  }
+}
 
 @end
