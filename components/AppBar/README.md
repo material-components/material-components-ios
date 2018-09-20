@@ -778,7 +778,7 @@ like so:
 +  // Match the width of the parent view.
 +  CGRect frame = appBarViewController.view.frame;
 +  frame.origin.x = 0;
-+  frame.size.width = appBarViewController.parentViewController.view.bounds.size.width;
++  frame.size.width = CGRectGetWidth(appBarViewController.parentViewController.view.bounds);
 +  appBarViewController.view.frame = frame;
 +
 +  view.addSubview(appBarViewController.view)
