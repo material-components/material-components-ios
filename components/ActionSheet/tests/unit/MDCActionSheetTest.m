@@ -108,23 +108,31 @@
   return @[ rgbColor, hsbColor, blackWithAlpha, black, uiColorFromCIColor, whiteColor ];
 }
 
-- (void)testTitleAndMessageCustomColor {
+- (void)testCustomMessageColor {
   // Given
-  self.actionSheet.title = @"Test title";
   self.actionSheet.message = @"Test message";
 
   NSArray *colors = [self colorsToTest];
   for (UIColor *color in colors) {
     // When
-    UIColor *titleColor = color;
-    UIColor *messageColor = color;
+    self.actionSheet.messageTextColor = color;
 
-    self.actionSheet.titleTextColor = titleColor;
-    self.actionSheet.messageTextColor = messageColor;
+    // Then
+    XCTAssertEqualObjects(self.actionSheet.header.messageLabel.textColor, color);
+  }
+}
+
+- (void)testCustomTitleColor {
+  // Given
+  self.actionSheet.title = @"Test title";
+
+  NSArray *colors = [self colorsToTest];
+  for (UIColor *color in colors) {
+    // When
+    self.actionSheet.titleTextColor = color;
 
     // Then
     XCTAssertEqualObjects(self.actionSheet.header.titleLabel.textColor, color);
-    XCTAssertEqualObjects(self.actionSheet.header.messageLabel.textColor, color);
   }
 }
 
