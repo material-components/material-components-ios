@@ -16,14 +16,14 @@
 
 #import "MaterialTypography.h"
 
-static const CGFloat ImageAlpha = 0.6f;
-static const CGFloat LabelAlpha = 0.87f;
-static const CGFloat ImageLeadingPadding = 16.f;
-static const CGFloat ImageTopPadding = 16.f;
-static const CGFloat ImageHeightAndWidth = 24.f;
-static const CGFloat TitleLeadingPadding = 72.f;
-static const CGFloat TitleTrailingPadding = 16.f;
-static const CGFloat ActionItemTitleVerticalPadding = 18.f;
+static const CGFloat kImageAlpha = 0.6f;
+static const CGFloat kLabelAlpha = 0.87f;
+static const CGFloat kImageLeadingPadding = 16.f;
+static const CGFloat kImageTopPadding = 16.f;
+static const CGFloat kImageHeightAndWidth = 24.f;
+static const CGFloat kTitleLeadingPadding = 72.f;
+static const CGFloat kTitleTrailingPadding = 16.f;
+static const CGFloat kActionItemTitleVerticalPadding = 18.f;
 
 @interface MDCActionSheetItemTableViewCell ()
 @property(nonatomic, strong) UILabel *actionLabel;
@@ -59,12 +59,12 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
   [_actionLabel sizeToFit];
   _actionLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
   _actionLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
-  _actionLabel.textColor = [UIColor.blackColor colorWithAlphaComponent:LabelAlpha];
+  _actionLabel.textColor = [UIColor.blackColor colorWithAlphaComponent:kLabelAlpha];
   CGFloat leadingConstant;
   if (_itemAction.image) {
-    leadingConstant = TitleLeadingPadding;
+    leadingConstant = kTitleLeadingPadding;
   } else {
-    leadingConstant = ImageLeadingPadding;
+    leadingConstant = kImageLeadingPadding;
   }
   [NSLayoutConstraint constraintWithItem:_actionLabel
                                attribute:NSLayoutAttributeTop
@@ -72,7 +72,7 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
                                   toItem:self.contentView
                                attribute:NSLayoutAttributeTop
                               multiplier:1
-                                constant:ActionItemTitleVerticalPadding]
+                                constant:kActionItemTitleVerticalPadding]
       .active = YES;
   [NSLayoutConstraint constraintWithItem:_actionLabel
                                attribute:NSLayoutAttributeBottom
@@ -80,7 +80,7 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
                                   toItem:self.contentView
                                attribute:NSLayoutAttributeBottom
                               multiplier:1
-                                constant:-ActionItemTitleVerticalPadding]
+                                constant:-kActionItemTitleVerticalPadding]
       .active = YES;
   _titleLeadingConstraint = [NSLayoutConstraint constraintWithItem:_actionLabel
                                                          attribute:NSLayoutAttributeLeading
@@ -90,7 +90,7 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
                                                         multiplier:1
                                                           constant:leadingConstant];
   _titleLeadingConstraint.active = YES;
-  CGFloat width = CGRectGetWidth(self.contentView.frame) - leadingConstant - TitleTrailingPadding;
+  CGFloat width = CGRectGetWidth(self.contentView.frame) - leadingConstant - kTitleTrailingPadding;
   _titleWidthConstraint = [NSLayoutConstraint constraintWithItem:_actionLabel
                                                        attribute:NSLayoutAttributeWidth
                                                        relatedBy:NSLayoutRelationEqual
@@ -107,14 +107,14 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
   _actionImageView = [[UIImageView alloc] init];
   [self.contentView addSubview:_actionImageView];
   _actionImageView.translatesAutoresizingMaskIntoConstraints = NO;
-  _actionImageView.alpha = ImageAlpha;
+  _actionImageView.alpha = kImageAlpha;
   [NSLayoutConstraint constraintWithItem:_actionImageView
                                attribute:NSLayoutAttributeTop
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self.contentView
                                attribute:NSLayoutAttributeTop
                               multiplier:1
-                                constant:ImageTopPadding]
+                                constant:kImageTopPadding]
       .active = YES;
   [NSLayoutConstraint constraintWithItem:_actionImageView
                                attribute:NSLayoutAttributeLeading
@@ -122,7 +122,7 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
                                   toItem:self.contentView
                                attribute:NSLayoutAttributeLeading
                               multiplier:1
-                                constant:ImageLeadingPadding]
+                                constant:kImageLeadingPadding]
       .active = YES;
   [NSLayoutConstraint constraintWithItem:_actionImageView
                                attribute:NSLayoutAttributeWidth
@@ -130,7 +130,7 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
                                   toItem:nil
                                attribute:NSLayoutAttributeNotAnAttribute
                               multiplier:1
-                                constant:ImageHeightAndWidth]
+                                constant:kImageHeightAndWidth]
       .active = YES;
   [NSLayoutConstraint constraintWithItem:_actionImageView
                                attribute:NSLayoutAttributeHeight
@@ -138,7 +138,7 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
                                   toItem:nil
                                attribute:NSLayoutAttributeNotAnAttribute
                               multiplier:1
-                                constant:ImageHeightAndWidth]
+                                constant:kImageHeightAndWidth]
       .active = YES;
 }
 
@@ -148,12 +148,12 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
   self.actionLabel.text = _itemAction.title;
   CGFloat leadingConstant;
   if (_itemAction.image) {
-    leadingConstant = TitleLeadingPadding;
+    leadingConstant = kTitleLeadingPadding;
   } else {
-    leadingConstant = ImageLeadingPadding;
+    leadingConstant = kImageLeadingPadding;
   }
   _titleLeadingConstraint.constant = leadingConstant;
-  CGFloat width = CGRectGetWidth(self.contentView.frame) - leadingConstant - TitleTrailingPadding;
+  CGFloat width = CGRectGetWidth(self.contentView.frame) - leadingConstant - kTitleTrailingPadding;
   _titleWidthConstraint.constant = width;
 
   self.actionImageView.image = _itemAction.image;
