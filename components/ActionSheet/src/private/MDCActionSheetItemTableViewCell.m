@@ -32,8 +32,6 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
 
 @implementation MDCActionSheetItemTableViewCell {
   MDCActionSheetAction *_itemAction;
-  UILabel *_textLabel;
-  UIImageView *_imageView;
   NSLayoutConstraint *_titleLeadingConstraint;
   NSLayoutConstraint *_titleWidthConstraint;
   MDCInkTouchController *_inkTouchController;
@@ -141,7 +139,7 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  _textLabel.text = _itemAction.title;
+  self.textLabel.text = _itemAction.title;
   CGFloat leadingConstant;
   if (_itemAction.image) {
     leadingConstant = TitleLeadingPadding;
@@ -152,13 +150,13 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
   CGFloat width = CGRectGetWidth(self.contentView.frame) - leadingConstant - TitleTrailingPadding;
   _titleWidthConstraint.constant = width;
 
-  _imageView.image = _itemAction.image;
+  self.imageView.image = _itemAction.image;
 }
 
 - (void)setAction:(MDCActionSheetAction *)action {
   _itemAction = [action copy];
-  _textLabel.text = _itemAction.title;
-  _imageView.image = _itemAction.image;
+  self.textLabel.text = _itemAction.title;
+  self.imageView.image = _itemAction.image;
   [self setNeedsLayout];
 }
 
@@ -175,11 +173,11 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
   UIFont *titleFont = _actionFont ?:
       [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
   if (self.mdc_adjustsFontForContentSizeCategory) {
-    _textLabel.font =
+    self.textLabel.font =
         [titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
                                 scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
   } else {
-    _textLabel.font = titleFont;
+    self.textLabel.font = titleFont;
   }
   [self setNeedsLayout];
 }
