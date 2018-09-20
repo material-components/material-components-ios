@@ -34,7 +34,7 @@ class AppBarColorThemerTests: XCTestCase {
     MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
 
     // Then
-    XCTAssertEqual(appBar.headerViewController.headerView.backgroundColor,
+    XCTAssertNotEqual(appBar.headerViewController.headerView.backgroundColor,
                    colorScheme.primaryColor)
     XCTAssertEqual(appBar.navigationBar.backgroundColor, colorScheme.primaryColor)
     XCTAssertEqual(appBar.navigationBar.titleTextColor, colorScheme.onPrimaryColor)
