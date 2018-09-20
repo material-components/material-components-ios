@@ -154,7 +154,7 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
   CGFloat width = CGRectGetWidth(self.contentView.frame) - leadingConstant - kTitleTrailingPadding;
   _titleWidthConstraint.constant = width;
 
-  self.actionImageView.image = _itemAction.image;
+  self.actionImageView.image = [_itemAction.image imageWithRenderingMode:self.imageRenderingMode];
 }
 
 - (void)setAction:(MDCActionSheetAction *)action {
