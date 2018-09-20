@@ -25,6 +25,11 @@ static const CGFloat TitleLeadingPadding = 72.f;
 static const CGFloat TitleTrailingPadding = 16.f;
 static const CGFloat ActionItemTitleVerticalPadding = 18.f;
 
+@interface MDCActionSheetItemTableViewCell
+@property(nonatomic, strong) UILabel *textLabel;
+@property(nonatomic, strong) UIImageView *imageView;
+@end
+
 @implementation MDCActionSheetItemTableViewCell {
   MDCActionSheetAction *_itemAction;
   UILabel *_textLabel;
