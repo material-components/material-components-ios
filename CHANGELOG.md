@@ -1,5 +1,9 @@
 # #develop#
 
+In this release
+  AlertControllers added a corner radius API.
+  FlexibleHeader added disableContentInsetAdjustmentWhenContentInsetAdjustmentBehaviorIsNever to let clients choose if the scrollview can adjust the contentInsets
+
 Replace this text with a summarized description of this release's contents.
 ## Breaking changes
 
