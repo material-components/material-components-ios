@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialDialogs.h"
 #import "MaterialDialogs+TypographyThemer.h"
+#import "MaterialDialogs.h"
 
 #import "MDCAlertControllerView+Private.h"
 
@@ -26,19 +26,18 @@
 @implementation MDCAlertControllerCustomizationTests
 
 - (void)setUp {
-    [super setUp];
-    
+  [super setUp];
 }
 
 - (void)tearDown {
-    [super tearDown];
+  [super tearDown];
 }
 
 - (void)testApplyingTitleAlignment {
   // Given
   MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:@"Title"
-                                                                   message: @"Message"];
-  MDCAlertControllerView* alertView = (MDCAlertControllerView *)alert.view;
+                                                                   message:@"Message"];
+  MDCAlertControllerView *alertView = (MDCAlertControllerView *)alert.view;
   NSTextAlignment titleAlignment = NSTextAlignmentCenter;
 
   // When
