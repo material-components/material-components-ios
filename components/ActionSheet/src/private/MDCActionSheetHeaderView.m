@@ -70,9 +70,9 @@ static const CGFloat kMiddlePadding = 8.f;
   CGSize messageSize = [self.messageLabel sizeThatFits:labelFrame.size];
   CGRect titleFrame = CGRectMake(kLeadingPadding + labelFrame.origin.x, kTopStandardPadding,
                                  labelFrame.size.width, titleSize.height);
-  CGRect messageFrame = CGRectMake(kLeadingPadding + labelFrame.origin.x,
-                                   CGRectGetMaxY(titleFrame) + kMiddlePadding,
-                                   labelFrame.size.width, messageSize.height);
+  CGRect messageFrame =
+      CGRectMake(kLeadingPadding + labelFrame.origin.x, CGRectGetMaxY(titleFrame) + kMiddlePadding,
+                 labelFrame.size.width, messageSize.height);
   self.titleLabel.frame = titleFrame;
   self.messageLabel.frame = messageFrame;
 }
@@ -85,8 +85,8 @@ static const CGFloat kMiddlePadding = 8.f;
   BOOL messageExist = (self.message) && (![self.message isEqualToString:@""]);
   BOOL titleExist = (self.title) && (![self.title isEqualToString:@""]);
   if (titleExist && messageExist) {
-    contentHeight = titleSize.height + messageSize.height +
-        (kTopStandardPadding * 2) + kMiddlePadding;
+    contentHeight =
+        titleSize.height + messageSize.height + (kTopStandardPadding * 2) + kMiddlePadding;
   } else if (messageExist) {
     contentHeight = messageSize.height + (kMessageOnlyPadding * 2);
   } else if (titleExist) {

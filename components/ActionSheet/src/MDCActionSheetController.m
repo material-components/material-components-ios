@@ -105,7 +105,7 @@ static NSString *const kReuseIdentifier = @"BaseCell";
     _tableView.rowHeight = UITableViewAutomaticDimension;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [_tableView registerClass:[MDCActionSheetItemTableViewCell class]
-       forCellReuseIdentifier:kReuseIdentifier];
+        forCellReuseIdentifier:kReuseIdentifier];
 
     _header = [[MDCActionSheetHeaderView alloc] initWithFrame:CGRectZero];
     _header.title = [title copy];
