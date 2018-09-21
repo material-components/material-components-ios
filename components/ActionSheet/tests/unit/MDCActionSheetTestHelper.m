@@ -32,7 +32,8 @@
 + (void)addNumberOfActions:(NSUInteger)actionsCount
              toActionSheet:(MDCActionSheetController *)actionSheet;
 
-+ (NSArray<MDCActionSheetItemTableViewCell *> *)getCellsFromActionSheet:(MDCActionSheetController *)actionSheet;
++ (NSArray<MDCActionSheetItemTableViewCell *> *)getCellsFromActionSheet:
+    (MDCActionSheetController *)actionSheet;
 
 @end
 
@@ -60,7 +61,8 @@
   }
 }
 
-+ (NSArray<MDCActionSheetItemTableViewCell *> *)getCellsFromActionSheet:(MDCActionSheetController *)actionSheet {
++ (NSArray<MDCActionSheetItemTableViewCell *> *)getCellsFromActionSheet:
+    (MDCActionSheetController *)actionSheet {
   NSMutableArray *cellsArray = [[NSMutableArray alloc] init];
   [MDCActionSheetTestHelper addNumberOfActions:10 toActionSheet:actionSheet];
   NSUInteger cellsCount = actionSheet.actions.count;

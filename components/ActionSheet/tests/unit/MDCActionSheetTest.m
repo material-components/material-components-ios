@@ -16,8 +16,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MDCActionSheetTestHelper.m"
 #import "../../src/private/MDCActionSheetHeaderView.h"
+#import "MDCActionSheetTestHelper.m"
 
 static const CGFloat kSafeAreaAmount = 20.f;
 
