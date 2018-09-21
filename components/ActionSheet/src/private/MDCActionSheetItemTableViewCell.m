@@ -199,6 +199,8 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
 
 - (void)setInkColor:(UIColor *)inkColor {
   _inkColor = inkColor;
+  self.inkTouchController.defaultInkView.inkColor =
+      inkColor ?: [[UIColor alloc] initWithWhite:0 alpha:0.14f];
 }
 
 - (void)setImageRenderingMode:(UIImageRenderingMode)imageRenderingMode {
