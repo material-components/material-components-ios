@@ -196,7 +196,6 @@ presentationController.preferredSheetHeight = 100;
 ### Tabs
 
 * [Fix an example bug (#5106)](https://github.com/material-components/material-components-ios/commit/a37d4a4f3a57ffca55adaa2904f9a5a4a4e8735f) (Cody Weaver)
-* [[MDCItemBar] Fix an issue where the protocol method `itemBar:shouldSelectItem:` does not behave correctly (#5071)](https://github.com/material-components/material-components-ios/commit/4bfc31efd851a35bb95c5f9f82541bbc4386b94a) (Ahmed Ibrahim)
 
 ### TextFields
 
