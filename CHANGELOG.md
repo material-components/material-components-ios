@@ -1,3 +1,208 @@
+# 64.0.0
+
+In this release
+  AlertControllers added a `cornerRadius` property to specify its shape.
+  FlexibleHeader added `disableContentInsetAdjustmentWhenContentInsetAdjustmentBehaviorIsNever` to let clients choose if the scrollview can adjust the contentInsets.
+  ChipField added `showChipsDeleteButton` to turn on the delete button on chips.
+  BottonSheet added `preferredSheetHeight` to let clients define a non half screen height.
+  Shape Subsystem integrated into many components including Button Cards and Chips.
+
+## Breaking changes
+
+Card Buttons and Chips all are using the shape subsystem, which subtly changed the way their corner
+radii are rendered.
+
+## New features
+
+### AlertControllers added a `cornerRadius`
+
+A property to specify its shape.
+
+```objc
+MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:@"title"
+                                                               message:@"message"];
+[alert addAction:[MDCAlertAction actionWithTitle:@"action1" handler:nil]];
+alert.cornerRadius = cornerRadius;
+```
+
+### FlexibleHeader added `disableContentInsetAdjustmentWhenContentInsetAdjustmentBehaviorIsNever`
+
+To make it easier to support scrollviews and content insets
+
+```objc
+_scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+if (@available(iOS 11.0, *)) {
+_scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+}
+```
+
+### ChipField added `showChipsDeleteButton` 
+
+Turns on the delete button on chips.
+
+```swift
+var chipField = MDCChipField()
+chipField.frame = .zero
+chipField.delegate = self
+chipField.textField.placeholderLabel.text = "This is a chip field."
+chipField.showChipsDeleteButton = true
+```
+
+### BottonSheet added `preferredSheetHeight` to let clients define a non half screen height.
+
+```objc
+presentationController = [[MDCBottomSheetPresentationController alloc]
+      initWithPresentedViewController:stubPresentedViewController
+             presentingViewController:stubPresentingViewController];
+presentationController.preferredSheetHeight = 100;
+```
+
+## API changes
+
+### BottomSheet
+
+#### MDCBottomSheetTransitionController
+
+*new* property: `preferredSheetHeight` in `MDCBottomSheetTransitionController`
+
+#### MDCBottomSheetPresentationController
+
+*new* property: `preferredSheetHeight` in `MDCBottomSheetPresentationController`
+
+### Buttons+ButtonThemer
+
+#### MDCButtonScheming
+
+*new* property: `shapeScheme` in `MDCButtonScheming`
+
+#### MDCButtonScheme
+
+*new* property: `shapeScheme` in `MDCButtonScheme`
+
+### Buttons+ShapeThemer
+
+**New component.**
+
+### Chips+ChipThemer
+
+#### MDCChipViewScheming
+
+*new* property: `shapeScheme` in `MDCChipViewScheming`
+
+#### MDCChipViewScheme
+
+*new* property: `shapeScheme` in `MDCChipViewScheme`
+
+### Chips
+
+#### MDCChipField
+
+*new* property: `showChipsDeleteButton` in `MDCChipField`
+
+
+### Chips+ShapeThemer
+
+**New component.**
+
+### Dialogs+DialogThemer
+
+**New component.**
+
+### Dialogs
+
+#### MDCAlertController
+
+*new* property: `cornerRadius` in `MDCAlertController`
+
+#### MDCAlertControllerView
+
+*new* property: `cornerRadius` in `MDCAlertControllerView`
+
+### FlexibleHeader
+
+#### MDCFlexibleHeaderView
+
+*new* property: `disableContentInsetAdjustmentWhenContentInsetAdjustmentBehaviorIsNever` in `MDCFlexibleHeaderView`
+
+## Component changes
+
+### ActionSheet
+
+* [Initial commit (#5157)](https://github.com/material-components/material-components-ios/commit/c14604f16a587e2cd80d4a50f629d315c54a7210) (Cody Weaver)
+* [Labels use text color instead of alpha (#5142)](https://github.com/material-components/material-components-ios/commit/dc3b9619de1c7afad4d342ba315753c6cd31b944) (Cody Weaver)
+* [Make header and table properties](https://github.com/material-components/material-components-ios/commit/98ff77c0a74d3badc268439e558d68cb0fa615b4) (Cody Weaver)
+* [Update the docs (#5134)](https://github.com/material-components/material-components-ios/commit/99f8e4c27e6dfe137b1cbbef5e3e00136c8a0dbb) (Cody Weaver)
+
+### AppBar
+
+* [[FlexibleHeaderView] Make FexibleHeaderView respect contentInsetAdjustmentBehavior (#4970) (#5073)](https://github.com/material-components/material-components-ios/commit/2fee13665fdc0052d1c9df2f8c187109730a50a3) (Wenyu Zhang)
+
+### BottomSheet
+
+* [Add property so clients can set a custom height for bottom sheet (#5139)](https://github.com/material-components/material-components-ios/commit/553fb019e7399876a4c34bc417194ef6721af47a) (Cody Weaver)
+* [Add tests for `updatePreferredSheetHeight`. (#5115)](https://github.com/material-components/material-components-ios/commit/db3f1f287bd13c5357c33fce6b05e0e8599eca8e) (Robert Moore)
+* [Make `sheetView` a property. (#5122)](https://github.com/material-components/material-components-ios/commit/c906e41fe6797559363c44e5a6953ca1675be36e) (Robert Moore)
+* [Use setter for sheet view height. (#5125)](https://github.com/material-components/material-components-ios/commit/b5c096009f604061fb10a2208a0445bffb5df2b9) (Robert Moore)
+* [[Shape]! Provide more granularity for corner setting for the theming (#5116)](https://github.com/material-components/material-components-ios/commit/c741ba49044e613faa0925e8b817783631629573) (Yarden Eitan)
+
+### Buttons
+
+#### Breaking changes
+
+* [**Breaking**:  Integrate the shape themer into the MDCButton themer (#5120)](https://github.com/material-components/material-components-ios/commit/b27c6f5654add48315b5ad50361fdfa768b6229d) (Yarden Eitan)
+
+* [Add the Floating Button Shape themer to the Floating Button themer (#5132)](https://github.com/material-components/material-components-ios/commit/a7810bbc5e3cc19c32d861a5d8a42ab22e1b7efa) (Yarden Eitan)
+* [Addition of a FAB shape themer (#5131)](https://github.com/material-components/material-components-ios/commit/a87ad9a1214793afffcd422d7041c8e796dd05cd) (Yarden Eitan)
+* [Addition of a Shape Themer for MDCButton (#5119)](https://github.com/material-components/material-components-ios/commit/d884aeccf1ee70c493cb1a500200015bc323c816) (Yarden Eitan)
+* [Integrate the FAB shape themer into our examples (#5133)](https://github.com/material-components/material-components-ios/commit/4e456f88ce45cea64bd2ce329a3a39807884c110) (Yarden Eitan)
+* [Integration of the button shape themer into the examples (#5121)](https://github.com/material-components/material-components-ios/commit/08bb1d707ab76589da992fa190cc20f39fd84475) (Yarden Eitan)
+* [[Shapes] Bug fix for getting the wrong backgroundColor when shapeGenerator is set. (#5127)](https://github.com/material-components/material-components-ios/commit/e785745070762f6779c359a77801e5961e4092c8) (Yarden Eitan)
+
+### Cards
+
+* [[Shape]! Provide more granularity for corner setting for the theming (#5116)](https://github.com/material-components/material-components-ios/commit/c741ba49044e613faa0925e8b817783631629573) (Yarden Eitan)
+
+### Chips
+
+#### Breaking changes
+
+* [**Breaking**:  Integrate the shape themer into the chip themer (#5112)](https://github.com/material-components/material-components-ios/commit/67ddf9b6caf0cbb2f2051150f28d2a203ec1ad0b) (Yarden Eitan)
+
+* [Add client the ability to delete chips in a chip field (#5135)](https://github.com/material-components/material-components-ios/commit/f233981e2fbcfa40ef1573ff333eed2b22465080) (Cody Weaver)
+* [Addition of a Shape Themer (#5111)](https://github.com/material-components/material-components-ios/commit/9faa1295b87feaec96b8fc0a38cd018cb5a9ac47) (Yarden Eitan)
+* [Integration of the chip themer into the examples (#5113)](https://github.com/material-components/material-components-ios/commit/31e4007ec0e7e6dca4e9359a3f2e14d20ebbba15) (Yarden Eitan)
+* [Support RTL in MDCChipCollectionViewFlowLayout (#5079)](https://github.com/material-components/material-components-ios/commit/1d0153ad6c07c60088cd24b6ecbd1bad0e19caa0) (jsaletta)
+* [Update example (#5118)](https://github.com/material-components/material-components-ios/commit/d57e6b724f148eaec173944f082c2c0d7998b509) (Cody Weaver)
+* [[Shapes] Bug fix for getting the wrong backgroundColor when shapeGenerator is set. (#5127)](https://github.com/material-components/material-components-ios/commit/e785745070762f6779c359a77801e5961e4092c8) (Yarden Eitan)
+
+### Dialogs
+
+* [Add a dialog themer](https://github.com/material-components/material-components-ios/commit/faea5d127ba60c54cbf45f34d008889026adb861) (Galia Kaufman)
+* [Expose corner radius property (#4988)](https://github.com/material-components/material-components-ios/commit/fcd70cad6ec577e1fb4033b2fb2f72748bb56cad) (Galia Kaufman)
+
+### FlexibleHeader
+
+* [Avoid nil logic in multiple tracking scroll view setting. (#5163)](https://github.com/material-components/material-components-ios/commit/128e6fe66795221d4061fd240e2565228ee7dff5) (featherless)
+* [[FlexibleHeaderView] Make FexibleHeaderView respect contentInsetAdjustmentBehavior (#4970) (#5073)](https://github.com/material-components/material-components-ios/commit/2fee13665fdc0052d1c9df2f8c187109730a50a3) (Wenyu Zhang)
+
+### PageControl
+
+* [[FlexibleHeaderView] Make FexibleHeaderView respect contentInsetAdjustmentBehavior (#4970) (#5073)](https://github.com/material-components/material-components-ios/commit/2fee13665fdc0052d1c9df2f8c187109730a50a3) (Wenyu Zhang)
+
+### Tabs
+
+* [Fix an example bug (#5106)](https://github.com/material-components/material-components-ios/commit/a37d4a4f3a57ffca55adaa2904f9a5a4a4e8735f) (Cody Weaver)
+
+### TextFields
+
+* [Send .editingChanged control event on clear button touch (#5144)](https://github.com/material-components/material-components-ios/commit/fec74d5e0de26314d832dd43812be04caf77df77) (Andrew Overton)
+
+### schemes/Shape
+
+* [[Shape Scheme] Addition of Unit Tests for the Shape Scheme (#5137)](https://github.com/material-components/material-components-ios/commit/f43e3e73862a0840396b5b6bb8ff4992ba69bd31) (Yarden Eitan)
+
+---
+
 # 63.0.0
 
 This major release adds additional support for shape theming to BottomSheet and Cards and

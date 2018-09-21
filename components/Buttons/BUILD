@@ -66,6 +66,18 @@ mdc_objc_library(
 )
 
 mdc_objc_library(
+    name = "ShapeThemer",
+    srcs = native.glob(["src/ShapeThemer/*.m"]),
+    hdrs = native.glob(["src/ShapeThemer/*.h"]),
+    includes = ["src/ShapeThemer"],
+    deps = [
+        ":Buttons",
+        "//components/schemes/Shape",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
     name = "TypographyThemer",
     srcs = native.glob(["src/TypographyThemer/*.m"]),
     hdrs = native.glob(["src/TypographyThemer/*.h"]),
@@ -84,8 +96,9 @@ mdc_objc_library(
     includes = ["src/ButtonThemer"],
     deps = [
         ":Buttons",
-        ":TypographyThemer",
         ":ColorThemer",
+        ":ShapeThemer",
+        ":TypographyThemer",
     ],
     visibility = ["//visibility:public"],
 )
@@ -119,9 +132,10 @@ mdc_objc_library(
     ],
     deps = [
         ":Buttons",
-        ":private",
-        ":ColorThemer",
         ":ButtonThemer",
+        ":ColorThemer",
+        ":private",
+        ":ShapeThemer",
         ":TitleColorAccessibilityMutator",
         ":TypographyThemer",
         "//components/Palettes",
