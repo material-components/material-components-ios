@@ -189,10 +189,6 @@ presentationController.preferredSheetHeight = 100;
 
 * [[FlexibleHeaderView] Make FexibleHeaderView respect contentInsetAdjustmentBehavior (#4970) (#5073)](https://github.com/material-components/material-components-ios/commit/2fee13665fdc0052d1c9df2f8c187109730a50a3) (Wenyu Zhang)
 
-### ShadowLayer
-
-* [Mark shadowPath invalid on cornerRadius change (#4921)](https://github.com/material-components/material-components-ios/commit/255541a4e5009daf57113fc7fcdac7d3aac4fe08) (ianegordon)
-
 ### Tabs
 
 * [Fix an example bug (#5106)](https://github.com/material-components/material-components-ios/commit/a37d4a4f3a57ffca55adaa2904f9a5a4a4e8735f) (Cody Weaver)
