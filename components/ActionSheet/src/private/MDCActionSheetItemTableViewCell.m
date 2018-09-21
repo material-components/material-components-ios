@@ -199,6 +199,7 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
 
 - (void)setInkColor:(UIColor *)inkColor {
   _inkColor = inkColor;
+  // If no ink color then reset to the default ink color
   self.inkTouchController.defaultInkView.inkColor =
       inkColor ?: [[UIColor alloc] initWithWhite:0 alpha:0.14f];
 }
