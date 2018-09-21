@@ -14,14 +14,60 @@
 
 #import <XCTest/XCTest.h>
 
-@interface MDCActionSheetThemeTest : XCTestCase
+#import "MDCActionSheetTestHelper.h"
+#import "MaterialActionSheet+ColorThemer.h"
 
+static const CGFloat kHighAlpha = 0.87f;
+static const CGFloat kMediumAlpha = 0.6f;
+static const CGFloat kInkAlpha = 16.f;
+
+@interface MDCActionSheetThemeTest : XCTestCase
+@property(nonatomic, strong) MDCActionSheetController *actionSheet;
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @end
 
 @implementation MDCActionSheetThemeTest
 
 - (void)setUp {
   [super setUp];
+
+  self.actionSheet = [[MDCActionSheetController alloc] init];
+  self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+}
+
+- (void)testApplyColorThemerWithTitleAndMessage {
+  // Given
+  UIColor *primary = UIColor.blueColor;
+  UIColor *onPrimary = UIColor.redColor;
+  self.colorScheme.primaryColor = primary;
+  self.colorScheme.onPrimaryColor = onPrimary;
+  self.actionSheet.title = @"Test title";
+  self.actionSheet.message = @"Test message";
+  NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheet];
+
+  // When
+  [MDCActionSheetColorThemer applySemanticColorScheme:self.colorScheme
+                                        toActionSheet:self.actionSheet];
+
+  // Then
+  XCTAssertEqualObjects(self.actionSheet.backgroundColor, primary);
+  XCTAssertEqualObjects(self.actionSheet.header.titleLabel.textColor,
+                        [onPrimary colorWithAlphaComponent:kHighAlpha]);
+  XCTAssertEqualObjects(self.actionSheet.header.messageLabel.textColor,
+                        [onPrimary colorWithAlphaComponent:kMediumAlpha]);
+  for (MDCActionSheetItemTableViewCell *cell in cells) {
+    XCTAssertEqualObjects(cell.actionImageView.tintColor,
+                          [onPrimary colorWithAlphaComponent:kMediumAlpha]);
+    XCTAssertEqualObjects(cell.actionLabel.textColor,
+                          [onPrimary colorWithAlphaComponent:kHighAlpha]);
+    XCTAssertEqualObjects(cell.inkTouchController.defaultInkView.inkColor,
+                          [onPrimary colorWithAlphaComponent:kInkAlpha]);
+  }
+}
+
+- (void)testApplyThemerWithOnlyTitle {
+  // Given
+
 }
 
 @end

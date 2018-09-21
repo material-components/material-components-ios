@@ -14,8 +14,9 @@
 
 #import "MDCActionSheetColorThemer.h"
 
-static const CGFloat kHighOpacity = 0.87f;
-static const CGFloat kMediumOpacity = 0.6f;
+static const CGFloat kHighAlpha = 0.87f;
+static const CGFloat kMediumAlpha = 0.6f;
+static const CGFloat kInkAlpha = 16.f;
 
 @implementation MDCActionSheetColorThemer
 
@@ -24,17 +25,18 @@ static const CGFloat kMediumOpacity = 0.6f;
   actionSheet.backgroundColor = colorScheme.surfaceColor;
   if (actionSheet.message && ![actionSheet.message isEqualToString:@""]) {
     // If there is a message then this can be high opacity and won't clash with actions.
-    actionSheet.titleTextColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kHighOpacity];
+    actionSheet.titleTextColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha];
   } else {
     actionSheet.titleTextColor =
-        [colorScheme.onSurfaceColor colorWithAlphaComponent:kMediumOpacity];
+        [colorScheme.onSurfaceColor colorWithAlphaComponent:kMediumAlpha];
   }
   actionSheet.messageTextColor =
-      [colorScheme.onSurfaceColor colorWithAlphaComponent:kMediumOpacity];
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:kMediumAlpha];
   actionSheet.imageRenderingMode = UIImageRenderingModeAlwaysTemplate;
   actionSheet.actionTintColor =
-      [colorScheme.onSurfaceColor colorWithAlphaComponent:kMediumOpacity];
-  actionSheet.actionTextColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kHighOpacity];
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:kMediumAlpha];
+  actionSheet.actionTextColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha];
+  actionSheet.inkColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha];
 }
 
 @end
