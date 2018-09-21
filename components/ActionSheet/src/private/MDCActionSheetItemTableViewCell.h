@@ -30,6 +30,8 @@
 
 @property(nonatomic, strong, nullable) UIColor *actionTextColor;
 
+@property(nonatomic, strong, nullable) UIColor *inkColor;
+
 @property(nonatomic) UIImageRenderingMode imageRenderingMode;
 
 @end

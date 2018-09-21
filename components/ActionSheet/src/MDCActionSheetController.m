@@ -295,6 +295,7 @@ static const CGFloat kActionTextAlpha = 0.87f;
   cell.backgroundColor = self.backgroundColor;
   cell.actionFont = self.actionFont;
   cell.accessibilityIdentifier = action.accessibilityIdentifier;
+  cell.inkColor = self.inkColor;
   cell.tintColor = self.actionTintColor;
   cell.imageRenderingMode = self.imageRenderingMode;
   cell.actionTextColor = self.actionTextColor;
@@ -408,6 +409,11 @@ static const CGFloat kActionTextAlpha = 0.87f;
 
 - (void)setImageRenderingMode:(UIImageRenderingMode)imageRenderingMode {
   _imageRenderingMode = imageRenderingMode;
+  [self.tableView reloadData];
+}
+
+- (void)setInkColor:(UIColor *)inkColor {
+  _inkColor = inkColor;
   [self.tableView reloadData];
 }
 
