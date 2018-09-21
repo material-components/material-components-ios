@@ -47,9 +47,17 @@ mdc_objc_library(
     deps = [
         ":Chips",
         ":ColorThemer",
+        ":ShapeThemer",
         ":TypographyThemer",
     ],
     visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
+    name = "privateHeaders",
+    hdrs = glob(["src/*.h"]),
+    visibility = ["//visibility:private"],
+    deps = [":Chips"],
 )
 
 mdc_objc_library(
@@ -74,6 +82,21 @@ mdc_objc_library(
         ":Chips",
         "//components/schemes/Color",
     ],
+)
+
+mdc_objc_library(
+    name = "ShapeThemer",
+    srcs = native.glob(["src/ShapeThemer/*.m"]),
+    hdrs = native.glob(["src/ShapeThemer/*.h"]),
+    includes = ["src/ShapeThemer"],
+    sdk_frameworks = [
+        "UIKit",
+    ],
+    deps = [
+        ":Chips",
+        "//components/schemes/Shape",
+    ],
+    visibility = ["//visibility:public"],
 )
 
 mdc_objc_library(
@@ -109,10 +132,13 @@ mdc_objc_library(
     ],
     deps = [
         ":Chips",
+        ":ChipThemer",
         ":ColorThemer",
         ":FontThemer",
+        ":ShapeThemer",
         ":TypographyThemer",
         ":private",
+        ":privateHeaders",
         "//components/TextFields:private",
         "//components/private/ShapeLibrary",
     ],

@@ -56,7 +56,7 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
   [_textLabel sizeToFit];
   _textLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
   _textLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
-  _textLabel.alpha = LabelAlpha;
+  _textLabel.textColor = [UIColor.blackColor colorWithAlphaComponent:LabelAlpha];
   CGFloat leadingConstant;
   if (_itemAction.image) {
     leadingConstant = TitleLeadingPadding;

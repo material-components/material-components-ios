@@ -574,6 +574,14 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
                       && [self trackingScrollViewIsWebKit])) {
     return 0;
   }
+  if (@available(iOS 11.0, *)) {
+    // Don't adjust the contentInset if scrollView's behavior doesn't want it.
+    // Compatible to iOS 11 and above
+    if (self.disableContentInsetAdjustmentWhenContentInsetAdjustmentBehaviorIsNever &&
+        scrollView.contentInsetAdjustmentBehavior == UIScrollViewContentInsetAdjustmentNever) {
+      return 0;
+    }
+  }
 
   MDCFlexibleHeaderScrollViewInfo *info = [_trackedScrollViews objectForKey:scrollView];
   if (!info) {
@@ -1717,6 +1725,10 @@ static BOOL isRunningiOS10_3OrAbove() {
     CGPoint offset = scrollView.contentOffset;
     offset.y -= topInsetDelta;
     scrollView.contentOffset = offset;
+  }
+
+  if (self.trackingScrollView == nil) {
+    return;
   }
 
   if (_shiftAccumulator >= [self fhv_accumulatorMax]) {
