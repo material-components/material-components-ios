@@ -159,6 +159,26 @@ __attribute__((objc_subclassing_restricted))
  */
 @property(nonatomic, strong, nullable) UIColor *messageTextColor;
 
+/**
+ The color for the text for all action items within an action sheet.
+ */
+@property(nonatomic, strong, nullable) UIColor *actionTextColor;
+
+/**
+ The tint color for the action items within an action sheet.
+ */
+@property(nonatomic, strong, nullable) UIColor *actionTintColor;
+
+/**
+ The ink color for the action items within an action sheet.
+ */
+@property(nonatomic, strong, nullable) UIColor *inkColor;
+
+/**
+ The image rendering mode for all actions within an action sheet.
+ */
+@property(nonatomic) UIImageRenderingMode imageRenderingMode;
+
 @property(nonatomic, strong, readonly, nonnull)
     MDCBottomSheetTransitionController *transitionController;
 

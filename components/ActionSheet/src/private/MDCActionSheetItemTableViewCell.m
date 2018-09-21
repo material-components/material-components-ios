@@ -16,7 +16,6 @@
 
 #import "MaterialTypography.h"
 
-static const CGFloat kImageAlpha = 0.6f;
 static const CGFloat kLabelAlpha = 0.87f;
 static const CGFloat kImageLeadingPadding = 16.f;
 static const CGFloat kImageTopPadding = 16.f;
@@ -107,7 +106,6 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
   _actionImageView = [[UIImageView alloc] init];
   [self.contentView addSubview:_actionImageView];
   _actionImageView.translatesAutoresizingMaskIntoConstraints = NO;
-  _actionImageView.alpha = kImageAlpha;
   [NSLayoutConstraint constraintWithItem:_actionImageView
                                attribute:NSLayoutAttributeTop
                                relatedBy:NSLayoutRelationEqual
@@ -156,7 +154,7 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
   CGFloat width = CGRectGetWidth(self.contentView.frame) - leadingConstant - kTitleTrailingPadding;
   _titleWidthConstraint.constant = width;
 
-  self.actionImageView.image = _itemAction.image;
+  self.actionImageView.image = [_itemAction.image imageWithRenderingMode:self.imageRenderingMode];
 }
 
 - (void)setAction:(MDCActionSheetAction *)action {
@@ -191,6 +189,24 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
   _mdc_adjustsFontForContentSizeCategory = adjusts;
   [self updateTitleFont];
+}
+
+- (void)setActionTextColor:(UIColor *)actionTextColor {
+  _actionTextColor = actionTextColor;
+  _actionLabel.textColor =
+      actionTextColor ?: [UIColor.blackColor colorWithAlphaComponent:kLabelAlpha];
+}
+
+- (void)setInkColor:(UIColor *)inkColor {
+  _inkColor = inkColor;
+  // If no ink color then reset to the default ink color
+  self.inkTouchController.defaultInkView.inkColor =
+      inkColor ?: [[UIColor alloc] initWithWhite:0 alpha:0.14f];
+}
+
+- (void)setImageRenderingMode:(UIImageRenderingMode)imageRenderingMode {
+  _imageRenderingMode = imageRenderingMode;
+  [self setNeedsLayout];
 }
 
 @end
