@@ -28,13 +28,13 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
 @interface MDCActionSheetItemTableViewCell ()
 @property(nonatomic, strong) UILabel *actionLabel;
 @property(nonatomic, strong) UIImageView *actionImageView;
+@property(nonatomic, strong) MDCInkTouchController *inkTouchController;
 @end
 
 @implementation MDCActionSheetItemTableViewCell {
   MDCActionSheetAction *_itemAction;
   NSLayoutConstraint *_titleLeadingConstraint;
   NSLayoutConstraint *_titleWidthConstraint;
-  MDCInkTouchController *_inkTouchController;
 }
 
 @synthesize mdc_adjustsFontForContentSizeCategory = _mdc_adjustsFontForContentSizeCategory;
