@@ -47,8 +47,8 @@ mdc_objc_library(
     name = "privateHeaders",
     testonly = 1,
     hdrs = native.glob(["src/private/*.h"]),
-    includes = ["src/private"],
     visibility = ["//visibility:private"],
+    deps = [":ActionSheet"],
 )
 
 mdc_objc_library(
