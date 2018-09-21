@@ -12,30 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialActionSheet.h"
-
-#import <XCTest/XCTest.h>
-
-#import "../../src/private/MDCActionSheetHeaderView.h"
-#import "../../src/private/MDCActionSheetItemTableViewCell.h"
-
-@interface MDCActionSheetController (Testing)
-@property(nonatomic, strong) UITableView *tableView;
-@property(nonatomic, strong) MDCActionSheetHeaderView *header;
-- (CGFloat)openingSheetHeight;
-@end
-
-@interface MDCActionSheetTestHelper : NSObject
-
-+ (NSArray *)colorsToTest;
-
-+ (void)addNumberOfActions:(NSUInteger)actionsCount
-             toActionSheet:(MDCActionSheetController *)actionSheet;
-
-+ (NSArray<MDCActionSheetItemTableViewCell *> *)getCellsFromActionSheet:
-    (MDCActionSheetController *)actionSheet;
-
-@end
+#import "MDCActionSheetTestHelper.h"
 
 @implementation MDCActionSheetTestHelper
 
