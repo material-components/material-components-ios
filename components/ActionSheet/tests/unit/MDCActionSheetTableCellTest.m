@@ -113,8 +113,8 @@
 
   // Then
   for (MDCActionSheetItemTableViewCell *cell in cells) {
-    XCTAssertEqualObjects(cell.actionImageView.tintColor,
-                          [[UIColor alloc] initWithWhite:0 alpha:0.14f]);
+    XCTAssertEqualObjects(cell.actionImageView.tintColor, [[UIColor alloc] initWithWhite:0
+                                                                                   alpha:0.14f]);
   }
 }
 
