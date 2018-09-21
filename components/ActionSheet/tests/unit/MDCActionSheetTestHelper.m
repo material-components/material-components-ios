@@ -14,6 +14,9 @@
 
 #import "MDCActionSheetTestHelper.h"
 
+#import "../../src/private/MDCActionSheetHeaderView.h"
+#import "../../src/private/MDCActionSheetItemTableViewCell.h"
+
 @implementation MDCActionSheetTestHelper
 
 + (NSArray *)colorsToTest {

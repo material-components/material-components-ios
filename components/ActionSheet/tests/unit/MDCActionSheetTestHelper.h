@@ -16,8 +16,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "../../src/private/MDCActionSheetHeaderView.h"
-#import "../../src/private/MDCActionSheetItemTableViewCell.h"
+@class MDCActionSheetHeaderView;
+@class MDCActionSheetItemTableViewCell;
 
 @interface MDCActionSheetController (Testing)
 @property(nonatomic, strong) UITableView *tableView;
