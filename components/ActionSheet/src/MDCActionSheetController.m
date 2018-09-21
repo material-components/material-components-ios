@@ -398,14 +398,17 @@ static const CGFloat kActionTextAlpha = 0.87f;
 
 - (void)setActionTextColor:(UIColor *)actionTextColor {
   _actionTextColor = actionTextColor;
+  [self.tableView reloadData];
 }
 
 - (void)setActionTintColor:(UIColor *)actionTintColor {
   _actionTintColor = actionTintColor;
+  [self.tableView reloadData];
 }
 
 - (void)setImageRenderingMode:(UIImageRenderingMode)imageRenderingMode {
   _imageRenderingMode = imageRenderingMode;
+  [self.tableView reloadData];
 }
 
 @end

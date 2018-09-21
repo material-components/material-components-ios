@@ -12,15 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialActionSheet.h"
-
 #import <XCTest/XCTest.h>
 
+#import "MDCActionSheetTestHelper.m"
 #import "../../src/private/MDCActionSheetItemTableViewCell.h"
-
-@interface MDCActionSheetController (Testing)
-@property(nonatomic, strong) UITableView *tableView;
-@end
 
 @interface MDCActionSheetItemTableViewCell (Testing)
 @property(nonatomic, strong) UILabel *actionLabel;
@@ -39,44 +34,9 @@
   self.actionSheet = [[MDCActionSheetController alloc] init];
 }
 
-- (void)addNumberOfActions:(NSUInteger)actionsCount {
-  for (NSUInteger actionIndex = 0; actionIndex < actionsCount; ++actionIndex) {
-    NSString *actionTitle = [NSString stringWithFormat:@"Action #%@", @(actionIndex)];
-    MDCActionSheetAction *action = [MDCActionSheetAction actionWithTitle:actionTitle
-                                                                   image:nil
-                                                                 handler:nil];
-    [self.actionSheet addAction:action];
-  }
-}
-
-- (NSArray *)colorsToTest {
-  UIColor *rgbColor = [UIColor colorWithRed:0.7f green:0.7f blue:0.7f alpha:0.7f];
-  UIColor *hsbColor = [UIColor colorWithHue:0.8f saturation:0.8f brightness:0.8f alpha:0.8f];
-  UIColor *blackWithAlpha = [UIColor.greenColor colorWithAlphaComponent:0.8f];
-  UIColor *black = UIColor.blackColor;
-  CIColor *ciColor = [[CIColor alloc] initWithColor:UIColor.blackColor];
-  UIColor *uiColorFromCIColor = [UIColor colorWithCIColor:ciColor];
-  UIColor *whiteColor = [UIColor colorWithWhite:0.5f alpha:0.5f];
-  return @[ rgbColor, hsbColor, blackWithAlpha, black, uiColorFromCIColor, whiteColor ];
-}
-
-- (NSArray<MDCActionSheetItemTableViewCell *> *)setupActionSheetAndGetCells {
-  NSMutableArray *cellsArray = [[NSMutableArray alloc] init];
-  [self addNumberOfActions:10];
-  NSUInteger cellsCount = self.actionSheet.actions.count;
-  UITableView *table = self.actionSheet.tableView;
-  for (NSUInteger cellIndex = 0; cellIndex < cellsCount; ++cellIndex) {
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:cellIndex inSection:0];
-    UITableViewCell *cell = [table.dataSource tableView:table cellForRowAtIndexPath:indexPath];
-    MDCActionSheetItemTableViewCell *actionCell = (MDCActionSheetItemTableViewCell *)cell;
-    [cellsArray addObject:actionCell];
-  }
-  return cellsArray;
-}
-
 - (void)testDefaultRenderingMode {
   // When
-  NSArray *cells = [self setupActionSheetAndGetCells];
+  NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheet];
 
   // Then
   for (MDCActionSheetItemTableViewCell *cell in cells) {
@@ -88,7 +48,7 @@
   // When
   UIImageRenderingMode imageMode = UIImageRenderingModeAlwaysOriginal;
   self.actionSheet.imageRenderingMode = imageMode;
-  NSArray *cells = [self setupActionSheetAndGetCells];
+  NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheet];
 
   // Then
   for (MDCActionSheetItemTableViewCell *cell in cells) {
@@ -98,7 +58,7 @@
 
 - (void)testDefaultCellActionTextColor {
   // When
-  NSArray *cells = [self setupActionSheetAndGetCells];
+  NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheet];
 
   // Then
   for (MDCActionSheetItemTableViewCell *cell in cells) {
@@ -109,11 +69,11 @@
 
 - (void)testSetActionTextColor {
   // When
-  NSArray *colors = [self colorsToTest];
+  NSArray *colors = [MDCActionSheetTestHelper colorsToTest];
 
   for (UIColor *color in colors) {
     self.actionSheet.actionTextColor = color;
-    NSArray *cells = [self setupActionSheetAndGetCells];
+    NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheet];
     for (MDCActionSheetItemTableViewCell *cell in cells) {
       // Then
       XCTAssertEqualObjects(cell.actionLabel.textColor, color);
@@ -123,7 +83,7 @@
 
 - (void)testDefaultCellTintColor {
   // When
-  NSArray *cells = [self setupActionSheetAndGetCells];
+  NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheet];
 
   // Then
   for (MDCActionSheetItemTableViewCell *cell in cells) {
@@ -134,11 +94,11 @@
 
 - (void)testSetTintColor {
   // When
-  NSArray *colors = [self colorsToTest];
+  NSArray *colors = [MDCActionSheetTestHelper colorsToTest];
 
   for (UIColor *color in colors) {
     self.actionSheet.actionTintColor = color;
-    NSArray *cells = [self setupActionSheetAndGetCells];
+    NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheet];
     for (MDCActionSheetItemTableViewCell *cell in cells) {
       // Then
       XCTAssertEqualObjects(cell.actionImageView.tintColor, color);

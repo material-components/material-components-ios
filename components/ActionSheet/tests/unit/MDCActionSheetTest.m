@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialActionSheet.h"
 #import "MaterialMath.h"
 
 #import <XCTest/XCTest.h>
 
+#import "MDCActionSheetTestHelper.m"
 #import "../../src/private/MDCActionSheetHeaderView.h"
 
 static const CGFloat kSafeAreaAmount = 20.f;
@@ -24,12 +24,6 @@ static const CGFloat kSafeAreaAmount = 20.f;
 @interface MDCActionSheetHeaderView (Testing)
 @property(nonatomic, strong) UILabel *titleLabel;
 @property(nonatomic, strong) UILabel *messageLabel;
-@end
-
-@interface MDCActionSheetController (Testing)
-@property(nonatomic, strong) UITableView *tableView;
-@property(nonatomic, strong) MDCActionSheetHeaderView *header;
-- (CGFloat)openingSheetHeight;
 @end
 
 @interface MDCActionSheetTest : XCTestCase
@@ -105,22 +99,11 @@ static const CGFloat kSafeAreaAmount = 20.f;
   XCTAssertEqualObjects(messageColor, expectedMessageColor);
 }
 
-- (NSArray *)colorsToTest {
-  UIColor *rgbColor = [UIColor colorWithRed:0.7f green:0.7f blue:0.7f alpha:0.7f];
-  UIColor *hsbColor = [UIColor colorWithHue:0.8f saturation:0.8f brightness:0.8f alpha:0.8f];
-  UIColor *blackWithAlpha = [UIColor.greenColor colorWithAlphaComponent:0.8f];
-  UIColor *black = UIColor.blackColor;
-  CIColor *ciColor = [[CIColor alloc] initWithColor:UIColor.blackColor];
-  UIColor *uiColorFromCIColor = [UIColor colorWithCIColor:ciColor];
-  UIColor *whiteColor = [UIColor colorWithWhite:0.5f alpha:0.5f];
-  return @[ rgbColor, hsbColor, blackWithAlpha, black, uiColorFromCIColor, whiteColor ];
-}
-
 - (void)testCustomMessageColor {
   // Given
   self.actionSheet.message = @"Test message";
 
-  NSArray *colors = [self colorsToTest];
+  NSArray *colors = [MDCActionSheetTestHelper colorsToTest];
   for (UIColor *color in colors) {
     // When
     self.actionSheet.messageTextColor = color;
@@ -134,7 +117,7 @@ static const CGFloat kSafeAreaAmount = 20.f;
   // Given
   self.actionSheet.title = @"Test title";
 
-  NSArray *colors = [self colorsToTest];
+  NSArray *colors = [MDCActionSheetTestHelper colorsToTest];
   for (UIColor *color in colors) {
     // When
     self.actionSheet.titleTextColor = color;
@@ -146,7 +129,7 @@ static const CGFloat kSafeAreaAmount = 20.f;
 
 - (void)testCustomBackgroundColor {
   // Given
-  NSArray *colors = [self colorsToTest];
+  NSArray *colors = [MDCActionSheetTestHelper colorsToTest];
   for (UIColor *color in colors) {
     // When
     self.actionSheet.backgroundColor = color;
@@ -222,16 +205,6 @@ static const CGFloat kSafeAreaAmount = 20.f;
 
 #pragma mark - Opening height
 
-- (void)addNumberOfActions:(NSUInteger)actionsCount {
-  for (NSUInteger actionIndex = 0; actionIndex < actionsCount; ++actionIndex) {
-    NSString *actionTitle = [NSString stringWithFormat:@"Action #%@", @(actionIndex)];
-    MDCActionSheetAction *action = [MDCActionSheetAction actionWithTitle:actionTitle
-                                                                   image:nil
-                                                                 handler:nil];
-    [self.actionSheet addAction:action];
-  }
-}
-
 - (CGRect)setUpActionSheetWithHeight:(CGFloat)height
                             andTitle:(NSString *)title
                           andMessage:(NSString *)message {
@@ -242,7 +215,7 @@ static const CGFloat kSafeAreaAmount = 20.f;
   self.actionSheet.message = message;
 
   // When
-  [self addNumberOfActions:100];
+  [MDCActionSheetTestHelper addNumberOfActions:100 toActionSheet:self.actionSheet];
   [self.actionSheet.view setNeedsLayout];
   [self.actionSheet.view layoutIfNeeded];
   return viewRect;
