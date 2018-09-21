@@ -44,6 +44,14 @@ mdc_objc_library(
 )
 
 mdc_objc_library(
+    name = "privateHeaders",
+    testonly = 1,
+    hdrs = native.glob(["src/private/*.h"]),
+    visibility = ["//visibility:private"],
+    deps = [":ActionSheet"],
+)
+
+mdc_objc_library(
     name = "private",
     hdrs = native.glob(["src/private/*.h"]),
     includes = ["src/private"],
@@ -71,7 +79,8 @@ mdc_objc_library(
         "UIKit",
         "XCTest",
     ],
-    deps = [":ActionSheet"],
+    deps = [":ActionSheet",
+            ":privateHeaders"],
     visibility = ["//visibility:private"],
 )
 
