@@ -33,6 +33,6 @@
              toActionSheet:(MDCActionSheetController *)actionSheet;
 
 + (NSArray<MDCActionSheetItemTableViewCell *> *)getCellsFromActionSheet:
-(MDCActionSheetController *)actionSheet;
+    (MDCActionSheetController *)actionSheet;
 
 @end
