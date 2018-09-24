@@ -23,11 +23,7 @@ fix_bazel_imports() {
   echo "Rewriting imports for bazel..."
 
   private_components() {
-    if [ -z "$KOKORO_BUILD_NUMBER" ]; then
-      find "components/private" -type d | cut -d'/' -f3 | sort | uniq
-    else
-      find "github/repo/components/private" -type d | cut -d'/' -f5 | sort | uniq
-    fi
+    find "components/private" -type d | cut -d'/' -f3 | sort | uniq
   }
   
   rewrite_tests() {
