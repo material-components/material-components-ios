@@ -16,9 +16,9 @@
 
 #import "MaterialSnackbar.h"
 #import "supplemental/MDCFakeMDCSnackbarManagerDelegate.h"
+
 #import "../../src/private/MDCSnackbarManagerInternal.h"
 #import "../../src/private/MDCSnackbarOverlayView.h"
-
 
 @interface MDCSnackbarManagerInternal (Testing)
 @property(nonatomic) MDCSnackbarOverlayView *overlayView;
