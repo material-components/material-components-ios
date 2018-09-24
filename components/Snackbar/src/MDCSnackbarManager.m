@@ -308,8 +308,8 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 #pragma mark - Helper methods
 
 - (BOOL)isVoiceOverRunning {
-  if (UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning()
-      || self.isVoiceOverRunningOverride) {
+  if (UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning() ||
+      self.isVoiceOverRunningOverride) {
     return YES;
   }
   return NO;
