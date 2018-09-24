@@ -36,9 +36,23 @@ mdc_objc_library(
     srcs = native.glob(["src/TypographyThemer/*.m"]),
     hdrs = native.glob(["src/TypographyThemer/*.h"]),
     includes = ["src/TypographyThemer"],
+    sdk_frameworks = ["UIKit"],
     deps = [
         ":ActionSheet",
         "//components/schemes/Typography",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
+    name = "ColorThemer",
+    srcs = native.glob(["src/ColorThemer/*.m"]),
+    hdrs = native.glob(["src/ColorThemer/*.h"]),
+    includes = ["src/ColorThemer"],
+    sdk_frameworks = ["UIKit"],
+    deps = [
+        ":ActionSheet",
+        "//components/schemes/Color",
     ],
     visibility = ["//visibility:public"],
 )
@@ -63,6 +77,7 @@ swift_library(
     srcs = glob(["tests/unit/*.swift"]),
     deps = [
         ":ActionSheet",
+        ":ColorThemer",
         ":private",
     ],
     visibility = ["//visibility:private"],
