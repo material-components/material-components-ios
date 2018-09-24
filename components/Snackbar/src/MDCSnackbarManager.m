@@ -17,10 +17,10 @@
 #import "MDCSnackbarMessageView.h"
 #import "MaterialOverlayWindow.h"
 #import "MaterialApplication.h"
+#import "private/MDCSnackbarManagerInternal.h"
 #import "private/MDCSnackbarMessageInternal.h"
 #import "private/MDCSnackbarMessageViewInternal.h"
 #import "private/MDCSnackbarOverlayView.h"
-#import "private/MDCSnackbarManagerInternal.h"
 
 /** Test whether any of the accessibility elements of a view is focused */
 static BOOL UIViewHasFocusedAccessibilityElement(UIView *view) {
