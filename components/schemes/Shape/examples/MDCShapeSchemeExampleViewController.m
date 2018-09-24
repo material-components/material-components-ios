@@ -14,15 +14,32 @@
 
 #import "MDCShapeSchemeExampleViewController.h"
 
+#import "../../../BottomSheet/examples/supplemental/BottomSheetDummyCollectionViewController.h"
+
+#import "MaterialAppBar.h"
+#import "MaterialAppBar+ColorThemer.h"
+#import "MaterialAppBar+TypographyThemer.h"
+#import "MaterialBottomSheet.h"
+#import "MaterialBottomSheet+ShapeThemer.h"
+#import "MaterialButtons.h"
+#import "MaterialButtons+ButtonThemer.h"
+#import "MaterialButtons+ShapeThemer.h"
+#import "MaterialCards.h"
+#import "MaterialCards+CardThemer.h"
+#import "MaterialCards+ShapeThemer.h"
+#import "MaterialChips.h"
+#import "MaterialChips+ChipThemer.h"
+#import "MaterialChips+ShapeThemer.h"
 #import "MaterialColorScheme.h"
 #import "MaterialShapeScheme.h"
 #import "MaterialShapeLibrary.h"
 #import "MaterialTypographyScheme.h"
 
 @interface MDCShapeSchemeExampleViewController ()
-@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
-@property(nonatomic, strong) MDCShapeScheme *shapeScheme;
-@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
+@property (strong, nonatomic) MDCSemanticColorScheme *colorScheme;
+@property (strong, nonatomic) MDCShapeScheme *shapeScheme;
+@property (strong, nonatomic) MDCTypographyScheme *typographyScheme;
+
 @property (weak, nonatomic) IBOutlet MDCShapedView *smallSurfaceShape;
 @property (weak, nonatomic) IBOutlet MDCShapedView *mediumSurfaceShape;
 @property (weak, nonatomic) IBOutlet MDCShapedView *largeSurfaceShape;
@@ -34,6 +51,14 @@
 @property (weak, nonatomic) IBOutlet UISlider *largeSurfaceValue;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *includeBaselineOverridesToggle;
 @property (weak, nonatomic) IBOutlet UIView *componentContentView;
+
+@property (strong, nonatomic) MDCButton *containedButton;
+@property (strong, nonatomic) MDCButton *outlinedButton;
+@property (strong, nonatomic) MDCFloatingButton *floatingButton;
+@property (strong, nonatomic) MDCChipView *chipView;
+@property (strong, nonatomic) MDCCard *card;
+@property (strong, nonatomic) MDCButton *presentBottomSheetButton;
+@property (strong, nonatomic) MDCBottomSheetController *bottomSheetController;
 @end
 
 @implementation MDCShapeSchemeExampleViewController
@@ -70,7 +95,151 @@
   _largeSurfaceShape.shapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
 
   [self applySchemeColors];
+  [self initializeComponentry];
 }
+
+- (void)initializeComponentry {
+  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
+  buttonScheme.colorScheme = self.colorScheme;
+  buttonScheme.shapeScheme = self.shapeScheme;
+  buttonScheme.typographyScheme = self.typographyScheme;
+
+  self.containedButton = [[MDCButton alloc] init];
+  [self.containedButton setTitle:@"Button" forState:UIControlStateNormal];
+  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:self.containedButton];
+  [self.containedButton sizeToFit];
+  self.containedButton.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.componentContentView addSubview:self.containedButton];
+
+//  self.outlinedButton = [[MDCButton alloc] init];
+//  [self.outlinedButton setTitle:@"Button" forState:UIControlStateNormal];
+//  [MDCOutlinedButtonThemer applyScheme:buttonScheme toButton:self.outlinedButton];
+//  [self.outlinedButton sizeToFit];
+//  self.outlinedButton.translatesAutoresizingMaskIntoConstraints = NO;
+//  [self.componentContentView addSubview:self.outlinedButton];
+//
+  self.floatingButton = [[MDCFloatingButton alloc] init];
+  UIImage *plusImage =
+      [[UIImage imageNamed:@"Plus"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  [self.floatingButton setImage:plusImage forState:UIControlStateNormal];
+  [MDCFloatingActionButtonThemer applyScheme:buttonScheme toButton:self.floatingButton];
+  [self.floatingButton sizeToFit];
+  self.floatingButton.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.componentContentView addSubview:self.floatingButton];
+
+  MDCChipViewScheme *chipViewScheme = [[MDCChipViewScheme alloc] init];
+  chipViewScheme.colorScheme = self.colorScheme;
+  chipViewScheme.shapeScheme = self.shapeScheme;
+  chipViewScheme.typographyScheme = self.typographyScheme;
+
+  self.chipView = [[MDCChipView alloc] init];
+  self.chipView.titleLabel.text = @"Material";
+  self.chipView.imageView.image = [self faceImage];
+  self.chipView.accessoryView = [self deleteButton];
+  self.chipView.translatesAutoresizingMaskIntoConstraints = NO;
+  [MDCChipViewThemer applyScheme:chipViewScheme toChipView:self.chipView];
+  [self.componentContentView addSubview:self.chipView];
+
+  CGSize chipSize = [self.chipView sizeThatFits:self.view.bounds.size];
+  self.chipView.frame = (CGRect) { CGPointMake(20, 20), chipSize };
+
+  MDCCardScheme *cardScheme = [[MDCCardScheme alloc] init];
+  cardScheme.colorScheme = self.colorScheme;
+  cardScheme.shapeScheme = self.shapeScheme;
+
+  self.card = [[MDCCard alloc] init];
+  self.card.translatesAutoresizingMaskIntoConstraints = NO;
+  [MDCCardThemer applyScheme:cardScheme toCard:self.card];
+  self.card.backgroundColor = _colorScheme.primaryColor;
+  [self.componentContentView addSubview:self.card];
+
+  NSArray<NSLayoutConstraint *> *cardConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[card]-|" options:0
+                                                                                           metrics:nil
+                                                                                             views:@{
+                                                                                                     @"card" : self.card
+                                                                                                     }];
+  [self.view addConstraints:cardConstraints];
+
+  self.presentBottomSheetButton = [[MDCButton alloc] init];
+  [self.presentBottomSheetButton setTitle:@"Present Bottom Sheet" forState:UIControlStateNormal];
+  [MDCOutlinedButtonThemer applyScheme:buttonScheme toButton:self.presentBottomSheetButton];
+  [self.presentBottomSheetButton sizeToFit];
+  self.presentBottomSheetButton.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.componentContentView addSubview:self.presentBottomSheetButton];
+  [self.presentBottomSheetButton addTarget:self action:@selector(presentBottomSheet)
+                    forControlEvents:UIControlEventTouchUpInside];
+
+  NSArray<NSLayoutConstraint *> *bottomSheetConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[presentBottomSheetButton]-|" options:0
+                                                                                           metrics:nil
+                                                                                             views:@{
+                                                                                                     @"presentBottomSheetButton" : self.presentBottomSheetButton
+                                                                                                     }];
+  [self.view addConstraints:bottomSheetConstraints];
+
+  NSArray<NSLayoutConstraint *> *componentConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(30)-[containedButton]-(20)-[floatingButton]-(20)-[chipView]-(20)-[card(80)]-(20)-[presentBottomSheetButton]" options:NSLayoutFormatAlignAllCenterX
+                                                                                        metrics:nil
+                                                                                          views:@{
+                                                                                                  @"containedButton": self.containedButton,
+                                                                                                  @"floatingButton": self.floatingButton,
+                                                                                                  @"chipView": self.chipView,
+                                                                                                  @"card": self.card,
+                                                                                                  @"presentBottomSheetButton" : self.presentBottomSheetButton
+                                                                                                  }];
+  [self.view addConstraints:componentConstraints];
+
+
+
+
+
+}
+
+- (void)presentBottomSheet {
+  BottomSheetDummyCollectionViewController *viewController =
+  [[BottomSheetDummyCollectionViewController alloc] initWithNumItems:102];
+  viewController.title = @"Shaped bottom sheet example";
+
+  MDCAppBarContainerViewController *container =
+  [[MDCAppBarContainerViewController alloc] initWithContentViewController:viewController];
+  container.preferredContentSize = CGSizeMake(500, 200);
+  container.appBarViewController.headerView.trackingScrollView =
+  viewController.collectionView;
+  container.topLayoutGuideAdjustmentEnabled = YES;
+
+  [MDCAppBarColorThemer applyColorScheme:self.colorScheme
+                  toAppBarViewController:container.appBarViewController];
+  [MDCAppBarTypographyThemer applyTypographyScheme:self.typographyScheme
+                            toAppBarViewController:container.appBarViewController];
+
+  self.bottomSheetController =
+      [[MDCBottomSheetController alloc] initWithContentViewController:container];
+  self.bottomSheetController.trackingScrollView = viewController.collectionView;
+  [MDCBottomSheetControllerShapeThemer applyShapeScheme:_shapeScheme
+                                toBottomSheetController:self.bottomSheetController];
+  [self presentViewController:self.bottomSheetController animated:YES completion:nil];
+}
+
+- (UIImage *)faceImage {
+  NSBundle *bundle = [NSBundle bundleForClass:[MDCShapeSchemeExampleViewController class]];
+  UIImage *image = [UIImage imageNamed:@"ic_mask"
+                              inBundle:bundle
+         compatibleWithTraitCollection:nil];
+  return image;
+}
+
+- (UIButton *)deleteButton {
+  NSBundle *bundle = [NSBundle bundleForClass:[MDCShapeSchemeExampleViewController class]];
+  UIImage *image = [UIImage imageNamed:@"ic_cancel"
+                              inBundle:bundle
+         compatibleWithTraitCollection:nil];
+  image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+
+  UIButton *button = [[UIButton alloc] initWithFrame:CGRectZero];
+  button.tintColor = [UIColor colorWithWhite:0 alpha:0.7f];
+  [button setImage:image forState:UIControlStateNormal];
+
+  return button;
+}
+
 
 - (void)applySchemeColors {
   _smallSurfaceShape.backgroundColor = _colorScheme.primaryColor;
@@ -107,16 +276,30 @@
   largeRect.bottomLeftCorner = _shapeScheme.largeSurfaceShape.bottomLeftCorner;
   largeRect.bottomRightCorner = _shapeScheme.largeSurfaceShape.bottomRightCorner;
   _largeSurfaceShape.shapeGenerator = largeRect;
+
+  [self updateComponentShapes];
+}
+
+- (void)updateComponentShapes {
+  [MDCButtonShapeThemer applyShapeScheme:_shapeScheme toButton:self.containedButton];
+  [MDCButtonShapeThemer applyShapeScheme:_shapeScheme toButton:self.outlinedButton];
+  [MDCFloatingButtonShapeThemer applyShapeScheme:_shapeScheme toButton:self.floatingButton];
+  [MDCChipViewShapeThemer applyShapeScheme:_shapeScheme toChipView:self.chipView];
+  [MDCCardsShapeThemer applyShapeScheme:_shapeScheme toCard:self.card];
+  [MDCButtonShapeThemer applyShapeScheme:_shapeScheme toButton:self.presentBottomSheetButton];
+  [MDCBottomSheetControllerShapeThemer applyShapeScheme:_shapeScheme
+                                toBottomSheetController:self.bottomSheetController];
 }
 
 - (MDCShapeCategory *)changedCategoryFromType:(UISegmentedControl *)sender
                                      andValue:(UISlider *)slider {
   MDCShapeCategory *changedCategory;
   if ([[sender titleForSegmentAtIndex:sender.selectedSegmentIndex] isEqualToString:@"Cut"]) {
+    // Cut Corner
     changedCategory = [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyAngled
                                                               andSize:slider.value];
   } else {
-    // Rounded
+    // Rounded Corner
     changedCategory = [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyRounded
                                                               andSize:slider.value];
   }
