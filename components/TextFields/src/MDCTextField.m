@@ -530,7 +530,7 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1.f;
     // If there is a rightView, the clearButton will not be shown.
   } else {
     CGFloat clearButtonWidth = CGRectGetWidth(self.clearButton.bounds);
-    clearButtonWidth += 2 * (MDCTextInputClearButtonImageBuiltInPadding * -1);
+    clearButtonWidth += 2 * (-1 * MDCTextInputClearButtonImageBuiltInPadding);
 
     // Clear buttons are only shown if there is entered text or programatically set text to clear.
     if (self.text.length > 0) {
