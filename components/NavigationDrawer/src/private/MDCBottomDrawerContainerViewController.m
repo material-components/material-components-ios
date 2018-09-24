@@ -228,11 +228,7 @@ static UIColor *DrawerShadowColor(void) {
       contentViewBounds.origin.y = MIN(maxScrollOrigin, MAX(contentViewBounds.origin.y, 0));
       self.trackingScrollView.bounds = contentViewBounds;
     } else {
-      CGFloat trackingScrollViewContentHeight = self.trackingScrollView.contentSize.height;
-      CGFloat scrollViewContentHeight = self.scrollView.contentSize.height;
-      BOOL trackingScrollViewContentFillsScreen =
-          trackingScrollViewContentHeight >= scrollViewContentHeight;
-      if (trackingScrollViewContentFillsScreen) {
+      if (self.trackingScrollView.contentSize.height >= self.trackingScrollView.frame.size.height) {
         // Have the drawer's scrollView's content size be static so it will bounce when reaching the
         // end of the content.
         CGSize scrollViewContentSize = self.scrollView.contentSize;
