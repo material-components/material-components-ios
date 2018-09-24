@@ -154,7 +154,7 @@ static const CGFloat kSafeAreaAmount = 20.f;
   self.actionSheet.messageTextColor = messageColorChangeAlpha;
 
   // Then
-  XCTAssertFalse([titleColor isEqual:self.actionSheet.header.titleLabel.textColor]);
+  XCTAssertTrue([titleColor isEqual:self.actionSheet.header.titleLabel.textColor]);
   XCTAssertFalse([messageColor isEqual:self.actionSheet.header.messageLabel.textColor]);
 }
 
