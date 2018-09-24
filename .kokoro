@@ -57,6 +57,7 @@ fix_bazel_imports() {
     rewrite_tests "s/import MaterialComponents.Material$private_component/import components_private_${private_component}_${private_component}/"
   done
   rewrite_tests "s/import MaterialComponentsAlpha.Material(.+)/import components_\1_\1 \/\/ Alpha/"
+  rewrite_tests "s/import MaterialComponentsAlpha.Material(.+)_(.+)/import components_\1_\2 \/\/ Alpha/"
   rewrite_tests "s/import MaterialComponents.Material(.+)/import components_\1_\1/"
   rewrite_source "s/import <Motion(.+)\/Motion.+\.h>/import \"Motion\1.h\"/"
   rewrite_source "s/import <MDF(.+)\/MDF.+\.h>/import \"MDF\1.h\"/"
@@ -66,6 +67,7 @@ fix_bazel_imports() {
   reset_imports() {
     # Undoes our source changes from above.
     rewrite_tests "s/import components_(.+)_\1 \/\/ Alpha/import MaterialComponentsAlpha.Material\1/"
+    rewrite_tests "s/import components_(.+)_(.+) \/\/ Alpha/import MaterialComponentsAlpha.Material\1_\2/"
     rewrite_tests "s/import components_schemes_(.+)_.+/import MaterialComponents.Material\1Scheme/"
     rewrite_tests "s/import components_private_(.+)_.+/import MaterialComponents.Material\1/"
     rewrite_tests "s/import components_(.+)_\1/import MaterialComponents.Material\1/"
