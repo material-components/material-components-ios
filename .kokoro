@@ -22,12 +22,6 @@ XCODE_MINIMUM_VERSION="9.0.0"
 fix_bazel_imports() {
   echo "Rewriting imports for bazel..."
 
-  if [ -z "$KOKORO_BUILD_NUMBER" ]; then
-    tests_dir_prefix=""
-  else
-    tests_dir_prefix="github/repo/"
-  fi
-  
   private_components() {
     if [ -z "$KOKORO_BUILD_NUMBER" ]; then
       find "components/private" -type d | cut -d'/' -f3 | sort | uniq
@@ -37,14 +31,14 @@ fix_bazel_imports() {
   }
   
   rewrite_tests() {
-    find "${stashed_dir}${tests_dir_prefix}"components/private/*/tests/unit -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
-    find "${stashed_dir}${tests_dir_prefix}"components/*/tests/unit -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/private/*/tests/unit -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/*/tests/unit -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
   }
   rewrite_source() {
-    find "${stashed_dir}${tests_dir_prefix}"components/private/*/src -type f -name '*.h' -exec perl -pi -e "$1" {} + || true
-    find "${stashed_dir}${tests_dir_prefix}"components/private/*/src -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
-    find "${stashed_dir}${tests_dir_prefix}"components/*/src -type f -name '*.h' -exec perl -pi -e "$1" {} + || true
-    find "${stashed_dir}${tests_dir_prefix}"components/*/src -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/private/*/src -type f -name '*.h' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/private/*/src -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/*/src -type f -name '*.h' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/*/src -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
   }
 
   stashed_dir=""
