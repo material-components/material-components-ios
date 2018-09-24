@@ -47,6 +47,8 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 
 /**
  This property is used to test logic flows only when voiceover is on.
+
+ Note: we can't fake or mock the system calls like UIAccessibilityIsVoiceOverRunning()
  */
 @property(nonatomic) BOOL isVoiceOverRunningOverride;
 
