@@ -53,6 +53,7 @@ static const CGFloat kInkAlpha = 16.f;
 }
 
 #pragma mark - Header test
+
 - (void)testApplyColorThemerWithTitleAndMessage {
   // Given
   self.actionSheet.title = @"Test title";
@@ -96,6 +97,7 @@ static const CGFloat kInkAlpha = 16.f;
 }
 
 #pragma mark - default test
+
 - (void)testApplyThemeToCells {
   // When
   [MDCActionSheetColorThemer applySemanticColorScheme:self.colorScheme
@@ -103,6 +105,7 @@ static const CGFloat kInkAlpha = 16.f;
   NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheet];
 
   // Then
+  XCTAssertNotEqual(cells.count, 0);
   for (MDCActionSheetItemTableViewCell *cell in cells) {
     XCTAssertEqualObjects(cell.actionImageView.tintColor,
                           [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kMediumAlpha]);
