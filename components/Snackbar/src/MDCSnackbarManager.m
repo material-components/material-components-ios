@@ -227,7 +227,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   [self.delegate willPresentSnackbarWithMessageView:snackbarView];
   self.currentSnackbar = snackbarView;
   self.overlayView.accessibilityViewIsModal =
-      self.manager.shouldSetAccessibilityViewIsModal && ![self isSnackbarTransient:snackbarView];
+      self.manager.shouldEnableAccessibilityViewIsModal && ![self isSnackbarTransient:snackbarView];
   self.overlayView.hidden = NO;
   [self activateOverlay:self.overlayView];
 

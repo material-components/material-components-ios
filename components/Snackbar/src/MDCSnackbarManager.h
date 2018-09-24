@@ -226,7 +226,7 @@
 
  Default is set to NO.
  */
-@property(nonatomic, assign) BOOL shouldSetAccessibilityViewIsModal;
+@property(nonatomic, assign) BOOL shouldEnableAccessibilityViewIsModal;
 
 /**
  The delegate for MDCSnackbarManager through which it may inform of snackbar presentation updates.

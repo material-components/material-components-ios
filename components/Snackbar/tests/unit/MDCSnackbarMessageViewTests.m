@@ -107,7 +107,7 @@
   MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
   action.title = @"Tap Me";
   self.message.action = action;
-  self.manager.shouldSetAccessibilityViewIsModal = YES;
+  self.manager.shouldEnableAccessibilityViewIsModal = YES;
 
   // When
   [self.manager showMessage:self.message];
@@ -119,7 +119,7 @@
 
 - (void)testSnackbarAccessibiltyViewIsModalShouldBeNoWithNoActions {
   // Given
-  self.manager.shouldSetAccessibilityViewIsModal = YES;
+  self.manager.shouldEnableAccessibilityViewIsModal = YES;
 
   // When
   [self.manager showMessage:self.message];
