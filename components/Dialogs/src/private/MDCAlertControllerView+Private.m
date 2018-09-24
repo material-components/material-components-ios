@@ -30,10 +30,6 @@ static const UIEdgeInsets MDCDialogContentInsets = {24.0, 24.0, 24.0, 24.0};
 static const CGFloat MDCDialogContentVerticalPadding = 20.0;
 static const CGFloat MDCDialogTitleIconVerticalPadding = 12.0;
 
-// TODO(galiak): Have the title-icon size respond to dynamic type or device screen size, once this:
-// https://github.com/material-components/material-components-ios/issues/5198 is resolved.
-static const CGFloat MDCDialogTitleIconSize = 24.0;
-
 static const UIEdgeInsets MDCDialogActionsInsets = {8.0, 8.0, 8.0, 8.0};
 static const CGFloat MDCDialogActionsHorizontalPadding = 8.0;
 static const CGFloat MDCDialogActionsVerticalPadding = 12.0;
@@ -361,7 +357,9 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
   CGSize titleIconSize = CGSizeZero;
   if (self.titleIconImageView != nil) {
-    titleIconSize = CGSizeMake(MDCDialogTitleIconSize, MDCDialogTitleIconSize);
+    // TODO(galiak): Have the title-icon size respond to dynamic type or device screen size, once this:
+    // https://github.com/material-components/material-components-ios/issues/5198 is resolved.
+    titleIconSize = self.titleIconImageView.image.size;
   }
 
   CGSize titleSize = [self.titleLabel sizeThatFits:boundsSize];
@@ -456,7 +454,9 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
   CGSize titleIconSize = CGSizeZero;
   if (self.titleIconImageView != nil) {
-    titleIconSize = CGSizeMake(MDCDialogTitleIconSize, MDCDialogTitleIconSize);
+    // TODO(galiak): Have the title-icon size respond to dynamic type or device screen size, once this:
+    // https://github.com/material-components/material-components-ios/issues/5198 is resolved.
+    titleIconSize = self.titleIconImageView.image.size;
   }
 
   CGSize messageSize = [self.messageLabel sizeThatFits:boundsSize];
