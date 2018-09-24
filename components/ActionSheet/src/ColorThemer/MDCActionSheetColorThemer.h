@@ -24,9 +24,9 @@
  Applies a color scheme's properties to an MDCActionSheetController
 
  @param colorScheme The color scheme to apply to the component instance.
- @param actionSheet A component instance to which the olor scheme should be applied.
+ @param actionSheetController A component instance to which the olor scheme should be applied.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
-                   toActionSheet:(nonnull MDCActionSheetController *)actionSheet;
+         toActionSheetController:(nonnull MDCActionSheetController *)actionSheetController;
 
 @end

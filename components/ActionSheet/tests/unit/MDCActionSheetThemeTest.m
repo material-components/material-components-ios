@@ -14,12 +14,25 @@
 
 #import <XCTest/XCTest.h>
 
+#import "../../src/private/MDCActionSheetHeaderView.h"
+#import "../../src/private/MDCActionSheetItemTableViewCell.h"
 #import "MDCActionSheetTestHelper.h"
 #import "MaterialActionSheet+ColorThemer.h"
 
 static const CGFloat kHighAlpha = 0.87f;
 static const CGFloat kMediumAlpha = 0.6f;
 static const CGFloat kInkAlpha = 16.f;
+
+@interface MDCActionSheetHeaderView (Testing)
+@property(nonatomic, strong) UILabel *titleLabel;
+@property(nonatomic, strong) UILabel *messageLabel;
+@end
+
+@interface MDCActionSheetItemTableViewCell (Testing)
+@property(nonatomic, strong) UILabel *actionLabel;
+@property(nonatomic, strong) UIImageView *actionImageView;
+@property(nonatomic, strong) MDCInkTouchController *inkTouchController;
+@end
 
 @interface MDCActionSheetThemeTest : XCTestCase
 @property(nonatomic, strong) MDCActionSheetController *actionSheet;
@@ -33,41 +46,71 @@ static const CGFloat kInkAlpha = 16.f;
 
   self.actionSheet = [[MDCActionSheetController alloc] init];
   self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+  UIColor *surface = UIColor.blueColor;
+  UIColor *onSurface = UIColor.redColor;
+  self.colorScheme.primaryColor = surface;
+  self.colorScheme.onPrimaryColor = onSurface;
 }
 
+#pragma mark - Header test
 - (void)testApplyColorThemerWithTitleAndMessage {
   // Given
-  UIColor *primary = UIColor.blueColor;
-  UIColor *onPrimary = UIColor.redColor;
-  self.colorScheme.primaryColor = primary;
-  self.colorScheme.onPrimaryColor = onPrimary;
   self.actionSheet.title = @"Test title";
   self.actionSheet.message = @"Test message";
-  NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheet];
 
   // When
   [MDCActionSheetColorThemer applySemanticColorScheme:self.colorScheme
-                                        toActionSheet:self.actionSheet];
+                              toActionSheetController:self.actionSheet];
 
   // Then
-  XCTAssertEqualObjects(self.actionSheet.backgroundColor, primary);
   XCTAssertEqualObjects(self.actionSheet.header.titleLabel.textColor,
-                        [onPrimary colorWithAlphaComponent:kHighAlpha]);
+                        [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha]);
   XCTAssertEqualObjects(self.actionSheet.header.messageLabel.textColor,
-                        [onPrimary colorWithAlphaComponent:kMediumAlpha]);
-  for (MDCActionSheetItemTableViewCell *cell in cells) {
-    XCTAssertEqualObjects(cell.actionImageView.tintColor,
-                          [onPrimary colorWithAlphaComponent:kMediumAlpha]);
-    XCTAssertEqualObjects(cell.actionLabel.textColor,
-                          [onPrimary colorWithAlphaComponent:kHighAlpha]);
-    XCTAssertEqualObjects(cell.inkTouchController.defaultInkView.inkColor,
-                          [onPrimary colorWithAlphaComponent:kInkAlpha]);
-  }
+                        [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kMediumAlpha]);
 }
 
 - (void)testApplyThemerWithOnlyTitle {
   // Given
+  self.actionSheet.title = @"Test title";
 
+  // When
+  [MDCActionSheetColorThemer applySemanticColorScheme:self.colorScheme
+                              toActionSheetController:self.actionSheet];
+
+  // Then
+  XCTAssertEqualObjects(self.actionSheet.header.titleLabel.textColor,
+                        [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kMediumAlpha]);
+}
+
+- (void)testApplyThemerWithOnlyMessage {
+  // Given
+  self.actionSheet.message = @"Test message";
+
+  // When
+  [MDCActionSheetColorThemer applySemanticColorScheme:self.colorScheme
+                              toActionSheetController:self.actionSheet];
+
+  // Then
+  XCTAssertEqualObjects(self.actionSheet.header.messageLabel.textColor,
+                        [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kMediumAlpha]);
+}
+
+#pragma mark - default test
+- (void)testApplyThemeToCells {
+  // When
+  [MDCActionSheetColorThemer applySemanticColorScheme:self.colorScheme
+                              toActionSheetController:self.actionSheet];
+  NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheet];
+
+  // Then
+  for (MDCActionSheetItemTableViewCell *cell in cells) {
+    XCTAssertEqualObjects(cell.actionImageView.tintColor,
+                          [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kMediumAlpha]);
+    XCTAssertEqualObjects(cell.actionLabel.textColor,
+                          [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha]);
+    XCTAssertEqualObjects(cell.inkTouchController.defaultInkView.inkColor,
+                          [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha]);
+  }
 }
 
 @end

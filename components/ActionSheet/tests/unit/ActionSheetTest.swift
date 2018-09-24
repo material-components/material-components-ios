@@ -14,6 +14,7 @@
 
 import XCTest
 import MaterialComponentsAlpha.MaterialActionSheet
+import MaterialComponentsAlpha.MaterialActionSheet_ColorThemer
 
 class ActionSheetTest: XCTestCase {
 
@@ -101,5 +102,20 @@ class ActionSheetTest: XCTestCase {
     // Then
     XCTAssertEqual(actionSheet.view.backgroundColor, actionSheet.backgroundColor)
     XCTAssertEqual(actionSheet.view.backgroundColor, newBackgroundColor)
+  }
+
+  func testApplyThemerToBackgroundColor() {
+    // Given
+    let surfaceColor: UIColor = .blue
+    let colorScheme = MDCSemanticColorScheme()
+    colorScheme.surfaceColor = surfaceColor
+
+    // When
+    MDCActionSheetColorThemer.applySemanticColorScheme(colorScheme, to: actionSheet)
+    let _ = actionSheet.view
+
+    // Then
+    XCTAssertEqual(actionSheet.view.backgroundColor, surfaceColor)
+    XCTAssertEqual(actionSheet.backgroundColor, surfaceColor)
   }
 }
