@@ -357,7 +357,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
   CGSize titleIconSize = CGSizeZero;
   if (self.titleIconImageView != nil) {
-    // TODO(galiak): Have the title-icon size respond to dynamic type or device screen size, once this:
+    // TODO(galiak): Have title-icon size respond to dynamic type or device screen size, once this:
     // https://github.com/material-components/material-components-ios/issues/5198 is resolved.
     titleIconSize = self.titleIconImageView.image.size;
   }
@@ -454,7 +454,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
   CGSize titleIconSize = CGSizeZero;
   if (self.titleIconImageView != nil) {
-    // TODO(galiak): Have the title-icon size respond to dynamic type or device screen size, once this:
+    // TODO(galiak): Have title-icon size respond to dynamic type or device screen size, once this:
     // https://github.com/material-components/material-components-ios/issues/5198 is resolved.
     titleIconSize = self.titleIconImageView.image.size;
   }
@@ -487,7 +487,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     // match the titleIcon alignment to the title alignment
     CGFloat titleIconPosition = titleFrame.origin.x;
     if (self.titleAlignment == NSTextAlignmentCenter) {
-      titleIconPosition = (contentSize.width - titleIconSize.width) / 2.0;
+      titleIconPosition = (contentSize.width - titleIconSize.width) / 2.0f;
     } else if (self.titleAlignment == NSTextAlignmentRight ||
                (self.titleAlignment == NSTextAlignmentNatural &&
                 [self mdf_effectiveUserInterfaceLayoutDirection] ==
