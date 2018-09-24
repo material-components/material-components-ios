@@ -2,6 +2,18 @@
 
 ## Automatically format your Git commit with clang-format
 
+### Run
+
+To run the command use
+
+```bash
+git clang-format origin/develop
+```
+
+This diffs from origin/develop to HEAD:
+
+
+### Install
 This tool allows you to run clang-format on your local changes before they're sent out for review.
 This will minimize the amount of style feedback you get from the team and saves everyone time.
 
@@ -31,12 +43,6 @@ sudo chmod +x "/usr/local/bin/git-clang-format"
 
 # Verify that the command works.
 git clang-format -h
-```
-
-To run the command from origin/develop to HEAD:
-
-```bash
-git clang-format origin/develop
 ```
 
 ## PR description chrome plugin
