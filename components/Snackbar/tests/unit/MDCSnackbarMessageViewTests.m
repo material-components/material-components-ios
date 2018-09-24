@@ -117,12 +117,13 @@
   XCTAssertTrue(self.manager.internalManager.overlayView.accessibilityViewIsModal);
 }
 
-- (void)testSnackbarAccessibiltyViewIsModalShouldBeNo {
+- (void)testSnackbarAccessibiltyViewIsModalShouldBeNoWithNoActions {
   // Given
   self.manager.shouldSetAccessibilityViewIsModal = YES;
 
   // When
   [self.manager showMessage:self.message];
+  [NSRunLoop.mainRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
 
   // Then
   XCTAssertFalse(self.manager.internalManager.overlayView.accessibilityViewIsModal);
