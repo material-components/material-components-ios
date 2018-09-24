@@ -1452,8 +1452,8 @@ static BOOL isRunningiOS10_3OrAbove() {
       accumulatorMin = [self fhv_accumulatorMin];
     }
     // Adjust the accumulator so that our height won't change and cap it to the possible range.
-    _shiftAccumulator = MAX(accumulatorMin, MIN([self fhv_accumulatorMax],
-                                                _shiftAccumulator - heightDelta));
+    _shiftAccumulator =
+        MAX(accumulatorMin, MIN([self fhv_accumulatorMax], _shiftAccumulator - heightDelta));
   }
 
   void (^animate)(void) = ^{
