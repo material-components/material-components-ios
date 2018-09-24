@@ -77,6 +77,7 @@ swift_library(
     srcs = glob(["tests/unit/*.swift"]),
     deps = [
         ":ActionSheet",
+        ":ColorThemer",
         ":private",
     ],
     visibility = ["//visibility:private"],
