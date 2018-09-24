@@ -7,7 +7,7 @@
 To run the command use
 
 ```bash
-git clang-format origin/develop
+git clang-format $(git merge-base origin/develop HEAD)
 ```
 
 This diffs from origin/develop to HEAD:
