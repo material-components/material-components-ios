@@ -38,7 +38,7 @@ the screen and displays actions a user can take.
 - [MDCActionSheetController vs. UIAlertControllerStyleActionSheet](#mdcactionsheetcontroller-vs.-uialertcontrollerstyleactionsheet)
 - [Extensions](#extensions)
   - [Color Theming](#color-theming)
-  - [Color Theming](#color-theming)
+  - [Typography Theming](#typography-theming)
 - [Accessibility](#accessibility)
   - [Set `-isScrimAccessibilityElement`](#set-`-isscrimaccessibilityelement`)
   - [Set `-scrimAccessibilityLabel`](#set-`-scrimaccessibilitylabel`)
@@ -209,7 +209,7 @@ MDCActionSheetController *actionSheet = [[MDCActionSheetController alloc] init];
 
 <!-- Extracted from docs/typography-theming.md -->
 
-### Color Theming
+### Typography Theming
 
 You can theme an Action Sheet with your app's typography scheme using the TypographyThemer extension.
 
