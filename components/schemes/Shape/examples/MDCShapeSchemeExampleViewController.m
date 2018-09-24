@@ -15,6 +15,9 @@
 #import "MDCShapeSchemeExampleViewController.h"
 
 #import "../../../BottomSheet/examples/supplemental/BottomSheetDummyCollectionViewController.h"
+#import "supplemental/MDCChipViewShapeThemerDefaultMapping.h"
+#import "supplemental/MDCFloatingButtonShapeThemerDefaultMapping.h"
+#import "supplemental/MDCBottomSheetControllerShapeThemerDefaultMapping.h"
 
 #import "MaterialAppBar.h"
 #import "MaterialAppBar+ColorThemer.h"
@@ -267,12 +270,10 @@
 - (void)updateComponentShapes {
   [MDCButtonShapeThemer applyShapeScheme:_shapeScheme toButton:self.containedButton];
   [MDCButtonShapeThemer applyShapeScheme:_shapeScheme toButton:self.outlinedButton];
-  [MDCFloatingButtonShapeThemer applyShapeScheme:_shapeScheme toButton:self.floatingButton];
-  [MDCChipViewShapeThemer applyShapeScheme:_shapeScheme toChipView:self.chipView];
   [MDCCardsShapeThemer applyShapeScheme:_shapeScheme toCard:self.card];
   [MDCButtonShapeThemer applyShapeScheme:_shapeScheme toButton:self.presentBottomSheetButton];
-  [MDCBottomSheetControllerShapeThemer applyShapeScheme:_shapeScheme
-                                toBottomSheetController:self.bottomSheetController];
+  [self updateComponentShapesWithBaselineOverrides:
+      self.includeBaselineOverridesToggle.selectedSegmentIndex == 0];
 }
 
 - (MDCShapeCategory *)changedCategoryFromType:(UISegmentedControl *)sender
@@ -328,6 +329,24 @@
 }
 
 - (IBAction)baselineOverrideValueChanged:(UISegmentedControl *)sender {
+  [self updateComponentShapesWithBaselineOverrides:sender.selectedSegmentIndex == 0];
+}
+
+- (void)updateComponentShapesWithBaselineOverrides:(BOOL)baselineOverrides {
+  if (!baselineOverrides) {
+    // We don't want baseline overrides.
+    [MDCBottomSheetControllerShapeThemerDefaultMapping applyShapeScheme:_shapeScheme
+                                                toBottomSheetController:self.bottomSheetController];
+    [MDCChipViewShapeThemerDefaultMapping applyShapeScheme:_shapeScheme toChipView:self.chipView];
+    [MDCFloatingButtonShapeThemerDefaultMapping applyShapeScheme:_shapeScheme
+                                                        toButton:self.floatingButton];
+  } else {
+    // We do want baseline overrides.
+    [MDCBottomSheetControllerShapeThemer applyShapeScheme:_shapeScheme
+                                  toBottomSheetController:self.bottomSheetController];
+    [MDCChipViewShapeThemer applyShapeScheme:_shapeScheme toChipView:self.chipView];
+    [MDCFloatingButtonShapeThemer applyShapeScheme:_shapeScheme toButton:self.floatingButton];
+  }
 }
 
 @end
