@@ -20,6 +20,7 @@
 #import "private/MDCSnackbarMessageInternal.h"
 #import "private/MDCSnackbarMessageViewInternal.h"
 #import "private/MDCSnackbarOverlayView.h"
+#import "private/MDCSnackbarManagerInternal.h"
 
 /** Test whether any of the accessibility elements of a view is focused */
 static BOOL UIViewHasFocusedAccessibilityElement(UIView *view) {
@@ -42,7 +43,12 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 /**
  The 'actual' Snackbar manager which will take care of showing/hiding Snackbar messages.
  */
-@interface MDCSnackbarManagerInternal : NSObject
+@interface MDCSnackbarManagerInternal ()
+
+/**
+ This property is used to test logic flows only when voiceover is on.
+ */
+@property(nonatomic) BOOL isVoiceOverRunningOverride;
 
 /**
  The instance of MDCSnackbarManager that "owns" this internal manager.  Used to get theming
@@ -220,6 +226,8 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
                                     snackbarManager:self.manager];
   [self.delegate willPresentSnackbarWithMessageView:snackbarView];
   self.currentSnackbar = snackbarView;
+  self.overlayView.accessibilityViewIsModal =
+      self.manager.shouldSetAccessibilityViewIsModal && ![self isSnackbarTransient:snackbarView];
   self.overlayView.hidden = NO;
   [self activateOverlay:self.overlayView];
 
@@ -299,8 +307,16 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 
 #pragma mark - Helper methods
 
+- (BOOL)isVoiceOverRunning {
+  if (UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning()
+      || self.isVoiceOverRunningOverride) {
+    return YES;
+  }
+  return NO;
+}
+
 - (BOOL)isSnackbarTransient:(MDCSnackbarMessageView *)snackbarView {
-  if (UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning()) {
+  if ([self isVoiceOverRunning]) {
     return ![snackbarView shouldWaitForDismissalDuringVoiceover];
   }
 
