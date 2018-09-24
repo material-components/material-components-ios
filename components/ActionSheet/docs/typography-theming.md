@@ -34,6 +34,6 @@ id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
 // Step 3: Apply the color scheme to your component
 MDCActionSheetController *actionSheet = [[MDCActionSheetController alloc] init];
 [MDCActionSheetTypographyThemer applyTypographyScheme:self.typographyScheme
-     toActionSheetController:actionSheet];
+                              toActionSheetController:actionSheet];
 ```
 <!--</div>-->

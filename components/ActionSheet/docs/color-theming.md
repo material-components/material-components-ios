@@ -34,6 +34,6 @@ id<MDCColorScheming> colorScheme = [[MDCSematnicColorScheme alloc] init];
 // Step 3: Apply the color scheme to your component
 MDCActionSheetController *actionSheet = [[MDCActionSheetController alloc] init];
 [MDCActionSheetColorThemer applySemanticColorScheme:self.colorScheme
-     toActionSheetController:actionSheet];
+                            toActionSheetController:actionSheet];
 ```
 <!--</div>-->
