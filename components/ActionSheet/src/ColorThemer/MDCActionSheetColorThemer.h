@@ -19,7 +19,6 @@
 
 @interface MDCActionSheetColorThemer : NSObject
 
-
 /**
  Applies a color scheme's properties to an MDCActionSheetController
 
