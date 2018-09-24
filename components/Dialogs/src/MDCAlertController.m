@@ -212,13 +212,24 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   }
 }
 
+- (void)setTitleAlignment:(NSTextAlignment)titleAlignment {
+  _titleAlignment = titleAlignment;
+  if (self.alertView) {
+    self.alertView.titleAlignment = titleAlignment;
+  }
+}
+
 - (void)setCornerRadius:(CGFloat)cornerRadius {
   _cornerRadius = cornerRadius;
-  self.alertView.cornerRadius = cornerRadius;
+  if (self.alertView) {
+    self.alertView.cornerRadius = cornerRadius;
+  }
   // make sure to pass the new shape through to the dialog's tracking/shadow layer
   MDCDialogPresentationController *dialogPresentationController =
       self.mdc_dialogPresentationController;
-  dialogPresentationController.dialogCornerRadius = cornerRadius;
+  if (dialogPresentationController) {
+    dialogPresentationController.dialogCornerRadius = cornerRadius;
+  }
 }
 
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
@@ -317,6 +328,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   self.alertView.buttonColor = self.buttonTitleColor;
   self.alertView.buttonFont = self.buttonFont;
   self.alertView.buttonInkColor = self.buttonInkColor;
+  self.alertView.titleAlignment = self.titleAlignment;
   self.alertView.cornerRadius = self.cornerRadius;
 
   for (MDCAlertAction *action in self.actions) {
