@@ -224,10 +224,10 @@ run_cocoapods() {
       if [ -n "$IS_RELEASE" ]; then
         bash scripts/test_all
       else
-        bash scripts/test_all catalog/MDCCatalog.xcworkspace:MDCUnitTests
+        bash scripts/test_all catalog/MDCCatalog.xcworkspace:MDCCatalog
       fi
     elif [ "$DEPENDENCY_SYSTEM" = "cocoapods-podspec" ]; then
-      pod lib lint MaterialComponents.podspec --verbose
+      pod lib lint MaterialComponents.podspec --verbose --skip-tests
     fi
   done
 
