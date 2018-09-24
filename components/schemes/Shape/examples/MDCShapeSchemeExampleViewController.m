@@ -107,17 +107,9 @@
   self.containedButton = [[MDCButton alloc] init];
   [self.containedButton setTitle:@"Button" forState:UIControlStateNormal];
   [MDCContainedButtonThemer applyScheme:buttonScheme toButton:self.containedButton];
-  [self.containedButton sizeToFit];
   self.containedButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.componentContentView addSubview:self.containedButton];
 
-//  self.outlinedButton = [[MDCButton alloc] init];
-//  [self.outlinedButton setTitle:@"Button" forState:UIControlStateNormal];
-//  [MDCOutlinedButtonThemer applyScheme:buttonScheme toButton:self.outlinedButton];
-//  [self.outlinedButton sizeToFit];
-//  self.outlinedButton.translatesAutoresizingMaskIntoConstraints = NO;
-//  [self.componentContentView addSubview:self.outlinedButton];
-//
   self.floatingButton = [[MDCFloatingButton alloc] init];
   UIImage *plusImage =
       [[UIImage imageNamed:@"Plus"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
@@ -136,12 +128,10 @@
   self.chipView.titleLabel.text = @"Material";
   self.chipView.imageView.image = [self faceImage];
   self.chipView.accessoryView = [self deleteButton];
+  self.chipView.minimumSize = CGSizeMake(140, 33);
   self.chipView.translatesAutoresizingMaskIntoConstraints = NO;
   [MDCChipViewThemer applyScheme:chipViewScheme toChipView:self.chipView];
   [self.componentContentView addSubview:self.chipView];
-
-  CGSize chipSize = [self.chipView sizeThatFits:self.view.bounds.size];
-  self.chipView.frame = (CGRect) { CGPointMake(20, 20), chipSize };
 
   MDCCardScheme *cardScheme = [[MDCCardScheme alloc] init];
   cardScheme.colorScheme = self.colorScheme;
@@ -163,7 +153,6 @@
   self.presentBottomSheetButton = [[MDCButton alloc] init];
   [self.presentBottomSheetButton setTitle:@"Present Bottom Sheet" forState:UIControlStateNormal];
   [MDCOutlinedButtonThemer applyScheme:buttonScheme toButton:self.presentBottomSheetButton];
-  [self.presentBottomSheetButton sizeToFit];
   self.presentBottomSheetButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.componentContentView addSubview:self.presentBottomSheetButton];
   [self.presentBottomSheetButton addTarget:self action:@selector(presentBottomSheet)
@@ -187,10 +176,6 @@
                                                                                                   }];
   [self.view addConstraints:componentConstraints];
 
-
-
-
-
 }
 
 - (void)presentBottomSheet {
@@ -201,8 +186,7 @@
   MDCAppBarContainerViewController *container =
   [[MDCAppBarContainerViewController alloc] initWithContentViewController:viewController];
   container.preferredContentSize = CGSizeMake(500, 200);
-  container.appBarViewController.headerView.trackingScrollView =
-  viewController.collectionView;
+  container.appBarViewController.headerView.trackingScrollView = viewController.collectionView;
   container.topLayoutGuideAdjustmentEnabled = YES;
 
   [MDCAppBarColorThemer applyColorScheme:self.colorScheme
