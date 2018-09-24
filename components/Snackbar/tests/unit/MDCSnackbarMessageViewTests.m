@@ -129,5 +129,32 @@
   XCTAssertFalse(self.manager.internalManager.overlayView.accessibilityViewIsModal);
 }
 
+- (void)testSnackbarSetAccessibiltyViewIsModalShouldBeNoForActionSnacbarsWhenManagerIsNo {
+  // Given
+  self.manager.internalManager.isVoiceOverRunningOverride = YES;
+  MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
+  action.title = @"Tap Me";
+  self.message.action = action;
+  self.manager.shouldEnableAccessibilityViewIsModal = NO;
+
+  // When
+  [self.manager showMessage:self.message];
+  [NSRunLoop.mainRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+
+  // Then
+  XCTAssertFalse(self.manager.internalManager.overlayView.accessibilityViewIsModal);
+}
+
+- (void)testSnackbarAccessibiltyViewIsModalShouldBeNoByDefault {
+  // Given
+  self.manager.shouldEnableAccessibilityViewIsModal = NO;
+
+  // When
+  [self.manager showMessage:self.message];
+  [NSRunLoop.mainRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+
+  // Then
+  XCTAssertFalse(self.manager.internalManager.overlayView.accessibilityViewIsModal);
+}
 
 @end
