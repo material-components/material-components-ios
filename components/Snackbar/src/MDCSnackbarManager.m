@@ -13,10 +13,12 @@
 // limitations under the License.
 
 #import "MDCSnackbarManager.h"
+
+#import "MaterialApplication.h"
+#import "MaterialOverlayWindow.h"
 #import "MDCSnackbarMessage.h"
 #import "MDCSnackbarMessageView.h"
-#import "MaterialOverlayWindow.h"
-#import "MaterialApplication.h"
+
 #import "private/MDCSnackbarManagerInternal.h"
 #import "private/MDCSnackbarMessageInternal.h"
 #import "private/MDCSnackbarMessageViewInternal.h"
