@@ -17,11 +17,11 @@
 # Fail on any error.
 set -e
 
-KOKORO_RUNNER_VERSION="v4.*"
-
 XCODE_MINIMUM_VERSION="9.0.0"
 
 fix_bazel_imports() {
+  echo "Rewriting imports for bazel..."
+
   if [ -z "$KOKORO_BUILD_NUMBER" ]; then
     tests_dir_prefix=""
   else
@@ -64,6 +64,8 @@ fix_bazel_imports() {
   rewrite_tests "s/import MDFInternationalization/import material_internationalization_ios_MDFInternationalization/"
   stashed_dir="$(pwd)/"
   reset_imports() {
+    echo "Undoing import rewrites for bazel..."
+
     # Undoes our source changes from above.
     rewrite_tests "s/import components_(.+)_\1 \/\/ Alpha/import MaterialComponentsAlpha.Material\1/"
     rewrite_tests "s/import components_schemes_(.+)_.+/import MaterialComponents.Material\1Scheme/"
@@ -135,14 +137,12 @@ run_bazel() {
     move_derived_data_to_tmp
   fi
 
-  fix_bazel_imports
-
   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
     bazel version
   fi
 
   if [ -n "$VERBOSE_OUTPUT" ]; then
-    verbosity_args="-v"
+    verbosity_args="-s"
   fi
 
   if [ -z "$COMMAND" ]; then
@@ -152,17 +152,47 @@ run_bazel() {
     TARGET="//components/..."
   fi
 
-  if [ -n "$XCODE_VERSION" ]; then
-    xcode_versions="--xcode-version $XCODE_VERSION"
-  else
-    xcode_versions="--min-xcode-version $XCODE_MINIMUM_VERSION"
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    select_xcode "$XCODE_VERSION"
+
+    # Move into our cloned repo
+    cd github/repo
   fi
 
-  ./.kokoro-ios-runner/bazel.sh $COMMAND $TARGET \
-      $xcode_versions \
-      $verbosity_args \
-      --ios_minimum_os=8.0 \
-      --ios_multi_cpus=i386,x86_64
+  # Run against whichever Xcode is currently selected.
+  selected_xcode_developer_path=$(xcode-select -p)
+  selected_xcode_contents_path=$(dirname "$selected_xcode_developer_path")
+
+  xcode_version=$(cat "$selected_xcode_contents_path/version.plist" \
+    | grep "CFBundleShortVersionString" -A1 \
+    | grep string \
+    | cut -d'>' -f2 \
+    | cut -d'<' -f1)
+  if [ -n "$MIN_XCODE_VERSION" ]; then
+    xcode_version_as_number="$(version_as_number $xcode_version)"
+
+    if [ "$xcode_version_as_number" -lt "$MIN_XCODE_VERSION" ]; then
+      echo "The currently selected Xcode version ($xcode_version_as_number) is less than the desired version ($MIN_XCODE_VERSION)."
+      echo "Stopping execution..."
+      exit 1
+    fi
+  fi
+
+  if [ "$COMMAND" == "build" ]; then
+    echo "🏗️  $COMMAND with Xcode $xcode_version..."
+  elif [ "$COMMAND" == "test" ]; then
+    echo "🛠️  $COMMAND with Xcode $xcode_version..."
+
+    if [ -n "$VERBOSE_OUTPUT" ]; then
+      extra_args="--test_output=all"
+    else
+      extra_args="--test_output=errors"
+    fi
+  fi
+
+  fix_bazel_imports
+  bazel clean
+  bazel $COMMAND $TARGET --xcode_version $xcode_version --ios_minimum_os=8.0 --ios_multi_cpus=i386,x86_64 $extra_args $verbosity_args
 }
 
 run_cocoapods() {
@@ -573,16 +603,6 @@ if [ -n "$VERBOSE_OUTPUT" ]; then
   # Display commands to stderr.
   set -x
 fi
-
-if [ ! -d .kokoro-ios-runner ]; then
-  git clone https://github.com/material-foundation/kokoro-ios-runner.git .kokoro-ios-runner
-fi
-
-pushd .kokoro-ios-runner
-git fetch > /dev/null
-TAG=$(git tag --sort=v:refname -l "$KOKORO_RUNNER_VERSION" | tail -n1)
-git checkout "$TAG" > /dev/null
-popd
 
 case "$DEPENDENCY_SYSTEM" in
   "bazel")      run_bazel ;;
