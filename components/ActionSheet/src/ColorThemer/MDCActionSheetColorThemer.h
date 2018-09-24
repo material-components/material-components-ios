@@ -17,6 +17,9 @@
 
 #import <Foundation/Foundation.h>
 
+/**
+ The Material Design color system's themer for instances of MDCActionSheetController.
+ */
 @interface MDCActionSheetColorThemer : NSObject
 
 /**
