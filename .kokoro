@@ -187,6 +187,10 @@ run_bazel() {
 
   if [ -n "$KOKORO_ARTIFACTS_DIR" ]; then
     mkdir -p "$KOKORO_ARTIFACTS_DIR/bazel_test_logs"
+    echo "Showing all build logs..."
+    find -L . -name "test.log"
+    find -L . -name "test.xml"
+    echo "Done"
     # rename all test.log to sponge_log.log and then copy them to the kokoro
     # artifacts directory.
     find -L . -name "test.log" -exec rename 's/test.log/sponge_log.log/' {} \;
