@@ -90,6 +90,8 @@ post_install do |installer|
   mdc_xcconfigs = [
     "#{pod_dir}/Target Support Files/MaterialComponents/MaterialComponents.xcconfig",
     "#{pod_dir}/Target Support Files/MaterialComponents/MaterialComponents.unit.xcconfig",
+    "#{pod_dir}/Target Support Files/MaterialComponentsAlpha/MaterialComponentsAlpha.xcconfig",
+    "#{pod_dir}/Target Support Files/MaterialComponentsAlpha/MaterialComponentsAlpha.unit.xcconfig",
     "#{pod_dir}/Target Support Files/MaterialComponentsExamples/MaterialComponentsExamples.xcconfig",
     "#{pod_dir}/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog.debug.xcconfig",
     "#{pod_dir}/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog.release.xcconfig",
