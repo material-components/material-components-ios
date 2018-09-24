@@ -229,7 +229,9 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 - (void)setTitleIconTintColor:(UIColor *)titleIconTintColor {
   _titleIconTintColor = titleIconTintColor;
-  self.alertView.titleIconTintColor = titleIconTintColor;
+  if (self.alertView) {
+    self.alertView.titleIconTintColor = titleIconTintColor;
+  }
 }
 
 - (void)setCornerRadius:(CGFloat)cornerRadius {

@@ -183,15 +183,17 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   self.titleLabel.textAlignment = titleAlignment;
 }
 
+- (UIImage *)titleIcon {
+  return self.titleIconImageView.image;
+}
+
 - (void)setTitleIcon:(UIImage *)titleIcon {
-  _titleIcon = titleIcon;
   if (titleIcon == nil) {
     [self.titleIconImageView removeFromSuperview];
     self.titleIconImageView = nil;
   } else if (self.titleIconImageView == nil) {
     self.titleIconImageView = [[UIImageView alloc] initWithImage:titleIcon];
     self.titleIconImageView.contentMode = UIViewContentModeScaleAspectFit;
-    [self tintTitleIcon];
     [self.contentScrollView addSubview:self.titleIconImageView];
   } else {
     self.titleIconImageView.image = titleIcon;

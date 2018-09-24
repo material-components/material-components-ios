@@ -105,7 +105,7 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
     case 3:
       return performRightTitleWithResizedIcon()
     case 4:
-      return performTitleIconNoTitle()
+      return performTintedTitleIconNoTitle()
     default:
       print("No row is selected")
       return nil
@@ -149,7 +149,7 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
     return alert
   }
 
-  func performTitleIconNoTitle() -> MDCAlertController {
+  func performTintedTitleIconNoTitle() -> MDCAlertController {
     let alert = createMDCAlertController(title: nil)
     alert.titleIcon = sampleIcon()
     MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
