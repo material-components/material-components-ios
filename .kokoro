@@ -67,7 +67,6 @@ fix_bazel_imports() {
   reset_imports() {
     # Undoes our source changes from above.
     rewrite_tests "s/import components_(.+)_\1 \/\/ Alpha/import MaterialComponentsAlpha.Material\1/"
-    rewrite_tests "s/import components_(.+)_(.+) \/\/ Alpha/import MaterialComponentsAlpha.Material\1_\2/"
     rewrite_tests "s/import components_schemes_(.+)_.+/import MaterialComponents.Material\1Scheme/"
     rewrite_tests "s/import components_private_(.+)_.+/import MaterialComponents.Material\1/"
     rewrite_tests "s/import components_(.+)_\1/import MaterialComponents.Material\1/"
