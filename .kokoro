@@ -187,16 +187,23 @@ run_bazel() {
 
   if [ -n "$KOKORO_ARTIFACTS_DIR" ]; then
     mkdir -p "$KOKORO_ARTIFACTS_DIR/bazel_test_logs"
+
     log_dir=$(readlink "$KOKORO_ARTIFACTS_DIR/bazel_test_logs")
+    echo "$log_dir"
+
     brew install rename
+
     # rename all test.log to sponge_log.log and then copy them to the kokoro
     # artifacts directory.
     find -L . -name "test.log" -type f -exec rename 's/test.log/sponge_log.log/' {} \;
     find -L . -name "sponge_log.log" -type f | cpio -pdm "$log_dir"
+    find -L "$log_dir" -name "sponge_log.log" -type f
+
     # rename all test.xml to sponge_log.xml and then copy them to kokoro
     # artifacts directory.
     find -L . -name "test.xml" -type f -exec rename 's/test.xml/sponge_log.xml/' {} \;
     find -L . -name "sponge_log.xml" -type f | cpio -pdm "$log_dir"
+    find -L "$log_dir" -name "sponge_log.xml" -type f
   fi
 }
 
