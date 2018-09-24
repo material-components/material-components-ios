@@ -106,6 +106,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
     _alertTitle = [title copy];
     _message = [message copy];
     _actions = [[NSMutableArray alloc] init];
+    _titleAlignment = NSTextAlignmentNatural;
 
     super.transitioningDelegate = _transitionController;
     super.modalPresentationStyle = UIModalPresentationCustom;

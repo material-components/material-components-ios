@@ -34,6 +34,15 @@ MDCAlertControllerView *alertView;
   alertView = (MDCAlertControllerView *)alert.view;
 }
 
+- (void)testDefaultTitleAlignment {
+  // Given
+  NSTextAlignment defaultTitleAlignment = NSTextAlignmentNatural;
+
+  // Then
+  XCTAssertEqual(alertView.titleAlignment, defaultTitleAlignment);
+  XCTAssertEqual(alertView.titleLabel.textAlignment, defaultTitleAlignment);
+}
+
 - (void)testApplyingTitleAlignment {
   // Given
   NSTextAlignment titleAlignment = NSTextAlignmentCenter;
