@@ -19,7 +19,7 @@
 /**
  The Material Design shape system's themer for instances of MDCFloatingButton.
  */
-@interface MDCFloatingButtonShapeThemerDefaultMapping: MDCFloatingButtonShapeThemer
+@interface MDCFloatingButtonShapeThemerDefaultMapping : MDCFloatingButtonShapeThemer
 
 /**
  Applies a shape scheme's properties to an MDCFloatingButton.

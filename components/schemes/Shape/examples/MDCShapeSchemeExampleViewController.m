@@ -15,59 +15,58 @@
 #import "MDCShapeSchemeExampleViewController.h"
 
 #import "../../../BottomSheet/examples/supplemental/BottomSheetDummyCollectionViewController.h"
+#import "supplemental/MDCBottomSheetControllerShapeThemerDefaultMapping.h"
 #import "supplemental/MDCChipViewShapeThemerDefaultMapping.h"
 #import "supplemental/MDCFloatingButtonShapeThemerDefaultMapping.h"
-#import "supplemental/MDCBottomSheetControllerShapeThemerDefaultMapping.h"
 
-#import "MaterialAppBar.h"
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
-#import "MaterialBottomSheet.h"
+#import "MaterialAppBar.h"
 #import "MaterialBottomSheet+ShapeThemer.h"
-#import "MaterialButtons.h"
+#import "MaterialBottomSheet.h"
 #import "MaterialButtons+ButtonThemer.h"
 #import "MaterialButtons+ShapeThemer.h"
-#import "MaterialCards.h"
+#import "MaterialButtons.h"
 #import "MaterialCards+CardThemer.h"
 #import "MaterialCards+ShapeThemer.h"
-#import "MaterialChips.h"
+#import "MaterialCards.h"
 #import "MaterialChips+ChipThemer.h"
 #import "MaterialChips+ShapeThemer.h"
+#import "MaterialChips.h"
 #import "MaterialColorScheme.h"
-#import "MaterialShapeScheme.h"
 #import "MaterialShapeLibrary.h"
+#import "MaterialShapeScheme.h"
 #import "MaterialTypographyScheme.h"
 
 @interface MDCShapeSchemeExampleViewController ()
-@property (strong, nonatomic) MDCSemanticColorScheme *colorScheme;
-@property (strong, nonatomic) MDCShapeScheme *shapeScheme;
-@property (strong, nonatomic) MDCTypographyScheme *typographyScheme;
+@property(strong, nonatomic) MDCSemanticColorScheme *colorScheme;
+@property(strong, nonatomic) MDCShapeScheme *shapeScheme;
+@property(strong, nonatomic) MDCTypographyScheme *typographyScheme;
 
-@property (weak, nonatomic) IBOutlet MDCShapedView *smallSurfaceShape;
-@property (weak, nonatomic) IBOutlet MDCShapedView *mediumSurfaceShape;
-@property (weak, nonatomic) IBOutlet MDCShapedView *largeSurfaceShape;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *smallSurfaceType;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *mediumSurfaceType;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *largeSurfaceType;
-@property (weak, nonatomic) IBOutlet UISlider *smallSurfaceValue;
-@property (weak, nonatomic) IBOutlet UISlider *mediumSurfaceValue;
-@property (weak, nonatomic) IBOutlet UISlider *largeSurfaceValue;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *includeBaselineOverridesToggle;
-@property (weak, nonatomic) IBOutlet UIView *componentContentView;
+@property(weak, nonatomic) IBOutlet MDCShapedView *smallSurfaceShape;
+@property(weak, nonatomic) IBOutlet MDCShapedView *mediumSurfaceShape;
+@property(weak, nonatomic) IBOutlet MDCShapedView *largeSurfaceShape;
+@property(weak, nonatomic) IBOutlet UISegmentedControl *smallSurfaceType;
+@property(weak, nonatomic) IBOutlet UISegmentedControl *mediumSurfaceType;
+@property(weak, nonatomic) IBOutlet UISegmentedControl *largeSurfaceType;
+@property(weak, nonatomic) IBOutlet UISlider *smallSurfaceValue;
+@property(weak, nonatomic) IBOutlet UISlider *mediumSurfaceValue;
+@property(weak, nonatomic) IBOutlet UISlider *largeSurfaceValue;
+@property(weak, nonatomic) IBOutlet UISegmentedControl *includeBaselineOverridesToggle;
+@property(weak, nonatomic) IBOutlet UIView *componentContentView;
 
-@property (strong, nonatomic) MDCButton *containedButton;
-@property (strong, nonatomic) MDCButton *outlinedButton;
-@property (strong, nonatomic) MDCFloatingButton *floatingButton;
-@property (strong, nonatomic) MDCChipView *chipView;
-@property (strong, nonatomic) MDCCard *card;
-@property (strong, nonatomic) MDCButton *presentBottomSheetButton;
-@property (strong, nonatomic) MDCBottomSheetController *bottomSheetController;
+@property(strong, nonatomic) MDCButton *containedButton;
+@property(strong, nonatomic) MDCButton *outlinedButton;
+@property(strong, nonatomic) MDCFloatingButton *floatingButton;
+@property(strong, nonatomic) MDCChipView *chipView;
+@property(strong, nonatomic) MDCCard *card;
+@property(strong, nonatomic) MDCButton *presentBottomSheetButton;
+@property(strong, nonatomic) MDCBottomSheetController *bottomSheetController;
 @end
 
 @implementation MDCShapeSchemeExampleViewController
 
-- (instancetype)init
-{
+- (instancetype)init {
   self = [super init];
   if (self) {
     [self commonShapeSchemeExampleInit];
@@ -75,8 +74,7 @@
   return self;
 }
 
-- (instancetype)initWithCoder:(NSCoder *)coder
-{
+- (instancetype)initWithCoder:(NSCoder *)coder {
   self = [super initWithCoder:coder];
   if (self) {
     [self commonShapeSchemeExampleInit];
@@ -146,11 +144,11 @@
   self.card.backgroundColor = _colorScheme.primaryColor;
   [self.componentContentView addSubview:self.card];
 
-  NSArray<NSLayoutConstraint *> *cardConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[card]-|" options:0
-                                                                                           metrics:nil
-                                                                                             views:@{
-                                                                                                     @"card" : self.card
-                                                                                                     }];
+  NSArray<NSLayoutConstraint *> *cardConstraints =
+      [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[card]-|"
+                                              options:0
+                                              metrics:nil
+                                                views:@{@"card" : self.card}];
   [self.view addConstraints:cardConstraints];
 
   self.presentBottomSheetButton = [[MDCButton alloc] init];
@@ -158,36 +156,39 @@
   [MDCOutlinedButtonThemer applyScheme:buttonScheme toButton:self.presentBottomSheetButton];
   self.presentBottomSheetButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.componentContentView addSubview:self.presentBottomSheetButton];
-  [self.presentBottomSheetButton addTarget:self action:@selector(presentBottomSheet)
-                    forControlEvents:UIControlEventTouchUpInside];
+  [self.presentBottomSheetButton addTarget:self
+                                    action:@selector(presentBottomSheet)
+                          forControlEvents:UIControlEventTouchUpInside];
 
-  NSArray<NSLayoutConstraint *> *bottomSheetConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[presentBottomSheetButton]-|" options:0
-                                                                                           metrics:nil
-                                                                                             views:@{
-                                                                                                     @"presentBottomSheetButton" : self.presentBottomSheetButton
-                                                                                                     }];
+  NSArray<NSLayoutConstraint *> *bottomSheetConstraints = [NSLayoutConstraint
+      constraintsWithVisualFormat:@"H:|-[presentBottomSheetButton]-|"
+                          options:0
+                          metrics:nil
+                            views:@{@"presentBottomSheetButton" : self.presentBottomSheetButton}];
   [self.view addConstraints:bottomSheetConstraints];
 
-  NSArray<NSLayoutConstraint *> *componentConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(30)-[containedButton]-(20)-[floatingButton]-(20)-[chipView]-(20)-[card(80)]-(20)-[presentBottomSheetButton]" options:NSLayoutFormatAlignAllCenterX
-                                                                                        metrics:nil
-                                                                                          views:@{
-                                                                                                  @"containedButton": self.containedButton,
-                                                                                                  @"floatingButton": self.floatingButton,
-                                                                                                  @"chipView": self.chipView,
-                                                                                                  @"card": self.card,
-                                                                                                  @"presentBottomSheetButton" : self.presentBottomSheetButton
-                                                                                                  }];
+  NSArray<NSLayoutConstraint *> *componentConstraints = [NSLayoutConstraint
+      constraintsWithVisualFormat:@"V:|-(30)-[containedButton]-(20)-[floatingButton]-(20)-["
+                                  @"chipView]-(20)-[card(80)]-(20)-[presentBottomSheetButton]"
+                          options:NSLayoutFormatAlignAllCenterX
+                          metrics:nil
+                            views:@{
+                              @"containedButton" : self.containedButton,
+                              @"floatingButton" : self.floatingButton,
+                              @"chipView" : self.chipView,
+                              @"card" : self.card,
+                              @"presentBottomSheetButton" : self.presentBottomSheetButton
+                            }];
   [self.view addConstraints:componentConstraints];
-
 }
 
 - (void)presentBottomSheet {
   BottomSheetDummyCollectionViewController *viewController =
-  [[BottomSheetDummyCollectionViewController alloc] initWithNumItems:102];
+      [[BottomSheetDummyCollectionViewController alloc] initWithNumItems:102];
   viewController.title = @"Shaped bottom sheet example";
 
   MDCAppBarContainerViewController *container =
-  [[MDCAppBarContainerViewController alloc] initWithContentViewController:viewController];
+      [[MDCAppBarContainerViewController alloc] initWithContentViewController:viewController];
   container.preferredContentSize = CGSizeMake(500, 200);
   container.appBarViewController.headerView.trackingScrollView = viewController.collectionView;
   container.topLayoutGuideAdjustmentEnabled = YES;
@@ -200,8 +201,8 @@
   self.bottomSheetController =
       [[MDCBottomSheetController alloc] initWithContentViewController:container];
   self.bottomSheetController.trackingScrollView = viewController.collectionView;
-  [self updateComponentShapesWithBaselineOverrides:
-      self.includeBaselineOverridesToggle.selectedSegmentIndex == 0];
+  [self updateComponentShapesWithBaselineOverrides:self.includeBaselineOverridesToggle
+                                                       .selectedSegmentIndex == 0];
   [self presentViewController:self.bottomSheetController animated:YES completion:nil];
 }
 
@@ -226,7 +227,6 @@
 
   return button;
 }
-
 
 - (void)applySchemeColors {
   _smallSurfaceShape.backgroundColor = _colorScheme.primaryColor;
@@ -272,8 +272,8 @@
   [MDCButtonShapeThemer applyShapeScheme:_shapeScheme toButton:self.outlinedButton];
   [MDCCardsShapeThemer applyShapeScheme:_shapeScheme toCard:self.card];
   [MDCButtonShapeThemer applyShapeScheme:_shapeScheme toButton:self.presentBottomSheetButton];
-  [self updateComponentShapesWithBaselineOverrides:
-      self.includeBaselineOverridesToggle.selectedSegmentIndex == 0];
+  [self updateComponentShapesWithBaselineOverrides:self.includeBaselineOverridesToggle
+                                                       .selectedSegmentIndex == 0];
 }
 
 - (MDCShapeCategory *)changedCategoryFromType:(UISegmentedControl *)sender
@@ -356,11 +356,12 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Shape", @"ShapeScheme" ],
-    @"description": @"The Shape scheme and theming allows components to be shaped on a theme level",
-    @"primaryDemo": @YES,
-    @"presentable": @NO,
-    @"storyboardName": @"MDCShapeSchemeExampleViewController",
+    @"breadcrumbs" : @[ @"Shape", @"ShapeScheme" ],
+    @"description" :
+        @"The Shape scheme and theming allows components to be shaped on a theme level",
+    @"primaryDemo" : @YES,
+    @"presentable" : @NO,
+    @"storyboardName" : @"MDCShapeSchemeExampleViewController",
   };
 }
 

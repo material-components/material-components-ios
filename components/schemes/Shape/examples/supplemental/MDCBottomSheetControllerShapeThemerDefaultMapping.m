@@ -28,8 +28,10 @@
   // Shape Generator for the Preferred state of the Bottom Sheet.
   MDCRectangleShapeGenerator *rectangleShapePreferred = [[MDCRectangleShapeGenerator alloc] init];
   // For a Bottom Sheet the corner values that can be set are the top corners.
-  rectangleShapePreferred.topLeftCorner = shapeScheme.mediumSurfaceShape.topLeftCorner;;
-  rectangleShapePreferred.topRightCorner = shapeScheme.mediumSurfaceShape.topRightCorner;;
+  rectangleShapePreferred.topLeftCorner = shapeScheme.mediumSurfaceShape.topLeftCorner;
+  ;
+  rectangleShapePreferred.topRightCorner = shapeScheme.mediumSurfaceShape.topRightCorner;
+  ;
   [bottomSheetController setShapeGenerator:rectangleShapePreferred forState:MDCSheetStatePreferred];
 }
 

@@ -19,7 +19,7 @@
 /**
  The Material Design shape system's themer for instances of MDCChipView.
  */
-@interface MDCChipViewShapeThemerDefaultMapping: MDCChipViewShapeThemer
+@interface MDCChipViewShapeThemerDefaultMapping : MDCChipViewShapeThemer
 
 /**
  Applies a shape scheme's properties to an MDCChipView.
