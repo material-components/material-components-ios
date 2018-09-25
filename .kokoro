@@ -121,6 +121,7 @@ select_xcode() {
   done
 }
 
+# Uploads all of the bazel test artifacts to Kokoro's artifacts storage.
 upload_bazel_test_artifacts() {
   logs_dir="$KOKORO_ARTIFACTS_DIR/bazel_test_logs"
   mkdir -p "$logs_dir"
