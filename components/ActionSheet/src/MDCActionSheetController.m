@@ -397,6 +397,11 @@ static const CGFloat kActionTextAlpha = 0.87f;
 
 #pragma mark - Table customization
 
+- (void)setActionFont:(UIFont *)actionFont {
+  _actionFont = actionFont;
+  [self.tableView reloadData];
+}
+
 - (void)setActionTextColor:(UIColor *)actionTextColor {
   _actionTextColor = actionTextColor;
   [self.tableView reloadData];
