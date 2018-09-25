@@ -51,7 +51,7 @@ script:
   - pod repo update
   - scripts/prep_all
   - travis_wait scripts/build_all --verbose
-  - travis_wait travis_retry scripts/test_all catalog/MDCCatalog.xcworkspace:MDCUnitTests
+  - travis_wait travis_retry scripts/test_all catalog/MDCCatalog.xcworkspace:MDCCatalog
 
 # Upload our testing coverage to codecov.io.
 after_success:
