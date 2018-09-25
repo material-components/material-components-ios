@@ -139,7 +139,7 @@
   // When
   self.actionSheet.actionFont = actionFont;
   NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheet];
-  XCTAssertNotEqual(cells.count, 0);
+  XCTAssertNotEqual(cells.count, 0U);
   for (MDCActionSheetItemTableViewCell *cell in cells) {
     // Then
     XCTAssertEqual(cell.actionLabel.font, actionFont);
