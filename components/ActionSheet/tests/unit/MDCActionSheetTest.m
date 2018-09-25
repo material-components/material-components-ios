@@ -373,7 +373,6 @@ static const CGFloat kSafeAreaAmount = 20.f;
 - (void)testSetTitleFont {
   // Given
   UIFont *titleFont = [UIFont preferredFontForTextStyle:UIFontTextStyleCallout];
-  self.actionSheet.title = @"Test title";
 
   // When
   self.actionSheet.titleFont = titleFont;
@@ -385,7 +384,6 @@ static const CGFloat kSafeAreaAmount = 20.f;
 - (void)testSetMessageFont {
   // Given
   UIFont *messageFont = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
-  self.actionSheet.message = @"Test message";
 
   // When
   self.actionSheet.messageFont = messageFont;
