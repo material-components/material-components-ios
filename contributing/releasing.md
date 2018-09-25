@@ -210,6 +210,7 @@ go-ahead from the following clients:
 - Google: must verify that the release branch passes all internal tests. If you are a Googler, see
   the internal "mirroring" document for further instructions. Notably you **must not continue** this
   releasing process until the internal synchronization CL has been tested.
+- @babakbo: Will test our weekly releases in parallel to our process.
 
 ---
 
