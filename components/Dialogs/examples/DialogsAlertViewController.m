@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "supplemental/DialogsAlertViewControllerSupplemental.h"
+#import "MDCAlertControllerThemer.h"
+#import "MDCAlertScheme.h"
 #import "MaterialButtons.h"
 #import "MaterialDialogs.h"
-#import "MaterialDialogs+ColorThemer.h"
-#import "MaterialDialogs+TypographyThemer.h"
+#import "supplemental/DialogsAlertViewControllerSupplemental.h"
 
 @implementation DialogsAlertViewController
 
@@ -70,9 +70,10 @@
 }
 
 - (void)themeAlertController:(MDCAlertController *)alertController {
-  [MDCAlertColorThemer applySemanticColorScheme:self.colorScheme toAlertController:alertController];
-  [MDCAlertTypographyThemer applyTypographyScheme:self.typographyScheme
-                                toAlertController:alertController];
+  MDCAlertScheme *alertScheme = [[MDCAlertScheme alloc] init];
+  alertScheme.colorScheme = self.colorScheme;
+  alertScheme.typographyScheme = self.typographyScheme;
+  [MDCAlertControllerThemer applyScheme:alertScheme toAlertController:alertController];
 }
 
 - (IBAction)didTapShowAlert {
@@ -366,7 +367,6 @@
 
   MDCAlertController *materialAlertController =
       [MDCAlertController alertControllerWithTitle:titleString message:messageString];
-  [self themeAlertController:materialAlertController];
 
   MDCAlertAction *agreeAaction = [MDCAlertAction actionWithTitle:@"AGREE"
                                                          handler:^(MDCAlertAction *action) {

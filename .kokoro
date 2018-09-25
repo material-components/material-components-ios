@@ -17,34 +17,24 @@
 # Fail on any error.
 set -e
 
-KOKORO_RUNNER_VERSION="v4.*"
-
 XCODE_MINIMUM_VERSION="9.0.0"
 
 fix_bazel_imports() {
-  if [ -z "$KOKORO_BUILD_NUMBER" ]; then
-    tests_dir_prefix=""
-  else
-    tests_dir_prefix="github/repo/"
-  fi
-  
+  echo "Rewriting imports for bazel..."
+
   private_components() {
-    if [ -z "$KOKORO_BUILD_NUMBER" ]; then
-      find "components/private" -type d | cut -d'/' -f3 | sort | uniq
-    else
-      find "github/repo/components/private" -type d | cut -d'/' -f5 | sort | uniq
-    fi
+    find "components/private" -type d | cut -d'/' -f3 | sort | uniq
   }
   
   rewrite_tests() {
-    find "${stashed_dir}${tests_dir_prefix}"components/private/*/tests/unit -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
-    find "${stashed_dir}${tests_dir_prefix}"components/*/tests/unit -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/private/*/tests/unit -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/*/tests/unit -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
   }
   rewrite_source() {
-    find "${stashed_dir}${tests_dir_prefix}"components/private/*/src -type f -name '*.h' -exec perl -pi -e "$1" {} + || true
-    find "${stashed_dir}${tests_dir_prefix}"components/private/*/src -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
-    find "${stashed_dir}${tests_dir_prefix}"components/*/src -type f -name '*.h' -exec perl -pi -e "$1" {} + || true
-    find "${stashed_dir}${tests_dir_prefix}"components/*/src -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/private/*/src -type f -name '*.h' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/private/*/src -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/*/src -type f -name '*.h' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/*/src -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
   }
 
   stashed_dir=""
@@ -56,6 +46,7 @@ fix_bazel_imports() {
     fi
     rewrite_tests "s/import MaterialComponents.Material$private_component/import components_private_${private_component}_${private_component}/"
   done
+  rewrite_tests "s/import MaterialComponentsAlpha.Material(.+)_(.+)/import components_\1_\2 \/\/ Alpha/"
   rewrite_tests "s/import MaterialComponentsAlpha.Material(.+)/import components_\1_\1 \/\/ Alpha/"
   rewrite_tests "s/import MaterialComponents.Material(.+)/import components_\1_\1/"
   rewrite_source "s/import <Motion(.+)\/Motion.+\.h>/import \"Motion\1.h\"/"
@@ -64,6 +55,8 @@ fix_bazel_imports() {
   rewrite_tests "s/import MDFInternationalization/import material_internationalization_ios_MDFInternationalization/"
   stashed_dir="$(pwd)/"
   reset_imports() {
+    echo "Undoing import rewrites for bazel..."
+
     # Undoes our source changes from above.
     rewrite_tests "s/import components_(.+)_\1 \/\/ Alpha/import MaterialComponentsAlpha.Material\1/"
     rewrite_tests "s/import components_schemes_(.+)_.+/import MaterialComponents.Material\1Scheme/"
@@ -128,6 +121,33 @@ select_xcode() {
   done
 }
 
+# Uploads all of the bazel test artifacts to Kokoro's artifacts storage.
+upload_bazel_test_artifacts() {
+  logs_dir="$KOKORO_ARTIFACTS_DIR/bazel_test_logs"
+  mkdir -p "$logs_dir"
+
+  # Copies each file from stdin to $KOKORO_ARTIFACTS_DIR and preserves the directory structure
+  copy_to_artifacts() {
+    cat - | while read file; do
+      directory="$logs_dir/$(dirname $file)"
+      mkdir -p "$directory"
+      cp "$file" "$logs_dir/$file"
+    done
+  }
+
+  brew install rename
+
+  # rename all test.log to sponge_log.log and then copy them to the kokoro
+  # artifacts directory.
+  find -L . -name "test.log" -type f -exec rename 's/test.log/sponge_log.log/' {} \;
+  find -L . -name "sponge_log.log" -type f | copy_to_artifacts
+
+  # rename all test.xml to sponge_log.xml and then copy them to kokoro
+  # artifacts directory.
+  find -L . -name "test.xml" -type f -exec rename 's/test.xml/sponge_log.xml/' {} \;
+  find -L . -name "sponge_log.xml" -type f | copy_to_artifacts
+}
+
 run_bazel() {
   echo "Running bazel builds..."
 
@@ -135,14 +155,12 @@ run_bazel() {
     move_derived_data_to_tmp
   fi
 
-  fix_bazel_imports
-
   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
     bazel version
   fi
 
   if [ -n "$VERBOSE_OUTPUT" ]; then
-    verbosity_args="-v"
+    verbosity_args="-s"
   fi
 
   if [ -z "$COMMAND" ]; then
@@ -152,17 +170,51 @@ run_bazel() {
     TARGET="//components/..."
   fi
 
-  if [ -n "$XCODE_VERSION" ]; then
-    xcode_versions="--xcode-version $XCODE_VERSION"
-  else
-    xcode_versions="--min-xcode-version $XCODE_MINIMUM_VERSION"
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    select_xcode "$XCODE_VERSION"
+
+    # Move into our cloned repo
+    cd github/repo
   fi
 
-  ./.kokoro-ios-runner/bazel.sh $COMMAND $TARGET \
-      $xcode_versions \
-      $verbosity_args \
-      --ios_minimum_os=8.0 \
-      --ios_multi_cpus=i386,x86_64
+  # Run against whichever Xcode is currently selected.
+  selected_xcode_developer_path=$(xcode-select -p)
+  selected_xcode_contents_path=$(dirname "$selected_xcode_developer_path")
+
+  xcode_version=$(cat "$selected_xcode_contents_path/version.plist" \
+    | grep "CFBundleShortVersionString" -A1 \
+    | grep string \
+    | cut -d'>' -f2 \
+    | cut -d'<' -f1)
+  if [ -n "$MIN_XCODE_VERSION" ]; then
+    xcode_version_as_number="$(version_as_number $xcode_version)"
+
+    if [ "$xcode_version_as_number" -lt "$MIN_XCODE_VERSION" ]; then
+      echo "The currently selected Xcode version ($xcode_version_as_number) is less than the desired version ($MIN_XCODE_VERSION)."
+      echo "Stopping execution..."
+      exit 1
+    fi
+  fi
+
+  if [ "$COMMAND" == "build" ]; then
+    echo "🏗️  $COMMAND with Xcode $xcode_version..."
+  elif [ "$COMMAND" == "test" ]; then
+    echo "🛠️  $COMMAND with Xcode $xcode_version..."
+
+    if [ -n "$VERBOSE_OUTPUT" ]; then
+      extra_args="--test_output=all"
+    else
+      extra_args="--test_output=errors"
+    fi
+  fi
+
+  fix_bazel_imports
+  if [ -n "$KOKORO_ARTIFACTS_DIR" ]; then
+    # Especially in the event of failure, we want our test artifacts to be uploaded.
+    trap upload_bazel_test_artifacts EXIT
+  fi
+  bazel clean
+  bazel $COMMAND $TARGET --xcode_version $xcode_version --ios_minimum_os=8.0 --ios_multi_cpus=i386,x86_64 $extra_args $verbosity_args
 }
 
 run_cocoapods() {
@@ -224,14 +276,16 @@ run_cocoapods() {
       if [ -n "$IS_RELEASE" ]; then
         bash scripts/test_all
       else
-        bash scripts/test_all catalog/MDCCatalog.xcworkspace:MDCUnitTests
+        bash scripts/test_all catalog/MDCCatalog.xcworkspace:MDCCatalog
       fi
     elif [ "$DEPENDENCY_SYSTEM" = "cocoapods-podspec" ]; then
-      pod lib lint MaterialComponents.podspec
+      pod lib lint MaterialComponents.podspec --verbose --skip-tests
     fi
   done
 
-  bash <(curl -s https://codecov.io/bash)
+  if [ -n "$CODECOV_TOKEN" ]; then
+    bash <(curl -s https://codecov.io/bash)
+  fi
 }
 
 # For local runs, you must set the following environment variables:
@@ -571,16 +625,6 @@ if [ -n "$VERBOSE_OUTPUT" ]; then
   # Display commands to stderr.
   set -x
 fi
-
-if [ ! -d .kokoro-ios-runner ]; then
-  git clone https://github.com/material-foundation/kokoro-ios-runner.git .kokoro-ios-runner
-fi
-
-pushd .kokoro-ios-runner
-git fetch > /dev/null
-TAG=$(git tag --sort=v:refname -l "$KOKORO_RUNNER_VERSION" | tail -n1)
-git checkout "$TAG" > /dev/null
-popd
 
 case "$DEPENDENCY_SYSTEM" in
   "bazel")      run_bazel ;;

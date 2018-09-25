@@ -101,6 +101,13 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 // The amount injected into scrollIndicatorInsets.top
 @property(nonatomic) CGFloat injectedTopScrollIndicatorInset;
 
+// When working with multiple tracking scroll views, this property keeps track of what the last
+// header height for a given tracking scroll view was. When we return to a tracking scroll view,
+// we're able to use this property to calculate any additional content offset shift that may be
+// required in order to maintain a consistent physical placement within the content.
+@property(nonatomic) CGFloat stashedHeight;
+@property(nonatomic) BOOL stashedHeightIsValid;
+
 @end
 
 @implementation MDCFlexibleHeaderView {
@@ -573,6 +580,14 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   if (!scrollView || (self.useAdditionalSafeAreaInsetsForWebKitScrollViews
                       && [self trackingScrollViewIsWebKit])) {
     return 0;
+  }
+  if (@available(iOS 11.0, *)) {
+    // Don't adjust the contentInset if scrollView's behavior doesn't want it.
+    // Compatible to iOS 11 and above
+    if (self.disableContentInsetAdjustmentWhenContentInsetAdjustmentBehaviorIsNever &&
+        scrollView.contentInsetAdjustmentBehavior == UIScrollViewContentInsetAdjustmentNever) {
+      return 0;
+    }
   }
 
   MDCFlexibleHeaderScrollViewInfo *info = [_trackedScrollViews objectForKey:scrollView];
@@ -1300,6 +1315,41 @@ static BOOL isRunningiOS10_3OrAbove() {
 }
 #endif
 
+#pragma mark Multiple tracking scroll views
+
+// Given a tracking scroll view and a potential new tracking scroll view, updates the state of the
+// header and scroll view such that header's height will not change once the scroll view becomes the
+// new tracking scroll view.
+- (void)fhv_matchHeightWithScrollView:(UIScrollView *)scrollView {
+  if (self.trackingScrollView == nil) {
+    return;
+  }
+
+  MDCFlexibleHeaderScrollViewInfo *info = [_trackedScrollViews objectForKey:scrollView];
+
+  if (_shiftAccumulator >= [self fhv_accumulatorMax]) {
+    // We're shifted off-screen, make sure that this scroll view isn't expecting to show the header.
+
+    CGPoint offset = scrollView.contentOffset;
+    CGFloat rawTopInset = scrollView.contentInset.top - info.injectedTopContentInset;
+    if (offset.y < -rawTopInset) {
+      offset.y = -rawTopInset;
+      scrollView.contentOffset = offset;
+    }
+  }
+
+  if (info.stashedHeightIsValid) {
+    // Did our height change since the last time we saw this content?
+    const CGFloat heightDelta = self.bounds.size.height - info.stashedHeight;
+    if (fabs(heightDelta) > DBL_EPSILON) {
+      // Offset our content accordingly so that we're still viewing what we were viewing last time.
+      CGPoint offset = scrollView.contentOffset;
+      offset.y -= heightDelta;
+      scrollView.contentOffset = offset;
+    }
+  }
+}
+
 #pragma mark - MDCStatusBarShifterDelegate
 
 - (void)statusBarShifterNeedsStatusBarAppearanceUpdate:
@@ -1352,6 +1402,11 @@ static BOOL isRunningiOS10_3OrAbove() {
 
   UIScrollView *oldTrackingScrollView = _trackingScrollView;
 
+  if (_trackingInfo != nil) {
+    _trackingInfo.stashedHeight = self.bounds.size.height;
+    _trackingInfo.stashedHeightIsValid = YES;
+  }
+
   BOOL wasTrackingScrollView = _trackingScrollView != nil;
   _trackingScrollView = trackingScrollView;
 
@@ -1366,11 +1421,39 @@ static BOOL isRunningiOS10_3OrAbove() {
   _shiftAccumulatorDeltaY = 0;
 
   _trackingInfo = [_trackedScrollViews objectForKey:_trackingScrollView];
+  _trackingInfo.stashedHeightIsValid = NO;
+  _trackingInfo.stashedHeight = 0;
 
   [self fhv_enforceInsetsForScrollView:_trackingScrollView];
 
   if (self.observesTrackingScrollViewScrollEvents) {
     [self fhv_startObservingContentOffset];
+  }
+
+  // When canAlwaysExpandToMaximumHeight is enabled our header's height no longer directly
+  // correlates to the content offset - it's also augmented by the shift accumulator. In order to
+  // keep the header's height constant when changing the tracking scroll view, we need to adjust
+  // the shift accumulator accordingly.
+  if (self.canAlwaysExpandToMaximumHeight && self.sharedWithManyScrollViews &&
+      wasTrackingScrollView) {
+    // What's our expected height now that we've changed the tracking scroll view?
+    CGFloat headerHeight = -[self fhv_contentOffsetWithoutInjectedTopInset];
+    headerHeight = MAX(self.computedMinimumHeight, MIN(self.computedMaximumHeight, headerHeight));
+
+    // How much will our height change if we do nothing right now?
+    const CGFloat heightDelta = self.bounds.size.height - headerHeight;
+
+    // Cap the accumulator to ensure it's valid.
+    CGFloat accumulatorMin;
+    if (headerHeight > self.computedMinimumHeight + DBL_EPSILON) {
+      // We're attached to the content, so don't allow any height accumulation.
+      accumulatorMin = 0;
+    } else {
+      accumulatorMin = [self fhv_accumulatorMin];
+    }
+    // Adjust the accumulator so that our height won't change and cap it to the possible range.
+    _shiftAccumulator =
+        MAX(accumulatorMin, MIN([self fhv_accumulatorMax], _shiftAccumulator - heightDelta));
   }
 
   void (^animate)(void) = ^{
@@ -1719,32 +1802,7 @@ static BOOL isRunningiOS10_3OrAbove() {
     scrollView.contentOffset = offset;
   }
 
-  if (_shiftAccumulator >= [self fhv_accumulatorMax]) {
-    // We're shifted off-screen, make sure that this scroll view isn't expecting to show the header.
-
-    CGPoint offset = scrollView.contentOffset;
-    CGFloat rawTopInset = scrollView.contentInset.top - info.injectedTopContentInset;
-    if (offset.y < -rawTopInset) {
-      offset.y = -rawTopInset;
-      scrollView.contentOffset = offset;
-    }
-
-  } else if (self.trackingScrollView.contentOffset.y != scrollView.contentOffset.y &&
-             self.trackingScrollView.contentOffset.y <= 0 && scrollView.contentOffset.y <= 0) {
-    // Our content is expanding the header in both columns, let's match up the content offsets so
-    // that the header's height won't change.
-    CGPoint offset = scrollView.contentOffset;
-    offset.y = self.trackingScrollView.contentOffset.y;
-    scrollView.contentOffset = offset;
-
-  } else if (self.trackingScrollView.contentOffset.y > scrollView.contentOffset.y
-             && scrollView.contentOffset.y < 0) { // Destination is showing an expanded header.
-    // Our header is possibly smaller now than it will be when we move to the new content.
-    // Scroll the new content such that we collapse the header to the current height.
-    CGPoint offset = scrollView.contentOffset;
-    offset.y = MIN(self.trackingScrollView.contentOffset.y, 0);
-    scrollView.contentOffset = offset;
-  }
+  [self fhv_matchHeightWithScrollView:scrollView];
 }
 
 - (void)shiftHeaderOnScreenAnimated:(BOOL)animated {

@@ -61,4 +61,16 @@
   XCTAssertEqualObjects(self.bottomAppBar.navBar.trailingBarItemsTintColor, UIColor.purpleColor);
 }
 
+#pragma mark - Floating Button
+
+- (void)testCustomizedFloatingButtonVerticalHeight {
+  CGFloat veriticalOffset = 5.0f;
+  self.bottomAppBar.floatingButtonVerticalOffset = veriticalOffset;
+  [self.bottomAppBar layoutSubviews];
+  CGPoint floatingButtonPosition = self.bottomAppBar.floatingButton.center;
+  CGPoint navigationBarPosition = self.bottomAppBar.navBar.frame.origin;
+  XCTAssertEqualWithAccuracy(floatingButtonPosition.y + veriticalOffset, navigationBarPosition.y,
+                             0.001f);
+}
+
 @end

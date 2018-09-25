@@ -219,6 +219,12 @@ static const float kAmbientShadowOpacity = 0.08f;
   _bottomShadow.shadowColor = shadowColor;
 }
 
+- (void)setCornerRadius:(CGFloat)cornerRadius {
+  super.cornerRadius = cornerRadius;
+
+  [self updateShadowPaths];
+}
+
 #pragma mark - shouldRasterize forwarding
 
 - (void)setShouldRasterize:(BOOL)shouldRasterize {
@@ -324,6 +330,10 @@ static const float kAmbientShadowOpacity = 0.08f;
   _topShadow.position = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds));
   _topShadow.bounds = bounds;
 
+  [self updateShadowPaths];
+}
+
+- (void)updateShadowPaths {
   if (_shadowMaskEnabled) {
     [self configureShadowLayerMaskForLayer:_topShadowMask];
     [self configureShadowLayerMaskForLayer:_bottomShadowMask];

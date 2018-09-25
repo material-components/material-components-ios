@@ -138,6 +138,11 @@
   info.trackingScrollView = trackingScrollView;
   [self setInfo:info forViewController:viewController];
 
+  if (@available(iOS 11.0, *)) {
+    appBar.appBarViewController.headerView
+        .disableContentInsetAdjustmentWhenContentInsetAdjustmentBehaviorIsNever = YES;
+  }
+
   // Ensures that the view controller's top layout guide / additional safe area insets are adjusted
   // to take into consideration the flexible header's height.
   appBar.appBarViewController.topLayoutGuideViewController = viewController;

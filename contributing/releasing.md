@@ -43,11 +43,24 @@ will be working day-to-day with a fork, consider creating a separate clone just 
 Our entire release process is encoded into the `release` script in the scripts/ directory.
 Read the [tool's readme](../scripts/README-release.md) to learn more about the tool.
 
-### Cut a release branch and notify clients
+### Cut a release branch and create a pull request
 
 Run the following command to cut a release:
 
     scripts/release cut
+
+Note: if for some reason `cut` fails, first ensure that nobody else is in the middle of cutting a release by visiting the repo and verifying that a release-candidate does not already exist because aborting the release will delete the remote release candidate. If that isn't the case, then please run `scripts/release abort` and try again.
+
+You will now have a local `release-candidate` branch, a new section in CHANGELOG.md titled
+"release-candidate", and the `release-candidate` branch will have been pushed to GitHub.
+
+At this point you should also create the initial Release Candidate pull request using the URL
+that the `cut` script generated.
+
+Name the Pull Request title "[WIP] Release Candidate." until you are able to provide the version as the title.
+
+**Do not use GitHub's big green button to merge the approved pull request.** Release are an
+exception to our normal squash-and-merge procedure.
 
 #### Hotfixing
 
@@ -63,19 +76,6 @@ path forward is to revert that commit using the `git revert <commit-hash>` comma
 After that PR is merged, you should cherry-pick the revert commit into the `release-candidate` branch: `git cherry-pick <commit-hash>`.
 
 Other than the steps above regarding hotfixing, the entire release process stays the same.
-
-Note: if for some reason `cut` fails, first ensure that nobody else is in the middle of cutting a release by visiting the repo and verifying that a release-candidate does not already exist because aborting the release will delete the remote release candidate. If that isn't the case, then please run `scripts/release abort` and try again.
-
-You will now have a local `release-candidate` branch, a new section in CHANGELOG.md titled
-"release-candidate", and the `release-candidate` branch will have been pushed to GitHub.
-
-At this point you should also create the initial Release Candidate pull request using the URL
-that the `cut` script generated.
-
-Name the Pull Request title "[WIP] Release Candidate." until you are able to provide the version as the title.
-
-**Do not use GitHub's big green button to merge the approved pull request.** Release are an
-exception to our normal squash-and-merge procedure.
 
 ### Start internal testing
 
@@ -156,7 +156,7 @@ discussion on the topic.
 
 The final sanity check is to visually inspect the diff.
 
-> If you have configured Git with a GUI diff tool (`git difftool`), then you can add
+> If you have configured Git with a GUI diff tool (`git difftool`) like [Kaleidoscope](https://itunes.apple.com/us/app/kaleidoscope/id587512244?mt=12), then you can add
 > `--use_diff_tool` to `scripts/release diff` below.
 
 Generate a list of component public header changes:

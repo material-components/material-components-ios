@@ -36,11 +36,33 @@ mdc_objc_library(
     srcs = native.glob(["src/TypographyThemer/*.m"]),
     hdrs = native.glob(["src/TypographyThemer/*.h"]),
     includes = ["src/TypographyThemer"],
+    sdk_frameworks = ["UIKit"],
     deps = [
         ":ActionSheet",
         "//components/schemes/Typography",
     ],
     visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
+    name = "ColorThemer",
+    srcs = native.glob(["src/ColorThemer/*.m"]),
+    hdrs = native.glob(["src/ColorThemer/*.h"]),
+    includes = ["src/ColorThemer"],
+    sdk_frameworks = ["UIKit"],
+    deps = [
+        ":ActionSheet",
+        "//components/schemes/Color",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
+    name = "privateHeaders",
+    testonly = 1,
+    hdrs = native.glob(["src/private/*.h"]),
+    visibility = ["//visibility:private"],
+    deps = [":ActionSheet"],
 )
 
 mdc_objc_library(
@@ -55,6 +77,7 @@ swift_library(
     srcs = glob(["tests/unit/*.swift"]),
     deps = [
         ":ActionSheet",
+        ":ColorThemer",
         ":private",
     ],
     visibility = ["//visibility:private"],
@@ -64,14 +87,19 @@ mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
     srcs = native.glob([
-        "test/unit/*.m",
-        "test/unit/*.h",
+        "tests/unit/*.m",
+        "tests/unit/*.h",
     ]),
     sdk_frameworks = [
         "UIKit",
         "XCTest",
     ],
-    deps = [":ActionSheet"],
+    deps = [
+         ":ActionSheet",
+         ":ColorThemer",
+         ":TypographyThemer",
+         ":privateHeaders"
+    ],
     visibility = ["//visibility:private"],
 )
 
