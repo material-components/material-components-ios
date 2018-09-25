@@ -200,8 +200,8 @@
   self.bottomSheetController =
       [[MDCBottomSheetController alloc] initWithContentViewController:container];
   self.bottomSheetController.trackingScrollView = viewController.collectionView;
-  [MDCBottomSheetControllerShapeThemer applyShapeScheme:_shapeScheme
-                                toBottomSheetController:self.bottomSheetController];
+  [self updateComponentShapesWithBaselineOverrides:
+      self.includeBaselineOverridesToggle.selectedSegmentIndex == 0];
   [self presentViewController:self.bottomSheetController animated:YES completion:nil];
 }
 
