@@ -59,6 +59,9 @@ that the `cut` script generated.
 
 Name the Pull Request title "[WIP] Release Candidate." until you are able to provide the version as the title.
 
+Add "@Release-blocking clients" to the pull request's reviewers. This is the mechanism by which
+release-blocking clients are notified of a new release.
+
 **Do not use GitHub's big green button to merge the approved pull request.** Release are an
 exception to our normal squash-and-merge procedure.
 
@@ -210,7 +213,6 @@ go-ahead from the following clients:
 - Google: must verify that the release branch passes all internal tests. If you are a Googler, see
   the internal "mirroring" document for further instructions. Notably you **must not continue** this
   releasing process until the internal synchronization CL has been tested.
-- @babakbo: Will test our weekly releases in parallel to our process.
 
 ---
 
