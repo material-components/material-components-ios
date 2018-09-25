@@ -361,7 +361,6 @@
     @"primaryDemo": @YES,
     @"presentable": @NO,
     @"storyboardName": @"MDCShapeSchemeExampleViewController",
-    @"debug": @YES,
   };
 }
 
