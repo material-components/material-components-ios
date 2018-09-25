@@ -105,7 +105,7 @@ static const CGFloat kInkAlpha = 16.f;
   NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheet];
 
   // Then
-  XCTAssertNotEqual(cells.count, 0);
+  XCTAssertNotEqual(cells.count, 0U);
   for (MDCActionSheetItemTableViewCell *cell in cells) {
     XCTAssertEqualObjects(cell.actionImageView.tintColor,
                           [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kMediumAlpha]);
