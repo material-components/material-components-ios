@@ -168,7 +168,7 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
   return _itemAction;
 }
 
-- (void)setActionFont:(UIFont *)actionFont {
+- (void)setActionsFont:(UIFont *)actionFont {
   _actionFont = actionFont;
   [self updateTitleFont];
 }
