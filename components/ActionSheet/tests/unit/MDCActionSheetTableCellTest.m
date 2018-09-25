@@ -132,4 +132,18 @@
   }
 }
 
+- (void)testSetActionFont {
+  // Given
+  UIFont *actionFont = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+
+  // When
+  self.actionSheet.actionFont = actionFont;
+  NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheet];
+  XCTAssertNotEqual(cells.count, 0);
+  for (MDCActionSheetItemTableViewCell *cell in cells) {
+    // Then
+    XCTAssertEqual(cell.actionLabel.font, actionFont);
+  }
+}
+
 @end

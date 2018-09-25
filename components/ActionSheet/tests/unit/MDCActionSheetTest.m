@@ -368,4 +368,28 @@ static const CGFloat kSafeAreaAmount = 20.f;
   }
 }
 
+#pragma mark - Fonts
+
+- (void)testSetTitleFont {
+  // Given
+  UIFont *titleFont = [UIFont preferredFontForTextStyle:UIFontTextStyleCallout];
+
+  // When
+  self.actionSheet.titleFont = titleFont;
+
+  // Then
+  XCTAssertEqual(self.actionSheet.header.titleLabel.font, titleFont);
+}
+
+- (void)testSetMessageFont {
+  // Given
+  UIFont *messageFont = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
+
+  // When
+  self.actionSheet.messageFont = messageFont;
+
+  // Then
+  XCTAssertEqual(self.actionSheet.header.messageLabel.font, messageFont);
+}
+
 @end
