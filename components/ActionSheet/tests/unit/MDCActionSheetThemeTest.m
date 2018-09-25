@@ -18,6 +18,7 @@
 #import "../../src/private/MDCActionSheetItemTableViewCell.h"
 #import "MDCActionSheetTestHelper.h"
 #import "MaterialActionSheet+ColorThemer.h"
+#import "MaterialActionSheet+TypographyThemer.h"
 
 static const CGFloat kHighAlpha = 0.87f;
 static const CGFloat kMediumAlpha = 0.6f;
@@ -37,6 +38,7 @@ static const CGFloat kInkAlpha = 16.f;
 @interface MDCActionSheetThemeTest : XCTestCase
 @property(nonatomic, strong) MDCActionSheetController *actionSheet;
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 @end
 
 @implementation MDCActionSheetThemeTest
@@ -50,6 +52,13 @@ static const CGFloat kInkAlpha = 16.f;
   UIColor *onSurface = UIColor.redColor;
   self.colorScheme.primaryColor = surface;
   self.colorScheme.onPrimaryColor = onSurface;
+  self.typographyScheme = [[MDCTypographyScheme alloc] init];
+  UIFont *subtitle = [UIFont systemFontOfSize:12.0 weight:UIFontWeightBold];
+  UIFont *body1 = [UIFont systemFontOfSize:8.0 weight:UIFontWeightThin];
+  UIFont *body2 = [UIFont systemFontOfSize:10.0 weight:UIFontWeightLight];
+  self.typographyScheme.subtitle1 = subtitle;
+  self.typographyScheme.body1 = body1;
+  self.typographyScheme.body2 = body2;
 }
 
 #pragma mark - Header test
@@ -98,7 +107,7 @@ static const CGFloat kInkAlpha = 16.f;
 
 #pragma mark - default test
 
-- (void)testApplyThemeToCells {
+- (void)testApplyColorTheme {
   // When
   [MDCActionSheetColorThemer applySemanticColorScheme:self.colorScheme
                               toActionSheetController:self.actionSheet];
@@ -113,6 +122,25 @@ static const CGFloat kInkAlpha = 16.f;
                           [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha]);
     XCTAssertEqualObjects(cell.inkTouchController.defaultInkView.inkColor,
                           [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha]);
+  }
+}
+
+- (void)testApplyTypographyTheme {
+  // Given
+  self.actionSheet.title = @"Test title";
+  self.actionSheet.message = @"Test message";
+
+  // When
+  [MDCActionSheetTypographyThemer applyTypographyScheme:self.typographyScheme
+                                toActionSheetController:self.actionSheet];
+  NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheet];
+
+  // Then
+  XCTAssertEqualObjects(self.actionSheet.header.titleLabel.font, self.typographyScheme.subtitle1);
+  XCTAssertEqualObjects(self.actionSheet.header.messageLabel.font, self.typographyScheme.body2);
+  XCTAssertNotEqual(cells.count, 0U);
+  for (MDCActionSheetItemTableViewCell *cell in cells) {
+    XCTAssertEqualObjects(cell.actionLabel.font, self.typographyScheme.body1);
   }
 }
 
