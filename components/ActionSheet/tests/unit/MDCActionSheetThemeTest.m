@@ -107,7 +107,7 @@ static const CGFloat kInkAlpha = 16.f;
 
 #pragma mark - default test
 
-- (void)testApplyColorThemeToCells {
+- (void)testApplyColorTheme {
   // When
   [MDCActionSheetColorThemer applySemanticColorScheme:self.colorScheme
                               toActionSheetController:self.actionSheet];
@@ -138,7 +138,7 @@ static const CGFloat kInkAlpha = 16.f;
   // Then
   XCTAssertEqualObjects(self.actionSheet.header.titleLabel.font, self.typographyScheme.subtitle1);
   XCTAssertEqualObjects(self.actionSheet.header.messageLabel.font, self.typographyScheme.body2);
-  XCTAssertNotEqual(cells.count, 0);
+  XCTAssertNotEqual(cells.count, 0U);
   for (MDCActionSheetItemTableViewCell *cell in cells) {
     XCTAssertEqualObjects(cell.actionLabel.font, self.typographyScheme.body1);
   }
