@@ -94,8 +94,12 @@ mdc_objc_library(
         "UIKit",
         "XCTest",
     ],
-    deps = [":ActionSheet",
-            ":privateHeaders"],
+    deps = [
+         ":ActionSheet",
+         ":ColorThemer",
+         ":TypographyThemer",
+         ":privateHeaders"
+    ],
     visibility = ["//visibility:private"],
 )
 
