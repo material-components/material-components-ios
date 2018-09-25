@@ -156,7 +156,7 @@ discussion on the topic.
 
 The final sanity check is to visually inspect the diff.
 
-> If you have configured Git with a GUI diff tool (`git difftool`), then you can add
+> If you have configured Git with a GUI diff tool (`git difftool`) like [Kaleidoscope](https://itunes.apple.com/us/app/kaleidoscope/id587512244?mt=12), then you can add
 > `--use_diff_tool` to `scripts/release diff` below.
 
 Generate a list of component public header changes:
