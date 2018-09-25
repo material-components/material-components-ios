@@ -121,6 +121,32 @@ select_xcode() {
   done
 }
 
+upload_bazel_test_artifacts() {
+  logs_dir="$KOKORO_ARTIFACTS_DIR/bazel_test_logs"
+  mkdir -p "$logs_dir"
+
+  # Copies each file from stdin to $KOKORO_ARTIFACTS_DIR and preserves the directory structure
+  copy_to_artifacts() {
+    cat - | while read file; do
+      directory="$logs_dir/$(dirname $file)"
+      mkdir -p "$directory"
+      cp "$file" "$logs_dir/$file"
+    done
+  }
+
+  brew install rename
+
+  # rename all test.log to sponge_log.log and then copy them to the kokoro
+  # artifacts directory.
+  find -L . -name "test.log" -type f -exec rename 's/test.log/sponge_log.log/' {} \;
+  find -L . -name "sponge_log.log" -type f | copy_to_artifacts
+
+  # rename all test.xml to sponge_log.xml and then copy them to kokoro
+  # artifacts directory.
+  find -L . -name "test.xml" -type f -exec rename 's/test.xml/sponge_log.xml/' {} \;
+  find -L . -name "sponge_log.xml" -type f | copy_to_artifacts
+}
+
 run_bazel() {
   echo "Running bazel builds..."
 
@@ -182,34 +208,10 @@ run_bazel() {
   fi
 
   fix_bazel_imports
-  upload_artifacts() {
-    if [ -n "$KOKORO_ARTIFACTS_DIR" ]; then
-      logs_dir="$KOKORO_ARTIFACTS_DIR/bazel_test_logs"
-      mkdir -p "$logs_dir"
-
-      # Copies each file from stdin to $KOKORO_ARTIFACTS_DIR and preserves the directory structure
-      copy_to_artifacts() {
-        cat - | while read file; do
-          directory="$logs_dir/$(dirname $file)"
-          mkdir -p "$directory"
-          cp "$file" "$logs_dir/$file"
-        done
-      }
-
-      brew install rename
-
-      # rename all test.log to sponge_log.log and then copy them to the kokoro
-      # artifacts directory.
-      find -L . -name "test.log" -type f -exec rename 's/test.log/sponge_log.log/' {} \;
-      find -L . -name "sponge_log.log" -type f | copy_to_artifacts
-
-      # rename all test.xml to sponge_log.xml and then copy them to kokoro
-      # artifacts directory.
-      find -L . -name "test.xml" -type f -exec rename 's/test.xml/sponge_log.xml/' {} \;
-      find -L . -name "sponge_log.xml" -type f | copy_to_artifacts
-    fi
-  }
-  trap upload_artifacts EXIT
+  if [ -n "$KOKORO_ARTIFACTS_DIR" ]; then
+    # Especially in the event of failure, we want our test artifacts to be uploaded.
+    trap upload_bazel_test_artifacts EXIT
+  fi
   bazel clean
   bazel $COMMAND $TARGET --xcode_version $xcode_version --ios_minimum_os=8.0 --ios_multi_cpus=i386,x86_64 $extra_args $verbosity_args
 }
