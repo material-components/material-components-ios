@@ -1,6 +1,5 @@
 # 65.0.0
 
-TextFields placehold text layout adjustment.
 Bottom App Bar got a `floatingButtonVerticalOffset` property.
 ActionSheets continued work. (still in alpha).
 AlertController in dialogs: Incremental improvements to bring it up to the design guidelines and so that a themer can style it.
@@ -149,7 +148,6 @@ manager.shouldEnableAccessibilityViewIsModal = YES;
 
 ### TextFields
 
-* [Fix outline text field clear button layout in RTL (#5129)](https://github.com/material-components/material-components-ios/commit/1fb09d4899ae65c6a5a4724f870f8a77d1e2fea4) (Andrew Overton)
 * [Remove extension check (#5182)](https://github.com/material-components/material-components-ios/commit/ebd792126341918415b0e193fe0780b61a4eb06b) (Cody Weaver)
 
 ---
