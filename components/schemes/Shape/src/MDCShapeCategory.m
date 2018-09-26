@@ -26,7 +26,7 @@
   if (self = [super init]) {
     MDCCornerTreatment *cornerTreatment;
     switch (cornerFamily) {
-      case MDCShapeCornerFamilyAngled:
+      case MDCShapeCornerFamilyCut:
         cornerTreatment = [MDCCornerTreatment cornerWithCut:cornerSize];
         break;
       case MDCShapeCornerFamilyRounded:

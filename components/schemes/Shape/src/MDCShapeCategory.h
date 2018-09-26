@@ -19,11 +19,11 @@
  This enum consists of the different types of shape corners.
 
  - MDCShapeCornerFamilyRounded: A rounded corner.
- - MDCShapeCornerFamilyAngled: An angled/cut corner.
+ - MDCShapeCornerFamilyCut: A cut corner.
  */
 typedef NS_ENUM(NSInteger, MDCShapeCornerFamily) {
   MDCShapeCornerFamilyRounded,
-  MDCShapeCornerFamilyAngled,
+  MDCShapeCornerFamilyCut,
 };
 
 /**
