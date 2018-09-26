@@ -19,7 +19,7 @@ Absolutely. Material was developed to be a starting point for designers and deve
 
 Roboto is not required for Material Design. The Typography component defaults to using Apple's system font.
 
-### Will we risk not being featured by Apple anymore?
+### Will we risk not being featured by Apple anymore if we use MDC-iOS?
 
 Apple features good products with good design and apps using MDC-iOS have been featured.
 
