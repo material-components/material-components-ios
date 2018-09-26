@@ -25,8 +25,8 @@
 
 - (void)testShapeCategoryEquality {
   // Given
-  MDCShapeCategory *cat1 =
-      [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyAngled andSize:2.1f];
+  MDCShapeCategory *cat1 = [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyCut
+                                                                   andSize:2.1f];
   MDCShapeCategory *cat2 = [[MDCShapeCategory alloc] init];
   MDCCornerTreatment *corner =
       [MDCCornerTreatment cornerWithCut:2.1f valueType:MDCCornerTreatmentValueTypeAbsolute];
@@ -46,9 +46,9 @@
       [[MDCShapeScheme alloc] initWithDefaults:MDCShapeSchemeDefaultsMaterial201809];
 
   // Then
-  XCTAssertEqualObjects(initScheme.largeSurfaceShape, mdDefaultScheme.largeSurfaceShape);
-  XCTAssertEqualObjects(initScheme.mediumSurfaceShape, mdDefaultScheme.mediumSurfaceShape);
-  XCTAssertEqualObjects(initScheme.smallSurfaceShape, mdDefaultScheme.smallSurfaceShape);
+  XCTAssertEqualObjects(initScheme.largeComponentShape, mdDefaultScheme.largeComponentShape);
+  XCTAssertEqualObjects(initScheme.mediumComponentShape, mdDefaultScheme.mediumComponentShape);
+  XCTAssertEqualObjects(initScheme.smallComponentShape, mdDefaultScheme.smallComponentShape);
 }
 
 - (void)testInitWithMaterialDefaults {
@@ -57,13 +57,13 @@
       [[MDCShapeScheme alloc] initWithDefaults:MDCShapeSchemeDefaultsMaterial201809];
 
   // Then
-  XCTAssertEqualObjects(shapeScheme.largeSurfaceShape,
+  XCTAssertEqualObjects(shapeScheme.largeComponentShape,
                         [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyRounded
                                                                 andSize:0.f]);
-  XCTAssertEqualObjects(shapeScheme.mediumSurfaceShape,
+  XCTAssertEqualObjects(shapeScheme.mediumComponentShape,
                         [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyRounded
                                                                 andSize:4.f]);
-  XCTAssertEqualObjects(shapeScheme.smallSurfaceShape,
+  XCTAssertEqualObjects(shapeScheme.smallComponentShape,
                         [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyRounded
                                                                 andSize:4.f]);
 }

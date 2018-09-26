@@ -92,6 +92,7 @@ mdc_objc_library(
     ]),
     sdk_frameworks = [
         "UIKit",
+        "CoreImage",
         "XCTest",
     ],
     deps = [

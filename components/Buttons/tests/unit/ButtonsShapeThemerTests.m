@@ -39,9 +39,9 @@
 
 - (void)testMDCButtonShapeThemer {
   // Given
-  self.shapeScheme.smallSurfaceShape =
-      [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyAngled andSize:10];
-  self.shapeScheme.smallSurfaceShape.topRightCorner = [MDCCornerTreatment cornerWithRadius:3.f];
+  self.shapeScheme.smallComponentShape =
+      [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyCut andSize:10];
+  self.shapeScheme.smallComponentShape.topRightCorner = [MDCCornerTreatment cornerWithRadius:3.f];
   self.button.shapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
 
   // When
@@ -49,19 +49,20 @@
 
   // Then
   MDCRectangleShapeGenerator *rect = (MDCRectangleShapeGenerator *)self.button.shapeGenerator;
-  XCTAssertEqualObjects(rect.topLeftCorner, self.shapeScheme.smallSurfaceShape.topLeftCorner);
-  XCTAssertEqualObjects(rect.topRightCorner, self.shapeScheme.smallSurfaceShape.topRightCorner);
-  XCTAssertEqualObjects(rect.bottomLeftCorner, self.shapeScheme.smallSurfaceShape.bottomLeftCorner);
+  XCTAssertEqualObjects(rect.topLeftCorner, self.shapeScheme.smallComponentShape.topLeftCorner);
+  XCTAssertEqualObjects(rect.topRightCorner, self.shapeScheme.smallComponentShape.topRightCorner);
+  XCTAssertEqualObjects(rect.bottomLeftCorner,
+                        self.shapeScheme.smallComponentShape.bottomLeftCorner);
   XCTAssertEqualObjects(rect.bottomRightCorner,
-                        self.shapeScheme.smallSurfaceShape.bottomRightCorner);
+                        self.shapeScheme.smallComponentShape.bottomRightCorner);
 }
 
 - (void)testMDCFloatingButtonShapeThemer {
   // Given
   MDCFloatingButton *FAB = [[MDCFloatingButton alloc] initWithFrame:CGRectZero
                                                               shape:MDCFloatingButtonShapeDefault];
-  self.shapeScheme.smallSurfaceShape =
-      [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyAngled andSize:10];
+  self.shapeScheme.smallComponentShape =
+      [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyCut andSize:10];
   FAB.shapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
 
   // When

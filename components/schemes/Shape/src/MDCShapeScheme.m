@@ -25,13 +25,13 @@
   if (self) {
     switch (defaults) {
       case MDCShapeSchemeDefaultsMaterial201809:
-        _smallSurfaceShape =
+        _smallComponentShape =
             [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyRounded
                                                     andSize:4.f];
-        _mediumSurfaceShape =
+        _mediumComponentShape =
             [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyRounded
                                                     andSize:4.f];
-        _largeSurfaceShape =
+        _largeComponentShape =
             [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyRounded
                                                     andSize:0.f];
         break;

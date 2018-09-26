@@ -39,8 +39,8 @@
 
 - (void)testChipViewShapeThemer {
   // Given
-  self.shapeScheme.smallSurfaceShape =
-      [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyAngled andSize:10];
+  self.shapeScheme.smallComponentShape =
+      [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyCut andSize:10];
   self.chip.shapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
 
   // When
