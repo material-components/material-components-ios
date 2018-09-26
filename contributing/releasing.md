@@ -59,6 +59,9 @@ that the `cut` script generated.
 
 Name the Pull Request title "[WIP] Release Candidate." until you are able to provide the version as the title.
 
+Add "@Release-blocking clients" to the pull request's reviewers. This is the mechanism by which
+release-blocking clients are notified of a new release.
+
 **Do not use GitHub's big green button to merge the approved pull request.** Release are an
 exception to our normal squash-and-merge procedure.
 
