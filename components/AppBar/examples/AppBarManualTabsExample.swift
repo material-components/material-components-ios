@@ -17,6 +17,8 @@ import CoreGraphics
 
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialAppBar
+import MaterialComponents.MaterialAppBar_ColorThemer
+import MaterialComponents.MaterialAppBar_TypographyThemer
 import MaterialComponents.MaterialTabs
 import MaterialComponents.MaterialTypographyScheme
 
