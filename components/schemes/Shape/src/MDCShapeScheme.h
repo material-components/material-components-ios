@@ -26,19 +26,19 @@
 @protocol MDCShapeScheming
 
 /**
- The shape defining the small surfaced components.
+ The shape defining small sized components.
  */
-@property(nonnull, readonly, nonatomic) MDCShapeCategory *smallSurfaceShape;
+@property(nonnull, readonly, nonatomic) MDCShapeCategory *smallComponentShape;
 
 /**
- The shape defining the medium surfaced components.
+ The shape defining medium sized components.
  */
-@property(nonnull, readonly, nonatomic) MDCShapeCategory *mediumSurfaceShape;
+@property(nonnull, readonly, nonatomic) MDCShapeCategory *mediumComponentShape;
 
 /**
- The shape defining the large surfaced components.
+ The shape defining large sized components.
  */
-@property(nonnull, readonly, nonatomic) MDCShapeCategory *largeSurfaceShape;
+@property(nonnull, readonly, nonatomic) MDCShapeCategory *largeComponentShape;
 
 @end
 
@@ -59,9 +59,9 @@ typedef NS_ENUM(NSInteger, MDCShapeSchemeDefaults) {
 @interface MDCShapeScheme : NSObject <MDCShapeScheming>
 
 // Redeclare protocol properties as readwrite
-@property(nonnull, readwrite, nonatomic) MDCShapeCategory *smallSurfaceShape;
-@property(nonnull, readwrite, nonatomic) MDCShapeCategory *mediumSurfaceShape;
-@property(nonnull, readwrite, nonatomic) MDCShapeCategory *largeSurfaceShape;
+@property(nonnull, readwrite, nonatomic) MDCShapeCategory *smallComponentShape;
+@property(nonnull, readwrite, nonatomic) MDCShapeCategory *mediumComponentShape;
+@property(nonnull, readwrite, nonatomic) MDCShapeCategory *largeComponentShape;
 
 /**
  Initializes the shape scheme with the latest material defaults.
