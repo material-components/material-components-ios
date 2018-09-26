@@ -24,10 +24,8 @@
   UIColor *hsbColor = [UIColor colorWithHue:0.8f saturation:0.8f brightness:0.8f alpha:0.8f];
   UIColor *blackWithAlpha = [UIColor.greenColor colorWithAlphaComponent:0.8f];
   UIColor *black = UIColor.blackColor;
-  CIColor *ciColor = [[CIColor alloc] initWithColor:UIColor.blackColor];
-  UIColor *uiColorFromCIColor = [UIColor colorWithCIColor:ciColor];
   UIColor *whiteColor = [UIColor colorWithWhite:0.5f alpha:0.5f];
-  return @[ rgbColor, hsbColor, blackWithAlpha, black, uiColorFromCIColor, whiteColor ];
+  return @[ rgbColor, hsbColor, blackWithAlpha, black, whiteColor ];
 }
 
 + (void)addNumberOfActions:(NSUInteger)actionsCount
