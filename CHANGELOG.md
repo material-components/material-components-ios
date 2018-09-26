@@ -1,15 +1,54 @@
-# #develop#
+# 65.0.0
 
-Replace this text with a summarized description of this release's contents.
+TextFields placehold text layout adjustment.
+Bottom App Bar got a `floatingButtonVerticalOffset` property.
+ActionSheets continued work. (still in alpha).
+AlertController in dialogs: Incremental improvements to the to bring it up to the design guidelines.
+Snackbar API for accessibility. 
+MDCAppBarTextColorAccessibilityMutator a deprecated class got deleted.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+MDCAppBarTextColorAccessibilityMutator a deprecated class got deleted.
 
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
+### ActionSheet
+
+Action sheet got the color and typography themers.
+```swift
+let actionSheet = MDCActionSheetController()
+MDCActionSheetColorThemer.applySemanticColorScheme(colorScheme, to: actionSheet)
+```
+```swift
+MDCActionSheetTypographyThemer.applyTypographyScheme(typographyScheme, to: actionSheet)
+```
+
+### BottomAppBar
+
+Bottom App Bar got a new property to offset the floating button.
+```objc
+bottomAppBar.floatingButtonVerticalOffset = 5.0f;
+```
+
+### AlertController
+
+AlertController got a themer
+
+```objc
+ MDCAlertScheme *alertScheme = [[MDCAlertScheme alloc] init];
+alertScheme.colorScheme = self.colorScheme;
+alertScheme.typographyScheme = self.typographyScheme;
+[MDCAlertControllerThemer applyScheme:alertScheme toAlertController:alertController];
+```
+
+### Snackbar
+
+To make Snackbars with action require a user action set the this property to YES.
+```
+manager.shouldEnableAccessibilityViewIsModal = YES;
+```
+
 ## API changes
 
 ### ActionSheet+ColorThemer
