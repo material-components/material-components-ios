@@ -19,7 +19,6 @@ import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialTabs
 import MaterialComponents.MaterialTypographyScheme
-import MaterialComponents.MaterialDialogs_DialogThemer
 
 // An example that demonstrates the behavior of an App Bar with Tabs and manually swapped tab view
 // controllers. This example is distinct from a typical tab bar view controller in that it does not
