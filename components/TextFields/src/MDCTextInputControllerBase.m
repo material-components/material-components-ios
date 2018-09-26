@@ -1545,6 +1545,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     // If there is a saved state, use it.
     if (self.previousLeadingText) {
       self.textInput.leadingUnderlineLabel.text = self.previousLeadingText;
+      UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification,
+                                      self.textInput.leadingUnderlineLabel);
     }
 
     // Clear out saved state.
