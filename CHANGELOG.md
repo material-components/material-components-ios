@@ -3,7 +3,7 @@
 TextFields placehold text layout adjustment.
 Bottom App Bar got a `floatingButtonVerticalOffset` property.
 ActionSheets continued work. (still in alpha).
-AlertController in dialogs: Incremental improvements to the to bring it up to the design guidelines.
+AlertController in dialogs: Incremental improvements to bring it up to the design guidelines and so that a themer can style it.
 Snackbar API for accessibility. 
 MDCAppBarTextColorAccessibilityMutator a deprecated class got deleted.
 
