@@ -25,8 +25,8 @@
 
 - (void)testShapeCategoryEquality {
   // Given
-  MDCShapeCategory *cat1 =
-      [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyCut andSize:2.1f];
+  MDCShapeCategory *cat1 = [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyCut
+                                                                   andSize:2.1f];
   MDCShapeCategory *cat2 = [[MDCShapeCategory alloc] init];
   MDCCornerTreatment *corner =
       [MDCCornerTreatment cornerWithCut:2.1f valueType:MDCCornerTreatmentValueTypeAbsolute];
