@@ -21,17 +21,15 @@
   // Shape Generator for the Extended state of the Bottom Sheet.
   MDCRectangleShapeGenerator *rectangleShapeExtended = [[MDCRectangleShapeGenerator alloc] init];
   // For a Bottom Sheet the corner values that can be set are the top corners.
-  rectangleShapeExtended.topLeftCorner = shapeScheme.largeSurfaceShape.topLeftCorner;
-  rectangleShapeExtended.topRightCorner = shapeScheme.largeSurfaceShape.topRightCorner;
+  rectangleShapeExtended.topLeftCorner = shapeScheme.largeComponentShape.topLeftCorner;
+  rectangleShapeExtended.topRightCorner = shapeScheme.largeComponentShape.topRightCorner;
   [bottomSheetController setShapeGenerator:rectangleShapeExtended forState:MDCSheetStateExtended];
 
   // Shape Generator for the Preferred state of the Bottom Sheet.
   MDCRectangleShapeGenerator *rectangleShapePreferred = [[MDCRectangleShapeGenerator alloc] init];
   // For a Bottom Sheet the corner values that can be set are the top corners.
-  rectangleShapePreferred.topLeftCorner = shapeScheme.mediumSurfaceShape.topLeftCorner;
-  ;
-  rectangleShapePreferred.topRightCorner = shapeScheme.mediumSurfaceShape.topRightCorner;
-  ;
+  rectangleShapePreferred.topLeftCorner = shapeScheme.mediumComponentShape.topLeftCorner;
+  rectangleShapePreferred.topRightCorner = shapeScheme.mediumComponentShape.topRightCorner;
   [bottomSheetController setShapeGenerator:rectangleShapePreferred forState:MDCSheetStatePreferred];
 }
 

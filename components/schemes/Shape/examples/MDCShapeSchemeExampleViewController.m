@@ -43,15 +43,15 @@
 @property(strong, nonatomic) MDCShapeScheme *shapeScheme;
 @property(strong, nonatomic) MDCTypographyScheme *typographyScheme;
 
-@property(weak, nonatomic) IBOutlet MDCShapedView *smallSurfaceShape;
-@property(weak, nonatomic) IBOutlet MDCShapedView *mediumSurfaceShape;
-@property(weak, nonatomic) IBOutlet MDCShapedView *largeSurfaceShape;
-@property(weak, nonatomic) IBOutlet UISegmentedControl *smallSurfaceType;
-@property(weak, nonatomic) IBOutlet UISegmentedControl *mediumSurfaceType;
-@property(weak, nonatomic) IBOutlet UISegmentedControl *largeSurfaceType;
-@property(weak, nonatomic) IBOutlet UISlider *smallSurfaceValue;
-@property(weak, nonatomic) IBOutlet UISlider *mediumSurfaceValue;
-@property(weak, nonatomic) IBOutlet UISlider *largeSurfaceValue;
+@property(weak, nonatomic) IBOutlet MDCShapedView *smallComponentShape;
+@property(weak, nonatomic) IBOutlet MDCShapedView *mediumComponentShape;
+@property(weak, nonatomic) IBOutlet MDCShapedView *largeComponentShape;
+@property(weak, nonatomic) IBOutlet UISegmentedControl *smallComponentType;
+@property(weak, nonatomic) IBOutlet UISegmentedControl *mediumComponentType;
+@property(weak, nonatomic) IBOutlet UISegmentedControl *largeComponentType;
+@property(weak, nonatomic) IBOutlet UISlider *smallComponentValue;
+@property(weak, nonatomic) IBOutlet UISlider *mediumComponentValue;
+@property(weak, nonatomic) IBOutlet UISlider *largeComponentValue;
 @property(weak, nonatomic) IBOutlet UISegmentedControl *includeBaselineOverridesToggle;
 @property(weak, nonatomic) IBOutlet UIView *componentContentView;
 
@@ -91,9 +91,9 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  _smallSurfaceShape.shapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
-  _mediumSurfaceShape.shapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
-  _largeSurfaceShape.shapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
+  _smallComponentShape.shapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
+  _mediumComponentShape.shapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
+  _largeComponentShape.shapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
 
   [self applySchemeColors];
   [self initializeComponentry];
@@ -229,40 +229,40 @@
 }
 
 - (void)applySchemeColors {
-  _smallSurfaceShape.backgroundColor = _colorScheme.primaryColor;
-  _mediumSurfaceShape.backgroundColor = _colorScheme.primaryColor;
-  _largeSurfaceShape.backgroundColor = _colorScheme.primaryColor;
+  _smallComponentShape.backgroundColor = _colorScheme.primaryColor;
+  _mediumComponentShape.backgroundColor = _colorScheme.primaryColor;
+  _largeComponentShape.backgroundColor = _colorScheme.primaryColor;
 
-  [_smallSurfaceType setTintColor:_colorScheme.primaryColor];
-  [_mediumSurfaceType setTintColor:_colorScheme.primaryColor];
-  [_largeSurfaceType setTintColor:_colorScheme.primaryColor];
+  [_smallComponentType setTintColor:_colorScheme.primaryColor];
+  [_mediumComponentType setTintColor:_colorScheme.primaryColor];
+  [_largeComponentType setTintColor:_colorScheme.primaryColor];
   [_includeBaselineOverridesToggle setTintColor:_colorScheme.primaryColor];
 }
 
 - (void)updateShapeSchemeValues {
   MDCRectangleShapeGenerator *smallRect =
-      (MDCRectangleShapeGenerator *)_smallSurfaceShape.shapeGenerator;
-  smallRect.topLeftCorner = _shapeScheme.smallSurfaceShape.topLeftCorner;
-  smallRect.topRightCorner = _shapeScheme.smallSurfaceShape.topRightCorner;
-  smallRect.bottomLeftCorner = _shapeScheme.smallSurfaceShape.bottomLeftCorner;
-  smallRect.bottomRightCorner = _shapeScheme.smallSurfaceShape.bottomRightCorner;
-  _smallSurfaceShape.shapeGenerator = smallRect;
+      (MDCRectangleShapeGenerator *)_smallComponentShape.shapeGenerator;
+  smallRect.topLeftCorner = _shapeScheme.smallComponentShape.topLeftCorner;
+  smallRect.topRightCorner = _shapeScheme.smallComponentShape.topRightCorner;
+  smallRect.bottomLeftCorner = _shapeScheme.smallComponentShape.bottomLeftCorner;
+  smallRect.bottomRightCorner = _shapeScheme.smallComponentShape.bottomRightCorner;
+  _smallComponentShape.shapeGenerator = smallRect;
 
   MDCRectangleShapeGenerator *mediumRect =
-      (MDCRectangleShapeGenerator *)_mediumSurfaceShape.shapeGenerator;
-  mediumRect.topLeftCorner = _shapeScheme.mediumSurfaceShape.topLeftCorner;
-  mediumRect.topRightCorner = _shapeScheme.mediumSurfaceShape.topRightCorner;
-  mediumRect.bottomLeftCorner = _shapeScheme.mediumSurfaceShape.bottomLeftCorner;
-  mediumRect.bottomRightCorner = _shapeScheme.mediumSurfaceShape.bottomRightCorner;
-  _mediumSurfaceShape.shapeGenerator = mediumRect;
+      (MDCRectangleShapeGenerator *)_mediumComponentShape.shapeGenerator;
+  mediumRect.topLeftCorner = _shapeScheme.mediumComponentShape.topLeftCorner;
+  mediumRect.topRightCorner = _shapeScheme.mediumComponentShape.topRightCorner;
+  mediumRect.bottomLeftCorner = _shapeScheme.mediumComponentShape.bottomLeftCorner;
+  mediumRect.bottomRightCorner = _shapeScheme.mediumComponentShape.bottomRightCorner;
+  _mediumComponentShape.shapeGenerator = mediumRect;
 
   MDCRectangleShapeGenerator *largeRect =
-      (MDCRectangleShapeGenerator *)_largeSurfaceShape.shapeGenerator;
-  largeRect.topLeftCorner = _shapeScheme.largeSurfaceShape.topLeftCorner;
-  largeRect.topRightCorner = _shapeScheme.largeSurfaceShape.topRightCorner;
-  largeRect.bottomLeftCorner = _shapeScheme.largeSurfaceShape.bottomLeftCorner;
-  largeRect.bottomRightCorner = _shapeScheme.largeSurfaceShape.bottomRightCorner;
-  _largeSurfaceShape.shapeGenerator = largeRect;
+      (MDCRectangleShapeGenerator *)_largeComponentShape.shapeGenerator;
+  largeRect.topLeftCorner = _shapeScheme.largeComponentShape.topLeftCorner;
+  largeRect.topRightCorner = _shapeScheme.largeComponentShape.topRightCorner;
+  largeRect.bottomLeftCorner = _shapeScheme.largeComponentShape.bottomLeftCorner;
+  largeRect.bottomRightCorner = _shapeScheme.largeComponentShape.bottomRightCorner;
+  _largeComponentShape.shapeGenerator = largeRect;
 
   [self updateComponentShapes];
 }
@@ -281,7 +281,7 @@
   MDCShapeCategory *changedCategory;
   if ([[sender titleForSegmentAtIndex:sender.selectedSegmentIndex] isEqualToString:@"Cut"]) {
     // Cut Corner
-    changedCategory = [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyAngled
+    changedCategory = [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyCut
                                                               andSize:slider.value];
   } else {
     // Rounded Corner
@@ -291,39 +291,41 @@
   return changedCategory;
 }
 
-- (IBAction)smallSurfaceTypeChanged:(UISegmentedControl *)sender {
-  _shapeScheme.smallSurfaceShape = [self changedCategoryFromType:sender
-                                                        andValue:_smallSurfaceValue];
+- (IBAction)smallComponentTypeChanged:(UISegmentedControl *)sender {
+  _shapeScheme.smallComponentShape = [self changedCategoryFromType:sender
+                                                        andValue:_smallComponentValue];
   [self updateShapeSchemeValues];
 }
 
-- (IBAction)smallSurfaceValueChanged:(UISlider *)sender {
-  _shapeScheme.smallSurfaceShape = [self changedCategoryFromType:_smallSurfaceType andValue:sender];
-
-  [self updateShapeSchemeValues];
-}
-
-- (IBAction)mediumSurfaceTypeChanged:(UISegmentedControl *)sender {
-  _shapeScheme.mediumSurfaceShape = [self changedCategoryFromType:sender
-                                                         andValue:_mediumSurfaceValue];
-  [self updateShapeSchemeValues];
-}
-
-- (IBAction)mediumSurfaceValueChanged:(UISlider *)sender {
-  _shapeScheme.mediumSurfaceShape = [self changedCategoryFromType:_mediumSurfaceType
-                                                         andValue:sender];
+- (IBAction)smallComponentValueChanged:(UISlider *)sender {
+  _shapeScheme.smallComponentShape = [self changedCategoryFromType:_smallComponentType
+                                                          andValue:sender];
 
   [self updateShapeSchemeValues];
 }
 
-- (IBAction)largeSurfaceTypeChanged:(UISegmentedControl *)sender {
-  _shapeScheme.largeSurfaceShape = [self changedCategoryFromType:sender
-                                                        andValue:_largeSurfaceValue];
+- (IBAction)mediumComponentTypeChanged:(UISegmentedControl *)sender {
+  _shapeScheme.mediumComponentShape = [self changedCategoryFromType:sender
+                                                           andValue:_mediumComponentValue];
   [self updateShapeSchemeValues];
 }
 
-- (IBAction)largeSurfaceValueChanged:(UISlider *)sender {
-  _shapeScheme.largeSurfaceShape = [self changedCategoryFromType:_largeSurfaceType andValue:sender];
+- (IBAction)mediumComponentValueChanged:(UISlider *)sender {
+  _shapeScheme.mediumComponentShape = [self changedCategoryFromType:_mediumComponentType
+                                                           andValue:sender];
+
+  [self updateShapeSchemeValues];
+}
+
+- (IBAction)largeComponentTypeChanged:(UISegmentedControl *)sender {
+  _shapeScheme.largeComponentShape = [self changedCategoryFromType:sender
+                                                          andValue:_largeComponentValue];
+  [self updateShapeSchemeValues];
+}
+
+- (IBAction)largeComponentValueChanged:(UISlider *)sender {
+  _shapeScheme.largeComponentShape = [self changedCategoryFromType:_largeComponentType
+                                                          andValue:sender];
 
   [self updateShapeSchemeValues];
 }

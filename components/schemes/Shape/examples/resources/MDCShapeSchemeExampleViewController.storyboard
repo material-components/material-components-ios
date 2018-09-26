@@ -36,8 +36,8 @@
                                                     <constraint firstAttribute="height" constant="50" id="cEn-cl-NQF"/>
                                                 </constraints>
                                             </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Small Surface" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vc2-XS-Vr0">
-                                                <rect key="frame" x="10" y="0.0" width="101" height="20"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Small Component" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vc2-XS-Vr0">
+                                                <rect key="frame" x="10" y="0.0" width="129" height="20"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -65,8 +65,8 @@
                                                     <constraint firstAttribute="width" constant="80" id="x6V-pL-Ltd"/>
                                                 </constraints>
                                             </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Medium Surface" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9pE-qc-pKt">
-                                                <rect key="frame" x="10" y="0.0" width="119" height="20"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Medium Component" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9pE-qc-pKt">
+                                                <rect key="frame" x="10" y="0.0" width="148" height="20"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -94,8 +94,8 @@
                                                     <constraint firstAttribute="height" constant="120" id="Rs2-av-Krj"/>
                                                 </constraints>
                                             </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Large Surface" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BSX-RM-iBf">
-                                                <rect key="frame" x="10" y="0.0" width="102" height="20"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Large Component" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BSX-RM-iBf">
+                                                <rect key="frame" x="10" y="0.0" width="131" height="20"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -117,7 +117,7 @@
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="16.5" translatesAutoresizingMaskIntoConstraints="NO" id="QWz-Y7-VXN">
                                                 <rect key="frame" x="3" y="38" width="143" height="31"/>
                                                 <connections>
-                                                    <action selector="smallSurfaceValueChanged:" destination="f36-Qf-c8i" eventType="valueChanged" id="kTg-2e-gVV"/>
+                                                    <action selector="smallComponentValueChanged:" destination="f36-Qf-c8i" eventType="valueChanged" id="hcD-jh-cPs"/>
                                                 </connections>
                                             </slider>
                                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="SVL-Sx-e7n">
@@ -127,7 +127,7 @@
                                                     <segment title="Cut"/>
                                                 </segments>
                                                 <connections>
-                                                    <action selector="smallSurfaceTypeChanged:" destination="f36-Qf-c8i" eventType="valueChanged" id="BQI-Md-q6c"/>
+                                                    <action selector="smallComponentTypeChanged:" destination="f36-Qf-c8i" eventType="valueChanged" id="k4B-L4-AkZ"/>
                                                 </connections>
                                             </segmentedControl>
                                         </subviews>
@@ -148,7 +148,7 @@
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="60" translatesAutoresizingMaskIntoConstraints="NO" id="qgp-VL-aY7">
                                                 <rect key="frame" x="3" y="38" width="143" height="31"/>
                                                 <connections>
-                                                    <action selector="largeSurfaceValueChanged:" destination="f36-Qf-c8i" eventType="valueChanged" id="4HB-rv-FRW"/>
+                                                    <action selector="largeComponentValueChanged:" destination="f36-Qf-c8i" eventType="valueChanged" id="XTh-5v-XTc"/>
                                                 </connections>
                                             </slider>
                                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Tpc-oW-UIP">
@@ -158,7 +158,7 @@
                                                     <segment title="Cut"/>
                                                 </segments>
                                                 <connections>
-                                                    <action selector="largeSurfaceTypeChanged:" destination="f36-Qf-c8i" eventType="valueChanged" id="2zF-xN-ey3"/>
+                                                    <action selector="largeComponentTypeChanged:" destination="f36-Qf-c8i" eventType="valueChanged" id="9OU-HA-BGe"/>
                                                 </connections>
                                             </segmentedControl>
                                         </subviews>
@@ -179,7 +179,7 @@
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="40" translatesAutoresizingMaskIntoConstraints="NO" id="PRs-2f-WMd">
                                                 <rect key="frame" x="3" y="38" width="143" height="31"/>
                                                 <connections>
-                                                    <action selector="mediumSurfaceValueChanged:" destination="f36-Qf-c8i" eventType="valueChanged" id="J4v-bG-MWf"/>
+                                                    <action selector="mediumComponentValueChanged:" destination="f36-Qf-c8i" eventType="valueChanged" id="ehZ-aK-Jjv"/>
                                                 </connections>
                                             </slider>
                                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Sd0-HG-VvX">
@@ -189,7 +189,7 @@
                                                     <segment title="Cut"/>
                                                 </segments>
                                                 <connections>
-                                                    <action selector="mediumSurfaceTypeChanged:" destination="f36-Qf-c8i" eventType="valueChanged" id="s17-du-Om7"/>
+                                                    <action selector="mediumComponentTypeChanged:" destination="f36-Qf-c8i" eventType="valueChanged" id="KF3-Y9-eZb"/>
                                                 </connections>
                                             </segmentedControl>
                                         </subviews>
@@ -268,15 +268,15 @@
                     <connections>
                         <outlet property="componentContentView" destination="GQ0-Wh-yVz" id="lnb-aC-e0F"/>
                         <outlet property="includeBaselineOverridesToggle" destination="RG0-7W-Hgz" id="6Us-Do-9ps"/>
-                        <outlet property="largeSurfaceShape" destination="o3w-aj-R37" id="sfS-ZK-x48"/>
-                        <outlet property="largeSurfaceType" destination="Tpc-oW-UIP" id="sHQ-J7-QhM"/>
-                        <outlet property="largeSurfaceValue" destination="qgp-VL-aY7" id="Jxj-5S-1v6"/>
-                        <outlet property="mediumSurfaceShape" destination="6U1-M0-YF3" id="ZYK-Ga-OW9"/>
-                        <outlet property="mediumSurfaceType" destination="Sd0-HG-VvX" id="WJN-Rg-QA2"/>
-                        <outlet property="mediumSurfaceValue" destination="PRs-2f-WMd" id="QxB-sq-bZU"/>
-                        <outlet property="smallSurfaceShape" destination="EN7-3m-ITa" id="stp-ra-NMF"/>
-                        <outlet property="smallSurfaceType" destination="SVL-Sx-e7n" id="8v6-uB-LUQ"/>
-                        <outlet property="smallSurfaceValue" destination="QWz-Y7-VXN" id="bOe-gn-v7W"/>
+                        <outlet property="largeComponentShape" destination="o3w-aj-R37" id="xkt-9Q-Pi4"/>
+                        <outlet property="largeComponentType" destination="Tpc-oW-UIP" id="8tB-yX-hFH"/>
+                        <outlet property="largeComponentValue" destination="qgp-VL-aY7" id="ede-Gx-lUE"/>
+                        <outlet property="mediumComponentShape" destination="6U1-M0-YF3" id="2a0-5y-5tT"/>
+                        <outlet property="mediumComponentType" destination="Sd0-HG-VvX" id="eCL-89-csV"/>
+                        <outlet property="mediumComponentValue" destination="PRs-2f-WMd" id="R9w-PZ-F2k"/>
+                        <outlet property="smallComponentShape" destination="EN7-3m-ITa" id="DgN-n9-Eqz"/>
+                        <outlet property="smallComponentType" destination="SVL-Sx-e7n" id="4mt-jB-XQr"/>
+                        <outlet property="smallComponentValue" destination="QWz-Y7-VXN" id="QcO-zz-0Z8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x8v-UI-Lpf" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -19,10 +19,10 @@
 + (void)applyShapeScheme:(nonnull id<MDCShapeScheming>)shapeScheme
                 toButton:(nonnull MDCFloatingButton *)button {
   MDCRectangleShapeGenerator *rectangleShape = [[MDCRectangleShapeGenerator alloc] init];
-  rectangleShape.topLeftCorner = shapeScheme.smallSurfaceShape.topLeftCorner;
-  rectangleShape.topRightCorner = shapeScheme.smallSurfaceShape.topRightCorner;
-  rectangleShape.bottomLeftCorner = shapeScheme.smallSurfaceShape.bottomLeftCorner;
-  rectangleShape.bottomRightCorner = shapeScheme.smallSurfaceShape.bottomRightCorner;
+  rectangleShape.topLeftCorner = shapeScheme.smallComponentShape.topLeftCorner;
+  rectangleShape.topRightCorner = shapeScheme.smallComponentShape.topRightCorner;
+  rectangleShape.bottomLeftCorner = shapeScheme.smallComponentShape.bottomLeftCorner;
+  rectangleShape.bottomRightCorner = shapeScheme.smallComponentShape.bottomRightCorner;
   button.shapeGenerator = rectangleShape;
 }
 
