@@ -14,6 +14,8 @@
 
 #import "MDCActionSheetTestHelper.h"
 
+#import <CoreImage/CoreImage.h>
+
 #import "../../src/private/MDCActionSheetHeaderView.h"
 #import "../../src/private/MDCActionSheetItemTableViewCell.h"
 
