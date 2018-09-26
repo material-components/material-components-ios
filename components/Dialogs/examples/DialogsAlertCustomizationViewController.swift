@@ -15,6 +15,7 @@
 import Foundation
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialDialogs
+import MaterialComponents.MaterialCollections
 
 class CustomAlertViewController: UIViewController {
 
