@@ -293,7 +293,7 @@
 
 - (IBAction)smallComponentTypeChanged:(UISegmentedControl *)sender {
   _shapeScheme.smallComponentShape = [self changedCategoryFromType:sender
-                                                        andValue:_smallComponentValue];
+                                                          andValue:_smallComponentValue];
   [self updateShapeSchemeValues];
 }
 
