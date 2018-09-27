@@ -196,7 +196,7 @@ Commit the results to your branch:
 
 Send our local podspec through the CocoaPods linter:
 
-    pod lib lint MaterialComponents.podspec
+    pod lib lint MaterialComponents.podspec --skip-tests
 
 CocoaPods publishes a directory of publicly available pods through its **trunk** service.
 Note: Ensure that you can [push the podspec](#publish-to-cocoapods) later by checking for `MaterialComponents` in your list of available `Pods` when you:
