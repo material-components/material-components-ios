@@ -14,7 +14,11 @@
 
 import Foundation
 import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialDialogs
+import MaterialComponents.MaterialCollections
+import MaterialComponents.MaterialDialogs_DialogThemer
+import MaterialComponents.MaterialTypographyScheme
 
 class CustomAlertViewController: UIViewController {
 
