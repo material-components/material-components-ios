@@ -14,7 +14,7 @@ any other.
 From the point of view of the public, Alpha components are not made available as part of our
 published pod. External clients that wish to use an Alpha component in their app will need to
 manually clone the repo and specify a path to the MaterialComponentsAlpha.podspec in thier PodFile
-like we do in our catalog.
+like we do in our [catalog Podfile](/catalog/Podfile).
 
 Alpha components are not subject to our deprecation policy and we will not provide behavioral flags
 for gradual migration of runtime behaviors.
