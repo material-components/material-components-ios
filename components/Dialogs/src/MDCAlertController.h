@@ -76,6 +76,9 @@
 /** The alignment applied to the title of the Alert Controller.*/
 @property(nonatomic, assign) NSTextAlignment titleAlignment;
 
+/** An optional icon appearing above the title of the Alert Controller.*/
+@property(nonatomic, strong, nullable) UIImage *titleIcon;
+
 /** The font applied to the message of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIFont *messageFont;
 

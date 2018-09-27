@@ -13,3 +13,4 @@
 // limitations under the License.
 
 #import "MDCAlertControllerThemer.h"
+#import "MDCAlertScheme.h"
