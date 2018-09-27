@@ -283,3 +283,5 @@ You can now publish the release to GitHub:
 
 Any work that was started by the [Release-blocking clients](#release-blocking-clients)
 (dragon) step above may need to be finalized.
+
+Also follow last instructions in the [internal release instructions](http://go/mdc-releasing)
