@@ -12,20 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import "MaterialActionSheet.h"
+#import "MaterialColorScheme.h"
+
 #import <Foundation/Foundation.h>
 
-#import "MaterialDialogs.h"
-#import "MDCAlertScheme.h"
-
-@interface MDCAlertControllerThemer : NSObject
+/**
+ The Material Design color system's themer for instances of MDCActionSheetController.
+ */
+@interface MDCActionSheetColorThemer : NSObject
 
 /**
- Applies a component scheme's properties to an MDCAlertController.
+ Applies a color scheme's properties to an MDCActionSheetController
 
- @param alertScheme The component scheme to apply to the alert dialog instance.
- @param alertController An alert dialog instance to which the component scheme should be applied.
+ @param colorScheme The color scheme to apply to the component instance.
+ @param actionSheetController A component instance to which the olor scheme should be applied.
  */
-+ (void)applyScheme:(nonnull id<MDCAlertScheming>)alertScheme
-    toAlertController:(nonnull MDCAlertController *)alertController;
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+         toActionSheetController:(nonnull MDCActionSheetController *)actionSheetController;
 
 @end

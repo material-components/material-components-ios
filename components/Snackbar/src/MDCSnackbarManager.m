@@ -13,10 +13,13 @@
 // limitations under the License.
 
 #import "MDCSnackbarManager.h"
+
 #import "MDCSnackbarMessage.h"
 #import "MDCSnackbarMessageView.h"
-#import "MaterialOverlayWindow.h"
 #import "MaterialApplication.h"
+#import "MaterialOverlayWindow.h"
+
+#import "private/MDCSnackbarManagerInternal.h"
 #import "private/MDCSnackbarMessageInternal.h"
 #import "private/MDCSnackbarMessageViewInternal.h"
 #import "private/MDCSnackbarOverlayView.h"
@@ -42,7 +45,14 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 /**
  The 'actual' Snackbar manager which will take care of showing/hiding Snackbar messages.
  */
-@interface MDCSnackbarManagerInternal : NSObject
+@interface MDCSnackbarManagerInternal ()
+
+/**
+ This property is used to test logic flows only when voiceover is on.
+
+ Note: we can't fake or mock the system calls like UIAccessibilityIsVoiceOverRunning()
+ */
+@property(nonatomic) BOOL isVoiceOverRunningOverride;
 
 /**
  The instance of MDCSnackbarManager that "owns" this internal manager.  Used to get theming
@@ -220,6 +230,8 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
                                     snackbarManager:self.manager];
   [self.delegate willPresentSnackbarWithMessageView:snackbarView];
   self.currentSnackbar = snackbarView;
+  self.overlayView.accessibilityViewIsModal =
+      self.manager.shouldEnableAccessibilityViewIsModal && ![self isSnackbarTransient:snackbarView];
   self.overlayView.hidden = NO;
   [self activateOverlay:self.overlayView];
 
@@ -299,8 +311,16 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 
 #pragma mark - Helper methods
 
+- (BOOL)isVoiceOverRunning {
+  if (UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning() ||
+      self.isVoiceOverRunningOverride) {
+    return YES;
+  }
+  return NO;
+}
+
 - (BOOL)isSnackbarTransient:(MDCSnackbarMessageView *)snackbarView {
-  if (UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning()) {
+  if ([self isVoiceOverRunning]) {
     return ![snackbarView shouldWaitForDismissalDuringVoiceover];
   }
 

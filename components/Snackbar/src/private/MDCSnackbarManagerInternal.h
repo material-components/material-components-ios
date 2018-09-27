@@ -1,4 +1,4 @@
-// Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,15 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <UIKit/UIKit.h>
-
-#import "MDCBottomAppBarView.h"
-
-@interface MDCBottomAppBarLayer : CAShapeLayer
-
-- (CGPathRef)pathFromRect:(CGRect)rect
-           floatingButton:(MDCFloatingButton *)floatingButton
-       navigationBarFrame:(CGRect)navigationBarFrame
-                shouldCut:(BOOL)shouldCut;
-
+/**
+ The 'actual' Snackbar manager which will take care of showing/hiding Snackbar messages.
+ */
+@interface MDCSnackbarManagerInternal : NSObject
 @end

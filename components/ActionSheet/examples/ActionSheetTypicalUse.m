@@ -14,8 +14,10 @@
 
 #import "ActionSheetTypicalUse.h"
 
-#import "MaterialButtons.h"
+#import "MaterialActionSheet+ColorThemer.h"
+#import "MaterialActionSheet+TypographyThemer.h"
 #import "MaterialButtons+ButtonThemer.h"
+#import "MaterialButtons.h"
 
 @interface ActionSheetTypicalUse ()
 
@@ -82,6 +84,10 @@
   [actionSheet addAction:homeAction];
   [actionSheet addAction:favoriteAction];
   [actionSheet addAction:emailAction];
+  [MDCActionSheetColorThemer applySemanticColorScheme:self.colorScheme
+                              toActionSheetController:actionSheet];
+  [MDCActionSheetTypographyThemer applyTypographyScheme:self.typographyScheme
+                                toActionSheetController:actionSheet];
   [self presentViewController:actionSheet animated:YES completion:nil];
 }
 

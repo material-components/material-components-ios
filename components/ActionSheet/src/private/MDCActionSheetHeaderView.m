@@ -17,14 +17,14 @@
 #import "MaterialMath.h"
 #import "MaterialTypography.h"
 
-static const CGFloat TitleLabelAlpha = 0.87f;
-static const CGFloat MessageLabelAlpha = 0.6f;
-static const CGFloat MessageOnlyPadding = 23.f;
-static const CGFloat LeadingPadding = 16.f;
-static const CGFloat TopStandardPadding = 16.f;
-static const CGFloat TrailingPadding = 16.f;
-static const CGFloat TitleOnlyPadding = 18.f;
-static const CGFloat MiddlePadding = 8.f;
+static const CGFloat kTitleLabelAlpha = 0.87f;
+static const CGFloat kMessageLabelAlpha = 0.6f;
+static const CGFloat kMessageOnlyPadding = 23.f;
+static const CGFloat kLeadingPadding = 16.f;
+static const CGFloat kTopStandardPadding = 16.f;
+static const CGFloat kTrailingPadding = 16.f;
+static const CGFloat kTitleOnlyPadding = 18.f;
+static const CGFloat kMiddlePadding = 8.f;
 
 @interface MDCActionSheetHeaderView ()
 @property(nonatomic, strong) UILabel *titleLabel;
@@ -49,7 +49,7 @@ static const CGFloat MiddlePadding = 8.f;
     _messageLabel.font = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody1];
     _messageLabel.numberOfLines = 2;
     _messageLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    _messageLabel.textColor = [UIColor.blackColor colorWithAlphaComponent:MessageLabelAlpha];
+    _messageLabel.textColor = [UIColor.blackColor colorWithAlphaComponent:kMessageLabelAlpha];
   }
   return self;
 }
@@ -65,32 +65,32 @@ static const CGFloat MiddlePadding = 8.f;
   size.width = CGRectGetWidth(self.bounds);
   CGRect labelFrame = [self frameWithSafeAreaInsets:self.bounds];
   labelFrame = CGRectStandardize(labelFrame);
-  labelFrame.size.width = labelFrame.size.width - LeadingPadding - TrailingPadding;
+  labelFrame.size.width = labelFrame.size.width - kLeadingPadding - kTrailingPadding;
   CGSize titleSize = [self.titleLabel sizeThatFits:labelFrame.size];
   CGSize messageSize = [self.messageLabel sizeThatFits:labelFrame.size];
-  CGRect titleFrame = CGRectMake(LeadingPadding + labelFrame.origin.x, TopStandardPadding,
+  CGRect titleFrame = CGRectMake(kLeadingPadding + labelFrame.origin.x, kTopStandardPadding,
                                  labelFrame.size.width, titleSize.height);
-  CGRect messageFrame = CGRectMake(LeadingPadding + labelFrame.origin.x,
-                                   CGRectGetMaxY(titleFrame) + MiddlePadding,
-                                   labelFrame.size.width, messageSize.height);
+  CGRect messageFrame =
+      CGRectMake(kLeadingPadding + labelFrame.origin.x, CGRectGetMaxY(titleFrame) + kMiddlePadding,
+                 labelFrame.size.width, messageSize.height);
   self.titleLabel.frame = titleFrame;
   self.messageLabel.frame = messageFrame;
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  size.width = size.width - LeadingPadding - TrailingPadding;
+  size.width = size.width - kLeadingPadding - kTrailingPadding;
   CGSize titleSize = [self.titleLabel sizeThatFits:size];
   CGSize messageSize = [self.messageLabel sizeThatFits:size];
   CGFloat contentHeight;
   BOOL messageExist = (self.message) && (![self.message isEqualToString:@""]);
   BOOL titleExist = (self.title) && (![self.title isEqualToString:@""]);
   if (titleExist && messageExist) {
-    contentHeight = titleSize.height + messageSize.height +
-        (TopStandardPadding * 2) + MiddlePadding;
+    contentHeight =
+        titleSize.height + messageSize.height + (kTopStandardPadding * 2) + kMiddlePadding;
   } else if (messageExist) {
-    contentHeight = messageSize.height + (MessageOnlyPadding * 2);
+    contentHeight = messageSize.height + (kMessageOnlyPadding * 2);
   } else if (titleExist) {
-    contentHeight = titleSize.height + (TitleOnlyPadding * 2);
+    contentHeight = titleSize.height + (kTitleOnlyPadding * 2);
   } else {
     contentHeight = 0;
   }
@@ -122,13 +122,7 @@ static const CGFloat MiddlePadding = 8.f;
 
 - (void)setMessage:(NSString *)message {
   self.messageLabel.text = message;
-  // If message is empty or nil then the title label's alpha value should be lighter, if there is both
-  // then the title label's alpha should be darker.
-  if (self.message && ![self.message isEqualToString:@""]) {
-    _titleLabel.textColor = [UIColor.blackColor colorWithAlphaComponent:TitleLabelAlpha];
-  } else {
-    _titleLabel.textColor = [UIColor.blackColor colorWithAlphaComponent:MessageLabelAlpha];
-  }
+  [self updateLabelColors];
   [self setNeedsLayout];
 }
 
@@ -199,6 +193,32 @@ static const CGFloat MiddlePadding = 8.f;
                                                     object:nil];
   }
   [self updateFonts];
+}
+
+- (UIColor *)defaultTitleTextColor {
+  // If message is empty or nil then the title label's alpha value should be lighter, if there is
+  // both then the title label's alpha should be darker.
+  if (self.message && ![self.message isEqualToString:@""]) {
+    return [UIColor.blackColor colorWithAlphaComponent:kTitleLabelAlpha];
+  } else {
+    return [UIColor.blackColor colorWithAlphaComponent:kMessageLabelAlpha];
+  }
+}
+
+- (void)updateLabelColors {
+  self.titleLabel.textColor = self.titleTextColor ?: [self defaultTitleTextColor];
+  self.messageLabel.textColor =
+      self.messageTextColor ?: [UIColor.blackColor colorWithAlphaComponent:kMessageLabelAlpha];
+}
+
+- (void)setTitleTextColor:(UIColor *)titleTextColor {
+  _titleTextColor = titleTextColor;
+  [self updateLabelColors];
+}
+
+- (void)setMessageTextColor:(UIColor *)messageTextColor {
+  _messageTextColor = messageTextColor;
+  [self updateLabelColors];
 }
 
 @end

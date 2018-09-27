@@ -12,20 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <Foundation/Foundation.h>
+#import "MaterialActionSheet.h"
 
-#import "MaterialDialogs.h"
-#import "MDCAlertScheme.h"
+#import <XCTest/XCTest.h>
 
-@interface MDCAlertControllerThemer : NSObject
+@class MDCActionSheetHeaderView;
+@class MDCActionSheetItemTableViewCell;
 
-/**
- Applies a component scheme's properties to an MDCAlertController.
+@interface MDCActionSheetController (Testing)
+@property(nonatomic, strong) UITableView *tableView;
+@property(nonatomic, strong) MDCActionSheetHeaderView *header;
+- (CGFloat)openingSheetHeight;
+@end
 
- @param alertScheme The component scheme to apply to the alert dialog instance.
- @param alertController An alert dialog instance to which the component scheme should be applied.
- */
-+ (void)applyScheme:(nonnull id<MDCAlertScheming>)alertScheme
-    toAlertController:(nonnull MDCAlertController *)alertController;
+@interface MDCActionSheetTestHelper : NSObject
+
++ (NSArray *)colorsToTest;
+
++ (void)addNumberOfActions:(NSUInteger)actionsCount
+             toActionSheet:(MDCActionSheetController *)actionSheet;
+
++ (NSArray<MDCActionSheetItemTableViewCell *> *)getCellsFromActionSheet:
+    (MDCActionSheetController *)actionSheet;
 
 @end

@@ -12,20 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <Foundation/Foundation.h>
-
-#import "MaterialDialogs.h"
-#import "MDCAlertScheme.h"
-
-@interface MDCAlertControllerThemer : NSObject
-
-/**
- Applies a component scheme's properties to an MDCAlertController.
-
- @param alertScheme The component scheme to apply to the alert dialog instance.
- @param alertController An alert dialog instance to which the component scheme should be applied.
- */
-+ (void)applyScheme:(nonnull id<MDCAlertScheming>)alertScheme
-    toAlertController:(nonnull MDCAlertController *)alertController;
-
-@end
+#import "MDCActionSheetColorThemer.h"
