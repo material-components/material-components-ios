@@ -46,6 +46,7 @@ extension BottomDrawerWithHeaderExample {
       "breadcrumbs": ["Navigation Drawer", "Bottom Drawer"],
       "primaryDemo": false,
       "presentable": false,
+      "debug": true,
     ]
   }
 }
