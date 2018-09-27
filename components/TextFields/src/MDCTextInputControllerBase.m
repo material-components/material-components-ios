@@ -1545,8 +1545,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     // If there is a saved state, use it.
     if (self.previousLeadingText) {
       self.textInput.leadingUnderlineLabel.text = self.previousLeadingText;
-      UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification,
-                                      self.textInput.leadingUnderlineLabel);
     }
 
     // Clear out saved state.
@@ -1582,7 +1580,6 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     self.textInput.leadingUnderlineLabel.accessibilityLabel =
         [NSString stringWithFormat:@"Error: %@.",
                                    leadingUnderlineLabelText ? leadingUnderlineLabelText : @""];
-    UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, self.textInput.leadingUnderlineLabel);
   } else {
     self.textInput.accessibilityValue = nil;
     if ([self.textInput.leadingUnderlineLabel.text isEqualToString:self.helperText]) {
@@ -1591,6 +1588,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
       self.textInput.leadingUnderlineLabel.accessibilityLabel = nil;
     }
   }
+  UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification,
+                                  self.textInput.leadingUnderlineLabel);
 }
 
 -(void)setHelperText:(NSString *)helperText
