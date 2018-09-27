@@ -551,10 +551,10 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   info.hasInjectedTopContentInset = NO;
   scrollView.contentInset = insets;
 
-  UIEdgeInsets scrollIndicatorInsets = _trackingScrollView.scrollIndicatorInsets;
+  UIEdgeInsets scrollIndicatorInsets = scrollView.scrollIndicatorInsets;
   scrollIndicatorInsets.top -= info.injectedTopScrollIndicatorInset;
   info.injectedTopScrollIndicatorInset = 0;
-  _trackingScrollView.scrollIndicatorInsets = scrollIndicatorInsets;
+  scrollView.scrollIndicatorInsets = scrollIndicatorInsets;
 }
 
 - (CGFloat)fhv_existingContentInsetAdjustmentForScrollView:(UIScrollView *)scrollView {
