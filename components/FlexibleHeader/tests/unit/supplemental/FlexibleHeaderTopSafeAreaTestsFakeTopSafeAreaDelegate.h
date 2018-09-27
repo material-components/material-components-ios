@@ -14,18 +14,11 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MaterialDialogs.h"
-#import "MDCAlertScheme.h"
+#import "../../../src/private/MDCFlexibleHeaderTopSafeArea.h"
 
-@interface MDCAlertControllerThemer : NSObject
-
-/**
- Applies a component scheme's properties to an MDCAlertController.
-
- @param alertScheme The component scheme to apply to the alert dialog instance.
- @param alertController An alert dialog instance to which the component scheme should be applied.
- */
-+ (void)applyScheme:(nonnull id<MDCAlertScheming>)alertScheme
-    toAlertController:(nonnull MDCAlertController *)alertController;
-
+@interface FlexibleHeaderTopSafeAreaTestsFakeTopSafeAreaDelegate
+    : NSObject <MDCFlexibleHeaderSafeAreaDelegate>
+@property(nonatomic) BOOL isStatusBarShifted;
+@property(nonatomic) BOOL topSafeAreaInsetDidChangeWasCalled;
+@property(nonatomic) CGFloat deviceTopSafeAreaInset;
 @end

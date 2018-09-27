@@ -202,7 +202,7 @@ final class TextFieldKitchenSinkSwiftExample: UIViewController {
     baselineTestLabel.font = textFieldFloatingCharMax.font
     self.scrollView.addSubview(baselineTestLabel)
 
-    if #available(iOSApplicationExtension 9.0, *), #available(iOS 9.0, *) {
+    if #available(iOS 9.0, *) {
       baselineTestLabel.trailingAnchor.constraint(equalTo: textFieldFloatingCharMax.trailingAnchor,
                                                  constant: 0).isActive = true
 

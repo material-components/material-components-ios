@@ -482,7 +482,11 @@ generate_release_apidiff() {
       echo >> $ALL_CHANGELOG_PATH
       echo "### $component" >> $ALL_CHANGELOG_PATH
       echo >> $ALL_CHANGELOG_PATH
-      echo "**New component.**" >> $ALL_CHANGELOG_PATH
+      if [[ "$component" = *"+"* ]]; then
+        echo "**New extension.**" >> $ALL_CHANGELOG_PATH
+      else
+        echo "**New component.**" >> $ALL_CHANGELOG_PATH
+      fi
 
       echo "New!"
       continue

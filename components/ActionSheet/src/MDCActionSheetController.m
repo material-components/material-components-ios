@@ -14,11 +14,14 @@
 
 #import "MDCActionSheetController.h"
 
-#import "private/MDCActionSheetItemTableViewCell.h"
-#import "private/MDCActionSheetHeaderView.h"
+#import "MaterialMath.h"
 #import "MaterialTypography.h"
+#import "private/MDCActionSheetHeaderView.h"
+#import "private/MDCActionSheetItemTableViewCell.h"
 
-static NSString *const ReuseIdentifier = @"BaseCell";
+static NSString *const kReuseIdentifier = @"BaseCell";
+static const CGFloat kActionImageAlpha = 0.6f;
+static const CGFloat kActionTextAlpha = 0.87f;
 
 @interface MDCActionSheetAction ()
 
@@ -104,7 +107,7 @@ static NSString *const ReuseIdentifier = @"BaseCell";
     _tableView.rowHeight = UITableViewAutomaticDimension;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [_tableView registerClass:[MDCActionSheetItemTableViewCell class]
-       forCellReuseIdentifier:ReuseIdentifier];
+        forCellReuseIdentifier:kReuseIdentifier];
 
     _header = [[MDCActionSheetHeaderView alloc] initWithFrame:CGRectZero];
     _header.title = [title copy];
@@ -112,6 +115,9 @@ static NSString *const ReuseIdentifier = @"BaseCell";
     _backgroundColor = UIColor.whiteColor;
     _header.backgroundColor = _backgroundColor;
     _tableView.backgroundColor = _backgroundColor;
+    _actionTextColor = [UIColor.blackColor colorWithAlphaComponent:kActionTextAlpha];
+    _actionTintColor = [UIColor.blackColor colorWithAlphaComponent:kActionImageAlpha];
+    _imageRenderingMode = UIImageRenderingModeAlwaysTemplate;
   }
 
   return self;
@@ -142,6 +148,11 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
 
+  if (self.tableView.contentSize.height > (CGRectGetHeight(self.view.bounds) / 2)) {
+    self.mdc_bottomSheetPresentationController.preferredSheetHeight = [self openingSheetHeight];
+  } else {
+    self.mdc_bottomSheetPresentationController.preferredSheetHeight = 0;
+  }
   CGSize size = [self.header sizeThatFits:CGRectStandardize(self.view.bounds).size];
   self.header.frame = CGRectMake(0, 0, self.view.bounds.size.width, size.height);
   UIEdgeInsets insets = UIEdgeInsetsMake(self.header.frame.size.height, 0, 0, 0);
@@ -152,6 +163,28 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 #endif
   self.tableView.contentInset = insets;
   self.tableView.contentOffset = CGPointMake(0, -size.height);
+}
+
+- (CGFloat)openingSheetHeight {
+  // If there are too many options to fit on half of the screen then show as many options as
+  // possible minus half a cell, to allow for bleeding and signal to the user that the sheet is
+  // scrollable content.
+  CGFloat maxHeight = CGRectGetHeight(self.view.bounds) / 2;
+  CGFloat headerHeight = [self.header sizeThatFits:CGRectStandardize(self.view.bounds).size].height;
+  CGFloat cellHeight = self.tableView.contentSize.height / (CGFloat)_actions.count;
+  CGFloat maxTableHeight = maxHeight - headerHeight;
+  NSInteger amountOfCellsToShow = (NSInteger)(maxTableHeight / cellHeight);
+  // There is already a partially shown cell that is showing and more than half is visable
+  if (fmod(maxTableHeight, cellHeight) > (cellHeight * 0.5f)) {
+    amountOfCellsToShow += 1;
+  }
+  CGFloat preferredHeight = (((CGFloat)amountOfCellsToShow - 0.5f) * cellHeight) + headerHeight;
+  // When updating the preferredSheetHeight the presentation controller takes into account the
+  // safe area so we have to remove that.
+  if (@available(iOS 11.0, *)) {
+    preferredHeight = preferredHeight - self.view.safeAreaInsets.bottom;
+  }
+  return MDCCeil(preferredHeight);
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -255,13 +288,17 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   MDCActionSheetItemTableViewCell *cell =
-      [tableView dequeueReusableCellWithIdentifier:ReuseIdentifier forIndexPath:indexPath];
+      [tableView dequeueReusableCellWithIdentifier:kReuseIdentifier forIndexPath:indexPath];
   MDCActionSheetAction *action = _actions[indexPath.row];
   cell.action = action;
   cell.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
   cell.backgroundColor = self.backgroundColor;
   cell.actionFont = self.actionFont;
   cell.accessibilityIdentifier = action.accessibilityIdentifier;
+  cell.inkColor = self.inkColor;
+  cell.tintColor = self.actionTintColor;
+  cell.imageRenderingMode = self.imageRenderingMode;
+  cell.actionTextColor = self.actionTextColor;
   return cell;
 }
 
@@ -306,6 +343,22 @@ static NSString *const ReuseIdentifier = @"BaseCell";
   self.header.backgroundColor = backgroundColor;
 }
 
+- (void)setTitleTextColor:(UIColor *)titleTextColor {
+  self.header.titleTextColor = titleTextColor;
+}
+
+- (UIColor *)titleTextColor {
+  return self.header.titleTextColor;
+}
+
+- (void)setMessageTextColor:(UIColor *)messageTextColor {
+  self.header.messageTextColor = messageTextColor;
+}
+
+- (UIColor *)messageTextColor {
+  return self.header.messageTextColor;
+}
+
 #pragma mark - Dynamic Type
 
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
@@ -340,6 +393,33 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 - (void)updateFontsForDynamicType {
   [self updateTableFonts];
   [self.view setNeedsLayout];
+}
+
+#pragma mark - Table customization
+
+- (void)setActionFont:(UIFont *)actionFont {
+  _actionFont = actionFont;
+  [self.tableView reloadData];
+}
+
+- (void)setActionTextColor:(UIColor *)actionTextColor {
+  _actionTextColor = actionTextColor;
+  [self.tableView reloadData];
+}
+
+- (void)setActionTintColor:(UIColor *)actionTintColor {
+  _actionTintColor = actionTintColor;
+  [self.tableView reloadData];
+}
+
+- (void)setImageRenderingMode:(UIImageRenderingMode)imageRenderingMode {
+  _imageRenderingMode = imageRenderingMode;
+  [self.tableView reloadData];
+}
+
+- (void)setInkColor:(UIColor *)inkColor {
+  _inkColor = inkColor;
+  [self.tableView reloadData];
 }
 
 @end

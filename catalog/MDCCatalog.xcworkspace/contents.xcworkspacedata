@@ -5,9 +5,6 @@
       location = "group:MDCCatalog.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:MDCUnitTests.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:MDCDragons.xcodeproj">
    </FileRef>
    <FileRef

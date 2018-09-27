@@ -16,22 +16,24 @@
 
 #import "MaterialTypography.h"
 
-static const CGFloat ImageAlpha = 0.6f;
-static const CGFloat LabelAlpha = 0.87f;
-static const CGFloat ImageLeadingPadding = 16.f;
-static const CGFloat ImageTopPadding = 16.f;
-static const CGFloat ImageHeightAndWidth = 24.f;
-static const CGFloat TitleLeadingPadding = 72.f;
-static const CGFloat TitleTrailingPadding = 16.f;
-static const CGFloat ActionItemTitleVerticalPadding = 18.f;
+static const CGFloat kLabelAlpha = 0.87f;
+static const CGFloat kImageLeadingPadding = 16.f;
+static const CGFloat kImageTopPadding = 16.f;
+static const CGFloat kImageHeightAndWidth = 24.f;
+static const CGFloat kTitleLeadingPadding = 72.f;
+static const CGFloat kTitleTrailingPadding = 16.f;
+static const CGFloat kActionItemTitleVerticalPadding = 18.f;
+
+@interface MDCActionSheetItemTableViewCell ()
+@property(nonatomic, strong) UILabel *actionLabel;
+@property(nonatomic, strong) UIImageView *actionImageView;
+@property(nonatomic, strong) MDCInkTouchController *inkTouchController;
+@end
 
 @implementation MDCActionSheetItemTableViewCell {
   MDCActionSheetAction *_itemAction;
-  UILabel *_textLabel;
-  UIImageView *_imageView;
   NSLayoutConstraint *_titleLeadingConstraint;
   NSLayoutConstraint *_titleWidthConstraint;
-  MDCInkTouchController *_inkTouchController;
 }
 
 @synthesize mdc_adjustsFontForContentSizeCategory = _mdc_adjustsFontForContentSizeCategory;
@@ -49,35 +51,37 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
   self.translatesAutoresizingMaskIntoConstraints = NO;
   self.selectionStyle = UITableViewCellSelectionStyleNone;
   self.accessibilityTraits = UIAccessibilityTraitButton;
-  _textLabel = [[UILabel alloc] init];
-  [self.contentView addSubview:_textLabel];
-  _textLabel.numberOfLines = 0;
-  _textLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  [_textLabel sizeToFit];
-  _textLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
-  _textLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
-  _textLabel.textColor = [UIColor.blackColor colorWithAlphaComponent:LabelAlpha];
+  _actionLabel = [[UILabel alloc] init];
+  [self.contentView addSubview:_actionLabel];
+  _actionLabel.numberOfLines = 0;
+  _actionLabel.translatesAutoresizingMaskIntoConstraints = NO;
+  [_actionLabel sizeToFit];
+  _actionLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
+  _actionLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
+  _actionLabel.textColor = [UIColor.blackColor colorWithAlphaComponent:kLabelAlpha];
   CGFloat leadingConstant;
   if (_itemAction.image) {
-    leadingConstant = TitleLeadingPadding;
+    leadingConstant = kTitleLeadingPadding;
   } else {
-    leadingConstant = ImageLeadingPadding;
+    leadingConstant = kImageLeadingPadding;
   }
-  [NSLayoutConstraint constraintWithItem:_textLabel
+  [NSLayoutConstraint constraintWithItem:_actionLabel
                                attribute:NSLayoutAttributeTop
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self.contentView
                                attribute:NSLayoutAttributeTop
                               multiplier:1
-                                constant:ActionItemTitleVerticalPadding].active = YES;
-  [NSLayoutConstraint constraintWithItem:_textLabel
+                                constant:kActionItemTitleVerticalPadding]
+      .active = YES;
+  [NSLayoutConstraint constraintWithItem:_actionLabel
                                attribute:NSLayoutAttributeBottom
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self.contentView
                                attribute:NSLayoutAttributeBottom
                               multiplier:1
-                                constant:-ActionItemTitleVerticalPadding].active = YES;
-  _titleLeadingConstraint = [NSLayoutConstraint constraintWithItem:_textLabel
+                                constant:-kActionItemTitleVerticalPadding]
+      .active = YES;
+  _titleLeadingConstraint = [NSLayoutConstraint constraintWithItem:_actionLabel
                                                          attribute:NSLayoutAttributeLeading
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:self.contentView
@@ -85,8 +89,8 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
                                                         multiplier:1
                                                           constant:leadingConstant];
   _titleLeadingConstraint.active = YES;
-  CGFloat width = CGRectGetWidth(self.contentView.frame) - leadingConstant - TitleTrailingPadding;
-  _titleWidthConstraint = [NSLayoutConstraint constraintWithItem:_textLabel
+  CGFloat width = CGRectGetWidth(self.contentView.frame) - leadingConstant - kTitleTrailingPadding;
+  _titleWidthConstraint = [NSLayoutConstraint constraintWithItem:_actionLabel
                                                        attribute:NSLayoutAttributeWidth
                                                        relatedBy:NSLayoutRelationEqual
                                                           toItem:nil
@@ -99,61 +103,64 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
     [_inkTouchController addInkView];
   }
 
-  _imageView = [[UIImageView alloc] init];
-  [self.contentView addSubview:_imageView];
-  _imageView.translatesAutoresizingMaskIntoConstraints = NO;
-  _imageView.alpha = ImageAlpha;
-  [NSLayoutConstraint constraintWithItem:_imageView
+  _actionImageView = [[UIImageView alloc] init];
+  [self.contentView addSubview:_actionImageView];
+  _actionImageView.translatesAutoresizingMaskIntoConstraints = NO;
+  [NSLayoutConstraint constraintWithItem:_actionImageView
                                attribute:NSLayoutAttributeTop
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self.contentView
                                attribute:NSLayoutAttributeTop
                               multiplier:1
-                                constant:ImageTopPadding].active = YES;
-  [NSLayoutConstraint constraintWithItem:_imageView
+                                constant:kImageTopPadding]
+      .active = YES;
+  [NSLayoutConstraint constraintWithItem:_actionImageView
                                attribute:NSLayoutAttributeLeading
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self.contentView
                                attribute:NSLayoutAttributeLeading
                               multiplier:1
-                                constant:ImageLeadingPadding].active = YES;
-  [NSLayoutConstraint constraintWithItem:_imageView
+                                constant:kImageLeadingPadding]
+      .active = YES;
+  [NSLayoutConstraint constraintWithItem:_actionImageView
                                attribute:NSLayoutAttributeWidth
                                relatedBy:NSLayoutRelationEqual
                                   toItem:nil
                                attribute:NSLayoutAttributeNotAnAttribute
                               multiplier:1
-                                constant:ImageHeightAndWidth].active = YES;
-  [NSLayoutConstraint constraintWithItem:_imageView
+                                constant:kImageHeightAndWidth]
+      .active = YES;
+  [NSLayoutConstraint constraintWithItem:_actionImageView
                                attribute:NSLayoutAttributeHeight
                                relatedBy:NSLayoutRelationEqual
                                   toItem:nil
                                attribute:NSLayoutAttributeNotAnAttribute
                               multiplier:1
-                                constant:ImageHeightAndWidth].active = YES;
+                                constant:kImageHeightAndWidth]
+      .active = YES;
 }
 
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  _textLabel.text = _itemAction.title;
+  self.actionLabel.text = _itemAction.title;
   CGFloat leadingConstant;
   if (_itemAction.image) {
-    leadingConstant = TitleLeadingPadding;
+    leadingConstant = kTitleLeadingPadding;
   } else {
-    leadingConstant = ImageLeadingPadding;
+    leadingConstant = kImageLeadingPadding;
   }
   _titleLeadingConstraint.constant = leadingConstant;
-  CGFloat width = CGRectGetWidth(self.contentView.frame) - leadingConstant - TitleTrailingPadding;
+  CGFloat width = CGRectGetWidth(self.contentView.frame) - leadingConstant - kTitleTrailingPadding;
   _titleWidthConstraint.constant = width;
 
-  _imageView.image = _itemAction.image;
+  self.actionImageView.image = [_itemAction.image imageWithRenderingMode:self.imageRenderingMode];
 }
 
 - (void)setAction:(MDCActionSheetAction *)action {
   _itemAction = [action copy];
-  _textLabel.text = _itemAction.title;
-  _imageView.image = _itemAction.image;
+  self.actionLabel.text = _itemAction.title;
+  self.actionImageView.image = _itemAction.image;
   [self setNeedsLayout];
 }
 
@@ -161,7 +168,7 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
   return _itemAction;
 }
 
-- (void)setActionsFont:(UIFont *)actionFont {
+- (void)setActionFont:(UIFont *)actionFont {
   _actionFont = actionFont;
   [self updateTitleFont];
 }
@@ -170,11 +177,11 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
   UIFont *titleFont = _actionFont ?:
       [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
   if (self.mdc_adjustsFontForContentSizeCategory) {
-    _textLabel.font =
+    self.actionLabel.font =
         [titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
                                 scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
   } else {
-    _textLabel.font = titleFont;
+    self.actionLabel.font = titleFont;
   }
   [self setNeedsLayout];
 }
@@ -182,6 +189,24 @@ static const CGFloat ActionItemTitleVerticalPadding = 18.f;
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
   _mdc_adjustsFontForContentSizeCategory = adjusts;
   [self updateTitleFont];
+}
+
+- (void)setActionTextColor:(UIColor *)actionTextColor {
+  _actionTextColor = actionTextColor;
+  _actionLabel.textColor =
+      actionTextColor ?: [UIColor.blackColor colorWithAlphaComponent:kLabelAlpha];
+}
+
+- (void)setInkColor:(UIColor *)inkColor {
+  _inkColor = inkColor;
+  // If no ink color then reset to the default ink color
+  self.inkTouchController.defaultInkView.inkColor =
+      inkColor ?: [[UIColor alloc] initWithWhite:0 alpha:0.14f];
+}
+
+- (void)setImageRenderingMode:(UIImageRenderingMode)imageRenderingMode {
+  _imageRenderingMode = imageRenderingMode;
+  [self setNeedsLayout];
 }
 
 @end

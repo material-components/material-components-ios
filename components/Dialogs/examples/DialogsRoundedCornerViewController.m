@@ -42,8 +42,6 @@
            forControlEvents:UIControlEventTouchUpInside];
 
   [self.view addSubview:_dismissButton];
-
-  self.view.layer.cornerRadius = 24.0;
 }
 
 - (void)viewWillLayoutSubviews {
@@ -105,11 +103,18 @@
 }
 
 - (IBAction)didTapPresent:(id)sender {
-  UIViewController *viewController =
+  DialogsRoundedCornerSimpleController *viewController =
       [[DialogsRoundedCornerSimpleController alloc] initWithNibName:nil bundle:nil];
 
   viewController.modalPresentationStyle = UIModalPresentationCustom;
   viewController.transitioningDelegate = self.transitionController;
+
+  // sets the dialog's corner radius
+  viewController.view.layer.cornerRadius = 24.0f;
+
+  // ensure shadow/tracking layer matches the dialog's corner radius
+  MDCDialogPresentationController *controller = viewController.mdc_dialogPresentationController;
+  controller.dialogCornerRadius = viewController.view.layer.cornerRadius;
 
   [self presentViewController:viewController animated:YES completion:NULL];
 }
