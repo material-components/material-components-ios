@@ -23,6 +23,8 @@
 @property(nonatomic, nonnull, strong) UILabel *titleLabel;
 @property(nonatomic, nonnull, strong) UILabel *messageLabel;
 
+@property(nonatomic, nullable, strong) UIImageView *titleIconImageView;
+
 @property(nonatomic, nonnull, strong, readonly) NSArray<MDCFlatButton *> *actionButtons;
 
 - (nonnull MDCButton *)addActionButtonTitle:(NSString *_Nonnull)actionTitle

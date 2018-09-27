@@ -75,7 +75,12 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
 
     view.backgroundColor = UIColor.white
 
-    loadCollectionView(menu: ["Dialog with Centered Title"])
+    loadCollectionView(menu: [
+      "Centered Title",
+      "Centered Title With a Title Icon",
+      "Naturally Aligned Title with an Icon",
+      "Right aligned Title with a Large Icon",
+      "Title Icon, No Title"])
   }
 
   func loadCollectionView(menu: [String]) {
@@ -84,22 +89,73 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
   }
 
   override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    switch indexPath.row {
-    case 0:
-      didTapCenteredTitle()
-    default:
-      print("No row is selected")
-    }
-  }
-
-  func didTapCenteredTitle() {
-    let alert = createMDCAlertController(title: "Dialog Title")
-    alert.titleAlignment = .center // todo: theme with themer when available
-    MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
+    guard let alert = performActionFor(row: indexPath.row) else { return }
     self.present(alert, animated: true, completion: nil)
   }
 
-  private func createMDCAlertController(title: String) -> MDCAlertController {
+  private func performActionFor(row: Int) -> MDCAlertController? {
+    switch row {
+    case 0:
+      return performCenteredTitle()
+    case 1:
+      return performCenteredTitleWithIcon()
+    case 2:
+      return performNaturalTitleWithIcon()
+    case 3:
+      return performRightTitleWithResizedIcon()
+    case 4:
+      return performTitleIconNoTitle()
+    default:
+      print("No row is selected")
+      return nil
+    }
+  }
+
+  func sampleIcon(isStandardSize: Bool = true) -> UIImage? {
+    let bundle = Bundle(for: DialogsAlertCustomizationViewController.self)
+    return UIImage(
+      named: isStandardSize ? "outline_lock_black_24pt" : "baseline_alarm_on_black_48pt",
+      in: bundle, compatibleWith: nil)
+  }
+
+  func performCenteredTitle() -> MDCAlertController {
+    let alert = createMDCAlertController(title: "Center Aligned Title")
+    alert.titleAlignment = .center
+    MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
+    return alert
+  }
+
+  func performCenteredTitleWithIcon() -> MDCAlertController {
+    let alert = createMDCAlertController(title: "Center Aligned Title")
+    alert.titleIcon = sampleIcon()
+    alert.titleAlignment = .center
+    MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
+    return alert
+  }
+
+  func performNaturalTitleWithIcon() -> MDCAlertController {
+    let alert = createMDCAlertController(title: "Default (Natural) Title Alignment")
+    alert.titleIcon = sampleIcon()
+    MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
+    return alert
+  }
+
+  func performRightTitleWithResizedIcon() -> MDCAlertController {
+    let alert = createMDCAlertController(title: "Right Aligned Title")
+    alert.titleIcon = sampleIcon(isStandardSize: false)
+    alert.titleAlignment = .right
+    MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
+    return alert
+  }
+
+  func performTitleIconNoTitle() -> MDCAlertController {
+    let alert = createMDCAlertController(title: nil)
+    alert.titleIcon = sampleIcon()
+    MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
+    return alert
+  }
+
+  private func createMDCAlertController(title: String?) -> MDCAlertController {
     let alertController = MDCAlertController(title: title, message: """
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
       tempor incididunt ut labore et dolore magna aliqua.
