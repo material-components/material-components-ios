@@ -21,18 +21,20 @@ class MDCAlertControllerAlertThemerTests: XCTestCase {
 
   let defaultCornerRadius: CGFloat = 4.0
   var alertScheme: MDCAlertScheme = MDCAlertScheme()
+  var alert = MDCAlertController(title: "Title", message: "Message")
+  var alertView: MDCAlertControllerView { return alert.view as! MDCAlertControllerView }
 
   override func setUp() {
     super.setUp()
 
     alertScheme = MDCAlertScheme()
+    alertScheme.colorScheme = MDCSemanticColorScheme()
+    alertScheme.typographyScheme = MDCTypographyScheme()
+
+    alert = MDCAlertController(title: "Title", message: "Message")
   }
 
   func testDefaultAlertScheme() {
-    // When
-    let alertScheme = MDCAlertScheme()
-
-    // Then
     XCTAssertEqual(alertScheme.colorScheme.primaryColor, MDCSemanticColorScheme().primaryColor)
     XCTAssertEqual(alertScheme.typographyScheme.body1, MDCTypographyScheme().body1)
     XCTAssertEqual(alertScheme.cornerRadius, defaultCornerRadius)
@@ -41,11 +43,8 @@ class MDCAlertControllerAlertThemerTests: XCTestCase {
   func testApplyingAlertSchemeWithCustomColor() {
     // Given
     let colorScheme = MDCSemanticColorScheme()
-
-    let alert = MDCAlertController(title: "Title", message: "Message")
-    let alertView = alert.view as! MDCAlertControllerView
-
     colorScheme.onSurfaceColor = .orange
+    colorScheme.primaryColor = .green
     alertScheme.colorScheme = colorScheme
 
     // When
@@ -57,14 +56,30 @@ class MDCAlertControllerAlertThemerTests: XCTestCase {
                    alertScheme.colorScheme.onSurfaceColor.withAlphaComponent(0.87))
     XCTAssertNotEqual(alertView.titleColor,
                    MDCSemanticColorScheme().onSurfaceColor.withAlphaComponent(0.87))
+    XCTAssertEqual(alertView.titleIconTintColor, colorScheme.primaryColor)
   }
     
+  func testApplyingCustomTitleIconTintColor() {
+    // Given
+    let iconColor = UIColor.red
+    let primaryColor = UIColor.green
+    let colorScheme = MDCSemanticColorScheme()
+    colorScheme.primaryColor = primaryColor
+    alertScheme.colorScheme = colorScheme
+
+    // When
+    MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
+    alert.titleIconTintColor = iconColor
+
+    // Then
+    XCTAssertEqual(alert.buttonTitleColor, primaryColor)
+    XCTAssertEqual(alertView.buttonColor, primaryColor)
+    XCTAssertEqual(alertView.titleIconTintColor, iconColor)
+  }
+
   func testApplyingAlertSchemeWithCustomTypography() {
     // Given
     let typographyScheme = MDCTypographyScheme()
-    let alert = MDCAlertController(title: "Title", message: "Message")
-    let alertView = alert.view as! MDCAlertControllerView
-
     let testFont = UIFont.boldSystemFont(ofSize: 55.0)
     typographyScheme.headline6 = testFont
     alertScheme.typographyScheme = typographyScheme
@@ -82,9 +97,6 @@ class MDCAlertControllerAlertThemerTests: XCTestCase {
   func testApplyingAlertSchemeWithCustomShape() {
     // Given
     let cornerRadius: CGFloat = 33.3
-    let alert = MDCAlertController(title: "Title", message: "Message")
-    let alertView = alert.view as! MDCAlertControllerView
-
     alertScheme.cornerRadius = cornerRadius
 
     // When

@@ -24,6 +24,7 @@
   alertController.titleColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87];
   alertController.messageColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
   alertController.buttonTitleColor = colorScheme.primaryColor;
+  alertController.titleIconTintColor = colorScheme.primaryColor;
 }
 
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme {

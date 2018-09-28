@@ -21,6 +21,7 @@
 
 @property(nonatomic, assign) NSTextAlignment titleAlignment;
 @property(nonatomic, strong, nullable) UIImage *titleIcon;
+@property(nonatomic, strong, nullable) UIColor *titleIconTintColor;
 
 @property(nonatomic, strong, nullable) UIFont *messageFont UI_APPEARANCE_SELECTOR;
 @property(nonatomic, strong, nullable) UIColor *messageColor UI_APPEARANCE_SELECTOR;
