@@ -17,7 +17,7 @@ manually specify the MaterialComponentsAlpha target and our repo.
 ```
    pod 'MaterialComponentsAlpha', :git => 'https://github.com/material-components/material-components-ios.git'
 ```
-When the component graduates to ready clients will need to change thier specs to point at the main pod.
+When the component graduates to "Ready" clients will need to change their specs to point at the main pod.
 
 Alpha components are not subject to our deprecation policy and we will not provide behavioral flags
 for gradual migration of runtime behaviors.
