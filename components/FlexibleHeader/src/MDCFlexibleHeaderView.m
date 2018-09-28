@@ -1459,7 +1459,7 @@ static BOOL isRunningiOS10_3OrAbove() {
     }
 
     // When the tracking scroll view is cleared we need a shadow update.
-    if (!_trackingScrollView) {
+    if (!self.trackingScrollView) {
       self.layer.shadowOpacity = 0;
     }
   };
