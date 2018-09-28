@@ -79,8 +79,9 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
       "Centered Title",
       "Centered Title With a Title Icon",
       "Naturally Aligned Title with an Icon",
-      "Right aligned Title with a Large Icon",
-      "Title Icon, No Title"])
+      "Right Aligned Title with a Large Icon",
+      "Tinted Title Icon, No Title",
+    ])
   }
 
   func loadCollectionView(menu: [String]) {
@@ -104,7 +105,7 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
     case 3:
       return performRightTitleWithResizedIcon()
     case 4:
-      return performTitleIconNoTitle()
+      return performTintedTitleIconNoTitle()
     default:
       print("No row is selected")
       return nil
@@ -148,10 +149,14 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
     return alert
   }
 
-  func performTitleIconNoTitle() -> MDCAlertController {
+  func performTintedTitleIconNoTitle() -> MDCAlertController {
     let alert = createMDCAlertController(title: nil)
     alert.titleIcon = sampleIcon()
     MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
+
+    // theming override: set the titleIconTintColor after the color scheme has been applied
+    alert.titleIconTintColor = .red
+
     return alert
   }
 

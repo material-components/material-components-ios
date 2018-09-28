@@ -54,6 +54,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 }
 
 @dynamic titleAlignment;
+@dynamic titleIcon;
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -182,8 +183,11 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   self.titleLabel.textAlignment = titleAlignment;
 }
 
+- (UIImage *)titleIcon {
+  return self.titleIconImageView.image;
+}
+
 - (void)setTitleIcon:(UIImage *)titleIcon {
-  _titleIcon = titleIcon;
   if (titleIcon == nil) {
     [self.titleIconImageView removeFromSuperview];
     self.titleIconImageView = nil;
@@ -195,7 +199,13 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     self.titleIconImageView.image = titleIcon;
   }
 
+  self.titleIconImageView.tintColor = self.titleIconTintColor;
   [self.titleIconImageView sizeToFit];
+}
+
+- (void)setTitleIconTintColor:(UIColor *)titleIconTintColor {
+  _titleIconTintColor = titleIconTintColor;
+  self.titleIconImageView.tintColor = titleIconTintColor;
 }
 
 - (NSString *)message {
