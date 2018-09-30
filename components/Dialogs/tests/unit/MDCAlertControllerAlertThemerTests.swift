@@ -77,6 +77,24 @@ class MDCAlertControllerAlertThemerTests: XCTestCase {
     XCTAssertEqual(alertView.titleIconTintColor, iconColor)
   }
 
+  func testApplyingAlertSchemeScrimColorToPresentationController() {
+
+    guard let presentationController = alert.mdc_dialogPresentationController else { return }
+
+    // Given
+    let colorScheme = MDCSemanticColorScheme()
+    colorScheme.onSurfaceColor = UIColor.green
+    alertScheme.colorScheme = colorScheme
+    let scrimColor = colorScheme.onSurfaceColor.withAlphaComponent(0.32)
+
+    // When
+    MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
+
+    // Then
+    XCTAssertEqual(presentationController.scrimColor, scrimColor)
+  }
+
+
   func testApplyingAlertSchemeWithCustomTypography() {
     // Given
     let typographyScheme = MDCTypographyScheme()

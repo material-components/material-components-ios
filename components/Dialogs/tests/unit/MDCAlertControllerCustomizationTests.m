@@ -91,6 +91,18 @@ MDCAlertControllerView *alertView;
   XCTAssertEqualObjects(alertView.titleIconImageView.tintColor, tintColor);
 }
 
+- (void)testApplyingScrimColorToPresentationController {
+  // Given
+  UIColor *scrimColor = [UIColor.orangeColor colorWithAlphaComponent:0.5];
+  MDCDialogPresentationController *presentationController = alert.mdc_dialogPresentationController;
+
+  // When
+  presentationController.scrimColor = scrimColor;
+
+  // Then
+  XCTAssertEqualObjects(alert.mdc_dialogPresentationController.scrimColor, scrimColor);
+}
+
 static inline UIImage *TestImage(CGSize size) {
   CGFloat scale = [UIScreen mainScreen].scale;
   UIGraphicsBeginImageContextWithOptions(size, false, scale);

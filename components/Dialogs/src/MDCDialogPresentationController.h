@@ -50,6 +50,13 @@
 @property(nonatomic, assign) CGFloat dialogCornerRadius;
 
 /**
+ Customize the color of the background scrim.
+
+ Defaults to a semi-transparent White.
+ */
+@property(nonatomic, strong, nullable) UIColor *scrimColor;
+
+/**
  Returns the size of the specified child view controller's content.
 
  The size is initially based on container.preferredSize. Width is will have a minimum of 280 and a
