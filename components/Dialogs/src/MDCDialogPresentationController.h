@@ -52,7 +52,7 @@
 /**
  Customize the color of the background scrim.
 
- Defaults to a semi-transparent White.
+ Defaults to a semi-transparent Black.
  */
 @property(nonatomic, strong, nullable) UIColor *scrimColor;
 

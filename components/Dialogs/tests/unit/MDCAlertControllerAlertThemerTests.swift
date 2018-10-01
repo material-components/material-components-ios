@@ -78,7 +78,6 @@ class MDCAlertControllerAlertThemerTests: XCTestCase {
   }
 
   func testApplyingAlertSchemeScrimColorToPresentationController() {
-
     guard let presentationController = alert.mdc_dialogPresentationController else { return }
 
     // Given
@@ -93,7 +92,6 @@ class MDCAlertControllerAlertThemerTests: XCTestCase {
     // Then
     XCTAssertEqual(presentationController.scrimColor, scrimColor)
   }
-
 
   func testApplyingAlertSchemeWithCustomTypography() {
     // Given
