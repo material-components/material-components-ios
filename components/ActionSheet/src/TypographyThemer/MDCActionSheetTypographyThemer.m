@@ -20,7 +20,7 @@
       toActionSheetController:(MDCActionSheetController *)actionSheetController {
   actionSheetController.titleFont = typographyScheme.subtitle1;
   actionSheetController.messageFont = typographyScheme.body2;
-  actionSheetController.actionFont = typographyScheme.body1;
+  actionSheetController.actionFont = typographyScheme.subtitle1;
 }
 
 @end
