@@ -601,7 +601,7 @@ static UIColor *DrawerShadowColor(void) {
     // The content header top inset is only set once.
     if (contentScrollsToReveal) {
       _contentHeaderTopInset = containerHeight * (1.f - kInitialDrawerHeightFactor);
-      if (_contentHeaderTopInset < self.topHeaderHeight - self.contentHeaderHeight) {
+      if (_contentHeaderTopInset <= self.topHeaderHeight - self.contentHeaderHeight) {
         _contentHeaderTopInset = self.topHeaderHeight - self.contentHeaderHeight + FLT_EPSILON;
       }
     } else {
