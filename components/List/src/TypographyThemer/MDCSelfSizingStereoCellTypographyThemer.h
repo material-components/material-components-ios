@@ -18,7 +18,8 @@
 #import <Foundation/Foundation.h>
 
 /**
- The Material Design typography system's themer for instances of MDCSelfSizingStereoCellTypographyThemer.
+ The Material Design typography system's themer for instances of
+ MDCSelfSizingStereoCellTypographyThemer.
  */
 @interface MDCSelfSizingStereoCellTypographyThemer : NSObject
 
