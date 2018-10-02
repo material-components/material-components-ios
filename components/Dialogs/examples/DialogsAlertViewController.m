@@ -31,15 +31,10 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  [self loadCollectionView:
-    @[ @"Show Alert",
-       @"Show Long Alert",
-       @"Non-Dismissable Alert",
-       @"Alert (Dynamic Type enabled)",
-       @"Overpopulated Alert",
-       @"Style Alert",
-       @"Un-style Alert",
-       @"Low elevation Alert"]];
+  [self loadCollectionView:@[
+    @"Show Alert", @"Show Long Alert", @"Non-Dismissable Alert", @"Alert (Dynamic Type enabled)",
+    @"Overpopulated Alert", @"Style Alert", @"Un-style Alert", @"Low elevation Alert"
+  ]];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -395,9 +390,9 @@
   [self themeAlertController:materialAlertController];
 
   MDCAlertAction *okAction = [MDCAlertAction actionWithTitle:@"OK"
-                                                         handler:^(MDCAlertAction *action) {
-                                                           NSLog(@"%@", @"OK pressed");
-                                                         }];
+                                                     handler:^(MDCAlertAction *action) {
+                                                       NSLog(@"%@", @"OK pressed");
+                                                     }];
   [materialAlertController addAction:okAction];
 
   materialAlertController.elevation = 2;

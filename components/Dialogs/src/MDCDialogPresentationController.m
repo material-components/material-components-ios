@@ -18,7 +18,6 @@
 #import "MaterialShadowLayer.h"
 #import "private/MDCDialogShadowedView.h"
 
-
 static CGFloat MDCDialogMinimumWidth = 280.0f;
 // TODO: Spec indicates 40 side margins and 280 minimum width.
 // That is incompatible with a 320 wide device.

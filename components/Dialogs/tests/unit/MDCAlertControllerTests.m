@@ -16,8 +16,8 @@
 #import "MaterialButtons.h"
 #import "MaterialDialogs.h"
 
-#import "MDCAlertControllerView+Private.h"
 #import "../../src/private/MDCDialogShadowedView.h"
+#import "MDCAlertControllerView+Private.h"
 
 #pragma mark - Subclasses for testing
 
