@@ -31,3 +31,16 @@ mdc_public_objc_library(
         "@material_internationalization_ios//:MDFInternationalization",
     ],
 )
+
+mdc_objc_library(
+    name = "TypographyThemer",
+    srcs = native.glob(["src/TypographyThemer/*.m"]),
+    hdrs = native.glob(["src/TypographyThemer/*.h"]),
+    includes = ["src/TypographyThemer"],
+    sdk_frameworks = ["UIKit"],
+    deps = [
+        ":List",
+        "//components/schemes/Typography",
+    ],
+    visibility = ["//visibility:public"],
+)
