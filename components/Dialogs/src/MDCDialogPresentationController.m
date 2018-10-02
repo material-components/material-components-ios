@@ -60,6 +60,14 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
   return _trackingView.layer.cornerRadius;
 }
 
+- (void)setScrimColor:(UIColor *)scrimColor {
+  self.dimmingView.backgroundColor = scrimColor;
+}
+
+- (UIColor *)scrimColor {
+  return self.dimmingView.backgroundColor;
+}
+
 - (instancetype)initWithPresentedViewController:(UIViewController *)presentedViewController
                        presentingViewController:(UIViewController *)presentingViewController {
   self = [super initWithPresentedViewController:presentedViewController
