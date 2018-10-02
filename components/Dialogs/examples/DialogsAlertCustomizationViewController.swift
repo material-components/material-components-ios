@@ -81,6 +81,7 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
       "Naturally Aligned Title with an Icon",
       "Right Aligned Title with a Large Icon",
       "Tinted Title Icon, No Title",
+      "Darker Scrim",
     ])
   }
 
@@ -106,6 +107,8 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
       return performRightTitleWithResizedIcon()
     case 4:
       return performTintedTitleIconNoTitle()
+    case 5:
+      return performScrimColor()
     default:
       print("No row is selected")
       return nil
@@ -157,6 +160,13 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
     // theming override: set the titleIconTintColor after the color scheme has been applied
     alert.titleIconTintColor = .red
 
+    return alert
+  }
+
+  func performScrimColor() -> MDCAlertController {
+    let alert = createMDCAlertController(title: "Darker Scrim")
+    MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
+    alert.mdc_dialogPresentationController?.scrimColor = UIColor.black.withAlphaComponent(0.6)
     return alert
   }
 
