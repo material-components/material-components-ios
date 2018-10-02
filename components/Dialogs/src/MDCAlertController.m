@@ -249,9 +249,6 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 - (void)setElevation:(CGFloat)elevation {
   _elevation = elevation;
-  if (self.alertView) {
-    self.alertView.elevation = elevation;
-  }
   MDCDialogPresentationController *dialogPresentationController =
       self.mdc_dialogPresentationController;
   if (dialogPresentationController) {

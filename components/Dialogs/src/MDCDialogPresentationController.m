@@ -82,7 +82,7 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
     MDCShadowLayer *shadowLayer = (MDCShadowLayer *)_trackingView.layer;
     return shadowLayer.elevation;
   }
-  return 0.0;
+  return MDCShadowElevationDialog;
 }
 
 - (instancetype)initWithPresentedViewController:(UIViewController *)presentedViewController
