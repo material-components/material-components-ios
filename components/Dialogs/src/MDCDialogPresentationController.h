@@ -50,6 +50,13 @@
 @property(nonatomic, assign) CGFloat dialogCornerRadius;
 
 /**
+ Customize the elevation of the shadow to match the presented view's shadow.
+
+ Defaults to 24.0.
+ */
+@property(nonatomic, assign) CGFloat dialogElevation;
+
+/**
  Customize the color of the background scrim.
 
  Defaults to a semi-transparent Black.

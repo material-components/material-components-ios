@@ -16,6 +16,7 @@
 #import "MaterialButtons.h"
 #import "MaterialDialogs.h"
 
+#import "../../src/private/MDCDialogShadowedView.h"
 #import "MDCAlertControllerView+Private.h"
 
 #pragma mark - Subclasses for testing
@@ -28,6 +29,10 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
 
 @interface MDCAlertControllerSubclass : MDCAlertController
 @property(nonatomic, assign) NSInteger value;
+@end
+
+@interface MDCDialogPresentationController (Testing)
+@property(nonatomic) MDCDialogShadowedView *trackingView;
 @end
 
 @implementation MDCAlertControllerSubclass
@@ -302,6 +307,48 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
   XCTAssertEqualWithAccuracy(view.layer.cornerRadius, cornerRadius, 0.0);
   XCTAssertEqualWithAccuracy(alert.mdc_dialogPresentationController.dialogCornerRadius,
                              cornerRadius, 0.0);
+}
+
+- (void)testDefaultElevation {
+  // Given
+  CGFloat elevation = (CGFloat)MDCShadowElevationDialog;
+  MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:@"title"
+                                                                   message:@"message"];
+  [alert addAction:[MDCAlertAction actionWithTitle:@"action1" handler:nil]];
+
+  // Then
+  MDCDialogShadowedView *shadowView = alert.mdc_dialogPresentationController.trackingView;
+  XCTAssertEqual(shadowView.elevation, elevation);
+}
+
+- (void)testCustomElevation {
+  // Given
+  CGFloat elevation = (CGFloat)2.0;
+  MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:@"title"
+                                                                   message:@"message"];
+  [alert addAction:[MDCAlertAction actionWithTitle:@"action1" handler:nil]];
+
+  // When
+  alert.elevation = elevation;
+
+  // Then
+  MDCDialogShadowedView *shadowView = alert.mdc_dialogPresentationController.trackingView;
+  XCTAssertEqual(shadowView.elevation, elevation);
+}
+
+- (void)testCustomDialogPresentationElevation {
+  // Given
+  CGFloat elevation = (CGFloat)2.0;
+  MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:@"title"
+                                                                   message:@"message"];
+  [alert addAction:[MDCAlertAction actionWithTitle:@"action1" handler:nil]];
+
+  // When
+  alert.mdc_dialogPresentationController.dialogElevation = elevation;
+
+  // Then
+  MDCDialogShadowedView *shadowView = alert.mdc_dialogPresentationController.trackingView;
+  XCTAssertEqual(shadowView.elevation, elevation);
 }
 
 @end
