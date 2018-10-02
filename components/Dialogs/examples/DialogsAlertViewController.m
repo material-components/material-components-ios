@@ -382,7 +382,7 @@
 }
 
 - (IBAction)didTapLowElevationAlert {
-  NSString *titleString = @"Low elevation Material alert controller";
+  NSString *titleString = @"Using Material alert controller?";
   NSString *messageString = @"This is an alert controller with a low elevation.";
 
   MDCAlertController *materialAlertController =
@@ -394,7 +394,6 @@
                                                        NSLog(@"%@", @"OK pressed");
                                                      }];
   [materialAlertController addAction:okAction];
-
   materialAlertController.elevation = 2;
   [self presentViewController:materialAlertController animated:YES completion:NULL];
 }
