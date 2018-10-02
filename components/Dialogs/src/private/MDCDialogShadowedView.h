@@ -15,5 +15,5 @@
 #import <UIKit/UIKit.h>
 
 @interface MDCDialogShadowedView : UIView
-
+@property(nonatomic, assign) CGFloat elevation;
 @end

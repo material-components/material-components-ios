@@ -32,7 +32,7 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
 
 // Tracking view that adds a shadow under the presented view. This view's frame should always match
 // the presented view's.
-@property(nonatomic) UIView *trackingView;
+@property(nonatomic) MDCDialogShadowedView *trackingView;
 
 @end
 
@@ -71,18 +71,11 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
 }
 
 - (void)setDialogElevation:(CGFloat)dialogElevation {
-  if ([_trackingView.layer isKindOfClass:[MDCShadowLayer class]]) {
-    MDCShadowLayer *shadowLayer = (MDCShadowLayer *)_trackingView.layer;
-    [shadowLayer setElevation:dialogElevation];
-  }
+  _trackingView.elevation = dialogElevation;
 }
 
 - (CGFloat)dialogElevation {
-  if ([_trackingView.layer isKindOfClass:[MDCShadowLayer class]]) {
-    MDCShadowLayer *shadowLayer = (MDCShadowLayer *)_trackingView.layer;
-    return shadowLayer.elevation;
-  }
-  return MDCShadowElevationDialog;
+  return _trackingView.elevation;
 }
 
 - (instancetype)initWithPresentedViewController:(UIViewController *)presentedViewController

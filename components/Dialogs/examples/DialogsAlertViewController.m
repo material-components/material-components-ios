@@ -391,14 +391,14 @@
   NSString *messageString = @"This is an alert controller with a low elevation.";
 
   MDCAlertController *materialAlertController =
-  [MDCAlertController alertControllerWithTitle:titleString message:messageString];
+      [MDCAlertController alertControllerWithTitle:titleString message:messageString];
   [self themeAlertController:materialAlertController];
 
-  MDCAlertAction *agreeAaction = [MDCAlertAction actionWithTitle:@"OK"
+  MDCAlertAction *okAction = [MDCAlertAction actionWithTitle:@"OK"
                                                          handler:^(MDCAlertAction *action) {
                                                            NSLog(@"%@", @"OK pressed");
                                                          }];
-  [materialAlertController addAction:agreeAaction];
+  [materialAlertController addAction:okAction];
 
   materialAlertController.elevation = 2;
   [self presentViewController:materialAlertController animated:YES completion:NULL];
