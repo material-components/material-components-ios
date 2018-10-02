@@ -31,14 +31,10 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  [self loadCollectionView:
-    @[ @"Show Alert",
-       @"Show Long Alert",
-       @"Non-Dismissable Alert",
-       @"Alert (Dynamic Type enabled)",
-       @"Overpopulated Alert",
-       @"Style Alert",
-       @"Un-style Alert"]];
+  [self loadCollectionView:@[
+    @"Show Alert", @"Show Long Alert", @"Non-Dismissable Alert", @"Alert (Dynamic Type enabled)",
+    @"Overpopulated Alert", @"Style Alert", @"Un-style Alert", @"Low elevation Alert"
+  ]];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -64,6 +60,9 @@
       break;
     case 6:
       [self didTapUnstyleAlert];
+      break;
+    case 7:
+      [self didTapLowElevationAlert];
       break;
   }
 }
@@ -382,6 +381,21 @@
   [self presentViewController:materialAlertController animated:YES completion:NULL];
 }
 
+- (IBAction)didTapLowElevationAlert {
+  NSString *titleString = @"Using Material alert controller?";
+  NSString *messageString = @"This is an alert controller with a low elevation.";
 
+  MDCAlertController *materialAlertController =
+      [MDCAlertController alertControllerWithTitle:titleString message:messageString];
+  [self themeAlertController:materialAlertController];
+
+  MDCAlertAction *okAction = [MDCAlertAction actionWithTitle:@"OK"
+                                                     handler:^(MDCAlertAction *action) {
+                                                       NSLog(@"%@", @"OK pressed");
+                                                     }];
+  [materialAlertController addAction:okAction];
+  materialAlertController.elevation = 2;
+  [self presentViewController:materialAlertController animated:YES completion:NULL];
+}
 
 @end
