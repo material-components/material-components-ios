@@ -100,6 +100,9 @@
 /** The corner radius applied to the Alert Controller view. Default to 0 (no round corners) */
 @property(nonatomic, assign) CGFloat cornerRadius;
 
+/** The elevation that will be applied to the Alert Controller view. Default to 24. */
+@property(nonatomic, assign) CGFloat elevation;
+
 // TODO(iangordon): Add support for preferredAction to match UIAlertController.
 // TODO(iangordon): Consider adding support for UITextFields to match UIAlertController.
 

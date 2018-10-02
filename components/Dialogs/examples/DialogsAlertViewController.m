@@ -38,7 +38,8 @@
        @"Alert (Dynamic Type enabled)",
        @"Overpopulated Alert",
        @"Style Alert",
-       @"Un-style Alert"]];
+       @"Un-style Alert",
+       @"Low elevation Alert"]];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -64,6 +65,9 @@
       break;
     case 6:
       [self didTapUnstyleAlert];
+      break;
+    case 7:
+      [self didTapLowElevationAlert];
       break;
   }
 }
@@ -382,6 +386,22 @@
   [self presentViewController:materialAlertController animated:YES completion:NULL];
 }
 
+- (IBAction)didTapLowElevationAlert {
+  NSString *titleString = @"Low elevation Material alert controller";
+  NSString *messageString = @"This is an alert controller with a low elevation.";
 
+  MDCAlertController *materialAlertController =
+  [MDCAlertController alertControllerWithTitle:titleString message:messageString];
+  [self themeAlertController:materialAlertController];
+
+  MDCAlertAction *agreeAaction = [MDCAlertAction actionWithTitle:@"OK"
+                                                         handler:^(MDCAlertAction *action) {
+                                                           NSLog(@"%@", @"OK pressed");
+                                                         }];
+  [materialAlertController addAction:agreeAaction];
+
+  materialAlertController.elevation = 2;
+  [self presentViewController:materialAlertController animated:YES completion:NULL];
+}
 
 @end

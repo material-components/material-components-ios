@@ -15,7 +15,9 @@
 #import "MDCDialogPresentationController.h"
 
 #import "MaterialKeyboardWatcher.h"
+#import "MaterialShadowLayer.h"
 #import "private/MDCDialogShadowedView.h"
+
 
 static CGFloat MDCDialogMinimumWidth = 280.0f;
 // TODO: Spec indicates 40 side margins and 280 minimum width.
@@ -66,6 +68,21 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
 
 - (UIColor *)scrimColor {
   return self.dimmingView.backgroundColor;
+}
+
+- (void)setDialogElevation:(CGFloat)dialogElevation {
+  if ([_trackingView.layer isKindOfClass:[MDCShadowLayer class]]) {
+    MDCShadowLayer *shadowLayer = (MDCShadowLayer *)_trackingView.layer;
+    [shadowLayer setElevation:dialogElevation];
+  }
+}
+
+- (CGFloat)dialogElevation {
+  if ([_trackingView.layer isKindOfClass:[MDCShadowLayer class]]) {
+    MDCShadowLayer *shadowLayer = (MDCShadowLayer *)_trackingView.layer;
+    return shadowLayer.elevation;
+  }
+  return 0.0;
 }
 
 - (instancetype)initWithPresentedViewController:(UIViewController *)presentedViewController
