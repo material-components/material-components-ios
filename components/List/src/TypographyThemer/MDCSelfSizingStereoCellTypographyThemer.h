@@ -30,6 +30,6 @@
  @param cell A component instance to which the typography scheme should be applied.
  */
 + (void)applyTypographyScheme:(id<MDCTypographyScheming>)typographyScheme
-      toActionSheetController:(MDCSelfSizingStereoCell *)cell;
+       toSelfSizingStereoCell:(MDCSelfSizingStereoCell *)cell;
 
 @end

@@ -118,7 +118,7 @@ static NSString *const kSelfSizingStereoCellExampleDescription =
   cell.trailingImageView.tintColor = [UIColor darkGrayColor];
   cell.mdc_adjustsFontForContentSizeCategory = YES;
   [MDCSelfSizingStereoCellTypographyThemer applyTypographyScheme:self.typographyScheme
-                                         toActionSheetController:cell];
+                                          toSelfSizingStereoCell:cell];
   return cell;
 }
 

@@ -17,7 +17,7 @@
 @implementation MDCSelfSizingStereoCellTypographyThemer
 
 + (void)applyTypographyScheme:(id<MDCTypographyScheming>)typographyScheme
-      toActionSheetController:(MDCSelfSizingStereoCell *)cell {
+       toSelfSizingStereoCell:(MDCSelfSizingStereoCell *)cell {
   cell.titleLabel.font = typographyScheme.subtitle1;
   cell.detailLabel.font = typographyScheme.body2;
 }
