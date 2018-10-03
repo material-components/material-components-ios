@@ -15,6 +15,7 @@
 #import "MDCSelfSizingStereoCellExample.h"
 
 #import "MDCSelfSizingStereoCell.h"
+#import "MaterialList+ColorThemer.h"
 #import "MaterialList+TypographyThemer.h"
 
 static CGFloat const kArbitraryCellHeight = 75.f;
@@ -29,6 +30,7 @@ static NSString *const kSelfSizingStereoCellExampleDescription =
 @property(nonatomic, strong) UICollectionViewFlowLayout *collectionViewLayout;
 @property(nonatomic, strong) NSArray *randomStrings;
 @property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, assign) NSInteger numberOfCells;
 @end
 
@@ -39,7 +41,7 @@ static NSString *const kSelfSizingStereoCellExampleDescription =
   self.parentViewController.automaticallyAdjustsScrollViewInsets = NO;
   self.automaticallyAdjustsScrollViewInsets = NO;
   self.typographyScheme = [[MDCTypographyScheme alloc] init];
-
+  self.colorScheme = [[MDCSemanticColorScheme alloc] init];
   [self createDataSource];
   [self createCollectionView];
 }
@@ -119,6 +121,8 @@ static NSString *const kSelfSizingStereoCellExampleDescription =
   cell.mdc_adjustsFontForContentSizeCategory = YES;
   [MDCSelfSizingStereoCellTypographyThemer applyTypographyScheme:self.typographyScheme
                                           toSelfSizingStereoCell:cell];
+  [MDCSelfSizingStereoCellColorThemer applySemanticColorScheme:self.colorScheme
+                                        toSelfSizingStereoCell:cell];
   return cell;
 }
 
