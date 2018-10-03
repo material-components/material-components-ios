@@ -27,6 +27,7 @@
                                 toAlertController:alertController];
 
   alertController.cornerRadius = alertScheme.cornerRadius;
+  alertController.elevation = alertScheme.elevation;
 }
 
 @end

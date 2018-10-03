@@ -14,12 +14,14 @@
 
 import XCTest
 
+import MaterialComponents.MaterialShadowElevations
 import MaterialComponents.MDCAlertScheme
 import MaterialComponents.MDCAlertControllerThemer
 
 class MDCAlertControllerAlertThemerTests: XCTestCase {
 
   let defaultCornerRadius: CGFloat = 4.0
+  let defaultElevation: CGFloat = ShadowElevation.dialog.rawValue
   var alertScheme: MDCAlertScheme = MDCAlertScheme()
   var alert = MDCAlertController(title: "Title", message: "Message")
   var alertView: MDCAlertControllerView { return alert.view as! MDCAlertControllerView }
@@ -38,6 +40,7 @@ class MDCAlertControllerAlertThemerTests: XCTestCase {
     XCTAssertEqual(alertScheme.colorScheme.primaryColor, MDCSemanticColorScheme().primaryColor)
     XCTAssertEqual(alertScheme.typographyScheme.body1, MDCTypographyScheme().body1)
     XCTAssertEqual(alertScheme.cornerRadius, defaultCornerRadius)
+    XCTAssertEqual(alertScheme.elevation, defaultElevation)
   }
 
   func testApplyingAlertSchemeWithCustomColor() {
@@ -122,5 +125,19 @@ class MDCAlertControllerAlertThemerTests: XCTestCase {
     XCTAssertEqual(alertScheme.cornerRadius, cornerRadius, accuracy: 0.0)
     XCTAssertEqual(alertView.cornerRadius, cornerRadius, accuracy: 0.0)
     XCTAssertNotEqual(alertScheme.cornerRadius, defaultCornerRadius, accuracy: 0.0)
+  }
+
+  func testApplyAlertSchemeWithCustomElevation() {
+    // Given
+    let elevation: CGFloat = 10.0
+    alertScheme.elevation = elevation
+
+    // When
+    MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
+
+    // Then
+    XCTAssertEqual(alertScheme.elevation, elevation, accuracy: 0.001)
+    XCTAssertEqual(alert.elevation, elevation, accuracy: 0.001)
+    XCTAssertNotEqual(alertScheme.elevation, defaultElevation, accuracy: 0.001)
   }
 }
