@@ -136,6 +136,7 @@ static UIColor *DrawerShadowColor(void) {
   CGFloat _contentHeaderTopInset;
   CGFloat _contentHeightSurplus;
   CGFloat _addedContentHeight;
+  CGFloat _contentVCPreferredContentSizeHeightCached;
 }
 
 - (instancetype)initWithOriginalPresentingViewController:
@@ -524,7 +525,8 @@ static UIColor *DrawerShadowColor(void) {
 }
 
 - (CGFloat)contentHeightSurplus {
-  if (_contentHeightSurplus == NSNotFound) {
+  if (_contentHeightSurplus == NSNotFound || _contentVCPreferredContentSizeHeightCached !=
+      self.contentViewController.preferredContentSize.height) {
     [self cacheLayoutCalculations];
   }
   return _contentHeightSurplus;
@@ -590,6 +592,7 @@ static UIColor *DrawerShadowColor(void) {
 
 - (void)cacheLayoutCalculationsWithAddedContentHeight:(CGFloat)addedContentHeight {
   CGFloat contentHeight = self.contentViewController.preferredContentSize.height;
+  _contentVCPreferredContentSizeHeightCached = contentHeight;
   NSLog(@"content height: %f", contentHeight);
   CGFloat contentHeaderHeight = self.contentHeaderHeight;
   CGFloat containerHeight = self.presentingViewBounds.size.height;
