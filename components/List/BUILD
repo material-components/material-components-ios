@@ -45,3 +45,16 @@ mdc_objc_library(
     ],
     visibility = ["//visibility:public"],
 )
+
+mdc_objc_library(
+    name = "ColorThemer",
+    srcs = native.glob(["src/ColorThemer/*.m"]),
+    hdrs = native.glob(["src/ColorThemer/*.h"]),
+    includes = ["src/ColorThemer"],
+    sdk_frameworks = ["UIKit"],
+    deps = [
+        ":List",
+        "//components/schemes/Color",
+    ],
+    visibility = ["//visibility:public"],
+)
