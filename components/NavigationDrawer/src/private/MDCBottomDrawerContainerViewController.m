@@ -23,6 +23,7 @@ static const CGFloat kVerticalDistanceThresholdForDismissal = 40.f;
 static const CGFloat kInitialDrawerHeightFactor = 1.f;
 static const CGFloat kHeaderAnimationDistanceAddedDistanceFromTopSafeAreaInset =
     20.f;
+static const CGFloat scrollViewBufferForPerformance = 20.f;
 static const CGFloat kDragVelocityThresholdForHidingDrawer = -2.f;
 static NSString *const kContentOffsetKeyPath = @"contentOffset";
 
@@ -205,15 +206,18 @@ static UIColor *DrawerShadowColor(void) {
   if (self.contentHeaderTopInset <= topAreaInsetForHeader + FLT_EPSILON) {
     topAreaInsetForHeader = FLT_EPSILON;
   }
-  CGFloat drawerOffset = self.contentHeaderTopInset - topAreaInsetForHeader;
+  CGFloat drawerOffset = self.contentHeaderTopInset - topAreaInsetForHeader + scrollViewBufferForPerformance;
+  NSLog(@"drawer offset: %f", drawerOffset);
   CGFloat headerHeightWithoutInset = self.contentHeaderHeight - topAreaInsetForHeader;
   CGFloat contentDiff = contentYOffset - drawerOffset;
   NSLog(@"content diff: %f", contentDiff);
   CGFloat maxScrollOrigin = self.trackingScrollView.contentSize.height -
-                            CGRectGetHeight(self.presentingViewBounds) + headerHeightWithoutInset;
+                            CGRectGetHeight(self.presentingViewBounds) + headerHeightWithoutInset - scrollViewBufferForPerformance;
   BOOL scrollingUpInFull = contentDiff < 0 && CGRectGetMinY(self.trackingScrollView.bounds) > 0;
   NSLog(@"scrollingUpInFull: %d", scrollingUpInFull);
   NSLog(@"first thing: %d, %f, %f", CGRectGetMinY(self.trackingScrollView.bounds) < maxScrollOrigin, CGRectGetMinY(self.trackingScrollView.bounds), maxScrollOrigin);
+  NSLog(@"HEHEHEHE %f", CGRectGetMinY(self.scrollView.bounds));
+
   if (CGRectGetMinY(self.scrollView.bounds) >= drawerOffset || scrollingUpInFull) {
     NSLog(@"we are in full screen");
     // If we reach full screen or if we are scrolling up after being in full screen.
@@ -248,7 +252,7 @@ static UIColor *DrawerShadowColor(void) {
         // end of the content.
         CGSize scrollViewContentSize = self.scrollView.contentSize;
         scrollViewContentSize.height =
-        drawerOffset + CGRectGetHeight(self.scrollView.frame) + 2 * topAreaInsetForHeader;
+            drawerOffset + CGRectGetHeight(self.scrollView.frame) + 2 * topAreaInsetForHeader;
         self.scrollView.contentSize = scrollViewContentSize;
       } else {
         NSLog(@"LOLOLOL");
@@ -357,7 +361,7 @@ static UIColor *DrawerShadowColor(void) {
 //  NSLog(@"contentViewFrame: %f", contentViewFrame.origin.y);
   if (self.trackingScrollView != nil) {
     CGFloat topAreaInsetForHeader = (self.headerViewController ? MDCDeviceTopSafeAreaInset() : 0);
-    contentViewFrame.size.height -= self.contentHeaderHeight;
+    contentViewFrame.size.height -= self.contentHeaderHeight - scrollViewBufferForPerformance;
     if (self.contentHeaderTopInset > topAreaInsetForHeader + FLT_EPSILON) {
       contentViewFrame.size.height += topAreaInsetForHeader;
     }
@@ -371,7 +375,7 @@ static UIColor *DrawerShadowColor(void) {
   }
 
   [self.headerViewController.view.superview bringSubviewToFront:self.headerViewController.view];
-//  [self updateViewWithContentOffset:self.scrollView.contentOffset];
+  [self updateViewWithContentOffset:self.scrollView.contentOffset];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -586,6 +590,7 @@ static UIColor *DrawerShadowColor(void) {
 
 - (void)cacheLayoutCalculationsWithAddedContentHeight:(CGFloat)addedContentHeight {
   CGFloat contentHeight = self.contentViewController.preferredContentSize.height;
+  NSLog(@"content height: %f", contentHeight);
   CGFloat contentHeaderHeight = self.contentHeaderHeight;
   CGFloat containerHeight = self.presentingViewBounds.size.height;
 
@@ -594,7 +599,7 @@ static UIColor *DrawerShadowColor(void) {
 
   CGFloat totalHeight = contentHeight + contentHeaderHeight;
   CGFloat contentHeightThresholdForScrollability =
-      containerHeight * kInitialDrawerHeightFactor + contentHeaderHeight;
+      MIN(containerHeight, containerHeight * kInitialDrawerHeightFactor + contentHeaderHeight);
   BOOL contentScrollsToReveal = totalHeight > contentHeightThresholdForScrollability;
 
   if (_contentHeaderTopInset == NSNotFound) {

@@ -110,6 +110,7 @@ extension BottomDrawerWithScrollableContentExample {
       "breadcrumbs": ["Navigation Drawer", "Bottom Drawer Scrollable Content"],
       "primaryDemo": false,
       "presentable": false,
+      "debug": true,
     ]
   }
 }
