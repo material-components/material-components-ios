@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #import "MDCAlertControllerThemer.h"
+
+#import "MaterialShadowElevations.h"
 #import "MDCAlertColorThemer.h"
 #import "MDCAlertTypographyThemer.h"
 
@@ -27,6 +29,7 @@
                                 toAlertController:alertController];
 
   alertController.cornerRadius = alertScheme.cornerRadius;
+  alertController.elevation = MDCShadowElevationDialog;
 }
 
 @end
