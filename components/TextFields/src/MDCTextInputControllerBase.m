@@ -1576,10 +1576,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     valueString = [valueString stringByAppendingString:@"."];
 
     self.textInput.accessibilityValue = valueString;
-    NSString *leadingUnderlineLabelText = self.textInput.leadingUnderlineLabel.text;
-    self.textInput.leadingUnderlineLabel.accessibilityLabel =
-        [NSString stringWithFormat:@"Error: %@.",
-                                   leadingUnderlineLabelText ? leadingUnderlineLabelText : @""];
+    self.textInput.leadingUnderlineLabel.accessibilityLabel = announcementString;
   } else {
     self.textInput.accessibilityValue = nil;
     if ([self.textInput.leadingUnderlineLabel.text isEqualToString:self.helperText]) {
