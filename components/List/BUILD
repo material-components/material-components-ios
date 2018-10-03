@@ -58,3 +58,28 @@ mdc_objc_library(
     ],
     visibility = ["//visibility:public"],
 )
+
+mdc_objc_library(
+    name = "unit_test_sources",
+    testonly = 1,
+    srcs = native.glob([
+        "tests/unit/*.m",
+        "tests/unit/*.h",
+    ]),
+    sdk_frameworks = [
+        "UIKit",
+        "XCTest",
+    ],
+    deps = [
+         ":List",
+         ":ColorThemer",
+         ":TypographyThemer",
+    ],
+    visibility = ["//visibility:private"],
+)
+
+mdc_unit_test_suite(
+    deps = [
+        ":unit_test_sources",
+    ]
+)
