@@ -25,8 +25,6 @@
 
 @implementation MDCThumbView
 
-static const CGFloat kMinTouchSize = 48;
-
 + (Class)layerClass {
   return [MDCShadowLayer class];
 }
@@ -73,18 +71,6 @@ static const CGFloat kMinTouchSize = 48;
   [super layoutSubviews];
   self.layer.shadowPath =
       [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:_cornerRadius].CGPath;
-}
-
-- (BOOL)pointInside:(CGPoint)point withEvent:(__unused UIEvent *)event {
-  CGFloat dx = MIN(0, _cornerRadius - kMinTouchSize / 2);
-  // Converts point to presentation layer coordinate system so gesture will land on the right visual
-  // position. Assuming superview is not animated.
-  if (self.layer.presentationLayer) {
-    point = [(CALayer *)self.layer.presentationLayer convertPoint:point
-                                                        fromLayer:self.layer.modelLayer];
-  }
-  CGRect rect = CGRectInset(self.bounds, dx, dx);
-  return CGRectContainsPoint(rect, point);
 }
 
 - (void)setIcon:(nullable UIImage *)icon {
