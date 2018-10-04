@@ -1,15 +1,13 @@
-# #develop#
+# 66.0.0
 
-Replace this text with a summarized description of this release's contents.
+Shapes updated it's interface.
+ActionSheet improvements.
+List added a typography themer.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+Shapes updated its API. See [#5247](https://github.com/material-components/material-components-ios/pull/5247) for details.
 
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
 ## API changes
 
 ### List+TypographyThemer
@@ -53,7 +51,6 @@ Replace this text with example code for each new feature.
 
 ### FlexibleHeader
 
-* [Clear the shadow opacity when a nil trackingScrollView is set. (#5282)](https://github.com/material-components/material-components-ios/commit/459fd7ae954ca08fd5cec15778158da33964061d) (Ali Rabbani)
 * [Update MDCFlexibleHeaderView.m (#5259)](https://github.com/material-components/material-components-ios/commit/a1f6658af968f12d354a10aed19f7848abe30579) (Ali Rabbani)
 
 ### List
