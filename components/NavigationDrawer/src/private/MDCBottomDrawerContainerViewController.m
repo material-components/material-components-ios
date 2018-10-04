@@ -23,7 +23,7 @@ static const CGFloat kVerticalDistanceThresholdForDismissal = 40.f;
 static const CGFloat kInitialDrawerHeightFactor = 0.5f;
 static const CGFloat kHeaderAnimationDistanceAddedDistanceFromTopSafeAreaInset =
     20.f;
-static const CGFloat scrollViewBufferForPerformance = 20.f;
+static const CGFloat kScrollViewBufferForPerformance = 20.f;
 static const CGFloat kDragVelocityThresholdForHidingDrawer = -2.f;
 static NSString *const kContentOffsetKeyPath = @"contentOffset";
 
@@ -213,11 +213,12 @@ static UIColor *DrawerShadowColor(void) {
   if (self.contentHeaderTopInset <= topAreaInsetForHeader + FLT_EPSILON) {
     topAreaInsetForHeader = FLT_EPSILON;
   }
-  CGFloat drawerOffset = self.contentHeaderTopInset - topAreaInsetForHeader + scrollViewBufferForPerformance;
+  CGFloat drawerOffset = self.contentHeaderTopInset - topAreaInsetForHeader + kScrollViewBufferForPerformance;
   CGFloat headerHeightWithoutInset = self.contentHeaderHeight - topAreaInsetForHeader;
   CGFloat contentDiff = contentYOffset - drawerOffset;
   CGFloat maxScrollOrigin = self.trackingScrollView.contentSize.height -
-                            CGRectGetHeight(self.presentingViewBounds) + headerHeightWithoutInset - scrollViewBufferForPerformance;
+                            CGRectGetHeight(self.presentingViewBounds) + headerHeightWithoutInset -
+  kScrollViewBufferForPerformance;
   BOOL scrollingUpInFull = contentDiff < 0 && CGRectGetMinY(self.trackingScrollView.bounds) > 0;
 
   if (CGRectGetMinY(self.scrollView.bounds) >= drawerOffset || scrollingUpInFull) {
@@ -350,7 +351,7 @@ static UIColor *DrawerShadowColor(void) {
   contentViewFrame.origin.y = self.contentHeaderTopInset + self.contentHeaderHeight;
   if (self.trackingScrollView != nil) {
     CGFloat topAreaInsetForHeader = (self.headerViewController ? MDCDeviceTopSafeAreaInset() : 0);
-    contentViewFrame.size.height -= self.contentHeaderHeight - scrollViewBufferForPerformance;
+    contentViewFrame.size.height -= self.contentHeaderHeight - kScrollViewBufferForPerformance;
     if (self.contentHeaderTopInset > topAreaInsetForHeader + FLT_EPSILON) {
       contentViewFrame.size.height += topAreaInsetForHeader;
     }
