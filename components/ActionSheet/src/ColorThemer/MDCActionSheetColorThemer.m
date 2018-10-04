@@ -16,7 +16,7 @@
 
 static const CGFloat kHighAlpha = 0.87f;
 static const CGFloat kMediumAlpha = 0.6f;
-static const CGFloat kInkAlpha = 16.f;
+static const CGFloat kInkAlpha = 0.16f;
 
 @implementation MDCActionSheetColorThemer
 

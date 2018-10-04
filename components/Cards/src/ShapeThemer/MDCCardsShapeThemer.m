@@ -27,10 +27,10 @@
 
 + (id<MDCShapeGenerating>)cardShapeGeneratorFromScheme:(id<MDCShapeScheming>)shapeScheme {
   MDCRectangleShapeGenerator *rectangleShape = [[MDCRectangleShapeGenerator alloc] init];
-  rectangleShape.topLeftCorner = shapeScheme.mediumSurfaceShape.topLeftCorner;
-  rectangleShape.topRightCorner = shapeScheme.mediumSurfaceShape.topRightCorner;
-  rectangleShape.bottomLeftCorner = shapeScheme.mediumSurfaceShape.bottomLeftCorner;
-  rectangleShape.bottomRightCorner = shapeScheme.mediumSurfaceShape.bottomRightCorner;
+  rectangleShape.topLeftCorner = shapeScheme.mediumComponentShape.topLeftCorner;
+  rectangleShape.topRightCorner = shapeScheme.mediumComponentShape.topRightCorner;
+  rectangleShape.bottomLeftCorner = shapeScheme.mediumComponentShape.bottomLeftCorner;
+  rectangleShape.bottomRightCorner = shapeScheme.mediumComponentShape.bottomRightCorner;
   return rectangleShape;
 }
 

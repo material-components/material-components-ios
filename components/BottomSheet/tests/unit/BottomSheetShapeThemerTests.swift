@@ -23,8 +23,8 @@ class BottomSheetShapeThemerTests: XCTestCase {
     // Given
     let shapeScheme = MDCShapeScheme()
     let bottomSheet = MDCBottomSheetController(contentViewController: UIViewController())
-    shapeScheme.largeSurfaceShape = MDCShapeCategory(cornersWith: .angled, andSize: 10)
-    shapeScheme.largeSurfaceShape.topRightCorner = MDCCornerTreatment.corner(withRadius: 3)
+    shapeScheme.largeComponentShape = MDCShapeCategory(cornersWith: .cut, andSize: 10)
+    shapeScheme.largeComponentShape.topRightCorner = MDCCornerTreatment.corner(withRadius: 3)
     bottomSheet.setShapeGenerator(MDCRectangleShapeGenerator(), for: .extended)
 
     // When
@@ -35,9 +35,9 @@ class BottomSheetShapeThemerTests: XCTestCase {
     XCTAssert(extendedShapeGenerator is MDCRectangleShapeGenerator)
     if let rectangleGenerator = extendedShapeGenerator as? MDCRectangleShapeGenerator {
       XCTAssertEqual(rectangleGenerator.topLeftCorner,
-                     shapeScheme.largeSurfaceShape.topLeftCorner)
+                     shapeScheme.largeComponentShape.topLeftCorner)
       XCTAssertEqual(rectangleGenerator.topRightCorner,
-                     shapeScheme.largeSurfaceShape.topRightCorner)
+                     shapeScheme.largeComponentShape.topRightCorner)
       XCTAssertEqual(rectangleGenerator.bottomLeftCorner, MDCCornerTreatment())
       XCTAssertEqual(rectangleGenerator.bottomRightCorner, MDCCornerTreatment())
     }
@@ -50,7 +50,7 @@ class BottomSheetShapeThemerTests: XCTestCase {
     let shapeScheme = MDCShapeScheme()
     let bottomSheet = MDCBottomSheetController(contentViewController: UIViewController())
     let generatedCorner = MDCCornerTreatment.corner(withRadius: collapsedBaselineShapeValue)
-    shapeScheme.largeSurfaceShape = MDCShapeCategory(cornersWith: .angled, andSize: 10)
+    shapeScheme.largeComponentShape = MDCShapeCategory(cornersWith: .cut, andSize: 10)
     bottomSheet.setShapeGenerator(MDCRectangleShapeGenerator(), for: .preferred)
 
     // When
