@@ -29,6 +29,7 @@ static const CGFloat kHeaderAnimationDistanceAddedDistanceFromTopSafeAreaInset =
 // has the behavior as if we are scrolling at the end of the content, and the scrolling isn't
 // smooth.
 static const CGFloat kScrollViewBufferForPerformance = 20.f;
+static const CGFloat kFixedStatusBarHeightOnPreiPhoneXDevices = 20.f;
 static const CGFloat kDragVelocityThresholdForHidingDrawer = -2.f;
 static NSString *const kContentOffsetKeyPath = @"contentOffset";
 
@@ -361,7 +362,7 @@ static UIColor *DrawerShadowColor(void) {
   CGRect contentViewFrame = self.scrollView.bounds;
   contentViewFrame.origin.y = self.contentHeaderTopInset + self.contentHeaderHeight;
   if (self.trackingScrollView != nil) {
-    CGFloat topAreaInsetForHeader = (self.headerViewController ? MDCDeviceTopSafeAreaInset() : 0);
+    CGFloat topAreaInsetForHeader = (self.headerViewController ? [self topSafeArea] : 0);
     contentViewFrame.size.height -= self.contentHeaderHeight - kScrollViewBufferForPerformance;
     // We add the topAreaInsetForHeader to the height of the content view frame when a tracking
     // scroll view is set, to normalize the algorithm after the removal of this value from the
@@ -582,6 +583,14 @@ static UIColor *DrawerShadowColor(void) {
   }
 }
 
+- (CGFloat)topSafeArea {
+  if (@available(iOS 11.0, *)) {
+    return self.view.safeAreaInsets.top;
+  } else {
+    return kFixedStatusBarHeightOnPreiPhoneXDevices;
+  }
+}
+
 @end
 
 #pragma mark - MDCBottomDrawerContainerViewController + Layout Calculations
@@ -680,7 +689,8 @@ static UIColor *DrawerShadowColor(void) {
     return 0.f;
   }
   CGFloat headerHeight = self.headerViewController.preferredContentSize.height;
-  return headerHeight + MDCDeviceTopSafeAreaInset();
+  headerHeight += [self topSafeArea];
+  return headerHeight;
 }
 
 - (CGFloat)contentHeaderHeight {
@@ -704,14 +714,14 @@ static UIColor *DrawerShadowColor(void) {
   CGFloat headerAnimationDistance =
       kHeaderAnimationDistanceAddedDistanceFromTopSafeAreaInset;
   if (self.contentReachesFullscreen) {
-    headerAnimationDistance += MDCDeviceTopSafeAreaInset();
+    headerAnimationDistance += [self topSafeArea];
   }
   return headerAnimationDistance;
 }
 
 - (CGFloat)addedContentHeightThreshold {
   // TODO: (#4900) change this to use safeAreaInsets as this is a soon to be deprecated API.
-  return MDCDeviceTopSafeAreaInset();
+  return [self topSafeArea];
 }
 
 @end
