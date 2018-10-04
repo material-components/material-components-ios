@@ -20,7 +20,7 @@
 
 static const CGFloat kVerticalShadowAnimationDistance = 10.f;
 static const CGFloat kVerticalDistanceThresholdForDismissal = 40.f;
-static const CGFloat kInitialDrawerHeightFactor = .5f;
+static const CGFloat kInitialDrawerHeightFactor = 0.5f;
 static const CGFloat kHeaderAnimationDistanceAddedDistanceFromTopSafeAreaInset =
     20.f;
 static const CGFloat scrollViewBufferForPerformance = 20.f;
@@ -214,24 +214,17 @@ static UIColor *DrawerShadowColor(void) {
     topAreaInsetForHeader = FLT_EPSILON;
   }
   CGFloat drawerOffset = self.contentHeaderTopInset - topAreaInsetForHeader + scrollViewBufferForPerformance;
-  NSLog(@"drawer offset: %f", drawerOffset);
   CGFloat headerHeightWithoutInset = self.contentHeaderHeight - topAreaInsetForHeader;
   CGFloat contentDiff = contentYOffset - drawerOffset;
-  NSLog(@"content diff: %f", contentDiff);
   CGFloat maxScrollOrigin = self.trackingScrollView.contentSize.height -
                             CGRectGetHeight(self.presentingViewBounds) + headerHeightWithoutInset - scrollViewBufferForPerformance;
   BOOL scrollingUpInFull = contentDiff < 0 && CGRectGetMinY(self.trackingScrollView.bounds) > 0;
-  NSLog(@"scrollingUpInFull: %d", scrollingUpInFull);
-  NSLog(@"first thing: %d, %f, %f", CGRectGetMinY(self.trackingScrollView.bounds) < maxScrollOrigin, CGRectGetMinY(self.trackingScrollView.bounds), maxScrollOrigin);
-  NSLog(@"HEHEHEHE %f", CGRectGetMinY(self.scrollView.bounds));
 
   if (CGRectGetMinY(self.scrollView.bounds) >= drawerOffset || scrollingUpInFull) {
-    NSLog(@"we are in full screen");
     // If we reach full screen or if we are scrolling up after being in full screen.
     if (CGRectGetMinY(self.trackingScrollView.bounds) < maxScrollOrigin || scrollingUpInFull) {
       // If we still didn't reach the end of the content, or if we are scrolling up after reaching
       // the end of the content.
-      NSLog(@"we didnt reach end of content, or we scrolling up after reaching end");
 
       // Update the drawer's scrollView's offset to be static so the content will scroll instead.
       CGRect scrollViewBounds = self.scrollView.bounds;
@@ -243,30 +236,23 @@ static UIColor *DrawerShadowColor(void) {
       CGSize scrollViewContentSize = self.presentingViewBounds.size;
       scrollViewContentSize.height += self.contentHeightSurplus;
       self.scrollView.contentSize = scrollViewContentSize;
-      NSLog(@"content size: %f", scrollViewContentSize.height);
+
       // Update the main content view's scrollView offset
       CGRect contentViewBounds = self.trackingScrollView.bounds;
       contentViewBounds.origin.y += contentDiff;
       contentViewBounds.origin.y = MIN(maxScrollOrigin, MAX(CGRectGetMinY(contentViewBounds), 0));
       self.trackingScrollView.bounds = contentViewBounds;
-      NSLog(@"content view bounds y: %f", contentViewBounds.origin.y);
     } else {
-      NSLog(@"dead branching?");
       if (self.trackingScrollView.contentSize.height >=
           CGRectGetHeight(self.trackingScrollView.frame)) {
-        NSLog(@"the content size of the content scroll view is bigger than the frame");
         // Have the drawer's scrollView's content size be static so it will bounce when reaching the
         // end of the content.
         CGSize scrollViewContentSize = self.scrollView.contentSize;
         scrollViewContentSize.height =
             drawerOffset + CGRectGetHeight(self.scrollView.frame) + 2 * topAreaInsetForHeader;
         self.scrollView.contentSize = scrollViewContentSize;
-      } else {
-        NSLog(@"LOLOLOL");
       }
     }
-  } else {
-    NSLog(@"wooooooooot!!!");
   }
   return normalizedYContentOffset;
 }
@@ -329,7 +315,6 @@ static UIColor *DrawerShadowColor(void) {
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
-  NSLog(@"view will layout subviews: %f", self.scrollView.contentOffset.y);
 
   // Layout the clipping view and the scroll view.
   if (self.currentlyFullscreen) {
@@ -341,7 +326,6 @@ static UIColor *DrawerShadowColor(void) {
     scrollViewFrame.origin.y = -self.topHeaderHeight;
     self.scrollView.frame = scrollViewFrame;
   } else {
-//    NSLog(@"Presenting View Bounds Y: %f", self.presentingViewBounds.origin.y);
     CGRect scrollViewFrame = self.presentingViewBounds;
     if (self.animatingPresentation) {
       CGFloat heightSurplusForSpringAnimationOvershooting =
@@ -351,7 +335,6 @@ static UIColor *DrawerShadowColor(void) {
     self.scrollViewClippingView.frame = scrollViewFrame;
     self.scrollView.frame = scrollViewFrame;
   }
-//  NSLog(@"Scroll view after viewwilllayout: %f", self.scrollView.contentOffset.y);
 
   // Layout the top header's bottom shadow.
   [self setUpHeaderBottomShadowIfNeeded];
@@ -365,7 +348,6 @@ static UIColor *DrawerShadowColor(void) {
   // Layout the main content view.
   CGRect contentViewFrame = self.scrollView.bounds;
   contentViewFrame.origin.y = self.contentHeaderTopInset + self.contentHeaderHeight;
-//  NSLog(@"contentViewFrame: %f", contentViewFrame.origin.y);
   if (self.trackingScrollView != nil) {
     CGFloat topAreaInsetForHeader = (self.headerViewController ? MDCDeviceTopSafeAreaInset() : 0);
     contentViewFrame.size.height -= self.contentHeaderHeight - scrollViewBufferForPerformance;
@@ -436,8 +418,6 @@ static UIColor *DrawerShadowColor(void) {
           : [self transitionPercentageForContentOffset:contentOffset
                                                 offset:0.f
                                               distance:self.headerAnimationDistance];
-//  NSLog(@"%f should be bigger or equal to %f", contentOffset.y, self.transitionCompleteContentOffset);
-//  NSLog(@"header transition to top %f", headerTransitionToTop);
   self.currentlyFullscreen =
       self.contentReachesFullscreen && headerTransitionToTop >= 1.f;
   CGFloat fullscreenHeaderHeight =
@@ -485,8 +465,6 @@ static UIColor *DrawerShadowColor(void) {
   CGFloat contentHeaderViewTop =
       self.currentlyFullscreen ? 0.f
           : self.contentHeaderTopInset - headerTransitionToTop * headersDiff;
-//  NSLog(@"contentHeaderViewTop: %f", self.contentHeaderTopInset - headerTransitionToTop * headersDiff);
-//  NSLog(@"header view frame: %f %f %f %f, currently full screen: %d", 0.f, contentHeaderViewTop, contentHeaderViewWidth, contentHeaderViewHeight, self.currentlyFullscreen);
   contentHeaderView.frame =
       CGRectMake(0, contentHeaderViewTop, contentHeaderViewWidth, contentHeaderViewHeight);
 }
@@ -599,7 +577,6 @@ static UIColor *DrawerShadowColor(void) {
 - (void)cacheLayoutCalculationsWithAddedContentHeight:(CGFloat)addedContentHeight {
   CGFloat contentHeight = self.contentViewController.preferredContentSize.height;
   _contentVCPreferredContentSizeHeightCached = contentHeight;
-  NSLog(@"content height: %f", contentHeight);
   CGFloat contentHeaderHeight = self.contentHeaderHeight;
   CGFloat containerHeight = self.presentingViewBounds.size.height;
 
@@ -625,7 +602,6 @@ static UIColor *DrawerShadowColor(void) {
 
   CGFloat scrollingDistance = _contentHeaderTopInset + contentHeaderHeight + contentHeight;
   _contentHeightSurplus = scrollingDistance - containerHeight;
-//  NSLog(@"contentHeightSurplus: %f", _contentHeightSurplus);
   if (addedContentHeight < FLT_EPSILON && (_contentHeaderTopInset > _contentHeightSurplus) &&
       (_contentHeaderTopInset - _contentHeightSurplus < self.addedContentHeightThreshold)) {
     CGFloat addedContentheight = _contentHeaderTopInset - _contentHeightSurplus;
@@ -672,7 +648,6 @@ static UIColor *DrawerShadowColor(void) {
 }
 
 - (BOOL)contentReachesFullscreen {
-//  NSLog(@"content reaches full screen %d", self.contentHeightSurplus >= self.contentHeaderTopInset);
   return self.contentHeightSurplus >= self.contentHeaderTopInset;
 }
 
@@ -699,7 +674,6 @@ static UIColor *DrawerShadowColor(void) {
   if (self.contentReachesFullscreen) {
     CGFloat transitionCompleteContentOffset = self.contentHeaderTopInset;
     transitionCompleteContentOffset -= self.topHeaderHeight - self.contentHeaderHeight;
-//    NSLog(@"transitionComplete: %f", transitionCompleteContentOffset);
     return transitionCompleteContentOffset;
   } else {
     return self.contentHeightSurplus;
