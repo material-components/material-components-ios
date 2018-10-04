@@ -15,6 +15,7 @@
 #import "MDCDialogPresentationController.h"
 
 #import "MaterialKeyboardWatcher.h"
+#import "MaterialShadowLayer.h"
 #import "private/MDCDialogShadowedView.h"
 
 static CGFloat MDCDialogMinimumWidth = 280.0f;
@@ -30,7 +31,7 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
 
 // Tracking view that adds a shadow under the presented view. This view's frame should always match
 // the presented view's.
-@property(nonatomic) UIView *trackingView;
+@property(nonatomic) MDCDialogShadowedView *trackingView;
 
 @end
 
@@ -58,6 +59,22 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
 
 - (CGFloat)dialogCornerRadius {
   return _trackingView.layer.cornerRadius;
+}
+
+- (void)setScrimColor:(UIColor *)scrimColor {
+  self.dimmingView.backgroundColor = scrimColor;
+}
+
+- (UIColor *)scrimColor {
+  return self.dimmingView.backgroundColor;
+}
+
+- (void)setDialogElevation:(CGFloat)dialogElevation {
+  _trackingView.elevation = dialogElevation;
+}
+
+- (CGFloat)dialogElevation {
+  return _trackingView.elevation;
 }
 
 - (instancetype)initWithPresentedViewController:(UIViewController *)presentedViewController

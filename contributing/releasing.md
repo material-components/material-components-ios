@@ -59,6 +59,9 @@ that the `cut` script generated.
 
 Name the Pull Request title "[WIP] Release Candidate." until you are able to provide the version as the title.
 
+Add "@Release-blocking clients" to the pull request's reviewers. This is the mechanism by which
+release-blocking clients are notified of a new release.
+
 **Do not use GitHub's big green button to merge the approved pull request.** Release are an
 exception to our normal squash-and-merge procedure.
 
@@ -193,7 +196,7 @@ Commit the results to your branch:
 
 Send our local podspec through the CocoaPods linter:
 
-    pod lib lint MaterialComponents.podspec
+    pod lib lint MaterialComponents.podspec --skip-tests
 
 CocoaPods publishes a directory of publicly available pods through its **trunk** service.
 Note: Ensure that you can [push the podspec](#publish-to-cocoapods) later by checking for `MaterialComponents` in your list of available `Pods` when you:
@@ -274,9 +277,11 @@ You can now publish the release to GitHub:
 ## Publish to Cocoapods
 
     git checkout stable
-    pod trunk push MaterialComponents.podspec
+    pod trunk push MaterialComponents.podspec --skip-tests
 
 ## Coordinate with release-blocking clients to finish work
 
 Any work that was started by the [Release-blocking clients](#release-blocking-clients)
 (dragon) step above may need to be finalized.
+
+Also follow last instructions in the [internal release instructions](http://go/mdc-releasing)

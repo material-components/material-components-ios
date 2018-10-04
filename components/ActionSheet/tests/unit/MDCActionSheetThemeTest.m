@@ -22,7 +22,7 @@
 
 static const CGFloat kHighAlpha = 0.87f;
 static const CGFloat kMediumAlpha = 0.6f;
-static const CGFloat kInkAlpha = 16.f;
+static const CGFloat kInkAlpha = 0.16f;
 
 @interface MDCActionSheetHeaderView (Testing)
 @property(nonatomic, strong) UILabel *titleLabel;
@@ -54,10 +54,8 @@ static const CGFloat kInkAlpha = 16.f;
   self.colorScheme.onPrimaryColor = onSurface;
   self.typographyScheme = [[MDCTypographyScheme alloc] init];
   UIFont *subtitle = [UIFont systemFontOfSize:12.0 weight:UIFontWeightBold];
-  UIFont *body1 = [UIFont systemFontOfSize:8.0 weight:UIFontWeightThin];
   UIFont *body2 = [UIFont systemFontOfSize:10.0 weight:UIFontWeightLight];
   self.typographyScheme.subtitle1 = subtitle;
-  self.typographyScheme.body1 = body1;
   self.typographyScheme.body2 = body2;
 }
 
@@ -140,7 +138,7 @@ static const CGFloat kInkAlpha = 16.f;
   XCTAssertEqualObjects(self.actionSheet.header.messageLabel.font, self.typographyScheme.body2);
   XCTAssertNotEqual(cells.count, 0U);
   for (MDCActionSheetItemTableViewCell *cell in cells) {
-    XCTAssertEqualObjects(cell.actionLabel.font, self.typographyScheme.body1);
+    XCTAssertEqualObjects(cell.actionLabel.font, self.typographyScheme.subtitle1);
   }
 }
 

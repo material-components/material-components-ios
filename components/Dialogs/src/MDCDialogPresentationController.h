@@ -50,6 +50,20 @@
 @property(nonatomic, assign) CGFloat dialogCornerRadius;
 
 /**
+ Customize the elevation of the shadow to match the presented view's shadow.
+
+ Defaults to 24.0.
+ */
+@property(nonatomic, assign) CGFloat dialogElevation;
+
+/**
+ Customize the color of the background scrim.
+
+ Defaults to a semi-transparent Black.
+ */
+@property(nonatomic, strong, nullable) UIColor *scrimColor;
+
+/**
  Returns the size of the specified child view controller's content.
 
  The size is initially based on container.preferredSize. Width is will have a minimum of 280 and a

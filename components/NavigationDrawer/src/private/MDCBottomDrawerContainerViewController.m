@@ -204,11 +204,11 @@ static UIColor *DrawerShadowColor(void) {
   CGFloat headerHeightWithoutInset = self.contentHeaderHeight - topAreaInsetForHeader;
   CGFloat contentDiff = contentYOffset - drawerOffset;
   CGFloat maxScrollOrigin = self.trackingScrollView.contentSize.height -
-                            self.presentingViewBounds.size.height + headerHeightWithoutInset;
-  BOOL scrollingUpInFull = contentDiff < 0 && self.trackingScrollView.bounds.origin.y > 0;
-  if (self.scrollView.bounds.origin.y >= drawerOffset || scrollingUpInFull) {
+                            CGRectGetHeight(self.presentingViewBounds) + headerHeightWithoutInset;
+  BOOL scrollingUpInFull = contentDiff < 0 && CGRectGetMinY(self.trackingScrollView.bounds) > 0;
+  if (CGRectGetMinY(self.scrollView.bounds) >= drawerOffset || scrollingUpInFull) {
     // If we reach full screen or if we are scrolling up after being in full screen.
-    if (self.trackingScrollView.bounds.origin.y < maxScrollOrigin || scrollingUpInFull) {
+    if (CGRectGetMinY(self.trackingScrollView.bounds) < maxScrollOrigin || scrollingUpInFull) {
       // If we still didn't reach the end of the content, or if we are scrolling up after reaching
       // the end of the content.
 
@@ -225,15 +225,16 @@ static UIColor *DrawerShadowColor(void) {
       // Update the main content view's scrollView offset
       CGRect contentViewBounds = self.trackingScrollView.bounds;
       contentViewBounds.origin.y += contentDiff;
-      contentViewBounds.origin.y = MIN(maxScrollOrigin, MAX(contentViewBounds.origin.y, 0));
+      contentViewBounds.origin.y = MIN(maxScrollOrigin, MAX(CGRectGetMinY(contentViewBounds), 0));
       self.trackingScrollView.bounds = contentViewBounds;
     } else {
-      if (self.trackingScrollView.contentSize.height >= self.trackingScrollView.frame.size.height) {
+      if (self.trackingScrollView.contentSize.height >=
+          CGRectGetHeight(self.trackingScrollView.frame)) {
         // Have the drawer's scrollView's content size be static so it will bounce when reaching the
         // end of the content.
         CGSize scrollViewContentSize = self.scrollView.contentSize;
         scrollViewContentSize.height =
-            drawerOffset + self.scrollView.frame.size.height + 2 * topAreaInsetForHeader;
+            drawerOffset + CGRectGetHeight(self.scrollView.frame) + 2 * topAreaInsetForHeader;
         self.scrollView.contentSize = scrollViewContentSize;
       }
     }
