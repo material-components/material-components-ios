@@ -867,6 +867,12 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 #pragma mark Shift Accumulator
 
 - (void)fhv_accumulatorDidChange {
+  if (!_trackingScrollView) {
+    // Set the shadow opacity directly.
+    self.layer.shadowOpacity = _visibleShadowOpacity;
+    return;
+  }
+
   CGRect frame = self.frame;
 
   CGFloat frameBottomEdge = [self fhv_projectedHeaderBottomEdge];
@@ -1460,7 +1466,7 @@ static BOOL isRunningiOS10_3OrAbove() {
 
     // When the tracking scroll view is cleared we need a shadow update.
     if (!self.trackingScrollView) {
-      self.layer.shadowOpacity = 0;
+      [self fhv_accumulatorDidChange];
     }
   };
   if (wasTrackingScrollView) {
