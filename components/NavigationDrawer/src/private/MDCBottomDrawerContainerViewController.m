@@ -20,7 +20,7 @@
 
 static const CGFloat kVerticalShadowAnimationDistance = 10.f;
 static const CGFloat kVerticalDistanceThresholdForDismissal = 40.f;
-static const CGFloat kInitialDrawerHeightFactor = 1.f;
+static const CGFloat kInitialDrawerHeightFactor = .5f;
 static const CGFloat kHeaderAnimationDistanceAddedDistanceFromTopSafeAreaInset =
     20.f;
 static const CGFloat scrollViewBufferForPerformance = 20.f;
