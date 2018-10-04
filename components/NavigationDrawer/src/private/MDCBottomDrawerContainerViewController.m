@@ -16,7 +16,6 @@
 
 #import "MDCBottomDrawerHeader.h"
 #import "MaterialShadowLayer.h"
-#import "MaterialUIMetrics.h"
 
 static const CGFloat kVerticalShadowAnimationDistance = 10.f;
 static const CGFloat kVerticalDistanceThresholdForDismissal = 40.f;
