@@ -190,15 +190,23 @@ static UIColor *DrawerShadowColor(void) {
                                            ? self.scrollViewIsDraggedToBottom
                                            : contentOffset.y < oldContentOffset.y;
 
-    [self updateViewWithContentOffset:contentOffset];
-
+    // The normalized content offset takes the content offset and updates it if using the
+    // performance logic that comes with setting the tracking scroll view. The reason we update
+    // the content offset is because the performance logic stops the scrolling internally of the
+    // main scroll view using the bounds origin, and we don't want the view update with content
+    // offset to use the outdated content offset of the main scroll view, so we update it
+    // accordingly.
+    CGPoint normalizedContentOffset = contentOffset;
     if (self.trackingScrollView != nil) {
-      [self updateContentOffsetForPerformantScrolling:contentOffset.y];
+      normalizedContentOffset.y = [self updateContentOffsetForPerformantScrolling:contentOffset.y];
     }
+
+    [self updateViewWithContentOffset:normalizedContentOffset];
   }
 }
 
-- (void)updateContentOffsetForPerformantScrolling:(CGFloat)contentYOffset {
+- (CGFloat)updateContentOffsetForPerformantScrolling:(CGFloat)contentYOffset {
+  CGFloat normalizedYContentOffset = contentYOffset;
   CGFloat topAreaInsetForHeader = (self.headerViewController ? MDCDeviceTopSafeAreaInset() : 0);
   CGFloat drawerOffset = self.contentHeaderTopInset - topAreaInsetForHeader;
   CGFloat headerHeightWithoutInset = self.contentHeaderHeight - topAreaInsetForHeader;
@@ -215,6 +223,7 @@ static UIColor *DrawerShadowColor(void) {
       // Update the drawer's scrollView's offset to be static so the content will scroll instead.
       CGRect scrollViewBounds = self.scrollView.bounds;
       scrollViewBounds.origin.y = drawerOffset;
+      normalizedYContentOffset = drawerOffset;
       self.scrollView.bounds = scrollViewBounds;
 
       // Make sure the drawer's scrollView's content size is the full size of the content
@@ -239,6 +248,7 @@ static UIColor *DrawerShadowColor(void) {
       }
     }
   }
+  return normalizedYContentOffset;
 }
 
 - (void)addScrollViewObserver {
@@ -331,7 +341,6 @@ static UIColor *DrawerShadowColor(void) {
 
   // Layout the main content view.
   CGRect contentViewFrame = self.scrollView.bounds;
-  NSLog(@"%f", self.contentHeaderTopInset);
   contentViewFrame.origin.y = self.contentHeaderTopInset + self.contentHeaderHeight;
   if (self.trackingScrollView != nil) {
     contentViewFrame.size.height -=
@@ -395,7 +404,7 @@ static UIColor *DrawerShadowColor(void) {
 
 - (void)updateViewWithContentOffset:(CGPoint)contentOffset {
   CGFloat headerTransitionToTop =
-      contentOffset.y >= self.contentHeaderTopInset
+      contentOffset.y >= self.transitionCompleteContentOffset
           ? 1.f
           : [self transitionPercentageForContentOffset:contentOffset
                                                 offset:0.f
