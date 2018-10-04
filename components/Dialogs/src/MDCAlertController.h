@@ -76,6 +76,12 @@
 /** The alignment applied to the title of the Alert Controller.*/
 @property(nonatomic, assign) NSTextAlignment titleAlignment;
 
+/** An optional icon appearing above the title of the Alert Controller.*/
+@property(nonatomic, strong, nullable) UIImage *titleIcon;
+
+/** The tint color applied to the titleIcon. Leave empty to preserve original image color(s).*/
+@property(nonatomic, strong, nullable) UIColor *titleIconTintColor;
+
 /** The font applied to the message of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIFont *messageFont;
 
@@ -93,6 +99,9 @@
 
 /** The corner radius applied to the Alert Controller view. Default to 0 (no round corners) */
 @property(nonatomic, assign) CGFloat cornerRadius;
+
+/** The elevation that will be applied to the Alert Controller view. Default to 24. */
+@property(nonatomic, assign) CGFloat elevation;
 
 // TODO(iangordon): Add support for preferredAction to match UIAlertController.
 // TODO(iangordon): Consider adding support for UITextFields to match UIAlertController.

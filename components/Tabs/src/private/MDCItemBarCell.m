@@ -294,7 +294,8 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
     }
   }
 
-  CGFloat scale = self.window.screen.scale;
+  UIScreen *screen = self.window.screen ?: UIScreen.mainScreen;
+  CGFloat scale = screen.scale;
   _imageView.bounds = imageBounds;
   _imageView.center = MDCRoundCenterWithBoundsAndScale(imageCenter, _imageView.bounds, scale);
 
@@ -317,12 +318,9 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 - (void)didMoveToWindow {
   [super didMoveToWindow];
 
-  if (self.window) {
-    [self updateTransformsAnimated:NO];
+  [self updateTransformsAnimated:NO];
 
-    // Layout depends on window scale.
-    [self setNeedsLayout];
-  }
+  [self setNeedsLayout];
 }
 
 #pragma mark - UICollectionReusableView
@@ -505,7 +503,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
   CGAffineTransform titleTransform = CGAffineTransformIdentity;
   CGAffineTransform imageTransform = CGAffineTransformIdentity;
 
-  UIScreen *screen = self.window.screen;
+  UIScreen *screen = self.window.screen ?: UIScreen.mainScreen;
   const CGFloat screenScale = (screen ? screen.scale : 1);
   CGFloat titleContentsScale = screenScale;
 

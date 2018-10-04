@@ -28,6 +28,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
 static const UIEdgeInsets MDCDialogContentInsets = {24.0, 24.0, 24.0, 24.0};
 static const CGFloat MDCDialogContentVerticalPadding = 20.0;
+static const CGFloat MDCDialogTitleIconVerticalPadding = 12.0;
 
 static const UIEdgeInsets MDCDialogActionsInsets = {8.0, 8.0, 8.0, 8.0};
 static const CGFloat MDCDialogActionsHorizontalPadding = 8.0;
@@ -53,6 +54,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 }
 
 @dynamic titleAlignment;
+@dynamic titleIcon;
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -179,6 +181,31 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
 - (void)setTitleAlignment:(NSTextAlignment)titleAlignment {
   self.titleLabel.textAlignment = titleAlignment;
+}
+
+- (UIImage *)titleIcon {
+  return self.titleIconImageView.image;
+}
+
+- (void)setTitleIcon:(UIImage *)titleIcon {
+  if (titleIcon == nil) {
+    [self.titleIconImageView removeFromSuperview];
+    self.titleIconImageView = nil;
+  } else if (self.titleIconImageView == nil) {
+    self.titleIconImageView = [[UIImageView alloc] initWithImage:titleIcon];
+    self.titleIconImageView.contentMode = UIViewContentModeScaleAspectFit;
+    [self.contentScrollView addSubview:self.titleIconImageView];
+  } else {
+    self.titleIconImageView.image = titleIcon;
+  }
+
+  self.titleIconImageView.tintColor = self.titleIconTintColor;
+  [self.titleIconImageView sizeToFit];
+}
+
+- (void)setTitleIconTintColor:(UIColor *)titleIconTintColor {
+  _titleIconTintColor = titleIconTintColor;
+  self.titleIconImageView.tintColor = titleIconTintColor;
 }
 
 - (NSString *)message {
@@ -338,6 +365,13 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   CGSize boundsSize = CGRectInfinite.size;
   boundsSize.width = boundingWidth - MDCDialogContentInsets.left - MDCDialogContentInsets.right;
 
+  CGSize titleIconSize = CGSizeZero;
+  if (self.titleIconImageView != nil) {
+    // TODO(galiak): Have title-icon size respond to dynamic type or device screen size, once this:
+    // https://github.com/material-components/material-components-ios/issues/5198 is resolved.
+    titleIconSize = self.titleIconImageView.image.size;
+  }
+
   CGSize titleSize = [self.titleLabel sizeThatFits:boundsSize];
   CGSize messageSize = [self.messageLabel sizeThatFits:boundsSize];
 
@@ -345,10 +379,15 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   contentWidth += MDCDialogContentInsets.left + MDCDialogContentInsets.right;
 
   CGFloat contentInternalVerticalPadding = 0.0;
-  if (0.0 < titleSize.height && 0.0 < messageSize.height) {
+  if ((0.0 < titleSize.height || 0.0 < titleIconSize.height) && 0.0 < messageSize.height) {
     contentInternalVerticalPadding = MDCDialogContentVerticalPadding;
   }
-  CGFloat contentHeight = titleSize.height + contentInternalVerticalPadding + messageSize.height;
+  CGFloat contentTitleIconVerticalPadding = 0.0f;
+  if (0.0 < titleSize.height && 0.0 < titleIconSize.height) {
+    contentTitleIconVerticalPadding = MDCDialogTitleIconVerticalPadding;
+  }
+  CGFloat contentHeight = titleIconSize.height + contentTitleIconVerticalPadding +
+                          titleSize.height + contentInternalVerticalPadding + messageSize.height;
   contentHeight += MDCDialogContentInsets.top + MDCDialogContentInsets.bottom;
 
   CGSize contentSize;
@@ -422,23 +461,53 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   boundsSize.width = boundsSize.width - MDCDialogContentInsets.left - MDCDialogContentInsets.right;
   CGSize titleSize = [self.titleLabel sizeThatFits:boundsSize];
   titleSize.width = boundsSize.width;
+
+  CGSize titleIconSize = CGSizeZero;
+  if (self.titleIconImageView != nil) {
+    // TODO(galiak): Have title-icon size respond to dynamic type or device screen size, once this:
+    // https://github.com/material-components/material-components-ios/issues/5198 is resolved.
+    titleIconSize = self.titleIconImageView.image.size;
+  }
+
   CGSize messageSize = [self.messageLabel sizeThatFits:boundsSize];
   messageSize.width = boundsSize.width;
   boundsSize.width = boundsSize.width + MDCDialogContentInsets.left + MDCDialogContentInsets.right;
 
   CGFloat contentInternalVerticalPadding = 0.0;
-  if (0.0 < titleSize.height && 0.0 < messageSize.height) {
+  if ((0.0 < titleSize.height || 0.0 < titleIconSize.height) && 0.0 < messageSize.height) {
     contentInternalVerticalPadding = MDCDialogContentVerticalPadding;
   }
+  CGFloat contentTitleIconVerticalPadding = 0.0f;
+  if (0.0 < titleSize.height && 0.0 < titleIconSize.height) {
+    contentTitleIconVerticalPadding = MDCDialogTitleIconVerticalPadding;
+  }
 
-  CGRect titleFrame = CGRectMake(MDCDialogContentInsets.left, MDCDialogContentInsets.top,
-                                 titleSize.width, titleSize.height);
+  CGFloat titleTop =
+      MDCDialogContentInsets.top + contentTitleIconVerticalPadding + titleIconSize.height;
+  CGRect titleFrame =
+      CGRectMake(MDCDialogContentInsets.left, titleTop, titleSize.width, titleSize.height);
   CGRect messageFrame = CGRectMake(MDCDialogContentInsets.left,
                                    CGRectGetMaxY(titleFrame) + contentInternalVerticalPadding,
                                    messageSize.width, messageSize.height);
 
   self.titleLabel.frame = titleFrame;
   self.messageLabel.frame = messageFrame;
+
+  if (self.titleIconImageView != nil) {
+    // match the titleIcon alignment to the title alignment
+    CGFloat titleIconPosition = titleFrame.origin.x;
+    if (self.titleAlignment == NSTextAlignmentCenter) {
+      titleIconPosition = (contentSize.width - titleIconSize.width) / 2.0f;
+    } else if (self.titleAlignment == NSTextAlignmentRight ||
+               (self.titleAlignment == NSTextAlignmentNatural &&
+                [self mdf_effectiveUserInterfaceLayoutDirection] ==
+                    UIUserInterfaceLayoutDirectionRightToLeft)) {
+      titleIconPosition = CGRectGetMaxX(titleFrame) - titleIconSize.width;
+    }
+    CGRect titleIconFrame = CGRectMake(titleIconPosition, MDCDialogContentInsets.top,
+                                       titleIconSize.width, titleIconSize.height);
+    self.titleIconImageView.frame = titleIconFrame;
+  }
 
   // Actions
   CGSize actionSize = [self calculateActionsSizeThatFitsWidth:boundsSize.width];
