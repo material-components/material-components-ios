@@ -14,8 +14,8 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MDCAlertScheme.h"
 #import "MaterialDialogs.h"
+#import "MDCAlertScheme.h"
 
 @interface MDCAlertControllerThemer : NSObject
 
