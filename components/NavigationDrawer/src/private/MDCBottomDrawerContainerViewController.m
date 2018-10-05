@@ -213,12 +213,13 @@ static UIColor *DrawerShadowColor(void) {
   if (self.contentHeaderTopInset <= topAreaInsetForHeader + FLT_EPSILON) {
     topAreaInsetForHeader = FLT_EPSILON;
   }
-  CGFloat drawerOffset = self.contentHeaderTopInset - topAreaInsetForHeader + kScrollViewBufferForPerformance;
+  CGFloat drawerOffset =
+      self.contentHeaderTopInset - topAreaInsetForHeader + kScrollViewBufferForPerformance;
   CGFloat headerHeightWithoutInset = self.contentHeaderHeight - topAreaInsetForHeader;
   CGFloat contentDiff = contentYOffset - drawerOffset;
   CGFloat maxScrollOrigin = self.trackingScrollView.contentSize.height -
                             CGRectGetHeight(self.presentingViewBounds) + headerHeightWithoutInset -
-  kScrollViewBufferForPerformance;
+                            kScrollViewBufferForPerformance;
   BOOL scrollingUpInFull = contentDiff < 0 && CGRectGetMinY(self.trackingScrollView.bounds) > 0;
 
   if (CGRectGetMinY(self.scrollView.bounds) >= drawerOffset || scrollingUpInFull) {
@@ -419,8 +420,7 @@ static UIColor *DrawerShadowColor(void) {
           : [self transitionPercentageForContentOffset:contentOffset
                                                 offset:0.f
                                               distance:self.headerAnimationDistance];
-  self.currentlyFullscreen =
-      self.contentReachesFullscreen && headerTransitionToTop >= 1.f;
+  self.currentlyFullscreen = self.contentReachesFullscreen && headerTransitionToTop >= 1.f;
   CGFloat fullscreenHeaderHeight =
       self.contentReachesFullscreen ? self.topHeaderHeight : [self contentHeaderHeight];
 
@@ -465,7 +465,7 @@ static UIColor *DrawerShadowColor(void) {
   CGFloat contentHeaderViewWidth = self.presentingViewBounds.size.width;
   CGFloat contentHeaderViewTop =
       self.currentlyFullscreen ? 0.f
-          : self.contentHeaderTopInset - headerTransitionToTop * headersDiff;
+                               : self.contentHeaderTopInset - headerTransitionToTop * headersDiff;
   contentHeaderView.frame =
       CGRectMake(0, contentHeaderViewTop, contentHeaderViewWidth, contentHeaderViewHeight);
 }
@@ -510,8 +510,9 @@ static UIColor *DrawerShadowColor(void) {
 }
 
 - (CGFloat)contentHeightSurplus {
-  if (_contentHeightSurplus == NSNotFound || _contentVCPreferredContentSizeHeightCached !=
-      self.contentViewController.preferredContentSize.height) {
+  if (_contentHeightSurplus == NSNotFound ||
+      _contentVCPreferredContentSizeHeightCached !=
+          self.contentViewController.preferredContentSize.height) {
     [self cacheLayoutCalculations];
   }
   return _contentHeightSurplus;
