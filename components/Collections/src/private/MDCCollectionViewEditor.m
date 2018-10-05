@@ -228,7 +228,7 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
       [_collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:indexPath];
   _cellSnapshot = [[ShadowedSnapshotView alloc] initWithFrame:attributes.frame];
   UICollectionViewCell *cell = [_collectionView cellForItemAtIndexPath:indexPath];
-  [_cellSnapshot addSubview:[cell snapshotViewAfterScreenUpdates:NO]];
+  [_cellSnapshot addSubview:[cell snapshotViewAfterScreenUpdates:YES]];
 
   // Invalidate layout here to force attributes to now be hidden.
   [_collectionView.collectionViewLayout invalidateLayout];
