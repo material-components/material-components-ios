@@ -152,7 +152,8 @@ static UIImage *fakeImage(void) {
                                       tag:0];
   tabBarItem3.badgeValue = @"111";
   bottomNavBar.items = @[ tabBarItem1, tabBarItem2, tabBarItem3 ];
-  // Setting one selected and 
+  // Setting one selected and title visablilty to selected test against both with and without
+  // a title label.
   bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
   bottomNavBar.selectedItem = tabBarItem2;
   
@@ -161,9 +162,12 @@ static UIImage *fakeImage(void) {
   [bottomNavBar layoutIfNeeded];
 
   // Then
-  for (MDCBottomNavigationItemView *itemView in bottomNavBar.subviews) {
-    XCTAssertEqualWithAccuracy(CGRectGetMinY(itemView.badge.frame),
-                               CGRectGetMidY(itemView.iconImageView.frame), 0.001);
+  for (UIView *containerView in bottomNavBar.subviews) {
+    for (MDCBottomNavigationItemView *itemView in containerView.subviews) {
+      CGRect badgeRect = CGRectStandardize(itemView.badge.frame);
+      CGRect iconImageRect = CGRectStandardize(itemView.iconImageView.frame);
+      XCTAssertEqualWithAccuracy(badgeRect.origin.y, iconImageRect.origin.y, 0.001);
+    }
   }
 }
 
