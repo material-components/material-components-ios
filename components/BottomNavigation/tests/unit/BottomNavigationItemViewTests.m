@@ -14,6 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
+#import "../../src/private/MDCBottomNavigationItemBadge.h"
 #import "../../src/private/MDCBottomNavigationItemView.h"
 
 #import "MaterialInk.h"
@@ -31,6 +32,7 @@ static UIImage *fakeImage(void) {
 @interface MDCBottomNavigationItemView (Testing)
 @property(nonatomic, strong) UIImageView *iconImageView;
 @property(nonatomic, strong) UILabel *label;
+@property(nonatomic, strong) MDCBottomNavigationItemBadge *badge;
 @end
 
 @interface BottomNavigationItemViewTests : XCTestCase
@@ -125,6 +127,44 @@ static UIImage *fakeImage(void) {
   // Then
   XCTAssertNotEqualObjects(item1.inkView.inkColor, item1DefaultInkColor);
   XCTAssertNotEqualObjects(item2.inkView.inkColor, item2DefaultInkColor);
+}
+
+- (void)testBadgeAndIconHaveSameOriginY {
+  // Given
+  CGRect bottomNavFrame = CGRectMake(0, 0, 200, 56);
+  MDCBottomNavigationBar *bottomNavBar =
+      [[MDCBottomNavigationBar alloc] initWithFrame:bottomNavFrame];
+  UITabBarItem *tabBarItem1 =
+      [[UITabBarItem alloc] initWithTitle:@"Home"
+                                    image:fakeImage()
+                                      tag:0];
+  tabBarItem1.badgeValue = @"111";
+
+  UITabBarItem *tabBarItem2 =
+      [[UITabBarItem alloc] initWithTitle:@"Messages"
+                                    image:fakeImage()
+                                      tag:0];
+  tabBarItem2.badgeValue = @"111";
+  
+  UITabBarItem *tabBarItem3 =
+      [[UITabBarItem alloc] initWithTitle:@"Favorites"
+                                    image:fakeImage()
+                                      tag:0];
+  tabBarItem3.badgeValue = @"111";
+  bottomNavBar.items = @[ tabBarItem1, tabBarItem2, tabBarItem3 ];
+  // Setting one selected and 
+  bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
+  bottomNavBar.selectedItem = tabBarItem2;
+  
+  // When
+  [bottomNavBar setNeedsLayout];
+  [bottomNavBar layoutIfNeeded];
+
+  // Then
+  for (MDCBottomNavigationItemView *itemView in bottomNavBar.subviews) {
+    XCTAssertEqualWithAccuracy(CGRectGetMinY(itemView.badge.frame),
+                               CGRectGetMidY(itemView.iconImageView.frame), 0.001);
+  }
 }
 
 @end
