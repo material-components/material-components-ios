@@ -134,29 +134,24 @@ static UIImage *fakeImage(void) {
   CGRect bottomNavFrame = CGRectMake(0, 0, 200, 56);
   MDCBottomNavigationBar *bottomNavBar =
       [[MDCBottomNavigationBar alloc] initWithFrame:bottomNavFrame];
-  UITabBarItem *tabBarItem1 =
-      [[UITabBarItem alloc] initWithTitle:@"Home"
-                                    image:fakeImage()
-                                      tag:0];
+  UITabBarItem *tabBarItem1 = [[UITabBarItem alloc] initWithTitle:@"Home" image:fakeImage() tag:0];
   tabBarItem1.badgeValue = @"111";
 
-  UITabBarItem *tabBarItem2 =
-      [[UITabBarItem alloc] initWithTitle:@"Messages"
-                                    image:fakeImage()
-                                      tag:0];
+  UITabBarItem *tabBarItem2 = [[UITabBarItem alloc] initWithTitle:@"Messages"
+                                                            image:fakeImage()
+                                                              tag:0];
   tabBarItem2.badgeValue = @"111";
-  
-  UITabBarItem *tabBarItem3 =
-      [[UITabBarItem alloc] initWithTitle:@"Favorites"
-                                    image:fakeImage()
-                                      tag:0];
+
+  UITabBarItem *tabBarItem3 = [[UITabBarItem alloc] initWithTitle:@"Favorites"
+                                                            image:fakeImage()
+                                                              tag:0];
   tabBarItem3.badgeValue = @"111";
   bottomNavBar.items = @[ tabBarItem1, tabBarItem2, tabBarItem3 ];
   // Setting one selected and title visablilty to selected test against both with and without
   // a title label.
   bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
   bottomNavBar.selectedItem = tabBarItem2;
-  
+
   // When
   [bottomNavBar setNeedsLayout];
   [bottomNavBar layoutIfNeeded];

@@ -214,9 +214,8 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
           iconImageViewCenter.x + contentsWidth / 2 + self.contentHorizontalMargin;
       CGFloat iconImageOriginY = iconImageViewCenter.y - CGRectGetMidY(self.iconImageView.bounds);
       self.label.center = CGPointMake(labelCenterX, centerY);
-      self.badge.center =
-          CGPointMake(iconImageViewCenter.x + CGRectGetMidX(iconBounds),
-                      iconImageOriginY + CGRectGetMidY(self.badge.bounds));
+      self.badge.center = CGPointMake(iconImageViewCenter.x + CGRectGetMidX(iconBounds),
+                                      iconImageOriginY + CGRectGetMidY(self.badge.bounds));
       self.label.textAlignment = NSTextAlignmentLeft;
     } else {
       CGPoint iconImageViewCenter =
@@ -226,9 +225,8 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
           iconImageViewCenter.x - contentsWidth / 2 - self.contentHorizontalMargin;
       self.label.center = CGPointMake(labelCenterX, centerY);
       CGFloat iconImageOriginY = iconImageViewCenter.y - CGRectGetMidY(self.iconImageView.bounds);
-      self.badge.center =
-          CGPointMake(iconImageViewCenter.x - CGRectGetMidX(iconBounds),
-                      iconImageOriginY + CGRectGetMidY(self.badge.bounds));
+      self.badge.center = CGPointMake(iconImageViewCenter.x - CGRectGetMidX(iconBounds),
+                                      iconImageOriginY + CGRectGetMidY(self.badge.bounds));
       self.label.textAlignment = NSTextAlignmentRight;
     }
   }
