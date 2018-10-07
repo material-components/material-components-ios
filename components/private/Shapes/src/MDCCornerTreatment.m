@@ -19,6 +19,7 @@
 @implementation MDCCornerTreatment
 
 - (instancetype)init {
+  _valueType = MDCCornerTreatmentValueTypeAbsolute;
   return [super init];
 }
 
@@ -33,16 +34,34 @@
   return [MDCPathGenerator pathGeneratorWithStartPoint:CGPointZero];
 }
 
+- (MDCPathGenerator *)pathGeneratorForCornerWithAngle:(CGFloat)__unused angle
+                                          forViewSize:(CGSize)__unused viewSize {
+  return [MDCPathGenerator pathGeneratorWithStartPoint:CGPointZero];
+}
+
 - (void)encodeWithCoder:(NSCoder *)__unused aCoder {
   // MDCCornerTreatment has no params, so nothing to encode here.
 }
 
 - (id)copyWithZone:(nullable NSZone *)__unused zone {
-  return [[[self class] alloc] init];
+  MDCCornerTreatment *copy = [[[self class] alloc] init];
+  copy.valueType = _valueType;
+  return copy;
 }
 
 + (BOOL)supportsSecureCoding {
   return YES;
+}
+
+- (BOOL)isEqual:(id)object {
+  if (object == self) {
+    return YES;
+  }
+  if (!object || ![[object class] isEqual:[self class]]) {
+    return NO;
+  }
+  MDCCornerTreatment *otherCorner = (MDCCornerTreatment *)object;
+  return self.valueType == otherCorner.valueType;
 }
 
 @end

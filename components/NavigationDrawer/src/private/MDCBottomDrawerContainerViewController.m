@@ -190,52 +190,65 @@ static UIColor *DrawerShadowColor(void) {
                                            ? self.scrollViewIsDraggedToBottom
                                            : contentOffset.y < oldContentOffset.y;
 
-    [self updateViewWithContentOffset:contentOffset];
-
+    // The normalized content offset takes the content offset and updates it if using the
+    // performance logic that comes with setting the tracking scroll view. The reason we update
+    // the content offset is because the performance logic stops the scrolling internally of the
+    // main scroll view using the bounds origin, and we don't want the view update with content
+    // offset to use the outdated content offset of the main scroll view, so we update it
+    // accordingly.
+    CGPoint normalizedContentOffset = contentOffset;
     if (self.trackingScrollView != nil) {
-      [self updateContentOffsetForPerformantScrolling:contentOffset.y];
+      normalizedContentOffset.y = [self updateContentOffsetForPerformantScrolling:contentOffset.y];
     }
+
+    [self updateViewWithContentOffset:normalizedContentOffset];
   }
 }
 
-- (void)updateContentOffsetForPerformantScrolling:(CGFloat)contentYOffset {
+- (CGFloat)updateContentOffsetForPerformantScrolling:(CGFloat)contentYOffset {
+  CGFloat normalizedYContentOffset = contentYOffset;
   CGFloat topAreaInsetForHeader = (self.headerViewController ? MDCDeviceTopSafeAreaInset() : 0);
   CGFloat drawerOffset = self.contentHeaderTopInset - topAreaInsetForHeader;
   CGFloat headerHeightWithoutInset = self.contentHeaderHeight - topAreaInsetForHeader;
   CGFloat contentDiff = contentYOffset - drawerOffset;
   CGFloat maxScrollOrigin = self.trackingScrollView.contentSize.height -
-                            self.presentingViewBounds.size.height + headerHeightWithoutInset;
-  BOOL scrollingUpInFull = contentDiff < 0 && self.trackingScrollView.bounds.origin.y > 0;
-  if (self.scrollView.bounds.origin.y >= drawerOffset || scrollingUpInFull) {
-    // Update the main content view's scrollView offset
-    CGRect contentViewBounds = self.trackingScrollView.bounds;
-    contentViewBounds.origin.y += contentDiff;
-    contentViewBounds.origin.y = MIN(maxScrollOrigin, MAX(contentViewBounds.origin.y, 0));
-    self.trackingScrollView.bounds = contentViewBounds;
-
+                            CGRectGetHeight(self.presentingViewBounds) + headerHeightWithoutInset;
+  BOOL scrollingUpInFull = contentDiff < 0 && CGRectGetMinY(self.trackingScrollView.bounds) > 0;
+  if (CGRectGetMinY(self.scrollView.bounds) >= drawerOffset || scrollingUpInFull) {
     // If we reach full screen or if we are scrolling up after being in full screen.
-    if (self.trackingScrollView.bounds.origin.y < maxScrollOrigin || scrollingUpInFull) {
+    if (CGRectGetMinY(self.trackingScrollView.bounds) < maxScrollOrigin || scrollingUpInFull) {
       // If we still didn't reach the end of the content, or if we are scrolling up after reaching
       // the end of the content.
 
       // Update the drawer's scrollView's offset to be static so the content will scroll instead.
       CGRect scrollViewBounds = self.scrollView.bounds;
       scrollViewBounds.origin.y = drawerOffset;
+      normalizedYContentOffset = drawerOffset;
       self.scrollView.bounds = scrollViewBounds;
 
       // Make sure the drawer's scrollView's content size is the full size of the content
       CGSize scrollViewContentSize = self.presentingViewBounds.size;
       scrollViewContentSize.height += self.contentHeightSurplus;
       self.scrollView.contentSize = scrollViewContentSize;
+
+      // Update the main content view's scrollView offset
+      CGRect contentViewBounds = self.trackingScrollView.bounds;
+      contentViewBounds.origin.y += contentDiff;
+      contentViewBounds.origin.y = MIN(maxScrollOrigin, MAX(CGRectGetMinY(contentViewBounds), 0));
+      self.trackingScrollView.bounds = contentViewBounds;
     } else {
-      // Have the drawer's scrollView's content size be static so it will bounce when reaching the
-      // end of the content.
-      CGSize scrollViewContentSize = self.scrollView.contentSize;
-      scrollViewContentSize.height =
-          drawerOffset + self.scrollView.frame.size.height + 2 * topAreaInsetForHeader;
-      self.scrollView.contentSize = scrollViewContentSize;
+      if (self.trackingScrollView.contentSize.height >=
+          CGRectGetHeight(self.trackingScrollView.frame)) {
+        // Have the drawer's scrollView's content size be static so it will bounce when reaching the
+        // end of the content.
+        CGSize scrollViewContentSize = self.scrollView.contentSize;
+        scrollViewContentSize.height =
+            drawerOffset + CGRectGetHeight(self.scrollView.frame) + 2 * topAreaInsetForHeader;
+        self.scrollView.contentSize = scrollViewContentSize;
+      }
     }
   }
+  return normalizedYContentOffset;
 }
 
 - (void)addScrollViewObserver {
@@ -328,7 +341,6 @@ static UIColor *DrawerShadowColor(void) {
 
   // Layout the main content view.
   CGRect contentViewFrame = self.scrollView.bounds;
-  NSLog(@"%f", self.contentHeaderTopInset);
   contentViewFrame.origin.y = self.contentHeaderTopInset + self.contentHeaderHeight;
   if (self.trackingScrollView != nil) {
     contentViewFrame.size.height -=
@@ -392,7 +404,7 @@ static UIColor *DrawerShadowColor(void) {
 
 - (void)updateViewWithContentOffset:(CGPoint)contentOffset {
   CGFloat headerTransitionToTop =
-      contentOffset.y >= self.contentHeaderTopInset
+      contentOffset.y >= self.transitionCompleteContentOffset
           ? 1.f
           : [self transitionPercentageForContentOffset:contentOffset
                                                 offset:0.f

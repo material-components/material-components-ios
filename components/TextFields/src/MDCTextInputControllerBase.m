@@ -1576,11 +1576,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
     valueString = [valueString stringByAppendingString:@"."];
 
     self.textInput.accessibilityValue = valueString;
-    NSString *leadingUnderlineLabelText = self.textInput.leadingUnderlineLabel.text;
-    self.textInput.leadingUnderlineLabel.accessibilityLabel =
-        [NSString stringWithFormat:@"Error: %@.",
-                                   leadingUnderlineLabelText ? leadingUnderlineLabelText : @""];
-    UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, self.textInput.leadingUnderlineLabel);
+    self.textInput.leadingUnderlineLabel.accessibilityLabel = announcementString;
   } else {
     self.textInput.accessibilityValue = nil;
     if ([self.textInput.leadingUnderlineLabel.text isEqualToString:self.helperText]) {
@@ -1589,6 +1585,8 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
       self.textInput.leadingUnderlineLabel.accessibilityLabel = nil;
     }
   }
+  UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification,
+                                  self.textInput.leadingUnderlineLabel);
 }
 
 -(void)setHelperText:(NSString *)helperText

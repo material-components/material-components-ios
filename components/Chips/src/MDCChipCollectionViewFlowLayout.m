@@ -59,4 +59,8 @@ static inline CGRect CGRectLeftAlign(CGRect rect) {
   return [customLayoutAttributes copy];
 }
 
+- (BOOL)flipsHorizontallyInOppositeLayoutDirection {
+  return YES;
+}
+
 @end

@@ -85,4 +85,6 @@
   XCTAssertEqual(_tabBar.selectedItem, _itemB);
 }
 
+// TODO(#5199): Add a snapshot test to prove the tabs render without a window
+
 @end

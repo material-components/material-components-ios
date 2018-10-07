@@ -34,6 +34,17 @@ Start the title with `[ComponentName]` to identify which component a change affe
 [FooBar] Removes the deprecated fooWithBar:(Bar*)bar method.
 ```
 
+### Pull request continuous integration for new contributors
+
+Continuous integration will only be initiated automatically for the [core team](https://github.com/orgs/material-components/teams/core-ios-team/members)
+and [recognized collaborators](https://github.com/orgs/material-components/teams/recognized-ios-collaborators/members).
+
+All other pull requests must be labeled with `kokoro:force-run` by a member of the repo
+with write access in order for continuous integration to be initiated. This label must
+be added again each time the pull request has new commits pushed to it.
+
+For Googlers: [b/115490922](http://b/115490922) is tracking making the above work more streamlined for new contributors.
+
 #### Using assignee to indicate who should action on a PR
 
 Since PRs on github permanently stay in the `Changes requested` state it is hard to tell when the author has addressed the concerns. By change the assignee to whomever still needs to action (review or modify/justify) we can more easily keep track of what needs attention in our PR queues.
@@ -45,10 +56,6 @@ Since PRs on github permanently stay in the `Changes requested` state it is hard
 ### Deprecation
 
 See [deprecation_policy.md](deprecation_policy.md) for details.
-
-### Hotfixing
-
-Occasionally it is necessary to hotfix the framework. See [hotfixing.md](hotfixing.md) for details.
 
 ## Finding an issue to work on
 

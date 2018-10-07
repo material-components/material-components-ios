@@ -138,7 +138,46 @@ __attribute__((objc_subclassing_restricted))
  */
 @property(nonatomic, nullable, strong) UIFont *actionFont;
 
+/**
+ The color applied to the sheet view of the action sheet controller.
+ */
 @property(nonatomic, nonnull, strong) UIColor *backgroundColor;
+
+/**
+ The color applied to the title of the action sheet controller.
+
+ @note If only using a title and the actions have no icons make sure they are different colors so
+ there is a distinction between the title and actions.
+ */
+@property(nonatomic, strong, nullable) UIColor *titleTextColor;
+
+/**
+ The color applied to the message of the action sheet controller.
+
+ @note To make for a better user experience we recommend using a different color for the message and
+ actions if there are no icons so there is a distinction between the message and actions.
+ */
+@property(nonatomic, strong, nullable) UIColor *messageTextColor;
+
+/**
+ The color for the text for all action items within an action sheet.
+ */
+@property(nonatomic, strong, nullable) UIColor *actionTextColor;
+
+/**
+ The tint color for the action items within an action sheet.
+ */
+@property(nonatomic, strong, nullable) UIColor *actionTintColor;
+
+/**
+ The ink color for the action items within an action sheet.
+ */
+@property(nonatomic, strong, nullable) UIColor *inkColor;
+
+/**
+ The image rendering mode for all actions within an action sheet.
+ */
+@property(nonatomic) UIImageRenderingMode imageRenderingMode;
 
 @property(nonatomic, strong, readonly, nonnull)
     MDCBottomSheetTransitionController *transitionController;

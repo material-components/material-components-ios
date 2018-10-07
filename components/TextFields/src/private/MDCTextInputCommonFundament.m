@@ -596,9 +596,11 @@ static inline UIColor *MDCTextInputUnderlineColor() {
       [[NSNotificationCenter defaultCenter] postNotificationName:UITextViewTextDidChangeNotification
                                                           object:textField.textView];
     } else if ([self.textInput isKindOfClass:[UITextField class]]) {
+      UITextField *textField = (UITextField *)self.textInput;
       [[NSNotificationCenter defaultCenter]
           postNotificationName:UITextFieldTextDidChangeNotification
                         object:self.textInput];
+      [textField sendActionsForControlEvents:UIControlEventEditingChanged];
     }
   }
 }

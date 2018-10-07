@@ -96,12 +96,26 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27.0f;
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+
   self.view.backgroundColor = [UIColor whiteColor];
   self.title = @"Shadow Corner Radius";
   _shadowsView = [[ShadowCornerRadiusView alloc] initWithFrame:self.view.bounds];
   _shadowsView.autoresizingMask =
       UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
   [self.view addSubview:_shadowsView];
+}
+
+- (void)viewDidLayoutSubviews {
+  [super viewDidLayoutSubviews];
+
+  if (@available(iOS 11.0, *)) {
+    _shadowsView.frame = UIEdgeInsetsInsetRect(self.view.bounds, self.view.safeAreaInsets);
+  } else {
+    CGRect frame = self.view.bounds;
+    frame.origin.y += self.topLayoutGuide.length;
+    frame.size.height -= self.topLayoutGuide.length;
+    _shadowsView.frame = frame;
+  }
 }
 
 #pragma mark catalog by convention

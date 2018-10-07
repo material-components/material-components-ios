@@ -43,16 +43,40 @@ static NSString *const MDCRoundedCornerTreatmentRadiusKey = @"MDCRoundedCornerTr
   [aCoder encodeDouble:_radius forKey:MDCRoundedCornerTreatmentRadiusKey];
 }
 
-- (id)copyWithZone:(NSZone *)__unused zone {
-  return [[[self class] alloc] initWithRadius:_radius];
+- (id)copyWithZone:(NSZone *)zone {
+  MDCRoundedCornerTreatment *copy = [super copyWithZone:zone];
+  copy.radius = _radius;
+  return copy;
 }
 
 - (MDCPathGenerator *)pathGeneratorForCornerWithAngle:(CGFloat)angle {
-  MDCPathGenerator *path = [MDCPathGenerator pathGeneratorWithStartPoint:CGPointMake(0, _radius)];
+  return [self pathGeneratorForCornerWithAngle:angle andRadius:_radius];
+}
+
+- (MDCPathGenerator *)pathGeneratorForCornerWithAngle:(CGFloat)angle forViewSize:(CGSize)viewSize {
+  CGFloat normalizedRadius = _radius * viewSize.height;
+  return [self pathGeneratorForCornerWithAngle:angle andRadius:normalizedRadius];
+}
+
+- (MDCPathGenerator *)pathGeneratorForCornerWithAngle:(CGFloat)angle andRadius:(CGFloat)radius {
+  MDCPathGenerator *path = [MDCPathGenerator pathGeneratorWithStartPoint:CGPointMake(0, radius)];
   [path addArcWithTangentPoint:CGPointZero
-                       toPoint:CGPointMake(MDCSin(angle) * _radius, MDCCos(angle) * _radius)
-                        radius:_radius];
+                       toPoint:CGPointMake(MDCSin(angle) * radius, MDCCos(angle) * radius)
+                        radius:radius];
   return path;
+}
+
+- (BOOL)isEqual:(id)object {
+  if (object == self) {
+    return YES;
+  } else if (![super isEqual:object]) {
+    return NO;
+  }
+  if (!object || ![[object class] isEqual:[self class]]) {
+    return NO;
+  }
+  MDCRoundedCornerTreatment *otherRoundedCorner = (MDCRoundedCornerTreatment *)object;
+  return self.radius == otherRoundedCorner.radius;
 }
 
 @end

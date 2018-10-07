@@ -22,6 +22,7 @@ class CardExampleViewController: UIViewController {
   @IBOutlet weak var button: MDCButton!
 
   var colorScheme = MDCSemanticColorScheme()
+  var shapeScheme = MDCShapeScheme()
   var typographyScheme = MDCTypographyScheme()
 
   override func viewDidLoad() {
@@ -40,6 +41,7 @@ class CardExampleViewController: UIViewController {
 
     let cardScheme = MDCCardScheme();
     cardScheme.colorScheme = colorScheme
+    cardScheme.shapeScheme = shapeScheme
     MDCCardThemer.applyScheme(cardScheme, to: card)
     card.isInteractable = false
 
@@ -78,22 +80,10 @@ class CardImageView: UIImageView {
   func curveImageToCorners() {
     // The main image from the xib is taken from: https://unsplash.com/photos/wMzx2nBdeng
     // License details: https://unsplash.com/license
-    var roundingCorners = UIRectCorner.topLeft
-    if (UIDevice.current.orientation == .portrait ||
-      UIDevice.current.orientation == .portraitUpsideDown) {
-      roundingCorners.formUnion(.topRight)
-    } else {
-      roundingCorners.formUnion(.bottomLeft)
+    if let card = self.superview as? MDCCard,
+      let shapedShadowLayer = card.layer as? MDCShapedShadowLayer {
+      self.layer.mask = shapedShadowLayer.shapeLayer
     }
-
-    let bezierPath = UIBezierPath(roundedRect: self.bounds,
-                                  byRoundingCorners: roundingCorners,
-                                  cornerRadii: CGSize(width: 4,
-                                                      height: 4))
-    let shapeLayer = CAShapeLayer()
-    shapeLayer.frame = self.bounds
-    shapeLayer.path = bezierPath.cgPath
-    self.layer.mask = shapeLayer
   }
 
 }

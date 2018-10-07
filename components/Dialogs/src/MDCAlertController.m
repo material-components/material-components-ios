@@ -106,6 +106,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
     _alertTitle = [title copy];
     _message = [message copy];
     _actions = [[NSMutableArray alloc] init];
+    _titleAlignment = NSTextAlignmentNatural;
 
     super.transitioningDelegate = _transitionController;
     super.modalPresentationStyle = UIModalPresentationCustom;
@@ -212,6 +213,49 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   }
 }
 
+- (void)setTitleAlignment:(NSTextAlignment)titleAlignment {
+  _titleAlignment = titleAlignment;
+  if (self.alertView) {
+    self.alertView.titleAlignment = titleAlignment;
+  }
+}
+
+- (void)setTitleIcon:(UIImage *)titleIcon {
+  _titleIcon = titleIcon;
+  if (self.alertView) {
+    self.alertView.titleIcon = titleIcon;
+  }
+}
+
+- (void)setTitleIconTintColor:(UIColor *)titleIconTintColor {
+  _titleIconTintColor = titleIconTintColor;
+  if (self.alertView) {
+    self.alertView.titleIconTintColor = titleIconTintColor;
+  }
+}
+
+- (void)setCornerRadius:(CGFloat)cornerRadius {
+  _cornerRadius = cornerRadius;
+  if (self.alertView) {
+    self.alertView.cornerRadius = cornerRadius;
+  }
+  // make sure to pass the new shape through to the dialog's tracking/shadow layer
+  MDCDialogPresentationController *dialogPresentationController =
+      self.mdc_dialogPresentationController;
+  if (dialogPresentationController) {
+    dialogPresentationController.dialogCornerRadius = cornerRadius;
+  }
+}
+
+- (void)setElevation:(CGFloat)elevation {
+  _elevation = elevation;
+  MDCDialogPresentationController *dialogPresentationController =
+      self.mdc_dialogPresentationController;
+  if (dialogPresentationController) {
+    dialogPresentationController.dialogElevation = elevation;
+  }
+}
+
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
   _mdc_adjustsFontForContentSizeCategory = adjusts;
 
@@ -308,6 +352,10 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   self.alertView.buttonColor = self.buttonTitleColor;
   self.alertView.buttonFont = self.buttonFont;
   self.alertView.buttonInkColor = self.buttonInkColor;
+  self.alertView.titleAlignment = self.titleAlignment;
+  self.alertView.titleIcon = self.titleIcon;
+  self.alertView.titleIconTintColor = self.titleIconTintColor;
+  self.alertView.cornerRadius = self.cornerRadius;
 
   for (MDCAlertAction *action in self.actions) {
     [self addActionToAlertView:action];

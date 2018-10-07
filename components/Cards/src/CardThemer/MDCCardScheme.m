@@ -20,6 +20,7 @@
   self = [super init];
   if (self) {
     _colorScheme = [[MDCSemanticColorScheme alloc] init];
+    _shapeScheme = [[MDCShapeScheme alloc] init];
   }
   return self;
 }

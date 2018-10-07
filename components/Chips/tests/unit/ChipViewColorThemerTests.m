@@ -103,4 +103,11 @@
                         [textColor colorWithAlphaComponent:0.38f]);
 }
 
+- (void)testBackgroundColorAfterColorTheming {
+  self.colorScheme.surfaceColor = [UIColor blueColor];
+  [MDCChipViewColorThemer applyOutlinedVariantWithColorScheme:self.colorScheme
+                                                   toChipView:self.chip];
+  XCTAssertEqualObjects(self.colorScheme.surfaceColor, self.chip.backgroundColor);
+}
+
 @end

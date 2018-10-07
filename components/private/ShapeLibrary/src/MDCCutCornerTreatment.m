@@ -41,14 +41,38 @@ static NSString *const MDCCutCornerTreatmentCutKey = @"MDCCutCornerTreatmentCutK
   [aCoder encodeDouble:_cut forKey:MDCCutCornerTreatmentCutKey];
 }
 
-- (id)copyWithZone:(NSZone *)__unused zone {
-  return [[[self class] alloc] initWithCut:_cut];
+- (id)copyWithZone:(NSZone *)zone {
+  MDCCutCornerTreatment *copy = [super copyWithZone:zone];
+  copy.cut = _cut;
+  return copy;
 }
 
 - (MDCPathGenerator *)pathGeneratorForCornerWithAngle:(CGFloat)angle {
-  MDCPathGenerator *path = [MDCPathGenerator pathGeneratorWithStartPoint:CGPointMake(0, _cut)];
-  [path addLineToPoint:CGPointMake(_cut, 0)];
+  return [self pathGeneratorForCornerWithAngle:angle andCut:_cut];
+}
+
+- (MDCPathGenerator *)pathGeneratorForCornerWithAngle:(CGFloat)angle forViewSize:(CGSize)viewSize {
+  CGFloat normalizedCut = _cut * viewSize.height;
+  return [self pathGeneratorForCornerWithAngle:angle andCut:normalizedCut];
+}
+
+- (MDCPathGenerator *)pathGeneratorForCornerWithAngle:(CGFloat)angle andCut:(CGFloat)cut {
+  MDCPathGenerator *path = [MDCPathGenerator pathGeneratorWithStartPoint:CGPointMake(0, cut)];
+  [path addLineToPoint:CGPointMake(cut, 0)];
   return path;
+}
+
+- (BOOL)isEqual:(id)object {
+  if (object == self) {
+    return YES;
+  } else if (![super isEqual:object]) {
+    return NO;
+  }
+  if (!object || ![[object class] isEqual:[self class]]) {
+    return NO;
+  }
+  MDCCutCornerTreatment *otherCutCorner = (MDCCutCornerTreatment *)object;
+  return self.cut == otherCutCorner.cut;
 }
 
 @end

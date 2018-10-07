@@ -19,12 +19,18 @@
 @property(nonatomic, strong, nullable) UIFont *titleFont UI_APPEARANCE_SELECTOR;
 @property(nonatomic, strong, nullable) UIColor *titleColor UI_APPEARANCE_SELECTOR;
 
+@property(nonatomic, assign) NSTextAlignment titleAlignment;
+@property(nonatomic, strong, nullable) UIImage *titleIcon;
+@property(nonatomic, strong, nullable) UIColor *titleIconTintColor;
+
 @property(nonatomic, strong, nullable) UIFont *messageFont UI_APPEARANCE_SELECTOR;
 @property(nonatomic, strong, nullable) UIColor *messageColor UI_APPEARANCE_SELECTOR;
 
 @property(nonatomic, strong, nullable) UIFont *buttonFont UI_APPEARANCE_SELECTOR;
 @property(nonatomic, strong, nullable) UIColor *buttonColor UI_APPEARANCE_SELECTOR;
 @property(nonatomic, strong, nullable) UIColor *buttonInkColor UI_APPEARANCE_SELECTOR;
+
+@property(nonatomic, assign) CGFloat cornerRadius;
 
 /*
  Indicates whether the view's contents should automatically update their font when the device’s

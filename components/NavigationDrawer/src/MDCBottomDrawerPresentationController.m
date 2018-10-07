@@ -37,10 +37,14 @@ static UIColor *DrawerOverlayBackgroundColor(void) {
 
 @implementation MDCBottomDrawerPresentationController
 
-// Override the presentedView property getter to return our container view controller's
-// view instead of the default.
 - (UIView *)presentedView {
-  return self.bottomDrawerContainerViewController.view;
+  if ([self.presentedViewController isKindOfClass:[MDCBottomDrawerViewController class]]) {
+    return super.presentedView;
+  } else {
+    // Override the presentedView property getter to return our container view controller's
+    // view instead of the default.
+    return self.bottomDrawerContainerViewController.view;
+  }
 }
 
 - (void)presentationTransitionWillBegin {
@@ -73,7 +77,12 @@ static UIColor *DrawerOverlayBackgroundColor(void) {
   self.scrimView.accessibilityTraits |= UIAccessibilityTraitButton;
 
   [self.containerView addSubview:self.scrimView];
-  [self.containerView addSubview:self.bottomDrawerContainerViewController.view];
+
+  if ([self.presentedViewController isKindOfClass:[MDCBottomDrawerViewController class]]) {
+    [self.presentedView addSubview:self.bottomDrawerContainerViewController.view];
+  } else {
+    [self.containerView addSubview:self.bottomDrawerContainerViewController.view];
+  }
 
   id<UIViewControllerTransitionCoordinator> transitionCoordinator =
       [[self presentingViewController] transitionCoordinator];

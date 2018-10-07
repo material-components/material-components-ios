@@ -623,10 +623,6 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 }
 
 - (void)updateFlowLayoutMetrics {
-  // Layout metrics cannot be updated while offscreen.
-  if (!self.window) {
-    return;
-  }
 
   UIUserInterfaceSizeClass horizontalSizeClass = [self horizontalSizeClass];
 
@@ -656,7 +652,6 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   // This is not animated because -updateFlowLayoutMetrics may be called in an animation block and
   // the change will be still get animated anyway - using NO avoids 'double' animation and allows
   // this method to be used without animation.
-  NSAssert(_collectionView.window, @"Collection view must be in a window to update layout");
   [_collectionView setCollectionViewLayout:_flowLayout animated:NO];
 
   // Force immediate layout so the selection indicator can be placed accurately.

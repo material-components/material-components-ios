@@ -140,6 +140,13 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
  */
 @property(nonatomic, assign) CGFloat itemsContentHorizontalMargin;
 
+/**
+ Returns the navigation bar subview associated with the specific item.
+
+ @param item A UITabBarItem
+ */
+- (nullable UIView *)viewForItem:(nonnull UITabBarItem *)item;
+
 @end
 
 #pragma mark - MDCBottomNavigationBarDelegate

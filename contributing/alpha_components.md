@@ -12,8 +12,12 @@ tests after a pod install. From the point of view of our catalogs, these compone
 any other.
 
 From the point of view of the public, Alpha components are not made available as part of our
-published pod. External clients that wish to use an Alpha component in their app will need to
-manually clone the repo and add the code to their project. This is by design.
+published pod. External clients that wish to use an Alpha component in their Podfile will need to
+manually specify the MaterialComponentsAlpha target and our repo.
+```
+   pod 'MaterialComponentsAlpha', :git => 'https://github.com/material-components/material-components-ios.git'
+```
+When the component graduates to "Ready" clients will need to change their specs to point at the main pod.
 
 Alpha components are not subject to our deprecation policy and we will not provide behavioral flags
 for gradual migration of runtime behaviors.
@@ -24,4 +28,20 @@ Once a component is ready for general production use, we will graduate the compo
 `MaterialComponents.podspec`. At this point the component will be subject to all of the processes
 and expectations that any other production component.
 
-All of your Swift example or test files must import `MaterialComponentsAlpha.ComponentName`.
+## Import statements
+
+Swift import statements for alpha components follow the pattern `MaterialComponentsAlpha.<#ComponentName#>`.
+
+## Component README.md
+
+The component's README.md should include the following near the top of the document:
+
+```
+## Alpha component
+
+This component is an [alpha component](../../contributing/alpha_components.md). This means the API is
+subject to change without notice and without incrementing major/minor version numbers. To use this
+component add the following to your Podfile:
+
+    pod 'MaterialComponentsAlpha', :path => 'https://github.com/material-components/material-components-ios.git'
+```

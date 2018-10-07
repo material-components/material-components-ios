@@ -196,6 +196,7 @@ test_release() {
   "$dir/prep_all"
   "$dir/build_all" --verbose
   "$dir/test_all"
+  "$dir/build_codelabs"
 }
 
 bump_release() {
@@ -481,7 +482,11 @@ generate_release_apidiff() {
       echo >> $ALL_CHANGELOG_PATH
       echo "### $component" >> $ALL_CHANGELOG_PATH
       echo >> $ALL_CHANGELOG_PATH
-      echo "**New component.**" >> $ALL_CHANGELOG_PATH
+      if [[ "$component" = *"+"* ]]; then
+        echo "**New extension.**" >> $ALL_CHANGELOG_PATH
+      else
+        echo "**New component.**" >> $ALL_CHANGELOG_PATH
+      fi
 
       echo "New!"
       continue
@@ -565,7 +570,7 @@ generate_release_diff() {
 }
 
 generate_release_notes() {
-  find components -type d -name 'src' | while read path; do
+  find components -type d -name 'src' | sort | while read path; do
     folder=$(dirname $path)
     component=$(echo $folder | cut -d'/' -f2-)
 
@@ -583,7 +588,7 @@ generate_release_notes() {
         --pretty="* [%s](https://github.com/material-components/material-components-ios/commit/%H) (%an)" \
         --no-merges \
         origin/stable..$(get_latest_branch) \
-        $folder
+        $folder | grep -v "\[automated\]"
     }
 
     if [[ $(componentdiff) ]]; then
@@ -602,8 +607,6 @@ generate_release_notes() {
       fi
 
       if [[ $(componentdiff | grep -v "\[$component\]\!") ]]; then
-        echo
-        echo "#### Changes"
         echo
 
         componentdiff \

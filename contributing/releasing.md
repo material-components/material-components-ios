@@ -21,7 +21,7 @@ code should be removed immediately from the release.
 
 Importantly: **do not** block the cutting of the weekly release on a PR or a piece of functionality
 you'd like to land. If your PR hasn't landed by the time the release is cut, it's not making it into
-that week's release. If your PR is important, cut a [hotfix release](hotfixing.md) in addition to the
+that week's release. If your PR is important, cut a hotfix release in addition to the
 typical weekly release.
 
 If you are not able to cut a release Wednesday morning, cut it Tuesday evening before you leave the
@@ -43,13 +43,13 @@ will be working day-to-day with a fork, consider creating a separate clone just 
 Our entire release process is encoded into the `release` script in the scripts/ directory.
 Read the [tool's readme](../scripts/README-release.md) to learn more about the tool.
 
-### Cut a release branch and notify clients
+### Cut a release branch and create a pull request
 
 Run the following command to cut a release:
 
     scripts/release cut
 
-Note: if for some reason this fails, first ensure that nobody else is in the middle of cutting a release by visiting the repo and verifying that a release-candidate does not already exist because aborting the release will delete the remote release candidate. If that isn't the case, then please run `scripts/release abort` and try again.
+Note: if for some reason `cut` fails, first ensure that nobody else is in the middle of cutting a release by visiting the repo and verifying that a release-candidate does not already exist because aborting the release will delete the remote release candidate. If that isn't the case, then please run `scripts/release abort` and try again.
 
 You will now have a local `release-candidate` branch, a new section in CHANGELOG.md titled
 "release-candidate", and the `release-candidate` branch will have been pushed to GitHub.
@@ -59,8 +59,26 @@ that the `cut` script generated.
 
 Name the Pull Request title "[WIP] Release Candidate." until you are able to provide the version as the title.
 
+Add "@Release-blocking clients" to the pull request's reviewers. This is the mechanism by which
+release-blocking clients are notified of a new release.
+
 **Do not use GitHub's big green button to merge the approved pull request.** Release are an
 exception to our normal squash-and-merge procedure.
+
+#### Hotfixing
+
+If you need to cut a hotfix release, run the following command instead:
+
+    scripts/release cut --hotfix
+
+A hotfix release is like a regular release, but its scope is limited specifically to the fix. Hotfix
+release candidates start from origin/stable rather than origin/develop. 
+
+If the hotfix is to fix a regression or a problematic commit in a recent release, the ideal
+path forward is to revert that commit using the `git revert <commit-hash>` command and opening a PR with that change to the develop branch.
+After that PR is merged, you should cherry-pick the revert commit into the `release-candidate` branch: `git cherry-pick <commit-hash>`.
+
+Other than the steps above regarding hotfixing, the entire release process stays the same.
 
 ### Start internal testing
 
@@ -141,7 +159,7 @@ discussion on the topic.
 
 The final sanity check is to visually inspect the diff.
 
-> If you have configured Git with a GUI diff tool (`git difftool`), then you can add
+> If you have configured Git with a GUI diff tool (`git difftool`) like [Kaleidoscope](https://itunes.apple.com/us/app/kaleidoscope/id587512244?mt=12), then you can add
 > `--use_diff_tool` to `scripts/release diff` below.
 
 Generate a list of component public header changes:
@@ -178,7 +196,7 @@ Commit the results to your branch:
 
 Send our local podspec through the CocoaPods linter:
 
-    pod lib lint MaterialComponents.podspec
+    pod lib lint MaterialComponents.podspec --skip-tests
 
 CocoaPods publishes a directory of publicly available pods through its **trunk** service.
 Note: Ensure that you can [push the podspec](#publish-to-cocoapods) later by checking for `MaterialComponents` in your list of available `Pods` when you:
@@ -233,6 +251,9 @@ exception to our normal squash-and-merge procedure.
 Once you've resolved any merge conflicts your local `develop` and `stable` branches will both
 include the latest changes from `release-candidate`.
 
+You must merge to **both** develop and stable. This is the mechanism by which we ensure that
+stable matches develop.
+
 ## Push the branches to GitHub
 
 You can now push the merged release candidate to GitHub so that you can complete the final
@@ -256,9 +277,11 @@ You can now publish the release to GitHub:
 ## Publish to Cocoapods
 
     git checkout stable
-    pod trunk push MaterialComponents.podspec
+    pod trunk push MaterialComponents.podspec --skip-tests
 
 ## Coordinate with release-blocking clients to finish work
 
 Any work that was started by the [Release-blocking clients](#release-blocking-clients)
 (dragon) step above may need to be finalized.
+
+Also follow last instructions in the [internal release instructions](http://go/mdc-releasing)

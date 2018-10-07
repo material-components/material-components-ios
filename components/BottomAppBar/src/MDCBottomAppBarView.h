@@ -61,6 +61,11 @@ typedef NS_ENUM(NSInteger, MDCBottomAppBarFloatingButtonPosition) {
 @property(nonatomic, strong, nonnull, readonly) MDCFloatingButton *floatingButton;
 
 /**
+ The offset from the center of the floating button to the top edge of the navigation bar
+ */
+@property(nonatomic, assign) CGFloat floatingButtonVerticalOffset;
+
+/**
  Navigation bar items that precede the floating action button. There is no limit to the number of
  buttons that can be added, but button bar width overflow is not handled.
  */
@@ -72,11 +77,20 @@ typedef NS_ENUM(NSInteger, MDCBottomAppBarFloatingButtonPosition) {
  */
 @property(nonatomic, copy, nullable) NSArray<UIBarButtonItem *> *trailingBarButtonItems;
 
-
 /**
  Color of the background of the bottom app bar.
  */
 @property(nullable, nonatomic, strong) UIColor *barTintColor UI_APPEARANCE_SELECTOR;
+
+/**
+ The @c tintColor applied to the bar items on the leading side of the BottomAppBar.
+ */
+@property(nonnull, nonatomic, strong) UIColor *leadingBarItemsTintColor;
+
+/**
+ The @c tintColor applied to the bar items on the trailing side of the BottomAppBar.
+ */
+@property(nonnull, nonatomic, strong) UIColor *trailingBarItemsTintColor;
 
 /**
  To color the background of the view use -barTintColor instead.
