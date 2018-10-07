@@ -101,12 +101,10 @@ static const CGFloat kDetailColorOpacity = 0.6f;
 }
 
 - (void)resetMDCSelfSizingStereoCellLabelProperties {
-  self.titleLabel.text = nil;
   self.titleLabel.font = self.defaultTitleLabelFont;
   self.titleLabel.textColor = self.defaultTitleLabelTextColor;
   self.titleLabel.numberOfLines = 0;
 
-  self.detailLabel.text = nil;
   self.detailLabel.font = self.defaultDetailLabelFont;
   self.detailLabel.textColor = self.defaultDetailLabelTextColor;
   self.detailLabel.numberOfLines = 0;
@@ -159,10 +157,12 @@ static const CGFloat kDetailColorOpacity = 0.6f;
 
   [self invalidateCachedLayouts];
 
-  [self resetMDCSelfSizingStereoCellLabelProperties];
-
+  self.titleLabel.text = nil;
+  self.detailLabel.text = nil;
   self.leadingImageView.image = nil;
   self.trailingImageView.image = nil;
+
+  [self resetMDCSelfSizingStereoCellLabelProperties];
 }
 
 #pragma mark Layout
