@@ -327,6 +327,7 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
   if ([self.delegate respondsToSelector:@selector(chipField:didAddChip:)]) {
     [self.delegate chipField:self didAddChip:chip];
   }
+  [self clearTextInput];
   [self notifyDelegateIfSizeNeedsToBeUpdated];
   [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];

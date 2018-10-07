@@ -318,6 +318,26 @@ static inline UIImage *TestImage(CGSize size) {
   XCTAssertGreaterThan(placeholderWithChipOriginX, finalPlaceholderPositionOriginX);
 }
 
+- (void)testAddChipsManuallyPlaceholderCorrectPosition {
+  // Given
+  MDCChipView *fakeChip = [[MDCChipView alloc] init];
+  fakeChip.titleLabel.text = @"Fake chip";
+  MDCChipField *fakeField = [[MDCChipField alloc] init];
+  fakeField.frame = CGRectMake(0, 0, 200, 100);
+
+  // When
+  [fakeField setNeedsLayout];
+  [fakeField layoutIfNeeded];
+  [fakeField addChip:fakeChip];
+  [fakeField layoutIfNeeded];
+
+  // Then
+  CGRect placeholderFrame = CGRectStandardize(fakeField.textField.placeholderLabel.frame);
+  // MDCTextField's adds 8dp padding to the text
+  CGFloat expectedXPosition = CGRectGetWidth(fakeChip.frame) + 8.f;
+  XCTAssertEqual(placeholderFrame.origin.x, expectedXPosition);
+}
+
 - (void)testChipsWithoutDeleteEnabled {
   // Given
   MDCChipField *field = [[MDCChipField alloc] init];
