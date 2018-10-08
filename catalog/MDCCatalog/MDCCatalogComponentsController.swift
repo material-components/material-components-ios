@@ -122,6 +122,7 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     }
     MDCFlexibleHeaderColorThemer.applySemanticColorScheme(colorScheme,
                                                           to: headerViewController.headerView)
+    setNeedsStatusBarAppearanceUpdate()
 
     titleLabel.textColor = colorScheme.onPrimaryColor
     menuButton.tintColor = colorScheme.onPrimaryColor
