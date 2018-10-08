@@ -65,7 +65,6 @@ mdc_objc_library(
     testonly = 1,
     srcs = native.glob([
         "tests/unit/*.m",
-        "tests/unit/*.h",
     ]),
     sdk_frameworks = [
         "UIKit",
