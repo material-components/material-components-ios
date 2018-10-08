@@ -110,8 +110,6 @@ static NSString *const kSelfSizingStereoCellExampleDescription =
                                                 forIndexPath:indexPath];
   cell.titleLabel.text = self.randomStrings[indexPath.item];
   cell.detailLabel.text = self.randomStrings[(indexPath.item + 1) % self.randomStrings.count];
-  cell.titleLabel.textColor = [UIColor darkGrayColor];
-  cell.detailLabel.textColor = [UIColor darkGrayColor];
   cell.leadingImageView.image =
       [[UIImage imageNamed:@"Cake"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   cell.trailingImageView.image =
