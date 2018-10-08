@@ -97,6 +97,9 @@
 /** The color applied to the button ink effect of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIColor *buttonInkColor;
 
+/** The color applied to the Alert's background when presented by MDCDialogPresentationController.*/
+@property(nonatomic, strong, nullable) UIColor *scrimColor;
+
 /** The corner radius applied to the Alert Controller view. Default to 0 (no round corners) */
 @property(nonatomic, assign) CGFloat cornerRadius;
 

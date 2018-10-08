@@ -96,15 +96,32 @@ MDCAlertControllerView *alertView;
   UIColor *scrimColor = [UIColor.orangeColor colorWithAlphaComponent:0.5];
   MDCDialogPresentationController *presentationController = alert.mdc_dialogPresentationController;
   if (presentationController == nil) {
-    return;  // don't fail the test if mdc_dialogPresentationController is empty
+    return;  // don't fail the test if mdc_dialogPresentationController is nil
   }
 
   // When
   presentationController.scrimColor = scrimColor;
 
   // Then
-  XCTAssertEqualObjects(alert.mdc_dialogPresentationController.scrimColor, scrimColor);
+  XCTAssertEqualObjects(presentationController.scrimColor, scrimColor);
 }
+
+- (void)testApplyingScrimColorToAlert {
+  // Given
+  UIColor *scrimColor = [UIColor.blueColor colorWithAlphaComponent:0.3];
+  MDCDialogPresentationController *presentationController = alert.mdc_dialogPresentationController;
+  if (presentationController == nil) {
+    return;  // don't fail the test if mdc_dialogPresentationController is nil
+  }
+
+  // When
+  alert.scrimColor = scrimColor;
+
+  // Then
+  XCTAssertEqualObjects(presentationController.scrimColor, scrimColor);
+}
+
+#pragma mark - helpers
 
 static inline UIImage *TestImage(CGSize size) {
   CGFloat scale = [UIScreen mainScreen].scale;

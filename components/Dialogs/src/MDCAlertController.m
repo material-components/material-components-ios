@@ -234,6 +234,16 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   }
 }
 
+- (void)setScrimColor:(UIColor *)scrimColor {
+  _scrimColor = scrimColor;
+  // make sure to pass the new shape through to the dialog's tracking/shadow layer
+  MDCDialogPresentationController *dialogPresentationController =
+      self.mdc_dialogPresentationController;
+  if (dialogPresentationController) {
+    dialogPresentationController.scrimColor = scrimColor;
+  }
+}
+
 - (void)setCornerRadius:(CGFloat)cornerRadius {
   _cornerRadius = cornerRadius;
   if (self.alertView) {

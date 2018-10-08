@@ -166,7 +166,7 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
   func performScrimColor() -> MDCAlertController {
     let alert = createMDCAlertController(title: "Darker Scrim")
     MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
-    alert.mdc_dialogPresentationController?.scrimColor = UIColor.black.withAlphaComponent(0.6)
+    alert.scrimColor = UIColor.black.withAlphaComponent(0.6)
     return alert
   }
 
