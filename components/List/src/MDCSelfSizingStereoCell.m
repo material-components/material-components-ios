@@ -191,7 +191,7 @@
 }
 
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
-   if (adjusts == _mdc_adjustsFontForContentSizeCategory) {
+  if (adjusts == _mdc_adjustsFontForContentSizeCategory) {
     return;
   }
 
