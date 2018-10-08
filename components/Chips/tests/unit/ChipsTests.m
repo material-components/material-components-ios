@@ -332,6 +332,8 @@ static inline UIImage *TestImage(CGSize size) {
   CGFloat initialPlaceholderOriginX =
       CGRectStandardize(fakeField.textField.placeholderLabel.frame).origin.x;
   [fakeField addChip:fakeChip];
+  fakeField.textField.placeholder = fakeField.textField.placeholder;
+  [fakeField setNeedsLayout];
   [fakeField layoutIfNeeded];
 
   // Then
