@@ -446,7 +446,7 @@ static NSString *const kEnabledSelector = @"enabled";
 
   for (NSUInteger i = 0; i < [_buttonViews count]; ++i) {
     UIView *viewObj = _buttonViews[i];
-    if ([viewObj isKindOfClass:[UIButton class]]) {
+    if ([viewObj isKindOfClass:[MDCButton class]]) {
       MDCButton *button = (MDCButton *)viewObj;
       [button setTitleFont:font forState:state];
 
@@ -477,7 +477,7 @@ static NSString *const kEnabledSelector = @"enabled";
 
   for (UIView *viewObj in _buttonViews) {
     if ([viewObj isKindOfClass:[UIButton class]]) {
-      MDCButton *button = (MDCButton *)viewObj;
+      UIButton *button = (UIButton *)viewObj;
       [button setTitleColor:color forState:state];
     }
   }
