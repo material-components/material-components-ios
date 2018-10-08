@@ -302,21 +302,12 @@ static inline UIImage *TestImage(CGSize size) {
   field.textField.placeholder = @"Test";
   [field setNeedsLayout];
   [field layoutIfNeeded];
-  CGFloat initialPlaceholderOriginX =
-      CGRectStandardize(field.textField.placeholderLabel.frame).origin.x;
 
   // When
   [field createNewChipFromInput];
   [field layoutIfNeeded];
-
-  // Then
   CGFloat placeholderWithChipOriginX =
       CGRectStandardize(field.textField.placeholderLabel.frame).origin.x;
-  // Guard's against a silent fail
-  XCTAssertGreaterThan(placeholderWithChipOriginX, initialPlaceholderOriginX);
-  XCTAssertNotEqual(field.chips.count, 0U);
-
-  // When
   MDCChipView *chip = field.chips[0];
   [field removeChip:chip];
   [field layoutIfNeeded];
@@ -324,7 +315,7 @@ static inline UIImage *TestImage(CGSize size) {
   // Then
   CGFloat finalPlaceholderPositionOriginX =
       CGRectStandardize(field.textField.placeholderLabel.frame).origin.x;
-  XCTAssertEqualWithAccuracy(initialPlaceholderOriginX, finalPlaceholderPositionOriginX, 0.001);
+  XCTAssertGreaterThan(placeholderWithChipOriginX, finalPlaceholderPositionOriginX);
 }
 
 - (void)testChipsWithoutDeleteEnabled {
