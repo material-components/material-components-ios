@@ -294,6 +294,39 @@ static inline UIImage *TestImage(CGSize size) {
                         withEvent:nil]);
 }
 
+- (void)testRemoveChipsManually {
+  // Given
+  MDCChipField *field = [[MDCChipField alloc] init];
+  field.frame = CGRectMake(0, 0, 200, 50);
+  field.textField.text = @"Test";
+  field.textField.placeholder = @"Test";
+  [field setNeedsLayout];
+  [field layoutIfNeeded];
+  CGFloat initialPlaceholderOriginX =
+      CGRectStandardize(field.textField.placeholderLabel.frame).origin.x;
+
+  // When
+  [field createNewChipFromInput];
+  [field layoutIfNeeded];
+
+  // Then
+  CGFloat placeholderWithChipOriginX =
+      CGRectStandardize(field.textField.placeholderLabel.frame).origin.x;
+  // Guard's against a silent fail
+  XCTAssertGreaterThan(placeholderWithChipOriginX, initialPlaceholderOriginX);
+  XCTAssertNotEqual(field.chips.count, 0U);
+
+  // When
+  MDCChipView *chip = field.chips[0];
+  [field removeChip:chip];
+  [field layoutIfNeeded];
+
+  // Then
+  CGFloat finalPlaceholderPositionOriginX =
+      CGRectStandardize(field.textField.placeholderLabel.frame).origin.x;
+  XCTAssertEqualWithAccuracy(initialPlaceholderOriginX, finalPlaceholderPositionOriginX, 0.001);
+}
+
 - (void)testChipsWithoutDeleteEnabled {
   // Given
   MDCChipField *field = [[MDCChipField alloc] init];

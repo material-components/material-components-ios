@@ -58,11 +58,11 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
 
 @end
 
-@interface MDCTextField (Fundament)
+@interface MDCTextField (MDCChipFieldTestingVisability)
 @property(nonatomic, strong) MDCTextInputCommonFundament *fundament;
 @end
 
-@interface MDCTextInputCommonFundament (Placeholder)
+@interface MDCTextInputCommonFundament (MDCChipFieldTestingVisability)
 - (void)updatePlaceholderPosition;
 @end
 
