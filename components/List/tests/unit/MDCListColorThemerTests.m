@@ -52,8 +52,7 @@ static const CGFloat kInkAlpha = 0.16f;
 - (void)testApplyingColorSchemeToSelfSizingStereoCell {
   MDCSelfSizingStereoCell *cell = [[MDCSelfSizingStereoCell alloc] initWithFrame:CGRectZero];
   MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
-  [MDCListColorThemer applySemanticColorScheme:colorScheme
-                        toSelfSizingStereoCell:cell];
+  [MDCListColorThemer applySemanticColorScheme:colorScheme toSelfSizingStereoCell:cell];
   XCTAssertTrue([self color1:cell.titleLabel.textColor
                 equalsColor2:[colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha]]);
   XCTAssertTrue([self color1:cell.detailLabel.textColor
@@ -69,8 +68,7 @@ static const CGFloat kInkAlpha = 0.16f;
 - (void)testApplyingColorSchemeToBaseCell {
   MDCBaseCell *cell = [[MDCBaseCell alloc] initWithFrame:CGRectZero];
   MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
-  [MDCListColorThemer applySemanticColorScheme:colorScheme
-                                    toBaseCell:cell];
+  [MDCListColorThemer applySemanticColorScheme:colorScheme toBaseCell:cell];
   XCTAssertTrue([self color1:cell.inkColor
                 equalsColor2:[colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha]]);
 }

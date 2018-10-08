@@ -26,8 +26,7 @@
 - (void)testApplyingTypographyScheme {
   MDCSelfSizingStereoCell *cell = [[MDCSelfSizingStereoCell alloc] initWithFrame:CGRectZero];
   MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
-  [MDCListTypographyThemer applyTypographyScheme:typographyScheme
-                                          toSelfSizingStereoCell:cell];
+  [MDCListTypographyThemer applyTypographyScheme:typographyScheme toSelfSizingStereoCell:cell];
   XCTAssertEqualObjects(cell.titleLabel.font, typographyScheme.subtitle1);
   XCTAssertEqualObjects(cell.detailLabel.font, typographyScheme.body2);
 }

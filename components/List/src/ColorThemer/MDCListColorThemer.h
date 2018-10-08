@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialList.h"
 #import "MaterialColorScheme.h"
+#import "MaterialList.h"
 
 #import <Foundation/Foundation.h>
 
@@ -37,7 +37,6 @@
  @param colorScheme The color scheme to apply to the component instance.
  @param cell A component instance to which the olor scheme should be applied.
  */
-+ (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
-                      toBaseCell:(MDCBaseCell *)cell;
++ (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme toBaseCell:(MDCBaseCell *)cell;
 
 @end

@@ -29,8 +29,7 @@ static const CGFloat kInkAlpha = 0.16f;
   cell.inkColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha];
 }
 
-+ (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
-                      toBaseCell:(MDCBaseCell *)cell {
++ (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme toBaseCell:(MDCBaseCell *)cell {
   cell.inkColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha];
 }
 
