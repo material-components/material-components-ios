@@ -84,6 +84,10 @@
                                       action:@selector(dismiss)];
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+  return UIStatusBarStyleLightContent;
+}
+
 - (void)dismiss {
   [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }

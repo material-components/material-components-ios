@@ -61,6 +61,10 @@ static NSString *const kCellIdentifier = @"cell";
   [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
+- (UIViewController *)childViewControllerForStatusBarStyle {
+  return self.viewController;
+}
+
 @end
 
 @implementation BottomAppBarExampleTableViewController
@@ -113,6 +117,10 @@ static NSString *const kCellIdentifier = @"cell";
   UIEdgeInsets contentInset = self.tableView.contentInset;
   contentInset.bottom = bottomAppBarFrame.size.height;
   self.tableView.contentInset = contentInset;
+}
+
+- (UIViewController *)childViewControllerForStatusBarStyle {
+  return self.appBarViewController;
 }
 
 #pragma mark - Table view data source

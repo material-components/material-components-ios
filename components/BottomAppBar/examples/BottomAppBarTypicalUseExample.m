@@ -68,7 +68,6 @@
   [self.bottomBarView setTrailingBarButtonItems:@[ barButtonTrailingItem ]];
 }
 
-
 - (void)viewDidLoad {
   [super viewDidLoad];
   [self commonBottomBarSetup];
@@ -81,6 +80,7 @@
   [MDCBottomAppBarColorThemer applySurfaceVariantWithSemanticColorScheme:self.colorScheme
                                                       toBottomAppBarView:self.bottomBarView];
 }
+
 - (void)didTapFloatingButton:(id)sender {
   [self.bottomBarView setFloatingButtonHidden:YES animated:YES];
 }
