@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialActionSheet.h"
 #import "MDCActionSheetScheme.h"
+#import "MaterialActionSheet.h"
 
 #import <Foundation/Foundation.h>
 

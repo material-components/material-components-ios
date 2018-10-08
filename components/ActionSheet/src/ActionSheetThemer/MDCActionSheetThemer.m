@@ -19,9 +19,12 @@
 
 @implementation MDCActionSheetThemer
 
-+ (void)applyScheme:(id<MDCActionSheetScheming>)scheme toActionSheetController:(MDCActionSheetController *)actionSheetController {
-  [MDCActionSheetColorThemer applySemanticColorScheme:scheme.colorScheme toActionSheetController:actionSheetController];
-  [MDCActionSheetTypographyThemer applyTypographyScheme:scheme.typographyScheme toActionSheetController:actionSheetController];
++ (void)applyScheme:(id<MDCActionSheetScheming>)scheme
+    toActionSheetController:(MDCActionSheetController *)actionSheetController {
+  [MDCActionSheetColorThemer applySemanticColorScheme:scheme.colorScheme
+                              toActionSheetController:actionSheetController];
+  [MDCActionSheetTypographyThemer applyTypographyScheme:scheme.typographyScheme
+                                toActionSheetController:actionSheetController];
 }
 
 @end
