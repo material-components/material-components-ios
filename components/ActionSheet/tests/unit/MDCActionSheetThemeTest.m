@@ -17,6 +17,7 @@
 #import "../../src/private/MDCActionSheetHeaderView.h"
 #import "../../src/private/MDCActionSheetItemTableViewCell.h"
 #import "MDCActionSheetTestHelper.h"
+#import "MaterialActionSheet+ActionSheetThemer.h"
 #import "MaterialActionSheet+ColorThemer.h"
 #import "MaterialActionSheet+TypographyThemer.h"
 
@@ -104,6 +105,31 @@ static const CGFloat kInkAlpha = 0.16f;
 }
 
 #pragma mark - default test
+
+- (void)testApplyThemer {
+  // Given
+  MDCActionSheetController *tempActionSheet = [[MDCActionSheetController alloc] init];
+  MDCActionSheetScheme *scheme = [[MDCActionSheetScheme alloc] init];
+  scheme.colorScheme = self.colorScheme;
+  scheme.typographyScheme = self.typographyScheme;
+
+  // When
+  [MDCActionSheetThemer applyScheme:scheme toActionSheetController:tempActionSheet];
+  [MDCActionSheetColorThemer applySemanticColorScheme:self.colorScheme
+                              toActionSheetController:self.actionSheet];
+  [MDCActionSheetTypographyThemer applyTypographyScheme:self.typographyScheme
+                                toActionSheetController:self.actionSheet];
+
+  // Then
+  XCTAssertEqualObjects(tempActionSheet.backgroundColor, self.actionSheet.backgroundColor);
+  XCTAssertEqualObjects(tempActionSheet.titleTextColor, self.actionSheet.titleTextColor);
+  XCTAssertEqualObjects(tempActionSheet.messageTextColor, self.actionSheet.messageTextColor);
+  XCTAssertEqualObjects(tempActionSheet.titleFont, self.actionSheet.titleFont);
+  XCTAssertEqualObjects(tempActionSheet.messageFont, self.actionSheet.messageFont);
+  XCTAssertEqualObjects(tempActionSheet.actionFont, self.actionSheet.actionFont);
+  XCTAssertEqualObjects(tempActionSheet.actionTintColor, self.actionSheet.actionTintColor);
+  XCTAssertEqualObjects(tempActionSheet.actionTextColor, self.actionSheet.actionTextColor);
+}
 
 - (void)testApplyColorTheme {
   // When
