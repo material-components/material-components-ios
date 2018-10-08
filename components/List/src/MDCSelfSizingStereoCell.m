@@ -86,13 +86,9 @@ static const CGFloat kDetailColorOpacity = 0.6f;
   [self.contentView addSubview:self.textContainer];
 
   self.titleLabel = [[UILabel alloc] init];
-  self.titleLabel.font = self.defaultTitleLabelFont;
-  self.titleLabel.numberOfLines = 0;
   [self.textContainer addSubview:self.titleLabel];
 
   self.detailLabel = [[UILabel alloc] init];
-  self.detailLabel.font = self.defaultDetailLabelFont;
-  self.detailLabel.numberOfLines = 0;
   [self.textContainer addSubview:self.detailLabel];
 
   self.leadingImageView = [[UIImageView alloc] init];
@@ -100,6 +96,18 @@ static const CGFloat kDetailColorOpacity = 0.6f;
 
   self.trailingImageView = [[UIImageView alloc] init];
   [self.contentView addSubview:self.trailingImageView];
+
+  [self resetMDCSelfSizingStereoCellLabelProperties];
+}
+
+- (void)resetMDCSelfSizingStereoCellLabelProperties {
+  self.titleLabel.font = self.defaultTitleLabelFont;
+  self.titleLabel.textColor = self.defaultTitleLabelTextColor;
+  self.titleLabel.numberOfLines = 0;
+
+  self.detailLabel.font = self.defaultDetailLabelFont;
+  self.detailLabel.textColor = self.defaultDetailLabelTextColor;
+  self.detailLabel.numberOfLines = 0;
 }
 
 #pragma mark UIView Overrides
@@ -148,12 +156,13 @@ static const CGFloat kDetailColorOpacity = 0.6f;
   [super prepareForReuse];
 
   [self invalidateCachedLayouts];
+
   self.titleLabel.text = nil;
-  self.titleLabel.font = self.defaultTitleLabelFont;
   self.detailLabel.text = nil;
-  self.detailLabel.font = self.defaultDetailLabelFont;
   self.leadingImageView.image = nil;
   self.trailingImageView.image = nil;
+
+  [self resetMDCSelfSizingStereoCellLabelProperties];
 }
 
 #pragma mark Layout
