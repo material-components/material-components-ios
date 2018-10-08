@@ -26,7 +26,7 @@
  Applies a color scheme's properties to an MDCSelfSizingStereoCell
 
  @param colorScheme The color scheme to apply to the component instance.
- @param cell A component instance to which the olor scheme should be applied.
+ @param cell A component instance to which the color scheme should be applied.
  */
 + (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
           toSelfSizingStereoCell:(MDCSelfSizingStereoCell *)cell;
@@ -35,7 +35,7 @@
  Applies a color scheme's properties to an MDCBaseCell
 
  @param colorScheme The color scheme to apply to the component instance.
- @param cell A component instance to which the olor scheme should be applied.
+ @param cell A component instance to which the color scheme should be applied.
  */
 + (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme toBaseCell:(MDCBaseCell *)cell;
 
