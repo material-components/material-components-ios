@@ -719,7 +719,6 @@ static UIColor *DrawerShadowColor(void) {
 }
 
 - (CGFloat)addedContentHeightThreshold {
-  // TODO: (#4900) change this to use safeAreaInsets as this is a soon to be deprecated API.
   return [self topSafeArea];
 }
 
