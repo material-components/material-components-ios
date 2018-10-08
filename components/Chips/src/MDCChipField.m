@@ -19,6 +19,7 @@
 #import "../../TextFields/src/private/MDCTextInputCommonFundament.h"
 #import "MaterialMath.h"
 #import "MaterialTextFields.h"
+#import "../../TextFields/src/private/MDCTextInputCommonFundament.h"
 
 static NSString *const MDCChipFieldTextFieldKey = @"textField";
 static NSString *const MDCChipFieldDelegateKey = @"delegate";
@@ -327,7 +328,7 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
   if ([self.delegate respondsToSelector:@selector(chipField:didAddChip:)]) {
     [self.delegate chipField:self didAddChip:chip];
   }
-  [self clearTextInput];
+  [self.textField.fundament updatePlaceholderPosition];
   [self notifyDelegateIfSizeNeedsToBeUpdated];
   [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];
