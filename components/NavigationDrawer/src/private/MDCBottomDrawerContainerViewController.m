@@ -214,7 +214,7 @@ static UIColor *DrawerShadowColor(void) {
 
 - (CGFloat)updateContentOffsetForPerformantScrolling:(CGFloat)contentYOffset {
   CGFloat normalizedYContentOffset = contentYOffset;
-  CGFloat topAreaInsetForHeader = (self.headerViewController ? MDCDeviceTopSafeAreaInset() : 0);
+  CGFloat topAreaInsetForHeader = (self.headerViewController ? [self topSafeArea] : 0);
   // The top area inset for header should be a positive non zero value for the algorithm to
   // correctly work when the drawer is presented in full screen and there is no top inset.
   // The reason being is that otherwise there would be a conflict between if the drawer is currently
