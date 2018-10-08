@@ -329,14 +329,15 @@ static inline UIImage *TestImage(CGSize size) {
   // When
   [fakeField setNeedsLayout];
   [fakeField layoutIfNeeded];
+  CGFloat initialPlaceholderOriginX =
+      CGRectStandardize(fakeField.textField.placeholderLabel.frame).origin.x;
   [fakeField addChip:fakeChip];
   [fakeField layoutIfNeeded];
 
   // Then
-  CGRect placeholderFrame = CGRectStandardize(fakeField.textField.placeholderLabel.frame);
-  // MDCTextField's adds 8dp padding to the text
-  CGFloat expectedXPosition = CGRectGetWidth(fakeChip.frame) + 8.f;
-  XCTAssertEqual(placeholderFrame.origin.x, expectedXPosition);
+  CGFloat finalPlaceholderOriginX =
+      CGRectStandardize(fakeField.textField.placeholderLabel.frame).origin.x;
+  XCTAssertGreaterThan(finalPlaceholderOriginX, initialPlaceholderOriginX);
 }
 
 - (void)testChipsWithoutDeleteEnabled {
