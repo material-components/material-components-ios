@@ -324,6 +324,7 @@ static inline UIImage *TestImage(CGSize size) {
   fakeChip.titleLabel.text = @"Fake chip";
   MDCChipField *fakeField = [[MDCChipField alloc] init];
   fakeField.frame = CGRectMake(0, 0, 200, 100);
+  fakeField.textField.placeholder = @"Test";
 
   // When
   [fakeField setNeedsLayout];
