@@ -37,7 +37,7 @@ matrix:
       env: DESTINATION="platform=iOS Simulator,name=iPad Pro (12.9-inch),OS=9.3" SDK="iphonesimulator9.3"
 
 before_install:
-  - gem install pod xcpretty --no-rdoc --no-ri --no-document --quiet
+  - gem install cocoapods xcpretty --no-rdoc --no-ri --no-document --quiet
 
 # The travis_wait prefix ensures that the build doesn't error out because too much time went past
 # without any output being produced.
