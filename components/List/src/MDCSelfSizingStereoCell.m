@@ -152,7 +152,7 @@
 - (void)prepareForReuse {
   [super prepareForReuse];
 
-  [self setNeedsLayout];
+  [self invalidateCachedLayouts];
 
   self.titleLabel.text = nil;
   self.detailLabel.text = nil;
