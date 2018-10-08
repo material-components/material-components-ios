@@ -119,10 +119,10 @@ static NSString *const kSelfSizingStereoCellExampleDescription =
   cell.leadingImageView.tintColor = [UIColor darkGrayColor];
   cell.trailingImageView.tintColor = [UIColor darkGrayColor];
   cell.mdc_adjustsFontForContentSizeCategory = YES;
-  [MDCSelfSizingStereoCellTypographyThemer applyTypographyScheme:self.typographyScheme
-                                          toSelfSizingStereoCell:cell];
-  [MDCSelfSizingStereoCellColorThemer applySemanticColorScheme:self.colorScheme
-                                        toSelfSizingStereoCell:cell];
+  [MDCListColorThemer applySemanticColorScheme:self.colorScheme
+                        toSelfSizingStereoCell:cell];
+  [MDCListTypographyThemer applyTypographyScheme:self.typographyScheme
+                          toSelfSizingStereoCell:cell];
   return cell;
 }
 

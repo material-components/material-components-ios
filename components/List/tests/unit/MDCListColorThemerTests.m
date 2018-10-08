@@ -28,11 +28,11 @@
 static const CGFloat kHighAlpha = 0.87f;
 static const CGFloat kInkAlpha = 0.16f;
 
-@interface MDCSelfSizingStereoCellColorThemerTests : XCTestCase
+@interface MDCListColorThemerTests : XCTestCase
 
 @end
 
-@implementation MDCSelfSizingStereoCellColorThemerTests
+@implementation MDCListColorThemerTests
 
 - (BOOL)color1:(UIColor *)color1 equalsColor2:(UIColor *)color2 {
   CGFloat red1 = 0;
@@ -49,11 +49,11 @@ static const CGFloat kInkAlpha = 0.16f;
           fabs(blue1 - blue2) < CGFLOAT_EPSILON && fabs(alpha1 - alpha2) < CGFLOAT_EPSILON);
 }
 
-- (void)testApplyingColorScheme {
+- (void)testApplyingColorSchemeToSelfSizingStereoCell {
   MDCSelfSizingStereoCell *cell = [[MDCSelfSizingStereoCell alloc] initWithFrame:CGRectZero];
   MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
-  [MDCSelfSizingStereoCellColorThemer applySemanticColorScheme:colorScheme
-                                        toSelfSizingStereoCell:cell];
+  [MDCListColorThemer applySemanticColorScheme:colorScheme
+                        toSelfSizingStereoCell:cell];
   XCTAssertTrue([self color1:cell.titleLabel.textColor
                 equalsColor2:[colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha]]);
   XCTAssertTrue([self color1:cell.detailLabel.textColor
@@ -62,6 +62,15 @@ static const CGFloat kInkAlpha = 0.16f;
                 equalsColor2:[colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha]]);
   XCTAssertTrue([self color1:cell.trailingImageView.tintColor
                 equalsColor2:[colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha]]);
+  XCTAssertTrue([self color1:cell.inkColor
+                equalsColor2:[colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha]]);
+}
+
+- (void)testApplyingColorSchemeToBaseCell {
+  MDCBaseCell *cell = [[MDCBaseCell alloc] initWithFrame:CGRectZero];
+  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  [MDCListColorThemer applySemanticColorScheme:colorScheme
+                                    toBaseCell:cell];
   XCTAssertTrue([self color1:cell.inkColor
                 equalsColor2:[colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha]]);
 }
