@@ -12,14 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCSelfSizingStereoCellTypographyThemer.h"
+#import "MaterialList.h"
+#import "MaterialTypographyScheme.h"
 
-@implementation MDCSelfSizingStereoCellTypographyThemer
+#import <Foundation/Foundation.h>
 
+/**
+ The Material Design typography system's themer for List Item classes.
+ */
+@interface MDCListTypographyThemer : NSObject
+
+/**
+ Applies a typography scheme's properties to an MDCSelfSizingStereoCell.
+
+ @param typographyScheme The typography scheme to apply to the component instance.
+ @param cell A component instance to which the typography scheme should be applied.
+ */
 + (void)applyTypographyScheme:(id<MDCTypographyScheming>)typographyScheme
-       toSelfSizingStereoCell:(MDCSelfSizingStereoCell *)cell {
-  cell.titleLabel.font = typographyScheme.subtitle1;
-  cell.detailLabel.font = typographyScheme.body2;
-}
+       toSelfSizingStereoCell:(MDCSelfSizingStereoCell *)cell;
 
 @end
