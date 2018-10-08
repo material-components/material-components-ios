@@ -24,9 +24,6 @@
 
 #import "private/MDCSelfSizingStereoCellLayout.h"
 
-static const CGFloat kTitleColorOpacity = 0.87f;
-static const CGFloat kDetailColorOpacity = 0.6f;
-
 @interface MDCSelfSizingStereoCell ()
 
 @property(nonatomic, strong) UIView *textContainer;
@@ -241,11 +238,11 @@ static const CGFloat kDetailColorOpacity = 0.6f;
 }
 
 - (UIColor *)defaultTitleLabelTextColor {
-  return [UIColor colorWithWhite:0 alpha:kTitleColorOpacity];
+  return [UIColor colorWithWhite:0 alpha:[MDCTypography subheadFontOpacity]];
 }
 
 - (UIColor *)defaultDetailLabelTextColor {
-  return [UIColor colorWithWhite:0 alpha:kDetailColorOpacity];
+  return [UIColor colorWithWhite:0 alpha:[MDCTypography captionFontOpacity]];
 }
 
 @end
