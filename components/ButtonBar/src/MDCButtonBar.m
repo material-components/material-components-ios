@@ -476,8 +476,8 @@ static NSString *const kEnabledSelector = @"enabled";
   [_defaultBuilder setTitleColor:color forState:state];
 
   for (UIView *viewObj in _buttonViews) {
-    if ([viewObj isKindOfClass:[UIButton class]]) {
-      UIButton *button = (UIButton *)viewObj;
+    if ([viewObj isKindOfClass:[MDCButton class]]) {
+      MDCButton *button = (MDCButton *)viewObj;
       [button setTitleColor:color forState:state];
     }
   }
