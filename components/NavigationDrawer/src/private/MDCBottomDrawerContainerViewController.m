@@ -21,8 +21,14 @@
 static const CGFloat kVerticalShadowAnimationDistance = 10.f;
 static const CGFloat kVerticalDistanceThresholdForDismissal = 40.f;
 static const CGFloat kInitialDrawerHeightFactor = 0.5f;
-static const CGFloat kHeaderAnimationDistanceAddedDistanceFromTopSafeAreaInset =
-    20.f;
+static const CGFloat kHeaderAnimationDistanceAddedDistanceFromTopSafeAreaInset = 20.f;
+// The buffer for the drawer's scroll view is neeeded to ensure that the KVO receiving the new
+// content offset, which is then changing the content offset of the tracking scroll view, will
+// be able to provide a value as if the scroll view is scrolling at natural speed. This is needed
+// as in cases where the drawer shows in full screen, the scroll offset is 0, and then the scrolling
+// has the behavior as if we are scrolling at the end of the content, and the scrolling isn't
+// smooth.
+static const CGFloat kScrollViewBufferForPerformance = 20.f;
 static const CGFloat kDragVelocityThresholdForHidingDrawer = -2.f;
 static NSString *const kContentOffsetKeyPath = @"contentOffset";
 
@@ -135,6 +141,7 @@ static UIColor *DrawerShadowColor(void) {
   CGFloat _contentHeaderTopInset;
   CGFloat _contentHeightSurplus;
   CGFloat _addedContentHeight;
+  CGFloat _contentVCPreferredContentSizeHeightCached;
 }
 
 - (instancetype)initWithOriginalPresentingViewController:
@@ -208,12 +215,23 @@ static UIColor *DrawerShadowColor(void) {
 - (CGFloat)updateContentOffsetForPerformantScrolling:(CGFloat)contentYOffset {
   CGFloat normalizedYContentOffset = contentYOffset;
   CGFloat topAreaInsetForHeader = (self.headerViewController ? MDCDeviceTopSafeAreaInset() : 0);
-  CGFloat drawerOffset = self.contentHeaderTopInset - topAreaInsetForHeader;
+  // The top area inset for header should be a positive non zero value for the algorithm to
+  // correctly work when the drawer is presented in full screen and there is no top inset.
+  // The reason being is that otherwise there would be a conflict between if the drawer is currently
+  // in full screen and we should move the header view outside the scrollview to remain sticky, or
+  // if we aren't in full screen and need the header view to be scrolled as part of the scrolling.
+  if (self.contentHeaderTopInset <= topAreaInsetForHeader + FLT_EPSILON) {
+    topAreaInsetForHeader = FLT_EPSILON;
+  }
+  CGFloat drawerOffset =
+      self.contentHeaderTopInset - topAreaInsetForHeader + kScrollViewBufferForPerformance;
   CGFloat headerHeightWithoutInset = self.contentHeaderHeight - topAreaInsetForHeader;
   CGFloat contentDiff = contentYOffset - drawerOffset;
   CGFloat maxScrollOrigin = self.trackingScrollView.contentSize.height -
-                            CGRectGetHeight(self.presentingViewBounds) + headerHeightWithoutInset;
+                            CGRectGetHeight(self.presentingViewBounds) + headerHeightWithoutInset -
+                            kScrollViewBufferForPerformance;
   BOOL scrollingUpInFull = contentDiff < 0 && CGRectGetMinY(self.trackingScrollView.bounds) > 0;
+
   if (CGRectGetMinY(self.scrollView.bounds) >= drawerOffset || scrollingUpInFull) {
     // If we reach full screen or if we are scrolling up after being in full screen.
     if (CGRectGetMinY(self.trackingScrollView.bounds) < maxScrollOrigin || scrollingUpInFull) {
@@ -343,8 +361,14 @@ static UIColor *DrawerShadowColor(void) {
   CGRect contentViewFrame = self.scrollView.bounds;
   contentViewFrame.origin.y = self.contentHeaderTopInset + self.contentHeaderHeight;
   if (self.trackingScrollView != nil) {
-    contentViewFrame.size.height -=
-        (self.contentHeaderHeight - (self.headerViewController ? MDCDeviceTopSafeAreaInset() : 0));
+    CGFloat topAreaInsetForHeader = (self.headerViewController ? MDCDeviceTopSafeAreaInset() : 0);
+    contentViewFrame.size.height -= self.contentHeaderHeight - kScrollViewBufferForPerformance;
+    // We add the topAreaInsetForHeader to the height of the content view frame when a tracking
+    // scroll view is set, to normalize the algorithm after the removal of this value from the
+    // topAreaInsetForHeader inside the updateContentOffsetForPerformantScrolling method.
+    if (self.contentHeaderTopInset > topAreaInsetForHeader + FLT_EPSILON) {
+      contentViewFrame.size.height += topAreaInsetForHeader;
+    }
   } else {
     contentViewFrame.size.height = self.contentViewController.preferredContentSize.height;
   }
@@ -409,8 +433,7 @@ static UIColor *DrawerShadowColor(void) {
           : [self transitionPercentageForContentOffset:contentOffset
                                                 offset:0.f
                                               distance:self.headerAnimationDistance];
-  self.currentlyFullscreen =
-      self.contentReachesFullscreen && headerTransitionToTop >= 1.f - FLT_EPSILON;
+  self.currentlyFullscreen = self.contentReachesFullscreen && headerTransitionToTop >= 1.f;
   CGFloat fullscreenHeaderHeight =
       self.contentReachesFullscreen ? self.topHeaderHeight : [self contentHeaderHeight];
 
@@ -500,7 +523,12 @@ static UIColor *DrawerShadowColor(void) {
 }
 
 - (CGFloat)contentHeightSurplus {
-  if (_contentHeightSurplus == NSNotFound) {
+  // The content view controller's preferredContentSize may only be updated to the corrent value
+  // later in the lifecycle, and therefore it is important to update the contentHeightSurplus
+  // accordingly, if there is an update.
+  if (_contentHeightSurplus == NSNotFound ||
+      _contentVCPreferredContentSizeHeightCached !=
+          self.contentViewController.preferredContentSize.height) {
     [self cacheLayoutCalculations];
   }
   return _contentHeightSurplus;
@@ -566,6 +594,7 @@ static UIColor *DrawerShadowColor(void) {
 
 - (void)cacheLayoutCalculationsWithAddedContentHeight:(CGFloat)addedContentHeight {
   CGFloat contentHeight = self.contentViewController.preferredContentSize.height;
+  _contentVCPreferredContentSizeHeightCached = contentHeight;
   CGFloat contentHeaderHeight = self.contentHeaderHeight;
   CGFloat containerHeight = self.presentingViewBounds.size.height;
 
@@ -574,13 +603,18 @@ static UIColor *DrawerShadowColor(void) {
 
   CGFloat totalHeight = contentHeight + contentHeaderHeight;
   CGFloat contentHeightThresholdForScrollability =
-      containerHeight * kInitialDrawerHeightFactor + contentHeaderHeight;
+      MIN(containerHeight, containerHeight * kInitialDrawerHeightFactor + contentHeaderHeight);
   BOOL contentScrollsToReveal = totalHeight > contentHeightThresholdForScrollability;
 
   if (_contentHeaderTopInset == NSNotFound) {
     // The content header top inset is only set once.
     if (contentScrollsToReveal) {
       _contentHeaderTopInset = containerHeight * (1.f - kInitialDrawerHeightFactor);
+      // The minimum inset value should be the size of the safe area inset, as
+      // kInitialDrawerHeightFactor discounts the safe area when receiving the height factor.
+      if (_contentHeaderTopInset <= self.topHeaderHeight - self.contentHeaderHeight) {
+        _contentHeaderTopInset = self.topHeaderHeight - self.contentHeaderHeight + FLT_EPSILON;
+      }
     } else {
       _contentHeaderTopInset = containerHeight - totalHeight;
     }
@@ -588,7 +622,6 @@ static UIColor *DrawerShadowColor(void) {
 
   CGFloat scrollingDistance = _contentHeaderTopInset + contentHeaderHeight + contentHeight;
   _contentHeightSurplus = scrollingDistance - containerHeight;
-
   if (addedContentHeight < FLT_EPSILON && (_contentHeaderTopInset > _contentHeightSurplus) &&
       (_contentHeaderTopInset - _contentHeightSurplus < self.addedContentHeightThreshold)) {
     CGFloat addedContentheight = _contentHeaderTopInset - _contentHeightSurplus;
