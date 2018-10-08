@@ -19,7 +19,6 @@
 #import "../../TextFields/src/private/MDCTextInputCommonFundament.h"
 #import "MaterialMath.h"
 #import "MaterialTextFields.h"
-#import "../../TextFields/src/private/MDCTextInputCommonFundament.h"
 
 static NSString *const MDCChipFieldTextFieldKey = @"textField";
 static NSString *const MDCChipFieldDelegateKey = @"delegate";
