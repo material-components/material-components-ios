@@ -21,8 +21,8 @@ static const CGFloat kInkAlpha = 0.16f;
 
 + (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
           toSelfSizingStereoCell:(MDCSelfSizingStereoCell *)cell {
-  cell.titleLabel.textColor = colorScheme.onSurfaceColor;
-  cell.detailLabel.textColor = colorScheme.onSurfaceColor;
+  cell.titleLabel.textColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha];
+  cell.detailLabel.textColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha];
   cell.leadingImageView.tintColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha];
   cell.trailingImageView.tintColor =
       [colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha];
