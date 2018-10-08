@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCSelfSizingStereoCellColorThemer.h"
+#import "MDCListColorThemer.h"
 
 static const CGFloat kHighAlpha = 0.87f;
 static const CGFloat kInkAlpha = 0.16f;
 
-@implementation MDCSelfSizingStereoCellColorThemer
+@implementation MDCListColorThemer
 
 + (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
           toSelfSizingStereoCell:(MDCSelfSizingStereoCell *)cell {
@@ -26,6 +26,10 @@ static const CGFloat kInkAlpha = 0.16f;
   cell.leadingImageView.tintColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha];
   cell.trailingImageView.tintColor =
       [colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha];
+  cell.inkColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha];
+}
+
++ (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme toBaseCell:(MDCBaseCell *)cell {
   cell.inkColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha];
 }
 
