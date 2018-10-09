@@ -93,7 +93,7 @@ MDCAlertControllerView *alertView;
 
 - (void)testApplyingScrimColorToPresentationController {
   // Given
-  UIColor *scrimColor = [UIColor.orangeColor colorWithAlphaComponent:0.5];
+  UIColor *scrimColor = [UIColor.orangeColor colorWithAlphaComponent:0.5f];
   MDCDialogPresentationController *presentationController = alert.mdc_dialogPresentationController;
   if (presentationController == nil) {
     return;  // don't fail the test if mdc_dialogPresentationController is nil
@@ -108,7 +108,7 @@ MDCAlertControllerView *alertView;
 
 - (void)testApplyingScrimColorToAlert {
   // Given
-  UIColor *scrimColor = [UIColor.blueColor colorWithAlphaComponent:0.3];
+  UIColor *scrimColor = [UIColor.blueColor colorWithAlphaComponent:0.3f];
   MDCDialogPresentationController *presentationController = alert.mdc_dialogPresentationController;
   if (presentationController == nil) {
     return;  // don't fail the test if mdc_dialogPresentationController is nil
