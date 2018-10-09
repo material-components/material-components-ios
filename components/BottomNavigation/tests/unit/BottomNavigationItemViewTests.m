@@ -35,7 +35,7 @@ static const CGFloat kMDCBottomNavigationItemViewBadgeYOffset = 4.f;
 @property(nonatomic, strong) UIImageView *iconImageView;
 @property(nonatomic, strong) UILabel *label;
 @property(nonatomic, strong) MDCBottomNavigationItemBadge *badge;
-- (CGPoint)badgeCenterFrom:(CGRect)iconFrame isRTL:(BOOL)isRTL;
+- (CGPoint)badgeCenterFromIconFrame:(CGRect)iconFrame isRTL:(BOOL)isRTL;
 @end
 
 @interface BottomNavigationItemViewTests : XCTestCase
@@ -138,8 +138,8 @@ static const CGFloat kMDCBottomNavigationItemViewBadgeYOffset = 4.f;
   itemView.iconImageView.frame = CGRectMake(8, 8, 24, 24);
 
   // When
-  CGPoint badgePoint = [itemView badgeCenterFrom:CGRectStandardize(itemView.iconImageView.frame)
-                                           isRTL:NO];
+  CGPoint badgePoint =
+      [itemView badgeCenterFromIconFrame:CGRectStandardize(itemView.iconImageView.frame) isRTL:NO];
 
   // Then
   CGRect iconFrame = itemView.iconImageView.frame;
@@ -156,8 +156,8 @@ static const CGFloat kMDCBottomNavigationItemViewBadgeYOffset = 4.f;
   itemView.iconImageView.frame = CGRectMake(8, 8, 24, 24);
 
   // When
-  CGPoint badgePoint = [itemView badgeCenterFrom:CGRectStandardize(itemView.iconImageView.frame)
-                                           isRTL:YES];
+  CGPoint badgePoint =
+      [itemView badgeCenterFromIconFrame:CGRectStandardize(itemView.iconImageView.frame) isRTL:YES];
 
   // Then
   CGRect iconFrame = itemView.iconImageView.frame;

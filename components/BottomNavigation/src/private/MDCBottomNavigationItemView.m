@@ -39,7 +39,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 @property(nonatomic, strong) UIImageView *iconImageView;
 @property(nonatomic, strong) UILabel *label;
 @property(nonatomic) BOOL shouldPretendToBeATab;
-- (CGPoint)badgeCenterFrom:(CGRect)iconFrame isRTL:(BOOL)isRTL;
+- (CGPoint)badgeCenterFromIconFrame:(CGRect)iconFrame isRTL:(BOOL)isRTL;
 
 @end
 
@@ -193,13 +193,9 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     if (animated) {
       [UIView animateWithDuration:kMDCBottomNavigationItemViewTransitionDuration animations:^(void) {
         self.iconImageView.center = iconImageViewCenter;
-        self.badge.center = [self badgeCenterFrom:CGRectStandardize(self.iconImageView.frame)
-                                            isRTL:isRTL];
       }];
     } else {
       self.iconImageView.center = iconImageViewCenter;
-      self.badge.center = [self badgeCenterFrom:CGRectStandardize(self.iconImageView.frame)
-                                          isRTL:isRTL];
     }
     self.label.textAlignment = NSTextAlignmentCenter;
   } else {
@@ -212,8 +208,6 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
       CGFloat labelCenterX =
           iconImageViewCenter.x + contentsWidth / 2 + self.contentHorizontalMargin;
       self.label.center = CGPointMake(labelCenterX, centerY);
-      self.badge.center = [self badgeCenterFrom:CGRectStandardize(self.iconImageView.frame)
-                                          isRTL:isRTL];
       self.label.textAlignment = NSTextAlignmentLeft;
     } else {
       CGPoint iconImageViewCenter =
@@ -222,11 +216,11 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
       CGFloat labelCenterX =
           iconImageViewCenter.x - contentsWidth / 2 - self.contentHorizontalMargin;
       self.label.center = CGPointMake(labelCenterX, centerY);
-      self.badge.center = [self badgeCenterFrom:CGRectStandardize(self.iconImageView.frame)
-                                          isRTL:isRTL];
       self.label.textAlignment = NSTextAlignmentRight;
     }
   }
+  self.badge.center = [self badgeCenterFromIconFrame:CGRectStandardize(self.iconImageView.frame)
+                                               isRTL:isRTL];
 }
 
 - (void)updateLabelVisibility {
@@ -276,14 +270,13 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
   return [labelComponents componentsJoinedByString:@", "];
 }
 
-- (CGPoint)badgeCenterFrom:(CGRect)iconFrame isRTL:(BOOL)isRTL {
+- (CGPoint)badgeCenterFromIconFrame:(CGRect)iconFrame isRTL:(BOOL)isRTL {
   if (isRTL) {
     return CGPointMake(CGRectGetMinX(iconFrame),
                        CGRectGetMinY(iconFrame) + kMDCBottomNavigationItemViewBadgeYOffset);
-  } else {
-    return CGPointMake(CGRectGetMaxX(iconFrame),
-                       CGRectGetMinY(iconFrame) + kMDCBottomNavigationItemViewBadgeYOffset);
   }
+  return CGPointMake(CGRectGetMaxX(iconFrame),
+                     CGRectGetMinY(iconFrame) + kMDCBottomNavigationItemViewBadgeYOffset);
 }
 
 - (NSString *)badgeValue {
