@@ -60,6 +60,43 @@ static const CGFloat kInkAlpha = 0.16f;
   self.typographyScheme.body2 = body2;
 }
 
+#pragma mark - Scheme test
+
+- (void)testDefaultScheme {
+  // Given
+  MDCActionSheetScheme *defaultScheme = [[MDCActionSheetScheme alloc] init];
+  MDCTypographyScheme *defaultTypographyScheme = [[MDCTypographyScheme alloc] init];
+  MDCSemanticColorScheme *defaultColorScheme = [[MDCSemanticColorScheme alloc] init];
+
+  // Then
+  XCTAssertEqualObjects(defaultScheme.typographyScheme, defaultTypographyScheme);
+  XCTAssertEqualObjects(defaultScheme.colorScheme, defaultColorScheme);
+}
+
+- (void)testCustomColorSchemeAppliedToGlobalScheme {
+  // Given
+  MDCActionSheetScheme *scheme = [[MDCActionSheetScheme alloc] init];
+
+  // When
+  scheme.colorScheme = self.colorScheme;
+
+  // Then
+  XCTAssertEqualObjects(scheme.colorScheme.surfaceColor, self.colorScheme.surfaceColor);
+  XCTAssertEqualObjects(scheme.colorScheme.onSurfaceColor, self.colorScheme.onSurfaceColor);
+}
+
+- (void)testCustomTypographySchemeAppliedToGlobalScheme {
+  // Given
+  MDCActionSheetScheme *scheme = [[MDCActionSheetScheme alloc] init];
+
+  // When
+  scheme.typographyScheme = self.typographyScheme;
+
+  // Then
+  XCTAssertEqualObjects(scheme.typographyScheme.subtitle1, self.typographyScheme.subtitle1);
+  XCTAssertEqualObjects(scheme.typographyScheme.body2, self.typographyScheme.body2);
+}
+
 #pragma mark - Header test
 
 - (void)testApplyColorThemerWithTitleAndMessage {
