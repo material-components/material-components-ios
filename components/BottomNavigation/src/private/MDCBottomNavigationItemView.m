@@ -24,7 +24,7 @@
 
 static const CGFloat MDCBottomNavigationItemViewInkOpacity = 0.150f;
 static const CGFloat MDCBottomNavigationItemViewTitleFontSize = 12.f;
-static const CGFloat kMDCBottomNavigationBadgeYOffset = 4.f;
+static const CGFloat kMDCBottomNavigationItemViewBadgeYOffset = 4.f;
 
 // The duration of the selection transition animation.
 static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.180f;
@@ -278,10 +278,10 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 - (CGPoint)badgeCenterFrom:(CGRect)iconFrame rtl:(BOOL)rtl {
   if (rtl) {
     return CGPointMake(CGRectGetMinX(iconFrame),
-                       CGRectGetMinY(iconFrame) + kMDCBottomNavigationBadgeYOffset);
+                       CGRectGetMinY(iconFrame) + kMDCBottomNavigationItemViewBadgeYOffset);
   } else {
     return CGPointMake(CGRectGetMaxX(iconFrame),
-                       CGRectGetMinY(iconFrame) + kMDCBottomNavigationBadgeYOffset);
+                       CGRectGetMinY(iconFrame) + kMDCBottomNavigationItemViewBadgeYOffset);
   }
 }
 
