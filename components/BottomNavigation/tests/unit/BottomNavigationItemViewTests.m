@@ -151,7 +151,8 @@ static UIImage *fakeImage(void) {
   CGPoint expectedCenter = CGPointMake(8, 12);
 
   // When
-  CGPoint badgePoint = [itemView badgeCenterFromIconFrame:CGRectStandardize(itemView.iconImageView.frame) isRTL:YES];
+  CGPoint badgePoint =
+      [itemView badgeCenterFromIconFrame:CGRectStandardize(itemView.iconImageView.frame) isRTL:YES];
 
   // Then
   XCTAssertEqualWithAccuracy(badgePoint.x, expectedCenter.x, 0.001);
