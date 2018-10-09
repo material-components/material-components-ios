@@ -29,6 +29,8 @@ static UIImage *fakeImage(void) {
   return image;
 }
 
+static const CGFloat kMDCBottomNavigationBadgeYOffset = 4.f;
+
 @interface MDCBottomNavigationItemView (Testing)
 @property(nonatomic, strong) UIImageView *iconImageView;
 @property(nonatomic, strong) UILabel *label;
@@ -161,7 +163,8 @@ static UIImage *fakeImage(void) {
     for (MDCBottomNavigationItemView *itemView in containerView.subviews) {
       CGRect badgeRect = CGRectStandardize(itemView.badge.frame);
       CGRect iconImageRect = CGRectStandardize(itemView.iconImageView.frame);
-      XCTAssertEqualWithAccuracy(badgeRect.origin.y, iconImageRect.origin.y, 0.001);
+      XCTAssertEqualWithAccuracy(badgeRect.origin.y + kMDCBottomNavigationBadgeYOffset,
+                                 iconImageRect.origin.y, 0.001);
     }
   }
 }
