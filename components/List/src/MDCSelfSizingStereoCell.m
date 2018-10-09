@@ -159,6 +159,7 @@
   self.leadingImageView.image = nil;
   self.trailingImageView.image = nil;
 
+  [self mdc_setAdjustsFontForContentSizeCategory:NO];
   [self resetMDCSelfSizingStereoCellLabelProperties];
 }
 
@@ -190,6 +191,10 @@
 }
 
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
+  if (adjusts == _mdc_adjustsFontForContentSizeCategory) {
+    return;
+  }
+
   _mdc_adjustsFontForContentSizeCategory = adjusts;
 
   if (_mdc_adjustsFontForContentSizeCategory) {
