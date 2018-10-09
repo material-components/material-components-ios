@@ -162,8 +162,8 @@ static const CGFloat kMDCBottomNavigationItemViewBadgeYOffset = 4.f;
   // Then
   CGRect iconFrame = itemView.iconImageView.frame;
   CGPoint expectPoint =
-  CGPointMake(CGRectGetMinX(iconFrame),
-              CGRectGetMinY(iconFrame) + kMDCBottomNavigationItemViewBadgeYOffset);
+      CGPointMake(CGRectGetMinX(iconFrame),
+                  CGRectGetMinY(iconFrame) + kMDCBottomNavigationItemViewBadgeYOffset);
   XCTAssertEqualWithAccuracy(badgePoint.x, expectPoint.x, 0.001);
   XCTAssertEqualWithAccuracy(badgePoint.y, expectPoint.y, 0.001);
 }
