@@ -29,12 +29,13 @@ static UIImage *fakeImage(void) {
   return image;
 }
 
-static const CGFloat kMDCBottomNavigationBadgeYOffset = 4.f;
+static const CGFloat kMDCBottomNavigationItemViewBadgeYOffset = 4.f;
 
 @interface MDCBottomNavigationItemView (Testing)
 @property(nonatomic, strong) UIImageView *iconImageView;
 @property(nonatomic, strong) UILabel *label;
 @property(nonatomic, strong) MDCBottomNavigationItemBadge *badge;
+- (CGPoint)badgeCenterFrom:(CGRect)iconFrame isRTL:(BOOL)isRTL;
 @end
 
 @interface BottomNavigationItemViewTests : XCTestCase
@@ -131,42 +132,40 @@ static const CGFloat kMDCBottomNavigationBadgeYOffset = 4.f;
   XCTAssertNotEqualObjects(item2.inkView.inkColor, item2DefaultInkColor);
 }
 
-- (void)testBadgeAndIconHaveSameOriginY {
+- (void)testBadgeCenterIsCorrectWithoutRTL {
   // Given
-  CGRect bottomNavFrame = CGRectMake(0, 0, 200, 56);
-  MDCBottomNavigationBar *bottomNavBar =
-      [[MDCBottomNavigationBar alloc] initWithFrame:bottomNavFrame];
-  UITabBarItem *tabBarItem1 = [[UITabBarItem alloc] initWithTitle:@"Home" image:fakeImage() tag:0];
-  tabBarItem1.badgeValue = @"111";
-
-  UITabBarItem *tabBarItem2 = [[UITabBarItem alloc] initWithTitle:@"Messages"
-                                                            image:fakeImage()
-                                                              tag:0];
-  tabBarItem2.badgeValue = @"111";
-
-  UITabBarItem *tabBarItem3 = [[UITabBarItem alloc] initWithTitle:@"Favorites"
-                                                            image:fakeImage()
-                                                              tag:0];
-  tabBarItem3.badgeValue = @"111";
-  bottomNavBar.items = @[ tabBarItem1, tabBarItem2, tabBarItem3 ];
-  // Setting one selected and title visablilty to selected test against both with and without
-  // a title label.
-  bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
-  bottomNavBar.selectedItem = tabBarItem2;
+  MDCBottomNavigationItemView *itemView = [[MDCBottomNavigationItemView alloc] init];
+  itemView.iconImageView.frame = CGRectMake(8, 8, 24, 24);
 
   // When
-  [bottomNavBar setNeedsLayout];
-  [bottomNavBar layoutIfNeeded];
+  CGPoint badgePoint = [itemView badgeCenterFrom:CGRectStandardize(itemView.iconImageView.frame)
+                                           isRTL:NO];
 
   // Then
-  for (UIView *containerView in bottomNavBar.subviews) {
-    for (MDCBottomNavigationItemView *itemView in containerView.subviews) {
-      CGPoint badgeCenter = itemView.badge.center;
-      CGRect iconImageRect = CGRectStandardize(itemView.iconImageView.frame);
-      XCTAssertEqualWithAccuracy(badgeCenter.y - kMDCBottomNavigationBadgeYOffset,
-                                 iconImageRect.origin.y, 0.001);
-    }
-  }
+  CGRect iconFrame = itemView.iconImageView.frame;
+  CGPoint expectPoint =
+      CGPointMake(CGRectGetMaxX(iconFrame),
+                  CGRectGetMinY(iconFrame) + kMDCBottomNavigationItemViewBadgeYOffset);
+  XCTAssertEqualWithAccuracy(badgePoint.x, expectPoint.x, 0.001);
+  XCTAssertEqualWithAccuracy(badgePoint.y, expectPoint.y, 0.001);
+}
+
+- (void)testBadgeCenterIsCorrectWithRTL {
+  // Given
+  MDCBottomNavigationItemView *itemView = [[MDCBottomNavigationItemView alloc] init];
+  itemView.iconImageView.frame = CGRectMake(8, 8, 24, 24);
+
+  // When
+  CGPoint badgePoint = [itemView badgeCenterFrom:CGRectStandardize(itemView.iconImageView.frame)
+                                           isRTL:YES];
+
+  // Then
+  CGRect iconFrame = itemView.iconImageView.frame;
+  CGPoint expectPoint =
+  CGPointMake(CGRectGetMinX(iconFrame),
+              CGRectGetMinY(iconFrame) + kMDCBottomNavigationItemViewBadgeYOffset);
+  XCTAssertEqualWithAccuracy(badgePoint.x, expectPoint.x, 0.001);
+  XCTAssertEqualWithAccuracy(badgePoint.y, expectPoint.y, 0.001);
 }
 
 @end
