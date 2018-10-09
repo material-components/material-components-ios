@@ -58,6 +58,10 @@
   [_collectionView registerClass:[MDCChipCollectionViewCell class]
       forCellWithReuseIdentifier:@"Cell"];
 
+  if (@available(iOS 11.0, *)) {
+    _collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
+  }
+  
   // This is used to calculate the size of each chip based on the chip setup
   _sizingChip = [[MDCChipView alloc] init];
 
