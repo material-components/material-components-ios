@@ -60,7 +60,7 @@
   if (@available(iOS 11.0, *)) {
     _collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
   }
-  
+
   [self.view addSubview:_collectionView];
 }
 
