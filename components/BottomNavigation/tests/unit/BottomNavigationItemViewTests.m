@@ -161,9 +161,9 @@ static const CGFloat kMDCBottomNavigationBadgeYOffset = 4.f;
   // Then
   for (UIView *containerView in bottomNavBar.subviews) {
     for (MDCBottomNavigationItemView *itemView in containerView.subviews) {
-      CGRect badgeRect = CGRectStandardize(itemView.badge.frame);
+      CGPoint badgeCenter = itemView.badge.center;
       CGRect iconImageRect = CGRectStandardize(itemView.iconImageView.frame);
-      XCTAssertEqualWithAccuracy(badgeRect.origin.y + kMDCBottomNavigationBadgeYOffset,
+      XCTAssertEqualWithAccuracy(badgeCenter.y - kMDCBottomNavigationBadgeYOffset,
                                  iconImageRect.origin.y, 0.001);
     }
   }
