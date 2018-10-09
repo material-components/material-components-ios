@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
+#import "MaterialButtons.h"
 
 @class MDCAlertAction;
 
@@ -144,6 +145,12 @@
 typedef void (^MDCActionHandler)(MDCAlertAction *_Nonnull action);
 
 /**
+ MDCActionPresentationHandler is a block that will be invoked when the action is presented.
+ Intended for theming and appearance customization.
+ */
+typedef void (^MDCActionPresentationHandler)(MDCButton *_Nonnull button);
+
+/**
  MDCAlertAction is passed to an MDCAlertController to add a button to the alert dialog.
  */
 @interface MDCAlertAction : NSObject <NSCopying, UIAccessibilityIdentification>
@@ -155,8 +162,22 @@ typedef void (^MDCActionHandler)(MDCAlertAction *_Nonnull action);
  @param handler A block to execute when the user selects the action.
  @return An initialized MDCActionAlert object.
  */
+// question: should we keep the old API "as is" to preserve backward-compatibility ?
 + (nonnull instancetype)actionWithTitle:(nonnull NSString *)title
                                 handler:(__nullable MDCActionHandler)handler;
+
+/**
+ Action alerts control the buttons that will be displayed on the bottom of an alert controller.
+
+ @param title The title of the button shown on the alert dialog.
+ @param didSelectHandler A block to execute when the user selects the action.
+ @param willPresentHandler A block to execute when the an action is presented. A good place
+ for theming customization.
+ @return An initialized MDCActionAlert object.
+ */
++ (nonnull instancetype)actionWithTitle:(nonnull NSString *)title
+                              didSelect:(__nullable MDCActionHandler)didSelectHandler
+                            willPresent:(__nullable MDCActionPresentationHandler)willPresentHandler;
 
 /** Alert actions must be created with actionWithTitle:handler: */
 - (nonnull instancetype)init NS_UNAVAILABLE;

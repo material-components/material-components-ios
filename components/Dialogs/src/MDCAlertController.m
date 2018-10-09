@@ -17,7 +17,6 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 
 #import "MDCDialogTransitionController.h"
-#import "MaterialButtons.h"
 #import "MaterialTypography.h"
 #import "MDCAlertControllerView.h"
 #import "UIViewController+MaterialDialogs.h"
@@ -31,7 +30,8 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 @interface MDCAlertAction ()
 
-@property(nonatomic, nullable, copy) MDCActionHandler completionHandler;
+@property(nonatomic, nullable, copy) MDCActionHandler didSelectHandler;
+@property(nonatomic, nullable, copy) MDCActionPresentationHandler willPresentHandler;
 
 @end
 
@@ -39,21 +39,34 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 + (instancetype)actionWithTitle:(nonnull NSString *)title
                         handler:(void (^__nullable)(MDCAlertAction *action))handler {
-  return [[MDCAlertAction alloc] initWithTitle:title handler:handler];
+  return [[MDCAlertAction alloc] initWithTitle:title didSelect:handler willPresent:nil];
+}
+
++ (nonnull instancetype)actionWithTitle:(nonnull NSString *)title
+                              didSelect:(__nullable MDCActionHandler)didSelectHandler
+                            willPresent:
+                                (__nullable MDCActionPresentationHandler)willPresentHandler {
+  return [[MDCAlertAction alloc] initWithTitle:title
+                                     didSelect:didSelectHandler
+                                   willPresent:willPresentHandler];
 }
 
 - (instancetype)initWithTitle:(nonnull NSString *)title
-                      handler:(void (^__nullable)(MDCAlertAction *action))handler {
+                    didSelect:(__nullable MDCActionHandler)didSelectHandler
+                  willPresent:(__nullable MDCActionPresentationHandler)willPresentHandler {
   self = [super init];
   if (self) {
     _title = [title copy];
-    _completionHandler = [handler copy];
+    _didSelectHandler = [didSelectHandler copy];
+    _willPresentHandler = [willPresentHandler copy];
   }
   return self;
 }
 
 - (id)copyWithZone:(__unused NSZone *)zone {
-  MDCAlertAction *action = [[self class] actionWithTitle:self.title handler:self.completionHandler];
+  MDCAlertAction *action = [[self class] actionWithTitle:self.title
+                                               didSelect:self.didSelectHandler
+                                             willPresent:self.willPresentHandler];
   action.accessibilityIdentifier = self.accessibilityIdentifier;
 
   return action;
@@ -165,6 +178,9 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
                                                            target:self
                                                          selector:@selector(actionButtonPressed:)];
     addedAction.accessibilityIdentifier = action.accessibilityIdentifier;
+    if (action.willPresentHandler) {
+      action.willPresentHandler(addedAction);
+    }
     self.preferredContentSize =
         [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
     [self.alertView setNeedsLayout];
@@ -296,14 +312,15 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 - (void)actionButtonPressed:(id)sender {
   NSInteger actionIndex = [self.alertView.actionButtons indexOfObject:sender];
   MDCAlertAction *action = self.actions[actionIndex];
-  // We call our action.completionHandler after we dismiss the existing alert in case the handler
+  // We call our action.didSelectHandler after we dismiss the existing alert in case the handler
   // also presents a view controller. Otherwise we get a warning about presenting on a controller
   // which is already presenting.
-  [self.presentingViewController dismissViewControllerAnimated:YES completion:^(void){
-    if (action.completionHandler) {
-      action.completionHandler(action);
-    }
-  }];
+  [self.presentingViewController dismissViewControllerAnimated:YES
+                                                    completion:^(void) {
+                                                      if (action.didSelectHandler) {
+                                                        action.didSelectHandler(action);
+                                                      }
+                                                    }];
 }
 
 #pragma mark - UIViewController

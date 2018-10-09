@@ -82,6 +82,8 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
       "Right Aligned Title with a Large Icon",
       "Tinted Title Icon, No Title",
       "Darker Scrim",
+      "Buttons: Model Customization",
+      "Buttons: View Customization",
     ])
   }
 
@@ -109,6 +111,10 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
       return performTintedTitleIconNoTitle()
     case 5:
       return performScrimColor()
+    case 6:
+      return performButtonModelCustomization()
+    case 7:
+      return performButtonViewCustomization()
     default:
       print("No row is selected")
       return nil
@@ -167,6 +173,43 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
     let alert = createMDCAlertController(title: "Darker Scrim")
     MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
     alert.mdc_dialogPresentationController?.scrimColor = UIColor.black.withAlphaComponent(0.6)
+    return alert
+  }
+
+  func performButtonModelCustomization() -> MDCAlertController {
+    let alert = createMDCAlertController(title: "Buttons: Model Theming")
+    MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
+    alert.buttonTitleColor = UIColor.red;
+    return alert
+  }
+
+  func performButtonViewCustomization() -> MDCAlertController {
+
+    // create a button scheme
+    let buttonScheme = MDCButtonScheme()
+    let colorScheme = MDCSemanticColorScheme()
+    colorScheme.primaryColor = .orange
+    buttonScheme.colorScheme = colorScheme
+
+    // define a "didSelect" handler
+    let didSelectAction: MDCActionHandler = { action in
+      print(action.title ?? "Unknown Action")
+    }
+
+    // create and theme the alert controller
+    let alert = MDCAlertController(title: "Buttons: View Theming",
+                                   message: "Lorem ipsum dolor sit amet, consectetur adipiscing")
+    MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
+
+    // create and theme the actions
+    let okAction = MDCAlertAction(title: "Okay", didSelect: didSelectAction) { button in
+      MDCContainedButtonThemer.applyScheme(buttonScheme, to: button)
+      button.isUppercaseTitle = false
+    }
+    let cancelAction = MDCAlertAction(title: "Cancel", handler: didSelectAction)
+    alert.addAction(okAction)
+    alert.addAction(cancelAction)
+
     return alert
   }
 
