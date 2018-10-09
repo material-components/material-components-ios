@@ -11,13 +11,13 @@ The following demo apps can be found in this directory:
 Our [catalog](../catalog/) showcases Material Components.
 You can use the `pod try` command from anywhere on your machine to try the components, even if you haven't checked out the repo yet:
 
-``` bash
+```bash
 pod try MaterialComponents
 ```
 
 In case you have already checked out the repo, run the following command:
 
-``` bash
+```bash
 pod install --project-directory=catalog/
 ```
 
@@ -25,10 +25,10 @@ pod install --project-directory=catalog/
 
 ## Useful Links
 
-- [How To Use MDC-iOS](../howto/)
+- [How To Use MDC-iOS](../docs/)
 - [All Components](../components/)
 - [Contributing](../contributing/)
 - [MDC-iOS on Stack Overflow](https://www.stackoverflow.com/questions/tagged/material-components+ios) (external site)
-- [Material.io](https://www.material.io) (external site)
+- [Material.io](https://material.io) (external site)
 - [Material Design Guidelines](https://material.io/guidelines) (external site)
 

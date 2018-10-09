@@ -1,21 +1,44 @@
 language: objective-c
-osx_image: xcode8.2
 sudo: false
+
+# Only do a shallow clone of our Git repo.
+# https://docs.travis-ci.com/user/customizing-the-build#Git-Clone-Depth
+git:
+  depth: 3
+
 # Only fire off builds for specific branches.
 branches:
   only:
     - develop
     - stable
     - /^feature-.*$/
+    - release-candidate
+
 env:
   global:
   - LC_CTYPE=en_US.UTF-8
   - LANG=en_US.UTF-8
-  matrix:
-    - DESTINATION="platform=iOS Simulator,name=iPhone 7,OS=10.2" SDK="iphonesimulator10.2"
+
+matrix:
+  include:
+    - osx_image: xcode9
+      # The iPhone X was chosen because it is a device with a strange screen size and
+      # the 'notch'.
+      # 11.0 was chosen as the latest generally available iOS version.
+      env: DESTINATION="platform=iOS Simulator,name=iPhone X,OS=11.0" SDK="iphonesimulator11.0"
+    - osx_image: xcode9
+      # The iPhone 7 Plus was chosen because it is a device with a 3x screen and also changes
+      # its size category trait on rotation.
+      # 10.3 was chosen to represent iOS 10.
+      env: DESTINATION="platform=iOS Simulator,name=iPhone 7 Plus,OS=10.3.1" SDK="iphonesimulator10.3.1"
+    - osx_image: xcode9
+      # The iPad Pro 12.9 was chosen because it is the largest resolution we can test on.
+      # 9.3 was chosen to round out the range of iOS versions we are testing on.
+      env: DESTINATION="platform=iOS Simulator,name=iPad Pro (12.9-inch),OS=9.3" SDK="iphonesimulator9.3"
+
 before_install:
-  - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
-  - scripts/install_contributor_tools
+  - gem install cocoapods xcpretty --no-rdoc --no-ri --no-document --quiet
+
 # The travis_wait prefix ensures that the build doesn't error out because too much time went past
 # without any output being produced.
 #
@@ -25,9 +48,11 @@ script:
   - xcodebuild -version
   - xcodebuild -showsdks
   - pod --version
-  - swiftlint
+  - pod repo update
   - scripts/prep_all
-  - travis_wait scripts/build_all
-  - travis_wait scripts/test_all catalog/MDCCatalog.xcworkspace:MDCUnitTests
+  - travis_wait scripts/build_all --verbose
+  - travis_wait travis_retry scripts/test_all catalog/MDCCatalog.xcworkspace:MDCCatalog
+
+# Upload our testing coverage to codecov.io.
 after_success:
   - bash <(curl -s https://codecov.io/bash)

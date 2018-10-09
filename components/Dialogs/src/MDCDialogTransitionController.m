@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCDialogTransitionController.h"
 
@@ -20,11 +18,12 @@
 
 @implementation MDCDialogTransitionController
 
-static const NSTimeInterval MDCDialogTransitionDuration = 0.5;
+static const NSTimeInterval MDCDialogTransitionDuration = 0.27;
 
 #pragma mark - UIViewControllerAnimatedTransitioning
 
-- (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
+- (NSTimeInterval)transitionDuration:
+    (__unused id<UIViewControllerContextTransitioning>)transitionContext {
   return MDCDialogTransitionDuration;
 }
 
@@ -73,7 +72,7 @@ static const NSTimeInterval MDCDialogTransitionDuration = 0.5;
       animations:^{
         animatingView.alpha = endingAlpha;
       }
-      completion:^(BOOL finished) {
+      completion:^(__unused BOOL finished) {
         // If we're dismissing, remove the presented view from the hierarchy
         if (!presenting) {
           [fromView removeFromSuperview];
@@ -92,20 +91,20 @@ static const NSTimeInterval MDCDialogTransitionDuration = 0.5;
 - (UIPresentationController *)
     presentationControllerForPresentedViewController:(UIViewController *)presented
                             presentingViewController:(UIViewController *)presenting
-                                sourceViewController:(UIViewController *)source {
+                                sourceViewController:(__unused UIViewController *)source {
   return [[MDCDialogPresentationController alloc] initWithPresentedViewController:presented
                                                          presentingViewController:presenting];
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)
-    animationControllerForPresentedController:(UIViewController *)presented
-                         presentingController:(UIViewController *)presenting
-                             sourceController:(UIViewController *)source {
+    animationControllerForPresentedController:(__unused UIViewController *)presented
+                         presentingController:(__unused UIViewController *)presenting
+                             sourceController:(__unused UIViewController *)source {
   return self;
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:
-        (UIViewController *)dismissed {
+    (__unused UIViewController *)dismissed {
   return self;
 }
 

@@ -4,19 +4,59 @@ project 'MDCCatalog.xcodeproj'
 target "MDCCatalog" do
   platform :ios, '8.0'
   project 'MDCCatalog.xcodeproj'
-  pod 'MaterialComponentsCatalog', :path => '../'
-  pod 'MaterialComponents', :path => '../'
-  pod 'CatalogByConvention'
-
-  use_frameworks!
-end
-
-target "MDCUnitTests" do
-  platform :ios, '8.0'
-  project 'MDCUnitTests.xcodeproj'
-  pod 'MaterialComponentsUnitTests', :path => '../'
-  pod 'MaterialComponents', :path => '../'
-  pod 'CatalogByConvention'
+  pod 'MaterialComponentsExamples', :path => '../'
+  pod 'MaterialComponents', :path => '../', :testspecs => [
+    'ActivityIndicator/tests/unit',
+    'AnimationTiming/tests/unit',
+    'AppBar/tests/unit',
+    'BottomAppBar/tests/unit',
+    'BottomNavigation/tests/unit',
+    'BottomSheet/tests/unit',
+    'Buttons/tests/unit',
+    'Cards/tests/unit',
+    'Chips/tests/unit',
+    'CollectionCells/tests/unit',
+    'CollectionLayoutAttributes/tests/unit',
+    'Collections/tests/unit',
+    'Dialogs/tests/unit',
+    'FeatureHighlight/tests/unit',
+    'FlexibleHeader/tests/unit',
+    'HeaderStackView/tests/unit',
+    'Ink/tests/unit',
+    'LibraryInfo/tests/unit',
+    'List/tests/unit',
+    'MaskedTransition/tests/unit',
+    'NavigationBar/tests/unit',
+    'OverlayWindow/tests/unit',
+    'PageControl/tests/unit',
+    'Palettes/tests/unit',
+    'private/Application/tests/unit',
+    'private/KeyboardWatcher/tests/unit',
+    'private/Math/tests/unit',
+    'private/Overlay/tests/unit',
+    'private/ShapeLibrary/tests/unit',
+    'private/Shapes/tests/unit',
+    'private/ThumbTrack/tests/unit',
+    'private/UIMetrics/tests/unit',
+    'ProgressView/tests/unit',
+    'schemes/Color/tests/unit',
+    'schemes/Shape/tests/unit',
+    'schemes/Typography/tests/unit',
+    'ShadowElevations/tests/unit',
+    'ShadowLayer/tests/unit',
+    'Slider/tests/unit',
+    'Snackbar/tests/unit',
+    'Tabs/tests/unit',
+    'TextFields/tests/unit',
+    'Themes/tests/unit',
+    'Typography/tests/unit',
+  ]
+  pod 'MaterialComponentsAlpha', :path => '../', :testspecs => [
+    'ActionSheet/tests/unit',
+    'NavigationDrawer/tests/unit',
+  ]
+  pod 'CatalogByConvention', "~> 2.5"
+  pod 'MaterialCatalog', :path => 'MaterialCatalog/'
 
   use_frameworks!
 end
@@ -24,23 +64,23 @@ end
 target "MDCActionExtension" do
   platform :ios, '8.0'
   project 'MDCCatalog.xcodeproj'
-  pod 'MaterialComponentsCatalog', :path => '../'
+  pod 'MaterialComponentsExamples', :path => '../'
   pod 'MaterialComponents', :path => '../'
-  pod 'CatalogByConvention'
+  pod 'MaterialComponentsAlpha', :path => '../'
+  pod 'CatalogByConvention', "~> 2.5"
+  pod 'MaterialCatalog', :path => 'MaterialCatalog/'
 
   use_frameworks!
 end
 
-# EarlGrey configuration
-PROJECT_NAME = 'MDCCatalog'
-TEST_TARGET = 'MDCInteractionTests'
-SCHEME_FILE = 'MDCInteractionTests.xcscheme'
-
-target TEST_TARGET do
+target "MDCDragons" do
   platform :ios, '8.0'
-  project PROJECT_NAME
-  inherit! :search_paths
-  pod 'EarlGrey'
+  project 'MDCDragons.xcodeproj'
+  pod 'CatalogByConvention', "~> 2.5"
+  pod 'MaterialComponents', :path => '../'
+  pod 'MaterialComponentsAlpha', :path => '../'
+  pod 'MaterialComponentsExamples', :path => '../'
+  use_frameworks!
 end
 
 post_install do |installer|
@@ -49,10 +89,12 @@ post_install do |installer|
   # Inject our specific warning flags into the .xcconfig files.
   mdc_xcconfigs = [
     "#{pod_dir}/Target Support Files/MaterialComponents/MaterialComponents.xcconfig",
+    "#{pod_dir}/Target Support Files/MaterialComponents/MaterialComponents.unit.xcconfig",
+    "#{pod_dir}/Target Support Files/MaterialComponentsAlpha/MaterialComponentsAlpha.xcconfig",
+    "#{pod_dir}/Target Support Files/MaterialComponentsAlpha/MaterialComponentsAlpha.unit.xcconfig",
+    "#{pod_dir}/Target Support Files/MaterialComponentsExamples/MaterialComponentsExamples.xcconfig",
     "#{pod_dir}/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog.debug.xcconfig",
     "#{pod_dir}/Target Support Files/Pods-MDCCatalog/Pods-MDCCatalog.release.xcconfig",
-    "#{pod_dir}/Target Support Files/Pods-MDCUnitTests/Pods-MDCUnitTests.debug.xcconfig",
-    "#{pod_dir}/Target Support Files/Pods-MDCUnitTests/Pods-MDCUnitTests.release.xcconfig",
   ]
 
   # Note the path is relative to the xcconfig file being modified.
@@ -62,10 +104,4 @@ post_install do |installer|
     new_xcconfig << "\n#include \"../../../MaterialComponentsWarnings.xcconfig\""
     File.write(mdc_xcconfig, new_xcconfig)
   end
-
-  # EarlGrey configuration
-  earl_grey_dir = "#{File.dirname(__FILE__)}/third_party/EarlGrey"
-  `git submodule update --init #{earl_grey_dir}`
-  load "#{earl_grey_dir}/gem/lib/earlgrey/configure_earlgrey.rb"
-  configure_for_earlgrey(installer, PROJECT_NAME, TEST_TARGET, SCHEME_FILE)
 end

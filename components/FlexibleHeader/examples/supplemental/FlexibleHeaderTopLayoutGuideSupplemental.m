@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 /** IMPORTANT:
  This file contains supplemental code used to populate the examples with dummy data and/or
@@ -22,11 +20,16 @@
 #import "FlexibleHeaderTopLayoutGuideSupplemental.h"
 
 #import "MaterialFlexibleHeader.h"
+#import "MaterialPalettes.h"
 
 @implementation FlexibleHeaderTopLayoutGuideExample (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Flexible Header", @"Utilizing Top Layout Guide" ];
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Flexible Header", @"Utilizing Top Layout Guide" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
 
 - (BOOL)catalogShouldHideNavigation {
@@ -42,10 +45,12 @@
 }
 
 - (void)setupScrollViewContent {
-  UIColor *color =
-      [UIColor colorWithRed:(97.0 / 255.0) green:(97.0 / 255.0) blue:(97.0 / 255.0) alpha:1.0];
+  UIColor *color = MDCPalette.greyPalette.tint700;
   UIView *scrollViewContent =
-      [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.scrollView.frame.size.width, 700)];
+      [[UIView alloc] initWithFrame:CGRectMake(0,
+                                               0,
+                                               self.scrollView.frame.size.width,
+                                               self.scrollView.frame.size.height * 2)];
   scrollViewContent.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   UILabel *pullDownLabel = [[UILabel alloc]

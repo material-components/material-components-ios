@@ -1,22 +1,21 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCDialogPresentationController.h"
 
 #import "MaterialKeyboardWatcher.h"
+#import "MaterialShadowLayer.h"
 #import "private/MDCDialogShadowedView.h"
 
 static CGFloat MDCDialogMinimumWidth = 280.0f;
@@ -32,7 +31,7 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
 
 // Tracking view that adds a shadow under the presented view. This view's frame should always match
 // the presented view's.
-@property(nonatomic) UIView *trackingView;
+@property(nonatomic) MDCDialogShadowedView *trackingView;
 
 @end
 
@@ -52,13 +51,39 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
   return _dismissGestureRecognizer.enabled;
 }
 
+// presentedViewCornerRadius wraps the cornerRadius property of our tracking view to avoid
+// duplication.
+- (void)setDialogCornerRadius:(CGFloat)cornerRadius {
+  _trackingView.layer.cornerRadius = cornerRadius;
+}
+
+- (CGFloat)dialogCornerRadius {
+  return _trackingView.layer.cornerRadius;
+}
+
+- (void)setScrimColor:(UIColor *)scrimColor {
+  self.dimmingView.backgroundColor = scrimColor;
+}
+
+- (UIColor *)scrimColor {
+  return self.dimmingView.backgroundColor;
+}
+
+- (void)setDialogElevation:(CGFloat)dialogElevation {
+  _trackingView.elevation = dialogElevation;
+}
+
+- (CGFloat)dialogElevation {
+  return _trackingView.elevation;
+}
+
 - (instancetype)initWithPresentedViewController:(UIViewController *)presentedViewController
                        presentingViewController:(UIViewController *)presentingViewController {
   self = [super initWithPresentedViewController:presentedViewController
                        presentingViewController:presentingViewController];
   if (self) {
     _dimmingView = [[UIView alloc] initWithFrame:CGRectZero];
-    _dimmingView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.4f];
+    _dimmingView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.32f];
     _dimmingView.alpha = 0.0f;
     _dismissGestureRecognizer =
         [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss:)];
@@ -77,17 +102,35 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
 }
 
 - (CGRect)frameOfPresentedViewInContainerView {
+  CGRect containerBounds = CGRectStandardize(self.containerView.bounds);
+
+  // For pre iOS 11 devices, we are assuming a safeAreaInset of UIEdgeInsetsZero
+  UIEdgeInsets containerSafeAreaInsets = UIEdgeInsetsZero;
+  if (@available(iOS 11.0, *)) {
+    containerSafeAreaInsets = self.containerView.safeAreaInsets;
+  }
+
+  // Take the larger of the Safe Area insets and the Material specified insets.
+  containerSafeAreaInsets.top = MAX(containerSafeAreaInsets.top, MDCDialogEdgeInsets.top);
+  containerSafeAreaInsets.left = MAX(containerSafeAreaInsets.left, MDCDialogEdgeInsets.left);
+  containerSafeAreaInsets.right = MAX(containerSafeAreaInsets.right, MDCDialogEdgeInsets.right);
+  containerSafeAreaInsets.bottom = MAX(containerSafeAreaInsets.bottom, MDCDialogEdgeInsets.bottom);
+
+  // Take into account a visible keyboard
+  CGFloat keyboardHeight = [MDCKeyboardWatcher sharedKeyboardWatcher].visibleKeyboardHeight;
+  containerSafeAreaInsets.bottom = MAX(containerSafeAreaInsets.bottom, keyboardHeight);
+
+  // Area that the presented dialog can use.
+  CGRect standardPresentableBounds = UIEdgeInsetsInsetRect(containerBounds, containerSafeAreaInsets);
+
   CGRect presentedViewFrame = CGRectZero;
-
-  CGRect containerBounds = self.containerView.bounds;
-  containerBounds.size.height -= [MDCKeyboardWatcher sharedKeyboardWatcher].keyboardOffset;
-
   presentedViewFrame.size = [self sizeForChildContentContainer:self.presentedViewController
-                                       withParentContainerSize:containerBounds.size];
+                                       withParentContainerSize:standardPresentableBounds.size];
 
-  presentedViewFrame.origin.x = (containerBounds.size.width - presentedViewFrame.size.width) * 0.5f;
+  presentedViewFrame.origin.x =
+    containerSafeAreaInsets.left + (standardPresentableBounds.size.width - presentedViewFrame.size.width) * 0.5f;
   presentedViewFrame.origin.y =
-      (containerBounds.size.height - presentedViewFrame.size.height) * 0.5f;
+    containerSafeAreaInsets.top + (standardPresentableBounds.size.height - presentedViewFrame.size.height) * 0.5f;
 
   presentedViewFrame.origin.x = (CGFloat)floor(presentedViewFrame.origin.x);
   presentedViewFrame.origin.y = (CGFloat)floor(presentedViewFrame.origin.y);
@@ -98,7 +141,7 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
 - (void)presentationTransitionWillBegin {
   // TODO: Follow the Material spec description of Autonomous surface creation for both
   // presentation and dismissal of the dialog.
-  // https://spec.googleplex.com/quantum/motion/choreography.html#choreography-creation
+  // https://material.io/guidelines/motion/choreography.html#choreography-creation
 
   // Set the dimming view to the container's bounds and fully transparent.
   self.dimmingView.frame = self.containerView.bounds;
@@ -116,7 +159,8 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
       [self.presentedViewController transitionCoordinator];
   if (transitionCoordinator) {
     [transitionCoordinator
-        animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        animateAlongsideTransition:
+            ^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
           self.dimmingView.alpha = 1.0f;
           self.trackingView.alpha = 1.0f;
         }
@@ -149,7 +193,8 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
       [self.presentedViewController transitionCoordinator];
   if (transitionCoordinator != nil) {
     [transitionCoordinator
-        animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        animateAlongsideTransition:
+            ^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
           self.dimmingView.alpha = 0.0f;
           self.trackingView.alpha = 0.0f;
         }
@@ -195,11 +240,7 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
     return CGSizeZero;
   }
 
-  CGSize maxChildSize;
-  maxChildSize.width = parentSize.width - MDCDialogEdgeInsets.left - MDCDialogEdgeInsets.right;
-  maxChildSize.height = parentSize.height - MDCDialogEdgeInsets.top - MDCDialogEdgeInsets.bottom;
-
-  CGSize targetSize = maxChildSize;
+  CGSize targetSize = parentSize;
 
   const CGSize preferredContentSize = container.preferredContentSize;
   if (!CGSizeEqualToSize(preferredContentSize, CGSizeZero)) {
@@ -209,9 +250,9 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
     if (0.0f < targetSize.width && targetSize.width < MDCDialogMinimumWidth) {
       targetSize.width = MDCDialogMinimumWidth;
     }
-    // targetSize cannot exceed maxChildSize.
-    targetSize.width = MIN(targetSize.width, maxChildSize.width);
-    targetSize.height = MIN(targetSize.height, maxChildSize.height);
+    // targetSize cannot exceed parentSize.
+    targetSize.width = MIN(targetSize.width, parentSize.width);
+    targetSize.height = MIN(targetSize.height, parentSize.height);
   }
 
   targetSize.width = (CGFloat)ceil(targetSize.width);
@@ -224,14 +265,14 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
        withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 
-  [coordinator
-      animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+  [coordinator animateAlongsideTransition:
+      ^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
         self.dimmingView.frame = self.containerView.bounds;
         CGRect presentedViewFrame = [self frameOfPresentedViewInContainerView];
         self.presentedView.frame = presentedViewFrame;
         self.trackingView.frame = presentedViewFrame;
       }
-                      completion:NULL];
+                               completion:NULL];
 }
 
 /**

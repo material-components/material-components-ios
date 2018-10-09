@@ -1,18 +1,16 @@
-/*
- Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCTypography.h"
 #import "private/UIFont+MaterialTypographyPrivate.h"
@@ -26,6 +24,9 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
 #pragma mark - Font loader access
 
 + (void)setFontLoader:(id<MDCTypographyFontLoading>)fontLoader {
+  if (gFontLoader && fontLoader != gFontLoader) {
+    [[NSNotificationCenter defaultCenter] removeObserver:gFontLoader];
+  }
   gFontLoader = fontLoader;
   NSAssert(gFontLoader,
            @"Font loader can't be null. The font loader will be reset to the default font loader.");
@@ -157,8 +158,8 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
   }
   UIFontDescriptor *fontDescriptor =
       [font.fontDescriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitItalic];
-  return [UIFont fontWithDescriptor:fontDescriptor size:0]
-             ?: [UIFont italicSystemFontOfSize:font.pointSize];
+  UIFont *fontFromDescriptor = [UIFont fontWithDescriptor:fontDescriptor size:0];
+  return fontFromDescriptor ? fontFromDescriptor : [UIFont italicSystemFontOfSize:font.pointSize];
 }
 
 + (UIFont *)boldFontFromFont:(UIFont *)font {
@@ -171,8 +172,8 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
     traits = traits | UIFontDescriptorTraitItalic;
   }
   UIFontDescriptor *fontDescriptor = [font.fontDescriptor fontDescriptorWithSymbolicTraits:traits];
-  return [UIFont fontWithDescriptor:fontDescriptor size:0]
-             ?: [UIFont boldSystemFontOfSize:font.pointSize];
+  UIFont *fontFromDescriptor = [UIFont fontWithDescriptor:fontDescriptor size:0];
+  return fontFromDescriptor ? fontFromDescriptor : [UIFont boldSystemFontOfSize:font.pointSize];
 }
 
 #pragma mark - Private
@@ -183,45 +184,152 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
 
 @end
 
+@interface MDCSystemFontLoader ()
+
+/*
+ In collectionView scrolling tests, manually caching UIFonts performs around 4.5 times better
+ (e.g. 230 ms vs. 1,080 ms in one test) than calling [UIFont systemFontForSize:weight:] every time.
+ */
+@property(nonatomic, strong) NSCache *fontCache;
+
+@end
+
 @implementation MDCSystemFontLoader
 
-- (UIFont *)lightFontOfSize:(CGFloat)fontSize {
-  if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
-    return [UIFont systemFontOfSize:fontSize weight:UIFontWeightLight];
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    _fontCache = [[NSCache alloc] init];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didChangeContentSizeCategory)
+                                                 name:UIContentSizeCategoryDidChangeNotification
+                                               object:nil];
   }
-  return [UIFont fontWithName:@"HelveticaNeue-Light" size:fontSize];
+  return self;
+}
+
+- (void)didChangeContentSizeCategory {
+  [_fontCache removeAllObjects];
+}
+
+- (nullable UIFont *)lightFontOfSize:(CGFloat)fontSize {
+  NSString *cacheKey = [NSString stringWithFormat:@"%@-%06f", NSStringFromSelector(_cmd), fontSize];
+  UIFont *font = [self.fontCache objectForKey:cacheKey];
+  if (font) {
+    return font;
+  }
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpartial-availability"
+  if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
+    font = [UIFont systemFontOfSize:fontSize weight:UIFontWeightLight];
+  } else {
+    font = [UIFont fontWithName:@"HelveticaNeue-Light" size:fontSize];
+  }
+#pragma clang diagnostic pop
+  if (font) {
+    [self.fontCache setObject:font forKey:cacheKey];
+  }
+  return font;
 }
 
 - (UIFont *)regularFontOfSize:(CGFloat)fontSize {
-  if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
-    return [UIFont systemFontOfSize:fontSize weight:UIFontWeightRegular];
+  NSString *cacheKey = [NSString stringWithFormat:@"%@-%06f", NSStringFromSelector(_cmd), fontSize];
+  UIFont *font = [self.fontCache objectForKey:cacheKey];
+  if (font) {
+    return font;
   }
-  return [UIFont systemFontOfSize:fontSize];
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpartial-availability"
+  if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
+    font = [UIFont systemFontOfSize:fontSize weight:UIFontWeightRegular];
+  } else {
+    font = [UIFont systemFontOfSize:fontSize];
+  }
+#pragma clang diagnostic pop
+
+  [self.fontCache setObject:font forKey:cacheKey];
+
+  return (UIFont *)font;
 }
 
-- (UIFont *)mediumFontOfSize:(CGFloat)fontSize {
-  if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
-    return [UIFont systemFontOfSize:fontSize weight:UIFontWeightMedium];
+- (nullable UIFont *)mediumFontOfSize:(CGFloat)fontSize {
+  NSString *cacheKey = [NSString stringWithFormat:@"%@-%06f", NSStringFromSelector(_cmd), fontSize];
+  UIFont *font = [self.fontCache objectForKey:cacheKey];
+  if (font) {
+    return font;
   }
-  return [UIFont fontWithName:@"HelveticaNeue-Medium" size:fontSize];
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpartial-availability"
+  if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
+    font = [UIFont systemFontOfSize:fontSize weight:UIFontWeightMedium];
+  } else {
+    font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:fontSize];
+  }
+#pragma clang diagnostic pop
+
+  if (font) {
+    [self.fontCache setObject:font forKey:cacheKey];
+  }
+  return font;
 }
 
 - (UIFont *)boldFontOfSize:(CGFloat)fontSize {
-  if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
-    return [UIFont systemFontOfSize:fontSize weight:UIFontWeightSemibold];
+  NSString *cacheKey = [NSString stringWithFormat:@"%@-%06f", NSStringFromSelector(_cmd), fontSize];
+  UIFont *font = [self.fontCache objectForKey:cacheKey];
+  if (font) {
+    return font;
   }
-  return [UIFont boldSystemFontOfSize:fontSize];
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpartial-availability"
+  if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
+    font = [UIFont systemFontOfSize:fontSize weight:UIFontWeightSemibold];
+  } else {
+    font = [UIFont boldSystemFontOfSize:fontSize];
+  }
+  #pragma clang diagnostic pop
+
+  [self.fontCache setObject:font forKey:cacheKey];
+
+  return font;
 }
 
 - (UIFont *)italicFontOfSize:(CGFloat)fontSize {
-  return [UIFont italicSystemFontOfSize:fontSize];
+  NSString *cacheKey = [NSString stringWithFormat:@"%@-%06f", NSStringFromSelector(_cmd), fontSize];
+  UIFont *font = [self.fontCache objectForKey:cacheKey];
+  if (font) {
+    return font;
+  }
+
+  font = [UIFont italicSystemFontOfSize:fontSize];
+
+  [self.fontCache setObject:font forKey:cacheKey];
+
+  return font;
 }
 
-- (UIFont *)boldItalicFontOfSize:(CGFloat)fontSize {
+- (nullable UIFont *)boldItalicFontOfSize:(CGFloat)fontSize {
+  NSString *cacheKey = [NSString stringWithFormat:@"%@-%06f", NSStringFromSelector(_cmd), fontSize];
+  UIFont *font = [self.fontCache objectForKey:cacheKey];
+  if (font) {
+    return font;
+  }
+
   UIFont *regular = [self regularFontOfSize:fontSize];
-  UIFontDescriptor *descriptor = [regular.fontDescriptor
+  UIFontDescriptor * _Nullable descriptor = [regular.fontDescriptor
       fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold | UIFontDescriptorTraitItalic];
-  return [UIFont fontWithDescriptor:descriptor size:fontSize];
+  if (!descriptor) {
+    return nil;
+  }
+  UIFontDescriptor *nonnullDescriptor = descriptor;
+  font = [UIFont fontWithDescriptor:nonnullDescriptor size:fontSize];
+
+  [self.fontCache setObject:font forKey:cacheKey];
+
+  return font;
 }
 
 - (BOOL)isLargeForContrastRatios:(UIFont *)font {
@@ -246,6 +354,7 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wtautological-pointer-compare"
 #pragma clang diagnostic ignored "-Wunreachable-code"
+#pragma clang diagnostic ignored "-Wpartial-availability"
   if (&UIFontWeightMedium != NULL) {
     MDCFontWeightMedium = UIFontWeightMedium;
   }

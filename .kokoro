@@ -1,0 +1,593 @@
+#!/bin/bash
+#
+# Copyright 2017-present The Material Components for iOS Authors. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Fail on any error.
+set -e
+
+fix_bazel_imports() {
+  echo "Rewriting imports for bazel..."
+
+  private_components() {
+    find "components/private" -type d | cut -d'/' -f3 | sort | uniq
+  }
+  
+  rewrite_tests() {
+    find "${stashed_dir}"components/private/*/tests/unit -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/*/tests/unit -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
+  }
+  rewrite_source() {
+    find "${stashed_dir}"components/private/*/src -type f -name '*.h' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/private/*/src -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/*/src -type f -name '*.h' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/*/src -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
+  }
+
+  stashed_dir=""
+  rewrite_tests "s/import MaterialComponents.Material(.+)_(.+)/import components_\1_\2/"
+  rewrite_tests "s/import MaterialComponents.Material(.+)Scheme/import components_schemes_\1_\1/"
+  private_components | while read private_component; do
+    if [ -z "$private_component" ]; then
+      continue
+    fi
+    rewrite_tests "s/import MaterialComponents.Material$private_component/import components_private_${private_component}_${private_component}/"
+  done
+  rewrite_tests "s/import MaterialComponentsAlpha.Material(.+)_(.+)/import components_\1_\2 \/\/ Alpha/"
+  rewrite_tests "s/import MaterialComponentsAlpha.Material(.+)/import components_\1_\1 \/\/ Alpha/"
+  rewrite_tests "s/import MaterialComponents.Material(.+)/import components_\1_\1/"
+  rewrite_source "s/import <Motion(.+)\/Motion.+\.h>/import \"Motion\1.h\"/"
+  rewrite_source "s/import <MDF(.+)\/MDF.+\.h>/import \"MDF\1.h\"/"
+  rewrite_tests "s/import MDFTextAccessibility/import material_text_accessibility_ios_MDFTextAccessibility/"
+  rewrite_tests "s/import MDFInternationalization/import material_internationalization_ios_MDFInternationalization/"
+  stashed_dir="$(pwd)/"
+  reset_imports() {
+    echo "Undoing import rewrites for bazel..."
+
+    # Undoes our source changes from above.
+    rewrite_tests "s/import components_(.+)_\1 \/\/ Alpha/import MaterialComponentsAlpha.Material\1/"
+    rewrite_tests "s/import components_schemes_(.+)_.+/import MaterialComponents.Material\1Scheme/"
+    rewrite_tests "s/import components_private_(.+)_.+/import MaterialComponents.Material\1/"
+    rewrite_tests "s/import components_(.+)_\1/import MaterialComponents.Material\1/"
+    rewrite_tests "s/import components_(.+)_(.+)/import MaterialComponents.Material\1_\2/"
+    rewrite_source "s/import \"Motion(.+)\.h\"/import <Motion\1\/Motion\1.h>/"
+    rewrite_source "s/import \"MDF(.+)\.h\"/import <MDF\1\/MDF\1.h>/"
+    rewrite_tests "s/import material_text_accessibility_ios_MDFTextAccessibility/import MDFTextAccessibility/"
+    rewrite_tests "s/import material_internationalization_ios_MDFInternationalization/import MDFInternationalization/"
+  }
+  trap reset_imports EXIT
+}
+
+version_as_number() {
+  padded_version="${1%.}" # Strip any trailing dots
+  # Pad with .0 until we get a M.m.p version string.
+  while [ $(grep -o "\." <<< "$padded_version" | wc -l) -lt "2" ]; do
+    padded_version=${padded_version}.0
+  done
+  echo "${padded_version//.}"
+}
+
+move_derived_data_to_tmp() {
+  targetDir="${HOME}/Library/Developer/Xcode/DerivedData"
+  if [[ -d "$targetDir" ]]; then
+    mv "$targetDir" /tmpfs/
+    ln -sf /tmpfs/DerivedData "$targetDir"
+  fi
+}
+
+# xcode-select's the provided xcode version.
+# Usage example:
+#     select_xcode 9.2.0
+select_xcode() {
+  desired_version="$1"
+  if [ -z "$desired_version" ]; then
+    return # No Xcode version to select.
+  fi
+
+  xcodes=$(ls /Applications/ | grep "Xcode")
+  for xcode_path in $xcodes; do
+    xcode_version=$(cat /Applications/$xcode_path/Contents/version.plist \
+      | grep "CFBundleShortVersionString" -A1 \
+      | grep string \
+      | cut -d'>' -f2 \
+      | cut -d'<' -f1)
+    xcode_version_as_number="$(version_as_number $xcode_version)"
+
+    if [ "$xcode_version_as_number" -ne "$(version_as_number $desired_version)" ]; then
+      continue
+    fi
+
+    sudo xcode-select --switch /Applications/$xcode_path/Contents/Developer
+    xcodebuild -version
+
+    # Resolves the following crash when switching Xcode versions:
+    # "Failed to locate a valid instance of CoreSimulatorService in the bootstrap"
+    launchctl remove com.apple.CoreSimulator.CoreSimulatorService || true
+
+    break
+  done
+}
+
+# Uploads all of the bazel test artifacts to Kokoro's artifacts storage.
+upload_bazel_test_artifacts() {
+  logs_dir="$KOKORO_ARTIFACTS_DIR/bazel_test_logs"
+  mkdir -p "$logs_dir"
+
+  # Copies each file from stdin to $KOKORO_ARTIFACTS_DIR and preserves the directory structure
+  copy_to_artifacts() {
+    cat - | while read file; do
+      directory="$logs_dir/$(dirname $file)"
+      mkdir -p "$directory"
+      cp "$file" "$logs_dir/$file"
+    done
+  }
+
+  brew install rename
+
+  # rename all test.log to sponge_log.log and then copy them to the kokoro
+  # artifacts directory.
+  find -L . -name "test.log" -type f -exec rename 's/test.log/sponge_log.log/' {} \;
+  find -L . -name "sponge_log.log" -type f | copy_to_artifacts
+
+  # rename all test.xml to sponge_log.xml and then copy them to kokoro
+  # artifacts directory.
+  find -L . -name "test.xml" -type f -exec rename 's/test.xml/sponge_log.xml/' {} \;
+  find -L . -name "sponge_log.xml" -type f | copy_to_artifacts
+}
+
+run_bazel() {
+  echo "Running bazel builds..."
+
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    move_derived_data_to_tmp
+  fi
+
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    bazel version
+  fi
+
+  if [ -n "$VERBOSE_OUTPUT" ]; then
+    verbosity_args="-s"
+  fi
+
+  if [ -z "$COMMAND" ]; then
+    COMMAND="test"
+  fi
+  if [ -z "$TARGET" ]; then
+    TARGET="//components/..."
+  fi
+
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    select_xcode "$XCODE_VERSION"
+
+    # Move into our cloned repo
+    cd github/repo
+  fi
+
+  # Run against whichever Xcode is currently selected.
+  selected_xcode_developer_path=$(xcode-select -p)
+  selected_xcode_contents_path=$(dirname "$selected_xcode_developer_path")
+
+  xcode_version=$(cat "$selected_xcode_contents_path/version.plist" \
+    | grep "CFBundleShortVersionString" -A1 \
+    | grep string \
+    | cut -d'>' -f2 \
+    | cut -d'<' -f1)
+
+  if [ "$COMMAND" == "build" ]; then
+    echo "🏗️  $COMMAND with Xcode $xcode_version..."
+  elif [ "$COMMAND" == "test" ]; then
+    echo "🛠️  $COMMAND with Xcode $xcode_version..."
+
+    if [ -n "$VERBOSE_OUTPUT" ]; then
+      extra_args="--test_output=all"
+    else
+      extra_args="--test_output=errors"
+    fi
+  fi
+
+  fix_bazel_imports
+  if [ -n "$KOKORO_ARTIFACTS_DIR" ]; then
+    # Especially in the event of failure, we want our test artifacts to be uploaded.
+    trap upload_bazel_test_artifacts EXIT
+  fi
+  bazel clean
+  bazel $COMMAND $TARGET --xcode_version $xcode_version --ios_minimum_os=8.0 --ios_multi_cpus=i386,x86_64 $extra_args $verbosity_args
+}
+
+run_cocoapods() {
+  echo "Running cocoapods builds..."
+
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    move_derived_data_to_tmp
+  fi
+
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    select_xcode "$XCODE_VERSION"
+
+    # Move into our cloned repo
+    cd github/repo
+
+    gem install xcpretty cocoapods --no-rdoc --no-ri --no-document --quiet
+    pod --version
+  fi
+
+  if [ "$DEPENDENCY_SYSTEM" = "cocoapods" ]; then
+    bash scripts/prep_all
+    bash scripts/build_all --verbose
+    if [ -n "$IS_RELEASE" ]; then
+      bash scripts/test_all
+    else
+      bash scripts/test_all catalog/MDCCatalog.xcworkspace:MDCCatalog
+    fi
+  elif [ "$DEPENDENCY_SYSTEM" = "cocoapods-podspec" ]; then
+    pod lib lint MaterialComponents.podspec --verbose --skip-tests
+  fi
+
+  if [ -n "$CODECOV_TOKEN" ]; then
+    bash <(curl -s https://codecov.io/bash)
+  fi
+}
+
+# For local runs, you must set the following environment variables:
+#
+#   DANGER_GITHUB_API_TOKEN -> Create a token here: https://github.com/settings/tokens.
+#                              Must have public_repo scope.
+#   DANGER_TEST_PR="###"    -> The PR # you want to test danger against.
+#
+# And you'll likely have to install danger:
+#
+#   yarn add danger
+#
+run_danger() {
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    # Move into our cloned repo
+    cd github/repo
+
+    export DANGER_TEST_PR="$KOKORO_GITHUB_PULL_REQUEST_NUMBER"
+
+    # Install danger
+    yarn add danger
+  fi
+
+  # We're not a supported CI, so we have to pretend to be one.
+  export DANGER_FAKE_CI="YEP"
+  export DANGER_TEST_REPO="material-components/material-components-ios"
+
+  # Run Danger
+  yarn danger ci
+}
+
+generate_website() {
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    # Move into our cloned repo
+    cd github/repo
+
+    ./scripts/build_site.sh
+
+    gem install bundler --no-rdoc --no-ri --no-document --quiet
+    brew update
+    brew install yarn --without-node
+  fi
+
+  cd docsite-generator
+  bundle install
+  yarn install
+  cd ../
+
+  TMP_PATH=$(mktemp -d)
+  ./scripts/build_site.sh 2>&1 | tee "$TMP_PATH/output"
+
+  if [[ $(grep "^Error:" "$TMP_PATH/output") ]]; then
+    # Make site generation errors be script failures. build_site.sh always exits with 0
+    # unfortunately.
+    exit 1
+  fi
+}
+
+# Will generate an API diff between the current branch and the merge-base from develop.
+# The result will be posted to GitHub as a comment.
+#
+# For local runs, you must set the following environment variables:
+#
+#   GITHUB_API_TOKEN -> Create a token here: https://github.com/settings/tokens.
+#                       Must have public_repo scope.
+#   KOKORO_GITHUB_PULL_REQUEST_NUMBER="###" -> The PR # you want to post the API diff results to.
+#
+# And you'll likely have to install sourcekitten:
+#
+#   brew install sourcekitten
+#
+generate_apidiff() {
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    select_xcode "$XCODE_VERSION"
+
+    # Move into our cloned repo
+    cd github/repo
+
+    # Install sourcekitten, a dependency of the apidiff tool
+    brew install sourcekitten
+  fi
+
+  usage() {
+    echo "Usage: $0 -d apidiff"
+    echo
+    echo "Will generate an API diff between the current branch and the merge-base from develop."
+    echo "The result will be posted to GitHub as a comment."
+    echo
+    echo "Must set the following environment variables to run locally:"
+    echo
+    echo "GITHUB_API_TOKEN -> Create a token here: https://github.com/settings/tokens."
+    echo "                    Must have public_repo scope."
+    echo "KOKORO_GITHUB_PULL_REQUEST_NUMBER=\"###\" -> The PR # you want to post the API diff results to."
+  }
+
+  if [ -z "$GITHUB_API_TOKEN" ]; then
+    echo "GITHUB_API_TOKEN must be set to a github token with public_repo scope."
+    usage
+    exit 1
+  fi
+
+  if [ -z "$KOKORO_GITHUB_PULL_REQUEST_NUMBER" ]; then
+    echo "KOKORO_GITHUB_PULL_REQUEST_NUMBER must be set to a github pull request number."
+    usage
+    exit 1
+  fi
+
+  BUILDS_TMP_PATH=$(mktemp -d)
+  base_sha=$(git merge-base origin/develop HEAD)
+
+  ./scripts/release apidiff "$base_sha" | tee "$BUILDS_TMP_PATH/api_diff"
+  changelog_path=$(cat "$BUILDS_TMP_PATH/api_diff" | grep "Changelog=" | cut -d'=' -f2)
+  error_path=$(cat "$BUILDS_TMP_PATH/api_diff" | grep "Errors=" | cut -d'=' -f2)
+
+  pushd scripts/github-comment >> /dev/null
+
+  if [ -f "$changelog_path" ]; then
+    echo "## API diff detected the following changes" > "$changelog_path.tmp"
+    cat "$changelog_path" >> "$changelog_path.tmp"
+
+    swift run github-comment \
+      --repo=material-components/material-components-ios \
+      --github_token="$GITHUB_API_TOKEN" \
+      --pull_request_number="$KOKORO_GITHUB_PULL_REQUEST_NUMBER" \
+      --identifier=apidiff \
+      --comment_body="$changelog_path.tmp"
+
+  else
+    # No changelog, so delete any existing comment
+    swift run github-comment \
+      --repo=material-components/material-components-ios \
+      --github_token="$GITHUB_API_TOKEN" \
+      --pull_request_number="$KOKORO_GITHUB_PULL_REQUEST_NUMBER" \
+      --identifier=apidiff \
+      --delete
+  fi
+
+  popd >> /dev/null
+
+  if [ -f "$error_path" ]; then
+    nested_error_path=$(cat "$error_path" | grep "stderr output is available in" | cut -d' ' -f6)
+    if [ -f "$nested_error_path" ]; then
+      echo
+      echo "Potential build errors:"
+      cat "$nested_error_path"
+    fi
+  fi
+}
+
+# Will run git clang-format on the branch's changes, reporting a failure if the linter generated any
+# stylistic changes.
+#
+# For local runs, you must set the following environment variables:
+#
+#   GITHUB_API_TOKEN -> Create a token here: https://github.com/settings/tokens.
+#                       Must have public_repo scope.
+#   KOKORO_GITHUB_PULL_REQUEST_NUMBER="###" -> The PR # you want to post the API diff results to.
+#   KOKORO_GITHUB_PULL_REQUEST_COMMIT="..." -> The PR commit you want to post to.
+#
+# And install the following tools:
+#
+# - clang-format
+# - git-clang-format
+lint_clang_format() {
+  usage() {
+    echo "Usage: $0 -d clang-format"
+    echo
+    echo "Will apply clang-format to changes made on the current branch from the merge-base of develop."
+    echo "The result will be posted to GitHub as a series of inline comments."
+    echo
+    echo "Must set the following environment variables to run locally:"
+    echo
+    echo "GITHUB_API_TOKEN -> Create a token here: https://github.com/settings/tokens."
+    echo "                    Must have public_repo scope."
+    echo "KOKORO_GITHUB_PULL_REQUEST_NUMBER=\"###\" -> The PR # you want to post the API diff results to."
+  }
+
+  if [ -z "$GITHUB_API_TOKEN" ]; then
+    echo "GITHUB_API_TOKEN must be set to a github token with public_repo scope."
+    usage
+    exit 1
+  fi
+
+  if [ -z "$KOKORO_GITHUB_PULL_REQUEST_NUMBER" ]; then
+    echo "KOKORO_GITHUB_PULL_REQUEST_NUMBER must be set to a github pull request number."
+    usage
+    exit 1
+  fi
+
+  if [ -z "$KOKORO_GITHUB_PULL_REQUEST_COMMIT" ]; then
+    echo "KOKORO_GITHUB_PULL_REQUEST_COMMIT must be set to a commit."
+    usage
+    exit 1
+  fi
+
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    select_xcode "$XCODE_VERSION"
+
+    mkdir bin
+    pushd bin >> /dev/null
+
+    # Install clang-format
+    echo "Downloading clang-format..."
+    CLANG_FORMAT_SHA="9d2a3aeaee65f09ae5405dd33812d167fadd48aba712965cdb3238e5d8837255"
+    curl -Ls "https://github.com/material-foundation/clang-format/releases/download/r343360/clang-format" -o "clang-format"
+    if openssl sha -sha256 "clang-format" | grep -q "$CLANG_FORMAT_SHA"; then
+      echo "SHAs match. Proceeding."
+    else
+      echo "clang-format does not match sha. Aborting."
+      exit 1
+    fi
+    chmod +x "clang-format"
+
+    echo "Downloading git-clang-format..."
+    # Install git-clang-format
+    GIT_CLANG_FORMAT_SHA="1f6cfad79f90ea202dcf2d52a360186341a589cdbfdee05b0e7694f912aa9820"
+    curl -Ls https://raw.githubusercontent.com/llvm-mirror/clang/c510fac5695e904b43d5bf0feee31cc9550f110e/tools/clang-format/git-clang-format -o "git-clang-format"
+    if openssl sha -sha256 "git-clang-format" | grep -q "$GIT_CLANG_FORMAT_SHA"; then
+      echo "SHAs match. Proceeding."
+    else
+      echo "git-clang-format does not match sha. Aborting."
+      exit 1
+    fi
+    chmod +x "git-clang-format"
+
+    export PATH="$(pwd):$PATH"
+
+    popd >> /dev/null
+
+    # Move into our cloned repo
+    cd github/repo
+  fi
+
+  if ! git clang-format -h > /dev/null 2> /dev/null; then
+    echo
+    echo "git clang-format is not configured correctly."
+    echo "Please ensure that the git-clang-format command is in your PATH and that it is executable."
+    exit 1
+  fi
+
+  base_sha=$(git merge-base origin/develop HEAD)
+
+  echo "Running clang-format on changes from $base_sha to HEAD..."
+  git clang-format "$base_sha"
+  if ! git diff-index --quiet HEAD --; then
+    echo
+    echo "clang-format requires the following stylistic changes to be made:"
+    echo
+    git --no-pager diff
+
+    COMMENT_TMP_PATH=$(mktemp -d)
+    COMMENT_TMP_FILE="$COMMENT_TMP_PATH/comment"
+    DIFF_TMP_FILE="$COMMENT_TMP_PATH/diff"
+
+    echo "clang-format suggested the following change:" > "$COMMENT_TMP_FILE"
+    git --no-pager diff -U0 > "$DIFF_TMP_FILE"
+
+    echo "Posting results to GitHub..."
+
+    pushd scripts/github-comment >> /dev/null
+
+    swift run github-comment \
+      --repo=material-components/material-components-ios \
+      --github_token="$GITHUB_API_TOKEN" \
+      --pull_request_number="$KOKORO_GITHUB_PULL_REQUEST_NUMBER" \
+      --commit="$KOKORO_GITHUB_PULL_REQUEST_COMMIT" \
+      --identifier=clang-format \
+      --comment_body="$COMMENT_TMP_FILE" \
+      --diff="$DIFF_TMP_FILE"
+
+    cat > "$COMMENT_TMP_FILE" <<EOL
+clang-format recommended changes.
+
+Consider installing [git-clang-format](https://github.com/llvm-mirror/clang/blob/master/tools/clang-format/git-clang-format) and running the following command:
+
+\`\`\`bash
+git clang-format \$(git merge-base origin/develop HEAD)
+\`\`\`
+EOL
+
+    swift run github-comment \
+      --repo=material-components/material-components-ios \
+      --github_token="$GITHUB_API_TOKEN" \
+      --pull_request_number="$KOKORO_GITHUB_PULL_REQUEST_NUMBER" \
+      --identifier=clang-format \
+      --comment_body="$COMMENT_TMP_FILE"
+
+    popd >> /dev/null
+
+    exit 1
+  else
+    pushd scripts/github-comment >> /dev/null
+    # No recommended changes, so delete any existing comment
+    swift run github-comment \
+      --repo=material-components/material-components-ios \
+      --github_token="$GITHUB_API_TOKEN" \
+      --pull_request_number="$KOKORO_GITHUB_PULL_REQUEST_NUMBER" \
+      --identifier=clang-format \
+      --delete
+    popd >> /dev/null
+  fi
+}
+
+POSITIONAL=()
+while [[ $# -gt 0 ]]; do
+  key="$1"
+
+  case $key in
+  -v|--verbose)
+    VERBOSE_OUTPUT="1"
+    shift
+    ;;
+  -d|--dependency_system)
+    DEPENDENCY_SYSTEM="$2"
+    shift
+    shift
+    ;;
+  -c|--command)
+    COMMAND="$2"
+    shift
+    shift
+    ;;
+  -t|--target)
+    TARGET="$2"
+    shift
+    shift
+    ;;
+  *)
+    POSITIONAL+=("$1")
+    shift
+    ;;
+  esac
+done
+set -- "${POSITIONAL[@]}" # restore positional parameters
+
+if [ -n "$VERBOSE_OUTPUT" ]; then
+  # Display commands to stderr.
+  set -x
+fi
+
+case "$DEPENDENCY_SYSTEM" in
+  "bazel")      run_bazel ;;
+  "clang-format")  lint_clang_format ;;
+  "cocoapods")  run_cocoapods ;;
+  "cocoapods-podspec")  run_cocoapods ;;
+  "website")    generate_website ;;
+  "danger")     run_danger ;;
+  "apidiff")    generate_apidiff ;;
+
+  *)            run_bazel ;;
+esac
+
+echo "Success!"

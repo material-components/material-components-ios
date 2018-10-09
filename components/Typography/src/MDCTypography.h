@@ -1,20 +1,20 @@
-/*
- Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <UIKit/UIKit.h>
+
+#pragma mark - Soon to be deprecated
 
 /**
  MDCTypography uses this protocol to delegate responsibility of loading the custom fonts.
@@ -22,19 +22,22 @@
  The spec defines the Roboto font family and uses three fonts in the named styles. Use this
  protocol to define your own fonts if there is a brand need.
 
- @see https://material.io/guidelines/style/typography.html#typography-styles
+ @warning This protocol will soon be deprecated. Consider using MDCTypographyScheme from the
+ schemes/Typography component instead.
+
+ @see https://material.io/go/design-typography#typography-styles
  */
 @protocol MDCTypographyFontLoading <NSObject>
 @required
 
 /** Asks the receiver to return a font with a light weight. FontSize must be larger tha 0. */
-- (nonnull UIFont *)lightFontOfSize:(CGFloat)fontSize;
+- (nullable UIFont *)lightFontOfSize:(CGFloat)fontSize;
 
 /** Asks the receiver to return a font with a normal weight. FontSize must be larger tha 0. */
 - (nonnull UIFont *)regularFontOfSize:(CGFloat)fontSize;
 
 /** Asks the receiver to return a font with a medium weight. FontSize must be larger tha 0. */
-- (nonnull UIFont *)mediumFontOfSize:(CGFloat)fontSize;
+- (nullable UIFont *)mediumFontOfSize:(CGFloat)fontSize;
 
 @optional
 
@@ -45,7 +48,7 @@
 - (nonnull UIFont *)italicFontOfSize:(CGFloat)fontSize;
 
 /** Asks the receiver to return a font with an italic bold weight. FontSize must be larger tha 0. */
-- (nonnull UIFont *)boldItalicFontOfSize:(CGFloat)fontSize;
+- (nullable UIFont *)boldItalicFontOfSize:(CGFloat)fontSize;
 
 /** Returns a bold version of the specified font. */
 - (nonnull UIFont *)boldFontFromFont:(nonnull UIFont *)font;
@@ -56,12 +59,11 @@
  Asks the receiver to determine if a particular font would be considered "large" for the purposes of
  calculating contrast ratios.
 
- Large fonts are defined as greater than 18pt normal or 14pt bold. If the passed font is nil, then
- this method returns NO.
+ Large fonts are defined as greater than 18pt normal or 14pt bold.
  For more see: https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html
 
- @param font The font to examine, or nil.
- @return YES if the font is non-nil and is considered "large".
+ @param font The font to examine.
+ @return YES if the font is considered "large".
  */
 - (BOOL)isLargeForContrastRatios:(nonnull UIFont *)font;
 
@@ -72,7 +74,10 @@
 
  To use these fonts, you must add MaterialTypography.bundle to your target.
 
- @see https://material.io/guidelines/style/typography.html#typography-styles
+ @warning This class will soon be deprecated. Consider using MDCTypographyScheme from the
+ schemes/Typography component instead.
+
+ @see https://material.io/go/design-typography#typography-styles
  */
 @interface MDCTypography : NSObject
 
@@ -177,6 +182,9 @@
 
 /**
  MDCSystemFontLoader allows you to use the system font for @c MDCTypography.
+
+ @warning This class will soon be deprecated. Consider using MDCTypographyScheme from the
+ schemes/Typography component instead.
 
  #### Example
 

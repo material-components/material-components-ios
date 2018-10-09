@@ -1,33 +1,25 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <UIKit/UIKit.h>
-
-#if !defined(__IPHONE_8_0) || (__IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_8_0)
-#error "This component only supports iOS 8.0 and above."
-#endif
 
 @class MDCAlertAction;
 
 /**
  MDCAlertController displays an alert message to the user, similar to UIAlertController.
 
- https://material.io/guidelines/components/dialogs.html
-
- MDCAlertController requires iOS 8 or later.
+ https://material.io/go/design-dialogs
 
  MDCAlertController class is intended to be used as-is and does not support subclassing. The view
  hierarchy for this class is private and must not be modified.
@@ -75,6 +67,42 @@
  */
 @property(nonatomic, nonnull, readonly) NSArray<MDCAlertAction *> *actions;
 
+/** The font applied to the title of Alert Controller.*/
+@property(nonatomic, strong, nullable) UIFont *titleFont;
+
+/** The color applied to the title of Alert Controller.*/
+@property(nonatomic, strong, nullable) UIColor *titleColor;
+
+/** The alignment applied to the title of the Alert Controller.*/
+@property(nonatomic, assign) NSTextAlignment titleAlignment;
+
+/** An optional icon appearing above the title of the Alert Controller.*/
+@property(nonatomic, strong, nullable) UIImage *titleIcon;
+
+/** The tint color applied to the titleIcon. Leave empty to preserve original image color(s).*/
+@property(nonatomic, strong, nullable) UIColor *titleIconTintColor;
+
+/** The font applied to the message of Alert Controller.*/
+@property(nonatomic, strong, nullable) UIFont *messageFont;
+
+/** The color applied to the message of Alert Controller.*/
+@property(nonatomic, strong, nullable) UIColor *messageColor;
+
+/** The font applied to the button of Alert Controller.*/
+@property(nonatomic, strong, nullable) UIFont *buttonFont;
+
+/** The color applied to the button title text of Alert Controller.*/
+@property(nonatomic, strong, nullable) UIColor *buttonTitleColor;
+
+/** The color applied to the button ink effect of Alert Controller.*/
+@property(nonatomic, strong, nullable) UIColor *buttonInkColor;
+
+/** The corner radius applied to the Alert Controller view. Default to 0 (no round corners) */
+@property(nonatomic, assign) CGFloat cornerRadius;
+
+/** The elevation that will be applied to the Alert Controller view. Default to 24. */
+@property(nonatomic, assign) CGFloat elevation;
+
 // TODO(iangordon): Add support for preferredAction to match UIAlertController.
 // TODO(iangordon): Consider adding support for UITextFields to match UIAlertController.
 
@@ -94,12 +122,12 @@
  UIContentSizeCategory changes.
 
  This property is modeled after the adjustsFontForContentSizeCategory property in the
- UIConnectSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
+ UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
 
  Default value is NO.
  */
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
-    BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
+    BOOL mdc_adjustsFontForContentSizeCategory;
 
 /** MDCAlertController handles its own transitioning delegate. */
 - (void)setTransitioningDelegate:
@@ -118,7 +146,7 @@ typedef void (^MDCActionHandler)(MDCAlertAction *_Nonnull action);
 /**
  MDCAlertAction is passed to an MDCAlertController to add a button to the alert dialog.
  */
-@interface MDCAlertAction : NSObject <NSCopying>
+@interface MDCAlertAction : NSObject <NSCopying, UIAccessibilityIdentification>
 
 /**
  Action alerts control the buttons that will be displayed on the bottom of an alert controller.
@@ -141,5 +169,10 @@ typedef void (^MDCActionHandler)(MDCAlertAction *_Nonnull action);
 @property(nonatomic, nullable, readonly) NSString *title;
 
 // TODO(iangordon): Add support for enabled property to match UIAlertAction
+
+/**
+ The @c accessibilityIdentifier for the view associated with this action.
+ */
+@property(nonatomic, nullable, copy) NSString *accessibilityIdentifier;
 
 @end

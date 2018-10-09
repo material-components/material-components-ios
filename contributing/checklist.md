@@ -1,6 +1,8 @@
 # Component checklist
 
 
+[Checklist status spreadsheet](https://docs.google.com/spreadsheets/d/e/2PACX-1vRQLFMuo0Q3xsJp1_TdWvImtfdc8dU0lqX2DTct5pOPAEUIrN9OsuPquvv4aKRAwKK_KItpGs7c4Fok/pubhtml)
+
 Over time we have curated a growing checklist of things we feel improve the experience of using a custom UIKit component. Many of these checks are performed by humans but we're now increasing the number of checks that can be performed by scripts.
 
 
@@ -48,6 +50,8 @@ Each component must have a short video captured from either iPhone or iPhone sim
 
 
 Each component must also have a still image to use when video cannot play.
+This image should be 750 x 1334, which is the device resolution of an iPhone 8.
+If captured from a simulator, this image should only contain the pixels on screen, no bezel.
 
 1. Verify the component's `.../docs/assets` folder contains a still named `component_name.png`.
 1. Enter YES or NO
@@ -60,23 +64,54 @@ The included catalog application uses Core Graphics to draw landing page tiles f
 
 #### To convert a raw asset to Core Graphics:
 
-1. Set the canvass size to 188 x 155.
+1. Set the canvas size to 82 x 82.
 1. Import the file (.svg or .ai) into PaintCode.
 1. Massage values until it matches the original (colors, gradients, spacing, etc).
 1. Make sure all shapes are enclosed in a group named Component Name Group.
-1. Enclose the group in a frame with the same bounds and origin as the canvas.
+1. Set the group's origin to (1,1) and size to 80 X 80
+1. Enclose the group in a frame with the same bounds and origin as the canvas, not the group.
 1. Set the group's springs and struts to:
   1. Top and Left pinned
   1. All others resize
 1. In `catalog/MDCCCatalog/MDCCatalogTiles.h`, declare a function for the new component.
 1. In `catalog/MDCCCatalog/MDCCatalogTiles.m`, add that function (empty.)
 1. Copy and paste the generated iOS Objc code into the function.
+1. Replace color variable values with values taken from the passed MDCColorScheme if possible.
 1. In `catalog/MDCCatalog/MDCCatalogTileView.swift`, add a new case for the new component and have it create `newImage` from the new function.
 
 #### Verify a tile exists:
 
 1. Run the catalog application and look for the component. Make sure the tile shown is specific to the component and not a placeholder nor empty view.
 1. Enter YES or NO
+
+
+### Site Icon
+
+The [material.io](https://material.io/components) site contains a [list of all components](https://material.io/components/ios/catalog/), each with an icon. These icons are created by Google's Material Design department specifically for this purpose. Adding it to the site is done by the core team.
+
+1. Enter YES or NO or N/A
+
+
+### Site Navigation Comment
+
+The [material.io](https://material.io/components) site's content is generated from the headers of MDC's files using [Jazzy](https://github.com/realm/jazzy) and [Jekyll](https://github.com/jekyll/jekyll). This requires some YAML.
+
+1. The root README.md of each component should start with a comment containing specific key-value pairs. Here's an example:
+```
+<!--docs:
+title: "App Bars"
+layout: detail
+section: components
+excerpt: "The App Bar is a flexible navigation bar designed to provide a typical Material Design navigation experience."
+iconId: toolbar
+path: /catalog/app-bars/
+api_doc_root: true
+-->
+```
+
+The root of each component should also contain a `.jazzy.yaml` file that's auto-generated during the publishing process.
+1. Enter YES or NO or N/A
+
 
 
 ### License Stanzas in Every Text-based Source File
@@ -89,7 +124,7 @@ You can do this manually or use a tool such as [autogen](https://github.com/mbru
 Sample:
 ```
 /*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+ Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
 
 
  Licensed under the Apache License, Version 2.0 (the "License");
@@ -132,14 +167,15 @@ Unit tests in MDC are run by the developer, the continuous integration service, 
 1. Ensure unit tests run with no errors.
 1. Enter YES or NO
 
+### Kokoro Support
 
-### Interaction Tests (If necessary)
 
+MDC-iOS uses Google's continuous integration service Kokoro for automated tests on each PR. Kokoro builds MDC with Google's open source build system, [Bazel](https://bazel.build/). For more information, see the [Kokoro & Bazel document](bazel_kokoro.md).
 
-Visual components should have interaction tests built with [Earl Grey](https://github.com/google/EarlGrey).
-
-//TODO and explain how
-
+1. Add a Bazel `BUILD` file to the root directory of the component.
+1. Add `BUILD` files for any components that are dependencies of the component. (If necessary.)
+1. Test locally with the .kokoro script in the repo's root directory. If necessary, propose adjustments to the script to support custom features of your target (like a private dependency.)
+1. Enter YES or NO
 
 ### Translations (If necessary)
 
@@ -160,7 +196,7 @@ Any UI code that isn’t centered - e.g. has directionality - will need RTL supp
 
 
 1. Prefer .leading and .trailing over .left and .right when laying out view hierarchies.
-1. Prefer Natural or Left when setting the alignment of text fields and labels.
+1. Prefer Natural over Left when setting the alignment of text fields and labels.
 1. Add an example to our catalog.
 1. Enter YES, NO or N/A
 
@@ -172,6 +208,44 @@ Custom controls should support VoiceOver.
 See Apple's [Accessibility Programming Guide for iOS](https://developer.apple.com/library/content/documentation/UserExperience/Conceptual/iPhoneAccessibility/Accessibility_on_iPhone/Accessibility_on_iPhone.html) for further information.
 
 1. Test your control on a device in VoiceOver mode and ensure the bahavior is at least as robust as UIKit.
+1. Enter YES, NO or N/A
+
+
+### Dynamic Type Support (If possible)
+
+
+Any component that has text, interacts with text, or lays itself out in relation to text should implement Dynamic Type.
+See Apple's [Building Apps with Dynamic Type video](https://developer.apple.com/videos/play/wwdc2017/245/) for further information.
+
+1. Set fonts with `[UIFont preferredTextForStyle:]` or `[UIFont mdc_perferredTextForMaterialStyle:]`, or via `UIFontMetrics`.
+1. Implement `mdc_adjustsFontForContentSizeCategory` as a `BOOL` property.
+1. Add code that listens to and reacts to the `UIContentSizeCategoryDidChangeNotification`.
+1. Never layout code around text with 'magic numbers'. Instead, use a dynamic layout like Apple's auto layout.
+1. Make sure labels have an appropriate overflow behavior. Usually that will mean setting label's `numberOfLines` to 0.
+1. Add any necessary client code into your examples.
+1. Test all your code with Dynamic Type settings from very small to very large.
+1. Enter YES, NO or N/A
+
+
+### Custom Color Support (If necessary)
+
+
+Any component that has visual elements that can be colorized should include expose public properties. Each element
+should have its own UIColor property.
+
+1. For any rendered element (text, foreground view, stroke) that we may want to customize the color of, create a
+UIColor property that is annotated with UI_APPEARANCE_SELECTOR.
+1. Enter YES, NO or N/A
+
+
+### Color Themer (If possible)
+
+
+Any component that has added custom color support should include a [color themer](https://github.com/material-components/material-components-ios/tree/develop/components/Themes). A color themer applies a set of colors, known as a color scheme, to a component in a systematic way. The user of the color themer passes a color scheme and component to the color themer and the component is automatically colorized in the correct way. Themers should operate on an instance of a component or its UIAppearance proxy.
+
+1. Make sure the color themer static method signatures adhere to existing conventions: `applyColorScheme:toComponent`.
+1. Add a `ColorThemer` directory with the color themer to the `src` directory of the component.
+1. Update component entry in `MaterialComponents.podspec` to include the color themer.
 1. Enter YES, NO or N/A
 
 
@@ -214,6 +288,7 @@ They should focus on educating thru the catalog’s visual result and the code i
 1. Include an example of typical usage.
 1. Include examples of additional features of the component, if possible.
 1. Enter YES or NO
+
 
 ### Interface Builder Support (If possible)
 
@@ -266,23 +341,12 @@ We want to avoid misuse of initializers both in the calling of existing classes 
 1. Enter YES or NO
 
 
-### NSCoding Support
-
-
-Conforming to NSCoding is necessary for Interface Builder support in views and could be used to
-serialize non-view classes. Tip: write a unit test for this.
-
-1. Implement `initWithCoder:`.
-1. Implement `encodeWithCoder:`.
-1. Enter YES or NO
-
-
 ### commonMDCClassInit (If necessary)
 
 
-Classes that set ivar values or perform other commands from the initializer, should avoid duplicate code by writing a `common*MDCClass*init` method to call from all initializers.
+Classes that set ivar values or perform other commands from the initializer, should avoid duplicate code by writing a `common*MDCClass*Init` method to call from all initializers.
 
-1. The method should be named `common` + the name of the class prefixed with MDC + `init`.
+1. The method should be named `common` + the name of the class prefixed with MDC + `Init`.
 1. The method should be called from all initializers (initWithFrame:, initWithCoder:, etc.)
 1. Enter YES, NO or N/A
 
@@ -316,10 +380,40 @@ Classes that set ivar values or perform other commands from the initializer, sho
 [Auto Layout Performance on iOS](http://floriankugler.com/2013/04/22/auto-layout-performance-on-ios/)
 
 
-### UIAppearance Support (If possible)
+### Custom Font Support (if necessary)
+
+Components with text elements should allow clients to choose a custom font. Each text element should have 
+its own UIFont property.  (titleFont, bodyFont, etc.)
+
+1. Add UIFont properties for each unique text element with a UIAPPEARANCE_SELECTOR annotation.
+1. Enter YES, NO or N/A
+
+### Font Themer Support (if possible)
+
+If a component exposes any custom font properties, create a font themer that will allow cliets to easily theme the component
+with a type hierarchy or MDCFontScheme. Themers should operate on an instance of a component or its UIAppearance proxy.
 
 
-We use the UIAppearance proxy with our visible components to allow setting default values of properties and state.
+1. Make sure the font themer static method signatures adhere to existing conventions: `applyFontScheme:toComponent`.
+1. Add a `FontThemer` directory with the themer to the `src` directory of the component.
+1. Update component entry in `MaterialComponents.podspec` to include the themer.
+1. Enter YES, NO or N/A
+
+
+### Safe Area Support (if necessary)
+
+All of our components should work as expected on iOS 11, and support new devices like the iPhone X.
+
+1. Make sure your component takes into account the Safe Area and responds to its changes.
+2. Test it both on 11.0 and 11.1, and pay special attention to the iPhone X on landscape.
+2. Enter YES, NO or N/A
+
+
+### UIAppearance Support
+
+#### UIView or UIBarItem subclasses
+
+We use the `UIAppearance` proxy with our visible components to allow setting default values of properties and state.
 
 
 1. Attempt to name properties in line with Apple’s style: `UISlider.thumbTintColor`, `UISlider.maximumTrackTintColor`, `UISwitch.onTintColor`, `UINavigationBar.barTintColor`, etc.
@@ -328,6 +422,17 @@ We use the UIAppearance proxy with our visible components to allow setting defau
 1. Avoid “primary”, “secondary” or “accent” in your property names to avoid confusion with our color schemes.
 1. Enter YES, NO or N/A
 
+#### All other superclasses
+
+We use class properties to pass defaults to instance properties to mimic the functionality of `UIAppearance`.
+
+1. Properties with defaults, that are objects, should be `null_resettable`.
+1. Properties with defaults should also always return the default if their value is nil. 
+1. Class property defaults should be named as `nameOfPropertyItAffects` + `Default`. For example, the class `MDCTextInputControllerDefault` inherits from `NSObject`. Its `borderFillColor` has a `borderFillColorDefault` class property.
+1. Class property default declarations should be placed directly beneath the property they affect's declaration in the `@interface`.
+1. Class property default implementations should be placed directly beneath the property they affect's implementation in the `@implementation`.
+1. The property they affect should have in its header documentation `Default is [class property name]`, the class property should say `Default value for [regular property name]` and `Default is [whatever value is default]`.
+1. Class properties that are primitives should have default values assigned when their static variables are declared and defined and not in any instance code like a common init. For example `static BOOL _floatingEnabledDefault = YES;`.
 
 ### IBDesignable Support for UIView Subclasses (If possible)
 
@@ -382,6 +487,12 @@ Material Components for iOS is built primarily for adoption with CocoaPods. Ther
 
 1. Verify `MaterialComponents.podspec` contains a properly filled out entry for the component.
 1. Enter YES or NO
+
+
+### Use umbrella header between components
+
+
+Material Components should always use umbrella headers to access API of other components.
 
 
 ## Running the checklist

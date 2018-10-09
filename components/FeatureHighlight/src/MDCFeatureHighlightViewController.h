@@ -1,18 +1,16 @@
-/*
- Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <UIKit/UIKit.h>
 
@@ -32,7 +30,7 @@ typedef void (^MDCFeatureHighlightCompletion)(BOOL accepted);
  MDCFeatureHighlightViewController highlights an element of a UI to introduce features or
  functionality that a user hasn’t tried.
 
- https://material.googleplex.com/growth-communications/feature-discovery.html
+ https://material.io/guidelines/growth-communications/feature-discovery.html
 
  MDCFeatureHighlightViewController should be presented modally and dismissed using either
  |acceptFeature| or |rejectFeature|.
@@ -105,6 +103,48 @@ typedef void (^MDCFeatureHighlightCompletion)(BOOL accepted);
  Should be opaque.
  */
 @property(nonatomic, strong, null_resettable) UIColor *innerHighlightColor;
+
+/**
+ Sets the color to be used for the title text. If nil upon presentation, a color of sufficient
+ contrast to the |outerHighlightColor| will be automatically chosen.
+
+ Defaults to nil.
+ */
+@property(nonatomic, strong, nullable) UIColor *titleColor;
+
+/**
+ Sets the color to be used for the body text. If nil upon presentation, a color of sufficient
+ contrast to the |outerHighlightColor| will be automatically chosen upon presentation.
+
+ Defaults to nil.
+ */
+@property(nonatomic, strong, nullable) UIColor *bodyColor;
+
+/**
+ Sets the custom font to be used for the title text.
+
+ Defaults to nil.
+ */
+@property(nonatomic, strong, nullable) UIFont *titleFont;
+
+/**
+ Sets the custom font to be used for the body text.
+
+ Defaults to nil.
+ */
+@property(nonatomic, strong, nullable) UIFont *bodyFont;
+
+/**
+ Indicates whether the feature highlight contents should automatically update their font when the
+ device’s UIContentSizeCategory changes.
+
+ This property is modeled after the adjustsFontForContentSizeCategory property in the
+ UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
+
+ Default value is NO.
+ */
+@property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
+    BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
 
 /**
  Dismisses the feature highlight using the 'accept' style dismissal animation and triggers the

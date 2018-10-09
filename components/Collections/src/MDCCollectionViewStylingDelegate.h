@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <UIKit/UIKit.h>
 
@@ -89,6 +87,38 @@
  */
 - (BOOL)collectionView:(nonnull UICollectionView *)collectionView
     shouldHideFooterBackgroundForSection:(NSInteger)section;
+
+#pragma mark - Separator
+
+/**
+ Asks the delegate whether the specified item should hide its separator.
+
+ @param collectionView The collection view.
+ @param indexPath The item's index path.
+ @return If the item separator should be hidden at the specified index path.
+ */
+- (BOOL)collectionView:(nonnull UICollectionView *)collectionView
+    shouldHideItemSeparatorAtIndexPath:(nonnull NSIndexPath *)indexPath;
+
+/**
+ Asks the delegate whether the specified header should hide its separator.
+
+ @param collectionView The collection view.
+ @param section The collection view section.
+ @return If the header separator should be hidden at the specified section.
+ */
+- (BOOL)collectionView:(nonnull UICollectionView *)collectionView
+    shouldHideHeaderSeparatorForSection:(NSInteger)section;
+
+/**
+ Asks the delegate whether the specified footer should hide its separator.
+
+ @param collectionView The collection view.
+ @param section The collection view section.
+ @return If the footer separator should be hidden at the specified section.
+ */
+- (BOOL)collectionView:(nonnull UICollectionView *)collectionView
+    shouldHideFooterSeparatorForSection:(NSInteger)section;
 
 #pragma mark - Item inlaying
 

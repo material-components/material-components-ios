@@ -1,5 +1,5 @@
 <!--docs:
-title: "Animation Timing"
+title: "Animation timing"
 layout: detail
 section: components
 excerpt: "Material Design animation timing curves."
@@ -7,25 +7,21 @@ iconId: animation
 path: /catalog/animation-timing/
 -->
 
-# Animation Timing
+# Animation timing
 
-Animation timing easing curves create smooth and consistent motion. Easing curves allow elements to
-move between positions or states. These easing curves affect an object's speed, opacity, and scale.
-These animation curves allow acceleration and deceleration changes to be smooth across the duration
-of an animation so that movement doesn't appear mechanical.
+Like color and typography, motion can play a role in defining your app's style and brand. The
+animation timing component provides implementations of the Material Motion easing curve types for
+iOS.
+
+<img src="docs/assets/animationtiming.gif" alt="An animation showing different Material Design animation timings." width="237">
 
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/motion/duration-easing.html">Duration & easing</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-easing">Material Design guidelines: Easing</a></li>
 </ul>
 
 ## Installation
-
-### Requirements
-
-- Xcode 7.0 or higher.
-- iOS SDK version 7.0 or higher.
 
 ### Installation with CocoaPods
 
@@ -34,10 +30,11 @@ To add this component to your Xcode project using CocoaPods, add the following t
 ```
 pod 'MaterialComponents/AnimationTiming'
 ```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 
-``` bash
+```bash
 pod install
 ```
 
@@ -52,13 +49,13 @@ Before using animation timing, you'll need to import it:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-``` swift
+```swift
 import MaterialComponents
 ```
 
 #### Objective-C
 
-``` objc
+```objc
 #import "MaterialAnimationTiming.h"
 ```
 <!--</div>-->
@@ -74,8 +71,8 @@ be used in an animation.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-``` swift
-let materialCurve = MDCAnimationTimingFunction.easeOut
+```swift
+let materialCurve = MDCAnimationTimingFunction.deceleration
 let timingFunction = CAMediaTimingFunction.mdc_function(withType: materialCurve)
 
 let animation = CABasicAnimation(keyPath:"transform.translation.x")
@@ -84,8 +81,8 @@ animation.timingFunction = timingFunction
 
 #### Objc
 
-``` objc
-MDCAnimationTimingFunction materialCurve = MDCAnimationTimingFunctionEaseOut;
+```objc
+MDCAnimationTimingFunction materialCurve = MDCAnimationTimingFunctionDeceleration;
 CAMediaTimingFunction *timingFunction = [CAMediaTimingFunction mdc_functionWithType:materialCurve];
 
 CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.translation.x"];

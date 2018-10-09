@@ -1,37 +1,29 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCCollectionViewEditor.h"
 
 #import "MDCCollectionViewEditingDelegate.h"
 #import "MaterialShadowLayer.h"
 
-#import <tgmath.h>
+#include <tgmath.h>
 
 // Distance from center before we start fading the item.
 static const CGFloat kDismissalDistanceBeforeFading = 50.0f;
 
 // Minimum alpha for an item being dismissed.
 static const CGFloat kDismissalMinimumAlpha = 0.5f;
-
-// Final angle of the arc the item travels through during dismissal.
-static const CGFloat kDismissalArcAngle = (CGFloat)(M_PI / 6.0f);
-
-// The centroid for the item dismissal arc.
-static const CGFloat kDismissalArcYOffset = 400.0f;
 
 // Simple linear friction applied to swipe velocity.
 static const CGFloat kDismissalSwipeFriction = 0.05f;
@@ -106,6 +98,7 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
     SEL panSelector = @selector(handlePanGesture:);
     _panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:panSelector];
     _panGestureRecognizer.delegate = self;
+    _panGestureRecognizer.maximumNumberOfTouches = 1;
     [_collectionView addGestureRecognizer:_panGestureRecognizer];
   }
   return self;
@@ -124,7 +117,7 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
   [self setEditing:editing animated:NO];
 }
 
-- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+- (void)setEditing:(BOOL)editing animated:(__unused BOOL)animated {
   _editing = editing;
   _collectionView.allowsMultipleSelection = editing;
 
@@ -142,8 +135,8 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
 
     [CATransaction setCompletionBlock:^{
       // Notify delegate did begin editing.
-      if ([_delegate respondsToSelector:@selector(collectionViewDidBeginEditing:)]) {
-        [_delegate collectionViewDidBeginEditing:_collectionView];
+      if ([self.delegate respondsToSelector:@selector(collectionViewDidBeginEditing:)]) {
+        [self.delegate collectionViewDidBeginEditing:self.collectionView];
       }
     }];
 
@@ -155,8 +148,8 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
 
     [CATransaction setCompletionBlock:^{
       // Notify delegate did end editing.
-      if ([_delegate respondsToSelector:@selector(collectionViewDidEndEditing:)]) {
-        [_delegate collectionViewDidEndEditing:_collectionView];
+      if ([self.delegate respondsToSelector:@selector(collectionViewDidEndEditing:)]) {
+        [self.delegate collectionViewDidEndEditing:self.collectionView];
       }
     }];
   }
@@ -305,7 +298,7 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
   return screenshotImage;
 }
 
-- (void)applyLayerShadowing:(CALayer *)layer {
+- (void)applyLayerShadowing:(__unused CALayer *)layer {
   MDCShadowLayer *shadowLayer = (MDCShadowLayer *)_cellSnapshot.layer;
   shadowLayer.shadowMaskEnabled = NO;
   shadowLayer.elevation = 3;
@@ -335,9 +328,9 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
   return YES;
 }
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
+- (BOOL)gestureRecognizer:(__unused UIGestureRecognizer *)gestureRecognizer
     shouldRecognizeSimultaneouslyWithGestureRecognizer:
-        (UIGestureRecognizer *)otherGestureRecognizer {
+        (__unused UIGestureRecognizer *)otherGestureRecognizer {
   return YES;
 }
 
@@ -348,13 +341,20 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
           [otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]);
 }
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
-       shouldReceiveTouch:(UITouch *)touch {
-  if (self.isEditing) {
-    return YES;
-  } else {
-    return NO;
+- (BOOL)gestureRecognizer:(__unused UIGestureRecognizer *)gestureRecognizer
+       shouldReceiveTouch:(__unused UITouch *)touch {
+  BOOL allowsSwipeToDismissItem = NO;
+  if ([_delegate respondsToSelector:@selector(collectionViewAllowsSwipeToDismissItem:)]) {
+    allowsSwipeToDismissItem = [_delegate collectionViewAllowsSwipeToDismissItem:_collectionView];
   }
+
+  BOOL allowsSwipeToDismissSection = NO;
+  if ([_delegate respondsToSelector:@selector(collectionViewAllowsSwipeToDismissSection:)]) {
+    allowsSwipeToDismissSection =
+        [_delegate collectionViewAllowsSwipeToDismissSection:_collectionView];
+  }
+
+  return (self.isEditing || allowsSwipeToDismissItem || allowsSwipeToDismissSection);
 }
 
 #pragma mark - LongPress Gesture Handling
@@ -396,24 +396,24 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
         UICollectionViewLayoutAttributes *attributes = [_collectionView.collectionViewLayout
             layoutAttributesForItemAtIndexPath:currentIndexPath];
 
-        void (^completionBlock)(BOOL finished) = ^(BOOL finished) {
+        void (^completionBlock)(BOOL finished) = ^(__unused BOOL finished) {
           // Notify delegate dragging has finished.
-          if ([_delegate
+          if ([self.delegate
                   respondsToSelector:@selector(collectionView:didEndDraggingItemAtIndexPath:)]) {
-            [_delegate collectionView:_collectionView
-                didEndDraggingItemAtIndexPath:_reorderingCellIndexPath];
+            [self.delegate collectionView:self.collectionView
+                didEndDraggingItemAtIndexPath:self->_reorderingCellIndexPath];
           }
           [self restoreEditingItem];
 
           // Re-enable scrolling.
-          [_collectionView setScrollEnabled:YES];
+          [self.collectionView setScrollEnabled:YES];
         };
 
         [UIView animateWithDuration:kDismissalAnimationDuration
                               delay:0
                             options:UIViewAnimationOptionBeginFromCurrentState
                          animations:^{
-                           _cellSnapshot.frame = attributes.frame;
+                           self->_cellSnapshot.frame = attributes.frame;
                          }
                          completion:completionBlock];
       }
@@ -468,9 +468,8 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
         _reorderingCellIndexPath = newIndexPath;
 
         // Notify delegate that item will move.
-        if ([_delegate respondsToSelector:@selector(collectionView:
-                                              willMoveItemAtIndexPath:
-                                                          toIndexPath:)]) {
+        if ([_delegate respondsToSelector:@selector
+                       (collectionView:willMoveItemAtIndexPath:toIndexPath:)]) {
           [_delegate collectionView:_collectionView
               willMoveItemAtIndexPath:previousIndexPath
                           toIndexPath:newIndexPath];
@@ -555,8 +554,8 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
           if ([_delegate collectionView:_collectionView
                   canSwipeToDismissItemAtIndexPath:_dismissingCellIndexPath]) {
             // Notify delegate.
-            if ([_delegate respondsToSelector:@selector(collectionView:
-                                                  willBeginSwipeToDismissItemAtIndexPath:)]) {
+            if ([_delegate respondsToSelector:@selector
+                           (collectionView:willBeginSwipeToDismissItemAtIndexPath:)]) {
               [_delegate collectionView:_collectionView
                   willBeginSwipeToDismissItemAtIndexPath:_dismissingCellIndexPath];
             }
@@ -627,30 +626,15 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
 
 - (CGAffineTransform)transformItemDismissalToTranslationX:(CGFloat)translationX {
   // Returns a transform that can be applied to the snapshot during dismissal. The
-  // translation will pan along an arc facing downwards.
-  CGFloat panDistance = (CGFloat)fabs(translationX) - kDismissalDistanceBeforeFading;
-  CGFloat panRatio = panDistance / CGRectGetWidth(_collectionView.bounds);
-  CGFloat arcAngle = (translationX > 0 ? kDismissalArcAngle : -kDismissalArcAngle);
-
-  CGAffineTransform initialTranslation = CGAffineTransformMakeTranslation(0, -kDismissalArcYOffset);
-  CGAffineTransform rotation = CGAffineTransformMakeRotation(panRatio * arcAngle);
-
-  // Modify the X translation to take account of the rotation angle.
-  // This makes the item continue to track the finger as it follows the arc.
-  CGFloat correctedXTranslation = (CGFloat)(translationX * (1 - cos(kDismissalArcAngle) / 2));
-  if (translationX > 0) {
-    correctedXTranslation = MAX(kDismissalDistanceBeforeFading, correctedXTranslation);
+  // translation will pan along the direction of the swipe.
+  CGFloat finalXTranslation = translationX;
+  if (finalXTranslation > 0) {
+    finalXTranslation = MAX(kDismissalDistanceBeforeFading, finalXTranslation);
   } else {
-    correctedXTranslation = MIN(-kDismissalDistanceBeforeFading, correctedXTranslation);
+    finalXTranslation = MIN(-kDismissalDistanceBeforeFading, finalXTranslation);
   }
 
-  // Reverse @c initialTranslation and add @c translation.x to ensure that
-  // we pan along with the arc.
-  CGAffineTransform reverseTranslation =
-      CGAffineTransformMakeTranslation(correctedXTranslation, kDismissalArcYOffset);
-
-  CGAffineTransform arcTransform = CGAffineTransformConcat(initialTranslation, rotation);
-  return CGAffineTransformConcat(arcTransform, reverseTranslation);
+  return CGAffineTransformMakeTranslation(finalXTranslation, 0);
 }
 
 - (void)animateFinalItemDismissalToTranslationX:(CGFloat)translationX {
@@ -678,17 +662,21 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
       delay:0
       options:UIViewAnimationOptionCurveEaseOut
       animations:^{
-        _cellSnapshot.layer.transform = CATransform3DMakeAffineTransform(transform);
-        _cellSnapshot.alpha = 0;
+        self->_cellSnapshot.layer.transform = CATransform3DMakeAffineTransform(transform);
+        self->_cellSnapshot.alpha = 0;
       }
-      completion:^(BOOL finished) {
+      completion:^(__unused BOOL finished) {
         [self restoreEditingItem];
       }];
 }
 
 - (void)restorePanningItemIfNecessaryWithMomentumX:(CGFloat)momentumX {
   // If we never had a snapshot, or the snapshot never moved, then skip straight to cleanup.
-  if (_cellSnapshot == nil || CGAffineTransformIsIdentity(_cellSnapshot.transform)) {
+  if (_cellSnapshot == nil) {
+    [self cleanupDismissingInformation];
+    return;
+  }
+  if (CGAffineTransformIsIdentity(_cellSnapshot.transform)) {
     [self restoreEditingItem];
     return;
   }
@@ -719,7 +707,7 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
   [_cellSnapshot.layer addAnimation:allAnimations forKey:nil];
 }
 
-- (void)animationDidStop:(CAAnimation *)animation finished:(BOOL)didFinish {
+- (void)animationDidStop:(__unused CAAnimation *)animation finished:(__unused BOOL)didFinish {
   [self cancelPanningItem];
 }
 
@@ -744,18 +732,26 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
 }
 
 - (void)restoreEditingItem {
+  [self cleanupDismissingInformation];
+  [_collectionView.collectionViewLayout invalidateLayout];
+}
+
+- (void)cleanupDismissingInformation {
   // Remove snapshot and reset item.
   [_cellSnapshot removeFromSuperview];
   _cellSnapshot = nil;
   _dismissingSection = NSNotFound;
   _dismissingCellIndexPath = nil;
   _reorderingCellIndexPath = nil;
-  [_collectionView.collectionViewLayout invalidateLayout];
 }
 
 // The distance an item must be panned before it is dismissed. Currently half of the bounds width.
 - (CGFloat)distanceThresholdForDismissal {
-  return _collectionView.bounds.size.width / 2;
+  if (_cellSnapshot) {
+    return CGRectGetWidth(_cellSnapshot.bounds) / 2;
+  } else {
+    return CGRectGetWidth(_collectionView.bounds) / 2;
+  }
 }
 
 - (CGFloat)dismissalAlphaForTranslationX:(CGFloat)translationX {
@@ -783,7 +779,7 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
   }
 }
 
-- (void)autoscroll:(CADisplayLink *)sender {
+- (void)autoscroll:(__unused CADisplayLink *)sender {
   // Scrolls at each tick of CADisplayLink by setting scroll contentOffset. Animation is performed
   // within UIView animation block rather than directly calling -setContentOffset:animated: method
   // in order to prevent jerkiness in scrolling.
@@ -793,9 +789,8 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
 
   // Quit early if scrolling past collection view bounds.
   if ((!isPanningDown && contentYOffset <= 0) ||
-      (isPanningDown &&
-       contentYOffset >=
-           self.collectionView.contentSize.height - CGRectGetHeight(self.collectionView.bounds))) {
+      (isPanningDown && contentYOffset >= self.collectionView.contentSize.height -
+                                              CGRectGetHeight(self.collectionView.bounds))) {
     [self stopAutoscroll];
     return;
   }

@@ -9,7 +9,8 @@ format your code whenever you write to disk.
 
 ### Installing clang-format
 
-You can install clang-format via [Brew](http://brew.sh/) by running `scripts/install_clang_format`.
+You can install clang-format via [Brew](http://brew.sh/) by running
+`scripts/install/install_clang_format`.
 
 ### Installing the Xcode plugin
 

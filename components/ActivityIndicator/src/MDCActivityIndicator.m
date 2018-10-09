@@ -1,51 +1,54 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCActivityIndicator.h"
 
-#import "MaterialRTL.h"
-#import "UIApplication+AppExtensions.h"
+#import <QuartzCore/QuartzCore.h>
+#import <MDFInternationalization/MDFInternationalization.h>
+#import <MotionAnimator/MotionAnimator.h>
 
-static const NSInteger kMDCActivityIndicatorTotalDetentCount = 5;
-static const NSTimeInterval kMDCActivityIndicatorAnimateOutDuration = 0.1f;
-static const NSTimeInterval kMDCActivityIndicatorPointCycleDuration = 4.0f / 3.0f;
-static const NSTimeInterval kMDCActivityIndicatorPointCycleMinimumVariableDuration =
-    kMDCActivityIndicatorPointCycleDuration / 8;
+#import "MaterialApplication.h"
+#import "MaterialPalettes.h"
+#import "private/MDCActivityIndicatorMotionSpec.h"
+#import "private/MDCActivityIndicator+Private.h"
+#import "private/MaterialActivityIndicatorStrings.h"
+#import "private/MaterialActivityIndicatorStrings_table.h"
+
+static const NSInteger kTotalDetentCount = 5;
+static const NSTimeInterval kAnimateOutDuration = 0.1f;
 static const CGFloat kCycleRotation = 3.0f / 2.0f;
 static const CGFloat kOuterRotationIncrement =
-    (1.0f / kMDCActivityIndicatorTotalDetentCount) * (CGFloat)M_PI;
+    (1.0f / kTotalDetentCount) * (CGFloat)M_PI;
 static const CGFloat kSpinnerRadius = 12.f;
 static const CGFloat kStrokeLength = 0.75f;
+
+#ifndef CGFLOAT_EPSILON
+#if CGFLOAT_IS_DOUBLE
+#define CGFLOAT_EPSILON DBL_EPSILON
+#else
+#define CGFLOAT_EPSILON FLT_EPSILON
+#endif
+#endif
+
+// The Bundle for string resources.
+static NSString *const kBundle = @"MaterialActivityIndicator.bundle";
 
 /**
  Total rotation (outer rotation + stroke rotation) per _cycleCount. One turn is 2.0f.
  */
 static const CGFloat kSingleCycleRotation =
-    2 * kStrokeLength + kCycleRotation + 1.0f / kMDCActivityIndicatorTotalDetentCount;
-
-/*
- States for the internal state machine. The states represent the last animation completed.
- It provides information required to select the next animation.
- */
-typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
-  MDCActivityIndicatorStateIndeterminate,
-  MDCActivityIndicatorStateTransitionToDeterminate,
-  MDCActivityIndicatorStateDeterminate,
-  MDCActivityIndicatorStateTransitionToIndeterminate,
-};
+    2 * kStrokeLength + kCycleRotation + 1.0f / kTotalDetentCount;
 
 @interface MDCActivityIndicator ()
 
@@ -56,10 +59,11 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
 @property(nonatomic, assign, readonly) CGFloat minStrokeDifference;
 
 /**
- The current color count for the spinner. Subclasses can change this value to start the spinner at
- a different color.
+ The index of the current stroke color in the @c cycleColors array.
+
+ @note Subclasses can change this value to start the spinner at a different color.
  */
-@property(nonatomic, assign) NSUInteger currentColorCount;
+@property(nonatomic, assign) NSUInteger cycleColorsIndex;
 
 /**
  The current cycle count.
@@ -89,6 +93,12 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
  */
 @property(nonatomic, strong, readonly, nullable) CAShapeLayer *trackLayer;
 
+/**
+ The currently queued stop transition, which will be run as soon as the current animation cycle
+ completes. At all other times should be nil.
+ */
+@property(nonatomic, strong, nullable) MDCActivityIndicatorTransition *stopTransition;
+
 @end
 
 @implementation MDCActivityIndicator {
@@ -99,6 +109,8 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
   BOOL _cycleInProgress;
   CGFloat _currentProgress;
   CGFloat _lastProgress;
+
+  MDMMotionAnimator *_animator;
 }
 
 #pragma mark - Init
@@ -128,12 +140,12 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
 
   [self applyPropertiesWithoutAnimation:^{
     // Resize and recenter rotation layer.
-    _outerRotationLayer.bounds = self.bounds;
-    _outerRotationLayer.position =
+    self.outerRotationLayer.bounds = self.bounds;
+    self.outerRotationLayer.position =
         CGPointMake(self.frame.size.width / 2, self.frame.size.height / 2);
 
-    _strokeLayer.bounds = _outerRotationLayer.bounds;
-    _strokeLayer.position = _outerRotationLayer.position;
+    self.strokeLayer.bounds = self.outerRotationLayer.bounds;
+    self.strokeLayer.position = self.outerRotationLayer.position;
 
     [self updateStrokePath];
   }];
@@ -143,9 +155,18 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
   // Register notifications for foreground and background if needed.
   [self registerForegroundAndBackgroundNotificationObserversIfNeeded];
 
+  // UISemanticContentAttribute was added in iOS SDK 9.0 but is available on devices running earlier
+  // version of iOS. We ignore the partial-availability warning that gets thrown on our use of this
+  // symbol.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpartial-availability"
   // The activity indicator reflects the passage of time (a spatial semantic context) and so
   // will not be mirrored in RTL languages.
-  self.mdc_semanticContentAttribute = UISemanticContentAttributeSpatial;
+  self.mdf_semanticContentAttribute = UISemanticContentAttributeSpatial;
+#pragma clang diagnostic pop
+
+  _animator = [[MDMMotionAnimator alloc] init];
+  _animator.additive = NO;
 
   _cycleStartIndex = 0;
   _indicatorMode = MDCActivityIndicatorModeIndeterminate;
@@ -155,8 +176,9 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
   _strokeWidth = 2.0f;
 
   // Colors.
-  _cycleColors = [MDCActivityIndicator defaultColors];
-  _currentColorCount = 0;
+  _cycleColorsIndex = 0;
+  _cycleColors = [MDCActivityIndicator defaultCycleColors];
+  self.accessibilityLabel = [self defaultAccessibilityLabel];
 
   // Track layer.
   _trackLayer = [CAShapeLayer layer];
@@ -195,10 +217,18 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
   return CGSizeMake(edge, edge);
 }
 
+- (CGSize)sizeThatFits:(__unused CGSize)size {
+  CGFloat edge = 2 * _radius + _strokeWidth;
+  return CGSizeMake(edge, edge);
+}
+
 #pragma mark - Public methods
 
 - (void)startAnimating {
   if (_animatingOut) {
+    if ([_delegate respondsToSelector:@selector(activityIndicatorAnimationDidFinish:)]) {
+      [_delegate activityIndicatorAnimationDidFinish:self];
+    }
     [self removeAnimations];
   }
 
@@ -208,9 +238,73 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
 
   _animating = YES;
 
-  if (self.window && !_backgrounded) {
-    [self actuallyStartAnimating];
+  if (!self.window || _backgrounded) {
+    return;
   }
+  
+  [self actuallyStartAnimating];
+}
+
+- (void)startAnimatingWithTransition:(nonnull MDCActivityIndicatorTransition *)startTransition
+                     cycleStartIndex:(NSInteger)cycleStartIndex {
+  if (_animating) {
+    return;
+  }
+
+  BOOL indeterminate = self.indicatorMode == MDCActivityIndicatorModeIndeterminate;
+  NSAssert(indeterminate, @"startAnimatingWithStartAnimation requires an indeterminate mode.");
+  if (!indeterminate) {
+    return;
+  }
+
+  if (_animatingOut) {
+    if ([_delegate respondsToSelector:@selector(activityIndicatorAnimationDidFinish:)]) {
+      [_delegate activityIndicatorAnimationDidFinish:self];
+    }
+    [self removeAnimations];
+  }
+
+  _animating = YES;
+
+  if (!self.window || _backgrounded) {
+    return;
+  }
+
+  _cycleStartIndex = cycleStartIndex;
+  _cycleCount = _cycleStartIndex;
+
+  _animationInProgress = YES;
+
+  [CATransaction begin];
+  {
+    [CATransaction setCompletionBlock:^{
+      self->_animationInProgress = NO;
+
+      [self actuallyStartAnimating];
+
+      self.cycleColorsIndex = self.cycleColors.count > 0 ? cycleStartIndex % self.cycleColors.count : 0;
+      [self applyPropertiesWithoutAnimation:^{
+        [self updateStrokeColor];
+      }];
+
+      if (startTransition.completion) {
+        startTransition.completion();
+      }
+    }];
+    [CATransaction setAnimationDuration:startTransition.duration];
+    [CATransaction setDisableActions:YES];
+
+    CGFloat outerRotation = kOuterRotationIncrement * _cycleStartIndex;
+    CGFloat innerRotation = _cycleStartIndex * (CGFloat)M_PI;
+    CGFloat strokeStart =
+        (CGFloat)fmod(innerRotation + outerRotation, 2 * M_PI) / (CGFloat)(2 * M_PI);
+
+    CGFloat strokeEnd = _minStrokeDifference + strokeStart;
+    strokeEnd = strokeEnd > 1 ? strokeEnd - 1 : strokeEnd;
+
+    startTransition.animation(strokeStart, strokeEnd);
+  }
+  [CATransaction commit];
 }
 
 - (void)stopAnimating {
@@ -221,6 +315,23 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
   _animating = NO;
 
   [self animateOut];
+}
+
+- (void)stopAnimatingWithTransition:(MDCActivityIndicatorTransition *)stopTransition {
+  if (!_animating) {
+    return;
+  }
+
+  BOOL indeterminate = self.indicatorMode == MDCActivityIndicatorModeIndeterminate;
+  NSAssert(indeterminate, @"stopAnimationWithTransition requires an indeterminate mode.");
+  if (!indeterminate) {
+    return;
+  }
+
+  _animating = NO;
+  _animatingOut = YES;
+
+  self.stopTransition = stopTransition;
 }
 
 - (void)stopAnimatingImmediately {
@@ -238,7 +349,7 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
 }
 
 - (void)resetStrokeColor {
-  _currentColorCount = 0;
+  _cycleColorsIndex = 0;
 
   [self updateStrokeColor];
 }
@@ -262,27 +373,33 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
         [self addTransitionToIndeterminateCycle];
         break;
     }
+  } else if (!_animating) {
+    if ([_delegate respondsToSelector:@selector(activityIndicatorModeTransitionDidFinish:)]) {
+      [_delegate activityIndicatorModeTransitionDidFinish:self];
+    }
   }
 }
 
-- (void)setIndicatorMode:(MDCActivityIndicatorMode)mode animated:(BOOL)animated {
+- (void)setIndicatorMode:(MDCActivityIndicatorMode)mode animated:(__unused BOOL)animated {
   [self setIndicatorMode:mode];
 }
 
 - (void)setProgress:(float)progress {
+  [self setProgress:progress animated:YES];
+}
+
+- (void)setProgress:(float)progress animated:(BOOL)animated {
   _progress = MAX(0.0f, MIN(progress, 1.0f));
-  if (_progress == _currentProgress) {
+  if (_indicatorMode == MDCActivityIndicatorModeIndeterminate || _progress == _currentProgress) {
     return;
   }
-  if (_animating && !_animationInProgress) {
-    switch (_indicatorMode) {
-      case MDCActivityIndicatorModeDeterminate:
-        // Currently animating the determinate mode but no animation queued.
-        [self addProgressAnimation];
-        break;
-      case MDCActivityIndicatorModeIndeterminate:
-        break;
+  if (animated) {
+    if (_animating && !_animationInProgress) {
+      // Currently animating the determinate mode but no animation queued.
+      [self addProgressAnimation];
     }
+  } else {
+    [self setDeterminateProgressWithoutAnimation];
   }
 }
 
@@ -353,10 +470,10 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
   _cycleCount = _cycleStartIndex;
 
   [self applyPropertiesWithoutAnimation:^{
-    _strokeLayer.strokeStart = 0.0f;
-    _strokeLayer.strokeEnd = 0.001f;
-    _strokeLayer.lineWidth = _strokeWidth;
-    _trackLayer.lineWidth = _strokeWidth;
+    self.strokeLayer.strokeStart = 0.0f;
+    self.strokeLayer.strokeEnd = 0.001f;
+    self.strokeLayer.lineWidth = self.strokeWidth;
+    self.trackLayer.lineWidth = self.strokeWidth;
 
     [self resetStrokeColor];
     [self updateStrokePath];
@@ -379,9 +496,62 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
 
   [self removeAnimations];
   [self applyPropertiesWithoutAnimation:^{
-    _strokeLayer.strokeStart = 0.0f;
-    _strokeLayer.strokeEnd = 0.0f;
+    self.strokeLayer.strokeStart = 0.0f;
+    self.strokeLayer.strokeEnd = 0.0f;
   }];
+}
+
+- (void)setCycleColors:(NSArray<UIColor *> *)cycleColors {
+  if (cycleColors.count) {
+    _cycleColors = [cycleColors copy];
+  } else {
+    _cycleColors = [MDCActivityIndicator defaultCycleColors];
+  }
+
+  if (self.cycleColors.count) {
+    [self setStrokeColor:self.cycleColors[0]];
+  }
+}
+
+- (void)addStopAnimation {
+  MDCActivityIndicatorTransition *stopTransition = self.stopTransition;
+
+  CGFloat innerRotation =
+      [[_strokeLayer valueForKeyPath:MDMKeyPathRotation] floatValue];
+  CGFloat outerRotation =
+      [[_outerRotationLayer valueForKeyPath:MDMKeyPathRotation] floatValue];
+  CGFloat totalRotation =
+      (CGFloat)fmod(innerRotation + outerRotation, 2 * M_PI) / (CGFloat)(2 * M_PI);
+
+  CGFloat strokeStart = _strokeLayer.strokeStart + totalRotation;
+  strokeStart = strokeStart > 1 ? strokeStart - 1 : strokeStart;
+
+  CGFloat strokeEnd = _strokeLayer.strokeEnd + totalRotation;
+  strokeEnd = strokeEnd > 1 ? strokeEnd - 1 : strokeEnd;
+
+  [self applyPropertiesWithoutAnimation:^{
+    self.strokeLayer.strokeStart = 0.0f;
+    self.strokeLayer.strokeEnd = 0.0f;
+  }];
+
+  [CATransaction begin];
+  {
+    [CATransaction setCompletionBlock:^{
+      if (stopTransition.completion) {
+        stopTransition.completion();
+      }
+      if (stopTransition == self.stopTransition) {
+        if ([self.delegate respondsToSelector:@selector(activityIndicatorAnimationDidFinish:)]) {
+          [self.delegate activityIndicatorAnimationDidFinish:self];
+        }
+        [self removeAnimations];
+      }
+    }];
+    [CATransaction setAnimationDuration:stopTransition.duration];
+    [CATransaction setDisableActions:YES];
+    stopTransition.animation(strokeStart, strokeEnd);
+  }
+  [CATransaction commit];
 }
 
 - (void)updateStrokePath {
@@ -398,10 +568,11 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
 }
 
 - (void)updateStrokeColor {
-  if (_cycleColors.count > 0) {
-    [self setStrokeColor:_cycleColors[_currentColorCount]];
+  if (self.cycleColors.count > 0 && self.cycleColors.count > self.cycleColorsIndex) {
+    [self setStrokeColor:self.cycleColors[self.cycleColorsIndex]];
   } else {
-    [self setStrokeColor:[MDCActivityIndicator defaultColors][0]];
+    NSAssert(NO, @"cycleColorsIndex is outside the bounds of cycleColors.");
+    [self setStrokeColor:[[MDCActivityIndicator defaultCycleColors] firstObject]];
   }
 }
 
@@ -411,62 +582,43 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
   }
 
   [CATransaction begin];
-  {
-    [CATransaction setCompletionBlock:^{
-      [self strokeRotationCycleFinishedFromState:MDCActivityIndicatorStateIndeterminate];
-    }];
+  [CATransaction setCompletionBlock:^{
+    [self strokeRotationCycleFinishedFromState:MDCActivityIndicatorStateIndeterminate];
+  }];
 
-    // Outer 5-point star detent rotation.
-    CABasicAnimation *outerRotationAnimation =
-        [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-    outerRotationAnimation.duration = kMDCActivityIndicatorPointCycleDuration;
-    outerRotationAnimation.fromValue = @(kOuterRotationIncrement * _cycleCount);
-    outerRotationAnimation.toValue = @(kOuterRotationIncrement * (_cycleCount + 1));
-    outerRotationAnimation.fillMode = kCAFillModeForwards;
-    outerRotationAnimation.removedOnCompletion = NO;
-    [_outerRotationLayer addAnimation:outerRotationAnimation forKey:@"transform.rotation.z"];
-
-    // Stroke rotation.
-    CGFloat startRotation = _cycleCount * (CGFloat)M_PI;
-    CGFloat endRotation = startRotation + kCycleRotation * (CGFloat)M_PI;
-
-    CABasicAnimation *strokeRotationAnimation =
-        [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-    strokeRotationAnimation.duration = kMDCActivityIndicatorPointCycleDuration;
-    strokeRotationAnimation.fromValue = @(startRotation);
-    strokeRotationAnimation.toValue = @(endRotation);
-    strokeRotationAnimation.fillMode = kCAFillModeForwards;
-    strokeRotationAnimation.removedOnCompletion = NO;
-    [_strokeLayer addAnimation:strokeRotationAnimation forKey:@"transform.rotation.z"];
-
-    // Stroke start.
-    CABasicAnimation *strokeStartPathAnimation =
-        [CABasicAnimation animationWithKeyPath:@"strokeStart"];
-    strokeStartPathAnimation.duration = kMDCActivityIndicatorPointCycleDuration / 2;
-    // It is always critical to convertTime:fromLayer: for animations, since changes to layer.speed
-    // on this layer or parent layers will alter the offset of beginTime.
-    CFTimeInterval currentTime = [_strokeLayer convertTime:CACurrentMediaTime() fromLayer:nil];
-    strokeStartPathAnimation.beginTime = currentTime + kMDCActivityIndicatorPointCycleDuration / 2;
-    strokeStartPathAnimation.fromValue = @(0.0f);
-    strokeStartPathAnimation.toValue = @(kStrokeLength);
-    strokeStartPathAnimation.timingFunction = [self materialEaseInOut];
-    strokeStartPathAnimation.fillMode = kCAFillModeBoth;
-    strokeStartPathAnimation.removedOnCompletion = NO;
-    [_strokeLayer addAnimation:strokeStartPathAnimation forKey:@"strokeStart"];
-
-    // Stroke end.
-    CABasicAnimation *strokeEndPathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    strokeEndPathAnimation.duration =
-        kMDCActivityIndicatorPointCycleDuration * ABS(_lastProgress - _currentProgress);
-    // Ensure the stroke never completely disappears on start by animating from non-zero start and
-    // to a value slightly larger than the strokeStart's final value.
-    strokeEndPathAnimation.fromValue = @(_minStrokeDifference);
-    strokeEndPathAnimation.toValue = @(kStrokeLength + _minStrokeDifference);
-    strokeEndPathAnimation.timingFunction = [self materialEaseInOut];
-    strokeEndPathAnimation.fillMode = kCAFillModeBoth;
-    strokeEndPathAnimation.removedOnCompletion = NO;
-    [_strokeLayer addAnimation:strokeEndPathAnimation forKey:@"strokeEnd"];
+  MDCActivityIndicatorMotionSpecIndeterminate timing =
+      MDCActivityIndicatorMotionSpec.loopIndeterminate;
+  // These values may be equal if we've never received a progress. In this case we don't want our
+  // duration to become zero.
+  if (fabs(_lastProgress - _currentProgress) > CGFLOAT_EPSILON) {
+    timing.strokeEnd.duration *= ABS(_lastProgress - _currentProgress);
   }
+
+  [_animator animateWithTiming:timing.outerRotation
+                       toLayer:_outerRotationLayer
+                    withValues:@[@(kOuterRotationIncrement * _cycleCount),
+                                 @(kOuterRotationIncrement * (_cycleCount + 1))]
+                       keyPath:MDMKeyPathRotation];
+
+  CGFloat startRotation = _cycleCount * (CGFloat)M_PI;
+  CGFloat endRotation = startRotation + kCycleRotation * (CGFloat)M_PI;
+  [_animator animateWithTiming:timing.innerRotation
+                       toLayer:_strokeLayer
+                    withValues:@[@(startRotation), @(endRotation)]
+                       keyPath:MDMKeyPathRotation];
+
+  [_animator animateWithTiming:timing.strokeStart
+                       toLayer:_strokeLayer
+                    withValues:@[@0, @(kStrokeLength)]
+                       keyPath:MDMKeyPathStrokeStart];
+
+  // Ensure the stroke never completely disappears on start by animating from non-zero start and
+  // to a value slightly larger than the strokeStart's final value.
+  [_animator animateWithTiming:timing.strokeEnd
+                       toLayer:_strokeLayer
+                    withValues:@[@(_minStrokeDifference), @(kStrokeLength + _minStrokeDifference)]
+                       keyPath:MDMKeyPathStrokeEnd];
+
   [CATransaction commit];
 
   _animationInProgress = YES;
@@ -480,7 +632,7 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
   NSInteger nearestCycle = 0;
   CGFloat nearestDistance = CGFLOAT_MAX;
   const CGFloat normalizedProgress = MAX(_lastProgress - _minStrokeDifference, 0.0f);
-  for (NSInteger cycle = 0; cycle < kMDCActivityIndicatorTotalDetentCount; cycle++) {
+  for (NSInteger cycle = 0; cycle < kTotalDetentCount; cycle++) {
     const CGFloat currentRotation = [self normalizedRotationForCycle:cycle];
     if (currentRotation >= normalizedProgress) {
       if (nearestDistance >= (currentRotation - normalizedProgress)) {
@@ -494,6 +646,9 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
     // Special case for 0% progress.
     _cycleCount = nearestCycle;
     [self strokeRotationCycleFinishedFromState:MDCActivityIndicatorStateTransitionToIndeterminate];
+    if ([_delegate respondsToSelector:@selector(activityIndicatorModeTransitionDidFinish:)]) {
+      [_delegate activityIndicatorModeTransitionDidFinish:self];
+    }
     return;
   }
 
@@ -503,48 +658,48 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
   if (targetRotation <= 0.001f) {
     targetRotation = 1.0f;
   }
+  CGFloat pointCycleDuration = (CGFloat)MDCActivityIndicatorMotionSpec.pointCycleDuration;
+  CGFloat pointCycleMinimumVariableDuration =
+      (CGFloat)MDCActivityIndicatorMotionSpec.pointCycleMinimumVariableDuration;
   CGFloat normalizedDuration = 2 * (targetRotation + _currentProgress) / kSingleCycleRotation *
-                               (CGFloat)kMDCActivityIndicatorPointCycleDuration;
+                               pointCycleDuration;
   CGFloat strokeEndTravelDistance = targetRotation - _currentProgress + _minStrokeDifference;
   CGFloat totalDistance = targetRotation + strokeEndTravelDistance;
   CGFloat strokeStartDuration =
-      MAX(normalizedDuration * targetRotation / totalDistance,
-          (CGFloat)kMDCActivityIndicatorPointCycleMinimumVariableDuration);
+      MAX(normalizedDuration * targetRotation / totalDistance, pointCycleMinimumVariableDuration);
   CGFloat strokeEndDuration = MAX(normalizedDuration * strokeEndTravelDistance / totalDistance,
-                                  (CGFloat)kMDCActivityIndicatorPointCycleMinimumVariableDuration);
+                                  pointCycleMinimumVariableDuration);
 
   [CATransaction begin];
   {
     [CATransaction setCompletionBlock:^{
       [self
           strokeRotationCycleFinishedFromState:MDCActivityIndicatorStateTransitionToIndeterminate];
+      if ([self.delegate respondsToSelector:@selector(activityIndicatorModeTransitionDidFinish:)]) {
+        [self.delegate activityIndicatorModeTransitionDidFinish:self];
+      }
     }];
+    [CATransaction setDisableActions:YES];
 
-    // Stroke start.
-    CABasicAnimation *strokeStartPathAnimation =
-        [CABasicAnimation animationWithKeyPath:@"strokeStart"];
-    strokeStartPathAnimation.duration = strokeStartDuration;
-    CFTimeInterval currentTime = [_strokeLayer convertTime:CACurrentMediaTime() fromLayer:nil];
-    strokeStartPathAnimation.beginTime = currentTime + strokeEndDuration;
-    strokeStartPathAnimation.fromValue = @(0.0f);
-    strokeStartPathAnimation.toValue = @(targetRotation);
-    strokeStartPathAnimation.timingFunction = [self materialEaseInOut];
-    ;
-    strokeStartPathAnimation.fillMode = kCAFillModeBoth;
-    strokeStartPathAnimation.removedOnCompletion = NO;
-    [_strokeLayer addAnimation:strokeStartPathAnimation forKey:@"strokeStart"];
+    MDCActivityIndicatorMotionSpecTransitionToIndeterminate timing =
+        MDCActivityIndicatorMotionSpec.willChangeToIndeterminate;
 
-    // Stroke end.
-    CABasicAnimation *strokeEndPathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    strokeEndPathAnimation.duration = strokeEndDuration;
-    // Ensure the stroke never completely disappears on start by animating from non-zero start and
-    // to a value slightly larger than the strokeStart's final value.
-    strokeEndPathAnimation.fromValue = @(_currentProgress);
-    strokeEndPathAnimation.toValue = @(targetRotation + _minStrokeDifference);
-    strokeEndPathAnimation.timingFunction = [self materialEaseInOut];
-    strokeEndPathAnimation.fillMode = kCAFillModeBoth;
-    strokeEndPathAnimation.removedOnCompletion = NO;
-    [_strokeLayer addAnimation:strokeEndPathAnimation forKey:@"strokeEnd"];
+    _outerRotationLayer.transform = CATransform3DIdentity;
+    _strokeLayer.transform = CATransform3DIdentity;
+
+    timing.strokeStart.duration = strokeStartDuration;
+    timing.strokeStart.delay = strokeEndDuration;
+    [_animator animateWithTiming:timing.strokeStart
+                         toLayer:_strokeLayer
+                      withValues:@[@0, @(targetRotation)]
+                         keyPath:MDMKeyPathStrokeStart];
+
+    timing.strokeEnd.duration = strokeEndDuration;
+    timing.strokeEnd.delay = 0;
+    [_animator animateWithTiming:timing.strokeEnd
+                         toLayer:_strokeLayer
+                      withValues:@[@(_currentProgress), @(targetRotation + _minStrokeDifference)]
+                         keyPath:MDMKeyPathStrokeEnd];
   }
   [CATransaction commit];
 
@@ -563,86 +718,59 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
     _currentProgress = 0.0f;
     _lastProgress = _currentProgress;
     [self strokeRotationCycleFinishedFromState:MDCActivityIndicatorStateTransitionToDeterminate];
+    if ([_delegate respondsToSelector:@selector(activityIndicatorModeTransitionDidFinish:)]) {
+      [_delegate activityIndicatorModeTransitionDidFinish:self];
+    }
   } else {
     _currentProgress = MAX(_progress, _minStrokeDifference);
 
     CGFloat rotationDelta = 1.0f - [self normalizedRotationForCycle:_cycleCount];
 
     // Change the duration relative to the distance in order to keep same relative speed.
+    CGFloat pointCycleDuration = (CGFloat)MDCActivityIndicatorMotionSpec.pointCycleDuration;
+    CGFloat pointCycleMinimumVariableDuration =
+        (CGFloat)MDCActivityIndicatorMotionSpec.pointCycleMinimumVariableDuration;
     CGFloat duration = 2.0f * (rotationDelta + _currentProgress) / kSingleCycleRotation *
-                       (CGFloat)kMDCActivityIndicatorPointCycleDuration;
+                       pointCycleDuration;
+    duration = MAX(duration, pointCycleMinimumVariableDuration);
 
-    duration = MAX(duration, (CGFloat)kMDCActivityIndicatorPointCycleMinimumVariableDuration);
     [CATransaction begin];
     {
       [CATransaction setCompletionBlock:^{
         [self
             strokeRotationCycleFinishedFromState:MDCActivityIndicatorStateTransitionToDeterminate];
+        if ([self.delegate respondsToSelector:@selector(activityIndicatorModeTransitionDidFinish:)]) {
+          [self.delegate activityIndicatorModeTransitionDidFinish:self];
+        }
       }];
+      [CATransaction setDisableActions:YES];
+      [CATransaction mdm_setTimeScaleFactor:@(duration)];
 
-      // Outer 5-point star detent rotation. Required for passing from transitionToIndeterminate to
-      // transitionToDeterminate.
-      CABasicAnimation *outerRotationAnimation =
-          [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-      outerRotationAnimation.duration = duration;
-      outerRotationAnimation.fromValue = @(kOuterRotationIncrement * _cycleCount);
-      outerRotationAnimation.toValue = @(kOuterRotationIncrement * _cycleCount);
-      outerRotationAnimation.fillMode = kCAFillModeForwards;
-      outerRotationAnimation.removedOnCompletion = NO;
-      [_outerRotationLayer addAnimation:outerRotationAnimation forKey:@"transform.rotation.z"];
+      MDCActivityIndicatorMotionSpecTransitionToDeterminate spec =
+          MDCActivityIndicatorMotionSpec.willChangeToDeterminate;
 
-      // Stroke rotation.
+      _outerRotationLayer.transform =
+          CATransform3DMakeRotation(kOuterRotationIncrement * _cycleCount, 0, 0, 1);
+
       CGFloat startRotation = _cycleCount * (CGFloat)M_PI;
       CGFloat endRotation = startRotation + rotationDelta * 2.0f * (CGFloat)M_PI;
+      [_animator animateWithTiming:spec.innerRotation
+                           toLayer:_strokeLayer
+                        withValues:@[@(startRotation), @(endRotation)]
+                           keyPath:MDMKeyPathRotation];
 
-      CABasicAnimation *strokeRotationAnimation =
-          [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-      strokeRotationAnimation.duration = duration;
-      strokeRotationAnimation.fromValue = @(startRotation);
-      strokeRotationAnimation.toValue = @(endRotation);
-      strokeRotationAnimation.fillMode = kCAFillModeForwards;
-      strokeRotationAnimation.removedOnCompletion = NO;
-      [_strokeLayer addAnimation:strokeRotationAnimation forKey:@"transform.rotation.z"];
+      _strokeLayer.strokeStart = 0;
 
-      // Stroke start.
-      CABasicAnimation *strokeStartPathAnimation =
-          [CABasicAnimation animationWithKeyPath:@"strokeStart"];
-      strokeStartPathAnimation.duration = duration;
-      // It is always critical to convertTime:fromLayer: for animations, since changes to
-      // layer.speed on this layer or parent layers will alter the offset of beginTime.
-      CFTimeInterval currentTime = [_strokeLayer convertTime:CACurrentMediaTime() fromLayer:nil];
-      strokeStartPathAnimation.beginTime = currentTime;
-      strokeStartPathAnimation.fromValue = @(0.0f);
-      strokeStartPathAnimation.toValue = @(0.0f);
-      strokeStartPathAnimation.timingFunction = [self materialEaseInOut];
-      strokeStartPathAnimation.fillMode = kCAFillModeBoth;
-      strokeStartPathAnimation.removedOnCompletion = NO;
-      [_strokeLayer addAnimation:strokeStartPathAnimation forKey:@"strokeStart"];
-
-      // Stroke end.
-      CABasicAnimation *strokeEndPathAnimation =
-          [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-      strokeEndPathAnimation.duration = duration;
-      // Ensure the stroke never completely disappears on start by animating from non-zero start and
-      // to a value slightly larger than the strokeStart's final value.
-      strokeEndPathAnimation.fromValue = @(_minStrokeDifference);
-      strokeEndPathAnimation.toValue = @(_currentProgress);
-      strokeEndPathAnimation.timingFunction = [self materialEaseInOut];
-      strokeEndPathAnimation.fillMode = kCAFillModeBoth;
-      strokeEndPathAnimation.removedOnCompletion = NO;
-      [_strokeLayer addAnimation:strokeEndPathAnimation forKey:@"strokeEnd"];
+      [_animator animateWithTiming:spec.strokeEnd
+                           toLayer:_strokeLayer
+                        withValues:@[@(_minStrokeDifference), @(_currentProgress)]
+                           keyPath:MDMKeyPathStrokeEnd];
     }
     [CATransaction commit];
 
     _animationInProgress = YES;
     _lastProgress = _currentProgress;
   }
-}
-
-- (CAMediaTimingFunction *)materialEaseInOut {
-  // This curve is slow both at the beginning and end.
-  // Visualization of curve  http://cubic-bezier.com/#.4,0,.2,1
-  return [[CAMediaTimingFunction alloc] initWithControlPoints:0.4f:0.0f:0.2f:1.0f];
 }
 
 - (void)addProgressAnimation {
@@ -657,16 +785,16 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
     [CATransaction setCompletionBlock:^{
       [self strokeRotationCycleFinishedFromState:MDCActivityIndicatorStateDeterminate];
     }];
+    [CATransaction setDisableActions:YES];
 
-    // Stroke end.
-    CABasicAnimation *strokeEndPathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    strokeEndPathAnimation.duration = kMDCActivityIndicatorPointCycleDuration / 2;
-    strokeEndPathAnimation.fromValue = @(_lastProgress);
-    strokeEndPathAnimation.toValue = @(_currentProgress);
-    strokeEndPathAnimation.timingFunction = [self materialEaseInOut];
-    strokeEndPathAnimation.fillMode = kCAFillModeBoth;
-    strokeEndPathAnimation.removedOnCompletion = NO;
-    [_strokeLayer addAnimation:strokeEndPathAnimation forKey:@"strokeEnd"];
+    _outerRotationLayer.transform = CATransform3DIdentity;
+    _strokeLayer.transform = CATransform3DIdentity;
+    _strokeLayer.strokeStart = 0;
+
+    [_animator animateWithTiming:MDCActivityIndicatorMotionSpec.willChangeProgress.strokeEnd
+                         toLayer:_strokeLayer
+                      withValues:@[@(_lastProgress), @(_currentProgress)]
+                         keyPath:MDMKeyPathStrokeEnd];
   }
 
   [CATransaction commit];
@@ -675,18 +803,33 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
   _animationInProgress = YES;
 }
 
+- (void)setDeterminateProgressWithoutAnimation {
+  [self removeAnimations];
+  _animationInProgress = NO;
+  _currentProgress = MAX(_progress, _minStrokeDifference);
+  _strokeLayer.strokeStart = 0.0;
+  _strokeLayer.strokeEnd = _currentProgress;
+  _lastProgress = _currentProgress;
+}
+
 - (void)strokeRotationCycleFinishedFromState:(MDCActivityIndicatorState)state {
   _animationInProgress = NO;
 
   if (!_animationsAdded) {
     return;
   }
+
+  if (self.stopTransition) {
+    [self addStopAnimation];
+    return;
+  }
+
   if (state == MDCActivityIndicatorStateIndeterminate) {
-    if (_cycleColors.count > 0) {
-      _currentColorCount = (_currentColorCount + 1) % _cycleColors.count;
+    if (self.cycleColors.count > 0) {
+      self.cycleColorsIndex = (self.cycleColorsIndex + 1) % self.cycleColors.count;
       [self updateStrokeColor];
     }
-    _cycleCount = (_cycleCount + 1) % kMDCActivityIndicatorTotalDetentCount;
+    _cycleCount = (_cycleCount + 1) % kTotalDetentCount;
   }
 
   switch (_indicatorMode) {
@@ -740,14 +883,14 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
   [CATransaction begin];
 
   [CATransaction setCompletionBlock:^{
-    if (_animatingOut) {
+    if (self->_animatingOut) {
       [self removeAnimations];
-      if ([_delegate respondsToSelector:@selector(activityIndicatorAnimationDidFinish:)]) {
-        [_delegate activityIndicatorAnimationDidFinish:self];
+      if ([self.delegate respondsToSelector:@selector(activityIndicatorAnimationDidFinish:)]) {
+        [self.delegate activityIndicatorAnimationDidFinish:self];
       }
     }
   }];
-  [CATransaction setAnimationDuration:kMDCActivityIndicatorAnimateOutDuration];
+  [CATransaction setAnimationDuration:kAnimateOutDuration];
 
   _strokeLayer.lineWidth = 0;
   _trackLayer.lineWidth = 0;
@@ -758,8 +901,14 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
 - (void)removeAnimations {
   _animationsAdded = NO;
   _animatingOut = NO;
+  self.stopTransition = nil;
   [_strokeLayer removeAllAnimations];
   [_outerRotationLayer removeAllAnimations];
+
+  // Reset current and latest progress, to ensure addProgressAnimationIfRequired adds a progress animation
+  // when returning from hidden.
+  _currentProgress = 0;
+  _lastProgress = 0;
 
   // Reset cycle count to 0 rather than cycleStart to reflect default starting position (top).
   _cycleCount = 0;
@@ -769,6 +918,19 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
 
 + (CGFloat)defaultHeight {
   return kSpinnerRadius * 2.f;
+}
+
++ (NSArray<UIColor *> *)defaultCycleColors {
+  static NSArray<UIColor *> *s_defaultCycleColors;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    s_defaultCycleColors =
+    @[ MDCPalette.bluePalette.tint500,
+       MDCPalette.redPalette.tint500,
+       MDCPalette.yellowPalette.tint500,
+       MDCPalette.greenPalette.tint500 ];
+  });
+  return s_defaultCycleColors;
 }
 
 - (void)applyPropertiesWithoutAnimation:(void (^)(void))setPropBlock {
@@ -781,18 +943,86 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorState) {
   [CATransaction commit];
 }
 
-+ (NSArray<UIColor *> *)defaultColors {
-  static NSArray *defaultColors;
+#pragma mark - Resource Bundle
+
++ (NSBundle *)bundle {
+  static NSBundle *bundle = nil;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    defaultColors = @[
-      [[UIColor alloc] initWithRed:0.129f green:0.588f blue:0.953f alpha:1],
-      [[UIColor alloc] initWithRed:0.957f green:0.263f blue:0.212f alpha:1],
-      [[UIColor alloc] initWithRed:1.0f green:0.922f blue:0.231f alpha:1],
-      [[UIColor alloc] initWithRed:0.298f green:0.686f blue:0.314f alpha:1]
-    ];
+    bundle = [NSBundle bundleWithPath:[self bundlePathWithName:kBundle]];
   });
-  return defaultColors;
+
+  return bundle;
 }
 
++ (NSString *)bundlePathWithName:(NSString *)bundleName {
+  // In iOS 8+, we could be included by way of a dynamic framework, and our resource bundles may
+  // not be in the main .app bundle, but rather in a nested framework, so figure out where we live
+  // and use that as the search location.
+  NSBundle *bundle = [NSBundle bundleForClass:[MDCActivityIndicator class]];
+  NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle)resourcePath];
+  return [resourcePath stringByAppendingPathComponent:bundleName];
+}
+
+#pragma mark - Accessibility
+
+- (BOOL)isAccessibilityElement {
+  return self.isAnimating;
+}
+
+- (NSString *)defaultAccessibilityLabel {
+  MaterialActivityIndicatorStringId keyIndex = kStr_MaterialActivityIndicatorAccessibilityLabel;
+  NSString *key = kMaterialActivityIndicatorStringTable[keyIndex];
+  return NSLocalizedStringFromTableInBundle(key,
+                                            kMaterialActivityIndicatorStringsTableName,
+                                            [[self class] bundle],
+                                            @"Activity Indicator");
+}
+
+- (NSString *)accessibilityValue {
+  if (self.isAnimating) {
+    if (self.indicatorMode == MDCActivityIndicatorModeIndeterminate) {
+      MaterialActivityIndicatorStringId keyIndex =
+          kStr_MaterialActivityIndicatorInProgressAccessibilityValue;
+      NSString *key = kMaterialActivityIndicatorStringTable[keyIndex];
+      return NSLocalizedStringFromTableInBundle(key,
+                                                kMaterialActivityIndicatorStringsTableName,
+                                                [[self class] bundle],
+                                                @"In Progress");
+    } else {
+      NSUInteger percentage = (int)(self.progress * 100);
+      MaterialActivityIndicatorStringId keyIndex =
+          kStr_MaterialActivityIndicatorProgressCompletedAccessibilityValue;
+      NSString *key = kMaterialActivityIndicatorStringTable[keyIndex];
+      NSString *localizedString = NSLocalizedStringFromTableInBundle(key,
+                                                                     kMaterialActivityIndicatorStringsTableName,
+                                                                     [[self class] bundle],
+                                                                     @"{percentage} Percent Complete");
+      return [NSString localizedStringWithFormat:localizedString, percentage];
+    }
+  } else {
+    MaterialActivityIndicatorStringId keyIndex =
+        kStr_MaterialActivityIndicatorProgressHaltedAccessibilityValue;
+    NSString *key = kMaterialActivityIndicatorStringTable[keyIndex];
+    return NSLocalizedStringFromTableInBundle(key,
+                                              kMaterialActivityIndicatorStringsTableName,
+                                              [[self class] bundle],
+                                              @"Progress Halted");
+  }
+}
+
+- (UIAccessibilityTraits)accessibilityTraits {
+  return UIAccessibilityTraitUpdatesFrequently;
+}
+
+@end
+
+@implementation MDCActivityIndicatorTransition
+- (nonnull instancetype)initWithAnimation:(_Nonnull MDCActivityIndicatorAnimation)animation {
+  self = [super init];
+  if (self) {
+    self.animation = animation;
+  }
+   return self;
+}
 @end

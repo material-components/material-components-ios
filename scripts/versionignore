@@ -1,0 +1,9 @@
+^\./third_party
+^\./Pods
+^\./docs
+^\./\.git
+^\./\.arc-hooks
+Podfile\.lock
+CHANGELOG\.md
+scripts/release
+^\./bazel

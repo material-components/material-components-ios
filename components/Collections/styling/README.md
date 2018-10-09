@@ -1,12 +1,11 @@
-<!--docs:
-title: "Styling the collection view"
-navTitle: Styling
-layout: detail
-section: components
-iconId: list
-path: /catalog/collections/styling/
--->
 # Styling the collection view
+
+**Notice**: This component will be deprecated over the next few months in favor of the
+[Cards](../../Cards) and [List](../../List) components. See our
+[public tracker](https://www.pivotaltracker.com/epic/show/3938766) for more details on timing and
+the deprecation plan.
+
+---
 
 `MDCCollectionViewController` provides a `styler` property that conforms to the
 `MDCCollectionViewStyling` protocol. By using this property, styling can be easily set for the
@@ -36,12 +35,12 @@ either set the `styler.cellStyle` property directly, or use the protocol method
 self.styler.cellStyle = .Card
 
 // Or set for specific sections.
-override func collectionView(collectionView: UICollectionView,
+override func collectionView(_ collectionView: UICollectionView,
                              cellStyleForSection section: Int) -> MDCCollectionViewCellStyle {
   if section == 2 {
-    return .Card
+    return .card
   }
-  return .Grouped
+  return .grouped
 }
 ```
 
@@ -68,8 +67,8 @@ The styling delegate protocol can be used to override the default cell height of
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
-override func collectionView(collectionView: UICollectionView,
-                             cellHeightAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+override func collectionView(_ collectionView: UICollectionView,
+                             cellHeightAt indexPath: IndexPath) -> CGFloat {
   if indexPath.item == 0 {
     return 80.0
   }
@@ -97,10 +96,10 @@ The styler allows setting the cell layout as List, Grid, or Custom.
 #### Swift
 ```swift
 // Set as list layout.
-self.styler.cellLayoutType = .List
+self.styler.cellLayoutType = .list
 
 // Or set as grid layout.
-self.styler.cellLayoutType = .Grid
+self.styler.cellLayoutType = .grid
 self.styler.gridPadding = 8
 self.styler.gridColumnCount = 2
 ```
@@ -121,14 +120,14 @@ self.styler.gridColumnCount = 2;
 
 The styler allows customizing cell separators for the entire collection view. Individual
 cell customization is also available by using an `MDCCollectionViewCell` cell or a subclass of it.
-Learn more by reading the section on [Cell Separators](../CollectionCells/#cell-separators) in the
-[CollectionCells](../CollectionCells/) component.
+Learn more by reading the section on [Cell Separators](../../CollectionCells/#cell-separators) in the
+[CollectionCells](../../CollectionCells/) component.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
 // Set separator color.
-self.styler.separatorColor = UIColor.redColor()
+self.styler.separatorColor = .red
 
 // Set separator insets.
 self.styler.separatorInset = UIEdgeInsetsMake(0, 16, 0, 16)
@@ -166,15 +165,15 @@ background colors are `#EEEEEE` for the collection view and `#FFFFFF` for the ce
 #### Swift
 ```swift
 // Set collection view background color.
-self.collectionView?.backgroundColor = UIColor.grayColor()
+self.collectionView?.backgroundColor = .gray
 
 // Set individual cell background colors.
-override func collectionView(collectionView: UICollectionView,
-                             cellBackgroundColorAtIndexPath indexPath: NSIndexPath) -> UIColor? {
+override func collectionView(_ collectionView: UICollectionView,
+                             cellBackgroundColorAt indexPath: IndexPath) -> UIColor? {
   if indexPath.item == 0 {
-    return UIColor.blueColor()
+    return .blue
   }
-  return UIColor.redColor()
+  return .red
 }
 ```
 

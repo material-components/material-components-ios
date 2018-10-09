@@ -1,1 +1,0 @@
-../../../MaterialComponents/components/private/Icons/icons/ic_arrow_back/src/MaterialIcons+ic_arrow_back.h

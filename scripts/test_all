@@ -16,10 +16,12 @@
 
 readonly SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly ROOT_DIR="$(dirname $SCRIPTS_DIR)"
-# Note that the following is using 10.1 until Travis CI fixes 
-# https://github.com/travis-ci/travis-ci/issues/7031
-readonly DESTINATION="platform=iOS Simulator,name=iPhone 7,OS=10.1"
 readonly COVERAGE_OPTIONS="GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES -enableCodeCoverage YES"
+
+# When run on Travis CI, this variable should be passed in
+if [[ ! $DESTINATION ]]; then
+  DESTINATION="platform=iOS Simulator,name=iPhone 7,OS=latest"
+fi
 
 # Given a path to an Xcode log file in $1, print a guess at what caused the
 # failure.
@@ -38,7 +40,7 @@ else
 fi
 
 all_tests_ok=1
-for workspace_scheme in $WORKSPACE_SCHEMES; do  
+for workspace_scheme in $WORKSPACE_SCHEMES; do
   workspace=$(echo $workspace_scheme | cut -d: -f1)
   scheme=$(echo $workspace_scheme | cut -d: -f2)
 
@@ -62,7 +64,7 @@ for workspace_scheme in $WORKSPACE_SCHEMES; do
   fi
 done
 
-# If any test failed, exit with a failure exit status so continuous integration 
+# If any test failed, exit with a failure exit status so continuous integration
 # tools can react appropriately.
 if [ "$all_tests_ok" -eq 1 ]; then
   exit 0

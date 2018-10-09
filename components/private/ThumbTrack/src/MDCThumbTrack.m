@@ -1,26 +1,28 @@
-/*
- Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCThumbTrack.h"
+#import "private/MDCThumbTrack+Private.h"
+
+#import <MDFInternationalization/MDFInternationalization.h>
 
 #import "MDCNumericValueLabel.h"
 #import "MDCThumbView.h"
 #import "MaterialInk.h"
 #import "MaterialMath.h"
-#import "MaterialRTL.h"
+
+#pragma mark - ThumbTrack constants
 
 static const CGFloat kAnimationDuration = 0.25f;
 static const CGFloat kThumbChangeAnimationDuration = 0.12f;
@@ -35,12 +37,25 @@ static const CGFloat kValueLabelHeight = 48.f;
 static const CGFloat kValueLabelWidth = 0.81f * kValueLabelHeight;
 static const CGFloat kValueLabelFontSize = 12.f;
 
-// Credit to the Beacon Tools iOS team for the idea for this implementations
-@interface MDCDiscreteDotView : UIView
+static UIColor *ValueLabelTextColorDefault() {
+  return UIColor.whiteColor;
+}
 
-@property(nonatomic, assign) NSUInteger numDiscreteDots;
+static UIColor *ValueLabelBackgroundColorDefault() {
+  return UIColor.blueColor;
+}
 
-@end
+static UIColor *TrackOnColorDefault() {
+  return UIColor.blueColor;
+}
+
+static UIColor *ThumbEnabledColorDefault() {
+  return UIColor.blueColor;
+}
+
+static UIColor *InkColorDefault() {
+  return [UIColor.blueColor colorWithAlphaComponent:kTrackOnAlpha];
+}
 
 @implementation MDCDiscreteDotView
 
@@ -48,6 +63,9 @@ static const CGFloat kValueLabelFontSize = 12.f;
   self = [super init];
   if (self) {
     self.backgroundColor = [UIColor clearColor];
+    _inactiveDotColor = UIColor.blackColor;
+    _activeDotColor = UIColor.blackColor;
+    _activeDotsSegment = CGRectMake(CGFLOAT_MIN, 0, 0, 0);
   }
   return self;
 }
@@ -57,18 +75,50 @@ static const CGFloat kValueLabelFontSize = 12.f;
   [self setNeedsDisplay];
 }
 
+- (void)setActiveDotColor:(UIColor *)activeDotColor {
+  _activeDotColor = activeDotColor;
+  [self setNeedsDisplay];
+}
+
+- (void)setInactiveDotColor:(UIColor *)inactiveDotColor {
+  _inactiveDotColor = inactiveDotColor;
+  [self setNeedsDisplay];
+}
+
+- (void)setActiveDotsSegment:(CGRect)activeDotsSegment {
+  CGFloat newMinX = MAX(0, MIN(1, CGRectGetMinX(activeDotsSegment)));
+  CGFloat newMaxX = MIN(1, MAX(0, CGRectGetMaxX(activeDotsSegment)));
+
+  _activeDotsSegment = CGRectMake(newMinX, 0,
+                                  (newMaxX - newMinX), 0);
+  [self setNeedsDisplay];
+}
+
 - (void)drawRect:(CGRect)rect {
   [super drawRect:rect];
 
   if (_numDiscreteDots >= 2) {
     CGContextRef contextRef = UIGraphicsGetCurrentContext();
-    CGContextSetFillColorWithColor(contextRef, [UIColor blackColor].CGColor);
 
     CGRect circleRect = CGRectMake(0, 0, self.bounds.size.height, self.bounds.size.height);
-    CGFloat increment = (self.bounds.size.width - self.bounds.size.height) / (_numDiscreteDots - 1);
+    // Increment within the bounds
+    CGFloat absoluteIncrement =
+        (self.bounds.size.width - self.bounds.size.height) / (_numDiscreteDots - 1);
+    // Increment within 0..1
+    CGFloat relativeIncrement = (CGFloat)1.0 / (_numDiscreteDots - 1);
 
+    // Allow an extra 10% of the increment to guard against rounding errors excluding dots that
+    // should genuinely be within the active segment.
+    CGFloat minActiveX = CGRectGetMinX(self.activeDotsSegment) - relativeIncrement * 0.1f;
+    CGFloat maxActiveX = CGRectGetMaxX(self.activeDotsSegment) + relativeIncrement * 0.1f;
     for (NSUInteger i = 0; i < _numDiscreteDots; i++) {
-      circleRect.origin.x = (i * increment);
+      CGFloat relativePosition = i * relativeIncrement;
+      if (minActiveX <= relativePosition && maxActiveX >= relativePosition) {
+        [self.activeDotColor setFill];
+      } else {
+        [self.inactiveDotColor setFill];
+      }
+      circleRect.origin.x = (i * absoluteIncrement);
       CGContextFillEllipseInRect(contextRef, circleRect);
     }
   }
@@ -105,8 +155,6 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
 @implementation MDCThumbTrack {
   CGFloat _lastDispatchedValue;
-  UIColor *_thumbOnColor;
-  UIColor *_trackOnColor;
   UIColor *_clearColor;
   MDCInkTouchController *_touchController;
   UIView *_trackView;
@@ -125,6 +173,9 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   BOOL _didChangeValueDuringPan;
   CGFloat _panThumbGrabPosition;
 }
+
+@synthesize thumbEnabledColor = _thumbEnabledColor;
+@synthesize trackOnColor = _trackOnColor;
 
 // TODO(iangordon): ThumbView is not respecting the bounds of ThumbTrack
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -171,12 +222,17 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
     _touchController.defaultInkView.inkStyle = MDCInkStyleUnbounded;
 
-    // Set colors.
-    if (onTintColor == nil) {
-      onTintColor = [UIColor blueColor];
-    }
-    self.primaryColor = onTintColor;
-    _clearColor = [UIColor colorWithWhite:1.0f alpha:0.0f];
+    _primaryColor = onTintColor ?: TrackOnColorDefault();
+    _thumbEnabledColor = onTintColor ?: ThumbEnabledColorDefault();
+    _trackOnColor = onTintColor ?: TrackOnColorDefault();
+    _valueLabelBackgroundColor = onTintColor ?: ValueLabelBackgroundColorDefault();
+    _touchController.defaultInkView.inkColor = onTintColor ?
+        [onTintColor colorWithAlphaComponent:kTrackOnAlpha] : InkColorDefault();
+    _clearColor = UIColor.clearColor;
+    _valueLabelTextColor = ValueLabelTextColorDefault();
+    _trackOnTickColor = UIColor.blackColor;
+    _trackOffTickColor = UIColor.blackColor;
+    [self setNeedsLayout];
 
     // We add this UIPanGestureRecognizer to our view so that any superviews of the thumb track know
     // when we are dragging the thumb track, and can treat it accordingly. Specifically, without
@@ -205,7 +261,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   [self updateThumbTrackAnimated:NO animateThumbAfterMove:NO previousValue:_value completion:nil];
 }
 
-- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+- (BOOL)pointInside:(CGPoint)point withEvent:(__unused UIEvent *)event {
   CGFloat dx = MIN(0, kDefaultThumbRadius - kMinTouchSize / 2);
   CGFloat dy = MIN(0, (self.bounds.size.height - kMinTouchSize) / 2);
   CGRect rect = CGRectInset(self.bounds, dx, dy);
@@ -215,19 +271,34 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 #pragma mark - Properties
 
 - (void)setPrimaryColor:(UIColor *)primaryColor {
-  if (primaryColor == nil) {
-    primaryColor = [UIColor blueColor];  // YSNBH
-  }
-  _primaryColor = primaryColor;
-  _thumbOnColor = primaryColor;
-  _trackOnColor = primaryColor;
+  _primaryColor = primaryColor ?: TrackOnColorDefault();
 
-  _touchController.defaultInkView.inkColor = [primaryColor colorWithAlphaComponent:kTrackOnAlpha];
+  _thumbEnabledColor = self.primaryColor;
+  _trackOnColor = self.primaryColor;
+
+  _touchController.defaultInkView.inkColor =
+      [self.primaryColor colorWithAlphaComponent:kTrackOnAlpha];
+  _valueLabelBackgroundColor = self.primaryColor;
   [self setNeedsLayout];
 }
 
-- (void)setThumbOffColor:(UIColor *)thumbOffColor {
-  _thumbOffColor = thumbOffColor;
+- (void)setInkColor:(UIColor *)inkColor {
+  _touchController.defaultInkView.inkColor = inkColor;
+  [self setNeedsLayout];
+}
+
+- (UIColor *)inkColor {
+  return _touchController.defaultInkView.inkColor;
+}
+
+- (void)setThumbEnabledColor:(UIColor *)thumbEnabledColor {
+  _thumbEnabledColor = thumbEnabledColor ?: ThumbEnabledColorDefault();
+  [self setNeedsLayout];
+}
+
+- (void)setTrackOnColor:(UIColor *)trackOnColor {
+  _trackOnColor = trackOnColor ?: TrackOnColorDefault();
+  [self setNeedsLayout];
 }
 
 - (void)setThumbDisabledColor:(UIColor *)thumbDisabledColor {
@@ -245,11 +316,47 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   [self setNeedsLayout];
 }
 
+- (void)setValueLabelTextColor:(UIColor *)valueLabelTextColor {
+  _valueLabelTextColor = valueLabelTextColor ?: ValueLabelTextColorDefault();
+  [self setNeedsLayout];
+}
+
+- (void)setValueLabelBackgroundColor:(UIColor *)valueLabelBackgroundColor {
+  _valueLabelBackgroundColor = valueLabelBackgroundColor ?: ValueLabelBackgroundColorDefault();
+  [self setNeedsLayout];
+}
+
+- (void)setTrackOnTickColor:(UIColor *)trackOnTickColor {
+  _trackOnTickColor = trackOnTickColor;
+  if (_discreteDots) {
+    _discreteDots.activeDotColor = trackOnTickColor;
+    [self setNeedsLayout];
+  }
+}
+
+- (void)setTrackOffTickColor:(UIColor *)trackOffTickColor {
+  _trackOffTickColor = trackOffTickColor;
+  if (_discreteDots) {
+    _discreteDots.inactiveDotColor = trackOffTickColor;
+    [self setNeedsLayout];
+  }
+}
+
+- (void)setThumbElevation:(MDCShadowElevation)thumbElevation {
+  _thumbView.elevation = thumbElevation;
+}
+
+- (MDCShadowElevation)thumbElevation {
+  return _thumbView.elevation;
+}
+
 - (void)setShouldDisplayDiscreteDots:(BOOL)shouldDisplayDiscreteDots {
   if (_shouldDisplayDiscreteDots != shouldDisplayDiscreteDots) {
     if (shouldDisplayDiscreteDots) {
       _discreteDots = [[MDCDiscreteDotView alloc] init];
       _discreteDots.alpha = 0.0;
+      _discreteDots.activeDotColor = self.trackOnTickColor;
+      _discreteDots.inactiveDotColor = self.trackOffTickColor;
       [_trackView addSubview:_discreteDots];
     } else {
       [_discreteDots removeFromSuperview];
@@ -276,6 +383,20 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   } else {
     [_valueLabel removeFromSuperview];
     _valueLabel = nil;
+  }
+}
+
+- (BOOL)shouldDisplayFilledTrack {
+  return [_trackOnLayer superlayer] != nil;
+}
+
+- (void)setShouldDisplayFilledTrack:(BOOL)shouldDisplayFilledTrack {
+  if (shouldDisplayFilledTrack) {
+    if ([_trackOnLayer superlayer] == nil) {
+      [_trackView.layer addSublayer:_trackOnLayer];
+    }
+  } else {
+    [_trackOnLayer removeFromSuperlayer];
   }
 }
 
@@ -347,7 +468,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
                  animated:(BOOL)animated
     animateThumbAfterMove:(BOOL)animateThumbAfterMove
             userGenerated:(BOOL)userGenerated
-               completion:(void (^)())completion {
+               completion:(void (^)(void))completion {
   CGFloat previousValue = _value;
   CGFloat newValue = MAX(_minimumValue, MIN(value, _maximumValue));
   newValue = [self closestValueToTargetValue:newValue];
@@ -410,8 +531,8 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
 #pragma mark - MDCInkTouchControllerDelegate
 
-- (BOOL)inkTouchController:(nonnull MDCInkTouchController *)inkTouchController
-    shouldProcessInkTouchesAtTouchLocation:(CGPoint)location {
+- (BOOL)inkTouchController:(nonnull __unused MDCInkTouchController *)inkTouchController
+    shouldProcessInkTouchesAtTouchLocation:(__unused CGPoint)location {
   return _shouldDisplayInk;
 }
 
@@ -462,8 +583,11 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 - (void)updateThumbTrackAnimated:(BOOL)animated
            animateThumbAfterMove:(BOOL)animateThumbAfterMove
                    previousValue:(CGFloat)previousValue
-                      completion:(void (^)())completion {
+                      completion:(void (^)(void))completion {
   [self updateViewsNoAnimation];
+
+  BOOL activeSegmentShrinking = MDCFabs(self.value - self.filledTrackAnchorValue) <
+      MDCFabs(previousValue - self.filledTrackAnchorValue);
 
   UIViewAnimationOptions baseAnimationOptions =
       UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionAllowUserInteraction;
@@ -478,6 +602,11 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
         return;
       }
 
+      // If the active segment is shrinking, we will update the dot colors immediately. If it's
+      // growing, update the colors here in the completion block.
+      if (!activeSegmentShrinking) {
+        [self updateDotsViewActiveSegment];
+      }
       // Do secondary animation and return.
       [self updateThumbAfterMoveAnimated:animateThumbAfterMove
                                  options:baseAnimationOptions
@@ -492,7 +621,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
       CGFloat animationDurationToAnchor = (MDCFabs(previousValue - _filledTrackAnchorValue) /
                                            MDCFabs(previousValue - currentValue)) *
                                           kAnimationDuration;
-      void (^afterCrossingAnchorAnimation)(BOOL) = ^void(BOOL finished) {
+      void (^afterCrossingAnchorAnimation)(BOOL) = ^void(__unused BOOL finished) {
         UIViewAnimationOptions options = baseAnimationOptions | UIViewAnimationOptionCurveEaseOut;
         [UIView animateWithDuration:(kAnimationDuration - animationDurationToAnchor)
                               delay:0.0f
@@ -510,11 +639,11 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
                             delay:0.0f
                           options:options
                        animations:^{
-                         _value = _filledTrackAnchorValue;
+                         self.value = self.filledTrackAnchorValue;
                          [self updateViewsMainIsAnimated:animated
                                             withDuration:animationDurationToAnchor
                                         animationOptions:options];
-                         _value = currentValue;
+                         self.value = currentValue;
                        }
                        completion:afterCrossingAnchorAnimation];
     } else {
@@ -522,6 +651,9 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
                             delay:0.0f
                           options:baseAnimationOptions
                        animations:^{
+                         if (activeSegmentShrinking) {
+                           [self updateDotsViewActiveSegment];
+                         }
                          [self updateViewsMainIsAnimated:animated
                                             withDuration:kAnimationDuration
                                         animationOptions:baseAnimationOptions];
@@ -532,6 +664,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     [self updateViewsMainIsAnimated:animated
                        withDuration:0.0f
                    animationOptions:baseAnimationOptions];
+    [self updateDotsViewActiveSegment];
     [self updateThumbAfterMoveAnimated:animateThumbAfterMove
                                options:baseAnimationOptions
                             completion:completion];
@@ -540,7 +673,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
 - (void)updateThumbAfterMoveAnimated:(BOOL)animated
                              options:(UIViewAnimationOptions)animationOptions
-                          completion:(void (^)())completion {
+                          completion:(void (^)(void))completion {
   if (animated) {
     [UIView animateWithDuration:kThumbChangeAnimationDuration
         delay:0.0f
@@ -549,7 +682,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
           [self updateViewsForThumbAfterMoveIsAnimated:animated
                                           withDuration:kThumbChangeAnimationDuration];
         }
-        completion:^void(BOOL _) {
+        completion:^void(__unused BOOL _) {
           if (completion) {
             completion();
           }
@@ -575,8 +708,8 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     if (!_thumbIsHollowAtStart || ![self isValueAtMinimum]) {
       [self updateTrackMask];
 
-      _thumbView.backgroundColor = _thumbOnColor;
-      _thumbView.layer.borderColor = _thumbOnColor.CGColor;
+      _thumbView.backgroundColor = _thumbEnabledColor;
+      _thumbView.layer.borderColor = _thumbEnabledColor.CGColor;
     }
   } else {
     _thumbView.backgroundColor = _thumbDisabledColor;
@@ -588,11 +721,22 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   }
 }
 
+- (void)updateDotsViewActiveSegment {
+  if (!MDCCGFloatEqual(self.maximumValue, self.minimumValue)) {
+    CGFloat relativeAnchorPoint =
+        (self.filledTrackAnchorValue - self.minimumValue) / (self.maximumValue - self.minimumValue);
+    CGFloat relativeValuePoint = (self.value - self.minimumValue) / (self.maximumValue - self.minimumValue);
+    CGFloat activeSegmentWidth = MDCFabs(relativeAnchorPoint - relativeValuePoint);
+    CGFloat activeSegmentOriginX = MIN(relativeAnchorPoint, relativeValuePoint);
+    _discreteDots.activeDotsSegment = CGRectMake(activeSegmentOriginX, 0, activeSegmentWidth, 0);
+  }
+}
+
 /**
  Updates the properties of the ThumbTrack that are animated in the main animation body. May be
  called from within a UIView animation block.
  */
-- (void)updateViewsMainIsAnimated:(BOOL)animated
+- (void)updateViewsMainIsAnimated:(__unused BOOL)animated
                      withDuration:(NSTimeInterval)duration
                  animationOptions:(UIViewAnimationOptions)animationOptions {
   // Move thumb position.
@@ -616,10 +760,20 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
     // Note that "center" here doesn't refer to the actual center, but rather the anchor point,
     // which is re-defined to be slightly below the bottom of the label
     _valueLabel.center = [self numericValueLabelPositionForValue:_value];
-    _valueLabel.backgroundColor = _trackOnColor;
-    _valueLabel.textColor = [UIColor whiteColor];
+    _valueLabel.backgroundColor = self.valueLabelBackgroundColor;
+    _valueLabel.textColor = self.valueLabelTextColor;
     if ([_delegate respondsToSelector:@selector(thumbTrack:stringForValue:)]) {
       _valueLabel.text = [_delegate thumbTrack:self stringForValue:_value];
+      if (CGRectGetWidth(_valueLabel.frame) > 1) {
+        // Reset the size prior to pixel alignement since previous alignement likely increased it
+        CGRect valueLabelFrame = CGRectMake(_valueLabel.frame.origin.x, _valueLabel.frame.origin.y,
+                                            kValueLabelWidth, kValueLabelHeight);
+        // TODO(https://github.com/material-components/material-components-ios/issues/3326 ):
+        //   Don't assign the frame AND the center (above). Do it only once to avoid extra layout
+        //   passes. This is the cause of the visual glitch seen when coloring the "active" tick
+        //   marks in the _discreteDots view.
+        _valueLabel.frame = MDCRectAlignToScale(valueLabelFrame, [UIScreen mainScreen].scale);
+      }
     }
   }
 
@@ -727,7 +881,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 // Used to make sure we update the mask after animating the thumb growing or shrinking. Specifically
 // in the case where the thumb is at the start and hollow, forgetting to update could leave the mask
 // in a strange visual state.
-- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
+- (void)animationDidStop:(CAAnimation *)anim finished:(__unused BOOL)flag {
   if (anim == [_thumbView.layer animationForKey:@"cornerRadius"]) {
     [_thumbView.layer removeAllAnimations];
     [self updateTrackMask];
@@ -804,7 +958,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   CGFloat relValue = (position.x - _thumbRadius) / self.thumbPanRange;
   relValue = MAX(0, MIN(relValue, 1));
   // For RTL we invert the value
-  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     relValue = 1 - relValue;
   }
   return (1 - relValue) * _minimumValue + relValue * _maximumValue;
@@ -848,7 +1002,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   }
   CGFloat relValue = (value - _minimumValue) / MDCFabs(_minimumValue - _maximumValue);
   // For RTL we invert the value
-  if (self.mdc_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     relValue = 1 - relValue;
   }
   return relValue;
@@ -874,37 +1028,6 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   [panTarget addGestureRecognizer:_dummyPanRecognizer];
 }
 
-#pragma mark - Color Helpers
-
-- (UIColor *)colorInterpolatedFromColor:(UIColor *)fromColor
-                                toColor:(UIColor *)toColor
-                                percent:(CGFloat)percent {
-  // Clamp percent to [0.0, 1.0]
-  percent = MAX(0, percent);
-  percent = MIN(1, percent);
-
-  CGFloat r1, g1, b1, a1;
-  r1 = g1 = b1 = a1 = 1;
-  if (![fromColor getRed:&r1 green:&g1 blue:&b1 alpha:&a1]) {
-    [fromColor getWhite:&r1 alpha:&a1];
-    g1 = b1 = r1;
-  };
-
-  CGFloat r2, g2, b2, a2;
-  r2 = g2 = b2 = a2 = 1;
-  if (![toColor getRed:&r2 green:&g2 blue:&b2 alpha:&a2]) {
-    [toColor getWhite:&r2 alpha:&a2];
-    g2 = b2 = r2;
-  }
-
-  CGFloat rfinal = r1 * (1 - percent) + r2 * percent;
-  CGFloat gfinal = g1 * (1 - percent) + g2 * percent;
-  CGFloat bfinal = b1 * (1 - percent) + b2 * percent;
-  CGFloat afinal = a1 * (1 - percent) + a2 * percent;
-
-  return [UIColor colorWithRed:rfinal green:gfinal blue:bfinal alpha:afinal];
-}
-
 #pragma mark - UIResponder Events
 
 /**
@@ -928,7 +1051,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
  every touch.
  */
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(__unused UIEvent *)event {
   if (!self.enabled || _currentTouch != nil) {
     return;
   }
@@ -955,7 +1078,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   [self sendActionsForControlEvents:UIControlEventTouchDown];
 }
 
-- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(__unused UIEvent *)event {
   UITouch *touch = [touches anyObject];
   if (!self.enabled || touch != _currentTouch) {
     return;
@@ -991,7 +1114,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   }
 }
 
-- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(__unused UIEvent *)event {
   UITouch *touch = [touches anyObject];
   if (touch == _currentTouch) {
     BOOL wasDragging = _isDraggingThumb;
@@ -1014,7 +1137,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   }
 }
 
-- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(__unused UIEvent *)event {
   UITouch *touch = [touches anyObject];
   if (!self.enabled || touch != _currentTouch) {
     return;
@@ -1108,6 +1231,22 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
 
 - (BOOL)isTracking {
   return _isDraggingThumb;
+}
+
+@end
+
+@implementation MDCThumbTrack (Private)
+
+- (MDCNumericValueLabel *)numericValueLabel {
+  return _valueLabel;
+}
+
+- (MDCInkTouchController *)touchController {
+  return _touchController;
+}
+
+- (MDCDiscreteDotView *)discreteDotView {
+  return _discreteDots;
 }
 
 @end

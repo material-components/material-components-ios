@@ -1,16 +1,16 @@
 load 'scripts/generated/icons.rb'
 
-Pod::Spec.new do |s|
-  s.name         = "MaterialComponents"
-  s.version      = "23.0.2"
-  s.authors      = "The Material Components authors."
-  s.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
-  s.homepage     = "https://github.com/material-components/material-components-ios"
-  s.license      = "Apache 2.0"
-  s.source       = { :git => "https://github.com/material-components/material-components-ios.git", :tag => "v#{s.version}" }
-  s.platform     = :ios
-  s.requires_arc = true
-  s.ios.deployment_target = '8.0'
+Pod::Spec.new do |mdc|
+  mdc.name         = "MaterialComponents"
+  mdc.version      = "66.0.0"
+  mdc.authors      = "The Material Components authors."
+  mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
+  mdc.homepage     = "https://github.com/material-components/material-components-ios"
+  mdc.license      = "Apache 2.0"
+  mdc.source       = { :git => "https://github.com/material-components/material-components-ios.git", :tag => "v#{mdc.version}" }
+  mdc.platform     = :ios
+  mdc.requires_arc = true
+  mdc.ios.deployment_target = '8.0'
 
   # # Subspec explanation
   #
@@ -21,315 +21,1317 @@ Pod::Spec.new do |s|
   #
   # ## Optional properties
   #
-  # resources    		 => If your component has a bundle, add a dictionary mapping from the bundle
-  #                         name to the bundle path. NOTE: Do not use resource_bundle property.
+  # resources        => If your component has a bundle, this property should be an Array
+  #                     containing the bundle path as a String.
+  #                     NOTE: Do not use resource_bundle property
   #
   # # Template subspec
   #
-  #  s.subspec "ComponentName" do |ss|
-  #    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-  #    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+  #  mdc.subspec "ComponentName" do |component|
+  #    component.public_header_files = "components/#{component.base_name}/src/*.h"
+  #    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
   #
   #    # Only if you have a resource bundle
-  #    ss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
+  #    component.resources = ["components/#{component.base_name}/src/Material#{component.base_name}.bundle"]
   #
+  #   component.test_spec 'tests' do |tests|
+  #     tests.test_spec 'unit' do |unit_tests|
+  #       unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+  #       unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+  #     end
+  #   end
   #  end
   #
 
-  s.subspec "ActivityIndicator" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+  # ActivityIndicator
 
-    ss.dependency "MaterialComponents/private/Application"
-    ss.dependency "MaterialComponents/private/RTL"
+  mdc.subspec "ActivityIndicator" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+    component.resources = ["components/#{component.base_name}/src/Material#{component.base_name}.bundle"]
+
+    component.dependency "MDFInternationalization"
+    component.dependency "MaterialComponents/Palettes"
+    component.dependency "MaterialComponents/private/Application"
+    component.dependency "MotionAnimator", "~> 2.0"
+
+    component.test_spec 'tests' do |tests|
+      tests.test_spec 'unit' do |unit_tests|
+        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      end
+    end
   end
 
-  s.subspec "AnimationTiming" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+  mdc.subspec "ActivityIndicator+ColorThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/schemes/Color"
   end
 
-  s.subspec "AppBar" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-    ss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
+  # AnimationTiming
+
+  mdc.subspec "AnimationTiming" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+
+    component.test_spec 'tests' do |tests|
+      tests.test_spec 'unit' do |unit_tests|
+        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      end
+    end
+  end
+
+  # AppBar
+
+  mdc.subspec "AppBar" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+    component.resources = ["components/#{component.base_name}/src/Material#{component.base_name}.bundle"]
 
     # Navigation bar contents
-    ss.dependency "MaterialComponents/HeaderStackView"
-    ss.dependency "MaterialComponents/NavigationBar"
-    ss.dependency "MaterialComponents/Typography"
-
+    component.dependency "MaterialComponents/HeaderStackView"
+    component.dependency "MaterialComponents/NavigationBar"
+    component.dependency "MaterialComponents/Typography"
+    component.dependency "MaterialComponents/private/Application"
     # Flexible header + shadow
-    ss.dependency "MaterialComponents/FlexibleHeader"
-    ss.dependency "MaterialComponents/ShadowElevations"
-    ss.dependency "MaterialComponents/ShadowLayer"
+    component.dependency "MaterialComponents/FlexibleHeader"
+    component.dependency "MaterialComponents/ShadowElevations"
+    component.dependency "MaterialComponents/ShadowLayer"
 
-    ss.dependency "MaterialComponents/private/Icons/ic_arrow_back"
-    ss.dependency "MaterialComponents/private/RTL"
+    component.dependency "MDFInternationalization"
+    component.dependency "MaterialComponents/private/Icons/ic_arrow_back"
+    component.dependency "MaterialComponents/private/UIMetrics"
+
+    component.test_spec 'tests' do |tests|
+      tests.test_spec 'unit' do |unit_tests|
+        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      end
+    end
   end
 
-  s.subspec "Buttons" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-
-    ss.dependency 'MDFTextAccessibility'
-    ss.dependency "MaterialComponents/Ink"
-    ss.dependency "MaterialComponents/ShadowElevations"
-    ss.dependency "MaterialComponents/ShadowLayer"
-    ss.dependency "MaterialComponents/Typography"
-
-    ss.dependency "MaterialComponents/private/Math"
+  mdc.subspec "AppBar+ColorThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}", "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/private/*.{h,m}"
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/FlexibleHeader+ColorThemer"
+    extension.dependency "MaterialComponents/NavigationBar+ColorThemer"
+    extension.dependency "MaterialComponents/Themes"
   end
 
-  s.subspec "ButtonBar" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-
-    ss.dependency "MaterialComponents/Buttons"
-    ss.dependency "MaterialComponents/private/RTL"
+  mdc.subspec "AppBar+TypographyThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}", "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/private/*.{h,m}"
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/NavigationBar+TypographyThemer"
   end
 
-  s.subspec "CollectionCells" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-    ss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
+  # BottomAppBar
 
-    ss.framework = "CoreGraphics", "QuartzCore"
+  mdc.subspec "BottomAppBar" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
 
-    ss.dependency "MaterialComponents/CollectionLayoutAttributes"
-    ss.dependency "MaterialComponents/Ink"
-    ss.dependency "MaterialComponents/Typography"
-    ss.dependency "MaterialComponents/private/Icons/ic_check"
-    ss.dependency "MaterialComponents/private/Icons/ic_check_circle"
-    ss.dependency "MaterialComponents/private/Icons/ic_chevron_right"
-    ss.dependency "MaterialComponents/private/Icons/ic_info"
-    ss.dependency "MaterialComponents/private/Icons/ic_radio_button_unchecked"
-    ss.dependency "MaterialComponents/private/Icons/ic_reorder"
-    ss.dependency "MaterialComponents/private/Math"
-    ss.dependency "MaterialComponents/private/RTL"
+    component.dependency "MDFInternationalization"
+    component.dependency "MaterialComponents/Buttons"
+    component.dependency "MaterialComponents/NavigationBar"
+    component.dependency "MaterialComponents/private/Math"
+
+    component.test_spec 'tests' do |tests|
+      tests.test_spec 'unit' do |unit_tests|
+        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      end
+    end
   end
 
-  s.subspec "CollectionLayoutAttributes" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
+  mdc.subspec "BottomAppBar+ColorThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/Themes"
   end
 
-  s.subspec "Collections" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-    ss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
+  # BottomNavigation
 
-    ss.framework = "CoreGraphics", "QuartzCore"
+  mdc.subspec "BottomNavigation" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+    component.resources = ["components/#{component.base_name}/src/Material#{component.base_name}.bundle"]
 
-    ss.dependency "MaterialComponents/CollectionCells"
-    ss.dependency "MaterialComponents/CollectionLayoutAttributes"
-    ss.dependency "MaterialComponents/Ink"
-    ss.dependency "MaterialComponents/ShadowElevations"
-    ss.dependency "MaterialComponents/ShadowLayer"
-    ss.dependency "MaterialComponents/Typography"
+    component.dependency "MDFInternationalization"
+    component.dependency "MaterialComponents/Ink"
+    component.dependency "MaterialComponents/ShadowElevations"
+    component.dependency "MaterialComponents/ShadowLayer"
+    component.dependency "MaterialComponents/Typography"
+    component.dependency "MaterialComponents/private/Math"
+
+    component.test_spec 'tests' do |tests|
+      tests.test_spec 'unit' do |unit_tests|
+        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      end
+    end
   end
 
-  s.subspec "Dialogs" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-
-    ss.dependency "MaterialComponents/Buttons"
-    ss.dependency "MaterialComponents/ShadowElevations"
-    ss.dependency "MaterialComponents/ShadowLayer"
-    ss.dependency "MaterialComponents/private/KeyboardWatcher"
-    ss.dependency "MaterialComponents/private/RTL"
+  mdc.subspec "BottomNavigation+ColorThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/schemes/Color"
   end
 
-  s.subspec "FeatureHighlight" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-    ss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
-    ss.dependency "MaterialComponents/Typography"
-    ss.dependency "MDFTextAccessibility"
+  mdc.subspec "BottomNavigation+TypographyThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/schemes/Typography"
   end
 
-  s.subspec "FlexibleHeader" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-    ss.dependency 'MDFTextAccessibility'
-    ss.dependency "MaterialComponents/private/Application"
+  # BottomSheet
+
+  mdc.subspec "BottomSheet" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+
+    component.dependency "MaterialComponents/private/KeyboardWatcher"
+    component.dependency "MaterialComponents/private/Math"
+    component.dependency "MaterialComponents/private/ShapeLibrary"
+    component.dependency "MaterialComponents/private/Shapes"
+
+    component.test_spec 'tests' do |tests|
+      tests.test_spec 'unit' do |unit_tests|
+        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      end
+    end
   end
 
-  s.subspec "HeaderStackView" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
+  mdc.subspec "BottomSheet+ShapeThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}", "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/private/*.{h,m}"
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/schemes/Shape"
   end
 
-  s.subspec "Ink" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+  # Buttons
+
+  mdc.subspec "Buttons" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+
+    component.dependency 'MDFInternationalization'
+    component.dependency 'MDFTextAccessibility'
+    component.dependency "MaterialComponents/Ink"
+    component.dependency "MaterialComponents/ShadowElevations"
+    component.dependency "MaterialComponents/ShadowLayer"
+    component.dependency "MaterialComponents/Typography"
+    component.dependency "MaterialComponents/private/Math"
+    component.dependency "MaterialComponents/private/Shapes"
+
+    component.test_spec 'tests' do |tests|
+      tests.test_spec 'unit' do |unit_tests|
+        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      end
+    end
   end
 
-  s.subspec "NavigationBar" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
+  mdc.subspec "Buttons+ColorThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}", "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/private/*.{h,m}"
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/schemes/Color"
+  end
+
+  mdc.subspec "Buttons+TitleColorAccessibilityMutator" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}", "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/private/*.{h,m}"
+
+    extension.dependency 'MDFTextAccessibility'
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+  end
+
+  mdc.subspec "Buttons+ShapeThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/schemes/Shape"
+  end
+
+  mdc.subspec "Buttons+TypographyThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/schemes/Typography"
+  end
+
+  mdc.subspec "Buttons+ButtonThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}", "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/private/*.{h,m}"
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/Buttons+ColorThemer"
+    extension.dependency "MaterialComponents/Buttons+ShapeThemer"
+    extension.dependency "MaterialComponents/Buttons+TypographyThemer"
+  end
+
+  # ButtonBar
+
+  mdc.subspec "ButtonBar" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+
+    component.dependency "MDFInternationalization"
+    component.dependency "MaterialComponents/Buttons"
+    component.dependency "MaterialComponents/private/Application"
+
+    component.test_spec 'tests' do |tests|
+      tests.test_spec 'unit' do |unit_tests|
+        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      end
+    end
+  end
+
+  mdc.subspec "ButtonBar+ColorThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/Themes"
+  end
+
+  mdc.subspec "ButtonBar+TypographyThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/schemes/Typography"
+  end
+
+  # Cards
+
+  mdc.subspec "Cards" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}"
+    component.dependency "MaterialComponents/Ink"
+    component.dependency "MaterialComponents/ShadowLayer"
+    component.dependency "MaterialComponents/private/Icons/ic_check_circle"
+    component.dependency "MaterialComponents/private/Math"
+    component.dependency "MaterialComponents/private/Shapes"
+
+    component.test_spec 'tests' do |tests|
+      tests.test_spec 'unit' do |unit_tests|
+        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      end
+    end
+  end
+
+  mdc.subspec "Cards+ColorThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/schemes/Color"
+  end
+
+  mdc.subspec "Cards+ShapeThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/schemes/Shape"
+  end
+
+  mdc.subspec "Cards+CardThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/Cards+ColorThemer"
+    extension.dependency "MaterialComponents/Cards+ShapeThemer"
+  end
+
+  # Chips
+
+  mdc.subspec "Chips" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+    component.dependency "MDFInternationalization"
+    component.dependency "MaterialComponents/Ink"
+    component.dependency "MaterialComponents/ShadowLayer"
+    component.dependency "MaterialComponents/ShadowElevations"
+    component.dependency "MaterialComponents/TextFields"
+    component.dependency "MaterialComponents/Typography"
+    component.dependency "MaterialComponents/private/Math"
+    component.dependency "MaterialComponents/private/ShapeLibrary"
+    component.dependency "MaterialComponents/private/Shapes"
+
+    component.test_spec 'tests' do |tests|
+      tests.test_spec 'unit' do |unit_tests|
+        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      end
+    end
+  end
+
+  mdc.subspec "Chips+ChipThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/Chips+ColorThemer"
+    extension.dependency "MaterialComponents/Chips+ShapeThemer"
+    extension.dependency "MaterialComponents/Chips+TypographyThemer"
+  end
+
+  mdc.subspec "Chips+ColorThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/schemes/Color"
+  end
+
+  mdc.subspec "Chips+FontThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/Themes"
+  end
+
+  mdc.subspec "Chips+ShapeThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/schemes/Shape"
+  end
+
+  mdc.subspec "Chips+TypographyThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/schemes/Typography"
+  end
+
+  # CollectionCells
+
+  mdc.subspec "CollectionCells" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+    component.resources = ["components/#{component.base_name}/src/Material#{component.base_name}.bundle"]
+    component.framework = "CoreGraphics", "QuartzCore"
+
+    component.dependency "MDFInternationalization"
+    component.dependency "MaterialComponents/CollectionLayoutAttributes"
+    component.dependency "MaterialComponents/Ink"
+    component.dependency "MaterialComponents/Typography"
+    component.dependency "MaterialComponents/Palettes"
+    component.dependency "MaterialComponents/private/Icons/ic_check"
+    component.dependency "MaterialComponents/private/Icons/ic_check_circle"
+    component.dependency "MaterialComponents/private/Icons/ic_chevron_right"
+    component.dependency "MaterialComponents/private/Icons/ic_info"
+    component.dependency "MaterialComponents/private/Icons/ic_radio_button_unchecked"
+    component.dependency "MaterialComponents/private/Icons/ic_reorder"
+    component.dependency "MaterialComponents/private/Math"
+
+    component.test_spec 'tests' do |tests|
+      tests.test_spec 'unit' do |unit_tests|
+        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      end
+    end
+  end
+
+  # CollectionLayoutAttributes
+
+  mdc.subspec "CollectionLayoutAttributes" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}"
+
+    component.test_spec 'tests' do |tests|
+      tests.test_spec 'unit' do |unit_tests|
+        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      end
+    end
+  end
+
+  # Collections
+
+  mdc.subspec "Collections" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+    component.resources = ["components/#{component.base_name}/src/Material#{component.base_name}.bundle"]
+    component.framework = "CoreGraphics", "QuartzCore"
+
+    component.dependency "MaterialComponents/CollectionCells"
+    component.dependency "MaterialComponents/CollectionLayoutAttributes"
+    component.dependency "MaterialComponents/Ink"
+    component.dependency "MaterialComponents/Palettes"
+    component.dependency "MaterialComponents/ShadowElevations"
+    component.dependency "MaterialComponents/ShadowLayer"
+    component.dependency "MaterialComponents/Typography"
+
+    component.test_spec 'tests' do |tests|
+      tests.test_spec 'unit' do |unit_tests|
+        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      end
+    end
+  end
+
+  # Dialogs
+
+  mdc.subspec "Dialogs" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+    component.resources = ["components/#{component.base_name}/src/Material#{component.base_name}.bundle"]
+
+    component.dependency "MaterialComponents/Buttons"
+    component.dependency "MaterialComponents/ShadowElevations"
+    component.dependency "MaterialComponents/ShadowLayer"
+    component.dependency "MaterialComponents/Typography"
+    component.dependency "MaterialComponents/private/KeyboardWatcher"
+    component.dependency "MDFInternationalization"
+
+    component.test_spec 'tests' do |tests|
+      tests.test_spec 'unit' do |unit_tests|
+        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      end
+    end
+  end
+
+  mdc.subspec "Dialogs+ColorThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/Themes"
+  end
+
+  mdc.subspec "Dialogs+TypographyThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/schemes/Typography"
+  end
+
+  mdc.subspec "Dialogs+DialogThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/Dialogs+ColorThemer"
+    extension.dependency "MaterialComponents/Dialogs+TypographyThemer"
+  end
+
+  # FeatureHighlight
+
+  mdc.subspec "FeatureHighlight" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+    component.resources = ["components/#{component.base_name}/src/Material#{component.base_name}.bundle"]
+
+    component.dependency "MaterialComponents/private/Math"
+    component.dependency "MaterialComponents/Typography"
+    component.dependency "MDFTextAccessibility"
+
+    component.test_spec 'tests' do |tests|
+      tests.test_spec 'unit' do |unit_tests|
+        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      end
+    end
+  end
+
+  mdc.subspec "FeatureHighlight+ColorThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/Themes"
+  end
+
+  mdc.subspec "FeatureHighlight+FontThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/Themes"
+  end
+
+  mdc.subspec "FeatureHighlight+TypographyThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/schemes/Typography"
+  end
+
+  mdc.subspec "FeatureHighlight+FeatureHighlightAccessibilityMutator" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency 'MDFTextAccessibility'
+  end
+
+  # FlexibleHeader
+
+  mdc.subspec "FlexibleHeader" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+
+    component.dependency 'MDFTextAccessibility'
+    component.dependency "MaterialComponents/private/Application"
+    component.dependency "MaterialComponents/private/UIMetrics"
+
+    component.test_spec 'tests' do |tests|
+      tests.test_spec 'unit' do |unit_tests|
+        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      end
+    end
+  end
+
+  mdc.subspec "FlexibleHeader+CanAlwaysExpandToMaximumHeight" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+  end
+
+  mdc.subspec "FlexibleHeader+ColorThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/schemes/Color"
+  end
+
+  # HeaderStackView
+
+  mdc.subspec "HeaderStackView" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}"
+
+    component.test_spec 'tests' do |tests|
+      tests.test_spec 'unit' do |unit_tests|
+        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      end
+    end
+  end
+
+  mdc.subspec "HeaderStackView+ColorThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/Themes"
+  end
+
+  # Ink
+
+  mdc.subspec "Ink" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+
+    component.dependency "MaterialComponents/private/Math"
+
+    component.test_spec 'tests' do |tests|
+      tests.test_spec 'unit' do |unit_tests|
+        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      end
+    end
+  end
+
+  mdc.subspec "Ink+ColorThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/Themes"
+  end
+
+  # LibraryInfo
+
+  mdc.subspec "LibraryInfo" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+
+    component.test_spec 'tests' do |tests|
+      tests.test_spec 'unit' do |unit_tests|
+        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      end
+    end
+  end
+
+  # List
+
+  mdc.subspec "List" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+
+    component.dependency "MaterialComponents/Ink"
+    component.dependency "MaterialComponents/ShadowElevations"
+    component.dependency "MaterialComponents/ShadowLayer"
+    component.dependency "MaterialComponents/Typography"
+    component.dependency "MDFInternationalization"
+    component.dependency "MaterialComponents/private/Math"
+
+    component.test_spec 'tests' do |tests|
+      tests.test_spec 'unit' do |unit_tests|
+        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      end
+    end
+  end
+
+  mdc.subspec "List+TypographyThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/schemes/Typography"
+  end
+
+  mdc.subspec "List+ColorThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}", "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/private/*.{h,m}"
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/schemes/Color"
+  end
+
+  # MaskedTransition
+
+  mdc.subspec "MaskedTransition" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+
+    component.dependency "MotionTransitioning", "~> 5.0"
+    component.dependency "MotionAnimator", "~> 2.0"
+    component.dependency "MotionInterchange", "~> 1.0"
+
+    component.test_spec 'tests' do |tests|
+      tests.test_spec 'unit' do |unit_tests|
+        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      end
+    end
+  end
+
+  # NavigationBar
+
+  mdc.subspec "NavigationBar" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}"
 
     # Accessibility Configurator
-    ss.dependency "MDFTextAccessibility"
+    component.dependency "MDFTextAccessibility"
 
-    ss.dependency "MaterialComponents/ButtonBar"
-    ss.dependency "MaterialComponents/Typography"
+    component.dependency "MaterialComponents/ButtonBar"
+    component.dependency "MaterialComponents/Typography"
+    component.dependency "MDFInternationalization"
+    component.dependency "MaterialComponents/private/Math"
 
-    ss.dependency "MaterialComponents/private/Math"
-    ss.dependency "MaterialComponents/private/RTL"
+    component.test_spec 'tests' do |tests|
+      tests.test_spec 'unit' do |unit_tests|
+        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      end
+    end
   end
 
-  s.subspec "OverlayWindow" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+  mdc.subspec "NavigationBar+ColorThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
 
-    ss.dependency "MaterialComponents/private/Application"
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/schemes/Color"
   end
 
-  s.subspec "PageControl" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-    ss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
+  mdc.subspec "NavigationBar+TypographyThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/schemes/Typography"
   end
 
-  s.subspec "Palettes" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+  # OverlayWindow
+
+  mdc.subspec "OverlayWindow" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+
+    component.dependency "MaterialComponents/private/Application"
+
+    component.test_spec 'tests' do |tests|
+      tests.test_spec 'unit' do |unit_tests|
+        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      end
+    end
   end
 
-  s.subspec "ProgressView" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
+  # PageControl
 
-    ss.dependency "MaterialComponents/private/Math"
-    ss.dependency "MaterialComponents/private/RTL"
+  mdc.subspec "PageControl" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+    component.resources = ["components/#{component.base_name}/src/Material#{component.base_name}.bundle"]
+
+    component.test_spec 'tests' do |tests|
+      tests.test_spec 'unit' do |unit_tests|
+        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      end
+    end
   end
 
-  s.subspec "ShadowElevations" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
+  mdc.subspec "PageControl+ColorThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/Themes"
   end
 
-  s.subspec "ShadowLayer" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}"
+  # Palettes
+
+  mdc.subspec "Palettes" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+
+    component.test_spec 'tests' do |tests|
+      tests.test_spec 'unit' do |unit_tests|
+        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      end
+    end
   end
 
-  s.subspec "Slider" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+  # ProgressView
 
-    ss.dependency "MaterialComponents/private/ThumbTrack"
+  mdc.subspec "ProgressView" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+
+    component.dependency "MDFInternationalization"
+    component.dependency "MaterialComponents/Palettes"
+    component.dependency "MaterialComponents/private/Math"
+    component.dependency "MotionAnimator", "~> 2.1"
+
+    component.test_spec 'tests' do |tests|
+      tests.test_spec 'unit' do |unit_tests|
+        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      end
+    end
   end
 
-  s.subspec "Snackbar" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+  mdc.subspec "ProgressView+ColorThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
 
-    ss.dependency "MaterialComponents/AnimationTiming"
-    ss.dependency "MaterialComponents/Buttons"
-    ss.dependency "MaterialComponents/OverlayWindow"
-    ss.dependency "MaterialComponents/Typography"
-    ss.dependency "MaterialComponents/private/Application"
-    ss.dependency "MaterialComponents/private/KeyboardWatcher"
-    ss.dependency "MaterialComponents/private/Overlay"
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/Themes"
   end
 
-  s.subspec "Tabs" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
-    ss.resources = ["components/#{ss.base_name}/src/Material#{ss.base_name}.bundle"]
+  # ShadowElevations
 
-    ss.dependency "MaterialComponents/AnimationTiming"
-    ss.dependency "MaterialComponents/Ink"
-    ss.dependency "MaterialComponents/Typography"
-    ss.dependency "MaterialComponents/private/RTL"
+  mdc.subspec "ShadowElevations" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}"
+
+    component.test_spec 'tests' do |tests|
+      tests.test_spec 'unit' do |unit_tests|
+        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      end
+    end
   end
 
-  s.subspec "Typography" do |ss|
-    ss.ios.deployment_target = '8.0'
-    ss.public_header_files = "components/#{ss.base_name}/src/*.h"
-    ss.source_files = "components/#{ss.base_name}/src/*.{h,m}", "components/#{ss.base_name}/src/private/*.{h,m}"
+  # ShadowLayer
 
-    ss.dependency "MaterialComponents/private/Application"
+  mdc.subspec "ShadowLayer" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}"
+
+    component.dependency "MaterialComponents/ShadowElevations"
+
+    component.test_spec 'tests' do |tests|
+      tests.test_spec 'unit' do |unit_tests|
+        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      end
+    end
   end
 
-  s.subspec "private" do |pss|
+  # Slider
 
+  mdc.subspec "Slider" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+
+    component.dependency "MaterialComponents/Palettes"
+    component.dependency "MaterialComponents/ShadowElevations"
+    component.dependency "MaterialComponents/private/ThumbTrack"
+
+    component.test_spec 'tests' do |tests|
+      tests.test_spec 'unit' do |unit_tests|
+        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      end
+    end
+  end
+
+  mdc.subspec "Slider+ColorThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/Palettes"
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/schemes/Color"
+  end
+
+  # Snackbar
+
+  mdc.subspec "Snackbar" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+    component.resources = ["components/#{component.base_name}/src/Material#{component.base_name}.bundle"]
+
+    component.dependency "MaterialComponents/AnimationTiming"
+    component.dependency "MaterialComponents/Buttons"
+    component.dependency "MaterialComponents/OverlayWindow"
+    component.dependency "MaterialComponents/Typography"
+    component.dependency "MaterialComponents/private/Application"
+    component.dependency "MaterialComponents/private/KeyboardWatcher"
+    component.dependency "MaterialComponents/private/Overlay"
+
+    component.test_spec 'tests' do |tests|
+      tests.test_spec 'unit' do |unit_tests|
+        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      end
+    end
+  end
+
+  mdc.subspec "Snackbar+ColorThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/schemes/Color"
+  end
+
+  mdc.subspec "Snackbar+FontThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/Themes"
+  end
+
+  mdc.subspec "Snackbar+TypographyThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/schemes/Typography"
+  end
+
+  # Tabs
+
+  mdc.subspec "Tabs" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+    component.resources = ["components/#{component.base_name}/src/Material#{component.base_name}.bundle"]
+
+    component.dependency "MDFInternationalization"
+    component.dependency "MaterialComponents/AnimationTiming"
+    component.dependency "MaterialComponents/Ink"
+    component.dependency "MaterialComponents/ShadowElevations"
+    component.dependency "MaterialComponents/ShadowLayer"
+    component.dependency "MaterialComponents/Typography"
+    component.dependency "MaterialComponents/private/Math"
+
+    component.test_spec 'tests' do |tests|
+      tests.test_spec 'unit' do |unit_tests|
+        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      end
+    end
+  end
+
+  mdc.subspec "Tabs+ColorThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/schemes/Color"
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+  end
+
+  mdc.subspec "Tabs+FontThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/Themes"
+  end
+
+  mdc.subspec "Tabs+TypographyThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/schemes/Typography"
+  end
+
+  # TextFields
+
+  mdc.subspec "TextFields" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+
+    component.dependency "MaterialComponents/AnimationTiming"
+    component.dependency "MaterialComponents/Palettes"
+    component.dependency "MaterialComponents/Typography"
+    component.dependency "MDFInternationalization"
+    component.dependency "MaterialComponents/private/Math"
+    component.dependency "MDFInternationalization"
+
+    component.test_spec 'tests' do |tests|
+      tests.test_spec 'unit' do |unit_tests|
+        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      end
+    end
+  end
+
+  mdc.subspec "TextFields+ColorThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/Themes"
+  end
+
+  mdc.subspec "TextFields+FontThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/Themes"
+  end
+
+  mdc.subspec "TextFields+TypographyThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
+
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/schemes/Typography"
+  end
+
+  # Themes
+
+  mdc.subspec "Themes" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+
+    component.dependency "MaterialComponents/schemes/Color"
+    component.dependency "MaterialComponents/schemes/Typography"
+
+    component.test_spec 'tests' do |tests|
+      tests.test_spec 'unit' do |unit_tests|
+        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      end
+    end
+  end
+
+  # Typography
+
+  mdc.subspec "Typography" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+
+    component.dependency "MaterialComponents/private/Application"
+    component.dependency "MaterialComponents/private/Math"
+
+    component.test_spec 'tests' do |tests|
+      tests.test_spec 'unit' do |unit_tests|
+        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      end
+    end
+  end
+
+  mdc.subspec "schemes" do |scheme_spec|
+    scheme_spec.subspec "Color" do |scheme|
+      scheme.ios.deployment_target = '8.0'
+      scheme.public_header_files = "components/schemes/#{scheme.base_name}/src/*.h"
+      scheme.source_files = "components/schemes/#{scheme.base_name}/src/*.{h,m}"
+
+      scheme.test_spec 'tests' do |tests|
+        tests.test_spec 'unit' do |unit_tests|
+          unit_tests.source_files = "components/schemes/#{scheme.base_name}/tests/unit/*.{h,m,swift}", "components/schemes/#{scheme.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+          unit_tests.resources = "components/schemes/#{scheme.base_name}/tests/unit/resources/*"
+        end
+      end
+    end
+    scheme_spec.subspec "Shape" do |scheme|
+      scheme.ios.deployment_target = '8.0'
+      scheme.public_header_files = "components/schemes/#{scheme.base_name}/src/*.h"
+      scheme.source_files = "components/schemes/#{scheme.base_name}/src/*.{h,m}"
+      scheme.dependency "MaterialComponents/private/ShapeLibrary"
+      scheme.dependency "MaterialComponents/private/Shapes"
+
+      scheme.test_spec 'tests' do |tests|
+        tests.test_spec 'unit' do |unit_tests|
+          unit_tests.source_files = "components/schemes/#{scheme.base_name}/tests/unit/*.{h,m,swift}", "components/schemes/#{scheme.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+          unit_tests.resources = "components/schemes/#{scheme.base_name}/tests/unit/resources/*"
+        end
+      end
+    end
+    scheme_spec.subspec "Typography" do |scheme|
+      scheme.ios.deployment_target = '8.0'
+      scheme.public_header_files = "components/schemes/#{scheme.base_name}/src/*.h"
+      scheme.source_files = "components/schemes/#{scheme.base_name}/src/*.{h,m}"
+
+      scheme.test_spec 'tests' do |tests|
+        tests.test_spec 'unit' do |unit_tests|
+          unit_tests.source_files = "components/schemes/#{scheme.base_name}/tests/unit/*.{h,m,swift}", "components/schemes/#{scheme.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+          unit_tests.resources = "components/schemes/#{scheme.base_name}/tests/unit/resources/*"
+        end
+      end
+    end
+  end
+
+  mdc.subspec "private" do |private_spec|
     # Pull in icon dependencies
     # The implementation of this method is generated by running scripts/sync_icons.sh
     # and defined in scripts/generated/icons.rb
-    registerIcons(pss)
+    registerIcons(private_spec)
 
-    pss.subspec "Application" do |ss|
-      ss.ios.deployment_target = '8.0'
-      ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
-      ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
+    private_spec.subspec "Application" do |component|
+      component.ios.deployment_target = '8.0'
+      component.public_header_files = "components/private/#{component.base_name}/src/*.h"
+      component.source_files = "components/private/#{component.base_name}/src/*.{h,m}"
+
+      component.test_spec 'tests' do |tests|
+        tests.test_spec 'unit' do |unit_tests|
+          unit_tests.source_files = "components/private/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/private/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+          unit_tests.resources = "components/private/#{component.base_name}/tests/unit/resources/*"
+        end
+      end
     end
 
-    pss.subspec "KeyboardWatcher" do |ss|
-      ss.ios.deployment_target = '8.0'
-      ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
-      ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
+    private_spec.subspec "KeyboardWatcher" do |component|
+      component.ios.deployment_target = '8.0'
+      component.public_header_files = "components/private/#{component.base_name}/src/*.h"
+      component.source_files = "components/private/#{component.base_name}/src/*.{h,m}"
 
-      ss.dependency "MaterialComponents/private/Application"
+      component.dependency "MaterialComponents/private/Application"
+
+      component.test_spec 'tests' do |tests|
+        tests.test_spec 'unit' do |unit_tests|
+          unit_tests.source_files = "components/private/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/private/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+          unit_tests.resources = "components/private/#{component.base_name}/tests/unit/resources/*"
+        end
+      end
     end
 
-    pss.subspec "Math" do |ss|
-      ss.ios.deployment_target = '8.0'
-      ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
-      ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
+    private_spec.subspec "Math" do |component|
+      component.ios.deployment_target = '8.0'
+      component.public_header_files = "components/private/#{component.base_name}/src/*.h"
+      component.source_files = "components/private/#{component.base_name}/src/*.{h,m}"
+
+      component.test_spec 'tests' do |tests|
+        tests.test_spec 'unit' do |unit_tests|
+          unit_tests.source_files = "components/private/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/private/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+          unit_tests.resources = "components/private/#{component.base_name}/tests/unit/resources/*"
+        end
+      end
     end
 
-    pss.subspec "Overlay" do |ss|
-      ss.ios.deployment_target = '8.0'
-      ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
-      ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}", "components/private/#{ss.base_name}/src/private/*.{h,m}"
+    private_spec.subspec "Overlay" do |component|
+      component.ios.deployment_target = '8.0'
+      component.public_header_files = "components/private/#{component.base_name}/src/*.h"
+      component.source_files = "components/private/#{component.base_name}/src/*.{h,m}", "components/private/#{component.base_name}/src/private/*.{h,m}"
+
+      component.test_spec 'tests' do |tests|
+        tests.test_spec 'unit' do |unit_tests|
+          unit_tests.source_files = "components/private/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/private/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+          unit_tests.resources = "components/private/#{component.base_name}/tests/unit/resources/*"
+        end
+      end
     end
 
-    pss.subspec "RTL" do |ss|
-      ss.ios.deployment_target = '8.0'
-      ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
-      ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
+    private_spec.subspec "ShapeLibrary" do |component|
+      component.ios.deployment_target = '8.0'
+      component.public_header_files = "components/private/#{component.base_name}/src/*.h"
+      component.source_files = "components/private/#{component.base_name}/src/*.{h,m}", "components/private/#{component.base_name}/src/private/*.{h,m}"
+
+      component.dependency "MaterialComponents/private/Shapes"
+      component.dependency "MaterialComponents/private/Math"
+
+      component.test_spec 'tests' do |tests|
+        tests.test_spec 'unit' do |unit_tests|
+          unit_tests.source_files = "components/private/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/private/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+          unit_tests.resources = "components/private/#{component.base_name}/tests/unit/resources/*"
+        end
+      end
     end
 
-    pss.subspec "ThumbTrack" do |ss|
-      ss.ios.deployment_target = '8.0'
-      ss.public_header_files = "components/private/#{ss.base_name}/src/*.h"
-      ss.source_files = "components/private/#{ss.base_name}/src/*.{h,m}"
+    private_spec.subspec "Shapes" do |component|
+      component.ios.deployment_target = '8.0'
+      component.public_header_files = "components/private/#{component.base_name}/src/*.h"
+      component.source_files = "components/private/#{component.base_name}/src/*.{h,m}", "components/private/#{component.base_name}/src/private/*.{h,m}"
 
-      ss.dependency "MaterialComponents/Ink"
-      ss.dependency "MaterialComponents/ShadowElevations"
-      ss.dependency "MaterialComponents/ShadowLayer"
-      ss.dependency "MaterialComponents/Typography"
+      component.dependency "MaterialComponents/ShadowLayer"
+      component.dependency "MaterialComponents/private/Math"
 
-      ss.dependency "MaterialComponents/private/Math"
-      ss.dependency "MaterialComponents/private/RTL"
+      component.test_spec 'tests' do |tests|
+        tests.test_spec 'unit' do |unit_tests|
+          unit_tests.source_files = "components/private/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/private/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+          unit_tests.resources = "components/private/#{component.base_name}/tests/unit/resources/*"
+        end
+      end
     end
 
+    private_spec.subspec "ThumbTrack" do |component|
+      component.ios.deployment_target = '8.0'
+      component.public_header_files = "components/private/#{component.base_name}/src/*.h"
+      component.source_files = "components/private/#{component.base_name}/src/*.{h,m}", "components/private/#{component.base_name}/src/private/*.{h,m}"
+
+      component.dependency "MaterialComponents/Ink"
+      component.dependency "MaterialComponents/ShadowElevations"
+      component.dependency "MaterialComponents/ShadowLayer"
+      component.dependency "MaterialComponents/Typography"
+      component.dependency "MDFInternationalization"
+      component.dependency "MaterialComponents/private/Math"
+
+      component.test_spec 'tests' do |tests|
+        tests.test_spec 'unit' do |unit_tests|
+          unit_tests.source_files = "components/private/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/private/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+          unit_tests.resources = "components/private/#{component.base_name}/tests/unit/resources/*"
+        end
+      end
+    end
+
+    private_spec.subspec "UIMetrics" do |component|
+      component.ios.deployment_target = '8.0'
+      component.public_header_files = "components/private/#{component.base_name}/src/*.h"
+      component.source_files = "components/private/#{component.base_name}/src/*.{h,m}", "components/private/#{component.base_name}/src/private/*.{h,m}"
+
+      component.dependency "MaterialComponents/private/Application"
+
+      component.test_spec 'tests' do |tests|
+        tests.test_spec 'unit' do |unit_tests|
+          unit_tests.source_files = "components/private/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/private/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+          unit_tests.resources = "components/private/#{component.base_name}/tests/unit/resources/*"
+        end
+      end
+    end
   end
-
 end

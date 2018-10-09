@@ -1,24 +1,23 @@
-/*
- Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <UIKit/UIKit.h>
 
 #import "MaterialInk.h"
+#import "MaterialPalettes.h"
 
-#import "InkTypicalUseSupplemental.h"
+#import "supplemental/InkTypicalUseSupplemental.h"
 
 @interface InkTypicalUseViewController () <MDCInkTouchControllerDelegate>
 
@@ -31,37 +30,41 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  UIView *containerView = [[UIView alloc] initWithFrame:self.view.frame];
+  [self.view addSubview:containerView];
+  self.containerView = containerView;
+
+  UIColor *blueColor = MDCPalette.bluePalette.tint500;
   CGFloat spacing = 16;
   CGRect customFrame = CGRectMake(0, 0, 200, 200);
-  CGRect unboundedFrame = CGRectMake(spacing / 2, spacing / 2, customFrame.size.width - spacing,
-                                     customFrame.size.height - spacing);
+  CGRect legacyFrame = CGRectMake(spacing / 2, spacing / 2, CGRectGetWidth(customFrame) - spacing,
+                                  CGRectGetHeight(customFrame) - spacing);
 
   // ExampleShapes is a custom UIView with several subviews of various shapes.
-  self.boundedShapes = [[ExampleShapes alloc] initWithFrame:customFrame];
-  self.unboundedShape = [[UIView alloc] initWithFrame:unboundedFrame];
+  self.shapes = [[ExampleShapes alloc] initWithFrame:customFrame];
+  self.legacyShape = [[UIView alloc] initWithFrame:legacyFrame];
 
   [self setupExampleViews];
 
   _inkTouchControllers = [[NSMutableArray alloc] init];
 
-  for (UIView *view in self.boundedShapes.subviews) {
+  for (UIView *view in self.shapes.subviews) {
     MDCInkTouchController *inkTouchController = [[MDCInkTouchController alloc] initWithView:view];
     inkTouchController.delegate = self;
+    inkTouchController.defaultInkView.inkColor = blueColor;
+    inkTouchController.defaultInkView.usesLegacyInkRipple = NO;
     [inkTouchController addInkView];
     [_inkTouchControllers addObject:inkTouchController];
   }
-  [self.view addSubview:self.boundedShapes];
+  [containerView addSubview:self.shapes];
 
   MDCInkTouchController *inkTouchController =
-      [[MDCInkTouchController alloc] initWithView:self.unboundedShape];
+      [[MDCInkTouchController alloc] initWithView:self.legacyShape];
   inkTouchController.delegate = self;
-  [inkTouchController addInkView];
-
-  UIColor *blueColor = [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:0.2];
   inkTouchController.defaultInkView.inkColor = blueColor;
-  inkTouchController.defaultInkView.inkStyle = MDCInkStyleUnbounded;
+  [inkTouchController addInkView];
   [_inkTouchControllers addObject:inkTouchController];
-  [self.view addSubview:self.unboundedShape];
+  [containerView addSubview:self.legacyShape];
 }
 
 #pragma mark - Private

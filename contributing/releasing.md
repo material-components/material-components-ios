@@ -2,74 +2,96 @@
 
 These instructions describe how to cut a new release.
 
-MDC follows the ["git flow"](http://nvie.com/posts/a-successful-git-branching-model/) style of
+MDC follows the ["git flow"](http://nvie.com/posts/a-successful-git-branching-model/) style of 
 development, where the default branch is called `develop`. `stable` (instead of the traditional
-`master`) is reserved for releases. The `develop` branch is periodically copied to a release branch,
+`master`) is reserved for releases. The `develop` branch is periodically copied to a release candidate,
 tested, and then merged into `stable`, which serves as the stable "vetted" branch.
+
+## A note on the role of the release engineer
+
+Each release is driven by a single **release engineer**, who is also a Googler. The release engineer
+is expected to do the following, in order of priority:
+
+- Do not break Google.
+- Cut a release by first thing Wednesday morning, NYC time, without exception.
+- Land a release at least once a week.
+
+If something is stopping the release engineer from achieving any of the above goals, the culprit
+code should be removed immediately from the release.
+
+Importantly: **do not** block the cutting of the weekly release on a PR or a piece of functionality
+you'd like to land. If your PR hasn't landed by the time the release is cut, it's not making it into
+that week's release. If your PR is important, cut a hotfix release in addition to the
+typical weekly release.
+
+If you are not able to cut a release Wednesday morning, cut it Tuesday evening before you leave the
+office.
 
 ## Before you start
 
-### Check for issues that might affect the release process
+### Create a clean clone
 
-Occasionally there are temporary issues with the release process, check the [`release`
-tag](https://github.com/material-components/material-components-ios/labels/where%3ARelease) for
-anything that might be affecting the release.
+Make sure you are working from a direct clone of the main Git repository.  The scripts involved 
+assume that the remote "origin" is the actual repository and not your fork.  Since most contributors 
+will be working day-to-day with a fork, consider creating a separate clone just for releases.
 
-### Check the release milestone
-
-We use weekly release milestones to track important issues that need to land in a given release.
-These issues may come from client teams that are shipping to the App Store on a given date.
-
-Look in the [Tasks for Next Release
-milestone](https://github.com/material-components/material-components-ios/milestone/10) for issues
-that must be resolved before or during release. If there are open issues you must identify why the
-issues are still open and either close them if resolved or determine whether it's acceptable to move
-the issue to a subsequent release.
+    git clone git@github.com:material-components/material-components-ios.git mdc-ios-release
+    cd mdc-ios-release
 
 ## Cutting and testing the release
 
-### Reset your state
+Our entire release process is encoded into the `release` script in the scripts/ directory.
+Read the [tool's readme](../scripts/README-release.md) to learn more about the tool.
 
-Releasing is important enough that we want to start with a clean slate:
-
-    git fetch -a
-    git checkout develop
-    scripts/clean_all
-
-### Cut a release branch and notify clients
-
-Verify that there are no existing release-candidate branches either locally or on origin:
-
-    git fetch -a
-    git remote prune origin
-    git branch -a | grep release-candidate
+### Cut a release branch and create a pull request
 
 Run the following command to cut a release:
 
-    scripts/release/cut
-    git add CHANGELOG.md
-    git commit -m "Cut release candidate."
+    scripts/release cut
 
-You will now have a local `release-candidate` branch and a new section in CHANGELOG.md titled
-"release-candidate".
+Note: if for some reason `cut` fails, first ensure that nobody else is in the middle of cutting a release by visiting the repo and verifying that a release-candidate does not already exist because aborting the release will delete the remote release candidate. If that isn't the case, then please run `scripts/release abort` and try again.
 
-The `scripts/release/cut` script will output the body of an email you should now send so clients can
-test the release.
+You will now have a local `release-candidate` branch, a new section in CHANGELOG.md titled
+"release-candidate", and the `release-candidate` branch will have been pushed to GitHub.
 
-### Test the release branch
+At this point you should also create the initial Release Candidate pull request using the URL
+that the `cut` script generated.
 
-    scripts/prep_all
-    scripts/build_all
-    scripts/test_all
+Name the Pull Request title "[WIP] Release Candidate." until you are able to provide the version as the title.
 
-Identify why any failures occurred and resolve them before continuing.
+Add "@Release-blocking clients" to the pull request's reviewers. This is the mechanism by which
+release-blocking clients are notified of a new release.
 
-> Push `release-candidate` to GitHub with `git push origin release-candidate` as you make changes.
-> This allows other people and machines to track the progress of the release.
+**Do not use GitHub's big green button to merge the approved pull request.** Release are an
+exception to our normal squash-and-merge procedure.
 
-#### Making changes
+#### Hotfixing
 
-You or clients may find problems with the release that need fixing before continuing. You have two
+If you need to cut a hotfix release, run the following command instead:
+
+    scripts/release cut --hotfix
+
+A hotfix release is like a regular release, but its scope is limited specifically to the fix. Hotfix
+release candidates start from origin/stable rather than origin/develop. 
+
+If the hotfix is to fix a regression or a problematic commit in a recent release, the ideal
+path forward is to revert that commit using the `git revert <commit-hash>` command and opening a PR with that change to the develop branch.
+After that PR is merged, you should cherry-pick the revert commit into the `release-candidate` branch: `git cherry-pick <commit-hash>`.
+
+Other than the steps above regarding hotfixing, the entire release process stays the same.
+
+### Start internal testing
+
+You can now start the internal release testing process documented at [go/mdc-releasing](http://go/mdc-releasing).
+
+### Resolve any failures
+
+Push `release-candidate` to GitHub with `git push origin release-candidate` as you make changes.
+This allows other people and machines to track the progress of the release.
+
+#### Make any necessary changes
+
+You, or clients, may find problems with the release that need fixing before continuing. You have two
 options for making those changes:
 
 1.  If the change does not touch library code and is trivial, then you can make the change directly
@@ -86,48 +108,30 @@ The two most important bits of metadata about a release is the *new version numb
 notes*. While we have tooling to help, your job is to make sure these are correct. If you're not
 familiar with [MDC's version number policy](versions.md), please review it now.
 
-You will now begin adding release notes to
-[CHANGELOG.md](https://github.com/material-components/material-components-ios/blob/stable/CHANGELOG.md)
-in the "release-candidate" section. **You will not know the version number yet**, to figure it out
-you will need to examine the release's changes.
+To figure out the release number you will need to examine the release's changes.
 
 You have several tools available for deciding if a release is major, minor, or a patch.
 
-### Generate the API diff
+### Review the API diff
 
-Use scripts/release/diff to determine API changes
-
-Inspect changes to public component headers and manually generate the API diff by hand.
-
-    scripts/release/diff components/*/src/*.h
-
-~~Generate the API diff using scripts/release/api_diff:~~
-
-**The api_diff script is broken. Manually generate the API diff using scripts/release/diff as noted above and continue to the next step, Commit the changes. - Mar.28,2017 (ianegordon)**
-
-    scripts/release/api_diff
-
-- Append the command's output to CHANGELOG.md's "release-candidate" section.
-- Delete any component sections that state "No public API changes detected."
-
-Commit the changes to the release branch.
-
-    git add CHANGELOG.md
-    git commit -m "Added API diff to CHANGELOG.md."
-    git push origin release-candidate
+CHANGELOG.md automatically includes the latest set of public API changes as part of the `cut` command.
+Inspect the API changes to get a quick sense of whether there might be an API-breaking change.
 
 1. If any part of a public API is deleted or changed, then this release is a *major* release.
 1. If any public API's nullability annotations have changed then this release is a *major* release.
 1. Otherwise, if any public APIs added, then this release is a *minor* release.
 1. Otherwise, this release *might* still be a bug fix release.
 
-### Generate the change logs
+### New Features / Top Level Description 
 
-Run the following command to generate a list of changes organized by component:
+In the "New Features" sub-category generated by the API diff tool, please provide more detail as to what is new in the release, also providing examples on how to use the added public API properties/methods. For instance if you have added the method `setShadowWidth:` to `MDCCard` an example usage would be:
+```swift
+let card = MDCCard()
+card.setShadowWidth(10)
+```
 
-    scripts/release/changes
-
-Paste the results into CHANGELOG.md's "release-candidate" section after the "API diffs" section.
+In the top level description please provide a sentence explaining the overall release. Something along the lines of:
+"This minor/major/patch release includes X and Y along with some Z."
 
 ### Verify API changes
 
@@ -155,48 +159,44 @@ discussion on the topic.
 
 The final sanity check is to visually inspect the diff.
 
-> If you have configured Git with a GUI diff tool (`git difftool`), then you can add
-> `--use_diff_tool` to `scripts/release/diff` below.
+> If you have configured Git with a GUI diff tool (`git difftool`) like [Kaleidoscope](https://itunes.apple.com/us/app/kaleidoscope/id587512244?mt=12), then you can add
+> `--use_diff_tool` to `scripts/release diff` below.
 
 Generate a list of component public header changes:
 
-    scripts/release/changed_public_headers
+    scripts/release headers
 
 Show changes to component headers:
 
-    scripts/release/diff components/*/src/*.h
+    scripts/release diff components/*/src/*.h
 
 Show all changes to components:
 
-    scripts/release/diff components/*/src/
+    scripts/release diff components/*/src/
 
 #### Diff everything
 
 Show all changes that are part of this release:
 
-    scripts/release/diff
+    scripts/release diff
 
 ### Classify the release type
 
 You should now be able to identify the release type and its new version number. Bump the release
 (change the version number everywhere):
 
-    scripts/release/bump <major.minor.patch>
-
-Add the version number to the change log in the "release-candidate" section:
-
-    $EDITOR CHANGELOG.md
+    scripts/release bump <major.minor.patch>
 
 Commit the results to your branch:
 
-    git commit -am "Bumped version number to $(pod ipc spec MaterialComponents.podspec | grep '"version"' | cut -d'"' -f4)."
+    git commit -am "Bumped version number to $(scripts/print_version)."
     git push origin release-candidate
 
 #### Verify CocoaPods podspec and trunk access
 
 Send our local podspec through the CocoaPods linter:
 
-    pod lib lint MaterialComponents.podspec
+    pod lib lint MaterialComponents.podspec --skip-tests
 
 CocoaPods publishes a directory of publicly available pods through its **trunk** service.
 Note: Ensure that you can [push the podspec](#publish-to-cocoapods) later by checking for `MaterialComponents` in your list of available `Pods` when you:
@@ -233,74 +233,55 @@ go-ahead from the following clients:
 
 ---
 
-## Send the release out for review
-
-Send the release-candidate branch out for review by opening [a pull request from `release-candidate`
-to
-`stable`](https://github.com/material-components/material-components-ios/compare/stable...release-candidate).
-
-Get a reviewer to approve the change.
-
-**Do not use GitHub's big green button to merge the approved pull request.** Release are an
-exception to our normal squash-and-merge procedure. 
-
 ## Merge the release candidate branch
 
 Once the release-candidate has passed all tests by clients, you may merge the release into the
-`develop` and `stable` branches.
+`develop` and `stable` branches using the `release` script.
+
+**Do not use GitHub's big green button to merge the approved pull request.** Release are an
+exception to our normal squash-and-merge procedure. 
 
     # Did you listen to the dragon?
     #
     # Do not run this until all release-blocking clients have given the go-ahead.
     # Ensure that you've checked off every item in the commit message's checklist.
     #
-    scripts/release/merge
+    scripts/release merge <version>
 
 Once you've resolved any merge conflicts your local `develop` and `stable` branches will both
 include the latest changes from `release-candidate`.
 
-Before pushing these changes to GitHub it's a good idea to run a final sanity check:
+You must merge to **both** develop and stable. This is the mechanism by which we ensure that
+stable matches develop.
 
-    git checkout stable
-    scripts/test_all
+## Push the branches to GitHub
 
-    git checkout develop
-    scripts/test_all
-
-You can now push both branches to GitHub:
+You can now push the merged release candidate to GitHub so that you can complete the final
+synchronization within Google.
 
     git push origin stable develop
 
-and delete the release branch:
-
-    git branch -d release-candidate
-    git push origin :release-candidate
+You can now sync to the desired stable release. [go/mdc-releasing#re-run-the-import-script-against-githubstable](http://go/mdc-releasing#re-run-the-import-script-against-githubstable). Once you've submitted
+the internal CL, continue below to tag and publish the release.
 
 ## Publish the official release
 
-1. Have all release-blocking clients given the go-ahead? **Do not create the official release until
-   all release-blocking clients are ready**. Otherwise you might publish a release that isn't
-   actually stable.
-1. Visit our
-   [GitHub list of releases](https://github.com/material-components/material-components-ios/releases), click on
-   "Draft a new release".
-1. Tag the release "vX.Y.Z".
-1. Select the stable branch.
-1. Title the release "Release X.Y.Z".
-1. In the body of the release notes, paste the text from [CHANGELOG.md](https://github.com/material-components/material-components-ios/blob/stable/CHANGELOG.md) for this release.
-1. Publish the release.
+> Have all release-blocking clients given the go-ahead? **Do not create the official release
+> until all release-blocking clients are ready**. Otherwise you might publish a release that
+> isn't actually stable.
+
+You can now publish the release to GitHub:
+
+    scripts/release publish <version>
 
 ## Publish to Cocoapods
 
-    pod trunk push MaterialComponents.podspec
-
-## Reply to the original release email message
-
-Post a reply to your message on [Material Components for iOS
-Discuss](https://groups.google.com/forum/#!forum/material-components-ios-discuss) indicating that
-you are done.
+    git checkout stable
+    pod trunk push MaterialComponents.podspec --skip-tests
 
 ## Coordinate with release-blocking clients to finish work
 
 Any work that was started by the [Release-blocking clients](#release-blocking-clients)
 (dragon) step above may need to be finalized.
+
+Also follow last instructions in the [internal release instructions](http://go/mdc-releasing)

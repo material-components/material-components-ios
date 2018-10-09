@@ -1,24 +1,21 @@
-/*
- Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCStatusBarShifter.h"
 
-#import "UIApplication+AppExtensions.h"
+#import "MaterialApplication.h"
 
-static CGFloat kStatusBarExpectedHeight = 20;
 static NSTimeInterval kStatusBarBecomesInvalidAnimationDuration = 0.2;
 
 // If the time changes then we need to invalidate the status bar.
@@ -54,12 +51,18 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
   // While our snapshot is invalid we have slightly different status bar visibility.
   BOOL _prefersStatusBarHiddenWhileInvalid;
 
+  BOOL _isChangingInterfaceOrientation;
+
   BOOL _prefersStatusBarHidden;
   MDCStatusBarShifterState _snapshotState;
+
+  // The height of the status bar as it is before we do anything to it.
+  CGFloat _originalStatusBarHeight;
 }
 
 - (void)dealloc {
   [_replicaInvalidatorTimer invalidate];
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (instancetype)init {
@@ -67,8 +70,22 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
   if (self) {
     _enabled = YES;
     _snapshottingEnabled = YES;
+
+    _originalStatusBarHeight = [UIApplication mdc_safeSharedApplication].statusBarFrame.size.height;
+    [[NSNotificationCenter defaultCenter]
+        addObserver:self
+           selector:@selector(statusBarDidChangeFrame)
+               name:UIApplicationDidChangeStatusBarFrameNotification
+             object:nil];
   }
   return self;
+}
+
+#pragma mark - Notification
+
+- (void)statusBarDidChangeFrame {
+  CGFloat statusBarHeight = [UIApplication mdc_safeSharedApplication].statusBarFrame.size.height;
+  _originalStatusBarHeight = statusBarHeight == 0 ? _originalStatusBarHeight : statusBarHeight;
 }
 
 #pragma mark - Private
@@ -133,6 +150,14 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
     snapshotState = MDCStatusBarShifterStateInvalidSnapshot;
   }
 
+  // Invalidate the snapshot if our replica view is currently hidden and we're attempting to take
+  // a new snapshot. This handles the case where you're running on an iPhone X in landscape, you
+  // hide the header, and then rotate back to portrait. It is at this point that we want to
+  // invalidate the snapshot.
+  if (_isChangingInterfaceOrientation && snapshotState == MDCStatusBarShifterStateIsSnapshot) {
+    snapshotState = MDCStatusBarShifterStateInvalidSnapshot;
+  }
+
   [_replicaInvalidatorTimer invalidate];
 
   _snapshotState = snapshotState;
@@ -157,8 +182,10 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
       // Take a snapshot of the status bar.
       UIView *snapshotView = [[UIScreen mainScreen] snapshotViewAfterScreenUpdates:NO];
       UIView *clippingView = [[UIView alloc] init];
+      CGFloat statusBarHeight =
+          [UIApplication mdc_safeSharedApplication].statusBarFrame.size.height;
       clippingView.frame =
-          CGRectMake(0, 0, snapshotView.frame.size.width, kStatusBarExpectedHeight);
+          CGRectMake(0, 0, snapshotView.frame.size.width, statusBarHeight);
       clippingView.autoresizingMask =
           (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin);
       clippingView.clipsToBounds = YES;
@@ -205,18 +232,18 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
     return;
   }
 
-  // Bound the status bar range to [0...kStatusBarExpectedHeight].
-  CGFloat statusOffsetY = MIN(kStatusBarExpectedHeight, offset);
+  // Bound the status bar range to [0..._originalStatusBarHeight].
+  CGFloat statusOffsetY = MIN(_originalStatusBarHeight, offset);
 
   // Adjust the frame of the status bar.
   if (statusOffsetY > 0) {
-    _prefersStatusBarHiddenWhileInvalid = statusOffsetY >= kStatusBarExpectedHeight;
+    _prefersStatusBarHiddenWhileInvalid = statusOffsetY >= _originalStatusBarHeight;
 
     if (_snapshotState == MDCStatusBarShifterStateInvalidSnapshot) {
       // If we're in an invalid state then we have to manage the visibility directly.
       [UIView animateWithDuration:kStatusBarBecomesInvalidAnimationDuration
                        animations:^{
-                         self.prefersStatusBarHidden = _prefersStatusBarHiddenWhileInvalid;
+                         self.prefersStatusBarHidden = self->_prefersStatusBarHiddenWhileInvalid;
                        }];
 
     } else {
@@ -244,7 +271,7 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
 - (BOOL)canUpdateStatusBarFrame {
   CGRect statusBarFrame = [[UIApplication mdc_safeSharedApplication] statusBarFrame];
   CGFloat statusBarHeight = MIN(statusBarFrame.size.width, statusBarFrame.size.height);
-  return ((statusBarHeight == kStatusBarExpectedHeight) || _statusBarReplicaView ||
+  return ((statusBarHeight == _originalStatusBarHeight) || _statusBarReplicaView ||
           _snapshotState == MDCStatusBarShifterStateInvalidSnapshot);
 }
 
@@ -254,10 +281,16 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
 
 - (void)interfaceOrientationWillChange {
   _statusBarReplicaView.hidden = YES;
+  _isChangingInterfaceOrientation = YES;
 }
 
 - (void)interfaceOrientationDidChange {
   _statusBarReplicaView.hidden = NO;
+  _isChangingInterfaceOrientation = NO;
+}
+
+- (void)didMoveToWindow {
+  _originalStatusBarHeight = [UIApplication mdc_safeSharedApplication].statusBarFrame.size.height;
 }
 
 @end

@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCOverlayObserver.h"
 
@@ -21,10 +19,17 @@
 #import <UIKit/UIKit.h>
 
 #import "MDCOverlayImplementor.h"
-#import "MDCOverlayTransitioning.h"
 #import "private/MDCOverlayAnimationObserver.h"
 #import "private/MDCOverlayObserverOverlay.h"
 #import "private/MDCOverlayObserverTransition.h"
+
+// If this is ever required elsewhere in the code, just disable unused parameter warnings entirely
+// with -Wno-unused-params.
+#ifdef NS_BLOCK_ASSERTIONS
+#define MDC_UNUSED_IN_RELEASE __unused
+#else
+#define MDC_UNUSED_IN_RELEASE
+#endif
 
 @interface MDCOverlayObserver () <MDCOverlayAnimationObserverDelegate>
 
@@ -54,7 +59,7 @@ static MDCOverlayObserver *_sOverlayObserver;
   }
 }
 
-+ (instancetype)observerForScreen:(UIScreen *)screen {
++ (instancetype)observerForScreen:(MDC_UNUSED_IN_RELEASE UIScreen *)screen {
   NSParameterAssert(screen == nil || screen == [UIScreen mainScreen]);
   return _sOverlayObserver;
 }
@@ -82,6 +87,10 @@ static MDCOverlayObserver *_sOverlayObserver;
                                                object:nil];
   }
   return self;
+}
+
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - Overlays
@@ -151,7 +160,8 @@ static MDCOverlayObserver *_sOverlayObserver;
     return;
   }
 
-  NSValue *frame = userInfo[MDCOverlayFrameKey] ?: [NSValue valueWithCGRect:CGRectNull];
+  NSValue *frame = userInfo[MDCOverlayFrameKey] ?
+                      userInfo[MDCOverlayFrameKey] : [NSValue valueWithCGRect:CGRectNull];
   NSNumber *duration = userInfo[MDCOverlayTransitionDurationKey];
 
   // Update the overlay frame.
@@ -207,10 +217,10 @@ static MDCOverlayObserver *_sOverlayObserver;
     return NSNotFound;
   }
 
-  return [invocations
-      indexOfObjectPassingTest:^BOOL(NSInvocation *invocation, NSUInteger idx, BOOL *stop) {
-        return invocation.selector == action;
-      }];
+  return [invocations indexOfObjectPassingTest:
+          ^BOOL(NSInvocation *invocation, __unused NSUInteger idx, __unused BOOL *stop) {
+            return invocation.selector == action;
+          }];
 }
 
 - (void)addTarget:(id)target action:(SEL)action {
@@ -296,7 +306,7 @@ static MDCOverlayObserver *_sOverlayObserver;
   self.pendingTransition = nil;
 }
 
-- (void)animationObserverDidEndRunloop:(MDCOverlayAnimationObserver *)observer {
+- (void)animationObserverDidEndRunloop:(__unused MDCOverlayAnimationObserver *)observer {
   [self fireTransition];
 }
 

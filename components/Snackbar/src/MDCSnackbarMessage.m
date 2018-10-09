@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCSnackbarMessage.h"
 #import "MDCSnackbarMessageView.h"
@@ -32,7 +30,7 @@ NSString *const MDCSnackbarMessageBoldAttributeName = @"MDCSnackbarMessageBoldAt
 @end
 
 @implementation MDCSnackbarMessage
-
+static BOOL _usesLegacySnackbar = YES;
 @synthesize accessibilityIdentifier;
 @dynamic text;
 
@@ -60,14 +58,17 @@ NSString *const MDCSnackbarMessageBoldAttributeName = @"MDCSnackbarMessageBoldAt
   return [MDCSnackbarMessageView class];
 }
 
-- (instancetype)copyWithZone:(NSZone *)zone {
+- (instancetype)copyWithZone:(__unused NSZone *)zone {
   MDCSnackbarMessage *copy = [[[self class] alloc] init];
   copy.attributedText = self.attributedText;
   copy.duration = self.duration;
   copy.category = self.category;
   copy.accessibilityLabel = self.accessibilityLabel;
+  copy.accessibilityHint = self.accessibilityHint;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   copy.buttonTextColor = self.buttonTextColor;
-  copy.highlightedButtonTextColor = self.highlightedButtonTextColor;
+#pragma clang diagnostic pop
 
   // Unfortunately there's not really a concept of 'copying' a block (in the same way you would copy
   // a string, for example). A block's pointer is immutable once it is created and copied to the
@@ -147,17 +148,26 @@ NSString *const MDCSnackbarMessageBoldAttributeName = @"MDCSnackbarMessageBoldAt
   });
 }
 
++ (void)setUsesLegacySnackbar:(BOOL)usesLegacySnackbar {
+  _usesLegacySnackbar = usesLegacySnackbar;
+}
+
++ (BOOL)usesLegacySnackbar {
+  return _usesLegacySnackbar;
+}
+
 @end
 
 @implementation MDCSnackbarMessageAction
 
 @synthesize accessibilityIdentifier;
 
-- (instancetype)copyWithZone:(NSZone *)zone {
+- (instancetype)copyWithZone:(__unused NSZone *)zone {
   MDCSnackbarMessageAction *copy = [[[self class] alloc] init];
   copy.title = self.title;
   copy.handler = self.handler;  // See the comment on @c completionHandler above.
   copy.accessibilityIdentifier = self.accessibilityIdentifier;
+  copy.accessibilityHint = self.accessibilityHint;
 
   return copy;
 }

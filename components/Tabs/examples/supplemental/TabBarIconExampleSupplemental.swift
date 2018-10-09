@@ -1,29 +1,38 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// swiftlint:disable function_body_length
+// swiftlint:disable line_length
 
 import UIKit
 
+import MaterialComponents.MaterialAppBar
+import MaterialComponents.MaterialAppBar_ColorThemer
+import MaterialComponents.MaterialAppBar_TypographyThemer
 import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialButtons_ButtonThemer
+import MaterialComponents.MaterialPalettes
 
 extension TabBarIconSwiftExample {
 
-  // MARK: Methods
+  func setupAlignmentButton() -> MDCButton {
+    let alignmentButton = MDCButton()
 
-  func setupAlignmentButton() -> MDCRaisedButton {
-    let alignmentButton = MDCRaisedButton()
+    let buttonScheme = MDCButtonScheme()
+    buttonScheme.colorScheme = colorScheme
+    buttonScheme.typographyScheme = typographyScheme
+    MDCContainedButtonThemer.applyScheme(buttonScheme, to: alignmentButton)
 
     alignmentButton.setTitle("Change Alignment", for: .normal)
     alignmentButton.setTitleColor(.white, for: .normal)
@@ -49,23 +58,26 @@ extension TabBarIconSwiftExample {
     return alignmentButton
   }
 
-  func setupAppBar() -> MDCAppBar {
-    let appBar = MDCAppBar()
+  func setupAppBar() -> MDCAppBarViewController {
+    let appBarViewController = MDCAppBarViewController()
 
-    self.addChildViewController(appBar.headerViewController)
-    appBar.headerViewController.headerView.backgroundColor = UIColor.white
-    appBar.headerViewController.headerView.minimumHeight = 76 + 72
-    appBar.headerViewController.headerView.tintColor = MDCPalette.blue().tint500
+    self.addChildViewController(appBarViewController)
+    appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
+    appBarViewController.headerView.minimumHeight = 56 + 72
+    appBarViewController.headerView.tintColor = MDCPalette.blue.tint500
+    MDCAppBarColorThemer.applyColorScheme(colorScheme, to: appBarViewController)
+    MDCAppBarTypographyThemer.applyTypographyScheme(typographyScheme, to: appBarViewController)
 
-    appBar.headerStackView.bottomBar = self.tabBar
-    appBar.headerStackView.setNeedsLayout()
-    return appBar
+    appBarViewController.headerStackView.bottomBar = self.tabBar
+    appBarViewController.headerStackView.setNeedsLayout()
+    return appBarViewController
   }
 
   func setupExampleViews() {
     view.backgroundColor = UIColor.white
 
-    appBar.addSubviewsToParent()
+    view.addSubview(appBarViewController.view)
+    appBarViewController.didMove(toParentViewController: self)
 
     let badgeIncrementItem = UIBarButtonItem(title: "Add",
                                              style: .plain,
@@ -73,8 +85,6 @@ extension TabBarIconSwiftExample {
                                              action:#selector(incrementDidTouch(sender: )))
 
     self.navigationItem.rightBarButtonItem = badgeIncrementItem
-
-    self.title = "Tabs With Icons"
 
     setupScrollingContent()
   }
@@ -88,7 +98,10 @@ extension TabBarIconSwiftExample {
 
     scrollView.backgroundColor = UIColor.red
 
-    let views = ["scrollView": scrollView, "header": self.appBar.headerStackView]
+    let views: [String: UIView] = [
+      "scrollView": scrollView,
+      "header": self.appBarViewController.headerStackView
+    ]
     NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "V:[header][scrollView]|",
                                                                options: [],
                                                                metrics: nil,
@@ -110,7 +123,7 @@ extension TabBarIconSwiftExample {
 
     let infoPage = UIView(frame: CGRect())
     infoPage.translatesAutoresizingMaskIntoConstraints = false
-    infoPage.backgroundColor = MDCPalette.lightBlue().tint300
+    infoPage.backgroundColor = MDCPalette.lightBlue.tint300
     scrollView.addSubview(infoPage)
 
     let infoLabel = UILabel(frame: CGRect())
@@ -184,7 +197,7 @@ extension TabBarIconSwiftExample {
   func setupStarPage() -> UIView {
     let starPage = UIView(frame: CGRect())
     starPage.translatesAutoresizingMaskIntoConstraints = false
-    starPage.backgroundColor = MDCPalette.lightBlue().tint200
+    starPage.backgroundColor = MDCPalette.lightBlue.tint200
     self.scrollView.addSubview(starPage)
 
     return starPage
@@ -192,7 +205,7 @@ extension TabBarIconSwiftExample {
 
   func addStar(centered: Bool) {
     let starImage = UIImage(named:"TabBarDemo_ic_star",
-                            in:Bundle(for: type(of: self)),
+                            in:Bundle(for: TabBarIconSwiftExample.self),
                             compatibleWith:nil)
     let starView = UIImageView(image: starImage)
     starView.translatesAutoresizingMaskIntoConstraints = false
@@ -221,15 +234,30 @@ extension TabBarIconSwiftExample {
 
 extension TabBarIconSwiftExample {
   override var childViewControllerForStatusBarStyle: UIViewController? {
-    return appBar.headerViewController
+    return appBarViewController
+  }
+
+  override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    coordinator.animate(alongsideTransition: { (_) in
+      if let selectedItem = self.tabBar.selectedItem {
+        self.tabBar(self.tabBar, didSelect: selectedItem)
+      }
+    }, completion: nil)
+    super.viewWillTransition(to: size, with: coordinator)
   }
 }
 
-// MARK: Catalog by convention
+// MARK: - Catalog by convention
 extension TabBarIconSwiftExample {
-  class func catalogBreadcrumbs() -> [String] {
-    return ["Tab Bar", "Icons and Text (Swift)"]
+
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Tab Bar", "Tabs with Icons (Swift)"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
   }
+
   func catalogShouldHideNavigation() -> Bool {
     return true
   }

@@ -1,1 +1,0 @@
-../../../MaterialComponents/components/Tabs/src/MDCTabBarItemAppearance.h

@@ -1,38 +1,29 @@
-/*
- Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <UIKit/UIKit.h>
 
-#import "MDCPageControl.h"
+#import "MaterialPageControl.h"
 
 @interface PageControlButtonExample : UIViewController <UIScrollViewDelegate>
 @end
 
-#define RGBCOLOR(r, g, b) \
-  [UIColor colorWithRed:(r) / 255.0f green:(g) / 255.0f blue:(b) / 255.0f alpha:1]
-#define HEXCOLOR(hex) RGBCOLOR((((hex) >> 16) & 0xFF), (((hex) >> 8) & 0xFF), ((hex)&0xFF))
-
 @implementation PageControlButtonExample {
   UIScrollView *_scrollView;
   MDCPageControl *_pageControl;
+  UIButton *_nextButton;
   NSArray *_pages;
-}
-
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Page Control", @"Page Control with Next Button" ];
 }
 
 - (void)viewDidLoad {
@@ -42,9 +33,11 @@
   CGFloat boundsHeight = CGRectGetHeight(self.view.bounds);
 
   NSArray *pageColors = @[
-    HEXCOLOR(0x55C4f5), HEXCOLOR(0x35B7F3), HEXCOLOR(0x1EAAF1), HEXCOLOR(0x35B7F3),
-    HEXCOLOR(0x1EAAF1)
-  ];
+      [UIColor colorWithWhite:0.9f alpha:1.0f],
+      [UIColor colorWithWhite:0.8f alpha:1.0f],
+      [UIColor colorWithWhite:0.7f alpha:1.0f],
+      [UIColor colorWithWhite:0.6f alpha:1.0f],
+      [UIColor colorWithWhite:0.5f alpha:1.0f]  ];
 
   // Scroll view configuration
   _scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
@@ -58,12 +51,12 @@
   NSMutableArray *pages = [NSMutableArray array];
 
   // Add pages to scrollView.
-  for (NSInteger i = 0; i < pageColors.count; i++) {
+  for (NSUInteger i = 0; i < pageColors.count; i++) {
     CGRect pageFrame = CGRectOffset(self.view.bounds, i * boundsWidth, 0);
     UILabel *page = [[UILabel alloc] initWithFrame:pageFrame];
-    page.text = [NSString stringWithFormat:@"Page %zd", i + 1];
+    page.text = [NSString stringWithFormat:@"Page %lu", (unsigned long)(i + 1)];
     page.font = [UIFont systemFontOfSize:50];
-    page.textColor = [UIColor colorWithWhite:0 alpha:0.8];
+    page.textColor = [UIColor colorWithWhite:0 alpha:0.8f];
     page.textAlignment = NSTextAlignmentCenter;
     page.backgroundColor = pageColors[i];
     page.autoresizingMask =
@@ -89,17 +82,14 @@
       UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
   [self.view addSubview:_pageControl];
 
-  UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-  [button setTitle:@"Next Page" forState:UIControlStateNormal];
-  [button sizeToFit];
-  button.center =
-      CGPointMake(boundsWidth - button.frame.size.width / 2 - 16, _pageControl.center.y);
-  button.autoresizingMask =
+  _nextButton = [UIButton buttonWithType:UIButtonTypeCustom];
+  [_nextButton setTitle:@"Next Page" forState:UIControlStateNormal];
+  _nextButton.autoresizingMask =
       UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin;
-  [button addTarget:self
-                action:@selector(didTapButton:)
-      forControlEvents:UIControlEventTouchUpInside];
-  [self.view addSubview:button];
+  [_nextButton addTarget:self
+                  action:@selector(didTapButton:)
+        forControlEvents:UIControlEventTouchUpInside];
+  [self.view addSubview:_nextButton];
 }
 
 #pragma mark - Frame changes
@@ -119,6 +109,24 @@
   offset.x = pageBeforeFrameChange * boundsWidth;
   // This non-anmiated change of offset ensures we keep the same page
   [_scrollView setContentOffset:offset animated:NO];
+
+  // We want the page control to span the bottom of the screen.
+  CGRect standardizedFrame = CGRectStandardize(self.view.frame);
+  [_pageControl sizeThatFits:standardizedFrame.size];
+  UIEdgeInsets edgeInsets = UIEdgeInsetsZero;
+  if (@available(iOS 11.0, *)) {
+    // Accommodate insets for iPhone X.
+    edgeInsets = self.view.safeAreaInsets;
+  }
+  CGFloat yOffset =
+      CGRectGetHeight(self.view.frame) - CGRectGetHeight(_pageControl.frame) - edgeInsets.bottom;
+  _pageControl.frame =
+      CGRectMake(0, yOffset, CGRectGetWidth(self.view.frame), CGRectGetHeight(_pageControl.frame));
+
+  [_nextButton sizeToFit];
+  CGFloat buttonCenterX =
+      boundsWidth - CGRectGetWidth(_nextButton.frame) / 2 - 16 - edgeInsets.right;
+  _nextButton.center = CGPointMake(buttonCenterX, _pageControl.center.y);
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -149,6 +157,16 @@
   offset.x = nextPage * CGRectGetWidth(_scrollView.frame);
   [_scrollView setContentOffset:offset animated:YES];
   [_pageControl setCurrentPage:nextPage animated:YES];
+}
+
+#pragma mark - CatalogByConvention
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Page Control", @"Page Control with Next Button" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
 
 @end

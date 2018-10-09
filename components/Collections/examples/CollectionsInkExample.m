@@ -1,29 +1,24 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
-
-#import "CollectionsInkExample.h"
+#import "MaterialPalettes.h"
+#import "supplemental/CollectionsInkExample.h"
 
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 @implementation CollectionsInkExample {
   NSArray *_content;
-}
-
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Collections", @"Cell Ink Example" ];
 }
 
 - (void)viewDidLoad {
@@ -74,11 +69,21 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
         inkColorAtIndexPath:(NSIndexPath *)indexPath {
   // Update cell ink colors.
   if (indexPath.item == 1) {
-    return [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:0.2];
+    return [MDCPalette.lightBluePalette.tint500 colorWithAlphaComponent:0.2f];
   } else if (indexPath.item == 2) {
-    return [UIColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:0.2];
+    return [UIColor colorWithRed:1.0f green:0.0f blue:0.0f alpha:0.2f];
   }
   return nil;
+}
+
+#pragma mark - CatalogByConvention
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Collections", @"Cell Ink Example" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
 
 @end

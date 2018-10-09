@@ -1,31 +1,38 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <UIKit/UIKit.h>
 
 #import "MaterialAppBar.h"
+#import "MaterialAppBar+ColorThemer.h"
+#import "MaterialAppBar+TypographyThemer.h"
 
 @interface AppBarTypicalUseExample : UITableViewController
 
 // Step 1: Create an App Bar.
-@property(nonatomic, strong) MDCAppBar *appBar;
+@property(nonatomic, strong) MDCAppBarViewController *appBarViewController;
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 
 @end
 
 @implementation AppBarTypicalUseExample
+
+- (void)dealloc {
+  // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
+  self.appBarViewController.headerView.trackingScrollView = nil;
+}
 
 - (id)init {
   self = [super init];
@@ -33,18 +40,18 @@
     self.title = @"App Bar";
 
     // Step 2: Initialize the App Bar and add the headerViewController as a child.
-    _appBar = [[MDCAppBar alloc] init];
-    [self addChildViewController:_appBar.headerViewController];
+    _appBarViewController = [[MDCAppBarViewController alloc] init];
 
-    // Optional: Change the App Bar's background color and tint color.
-    UIColor *color = [UIColor colorWithRed:(CGFloat)0x03 / (CGFloat)255
-                                     green:(CGFloat)0xA9 / (CGFloat)255
-                                      blue:(CGFloat)0xF4 / (CGFloat)255
-                                     alpha:1];
-    _appBar.headerViewController.headerView.backgroundColor = color;
-    _appBar.navigationBar.tintColor = [UIColor whiteColor];
-    _appBar.navigationBar.titleTextAttributes =
-        @{NSForegroundColorAttributeName : [UIColor whiteColor]};
+    // Behavioral flags.
+    _appBarViewController.inferTopSafeAreaInsetFromViewController = YES;
+    _appBarViewController.headerView.minMaxHeightIncludesSafeArea = NO;
+
+    [self addChildViewController:_appBarViewController];
+
+    _appBarViewController.navigationBar.inkColor = [UIColor colorWithWhite:0.9f alpha:0.1f];
+
+    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;
 }
@@ -52,19 +59,23 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  // Recommended step: Set the tracking scroll view.
-  self.appBar.headerViewController.headerView.trackingScrollView = self.tableView;
+  [MDCAppBarColorThemer applyColorScheme:self.colorScheme
+                  toAppBarViewController:self.appBarViewController];
+  [MDCAppBarTypographyThemer applyTypographyScheme:self.typographyScheme
+                            toAppBarViewController:_appBarViewController];
 
-  // Choice: If you do not need to implement any delegate methods and you are not using a
-  //         collection view, you can use the headerViewController as the delegate.
-  // Alternative: See AppBarDelegateForwardingExample.
-  self.tableView.delegate = self.appBar.headerViewController;
+  // Need to update the status bar style after applying the theme.
+  [self setNeedsStatusBarAppearanceUpdate];
+
+  // Allows us to avoid forwarding events, but means we can't enable shift behaviors.
+  self.appBarViewController.headerView.observesTrackingScrollViewScrollEvents = YES;
+
+  // Recommended step: Set the tracking scroll view.
+  self.appBarViewController.headerView.trackingScrollView = self.tableView;
 
   // Step 3: Register the App Bar views.
-  [self.appBar addSubviewsToParent];
-
-  self.tableView.layoutMargins = UIEdgeInsetsZero;
-  self.tableView.separatorInset = UIEdgeInsetsZero;
+  [self.view addSubview:self.appBarViewController.view];
+  [self.appBarViewController didMoveToParentViewController:self];
 
   self.navigationItem.rightBarButtonItem =
       [[UIBarButtonItem alloc] initWithTitle:@"Right"
@@ -76,20 +87,18 @@
 // Optional step: If you allow the header view to hide the status bar you must implement this
 //                method and return the headerViewController.
 - (UIViewController *)childViewControllerForStatusBarHidden {
-  return self.appBar.headerViewController;
+  return self.appBarViewController;
 }
 
 // Optional step: The Header View Controller does basic inspection of the header view's background
 //                color to identify whether the status bar should be light or dark-themed.
 - (UIViewController *)childViewControllerForStatusBarStyle {
-  return self.appBar.headerViewController;
+  return self.appBarViewController;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
 
-  // We don't know whether the navigation bar will be visible within the Catalog by Convention, so
-  // we always hide the navigation bar when we're about to appear.
   [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
@@ -97,17 +106,14 @@
 
 @implementation AppBarTypicalUseExample (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"App Bar", @"App Bar" ];
-}
-
-+ (NSString *)catalogDescription {
-  return @"The App Bar is a flexible navigation bar designed to provide a typical Material Design"
-          " navigation experience.";
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"App Bar", @"App Bar" ],
+    @"description": @"The top app bar displays information and actions relating to "
+    @"the current view.",
+    @"primaryDemo": @YES,
+    @"presentable": @YES,
+  };
 }
 
 - (BOOL)catalogShouldHideNavigation {
@@ -132,6 +138,7 @@
         [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
   }
   cell.layoutMargins = UIEdgeInsetsZero;
+  cell.selectionStyle = UITableViewCellSelectionStyleNone;
   return cell;
 }
 

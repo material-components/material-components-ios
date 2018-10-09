@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <UIKit/UIKit.h>
 
@@ -33,10 +31,15 @@
 + (CGFloat)defaultHeightForStyle:(nonnull MDCItemBarStyle *)style;
 
 /**
- Items displayed in bar.
+ Items displayed in the item bar.
 
- If the new items do not contain the currently selected item, the selection will be reset to the
- first item. Changes to this property are not animated. May not be nil.
+ The bar determines the newly-selected item using the following logic:
+ * Reselect the previously-selected item if it's still present in `items` after the update.
+ * If there was no selection previously or if the old selected item is gone, select the first item.
+   Clients that need empty selection to be preserved across updates to `items` must manually reset
+   selectedItem to nil after the update.
+
+ Changes to this property are not animated.
  */
 @property(nonatomic, copy, nonnull) NSArray<UITabBarItem *> *items;
 
@@ -77,12 +80,11 @@
  selection changes.
  */
 @protocol MDCItemBarDelegate <NSObject>
-
 /**
  Called before the selected item changes by user action. This method is not called for programmatic
- changes to the bar's selected item.
+ changes to the bar's selected item. Return YES to allow the selection.
  */
-- (void)itemBar:(nonnull MDCItemBar *)itemBar willSelectItem:(nonnull UITabBarItem *)item;
+- (BOOL)itemBar:(nonnull MDCItemBar *)itemBar shouldSelectItem:(nonnull UITabBarItem *)item;
 
 /**
  Called when the selected item changes by user action. This method is not called for programmatic

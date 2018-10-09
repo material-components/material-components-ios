@@ -1,25 +1,22 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <UIKit/UIKit.h>
 
-#import "FlexibleHeaderFABSupplemental.h"
-
 #import "MaterialButtons.h"
 #import "MaterialFlexibleHeader.h"
+#import "supplemental/FlexibleHeaderFABSupplemental.h"
 
 static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 
@@ -58,7 +55,13 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 
 - (void)commonMDCFlexibleHeaderViewControllerInit {
   _fhvc = [[MDCFlexibleHeaderViewController alloc] initWithNibName:nil bundle:nil];
-  _fhvc.headerView.minimumHeight = kFlexibleHeaderMinHeight;
+
+  // Behavioral flags.
+  _fhvc.topLayoutGuideAdjustmentEnabled = YES;
+  _fhvc.inferTopSafeAreaInsetFromViewController = YES;
+  _fhvc.headerView.minMaxHeightIncludesSafeArea = NO;
+
+  _fhvc.headerView.maximumHeight = kFlexibleHeaderMinHeight;
   [self addChildViewController:_fhvc];
 }
 
@@ -78,9 +81,7 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
   [self.view addSubview:self.fhvc.view];
   [self.fhvc didMoveToParentViewController:self];
 
-  // Light blue 500
-  self.fhvc.headerView.backgroundColor =
-      [UIColor colorWithRed:0.333 green:0.769 blue:0.961 alpha:1];
+  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:0.1f alpha:1.0f];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -91,6 +92,11 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
   [self.navigationController setNavigationBarHidden:YES animated:animated];
 
   self.floatingButton = [[MDCFloatingButton alloc] init];
+  [self.floatingButton setBackgroundColor:[UIColor colorWithRed:11/255.0f
+                                                          green:232/255.0f
+                                                           blue:94/255.0f
+                                                          alpha:1]
+                                 forState:UIControlStateNormal];
   [self.floatingButton sizeToFit];
   self.floatingButton.center = CGPointMake(
       self.view.frame.size.width - self.floatingButton.frame.size.width, kFlexibleHeaderMinHeight);
@@ -116,18 +122,17 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 #pragma mark -
 
 - (void)didTap:(id)sender {
-  NSLog(@"Button was tapped.");
+  NSLog(@"Button was tapped. %@", sender);
 }
 
 #pragma mark - <UIScrollViewDelegate>
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-  CGFloat contentOffsetY = -scrollView.contentOffset.y;
-  if (contentOffsetY < kFlexibleHeaderMinHeight) {
-    contentOffsetY = kFlexibleHeaderMinHeight;
+  if (scrollView == self.fhvc.headerView.trackingScrollView) {
+    [self.fhvc scrollViewDidScroll:scrollView];
   }
-  self.floatingButton.center = CGPointMake(self.floatingButton.center.x, contentOffsetY);
-  [self.fhvc scrollViewDidScroll:scrollView];
+  self.floatingButton.center = CGPointMake(self.floatingButton.center.x,
+                                           CGRectGetMaxY(self.fhvc.headerView.frame));
 }
 
 @end
