@@ -51,8 +51,8 @@ static const CGFloat kInkAlpha = 0.16f;
   self.colorScheme = [[MDCSemanticColorScheme alloc] init];
   UIColor *surface = UIColor.blueColor;
   UIColor *onSurface = UIColor.redColor;
-  self.colorScheme.primaryColor = surface;
-  self.colorScheme.onPrimaryColor = onSurface;
+  self.colorScheme.surfaceColor = surface;
+  self.colorScheme.onSurfaceColor = onSurface;
   self.typographyScheme = [[MDCTypographyScheme alloc] init];
   UIFont *subtitle = [UIFont systemFontOfSize:12.0 weight:UIFontWeightBold];
   UIFont *body2 = [UIFont systemFontOfSize:10.0 weight:UIFontWeightLight];
@@ -69,8 +69,12 @@ static const CGFloat kInkAlpha = 0.16f;
   MDCSemanticColorScheme *defaultColorScheme = [[MDCSemanticColorScheme alloc] init];
 
   // Then
-  XCTAssertEqualObjects(defaultScheme.typographyScheme, defaultTypographyScheme);
-  XCTAssertEqualObjects(defaultScheme.colorScheme, defaultColorScheme);
+  XCTAssertEqualObjects(defaultScheme.typographyScheme.subtitle1,
+                        defaultTypographyScheme.subtitle1);
+  XCTAssertEqualObjects(defaultScheme.typographyScheme.body2, defaultTypographyScheme.body2);
+  XCTAssertEqualObjects(defaultScheme.colorScheme.surfaceColor, defaultColorScheme.surfaceColor);
+  XCTAssertEqualObjects(defaultScheme.colorScheme.onSurfaceColor,
+                        defaultColorScheme.onSurfaceColor);
 }
 
 - (void)testCustomColorSchemeAppliedToGlobalScheme {
