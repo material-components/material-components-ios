@@ -29,8 +29,6 @@ static UIImage *fakeImage(void) {
   return image;
 }
 
-static const CGFloat kMDCBottomNavigationItemViewBadgeYOffset = 4.f;
-
 @interface MDCBottomNavigationItemView (Testing)
 @property(nonatomic, strong) UIImageView *iconImageView;
 @property(nonatomic, strong) UILabel *label;
@@ -136,36 +134,28 @@ static const CGFloat kMDCBottomNavigationItemViewBadgeYOffset = 4.f;
   // Given
   MDCBottomNavigationItemView *itemView = [[MDCBottomNavigationItemView alloc] init];
   itemView.iconImageView.frame = CGRectMake(8, 8, 24, 24);
+  CGPoint expectedCenter = CGPointMake(32, 12);
 
   // When
   CGPoint badgePoint =
       [itemView badgeCenterFromIconFrame:CGRectStandardize(itemView.iconImageView.frame) isRTL:NO];
-
   // Then
-  CGRect iconFrame = itemView.iconImageView.frame;
-  CGPoint expectPoint =
-      CGPointMake(CGRectGetMaxX(iconFrame),
-                  CGRectGetMinY(iconFrame) + kMDCBottomNavigationItemViewBadgeYOffset);
-  XCTAssertEqualWithAccuracy(badgePoint.x, expectPoint.x, 0.001);
-  XCTAssertEqualWithAccuracy(badgePoint.y, expectPoint.y, 0.001);
+  XCTAssertEqualWithAccuracy(badgePoint.x, expectedCenter.x, 0.001);
+  XCTAssertEqualWithAccuracy(badgePoint.y, expectedCenter.y, 0.001);
 }
 
 - (void)testBadgeCenterIsCorrectWithRTL {
   // Given
   MDCBottomNavigationItemView *itemView = [[MDCBottomNavigationItemView alloc] init];
   itemView.iconImageView.frame = CGRectMake(8, 8, 24, 24);
+  CGPoint expectedCenter = CGPointMake(8, 12);
 
   // When
-  CGPoint badgePoint =
-      [itemView badgeCenterFromIconFrame:CGRectStandardize(itemView.iconImageView.frame) isRTL:YES];
+  CGPoint badgePoint = [itemView badgeCenterFromIconFrame:CGRectStandardize(itemView.iconImageView.frame) isRTL:YES];
 
   // Then
-  CGRect iconFrame = itemView.iconImageView.frame;
-  CGPoint expectPoint =
-      CGPointMake(CGRectGetMinX(iconFrame),
-                  CGRectGetMinY(iconFrame) + kMDCBottomNavigationItemViewBadgeYOffset);
-  XCTAssertEqualWithAccuracy(badgePoint.x, expectPoint.x, 0.001);
-  XCTAssertEqualWithAccuracy(badgePoint.y, expectPoint.y, 0.001);
+  XCTAssertEqualWithAccuracy(badgePoint.x, expectedCenter.x, 0.001);
+  XCTAssertEqualWithAccuracy(badgePoint.y, expectedCenter.y, 0.001);
 }
 
 @end
