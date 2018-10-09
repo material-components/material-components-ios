@@ -441,8 +441,8 @@ lint_clang_format() {
 
     # Install clang-format
     echo "Downloading clang-format..."
-    CLANG_FORMAT_SHA="f2917c1235f32617e5819bb2a7ec0a4f163fbb82f305b5639c540fafa6622d12"
-    curl -Ls "https://github.com/material-foundation/clang-format/releases/download/r340070/clang-format" -o "clang-format"
+    CLANG_FORMAT_SHA="9d2a3aeaee65f09ae5405dd33812d167fadd48aba712965cdb3238e5d8837255"
+    curl -Ls "https://github.com/material-foundation/clang-format/releases/download/r343360/clang-format" -o "clang-format"
     if openssl sha -sha256 "clang-format" | grep -q "$CLANG_FORMAT_SHA"; then
       echo "SHAs match. Proceeding."
     else
