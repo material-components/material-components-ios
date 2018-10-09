@@ -772,6 +772,15 @@ Pod::Spec.new do |mdc|
     extension.dependency "MaterialComponents/schemes/Color"
   end
 
+  mdc.subspec "List+ListThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}", "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/private/*.{h,m}"
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/schemes/Color"
+    extension.dependency "MaterialComponents/schemes/Typography"
+  end
+
   # MaskedTransition
 
   mdc.subspec "MaskedTransition" do |component|

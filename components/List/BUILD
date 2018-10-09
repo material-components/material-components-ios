@@ -61,6 +61,20 @@ mdc_objc_library(
 )
 
 mdc_objc_library(
+    name = "ListThemer",
+    srcs = native.glob(["src/ListThemer/*.m"]),
+    hdrs = native.glob(["src/ListThemer/*.h"]),
+    includes = ["src/ListThemer"],
+    sdk_frameworks = ["UIKit"],
+    deps = [
+        ":List",
+        ":TypographyThemer",
+        ":ColorThemer",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
     srcs = native.glob([
@@ -72,6 +86,7 @@ mdc_objc_library(
     ],
     deps = [
          ":List",
+         ":ListThemer",
          ":ColorThemer",
          ":TypographyThemer",
     ],
