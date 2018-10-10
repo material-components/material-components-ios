@@ -25,13 +25,7 @@
   alertController.messageColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
   alertController.buttonTitleColor = colorScheme.primaryColor;
   alertController.titleIconTintColor = colorScheme.primaryColor;
-
-  MDCDialogPresentationController *dialogPresentationController =
-      alertController.mdc_dialogPresentationController;
-  if (dialogPresentationController) {
-    dialogPresentationController.scrimColor =
-        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.32];
-  }
+  alertController.scrimColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.32];
 }
 
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme {
