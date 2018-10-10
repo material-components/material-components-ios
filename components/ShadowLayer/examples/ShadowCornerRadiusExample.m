@@ -38,7 +38,7 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27.0f;
 
     _elevationLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, frame.size.width, 100)];
     _elevationLabel.textAlignment = NSTextAlignmentCenter;
-    _elevationLabel.text = @"MDCShadowElevationFABPressed";
+    _elevationLabel.text = @"8 pt";
     [self addSubview:_elevationLabel];
 
     CGFloat paperDim = 200.f;
@@ -78,6 +78,7 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27.0f;
 - (void)sliderValueChanged:(MDCSlider *)slider {
   NSInteger points = (NSInteger)round(slider.value);
   _paper.cornerRadius = (CGFloat)points;
+  _elevationLabel.text = [NSString stringWithFormat:@"%ld pt", (long)points];
 }
 
 @end
