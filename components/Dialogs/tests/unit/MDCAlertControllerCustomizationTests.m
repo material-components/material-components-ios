@@ -31,6 +31,7 @@
 - (void)setUp {
   [super setUp];
   self.alert = [MDCAlertController alertControllerWithTitle:@"Title" message:@"Message"];
+  XCTAssertTrue([self.alert.view isKindOfClass:[MDCAlertControllerView class]]);
   self.alertView = (MDCAlertControllerView *)self.alert.view;
   self.presentationController = self.alert.mdc_dialogPresentationController;
 }
