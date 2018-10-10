@@ -870,6 +870,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   if (!_trackingScrollView) {
     self.layer.shadowOpacity =
         self.resetShadowAfterTrackingScrollViewIsReset ? 0 : _visibleShadowOpacity;
+    return;
   }
 
   CGRect frame = self.frame;
