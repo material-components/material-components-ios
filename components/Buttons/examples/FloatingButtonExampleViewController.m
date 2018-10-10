@@ -124,6 +124,10 @@ NSString *kMiniButtonLabel = @"Add";
   CGSize largeIconFabSize = self.largeIconFloatingButton.intrinsicContentSize;
 
   CGFloat xOffset = CGRectGetMinX(bounds) + 20;
+  if (@available(iOS 11.0, *)) {
+    xOffset += self.view.safeAreaInsets.left;
+  }
+
   if (!self.iPadLabel.hidden) {
     self.iPadLabel.center =
         CGPointMake(CGRectGetMidX(bounds),
