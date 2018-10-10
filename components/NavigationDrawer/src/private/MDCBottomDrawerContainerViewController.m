@@ -215,9 +215,9 @@ static CGFloat InitialDrawerHeightFactor(void) {
     // offset to use the outdated content offset of the main scroll view, so we update it
     // accordingly.
     CGPoint normalizedContentOffset = contentOffset;
-    if (self.trackingScrollView != nil) {
-      normalizedContentOffset.y = [self updateContentOffsetForPerformantScrolling:contentOffset.y];
-    }
+//    if (self.trackingScrollView != nil) {
+//      normalizedContentOffset.y = [self updateContentOffsetForPerformantScrolling:contentOffset.y];
+//    }
 
     [self updateViewWithContentOffset:normalizedContentOffset];
   }
@@ -371,23 +371,23 @@ static CGFloat InitialDrawerHeightFactor(void) {
   // Layout the main content view.
   CGRect contentViewFrame = self.scrollView.bounds;
   contentViewFrame.origin.y = self.contentHeaderTopInset + self.contentHeaderHeight;
-  if (self.trackingScrollView != nil) {
-    CGFloat topAreaInsetForHeader = (self.headerViewController ? MDCDeviceTopSafeAreaInset() : 0);
-    contentViewFrame.size.height -= self.contentHeaderHeight - kScrollViewBufferForPerformance;
-    // We add the topAreaInsetForHeader to the height of the content view frame when a tracking
-    // scroll view is set, to normalize the algorithm after the removal of this value from the
-    // topAreaInsetForHeader inside the updateContentOffsetForPerformantScrolling method.
-    if (self.contentHeaderTopInset > topAreaInsetForHeader + FLT_EPSILON) {
-      contentViewFrame.size.height += topAreaInsetForHeader;
-    }
-  } else {
-    contentViewFrame.size.height = self.presentingViewBounds.size.height;// self.contentViewController.preferredContentSize.height;
-  }
+//  if (self.trackingScrollView != nil) {
+//    CGFloat topAreaInsetForHeader = (self.headerViewController ? MDCDeviceTopSafeAreaInset() : 0);
+//    contentViewFrame.size.height -= self.contentHeaderHeight - kScrollViewBufferForPerformance;
+//    // We add the topAreaInsetForHeader to the height of the content view frame when a tracking
+//    // scroll view is set, to normalize the algorithm after the removal of this value from the
+//    // topAreaInsetForHeader inside the updateContentOffsetForPerformantScrolling method.
+//    if (self.contentHeaderTopInset > topAreaInsetForHeader + FLT_EPSILON) {
+//      contentViewFrame.size.height += topAreaInsetForHeader;
+//    }
+//  } else {
+    contentViewFrame.size.height = self.presentingViewBounds.size.height - 200;// self.contentViewController.preferredContentSize.height;
+//  }
   self.contentViewController.view.frame = contentViewFrame;
-  if (self.trackingScrollView != nil) {
-    contentViewFrame.origin.y = self.trackingScrollView.frame.origin.y;
-    self.trackingScrollView.frame = contentViewFrame;
-  }
+//  if (self.trackingScrollView != nil) {
+//    contentViewFrame.origin.y = self.trackingScrollView.frame.origin.y;
+//    self.trackingScrollView.frame = contentViewFrame;
+//  }
 
   [self.headerViewController.view.superview bringSubviewToFront:self.headerViewController.view];
   [self updateViewWithContentOffset:self.scrollView.contentOffset];
@@ -634,8 +634,8 @@ static CGFloat InitialDrawerHeightFactor(void) {
     }
   }
 
-  CGFloat scrollingDistance = _contentHeaderTopInset + contentHeaderHeight + contentHeight;
-  _contentHeightSurplus = scrollingDistance - containerHeight;
+//  CGFloat scrollingDistance = _contentHeaderTopInset + contentHeaderHeight + contentHeight;
+  _contentHeightSurplus = _contentHeaderTopInset;// scrollingDistance - containerHeight;
   if (addedContentHeight < FLT_EPSILON && (_contentHeaderTopInset > _contentHeightSurplus) &&
       (_contentHeaderTopInset - _contentHeightSurplus < self.addedContentHeightThreshold)) {
     CGFloat addedContentheight = _contentHeaderTopInset - _contentHeightSurplus;
