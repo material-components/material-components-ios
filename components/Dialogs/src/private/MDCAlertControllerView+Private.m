@@ -120,9 +120,12 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 }
 
 - (MDCButton *)addActionButtonTitle:(NSString *)actionTitle target:(id)target selector:(SEL)selector {
-  MDCFlatButton *actionButton = [[MDCFlatButton alloc] initWithFrame:CGRectZero];
+  MDCButton *actionButton = [[MDCButton alloc] initWithFrame:CGRectZero];
+  // maintain the Dialogs's default buttons style (as text) after switching to the MDCButton class.
+  [self styleAsTextButton:actionButton];
   actionButton.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
   [actionButton setTitle:actionTitle forState:UIControlStateNormal];
+  [actionButton setTitleColor:_buttonColor forState:UIControlStateNormal];
   if (_buttonColor) {
     // We only set if _buttonColor since settingTitleColor to nil doesn't reset the title to the
     // default
@@ -142,6 +145,18 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
   [_actionButtons addObject:actionButton];
   return actionButton;
+}
+
+- (void)styleAsTextButton:(nonnull MDCButton *)button {
+  UIColor *lightTitleColor = [UIColor.blackColor colorWithAlphaComponent:0.38f];
+  [button setBackgroundColor:UIColor.clearColor forState:UIControlStateNormal];
+  [button setBackgroundColor:UIColor.clearColor forState:UIControlStateDisabled];
+  [button setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+  [button setTitleColor:lightTitleColor forState:UIControlStateDisabled];
+  [button setImageTintColor:UIColor.blackColor forState:UIControlStateNormal];
+  [button setImageTintColor:lightTitleColor forState:UIControlStateDisabled];
+  button.disabledAlpha = 1.f;
+  button.inkColor = [UIColor.blackColor colorWithAlphaComponent:0.16f];
 }
 
 - (void)setTitleFont:(UIFont *)font {
