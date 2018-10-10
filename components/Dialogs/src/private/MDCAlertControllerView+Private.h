@@ -16,8 +16,6 @@
 
 #import "MaterialButtons.h"
 
-@class MDCFlatButton;
-
 @interface MDCAlertControllerView ()
 
 @property(nonatomic, nonnull, strong) UILabel *titleLabel;
@@ -25,7 +23,7 @@
 
 @property(nonatomic, nullable, strong) UIImageView *titleIconImageView;
 
-@property(nonatomic, nonnull, strong, readonly) NSArray<MDCFlatButton *> *actionButtons;
+@property(nonatomic, nonnull, strong, readonly) NSArray<MDCButton *> *actionButtons;
 
 - (nonnull MDCButton *)addActionButtonTitle:(NSString *_Nonnull)actionTitle
                                      target:(nullable id)target
