@@ -20,18 +20,20 @@
 #import <XCTest/XCTest.h>
 
 @interface MDCAlertControllerCustomizationTests : XCTestCase
+@property(nonatomic, nullable, strong) MDCAlertController *alert;
+@property(nonatomic, nullable, weak) MDCAlertControllerView *alertView;
+@property(nonatomic, nullable, weak) MDCDialogPresentationController *presentationController;
 
 @end
 
 @implementation MDCAlertControllerCustomizationTests
 
-MDCAlertController *alert;
-MDCAlertControllerView *alertView;
-
 - (void)setUp {
   [super setUp];
-  alert = [MDCAlertController alertControllerWithTitle:@"Title" message:@"Message"];
-  alertView = (MDCAlertControllerView *)alert.view;
+  self.alert = [MDCAlertController alertControllerWithTitle:@"Title" message:@"Message"];
+  XCTAssertTrue([self.alert.view isKindOfClass:[MDCAlertControllerView class]]);
+  self.alertView = (MDCAlertControllerView *)self.alert.view;
+  self.presentationController = self.alert.mdc_dialogPresentationController;
 }
 
 - (void)testApplyingTitleAlignment {
@@ -39,11 +41,11 @@ MDCAlertControllerView *alertView;
   NSTextAlignment titleAlignment = NSTextAlignmentCenter;
 
   // When
-  alert.titleAlignment = titleAlignment;
+  self.alert.titleAlignment = titleAlignment;
 
   // Then
-  XCTAssertEqual(alertView.titleAlignment, titleAlignment);
-  XCTAssertEqual(alertView.titleLabel.textAlignment, titleAlignment);
+  XCTAssertEqual(self.alertView.titleAlignment, titleAlignment);
+  XCTAssertEqual(self.alertView.titleLabel.textAlignment, titleAlignment);
 }
 
 - (void)testAddingTitleIconToAlert {
@@ -51,12 +53,12 @@ MDCAlertControllerView *alertView;
   UIImage *icon = TestImage(CGSizeMake(24, 24));
 
   // When
-  alert.titleIcon = icon;
+  self.alert.titleIcon = icon;
 
   // Then
-  XCTAssertNotNil(alert.titleIcon);
-  XCTAssertEqual(alertView.titleIcon, icon);
-  XCTAssertEqual(alertView.titleIconImageView.image, icon);
+  XCTAssertNotNil(self.alert.titleIcon);
+  XCTAssertEqual(self.alertView.titleIcon, icon);
+  XCTAssertEqual(self.alertView.titleIconImageView.image, icon);
 }
 
 - (void)testApplyingTintToTitleIcon {
@@ -65,14 +67,14 @@ MDCAlertControllerView *alertView;
   UIColor *tintColor = UIColor.orangeColor;
 
   // When
-  alert.titleIcon = icon;
-  alert.titleIconTintColor = tintColor;
+  self.alert.titleIcon = icon;
+  self.alert.titleIconTintColor = tintColor;
 
   // Then
-  XCTAssertNotNil(alert.titleIcon);
-  XCTAssertEqualObjects(alertView.titleIcon, icon);
-  XCTAssertEqualObjects(alertView.titleIconTintColor, tintColor);
-  XCTAssertEqualObjects(alertView.titleIconImageView.tintColor, tintColor);
+  XCTAssertNotNil(self.alert.titleIcon);
+  XCTAssertEqualObjects(self.alertView.titleIcon, icon);
+  XCTAssertEqualObjects(self.alertView.titleIconTintColor, tintColor);
+  XCTAssertEqualObjects(self.alertView.titleIconImageView.tintColor, tintColor);
 }
 
 - (void)testApplyingTintToTitleIconInAnyOrder {
@@ -81,30 +83,39 @@ MDCAlertControllerView *alertView;
   UIColor *tintColor = UIColor.orangeColor;
 
   // When
-  alert.titleIconTintColor = tintColor;
-  alert.titleIcon = icon;
+  self.alert.titleIconTintColor = tintColor;
+  self.alert.titleIcon = icon;
 
   // Then
-  XCTAssertNotNil(alert.titleIcon);
-  XCTAssertEqualObjects(alertView.titleIcon, icon);
-  XCTAssertEqualObjects(alertView.titleIconTintColor, tintColor);
-  XCTAssertEqualObjects(alertView.titleIconImageView.tintColor, tintColor);
+  XCTAssertNotNil(self.alert.titleIcon);
+  XCTAssertEqualObjects(self.alertView.titleIcon, icon);
+  XCTAssertEqualObjects(self.alertView.titleIconTintColor, tintColor);
+  XCTAssertEqualObjects(self.alertView.titleIconImageView.tintColor, tintColor);
 }
 
 - (void)testApplyingScrimColorToPresentationController {
   // Given
-  UIColor *scrimColor = [UIColor.orangeColor colorWithAlphaComponent:0.5];
-  MDCDialogPresentationController *presentationController = alert.mdc_dialogPresentationController;
-  if (presentationController == nil) {
-    return;  // don't fail the test if mdc_dialogPresentationController is empty
-  }
+  UIColor *scrimColor = [UIColor.orangeColor colorWithAlphaComponent:0.5f];
 
   // When
-  presentationController.scrimColor = scrimColor;
+  self.presentationController.scrimColor = scrimColor;
 
   // Then
-  XCTAssertEqualObjects(alert.mdc_dialogPresentationController.scrimColor, scrimColor);
+  XCTAssertEqualObjects(self.presentationController.scrimColor, scrimColor);
 }
+
+- (void)testApplyingScrimColorToAlert {
+  // Given
+  UIColor *scrimColor = [UIColor.blueColor colorWithAlphaComponent:0.3f];
+
+  // When
+  self.alert.scrimColor = scrimColor;
+
+  // Then
+  XCTAssertEqualObjects(self.presentationController.scrimColor, scrimColor);
+}
+
+#pragma mark - helpers
 
 static inline UIImage *TestImage(CGSize size) {
   CGFloat scale = [UIScreen mainScreen].scale;
