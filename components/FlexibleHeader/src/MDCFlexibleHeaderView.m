@@ -306,11 +306,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 
 - (void)setVisibleShadowOpacity:(float)visibleShadowOpacity {
   _visibleShadowOpacity = visibleShadowOpacity;
-  if (!_trackingScrollView) {
-    self.layer.shadowOpacity = visibleShadowOpacity;
-  } else {
-    [self fhv_accumulatorDidChange];
-  }
+  [self fhv_accumulatorDidChange];
 }
 
 - (void)fhv_setShadowLayer:(CALayer *)shadowLayer
@@ -872,7 +868,8 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 
 - (void)fhv_accumulatorDidChange {
   if (!_trackingScrollView) {
-    return;
+    self.layer.shadowOpacity =
+        self.resetShadowAfterTrackingScrollViewIsReset ? 0 : _visibleShadowOpacity;
   }
 
   CGRect frame = self.frame;
@@ -1468,8 +1465,7 @@ static BOOL isRunningiOS10_3OrAbove() {
 
     // When the tracking scroll view is cleared we need a shadow update.
     if (!self.trackingScrollView) {
-      self.layer.shadowOpacity =
-          self.resetShadowAfterTrackingScrollViewIsReset ? 0 : _visibleShadowOpacity;
+      [self fhv_accumulatorDidChange];
     }
   };
   if (wasTrackingScrollView) {
