@@ -45,13 +45,9 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27.0f;
     CGRect paperFrame =
         CGRectMake((CGRectGetWidth(frame) - paperDim) / 2, 200.f, paperDim, paperDim);
     _paper = [[ShadowRadiusLabel alloc] initWithFrame:paperFrame];
-    _paper.textAlignment = NSTextAlignmentCenter;
-    _paper.text = [NSString stringWithFormat:@"%ld pt", (long)kShadowElevationsDefault];
-    _paper.autoresizingMask =
-        (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin |
-         UIViewAutoresizingFlexibleRightMargin);
     _paper.cornerRadius = 8.0;
     _paper.elevation = 12.0;
+    _paper.backgroundColor = UIColor.grayColor;
     [self addSubview:_paper];
 
     CGFloat margin = 20.f;
@@ -81,9 +77,7 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27.0f;
 // TODO: (#4848) [ShadowLayer] cornerRadius changes don't render
 - (void)sliderValueChanged:(MDCSlider *)slider {
   NSInteger points = (NSInteger)round(slider.value);
-  _paper.text = [NSString stringWithFormat:@"%ld pt", (long)points];
   _paper.cornerRadius = (CGFloat)points;
-  _elevationLabel.text = _paper.text;
 }
 
 @end
