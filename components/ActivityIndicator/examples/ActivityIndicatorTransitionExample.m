@@ -56,7 +56,8 @@ static const NSTimeInterval kActivityIndicatorExampleAnimationDuration = 2.0 / 3
   _activityIndicator = [[MDCActivityIndicator alloc] initWithFrame:CGRectZero];
   [_activityIndicator sizeToFit];
   _activityIndicator.center = CGPointMake(self.view.bounds.size.width / 2, 130);
-  _activityIndicator.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+  _activityIndicator.autoresizingMask =
+      UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
   _activityIndicator.delegate = self;
   [self.view addSubview:_activityIndicator];
 
@@ -71,7 +72,8 @@ static const NSTimeInterval kActivityIndicatorExampleAnimationDuration = 2.0 / 3
   [_button setTitle:@"Refresh" forState:UIControlStateNormal];
   [_button sizeToFit];
   _button.center = CGPointMake(self.view.bounds.size.width / 2, 200);
-  _button.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+  _button.autoresizingMask =
+      UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
   [self.view addSubview:_button];
 
   // Layers used in the custom transition animation.
