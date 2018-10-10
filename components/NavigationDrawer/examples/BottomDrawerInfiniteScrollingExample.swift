@@ -75,7 +75,7 @@ class DrawerContentTableViewController: UITableViewController {
   }
 
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 100
+    return 1
   }
 
   override func numberOfSections(in tableView: UITableView) -> Int {
