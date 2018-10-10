@@ -16,9 +16,8 @@
 
 #import "MaterialShadowElevations.h"
 
-@interface ShadowRadiusLabel : UILabel
+@interface ShadowRadiusLabel : UIView
 
 @property(nonatomic, assign) CGFloat cornerRadius;
 @property(nonatomic, assign) MDCShadowElevation elevation;
-
 @end
