@@ -179,7 +179,14 @@ private class ModalViewController: UIViewController {
     view.backgroundColor = .white
 
     view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTap)))
+    setupLabel()
+  }
 
+  override var preferredStatusBarStyle: UIStatusBarStyle {
+    return .lightContent
+  }
+
+  func setupLabel() {
     let label = UILabel(frame: view.bounds)
     label.numberOfLines = 0
     label.lineBreakMode = .byWordWrapping
@@ -227,11 +234,7 @@ private class ModalViewController: UIViewController {
                        multiplier: 1,
                        constant: bottomOffset).isActive = true
   }
-
-  override var preferredStatusBarStyle: UIStatusBarStyle {
-    return .lightContent
-  }
-
+  
   func didTap() {
     dismiss(animated: true)
   }
