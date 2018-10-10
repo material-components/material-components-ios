@@ -49,7 +49,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 @end
 
 @implementation MDCAlertControllerView {
-    NSMutableArray<MDCFlatButton *> *_actionButtons;
+    NSMutableArray<MDCButton *> *_actionButtons;
     BOOL _mdc_adjustsFontForContentSizeCategory;
 }
 
@@ -120,9 +120,12 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 }
 
 - (MDCButton *)addActionButtonTitle:(NSString *)actionTitle target:(id)target selector:(SEL)selector {
-  MDCFlatButton *actionButton = [[MDCFlatButton alloc] initWithFrame:CGRectZero];
+  MDCButton *actionButton = [[MDCButton alloc] initWithFrame:CGRectZero];
+  // maintain the Dialogs's default buttons style (as text) after switching to the MDCButton class.
+  [self styleAsTextButton:actionButton];
   actionButton.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
   [actionButton setTitle:actionTitle forState:UIControlStateNormal];
+  [actionButton setTitleColor:_buttonColor forState:UIControlStateNormal];
   if (_buttonColor) {
     // We only set if _buttonColor since settingTitleColor to nil doesn't reset the title to the
     // default
@@ -142,6 +145,18 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
   [_actionButtons addObject:actionButton];
   return actionButton;
+}
+
+- (void)styleAsTextButton:(nonnull MDCButton *)button {
+  UIColor *lightTitleColor = [UIColor.blackColor colorWithAlphaComponent:0.38f];
+  [button setBackgroundColor:UIColor.clearColor forState:UIControlStateNormal];
+  [button setBackgroundColor:UIColor.clearColor forState:UIControlStateDisabled];
+  [button setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+  [button setTitleColor:lightTitleColor forState:UIControlStateDisabled];
+  [button setImageTintColor:UIColor.blackColor forState:UIControlStateNormal];
+  [button setImageTintColor:lightTitleColor forState:UIControlStateDisabled];
+  button.disabledAlpha = 1.f;
+  button.inkColor = [UIColor.blackColor colorWithAlphaComponent:0.16f];
 }
 
 - (void)setTitleFont:(UIFont *)font {
@@ -262,7 +277,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
         [finalButtonFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
                                 scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
   }
-  for (MDCFlatButton *button in self.actionButtons) {
+  for (MDCButton *button in self.actionButtons) {
     [button setTitleFont:finalButtonFont forState:UIControlStateNormal];
   }
 
@@ -280,7 +295,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 - (void)setButtonColor:(UIColor *)color {
   _buttonColor = color;
 
-  for (MDCFlatButton *button in self.actionButtons) {
+  for (MDCButton *button in self.actionButtons) {
     [button setTitleColor:_buttonColor forState:UIControlStateNormal];
   }
 }
@@ -614,7 +629,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
   _mdc_adjustsFontForContentSizeCategory = adjusts;
 
-  for (MDCFlatButton *button in _actionButtons) {
+  for (MDCButton *button in _actionButtons) {
     button.mdc_adjustsFontForContentSizeCategory = adjusts;
   }
 
