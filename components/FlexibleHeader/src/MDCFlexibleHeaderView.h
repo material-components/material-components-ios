@@ -272,6 +272,18 @@ IB_DESIGNABLE
 
 @property(nonatomic) float visibleShadowOpacity;  ///< The visible shadow opacity. Default: 0.4
 
+/**
+ * Whether or not shadow opacity (if using the default shadow layer) should be reset to 0 when
+ * trackingScrollView is set to nil. If the flexible header view is created without ever setting
+ * trackingScrollView, it always has 0 opacity for the default shadow layer regardless of the value
+ * of this flag. If trackingScrollView is ever set, then this flag enables resetting the shadow
+ * opacity back to 0 when trackingScrollView is set to nil.
+ *
+ * Default: NO, but we are planning to change it to YES very soon, so all clients should set this
+ * property to YES.
+ */
+@property(nonatomic) BOOL resetShadowAfterTrackingScrollViewIsReset;
+
 #pragma mark Scroll View Tracking
 
 /**
