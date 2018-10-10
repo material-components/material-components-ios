@@ -868,6 +868,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 
 - (void)fhv_accumulatorDidChange {
   if (!_trackingScrollView) {
+    // Set the shadow opacity directly.
     self.layer.shadowOpacity =
         self.resetShadowAfterTrackingScrollViewIsReset ? 0 : _visibleShadowOpacity;
     return;
