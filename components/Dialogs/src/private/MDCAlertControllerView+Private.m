@@ -49,8 +49,8 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 @end
 
 @implementation MDCAlertControllerView {
-    NSMutableArray<MDCButton *> *_actionButtons;
-    BOOL _mdc_adjustsFontForContentSizeCategory;
+  NSMutableArray<MDCButton *> *_actionButtons;
+  BOOL _mdc_adjustsFontForContentSizeCategory;
 }
 
 @dynamic titleAlignment;
@@ -119,7 +119,11 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   [self setNeedsLayout];
 }
 
-- (MDCButton *)addActionButtonTitle:(NSString *)actionTitle target:(id)target selector:(SEL)selector {
+- (MDCButton *)addActionButtonTitle:(NSString *)actionTitle
+                           semantic:(MDCAlertActionSemantic)semantic
+                               role:(MDCAlertActionRole)role
+                             target:(id)target
+                           selector:(SEL)selector {
   MDCButton *actionButton = [[MDCButton alloc] initWithFrame:CGRectZero];
   // maintain the Dialogs's default buttons style (as text) after switching to the MDCButton class.
   [self styleAsTextButton:actionButton];

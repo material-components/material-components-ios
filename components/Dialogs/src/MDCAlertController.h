@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
+#import "MDCAlertActionSemantics.h"
 
 @class MDCAlertAction;
 
@@ -153,12 +154,26 @@ typedef void (^MDCActionHandler)(MDCAlertAction *_Nonnull action);
 
 /**
  Action alerts control the buttons that will be displayed on the bottom of an alert controller.
+ A convenience factory method creating Alert Actions with normal semantic and role.
 
  @param title The title of the button shown on the alert dialog.
  @param handler A block to execute when the user selects the action.
  @return An initialized MDCActionAlert object.
  */
 + (nonnull instancetype)actionWithTitle:(nonnull NSString *)title
+                                handler:(__nullable MDCActionHandler)handler;
+
+/**
+ Action alerts control the buttons that will be displayed on the bottom of an alert controller.
+
+ @param title The title of the button shown on the alert dialog.
+ @param semantic The semantic to apply to the action
+ @param handler A block to execute when the user selects the action.
+ @return An initialized MDCActionAlert object.
+ */
++ (nonnull instancetype)actionWithTitle:(nonnull NSString *)title
+                               semantic:(MDCAlertActionSemantic)semantic
+                                   role:(MDCAlertActionRole)role
                                 handler:(__nullable MDCActionHandler)handler;
 
 /** Alert actions must be created with actionWithTitle:handler: */
@@ -171,7 +186,14 @@ typedef void (^MDCActionHandler)(MDCAlertAction *_Nonnull action);
  */
 @property(nonatomic, nullable, readonly) NSString *title;
 
-// TODO(iangordon): Add support for enabled property to match UIAlertAction
+/** [TBD] */
+@property(nonatomic, readonly) MDCAlertActionSemantic semantic;
+/** [TBD]
+ NOTE: Might as well just use UIAlertActionStyle (with: Default, Cancel & Destructive) ?
+ */
+@property(nonatomic, readonly) MDCAlertActionRole role;
+/** [TBD] */
+@property(nonatomic, readwrite) BOOL enabled;
 
 /**
  The @c accessibilityIdentifier for the view associated with this action.

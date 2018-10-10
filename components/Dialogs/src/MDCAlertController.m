@@ -31,29 +31,48 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 @interface MDCAlertAction ()
 
-@property(nonatomic, nullable, copy) MDCActionHandler completionHandler;
+@property(nonatomic, nullable, copy) MDCActionHandler didSelectHandler;
 
 @end
 
 @implementation MDCAlertAction
 
 + (instancetype)actionWithTitle:(nonnull NSString *)title
-                        handler:(void (^__nullable)(MDCAlertAction *action))handler {
-  return [[MDCAlertAction alloc] initWithTitle:title handler:handler];
+                        handler:(__nullable MDCActionHandler)handler {
+  return [[MDCAlertAction alloc] initWithTitle:title
+                                      semantic:MDCAlertActionSemanticLow
+                                          role:MDCAlertActionRoleNormal
+                                       handler:handler];
+}
+
++ (instancetype)actionWithTitle:(nonnull NSString *)title
+                       semantic:(MDCAlertActionSemantic)semantic
+                           role:(MDCAlertActionRole)role
+                        handler:(__nullable MDCActionHandler)handler {
+  return [[MDCAlertAction alloc] initWithTitle:title semantic:semantic role:role handler:handler];
 }
 
 - (instancetype)initWithTitle:(nonnull NSString *)title
+                     semantic:(MDCAlertActionSemantic)semantic
+                         role:(MDCAlertActionRole)role
                       handler:(void (^__nullable)(MDCAlertAction *action))handler {
   self = [super init];
   if (self) {
     _title = [title copy];
-    _completionHandler = [handler copy];
+    _semantic = semantic;
+    _role = role;
+    _didSelectHandler = [handler copy];
+    _enabled = YES;
   }
   return self;
 }
 
 - (id)copyWithZone:(__unused NSZone *)zone {
-  MDCAlertAction *action = [[self class] actionWithTitle:self.title handler:self.completionHandler];
+  MDCAlertAction *action = [[self class] actionWithTitle:self.title
+                                                semantic:self.semantic
+                                                    role:self.role
+                                                 handler:self.didSelectHandler];
+  action.enabled = self.enabled;
   action.accessibilityIdentifier = self.accessibilityIdentifier;
 
   return action;
@@ -162,6 +181,8 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 - (void)addActionToAlertView:(MDCAlertAction *)action {
   if (self.alertView) {
     MDCButton *addedAction = [self.alertView addActionButtonTitle:action.title
+                                                         semantic:action.semantic
+                                                             role:action.role
                                                            target:self
                                                          selector:@selector(actionButtonPressed:)];
     addedAction.accessibilityIdentifier = action.accessibilityIdentifier;
@@ -292,14 +313,15 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 - (void)actionButtonPressed:(id)sender {
   NSInteger actionIndex = [self.alertView.actionButtons indexOfObject:sender];
   MDCAlertAction *action = self.actions[actionIndex];
-  // We call our action.completionHandler after we dismiss the existing alert in case the handler
+  // We call our action.didSelectHandler after we dismiss the existing alert in case the handler
   // also presents a view controller. Otherwise we get a warning about presenting on a controller
   // which is already presenting.
-  [self.presentingViewController dismissViewControllerAnimated:YES completion:^(void){
-    if (action.completionHandler) {
-      action.completionHandler(action);
-    }
-  }];
+  [self.presentingViewController dismissViewControllerAnimated:YES
+                                                    completion:^(void) {
+                                                      if (action.didSelectHandler) {
+                                                        action.didSelectHandler(action);
+                                                      }
+                                                    }];
 }
 
 #pragma mark - UIViewController

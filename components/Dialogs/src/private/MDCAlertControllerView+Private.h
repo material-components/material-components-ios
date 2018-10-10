@@ -14,6 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MDCAlertActionSemantics.h"
 #import "MaterialButtons.h"
 
 @interface MDCAlertControllerView ()
@@ -26,6 +27,8 @@
 @property(nonatomic, nonnull, strong, readonly) NSArray<MDCButton *> *actionButtons;
 
 - (nonnull MDCButton *)addActionButtonTitle:(NSString *_Nonnull)actionTitle
+                                   semantic:(MDCAlertActionSemantic)semantic
+                                       role:(MDCAlertActionRole)role
                                      target:(nullable id)target
                                    selector:(SEL _Nonnull)selector;
 
