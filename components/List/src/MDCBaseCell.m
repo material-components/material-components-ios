@@ -109,16 +109,11 @@ static NSString *const MDCListBaseCellCurrentElevationKey = @"MDCListBaseCellCur
 #pragma mark - UIResponder
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-  [super touchesBegan:touches withEvent:event];
   UITouch *touch = [touches anyObject];
   CGPoint location = [touch locationInView:self];
   self.lastTouch = location;
-  [self startInk];
-}
-
-- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  [super touchesEnded:touches withEvent:event];
-  [self endInk];
+  // Call super only after -lastTouch has been recorded, since super can call -setHighlighted:.
+  [super touchesBegan:touches withEvent:event];
 }
 
 #pragma mark UIView Overrides
@@ -137,7 +132,9 @@ static NSString *const MDCListBaseCellCurrentElevationKey = @"MDCListBaseCellCur
 
 - (void)setHighlighted:(BOOL)highlighted {
   [super setHighlighted:highlighted];
-  if (!highlighted) {
+  if (highlighted) {
+    [self startInk];
+  } else {
     [self endInk];
   }
 }
