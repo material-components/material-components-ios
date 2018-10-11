@@ -83,7 +83,7 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
                        presentingViewController:presentingViewController];
   if (self) {
     _dimmingView = [[UIView alloc] initWithFrame:CGRectZero];
-    _dimmingView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.4f];
+    _dimmingView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.32f];
     _dimmingView.alpha = 0.0f;
     _dismissGestureRecognizer =
         [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss:)];

@@ -17,8 +17,6 @@
 # Fail on any error.
 set -e
 
-XCODE_MINIMUM_VERSION="9.0.0"
-
 fix_bazel_imports() {
   echo "Rewriting imports for bazel..."
 
@@ -186,15 +184,6 @@ run_bazel() {
     | grep string \
     | cut -d'>' -f2 \
     | cut -d'<' -f1)
-  if [ -n "$MIN_XCODE_VERSION" ]; then
-    xcode_version_as_number="$(version_as_number $xcode_version)"
-
-    if [ "$xcode_version_as_number" -lt "$MIN_XCODE_VERSION" ]; then
-      echo "The currently selected Xcode version ($xcode_version_as_number) is less than the desired version ($MIN_XCODE_VERSION)."
-      echo "Stopping execution..."
-      exit 1
-    fi
-  fi
 
   if [ "$COMMAND" == "build" ]; then
     echo "🏗️  $COMMAND with Xcode $xcode_version..."
@@ -224,9 +213,9 @@ run_cocoapods() {
     move_derived_data_to_tmp
   fi
 
-  xcode_min_version_as_number="$(version_as_number $XCODE_MINIMUM_VERSION)"
-
   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    select_xcode "$XCODE_VERSION"
+
     # Move into our cloned repo
     cd github/repo
 
@@ -234,54 +223,17 @@ run_cocoapods() {
     pod --version
   fi
 
-  BUILDS_TMP_PATH=$(mktemp -d)
-  SEEN_XCODES_FILE_PATH="$BUILDS_TMP_PATH/seen_xcodes"
-  touch "$SEEN_XCODES_FILE_PATH"
-  xcodes=$(ls /Applications/ | grep "Xcode")
-  for xcode_path in $xcodes; do
-    xcode_version=$(cat /Applications/$xcode_path/Contents/version.plist \
-      | grep "CFBundleShortVersionString" -A1 \
-      | grep string \
-      | cut -d'>' -f2 \
-      | cut -d'<' -f1)
-    xcode_version_as_number="$(version_as_number $xcode_version)"
-
-    # Ignore duplicate Xcode installations
-    if grep -xq "$xcode_version_as_number" "$SEEN_XCODES_FILE_PATH"; then
-      continue
+  if [ "$DEPENDENCY_SYSTEM" = "cocoapods" ]; then
+    bash scripts/prep_all
+    bash scripts/build_all --verbose
+    if [ -n "$IS_RELEASE" ]; then
+      bash scripts/test_all
+    else
+      bash scripts/test_all catalog/MDCCatalog.xcworkspace:MDCCatalog
     fi
-
-    echo "$xcode_version_as_number" >> "$SEEN_XCODES_FILE_PATH"
-
-    if [ -n "$XCODE_VERSION" ]; then
-      if [ "$xcode_version_as_number" -ne "$(version_as_number $XCODE_VERSION)" ]; then
-        continue
-      fi
-    elif [ -n "$xcode_min_version_as_number" ]; then
-      if [ "$xcode_version_as_number" -lt "$xcode_min_version_as_number" ]; then
-        continue
-      fi
-    fi
-
-    sudo xcode-select --switch /Applications/$xcode_path/Contents/Developer
-    xcodebuild -version
-
-    # Resolves the following crash when switching Xcode versions:
-    # "Failed to locate a valid instance of CoreSimulatorService in the bootstrap"
-    launchctl remove com.apple.CoreSimulator.CoreSimulatorService || true
-
-    if [ "$DEPENDENCY_SYSTEM" = "cocoapods" ]; then
-      bash scripts/prep_all
-      bash scripts/build_all --verbose
-      if [ -n "$IS_RELEASE" ]; then
-        bash scripts/test_all
-      else
-        bash scripts/test_all catalog/MDCCatalog.xcworkspace:MDCCatalog
-      fi
-    elif [ "$DEPENDENCY_SYSTEM" = "cocoapods-podspec" ]; then
-      pod lib lint MaterialComponents.podspec --verbose --skip-tests
-    fi
-  done
+  elif [ "$DEPENDENCY_SYSTEM" = "cocoapods-podspec" ]; then
+    pod lib lint MaterialComponents.podspec --verbose --skip-tests
+  fi
 
   if [ -n "$CODECOV_TOKEN" ]; then
     bash <(curl -s https://codecov.io/bash)
@@ -489,8 +441,8 @@ lint_clang_format() {
 
     # Install clang-format
     echo "Downloading clang-format..."
-    CLANG_FORMAT_SHA="f2917c1235f32617e5819bb2a7ec0a4f163fbb82f305b5639c540fafa6622d12"
-    curl -Ls "https://github.com/material-foundation/clang-format/releases/download/r340070/clang-format" -o "clang-format"
+    CLANG_FORMAT_SHA="9d2a3aeaee65f09ae5405dd33812d167fadd48aba712965cdb3238e5d8837255"
+    curl -Ls "https://github.com/material-foundation/clang-format/releases/download/r343360/clang-format" -o "clang-format"
     if openssl sha -sha256 "clang-format" | grep -q "$CLANG_FORMAT_SHA"; then
       echo "SHAs match. Proceeding."
     else

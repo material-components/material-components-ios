@@ -80,7 +80,7 @@ MDCOutlinedButtonThemer.applyScheme(buttonScheme, to: button)
 
 <img src="assets/contained.gif" alt="An animation showing a Material Design contained button." width="128">
 
-To theme a button as a Material Design text button, use `MDCContainedButtonThemer`.
+To theme a button as a Material Design contained button, use `MDCContainedButtonThemer`.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift

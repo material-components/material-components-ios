@@ -78,9 +78,7 @@
                                            selector:@selector(contentSizeCategoryDidChange)
                                                name:UIContentSizeCategoryDidChangeNotification
                                              object:nil];
-  if (@available(iOS 11.0, *)) {
-    self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
-  }
+
   [self updateClearButton];
 }
 

@@ -1,3 +1,83 @@
+# 67.0.0
+
+There are some rendering changes that have lead to classifying this as a major release. There are no major API changes.
+
+We've added some new theming capabilities for Action Sheets and Lists.
+
+## API changes
+
+### ActionSheet+ActionSheetThemer
+
+**New extension.**
+
+### List+ColorThemer
+
+**New extension.**
+
+### List+ListThemer
+
+**New extension.**
+
+## Component changes
+
+### ActionSheet
+
+* [Add action sheet themer (#5345)](https://github.com/material-components/material-components-ios/commit/85718988e52f3752465eafb59e6669b578aa2f42) (Cody Weaver)
+
+### AppBar
+
+* [Fix status bar color appearing incorrect in some Catalog examples (#5363)](https://github.com/material-components/material-components-ios/commit/160f5b15c1d3b0d2af07bd2cc424c2e8c9f50927) (rami-a)
+
+### BottomAppBar
+
+* [Fix status bar color appearing incorrect in some Catalog examples (#5363)](https://github.com/material-components/material-components-ios/commit/160f5b15c1d3b0d2af07bd2cc424c2e8c9f50927) (rami-a)
+
+### BottomNavigation
+
+* [Change badge position (#5339)](https://github.com/material-components/material-components-ios/commit/5db5057aafdb09c3d0f6e46de2489d99099b1491) (Cody Weaver)
+
+### ButtonBar
+
+* [Fix incorrect casts in ButtonBar (#5358)](https://github.com/material-components/material-components-ios/commit/4766299a56d7ab42fdf56526bc66235134ff302c) (rami-a)
+
+### Buttons
+
+* [Fix a typo around text vs contained button (#5367)](https://github.com/material-components/material-components-ios/commit/30138a90827f92830b1ee54c4516dc33567b6021) (Louis Romero)
+
+### Chips
+
+* [Add support for third party keyboards (#5342)](https://github.com/material-components/material-components-ios/commit/190b2c47ea9fd67e98e310b5b1a9152ff65c8a85) (Cody Weaver)
+* [Fix placeholder for manually adding chips (#5343)](https://github.com/material-components/material-components-ios/commit/04415cc92425f52a4e47039c7384be1b3fba7c1d) (Cody Weaver)
+* [Respect safe area for Chips examples (#5377)](https://github.com/material-components/material-components-ios/commit/ae6d459a349d95632243c6c999ad22d2c44fd989) (rami-a)
+
+### Dialogs
+
+* [Update README for new themer](https://github.com/material-components/material-components-ios/commit/95fbb31946b5d64cc0eb18d68ee3b7ad377ccd1e) (Cody Weaver)
+* [Update the themer and scheme to have elevation (#5301)](https://github.com/material-components/material-components-ios/commit/20b759081d5d69303e1cfa31302a36d56ea96334) (Cody Weaver)
+* [Update to match spec (#5309)](https://github.com/material-components/material-components-ios/commit/abd24015d89410d1782d6ec067591b39eb7812ad) (Cody Weaver)
+* [add scrimColor to MDCAlertController (#5362)](https://github.com/material-components/material-components-ios/commit/0beee09b20046fc5e0b8d5901244f7bdd3756df4) (Galia Kaufman)
+
+### List
+
+* [Add MDCSelfSizingStereoCellColorThemer (#5311)](https://github.com/material-components/material-components-ios/commit/0aabda44b39b74b931858a4566c6ce4e92b27ae1) (Andrew Overton)
+* [Add global themer for List component (#5378)](https://github.com/material-components/material-components-ios/commit/395825465a53650f0272e969f6c0f74cddbe0278) (Andrew Overton)
+* [Add tests for List themers (#5315)](https://github.com/material-components/material-components-ios/commit/4afe7a81f1bfb9d035d3e2290ce1d7643db84480) (Andrew Overton)
+* [Fix MDCSelfSizingStereoCell not using the right text color and not resetting all label properties on re-use (#5341)](https://github.com/material-components/material-components-ios/commit/d55b6bb37fa0f591b730704c2e863d977ade35a1) (Julien Poumailloux)
+* [Generalize List themers (#5357)](https://github.com/material-components/material-components-ios/commit/d5547090997a754392d043a34b9f5c50a508c9fa) (Andrew Overton)
+* [SelfSizingStereoCell is not resetting its -mdc_adjustsFontForContentSizeCategory in -prepareForReuse (#5364)](https://github.com/material-components/material-components-ios/commit/542040d93fb4261acdcd457b344c92f0987cc487) (Julien Poumailloux)
+* [SelfSizingStereoCell should use MDCTypography instead of hardcoding its own font opacity (#5361)](https://github.com/material-components/material-components-ios/commit/5dbec5b8a9b7324d1f02bbfd0eaf877fc8b6bb50) (Julien Poumailloux)
+
+### NavigationDrawer
+
+* [Performance improvements and increased support for customizing initial drawer percentage height (#5255)](https://github.com/material-components/material-components-ios/commit/0f35751373fa197d8bd2ea4b760dfa196724f8e5) (Yarden Eitan)
+* [Support any kInitialDrawerHeightFactor value (#5337)](https://github.com/material-components/material-components-ios/commit/4c5dfa93bded0c21b79a1e6e3e293de218e26cc2) (Yarden Eitan)
+
+### TextFields
+
+* [TextFields: Fix the error accessibility label, the value was not respected previously. (#5300)](https://github.com/material-components/material-components-ios/commit/cfaf6d7a2d3edd56e53c7ee8d6c499f8b41ffb82) (Yilei (Dolee) Yang)
+
+---
+
 # 66.0.0
 
 Shapes updated it's interface.

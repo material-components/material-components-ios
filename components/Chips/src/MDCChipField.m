@@ -16,6 +16,7 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
+#import "../../TextFields/src/private/MDCTextInputCommonFundament.h"
 #import "MaterialMath.h"
 #import "MaterialTextFields.h"
 
@@ -55,6 +56,14 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
 
 @property(nonatomic, weak) id<MDCChipTextFieldDelegate> deletionDelegate;
 
+@end
+
+@interface MDCTextField (MDCChipFieldTestingVisibility)
+@property(nonatomic, strong) MDCTextInputCommonFundament *fundament;
+@end
+
+@interface MDCTextInputCommonFundament (MDCChipFieldTestingVisibility)
+- (void)updatePlaceholderPosition;
 @end
 
 @implementation MDCChipTextField
@@ -318,6 +327,7 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
   if ([self.delegate respondsToSelector:@selector(chipField:didAddChip:)]) {
     [self.delegate chipField:self didAddChip:chip];
   }
+  [self.textField.fundament updatePlaceholderPosition];
   [self notifyDelegateIfSizeNeedsToBeUpdated];
   [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];
@@ -330,6 +340,7 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
     [self.delegate chipField:self didRemoveChip:chip];
   }
   [self notifyDelegateIfSizeNeedsToBeUpdated];
+  [self.textField.fundament updatePlaceholderPosition];
   [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];
 }
