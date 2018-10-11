@@ -152,15 +152,38 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 }
 
 - (void)styleAsTextButton:(nonnull MDCButton *)button {
-  UIColor *lightTitleColor = [UIColor.blackColor colorWithAlphaComponent:0.38f];
+  UIColor *titleColor = UIColor.blackColor;
+  UIColor *lightTitleColor = [titleColor colorWithAlphaComponent:0.38f];
   [button setBackgroundColor:UIColor.clearColor forState:UIControlStateNormal];
   [button setBackgroundColor:UIColor.clearColor forState:UIControlStateDisabled];
-  [button setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+  [button setTitleColor:titleColor forState:UIControlStateNormal];
   [button setTitleColor:lightTitleColor forState:UIControlStateDisabled];
-  [button setImageTintColor:UIColor.blackColor forState:UIControlStateNormal];
+  [button setImageTintColor:titleColor forState:UIControlStateNormal];
   [button setImageTintColor:lightTitleColor forState:UIControlStateDisabled];
   button.disabledAlpha = 1.f;
-  button.inkColor = [UIColor.blackColor colorWithAlphaComponent:0.16f];
+  button.inkColor = [titleColor colorWithAlphaComponent:0.16f];
+}
+
+- (void)styleButton:(MDCButton *)button
+           emphasis:(MDCAlertActionEmphasis)emphasis
+               role:(MDCAlertActionRole)role {
+
+  if (emphasis == MDCAlertActionEmphasisLow) {
+    // set text style for buttons
+    [self styleColorsAsTextButton:button role:role];
+  } else if (emphasis == MDCAlertActionEmphasisMedium) {
+    [self styleColorsAsTextButton:button role:role];
+  } else {
+    // Keep MDCButton default "contained-button" style
+    UIColor *titleColor =
+        (role == MDCAlertActionRoleDestructive) ? UIColor.redColor : UIColor.whiteColor;
+    [button setTitleColor:titleColor forState:UIControlStateNormal];
+    [button setImageTintColor:titleColor forState:UIControlStateNormal];
+  }
+
+  if (role == MDCAlertActionRoleDefault) {
+    // todo: how to designate default action? Make the font "bolder"?
+  }
 }
 
 - (void)setTitleFont:(UIFont *)font {
@@ -294,7 +317,6 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   }
   return [MDCTypography titleFont];
 }
-
 
 - (void)setButtonColor:(UIColor *)color {
   _buttonColor = color;
