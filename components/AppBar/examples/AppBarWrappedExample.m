@@ -78,6 +78,10 @@
   [self.appBarContainerViewController didMoveToParentViewController:self];
 }
 
+- (UIViewController *)childViewControllerForStatusBarStyle {
+  return self.appBarContainerViewController;
+}
+
 @end
 
 @implementation AppBarWrappedExample (CatalogByConvention)

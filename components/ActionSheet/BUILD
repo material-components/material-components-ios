@@ -32,6 +32,20 @@ mdc_public_objc_library(
 )
 
 mdc_objc_library(
+    name = "ActionSheetThemer",
+    srcs = native.glob(["src/ActionSheetThemer/*.m"]),
+    hdrs = native.glob(["src/ActionSheetThemer/*.h"]),
+    includes = ["src/ActionSheetThemer"],
+    sdk_frameworks = ["UIKit"],
+    deps = [
+        ":ActionSheet",
+        ":TypographyThemer",
+        ":ColorThemer",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
     name = "TypographyThemer",
     srcs = native.glob(["src/TypographyThemer/*.m"]),
     hdrs = native.glob(["src/TypographyThemer/*.h"]),
@@ -97,6 +111,7 @@ mdc_objc_library(
     ],
     deps = [
          ":ActionSheet",
+         ":ActionSheetThemer",
          ":ColorThemer",
          ":TypographyThemer",
          ":privateHeaders"

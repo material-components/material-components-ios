@@ -14,6 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
+#import "../../src/private/MDCBottomNavigationItemBadge.h"
 #import "../../src/private/MDCBottomNavigationItemView.h"
 
 #import "MaterialInk.h"
@@ -31,6 +32,8 @@ static UIImage *fakeImage(void) {
 @interface MDCBottomNavigationItemView (Testing)
 @property(nonatomic, strong) UIImageView *iconImageView;
 @property(nonatomic, strong) UILabel *label;
+@property(nonatomic, strong) MDCBottomNavigationItemBadge *badge;
+- (CGPoint)badgeCenterFromIconFrame:(CGRect)iconFrame isRTL:(BOOL)isRTL;
 @end
 
 @interface BottomNavigationItemViewTests : XCTestCase
@@ -125,6 +128,35 @@ static UIImage *fakeImage(void) {
   // Then
   XCTAssertNotEqualObjects(item1.inkView.inkColor, item1DefaultInkColor);
   XCTAssertNotEqualObjects(item2.inkView.inkColor, item2DefaultInkColor);
+}
+
+- (void)testBadgeCenterIsCorrectWithoutRTL {
+  // Given
+  MDCBottomNavigationItemView *itemView = [[MDCBottomNavigationItemView alloc] init];
+  itemView.iconImageView.frame = CGRectMake(8, 8, 24, 24);
+  CGPoint expectedCenter = CGPointMake(32, 12);
+
+  // When
+  CGPoint badgePoint =
+      [itemView badgeCenterFromIconFrame:CGRectStandardize(itemView.iconImageView.frame) isRTL:NO];
+  // Then
+  XCTAssertEqualWithAccuracy(badgePoint.x, expectedCenter.x, 0.001);
+  XCTAssertEqualWithAccuracy(badgePoint.y, expectedCenter.y, 0.001);
+}
+
+- (void)testBadgeCenterIsCorrectWithRTL {
+  // Given
+  MDCBottomNavigationItemView *itemView = [[MDCBottomNavigationItemView alloc] init];
+  itemView.iconImageView.frame = CGRectMake(8, 8, 24, 24);
+  CGPoint expectedCenter = CGPointMake(8, 12);
+
+  // When
+  CGPoint badgePoint =
+      [itemView badgeCenterFromIconFrame:CGRectStandardize(itemView.iconImageView.frame) isRTL:YES];
+
+  // Then
+  XCTAssertEqualWithAccuracy(badgePoint.x, expectedCenter.x, 0.001);
+  XCTAssertEqualWithAccuracy(badgePoint.y, expectedCenter.y, 0.001);
 }
 
 @end

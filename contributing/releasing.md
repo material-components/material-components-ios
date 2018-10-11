@@ -27,6 +27,8 @@ typical weekly release.
 If you are not able to cut a release Wednesday morning, cut it Tuesday evening before you leave the
 office.
 
+For Googlers, also read [go/mdc-release-engineering](http://go/mdc-release-engineering) for additional details.
+
 ## Before you start
 
 ### Create a clean clone

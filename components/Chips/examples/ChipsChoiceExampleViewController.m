@@ -57,6 +57,10 @@
   [_collectionView registerClass:[MDCChipCollectionViewCell class]
       forCellWithReuseIdentifier:@"Cell"];
 
+  if (@available(iOS 11.0, *)) {
+    _collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
+  }
+
   [self.view addSubview:_collectionView];
 }
 

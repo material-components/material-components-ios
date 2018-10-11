@@ -17,6 +17,7 @@
 #import "../../src/private/MDCActionSheetHeaderView.h"
 #import "../../src/private/MDCActionSheetItemTableViewCell.h"
 #import "MDCActionSheetTestHelper.h"
+#import "MaterialActionSheet+ActionSheetThemer.h"
 #import "MaterialActionSheet+ColorThemer.h"
 #import "MaterialActionSheet+TypographyThemer.h"
 
@@ -50,13 +51,54 @@ static const CGFloat kInkAlpha = 0.16f;
   self.colorScheme = [[MDCSemanticColorScheme alloc] init];
   UIColor *surface = UIColor.blueColor;
   UIColor *onSurface = UIColor.redColor;
-  self.colorScheme.primaryColor = surface;
-  self.colorScheme.onPrimaryColor = onSurface;
+  self.colorScheme.surfaceColor = surface;
+  self.colorScheme.onSurfaceColor = onSurface;
   self.typographyScheme = [[MDCTypographyScheme alloc] init];
   UIFont *subtitle = [UIFont systemFontOfSize:12.0 weight:UIFontWeightBold];
   UIFont *body2 = [UIFont systemFontOfSize:10.0 weight:UIFontWeightLight];
   self.typographyScheme.subtitle1 = subtitle;
   self.typographyScheme.body2 = body2;
+}
+
+#pragma mark - Scheme test
+
+- (void)testDefaultScheme {
+  // Given
+  MDCActionSheetScheme *defaultScheme = [[MDCActionSheetScheme alloc] init];
+  MDCTypographyScheme *defaultTypographyScheme = [[MDCTypographyScheme alloc] init];
+  MDCSemanticColorScheme *defaultColorScheme = [[MDCSemanticColorScheme alloc] init];
+
+  // Then
+  XCTAssertEqualObjects(defaultScheme.typographyScheme.subtitle1,
+                        defaultTypographyScheme.subtitle1);
+  XCTAssertEqualObjects(defaultScheme.typographyScheme.body2, defaultTypographyScheme.body2);
+  XCTAssertEqualObjects(defaultScheme.colorScheme.surfaceColor, defaultColorScheme.surfaceColor);
+  XCTAssertEqualObjects(defaultScheme.colorScheme.onSurfaceColor,
+                        defaultColorScheme.onSurfaceColor);
+}
+
+- (void)testCustomColorSchemeAppliedToGlobalScheme {
+  // Given
+  MDCActionSheetScheme *scheme = [[MDCActionSheetScheme alloc] init];
+
+  // When
+  scheme.colorScheme = self.colorScheme;
+
+  // Then
+  XCTAssertEqualObjects(scheme.colorScheme.surfaceColor, self.colorScheme.surfaceColor);
+  XCTAssertEqualObjects(scheme.colorScheme.onSurfaceColor, self.colorScheme.onSurfaceColor);
+}
+
+- (void)testCustomTypographySchemeAppliedToGlobalScheme {
+  // Given
+  MDCActionSheetScheme *scheme = [[MDCActionSheetScheme alloc] init];
+
+  // When
+  scheme.typographyScheme = self.typographyScheme;
+
+  // Then
+  XCTAssertEqualObjects(scheme.typographyScheme.subtitle1, self.typographyScheme.subtitle1);
+  XCTAssertEqualObjects(scheme.typographyScheme.body2, self.typographyScheme.body2);
 }
 
 #pragma mark - Header test
@@ -104,6 +146,31 @@ static const CGFloat kInkAlpha = 0.16f;
 }
 
 #pragma mark - default test
+
+- (void)testApplyThemer {
+  // Given
+  MDCActionSheetController *tempActionSheet = [[MDCActionSheetController alloc] init];
+  MDCActionSheetScheme *scheme = [[MDCActionSheetScheme alloc] init];
+  scheme.colorScheme = self.colorScheme;
+  scheme.typographyScheme = self.typographyScheme;
+
+  // When
+  [MDCActionSheetThemer applyScheme:scheme toActionSheetController:tempActionSheet];
+  [MDCActionSheetColorThemer applySemanticColorScheme:self.colorScheme
+                              toActionSheetController:self.actionSheet];
+  [MDCActionSheetTypographyThemer applyTypographyScheme:self.typographyScheme
+                                toActionSheetController:self.actionSheet];
+
+  // Then
+  XCTAssertEqualObjects(tempActionSheet.backgroundColor, self.actionSheet.backgroundColor);
+  XCTAssertEqualObjects(tempActionSheet.titleTextColor, self.actionSheet.titleTextColor);
+  XCTAssertEqualObjects(tempActionSheet.messageTextColor, self.actionSheet.messageTextColor);
+  XCTAssertEqualObjects(tempActionSheet.titleFont, self.actionSheet.titleFont);
+  XCTAssertEqualObjects(tempActionSheet.messageFont, self.actionSheet.messageFont);
+  XCTAssertEqualObjects(tempActionSheet.actionFont, self.actionSheet.actionFont);
+  XCTAssertEqualObjects(tempActionSheet.actionTintColor, self.actionSheet.actionTintColor);
+  XCTAssertEqualObjects(tempActionSheet.actionTextColor, self.actionSheet.actionTextColor);
+}
 
 - (void)testApplyColorTheme {
   // When

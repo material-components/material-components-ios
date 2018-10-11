@@ -14,7 +14,8 @@
 
 load("//:material_components_ios.bzl",
      "mdc_public_objc_library",
-     "mdc_objc_library")
+     "mdc_objc_library",
+     "mdc_unit_test_suite")
 
 licenses(["notice"])  # Apache 2.0
 
@@ -44,4 +45,56 @@ mdc_objc_library(
         "//components/schemes/Typography",
     ],
     visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
+    name = "ColorThemer",
+    srcs = native.glob(["src/ColorThemer/*.m"]),
+    hdrs = native.glob(["src/ColorThemer/*.h"]),
+    includes = ["src/ColorThemer"],
+    sdk_frameworks = ["UIKit"],
+    deps = [
+        ":List",
+        "//components/schemes/Color",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
+    name = "ListThemer",
+    srcs = native.glob(["src/ListThemer/*.m"]),
+    hdrs = native.glob(["src/ListThemer/*.h"]),
+    includes = ["src/ListThemer"],
+    sdk_frameworks = ["UIKit"],
+    deps = [
+        ":List",
+        ":TypographyThemer",
+        ":ColorThemer",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
+    name = "unit_test_sources",
+    testonly = 1,
+    srcs = native.glob([
+        "tests/unit/*.m",
+    ]),
+    sdk_frameworks = [
+        "UIKit",
+        "XCTest",
+    ],
+    deps = [
+         ":List",
+         ":ListThemer",
+         ":ColorThemer",
+         ":TypographyThemer",
+    ],
+    visibility = ["//visibility:private"],
+)
+
+mdc_unit_test_suite(
+    deps = [
+        ":unit_test_sources",
+    ]
 )

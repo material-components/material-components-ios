@@ -239,6 +239,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
   }
 
   func themeDidChange(notification: NSNotification) {
+    setNeedsStatusBarAppearanceUpdate()
     self.tableView.reloadData()
   }
 }

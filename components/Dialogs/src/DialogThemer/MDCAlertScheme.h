@@ -29,6 +29,9 @@
 /** The corner radius to apply to Dialog. */
 @property(readonly, nonatomic) CGFloat cornerRadius;
 
+/** The elevation to apply to the Dialog. */
+@property(readonly, nonatomic) CGFloat elevation;
+
 @end
 
 /**  A simple implementation of @c MDCAlertScheming that provides default color,
@@ -43,5 +46,8 @@
 
 /** The corner radius to apply to Dialog. */
 @property(readwrite, nonatomic) CGFloat cornerRadius;
+
+/** The elevation to apply to the Dialog. */
+@property(readwrite, nonatomic) CGFloat elevation;
 
 @end
