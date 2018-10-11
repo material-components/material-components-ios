@@ -1,15 +1,9 @@
-# #develop#
+# 67.0.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+There are some rendering changes that have lead to classifying this as a major release. There are no major API changes.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+We've added some new theming capabilities for Action Sheets and Lists.
 
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
 ## API changes
 
 ### ActionSheet+ActionSheetThemer
