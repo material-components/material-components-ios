@@ -17,6 +17,7 @@
 static NSDictionary<NSString *, MDCFontTraits *> *_body1Traits;
 static NSDictionary<NSString *, MDCFontTraits *> *_body2Traits;
 static NSDictionary<NSString *, MDCFontTraits *> *_buttonTraits;
+static NSDictionary<NSString *, MDCFontTraits *> *_highEmphasisButtonTraits;
 static NSDictionary<NSString *, MDCFontTraits *> *_captionTraits;
 static NSDictionary<NSString *, MDCFontTraits *> *_display1Traits;
 static NSDictionary<NSString *, MDCFontTraits *> *_display2Traits;
@@ -163,6 +164,39 @@ static NSDictionary<NSNumber *, NSDictionary *> *_styleTable;
                                           weight:UIFontWeightMedium
                                          leading:0.0
                                         tracking:0.0],
+  };
+
+  _highEmphasisButtonTraits = @{
+    UIContentSizeCategoryExtraSmall : [[MDCFontTraits alloc] initWithPointSize:11
+                                                                        weight:UIFontWeightBlack
+                                                                       leading:0.0
+                                                                      tracking:0.0],
+    UIContentSizeCategorySmall : [[MDCFontTraits alloc] initWithPointSize:12
+                                                                   weight:UIFontWeightBlack
+                                                                  leading:0.0
+                                                                 tracking:0.0],
+    UIContentSizeCategoryMedium : [[MDCFontTraits alloc] initWithPointSize:13
+                                                                    weight:UIFontWeightBlack
+                                                                   leading:0.0
+                                                                  tracking:0.0],
+    UIContentSizeCategoryLarge : [[MDCFontTraits alloc] initWithPointSize:14
+                                                                   weight:UIFontWeightBlack
+                                                                  leading:0.0
+                                                                 tracking:0.0],
+    UIContentSizeCategoryExtraLarge : [[MDCFontTraits alloc] initWithPointSize:16
+                                                                        weight:UIFontWeightBlack
+                                                                       leading:0.0
+                                                                      tracking:0.0],
+    UIContentSizeCategoryExtraExtraLarge :
+      [[MDCFontTraits alloc] initWithPointSize:18
+                                        weight:UIFontWeightBlack
+                                       leading:0.0
+                                      tracking:0.0],
+    UIContentSizeCategoryExtraExtraExtraLarge :
+      [[MDCFontTraits alloc] initWithPointSize:20
+                                        weight:UIFontWeightBlack
+                                       leading:0.0
+                                      tracking:0.0],
   };
 
   _captionTraits = @{
@@ -433,6 +467,7 @@ static NSDictionary<NSNumber *, NSDictionary *> *_styleTable;
     @(MDCFontTextStyleBody1) : _body1Traits,
     @(MDCFontTextStyleBody2) : _body2Traits,
     @(MDCFontTextStyleButton) : _buttonTraits,
+    @(MDCFontTextStyleHighEmphasisButton): _highEmphasisButtonTraits,
     @(MDCFontTextStyleCaption) : _captionTraits,
     @(MDCFontTextStyleDisplay1) : _display1Traits,
     @(MDCFontTextStyleDisplay2) : _display2Traits,

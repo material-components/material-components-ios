@@ -35,4 +35,5 @@ typedef NS_ENUM(NSInteger, MDCFontTextStyle) {
   MDCFontTextStyleDisplay3,
   MDCFontTextStyleDisplay4,
   MDCFontTextStyleButton,
+  MDCFontTextStyleHighEmphasisButton,
 };
