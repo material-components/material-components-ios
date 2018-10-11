@@ -280,6 +280,10 @@ static CGFloat InitialDrawerHeightFactor(void) {
   return normalizedYContentOffset;
 }
 
+- (BOOL)isAccessibilityMode {
+  return UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning() || true;
+}
+
 - (void)addScrollViewObserver {
   if (self.scrollViewObserved) {
     return;
@@ -381,7 +385,7 @@ static CGFloat InitialDrawerHeightFactor(void) {
 //      contentViewFrame.size.height += topAreaInsetForHeader;
 //    }
 //  } else {
-  contentViewFrame.size.height = 688;//self.presentingViewBounds.size.height - (self.contentHeaderTopInset + self.contentHeaderHeight);// self.contentViewController.preferredContentSize.height;
+  contentViewFrame.size.height = self.presentingViewBounds.size.height - self.topHeaderHeight;//688;//self.presentingViewBounds.size.height - (self.contentHeaderTopInset + self.contentHeaderHeight);// self.contentViewController.preferredContentSize.height;
 //  }
   self.contentViewController.view.frame = contentViewFrame;
 //  if (self.trackingScrollView != nil) {
@@ -607,12 +611,10 @@ static CGFloat InitialDrawerHeightFactor(void) {
 }
 
 - (void)cacheLayoutCalculationsWithAddedContentHeight:(CGFloat)addedContentHeight {
-  BOOL enableAccessibilityMode =
-      UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning() || true;
   CGFloat contentHeaderHeight = self.contentHeaderHeight;
   CGFloat containerHeight = self.presentingViewBounds.size.height;
-  CGFloat contentHeight = enableAccessibilityMode
-      ? 688 : self.contentViewController.preferredContentSize.height;
+  CGFloat contentHeight = [self isAccessibilityMode] ? containerHeight - self.topHeaderHeight :
+      self.contentViewController.preferredContentSize.height;
   _contentVCPreferredContentSizeHeightCached = contentHeight;
 
   contentHeight += addedContentHeight;
