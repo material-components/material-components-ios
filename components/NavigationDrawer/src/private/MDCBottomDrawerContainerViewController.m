@@ -585,9 +585,10 @@ static UIColor *DrawerShadowColor(void) {
 - (CGFloat)topSafeArea {
   if (@available(iOS 11.0, *)) {
     return self.view.safeAreaInsets.top;
-  } else {
-    return kFixedStatusBarHeightOnPreiPhoneXDevices;
   }
+  // On a Pre iPhoneX device the status bar is 20dp tall in portrait and landscape and we need to
+  // account for that.
+  return kFixedStatusBarHeightOnPreiPhoneXDevices;
 }
 
 @end
