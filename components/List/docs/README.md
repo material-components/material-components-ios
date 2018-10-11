@@ -1,15 +1,3 @@
-<!--docs:
-title: "List"
-layout: detail
-section: components
-excerpt: "Material Design Lists are used to show continuous groups of images or text."
-iconId: <#icon_id#>
-path: /catalog/list/
-api_doc_root: true
--->
-
-<!-- This file was auto-generated using ./scripts/generate_readme List -->
-
 # List
 
 Material Design Lists are continuous groups of text and/or images. The [Material guidelines](https://material.io/go/design-lists) for Lists are extensive, and there is no class at this time for implementing any one of them, let alone all of them. However, we are starting to add classes that represent individual List Items. We currently offer two List Item Cells:
@@ -32,183 +20,18 @@ Below is an example:
 
 ## Installation
 
-<!-- Extracted from docs/../../../docs/component-installation.md -->
-
-### Installation with CocoaPods
-
-Add the following to your `Podfile`:
-
-```bash
-pod 'MaterialComponents/List'
-```
-<!--{: .code-renderer.code-renderer--install }-->
-
-Then, run the following command:
-
-```bash
-pod install
-```
-
-### Importing
-
-To import the component:
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-import MaterialComponents.MaterialList
-```
-
-#### Objective-C
-
-```objc
-#import "MaterialList.h"
-```
-<!--</div>-->
-
+- [Typical installation](../../../docs/component-installation.md)
 
 ## Usage
 
-<!-- Extracted from docs/typical-use.md -->
-
-### Typical use
-
-Because List Items ultimately inherit from UICollectionViewCell, clients are not expected to instantiate them themselves. Rather, cell classes are registered with UICollectionViews. Then, in `-collectionView:cellForItemAtIndexPath:`, the client is expected to cast the cell to a List Item class.
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-
-```swift
-// registering the cell
-collectionView.register(MDCBaseCell.self, forCellWithReuseIdentifier: "baseCellIdentifier")
-
-// casting the cell to the desired type within `-collectionView:cellForItemAtIndexPath:`
-guard let cell = collectionView.cellForItem(at: indexPath) as? MDCBaseCell else { fatalError() }
-```
-
-#### Objective-C
-
-```objc
-// registering the cell
-[self.collectionView registerClass:[MDCBaseCell class]
-        forCellWithReuseIdentifier:@"BaseCellIdentifier"];
-
-// casting the cell to the desired type within `-collectionView:cellForItemAtIndexPath:`
-MDCBaseCell *cell =
-    [collectionView dequeueReusableCellWithReuseIdentifier:@"BaseCellIdentifier"
-                                              forIndexPath:indexPath];
-```
-<!--</div>-->
-
+- [Typical use](typical-use.md)
 
 ## Extensions
 
-<!-- Extracted from docs/color-theming.md -->
+- [Color Theming](color-theming.md)
+- [Typography Theming](typography-theming.md)
 
-### Color Theming
-
-You can theme a List Item with your app's color scheme using the ColorThemer extension.
-
-You must first add the Color Themer extension to your project:
-
-```bash
-pod `MaterialComponents/List+ColorThemer`
-```
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-
-```swift
-// Step 1: Import the ColorThemer extension
-import MaterialComponents.MaterialList_ColorThemer
-
-// Step 2: Create or get a color scheme
-let colorScheme = MDCSemanticColorScheme()
-
-// Step 3: Apply the color scheme to your component from within `-collectionView:cellForItemAtIndexPath:`
-MDCListColorThemer.applySemanticColorScheme(colorScheme, to: cell)
-```
-
-#### Objective-C
-
-```objc
-// Step 1: Import the ColorThemer extension
-#import "MaterialList+ColorThemer.h"
-
-// Step 2: Create or get a color scheme
-id<MDCColorScheming> colorScheme = [[MDCSematnicColorScheme alloc] init];
-
-// Step 3: Apply the color scheme to your component from within `-collectionView:cellForItemAtIndexPath:`
-[MDCListColorThemer applySemanticColorScheme:colorScheme
-                                 toBaseCell:cell];
-```
-<!--</div>-->
-
-<!-- Extracted from docs/typography-theming.md -->
-
-### Typography Theming
-
-You can theme a List Item cell with your app's typography scheme using the TypographyThemer extension.
-
-You must first add the Typography Themer extension to your project:
-
-```bash
-pod `MaterialComponents/List+TypographyThemer`
-```
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-// Step 1: Import the ColorThemer extension
-import MaterialComponents.MaterialList_TypographyThemer
-
-// Step 2: Create or get a color scheme
-let typographyScheme = MDCTypographyScheme()
-
-// Step 3: Apply the typography scheme to your component from within `-collectionView:cellForItemAtIndexPath:`
-MDCListTypographyThemer.applyTypographyScheme(typographyScheme, to: cell)
-```
-
-#### Objective-C
-
-```objc
-// Step 1: Import the Typography extension
-#import "MaterialList+TypographyThemer.h"
-
-// Step 2: Create or get a color scheme
-id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
-
-// Step 3: Apply the typography scheme to your component from within `-collectionView:cellForItemAtIndexPath:`
-[MDCListTypographyThemer applyTypographyScheme:self.typographyScheme
-                                    toBaseCell:cell];
-```
-<!--</div>-->
-
-
-<!-- Extracted from docs/accessibility.md -->
-
-## Accessibility
-
-To help ensure your Lists are accessible to as many users as possible, please be sure to reivew the following
-recommendations:
-
-### Setting `-isAccessibilityElement`
-
-It is generally recommended to set UICollectionViewCells (and UITableViewCells) as accessibilityElements. That way, VoiceOver doesn't traverse the entire cell and articulate an overwhelming amount of accessibility information for each of its subviews.
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-cell.isAccessibilityElement = true
-```
-
-#### Objective-C
-
-```objc
-cell.isAccessibilityElement = YES;
-```
-<!--</div>-->
-
+- [Accessibility](accessibility.md)
 
 ## How to implement your own List Cell
 
@@ -324,7 +147,7 @@ _flowLayout.estimatedItemSize = CGSizeMake(kSmallArbitraryCellWidth, kSmallestCe
 
 ### Typography
 
-For our example we use a typography scheme to apply the fonts to our cell's `UILabel`'s. Please see <a href="schemes/Typography">Typography Scheme</a> for more info.
+For our example we use a typography scheme to apply the fonts to our cell's `UILabel`'s. Please see <a href="../schemes/Typography">Typography Scheme</a> for more info.
 
 ### Dynamic Type
 
