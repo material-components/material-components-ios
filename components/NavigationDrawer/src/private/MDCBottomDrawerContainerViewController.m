@@ -351,6 +351,7 @@ static UIColor *DrawerShadowColor(void) {
   // Layout the top header's bottom shadow.
   [self setUpHeaderBottomShadowIfNeeded];
   self.headerShadowLayer.frame = self.headerViewController.view.bounds;
+  self.headerViewController.view.layer.cornerRadius = 24.f;
 
   // Set the scroll view's content size.
   CGSize scrollViewContentSize = self.presentingViewBounds.size;
