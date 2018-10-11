@@ -381,7 +381,7 @@ static CGFloat InitialDrawerHeightFactor(void) {
 //      contentViewFrame.size.height += topAreaInsetForHeader;
 //    }
 //  } else {
-    contentViewFrame.size.height = self.presentingViewBounds.size.height - 200;// self.contentViewController.preferredContentSize.height;
+  contentViewFrame.size.height = 688;//self.presentingViewBounds.size.height - (self.contentHeaderTopInset + self.contentHeaderHeight);// self.contentViewController.preferredContentSize.height;
 //  }
   self.contentViewController.view.frame = contentViewFrame;
 //  if (self.trackingScrollView != nil) {
@@ -444,6 +444,7 @@ static CGFloat InitialDrawerHeightFactor(void) {
           : [self transitionPercentageForContentOffset:contentOffset
                                                 offset:0.f
                                               distance:self.headerAnimationDistance];
+  NSLog(@"%f %f %f", contentOffset.y, self.transitionCompleteContentOffset, headerTransitionToTop);
   self.currentlyFullscreen = self.contentReachesFullscreen && headerTransitionToTop >= 1.f;
   CGFloat fullscreenHeaderHeight =
       self.contentReachesFullscreen ? self.topHeaderHeight : [self contentHeaderHeight];
@@ -472,6 +473,7 @@ static CGFloat InitialDrawerHeightFactor(void) {
   CGFloat contentHeaderViewHeight = contentHeaderHeight + headerTransitionToTop * headersDiff;
 
   if (self.currentlyFullscreen && contentHeaderView.superview != self.view) {
+    NSLog(@"currently full screen");
     // The content header should be located statically at the top of the drawer when the drawer
     // is shown in fullscreen.
     [contentHeaderView removeFromSuperview];
@@ -479,6 +481,7 @@ static CGFloat InitialDrawerHeightFactor(void) {
     self.scrollViewClippingView.clipsToBounds = YES;
     [self.view setNeedsLayout];
   } else if (!self.currentlyFullscreen && contentHeaderView.superview != self.scrollView) {
+    NSLog(@"not full screen!");
     // The content header should be scrolled together with the rest of the content when the drawer
     // is not in fullscreen.
     [contentHeaderView removeFromSuperview];
@@ -609,7 +612,7 @@ static CGFloat InitialDrawerHeightFactor(void) {
   CGFloat contentHeaderHeight = self.contentHeaderHeight;
   CGFloat containerHeight = self.presentingViewBounds.size.height;
   CGFloat contentHeight = enableAccessibilityMode
-      ? containerHeight : self.contentViewController.preferredContentSize.height;
+      ? 688 : self.contentViewController.preferredContentSize.height;
   _contentVCPreferredContentSizeHeightCached = contentHeight;
 
   contentHeight += addedContentHeight;
@@ -630,12 +633,12 @@ static CGFloat InitialDrawerHeightFactor(void) {
         _contentHeaderTopInset = self.topHeaderHeight - self.contentHeaderHeight + FLT_EPSILON;
       }
     } else {
-      _contentHeaderTopInset = containerHeight - totalHeight;
+      _contentHeaderTopInset = containerHeight - totalHeight + FLT_EPSILON;
     }
   }
 
-//  CGFloat scrollingDistance = _contentHeaderTopInset + contentHeaderHeight + contentHeight;
-  _contentHeightSurplus = _contentHeaderTopInset;// scrollingDistance - containerHeight;
+  CGFloat scrollingDistance = _contentHeaderTopInset + contentHeaderHeight + contentHeight;
+  _contentHeightSurplus = scrollingDistance - containerHeight;
   if (addedContentHeight < FLT_EPSILON && (_contentHeaderTopInset > _contentHeightSurplus) &&
       (_contentHeaderTopInset - _contentHeightSurplus < self.addedContentHeightThreshold)) {
     CGFloat addedContentheight = _contentHeaderTopInset - _contentHeightSurplus;
@@ -682,7 +685,7 @@ static CGFloat InitialDrawerHeightFactor(void) {
 }
 
 - (BOOL)contentReachesFullscreen {
-  return self.contentHeightSurplus >= self.contentHeaderTopInset;
+  return YES;//self.contentHeightSurplus >= self.contentHeaderTopInset;
 }
 
 - (BOOL)contentScrollsToReveal {
