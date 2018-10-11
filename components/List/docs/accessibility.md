@@ -1,6 +1,6 @@
 ## Accessibility
 
-To help ensure your Lists are accessible to as many users as possible, please be sure to reivew the following
+To help ensure your Lists are accessible to as many users as possible, please be sure to review the following
 recommendations:
 
 ### Setting `-isAccessibilityElement`

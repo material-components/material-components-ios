@@ -33,6 +33,6 @@ id<MDCColorScheming> colorScheme = [[MDCSematnicColorScheme alloc] init];
 
 // Step 3: Apply the color scheme to your component from within `-collectionView:cellForItemAtIndexPath:`
 [MDCListColorThemer applySemanticColorScheme:colorScheme
-                                 toBaseCell:cell];
+                                  toBaseCell:cell];
 ```
 <!--</div>-->
