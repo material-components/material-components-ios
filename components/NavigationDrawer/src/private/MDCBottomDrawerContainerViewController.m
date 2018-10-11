@@ -619,9 +619,9 @@ static CGFloat InitialDrawerHeightFactor(void) {
   _addedContentHeight = addedContentHeight;
 
   CGFloat totalHeight = contentHeight + contentHeaderHeight;
-  CGFloat contentHeightThresholdForScrollability =
-      MIN(containerHeight, containerHeight * InitialDrawerHeightFactor() + contentHeaderHeight);
-  BOOL contentScrollsToReveal = totalHeight > contentHeightThresholdForScrollability;
+//  CGFloat contentHeightThresholdForScrollability =
+//      MIN(containerHeight, containerHeight * InitialDrawerHeightFactor() + contentHeaderHeight);
+  BOOL contentScrollsToReveal = YES;//totalHeight > contentHeightThresholdForScrollability;
 
   if (_contentHeaderTopInset == NSNotFound) {
     // The content header top inset is only set once.
@@ -633,7 +633,7 @@ static CGFloat InitialDrawerHeightFactor(void) {
         _contentHeaderTopInset = self.topHeaderHeight - self.contentHeaderHeight + FLT_EPSILON;
       }
     } else {
-      _contentHeaderTopInset = containerHeight - totalHeight + FLT_EPSILON;
+      _contentHeaderTopInset = containerHeight - totalHeight;
     }
   }
 
