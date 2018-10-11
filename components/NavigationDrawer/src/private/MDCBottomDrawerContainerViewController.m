@@ -687,7 +687,7 @@ static CGFloat InitialDrawerHeightFactor(void) {
 }
 
 - (BOOL)contentReachesFullscreen {
-  return YES;//self.contentHeightSurplus >= self.contentHeaderTopInset;
+  return [self isAccessibilityMode] ? YES : self.contentHeightSurplus >= self.contentHeaderTopInset;
 }
 
 - (BOOL)contentScrollsToReveal {
