@@ -16,6 +16,7 @@
 
 #import "MDCBottomDrawerHeader.h"
 #import "MaterialShadowLayer.h"
+#import "MaterialApplication.h"
 
 static const CGFloat kVerticalShadowAnimationDistance = 10.f;
 static const CGFloat kVerticalDistanceThresholdForDismissal = 40.f;
@@ -28,7 +29,6 @@ static const CGFloat kHeaderAnimationDistanceAddedDistanceFromTopSafeAreaInset =
 // has the behavior as if we are scrolling at the end of the content, and the scrolling isn't
 // smooth.
 static const CGFloat kScrollViewBufferForPerformance = 20.f;
-static const CGFloat kFixedStatusBarHeightOnPreiPhoneXDevices = 20.f;
 static const CGFloat kDragVelocityThresholdForHidingDrawer = -2.f;
 static NSString *const kContentOffsetKeyPath = @"contentOffset";
 
@@ -154,6 +154,11 @@ static UIColor *DrawerShadowColor(void) {
     _contentHeightSurplus = NSNotFound;
     _addedContentHeight = NSNotFound;
     _trackingScrollView = trackingScrollView;
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self
+           selector:@selector(statusBarFrameWillChange:)
+               name:UIApplicationWillChangeStatusBarFrameNotification
+             object:nil];
   }
   return self;
 }
@@ -586,9 +591,15 @@ static UIColor *DrawerShadowColor(void) {
   if (@available(iOS 11.0, *)) {
     return self.view.safeAreaInsets.top;
   }
-  // On a Pre iPhoneX device the status bar is 20dp tall in portrait and landscape and we need to
-  // account for that.
-  return kFixedStatusBarHeightOnPreiPhoneXDevices;
+  CGSize statusBarSize = [[UIApplication mdc_safeSharedApplication] statusBarFrame].size;
+  return MIN(statusBarSize.width, statusBarSize.height);
+}
+
+- (void)statusBarFrameWillChange:(NSNotification *)notification {
+  [self.headerViewController.view setNeedsLayout];
+  [self.contentViewController.view setNeedsLayout];
+  [self updateContentOffsetForPerformantScrolling:self.scrollView.contentOffset.y];
+  [self updateViewWithContentOffset:self.scrollView.contentOffset];
 }
 
 @end
