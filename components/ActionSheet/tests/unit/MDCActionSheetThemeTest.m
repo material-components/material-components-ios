@@ -60,6 +60,14 @@ static const CGFloat kInkAlpha = 0.16f;
   self.typographyScheme.body2 = body2;
 }
 
+- (void)tearDown {
+  self.typographyScheme = nil;
+  self.colorScheme = nil;
+  self.actionSheet = nil;
+
+  [super tearDown];
+}
+
 #pragma mark - Scheme test
 
 - (void)testDefaultScheme {

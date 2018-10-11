@@ -24,7 +24,15 @@ class FlexibleHeaderView324Tests: XCTestCase {
   var headerView: MDCFlexibleHeaderView!
 
   override func setUp() {
+    super.setUp()
+    
     headerView = MDCFlexibleHeaderView()
+  }
+
+  override func tearDown() {
+    headerView = nil
+
+    super.tearDown()
   }
 
   // Side effect cases

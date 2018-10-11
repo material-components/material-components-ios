@@ -26,6 +26,12 @@ class ActionSheetTest: XCTestCase {
     actionSheet = MDCActionSheetController()
   }
 
+  override func tearDown() {
+    actionSheet = nil
+
+    super.tearDown()
+  }
+
   func testNumberOfActions() {
     // Then
     XCTAssertEqual(actionSheet.actions.count, 0)

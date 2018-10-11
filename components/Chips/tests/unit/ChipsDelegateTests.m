@@ -35,6 +35,7 @@
 }
 
 - (void)tearDown {
+  self.delegateTextInput = nil;
   self.chip.delegate = nil;
   self.chip = nil;
   [super tearDown];

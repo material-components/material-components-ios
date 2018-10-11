@@ -44,5 +44,7 @@ class SnackbarColorThemerTests: XCTestCase {
                    colorScheme.surfaceColor)
     XCTAssertEqual(MDCSnackbarManager.buttonTitleColor(for: .highlighted)?.withAlphaComponent(1),
                    colorScheme.surfaceColor)
+
+    MDCSnackbarManager.dismissAndCallCompletionBlocks(withCategory: nil)
   }
 }

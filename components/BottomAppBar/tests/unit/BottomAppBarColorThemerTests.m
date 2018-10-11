@@ -29,6 +29,11 @@
   self.bottomAppBar = [[MDCBottomAppBarView alloc] init];
 }
 
+- (void)tearDown {
+  self.bottomAppBar = nil;
+  [super tearDown];
+}
+
 - (void)testPrimaryColorAppliedToBarTintColor {
   // Given
   MDCBasicColorScheme *scheme =

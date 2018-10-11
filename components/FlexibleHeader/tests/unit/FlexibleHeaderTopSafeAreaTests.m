@@ -36,6 +36,13 @@
   _delegate = [[FlexibleHeaderTopSafeAreaTestsFakeTopSafeAreaDelegate alloc] init];
 }
 
+- (void)tearDown {
+  _topSafeArea = nil;
+  _delegate = nil;
+
+  [super tearDown];
+}
+
 #pragma mark - When inferTopSafeAreaInsetFromViewController is disabled
 
 - (void)testDeviceSafeAreaInsetIsDefaultTopSafeAreaInset {

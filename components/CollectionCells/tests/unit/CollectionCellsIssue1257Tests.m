@@ -38,6 +38,12 @@
   self.layoutAttributes = [[MDCCollectionViewLayoutAttributes alloc] init];
 }
 
+- (void)tearDown {
+  self.cell = nil;
+  self.layoutAttributes = nil;
+  [super tearDown];
+}
+
 - (void)testSelectableSelected {
   self.layoutAttributes.shouldShowSelectorStateMask = YES;
   [self.cell applyLayoutAttributes:self.layoutAttributes];
