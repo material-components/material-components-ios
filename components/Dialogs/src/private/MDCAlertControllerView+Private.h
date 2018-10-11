@@ -27,7 +27,7 @@
 @property(nonatomic, nonnull, strong, readonly) NSArray<MDCButton *> *actionButtons;
 
 - (nonnull MDCButton *)addActionButtonTitle:(NSString *_Nonnull)actionTitle
-                                   semantic:(MDCAlertActionSemantic)semantic
+                                   emphasis:(MDCAlertActionEmphasis)emphasis
                                        role:(MDCAlertActionRole)role
                                      target:(nullable id)target
                                    selector:(SEL _Nonnull)selector;

@@ -13,15 +13,16 @@
 // limitations under the License.
 
 /**
- Material Design Alert Action Semantic.
+ Material Design Alert Action Semantic Emphasis.
 
- These semantics are available to themers. When assigned to actions, these can enforce
+ Emphasis semantics are available to themers. When assigned to actions, these can enforce
  consistent theming that conforms to Material Design.
  */
-typedef NS_ENUM(NSUInteger, MDCAlertActionSemantic) {
-  MDCAlertActionSemanticLow,
-  MDCAlertActionSemanticMedium,
-  MDCAlertActionSemanticHigh,
+typedef NS_ENUM(NSUInteger, MDCAlertActionEmphasis) {
+  MDCAlertActionEmphasisNone,
+  MDCAlertActionEmphasisLow,
+  MDCAlertActionEmphasisMedium,
+  MDCAlertActionEmphasisHigh,
 };
 
 /**
@@ -30,15 +31,22 @@ typedef NS_ENUM(NSUInteger, MDCAlertActionSemantic) {
  Use these properties to map voice over accessibility gestures to dialog actions:
    Voice Over default gesture is mapped to an MDCAlertActionRoleDefault action.
    Voice Over escape gesture is mapped to an MDCAlertActionRoleCancel action.
+      When no MDCAlertActionRoleCancel is defined, and the presentationController's
+      dismissOnBackgroundTap is false, the escape will be ignored.
 
- Additionally, actions set as MDCAlertActionRoleCancel are added as the leading button
+ todo: Additionally, actions set as MDCAlertActionRoleCancel are added as the leading button
  in the order of buttons, regardless of the order the actions were added to an alert.
 
- The alert action roles are available to themers and can afect styling of buttons.
+ The alert action roles are available to themers and may be used in role-based button styling.
  */
 typedef NS_ENUM(NSUInteger, MDCAlertActionRole) {
-  MDCAlertActionRoleNormal,   // designates no specific role for the action
-  MDCAlertActionRoleDefault,  // designates the action to take when no specific action is requested
-  MDCAlertActionRoleCancel,   // designates a dismiss or cancel action
-  MDCAlertActionRoleDestructive,  // designates an action that might be harmful or irreversible
+  /** designates no specific role for the action */
+  MDCAlertActionRoleNone,
+  /** designates the default action that is taken when no specific action is selected.
+   Used for indicating a default action to assistive technologies. */
+  MDCAlertActionRoleDefault,
+  /** designates a dismiss or cancel action */
+  MDCAlertActionRoleCancel,
+  /** designates an action that might be detrimental or irreversible */
+  MDCAlertActionRoleDestructive,
 };

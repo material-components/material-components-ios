@@ -107,7 +107,8 @@
 /** The elevation that will be applied to the Alert Controller view. Default to 24. */
 @property(nonatomic, assign) CGFloat elevation;
 
-// TODO(iangordon): Add support for preferredAction to match UIAlertController.
+// TODO(iangordon): Add support for preferredAction to match UIAlertController. Note: this is now
+//                  implemented using roles. Can we remove this todo?
 // TODO(iangordon): Consider adding support for UITextFields to match UIAlertController.
 
 /**
@@ -140,6 +141,8 @@
 /** MDCAlertController.modalPresentationStyle is always UIModalPresentationCustom. */
 - (void)setModalPresentationStyle:(UIModalPresentationStyle)modalPresentationStyle NS_UNAVAILABLE;
 
+//- (void)styleSemanticActions;
+
 @end
 
 /**
@@ -154,7 +157,7 @@ typedef void (^MDCActionHandler)(MDCAlertAction *_Nonnull action);
 
 /**
  Action alerts control the buttons that will be displayed on the bottom of an alert controller.
- A convenience factory method creating Alert Actions with normal semantic and role.
+ A convenience factory method creating Alert Actions with no specific emphasis or role.
 
  @param title The title of the button shown on the alert dialog.
  @param handler A block to execute when the user selects the action.
@@ -167,12 +170,12 @@ typedef void (^MDCActionHandler)(MDCAlertAction *_Nonnull action);
  Action alerts control the buttons that will be displayed on the bottom of an alert controller.
 
  @param title The title of the button shown on the alert dialog.
- @param semantic The semantic to apply to the action
+ @param emphasis The semantic emphasis to apply to the action.
  @param handler A block to execute when the user selects the action.
  @return An initialized MDCActionAlert object.
  */
 + (nonnull instancetype)actionWithTitle:(nonnull NSString *)title
-                               semantic:(MDCAlertActionSemantic)semantic
+                               emphasis:(MDCAlertActionEmphasis)emphasis
                                    role:(MDCAlertActionRole)role
                                 handler:(__nullable MDCActionHandler)handler;
 
@@ -186,14 +189,19 @@ typedef void (^MDCActionHandler)(MDCAlertAction *_Nonnull action);
  */
 @property(nonatomic, nullable, readonly) NSString *title;
 
-/** [TBD] */
-@property(nonatomic, readonly) MDCAlertActionSemantic semantic;
-/** [TBD]
- NOTE: Might as well just use UIAlertActionStyle (with: Default, Cancel & Destructive) ?
+/**
+ A MDCAlertActionEmphasis semantic that is associated with the action.
+ The emphasis determines the Material theming of the action's button.
+ */
+@property(nonatomic, readonly) MDCAlertActionEmphasis emphasis;
+/**
+ A MDCAlertActionRole semantic that is associated with the action.
+ Action roles are integrated with the Voice Over's default and escape gestures.
+ Roles, specifically a descructive action, may affect theming.
  */
 @property(nonatomic, readonly) MDCAlertActionRole role;
-/** [TBD] */
-@property(nonatomic, readwrite) BOOL enabled;
+
+// TODO(iangordon): Add support for enabled property to match UIAlertAction
 
 /**
  The @c accessibilityIdentifier for the view associated with this action.

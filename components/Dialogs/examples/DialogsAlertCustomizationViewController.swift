@@ -70,6 +70,10 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
 
   var menu: [String] = []
 
+  var handler: MDCActionHandler = { action in
+    print(action.title ?? "Some Action")
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -82,15 +86,21 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
       "Right Aligned Title with a Large Icon",
       "Tinted Title Icon, No Title",
       "Darker Scrim",
+      "High Emphasis Default Button; Unthemed",
+      "Low Emphasis Default Button; Themed",
+      "Low Emphasis Destructive Button; Unthemed",
+      "Low Emphasis Destructive Button; Themed",
     ])
   }
 
   func loadCollectionView(menu: [String]) {
-    self.collectionView?.register(MDCCollectionViewTextCell.self, forCellWithReuseIdentifier: kReusableIdentifierItem)
+    self.collectionView?.register(MDCCollectionViewTextCell.self,
+                                  forCellWithReuseIdentifier: kReusableIdentifierItem)
     self.menu = menu
   }
 
-  override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+  override func collectionView(_ collectionView: UICollectionView,
+                               didSelectItemAt indexPath: IndexPath) {
     guard let alert = performActionFor(row: indexPath.row) else { return }
     self.present(alert, animated: true, completion: nil)
   }
@@ -109,6 +119,14 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
       return performTintedTitleIconNoTitle()
     case 5:
       return performScrimColor()
+    case 6:
+      return performHighEmphasisDefaultButton(themed: false)
+    case 7:
+      return performLowEmphasisDefaultButton()
+    case 8:
+      return performLowEmphasisDestructiveButton(themed: false)
+    case 9:
+      return performLowEmphasisDestructiveButton(themed: true)
     default:
       print("No row is selected")
       return nil
@@ -170,13 +188,53 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
     return alert
   }
 
+  func performHighEmphasisDefaultButton(themed: Bool) -> MDCAlertController {
+    let alert = MDCAlertController(
+        title: "Send Error", message: "Your email failed to send. Try again?")
+    let resend = MDCAlertAction(title: "OK", emphasis: .high, role: .default, handler: handler)
+    let cancel = MDCAlertAction(title: "Cancel", emphasis: .low, role: .cancel, handler: handler)
+    alert.addAction(resend)
+    alert.addAction(cancel)
+    if themed {
+      MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
+    }
+    return alert
+  }
+
+  func performLowEmphasisDefaultButton() -> MDCAlertController {
+    let alert = MDCAlertController(title: "Send Error", message: "Your email failed to send.")
+    let cancel = MDCAlertAction(title: "Cancel", emphasis: .low, role: .cancel, handler: handler)
+    let okay = MDCAlertAction(title: "OK", emphasis: .low, role: .default, handler: handler)
+    alert.addAction(cancel)
+    alert.addAction(okay)
+
+    MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
+    return alert
+  }
+
+  func performLowEmphasisDestructiveButton(themed: Bool) -> MDCAlertController {
+    let alert = MDCAlertController(title: "Send Error", message: "Your email failed to send")
+    let resend = MDCAlertAction(
+        title: "Try Again", emphasis: .high, role: .default, handler: handler)
+    let delete = MDCAlertAction(
+        title: "Delete Draft", emphasis: .low, role: .destructive, handler: handler)
+    let cancel = MDCAlertAction(title: "Cancel", emphasis: .medium, role: .cancel, handler: handler)
+    alert.addAction(resend)
+    alert.addAction(delete)
+    alert.addAction(cancel)
+    if (themed) {
+      MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
+    }
+    return alert
+  }
+
   private func createMDCAlertController(title: String?) -> MDCAlertController {
     let alertController = MDCAlertController(title: title, message: """
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
       tempor incididunt ut labore et dolore magna aliqua.
       """)
-    alertController.addAction(MDCAlertAction(title:"OK") { _ in print("OK") })
-    alertController.addAction(MDCAlertAction(title:"Cancel") { _ in print("Cancel") })
+    alertController.addAction(MDCAlertAction(title:"OK", handler: handler))
+    alertController.addAction(MDCAlertAction(title:"Cancel", handler: handler))
     return alertController
   }
 
@@ -189,11 +247,13 @@ extension DialogsAlertCustomizationViewController {
     return 1
   }
 
-  override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+  override func collectionView(_ collectionView: UICollectionView,
+                               numberOfItemsInSection section: Int) -> Int {
     return menu.count
   }
 
-  override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+  override func collectionView(_ collectionView: UICollectionView,
+                               cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kReusableIdentifierItem,
                                                   for: indexPath)

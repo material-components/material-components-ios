@@ -40,39 +40,37 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 + (instancetype)actionWithTitle:(nonnull NSString *)title
                         handler:(__nullable MDCActionHandler)handler {
   return [[MDCAlertAction alloc] initWithTitle:title
-                                      semantic:MDCAlertActionSemanticLow
-                                          role:MDCAlertActionRoleNormal
+                                      emphasis:MDCAlertActionEmphasisNone
+                                          role:MDCAlertActionRoleNone
                                        handler:handler];
 }
 
 + (instancetype)actionWithTitle:(nonnull NSString *)title
-                       semantic:(MDCAlertActionSemantic)semantic
+                       emphasis:(MDCAlertActionEmphasis)emphasis
                            role:(MDCAlertActionRole)role
                         handler:(__nullable MDCActionHandler)handler {
-  return [[MDCAlertAction alloc] initWithTitle:title semantic:semantic role:role handler:handler];
+  return [[MDCAlertAction alloc] initWithTitle:title emphasis:emphasis role:role handler:handler];
 }
 
 - (instancetype)initWithTitle:(nonnull NSString *)title
-                     semantic:(MDCAlertActionSemantic)semantic
+                     emphasis:(MDCAlertActionEmphasis)emphasis
                          role:(MDCAlertActionRole)role
                       handler:(void (^__nullable)(MDCAlertAction *action))handler {
   self = [super init];
   if (self) {
     _title = [title copy];
-    _semantic = semantic;
+    _emphasis = emphasis;
     _role = role;
     _didSelectHandler = [handler copy];
-    _enabled = YES;
   }
   return self;
 }
 
 - (id)copyWithZone:(__unused NSZone *)zone {
   MDCAlertAction *action = [[self class] actionWithTitle:self.title
-                                                semantic:self.semantic
+                                                emphasis:self.emphasis
                                                     role:self.role
                                                  handler:self.didSelectHandler];
-  action.enabled = self.enabled;
   action.accessibilityIdentifier = self.accessibilityIdentifier;
 
   return action;
@@ -181,7 +179,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 - (void)addActionToAlertView:(MDCAlertAction *)action {
   if (self.alertView) {
     MDCButton *addedAction = [self.alertView addActionButtonTitle:action.title
-                                                         semantic:action.semantic
+                                                         emphasis:action.emphasis
                                                              role:action.role
                                                            target:self
                                                          selector:@selector(actionButtonPressed:)];
@@ -312,7 +310,10 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 - (void)actionButtonPressed:(id)sender {
   NSInteger actionIndex = [self.alertView.actionButtons indexOfObject:sender];
-  MDCAlertAction *action = self.actions[actionIndex];
+  [self performAction:self.actions[actionIndex]];
+}
+
+- (void)performAction:(MDCAlertAction *)action {
   // We call our action.didSelectHandler after we dismiss the existing alert in case the handler
   // also presents a view controller. Otherwise we get a warning about presenting on a controller
   // which is already presenting.
@@ -453,10 +454,28 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 #pragma mark - UIAccessibilityAction
 
+- (BOOL)accessibilityPerformMagicTap {
+  // perform the first default action found
+  for (MDCAlertAction *action in self.actions) {
+    if (action.role == MDCAlertActionRoleDefault) {
+      [self performAction:action];
+      return YES;
+    }
+  }
+  return NO;
+}
+
 - (BOOL)accessibilityPerformEscape {
-  MDCDialogPresentationController *dialogPresentationController =
-      self.mdc_dialogPresentationController;
-  if (dialogPresentationController.dismissOnBackgroundTap) {
+  MDCDialogPresentationController *presentationController = self.mdc_dialogPresentationController;
+  if (presentationController.dismissOnBackgroundTap) {
+    // perform the first cancel action found
+    for (MDCAlertAction *action in self.actions) {
+      if (action.role == MDCAlertActionRoleCancel) {
+        [self performAction:action];
+        return YES;
+      }
+    }
+    // if not cancel action found, dismiss the alert (while dismissOnBackgroundTap is true)
     [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
     return YES;
   }
