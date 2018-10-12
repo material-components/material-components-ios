@@ -23,7 +23,7 @@
 /**
  Calculates the CGPath and returns a layer with that path
 
- @param cornerRadius The top corner radius that you want 
+ @param cornerRadius The top corner radius that you want
  @return The layer that will be used as a mask for the top header
  */
 - (CALayer *)layerForCornerRadius:(CGFloat)cornerRadius inView:(UIView *)view;

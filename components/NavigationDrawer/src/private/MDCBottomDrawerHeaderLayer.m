@@ -28,10 +28,18 @@
   CGPoint origin = CGPointMake(safeCornerRadius, 0);
   [path moveToPoint:origin];
   [path addLineToPoint:CGPointMake(safeWidth - safeCornerRadius, 0)];
-  [path addArcWithCenter:CGPointMake(safeWidth - safeCornerRadius, safeCornerRadius) radius:safeCornerRadius startAngle:M_PI endAngle:-M_PI clockwise:YES];
+  [path addArcWithCenter:CGPointMake(safeWidth - safeCornerRadius, safeCornerRadius)
+                  radius:safeCornerRadius
+              startAngle:M_PI
+                endAngle:-M_PI
+               clockwise:YES];
   [path addLineToPoint:CGPointMake(safeWidth, safeHeight)];
   [path addLineToPoint:CGPointMake(0, CGRectGetHeight(view.bounds))];
-  [path addArcWithCenter:CGPointMake(safeCornerRadius, safeCornerRadius) radius:safeCornerRadius startAngle:-M_PI endAngle:M_PI clockwise:YES];
+  [path addArcWithCenter:CGPointMake(safeCornerRadius, safeCornerRadius)
+                  radius:safeCornerRadius
+              startAngle:-M_PI
+                endAngle:M_PI
+               clockwise:YES];
   [path closePath];
   headerLayer.path = path.CGPath;
   return headerLayer;
