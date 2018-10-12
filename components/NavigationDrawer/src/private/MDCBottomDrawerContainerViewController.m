@@ -156,7 +156,7 @@ static UIColor *DrawerShadowColor(void) {
     _contentHeightSurplus = NSNotFound;
     _addedContentHeight = NSNotFound;
     _trackingScrollView = trackingScrollView;
-    _maskLayer = [[MDCBottomDrawerHeaderLayer alloc] initWithMaxCornerRadius:20.f
+    _maskLayer = [[MDCBottomDrawerHeaderLayer alloc] initWithMaxCornerRadius:8.f
                                                          minimumCornerRadius:0];
   }
   return self;
