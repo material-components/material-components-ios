@@ -16,7 +16,7 @@
 
 #import "MDCBottomDrawerHeader.h"
 #import "MaterialShadowLayer.h"
-#import "MaterialUIMetrics.h"
+#import "MaterialApplication.h"
 
 static const CGFloat kVerticalShadowAnimationDistance = 10.f;
 static const CGFloat kVerticalDistanceThresholdForDismissal = 40.f;
@@ -214,7 +214,7 @@ static UIColor *DrawerShadowColor(void) {
 
 - (CGFloat)updateContentOffsetForPerformantScrolling:(CGFloat)contentYOffset {
   CGFloat normalizedYContentOffset = contentYOffset;
-  CGFloat topAreaInsetForHeader = (self.headerViewController ? MDCDeviceTopSafeAreaInset() : 0);
+  CGFloat topAreaInsetForHeader = (self.headerViewController ? [self topSafeArea] : 0);
   // The top area inset for header should be a positive non zero value for the algorithm to
   // correctly work when the drawer is presented in full screen and there is no top inset.
   // The reason being is that otherwise there would be a conflict between if the drawer is currently
@@ -361,7 +361,7 @@ static UIColor *DrawerShadowColor(void) {
   CGRect contentViewFrame = self.scrollView.bounds;
   contentViewFrame.origin.y = self.contentHeaderTopInset + self.contentHeaderHeight;
   if (self.trackingScrollView != nil) {
-    CGFloat topAreaInsetForHeader = (self.headerViewController ? MDCDeviceTopSafeAreaInset() : 0);
+    CGFloat topAreaInsetForHeader = (self.headerViewController ? [self topSafeArea] : 0);
     contentViewFrame.size.height -= self.contentHeaderHeight - kScrollViewBufferForPerformance;
     // We add the topAreaInsetForHeader to the height of the content view frame when a tracking
     // scroll view is set, to normalize the algorithm after the removal of this value from the
@@ -582,6 +582,14 @@ static UIColor *DrawerShadowColor(void) {
   }
 }
 
+- (CGFloat)topSafeArea {
+  if (@available(iOS 11.0, *)) {
+    return self.view.safeAreaInsets.top;
+  }
+  CGSize statusBarSize = [[UIApplication mdc_safeSharedApplication] statusBarFrame].size;
+  return MIN(statusBarSize.width, statusBarSize.height);
+}
+
 @end
 
 #pragma mark - MDCBottomDrawerContainerViewController + Layout Calculations
@@ -680,7 +688,8 @@ static UIColor *DrawerShadowColor(void) {
     return 0.f;
   }
   CGFloat headerHeight = self.headerViewController.preferredContentSize.height;
-  return headerHeight + MDCDeviceTopSafeAreaInset();
+  headerHeight += [self topSafeArea];
+  return headerHeight;
 }
 
 - (CGFloat)contentHeaderHeight {
@@ -704,14 +713,13 @@ static UIColor *DrawerShadowColor(void) {
   CGFloat headerAnimationDistance =
       kHeaderAnimationDistanceAddedDistanceFromTopSafeAreaInset;
   if (self.contentReachesFullscreen) {
-    headerAnimationDistance += MDCDeviceTopSafeAreaInset();
+    headerAnimationDistance += [self topSafeArea];
   }
   return headerAnimationDistance;
 }
 
 - (CGFloat)addedContentHeightThreshold {
-  // TODO: (#4900) change this to use safeAreaInsets as this is a soon to be deprecated API.
-  return MDCDeviceTopSafeAreaInset();
+  return [self topSafeArea];
 }
 
 @end
