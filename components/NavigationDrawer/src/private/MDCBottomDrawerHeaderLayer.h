@@ -21,10 +21,31 @@
 @interface MDCBottomDrawerHeaderLayer : NSObject
 
 /**
- Calculates the CGPath and returns a layer with that path
+ Creates an object for animating the corner radius of a mask layer
 
- @param cornerRadius The top corner radius that you want
- @return The layer that will be used as a mask for the top header
+ @param maxCornerRadius The maximum corner radius for the animation
+ @param minimumCornerRadius The minimum corner radius for the animation
+ @note Must set a view for this to work
  */
-- (CALayer *)layerForCornerRadius:(CGFloat)cornerRadius inView:(UIView *)view;
+- (nonnull instancetype)initWithMaxCornerRadius:(CGFloat)maxCornerRadius
+                            minimumCornerRadius:(CGFloat)minimumCornerRadius;
+
+/**
+ The view that will be masked
+ */
+@property(nonatomic, strong, nullable) UIView *view;
+
+/**
+ Masks the view that we want to mask
+ */
+- (void)mask;
+
+/**
+ Animates the mask layers corner radius on the view
+
+ @param percentage The precentage from maximum corner radius to minimum corner radius values can be
+ from 0.0 to 1.0
+ */
+- (void)animateWithPercentage:(CGFloat)percentage;
+
 @end

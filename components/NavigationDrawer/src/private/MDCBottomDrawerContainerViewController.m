@@ -15,6 +15,7 @@
 #import "MDCBottomDrawerContainerViewController.h"
 
 #import "MDCBottomDrawerHeader.h"
+#import "MDCBottomDrawerHeaderLayer.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialUIMetrics.h"
 
@@ -142,6 +143,7 @@ static UIColor *DrawerShadowColor(void) {
   CGFloat _contentHeightSurplus;
   CGFloat _addedContentHeight;
   CGFloat _contentVCPreferredContentSizeHeightCached;
+  MDCBottomDrawerHeaderLayer *_maskLayer;
 }
 
 - (instancetype)initWithOriginalPresentingViewController:
@@ -154,6 +156,8 @@ static UIColor *DrawerShadowColor(void) {
     _contentHeightSurplus = NSNotFound;
     _addedContentHeight = NSNotFound;
     _trackingScrollView = trackingScrollView;
+    _maskLayer = [[MDCBottomDrawerHeaderLayer alloc] initWithMaxCornerRadius:20.f
+                                                         minimumCornerRadius:0];
   }
   return self;
 }
@@ -338,6 +342,14 @@ static UIColor *DrawerShadowColor(void) {
     scrollViewFrame.origin.y = -self.topHeaderHeight;
     self.scrollView.frame = scrollViewFrame;
   } else {
+    if (self.contentHeightSurplus > 0) {
+      if (self.topHeaderHeight != 0.f) {
+        _maskLayer.view = self.headerViewController.view;
+      } else {
+        _maskLayer.view = self.contentViewController.view;
+      }
+      [_maskLayer mask];
+    }
     CGRect scrollViewFrame = self.presentingViewBounds;
     if (self.animatingPresentation) {
       CGFloat heightSurplusForSpringAnimationOvershooting =
@@ -351,7 +363,6 @@ static UIColor *DrawerShadowColor(void) {
   // Layout the top header's bottom shadow.
   [self setUpHeaderBottomShadowIfNeeded];
   self.headerShadowLayer.frame = self.headerViewController.view.bounds;
-  self.headerViewController.view.layer.cornerRadius = 24.f;
 
   // Set the scroll view's content size.
   CGSize scrollViewContentSize = self.presentingViewBounds.size;
@@ -428,12 +439,13 @@ static UIColor *DrawerShadowColor(void) {
 #pragma mark Content Offset Adaptions (Private)
 
 - (void)updateViewWithContentOffset:(CGPoint)contentOffset {
+  CGFloat transitionPercentage =
+      [self transitionPercentageForContentOffset:contentOffset
+                                          offset:0.f
+                                        distance:self.headerAnimationDistance];
   CGFloat headerTransitionToTop =
-      contentOffset.y >= self.transitionCompleteContentOffset
-          ? 1.f
-          : [self transitionPercentageForContentOffset:contentOffset
-                                                offset:0.f
-                                              distance:self.headerAnimationDistance];
+      contentOffset.y >= self.transitionCompleteContentOffset ? 1.f : transitionPercentage;
+  [_maskLayer animateWithPercentage:1.f - transitionPercentage];
   self.currentlyFullscreen = self.contentReachesFullscreen && headerTransitionToTop >= 1.f;
   CGFloat fullscreenHeaderHeight =
       self.contentReachesFullscreen ? self.topHeaderHeight : [self contentHeaderHeight];
@@ -647,6 +659,7 @@ static UIColor *DrawerShadowColor(void) {
       [self transitionPercentageForContentOffset:targetContentOffset
                                           offset:0
                                         distance:headerAnimationDistance];
+  [_maskLayer animateWithPercentage:1.f - headerTransitionToTop];
   if (headerTransitionToTop >= FLT_EPSILON && headerTransitionToTop < 1.f) {
     CGFloat contentHeaderFullyCoversTopHeaderContentOffset = self.transitionCompleteContentOffset;
     CGFloat contentHeaderReachesTopHeaderContentOffset =
