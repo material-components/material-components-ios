@@ -12,12 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCBottomDrawerHeaderCornerRadiusLayer.h"
+#import <UIKit/UIKit.h>
 
-@implementation MDCBottomDrawerHeaderCornerRadiusLayer
+/**
+ MDCBottomDrawerHeaderLayer handles the shape calculations for
+ MDCBottomDrawerContainerViewController.
+ */
+@interface MDCBottomDrawerHeaderLayer : NSObject
 
-- (CALayer *)layerForCornerRadius:(CGFloat)cornerRadius {
+/**
+ Calculates the CGPath and returns a layer with that path
 
-}
-
+ @param cornerRadius The top corner radius that you want 
+ @return The layer that will be used as a mask for the top header
+ */
+- (CALayer *)layerForCornerRadius:(CGFloat)cornerRadius inView:(UIView *)view;
 @end
