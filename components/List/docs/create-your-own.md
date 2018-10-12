@@ -1,9 +1,9 @@
-The example files can be found <a href="examples/">here</a>
+The example files can be found <a href="../examples/">here</a>
 
-<img src="docs/assets/listcellexample.gif" alt="List Cell Example" width="300">
+<img src="assets/listcellexample.gif" alt="List Cell Example" width="300">
 
-Our example consists of a custom `UICollectionViewController`: <a href="examples/CollectionListCellExampleTypicalUse.m">examples/CollectionListCellExampleTypicalUse.m</a>
-and also of a custom `UICollectionViewCell`: <a href="examples/supplemental/CollectionViewListCell.m">examples/supplemental/CollectionViewListCell.m</a>.
+Our example consists of a custom `UICollectionViewController`: <a href="../examples/CollectionListCellExampleTypicalUse.m">examples/CollectionListCellExampleTypicalUse.m</a>
+and also of a custom `UICollectionViewCell`: <a href="../examples/supplemental/CollectionViewListCell.m">examples/supplemental/CollectionViewListCell.m</a>.
 
 The main focus will be on the custom cell as that's where all the logic goes in, whereas the collection view and its controller are using mostly boilerplate code of setting up a simple example and collection view.
 
