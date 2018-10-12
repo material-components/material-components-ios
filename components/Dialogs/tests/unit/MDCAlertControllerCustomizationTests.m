@@ -36,6 +36,13 @@
   self.presentationController = self.alert.mdc_dialogPresentationController;
 }
 
+- (void)tearDown {
+  self.presentationController = nil;
+  self.alertView = nil;
+  self.alert = nil;
+  [super tearDown];
+}
+
 - (void)testApplyingTitleAlignment {
   // Given
   NSTextAlignment titleAlignment = NSTextAlignmentCenter;

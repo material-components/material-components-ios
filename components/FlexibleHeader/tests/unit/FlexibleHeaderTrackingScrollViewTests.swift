@@ -27,6 +27,8 @@ class FlexibleHeaderTrackingScrollViewTests: XCTestCase, UIScrollViewDelegate {
   var contentOffsetPtr: UnsafeMutablePointer<CGPoint>?
 
   override func setUp() {
+    super.setUp()
+
     view = MDCFlexibleHeaderView()
 
     let originalFrame = CGRect(x: 0, y: 0, width: 100, height: 50)
@@ -43,6 +45,16 @@ class FlexibleHeaderTrackingScrollViewTests: XCTestCase, UIScrollViewDelegate {
 
     view.trackingScrollView = scrollView
     contentOffsetPtr = UnsafeMutablePointer<CGPoint>(&contentOffset)
+  }
+
+  override func tearDown() {
+    contentOffsetPtr = nil
+    view.trackingScrollView = nil
+    scrollView.delegate = nil
+    scrollView = nil
+    view = nil
+
+    super.tearDown()
   }
 
   // MARK: UIScrollViewDelegate events

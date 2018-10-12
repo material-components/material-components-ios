@@ -27,10 +27,21 @@
 }
 
 - (void)setUp {
+  [super setUp];
+
   _tabBar = [[MDCTabBar alloc] init];
   _itemA = [[UITabBarItem alloc] initWithTitle:@"A" image:nil tag:0];
   _itemB = [[UITabBarItem alloc] initWithTitle:@"B" image:nil tag:0];
   _itemC = [[UITabBarItem alloc] initWithTitle:@"C" image:nil tag:0];
+}
+
+- (void)tearDown {
+  _itemA = nil;
+  _itemB = nil;
+  _itemC = nil;
+  _tabBar = nil;
+
+  [super tearDown];
 }
 
 /// Tab bars should by default select the first item in their items array.

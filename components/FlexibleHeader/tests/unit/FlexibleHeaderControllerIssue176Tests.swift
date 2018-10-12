@@ -24,8 +24,16 @@ class FlexibleHeaderControllerIssue176Tests: XCTestCase {
   var fhvc: MDCFlexibleHeaderViewController!
 
   override func setUp() {
+    super.setUp()
+
     fhvc = MDCFlexibleHeaderViewController()
     fhvc.headerView.maximumHeight = fhvc.headerView.minimumHeight + 100
+  }
+
+  override func tearDown() {
+    fhvc = nil
+
+    super.tearDown()
   }
 
   func registerToParentViewController(_ parent: UIViewController) {

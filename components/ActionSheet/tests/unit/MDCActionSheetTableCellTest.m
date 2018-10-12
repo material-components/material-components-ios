@@ -35,6 +35,12 @@
   self.actionSheet = [[MDCActionSheetController alloc] init];
 }
 
+- (void)tearDown {
+  self.actionSheet = nil;
+
+  [super tearDown];
+}
+
 - (void)testDefaultRenderingMode {
   // When
   NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheet];

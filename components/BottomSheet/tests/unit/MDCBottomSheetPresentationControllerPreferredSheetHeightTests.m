@@ -79,6 +79,14 @@
   self.presentationController.sheetView = self.sheetView;
 }
 
+- (void)tearDown {
+  self.presentationController.sheetView = nil;
+  self.presentationController = nil;
+  self.sheetView = nil;
+
+  [super tearDown];
+}
+
 - (void)testUpdatePreferredSheetHeightZeroWhenSheetViewHasStandardizedFrame {
   // Given
   CGFloat sheetFrameHeight = 80;

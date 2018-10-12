@@ -49,6 +49,7 @@
 }
 
 - (void)tearDown {
+  // Restore the Snackbar Manager's state
   MDCSnackbarManager.messageTextColor = self.messageTextColor;
   MDCSnackbarManager.snackbarMessageViewShadowColor = self.snackbarMessageViewShadowColor;
   MDCSnackbarManager.snackbarMessageViewBackgroundColor = self.snackbarMessageViewBackgroundColor;
@@ -58,7 +59,13 @@
                                      forState:state.unsignedIntegerValue];
     }
   }
+
+  // Clean-up the test case
   [self.titleColorForState removeAllObjects];
+  self.messageTextColor = nil;
+  self.snackbarMessageViewShadowColor = nil;
+  self.snackbarMessageViewBackgroundColor = nil;
+
   [super tearDown];
 }
 

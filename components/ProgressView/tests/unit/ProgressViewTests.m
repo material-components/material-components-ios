@@ -48,6 +48,8 @@
 - (void)testSetProgressAnimated {
   [_progressView setProgress:0.777f animated:YES completion:nil];
   XCTAssertEqual(_progressView.progress, 0.777f);
+
+  [NSRunLoop.mainRunLoop runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1]];
 }
 
 - (void)testProgressClampedAt0 {

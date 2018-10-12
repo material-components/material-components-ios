@@ -22,9 +22,9 @@ class MDCAlertControllerAlertThemerTests: XCTestCase {
 
   let defaultCornerRadius: CGFloat = 4.0
   let defaultElevation: CGFloat = ShadowElevation.dialog.rawValue
-  var alertScheme: MDCAlertScheme = MDCAlertScheme()
-  var alert = MDCAlertController(title: "Title", message: "Message")
-  var alertView: MDCAlertControllerView { return alert.view as! MDCAlertControllerView }
+  var alertScheme: MDCAlertScheme! = MDCAlertScheme()
+  var alert: MDCAlertController! = MDCAlertController(title: "Title", message: "Message")
+  var alertView: MDCAlertControllerView! { return alert.view as! MDCAlertControllerView }
 
   override func setUp() {
     super.setUp()
@@ -35,6 +35,14 @@ class MDCAlertControllerAlertThemerTests: XCTestCase {
 
     alert = MDCAlertController(title: "Title", message: "Message")
   }
+
+  override func tearDown() {
+    alertScheme = nil
+    alert = nil
+
+    super.tearDown()
+  }
+
 
   func testDefaultAlertScheme() {
     XCTAssertEqual(alertScheme.colorScheme.primaryColor, MDCSemanticColorScheme().primaryColor)
