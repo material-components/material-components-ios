@@ -43,7 +43,7 @@ static UIColor *DrawerShadowColor(void) {
  */
 static CGFloat InitialDrawerHeightFactor(void) {
   BOOL enableAccessibilityMode =
-      UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning() || false;
+      UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning();
   return enableAccessibilityMode ? 1.0f : 0.5f;
 }
 
@@ -281,7 +281,7 @@ static CGFloat InitialDrawerHeightFactor(void) {
 }
 
 - (BOOL)isAccessibilityMode {
-  return UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning() || true;
+  return UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning();
 }
 
 - (void)addScrollViewObserver {
@@ -453,10 +453,7 @@ static CGFloat InitialDrawerHeightFactor(void) {
           : [self transitionPercentageForContentOffset:contentOffset
                                                 offset:0.f
                                               distance:self.headerAnimationDistance];
-//  NSLog(@"%f %f %f %d", contentOffset.y, self.transitionCompleteContentOffset, headerTransitionToTop, self.contentReachesFullscreen);
   self.currentlyFullscreen = self.contentReachesFullscreen && headerTransitionToTop >= 1.f;
-  NSLog(@"headerTransitionToTop: %f", headerTransitionToTop);
-  NSLog(@"CURRENTLY FULL SCREEN: %d", self.currentlyFullscreen);
   CGFloat fullscreenHeaderHeight =
       self.contentReachesFullscreen ? self.topHeaderHeight : [self contentHeaderHeight];
 
@@ -484,7 +481,6 @@ static CGFloat InitialDrawerHeightFactor(void) {
   CGFloat contentHeaderViewHeight = contentHeaderHeight + headerTransitionToTop * headersDiff;
 
   if (self.currentlyFullscreen && contentHeaderView.superview != self.view) {
-    NSLog(@"currently full screen");
     // The content header should be located statically at the top of the drawer when the drawer
     // is shown in fullscreen.
     [contentHeaderView removeFromSuperview];
@@ -492,7 +488,6 @@ static CGFloat InitialDrawerHeightFactor(void) {
     self.scrollViewClippingView.clipsToBounds = YES;
     [self.view setNeedsLayout];
   } else if (!self.currentlyFullscreen && contentHeaderView.superview != self.scrollView) {
-    NSLog(@"not full screen!");
     // The content header should be scrolled together with the rest of the content when the drawer
     // is not in fullscreen.
     [contentHeaderView removeFromSuperview];
