@@ -43,7 +43,7 @@ static UIColor *DrawerShadowColor(void) {
  */
 static CGFloat InitialDrawerHeightFactor(void) {
   BOOL enableAccessibilityMode =
-      UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning() || true;
+      UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning() || false;
   return enableAccessibilityMode ? 1.0f : 0.5f;
 }
 
@@ -385,8 +385,12 @@ static CGFloat InitialDrawerHeightFactor(void) {
       contentViewFrame.size.height += topAreaInsetForHeader;
     }
   } else {
-  contentViewFrame.size.height = MAX(self.presentingViewBounds.size.height - self.topHeaderHeight,
-                                     self.contentViewController.preferredContentSize.height);
+    contentViewFrame.size.height = self.contentViewController.preferredContentSize.height;
+    if ([self isAccessibilityMode]) {
+      contentViewFrame.size.height =
+          MAX(contentViewFrame.size.height,
+              self.presentingViewBounds.size.height - self.topHeaderHeight);
+    }
   }
   self.contentViewController.view.frame = contentViewFrame;
   if (self.trackingScrollView != nil) {
