@@ -18,7 +18,7 @@ import MaterialComponents.MaterialColorScheme
 
 class DrawerContentViewController: UIViewController {
   var colorScheme = MDCSemanticColorScheme()
-  let preferredHeight: CGFloat = 100
+  let preferredHeight: CGFloat = 2000
 
   override var preferredContentSize: CGSize {
     get {

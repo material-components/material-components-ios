@@ -75,7 +75,7 @@ class DrawerContentTableViewController: UITableViewController {
   }
 
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 1
+    return 100
   }
 
   override func numberOfSections(in tableView: UITableView) -> Int {
@@ -91,7 +91,6 @@ extension BottomDrawerInfiniteScrollingExample {
       "description": "Navigation Drawer",
       "primaryDemo": true,
       "presentable": true,
-      "debug": false,
     ]
   }
 }
