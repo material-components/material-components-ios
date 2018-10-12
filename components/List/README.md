@@ -222,7 +222,7 @@ id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
 
 ## Accessibility
 
-To help ensure your Lists are accessible to as many users as possible, please be sure to reivew the following
+To help ensure your Lists are accessible to as many users as possible, please be sure to review the following
 recommendations:
 
 ### Setting `-isAccessibilityElement`
@@ -359,7 +359,7 @@ _flowLayout.estimatedItemSize = CGSizeMake(kSmallArbitraryCellWidth, kSmallestCe
 
 ### Typography
 
-For our example we use a typography scheme to apply the fonts to our cell's `UILabel`'s. Please see <a href="schemes/Typography">Typography Scheme</a> for more info.
+For our example we use a typography scheme to apply the fonts to our cell's `UILabel`'s. Please see <a href="../schemes/Typography">Typography Scheme</a> for more info.
 
 ### Dynamic Type
 
