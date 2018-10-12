@@ -154,11 +154,6 @@ static UIColor *DrawerShadowColor(void) {
     _contentHeightSurplus = NSNotFound;
     _addedContentHeight = NSNotFound;
     _trackingScrollView = trackingScrollView;
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self
-           selector:@selector(statusBarFrameWillChange:)
-               name:UIApplicationWillChangeStatusBarFrameNotification
-             object:nil];
   }
   return self;
 }
@@ -593,13 +588,6 @@ static UIColor *DrawerShadowColor(void) {
   }
   CGSize statusBarSize = [[UIApplication mdc_safeSharedApplication] statusBarFrame].size;
   return MIN(statusBarSize.width, statusBarSize.height);
-}
-
-- (void)statusBarFrameWillChange:(NSNotification *)notification {
-  [self.headerViewController.view setNeedsLayout];
-  [self.contentViewController.view setNeedsLayout];
-  [self updateContentOffsetForPerformantScrolling:self.scrollView.contentOffset.y];
-  [self updateViewWithContentOffset:self.scrollView.contentOffset];
 }
 
 @end
