@@ -16,7 +16,7 @@
 
 @implementation MDCBottomDrawerHeaderLayer
 
-- (CALayer *)layerForCornerRadius:(CGFloat)cornerRadius inView:(UIView *)view {
+- (CAShapeLayer *)layerForCornerRadius:(CGFloat)cornerRadius inView:(UIView *)view {
   CAShapeLayer *headerLayer = [[CAShapeLayer alloc] init];
   CGRect safeBounds = CGRectStandardize(view.bounds);
   CGFloat safeHeight = safeBounds.size.height;
@@ -30,8 +30,8 @@
   [path addLineToPoint:CGPointMake(safeWidth - safeCornerRadius, 0)];
   [path addArcWithCenter:CGPointMake(safeWidth - safeCornerRadius, safeCornerRadius)
                   radius:safeCornerRadius
-              startAngle:M_PI
-                endAngle:-M_PI
+              startAngle:-M_PI
+                endAngle:0
                clockwise:YES];
   [path addLineToPoint:CGPointMake(safeWidth, safeHeight)];
   [path addLineToPoint:CGPointMake(0, CGRectGetHeight(view.bounds))];
