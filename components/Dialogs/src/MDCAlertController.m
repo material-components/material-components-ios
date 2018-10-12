@@ -84,6 +84,10 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 @property(nonatomic, strong) MDCDialogTransitionController *transitionController;
 
+@property(nonatomic, strong) MDCEmphasisHandler lowEmphasisAction;
+@property(nonatomic, strong) MDCEmphasisHandler mediumEmphasisAction;
+@property(nonatomic, strong) MDCEmphasisHandler highEmphasisAction;
+
 - (nonnull instancetype)initWithTitle:(nullable NSString *)title
                               message:(nullable NSString *)message;
 
@@ -184,6 +188,13 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
                                                            target:self
                                                          selector:@selector(actionButtonPressed:)];
     addedAction.accessibilityIdentifier = action.accessibilityIdentifier;
+    if (action.emphasis == MDCAlertActionEmphasisLow && self.lowEmphasisAction) {
+      self.lowEmphasisAction(addedAction);
+    } else if (action.emphasis == MDCAlertActionEmphasisMedium && self.mediumEmphasisAction) {
+      self.mediumEmphasisAction(addedAction);
+    } else if (action.emphasis == MDCAlertActionEmphasisHigh && self.highEmphasisAction) {
+      self.highEmphasisAction(addedAction);
+    }
     self.preferredContentSize =
         [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
     [self.alertView setNeedsLayout];
@@ -323,6 +334,20 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
                                                         action.didSelectHandler(action);
                                                       }
                                                     }];
+}
+
+#pragma mark - Emphasis
+
+- (void)configureLowEmphasisActions:(__nonnull MDCEmphasisHandler)handler {
+  self.lowEmphasisAction = handler;
+}
+
+- (void)configureMediumeEmphasisActions:(__nonnull MDCEmphasisHandler)handler {
+  self.mediumEmphasisAction = handler;
+}
+
+- (void)configureHighEmphasisActions:(__nonnull MDCEmphasisHandler)handler {
+  self.highEmphasisAction = handler;
 }
 
 #pragma mark - UIViewController

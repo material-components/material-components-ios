@@ -14,6 +14,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MDCAlertActionSemantics.h"
+#import "MaterialButtons.h"
 
 @class MDCAlertAction;
 
@@ -141,7 +142,15 @@
 /** MDCAlertController.modalPresentationStyle is always UIModalPresentationCustom. */
 - (void)setModalPresentationStyle:(UIModalPresentationStyle)modalPresentationStyle NS_UNAVAILABLE;
 
-//- (void)styleSemanticActions;
+/**
+ MDCPresentationAction is an action configurtion block that will be invoked just before
+ the action is presented. Passed into the block is the button to be themed.
+ */
+typedef void (^MDCEmphasisHandler)(MDCButton *_Nonnull actionButton);
+
+- (void)configureLowEmphasisActions:(__nonnull MDCEmphasisHandler)handler;
+- (void)configureMediumeEmphasisActions:(__nonnull MDCEmphasisHandler)handler;
+- (void)configureHighEmphasisActions:(__nonnull MDCEmphasisHandler)handler;
 
 @end
 

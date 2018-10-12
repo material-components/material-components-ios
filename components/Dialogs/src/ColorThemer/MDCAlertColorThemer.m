@@ -14,7 +14,8 @@
 
 #import "MDCAlertColorThemer.h"
 
-#import "MaterialButtons.h"
+//#import "MaterialButtons.h"
+#import "MaterialButtons+ButtonThemer.h"
 #import "MaterialDialogs.h"
 
 @implementation MDCAlertColorThemer
@@ -23,9 +24,27 @@
                toAlertController:(nonnull MDCAlertController *)alertController {
   alertController.titleColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87];
   alertController.messageColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
-  alertController.buttonTitleColor = colorScheme.primaryColor;
+  //alertController.buttonTitleColor = colorScheme.primaryColor;
   alertController.titleIconTintColor = colorScheme.primaryColor;
   alertController.scrimColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.32];
+
+  MDCButtonScheme *lowEmphasisButtonScheme = [[MDCButtonScheme alloc] init];
+  //MDCSemanticColorScheme *lowEmphasisColorScheme = [(MDCSemanticColorScheme *)colorScheme copy];
+  MDCSemanticColorScheme *lowEmphasisColorScheme = [[MDCSemanticColorScheme alloc] init];
+  lowEmphasisColorScheme.primaryColor = UIColor.cyanColor;
+  lowEmphasisButtonScheme.colorScheme = lowEmphasisColorScheme;
+  [alertController configureLowEmphasisActions:^(MDCButton * _Nonnull actionButton) {
+    [MDCTextButtonThemer applyScheme:lowEmphasisButtonScheme toButton:actionButton];
+  }];
+
+  MDCButtonScheme *highEmphasisButtonScheme = [[MDCButtonScheme alloc] init];
+  //MDCSemanticColorScheme *highEmphasisColorScheme = [(MDCSemanticColorScheme *)colorScheme copy];
+  MDCSemanticColorScheme *highEmphasisColorScheme = [[MDCSemanticColorScheme alloc] init];
+  highEmphasisColorScheme.primaryColor = UIColor.blueColor;
+  highEmphasisButtonScheme.colorScheme = highEmphasisColorScheme;
+  [alertController configureHighEmphasisActions:^(MDCButton * _Nonnull actionButton) {
+    [MDCContainedButtonThemer applyScheme:highEmphasisButtonScheme toButton:actionButton];
+  }];
 }
 
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme {
