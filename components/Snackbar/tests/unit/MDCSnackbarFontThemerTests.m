@@ -23,6 +23,12 @@
 
 @implementation MDCSnackbarFontThemerTests
 
+- (void)tearDown {
+  [MDCSnackbarManager dismissAndCallCompletionBlocksWithCategory:nil];
+
+  [super tearDown];
+}
+
 - (void)testSnackbarFontThemerUsingUIAppearance {
   MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
   message.text = @"How much wood would a woodchuck chuck if a woodchuck could chuck wood?";

@@ -32,9 +32,9 @@
 }
 
 - (void)tearDown {
-  [super tearDown];
   self.showView = nil;
   self.highlightedView = nil;
+  [super tearDown];
 }
 
 - (void)testFeaturehighlightTypographyThemer {

@@ -25,6 +25,8 @@ class FlexibleHeaderControllerIssue279Tests: XCTestCase {
   var tableViewController: UITableViewController!
 
   override func setUp() {
+    super.setUp()
+
     fhvc = MDCFlexibleHeaderViewController()
 
     tableViewController = UITableViewController()
@@ -34,6 +36,13 @@ class FlexibleHeaderControllerIssue279Tests: XCTestCase {
     fhvc.headerView.trackingScrollView = tableViewController.tableView
 
     fhvc.didMove(toParentViewController: tableViewController)
+  }
+
+  override func tearDown() {
+    tableViewController = nil
+    fhvc = nil
+    
+    super.tearDown()
   }
 
   func testIsFrontMostView() {

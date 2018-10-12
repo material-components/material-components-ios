@@ -24,6 +24,12 @@ class AppBarNavigationControllerTests: XCTestCase {
     navigationController = MDCAppBarNavigationController()
   }
 
+  override func tearDown() {
+    navigationController = nil
+
+    super.tearDown()
+  }
+
   func testInitializingWithRootViewControllerInjectsAnAppBar() {
     // Given
     let viewController = UIViewController()

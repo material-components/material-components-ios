@@ -48,6 +48,16 @@
   self.message = [MDCSnackbarMessage messageWithText:@"message text"];
 }
 
+- (void)tearDown {
+  [self.manager dismissAndCallCompletionBlocksWithCategory:nil];
+  self.message = nil;
+  self.manager.delegate = nil;
+  self.delegate = nil;
+  self.manager = nil;
+
+  [super tearDown];
+}
+
 - (void)testDefaultColors {
   // Given
   MDCSnackbarMessageView *messageView = [[MDCSnackbarMessageView alloc] init];
