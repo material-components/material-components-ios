@@ -28,6 +28,7 @@
 /components/HeaderStackView/      @jverkoey
 /components/Ink/                  @yarneo
 /components/LibraryInfo/          @ajsecord
+/components/List                  @andrewoverton
 /components/MaskedTransition/     @jverkoey
 /components/NavigationBar/        @yarneo @jverkoey
 /components/NavigationDrawer/     @yarneo
