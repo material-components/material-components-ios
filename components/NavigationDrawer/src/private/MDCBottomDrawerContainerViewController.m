@@ -215,9 +215,9 @@ static CGFloat InitialDrawerHeightFactor(void) {
     // offset to use the outdated content offset of the main scroll view, so we update it
     // accordingly.
     CGPoint normalizedContentOffset = contentOffset;
-//    if (self.trackingScrollView != nil) {
-//      normalizedContentOffset.y = [self updateContentOffsetForPerformantScrolling:contentOffset.y];
-//    }
+    if (self.trackingScrollView != nil) {
+      normalizedContentOffset.y = [self updateContentOffsetForPerformantScrolling:contentOffset.y];
+    }
 
     [self updateViewWithContentOffset:normalizedContentOffset];
   }
@@ -375,23 +375,24 @@ static CGFloat InitialDrawerHeightFactor(void) {
   // Layout the main content view.
   CGRect contentViewFrame = self.scrollView.bounds;
   contentViewFrame.origin.y = self.contentHeaderTopInset + self.contentHeaderHeight;
-//  if (self.trackingScrollView != nil) {
-//    CGFloat topAreaInsetForHeader = (self.headerViewController ? MDCDeviceTopSafeAreaInset() : 0);
-//    contentViewFrame.size.height -= self.contentHeaderHeight - kScrollViewBufferForPerformance;
-//    // We add the topAreaInsetForHeader to the height of the content view frame when a tracking
-//    // scroll view is set, to normalize the algorithm after the removal of this value from the
-//    // topAreaInsetForHeader inside the updateContentOffsetForPerformantScrolling method.
-//    if (self.contentHeaderTopInset > topAreaInsetForHeader + FLT_EPSILON) {
-//      contentViewFrame.size.height += topAreaInsetForHeader;
-//    }
-//  } else {
-  contentViewFrame.size.height = self.presentingViewBounds.size.height - self.topHeaderHeight;//688;//self.presentingViewBounds.size.height - (self.contentHeaderTopInset + self.contentHeaderHeight);// self.contentViewController.preferredContentSize.height;
-//  }
+  if (self.trackingScrollView != nil) {
+    CGFloat topAreaInsetForHeader = (self.headerViewController ? MDCDeviceTopSafeAreaInset() : 0);
+    contentViewFrame.size.height -= self.contentHeaderHeight - kScrollViewBufferForPerformance;
+    // We add the topAreaInsetForHeader to the height of the content view frame when a tracking
+    // scroll view is set, to normalize the algorithm after the removal of this value from the
+    // topAreaInsetForHeader inside the updateContentOffsetForPerformantScrolling method.
+    if (self.contentHeaderTopInset > topAreaInsetForHeader + FLT_EPSILON) {
+      contentViewFrame.size.height += topAreaInsetForHeader;
+    }
+  } else {
+  contentViewFrame.size.height = MAX(self.presentingViewBounds.size.height - self.topHeaderHeight,
+                                     self.contentViewController.preferredContentSize.height);
+  }
   self.contentViewController.view.frame = contentViewFrame;
-//  if (self.trackingScrollView != nil) {
-//    contentViewFrame.origin.y = self.trackingScrollView.frame.origin.y;
-//    self.trackingScrollView.frame = contentViewFrame;
-//  }
+  if (self.trackingScrollView != nil) {
+    contentViewFrame.origin.y = self.trackingScrollView.frame.origin.y;
+    self.trackingScrollView.frame = contentViewFrame;
+  }
 
   [self.headerViewController.view.superview bringSubviewToFront:self.headerViewController.view];
   [self updateViewWithContentOffset:self.scrollView.contentOffset];
@@ -448,8 +449,10 @@ static CGFloat InitialDrawerHeightFactor(void) {
           : [self transitionPercentageForContentOffset:contentOffset
                                                 offset:0.f
                                               distance:self.headerAnimationDistance];
-  NSLog(@"%f %f %f", contentOffset.y, self.transitionCompleteContentOffset, headerTransitionToTop);
+//  NSLog(@"%f %f %f %d", contentOffset.y, self.transitionCompleteContentOffset, headerTransitionToTop, self.contentReachesFullscreen);
   self.currentlyFullscreen = self.contentReachesFullscreen && headerTransitionToTop >= 1.f;
+  NSLog(@"headerTransitionToTop: %f", headerTransitionToTop);
+  NSLog(@"CURRENTLY FULL SCREEN: %d", self.currentlyFullscreen);
   CGFloat fullscreenHeaderHeight =
       self.contentReachesFullscreen ? self.topHeaderHeight : [self contentHeaderHeight];
 
@@ -613,8 +616,10 @@ static CGFloat InitialDrawerHeightFactor(void) {
 - (void)cacheLayoutCalculationsWithAddedContentHeight:(CGFloat)addedContentHeight {
   CGFloat contentHeaderHeight = self.contentHeaderHeight;
   CGFloat containerHeight = self.presentingViewBounds.size.height;
-  CGFloat contentHeight = [self isAccessibilityMode] ? containerHeight - self.topHeaderHeight :
-      self.contentViewController.preferredContentSize.height;
+  CGFloat contentHeight = self.contentViewController.preferredContentSize.height;
+  if ([self isAccessibilityMode]) {
+    contentHeight = MAX(contentHeight, containerHeight - self.topHeaderHeight);
+  }
   _contentVCPreferredContentSizeHeightCached = contentHeight;
 
   contentHeight += addedContentHeight;
