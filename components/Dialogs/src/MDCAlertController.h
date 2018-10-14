@@ -158,6 +158,12 @@
 
 @end
 
+typedef NS_ENUM(NSInteger, MDCActionEmphasis) {
+  MDCActionEmphasisLow = 0,
+  MDCActionEmphasisMedium = 1,
+  MDCActionEmphasisHigh = 2,
+};
+
 /**
  MDCActionHandler is a block that will be invoked when the action is selected.
  */
@@ -169,7 +175,8 @@ typedef void (^MDCActionHandler)(MDCAlertAction *_Nonnull action);
 @interface MDCAlertAction : NSObject <NSCopying, UIAccessibilityIdentification>
 
 /**
- Action alerts control the buttons that will be displayed on the bottom of an alert controller.
+ A convenience method for adding actions that will be rendered as low emphasis buttons at the
+ bottom of an alert controller.
 
  @param title The title of the button shown on the alert dialog.
  @param handler A block to execute when the user selects the action.
@@ -178,15 +185,36 @@ typedef void (^MDCActionHandler)(MDCAlertAction *_Nonnull action);
 + (nonnull instancetype)actionWithTitle:(nonnull NSString *)title
                                 handler:(__nullable MDCActionHandler)handler;
 
+/**
+ An action that renders at the bottom of an alert controller as a button of the given emphasis.
+
+ @param title The title of the button shown on the alert dialog.
+ @param emphasis The emphasis of the button that will be rendered in the alert dialog.
+        Unthemed actions will render all emphases as text. Apply themers to the alert
+        to achieve different appearance for different emphases.
+ @param handler A block to execute when the user selects the action.
+ @return An initialized MDCActionAlert object.
+ */
++ (nonnull instancetype)actionWithTitle:(nonnull NSString *)title
+                               emphasis:(MDCActionEmphasis)emphasis
+                                handler:(__nullable MDCActionHandler)handler;
+
 /** Alert actions must be created with actionWithTitle:handler: */
 - (nonnull instancetype)init NS_UNAVAILABLE;
 
 /**
  Title of the button shown on the alert dialog.
 
- Alert actions titles must be set in the actionWithTitle:handler: method.
+ Alert actions titles must be set using either of the actionWithTitle:[emphais:]handler: methods.
  */
 @property(nonatomic, nullable, readonly) NSString *title;
+
+/**
+ The MDCActionEmphasis emphasis of the button that will be rendered for the action.
+
+ Alert actions emphasis must be set in the actionWithTitle:emphasis:handler: method.
+ */
+@property(nonatomic, readonly) MDCActionEmphasis emphasis;
 
 // TODO(iangordon): Add support for enabled property to match UIAlertAction
 

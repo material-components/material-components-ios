@@ -40,21 +40,31 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 + (instancetype)actionWithTitle:(nonnull NSString *)title
                         handler:(void (^__nullable)(MDCAlertAction *action))handler {
-  return [[MDCAlertAction alloc] initWithTitle:title handler:handler];
+  return [[MDCAlertAction alloc] initWithTitle:title emphasis:MDCActionEmphasisLow handler:handler];
+}
+
++ (instancetype)actionWithTitle:(nonnull NSString *)title
+                       emphasis:(MDCActionEmphasis)emphasis
+                        handler:(void (^__nullable)(MDCAlertAction *action))handler {
+  return [[MDCAlertAction alloc] initWithTitle:title emphasis:emphasis handler:handler];
 }
 
 - (instancetype)initWithTitle:(nonnull NSString *)title
+                     emphasis:(MDCActionEmphasis)emphasis
                       handler:(void (^__nullable)(MDCAlertAction *action))handler {
   self = [super init];
   if (self) {
     _title = [title copy];
+    _emphasis = emphasis;
     _completionHandler = [handler copy];
   }
   return self;
 }
 
 - (id)copyWithZone:(__unused NSZone *)zone {
-  MDCAlertAction *action = [[self class] actionWithTitle:self.title handler:self.completionHandler];
+  MDCAlertAction *action = [[self class] actionWithTitle:self.title
+                                                emphasis:self.emphasis
+                                                 handler:self.completionHandler];
   action.accessibilityIdentifier = self.accessibilityIdentifier;
 
   return action;
@@ -65,8 +75,8 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 @interface MDCAlertController ()
 
 @property(nonatomic, nullable, weak) MDCAlertControllerView *alertView;
-@property(nonatomic, nonnull, strong) MDCAlertActionManager *actionManager;
 @property(nonatomic, strong) MDCDialogTransitionController *transitionController;
+@property(nonatomic, nonnull, strong) MDCAlertActionManager *actionManager;
 
 - (nonnull instancetype)initWithTitle:(nullable NSString *)title
                               message:(nullable NSString *)message;

@@ -70,6 +70,10 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
 
   var menu: [String] = []
 
+  var handler: MDCActionHandler = { action in
+    print(action.title ?? "Some Action")
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -82,6 +86,8 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
       "Right Aligned Title with a Large Icon",
       "Tinted Title Icon, No Title",
       "Darker Scrim",
+      "Emphasis-based Button Theming",
+      "Unthemed Alert",
     ])
   }
 
@@ -109,6 +115,10 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
       return performTintedTitleIconNoTitle()
     case 5:
       return performScrimColor()
+    case 6:
+      return performEmphasisButtonTheming()
+    case 7:
+      return performUnthemed()
     default:
       print("No row is selected")
       return nil
@@ -170,13 +180,32 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
     return alert
   }
 
+  func performEmphasisButtonTheming() -> MDCAlertController {
+    let alert = MDCAlertController(title: "Button Theming", message: "High, Medium & Low Emphasis")
+    alert.enableEmphasisThemingForActionButtons = true
+    alert.addAction(MDCAlertAction(title:"High", emphasis: .high, handler: handler))
+    alert.addAction(MDCAlertAction(title:"Medium", emphasis: .medium, handler: handler))
+    alert.addAction(MDCAlertAction(title:"Low", emphasis: .low, handler: handler))
+    MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
+    return alert
+  }
+
+  func performUnthemed() -> MDCAlertController {
+    let alert = MDCAlertController(title: "Unthemed Alert",
+                                   message: "Lorem ipsum dolor sit amet, consectetur adipiscing...")
+    alert.addAction(MDCAlertAction(title:"High", emphasis: .high, handler: handler))
+    alert.addAction(MDCAlertAction(title:"Medium", emphasis: .medium, handler: handler))
+    alert.addAction(MDCAlertAction(title:"Low", emphasis: .low, handler: handler))
+    return alert
+  }
+
   private func createMDCAlertController(title: String?) -> MDCAlertController {
     let alertController = MDCAlertController(title: title, message: """
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
       tempor incididunt ut labore et dolore magna aliqua.
       """)
-    alertController.addAction(MDCAlertAction(title:"OK") { _ in print("OK") })
-    alertController.addAction(MDCAlertAction(title:"Cancel") { _ in print("Cancel") })
+    alertController.addAction(MDCAlertAction(title:"OK", handler: handler))
+    alertController.addAction(MDCAlertAction(title:"Cancel", handler: handler))
     return alertController
   }
 

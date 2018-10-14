@@ -15,6 +15,7 @@
 #import "MDCAlertControllerThemer.h"
 #import "MDCAlertColorThemer.h"
 #import "MDCAlertTypographyThemer.h"
+#import "MaterialButtons+ButtonThemer.h" // todo: update podspec?
 
 @implementation MDCAlertControllerThemer
 
@@ -28,6 +29,24 @@
 
   alertController.cornerRadius = alertScheme.cornerRadius;
   alertController.elevation = alertScheme.elevation;
+
+  for (MDCAlertAction *action in alertController.actions) {
+    MDCButton *button = [alertController buttonForAction:action];
+    switch (action.emphasis) {
+      case MDCActionEmphasisHigh:
+        [MDCContainedButtonThemer applyScheme:alertScheme.buttonScheme toButton:button];
+        break;
+
+      case MDCActionEmphasisMedium:
+        [MDCOutlinedButtonThemer applyScheme:alertScheme.buttonScheme toButton:button];
+        break;
+
+      case MDCActionEmphasisLow:
+      default:
+        [MDCTextButtonThemer applyScheme:alertScheme.buttonScheme toButton:button];
+        break;
+    }
+  }
 }
 
 @end
