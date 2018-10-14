@@ -89,13 +89,12 @@ class MDCAlertControllerAlertThemerTests: XCTestCase {
   }
 
   func testApplyingAlertSchemeScrimColorToPresentationController() {
-    guard let presentationController = alert.mdc_dialogPresentationController else { return }
-
     // Given
     let colorScheme = MDCSemanticColorScheme()
     colorScheme.onSurfaceColor = UIColor.green
     alertScheme.colorScheme = colorScheme
     let scrimColor = colorScheme.onSurfaceColor.withAlphaComponent(0.32)
+    let presentationController = alert.mdc_dialogPresentationController!
 
     // When
     MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)

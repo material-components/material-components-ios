@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
+#import "MaterialButtons.h"
 
 #import "MaterialShadowElevations.h"
 
@@ -48,26 +49,6 @@
 
 /** Alert controllers must be created with alertControllerWithTitle:message: */
 - (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;
-
-/**
- Adds an action to the alert dialog.
-
- Actions are the possible reactions of the user to the presented alert. Actions are added as a
- button at the bottom of the alert. Affirmative actions should be added before dismissive actions.
- Action buttons will be laid out from right to left if possible or top to bottom depending on space.
-
- Material spec recommends alerts should not have more than two actions.
-
- @param action Will be added to the end of MDCAlertController.actions.
- */
-- (void)addAction:(nonnull MDCAlertAction *)action;
-
-/**
- The actions that the user can take in response to the alert.
-
- The order of the actions in the array matches the order in which they were added to the alert.
- */
-@property(nonatomic, nonnull, readonly) NSArray<MDCAlertAction *> *actions;
 
 /** The font applied to the title of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIFont *titleFont;
@@ -134,9 +115,43 @@
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
     BOOL mdc_adjustsFontForContentSizeCategory;
 
+/**
+ The actions that the user can take in response to the alert.
+
+ The order of the actions in the array matches the order in which they were added to the alert.
+ */
+@property(nonatomic, nonnull, readonly) NSArray<MDCAlertAction *> *actions;
+
+/**
+ Adds an action to the alert dialog.
+
+ Actions are the possible reactions of the user to the presented alert. Actions are added as a
+ button at the bottom of the alert. Affirmative actions should be added before dismissive actions.
+ Action buttons will be laid out from right to left if possible or top to bottom depending on space.
+
+ Material spec recommends alerts should not have more than two actions.
+
+ @param action Will be added to the end of MDCAlertController.actions.
+ */
+- (void)addAction:(nonnull MDCAlertAction *)action;
+
+/**
+ Returns an MDCButton associated with the given action. This method might create the button if
+ it no associated button exist for the action yet. Buttons returned by thismethod may not (yet)
+ be attached to the view hierarchy at the time the method is called.
+
+ This method is commonly used by themers to style the button associated with the action.
+
+ @param action The action with which the button is associated. Must be an existing action that
+               had been previously added through addAction: to the alert.
+ @return The button associated with the action, or nil if the action doesn't exist (the action
+          must first be added to the alert).
+ */
+- (nullable MDCButton *)buttonForAction:(nonnull MDCAlertAction *)action;
+
 /** MDCAlertController handles its own transitioning delegate. */
 - (void)setTransitioningDelegate:
-        (_Nullable id<UIViewControllerTransitioningDelegate>)transitioningDelegate NS_UNAVAILABLE;
+(_Nullable id<UIViewControllerTransitioningDelegate>)transitioningDelegate NS_UNAVAILABLE;
 
 /** MDCAlertController.modalPresentationStyle is always UIModalPresentationCustom. */
 - (void)setModalPresentationStyle:(UIModalPresentationStyle)modalPresentationStyle NS_UNAVAILABLE;
