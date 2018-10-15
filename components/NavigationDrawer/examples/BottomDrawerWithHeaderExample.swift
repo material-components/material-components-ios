@@ -14,10 +14,12 @@
 
 import UIKit
 import MaterialComponentsAlpha.MaterialNavigationDrawer
+import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialColorScheme
 
 class BottomDrawerWithHeaderExample: UIViewController {
   var colorScheme = MDCSemanticColorScheme()
+  let button = MDCButton()
 
   let headerViewController = DrawerHeaderViewController()
   let contentViewController = DrawerContentViewController()
@@ -27,16 +29,28 @@ class BottomDrawerWithHeaderExample: UIViewController {
     view.backgroundColor = colorScheme.backgroundColor
     headerViewController.colorScheme = colorScheme
     contentViewController.colorScheme = colorScheme
+
+    button.setTitle("Show Navigation Drawer", for: .normal)
+    button.sizeToFit()
+    let buttonScheme = MDCButtonScheme()
+    buttonScheme.colorScheme = colorScheme
+    MDCContainedButtonThemer.applyScheme(buttonScheme, to: button)
+    button.addTarget(self, action: #selector(presentNavigationDrawer), for: .touchUpInside)
+    view.addSubview(button)
   }
 
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+
+    button.center = view.center
+  }
+
+  @objc func presentNavigationDrawer() {
     let bottomDrawerViewController = MDCBottomDrawerViewController()
     bottomDrawerViewController.contentViewController = contentViewController
     bottomDrawerViewController.headerViewController = headerViewController
     present(bottomDrawerViewController, animated: true, completion: nil)
   }
-
 }
 
 extension BottomDrawerWithHeaderExample {

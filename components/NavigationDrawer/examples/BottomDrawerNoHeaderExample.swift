@@ -14,11 +14,13 @@
 
 import UIKit
 import MaterialComponentsAlpha.MaterialNavigationDrawer
+import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialColorScheme
 
 class BottomDrawerNoHeaderExample: UIViewController {
   var colorScheme = MDCSemanticColorScheme()
 
+  let button = MDCButton()
   let contentViewController = DrawerContentViewController()
   let bottomDrawerTransitionController = MDCBottomDrawerTransitionController()
 
@@ -26,19 +28,31 @@ class BottomDrawerNoHeaderExample: UIViewController {
     super.viewDidLoad()
     view.backgroundColor = colorScheme.backgroundColor
     contentViewController.colorScheme = colorScheme
+
+    button.setTitle("Show Navigation Drawer", for: .normal)
+    button.sizeToFit()
+    let buttonScheme = MDCButtonScheme()
+    buttonScheme.colorScheme = colorScheme
+    MDCContainedButtonThemer.applyScheme(buttonScheme, to: button)
+    button.addTarget(self, action: #selector(presentNavigationDrawer), for: .touchUpInside)
+    view.addSubview(button)
   }
 
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
-    // This shows that it is possible to present the content view controller directly without
-    // the need of the MDCBottomDrawerViewController wrapper. To present the view controller
-    // inside the drawer, both the transition controller and the custom presentation controller
-    // of the drawer need to be set.
-    contentViewController.transitioningDelegate = bottomDrawerTransitionController
-    contentViewController.modalPresentationStyle = .custom
-    present(contentViewController, animated: true, completion: nil)
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+
+    button.center = view.center
   }
 
+  @objc func presentNavigationDrawer() {
+  // This shows that it is possible to present the content view controller directly without
+  // the need of the MDCBottomDrawerViewController wrapper. To present the view controller
+  // inside the drawer, both the transition controller and the custom presentation controller
+  // of the drawer need to be set.
+  contentViewController.transitioningDelegate = bottomDrawerTransitionController
+  contentViewController.modalPresentationStyle = .custom
+  present(contentViewController, animated: true, completion: nil)
+  }
 }
 
 extension BottomDrawerNoHeaderExample {

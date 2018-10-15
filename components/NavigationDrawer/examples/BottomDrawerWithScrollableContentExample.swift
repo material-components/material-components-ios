@@ -18,6 +18,7 @@ import MaterialComponents.MaterialColorScheme
 
 class BottomDrawerWithScrollableContentExample: UIViewController {
   var colorScheme = MDCSemanticColorScheme()
+  let button = MDCButton()
 
   let headerViewController = DrawerHeaderViewController()
   let contentViewController = DrawerContentWithScrollViewController()
@@ -27,17 +28,23 @@ class BottomDrawerWithScrollableContentExample: UIViewController {
     view.backgroundColor = colorScheme.backgroundColor
     headerViewController.colorScheme = colorScheme
     contentViewController.colorScheme = colorScheme
+
+    button.setTitle("Show Navigation Drawer", for: .normal)
+    button.sizeToFit()
+    let buttonScheme = MDCButtonScheme()
+    buttonScheme.colorScheme = colorScheme
+    MDCContainedButtonThemer.applyScheme(buttonScheme, to: button)
+    button.addTarget(self, action: #selector(presentNavigationDrawer), for: .touchUpInside)
+    view.addSubview(button)
   }
 
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
+  @objc func presentNavigationDrawer() {
     let bottomDrawerViewController = MDCBottomDrawerViewController()
     bottomDrawerViewController.contentViewController = contentViewController
     bottomDrawerViewController.headerViewController = headerViewController
     bottomDrawerViewController.trackingScrollView = contentViewController.collectionView
     present(bottomDrawerViewController, animated: true, completion: nil)
   }
-
 }
 
 class DrawerContentWithScrollViewController: UIViewController,

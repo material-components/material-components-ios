@@ -14,10 +14,12 @@
 
 import UIKit
 import MaterialComponentsAlpha.MaterialNavigationDrawer
+import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialColorScheme
 
 class BottomDrawerInfiniteScrollingExample: UIViewController {
   var colorScheme = MDCSemanticColorScheme()
+  let button = MDCButton()
 
   let headerViewController = DrawerHeaderViewController()
   let contentViewController = DrawerContentTableViewController()
@@ -26,17 +28,29 @@ class BottomDrawerInfiniteScrollingExample: UIViewController {
     super.viewDidLoad()
     view.backgroundColor = colorScheme.backgroundColor
     contentViewController.colorScheme = colorScheme
+
+    button.setTitle("Show Navigation Drawer", for: .normal)
+    button.sizeToFit()
+    let buttonScheme = MDCButtonScheme()
+    buttonScheme.colorScheme = colorScheme
+    MDCContainedButtonThemer.applyScheme(buttonScheme, to: button)
+    button.addTarget(self, action: #selector(presentNavigationDrawer), for: .touchUpInside)
+    view.addSubview(button)
   }
 
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+
+    button.center = view.center
+  }
+
+  @objc private func presentNavigationDrawer() {
     let bottomDrawerViewController = MDCBottomDrawerViewController()
     bottomDrawerViewController.contentViewController = contentViewController
     bottomDrawerViewController.headerViewController = headerViewController
     bottomDrawerViewController.trackingScrollView = contentViewController.tableView
     present(bottomDrawerViewController, animated: true, completion: nil)
   }
-
 }
 
 class DrawerContentTableViewController: UITableViewController {
@@ -70,6 +84,9 @@ class DrawerContentTableViewController: UITableViewController {
     let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
     cell.textLabel?.text = "cell #\(indexPath.item)"
     cell.backgroundColor = colorScheme.surfaceColor
+    if #available(iOS 10.0, *) {
+      cell.textLabel?.adjustsFontForContentSizeCategory = true
+    }
     print(cell.textLabel?.text ?? "")
     return cell
   }
