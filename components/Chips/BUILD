@@ -31,7 +31,6 @@ mdc_public_objc_library(
         "//components/ShadowElevations",
         "//components/ShadowLayer",
         "//components/TextFields",
-        "//components/TextFields:private",
         "//components/Typography",
         "//components/private/Math",
         "//components/private/ShapeLibrary",
