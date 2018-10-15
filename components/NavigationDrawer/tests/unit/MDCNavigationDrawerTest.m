@@ -23,8 +23,7 @@
 @interface MDCNavigationDrawerFakeTableViewController : UITableViewController
 @end
 
-@interface MDCNavigationDrawerFakeHeaderViewController
-    : UITableViewController <MDCBottomDrawerHeader>
+@interface MDCNavigationDrawerFakeHeaderViewController: UIViewController <MDCBottomDrawerHeader>
 @end
 
 @implementation MDCNavigationDrawerTest
