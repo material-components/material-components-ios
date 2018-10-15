@@ -15,6 +15,7 @@
 import UIKit
 import MaterialComponentsAlpha.MaterialNavigationDrawer
 import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialButtons_ButtonThemer
 import MaterialComponents.MaterialColorScheme
 
 class BottomDrawerWithHeaderExample: UIViewController {

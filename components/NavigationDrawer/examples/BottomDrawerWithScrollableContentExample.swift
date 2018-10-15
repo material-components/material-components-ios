@@ -14,6 +14,8 @@
 
 import UIKit
 import MaterialComponentsAlpha.MaterialNavigationDrawer
+import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialButtons_ButtonThemer
 import MaterialComponents.MaterialColorScheme
 
 class BottomDrawerWithScrollableContentExample: UIViewController {
@@ -36,6 +38,12 @@ class BottomDrawerWithScrollableContentExample: UIViewController {
     MDCContainedButtonThemer.applyScheme(buttonScheme, to: button)
     button.addTarget(self, action: #selector(presentNavigationDrawer), for: .touchUpInside)
     view.addSubview(button)
+  }
+
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+
+    button.center = view.center
   }
 
   @objc func presentNavigationDrawer() {
