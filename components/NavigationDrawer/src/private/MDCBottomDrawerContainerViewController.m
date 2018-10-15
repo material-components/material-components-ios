@@ -20,7 +20,6 @@
 
 static const CGFloat kVerticalShadowAnimationDistance = 10.f;
 static const CGFloat kVerticalDistanceThresholdForDismissal = 40.f;
-static const CGFloat kInitialDrawerHeightFactor = 0.5f;
 static const CGFloat kHeaderAnimationDistanceAddedDistanceFromTopSafeAreaInset = 20.f;
 // The buffer for the drawer's scroll view is neeeded to ensure that the KVO receiving the new
 // content offset, which is then changing the content offset of the tracking scroll view, will
@@ -34,6 +33,18 @@ static NSString *const kContentOffsetKeyPath = @"contentOffset";
 
 static UIColor *DrawerShadowColor(void) {
   return [[UIColor blackColor] colorWithAlphaComponent:0.2f];
+}
+
+/**
+ The drawer height factor defines how much percentage of the screen space the drawer will take up
+ when displayed. The expected range is 0 - 1 (0% - 100%).
+
+ Default value is 0.5. If VoiceOver is enabled, the default value becomes 1.0.
+ */
+static CGFloat InitialDrawerHeightFactor(void) {
+  BOOL enableAccessibilityMode =
+      UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning();
+  return enableAccessibilityMode ? 1.0f : 0.5f;
 }
 
 @interface MDCBottomDrawerContainerViewController (LayoutCalculations)
@@ -269,6 +280,10 @@ static UIColor *DrawerShadowColor(void) {
   return normalizedYContentOffset;
 }
 
+- (BOOL)isAccessibilityMode {
+  return UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning();
+}
+
 - (void)addScrollViewObserver {
   if (self.scrollViewObserved) {
     return;
@@ -371,6 +386,11 @@ static UIColor *DrawerShadowColor(void) {
     }
   } else {
     contentViewFrame.size.height = self.contentViewController.preferredContentSize.height;
+    if ([self isAccessibilityMode]) {
+      contentViewFrame.size.height =
+          MAX(contentViewFrame.size.height,
+              self.presentingViewBounds.size.height - self.topHeaderHeight);
+    }
   }
   self.contentViewController.view.frame = contentViewFrame;
   if (self.trackingScrollView != nil) {
@@ -593,23 +613,27 @@ static UIColor *DrawerShadowColor(void) {
 }
 
 - (void)cacheLayoutCalculationsWithAddedContentHeight:(CGFloat)addedContentHeight {
-  CGFloat contentHeight = self.contentViewController.preferredContentSize.height;
-  _contentVCPreferredContentSizeHeightCached = contentHeight;
   CGFloat contentHeaderHeight = self.contentHeaderHeight;
   CGFloat containerHeight = self.presentingViewBounds.size.height;
+  CGFloat contentHeight = self.contentViewController.preferredContentSize.height;
+  if ([self isAccessibilityMode]) {
+    contentHeight = MAX(contentHeight, containerHeight - self.topHeaderHeight);
+  }
+  _contentVCPreferredContentSizeHeightCached = contentHeight;
 
   contentHeight += addedContentHeight;
   _addedContentHeight = addedContentHeight;
 
   CGFloat totalHeight = contentHeight + contentHeaderHeight;
   CGFloat contentHeightThresholdForScrollability =
-      MIN(containerHeight, containerHeight * kInitialDrawerHeightFactor + contentHeaderHeight);
-  BOOL contentScrollsToReveal = totalHeight > contentHeightThresholdForScrollability;
+      MIN(containerHeight - MDCDeviceTopSafeAreaInset(),
+          containerHeight * InitialDrawerHeightFactor() + contentHeaderHeight);
+  BOOL contentScrollsToReveal = totalHeight >= contentHeightThresholdForScrollability;
 
   if (_contentHeaderTopInset == NSNotFound) {
     // The content header top inset is only set once.
     if (contentScrollsToReveal) {
-      _contentHeaderTopInset = containerHeight * (1.f - kInitialDrawerHeightFactor);
+      _contentHeaderTopInset = containerHeight * (1.f - InitialDrawerHeightFactor());
       // The minimum inset value should be the size of the safe area inset, as
       // kInitialDrawerHeightFactor discounts the safe area when receiving the height factor.
       if (_contentHeaderTopInset <= self.topHeaderHeight - self.contentHeaderHeight) {
@@ -668,7 +692,7 @@ static UIColor *DrawerShadowColor(void) {
 }
 
 - (BOOL)contentReachesFullscreen {
-  return self.contentHeightSurplus >= self.contentHeaderTopInset;
+  return [self isAccessibilityMode] ? YES : self.contentHeightSurplus >= self.contentHeaderTopInset;
 }
 
 - (BOOL)contentScrollsToReveal {

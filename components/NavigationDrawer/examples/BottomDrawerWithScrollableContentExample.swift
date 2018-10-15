@@ -75,6 +75,7 @@ class DrawerContentWithScrollViewController: UIViewController,
     collectionView.isScrollEnabled = false
     collectionView.delegate = self
     collectionView.dataSource = self
+    collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     layout.minimumLineSpacing = 0
     layout.minimumInteritemSpacing = 0
     self.view.addSubview(collectionView)
