@@ -14,9 +14,9 @@
 
 #import "MDCSelfSizingStereoCellExample.h"
 
-#import "MDCSelfSizingStereoCell.h"
 #import "MaterialList+ColorThemer.h"
 #import "MaterialList+TypographyThemer.h"
+#import "MaterialList.h"
 
 static CGFloat const kArbitraryCellHeight = 75.f;
 static NSString *const kSelfSizingStereoCellIdentifier = @"kSelfSizingStereoCellIdentifier";
