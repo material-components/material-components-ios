@@ -26,29 +26,6 @@
 @interface MDCNavigationDrawerFakeHeaderViewController : UIViewController <MDCBottomDrawerHeader>
 @end
 
-@implementation MDCNavigationDrawerTest
-
-- (void)setUp {
-  [super setUp];
-
-  MDCNavigationDrawerFakeTableViewController *fakeTableViewController =
-      [[MDCNavigationDrawerFakeTableViewController alloc] init];
-  MDCNavigationDrawerFakeHeaderViewController *fakeHeaderViewController =
-      [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
-  self.navigationDrawer = [[MDCBottomDrawerViewController alloc] init];
-  self.navigationDrawer.headerViewController = fakeHeaderViewController;
-  self.navigationDrawer.contentViewController = fakeTableViewController;
-  self.navigationDrawer.trackingScrollView = fakeTableViewController.tableView;
-}
-
-- (void)tearDown {
-  self.navigationDrawer = nil;
-
-  [super tearDown];
-}
-
-@end
-
 static NSString *const reuseIdentifier = @"FakeCell";
 
 @implementation MDCNavigationDrawerFakeTableViewController
@@ -78,6 +55,32 @@ static NSString *const reuseIdentifier = @"FakeCell";
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier
                                                           forIndexPath:indexPath];
   return cell;
+}
+
+@end
+
+@implementation MDCNavigationDrawerFakeHeaderViewController
+@end
+
+@implementation MDCNavigationDrawerTest
+
+- (void)setUp {
+  [super setUp];
+
+  MDCNavigationDrawerFakeTableViewController *fakeTableViewController =
+      [[MDCNavigationDrawerFakeTableViewController alloc] init];
+  MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
+      [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
+  self.navigationDrawer = [[MDCBottomDrawerViewController alloc] init];
+  self.navigationDrawer.headerViewController = fakeHeader;
+  self.navigationDrawer.contentViewController = fakeTableViewController;
+  self.navigationDrawer.trackingScrollView = fakeTableViewController.tableView;
+}
+
+- (void)tearDown {
+  self.navigationDrawer = nil;
+
+  [super tearDown];
 }
 
 @end
