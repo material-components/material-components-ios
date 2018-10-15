@@ -12,18 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCBottomDrawerHeaderLayer.h"
+#import "MDCBottomDrawerHeaderMask.h"
 
-@implementation MDCBottomDrawerHeaderLayer {
-  CGFloat _maximumCornerRadius;
-  CGFloat _minimumCornerRadius;
-}
+@interface MDCBottomDrawerHeaderMask ()
+@property(nonatomic, assign) CGFloat maximumCornerRadius;
+@property(nonatomic, assign) CGFloat minimumCornerRadius;
+@end
 
-- (instancetype)initWithMaxCornerRadius:(CGFloat)max minimumCornerRadius:(CGFloat)min {
+@implementation MDCBottomDrawerHeaderMask
+
+- (instancetype)initWithMaximumCornerRadius:(CGFloat)maximumCornerRadius
+                        minimumCornerRadius:(CGFloat)minimumCornerRadius {
   self = [super init];
   if (self) {
-    _maximumCornerRadius = max;
-    _minimumCornerRadius = min;
+    _maximumCornerRadius = maximumCornerRadius;
+    _minimumCornerRadius = minimumCornerRadius;
   }
   return self;
 }
@@ -73,9 +76,9 @@
   return path;
 }
 
-- (void)mask {
+- (void)applyMask {
   if (self.view) {
-    CAShapeLayer *maskLayer = [self layerForCornerRadius:_maximumCornerRadius inView:self.view];
+    CAShapeLayer *maskLayer = [self layerForCornerRadius:self.maximumCornerRadius inView:self.view];
     self.view.layer.mask = maskLayer;
   }
 }
@@ -83,9 +86,10 @@
 - (void)animateWithPercentage:(CGFloat)percentage {
   if (self.view) {
     [CATransaction begin];
-    CGFloat cornerRadius = [self calcuateCornerRadiusFromOriginalCornerRadius:_maximumCornerRadius
-                                                          toFinalCornerRadius:_minimumCornerRadius
-                                                               withPercentage:percentage];
+    CGFloat cornerRadius =
+        [self calcuateCornerRadiusFromOriginalCornerRadius:self.maximumCornerRadius
+                                       toFinalCornerRadius:self.minimumCornerRadius
+                                            withPercentage:percentage];
     UIBezierPath *newPath = [self createPathWithCornerRadius:cornerRadius
                                                        width:CGRectGetWidth(self.view.frame)
                                                       height:CGRectGetHeight(self.view.frame)];

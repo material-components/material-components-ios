@@ -12,33 +12,34 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 
 /**
  MDCBottomDrawerHeaderLayer handles the shape calculations for
  MDCBottomDrawerContainerViewController.
  */
-@interface MDCBottomDrawerHeaderLayer : NSObject
+@interface MDCBottomDrawerHeaderMask : NSObject
 
 /**
  Creates an object for animating the corner radius of a mask layer
 
- @param maxCornerRadius The maximum corner radius for the animation
+ @param maximumCornerRadius The maximum corner radius for the animation
  @param minimumCornerRadius The minimum corner radius for the animation
- @note Must set a view for this to work
+ @note @c view must be set for the animation to work correctly.
  */
-- (nonnull instancetype)initWithMaxCornerRadius:(CGFloat)maxCornerRadius
-                            minimumCornerRadius:(CGFloat)minimumCornerRadius;
+- (nonnull instancetype)initWithMaximumCornerRadius:(CGFloat)maximumCornerRadius
+                                minimumCornerRadius:(CGFloat)minimumCornerRadius;
 
 /**
  The view that will be masked
  */
-@property(nonatomic, strong, nullable) UIView *view;
+@property(nonatomic, weak, nullable) UIView *view;
 
 /**
  Masks the view that we want to mask
  */
-- (void)mask;
+- (void)applyMask;
 
 /**
  Animates the mask layers corner radius on the view

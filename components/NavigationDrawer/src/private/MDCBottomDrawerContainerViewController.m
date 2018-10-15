@@ -15,7 +15,7 @@
 #import "MDCBottomDrawerContainerViewController.h"
 
 #import "MDCBottomDrawerHeader.h"
-#import "MDCBottomDrawerHeaderLayer.h"
+#import "MDCBottomDrawerHeaderMask.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialUIMetrics.h"
 
@@ -31,6 +31,7 @@ static const CGFloat kHeaderAnimationDistanceAddedDistanceFromTopSafeAreaInset =
 // smooth.
 static const CGFloat kScrollViewBufferForPerformance = 20.f;
 static const CGFloat kDragVelocityThresholdForHidingDrawer = -2.f;
+static const CGFloat kDefaultHeaderCornerRadius = 8.f;
 static NSString *const kContentOffsetKeyPath = @"contentOffset";
 
 static UIColor *DrawerShadowColor(void) {
@@ -143,7 +144,7 @@ static UIColor *DrawerShadowColor(void) {
   CGFloat _contentHeightSurplus;
   CGFloat _addedContentHeight;
   CGFloat _contentVCPreferredContentSizeHeightCached;
-  MDCBottomDrawerHeaderLayer *_maskLayer;
+  MDCBottomDrawerHeaderMask *_maskLayer;
 }
 
 - (instancetype)initWithOriginalPresentingViewController:
@@ -156,8 +157,9 @@ static UIColor *DrawerShadowColor(void) {
     _contentHeightSurplus = NSNotFound;
     _addedContentHeight = NSNotFound;
     _trackingScrollView = trackingScrollView;
-    _maskLayer = [[MDCBottomDrawerHeaderLayer alloc] initWithMaxCornerRadius:8.f
-                                                         minimumCornerRadius:0];
+    _maskLayer =
+        [[MDCBottomDrawerHeaderMask alloc] initWithMaximumCornerRadius:kDefaultHeaderCornerRadius
+                                                   minimumCornerRadius:0];
   }
   return self;
 }
@@ -348,7 +350,7 @@ static UIColor *DrawerShadowColor(void) {
       } else {
         _maskLayer.view = self.contentViewController.view;
       }
-      [_maskLayer mask];
+      [_maskLayer applyMask];
     }
     CGRect scrollViewFrame = self.presentingViewBounds;
     if (self.animatingPresentation) {
