@@ -37,8 +37,8 @@
   CGFloat halfViewHeight = safeBounds.size.height / 2;
   CGFloat halfViewWidth = safeBounds.size.width / 2;
   CGFloat safeCornerRadius = MIN(cornerRadius, MIN(halfViewWidth, halfViewHeight));
-  CGFloat newCornerRadius = [self calcuateCornerRadiusFromOriginalCornerRadius:safeCornerRadius
-                                                           toFinalCornerRadius:0
+  CGFloat newCornerRadius = [self calcuateCornerRadiusFromMaximumCornerRadius:safeCornerRadius
+                                                           toMinimumCornerRadius:0
                                                                 withPercentage:1.f];
   UIBezierPath *path = [self createPathWithCornerRadius:newCornerRadius
                                                   width:safeBounds.size.width
@@ -47,10 +47,15 @@
   return headerLayer;
 }
 
-- (CGFloat)calcuateCornerRadiusFromOriginalCornerRadius:(CGFloat)originalCornerRadius
-                                    toFinalCornerRadius:(CGFloat)finalCornerRadius
+- (CGFloat)calcuateCornerRadiusFromMaximumCornerRadius:(CGFloat)maximumCornerRadius
+                                    toMinimumCornerRadius:(CGFloat)minimumCornerRadius
                                          withPercentage:(CGFloat)percentage {
-  return ((originalCornerRadius - finalCornerRadius) * percentage) + finalCornerRadius;
+  if (percentage < 0) {
+    return maximumCornerRadius;
+  } else if (percentage > 1.f) {
+    return minimumCornerRadius;
+  }
+  return ((maximumCornerRadius - minimumCornerRadius) * percentage) + minimumCornerRadius;
 }
 
 - (UIBezierPath *)createPathWithCornerRadius:(CGFloat)cornerRadius
@@ -87,8 +92,8 @@
   if (self.view) {
     [CATransaction begin];
     CGFloat cornerRadius =
-        [self calcuateCornerRadiusFromOriginalCornerRadius:self.maximumCornerRadius
-                                       toFinalCornerRadius:self.minimumCornerRadius
+        [self calcuateCornerRadiusFromMaximumCornerRadius:self.maximumCornerRadius
+                                       toMinimumCornerRadius:self.minimumCornerRadius
                                             withPercentage:percentage];
     UIBezierPath *newPath = [self createPathWithCornerRadius:cornerRadius
                                                        width:CGRectGetWidth(self.view.frame)
