@@ -69,6 +69,7 @@
 }
 
 - (void)commonMDCSelfSizingStereoCellInit {
+  self.cachedLayouts = [[NSMutableDictionary alloc] init];
   [self createSubviews];
 }
 
