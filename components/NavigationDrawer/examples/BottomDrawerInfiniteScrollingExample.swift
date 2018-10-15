@@ -14,13 +14,12 @@
 
 import UIKit
 import MaterialComponentsAlpha.MaterialNavigationDrawer
-import MaterialComponents.MaterialButtons
-import MaterialComponents.MaterialButtons_ButtonThemer
+import MaterialComponents.MaterialBottomAppBar
 import MaterialComponents.MaterialColorScheme
 
 class BottomDrawerInfiniteScrollingExample: UIViewController {
   var colorScheme = MDCSemanticColorScheme()
-  let button = MDCButton()
+  let bottomAppBar = MDCBottomAppBarView()
 
   let headerViewController = DrawerHeaderViewController()
   let contentViewController = DrawerContentTableViewController()
@@ -30,19 +29,29 @@ class BottomDrawerInfiniteScrollingExample: UIViewController {
     view.backgroundColor = colorScheme.backgroundColor
     contentViewController.colorScheme = colorScheme
 
-    button.setTitle("Show Navigation Drawer", for: .normal)
-    button.sizeToFit()
-    let buttonScheme = MDCButtonScheme()
-    buttonScheme.colorScheme = colorScheme
-    MDCContainedButtonThemer.applyScheme(buttonScheme, to: button)
-    button.addTarget(self, action: #selector(presentNavigationDrawer), for: .touchUpInside)
-    view.addSubview(button)
+    bottomAppBar.isFloatingButtonHidden = true
+    let barButtonLeadingItem = UIBarButtonItem()
+    let menuImage = UIImage(named:"Menu")?.withRenderingMode(.alwaysTemplate)
+    barButtonLeadingItem.image = menuImage
+    barButtonLeadingItem.target = self
+    barButtonLeadingItem.action = #selector(presentNavigationDrawer)
+    bottomAppBar.leadingBarButtonItems = [ barButtonLeadingItem ]
+    view.addSubview(bottomAppBar)
+  }
+
+  func layoutBottomAppBar() {
+    let size = bottomAppBar.sizeThatFits(view.bounds.size)
+    let bottomBarViewFrame = CGRect(x: 0,
+                                    y: view.bounds.size.height - size.height,
+                                    width: size.width,
+                                    height: size.height)
+    bottomAppBar.frame = bottomBarViewFrame
   }
 
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
 
-    button.center = view.center
+    layoutBottomAppBar()
   }
 
   @objc private func presentNavigationDrawer() {
