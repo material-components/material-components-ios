@@ -38,8 +38,8 @@
   CGFloat halfViewWidth = safeBounds.size.width / 2;
   CGFloat safeCornerRadius = MIN(cornerRadius, MIN(halfViewWidth, halfViewHeight));
   CGFloat newCornerRadius = [self calcuateCornerRadiusFromMaximumCornerRadius:safeCornerRadius
-                                                           toMinimumCornerRadius:0
-                                                                withPercentage:1.f];
+                                                        toMinimumCornerRadius:0
+                                                               withPercentage:1.f];
   UIBezierPath *path = [self createPathWithCornerRadius:newCornerRadius
                                                   width:safeBounds.size.width
                                                  height:safeBounds.size.height];
@@ -48,8 +48,8 @@
 }
 
 - (CGFloat)calcuateCornerRadiusFromMaximumCornerRadius:(CGFloat)maximumCornerRadius
-                                    toMinimumCornerRadius:(CGFloat)minimumCornerRadius
-                                         withPercentage:(CGFloat)percentage {
+                                 toMinimumCornerRadius:(CGFloat)minimumCornerRadius
+                                        withPercentage:(CGFloat)percentage {
   if (percentage < 0) {
     return maximumCornerRadius;
   } else if (percentage > 1.f) {
@@ -93,8 +93,8 @@
     [CATransaction begin];
     CGFloat cornerRadius =
         [self calcuateCornerRadiusFromMaximumCornerRadius:self.maximumCornerRadius
-                                       toMinimumCornerRadius:self.minimumCornerRadius
-                                            withPercentage:percentage];
+                                    toMinimumCornerRadius:self.minimumCornerRadius
+                                           withPercentage:percentage];
     UIBezierPath *newPath = [self createPathWithCornerRadius:cornerRadius
                                                        width:CGRectGetWidth(self.view.frame)
                                                       height:CGRectGetHeight(self.view.frame)];
