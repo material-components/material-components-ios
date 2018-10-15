@@ -317,12 +317,10 @@ static UIColor *DrawerShadowColor(void) {
   [self addScrollViewObserver];
 
   // Scroll view should not update its content insets implicitly.
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     self.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     self.scrollView.insetsLayoutMarginsFromSafeArea = NO;
   }
-#endif  // defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
 }
 
 - (void)viewWillLayoutSubviews {
