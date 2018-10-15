@@ -14,15 +14,15 @@
 
 #import "MDCTextInputCommonFundament.h"
 
-#import "MDCMultilineTextField.h"
-#import "MDCMultilineTextInputDelegate.h"
-#import "MDCTextField.h"
-#import "MDCTextFieldPositioningDelegate.h"
-#import "MDCTextInput.h"
+#import "../MDCMultilineTextField.h"
+#import "../MDCMultilineTextInputDelegate.h"
+#import "../MDCTextField.h"
+#import "../MDCTextFieldPositioningDelegate.h"
+#import "../MDCTextInput.h"
+#import "../MDCTextInputBorderView.h"
+#import "../MDCTextInputUnderlineView.h"
 #import "MDCTextInputArt.h"
-#import "MDCTextInputBorderView.h"
 #import "MDCTextInputCommonFundament.h"
-#import "MDCTextInputUnderlineView.h"
 
 #import "MaterialAnimationTiming.h"
 #import "MaterialMath.h"
