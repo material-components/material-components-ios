@@ -85,9 +85,6 @@ class DrawerContentTableViewController: UITableViewController {
     let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
     cell.textLabel?.text = "cell #\(indexPath.item)"
     cell.backgroundColor = colorScheme.surfaceColor
-    if #available(iOS 10.0, *) {
-      cell.textLabel?.adjustsFontForContentSizeCategory = true
-    }
     print(cell.textLabel?.text ?? "")
     return cell
   }
