@@ -23,7 +23,8 @@
 @interface MDCNavigationDrawerFakeTableViewController : UITableViewController
 @end
 
-@interface MDCNavigationDrawerFakeHeaderViewController : UITableViewController<MDCBottomDrawerHeader>
+@interface MDCNavigationDrawerFakeHeaderViewController
+    : UITableViewController <MDCBottomDrawerHeader>
 @end
 
 @implementation MDCNavigationDrawerTest
@@ -73,9 +74,10 @@ static NSString *const reuseIdentifier = @"FakeCell";
   return 100;
 }
 
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier
+                                                          forIndexPath:indexPath];
   return cell;
 }
 
