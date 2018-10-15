@@ -59,15 +59,15 @@
   [path addLineToPoint:CGPointMake(width - cornerRadius, 0)];
   [path addArcWithCenter:CGPointMake(width - cornerRadius, cornerRadius)
                   radius:cornerRadius
-              startAngle:-(CGFloat)M_PI
+              startAngle:(CGFloat)(3 * M_PI_2)
                 endAngle:0
                clockwise:YES];
   [path addLineToPoint:CGPointMake(width, height)];
   [path addLineToPoint:CGPointMake(0, height)];
   [path addArcWithCenter:CGPointMake(cornerRadius, cornerRadius)
                   radius:cornerRadius
-              startAngle:-(CGFloat)M_PI
-                endAngle:0
+              startAngle:(CGFloat)M_PI
+                endAngle:(CGFloat)(3 * M_PI_2)
                clockwise:YES];
   [path closePath];
   return path;
