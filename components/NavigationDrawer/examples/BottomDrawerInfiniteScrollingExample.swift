@@ -15,6 +15,7 @@
 import UIKit
 import MaterialComponentsAlpha.MaterialNavigationDrawer
 import MaterialComponents.MaterialBottomAppBar
+import MaterialComponents.MaterialBottomAppBar_ColorThemer
 import MaterialComponents.MaterialColorScheme
 
 class BottomDrawerInfiniteScrollingExample: UIViewController {
@@ -36,15 +37,21 @@ class BottomDrawerInfiniteScrollingExample: UIViewController {
     barButtonLeadingItem.target = self
     barButtonLeadingItem.action = #selector(presentNavigationDrawer)
     bottomAppBar.leadingBarButtonItems = [ barButtonLeadingItem ]
+    MDCBottomAppBarColorThemer.applySurfaceVariant(withSemanticColorScheme: colorScheme,
+                                                   to: bottomAppBar)
     view.addSubview(bottomAppBar)
   }
 
-  func layoutBottomAppBar() {
+  private func layoutBottomAppBar() {
     let size = bottomAppBar.sizeThatFits(view.bounds.size)
-    let bottomBarViewFrame = CGRect(x: 0,
+    var bottomBarViewFrame = CGRect(x: 0,
                                     y: view.bounds.size.height - size.height,
                                     width: size.width,
                                     height: size.height)
+    if #available(iOS 11.0, *) {
+      bottomBarViewFrame.size.height += view.safeAreaInsets.bottom
+      bottomBarViewFrame.origin.y -= view.safeAreaInsets.bottom
+    }
     bottomAppBar.frame = bottomBarViewFrame
   }
 

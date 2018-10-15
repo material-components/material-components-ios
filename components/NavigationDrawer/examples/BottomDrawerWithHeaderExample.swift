@@ -14,13 +14,13 @@
 
 import UIKit
 import MaterialComponentsAlpha.MaterialNavigationDrawer
-import MaterialComponents.MaterialButtons
-import MaterialComponents.MaterialButtons_ButtonThemer
+import MaterialComponents.MaterialBottomAppBar
+import MaterialComponents.MaterialBottomAppBar_ColorThemer
 import MaterialComponents.MaterialColorScheme
 
 class BottomDrawerWithHeaderExample: UIViewController {
   var colorScheme = MDCSemanticColorScheme()
-  let button = MDCButton()
+  let bottomAppBar = MDCBottomAppBarView()
 
   let headerViewController = DrawerHeaderViewController()
   let contentViewController = DrawerContentViewController()
@@ -31,19 +31,35 @@ class BottomDrawerWithHeaderExample: UIViewController {
     headerViewController.colorScheme = colorScheme
     contentViewController.colorScheme = colorScheme
 
-    button.setTitle("Show Navigation Drawer", for: .normal)
-    button.sizeToFit()
-    let buttonScheme = MDCButtonScheme()
-    buttonScheme.colorScheme = colorScheme
-    MDCContainedButtonThemer.applyScheme(buttonScheme, to: button)
-    button.addTarget(self, action: #selector(presentNavigationDrawer), for: .touchUpInside)
-    view.addSubview(button)
+    bottomAppBar.isFloatingButtonHidden = true
+    let barButtonLeadingItem = UIBarButtonItem()
+    let menuImage = UIImage(named:"Menu")?.withRenderingMode(.alwaysTemplate)
+    barButtonLeadingItem.image = menuImage
+    barButtonLeadingItem.target = self
+    barButtonLeadingItem.action = #selector(presentNavigationDrawer)
+    bottomAppBar.leadingBarButtonItems = [ barButtonLeadingItem ]
+    MDCBottomAppBarColorThemer.applySurfaceVariant(withSemanticColorScheme: colorScheme,
+                                                   to: bottomAppBar)
+    view.addSubview(bottomAppBar)
+  }
+
+  private func layoutBottomAppBar() {
+    let size = bottomAppBar.sizeThatFits(view.bounds.size)
+    var bottomBarViewFrame = CGRect(x: 0,
+                                    y: view.bounds.size.height - size.height,
+                                    width: size.width,
+                                    height: size.height)
+    if #available(iOS 11.0, *) {
+      bottomBarViewFrame.size.height += view.safeAreaInsets.bottom
+      bottomBarViewFrame.origin.y -= view.safeAreaInsets.bottom
+    }
+    bottomAppBar.frame = bottomBarViewFrame
   }
 
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
 
-    button.center = view.center
+    layoutBottomAppBar()
   }
 
   @objc func presentNavigationDrawer() {
