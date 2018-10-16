@@ -15,8 +15,10 @@
 
 load("//:material_components_ios.bzl",
      "mdc_public_objc_library",
-     "mdc_objc_library")
+     "mdc_objc_library",
+     "mdc_unit_test_suite")
 
+load("@build_bazel_rules_apple//apple:swift.bzl", "swift_library")
 licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
@@ -29,4 +31,24 @@ mdc_public_objc_library(
         "//components/ShadowLayer",
         "//components/private/UIMetrics",
     ],
+)
+
+mdc_objc_library(
+    name = "unit_test_sources",
+    testonly = 1,
+    srcs = native.glob(["tests/unit/*.m"]),
+    sdk_frameworks = [
+        "UIKit",
+        "XCTest",
+    ],
+    deps = [
+         ":NavigationDrawer",
+    ],
+    visibility = ["//visibility:private"],
+)
+
+mdc_unit_test_suite(
+    deps = [
+        ":unit_test_sources",
+    ]
 )
