@@ -1,6 +1,6 @@
 # 67.1.0
 
-In this minor release we provide a shadow opacity reset toggle for Flexible Header, VoiceOver and rounded corners support for the Navigation Drawer, and lastly a bug fix regarding MDCShadowLayer with Corner Radius along with other bug fixes and unit tests improvements.
+In this minor release we provide a shadow opacity reset toggle for Flexible Header, VoiceOver and rounded corners support for the Navigation Drawer, along with bug fixes and unit tests improvements.
 
 ## New features
 
