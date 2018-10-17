@@ -5,7 +5,7 @@ In this minor release we provide a shadow opacity reset toggle for Flexible Head
 ## New features
 
 ### Flexible Header
-* Now with Flexible Header you can enables resetting the visible shadow opacity to 0 when setting trackingScrollView to 0 by setting the BOOL property `resetShadowAfterTrackingScrollViewIsReset`.
+* Now with Flexible Header you can enables resetting the visible shadow opacity to 0 when setting trackingScrollView to `nil` by setting the BOOL property `resetShadowAfterTrackingScrollViewIsReset`.
 
 ### Navigation Drawer
 * When VoiceOver or Switch Control is turned on in your app, Navigation Drawer will now always show up in full screen.
