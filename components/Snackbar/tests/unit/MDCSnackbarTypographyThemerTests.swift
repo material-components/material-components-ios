@@ -17,6 +17,12 @@ import MaterialComponents.MaterialSnackbar
 import MaterialComponents.MaterialSnackbar_TypographyThemer
 
 class MDCSnackbarTypographyThemerTests: XCTestCase {
+
+  override func tearDown() {
+    MDCSnackbarManager.dismissAndCallCompletionBlocks(withCategory: nil)
+
+    super.tearDown()
+  }
     
   func testSnackbarTypographyThemer() {
     // Given

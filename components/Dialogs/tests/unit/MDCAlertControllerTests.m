@@ -278,7 +278,7 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
   XCTAssertEqualObjects(button2.accessibilityIdentifier, @"A");
 }
 
-- (void)tesDefaultCornerRadius {
+- (void)testDefaultCornerRadius {
   // Given
   MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:@"title"
                                                                    message:@"message"];

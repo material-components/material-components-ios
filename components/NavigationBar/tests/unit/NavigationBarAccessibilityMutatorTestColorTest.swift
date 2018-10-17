@@ -25,11 +25,18 @@ class NavigationBarAccessibilityMutatorTestColorTest: XCTestCase {
   var navBar: MDCNavigationBar!
   var mutator: MDCNavigationBarTextColorAccessibilityMutator!
 
-    override func setUp() {
-      super.setUp()
-      navBar = MDCNavigationBar()
-      mutator = MDCNavigationBarTextColorAccessibilityMutator()
-    }
+  override func setUp() {
+    super.setUp()
+    navBar = MDCNavigationBar()
+    mutator = MDCNavigationBarTextColorAccessibilityMutator()
+  }
+
+  override func tearDown() {
+    navBar = nil
+    mutator = nil
+
+    super.tearDown()
+  }
 
   func testDarkNavigationBarBackground() {
     // Given

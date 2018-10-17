@@ -33,6 +33,12 @@
   self.card = [[MDCCard alloc] init];
 }
 
+- (void)tearDown {
+  self.cell = nil;
+  self.card = nil;
+  [super tearDown];
+}
+
 - (void)testShadowElevationForCard {
   XCTAssertEqual(((MDCShadowLayer *)self.card.layer).elevation, 1.f);
   XCTAssertEqual([self.card shadowElevationForState:UIControlStateNormal], 1.f);

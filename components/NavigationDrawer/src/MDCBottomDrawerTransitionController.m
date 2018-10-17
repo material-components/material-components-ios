@@ -40,19 +40,11 @@ static const CGFloat kOpenAnimationSpringDampingRatio = 0.85f;
     presentationControllerForPresentedViewController:(UIViewController *)presented
                             presentingViewController:(UIViewController *)presenting
                                 sourceViewController:(UIViewController *)source {
-  BOOL enableAccessibilityMode =
-      UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning();
-
-  if (enableAccessibilityMode) {
-    // TODO: (#4899) Display drawer in full screen. To be done in a follow up PR.
-    return nil;
-  } else {
-    MDCBottomDrawerPresentationController *presentationController =
-        [[MDCBottomDrawerPresentationController alloc] initWithPresentedViewController:presented
-                                                              presentingViewController:presenting];
-    presentationController.trackingScrollView = self.trackingScrollView;
-    return presentationController;
-  }
+  MDCBottomDrawerPresentationController *presentationController =
+      [[MDCBottomDrawerPresentationController alloc] initWithPresentedViewController:presented
+                                                            presentingViewController:presenting];
+  presentationController.trackingScrollView = self.trackingScrollView;
+  return presentationController;
 }
 
 #pragma mark UIViewControllerAnimatedTransitioning

@@ -33,6 +33,11 @@
   self.bottomAppBar = [[MDCBottomAppBarView alloc] init];
 }
 
+- (void)tearDown {
+  self.bottomAppBar = nil;
+  [super tearDown];
+}
+
 #pragma mark - Color
 
 - (void)testLeadingBarItemTintColorDefault {

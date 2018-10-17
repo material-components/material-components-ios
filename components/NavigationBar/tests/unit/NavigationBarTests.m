@@ -37,6 +37,11 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   self.navBar = [[MDCNavigationBar alloc] init];
 }
 
+- (void)tearDown {
+  self.navBar = nil;
+  [super tearDown];
+}
+
 - (void)testSettingTextAlignmentToCenterMustCenterTheTitleLabel {
   // Given
   self.navBar.frame = CGRectMake(0, 0, 300, 25);

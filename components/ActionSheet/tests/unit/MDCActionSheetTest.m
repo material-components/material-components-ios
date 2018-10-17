@@ -49,6 +49,12 @@ static const CGFloat kSafeAreaAmount = 20.f;
   self.actionSheet = [[MDCActionSheetController alloc] init];
 }
 
+- (void)tearDown {
+  self.actionSheet = nil;
+
+  [super tearDown];
+}
+
 - (void)testTitleColor {
   // When
   self.actionSheet.title = @"Test";

@@ -24,6 +24,8 @@
 @implementation CollectionLayoutAttributesTests
 
 - (void)setUp {
+  [super setUp];
+
   NSIndexPath *indexPath = [NSIndexPath indexPathWithIndex:0];
   _attributes = [MDCCollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
   _attributes.editing = YES;
@@ -40,6 +42,12 @@
   _attributes.willAnimateCellsOnAppearance = YES;
   _attributes.animateCellsOnAppearanceDuration = 3.145926;
   _attributes.animateCellsOnAppearanceDelay = 42;
+}
+
+- (void)tearDown {
+  _attributes = nil;
+
+  [super tearDown];
 }
 
 - (void)testCopying {

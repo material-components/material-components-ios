@@ -10,7 +10,6 @@
 # *.js    @octocat @github/js
 
 # You can also use email addresses if you prefer.
-/components/ActivityIndicator/    # TBD
 /components/AnimationTiming/      @yarneo
 /components/AppBar/               @jverkoey
 /components/BottomAppBar/         @wenyuzhang666
@@ -29,6 +28,7 @@
 /components/HeaderStackView/      @jverkoey
 /components/Ink/                  @yarneo
 /components/LibraryInfo/          @ajsecord
+/components/List                  @andrewoverton
 /components/MaskedTransition/     @jverkoey
 /components/NavigationBar/        @yarneo @jverkoey
 /components/NavigationDrawer/     @yarneo

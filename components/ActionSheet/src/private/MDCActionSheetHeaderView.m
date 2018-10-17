@@ -102,12 +102,10 @@ static const CGFloat kMiddlePadding = 8.f;
 
 - (CGRect)frameWithSafeAreaInsets:(CGRect)frame {
   UIEdgeInsets safeAreaInsets = UIEdgeInsetsZero;
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     safeAreaInsets = self.safeAreaInsets;
     safeAreaInsets.top = 0.f;
   }
-#endif
   return UIEdgeInsetsInsetRect(frame, safeAreaInsets);
 }
 
