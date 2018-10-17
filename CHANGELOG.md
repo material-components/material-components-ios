@@ -10,7 +10,7 @@ In this minor release we provide a shadow opacity reset toggle for Flexible Head
 ### Navigation Drawer
 * When VoiceOver or Switch Control is turned on in your app, Navigation Drawer will always show up in full screen.
 
-* Navigation Drawer now has rounded corners when there is more scrollable content to scroll in the drawer.
+* Navigation Drawer has rounded corners when there is more scrollable content to scroll in the drawer.
 
 ## Component changes
 
