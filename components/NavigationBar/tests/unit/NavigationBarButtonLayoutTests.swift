@@ -21,7 +21,15 @@ class NavigationBarButtonLayoutTests: XCTestCase {
   var navigationBar: MDCNavigationBar!
 
   override func setUp() {
+    super.setUp()
+
     navigationBar = MDCNavigationBar()
+  }
+
+  override func tearDown() {
+    navigationBar = nil
+
+    super.tearDown()
   }
 
   private func recursiveSubviews(of superview: UIView) -> [UIView] {

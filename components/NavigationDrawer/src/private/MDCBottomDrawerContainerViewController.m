@@ -15,12 +15,12 @@
 #import "MDCBottomDrawerContainerViewController.h"
 
 #import "MDCBottomDrawerHeader.h"
+#import "MDCBottomDrawerHeaderMask.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialUIMetrics.h"
 
 static const CGFloat kVerticalShadowAnimationDistance = 10.f;
 static const CGFloat kVerticalDistanceThresholdForDismissal = 40.f;
-static const CGFloat kInitialDrawerHeightFactor = 0.5f;
 static const CGFloat kHeaderAnimationDistanceAddedDistanceFromTopSafeAreaInset = 20.f;
 // The buffer for the drawer's scroll view is neeeded to ensure that the KVO receiving the new
 // content offset, which is then changing the content offset of the tracking scroll view, will
@@ -30,10 +30,23 @@ static const CGFloat kHeaderAnimationDistanceAddedDistanceFromTopSafeAreaInset =
 // smooth.
 static const CGFloat kScrollViewBufferForPerformance = 20.f;
 static const CGFloat kDragVelocityThresholdForHidingDrawer = -2.f;
+static const CGFloat kDefaultHeaderCornerRadius = 8.f;
 static NSString *const kContentOffsetKeyPath = @"contentOffset";
 
 static UIColor *DrawerShadowColor(void) {
   return [[UIColor blackColor] colorWithAlphaComponent:0.2f];
+}
+
+/**
+ The drawer height factor defines how much percentage of the screen space the drawer will take up
+ when displayed. The expected range is 0 - 1 (0% - 100%).
+
+ Default value is 0.5. If VoiceOver is enabled, the default value becomes 1.0.
+ */
+static CGFloat InitialDrawerHeightFactor(void) {
+  BOOL enableAccessibilityMode =
+      UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning();
+  return enableAccessibilityMode ? 1.0f : 0.5f;
 }
 
 @interface MDCBottomDrawerContainerViewController (LayoutCalculations)
@@ -142,6 +155,7 @@ static UIColor *DrawerShadowColor(void) {
   CGFloat _contentHeightSurplus;
   CGFloat _addedContentHeight;
   CGFloat _contentVCPreferredContentSizeHeightCached;
+  MDCBottomDrawerHeaderMask *_maskLayer;
 }
 
 - (instancetype)initWithOriginalPresentingViewController:
@@ -154,6 +168,9 @@ static UIColor *DrawerShadowColor(void) {
     _contentHeightSurplus = NSNotFound;
     _addedContentHeight = NSNotFound;
     _trackingScrollView = trackingScrollView;
+    _maskLayer =
+        [[MDCBottomDrawerHeaderMask alloc] initWithMaximumCornerRadius:kDefaultHeaderCornerRadius
+                                                   minimumCornerRadius:0];
   }
   return self;
 }
@@ -269,6 +286,10 @@ static UIColor *DrawerShadowColor(void) {
   return normalizedYContentOffset;
 }
 
+- (BOOL)isAccessibilityMode {
+  return UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning();
+}
+
 - (void)addScrollViewObserver {
   if (self.scrollViewObserved) {
     return;
@@ -317,12 +338,10 @@ static UIColor *DrawerShadowColor(void) {
   [self addScrollViewObserver];
 
   // Scroll view should not update its content insets implicitly.
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     self.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     self.scrollView.insetsLayoutMarginsFromSafeArea = NO;
   }
-#endif  // defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
 }
 
 - (void)viewWillLayoutSubviews {
@@ -338,6 +357,14 @@ static UIColor *DrawerShadowColor(void) {
     scrollViewFrame.origin.y = -self.topHeaderHeight;
     self.scrollView.frame = scrollViewFrame;
   } else {
+    if (self.contentHeightSurplus > 0) {
+      if (self.topHeaderHeight != 0.f) {
+        _maskLayer.view = self.headerViewController.view;
+      } else {
+        _maskLayer.view = self.contentViewController.view;
+      }
+      [_maskLayer applyMask];
+    }
     CGRect scrollViewFrame = self.presentingViewBounds;
     if (self.animatingPresentation) {
       CGFloat heightSurplusForSpringAnimationOvershooting =
@@ -371,6 +398,11 @@ static UIColor *DrawerShadowColor(void) {
     }
   } else {
     contentViewFrame.size.height = self.contentViewController.preferredContentSize.height;
+    if ([self isAccessibilityMode]) {
+      contentViewFrame.size.height =
+          MAX(contentViewFrame.size.height,
+              self.presentingViewBounds.size.height - self.topHeaderHeight);
+    }
   }
   self.contentViewController.view.frame = contentViewFrame;
   if (self.trackingScrollView != nil) {
@@ -427,12 +459,13 @@ static UIColor *DrawerShadowColor(void) {
 #pragma mark Content Offset Adaptions (Private)
 
 - (void)updateViewWithContentOffset:(CGPoint)contentOffset {
+  CGFloat transitionPercentage =
+      [self transitionPercentageForContentOffset:contentOffset
+                                          offset:0.f
+                                        distance:self.headerAnimationDistance];
   CGFloat headerTransitionToTop =
-      contentOffset.y >= self.transitionCompleteContentOffset
-          ? 1.f
-          : [self transitionPercentageForContentOffset:contentOffset
-                                                offset:0.f
-                                              distance:self.headerAnimationDistance];
+      contentOffset.y >= self.transitionCompleteContentOffset ? 1.f : transitionPercentage;
+  [_maskLayer animateWithPercentage:1.f - transitionPercentage];
   self.currentlyFullscreen = self.contentReachesFullscreen && headerTransitionToTop >= 1.f;
   CGFloat fullscreenHeaderHeight =
       self.contentReachesFullscreen ? self.topHeaderHeight : [self contentHeaderHeight];
@@ -593,23 +626,27 @@ static UIColor *DrawerShadowColor(void) {
 }
 
 - (void)cacheLayoutCalculationsWithAddedContentHeight:(CGFloat)addedContentHeight {
-  CGFloat contentHeight = self.contentViewController.preferredContentSize.height;
-  _contentVCPreferredContentSizeHeightCached = contentHeight;
   CGFloat contentHeaderHeight = self.contentHeaderHeight;
   CGFloat containerHeight = self.presentingViewBounds.size.height;
+  CGFloat contentHeight = self.contentViewController.preferredContentSize.height;
+  if ([self isAccessibilityMode]) {
+    contentHeight = MAX(contentHeight, containerHeight - self.topHeaderHeight);
+  }
+  _contentVCPreferredContentSizeHeightCached = contentHeight;
 
   contentHeight += addedContentHeight;
   _addedContentHeight = addedContentHeight;
 
   CGFloat totalHeight = contentHeight + contentHeaderHeight;
   CGFloat contentHeightThresholdForScrollability =
-      MIN(containerHeight, containerHeight * kInitialDrawerHeightFactor + contentHeaderHeight);
-  BOOL contentScrollsToReveal = totalHeight > contentHeightThresholdForScrollability;
+      MIN(containerHeight - MDCDeviceTopSafeAreaInset(),
+          containerHeight * InitialDrawerHeightFactor() + contentHeaderHeight);
+  BOOL contentScrollsToReveal = totalHeight >= contentHeightThresholdForScrollability;
 
   if (_contentHeaderTopInset == NSNotFound) {
     // The content header top inset is only set once.
     if (contentScrollsToReveal) {
-      _contentHeaderTopInset = containerHeight * (1.f - kInitialDrawerHeightFactor);
+      _contentHeaderTopInset = containerHeight * (1.f - InitialDrawerHeightFactor());
       // The minimum inset value should be the size of the safe area inset, as
       // kInitialDrawerHeightFactor discounts the safe area when receiving the height factor.
       if (_contentHeaderTopInset <= self.topHeaderHeight - self.contentHeaderHeight) {
@@ -646,6 +683,7 @@ static UIColor *DrawerShadowColor(void) {
       [self transitionPercentageForContentOffset:targetContentOffset
                                           offset:0
                                         distance:headerAnimationDistance];
+  [_maskLayer animateWithPercentage:1.f - headerTransitionToTop];
   if (headerTransitionToTop >= FLT_EPSILON && headerTransitionToTop < 1.f) {
     CGFloat contentHeaderFullyCoversTopHeaderContentOffset = self.transitionCompleteContentOffset;
     CGFloat contentHeaderReachesTopHeaderContentOffset =
@@ -668,7 +706,7 @@ static UIColor *DrawerShadowColor(void) {
 }
 
 - (BOOL)contentReachesFullscreen {
-  return self.contentHeightSurplus >= self.contentHeaderTopInset;
+  return [self isAccessibilityMode] ? YES : self.contentHeightSurplus >= self.contentHeaderTopInset;
 }
 
 - (BOOL)contentScrollsToReveal {

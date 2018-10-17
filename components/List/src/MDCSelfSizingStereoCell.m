@@ -24,6 +24,9 @@
 
 #import "private/MDCSelfSizingStereoCellLayout.h"
 
+static const CGFloat kTitleColorOpacity = 0.87f;
+static const CGFloat kDetailColorOpacity = 0.6f;
+
 @interface MDCSelfSizingStereoCell ()
 
 @property(nonatomic, strong) UIView *textContainer;
@@ -69,6 +72,7 @@
 }
 
 - (void)commonMDCSelfSizingStereoCellInit {
+  self.cachedLayouts = [[NSMutableDictionary alloc] init];
   [self createSubviews];
 }
 
@@ -243,11 +247,11 @@
 }
 
 - (UIColor *)defaultTitleLabelTextColor {
-  return [UIColor colorWithWhite:0 alpha:[MDCTypography subheadFontOpacity]];
+  return [UIColor colorWithWhite:0 alpha:kTitleColorOpacity];
 }
 
 - (UIColor *)defaultDetailLabelTextColor {
-  return [UIColor colorWithWhite:0 alpha:[MDCTypography captionFontOpacity]];
+  return [UIColor colorWithWhite:0 alpha:kDetailColorOpacity];
 }
 
 @end

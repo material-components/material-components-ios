@@ -28,7 +28,7 @@
 
 @implementation MDCSnackbarManagerInstanceTests
 
-// The fact that MDCSnackbarManager.defaultInstance is a singelton means it's incredibly hard to
+// The fact that MDCSnackbarManager.defaultInstance is a singleton means it's incredibly hard to
 // test correctly. The -setUp and -tearDown methods below attempt to save/restore the
 // defaultManager's tested state as well as possible. If either these tests or any of the "default"
 // styling tests begin to flake/fail, it's probably best to remove these methods as well as
@@ -39,7 +39,7 @@
 
   self.messageTextColor = MDCSnackbarManager.messageTextColor;
   self.snackbarMessageViewShadowColor = MDCSnackbarManager.snackbarMessageViewShadowColor;
-  self.snackbarMessageViewShadowColor = MDCSnackbarManager.snackbarMessageViewBackgroundColor;
+  self.snackbarMessageViewBackgroundColor = MDCSnackbarManager.snackbarMessageViewBackgroundColor;
   self.titleColorForState = [@{} mutableCopy];
   NSUInteger maxState = UIControlStateNormal | UIControlStateDisabled | UIControlStateSelected
     | UIControlStateHighlighted;
@@ -49,6 +49,7 @@
 }
 
 - (void)tearDown {
+  // Restore the Snackbar Manager's state
   MDCSnackbarManager.messageTextColor = self.messageTextColor;
   MDCSnackbarManager.snackbarMessageViewShadowColor = self.snackbarMessageViewShadowColor;
   MDCSnackbarManager.snackbarMessageViewBackgroundColor = self.snackbarMessageViewBackgroundColor;
@@ -58,7 +59,13 @@
                                      forState:state.unsignedIntegerValue];
     }
   }
+
+  // Clean-up the test case
   [self.titleColorForState removeAllObjects];
+  self.messageTextColor = nil;
+  self.snackbarMessageViewShadowColor = nil;
+  self.snackbarMessageViewBackgroundColor = nil;
+
   [super tearDown];
 }
 

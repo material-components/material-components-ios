@@ -25,8 +25,17 @@ class AppBarContainerIssue287Tests: XCTestCase {
   var container: MDCAppBarContainerViewController!
 
   override func setUp() {
+    super.setUp()
+
     content = UIViewController()
     container = MDCAppBarContainerViewController(contentViewController: content)
+  }
+
+  override func tearDown() {
+    container = nil
+    content = nil
+
+    super.tearDown()
   }
 
   func testViewHasNotLoadedAfterInitialization() {
