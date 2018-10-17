@@ -156,17 +156,15 @@ static const CGFloat kDetailColorOpacity = 0.6f;
 - (void)prepareForReuse {
   [super prepareForReuse];
 
-  [self invalidateCachedLayouts];
-
   self.titleLabel.text = nil;
   self.detailLabel.text = nil;
   self.leadingImageView.image = nil;
   self.trailingImageView.image = nil;
 
+  [self setNeedsLayout];
+
   [self mdc_setAdjustsFontForContentSizeCategory:NO];
   [self resetMDCSelfSizingStereoCellLabelProperties];
-
-  [self setNeedsLayout];
 }
 
 #pragma mark Layout
