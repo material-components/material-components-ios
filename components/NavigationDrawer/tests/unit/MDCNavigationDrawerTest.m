@@ -83,4 +83,22 @@ static NSString *const reuseIdentifier = @"FakeCell";
   [super tearDown];
 }
 
+- (void)testsNavigationDrawerOpensHalfWay {
+  // Given
+  CGFloat viewControllerHeight = 500.f;
+  UIViewController *fakeViewController = [[UIViewController alloc] init];
+  fakeViewController.view.frame = CGRectMake(0, 0, 200, viewControllerHeight);
+  UIWindow *fakeWindow = [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, 200, 500)];
+  [fakeWindow makeKeyWindow];
+  fakeWindow.rootViewController = fakeViewController;
+
+
+  // When
+  [fakeViewController presentViewController:self.navigationDrawer animated:NO completion:nil];
+
+  // Then
+  XCTAssertEqualWithAccuracy(viewControllerHeight / 2,
+                             CGRectGetHeight(self.navigationDrawer.view.frame), 0.001);
+}
+
 @end
