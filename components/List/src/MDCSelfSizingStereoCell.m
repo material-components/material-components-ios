@@ -165,6 +165,8 @@ static const CGFloat kDetailColorOpacity = 0.6f;
 
   [self mdc_setAdjustsFontForContentSizeCategory:NO];
   [self resetMDCSelfSizingStereoCellLabelProperties];
+
+  [self setNeedsLayout];
 }
 
 #pragma mark Layout
