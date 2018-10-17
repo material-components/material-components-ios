@@ -1,16 +1,16 @@
-# #develop#
+# 67.1.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+In this minor release we provide a shadow opacity reset toggle for Flexible Header, VoiceOver and rounded corners support for the Navigation Drawer, and lastly a bug fix regarding MDCShadowLayer with Corner Radius along with other bug fixes and unit tests improvements.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
-## API changes
+### Flexible Header
+* Now with Flexible Header you can enables resetting the visible shadow opacity to 0 when setting trackingScrollView to 0 by setting the BOOL property `resetShadowAfterTrackingScrollViewIsReset`.
+
+### Navigation Drawer
+* When VoiceOver or Switch Control is turned on in your app, Navigation Drawer will now always show up in full screen.
+
+* Navigation Drawer now has rounded corners when there is more scrollable content to scroll in the drawer.
 
 ## Component changes
 
