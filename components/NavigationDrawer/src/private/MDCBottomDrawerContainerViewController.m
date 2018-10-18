@@ -696,7 +696,8 @@ static UIColor *DrawerShadowColor(void) {
 
 - (BOOL)contentReachesFullscreen {
   return ([self isAccessibilityMode] || [self isMobileLandscape])
-      ? YES : self.contentHeightSurplus >= self.contentHeaderTopInset;
+             ? YES
+             : self.contentHeightSurplus >= self.contentHeaderTopInset;
 }
 
 - (BOOL)contentScrollsToReveal {
