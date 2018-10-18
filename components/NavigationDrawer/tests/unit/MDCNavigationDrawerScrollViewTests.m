@@ -37,7 +37,9 @@
   fakeViewController.view.frame = CGRectMake(0, 0, 200, 500);
 
   _fakeScrollView = [[UIScrollView alloc] init];
-  _fakeBottomDrawer = [[MDCBottomDrawerContainerViewController alloc] initWithOriginalPresentingViewController:fakeViewController trackingScrollView:_fakeScrollView];
+  _fakeBottomDrawer = [[MDCBottomDrawerContainerViewController alloc]
+      initWithOriginalPresentingViewController:fakeViewController
+                            trackingScrollView:_fakeScrollView];
 }
 
 - (void)tearDown {
