@@ -34,6 +34,14 @@ mdc_public_objc_library(
 )
 
 mdc_objc_library(
+    name = "private",
+    hdrs = native.glob(["src/private/*.h"]),
+    includes = ["src/private"],
+    visibility = ["//visibility:private"],
+
+)
+
+mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
     srcs = native.glob(["tests/unit/*.m"]),
@@ -43,6 +51,7 @@ mdc_objc_library(
     ],
     deps = [
          ":NavigationDrawer",
+         ":private",
     ],
     visibility = ["//visibility:private"],
 )
