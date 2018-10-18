@@ -37,6 +37,7 @@ mdc_public_objc_library(
 mdc_objc_library(
     name = "private",
     hdrs = native.glob(["src/private/*.h"]),
+    srcs = native.glob(["src/private/*.m"]),
     includes = ["src/private"],
     visibility = ["//visibility:private"],
 )
