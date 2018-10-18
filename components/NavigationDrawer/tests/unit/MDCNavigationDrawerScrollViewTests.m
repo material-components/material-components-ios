@@ -75,6 +75,7 @@
 
 - (void)testCurrentlyFullScreen {
   // Given
+  
 
   // When
 
