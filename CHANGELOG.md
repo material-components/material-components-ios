@@ -1,3 +1,126 @@
+# 67.1.0
+
+In this minor release we provide a shadow opacity reset toggle for Flexible Header, VoiceOver and rounded corners support for the Navigation Drawer, along with bug fixes and unit tests improvements.
+
+## New features
+
+### Flexible Header
+
+* Flexible Header supports resetting the visible shadow opacity to 0 when setting trackingScrollView to `nil` by setting the BOOL property `resetShadowAfterTrackingScrollViewIsReset`.
+
+### Navigation Drawer
+* When VoiceOver or Switch Control is turned on in your app, Navigation Drawer will always show up in full screen.
+
+* Navigation Drawer has rounded corners when there is more scrollable content to scroll in the drawer.
+
+## Component changes
+
+### ActionSheet
+
+* [Remove remaining _IPHONE_11 checks (#5417)](https://github.com/material-components/material-components-ios/commit/d85eee86cbe97a79fb1a59db8b85f693360d7a81) (Cody Weaver)
+* [Update examples to use global themer](https://github.com/material-components/material-components-ios/commit/1c95887654c9abf9a294ec8260e7fda817bcb284) (Cody Weaver)
+* [{Tests} Deallocate test objects at the end of tests. (#5397)](https://github.com/material-components/material-components-ios/commit/675235ed050bb959dcbae957c78a58bbb3567eb3) (Robert Moore)
+
+### ActivityIndicator
+
+* [Fix ActivityIndicatorTransitionExample layout when rotating device (#5392)](https://github.com/material-components/material-components-ios/commit/545eea116151e6e7c39c6c87298ecfe4f8bf94eb) (rami-a)
+
+### AppBar
+
+* [{Tests} Deallocate test objects at the end of tests. (#5397)](https://github.com/material-components/material-components-ios/commit/675235ed050bb959dcbae957c78a58bbb3567eb3) (Robert Moore)
+
+### BottomAppBar
+
+* [{Tests} Deallocate test objects at the end of tests. (#5397)](https://github.com/material-components/material-components-ios/commit/675235ed050bb959dcbae957c78a58bbb3567eb3) (Robert Moore)
+
+### BottomSheet
+
+* [{Tests} Deallocate test objects at the end of tests. (#5397)](https://github.com/material-components/material-components-ios/commit/675235ed050bb959dcbae957c78a58bbb3567eb3) (Robert Moore)
+
+### Buttons
+
+* [[MaskedTransition] Apply safe area to floating button example and masked transition example (#5389)](https://github.com/material-components/material-components-ios/commit/bff3fcf7f1e8e14eb17899c7675ae7fc90a4f343) (rami-a)
+
+### Cards
+
+* [{Tests} Deallocate test objects at the end of tests. (#5397)](https://github.com/material-components/material-components-ios/commit/675235ed050bb959dcbae957c78a58bbb3567eb3) (Robert Moore)
+
+### Chips
+
+* [Fix layout when Chip added programmatically. (#5425)](https://github.com/material-components/material-components-ios/commit/e54b0bbf00be014992b852284a80fb73ca859e64) (Robert Moore)
+* [{Tests} Deallocate test objects at the end of tests. (#5397)](https://github.com/material-components/material-components-ios/commit/675235ed050bb959dcbae957c78a58bbb3567eb3) (Robert Moore)
+
+### CollectionCells
+
+* [{Tests} Deallocate test objects at the end of tests. (#5397)](https://github.com/material-components/material-components-ios/commit/675235ed050bb959dcbae957c78a58bbb3567eb3) (Robert Moore)
+
+### CollectionLayoutAttributes
+
+* [{Tests} Deallocate test objects at the end of tests. (#5397)](https://github.com/material-components/material-components-ios/commit/675235ed050bb959dcbae957c78a58bbb3567eb3) (Robert Moore)
+
+### Dialogs
+
+* [Enable misspelled test. (#5399)](https://github.com/material-components/material-components-ios/commit/d994fe7531a66a5625a8ed28ad9078cf6a172d93) (Robert Moore)
+* [{Tests} Deallocate test objects at the end of tests. (#5397)](https://github.com/material-components/material-components-ios/commit/675235ed050bb959dcbae957c78a58bbb3567eb3) (Robert Moore)
+
+### FeatureHighlight
+
+* [{Tests} Deallocate test objects at the end of tests. (#5397)](https://github.com/material-components/material-components-ios/commit/675235ed050bb959dcbae957c78a58bbb3567eb3) (Robert Moore)
+
+### FlexibleHeader
+
+* [Allow clearing shadow when trackingScrollView is emptied (#5385)](https://github.com/material-components/material-components-ios/commit/968f6dfaaa3e5f58501b39e61ecd86fd8b4a9931) (Ali Rabbani)
+* [{Tests} Deallocate test objects at the end of tests. (#5397)](https://github.com/material-components/material-components-ios/commit/675235ed050bb959dcbae957c78a58bbb3567eb3) (Robert Moore)
+
+### List
+
+* [BaseCell shouldn't display Ink on tap if -collectionView:shouldHighlightItemAtIndexPath: returns NO (#5393)](https://github.com/material-components/material-components-ios/commit/0383d68a198a55d080e9ce96b3b6d83c217db1f2) (Julien Poumailloux)
+* [Fix example import. (#5426)](https://github.com/material-components/material-components-ios/commit/12773d3289c484bf1534f68632d73c1b565f0dab) (Robert Moore)
+* [Initialize layoutCache in SelfSizingStereoCell (#5422)](https://github.com/material-components/material-components-ios/commit/4d2d2cda26e3ac493b8f8e8136e72dd2de03b8b8) (Andrew Overton)
+* [Revert "SelfSizingStereoCell should use MDCTypography instead of hardcoding its own font opacity (#5361)" (#5405)](https://github.com/material-components/material-components-ios/commit/95a5f36125f5ba8694a9971b114002d7368bb2ed) (Julien Poumailloux)
+* [Update List readme to include information on accessibility and color/… (#5403)](https://github.com/material-components/material-components-ios/commit/a19aac07b747bdb948972bf3d6860b02a934862a) (Andrew Overton)
+
+### MaskedTransition
+
+* [[Buttons] Apply safe area to floating button example and masked transition example (#5389)](https://github.com/material-components/material-components-ios/commit/bff3fcf7f1e8e14eb17899c7675ae7fc90a4f343) (rami-a)
+
+### NavigationBar
+
+* [{Tests} Deallocate test objects at the end of tests. (#5397)](https://github.com/material-components/material-components-ios/commit/675235ed050bb959dcbae957c78a58bbb3567eb3) (Robert Moore)
+
+### NavigationDrawer
+
+* [Add buttons to example to present navigation drawer (#5419)](https://github.com/material-components/material-components-ios/commit/d1a8746ad1041f2359a0983d88d66725d5b53766) (Cody Weaver)
+* [Add rounded corners when there is scrollable content (#5410)](https://github.com/material-components/material-components-ios/commit/d9c9e741d99f991c10bcee404ccb1055d1388ff1) (Cody Weaver)
+* [Added VoiceOver support to have the drawer show at full screen. (#5411)](https://github.com/material-components/material-components-ios/commit/6e31fd6d79093d31e222746530145ebf2c8a1aa3) (Yarden Eitan)
+* [Made DrawerHeaderViewController.swift file to conform to MDCBottomDrawerHeader to fix header not showing issue in components examples (#5325)](https://github.com/material-components/material-components-ios/commit/b71390dbc48100f2fd6a45949ca0c4ec871a75dc) (Anuran Barman)
+* [Remove remaining _IPHONE_11 checks (#5417)](https://github.com/material-components/material-components-ios/commit/d85eee86cbe97a79fb1a59db8b85f693360d7a81) (Cody Weaver)
+* [Setup for tests (#5423)](https://github.com/material-components/material-components-ios/commit/b18f9987b6b898c489920182eb346ea792b5e898) (Cody Weaver)
+
+### ProgressView
+
+* [{Tests} Deallocate test objects at the end of tests. (#5397)](https://github.com/material-components/material-components-ios/commit/675235ed050bb959dcbae957c78a58bbb3567eb3) (Robert Moore)
+
+### ShadowLayer
+
+* [Corner radius (#5390) (#5398)](https://github.com/material-components/material-components-ios/commit/7806ee3c3e1568e8af450ed4a64e4b53e7cd8ea8) (Cody Weaver)
+* [Subclass UIView in corner radius example (#5388)](https://github.com/material-components/material-components-ios/commit/3c636c17040ea7667b198381083f7d1ef5d62683) (Cody Weaver)
+
+### Snackbar
+
+* [Clean up unit test. (#5394)](https://github.com/material-components/material-components-ios/commit/4ab529d31647e8dc3ec0633fe43e27663821e8e6) (Robert Moore)
+* [{Tests} Deallocate test objects at the end of tests. (#5397)](https://github.com/material-components/material-components-ios/commit/675235ed050bb959dcbae957c78a58bbb3567eb3) (Robert Moore)
+
+### Tabs
+
+* [{Tests} Deallocate test objects at the end of tests. (#5397)](https://github.com/material-components/material-components-ios/commit/675235ed050bb959dcbae957c78a58bbb3567eb3) (Robert Moore)
+
+### TextFields
+
+* [{Tests} Deallocate test objects at the end of tests. (#5397)](https://github.com/material-components/material-components-ios/commit/675235ed050bb959dcbae957c78a58bbb3567eb3) (Robert Moore)
+
+---
+
 # 67.0.0
 
 There are some rendering changes that have lead to classifying this as a major release. There are no major API changes.
