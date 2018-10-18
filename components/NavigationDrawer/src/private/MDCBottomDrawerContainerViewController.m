@@ -700,7 +700,7 @@ static UIColor *DrawerShadowColor(void) {
 
 - (BOOL)contentReachesFullscreen {
   return [self shouldPresentFullScreen] ? YES
-      : self.contentHeightSurplus >= self.contentHeaderTopInset;
+                                        : self.contentHeightSurplus >= self.contentHeaderTopInset;
 }
 
 - (BOOL)contentScrollsToReveal {
