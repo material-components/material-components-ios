@@ -541,6 +541,12 @@ EOL
   fi
 }
 
+# This command can be used when a pull request should always be put into a failure state.
+# For example, we do not want to allow pull requests to be merged into stable.
+fail_immediately() {
+  exit 1
+}
+
 POSITIONAL=()
 while [[ $# -gt 0 ]]; do
   key="$1"
@@ -586,6 +592,7 @@ case "$DEPENDENCY_SYSTEM" in
   "website")    generate_website ;;
   "danger")     run_danger ;;
   "apidiff")    generate_apidiff ;;
+  "fail")       fail_immediately ;;
 
   *)            run_bazel ;;
 esac
