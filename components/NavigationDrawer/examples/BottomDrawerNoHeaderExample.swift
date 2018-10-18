@@ -14,11 +14,14 @@
 
 import UIKit
 import MaterialComponentsAlpha.MaterialNavigationDrawer
+import MaterialComponents.MaterialBottomAppBar
+import MaterialComponents.MaterialBottomAppBar_ColorThemer
 import MaterialComponents.MaterialColorScheme
 
 class BottomDrawerNoHeaderExample: UIViewController {
   var colorScheme = MDCSemanticColorScheme()
-
+  let bottomAppBar = MDCBottomAppBarView()
+  
   let contentViewController = DrawerContentViewController()
   let bottomDrawerTransitionController = MDCBottomDrawerTransitionController()
 
@@ -26,19 +29,47 @@ class BottomDrawerNoHeaderExample: UIViewController {
     super.viewDidLoad()
     view.backgroundColor = colorScheme.backgroundColor
     contentViewController.colorScheme = colorScheme
+
+    bottomAppBar.isFloatingButtonHidden = true
+    let barButtonLeadingItem = UIBarButtonItem()
+    let menuImage = UIImage(named:"Menu")?.withRenderingMode(.alwaysTemplate)
+    barButtonLeadingItem.image = menuImage
+    barButtonLeadingItem.target = self
+    barButtonLeadingItem.action = #selector(presentNavigationDrawer)
+    bottomAppBar.leadingBarButtonItems = [ barButtonLeadingItem ]
+    MDCBottomAppBarColorThemer.applySurfaceVariant(withSemanticColorScheme: colorScheme,
+                                                   to: bottomAppBar)
+    view.addSubview(bottomAppBar)
   }
 
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
-    // This shows that it is possible to present the content view controller directly without
-    // the need of the MDCBottomDrawerViewController wrapper. To present the view controller
-    // inside the drawer, both the transition controller and the custom presentation controller
-    // of the drawer need to be set.
-    contentViewController.transitioningDelegate = bottomDrawerTransitionController
-    contentViewController.modalPresentationStyle = .custom
-    present(contentViewController, animated: true, completion: nil)
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+
+    layoutBottomAppBar()
   }
 
+  private func layoutBottomAppBar() {
+    let size = bottomAppBar.sizeThatFits(view.bounds.size)
+    var bottomBarViewFrame = CGRect(x: 0,
+                                    y: view.bounds.size.height - size.height,
+                                    width: size.width,
+                                    height: size.height)
+    if #available(iOS 11.0, *) {
+      bottomBarViewFrame.size.height += view.safeAreaInsets.bottom
+      bottomBarViewFrame.origin.y -= view.safeAreaInsets.bottom
+    }
+    bottomAppBar.frame = bottomBarViewFrame
+  }
+
+  @objc func presentNavigationDrawer() {
+  // This shows that it is possible to present the content view controller directly without
+  // the need of the MDCBottomDrawerViewController wrapper. To present the view controller
+  // inside the drawer, both the transition controller and the custom presentation controller
+  // of the drawer need to be set.
+  contentViewController.transitioningDelegate = bottomDrawerTransitionController
+  contentViewController.modalPresentationStyle = .custom
+  present(contentViewController, animated: true, completion: nil)
+  }
 }
 
 extension BottomDrawerNoHeaderExample {

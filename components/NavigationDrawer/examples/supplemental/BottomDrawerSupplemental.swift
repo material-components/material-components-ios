@@ -43,7 +43,7 @@ class DrawerContentViewController: UIViewController {
   }
 }
 
-class DrawerHeaderViewController: UIViewController {
+class DrawerHeaderViewController: UIViewController,MDCBottomDrawerHeader {
   var colorScheme = MDCSemanticColorScheme()
   let preferredHeight: CGFloat = 80
 

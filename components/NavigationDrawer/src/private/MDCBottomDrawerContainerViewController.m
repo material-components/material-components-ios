@@ -15,6 +15,7 @@
 #import "MDCBottomDrawerContainerViewController.h"
 
 #import "MDCBottomDrawerHeader.h"
+#import "MDCBottomDrawerHeaderMask.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialUIMetrics.h"
 
@@ -32,6 +33,7 @@ static const CGFloat kEpsilon = 0.001f;
 // smooth.
 static const CGFloat kScrollViewBufferForPerformance = 20.f;
 static const CGFloat kDragVelocityThresholdForHidingDrawer = -2.f;
+static const CGFloat kDefaultHeaderCornerRadius = 8.f;
 static NSString *const kContentOffsetKeyPath = @"contentOffset";
 
 static UIColor *DrawerShadowColor(void) {
@@ -144,6 +146,7 @@ static UIColor *DrawerShadowColor(void) {
   CGFloat _contentHeightSurplus;
   CGFloat _addedContentHeight;
   CGFloat _contentVCPreferredContentSizeHeightCached;
+  MDCBottomDrawerHeaderMask *_maskLayer;
 }
 
 - (instancetype)initWithOriginalPresentingViewController:
@@ -156,6 +159,9 @@ static UIColor *DrawerShadowColor(void) {
     _contentHeightSurplus = NSNotFound;
     _addedContentHeight = NSNotFound;
     _trackingScrollView = trackingScrollView;
+    _maskLayer =
+        [[MDCBottomDrawerHeaderMask alloc] initWithMaximumCornerRadius:kDefaultHeaderCornerRadius
+                                                   minimumCornerRadius:0];
   }
   return self;
 }
@@ -342,12 +348,10 @@ static UIColor *DrawerShadowColor(void) {
   [self addScrollViewObserver];
 
   // Scroll view should not update its content insets implicitly.
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     self.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     self.scrollView.insetsLayoutMarginsFromSafeArea = NO;
   }
-#endif  // defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
 }
 
 - (void)viewWillLayoutSubviews {
@@ -363,6 +367,14 @@ static UIColor *DrawerShadowColor(void) {
     scrollViewFrame.origin.y = -self.topHeaderHeight;
     self.scrollView.frame = scrollViewFrame;
   } else {
+    if (self.contentHeightSurplus > 0) {
+      if (self.topHeaderHeight != 0.f) {
+        _maskLayer.view = self.headerViewController.view;
+      } else {
+        _maskLayer.view = self.contentViewController.view;
+      }
+      [_maskLayer applyMask];
+    }
     CGRect scrollViewFrame = self.presentingViewBounds;
     if (self.animatingPresentation) {
       CGFloat heightSurplusForSpringAnimationOvershooting =
@@ -457,12 +469,13 @@ static UIColor *DrawerShadowColor(void) {
 #pragma mark Content Offset Adaptions (Private)
 
 - (void)updateViewWithContentOffset:(CGPoint)contentOffset {
+  CGFloat transitionPercentage =
+      [self transitionPercentageForContentOffset:contentOffset
+                                          offset:0.f
+                                        distance:self.headerAnimationDistance];
   CGFloat headerTransitionToTop =
-      contentOffset.y >= self.transitionCompleteContentOffset
-          ? 1.f
-          : [self transitionPercentageForContentOffset:contentOffset
-                                                offset:0.f
-                                              distance:self.headerAnimationDistance];
+      contentOffset.y >= self.transitionCompleteContentOffset ? 1.f : transitionPercentage;
+  [_maskLayer animateWithPercentage:1.f - transitionPercentage];
   self.currentlyFullscreen = self.contentReachesFullscreen && headerTransitionToTop >= 1.f;
   CGFloat fullscreenHeaderHeight =
       self.contentReachesFullscreen ? self.topHeaderHeight : [self contentHeaderHeight];
@@ -680,6 +693,7 @@ static UIColor *DrawerShadowColor(void) {
       [self transitionPercentageForContentOffset:targetContentOffset
                                           offset:0
                                         distance:headerAnimationDistance];
+  [_maskLayer animateWithPercentage:1.f - headerTransitionToTop];
   if (headerTransitionToTop >= kEpsilon && headerTransitionToTop < 1.f) {
     CGFloat contentHeaderFullyCoversTopHeaderContentOffset = self.transitionCompleteContentOffset;
     CGFloat contentHeaderReachesTopHeaderContentOffset =
