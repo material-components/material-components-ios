@@ -20,7 +20,8 @@
 
 @property(nonatomic) BOOL scrollViewObserved;
 @property(nonatomic, readonly) UIScrollView *scrollView;
-@property(nonatomic) BOOL currentlyFullScreen;
+@property(nonatomic, readwrite) CGFloat contentHeightSurplus;
+@property(nonatomic) BOOL contentScrollsToReveal;
 
 @end
 
@@ -72,13 +73,20 @@
   XCTAssertFalse(self.fakeBottomDrawer.scrollViewObserved);
 }
 
-- (void)testCurrentlyFullScreen {
-  // Given
-  
-
+- (void)testContentDoesScrollToReveal {
   // When
+  self.fakeBottomDrawer.contentHeightSurplus = CGFLOAT_MAX;
 
   // Then
+  XCTAssertTrue(self.fakeBottomDrawer.contentScrollsToReveal);
+}
+
+- (void)testContentDoesNotScrollToReveal {
+  // When
+  self.fakeBottomDrawer.contentHeightSurplus = CGFLOAT_MIN;
+
+  // Then
+  XCTAssertFalse(self.fakeBottomDrawer.contentScrollsToReveal);
 }
 
 @end
