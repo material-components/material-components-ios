@@ -276,6 +276,10 @@ static UIColor *DrawerShadowColor(void) {
   return self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassCompact;
 }
 
+- (BOOL)shouldPresentFullScreen {
+  return [self isAccessibilityMode] || [self isMobileLandscape];
+}
+
 /**
  The drawer height factor defines how much percentage of the screen space the drawer will take up
  when displayed. The expected range is 0 - 1 (0% - 100%).
@@ -284,7 +288,7 @@ static UIColor *DrawerShadowColor(void) {
  the default value becomes 1.0.
  */
 - (CGFloat)initialDrawerFactor {
-  return ([self isAccessibilityMode] || [self isMobileLandscape]) ? 1.0f : 0.5f;
+  return [self shouldPresentFullScreen] ? 1.0f : 0.5f;
 }
 
 - (void)addScrollViewObserver {
@@ -389,7 +393,7 @@ static UIColor *DrawerShadowColor(void) {
     }
   } else {
     contentViewFrame.size.height = self.contentViewController.preferredContentSize.height;
-    if ([self isAccessibilityMode] || [self isMobileLandscape]) {
+    if ([self shouldPresentFullScreen]) {
       contentViewFrame.size.height =
           MAX(contentViewFrame.size.height,
               self.presentingViewBounds.size.height - self.topHeaderHeight);
@@ -619,7 +623,7 @@ static UIColor *DrawerShadowColor(void) {
   CGFloat contentHeaderHeight = self.contentHeaderHeight;
   CGFloat containerHeight = self.presentingViewBounds.size.height;
   CGFloat contentHeight = self.contentViewController.preferredContentSize.height;
-  if ([self isAccessibilityMode] || [self isMobileLandscape]) {
+  if ([self shouldPresentFullScreen]) {
     contentHeight = MAX(contentHeight, containerHeight - self.topHeaderHeight);
   }
   _contentVCPreferredContentSizeHeightCached = contentHeight;
@@ -695,9 +699,8 @@ static UIColor *DrawerShadowColor(void) {
 }
 
 - (BOOL)contentReachesFullscreen {
-  return ([self isAccessibilityMode] || [self isMobileLandscape])
-             ? YES
-             : self.contentHeightSurplus >= self.contentHeaderTopInset;
+  return [self shouldPresentFullScreen] ? YES
+      : self.contentHeightSurplus >= self.contentHeaderTopInset;
 }
 
 - (BOOL)contentScrollsToReveal {
