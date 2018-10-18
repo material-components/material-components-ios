@@ -35,18 +35,6 @@ static UIColor *DrawerShadowColor(void) {
   return [[UIColor blackColor] colorWithAlphaComponent:0.2f];
 }
 
-/**
- The drawer height factor defines how much percentage of the screen space the drawer will take up
- when displayed. The expected range is 0 - 1 (0% - 100%).
-
- Default value is 0.5. If VoiceOver is enabled, the default value becomes 1.0.
- */
-static CGFloat InitialDrawerHeightFactor(void) {
-  BOOL enableAccessibilityMode =
-      UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning();
-  return enableAccessibilityMode ? 1.0f : 0.5f;
-}
-
 @interface MDCBottomDrawerContainerViewController (LayoutCalculations)
 
 /**
@@ -284,6 +272,21 @@ static CGFloat InitialDrawerHeightFactor(void) {
   return UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning();
 }
 
+- (BOOL)isMobileLandscape {
+  return self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassCompact;
+}
+
+/**
+ The drawer height factor defines how much percentage of the screen space the drawer will take up
+ when displayed. The expected range is 0 - 1 (0% - 100%).
+
+ Default value is 0.5. If VoiceOver is enabled, or the mobile device is in landscape,
+ the default value becomes 1.0.
+ */
+- (CGFloat)initialDrawerFactor {
+  return ([self isAccessibilityMode] || [self isMobileLandscape]) ? 1.0f : 0.5f;
+}
+
 - (void)addScrollViewObserver {
   if (self.scrollViewObserved) {
     return;
@@ -386,7 +389,7 @@ static CGFloat InitialDrawerHeightFactor(void) {
     }
   } else {
     contentViewFrame.size.height = self.contentViewController.preferredContentSize.height;
-    if ([self isAccessibilityMode]) {
+    if ([self isAccessibilityMode] || [self isMobileLandscape]) {
       contentViewFrame.size.height =
           MAX(contentViewFrame.size.height,
               self.presentingViewBounds.size.height - self.topHeaderHeight);
@@ -616,7 +619,7 @@ static CGFloat InitialDrawerHeightFactor(void) {
   CGFloat contentHeaderHeight = self.contentHeaderHeight;
   CGFloat containerHeight = self.presentingViewBounds.size.height;
   CGFloat contentHeight = self.contentViewController.preferredContentSize.height;
-  if ([self isAccessibilityMode]) {
+  if ([self isAccessibilityMode] || [self isMobileLandscape]) {
     contentHeight = MAX(contentHeight, containerHeight - self.topHeaderHeight);
   }
   _contentVCPreferredContentSizeHeightCached = contentHeight;
@@ -627,13 +630,13 @@ static CGFloat InitialDrawerHeightFactor(void) {
   CGFloat totalHeight = contentHeight + contentHeaderHeight;
   CGFloat contentHeightThresholdForScrollability =
       MIN(containerHeight - MDCDeviceTopSafeAreaInset(),
-          containerHeight * InitialDrawerHeightFactor() + contentHeaderHeight);
+          containerHeight * [self initialDrawerFactor] + contentHeaderHeight);
   BOOL contentScrollsToReveal = totalHeight >= contentHeightThresholdForScrollability;
 
   if (_contentHeaderTopInset == NSNotFound) {
     // The content header top inset is only set once.
     if (contentScrollsToReveal) {
-      _contentHeaderTopInset = containerHeight * (1.f - InitialDrawerHeightFactor());
+      _contentHeaderTopInset = containerHeight * (1.f - [self initialDrawerFactor]);
       // The minimum inset value should be the size of the safe area inset, as
       // kInitialDrawerHeightFactor discounts the safe area when receiving the height factor.
       if (_contentHeaderTopInset <= self.topHeaderHeight - self.contentHeaderHeight) {
@@ -692,7 +695,8 @@ static CGFloat InitialDrawerHeightFactor(void) {
 }
 
 - (BOOL)contentReachesFullscreen {
-  return [self isAccessibilityMode] ? YES : self.contentHeightSurplus >= self.contentHeaderTopInset;
+  return ([self isAccessibilityMode] || [self isMobileLandscape])
+      ? YES : self.contentHeightSurplus >= self.contentHeaderTopInset;
 }
 
 - (BOOL)contentScrollsToReveal {
