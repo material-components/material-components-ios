@@ -81,7 +81,6 @@ static NSString *const reuseIdentifier = @"FakeCell";
   self.navigationDrawer = nil;
 
   [super tearDown];
-}
-
+}gi
 
 @end
