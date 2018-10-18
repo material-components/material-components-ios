@@ -87,11 +87,8 @@ MDCBottomSheetController *bottomSheet = [[MDCBottomSheetController alloc] initWi
 [self presentViewController:bottomSheet animated:true completion:nil];
 ```
 
-<!--</div>-->
-
 Create a button that will call the code above.
 
-<!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
 let button = UIButton(frame: .zero)
@@ -102,5 +99,7 @@ button.addTarget(self, action: #selector(presentBottomSheet), for: .touchUpInsid
 ```objc
 _button = [[UIButton alloc] initWithFrame:CGRectZero];
 [_button addTarget:self action:@selector(presentBottomSheet) forControlEvents:UIControlEventTouchUpInside];
+
 ```
+
 <!--</div>-->
