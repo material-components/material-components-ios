@@ -23,6 +23,7 @@ licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
     name = "NavigationDrawer",
+
     sdk_frameworks = [
         "Foundation",
         "UIKit",
@@ -31,6 +32,13 @@ mdc_public_objc_library(
         "//components/ShadowLayer",
         "//components/private/UIMetrics",
     ],
+)
+
+mdc_objc_library(
+    name = "private",
+    hdrs = native.glob(["src/private/*.h"]),
+    includes = ["src/private"],
+    visibility = ["//visibility:private"],
 )
 
 mdc_objc_library(
@@ -43,6 +51,7 @@ mdc_objc_library(
     ],
     deps = [
          ":NavigationDrawer",
+         ":private",
     ],
     visibility = ["//visibility:private"],
 )
