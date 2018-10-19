@@ -14,8 +14,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialNavigationDrawer.h"
 #import "MaterialNavigationDrawer+ColorThemer.h"
+#import "MaterialNavigationDrawer.h"
 
 @interface FakeHeaderViewController : UIViewController <MDCBottomDrawerHeader>
 @end
@@ -62,7 +62,6 @@
                         self.colorScheme.surfaceColor);
   XCTAssertEqualObjects(self.contentViewController.view.backgroundColor,
                         self.colorScheme.surfaceColor);
-
 }
 
 @end

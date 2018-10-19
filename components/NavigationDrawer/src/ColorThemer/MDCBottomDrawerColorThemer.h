@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialNavigationDrawer.h"
 #import "MaterialColorScheme.h"
+#import "MaterialNavigationDrawer.h"
 
 #import <Foundation/Foundation.h>
 
@@ -29,7 +29,6 @@
  @param bottomDrawer A component instance to which the color scheme should be applied.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
-        toBottomDrawer:(nonnull MDCBottomDrawerViewController *)bottomDrawer;
+                  toBottomDrawer:(nonnull MDCBottomDrawerViewController *)bottomDrawer;
 
 @end
-
