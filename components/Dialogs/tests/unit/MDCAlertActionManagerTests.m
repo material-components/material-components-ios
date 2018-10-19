@@ -42,7 +42,7 @@
 
   // Then
   XCTAssertEqual([[self.actionManager actions] count], 1ul);
-  XCTAssertEqual([[self.actionManager sortedButtons] count], 0ul);
+  XCTAssertEqual([[self.actionManager buttonsInActionOrder] count], 0ul);
 }
 
 - (void)testActionManager_ButtonForActionReturnsNoButtonsWhenCalledBeforeThemingOrPresentation {
@@ -55,7 +55,7 @@
   // Then
   XCTAssertNil(button);
   XCTAssertEqual([[self.actionManager actions] count], 1ul);
-  XCTAssertEqual([[self.actionManager sortedButtons] count], 0ul);
+  XCTAssertEqual([[self.actionManager buttonsInActionOrder] count], 0ul);
 }
 
 - (void)testActionManager_AddingButtonToActionBeforeAlertIsPResentedReturnsDetachedButtons {
@@ -63,16 +63,16 @@
   [self.actionManager addAction:self.action];
 
   // When
-  MDCButton *button = [self.actionManager addButtonForAction:self.action
-                                                      target:self
-                                                    selector:@selector(actionButtonPressed:)];
+  MDCButton *button = [self.actionManager createButtonForAction:self.action
+                                                         target:self
+                                                       selector:@selector(actionButtonPressed:)];
   MDCButton *button2 = [self.actionManager buttonForAction:self.action];
 
   // Then
   XCTAssertNotNil(button);
   XCTAssertNil(button.superview);
   XCTAssertEqual([[self.actionManager actions] count], 1ul);
-  XCTAssertEqual([[self.actionManager sortedButtons] count], 1ul);
+  XCTAssertEqual([[self.actionManager buttonsInActionOrder] count], 1ul);
   XCTAssertEqual(button, button2);
   XCTAssertEqual([self.actionManager actionForButton:button], self.action);
 }
@@ -109,7 +109,7 @@
   XCTAssertNotNil(button);
   XCTAssertNotNil(button.superview);
   XCTAssertEqual([[alertView.actionManager actions] count], 1ul);
-  XCTAssertEqual([[alertView.actionManager sortedButtons] count], 1ul);
+  XCTAssertEqual([[alertView.actionManager buttonsInActionOrder] count], 1ul);
   XCTAssertEqual([alertView.actionManager buttonForAction:self.action], button);
   XCTAssertEqual([alertView.actionManager actionForButton:button], self.action);
 }
@@ -131,7 +131,7 @@
   XCTAssertEqual([alert.actions count], 2ul);
   XCTAssertNotNil(button);
   XCTAssertNotNil(button.superview);
-  XCTAssertEqual([[alertView.actionManager sortedButtons] count], 2ul);
+  XCTAssertEqual([[alertView.actionManager buttonsInActionOrder] count], 2ul);
   MDCButton *button2 = [alert buttonForAction:action2];
   XCTAssertNotNil(button2);
   XCTAssertNotNil(button2.superview);

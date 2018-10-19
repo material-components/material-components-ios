@@ -15,14 +15,16 @@
 #import "MDCAlertActionManager.h"
 
 @interface MDCAlertActionManager ()
-@property(nonatomic, nonnull, strong) NSMapTable *actionButtons;
+
+@property(nonatomic, nonnull, strong) NSMapTable<MDCAlertAction *, MDCButton *> *actionButtons;
+
 @end
 
 @implementation MDCAlertActionManager {
   NSMutableArray<MDCAlertAction *> *_actions;
 }
 
-@dynamic sortedButtons;
+@dynamic buttonsInActionOrder;
 
 - (instancetype)init {
   self = [super init];
@@ -34,18 +36,18 @@
   return self;
 }
 
-- (NSArray<MDCButton *> *)sortedButtons {
-  NSMutableArray<MDCButton *> *sortedButtons =
+- (NSArray<MDCButton *> *)buttonsInActionOrder {
+  NSMutableArray<MDCButton *> *buttons =
       [[NSMutableArray alloc] initWithCapacity:self.actions.count];
   if ([self.actionButtons count] > 0) {
     for (MDCAlertAction *action in self.actions) {
       MDCButton *button = [self.actionButtons objectForKey:action];
       if (button) {
-        [sortedButtons addObject:button];
+        [buttons addObject:button];
       }
     }
   }
-  return sortedButtons;
+  return buttons;
 }
 
 - (void)addAction:(nonnull MDCAlertAction *)action {
@@ -61,24 +63,25 @@
 }
 
 - (nullable MDCAlertAction *)actionForButton:(nonnull MDCButton *)button {
-  NSEnumerator *enumerator = [self.actionButtons keyEnumerator];
-  MDCAlertAction *action = nil;
-  while ((action = [enumerator nextObject])) {
+  for (MDCAlertAction *action in self.actionButtons) {
     MDCButton *currButton = [self.actionButtons objectForKey:action];
     if (currButton == button) {
       return action;
     }
   }
-  return action;
+  return nil;
 }
 
 // creating a new buttons and associating it with the given action. the button is not added
 // to view hierarchy.
-- (nullable MDCButton *)addButtonForAction:(nonnull MDCAlertAction *)action
-                                    target:(nullable id)target
-                                  selector:(SEL _Nonnull)selector {
-  MDCButton *button = [self makeButtonForAction:action target:target selector:selector];
-  [self.actionButtons setObject:button forKey:action];
+- (nullable MDCButton *)createButtonForAction:(nonnull MDCAlertAction *)action
+                                       target:(nullable id)target
+                                     selector:(SEL _Nonnull)selector {
+  MDCButton *button = [self.actionButtons objectForKey:action];
+  if (button == nil) {
+    button = [self makeButtonForAction:action target:target selector:selector];
+    [self.actionButtons setObject:button forKey:action];
+  }
   return button;
 }
 

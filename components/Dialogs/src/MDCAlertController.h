@@ -153,17 +153,20 @@
  This method is commonly used by themers to style the button associated with the action.
 
  @param action The action with which the button is associated. Must be an existing action that
-               had been previously added through addAction: to the alert.
+ had been previously added through addAction: to the alert.
  @return The button associated with the action, or nil if the action doesn't exist (the action
-          must first be added to the alert).
+ must first be added to the alert).
  */
 - (nullable MDCButton *)buttonForAction:(nonnull MDCAlertAction *)action;
 
 @end
 
 typedef NS_ENUM(NSInteger, MDCActionEmphasis) {
+  /* Low emphasis attribute produces low emphasis appearance when attached to actions or buttons */
   MDCActionEmphasisLow = 0,
+  /* a Medium emphasis attribute produces a medium emphasis appearance */
   MDCActionEmphasisMedium = 1,
+  /* a High emphasis attribute produces a high emphasis appearance */
   MDCActionEmphasisHigh = 2,
 };
 
@@ -207,15 +210,11 @@ typedef void (^MDCActionHandler)(MDCAlertAction *_Nonnull action);
 
 /**
  Title of the button shown on the alert dialog.
-
- Alert actions titles must be set using either of the actionWithTitle:[emphais:]handler: methods.
  */
 @property(nonatomic, nullable, readonly) NSString *title;
 
 /**
  The MDCActionEmphasis emphasis of the button that will be rendered for the action.
-
- Alert actions emphasis must be set in the actionWithTitle:emphasis:handler: method.
  */
 @property(nonatomic, readonly) MDCActionEmphasis emphasis;
 

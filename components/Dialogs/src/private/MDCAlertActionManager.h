@@ -18,13 +18,20 @@
 
 @interface MDCAlertActionManager : NSObject
 
-@property(nonatomic, nonnull, strong, readonly) NSArray<MDCAlertAction *> *actions;
 /**
- returns the list of buttons for the provided actions, if they're already created. May
- return a different size list than actions, if the buttons hasn't materialized yet.
- Returns the buttons in the order they appear on screen (matches the order of "actions").
+ List of the actions that were added to the action manager.
  */
-@property(nonatomic, nonnull, strong, readonly) NSArray<MDCButton *> *sortedButtons;
+@property(nonatomic, nonnull, strong, readonly) NSArray<MDCAlertAction *> *actions;
+
+/**
+ Returns the list of buttons for the provided actions. Only returns buttons which have already
+ been created. Unlike buttonForAction, it does not create buttons, and as a results, may
+ return a shorter list than the actions array. Order of buttons resembles order of actions,
+ but is not guaranteed.
+
+ Note: It is the caller's responsibility to make sure buttons is added to the view hierarchy.
+ */
+@property(nonatomic, nonnull, strong, readonly) NSArray<MDCButton *> *buttonsInActionOrder;
 
 /**
  Adding an action with no associated button (will be created later)
@@ -39,7 +46,7 @@
 /**
  Returns the button for the action. Returns nil if the button hasn't been created yet.
 
- Note: It is the caller's responsibility to ensure the button is in the view hierarchy.
+ Note: It is the caller's responsibility to make sure the button is added to the view hierarchy.
  */
 - (nullable MDCButton *)buttonForAction:(nonnull MDCAlertAction *)action;
 
@@ -49,13 +56,15 @@
 - (nullable MDCAlertAction *)actionForButton:(nonnull MDCButton *)button;
 
 /**
- Creates a button and associates it with the action. Given Target and selector are
- assigned to the button.
+ Creates a button for the given action if the action is not yet associated with a button.
+ If the action is already associated with a button, then the existing button is returned.
+ The given Target and selector are assigned to the button when it's created (or ignored
+ if the button is already exists).
 
- Note: It is the caller's responsibility to add the button to the view hierarchy.
+ Note: It is the caller's responsibility to make sure the button is added to the view hierarchy.
  */
-- (nullable MDCButton *)addButtonForAction:(nonnull MDCAlertAction *)action
-                                    target:(nullable id)target
-                                  selector:(SEL _Nonnull)selector;
+- (nullable MDCButton *)createButtonForAction:(nonnull MDCAlertAction *)action
+                                       target:(nullable id)target
+                                     selector:(SEL _Nonnull)selector;
 
 @end

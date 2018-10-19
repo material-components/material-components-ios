@@ -172,9 +172,9 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 - (nullable MDCButton *)buttonForAction:(nonnull MDCAlertAction *)action {
   MDCButton *button = [self.actionManager buttonForAction:action];
   if (!button && [self.actionManager hasAction:action]) {
-    button = [self.actionManager addButtonForAction:action
-                                             target:self
-                                           selector:@selector(actionButtonPressed:)];
+    button = [self.actionManager createButtonForAction:action
+                                                target:self
+                                              selector:@selector(actionButtonPressed:)];
     [MDCAlertControllerView styleAsTextButton:button];
   }
   return button;

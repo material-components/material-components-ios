@@ -87,9 +87,9 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
       "Tinted Title Icon, No Title",
       "Darker Scrim",
       "Emphasis-based Button Theming",
-      "Old-fashion Button Theming (Will be deprecated)",
-      "Old-fashion Button Theming (The right way)",
-      "Custom Button Theming (The right way)",
+      "Text Button Theming (will be deprecated)",
+      "Text Button Theming (the right way)",
+      "Custom Button Theming",
       "Unthemed Alert",
     ])
   }
@@ -121,9 +121,9 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
     case 6:
       return performEmphasisButtonTheming()
     case 7:
-      return performDeprecatedOldFashionButtonTheming()   // b/117717380: Will be deprecated
+      return performDeprecatedTextButtonTheming()   // b/117717380: Will be deprecated
     case 8:
-      return performOldFashionButtonThemingTheRightWay()
+      return performTextButtonThemingTheRightWay()
     case 9:
       return performCustomButtonTheming()
     case 10:
@@ -176,7 +176,7 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
     alert.titleIcon = sampleIcon()
     MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
 
-    // theming override: set the titleIconTintColor after the color scheme has been applied
+    // Theming override: set the titleIconTintColor after the color scheme has been applied
     alert.titleIconTintColor = .red
 
     return alert
@@ -198,52 +198,54 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
     return alert
   }
 
-  func performOldFashionButtonThemingTheRightWay() -> MDCAlertController {
+  func performDeprecatedTextButtonTheming() -> MDCAlertController {
     let alert = MDCAlertController(title: "Button Theming",
-                                   message: "Use low emphasis for text style for buttons")
-    // use .low emphasis for styling buttons as text buttons
-    alert.addAction(MDCAlertAction(title:"Low", emphasis: .low, handler: handler))
-    alert.addAction(MDCAlertAction(title:"Low", emphasis: .low, handler: handler))
-    alert.addAction(MDCAlertAction(title:"Low", emphasis: .low, handler: handler))
+                                   message: "This method of button theming will be deprecated")
+    // When not specified, the action is low emphasis by default
+    alert.addAction(MDCAlertAction(title:"Text", handler: handler))
+    alert.addAction(MDCAlertAction(title:"Text", handler: handler))
+    alert.addAction(MDCAlertAction(title:"Text", handler: handler))
+    MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
+    alert.buttonTitleColor = .orange   // b/117717380: will be deprecated
+    return alert
+  }
+
+  // The right way to select the type of buttons is by setting empahsis for actions
+  func performTextButtonThemingTheRightWay() -> MDCAlertController {
+    let alert = MDCAlertController(title: "Button Theming",
+                                   message: "Use low emphasis to present buttons as text")
+    // Use .low emphasis to style buttons as text buttons.
+    alert.addAction(MDCAlertAction(title:"Text", emphasis: .low, handler: handler))
+    alert.addAction(MDCAlertAction(title:"Text", emphasis: .low, handler: handler))
+    alert.addAction(MDCAlertAction(title:"Text", emphasis: .low, handler: handler))
     MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
     return alert
   }
 
   func performCustomButtonTheming() -> MDCAlertController {
     let alert = MDCAlertController(title: "Custom Button Theming",
-                                   message: "Custom styling for High, Medium & Low Emphasis")
+                                   message: "Custom styling of High, Medium & Low Emphasis")
     alert.titleIcon = sampleIcon()
 
-    // use .low emphasis for styling buttons as text buttons
-    alert.addAction(MDCAlertAction(title:"High", emphasis: .low, handler: handler))
-    alert.addAction(MDCAlertAction(title:"Medium", emphasis: .low, handler: handler))
+    // Use .low emphasis for styling buttons as text buttons
+    alert.addAction(MDCAlertAction(title:"High", emphasis: .high, handler: handler))
+    alert.addAction(MDCAlertAction(title:"Medium", emphasis: .medium, handler: handler))
     alert.addAction(MDCAlertAction(title:"Low", emphasis: .low, handler: handler))
 
     let scheme = MDCAlertScheme()
     scheme.typographyScheme = self.typographyScheme
 
-    // create a color theme with a different primary color
+    // Create a color theme with a different primary color
     let colorScheme = MDCSemanticColorScheme()
     colorScheme.primaryColor = .blue
 
-    // assign the new color theme to both the button and the alert schemes.
+    // Assign the new color theme to both the button and the alert schemes.
     let buttonScheme = MDCButtonScheme()
     buttonScheme.colorScheme = colorScheme
     scheme.colorScheme = colorScheme
     scheme.buttonScheme = buttonScheme
 
     MDCAlertControllerThemer.applyScheme(scheme, to: alert)
-    return alert
-  }
-
-  // b/117717380: This example will be deprecated
-  func performDeprecatedOldFashionButtonTheming() -> MDCAlertController {
-    let alert = MDCAlertController(title: "Button Theming",
-                                   message: "This method of button theming will be deprecated")
-    alert.addAction(MDCAlertAction(title:"High", emphasis: .high, handler: handler))
-    alert.addAction(MDCAlertAction(title:"Medium", emphasis: .medium, handler: handler))
-    alert.addAction(MDCAlertAction(title:"Low", emphasis: .low, handler: handler))
-    alert.buttonTitleColor = .orange
     return alert
   }
 

@@ -112,7 +112,7 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
   MDCAlertControllerView *view = (MDCAlertControllerView *)alert.view;
   XCTAssertEqual(view.titleLabel.font, testFont);
   XCTAssertEqual(view.messageLabel.font, testFont);
-  for (UIButton *button in view.actionManager.sortedButtons) {
+  for (UIButton *button in view.actionManager.buttonsInActionOrder) {
     XCTAssertEqual(button.titleLabel.font, testFont);
   }
 }
@@ -129,7 +129,7 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
   MDCAlertControllerView *view = (MDCAlertControllerView *)alert.view;
   XCTAssertEqual(view.titleLabel.textColor, testColor);
   XCTAssertEqual(view.messageLabel.textColor, testColor);
-  for (UIButton *button in view.actionManager.sortedButtons) {
+  for (UIButton *button in view.actionManager.buttonsInActionOrder) {
     XCTAssertEqual([button titleColorForState:UIControlStateNormal], testColor);
     XCTAssertTrue([button isKindOfClass:[MDCButton class]]);
     XCTAssertEqual([(MDCButton *)button inkColor], testColor);
@@ -154,7 +154,7 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
   MDCAlertControllerView *view = (MDCAlertControllerView *)alert.view;
   XCTAssertEqual(view.titleLabel.textColor, testColor);
   XCTAssertEqual(view.messageLabel.textColor, testColor);
-  NSArray<MDCButton *> *buttons = view.actionManager.sortedButtons;
+  NSArray<MDCButton *> *buttons = view.actionManager.buttonsInActionOrder;
   XCTAssertEqual((int)buttons.count, 2);
   for (UIButton *button in buttons) {
     XCTAssertEqual([button titleColorForState:UIControlStateNormal], testColor);
@@ -181,7 +181,7 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
   MDCAlertControllerView *view = (MDCAlertControllerView *)alert.view;
   XCTAssertEqual(view.titleLabel.textColor, testColor);
   XCTAssertEqual(view.messageLabel.textColor, testColor);
-  NSArray<MDCButton *> *buttons = view.actionManager.sortedButtons;
+  NSArray<MDCButton *> *buttons = view.actionManager.buttonsInActionOrder;
   XCTAssertEqual((int)buttons.count, 2);
   for (UIButton *button in buttons) {
     XCTAssertEqual([button titleColorForState:UIControlStateNormal], testColor);
@@ -209,7 +209,7 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
   MDCAlertControllerView *view = (MDCAlertControllerView *)alert.view;
   XCTAssertEqual(view.titleLabel.textColor, testColor);
   XCTAssertEqual(view.messageLabel.textColor, testColor);
-  NSArray<MDCButton *> *buttons = view.actionManager.sortedButtons;
+  NSArray<MDCButton *> *buttons = view.actionManager.buttonsInActionOrder;
   XCTAssertEqual((int)buttons.count, 2);
   for (UIButton *button in buttons) {
     XCTAssertEqual([button titleColorForState:UIControlStateNormal], testColor);
@@ -268,7 +268,7 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
   }
 
   // Then
-  NSArray<UIButton *> *buttons = alertController.alertView.actionManager.sortedButtons;
+  NSArray<UIButton *> *buttons = alertController.alertView.actionManager.buttonsInActionOrder;
   XCTAssertEqual(buttons.count, 2U);
   UIButton *button1 = buttons.firstObject;
   UIButton *button2 = buttons.lastObject;

@@ -53,6 +53,24 @@ objc_bundle(
 )
 
 mdc_objc_library(
+    name = "DialogThemer",
+    srcs = native.glob(["src/DialogThemer/*.m"]),
+    hdrs = native.glob(["src/DialogThemer/*.h"]),
+    includes = ["src/DialogThemer"],
+    sdk_frameworks = [
+        "UIKit",
+    ],
+    deps = [
+        ":Dialogs",
+        "//components/Themes",
+        "//components/Buttons:ButtonThemer",
+        ":ColorThemer",
+        ":TypographyThemer",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
     name = "ColorThemer",
     srcs = native.glob(["src/ColorThemer/*.m"]),
     hdrs = native.glob(["src/ColorThemer/*.h"]),
@@ -102,6 +120,7 @@ mdc_objc_library(
     ],
     deps = [
         ":Dialogs",
+        ":DialogThemer",
         ":ColorThemer",
         ":TypographyThemer",
         ":private",

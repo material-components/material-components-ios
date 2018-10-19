@@ -131,7 +131,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   }
 }
 
-- (void)styleAsTextButton:(nonnull MDCButton *)button {
++ (void)styleAsTextButton:(nonnull MDCButton *)button {
   // This preserves default buttons style (as MDCFlatButton/text) for backward compatibility reasons
   UIColor *themeColor = [UIColor blackColor];
   [button setBackgroundColor:UIColor.clearColor forState:UIControlStateNormal];
@@ -260,7 +260,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
         [finalButtonFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
                                 scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
   }
-  for (MDCButton *button in self.actionManager.sortedButtons) {
+  for (MDCButton *button in self.actionManager.buttonsInActionOrder) {
     [button setTitleFont:finalButtonFont forState:UIControlStateNormal];
   }
 
@@ -278,7 +278,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 - (void)setButtonColor:(UIColor *)color {
   _buttonColor = color;
 
-  for (MDCButton *button in self.actionManager.sortedButtons) {
+  for (MDCButton *button in self.actionManager.buttonsInActionOrder) {
     [button setTitleColor:_buttonColor forState:UIControlStateNormal];
   }
 }
@@ -286,7 +286,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 - (void)setButtonInkColor:(UIColor *)color {
   _buttonInkColor = color;
 
-  for (MDCButton *button in self.actionManager.sortedButtons) {
+  for (MDCButton *button in self.actionManager.buttonsInActionOrder) {
     button.inkColor = color;
   }
 }
@@ -308,7 +308,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
 - (CGSize)actionButtonsSizeInHorizontalLayout {
   CGSize size = CGSizeZero;
-  NSArray<MDCButton *> *buttons = self.actionManager.sortedButtons;
+  NSArray<MDCButton *> *buttons = self.actionManager.buttonsInActionOrder;
   if (0 < [buttons count]) {
     size.height =
     MDCDialogActionsInsets.top + MDCDialogActionButtonHeight + MDCDialogActionsInsets.bottom;
@@ -327,7 +327,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
 - (CGSize)actionButtonsSizeInVericalLayout {
   CGSize size = CGSizeZero;
-  NSArray<MDCButton *> *buttons = self.actionManager.sortedButtons;
+  NSArray<MDCButton *> *buttons = self.actionManager.buttonsInActionOrder;
   if (0 < [buttons count]) {
     size.height = MDCDialogActionsInsets.top + MDCDialogActionsInsets.bottom;
     size.width = MDCDialogActionsInsets.left + MDCDialogActionsInsets.right;
@@ -426,7 +426,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  NSArray<MDCButton *> *buttons = self.actionManager.sortedButtons;
+  NSArray<MDCButton *> *buttons = self.actionManager.buttonsInActionOrder;
 
   for (MDCButton *button in buttons) {
     [button sizeToFit];
@@ -616,7 +616,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
   _mdc_adjustsFontForContentSizeCategory = adjusts;
 
-  for (MDCButton *button in self.actionManager.sortedButtons) {
+  for (MDCButton *button in self.actionManager.buttonsInActionOrder) {
     button.mdc_adjustsFontForContentSizeCategory = adjusts;
   }
 
