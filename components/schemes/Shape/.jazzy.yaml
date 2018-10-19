@@ -1,0 +1,4 @@
+module: ShapeScheme
+umbrella_header: src/MaterialShapeScheme.h
+objc: true
+sdk: iphonesimulator
