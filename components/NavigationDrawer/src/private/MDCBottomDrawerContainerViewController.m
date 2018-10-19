@@ -22,6 +22,9 @@
 static const CGFloat kVerticalShadowAnimationDistance = 10.f;
 static const CGFloat kVerticalDistanceThresholdForDismissal = 40.f;
 static const CGFloat kHeaderAnimationDistanceAddedDistanceFromTopSafeAreaInset = 20.f;
+// This epsilon is defined in units of screen points, and is supposed to be as small as possible
+// yet meaningful for comparison calculations.
+static const CGFloat kEpsilon = 0.001f;
 // The buffer for the drawer's scroll view is neeeded to ensure that the KVO receiving the new
 // content offset, which is then changing the content offset of the tracking scroll view, will
 // be able to provide a value as if the scroll view is scrolling at natural speed. This is needed
@@ -225,8 +228,8 @@ static UIColor *DrawerShadowColor(void) {
   // The reason being is that otherwise there would be a conflict between if the drawer is currently
   // in full screen and we should move the header view outside the scrollview to remain sticky, or
   // if we aren't in full screen and need the header view to be scrolled as part of the scrolling.
-  if (self.contentHeaderTopInset <= topAreaInsetForHeader + FLT_EPSILON) {
-    topAreaInsetForHeader = FLT_EPSILON;
+  if (self.contentHeaderTopInset <= topAreaInsetForHeader + kEpsilon) {
+    topAreaInsetForHeader = kEpsilon;
   }
   CGFloat drawerOffset =
       self.contentHeaderTopInset - topAreaInsetForHeader + kScrollViewBufferForPerformance;
@@ -400,7 +403,7 @@ static UIColor *DrawerShadowColor(void) {
     // We add the topAreaInsetForHeader to the height of the content view frame when a tracking
     // scroll view is set, to normalize the algorithm after the removal of this value from the
     // topAreaInsetForHeader inside the updateContentOffsetForPerformantScrolling method.
-    if (self.contentHeaderTopInset > topAreaInsetForHeader + FLT_EPSILON) {
+    if (self.contentHeaderTopInset > topAreaInsetForHeader + kEpsilon) {
       contentViewFrame.size.height += topAreaInsetForHeader;
     }
   } else {
@@ -657,7 +660,7 @@ static UIColor *DrawerShadowColor(void) {
       // The minimum inset value should be the size of the safe area inset, as
       // kInitialDrawerHeightFactor discounts the safe area when receiving the height factor.
       if (_contentHeaderTopInset <= self.topHeaderHeight - self.contentHeaderHeight) {
-        _contentHeaderTopInset = self.topHeaderHeight - self.contentHeaderHeight + FLT_EPSILON;
+        _contentHeaderTopInset = self.topHeaderHeight - self.contentHeaderHeight + kEpsilon;
       }
     } else {
       _contentHeaderTopInset = containerHeight - totalHeight;
@@ -666,7 +669,7 @@ static UIColor *DrawerShadowColor(void) {
 
   CGFloat scrollingDistance = _contentHeaderTopInset + contentHeaderHeight + contentHeight;
   _contentHeightSurplus = scrollingDistance - containerHeight;
-  if (addedContentHeight < FLT_EPSILON && (_contentHeaderTopInset > _contentHeightSurplus) &&
+  if (addedContentHeight < kEpsilon && (_contentHeaderTopInset > _contentHeightSurplus) &&
       (_contentHeaderTopInset - _contentHeightSurplus < self.addedContentHeightThreshold)) {
     CGFloat addedContentheight = _contentHeaderTopInset - _contentHeightSurplus;
     [self cacheLayoutCalculationsWithAddedContentHeight:addedContentheight];
@@ -691,7 +694,7 @@ static UIColor *DrawerShadowColor(void) {
                                           offset:0
                                         distance:headerAnimationDistance];
   [_maskLayer animateWithPercentage:1.f - headerTransitionToTop];
-  if (headerTransitionToTop >= FLT_EPSILON && headerTransitionToTop < 1.f) {
+  if (headerTransitionToTop >= kEpsilon && headerTransitionToTop < 1.f) {
     CGFloat contentHeaderFullyCoversTopHeaderContentOffset = self.transitionCompleteContentOffset;
     CGFloat contentHeaderReachesTopHeaderContentOffset =
         contentHeaderFullyCoversTopHeaderContentOffset - headerAnimationDistance;
@@ -718,7 +721,7 @@ static UIColor *DrawerShadowColor(void) {
 }
 
 - (BOOL)contentScrollsToReveal {
-  return self.contentHeightSurplus > FLT_EPSILON;
+  return self.contentHeightSurplus > kEpsilon;
 }
 
 - (CGFloat)topHeaderHeight {
