@@ -22,7 +22,7 @@ largeShapeCategory?.topLeftCorner = rounded50PercentCorner
 largeShapeCategory?.topRightCorner = rounded50PercentCorner
 largeShapeCategory?.bottomLeftCorner = cut8PointsCorner
 largeShapeCategory?.bottomRightCorner = cut8PointsCorner
-shapeScheme.LargeComponentShape = largeShapeCategory
+shapeScheme.largeComponentShape = largeShapeCategory
 ```
 
 #### Objective-C
@@ -48,6 +48,6 @@ largeShapeCategory.topLeftCorner = rounded50PercentCorner;
 largeShapeCategory.topRightCorner = rounded50PercentCorner;
 largeShapeCategory.bottomLeftCorner = cut8PointsCorner;
 largeShapeCategory.bottomRightCorner = cut8PointsCorner;
-shapeScheme.LargeComponentShape = largeShapeCategory;
+shapeScheme.largeComponentShape = largeShapeCategory;
 ```
 <!--</div>-->

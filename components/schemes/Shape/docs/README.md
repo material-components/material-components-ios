@@ -36,7 +36,7 @@ A shape scheme consists of the following shape values:
 
 Each of the shape categories are of the class `MDCShapeCategory`. 
 
-A `MDCShapeCategory` holds properties that define a shape value. It consists of 4 corners of type `MDCCornerTreatment` that represent each corner of the shape. It also has a convenience initializer to set all the 4 corners at once to the same value, creating a symmetrical shape.
+An `MDCShapeCategory` holds properties that define a shape value. It consists of 4 corners of type `MDCCornerTreatment` that represent each corner of the shape. It also has a convenience initializer to set all the 4 corners at once to the same value, creating a symmetrical shape.
 
 Lastly, an `MDCCornerTreatment` can be set by using any of the convenience initializers in [MDCCornerTreatment+CornerTypeInitializer.h](https://github.com/material-components/material-components-ios/blob/develop/components/private/ShapeLibrary/src/MDCCornerTreatment%2BCornerTypeInitalizer.h).
 
