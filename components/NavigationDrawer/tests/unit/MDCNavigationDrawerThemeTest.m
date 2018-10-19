@@ -14,18 +14,13 @@
 
 #import <XCTest/XCTest.h>
 
+#import "MDCNavigationDrawerFakes.h"
 #import "MaterialNavigationDrawer+ColorThemer.h"
 #import "MaterialNavigationDrawer.h"
 
-@interface FakeHeaderViewController : UIViewController <MDCBottomDrawerHeader>
-@end
-
-@implementation FakeHeaderViewController
-@end
-
 @interface MDCNavigationDrawerThemeTest : XCTestCase
 @property(nonatomic, strong) MDCBottomDrawerViewController *bottomDrawer;
-@property(nonatomic, strong) FakeHeaderViewController *headerViewController;
+@property(nonatomic, strong) MDCNavigationDrawerFakeHeaderViewController *headerViewController;
 @property(nonatomic, strong) UIViewController *contentViewController;
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @end
@@ -35,7 +30,7 @@
 - (void)setUp {
   [super setUp];
 
-  self.headerViewController = [[FakeHeaderViewController alloc] init];
+  self.headerViewController = [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
   self.contentViewController = [[UIViewController alloc] init];
   self.bottomDrawer = [[MDCBottomDrawerViewController alloc] init];
   self.bottomDrawer.headerViewController = self.headerViewController;
