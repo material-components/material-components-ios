@@ -26,10 +26,10 @@
  Applies a color scheme's properties to an MDCBottomDrawerViewController
 
  @param colorScheme The color scheme to apply to the component instance.
- @param bottomDrawerController A component instance to which the color scheme should be applied.
+ @param bottomDrawer A component instance to which the color scheme should be applied.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
-        toBottomDrawerController:(nonnull MDCBottomDrawerViewController *)bottomDrawerController;
+        toBottomDrawer:(nonnull MDCBottomDrawerViewController *)bottomDrawer;
 
 @end
 

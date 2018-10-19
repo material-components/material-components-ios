@@ -28,7 +28,7 @@ class BottomDrawerNoHeaderExample: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = colorScheme.backgroundColor
-    contentViewController.colorScheme = colorScheme
+    contentViewController.view.backgroundColor = colorScheme.primaryColor
 
     bottomAppBar.isFloatingButtonHidden = true
     let barButtonLeadingItem = UIBarButtonItem()

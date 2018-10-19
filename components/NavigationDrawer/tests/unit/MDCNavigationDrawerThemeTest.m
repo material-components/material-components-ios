@@ -55,7 +55,7 @@
 - (void)testApplyColorTheme {
   // When
   [MDCBottomDrawerColorThemer applySemanticColorScheme:self.colorScheme
-                              toBottomDrawerController:self.bottomDrawer];
+                                        toBottomDrawer:self.bottomDrawer];
 
   // Then
   XCTAssertEqualObjects(self.headerViewController.view.backgroundColor,
