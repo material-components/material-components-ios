@@ -73,4 +73,25 @@
   XCTAssertFalse(self.fakeBottomDrawer.scrollViewObserved);
 }
 
+- (void)testContentHeaderHeightWithNoHeader {
+  // When
+  self.fakeBottomDrawer.headerViewController = nil;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderHeight, 0.f, 0.001);
+}
+
+- (void)testContentHeaderHeightWithHeader {
+  // Given
+  CGSize fakePreferredContentSize = CGSizeMake(200, 300);
+  MDCNavigationDrawerFakeHeaderViewController *fakeHeader = [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
+  self.fakeBottomDrawer.headerViewController = fakeHeader;
+
+  // When
+  self.fakeBottomDrawer.headerViewController.preferredContentSize = fakePreferredContentSize;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderHeight, fakePreferredContentSize.height, 0.001);
+}
+
 @end
