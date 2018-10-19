@@ -30,12 +30,14 @@ shapeScheme.LargeComponentShape = largeShapeCategory
 ```objc
 MDCShapeScheme *shapeScheme = [[MDCShapeScheme alloc] init];
 // Small Component Shape
-shapeScheme.smallComponentShape = [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyCut
-                                                                   andSize:4.f];
+shapeScheme.smallComponentShape = 
+    [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyCut
+                                            andSize:4.f];
 
 // Medium Component Shape
-shapeScheme.mediumComponentShape = [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyRounded
-                                                                   andSize:10.f];
+shapeScheme.mediumComponentShape = 
+    [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyRounded
+                                            andSize:10.f];
 
 // Large Component Shape
 MDCShapeCategory *largeShapeCategory = [[MDCShapeCategory alloc] init];

@@ -24,13 +24,14 @@ style.
 ## Table of contents
 
 - [Overview](#overview)
-  - [Shape Balues](#shape-balues)
+  - [Shape Values](#shape-values)
   - [Shape to Component Mapping](#shape-to-component-mapping)
 - [Installation](#installation)
   - [Installation with CocoaPods](#installation-with-cocoapods)
   - [Importing](#importing)
 - [Usage](#usage)
   - [Typical use: customizing a shape scheme](#typical-use-customizing-a-shape-scheme)
+- [Component content awareness when using custom shapes](#component-content-awareness-when-using-custom-shapes)
 
 - - -
 
@@ -47,7 +48,7 @@ Currently, 5 components support being themed with a shape scheme using a `shape 
 and Bottom Sheet. You can learn more about which extensions are available for a given component by reading the
 [component documentation](../../).
 
-### Shape Balues
+### Shape Values
 
 A shape scheme consists of the following shape values:
 
@@ -149,12 +150,14 @@ shapeScheme.LargeComponentShape = largeShapeCategory
 ```objc
 MDCShapeScheme *shapeScheme = [[MDCShapeScheme alloc] init];
 // Small Component Shape
-shapeScheme.smallComponentShape = [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyCut
-                                                                   andSize:4.f];
+shapeScheme.smallComponentShape = 
+    [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyCut
+                                            andSize:4.f];
 
 // Medium Component Shape
-shapeScheme.mediumComponentShape = [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyRounded
-                                                                   andSize:10.f];
+shapeScheme.mediumComponentShape = 
+    [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyRounded
+                                            andSize:10.f];
 
 // Large Component Shape
 MDCShapeCategory *largeShapeCategory = [[MDCShapeCategory alloc] init];
@@ -168,4 +171,12 @@ largeShapeCategory.bottomRightCorner = cut8PointsCorner;
 shapeScheme.LargeComponentShape = largeShapeCategory;
 ```
 <!--</div>-->
+
+
+## Component content awareness when using custom shapes
+
+<!-- Extracted from docs/shape-content-margins.md -->
+
+Choosing a shape value for your shape scheme or component has an effect on the component's content. 
+As an example, we may choose the `smallComponentShape` category to have a cut corner treatment at a 50% value of its height. That will create a diamond-like shape, which in certain cases is likely to clip content. In other cases, such as with dynamic type, or a typography scheme with large fonts, even a less intrusive shape could potentially cut out content. Therefore, it is recommended to be mindful of how a custom shape manipulates the component and if that shape makes sense for your specific case. One recommendation is to use the built-in UIView’s `layoutMargins`. By setting it to a custom `UIEdgeInset` you can get the desired outcome for your content when using a custom shape.
 

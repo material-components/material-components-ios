@@ -24,7 +24,7 @@ Currently, 5 components support being themed with a shape scheme using a `shape 
 and Bottom Sheet. You can learn more about which extensions are available for a given component by reading the
 [component documentation](../../../).
 
-### Shape Balues
+### Shape Values
 
 A shape scheme consists of the following shape values:
 
@@ -81,3 +81,7 @@ import MaterialComponents.MaterialShapeScheme
 ## Usage
 
 - [Typical use: customizing a shape scheme](typical-use-customizing-a-scheme.md)
+
+## Component content awareness when using custom shapes
+
+- [Shapes impact on the component's content](shape-content-margins.md)
