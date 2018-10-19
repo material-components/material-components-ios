@@ -18,8 +18,8 @@
 
 + (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
         toBottomDrawerController:(nonnull MDCBottomDrawerViewController *)bottomDrawerController {
-  bottomDrawerController.contentViewController.view.backgroundColor = colorScheme.surfaceColor;
   bottomDrawerController.headerViewController.view.backgroundColor = colorScheme.surfaceColor;
+  bottomDrawerController.contentViewController.view.backgroundColor = colorScheme.surfaceColor;
 }
 
 @end
