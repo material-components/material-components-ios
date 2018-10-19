@@ -15,6 +15,7 @@
 #import <Foundation/Foundation.h>
 
 #import "MaterialColorScheme.h"
+#import "MaterialShadowElevations.h"
 #import "MaterialTypographyScheme.h"
 
 /** Defines a readonly immutable interface for component style data to be applied by a themer. */
@@ -48,6 +49,6 @@
 @property(readwrite, nonatomic) CGFloat cornerRadius;
 
 /** The elevation to apply to the Dialog. */
-@property(readwrite, nonatomic) CGFloat elevation;
+@property(readwrite, nonatomic) MDCShadowElevation elevation;
 
 @end
