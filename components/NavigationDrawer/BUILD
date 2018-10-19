@@ -44,7 +44,10 @@ mdc_objc_library(
 mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
-    srcs = native.glob(["tests/unit/*.m"]),
+    srcs = native.glob([
+        "tests/unit/*.m",
+        "tests/unit/*.h",
+    ]),
     sdk_frameworks = [
         "UIKit",
         "XCTest",
