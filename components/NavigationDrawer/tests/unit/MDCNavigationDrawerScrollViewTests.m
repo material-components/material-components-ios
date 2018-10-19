@@ -21,6 +21,7 @@
 
 @property(nonatomic) BOOL scrollViewObserved;
 @property(nonatomic, readonly) UIScrollView *scrollView;
+@property(nonatomic, readonly) CGFloat topHeaderHeight;
 @property(nonatomic, readonly) CGFloat contentHeaderHeight;
 
 @end
@@ -84,14 +85,40 @@
 - (void)testContentHeaderHeightWithHeader {
   // Given
   CGSize fakePreferredContentSize = CGSizeMake(200, 300);
-  MDCNavigationDrawerFakeHeaderViewController *fakeHeader = [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
+  MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
+      [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
   self.fakeBottomDrawer.headerViewController = fakeHeader;
 
   // When
   self.fakeBottomDrawer.headerViewController.preferredContentSize = fakePreferredContentSize;
 
   // Then
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderHeight, fakePreferredContentSize.height, 0.001);
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderHeight,
+                             fakePreferredContentSize.height, 0.001);
+}
+
+- (void)testTopHeaderHeightWithNoHeader {
+  // When
+  self.fakeBottomDrawer.headerViewController = nil;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.topHeaderHeight, 0.f, 0.001);
+}
+
+- (void)testTopHeaderHeightWithHeader {
+  // Given
+  // MDCDeviceTopSafeAreaInset adds 20.f if there is no safe area and you are not in an application
+  CGFloat mdcDeviceTopSafeArea = 20.f;
+  CGSize fakePreferredContentSize = CGSizeMake(200, 300);
+  MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
+  [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
+  self.fakeBottomDrawer.headerViewController = fakeHeader;
+
+  // When
+  self.fakeBottomDrawer.headerViewController.preferredContentSize = fakePreferredContentSize;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.topHeaderHeight, mdcDeviceTopSafeArea + fakePreferredContentSize.height, 0.001);
 }
 
 @end
