@@ -111,14 +111,15 @@
   CGFloat mdcDeviceTopSafeArea = 20.f;
   CGSize fakePreferredContentSize = CGSizeMake(200, 300);
   MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
-  [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
+      [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
   self.fakeBottomDrawer.headerViewController = fakeHeader;
 
   // When
   self.fakeBottomDrawer.headerViewController.preferredContentSize = fakePreferredContentSize;
 
   // Then
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.topHeaderHeight, mdcDeviceTopSafeArea + fakePreferredContentSize.height, 0.001);
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.topHeaderHeight,
+                             mdcDeviceTopSafeArea + fakePreferredContentSize.height, 0.001);
 }
 
 @end
