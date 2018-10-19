@@ -28,8 +28,6 @@ class BottomDrawerWithHeaderExample: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = colorScheme.backgroundColor
-    headerViewController.colorScheme = colorScheme
-    contentViewController.colorScheme = colorScheme
 
     bottomAppBar.isFloatingButtonHidden = true
     let barButtonLeadingItem = UIBarButtonItem()
@@ -66,6 +64,8 @@ class BottomDrawerWithHeaderExample: UIViewController {
     let bottomDrawerViewController = MDCBottomDrawerViewController()
     bottomDrawerViewController.contentViewController = contentViewController
     bottomDrawerViewController.headerViewController = headerViewController
+    MDCBottomDrawerColorThemer.applySemanticColorScheme(colorScheme,
+                                                        toBottomDrawer: bottomDrawerViewController)
     present(bottomDrawerViewController, animated: true, completion: nil)
   }
 }

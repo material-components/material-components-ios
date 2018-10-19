@@ -73,6 +73,16 @@ Pod::Spec.new do |mdc|
     end
   end
 
+  mdc.subspec "NavigationDrawer+ColorThemer" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}", "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/private/*.{h,m}"
+    extension.dependency "MaterialComponentsAlpha/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/schemes/Color"
+  end
+
+  # Private
+
   mdc.subspec "private" do |private_spec|
     # CocoaPods requires at least one file to show up in a subspec, so we depend on the fake
     # "Alpha" component as a baseline.
