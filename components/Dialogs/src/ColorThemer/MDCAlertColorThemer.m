@@ -14,10 +14,9 @@
 
 #import "MDCAlertColorThemer.h"
 
-#import "MDCAlertController+ButtonForAction.h"
-#import "MaterialButtons+ColorThemer.h"
+#import "../../../Buttons/src/ColorThemer/MaterialButtons+ColorThemer.h"
+#import "../MDCAlertController+ButtonForAction.h"
 #import "MaterialButtons.h"
-#import "MaterialDialogs.h"
 
 @implementation MDCAlertColorThemer
 

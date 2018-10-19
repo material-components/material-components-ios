@@ -64,6 +64,7 @@ mdc_objc_library(
         ":Dialogs",
         "//components/Themes",
         "//components/Buttons:ButtonThemer",
+        "//components/Buttons:ColorThemer",
         ":ColorThemer",
         ":TypographyThemer",
     ],
@@ -81,6 +82,7 @@ mdc_objc_library(
     deps = [
         ":Dialogs",
         "//components/Themes",
+        "//components/Buttons:ColorThemer",
     ],
     visibility = ["//visibility:public"],
 )
@@ -96,6 +98,7 @@ mdc_objc_library(
     deps = [
         ":Dialogs",
         "//components/schemes/Typography",
+        "//components/Buttons:TypographyThemer",
     ],
     visibility = ["//visibility:public"],
 )
