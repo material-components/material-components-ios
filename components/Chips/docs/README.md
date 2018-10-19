@@ -33,5 +33,5 @@ Chips are compact elements that represent an input, attribute, or action.
 ## Extensions
 
 - [Color Theming](color-theming.md)
-
 - [Typography Theming](typography-theming.md)
+- [Shape Theming](shape-theming.md)
