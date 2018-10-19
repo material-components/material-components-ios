@@ -16,50 +16,10 @@
 
 #import "MaterialNavigationDrawer.h"
 
+#import "MDCNavigationDrawerFakes.h"
+
 @interface MDCNavigationDrawerTest : XCTestCase
 @property(nonatomic, strong) MDCBottomDrawerViewController *navigationDrawer;
-@end
-
-@interface MDCNavigationDrawerFakeTableViewController : UITableViewController
-@end
-
-@interface MDCNavigationDrawerFakeHeaderViewController : UIViewController <MDCBottomDrawerHeader>
-@end
-
-static NSString *const reuseIdentifier = @"FakeCell";
-
-@implementation MDCNavigationDrawerFakeTableViewController
-
-- (instancetype)init {
-  self = [super init];
-  if (self) {
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:reuseIdentifier];
-    self.tableView.dataSource = self;
-    self.tableView.delegate = self;
-  }
-  return self;
-}
-
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-  return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  return 100;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView
-         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier
-                                                          forIndexPath:indexPath];
-  return cell;
-}
-
-@end
-
-@implementation MDCNavigationDrawerFakeHeaderViewController
 @end
 
 @implementation MDCNavigationDrawerTest
@@ -82,5 +42,7 @@ static NSString *const reuseIdentifier = @"FakeCell";
 
   [super tearDown];
 }
+
+
 
 @end
