@@ -16,7 +16,7 @@ style.
 An implementation of the Material Design shape scheme is provided in the `MDCShapeScheme`
 class. By default, an instance of this class is configured with the Material defaults. 
 The following image shows an MDCButton themed with the default
-shape scheme values (top) and an MDCButton themed with custom shape scheme values (bottom).
+shape scheme values (bottom) and an MDCButton themed with custom shape scheme values (top).
 
 <img src="assets/shapethemedbuttons.png" width="144" alt="An MDCButton themed with the default shape scheme and a custom one.">
 
