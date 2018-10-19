@@ -1,15 +1,3 @@
-<!--docs:
-title: "Sheets: bottom"
-layout: detail
-section: components
-excerpt: "Bottom sheets slide up from the bottom of the screen to reveal more content."
-iconId: animation
-path: /catalog/bottom-sheet/
-api_doc_root: true
--->
-
-<!-- This file was auto-generated using scripts/generate_readme BottomSheet -->
-
 # Sheets: bottom
 
 Bottom sheets slide up from the bottom of the screen to reveal more content. Bottom sheets integrate with the app to display supporting content or present deep-linked content from other apps.
@@ -109,43 +97,4 @@ _button = [[UIButton alloc] initWithFrame:CGRectZero];
 
 ## Extensions
 
-<!-- Extracted from docs/shape-theming.md -->
-
-### Shape Theming
-
-You can theme a bottom sheet with your app's shape scheme using the ShapeThemer extension.
-
-You must first add the ShapeThemer extension to your project:
-
-```bash
-pod 'MaterialComponents/BottomSheet+ShapeThemer'
-```
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-// Step 1: Import the ShapeThemer extension
-import MaterialComponents.MaterialBottomSheet_ShapeThemer
-
-// Step 2: Create or get a shape scheme
-let shapeScheme = MDCShapeScheme()
-
-// Step 3: Apply the shape scheme to your component
-MDCBottomSheetControllerShapeThemer.applyShapeScheme(shapeScheme, to: component)
-```
-
-#### Objective-C
-
-```objc
-// Step 1: Import the ShapeThemer extension
-#import "MaterialBottomSheet+ShapeThemer.h"
-
-// Step 2: Create or get a shape scheme
-id<MDCShapeScheming> shapeScheme = [[MDCShapeScheme alloc] init];
-
-// Step 3: Apply the shape scheme to your component
-[MDCBottomSheetControllerShapeThemer applyShapeScheme:shapeScheme
-     toBottomSheetController:component];
-```
-<!--</div>-->
-
+- [Shape Theming](shape-theming.md)
