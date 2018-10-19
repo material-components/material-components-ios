@@ -14,6 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialShadowElevations.h"
+
 @class MDCAlertAction;
 
 /**
@@ -104,7 +106,7 @@
 @property(nonatomic, assign) CGFloat cornerRadius;
 
 /** The elevation that will be applied to the Alert Controller view. Default to 24. */
-@property(nonatomic, assign) CGFloat elevation;
+@property(nonatomic, assign) MDCShadowElevation elevation;
 
 // TODO(iangordon): Add support for preferredAction to match UIAlertController.
 // TODO(iangordon): Consider adding support for UITextFields to match UIAlertController.

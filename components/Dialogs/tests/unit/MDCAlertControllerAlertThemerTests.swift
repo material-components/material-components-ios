@@ -21,7 +21,7 @@ import MaterialComponents.MDCAlertControllerThemer
 class MDCAlertControllerAlertThemerTests: XCTestCase {
 
   let defaultCornerRadius: CGFloat = 4.0
-  let defaultElevation: CGFloat = ShadowElevation.dialog.rawValue
+  let defaultElevation: ShadowElevation = .dialog
   var alertScheme: MDCAlertScheme! = MDCAlertScheme()
   var alert: MDCAlertController! = MDCAlertController(title: "Title", message: "Message")
   var alertView: MDCAlertControllerView! { return alert.view as! MDCAlertControllerView }
@@ -137,15 +137,15 @@ class MDCAlertControllerAlertThemerTests: XCTestCase {
 
   func testApplyAlertSchemeWithCustomElevation() {
     // Given
-    let elevation: CGFloat = 10.0
+    let elevation: ShadowElevation = ShadowElevation(rawValue: 10.0)
     alertScheme.elevation = elevation
 
     // When
     MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
 
     // Then
-    XCTAssertEqual(alertScheme.elevation, elevation, accuracy: 0.001)
-    XCTAssertEqual(alert.elevation, elevation, accuracy: 0.001)
-    XCTAssertNotEqual(alertScheme.elevation, defaultElevation, accuracy: 0.001)
+    XCTAssertEqual(alertScheme.elevation.rawValue, elevation.rawValue, accuracy: 0.001)
+    XCTAssertEqual(alert.elevation.rawValue, elevation.rawValue, accuracy: 0.001)
+    XCTAssertNotEqual(alertScheme.elevation.rawValue, defaultElevation.rawValue, accuracy: 0.001)
   }
 }

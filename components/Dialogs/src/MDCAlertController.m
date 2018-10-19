@@ -247,7 +247,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   self.mdc_dialogPresentationController.dialogCornerRadius = cornerRadius;
 }
 
-- (void)setElevation:(CGFloat)elevation {
+- (void)setElevation:(MDCShadowElevation)elevation {
   _elevation = elevation;
   self.mdc_dialogPresentationController.dialogElevation = elevation;
 }
