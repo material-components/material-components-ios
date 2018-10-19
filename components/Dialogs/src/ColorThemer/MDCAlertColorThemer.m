@@ -14,6 +14,9 @@
 
 #import "MDCAlertColorThemer.h"
 
+#import "MDCContainedButtonColorThemer.h"
+#import "MDCOutlinedButtonColorThemer.h"
+#import "MDCTextButtonColorThemer.h"
 #import "MaterialButtons.h"
 #import "MaterialDialogs.h"
 
@@ -23,9 +26,25 @@
                toAlertController:(nonnull MDCAlertController *)alertController {
   alertController.titleColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87];
   alertController.messageColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
-  alertController.buttonTitleColor = colorScheme.primaryColor;
   alertController.titleIconTintColor = colorScheme.primaryColor;
   alertController.scrimColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.32];
+
+  // Apply theming to buttons based on the action emphasis
+  for (MDCAlertAction *action in alertController.actions) {
+    MDCButton *button = [alertController buttonForAction:action];
+    switch (action.emphasis) {
+      case MDCActionEmphasisHigh:
+        [MDCContainedButtonColorThemer applySemanticColorScheme:colorScheme toButton:button];
+        break;
+      case MDCActionEmphasisMedium:
+        [MDCOutlinedButtonColorThemer applySemanticColorScheme:colorScheme toButton:button];
+        break;
+      case MDCActionEmphasisLow:  // fallthrough
+      default:
+        [MDCTextButtonColorThemer applySemanticColorScheme:colorScheme toButton:button];
+        break;
+    }
+  }
 }
 
 + (void)applyColorScheme:(id<MDCColorScheme>)colorScheme {

@@ -14,10 +14,10 @@
 
 #import <Foundation/Foundation.h>
 
+#import "MDCButtonScheme.h"
 #import "MaterialColorScheme.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialTypographyScheme.h"
-#import "MDCButtonScheme.h"
 
 /** Defines a readonly immutable interface for component style data to be applied by a themer. */
 @protocol MDCAlertScheming

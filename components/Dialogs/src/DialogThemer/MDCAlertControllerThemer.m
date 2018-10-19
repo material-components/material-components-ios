@@ -15,7 +15,7 @@
 #import "MDCAlertControllerThemer.h"
 #import "MDCAlertColorThemer.h"
 #import "MDCAlertTypographyThemer.h"
-#import "MaterialButtons+ButtonThemer.h" // todo: update podspec?
+#import "MaterialButtons+ButtonThemer.h"
 
 @implementation MDCAlertControllerThemer
 
@@ -30,23 +30,22 @@
   alertController.cornerRadius = alertScheme.cornerRadius;
   alertController.elevation = alertScheme.elevation;
 
+  // Apply theming to buttons based on the action emphasis
   for (MDCAlertAction *action in alertController.actions) {
     MDCButton *button = [alertController buttonForAction:action];
+    // todo: b/117265609: Incorporate dynamic type support in semantic themers
     switch (action.emphasis) {
       case MDCActionEmphasisHigh:
         [MDCContainedButtonThemer applyScheme:alertScheme.buttonScheme toButton:button];
         break;
-
       case MDCActionEmphasisMedium:
         [MDCOutlinedButtonThemer applyScheme:alertScheme.buttonScheme toButton:button];
         break;
-
-      case MDCActionEmphasisLow:
+      case MDCActionEmphasisLow:  // fallthrough
       default:
         [MDCTextButtonThemer applyScheme:alertScheme.buttonScheme toButton:button];
         break;
     }
   }
 }
-
 @end

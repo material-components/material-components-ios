@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #import "MDCAlertTypographyThemer.h"
+#import "MDCButtonTypographyThemer.h"
+#import "MaterialTypography.h"
 
 @implementation MDCAlertTypographyThemer
 
@@ -20,7 +22,13 @@
             toAlertController:(nonnull MDCAlertController *)alertController {
   alertController.titleFont = typographyScheme.headline6;
   alertController.messageFont = typographyScheme.body1;
-  alertController.buttonFont = typographyScheme.button;
+
+  // Apply emphasis-based button theming, if enabled
+  for (MDCAlertAction *action in alertController.actions) {
+    MDCButton *button = [alertController buttonForAction:action];
+    // todo: b/117265609: Incorporate dynamic type support in button themers
+    [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:button];
+  }
 }
 
 @end

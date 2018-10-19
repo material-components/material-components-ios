@@ -71,12 +71,15 @@
 /** The color applied to the message of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIColor *messageColor;
 
+// b/117717380: Will be deprecated
 /** The font applied to the button of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIFont *buttonFont;
 
+// b/117717380: Will be deprecated
 /** The color applied to the button title text of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIColor *buttonTitleColor;
 
+// b/117717380: Will be deprecated
 /** The color applied to the button ink effect of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIColor *buttonInkColor;
 
@@ -115,6 +118,13 @@
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
     BOOL mdc_adjustsFontForContentSizeCategory;
 
+/** MDCAlertController handles its own transitioning delegate. */
+- (void)setTransitioningDelegate:
+    (_Nullable id<UIViewControllerTransitioningDelegate>)transitioningDelegate NS_UNAVAILABLE;
+
+/** MDCAlertController.modalPresentationStyle is always UIModalPresentationCustom. */
+- (void)setModalPresentationStyle:(UIModalPresentationStyle)modalPresentationStyle NS_UNAVAILABLE;
+
 /**
  The actions that the user can take in response to the alert.
 
@@ -148,13 +158,6 @@
           must first be added to the alert).
  */
 - (nullable MDCButton *)buttonForAction:(nonnull MDCAlertAction *)action;
-
-/** MDCAlertController handles its own transitioning delegate. */
-- (void)setTransitioningDelegate:
-(_Nullable id<UIViewControllerTransitioningDelegate>)transitioningDelegate NS_UNAVAILABLE;
-
-/** MDCAlertController.modalPresentationStyle is always UIModalPresentationCustom. */
-- (void)setModalPresentationStyle:(UIModalPresentationStyle)modalPresentationStyle NS_UNAVAILABLE;
 
 @end
 
