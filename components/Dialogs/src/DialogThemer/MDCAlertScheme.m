@@ -14,8 +14,6 @@
 
 #import "MDCAlertScheme.h"
 
-#import "MaterialShadowElevations.h"
-
 static const CGFloat kCornerRadius = 4.0f;
 
 @implementation MDCAlertScheme
