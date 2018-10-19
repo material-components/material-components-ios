@@ -21,7 +21,7 @@
 
 @property(nonatomic) BOOL scrollViewObserved;
 @property(nonatomic, readonly) UIScrollView *scrollView;
-@property(nonatomic, readonly) CGFloat contentHeaderHeight;
+@property(nonatomic) BOOL currentlyFullScreen;
 
 @end
 
@@ -71,6 +71,14 @@
 
   // Then
   XCTAssertFalse(self.fakeBottomDrawer.scrollViewObserved);
+}
+
+- (void)testCurrentlyFullScreen {
+  // Given
+
+  // When
+
+  // Then
 }
 
 @end
