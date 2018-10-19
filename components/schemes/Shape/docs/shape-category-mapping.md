@@ -8,7 +8,3 @@ Below is a table showing how our shape categories are mapped to each component.
 | FAB              |                   |                            |
 | Snackbar         |                   |                            |
 | Textfield        |                   |                            |
-
-
-
-
