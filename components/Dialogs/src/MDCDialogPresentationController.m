@@ -69,7 +69,7 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
   return self.dimmingView.backgroundColor;
 }
 
-- (void)setDialogElevation:(CGFloat)dialogElevation {
+- (void)setDialogElevation:(MDCShadowElevation)dialogElevation {
   _trackingView.elevation = dialogElevation;
 }
 
