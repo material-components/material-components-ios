@@ -15,6 +15,7 @@
 #import <XCTest/XCTest.h>
 
 #import "../../src/private/MDCBottomDrawerContainerViewController.h"
+#import "MDCNavigationDrawerFakes.h"
 
 @interface MDCBottomDrawerContainerViewController (ScrollViewTests)
 
