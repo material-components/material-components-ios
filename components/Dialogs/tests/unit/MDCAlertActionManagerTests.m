@@ -14,6 +14,7 @@
 
 #import <XCTest/XCTest.h>
 #import "MDCAlertActionManager.h"
+#import "MDCAlertController+ButtonForAction.h"
 #import "MDCAlertControllerView+Private.h"
 
 @interface MDCAlertActionManagerTests : XCTestCase

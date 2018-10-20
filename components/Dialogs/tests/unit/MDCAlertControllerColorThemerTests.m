@@ -50,7 +50,7 @@
           && fabs(alpha1 - alpha2) < CGFLOAT_EPSILON);
 }
 
-- (void)testApplyingTypographyScheme {
+- (void)testApplyingColorScheme {
   MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:@"title"
                                                                    message:@"message"];
   MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];

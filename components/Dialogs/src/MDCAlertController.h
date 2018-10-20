@@ -145,20 +145,6 @@
  */
 - (void)addAction:(nonnull MDCAlertAction *)action;
 
-/**
- Returns an MDCButton associated with the given action. This method might create the button if
- it no associated button exist for the action yet. Buttons returned by thismethod may not (yet)
- be attached to the view hierarchy at the time the method is called.
-
- This method is commonly used by themers to style the button associated with the action.
-
- @param action The action with which the button is associated. Must be an existing action that
- had been previously added through addAction: to the alert.
- @return The button associated with the action, or nil if the action doesn't exist (the action
- must first be added to the alert).
- */
-- (nullable MDCButton *)buttonForAction:(nonnull MDCAlertAction *)action;
-
 @end
 
 typedef NS_ENUM(NSInteger, MDCActionEmphasis) {

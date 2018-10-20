@@ -12,8 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialDialogs+TypographyThemer.h"
-#import "MDCButtonTypographyThemer.h"
+#import "MDCAlertTypographyThemer.h"
+
+#import "MDCAlertController+ButtonForAction.h"
+#import "MaterialButtons+TypographyThemer.h"
 #import "MaterialTypography.h"
 
 @implementation MDCAlertTypographyThemer

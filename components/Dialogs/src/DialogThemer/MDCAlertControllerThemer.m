@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #import "MDCAlertControllerThemer.h"
+
 #import "MDCAlertColorThemer.h"
+#import "../MDCAlertController+ButtonForAction.h"
 #import "MDCAlertTypographyThemer.h"
 #import "MaterialButtons+ButtonThemer.h"
 
