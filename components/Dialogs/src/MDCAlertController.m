@@ -16,12 +16,13 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
+#import "MDCAlertControllerView.h"
+#import "MDCDialogPresentationController.h"
 #import "MDCDialogTransitionController.h"
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
-#import "MDCAlertControllerView.h"
 #import "UIViewController+MaterialDialogs.h"
-#import "MDCDialogPresentationController.h"
+#import "private/MDCAlertActionManager.h"
 #import "private/MDCAlertControllerView+Private.h"
 #import "private/MaterialDialogsStrings.h"
 #import "private/MaterialDialogsStrings_table.h"
@@ -39,21 +40,31 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 + (instancetype)actionWithTitle:(nonnull NSString *)title
                         handler:(void (^__nullable)(MDCAlertAction *action))handler {
-  return [[MDCAlertAction alloc] initWithTitle:title handler:handler];
+  return [[MDCAlertAction alloc] initWithTitle:title emphasis:MDCActionEmphasisLow handler:handler];
+}
+
++ (instancetype)actionWithTitle:(nonnull NSString *)title
+                       emphasis:(MDCActionEmphasis)emphasis
+                        handler:(void (^__nullable)(MDCAlertAction *action))handler {
+  return [[MDCAlertAction alloc] initWithTitle:title emphasis:emphasis handler:handler];
 }
 
 - (instancetype)initWithTitle:(nonnull NSString *)title
+                     emphasis:(MDCActionEmphasis)emphasis
                       handler:(void (^__nullable)(MDCAlertAction *action))handler {
   self = [super init];
   if (self) {
     _title = [title copy];
+    _emphasis = emphasis;
     _completionHandler = [handler copy];
   }
   return self;
 }
 
 - (id)copyWithZone:(__unused NSZone *)zone {
-  MDCAlertAction *action = [[self class] actionWithTitle:self.title handler:self.completionHandler];
+  MDCAlertAction *action = [[self class] actionWithTitle:self.title
+                                                emphasis:self.emphasis
+                                                 handler:self.completionHandler];
   action.accessibilityIdentifier = self.accessibilityIdentifier;
 
   return action;
@@ -64,8 +75,8 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 @interface MDCAlertController ()
 
 @property(nonatomic, nullable, weak) MDCAlertControllerView *alertView;
-
 @property(nonatomic, strong) MDCDialogTransitionController *transitionController;
+@property(nonatomic, nonnull, strong) MDCAlertActionManager *actionManager;
 
 - (nonnull instancetype)initWithTitle:(nullable NSString *)title
                               message:(nullable NSString *)message;
@@ -73,7 +84,6 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 @end
 
 @implementation MDCAlertController {
-  NSMutableArray<MDCAlertAction *> *_actions;
 
   // This is because title is overlapping with view controller title, However Apple alertController
   // redefines title as well.
@@ -105,8 +115,8 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
     _alertTitle = [title copy];
     _message = [message copy];
-    _actions = [[NSMutableArray alloc] init];
     _titleAlignment = NSTextAlignmentNatural;
+    _actionManager = [[MDCAlertActionManager alloc] init];
 
     super.transitioningDelegate = _transitionController;
     super.modalPresentationStyle = UIModalPresentationCustom;
@@ -151,20 +161,29 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 }
 
 - (NSArray<MDCAlertAction *> *)actions {
-  return [_actions copy];
+  return self.actionManager.actions;
 }
 
 - (void)addAction:(MDCAlertAction *)action {
-  [_actions addObject:[action copy]];
-  [self addActionToAlertView:action];
+  [self.actionManager addAction:action];
+  [self addButtonToAlertViewForAction:action];
 }
 
-- (void)addActionToAlertView:(MDCAlertAction *)action {
+- (nullable MDCButton *)buttonForAction:(nonnull MDCAlertAction *)action {
+  MDCButton *button = [self.actionManager buttonForAction:action];
+  if (!button && [self.actionManager hasAction:action]) {
+    button = [self.actionManager createButtonForAction:action
+                                                target:self
+                                              selector:@selector(actionButtonPressed:)];
+    [MDCAlertControllerView styleAsTextButton:button];
+  }
+  return button;
+}
+
+- (void)addButtonToAlertViewForAction:(MDCAlertAction *)action {
   if (self.alertView) {
-    MDCButton *addedAction = [self.alertView addActionButtonTitle:action.title
-                                                           target:self
-                                                         selector:@selector(actionButtonPressed:)];
-    addedAction.accessibilityIdentifier = action.accessibilityIdentifier;
+    MDCButton *button = [self buttonForAction:action];
+    [self.alertView addActionButton:button];
     self.preferredContentSize =
         [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
     [self.alertView setNeedsLayout];
@@ -185,6 +204,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   }
 }
 
+// b/117717380: Will be deprecated
 - (void)setButtonFont:(UIFont *)buttonFont {
   _buttonFont = buttonFont;
   if (self.alertView) {
@@ -206,6 +226,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   }
 }
 
+// b/117717380: Will be deprecated
 - (void)setButtonTitleColor:(UIColor *)buttonColor {
   _buttonTitleColor = buttonColor;
   if (self.alertView) {
@@ -289,9 +310,9 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   }
 }
 
-- (void)actionButtonPressed:(id)sender {
-  NSInteger actionIndex = [self.alertView.actionButtons indexOfObject:sender];
-  MDCAlertAction *action = self.actions[actionIndex];
+- (void)actionButtonPressed:(id)button {
+  MDCAlertAction *action = [self.actionManager actionForButton:button];
+
   // We call our action.completionHandler after we dismiss the existing alert in case the handler
   // also presents a view controller. Otherwise we get a warning about presenting on a controller
   // which is already presenting.
@@ -307,7 +328,8 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 - (void)loadView {
   self.view = [[MDCAlertControllerView alloc] initWithFrame:CGRectZero];
   self.alertView = (MDCAlertControllerView *)self.view;
-
+  // sharing MDCActionManager with with the alert view
+  self.alertView.actionManager = self.actionManager;
 }
 
 - (void)viewDidLoad {
@@ -345,16 +367,23 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   self.alertView.messageFont = self.messageFont;
   self.alertView.titleColor = self.titleColor;
   self.alertView.messageColor = self.messageColor;
-  self.alertView.buttonColor = self.buttonTitleColor;
-  self.alertView.buttonFont = self.buttonFont;
-  self.alertView.buttonInkColor = self.buttonInkColor;
+  if (self.buttonTitleColor) {
+    // Avoid reset title color to white when setting it to nil. only set it for an actual UIColor.
+    self.alertView.buttonColor = self.buttonTitleColor;  // b/117717380: Will be deprecated
+  }
+  self.alertView.buttonFont = self.buttonFont;  // b/117717380: Will be deprecated
+  if (self.buttonInkColor) {
+    // Avoid reset ink color to white when setting it to nil. only set it for an actual UIColor.
+    self.alertView.buttonInkColor = self.buttonInkColor;  // b/117717380: Will be deprecated
+  }
   self.alertView.titleAlignment = self.titleAlignment;
   self.alertView.titleIcon = self.titleIcon;
   self.alertView.titleIconTintColor = self.titleIconTintColor;
   self.alertView.cornerRadius = self.cornerRadius;
 
+  // Create buttons for the actions (if not already created) and apply default styling
   for (MDCAlertAction *action in self.actions) {
-    [self addActionToAlertView:action];
+    [self addButtonToAlertViewForAction:action];
   }
 }
 

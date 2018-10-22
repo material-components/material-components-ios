@@ -12,21 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCAlertScheme.h"
+#import "MDCAlertController+ButtonForAction.h"
 
-static const CGFloat kCornerRadius = 4.0f;
+@implementation MDCAlertController (buttonForAction)
 
-@implementation MDCAlertScheme
-
-- (instancetype)init {
-  self = [super init];
-  if (self) {
-    _colorScheme = [[MDCSemanticColorScheme alloc] init];
-    _typographyScheme = [[MDCTypographyScheme alloc] init];
-    _buttonScheme = [[MDCButtonScheme alloc] init];
-    _cornerRadius = kCornerRadius;
-    _elevation = MDCShadowElevationDialog;
-  }
-  return self;
-}
 @end

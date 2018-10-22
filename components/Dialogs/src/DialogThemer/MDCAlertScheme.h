@@ -14,6 +14,7 @@
 
 #import <Foundation/Foundation.h>
 
+#import "MaterialButtons+ButtonThemer.h"
 #import "MaterialColorScheme.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialTypographyScheme.h"
@@ -26,6 +27,9 @@
 
 /** The typography scheme to apply to Dialog. */
 @property(nonnull, readonly, nonatomic) id<MDCTypographyScheming> typographyScheme;
+
+/** The button scheme to apply to Dialog's actions. */
+@property(nonnull, readonly, nonatomic) id<MDCButtonScheming> buttonScheme;
 
 /** The corner radius to apply to Dialog. */
 @property(readonly, nonatomic) CGFloat cornerRadius;
@@ -44,6 +48,9 @@
 
 /** The typography scheme to apply to Dialog. */
 @property(nonnull, readwrite, nonatomic) id<MDCTypographyScheming> typographyScheme;
+
+/** The button scheme to apply to Dialog's actions. */
+@property(nonnull, readwrite, nonatomic) id<MDCButtonScheming> buttonScheme;
 
 /** The corner radius to apply to Dialog. */
 @property(readwrite, nonatomic) CGFloat cornerRadius;
