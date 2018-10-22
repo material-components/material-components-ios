@@ -1,10 +1,21 @@
-# #develop#
+# 67.2.0
 
-Replace this text with a summarized description of this release's contents.
+This minor release introduces new functionality for theming individual buttons of an
+MDCAlertController.
 
 ## New features
 
-Replace this text with example code for each new feature.
+It is now possible to theme MDCAlertController buttons individually using the new `emphasis`
+property on `MDCAlertAction` in conjunction with the `MDCAlertControllerThemer`.
+
+```swift
+let alert = MDCAlertController(title: "Button Theming", message: "High, Medium & Low Emphasis")
+alert.addAction(MDCAlertAction(title:"High", emphasis: .high, handler: handler))
+alert.addAction(MDCAlertAction(title:"Medium", emphasis: .medium, handler: handler))
+alert.addAction(MDCAlertAction(title:"Low", emphasis: .low, handler: handler))
+MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
+self.present(alert, animated: true, completion: nil)
+```
 
 ## API changes
 
