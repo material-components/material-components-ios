@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import UIKit
-import MaterialComponentsAlpha.MaterialNavigationDrawer
 import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialNavigationDrawer
 
 class DrawerContentViewController: UIViewController {
   let preferredHeight: CGFloat = 2000
