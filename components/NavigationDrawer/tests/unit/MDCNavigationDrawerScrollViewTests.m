@@ -25,6 +25,8 @@
 @property(nonatomic, readonly) CGFloat contentHeaderHeight;
 @property(nonatomic, readonly) CGFloat contentHeaderTopInset;
 @property(nonatomic, readonly) CGRect presentingViewBounds;
+@property(nonatomic, readonly) CGFloat contentHeightSurplus;
+@property(nonatomic, readonly) BOOL contentScrollsToReveal;
 - (void)cacheLayoutCalculations;
 
 @end
@@ -268,6 +270,51 @@
   // In cacheLayoutCalculation we test if contentScrollsToReveal is true then contentHeaderTopInset
   // should be initialDrawerFactor * presentingViewBounds = 500 * 0.5
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 250.f, 0.001);
+}
+
+- (void)testContentHeightSurplus {
+  // Then
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeightSurplus, 0.f, 0.001);
+}
+
+- (void)testContentHeightSurplusWithScrollabelContent {
+  // Given
+  CGSize fakePreferredContentSize = CGSizeMake(200, 1000);
+  MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
+      [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
+  fakeHeader.preferredContentSize = fakePreferredContentSize;
+  self.fakeBottomDrawer.headerViewController = fakeHeader;
+  self.fakeBottomDrawer.contentViewController =
+      [[MDCNavigationDrawerFakeTableViewController alloc] init];
+  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(200, 1500);
+
+  // When
+  [self.fakeBottomDrawer cacheLayoutCalculations];
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeightSurplus, 2250.f, 0.001);
+}
+
+- (void)testContentScrollsToRevealFalse {
+  // Then
+  XCTAssertFalse(self.fakeBottomDrawer.contentScrollsToReveal);
+}
+
+- (void)testContentScrollsToRevealTrue {
+  CGSize fakePreferredContentSize = CGSizeMake(200, 1000);
+  MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
+      [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
+  fakeHeader.preferredContentSize = fakePreferredContentSize;
+  self.fakeBottomDrawer.headerViewController = fakeHeader;
+  self.fakeBottomDrawer.contentViewController =
+      [[MDCNavigationDrawerFakeTableViewController alloc] init];
+  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(200, 1500);
+
+  // When
+  [self.fakeBottomDrawer cacheLayoutCalculations];
+
+  // Then
+  XCTAssertTrue(self.fakeBottomDrawer.contentScrollsToReveal);
 }
 
 @end
