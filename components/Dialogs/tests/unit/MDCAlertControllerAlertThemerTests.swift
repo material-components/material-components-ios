@@ -69,17 +69,15 @@ class MDCAlertControllerAlertThemerTests: XCTestCase {
                    MDCSemanticColorScheme().onSurfaceColor.withAlphaComponent(0.87))
     XCTAssertEqual(alertView.titleIconTintColor, colorScheme.primaryColor)
   }
-    
+
+  // Testing soon-to-be-deprecated old approach to button theming // b/117717380: Will be deprecated
   func testApplyingCustomTitleIconTintColor() {
     // Given
     let iconColor = UIColor.red
     let primaryColor = UIColor.green
-    let colorScheme = MDCSemanticColorScheme()
-    colorScheme.primaryColor = primaryColor
-    alertScheme.colorScheme = colorScheme
 
     // When
-    MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
+    alert.buttonTitleColor = primaryColor
     alert.titleIconTintColor = iconColor
 
     // Then
@@ -89,13 +87,12 @@ class MDCAlertControllerAlertThemerTests: XCTestCase {
   }
 
   func testApplyingAlertSchemeScrimColorToPresentationController() {
-    guard let presentationController = alert.mdc_dialogPresentationController else { return }
-
     // Given
     let colorScheme = MDCSemanticColorScheme()
     colorScheme.onSurfaceColor = UIColor.green
     alertScheme.colorScheme = colorScheme
     let scrimColor = colorScheme.onSurfaceColor.withAlphaComponent(0.32)
+    let presentationController = alert.mdc_dialogPresentationController!
 
     // When
     MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)

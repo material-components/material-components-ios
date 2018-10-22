@@ -70,6 +70,10 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
 
   var menu: [String] = []
 
+  var handler: MDCActionHandler = { action in
+    print(action.title ?? "Some Action")
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -82,6 +86,11 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
       "Right Aligned Title with a Large Icon",
       "Tinted Title Icon, No Title",
       "Darker Scrim",
+      "Emphasis-based Button Theming",
+      "Text Button Theming (will be deprecated)",
+      "Text Button Theming (the right way)",
+      "Custom Button Theming",
+      "Unthemed Alert",
     ])
   }
 
@@ -109,6 +118,16 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
       return performTintedTitleIconNoTitle()
     case 5:
       return performScrimColor()
+    case 6:
+      return performEmphasisButtonTheming()
+    case 7:
+      return performDeprecatedTextButtonTheming()   // b/117717380: Will be deprecated
+    case 8:
+      return performTextButtonThemingTheRightWay()
+    case 9:
+      return performCustomButtonTheming()
+    case 10:
+      return performUnthemed()
     default:
       print("No row is selected")
       return nil
@@ -157,7 +176,7 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
     alert.titleIcon = sampleIcon()
     MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
 
-    // theming override: set the titleIconTintColor after the color scheme has been applied
+    // Theming override: set the titleIconTintColor after the color scheme has been applied
     alert.titleIconTintColor = .red
 
     return alert
@@ -170,13 +189,82 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
     return alert
   }
 
+  func performEmphasisButtonTheming() -> MDCAlertController {
+    let alert = MDCAlertController(title: "Button Theming", message: "High, Medium & Low Emphasis")
+    alert.addAction(MDCAlertAction(title:"High", emphasis: .high, handler: handler))
+    alert.addAction(MDCAlertAction(title:"Medium", emphasis: .medium, handler: handler))
+    alert.addAction(MDCAlertAction(title:"Low", emphasis: .low, handler: handler))
+    MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
+    return alert
+  }
+
+  func performDeprecatedTextButtonTheming() -> MDCAlertController {
+    let alert = MDCAlertController(title: "Button Theming",
+                                   message: "This method of button theming will be deprecated")
+    // When not specified, the action is low emphasis by default
+    alert.addAction(MDCAlertAction(title:"Text", handler: handler))
+    alert.addAction(MDCAlertAction(title:"Text", handler: handler))
+    alert.addAction(MDCAlertAction(title:"Text", handler: handler))
+    MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
+    alert.buttonTitleColor = .orange   // b/117717380: will be deprecated
+    return alert
+  }
+
+  // The right way to select the type of buttons is by setting empahsis for actions
+  func performTextButtonThemingTheRightWay() -> MDCAlertController {
+    let alert = MDCAlertController(title: "Button Theming",
+                                   message: "Use low emphasis to present buttons as text")
+    // Use .low emphasis to style buttons as text buttons.
+    alert.addAction(MDCAlertAction(title:"Text", emphasis: .low, handler: handler))
+    alert.addAction(MDCAlertAction(title:"Text", emphasis: .low, handler: handler))
+    alert.addAction(MDCAlertAction(title:"Text", emphasis: .low, handler: handler))
+    MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
+    return alert
+  }
+
+  func performCustomButtonTheming() -> MDCAlertController {
+    let alert = MDCAlertController(title: "Custom Button Theming",
+                                   message: "Custom styling of High, Medium & Low Emphasis")
+    alert.titleIcon = sampleIcon()
+
+    // Use .low emphasis for styling buttons as text buttons
+    alert.addAction(MDCAlertAction(title:"High", emphasis: .high, handler: handler))
+    alert.addAction(MDCAlertAction(title:"Medium", emphasis: .medium, handler: handler))
+    alert.addAction(MDCAlertAction(title:"Low", emphasis: .low, handler: handler))
+
+    let scheme = MDCAlertScheme()
+    scheme.typographyScheme = self.typographyScheme
+
+    // Create a color theme with a different primary color
+    let colorScheme = MDCSemanticColorScheme()
+    colorScheme.primaryColor = .blue
+
+    // Assign the new color theme to both the button and the alert schemes.
+    let buttonScheme = MDCButtonScheme()
+    buttonScheme.colorScheme = colorScheme
+    scheme.colorScheme = colorScheme
+    scheme.buttonScheme = buttonScheme
+
+    MDCAlertControllerThemer.applyScheme(scheme, to: alert)
+    return alert
+  }
+
+  func performUnthemed() -> MDCAlertController {
+    let alert = MDCAlertController(title: "Unthemed Alert",
+                                   message: "Lorem ipsum dolor sit amet, consectetur adipiscing...")
+    alert.addAction(MDCAlertAction(title:"High", emphasis: .high, handler: handler))
+    alert.addAction(MDCAlertAction(title:"Medium", emphasis: .medium, handler: handler))
+    alert.addAction(MDCAlertAction(title:"Low", emphasis: .low, handler: handler))
+    return alert
+  }
+
   private func createMDCAlertController(title: String?) -> MDCAlertController {
     let alertController = MDCAlertController(title: title, message: """
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
       tempor incididunt ut labore et dolore magna aliqua.
       """)
-    alertController.addAction(MDCAlertAction(title:"OK") { _ in print("OK") })
-    alertController.addAction(MDCAlertAction(title:"Cancel") { _ in print("Cancel") })
+    alertController.addAction(MDCAlertAction(title:"OK", handler: handler))
+    alertController.addAction(MDCAlertAction(title:"Cancel", handler: handler))
     return alertController
   }
 
