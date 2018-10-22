@@ -160,6 +160,7 @@
   // When
   [self.fakeBottomDrawer cacheLayoutCalculations];
 
+  // Then
   // presentingViewBounds.size.height = 500, contentHeaderHeight = 300
   // contentViewController.preferredContentSize.height = 100
   // 500 - 300 - 100 = 100
@@ -225,6 +226,10 @@
   fakeHeader.preferredContentSize = fakePreferredContentSize;
   self.fakeBottomDrawer.headerViewController = fakeHeader;
 
+  // When
+  [self.fakeBottomDrawer cacheLayoutCalculations];
+
+  // Then
   // In cacheLayoutCalculation we test if contentScrollsToReveal is true then contentHeaderTopInset
   // should be initialDrawerFactor * presentingViewBounds = 500 * 0.5
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 250.f, 0.001);
