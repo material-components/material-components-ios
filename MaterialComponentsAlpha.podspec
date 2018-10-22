@@ -8,6 +8,7 @@ Pod::Spec.new do |mdc|
   mdc.source       = { :git => "https://github.com/material-components/material-components-ios.git", :tag => "v#{mdc.version}" }
   mdc.platform     = :ios
   mdc.requires_arc = true
+  mdc.dependency   = "MaterialComponents"
   mdc.ios.deployment_target = '8.0'
 
   # See MaterialComponents.podspec for the subspec structure and template.
