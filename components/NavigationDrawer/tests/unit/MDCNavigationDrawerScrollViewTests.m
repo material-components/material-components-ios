@@ -225,11 +225,11 @@
   // Given
   CGSize fakePreferredContentSize = CGSizeMake(200, 1000);
   MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
-  [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
+      [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
   fakeHeader.preferredContentSize = fakePreferredContentSize;
   self.fakeBottomDrawer.headerViewController = fakeHeader;
   self.fakeBottomDrawer.contentViewController =
-  [[MDCNavigationDrawerFakeTableViewController alloc] init];
+      [[MDCNavigationDrawerFakeTableViewController alloc] init];
   self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(200, 1500);
 
   // When
@@ -299,11 +299,11 @@
 - (void)testContentScrollsToRevealTrue {
   CGSize fakePreferredContentSize = CGSizeMake(200, 1000);
   MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
-  [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
+      [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
   fakeHeader.preferredContentSize = fakePreferredContentSize;
   self.fakeBottomDrawer.headerViewController = fakeHeader;
   self.fakeBottomDrawer.contentViewController =
-  [[MDCNavigationDrawerFakeTableViewController alloc] init];
+      [[MDCNavigationDrawerFakeTableViewController alloc] init];
   self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(200, 1500);
 
   // When
