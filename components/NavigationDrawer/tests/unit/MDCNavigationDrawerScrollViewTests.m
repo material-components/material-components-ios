@@ -151,7 +151,8 @@
       [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
   fakeHeader.preferredContentSize = fakePreferredContentSize;
   self.fakeBottomDrawer.headerViewController = fakeHeader;
-  self.fakeBottomDrawer.contentViewController = [[MDCNavigationDrawerFakeTableViewController alloc] init];
+  self.fakeBottomDrawer.contentViewController =
+      [[MDCNavigationDrawerFakeTableViewController alloc] init];
   self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(200, 100);
 
   // When
@@ -183,7 +184,7 @@
   // Setup gives us presentingViewBounds of (0, 0, 200, 500)
   CGSize fakePreferredContentSize = CGSizeMake(200, 300);
   MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
-  [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
+      [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
   fakeHeader.preferredContentSize = fakePreferredContentSize;
   self.fakeBottomDrawer.headerViewController = fakeHeader;
 
@@ -200,7 +201,8 @@
 - (void)testContentHeaderTopInsetWithOnlyContentViewController {
   // Given
   // Setup gives us presentingViewBounds of (0, 0, 200, 500)
-  self.fakeBottomDrawer.contentViewController = [[MDCNavigationDrawerFakeTableViewController alloc] init];
+  self.fakeBottomDrawer.contentViewController =
+      [[MDCNavigationDrawerFakeTableViewController alloc] init];
   self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(200, 100);
 
   // When
@@ -218,7 +220,7 @@
   // Setup gives us presentingViewBoudns of (0, 0, 200, 500)
   CGSize fakePreferredContentSize = CGSizeMake(200, 700);
   MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
-  [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
+      [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
   fakeHeader.preferredContentSize = fakePreferredContentSize;
   self.fakeBottomDrawer.headerViewController = fakeHeader;
 
@@ -234,7 +236,8 @@
 - (void)testContentHeaderTopInsetForScrollableContentForLargeContent {
   // Given
   // Setup gives us presentingViewBounds of (0, 0, 200, 500)
-  self.fakeBottomDrawer.contentViewController = [[MDCNavigationDrawerFakeTableViewController alloc] init];
+  self.fakeBottomDrawer.contentViewController =
+      [[MDCNavigationDrawerFakeTableViewController alloc] init];
   self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(200, 1000);
 
   // When
