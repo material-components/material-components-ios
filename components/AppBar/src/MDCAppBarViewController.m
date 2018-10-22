@@ -246,6 +246,10 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
   [super didMoveToParentViewController:parent];
 
   [self.navigationBar observeNavigationItem:parent.navigationItem];
+
+  CGRect frame = self.view.frame;
+  frame.size.width = parent.view.bounds.size.width;
+  self.view.frame = frame;
 }
 
 - (BOOL)accessibilityPerformEscape {
