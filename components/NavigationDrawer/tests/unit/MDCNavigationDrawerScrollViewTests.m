@@ -216,6 +216,57 @@
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 400.f, 0.001);
 }
 
+- (void)testContentHeaderTopInsetForScrollableContentForLargeHeader {
+  // Given
+  // Setup gives us presentingViewBoudns of (0, 0, 200, 500)
+  CGSize fakePreferredContentSize = CGSizeMake(200, 700);
+  MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
+  [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
+  fakeHeader.preferredContentSize = fakePreferredContentSize;
+  self.fakeBottomDrawer.headerViewController = fakeHeader;
+
+  // In cacheLayoutCalculation we test if contentScrollsToReveal is true then contentHeaderTopInset
+  // should be initialDrawerFactor * presentingViewBounds = 500 * 0.5
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 250.f, 0.001);
+}
+
+- (void)testContentHeaderTopInsetForScrollableContentForLargeContent {
+  // Given
+  // Setup gives us presentingViewBounds of (0, 0, 200, 500)
+  self.fakeBottomDrawer.contentViewController =
+  [[MDCNavigationDrawerFakeTableViewController alloc] init];
+  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(200, 1000);
+
+  // When
+  [self.fakeBottomDrawer cacheLayoutCalculations];
+
+  // Then
+  // In cacheLayoutCalculation we test if contentScrollsToReveal is true then contentHeaderTopInset
+  // should be initialDrawerFactor * presentingViewBounds = 500 * 0.5
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 250.f, 0.001);
+}
+
+- (void)testContentHeaderTopInsetForScrollableContent {
+  // Given
+  // Setup gives us presentingViewBounds of (0, 0, 200, 500)
+  CGSize fakePreferredContentSize = CGSizeMake(200, 700);
+  MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
+  [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
+  fakeHeader.preferredContentSize = fakePreferredContentSize;
+  self.fakeBottomDrawer.headerViewController = fakeHeader;
+  self.fakeBottomDrawer.contentViewController =
+  [[MDCNavigationDrawerFakeTableViewController alloc] init];
+  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(200, 1000);
+
+  // When
+  [self.fakeBottomDrawer cacheLayoutCalculations];
+
+  // Then
+  // In cacheLayoutCalculation we test if contentScrollsToReveal is true then contentHeaderTopInset
+  // should be initialDrawerFactor * presentingViewBounds = 500 * 0.5
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 250.f, 0.001);
+}
+
 - (void)testContentHeightSurplus {
   // Then
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeightSurplus, 0.f, 0.001);
@@ -239,61 +290,9 @@
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeightSurplus, 2250.f, 0.001);
 }
 
-- (void)testContentHeaderTopInsetForScrollableContentForLargeHeader {
-  // Given
-  // Setup gives us presentingViewBoudns of (0, 0, 200, 500)
-  CGSize fakePreferredContentSize = CGSizeMake(200, 700);
-  MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
-      [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
-  fakeHeader.preferredContentSize = fakePreferredContentSize;
-  self.fakeBottomDrawer.headerViewController = fakeHeader;
-
-  // In cacheLayoutCalculation we test if contentScrollsToReveal is true then contentHeaderTopInset
-  // should be initialDrawerFactor * presentingViewBounds = 500 * 0.5
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 250.f, 0.001);
-
-}
-
 - (void)testContentScrollsToRevealFalse {
   // Then
   XCTAssertFalse(self.fakeBottomDrawer.contentScrollsToReveal);
-}
-
-- (void)testContentHeaderTopInsetForScrollableContentForLargeContent {
-  // Given
-  // Setup gives us presentingViewBounds of (0, 0, 200, 500)
-  self.fakeBottomDrawer.contentViewController =
-      [[MDCNavigationDrawerFakeTableViewController alloc] init];
-  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(200, 1000);
-
-  // When
-  [self.fakeBottomDrawer cacheLayoutCalculations];
-
-  // Then
-  // In cacheLayoutCalculation we test if contentScrollsToReveal is true then contentHeaderTopInset
-  // should be initialDrawerFactor * presentingViewBounds = 500 * 0.5
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 250.f, 0.001);
-}
-
-- (void)testContentHeaderTopInsetForScrollableContent {
-  // Given
-  // Setup gives us presentingViewBounds of (0, 0, 200, 500)
-  CGSize fakePreferredContentSize = CGSizeMake(200, 700);
-  MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
-      [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
-  fakeHeader.preferredContentSize = fakePreferredContentSize;
-  self.fakeBottomDrawer.headerViewController = fakeHeader;
-  self.fakeBottomDrawer.contentViewController =
-      [[MDCNavigationDrawerFakeTableViewController alloc] init];
-  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(200, 1000);
-
-  // When
-  [self.fakeBottomDrawer cacheLayoutCalculations];
-
-  // Then
-  // In cacheLayoutCalculation we test if contentScrollsToReveal is true then contentHeaderTopInset
-  // should be initialDrawerFactor * presentingViewBounds = 500 * 0.5
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 250.f, 0.001);
 }
 
 - (void)testContentScrollsToRevealTrue {
