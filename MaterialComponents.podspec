@@ -555,6 +555,7 @@ Pod::Spec.new do |mdc|
 
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
     extension.dependency "MaterialComponents/Themes"
+    extension.dependency "MaterialComponents/Buttons+ColorThemer"
   end
 
   mdc.subspec "Dialogs+TypographyThemer" do |extension|
@@ -564,6 +565,7 @@ Pod::Spec.new do |mdc|
 
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
     extension.dependency "MaterialComponents/schemes/Typography"
+    extension.dependency "MaterialComponents/Buttons+TypographyThemer"
   end
 
   mdc.subspec "Dialogs+DialogThemer" do |extension|
@@ -574,6 +576,7 @@ Pod::Spec.new do |mdc|
     extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
     extension.dependency "MaterialComponents/Dialogs+ColorThemer"
     extension.dependency "MaterialComponents/Dialogs+TypographyThemer"
+    extension.dependency "MaterialComponents/Buttons+ButtonThemer"
   end
 
   # FeatureHighlight

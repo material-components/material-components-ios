@@ -14,6 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MDCAlertActionManager.h"
 #import "MaterialButtons.h"
 
 @interface MDCAlertControllerView ()
@@ -23,11 +24,10 @@
 
 @property(nonatomic, nullable, strong) UIImageView *titleIconImageView;
 
-@property(nonatomic, nonnull, strong, readonly) NSArray<MDCButton *> *actionButtons;
+@property(nonatomic, nullable, weak) MDCAlertActionManager *actionManager;
 
-- (nonnull MDCButton *)addActionButtonTitle:(NSString *_Nonnull)actionTitle
-                                     target:(nullable id)target
-                                   selector:(SEL _Nonnull)selector;
+- (void)addActionButton:(nonnull MDCButton *)button;
++ (void)styleAsTextButton:(nonnull MDCButton *)button;
 
 - (CGSize)calculatePreferredContentSizeForBounds:(CGSize)boundsSize;
 
