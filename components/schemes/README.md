@@ -121,6 +121,7 @@ func applyGlobalTheme(to button: MDCButton) {
 
 void ApplyGlobalThemeToButton(MDCButton *button) {
   [MDCButtonColorThemer applySemanticColorScheme:colorScheme toButton:button];
+  [MDCButtonShapeThemer applyShapeScheme:shapeScheme toButton:button];
   [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:button];
 }
 ```
