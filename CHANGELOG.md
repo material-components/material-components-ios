@@ -11,11 +11,11 @@ property on `MDCAlertAction` in conjunction with the `MDCAlertControllerThemer`.
 ```swift
 let alert = MDCAlertController(title: "Button Theming", message: "High, Medium & Low Emphasis")
 
-alert.addAction(MDCAlertAction(title:"High", emphasis: .high, handler: handler))
-alert.addAction(MDCAlertAction(title:"Medium", emphasis: .medium, handler: handler))
-alert.addAction(MDCAlertAction(title:"Low", emphasis: .low, handler: handler))
+alert.addAction(MDCAlertAction(title:"High", emphasis: .high, handler: <#handler#>))
+alert.addAction(MDCAlertAction(title:"Medium", emphasis: .medium, handler: <#handler#>))
+alert.addAction(MDCAlertAction(title:"Low", emphasis: .low, handler: <#handler#>))
 
-MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
+MDCAlertControllerThemer.applyScheme(<#alertScheme#>, to: alert)
 
 self.present(alert, animated: true, completion: nil)
 ```
