@@ -1,30 +1,28 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCItemBarCell.h"
+#import "MDCItemBarCell+Private.h"
+
+#import <MDFInternationalization/MDFInternationalization.h>
 
 #import "MDCItemBarStringConstants.h"
 #import "MDCItemBarStyle.h"
 #import "MaterialAnimationTiming.h"
 #import "MaterialInk.h"
-#import "MaterialRTL.h"
+#import "MaterialMath.h"
 #import "MaterialTypography.h"
-
-/// Padding between the bottom of the cell and its content, in points.
-static const CGFloat kBottomPadding = 20.0f;
 
 /// Size of image in points.
 static const CGSize kImageSize = {24, 24};
@@ -54,7 +52,6 @@ const CGFloat kSelectedNavigationImageYOffset = -2;
 static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 
 @implementation MDCItemBarCell {
-  UILabel *_titleLabel;
   UIImageView *_imageView;
   UILabel *_badgeLabel;
   MDCInkTouchController *_inkTouchController;
@@ -81,7 +78,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 
     // Set up ink controller to splash ink on taps.
     _inkTouchController = [[MDCInkTouchController alloc] initWithView:self];
-    [_inkTouchController addInkView];
+    [_inkTouchController addInkView];   // Ink should always be on top of other views
 
     [self updateInk];
     [self updateColors];
@@ -93,7 +90,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 #pragma mark - Public
 
 + (UIEdgeInsets)edgeInsetsForHorizontalSizeClass:(UIUserInterfaceSizeClass)sizeClass {
-  // Padding from spec: https://material.io/guidelines/components/tabs.html
+  // Padding from spec: https://material.io/go/design-tabs
   CGFloat outerPadding = (sizeClass == UIUserInterfaceSizeClassRegular) ? 24.0f : 12.0f;
   return UIEdgeInsetsMake(0.0, outerPadding, 0.0, outerPadding);
 }
@@ -109,7 +106,8 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 
   // Only compute text bounding rect if necessary (all except image-only items)
   if (style.shouldDisplayTitle) {
-    UIFont *font = style.titleFont;
+    // Determine size based on the unselected state because the majority of tabs are unselected.
+    UIFont *font = style.unselectedTitleFont;
     NSDictionary *titleAttributes = @{NSFontAttributeName : font};
     textBounds = [title boundingRectWithSize:size
                                      options:NSStringDrawingTruncatesLastVisibleLine
@@ -179,18 +177,44 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
   [self setNeedsLayout];
 }
 
+- (CGRect)contentFrame {
+  if (_style.shouldDisplayTitle) {
+    if (_style.shouldDisplayImage) {
+      // Title and image.
+      CGRect titleFrame = [self convertRect:_titleLabel.bounds fromView:_titleLabel];
+      CGRect imageFrame = [self convertRect:_imageView.bounds fromView:_imageView];
+      return CGRectUnion(titleFrame, imageFrame);
+    } else {
+      // Only title.
+      return [self convertRect:_titleLabel.bounds fromView:_titleLabel];
+    }
+  } else {
+    // Only image.
+    return [self convertRect:_imageView.bounds fromView:_imageView];
+  }
+}
+
 - (void)applyStyle:(MDCItemBarStyle *)style {
   if (style != _style && ![style isEqual:_style]) {
     _style = style;
 
     [self updateDisplayedTitle];
     [self updateTitleTextColor];
+    [self updateImageTintColor];
     [self updateInk];
     [self updateSubviews];
+    [self updateTitleLines];
     [self updateTitleFont];
     [self updateTransformsAnimated:NO];
     [self setNeedsLayout];
   }
+}
+
+- (void)updateTitleLines {
+  // The presence of an image restricts titles to a single line
+  _titleLabel.numberOfLines = _style.shouldDisplayImage ? 1 : _style.textOnlyNumberOfLines;
+  // Only permit smaller font sizes for two-line titles
+  _titleLabel.adjustsFontSizeToFitWidth = _titleLabel.numberOfLines == 1 ? NO : YES;
 }
 
 - (void)updateWithItem:(UITabBarItem *)item
@@ -222,15 +246,14 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 
   // Image has a fixed size and is horizontally centered, regardless of content style.
   imageBounds.size = kImageSize;
-  imageCenter.x = (float)round(CGRectGetMidX(contentBounds));
+  imageCenter.x = CGRectGetMidX(contentBounds);
 
-  CGSize titleSize = [_titleLabel sizeThatFits:contentBounds.size];
+  CGSize titleSize = [self.titleLabel sizeThatFits:contentBounds.size];
   titleSize.width = MIN(titleSize.width, CGRectGetWidth(contentBounds));
 
   // Title is a fixed height based on content and is placed full-width, regardless of content style.
-  titleCenter.x = roundf((float)CGRectGetMidX(contentBounds));
-  titleBounds.size.width = ceilf((float)CGRectGetWidth(contentBounds));
-  titleBounds.size.height = ceilf((float)titleSize.height);
+  titleCenter.x = CGRectGetMidX(contentBounds);
+  titleBounds.size = titleSize;
 
   // Horizontally align the badge.
   CGSize badgeSize = [_badgeLabel sizeThatFits:contentBounds.size];
@@ -238,14 +261,14 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
   badgeBounds.size = badgeSize;
 
   if (_style.shouldDisplayBadge) {
-    CGFloat badgeOffset = ((float)imageBounds.size.width / 2.0f) + ((float)badgeSize.width / 2.0f);
-    if (self.mdc_effectiveUserInterfaceLayoutDirection ==
+    CGFloat badgeOffset = (imageBounds.size.width / 2) + (badgeSize.width / 2);
+    if (self.mdf_effectiveUserInterfaceLayoutDirection ==
         UIUserInterfaceLayoutDirectionRightToLeft) {
       badgeOffset *= -1;
     }
 
     badgeCenter.x = imageCenter.x + badgeOffset;
-    badgeCenter.y = kBadgeTopPadding + ((float)badgeSize.height / 2.0f);
+    badgeCenter.y = kBadgeTopPadding + (badgeSize.height / 2);
   }
 
   // Place components vertically
@@ -254,50 +277,50 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
       // Image and title, center both vertically together.
       const CGFloat padding = _style.titleImagePadding;
       const CGFloat totalHeight = titleSize.height + padding + kImageSize.height;
-      const CGFloat yOrigin = (float)round(CGRectGetMidY(contentBounds) - totalHeight / 2.0f);
-      imageCenter.y = yOrigin + ((float)kImageSize.height / 2.0f);
-      titleCenter.y = yOrigin + kImageSize.height + padding + ((float)titleSize.height / 2.0f);
-      titleCenter.y = roundf((float)titleCenter.y);
+      const CGFloat yOrigin = CGRectGetMidY(contentBounds) - (totalHeight / 2);
+      imageCenter.y = yOrigin + (kImageSize.height / 2);
+      titleCenter.y = yOrigin + kImageSize.height + padding + (titleSize.height / 2);
+      titleCenter.y = titleCenter.y;
 
     } else {
-      // Title only, center vertically.
-      // +1 for slight adjustment to font baseline for centered title labels.
-      const CGFloat centeredTitleYOffset = 1.0f;
-      titleCenter.y = contentBounds.size.height - kBottomPadding - titleSize.height +
-                      centeredTitleYOffset + ((float)titleSize.height / 2.0f);
-      titleCenter.y = roundf((float)titleCenter.y);
+      titleCenter.y = CGRectGetMidY(contentBounds);
     }
   } else {
     if (_style.shouldDisplayImage) {
       // Image only, center image vertically
-      imageCenter.y = (float)round(CGRectGetMidY(contentBounds));
+      imageCenter.y = CGRectGetMidY(contentBounds);
     } else {
       // Nothing: NOP
     }
   }
 
-  _imageView.center = imageCenter;
+  UIScreen *screen = self.window.screen ?: UIScreen.mainScreen;
+  CGFloat scale = screen.scale;
   _imageView.bounds = imageBounds;
+  _imageView.center = MDCRoundCenterWithBoundsAndScale(imageCenter, _imageView.bounds, scale);
 
-  _badgeLabel.center = badgeCenter;
-  _badgeLabel.bounds = badgeBounds;
+  _badgeLabel.bounds = MDCRectAlignToScale(badgeBounds, scale);
+  _badgeLabel.center = MDCRoundCenterWithBoundsAndScale(badgeCenter, _badgeLabel.bounds, scale);
 
-  _titleLabel.center = titleCenter;
-  _titleLabel.bounds = titleBounds;
+  self.titleLabel.bounds = MDCRectAlignToScale(titleBounds, scale);
+  self.titleLabel.center = MDCRoundCenterWithBoundsAndScale(titleCenter,
+                                                            self.titleLabel.bounds,
+                                                            scale);
 }
 
 - (void)tintColorDidChange {
   [super tintColorDidChange];
 
   [self updateTitleTextColor];
+  [self updateImageTintColor];
 }
 
 - (void)didMoveToWindow {
   [super didMoveToWindow];
 
-  if (self.window) {
-    [self updateTransformsAnimated:NO];
-  }
+  [self updateTransformsAnimated:NO];
+
+  [self setNeedsLayout];
 }
 
 #pragma mark - UICollectionReusableView
@@ -305,6 +328,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 - (void)prepareForReuse {
   [super prepareForReuse];
   [self updateTitleTextColor];
+  [self updateImageTintColor];
   [self updateAccessibilityTraits];
   [_inkTouchController cancelInkTouchProcessing];
 }
@@ -317,13 +341,16 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 
   [super setSelected:selected];
   [self updateTitleTextColor];
+  [self updateImageTintColor];
   [self updateAccessibilityTraits];
   [self updateTransformsAnimated:animate];
+  [self updateTitleFont];
 }
 
 - (void)setHighlighted:(BOOL)highlighted {
   [super setHighlighted:highlighted];
   [self updateTitleTextColor];
+  [self updateImageTintColor];
 }
 
 #pragma mark - UIAccessibility
@@ -387,14 +414,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 }
 
 - (UIUserInterfaceSizeClass)horizontalSizeClass {
-  // Use trait collection's horizontalSizeClass if available.
-  if ([self respondsToSelector:@selector(traitCollection)]) {
-    return self.traitCollection.horizontalSizeClass;
-  }
-
-  // Pre-iOS 8: Use fixed size class for device.
-  const BOOL isPad = [UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad;
-  return isPad ? UIUserInterfaceSizeClassRegular : UIUserInterfaceSizeClassCompact;
+  return self.traitCollection.horizontalSizeClass;
 }
 
 /// Ensures that subviews exist and have the correct visibility for the current content style.
@@ -408,6 +428,8 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 
       // Display our image in the new image view.
       [self updateDisplayedImage];
+
+      [self updateImageTintColor];
     }
 
     _imageView.hidden = NO;
@@ -422,12 +444,14 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
       _titleLabel = [[UILabel alloc] initWithFrame:titleFrame];
       _titleLabel.autoresizingMask =
           UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-      _titleLabel.numberOfLines = 1;
+      // 0.85 is based on 12sp/14sp guidelines for single- or double-line text
+      _titleLabel.minimumScaleFactor = (CGFloat)0.85;
       _titleLabel.textAlignment = NSTextAlignmentCenter;
 
       [self.contentView addSubview:_titleLabel];
 
       // Display title and update color for the new label.
+      [self updateTitleLines];
       [self updateDisplayedTitle];
       [self updateTitleTextColor];
       [self updateTitleFont];
@@ -454,6 +478,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 
 - (void)updateColors {
   [self updateTitleTextColor];
+  [self updateImageTintColor];
   [self updateInk];
 }
 
@@ -464,14 +489,21 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
   }
   _titleLabel.textColor = textColor;
   _badgeLabel.textColor = textColor;
-  _imageView.tintColor = textColor;
+}
+
+- (void)updateImageTintColor {
+  UIColor *imageTintColor = _style.imageTintColor;
+  if (self.isHighlighted || self.isSelected) {
+    imageTintColor = _style.selectedImageTintColor;
+  }
+  _imageView.tintColor = imageTintColor;
 }
 
 - (void)updateTransformsAnimated:(BOOL)animated {
   CGAffineTransform titleTransform = CGAffineTransformIdentity;
   CGAffineTransform imageTransform = CGAffineTransformIdentity;
 
-  UIScreen *screen = self.window.screen;
+  UIScreen *screen = self.window.screen ?: UIScreen.mainScreen;
   const CGFloat screenScale = (screen ? screen.scale : 1);
   CGFloat titleContentsScale = screenScale;
 
@@ -498,33 +530,35 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
   void (^performAnimations)(void) = ^{
     // Update the title scale and redraw if it'll be ending at a higher scale
     // to minimize aliasing during animation.
-    if (titleContentsScale > _titleLabel.layer.contentsScale) {
-      _titleLabel.layer.contentsScale = titleContentsScale;
-      [_titleLabel setNeedsDisplay];
+    if (titleContentsScale > self.titleLabel.layer.contentsScale) {
+      self.titleLabel.layer.contentsScale = titleContentsScale;
+      [self.titleLabel setNeedsDisplay];
     }
 
     // Set the transforms.
-    _titleLabel.transform = titleTransform;
-    _badgeLabel.transform = imageTransform;
-    _imageView.transform = imageTransform;
+    self.titleLabel.transform = titleTransform;
+    self->_badgeLabel.transform = imageTransform;
+    self->_imageView.transform = imageTransform;
   };
-  void (^completeAnimations)(BOOL) = ^(BOOL finished) {
-    if (titleContentsScale != _titleLabel.layer.contentsScale) {
+  void (^completeAnimations)(BOOL) = ^(__unused BOOL finished) {
+    if (titleContentsScale != self.titleLabel.layer.contentsScale) {
       // Update the title with the final contents scale and redraw.
-      _titleLabel.layer.contentsScale = titleContentsScale;
-      [_titleLabel setNeedsDisplay];
+      self.titleLabel.layer.contentsScale = titleContentsScale;
+      [self.titleLabel setNeedsDisplay];
     }
   };
 
   if (animated) {
+    [CATransaction begin];
     CAMediaTimingFunction *translateTimingFunction =
         [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionTranslate];
-    [UIView mdc_animateWithTimingFunction:translateTimingFunction
-                                 duration:kSelectionAnimationDuration
-                                    delay:0
-                                  options:0
-                               animations:performAnimations
-                               completion:completeAnimations];
+    [CATransaction setAnimationTimingFunction:translateTimingFunction];
+    [UIView animateWithDuration:kSelectionAnimationDuration
+                          delay:0
+                        options:0
+                     animations:performAnimations
+                     completion:completeAnimations];
+    [CATransaction commit];
   } else {
     performAnimations();
     completeAnimations(YES);
@@ -532,13 +566,15 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 }
 
 - (void)updateTitleFont {
-  _titleLabel.font = _style.titleFont;
+  _titleLabel.font = self.isSelected ? _style.selectedTitleFont : _style.unselectedTitleFont;
 }
 
 - (void)updateInk {
   MDCInkView *inkView = _inkTouchController.defaultInkView;
   inkView.inkColor = _style.inkColor;
   inkView.inkStyle = _style.inkStyle;
+  inkView.usesLegacyInkRipple = NO;
+  inkView.clipsToBounds = (inkView.inkStyle == MDCInkStyleBounded) ? YES : NO;
 }
 
 - (void)updateAccessibilityTraits {
@@ -554,9 +590,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 }
 
 - (void)updateDisplayedTitle {
-  if (!_titleLabel.hidden) {
-    _titleLabel.text = [[self class] displayedTitleForTitle:_title style:_style];
-  }
+  _titleLabel.text = [[self class] displayedTitleForTitle:_title style:_style];
 }
 
 @end

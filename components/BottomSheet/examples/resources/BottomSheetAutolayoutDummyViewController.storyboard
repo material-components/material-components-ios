@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Bottom Sheet Autolayout Dummy View Controller-->
+        <scene sceneID="Xmz-P4-gC4">
+            <objects>
+                <viewController storyboardIdentifier="BottomSheetAutolayoutID" id="HZQ-uo-nGg" customClass="BottomSheetAutolayoutDummyViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="4IK-NX-Sr4"/>
+                        <viewControllerLayoutGuide type="bottom" id="SYu-ku-JWw"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="s1z-8Q-7ud">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bottom sheet" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xok-FS-AFe">
+                                <rect key="frame" x="0.0" y="28" width="375" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="5mL-Z9-BkU"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This view controller is laid out using Autolayout. You can also set preferredContentSize to customize the size." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HDl-Ut-EPL">
+                                <rect key="frame" x="20" y="71" width="335" height="550"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4gI-VF-J2B" customClass="MDCButton">
+                                <rect key="frame" x="235" y="629" width="120" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="120" id="Ek2-JA-Uum"/>
+                                    <constraint firstAttribute="height" constant="30" id="Llx-WR-X7r"/>
+                                </constraints>
+                                <state key="normal" title="Dismiss"/>
+                                <connections>
+                                    <action selector="dismissButtonPressed:" destination="HZQ-uo-nGg" eventType="primaryActionTriggered" id="MQ5-Ho-INK"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="HDl-Ut-EPL" firstAttribute="leading" secondItem="s1z-8Q-7ud" secondAttribute="leading" constant="20" symbolic="YES" id="EvP-rT-UaV"/>
+                            <constraint firstAttribute="trailing" secondItem="4gI-VF-J2B" secondAttribute="trailing" constant="20" symbolic="YES" id="GKI-bh-IsU"/>
+                            <constraint firstItem="xok-FS-AFe" firstAttribute="leading" secondItem="s1z-8Q-7ud" secondAttribute="leading" id="Jrd-ld-uU7"/>
+                            <constraint firstItem="4gI-VF-J2B" firstAttribute="top" secondItem="HDl-Ut-EPL" secondAttribute="bottom" constant="8" symbolic="YES" id="Ror-hV-6Xl"/>
+                            <constraint firstItem="SYu-ku-JWw" firstAttribute="top" secondItem="4gI-VF-J2B" secondAttribute="bottom" constant="8" symbolic="YES" id="Xzm-gY-kWO"/>
+                            <constraint firstItem="xok-FS-AFe" firstAttribute="top" secondItem="4IK-NX-Sr4" secondAttribute="bottom" constant="8" symbolic="YES" id="bPa-Vk-aAM"/>
+                            <constraint firstAttribute="trailing" secondItem="HDl-Ut-EPL" secondAttribute="trailing" constant="20" symbolic="YES" id="hgx-uA-eWj"/>
+                            <constraint firstAttribute="trailing" secondItem="xok-FS-AFe" secondAttribute="trailing" id="mjf-M9-mBd"/>
+                            <constraint firstItem="HDl-Ut-EPL" firstAttribute="top" secondItem="xok-FS-AFe" secondAttribute="bottom" constant="8" symbolic="YES" id="sT8-Oj-2i3"/>
+                        </constraints>
+                    </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="375" height="667"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Xrr-rI-UeO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-32.799999999999997" y="-13.943028485757123"/>
+        </scene>
+    </scenes>
+</document>

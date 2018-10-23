@@ -1,55 +1,45 @@
 <!--docs:
-title: "Header Stack Views"
+title: "Header stack view"
 layout: detail
 section: components
 excerpt: "The Header Stack View component is a view that coordinates the layout of two vertically stacked bar views."
 iconId: header
-path: /catalog/header-stack-views/
+path: /catalog/app-bars/header-stack-view/
+api_doc_root: true
 -->
 
-# Header Stack Views
+# Header stack view
 
-<!--{% if site.link_to_site == "true" %}-->
+The header stack view component is a view that coordinates the layout of two vertically stacked
+bar views.
+
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/header_stack_view.png" alt="Header Stack View" width="320">
 </div>
-<!--{% else %}
-<div class="article__asset article__asset--screenshot" markdown="1">
-  <video src="docs/assets/header_stack_view.mp4" autoplay loop></video>
-</div>
-{% endif %}-->
-
-The Header Stack View component is a view that coordinates the layout of two vertically stacked
-bar views.
-<!--{: .article__intro }-->
 
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/layout/structure.html#structure-app-bar">App Bar</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/layout/structure.html#structure-app-bar">Material Design guidelines: App Bar</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/flexible-headers/header-stack-views/api-docs/Classes/MDCHeaderStackView.html">API: MDCHeaderStackView</a></li>
 </ul>
 
 - - -
 
 ## Installation
 
-### Requirements
-
-- Xcode 7.0 or higher.
-- iOS SDK version 7.0 or higher.
-
-
 ### Installation with CocoaPods
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-``` bash
+```bash
 pod 'MaterialComponents/HeaderStackView'
 ```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 
-``` bash
+```bash
 pod install
 ```
 
@@ -72,33 +62,33 @@ The top bar is typically a navigation bar. The bottom bar, when provided, is typ
 
 ### Importing
 
-Before using Header Stack View, you'll need to import it:
+Before using header stack view, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 import MaterialComponents.MaterialHeaderStackView
 ```
 
 #### Objective-C
 
-``` objc
+```objc
 #import "MaterialHeaderStackView.h"
 ```
 <!--</div>-->
 
 
-Header Stack View provides MDCHeaderStackView, which is a UIView subclass.
+Header stack view provides MDCHeaderStackView, which is a UIView subclass.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 let headerStackView = MDCHeaderStackView()
 ```
 
 #### Objective-C
 
-``` objc
+```objc
 MDCHeaderStackView *headerStackView = [[MDCHeaderStackView alloc] init];
 ```
 <!--</div>-->
@@ -107,13 +97,13 @@ You may provide a top bar:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 headerStackView.topBar = navigationBar
 ```
 
 #### Objective-C
 
-``` objc
+```objc
 headerStackView.topBar = navigationBar;
 ```
 <!--</div>-->
@@ -122,13 +112,13 @@ You may provide a bottom bar:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 headerStackView.bottomBar = tabBar
 ```
 
 #### Objective-C
 
-``` objc
+```objc
 headerStackView.bottomBar = tabBar;
 ```
 <!--</div>-->

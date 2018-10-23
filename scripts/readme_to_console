@@ -1,0 +1,47 @@
+#!/bin/bash -e
+#
+# Copyright 2017-present The Material Motion and Material Components for
+# iOS Authors. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+HELPFILE="$1"
+if [ ! -f "$HELPFILE" ]; then
+  echo "No help for $parentcmd $1 found."
+  exit 1
+fi
+
+if [ -t 1 ] ; then # We're writing directly to terminal
+  readonly B=$(tput bold)
+  readonly U=$(tput smul)
+  readonly N=$(tput sgr0)
+else # We're in a pipe
+  readonly B=""
+  readonly U=""
+  readonly N=""
+fi
+
+echo
+# Underline content between <> marks
+sed -e "s:\(<\([a-zA-Z0-9 /]*\)>\):${N}${U}\2${N}:g" "$HELPFILE" | \
+  # Bold content between `` marks
+  perl -pe "s:(\`(.+?)\`):${B}\2${N}:g" | \
+  # Indent code blocks by two
+  sed -e "s/^    /      /" | \
+  # Bold markdown headers
+  perl -pe "s/^#+ (.+)/${B}\1${N}/g" | \
+  # Strip "Usage:"
+  sed -e "s/^Usage: //" | \
+  # Indent all paragraphs
+  perl -pe "s:^(\S.+):    \1:g"
+echo

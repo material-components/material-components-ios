@@ -1,24 +1,22 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCOverlayWindow.h"
 
 #import <objc/runtime.h>
 
-#import "UIApplication+AppExtensions.h"
+#import "MaterialApplication.h"
 
 /**
  A container view for overlay views.
@@ -95,70 +93,12 @@
   _overlayView.backgroundColor = [UIColor clearColor];
   [self addSubview:_overlayView];
 
-  NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-  [nc addObserver:self
-         selector:@selector(handleRotationNotification:)
-             name:UIApplicationWillChangeStatusBarOrientationNotification
-           object:nil];
-
-  // Set a sane initial position.
-  [self updateOverlayViewForOrientation:[[UIApplication mdc_safeSharedApplication]
-                                            statusBarOrientation]];
-
   // Set a sane hidden state.
   [self updateOverlayHiddenState];
 }
 
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-#pragma mark - Rotation
-
-- (void)updateOverlayViewForOrientation:(UIInterfaceOrientation)orientation {
-  // On iOS 8, the window orientation is corrected logically after transforms, so there is
-  // no need to apply this transform correction like we do for iOS 7 and below.
-  BOOL hasFixedCoordinateSpace = NO;
-  UIScreen *screen = [UIScreen mainScreen];
-  hasFixedCoordinateSpace = [screen respondsToSelector:@selector(fixedCoordinateSpace)];
-
-  if (!hasFixedCoordinateSpace) {
-    CGAffineTransform transform = CGAffineTransformIdentity;
-    BOOL swapBounds = NO;
-
-    switch (orientation) {
-      case UIInterfaceOrientationLandscapeLeft:
-        transform = CGAffineTransformMakeRotation((CGFloat)-M_PI_2);
-        swapBounds = YES;
-        break;
-      case UIInterfaceOrientationLandscapeRight:
-        transform = CGAffineTransformMakeRotation((CGFloat)M_PI_2);
-        swapBounds = YES;
-        break;
-      case UIInterfaceOrientationPortraitUpsideDown:
-        transform = CGAffineTransformMakeRotation((CGFloat)M_PI);
-        break;
-      case UIInterfaceOrientationPortrait:
-      default:
-        break;
-    }
-
-    CGRect bounds = self.bounds;
-
-    if (swapBounds) {
-      bounds = CGRectMake(0, 0, bounds.size.height, bounds.size.width);
-    }
-    self.overlayView.bounds = bounds;
-    self.overlayView.transform = transform;
-    [self.overlayView layoutIfNeeded];
-  }
-}
-
-// This method is called within an animation block, so we simply need to update the overlay view.
-- (void)handleRotationNotification:(NSNotification *)notification {
-  UIInterfaceOrientation orientation =
-      [notification.userInfo[UIApplicationStatusBarOrientationUserInfoKey] integerValue];
-  [self updateOverlayViewForOrientation:orientation];
 }
 
 #pragma mark - Window positioning
@@ -265,7 +205,7 @@
 
 static char kLevelKey;
 
-- (UIWindowLevel)windowLevelForOverlay:(UIView *)overlay {
+- (UIWindowLevel)windowLevelForOverlay:(__unused UIView *)overlay {
   NSNumber *levelObject = objc_getAssociatedObject(self, &kLevelKey);
   return [levelObject floatValue];
 }

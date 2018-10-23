@@ -1,4 +1,0 @@
-﻿/* Label for a button indicating a collectionView row can be deleted. (40 chars.) */
-"DeleteButton" = "Delete";
-/* Label for info bar indicating available editing gestures for collectionView. (40 chars.) */
-"InfoBarGestureHint" = "Swipe an item to delete";

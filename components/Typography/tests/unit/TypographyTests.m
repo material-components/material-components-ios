@@ -1,22 +1,21 @@
-/*
- Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <XCTest/XCTest.h>
 
 #import "MaterialTypography.h"
+#import "../../src/private/UIFont+MaterialTypographyPrivate.h"
 
 static const CGFloat kEpsilon = 0.001f;
 static const CGFloat kOpacityLight = 0.54f;
@@ -330,4 +329,61 @@ static const CGFloat kOpacityMedium = 0.87f;
   // Cleanup
   [MDCTypography setFontLoader:[[MDCSystemFontLoader alloc] init]];
 }
+
+- (void)testFontFamilyMatchesSystemFontFamily {
+  // Given
+  NSArray<NSNumber *> *allFontStyles = @[
+    @(MDCFontTextStyleBody1),
+    @(MDCFontTextStyleBody2),
+    @(MDCFontTextStyleCaption),
+    @(MDCFontTextStyleHeadline),
+    @(MDCFontTextStyleSubheadline),
+    @(MDCFontTextStyleTitle),
+    @(MDCFontTextStyleDisplay1),
+    @(MDCFontTextStyleDisplay2),
+    @(MDCFontTextStyleDisplay3),
+    @(MDCFontTextStyleDisplay4),
+    @(MDCFontTextStyleButton),
+  ];
+
+  for (NSNumber *styleObject in allFontStyles) {
+    // When
+    MDCFontTextStyle style = styleObject.integerValue;
+    UIFont *mdcFont = [UIFont mdc_preferredFontForMaterialTextStyle:style];
+    UIFont *systemFont;
+    if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpartial-availability"
+    systemFont = [UIFont systemFontOfSize:mdcFont.pointSize weight:UIFontWeightRegular];
+    } else {
+      systemFont = [UIFont systemFontOfSize:mdcFont.pointSize];
+    }
+#pragma clang diagnostic pop
+
+    // Then
+    XCTAssertEqualObjects(systemFont.familyName, mdcFont.familyName);
+  }
+}
+
+- (void)testExtendedDescription {
+  // Given
+  UIFont *systemFont;
+  if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpartial-availability"
+    systemFont = [UIFont systemFontOfSize:22.0 weight:UIFontWeightRegular];
+  } else {
+    systemFont = [UIFont systemFontOfSize:22.0];
+  }
+#pragma clang diagnostic pop
+  XCTAssertNotNil(systemFont);
+
+  // When
+  NSString *fontExtendedDescription = [systemFont mdc_extendedDescription];
+
+  // Then
+  XCTAssertNotNil(fontExtendedDescription);
+}
+
+
 @end

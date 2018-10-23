@@ -17,7 +17,9 @@
 readonly SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly ROOT_DIR="$SCRIPTS_DIR/.."
 
-# Update CocoaPod's repo for the pods that the library, catalog, or demo apps use.
+# Update CocoaPod's repo for the pods that the library, catalog, or demo apps
+# use.
 pod repo update
 
-"$SCRIPTS_DIR"/release/manage_pods.py install
+# We've already updated the repo once, so don't do it in each directory.
+"$SCRIPTS_DIR"/manage_pods.py --fast_pod_install install

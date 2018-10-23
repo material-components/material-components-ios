@@ -1,1 +1,0 @@
-../../../MaterialComponents/components/Snackbar/src/MDCSnackbarManager.h

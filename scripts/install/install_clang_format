@@ -23,7 +23,24 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 "$DIR/install_brew"
 
 set -o errexit
-brew update
-brew uninstall --force clang-format
-brew install clang-format
 
+# Respect existing installs first.
+if ! git clang-format -h >/dev/null 2>&1; then
+  echo "git clang-format not available..."
+
+  git_clang_format_path="/usr/local/bin/git-clang-format"
+
+  if [ ! -f "$git_clang_format_path" ]; then
+    TMP_PATH=$(mktemp -d)
+    TMP_FILE="$TMP_PATH/git-clang-format"
+    echo "Downloading..."
+    curl -s https://raw.githubusercontent.com/llvm-mirror/clang/master/tools/clang-format/git-clang-format -o "$TMP_FILE"
+
+    echo "Requesting sudo to move $TMP_FILE to $git_clang_format_path"
+    sudo mv "$TMP_FILE" "$git_clang_format_path"
+  fi
+
+  # Ensure permissions are set correctly.
+  echo "Setting executable permissions on $git_clang_format_path..."
+  chmod +x "$git_clang_format_path"
+fi

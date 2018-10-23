@@ -1,28 +1,24 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCCollectionViewStyler.h"
 
 #import "MDCCollectionViewStylingDelegate.h"
 #import "MaterialCollectionLayoutAttributes.h"
+#import "MaterialPalettes.h"
 
-#import <tgmath.h>
-
-#define RGBCOLOR(r, g, b) \
-  [UIColor colorWithRed:(r) / 255.0f green:(g) / 255.0f blue:(b) / 255.0f alpha:1]
+#include <tgmath.h>
 
 typedef NS_OPTIONS(NSUInteger, BackgroundCacheKey) {
   BackgroundCacheKeyFlat = 0,
@@ -106,6 +102,7 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
 @synthesize gridColumnCount = _gridColumnCount;
 @synthesize gridPadding = _gridPadding;
 @synthesize cellStyle = _cellStyle;
+@synthesize cardBorderRadius = _cardBorderRadius;
 @synthesize separatorColor = _separatorColor;
 @synthesize separatorInset = _separatorInset;
 @synthesize separatorLineHeight = _separatorLineHeight;
@@ -125,11 +122,13 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
     // Cell default style properties.
     _cellBackgroundColor = [UIColor whiteColor];
     _cellStyle = MDCCollectionViewCellStyleDefault;
-    _collectionView.backgroundColor = RGBCOLOR(0xEE, 0xEE, 0xEE);
+    // Background color is 0xEEEEEE
+    _collectionView.backgroundColor = MDCPalette.greyPalette.tint200;
     _inlaidIndexPathSet = [NSMutableSet set];
+    _cardBorderRadius = kCollectionViewCellDefaultBorderRadius;
 
     // Cell separator defaults.
-    _separatorColor = RGBCOLOR(224, 224, 224);
+    _separatorColor = MDCPalette.greyPalette.tint300;
     _separatorInset = UIEdgeInsetsZero;
     _separatorLineHeight =
         kCollectionViewCellSeparatorDefaultHeightInPixels / [[UIScreen mainScreen] scale];
@@ -172,7 +171,7 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
         animations:^{
           [self updateLayoutAnimated:YES];
         }
-        completion:^(BOOL finished) {
+        completion:^(__unused BOOL finished) {
           [self setShouldAnimateCellsOnAppearance:NO];
         }];
   }
@@ -244,6 +243,40 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
   [_cellBackgroundCaches removeAllObjects];
   [self invalidateLayoutForStyleChange];
   _cellStyle = cellStyle;
+}
+
+- (BOOL)shouldHideSeparatorForCellLayoutAttributes:(MDCCollectionViewLayoutAttributes *)attr {
+  BOOL shouldHideSeparator = self.shouldHideSeparators;
+  if (!self.delegate) {
+    return shouldHideSeparator;
+  }
+
+  NSIndexPath *indexPath = attr.indexPath;
+  BOOL isCell = attr.representedElementCategory == UICollectionElementCategoryCell;
+  BOOL isSectionHeader =
+      [attr.representedElementKind isEqualToString:UICollectionElementKindSectionHeader];
+  BOOL isSectionFooter =
+      [attr.representedElementKind isEqualToString:UICollectionElementKindSectionFooter];
+  if (isCell) {
+    if ([self.delegate
+            respondsToSelector:@selector(collectionView:shouldHideItemSeparatorAtIndexPath:)]) {
+      shouldHideSeparator = [self.delegate collectionView:_collectionView
+                       shouldHideItemSeparatorAtIndexPath:indexPath];
+    }
+  } else if (isSectionHeader) {
+    if ([self.delegate
+            respondsToSelector:@selector(collectionView:shouldHideHeaderSeparatorForSection:)]) {
+      shouldHideSeparator = [self.delegate collectionView:_collectionView
+                      shouldHideHeaderSeparatorForSection:indexPath.section];
+    }
+  } else if (isSectionFooter) {
+    if ([self.delegate
+            respondsToSelector:@selector(collectionView:shouldHideFooterSeparatorForSection:)]) {
+      shouldHideSeparator = [self.delegate collectionView:_collectionView
+                      shouldHideFooterSeparatorForSection:indexPath.section];
+    }
+  }
+  return shouldHideSeparator;
 }
 
 #pragma mark - Public
@@ -325,10 +358,10 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
       }
     }
 
-    void (^completionBlock)(BOOL finished) = ^(BOOL finished) {
+    void (^completionBlock)(BOOL finished) = ^(__unused BOOL finished) {
       if ([self.delegate
               respondsToSelector:@selector(collectionView:didApplyInlayToItemAtIndexPaths:)]) {
-        [self.delegate collectionView:_collectionView
+        [self.delegate collectionView:self.collectionView
             didApplyInlayToItemAtIndexPaths:@[ indexPath ]];
       }
     };
@@ -342,10 +375,10 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
 - (void)removeInlayFromItemAtIndexPath:(NSIndexPath *)indexPath animated:(BOOL)animated {
   [_inlaidIndexPathSet removeObject:indexPath];
 
-  void (^completionBlock)(BOOL finished) = ^(BOOL finished) {
+  void (^completionBlock)(BOOL finished) = ^(__unused BOOL finished) {
     if ([self.delegate
             respondsToSelector:@selector(collectionView:didRemoveInlayFromItemAtIndexPaths:)]) {
-      [self.delegate collectionView:_collectionView
+      [self.delegate collectionView:self.collectionView
           didRemoveInlayFromItemAtIndexPaths:@[ indexPath ]];
     }
   };
@@ -364,11 +397,11 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
       }
     }
 
-    void (^completionBlock)(BOOL finished) = ^(BOOL finished) {
+    void (^completionBlock)(BOOL finished) = ^(__unused BOOL finished) {
       if ([self.delegate
               respondsToSelector:@selector(collectionView:didApplyInlayToItemAtIndexPaths:)]) {
-        [self.delegate collectionView:_collectionView
-            didApplyInlayToItemAtIndexPaths:[_inlaidIndexPathSet allObjects]];
+        [self.delegate collectionView:self.collectionView
+            didApplyInlayToItemAtIndexPaths:[self.inlaidIndexPathSet allObjects]];
       }
     };
 
@@ -381,10 +414,10 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
   NSArray *indexPaths = [_inlaidIndexPathSet allObjects];
   [_inlaidIndexPathSet removeAllObjects];
 
-  void (^completionBlock)(BOOL finished) = ^(BOOL finished) {
+  void (^completionBlock)(BOOL finished) = ^(__unused BOOL finished) {
     if ([self.delegate
             respondsToSelector:@selector(collectionView:didRemoveInlayFromItemAtIndexPaths:)]) {
-      [self.delegate collectionView:_collectionView didRemoveInlayFromItemAtIndexPaths:indexPaths];
+      [self.delegate collectionView:self.collectionView didRemoveInlayFromItemAtIndexPaths:indexPaths];
     }
   };
 
@@ -407,7 +440,7 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
     // Invalidate current layout while allowing animation to new layout.
     [UIView animateWithDuration:0
         animations:^{
-          [_collectionView.collectionViewLayout invalidateLayout];
+          [self.collectionView.collectionViewLayout invalidateLayout];
         }
         completion:^(BOOL finished) {
           if (completion) {
@@ -468,7 +501,7 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
     // If not card or grouped style, revert @c isBottom to allow drawing separator at bottom.
     isBottom = NO;
   }
-  CGFloat borderRadius = (isCardStyle) ? kCollectionViewCellDefaultBorderRadius : 0.0f;
+  CGFloat borderRadius = (isCardStyle) ? _cardBorderRadius : 0.0f;
 
   // Allowance for grid decoration view.
   if (isGridLayout) {
@@ -528,8 +561,11 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
   // Get cell color.
   UIColor *backgroundColor = _cellBackgroundColor;
   if ([_delegate respondsToSelector:@selector(collectionView:cellBackgroundColorAtIndexPath:)]) {
-    backgroundColor =
+    UIColor *customBackgroundColor =
         [_delegate collectionView:_collectionView cellBackgroundColorAtIndexPath:attr.indexPath];
+    if (customBackgroundColor) {
+      backgroundColor = customBackgroundColor;
+    }
   }
 
   NSPointerArray *cellBackgroundCache = _cellBackgroundCaches[backgroundColor];

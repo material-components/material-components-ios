@@ -1,0 +1,247 @@
+#!/bin/bash
+
+# Build iOS codelabs.
+#
+# If --verbose (-v) is specified, print the progress of each build.
+#
+# If xcpretty is installed (https://github.com/supermarin/xcpretty) then it will
+# be used in verbose mode.
+#
+# Other options can be found by using -h.
+
+readonly SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+readonly ROOT_DIR="$SCRIPTS_DIR/.."
+readonly CURRENT_DIR="$PWD"
+
+# Given a path to an Xcode log file in $1, exit with status 0 if it looks like
+# the failure is expected and can be ignored, or exit with non-zero status
+# otherwise.
+function is_expected_failure() {
+  # A test target was specified with the 'build' command.
+  grep --quiet "is not configured for Running" "$1"
+}
+
+# Test if the xcpretty command is available.
+#
+# Returns exit status zero if available and non-zero if not.
+function is_xcpretty_available() {
+  xcpretty > /dev/null 2>&1
+  # Exit code 127 is the standard "command not found" exit code.
+  if [ $? -eq 127 ]; then
+    return 1
+  else
+    return 0
+  fi
+}
+
+# Check that flags have arguments.
+#
+# Exits if the flag does not have an argument.
+function check_arguments() {
+  if [ -z $1 ]; then
+    echo "Argument must be provided to flag."
+    echo "$(basename $0) -h for help"
+    exit 1
+  fi
+}
+
+# Checks that the argument is a valid reference.
+#
+# Exits if the reference is not valid.
+function check_reference() {
+  reference=$(git ls-remote https://github.com/material-components/material-components-ios.git $1 | wc -l)
+  if [ $reference -eq 0 ]; then
+    echo "Unable to find $1 on GitHub."
+    echo "$(basename $0) -h for help"
+    exit 1
+  fi
+}
+
+# Checks that the argument is a valid commit.
+#
+# Exits if the commit is not valid.
+function check_commit() {
+  if [ ! $(git cat-file commit $1) ]; then
+    echo "Invalid commit SHA."
+    echo "$(basename $0) -h for help"
+    exit 1
+  fi
+}
+
+# Parse command-line arguments.
+#
+# Note that we're following the command-line exit status convention of zero
+# to mean "success."
+verbose=1
+all_codelabs=0
+has_source=0
+
+# Set default branch to this branch
+export DEFAULT_BRANCH=$(git symbolic-ref --short HEAD)
+
+while [ $# -gt 0 ]; do
+  case $1 in
+    -v|--verbose)
+      verbose=0
+      shift
+      ;;
+    -rb|--remote-branch)
+      shift
+      check_arguments $1
+      check_reference $1
+      if [ $has_source -eq 1 ]; then
+        echo "Only one of --remote-branch/--commit/--tag allowed."
+        echo "$(basename $0) -h for help"
+        exit -1
+      fi
+      export TEST_BRANCH=$1
+      has_source=1
+      shift
+      ;;
+    -c|--commit)
+      shift
+      check_arguments $1
+      check_commit $1
+      if [ $has_source -eq 1 ];then
+        echo "Only one of --remote-branch/--commit/--tag allowed."
+        echo "$(basename $0) -h for help"
+        exit -1
+      fi
+      export TEST_COMMIT=$1
+      has_source=1
+      shift
+      ;;
+    -t|--tag)
+      shift
+      check_arguments $1
+      check_reference $1
+      if [ $has_source -eq 1 ];then
+        echo "Only one of --remote-branch/--commit/--tag allowed."
+        echo "$(basename $0) -h for help"
+        exit -1
+      fi
+      export TEST_TAG=$1
+      has_source=1
+      shift
+      ;;
+    -a|--all)
+      all_codelabs=1
+      shift
+      ;;
+    -h|--help)
+      echo
+      echo "Builds MDC iOS Codelabs."
+      echo
+      echo "By default the codelabs are tested against the remote branch tracking your current branch."
+      echo "Your current branch is: $DEFAULT_BRANCH"
+      echo
+      echo "By default the Swift and Objective-C Google I/O 2018 Codelab 104 and Codelab 111 targets will be built."
+      echo "You can build all codelabs by specifying --all."
+      echo
+      echo "Options:"
+      echo "-v,  --verbose              Verbose logging."
+      echo "-rb, --remote-branch        Remote branch of MDC-iOS with which to test codelabs."
+      echo "-c,  --commit               Commit SHA of MDC-iOS with which to test codelabs."
+      echo "-t,  --tag                  Tag of MDC-iOS with which to test codelabs."
+      echo "-a,  --all                  Build all the codelabs."
+      echo "-h,  --help                 Print this usage information."
+      echo
+      echo "Note: Only one of --remote-branch/--commit/--tag is allowed."
+      echo
+      exit 0
+      ;;
+    *)
+      echo "Unknown option $1, aborting."
+      exit -1
+      ;;
+  esac
+done
+
+# Ensure the current branch is a valid remote branch
+if [ $has_source -eq 0 ]; then
+  check_reference $DEFAULT_BRANCH
+fi
+
+readonly SIGNING_OPTIONS="CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO"
+
+# Check for xcpretty once and cache the result.
+is_xcpretty_available
+readonly IS_XCPRETTY_AVAILABLE=$?
+
+all_builds_ok=1
+
+cd $SCRIPTS_DIR/external
+# Remove the codelabs folder if it exists already so it can be re-cloned.
+if [ -d "material-components-ios-codelabs" ]; then
+  rm -rf material-components-ios-codelabs
+fi
+git clone https://github.com/material-components/material-components-ios-codelabs.git
+cd material-components-ios-codelabs
+
+# Build only 104 and 111 complete by default. With -a flag, build all.
+if [ "$all_codelabs" -eq 1 ]; then
+  readonly WORKSPACE_PATHS=$(find $SCRIPTS_DIR/external/material-components-ios-codelabs -name "*.xcworkspace" ! -name "project.xcworkspace")
+else
+  readonly WORKSPACE_PATHS=$(find $SCRIPTS_DIR/external/material-components-ios-codelabs/MDC-104/*/Complete $SCRIPTS_DIR/external/material-components-ios-codelabs/MDC-111/*/Complete -name "*.xcworkspace" ! -name "project.xcworkspace")
+fi
+
+for workspace_path in $WORKSPACE_PATHS; do
+  # Give the output some meaning, since all the filenames (mostly) the same.
+  workspace=$(basename "$workspace_path")
+  scheme=$(echo "$workspace" | cut -d '.' -f1)
+  codelab=$(echo "$workspace_path" | cut -d/ -f10)
+  language=$(echo "$workspace_path" | cut -d/ -f11)
+  codelab_state=$(echo "$workspace_path" | cut -d/ -f12)
+
+  log_file=$(dirname "$workspace_path")/"build_log_for_scheme_${scheme}.txt"
+  options="-workspace $workspace_path -scheme $scheme $SIGNING_OPTIONS"
+  build_command="xcodebuild $options build"
+  pod_install="pod install --project-directory=$(dirname "$workspace_path")"
+
+  # pod install so the specified branch/commit/tag can be used
+  if [ -f $(dirname "$workspace_path")/Podfile ]; then
+    if [ "$verbose" -eq 0 ]; then
+      $pod_install
+    else
+      $pod_install --silent
+    fi
+  else
+    echo "No Podfile available."
+    exit 1
+  fi
+
+  echo "xcodebuild $scheme in $workspace for $codelab $codelab_state in $language."
+
+  if [ "$verbose" -eq 0 ]; then
+    if [ "$IS_XCPRETTY_AVAILABLE" -eq 0 ]; then
+      $build_command 2>&1 | tee "$log_file" | xcpretty
+    else
+      $build_command 2>&1 | tee "$log_file"
+    fi
+  else
+    $build_command >"$log_file" 2>&1
+  fi
+
+  # We need to have the output in a log file in all cases so we can check for
+  # expected failures.
+  if [ ${PIPESTATUS[0]} -eq 0 ] || is_expected_failure "$log_file"; then
+    rm "$log_file"
+  else
+    all_builds_ok=0
+    echo
+    echo "Failed to build $scheme in $workspace:"
+    echo "Log left in $log_file."
+    echo "Continuing with next build..."
+    echo
+  fi
+done
+
+cd $CURRENT_DIR
+
+# If any build failed, exit with a failure exit status so continuous integration
+# tools can react appropriately.
+if [ "$all_builds_ok" -eq 1 ]; then
+  exit 0
+else
+  exit 1
+fi

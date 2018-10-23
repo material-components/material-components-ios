@@ -17,11 +17,9 @@
  instructions. It is not necessary to import this file to use Material Components for iOS.
  */
 
-#import <Foundation/Foundation.h>
-
 #import "NavigationBarTypicalUseExampleSupplemental.h"
 
-#import "MaterialNavigationBar.h"
+#import "MaterialPalettes.h"
 
 @interface ExampleInstructionsViewNavigationBarTypicalUseExample : UIView
 
@@ -58,20 +56,17 @@
 
 @implementation NavigationBarTypicalUseExample (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Navigation Bar", @"Navigation Bar" ];
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Navigation Bar", @"Navigation Bar" ],
+    @"description": @"The Navigation Bar component is a view composed of a left and right Button "
+    @"Bar and either a title label or a custom title view.",
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
 
 - (BOOL)catalogShouldHideNavigation {
-  return YES;
-}
-
-+ (NSString *)catalogDescription {
-  return @"The Navigation Bar component is a view composed of a left and right Button Bar and"
-          " either a title label or a custom title view.";
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
   return YES;
 }
 
@@ -117,14 +112,14 @@
   NSDictionary *instructionAttributes1 = @{
     NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline],
     NSForegroundColorAttributeName :
-        [UIColor colorWithRed:0.459 green:0.459 blue:0.459 alpha:0.87f],
+        [MDCPalette.greyPalette.tint600 colorWithAlphaComponent:0.87f],
     NSParagraphStyleAttributeName : style
   };
 
   NSDictionary *instructionAttributes2 = @{
     NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline],
     NSForegroundColorAttributeName :
-        [UIColor colorWithRed:0.459 green:0.459 blue:0.459 alpha:0.87f],
+        [MDCPalette.greyPalette.tint600 colorWithAlphaComponent:0.87f],
     NSParagraphStyleAttributeName : style
   };
 
@@ -142,20 +137,20 @@
   UIBezierPath *bezierPath = [UIBezierPath bezierPath];
   [bezierPath moveToPoint:CGPointMake(CGRectGetMinX(frame) + 12, CGRectGetMinY(frame) + 4)];
   [bezierPath
-      addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 10.59, CGRectGetMinY(frame) + 5.41)];
-  [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 16.17, CGRectGetMinY(frame) + 11)];
+      addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 10.59f, CGRectGetMinY(frame) + 5.41f)];
+  [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 16.17f, CGRectGetMinY(frame) + 11)];
   [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 4, CGRectGetMinY(frame) + 11)];
   [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 4, CGRectGetMinY(frame) + 13)];
-  [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 16.17, CGRectGetMinY(frame) + 13)];
+  [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 16.17f, CGRectGetMinY(frame) + 13)];
   [bezierPath
-      addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 10.59, CGRectGetMinY(frame) + 18.59)];
+      addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 10.59f, CGRectGetMinY(frame) + 18.59f)];
   [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 12, CGRectGetMinY(frame) + 20)];
   [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 20, CGRectGetMinY(frame) + 12)];
   [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 12, CGRectGetMinY(frame) + 4)];
   [bezierPath closePath];
   bezierPath.miterLimit = 4;
 
-  [[UIColor colorWithRed:0.459 green:0.459 blue:0.459 alpha:0.87f] setFill];
+  [[MDCPalette.greyPalette.tint600 colorWithAlphaComponent:0.87f] setFill];
   [bezierPath fill];
 }
 

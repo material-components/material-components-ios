@@ -1,43 +1,50 @@
-/*
- Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 import UIKit
-import MaterialComponents
+
+import MaterialComponents.MaterialButtons
 
 class ButtonsDynamicTypeViewController: UIViewController {
 
-  class func catalogBreadcrumbs() -> [String] {
-    return ["Buttons", "Buttons (DynamicType)"]
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Buttons", "Buttons (DynamicType)"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
   }
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = .white
+    view.backgroundColor = UIColor(white: 0.9, alpha:1.0)
+    let titleColor = UIColor.white
+    let backgroundColor = UIColor(white: 0.1, alpha: 1.0)
 
-    let flatButtonStatic = MDCFlatButton()
-    flatButtonStatic.backgroundColor = .blue
+    let flatButtonStatic = MDCRaisedButton()
+    flatButtonStatic.setTitleColor(titleColor, for: .normal)
+    flatButtonStatic.setBackgroundColor(backgroundColor, for: .normal)
     flatButtonStatic.setTitle("Static", for: UIControlState())
     flatButtonStatic.sizeToFit()
     flatButtonStatic.translatesAutoresizingMaskIntoConstraints = false
     flatButtonStatic.addTarget(self, action: #selector(tap), for: .touchUpInside)
     view.addSubview(flatButtonStatic)
 
-    let flatButtonDynamic = MDCFlatButton()
-    flatButtonDynamic.backgroundColor = .blue
+    let flatButtonDynamic = MDCRaisedButton()
+    flatButtonDynamic.setTitleColor(titleColor, for: .normal)
+    flatButtonDynamic.setBackgroundColor(backgroundColor, for: .normal)
     flatButtonDynamic.setTitle("Dynamic", for: UIControlState())
     flatButtonDynamic.sizeToFit()
     flatButtonDynamic.translatesAutoresizingMaskIntoConstraints = false
@@ -47,7 +54,7 @@ class ButtonsDynamicTypeViewController: UIViewController {
 
     let views = [
       "flatStatic": flatButtonStatic,
-      "flatDynamic": flatButtonDynamic,
+      "flatDynamic": flatButtonDynamic
     ]
 
     centerView(view: flatButtonDynamic, onView: self.view)
@@ -81,7 +88,7 @@ class ButtonsDynamicTypeViewController: UIViewController {
       constant: 0.0))
   }
 
-  func tap(_ sender: Any) {
+  @objc func tap(_ sender: Any) {
     print("\(type(of: sender)) was tapped.")
   }
 

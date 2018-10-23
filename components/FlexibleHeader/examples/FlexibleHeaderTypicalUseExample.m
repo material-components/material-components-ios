@@ -1,24 +1,22 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialFlexibleHeader+ColorThemer.h"
 #import "MaterialFlexibleHeader.h"
-
-#import "FlexibleHeaderTypicalUseSupplemental.h"
+#import "supplemental/FlexibleHeaderTypicalUseSupplemental.h"
 
 @interface FlexibleHeaderTypicalUseViewController ()
 
@@ -54,6 +52,12 @@
 
 - (void)commonMDCFlexibleHeaderViewControllerInit {
   _fhvc = [[MDCFlexibleHeaderViewController alloc] initWithNibName:nil bundle:nil];
+
+  // Behavioral flags.
+  _fhvc.topLayoutGuideAdjustmentEnabled = YES;
+  _fhvc.inferTopSafeAreaInsetFromViewController = YES;
+  _fhvc.headerView.minMaxHeightIncludesSafeArea = NO;
+
   [self addChildViewController:_fhvc];
 }
 
@@ -76,23 +80,17 @@
   [self.view addSubview:self.fhvc.view];
   [self.fhvc didMoveToParentViewController:self];
 
-  // Light blue 500
-  self.fhvc.headerView.backgroundColor =
-      [UIColor colorWithRed:0.012 green:0.663 blue:0.957 alpha:1];
-
   [self setupExampleViews];
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+  return UIStatusBarStyleLightContent;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
 
-  // If the MDCFlexibleHeaderViewController's view is not going to replace a navigation bar,
-  // comment this line:
   [self.navigationController setNavigationBarHidden:YES animated:animated];
-}
-
-- (UIStatusBarStyle)preferredStatusBarStyle {
-  return UIStatusBarStyleLightContent;
 }
 
 // This method must be implemented for MDCFlexibleHeaderViewController's

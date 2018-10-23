@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <UIKit/UIKit.h>
 
@@ -24,7 +22,7 @@
 typedef void (^MDCSnackbarMessageCompletionHandler)(BOOL userInitiated);
 
 /**
- Called when the button in the snackbar is tapped.
+ Called when the button in the Snackbar is tapped.
  */
 typedef void (^MDCSnackbarMessageActionHandler)(void);
 
@@ -42,12 +40,12 @@ extern const NSTimeInterval MDCSnackbarMessageDurationMax;
  This attribute can be set over any range of @c attributedText and that text will have the proper
  font applied.
  */
-extern NSString *const MDCSnackbarMessageBoldAttributeName;
+extern NSString * __nonnull const MDCSnackbarMessageBoldAttributeName;
 
 /**
  Represents a message to unobtrusively show to the user.
 
- A snackbar message provides brief feedback about an operation. Messages are passed to the snackbar
+ A Snackbar message provides brief feedback about an operation. Messages are passed to the Snackbar
  manager to be displayed.
 
  Snackbars prefer an application's main window is a subclass of @c MDCOverlayWindow. When a standard
@@ -61,7 +59,7 @@ extern NSString *const MDCSnackbarMessageBoldAttributeName;
  @param text The text to display in the message.
  @return An initialized MDCSnackbarMessage object with @c text.
  */
-+ (instancetype)messageWithText:(NSString *)text;
++ (nonnull instancetype)messageWithText:(nonnull NSString *)text;
 
 /**
  Returns a MDCSnackbarMessage with its attributed text initialized.
@@ -69,44 +67,44 @@ extern NSString *const MDCSnackbarMessageBoldAttributeName;
  @param attributedText The attributed text to display in the message.
  @return An initialized MDCSnackbarMessage object with @c attributedText.
  */
-+ (instancetype)messageWithAttributedText:(NSAttributedString *)attributedText;
++ (nonnull instancetype)messageWithAttributedText:(nonnull NSAttributedString *)attributedText;
+
+/**
+ Use the older legacy version of Snackbar. Default is YES.
+ */
+@property(class, nonatomic, assign) BOOL usesLegacySnackbar;
 
 /**
  The primary text of the message.
 
  Either @c text or @c attributedText must be set.
  */
-@property(nonatomic, copy) NSString *text;
+@property(nonatomic, copy, nullable) NSString *text;
 
 /**
  The primary text of the message with styling.
 
  Any attributes supported by UIKit may be set, though font and color will be overridden by the
- snackbar. Either @c text or @c attributedText must be set.
+ Snackbar. Either @c text or @c attributedText must be set.
  */
-@property(nonatomic, copy) NSAttributedString *attributedText;
+@property(nonatomic, copy, nullable) NSAttributedString *attributedText;
 
 /**
  Optional button to show along with the rest of the message.
 
- A MDCSnackbarMessageAction is displayed as a button on the snackbar. If no action is set no button
+ A MDCSnackbarMessageAction is displayed as a button on the Snackbar. If no action is set no button
  will appear on the Snackbar.
  */
-@property(nonatomic, strong) MDCSnackbarMessageAction *action;
+@property(nonatomic, strong, nullable) MDCSnackbarMessageAction *action;
 
 /**
- The color used for button text on the snackbar in normal state.
+  The color used for button text on the Snackbar in normal state.
 
- Default is white.
- */
-@property(nonatomic, strong) UIColor *buttonTextColor;
-
-/**
- The color used for button text on the snackbar in highlighted state.
-
- Default is white.
- */
-@property(nonatomic, strong) UIColor *highlightedButtonTextColor;
+  Default is nil, but MDCRGBAColor(0xFF, 0xFF, 0xFF, 0.6f) will be set as the default color
+  and is taken from MDCSnackbarMessageView's buttonTitleColorForState:
+  */
+@property(nonatomic, strong, nullable) UIColor *buttonTextColor
+    __deprecated_msg("Use MDCSnackbarMessageView's buttonTitleColorForState: instead.");
 
 /**
  How long the message should be displayed.
@@ -122,26 +120,31 @@ extern NSString *const MDCSnackbarMessageBoldAttributeName;
  The message completion handler is called regardless of whether or not buttons were tapped and is
  always called on the main thread.
  */
-@property(nonatomic, copy) MDCSnackbarMessageCompletionHandler completionHandler;
+@property(nonatomic, copy, nullable) MDCSnackbarMessageCompletionHandler completionHandler;
 
 /**
  The category of messages to which a message belongs.
 
  Default is nil. If set, only the last message of this category will be shown, any currently
  showing or pending messages in this category will be dismissed as if the user had directly tapped
- the snackbar.
+ the Snackbar.
  */
-@property(nonatomic, copy) NSString *category;
+@property(nonatomic, copy, nullable) NSString *category;
 
 /**
  Redeclaration from UIAccessibility to make clear that this class supports accessibility labels.
  */
-@property(nonatomic, copy) NSString *accessibilityLabel;
+@property(nonatomic, copy, nullable) NSString *accessibilityLabel;
+
+/**
+ Redeclaration from UIAccessibility to make clear that this class supports accessibility hints.
+ */
+@property(nonatomic, copy, nullable) NSString *accessibilityHint;
 
 /**
  Text that should be read when the message appears on screen and VoiceOver is enabled.
  */
-@property(nonatomic, readonly) NSString *voiceNotificationText;
+@property(nonatomic, readonly, nullable) NSString *voiceNotificationText;
 
 @end
 
@@ -153,13 +156,13 @@ extern NSString *const MDCSnackbarMessageBoldAttributeName;
 /**
  The title text on the button.
  */
-@property(nonatomic, copy) NSString *title;
+@property(nonatomic, copy, nullable) NSString *title;
 
 /**
- Called when the button in the snackbar is tapped.
+ Called when the button in the Snackbar is tapped.
 
  Always called on the main thread.
  */
-@property(nonatomic, copy) MDCSnackbarMessageActionHandler handler;
+@property(nonatomic, copy, nullable) MDCSnackbarMessageActionHandler handler;
 
 @end

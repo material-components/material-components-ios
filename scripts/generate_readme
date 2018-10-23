@@ -1,0 +1,201 @@
+#!/bin/bash -e
+#
+# Copyright 2018-present The Material Components for iOS Authors. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+usage() {
+  echo "Usage: $0 <ComponentName>"
+  echo
+  echo "Generates a root readme file from a component's documentation."
+  echo
+  echo "Example usage: $0 ActivityIndicator"
+}
+
+if [ "$#" -ne 1 ]; then
+  usage
+  exit 1
+fi
+
+command -v jazzy >/dev/null 2>&1 || { 
+  echo >&2 "Cannot find jazzy. jazzy is required to generate API links. To install try:"
+  echo >&2 "[sudo] gem install jazzy"
+  exit 1
+}
+
+# Generates a list of urls to APIs
+# Args: $1 - Jazzy API type name. E.g. Classes
+#       $2 - Docs API type name. E.g. Class
+extract_apis_of_type() {
+  type="$1"
+  type_name="$2"
+  cat apidocs/search.json | tr , '\n' \
+      | grep "^\"$type" \
+      | grep -v "$type\"$" \
+      | grep -v "(.*).*(.*)" \
+      | grep -v "/.*/" \
+      | grep -v "@" \
+      | sort | uniq \
+      | while read line; do
+    url=$(echo "$line" | cut -d'"' -f2)
+    api=$(echo "$line" | cut -d'"' -f6)
+    echo "* $type_name: [$api](${SITE_URL_BASE}${COMPONENT_SITE_PATH}/api-docs/$url)"
+  done
+}
+
+COMPONENT="$1"
+
+COMPONENT_PATH="components/$COMPONENT"
+SITE_README_PATH="$COMPONENT_PATH/README.md"
+
+mkdir -p $(dirname "$SITE_README_PATH")
+
+TMP_PATH=$(mktemp -d)
+TMP_README_PATH="$TMP_PATH/README.md"
+TMP_EXPANDED_README_PATH="$TMP_PATH/README.md.expanded"
+TMP_TOC_PATH="$TMP_PATH/toc.md"
+TOC_STRING="<!-- toc -->"
+DESIGN_AND_API_STRING="<!-- design-and-api -->"
+BADGES_STRING="<!-- badges -->"
+VARS_PATH="$COMPONENT_PATH/.vars"
+JAZZY_PATH="$COMPONENT_PATH/.jazzy.yaml"
+SITE_URL_BASE="https://material.io/components/ios"
+
+touch "$TMP_README_PATH"
+
+if [ ! -f "$VARS_PATH" ]; then
+  echo "No .vars file found at $VARS_PATH. Please create one."
+  exit 1
+fi
+
+if [ ! -f "$JAZZY_PATH" ]; then
+  echo "No .jazzy.yaml file found at $JAZZY_PATH. Please create one. Note: it's .yaml - not .yml."
+  exit 1
+fi
+
+echo "Generating template readme..."
+if [[ $(grep -e "^root_path=" "$VARS_PATH") ]]; then
+  ./scripts/apply_template "$COMPONENT" scripts/templates/component/README.md.template "$TMP_README_PATH" >> /dev/null
+  COMPONENT_SITE_PATH=$(grep -e "^root_path=" "$VARS_PATH" | cut -d'=' -f2-)
+fi
+
+COMPONENT_NAME=$(grep -e "^component=" "$VARS_PATH" | cut -d'=' -f2-)
+
+echo "<!-- This file was auto-generated using $0 $COMPONENT -->" >> "$TMP_README_PATH"
+echo "" >> "$TMP_README_PATH"
+
+cat "$COMPONENT_PATH/docs/README.md" >> "$TMP_README_PATH"
+
+echo "Expanding all articles inline..."
+
+# Expand all files inline
+IFS='' # Don't trim whitespace from lines
+cat "$TMP_README_PATH" | while read line; do
+  if [[ $(echo $line | grep -e "^- \[.*\]\(.*\)$") ]]; then
+    file=$(echo $line | cut -d'(' -f2 | cut -d')' -f1)
+    file_path="$COMPONENT_PATH/docs/$file"
+    echo "<!-- Extracted from docs/$file -->" >> "$TMP_EXPANDED_README_PATH"
+    echo >> "$TMP_EXPANDED_README_PATH"
+    cat "$file_path" | sed "s/<#ComponentName#>/$COMPONENT_NAME/" >> "$TMP_EXPANDED_README_PATH"
+    echo >> "$TMP_EXPANDED_README_PATH" # Ensure that there is always a newline between files.
+  else
+    echo "$line" >> "$TMP_EXPANDED_README_PATH"
+  fi
+done
+
+rm "$TMP_README_PATH"
+
+echo "Generating table of contents..."
+
+# Write the table of contents and design/api links
+cat "$TMP_EXPANDED_README_PATH" | while read -r line; do
+  if [ "$line" = "$DESIGN_AND_API_STRING" ]; then
+    echo "## Design & API documentation" >> "$TMP_README_PATH"
+    echo "" >> "$TMP_README_PATH"
+
+    if [[ $(grep -e "^guidelines_short_link=" "$VARS_PATH") && $(grep -e "^guidelines_title=" "$VARS_PATH") ]]; then
+      guidelines_short_link=$(grep -e "^guidelines_short_link=" "$VARS_PATH" | cut -d'=' -f2-)
+      guidelines_title=$(grep -e "^guidelines_title=" "$VARS_PATH" | cut -d'=' -f2-)
+      echo "* [Material Design guidelines: $guidelines_title](https://material.io/go/$guidelines_short_link)" >> "$TMP_README_PATH"
+    else
+      echo ".vars is missing guidelines_short_link= and guidelines_title=."
+      echo "No Material Design guidelines link will be generated."
+    fi
+
+    if [ -z "$COMPONENT_SITE_PATH" ]; then
+      echo "No root_path= value found in .vars, skipping API generation."
+      continue
+    fi
+
+    pushd "$COMPONENT_PATH" >> /dev/null
+    echo "Generating jazzy docs for API links..."
+    jazzy . --output apidocs
+    extract_apis_of_type "Classes" "Class" >> "$TMP_README_PATH"
+    extract_apis_of_type "Protocols" "Protocol" >> "$TMP_README_PATH"
+    extract_apis_of_type "Enums" "Enumeration" >> "$TMP_README_PATH"
+    popd >> /dev/null
+
+  elif [ "$line" = "$TOC_STRING" ]; then
+    echo "## Table of contents" >> "$TMP_README_PATH"
+    echo "" >> "$TMP_README_PATH"
+    grep -e "^#" -e "^$TOC_STRING" "$TMP_EXPANDED_README_PATH" \
+      | grep -v "####" \
+      | grep -v "#\w" \
+      | sed -n '/ toc /,$p' \
+      | tail -n +2  > "$TMP_TOC_PATH"
+
+    cat "$TMP_TOC_PATH" | while read toc; do
+      indent=$(echo $toc | cut -d' ' -f1 | sed "s/###/  -/" | sed "s/##/-/g")
+      text=$(echo $toc | cut -d' ' -f2-)
+      url=$(echo $text | awk '{print tolower($0)}')
+      url=${url//:} # Strip invalid characters
+      url=${url//,} # Strip invalid characters
+      url=${url//\/} # Strip invalid characters
+      url=${url// /-} # Turn spaces into dashes
+      echo "$indent [$text](#$url)" >> "$TMP_README_PATH"
+    done
+  elif [ "$line" = "$BADGES_STRING" ]; then
+    echo "[![Open bugs badge](https://img.shields.io/badge/dynamic/json.svg?label=open%20bugs&url=https%3A%2F%2Fapi.github.com%2Fsearch%2Fissues%3Fq%3Dis%253Aopen%2Blabel%253Atype%253ABug%2Blabel%253A%255B${COMPONENT}%255D&query=%24.total_count)](https://github.com/material-components/material-components-ios/issues?q=is%3Aopen+is%3Aissue+label%3Atype%3ABug+label%3A%5B${COMPONENT}%5D)" >> "$TMP_README_PATH"
+  else
+    echo "$line" >> "$TMP_README_PATH"
+  fi
+done
+
+echo "Generating pretty lists..."
+
+# Convert * spec urls to stylized lists
+perl -pi -e "s|^\* \[(.+)\]\\((.+?)/go/design-(.+)\\)|  <li class=\"icon-list-item icon-list-item--spec\"><a href=\"\2/go/design-\3\">\1</a></li>|g" "$TMP_README_PATH"
+
+# Convert * list urls to stylized lists
+perl -pi -e "s|^\* (.*)\[(.+)\]\\((.+)\\)|  <li class=\"icon-list-item icon-list-item--link\">\1<a href=\"\3\">\2</a></li>|g" "$TMP_README_PATH"
+
+# Convert * list text to stylized lists.
+perl -pi -e "s|^\* (.+)$|  <li class=\"icon-list-item icon-list-item\">\1</li>|g" "$TMP_README_PATH"
+
+# Prefix lists with <ul>
+perl -p0i -e "s|\n\n  <li|\n\n<ul class=\"icon-list\">\n  <li|g" "$TMP_README_PATH"
+
+# Postfix lists with </ul>
+perl -p0i -e "s|li>\n\n|li>\n</ul>\n\n|g" "$TMP_README_PATH"
+
+echo "Rewriting paths..."
+
+# Rewrite relative paths
+perl -pi -e "s|\(\.\./|(|g" "$TMP_README_PATH"
+perl -pi -e "s|href=\"\.\./|href=\"|g" "$TMP_README_PATH"
+perl -pi -e "s|\[(.+)\]\((.+)\.md\)|[\1](docs/\2.md)|g" "$TMP_README_PATH"
+
+# Rewrite asset paths
+perl -pi -e "s|src=\"assets|src=\"docs/assets|g" "$TMP_README_PATH"
+
+mv "$TMP_README_PATH" "$SITE_README_PATH"

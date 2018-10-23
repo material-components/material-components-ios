@@ -18,7 +18,7 @@ readonly SCRIPTS_DIR="$(cd "$(dirname "$(dirname "${BASH_SOURCE[0]}")")" && pwd)
 readonly ROOT_DIR="$SCRIPTS_DIR/.."
 
 # For the moment, we only have workspaces from CocoaPods projects.
-readonly PODFILE_DIRS=$("$SCRIPTS_DIR"/release/manage_pods.py --dir "$ROOT_DIR" list)
+readonly PODFILE_DIRS=$("$SCRIPTS_DIR"/manage_pods.py --dir "$ROOT_DIR" list)
 
 workspaces=""
 for i in ${PODFILE_DIRS}; do

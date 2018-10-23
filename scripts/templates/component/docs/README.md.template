@@ -1,0 +1,59 @@
+# <#component_name#>
+
+<!-- Template: Short component description, summarized from the spec, connecting the Material spec
+terminology to the terminology being used in this component. Avoid talking about any specific API
+names here.
+-->
+
+<!-- Template:
+Cropped, animated gif of the component. Avoid including any iOS chrome such as status bar.
+
+<img src="assets/component.gif" alt="Description of the animation.">
+-->
+
+## Design & API documentation
+
+* [Material Design guidelines: Progress & activity](https://material.io/go/design-progress-indicators)
+<!-- Template:
+Replace the url with the API's URL.
+* [API: SomeClass](https://material.io/components/ios/catalog/progress-indicators/activity-indicators/api-docs/Classes/MDCActivityIndicator.html)
+-->
+
+<!-- Template:
+## Related components
+
+* [OtherComponent](../../OtherComponent)
+-->
+
+<!-- toc -->
+
+- - -
+
+## Overview
+
+<!-- Template:
+Detailed summary of the important APIs that are provided by this component.
+-->
+
+## Installation
+
+- [Typical installation](../../../docs/component-installation.md)
+
+## Usage
+
+<!-- Template: Include at least one typical use article demonstrating the most common use case for
+the component.
+
+- [Typical use](typical-use.md)
+- [An article covering a specific topic](article.md)
+-->
+
+## Extensions
+
+<!-- Template: Extensions should be called out separately from Usage docs.
+
+- [Color Theming](color-theming.md)
+
+- [Shape Theming](shape-theming.md)
+-->
+

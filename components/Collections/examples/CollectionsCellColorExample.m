@@ -1,30 +1,24 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
-
-#import "CollectionsCellColorExample.h"
+#import "supplemental/CollectionsCellColorExample.h"
 
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 @implementation CollectionsCellColorExample {
-  NSMutableArray *_content;
+  NSMutableArray <NSArray *>*_content;
   NSArray *_cellBackgroundColors;
-}
-
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Collections", @"Cell Color Example" ];
 }
 
 - (void)viewDidLoad {
@@ -36,17 +30,18 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
   // Array of cell background colors.
   _cellBackgroundColors = @[
-    [UIColor colorWithWhite:0 alpha:0.2], [UIColor colorWithRed:(CGFloat)0x39 / (CGFloat)255
-                                                          green:(CGFloat)0xA4 / (CGFloat)255
-                                                           blue:(CGFloat)0xDD / (CGFloat)255
-                                                          alpha:1],
+    [UIColor colorWithWhite:0 alpha:0.2f],
+    [UIColor colorWithRed:(CGFloat)0x39 / (CGFloat)255
+                    green:(CGFloat)0xA4 / (CGFloat)255
+                     blue:(CGFloat)0xDD / (CGFloat)255
+                    alpha:1],
     [UIColor whiteColor]
   ];
 
   // Populate content.
   _content = [NSMutableArray array];
   [_content addObject:@[
-    @"[UIColor colorWithWhite:0 alpha:0.2]", @"Custom Blue Color", @"Default White Color"
+    @"[UIColor colorWithWhite:0 alpha:0.2f]", @"Custom Blue Color", @"Default White Color"
   ]];
 
   // Customize collection view settings.
@@ -78,6 +73,16 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 - (UIColor *)collectionView:(UICollectionView *)collectionView
     cellBackgroundColorAtIndexPath:(NSIndexPath *)indexPath {
   return _cellBackgroundColors[indexPath.item];
+}
+
+#pragma mark - CatalogByConvention
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Collections", @"Cell Color Example" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
 
 @end

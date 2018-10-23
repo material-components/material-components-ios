@@ -17,24 +17,23 @@
  instructions. It is not necessary to import this file to use Material Components for iOS.
  */
 
-@import UIKit;
+#import <UIKit/UIKit.h>
 
-@import MaterialComponents.MaterialTabs;
-
-@class MDCAppBar;
-@class MDCRaisedButton;
-@class MDCTabBar;
-
-@protocol MDCTabBarDelegate;
+#import "MaterialAppBar.h"
+#import "MaterialButtons.h"
+#import "MaterialColorScheme.h"
+#import "MaterialTabs.h"
+#import "MaterialTypographyScheme.h"
 
 @interface TabBarIconExample : UIViewController <MDCTabBarDelegate>
 
-@property MDCTabBar *_Nullable tabBar;
-@property MDCRaisedButton *_Nullable alignmentButton;
-@property MDCAppBar *_Nullable appBar;
-@property UIScrollView *_Nullable scrollView;
-@property UIView *_Nullable starPage;
-
+@property(nonatomic, nullable) MDCTabBar * tabBar;
+@property(nonatomic, nullable) MDCButton * alignmentButton;
+@property(nonatomic, nullable) MDCAppBarViewController * appBarViewController;
+@property(nonatomic, nullable) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, nullable) MDCTypographyScheme *typographyScheme;
+@property(nonatomic, nullable) UIScrollView * scrollView;
+@property(nonatomic, nullable) UIView * starPage;
 @end
 
 @interface TabBarIconExample (Supplemental)

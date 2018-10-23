@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="rmZ-Mt-scB">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13770" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="rmZ-Mt-scB">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13770"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -14,7 +14,7 @@
         <!--Buttons Swift And Storyboard Controller-->
         <scene sceneID="4Dd-I6-MBs">
             <objects>
-                <viewController id="rmZ-Mt-scB" customClass="ButtonsSwiftAndStoryboardController" customModule="MaterialComponentsCatalog" sceneMemberID="viewController">
+                <viewController id="rmZ-Mt-scB" customClass="ButtonsSwiftAndStoryboardController" customModule="MaterialComponentsExamples" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="dkA-v6-Opi"/>
                         <viewControllerLayoutGuide type="bottom" id="QjK-x9-gr9"/>
@@ -29,8 +29,10 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VTp-Pq-SmW" userLabel="Inner Button Container">
                                         <rect key="frame" x="48.5" y="254.5" width="91" height="138"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ixI-3k-a3r" customClass="MDCRaisedButton">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ixI-3k-a3r" userLabel="Storyboard Contained" customClass="MDCButton">
                                                 <rect key="frame" x="0.0" y="0.0" width="91" height="34"/>
+                                                <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="tintColor" white="0.1007254635" alpha="1" colorSpace="calibratedWhite"/>
                                                 <state key="normal" title="Storyboard">
                                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
@@ -40,6 +42,8 @@
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Dc-Q4-b6Z" customClass="MDCFlatButton">
                                                 <rect key="frame" x="7" y="56" width="77" height="30"/>
+                                                <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="tintColor" white="0.1007254635" alpha="1" colorSpace="calibratedWhite"/>
                                                 <state key="normal" title="Storyboard">
                                                     <color key="titleColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
@@ -49,6 +53,8 @@
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BDu-tK-SwC" customClass="MDCFloatingButton">
                                                 <rect key="frame" x="30.5" y="108" width="30" height="30"/>
+                                                <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="tintColor" white="0.1007254635" alpha="1" colorSpace="calibratedWhite"/>
                                                 <state key="normal">
                                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
@@ -77,7 +83,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.81176470590000005" green="0.90980392160000001" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="0.89550476414816715" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="ISg-pg-Aeq" firstAttribute="width" secondItem="dz8-vM-Ak5" secondAttribute="width" multiplier="0.5" id="19q-Zc-Tgb"/>
                             <constraint firstItem="ISg-pg-Aeq" firstAttribute="trailing" secondItem="dz8-vM-Ak5" secondAttribute="trailingMargin" constant="16" id="PMn-Bh-3ZY"/>
@@ -86,9 +92,9 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="storyboardContained" destination="ixI-3k-a3r" id="5z9-aK-IJ5"/>
                         <outlet property="storyboardFlat" destination="1Dc-Q4-b6Z" id="tf2-SG-2uQ"/>
                         <outlet property="storyboardFloating" destination="BDu-tK-SwC" id="AIX-u6-JAL"/>
-                        <outlet property="storyboardRaised" destination="ixI-3k-a3r" id="5z9-aK-IJ5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LO5-z8-Ix6" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -96,4 +102,5 @@
             <point key="canvasLocation" x="442.39999999999998" y="467.3163418290855"/>
         </scene>
     </scenes>
+    <color key="tintColor" white="0.1007254635" alpha="1" colorSpace="calibratedWhite"/>
 </document>

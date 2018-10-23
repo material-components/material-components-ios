@@ -1,21 +1,20 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <UIKit/UIKit.h>
 
+@class MDCActivityIndicatorTransition;
 @protocol MDCActivityIndicatorDelegate;
 
 /**
@@ -41,7 +40,7 @@ typedef NS_ENUM(NSInteger, MDCActivityIndicatorMode) {
  a standard UIActivityIndicator, MDCActivityIndicator supports showing determinate progress and uses
  custom Material Design animation for indeterminate progress.
 
- See https://material.io/guidelines/components/progress-activity.html
+ See https://material.io/go/design-progress-indicators
  */
 IB_DESIGNABLE
 @interface MDCActivityIndicator : UIView
@@ -57,7 +56,7 @@ IB_DESIGNABLE
 @property(nonatomic, assign, getter=isAnimating) BOOL animating;
 
 /**
- Spinner radius width. Defaults to 12dp (24x24dp circle), constrained to range [8dp, 72dp]. The
+ Spinner radius width. Defaults to 12dp (24x24dp circle), constrained to range [5dp, 72dp]. The
  spinner is centered in the view's bounds. If the bounds are smaller than the diameter of the
  spinner, the spinner may be clipped when clipToBounds is true.
  */
@@ -96,9 +95,17 @@ IB_DESIGNABLE
 @property(nonatomic, assign) IBInspectable float progress;
 
 /**
- The array of colors that are cycled through when animating the spinner. Populated with default
- colors of blue, red, yellow and green on initialization. An empty array results in a blue spinner
- with no color cycling.
+ Set the determinate progress of the activity indicator when indicatorMode is
+ MDCActivityIndicatorModeDeterminate.
+ */
+- (void)setProgress:(float)progress animated:(BOOL)animated;
+
+/**
+ The array of colors that are cycled through when animating the spinner. Populated with a set of
+ default colors. 
+ 
+ @note If an empty array is provided to this property's setter, then the provided array will be 
+ discarded and an array consisting of the default color values will be assigned instead.
  */
 @property(nonatomic, copy, nonnull) NSArray<UIColor *> *cycleColors UI_APPEARANCE_SELECTOR;
 
@@ -108,10 +115,28 @@ IB_DESIGNABLE
 - (void)startAnimating;
 
 /**
+ Starts the animated activity indicator after performing the provided transition. The animation
+ cycle will begin on the cycleStartIndex provided. The startTransition will be applied with the
+ starting and ending positions of the indicator stroke at the moment when the animation will begin
+ taking into account the provided cycleStartIndex in the range [0,1]. The indicatorMode must be
+ MDCActivityIndicatorModeIndeterminate before calling.
+ */
+- (void)startAnimatingWithTransition:(nonnull MDCActivityIndicatorTransition *)startTransition
+                     cycleStartIndex:(NSInteger)cycleStartIndex;
+
+/**
  Stops the animated activity indicator with a short opacity and stroke width animation. Does nothing
  if the spinner is not animating.
  */
 - (void)stopAnimating;
+
+/**
+ Stops the animated activity indicator and then performs the provided transition. The provided
+ stopTransition will be called with the starting and ending positions of the indicator stroke at the
+ moment when the animation will begin in the range [0,1]. The indicatorMode must be
+ MDCActivityIndicatorModeIndeterminate before calling.
+ */
+- (void)stopAnimatingWithTransition:(nonnull MDCActivityIndicatorTransition *)stopTransition;
 
 @end
 
@@ -128,5 +153,49 @@ IB_DESIGNABLE
  @param activityIndicator Caller
  */
 - (void)activityIndicatorAnimationDidFinish:(nonnull MDCActivityIndicator *)activityIndicator;
+
+/**
+ When setIndicatorMode:animated: is called the spinner animates the transition from the current
+ mode to the new mode. This method is called after the animation completes or immediately if no
+ animation is requested.
+
+ @param activityIndicator Caller
+ */
+- (void)activityIndicatorModeTransitionDidFinish:(nonnull MDCActivityIndicator *)activityIndicator;
+
+@end
+
+typedef void (^MDCActivityIndicatorAnimation)(CGFloat strokeStart, CGFloat strokeEnd);
+
+/**
+ Describes an animation that can be provided to an MDCActivityIndicator instance to perform before
+ or after its standard cycle animation.
+ */
+@interface MDCActivityIndicatorTransition : NSObject
+
+/**
+ The animations to be performed by MDCActivityIndicator. In this block add CAAnimations to be
+ animated before or after MDCActivityIndicator's cycle animation. MDCActivityIndicator will trigger
+ these animations and call completion after they complete.
+ */
+@property(nonatomic, copy, nonnull) MDCActivityIndicatorAnimation animation;
+
+/**
+ The completion block to call after animation's completion. This should be used to clean up any
+ layers placed and animating on the MDCActivityIndicator.
+ */
+@property(nonatomic, copy, nullable) void (^completion)(void);
+
+/**
+ The duration of the animation.
+ */
+@property(nonatomic, assign) NSTimeInterval duration;
+
+- (nonnull instancetype)init NS_UNAVAILABLE;
+
+- (nonnull instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;
+
+- (nonnull instancetype)initWithAnimation:
+    (_Nonnull MDCActivityIndicatorAnimation)animation NS_DESIGNATED_INITIALIZER;
 
 @end

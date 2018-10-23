@@ -11,7 +11,6 @@ fill out have been marked with `TODO` statements.
     # TODO: ComponentName
 
     TODO: Single sentence description of the component.
-    <!--{: .article__intro }-->
 
     ## Design & API Documentation
 
@@ -36,11 +35,6 @@ fill out have been marked with `TODO` statements.
 
     ## Installation
 
-    ### Requirements
-
-    - Xcode 7.0 or higher.
-    - iOS SDK version 7.0 or higher.
-
     ### Installation with CocoaPods
 
     To add this component to your Xcode project using CocoaPods, add the
@@ -52,7 +46,7 @@ fill out have been marked with `TODO` statements.
 
     Then, run the following command:
 
-    ``` bash
+    ```bash
     pod install
     ```
 
@@ -91,7 +85,7 @@ Swift language to use when writing examples.
 
     <!--<div class="material-code-render" markdown="1">-->
     #### Objective-C
-    ``` objc
+    ```objc
     - (void)viewDidLoad {
       [super viewDidLoad];
 
@@ -103,7 +97,7 @@ Swift language to use when writing examples.
     ```
 
     #### Swift
-    ``` swift
+    ```swift
     override func viewDidLoad() {
       super.viewDidLoad()
 

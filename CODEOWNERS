@@ -1,0 +1,46 @@
+# Lines starting with '#' are comments.
+# Each line is a file pattern followed by one or more owners.
+
+# These owners will be the default owners for everything in the repo.
+**       @material-components/core-ios-team
+
+# Order is important. The last matching pattern has the most precedence.
+# So if a pull request only touches javascript files, only these owners
+# will be requested to review.
+# *.js    @octocat @github/js
+
+# You can also use email addresses if you prefer.
+/components/AnimationTiming/      @yarneo
+/components/AppBar/               @jverkoey
+/components/BottomAppBar/         @wenyuzhang666
+/components/BottomNavigation/     @romoore
+/components/BottomSheet/          @yarneo
+/components/ButtonBar/            @romoore
+/components/Buttons/              @randallli
+/components/Cards/                @yarneo
+/components/Chips/                @romoore
+/components/CollectionCells/      @yarneo
+/components/CollectionLayoutAttributes/ @ianegordon
+/components/Collections/          @ianegordon
+/components/Dialogs/              @ianegordon
+/components/FeatureHighlight/     @codeman7
+/components/FlexibleHeader/       @jverkoey
+/components/HeaderStackView/      @jverkoey
+/components/Ink/                  @yarneo
+/components/LibraryInfo/          @ajsecord
+/components/List                  @andrewoverton
+/components/MaskedTransition/     @jverkoey
+/components/NavigationBar/        @yarneo @jverkoey
+/components/NavigationDrawer/     @yarneo
+/components/OverlayWindow/        @yarneo
+/components/PageControl/          @randallli
+/components/Palettes/             @ajsecord
+/components/ProgressView/         @romoore
+/components/ShadowElevations/     @ianegordon
+/components/ShadowLayer/          @ianegordon
+/components/Slider/               @romoore
+/components/Snackbar/             @yarneo
+/components/Tabs/                 @romoore
+/components/TextFields/           @andrewoverton
+/components/Themes/               @featherless
+/components/Typography/           @ianegordon

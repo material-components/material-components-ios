@@ -190,6 +190,12 @@ EOL
  */
 + (nonnull NSString *)pathFor_$icon_name;
 
+/*
+ Returns the image for the $icon_name image contained in
+ MaterialIcons_$icon_name.bundle.
+ */
++ (nullable UIImage *)imageFor_$icon_name;
+
 @end
 EOL
 
@@ -215,7 +221,7 @@ EOL
 
 #import "$file.h"
 
-#import "MDCIcons+BundleLoader.h"
+#import "MaterialIcons.h"
 
 static NSString *const kBundleName = @"MaterialIcons_$icon_name";
 static NSString *const kIconName = @"$icon_name";
@@ -228,6 +234,13 @@ __attribute__((visibility("default")))
 
 + (nonnull NSString *)pathFor_$icon_name {
   return [self pathForIconName:kIconName withBundleName:kBundleName];
+}
+
++ (nullable UIImage *)imageFor_$icon_name {
+  NSBundle *bundle = [self bundleNamed:kBundleName];
+  return [UIImage imageNamed:kIconName
+                    inBundle:bundle
+      compatibleWithTraitCollection:nil];
 }
 
 @end

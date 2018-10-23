@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCCollectionViewController.h"
 
@@ -24,7 +22,7 @@
 #import "private/MDCCollectionViewEditor.h"
 #import "private/MDCCollectionViewStyler.h"
 
-#import <tgmath.h>
+#include <tgmath.h>
 
 NSString *const MDCCollectionInfoBarKindHeader = @"MDCCollectionInfoBarKindHeader";
 NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFooter";
@@ -85,6 +83,10 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  if (@available(iOS 11.0, *)) {
+    self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
+  }
+
   [self.collectionView setCollectionViewLayout:self.collectionViewLayout];
   self.collectionView.backgroundColor = [UIColor whiteColor];
   self.collectionView.alwaysBounceVertical = YES;
@@ -109,6 +111,21 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
   [self.collectionView registerClass:[MDCCollectionInfoBarView class]
           forSupplementaryViewOfKind:footerKind
                  withReuseIdentifier:classIdentifier];
+}
+
+- (void)viewDidLayoutSubviews {
+  [super viewDidLayoutSubviews];
+
+  // Fixes an iOS 11 bug where supplementary views would be given a zPosition of 1, meaning the
+  // scroll view indicator (with a zPosition of 0) would be placed behind supplementary views.
+  // We know that iOS keeps the scroll indicator as the top-most view in the hierarchy as a subview,
+  // so we grab it and give it a better zPosition ourselves.
+  if (@available(iOS 11.0, *)) {
+    UIView *maybeScrollViewIndicator = self.collectionView.subviews.lastObject;
+    if ([maybeScrollViewIndicator isKindOfClass:[UIImageView class]]) {
+      maybeScrollViewIndicator.layer.zPosition = 2;
+    }
+  }
 }
 
 - (void)setCollectionView:(__kindof UICollectionView *)collectionView {
@@ -145,15 +162,15 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
 }
 
 - (void)infoBar:(MDCCollectionInfoBarView *)infoBar
-    willShowAnimated:(BOOL)animated
-     willAutoDismiss:(BOOL)willAutoDismiss {
+    willShowAnimated:(__unused BOOL)animated
+     willAutoDismiss:(__unused BOOL)willAutoDismiss {
   if ([infoBar.kind isEqualToString:MDCCollectionInfoBarKindFooter]) {
     [self updateContentWithBottomInset:MDCCollectionInfoBarFooterHeight];
   }
 }
 
 - (void)infoBar:(MDCCollectionInfoBarView *)infoBar
-    willDismissAnimated:(BOOL)animated
+    willDismissAnimated:(__unused BOOL)animated
         willAutoDismiss:(BOOL)willAutoDismiss {
   if ([infoBar.kind isEqualToString:MDCCollectionInfoBarKindHeader]) {
     _headerInfoBarDismissed = willAutoDismiss;
@@ -164,8 +181,8 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
 
 #pragma mark - <MDCCollectionViewStylingDelegate>
 
-- (MDCCollectionViewCellStyle)collectionView:(UICollectionView *)collectionView
-                         cellStyleForSection:(NSInteger)section {
+- (MDCCollectionViewCellStyle)collectionView:(__unused UICollectionView *)collectionView
+                         cellStyleForSection:(__unused NSInteger)section {
   return _styler.cellStyle;
 }
 
@@ -176,20 +193,20 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
     sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
   UICollectionViewLayoutAttributes *attr =
       [collectionViewLayout layoutAttributesForItemAtIndexPath:indexPath];
-  CGSize size = [self sizeWithAttribute:attr];
-  size = [self inlaidSizeAtIndexPath:indexPath withSize:size];
+  CGSize size = [self sizeWithAttribute:attr collectionView:collectionView];
+  size = [self inlaidSizeAtIndexPath:indexPath withSize:size collectionView:collectionView];
   return size;
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView
-                        layout:(UICollectionViewLayout *)collectionViewLayout
+                        layout:(__unused UICollectionViewLayout *)collectionViewLayout
         insetForSectionAtIndex:(NSInteger)section {
-  return [self insetsAtSectionIndex:section];
+  return [self insetsAtSectionIndex:section collectionView:collectionView];
 }
 
-- (CGFloat)collectionView:(UICollectionView *)collectionView
+- (CGFloat)collectionView:(__unused UICollectionView *)collectionView
                                  layout:(UICollectionViewLayout *)collectionViewLayout
-    minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+    minimumLineSpacingForSectionAtIndex:(__unused NSInteger)section {
   if ([collectionViewLayout isKindOfClass:[UICollectionViewFlowLayout class]]) {
     if (_styler.cellLayoutType == MDCCollectionViewCellLayoutTypeGrid) {
       return _styler.gridPadding;
@@ -199,21 +216,31 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
   return 0;
 }
 
-- (CGSize)sizeWithAttribute:(UICollectionViewLayoutAttributes *)attr {
+- (CGSize)sizeWithAttribute:(UICollectionViewLayoutAttributes *)attr
+             collectionView:(UICollectionView *)collectionView {
   CGFloat height = MDCCellDefaultOneLineHeight;
   if ([_styler.delegate respondsToSelector:@selector(collectionView:cellHeightAtIndexPath:)]) {
-    height =
-        [_styler.delegate collectionView:self.collectionView cellHeightAtIndexPath:attr.indexPath];
+    height = [_styler.delegate collectionView:collectionView cellHeightAtIndexPath:attr.indexPath];
   }
 
-  CGFloat width = [self cellWidthAtSectionIndex:attr.indexPath.section];
+  CGFloat width =
+      [self cellWidthAtSectionIndex:attr.indexPath.section collectionView:collectionView];
   return CGSizeMake(width, height);
 }
 
-- (CGFloat)cellWidthAtSectionIndex:(NSInteger)section {
-  CGFloat bounds = CGRectGetWidth(
-      UIEdgeInsetsInsetRect(self.collectionView.bounds, self.collectionView.contentInset));
-  UIEdgeInsets sectionInsets = [self insetsAtSectionIndex:section];
+// Note that this method is only exposed temporarily until self-sizing cells are supported.
+- (CGFloat)cellWidthAtSectionIndex:(NSInteger)section
+                    collectionView:(UICollectionView *)collectionView {
+  UIEdgeInsets contentInset = collectionView.contentInset;
+// On the iPhone X, we need to use the offset which might take into account the safe area.
+  if (@available(iOS 11.0, *)) {
+    contentInset = collectionView.adjustedContentInset;
+  }
+
+  CGFloat bounds = CGRectGetWidth(UIEdgeInsetsInsetRect(collectionView.bounds, contentInset));
+  UIEdgeInsets sectionInsets = [self collectionView:collectionView
+                                             layout:collectionView.collectionViewLayout
+                             insetForSectionAtIndex:section];
   CGFloat insets = sectionInsets.left + sectionInsets.right;
   if (_styler.cellLayoutType == MDCCollectionViewCellLayoutTypeGrid) {
     CGFloat cellWidth = bounds - insets - (_styler.gridPadding * (_styler.gridColumnCount - 1));
@@ -222,11 +249,12 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
   return bounds - insets;
 }
 
-- (UIEdgeInsets)insetsAtSectionIndex:(NSInteger)section {
+- (UIEdgeInsets)insetsAtSectionIndex:(NSInteger)section
+                      collectionView:(UICollectionView *)collectionView {
   // Determine insets based on cell style.
   CGFloat inset = (CGFloat)floor(MDCCollectionViewCellStyleCardSectionInset);
   UIEdgeInsets insets = UIEdgeInsetsZero;
-  NSInteger numberOfSections = self.collectionView.numberOfSections;
+  NSInteger numberOfSections = collectionView.numberOfSections;
   BOOL isTop = (section == 0);
   BOOL isBottom = (section == numberOfSections - 1);
   MDCCollectionViewCellStyle cellStyle = [_styler cellStyleAtSectionIndex:section];
@@ -236,6 +264,14 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
   if (isCardStyle) {
     insets.left = inset;
     insets.right = inset;
+    if (@available(iOS 11.0, *)) {
+      if (collectionView.contentInsetAdjustmentBehavior
+          == UIScrollViewContentInsetAdjustmentAlways) {
+        // We don't need section insets if there are already safe area insets.
+        insets.left = MAX(0, insets.left - collectionView.safeAreaInsets.left);
+        insets.right = MAX(0, insets.right - collectionView.safeAreaInsets.right);
+      }
+    }
   }
   // Set top/bottom insets.
   if (isCardStyle || isGroupedStyle) {
@@ -245,9 +281,10 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
   return insets;
 }
 
-- (CGSize)inlaidSizeAtIndexPath:(NSIndexPath *)indexPath withSize:(CGSize)size {
+- (CGSize)inlaidSizeAtIndexPath:(NSIndexPath *)indexPath
+                       withSize:(CGSize)size
+                 collectionView:(UICollectionView *)collectionView {
   // If object is inlaid, return its adjusted size.
-  UICollectionView *collectionView = self.collectionView;
   if ([_styler isItemInlaidAtIndexPath:indexPath]) {
     CGFloat inset = MDCCollectionViewCellStyleCardSectionInset;
     UIEdgeInsets inlayInsets = UIEdgeInsetsZero;
@@ -258,7 +295,7 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
     if ([self
             respondsToSelector:@selector(collectionView:layout:referenceSizeForHeaderInSection:)]) {
       CGSize headerSize = [self collectionView:collectionView
-                                        layout:_collectionViewLayout
+                                        layout:collectionView.collectionViewLayout
                referenceSizeForHeaderInSection:indexPath.section];
       hasSectionHeader = !CGSizeEqualToSize(headerSize, CGSizeZero);
     }
@@ -295,9 +332,40 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
   return size;
 }
 
+#pragma mark - Subclassing Methods
+
+/*
+ The below method is solely used for subclasses to retrieve width information in order to
+ calculate cell height. Not meant to call method cellWidthAtSectionIndex:collectionView as
+ that method recalculates section insets which we don't want to do.
+ */
+- (CGFloat)cellWidthAtSectionIndex:(NSInteger)section {
+  UIEdgeInsets contentInset = self.collectionView.contentInset;
+  // On the iPhone X, we need to use the offset which might take into account the safe area.
+  if (@available(iOS 11.0, *)) {
+    contentInset = self.collectionView.adjustedContentInset;
+  }
+  CGFloat bounds = CGRectGetWidth(
+      UIEdgeInsetsInsetRect(self.collectionView.bounds, contentInset));
+  UIEdgeInsets sectionInsets = [self collectionView:self.collectionView
+                                             layout:self.collectionView.collectionViewLayout
+                             insetForSectionAtIndex:section];
+
+  CGFloat insets = sectionInsets.left + sectionInsets.right;
+  if (_styler != nil) {
+    if (_styler.cellLayoutType == MDCCollectionViewCellLayoutTypeGrid) {
+      CGFloat cellWidth = bounds - insets - (_styler.gridPadding * (_styler.gridColumnCount - 1));
+      if (_styler.gridColumnCount > 0) {
+        return cellWidth / _styler.gridColumnCount;
+      }
+    }
+  }
+  return bounds - insets;
+}
+
 #pragma mark - <MDCInkTouchControllerDelegate>
 
-- (BOOL)inkTouchController:(MDCInkTouchController *)inkTouchController
+- (BOOL)inkTouchController:(__unused MDCInkTouchController *)inkTouchController
     shouldProcessInkTouchesAtTouchLocation:(CGPoint)location {
   // Only store touch location and do not allow ink processing. This ink location will be used when
   // manually starting/stopping the ink animation during cell highlight/unhighlight states.
@@ -366,16 +434,17 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
 
 #pragma mark - <UICollectionViewDelegate>
 
-- (BOOL)collectionView:(UICollectionView *)collectionView
-    shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-  if ([_styler.delegate respondsToSelector:@selector(collectionView:hidesInkViewAtIndexPath:)]) {
-    return ![_styler.delegate collectionView:collectionView hidesInkViewAtIndexPath:indexPath];
-  }
+- (BOOL)collectionView:(__unused UICollectionView *)collectionView
+    shouldHighlightItemAtIndexPath:(__unused NSIndexPath *)indexPath {
   return YES;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView
     didHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
+  if ([_styler.delegate respondsToSelector:@selector(collectionView:hidesInkViewAtIndexPath:)] &&
+      [_styler.delegate collectionView:collectionView hidesInkViewAtIndexPath:indexPath]) {
+    return;
+  }
   UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
   CGPoint location = [collectionView convertPoint:_inkTouchLocation toView:cell];
 
@@ -428,27 +497,27 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView
-    shouldDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
+    shouldDeselectItemAtIndexPath:(__unused NSIndexPath *)indexPath {
   return collectionView.allowsMultipleSelection;
 }
 
-- (void)collectionView:(UICollectionView *)collectionView
-    didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+- (void)collectionView:(__unused UICollectionView *)collectionView
+    didSelectItemAtIndexPath:(__unused NSIndexPath *)indexPath {
   [self updateFooterInfoBarIfNecessary];
 }
 
-- (void)collectionView:(UICollectionView *)collectionView
-    didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
+- (void)collectionView:(__unused UICollectionView *)collectionView
+    didDeselectItemAtIndexPath:(__unused NSIndexPath *)indexPath {
   [self updateFooterInfoBarIfNecessary];
 }
 
 #pragma mark - <MDCCollectionViewEditingDelegate>
 
-- (BOOL)collectionViewAllowsEditing:(UICollectionView *)collectionView {
+- (BOOL)collectionViewAllowsEditing:(__unused UICollectionView *)collectionView {
   return NO;
 }
 
-- (void)collectionViewWillBeginEditing:(UICollectionView *)collectionView {
+- (void)collectionViewWillBeginEditing:(__unused UICollectionView *)collectionView {
   if (self.currentlyActiveInk) {
     MDCInkView *activeInkView =
         [self inkTouchController:_inkTouchController inkViewAtTouchLocation:_inkTouchLocation];
@@ -461,14 +530,14 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
   [self updateHeaderInfoBarIfNecessary];
 }
 
-- (void)collectionViewWillEndEditing:(UICollectionView *)collectionView {
+- (void)collectionViewWillEndEditing:(__unused UICollectionView *)collectionView {
   // Remove inlay of all items.
   [_styler removeInlayFromAllItemsAnimated:YES];
   [self updateFooterInfoBarIfNecessary];
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView
-    canEditItemAtIndexPath:(NSIndexPath *)indexPath {
+    canEditItemAtIndexPath:(__unused NSIndexPath *)indexPath {
   return [self collectionViewAllowsEditing:collectionView];
 }
 
@@ -482,12 +551,12 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
 
 #pragma mark - Item Moving
 
-- (BOOL)collectionViewAllowsReordering:(UICollectionView *)collectionView {
+- (BOOL)collectionViewAllowsReordering:(__unused UICollectionView *)collectionView {
   return NO;
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView
-    canMoveItemAtIndexPath:(NSIndexPath *)indexPath {
+    canMoveItemAtIndexPath:(__unused NSIndexPath *)indexPath {
   return ([self collectionViewAllowsEditing:collectionView] &&
           [self collectionViewAllowsReordering:collectionView]);
 }
@@ -508,32 +577,32 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
 
 #pragma mark - Swipe-To-Dismiss-Items
 
-- (BOOL)collectionViewAllowsSwipeToDismissItem:(UICollectionView *)collectionView {
+- (BOOL)collectionViewAllowsSwipeToDismissItem:(__unused UICollectionView *)collectionView {
   return NO;
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView
-    canSwipeToDismissItemAtIndexPath:(NSIndexPath *)indexPath {
+    canSwipeToDismissItemAtIndexPath:(__unused NSIndexPath *)indexPath {
   return [self collectionViewAllowsSwipeToDismissItem:collectionView];
 }
 
-- (void)collectionView:(UICollectionView *)collectionView
+- (void)collectionView:(__unused UICollectionView *)collectionView
     didEndSwipeToDismissItemAtIndexPath:(NSIndexPath *)indexPath {
   [self deleteIndexPaths:@[ indexPath ]];
 }
 
 #pragma mark - Swipe-To-Dismiss-Sections
 
-- (BOOL)collectionViewAllowsSwipeToDismissSection:(UICollectionView *)collectionView {
+- (BOOL)collectionViewAllowsSwipeToDismissSection:(__unused UICollectionView *)collectionView {
   return NO;
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView
-    canSwipeToDismissSection:(NSInteger)section {
+    canSwipeToDismissSection:(__unused NSInteger)section {
   return [self collectionViewAllowsSwipeToDismissSection:collectionView];
 }
 
-- (void)collectionView:(UICollectionView *)collectionView
+- (void)collectionView:(__unused UICollectionView *)collectionView
     didEndSwipeToDismissSection:(NSInteger)section {
   [self deleteSections:[NSIndexSet indexSetWithIndex:section]];
 }
@@ -542,7 +611,7 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
 
 - (void)deleteIndexPaths:(NSArray<NSIndexPath *> *)indexPaths {
   if ([self respondsToSelector:@selector(collectionView:willDeleteItemsAtIndexPaths:)]) {
-    void (^batchUpdates)() = ^{
+    void (^batchUpdates)(void) = ^{
       // Notify delegate to delete data.
       [self collectionView:self.collectionView willDeleteItemsAtIndexPaths:indexPaths];
 
@@ -550,7 +619,7 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
       [self.collectionView deleteItemsAtIndexPaths:indexPaths];
     };
 
-    void (^completionBlock)(BOOL finished) = ^(BOOL finished) {
+    void (^completionBlock)(BOOL finished) = ^(__unused BOOL finished) {
       [self updateFooterInfoBarIfNecessary];
       // Notify delegate of deletion.
       if ([self respondsToSelector:@selector(collectionView:didDeleteItemsAtIndexPaths:)]) {
@@ -565,7 +634,7 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
 
 - (void)deleteSections:(NSIndexSet *)sections {
   if ([self respondsToSelector:@selector(collectionView:willDeleteSections:)]) {
-    void (^batchUpdates)() = ^{
+    void (^batchUpdates)(void) = ^{
       // Notify delegate to delete data.
       [self collectionView:self.collectionView willDeleteSections:sections];
 
@@ -573,7 +642,7 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
       [self.collectionView deleteSections:sections];
     };
 
-    void (^completionBlock)(BOOL finished) = ^(BOOL finished) {
+    void (^completionBlock)(BOOL finished) = ^(__unused BOOL finished) {
       [self updateFooterInfoBarIfNecessary];
       // Notify delegate of deletion.
       if ([self respondsToSelector:@selector(collectionView:didDeleteSections:)]) {

@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCCollectionViewFlowLayout.h"
 
@@ -24,7 +22,7 @@
 #import "private/MDCCollectionInfoBarView.h"
 #import "private/MDCCollectionViewEditor.h"
 
-#import <tgmath.h>
+#include <tgmath.h>
 
 /** The grid background decoration view kind. */
 NSString *const kCollectionGridDecorationView = @"MDCCollectionGridDecorationView";
@@ -182,11 +180,18 @@ static const NSInteger kSupplementaryViewZIndex = 99;
       attr.size = CGSizeMake(CGRectGetWidth(currentBounds), MDCCollectionInfoBarHeaderHeight);
       // Allow header to move upwards with scroll, but prevent from moving downwards with scroll.
       CGFloat insetTop = self.collectionView.contentInset.top;
+      if (@available(iOS 11.0, *)) {
+        insetTop = self.collectionView.adjustedContentInset.top;
+      }
       CGFloat boundsY = currentBounds.origin.y;
       CGFloat maxOffsetY = MAX(boundsY + insetTop, 0);
       offsetY = boundsY + (attr.size.height / 2) + insetTop - maxOffsetY;
     } else if ([kind isEqualToString:MDCCollectionInfoBarKindFooter]) {
-      attr.size = CGSizeMake(CGRectGetWidth(currentBounds), MDCCollectionInfoBarFooterHeight);
+      CGFloat height = MDCCollectionInfoBarFooterHeight;
+      if (@available(iOS 11.0, *)) {
+        height += self.collectionView.safeAreaInsets.bottom;
+      }
+      attr.size = CGSizeMake(CGRectGetWidth(currentBounds), height);
       offsetY = currentBounds.origin.y + currentBounds.size.height - (attr.size.height / 2);
     }
     attr.center = CGPointMake(CGRectGetMidX(currentBounds), offsetY);
@@ -217,12 +222,15 @@ static const NSInteger kSupplementaryViewZIndex = 99;
       sectionFrame = CGRectUnion(sectionFrame, attribute.frame);
     }
   }
-  decorationAttr.frame = sectionFrame;
+  if (!CGRectIsNull(sectionFrame)) {
+    decorationAttr.frame = sectionFrame;
+  }
+
   decorationAttr.zIndex = -1;
   return decorationAttr;
 }
 
-- (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset {
+- (CGPoint)targetContentOffsetForProposedContentOffset:(__unused CGPoint)proposedContentOffset {
   // Return current contentOffset to prevent any layout animations from jumping to new offset.
   return [super targetContentOffsetForProposedContentOffset:self.collectionView.contentOffset];
 }
@@ -374,7 +382,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
   attr.separatorColor = self.styler.separatorColor;
   attr.separatorInset = self.styler.separatorInset;
   attr.separatorLineHeight = self.styler.separatorLineHeight;
-  attr.shouldHideSeparators = self.styler.shouldHideSeparators;
+  attr.shouldHideSeparators = [self.styler shouldHideSeparatorForCellLayoutAttributes:attr];
 
   // Set inlay and hidden state if necessary.
   [self inlayAttributeIfNecessary:attr];
@@ -390,15 +398,31 @@ static const NSInteger kSupplementaryViewZIndex = 99;
   // on both the backgroundView and contentView in order to match the insets of the collection
   // view rows.
   CGRect insetFrame = attr.frame;
-  UIEdgeInsets insets = [self insetsAtSectionIndex:attr.indexPath.section];
-  if (self.scrollDirection == UICollectionViewScrollDirectionVertical) {
-    insetFrame = CGRectInset(insetFrame, insets.left / 2 + insets.right / 2, 0);
-    if ([attr.representedElementKind isEqualToString:UICollectionElementKindSectionHeader]) {
-      insetFrame.origin.y += insets.top;
-    } else if ([attr.representedElementKind isEqualToString:UICollectionElementKindSectionFooter]) {
-      insetFrame.origin.y -= insets.bottom;
+  if (!CGRectIsEmpty(insetFrame)) {
+    UIEdgeInsets insets;
+
+    // Retrieve the insets from the Flow Layout delegate to maintain consistency with the CVC
+    if ([self.collectionView.delegate
+            respondsToSelector:@selector(collectionView:layout:insetForSectionAtIndex:)]) {
+      id<UICollectionViewDelegateFlowLayout> flowLayoutDelegate =
+          (id<UICollectionViewDelegateFlowLayout>)self.collectionView.delegate;
+      insets = [flowLayoutDelegate collectionView:self.collectionView
+                                           layout:self.collectionView.collectionViewLayout
+                           insetForSectionAtIndex:attr.indexPath.section];
+    } else {
+      insets = [self insetsAtSectionIndex:attr.indexPath.section];
     }
-    attr.frame = insetFrame;
+
+    if (self.scrollDirection == UICollectionViewScrollDirectionVertical) {
+      insetFrame = CGRectInset(insetFrame, insets.left / 2 + insets.right / 2, 0);
+      if ([attr.representedElementKind isEqualToString:UICollectionElementKindSectionHeader]) {
+        insetFrame.origin.y += insets.top;
+      } else if ([attr.representedElementKind
+                     isEqualToString:UICollectionElementKindSectionFooter]) {
+        insetFrame.origin.y -= insets.bottom;
+      }
+      attr.frame = insetFrame;
+    }
   }
   return attr;
 }
@@ -437,7 +461,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
   BOOL isBottom = NO;
   BOOL hasSectionHeader = [_headerSections containsIndex:indexPath.section];
   BOOL hasSectionFooter = [_footerSections containsIndex:indexPath.section];
-  BOOL hasSectionItems = YES;
+  BOOL hasSectionItems = [self numberOfItemsInSection:indexPath.section] > 0;
 
   BOOL hidesHeaderBackground = NO;
   if ([self.styler.delegate
@@ -528,8 +552,8 @@ static const NSInteger kSupplementaryViewZIndex = 99;
           (id<MDCCollectionViewEditingDelegate>)self.collectionView.dataSource;
 
       // Check if delegate can select during editing.
-      if ([editingDelegate respondsToSelector:@selector(collectionView:
-                                                  canSelectItemDuringEditingAtIndexPath:)]) {
+      if ([editingDelegate respondsToSelector:@selector
+                           (collectionView:canSelectItemDuringEditingAtIndexPath:)]) {
         attr.shouldShowSelectorStateMask = [editingDelegate collectionView:self.collectionView
                                      canSelectItemDuringEditingAtIndexPath:attr.indexPath];
       }
@@ -682,7 +706,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
   }
 }
 
-- (BOOL)shouldShowGridBackgroundWithAttribute:(MDCCollectionViewLayoutAttributes *)attr {
+- (BOOL)shouldShowGridBackgroundWithAttribute:(__unused MDCCollectionViewLayoutAttributes *)attr {
   // Determine whether to show grid background.
   if (self.styler.cellLayoutType == MDCCollectionViewCellLayoutTypeGrid) {
     if (self.styler.cellStyle == MDCCollectionViewCellStyleGrouped ||
@@ -736,7 +760,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
     NSMutableArray<__kindof UICollectionViewLayoutAttributes *> *sortedAttributes =
         [NSMutableArray array];
     [sortedByIndexPath enumerateObjectsUsingBlock:^(MDCCollectionViewLayoutAttributes *attr,
-                                                    NSUInteger idx, BOOL *stop) {
+                                                    __unused NSUInteger idx, __unused BOOL *stop) {
       if (sortedAttributes.count > 0) {
         // Check if current attribute is a header and previous attribute is an item. If so,
         // insert the current header attribute before the cell.
@@ -762,7 +786,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
 
     // Now assign delays and add padding to frame Y coordinate which gets removed during animation.
     [sortedAttributes enumerateObjectsUsingBlock:^(MDCCollectionViewLayoutAttributes *attr,
-                                                   NSUInteger idx, BOOL *stop) {
+                                                   NSUInteger idx, __unused BOOL *stop) {
       // If the element is an info bar header, then don't do anything.
       attr.willAnimateCellsOnAppearance = self.styler.willAnimateCellsOnAppearance;
       attr.animateCellsOnAppearanceDuration = self.styler.animateCellsOnAppearanceDuration;

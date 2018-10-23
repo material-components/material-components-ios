@@ -194,13 +194,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Bare-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		914DEBFE9F34FA62FE43A1DC /* [CP] Copy Pods Resources */ = {
@@ -209,9 +212,27 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Bare/Pods-Bare-resources.sh",
+				"${PODS_ROOT}/../../../components/ActivityIndicator/src/MaterialActivityIndicator.bundle",
+				"${PODS_ROOT}/../../../components/AppBar/src/MaterialAppBar.bundle",
+				"${PODS_ROOT}/../../../components/BottomNavigation/src/MaterialBottomNavigation.bundle",
+				"${PODS_ROOT}/../../../components/CollectionCells/src/MaterialCollectionCells.bundle",
+				"${PODS_ROOT}/../../../components/Collections/src/MaterialCollections.bundle",
+				"${PODS_ROOT}/../../../components/Dialogs/src/MaterialDialogs.bundle",
+				"${PODS_ROOT}/../../../components/FeatureHighlight/src/MaterialFeatureHighlight.bundle",
+				"${PODS_ROOT}/../../../components/PageControl/src/MaterialPageControl.bundle",
+				"${PODS_ROOT}/../../../components/Tabs/src/MaterialTabs.bundle",
+				"$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_arrow_back.bundle",
+				"$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_check.bundle",
+				"$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_check_circle.bundle",
+				"$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_chevron_right.bundle",
+				"$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_info.bundle",
+				"$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_radio_button_unchecked.bundle",
+				"$PODS_CONFIGURATION_BUILD_DIR/MaterialComponents/MaterialIcons_ic_reorder.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

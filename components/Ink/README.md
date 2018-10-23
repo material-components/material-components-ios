@@ -2,53 +2,44 @@
 title: "Ink"
 layout: detail
 section: components
-excerpt: "The Ink component provides a radial action in the form of a visual ripple of ink expanding outward from the user's touch."
+excerpt: "The Ink component provides a radial action in the form of a visual ripple expanding outward from the user's touch."
 iconId: ripple
 path: /catalog/ink/
+api_doc_root: true
 -->
 
 # Ink
 
-<!--{% if site.link_to_site == "true" %}-->
-<div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/ink.png" alt="Ink" width="320">
-</div>
-<!--{% else %}
-<div class="article__asset article__asset--screenshot" markdown="1">
-  <video src="docs/assets/ink.mp4" autoplay loop></video>
-</div>
-{% endif %}-->
+The Ink component provides a radial action in the form of a visual ripple expanding outward from
+the user's touch.
 
-The Ink component provides a radial action in the form of a visual ripple of ink expanding
-outward from the user's touch.
-<!--{: .article__intro }-->
+<img src="docs/assets/ink.gif" alt="An animation showing a Material ink ripple on multiple surfaces." width="210">
 
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/animation/responsive-interaction.html#responsive-interaction-radial-action">Radial Action</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/animation/responsive-interaction.html#responsive-interaction-radial-action">Material Design guidelines: Radial Action</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/ink/api-docs/Classes/MDCInkGestureRecognizer.html">API: MDCInkGestureRecognizer</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/ink/api-docs/Classes/MDCInkTouchController.html">API: MDCInkTouchController</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/ink/api-docs/Classes/MDCInkView.html">API: MDCInkView</a></li>
 </ul>
 
 - - -
 
 ## Installation
 
-### Requirements
-
-- Xcode 7.0 or higher.
-- iOS SDK version 7.0 or higher.
-
 ### Installation with CocoaPods
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-``` bash
+```bash
 pod 'MaterialComponents/Ink'
 ```
+<!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 
-``` bash
+```bash
 pod install
 ```
 
@@ -63,13 +54,13 @@ Before using Ink, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 import MaterialComponents
 ```
 
 #### Objective-C
 
-``` objc
+```objc
 #import "MaterialInk.h"
 ```
 <!--</div>-->
@@ -90,15 +81,15 @@ The simplest method of using ink in your views is to use a
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 let myButton = UIButton(type: .system)
 myButton.setTitle("Tap Me", for: .normal)
 let inkTouchController = MDCInkTouchController(view: myButton)
-inkTouchController?.addInkView()
+inkTouchController.addInkView()
 ```
 
 #### Objective-C
-``` objc
+```objc
 UIButton *myButton = [UIButton buttonWithType:UIButtonTypeSystem];
 [myButton setTitle:@"Tap me" forState:UIControlStateNormal];
 MDCInkTouchController *inkTouchController = [[MDCInkTouchController alloc] initWithView:myButton];
@@ -117,7 +108,7 @@ touches, the following code uses the delegate's
 <!--<div class="material-code-render" markdown="1">-->
 
 #### Swift
-``` swift
+```swift
 class MyDelegate: NSObject, MDCInkTouchControllerDelegate {
 
   func inkTouchController(_ inkTouchController: MDCInkTouchController, shouldProcessInkTouchesAtTouchLocation location: CGPoint) -> Bool {
@@ -135,13 +126,13 @@ myButton.setTitle("Tap Me", for: .normal)
 let myDelegate = MyDelegate()
 
 let inkTouchController = MDCInkTouchController(view: myButton)
-inkTouchController?.delegate = myDelegate
-inkTouchController?.addInkView()
+inkTouchController.delegate = myDelegate
+inkTouchController.addInkView()
 
 ```
 
 #### Objective-C
-``` objc
+```objc
 @interface MyDelegate: NSObject <MDCInkTouchControllerDelegate>
 @end
 
@@ -175,7 +166,7 @@ own touch processing:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 let myCustomView = MyCustomView(frame: CGRect.zero)
 let inkView = MDCInkView()
 inkView.inkColor = UIColor.red
@@ -189,9 +180,9 @@ inkView.startTouchEndedAnimation(at: touchPoint, completion: nil)
 ```
 
 #### Objective-C
-``` objc
+```objc
 MyCustomView *myCustomView = [[MyCustomView alloc] initWithFrame:CGRectZero];
-MDCInkView *inkView = [MDCInkView new];
+MDCInkView *inkView = [[MDCInkView alloc] init];
 inkView.inkColor = [UIColor redColor];
 [myCustomView addSubview:inkView];
 ...

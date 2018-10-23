@@ -52,12 +52,45 @@ def registerIcons(s)
       ss.dependency "#{Pathname.new(ss.name).dirname}/Base"
     end
 
+    iss.subspec "ic_color_lens" do |ss|
+      ss.public_header_files = "components/private/Icons/icons/ic_color_lens/src/*.h"
+      ss.source_files = "components/private/Icons/icons/ic_color_lens/src/*.{h,m}"
+      ss.resource_bundles = {
+        "MaterialIcons_ic_color_lens" => [
+          "components/private/Icons/icons/ic_color_lens/src/MaterialIcons_ic_color_lens.bundle/*.png",
+        ]
+      }
+      ss.dependency "#{Pathname.new(ss.name).dirname}/Base"
+    end
+
+    iss.subspec "ic_help_outline" do |ss|
+      ss.public_header_files = "components/private/Icons/icons/ic_help_outline/src/*.h"
+      ss.source_files = "components/private/Icons/icons/ic_help_outline/src/*.{h,m}"
+      ss.resource_bundles = {
+        "MaterialIcons_ic_help_outline" => [
+          "components/private/Icons/icons/ic_help_outline/src/MaterialIcons_ic_help_outline.bundle/*.png",
+        ]
+      }
+      ss.dependency "#{Pathname.new(ss.name).dirname}/Base"
+    end
+
     iss.subspec "ic_info" do |ss|
       ss.public_header_files = "components/private/Icons/icons/ic_info/src/*.h"
       ss.source_files = "components/private/Icons/icons/ic_info/src/*.{h,m}"
       ss.resource_bundles = {
         "MaterialIcons_ic_info" => [
           "components/private/Icons/icons/ic_info/src/MaterialIcons_ic_info.bundle/*.png",
+        ]
+      }
+      ss.dependency "#{Pathname.new(ss.name).dirname}/Base"
+    end
+
+    iss.subspec "ic_more_horiz" do |ss|
+      ss.public_header_files = "components/private/Icons/icons/ic_more_horiz/src/*.h"
+      ss.source_files = "components/private/Icons/icons/ic_more_horiz/src/*.{h,m}"
+      ss.resource_bundles = {
+        "MaterialIcons_ic_more_horiz" => [
+          "components/private/Icons/icons/ic_more_horiz/src/MaterialIcons_ic_more_horiz.bundle/*.png",
         ]
       }
       ss.dependency "#{Pathname.new(ss.name).dirname}/Base"
@@ -80,6 +113,17 @@ def registerIcons(s)
       ss.resource_bundles = {
         "MaterialIcons_ic_reorder" => [
           "components/private/Icons/icons/ic_reorder/src/MaterialIcons_ic_reorder.bundle/*.png",
+        ]
+      }
+      ss.dependency "#{Pathname.new(ss.name).dirname}/Base"
+    end
+
+    iss.subspec "ic_settings" do |ss|
+      ss.public_header_files = "components/private/Icons/icons/ic_settings/src/*.h"
+      ss.source_files = "components/private/Icons/icons/ic_settings/src/*.{h,m}"
+      ss.resource_bundles = {
+        "MaterialIcons_ic_settings" => [
+          "components/private/Icons/icons/ic_settings/src/MaterialIcons_ic_settings.bundle/*.png",
         ]
       }
       ss.dependency "#{Pathname.new(ss.name).dirname}/Base"

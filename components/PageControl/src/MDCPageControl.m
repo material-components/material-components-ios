@@ -1,18 +1,16 @@
-/*
- Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCPageControl.h"
 
@@ -21,7 +19,7 @@
 #import "private/MaterialPageControlStrings.h"
 #import "private/MaterialPageControlStrings_table.h"
 
-#import <tgmath.h>
+#include <tgmath.h>
 
 // The Bundle for string resources.
 static NSString *const kMaterialPageControlBundle = @"MaterialPageControl.bundle";
@@ -30,7 +28,7 @@ static NSString *const kMaterialPageControlBundle = @"MaterialPageControl.bundle
 static NSString *const kMaterialPageControlScrollViewContentOffset = @"bounds.origin";
 
 // Matches native UIPageControl minimum height.
-static const CGFloat kPageControlMinimumHeight = 37.0f;
+static const CGFloat kPageControlMinimumHeight = 48.0f;
 
 // Matches native UIPageControl indicator radius.
 static const CGFloat kPageControlIndicatorRadius = 3.5f;
@@ -108,7 +106,7 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
 
 - (void)layoutSubviews {
   [super layoutSubviews];
-  if (_hidesForSinglePage && [_indicators count] == 1) {
+  if (_numberOfPages == 0 || (_hidesForSinglePage && [_indicators count] == 1)) {
     self.hidden = YES;
     return;
   }
@@ -152,6 +150,10 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
   BOOL shouldReverse = (previousPage > currentPage);
   _currentPage = currentPage;
 
+  if (_numberOfPages == 0) {
+    return;
+  }
+
   if (animated) {
     // Draw and extend track.
     CGPoint startPoint = [_indicatorPositions[previousPage] CGPointValue];
@@ -163,13 +165,13 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
 
     // Remove track and reveal hidden indicators staggered towards current page indicator. Reveal
     // indicators in reverse if scrolling to left.
-    void (^completionBlock)() = ^{
+    void (^completionBlock)(void) = ^{
       // We are using the delay to increase the time between the end of the extension of the track
       // ahead of the dots movement and the contraction of the track under the dot at the
       // destination.
       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(duration * NSEC_PER_SEC)),
                      dispatch_get_main_queue(), ^{
-                       [_trackLayer removeTrackTowardsPoint:shouldReverse ? startPoint : endPoint
+                       [self->_trackLayer removeTrackTowardsPoint:shouldReverse ? startPoint : endPoint
                                                  completion:^{
                                                    // Once track is removed, reveal indicators once
                                                    // more to ensure
@@ -201,14 +203,6 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
   [self setNeedsLayout];
 }
 
-- (CGSize)sizeForNumberOfPages:(NSInteger)pageCount {
-  CGFloat radius = kPageControlIndicatorRadius;
-  CGFloat margin = kPageControlIndicatorMargin;
-  CGFloat width = pageCount * ((radius * 2) + margin) - margin;
-  CGFloat height = MAX(kPageControlMinimumHeight, radius * 2);
-  return CGSizeMake(width, height);
-}
-
 - (BOOL)isPageIndexValid:(NSInteger)nextPage {
   // Returns YES if next page is within bounds of page control. Otherwise NO.
   return (nextPage >= 0 && nextPage < _numberOfPages);
@@ -216,8 +210,16 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
 
 #pragma mark - UIView(UIViewGeometry)
 
-- (CGSize)sizeThatFits:(CGSize)size {
-  return [self sizeForNumberOfPages:_numberOfPages];
+- (CGSize)sizeThatFits:(__unused CGSize)size {
+  return [MDCPageControl sizeForNumberOfPages:_numberOfPages];
+}
+
++ (CGSize)sizeForNumberOfPages:(NSInteger)pageCount {
+   CGFloat radius = kPageControlIndicatorRadius;
+   CGFloat margin = kPageControlIndicatorMargin;
+   CGFloat width = pageCount * ((radius * 2) + margin) - margin;
+   CGFloat height = MAX(kPageControlMinimumHeight, radius * 2);
+   return CGSizeMake(width, height);
 }
 
 #pragma mark - Colors
@@ -265,14 +267,14 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
                      NSInteger currentPage = [self scrolledPageNumber:scrollView];
                      [self setCurrentPage:currentPage animated:YES duration:animation.duration];
 
-                     CGFloat transformX = scrolledPercentage * _trackLength;
-                     [_animatedIndicator updateIndicatorTransformX:transformX
-                                                          animated:YES
-                                                          duration:animation.duration
-                                               mediaTimingFunction:animation.timingFunction];
+                     CGFloat transformX = scrolledPercentage * self->_trackLength;
+                     [self->_animatedIndicator updateIndicatorTransformX:transformX
+                                                                animated:YES
+                                                                duration:animation.duration
+                                                     mediaTimingFunction:animation.timingFunction];
                    });
 
-  } else if (scrolledPercentage >= 0 && scrolledPercentage <= 1) {
+  } else if (scrolledPercentage >= 0 && scrolledPercentage <= 1 && _numberOfPages > 0) {
     // Update active indicator position.
     CGFloat transformX = scrolledPercentage * _trackLength;
     if (!_isDeferredScrolling) {
@@ -456,6 +458,11 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
   _indicators = [NSMutableArray arrayWithCapacity:_numberOfPages];
   _indicatorPositions = [NSMutableArray arrayWithCapacity:_numberOfPages];
 
+  if (_numberOfPages == 0) {
+    [self setNeedsLayout];
+    return;
+  }
+
   // Create indicators.
   CGFloat radius = kPageControlIndicatorRadius;
   CGFloat margin = kPageControlIndicatorMargin;
@@ -473,14 +480,16 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
 
   // Resize container view to keep indicators centered.
   CGFloat frameWidth = _containerView.frame.size.width;
-  CGSize controlSize = [self sizeForNumberOfPages:_numberOfPages];
+  CGSize controlSize = [MDCPageControl sizeForNumberOfPages:_numberOfPages];
   _containerView.frame = CGRectInset(_containerView.frame, (frameWidth - controlSize.width) / 2, 0);
   _trackLength = CGRectGetWidth(_containerView.frame) - (radius * 2);
 
   // Add animated indicator that will travel freely across the container. Its transform will be
   // updated by calling its -updateIndicatorTransformX method.
   CGPoint center = CGPointMake(radius, radius);
+  CGPoint point = [_indicatorPositions[_currentPage] CGPointValue];
   _animatedIndicator = [[MDCPageControlIndicator alloc] initWithCenter:center radius:radius];
+  [_animatedIndicator updateIndicatorTransformX:point.x - kPageControlIndicatorRadius];
   [_containerView.layer addSublayer:_animatedIndicator];
 
   [self setNeedsLayout];
@@ -512,7 +521,7 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
   // In iOS 8+, we could be included by way of a dynamic framework, and our resource bundles may
   // not be in the main .app bundle, but rather in a nested framework, so figure out where we live
   // and use that as the search location.
-  NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+  NSBundle *bundle = [NSBundle bundleForClass:[MDCPageControl class]];
   NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle)resourcePath];
   return [resourcePath stringByAppendingPathComponent:bundleName];
 }

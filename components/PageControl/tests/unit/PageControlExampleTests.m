@@ -1,18 +1,16 @@
-/*
- Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <XCTest/XCTest.h>
 
@@ -81,21 +79,27 @@
   [pageControl sizeToFit];
   nativePageControl.numberOfPages = 1;
   [nativePageControl sizeToFit];
-  XCTAssertTrue(CGRectEqualToRect(CGRectIntegral(pageControl.frame), nativePageControl.frame));
+  CGRect frame = CGRectIntegral(pageControl.frame);
+  XCTAssertEqual(frame.size.height, 48.0);
+  XCTAssertEqual(frame.size.width, nativePageControl.frame.size.width);
 
   // Test both controls with 4 pages.
   pageControl.numberOfPages = 4;
   [pageControl sizeToFit];
   nativePageControl.numberOfPages = 4;
   [nativePageControl sizeToFit];
-  XCTAssertTrue(CGRectEqualToRect(CGRectIntegral(pageControl.frame), nativePageControl.frame));
+  frame = CGRectIntegral(pageControl.frame);
+  XCTAssertEqual(frame.size.height, 48.0);
+  XCTAssertEqual(frame.size.width, nativePageControl.frame.size.width);
 
   // Test with different number of pages for each control.
   pageControl.numberOfPages = 4;
   [pageControl sizeToFit];
   nativePageControl.numberOfPages = 2;
   [nativePageControl sizeToFit];
-  XCTAssertFalse(CGRectEqualToRect(CGRectIntegral(pageControl.frame), nativePageControl.frame));
+  frame = CGRectIntegral(pageControl.frame);
+  XCTAssertEqual(frame.size.height, 48.0);
+  XCTAssertNotEqual(frame.size.width, nativePageControl.frame.size.width);
 }
 
 - (void)testScrollOffsetOutOfBoundsOfNumberOfPages {
@@ -121,13 +125,51 @@
   pageControl.numberOfPages = 3;
   UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:frame];
   scrollView.delegate = pageControl;
-  NSUInteger page = 2;
+  NSInteger page = 2;
 
   // When
   [scrollView setContentOffset:CGPointMake(frame.size.width * page, 0) animated:YES];
 
   // Then
   XCTAssertEqual(pageControl.currentPage, page);
+}
+
+- (void)testResetNumberOfPagesToZero {
+  // Given
+  MDCPageControl *pageControl = [[MDCPageControl alloc] init];
+  pageControl.numberOfPages = 3;
+  NSException *exception;
+
+  // When
+  @try {
+    pageControl.numberOfPages = 0;
+    pageControl.currentPage = 0;
+  }
+  @catch (NSException *e) {
+    exception = e;
+  }
+
+  // Then
+  XCTAssertNil(exception, @"PageControl crashed with exception: %@", exception);
+}
+
+- (void)testScrollViewDidScrollWithZeroPages {
+  // Given
+  MDCPageControl *pageControl = [[MDCPageControl alloc] init];
+  pageControl.numberOfPages = 0;
+  UIScrollView *scrollView = [[UIScrollView alloc] init];
+  NSException *exception;
+
+  // When
+  @try {
+    [pageControl scrollViewDidScroll:scrollView];
+  }
+  @catch (NSException *e) {
+    exception = e;
+  }
+
+  // Then
+  XCTAssertNil(exception, @"PageControl crashed with exception: %@", exception);
 }
 
 @end
