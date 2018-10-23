@@ -107,11 +107,15 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
 }
 
 - (void)testAlertControllerTyphography {
+  // Given
   UIFont *testFont = [UIFont boldSystemFontOfSize:30];
+
+  // When
   self.alert.titleFont = testFont;
   self.alert.messageFont = testFont;
   self.alert.buttonFont = testFont;
 
+  // Then
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertEqual(view.titleLabel.font, testFont);
   XCTAssertEqual(view.messageLabel.font, testFont);
@@ -121,12 +125,16 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
 }
 
 - (void)testAlertControllerColorSetting {
+  // Given
   UIColor *testColor = [UIColor redColor];
+
+  // When
   self.alert.titleColor = testColor;
   self.alert.messageColor = testColor;
   self.alert.buttonTitleColor = testColor;
   self.alert.buttonInkColor = testColor;
 
+  // Then
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertEqual(view.titleLabel.textColor, testColor);
   XCTAssertEqual(view.messageLabel.textColor, testColor);
@@ -217,11 +225,14 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
 }
 
 - (void)testAlertControllerSettingTitleAndMessage {
+  // Given
   NSString *title = @"title";
   NSString *message = @"message";
 
+  // When
   self.alert.titleFont = [UIFont systemFontOfSize:25];
 
+  // Then
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertEqual(view.titleLabel.text, title);
   XCTAssertEqual(view.messageLabel.text, message);
@@ -275,36 +286,29 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
 }
 
 - (void)testDefaultCornerRadius {
-  // Given
-  [self.alert addAction:[MDCAlertAction actionWithTitle:@"action1" handler:nil]];
-  [self.alert addAction:[MDCAlertAction actionWithTitle:@"action2" handler:nil]];
-
   // Then
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
-  XCTAssertEqualWithAccuracy(view.layer.cornerRadius, 0.0, 0.0);
-  XCTAssertEqualWithAccuracy(self.alert.mdc_dialogPresentationController.dialogCornerRadius, 0.0, 0.0);
+  XCTAssertEqualWithAccuracy(view.layer.cornerRadius, 0.0, 0.001);
+  XCTAssertEqualWithAccuracy(self.alert.mdc_dialogPresentationController.dialogCornerRadius, 0.0, 0.001);
 }
 
 - (void)testCustomCornerRadius {
   // Given
   CGFloat cornerRadius = (CGFloat)36.0;
-  [self.alert addAction:[MDCAlertAction actionWithTitle:@"action1" handler:nil]];
-  [self.alert addAction:[MDCAlertAction actionWithTitle:@"action2" handler:nil]];
 
   // When
   self.alert.cornerRadius = cornerRadius;
 
   // Then
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
-  XCTAssertEqualWithAccuracy(view.layer.cornerRadius, cornerRadius, 0.0);
+  XCTAssertEqualWithAccuracy(view.layer.cornerRadius, cornerRadius, 0.001);
   XCTAssertEqualWithAccuracy(self.alert.mdc_dialogPresentationController.dialogCornerRadius,
-                             cornerRadius, 0.0);
+                             cornerRadius, 0.001);
 }
 
 - (void)testDefaultElevation {
   // Given
   CGFloat elevation = (CGFloat)MDCShadowElevationDialog;
-  [self.alert addAction:[MDCAlertAction actionWithTitle:@"action1" handler:nil]];
 
   // Then
   MDCDialogShadowedView *shadowView = self.alert.mdc_dialogPresentationController.trackingView;
@@ -314,7 +318,6 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
 - (void)testCustomElevation {
   // Given
   CGFloat elevation = (CGFloat)2.0;
-  [self.alert addAction:[MDCAlertAction actionWithTitle:@"action1" handler:nil]];
 
   // When
   self.alert.elevation = elevation;
@@ -327,7 +330,6 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
 - (void)testCustomDialogPresentationElevation {
   // Given
   CGFloat elevation = (CGFloat)2.0;
-  [self.alert addAction:[MDCAlertAction actionWithTitle:@"action1" handler:nil]];
 
   // When
   self.alert.mdc_dialogPresentationController.dialogElevation = elevation;
