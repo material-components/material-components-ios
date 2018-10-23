@@ -17,8 +17,8 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 
-#import "../../src/private/MDCSheetContainerView.h"
 #import "../../src/private/MDCDraggableView.h"
+#import "../../src/private/MDCSheetContainerView.h"
 
 // Exposing internal methods for unit testing
 @interface MDCBottomSheetPresentationController (Testing)
@@ -243,7 +243,10 @@
   CGFloat scrollViewHeight = 100;
   CGRect fakeFrame = CGRectMake(0, 0, 200, scrollViewHeight);
   UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
-  MDCSheetContainerView *fakeSheet = [[MDCSheetContainerView alloc] initWithFrame:fakeFrame contentView:[[UIView alloc] initWithFrame:fakeFrame] scrollView:scrollView];
+  MDCSheetContainerView *fakeSheet =
+      [[MDCSheetContainerView alloc] initWithFrame:fakeFrame
+                                       contentView:[[UIView alloc] initWithFrame:fakeFrame]
+                                        scrollView:scrollView];
 
   // When
   [fakeSheet setNeedsLayout];
