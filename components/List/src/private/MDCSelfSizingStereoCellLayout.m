@@ -109,9 +109,7 @@ static const CGFloat kImageSideLengthMax = 56.0;
   const CGSize fittingSize = CGSizeMake(textContainerWidth, CGFLOAT_MAX);
 
   CGSize titleSize = [titleLabel sizeThatFits:fittingSize];
-  if (titleLabel.numberOfLines != 0 && titleSize.width > textContainerWidth) {
-    titleSize.width = textContainerWidth;
-  }
+  titleSize.width = textContainerWidth;
   const CGFloat titleLabelMinX = 0;
   CGFloat titleLabelMinY = 0;
   CGPoint titleOrigin = CGPointMake(titleLabelMinX, titleLabelMinY);
@@ -121,9 +119,7 @@ static const CGFloat kImageSideLengthMax = 56.0;
   self.titleLabelFrame = titleFrame;
 
   CGSize detailSize = [detailLabel sizeThatFits:fittingSize];
-  if (detailLabel.numberOfLines != 0 && detailSize.width > textContainerWidth) {
-    detailSize.width = textContainerWidth;
-  }
+  detailSize.width = textContainerWidth;
   const CGFloat detailLabelMinX = 0;
   CGFloat detailLabelMinY = CGRectGetMaxY(titleFrame);
   if (titleLabel.text.length > 0 && detailLabel.text.length > 0) {
