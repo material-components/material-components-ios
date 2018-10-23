@@ -27,6 +27,7 @@ target "MDCCatalog" do
     'List/tests/unit',
     'MaskedTransition/tests/unit',
     'NavigationBar/tests/unit',
+    'NavigationDrawer/tests/unit',
     'OverlayWindow/tests/unit',
     'PageControl/tests/unit',
     'Palettes/tests/unit',
@@ -53,7 +54,6 @@ target "MDCCatalog" do
   ]
   pod 'MaterialComponentsAlpha', :path => '../', :testspecs => [
     'ActionSheet/tests/unit',
-    'NavigationDrawer/tests/unit',
   ]
   pod 'CatalogByConvention', "~> 2.5"
   pod 'MaterialCatalog', :path => 'MaterialCatalog/'
