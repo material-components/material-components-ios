@@ -18,11 +18,16 @@
 #import <XCTest/XCTest.h>
 
 #import "../../src/private/MDCSheetContainerView.h"
+#import "../../src/private/MDCDraggableView.h"
 
 // Exposing internal methods for unit testing
 @interface MDCBottomSheetPresentationController (Testing)
 @property(nonatomic, strong) MDCSheetContainerView *sheetView;
 - (void)updatePreferredSheetHeight;
+@end
+
+@interface MDCSheetContainerView (Testing)
+@property(nonatomic) MDCDraggableView *sheet;
 @end
 
 /**
@@ -231,6 +236,22 @@
 
   // Then
   XCTAssertEqualWithAccuracy(CGRectGetHeight(sheetView.frame), CGRectGetHeight(smallFrame), 0.001);
+}
+
+- (void)testSheetViewFrameMatchesScrollViewFrame {
+  // Given
+  CGFloat scrollViewHeight = 100;
+  CGRect fakeFrame = CGRectMake(0, 0, 200, scrollViewHeight);
+  UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
+  MDCSheetContainerView *fakeSheet = [[MDCSheetContainerView alloc] initWithFrame:fakeFrame contentView:[[UIView alloc] initWithFrame:fakeFrame] scrollView:scrollView];
+
+  // When
+  [fakeSheet setNeedsLayout];
+  [fakeSheet layoutIfNeeded];
+
+  // Then
+  CGRect scrollViewFrame = CGRectStandardize(fakeSheet.sheet.frame);
+  XCTAssertEqualWithAccuracy(scrollViewFrame.size.height, scrollViewHeight, 0.001);
 }
 
 @end
