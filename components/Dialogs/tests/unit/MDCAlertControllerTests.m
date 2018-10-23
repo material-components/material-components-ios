@@ -248,8 +248,8 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
   self.alert.messageFont = [UIFont systemFontOfSize:14];
   self.alert.buttonFont = [UIFont systemFontOfSize:10];
   [self.alert addAction:[MDCAlertAction actionWithTitle:@"test"
-                                           handler:^(MDCAlertAction * _Nonnull action) {
-                                           }]];
+                                                handler:^(MDCAlertAction *_Nonnull action){
+                                                }]];
   XCTAssertFalse(self.alert.isViewLoaded);
 }
 
@@ -263,7 +263,7 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
   // When
   [self.alert addAction:action1];
   [self.alert addAction:action2];
-  
+
   // Force the view to load
   if (@available(iOS 9.0, *)) {
     [self.alert loadViewIfNeeded];
@@ -289,7 +289,8 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
   // Then
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertEqualWithAccuracy(view.layer.cornerRadius, 0.0, 0.001);
-  XCTAssertEqualWithAccuracy(self.alert.mdc_dialogPresentationController.dialogCornerRadius, 0.0, 0.001);
+  XCTAssertEqualWithAccuracy(self.alert.mdc_dialogPresentationController.dialogCornerRadius, 0.0,
+                             0.001);
 }
 
 - (void)testCustomCornerRadius {
