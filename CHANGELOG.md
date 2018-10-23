@@ -1,3 +1,97 @@
+# 67.2.0
+
+This minor release introduces new functionality for theming individual buttons of an
+MDCAlertController.
+
+## New features
+
+It is now possible to theme MDCAlertController buttons individually using the new `emphasis`
+property on `MDCAlertAction` in conjunction with the `MDCAlertControllerThemer`.
+
+```swift
+let alert = MDCAlertController(title: "Button Theming", message: "High, Medium & Low Emphasis")
+
+alert.addAction(MDCAlertAction(title:"High", emphasis: .high, handler: <#handler#>))
+alert.addAction(MDCAlertAction(title:"Medium", emphasis: .medium, handler: <#handler#>))
+alert.addAction(MDCAlertAction(title:"Low", emphasis: .low, handler: <#handler#>))
+
+MDCAlertControllerThemer.applyScheme(<#alertScheme#>, to: alert)
+
+self.present(alert, animated: true, completion: nil)
+```
+
+## API changes
+
+### Dialogs+DialogThemer
+
+#### MDCAlertScheming
+
+*new* property: `buttonScheme` in `MDCAlertScheming`
+
+#### MDCAlertScheme
+
+*new* property: `buttonScheme` in `MDCAlertScheme`
+
+### Dialogs
+
+#### MDCAlertController
+
+*modified* property: `elevation` in `MDCAlertController`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `var elevation: CGFloat { get set }` |
+| To: | `var elevation: Int32 { get set }` |
+
+*modified* property: `elevation` in `MDCAlertController`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@property (assign, readwrite, nonatomic) CGFloat elevation;` |
+| To: | `@property (assign, readwrite, nonatomic) int elevation;` |
+
+#### MDCActionEmphasis
+
+*new* enum: `MDCActionEmphasis`
+
+*new* enum value: `MDCActionEmphasisLow` in `MDCActionEmphasis`
+
+*new* enum value: `MDCActionEmphasisMedium` in `MDCActionEmphasis`
+
+*new* enum value: `MDCActionEmphasisHigh` in `MDCActionEmphasis`
+
+#### MDCDialogPresentationController
+
+*modified* property: `dialogElevation` in `MDCDialogPresentationController`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `var dialogElevation: CGFloat { get set }` |
+| To: | `var dialogElevation: Int32 { get set }` |
+
+*modified* property: `dialogElevation` in `MDCDialogPresentationController`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@property (assign, readwrite, nonatomic) CGFloat dialogElevation;` |
+| To: | `@property (assign, readwrite, nonatomic) int dialogElevation;` |
+
+#### MDCAlertAction
+
+*new* property: `emphasis` in `MDCAlertAction`
+
+*new* class method: `+actionWithTitle:emphasis:handler:` in `MDCAlertAction`
+
+## Component changes
+
+### Dialogs
+
+* [Fix elevation to use MDCShadowElevation](https://github.com/material-components/material-components-ios/commit/c7d4f27d0c8ee7027519196480ae3e7c0f65d8c5) (Cody Weaver)
+* [Theming action buttons in DialogThemer  (#5416)](https://github.com/material-components/material-components-ios/commit/325772ba5e40ce8c27cadab5f0da727dea3d05a9) (Galia Kaufman)
+* [Upgrade buttons class to MDCButton (b/117543195) (#5401)](https://github.com/material-components/material-components-ios/commit/9122fc2fcba1d7464d66edc761ce9ab07db318f2) (Galia Kaufman)
+
+---
+
 # 67.1.0
 
 In this minor release we provide a shadow opacity reset toggle for Flexible Header, VoiceOver and rounded corners support for the Navigation Drawer, along with bug fixes and unit tests improvements.

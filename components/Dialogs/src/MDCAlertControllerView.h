@@ -26,6 +26,7 @@
 @property(nonatomic, strong, nullable) UIFont *messageFont UI_APPEARANCE_SELECTOR;
 @property(nonatomic, strong, nullable) UIColor *messageColor UI_APPEARANCE_SELECTOR;
 
+// b/117717380: Will be deprecated (x3)
 @property(nonatomic, strong, nullable) UIFont *buttonFont UI_APPEARANCE_SELECTOR;
 @property(nonatomic, strong, nullable) UIColor *buttonColor UI_APPEARANCE_SELECTOR;
 @property(nonatomic, strong, nullable) UIColor *buttonInkColor UI_APPEARANCE_SELECTOR;

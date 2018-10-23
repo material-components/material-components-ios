@@ -21,7 +21,7 @@ import MaterialComponents.MDCAlertControllerThemer
 class MDCAlertControllerAlertThemerTests: XCTestCase {
 
   let defaultCornerRadius: CGFloat = 4.0
-  let defaultElevation: CGFloat = ShadowElevation.dialog.rawValue
+  let defaultElevation: ShadowElevation = .dialog
   var alertScheme: MDCAlertScheme! = MDCAlertScheme()
   var alert: MDCAlertController! = MDCAlertController(title: "Title", message: "Message")
   var alertView: MDCAlertControllerView! { return alert.view as! MDCAlertControllerView }
@@ -69,17 +69,15 @@ class MDCAlertControllerAlertThemerTests: XCTestCase {
                    MDCSemanticColorScheme().onSurfaceColor.withAlphaComponent(0.87))
     XCTAssertEqual(alertView.titleIconTintColor, colorScheme.primaryColor)
   }
-    
+
+  // Testing soon-to-be-deprecated old approach to button theming // b/117717380: Will be deprecated
   func testApplyingCustomTitleIconTintColor() {
     // Given
     let iconColor = UIColor.red
     let primaryColor = UIColor.green
-    let colorScheme = MDCSemanticColorScheme()
-    colorScheme.primaryColor = primaryColor
-    alertScheme.colorScheme = colorScheme
 
     // When
-    MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
+    alert.buttonTitleColor = primaryColor
     alert.titleIconTintColor = iconColor
 
     // Then
@@ -89,13 +87,12 @@ class MDCAlertControllerAlertThemerTests: XCTestCase {
   }
 
   func testApplyingAlertSchemeScrimColorToPresentationController() {
-    guard let presentationController = alert.mdc_dialogPresentationController else { return }
-
     // Given
     let colorScheme = MDCSemanticColorScheme()
     colorScheme.onSurfaceColor = UIColor.green
     alertScheme.colorScheme = colorScheme
     let scrimColor = colorScheme.onSurfaceColor.withAlphaComponent(0.32)
+    let presentationController = alert.mdc_dialogPresentationController!
 
     // When
     MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
@@ -137,15 +134,15 @@ class MDCAlertControllerAlertThemerTests: XCTestCase {
 
   func testApplyAlertSchemeWithCustomElevation() {
     // Given
-    let elevation: CGFloat = 10.0
+    let elevation: ShadowElevation = ShadowElevation(rawValue: 10.0)
     alertScheme.elevation = elevation
 
     // When
     MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
 
     // Then
-    XCTAssertEqual(alertScheme.elevation, elevation, accuracy: 0.001)
-    XCTAssertEqual(alert.elevation, elevation, accuracy: 0.001)
-    XCTAssertNotEqual(alertScheme.elevation, defaultElevation, accuracy: 0.001)
+    XCTAssertEqual(alertScheme.elevation.rawValue, elevation.rawValue, accuracy: 0.001)
+    XCTAssertEqual(alert.elevation.rawValue, elevation.rawValue, accuracy: 0.001)
+    XCTAssertNotEqual(alertScheme.elevation.rawValue, defaultElevation.rawValue, accuracy: 0.001)
   }
 }
