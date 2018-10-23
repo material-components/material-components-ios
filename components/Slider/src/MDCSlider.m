@@ -385,6 +385,11 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
 
 #pragma mark - UIView methods
 
+- (void)setExclusiveTouch:(BOOL)exclusiveTouch {
+  [super setExclusiveTouch:exclusiveTouch];
+  _thumbTrack.exclusiveTouch = exclusiveTouch;
+}
+
 - (CGSize)intrinsicContentSize {
   return CGSizeMake(kSliderDefaultWidth, kSliderFrameHeight);
 }
