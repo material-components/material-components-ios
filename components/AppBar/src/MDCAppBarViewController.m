@@ -248,7 +248,7 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
   [self.navigationBar observeNavigationItem:parent.navigationItem];
 
   CGRect frame = self.view.frame;
-  frame.size.width = parent.view.bounds.size.width;
+  frame.size.width = CGRectGetWidth(parent.view.bounds);
   self.view.frame = frame;
 }
 
