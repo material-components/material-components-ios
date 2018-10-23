@@ -67,7 +67,6 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
   UILongPressGestureRecognizer *_longPressGestureRecognizer;
   UIPanGestureRecognizer *_panGestureRecognizer;
   CGPoint _selectedCellLocation;
-  CGPoint _initialCellLocation;
   ShadowedSnapshotView *_cellSnapshot;
   CADisplayLink *_autoscrollTimer;
   MDCAutoscrollPanningDirection _autoscrollPanningDirection;
@@ -158,6 +157,13 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
 }
 
 #pragma mark - Private
+
+- (void)updateCellSnapshotPosition:(CGPoint)newPosition {
+  if (_cellSnapshot) {
+    CGPoint newCellCenter = CGPointMake(_cellSnapshot.center.x, newPosition.y);
+    _cellSnapshot.center = newCellCenter;
+  }
+}
 
 - (NSArray *)attributesAtSection:(NSInteger)section {
   UICollectionViewLayout *layout = _collectionView.collectionViewLayout;
@@ -356,7 +362,6 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
 - (void)handleLongPressGesture:(UILongPressGestureRecognizer *)recognizer {
   switch (recognizer.state) {
     case UIGestureRecognizerStateBegan: {
-      _initialCellLocation = [recognizer locationInView:_collectionView];
       _selectedCellLocation = [recognizer locationInView:_collectionView];
       _reorderingCellIndexPath = [_collectionView indexPathForItemAtPoint:_selectedCellLocation];
 
@@ -431,11 +436,9 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
 
 - (void)panToReorderWithRecognizer:(UIPanGestureRecognizer *)recognizer {
   if (recognizer.state == UIGestureRecognizerStateChanged) {
-    // Transform snapshot position when panning.
+    // Update the snapshot's position when panning.
     _selectedCellLocation = [recognizer locationInView:_collectionView];
-    CGFloat change = _selectedCellLocation.y - _initialCellLocation.y;
-    CGAffineTransform transform = CGAffineTransformMakeTranslation(0, change);
-    _cellSnapshot.layer.transform = CATransform3DMakeAffineTransform(transform);
+    [self updateCellSnapshotPosition:_selectedCellLocation];
 
     // Determine moved index paths.
     NSIndexPath *newIndexPath = [_collectionView indexPathForItemAtPoint:_selectedCellLocation];
@@ -792,11 +795,6 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
     return;
   }
 
-  // When autoscrolling, keep cell snapshot transform to longpress position.
-  CGAffineTransform snapshotTransform =
-      CATransform3DGetAffineTransform(_cellSnapshot.layer.transform);
-  snapshotTransform.ty += yOffset;
-
   [UIView animateWithDuration:0.3
                         delay:0
                       options:UIViewAnimationOptionBeginFromCurrentState
@@ -804,9 +802,10 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
                      self.collectionView.contentOffset =
                          CGPointMake(0, MAX(0, contentYOffset + yOffset));
 
-                     // Transform snapshot position when panning.
-                     self->_cellSnapshot.layer.transform =
-                         CATransform3DMakeAffineTransform(snapshotTransform);
+                     // Update the snapshot's position when panning.
+                     CGPoint userTouchPosition =
+                         [self->_longPressGestureRecognizer locationInView:self.collectionView];
+                     [self updateCellSnapshotPosition:userTouchPosition];
                    }
                    completion:nil];
 }
