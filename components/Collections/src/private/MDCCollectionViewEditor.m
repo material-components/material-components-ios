@@ -804,7 +804,7 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
 
                      // Update the snapshot's position when panning.
                      CGPoint userTouchPosition =
-                     [self->_longPressGestureRecognizer locationInView:self.collectionView];
+                         [self->_longPressGestureRecognizer locationInView:self.collectionView];
                      [self updateCellSnapshotPosition:userTouchPosition];
                    }
                    completion:nil];
