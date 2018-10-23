@@ -35,11 +35,11 @@
   return self;
 }
 
-- (CGFloat)elevation {
+- (MDCShadowElevation)elevation {
   return [self shadowLayer].elevation;
 }
 
-- (void)setElevation:(CGFloat)elevation {
+- (void)setElevation:(MDCShadowElevation)elevation {
   [[self shadowLayer] setElevation:elevation];
 }
 

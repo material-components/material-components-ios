@@ -14,8 +14,6 @@
 
 #import "MDCAlertScheme.h"
 
-#import "MaterialShadowElevations.h"
-
 static const CGFloat kCornerRadius = 4.0f;
 
 @implementation MDCAlertScheme
@@ -25,6 +23,7 @@ static const CGFloat kCornerRadius = 4.0f;
   if (self) {
     _colorScheme = [[MDCSemanticColorScheme alloc] init];
     _typographyScheme = [[MDCTypographyScheme alloc] init];
+    _buttonScheme = [[MDCButtonScheme alloc] init];
     _cornerRadius = kCornerRadius;
     _elevation = MDCShadowElevationDialog;
   }
