@@ -14,8 +14,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialSnackbar.h"
 #import "MaterialSnackbar+ColorThemer.h"
+#import "MaterialSnackbar.h"
 
 @interface MDCSnackbarColorThemerTests : XCTestCase
 @end
@@ -47,7 +47,6 @@
                         [colorScheme.surfaceColor colorWithAlphaComponent:0.6f]);
   XCTAssertEqualObjects([MDCSnackbarManager buttonTitleColorForState:UIControlStateHighlighted],
                         [colorScheme.surfaceColor colorWithAlphaComponent:0.6f]);
-
 }
 
 @end
