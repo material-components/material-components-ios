@@ -128,9 +128,10 @@ static NSString *const kSelfSizingStereoCellExampleDescription =
 
 - (NSTextAlignment)textAlignmentForText:(NSString *)text {
   if (text.length > 0) {
-    if (text.mdf_calculatedLanguageDirection == NSLocaleLanguageDirectionLeftToRight) {
+    NSLocaleLanguageDirection textDirection = text.mdf_calculatedLanguageDirection;
+    if (textDirection == NSLocaleLanguageDirectionLeftToRight) {
       return NSTextAlignmentLeft;
-    } else if (text.mdf_calculatedLanguageDirection == NSLocaleLanguageDirectionRightToLeft) {
+    } else if (textDirection == NSLocaleLanguageDirectionRightToLeft) {
       return NSTextAlignmentRight;
     }
   }
