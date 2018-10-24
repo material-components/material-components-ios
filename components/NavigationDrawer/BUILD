@@ -34,15 +34,41 @@ mdc_public_objc_library(
 )
 
 mdc_objc_library(
+    name = "ColorThemer",
+    srcs = native.glob(["src/ColorThemer/*.m"]),
+    hdrs = native.glob(["src/ColorThemer/*.h"]),
+    includes = ["src/ColorThemer"],
+    sdk_frameworks = ["UIKit"],
+    deps = [
+      ":NavigationDrawer",
+      "//components/schemes/Color",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
+    name = "private",
+    hdrs = native.glob(["src/private/*.h"]),
+    includes = ["src/private"],
+    visibility = ["//visibility:private"],
+
+)
+
+mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
-    srcs = native.glob(["tests/unit/*.m"]),
+    srcs = native.glob([
+        "tests/unit/*.m",
+        "tests/unit/*.h",
+    ]),
     sdk_frameworks = [
         "UIKit",
         "XCTest",
     ],
     deps = [
          ":NavigationDrawer",
+         ":ColorThemer",
+         ":private",
     ],
     visibility = ["//visibility:private"],
 )

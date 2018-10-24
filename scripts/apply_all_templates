@@ -24,6 +24,15 @@ find components -type d | grep ColorThemer | sort | uniq | while read line; do
   ./scripts/apply_template $component scripts/templates/component/docs/color-theming.md.template components/$component/docs/color-theming.md
 done
 
+find components -type d | grep ShapeThemer | sort | uniq | while read line; do
+  component=$(echo "$line" | cut -d'/' -f2)
+  themer=$(echo "$line" | cut -d'/' -f4)
+
+  echo "Generating shape theming documentation for $component..."
+
+  ./scripts/apply_template $component scripts/templates/component/docs/shape-theming.md.template components/$component/docs/shape-theming.md
+done
+
 find components -type d | grep TypographyThemer | sort | uniq | while read line; do
   component=$(echo "$line" | cut -d'/' -f2)
   themer=$(echo "$line" | cut -d'/' -f4)

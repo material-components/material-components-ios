@@ -13,10 +13,10 @@
 // limitations under the License.
 
 import UIKit
-import MaterialComponentsAlpha.MaterialNavigationDrawer
 import MaterialComponents.MaterialBottomAppBar
 import MaterialComponents.MaterialBottomAppBar_ColorThemer
 import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialNavigationDrawer
 
 class BottomDrawerWithScrollableContentExample: UIViewController {
   var colorScheme = MDCSemanticColorScheme()
@@ -28,7 +28,6 @@ class BottomDrawerWithScrollableContentExample: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = colorScheme.backgroundColor
-    headerViewController.colorScheme = colorScheme
     contentViewController.colorScheme = colorScheme
 
     bottomAppBar.isFloatingButtonHidden = true
@@ -67,6 +66,8 @@ class BottomDrawerWithScrollableContentExample: UIViewController {
     bottomDrawerViewController.contentViewController = contentViewController
     bottomDrawerViewController.headerViewController = headerViewController
     bottomDrawerViewController.trackingScrollView = contentViewController.collectionView
+    MDCBottomDrawerColorThemer.applySemanticColorScheme(colorScheme,
+                                                        toBottomDrawer: bottomDrawerViewController)
     present(bottomDrawerViewController, animated: true, completion: nil)
   }
 }
@@ -99,7 +100,6 @@ class DrawerContentWithScrollViewController: UIViewController,
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = colorScheme.primaryColor
     collectionView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width,
                              height: self.view.bounds.height)
     collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")

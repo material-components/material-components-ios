@@ -13,11 +13,10 @@
 // limitations under the License.
 
 import UIKit
-import MaterialComponentsAlpha.MaterialNavigationDrawer
 import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialNavigationDrawer
 
 class DrawerContentViewController: UIViewController {
-  var colorScheme = MDCSemanticColorScheme()
   let preferredHeight: CGFloat = 2000
 
   override var preferredContentSize: CGSize {
@@ -36,15 +35,9 @@ class DrawerContentViewController: UIViewController {
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
   }
-
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    view.backgroundColor = colorScheme.primaryColor
-  }
 }
 
 class DrawerHeaderViewController: UIViewController,MDCBottomDrawerHeader {
-  var colorScheme = MDCSemanticColorScheme()
   let preferredHeight: CGFloat = 80
 
   override var preferredContentSize: CGSize {
@@ -62,10 +55,5 @@ class DrawerHeaderViewController: UIViewController,MDCBottomDrawerHeader {
 
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
-  }
-
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    view.backgroundColor = colorScheme.secondaryColor
   }
 }

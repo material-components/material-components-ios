@@ -123,8 +123,6 @@ static const CGFloat kDetailColorOpacity = 0.6f;
   self.leadingImageView.frame = layout.leadingImageViewFrame;
   self.trailingImageView.frame = layout.trailingImageViewFrame;
   if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
-    self.titleLabel.textAlignment = NSTextAlignmentRight;
-    self.detailLabel.textAlignment = NSTextAlignmentRight;
     self.leadingImageView.frame =
         MDFRectFlippedHorizontally(self.leadingImageView.frame, layout.cellWidth);
     self.trailingImageView.frame =
@@ -135,9 +133,6 @@ static const CGFloat kDetailColorOpacity = 0.6f;
         MDFRectFlippedHorizontally(self.titleLabel.frame, self.textContainer.frame.size.width);
     self.detailLabel.frame =
         MDFRectFlippedHorizontally(self.detailLabel.frame, self.textContainer.frame.size.width);
-  } else {
-    self.titleLabel.textAlignment = NSTextAlignmentLeft;
-    self.detailLabel.textAlignment = NSTextAlignmentLeft;
   }
 }
 
@@ -156,12 +151,12 @@ static const CGFloat kDetailColorOpacity = 0.6f;
 - (void)prepareForReuse {
   [super prepareForReuse];
 
-  [self invalidateCachedLayouts];
-
   self.titleLabel.text = nil;
   self.detailLabel.text = nil;
   self.leadingImageView.image = nil;
   self.trailingImageView.image = nil;
+
+  [self setNeedsLayout];
 
   [self mdc_setAdjustsFontForContentSizeCategory:NO];
   [self resetMDCSelfSizingStereoCellLabelProperties];
