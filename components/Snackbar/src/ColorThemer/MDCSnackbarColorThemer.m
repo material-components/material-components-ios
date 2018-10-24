@@ -18,7 +18,8 @@
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme {
   MDCSnackbarManager.snackbarMessageViewBackgroundColor =
-      [colorScheme.onSurfaceColor colorWithAlphaComponent:0.8f];
+      [MDCSemanticColorScheme blendColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.8f]
+                     withBackgroundColor:colorScheme.surfaceColor];
   MDCSnackbarManager.messageTextColor = [colorScheme.surfaceColor colorWithAlphaComponent:0.87f];
   UIColor *buttonTitleColor = [colorScheme.surfaceColor
                                        colorWithAlphaComponent:0.6f];
