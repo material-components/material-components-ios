@@ -1,15 +1,22 @@
-# #develop#
+# 68.0.0
 
-Replace this text with a summarized description of this release's contents.
+This major release includes a breaking change in behavior for Bottom Sheet's shapes themer, a
+variety of bug fixes, a new color themer for NavigationDrawer, and documentation for the Shape
+theming system.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+Bottom Sheet's shape themer behavior has changed:
 
-Replace this text with links to deprecation guides.
+> Bottom Sheet now maps the top 2 corners to the Large Component Shape category when the sheet isn't
+> in a full screen state. When the sheet is in full screen, we do not map it or shape it at all.
+
 ## New features
 
-Replace this text with example code for each new feature.
+NavigationDrawer now has a color themer.
+
+Sliders now respect exclusive touches.
+
 ## API changes
 
 ### NavigationDrawer+ColorThemer
