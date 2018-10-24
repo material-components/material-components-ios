@@ -35,8 +35,8 @@
   self.snackbarMessageViewShadowColor = MDCSnackbarManager.snackbarMessageViewShadowColor;
   self.snackbarMessageViewBackgroundColor = MDCSnackbarManager.snackbarMessageViewBackgroundColor;
   self.titleColorForState = [@{} mutableCopy];
-  NSUInteger maxState = UIControlStateNormal | UIControlStateDisabled | UIControlStateSelected
-  | UIControlStateHighlighted;
+  NSUInteger maxState = UIControlStateNormal | UIControlStateDisabled | UIControlStateSelected |
+                        UIControlStateHighlighted;
   for (NSUInteger state = 0; state < maxState; ++state) {
     self.titleColorForState[@(state)] = [MDCSnackbarManager buttonTitleColorForState:state];
   }
