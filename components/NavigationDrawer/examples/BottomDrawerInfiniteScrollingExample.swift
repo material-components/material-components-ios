@@ -13,10 +13,10 @@
 // limitations under the License.
 
 import UIKit
-import MaterialComponentsAlpha.MaterialNavigationDrawer
 import MaterialComponents.MaterialBottomAppBar
 import MaterialComponents.MaterialBottomAppBar_ColorThemer
 import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialNavigationDrawer
 
 class BottomDrawerInfiniteScrollingExample: UIViewController {
   var colorScheme = MDCSemanticColorScheme()
@@ -66,6 +66,8 @@ class BottomDrawerInfiniteScrollingExample: UIViewController {
     bottomDrawerViewController.contentViewController = contentViewController
     bottomDrawerViewController.headerViewController = headerViewController
     bottomDrawerViewController.trackingScrollView = contentViewController.tableView
+    MDCBottomDrawerColorThemer.applySemanticColorScheme(colorScheme,
+                                                        toBottomDrawer: bottomDrawerViewController)
     present(bottomDrawerViewController, animated: true, completion: nil)
   }
 }
@@ -92,7 +94,6 @@ class DrawerContentTableViewController: UITableViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = colorScheme.primaryColor
     self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
     self.tableView.isScrollEnabled = false
   }

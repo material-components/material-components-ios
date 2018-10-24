@@ -14,27 +14,15 @@
 
 #import "MDCBottomSheetControllerShapeThemer.h"
 
-static const CGFloat kBottomSheetCollapsedBaselineShapeValue = 24.0f;
-
 @implementation MDCBottomSheetControllerShapeThemer
 
 + (void)applyShapeScheme:(id<MDCShapeScheming>)shapeScheme
     toBottomSheetController:(MDCBottomSheetController *)bottomSheetController {
   // Shape Generator for the Extended state of the Bottom Sheet.
-  MDCRectangleShapeGenerator *rectangleShapeExtended = [[MDCRectangleShapeGenerator alloc] init];
-  // For a Bottom Sheet the corner values that can be set are the top corners.
-  rectangleShapeExtended.topLeftCorner = shapeScheme.largeComponentShape.topLeftCorner;
-  rectangleShapeExtended.topRightCorner = shapeScheme.largeComponentShape.topRightCorner;
-  [bottomSheetController setShapeGenerator:rectangleShapeExtended forState:MDCSheetStateExtended];
-
-  // Shape Generator for the Preferred state of the Bottom Sheet.
-  // This is an override of the default scheme to fit the baseline values.
   MDCRectangleShapeGenerator *rectangleShapePreferred = [[MDCRectangleShapeGenerator alloc] init];
-  MDCCornerTreatment *cornerTreatmentPreferred =
-      [[MDCRoundedCornerTreatment alloc] initWithRadius:kBottomSheetCollapsedBaselineShapeValue];
   // For a Bottom Sheet the corner values that can be set are the top corners.
-  rectangleShapePreferred.topLeftCorner = cornerTreatmentPreferred;
-  rectangleShapePreferred.topRightCorner = cornerTreatmentPreferred;
+  rectangleShapePreferred.topLeftCorner = shapeScheme.largeComponentShape.topLeftCorner;
+  rectangleShapePreferred.topRightCorner = shapeScheme.largeComponentShape.topRightCorner;
   [bottomSheetController setShapeGenerator:rectangleShapePreferred forState:MDCSheetStatePreferred];
 }
 

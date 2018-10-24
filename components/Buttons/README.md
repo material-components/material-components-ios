@@ -8,7 +8,7 @@ path: /catalog/buttons/
 api_doc_root: true
 -->
 
-<!-- This file was auto-generated using ./scripts/generate_readme Buttons -->
+<!-- This file was auto-generated using scripts/generate_readme Buttons -->
 
 # Buttons
 
@@ -49,6 +49,7 @@ many distinct button styles including text buttons, contained buttons, and float
   - [Theming](#theming)
   - [Color Theming](#color-theming)
   - [Typography Theming](#typography-theming)
+  - [Shape Theming](#shape-theming)
 - [Accessibility](#accessibility)
   - [Set `-accessibilityLabel`](#set-`-accessibilitylabel`)
   - [Minimum touch size](#minimum-touch-size)
@@ -303,7 +304,7 @@ MDCOutlinedButtonThemer.applyScheme(buttonScheme, to: button)
 
 <img src="docs/assets/contained.gif" alt="An animation showing a Material Design contained button." width="128">
 
-To theme a button as a Material Design text button, use `MDCContainedButtonThemer`.
+To theme a button as a Material Design contained button, use `MDCContainedButtonThemer`.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -420,6 +421,49 @@ id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
 
 // Step 3: Apply the typography scheme to your component
 [MDCButtonTypographyThemer applyTypographyScheme:colorScheme
+     toButton:component];
+```
+<!--</div>-->
+
+<!-- Extracted from docs/shape-theming.md -->
+
+### Shape Theming
+
+You can theme buttons with your app's shape scheme using the ShapeThemer extension.
+
+You must first add the ShapeThemer extension to your project:
+
+```bash
+pod 'MaterialComponents/Buttons+ShapeThemer'
+```
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// Step 1: Import the ShapeThemer extension
+import MaterialComponents.MaterialButtons_ShapeThemer
+
+// Step 2: Create or get a shape scheme
+let shapeScheme = MDCShapeScheme()
+
+// Step 3: Apply the shape scheme to your component
+MDCButtonShapeThemer.applyShapeScheme(shapeScheme, to: component)
+MDCFloatingButtonShapeThemer.applyShapeScheme(shapeScheme, to: component)
+```
+
+#### Objective-C
+
+```objc
+// Step 1: Import the ShapeThemer extension
+#import "MaterialButtons+ShapeThemer.h"
+
+// Step 2: Create or get a shape scheme
+id<MDCShapeScheming> shapeScheme = [[MDCShapeScheme alloc] init];
+
+// Step 3: Apply the shape scheme to your component
+[MDCButtonShapeThemer applyShapeScheme:shapeScheme
+     toButton:component];
+[MDCFloatingButtonShapeThemer applyShapeScheme:shapeScheme
      toButton:component];
 ```
 <!--</div>-->
