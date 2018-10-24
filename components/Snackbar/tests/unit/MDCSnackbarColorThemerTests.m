@@ -56,6 +56,7 @@
 
   // Clean-up the test case
   [self.titleColorForState removeAllObjects];
+  self.titleColorForState = nil;
   self.messageTextColor = nil;
   self.snackbarMessageViewShadowColor = nil;
   self.snackbarMessageViewBackgroundColor = nil;
