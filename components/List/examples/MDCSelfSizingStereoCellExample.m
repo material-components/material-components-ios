@@ -16,8 +16,7 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
-#import "MaterialList+ColorThemer.h"
-#import "MaterialList+TypographyThemer.h"
+#import "MaterialList+ListThemer.h"
 #import "MaterialList.h"
 
 static CGFloat const kArbitraryCellHeight = 75.f;
@@ -31,8 +30,7 @@ static NSString *const kSelfSizingStereoCellExampleDescription =
 @property(nonatomic, strong) UICollectionView *collectionView;
 @property(nonatomic, strong) UICollectionViewFlowLayout *collectionViewLayout;
 @property(nonatomic, strong) NSArray *randomStrings;
-@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
-@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong) MDCListScheme *listScheme;
 @property(nonatomic, assign) NSInteger numberOfCells;
 @end
 
@@ -42,8 +40,7 @@ static NSString *const kSelfSizingStereoCellExampleDescription =
   [super viewDidLoad];
   self.parentViewController.automaticallyAdjustsScrollViewInsets = NO;
   self.automaticallyAdjustsScrollViewInsets = NO;
-  self.typographyScheme = [[MDCTypographyScheme alloc] init];
-  self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+  self.listScheme = [[MDCListScheme alloc] init];
   [self createDataSource];
   [self createCollectionView];
 }
@@ -121,8 +118,7 @@ static NSString *const kSelfSizingStereoCellExampleDescription =
   cell.leadingImageView.tintColor = [UIColor darkGrayColor];
   cell.trailingImageView.tintColor = [UIColor darkGrayColor];
   cell.mdc_adjustsFontForContentSizeCategory = YES;
-  [MDCListColorThemer applySemanticColorScheme:self.colorScheme toSelfSizingStereoCell:cell];
-  [MDCListTypographyThemer applyTypographyScheme:self.typographyScheme toSelfSizingStereoCell:cell];
+  [MDCListThemer applyScheme:self.listScheme toSelfSizingStereoCell:cell];
   return cell;
 }
 
