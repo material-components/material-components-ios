@@ -18,9 +18,50 @@
 #import "MaterialSnackbar.h"
 
 @interface MDCSnackbarColorThemerTests : XCTestCase
+
+@property(nonatomic, strong) UIColor *messageTextColor;
+@property(nonatomic, strong) UIColor *snackbarMessageViewShadowColor;
+@property(nonatomic, strong) UIColor *snackbarMessageViewBackgroundColor;
+@property(nonatomic, strong) NSMutableDictionary *titleColorForState;
+
 @end
 
 @implementation MDCSnackbarColorThemerTests
+
+- (void)setUp {
+  [super setUp];
+
+  self.messageTextColor = MDCSnackbarManager.messageTextColor;
+  self.snackbarMessageViewShadowColor = MDCSnackbarManager.snackbarMessageViewShadowColor;
+  self.snackbarMessageViewBackgroundColor = MDCSnackbarManager.snackbarMessageViewBackgroundColor;
+  self.titleColorForState = [@{} mutableCopy];
+  NSUInteger maxState = UIControlStateNormal | UIControlStateDisabled | UIControlStateSelected
+  | UIControlStateHighlighted;
+  for (NSUInteger state = 0; state < maxState; ++state) {
+    self.titleColorForState[@(state)] = [MDCSnackbarManager buttonTitleColorForState:state];
+  }
+}
+
+- (void)tearDown {
+  // Restore the Snackbar Manager's state
+  MDCSnackbarManager.messageTextColor = self.messageTextColor;
+  MDCSnackbarManager.snackbarMessageViewShadowColor = self.snackbarMessageViewShadowColor;
+  MDCSnackbarManager.snackbarMessageViewBackgroundColor = self.snackbarMessageViewBackgroundColor;
+  for (NSNumber *state in self.titleColorForState.allKeys) {
+    if (self.titleColorForState[state] != nil) {
+      [MDCSnackbarManager setButtonTitleColor:self.titleColorForState[state]
+                                     forState:state.unsignedIntegerValue];
+    }
+  }
+
+  // Clean-up the test case
+  [self.titleColorForState removeAllObjects];
+  self.messageTextColor = nil;
+  self.snackbarMessageViewShadowColor = nil;
+  self.snackbarMessageViewBackgroundColor = nil;
+
+  [super tearDown];
+}
 
 - (void)testSnackbarColorThemerChangesCorrectParameters {
   // Given
