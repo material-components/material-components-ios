@@ -9,7 +9,7 @@ Pod::Spec.new do |mdc|
   mdc.platform     = :ios
   mdc.requires_arc = true
   mdc.ios.deployment_target = '8.0'
-  mdc.xcconfig = { "HEADER_SEARCH_PATHS" => "$(PODS_ROOT)/**"}
+  mdc.xcconfig = { "FRAMEWORK_SEARCH_PATHS" => "$(PODS_ROOT)/**"}
   # See MaterialComponents.podspec for the subspec structure and template.
 
 
@@ -21,7 +21,6 @@ Pod::Spec.new do |mdc|
     component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
 
     component.dependency "MaterialComponents/BottomSheet"
-    component.xcconfig = { "HEADER_SEARCH_PATHS" => "$(PODS_ROOT)/**"}
     component.dependency "MaterialComponents/Ink"
     component.dependency "MaterialComponents/Typography"
 
