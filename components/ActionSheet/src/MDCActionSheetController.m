@@ -243,21 +243,6 @@ static const CGFloat kActionTextAlpha = 0.87f;
   return;
 }
 
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:
-    (id<UIViewControllerTransitionCoordinator>)coordinator {
-  [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-
-  [coordinator animateAlongsideTransition:
-      ^(__unused id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
-        CGRect frame = self.view.bounds;
-        frame.size = size;
-        frame.origin = CGPointZero;
-        self.view.frame = frame;
-        [self.view setNeedsLayout];
-        [self.view layoutIfNeeded];
-      }                        completion:nil];
-}
-
 #pragma mark - Table view
 
 - (void)updateTable {
