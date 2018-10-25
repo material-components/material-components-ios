@@ -1,6 +1,6 @@
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponentsAlpha"
-  mdc.version      = "67.2.0"
+  mdc.version      = "68.0.0"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone alpha UI libraries that are not yet guaranteed to be ready for general production use. Use with caution."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -21,7 +21,7 @@ Pod::Spec.new do |mdc|
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
 
-    component.dependency "MaterialComponents/BottomSheet"
+    component.dependency "MaterialComponents/BottomSheet", "~> 68.0.0"
     component.dependency "MaterialComponents/Ink"
     component.dependency "MaterialComponents/Typography"
 
