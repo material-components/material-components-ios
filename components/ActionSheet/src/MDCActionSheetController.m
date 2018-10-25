@@ -14,6 +14,7 @@
 
 #import "MDCActionSheetController.h"
 
+#import "MaterialBottomSheet.h"
 #import "MaterialMath.h"
 #import "MaterialTypography.h"
 #import "private/MDCActionSheetHeaderView.h"
