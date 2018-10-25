@@ -13,10 +13,9 @@
 // limitations under the License.
 
 #import "MaterialActionSheet.h"
+#import "MaterialTypographyScheme.h"
 
 #import <Foundation/Foundation.h>
-
-@protocol MDCTypographyScheming;
 
 /**
  The Material Design typography system's themer for instances of MDCActionSheetController.

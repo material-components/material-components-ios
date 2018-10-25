@@ -14,9 +14,6 @@
 
 #import "MDCActionSheetScheme.h"
 
-#import "MaterialColorScheme.h"
-#import "MaterialTypographyScheme.h"
-
 @implementation MDCActionSheetScheme
 
 - (instancetype)init {

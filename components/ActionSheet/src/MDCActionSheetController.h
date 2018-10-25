@@ -14,8 +14,9 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialBottomSheet.h"
+
 @class MDCActionSheetAction;
-@class MDCBottomSheetTransitionController;
 
 /**
  MDCActionSheetController displays an alert message to the user, similar to
