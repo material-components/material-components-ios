@@ -23,11 +23,12 @@
 
 - (void)testMDC_standardFontForMaterialTextStyleReturnsEquivalentFonts {
   // Given
-  NSArray<NSNumber *> *textStyles =
-      @[@(MDCFontTextStyleTitle), @(MDCFontTextStyleBody1), @(MDCFontTextStyleBody2),
-        @(MDCFontTextStyleButton), @(MDCFontTextStyleCaption), @(MDCFontTextStyleDisplay1),
-        @(MDCFontTextStyleDisplay2), @(MDCFontTextStyleDisplay3), @(MDCFontTextStyleDisplay4),
-        @(MDCFontTextStyleHeadline), @(MDCFontTextStyleSubheadline)];
+  NSArray<NSNumber *> *textStyles = @[
+    @(MDCFontTextStyleTitle), @(MDCFontTextStyleBody1), @(MDCFontTextStyleBody2),
+    @(MDCFontTextStyleButton), @(MDCFontTextStyleCaption), @(MDCFontTextStyleDisplay1),
+    @(MDCFontTextStyleDisplay2), @(MDCFontTextStyleDisplay3), @(MDCFontTextStyleDisplay4),
+    @(MDCFontTextStyleHeadline), @(MDCFontTextStyleSubheadline)
+  ];
 
   UIFont *lastFont;
   for (NSNumber *textStyleNumber in textStyles) {
