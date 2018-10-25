@@ -20,6 +20,8 @@
 #import "MaterialActionSheet+ActionSheetThemer.h"
 #import "MaterialActionSheet+ColorThemer.h"
 #import "MaterialActionSheet+TypographyThemer.h"
+#import "MaterialColorScheme.h"
+#import "MaterialTypographyScheme.h"
 
 static const CGFloat kHighAlpha = 0.87f;
 static const CGFloat kMediumAlpha = 0.6f;
