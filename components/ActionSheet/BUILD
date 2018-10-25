@@ -93,6 +93,7 @@ swift_library(
         ":ActionSheet",
         ":ColorThemer",
         ":private",
+        "//components/schemes/Color",
     ],
     visibility = ["//visibility:private"],
 )
