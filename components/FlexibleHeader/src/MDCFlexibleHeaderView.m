@@ -92,6 +92,12 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 // A separate info object is tracked for each scroll view tracked by the flexible header view.
 @interface MDCFlexibleHeaderScrollViewInfo : NSObject
 
+// Whether or not we've compensated for automatic UITableView content offset adjustments.
+@property(nonatomic) BOOL hasCompensatedForUITableViewContentOffsetAdjustments;
+
+// Whether or not to ignore the next content offset change.
+@property(nonatomic) BOOL shouldIgnoreNextContentOffsetAdjustment;
+
 // The amount injected into contentInsets.top
 @property(nonatomic) CGFloat injectedTopContentInset;
 
@@ -1176,6 +1182,12 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   _didAdjustTargetContentOffset = NO;
 #endif
 
+  if (_trackingInfo.shouldIgnoreNextContentOffsetAdjustment) {
+    _shiftAccumulatorLastContentOffsetIsValid = NO;
+    _trackingInfo.shouldIgnoreNextContentOffsetAdjustment = NO;
+    return;
+  }
+
   if (self.trackingScrollView.isTracking) {
     _didDecelerate = NO; // Invalidate the flag - we're not actually decelerating right now.
   }
@@ -1405,8 +1417,9 @@ static BOOL isRunningiOS10_3OrAbove() {
 
   UIScrollView *oldTrackingScrollView = _trackingScrollView;
 
+  CGFloat stashedHeight = self.bounds.size.height;
   if (_trackingInfo != nil) {
-    _trackingInfo.stashedHeight = self.bounds.size.height;
+    _trackingInfo.stashedHeight = stashedHeight;
     _trackingInfo.stashedHeightIsValid = YES;
   }
 
@@ -1433,30 +1446,66 @@ static BOOL isRunningiOS10_3OrAbove() {
     [self fhv_startObservingContentOffset];
   }
 
-  // When canAlwaysExpandToMaximumHeight is enabled our header's height no longer directly
-  // correlates to the content offset - it's also augmented by the shift accumulator. In order to
-  // keep the header's height constant when changing the tracking scroll view, we need to adjust
-  // the shift accumulator accordingly.
-  if (self.canAlwaysExpandToMaximumHeight && self.sharedWithManyScrollViews &&
-      wasTrackingScrollView) {
+  BOOL shouldAnimate = YES;
+
+  if (self.sharedWithManyScrollViews && wasTrackingScrollView) {
     // What's our expected height now that we've changed the tracking scroll view?
     CGFloat headerHeight = -[self fhv_contentOffsetWithoutInjectedTopInset];
     headerHeight = MAX(self.computedMinimumHeight, MIN(self.computedMaximumHeight, headerHeight));
 
     // How much will our height change if we do nothing right now?
-    const CGFloat heightDelta = self.bounds.size.height - headerHeight;
+    const CGFloat heightDelta = stashedHeight - headerHeight;
 
-    // Cap the accumulator to ensure it's valid.
-    CGFloat accumulatorMin;
-    if (headerHeight > self.computedMinimumHeight + DBL_EPSILON) {
-      // We're attached to the content, so don't allow any height accumulation.
-      accumulatorMin = 0;
-    } else {
-      accumulatorMin = [self fhv_accumulatorMin];
+    // When canAlwaysExpandToMaximumHeight is enabled our header's height no longer directly
+    // correlates to the content offset - it's also augmented by the shift accumulator. In order to
+    // keep the header's height constant when changing the tracking scroll view, we need to adjust
+    // the shift accumulator accordingly.
+    if (self.canAlwaysExpandToMaximumHeight) {
+      // Cap the accumulator to ensure it's valid.
+      CGFloat accumulatorMin;
+      if (headerHeight > self.computedMinimumHeight + DBL_EPSILON) {
+        // We're attached to the content, so don't allow any height accumulation.
+        accumulatorMin = 0;
+      } else {
+        accumulatorMin = [self fhv_accumulatorMin];
+      }
+      // Adjust the accumulator so that our height won't change and cap it to the possible range.
+      CGFloat desiredShiftAccumulatorValue =
+          MAX(accumulatorMin, MIN([self fhv_accumulatorMax], _shiftAccumulator - heightDelta));
+      if (_shiftAccumulator != desiredShiftAccumulatorValue) {
+        _shiftAccumulator = desiredShiftAccumulatorValue;
+        shouldAnimate = NO;
+      }
     }
-    // Adjust the accumulator so that our height won't change and cap it to the possible range.
-    _shiftAccumulator =
-        MAX(accumulatorMin, MIN([self fhv_accumulatorMax], _shiftAccumulator - heightDelta));
+
+    CGPoint offset = self.trackingScrollView.contentOffset;
+
+    // Are we moving to content that requires the header to be expanded?
+    if (headerHeight > stashedHeight) {
+      // If so, shift the content up so that the header matches our current height.
+      offset.y -= heightDelta;
+      shouldAnimate = NO;
+
+      if ([self.trackingScrollView isKindOfClass:[UITableView class]]
+          && !_trackingInfo.hasCompensatedForUITableViewContentOffsetAdjustments) {
+        offset.y += [_topSafeArea topSafeAreaInset];
+        _trackingInfo.hasCompensatedForUITableViewContentOffsetAdjustments = YES;
+      }
+    }
+
+    if (!CGPointEqualToPoint(self.trackingScrollView.contentOffset, offset)) {
+      self.trackingScrollView.contentOffset = offset;
+    }
+
+    if ([self.trackingScrollView isKindOfClass:[UITableView class]]) {
+      // UITableView, when added to a UIWindow for the first time, will automatically adjust
+      // its content offset to take into account the top safe area insets. While typically
+      // desirable, this behavior clashes with our own top safe area insets management resulting
+      // in the table view "jumping" when it first appears. To counter this behavior, we
+      // intentionally ignore the next content offset change if it happens to match our safe area
+      // insets adjustment.
+      _trackingInfo.shouldIgnoreNextContentOffsetAdjustment = YES;
+    }
   }
 
   void (^animate)(void) = ^{
@@ -1472,7 +1521,7 @@ static BOOL isRunningiOS10_3OrAbove() {
       [self fhv_accumulatorDidChange];
     }
   };
-  if (wasTrackingScrollView) {
+  if (wasTrackingScrollView && shouldAnimate) {
     [UIView animateWithDuration:kTrackingScrollViewDidChangeAnimationDuration
                      animations:animate
                      completion:completion];
