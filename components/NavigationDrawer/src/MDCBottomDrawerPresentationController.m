@@ -160,11 +160,10 @@ static UIColor *DrawerOverlayBackgroundColor(void) {
 #pragma mark - MDCBottomDrawerContainerViewControllerDelegate
 
 - (void)bottomDrawerContainerViewControllerWillChangeState:
-    (MDCBottomDrawerContainerViewController *)containerViewController
-                               drawerState:(MDCBottomDrawerState)drawerState {
+            (MDCBottomDrawerContainerViewController *)containerViewController
+                                               drawerState:(MDCBottomDrawerState)drawerState {
   id<MDCBottomDrawerPresentationControllerDelegate> strongDelegate = self.delegate;
-  if ([strongDelegate respondsToSelector:
-       @selector(bottomDrawerWillChangeState:drawerState:)]) {
+  if ([strongDelegate respondsToSelector:@selector(bottomDrawerWillChangeState:drawerState:)]) {
     [strongDelegate bottomDrawerWillChangeState:self drawerState:drawerState];
   }
 }

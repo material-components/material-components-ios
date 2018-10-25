@@ -14,7 +14,6 @@
 
 #import <Foundation/Foundation.h>
 
-
 /**
  The MDCBottomDrawerState enum provides the different possible states the bottom drawer can be in.
  There are 2 different states for the bottom drawer:
@@ -28,4 +27,3 @@ typedef NS_ENUM(NSUInteger, MDCBottomDrawerState) {
   MDCBottomDrawerStateCollapsed,
   MDCBottomDrawerStateExpanded,
 };
-

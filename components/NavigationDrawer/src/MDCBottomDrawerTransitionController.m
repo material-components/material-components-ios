@@ -20,7 +20,7 @@ static const NSTimeInterval kOpenAnimationDuration = 0.34;
 static const NSTimeInterval kCloseAnimationDuration = 0.3;
 static const CGFloat kOpenAnimationSpringDampingRatio = 0.85f;
 
-@interface MDCBottomDrawerTransitionController() <MDCBottomDrawerPresentationControllerDelegate>
+@interface MDCBottomDrawerTransitionController () <MDCBottomDrawerPresentationControllerDelegate>
 @end
 
 @implementation MDCBottomDrawerTransitionController

@@ -29,7 +29,7 @@
  @param drawerState the drawer's state
  */
 - (void)bottomDrawerWillChangeState:
-(nonnull MDCBottomDrawerPresentationController *)presentationController
+            (nonnull MDCBottomDrawerPresentationController *)presentationController
                         drawerState:(MDCBottomDrawerState)drawerState;
 @end
 
@@ -51,6 +51,4 @@
  */
 @property(nonatomic, weak, nullable) id<MDCBottomDrawerPresentationControllerDelegate> delegate;
 
-
 @end
-

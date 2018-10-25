@@ -31,8 +31,8 @@
  @param drawerState the drawer's state.
  */
 - (void)bottomDrawerContainerViewControllerWillChangeState:
-    (nonnull MDCBottomDrawerContainerViewController *)containerViewController
-                                     drawerState:(MDCBottomDrawerState)drawerState;
+            (nonnull MDCBottomDrawerContainerViewController *)containerViewController
+                                               drawerState:(MDCBottomDrawerState)drawerState;
 @end
 
 /**
