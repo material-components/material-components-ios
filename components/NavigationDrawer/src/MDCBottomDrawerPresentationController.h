@@ -13,6 +13,25 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
+#import "MDCBottomDrawerState.h"
+
+@class MDCBottomDrawerPresentationController;
+
+/**
+ Delegate for MDCBottomSheetPresentationController.
+ */
+@protocol MDCBottomDrawerPresentationControllerDelegate <UIAdaptivePresentationControllerDelegate>
+/**
+ This method is called when the bottom drawer will change its presented state to one of the
+ MDCBottomDrawerState states.
+
+ @param presentationController presentation controller of the bottom drawer
+ @param drawerState the drawer's state
+ */
+- (void)bottomDrawerWillChangeState:
+(nonnull MDCBottomDrawerPresentationController *)presentationController
+                        drawerState:(MDCBottomDrawerState)drawerState;
+@end
 
 /**
  The presentation controller to use for presenting an MDC bottom drawer.
@@ -27,4 +46,11 @@
  */
 @property(nonatomic, weak, nullable) UIScrollView *trackingScrollView;
 
+/**
+ Delegate to tell the presenter when the drawer will change state.
+ */
+@property(nonatomic, weak, nullable) id<MDCBottomDrawerPresentationControllerDelegate> delegate;
+
+
 @end
+

@@ -317,4 +317,38 @@
   XCTAssertTrue(self.fakeBottomDrawer.contentScrollsToReveal);
 }
 
+- (void)testBottomDrawerStateCollapsed {
+  CGSize fakePreferredContentSize = CGSizeMake(200, 1000);
+  MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
+      [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
+  fakeHeader.preferredContentSize = fakePreferredContentSize;
+  self.fakeBottomDrawer.headerViewController = fakeHeader;
+  self.fakeBottomDrawer.contentViewController =
+      [[MDCNavigationDrawerFakeTableViewController alloc] init];
+
+  // When
+  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(200, 1500);
+  [self.fakeBottomDrawer cacheLayoutCalculations];
+
+  // Then
+  XCTAssertEqual(self.fakeBottomDrawer.drawerState, MDCBottomDrawerStateCollapsed);
+}
+
+- (void)testBottomDrawerStateExpanded {
+  CGSize fakePreferredContentSize = CGSizeMake(200, 100);
+  MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
+      [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
+  fakeHeader.preferredContentSize = fakePreferredContentSize;
+  self.fakeBottomDrawer.headerViewController = fakeHeader;
+  self.fakeBottomDrawer.contentViewController =
+      [[MDCNavigationDrawerFakeTableViewController alloc] init];
+
+  // When
+  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(200, 200);
+  [self.fakeBottomDrawer cacheLayoutCalculations];
+
+  // Then
+  XCTAssertEqual(self.fakeBottomDrawer.drawerState, MDCBottomDrawerStateExpanded);
+}
+
 @end

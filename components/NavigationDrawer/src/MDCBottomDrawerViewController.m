@@ -14,6 +14,7 @@
 
 #import "MDCBottomDrawerViewController.h"
 
+#import "MDCBottomDrawerPresentationController.h"
 #import "MDCBottomDrawerTransitionController.h"
 
 @interface MDCBottomDrawerViewController ()
@@ -47,6 +48,10 @@
 
 - (void)setTrackingScrollView:(UIScrollView *)trackingScrollView {
   _transitionController.trackingScrollView = trackingScrollView;
+}
+
+- (MDCBottomDrawerState)state {
+  return _transitionController.state;
 }
 
 #pragma mark UIAccessibilityAction

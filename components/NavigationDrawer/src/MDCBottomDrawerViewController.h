@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
+#import "MDCBottomDrawerState.h"
 
 @protocol MDCBottomDrawerHeader;
 
@@ -40,5 +41,10 @@
  and allow to reuse the cells when using a UICollectionView or UITableView.
  */
 @property(nonatomic, weak, nullable) UIScrollView *trackingScrollView;
+
+/**
+ The current state of the bottom drawer.
+ */
+@property(nonatomic, readonly) MDCBottomDrawerState state;
 
 @end

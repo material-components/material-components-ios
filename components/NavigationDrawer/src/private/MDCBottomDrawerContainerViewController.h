@@ -13,8 +13,27 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
+#import "MDCBottomDrawerState.h"
 
+@class MDCBottomDrawerContainerViewController;
 @protocol MDCBottomDrawerHeader;
+@protocol MDCBottomDrawerContainerViewControllerDelegate;
+
+/**
+ Delegate for MDCBottomDrawerContainerViewController.
+ */
+@protocol MDCBottomDrawerContainerViewControllerDelegate <NSObject>
+/**
+ This method is called when the bottom drawer will change its presented state to one of the
+ MDCBottomDrawerState states.
+
+ @param containerViewController the container view controller of the bottom drawer.
+ @param drawerState the drawer's state.
+ */
+- (void)bottomDrawerContainerViewControllerWillChangeState:
+    (nonnull MDCBottomDrawerContainerViewController *)containerViewController
+                                     drawerState:(MDCBottomDrawerState)drawerState;
+@end
 
 /**
  View controller for containing a Google Material bottom drawer. Used internally only.
@@ -60,5 +79,15 @@
 
 // Whether the drawer is currently animating its presentation.
 @property(nonatomic) BOOL animatingPresentation;
+
+/**
+ Delegate to tell the presentation controller when the drawer will change state.
+ */
+@property(nonatomic, weak, nullable) id<MDCBottomDrawerContainerViewControllerDelegate> delegate;
+
+/**
+ The current state of the bottom drawer.
+ */
+@property(nonatomic, readonly) MDCBottomDrawerState drawerState;
 
 @end
