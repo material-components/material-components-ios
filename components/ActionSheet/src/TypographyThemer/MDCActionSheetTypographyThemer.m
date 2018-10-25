@@ -14,6 +14,8 @@
 
 #import "MDCActionSheetTypographyThemer.h"
 
+#import "MaterialTypographyScheme.h"
+
 @implementation MDCActionSheetTypographyThemer
 
 + (void)applyTypographyScheme:(id<MDCTypographyScheming>)typographyScheme

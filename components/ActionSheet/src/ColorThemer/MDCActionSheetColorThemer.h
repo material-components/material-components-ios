@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import "MaterialActionSheet.h"
-#import "MaterialColorScheme.h"
+@protocol MDCColorScheming;
 
 #import <Foundation/Foundation.h>
 
