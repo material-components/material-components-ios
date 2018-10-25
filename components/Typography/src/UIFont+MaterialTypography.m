@@ -37,45 +37,32 @@
 }
 
 + (nonnull UIFont *)mdc_standardFontForMaterialTextStyle:(MDCFontTextStyle)style {
+  // Caches a font for a specific MDCFontTextStyle value
+  static NSCache<NSValue *, UIFont *> *fontCache;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    // NOTE: We assume the Font Loader will never change, so the cached fonts are never invalidated.
+    fontCache = [[NSCache alloc] init];
+  });
 
-  static __weak id<MDCTypographyFontLoading> fontLoaderForCaching;
   // Due to the way iOS handles missing glyphs in fonts, we do not support using our
   // font loader with standardFont.
   id<MDCTypographyFontLoading> fontLoader = [MDCTypography fontLoader];
   if (![fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
     NSLog(@"MaterialTypography : Custom font loaders are not compatible with Dynamic Type.");
   }
-  static NSRecursiveLock *cacheLock;
-  static NSCache<NSValue *, UIFont *> *fontCache;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    fontCache = [[NSCache alloc] init];
-    cacheLock = [[NSRecursiveLock alloc] init];
-  });
-  if ([cacheLock lockBeforeDate:[NSDate dateWithTimeIntervalSinceNow:1]]) {
-    if (fontLoaderForCaching != fontLoader) {
-      [fontCache removeAllObjects];
-      fontLoaderForCaching = fontLoader;
-    }
 
-    UIFont *font = [fontCache objectForKey:@(style)];
-    if (!font) {
-      UIFontDescriptor *fontDescriptor =
-      [UIFontDescriptor mdc_standardFontDescriptorForMaterialTextStyle:style];
+  UIFont *font = [fontCache objectForKey:@(style)];
+  if (!font) {
+    UIFontDescriptor *fontDescriptor =
+        [UIFontDescriptor mdc_standardFontDescriptorForMaterialTextStyle:style];
 
-      // Size is included in the fontDescriptor, so we pass in 0.0 in the parameter.
-      font = [UIFont fontWithDescriptor:fontDescriptor size:0.0];
-      [fontCache setObject:font forKey:@(style)];
-    }
-
-    [cacheLock unlock];
-    return font;
+    // Size is included in the fontDescriptor, so we pass in 0.0 in the parameter.
+    font = [UIFont fontWithDescriptor:fontDescriptor size:0.0];
+    [fontCache setObject:font forKey:@(style)];
   }
-  UIFontDescriptor *fontDescriptor =
-  [UIFontDescriptor mdc_standardFontDescriptorForMaterialTextStyle:style];
 
-  // Size is included in the fontDescriptor, so we pass in 0.0 in the parameter.
-  return [UIFont fontWithDescriptor:fontDescriptor size:0.0];
+  return font;
 }
 
 - (nonnull UIFont *)mdc_fontSizedForMaterialTextStyle:(MDCFontTextStyle)style
