@@ -46,6 +46,9 @@ static const NSTimeInterval kTrackingScrollViewDidChangeAnimationDuration = 0.2;
 // on/off-screen with the display link.
 static const float kShiftEpsilon = 0.1f;
 
+// The epsilon used when comparing content offset values.
+static const float kContentOffsetEpsilon = 0.001f;
+
 // The minimum delta y before we change the scroll direction.
 static const CGFloat kDeltaYSlop = 5;
 
@@ -1189,7 +1192,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
     if (_shiftAccumulatorLastContentOffsetIsValid) {
       CGFloat delta =
           fabs(_shiftAccumulatorLastContentOffset.y - self.trackingScrollView.contentOffset.y);
-      if (fabs(delta - [_topSafeArea topSafeAreaInset]) < 0.001) {
+      if (fabs(delta - [_topSafeArea topSafeAreaInset]) < kContentOffsetEpsilon) {
         // Looks like a top safe area inset adjustment. Let's ignore it.
         self.trackingScrollView.contentOffset = _shiftAccumulatorLastContentOffset;
       }
