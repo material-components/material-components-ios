@@ -47,7 +47,7 @@ static const NSTimeInterval kTrackingScrollViewDidChangeAnimationDuration = 0.2;
 static const float kShiftEpsilon = 0.1f;
 
 // The epsilon used when comparing content offset values.
-static const float kContentOffsetEpsilon = 0.001f;
+static const CGFloat kContentOffsetEpsilon = 0.001f;
 
 // The minimum delta y before we change the scroll direction.
 static const CGFloat kDeltaYSlop = 5;
