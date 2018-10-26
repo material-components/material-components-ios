@@ -1456,7 +1456,7 @@ static BOOL isRunningiOS10_3OrAbove() {
     [self fhv_startObservingContentOffset];
   }
 
-  BOOL shouldAnimate = YES;
+  BOOL shouldAnimate = NO;
 
   if (self.sharedWithManyScrollViews && wasTrackingScrollView) {
     // What's our expected height now that we've changed the tracking scroll view?
@@ -1484,7 +1484,6 @@ static BOOL isRunningiOS10_3OrAbove() {
           MAX(accumulatorMin, MIN([self fhv_accumulatorMax], _shiftAccumulator - heightDelta));
       if (_shiftAccumulator != desiredShiftAccumulatorValue) {
         _shiftAccumulator = desiredShiftAccumulatorValue;
-        shouldAnimate = NO;
       }
     }
 
@@ -1496,7 +1495,10 @@ static BOOL isRunningiOS10_3OrAbove() {
     if (headerHeight > stashedHeight) {
       // If so, shift the content up so that the header matches our current height.
       offset.y -= heightDelta;
-      shouldAnimate = NO;
+    } else if (headerHeight < stashedHeight) {
+      // We're about to shrink the header - this is the only case where we want to animate the
+      // header's height change.
+      shouldAnimate = YES;
     }
 
     if (!CGPointEqualToPoint(self.trackingScrollView.contentOffset, offset)) {
