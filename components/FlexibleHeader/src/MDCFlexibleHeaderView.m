@@ -92,11 +92,8 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 // A separate info object is tracked for each scroll view tracked by the flexible header view.
 @interface MDCFlexibleHeaderScrollViewInfo : NSObject
 
-// Whether or not we've compensated for automatic UITableView content offset adjustments.
-@property(nonatomic) BOOL hasCompensatedForUITableViewContentOffsetAdjustments;
-
 // Whether or not to ignore the next content offset change.
-@property(nonatomic) BOOL shouldIgnoreNextContentOffsetAdjustment;
+@property(nonatomic) BOOL shouldIgnoreNextSafeAreaAdjustment;
 
 // The amount injected into contentInsets.top
 @property(nonatomic) CGFloat injectedTopContentInset;
@@ -1182,9 +1179,19 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   _didAdjustTargetContentOffset = NO;
 #endif
 
-  if (_trackingInfo.shouldIgnoreNextContentOffsetAdjustment) {
+  if (_trackingInfo.shouldIgnoreNextSafeAreaAdjustment) {
+    _trackingInfo.shouldIgnoreNextSafeAreaAdjustment = NO;
+
+    if (_shiftAccumulatorLastContentOffsetIsValid) {
+      // Ignore this change.
+      CGFloat delta =
+          fabs(_shiftAccumulatorLastContentOffset.y - self.trackingScrollView.contentOffset.y);
+      if (fabs(delta - [_topSafeArea topSafeAreaInset]) < 0.001) {
+        // Looks like a top safe area inset adjustment. Let's ignore it.
+        self.trackingScrollView.contentOffset = _shiftAccumulatorLastContentOffset;
+      }
+    }
     _shiftAccumulatorLastContentOffsetIsValid = NO;
-    _trackingInfo.shouldIgnoreNextContentOffsetAdjustment = NO;
     return;
   }
 
@@ -1479,32 +1486,28 @@ static BOOL isRunningiOS10_3OrAbove() {
     }
 
     CGPoint offset = self.trackingScrollView.contentOffset;
+    BOOL trackingScrollViewIsUITableView =
+        [self.trackingScrollView isKindOfClass:[UITableView class]];
 
     // Are we moving to content that requires the header to be expanded?
     if (headerHeight > stashedHeight) {
       // If so, shift the content up so that the header matches our current height.
       offset.y -= heightDelta;
       shouldAnimate = NO;
-
-      if ([self.trackingScrollView isKindOfClass:[UITableView class]]
-          && !_trackingInfo.hasCompensatedForUITableViewContentOffsetAdjustments) {
-        offset.y += [_topSafeArea topSafeAreaInset];
-        _trackingInfo.hasCompensatedForUITableViewContentOffsetAdjustments = YES;
-      }
     }
 
     if (!CGPointEqualToPoint(self.trackingScrollView.contentOffset, offset)) {
       self.trackingScrollView.contentOffset = offset;
     }
 
-    if ([self.trackingScrollView isKindOfClass:[UITableView class]]) {
-      // UITableView, when added to a UIWindow for the first time, will automatically adjust
+    if (trackingScrollViewIsUITableView) {
+      // UITableView, when added to a UIWindow for the first time, may automatically adjust
       // its content offset to take into account the top safe area insets. While typically
       // desirable, this behavior clashes with our own top safe area insets management resulting
       // in the table view "jumping" when it first appears. To counter this behavior, we
       // intentionally ignore the next content offset change if it happens to match our safe area
       // insets adjustment.
-      _trackingInfo.shouldIgnoreNextContentOffsetAdjustment = YES;
+      _trackingInfo.shouldIgnoreNextSafeAreaAdjustment = YES;
     }
   }
 
