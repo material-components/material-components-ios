@@ -62,7 +62,7 @@ colors that they meet [the accessibility guidelines for text and contrasting col
 Add the following to your `Podfile`:
 
 ```bash
-pod 'MaterialComponents/schemes/ColorScheme'
+pod 'MaterialComponents/schemes/Color'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
