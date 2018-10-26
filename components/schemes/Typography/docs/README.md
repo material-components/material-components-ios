@@ -49,7 +49,7 @@ which is larger than headline3 and so on.
 Add the following to your `Podfile`:
 
 ```bash
-pod 'MaterialComponents/schemes/TypographyScheme'
+pod 'MaterialComponents/schemes/Typography'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
