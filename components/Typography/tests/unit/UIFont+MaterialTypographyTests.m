@@ -30,7 +30,6 @@
     @(MDCFontTextStyleHeadline), @(MDCFontTextStyleSubheadline)
   ];
 
-  UIFont *lastFont;
   for (NSNumber *textStyleNumber in textStyles) {
     MDCFontTextStyle textStyle = [textStyleNumber integerValue];
 
@@ -40,8 +39,6 @@
 
     // Then
     XCTAssertEqualObjects(font1, font2);
-    XCTAssertNotEqualObjects(font2, lastFont);
-    lastFont = font2;
   }
 }
 
