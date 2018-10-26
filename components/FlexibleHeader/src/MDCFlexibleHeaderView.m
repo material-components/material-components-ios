@@ -92,7 +92,11 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 // A separate info object is tracked for each scroll view tracked by the flexible header view.
 @interface MDCFlexibleHeaderScrollViewInfo : NSObject
 
-// Whether or not to ignore the next content offset change.
+// UITableView, when added to a UIWindow for the first time, may automatically adjust
+// its content offset to take into account the top safe area insets. While typically
+// desirable, this behavior clashes with our own top safe area insets management resulting
+// in the table view "jumping" when it first appears. To counter this behavior, we
+// intentionally ignore the next content offset change if it looks like a safe area adjustment.
 @property(nonatomic) BOOL shouldIgnoreNextSafeAreaAdjustment;
 
 // The amount injected into contentInsets.top
@@ -1183,7 +1187,6 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
     _trackingInfo.shouldIgnoreNextSafeAreaAdjustment = NO;
 
     if (_shiftAccumulatorLastContentOffsetIsValid) {
-      // Ignore this change.
       CGFloat delta =
           fabs(_shiftAccumulatorLastContentOffset.y - self.trackingScrollView.contentOffset.y);
       if (fabs(delta - [_topSafeArea topSafeAreaInset]) < 0.001) {
@@ -1501,12 +1504,6 @@ static BOOL isRunningiOS10_3OrAbove() {
     }
 
     if (trackingScrollViewIsUITableView) {
-      // UITableView, when added to a UIWindow for the first time, may automatically adjust
-      // its content offset to take into account the top safe area insets. While typically
-      // desirable, this behavior clashes with our own top safe area insets management resulting
-      // in the table view "jumping" when it first appears. To counter this behavior, we
-      // intentionally ignore the next content offset change if it happens to match our safe area
-      // insets adjustment.
       _trackingInfo.shouldIgnoreNextSafeAreaAdjustment = YES;
     }
   }
