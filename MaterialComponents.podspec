@@ -12,8 +12,10 @@ Pod::Spec.new do |mdc|
   mdc.requires_arc = true
   mdc.ios.deployment_target = '8.0'
   mdc.public_header_files = "MaterialComponents/components/**/*.h"
-  s.header_mappings_dir = "components"
-  s.header_dir = "MaterialComponents"
+  mdc.header_mappings_dir = "components"
+  mdc.header_dir = "MaterialComponents"
+  mdc.source_files = "MaterialComponents/components/**/src/*.{h,m}"
+
 
   # # Subspec explanation
   #
