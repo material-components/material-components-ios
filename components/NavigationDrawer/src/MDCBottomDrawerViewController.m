@@ -17,19 +17,23 @@
 #import "MDCBottomDrawerPresentationController.h"
 #import "MDCBottomDrawerTransitionController.h"
 
-@interface MDCBottomDrawerViewController ()
+@interface MDCBottomDrawerViewController () <MDCBottomDrawerPresentationControllerDelegate>
 
 /** The transition controller. */
 @property(nonatomic) MDCBottomDrawerTransitionController *transitionController;
 
 @end
 
-@implementation MDCBottomDrawerViewController
+@implementation MDCBottomDrawerViewController {
+  NSMutableDictionary<NSNumber *, NSNumber *> *_topCornersRadius;
+}
 
 - (instancetype)init {
   self = [super init];
   if (self) {
     _transitionController = [[MDCBottomDrawerTransitionController alloc] init];
+    _topCornersRadius = [NSMutableDictionary dictionary];
+    _topCornersRadius[@(MDCBottomDrawerStateCollapsed)] = @(0.f);
   }
   return self;
 }
@@ -54,6 +58,25 @@
   return _transitionController.drawerState;
 }
 
+- (void)setTopCornersRadius:(CGFloat)radius forDrawerState:(MDCBottomDrawerState)drawerState {
+  _topCornersRadius[@(drawerState)] = @(radius);
+
+  [self updateTopCornersRadius];
+}
+
+- (void)updateTopCornersRadius {
+//  CGFloat topCornersRadius = [self topCornersRadiusForDrawerState:self.drawerState];
+//  _transitionController.topCornersRadius = topCornersRadius;
+}
+
+- (CGFloat)topCornersRadiusForDrawerState:(MDCBottomDrawerState)drawerState {
+  NSNumber *topCornersRadius = _topCornersRadius[@(drawerState)];
+  if (topCornersRadius != nil) {
+    return (CGFloat)[topCornersRadius doubleValue];
+  }
+  return 0.f;
+}
+
 #pragma mark UIAccessibilityAction
 
 // Adds the Z gesture for dismissal.
@@ -62,4 +85,15 @@
   return YES;
 }
 
+- (void)bottomDrawerTopTransitionRatio:
+    (nonnull MDCBottomDrawerPresentationController *)presentationController
+                       transitionRatio:(CGFloat)transitionRatio {
+
+}
+
+- (void)bottomDrawerWillChangeState:
+    (nonnull MDCBottomDrawerPresentationController *)presentationController
+                        drawerState:(MDCBottomDrawerState)drawerState {
+
+}
 @end

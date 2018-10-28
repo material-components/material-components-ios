@@ -489,6 +489,7 @@ static UIColor *DrawerShadowColor(void) {
   self.drawerState = transitionPercentage >= 1.f - kEpsilon ? MDCBottomDrawerStateExpanded
                                                             : MDCBottomDrawerStateCollapsed;
   [_maskLayer animateWithPercentage:1.f - transitionPercentage];
+  [self.delegate bottomDrawerTopTransitionRatio:transitionPercentage];
   self.currentlyFullscreen = self.contentReachesFullscreen && headerTransitionToTop >= 1.f;
   CGFloat fullscreenHeaderHeight =
       self.contentReachesFullscreen ? self.topHeaderHeight : [self contentHeaderHeight];
@@ -709,6 +710,7 @@ static UIColor *DrawerShadowColor(void) {
       [self transitionPercentageForContentOffset:targetContentOffset
                                           offset:0
                                         distance:headerAnimationDistance];
+  [self.delegate bottomDrawerTopTransitionRatio:headerTransitionToTop];
   self.drawerState = headerTransitionToTop >= 1.f - kEpsilon ? MDCBottomDrawerStateExpanded
                                                              : MDCBottomDrawerStateCollapsed;
   [_maskLayer animateWithPercentage:1.f - headerTransitionToTop];

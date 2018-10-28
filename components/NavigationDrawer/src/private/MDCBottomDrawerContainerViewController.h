@@ -33,6 +33,10 @@
 - (void)bottomDrawerContainerViewControllerWillChangeState:
             (nonnull MDCBottomDrawerContainerViewController *)containerViewController
                                                drawerState:(MDCBottomDrawerState)drawerState;
+
+- (void)bottomDrawerContainerViewControllerTopTransitionRatio:
+            (nonnull MDCBottomDrawerContainerViewController *)containerViewController
+                                              transitionRatio:(CGFloat)transitionRatio;
 @end
 
 /**

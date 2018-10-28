@@ -47,4 +47,22 @@
  */
 @property(nonatomic, readonly) MDCBottomDrawerState drawerState;
 
+/**
+ Sets the top corners radius for an MDCBottomDrawerState drawerState
+
+ @param radius The corner radius to set the top corners.
+ @param drawerState MDCBottomDrawerState the drawer state.
+ */
+- (void)setTopCornersRadius:(CGFloat)radius forDrawerState:(MDCBottomDrawerState)drawerState;
+
+/**
+ Returns the top corners radius for an MDCBottomDrawerState drawerState.
+
+ If no radius has been set for a state, the value 0.f is returned.
+
+ @param drawerState MDCBottomDrawerState the drawer state.
+ @return The corner radius to set the top corners.
+ */
+- (CGFloat)topCornersRadiusForDrawerState:(MDCBottomDrawerState)drawerState;
+
 @end

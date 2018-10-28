@@ -31,6 +31,10 @@
 - (void)bottomDrawerWillChangeState:
             (nonnull MDCBottomDrawerPresentationController *)presentationController
                         drawerState:(MDCBottomDrawerState)drawerState;
+
+- (void)bottomDrawerTopTransitionRatio:
+            (nonnull MDCBottomDrawerPresentationController *)presentationController
+                       transitionRatio:(CGFloat)transitionRatio;
 @end
 
 /**
