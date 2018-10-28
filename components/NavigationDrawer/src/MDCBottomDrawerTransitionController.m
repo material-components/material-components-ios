@@ -125,7 +125,7 @@ static const CGFloat kOpenAnimationSpringDampingRatio = 0.85f;
 
 - (void)bottomDrawerWillChangeState:(MDCBottomDrawerPresentationController *)presentationController
                         drawerState:(MDCBottomDrawerState)drawerState {
-  _state = drawerState;
+  _drawerState = drawerState;
 }
 
 @end

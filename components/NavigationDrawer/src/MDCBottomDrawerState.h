@@ -24,6 +24,6 @@
  (displaying the entire content), or is in full screen..
  */
 typedef NS_ENUM(NSUInteger, MDCBottomDrawerState) {
-  MDCBottomDrawerStateCollapsed,
-  MDCBottomDrawerStateExpanded,
+  MDCBottomDrawerStateCollapsed = 0,
+  MDCBottomDrawerStateExpanded = 1,
 };

@@ -32,6 +32,6 @@
 /**
  The current state of the bottom drawer.
  */
-@property(nonatomic, readonly) MDCBottomDrawerState state;
+@property(nonatomic, readonly) MDCBottomDrawerState drawerState;
 
 @end

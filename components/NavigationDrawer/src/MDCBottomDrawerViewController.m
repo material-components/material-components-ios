@@ -50,8 +50,8 @@
   _transitionController.trackingScrollView = trackingScrollView;
 }
 
-- (MDCBottomDrawerState)state {
-  return _transitionController.state;
+- (MDCBottomDrawerState)drawerState {
+  return _transitionController.drawerState;
 }
 
 #pragma mark UIAccessibilityAction
