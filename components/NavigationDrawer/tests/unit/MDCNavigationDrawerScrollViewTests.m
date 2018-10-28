@@ -37,9 +37,8 @@
 }
 
 - (void)bottomDrawerTopTransitionRatio:
-(nonnull MDCBottomDrawerPresentationController *)presentationController
+            (nonnull MDCBottomDrawerPresentationController *)presentationController
                        transitionRatio:(CGFloat)transitionRatio {
-    
 }
 
 @end

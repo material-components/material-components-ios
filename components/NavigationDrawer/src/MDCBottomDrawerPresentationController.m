@@ -174,8 +174,8 @@ static UIColor *DrawerOverlayBackgroundColor(void) {
             (MDCBottomDrawerContainerViewController *)containerViewController
                                               transitionRatio:(CGFloat)transitionRatio {
   id<MDCBottomDrawerPresentationControllerDelegate> strongDelegate = self.delegate;
-  if ([strongDelegate
-          respondsToSelector:@selector(bottomDrawerTopTransitionRatio:transitionRatio:)]) {
+  if ([strongDelegate respondsToSelector:@selector(bottomDrawerTopTransitionRatio:
+                                                                  transitionRatio:)]) {
     [strongDelegate bottomDrawerTopTransitionRatio:self transitionRatio:transitionRatio];
   }
 }
