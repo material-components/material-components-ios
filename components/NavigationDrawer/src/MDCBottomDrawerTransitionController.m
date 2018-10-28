@@ -122,15 +122,4 @@ static const CGFloat kOpenAnimationSpringDampingRatio = 0.85f;
   return (toPresentingViewController == fromViewController) ? YES : NO;
 }
 
-- (void)bottomDrawerWillChangeState:(MDCBottomDrawerPresentationController *)presentationController
-                        drawerState:(MDCBottomDrawerState)drawerState {
-  _drawerState = drawerState;
-}
-
-- (void)bottomDrawerTopTransitionRatio:
-    (MDCBottomDrawerPresentationController *)presentationController
-                       transitionRatio:(CGFloat)transitionRatio {
-
-}
-
 @end

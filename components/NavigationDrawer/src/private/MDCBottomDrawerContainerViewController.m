@@ -33,7 +33,6 @@ static const CGFloat kEpsilon = 0.001f;
 // smooth.
 static const CGFloat kScrollViewBufferForPerformance = 20.f;
 static const CGFloat kDragVelocityThresholdForHidingDrawer = -2.f;
-static const CGFloat kDefaultHeaderCornerRadius = 8.f;
 static NSString *const kContentOffsetKeyPath = @"contentOffset";
 
 static UIColor *DrawerShadowColor(void) {
@@ -149,7 +148,6 @@ static UIColor *DrawerShadowColor(void) {
   CGFloat _contentHeightSurplus;
   CGFloat _addedContentHeight;
   CGFloat _contentVCPreferredContentSizeHeightCached;
-  MDCBottomDrawerHeaderMask *_maskLayer;
 }
 
 - (instancetype)initWithOriginalPresentingViewController:
@@ -162,9 +160,6 @@ static UIColor *DrawerShadowColor(void) {
     _contentHeightSurplus = NSNotFound;
     _addedContentHeight = NSNotFound;
     _trackingScrollView = trackingScrollView;
-    _maskLayer =
-        [[MDCBottomDrawerHeaderMask alloc] initWithMaximumCornerRadius:kDefaultHeaderCornerRadius
-                                                   minimumCornerRadius:0];
     _drawerState = MDCBottomDrawerStateCollapsed;
   }
   return self;
@@ -378,14 +373,6 @@ static UIColor *DrawerShadowColor(void) {
     scrollViewFrame.origin.y = -self.topHeaderHeight;
     self.scrollView.frame = scrollViewFrame;
   } else {
-    if (self.contentHeightSurplus > 0) {
-      if (self.topHeaderHeight != 0.f) {
-        _maskLayer.view = self.headerViewController.view;
-      } else {
-        _maskLayer.view = self.contentViewController.view;
-      }
-      [_maskLayer applyMask];
-    }
     CGRect scrollViewFrame = self.presentingViewBounds;
     if (self.animatingPresentation) {
       CGFloat heightSurplusForSpringAnimationOvershooting =
@@ -488,8 +475,8 @@ static UIColor *DrawerShadowColor(void) {
       contentOffset.y >= self.transitionCompleteContentOffset ? 1.f : transitionPercentage;
   self.drawerState = transitionPercentage >= 1.f - kEpsilon ? MDCBottomDrawerStateExpanded
                                                             : MDCBottomDrawerStateCollapsed;
-  [_maskLayer animateWithPercentage:1.f - transitionPercentage];
-  [self.delegate bottomDrawerTopTransitionRatio:transitionPercentage];
+  [self.delegate bottomDrawerContainerViewControllerTopTransitionRatio:self
+                                                       transitionRatio:transitionPercentage];
   self.currentlyFullscreen = self.contentReachesFullscreen && headerTransitionToTop >= 1.f;
   CGFloat fullscreenHeaderHeight =
       self.contentReachesFullscreen ? self.topHeaderHeight : [self contentHeaderHeight];
@@ -710,10 +697,10 @@ static UIColor *DrawerShadowColor(void) {
       [self transitionPercentageForContentOffset:targetContentOffset
                                           offset:0
                                         distance:headerAnimationDistance];
-  [self.delegate bottomDrawerTopTransitionRatio:headerTransitionToTop];
+  [self.delegate bottomDrawerContainerViewControllerTopTransitionRatio:self
+                                                       transitionRatio:headerTransitionToTop];
   self.drawerState = headerTransitionToTop >= 1.f - kEpsilon ? MDCBottomDrawerStateExpanded
                                                              : MDCBottomDrawerStateCollapsed;
-  [_maskLayer animateWithPercentage:1.f - headerTransitionToTop];
   if (headerTransitionToTop >= kEpsilon && headerTransitionToTop < 1.f) {
     CGFloat contentHeaderFullyCoversTopHeaderContentOffset = self.transitionCompleteContentOffset;
     CGFloat contentHeaderReachesTopHeaderContentOffset =

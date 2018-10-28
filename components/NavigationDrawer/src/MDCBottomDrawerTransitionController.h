@@ -29,9 +29,4 @@
  */
 @property(nonatomic, weak, nullable) UIScrollView *trackingScrollView;
 
-/**
- The current state of the bottom drawer.
- */
-@property(nonatomic, readonly) MDCBottomDrawerState drawerState;
-
 @end

@@ -36,6 +36,12 @@
   _delegateWasCalled = YES;
 }
 
+- (void)bottomDrawerTopTransitionRatio:
+(nonnull MDCBottomDrawerPresentationController *)presentationController
+                       transitionRatio:(CGFloat)transitionRatio {
+    
+}
+
 @end
 
 @interface MDCBottomDrawerContainerViewController (ScrollViewTests)

@@ -67,6 +67,7 @@ static UIColor *DrawerOverlayBackgroundColor(void) {
         bottomDrawerViewController.contentViewController;
     bottomDrawerContainerViewController.headerViewController =
         bottomDrawerViewController.headerViewController;
+    self.delegate = bottomDrawerViewController;
   } else {
     bottomDrawerContainerViewController.contentViewController = self.presentedViewController;
   }

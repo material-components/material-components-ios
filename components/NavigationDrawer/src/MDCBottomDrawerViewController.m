@@ -14,8 +14,8 @@
 
 #import "MDCBottomDrawerViewController.h"
 
-#import "MDCBottomDrawerPresentationController.h"
 #import "MDCBottomDrawerTransitionController.h"
+#import "private/MDCBottomDrawerHeaderMask.h"
 
 @interface MDCBottomDrawerViewController () <MDCBottomDrawerPresentationControllerDelegate>
 
@@ -26,6 +26,7 @@
 
 @implementation MDCBottomDrawerViewController {
   NSMutableDictionary<NSNumber *, NSNumber *> *_topCornersRadius;
+  MDCBottomDrawerHeaderMask *_maskLayer;
 }
 
 - (instancetype)init {
@@ -34,8 +35,15 @@
     _transitionController = [[MDCBottomDrawerTransitionController alloc] init];
     _topCornersRadius = [NSMutableDictionary dictionary];
     _topCornersRadius[@(MDCBottomDrawerStateCollapsed)] = @(0.f);
+    _maskLayer =
+        [[MDCBottomDrawerHeaderMask alloc] initWithMaximumCornerRadius:0.f minimumCornerRadius:0.f];
   }
   return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+  [_maskLayer applyMask];
 }
 
 - (id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
@@ -54,19 +62,15 @@
   _transitionController.trackingScrollView = trackingScrollView;
 }
 
-- (MDCBottomDrawerState)drawerState {
-  return _transitionController.drawerState;
-}
-
 - (void)setTopCornersRadius:(CGFloat)radius forDrawerState:(MDCBottomDrawerState)drawerState {
   _topCornersRadius[@(drawerState)] = @(radius);
 
-  [self updateTopCornersRadius];
-}
-
-- (void)updateTopCornersRadius {
-//  CGFloat topCornersRadius = [self topCornersRadiusForDrawerState:self.drawerState];
-//  _transitionController.topCornersRadius = topCornersRadius;
+  CGFloat topCornersRadius = [self topCornersRadiusForDrawerState:drawerState];
+  if (drawerState == MDCBottomDrawerStateCollapsed) {
+    _maskLayer.maximumCornerRadius = topCornersRadius;
+  } else if (drawerState == MDCBottomDrawerStateExpanded) {
+    _maskLayer.minimumCornerRadius = topCornersRadius;
+  }
 }
 
 - (CGFloat)topCornersRadiusForDrawerState:(MDCBottomDrawerState)drawerState {
@@ -75,6 +79,18 @@
     return (CGFloat)[topCornersRadius doubleValue];
   }
   return 0.f;
+}
+
+- (void)setHeaderViewController:(UIViewController<MDCBottomDrawerHeader> *)headerViewController {
+  _headerViewController = headerViewController;
+  _maskLayer.view = headerViewController.view;
+}
+
+- (void)setContentViewController:(UIViewController *)contentViewController {
+  _contentViewController = contentViewController;
+  if (!_headerViewController) {
+    _maskLayer.view = contentViewController.view;
+  }
 }
 
 #pragma mark UIAccessibilityAction
@@ -88,12 +104,13 @@
 - (void)bottomDrawerTopTransitionRatio:
     (nonnull MDCBottomDrawerPresentationController *)presentationController
                        transitionRatio:(CGFloat)transitionRatio {
-
+  [_maskLayer animateWithPercentage:1.f - transitionRatio];
 }
 
 - (void)bottomDrawerWillChangeState:
-    (nonnull MDCBottomDrawerPresentationController *)presentationController
+            (nonnull MDCBottomDrawerPresentationController *)presentationController
                         drawerState:(MDCBottomDrawerState)drawerState {
-
+  _drawerState = drawerState;
 }
+
 @end
