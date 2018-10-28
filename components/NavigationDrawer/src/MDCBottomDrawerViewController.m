@@ -14,7 +14,6 @@
 
 #import "MDCBottomDrawerViewController.h"
 
-#import "MDCBottomDrawerPresentationController.h"
 #import "MDCBottomDrawerTransitionController.h"
 
 @interface MDCBottomDrawerViewController ()
@@ -50,16 +49,18 @@
   _transitionController.trackingScrollView = trackingScrollView;
 }
 
-- (MDCBottomDrawerState)drawerState {
-  return _transitionController.drawerState;
-}
-
 #pragma mark UIAccessibilityAction
 
 // Adds the Z gesture for dismissal.
 - (BOOL)accessibilityPerformEscape {
   [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
   return YES;
+}
+
+- (void)bottomDrawerWillChangeState:
+    (nonnull MDCBottomDrawerPresentationController *)presentationController
+                        drawerState:(MDCBottomDrawerState)drawerState {
+  _drawerState = drawerState;
 }
 
 @end

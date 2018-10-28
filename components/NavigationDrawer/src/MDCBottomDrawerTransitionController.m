@@ -20,7 +20,7 @@ static const NSTimeInterval kOpenAnimationDuration = 0.34;
 static const NSTimeInterval kCloseAnimationDuration = 0.3;
 static const CGFloat kOpenAnimationSpringDampingRatio = 0.85f;
 
-@interface MDCBottomDrawerTransitionController () <MDCBottomDrawerPresentationControllerDelegate>
+@interface MDCBottomDrawerTransitionController ()
 @end
 
 @implementation MDCBottomDrawerTransitionController
@@ -47,7 +47,6 @@ static const CGFloat kOpenAnimationSpringDampingRatio = 0.85f;
       [[MDCBottomDrawerPresentationController alloc] initWithPresentedViewController:presented
                                                             presentingViewController:presenting];
   presentationController.trackingScrollView = self.trackingScrollView;
-  presentationController.delegate = self;
   return presentationController;
 }
 
@@ -121,11 +120,6 @@ static const CGFloat kOpenAnimationSpringDampingRatio = 0.85f;
       [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
   UIViewController *toPresentingViewController = toViewController.presentingViewController;
   return (toPresentingViewController == fromViewController) ? YES : NO;
-}
-
-- (void)bottomDrawerWillChangeState:(MDCBottomDrawerPresentationController *)presentationController
-                        drawerState:(MDCBottomDrawerState)drawerState {
-  _drawerState = drawerState;
 }
 
 @end
