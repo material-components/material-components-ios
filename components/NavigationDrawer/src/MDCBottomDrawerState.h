@@ -21,7 +21,7 @@
  - MDCBottomDrawerStateCollapsed: This state is reached when the bottom drawer is collapsed
  (can be expanded to present more content), but is not taking up the entire screen.
  - MDCBottomDrawerStateExpanded: This state is reached when the bottom drawer is fully expanded
- (displaying the entire content), or is in full screen..
+ (displaying the entire content), or is in full screen.
  */
 typedef NS_ENUM(NSUInteger, MDCBottomDrawerState) {
   MDCBottomDrawerStateCollapsed = 0,
