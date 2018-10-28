@@ -44,6 +44,7 @@ static const CGFloat kOpenAnimationSpringDampingRatio = 0.85f;
       [[MDCBottomDrawerPresentationController alloc] initWithPresentedViewController:presented
                                                             presentingViewController:presenting];
   presentationController.trackingScrollView = self.trackingScrollView;
+  presentationController.cornerRadius = _cornerRadius;
   return presentationController;
 }
 

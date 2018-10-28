@@ -28,4 +28,6 @@
  */
 @property(nonatomic, weak, nullable) UIScrollView *trackingScrollView;
 
+@property(nonatomic, assign) CGFloat cornerRadius;
+
 @end

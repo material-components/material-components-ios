@@ -139,6 +139,11 @@ static UIColor *DrawerOverlayBackgroundColor(void) {
                                            withTransitionCoordinator:coordinator];
 }
 
+- (void)setCornerRadius:(CGFloat)cornerRadius {
+  _cornerRadius = cornerRadius;
+  self.bottomDrawerContainerViewController.cornerRadius = cornerRadius;
+}
+
 #pragma mark - Private
 
 - (void)hideDrawer {

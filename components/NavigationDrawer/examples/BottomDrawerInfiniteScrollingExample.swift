@@ -68,6 +68,7 @@ class BottomDrawerInfiniteScrollingExample: UIViewController {
     bottomDrawerViewController.trackingScrollView = contentViewController.tableView
     MDCBottomDrawerColorThemer.applySemanticColorScheme(colorScheme,
                                                         toBottomDrawer: bottomDrawerViewController)
+    bottomDrawerViewController.cornerRadius = 20
     present(bottomDrawerViewController, animated: true, completion: nil)
   }
 }

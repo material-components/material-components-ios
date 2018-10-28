@@ -61,4 +61,6 @@
 // Whether the drawer is currently animating its presentation.
 @property(nonatomic) BOOL animatingPresentation;
 
+@property(nonatomic, assign) CGFloat cornerRadius;
+
 @end

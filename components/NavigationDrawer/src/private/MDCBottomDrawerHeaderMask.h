@@ -49,4 +49,6 @@
  */
 - (void)animateWithPercentage:(CGFloat)percentage;
 
+@property(nonatomic, assign) CGFloat maximumCornerRadius;
+
 @end

@@ -49,6 +49,11 @@
   _transitionController.trackingScrollView = trackingScrollView;
 }
 
+- (void)setCornerRadius:(CGFloat)cornerRadius {
+  _cornerRadius = cornerRadius;
+  _transitionController.cornerRadius = cornerRadius;
+}
+
 #pragma mark UIAccessibilityAction
 
 // Adds the Z gesture for dismissal.

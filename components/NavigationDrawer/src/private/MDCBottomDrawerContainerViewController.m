@@ -33,7 +33,6 @@ static const CGFloat kEpsilon = 0.001f;
 // smooth.
 static const CGFloat kScrollViewBufferForPerformance = 20.f;
 static const CGFloat kDragVelocityThresholdForHidingDrawer = -2.f;
-static const CGFloat kDefaultHeaderCornerRadius = 8.f;
 static NSString *const kContentOffsetKeyPath = @"contentOffset";
 
 static UIColor *DrawerShadowColor(void) {
@@ -159,8 +158,9 @@ static UIColor *DrawerShadowColor(void) {
     _contentHeightSurplus = NSNotFound;
     _addedContentHeight = NSNotFound;
     _trackingScrollView = trackingScrollView;
+    _cornerRadius = 0.f;
     _maskLayer =
-        [[MDCBottomDrawerHeaderMask alloc] initWithMaximumCornerRadius:kDefaultHeaderCornerRadius
+        [[MDCBottomDrawerHeaderMask alloc] initWithMaximumCornerRadius:_cornerRadius
                                                    minimumCornerRadius:0];
   }
   return self;
@@ -464,6 +464,11 @@ static UIColor *DrawerShadowColor(void) {
   self.headerShadowLayer.shadowColor = DrawerShadowColor().CGColor;
   [self.headerViewController.view.layer addSublayer:self.headerShadowLayer];
   self.headerShadowLayer.hidden = YES;
+}
+
+- (void)setCornerRadius:(CGFloat)cornerRadius {
+  _cornerRadius = cornerRadius;
+  _maskLayer.maximumCornerRadius = cornerRadius;
 }
 
 #pragma mark Content Offset Adaptions (Private)
