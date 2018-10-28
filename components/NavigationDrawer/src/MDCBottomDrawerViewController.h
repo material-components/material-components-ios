@@ -21,8 +21,8 @@
 /**
  View controller for containing a Google Material bottom drawer.
  */
-@interface MDCBottomDrawerViewController : UIViewController
-    <MDCBottomDrawerPresentationControllerDelegate>
+@interface MDCBottomDrawerViewController
+    : UIViewController <MDCBottomDrawerPresentationControllerDelegate>
 
 /**
  The main content displayed by the drawer.

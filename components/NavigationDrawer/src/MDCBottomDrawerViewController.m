@@ -58,7 +58,7 @@
 }
 
 - (void)bottomDrawerWillChangeState:
-    (nonnull MDCBottomDrawerPresentationController *)presentationController
+            (nonnull MDCBottomDrawerPresentationController *)presentationController
                         drawerState:(MDCBottomDrawerState)drawerState {
   _drawerState = drawerState;
 }
