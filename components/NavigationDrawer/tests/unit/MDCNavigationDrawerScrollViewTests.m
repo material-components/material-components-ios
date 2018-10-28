@@ -17,15 +17,14 @@
 #import "../../src/private/MDCBottomDrawerContainerViewController.h"
 #import "MDCNavigationDrawerFakes.h"
 
-@interface MDCBottomDrawerDelegateTest: UIViewController
-<MDCBottomDrawerPresentationControllerDelegate>
+@interface MDCBottomDrawerDelegateTest
+    : UIViewController <MDCBottomDrawerPresentationControllerDelegate>
 @property(nonatomic, assign) BOOL delegateWasCalled;
 @end
 
 @implementation MDCBottomDrawerDelegateTest
 
-- (instancetype)init
-{
+- (instancetype)init {
   self = [super init];
   if (self) {
     _delegateWasCalled = NO;
@@ -39,7 +38,6 @@
 
 @end
 
-
 @interface MDCBottomDrawerContainerViewController (ScrollViewTests)
 
 @property(nonatomic) BOOL scrollViewObserved;
@@ -51,12 +49,13 @@
 @property(nonatomic, readonly) CGFloat contentHeightSurplus;
 @property(nonatomic, readonly) BOOL contentScrollsToReveal;
 @property(nonatomic) MDCBottomDrawerState drawerState;
-@property (nullable, nonatomic, readonly) UIPresentationController *presentationController;
+@property(nullable, nonatomic, readonly) UIPresentationController *presentationController;
 - (void)cacheLayoutCalculations;
 
 @end
 
-@interface MDCBottomDrawerPresentationController (ScrollViewTests) <MDCBottomDrawerContainerViewControllerDelegate>
+@interface MDCBottomDrawerPresentationController (ScrollViewTests) <
+    MDCBottomDrawerContainerViewControllerDelegate>
 @property(nonatomic) MDCBottomDrawerContainerViewController *bottomDrawerContainerViewController;
 @property(nonatomic, weak, nullable) id<MDCBottomDrawerPresentationControllerDelegate> delegate;
 @end
@@ -65,11 +64,10 @@
 @property(nonatomic, strong, nullable) UIScrollView *fakeScrollView;
 @property(nonatomic, strong, nullable) MDCBottomDrawerContainerViewController *fakeBottomDrawer;
 @property(nonatomic, strong, nullable) MDCBottomDrawerViewController *drawerViewController;
-@property(nonatomic, strong, nullable) MDCBottomDrawerPresentationController
-    *presentationController;
+@property(nonatomic, strong, nullable)
+    MDCBottomDrawerPresentationController *presentationController;
 @property(nonatomic, strong, nullable) MDCBottomDrawerDelegateTest *delegateTest;
 @end
-
 
 @implementation MDCNavigationDrawerScrollViewTests
 
@@ -86,8 +84,8 @@
   _drawerViewController = [[MDCBottomDrawerViewController alloc] init];
   _drawerViewController.contentViewController = fakeViewController;
   _presentationController = [[MDCBottomDrawerPresentationController alloc]
-                             initWithPresentedViewController:_drawerViewController
-                             presentingViewController:nil];
+      initWithPresentedViewController:_drawerViewController
+             presentingViewController:nil];
   _delegateTest = [[MDCBottomDrawerDelegateTest alloc] init];
 }
 
