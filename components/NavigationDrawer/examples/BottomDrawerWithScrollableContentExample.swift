@@ -126,7 +126,7 @@ class DrawerContentWithScrollViewController: UIViewController,
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
     let colorPick = indexPath.row % 2 == 0
     print(indexPath.item)
-    cell.backgroundColor = colorPick ? colorScheme.secondaryColor : colorScheme.primaryColorVariant
+    cell.backgroundColor = colorPick ? colorScheme.surfaceColor : colorScheme.primaryColorVariant
     return cell
   }
 
