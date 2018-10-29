@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
-#import "MDCBottomDrawerState.h"
 
 /**
  The transitioning delegate to use for presenting a view controller as a MDC bottom drawer.
