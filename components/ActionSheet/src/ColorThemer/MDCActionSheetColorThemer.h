@@ -13,9 +13,10 @@
 // limitations under the License.
 
 #import "MaterialActionSheet.h"
-@import MaterialComponents.MaterialColorScheme;
 
 #import <Foundation/Foundation.h>
+
+#import <MaterialComponents/MaterialColorScheme.h>
 
 /**
  The Material Design color system's themer for instances of MDCActionSheetController.
