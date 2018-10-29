@@ -18,12 +18,12 @@ import MaterialComponents.MaterialBottomAppBar_ColorThemer
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialNavigationDrawer
 
-class BottomDrawerWithScrollableContentExample: UIViewController {
+class BottomDrawerWithChangingContentSizeExample: UIViewController {
   var colorScheme = MDCSemanticColorScheme()
   let bottomAppBar = MDCBottomAppBarView()
 
   let headerViewController = DrawerHeaderViewController()
-  let contentViewController = DrawerContentWithScrollViewController()
+  let contentViewController = DrawerChangingContentSizeViewController()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -72,9 +72,12 @@ class BottomDrawerWithScrollableContentExample: UIViewController {
   }
 }
 
-class DrawerContentWithScrollViewController: UIViewController,
-    UICollectionViewDelegate, UICollectionViewDataSource {
+class DrawerChangingContentSizeViewController: UIViewController,
+UICollectionViewDelegate, UICollectionViewDataSource {
   var colorScheme: MDCSemanticColorScheme!
+  let numberOfRowsShort : Int = 2
+  let numberOfRowsLong : Int = 12
+  var longList = false
 
   let collectionView: UICollectionView
   let layout = UICollectionViewFlowLayout()
@@ -101,7 +104,7 @@ class DrawerContentWithScrollViewController: UIViewController,
   override func viewDidLoad() {
     super.viewDidLoad()
     collectionView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width,
-                             height: self.view.bounds.height)
+                                  height: self.view.bounds.height)
     collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
     collectionView.isScrollEnabled = false
     collectionView.delegate = self
@@ -110,6 +113,9 @@ class DrawerContentWithScrollViewController: UIViewController,
     layout.minimumLineSpacing = 0
     layout.minimumInteritemSpacing = 0
     self.view.addSubview(collectionView)
+
+    let tapGestureRecognizer = UITapGestureRecognizer(target: self, action:#selector(didTap(gestureRecognizer:)))
+    collectionView.addGestureRecognizer(tapGestureRecognizer)
   }
 
   override func viewWillLayoutSubviews() {
@@ -119,27 +125,40 @@ class DrawerContentWithScrollViewController: UIViewController,
   }
 
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 102
+    let numberOfRows = longList ? numberOfRowsLong : numberOfRowsShort
+    return numberOfRows * 3
   }
 
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
     let colorPick = indexPath.row % 2 == 0
     print(indexPath.item)
-    cell.backgroundColor = colorPick ? colorScheme.secondaryColor : colorScheme.primaryColorVariant
+    if longList {
+      cell.backgroundColor =
+        colorPick ? colorScheme.secondaryColor : colorScheme.errorColor
+    } else {
+      cell.backgroundColor =
+        colorPick ? colorScheme.secondaryColor : colorScheme.primaryColorVariant
+    }
     return cell
   }
 
   func numberOfSections(in collectionView: UICollectionView) -> Int {
     return 1
   }
+
+  func didTap(gestureRecognizer : UITapGestureRecognizer) {
+    longList = !longList
+    collectionView.reloadData()
+    self.view.setNeedsLayout()
+  }
 }
 
-extension BottomDrawerWithScrollableContentExample {
+extension BottomDrawerWithChangingContentSizeExample {
 
   class func catalogMetadata() -> [String: Any] {
     return [
-      "breadcrumbs": ["Navigation Drawer", "Bottom Drawer Scrollable Content"],
+      "breadcrumbs": ["Navigation Drawer", "Bottom Drawer Changing Content Size"],
       "primaryDemo": false,
       "presentable": false,
     ]
