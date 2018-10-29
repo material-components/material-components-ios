@@ -39,6 +39,11 @@ class DrawerContentViewController: UIViewController {
 
 class DrawerHeaderViewController: UIViewController,MDCBottomDrawerHeader {
   let preferredHeight: CGFloat = 80
+  let titleLabel : UILabel = {
+    let label = UILabel(frame: .zero)
+    label.text = "Example Header"
+    return label
+  }()
 
   override var preferredContentSize: CGSize {
     get {
@@ -55,5 +60,18 @@ class DrawerHeaderViewController: UIViewController,MDCBottomDrawerHeader {
 
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
+  }
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    view.addSubview(titleLabel)
+  }
+
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    
+    titleLabel.sizeToFit()
+    titleLabel.center =
+      CGPoint(x: self.view.frame.size.width / 2, y: self.view.frame.size.height / 2)
   }
 }
