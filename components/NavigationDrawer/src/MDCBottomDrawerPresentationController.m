@@ -62,6 +62,7 @@ static UIColor *DrawerOverlayBackgroundColor(void) {
     // consists of the drawer logic.
     MDCBottomDrawerViewController *bottomDrawerViewController =
         (MDCBottomDrawerViewController *)self.presentedViewController;
+    self.delegate = bottomDrawerViewController;
     bottomDrawerContainerViewController.contentViewController =
         bottomDrawerViewController.contentViewController;
     bottomDrawerContainerViewController.headerViewController =
@@ -166,6 +167,16 @@ static UIColor *DrawerOverlayBackgroundColor(void) {
   id<MDCBottomDrawerPresentationControllerDelegate> strongDelegate = self.delegate;
   if ([strongDelegate respondsToSelector:@selector(bottomDrawerWillChangeState:drawerState:)]) {
     [strongDelegate bottomDrawerWillChangeState:self drawerState:drawerState];
+  }
+}
+
+- (void)bottomDrawerContainerViewControllerTopTransitionRatio:
+            (MDCBottomDrawerContainerViewController *)containerViewController
+                                              transitionRatio:(CGFloat)transitionRatio {
+  id<MDCBottomDrawerPresentationControllerDelegate> strongDelegate = self.delegate;
+  if ([strongDelegate respondsToSelector:@selector(bottomDrawerTopTransitionRatio:
+                                                                  transitionRatio:)]) {
+    [strongDelegate bottomDrawerTopTransitionRatio:self transitionRatio:transitionRatio];
   }
 }
 
