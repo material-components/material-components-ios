@@ -36,6 +36,9 @@
  */
 @property(nonatomic, weak, nullable) UIView *view;
 
+@property(nonatomic, assign) CGFloat maximumCornerRadius;
+@property(nonatomic, assign) CGFloat minimumCornerRadius;
+
 /**
  Masks the view that we want to mask
  */

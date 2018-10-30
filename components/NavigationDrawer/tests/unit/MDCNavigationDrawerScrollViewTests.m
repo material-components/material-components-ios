@@ -15,6 +15,7 @@
 #import <XCTest/XCTest.h>
 
 #import "../../src/private/MDCBottomDrawerContainerViewController.h"
+#import "../../src/private/MDCBottomDrawerHeaderMask.h"
 #import "MDCNavigationDrawerFakes.h"
 
 @interface MDCBottomDrawerDelegateTest
@@ -36,10 +37,18 @@
   _delegateWasCalled = YES;
 }
 
+- (void)bottomDrawerTopTransitionRatio:
+            (nonnull MDCBottomDrawerPresentationController *)presentationController
+                       transitionRatio:(CGFloat)transitionRatio {
+}
+
+@end
+
+@interface MDCBottomDrawerViewController (ScrollViewTests)
+@property(nullable, nonatomic, readonly) MDCBottomDrawerHeaderMask *maskLayer;
 @end
 
 @interface MDCBottomDrawerContainerViewController (ScrollViewTests)
-
 @property(nonatomic) BOOL scrollViewObserved;
 @property(nonatomic, readonly) UIScrollView *scrollView;
 @property(nonatomic, readonly) CGFloat topHeaderHeight;
@@ -426,6 +435,32 @@
 
   // Then
   XCTAssertEqual(self.delegateTest.delegateWasCalled, YES);
+}
+
+- (void)testBottomDrawerCornersAPICollapsed {
+  // When
+  [self.drawerViewController setTopCornersRadius:10.f forDrawerState:MDCBottomDrawerStateCollapsed];
+
+  // Then
+  XCTAssertEqual(self.drawerViewController.maskLayer.maximumCornerRadius, 10.f);
+}
+
+- (void)testBottomDrawerCornersAPIExpanded {
+  // When
+  self.drawerViewController.contentViewController.preferredContentSize = CGSizeMake(100, 100);
+  [self.drawerViewController setTopCornersRadius:5.f forDrawerState:MDCBottomDrawerStateExpanded];
+
+  // Then
+  XCTAssertEqual(self.drawerViewController.maskLayer.minimumCornerRadius, 5.f);
+}
+
+- (void)testBottomDrawerCornersAPIFullScreen {
+  // When
+  self.drawerViewController.contentViewController.preferredContentSize = CGSizeMake(100, 5000);
+  [self.drawerViewController setTopCornersRadius:3.f forDrawerState:MDCBottomDrawerStateFullScreen];
+
+  // Then
+  XCTAssertEqual(self.drawerViewController.maskLayer.minimumCornerRadius, 3.f);
 }
 
 @end

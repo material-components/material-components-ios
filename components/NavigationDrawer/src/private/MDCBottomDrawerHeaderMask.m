@@ -14,11 +14,6 @@
 
 #import "MDCBottomDrawerHeaderMask.h"
 
-@interface MDCBottomDrawerHeaderMask ()
-@property(nonatomic, assign) CGFloat maximumCornerRadius;
-@property(nonatomic, assign) CGFloat minimumCornerRadius;
-@end
-
 @implementation MDCBottomDrawerHeaderMask
 
 - (instancetype)initWithMaximumCornerRadius:(CGFloat)maximumCornerRadius
