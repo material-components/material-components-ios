@@ -29,16 +29,28 @@
   NSMutableDictionary<NSNumber *, NSNumber *> *_topCornersRadius;
 }
 
-- (instancetype)init {
-  self = [super init];
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+  self = [super initWithNibName:nil bundle:nil];
   if (self) {
-    _transitionController = [[MDCBottomDrawerTransitionController alloc] init];
-    _topCornersRadius = [NSMutableDictionary dictionary];
-    _topCornersRadius[@(MDCBottomDrawerStateCollapsed)] = @(0.f);
-    _maskLayer = [[MDCBottomDrawerHeaderMask alloc] initWithMaximumCornerRadius:0.f
-                                                            minimumCornerRadius:0.f];
+    [self commonMDCBottomDrawerViewControllerInit];
   }
   return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+  self = [super initWithCoder:aDecoder];
+  if (self) {
+    [self commonMDCBottomDrawerViewControllerInit];
+  }
+  return self;
+}
+
+- (void)commonMDCBottomDrawerViewControllerInit {
+  _transitionController = [[MDCBottomDrawerTransitionController alloc] init];
+  _topCornersRadius = [NSMutableDictionary dictionary];
+  _topCornersRadius[@(MDCBottomDrawerStateCollapsed)] = @(0.f);
+  _maskLayer = [[MDCBottomDrawerHeaderMask alloc] initWithMaximumCornerRadius:0.f
+                                                          minimumCornerRadius:0.f];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
