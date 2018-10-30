@@ -325,6 +325,15 @@ static UIColor *DrawerShadowColor(void) {
   }
 }
 
+- (void)updateDrawerState:(CGFloat)transitionPercentage {
+  if (transitionPercentage >= 1.f - kEpsilon) {
+    self.drawerState = self.contentReachesFullscreen ? MDCBottomDrawerStateFullScreen
+                                                     : MDCBottomDrawerStateExpanded;
+  } else {
+    self.drawerState = MDCBottomDrawerStateCollapsed;
+  }
+}
+
 #pragma mark UIViewController
 
 - (void)viewDidLoad {
@@ -473,10 +482,9 @@ static UIColor *DrawerShadowColor(void) {
                                         distance:self.headerAnimationDistance];
   CGFloat headerTransitionToTop =
       contentOffset.y >= self.transitionCompleteContentOffset ? 1.f : transitionPercentage;
-  self.drawerState = transitionPercentage >= 1.f - kEpsilon ? MDCBottomDrawerStateExpanded
-                                                            : MDCBottomDrawerStateCollapsed;
   [self.delegate bottomDrawerContainerViewControllerTopTransitionRatio:self
                                                        transitionRatio:transitionPercentage];
+  [self updateDrawerState:transitionPercentage];
   self.currentlyFullscreen = self.contentReachesFullscreen && headerTransitionToTop >= 1.f;
   CGFloat fullscreenHeaderHeight =
       self.contentReachesFullscreen ? self.topHeaderHeight : [self contentHeaderHeight];
@@ -670,8 +678,12 @@ static UIColor *DrawerShadowColor(void) {
 
   CGFloat scrollingDistance = _contentHeaderTopInset + contentHeaderHeight + contentHeight;
   _contentHeightSurplus = scrollingDistance - containerHeight;
-  if ([self shouldPresentFullScreen] || _contentHeightSurplus <= 0) {
-    _drawerState = MDCBottomDrawerStateExpanded;
+  if ([self shouldPresentFullScreen]) {
+    self.drawerState = MDCBottomDrawerStateFullScreen;
+  } else if (_contentHeightSurplus <= 0) {
+    self.drawerState = MDCBottomDrawerStateExpanded;
+  } else {
+    self.drawerState = MDCBottomDrawerStateCollapsed;
   }
   if (addedContentHeight < kEpsilon && (_contentHeaderTopInset > _contentHeightSurplus) &&
       (_contentHeaderTopInset - _contentHeightSurplus < self.addedContentHeightThreshold)) {
@@ -697,10 +709,6 @@ static UIColor *DrawerShadowColor(void) {
       [self transitionPercentageForContentOffset:targetContentOffset
                                           offset:0
                                         distance:headerAnimationDistance];
-  [self.delegate bottomDrawerContainerViewControllerTopTransitionRatio:self
-                                                       transitionRatio:headerTransitionToTop];
-  self.drawerState = headerTransitionToTop >= 1.f - kEpsilon ? MDCBottomDrawerStateExpanded
-                                                             : MDCBottomDrawerStateCollapsed;
   if (headerTransitionToTop >= kEpsilon && headerTransitionToTop < 1.f) {
     CGFloat contentHeaderFullyCoversTopHeaderContentOffset = self.transitionCompleteContentOffset;
     CGFloat contentHeaderReachesTopHeaderContentOffset =
