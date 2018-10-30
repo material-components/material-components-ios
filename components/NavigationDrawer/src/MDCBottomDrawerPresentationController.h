@@ -32,7 +32,6 @@
             (nonnull MDCBottomDrawerPresentationController *)presentationController
                         drawerState:(MDCBottomDrawerState)drawerState;
 
-
 /**
  This method is called when the drawer is scrolled/dragged and provides a transition ratio value
  between 0-100% (0-1) that indicates the percentage in which the drawer is close to reaching the end
@@ -40,7 +39,7 @@
  as it starts covering the safe area and status bar. If the drawer doesn't reach full screen, it
  moves between 0-100% as it reaches 20 points away from being fully expanded.
 
- @param presentationController the bottom drawer presentation controller
+ @param presentationController the bottom drawer presentation controller.
  @param transitionRatio The transition ratio betwen 0-100% (0-1).
  */
 - (void)bottomDrawerTopTransitionRatio:

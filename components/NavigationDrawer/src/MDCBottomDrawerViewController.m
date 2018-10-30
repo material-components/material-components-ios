@@ -21,12 +21,12 @@
 
 /** The transition controller. */
 @property(nonatomic) MDCBottomDrawerTransitionController *transitionController;
+@property(nonatomic) MDCBottomDrawerHeaderMask *maskLayer;
 
 @end
 
 @implementation MDCBottomDrawerViewController {
   NSMutableDictionary<NSNumber *, NSNumber *> *_topCornersRadius;
-  MDCBottomDrawerHeaderMask *_maskLayer;
 }
 
 - (instancetype)init {
@@ -43,6 +43,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
+  _maskLayer.minimumCornerRadius = [self getMinimumCornerRadius];
   [_maskLayer applyMask];
 }
 
@@ -65,12 +66,17 @@
 - (void)setTopCornersRadius:(CGFloat)radius forDrawerState:(MDCBottomDrawerState)drawerState {
   _topCornersRadius[@(drawerState)] = @(radius);
 
-  CGFloat topCornersRadius = [self topCornersRadiusForDrawerState:drawerState];
   if (drawerState == MDCBottomDrawerStateCollapsed) {
-    _maskLayer.maximumCornerRadius = topCornersRadius;
-  } else if (drawerState == MDCBottomDrawerStateExpanded) {
-    _maskLayer.minimumCornerRadius = topCornersRadius;
+    _maskLayer.maximumCornerRadius = radius;
+  } else {
+    _maskLayer.minimumCornerRadius = [self getMinimumCornerRadius];
   }
+}
+
+- (CGFloat)getMinimumCornerRadius {
+  return [self contentReachesFullScreen] ?
+      [self topCornersRadiusForDrawerState:MDCBottomDrawerStateFullScreen] :
+      [self topCornersRadiusForDrawerState:MDCBottomDrawerStateExpanded];
 }
 
 - (CGFloat)topCornersRadiusForDrawerState:(MDCBottomDrawerState)drawerState {
@@ -93,6 +99,27 @@
   }
 }
 
+- (BOOL)isAccessibilityMode {
+  return UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning();
+}
+
+- (BOOL)isMobileLandscape {
+  return self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassCompact;
+}
+
+- (BOOL)shouldPresentFullScreen {
+  return [self isAccessibilityMode] || [self isMobileLandscape];
+}
+
+- (BOOL)contentReachesFullScreen {
+  if ([self shouldPresentFullScreen]) {
+    return YES;
+  }
+  return CGRectGetHeight(self.view.bounds) <=
+      self.headerViewController.preferredContentSize.height +
+      self.contentViewController.preferredContentSize.height;
+}
+
 #pragma mark UIAccessibilityAction
 
 // Adds the Z gesture for dismissal.
@@ -111,6 +138,11 @@
             (nonnull MDCBottomDrawerPresentationController *)presentationController
                         drawerState:(MDCBottomDrawerState)drawerState {
   _drawerState = drawerState;
+  CGFloat minimumCornerRadius = [self getMinimumCornerRadius];
+  if (_maskLayer.minimumCornerRadius != minimumCornerRadius) {
+    _maskLayer.minimumCornerRadius = minimumCornerRadius;
+    [_maskLayer applyMask];
+  }
 }
 
 @end

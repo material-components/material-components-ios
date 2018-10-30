@@ -34,6 +34,16 @@
             (nonnull MDCBottomDrawerContainerViewController *)containerViewController
                                                drawerState:(MDCBottomDrawerState)drawerState;
 
+/**
+ This method is called when the drawer is scrolled/dragged and provides a transition ratio value
+ between 0-100% (0-1) that indicates the percentage in which the drawer is close to reaching the end
+ of its scrolling. If the drawer is about to reach fullscreen, its percentage moves between 0-100%
+ as it starts covering the safe area and status bar. If the drawer doesn't reach full screen, it
+ moves between 0-100% as it reaches 20 points away from being fully expanded.
+
+ @param containerViewController the container view controller of the bottom drawer.
+ @param transitionRatio The transition ratio betwen 0-100% (0-1).
+ */
 - (void)bottomDrawerContainerViewControllerTopTransitionRatio:
             (nonnull MDCBottomDrawerContainerViewController *)containerViewController
                                               transitionRatio:(CGFloat)transitionRatio;

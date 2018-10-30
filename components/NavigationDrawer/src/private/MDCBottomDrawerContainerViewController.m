@@ -700,7 +700,7 @@ static UIColor *DrawerShadowColor(void) {
 }
 
 - (CGFloat)midAnimationScrollToPositionForOffset:(CGPoint)targetContentOffset {
-  if (!self.contentScrollsToReveal) {
+  if (!self.contentScrollsToReveal || !self.contentReachesFullscreen) {
     return NSNotFound;
   }
 
