@@ -51,7 +51,7 @@
 @property(nonatomic) MDCBottomDrawerState drawerState;
 @property(nullable, nonatomic, readonly) UIPresentationController *presentationController;
 - (void)cacheLayoutCalculations;
-
+- (void)updateDrawerState:(CGFloat)transitionPercentage;
 @end
 
 @interface MDCBottomDrawerPresentationController (ScrollViewTests) <
@@ -388,6 +388,23 @@
 
   // Then
   XCTAssertEqual(self.fakeBottomDrawer.drawerState, MDCBottomDrawerStateExpanded);
+}
+
+- (void)testBottomDrawerStateFullScreen {
+  CGSize fakePreferredContentSize = CGSizeMake(200, 2000);
+  MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
+  [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
+  fakeHeader.preferredContentSize = fakePreferredContentSize;
+  self.fakeBottomDrawer.headerViewController = fakeHeader;
+  self.fakeBottomDrawer.contentViewController =
+      [[MDCNavigationDrawerFakeTableViewController alloc] init];
+
+  // When
+  [self.fakeBottomDrawer cacheLayoutCalculations];
+  [self.fakeBottomDrawer updateDrawerState:1.f];
+
+  // Then
+  XCTAssertEqual(self.fakeBottomDrawer.drawerState, MDCBottomDrawerStateFullScreen);
 }
 
 - (void)testBottomDrawerStateCallback {
