@@ -74,9 +74,9 @@
 }
 
 - (CGFloat)getMinimumCornerRadius {
-  return [self contentReachesFullScreen] ?
-      [self topCornersRadiusForDrawerState:MDCBottomDrawerStateFullScreen] :
-      [self topCornersRadiusForDrawerState:MDCBottomDrawerStateExpanded];
+  return [self contentReachesFullScreen]
+             ? [self topCornersRadiusForDrawerState:MDCBottomDrawerStateFullScreen]
+             : [self topCornersRadiusForDrawerState:MDCBottomDrawerStateExpanded];
 }
 
 - (CGFloat)topCornersRadiusForDrawerState:(MDCBottomDrawerState)drawerState {
@@ -116,8 +116,8 @@
     return YES;
   }
   return CGRectGetHeight(self.view.bounds) <=
-      self.headerViewController.preferredContentSize.height +
-      self.contentViewController.preferredContentSize.height;
+         self.headerViewController.preferredContentSize.height +
+             self.contentViewController.preferredContentSize.height;
 }
 
 #pragma mark UIAccessibilityAction
