@@ -55,7 +55,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  _maskLayer.minimumCornerRadius = [self getMinimumCornerRadius];
+
+  _maskLayer.minimumCornerRadius = [self minimumCornerRadius];
   [_maskLayer applyMask];
 }
 
@@ -81,11 +82,11 @@
   if (drawerState == MDCBottomDrawerStateCollapsed) {
     _maskLayer.maximumCornerRadius = radius;
   } else {
-    _maskLayer.minimumCornerRadius = [self getMinimumCornerRadius];
+    _maskLayer.minimumCornerRadius = [self minimumCornerRadius];
   }
 }
 
-- (CGFloat)getMinimumCornerRadius {
+- (CGFloat)minimumCornerRadius {
   return [self contentReachesFullScreen]
              ? [self topCornersRadiusForDrawerState:MDCBottomDrawerStateFullScreen]
              : [self topCornersRadiusForDrawerState:MDCBottomDrawerStateExpanded];
@@ -150,7 +151,7 @@
             (nonnull MDCBottomDrawerPresentationController *)presentationController
                         drawerState:(MDCBottomDrawerState)drawerState {
   _drawerState = drawerState;
-  CGFloat minimumCornerRadius = [self getMinimumCornerRadius];
+  CGFloat minimumCornerRadius = [self minimumCornerRadius];
   if (_maskLayer.minimumCornerRadius != minimumCornerRadius) {
     _maskLayer.minimumCornerRadius = minimumCornerRadius;
     [_maskLayer applyMask];
