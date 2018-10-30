@@ -393,7 +393,7 @@
 - (void)testBottomDrawerStateFullScreen {
   CGSize fakePreferredContentSize = CGSizeMake(200, 2000);
   MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
-  [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
+      [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
   fakeHeader.preferredContentSize = fakePreferredContentSize;
   self.fakeBottomDrawer.headerViewController = fakeHeader;
   self.fakeBottomDrawer.contentViewController =
