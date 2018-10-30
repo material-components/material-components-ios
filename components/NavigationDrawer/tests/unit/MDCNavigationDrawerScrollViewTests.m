@@ -17,6 +17,27 @@
 #import "../../src/private/MDCBottomDrawerContainerViewController.h"
 #import "MDCNavigationDrawerFakes.h"
 
+@interface MDCBottomDrawerDelegateTest
+    : UIViewController <MDCBottomDrawerPresentationControllerDelegate>
+@property(nonatomic, assign) BOOL delegateWasCalled;
+@end
+
+@implementation MDCBottomDrawerDelegateTest
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    _delegateWasCalled = NO;
+  }
+  return self;
+}
+- (void)bottomDrawerWillChangeState:(MDCBottomDrawerPresentationController *)presentationController
+                        drawerState:(MDCBottomDrawerState)drawerState {
+  _delegateWasCalled = YES;
+}
+
+@end
+
 @interface MDCBottomDrawerContainerViewController (ScrollViewTests)
 
 @property(nonatomic) BOOL scrollViewObserved;
@@ -27,13 +48,25 @@
 @property(nonatomic, readonly) CGRect presentingViewBounds;
 @property(nonatomic, readonly) CGFloat contentHeightSurplus;
 @property(nonatomic, readonly) BOOL contentScrollsToReveal;
+@property(nonatomic) MDCBottomDrawerState drawerState;
+@property(nullable, nonatomic, readonly) UIPresentationController *presentationController;
 - (void)cacheLayoutCalculations;
+- (void)updateDrawerState:(CGFloat)transitionPercentage;
+@end
 
+@interface MDCBottomDrawerPresentationController (ScrollViewTests) <
+    MDCBottomDrawerContainerViewControllerDelegate>
+@property(nonatomic) MDCBottomDrawerContainerViewController *bottomDrawerContainerViewController;
+@property(nonatomic, weak, nullable) id<MDCBottomDrawerPresentationControllerDelegate> delegate;
 @end
 
 @interface MDCNavigationDrawerScrollViewTests : XCTestCase
 @property(nonatomic, strong, nullable) UIScrollView *fakeScrollView;
 @property(nonatomic, strong, nullable) MDCBottomDrawerContainerViewController *fakeBottomDrawer;
+@property(nonatomic, strong, nullable) MDCBottomDrawerViewController *drawerViewController;
+@property(nonatomic, strong, nullable)
+    MDCBottomDrawerPresentationController *presentationController;
+@property(nonatomic, strong, nullable) MDCBottomDrawerDelegateTest *delegateTest;
 @end
 
 @implementation MDCNavigationDrawerScrollViewTests
@@ -48,6 +81,12 @@
   _fakeBottomDrawer = [[MDCBottomDrawerContainerViewController alloc]
       initWithOriginalPresentingViewController:fakeViewController
                             trackingScrollView:_fakeScrollView];
+  _drawerViewController = [[MDCBottomDrawerViewController alloc] init];
+  _drawerViewController.contentViewController = fakeViewController;
+  _presentationController = [[MDCBottomDrawerPresentationController alloc]
+      initWithPresentedViewController:_drawerViewController
+             presentingViewController:nil];
+  _delegateTest = [[MDCBottomDrawerDelegateTest alloc] init];
 }
 
 - (void)tearDown {
@@ -315,6 +354,78 @@
 
   // Then
   XCTAssertTrue(self.fakeBottomDrawer.contentScrollsToReveal);
+}
+
+- (void)testBottomDrawerStateCollapsed {
+  CGSize fakePreferredContentSize = CGSizeMake(200, 1000);
+  MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
+      [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
+  fakeHeader.preferredContentSize = fakePreferredContentSize;
+  self.fakeBottomDrawer.headerViewController = fakeHeader;
+  self.fakeBottomDrawer.contentViewController =
+      [[MDCNavigationDrawerFakeTableViewController alloc] init];
+
+  // When
+  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(200, 1500);
+  [self.fakeBottomDrawer cacheLayoutCalculations];
+
+  // Then
+  XCTAssertEqual(self.fakeBottomDrawer.drawerState, MDCBottomDrawerStateCollapsed);
+}
+
+- (void)testBottomDrawerStateExpanded {
+  CGSize fakePreferredContentSize = CGSizeMake(200, 100);
+  MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
+      [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
+  fakeHeader.preferredContentSize = fakePreferredContentSize;
+  self.fakeBottomDrawer.headerViewController = fakeHeader;
+  self.fakeBottomDrawer.contentViewController =
+      [[MDCNavigationDrawerFakeTableViewController alloc] init];
+
+  // When
+  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(200, 200);
+  [self.fakeBottomDrawer cacheLayoutCalculations];
+
+  // Then
+  XCTAssertEqual(self.fakeBottomDrawer.drawerState, MDCBottomDrawerStateExpanded);
+}
+
+- (void)testBottomDrawerStateFullScreen {
+  CGSize fakePreferredContentSize = CGSizeMake(200, 2000);
+  MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
+      [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
+  fakeHeader.preferredContentSize = fakePreferredContentSize;
+  self.fakeBottomDrawer.headerViewController = fakeHeader;
+  self.fakeBottomDrawer.contentViewController =
+      [[MDCNavigationDrawerFakeTableViewController alloc] init];
+
+  // When
+  [self.fakeBottomDrawer cacheLayoutCalculations];
+  [self.fakeBottomDrawer updateDrawerState:1.f];
+
+  // Then
+  XCTAssertEqual(self.fakeBottomDrawer.drawerState, MDCBottomDrawerStateFullScreen);
+}
+
+- (void)testBottomDrawerStateCallback {
+  CGSize fakePreferredContentSize = CGSizeMake(200, 1000);
+  MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
+      [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
+  fakeHeader.preferredContentSize = fakePreferredContentSize;
+  self.fakeBottomDrawer.headerViewController = fakeHeader;
+  self.fakeBottomDrawer.contentViewController =
+      [[MDCNavigationDrawerFakeTableViewController alloc] init];
+
+  // When
+  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(200, 1500);
+  [self.fakeBottomDrawer cacheLayoutCalculations];
+  self.presentationController.delegate = self.delegateTest;
+  self.presentationController.bottomDrawerContainerViewController = self.fakeBottomDrawer;
+  self.fakeBottomDrawer.delegate = self.presentationController;
+  self.fakeBottomDrawer.drawerState = MDCBottomDrawerStateExpanded;
+
+  // Then
+  XCTAssertEqual(self.delegateTest.delegateWasCalled, YES);
 }
 
 @end

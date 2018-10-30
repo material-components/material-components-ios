@@ -137,6 +137,9 @@ static UIColor *DrawerShadowColor(void) {
 // The top header bottom shadow layer.
 @property(nonatomic) MDCShadowLayer *headerShadowLayer;
 
+// The current bottom drawer state.
+@property(nonatomic) MDCBottomDrawerState drawerState;
+
 @end
 
 @implementation MDCBottomDrawerContainerViewController {
@@ -162,6 +165,7 @@ static UIColor *DrawerShadowColor(void) {
     _maskLayer =
         [[MDCBottomDrawerHeaderMask alloc] initWithMaximumCornerRadius:kDefaultHeaderCornerRadius
                                                    minimumCornerRadius:0];
+    _drawerState = MDCBottomDrawerStateCollapsed;
   }
   return self;
 }
@@ -317,6 +321,22 @@ static UIColor *DrawerShadowColor(void) {
   }
   self.scrollViewObserved = NO;
   [self.scrollView removeObserver:self forKeyPath:kContentOffsetKeyPath];
+}
+
+- (void)setDrawerState:(MDCBottomDrawerState)drawerState {
+  if (drawerState != _drawerState) {
+    _drawerState = drawerState;
+    [self.delegate bottomDrawerContainerViewControllerWillChangeState:self drawerState:drawerState];
+  }
+}
+
+- (void)updateDrawerState:(CGFloat)transitionPercentage {
+  if (transitionPercentage >= 1.f - kEpsilon) {
+    self.drawerState = self.contentReachesFullscreen ? MDCBottomDrawerStateFullScreen
+                                                     : MDCBottomDrawerStateExpanded;
+  } else {
+    self.drawerState = MDCBottomDrawerStateCollapsed;
+  }
 }
 
 #pragma mark UIViewController
@@ -475,6 +495,7 @@ static UIColor *DrawerShadowColor(void) {
                                         distance:self.headerAnimationDistance];
   CGFloat headerTransitionToTop =
       contentOffset.y >= self.transitionCompleteContentOffset ? 1.f : transitionPercentage;
+  [self updateDrawerState:transitionPercentage];
   [_maskLayer animateWithPercentage:1.f - transitionPercentage];
   self.currentlyFullscreen = self.contentReachesFullscreen && headerTransitionToTop >= 1.f;
   CGFloat fullscreenHeaderHeight =
@@ -669,6 +690,13 @@ static UIColor *DrawerShadowColor(void) {
 
   CGFloat scrollingDistance = _contentHeaderTopInset + contentHeaderHeight + contentHeight;
   _contentHeightSurplus = scrollingDistance - containerHeight;
+  if ([self shouldPresentFullScreen]) {
+    self.drawerState = MDCBottomDrawerStateFullScreen;
+  } else if (_contentHeightSurplus <= 0) {
+    self.drawerState = MDCBottomDrawerStateExpanded;
+  } else {
+    self.drawerState = MDCBottomDrawerStateCollapsed;
+  }
   if (addedContentHeight < kEpsilon && (_contentHeaderTopInset > _contentHeightSurplus) &&
       (_contentHeaderTopInset - _contentHeightSurplus < self.addedContentHeightThreshold)) {
     CGFloat addedContentheight = _contentHeaderTopInset - _contentHeightSurplus;

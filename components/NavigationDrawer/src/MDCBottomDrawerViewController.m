@@ -65,4 +65,10 @@
   return YES;
 }
 
+- (void)bottomDrawerWillChangeState:
+            (nonnull MDCBottomDrawerPresentationController *)presentationController
+                        drawerState:(MDCBottomDrawerState)drawerState {
+  _drawerState = drawerState;
+}
+
 @end
