@@ -25,8 +25,16 @@
 
 @implementation MDCBottomDrawerViewController
 
-- (instancetype)init {
-  self = [super init];
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+  self = [super initWithNibName:nil bundle:nil];
+  if (self) {
+    _transitionController = [[MDCBottomDrawerTransitionController alloc] init];
+  }
+  return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+  self = [super initWithCoder:aDecoder];
   if (self) {
     _transitionController = [[MDCBottomDrawerTransitionController alloc] init];
   }
