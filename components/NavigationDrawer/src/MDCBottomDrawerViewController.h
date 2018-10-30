@@ -13,13 +13,16 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
+#import "MDCBottomDrawerPresentationController.h"
+#import "MDCBottomDrawerState.h"
 
 @protocol MDCBottomDrawerHeader;
 
 /**
  View controller for containing a Google Material bottom drawer.
  */
-@interface MDCBottomDrawerViewController : UIViewController
+@interface MDCBottomDrawerViewController
+    : UIViewController <MDCBottomDrawerPresentationControllerDelegate>
 
 /**
  The main content displayed by the drawer.
@@ -40,5 +43,10 @@
  and allow to reuse the cells when using a UICollectionView or UITableView.
  */
 @property(nonatomic, weak, nullable) UIScrollView *trackingScrollView;
+
+/**
+ The current state of the bottom drawer.
+ */
+@property(nonatomic, readonly) MDCBottomDrawerState drawerState;
 
 @end
