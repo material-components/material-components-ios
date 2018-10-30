@@ -156,6 +156,13 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
   [CATransaction commit];
 }
 
+- (void)updateReorderCellPosition {
+  if (_reorderingCellIndexPath) {
+    CGPoint userTouchPosition = [_longPressGestureRecognizer locationInView:self.collectionView];
+    [self updateCellSnapshotPosition:userTouchPosition];
+  }
+}
+
 #pragma mark - Private
 
 - (void)updateCellSnapshotPosition:(CGPoint)newPosition {
