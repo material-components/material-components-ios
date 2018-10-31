@@ -1,11 +1,10 @@
 # Shapes Core
 
 Our Shapes Core library consists of different APIs and classes we use to build shapes for our components. 
-Concretely, to create a shape object, you'll need to create an object that implements the protocol `MDCShapeGenerating`. 
+Concretely, to create a shape object, you'll need to create an object that implements the `MDCShapeGenerating` protocol. 
 `MDCShapeGenerating` only has one method, `(CGPath *)pathForSize:(CGSize)size` that returns the shape’s `CGPath` for the expected size.
 
-Our components support shapes by providing in their API a property called `id<MDCShapeGenerating> shapeGenerator`, which can receive any object that implements
-the `MDCShapeGenerating` protocol, and applies the provided shape on the component.
+Our components support shapes by providing a property called `id<MDCShapeGenerating> shapeGenerator` and applies the provided shape to the component.
 
 ## Related Documentation
 
@@ -17,25 +16,30 @@ the `MDCShapeGenerating` protocol, and applies the provided shape on the compone
 
 ## Overview
 
-For our convenience there are a few classes that help create an object that implements the protocol `MDCShapeGenerating`.
+Listed below are classes that can be used to create an object that implements the `MDCShapeGenerating` protocol.
 
 #### MDCPathGenerator
-At the core there is `MDCPathGenerator`, which has a few helper methods to build a `CGPath`.
+
+At the core there is `MDCPathGenerator`, which provides helper methods for building a `CGPath`.
 By providing a start point and end point, and using its different APIs to draw lines/curves between points, a CGPath is created.
 
 #### MDCShapedShadowLayer
+
 An `MDCShapedShadowLayer` class is used as the base layer of the component's view instead of `MDCShadowLayer` 
 to allow shapes to work well with shadows, borders, and background color.
 
 #### MDCShapedView
-`MDCShapedView` is a base `UIView` that already incorporates `MDCShapedShadowLayer`, a shapeGenerator object,
+
+`MDCShapedView` is a base `UIView` that incorporates `MDCShapedShadowLayer`, a shapeGenerator object,
 and elevation, to provide a minimal view that has full shape support. 
 This can be used as a basic building block to build on top of when building new components that need shape support from the get go.
 
 #### MDCCornerTreatment and MDCEdgeTreatment
-`MDCCornerTreatment` and `MDCEdgeTreatment` are both classes that provide a more modular approach for defining specifically the `CGPath` for a specific edge or corner.
+
+`MDCCornerTreatment` and `MDCEdgeTreatment` are both classes that provide a modular approach for defining specifically the `CGPath` for a specific edge or corner.
 
 #### MDCRectangleShapeGenerator
+
 The last class in the Shapes Core library is `MDCRectangleShapeGenerator`. 
 It is a shapeGenerator on its own (meaning it implements `MDCShapeGenerating`),
 and generates a `CGPath` but allows good customization as part of its implementation. 
