@@ -46,6 +46,9 @@ static const NSTimeInterval kTrackingScrollViewDidChangeAnimationDuration = 0.2;
 // on/off-screen with the display link.
 static const float kShiftEpsilon = 0.1f;
 
+// The epsilon used when comparing height values.
+static const CGFloat kHeightEpsilon = 0.001f;
+
 // The epsilon used when comparing content offset values.
 static const CGFloat kContentOffsetEpsilon = 0.001f;
 
@@ -1369,7 +1372,7 @@ static BOOL isRunningiOS10_3OrAbove() {
   if (info.stashedHeightIsValid) {
     // Did our height change since the last time we saw this content?
     const CGFloat heightDelta = self.bounds.size.height - info.stashedHeight;
-    if (fabs(heightDelta) > DBL_EPSILON) {
+    if (fabs(heightDelta) > kContentOffsetEpsilon) {
       // Offset our content accordingly so that we're still viewing what we were viewing last time.
       CGPoint offset = scrollView.contentOffset;
       offset.y -= heightDelta;
@@ -1476,7 +1479,7 @@ static BOOL isRunningiOS10_3OrAbove() {
     if (self.canAlwaysExpandToMaximumHeight) {
       // Cap the accumulator to ensure it's valid.
       CGFloat accumulatorMin;
-      if (headerHeight > self.computedMinimumHeight + DBL_EPSILON) {
+      if (headerHeight > self.computedMinimumHeight + kHeightEpsilon) {
         // We're attached to the content, so don't allow any height accumulation.
         accumulatorMin = 0;
       } else {
