@@ -1,12 +1,12 @@
 # Shape Library
 
 Our Shape Library consists of different convenience API and classes we use to build a shape.
-Specifically, the classes in this library sit on top of our [core Shapes implementation](../Shapes), and that implementation
+Specifically, the classes in this library sit on top of our [core Shapes implementation](../../Shapes), and that implementation
 should be understood and used before making use of the classes here.
 
 ## Related Documentation
 
-* [Core Shapes Implementation](../Shapes)
+* [Core Shapes Implementation](../../Shapes)
 
 <!-- toc -->
 

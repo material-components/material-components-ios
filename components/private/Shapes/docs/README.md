@@ -9,7 +9,7 @@ the `MDCShapeGenerating` protocol, and applies the provided shape on the compone
 
 ## Related Documentation
 
-* [Shape Library](../ShapeLibrary)
+* [Shape Library](../../ShapeLibrary)
 
 <!-- toc -->
 

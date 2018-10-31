@@ -22,7 +22,7 @@ the `MDCShapeGenerating` protocol, and applies the provided shape on the compone
 ## Related Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--link"><a href="ShapeLibrary">Shape Library</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="../ShapeLibrary">Shape Library</a></li>
 </ul>
 
 ## Table of contents

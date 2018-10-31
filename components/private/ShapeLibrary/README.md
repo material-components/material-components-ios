@@ -13,13 +13,13 @@ api_doc_root: true
 # Shape Library
 
 Our Shape Library consists of different convenience API and classes we use to build a shape.
-Specifically, the classes in this library sit on top of our [core Shapes implementation](Shapes), and that implementation
+Specifically, the classes in this library sit on top of our [core Shapes implementation](../Shapes), and that implementation
 should be understood and used before making use of the classes here.
 
 ## Related Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--link"><a href="Shapes">Core Shapes Implementation</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="../Shapes">Core Shapes Implementation</a></li>
 </ul>
 
 ## Table of contents
