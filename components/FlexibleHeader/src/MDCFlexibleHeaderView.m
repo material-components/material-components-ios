@@ -1200,10 +1200,10 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
       if (fabs(delta - [_topSafeArea topSafeAreaInset]) < kContentOffsetEpsilon) {
         // Looks like a top safe area inset adjustment. Let's ignore it.
         self.trackingScrollView.contentOffset = _shiftAccumulatorLastContentOffset;
+        return;
       }
     }
     _shiftAccumulatorLastContentOffsetIsValid = NO;
-    return;
   }
 
   if (self.trackingScrollView.isTracking) {
