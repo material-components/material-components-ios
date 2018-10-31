@@ -1,3 +1,53 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+### ActionSheet
+
+* [Fix rotation bug  (#5505)](https://github.com/material-components/material-components-ios/commit/07ed3771dc34de4806b62db187e68b669bbcfa2b) (Cody Weaver)
+
+### AppBar
+
+* [Initial frame wrong in MDCAppBarViewController for iPad split screen (#5497)](https://github.com/material-components/material-components-ios/commit/1d9b984cb3a146008779fa12e4e60dc5862789af) (rami-a)
+
+### List
+
+* [Use ListThemer for List example (#5502)](https://github.com/material-components/material-components-ios/commit/49b29af661b7d6c3cc7c79de59b21eb5a92af434) (Andrew Overton)
+* [[List Items] Improve BiDi example performance. (#5506)](https://github.com/material-components/material-components-ios/commit/410f2f55e7976570ceabe0d4276c385ed90ef930) (Robert Moore)
+
+### NavigationDrawer
+
+* [Added a state system to the Nav Drawer (#5520)](https://github.com/material-components/material-components-ios/commit/a8d3794de3dff0163126726f8b4dd997fa1fec68) (Yarden Eitan)
+* [Added a top corners radius for state API. (#5543)](https://github.com/material-components/material-components-ios/commit/bc584d9e0e74118caea241959de2aa64dd245695) (Yarden Eitan)
+* [Fix the init of the MDCBottomDrawerViewController to use the designated inits (#5546)](https://github.com/material-components/material-components-ios/commit/bfa674da949b3f7a51610c29a95994d2bfd44526) (guylivneh)
+* [[BottomDrawer] Adding an example for dynamically changing content size (#5545)](https://github.com/material-components/material-components-ios/commit/08b71a81eee40c0b8a71f35e3275acfd13b741eb) (guylivneh)
+
+### Snackbar
+
+* [Update MDCSnackbarColorThemer to set correct background color to match the spec (#5517)](https://github.com/material-components/material-components-ios/commit/479eaa84af054ade867b331b50854c917f82068a) (rami-a)
+
+### schemes/Color
+
+* [Fix pod name (#5532)](https://github.com/material-components/material-components-ios/commit/92c8f03d3079d1034ed6cc22c73c0799200e9add) (Cody Weaver)
+
+### schemes/Typography
+
+* [Fix pod name (#5532)](https://github.com/material-components/material-components-ios/commit/92c8f03d3079d1034ed6cc22c73c0799200e9add) (Cody Weaver)
+
+---
+
 # 68.0.0
 
 This major release includes a breaking change in behavior for Bottom Sheet's shapes themer, a
