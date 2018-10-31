@@ -13,13 +13,16 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
+#import "MDCBottomDrawerPresentationController.h"
+#import "MDCBottomDrawerState.h"
 
 @protocol MDCBottomDrawerHeader;
 
 /**
  View controller for containing a Google Material bottom drawer.
  */
-@interface MDCBottomDrawerViewController : UIViewController
+@interface MDCBottomDrawerViewController
+    : UIViewController <MDCBottomDrawerPresentationControllerDelegate>
 
 /**
  The main content displayed by the drawer.
@@ -40,5 +43,28 @@
  and allow to reuse the cells when using a UICollectionView or UITableView.
  */
 @property(nonatomic, weak, nullable) UIScrollView *trackingScrollView;
+
+/**
+ The current state of the bottom drawer.
+ */
+@property(nonatomic, readonly) MDCBottomDrawerState drawerState;
+
+/**
+ Sets the top corners radius for an MDCBottomDrawerState drawerState
+
+ @param radius The corner radius to set the top corners.
+ @param drawerState MDCBottomDrawerState the drawer state.
+ */
+- (void)setTopCornersRadius:(CGFloat)radius forDrawerState:(MDCBottomDrawerState)drawerState;
+
+/**
+ Returns the top corners radius for an MDCBottomDrawerState drawerState.
+
+ If no radius has been set for a state, the value 0.f is returned.
+
+ @param drawerState MDCBottomDrawerState the drawer state.
+ @return The corner radius to set the top corners.
+ */
+- (CGFloat)topCornersRadiusForDrawerState:(MDCBottomDrawerState)drawerState;
 
 @end

@@ -21,7 +21,8 @@ static UIColor *DrawerOverlayBackgroundColor(void) {
   return [UIColor colorWithWhite:0 alpha:0.4f];
 }
 
-@interface MDCBottomDrawerPresentationController () <UIGestureRecognizerDelegate>
+@interface MDCBottomDrawerPresentationController () <UIGestureRecognizerDelegate,
+                                                     MDCBottomDrawerContainerViewControllerDelegate>
 
 /**
  A semi-transparent scrim view that darkens the visible main view when the drawer is displayed.
@@ -36,6 +37,8 @@ static UIColor *DrawerOverlayBackgroundColor(void) {
 @end
 
 @implementation MDCBottomDrawerPresentationController
+
+@synthesize delegate;
 
 - (UIView *)presentedView {
   if ([self.presentedViewController isKindOfClass:[MDCBottomDrawerViewController class]]) {
@@ -59,15 +62,18 @@ static UIColor *DrawerOverlayBackgroundColor(void) {
     // consists of the drawer logic.
     MDCBottomDrawerViewController *bottomDrawerViewController =
         (MDCBottomDrawerViewController *)self.presentedViewController;
+    self.delegate = bottomDrawerViewController;
     bottomDrawerContainerViewController.contentViewController =
         bottomDrawerViewController.contentViewController;
     bottomDrawerContainerViewController.headerViewController =
         bottomDrawerViewController.headerViewController;
+    self.delegate = bottomDrawerViewController;
   } else {
     bottomDrawerContainerViewController.contentViewController = self.presentedViewController;
   }
   bottomDrawerContainerViewController.animatingPresentation = YES;
   self.bottomDrawerContainerViewController = bottomDrawerContainerViewController;
+  self.bottomDrawerContainerViewController.delegate = self;
 
   self.scrimView = [[UIView alloc] initWithFrame:self.containerView.bounds];
   self.scrimView.backgroundColor = DrawerOverlayBackgroundColor();
@@ -151,6 +157,27 @@ static UIColor *DrawerOverlayBackgroundColor(void) {
        shouldReceiveTouch:(UITouch *)touch {
   return [self.bottomDrawerContainerViewController gestureRecognizer:gestureRecognizer
                                                   shouldReceiveTouch:touch];
+}
+
+#pragma mark - MDCBottomDrawerContainerViewControllerDelegate
+
+- (void)bottomDrawerContainerViewControllerWillChangeState:
+            (MDCBottomDrawerContainerViewController *)containerViewController
+                                               drawerState:(MDCBottomDrawerState)drawerState {
+  id<MDCBottomDrawerPresentationControllerDelegate> strongDelegate = self.delegate;
+  if ([strongDelegate respondsToSelector:@selector(bottomDrawerWillChangeState:drawerState:)]) {
+    [strongDelegate bottomDrawerWillChangeState:self drawerState:drawerState];
+  }
+}
+
+- (void)bottomDrawerContainerViewControllerTopTransitionRatio:
+            (MDCBottomDrawerContainerViewController *)containerViewController
+                                              transitionRatio:(CGFloat)transitionRatio {
+  id<MDCBottomDrawerPresentationControllerDelegate> strongDelegate = self.delegate;
+  if ([strongDelegate respondsToSelector:@selector(bottomDrawerTopTransitionRatio:
+                                                                  transitionRatio:)]) {
+    [strongDelegate bottomDrawerTopTransitionRatio:self transitionRatio:transitionRatio];
+  }
 }
 
 @end
