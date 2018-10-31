@@ -87,6 +87,7 @@ static const float kAmbientShadowOpacity = 0.08f;
 @property(nonatomic, strong) CAShapeLayer *bottomShadow;
 @property(nonatomic, strong) CAShapeLayer *topShadowMask;
 @property(nonatomic, strong) CAShapeLayer *bottomShadowMask;
++ (CGSize)shadowSpreadForElevation:(CGFloat)elevation;
 
 @end
 
