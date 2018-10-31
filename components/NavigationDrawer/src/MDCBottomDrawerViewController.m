@@ -115,9 +115,9 @@
 - (void)setScrimColor:(UIColor *)scrimColor {
   _scrimColor = scrimColor;
   if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
-    MDCBottomDrawerPresentationController *bottomDrawerPresentation =
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
         (MDCBottomDrawerPresentationController *)self.presentationController;
-    bottomDrawerPresentation.scrimColor = scrimColor;
+    bottomDrawerPresentationController.scrimColor = scrimColor;
   }
 }
 
