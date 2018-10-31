@@ -1374,7 +1374,7 @@ static BOOL isRunningiOS10_3OrAbove() {
   if (info.stashedHeightIsValid) {
     // Did our height change since the last time we saw this content?
     const CGFloat heightDelta = self.bounds.size.height - info.stashedHeight;
-    if (fabs(heightDelta) > kContentOffsetEpsilon) {
+    if (fabs(heightDelta) > kHeightEpsilon) {
       // Offset our content accordingly so that we're still viewing what we were viewing last time.
       CGPoint offset = scrollView.contentOffset;
       offset.y -= heightDelta;
