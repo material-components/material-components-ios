@@ -1,5 +1,5 @@
 <!--docs:
-title: "<#component_name#>"
+title: "ShapeLibrary"
 layout: detail
 section: components
 excerpt: "ShapeLibrary consists of convenience APIs to create shaped surfaces."

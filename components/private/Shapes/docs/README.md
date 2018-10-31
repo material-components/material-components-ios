@@ -1,6 +1,6 @@
 # Shapes Core
 
-Our Shapes Core library consists of different APIs and classes we use to build shapes for our components. 
+This library consists of several classes that are often used together to implement Shape behavior on a component.
 Concretely, to create a shape object, you'll need to create an object that implements the `MDCShapeGenerating` protocol. 
 `MDCShapeGenerating` only has one method, `(CGPath *)pathForSize:(CGSize)size` that returns the shape’s `CGPath` for the expected size.
 
@@ -25,14 +25,31 @@ By providing a start point and end point, and using its different APIs to draw l
 
 #### MDCShapedShadowLayer
 
-An `MDCShapedShadowLayer` class is used as the base layer of the component's view instead of `MDCShadowLayer` 
+An `MDCShapedShadowLayer` class is used as the main layer class of the component's view instead of `MDCShadowLayer` 
 to allow shapes to work well with shadows, borders, and background color.
+
+The same way we override the layer in our components with `MDCShadowLayer` to achieve a shadow, we instead use `MDCShapedShadowLayer` like so:
+
+```objc
+@interface Component ()
+@property(nonatomic, readonly, strong) MDCShapedShadowLayer *layer;
+@end
+
+@implementation Component
+
+@dynamic layer;
+
++ (Class)layerClass {
+  return [MDCShapedShadowLayer class];
+}
+@end
+```
 
 #### MDCShapedView
 
 `MDCShapedView` is a base `UIView` that incorporates `MDCShapedShadowLayer`, a shapeGenerator object,
 and elevation, to provide a minimal view that has full shape support. 
-This can be used as a basic building block to build on top of when building new components that need shape support from the get go.
+This can be used as a building block for components that need shape support.
 
 #### MDCCornerTreatment and MDCEdgeTreatment
 
