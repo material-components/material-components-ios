@@ -17,10 +17,6 @@
 #import "MDCBottomDrawerViewController.h"
 #import "private/MDCBottomDrawerContainerViewController.h"
 
-static UIColor *DrawerOverlayBackgroundColor(void) {
-  return [UIColor colorWithWhite:0 alpha:0.4f];
-}
-
 @interface MDCBottomDrawerPresentationController () <UIGestureRecognizerDelegate,
                                                      MDCBottomDrawerContainerViewControllerDelegate>
 
@@ -76,7 +72,7 @@ static UIColor *DrawerOverlayBackgroundColor(void) {
   self.bottomDrawerContainerViewController.delegate = self;
 
   self.scrimView = [[UIView alloc] initWithFrame:self.containerView.bounds];
-  self.scrimView.backgroundColor = DrawerOverlayBackgroundColor();
+  self.scrimView.backgroundColor = self.scrimColor ?: [UIColor colorWithWhite:0 alpha:(CGFloat)0.32];
   self.scrimView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   self.scrimView.accessibilityIdentifier = @"Close drawer";
@@ -143,6 +139,11 @@ static UIColor *DrawerOverlayBackgroundColor(void) {
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
   [self.bottomDrawerContainerViewController viewWillTransitionToSize:size
                                            withTransitionCoordinator:coordinator];
+}
+
+- (void)setScrimColor:(UIColor *)scrimColor {
+  _scrimColor = scrimColor;
+  self.scrimView.backgroundColor = scrimColor;
 }
 
 #pragma mark - Private
