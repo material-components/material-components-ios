@@ -1,16 +1,74 @@
-# #develop#
+# 68.1.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+In this minor release we have added a top corners API and a state system for Navigation Drawer along with bug fixes and additional examples.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
+By using Navigation Drawer's `MDCBottomDrawerViewController`, you can now set the top corners radius of your drawer for each of its 
+different presentation states `MDCBottomDrawerState`.
+
+```swift
+let bottomDrawerViewController = MDCBottomDrawerViewController()
+// Set the drawer top corners for the drawer states.
+bottomDrawerViewController.setTopCornersRadius(24, for: .collapsed)
+bottomDrawerViewController.setTopCornersRadius(8, for: .expanded)
+
+bottomDrawerViewController.contentViewController = contentViewController
+bottomDrawerViewController.headerViewController = headerViewController
+MDCBottomDrawerColorThemer.applySemanticColorScheme(colorScheme,
+                                                    toBottomDrawer: bottomDrawerViewController)
+present(bottomDrawerViewController, animated: true, completion: nil)
+```
+
 ## API changes
+
+### NavigationDrawer
+
+#### MDCBottomDrawerViewController
+
+*new* method: `-topCornersRadiusForDrawerState:` in `MDCBottomDrawerViewController`
+
+*new* method: `-setTopCornersRadius:forDrawerState:` in `MDCBottomDrawerViewController`
+
+*new* property: `drawerState` in `MDCBottomDrawerViewController`
+
+*modified* class: `MDCBottomDrawerViewController`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `class MDCBottomDrawerViewController : UIViewController` |
+| To: | `class MDCBottomDrawerViewController : UIViewController, MDCBottomDrawerPresentationControllerDelegate` |
+
+*modified* class: `MDCBottomDrawerViewController`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCBottomDrawerViewController : UIViewController` |
+| To: | `@interface MDCBottomDrawerViewController     : UIViewController <MDCBottomDrawerPresentationControllerDelegate>` |
+
+#### MDCBottomDrawerState
+
+*new* enum: `MDCBottomDrawerState`
+
+*new* enum value: `MDCBottomDrawerStateExpanded` in `MDCBottomDrawerState`
+
+*new* enum value: `MDCBottomDrawerStateCollapsed` in `MDCBottomDrawerState`
+
+*new* typedef: `MDCBottomDrawerState`
+
+*new* enum value: `MDCBottomDrawerStateFullScreen` in `MDCBottomDrawerState`
+
+#### MDCBottomDrawerPresentationController
+
+*new* property: `delegate` in `MDCBottomDrawerPresentationController`
+
+#### MDCBottomDrawerPresentationControllerDelegate
+
+*new* method: `-bottomDrawerWillChangeState:drawerState:` in `MDCBottomDrawerPresentationControllerDelegate`
+
+*new* method: `-bottomDrawerTopTransitionRatio:transitionRatio:` in `MDCBottomDrawerPresentationControllerDelegate`
+
+*new* protocol: `MDCBottomDrawerPresentationControllerDelegate`
 
 ## Component changes
 
