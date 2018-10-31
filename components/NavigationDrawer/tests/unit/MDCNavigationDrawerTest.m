@@ -51,11 +51,14 @@
   self.navigationDrawer.scrimColor = customColor;
 
   // Then
-  if ([self.navigationDrawer.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
-    MDCBottomDrawerPresentationController *presentationController = (MDCBottomDrawerPresentationController *)self.navigationDrawer.presentationController;
+  if ([self.navigationDrawer.presentationController
+          isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *presentationController =
+        (MDCBottomDrawerPresentationController *)self.navigationDrawer.presentationController;
     XCTAssertEqualObjects(presentationController.scrimColor, customColor);
   } else {
-    XCTFail(@"Navigation Drawer isn't using MDCBottomDrawerPresentationController as it's presentationController");
+    XCTFail(@"Navigation Drawer isn't using MDCBottomDrawerPresentationController as it's "
+            @"presentationController");
   }
 }
 

@@ -72,7 +72,8 @@
   self.bottomDrawerContainerViewController.delegate = self;
 
   self.scrimView = [[UIView alloc] initWithFrame:self.containerView.bounds];
-  self.scrimView.backgroundColor = self.scrimColor ?: [UIColor colorWithWhite:0 alpha:(CGFloat)0.32];
+  self.scrimView.backgroundColor =
+      self.scrimColor ?: [UIColor colorWithWhite:0 alpha:(CGFloat)0.32];
   self.scrimView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   self.scrimView.accessibilityIdentifier = @"Close drawer";

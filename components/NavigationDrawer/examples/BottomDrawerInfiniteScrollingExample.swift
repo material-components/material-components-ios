@@ -68,6 +68,7 @@ class BottomDrawerInfiniteScrollingExample: UIViewController {
     bottomDrawerViewController.trackingScrollView = contentViewController.tableView
     MDCBottomDrawerColorThemer.applySemanticColorScheme(colorScheme,
                                                         toBottomDrawer: bottomDrawerViewController)
+    bottomDrawerViewController.scrimColor = UIColor.blue.withAlphaComponent(0.5)
     present(bottomDrawerViewController, animated: true, completion: nil)
   }
 }
