@@ -103,6 +103,8 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 // desirable, this behavior clashes with our own top safe area insets management resulting
 // in the table view "jumping" when it first appears. To counter this behavior, we
 // intentionally ignore the next content offset change if it looks like a safe area adjustment.
+// See https://github.com/material-components/material-components-ios/issues/5412 for additional
+// details.
 @property(nonatomic) BOOL shouldIgnoreNextSafeAreaAdjustment;
 
 // The amount injected into contentInsets.top
