@@ -14,10 +14,10 @@
 
 #import "ShadowAnimationExampleViewController.h"
 
-#import "MaterialButtons.h"
-#import "MaterialButtons+ButtonThemer.h"
-#import "MaterialShadowLayer.h"
 #import "MaterialAnimationTiming.h"
+#import "MaterialButtons+ButtonThemer.h"
+#import "MaterialButtons.h"
+#import "MaterialShadowLayer.h"
 
 static const CGFloat kAnimationDuration = (CGFloat)2.0;
 static const CGFloat kStartCornerRadius = (CGFloat)0.001;
@@ -74,7 +74,8 @@ static const CGFloat kEndCornerRadius = (CGFloat)20.0;
   self.button = [[MDCButton alloc] init];
   [self.button setTitle:@"Update view" forState:UIControlStateNormal];
   [MDCContainedButtonThemer applyScheme:[[MDCButtonScheme alloc] init] toButton:self.button];
-  [self.button addTarget:self action:@selector(animateView)
+  [self.button addTarget:self
+                  action:@selector(animateView)
         forControlEvents:UIControlEventTouchUpInside];
   [self.button sizeToFit];
   [self.view addSubview:self.button];
@@ -96,12 +97,15 @@ static const CGFloat kEndCornerRadius = (CGFloat)20.0;
 }
 
 - (void)animateView {
-  CAMediaTimingFunction *timingFunction = [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
+  CAMediaTimingFunction *timingFunction =
+      [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
   if (!_animated) {
     CGPathRef toShadowPath = [UIBezierPath bezierPathWithRoundedRect:self.customView.bounds
-                                                        cornerRadius:kEndCornerRadius].CGPath;
+                                                        cornerRadius:kEndCornerRadius]
+                                 .CGPath;
     CGPathRef fromShadowPath = [UIBezierPath bezierPathWithRoundedRect:self.customView.bounds
-                                                          cornerRadius:kStartCornerRadius].CGPath;
+                                                          cornerRadius:kStartCornerRadius]
+                                   .CGPath;
     [CATransaction begin];
     CABasicAnimation *topAnimation = [CABasicAnimation animationWithKeyPath:@"shadowPath"];
     topAnimation.fromValue = (__bridge id)fromShadowPath;
@@ -148,11 +152,12 @@ static const CGFloat kEndCornerRadius = (CGFloat)20.0;
       bottomMaskAnimation.fromValue = (__bridge id)fromMaskPath.CGPath;
       bottomMaskAnimation.toValue = (__bridge id)toMaskPath.CGPath;
       bottomMaskAnimation.duration = kAnimationDuration;
-      [self.customView.shadowLayer.bottomShadowMask addAnimation:bottomMaskAnimation forKey:@"path"];
+      [self.customView.shadowLayer.bottomShadowMask addAnimation:bottomMaskAnimation
+                                                          forKey:@"path"];
     }
 
     [CATransaction setAnimationDuration:kAnimationDuration];
-    [CATransaction setCompletionBlock:^(void){
+    [CATransaction setCompletionBlock:^(void) {
       self.customView.layer.cornerRadius = kEndCornerRadius;
       self.customView.shadowLayer.topShadow.shadowPath = toShadowPath;
       self.customView.shadowLayer.bottomShadow.shadowPath = toShadowPath;
@@ -164,9 +169,11 @@ static const CGFloat kEndCornerRadius = (CGFloat)20.0;
     [CATransaction commit];
   } else {
     CGPathRef fromShadowPath = [UIBezierPath bezierPathWithRoundedRect:self.customView.bounds
-                                                        cornerRadius:kEndCornerRadius].CGPath;
+                                                          cornerRadius:kEndCornerRadius]
+                                   .CGPath;
     CGPathRef toShadowPath = [UIBezierPath bezierPathWithRoundedRect:self.customView.bounds
-                                                          cornerRadius:kStartCornerRadius].CGPath;
+                                                        cornerRadius:kStartCornerRadius]
+                                 .CGPath;
     [CATransaction begin];
     CABasicAnimation *topAnimation = [CABasicAnimation animationWithKeyPath:@"shadowPath"];
     topAnimation.fromValue = (__bridge id)fromShadowPath;
@@ -194,11 +201,11 @@ static const CGFloat kEndCornerRadius = (CGFloat)20.0;
     UIBezierPath *fromMaskPath = [UIBezierPath bezierPathWithRect:maskRect];
     if (self.customView.shadowLayer.shadowMaskEnabled) {
       [toMaskPath appendPath:[UIBezierPath bezierPathWithRoundedRect:self.customView.bounds
-                                                          cornerRadius:kStartCornerRadius]];
+                                                        cornerRadius:kStartCornerRadius]];
       [toMaskPath setUsesEvenOddFillRule:YES];
 
       [fromMaskPath appendPath:[UIBezierPath bezierPathWithRoundedRect:self.customView.bounds
-                                                        cornerRadius:kEndCornerRadius]];
+                                                          cornerRadius:kEndCornerRadius]];
       [fromMaskPath setUsesEvenOddFillRule:YES];
 
       CABasicAnimation *topMaskAnimation = [CABasicAnimation animationWithKeyPath:@"path"];
@@ -213,11 +220,12 @@ static const CGFloat kEndCornerRadius = (CGFloat)20.0;
       bottomMaskAnimation.fromValue = (__bridge id)fromMaskPath.CGPath;
       bottomMaskAnimation.toValue = (__bridge id)toMaskPath.CGPath;
       bottomMaskAnimation.duration = kAnimationDuration;
-      [self.customView.shadowLayer.bottomShadowMask addAnimation:bottomMaskAnimation forKey:@"path"];
+      [self.customView.shadowLayer.bottomShadowMask addAnimation:bottomMaskAnimation
+                                                          forKey:@"path"];
     }
 
     [CATransaction setAnimationDuration:kAnimationDuration];
-    [CATransaction setCompletionBlock:^(void){
+    [CATransaction setCompletionBlock:^(void) {
       self.customView.shadowLayer.cornerRadius = kEndCornerRadius;
       self.customView.shadowLayer.topShadow.shadowPath = toShadowPath;
       self.customView.shadowLayer.bottomShadow.shadowPath = toShadowPath;
@@ -242,10 +250,10 @@ static const CGFloat kEndCornerRadius = (CGFloat)20.0;
 
 + (NSDictionary *)catalogMetadata {
   return @{
-           @"breadcrumbs" : @[ @"Shadow", @"Custom Animation" ],
-           @"primaryDemo" : @YES,
-           @"presentable" : @NO
-           };
+    @"breadcrumbs" : @[ @"Shadow", @"Custom Animation" ],
+    @"primaryDemo" : @YES,
+    @"presentable" : @NO
+  };
 }
 
 @end
