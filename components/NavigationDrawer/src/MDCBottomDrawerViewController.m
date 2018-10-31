@@ -112,6 +112,15 @@
   }
 }
 
+- (void)setScrimColor:(UIColor *)scrimColor {
+  _scrimColor = scrimColor;
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+        (MDCBottomDrawerPresentationController *)self.presentationController;
+    bottomDrawerPresentationController.scrimColor = scrimColor;
+  }
+}
+
 - (BOOL)isAccessibilityMode {
   return UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning();
 }
