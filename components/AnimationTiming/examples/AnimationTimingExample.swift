@@ -29,7 +29,7 @@ struct Constants {
    }
 }
 
-class AnimationTimingExample: UIViewController {
+class AnimationTimingExampleSwift: UIViewController {
 
    fileprivate let scrollView: UIScrollView = UIScrollView()
    fileprivate let linearView: UIView = UIView()
@@ -97,7 +97,7 @@ class AnimationTimingExample: UIViewController {
    }
 }
 
-extension AnimationTimingExample {
+extension AnimationTimingExampleSwift {
    fileprivate func setupExampleViews() {
 
       let curveLabel: (String) -> UILabel = { labelTitle in
