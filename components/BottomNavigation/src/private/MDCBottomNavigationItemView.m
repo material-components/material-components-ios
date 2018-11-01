@@ -194,8 +194,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
       [UIView animateWithDuration:kMDCBottomNavigationItemViewTransitionDuration animations:^(void) {
         self.iconImageView.center = iconImageViewCenter;
         self.badge.center =
-            [self badgeCenterFromIconFrame:CGRectStandardize(self.iconImageView.frame)
-                                     isRTL:isRTL];
+            [self badgeCenterFromIconFrame:CGRectStandardize(self.iconImageView.frame) isRTL:isRTL];
       }];
     } else {
       self.iconImageView.center = iconImageViewCenter;
