@@ -18,4 +18,4 @@
 #import "MDCCollectionViewFlowLayout.h"
 #import "MDCCollectionViewStyling.h"
 #import "MDCCollectionViewStylingDelegate.h"
-#import "MaterialCollectionCells.h"
+#import <MaterialComponents/MaterialCollectionCells.h>

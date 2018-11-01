@@ -19,10 +19,10 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialAppBar.h"
-#import "MaterialCollections.h"
-#import "MaterialColorScheme.h"
-#import "MaterialTabs.h"
+#import <MaterialComponents/MaterialAppBar.h>
+#import <MaterialComponents/MaterialCollections.h>
+#import <MaterialComponents/MaterialColorScheme.h>
+#import <MaterialComponents/MaterialTabs.h>
 
 @interface TabBarTextOnlyExample : MDCCollectionViewController
 

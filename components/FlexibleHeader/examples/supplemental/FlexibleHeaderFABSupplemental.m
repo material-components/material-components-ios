@@ -19,7 +19,7 @@
 
 #import "FlexibleHeaderFABSupplemental.h"
 
-#import "MaterialFlexibleHeader.h"
+#import <MaterialComponents/MaterialFlexibleHeader.h>
 
 @implementation FlexibleHeaderFABExample (CatalogByConvention)
 

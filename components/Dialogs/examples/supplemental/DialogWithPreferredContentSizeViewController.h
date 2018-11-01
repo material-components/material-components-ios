@@ -17,8 +17,8 @@
  instructions. It is not necessary to import this file to use Material Components for iOS.
  */
 
-#import "MaterialColorScheme.h"
-#import "MaterialTypographyScheme.h"
+#import <MaterialComponents/MaterialColorScheme.h>
+#import <MaterialComponents/MaterialTypographyScheme.h>
 
 #import <UIKit/UIKit.h>
 

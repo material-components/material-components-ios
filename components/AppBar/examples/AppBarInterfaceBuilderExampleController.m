@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialAppBar.h"
+#import <MaterialComponents/MaterialAppBar.h>
 #import "MaterialAppBar+ColorThemer.h"
 
 @interface AppBarInterfaceBuilderExample : UIViewController <UIScrollViewDelegate>

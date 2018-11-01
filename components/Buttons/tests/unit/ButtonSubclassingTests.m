@@ -14,9 +14,9 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialButtons.h"
-#import "MaterialShadowElevations.h"
-#import "MaterialTypography.h"
+#import <MaterialComponents/MaterialButtons.h>
+#import <MaterialComponents/MaterialShadowElevations.h>
+#import <MaterialComponents/MaterialTypography.h>
 #import "MDCButton+Subclassing.h"
 
 static const UIEdgeInsets ButtonTestContentEdgeInsets = {1, 2, 3, 4};

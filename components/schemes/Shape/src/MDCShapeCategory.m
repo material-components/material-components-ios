@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import "MDCShapeCategory.h"
-#import "MaterialShapeLibrary.h"
+#import <MaterialComponents/MaterialShapeLibrary.h>
 
 @implementation MDCShapeCategory
 

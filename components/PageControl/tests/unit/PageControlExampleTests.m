@@ -14,7 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialPageControl.h"
+#import <MaterialComponents/MaterialPageControl.h>
 
 @interface PageControlExampleTests : XCTestCase
 

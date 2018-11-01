@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import <XCTest/XCTest.h>
-#import "MaterialChips.h"
+#import <MaterialComponents/MaterialChips.h>
 
 @interface ChipAccessibilityTests : XCTestCase
 

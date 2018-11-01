@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialCollections.h"
+#import <MaterialComponents/MaterialCollections.h>
 
 @interface CollectionsCellAccessoryExample : MDCCollectionViewController
 @end

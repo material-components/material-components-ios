@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialButtons.h"
-#import "MaterialColorScheme.h"
+#import <MaterialComponents/MaterialButtons.h>
+#import <MaterialComponents/MaterialColorScheme.h>
 
 /**
  The Material Design color system's outlined button themer for instances of MDCButton.

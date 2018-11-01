@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import "MDCInkLayer.h"
-#import "MaterialMath.h"
+#import <MaterialComponents/MaterialMath.h>
 
 static NSString *const MDCInkLayerAnimationDelegateClassNameKey = @"MDCInkLayerAnimationDelegateClassNameKey";
 static NSString *const MDCInkLayerAnimationDelegateKey = @"MDCInkLayerAnimationDelegateKey";

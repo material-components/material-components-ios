@@ -14,10 +14,10 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialColorScheme.h"
-#import "MaterialPalettes.h"
-#import "MaterialProgressView.h"
-#import "MaterialTypographyScheme.h"
+#import <MaterialComponents/MaterialColorScheme.h>
+#import <MaterialComponents/MaterialPalettes.h>
+#import <MaterialComponents/MaterialProgressView.h>
+#import <MaterialComponents/MaterialTypographyScheme.h>
 
 static const CGFloat MDCProgressViewAnimationDuration = 1.f;
 

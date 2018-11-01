@@ -14,8 +14,8 @@
 
 #import "MDCCollectionStringResources.h"
 
-#import "MaterialCollectionsStrings.h"
-#import "MaterialCollectionsStrings_table.h"
+#import <MaterialComponents/MaterialCollectionsStrings.h>
+#import <MaterialComponents/MaterialCollectionsStrings_table.h>
 
 // The Bundle for string resources.
 static NSString *const kBundleName = @"MaterialCollections.bundle";

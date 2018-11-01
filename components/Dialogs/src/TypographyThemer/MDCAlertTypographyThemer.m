@@ -16,7 +16,7 @@
 
 #import "../../../Buttons/src/TypographyThemer/MaterialButtons+TypographyThemer.h"
 #import "../MDCAlertController+ButtonForAction.h"
-#import "MaterialTypography.h"
+#import <MaterialComponents/MaterialTypography.h>
 
 @implementation MDCAlertTypographyThemer
 

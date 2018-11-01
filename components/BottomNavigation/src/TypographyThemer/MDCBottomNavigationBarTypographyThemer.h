@@ -14,8 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialBottomNavigation.h"
-#import "MaterialTypographyScheme.h"
+#import <MaterialComponents/MaterialBottomNavigation.h>
+#import <MaterialComponents/MaterialTypographyScheme.h>
 
 /**
  The Material Design typography system's themer for instances of MDCBottomNavigationBar.

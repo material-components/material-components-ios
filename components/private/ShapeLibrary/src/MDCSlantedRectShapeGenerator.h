@@ -14,7 +14,7 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <Foundation/Foundation.h>
 
-#import "MaterialShapes.h"
+#import <MaterialComponents/MaterialShapes.h>
 
 /**
  A slanted rectangle shape generator.

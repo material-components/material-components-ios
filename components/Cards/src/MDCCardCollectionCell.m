@@ -14,9 +14,9 @@
 
 #import "MDCCardCollectionCell.h"
 
-#import "MaterialMath.h"
+#import <MaterialComponents/MaterialMath.h>
 #import "MaterialIcons+ic_check_circle.h"
-#import "MaterialShapes.h"
+#import <MaterialComponents/MaterialShapes.h>
 
 static NSString *const MDCCardCellBackgroundColorsKey = @"MDCCardCellBackgroundColorsKey";
 static NSString *const MDCCardCellBorderWidthsKey = @"MDCCardCellBorderWidthsKey";

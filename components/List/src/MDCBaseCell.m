@@ -14,8 +14,8 @@
 
 #import "MDCBaseCell.h"
 
-#import "MaterialInk.h"
-#import "MaterialShadowLayer.h"
+#import <MaterialComponents/MaterialInk.h>
+#import <MaterialComponents/MaterialShadowLayer.h>
 
 static NSString *const MDCListBaseCellInkViewKey = @"MDCListBaseCellInkViewKey";
 static NSString *const MDCListBaseCellCurrentInkColorKey = @"MDCListBaseCellCurrentInkColorKey";

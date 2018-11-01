@@ -18,11 +18,11 @@
 
 #import "TabBarViewControllerExampleSupplemental.h"
 
-#import "MaterialAppBar.h"
+#import <MaterialComponents/MaterialAppBar.h>
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
-#import "MaterialButtons.h"
-#import "MaterialPalettes.h"
+#import <MaterialComponents/MaterialButtons.h>
+#import <MaterialComponents/MaterialPalettes.h>
 
 @interface TBVCSampleView : UIView
 @end

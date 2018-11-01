@@ -15,7 +15,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
 
-#import "MaterialShapes.h"
+#import <MaterialComponents/MaterialShapes.h>
 
 /**
  A curved rectangle shape generator.

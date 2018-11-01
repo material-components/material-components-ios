@@ -19,9 +19,9 @@
 #import "PestoDetailViewController.h"
 #import "PestoRecipeCardView.h"
 
-#import "MaterialAnimationTiming.h"
-#import "MaterialAppBar.h"
-#import "MaterialFlexibleHeader.h"
+#import <MaterialComponents/MaterialAnimationTiming.h>
+#import <MaterialComponents/MaterialAppBar.h>
+#import <MaterialComponents/MaterialFlexibleHeader.h>
 
 static CGFloat kPestoDetailAnimationDelay = 0.1f;
 static CGFloat kPestoDetailAnimationDuration = 0.33f;

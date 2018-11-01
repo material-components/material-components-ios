@@ -14,8 +14,8 @@
 
 #import "MDCChipViewFontThemer.h"
 
-#import "MaterialChips.h"
-#import "MaterialThemes.h"
+#import <MaterialComponents/MaterialChips.h>
+#import <MaterialComponents/MaterialThemes.h>
 
 @implementation MDCChipViewFontThemer
 

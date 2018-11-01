@@ -23,9 +23,9 @@
 #import "PestoIcons/PestoIconTimer.h"
 #import "PestoIcons/PestoIconVeggie.h"
 
-#import "MaterialShadowElevations.h"
-#import "MaterialShadowLayer.h"
-#import "MaterialTypography.h"
+#import <MaterialComponents/MaterialShadowElevations.h>
+#import <MaterialComponents/MaterialShadowLayer.h>
+#import <MaterialComponents/MaterialTypography.h>
 
 static CGFloat kPestoDetailDescTextHeight = 140;
 static CGFloat kPestoDetailPadding = 28;

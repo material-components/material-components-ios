@@ -14,7 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialCards.h"
+#import <MaterialComponents/MaterialCards.h>
 
 @interface MDCCardCollectionCell (MDCCardTests)
 - (void)setState:(MDCCardCellState)state animated:(BOOL)animated;

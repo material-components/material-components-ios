@@ -14,8 +14,8 @@
 
 #import "CollectionViewListCell.h"
 #import <MDFInternationalization/MDFInternationalization.h>
-#import "MaterialInk.h"
-#import "MaterialTypography.h"
+#import <MaterialComponents/MaterialInk.h>
+#import <MaterialComponents/MaterialTypography.h>
 
 static const CGFloat kImagePadding = 16.f;
 static const CGFloat kImageHeight = 40.f;

@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialShadowElevations.h"
+#import <MaterialComponents/MaterialShadowElevations.h>
 
 /**
  MDCDialogPresentationController will present a modal ViewController as a dialog according to the

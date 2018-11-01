@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialList.h"
-#import "MaterialTypographyScheme.h"
+#import <MaterialComponents/MaterialList.h>
+#import <MaterialComponents/MaterialTypographyScheme.h>
 
 #import <Foundation/Foundation.h>
 

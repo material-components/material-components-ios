@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import "MDCSliderColorThemer.h"
-#import "MaterialPalettes.h"
+#import <MaterialComponents/MaterialPalettes.h>
 
 static const CGFloat kSliderThemerLightAlpha = 0.26f;
 static const CGFloat kSliderThemerDarkAlpha = 0.3f;

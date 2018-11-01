@@ -14,9 +14,9 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialCollections.h"
-#import "MaterialColorScheme.h"
-#import "MaterialTypographyScheme.h"
+#import <MaterialComponents/MaterialCollections.h>
+#import <MaterialComponents/MaterialColorScheme.h>
+#import <MaterialComponents/MaterialTypographyScheme.h>
 
 @interface FeatureHighlightTypicalUseViewController : UIViewController
 @property(nonatomic) UILabel *infoLabel;

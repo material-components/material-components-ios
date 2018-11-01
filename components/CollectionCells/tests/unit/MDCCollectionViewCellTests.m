@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import <XCTest/XCTest.h>
-#import "MaterialCollectionCells.h"
+#import <MaterialComponents/MaterialCollectionCells.h>
 
 @interface MDCCollectionViewCellTests : XCTestCase
 

@@ -14,7 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialCollectionCells.h"
+#import <MaterialComponents/MaterialCollectionCells.h>
 
 @interface CollectionViewTextCellsReuseTests : XCTestCase
 @end

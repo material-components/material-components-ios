@@ -13,7 +13,7 @@
 // limitations under the License.
 
 
-#import "MaterialFeatureHighlight.h"
+#import <MaterialComponents/MaterialFeatureHighlight.h>
 #import "MaterialFeatureHighlight+ColorThemer.h"
 
 #import <XCTest/XCTest.h>

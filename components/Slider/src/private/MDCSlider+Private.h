@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import "MDCSlider.h"
-#import "MaterialThumbTrack.h"
+#import <MaterialComponents/MaterialThumbTrack.h>
 
 @interface MDCSlider (Private)
 @property(nonatomic, nonnull, readonly) MDCThumbTrack *thumbTrack;

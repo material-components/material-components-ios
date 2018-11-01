@@ -14,8 +14,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialButtons.h"
-#import "MaterialShadowElevations.h"
+#import <MaterialComponents/MaterialButtons.h>
+#import <MaterialComponents/MaterialShadowElevations.h>
 
 static UIImage *fakeImage(void) {
   CGSize imageSize = CGSizeMake(24, 24);

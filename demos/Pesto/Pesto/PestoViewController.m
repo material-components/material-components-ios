@@ -19,8 +19,8 @@
 #import "PestoDetailViewController.h"
 #import "PestoSettingsViewController.h"
 
-#import "MaterialAnimationTiming.h"
-#import "MaterialAppBar.h"
+#import <MaterialComponents/MaterialAnimationTiming.h>
+#import <MaterialComponents/MaterialAppBar.h>
 
 static CGFloat kPestoAnimationDuration = 0.33f;
 static CGFloat kPestoInset = 5.f;

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import <XCTest/XCTest.h>
-#import "MaterialActivityIndicator.h"
+#import <MaterialComponents/MaterialActivityIndicator.h>
 
 static CGFloat randomNumber() {
   return arc4random_uniform(64) + 8;

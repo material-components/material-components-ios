@@ -21,22 +21,22 @@
 
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
-#import "MaterialAppBar.h"
+#import <MaterialComponents/MaterialAppBar.h>
 #import "MaterialBottomSheet+ShapeThemer.h"
-#import "MaterialBottomSheet.h"
+#import <MaterialComponents/MaterialBottomSheet.h>
 #import "MaterialButtons+ButtonThemer.h"
 #import "MaterialButtons+ShapeThemer.h"
-#import "MaterialButtons.h"
+#import <MaterialComponents/MaterialButtons.h>
 #import "MaterialCards+CardThemer.h"
 #import "MaterialCards+ShapeThemer.h"
-#import "MaterialCards.h"
+#import <MaterialComponents/MaterialCards.h>
 #import "MaterialChips+ChipThemer.h"
 #import "MaterialChips+ShapeThemer.h"
-#import "MaterialChips.h"
-#import "MaterialColorScheme.h"
-#import "MaterialShapeLibrary.h"
-#import "MaterialShapeScheme.h"
-#import "MaterialTypographyScheme.h"
+#import <MaterialComponents/MaterialChips.h>
+#import <MaterialComponents/MaterialColorScheme.h>
+#import <MaterialComponents/MaterialShapeLibrary.h>
+#import <MaterialComponents/MaterialShapeScheme.h>
+#import <MaterialComponents/MaterialTypographyScheme.h>
 
 @interface MDCShapeSchemeExampleViewController ()
 @property(strong, nonatomic) MDCSemanticColorScheme *colorScheme;

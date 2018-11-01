@@ -16,7 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialCollections.h"
+#import <MaterialComponents/MaterialCollections.h>
 
 @interface PestoSettingsViewController : MDCCollectionViewController
 @end

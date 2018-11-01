@@ -14,7 +14,7 @@
 
 #import "MDCActionSheetItemTableViewCell.h"
 
-#import "MaterialTypography.h"
+#import <MaterialComponents/MaterialTypography.h>
 
 static const CGFloat kLabelAlpha = 0.87f;
 static const CGFloat kImageLeadingPadding = 16.f;

@@ -18,9 +18,9 @@
  */
 
 #import "ButtonsTypicalUseSupplemental.h"
-#import "MaterialButtons.h"
-#import "MaterialMath.h"
-#import "MaterialTypography.h"
+#import <MaterialComponents/MaterialButtons.h>
+#import <MaterialComponents/MaterialMath.h>
+#import <MaterialComponents/MaterialTypography.h>
 
 static const CGFloat kViewOffsetToCenter = 20.0f;
 

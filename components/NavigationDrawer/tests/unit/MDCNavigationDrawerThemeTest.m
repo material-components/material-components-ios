@@ -16,7 +16,7 @@
 
 #import "MDCNavigationDrawerFakes.h"
 #import "MaterialNavigationDrawer+ColorThemer.h"
-#import "MaterialNavigationDrawer.h"
+#import <MaterialComponents/MaterialNavigationDrawer.h>
 
 @interface MDCNavigationDrawerThemeTest : XCTestCase
 @property(nonatomic, strong) MDCBottomDrawerViewController *bottomDrawer;

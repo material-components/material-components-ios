@@ -17,7 +17,7 @@
 #import "../../src/private/MDCBottomNavigationItemBadge.h"
 #import "../../src/private/MDCBottomNavigationItemView.h"
 
-#import "MaterialInk.h"
+#import <MaterialComponents/MaterialInk.h>
 
 static UIImage *fakeImage(void) {
   CGSize imageSize = CGSizeMake(24, 24);

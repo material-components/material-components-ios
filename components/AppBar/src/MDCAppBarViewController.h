@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialFlexibleHeader.h"
-#import "MaterialHeaderStackView.h"
-#import "MaterialNavigationBar.h"
+#import <MaterialComponents/MaterialFlexibleHeader.h>
+#import <MaterialComponents/MaterialHeaderStackView.h>
+#import <MaterialComponents/MaterialNavigationBar.h>
 
 @class MDCAppBarViewController;
 

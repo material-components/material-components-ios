@@ -14,7 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialShapes.h"
+#import <MaterialComponents/MaterialShapes.h>
 
 @interface ShapesNoopTest : XCTestCase
 

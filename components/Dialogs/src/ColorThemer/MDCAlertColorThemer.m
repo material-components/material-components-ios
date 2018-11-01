@@ -16,7 +16,7 @@
 
 #import "../../../Buttons/src/ColorThemer/MaterialButtons+ColorThemer.h"
 #import "../MDCAlertController+ButtonForAction.h"
-#import "MaterialButtons.h"
+#import <MaterialComponents/MaterialButtons.h>
 
 @implementation MDCAlertColorThemer
 

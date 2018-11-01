@@ -17,8 +17,8 @@
 #include <tgmath.h>
 
 #import <MDFInternationalization/MDFInternationalization.h>
-#import "MaterialMath.h"
-#import "MaterialPalettes.h"
+#import <MaterialComponents/MaterialMath.h>
+#import <MaterialComponents/MaterialPalettes.h>
 
 static inline UIColor *MDCProgressViewDefaultTintColor(void) {
   return MDCPalette.bluePalette.tint500;

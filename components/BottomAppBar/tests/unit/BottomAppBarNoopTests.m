@@ -14,7 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialBottomAppBar.h"
+#import <MaterialComponents/MaterialBottomAppBar.h>
 
 @interface BottomAppBarNoopTests : XCTestCase
 

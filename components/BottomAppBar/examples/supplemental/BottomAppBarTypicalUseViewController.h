@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialBottomAppBar.h"
+#import <MaterialComponents/MaterialBottomAppBar.h>
 
 /**
  Shows the bottom app bar in the context of a table view.

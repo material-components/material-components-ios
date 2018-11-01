@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import "MaterialFlexibleHeader.h"
+#import <MaterialComponents/MaterialFlexibleHeader.h>
 
 @interface PestoViewController : MDCFlexibleHeaderContainerViewController
 

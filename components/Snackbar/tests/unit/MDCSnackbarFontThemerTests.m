@@ -14,8 +14,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialSnackbar.h"
-#import "MaterialThemes.h"
+#import <MaterialComponents/MaterialSnackbar.h>
+#import <MaterialComponents/MaterialThemes.h>
 #import "MaterialSnackbar+FontThemer.h"
 
 @interface MDCSnackbarFontThemerTests : XCTestCase

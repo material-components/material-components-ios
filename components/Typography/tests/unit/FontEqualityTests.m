@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import <XCTest/XCTest.h>
-#import "MaterialTypography.h"
+#import <MaterialComponents/MaterialTypography.h>
 
 @interface FontEqualityTests : XCTestCase
 

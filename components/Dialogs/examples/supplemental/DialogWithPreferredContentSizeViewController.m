@@ -19,7 +19,7 @@
 
 #import "DialogWithPreferredContentSizeViewController.h"
 
-#import "MaterialButtons.h"
+#import <MaterialComponents/MaterialButtons.h>
 #import "MaterialButtons+ButtonThemer.h"
 
 @interface DialogWithPreferredContentSizeViewController()

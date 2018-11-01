@@ -13,12 +13,12 @@
 // limitations under the License.
 
 #import "supplemental/SliderCollectionSupplemental.h"
-#import "MaterialCollections.h"
-#import "MaterialColorScheme.h"
-#import "MaterialPalettes.h"
-#import "MaterialSlider.h"
+#import <MaterialComponents/MaterialCollections.h>
+#import <MaterialComponents/MaterialColorScheme.h>
+#import <MaterialComponents/MaterialPalettes.h>
+#import <MaterialComponents/MaterialSlider.h>
 #import "MaterialSlider+ColorThemer.h"
-#import "MaterialTypographyScheme.h"
+#import <MaterialComponents/MaterialTypographyScheme.h>
 
 static NSString *const kReusableIdentifierItem = @"sliderItemCellIdentifier";
 static CGFloat const kSliderHorizontalMargin = 16.f;

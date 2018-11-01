@@ -16,14 +16,14 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
-#import "MaterialCollectionLayoutAttributes.h"
+#import <MaterialComponents/MaterialCollectionLayoutAttributes.h>
 #import "MaterialIcons+ic_check.h"
 #import "MaterialIcons+ic_check_circle.h"
 #import "MaterialIcons+ic_chevron_right.h"
 #import "MaterialIcons+ic_info.h"
 #import "MaterialIcons+ic_radio_button_unchecked.h"
 #import "MaterialIcons+ic_reorder.h"
-#import "MaterialPalettes.h"
+#import <MaterialComponents/MaterialPalettes.h>
 
 static CGFloat kEditingControlAppearanceOffset = 16.0f;
 

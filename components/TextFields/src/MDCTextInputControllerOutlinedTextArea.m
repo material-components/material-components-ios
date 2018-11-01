@@ -22,7 +22,7 @@
 #import "MDCTextInputUnderlineView.h"
 #import "private/MDCTextInputControllerBase+Subclassing.h"
 
-#import "MaterialMath.h"
+#import <MaterialComponents/MaterialMath.h>
 
 /**
  Note: Right now this is a subclass of MDCTextInputControllerBase since they share a vast

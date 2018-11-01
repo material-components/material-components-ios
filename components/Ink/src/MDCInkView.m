@@ -14,7 +14,7 @@
 
 #import "MDCInkView.h"
 
-#import "MaterialMath.h"
+#import <MaterialComponents/MaterialMath.h>
 #import "private/MDCInkLayer.h"
 #import "private/MDCLegacyInkLayer.h"
 

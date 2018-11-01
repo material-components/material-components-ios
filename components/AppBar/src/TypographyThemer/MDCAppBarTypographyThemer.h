@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialAppBar.h"
-#import "MaterialTypographyScheme.h"
+#import <MaterialComponents/MaterialAppBar.h>
+#import <MaterialComponents/MaterialTypographyScheme.h>
 
 /**
  The Material Design typography system's themer for instances of MDCAppBar.

@@ -14,7 +14,7 @@
 
 #import "MDCSheetContainerView.h"
 
-#import "MaterialKeyboardWatcher.h"
+#import <MaterialComponents/MaterialKeyboardWatcher.h>
 #import "MDCDraggableView.h"
 #import "MDCSheetBehavior.h"
 

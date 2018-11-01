@@ -14,7 +14,7 @@
 
 #import "MDCThumbTrack.h"
 #import "MDCNumericValueLabel.h"
-#import "MaterialInk.h"
+#import <MaterialComponents/MaterialInk.h>
 
 // Credit to the Beacon Tools iOS team for the idea for this implementations
 @interface MDCDiscreteDotView : UIView

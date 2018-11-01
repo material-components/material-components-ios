@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #import "MaterialDialogs+DialogThemer.h"
-#import "MaterialButtons.h"
-#import "MaterialDialogs.h"
+#import <MaterialComponents/MaterialButtons.h>
+#import <MaterialComponents/MaterialDialogs.h>
 #import "supplemental/DialogsAlertViewControllerSupplemental.h"
 
 @implementation DialogsAlertViewController

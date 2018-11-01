@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialButtons.h"
+#import <MaterialComponents/MaterialButtons.h>
 
 /** The elevation of the floating action button. */
 typedef NS_ENUM(NSInteger, MDCBottomAppBarFloatingButtonElevation) {

@@ -14,7 +14,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MaterialButtons.h"
+#import <MaterialComponents/MaterialButtons.h>
 
 /**
  A Mutator that will change an instance of MDCButton to have a high enough contrast text between

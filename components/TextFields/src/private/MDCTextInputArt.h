@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialMath.h"
+#import <MaterialComponents/MaterialMath.h>
 
 static const CGFloat MDCTextInputClearButtonImageBuiltInPadding = 2.0f;
 

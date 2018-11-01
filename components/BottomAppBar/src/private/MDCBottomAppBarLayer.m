@@ -14,7 +14,7 @@
 
 #import "MDCBottomAppBarLayer.h"
 
-#import "MaterialMath.h"
+#import <MaterialComponents/MaterialMath.h>
 #import "MDCBottomAppBarAttributes.h"
 
 @implementation MDCBottomAppBarLayer

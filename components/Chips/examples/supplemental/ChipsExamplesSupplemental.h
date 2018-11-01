@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
-#import "MaterialColorScheme.h"
-#import "MaterialShapeScheme.h"
-#import "MaterialTypographyScheme.h"
+#import <MaterialComponents/MaterialColorScheme.h>
+#import <MaterialComponents/MaterialShapeScheme.h>
+#import <MaterialComponents/MaterialTypographyScheme.h>
 
 @class MDCChipView;
 @class ChipModel;

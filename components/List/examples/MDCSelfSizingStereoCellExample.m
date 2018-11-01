@@ -17,7 +17,7 @@
 #import <MDFInternationalization/MDFInternationalization.h>
 
 #import "MaterialList+ListThemer.h"
-#import "MaterialList.h"
+#import <MaterialComponents/MaterialList.h>
 
 static CGFloat const kArbitraryCellHeight = 75.f;
 static NSString *const kSelfSizingStereoCellIdentifier = @"kSelfSizingStereoCellIdentifier";

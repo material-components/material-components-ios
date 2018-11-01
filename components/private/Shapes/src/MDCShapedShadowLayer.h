@@ -14,7 +14,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-#import "MaterialShadowLayer.h"
+#import <MaterialComponents/MaterialShadowLayer.h>
 
 @protocol MDCShapeGenerating;
 

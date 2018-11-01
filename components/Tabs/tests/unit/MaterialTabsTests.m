@@ -14,7 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialTabs.h"
+#import <MaterialComponents/MaterialTabs.h>
 
 @interface MaterialTabsTests : XCTestCase
 @end

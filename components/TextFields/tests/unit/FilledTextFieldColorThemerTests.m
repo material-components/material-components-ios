@@ -15,8 +15,8 @@
 #import <XCTest/XCTest.h>
 
 #import "MDCTextInputBorderView.h"
-#import "MaterialColorScheme.h"
-#import "MaterialTextFields.h"
+#import <MaterialComponents/MaterialColorScheme.h>
+#import <MaterialComponents/MaterialTextFields.h>
 #import "MaterialTextFields+ColorThemer.h"
 
 @interface FilledTextFieldColorThemerTests : XCTestCase

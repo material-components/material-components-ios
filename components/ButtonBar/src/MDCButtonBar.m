@@ -16,8 +16,8 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
-#import "MaterialApplication.h"
-#import "MaterialButtons.h"
+#import <MaterialComponents/MaterialApplication.h>
+#import <MaterialComponents/MaterialButtons.h>
 #import "private/MDCAppBarButtonBarBuilder.h"
 
 static const CGFloat kButtonBarMaxHeight = 56;

@@ -14,8 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialOverlay.h"
-#import "MaterialSnackbar.h"
+#import <MaterialComponents/MaterialOverlay.h>
+#import <MaterialComponents/MaterialSnackbar.h>
 #import "supplemental/SnackbarExampleSupplemental.h"
 
 static const CGFloat kFABBottomOffset = 24.0f;

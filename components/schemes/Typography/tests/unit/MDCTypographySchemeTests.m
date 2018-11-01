@@ -15,7 +15,7 @@
 #import <Foundation/Foundation.h>
 #import <XCTest/XCTest.h>
 
-#import "MaterialTypographyScheme.h"
+#import <MaterialComponents/MaterialTypographyScheme.h>
 
 @interface MDCTypographySchemeTests : XCTestCase
 @end

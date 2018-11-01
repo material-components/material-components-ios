@@ -14,11 +14,11 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialButtons.h"
-#import "MaterialShadowElevations.h"
-#import "MaterialShapes.h"
-#import "MaterialShadowLayer.h"
-#import "MaterialTypography.h"
+#import <MaterialComponents/MaterialButtons.h>
+#import <MaterialComponents/MaterialShadowElevations.h>
+#import <MaterialComponents/MaterialShapes.h>
+#import <MaterialComponents/MaterialShadowLayer.h>
+#import <MaterialComponents/MaterialTypography.h>
 
 static const CGFloat kEpsilonAccuracy = 0.001f;
 // A value greater than the largest value created by combining normal values of UIControlState.

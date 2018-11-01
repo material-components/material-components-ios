@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import "CardsCollectionExample.h"
-#import "MaterialInk.h"
+#import <MaterialComponents/MaterialInk.h>
 #import "UICollectionViewController+MDCCardReordering.h"
 
 @interface CardsCollectionExample ()

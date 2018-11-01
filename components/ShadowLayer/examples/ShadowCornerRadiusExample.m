@@ -14,8 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialShadowLayer.h"
-#import "MaterialSlider.h"
+#import <MaterialComponents/MaterialShadowLayer.h>
+#import <MaterialComponents/MaterialSlider.h>
 #import "ShadowRadiusLabel.h"
 
 static const CGFloat kShadowElevationsDefault = 8.f;

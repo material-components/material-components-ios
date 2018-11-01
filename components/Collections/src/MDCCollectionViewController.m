@@ -15,8 +15,8 @@
 #import "MDCCollectionViewController.h"
 
 #import "MDCCollectionViewFlowLayout.h"
-#import "MaterialCollectionCells.h"
-#import "MaterialInk.h"
+#import <MaterialComponents/MaterialCollectionCells.h>
+#import <MaterialComponents/MaterialInk.h>
 #import "private/MDCCollectionInfoBarView.h"
 #import "private/MDCCollectionStringResources.h"
 #import "private/MDCCollectionViewEditor.h"

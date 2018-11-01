@@ -18,8 +18,8 @@
 #import "MDCSnackbarMessage.h"
 #import "MDCSnackbarMessageView.h"
 
-#import "MaterialAnimationTiming.h"
-#import "MaterialTypography.h"
+#import <MaterialComponents/MaterialAnimationTiming.h>
+#import <MaterialComponents/MaterialTypography.h>
 #import "private/MaterialSnackbarStrings.h"
 #import "private/MaterialSnackbarStrings_table.h"
 #import "private/MDCSnackbarMessageViewInternal.h"

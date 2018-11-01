@@ -15,9 +15,9 @@
 #import "MDCFeatureHighlightViewController.h"
 
 #import <MDFTextAccessibility/MDFTextAccessibility.h>
-#import "MaterialFeatureHighlightStrings.h"
-#import "MaterialFeatureHighlightStrings_table.h"
-#import "MaterialTypography.h"
+#import <MaterialComponents/MaterialFeatureHighlightStrings.h>
+#import <MaterialComponents/MaterialFeatureHighlightStrings_table.h>
+#import <MaterialComponents/MaterialTypography.h>
 #import "private/MDCFeatureHighlightAnimationController.h"
 #import "private/MDCFeatureHighlightView+Private.h"
 

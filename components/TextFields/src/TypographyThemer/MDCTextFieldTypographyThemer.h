@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialTextFields.h"
-#import "MaterialTypographyScheme.h"
+#import <MaterialComponents/MaterialTextFields.h>
+#import <MaterialComponents/MaterialTypographyScheme.h>
 
 /**
  The Material Design typography system's text field themer.

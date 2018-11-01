@@ -14,8 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialFeatureHighlight.h"
-#import "MaterialThemes.h"
+#import <MaterialComponents/MaterialFeatureHighlight.h>
+#import <MaterialComponents/MaterialThemes.h>
 
 #pragma mark - Soon to be deprecated
 

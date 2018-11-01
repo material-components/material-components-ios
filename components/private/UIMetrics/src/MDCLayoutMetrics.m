@@ -14,7 +14,7 @@
 
 #import "MDCLayoutMetrics.h"
 
-#import "MaterialApplication.h"
+#import <MaterialComponents/MaterialApplication.h>
 
 static const CGFloat kFixedStatusBarHeightOnPreiPhoneXDevices = 20;
 

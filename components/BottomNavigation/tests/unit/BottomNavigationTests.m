@@ -14,7 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialBottomNavigation.h"
+#import <MaterialComponents/MaterialBottomNavigation.h>
 #import "../../src/private/MDCBottomNavigationItemView.h"
 
 @interface MDCBottomNavigationBar (Testing)

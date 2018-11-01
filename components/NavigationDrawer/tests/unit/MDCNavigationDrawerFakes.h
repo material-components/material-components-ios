@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialNavigationDrawer.h"
+#import <MaterialComponents/MaterialNavigationDrawer.h>
 
 @interface MDCNavigationDrawerFakeHeaderViewController : UIViewController <MDCBottomDrawerHeader>
 @end

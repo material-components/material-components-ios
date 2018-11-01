@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import "MaterialDialogs+TypographyThemer.h"
-#import "MaterialDialogs.h"
+#import <MaterialComponents/MaterialDialogs.h>
 
 #import "MDCAlertControllerView+Private.h"
 

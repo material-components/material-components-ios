@@ -19,7 +19,7 @@
 
 #import "FlexibleHeaderUINavigationBarSupplemental.h"
 
-#import "MaterialFlexibleHeader.h"
+#import <MaterialComponents/MaterialFlexibleHeader.h>
 
 @implementation FlexibleHeaderUINavigationBarExample (CatalogByConvention)
 

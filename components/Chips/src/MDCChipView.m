@@ -16,12 +16,12 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
-#import "MaterialInk.h"
-#import "MaterialMath.h"
-#import "MaterialShadowLayer.h"
-#import "MaterialShadowElevations.h"
-#import "MaterialShapes.h"
-#import "MaterialTypography.h"
+#import <MaterialComponents/MaterialInk.h>
+#import <MaterialComponents/MaterialMath.h>
+#import <MaterialComponents/MaterialShadowLayer.h>
+#import <MaterialComponents/MaterialShadowElevations.h>
+#import <MaterialComponents/MaterialShapes.h>
+#import <MaterialComponents/MaterialTypography.h>
 
 static const MDCFontTextStyle kTitleTextStyle = MDCFontTextStyleBody2;
 

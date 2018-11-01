@@ -15,7 +15,7 @@
 #import "MaterialList+ColorThemer.h"
 #import "MaterialList+ListThemer.h"
 #import "MaterialList+TypographyThemer.h"
-#import "MaterialList.h"
+#import <MaterialComponents/MaterialList.h>
 
 #import <XCTest/XCTest.h>
 

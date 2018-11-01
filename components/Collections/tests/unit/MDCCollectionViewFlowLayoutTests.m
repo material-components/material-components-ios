@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import <XCTest/XCTest.h>
-#import "MaterialCollections.h"
+#import <MaterialComponents/MaterialCollections.h>
 
 @interface FakeUICollectionViewUpdateItem : UICollectionViewUpdateItem {
   NSIndexPath *_indexPathBeforeUpdate;

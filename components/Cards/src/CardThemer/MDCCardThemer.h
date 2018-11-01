@@ -14,7 +14,7 @@
 
 #import "MDCCardScheme.h"
 
-#import "MaterialCards.h"
+#import <MaterialComponents/MaterialCards.h>
 
 #import <Foundation/Foundation.h>
 

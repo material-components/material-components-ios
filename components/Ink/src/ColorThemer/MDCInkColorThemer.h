@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialInk.h"
-#import "MaterialThemes.h"
+#import <MaterialComponents/MaterialInk.h>
+#import <MaterialComponents/MaterialThemes.h>
 
 #import <Foundation/Foundation.h>
 

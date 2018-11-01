@@ -14,10 +14,10 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialChips.h"
-#import "MaterialShapeLibrary.h"
-#import "MaterialShapeScheme.h"
-#import "MaterialShapes.h"
+#import <MaterialComponents/MaterialChips.h>
+#import <MaterialComponents/MaterialShapeLibrary.h>
+#import <MaterialComponents/MaterialShapeScheme.h>
+#import <MaterialComponents/MaterialShapes.h>
 
 /**
  The Material Design shape system's themer for instances of MDCChipView.

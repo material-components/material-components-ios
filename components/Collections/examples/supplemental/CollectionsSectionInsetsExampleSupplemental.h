@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialCollections.h"
+#import <MaterialComponents/MaterialCollections.h>
 
 static const NSInteger kSectionCount = 5;
 static const NSInteger kSectionItemCount = 3;

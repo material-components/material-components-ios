@@ -23,8 +23,8 @@
 #import "MDCTextInputUnderlineView.h"
 #import "private/MDCTextInputCommonFundament.h"
 
-#import "MaterialMath.h"
-#import "MaterialTypography.h"
+#import <MaterialComponents/MaterialMath.h>
+#import <MaterialComponents/MaterialTypography.h>
 
 @interface MDCMultilineTextField () {
   UIColor *_cursorColor;

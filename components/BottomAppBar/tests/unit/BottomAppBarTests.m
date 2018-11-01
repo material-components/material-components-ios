@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialBottomAppBar.h"
+#import <MaterialComponents/MaterialBottomAppBar.h>
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialNavigationBar.h"
+#import <MaterialComponents/MaterialNavigationBar.h>
 
 @interface MDCBottomAppBarView (Testing)
 @property(nonatomic, strong) MDCNavigationBar *navBar;

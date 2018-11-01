@@ -15,8 +15,8 @@
 #import "MDCCollectionViewTextCell.h"
 
 #import <MDFInternationalization/MDFInternationalization.h>
-#import "MaterialMath.h"
-#import "MaterialTypography.h"
+#import <MaterialComponents/MaterialMath.h>
+#import <MaterialComponents/MaterialTypography.h>
 
 #include <tgmath.h>
 

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialTabs.h"
+#import <MaterialComponents/MaterialTabs.h>
 #import "MaterialTabs+TypographyThemer.h"
 
 #import <XCTest/XCTest.h>

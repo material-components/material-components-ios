@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import <XCTest/XCTest.h>
-#import "MaterialShadowLayer.h"
+#import <MaterialComponents/MaterialShadowLayer.h>
 
 @interface ShadowLayerTests : XCTestCase
 @end

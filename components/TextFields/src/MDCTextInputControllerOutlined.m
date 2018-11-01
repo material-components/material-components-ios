@@ -24,7 +24,7 @@
 #import "MDCTextInputUnderlineView.h"
 #import "private/MDCTextInputControllerBase+Subclassing.h"
 
-#import "MaterialMath.h"
+#import <MaterialComponents/MaterialMath.h>
 
 #pragma mark - Class Properties
 

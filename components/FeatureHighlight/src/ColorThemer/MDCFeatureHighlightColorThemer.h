@@ -14,8 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialFeatureHighlight.h"
-#import "MaterialThemes.h"
+#import <MaterialComponents/MaterialFeatureHighlight.h>
+#import <MaterialComponents/MaterialThemes.h>
 
 /**
  The Material Design color system's themer for instances of MDCFeatureHighlightViewController.

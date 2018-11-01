@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import "MaterialList+ColorThemer.h"
-#import "MaterialList.h"
+#import <MaterialComponents/MaterialList.h>
 
 #import <XCTest/XCTest.h>
 

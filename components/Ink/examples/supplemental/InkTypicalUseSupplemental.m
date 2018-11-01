@@ -19,8 +19,8 @@
 
 #import "InkTypicalUseSupplemental.h"
 
-#import "MaterialPalettes.h"
-#import "MaterialTypography.h"
+#import <MaterialComponents/MaterialPalettes.h>
+#import <MaterialComponents/MaterialTypography.h>
 
 // A set of UILabels in an variety of shapes to tap on.
 

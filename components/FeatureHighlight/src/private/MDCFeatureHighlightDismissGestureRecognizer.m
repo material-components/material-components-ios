@@ -17,7 +17,7 @@
 #import "MDCFeatureHighlightDismissGestureRecognizer.h"
 #import "MDCFeatureHighlightView+Private.h"
 
-#import "MaterialMath.h"
+#import <MaterialComponents/MaterialMath.h>
 
 @interface MDCFeatureHighlightDismissGestureRecognizer ()
 

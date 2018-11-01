@@ -14,7 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialProgressView.h"
+#import <MaterialComponents/MaterialProgressView.h>
 
 @interface ProgressViewTests : XCTestCase
 

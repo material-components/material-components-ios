@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
-#import "MaterialInk.h"
-#import "MaterialShadowLayer.h"
+#import <MaterialComponents/MaterialInk.h>
+#import <MaterialComponents/MaterialShadowLayer.h>
 
 @protocol MDCShapeGenerating;
 

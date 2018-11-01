@@ -14,7 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialKeyboardWatcher.h"
+#import <MaterialComponents/MaterialKeyboardWatcher.h>
 
 @interface KeyboardWatcherNoopTest : XCTestCase
 

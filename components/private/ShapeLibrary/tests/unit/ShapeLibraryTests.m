@@ -22,7 +22,7 @@
 #import "MDCRoundedCornerTreatment.h"
 #import "MDCSlantedRectShapeGenerator.h"
 #import "MDCTriangleEdgeTreatment.h"
-#import "MaterialMath.h"
+#import <MaterialComponents/MaterialMath.h>
 
 @interface ShapeLibraryTests : XCTestCase
 void GetCGPathAddLineToPointValues(void *info, const CGPathElement *element);

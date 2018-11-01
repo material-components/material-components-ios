@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialInk.h"
+#import <MaterialComponents/MaterialInk.h>
 
 @protocol MDCTabBarIndicatorTemplate;
 

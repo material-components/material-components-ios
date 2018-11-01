@@ -14,7 +14,7 @@
 
 #import "BottomAppBarTypicalUseSupplemental.h"
 
-#import "MaterialAppBar.h"
+#import <MaterialComponents/MaterialAppBar.h>
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
 

@@ -18,7 +18,7 @@
 #import "MDCTextInputUnderlineView.h"
 #import "private/MDCTextInputArt.h"
 
-#import "MaterialTypography.h"
+#import <MaterialComponents/MaterialTypography.h>
 
 #pragma mark - Constants
 

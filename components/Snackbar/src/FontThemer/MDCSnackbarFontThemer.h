@@ -14,8 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialSnackbar.h"
-#import "MaterialThemes.h"
+#import <MaterialComponents/MaterialSnackbar.h>
+#import <MaterialComponents/MaterialThemes.h>
 
 #pragma mark - Soon to be deprecated
 

@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialFlexibleHeader.h"
+#import <MaterialComponents/MaterialFlexibleHeader.h>
 #import "supplemental/FlexibleHeaderConfiguratorSupplemental.h"
 
 #import "MaterialFlexibleHeader+CanAlwaysExpandToMaximumHeight.h"

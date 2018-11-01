@@ -16,8 +16,8 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
-#import "MaterialMath.h"
-#import "MaterialTextFields.h"
+#import <MaterialComponents/MaterialMath.h>
+#import <MaterialComponents/MaterialTextFields.h>
 
 static NSString *const MDCChipFieldTextFieldKey = @"textField";
 static NSString *const MDCChipFieldDelegateKey = @"delegate";

@@ -14,7 +14,7 @@
 
 #import "BottomSheetPresenterViewController.h"
 
-#import "MaterialButtons.h"
+#import <MaterialComponents/MaterialButtons.h>
 
 @implementation BottomSheetPresenterViewController {
   MDCButton *_button;

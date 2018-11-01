@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import "MaterialIcons+ic_info.h"
-#import "MaterialTypographyScheme.h"
+#import <MaterialComponents/MaterialTypographyScheme.h>
 #import "supplemental/CollectionListCellExampleTypicalUse.h"
 #import "supplemental/CollectionViewListCell.h"
 

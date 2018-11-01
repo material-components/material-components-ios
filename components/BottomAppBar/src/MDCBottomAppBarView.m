@@ -18,7 +18,7 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
-#import "MaterialNavigationBar.h"
+#import <MaterialComponents/MaterialNavigationBar.h>
 #import "private/MDCBottomAppBarAttributes.h"
 #import "private/MDCBottomAppBarLayer.h"
 

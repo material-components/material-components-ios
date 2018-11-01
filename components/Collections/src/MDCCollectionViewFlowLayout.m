@@ -17,7 +17,7 @@
 #import "MDCCollectionViewController.h"
 #import "MDCCollectionViewEditingDelegate.h"
 #import "MDCCollectionViewStyling.h"
-#import "MaterialCollectionLayoutAttributes.h"
+#import <MaterialComponents/MaterialCollectionLayoutAttributes.h>
 #import "private/MDCCollectionGridBackgroundView.h"
 #import "private/MDCCollectionInfoBarView.h"
 #import "private/MDCCollectionViewEditor.h"

@@ -19,8 +19,8 @@
 
 #import "MDCNumericValueLabel.h"
 #import "MDCThumbView.h"
-#import "MaterialInk.h"
-#import "MaterialMath.h"
+#import <MaterialComponents/MaterialInk.h>
+#import <MaterialComponents/MaterialMath.h>
 
 #pragma mark - ThumbTrack constants
 

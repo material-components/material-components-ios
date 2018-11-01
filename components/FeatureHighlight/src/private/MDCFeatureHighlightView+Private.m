@@ -18,10 +18,10 @@
 #import "MDCFeatureHighlightLayer.h"
 #import <MDFTextAccessibility/MDFTextAccessibility.h>
 
-#import "MaterialFeatureHighlightStrings.h"
-#import "MaterialFeatureHighlightStrings_table.h"
-#import "MaterialMath.h"
-#import "MaterialTypography.h"
+#import <MaterialComponents/MaterialFeatureHighlightStrings.h>
+#import <MaterialComponents/MaterialFeatureHighlightStrings_table.h>
+#import <MaterialComponents/MaterialMath.h>
+#import <MaterialComponents/MaterialTypography.h>
 
 static inline CGFloat CGPointDistanceToPoint(CGPoint a, CGPoint b) {
   return MDCHypot(a.x - b.x, a.y - b.y);

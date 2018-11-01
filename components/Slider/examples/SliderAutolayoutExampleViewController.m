@@ -14,7 +14,7 @@
 
 #import "SliderAutolayoutExampleViewController.h"
 
-#import "MaterialSlider.h"
+#import <MaterialComponents/MaterialSlider.h>
 #import "MaterialSlider+ColorThemer.h"
 
 @interface SliderAutolayoutExampleViewController ()

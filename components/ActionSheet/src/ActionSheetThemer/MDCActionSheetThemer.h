@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import "MDCActionSheetScheme.h"
-#import "MaterialActionSheet.h"
+#import <MaterialComponents/MaterialActionSheet.h>
 
 #import <Foundation/Foundation.h>
 

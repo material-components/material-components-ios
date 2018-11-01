@@ -19,7 +19,7 @@
 
 #import "FlexibleHeaderPageControlSupplemental.h"
 
-#import "MaterialFlexibleHeader.h"
+#import <MaterialComponents/MaterialFlexibleHeader.h>
 
 @implementation FlexibleHeaderPageControlExample (CatalogByConvention)
 

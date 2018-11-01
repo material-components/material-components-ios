@@ -19,8 +19,8 @@
 #import "MDCAlertControllerView.h"
 #import "MDCDialogPresentationController.h"
 #import "MDCDialogTransitionController.h"
-#import "MaterialButtons.h"
-#import "MaterialTypography.h"
+#import <MaterialComponents/MaterialButtons.h>
+#import <MaterialComponents/MaterialTypography.h>
 #import "UIViewController+MaterialDialogs.h"
 #import "private/MDCAlertActionManager.h"
 #import "private/MDCAlertControllerView+Private.h"

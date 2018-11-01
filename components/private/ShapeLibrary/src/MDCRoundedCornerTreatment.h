@@ -13,7 +13,7 @@
 // limitations under the License.
 #import <CoreGraphics/CoreGraphics.h>
 
-#import "MaterialShapes.h"
+#import <MaterialComponents/MaterialShapes.h>
 
 /**
  A rounded corner treatment.

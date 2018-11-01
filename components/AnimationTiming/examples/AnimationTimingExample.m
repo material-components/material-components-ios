@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialAnimationTiming.h"
+#import <MaterialComponents/MaterialAnimationTiming.h>
 #import "supplemental/AnimationTimingExampleSupplemental.h"
 
 const NSTimeInterval kAnimationTimeInterval = 1.0f;

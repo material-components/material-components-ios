@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import "MDCKeyboardWatcher.h"
-#import "MaterialApplication.h"
+#import <MaterialComponents/MaterialApplication.h>
 
 NSString *const MDCKeyboardWatcherKeyboardWillShowNotification =
     @"MDCKeyboardWatcherKeyboardWillShowNotification";

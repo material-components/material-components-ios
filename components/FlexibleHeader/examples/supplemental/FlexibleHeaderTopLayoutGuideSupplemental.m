@@ -19,8 +19,8 @@
 
 #import "FlexibleHeaderTopLayoutGuideSupplemental.h"
 
-#import "MaterialFlexibleHeader.h"
-#import "MaterialPalettes.h"
+#import <MaterialComponents/MaterialFlexibleHeader.h>
+#import <MaterialComponents/MaterialPalettes.h>
 
 @implementation FlexibleHeaderTopLayoutGuideExample (CatalogByConvention)
 

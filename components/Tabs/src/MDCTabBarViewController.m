@@ -14,8 +14,8 @@
 
 #import "MDCTabBarViewController.h"
 
-#import "MaterialShadowElevations.h"
-#import "MaterialShadowLayer.h"
+#import <MaterialComponents/MaterialShadowElevations.h>
+#import <MaterialComponents/MaterialShadowLayer.h>
 
 static NSString *const MDCTabBarViewControllerViewControllersKey =
     @"MDCTabBarViewControllerViewControllersKey";

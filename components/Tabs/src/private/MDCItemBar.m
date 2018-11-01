@@ -22,7 +22,7 @@
 #import "MDCTabBarIndicatorTemplate.h"
 #import "MDCTabBarIndicatorView.h"
 #import "MDCTabBarPrivateIndicatorContext.h"
-#import "MaterialAnimationTiming.h"
+#import <MaterialComponents/MaterialAnimationTiming.h>
 
 /// Cell reuse identifier for item bar cells.
 static NSString *const kItemReuseID = @"MDCItem";

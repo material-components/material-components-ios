@@ -14,7 +14,7 @@
 
 #import "ChipsExamplesSupplemental.h"
 
-#import "MaterialChips.h"
+#import <MaterialComponents/MaterialChips.h>
 
 static UIImage *DoneImage() {
   NSBundle *bundle = [NSBundle bundleForClass:[ChipsTypicalUseViewController class]];

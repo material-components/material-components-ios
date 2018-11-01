@@ -14,7 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialOverlay.h"
+#import <MaterialComponents/MaterialOverlay.h>
 
 @interface OverlayNoopTests : XCTestCase
 

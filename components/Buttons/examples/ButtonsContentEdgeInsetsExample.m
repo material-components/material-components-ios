@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialButtons.h"
+#import <MaterialComponents/MaterialButtons.h>
 #import "MaterialButtons+ButtonThemer.h"
 
 @interface ButtonsContentEdgeInsetsExample : UIViewController

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import <XCTest/XCTest.h>
-#import "MaterialTabs.h"
+#import <MaterialComponents/MaterialTabs.h>
 
 @interface MDCTabBarCodingTests : XCTestCase
 

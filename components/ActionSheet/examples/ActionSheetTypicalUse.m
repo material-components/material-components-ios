@@ -16,7 +16,7 @@
 
 #import "MaterialActionSheet+ActionSheetThemer.h"
 #import "MaterialButtons+ButtonThemer.h"
-#import "MaterialButtons.h"
+#import <MaterialComponents/MaterialButtons.h>
 
 @interface ActionSheetTypicalUse ()
 

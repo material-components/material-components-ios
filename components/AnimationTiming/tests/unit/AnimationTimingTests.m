@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import <XCTest/XCTest.h>
-#import "MaterialAnimationTiming.h"
+#import <MaterialComponents/MaterialAnimationTiming.h>
 
 @interface AnimationTimingTests : XCTestCase
 

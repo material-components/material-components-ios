@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialButtons.h"
+#import <MaterialComponents/MaterialButtons.h>
 #import "MaterialButtons+ButtonThemer.h"
 #import "MaterialButtons+ColorThemer.h"
 #import "MaterialButtons+TypographyThemer.h"
-#import "MaterialShapes.h"
-#import "MaterialShapeLibrary.h"
-#import "MaterialTypography.h"
+#import <MaterialComponents/MaterialShapes.h>
+#import <MaterialComponents/MaterialShapeLibrary.h>
+#import <MaterialComponents/MaterialTypography.h>
 #import "supplemental/ButtonsTypicalUseSupplemental.h"
 
 @interface ButtonsShapesExampleViewController ()

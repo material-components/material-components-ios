@@ -20,9 +20,9 @@
 #import <Foundation/Foundation.h>
 
 #import "DialogsAlertViewControllerSupplemental.h"
-#import "MaterialButtons.h"
-#import "MaterialDialogs.h"
-#import "MaterialTypography.h"
+#import <MaterialComponents/MaterialButtons.h>
+#import <MaterialComponents/MaterialDialogs.h>
+#import <MaterialComponents/MaterialTypography.h>
 
 static NSString *const kReusableIdentifierItem = @"cell";
 

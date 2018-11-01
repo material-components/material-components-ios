@@ -14,8 +14,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialTabs.h"
-#import "MaterialThemes.h"
+#import <MaterialComponents/MaterialTabs.h>
+#import <MaterialComponents/MaterialThemes.h>
 #import "MaterialTabs+FontThemer.h"
 
 @interface MDCTabBarFontThemerTests : XCTestCase

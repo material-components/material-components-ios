@@ -14,8 +14,8 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <XCTest/XCTest.h>
 
-#import "MaterialPalettes.h"
-#import "MaterialColorScheme.h"
+#import <MaterialComponents/MaterialPalettes.h>
+#import <MaterialComponents/MaterialColorScheme.h>
 
 @interface MDCTonalPaletteTests : XCTestCase
 

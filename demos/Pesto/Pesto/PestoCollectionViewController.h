@@ -16,8 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialCollections.h"
-#import "MaterialFlexibleHeader.h"
+#import <MaterialComponents/MaterialCollections.h>
+#import <MaterialComponents/MaterialFlexibleHeader.h>
 #import "PestoCardCollectionViewCell.h"
 
 @protocol PestoCollectionViewControllerDelegate <NSObject>

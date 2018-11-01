@@ -14,8 +14,8 @@
 
 #import "MDCThumbView.h"
 
-#import "MaterialShadowElevations.h"
-#import "MaterialShadowLayer.h"
+#import <MaterialComponents/MaterialShadowElevations.h>
+#import <MaterialComponents/MaterialShadowLayer.h>
 
 @interface MDCThumbView ()
 

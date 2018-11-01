@@ -14,8 +14,8 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MaterialColorScheme.h"
-#import "MaterialTextFields.h"
+#import <MaterialComponents/MaterialColorScheme.h>
+#import <MaterialComponents/MaterialTextFields.h>
 
 /**
  The Material Design color system's outlined text field themer.

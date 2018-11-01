@@ -14,8 +14,8 @@
 
 #import "MDCFeatureHighlightAccessibilityMutator.h"
 
-#import "MaterialFeatureHighlight.h"
-#import "MaterialTypography.h"
+#import <MaterialComponents/MaterialFeatureHighlight.h>
+#import <MaterialComponents/MaterialTypography.h>
 
 @implementation MDCFeatureHighlightAccessibilityMutator
 

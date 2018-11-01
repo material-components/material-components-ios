@@ -14,8 +14,8 @@
 
 #import "MDCBottomAppBarColorThemer.h"
 
-#import "MaterialBottomAppBar.h"
-#import "MaterialThemes.h"
+#import <MaterialComponents/MaterialBottomAppBar.h>
+#import <MaterialComponents/MaterialThemes.h>
 
 @implementation MDCBottomAppBarColorThemer
 

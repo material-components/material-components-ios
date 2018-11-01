@@ -14,8 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialCards.h"
-#import "MaterialColorScheme.h"
+#import <MaterialComponents/MaterialCards.h>
+#import <MaterialComponents/MaterialColorScheme.h>
 
 /**
  The Material Design color system's themer for instances of MDCCard and MDCCardCollectionCell.

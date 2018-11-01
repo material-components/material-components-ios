@@ -14,12 +14,12 @@
 
 #import "ChipsExamplesSupplemental.h"
 
-#import "MaterialChips.h"
+#import <MaterialComponents/MaterialChips.h>
 #import "MaterialChips+ChipThemer.h"
-#import "MaterialSlider.h"
+#import <MaterialComponents/MaterialSlider.h>
 #import "MaterialSlider+ColorThemer.h"
-#import "MaterialShapes.h"
-#import "MaterialShapeLibrary.h"
+#import <MaterialComponents/MaterialShapes.h>
+#import <MaterialComponents/MaterialShapeLibrary.h>
 
 @interface ChipsShapingExampleViewController()
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;

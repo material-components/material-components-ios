@@ -14,11 +14,11 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialAppBar.h"
-#import "MaterialButtons.h"
-#import "MaterialCollections.h"
-#import "MaterialColorScheme.h"
-#import "MaterialTabs.h"
+#import <MaterialComponents/MaterialAppBar.h>
+#import <MaterialComponents/MaterialButtons.h>
+#import <MaterialComponents/MaterialCollections.h>
+#import <MaterialComponents/MaterialColorScheme.h>
+#import <MaterialComponents/MaterialTabs.h>
 #import "MaterialTabs+ColorThemer.h"
 #import "supplemental/TabBarTextOnlyExampleSupplemental.h"
 

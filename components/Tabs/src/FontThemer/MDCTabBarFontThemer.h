@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialTabs.h"
-#import "MaterialThemes.h"
+#import <MaterialComponents/MaterialTabs.h>
+#import <MaterialComponents/MaterialThemes.h>
 
 #pragma mark - Soon to be deprecated
 

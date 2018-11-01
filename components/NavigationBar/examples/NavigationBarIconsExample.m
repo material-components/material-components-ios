@@ -20,7 +20,7 @@
 #import "MaterialIcons+ic_arrow_back.h"
 #import "MaterialIcons+ic_info.h"
 #import "MaterialIcons+ic_reorder.h"
-#import "MaterialNavigationBar.h"
+#import <MaterialComponents/MaterialNavigationBar.h>
 #import "MaterialNavigationBar+ColorThemer.h"
 #import "MaterialNavigationBar+TypographyThemer.h"
 #import "supplemental/NavigationBarTypicalUseExampleSupplemental.h"

@@ -14,7 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialMaskedTransition.h"
+#import <MaterialComponents/MaterialMaskedTransition.h>
 
 @interface MaskedTransitionNoopTest : XCTestCase
 

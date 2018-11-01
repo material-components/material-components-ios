@@ -14,7 +14,7 @@
 
 #import "MDCRoundedCornerTreatment.h"
 
-#import "MaterialMath.h"
+#import <MaterialComponents/MaterialMath.h>
 
 static NSString *const MDCRoundedCornerTreatmentRadiusKey = @"MDCRoundedCornerTreatmentRadiusKey";
 

@@ -19,11 +19,11 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialAppBar.h"
-#import "MaterialButtons.h"
-#import "MaterialColorScheme.h"
-#import "MaterialTabs.h"
-#import "MaterialTypographyScheme.h"
+#import <MaterialComponents/MaterialAppBar.h>
+#import <MaterialComponents/MaterialButtons.h>
+#import <MaterialComponents/MaterialColorScheme.h>
+#import <MaterialComponents/MaterialTabs.h>
+#import <MaterialComponents/MaterialTypographyScheme.h>
 
 @interface TabBarIconExample : UIViewController <MDCTabBarDelegate>
 

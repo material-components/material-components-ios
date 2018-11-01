@@ -14,7 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialInk.h"
+#import <MaterialComponents/MaterialInk.h>
 
 #pragma mark - Fake classes
 

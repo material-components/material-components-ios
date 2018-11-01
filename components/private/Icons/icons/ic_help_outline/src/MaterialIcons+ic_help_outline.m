@@ -17,7 +17,7 @@
 
 #import "MaterialIcons+ic_help_outline.h"
 
-#import "MaterialIcons.h"
+#import <MaterialComponents/MaterialIcons.h>
 
 static NSString *const kBundleName = @"MaterialIcons_ic_help_outline";
 static NSString *const kIconName = @"ic_help_outline";

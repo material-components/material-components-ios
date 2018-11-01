@@ -14,9 +14,9 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialButtons.h"
-#import "MaterialShapeLibrary.h"
-#import "MaterialShapeScheme.h"
+#import <MaterialComponents/MaterialButtons.h>
+#import <MaterialComponents/MaterialShapeLibrary.h>
+#import <MaterialComponents/MaterialShapeScheme.h>
 
 /**
  The Material Design shape system's themer for instances of MDCFloatingButton.

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialSnackbar.h"
-#import "MaterialTypographyScheme.h"
+#import <MaterialComponents/MaterialSnackbar.h>
+#import <MaterialComponents/MaterialTypographyScheme.h>
 
 /**
  The Material Design typography system's themer for all snackbar messages.

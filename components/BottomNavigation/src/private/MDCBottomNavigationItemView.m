@@ -17,9 +17,9 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
-#import "MaterialBottomNavigationStrings.h"
-#import "MaterialBottomNavigationStrings_table.h"
-#import "MaterialMath.h"
+#import <MaterialComponents/MaterialBottomNavigationStrings.h>
+#import <MaterialComponents/MaterialBottomNavigationStrings_table.h>
+#import <MaterialComponents/MaterialMath.h>
 #import "MDCBottomNavigationItemBadge.h"
 
 static const CGFloat MDCBottomNavigationItemViewInkOpacity = 0.150f;

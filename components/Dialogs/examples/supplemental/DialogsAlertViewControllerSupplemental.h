@@ -19,9 +19,9 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialCollections.h"
-#import "MaterialColorScheme.h"
-#import "MaterialTypographyScheme.h"
+#import <MaterialComponents/MaterialCollections.h>
+#import <MaterialComponents/MaterialColorScheme.h>
+#import <MaterialComponents/MaterialTypographyScheme.h>
 
 @interface DialogsAlertViewController : MDCCollectionViewController
 @property(nonatomic, strong, nullable) NSArray *modes;

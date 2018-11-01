@@ -21,10 +21,10 @@
 #import "MDCTextInputCharacterCounter.h"
 #import "MDCTextInputUnderlineView.h"
 
-#import "MaterialAnimationTiming.h"
-#import "MaterialMath.h"
-#import "MaterialPalettes.h"
-#import "MaterialTypography.h"
+#import <MaterialComponents/MaterialAnimationTiming.h>
+#import <MaterialComponents/MaterialMath.h>
+#import <MaterialComponents/MaterialPalettes.h>
+#import <MaterialComponents/MaterialTypography.h>
 
 static const CGFloat MDCTextInputControllerFullWidthHintTextOpacity = 0.54f;
 static const CGFloat MDCTextInputControllerFullWidthHorizontalInnerPadding = 8.f;

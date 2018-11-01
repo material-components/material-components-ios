@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialButtons.h"
+#import <MaterialComponents/MaterialButtons.h>
 
 @interface ButtonTestView : UIView
 @property (unsafe_unretained, nonatomic) IBOutlet MDCButton *button;

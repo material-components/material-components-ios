@@ -19,10 +19,10 @@
 
 #import "MDCItemBarStringConstants.h"
 #import "MDCItemBarStyle.h"
-#import "MaterialAnimationTiming.h"
-#import "MaterialInk.h"
-#import "MaterialMath.h"
-#import "MaterialTypography.h"
+#import <MaterialComponents/MaterialAnimationTiming.h>
+#import <MaterialComponents/MaterialInk.h>
+#import <MaterialComponents/MaterialMath.h>
+#import <MaterialComponents/MaterialTypography.h>
 
 /// Size of image in points.
 static const CGSize kImageSize = {24, 24};

@@ -14,8 +14,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialChips.h"
-#import "MaterialInk.h"
+#import <MaterialComponents/MaterialChips.h>
+#import <MaterialComponents/MaterialInk.h>
 
 @interface MDCChipView (PrivateTesting)
 - (MDCInkView *)inkView;

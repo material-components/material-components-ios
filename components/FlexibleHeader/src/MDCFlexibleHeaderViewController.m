@@ -14,8 +14,8 @@
 
 #import "MDCFlexibleHeaderViewController.h"
 
-#import "MaterialApplication.h"
-#import "MaterialUIMetrics.h"
+#import <MaterialComponents/MaterialApplication.h>
+#import <MaterialComponents/MaterialUIMetrics.h>
 #import "MDCFlexibleHeaderContainerViewController.h"
 #import "MDCFlexibleHeaderView.h"
 #import "MDCFlexibleHeaderView+ShiftBehavior.h"

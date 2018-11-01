@@ -14,7 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialCollectionLayoutAttributes.h"
+#import <MaterialComponents/MaterialCollectionLayoutAttributes.h>
 
 @interface CollectionLayoutAttributesTests : XCTestCase {
   MDCCollectionViewLayoutAttributes *_attributes;

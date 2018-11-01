@@ -14,7 +14,7 @@
 
 #import "MDCPathGenerator.h"
 
-#import "MaterialMath.h"
+#import <MaterialComponents/MaterialMath.h>
 
 @interface MDCPathCommand : NSObject
 - (void)applyToCGPath:(CGMutablePathRef)cgPath transform:(CGAffineTransform *)transform;

@@ -14,7 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialChips.h"
+#import <MaterialComponents/MaterialChips.h>
 #import "MaterialChips+ColorThemer.h"
 
 @interface ChipViewColorThemerTests : XCTestCase

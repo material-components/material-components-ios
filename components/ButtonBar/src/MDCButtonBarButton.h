@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialButtons.h"
+#import <MaterialComponents/MaterialButtons.h>
 
 /**
  The MDCButtonBarButton class is used by MDCButtonBar.

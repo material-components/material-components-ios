@@ -21,7 +21,7 @@
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
 #import "MaterialButtons+ButtonThemer.h"
-#import "MaterialPalettes.h"
+#import <MaterialComponents/MaterialPalettes.h>
 #import "MaterialTabs+TypographyThemer.h"
 
 // Exposing selectors defined in the main example class

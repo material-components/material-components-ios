@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialButtonBar.h"
+#import <MaterialComponents/MaterialButtonBar.h>
 #import "MaterialButtonBar+ColorThemer.h"
 #import "MaterialButtonBar+TypographyThemer.h"
 

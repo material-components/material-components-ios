@@ -16,7 +16,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "MaterialTextFields.h"
+#import <MaterialComponents/MaterialTextFields.h>
 
 #import "supplemental/TextFieldInterfaceBuilderExampleSupplemental.h"
 

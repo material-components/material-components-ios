@@ -16,8 +16,8 @@
 
 #import "BottomNavigationTypicalUseSupplemental.h"
 
-#import "MaterialBottomNavigation.h"
-#import "MaterialPalettes.h"
+#import <MaterialComponents/MaterialBottomNavigation.h>
+#import <MaterialComponents/MaterialPalettes.h>
 #import "MaterialBottomNavigation+ColorThemer.h"
 #import "MaterialBottomNavigation+TypographyThemer.h"
 

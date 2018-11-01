@@ -14,7 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialNavigationDrawer.h"
+#import <MaterialComponents/MaterialNavigationDrawer.h>
 
 #import "MDCNavigationDrawerFakes.h"
 

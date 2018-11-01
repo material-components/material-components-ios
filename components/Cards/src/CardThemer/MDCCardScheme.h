@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialCards.h"
-#import "MaterialColorScheme.h"
-#import "MaterialShapeScheme.h"
+#import <MaterialComponents/MaterialCards.h>
+#import <MaterialComponents/MaterialColorScheme.h>
+#import <MaterialComponents/MaterialShapeScheme.h>
 
 #import <Foundation/Foundation.h>
 

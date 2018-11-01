@@ -18,11 +18,11 @@
  */
 
 #import "DialogsTypicalUseSupplemental.h"
-#import "MaterialApplication.h"
-#import "MaterialButtons.h"
-#import "MaterialCollections.h"
-#import "MaterialDialogs.h"
-#import "MaterialTypography.h"
+#import <MaterialComponents/MaterialApplication.h>
+#import <MaterialComponents/MaterialButtons.h>
+#import <MaterialComponents/MaterialCollections.h>
+#import <MaterialComponents/MaterialDialogs.h>
+#import <MaterialComponents/MaterialTypography.h>
 
 #pragma mark - DialogsTypicalUseViewController
 

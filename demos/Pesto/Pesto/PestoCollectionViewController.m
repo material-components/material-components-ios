@@ -18,9 +18,9 @@
 #import "PestoCardCollectionViewCell.h"
 #import "PestoData.h"
 
-#import "MaterialInk.h"
-#import "MaterialShadowElevations.h"
-#import "MaterialShadowLayer.h"
+#import <MaterialComponents/MaterialInk.h>
+#import <MaterialComponents/MaterialShadowElevations.h>
+#import <MaterialComponents/MaterialShadowLayer.h>
 
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 

@@ -14,7 +14,7 @@
 
 #import "UIFont+MaterialSimpleEquality.h"
 
-#import "MaterialMath.h"
+#import <MaterialComponents/MaterialMath.h>
 
 @implementation UIFont (MaterialSimpleEquality)
 

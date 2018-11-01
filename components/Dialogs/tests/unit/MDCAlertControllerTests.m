@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #import <XCTest/XCTest.h>
-#import "MaterialButtons.h"
-#import "MaterialDialogs.h"
+#import <MaterialComponents/MaterialButtons.h>
+#import <MaterialComponents/MaterialDialogs.h>
 
 #import "../../src/private/MDCDialogShadowedView.h"
 #import "MDCAlertControllerView+Private.h"

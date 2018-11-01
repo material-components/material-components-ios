@@ -14,7 +14,7 @@
 
 #import "MDCButtonScheme.h"
 
-#import "MaterialButtons.h"
+#import <MaterialComponents/MaterialButtons.h>
 
 #import <Foundation/Foundation.h>
 

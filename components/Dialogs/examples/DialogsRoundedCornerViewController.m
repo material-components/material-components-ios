@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #import "DialogsRoundedCornerViewController.h"
-#import "MaterialButtons.h"
-#import "MaterialDialogs.h"
+#import <MaterialComponents/MaterialButtons.h>
+#import <MaterialComponents/MaterialDialogs.h>
 
 @interface DialogsRoundedCornerSimpleController : UIViewController
 

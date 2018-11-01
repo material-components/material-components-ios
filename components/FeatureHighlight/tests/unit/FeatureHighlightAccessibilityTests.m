@@ -14,7 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialFeatureHighlight.h"
+#import <MaterialComponents/MaterialFeatureHighlight.h>
 #import "MDCFeatureHighlightView+Private.h"
 
 @interface MDCFeatureHighlightViewController (Testing)

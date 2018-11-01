@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialButtonBar.h"
+#import <MaterialComponents/MaterialButtonBar.h>
 #import "MaterialIcons+ic_check_circle.h"
 #import "MaterialIcons+ic_info.h"
 

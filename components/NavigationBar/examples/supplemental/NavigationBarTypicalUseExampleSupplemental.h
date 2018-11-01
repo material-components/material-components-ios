@@ -19,9 +19,9 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialColorScheme.h"
-#import "MaterialNavigationBar.h"
-#import "MaterialTypographyScheme.h"
+#import <MaterialComponents/MaterialColorScheme.h>
+#import <MaterialComponents/MaterialNavigationBar.h>
+#import <MaterialComponents/MaterialTypographyScheme.h>
 
 @class ExampleInstructionsViewNavigationBarTypicalUseExample;
 

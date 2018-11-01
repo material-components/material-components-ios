@@ -14,7 +14,7 @@
 
 #import "TypographyCustomFontViewController.h"
 
-#import "MaterialTypography.h"
+#import <MaterialComponents/MaterialTypography.h>
 
 @implementation TypographyCustomFontViewController {
    NSArray<NSString *> *_strings;

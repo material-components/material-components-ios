@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialPalettes.h"
+#import <MaterialComponents/MaterialPalettes.h>
 #import "supplemental/CollectionsInkExample.h"
 
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";

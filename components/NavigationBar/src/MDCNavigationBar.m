@@ -18,9 +18,9 @@
 #import <objc/runtime.h>
 
 #import <MDFTextAccessibility/MDFTextAccessibility.h>
-#import "MaterialButtonBar.h"
-#import "MaterialMath.h"
-#import "MaterialTypography.h"
+#import <MaterialComponents/MaterialButtonBar.h>
+#import <MaterialComponents/MaterialMath.h>
+#import <MaterialComponents/MaterialTypography.h>
 
 
 static const NSUInteger kTitleFontSize = 20;

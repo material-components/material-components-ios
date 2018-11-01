@@ -15,9 +15,9 @@
 #import <UIKit/UIKit.h>
 
 #import "BottomAppBarTypicalUseViewController.h"
-#import "MaterialBottomAppBar.h"
-#import "MaterialColorScheme.h"
-#import "MaterialTypographyScheme.h"
+#import <MaterialComponents/MaterialBottomAppBar.h>
+#import <MaterialComponents/MaterialColorScheme.h>
+#import <MaterialComponents/MaterialTypographyScheme.h>
 
 @interface BottomAppBarTypicalUseExample : BottomAppBarTypicalUseViewController
 

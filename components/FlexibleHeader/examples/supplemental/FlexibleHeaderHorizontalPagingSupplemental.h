@@ -19,7 +19,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialFlexibleHeader.h"
+#import <MaterialComponents/MaterialFlexibleHeader.h>
 
 @interface FlexibleHeaderHorizontalPagingViewController : UIViewController
 

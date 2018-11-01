@@ -16,7 +16,7 @@
 
 #import "PestoSettingsViewController.h"
 
-#import "MaterialAppBar.h"
+#import <MaterialComponents/MaterialAppBar.h>
 
 static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 

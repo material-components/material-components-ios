@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import "CardsCollectionTintingExample.h"
-#import "MaterialInk.h"
+#import <MaterialComponents/MaterialInk.h>
 #import "supplemental/CardTintExampleCell.h"
 
 @interface CardsCollectionTintingExample ()

@@ -16,7 +16,7 @@
 
 #import <objc/runtime.h>
 
-#import "MaterialApplication.h"
+#import <MaterialComponents/MaterialApplication.h>
 
 /**
  A container view for overlay views.

@@ -16,7 +16,7 @@
 
 #import "MDCPillShapeGenerator.h"
 
-#import "MaterialMath.h"
+#import <MaterialComponents/MaterialMath.h>
 #import "MDCRoundedCornerTreatment.h"
 
 @implementation MDCPillShapeGenerator {

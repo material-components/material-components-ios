@@ -14,7 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialHeaderStackView.h"
+#import <MaterialComponents/MaterialHeaderStackView.h>
 
 @interface HeaderStackViewNoopTest : XCTestCase
 

@@ -14,9 +14,9 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialColorScheme.h"
-#import "MaterialSlider.h"
-#import "MaterialTabs.h"
+#import <MaterialComponents/MaterialColorScheme.h>
+#import <MaterialComponents/MaterialSlider.h>
+#import <MaterialComponents/MaterialTabs.h>
 #import "MaterialTabs+ColorThemer.h"
 #import "supplemental/TabBarViewControllerExampleSupplemental.h"
 

@@ -14,7 +14,7 @@
 
 #import "MDCListScheme.h"
 
-#import "MaterialList.h"
+#import <MaterialComponents/MaterialList.h>
 
 #import <Foundation/Foundation.h>
 

@@ -14,7 +14,7 @@
 
 
 #import "MaterialFeatureHighlight+FeatureHighlightAccessibilityMutator.h"
-#import "MaterialFeatureHighlight.h"
+#import <MaterialComponents/MaterialFeatureHighlight.h>
 
 #import <XCTest/XCTest.h>
 

@@ -14,7 +14,7 @@
 
 #import "TypographyMaterialStylesViewController.h"
 
-#import "MaterialTypography.h"
+#import <MaterialComponents/MaterialTypography.h>
 
 @implementation TypographyMaterialStyleViewController {
   NSArray<NSString *> *_strings;

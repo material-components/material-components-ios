@@ -21,7 +21,7 @@
 #import "MaterialIcons+ic_info.h"
 #import "MaterialIcons+ic_reorder.h"
 #import "MaterialIcons+ic_check_circle.h"
-#import "MaterialNavigationBar.h"
+#import <MaterialComponents/MaterialNavigationBar.h>
 #import "MaterialNavigationBar+ColorThemer.h"
 #import "supplemental/NavigationBarTypicalUseExampleSupplemental.h"
 

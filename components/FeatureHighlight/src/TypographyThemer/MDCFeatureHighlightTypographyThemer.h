@@ -14,8 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialFeatureHighlight.h"
-#import "MaterialTypographyScheme.h"
+#import <MaterialComponents/MaterialFeatureHighlight.h>
+#import <MaterialComponents/MaterialTypographyScheme.h>
 
 /**
  The Material Design typography system's themer for instances of MDCFeatureHighlightViewController.

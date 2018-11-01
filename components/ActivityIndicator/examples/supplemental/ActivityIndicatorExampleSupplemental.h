@@ -19,8 +19,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialActivityIndicator.h"
-#import "MaterialCollections.h"
+#import <MaterialComponents/MaterialActivityIndicator.h>
+#import <MaterialComponents/MaterialCollections.h>
 
 static const CGFloat kActivityIndicatorRadius = 72.f;
 static const CGFloat kActivityInitialProgress = 0.6f;

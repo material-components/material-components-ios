@@ -16,8 +16,8 @@
 
 #import "private/MDCSlider+Private.h"
 #import "private/MDCSlider_Subclassable.h"
-#import "MaterialPalettes.h"
-#import "MaterialThumbTrack.h"
+#import <MaterialComponents/MaterialPalettes.h>
+#import <MaterialComponents/MaterialThumbTrack.h>
 
 static const CGFloat kSliderDefaultWidth = 100.0f;
 static const CGFloat kSliderFrameHeight = 27.0f;

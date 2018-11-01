@@ -14,12 +14,12 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialAppBar.h"
+#import <MaterialComponents/MaterialAppBar.h>
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
-#import "MaterialBottomSheet.h"
-#import "MaterialShapes.h"
-#import "MaterialShapeLibrary.h"
+#import <MaterialComponents/MaterialBottomSheet.h>
+#import <MaterialComponents/MaterialShapes.h>
+#import <MaterialComponents/MaterialShapeLibrary.h>
 #import "supplemental/BottomSheetDummyStaticViewController.h"
 #import "supplemental/BottomSheetDummyCollectionViewController.h"
 #import "supplemental/BottomSheetSupplemental.h"

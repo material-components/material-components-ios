@@ -15,7 +15,7 @@
 #import "MDCCollectionViewEditor.h"
 
 #import "MDCCollectionViewEditingDelegate.h"
-#import "MaterialShadowLayer.h"
+#import <MaterialComponents/MaterialShadowLayer.h>
 
 #include <tgmath.h>
 

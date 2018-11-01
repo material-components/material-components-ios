@@ -24,9 +24,9 @@
 #import "PestoIcons/PestoIconTimer.h"
 #import "PestoIcons/PestoIconVeggie.h"
 
-#import "MaterialShadowElevations.h"
-#import "MaterialShadowLayer.h"
-#import "MaterialTypography.h"
+#import <MaterialComponents/MaterialShadowElevations.h>
+#import <MaterialComponents/MaterialShadowLayer.h>
+#import <MaterialComponents/MaterialTypography.h>
 
 static const CGFloat kPestoCardPadding = 15.f;
 static const CGFloat kPestoCardIconSize = 72.f;

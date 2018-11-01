@@ -14,7 +14,7 @@
 
 #import "MDCCollectionGridBackgroundView.h"
 
-#import "MaterialCollectionLayoutAttributes.h"
+#import <MaterialComponents/MaterialCollectionLayoutAttributes.h>
 
 @implementation MDCCollectionGridBackgroundView {
   UIImageView *_backgroundImageView;

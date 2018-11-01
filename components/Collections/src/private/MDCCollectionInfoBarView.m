@@ -14,9 +14,9 @@
 
 #import "MDCCollectionInfoBarView.h"
 
-#import "MaterialPalettes.h"
-#import "MaterialShadowLayer.h"
-#import "MaterialTypography.h"
+#import <MaterialComponents/MaterialPalettes.h>
+#import <MaterialComponents/MaterialShadowLayer.h>
+#import <MaterialComponents/MaterialTypography.h>
 
 const CGFloat MDCCollectionInfoBarAnimationDuration = 0.3f;
 const CGFloat MDCCollectionInfoBarHeaderHeight = 48.0f;

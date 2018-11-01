@@ -14,7 +14,7 @@
 
 #import "AnimationTimingExampleSupplemental.h"
 
-#import "MaterialTypography.h"
+#import <MaterialComponents/MaterialTypography.h>
 
 const CGFloat kTopMargin = 16.f;
 const CGFloat kLeftGutter = 16.f;

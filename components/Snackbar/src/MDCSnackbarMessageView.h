@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
-#import "MaterialButtons.h"
+#import <MaterialComponents/MaterialButtons.h>
 
 /**
  Class which provides the default implementation of a Snackbar.

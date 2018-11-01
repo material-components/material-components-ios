@@ -14,8 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialInk.h"
-#import "MaterialPalettes.h"
+#import <MaterialComponents/MaterialInk.h>
+#import <MaterialComponents/MaterialPalettes.h>
 
 #import "supplemental/InkTypicalUseSupplemental.h"
 

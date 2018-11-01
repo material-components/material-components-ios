@@ -14,7 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialThumbTrack.h"
+#import <MaterialComponents/MaterialThumbTrack.h>
 
 @interface ThumbTrackNoopTest : XCTestCase
 

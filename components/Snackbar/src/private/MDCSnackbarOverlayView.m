@@ -20,10 +20,10 @@
 
 #import "../MDCSnackbarMessage.h"
 #import "MDCSnackbarMessageViewInternal.h"
-#import "MaterialAnimationTiming.h"
-#import "MaterialApplication.h"
-#import "MaterialKeyboardWatcher.h"
-#import "MaterialOverlay.h"
+#import <MaterialComponents/MaterialAnimationTiming.h>
+#import <MaterialComponents/MaterialApplication.h>
+#import <MaterialComponents/MaterialKeyboardWatcher.h>
+#import <MaterialComponents/MaterialOverlay.h>
 
 NSString *const MDCSnackbarOverlayIdentifier = @"MDCSnackbar";
 

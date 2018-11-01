@@ -15,9 +15,9 @@
 #import <XCTest/XCTest.h>
 
 #import "MDCSlider+Private.h"
-#import "MaterialPalettes.h"
-#import "MaterialThumbTrack.h"
-#import "MaterialSlider.h"
+#import <MaterialComponents/MaterialPalettes.h>
+#import <MaterialComponents/MaterialThumbTrack.h>
+#import <MaterialComponents/MaterialSlider.h>
 
 static const int kNumberOfRepeats = 20;
 static const CGFloat kEpsilonAccuracy = 0.001f;

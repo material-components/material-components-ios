@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #import "MaterialIcons+ic_arrow_back.h"
-#import "MaterialNavigationBar.h"
-#import "MaterialTextFields.h"
+#import <MaterialComponents/MaterialNavigationBar.h>
+#import <MaterialComponents/MaterialTextFields.h>
 #import "MaterialNavigationBar+ColorThemer.h"
 #import <MDFInternationalization/MDFInternationalization.h>
 
