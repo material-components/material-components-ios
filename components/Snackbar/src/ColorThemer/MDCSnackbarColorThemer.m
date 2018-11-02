@@ -26,12 +26,9 @@
       [MDCSemanticColorScheme blendColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.8f]
                      withBackgroundColor:colorScheme.surfaceColor];
   snackbarManager.messageTextColor = [colorScheme.surfaceColor colorWithAlphaComponent:0.87f];
-  UIColor *buttonTitleColor = [colorScheme.surfaceColor
-                               colorWithAlphaComponent:0.6f];
-  [snackbarManager setButtonTitleColor:buttonTitleColor
-                              forState:UIControlStateNormal];
-  [snackbarManager setButtonTitleColor:buttonTitleColor
-                              forState:UIControlStateHighlighted];
+  UIColor *buttonTitleColor = [colorScheme.surfaceColor colorWithAlphaComponent:0.6f];
+  [snackbarManager setButtonTitleColor:buttonTitleColor forState:UIControlStateNormal];
+  [snackbarManager setButtonTitleColor:buttonTitleColor forState:UIControlStateHighlighted];
 }
 
 #pragma clang diagnostic push

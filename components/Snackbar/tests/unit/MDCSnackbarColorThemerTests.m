@@ -37,8 +37,7 @@
   [MDCSnackbarColorThemer applySemanticColorScheme:colorScheme toSnackbarManager:snackbarManager];
 
   // Then
-  XCTAssertEqualObjects(snackbarManager.snackbarMessageViewBackgroundColor,
-                        blendedBackgroundColor);
+  XCTAssertEqualObjects(snackbarManager.snackbarMessageViewBackgroundColor, blendedBackgroundColor);
   XCTAssertEqualObjects(snackbarManager.messageTextColor,
                         [colorScheme.surfaceColor colorWithAlphaComponent:0.87f]);
   XCTAssertEqualObjects([snackbarManager buttonTitleColorForState:UIControlStateNormal],
