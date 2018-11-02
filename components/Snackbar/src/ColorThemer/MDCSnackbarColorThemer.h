@@ -36,7 +36,7 @@
  @param snackbarManager The MDCSnackbarManager instance to theme.
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
-               toSnackbarManager:(MDCSnackbarManager *)snackbarManager;
+               toSnackbarManager:(nonnull MDCSnackbarManager *)snackbarManager;
 
 @end
 

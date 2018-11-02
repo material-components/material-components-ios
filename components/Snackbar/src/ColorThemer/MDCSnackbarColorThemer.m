@@ -16,11 +16,11 @@
 
 @implementation MDCSnackbarColorThemer
 
-+ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme {
++ (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme {
   [self applySemanticColorScheme:colorScheme toSnackbarManager:MDCSnackbarManager.defaultManager];
 }
 
-+ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
++ (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
                toSnackbarManager:(MDCSnackbarManager *)snackbarManager {
   snackbarManager.snackbarMessageViewBackgroundColor =
       [MDCSemanticColorScheme blendColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.8f]
