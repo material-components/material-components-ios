@@ -19,75 +19,31 @@
 
 @interface MDCSnackbarColorThemerTests : XCTestCase
 
-@property(nonatomic, strong) UIColor *messageTextColor;
-@property(nonatomic, strong) UIColor *snackbarMessageViewShadowColor;
-@property(nonatomic, strong) UIColor *snackbarMessageViewBackgroundColor;
-@property(nonatomic, strong) NSMutableDictionary *titleColorForState;
-
 @end
 
 @implementation MDCSnackbarColorThemerTests
 
-- (void)setUp {
-  [super setUp];
-
-  self.messageTextColor = MDCSnackbarManager.messageTextColor;
-  self.snackbarMessageViewShadowColor = MDCSnackbarManager.snackbarMessageViewShadowColor;
-  self.snackbarMessageViewBackgroundColor = MDCSnackbarManager.snackbarMessageViewBackgroundColor;
-  self.titleColorForState = [@{} mutableCopy];
-  NSUInteger maxState = UIControlStateNormal | UIControlStateDisabled | UIControlStateSelected |
-                        UIControlStateHighlighted;
-  for (NSUInteger state = 0; state < maxState; ++state) {
-    self.titleColorForState[@(state)] = [MDCSnackbarManager buttonTitleColorForState:state];
-  }
-}
-
-- (void)tearDown {
-  // Restore the Snackbar Manager's state
-  MDCSnackbarManager.messageTextColor = self.messageTextColor;
-  MDCSnackbarManager.snackbarMessageViewShadowColor = self.snackbarMessageViewShadowColor;
-  MDCSnackbarManager.snackbarMessageViewBackgroundColor = self.snackbarMessageViewBackgroundColor;
-  for (NSNumber *state in self.titleColorForState.allKeys) {
-    if (self.titleColorForState[state] != nil) {
-      [MDCSnackbarManager setButtonTitleColor:self.titleColorForState[state]
-                                     forState:state.unsignedIntegerValue];
-    }
-  }
-
-  // Clean-up the test case
-  [self.titleColorForState removeAllObjects];
-  self.titleColorForState = nil;
-  self.messageTextColor = nil;
-  self.snackbarMessageViewShadowColor = nil;
-  self.snackbarMessageViewBackgroundColor = nil;
-
-  [super tearDown];
-}
-
 - (void)testSnackbarColorThemerChangesCorrectParameters {
   // Given
+  MDCSnackbarManager *snackbarManager = [[MDCSnackbarManager alloc] init];
   MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
   colorScheme.surfaceColor = [UIColor redColor];
   colorScheme.onSurfaceColor = [UIColor blueColor];
-  MDCSnackbarManager.snackbarMessageViewBackgroundColor = [UIColor whiteColor];
-  MDCSnackbarManager.messageTextColor = [UIColor whiteColor];
-  [MDCSnackbarManager setButtonTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-  [MDCSnackbarManager setButtonTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
   UIColor *blendedBackgroundColor =
       [MDCSemanticColorScheme blendColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.8f]
                      withBackgroundColor:colorScheme.surfaceColor];
 
   // When
-  [MDCSnackbarColorThemer applySemanticColorScheme:colorScheme];
+  [MDCSnackbarColorThemer applySemanticColorScheme:colorScheme toSnackbarManager:snackbarManager];
 
   // Then
-  XCTAssertEqualObjects(MDCSnackbarManager.snackbarMessageViewBackgroundColor,
+  XCTAssertEqualObjects(snackbarManager.snackbarMessageViewBackgroundColor,
                         blendedBackgroundColor);
-  XCTAssertEqualObjects(MDCSnackbarManager.messageTextColor,
+  XCTAssertEqualObjects(snackbarManager.messageTextColor,
                         [colorScheme.surfaceColor colorWithAlphaComponent:0.87f]);
-  XCTAssertEqualObjects([MDCSnackbarManager buttonTitleColorForState:UIControlStateNormal],
+  XCTAssertEqualObjects([snackbarManager buttonTitleColorForState:UIControlStateNormal],
                         [colorScheme.surfaceColor colorWithAlphaComponent:0.6f]);
-  XCTAssertEqualObjects([MDCSnackbarManager buttonTitleColorForState:UIControlStateHighlighted],
+  XCTAssertEqualObjects([snackbarManager buttonTitleColorForState:UIControlStateHighlighted],
                         [colorScheme.surfaceColor colorWithAlphaComponent:0.6f]);
 }
 

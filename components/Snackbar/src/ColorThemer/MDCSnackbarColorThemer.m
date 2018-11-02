@@ -17,16 +17,21 @@
 @implementation MDCSnackbarColorThemer
 
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme {
-  MDCSnackbarManager.snackbarMessageViewBackgroundColor =
+  [self applySemanticColorScheme:colorScheme toSnackbarManager:MDCSnackbarManager.defaultManager];
+}
+
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+               toSnackbarManager:(MDCSnackbarManager *)snackbarManager {
+  snackbarManager.snackbarMessageViewBackgroundColor =
       [MDCSemanticColorScheme blendColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.8f]
                      withBackgroundColor:colorScheme.surfaceColor];
-  MDCSnackbarManager.messageTextColor = [colorScheme.surfaceColor colorWithAlphaComponent:0.87f];
+  snackbarManager.messageTextColor = [colorScheme.surfaceColor colorWithAlphaComponent:0.87f];
   UIColor *buttonTitleColor = [colorScheme.surfaceColor
-                                       colorWithAlphaComponent:0.6f];
-  [MDCSnackbarManager setButtonTitleColor:buttonTitleColor
-                                 forState:UIControlStateNormal];
-  [MDCSnackbarManager setButtonTitleColor:buttonTitleColor
-                                 forState:UIControlStateHighlighted];
+                               colorWithAlphaComponent:0.6f];
+  [snackbarManager setButtonTitleColor:buttonTitleColor
+                              forState:UIControlStateNormal];
+  [snackbarManager setButtonTitleColor:buttonTitleColor
+                              forState:UIControlStateHighlighted];
 }
 
 #pragma clang diagnostic push
