@@ -14,8 +14,25 @@
 
 #import "MDCBannerViewLayout.h"
 
-#import "MDCBannerParams.h"
 #import "MDCBannerView.h"
+
+static const CGFloat kLeadingPadding = 16.0f;
+static const CGFloat kTrailingPadding = 8.0f;
+static const CGFloat kTopPaddingSmall = 10.0f;
+static const CGFloat kTopPaddingLarge = 24.0f;
+static const CGFloat kBottomPadding = 8.0f;
+static const CGFloat kButtonHorizontalIntervalSpace = 8.0f;
+static const CGFloat kButtonVerticalIntervalSpace = 8.0f;
+static const CGFloat kSpaceBetweenIconImageAndTextLabel = 16.0f;
+static const CGFloat kHorizontalSpaceBetweenTextLabelAndButton = 36.0f;
+static const CGFloat kVerticalSpaceBetweenButtonAndTextLabelLarge = 20.0f;
+static const CGFloat kVerticalSpaceBetweenButtonAndTextLabelSmall = 12.0f;
+
+typedef NS_ENUM(NSInteger, MDCBannerViewLayoutMode) {
+  MDCBannerViewLayoutSingleLineStyle = 0,              // All elements lays on the same line
+  MDCBannerViewLayoutMultiLineStackedButtonStyle = 1,  // Stacked button layout
+  MDCBannerViewLayoutMultiLineAlignedButtonStyle = 2   // All buttons lays on the same line
+};
 
 @interface MDCBannerViewLayout ()
 
@@ -43,7 +60,9 @@
 
 - (void)reloadData {
   [self reloadViewModelsFromDataSource:self.dataSource];
-  [self updateLayoutStyleAndFrameSize];
+  self.style = [self layoutStyleForSizeToFit:self.sizeToFit];
+  self.frameSize = [self frameSizeForLayoutStyle:self.style
+                                   withSizeToFit:self.sizeToFit];
   [self updateLayoutWithStyle:self.style];
 }
 
@@ -70,9 +89,7 @@
   }
 }
 
-- (void)updateLayoutStyleAndFrameSize {
-  // TODO: add cache support to partical views for performance
-
+- (MDCBannerViewLayoutMode)layoutStyleForSizeToFit:(CGSize)sizeToFit {
   CGFloat remainingWidth = self.sizeToFit.width;
   remainingWidth -= (kLeadingPadding + kTrailingPadding);
   remainingWidth -= [self buttonsWidthSum];
@@ -81,72 +98,93 @@
     remainingWidth -= self.imageContainer.frame.size.width;
     remainingWidth -= kSpaceBetweenIconImageAndTextLabel;
   }
-  CGSize textLabelSize = CGSizeZero;
   if ([self isAbleToFitTextLabelWithWidthLimit:remainingWidth]) {
-    CGFloat singleLineStyleFrameHeight = kTopPaddingSmall + kBottomPadding;
-    NSMutableArray *singleLineViews = [[NSMutableArray alloc] init];
-    [singleLineViews addObject:self.textLabel];
-    if (self.imageContainer) {
-      [singleLineViews addObject:self.imageContainer];
-    }
-    singleLineStyleFrameHeight +=
-        MAX([self maximumHeightAmongViews:singleLineViews], [self maximumButtonHeight]);
-    self.style = MDCBannerViewLayoutSingleLineStyle;
-    textLabelSize = [self.textLabel sizeThatFits:CGSizeMake(remainingWidth, CGFLOAT_MAX)];
-    self.frameSize = CGSizeMake(self.sizeToFit.width, singleLineStyleFrameHeight);
+    return MDCBannerViewLayoutSingleLineStyle;
   } else {
-    CGFloat multiLineStyleFrameHeight = kTopPaddingLarge + kBottomPadding;
-    // Handle Buttons
     if ([self buttonsWidthSum] + kLeadingPadding + kTrailingPadding > self.sizeToFit.width) {
-      self.style = MDCBannerViewLayoutMultiLineStackedButtonStyle;
-      multiLineStyleFrameHeight += [self buttonsHeightSum];
+      return MDCBannerViewLayoutMultiLineStackedButtonStyle;
     } else {
-      self.style = MDCBannerViewLayoutMultiLineAlignedButtonStyle;
-      multiLineStyleFrameHeight += [self maximumButtonHeight];
+      return MDCBannerViewLayoutMultiLineAlignedButtonStyle;
     }
-    // Handle Image and Text
-    remainingWidth = self.sizeToFit.width - kLeadingPadding - kTrailingPadding;
-    if (self.imageContainer) {
-      remainingWidth -= (self.imageContainer.frame.size.width + kSpaceBetweenIconImageAndTextLabel);
-      textLabelSize = [self.textLabel sizeThatFits:CGSizeMake(remainingWidth, CGFLOAT_MAX)];
-      multiLineStyleFrameHeight +=
-          MAX(textLabelSize.height + kVerticalSpaceBetweenButtonAndTextLabelLarge,
-              76.0f);  // TODO: remove hard coded value here (Image side + padding)
-    } else {
-      multiLineStyleFrameHeight += kVerticalSpaceBetweenButtonAndTextLabelSmall;
-      textLabelSize = [self.textLabel sizeThatFits:CGSizeMake(remainingWidth, CGFLOAT_MAX)];
-      multiLineStyleFrameHeight += textLabelSize.height;
-    }
-    self.frameSize = CGSizeMake(self.sizeToFit.width, multiLineStyleFrameHeight);
   }
-  self.textLabel.frame = CGRectMake(0.0f, 0.0f, remainingWidth, textLabelSize.height);
 }
 
-- (void)updateLayoutWithStyle:(MDCBannerViewLayoutMode)layoutMode {
-  CGSize frameSize = self.frameSize;
-  switch (layoutMode) {
+- (CGSize)frameSizeForLayoutStyle:(MDCBannerViewLayoutMode)style
+                    withSizeToFit:(CGSize)sizeToFit {
+  CGFloat frameHeight = 0.0f;
+  switch (style) {
+    case MDCBannerViewLayoutSingleLineStyle: {
+      frameHeight += kTopPaddingSmall + kBottomPadding;
+      NSMutableArray *singleLineViews = [[NSMutableArray alloc] init];
+      [singleLineViews addObject:self.textLabel];
+      if (self.imageContainer) {
+        [singleLineViews addObject:self.imageContainer];
+      }
+      frameHeight += MAX([self maximumHeightAmongViews:singleLineViews], [self maximumButtonHeight]);
+      break;
+    }
+    case MDCBannerViewLayoutMultiLineAlignedButtonStyle: {
+      frameHeight += [self getFrameHeightOfImageAndTextWithSizeToFit:sizeToFit];
+      frameHeight += [self maximumButtonHeight];
+      break;
+    }
+    case MDCBannerViewLayoutMultiLineStackedButtonStyle: {
+      frameHeight += [self getFrameHeightOfImageAndTextWithSizeToFit:sizeToFit];
+      frameHeight += [self buttonsHeightSum];
+      break;
+    }
+  }
+  return CGSizeMake(sizeToFit.width, frameHeight);
+}
+
+- (CGFloat)getFrameHeightOfImageAndTextWithSizeToFit:(CGSize)sizeToFit {
+  CGFloat frameHeight = kTopPaddingLarge + kBottomPadding;
+  CGFloat remainingWidth = sizeToFit.width - kLeadingPadding - kTrailingPadding;
+  CGSize textLabelSize = CGSizeZero;
+  if (self.imageContainer) {
+    remainingWidth -= (self.imageContainer.frame.size.width + kSpaceBetweenIconImageAndTextLabel);
+    textLabelSize = [self.textLabel sizeThatFits:CGSizeMake(remainingWidth, CGFLOAT_MAX)];
+    frameHeight +=
+    MAX(textLabelSize.height + kVerticalSpaceBetweenButtonAndTextLabelLarge,
+        76.0f);  // Hard coded value here (Image side + padding)
+  } else {
+    frameHeight += kVerticalSpaceBetweenButtonAndTextLabelSmall;
+    textLabelSize = [self.textLabel sizeThatFits:CGSizeMake(remainingWidth, CGFLOAT_MAX)];
+    frameHeight += textLabelSize.height;
+  }
+  return frameHeight;
+}
+
+- (void)updateLayoutWithStyle:(MDCBannerViewLayoutMode)style {
+  switch (style) {
     case MDCBannerViewLayoutSingleLineStyle: {
       CGFloat currentXAxis = 0.0f;
       currentXAxis += kLeadingPadding;
+      CGFloat remainingWidth = self.sizeToFit.width;
+      remainingWidth -= (kLeadingPadding + kTrailingPadding);
+      remainingWidth -= [self buttonsWidthSum];
+      remainingWidth -= kHorizontalSpaceBetweenTextLabelAndButton;
       if (self.imageContainer) {
         CGRect originalIconimageContainer = self.imageContainer.frame;
-        self.imageContainer.frame = CGRectMake(
-            currentXAxis, frameSize.height / 2 - originalIconimageContainer.size.height / 2,
-            originalIconimageContainer.size.width, originalIconimageContainer.size.height);
+        self.imageContainer.frame =
+        CGRectMake(currentXAxis, self.frameSize.height / 2 - originalIconimageContainer.size.height / 2,
+                   originalIconimageContainer.size.width, originalIconimageContainer.size.height);
         currentXAxis += self.imageContainer.frame.size.width;
         currentXAxis += kSpaceBetweenIconImageAndTextLabel;
+        remainingWidth -= self.imageContainer.frame.size.width;
+        remainingWidth -= kSpaceBetweenIconImageAndTextLabel;
       }
-      CGRect originalTextLabelFrame = self.textLabel.frame;
+      CGSize textLabelSize = [self.textLabel sizeThatFits:CGSizeMake(remainingWidth, CGFLOAT_MAX)];
       self.textLabel.frame =
-          CGRectMake(currentXAxis, frameSize.height / 2 - originalTextLabelFrame.size.height / 2,
-                     originalTextLabelFrame.size.width, originalTextLabelFrame.size.height);
+      CGRectMake(currentXAxis, self.frameSize.height / 2 - textLabelSize.height / 2,
+                 textLabelSize.width, textLabelSize.height);
       currentXAxis += self.textLabelFrame.size.width;
       for (NSUInteger index = 0; index < self.internalButtonFrames.count; ++index) {
         currentXAxis += kButtonHorizontalIntervalSpace;
         CGRect buttonFrame = [self.internalButtonFrames[index] CGRectValue];
         CGRect newButtonFrame =
-            CGRectMake(currentXAxis, frameSize.height / 2 - buttonFrame.size.height / 2,
-                       buttonFrame.size.width, buttonFrame.size.height);
+        CGRectMake(currentXAxis, self.frameSize.height / 2 - buttonFrame.size.height / 2,
+                   buttonFrame.size.width, buttonFrame.size.height);
         self.internalButtonFrames[index] = [NSValue valueWithCGRect:newButtonFrame];
         currentXAxis += newButtonFrame.size.width;
       }
@@ -157,16 +195,18 @@
       CGFloat currentYAxis = 0.0f;
       currentYAxis += kTopPaddingLarge;
       currentXAxis += kLeadingPadding;
+      CGFloat remainingWidth = self.sizeToFit.width - kLeadingPadding - kTrailingPadding;
       if (self.imageContainer) {
         CGSize originalImageSize = self.imageContainerFrame.size;
-        self.imageContainer.frame = CGRectMake(currentXAxis, currentYAxis, originalImageSize.width,
-                                               originalImageSize.height);
+        self.imageContainer.frame = CGRectMake(
+                                          currentXAxis, currentYAxis, originalImageSize.width, originalImageSize.height);
         currentXAxis += self.imageContainerFrame.size.width;
         currentXAxis += kSpaceBetweenIconImageAndTextLabel;
+        remainingWidth -= (self.imageContainer.frame.size.width + kSpaceBetweenIconImageAndTextLabel);
       }
-      CGSize originalTextLabelSize = self.textLabelFrame.size;
-      self.textLabel.frame = CGRectMake(currentXAxis, currentYAxis, originalTextLabelSize.width,
-                                        originalTextLabelSize.height);
+      CGSize textLabelSize = [self.textLabel sizeThatFits:CGSizeMake(remainingWidth, CGFLOAT_MAX)];
+      self.textLabel.frame = CGRectMake(currentXAxis, currentYAxis, textLabelSize.width,
+                                        textLabelSize.height);
       currentXAxis = self.frameSize.width;
       currentYAxis = self.frameSize.height;
       currentXAxis -= kTrailingPadding;
@@ -178,10 +218,9 @@
         CGRect buttonFrame = [self.internalButtonFrames[buttonCount - index - 1] CGRectValue];
         currentXAxis -= buttonFrame.size.width;
         CGRect newButtonFrame =
-            CGRectMake(currentXAxis, currentYAxisCenter - buttonFrame.size.height / 2,
-                       buttonFrame.size.width, buttonFrame.size.height);
-        self.internalButtonFrames[buttonCount - index - 1] =
-            [NSValue valueWithCGRect:newButtonFrame];
+        CGRectMake(currentXAxis, currentYAxisCenter - buttonFrame.size.height / 2,
+                   buttonFrame.size.width, buttonFrame.size.height);
+        self.internalButtonFrames[buttonCount - index - 1] = [NSValue valueWithCGRect:newButtonFrame];
         currentXAxis -= kButtonHorizontalIntervalSpace;
       }
       break;
@@ -191,16 +230,18 @@
       CGFloat currentYAxis = 0.0f;
       currentYAxis += kTopPaddingLarge;
       currentXAxis += kLeadingPadding;
+      CGFloat remainingWidth = self.sizeToFit.width - kLeadingPadding - kTrailingPadding;
       if (self.imageContainer) {
         CGSize originalIconImageSize = self.imageContainerFrame.size;
         self.imageContainer.frame = CGRectMake(
-            currentXAxis, currentYAxis, originalIconImageSize.width, originalIconImageSize.height);
+                                          currentXAxis, currentYAxis, originalIconImageSize.width, originalIconImageSize.height);
         currentXAxis += self.imageContainerFrame.size.width;
         currentXAxis += kSpaceBetweenIconImageAndTextLabel;
+        remainingWidth -= (self.imageContainer.frame.size.width + kSpaceBetweenIconImageAndTextLabel);
       }
-      CGSize originalTextLabelSize = self.textLabelFrame.size;
-      self.textLabel.frame = CGRectMake(currentXAxis, currentYAxis, originalTextLabelSize.width,
-                                        originalTextLabelSize.height);
+      CGSize textLabelSize = [self.textLabel sizeThatFits:CGSizeMake(remainingWidth, CGFLOAT_MAX)];
+      self.textLabel.frame = CGRectMake(currentXAxis, currentYAxis, textLabelSize.width,
+                                        textLabelSize.height);
       currentXAxis = self.frameSize.width;
       currentYAxis = self.frameSize.height;
       currentXAxis -= kTrailingPadding;

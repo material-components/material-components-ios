@@ -14,12 +14,6 @@
 
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM(NSInteger, MDCBannerViewLayoutMode) {
-  MDCBannerViewLayoutSingleLineStyle = 0,              // All elements lays on the same line
-  MDCBannerViewLayoutMultiLineStackedButtonStyle = 1,  // Stacked button layout
-  MDCBannerViewLayoutMultiLineAlignedButtonStyle = 2   // All buttons lay on the same line
-};
-
 @class MDCBannerViewLayout;
 
 /**
@@ -57,7 +51,6 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutMode) {
 @property(nonatomic, readonly, assign) CGRect textLabelFrame;
 
 @property(nonatomic, readonly, assign) CGSize frameSize;
-@property(nonatomic, readonly, assign) MDCBannerViewLayoutMode style;
 
 @property(nonatomic, weak, nullable) id<MDCBannerViewLayoutDataSource> dataSource;
 

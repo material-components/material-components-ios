@@ -14,9 +14,14 @@
 
 #import "MDCBannerView.h"
 
-#import "MDCBannerParams.h"
 #import "MDCBannerViewLayout.h"
 #import "MaterialColorScheme.h"
+
+static const CGFloat kIconImageContainerSideLength = 40.0f;
+static const CGFloat kIconImageSideLength = 24.0f;
+static const CGFloat kTextColorOpacity = 0.87f;
+static const CGFloat kTextFontSize = 14.0f;
+static const NSInteger kTextNumberOfLineLimit = 3;
 
 @interface MDCBannerView () <MDCBannerViewLayoutDataSource>
 
