@@ -386,29 +386,31 @@ static const float kAmbientShadowOpacity = 0.08f;
   [newMaskPath setUsesEvenOddFillRule:YES];
 
   // Animate the top layers
-  CABasicAnimation *topLayerAnimation = [CABasicAnimation animationWithKeyPath:@"path"];
+  NSString *shadowPathKey = @"shadowPath";
+  CABasicAnimation *topLayerAnimation = [CABasicAnimation animationWithKeyPath:shadowPathKey];
   topLayerAnimation.fromValue = (__bridge id)currentLayerPath.CGPath;
   topLayerAnimation.toValue = (__bridge id)newLayerPath.CGPath;
   topLayerAnimation.duration = duration;
-  [self.topShadow addAnimation:topLayerAnimation forKey:@"path"];
-  CABasicAnimation *bottomLayerAnimation = [CABasicAnimation animationWithKeyPath:@"path"];
+  [self.topShadow addAnimation:topLayerAnimation forKey:shadowPathKey];
+  CABasicAnimation *bottomLayerAnimation = [CABasicAnimation animationWithKeyPath:shadowPathKey];
   bottomLayerAnimation.fromValue = (__bridge id)currentLayerPath.CGPath;
   bottomLayerAnimation.toValue = (__bridge id)newLayerPath.CGPath;
   bottomLayerAnimation.duration = duration;
-  [self.bottomShadow addAnimation:bottomLayerAnimation forKey:@"path"];
+  [self.bottomShadow addAnimation:bottomLayerAnimation forKey:shadowPathKey];
 
   // Animate the masks
   if (self.shadowMaskEnabled) {
-    CABasicAnimation *topMaskLayerAnimation = [CABasicAnimation animationWithKeyPath:@"path"];
+    NSString *pathKey = @"path";
+    CABasicAnimation *topMaskLayerAnimation = [CABasicAnimation animationWithKeyPath:pathKey];
     topMaskLayerAnimation.fromValue = (__bridge id)currentMaskPath.CGPath;
     topMaskLayerAnimation.toValue = (__bridge id)newMaskPath.CGPath;
     topMaskLayerAnimation.duration = duration;
-    [self.topShadowMask addAnimation:topMaskLayerAnimation forKey:@"path"];
-    CABasicAnimation *bottomMaskLayerAnimation = [CABasicAnimation animationWithKeyPath:@"path"];
+    [self.topShadowMask addAnimation:topMaskLayerAnimation forKey:pathKey];
+    CABasicAnimation *bottomMaskLayerAnimation = [CABasicAnimation animationWithKeyPath:pathKey];
     bottomMaskLayerAnimation.fromValue = (__bridge id)currentMaskPath.CGPath;
     bottomMaskLayerAnimation.toValue = (__bridge id)newMaskPath.CGPath;
     bottomMaskLayerAnimation.duration = duration;
-    [self.bottomShadowMask addAnimation:bottomMaskLayerAnimation forKey:@"path"];
+    [self.bottomShadowMask addAnimation:bottomMaskLayerAnimation forKey:pathKey];
   }
 
   // Animate the corner radius
@@ -421,8 +423,8 @@ static const float kAmbientShadowOpacity = 0.08f;
   // Set completion block
   [CATransaction setAnimationDuration:duration];
   [CATransaction setCompletionBlock:^(void){
-    self.topShadow.path = newLayerPath.CGPath;
-    self.bottomShadow.path = newLayerPath.CGPath;
+    self.topShadow.shadowPath = newLayerPath.CGPath;
+    self.bottomShadow.shadowPath = newLayerPath.CGPath;
     self.topShadowMask.path = newMaskPath.CGPath;
     self.bottomShadowMask.path = newMaskPath.CGPath;
     self.cornerRadius = newCornerRadius;
