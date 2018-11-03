@@ -81,12 +81,16 @@ static const CGFloat kAnimationDuration = (CGFloat)0.125;
 }
 
 - (void)animateView {
+  CAMediaTimingFunction *timingFunction =
+      [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
   if (!_animated) {
     [self.customView.shadowLayer animateCornerRadius:kEndCornerRadius
-                                        withDuration:kAnimationDuration];
+                                      timingFunction:timingFunction
+                                            duration:kAnimationDuration];
   } else {
     [self.customView.shadowLayer animateCornerRadius:kStartCornerRadius
-                                        withDuration:kAnimationDuration];
+                                      timingFunction:timingFunction
+                                            duration:kAnimationDuration];
   }
   _animated = !_animated;
 }

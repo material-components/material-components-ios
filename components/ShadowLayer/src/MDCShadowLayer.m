@@ -367,7 +367,9 @@ static const float kAmbientShadowOpacity = 0.08f;
   _shadowPathIsInvalid = NO;
 }
 
-- (void)animateCornerRadius:(CGFloat)cornerRadius withDuration:(NSTimeInterval)duration {
+- (void)animateCornerRadius:(CGFloat)cornerRadius
+             timingFunction:(CAMediaTimingFunction *)timingFunction
+                   duration:(NSTimeInterval)duration {
   CGFloat currentCornerRadius = (self.cornerRadius <= 0) ? 0.001 : self.cornerRadius;
   CGFloat newCornerRadius = (cornerRadius <= 0) ? 0.001 : cornerRadius;
   [CATransaction begin];
@@ -391,11 +393,13 @@ static const float kAmbientShadowOpacity = 0.08f;
   topLayerAnimation.fromValue = (__bridge id)currentLayerPath.CGPath;
   topLayerAnimation.toValue = (__bridge id)newLayerPath.CGPath;
   topLayerAnimation.duration = duration;
+  topLayerAnimation.timingFunction = timingFunction;
   [self.topShadow addAnimation:topLayerAnimation forKey:shadowPathKey];
   CABasicAnimation *bottomLayerAnimation = [CABasicAnimation animationWithKeyPath:shadowPathKey];
   bottomLayerAnimation.fromValue = (__bridge id)currentLayerPath.CGPath;
   bottomLayerAnimation.toValue = (__bridge id)newLayerPath.CGPath;
   bottomLayerAnimation.duration = duration;
+  bottomLayerAnimation.timingFunction = timingFunction;
   [self.bottomShadow addAnimation:bottomLayerAnimation forKey:shadowPathKey];
 
   // Animate the masks
@@ -405,11 +409,13 @@ static const float kAmbientShadowOpacity = 0.08f;
     topMaskLayerAnimation.fromValue = (__bridge id)currentMaskPath.CGPath;
     topMaskLayerAnimation.toValue = (__bridge id)newMaskPath.CGPath;
     topMaskLayerAnimation.duration = duration;
+    topMaskLayerAnimation.timingFunction = timingFunction;
     [self.topShadowMask addAnimation:topMaskLayerAnimation forKey:pathKey];
     CABasicAnimation *bottomMaskLayerAnimation = [CABasicAnimation animationWithKeyPath:pathKey];
     bottomMaskLayerAnimation.fromValue = (__bridge id)currentMaskPath.CGPath;
     bottomMaskLayerAnimation.toValue = (__bridge id)newMaskPath.CGPath;
     bottomMaskLayerAnimation.duration = duration;
+    bottomMaskLayerAnimation.timingFunction = timingFunction;
     [self.bottomShadowMask addAnimation:bottomMaskLayerAnimation forKey:pathKey];
   }
 
