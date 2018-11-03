@@ -372,10 +372,10 @@ static const float kAmbientShadowOpacity = 0.08f;
   CGFloat newCornerRadius = (cornerRadius <= 0) ? 0.001 : cornerRadius;
   [CATransaction begin];
   // Create the paths
-  UIBezierPath *currentLayerPath = [UIBezierPath  bezierPathWithRoundedRect:self.bounds
-                                                                cornerRadius:currentCornerRadius];
+  UIBezierPath *currentLayerPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds
+                                                              cornerRadius:currentCornerRadius];
   UIBezierPath *newLayerPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds
-                                                           cornerRadius:newCornerRadius];
+                                                          cornerRadius:newCornerRadius];
 
   UIBezierPath *currentMaskPath = [self outerMaskPath];
   [currentMaskPath appendPath:currentLayerPath];
@@ -422,7 +422,7 @@ static const float kAmbientShadowOpacity = 0.08f;
 
   // Set completion block
   [CATransaction setAnimationDuration:duration];
-  [CATransaction setCompletionBlock:^(void){
+  [CATransaction setCompletionBlock:^(void) {
     self.topShadow.shadowPath = newLayerPath.CGPath;
     self.bottomShadow.shadowPath = newLayerPath.CGPath;
     self.topShadowMask.path = newMaskPath.CGPath;

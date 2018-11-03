@@ -15,8 +15,8 @@
 #import "ShadowCornerRadiusAnimationViewController.h"
 
 #import "MaterialAnimationTiming.h"
-#import "MaterialButtons.h"
 #import "MaterialButtons+ButtonThemer.h"
+#import "MaterialButtons.h"
 #import "MaterialShadowLayer.h"
 
 static const CGFloat kStartCornerRadius = (CGFloat)0.001;
@@ -61,7 +61,8 @@ static const CGFloat kAnimationDuration = (CGFloat)0.125;
   [self.button setTitle:@"Animation View" forState:UIControlStateNormal];
   [MDCContainedButtonThemer applyScheme:[[MDCButtonScheme alloc] init] toButton:self.button];
   [self.button sizeToFit];
-  [self.button addTarget:self action:@selector(animateView)
+  [self.button addTarget:self
+                  action:@selector(animateView)
         forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:self.button];
 
@@ -81,20 +82,22 @@ static const CGFloat kAnimationDuration = (CGFloat)0.125;
 
 - (void)animateView {
   if (!_animated) {
-    [self.customView.shadowLayer animateCornerRadius:kEndCornerRadius withDuration:kAnimationDuration];
+    [self.customView.shadowLayer animateCornerRadius:kEndCornerRadius
+                                        withDuration:kAnimationDuration];
   } else {
-    [self.customView.shadowLayer animateCornerRadius:kStartCornerRadius withDuration:kAnimationDuration];
+    [self.customView.shadowLayer animateCornerRadius:kStartCornerRadius
+                                        withDuration:kAnimationDuration];
   }
   _animated = !_animated;
 }
 
 + (NSDictionary *)catalogMetadata {
   return @{
-           @"breadcrumbs": @[ @"Shadow", @"Shadow Corner Animation" ],
-           @"description": @"Animate shadows within a CABasicAnimation.",
-           @"primaryDemo": @NO,
-           @"presentable": @NO,
-           };
+    @"breadcrumbs" : @[ @"Shadow", @"Shadow Corner Animation" ],
+    @"description" : @"Animate shadows within a CABasicAnimation.",
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
+  };
 }
 
 @end
