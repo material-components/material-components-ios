@@ -78,7 +78,7 @@
 
 - (void)animateCornerRadius:(CGFloat)cornerRadius
              timingFunction:(CAMediaTimingFunction *)timingFunction
-                  duuration:(NSTimeInterval)duration;
+                  duration:(NSTimeInterval)duration;
 
 @end
 
