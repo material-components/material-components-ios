@@ -214,6 +214,8 @@ static const float kAmbientShadowOpacity = 0.08f;
     _topShadow.mask = _topShadowMask;
     _bottomShadow.mask = _bottomShadowMask;
   }
+  self.shadowPath =
+      [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:cornerRadius].CGPath;
 }
 
 - (void)setShadowPath:(CGPathRef)shadowPath {
