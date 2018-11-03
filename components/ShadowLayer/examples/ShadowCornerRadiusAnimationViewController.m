@@ -14,25 +14,86 @@
 
 #import "ShadowCornerRadiusAnimationViewController.h"
 
-@interface ShadowCornerRadiusAnimationViewController ()
+#import "MaterialAnimationTiming.h"
+#import "MaterialButtons.h"
+#import "MaterialButtons+ButtonThemer.h"
+#import "MaterialShadowLayer.h"
+
+static const CGFloat kStartCornerRadius = (CGFloat)0.001;
+static const CGFloat kEndCornerRadius = (CGFloat)25.0;
+
+@interface CustomView : UIView
 
 @end
 
-@implementation ShadowCornerRadiusAnimationViewController
+@implementation CustomView
+
++ (Class)layerClass {
+  return [MDCShadowLayer class];
+}
+
+- (MDCShadowLayer *)shadowLayer {
+  return (MDCShadowLayer *)self.layer;
+}
+
+- (void)setElevation:(CGFloat)points {
+  [(MDCShadowLayer *)self.layer setElevation:points];
+}
+
+@end
+
+@interface ShadowCornerRadiusAnimationViewController ()
+@property(nonatomic, strong, nullable) MDCButton *button;
+@property(nonatomic, strong, nullable) CustomView *customView;
+@end
+
+@implementation ShadowCornerRadiusAnimationViewController {
+  BOOL _animated;
+}
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
+  [super viewDidLoad];
+
+  _animated = NO;
+  self.view.backgroundColor = UIColor.whiteColor;
+  self.button = [[MDCButton alloc] init];
+  [self.button setTitle:@"Animation View" forState:UIControlStateNormal];
+  [MDCContainedButtonThemer applyScheme:[[MDCButtonScheme alloc] init] toButton:self.button];
+  [self.button sizeToFit];
+  [self.button addTarget:self action:@selector(animateView)
+        forControlEvents:UIControlEventTouchUpInside];
+  [self.view addSubview:self.button];
+
+  self.customView = [[CustomView alloc] initWithFrame:CGRectZero];
+  self.customView.backgroundColor = UIColor.lightGrayColor;
+  [self.customView setElevation:(CGFloat)8.0];
+  [self.view addSubview:self.customView];
 }
 
-/*
-#pragma mark - Navigation
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+  self.button.center = CGPointMake(self.view.center.x, self.view.center.y - 100);
+  self.customView.bounds = CGRectMake(0, 0, 100, 100);
+  self.customView.center = CGPointMake(self.view.center.x, self.view.center.y + 20);
 }
-*/
+
+- (void)animateView {
+  if (!_animated) {
+    [self.customView.shadowLayer animateCornerRadius:kEndCornerRadius];
+  } else {
+    [self.customView.shadowLayer animateCornerRadius:kStartCornerRadius];
+  }
+  _animated = !_animated;
+}
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+           @"breadcrumbs": @[ @"Shadow", @"Shadow Corner Animation" ],
+           @"description": @"Animate shadows within a CABasicAnimation.",
+           @"primaryDemo": @NO,
+           @"presentable": @NO,
+           };
+}
 
 @end
