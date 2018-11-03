@@ -360,6 +360,21 @@ static const float kAmbientShadowOpacity = 0.08f;
   _shadowPathIsInvalid = NO;
 }
 
+- (void)animateCornerRadius:(CGFloat)cornerRadius {
+  CGFloat currentCornerRadius = (self.cornerRadius <= 0) ? 0.001 : self.cornerRadius;
+  CGFloat newCornerRadius = (cornerRadius <= 0) ? 0.001 : cornerRadius;
+  [CATransaction begin];
+  // Create the paths
+
+  // Animate the top layers
+
+  // Animate the masks
+
+  // Set completion block
+
+  [CATransaction commit];
+}
+
 @end
 
 @implementation MDCPendingAnimation

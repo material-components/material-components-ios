@@ -76,6 +76,8 @@
  */
 @property(nonatomic, getter=isShadowMaskEnabled, assign) BOOL shadowMaskEnabled;
 
+- (void)animateCornerRadius:(CGFloat)cornerRadius;
+
 @end
 
 /**
