@@ -274,11 +274,7 @@ static const float kAmbientShadowOpacity = 0.08f;
 // of the view is no obscured by the shadow the top/bottom pseudo shadow layers
 // cast.
 - (void)configureShadowLayerMaskForLayer:(CAShapeLayer *)maskLayer {
-  CGSize shadowSpread = [MDCShadowLayer shadowSpreadForElevation:kShadowElevationDialog];
-  CGRect bounds = self.bounds;
-  CGRect maskRect = CGRectInset(bounds, -shadowSpread.width * 2, -shadowSpread.height * 2);
-
-  UIBezierPath *path = [UIBezierPath bezierPathWithRect:maskRect];
+  UIBezierPath *path = [self outerMaskPath];
   UIBezierPath *innerPath = nil;
   if (self.shadowPath != nil) {
     innerPath = [UIBezierPath bezierPathWithCGPath:(_Nonnull CGPathRef)self.shadowPath];
@@ -290,11 +286,22 @@ static const float kAmbientShadowOpacity = 0.08f;
   [path appendPath:innerPath];
   [path setUsesEvenOddFillRule:YES];
 
-  maskLayer.position = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds));
-  maskLayer.bounds = maskRect;
+  maskLayer.position = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
+  maskLayer.bounds = [self maskRect];
   maskLayer.path = path.CGPath;
   maskLayer.fillRule = kCAFillRuleEvenOdd;
   maskLayer.fillColor = [UIColor blackColor].CGColor;
+}
+
+- (CGRect)maskRect {
+  CGSize shadowSpread = [MDCShadowLayer shadowSpreadForElevation:kShadowElevationDialog];
+  CGRect bounds = self.bounds;
+  return CGRectInset(bounds, -shadowSpread.width * 2, -shadowSpread.height * 2);
+}
+
+- (UIBezierPath *)outerMaskPath {
+  UIBezierPath *path = [UIBezierPath bezierPathWithRect:[self maskRect]];
+  return path;
 }
 
 - (void)setElevation:(CGFloat)elevation {
@@ -365,13 +372,61 @@ static const float kAmbientShadowOpacity = 0.08f;
   CGFloat newCornerRadius = (cornerRadius <= 0) ? 0.001 : cornerRadius;
   [CATransaction begin];
   // Create the paths
+  UIBezierPath *currentLayerPath = [UIBezierPath  bezierPathWithRoundedRect:self.bounds
+                                                                cornerRadius:currentCornerRadius];
+  UIBezierPath *newLayerPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds
+                                                           cornerRadius:newCornerRadius];
+
+  UIBezierPath *currentMaskPath = [self outerMaskPath];
+  [currentMaskPath appendPath:currentLayerPath];
+  [currentMaskPath setUsesEvenOddFillRule:YES];
+
+  UIBezierPath *newMaskPath = [self outerMaskPath];
+  [newMaskPath appendPath:newLayerPath];
+  [newMaskPath setUsesEvenOddFillRule:YES];
 
   // Animate the top layers
+  CABasicAnimation *topLayerAnimation = [CABasicAnimation animationWithKeyPath:@"path"];
+  topLayerAnimation.fromValue = (__bridge id)currentLayerPath.CGPath;
+  topLayerAnimation.toValue = (__bridge id)newLayerPath.CGPath;
+  topLayerAnimation.duration = 3.0;
+  [self.topShadow addAnimation:topLayerAnimation forKey:@"path"];
+  CABasicAnimation *bottomLayerAnimation = [CABasicAnimation animationWithKeyPath:@"path"];
+  bottomLayerAnimation.fromValue = (__bridge id)currentLayerPath.CGPath;
+  bottomLayerAnimation.toValue = (__bridge id)newLayerPath.CGPath;
+  bottomLayerAnimation.duration = 3.0;
+  [self.bottomShadow addAnimation:bottomLayerAnimation forKey:@"path"];
 
   // Animate the masks
+  if (self.shadowMaskEnabled) {
+    CABasicAnimation *topMaskLayerAnimation = [CABasicAnimation animationWithKeyPath:@"path"];
+    topMaskLayerAnimation.fromValue = (__bridge id)currentMaskPath.CGPath;
+    topMaskLayerAnimation.toValue = (__bridge id)newMaskPath.CGPath;
+    topMaskLayerAnimation.duration = 3.0;
+    [self.topShadowMask addAnimation:topMaskLayerAnimation forKey:@"path"];
+    CABasicAnimation *bottomMaskLayerAnimation = [CABasicAnimation animationWithKeyPath:@"path"];
+    bottomMaskLayerAnimation.fromValue = (__bridge id)currentMaskPath.CGPath;
+    bottomMaskLayerAnimation.toValue = (__bridge id)newMaskPath.CGPath;
+    bottomMaskLayerAnimation.duration = 3.0;
+    [self.bottomShadowMask addAnimation:bottomMaskLayerAnimation forKey:@"path"];
+  }
+
+  // Animate the corner radius
+  CABasicAnimation *cornerRadiusAnimation = [CABasicAnimation animationWithKeyPath:@"cornerRadius"];
+  cornerRadiusAnimation.fromValue = @((CGFloat)currentCornerRadius);
+  cornerRadiusAnimation.toValue = @((CGFloat)newCornerRadius);
+  cornerRadiusAnimation.duration = 3.0;
+  [self addAnimation:cornerRadiusAnimation forKey:@"cornerRadius"];
 
   // Set completion block
-
+  [CATransaction setAnimationDuration:3.0];
+  [CATransaction setCompletionBlock:^(void){
+    self.topShadow.path = newLayerPath.CGPath;
+    self.bottomShadow.path = newLayerPath.CGPath;
+    self.topShadowMask.path = newMaskPath.CGPath;
+    self.bottomShadowMask.path = newMaskPath.CGPath;
+    self.cornerRadius = newCornerRadius;
+  }];
   [CATransaction commit];
 }
 
