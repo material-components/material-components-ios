@@ -21,6 +21,7 @@
 
 static const CGFloat kStartCornerRadius = (CGFloat)0.001;
 static const CGFloat kEndCornerRadius = (CGFloat)25.0;
+static const CGFloat kAnimationDuration = (CGFloat)0.125;
 
 @interface CustomView : UIView
 
@@ -80,9 +81,9 @@ static const CGFloat kEndCornerRadius = (CGFloat)25.0;
 
 - (void)animateView {
   if (!_animated) {
-    [self.customView.shadowLayer animateCornerRadius:kEndCornerRadius];
+    [self.customView.shadowLayer animateCornerRadius:kEndCornerRadius withDuration:kAnimationDuration];
   } else {
-    [self.customView.shadowLayer animateCornerRadius:kStartCornerRadius];
+    [self.customView.shadowLayer animateCornerRadius:kStartCornerRadius withDuration:kAnimationDuration];
   }
   _animated = !_animated;
 }
