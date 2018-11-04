@@ -21,7 +21,7 @@
 
 static const CGFloat kStartCornerRadius = (CGFloat)0.001;
 static const CGFloat kEndCornerRadius = (CGFloat)25.0;
-static const CGFloat kAnimationDuration = (CGFloat)0.125;
+static const CGFloat kAnimationDuration = (CGFloat)2.5;
 
 @interface CustomView : UIView
 

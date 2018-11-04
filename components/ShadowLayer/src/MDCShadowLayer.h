@@ -77,8 +77,8 @@
 @property(nonatomic, getter=isShadowMaskEnabled, assign) BOOL shadowMaskEnabled;
 
 /**
- Used to animate a MaterialShadowLayer within an animation, if animating the @c cornerRadius does not
- work for your use case please use this.
+ Used to animate a MaterialShadowLayer within an animation, if animating the @c cornerRadius does
+ not work for your use case please use this.
 
  @note At the end of the animation the corner radius is set to your desired corner radius.
 
@@ -87,8 +87,8 @@
  @param duration The duration of the animation
  */
 - (void)animateCornerRadius:(CGFloat)cornerRadius
-             timingFunction:(CAMediaTimingFunction *)timingFunction
-                  duration:(NSTimeInterval)duration;
+             timingFunction:(nonnull CAMediaTimingFunction *)timingFunction
+                   duration:(NSTimeInterval)duration;
 
 @end
 
