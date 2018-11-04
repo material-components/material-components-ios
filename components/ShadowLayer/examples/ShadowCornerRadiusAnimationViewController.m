@@ -17,7 +17,9 @@
 #import "MaterialAnimationTiming.h"
 #import "MaterialButtons+ButtonThemer.h"
 #import "MaterialButtons.h"
+#import "MaterialColorScheme.h"
 #import "MaterialShadowLayer.h"
+#import "MaterialTypographyScheme.h"
 
 static const CGFloat kStartCornerRadius = (CGFloat)0.001;
 static const CGFloat kEndCornerRadius = (CGFloat)25.0;
@@ -44,6 +46,8 @@ static const CGFloat kAnimationDuration = (CGFloat)2.5;
 @end
 
 @interface ShadowCornerRadiusAnimationViewController ()
+@property(nonatomic, strong, nonnull) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong, nonnull) MDCTypographyScheme *typographyScheme;
 @property(nonatomic, strong, nullable) MDCButton *button;
 @property(nonatomic, strong, nullable) CustomView *customView;
 @end
@@ -52,22 +56,35 @@ static const CGFloat kAnimationDuration = (CGFloat)2.5;
   BOOL _animated;
 }
 
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    _colorScheme = [[MDCSemanticColorScheme alloc] init];
+    _typographyScheme = [[MDCTypographyScheme alloc] init];
+    _button = [[MDCButton alloc] init];
+    _customView = [[CustomView alloc] initWithFrame:CGRectZero];
+  }
+  return self;
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
 
   _animated = NO;
-  self.view.backgroundColor = UIColor.whiteColor;
-  self.button = [[MDCButton alloc] init];
-  [self.button setTitle:@"Animation View" forState:UIControlStateNormal];
-  [MDCContainedButtonThemer applyScheme:[[MDCButtonScheme alloc] init] toButton:self.button];
+  self.view.backgroundColor = self.colorScheme.backgroundColor;
+
+  [self.button setTitle:@"Animate View" forState:UIControlStateNormal];
+  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
+  buttonScheme.typographyScheme = self.typographyScheme;
+  buttonScheme.colorScheme = self.colorScheme;
+  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:self.button];
   [self.button sizeToFit];
   [self.button addTarget:self
                   action:@selector(animateView)
         forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:self.button];
 
-  self.customView = [[CustomView alloc] initWithFrame:CGRectZero];
-  self.customView.backgroundColor = UIColor.lightGrayColor;
+  self.customView.backgroundColor = self.colorScheme.surfaceColor;
   [self.customView setElevation:(CGFloat)8.0];
   [self.view addSubview:self.customView];
 }
