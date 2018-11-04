@@ -370,8 +370,8 @@ static const float kAmbientShadowOpacity = 0.08f;
 - (void)animateCornerRadius:(CGFloat)cornerRadius
              timingFunction:(CAMediaTimingFunction *)timingFunction
                    duration:(NSTimeInterval)duration {
-  CGFloat currentCornerRadius = (self.cornerRadius <= 0) ? 0.001 : self.cornerRadius;
-  CGFloat newCornerRadius = (cornerRadius <= 0) ? 0.001 : cornerRadius;
+  CGFloat currentCornerRadius = (self.cornerRadius <= 0) ? (CGFloat)0.001 : self.cornerRadius;
+  CGFloat newCornerRadius = (cornerRadius <= 0) ? (CGFloat)0.001 : cornerRadius;
   [CATransaction begin];
   // Create the paths
   UIBezierPath *currentLayerPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds
