@@ -424,6 +424,7 @@ static const float kAmbientShadowOpacity = 0.08f;
   cornerRadiusAnimation.fromValue = @((CGFloat)currentCornerRadius);
   cornerRadiusAnimation.toValue = @((CGFloat)newCornerRadius);
   cornerRadiusAnimation.duration = duration;
+  cornerRadiusAnimation.timingFunction = timingFunction;
   [self addAnimation:cornerRadiusAnimation forKey:@"cornerRadius"];
 
   // Set completion block
