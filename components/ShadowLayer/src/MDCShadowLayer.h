@@ -77,8 +77,7 @@
 @property(nonatomic, getter=isShadowMaskEnabled, assign) BOOL shadowMaskEnabled;
 
 /**
- Used to animate a MaterialShadowLayer within an animation, if animating the @c cornerRadius does
- not work for your use case please use this.
+ Animates the layer's corner radius
 
  @note At the end of the animation the corner radius is set to your desired corner radius.
 
