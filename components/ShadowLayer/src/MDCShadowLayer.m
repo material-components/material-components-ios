@@ -369,6 +369,8 @@ static const float kAmbientShadowOpacity = 0.08f;
 - (void)animateCornerRadius:(CGFloat)cornerRadius
          withTimingFunction:(CAMediaTimingFunction *)timingFunction
                    duration:(NSTimeInterval)duration {
+  [CATransaction begin];
+  [CATransaction setDisableActions:NO];
   CGFloat currentCornerRadius = (self.cornerRadius <= 0) ? (CGFloat)0.001 : self.cornerRadius;
   CGFloat newCornerRadius = (cornerRadius <= 0) ? (CGFloat)0.001 : cornerRadius;
   // Create the paths
@@ -379,11 +381,11 @@ static const float kAmbientShadowOpacity = 0.08f;
 
   UIBezierPath *currentMaskPath = [self outerMaskPath];
   [currentMaskPath appendPath:currentLayerPath];
-  [currentMaskPath setUsesEvenOddFillRule:YES];
+  currentMaskPath.usesEvenOddFillRule = YES;
 
   UIBezierPath *newMaskPath = [self outerMaskPath];
   [newMaskPath appendPath:newLayerPath];
-  [newMaskPath setUsesEvenOddFillRule:YES];
+  newMaskPath.usesEvenOddFillRule = YES;
 
   // Animate the top layers
   NSString *shadowPathKey = @"shadowPath";
@@ -429,6 +431,7 @@ static const float kAmbientShadowOpacity = 0.08f;
   cornerRadiusAnimation.timingFunction = timingFunction;
   self.cornerRadius = cornerRadius;
   [self addAnimation:cornerRadiusAnimation forKey:@"cornerRadius"];
+  [CATransaction commit];
 }
 
 @end
