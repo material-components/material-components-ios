@@ -82,8 +82,12 @@
  @note At the end of the animation the corner radius is set to your desired corner radius.
 
  @param cornerRadius The desired corner radius at the end of the animation
+ @param timingFunction The timing function you desire for the animation
+ @param duration The duration of the animation
  */
-- (CAAnimationGroup *)animateCornerRadius:(CGFloat)cornerRadius;
+- (void)animateCornerRadius:(CGFloat)cornerRadius
+             timingFunction:(nonnull CAMediaTimingFunction *)timingFunction
+                   duration:(NSTimeInterval)duration;
 
 @end
 
