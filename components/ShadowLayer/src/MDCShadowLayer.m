@@ -300,8 +300,7 @@ static const float kAmbientShadowOpacity = 0.08f;
 }
 
 - (UIBezierPath *)outerMaskPath {
-  UIBezierPath *path = [UIBezierPath bezierPathWithRect:[self maskRect]];
-  return path;
+  return [UIBezierPath bezierPathWithRect:[self maskRect]];
 }
 
 - (void)setElevation:(CGFloat)elevation {
@@ -368,7 +367,7 @@ static const float kAmbientShadowOpacity = 0.08f;
 }
 
 - (void)animateCornerRadius:(CGFloat)cornerRadius
-             timingFunction:(CAMediaTimingFunction *)timingFunction
+         withTimingFunction:(CAMediaTimingFunction *)timingFunction
                    duration:(NSTimeInterval)duration {
   CGFloat currentCornerRadius = (self.cornerRadius <= 0) ? (CGFloat)0.001 : self.cornerRadius;
   CGFloat newCornerRadius = (cornerRadius <= 0) ? (CGFloat)0.001 : cornerRadius;

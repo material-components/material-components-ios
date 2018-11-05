@@ -86,7 +86,7 @@
  @param duration The duration of the animation
  */
 - (void)animateCornerRadius:(CGFloat)cornerRadius
-             timingFunction:(nonnull CAMediaTimingFunction *)timingFunction
+         withTimingFunction:(nonnull CAMediaTimingFunction *)timingFunction
                    duration:(NSTimeInterval)duration;
 
 @end
