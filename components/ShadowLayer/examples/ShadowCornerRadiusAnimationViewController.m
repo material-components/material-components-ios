@@ -84,13 +84,13 @@ static const CGFloat kAnimationDuration = (CGFloat)2.5;
   CAMediaTimingFunction *timingFunction =
       [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
   if (!_animated) {
-    [self.customView.shadowLayer animateCornerRadius:kEndCornerRadius
-                                      timingFunction:timingFunction
-                                            duration:kAnimationDuration];
+    CAAnimationGroup *group = [self.customView.shadowLayer animateCornerRadius:kEndCornerRadius];
+    group.timingFunction = timingFunction;
+    group.duration = kAnimationDuration;
   } else {
-    [self.customView.shadowLayer animateCornerRadius:kStartCornerRadius
-                                      timingFunction:timingFunction
-                                            duration:kAnimationDuration];
+    CAAnimationGroup *group = [self.customView.shadowLayer animateCornerRadius:kStartCornerRadius];
+    group.timingFunction = timingFunction;
+    group.duration = kAnimationDuration;
   }
   _animated = !_animated;
 }

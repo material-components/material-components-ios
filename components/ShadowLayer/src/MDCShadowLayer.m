@@ -367,12 +367,10 @@ static const float kAmbientShadowOpacity = 0.08f;
   _shadowPathIsInvalid = NO;
 }
 
-- (void)animateCornerRadius:(CGFloat)cornerRadius
-             timingFunction:(CAMediaTimingFunction *)timingFunction
-                   duration:(NSTimeInterval)duration {
+- (CAAnimationGroup *)animateCornerRadius:(CGFloat)cornerRadius {
+  CAAnimationGroup *animationGroup = [[CAAnimationGroup alloc] init];
   CGFloat currentCornerRadius = (self.cornerRadius <= 0) ? (CGFloat)0.001 : self.cornerRadius;
   CGFloat newCornerRadius = (cornerRadius <= 0) ? (CGFloat)0.001 : cornerRadius;
-  [CATransaction begin];
   // Create the paths
   UIBezierPath *currentLayerPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds
                                                               cornerRadius:currentCornerRadius];
@@ -392,14 +390,14 @@ static const float kAmbientShadowOpacity = 0.08f;
   CABasicAnimation *topLayerAnimation = [CABasicAnimation animationWithKeyPath:shadowPathKey];
   topLayerAnimation.fromValue = (__bridge id)currentLayerPath.CGPath;
   topLayerAnimation.toValue = (__bridge id)newLayerPath.CGPath;
-  topLayerAnimation.duration = duration;
-  topLayerAnimation.timingFunction = timingFunction;
+  self.topShadow.shadowPath = newLayerPath.CGPath;
   [self.topShadow addAnimation:topLayerAnimation forKey:shadowPathKey];
+  [animationGroup.animations arrayByAddingObject:topLayerAnimation];
   CABasicAnimation *bottomLayerAnimation = [CABasicAnimation animationWithKeyPath:shadowPathKey];
   bottomLayerAnimation.fromValue = (__bridge id)currentLayerPath.CGPath;
   bottomLayerAnimation.toValue = (__bridge id)newLayerPath.CGPath;
-  bottomLayerAnimation.duration = duration;
-  bottomLayerAnimation.timingFunction = timingFunction;
+  self.bottomShadow.shadowPath = newLayerPath.CGPath;
+  [animationGroup.animations arrayByAddingObject:bottomLayerAnimation];
   [self.bottomShadow addAnimation:bottomLayerAnimation forKey:shadowPathKey];
 
   // Animate the masks
@@ -408,14 +406,14 @@ static const float kAmbientShadowOpacity = 0.08f;
     CABasicAnimation *topMaskLayerAnimation = [CABasicAnimation animationWithKeyPath:pathKey];
     topMaskLayerAnimation.fromValue = (__bridge id)currentMaskPath.CGPath;
     topMaskLayerAnimation.toValue = (__bridge id)newMaskPath.CGPath;
-    topMaskLayerAnimation.duration = duration;
-    topMaskLayerAnimation.timingFunction = timingFunction;
+    self.topShadowMask.path = newMaskPath.CGPath;
+    [animationGroup.animations arrayByAddingObject:topMaskLayerAnimation];
     [self.topShadowMask addAnimation:topMaskLayerAnimation forKey:pathKey];
     CABasicAnimation *bottomMaskLayerAnimation = [CABasicAnimation animationWithKeyPath:pathKey];
     bottomMaskLayerAnimation.fromValue = (__bridge id)currentMaskPath.CGPath;
     bottomMaskLayerAnimation.toValue = (__bridge id)newMaskPath.CGPath;
-    bottomMaskLayerAnimation.duration = duration;
-    bottomMaskLayerAnimation.timingFunction = timingFunction;
+    self.bottomShadowMask.path = newMaskPath.CGPath;
+    [animationGroup.animations arrayByAddingObject:bottomMaskLayerAnimation];
     [self.bottomShadowMask addAnimation:bottomMaskLayerAnimation forKey:pathKey];
   }
 
@@ -423,20 +421,11 @@ static const float kAmbientShadowOpacity = 0.08f;
   CABasicAnimation *cornerRadiusAnimation = [CABasicAnimation animationWithKeyPath:@"cornerRadius"];
   cornerRadiusAnimation.fromValue = @((CGFloat)currentCornerRadius);
   cornerRadiusAnimation.toValue = @((CGFloat)newCornerRadius);
-  cornerRadiusAnimation.duration = duration;
-  cornerRadiusAnimation.timingFunction = timingFunction;
+  self.cornerRadius = newCornerRadius;
   [self addAnimation:cornerRadiusAnimation forKey:@"cornerRadius"];
+  [animationGroup.animations arrayByAddingObject:cornerRadiusAnimation];
 
-  // Set completion block
-  [CATransaction setAnimationDuration:duration];
-  [CATransaction setCompletionBlock:^(void) {
-    self.topShadow.shadowPath = newLayerPath.CGPath;
-    self.bottomShadow.shadowPath = newLayerPath.CGPath;
-    self.topShadowMask.path = newMaskPath.CGPath;
-    self.bottomShadowMask.path = newMaskPath.CGPath;
-    self.cornerRadius = newCornerRadius;
-  }];
-  [CATransaction commit];
+  return animationGroup;
 }
 
 @end
