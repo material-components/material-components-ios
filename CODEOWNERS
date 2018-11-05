@@ -10,37 +10,64 @@
 # *.js    @octocat @github/js
 
 # You can also use email addresses if you prefer.
-/components/AnimationTiming/      @yarneo
-/components/AppBar/               @jverkoey
-/components/BottomAppBar/         @wenyuzhang666
-/components/BottomNavigation/     @romoore
-/components/BottomSheet/          @yarneo
-/components/ButtonBar/            @romoore
-/components/Buttons/              @randallli
-/components/Cards/                @yarneo
-/components/Chips/                @romoore
-/components/CollectionCells/      @yarneo
-/components/CollectionLayoutAttributes/ @ianegordon
-/components/Collections/          @ianegordon
-/components/Dialogs/              @ianegordon
-/components/FeatureHighlight/     @codeman7
-/components/FlexibleHeader/       @jverkoey
-/components/HeaderStackView/      @jverkoey
-/components/Ink/                  @yarneo
-/components/LibraryInfo/          @ajsecord
-/components/List                  @andrewoverton
-/components/MaskedTransition/     @jverkoey
-/components/NavigationBar/        @yarneo @jverkoey
-/components/NavigationDrawer/     @yarneo
-/components/OverlayWindow/        @yarneo
-/components/PageControl/          @randallli
-/components/Palettes/             @ajsecord
-/components/ProgressView/         @romoore
-/components/ShadowElevations/     @ianegordon
-/components/ShadowLayer/          @ianegordon
-/components/Slider/               @romoore
-/components/Snackbar/             @yarneo
-/components/Tabs/                 @romoore
-/components/TextFields/           @andrewoverton
-/components/Themes/               @featherless
-/components/Typography/           @ianegordon
+/components/ActionSheet                     @jverkoey @codeman7 @ianegordon
+/components/ActivityIndicator               @jverkoey @randallli @ianegordon
+/components/AnimationTiming                 @jverkoey @codeman7 
+/components/AppBar                          @jverkoey @randallli 
+/components/Backdrop 
+/components/Banner 
+/components/BottomAppBar                    @ianegordon
+/components/BottomNavigation                @codeman7 @andrewoverton @ianegordon
+/components/BottomSheet                     @jverkoey @codeman7 @yarneo @ianegordon
+/components/ButtonBar                       @jverkoey @yarneo 
+/components/Buttons                         @jverkoey @randallli @codeman7 @andrewoverton @yarneo 
+/components/Cards                           @jverkoey @andrewoverton @yarneo @ianegordon
+/components/Checkboxes                      @ianegordon
+/components/Chips                           @codeman7 
+/components/CollectionCells                 @yarneo @ianegordon
+/components/CollectionLayoutAttributes 
+/components/Collections                     @ianegordon
+/components/DataTables 
+/components/Dialogs                         @jverkoey @galiak11 @randallli @codeman7 @ianegordon
+/components/Dividers 
+/components/FeatureHighlight                @codeman7 @ianegordon
+/components/FlexibleHeader                  @jverkoey 
+/components/HeaderStackView                 @jverkoey 
+/components/ImageList 
+/components/Ink                             @jverkoey @codeman7 @andrewoverton @yarneo @ianegordon
+/components/LibraryInfo                     @jverkoey @ianegordon
+/components/List                            @jverkoey @andrewoverton @ianegordon
+/components/MaskedTransition                @jverkoey @codeman7 
+/components/Menus                           @ianegordon
+/components/NavigationBar                   @jverkoey @ianegordon
+/components/NavigationDrawer                @andrewoverton @yarneo 
+/components/OverlayWindow                   @yarneo 
+/components/PageControl 
+/components/Palettes                        @jverkoey @randallli @codeman7 @romoore 
+/components/private/Application             @jverkoey @ianegordon
+/components/private/Dragons                 @andrewoverton @yarneo @ianegordon
+/components/private/Icons                   @jverkoey @ianegordon
+/components/private/KeyboardWatcher         @ianegordon
+/components/private/Math                    @jverkoey @romoore @ianegordon
+/components/private/Overlay 
+/components/private/ShapeLibrary            @yarneo 
+/components/private/Shapes                  @yarneo 
+/components/private/ThumbTrack              @ianegordon
+/components/private/UIMetrics               @jverkoey 
+/components/ProgressView                    @jverkoey @ianegordon
+/components/RadioButton                     @ianegordon
+/components/schemes/Bidirectionality        @ianegordon
+/components/schemes/Color                   @jverkoey @galiak11 @randallli @codeman7 @romoore @yarneo @ianegordon
+/components/schemes/Shape                   @yarneo 
+/components/schemes/Typography              @jverkoey @codeman7 @ianegordon
+/components/ShadowElevations                @jverkoey @codeman7 @romoore @yarneo @ianegordon
+/components/ShadowLayer                     @jverkoey @codeman7 @yarneo @ianegordon
+/components/SideSheet                       @ianegordon
+/components/Slider                          @randallli @ianegordon
+/components/Snackbar                        @yarneo 
+/components/Switch                          @ianegordon
+/components/Tabs                            @ianegordon
+/components/TextFields                      @andrewoverton 
+/components/Themes                          @jverkoey @galiak11 @randallli @ianegordon
+/components/Tooltips 
+/components/Typography                      @jverkoey @randallli @codeman7 @andrewoverton @ianegordon
