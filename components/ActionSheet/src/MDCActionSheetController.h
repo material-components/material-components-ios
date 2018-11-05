@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialBottomSheet.h"
+#import "MaterialBottomSheet.h" //MaterialComponentsAlpha import
 
 @class MDCActionSheetAction;
 
