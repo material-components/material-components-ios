@@ -1435,7 +1435,7 @@ static BOOL isRunningiOS10_3OrAbove() {
 
   UIScrollView *oldTrackingScrollView = _trackingScrollView;
 
-  CGFloat stashedHeight = self.bounds.size.height;
+  CGFloat stashedHeight = CGRectGetHeight(self.bounds);
   if (_trackingInfo != nil) {
     _trackingInfo.stashedHeight = stashedHeight;
     _trackingInfo.stashedHeightIsValid = YES;
