@@ -485,4 +485,15 @@
   XCTAssertEqual(presentationController.topHandle.hidden, NO);
 }
 
+- (void)testBottomDrawerHandleColor {
+  // When
+  MDCBottomDrawerPresentationController *presentationController =
+  (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
+  presentationController.topHandle = [[UIView alloc] init];
+  presentationController.topHandle.backgroundColor = UIColor.blueColor;
+  self.drawerViewController.topHandleColor = UIColor.redColor;
+  // Then
+  XCTAssertEqualObjects(presentationController.topHandle.backgroundColor, UIColor.redColor);
+}
+
 @end
