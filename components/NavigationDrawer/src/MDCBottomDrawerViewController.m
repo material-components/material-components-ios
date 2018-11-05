@@ -142,6 +142,15 @@
              self.contentViewController.preferredContentSize.height;
 }
 
+- (void)setTopHandleHidden:(BOOL)topHandleHidden {
+  _topHandleHidden = topHandleHidden;
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+    (MDCBottomDrawerPresentationController *)self.presentationController;
+    bottomDrawerPresentationController.topHandleHidden = topHandleHidden;
+  }
+}
+
 #pragma mark UIAccessibilityAction
 
 // Adds the Z gesture for dismissal.

@@ -74,4 +74,10 @@
  */
 @property(nonatomic, weak, nullable) id<MDCBottomDrawerPresentationControllerDelegate> delegate;
 
+/**
+ A Boolean indicating if the top handle of the drawer is hidden or visible.
+ Default is set to YES.
+ */
+@property(nonatomic, assign, getter=isTopHandleHidden) BOOL topHandleHidden;
+
 @end
