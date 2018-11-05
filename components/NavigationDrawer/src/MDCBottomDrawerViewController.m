@@ -146,7 +146,7 @@
   _topHandleHidden = topHandleHidden;
   if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
     MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
-    (MDCBottomDrawerPresentationController *)self.presentationController;
+        (MDCBottomDrawerPresentationController *)self.presentationController;
     bottomDrawerPresentationController.topHandleHidden = topHandleHidden;
   }
 }

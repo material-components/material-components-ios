@@ -101,10 +101,8 @@ static CGFloat kTopHandleYCenter = 6.f;
 
   [self.containerView addSubview:self.scrimView];
 
-  self.topHandle = [[UIView alloc] initWithFrame:CGRectMake(0,
-                                                            0,
-                                                            kTopHandleWidth,
-                                                            kTopHandleHeight)];
+  self.topHandle =
+      [[UIView alloc] initWithFrame:CGRectMake(0, 0, kTopHandleWidth, kTopHandleHeight)];
   self.topHandle.layer.cornerRadius = kTopHandleHeight * 0.5;
   self.topHandle.backgroundColor = MDCPalette.greyPalette.tint300;
   self.topHandle.hidden = self.topHandleHidden;
