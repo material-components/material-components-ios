@@ -477,7 +477,7 @@
 - (void)testBottomDrawerHandleHidden {
   // When
   MDCBottomDrawerPresentationController *presentationController =
-  (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
+      (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
   presentationController.topHandle = [[UIView alloc] init];
   presentationController.topHandle.hidden = YES;
   self.drawerViewController.topHandleHidden = NO;
@@ -488,7 +488,7 @@
 - (void)testBottomDrawerHandleColor {
   // When
   MDCBottomDrawerPresentationController *presentationController =
-  (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
+      (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
   presentationController.topHandle = [[UIView alloc] init];
   presentationController.topHandle.backgroundColor = UIColor.blueColor;
   self.drawerViewController.topHandleColor = UIColor.redColor;
