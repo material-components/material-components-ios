@@ -370,7 +370,7 @@ static const float kAmbientShadowOpacity = 0.08f;
          withTimingFunction:(CAMediaTimingFunction *)timingFunction
                    duration:(NSTimeInterval)duration {
   [CATransaction begin];
-  [CATransaction setDisableActions:NO];
+  [CATransaction setDisableActions:YES];
   CGFloat currentCornerRadius = (self.cornerRadius <= 0) ? (CGFloat)0.001 : self.cornerRadius;
   CGFloat newCornerRadius = (cornerRadius <= 0) ? (CGFloat)0.001 : cornerRadius;
   // Create the paths
