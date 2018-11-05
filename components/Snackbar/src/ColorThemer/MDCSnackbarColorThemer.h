@@ -29,6 +29,15 @@
  */
 + (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme;
 
+/**
+ Applies a color scheme's properties to all snackbar messages for an instance of MDCSnackbarManager.
+
+ @param colorScheme The color scheme to apply to all snackbar messages.
+ @param snackbarManager The MDCSnackbarManager instance to theme.
+ */
++ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme
+               toSnackbarManager:(nonnull MDCSnackbarManager *)snackbarManager;
+
 @end
 
 @interface MDCSnackbarColorThemer (Deprecated)
