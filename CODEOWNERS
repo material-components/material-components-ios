@@ -14,8 +14,6 @@
 /components/ActivityIndicator               @jverkoey @randallli @ianegordon
 /components/AnimationTiming                 @jverkoey @codeman7 
 /components/AppBar                          @jverkoey @randallli 
-/components/Backdrop 
-/components/Banner 
 /components/BottomAppBar                    @ianegordon
 /components/BottomNavigation                @codeman7 @andrewoverton @ianegordon
 /components/BottomSheet                     @jverkoey @codeman7 @yarneo @ianegordon
@@ -25,15 +23,11 @@
 /components/Checkboxes                      @ianegordon
 /components/Chips                           @codeman7 
 /components/CollectionCells                 @yarneo @ianegordon
-/components/CollectionLayoutAttributes 
 /components/Collections                     @ianegordon
-/components/DataTables 
 /components/Dialogs                         @jverkoey @galiak11 @randallli @codeman7 @ianegordon
-/components/Dividers 
 /components/FeatureHighlight                @codeman7 @ianegordon
 /components/FlexibleHeader                  @jverkoey 
 /components/HeaderStackView                 @jverkoey 
-/components/ImageList 
 /components/Ink                             @jverkoey @codeman7 @andrewoverton @yarneo @ianegordon
 /components/LibraryInfo                     @jverkoey @ianegordon
 /components/List                            @jverkoey @andrewoverton @ianegordon
@@ -42,14 +36,12 @@
 /components/NavigationBar                   @jverkoey @ianegordon
 /components/NavigationDrawer                @andrewoverton @yarneo 
 /components/OverlayWindow                   @yarneo 
-/components/PageControl 
 /components/Palettes                        @jverkoey @randallli @codeman7 @romoore 
 /components/private/Application             @jverkoey @ianegordon
 /components/private/Dragons                 @andrewoverton @yarneo @ianegordon
 /components/private/Icons                   @jverkoey @ianegordon
 /components/private/KeyboardWatcher         @ianegordon
 /components/private/Math                    @jverkoey @romoore @ianegordon
-/components/private/Overlay 
 /components/private/ShapeLibrary            @yarneo 
 /components/private/Shapes                  @yarneo 
 /components/private/ThumbTrack              @ianegordon
@@ -69,5 +61,4 @@
 /components/Tabs                            @ianegordon
 /components/TextFields                      @andrewoverton 
 /components/Themes                          @jverkoey @galiak11 @randallli @ianegordon
-/components/Tooltips 
 /components/Typography                      @jverkoey @randallli @codeman7 @andrewoverton @ianegordon
