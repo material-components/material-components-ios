@@ -17,6 +17,16 @@
 #import "MaterialMath.h"
 #import "MDCBottomAppBarAttributes.h"
 
+@interface MDCBottomAppBarLayer (PathGenerators)
+- (UIBezierPath *)drawWithPathToCut:(UIBezierPath *)bottomBarPath yOffset:(CGFloat)yOffset
+                              width:(CGFloat)width height:(CGFloat)height
+                          arcCenter:(CGPoint)arcCenter arcRadius:(CGFloat)arcRadius
+                         startAngle:(CGFloat)startAngle endAngle:(CGFloat)endAngle;
+- (UIBezierPath *)drawWithPlainPath:(UIBezierPath *)bottomBarPath yOffset:(CGFloat)yOffset
+                              width:(CGFloat)width height:(CGFloat)height
+                          arcCenter:(CGPoint)arcCenter arcRadius:(CGFloat)arcRadius;
+@end
+
 @implementation MDCBottomAppBarLayer
 
 + (instancetype)layer {
@@ -106,6 +116,7 @@
   [bottomBarPath addLineToPoint:CGPointMake(arcCenter.x - arcRadius, yOffset)];
   [bottomBarPath addLineToPoint:CGPointMake(arcCenter.x, yOffset)];
   [bottomBarPath addLineToPoint:CGPointMake(arcCenter.x + arcRadius, yOffset)];
+  // The extra line is needed to have the same number of control points in boths paths.
   [bottomBarPath addLineToPoint:CGPointMake(arcCenter.x + arcRadius, yOffset)];
   [bottomBarPath addLineToPoint:CGPointMake(width, yOffset)];
   [bottomBarPath addLineToPoint:CGPointMake(width, height * 2 + yOffset)];
