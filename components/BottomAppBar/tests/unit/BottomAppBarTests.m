@@ -132,6 +132,7 @@
 
 - (int)numberOfPointsInPath:(UIBezierPath *)bezierPath {
   __block int numberOfPoints = 0;
+  if (@available(iOS 11.0, *)) {
   CGPathApplyWithBlock(bezierPath.CGPath, ^(const CGPathElement *_Nonnull element) {
     switch (element->type) {
       case kCGPathElementMoveToPoint:
@@ -153,6 +154,9 @@
     }
   });
   return numberOfPoints;
+  } else {
+    return numberOfPoints;
+  }
 }
 
 @end
