@@ -14,20 +14,27 @@
 
 #import "MaterialBottomAppBar.h"
 
-#import <XCTest/XCTest.h>
 #import <CoreGraphics/CoreGraphics.h>
+#import <XCTest/XCTest.h>
 
-#import "MaterialNavigationBar.h"
 #import "../../src/private/MDCBottomAppBarLayer.h"
+#import "MaterialNavigationBar.h"
 
 @interface MDCBottomAppBarLayer (Testing)
-- (UIBezierPath *)drawWithPathToCut:(UIBezierPath *)bottomBarPath yOffset:(CGFloat)yOffset
-                              width:(CGFloat)width height:(CGFloat)height
-                          arcCenter:(CGPoint)arcCenter arcRadius:(CGFloat)arcRadius
-                         startAngle:(CGFloat)startAngle endAngle:(CGFloat)endAngle;
-- (UIBezierPath *)drawWithPlainPath:(UIBezierPath *)bottomBarPath yOffset:(CGFloat)yOffset
-                              width:(CGFloat)width height:(CGFloat)height
-                          arcCenter:(CGPoint)arcCenter arcRadius:(CGFloat)arcRadius;
+- (UIBezierPath *)drawWithPathToCut:(UIBezierPath *)bottomBarPath
+                            yOffset:(CGFloat)yOffset
+                              width:(CGFloat)width
+                             height:(CGFloat)height
+                          arcCenter:(CGPoint)arcCenter
+                          arcRadius:(CGFloat)arcRadius
+                         startAngle:(CGFloat)startAngle
+                           endAngle:(CGFloat)endAngle;
+- (UIBezierPath *)drawWithPlainPath:(UIBezierPath *)bottomBarPath
+                            yOffset:(CGFloat)yOffset
+                              width:(CGFloat)width
+                             height:(CGFloat)height
+                          arcCenter:(CGPoint)arcCenter
+                          arcRadius:(CGFloat)arcRadius;
 @end
 
 @interface MDCBottomAppBarView (Testing)
@@ -104,11 +111,17 @@
   CGPoint fakeCenter = CGPointMake(207, 38);
 
   // When
-  fakeToPath = [bottomAppLayer drawWithPathToCut:fakeToPath yOffset:fakeYOffset width:fakeWidth
+  fakeToPath = [bottomAppLayer drawWithPathToCut:fakeToPath
+                                         yOffset:fakeYOffset
+                                           width:fakeWidth
                                           height:fakeHeight
                                        arcCenter:fakeCenter
-                                       arcRadius:fakeArcRadius startAngle:M_PI endAngle:M_PI_2];
-  fakeFromPath = [bottomAppLayer drawWithPlainPath:fakeFromPath yOffset:fakeYOffset width:fakeWidth
+                                       arcRadius:fakeArcRadius
+                                      startAngle:M_PI
+                                        endAngle:M_PI_2];
+  fakeFromPath = [bottomAppLayer drawWithPlainPath:fakeFromPath
+                                           yOffset:fakeYOffset
+                                             width:fakeWidth
                                             height:fakeHeight
                                          arcCenter:fakeCenter
                                          arcRadius:fakeArcRadius];
@@ -119,7 +132,7 @@
 
 - (int)numberOfPointsInPath:(UIBezierPath *)bezierPath {
   __block int numberOfPoints = 0;
-  CGPathApplyWithBlock(bezierPath.CGPath, ^(const CGPathElement * _Nonnull element) {
+  CGPathApplyWithBlock(bezierPath.CGPath, ^(const CGPathElement *_Nonnull element) {
     switch (element->type) {
       case kCGPathElementMoveToPoint:
         numberOfPoints = numberOfPoints + 1;

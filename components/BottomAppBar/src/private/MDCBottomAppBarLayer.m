@@ -18,13 +18,20 @@
 #import "MDCBottomAppBarAttributes.h"
 
 @interface MDCBottomAppBarLayer (PathGenerators)
-- (UIBezierPath *)drawWithPathToCut:(UIBezierPath *)bottomBarPath yOffset:(CGFloat)yOffset
-                              width:(CGFloat)width height:(CGFloat)height
-                          arcCenter:(CGPoint)arcCenter arcRadius:(CGFloat)arcRadius
-                         startAngle:(CGFloat)startAngle endAngle:(CGFloat)endAngle;
-- (UIBezierPath *)drawWithPlainPath:(UIBezierPath *)bottomBarPath yOffset:(CGFloat)yOffset
-                              width:(CGFloat)width height:(CGFloat)height
-                          arcCenter:(CGPoint)arcCenter arcRadius:(CGFloat)arcRadius;
+- (UIBezierPath *)drawWithPathToCut:(UIBezierPath *)bottomBarPath
+                            yOffset:(CGFloat)yOffset
+                              width:(CGFloat)width
+                             height:(CGFloat)height
+                          arcCenter:(CGPoint)arcCenter
+                          arcRadius:(CGFloat)arcRadius
+                         startAngle:(CGFloat)startAngle
+                           endAngle:(CGFloat)endAngle;
+- (UIBezierPath *)drawWithPlainPath:(UIBezierPath *)bottomBarPath
+                            yOffset:(CGFloat)yOffset
+                              width:(CGFloat)width
+                             height:(CGFloat)height
+                          arcCenter:(CGPoint)arcCenter
+                          arcRadius:(CGFloat)arcRadius;
 @end
 
 @implementation MDCBottomAppBarLayer
