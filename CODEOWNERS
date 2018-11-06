@@ -36,12 +36,12 @@
 /components/NavigationBar                   @jverkoey @ianegordon
 /components/NavigationDrawer                @andrewoverton @yarneo 
 /components/OverlayWindow                   @yarneo 
-/components/Palettes                        @jverkoey @randallli @codeman7 @romoore 
+/components/Palettes                        @jverkoey @randallli @codeman7
 /components/private/Application             @jverkoey @ianegordon
 /components/private/Dragons                 @andrewoverton @yarneo @ianegordon
 /components/private/Icons                   @jverkoey @ianegordon
 /components/private/KeyboardWatcher         @ianegordon
-/components/private/Math                    @jverkoey @romoore @ianegordon
+/components/private/Math                    @jverkoey @ianegordon
 /components/private/ShapeLibrary            @yarneo 
 /components/private/Shapes                  @yarneo 
 /components/private/ThumbTrack              @ianegordon
@@ -49,10 +49,10 @@
 /components/ProgressView                    @jverkoey @ianegordon
 /components/RadioButton                     @ianegordon
 /components/schemes/Bidirectionality        @ianegordon
-/components/schemes/Color                   @jverkoey @galiak11 @randallli @codeman7 @romoore @yarneo @ianegordon
+/components/schemes/Color                   @jverkoey @galiak11 @randallli @codeman7 @yarneo @ianegordon
 /components/schemes/Shape                   @yarneo 
 /components/schemes/Typography              @jverkoey @codeman7 @ianegordon
-/components/ShadowElevations                @jverkoey @codeman7 @romoore @yarneo @ianegordon
+/components/ShadowElevations                @jverkoey @codeman7 @yarneo @ianegordon
 /components/ShadowLayer                     @jverkoey @codeman7 @yarneo @ianegordon
 /components/SideSheet                       @ianegordon
 /components/Slider                          @randallli @ianegordon
