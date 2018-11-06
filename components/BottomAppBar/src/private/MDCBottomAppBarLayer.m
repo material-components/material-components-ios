@@ -48,7 +48,6 @@
   CGFloat halfAngle = acosf((float)((navigationBarYOffset - floatingButton.center.y) / arcRadius));
   CGFloat startAngle = (float)M_PI / 2.0f + halfAngle;
   CGFloat endAngle = (float)M_PI / 2.0f - halfAngle;
-  CGFloat halfOfHypotenuseLength = sinf((float)halfAngle) * arcRadius;
 
   CGFloat width = CGRectGetWidth(rect);
   CGFloat height = CGRectGetHeight(rect);
@@ -68,7 +67,7 @@
                       width:width
                      height:height
                   arcCenter:floatingButton.center
-           hypotenuseLength:halfOfHypotenuseLength * 2];
+                  arcRadius:arcRadius];
   }
 
   return bottomBarPath.CGPath;
@@ -102,12 +101,12 @@
                               width:(CGFloat)width
                              height:(CGFloat)height
                           arcCenter:(CGPoint)arcCenter
-                   hypotenuseLength:(CGFloat)hypotenuseLength {
-  CGFloat halfOfHypotenuseLength = hypotenuseLength / 2;
+                          arcRadius:(CGFloat)arcRadius {
   [bottomBarPath moveToPoint:CGPointMake(0, yOffset)];
-  [bottomBarPath addLineToPoint:CGPointMake(arcCenter.x - halfOfHypotenuseLength, yOffset)];
+  [bottomBarPath addLineToPoint:CGPointMake(arcCenter.x - arcRadius, yOffset)];
   [bottomBarPath addLineToPoint:CGPointMake(arcCenter.x, yOffset)];
-  [bottomBarPath addLineToPoint:CGPointMake(arcCenter.x + halfOfHypotenuseLength, yOffset)];
+  [bottomBarPath addLineToPoint:CGPointMake(arcCenter.x + arcRadius, yOffset)];
+  [bottomBarPath addLineToPoint:CGPointMake(arcCenter.x + arcRadius, yOffset)];
   [bottomBarPath addLineToPoint:CGPointMake(width, yOffset)];
   [bottomBarPath addLineToPoint:CGPointMake(width, height * 2 + yOffset)];
   [bottomBarPath addLineToPoint:CGPointMake(0, height * 2 + yOffset)];
