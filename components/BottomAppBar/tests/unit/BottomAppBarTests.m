@@ -118,7 +118,7 @@
                                        arcCenter:fakeCenter
                                        arcRadius:fakeArcRadius
                                       startAngle:(CGFloat)M_PI
-                                        endAngle:(CGFloat)gM_PI_2];
+                                        endAngle:(CGFloat)M_PI_2];
   fakeFromPath = [bottomAppLayer drawWithPlainPath:fakeFromPath
                                            yOffset:fakeYOffset
                                              width:fakeWidth
