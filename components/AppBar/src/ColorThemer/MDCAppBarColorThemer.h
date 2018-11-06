@@ -44,6 +44,22 @@
 + (void)applySurfaceVariantWithColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                     toAppBarViewController:(nonnull MDCAppBarViewController *)appBarViewController;
 
+@end
+
+@interface MDCAppBarColorThemer (ToBeDeprecated)
+
+/**
+ Applies a color scheme's properties to an MDCAppBar.
+
+ @warning This method will soon be deprecated. Consider using @c +applySemanticColorScheme:toAppBar:
+ instead. Learn more at components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
+
+ @param colorScheme The color scheme to apply to the component instance.
+ @param appBar A component instance to which the color scheme should be applied.
+ */
++ (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
+                toAppBar:(nonnull MDCAppBar *)appBar;
+
 /**
  Applies a color scheme's properties to an MDCAppBar using the primary mapping.
 
@@ -65,21 +81,5 @@
  */
 + (void)applySurfaceVariantWithColorScheme:(nonnull id<MDCColorScheming>)colorScheme
                                   toAppBar:(nonnull MDCAppBar *)appBar;
-
-@end
-
-@interface MDCAppBarColorThemer (ToBeDeprecated)
-
-/**
- Applies a color scheme's properties to an MDCAppBar.
-
- @warning This method will soon be deprecated. Consider using @c +applySemanticColorScheme:toAppBar:
- instead. Learn more at components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
-
- @param colorScheme The color scheme to apply to the component instance.
- @param appBar A component instance to which the color scheme should be applied.
- */
-+ (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
-                toAppBar:(nonnull MDCAppBar *)appBar;
 
 @end
