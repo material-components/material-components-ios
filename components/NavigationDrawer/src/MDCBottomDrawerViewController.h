@@ -50,6 +50,11 @@
 @property(nonatomic, readonly) MDCBottomDrawerState drawerState;
 
 /**
+ The color applied to the background scrim.
+ */
+@property(nonatomic, strong, nullable) UIColor *scrimColor;
+
+/**
  Sets the top corners radius for an MDCBottomDrawerState drawerState
 
  @param radius The corner radius to set the top corners.

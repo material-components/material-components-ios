@@ -12,17 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCBottomDrawerColorThemer.h"
+#import <UIKit/UIKit.h>
 
-static const CGFloat kScrimAlpha = (CGFloat)0.32;
-
-@implementation MDCBottomDrawerColorThemer
-
-+ (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
-                  toBottomDrawer:(nonnull MDCBottomDrawerViewController *)bottomDrawer {
-  bottomDrawer.headerViewController.view.backgroundColor = colorScheme.surfaceColor;
-  bottomDrawer.contentViewController.view.backgroundColor = colorScheme.surfaceColor;
-  bottomDrawer.scrimColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kScrimAlpha];
-}
+@interface ShadowCornerRadiusAnimationViewController : UIViewController
 
 @end

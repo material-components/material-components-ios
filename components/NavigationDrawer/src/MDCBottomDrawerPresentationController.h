@@ -65,6 +65,11 @@
 @property(nonatomic, weak, nullable) UIScrollView *trackingScrollView;
 
 /**
+  The color applied to the background scrim.
+ */
+@property(nonatomic, strong, nullable) UIColor *scrimColor;
+
+/**
  Delegate to tell the presenter when the drawer will change state.
  */
 @property(nonatomic, weak, nullable) id<MDCBottomDrawerPresentationControllerDelegate> delegate;
