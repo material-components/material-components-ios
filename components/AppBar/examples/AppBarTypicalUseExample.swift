@@ -60,7 +60,11 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
 
     // Step 2: Register the App Bar views.
     view.addSubview(appBarViewController.view)
+    #if swift(>=4.2)
+    appBarViewController.didMove(toParent: self)
+    #else
     appBarViewController.didMove(toParentViewController: self)
+    #endif
 
     self.navigationItem.rightBarButtonItem =
       UIBarButtonItem(title: "Right", style: .done, target: nil, action: nil)
