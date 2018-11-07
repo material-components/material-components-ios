@@ -18,9 +18,9 @@
 #import "MaterialPalettes.h"
 #import "private/MDCBottomDrawerContainerViewController.h"
 
-static CGFloat kTopHandleHeight = 2.f;
-static CGFloat kTopHandleWidth = 24.f;
-static CGFloat kTopHandleYCenter = 6.f;
+static CGFloat kTopHandleHeight = (CGFloat)2.0;
+static CGFloat kTopHandleWidth = (CGFloat)24.0;
+static CGFloat kTopHandleYCenter = (CGFloat)6.0;
 
 @interface MDCBottomDrawerPresentationController () <UIGestureRecognizerDelegate,
                                                      MDCBottomDrawerContainerViewControllerDelegate>
@@ -103,11 +103,12 @@ static CGFloat kTopHandleYCenter = 6.f;
 
   self.topHandle =
       [[UIView alloc] initWithFrame:CGRectMake(0, 0, kTopHandleWidth, kTopHandleHeight)];
-  self.topHandle.layer.cornerRadius = kTopHandleHeight * 0.5f;
+  self.topHandle.layer.cornerRadius = kTopHandleHeight * (CGFloat)0.5;
   self.topHandle.backgroundColor = MDCPalette.greyPalette.tint300;
   self.topHandle.hidden = self.topHandleHidden;
   self.topHandle.center = CGPointMake(
-      bottomDrawerContainerViewController.contentViewController.view.center.x, kTopHandleYCenter);
+      CGRectGetMidX(bottomDrawerContainerViewController.contentViewController.view.frame),
+                                      kTopHandleYCenter);
   self.topHandle.autoresizingMask =
       UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
   if (bottomDrawerContainerViewController.headerViewController) {
@@ -221,7 +222,7 @@ static CGFloat kTopHandleYCenter = 6.f;
   if ([strongDelegate respondsToSelector:@selector(bottomDrawerTopTransitionRatio:
                                                                   transitionRatio:)]) {
     [strongDelegate bottomDrawerTopTransitionRatio:self transitionRatio:transitionRatio];
-    self.topHandle.alpha = 1.f - transitionRatio;
+    self.topHandle.alpha = (CGFloat)1.0 - transitionRatio;
   }
 }
 

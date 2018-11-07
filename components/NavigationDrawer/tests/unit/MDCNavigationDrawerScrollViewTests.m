@@ -469,11 +469,18 @@
   [self.presentationController presentationTransitionWillBegin];
   // Then
   XCTAssertNotNil(self.presentationController.topHandle);
-  XCTAssertEqual(CGRectGetWidth(self.presentationController.topHandle.frame), 24.f);
-  XCTAssertEqual(CGRectGetHeight(self.presentationController.topHandle.frame), 2.f);
-  XCTAssertEqual(self.presentationController.topHandle.layer.cornerRadius, 1.f);
+  XCTAssertEqualWithAccuracy(CGRectGetWidth(self.presentationController.topHandle.frame),
+                             (CGFloat)24.0,
+                             (CGFloat)0.001);
+  XCTAssertEqualWithAccuracy(CGRectGetHeight(self.presentationController.topHandle.frame),
+                             (CGFloat)2.0,
+                             (CGFloat)0.001);
+  XCTAssertEqualWithAccuracy(self.presentationController.topHandle.layer.cornerRadius,
+                             (CGFloat)1.0,
+                             (CGFloat)0.001);
   XCTAssertEqual(self.presentationController.topHandle.hidden, YES);
 }
+
 - (void)testBottomDrawerHandleHidden {
   // When
   MDCBottomDrawerPresentationController *presentationController =
