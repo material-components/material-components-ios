@@ -108,7 +108,7 @@ static CGFloat kTopHandleYCenter = (CGFloat)6.0;
   self.topHandle.hidden = self.topHandleHidden;
   self.topHandle.center = CGPointMake(
       CGRectGetMidX(bottomDrawerContainerViewController.contentViewController.view.frame),
-                                      kTopHandleYCenter);
+      kTopHandleYCenter);
   self.topHandle.autoresizingMask =
       UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
   if (bottomDrawerContainerViewController.headerViewController) {
