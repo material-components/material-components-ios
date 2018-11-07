@@ -547,6 +547,35 @@ fail_immediately() {
   exit 1
 }
 
+# This command protects the stable branch from being merged with anything other than
+# release-candidate branches.
+protect_stable_from_undesired_merges() {
+  if [ -z "$KOKORO_GITHUB_PULL_REQUEST_NUMBER" ]; then
+    echo "KOKORO_GITHUB_PULL_REQUEST_NUMBER has not been defined."
+    echo "Please set this variable to a valid GitHub pull request number."
+    exit 1
+  fi
+
+  pull_request_api_url="https://api.github.com/repos/material-components/material-components-ios/pulls/$KOKORO_GITHUB_PULL_REQUEST_NUMBER"
+
+  tmp_path=$(mktemp -d)
+  pull_request_metadata_file="$tmp_path/output"
+
+  curl -s "$pull_request_api_url" > "$pull_request_metadata_file"
+
+  if ! grep --quiet '^    "label": "material-components:stable",$' "$pull_request_metadata_file"; then
+    echo "This job should only be used to validate pull requests to stable."
+    exit 1;
+  fi
+
+  if ! grep --quiet '^    "label": "material-components:release-candidate",$' "$pull_request_metadata_file"; then
+    echo "Only release-candidate branches can be merged into stable."
+    exit 1;
+  fi
+
+  echo "Validated that this branch is a release-candidate being merged in to stable."
+}
+
 POSITIONAL=()
 while [[ $# -gt 0 ]]; do
   key="$1"
@@ -593,6 +622,7 @@ case "$DEPENDENCY_SYSTEM" in
   "danger")     run_danger ;;
   "apidiff")    generate_apidiff ;;
   "fail")       fail_immediately ;;
+  "protect-stable-from-undesired-merges") protect_stable_from_undesired_merges ;;
 
   *)            run_bazel ;;
 esac

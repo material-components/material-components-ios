@@ -69,7 +69,11 @@ class AppBarJumpExample: UIViewController {
 
     view.backgroundColor = colorScheme.backgroundColor
     view.addSubview(appBarViewController.view)
+    #if swift(>=4.2)
+    appBarViewController.didMove(toParent: self)
+    #else
     appBarViewController.didMove(toParentViewController: self)
+    #endif
 
     switchToTab(firstTab)
   }
@@ -92,7 +96,11 @@ class AppBarJumpExample: UIViewController {
 
     view.addSubview(tab.view)
     view.sendSubview(toBack: tab.view)
+    #if swift(>=4.2)
+    tab.didMove(toParent: self)
+    #else
     tab.didMove(toParentViewController: self)
+    #endif
 
     tab.headerView = appBarViewController.headerView
 
