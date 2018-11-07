@@ -63,6 +63,10 @@
  this method allows for the explicit update of the cell's position which may be required when the
  cell's location changes due to a layout update (such as performing collection view changes while
  the user is reordering).
+ 
+ For example, you can call this in the MDCCollectionViewEditingDelegate's implementation of
+ -collectionView:willBeginDraggingItemAtIndexPath: after performing updates to the collection view
+ in preparation for the user's move of an item.
  */
 - (void)updateReorderCellPosition;
 
