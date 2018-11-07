@@ -475,7 +475,7 @@
   self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(200, 200);
 
   // Then
-  XCTAssertNotEqual(previousContentHeaderTopInset, self.fakeBottomDrawer.contentHeaderTopInset);
+  XCTAssertLessThan(self.fakeBottomDrawer.contentHeaderTopInset, previousContentHeaderTopInset);
 }
 
 @end
