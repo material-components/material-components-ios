@@ -49,6 +49,7 @@ fix_bazel_imports() {
   rewrite_tests "s/import MaterialComponents.Material(.+)/import components_\1_\1/"
   rewrite_source "s/import <Motion(.+)\/Motion.+\.h>/import \"Motion\1.h\"/"
   rewrite_source "s/import <MDF(.+)\/MDF.+\.h>/import \"MDF\1.h\"/"
+  rewrite_source "s/import <MaterialComponents\/Material(.+)\.h>/import\/\*framework import\*\/ \"Material\1.h\"/"
   rewrite_tests "s/import MDFTextAccessibility/import material_text_accessibility_ios_MDFTextAccessibility/"
   rewrite_tests "s/import MDFInternationalization/import material_internationalization_ios_MDFInternationalization/"
   stashed_dir="$(pwd)/"
@@ -63,6 +64,7 @@ fix_bazel_imports() {
     rewrite_tests "s/import components_(.+)_(.+)/import MaterialComponents.Material\1_\2/"
     rewrite_source "s/import \"Motion(.+)\.h\"/import <Motion\1\/Motion\1.h>/"
     rewrite_source "s/import \"MDF(.+)\.h\"/import <MDF\1\/MDF\1.h>/"
+    rewrite_source "s/import\/\*framework import\*\/ \"Material(.+)\.h\"/import <MaterialComponents\/Material\1\.h>/"
     rewrite_tests "s/import material_text_accessibility_ios_MDFTextAccessibility/import MDFTextAccessibility/"
     rewrite_tests "s/import material_internationalization_ios_MDFInternationalization/import MDFInternationalization/"
   }
