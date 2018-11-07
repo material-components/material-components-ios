@@ -1,16 +1,77 @@
-# #develop#
+# 68.2.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+In this minor release we have introduced an API for customizing the Navigation Drawer scrim color, an API for animating corner radius changes for `MDCShadowLayer`, an `MDCSnackbarManager` instance color themer, along with bug fixes and performance improvements.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
+Navigation Drawer now supports customizing its scrim color as follows:
+
+```swift
+let bottomDrawerViewController = MDCBottomDrawerViewController()
+// Set the drawer scrim color.
+bottomDrawerViewController.scrimColor = UIColor.blue.withAlphaComponent(0.5)
+
+bottomDrawerViewController.contentViewController = contentViewController
+bottomDrawerViewController.headerViewController = headerViewController
+MDCBottomDrawerColorThemer.applySemanticColorScheme(colorScheme,
+                                                    toBottomDrawer: bottomDrawerViewController)
+present(bottomDrawerViewController, animated: true, completion: nil)
+```
+
+`MDCShadowLayer` now supports animating corner radius changes:
+
+```objc
+@interface CustomView : UIView
+@end
+
+@implementation CustomView
++ (Class)layerClass {
+  return [MDCShadowLayer class];
+}
+
+- (MDCShadowLayer *)shadowLayer {
+  return (MDCShadowLayer *)self.layer;
+}
+ @end
+
+CAMediaTimingFunction *timingFunction =
+    [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
+[self.customView.shadowLayer animateCornerRadius:(CGFloat)25.0
+                              withTimingFunction:timingFunction
+                                        duration:(CGFloat)2.5];
+```
+
+`MDCSnackbarManager` instances can now be themed using a color scheme:
+
+```objc
+MDCSnackbarManager *snackbarManager = [[MDCSnackbarManager alloc] init];
+MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+[MDCSnackbarColorThemer applySemanticColorScheme:colorScheme toSnackbarManager:snackbarManager];
+```
+
 ## API changes
+
+### NavigationDrawer
+
+#### MDCBottomDrawerViewController
+
+*new* property: `scrimColor` in `MDCBottomDrawerViewController`
+
+#### MDCBottomDrawerPresentationController
+
+*new* property: `scrimColor` in `MDCBottomDrawerPresentationController`
+
+### ShadowLayer
+
+#### MDCShadowLayer
+
+*new* method: `-animateCornerRadius:withTimingFunction:duration:` in `MDCShadowLayer`
+
+### Snackbar+ColorThemer
+
+#### MDCSnackbarColorThemer
+
+*new* class method: `+applySemanticColorScheme:toSnackbarManager:` in `MDCSnackbarColorThemer`
 
 ## Component changes
 
