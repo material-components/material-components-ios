@@ -73,6 +73,9 @@
 }
 
 - (void)setTrackingScrollView:(UIScrollView *)trackingScrollView {
+  // Rather than have the client manually disable scrolling on the internal scroll view for
+  // the drawer to work properly, we can disable it if a trackingScrollView is provided.
+  [trackingScrollView setScrollEnabled:NO];
   _transitionController.trackingScrollView = trackingScrollView;
 }
 
@@ -109,6 +112,15 @@
   _contentViewController = contentViewController;
   if (!_headerViewController) {
     _maskLayer.view = contentViewController.view;
+  }
+}
+
+- (void)setScrimColor:(UIColor *)scrimColor {
+  _scrimColor = scrimColor;
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+        (MDCBottomDrawerPresentationController *)self.presentationController;
+    bottomDrawerPresentationController.scrimColor = scrimColor;
   }
 }
 

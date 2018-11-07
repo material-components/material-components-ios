@@ -46,6 +46,12 @@ static const NSTimeInterval kTrackingScrollViewDidChangeAnimationDuration = 0.2;
 // on/off-screen with the display link.
 static const float kShiftEpsilon = 0.1f;
 
+// The epsilon used when comparing height values.
+static const CGFloat kHeightEpsilon = 0.001f;
+
+// The epsilon used when comparing content offset values.
+static const CGFloat kContentOffsetEpsilon = 0.001f;
+
 // The minimum delta y before we change the scroll direction.
 static const CGFloat kDeltaYSlop = 5;
 
@@ -91,6 +97,15 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 //
 // A separate info object is tracked for each scroll view tracked by the flexible header view.
 @interface MDCFlexibleHeaderScrollViewInfo : NSObject
+
+// UITableView, when added to a UIWindow for the first time, may automatically adjust
+// its content offset to take into account the top safe area insets. While typically
+// desirable, this behavior clashes with our own top safe area insets management resulting
+// in the table view "jumping" when it first appears. To counter this behavior, we
+// intentionally ignore the next content offset change if it looks like a safe area adjustment.
+// See https://github.com/material-components/material-components-ios/issues/5412 for additional
+// details.
+@property(nonatomic) BOOL shouldIgnoreNextSafeAreaAdjustment;
 
 // The amount injected into contentInsets.top
 @property(nonatomic) CGFloat injectedTopContentInset;
@@ -870,7 +885,9 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   if (!_trackingScrollView) {
     // Set the shadow opacity directly.
     self.layer.shadowOpacity =
-        self.resetShadowAfterTrackingScrollViewIsReset ? 0 : _visibleShadowOpacity;
+        self.resetShadowAfterTrackingScrollViewIsReset && !self.isInFrontOfInfiniteContent
+            ? 0
+            : _visibleShadowOpacity;
     return;
   }
 
@@ -1174,6 +1191,21 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   _didAdjustTargetContentOffset = NO;
 #endif
 
+  if (_trackingInfo.shouldIgnoreNextSafeAreaAdjustment) {
+    _trackingInfo.shouldIgnoreNextSafeAreaAdjustment = NO;
+
+    if (_shiftAccumulatorLastContentOffsetIsValid) {
+      CGFloat delta = (CGFloat)fabs(_shiftAccumulatorLastContentOffset.y -
+                                    self.trackingScrollView.contentOffset.y);
+      if (fabs(delta - [_topSafeArea topSafeAreaInset]) < kContentOffsetEpsilon) {
+        // Looks like a top safe area inset adjustment. Let's ignore it.
+        self.trackingScrollView.contentOffset = _shiftAccumulatorLastContentOffset;
+        return;
+      }
+    }
+    _shiftAccumulatorLastContentOffsetIsValid = NO;
+  }
+
   if (self.trackingScrollView.isTracking) {
     _didDecelerate = NO; // Invalidate the flag - we're not actually decelerating right now.
   }
@@ -1342,7 +1374,7 @@ static BOOL isRunningiOS10_3OrAbove() {
   if (info.stashedHeightIsValid) {
     // Did our height change since the last time we saw this content?
     const CGFloat heightDelta = self.bounds.size.height - info.stashedHeight;
-    if (fabs(heightDelta) > DBL_EPSILON) {
+    if (fabs(heightDelta) > kHeightEpsilon) {
       // Offset our content accordingly so that we're still viewing what we were viewing last time.
       CGPoint offset = scrollView.contentOffset;
       offset.y -= heightDelta;
@@ -1403,8 +1435,9 @@ static BOOL isRunningiOS10_3OrAbove() {
 
   UIScrollView *oldTrackingScrollView = _trackingScrollView;
 
+  CGFloat stashedHeight = CGRectGetHeight(self.bounds);
   if (_trackingInfo != nil) {
-    _trackingInfo.stashedHeight = self.bounds.size.height;
+    _trackingInfo.stashedHeight = stashedHeight;
     _trackingInfo.stashedHeightIsValid = YES;
   }
 
@@ -1431,30 +1464,58 @@ static BOOL isRunningiOS10_3OrAbove() {
     [self fhv_startObservingContentOffset];
   }
 
-  // When canAlwaysExpandToMaximumHeight is enabled our header's height no longer directly
-  // correlates to the content offset - it's also augmented by the shift accumulator. In order to
-  // keep the header's height constant when changing the tracking scroll view, we need to adjust
-  // the shift accumulator accordingly.
-  if (self.canAlwaysExpandToMaximumHeight && self.sharedWithManyScrollViews &&
-      wasTrackingScrollView) {
+  BOOL shouldAnimate = NO;
+
+  if (self.sharedWithManyScrollViews && wasTrackingScrollView) {
     // What's our expected height now that we've changed the tracking scroll view?
     CGFloat headerHeight = -[self fhv_contentOffsetWithoutInjectedTopInset];
     headerHeight = MAX(self.computedMinimumHeight, MIN(self.computedMaximumHeight, headerHeight));
 
     // How much will our height change if we do nothing right now?
-    const CGFloat heightDelta = self.bounds.size.height - headerHeight;
+    const CGFloat heightDelta = stashedHeight - headerHeight;
 
-    // Cap the accumulator to ensure it's valid.
-    CGFloat accumulatorMin;
-    if (headerHeight > self.computedMinimumHeight + DBL_EPSILON) {
-      // We're attached to the content, so don't allow any height accumulation.
-      accumulatorMin = 0;
-    } else {
-      accumulatorMin = [self fhv_accumulatorMin];
+    // When canAlwaysExpandToMaximumHeight is enabled our header's height no longer directly
+    // correlates to the content offset - it's also augmented by the shift accumulator. In order to
+    // keep the header's height constant when changing the tracking scroll view, we need to adjust
+    // the shift accumulator accordingly.
+    if (self.canAlwaysExpandToMaximumHeight) {
+      // Cap the accumulator to ensure it's valid.
+      CGFloat accumulatorMin;
+      if (headerHeight > self.computedMinimumHeight + kHeightEpsilon) {
+        // We're attached to the content, so don't allow any height accumulation.
+        accumulatorMin = 0;
+      } else {
+        accumulatorMin = [self fhv_accumulatorMin];
+      }
+      // Adjust the accumulator so that our height won't change and cap it to the possible range.
+      CGFloat desiredShiftAccumulatorValue =
+          MAX(accumulatorMin, MIN([self fhv_accumulatorMax], _shiftAccumulator - heightDelta));
+      if (_shiftAccumulator != desiredShiftAccumulatorValue) {
+        _shiftAccumulator = desiredShiftAccumulatorValue;
+      }
     }
-    // Adjust the accumulator so that our height won't change and cap it to the possible range.
-    _shiftAccumulator =
-        MAX(accumulatorMin, MIN([self fhv_accumulatorMax], _shiftAccumulator - heightDelta));
+
+    CGPoint offset = self.trackingScrollView.contentOffset;
+    BOOL trackingScrollViewIsUITableView =
+        [self.trackingScrollView isKindOfClass:[UITableView class]];
+
+    // Are we moving to content that requires the header to be expanded?
+    if (headerHeight > stashedHeight) {
+      // If so, shift the content up so that the header matches our current height.
+      offset.y -= heightDelta;
+    } else if (headerHeight < stashedHeight) {
+      // We're about to shrink the header - this is the only case where we want to animate the
+      // header's height change.
+      shouldAnimate = YES;
+    }
+
+    if (!CGPointEqualToPoint(self.trackingScrollView.contentOffset, offset)) {
+      self.trackingScrollView.contentOffset = offset;
+    }
+
+    if (trackingScrollViewIsUITableView) {
+      _trackingInfo.shouldIgnoreNextSafeAreaAdjustment = YES;
+    }
   }
 
   void (^animate)(void) = ^{
@@ -1470,7 +1531,7 @@ static BOOL isRunningiOS10_3OrAbove() {
       [self fhv_accumulatorDidChange];
     }
   };
-  if (wasTrackingScrollView) {
+  if (wasTrackingScrollView && shouldAnimate) {
     [UIView animateWithDuration:kTrackingScrollViewDidChangeAnimationDuration
                      animations:animate
                      completion:completion];
