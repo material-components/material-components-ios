@@ -73,6 +73,9 @@
 }
 
 - (void)setTrackingScrollView:(UIScrollView *)trackingScrollView {
+  // Rather than have the client manually disable scrolling on the internal scroll view for
+  // the drawer to work properly, we can disable it if a trackingScrollView is provided.
+  [trackingScrollView setScrollEnabled:NO];
   _transitionController.trackingScrollView = trackingScrollView;
 }
 

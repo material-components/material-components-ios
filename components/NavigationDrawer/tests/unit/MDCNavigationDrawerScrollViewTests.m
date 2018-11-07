@@ -489,4 +489,12 @@
   XCTAssertEqual(presentationController.topHandle.hidden, NO);
 }
 
+- (void)testBottomDrawerScrollingEnabled {
+  // When
+  self.drawerViewController.trackingScrollView = self.fakeScrollView;
+
+  // Then
+  XCTAssertEqual(self.fakeScrollView.scrollEnabled, NO);
+}
+
 @end

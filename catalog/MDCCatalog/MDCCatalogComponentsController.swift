@@ -201,7 +201,11 @@ class MDCCatalogComponentsController: UICollectionViewController, MDCInkTouchCon
     }
 
     view.addSubview(headerViewController.view)
+    #if swift(>=4.2)
+    headerViewController.didMove(toParent: self)
+    #else
     headerViewController.didMove(toParentViewController: self)
+    #endif
 
     collectionView?.accessibilityIdentifier = "collectionView"
 #if swift(>=3.2)

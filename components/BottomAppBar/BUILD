@@ -69,6 +69,7 @@ mdc_objc_library(
     sdk_frameworks = [
         "UIKit",
         "XCTest",
+        "CoreGraphics",
     ],
     deps = [
         ":BottomAppBar",

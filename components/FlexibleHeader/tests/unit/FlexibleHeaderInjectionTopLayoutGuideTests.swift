@@ -40,11 +40,19 @@ class FlexibleHeaderInjectionTopLayoutGuideTests: XCTestCase {
   func testTopLayoutGuideIsUnaffactedWithNoTopLayoutGuideViewController() {
     // Given
     let contentViewController = UIViewController()
+    #if swift(>=4.2)
+    contentViewController.addChild(fhvc)
+    #else
     contentViewController.addChildViewController(fhvc)
+    #endif
     contentViewController.view.addSubview(fhvc.view)
     fhvc.isTopLayoutGuideAdjustmentEnabled = true
     fhvc.topLayoutGuideViewController = nil
+    #if swift(>=4.2)
+    fhvc.didMove(toParent: contentViewController)
+    #else
     fhvc.didMove(toParentViewController: contentViewController)
+    #endif
 
     // Then
     XCTAssertEqual(contentViewController.topLayoutGuide.length, 0)
@@ -60,10 +68,18 @@ class FlexibleHeaderInjectionTopLayoutGuideTests: XCTestCase {
   func testNoScrollViewTopLayoutGuideEqualsBottomEdgeOfHeaderView() {
     // Given
     let contentViewController = UIViewController()
+    #if swift(>=4.2)
+    contentViewController.addChild(fhvc)
+    #else
     contentViewController.addChildViewController(fhvc)
+    #endif
     contentViewController.view.addSubview(fhvc.view)
     fhvc.topLayoutGuideViewController = contentViewController
+    #if swift(>=4.2)
+    fhvc.didMove(toParent: contentViewController)
+    #else
     fhvc.didMove(toParentViewController: contentViewController)
+    #endif
 
     // Then
     XCTAssertEqual(contentViewController.topLayoutGuide.length, fhvc.headerView.frame.maxY)
@@ -80,10 +96,18 @@ class FlexibleHeaderInjectionTopLayoutGuideTests: XCTestCase {
   func testUntrackedTableViewTopLayoutGuideEqualsBottomEdgeOfHeaderView() {
     // Given
     let contentViewController = UITableViewController()
+    #if swift(>=4.2)
+    contentViewController.addChild(fhvc)
+    #else
     contentViewController.addChildViewController(fhvc)
+    #endif
     contentViewController.view.addSubview(fhvc.view)
     fhvc.topLayoutGuideViewController = contentViewController
+    #if swift(>=4.2)
+    fhvc.didMove(toParent: contentViewController)
+    #else
     fhvc.didMove(toParentViewController: contentViewController)
+    #endif
 
     // Then
     XCTAssertEqual(contentViewController.topLayoutGuide.length, fhvc.headerView.frame.maxY)
@@ -99,10 +123,18 @@ class FlexibleHeaderInjectionTopLayoutGuideTests: XCTestCase {
   func testTrackingAnUntrackedTableViewTopLayoutGuideEqualsBottomEdgeOfHeaderView() {
     // Given
     let contentViewController = UITableViewController()
+    #if swift(>=4.2)
+    contentViewController.addChild(fhvc)
+    #else
     contentViewController.addChildViewController(fhvc)
+    #endif
     contentViewController.view.addSubview(fhvc.view)
     fhvc.topLayoutGuideViewController = contentViewController
+    #if swift(>=4.2)
+    fhvc.didMove(toParent: contentViewController)
+    #else
     fhvc.didMove(toParentViewController: contentViewController)
+    #endif
 
     // Then
     XCTAssertEqual(contentViewController.topLayoutGuide.length, fhvc.headerView.frame.maxY)
@@ -134,10 +166,18 @@ class FlexibleHeaderInjectionTopLayoutGuideTests: XCTestCase {
     // Given
     let contentViewController = UITableViewController()
     fhvc.headerView.trackingScrollView = contentViewController.tableView
+    #if swift(>=4.2)
+    contentViewController.addChild(fhvc)
+    #else
     contentViewController.addChildViewController(fhvc)
+    #endif
     contentViewController.view.addSubview(fhvc.view)
     fhvc.topLayoutGuideViewController = contentViewController
+    #if swift(>=4.2)
+    fhvc.didMove(toParent: contentViewController)
+    #else
     fhvc.didMove(toParentViewController: contentViewController)
+    #endif
     fhvc.headerView.trackingScrollDidScroll()
 
     // Then
@@ -158,10 +198,18 @@ class FlexibleHeaderInjectionTopLayoutGuideTests: XCTestCase {
       CGSize(width: contentViewController.tableView.bounds.width,
              height: contentViewController.tableView.bounds.height * 2)
     fhvc.headerView.trackingScrollView = contentViewController.tableView
+    #if swift(>=4.2)
+    contentViewController.addChild(fhvc)
+    #else
     contentViewController.addChildViewController(fhvc)
+    #endif
     contentViewController.view.addSubview(fhvc.view)
     fhvc.topLayoutGuideViewController = contentViewController
+    #if swift(>=4.2)
+    fhvc.didMove(toParent: contentViewController)
+    #else
     fhvc.didMove(toParentViewController: contentViewController)
+    #endif
     fhvc.headerView.trackingScrollDidScroll()
     contentViewController.tableView.contentOffset =
       CGPoint(x: 0, y: -contentViewController.tableView.contentInset.top)
@@ -185,10 +233,18 @@ class FlexibleHeaderInjectionTopLayoutGuideTests: XCTestCase {
     // Given
     let flow = UICollectionViewFlowLayout()
     let contentViewController = UICollectionViewController(collectionViewLayout: flow)
+    #if swift(>=4.2)
+    contentViewController.addChild(fhvc)
+    #else
     contentViewController.addChildViewController(fhvc)
+    #endif
     contentViewController.view.addSubview(fhvc.view)
     fhvc.topLayoutGuideViewController = contentViewController
+    #if swift(>=4.2)
+    fhvc.didMove(toParent: contentViewController)
+    #else
     fhvc.didMove(toParentViewController: contentViewController)
+    #endif
 
     // Then
     XCTAssertEqual(contentViewController.topLayoutGuide.length, fhvc.headerView.frame.maxY)
@@ -208,10 +264,18 @@ class FlexibleHeaderInjectionTopLayoutGuideTests: XCTestCase {
     let flow = UICollectionViewFlowLayout()
     let contentViewController = UICollectionViewController(collectionViewLayout: flow)
     fhvc.headerView.trackingScrollView = contentViewController.collectionView
+    #if swift(>=4.2)
+    contentViewController.addChild(fhvc)
+    #else
     contentViewController.addChildViewController(fhvc)
+    #endif
     contentViewController.view.addSubview(fhvc.view)
     fhvc.topLayoutGuideViewController = contentViewController
+    #if swift(>=4.2)
+    fhvc.didMove(toParent: contentViewController)
+    #else
     fhvc.didMove(toParentViewController: contentViewController)
+    #endif
     fhvc.headerView.trackingScrollDidScroll()
 
     // Then
@@ -233,10 +297,18 @@ class FlexibleHeaderInjectionTopLayoutGuideTests: XCTestCase {
       CGSize(width: contentViewController.collectionView!.bounds.width,
              height: contentViewController.collectionView!.bounds.height * 2)
     fhvc.headerView.trackingScrollView = contentViewController.collectionView!
+    #if swift(>=4.2)
+    contentViewController.addChild(fhvc)
+    #else
     contentViewController.addChildViewController(fhvc)
+    #endif
     contentViewController.view.addSubview(fhvc.view)
     fhvc.topLayoutGuideViewController = contentViewController
+    #if swift(>=4.2)
+    fhvc.didMove(toParent: contentViewController)
+    #else
     fhvc.didMove(toParentViewController: contentViewController)
+    #endif
     fhvc.headerView.trackingScrollDidScroll()
     contentViewController.collectionView!.contentOffset =
       CGPoint(x: 0, y: -contentViewController.collectionView!.contentInset.top)
