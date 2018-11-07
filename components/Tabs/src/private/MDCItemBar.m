@@ -402,7 +402,6 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
   // Size cell to fit content.
   size = [MDCItemBarCell sizeThatFits:size
-                  horizontalSizeClass:[self horizontalSizeClass]
                                  item:item
                                 style:_style];
 

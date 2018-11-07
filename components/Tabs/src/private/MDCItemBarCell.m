@@ -36,6 +36,10 @@ static const CGFloat kBadgeTopPadding = 6;
 /// Maximum width of a badge. This allows for 3 characters before truncation.
 static const CGFloat kBadgeMaxWidth = 22;
 
+/// Outer edge padding from spec: https://material.io/go/design-tabs#spec.
+static const UIEdgeInsets kEdgeInsets = {
+    .top = 0.0f, .right = 16.0f, .bottom = 0.0f, .left = 16.0f};
+
 /// File name of the bundle (without the '.bundle' extension) containing resources.
 static NSString *const kResourceBundleName = @"MaterialTabs";
 
@@ -89,17 +93,10 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 
 #pragma mark - Public
 
-+ (UIEdgeInsets)edgeInsetsForHorizontalSizeClass:(UIUserInterfaceSizeClass)sizeClass {
-  // Padding from spec: https://material.io/go/design-tabs
-  CGFloat outerPadding = (sizeClass == UIUserInterfaceSizeClassRegular) ? 24.0f : 12.0f;
-  return UIEdgeInsetsMake(0.0, outerPadding, 0.0, outerPadding);
-}
 
 + (CGSize)sizeThatFits:(CGSize)size
-    horizontalSizeClass:(UIUserInterfaceSizeClass)sizeClass
                    item:(UITabBarItem *)item
                   style:(MDCItemBarStyle *)style {
-  UIEdgeInsets insets = [self edgeInsetsForHorizontalSizeClass:sizeClass];
   NSString *title = [self displayedTitleForTitle:item.title style:style];
 
   CGRect textBounds = CGRectZero;
@@ -153,6 +150,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
   bounds.size.width = MIN(bounds.size.width, size.width);
 
   // Add insets.
+  UIEdgeInsets insets = kEdgeInsets;
   bounds.size.width += insets.left + insets.right;
   bounds.size.height += insets.top + insets.bottom;
 
@@ -411,10 +409,6 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
     displayedTitle = [displayedTitle uppercaseStringWithLocale:nil];
   }
   return displayedTitle;
-}
-
-- (UIUserInterfaceSizeClass)horizontalSizeClass {
-  return self.traitCollection.horizontalSizeClass;
 }
 
 /// Ensures that subviews exist and have the correct visibility for the current content style.
