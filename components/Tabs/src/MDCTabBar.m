@@ -78,6 +78,9 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
     case MDCTabBarAlignmentJustified:
       return MDCItemBarAlignmentJustified;
 
+    case MDCTabBarAlignmentBestEffortJustified:
+      return MDCItemBarAlignmentBestEffortJustified;
+
     case MDCTabBarAlignmentCenterSelected:
       return MDCItemBarAlignmentCenterSelected;
   }

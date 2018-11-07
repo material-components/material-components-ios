@@ -26,6 +26,13 @@ typedef NS_ENUM(NSInteger, MDCTabBarAlignment) {
   MDCTabBarAlignmentJustified,
 
   /**
+   * If the tabs can be nicely justified, in an equal size across the width of the screen, then they
+   * will layout as if `MDCTabBarAlignmentJustified` were set. However if the tabs are too wide to
+   * be nicely justified, then the tabs fall back to using a `MDCTabBarAlignmentLeading` layout.
+   */
+  MDCTabBarAlignmentBestEffortJustified,
+
+  /**
    Items are sized to fit their content and center-aligned as a group. If they do not fit in view,
    they will be leading-aligned instead.
    */
