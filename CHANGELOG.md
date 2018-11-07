@@ -1,3 +1,61 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+## Component changes
+
+### AnimationTiming
+
+* [fix swift debugging (#5569)](https://github.com/material-components/material-components-ios/commit/3442cf9deb1c31b0962dab4906177dd2306ed7c2) (Yarden Eitan)
+
+### BottomAppBar
+
+* [Fix path animation (#5611)](https://github.com/material-components/material-components-ios/commit/7b51a89030ec32d617e11794adfd50741aa3e951) (Cody Weaver)
+
+### BottomNavigation
+
+* [Fix selection animation for badge (#5571)](https://github.com/material-components/material-components-ios/commit/9147435cf7e6624b0876d07389374d039b0ccf69) (Cody Weaver)
+
+### FlexibleHeader
+
+* [Fix an edge case in resetShadowAfterTrackingScrollViewIsReset (#5561)](https://github.com/material-components/material-components-ios/commit/91186a3182ce3e0e207ee93ff3c75f0095d4895a) (Ali Rabbani)
+* [Fix animation glitches when switching between UITableView tabs (#5540)](https://github.com/material-components/material-components-ios/commit/0124394a1d03b8e9a06c759028250b775e56321b) (featherless)
+
+### NavigationDrawer
+
+* [Add scrim color to color themer (#5570)](https://github.com/material-components/material-components-ios/commit/71c4da9404f3ffb5ca75b145592b189215297a16) (Cody Weaver)
+* [Add support for scrimColor (#5568)](https://github.com/material-components/material-components-ios/commit/51f69ae40255cbccddf18d551962e81a60e96c97) (Cody Weaver)
+* [automatically disable scrolling (#5586)](https://github.com/material-components/material-components-ios/commit/2127004680f3ed66716750ef435b79e665ed9201) (Yarden Eitan)
+* [fix spacing (#5590)](https://github.com/material-components/material-components-ios/commit/dd26cfa95b60b3575b61f9423111b84cbfe35a7c) (Yarden Eitan)
+
+### ShadowElevations
+
+* [Remove .m file (#5583)](https://github.com/material-components/material-components-ios/commit/8d26cb5bb9e4efc81657b44726ef8ed418b96bc3) (Cody Weaver)
+
+### ShadowLayer
+
+* [Add API to animate corner radius (#5585)](https://github.com/material-components/material-components-ios/commit/a0810b574649546bd27e330818e1575c5e0a6518) (Cody Weaver)
+
+### Snackbar
+
+* [Add support to pass MDCSnackbarManager instances to color themer (#5582)](https://github.com/material-components/material-components-ios/commit/c724f4ae4bded239fd18db09baccbd33a8162990) (rami-a)
+
+### Typography
+
+* [Cache standard font for text style. (#5533)](https://github.com/material-components/material-components-ios/commit/64d6535f2a4a26681bb3c97361979466e8ba3523) (Robert Moore)
+
+---
+
 # 68.1.0
 
 In this minor release we have added a top corners API and a state system for Navigation Drawer along with bug fixes and additional examples.
