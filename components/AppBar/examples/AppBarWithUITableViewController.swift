@@ -64,7 +64,11 @@ class AppBarWithUITableViewController: UITableViewController {
     appBarViewController.headerView.observesTrackingScrollViewScrollEvents = true
 
     view.addSubview(appBarViewController.view)
+    #if swift(>=4.2)
+    appBarViewController.didMove(toParent: self)
+    #else
     appBarViewController.didMove(toParentViewController: self)
+    #endif
 
     MDCAppBarColorThemer.applyColorScheme(colorScheme, to: appBarViewController)
     
