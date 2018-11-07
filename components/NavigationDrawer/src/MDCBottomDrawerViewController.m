@@ -15,6 +15,7 @@
 #import "MDCBottomDrawerViewController.h"
 
 #import "MDCBottomDrawerTransitionController.h"
+#import "MaterialUIMetrics.h"
 #import "private/MDCBottomDrawerHeaderMask.h"
 
 @interface MDCBottomDrawerViewController () <MDCBottomDrawerPresentationControllerDelegate>
@@ -174,6 +175,16 @@
     _maskLayer.minimumCornerRadius = minimumCornerRadius;
     [_maskLayer applyMask];
   }
+}
+
+- (CGFloat)contentDrawerTopInset:(CGFloat)transitionToTop {
+  CGFloat topInset = MDCDeviceTopSafeAreaInset();
+  if ([self contentReachesFullScreen]) {
+    topInset -= (1.f - transitionToTop) * topInset;
+  } else {
+    topInset = 0.f;
+  }
+  return topInset;
 }
 
 @end
