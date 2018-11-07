@@ -15,7 +15,12 @@
 #import "MDCBottomDrawerPresentationController.h"
 
 #import "MDCBottomDrawerViewController.h"
+#import "MaterialPalettes.h"
 #import "private/MDCBottomDrawerContainerViewController.h"
+
+static CGFloat kTopHandleHeight = (CGFloat)2.0;
+static CGFloat kTopHandleWidth = (CGFloat)24.0;
+static CGFloat kTopHandleYCenter = (CGFloat)6.0;
 
 @interface MDCBottomDrawerPresentationController () <UIGestureRecognizerDelegate,
                                                      MDCBottomDrawerContainerViewControllerDelegate>
@@ -24,6 +29,11 @@
  A semi-transparent scrim view that darkens the visible main view when the drawer is displayed.
  */
 @property(nonatomic) UIView *scrimView;
+
+/**
+ The top handle view at the top of the drawer to provide a visual affordance for scrollability.
+ */
+@property(nonatomic) UIView *topHandle;
 
 /**
  The bottom drawer container view controller.
@@ -35,6 +45,16 @@
 @implementation MDCBottomDrawerPresentationController
 
 @synthesize delegate;
+
+- (instancetype)initWithPresentedViewController:(UIViewController *)presentedViewController
+                       presentingViewController:(UIViewController *)presentingViewController {
+  self = [super initWithPresentedViewController:presentedViewController
+                       presentingViewController:presentingViewController];
+  if (self) {
+    _topHandleHidden = YES;
+  }
+  return self;
+}
 
 - (UIView *)presentedView {
   if ([self.presentedViewController isKindOfClass:[MDCBottomDrawerViewController class]]) {
@@ -81,6 +101,22 @@
 
   [self.containerView addSubview:self.scrimView];
 
+  self.topHandle =
+      [[UIView alloc] initWithFrame:CGRectMake(0, 0, kTopHandleWidth, kTopHandleHeight)];
+  self.topHandle.layer.cornerRadius = kTopHandleHeight * (CGFloat)0.5;
+  self.topHandle.backgroundColor = MDCPalette.greyPalette.tint300;
+  self.topHandle.hidden = self.topHandleHidden;
+  self.topHandle.center = CGPointMake(
+      CGRectGetMidX(bottomDrawerContainerViewController.contentViewController.view.frame),
+      kTopHandleYCenter);
+  self.topHandle.autoresizingMask =
+      UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+  if (bottomDrawerContainerViewController.headerViewController) {
+    [bottomDrawerContainerViewController.headerViewController.view addSubview:self.topHandle];
+  } else {
+    [bottomDrawerContainerViewController.contentViewController.view addSubview:self.topHandle];
+  }
+
   if ([self.presentedViewController isKindOfClass:[MDCBottomDrawerViewController class]]) {
     [self.presentedView addSubview:self.bottomDrawerContainerViewController.view];
   } else {
@@ -110,6 +146,7 @@
   [self.bottomDrawerContainerViewController.view setNeedsLayout];
   if (!completed) {
     [self.scrimView removeFromSuperview];
+    [self.topHandle removeFromSuperview];
   }
 }
 
@@ -126,6 +163,7 @@
 - (void)dismissalTransitionDidEnd:(BOOL)completed {
   if (completed) {
     [self.scrimView removeFromSuperview];
+    [self.topHandle removeFromSuperview];
   }
 }
 
@@ -145,6 +183,11 @@
 - (void)setScrimColor:(UIColor *)scrimColor {
   _scrimColor = scrimColor;
   self.scrimView.backgroundColor = scrimColor;
+}
+
+- (void)setTopHandleHidden:(BOOL)topHandleHidden {
+  _topHandleHidden = topHandleHidden;
+  self.topHandle.hidden = topHandleHidden;
 }
 
 #pragma mark - Private
@@ -179,6 +222,7 @@
   if ([strongDelegate respondsToSelector:@selector(bottomDrawerTopTransitionRatio:
                                                                   transitionRatio:)]) {
     [strongDelegate bottomDrawerTopTransitionRatio:self transitionRatio:transitionRatio];
+    self.topHandle.alpha = (CGFloat)1.0 - transitionRatio;
   }
 }
 

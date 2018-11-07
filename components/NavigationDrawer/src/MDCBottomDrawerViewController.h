@@ -55,6 +55,12 @@
 @property(nonatomic, strong, nullable) UIColor *scrimColor;
 
 /**
+ A Boolean value that determines whether the top handle of the drawer is hidden.
+ Default is YES.
+ */
+@property(nonatomic, assign, getter=isTopHandleHidden) BOOL topHandleHidden;
+
+/**
  Sets the top corners radius for an MDCBottomDrawerState drawerState
 
  @param radius The corner radius to set the top corners.

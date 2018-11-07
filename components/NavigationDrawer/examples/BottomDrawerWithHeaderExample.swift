@@ -64,6 +64,7 @@ class BottomDrawerWithHeaderExample: UIViewController {
     let bottomDrawerViewController = MDCBottomDrawerViewController()
     bottomDrawerViewController.setTopCornersRadius(24, for: .collapsed)
     bottomDrawerViewController.setTopCornersRadius(8, for: .expanded)
+    bottomDrawerViewController.isTopHandleHidden = false
     bottomDrawerViewController.contentViewController = contentViewController
     bottomDrawerViewController.headerViewController = headerViewController
     MDCBottomDrawerColorThemer.applySemanticColorScheme(colorScheme,
