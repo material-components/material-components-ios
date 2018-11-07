@@ -463,4 +463,12 @@
   XCTAssertEqual(self.drawerViewController.maskLayer.minimumCornerRadius, 3.f);
 }
 
+- (void)testBottomDrawerScrollingEnabled {
+  // When
+  self.drawerViewController.trackingScrollView = self.fakeScrollView;
+
+  // Then
+  XCTAssertEqual(self.fakeScrollView.scrollEnabled, NO);
+}
+
 @end
