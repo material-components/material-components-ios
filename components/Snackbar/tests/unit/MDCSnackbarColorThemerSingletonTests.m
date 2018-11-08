@@ -74,7 +74,7 @@
   [MDCSnackbarManager setButtonTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [MDCSnackbarManager setButtonTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
   UIColor *blendedBackgroundColor =
-      [MDCSemanticColorScheme blendColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.8f]
+      [MDCSemanticColorScheme blendColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.8]
                      withBackgroundColor:colorScheme.surfaceColor];
 
   // When
@@ -84,11 +84,11 @@
   XCTAssertEqualObjects(MDCSnackbarManager.snackbarMessageViewBackgroundColor,
                         blendedBackgroundColor);
   XCTAssertEqualObjects(MDCSnackbarManager.messageTextColor,
-                        [colorScheme.surfaceColor colorWithAlphaComponent:0.87f]);
+                        [colorScheme.surfaceColor colorWithAlphaComponent:(CGFloat)0.87]);
   XCTAssertEqualObjects([MDCSnackbarManager buttonTitleColorForState:UIControlStateNormal],
-                        [colorScheme.surfaceColor colorWithAlphaComponent:0.6f]);
+                        [colorScheme.surfaceColor colorWithAlphaComponent:(CGFloat)0.6]);
   XCTAssertEqualObjects([MDCSnackbarManager buttonTitleColorForState:UIControlStateHighlighted],
-                        [colorScheme.surfaceColor colorWithAlphaComponent:0.6f]);
+                        [colorScheme.surfaceColor colorWithAlphaComponent:(CGFloat)0.6]);
 }
 
 @end

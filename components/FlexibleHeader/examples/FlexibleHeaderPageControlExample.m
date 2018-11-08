@@ -84,14 +84,14 @@ static const CGFloat kFlexibleHeaderMinHeight = 200;
   [self.view addSubview:self.fhvc.view];
   [self.fhvc didMoveToParentViewController:self];
 
-  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:0.1f alpha:1];
+  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.1 alpha:1];
 
   CGFloat boundsWidth = CGRectGetWidth(self.fhvc.headerView.bounds);
   CGFloat boundsHeight = CGRectGetHeight(self.fhvc.headerView.bounds);
 
-  NSArray *pageColors = @[ [UIColor colorWithWhite:0.1f alpha:1],
-                           [UIColor colorWithWhite:0.2f alpha:1],
-                           [UIColor colorWithWhite:0.3f alpha:1]];
+  NSArray *pageColors = @[ [UIColor colorWithWhite:(CGFloat)0.1 alpha:1],
+                           [UIColor colorWithWhite:(CGFloat)0.2 alpha:1],
+                           [UIColor colorWithWhite:(CGFloat)0.3 alpha:1]];
 
   // Scroll view configuration
   CGRect pageScrollViewFrame = CGRectMake(0, 0, boundsWidth, boundsHeight);
@@ -112,7 +112,7 @@ static const CGFloat kFlexibleHeaderMinHeight = 200;
     UILabel *page = [[UILabel alloc] initWithFrame:pageFrame];
     page.text = [NSString stringWithFormat:@"Page %lu", (unsigned long)(i + 1)];
     page.font = [UIFont systemFontOfSize:18];
-    page.textColor = [UIColor colorWithWhite:1 alpha:0.8f];
+    page.textColor = [UIColor colorWithWhite:1 alpha:(CGFloat)0.8];
     page.textAlignment = NSTextAlignmentCenter;
     page.backgroundColor = pageColors[i];
     page.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;

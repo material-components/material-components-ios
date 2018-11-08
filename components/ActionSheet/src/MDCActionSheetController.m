@@ -20,8 +20,8 @@
 #import "private/MDCActionSheetItemTableViewCell.h"
 
 static NSString *const kReuseIdentifier = @"BaseCell";
-static const CGFloat kActionImageAlpha = 0.6f;
-static const CGFloat kActionTextAlpha = 0.87f;
+static const CGFloat kActionImageAlpha = (CGFloat)0.6;
+static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 
 @interface MDCActionSheetAction ()
 
@@ -173,10 +173,10 @@ static const CGFloat kActionTextAlpha = 0.87f;
   CGFloat maxTableHeight = maxHeight - headerHeight;
   NSInteger amountOfCellsToShow = (NSInteger)(maxTableHeight / cellHeight);
   // There is already a partially shown cell that is showing and more than half is visable
-  if (fmod(maxTableHeight, cellHeight) > (cellHeight * 0.5f)) {
+  if (fmod(maxTableHeight, cellHeight) > (cellHeight * (CGFloat)0.5)) {
     amountOfCellsToShow += 1;
   }
-  CGFloat preferredHeight = (((CGFloat)amountOfCellsToShow - 0.5f) * cellHeight) + headerHeight;
+  CGFloat preferredHeight = (((CGFloat)amountOfCellsToShow - (CGFloat)0.5) * cellHeight) + headerHeight;
   // When updating the preferredSheetHeight the presentation controller takes into account the
   // safe area so we have to remove that.
   if (@available(iOS 11.0, *)) {

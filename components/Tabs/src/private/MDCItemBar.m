@@ -28,7 +28,7 @@
 static NSString *const kItemReuseID = @"MDCItem";
 
 /// Default duration in seconds for selection change animations.
-static const NSTimeInterval kDefaultAnimationDuration = 0.3f;
+static const NSTimeInterval kDefaultAnimationDuration = (CGFloat)0.3;
 
 /// Placeholder width for cells, which get per-item sizing.
 static const CGFloat kPlaceholderCellWidth = 10;

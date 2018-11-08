@@ -49,7 +49,7 @@ const CGFloat kSelectedNavigationTitleScaleFactor = (16.0f / 14.0f);
 const CGFloat kSelectedNavigationImageYOffset = -2;
 
 /// Duration of selection animations in applicable content styles.
-static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
+static const NSTimeInterval kSelectionAnimationDuration = (CGFloat)0.3;
 
 @implementation MDCItemBarCell {
   UIImageView *_imageView;

@@ -140,7 +140,7 @@
   // Given
   CapturingMDCInkLayerSubclass *inkLayer = [[CapturingMDCInkLayerSubclass alloc] init];
   inkLayer.bounds = CGRectMake(0, 0, 10, 10);
-  inkLayer.speed = 0.5f;
+  inkLayer.speed = (CGFloat)0.5;
   inkLayer.endAnimationDelay = (CGFloat)0.9;
 
   // When
@@ -160,7 +160,7 @@
   // Given
   CapturingMDCInkLayerSubclass *inkLayer = [[CapturingMDCInkLayerSubclass alloc] init];
   inkLayer.bounds = CGRectMake(0, 0, 10, 10);
-  inkLayer.speed = 0.5f;
+  inkLayer.speed = (CGFloat)0.5;
 
   // When
   [inkLayer changeAnimationAtPoint:CGPointMake(5, 5)];
@@ -171,7 +171,7 @@
   CAAnimation *animation = inkLayer.addedAnimations.firstObject;
   if (animation) {
     startTime = [inkLayer convertTime:startTime fromLayer:nil];
-    XCTAssertEqualWithAccuracy(animation.beginTime, startTime, 0.1f);
+    XCTAssertEqualWithAccuracy(animation.beginTime, startTime, (CGFloat)0.1);
   }
 }
 

@@ -40,15 +40,15 @@
 
   // Given
   NSArray<UIColor *> *tonalColors = @[
-    [UIColor colorWithRed:0.6f green:0.2f blue:0.3f alpha:1],
-    [UIColor colorWithRed:1 green:0.5f blue:0 alpha:1],
-    [UIColor colorWithRed:0.2f green:0.3f blue:0.3f alpha:1],
-    [UIColor colorWithRed:0.5f green:0.8f blue:0.6f alpha:1],
-    [UIColor colorWithRed:0.4f green:0.7f blue:0.4f alpha:1],
-    [UIColor colorWithRed:0.8f green:0.3f blue:0.9f alpha:1],
-    [UIColor colorWithRed:0.6f green:0.2f blue:0.3f alpha:1],
-    [UIColor colorWithRed:0 green:0.8f blue:1 alpha:1],
-    [UIColor colorWithRed:0.1f green:0.8f blue:0.3f alpha:1],
+    [UIColor colorWithRed:(CGFloat)0.6 green:(CGFloat)0.2 blue:(CGFloat)0.3 alpha:1],
+    [UIColor colorWithRed:1 green:(CGFloat)0.5 blue:0 alpha:1],
+    [UIColor colorWithRed:(CGFloat)0.2 green:(CGFloat)0.3 blue:(CGFloat)0.3 alpha:1],
+    [UIColor colorWithRed:(CGFloat)0.5 green:(CGFloat)0.8 blue:(CGFloat)0.6 alpha:1],
+    [UIColor colorWithRed:(CGFloat)0.4 green:(CGFloat)0.7 blue:(CGFloat)0.4 alpha:1],
+    [UIColor colorWithRed:(CGFloat)0.8 green:(CGFloat)0.3 blue:(CGFloat)0.9 alpha:1],
+    [UIColor colorWithRed:(CGFloat)0.6 green:(CGFloat)0.2 blue:(CGFloat)0.3 alpha:1],
+    [UIColor colorWithRed:0 green:(CGFloat)0.8 blue:1 alpha:1],
+    [UIColor colorWithRed:(CGFloat)0.1 green:(CGFloat)0.8 blue:(CGFloat)0.3 alpha:1],
     [UIColor colorWithRed:1 green:0 blue:1 alpha:1]
   ];
 

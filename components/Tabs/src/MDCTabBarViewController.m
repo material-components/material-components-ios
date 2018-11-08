@@ -24,7 +24,7 @@ static NSString *const MDCTabBarViewControllerSelectedViewControllerKey =
 static NSString *const MDCTabBarViewControllerDelegateKey = @"MDCTabBarViewControllerDelegateKey";
 static NSString *const MDCTabBarViewControllerTabBarKey = @"MDCTabBarViewControllerTabBarKey";
 
-const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
+const CGFloat MDCTabBarViewControllerAnimationDuration = (CGFloat)0.3;
 
 /**
  * View to host shadow for the tab bar.

@@ -71,7 +71,7 @@
 /**
  Returns the button title color for a particular control state.
 
- Default for UIControlStateNormal is MDCRGBAColor(0xFF, 0xFF, 0xFF, 0.6f).
+ Default for UIControlStateNormal is MDCRGBAColor(0xFF, 0xFF, 0xFF, (CGFloat)0.6).
  Default for UIControlStatehighlighted is white.
 
  @param state The control state.

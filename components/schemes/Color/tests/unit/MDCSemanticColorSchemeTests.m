@@ -76,8 +76,8 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
 
 - (void)testColorMergeFor50OpacityBlackOnWhite {
   UIColor *backgroundColor = [UIColor whiteColor];
-  UIColor *blendColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5f];
-  UIColor *expectedColor = [UIColor colorWithRed:0.5f green:0.5f blue:0.5f alpha:1];
+  UIColor *blendColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:(CGFloat)0.5];
+  UIColor *expectedColor = [UIColor colorWithRed:(CGFloat)0.5 green:(CGFloat)0.5 blue:(CGFloat)0.5 alpha:1];
   UIColor *resultColor =
       [MDCSemanticColorScheme blendColor:blendColor withBackgroundColor:backgroundColor];
   XCTAssertEqualObjects(resultColor, expectedColor);
@@ -101,8 +101,8 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
 
 - (void)testColorMergeFor50OpacityWhiteOnBlack {
   UIColor *backgroundColor = [UIColor blackColor];
-  UIColor *blendColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.5f];
-  UIColor *expectedColor = [UIColor colorWithRed:0.5f green:0.5f blue:0.5f alpha:1];
+  UIColor *blendColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:(CGFloat)0.5];
+  UIColor *expectedColor = [UIColor colorWithRed:(CGFloat)0.5 green:(CGFloat)0.5 blue:(CGFloat)0.5 alpha:1];
   UIColor *resultColor =
       [MDCSemanticColorScheme blendColor:blendColor withBackgroundColor:backgroundColor];
   XCTAssertEqualObjects(resultColor, expectedColor);

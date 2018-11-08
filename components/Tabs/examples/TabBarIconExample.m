@@ -91,7 +91,7 @@
 
   [MDCTabBarColorThemer applySemanticColorScheme:self.colorScheme toTabs:tabBar];
 
-  tabBar.inkColor = [[UIColor whiteColor] colorWithAlphaComponent:0.1f];
+  tabBar.inkColor = [[UIColor whiteColor] colorWithAlphaComponent:(CGFloat)0.1];
   tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
 
   self.tabBar = tabBar;
