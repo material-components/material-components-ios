@@ -62,7 +62,7 @@
 }
 
 - (id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
-  return _transitionController;
+  return self.transitionController;
 }
 
 - (UIModalPresentationStyle)modalPresentationStyle {
@@ -70,14 +70,14 @@
 }
 
 - (UIScrollView *)trackingScrollView {
-  return _transitionController.trackingScrollView;
+  return self.transitionController.trackingScrollView;
 }
 
 - (void)setTrackingScrollView:(UIScrollView *)trackingScrollView {
   // Rather than have the client manually disable scrolling on the internal scroll view for
   // the drawer to work properly, we can disable it if a trackingScrollView is provided.
   [trackingScrollView setScrollEnabled:NO];
-  _transitionController.trackingScrollView = trackingScrollView;
+  self.transitionController.trackingScrollView = trackingScrollView;
 }
 
 - (void)setTopCornersRadius:(CGFloat)radius forDrawerState:(MDCBottomDrawerState)drawerState {
