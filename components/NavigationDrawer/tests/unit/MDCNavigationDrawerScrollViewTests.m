@@ -467,6 +467,7 @@
 - (void)testBottomDrawerHandle {
   // When
   [self.presentationController presentationTransitionWillBegin];
+
   // Then
   XCTAssertNotNil(self.presentationController.topHandle);
   XCTAssertEqualWithAccuracy(CGRectGetWidth(self.presentationController.topHandle.frame),
@@ -485,6 +486,7 @@
   presentationController.topHandle = [[UIView alloc] init];
   presentationController.topHandle.hidden = YES;
   self.drawerViewController.topHandleHidden = NO;
+
   // Then
   XCTAssertEqual(presentationController.topHandle.hidden, NO);
 }
@@ -496,6 +498,7 @@
   presentationController.topHandle = [[UIView alloc] init];
   presentationController.topHandle.backgroundColor = UIColor.blueColor;
   self.drawerViewController.topHandleColor = UIColor.redColor;
+
   // Then
   XCTAssertEqualObjects(presentationController.topHandle.backgroundColor, UIColor.redColor);
 }
