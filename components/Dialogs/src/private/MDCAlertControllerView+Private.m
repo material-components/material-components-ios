@@ -35,7 +35,7 @@ static const CGFloat MDCDialogActionsHorizontalPadding = 8.0;
 static const CGFloat MDCDialogActionsVerticalPadding = 12.0;
 static const CGFloat MDCDialogActionButtonHeight = 36.0;
 static const CGFloat MDCDialogActionButtonMinimumWidth = 48.0;
-static const CGFloat MDCDialogActionMinTouchTarget = 48.f;
+static const CGFloat MDCDialogActionMinTouchTarget = 48;
 
 static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
@@ -89,7 +89,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     } else {
       self.messageLabel.font = [MDCTypography body1Font];
     }
-    self.messageLabel.textColor = [UIColor colorWithWhite:0.0f alpha:MDCDialogMessageOpacity];
+    self.messageLabel.textColor = [UIColor colorWithWhite:0 alpha:MDCDialogMessageOpacity];
     [self.contentScrollView addSubview:self.messageLabel];
 
     [self setNeedsLayout];
@@ -138,7 +138,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   [button setTitleColor:themeColor forState:UIControlStateNormal];
   [button setImageTintColor:themeColor forState:UIControlStateNormal];
   [button setInkColor:[UIColor colorWithWhite:0 alpha:0.06f]];
-  button.disabledAlpha = 1.f;
+  button.disabledAlpha = 1;
   [button setElevation:MDCShadowElevationNone forState:UIControlStateNormal];
 }
 
@@ -382,7 +382,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   if ((0.0 < titleSize.height || 0.0 < titleIconSize.height) && 0.0 < messageSize.height) {
     contentInternalVerticalPadding = MDCDialogContentVerticalPadding;
   }
-  CGFloat contentTitleIconVerticalPadding = 0.0f;
+  CGFloat contentTitleIconVerticalPadding = 0;
   if (0.0 < titleSize.height && 0.0 < titleIconSize.height) {
     contentTitleIconVerticalPadding = MDCDialogTitleIconVerticalPadding;
   }
@@ -479,7 +479,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   if ((0.0 < titleSize.height || 0.0 < titleIconSize.height) && 0.0 < messageSize.height) {
     contentInternalVerticalPadding = MDCDialogContentVerticalPadding;
   }
-  CGFloat contentTitleIconVerticalPadding = 0.0f;
+  CGFloat contentTitleIconVerticalPadding = 0;
   if (0.0 < titleSize.height && 0.0 < titleIconSize.height) {
     contentTitleIconVerticalPadding = MDCDialogTitleIconVerticalPadding;
   }
@@ -499,7 +499,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     // match the titleIcon alignment to the title alignment
     CGFloat titleIconPosition = titleFrame.origin.x;
     if (self.titleAlignment == NSTextAlignmentCenter) {
-      titleIconPosition = (contentSize.width - titleIconSize.width) / 2.0f;
+      titleIconPosition = (contentSize.width - titleIconSize.width) / 2;
     } else if (self.titleAlignment == NSTextAlignmentRight ||
                (self.titleAlignment == NSTextAlignmentNatural &&
                 [self mdf_effectiveUserInterfaceLayoutDirection] ==

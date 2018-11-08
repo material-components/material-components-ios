@@ -19,7 +19,7 @@
 #import "MaterialPageControl.h"
 #import "supplemental/FlexibleHeaderPageControlSupplemental.h"
 
-static const CGFloat kFlexibleHeaderMinHeight = 200.f;
+static const CGFloat kFlexibleHeaderMinHeight = 200;
 
 @interface FlexibleHeaderPageControlExample () <UIScrollViewDelegate>
 

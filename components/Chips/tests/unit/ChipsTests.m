@@ -104,7 +104,7 @@ static inline UIImage *TestImage(CGSize size) {
   XCTAssertEqualWithAccuracy([chip elevationForState:UIControlStateHighlighted], 8, 0.001);
 
   // Title color
-  UIColor *normalTitleColor = [UIColor colorWithWhite:0.13f alpha:1.0f];
+  UIColor *normalTitleColor = [UIColor colorWithWhite:0.13f alpha:1];
   XCTAssertEqualObjects([chip titleColorForState:UIControlStateDisabled],
                         MDCColorLighten(normalTitleColor, 0.38f));
 

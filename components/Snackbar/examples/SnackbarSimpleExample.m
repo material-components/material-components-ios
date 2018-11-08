@@ -134,11 +134,11 @@
 }
 
 - (void)showCustomizedSnackbar:(id)sender {
-  UIFont *customMessageFont = [UIFont fontWithName:@"Zapfino" size:14.0f];
+  UIFont *customMessageFont = [UIFont fontWithName:@"Zapfino" size:14];
   NSAssert(customMessageFont, @"Unable to instantiate font");
   MDCSnackbarManager.messageFont = customMessageFont;
 
-  UIFont *customButtonFont = [UIFont fontWithName:@"ChalkDuster" size:14.0f];
+  UIFont *customButtonFont = [UIFont fontWithName:@"ChalkDuster" size:14];
   NSAssert(customButtonFont, @"Unable to instantiate font");
   MDCSnackbarManager.buttonFont = customButtonFont;
 

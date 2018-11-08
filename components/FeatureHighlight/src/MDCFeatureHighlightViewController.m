@@ -24,7 +24,7 @@
 // The Bundle for string resources.
 static NSString *const kMaterialFeatureHighlightBundle = @"MaterialFeatureHighlight.bundle";
 
-static const CGFloat kMDCFeatureHighlightLineSpacing = 1.0f;
+static const CGFloat kMDCFeatureHighlightLineSpacing = 1;
 static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
 
 @interface MDCFeatureHighlightViewController () <UIViewControllerTransitioningDelegate>

@@ -59,13 +59,13 @@
   // Then
   XCTAssertEqualObjects(shapeScheme.largeComponentShape,
                         [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyRounded
-                                                                andSize:0.f]);
+                                                                andSize:0]);
   XCTAssertEqualObjects(shapeScheme.mediumComponentShape,
                         [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyRounded
-                                                                andSize:4.f]);
+                                                                andSize:4]);
   XCTAssertEqualObjects(shapeScheme.smallComponentShape,
                         [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyRounded
-                                                                andSize:4.f]);
+                                                                andSize:4]);
 }
 
 @end

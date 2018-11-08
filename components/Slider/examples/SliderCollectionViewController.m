@@ -21,8 +21,8 @@
 #import "MaterialTypographyScheme.h"
 
 static NSString *const kReusableIdentifierItem = @"sliderItemCellIdentifier";
-static CGFloat const kSliderHorizontalMargin = 16.f;
-static CGFloat const kSliderVerticalMargin = 12.f;
+static CGFloat const kSliderHorizontalMargin = 16;
+static CGFloat const kSliderVerticalMargin = 12;
 
 @interface MDCSliderModel : NSObject
 
@@ -231,7 +231,7 @@ static CGFloat const kSliderVerticalMargin = 12.f;
     model.labelString = @"Green slider without hollow circle at 0";
     model.sliderColor = MDCPalette.greenPalette.tint800;
     model.hollowCircle = NO;
-    model.value = 0.f;
+    model.value = 0;
     [_sliders addObject:model];
 
     model = [[MDCSliderModel alloc] init];
@@ -243,7 +243,7 @@ static CGFloat const kSliderVerticalMargin = 12.f;
     model = [[MDCSliderModel alloc] init];
     model.labelString = @"Discrete slider without numeric value label";
     model.numDiscreteValues = 7;
-    model.value = 1.f;
+    model.value = 1;
     model.discreteValueLabel = NO;
     [_sliders addObject:model];
 

@@ -34,7 +34,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   [MDCTextButtonColorThemer applySemanticColorScheme:colorScheme toButton:button];
 
   // Then
-  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1.f, kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1, kEpsilonAccuracy);
   XCTAssertEqualObjects([button backgroundColorForState:UIControlStateNormal], UIColor.clearColor);
   XCTAssertEqualObjects([button backgroundColorForState:UIControlStateDisabled],
                         UIColor.clearColor);
@@ -62,7 +62,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   [MDCContainedButtonColorThemer applySemanticColorScheme:colorScheme toButton:button];
 
   // Then
-  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1.f, kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1, kEpsilonAccuracy);
   XCTAssertEqualObjects([button backgroundColorForState:UIControlStateNormal],
                         colorScheme.primaryColor);
   XCTAssertEqualObjects([button backgroundColorForState:UIControlStateDisabled],
@@ -123,7 +123,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
                               [colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f].CGColor));
     }
   }
-  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1.f, 0.001f);
+  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1, 0.001f);
 }
 
 - (void)testMDCFlatButtonColorThemer {
@@ -165,7 +165,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
                      (unsigned long)state);
     }
   }
-  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1.f, 0.001f);
+  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1, 0.001f);
 }
 
 - (void)testMDCRaisedButtonColorThemer {
@@ -208,7 +208,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
                               [colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f].CGColor));
     }
   }
-  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1.f, 0.001f);
+  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1, 0.001f);
 }
 
 - (void)testMDCFloatingButtonColorThemer {
@@ -236,7 +236,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
     }
   }
 
-  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1.f, 0.001f);
+  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1, 0.001f);
 }
 
 

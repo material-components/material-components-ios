@@ -88,7 +88,7 @@
 #pragma mark - Floating Button
 
 - (void)testCustomizedFloatingButtonVerticalHeight {
-  CGFloat veriticalOffset = 5.0f;
+  CGFloat veriticalOffset = 5;
   self.bottomAppBar.floatingButtonVerticalOffset = veriticalOffset;
   [self.bottomAppBar layoutSubviews];
   CGPoint floatingButtonPosition = self.bottomAppBar.floatingButton.center;

@@ -18,8 +18,8 @@
 #import "MaterialButtons.h"
 #import "MaterialButtons+ButtonThemer.h"
 
-static const CGFloat kActivityIndicatorExampleArrowHeadSize = 5.0f;
-static const CGFloat kActivityIndicatorExampleStrokeWidth = 2.0f;
+static const CGFloat kActivityIndicatorExampleArrowHeadSize = 5;
+static const CGFloat kActivityIndicatorExampleStrokeWidth = 2;
 
 static const NSTimeInterval kActivityIndicatorExampleAnimationDuration = 2.0 / 3.0;
 
@@ -128,13 +128,13 @@ static const NSTimeInterval kActivityIndicatorExampleAnimationDuration = 2.0 / 3
   _refreshArrowContainer.position = _rotationContainer.position;
 
   _refreshArrowPoint.position =
-      CGPointMake(bounds.size.width / 2, kActivityIndicatorExampleStrokeWidth / 2.0f);
+      CGPointMake(bounds.size.width / 2, kActivityIndicatorExampleStrokeWidth / 2);
 
-  CGFloat offsetRadius = _activityIndicator.radius - kActivityIndicatorExampleStrokeWidth / 2.0f;
+  CGFloat offsetRadius = _activityIndicator.radius - kActivityIndicatorExampleStrokeWidth / 2;
   UIBezierPath *strokePath = [UIBezierPath bezierPathWithArcCenter:_refreshStrokeLayer.position
                                                             radius:offsetRadius
-                                                        startAngle:-1.0f * (CGFloat)M_PI_2
-                                                          endAngle:3.0f * (CGFloat)M_PI_2
+                                                        startAngle:-1 * (CGFloat)M_PI_2
+                                                          endAngle:3 * (CGFloat)M_PI_2
                                                          clockwise:YES];
   _refreshStrokeLayer.path = strokePath.CGPath;
 }
@@ -201,7 +201,7 @@ static const NSTimeInterval kActivityIndicatorExampleAnimationDuration = 2.0 / 3
   CABasicAnimation *strokeStartAnimation = [CABasicAnimation animationWithKeyPath:@"strokeStart"];
   strokeStartAnimation.fromValue = @(0);
   // Ensure the stroke never disappears by never hitting stroke end's toValue.
-  strokeStartAnimation.toValue = @(1.0f - difference);
+  strokeStartAnimation.toValue = @(1 - difference);
   strokeStartAnimation.fillMode = kCAFillModeBoth;
   strokeStartAnimation.removedOnCompletion = NO;
   [_refreshStrokeLayer addAnimation:strokeStartAnimation forKey:@"strokeStart"];

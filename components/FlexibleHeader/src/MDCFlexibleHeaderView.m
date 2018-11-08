@@ -280,8 +280,8 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 
   _defaultShadowLayer = [CALayer layer];
   _defaultShadowLayer.shadowColor = [[UIColor blackColor] CGColor];
-  _defaultShadowLayer.shadowOffset = CGSizeMake(0, 1.f);
-  _defaultShadowLayer.shadowRadius = 4.f;
+  _defaultShadowLayer.shadowOffset = CGSizeMake(0, 1);
+  _defaultShadowLayer.shadowRadius = 4;
   _defaultShadowLayer.shadowOpacity = 0;
   _defaultShadowLayer.hidden = YES;
   [self.layer addSublayer:_defaultShadowLayer];
@@ -308,7 +308,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 
   self.layer.shadowColor = [[UIColor blackColor] CGColor];
   self.layer.shadowOffset = CGSizeMake(0, 1);
-  self.layer.shadowRadius = 4.f;
+  self.layer.shadowRadius = 4;
   self.layer.shadowOpacity = 0;
 
   [[NSNotificationCenter defaultCenter] addObserver:self

@@ -25,10 +25,10 @@
 #import "MaterialIcons+ic_reorder.h"
 #import "MaterialPalettes.h"
 
-static CGFloat kEditingControlAppearanceOffset = 16.0f;
+static CGFloat kEditingControlAppearanceOffset = 16;
 
 // Default accessory insets.
-static const UIEdgeInsets kAccessoryInsetDefault = {0, 16.0f, 0, 16.0f};
+static const UIEdgeInsets kAccessoryInsetDefault = {0, 16, 0, 16};
 
 // Default editing icon colors.
 // Color is 0x626262
@@ -147,15 +147,15 @@ NSString *const kDeselectedCellAccessibilityHintKey =
         txSelectorTransform = kEditingControlAppearanceOffset;
         break;
     }
-    self->_editingReorderImageView.alpha = self->_attr.shouldShowReorderStateMask ? 1.0f : 0.0f;
+    self->_editingReorderImageView.alpha = self->_attr.shouldShowReorderStateMask ? 1 : 0;
     self->_editingReorderImageView.transform = self->_attr.shouldShowReorderStateMask ?
         CGAffineTransformMakeTranslation(txReorderTransform, 0) : CGAffineTransformIdentity;
 
-    self->_editingSelectorImageView.alpha = self->_attr.shouldShowSelectorStateMask ? 1.0f : 0.0f;
+    self->_editingSelectorImageView.alpha = self->_attr.shouldShowSelectorStateMask ? 1 : 0;
     self->_editingSelectorImageView.transform = self->_attr.shouldShowSelectorStateMask ?
         CGAffineTransformMakeTranslation(txSelectorTransform, 0) : CGAffineTransformIdentity;
 
-    self.accessoryView.alpha = self->_attr.shouldShowSelectorStateMask ? 0.0f : 1.0f;
+    self.accessoryView.alpha = self->_attr.shouldShowSelectorStateMask ? 0 : 1;
     self->_accessoryInset.right = self->_attr.shouldShowSelectorStateMask
                                   ? kAccessoryInsetDefault.right + kEditingControlAppearanceOffset
                                   : kAccessoryInsetDefault.right;
@@ -391,9 +391,9 @@ NSString *const kDeselectedCellAccessibilityHintKey =
       }
       _editingReorderImageView.frame = frame;
       _editingReorderImageView.transform = transform;
-      _editingReorderImageView.alpha = 1.0f;
+      _editingReorderImageView.alpha = 1;
     } else {
-      _editingReorderImageView.alpha = 0.0f;
+      _editingReorderImageView.alpha = 0;
     }
 
     // Create selector editing controls.
@@ -420,18 +420,18 @@ NSString *const kDeselectedCellAccessibilityHintKey =
       }
       _editingSelectorImageView.frame = frame;
       _editingSelectorImageView.transform = transform;
-      _editingSelectorImageView.alpha = 1.0f;
+      _editingSelectorImageView.alpha = 1;
     } else {
-      _editingSelectorImageView.alpha = 0.0f;
+      _editingSelectorImageView.alpha = 0;
     }
     [CATransaction commit];
   } else {
-    _editingReorderImageView.alpha = 0.0f;
-    _editingSelectorImageView.alpha = 0.0f;
+    _editingReorderImageView.alpha = 0;
+    _editingSelectorImageView.alpha = 0;
   }
 
   // Update accessory view.
-  _accessoryView.alpha = _attr.shouldShowSelectorStateMask ? 0.0f : 1.0f;
+  _accessoryView.alpha = _attr.shouldShowSelectorStateMask ? 0 : 1;
   _accessoryInset.right = _attr.shouldShowSelectorStateMask
                               ? kAccessoryInsetDefault.right + kEditingControlAppearanceOffset
                               : kAccessoryInsetDefault.right;
@@ -539,7 +539,7 @@ NSString *const kDeselectedCellAccessibilityHintKey =
   CGFloat leadingPadding =
       _attr.shouldShowReorderStateMask
           ? CGRectGetWidth(_editingReorderImageView.bounds) + kEditingControlAppearanceOffset
-          : 0.f;
+          : 0;
 
   CGFloat accessoryViewPadding =
       _accessoryView ? CGRectGetWidth(self.bounds) - CGRectGetMinX(_accessoryView.frame) : 0;
