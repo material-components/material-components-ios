@@ -164,6 +164,9 @@
             (nonnull MDCBottomDrawerPresentationController *)presentationController
                        transitionRatio:(CGFloat)transitionRatio {
   [_maskLayer animateWithPercentage:1.f - transitionRatio];
+  if (self.delegate) {
+    [self contentDrawerTopInset:transitionRatio];
+  }
 }
 
 - (void)bottomDrawerWillChangeState:
@@ -177,14 +180,17 @@
   }
 }
 
-- (CGFloat)contentDrawerTopInset:(CGFloat)transitionToTop {
+- (void)contentDrawerTopInset:(CGFloat)transitionToTop {
   CGFloat topInset = MDCDeviceTopSafeAreaInset();
   if ([self contentReachesFullScreen]) {
-    topInset -= (1.f - transitionToTop) * topInset;
+    topInset -= ((CGFloat)1.0 - transitionToTop) * topInset;
   } else {
-    topInset = 0.f;
+    topInset = (CGFloat)0.0;
   }
-  return topInset;
+  if (!self.topHandleHidden) {
+    topInset = MAX(topInset, (CGFloat)7.0);
+  }
+  [self.delegate bottomDrawerControllerDidChangeTopInset:self topInset:topInset];
 }
 
 @end

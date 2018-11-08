@@ -83,7 +83,6 @@ static CGFloat kTopHandleYCenter = 6.f;
         bottomDrawerViewController.contentViewController;
     bottomDrawerContainerViewController.headerViewController =
         bottomDrawerViewController.headerViewController;
-    self.delegate = bottomDrawerViewController;
   } else {
     bottomDrawerContainerViewController.contentViewController = self.presentedViewController;
   }
