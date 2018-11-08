@@ -17,6 +17,7 @@
 #import "MDCBottomDrawerState.h"
 
 @protocol MDCBottomDrawerHeader;
+@protocol MDCBottomDrawerViewControllerDelegate;
 
 /**
  View controller for containing a Google Material bottom drawer.
@@ -68,6 +69,11 @@
 @property(nonatomic, strong, nullable) UIColor *topHandleColor;
 
 /**
+ The bottom drawer delegate.
+ */
+@property(nonatomic, weak, nullable) id<MDCBottomDrawerViewControllerDelegate> delegate;
+
+/**
  Sets the top corners radius for an MDCBottomDrawerState drawerState
 
  @param radius The corner radius to set the top corners.
@@ -84,5 +90,24 @@
  @return The corner radius to set the top corners.
  */
 - (CGFloat)topCornersRadiusForDrawerState:(MDCBottomDrawerState)drawerState;
+
+@end
+
+/**
+ Delegate for MDCBottomDrawerViewController.
+ */
+@protocol MDCBottomDrawerViewControllerDelegate <NSObject>
+
+/**
+ Called when the top inset of the drawer changes due to size changes when moving into full screen
+ to cover the status bar and safe area inset. Also if there is a top handle, the top inset will
+ take into regards the handle height. The top inset indicates where the content can be safely
+ laid out without it being clipped.
+
+ @param controller The MDCBottomDrawerViewController.
+ @param topInset The top inset in which the content should take into regards when being laid out.
+ */
+- (void)bottomDrawerControllerDidChangeTopInset:(nonnull MDCBottomDrawerViewController *)controller
+                                       topInset:(CGFloat)topInset;
 
 @end

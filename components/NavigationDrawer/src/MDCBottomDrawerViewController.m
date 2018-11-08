@@ -15,6 +15,7 @@
 #import "MDCBottomDrawerViewController.h"
 
 #import "MDCBottomDrawerTransitionController.h"
+#import "MaterialUIMetrics.h"
 #import "private/MDCBottomDrawerHeaderMask.h"
 
 @interface MDCBottomDrawerViewController () <MDCBottomDrawerPresentationControllerDelegate>
@@ -175,6 +176,9 @@
             (nonnull MDCBottomDrawerPresentationController *)presentationController
                        transitionRatio:(CGFloat)transitionRatio {
   [_maskLayer animateWithPercentage:1.f - transitionRatio];
+  if (self.delegate) {
+    [self contentDrawerTopInset:transitionRatio];
+  }
 }
 
 - (void)bottomDrawerWillChangeState:
@@ -186,6 +190,19 @@
     _maskLayer.minimumCornerRadius = minimumCornerRadius;
     [_maskLayer applyMask];
   }
+}
+
+- (void)contentDrawerTopInset:(CGFloat)transitionToTop {
+  CGFloat topInset = MDCDeviceTopSafeAreaInset();
+  if ([self contentReachesFullScreen]) {
+    topInset -= ((CGFloat)1.0 - transitionToTop) * topInset;
+  } else {
+    topInset = (CGFloat)0.0;
+  }
+  if (!self.topHandleHidden) {
+    topInset = MAX(topInset, (CGFloat)7.0);
+  }
+  [self.delegate bottomDrawerControllerDidChangeTopInset:self topInset:topInset];
 }
 
 @end
