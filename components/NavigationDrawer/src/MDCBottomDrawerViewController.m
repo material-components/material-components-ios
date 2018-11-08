@@ -15,6 +15,7 @@
 #import "MDCBottomDrawerViewController.h"
 
 #import "MDCBottomDrawerTransitionController.h"
+#import "MaterialUIMetrics.h"
 #import "private/MDCBottomDrawerHeaderMask.h"
 
 @interface MDCBottomDrawerViewController () <MDCBottomDrawerPresentationControllerDelegate>
@@ -145,6 +146,24 @@
              self.contentViewController.preferredContentSize.height;
 }
 
+- (void)setTopHandleHidden:(BOOL)topHandleHidden {
+  _topHandleHidden = topHandleHidden;
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+        (MDCBottomDrawerPresentationController *)self.presentationController;
+    bottomDrawerPresentationController.topHandleHidden = topHandleHidden;
+  }
+}
+
+- (void)setTopHandleColor:(UIColor *)topHandleColor {
+  _topHandleColor = topHandleColor;
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+        (MDCBottomDrawerPresentationController *)self.presentationController;
+    bottomDrawerPresentationController.topHandleColor = topHandleColor;
+  }
+}
+
 #pragma mark UIAccessibilityAction
 
 // Adds the Z gesture for dismissal.
@@ -157,6 +176,9 @@
             (nonnull MDCBottomDrawerPresentationController *)presentationController
                        transitionRatio:(CGFloat)transitionRatio {
   [_maskLayer animateWithPercentage:1 - transitionRatio];
+  if (self.delegate) {
+    [self contentDrawerTopInset:transitionRatio];
+  }
 }
 
 - (void)bottomDrawerWillChangeState:
@@ -168,6 +190,19 @@
     _maskLayer.minimumCornerRadius = minimumCornerRadius;
     [_maskLayer applyMask];
   }
+}
+
+- (void)contentDrawerTopInset:(CGFloat)transitionToTop {
+  CGFloat topInset = MDCDeviceTopSafeAreaInset();
+  if ([self contentReachesFullScreen]) {
+    topInset -= ((CGFloat)1.0 - transitionToTop) * topInset;
+  } else {
+    topInset = (CGFloat)0.0;
+  }
+  if (!self.topHandleHidden) {
+    topInset = MAX(topInset, (CGFloat)7.0);
+  }
+  [self.delegate bottomDrawerControllerDidChangeTopInset:self topInset:topInset];
 }
 
 @end

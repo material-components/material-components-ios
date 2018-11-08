@@ -67,6 +67,7 @@
     MDCBottomDrawerContainerViewControllerDelegate>
 @property(nonatomic) MDCBottomDrawerContainerViewController *bottomDrawerContainerViewController;
 @property(nonatomic, weak, nullable) id<MDCBottomDrawerPresentationControllerDelegate> delegate;
+@property(nonatomic, strong, nullable) UIView *topHandle;
 @end
 
 @interface MDCNavigationDrawerScrollViewTests : XCTestCase
@@ -463,12 +464,84 @@
   XCTAssertEqual(self.drawerViewController.maskLayer.minimumCornerRadius, 3);
 }
 
+- (void)testBottomDrawerDynamicSizing {
+  // Given
+  self.fakeBottomDrawer.contentViewController =
+      [[MDCNavigationDrawerFakeTableViewController alloc] init];
+  [self.fakeBottomDrawer viewDidLoad];
+  [self.fakeBottomDrawer cacheLayoutCalculations];
+  CGFloat previousContentHeaderTopInset = self.fakeBottomDrawer.contentHeaderTopInset;
+
+  // When
+  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(200, 200);
+
+  // Then
+  XCTAssertLessThan(self.fakeBottomDrawer.contentHeaderTopInset, previousContentHeaderTopInset);
+}
+
+- (void)testBottomDrawerHandle {
+  // When
+  [self.presentationController presentationTransitionWillBegin];
+
+  // Then
+  XCTAssertNotNil(self.presentationController.topHandle);
+  XCTAssertEqualWithAccuracy(CGRectGetWidth(self.presentationController.topHandle.frame),
+                             (CGFloat)24.0, (CGFloat)0.001);
+  XCTAssertEqualWithAccuracy(CGRectGetHeight(self.presentationController.topHandle.frame),
+                             (CGFloat)2.0, (CGFloat)0.001);
+  XCTAssertEqualWithAccuracy(self.presentationController.topHandle.layer.cornerRadius, (CGFloat)1.0,
+                             (CGFloat)0.001);
+  XCTAssertEqual(self.presentationController.topHandle.hidden, YES);
+}
+
+- (void)testBottomDrawerHandleHidden {
+  // When
+  MDCBottomDrawerPresentationController *presentationController =
+      (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
+  presentationController.topHandle = [[UIView alloc] init];
+  presentationController.topHandle.hidden = YES;
+  self.drawerViewController.topHandleHidden = NO;
+
+  // Then
+  XCTAssertEqual(presentationController.topHandle.hidden, NO);
+}
+
+- (void)testBottomDrawerHandleColor {
+  // When
+  MDCBottomDrawerPresentationController *presentationController =
+      (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
+  presentationController.topHandle = [[UIView alloc] init];
+  presentationController.topHandle.backgroundColor = UIColor.blueColor;
+  self.drawerViewController.topHandleColor = UIColor.redColor;
+
+  // Then
+  XCTAssertEqualObjects(presentationController.topHandle.backgroundColor, UIColor.redColor);
+}
+
 - (void)testBottomDrawerScrollingEnabled {
   // When
   self.drawerViewController.trackingScrollView = self.fakeScrollView;
 
   // Then
   XCTAssertEqual(self.fakeScrollView.scrollEnabled, NO);
+}
+
+- (void)testBottomDrawerTopInset {
+  // Given
+  MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
+      [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
+  self.fakeBottomDrawer.headerViewController = fakeHeader;
+  self.drawerViewController.delegate = fakeHeader;
+  self.fakeBottomDrawer.delegate = self.presentationController;
+  [self.presentationController presentationTransitionWillBegin];
+
+  // When
+  [self.fakeBottomDrawer viewWillAppear:YES];
+  [self.fakeBottomDrawer cacheLayoutCalculations];
+  [self.fakeBottomDrawer.scrollView setContentOffset:CGPointMake(0, 1000)];
+
+  // Then
+  XCTAssertEqualWithAccuracy(fakeHeader.topInset, (CGFloat)7.0, (CGFloat)0.001);
 }
 
 @end

@@ -439,6 +439,14 @@ static UIColor *DrawerShadowColor(void) {
   self.headerShadowLayer = nil;
 }
 
+- (void)preferredContentSizeDidChangeForChildContentContainer:(id<UIContentContainer>)container {
+  [super preferredContentSizeDidChangeForChildContentContainer:container];
+  _contentHeaderTopInset = NSNotFound;
+  _contentHeightSurplus = NSNotFound;
+  _addedContentHeight = NSNotFound;
+  [self.view setNeedsLayout];
+}
+
 #pragma mark Set ups (Private)
 
 - (void)setUpContentHeader {
@@ -575,12 +583,7 @@ static UIColor *DrawerShadowColor(void) {
 }
 
 - (CGFloat)contentHeightSurplus {
-  // The content view controller's preferredContentSize may only be updated to the corrent value
-  // later in the lifecycle, and therefore it is important to update the contentHeightSurplus
-  // accordingly, if there is an update.
-  if (_contentHeightSurplus == NSNotFound ||
-      _contentVCPreferredContentSizeHeightCached !=
-          self.contentViewController.preferredContentSize.height) {
+  if (_contentHeightSurplus == NSNotFound) {
     [self cacheLayoutCalculations];
   }
   return _contentHeightSurplus;

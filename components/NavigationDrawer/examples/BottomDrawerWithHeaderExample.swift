@@ -18,7 +18,8 @@ import MaterialComponents.MaterialBottomAppBar_ColorThemer
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialNavigationDrawer
 
-class BottomDrawerWithHeaderExample: UIViewController {
+class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewControllerDelegate {
+
   var colorScheme = MDCSemanticColorScheme()
   let bottomAppBar = MDCBottomAppBarView()
 
@@ -64,11 +65,21 @@ class BottomDrawerWithHeaderExample: UIViewController {
     let bottomDrawerViewController = MDCBottomDrawerViewController()
     bottomDrawerViewController.setTopCornersRadius(24, for: .collapsed)
     bottomDrawerViewController.setTopCornersRadius(8, for: .expanded)
+    bottomDrawerViewController.isTopHandleHidden = false
+    bottomDrawerViewController.topHandleColor = UIColor.lightGray
     bottomDrawerViewController.contentViewController = contentViewController
     bottomDrawerViewController.headerViewController = headerViewController
+    bottomDrawerViewController.delegate = self
     MDCBottomDrawerColorThemer.applySemanticColorScheme(colorScheme,
                                                         toBottomDrawer: bottomDrawerViewController)
     present(bottomDrawerViewController, animated: true, completion: nil)
+  }
+
+  func bottomDrawerControllerDidChangeTopInset(_ controller: MDCBottomDrawerViewController,
+                                               topInset: CGFloat) {
+    headerViewController.titleLabel.center =
+      CGPoint(x: headerViewController.view.frame.size.width / 2,
+              y: (headerViewController.view.frame.size.height + topInset) / 2)
   }
 }
 
