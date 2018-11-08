@@ -22,7 +22,7 @@
 #import "MaterialActivityIndicator.h"
 #import "MaterialCollections.h"
 
-static const CGFloat kActivityIndicatorRadius = 72.f;
+static const CGFloat kActivityIndicatorRadius = 72;
 static const CGFloat kActivityInitialProgress = 0.6f;
 
 @class ActivityIndicatorExample;

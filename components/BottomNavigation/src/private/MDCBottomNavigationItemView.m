@@ -23,8 +23,8 @@
 #import "MDCBottomNavigationItemBadge.h"
 
 static const CGFloat MDCBottomNavigationItemViewInkOpacity = 0.150f;
-static const CGFloat MDCBottomNavigationItemViewTitleFontSize = 12.f;
-static const CGFloat kMDCBottomNavigationItemViewBadgeYOffset = 4.f;
+static const CGFloat MDCBottomNavigationItemViewTitleFontSize = 12;
+static const CGFloat kMDCBottomNavigationItemViewBadgeYOffset = 4;
 
 // The duration of the selection transition animation.
 static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.180f;
@@ -193,9 +193,13 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
     if (animated) {
       [UIView animateWithDuration:kMDCBottomNavigationItemViewTransitionDuration animations:^(void) {
         self.iconImageView.center = iconImageViewCenter;
+        self.badge.center =
+            [self badgeCenterFromIconFrame:CGRectStandardize(self.iconImageView.frame) isRTL:isRTL];
       }];
     } else {
       self.iconImageView.center = iconImageViewCenter;
+      self.badge.center = [self badgeCenterFromIconFrame:CGRectStandardize(self.iconImageView.frame)
+                                                   isRTL:isRTL];
     }
     self.label.textAlignment = NSTextAlignmentCenter;
   } else {
@@ -218,9 +222,9 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
       self.label.center = CGPointMake(labelCenterX, centerY);
       self.label.textAlignment = NSTextAlignmentRight;
     }
+    self.badge.center = [self badgeCenterFromIconFrame:CGRectStandardize(self.iconImageView.frame)
+                                                 isRTL:isRTL];
   }
-  self.badge.center = [self badgeCenterFromIconFrame:CGRectStandardize(self.iconImageView.frame)
-                                               isRTL:isRTL];
 }
 
 - (void)updateLabelVisibility {

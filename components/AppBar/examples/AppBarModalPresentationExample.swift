@@ -55,7 +55,11 @@ class AppBarModalPresentationSwiftExamplePresented: UITableViewController {
     appBarViewController.headerView.trackingScrollView = self.tableView
 
     view.addSubview(appBarViewController.view)
+    #if swift(>=4.2)
+    appBarViewController.didMove(toParent: self)
+    #else
     appBarViewController.didMove(toParentViewController: self)
+    #endif
 
     self.navigationItem.rightBarButtonItem =
       UIBarButtonItem(title: "Touch", style: .done, target: nil, action: nil)
@@ -124,7 +128,11 @@ class AppBarModalPresentationSwiftExample: UITableViewController {
     self.tableView.delegate = appBarViewController
 
     view.addSubview(appBarViewController.view)
+    #if swift(>=4.2)
+    appBarViewController.didMove(toParent: self)
+    #else
     appBarViewController.didMove(toParentViewController: self)
+    #endif
 
     self.navigationItem.rightBarButtonItem =
       UIBarButtonItem(title: "Detail", style: .done, target: self, action: #selector(presentModal))

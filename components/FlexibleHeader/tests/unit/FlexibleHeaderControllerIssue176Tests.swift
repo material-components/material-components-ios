@@ -37,7 +37,11 @@ class FlexibleHeaderControllerIssue176Tests: XCTestCase {
   }
 
   func registerToParentViewController(_ parent: UIViewController) {
-    parent.addChildViewController(fhvc)
+    #if swift(>=4.2)
+      parent.addChild(fhvc)
+    #else
+      parent.addChildViewController(fhvc)
+    #endif
     parent.view.addSubview(fhvc.view)
   }
 
@@ -46,8 +50,11 @@ class FlexibleHeaderControllerIssue176Tests: XCTestCase {
     self.registerToParentViewController(parentVc)
 
     // NOTE: No tracking scroll view
-
+    #if swift(>=4.2)
+    fhvc.didMove(toParent: parentVc)
+    #else
     fhvc.didMove(toParentViewController: parentVc)
+    #endif
 
     XCTAssertEqual(fhvc.view.bounds.size.height, fhvc.headerView.minimumHeight)
   }
@@ -64,7 +71,11 @@ class FlexibleHeaderControllerIssue176Tests: XCTestCase {
 
     fhvc.headerView.trackingScrollView = parentVc.tableView
 
+    #if swift(>=4.2)
+    fhvc.didMove(toParent: parentVc)
+    #else
     fhvc.didMove(toParentViewController: parentVc)
+    #endif
 
     XCTAssertEqual(fhvc.headerView.trackingScrollView!.contentOffset.y,
                    -fhvc.headerView.maximumHeight)

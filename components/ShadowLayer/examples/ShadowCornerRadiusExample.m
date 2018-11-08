@@ -18,9 +18,9 @@
 #import "MaterialSlider.h"
 #import "ShadowRadiusLabel.h"
 
-static const CGFloat kShadowElevationsDefault = 8.f;
-static const CGFloat kShadowElevationsMax = 24.f;
-static const CGFloat kShadowElevationsSliderFrameHeight = 27.0f;
+static const CGFloat kShadowElevationsDefault = 8;
+static const CGFloat kShadowElevationsMax = 24;
+static const CGFloat kShadowElevationsSliderFrameHeight = 27;
 
 @interface ShadowCornerRadiusView : UIView <MDCSliderDelegate>
 
@@ -41,18 +41,17 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27.0f;
     _elevationLabel.text = @"8 pt";
     [self addSubview:_elevationLabel];
 
-    CGFloat paperDim = 200.f;
-    CGRect paperFrame =
-        CGRectMake((CGRectGetWidth(frame) - paperDim) / 2, 200.f, paperDim, paperDim);
+    CGFloat paperDim = 200;
+    CGRect paperFrame = CGRectMake((CGRectGetWidth(frame) - paperDim) / 2, 200, paperDim, paperDim);
     _paper = [[ShadowRadiusLabel alloc] initWithFrame:paperFrame];
     _paper.cornerRadius = 8.0;
     _paper.elevation = 12.0;
     _paper.backgroundColor = UIColor.grayColor;
     [self addSubview:_paper];
 
-    CGFloat margin = 20.f;
-    CGRect sliderRect = CGRectMake(margin, 140.f, frame.size.width - margin * 2,
-                                   kShadowElevationsSliderFrameHeight);
+    CGFloat margin = 20;
+    CGRect sliderRect =
+        CGRectMake(margin, 140, frame.size.width - margin * 2, kShadowElevationsSliderFrameHeight);
     MDCSlider *sliderControl = [[MDCSlider alloc] initWithFrame:sliderRect];
     sliderControl.numberOfDiscreteValues = (NSUInteger) kShadowElevationsMax + 1;
     sliderControl.maximumValue = kShadowElevationsMax;

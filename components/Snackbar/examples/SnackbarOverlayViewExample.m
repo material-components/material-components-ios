@@ -18,9 +18,9 @@
 #import "MaterialSnackbar.h"
 #import "supplemental/SnackbarExampleSupplemental.h"
 
-static const CGFloat kFABBottomOffset = 24.0f;
-static const CGFloat kFABSideOffset = 24.0f;
-static const CGFloat kBottomBarHeight = 44.0f;
+static const CGFloat kFABBottomOffset = 24;
+static const CGFloat kFABSideOffset = 24;
+static const CGFloat kBottomBarHeight = 44;
 
 @interface SnackbarOverlayViewExample ()
 @property(nonatomic, assign) CGFloat floatingButtonOffset;
@@ -51,9 +51,9 @@ static const CGFloat kBottomBarHeight = 44.0f;
   fabFrame.origin.x = CGRectGetMaxX(self.view.bounds) - CGRectGetWidth(fabFrame) - kFABSideOffset;
   fabFrame.origin.y =
       CGRectGetMaxY(self.view.bounds) - CGRectGetHeight(fabFrame) - kFABBottomOffset;
-  [self.floatingButton setBackgroundColor:[UIColor colorWithRed:11 / 255.0f
-                                                          green:232 / 255.0f
-                                                           blue:94 / 255.0f
+  [self.floatingButton setBackgroundColor:[UIColor colorWithRed:11 / (CGFloat)255
+                                                          green:232 / (CGFloat)255
+                                                           blue:94 / (CGFloat)255
                                                           alpha:1]
                                  forState:UIControlStateNormal];
   self.floatingButton.frame = fabFrame;
@@ -108,7 +108,7 @@ static const CGFloat kBottomBarHeight = 44.0f;
 - (void)showSnackbar {
   NSString *text = @"Snackbar Message";
   MDCSnackbarMessage *message = [MDCSnackbarMessage messageWithText:text];
-  message.duration = 5.0f;
+  message.duration = 5;
   [MDCSnackbarManager showMessage:message];
 }
 

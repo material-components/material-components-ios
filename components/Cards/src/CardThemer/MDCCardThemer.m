@@ -17,10 +17,10 @@
 #import "MaterialCards+ColorThemer.h"
 #import "MaterialCards+ShapeThemer.h"
 
-static const MDCShadowElevation kNormalElevation = 1.f;
-static const MDCShadowElevation kHighlightedElevation = 4.f;
-static const MDCShadowElevation kSelectedElevation = 4.f;
-static const CGFloat kBorderWidth = 1.f;
+static const MDCShadowElevation kNormalElevation = 1;
+static const MDCShadowElevation kHighlightedElevation = 4;
+static const MDCShadowElevation kSelectedElevation = 4;
+static const CGFloat kBorderWidth = 1;
 
 @implementation MDCCardThemer
 

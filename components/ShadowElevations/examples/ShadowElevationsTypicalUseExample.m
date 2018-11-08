@@ -23,15 +23,15 @@
 
 static NSString *const kDefaultShadowElevationLabelString = @"";
 
-static const CGFloat kShadowElevationLabelTopOffset = 0.0f;
-static const CGFloat kShadowElevationLabelHeight = 70.0f;
-static const CGFloat kShadowElevationsDefault = 8.f;
-static const CGFloat kShadowElevationsMax = 24.f;
-static const CGFloat kShadowElevationsSliderFrameHeight = 27.0f;
-static const CGFloat kShadowElevationsSliderFrameMargin = 20.0f;
-static const CGFloat kShadowElevationsElementSpace = 20.0f;
-static const CGFloat kShadowElevationsPaperDimRange = 130.0f;
-static const CGFloat kShadowElevationsPaperBottomMargin = 20.0f;
+static const CGFloat kShadowElevationLabelTopOffset = 0;
+static const CGFloat kShadowElevationLabelHeight = 70;
+static const CGFloat kShadowElevationsDefault = 8;
+static const CGFloat kShadowElevationsMax = 24;
+static const CGFloat kShadowElevationsSliderFrameHeight = 27;
+static const CGFloat kShadowElevationsSliderFrameMargin = 20;
+static const CGFloat kShadowElevationsElementSpace = 20;
+static const CGFloat kShadowElevationsPaperDimRange = 130;
+static const CGFloat kShadowElevationsPaperBottomMargin = 20;
 
 @interface ShadowElevationsPointsView : UIView <MDCSliderDelegate>
 

@@ -26,7 +26,7 @@
 - (void)testMDCFloorScaled {
   CGFloat inputNumber = 1.3f;
 
-  CGFloat scale = 4.0f;
+  CGFloat scale = 4;
   CGFloat expectedOutputNumber = 1.25f;
   XCTAssertEqualWithAccuracy(MDCFloorScaled(inputNumber, scale), expectedOutputNumber, 0.001f);
 }
@@ -34,15 +34,15 @@
 - (void)testMDCFloorScaledWhenScaleIsZero {
   CGFloat inputNumber = 1.3f;
 
-  CGFloat scale = 0.0f;
-  CGFloat expectedOutputNumber = 0.0f;
+  CGFloat scale = 0;
+  CGFloat expectedOutputNumber = 0;
   XCTAssertEqualWithAccuracy(MDCFloorScaled(inputNumber, scale), expectedOutputNumber, 0.001f);
 }
 
 - (void)testMDCFloorScaledWhenScaleIsNegative {
   CGFloat inputNumber = 1.3f;
 
-  CGFloat scale = -2.0f;
+  CGFloat scale = -2;
   CGFloat expectedOutputNumber = 1.5f;
   XCTAssertEqualWithAccuracy(MDCFloorScaled(inputNumber, scale), expectedOutputNumber, 0.001f);
 }
@@ -50,7 +50,7 @@
 - (void)testMDCCeilScaled {
   CGFloat inputNumber = 1.3f;
 
-  CGFloat scale = 4.0f;
+  CGFloat scale = 4;
   CGFloat expectedOutputNumber = 1.5f;
   XCTAssertEqualWithAccuracy(MDCCeilScaled(inputNumber, scale), expectedOutputNumber, 0.001f);
 }
@@ -58,16 +58,16 @@
 - (void)testMDCCeilScaledWhenScaleIsZero {
   CGFloat inputNumber = 1.3f;
 
-  CGFloat scale = 0.0f;
-  CGFloat expectedOutputNumber = 0.0f;
+  CGFloat scale = 0;
+  CGFloat expectedOutputNumber = 0;
   XCTAssertEqualWithAccuracy(MDCCeilScaled(inputNumber, scale), expectedOutputNumber, 0.001f);
 }
 
 - (void)testMDCCeilScaledWhenScaleIsNegative {
   CGFloat inputNumber = 1.3f;
 
-  CGFloat scale = -2.0f;
-  CGFloat expectedOutputNumber = 1.0f;
+  CGFloat scale = -2;
+  CGFloat expectedOutputNumber = 1;
   XCTAssertEqualWithAccuracy(MDCCeilScaled(inputNumber, scale), expectedOutputNumber, 0.001f);
 }
 

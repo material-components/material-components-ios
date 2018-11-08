@@ -93,7 +93,6 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 
 #pragma mark - Public
 
-
 + (CGSize)sizeThatFits:(CGSize)size
                    item:(UITabBarItem *)item
                   style:(MDCItemBarStyle *)style {
@@ -391,7 +390,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 #pragma mark - Private
 
 + (UIEdgeInsets)minimumEdgeInsets {
-  const CGFloat outerPadding = 2.0f;
+  const CGFloat outerPadding = 2;
   return UIEdgeInsetsMake(0.0, outerPadding, 0.0, outerPadding);
 }
 

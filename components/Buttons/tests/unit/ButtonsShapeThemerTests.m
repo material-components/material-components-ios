@@ -41,7 +41,7 @@
   // Given
   self.shapeScheme.smallComponentShape =
       [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyCut andSize:10];
-  self.shapeScheme.smallComponentShape.topRightCorner = [MDCCornerTreatment cornerWithRadius:3.f];
+  self.shapeScheme.smallComponentShape.topRightCorner = [MDCCornerTreatment cornerWithRadius:3];
   self.button.shapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
 
   // When

@@ -33,7 +33,7 @@
                 toFloatingButton:(nonnull MDCFloatingButton *)floatingButton {
   [self resetUIControlStatesForButtonTheming:floatingButton];
   [floatingButton setBackgroundColor:colorScheme.secondaryColor forState:UIControlStateNormal];
-  floatingButton.disabledAlpha = 1.f;
+  floatingButton.disabledAlpha = 1;
 }
 
 + (void)resetUIControlStatesForButtonTheming:(nonnull MDCButton *)button {

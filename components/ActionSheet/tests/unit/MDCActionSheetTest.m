@@ -19,7 +19,7 @@
 #import "../../src/private/MDCActionSheetHeaderView.h"
 #import "MDCActionSheetTestHelper.h"
 
-static const CGFloat kSafeAreaAmount = 20.f;
+static const CGFloat kSafeAreaAmount = 20;
 
 @interface MDCActionSheetHeaderView (Testing)
 @property(nonatomic, strong) UILabel *titleLabel;

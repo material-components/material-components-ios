@@ -261,7 +261,7 @@ static const NSTimeInterval MDCProgressViewAnimationDuration = 0.25;
 + (UIColor *)defaultTrackTintColorForProgressTintColor:(UIColor *)progressTintColor {
   CGFloat hue, saturation, brightness, alpha;
   if ([progressTintColor getHue:&hue saturation:&saturation brightness:&brightness alpha:&alpha]) {
-    CGFloat newSaturation = MIN(saturation * MDCProgressViewTrackColorDesaturation, 1.0f);
+    CGFloat newSaturation = MIN(saturation * MDCProgressViewTrackColorDesaturation, 1);
     return [UIColor colorWithHue:hue saturation:newSaturation brightness:brightness alpha:alpha];
   }
   return [UIColor clearColor];

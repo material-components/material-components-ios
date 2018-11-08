@@ -18,7 +18,7 @@
 
 static const CGFloat kAnchorPointY = 1.15f;
 static const CGFloat kBezierSmoothingFactor = 0.0625f;
-static const CGFloat kLabelInsetSize = 6.f;
+static const CGFloat kLabelInsetSize = 6;
 
 @implementation MDCNumericValueLabel {
   CAShapeLayer *_marker;

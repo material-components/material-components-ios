@@ -65,7 +65,7 @@
 
   MDCRectangleShapeGenerator *raisedShapeGenerator =
       [[MDCRectangleShapeGenerator alloc] init];
-  [raisedShapeGenerator setCorners:[[MDCCutCornerTreatment alloc] initWithCut:8.f]];
+  [raisedShapeGenerator setCorners:[[MDCCutCornerTreatment alloc] initWithCut:8]];
   containedButton.shapeGenerator = raisedShapeGenerator;
 
   [containedButton sizeToFit];
@@ -118,7 +118,7 @@
 
   MDCSlantedRectShapeGenerator *strokedShapeGenerator =
       [[MDCSlantedRectShapeGenerator alloc] init];
-  strokedShapeGenerator.slant = 10.f;
+  strokedShapeGenerator.slant = 10;
   strokedButton.shapeGenerator = strokedShapeGenerator;
 
   [strokedButton sizeToFit];
@@ -167,8 +167,9 @@
   [self.floatingButton sizeToFit];
 
   MDCRectangleShapeGenerator *floatingShapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
-  [floatingShapeGenerator setCorners:
-      [[MDCCutCornerTreatment alloc] initWithCut:CGRectGetWidth(self.floatingButton.bounds) / 2.f]];
+  [floatingShapeGenerator
+      setCorners:[[MDCCutCornerTreatment alloc]
+                     initWithCut:CGRectGetWidth(self.floatingButton.bounds) / 2]];
   self.floatingButton.shapeGenerator = floatingShapeGenerator;
   [MDCFloatingActionButtonThemer applyScheme:buttonScheme toButton:self.floatingButton];
 

@@ -31,70 +31,70 @@ NS_SWIFT_NAME(ShadowElevation)
 typedef CGFloat MDCShadowElevation MDC_SHADOW_ELEVATION_TYPED_EXTENSIBLE_ENUM;
 
 /** The shadow elevation of the app bar. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationAppBar;
+static const MDCShadowElevation MDCShadowElevationAppBar = (CGFloat)4.0;
 
 /** The shadow elevation of the Bottom App Bar. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationBottomNavigationBar;
+static const MDCShadowElevation MDCShadowElevationBottomNavigationBar = (CGFloat)8.0;
 
 /** The shadow elevation of a card in its picked up state. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationCardPickedUp;
+static const MDCShadowElevation MDCShadowElevationCardPickedUp = (CGFloat)8.0;
 
 /** The shadow elevation of a card in its resting state. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationCardResting;
+static const MDCShadowElevation MDCShadowElevationCardResting = (CGFloat)2.0;
 
 /** The shadow elevation of dialogs. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationDialog;
+static const MDCShadowElevation MDCShadowElevationDialog = (CGFloat)24.0;
 
 /** The shadow elevation of the floating action button in its pressed state. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationFABPressed;
+static const MDCShadowElevation MDCShadowElevationFABPressed = (CGFloat)12.0;
 
 /** The shadow elevation of the floating action button in its resting state. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationFABResting;
+static const MDCShadowElevation MDCShadowElevationFABResting = (CGFloat)6.0;
 
 /** The shadow elevation of a menu. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationMenu;
+static const MDCShadowElevation MDCShadowElevationMenu = (CGFloat)8.0;
 
 /** The shadow elevation of a modal bottom sheet. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationModalBottomSheet;
+static const MDCShadowElevation MDCShadowElevationModalBottomSheet = (CGFloat)16.0;
 
 /** The shadow elevation of the navigation drawer. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationNavDrawer;
+static const MDCShadowElevation MDCShadowElevationNavDrawer = (CGFloat)16.0;
 
 /** No shadow elevation at all. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationNone;
+static const MDCShadowElevation MDCShadowElevationNone = (CGFloat)0.0;
 
 /** The shadow elevation of a picker. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationPicker;
+static const MDCShadowElevation MDCShadowElevationPicker = (CGFloat)24.0;
 
 /** The shadow elevation of the quick entry in the scrolled state. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationQuickEntry;
+static const MDCShadowElevation MDCShadowElevationQuickEntry = (CGFloat)3.0;
 
 /** The shadow elevation of the quick entry in the resting state. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationQuickEntryResting;
+static const MDCShadowElevation MDCShadowElevationQuickEntryResting = (CGFloat)2.0;
 
 /** The shadow elevation of a raised button in the pressed state. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationRaisedButtonPressed;
+static const MDCShadowElevation MDCShadowElevationRaisedButtonPressed = (CGFloat)8.0;
 
 /** The shadow elevation of a raised button in the resting state. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationRaisedButtonResting;
+static const MDCShadowElevation MDCShadowElevationRaisedButtonResting = (CGFloat)2.0;
 
 /** The shadow elevation of a refresh indicator. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationRefresh;
+static const MDCShadowElevation MDCShadowElevationRefresh = (CGFloat)3.0;
 
 /** The shadow elevation of the right drawer. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationRightDrawer;
+static const MDCShadowElevation MDCShadowElevationRightDrawer = (CGFloat)16.0;
 
 /** The shadow elevation of the search bar in the resting state. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationSearchBarResting;
+static const MDCShadowElevation MDCShadowElevationSearchBarResting = (CGFloat)2.0;
 
 /** The shadow elevation of the search bar in the scrolled state. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationSearchBarScrolled;
+static const MDCShadowElevation MDCShadowElevationSearchBarScrolled = (CGFloat)3.0;
 
 /** The shadow elevation of the snackbar. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationSnackbar;
+static const MDCShadowElevation MDCShadowElevationSnackbar = (CGFloat)6.0;
 
 /** The shadow elevation of a sub menu (+1 for each additional sub menu). */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationSubMenu;
+static const MDCShadowElevation MDCShadowElevationSubMenu = (CGFloat)9.0;
 
 /** The shadow elevation of a switch. */
-FOUNDATION_EXPORT const MDCShadowElevation MDCShadowElevationSwitch;
+static const MDCShadowElevation MDCShadowElevationSwitch = (CGFloat)1.0;

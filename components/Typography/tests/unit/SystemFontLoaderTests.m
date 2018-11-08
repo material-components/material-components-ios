@@ -57,9 +57,9 @@
 
 - (void)testIsLargeForContrastRatio {
   // Given
-  CGFloat smallSize = 10.0f;
-  CGFloat largeIfBoldSize = 15.0f;
-  CGFloat largeSize = 18.0f;
+  CGFloat smallSize = 10;
+  CGFloat largeIfBoldSize = 15;
+  CGFloat largeSize = 18;
   MDCSystemFontLoader *fontLoader = [[MDCSystemFontLoader alloc] init];
 
   // Then

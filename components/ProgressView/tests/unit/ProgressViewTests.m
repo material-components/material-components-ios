@@ -53,13 +53,13 @@
 }
 
 - (void)testProgressClampedAt0 {
-  _progressView.progress = -1.f;
-  XCTAssertEqual(_progressView.progress, 0.f);
+  _progressView.progress = -1;
+  XCTAssertEqual(_progressView.progress, 0);
 }
 
 - (void)testProgressClampedAt1 {
-  _progressView.progress = 2.f;
-  XCTAssertEqual(_progressView.progress, 1.f);
+  _progressView.progress = 2;
+  XCTAssertEqual(_progressView.progress, 1);
 }
 
 @end

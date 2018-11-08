@@ -56,8 +56,8 @@ static const NSTimeInterval MDCDialogTransitionDuration = 0.27;
     [containerView addSubview:toView];
   }
 
-  CGFloat startingAlpha = presenting ? 0.0f : 1.0f;
-  CGFloat endingAlpha = presenting ? 1.0f : 0.0f;
+  CGFloat startingAlpha = presenting ? 0 : 1;
+  CGFloat endingAlpha = presenting ? 1 : 0;
 
   animatingView.frame = [transitionContext finalFrameForViewController:animatingViewController];
   animatingView.alpha = startingAlpha;

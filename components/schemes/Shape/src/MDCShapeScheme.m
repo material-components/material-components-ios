@@ -26,14 +26,11 @@
     switch (defaults) {
       case MDCShapeSchemeDefaultsMaterial201809:
         _smallComponentShape =
-            [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyRounded
-                                                    andSize:4.f];
+            [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyRounded andSize:4];
         _mediumComponentShape =
-            [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyRounded
-                                                    andSize:4.f];
+            [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyRounded andSize:4];
         _largeComponentShape =
-            [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyRounded
-                                                    andSize:0.f];
+            [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyRounded andSize:0];
         break;
     }
   }

@@ -17,20 +17,16 @@
 #import "MaterialInk.h"
 #import "MaterialTypography.h"
 
-static const CGFloat kImagePadding = 16.f;
-static const CGFloat kImageHeight = 40.f;
-static const CGFloat kWithImageRightPadding = 12.f;
-static const CGFloat kTextVerticalPadding = 12.f;
+static const CGFloat kImagePadding = 16;
+static const CGFloat kImageHeight = 40;
+static const CGFloat kWithImageRightPadding = 12;
+static const CGFloat kTextVerticalPadding = 12;
 static const CGFloat kTitleColorOpacity = 0.87f;
 static const CGFloat kDetailsColorOpacity = 0.6f;
 
-static inline UIFont *defaultTitleFont(void) {
-  return [UIFont systemFontOfSize:16.f];
-}
+static inline UIFont *defaultTitleFont(void) { return [UIFont systemFontOfSize:16]; }
 
-static inline UIFont *defaultDetailsFont(void) {
-  return [UIFont systemFontOfSize:14.f];
-}
+static inline UIFont *defaultDetailsFont(void) { return [UIFont systemFontOfSize:14]; }
 
 @implementation CollectionViewListCell {
   CGPoint _lastTouch;

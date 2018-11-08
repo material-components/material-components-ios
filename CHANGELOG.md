@@ -1,3 +1,230 @@
+# 68.2.0
+
+In this minor release we have introduced an API for customizing the Navigation Drawer scrim color, an API for animating corner radius changes for `MDCShadowLayer`, an `MDCSnackbarManager` instance color themer, along with bug fixes and performance improvements.
+
+## New features
+
+Navigation Drawer now supports customizing its scrim color as follows:
+
+```swift
+let bottomDrawerViewController = MDCBottomDrawerViewController()
+// Set the drawer scrim color.
+bottomDrawerViewController.scrimColor = UIColor.blue.withAlphaComponent(0.5)
+
+bottomDrawerViewController.contentViewController = contentViewController
+bottomDrawerViewController.headerViewController = headerViewController
+MDCBottomDrawerColorThemer.applySemanticColorScheme(colorScheme,
+                                                    toBottomDrawer: bottomDrawerViewController)
+present(bottomDrawerViewController, animated: true, completion: nil)
+```
+
+`MDCShadowLayer` now supports animating corner radius changes:
+
+```objc
+@interface CustomView : UIView
+@end
+
+@implementation CustomView
++ (Class)layerClass {
+  return [MDCShadowLayer class];
+}
+
+- (MDCShadowLayer *)shadowLayer {
+  return (MDCShadowLayer *)self.layer;
+}
+ @end
+
+CAMediaTimingFunction *timingFunction =
+    [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
+[self.customView.shadowLayer animateCornerRadius:(CGFloat)25.0
+                              withTimingFunction:timingFunction
+                                        duration:(CGFloat)2.5];
+```
+
+`MDCSnackbarManager` instances can now be themed using a color scheme:
+
+```objc
+MDCSnackbarManager *snackbarManager = [[MDCSnackbarManager alloc] init];
+MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+[MDCSnackbarColorThemer applySemanticColorScheme:colorScheme toSnackbarManager:snackbarManager];
+```
+
+## API changes
+
+### NavigationDrawer
+
+#### MDCBottomDrawerViewController
+
+*new* property: `scrimColor` in `MDCBottomDrawerViewController`
+
+#### MDCBottomDrawerPresentationController
+
+*new* property: `scrimColor` in `MDCBottomDrawerPresentationController`
+
+### ShadowLayer
+
+#### MDCShadowLayer
+
+*new* method: `-animateCornerRadius:withTimingFunction:duration:` in `MDCShadowLayer`
+
+### Snackbar+ColorThemer
+
+#### MDCSnackbarColorThemer
+
+*new* class method: `+applySemanticColorScheme:toSnackbarManager:` in `MDCSnackbarColorThemer`
+
+## Component changes
+
+### AnimationTiming
+
+* [fix swift debugging (#5569)](https://github.com/material-components/material-components-ios/commit/3442cf9deb1c31b0962dab4906177dd2306ed7c2) (Yarden Eitan)
+
+### BottomAppBar
+
+* [Fix path animation (#5611)](https://github.com/material-components/material-components-ios/commit/7b51a89030ec32d617e11794adfd50741aa3e951) (Cody Weaver)
+
+### BottomNavigation
+
+* [Fix selection animation for badge (#5571)](https://github.com/material-components/material-components-ios/commit/9147435cf7e6624b0876d07389374d039b0ccf69) (Cody Weaver)
+
+### FlexibleHeader
+
+* [Fix an edge case in resetShadowAfterTrackingScrollViewIsReset (#5561)](https://github.com/material-components/material-components-ios/commit/91186a3182ce3e0e207ee93ff3c75f0095d4895a) (Ali Rabbani)
+* [Fix animation glitches when switching between UITableView tabs (#5540)](https://github.com/material-components/material-components-ios/commit/0124394a1d03b8e9a06c759028250b775e56321b) (featherless)
+
+### NavigationDrawer
+
+* [Add scrim color to color themer (#5570)](https://github.com/material-components/material-components-ios/commit/71c4da9404f3ffb5ca75b145592b189215297a16) (Cody Weaver)
+* [Add support for scrimColor (#5568)](https://github.com/material-components/material-components-ios/commit/51f69ae40255cbccddf18d551962e81a60e96c97) (Cody Weaver)
+* [automatically disable scrolling (#5586)](https://github.com/material-components/material-components-ios/commit/2127004680f3ed66716750ef435b79e665ed9201) (Yarden Eitan)
+* [fix spacing (#5590)](https://github.com/material-components/material-components-ios/commit/dd26cfa95b60b3575b61f9423111b84cbfe35a7c) (Yarden Eitan)
+
+### ShadowElevations
+
+* [Remove .m file (#5583)](https://github.com/material-components/material-components-ios/commit/8d26cb5bb9e4efc81657b44726ef8ed418b96bc3) (Cody Weaver)
+
+### ShadowLayer
+
+* [Add API to animate corner radius (#5585)](https://github.com/material-components/material-components-ios/commit/a0810b574649546bd27e330818e1575c5e0a6518) (Cody Weaver)
+
+### Snackbar
+
+* [Add support to pass MDCSnackbarManager instances to color themer (#5582)](https://github.com/material-components/material-components-ios/commit/c724f4ae4bded239fd18db09baccbd33a8162990) (rami-a)
+
+### Typography
+
+* [Cache standard font for text style. (#5533)](https://github.com/material-components/material-components-ios/commit/64d6535f2a4a26681bb3c97361979466e8ba3523) (Robert Moore)
+
+---
+
+# 68.1.0
+
+In this minor release we have added a top corners API and a state system for Navigation Drawer along with bug fixes and additional examples.
+
+## New features
+
+By using Navigation Drawer's `MDCBottomDrawerViewController`, you can now set the top corners radius of your drawer for each of its 
+different presentation states `MDCBottomDrawerState`.
+
+```swift
+let bottomDrawerViewController = MDCBottomDrawerViewController()
+// Set the drawer top corners for the drawer states.
+bottomDrawerViewController.setTopCornersRadius(24, for: .collapsed)
+bottomDrawerViewController.setTopCornersRadius(8, for: .expanded)
+
+bottomDrawerViewController.contentViewController = contentViewController
+bottomDrawerViewController.headerViewController = headerViewController
+MDCBottomDrawerColorThemer.applySemanticColorScheme(colorScheme,
+                                                    toBottomDrawer: bottomDrawerViewController)
+present(bottomDrawerViewController, animated: true, completion: nil)
+```
+
+## API changes
+
+### NavigationDrawer
+
+#### MDCBottomDrawerViewController
+
+*new* method: `-topCornersRadiusForDrawerState:` in `MDCBottomDrawerViewController`
+
+*new* method: `-setTopCornersRadius:forDrawerState:` in `MDCBottomDrawerViewController`
+
+*new* property: `drawerState` in `MDCBottomDrawerViewController`
+
+*modified* class: `MDCBottomDrawerViewController`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `class MDCBottomDrawerViewController : UIViewController` |
+| To: | `class MDCBottomDrawerViewController : UIViewController, MDCBottomDrawerPresentationControllerDelegate` |
+
+*modified* class: `MDCBottomDrawerViewController`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCBottomDrawerViewController : UIViewController` |
+| To: | `@interface MDCBottomDrawerViewController     : UIViewController <MDCBottomDrawerPresentationControllerDelegate>` |
+
+#### MDCBottomDrawerState
+
+*new* enum: `MDCBottomDrawerState`
+
+*new* enum value: `MDCBottomDrawerStateExpanded` in `MDCBottomDrawerState`
+
+*new* enum value: `MDCBottomDrawerStateCollapsed` in `MDCBottomDrawerState`
+
+*new* typedef: `MDCBottomDrawerState`
+
+*new* enum value: `MDCBottomDrawerStateFullScreen` in `MDCBottomDrawerState`
+
+#### MDCBottomDrawerPresentationController
+
+*new* property: `delegate` in `MDCBottomDrawerPresentationController`
+
+#### MDCBottomDrawerPresentationControllerDelegate
+
+*new* method: `-bottomDrawerWillChangeState:drawerState:` in `MDCBottomDrawerPresentationControllerDelegate`
+
+*new* method: `-bottomDrawerTopTransitionRatio:transitionRatio:` in `MDCBottomDrawerPresentationControllerDelegate`
+
+*new* protocol: `MDCBottomDrawerPresentationControllerDelegate`
+
+## Component changes
+
+### ActionSheet
+
+* [Fix rotation bug  (#5505)](https://github.com/material-components/material-components-ios/commit/07ed3771dc34de4806b62db187e68b669bbcfa2b) (Cody Weaver)
+
+### AppBar
+
+* [Initial frame wrong in MDCAppBarViewController for iPad split screen (#5497)](https://github.com/material-components/material-components-ios/commit/1d9b984cb3a146008779fa12e4e60dc5862789af) (rami-a)
+
+### List
+
+* [Use ListThemer for List example (#5502)](https://github.com/material-components/material-components-ios/commit/49b29af661b7d6c3cc7c79de59b21eb5a92af434) (Andrew Overton)
+* [[List Items] Improve BiDi example performance. (#5506)](https://github.com/material-components/material-components-ios/commit/410f2f55e7976570ceabe0d4276c385ed90ef930) (Robert Moore)
+
+### NavigationDrawer
+
+* [Added a state system to the Nav Drawer (#5520)](https://github.com/material-components/material-components-ios/commit/a8d3794de3dff0163126726f8b4dd997fa1fec68) (Yarden Eitan)
+* [Added a top corners radius for state API. (#5543)](https://github.com/material-components/material-components-ios/commit/bc584d9e0e74118caea241959de2aa64dd245695) (Yarden Eitan)
+* [Fix the init of the MDCBottomDrawerViewController to use the designated inits (#5546)](https://github.com/material-components/material-components-ios/commit/bfa674da949b3f7a51610c29a95994d2bfd44526) (guylivneh)
+* [[BottomDrawer] Adding an example for dynamically changing content size (#5545)](https://github.com/material-components/material-components-ios/commit/08b71a81eee40c0b8a71f35e3275acfd13b741eb) (guylivneh)
+
+### Snackbar
+
+* [Update MDCSnackbarColorThemer to set correct background color to match the spec (#5517)](https://github.com/material-components/material-components-ios/commit/479eaa84af054ade867b331b50854c917f82068a) (rami-a)
+
+### schemes/Color
+
+* [Fix pod name (#5532)](https://github.com/material-components/material-components-ios/commit/92c8f03d3079d1034ed6cc22c73c0799200e9add) (Cody Weaver)
+
+### schemes/Typography
+
+* [Fix pod name (#5532)](https://github.com/material-components/material-components-ios/commit/92c8f03d3079d1034ed6cc22c73c0799200e9add) (Cody Weaver)
+
+---
+
 # 68.0.0
 
 This major release includes a breaking change in behavior for Bottom Sheet's shapes themer, a
