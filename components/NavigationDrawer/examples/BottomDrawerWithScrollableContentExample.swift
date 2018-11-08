@@ -78,15 +78,6 @@ class DrawerContentWithScrollViewController: UIViewController,
 
   let collectionView: UICollectionView
   let layout = UICollectionViewFlowLayout()
-  override var preferredContentSize: CGSize {
-    get {
-      return CGSize(width: view.bounds.width,
-                    height: layout.collectionViewContentSize.height)
-    }
-    set {
-      super.preferredContentSize = newValue
-    }
-  }
 
   init() {
     collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -115,6 +106,8 @@ class DrawerContentWithScrollViewController: UIViewController,
     super.viewWillLayoutSubviews()
     let s = self.view.frame.size.width / 3
     layout.itemSize = CGSize(width: s, height: s)
+    self.preferredContentSize = CGSize(width: view.bounds.width,
+                                       height: layout.collectionViewContentSize.height)
   }
 
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

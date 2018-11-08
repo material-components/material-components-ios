@@ -464,6 +464,21 @@
   XCTAssertEqual(self.drawerViewController.maskLayer.minimumCornerRadius, 3.f);
 }
 
+- (void)testBottomDrawerDynamicSizing {
+  // Given
+  self.fakeBottomDrawer.contentViewController =
+      [[MDCNavigationDrawerFakeTableViewController alloc] init];
+  [self.fakeBottomDrawer viewDidLoad];
+  [self.fakeBottomDrawer cacheLayoutCalculations];
+  CGFloat previousContentHeaderTopInset = self.fakeBottomDrawer.contentHeaderTopInset;
+
+  // When
+  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(200, 200);
+
+  // Then
+  XCTAssertLessThan(self.fakeBottomDrawer.contentHeaderTopInset, previousContentHeaderTopInset);
+}
+
 - (void)testBottomDrawerHandle {
   // When
   [self.presentationController presentationTransitionWillBegin];
