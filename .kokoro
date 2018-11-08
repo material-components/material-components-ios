@@ -488,16 +488,12 @@ lint_clang_format() {
     git submodule update --init --recursive scripts/external/clang-format-ci
   fi
 
-  pushd scripts/external/clang-format-ci >> /dev/null
-
-  ./check-pull-request.sh \
+  scripts/external/clang-format-ci/check-pull-request.sh \
     --api_token "$GITHUB_API_TOKEN" \
     --repo "material-components/material-components-ios" \
     --pr "$KOKORO_GITHUB_PULL_REQUEST_NUMBER" \
     --commit "$KOKORO_GITHUB_PULL_REQUEST_COMMIT" \
     --target_branch "$KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH"
-
-  popd >> /dev/null
 }
 
 # This command can be used when a pull request should always be put into a failure state.
