@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <MDFInternationalization/MDFInternationalization.h>
 #import <UIKit/UIKit.h>
 
 #import "MaterialPageControl.h"
@@ -22,7 +23,7 @@
 @implementation PageControlTypicalUseViewController {
   UIScrollView *_scrollView;
   MDCPageControl *_pageControl;
-  NSArray *_pages;
+  NSMutableDictionary *_pages;
 }
 
 - (void)viewDidLoad {
@@ -50,11 +51,16 @@
   _scrollView.showsHorizontalScrollIndicator = NO;
   [self.view addSubview:_scrollView];
 
-  NSMutableArray *pages = [NSMutableArray array];
+  NSMutableDictionary *pages = [NSMutableDictionary new];
 
   // Add pages to scrollView.
   for (NSUInteger i = 0; i < pageColors.count; i++) {
-    CGRect pageFrame = CGRectOffset(self.view.bounds, i * boundsWidth, 0);
+    CGFloat offsetMultiplier = i;
+    if (self.view.mdf_effectiveUserInterfaceLayoutDirection ==
+        UIUserInterfaceLayoutDirectionRightToLeft) {
+      offsetMultiplier = pageColors.count - 1 - i;
+    }
+    CGRect pageFrame = CGRectOffset(self.view.bounds, offsetMultiplier * boundsWidth, 0);
     UILabel *page = [[UILabel alloc] initWithFrame:pageFrame];
     page.text = [NSString stringWithFormat:@"Page %lu", (unsigned long)i + 1];
     page.font = [UIFont systemFontOfSize:50];
@@ -64,13 +70,14 @@
     page.autoresizingMask =
         UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
     [_scrollView addSubview:page];
-    [pages addObject:page];
+    pages[@(i)] = page;
   }
   _pages = [pages copy];
 
   // Page control configuration.
   _pageControl = [[MDCPageControl alloc] initWithFrame:CGRectZero];
   _pageControl.numberOfPages = pageColors.count;
+  _pageControl.respectsUserInterfaceLayoutDirection = YES;
 
   [_pageControl addTarget:self
                    action:@selector(didChangePage:)
@@ -89,15 +96,21 @@
   NSInteger pageBeforeFrameChange = _pageControl.currentPage;
   NSInteger pageCount = _pages.count;
   CGRect standardizedFrame = CGRectStandardize(self.view.frame);
+  NSInteger numberOfPages = _pages.allKeys.count;
+  BOOL isRightToLeft = self.view.mdf_effectiveUserInterfaceLayoutDirection ==
+                       UIUserInterfaceLayoutDirectionRightToLeft;
   for (NSInteger i = 0; i < pageCount; i++) {
-    UILabel *page = [_pages objectAtIndex:i];
+    UILabel *page = _pages[@(i)];
+    NSInteger offsetMultiplier = isRightToLeft ? numberOfPages - 1 - i : i;
     page.frame =
-        CGRectOffset(self.view.bounds, i * CGRectGetWidth(standardizedFrame), 0);
+        CGRectOffset(self.view.bounds, offsetMultiplier * CGRectGetWidth(standardizedFrame), 0);
   }
   _scrollView.contentSize =
       CGSizeMake(CGRectGetWidth(standardizedFrame) * pageCount, CGRectGetHeight(standardizedFrame));
   CGPoint offset = _scrollView.contentOffset;
-  offset.x = pageBeforeFrameChange * CGRectGetWidth(standardizedFrame);
+  NSInteger offsetMultiplier =
+      isRightToLeft ? numberOfPages - 1 - pageBeforeFrameChange : pageBeforeFrameChange;
+  offset.x = offsetMultiplier * CGRectGetWidth(standardizedFrame);
   // This non-anmiated change of offset ensures we keep the same page
   [_scrollView setContentOffset:offset animated:NO];
   _scrollView.frame = self.view.bounds;
@@ -132,8 +145,15 @@
 #pragma mark - User events
 
 - (void)didChangePage:(MDCPageControl *)sender {
+  NSInteger page = sender.currentPage;
+  CGFloat pageWidth = CGRectGetWidth(_scrollView.bounds);
   CGPoint offset = _scrollView.contentOffset;
-  offset.x = sender.currentPage * _scrollView.bounds.size.width;
+  CGFloat offsetMultiplier = page;
+  if (self.view.mdf_effectiveUserInterfaceLayoutDirection ==
+      UIUserInterfaceLayoutDirectionRightToLeft) {
+    offsetMultiplier = _pages.count - 1 - page;
+  }
+  offset.x = offsetMultiplier * pageWidth;
   [_scrollView setContentOffset:offset animated:YES];
 }
 
