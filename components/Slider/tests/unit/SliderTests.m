@@ -1095,7 +1095,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
         (self.slider.numberOfDiscreteValues - 1);
     CGFloat expectedValue = self.slider.minimumValue + stepValue;
     XCTAssertEqualWithAccuracy(self.slider.value, expectedValue, 0.0001,
-                               @"A slider with (%lu) discrete values should have step of '%(CGFloat).3'.",
+                               @"A slider with (%lu) discrete values should have step of '%.3f'.",
                                (unsigned long)self.slider.numberOfDiscreteValues, stepValue);
   }
 }

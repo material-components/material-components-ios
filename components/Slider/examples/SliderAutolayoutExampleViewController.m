@@ -53,13 +53,13 @@
 }
 
 - (IBAction)materialSliderDidChange:(id)sender {
-  NSLog(@"Material Slider : %(CGFloat).2", self.materialSlider.value);
+  NSLog(@"Material Slider : %.2f", self.materialSlider.value);
 
   self.vanillaSlider.value = (float)self.materialSlider.value;
 }
 
 - (IBAction)vanillaSliderDidChange:(id)sender {
-  NSLog(@"Vanilla Slider : %(CGFloat).2", self.vanillaSlider.value);
+  NSLog(@"Vanilla Slider : %.2f", self.vanillaSlider.value);
 
   self.materialSlider.value = self.vanillaSlider.value;
 }
