@@ -526,4 +526,22 @@
   XCTAssertEqual(self.fakeScrollView.scrollEnabled, NO);
 }
 
+- (void)testBottomDrawerTopInset {
+  // Given
+  MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
+      [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
+  self.fakeBottomDrawer.headerViewController = fakeHeader;
+  self.drawerViewController.delegate = fakeHeader;
+  self.fakeBottomDrawer.delegate = self.presentationController;
+  [self.presentationController presentationTransitionWillBegin];
+  
+  // When
+  [self.fakeBottomDrawer viewWillAppear:YES];
+  [self.fakeBottomDrawer cacheLayoutCalculations];
+  [self.fakeBottomDrawer.scrollView setContentOffset:CGPointMake(0, 1000)];
+
+  // Then
+  XCTAssertEqualWithAccuracy(fakeHeader.topInset, (CGFloat)7.0, (CGFloat)0.001);
+}
+
 @end

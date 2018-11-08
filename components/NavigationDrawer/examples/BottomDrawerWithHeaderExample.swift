@@ -77,7 +77,6 @@ class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewContro
 
   func bottomDrawerControllerDidChangeTopInset(_ controller: MDCBottomDrawerViewController,
                                                topInset: CGFloat) {
-    print(topInset)
     headerViewController.titleLabel.center =
       CGPoint(x: headerViewController.view.frame.size.width / 2,
               y: (headerViewController.view.frame.size.height + topInset) / 2)

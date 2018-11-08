@@ -16,7 +16,8 @@
 
 #import "MaterialNavigationDrawer.h"
 
-@interface MDCNavigationDrawerFakeHeaderViewController : UIViewController <MDCBottomDrawerHeader>
+@interface MDCNavigationDrawerFakeHeaderViewController : UIViewController <MDCBottomDrawerHeader, MDCBottomDrawerViewControllerDelegate>
+@property (nonatomic) CGFloat topInset;
 @end
 
 @interface MDCNavigationDrawerFakeTableViewController : UITableViewController
