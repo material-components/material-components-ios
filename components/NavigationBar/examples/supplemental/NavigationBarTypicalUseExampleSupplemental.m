@@ -88,12 +88,12 @@
   [[UIBezierPath bezierPathWithRect:rect] fill];
 
   CGSize textSize = [self textSizeForRect:rect];
-  CGRect rectForText = CGRectMake(rect.origin.x + rect.size.width / 2.f - textSize.width / 2.f,
-                                  rect.origin.y + rect.size.height / 2.f - textSize.height / 2.f,
+  CGRect rectForText = CGRectMake(rect.origin.x + rect.size.width / 2 - textSize.width / 2,
+                                  rect.origin.y + rect.size.height / 2 - textSize.height / 2,
                                   textSize.width, textSize.height);
   [[self instructionsString] drawInRect:rectForText];
-  [self drawArrowWithFrame:CGRectMake(rect.size.width / 2.f - 12.f,
-                                      rect.size.height / 2.f - 58.f - 12.f, 24.f, 24.f)];
+  [self drawArrowWithFrame:CGRectMake(rect.size.width / 2 - 12, rect.size.height / 2 - 58 - 12, 24,
+                                      24)];
 }
 
 - (CGSize)textSizeForRect:(CGRect)frame {

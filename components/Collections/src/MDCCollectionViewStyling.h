@@ -137,7 +137,7 @@ typedef NS_ENUM(NSUInteger, MDCCollectionViewCellLayoutType) {
 /** Separator inset. Defaults to UIEdgeInsetsZero. */
 @property(nonatomic) UIEdgeInsets separatorInset;
 
-/** Separator line height. Defaults to 1.0f */
+/** Separator line height. Defaults to 1 */
 @property(nonatomic) CGFloat separatorLineHeight;
 
 /* Whether to hide the cell separators. Defaults to NO. */

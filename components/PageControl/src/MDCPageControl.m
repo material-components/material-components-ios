@@ -28,7 +28,7 @@ static NSString *const kMaterialPageControlBundle = @"MaterialPageControl.bundle
 static NSString *const kMaterialPageControlScrollViewContentOffset = @"bounds.origin";
 
 // Matches native UIPageControl minimum height.
-static const CGFloat kPageControlMinimumHeight = 48.0f;
+static const CGFloat kPageControlMinimumHeight = 48;
 
 // Matches native UIPageControl indicator radius.
 static const CGFloat kPageControlIndicatorRadius = 3.5f;

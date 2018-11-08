@@ -49,15 +49,17 @@ static const CGFloat kSafeContentWidth = 300;
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self.withinSafeAreaView
                                attribute:NSLayoutAttributeCenterX
-                              multiplier:1.0f
-                                constant:0.0f].active = YES;
+                              multiplier:1
+                                constant:0]
+      .active = YES;
   [NSLayoutConstraint constraintWithItem:self.safeAreaLabel
                                attribute:NSLayoutAttributeCenterY
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self.withinSafeAreaView
                                attribute:NSLayoutAttributeCenterY
-                              multiplier:1.0f
-                                constant:0.0f].active = YES;
+                              multiplier:1
+                                constant:0]
+      .active = YES;
 
   // Lay out the withinSafeAreaView to fill the sheet, but only take up as much space as requested
   // (not accounting for what the bottom sheet presentation adds for the safe area).
@@ -66,30 +68,34 @@ static const CGFloat kSafeContentWidth = 300;
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self.view
                                attribute:NSLayoutAttributeTop
-                              multiplier:1.0f
-                                constant:0.0f].active = YES;
+                              multiplier:1
+                                constant:0]
+      .active = YES;
   [NSLayoutConstraint constraintWithItem:self.withinSafeAreaView
                                attribute:NSLayoutAttributeLeading
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self.view
                                attribute:NSLayoutAttributeLeading
-                              multiplier:1.0f
-                                constant:0.0f].active = YES;
+                              multiplier:1
+                                constant:0]
+      .active = YES;
   [NSLayoutConstraint constraintWithItem:self.withinSafeAreaView
                                attribute:NSLayoutAttributeTrailing
                                relatedBy:NSLayoutRelationEqual
                                   toItem:self.view
                                attribute:NSLayoutAttributeTrailing
-                              multiplier:1.0f
-                                constant:0.0f].active = YES;
+                              multiplier:1
+                                constant:0]
+      .active = YES;
   // Don't expand into the safe area.
   [NSLayoutConstraint constraintWithItem:self.withinSafeAreaView
                                attribute:NSLayoutAttributeBottom
                                relatedBy:NSLayoutRelationLessThanOrEqual
                                   toItem:self.view
                                attribute:NSLayoutAttributeBottom
-                              multiplier:1.0f
-                                constant:0.0f].active = YES;
+                              multiplier:1
+                                constant:0]
+      .active = YES;
 
   // Set size of the withinSafeArea view.
   [NSLayoutConstraint constraintWithItem:self.withinSafeAreaView
@@ -97,15 +103,17 @@ static const CGFloat kSafeContentWidth = 300;
                                relatedBy:NSLayoutRelationEqual
                                   toItem:nil
                                attribute:NSLayoutAttributeNotAnAttribute
-                              multiplier:0.0f
-                                constant:kSafeContentHeight].active = YES;
+                              multiplier:0
+                                constant:kSafeContentHeight]
+      .active = YES;
   [NSLayoutConstraint constraintWithItem:self.withinSafeAreaView
                                attribute:NSLayoutAttributeHeight
                                relatedBy:NSLayoutRelationEqual
                                   toItem:nil
                                attribute:NSLayoutAttributeNotAnAttribute
-                              multiplier:0.0f
-                                constant:kSafeContentHeight].active = YES;
+                              multiplier:0
+                                constant:kSafeContentHeight]
+      .active = YES;
 
   self.preferredContentSize = CGSizeMake(kSafeContentWidth, kSafeContentHeight);
 }

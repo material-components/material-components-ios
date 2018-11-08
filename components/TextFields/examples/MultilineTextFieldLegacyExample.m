@@ -32,7 +32,7 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  self.view.backgroundColor = [UIColor colorWithWhite:0.97f alpha:1.0f];
+  self.view.backgroundColor = [UIColor colorWithWhite:0.97f alpha:1];
 
   self.title = @"Legacy Multi-line Styles";
 

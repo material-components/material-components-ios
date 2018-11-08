@@ -34,8 +34,8 @@
   message.text = @"How much wood would a woodchuck chuck if a woodchuck could chuck wood?";
   [MDCSnackbarManager showMessage:message];
   MDCBasicFontScheme *fontScheme = [[MDCBasicFontScheme alloc] init];
-  fontScheme.button = [UIFont boldSystemFontOfSize:12.f];
-  fontScheme.body2 = [UIFont systemFontOfSize:13.f];
+  fontScheme.button = [UIFont boldSystemFontOfSize:12];
+  fontScheme.body2 = [UIFont systemFontOfSize:13];
   [MDCSnackbarFontThemer applyFontScheme:fontScheme
                    toSnackbarMessageView:[MDCSnackbarMessageView appearance]];
   XCTAssertEqualObjects([MDCSnackbarMessageView appearance].messageFont,
@@ -49,8 +49,8 @@
   message.text = @"How much wood would a woodchuck chuck if a woodchuck could chuck wood?";
   [MDCSnackbarManager showMessage:message];
   MDCBasicFontScheme *fontScheme = [[MDCBasicFontScheme alloc] init];
-  fontScheme.button = [UIFont boldSystemFontOfSize:12.f];
-  fontScheme.body2 = [UIFont systemFontOfSize:13.f];
+  fontScheme.button = [UIFont boldSystemFontOfSize:12];
+  fontScheme.body2 = [UIFont systemFontOfSize:13];
   [MDCSnackbarFontThemer applyFontScheme:fontScheme];
   XCTAssertEqualObjects(MDCSnackbarManager.messageFont,
                         fontScheme.body2);

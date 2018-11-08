@@ -162,7 +162,7 @@ static const NSUInteger kNumberOfPages = 10;
   [self.view addSubview:self.fhvc.view];
   [self.fhvc didMoveToParentViewController:self];
 
-  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:0.1f alpha:1.0f];
+  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:0.1f alpha:1];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

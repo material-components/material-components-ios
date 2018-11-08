@@ -24,7 +24,7 @@ static void *kContentSizeContext = &kContentSizeContext;
 
 // We add an extra padding to the sheet height, so that if the user swipes upwards, fast, the
 // bounce does not reveal a gap between the sheet and the bottom of the screen.
-static const CGFloat kSheetBounceBuffer = 150.0f;
+static const CGFloat kSheetBounceBuffer = 150;
 
 @interface MDCSheetContainerView () <MDCDraggableViewDelegate>
 
@@ -64,7 +64,7 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
 
     // Adjust the anchor point so all positions relate to the top edge rather than the actual
     // center.
-    _sheet.layer.anchorPoint = CGPointMake(0.5f, 0.f);
+    _sheet.layer.anchorPoint = CGPointMake(0.5f, 0);
     _sheet.frame = self.bounds;
 
     _contentView = contentView;

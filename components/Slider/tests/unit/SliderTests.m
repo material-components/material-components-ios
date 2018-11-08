@@ -77,7 +77,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testMaximumDefault {
   // Then
-  XCTAssertEqualWithAccuracy(self.slider.maximumValue, 1.0f, kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy(self.slider.maximumValue, 1, kEpsilonAccuracy);
 }
 
 - (void)testSetValueToHigherThanMaximum {
@@ -928,7 +928,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
   // Then
   XCTAssertEqualObjects(
-      [testFormatter numberFromString:[self.slider thumbTrack:track stringForValue:1.f]], @(1.));
+      [testFormatter numberFromString:[self.slider thumbTrack:track stringForValue:1]], @(1.));
   XCTAssertEqualObjects(
       [testFormatter numberFromString:[self.slider thumbTrack:track stringForValue:0.57f]],
       @(0.57));
@@ -1047,11 +1047,11 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testAccessibilityActivate {
   // Given
-  self.slider.value = 0.0f;
+  self.slider.value = 0;
 
   // When
   [self.slider accessibilityActivate];
-  CGFloat newValue = (self.slider.maximumValue - self.slider.minimumValue) / 6.0f;
+  CGFloat newValue = (self.slider.maximumValue - self.slider.minimumValue) / 6;
 
   // Then
   XCTAssertEqual(self.slider.value, newValue);

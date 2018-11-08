@@ -87,7 +87,7 @@ static const CGFloat kOpenAnimationSpringDampingRatio = 0.85f;
     [UIView animateWithDuration:kOpenAnimationDuration
         delay:0
         usingSpringWithDamping:kOpenAnimationSpringDampingRatio
-        initialSpringVelocity:0.f
+        initialSpringVelocity:0
         options:UIViewAnimationOptionCurveEaseOut
         animations:^{
           animatingView.frame = containerView.bounds;

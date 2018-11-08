@@ -27,15 +27,15 @@ static inline CGFloat CGPointDistanceToPoint(CGPoint a, CGPoint b) {
   return MDCHypot(a.x - b.x, a.y - b.y);
 }
 
-const CGFloat kMDCFeatureHighlightMinimumInnerRadius = 44.0f;
-const CGFloat kMDCFeatureHighlightInnerContentPadding = 10.0f;
-const CGFloat kMDCFeatureHighlightInnerPadding = 20.0f;
-const CGFloat kMDCFeatureHighlightTextPadding = 40.0f;
-const CGFloat kMDCFeatureHighlightTextMaxWidth = 300.0f;
-const CGFloat kMDCFeatureHighlightConcentricBound = 88.0f;
-const CGFloat kMDCFeatureHighlightNonconcentricOffset = 20.0f;
-const CGFloat kMDCFeatureHighlightMaxTextHeight = 1000.0f;
-const CGFloat kMDCFeatureHighlightTitleBodyBaselineOffset = 32.0f;
+const CGFloat kMDCFeatureHighlightMinimumInnerRadius = 44;
+const CGFloat kMDCFeatureHighlightInnerContentPadding = 10;
+const CGFloat kMDCFeatureHighlightInnerPadding = 20;
+const CGFloat kMDCFeatureHighlightTextPadding = 40;
+const CGFloat kMDCFeatureHighlightTextMaxWidth = 300;
+const CGFloat kMDCFeatureHighlightConcentricBound = 88;
+const CGFloat kMDCFeatureHighlightNonconcentricOffset = 20;
+const CGFloat kMDCFeatureHighlightMaxTextHeight = 1000;
+const CGFloat kMDCFeatureHighlightTitleBodyBaselineOffset = 32;
 const CGFloat kMDCFeatureHighlightOuterHighlightAlpha = 0.96f;
 
 const CGFloat kMDCFeatureHighlightGestureDisappearThresh = 0.9f;
@@ -48,7 +48,7 @@ const CGFloat kMDCFeatureHighlightDismissAnimationDuration = 0.25f;
 // Animation consts
 const CGFloat kMDCFeatureHighlightInnerRadiusFactor = 1.1f;
 const CGFloat kMDCFeatureHighlightOuterRadiusFactor = 1.125f;
-const CGFloat kMDCFeatureHighlightPulseRadiusFactor = 2.0f;
+const CGFloat kMDCFeatureHighlightPulseRadiusFactor = 2;
 const CGFloat kMDCFeatureHighlightPulseStartAlpha = 0.54f;
 const CGFloat kMDCFeatureHighlightInnerRadiusBloomAmount =
     (kMDCFeatureHighlightInnerRadiusFactor - 1) * kMDCFeatureHighlightMinimumInnerRadius;
@@ -517,7 +517,7 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
   CGFloat radius = _innerRadius;
 
   [CATransaction begin];
-  [CATransaction setAnimationDuration:1.0f];
+  [CATransaction setAnimationDuration:1];
   [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction
                                                 functionWithName:kCAMediaTimingFunctionEaseOut]];
   CGFloat innerBloomRadius = radius + kMDCFeatureHighlightInnerRadiusBloomAmount;

@@ -22,11 +22,11 @@
 
 #pragma mark - Constants
 
-static const CGFloat MDCTextInputControllerLegacyDefaultClearButtonImageSquareWidthHeight = 24.f;
-static const CGFloat MDCTextInputControllerLegacyDefaultUnderlineActiveHeight = 2.f;
-static const CGFloat MDCTextInputControllerLegacyDefaultUnderlineNormalHeight = 1.f;
-static const CGFloat MDCTextInputControllerLegacyDefaultVerticalHalfPadding = 8.f;
-static const CGFloat MDCTextInputControllerLegacyDefaultVerticalPadding = 16.f;
+static const CGFloat MDCTextInputControllerLegacyDefaultClearButtonImageSquareWidthHeight = 24;
+static const CGFloat MDCTextInputControllerLegacyDefaultUnderlineActiveHeight = 2;
+static const CGFloat MDCTextInputControllerLegacyDefaultUnderlineNormalHeight = 1;
+static const CGFloat MDCTextInputControllerLegacyDefaultVerticalHalfPadding = 8;
+static const CGFloat MDCTextInputControllerLegacyDefaultVerticalPadding = 16;
 
 static inline UIBezierPath *MDCTextInputControllerLegacyDefaultEmptyPath() {
   return [UIBezierPath bezierPath];

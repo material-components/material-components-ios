@@ -23,8 +23,8 @@
 #import "MDCBottomNavigationItemBadge.h"
 
 static const CGFloat MDCBottomNavigationItemViewInkOpacity = 0.150f;
-static const CGFloat MDCBottomNavigationItemViewTitleFontSize = 12.f;
-static const CGFloat kMDCBottomNavigationItemViewBadgeYOffset = 4.f;
+static const CGFloat MDCBottomNavigationItemViewTitleFontSize = 12;
+static const CGFloat kMDCBottomNavigationItemViewBadgeYOffset = 4;
 
 // The duration of the selection transition animation.
 static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.180f;

@@ -33,11 +33,10 @@
   CGFloat boundsHeight = CGRectGetHeight(self.view.bounds);
 
   NSArray *pageColors = @[
-      [UIColor colorWithWhite:0.9f alpha:1.0f],
-      [UIColor colorWithWhite:0.8f alpha:1.0f],
-      [UIColor colorWithWhite:0.7f alpha:1.0f],
-      [UIColor colorWithWhite:0.6f alpha:1.0f],
-      [UIColor colorWithWhite:0.5f alpha:1.0f]  ];
+    [UIColor colorWithWhite:0.9f alpha:1], [UIColor colorWithWhite:0.8f alpha:1],
+    [UIColor colorWithWhite:0.7f alpha:1], [UIColor colorWithWhite:0.6f alpha:1],
+    [UIColor colorWithWhite:0.5f alpha:1]
+  ];
 
   // Scroll view configuration
   _scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];

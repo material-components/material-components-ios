@@ -120,10 +120,10 @@ void GetCGPathAddLineToPointValues(void *info, const CGPathElement *element);
   // (0, 50), (50, 0), (100, 50), (50, 100)
   XCTAssertEqual([pathPoints count], (NSUInteger)8);
   NSArray<NSValue *> *points =
-      [NSArray arrayWithObjects:[NSValue valueWithCGPoint:CGPointMake(50.f, 0.f)],
-                                [NSValue valueWithCGPoint:CGPointMake(100.f, 50.f)],
-                                [NSValue valueWithCGPoint:CGPointMake(50.f, 100.f)],
-                                [NSValue valueWithCGPoint:CGPointMake(0.f, 50.f)], nil];
+      [NSArray arrayWithObjects:[NSValue valueWithCGPoint:CGPointMake(50, 0)],
+                                [NSValue valueWithCGPoint:CGPointMake(100, 50)],
+                                [NSValue valueWithCGPoint:CGPointMake(50, 100)],
+                                [NSValue valueWithCGPoint:CGPointMake(0, 50)], nil];
   for (NSUInteger i = 0; i < [pathPoints count]; i += 2) {
     CGPoint point = points[i / 2].CGPointValue;
     CGPoint p1 = pathPoints[i].CGPointValue;

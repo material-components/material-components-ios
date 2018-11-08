@@ -14,7 +14,7 @@
 
 #import "MDCAlertScheme.h"
 
-static const CGFloat kCornerRadius = 4.0f;
+static const CGFloat kCornerRadius = 4;
 
 @implementation MDCAlertScheme
 

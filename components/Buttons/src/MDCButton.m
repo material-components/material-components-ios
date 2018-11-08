@@ -680,7 +680,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 /** Returns YES if the color is transparent (including a nil color). */
 - (BOOL)isTransparentColor:(UIColor *)color {
-  return !color || [color isEqual:[UIColor clearColor]] || CGColorGetAlpha(color.CGColor) == 0.0f;
+  return !color || [color isEqual:[UIColor clearColor]] || CGColorGetAlpha(color.CGColor) == 0;
 }
 
 - (void)touchDragEnter:(__unused MDCButton *)button forEvent:(UIEvent *)event {
@@ -829,7 +829,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (void)updateInkForShape {
   CGRect boundingBox = CGPathGetBoundingBox(self.layer.shapeLayer.path);
   self.inkView.maxRippleRadius =
-      (CGFloat)(MDCHypot(CGRectGetHeight(boundingBox), CGRectGetWidth(boundingBox)) / 2 + 10.f);
+      (CGFloat)(MDCHypot(CGRectGetHeight(boundingBox), CGRectGetWidth(boundingBox)) / 2 + 10);
   self.inkView.layer.masksToBounds = NO;
 }
 

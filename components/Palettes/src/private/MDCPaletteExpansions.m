@@ -22,29 +22,29 @@
 static const CGFloat kSaturation50Min = 0.06f;
 static const CGFloat kSaturation50Max = 0.12f;
 static const CGFloat kSaturation500Min = 0.60f;
-static const CGFloat kSaturation500Max = 1.00f;
+static const CGFloat kSaturation500Max = 1;
 static const CGFloat kSaturation900Min = 0.70f;
-static const CGFloat kSaturation900Max = 1.00f;
+static const CGFloat kSaturation900Max = 1;
 
 // Minimum value of saturation to consider a color "colorless" (e.g. white/black/grey).
-static const CGFloat kSaturationMinThreshold = 1 / 256.0f;
+static const CGFloat kSaturationMinThreshold = 1 / (CGFloat)256;
 
 // A small value for comparing floating point numbers that is appropriate for color components.
-static const CGFloat kComponentEpsilon = 0.5f / 256.0f;
+static const CGFloat kComponentEpsilon = 0.5f / 256;
 
 // Observed brightness ranges for tints 50, 500, 900.
 static const CGFloat kBrightness50Min = 0.95f;
-static const CGFloat kBrightness50Max = 1.00f;
+static const CGFloat kBrightness50Max = 1;
 static const CGFloat kBrightness500Min = 0.50f;
-static const CGFloat kBrightness500Max = 1.00f;
+static const CGFloat kBrightness500Max = 1;
 
 // Observed quadratic brightness coefficients for tints >= 500.
 static const CGFloat kBrightnessQuadracticCoeff = -0.00642857142857143f;
 static const CGFloat kBrightnessLinearCoeff = -0.03585714285714282f;
 
 // Median saturation and brightness values for A100, A200, A400, A700.
-static const CGFloat kAccentSaturation[4] = {0.49f, 0.75f, 1.00f, 1.00f};
-static const CGFloat kAccentBrightness[4] = {1.00f, 1.00f, 1.00f, 0.92f};
+static const CGFloat kAccentSaturation[4] = {0.49f, 0.75f, 1, 1};
+static const CGFloat kAccentBrightness[4] = {1, 1, 1, 0.92f};
 
 // Ordered indices of each of the tints/accents.
 static const int kQTMColorTint50Index = 0;

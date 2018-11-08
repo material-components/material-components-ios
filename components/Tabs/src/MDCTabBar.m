@@ -191,10 +191,10 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 - (void)commonMDCTabBarInit {
   _bottomDividerColor = [UIColor clearColor];
   _selectedItemTintColor = [UIColor whiteColor];
-  _unselectedItemTintColor = [UIColor colorWithWhite:1.0f alpha:0.7f];
+  _unselectedItemTintColor = [UIColor colorWithWhite:1 alpha:0.7f];
   _selectedTitleColor = _selectedItemTintColor;
   _unselectedTitleColor = _unselectedItemTintColor;
-  _inkColor = [UIColor colorWithWhite:1.0f alpha:0.7f];
+  _inkColor = [UIColor colorWithWhite:1 alpha:0.7f];
 
   self.clipsToBounds = YES;
   _barPosition = UIBarPositionAny;
