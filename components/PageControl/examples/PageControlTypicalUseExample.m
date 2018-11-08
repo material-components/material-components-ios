@@ -23,7 +23,7 @@
 @implementation PageControlTypicalUseViewController {
   UIScrollView *_scrollView;
   MDCPageControl *_pageControl;
-  NSMutableDictionary *_pages;
+  NSArray *_pages;
 }
 
 - (void)viewDidLoad {
@@ -51,18 +51,14 @@
   _scrollView.showsHorizontalScrollIndicator = NO;
   [self.view addSubview:_scrollView];
 
-  NSMutableDictionary *pages = [NSMutableDictionary new];
+  NSMutableArray *pages = [NSMutableArray array];
 
   // Add pages to scrollView.
   for (NSUInteger i = 0; i < pageColors.count; i++) {
-    CGFloat offsetMultiplier = i;
-    if (self.view.mdf_effectiveUserInterfaceLayoutDirection ==
-        UIUserInterfaceLayoutDirectionRightToLeft) {
-      offsetMultiplier = pageColors.count - 1 - i;
-    }
+    CGFloat offsetMultiplier = [self offsetMultiplierForPage:i numberOfPages:pageColors.count];
     CGRect pageFrame = CGRectOffset(self.view.bounds, offsetMultiplier * boundsWidth, 0);
     UILabel *page = [[UILabel alloc] initWithFrame:pageFrame];
-    page.text = [NSString stringWithFormat:@"Page %lu", (unsigned long)i + 1];
+    page.text = [NSString stringWithFormat:@"Page %lu", (unsigned long)offsetMultiplier + 1];
     page.font = [UIFont systemFontOfSize:50];
     page.textColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.8];
     page.textAlignment = NSTextAlignmentCenter;
@@ -70,7 +66,11 @@
     page.autoresizingMask =
         UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
     [_scrollView addSubview:page];
-    pages[@(i)] = page;
+    if ([self isRTL]) {
+      [pages insertObject:page atIndex:0];
+    } else {
+      [pages addObject:page];
+    }
   }
   _pages = [pages copy];
 
@@ -96,20 +96,17 @@
   NSInteger pageBeforeFrameChange = _pageControl.currentPage;
   NSInteger pageCount = _pages.count;
   CGRect standardizedFrame = CGRectStandardize(self.view.frame);
-  NSInteger numberOfPages = _pages.allKeys.count;
-  BOOL isRightToLeft = self.view.mdf_effectiveUserInterfaceLayoutDirection ==
-                       UIUserInterfaceLayoutDirectionRightToLeft;
   for (NSInteger i = 0; i < pageCount; i++) {
-    UILabel *page = _pages[@(i)];
-    NSInteger offsetMultiplier = isRightToLeft ? numberOfPages - 1 - i : i;
+    UILabel *page = _pages[i];
+    CGFloat offsetMultiplier = [self offsetMultiplierForPage:i numberOfPages:pageCount];
     page.frame =
         CGRectOffset(self.view.bounds, offsetMultiplier * CGRectGetWidth(standardizedFrame), 0);
   }
   _scrollView.contentSize =
       CGSizeMake(CGRectGetWidth(standardizedFrame) * pageCount, CGRectGetHeight(standardizedFrame));
   CGPoint offset = _scrollView.contentOffset;
-  NSInteger offsetMultiplier =
-      isRightToLeft ? numberOfPages - 1 - pageBeforeFrameChange : pageBeforeFrameChange;
+  CGFloat offsetMultiplier = [self offsetMultiplierForPage:pageBeforeFrameChange
+                                             numberOfPages:pageCount];
   offset.x = offsetMultiplier * CGRectGetWidth(standardizedFrame);
   // This non-anmiated change of offset ensures we keep the same page
   [_scrollView setContentOffset:offset animated:NO];
@@ -148,11 +145,7 @@
   NSInteger page = sender.currentPage;
   CGFloat pageWidth = CGRectGetWidth(_scrollView.bounds);
   CGPoint offset = _scrollView.contentOffset;
-  CGFloat offsetMultiplier = page;
-  if (self.view.mdf_effectiveUserInterfaceLayoutDirection ==
-      UIUserInterfaceLayoutDirectionRightToLeft) {
-    offsetMultiplier = _pages.count - 1 - page;
-  }
+  CGFloat offsetMultiplier = [self offsetMultiplierForPage:page numberOfPages:_pages.count];
   offset.x = offsetMultiplier * pageWidth;
   [_scrollView setContentOffset:offset animated:YES];
 }
@@ -167,6 +160,15 @@
     @"primaryDemo": @YES,
     @"presentable": @YES,
   };
+}
+
+- (CGFloat)offsetMultiplierForPage:(NSInteger)page numberOfPages:(NSInteger)numberOfPages {
+  return [self isRTL] ? numberOfPages - page - 1 : page;
+}
+
+- (BOOL)isRTL {
+  return self.view.mdf_effectiveUserInterfaceLayoutDirection ==
+         UIUserInterfaceLayoutDirectionRightToLeft;
 }
 
 @end

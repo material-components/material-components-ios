@@ -58,8 +58,8 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
 
 @implementation MDCPageControl {
   UIView *_containerView;
-  NSMutableDictionary<NSNumber *, MDCPageControlIndicator *> *_indicators;
-  NSMutableDictionary<NSNumber *, NSValue *> *_indicatorPositions;
+  NSMutableArray<MDCPageControlIndicator *> *_indicators;
+  NSMutableArray<NSValue *> *_indicatorPositions;
   MDCPageControlIndicator *_animatedIndicator;
   MDCPageControlTrackLayer *_trackLayer;
   CGFloat _trackLength;
@@ -114,9 +114,9 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
   }
   self.hidden = NO;
 
-  for (NSNumber *pageNumber in [_indicators allKeys]) {
+  for (NSUInteger pageNumber = 0; pageNumber < _indicators.count; pageNumber++) {
     MDCPageControlIndicator *indicator = _indicators[pageNumber];
-    if (pageNumber.integerValue == _currentPage) {
+    if (pageNumber == (NSUInteger)_currentPage) {
       indicator.hidden = YES;
     }
     indicator.color = _pageIndicatorTintColor;
@@ -152,11 +152,11 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
 
   if (animated) {
     // Draw and extend track.
-    CGPoint startPoint = [_indicatorPositions[@(previousPage)] CGPointValue];
-    CGPoint endPoint = [_indicatorPositions[@(currentPage)] CGPointValue];
+    CGPoint startPoint = [_indicatorPositions[previousPage] CGPointValue];
+    CGPoint endPoint = [_indicatorPositions[currentPage] CGPointValue];
     if (shouldReverse) {
-      startPoint = [_indicatorPositions[@(currentPage)] CGPointValue];
-      endPoint = [_indicatorPositions[@(previousPage)] CGPointValue];
+      startPoint = [_indicatorPositions[currentPage] CGPointValue];
+      endPoint = [_indicatorPositions[previousPage] CGPointValue];
     }
 
     // Remove track and reveal hidden indicators staggered towards current page indicator. Reveal
@@ -183,13 +183,13 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
                                        completion:completionBlock];
   } else {
     // If not animated, simply move indicator to new position and reset track.
-    CGPoint point = [_indicatorPositions[@(currentPage)] CGPointValue];
+    CGPoint point = [_indicatorPositions[currentPage] CGPointValue];
     [_animatedIndicator updateIndicatorTransformX:point.x - kPageControlIndicatorRadius];
     [_trackLayer resetAtPoint:point];
 
     [CATransaction begin];
     [CATransaction setDisableActions:YES];
-    [_indicators[@(previousPage)] setHidden:NO];
+    [_indicators[previousPage] setHidden:NO];
     [CATransaction commit];
   }
 }
@@ -283,20 +283,20 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
 
     // Determine endpoints for drawing track depending on direction scrolled.
     NSInteger scrolledPageNumber = [self scrolledPageNumber:scrollView];
-    CGPoint startPoint = [_indicatorPositions[@(scrolledPageNumber)] CGPointValue];
+    CGPoint startPoint = [_indicatorPositions[scrolledPageNumber] CGPointValue];
     CGPoint endPoint = startPoint;
     CGFloat radius = kPageControlIndicatorRadius;
     if (transformX > startPoint.x - radius) {
       if ([self isRTL]) {
-        endPoint = [_indicatorPositions[@(scrolledPageNumber - 1)] CGPointValue];
+        endPoint = [_indicatorPositions[scrolledPageNumber - 1] CGPointValue];
       } else {
-        endPoint = [_indicatorPositions[@(scrolledPageNumber + 1)] CGPointValue];
+        endPoint = [_indicatorPositions[scrolledPageNumber + 1] CGPointValue];
       }
     } else if (transformX < startPoint.x - radius) {
       if ([self isRTL]) {
-        startPoint = [_indicatorPositions[@(scrolledPageNumber + 1)] CGPointValue];
+        startPoint = [_indicatorPositions[scrolledPageNumber + 1] CGPointValue];
       } else {
-        startPoint = [_indicatorPositions[@(scrolledPageNumber - 1)] CGPointValue];
+        startPoint = [_indicatorPositions[scrolledPageNumber - 1] CGPointValue];
       }
     }
 
@@ -311,7 +311,7 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
 
     // Hide indicators to be shown with animated reveal once track is removed.
     if (!_isDeferredScrolling) {
-      [_indicators[@(scrolledPageNumber)] setHidden:YES];
+      [_indicators[scrolledPageNumber] setHidden:YES];
     }
   }
 }
@@ -319,7 +319,7 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
   // Remove track towards current active indicator position.
   NSInteger scrolledPageNumber = [self scrolledPageNumber:scrollView];
-  CGPoint point = [_indicatorPositions[@(scrolledPageNumber)] CGPointValue];
+  CGPoint point = [_indicatorPositions[scrolledPageNumber] CGPointValue];
   BOOL shouldReverse = (_currentPage > scrolledPageNumber);
   BOOL sendAction = (_currentPage != scrolledPageNumber);
   _currentPage = scrolledPageNumber;
@@ -352,24 +352,14 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
 
 #pragma mark - Indicators
 
-- (NSInteger)pageForIndicator:(MDCPageControlIndicator *)indicator {
-  for (NSNumber *pageNumber in [_indicators allKeys]) {
-    MDCPageControlIndicator *anIndicator = _indicators[pageNumber];
-    if (anIndicator == indicator) {
-      return pageNumber.integerValue;
-    }
-  }
-  return NSNotFound;
-}
-
 - (void)revealIndicatorsReversed:(BOOL)reversed {
   // Animate hidden indicators staggered with delay.
   NSInteger count = 0;
-  for (MDCPageControlIndicator *indicator in [_indicators allValues]) {
+  for (MDCPageControlIndicator *indicator in _indicators) {
     // Determine if this is the current page indicator.
-    NSInteger indicatorIndex = [self pageForIndicator:indicator];
+    NSInteger indicatorIndex = [_indicators indexOfObject:indicator];
     if (reversed) {
-      indicatorIndex = [[_indicators allValues] count] - 1 - indicatorIndex;
+      indicatorIndex = [_indicators count] - 1 - indicatorIndex;
     }
     BOOL isCurrentPageIndicator = indicatorIndex == _currentPage;
 
@@ -418,7 +408,7 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
     [CATransaction begin];
     [CATransaction setDisableActions:YES];
     for (int i = 0; i < _numberOfPages; i++) {
-      MDCPageControlIndicator *indicator = _indicators[@(i)];
+      MDCPageControlIndicator *indicator = _indicators[i];
       indicator.hidden = (i == _currentPage) ? YES : NO;
     }
     [CATransaction commit];
@@ -484,8 +474,8 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
       [layer removeFromSuperlayer];
     }
   }
-  _indicators = [NSMutableDictionary dictionaryWithCapacity:_numberOfPages];
-  _indicatorPositions = [NSMutableDictionary dictionaryWithCapacity:_numberOfPages];
+  _indicators = [NSMutableArray arrayWithCapacity:_numberOfPages];
+  _indicatorPositions = [NSMutableArray arrayWithCapacity:_numberOfPages];
 
   if (_numberOfPages == 0) {
     [self setNeedsLayout];
@@ -506,9 +496,12 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
     NSInteger pageNumber = i;
     if ([self isRTL]) {
       pageNumber = _numberOfPages - 1 - i;
+      [_indicators insertObject:indicator atIndex:0];
+      [_indicatorPositions insertObject:[NSValue valueWithCGPoint:indicator.position] atIndex:0];
+    } else {
+      [_indicators addObject:indicator];
+      [_indicatorPositions addObject:[NSValue valueWithCGPoint:indicator.position]];
     }
-    _indicators[@(pageNumber)] = indicator;
-    _indicatorPositions[@(pageNumber)] = [NSValue valueWithCGPoint:indicator.position];
   }
 
   // Resize container view to keep indicators centered.
@@ -520,7 +513,7 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
   // Add animated indicator that will travel freely across the container. Its transform will be
   // updated by calling its -updateIndicatorTransformX method.
   CGPoint center = CGPointMake(radius, radius);
-  CGPoint point = [_indicatorPositions[@(_currentPage)] CGPointValue];
+  CGPoint point = [_indicatorPositions[_currentPage] CGPointValue];
   _animatedIndicator = [[MDCPageControlIndicator alloc] initWithCenter:center radius:radius];
   [_animatedIndicator updateIndicatorTransformX:point.x - kPageControlIndicatorRadius];
   [_containerView.layer addSublayer:_animatedIndicator];
