@@ -20,7 +20,7 @@
 #import "MaterialSlider.h"
 
 static const int kNumberOfRepeats = 20;
-static const CGFloat kEpsilonAccuracy = 0.001f;
+static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
 @interface MDCSlider (TestInterface)
 
@@ -42,7 +42,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   self.slider = [[MDCSlider alloc] init];
   self.aNonDefaultColor = [UIColor orangeColor];
   self.defaultBlue = MDCPalette.bluePalette.tint500;
-  self.defaultGray = [[UIColor blackColor] colorWithAlphaComponent:0.26f];
+  self.defaultGray = [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.26];
 }
 
 - (void)tearDown {
@@ -77,7 +77,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testMaximumDefault {
   // Then
-  XCTAssertEqualWithAccuracy(self.slider.maximumValue, 1.0f, kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy(self.slider.maximumValue, 1, kEpsilonAccuracy);
 }
 
 - (void)testSetValueToHigherThanMaximum {
@@ -230,7 +230,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
     self.slider.numberOfDiscreteValues = (NSUInteger)(self.slider.maximumValue + 1);
 
     // Then
-    XCTAssertEqualWithAccuracy(self.slider.value, originalValue, 0.5f + kEpsilonAccuracy);
+    XCTAssertEqualWithAccuracy(self.slider.value, originalValue, (CGFloat)0.5 + kEpsilonAccuracy);
     XCTAssertEqualWithAccuracy(self.slider.value, round(originalValue), kEpsilonAccuracy);
   }
 }
@@ -315,7 +315,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 - (void)testThumbColorForStateDefaults {
   // Given
   UIColor *expectedThumbColor = MDCPalette.bluePalette.tint500;
-  UIColor *expectedThumbDisabledColor = [[UIColor blackColor] colorWithAlphaComponent:0.26f];
+  UIColor *expectedThumbDisabledColor = [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.26];
 
   // Then
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
@@ -596,8 +596,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testTrackBackgroundColorForStateDefaults {
   // Given
-  UIColor *expectedDefaultTrackOffColor = [UIColor.blackColor colorWithAlphaComponent:0.26f];
-  UIColor *expectedDisabledTrackOffColor = [UIColor.blackColor colorWithAlphaComponent:0.26f];
+  UIColor *expectedDefaultTrackOffColor = [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.26];
+  UIColor *expectedDisabledTrackOffColor = [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.26];
 
   // Then
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
@@ -928,12 +928,12 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
   // Then
   XCTAssertEqualObjects(
-      [testFormatter numberFromString:[self.slider thumbTrack:track stringForValue:1.f]], @(1.));
+      [testFormatter numberFromString:[self.slider thumbTrack:track stringForValue:1]], @(1.));
   XCTAssertEqualObjects(
-      [testFormatter numberFromString:[self.slider thumbTrack:track stringForValue:0.57f]],
+      [testFormatter numberFromString:[self.slider thumbTrack:track stringForValue:(CGFloat)0.57]],
       @(0.57));
   XCTAssertEqualObjects(
-      [testFormatter numberFromString:[self.slider thumbTrack:track stringForValue:0.33333333f]],
+      [testFormatter numberFromString:[self.slider thumbTrack:track stringForValue:(CGFloat)0.33333333]],
       @(0.333));
 }
 
@@ -1023,35 +1023,35 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testAccessibilityIncrement {
   // Given
-  self.slider.value = [self randomPercent] - 0.1f;
+  self.slider.value = [self randomPercent] - (CGFloat)0.1;
   CGFloat originalValue = self.slider.value;
 
   // When
   [self.slider accessibilityIncrement];
 
   // Then
-  XCTAssertEqual(originalValue + 0.1f, self.slider.value);
+  XCTAssertEqual(originalValue + (CGFloat)0.1, self.slider.value);
 }
 
 - (void)testAccessibilityDecrement {
   // Given
-  self.slider.value = [self randomPercent] + 0.1f;
+  self.slider.value = [self randomPercent] + (CGFloat)0.1;
   CGFloat originalValue = self.slider.value;
 
   // When
   [self.slider accessibilityDecrement];
 
   // Then
-  XCTAssertEqual(originalValue - 0.1f, self.slider.value);
+  XCTAssertEqual(originalValue - (CGFloat)0.1, self.slider.value);
 }
 
 - (void)testAccessibilityActivate {
   // Given
-  self.slider.value = 0.0f;
+  self.slider.value = 0;
 
   // When
   [self.slider accessibilityActivate];
-  CGFloat newValue = (self.slider.maximumValue - self.slider.minimumValue) / 6.0f;
+  CGFloat newValue = (self.slider.maximumValue - self.slider.minimumValue) / 6;
 
   // Then
   XCTAssertEqual(self.slider.value, newValue);
@@ -1060,14 +1060,14 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 - (void)testAccessibilityIncrementWithLargerMax {
   // Given
   self.slider.maximumValue = [self randomNumber];
-  self.slider.value = ([self randomPercent] - 0.1f) * self.slider.maximumValue;
+  self.slider.value = ([self randomPercent] - (CGFloat)0.1) * self.slider.maximumValue;
   CGFloat originalValue = self.slider.value;
 
   // When
   [self.slider accessibilityIncrement];
 
   // Then
-  XCTAssertEqual(originalValue + 0.1f * self.slider.maximumValue, self.slider.value);
+  XCTAssertEqual(originalValue + (CGFloat)0.1 * self.slider.maximumValue, self.slider.value);
 }
 
 - (void)testAccessibilityTraits {
@@ -1095,7 +1095,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
         (self.slider.numberOfDiscreteValues - 1);
     CGFloat expectedValue = self.slider.minimumValue + stepValue;
     XCTAssertEqualWithAccuracy(self.slider.value, expectedValue, 0.0001,
-                               @"A slider with (%lu) discrete values should have step of '%.3f'.",
+                               @"A slider with (%lu) discrete values should have step of '%(CGFloat).3'.",
                                (unsigned long)self.slider.numberOfDiscreteValues, stepValue);
   }
 }

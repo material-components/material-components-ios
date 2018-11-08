@@ -16,13 +16,13 @@
 
 #import "MaterialTypography.h"
 
-static const CGFloat kLabelAlpha = 0.87f;
-static const CGFloat kImageLeadingPadding = 16.f;
-static const CGFloat kImageTopPadding = 16.f;
-static const CGFloat kImageHeightAndWidth = 24.f;
-static const CGFloat kTitleLeadingPadding = 72.f;
-static const CGFloat kTitleTrailingPadding = 16.f;
-static const CGFloat kActionItemTitleVerticalPadding = 18.f;
+static const CGFloat kLabelAlpha = (CGFloat)0.87;
+static const CGFloat kImageLeadingPadding = 16;
+static const CGFloat kImageTopPadding = 16;
+static const CGFloat kImageHeightAndWidth = 24;
+static const CGFloat kTitleLeadingPadding = 72;
+static const CGFloat kTitleTrailingPadding = 16;
+static const CGFloat kActionItemTitleVerticalPadding = 18;
 
 @interface MDCActionSheetItemTableViewCell ()
 @property(nonatomic, strong) UILabel *actionLabel;
@@ -201,7 +201,7 @@ static const CGFloat kActionItemTitleVerticalPadding = 18.f;
   _inkColor = inkColor;
   // If no ink color then reset to the default ink color
   self.inkTouchController.defaultInkView.inkColor =
-      inkColor ?: [[UIColor alloc] initWithWhite:0 alpha:0.14f];
+      inkColor ?: [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14];
 }
 
 - (void)setImageRenderingMode:(UIImageRenderingMode)imageRenderingMode {

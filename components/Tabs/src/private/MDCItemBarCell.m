@@ -49,7 +49,7 @@ const CGFloat kSelectedNavigationTitleScaleFactor = (16.0f / 14.0f);
 const CGFloat kSelectedNavigationImageYOffset = -2;
 
 /// Duration of selection animations in applicable content styles.
-static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
+static const NSTimeInterval kSelectionAnimationDuration = (CGFloat)0.3;
 
 @implementation MDCItemBarCell {
   UIImageView *_imageView;
@@ -91,7 +91,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 
 + (UIEdgeInsets)edgeInsetsForHorizontalSizeClass:(UIUserInterfaceSizeClass)sizeClass {
   // Padding from spec: https://material.io/go/design-tabs
-  CGFloat outerPadding = (sizeClass == UIUserInterfaceSizeClassRegular) ? 24.0f : 12.0f;
+  CGFloat outerPadding = (sizeClass == UIUserInterfaceSizeClassRegular) ? 24 : 12;
   return UIEdgeInsetsMake(0.0, outerPadding, 0.0, outerPadding);
 }
 
@@ -393,7 +393,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3f;
 #pragma mark - Private
 
 + (UIEdgeInsets)minimumEdgeInsets {
-  const CGFloat outerPadding = 2.0f;
+  const CGFloat outerPadding = 2;
   return UIEdgeInsetsMake(0.0, outerPadding, 0.0, outerPadding);
 }
 

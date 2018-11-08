@@ -28,14 +28,14 @@
     _item = item;
     _attachmentBehavior = [[UIAttachmentBehavior alloc] initWithItem:self.item
                                                     attachedToAnchor:CGPointZero];
-    _attachmentBehavior.frequency = 3.5f;
-    _attachmentBehavior.damping = 0.4f;
-    _attachmentBehavior.length = 0.f;
+    _attachmentBehavior.frequency = (CGFloat)3.5;
+    _attachmentBehavior.damping = (CGFloat)0.4;
+    _attachmentBehavior.length = 0;
     [self addChildBehavior:_attachmentBehavior];
 
     _itemBehavior = [[UIDynamicItemBehavior alloc] initWithItems:@[self.item]];
-    _itemBehavior.density = 100.f;
-    _itemBehavior.resistance = 10.f;
+    _itemBehavior.density = 100;
+    _itemBehavior.resistance = 10;
     [self addChildBehavior:_itemBehavior];
   }
   return self;

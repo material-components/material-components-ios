@@ -96,17 +96,17 @@ static inline UIImage *TestImage(CGSize size) {
   XCTAssertNil(chip.shapeGenerator);
   // Background color
   XCTAssertEqualObjects([chip backgroundColorForState:UIControlStateDisabled],
-                        MDCColorLighten(MDCColorFromRGB(0xEBEBEB), 0.38f));
+                        MDCColorLighten(MDCColorFromRGB(0xEBEBEB), (CGFloat)0.38));
   XCTAssertEqualObjects([chip backgroundColorForState:UIControlStateSelected],
-                        MDCColorDarken(MDCColorFromRGB(0xEBEBEB), 0.16f));
+                        MDCColorDarken(MDCColorFromRGB(0xEBEBEB), (CGFloat)0.16));
 
   // Elevation
   XCTAssertEqualWithAccuracy([chip elevationForState:UIControlStateHighlighted], 8, 0.001);
 
   // Title color
-  UIColor *normalTitleColor = [UIColor colorWithWhite:0.13f alpha:1.0f];
+  UIColor *normalTitleColor = [UIColor colorWithWhite:(CGFloat)0.13 alpha:1];
   XCTAssertEqualObjects([chip titleColorForState:UIControlStateDisabled],
-                        MDCColorLighten(normalTitleColor, 0.38f));
+                        MDCColorLighten(normalTitleColor, (CGFloat)0.38));
 
   UIControlState maximumState =
       UIControlStateDisabled | UIControlStateSelected | UIControlStateHighlighted;

@@ -17,7 +17,7 @@
 #import "MaterialButtons.h"
 #import "MaterialButtons+ColorThemer.h"
 
-static const CGFloat kEpsilonAccuracy = 0.001f;
+static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
 @interface ButtonsColorThemerTests : XCTestCase
 
@@ -34,13 +34,13 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   [MDCTextButtonColorThemer applySemanticColorScheme:colorScheme toButton:button];
 
   // Then
-  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1.f, kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1, kEpsilonAccuracy);
   XCTAssertEqualObjects([button backgroundColorForState:UIControlStateNormal], UIColor.clearColor);
   XCTAssertEqualObjects([button backgroundColorForState:UIControlStateDisabled],
                         UIColor.clearColor);
   XCTAssertEqualObjects([button titleColorForState:UIControlStateNormal], colorScheme.primaryColor);
   XCTAssertEqualObjects([button titleColorForState:UIControlStateDisabled],
-                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]);
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38]);
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
       UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
@@ -62,15 +62,15 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   [MDCContainedButtonColorThemer applySemanticColorScheme:colorScheme toButton:button];
 
   // Then
-  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1.f, kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1, kEpsilonAccuracy);
   XCTAssertEqualObjects([button backgroundColorForState:UIControlStateNormal],
                         colorScheme.primaryColor);
   XCTAssertEqualObjects([button backgroundColorForState:UIControlStateDisabled],
-                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f]);
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12]);
   XCTAssertEqualObjects([button titleColorForState:UIControlStateNormal],
                         colorScheme.onPrimaryColor);
   XCTAssertEqualObjects([button titleColorForState:UIControlStateDisabled],
-                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]);
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38]);
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
       UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
@@ -117,13 +117,13 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
     } else {
       XCTAssert(
           CGColorEqualToColor([button titleColorForState:state].CGColor,
-                              [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f].CGColor));
+                              [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38].CGColor));
       XCTAssert(
           CGColorEqualToColor([button backgroundColorForState:state].CGColor,
-                              [colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f].CGColor));
+                              [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12].CGColor));
     }
   }
-  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1.f, 0.001f);
+  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1, (CGFloat)0.001);
 }
 
 - (void)testMDCFlatButtonColorThemer {
@@ -159,13 +159,13 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
     } else {
       XCTAssert(
           CGColorEqualToColor([button titleColorForState:state].CGColor,
-                              [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f].CGColor),
+                              [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38].CGColor),
           @"state:%lu", (unsigned long)state);
       XCTAssertEqual([button backgroundColorForState:state], UIColor.clearColor, @"state:%lu",
                      (unsigned long)state);
     }
   }
-  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1.f, 0.001f);
+  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1, (CGFloat)0.001);
 }
 
 - (void)testMDCRaisedButtonColorThemer {
@@ -202,13 +202,13 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
     } else {
       XCTAssert(
           CGColorEqualToColor([button titleColorForState:state].CGColor,
-                              [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f].CGColor));
+                              [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38].CGColor));
       XCTAssert(
           CGColorEqualToColor([button backgroundColorForState:state].CGColor,
-                              [colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f].CGColor));
+                              [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12].CGColor));
     }
   }
-  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1.f, 0.001f);
+  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1, (CGFloat)0.001);
 }
 
 - (void)testMDCFloatingButtonColorThemer {
@@ -236,7 +236,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
     }
   }
 
-  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1.f, 0.001f);
+  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1, (CGFloat)0.001);
 }
 
 

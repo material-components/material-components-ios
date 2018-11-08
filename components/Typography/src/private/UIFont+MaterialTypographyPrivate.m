@@ -21,7 +21,7 @@
  */
 + (NSString *)mdc_fontWeightDescription:(CGFloat)weight {
 // The UIFontWeight enumeration was added in iOS 8.2
-  NSString *description = [NSString stringWithFormat:@"(%.3f)", weight];
+  NSString *description = [NSString stringWithFormat:@"(%(CGFloat).3)", weight];
 #if defined(__IPHONE_8_2)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wpartial-availability"
@@ -97,7 +97,7 @@
   NSMutableString *extendedDescription = [[NSMutableString alloc] init];
   [extendedDescription appendFormat:@"%@ : ", self.fontName];
   [extendedDescription appendFormat:@"%@ : ", self.familyName];
-  [extendedDescription appendFormat:@"%.1f pt : ", self.pointSize];
+  [extendedDescription appendFormat:@"%(CGFloat).1 pt : ", self.pointSize];
   [extendedDescription appendFormat:@"%@", [self mdc_weightString]];
 
   return extendedDescription;

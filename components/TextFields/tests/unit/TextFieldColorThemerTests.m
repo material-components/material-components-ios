@@ -80,9 +80,9 @@
 
 - (void)testDefaultValuesAreSet {
   MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
-  UIColor *primary87Opacity = [colorScheme.primaryColor colorWithAlphaComponent:0.87f];
-  UIColor *onSurface87Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.87f];
-  UIColor *onSurface60Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.60f];
+  UIColor *primary87Opacity = [colorScheme.primaryColor colorWithAlphaComponent:(CGFloat)0.87];
+  UIColor *onSurface87Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87];
+  UIColor *onSurface60Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
 
   XCTAssertEqualObjects(MDCTextInputControllerBase.activeColorDefault, colorScheme.primaryColor);
   XCTAssertEqualObjects(MDCTextInputControllerBase.errorColorDefault, colorScheme.errorColor);
@@ -112,8 +112,8 @@
   colorScheme.onSurfaceColor = [UIColor greenColor];
   colorScheme.errorColor = [UIColor redColor];
 
-  UIColor *onSurface87Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.87f];
-  UIColor *onSurface60Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.60f];
+  UIColor *onSurface87Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87];
+  UIColor *onSurface60Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
   
   MDCTextField *textField = [[MDCTextField alloc] initWithFrame:CGRectZero];
   MDCTextField *baseTextField = [[MDCTextField alloc] initWithFrame:CGRectZero];

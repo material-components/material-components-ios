@@ -20,7 +20,7 @@
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
 
-static const CGFloat kEpsilonAccuracy = 0.001f;
+static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 // A value greater than the largest value created by combining normal values of UIControlState.
 // This is a complete hack, but UIControlState doesn't expose anything useful here.
 // This assumes that UIControlState is actually a set of bitfields and ignores application-specific

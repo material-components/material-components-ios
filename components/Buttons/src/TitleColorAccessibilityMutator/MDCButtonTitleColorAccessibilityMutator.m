@@ -51,7 +51,7 @@
 
 /** Returns YES if the color is transparent (including a nil color). */
 + (BOOL)isTransparentColor:(UIColor *)color {
-  return !color || [color isEqual:[UIColor clearColor]] || CGColorGetAlpha(color.CGColor) == 0.0f;
+  return !color || [color isEqual:[UIColor clearColor]] || CGColorGetAlpha(color.CGColor) == 0;
 }
 
 

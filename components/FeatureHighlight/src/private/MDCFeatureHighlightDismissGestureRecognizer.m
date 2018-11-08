@@ -102,8 +102,8 @@
   if (newProgress < _startProgress) {
     _startProgress = newProgress;
   }
-  _progress = 1.0f - [self dismissPercentOfTouches:touches] + _startProgress;
-  _progress = MIN(1.0f, MAX(0.0f, _progress));
+  _progress = 1 - [self dismissPercentOfTouches:touches] + _startProgress;
+  _progress = MIN(1, MAX(0, _progress));
 }
 
 - (CGFloat)progressForTouchPosition:(CGPoint)touchPos {
@@ -161,7 +161,7 @@
   }
 
   CGFloat progress = dismissSum / touches.count;
-  return MIN(1.0f, MAX(0.0f, progress));
+  return MIN(1, MAX(0, progress));
 }
 
 @end

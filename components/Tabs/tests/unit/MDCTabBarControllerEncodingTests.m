@@ -65,7 +65,7 @@
 //  vc2.view.tag = 2;
 //  tabBarVC.viewControllers = @[vc1, vc2];
 //  tabBarVC.selectedViewController = vc1;
-//  tabBarVC.tabBar.tintColor = [UIColor colorWithRed:0.6f green:0.2f blue:0.3f alpha:1.0f];
+//  tabBarVC.tabBar.tintColor = [UIColor colorWithRed:(CGFloat)0.6 green:(CGFloat)0.2 blue:(CGFloat)0.3 alpha:1.0f];
 //  MDCTabBarViewControllerDelegateExample *delegate = [[MDCTabBarViewControllerDelegateExample alloc] init];
 //  tabBarVC.delegate = delegate;
 //  // force view did load

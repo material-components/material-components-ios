@@ -36,11 +36,11 @@ static CGFloat randomNumber() {
   MDCActivityIndicator *indicator = [[MDCActivityIndicator alloc] init];
 
   // When
-  indicator.radius = 2.0f;
+  indicator.radius = 2;
 
   // Then
-  XCTAssertGreaterThanOrEqual(indicator.radius, 5.0f);
-  XCTAssertLessThanOrEqual(indicator.radius, 72.0f);
+  XCTAssertGreaterThanOrEqual(indicator.radius, 5);
+  XCTAssertLessThanOrEqual(indicator.radius, 72);
 }
 
 - (void)testSetRadiusMax {
@@ -48,11 +48,11 @@ static CGFloat randomNumber() {
   MDCActivityIndicator *indicator = [[MDCActivityIndicator alloc] init];
 
   // When
-  indicator.radius = 80.0f;
+  indicator.radius = 80;
 
   // Then
-  XCTAssertGreaterThanOrEqual(indicator.radius, 8.0f);
-  XCTAssertLessThanOrEqual(indicator.radius, 72.0f);
+  XCTAssertGreaterThanOrEqual(indicator.radius, 8);
+  XCTAssertLessThanOrEqual(indicator.radius, 72);
 }
 
 - (void)testSetRadius {
@@ -64,8 +64,8 @@ static CGFloat randomNumber() {
   indicator.radius = random;
 
   // Then
-  XCTAssertGreaterThanOrEqual(indicator.radius, 8.0f);
-  XCTAssertLessThanOrEqual(indicator.radius, 72.0f);
+  XCTAssertGreaterThanOrEqual(indicator.radius, 8);
+  XCTAssertLessThanOrEqual(indicator.radius, 72);
   XCTAssertEqual(indicator.radius, random);
 }
 
@@ -127,9 +127,9 @@ static CGFloat randomNumber() {
   MDCActivityIndicator *indicator = [[MDCActivityIndicator alloc] init];
   indicator.indicatorMode = MDCActivityIndicatorModeDeterminate;
 
-  [indicator setProgress:0.33f animated:NO];
+  [indicator setProgress:(CGFloat)0.33 animated:NO];
   XCTAssertEqual(indicator.strokeLayer.strokeStart, 0.0);
-  XCTAssertEqual(indicator.strokeLayer.strokeEnd, 0.33f);
+  XCTAssertEqual(indicator.strokeLayer.strokeEnd, (CGFloat)0.33);
 }
 
 - (void)testSetProgressStrokeAnimated {
@@ -138,9 +138,9 @@ static CGFloat randomNumber() {
   indicator.indicatorMode = MDCActivityIndicatorModeDeterminate;
   [indicator startAnimating];
 
-  [indicator setProgress:0.55f animated:YES];
+  [indicator setProgress:(CGFloat)0.55 animated:YES];
   XCTAssertEqual(indicator.strokeLayer.strokeStart, 0.0);
-  XCTAssertEqual(indicator.strokeLayer.strokeEnd, 0.55f);
+  XCTAssertEqual(indicator.strokeLayer.strokeEnd, (CGFloat)0.55);
 }
 
 - (void)testSetAccessibiltyLabelProperty {
@@ -158,14 +158,14 @@ static CGFloat randomNumber() {
 #pragma mark - Helpers
 
 - (void)verifySettingProgressOnIndicator:(MDCActivityIndicator *)indicator animated:(BOOL)animated {
-  [indicator setProgress:-5.0f animated:animated];
-  XCTAssertEqual(indicator.progress, 0.0f);
+  [indicator setProgress:-5 animated:animated];
+  XCTAssertEqual(indicator.progress, 0);
 
-  [indicator setProgress:0.77f animated:animated];
-  XCTAssertEqual(indicator.progress, 0.77f);
+  [indicator setProgress:(CGFloat)0.77 animated:animated];
+  XCTAssertEqual(indicator.progress, (CGFloat)0.77);
 
-  [indicator setProgress:5.0f animated:animated];
-  XCTAssertEqual(indicator.progress, 1.0f);
+  [indicator setProgress:5 animated:animated];
+  XCTAssertEqual(indicator.progress, 1);
 }
 
 @end

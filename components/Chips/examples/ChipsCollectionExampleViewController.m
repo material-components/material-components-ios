@@ -20,7 +20,7 @@
 
 - (instancetype)init {
   MDCChipCollectionViewFlowLayout *layout = [[MDCChipCollectionViewFlowLayout alloc] init];
-  layout.minimumInteritemSpacing = 10.0f;
+  layout.minimumInteritemSpacing = 10;
   layout.estimatedItemSize = CGSizeMake(60, 33);
 
   self = [super initWithCollectionViewLayout:layout];

@@ -32,12 +32,12 @@
 
 #pragma mark - Constants
 
-static const CGFloat MDCTextInputTextFieldOutlinedTextAreaFullPadding = 16.f;
-static const CGFloat MDCTextInputTextFieldOutlinedTextAreaHalfPadding = 8.f;
+static const CGFloat MDCTextInputTextFieldOutlinedTextAreaFullPadding = 16;
+static const CGFloat MDCTextInputTextFieldOutlinedTextAreaHalfPadding = 8;
 
 // The guidelines have 8 points of padding but since the fonts on iOS are slightly smaller, we need
 // to add points to keep the versions at the same height.
-static const CGFloat MDCTextInputTextFieldOutlinedTextAreaPaddingAdjustment = 1.f;
+static const CGFloat MDCTextInputTextFieldOutlinedTextAreaPaddingAdjustment = 1;
 
 #pragma mark - Class Properties
 

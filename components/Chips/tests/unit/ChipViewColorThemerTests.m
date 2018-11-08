@@ -38,9 +38,9 @@
 
 - (void)testInputChipViewColorThemer {
   [MDCChipViewColorThemer applySemanticColorScheme:self.colorScheme toChipView:self.chip];
-  UIColor *onSurface12Opacity = [self.colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f];
-  UIColor *onSurface87Opacity = [self.colorScheme.onSurfaceColor colorWithAlphaComponent:0.87f];
-  UIColor *onSurface16Opacity = [self.colorScheme.onSurfaceColor colorWithAlphaComponent:0.16f];
+  UIColor *onSurface12Opacity = [self.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12];
+  UIColor *onSurface87Opacity = [self.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87];
+  UIColor *onSurface16Opacity = [self.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.16];
 
   UIColor *backgroundColor =
       [MDCSemanticColorScheme blendColor:onSurface12Opacity
@@ -62,18 +62,18 @@
                         selectedBackgroundColor);
   XCTAssertEqualObjects([self.chip titleColorForState:UIControlStateSelected], selectedTextColor);
   XCTAssertEqualObjects([self.chip backgroundColorForState:UIControlStateDisabled],
-                        [backgroundColor colorWithAlphaComponent:0.38f]);
+                        [backgroundColor colorWithAlphaComponent:(CGFloat)0.38]);
   XCTAssertEqualObjects([self.chip titleColorForState:UIControlStateDisabled],
-                        [textColor colorWithAlphaComponent:0.38f]);
+                        [textColor colorWithAlphaComponent:(CGFloat)0.38]);
 
 }
 
 - (void)testStrokedChipViewColorThemer {
   [MDCChipViewColorThemer applyOutlinedVariantWithColorScheme:self.colorScheme
                                                    toChipView:self.chip];
-  UIColor *onSurface12Opacity = [self.colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f];
-  UIColor *onSurface87Opacity = [self.colorScheme.onSurfaceColor colorWithAlphaComponent:0.87f];
-  UIColor *onSurface16Opacity = [self.colorScheme.onSurfaceColor colorWithAlphaComponent:0.16f];
+  UIColor *onSurface12Opacity = [self.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12];
+  UIColor *onSurface87Opacity = [self.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87];
+  UIColor *onSurface16Opacity = [self.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.16];
   UIColor *selectedBackgroundColor =
       [MDCSemanticColorScheme blendColor:onSurface12Opacity
                      withBackgroundColor:self.colorScheme.surfaceColor];
@@ -98,9 +98,9 @@
                         selectedBackgroundColor);
   XCTAssertEqualObjects([self.chip titleColorForState:UIControlStateSelected], selectedTextColor);
   XCTAssertEqualObjects([self.chip backgroundColorForState:UIControlStateDisabled],
-                        [self.colorScheme.surfaceColor colorWithAlphaComponent:0.38f]);
+                        [self.colorScheme.surfaceColor colorWithAlphaComponent:(CGFloat)0.38]);
   XCTAssertEqualObjects([self.chip titleColorForState:UIControlStateDisabled],
-                        [textColor colorWithAlphaComponent:0.38f]);
+                        [textColor colorWithAlphaComponent:(CGFloat)0.38]);
 }
 
 - (void)testBackgroundColorAfterColorTheming {

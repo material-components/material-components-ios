@@ -32,18 +32,18 @@ MDCShapeScheme *shapeScheme = [[MDCShapeScheme alloc] init];
 // Small Component Shape
 shapeScheme.smallComponentShape = 
     [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyCut
-                                            andSize:4.f];
+                                            andSize:4];
 
 // Medium Component Shape
 shapeScheme.mediumComponentShape = 
     [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyRounded
-                                            andSize:10.f];
+                                            andSize:10];
 
 // Large Component Shape
 MDCShapeCategory *largeShapeCategory = [[MDCShapeCategory alloc] init];
 MDCCornerTreatment *rounded50PercentCorner =
-    [MDCCornerTreatment cornerWithRadius:0.5f valueType:MDCCornerTreatmentValueTypePercentage];
-MDCCornerTreatment *cut8PointsCorner = [MDCCornerTreatment cornerWithCut:8.f];
+    [MDCCornerTreatment cornerWithRadius:(CGFloat)0.5 valueType:MDCCornerTreatmentValueTypePercentage];
+MDCCornerTreatment *cut8PointsCorner = [MDCCornerTreatment cornerWithCut:8];
 largeShapeCategory.topLeftCorner = rounded50PercentCorner;
 largeShapeCategory.topRightCorner = rounded50PercentCorner;
 largeShapeCategory.bottomLeftCorner = cut8PointsCorner;

@@ -41,25 +41,25 @@
 }
 
 - (void)testSetProgress {
-  _progressView.progress = 0.1234f;
-  XCTAssertEqual(_progressView.progress, 0.1234f);
+  _progressView.progress = (CGFloat)0.1234;
+  XCTAssertEqual(_progressView.progress, (CGFloat)0.1234);
 }
 
 - (void)testSetProgressAnimated {
-  [_progressView setProgress:0.777f animated:YES completion:nil];
-  XCTAssertEqual(_progressView.progress, 0.777f);
+  [_progressView setProgress:(CGFloat)0.777 animated:YES completion:nil];
+  XCTAssertEqual(_progressView.progress, (CGFloat)0.777);
 
   [NSRunLoop.mainRunLoop runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1]];
 }
 
 - (void)testProgressClampedAt0 {
-  _progressView.progress = -1.f;
-  XCTAssertEqual(_progressView.progress, 0.f);
+  _progressView.progress = -1;
+  XCTAssertEqual(_progressView.progress, 0);
 }
 
 - (void)testProgressClampedAt1 {
-  _progressView.progress = 2.f;
-  XCTAssertEqual(_progressView.progress, 1.f);
+  _progressView.progress = 2;
+  XCTAssertEqual(_progressView.progress, 1);
 }
 
 @end

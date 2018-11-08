@@ -25,9 +25,9 @@
 static NSString *kMDCBottomAppBarViewAnimKeyString = @"AnimKey";
 static NSString *kMDCBottomAppBarViewPathString = @"path";
 static NSString *kMDCBottomAppBarViewPositionString = @"position";
-static const CGFloat kMDCBottomAppBarViewFloatingButtonCenterToNavigationBarTopOffset = 0.f;
-static const CGFloat kMDCBottomAppBarViewFloatingButtonElevationPrimary = 6.f;
-static const CGFloat kMDCBottomAppBarViewFloatingButtonElevationSecondary = 4.f;
+static const CGFloat kMDCBottomAppBarViewFloatingButtonCenterToNavigationBarTopOffset = 0;
+static const CGFloat kMDCBottomAppBarViewFloatingButtonElevationPrimary = 6;
+static const CGFloat kMDCBottomAppBarViewFloatingButtonElevationSecondary = 4;
 static const int kMDCButtonAnimationDuration = 200;
 
 @interface MDCBottomAppBarCutView : UIView
@@ -127,8 +127,7 @@ static const int kMDCButtonAnimationDuration = 200;
   CGFloat navigationBarTopEdgeYOffset = CGRectGetMinY(self.navBar.frame);
   CGFloat midX = appBarWidth / 2;
 
-  floatingButtonPoint.y =
-      MAX(0.0f, navigationBarTopEdgeYOffset - self.floatingButtonVerticalOffset);
+  floatingButtonPoint.y = MAX(0, navigationBarTopEdgeYOffset - self.floatingButtonVerticalOffset);
   switch (self.floatingButtonPosition) {
     case MDCBottomAppBarFloatingButtonPositionLeading: {
       if (self.layoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {

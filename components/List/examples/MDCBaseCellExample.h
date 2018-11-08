@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-static CGFloat const kArbitraryCellHeight = 75.f;
+static CGFloat const kArbitraryCellHeight = 75;
 static NSString *const kBaseCellIdentifier = @"kBaseCellIdentifier";
 
 @interface MDCBaseCellExample : UIViewController

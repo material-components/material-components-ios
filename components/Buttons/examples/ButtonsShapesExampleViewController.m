@@ -39,14 +39,14 @@
 - (MDCButton *)buildCustomStrokedButton {
   MDCButton *button = [[MDCButton alloc] init];
   [button setBorderWidth:1.0 forState:UIControlStateNormal];
-  [button setBorderColor:[UIColor colorWithWhite:0.1f alpha:1] forState:UIControlStateNormal];
+  [button setBorderColor:[UIColor colorWithWhite:(CGFloat)0.1 alpha:1] forState:UIControlStateNormal];
   return button;
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = [UIColor colorWithWhite:0.9f alpha:1];
+  self.view.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
   UIColor *titleColor = [UIColor whiteColor];
 
   MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
@@ -65,7 +65,7 @@
 
   MDCRectangleShapeGenerator *raisedShapeGenerator =
       [[MDCRectangleShapeGenerator alloc] init];
-  [raisedShapeGenerator setCorners:[[MDCCutCornerTreatment alloc] initWithCut:8.f]];
+  [raisedShapeGenerator setCorners:[[MDCCutCornerTreatment alloc] initWithCut:8]];
   containedButton.shapeGenerator = raisedShapeGenerator;
 
   [containedButton sizeToFit];
@@ -118,7 +118,7 @@
 
   MDCSlantedRectShapeGenerator *strokedShapeGenerator =
       [[MDCSlantedRectShapeGenerator alloc] init];
-  strokedShapeGenerator.slant = 10.f;
+  strokedShapeGenerator.slant = 10;
   strokedButton.shapeGenerator = strokedShapeGenerator;
 
   [strokedButton sizeToFit];
@@ -167,8 +167,9 @@
   [self.floatingButton sizeToFit];
 
   MDCRectangleShapeGenerator *floatingShapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
-  [floatingShapeGenerator setCorners:
-      [[MDCCutCornerTreatment alloc] initWithCut:CGRectGetWidth(self.floatingButton.bounds) / 2.f]];
+  [floatingShapeGenerator
+      setCorners:[[MDCCutCornerTreatment alloc]
+                     initWithCut:CGRectGetWidth(self.floatingButton.bounds) / 2]];
   self.floatingButton.shapeGenerator = floatingShapeGenerator;
   [MDCFloatingActionButtonThemer applyScheme:buttonScheme toButton:self.floatingButton];
 

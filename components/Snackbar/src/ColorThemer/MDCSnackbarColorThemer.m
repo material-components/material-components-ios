@@ -23,10 +23,10 @@
 + (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
                toSnackbarManager:(MDCSnackbarManager *)snackbarManager {
   snackbarManager.snackbarMessageViewBackgroundColor =
-      [MDCSemanticColorScheme blendColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.8f]
+      [MDCSemanticColorScheme blendColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.8]
                      withBackgroundColor:colorScheme.surfaceColor];
-  snackbarManager.messageTextColor = [colorScheme.surfaceColor colorWithAlphaComponent:0.87f];
-  UIColor *buttonTitleColor = [colorScheme.surfaceColor colorWithAlphaComponent:0.6f];
+  snackbarManager.messageTextColor = [colorScheme.surfaceColor colorWithAlphaComponent:(CGFloat)0.87];
+  UIColor *buttonTitleColor = [colorScheme.surfaceColor colorWithAlphaComponent:(CGFloat)0.6];
   [snackbarManager setButtonTitleColor:buttonTitleColor forState:UIControlStateNormal];
   [snackbarManager setButtonTitleColor:buttonTitleColor forState:UIControlStateHighlighted];
 }

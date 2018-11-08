@@ -88,13 +88,13 @@
 #pragma mark - Floating Button
 
 - (void)testCustomizedFloatingButtonVerticalHeight {
-  CGFloat veriticalOffset = 5.0f;
+  CGFloat veriticalOffset = 5;
   self.bottomAppBar.floatingButtonVerticalOffset = veriticalOffset;
   [self.bottomAppBar layoutSubviews];
   CGPoint floatingButtonPosition = self.bottomAppBar.floatingButton.center;
   CGPoint navigationBarPosition = self.bottomAppBar.navBar.frame.origin;
   XCTAssertEqualWithAccuracy(floatingButtonPosition.y + veriticalOffset, navigationBarPosition.y,
-                             0.001f);
+                             (CGFloat)0.001);
 }
 
 #pragma mark - Path test

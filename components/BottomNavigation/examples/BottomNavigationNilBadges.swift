@@ -92,7 +92,11 @@ class BottomNavigationNilBadges : UIViewController {
     super.viewDidLoad()
 
     view.addSubview(appBarViewController.view)
+    #if swift(>=4.2)
+    appBarViewController.didMove(toParent: self)
+    #else
     appBarViewController.didMove(toParentViewController: self)
+    #endif
 
     // Theme the bottom navigation bar.
     MDCBottomNavigationBarColorThemer.applySemanticColorScheme(colorScheme,

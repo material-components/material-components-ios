@@ -53,7 +53,7 @@
 }
 
 - (CGPathRef)pathForSize:(CGSize)size {
-  CGFloat radius = 0.5f * MIN(MDCFabs(size.width), MDCFabs(size.height));
+  CGFloat radius = (CGFloat)0.5 * MIN(MDCFabs(size.width), MDCFabs(size.height));
   if (radius > 0) {
     [_rectangleGenerator setCorners:[[MDCRoundedCornerTreatment alloc] initWithRadius:radius]];
   }

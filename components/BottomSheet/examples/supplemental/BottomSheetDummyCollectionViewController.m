@@ -63,7 +63,7 @@
   NSString *reuseIdent = NSStringFromClass([DummyCollectionViewCell class]);
   DummyCollectionViewCell *cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdent forIndexPath:indexPath];
-  cell.backgroundColor = [UIColor colorWithWhite:(indexPath.row % 2) * 0.2f + 0.8f alpha:1.0f];
+  cell.backgroundColor = [UIColor colorWithWhite:(indexPath.row % 2) * (CGFloat)0.2 + (CGFloat)0.8 alpha:1];
   return cell;
 }
 

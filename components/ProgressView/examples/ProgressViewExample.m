@@ -19,7 +19,7 @@
 #import "MaterialProgressView.h"
 #import "MaterialTypographyScheme.h"
 
-static const CGFloat MDCProgressViewAnimationDuration = 1.f;
+static const CGFloat MDCProgressViewAnimationDuration = 1;
 
 @interface ProgressViewExample : UIViewController
 
@@ -75,7 +75,7 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
   _backwardProgressResetView.translatesAutoresizingMaskIntoConstraints = NO;
   [self.container addSubview:_backwardProgressResetView];
   // Have a non-zero progress at setup time.
-  _backwardProgressResetView.progress = 0.33f;
+  _backwardProgressResetView.progress = (CGFloat)0.33;
 
   _backwardProgressAnimateView = [[MDCProgressView alloc] init];
   _backwardProgressAnimateView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -83,7 +83,7 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
       MDCProgressViewBackwardAnimationModeAnimate;
   [self.container addSubview:_backwardProgressAnimateView];
   // Have a non-zero progress at setup time.
-  _backwardProgressAnimateView.progress = 0.33f;
+  _backwardProgressAnimateView.progress = (CGFloat)0.33;
 }
 
 @end
