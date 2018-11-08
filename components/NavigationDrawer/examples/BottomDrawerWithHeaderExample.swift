@@ -80,7 +80,7 @@ class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewContro
     print(topInset)
     headerViewController.titleLabel.center =
       CGPoint(x: headerViewController.view.frame.size.width / 2,
-              y: headerViewController.view.frame.size.height / 2 + topInset)
+              y: (headerViewController.view.frame.size.height + topInset) / 2)
   }
 }
 
