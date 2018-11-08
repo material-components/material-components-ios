@@ -534,7 +534,7 @@
   self.drawerViewController.delegate = fakeHeader;
   self.fakeBottomDrawer.delegate = self.presentationController;
   [self.presentationController presentationTransitionWillBegin];
-  
+
   // When
   [self.fakeBottomDrawer viewWillAppear:YES];
   [self.fakeBottomDrawer cacheLayoutCalculations];
