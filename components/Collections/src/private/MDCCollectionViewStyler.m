@@ -33,7 +33,7 @@ typedef NS_OPTIONS(NSUInteger, BackgroundCacheKey) {
 const CGFloat MDCCollectionViewCellStyleCardSectionInset = 8;
 
 /** Cell content view insets for card-style cells */
-static const CGFloat kFourThirds = 4 / 3;
+static const CGFloat kFourThirds = (CGFloat)4 / 3;
 static const UIEdgeInsets kCollectionViewCellContentInsetsRetina3x = {kFourThirds, kFourThirds,
                                                                       kFourThirds, kFourThirds};
 static const UIEdgeInsets kCollectionViewCellContentInsetsRetina = {1.5, 1.5, 1.5, 1.5};
