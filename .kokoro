@@ -355,7 +355,7 @@ generate_apidiff() {
   error_path=$(cat "$BUILDS_TMP_PATH/api_diff" | grep "Errors=" | cut -d'=' -f2)
 
   if [ ! -f scripts/external/github-comment/.git ]; then
-    git submodule update --init --recursive
+    git submodule update --init --recursive scripts/external/github-comment
   fi
 
   pushd scripts/external/github-comment >> /dev/null
@@ -485,7 +485,7 @@ lint_clang_format() {
   fi
 
   if [ ! -f scripts/external/clang-format-ci/.git ]; then
-    git submodule update --init --recursive
+    git submodule update --init --recursive scripts/external/clang-format-ci
   fi
 
   pushd scripts/external/clang-format-ci >> /dev/null
