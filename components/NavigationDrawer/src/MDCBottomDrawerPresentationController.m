@@ -104,7 +104,7 @@ static CGFloat kTopHandleYCenter = (CGFloat)6.0;
   self.topHandle =
       [[UIView alloc] initWithFrame:CGRectMake(0, 0, kTopHandleWidth, kTopHandleHeight)];
   self.topHandle.layer.cornerRadius = kTopHandleHeight * (CGFloat)0.5;
-  self.topHandle.backgroundColor = MDCPalette.greyPalette.tint300;
+  self.topHandle.backgroundColor = self.topHandleColor ?: MDCPalette.greyPalette.tint300;
   self.topHandle.hidden = self.topHandleHidden;
   self.topHandle.center = CGPointMake(
       CGRectGetMidX(bottomDrawerContainerViewController.contentViewController.view.frame),
@@ -188,6 +188,11 @@ static CGFloat kTopHandleYCenter = (CGFloat)6.0;
 - (void)setTopHandleHidden:(BOOL)topHandleHidden {
   _topHandleHidden = topHandleHidden;
   self.topHandle.hidden = topHandleHidden;
+}
+
+- (void)setTopHandleColor:(UIColor *)topHandleColor {
+  _topHandleColor = topHandleColor;
+  self.topHandle.backgroundColor = topHandleColor;
 }
 
 #pragma mark - Private

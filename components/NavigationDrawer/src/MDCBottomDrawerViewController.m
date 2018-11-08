@@ -154,6 +154,15 @@
   }
 }
 
+- (void)setTopHandleColor:(UIColor *)topHandleColor {
+  _topHandleColor = topHandleColor;
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+        (MDCBottomDrawerPresentationController *)self.presentationController;
+    bottomDrawerPresentationController.topHandleColor = topHandleColor;
+  }
+}
+
 #pragma mark UIAccessibilityAction
 
 // Adds the Z gesture for dismissal.
