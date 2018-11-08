@@ -97,7 +97,6 @@ UICollectionViewDelegate, UICollectionViewDataSource {
     collectionView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width,
                                   height: self.view.bounds.height)
     collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
-    collectionView.isScrollEnabled = false
     collectionView.delegate = self
     collectionView.dataSource = self
     collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]

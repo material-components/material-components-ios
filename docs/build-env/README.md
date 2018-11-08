@@ -46,7 +46,7 @@ Our components currently support **iOS 8.0 and up**.
 
 ### CocoaPods
 
-We are using CocoaPods 1.3.1.
+We are using CocoaPods 1.5.0.
 
 ### Ruby
 

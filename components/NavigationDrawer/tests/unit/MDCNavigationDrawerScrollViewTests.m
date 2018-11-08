@@ -67,6 +67,7 @@
     MDCBottomDrawerContainerViewControllerDelegate>
 @property(nonatomic) MDCBottomDrawerContainerViewController *bottomDrawerContainerViewController;
 @property(nonatomic, weak, nullable) id<MDCBottomDrawerPresentationControllerDelegate> delegate;
+@property(nonatomic, strong, nullable) UIView *topHandle;
 @end
 
 @interface MDCNavigationDrawerScrollViewTests : XCTestCase
@@ -476,6 +477,39 @@
 
   // Then
   XCTAssertLessThan(self.fakeBottomDrawer.contentHeaderTopInset, previousContentHeaderTopInset);
+}
+
+- (void)testBottomDrawerHandle {
+  // When
+  [self.presentationController presentationTransitionWillBegin];
+  // Then
+  XCTAssertNotNil(self.presentationController.topHandle);
+  XCTAssertEqualWithAccuracy(CGRectGetWidth(self.presentationController.topHandle.frame),
+                             (CGFloat)24.0, (CGFloat)0.001);
+  XCTAssertEqualWithAccuracy(CGRectGetHeight(self.presentationController.topHandle.frame),
+                             (CGFloat)2.0, (CGFloat)0.001);
+  XCTAssertEqualWithAccuracy(self.presentationController.topHandle.layer.cornerRadius, (CGFloat)1.0,
+                             (CGFloat)0.001);
+  XCTAssertEqual(self.presentationController.topHandle.hidden, YES);
+}
+
+- (void)testBottomDrawerHandleHidden {
+  // When
+  MDCBottomDrawerPresentationController *presentationController =
+      (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
+  presentationController.topHandle = [[UIView alloc] init];
+  presentationController.topHandle.hidden = YES;
+  self.drawerViewController.topHandleHidden = NO;
+  // Then
+  XCTAssertEqual(presentationController.topHandle.hidden, NO);
+}
+
+- (void)testBottomDrawerScrollingEnabled {
+  // When
+  self.drawerViewController.trackingScrollView = self.fakeScrollView;
+
+  // Then
+  XCTAssertEqual(self.fakeScrollView.scrollEnabled, NO);
 }
 
 @end
