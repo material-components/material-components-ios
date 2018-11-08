@@ -150,7 +150,7 @@
   self.fakeBottomDrawer.headerViewController = nil;
 
   // Then
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderHeight, 0.f, 0.001);
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderHeight, 0, 0.001);
 }
 
 - (void)testContentHeaderHeightWithHeader {
@@ -173,13 +173,13 @@
   self.fakeBottomDrawer.headerViewController = nil;
 
   // Then
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.topHeaderHeight, 0.f, 0.001);
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.topHeaderHeight, 0, 0.001);
 }
 
 - (void)testTopHeaderHeightWithHeader {
   // Given
-  // MDCDeviceTopSafeAreaInset adds 20.f if there is no safe area and you are not in an application
-  CGFloat mdcDeviceTopSafeArea = 20.f;
+  // MDCDeviceTopSafeAreaInset adds 20 if there is no safe area and you are not in an application
+  CGFloat mdcDeviceTopSafeArea = 20;
   CGSize fakePreferredContentSize = CGSizeMake(200, 300);
   MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
       [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
@@ -212,7 +212,7 @@
   // presentingViewBounds.size.height = 500, contentHeaderHeight = 300
   // contentViewController.preferredContentSize.height = 100
   // 500 - 300 - 100 = 100
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 100.f, 0.001);
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 100, 0.001);
 }
 
 - (void)testContentHeaderTopInsetWithNoHeaderOrContentViewController {
@@ -226,7 +226,7 @@
   // presentingViewBounds.size.height = 500, contentHeaderHeight = 0
   // contentViewController.preferredContentSize.height = 0
   // 500 - 0 - 0 = 500
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 500.f, 0.001);
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 500, 0.001);
 }
 
 - (void)testContentHeaderTopInsetWithHeaderAndNoContentViewController {
@@ -245,7 +245,7 @@
   // presentingViewBounds.size.height = 500, contentHeaderHeight = 300
   // contentViewController.preferredContentSize.height = 0
   // 500 - 300 - 0 = 200
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 200.f, 0.001);
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 200, 0.001);
 }
 
 - (void)testContentHeaderTopInsetWithOnlyContentViewController {
@@ -262,7 +262,7 @@
   // presentingViewBounds.size.height = 500, contentHeaderHeight = 0
   // contentViewController.preferredContentSize.height = 100
   // 500 - 0 - 100 = 400
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 400.f, 0.001);
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 400, 0.001);
 }
 
 - (void)testContentHeaderTopInsetForScrollableContentForLargeHeader {
@@ -280,7 +280,7 @@
   // Then
   // In cacheLayoutCalculation we test if contentScrollsToReveal is true then contentHeaderTopInset
   // should be initialDrawerFactor * presentingViewBounds = 500 * 0.5
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 250.f, 0.001);
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 250, 0.001);
 }
 
 - (void)testContentHeaderTopInsetForScrollableContentForLargeContent {
@@ -296,7 +296,7 @@
   // Then
   // In cacheLayoutCalculation we test if contentScrollsToReveal is true then contentHeaderTopInset
   // should be initialDrawerFactor * presentingViewBounds = 500 * 0.5
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 250.f, 0.001);
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 250, 0.001);
 }
 
 - (void)testContentHeaderTopInsetForScrollableContent {
@@ -317,12 +317,12 @@
   // Then
   // In cacheLayoutCalculation we test if contentScrollsToReveal is true then contentHeaderTopInset
   // should be initialDrawerFactor * presentingViewBounds = 500 * 0.5
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 250.f, 0.001);
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 250, 0.001);
 }
 
 - (void)testContentHeightSurplus {
   // Then
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeightSurplus, 0.f, 0.001);
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeightSurplus, 0, 0.001);
 }
 
 - (void)testContentHeightSurplusWithScrollabelContent {
@@ -340,7 +340,7 @@
   [self.fakeBottomDrawer cacheLayoutCalculations];
 
   // Then
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeightSurplus, 2250.f, 0.001);
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeightSurplus, 2250, 0.001);
 }
 
 - (void)testContentScrollsToRevealFalse {
@@ -410,7 +410,7 @@
 
   // When
   [self.fakeBottomDrawer cacheLayoutCalculations];
-  [self.fakeBottomDrawer updateDrawerState:1.f];
+  [self.fakeBottomDrawer updateDrawerState:1];
 
   // Then
   XCTAssertEqual(self.fakeBottomDrawer.drawerState, MDCBottomDrawerStateFullScreen);
@@ -439,28 +439,28 @@
 
 - (void)testBottomDrawerCornersAPICollapsed {
   // When
-  [self.drawerViewController setTopCornersRadius:10.f forDrawerState:MDCBottomDrawerStateCollapsed];
+  [self.drawerViewController setTopCornersRadius:10 forDrawerState:MDCBottomDrawerStateCollapsed];
 
   // Then
-  XCTAssertEqual(self.drawerViewController.maskLayer.maximumCornerRadius, 10.f);
+  XCTAssertEqual(self.drawerViewController.maskLayer.maximumCornerRadius, 10);
 }
 
 - (void)testBottomDrawerCornersAPIExpanded {
   // When
   self.drawerViewController.contentViewController.preferredContentSize = CGSizeMake(100, 100);
-  [self.drawerViewController setTopCornersRadius:5.f forDrawerState:MDCBottomDrawerStateExpanded];
+  [self.drawerViewController setTopCornersRadius:5 forDrawerState:MDCBottomDrawerStateExpanded];
 
   // Then
-  XCTAssertEqual(self.drawerViewController.maskLayer.minimumCornerRadius, 5.f);
+  XCTAssertEqual(self.drawerViewController.maskLayer.minimumCornerRadius, 5);
 }
 
 - (void)testBottomDrawerCornersAPIFullScreen {
   // When
   self.drawerViewController.contentViewController.preferredContentSize = CGSizeMake(100, 5000);
-  [self.drawerViewController setTopCornersRadius:3.f forDrawerState:MDCBottomDrawerStateFullScreen];
+  [self.drawerViewController setTopCornersRadius:3 forDrawerState:MDCBottomDrawerStateFullScreen];
 
   // Then
-  XCTAssertEqual(self.drawerViewController.maskLayer.minimumCornerRadius, 3.f);
+  XCTAssertEqual(self.drawerViewController.maskLayer.minimumCornerRadius, 3);
 }
 
 - (void)testBottomDrawerScrollingEnabled {

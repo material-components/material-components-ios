@@ -27,11 +27,11 @@
   UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"item2" image:nil tag:2];
   tabBar.items = @[item1, item2];
   tabBar.selectedItem = item1;
-  tabBar.tintColor = [UIColor colorWithRed:0.6f green:0.2f blue:0.3f alpha:1.0f];
-  tabBar.selectedItemTintColor = [UIColor colorWithRed:1.0f green:0.5f blue:0 alpha:1.0f];
-  tabBar.unselectedItemTintColor = [UIColor colorWithRed:0.2f green:0.3f blue:0.3f alpha:1.0f];
-  tabBar.inkColor = [UIColor colorWithRed:0.5f green:0.8f blue:0.6f alpha:1.0f];
-  tabBar.barTintColor = [UIColor colorWithRed:0.4f green:0.7f blue:0.4f alpha:1.0f];
+  tabBar.tintColor = [UIColor colorWithRed:0.6f green:0.2f blue:0.3f alpha:1];
+  tabBar.selectedItemTintColor = [UIColor colorWithRed:1 green:0.5f blue:0 alpha:1];
+  tabBar.unselectedItemTintColor = [UIColor colorWithRed:0.2f green:0.3f blue:0.3f alpha:1];
+  tabBar.inkColor = [UIColor colorWithRed:0.5f green:0.8f blue:0.6f alpha:1];
+  tabBar.barTintColor = [UIColor colorWithRed:0.4f green:0.7f blue:0.4f alpha:1];
   tabBar.selectedItemTitleFont = [UIFont systemFontOfSize:20];
   tabBar.unselectedItemTitleFont = [UIFont systemFontOfSize:18];
   tabBar.alignment = MDCTabBarAlignmentJustified;

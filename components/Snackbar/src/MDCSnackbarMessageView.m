@@ -32,7 +32,10 @@ NSString *const MDCSnackbarMessageTitleAutomationIdentifier =
 static NSString *const kMaterialSnackbarBundle = @"MaterialSnackbar.bundle";
 
 static inline UIColor *MDCRGBAColor(uint8_t r, uint8_t g, uint8_t b, float a) {
-  return [UIColor colorWithRed:(r) / 255.0f green:(g) / 255.0f blue:(b) / 255.0f alpha:(a)];
+  return [UIColor colorWithRed:(r) / (CGFloat)255
+                         green:(g) / (CGFloat)255
+                          blue:(b) / (CGFloat)255
+                         alpha:(a)];
 }
 
 /**
@@ -48,8 +51,8 @@ static const CGFloat kShadowAlpha = 0.24f;
 static const CGSize kShadowOffset = (CGSize){0.0, 2.0};
 static const CGSize kLegacyShadowOffset = (CGSize){0.0, 1.0};
 
-static const CGFloat kShadowSpread = 4.0f;
-static const CGFloat kLegacyShadowSpread = 1.0f;
+static const CGFloat kShadowSpread = 4;
+static const CGFloat kLegacyShadowSpread = 1;
 
 /**
  The radius of the corners.
@@ -66,37 +69,36 @@ static UIEdgeInsets kLegacyContentMargin = (UIEdgeInsets){18.0, 24.0, 18.0, 24.0
 /**
  Padding between the image and the main title.
  */
-static const CGFloat kTitleImagePadding = 8.0f;
+static const CGFloat kTitleImagePadding = 8;
 
 /**
  Padding between the main title and the first button.
  */
-static const CGFloat kTitleButtonPadding = 8.0f;
+static const CGFloat kTitleButtonPadding = 8;
 
 /**
  Padding on the edges of the buttons.
  */
-static const CGFloat kLegacyButtonPadding = 5.0f;
-static const CGFloat kButtonPadding = 8.0f;
-
+static const CGFloat kLegacyButtonPadding = 5;
+static const CGFloat kButtonPadding = 8;
 
 /**
  Minimum padding for the vertical padding of the buttons to the Snackbar
  */
-static const CGFloat kMinVerticalButtonPadding = 6.0f;
+static const CGFloat kMinVerticalButtonPadding = 6;
 
 /**
  The width of the Snackbar.
  */
-static const CGFloat kMinimumViewWidth_iPad = 288.0f;
-static const CGFloat kMaximumViewWidth_iPad = 568.0f;
-static const CGFloat kMinimumViewWidth_iPhone = 320.0f;
-static const CGFloat kMaximumViewWidth_iPhone = 320.0f;
+static const CGFloat kMinimumViewWidth_iPad = 288;
+static const CGFloat kMaximumViewWidth_iPad = 568;
+static const CGFloat kMinimumViewWidth_iPhone = 320;
+static const CGFloat kMaximumViewWidth_iPhone = 320;
 
 /**
  The minimum height of the Snackbar.
  */
-static const CGFloat kMinimumHeight = 48.0f;
+static const CGFloat kMinimumHeight = 48;
 
 /**
  Each button will have a tag indexed starting from this value.
@@ -106,7 +108,7 @@ static const NSInteger kButtonTagStart = 20000;
 /**
  The ink radius of the action button.
  */
-static const CGFloat kButtonInkRadius = 64.0f;
+static const CGFloat kButtonInkRadius = 64;
 
 static const MDCFontTextStyle kMessageTextStyle = MDCFontTextStyleBody1;
 static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;

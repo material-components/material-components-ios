@@ -103,7 +103,7 @@ static const CGFloat kActionTextAlpha = 0.87f;
                                    | UIViewAutoresizingFlexibleHeight);
     _tableView.delegate = self;
     _tableView.dataSource = self;
-    _tableView.estimatedRowHeight = 56.f;
+    _tableView.estimatedRowHeight = 56;
     _tableView.rowHeight = UITableViewAutomaticDimension;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [_tableView registerClass:[MDCActionSheetItemTableViewCell class]

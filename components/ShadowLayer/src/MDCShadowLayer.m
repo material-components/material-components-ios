@@ -55,10 +55,10 @@ static const float kAmbientShadowOpacity = 0.08f;
     emptyShadowMetrics = [[MDCShadowMetrics alloc] init];
     emptyShadowMetrics->_topShadowRadius = (CGFloat)0.0;
     emptyShadowMetrics->_topShadowOffset = CGSizeMake(0.0, 0.0);
-    emptyShadowMetrics->_topShadowOpacity = 0.0f;
+    emptyShadowMetrics->_topShadowOpacity = 0;
     emptyShadowMetrics->_bottomShadowRadius = (CGFloat)0.0;
     emptyShadowMetrics->_bottomShadowOffset = CGSizeMake(0.0, 0.0);
-    emptyShadowMetrics->_bottomShadowOpacity = 0.0f;
+    emptyShadowMetrics->_bottomShadowOpacity = 0;
   });
 
   return emptyShadowMetrics;

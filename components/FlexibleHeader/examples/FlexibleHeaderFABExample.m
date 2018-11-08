@@ -18,7 +18,7 @@
 #import "MaterialFlexibleHeader.h"
 #import "supplemental/FlexibleHeaderFABSupplemental.h"
 
-static const CGFloat kFlexibleHeaderMinHeight = 200.f;
+static const CGFloat kFlexibleHeaderMinHeight = 200;
 
 @interface FlexibleHeaderFABExample () <UIScrollViewDelegate>
 
@@ -81,7 +81,7 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
   [self.view addSubview:self.fhvc.view];
   [self.fhvc didMoveToParentViewController:self];
 
-  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:0.1f alpha:1.0f];
+  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:0.1f alpha:1];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -92,9 +92,9 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
   [self.navigationController setNavigationBarHidden:YES animated:animated];
 
   self.floatingButton = [[MDCFloatingButton alloc] init];
-  [self.floatingButton setBackgroundColor:[UIColor colorWithRed:11/255.0f
-                                                          green:232/255.0f
-                                                           blue:94/255.0f
+  [self.floatingButton setBackgroundColor:[UIColor colorWithRed:11 / (CGFloat)255
+                                                          green:232 / (CGFloat)255
+                                                           blue:94 / (CGFloat)255
                                                           alpha:1]
                                  forState:UIControlStateNormal];
   [self.floatingButton sizeToFit];

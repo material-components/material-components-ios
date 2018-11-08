@@ -65,7 +65,7 @@
 /**
  Returns the top corners radius for an MDCBottomDrawerState drawerState.
 
- If no radius has been set for a state, the value 0.f is returned.
+ If no radius has been set for a state, the value 0 is returned.
 
  @param drawerState MDCBottomDrawerState the drawer state.
  @return The corner radius to set the top corners.

@@ -48,9 +48,9 @@
 - (void)commonMDCBottomDrawerViewControllerInit {
   _transitionController = [[MDCBottomDrawerTransitionController alloc] init];
   _topCornersRadius = [NSMutableDictionary dictionary];
-  _topCornersRadius[@(MDCBottomDrawerStateCollapsed)] = @(0.f);
-  _maskLayer = [[MDCBottomDrawerHeaderMask alloc] initWithMaximumCornerRadius:0.f
-                                                          minimumCornerRadius:0.f];
+  _topCornersRadius[@(MDCBottomDrawerStateCollapsed)] = @(0);
+  _maskLayer = [[MDCBottomDrawerHeaderMask alloc] initWithMaximumCornerRadius:0
+                                                          minimumCornerRadius:0];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -100,7 +100,7 @@
   if (topCornersRadius != nil) {
     return (CGFloat)[topCornersRadius doubleValue];
   }
-  return 0.f;
+  return 0;
 }
 
 - (void)setHeaderViewController:(UIViewController<MDCBottomDrawerHeader> *)headerViewController {
@@ -156,7 +156,7 @@
 - (void)bottomDrawerTopTransitionRatio:
             (nonnull MDCBottomDrawerPresentationController *)presentationController
                        transitionRatio:(CGFloat)transitionRatio {
-  [_maskLayer animateWithPercentage:1.f - transitionRatio];
+  [_maskLayer animateWithPercentage:1 - transitionRatio];
 }
 
 - (void)bottomDrawerWillChangeState:

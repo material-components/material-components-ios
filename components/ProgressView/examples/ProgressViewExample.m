@@ -19,7 +19,7 @@
 #import "MaterialProgressView.h"
 #import "MaterialTypographyScheme.h"
 
-static const CGFloat MDCProgressViewAnimationDuration = 1.f;
+static const CGFloat MDCProgressViewAnimationDuration = 1;
 
 @interface ProgressViewExample : UIViewController
 

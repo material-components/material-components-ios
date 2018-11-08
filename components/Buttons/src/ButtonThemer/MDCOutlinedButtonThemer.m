@@ -32,7 +32,7 @@
       UIControlStateNormal | UIControlStateSelected | UIControlStateHighlighted |
       UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
-    [button setBorderWidth:1.f forState:state];
+    [button setBorderWidth:1 forState:state];
   }
 }
 

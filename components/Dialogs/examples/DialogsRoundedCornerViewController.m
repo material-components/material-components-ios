@@ -110,7 +110,7 @@
   viewController.transitioningDelegate = self.transitionController;
 
   // sets the dialog's corner radius
-  viewController.view.layer.cornerRadius = 24.0f;
+  viewController.view.layer.cornerRadius = 24;
 
   // ensure shadow/tracking layer matches the dialog's corner radius
   MDCDialogPresentationController *controller = viewController.mdc_dialogPresentationController;

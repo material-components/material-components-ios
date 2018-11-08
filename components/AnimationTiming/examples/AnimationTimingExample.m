@@ -15,7 +15,7 @@
 #import "MaterialAnimationTiming.h"
 #import "supplemental/AnimationTimingExampleSupplemental.h"
 
-const NSTimeInterval kAnimationTimeInterval = 1.0f;
+const NSTimeInterval kAnimationTimeInterval = 1;
 const NSTimeInterval kAnimationTimeDelay = 0.5f;
 
 @interface AnimationTimingExample ()
@@ -75,7 +75,7 @@ const NSTimeInterval kAnimationTimeDelay = 0.5f;
 - (void)applyAnimationToView:(UIView *)view
           withTimingFunction:(CAMediaTimingFunction *)timingFunction
                   completion:(void (^)(BOOL))completion {
-  CGFloat animWidth = self.view.frame.size.width - view.frame.size.width - 32.f;
+  CGFloat animWidth = self.view.frame.size.width - view.frame.size.width - 32;
   CGAffineTransform transform = CGAffineTransformMakeTranslation(animWidth, 0);
   [UIView mdc_animateWithTimingFunction:timingFunction
       duration:kAnimationTimeInterval
