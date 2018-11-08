@@ -66,6 +66,7 @@ class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewContro
     bottomDrawerViewController.setTopCornersRadius(24, for: .collapsed)
     bottomDrawerViewController.setTopCornersRadius(8, for: .expanded)
     bottomDrawerViewController.isTopHandleHidden = false
+    bottomDrawerViewController.topHandleColor = UIColor.lightGray
     bottomDrawerViewController.contentViewController = contentViewController
     bottomDrawerViewController.headerViewController = headerViewController
     bottomDrawerViewController.delegate = self
@@ -74,7 +75,8 @@ class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewContro
     present(bottomDrawerViewController, animated: true, completion: nil)
   }
 
-  func bottomDrawerControllerDidChangeTopInset(_ controller: MDCBottomDrawerViewController, topInset: CGFloat) {
+  func bottomDrawerControllerDidChangeTopInset(_ controller: MDCBottomDrawerViewController,
+                                               topInset: CGFloat) {
     print(topInset)
     headerViewController.titleLabel.center =
       CGPoint(x: headerViewController.view.frame.size.width / 2,

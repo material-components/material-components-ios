@@ -37,6 +37,14 @@
 }
 
 + (nonnull UIFont *)mdc_standardFontForMaterialTextStyle:(MDCFontTextStyle)style {
+  // Caches a font for a specific MDCFontTextStyle value
+  static NSCache<NSValue *, UIFont *> *fontCache;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    // NOTE: We assume the Font Loader will never change, so the cached fonts are never invalidated.
+    fontCache = [[NSCache alloc] init];
+  });
+
   // Due to the way iOS handles missing glyphs in fonts, we do not support using our
   // font loader with standardFont.
   id<MDCTypographyFontLoading> fontLoader = [MDCTypography fontLoader];
@@ -44,11 +52,15 @@
     NSLog(@"MaterialTypography : Custom font loaders are not compatible with Dynamic Type.");
   }
 
-  UIFontDescriptor *fontDescriptor =
-      [UIFontDescriptor mdc_standardFontDescriptorForMaterialTextStyle:style];
+  UIFont *font = [fontCache objectForKey:@(style)];
+  if (!font) {
+    UIFontDescriptor *fontDescriptor =
+        [UIFontDescriptor mdc_standardFontDescriptorForMaterialTextStyle:style];
 
-  // Size is included in the fontDescriptor, so we pass in 0.0 in the parameter.
-  UIFont *font = [UIFont fontWithDescriptor:fontDescriptor size:0.0];
+    // Size is included in the fontDescriptor, so we pass in 0.0 in the parameter.
+    font = [UIFont fontWithDescriptor:fontDescriptor size:0.0];
+    [fontCache setObject:font forKey:@(style)];
+  }
 
   return font;
 }
