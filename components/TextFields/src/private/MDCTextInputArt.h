@@ -133,15 +133,15 @@ static inline UIBezierPath *MDCPathForClearButtonImageFrame(CGRect frame) {
 static inline UIBezierPath *MDCPathForClearButtonLegacyImageFrame(CGRect frame) {
   // GENERATED CODE
 
-  CGRect innerBounds = CGRectMake(CGRectGetMinX(frame) + 10, CGRectGetMinY(frame) + 10,
-                                  MDCFloor((frame.size.width - 10) * (CGFloat)0.73684 + (CGFloat)0.5),
-                                  MDCFloor((frame.size.height - 10) * (CGFloat)0.73684 + (CGFloat)0.5));
+  CGRect innerBounds =
+      CGRectMake(CGRectGetMinX(frame) + 10, CGRectGetMinY(frame) + 10,
+                 MDCFloor((frame.size.width - 10) * (CGFloat)0.73684 + (CGFloat)0.5),
+                 MDCFloor((frame.size.height - 10) * (CGFloat)0.73684 + (CGFloat)0.5));
 
   UIBezierPath *ic_clear_path = [UIBezierPath bezierPath];
-  [ic_clear_path
-      moveToPoint:CGPointMake(
-                      CGRectGetMinX(innerBounds) + 1 * innerBounds.size.width,
-                      CGRectGetMinY(innerBounds) + (CGFloat)0.10107 * innerBounds.size.height)];
+  [ic_clear_path moveToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 1 * innerBounds.size.width,
+                                         CGRectGetMinY(innerBounds) +
+                                            (CGFloat)0.10107 * innerBounds.size.height)];
   [ic_clear_path
       addLineToPoint:CGPointMake(
                          CGRectGetMinX(innerBounds) + (CGFloat)0.89893 * innerBounds.size.width,
@@ -154,18 +154,16 @@ static inline UIBezierPath *MDCPathForClearButtonLegacyImageFrame(CGRect frame) 
       addLineToPoint:CGPointMake(
                          CGRectGetMinX(innerBounds) + (CGFloat)0.10107 * innerBounds.size.width,
                          CGRectGetMinY(innerBounds) + 0 * innerBounds.size.height)];
-  [ic_clear_path
-      addLineToPoint:CGPointMake(
-                         CGRectGetMinX(innerBounds) + 0 * innerBounds.size.width,
-                         CGRectGetMinY(innerBounds) + (CGFloat)0.10107 * innerBounds.size.height)];
+  [ic_clear_path addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0 * innerBounds.size.width,
+                                            CGRectGetMinY(innerBounds) +
+                                                (CGFloat)0.10107 * innerBounds.size.height)];
   [ic_clear_path
       addLineToPoint:CGPointMake(
                          CGRectGetMinX(innerBounds) + (CGFloat)0.39893 * innerBounds.size.width,
                          CGRectGetMinY(innerBounds) + (CGFloat)0.50000 * innerBounds.size.height)];
-  [ic_clear_path
-      addLineToPoint:CGPointMake(
-                         CGRectGetMinX(innerBounds) + 0 * innerBounds.size.width,
-                         CGRectGetMinY(innerBounds) + (CGFloat)0.89893 * innerBounds.size.height)];
+  [ic_clear_path addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 0 * innerBounds.size.width,
+                                            CGRectGetMinY(innerBounds) +
+                                                (CGFloat)0.89893 * innerBounds.size.height)];
   [ic_clear_path
       addLineToPoint:CGPointMake(
                          CGRectGetMinX(innerBounds) + (CGFloat)0.10107 * innerBounds.size.width,
@@ -178,18 +176,16 @@ static inline UIBezierPath *MDCPathForClearButtonLegacyImageFrame(CGRect frame) 
       addLineToPoint:CGPointMake(
                          CGRectGetMinX(innerBounds) + (CGFloat)0.89893 * innerBounds.size.width,
                          CGRectGetMinY(innerBounds) + 1 * innerBounds.size.height)];
-  [ic_clear_path
-      addLineToPoint:CGPointMake(
-                         CGRectGetMinX(innerBounds) + 1 * innerBounds.size.width,
-                         CGRectGetMinY(innerBounds) + (CGFloat)0.89893 * innerBounds.size.height)];
+  [ic_clear_path addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 1 * innerBounds.size.width,
+                                            CGRectGetMinY(innerBounds) +
+                                                (CGFloat)0.89893 * innerBounds.size.height)];
   [ic_clear_path
       addLineToPoint:CGPointMake(
                          CGRectGetMinX(innerBounds) + (CGFloat)0.60107 * innerBounds.size.width,
                          CGRectGetMinY(innerBounds) + (CGFloat)0.50000 * innerBounds.size.height)];
-  [ic_clear_path
-      addLineToPoint:CGPointMake(
-                         CGRectGetMinX(innerBounds) + 1 * innerBounds.size.width,
-                         CGRectGetMinY(innerBounds) + (CGFloat)0.10107 * innerBounds.size.height)];
+  [ic_clear_path addLineToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 1 * innerBounds.size.width,
+                                            CGRectGetMinY(innerBounds) +
+                                                (CGFloat)0.10107 * innerBounds.size.height)];
   [ic_clear_path closePath];
 
   return ic_clear_path;

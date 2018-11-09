@@ -114,7 +114,7 @@
 
   UIColor *onSurface87Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87];
   UIColor *onSurface60Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
-  
+
   MDCTextField *textField = [[MDCTextField alloc] initWithFrame:CGRectZero];
   MDCTextField *baseTextField = [[MDCTextField alloc] initWithFrame:CGRectZero];
   MDCTextField *fullWidthTextField = [[MDCTextField alloc] initWithFrame:CGRectZero];

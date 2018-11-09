@@ -930,11 +930,12 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   NSNumberFormatter *testFormatter = [[NSNumberFormatter alloc] init];
 
   // Then
-  XCTAssertEqualObjects(
-      [testFormatter numberFromString:[self.slider thumbTrack:track stringForValue:1]], @(1.));
-  XCTAssertEqualObjects(
-      [testFormatter numberFromString:[self.slider thumbTrack:track stringForValue:(CGFloat)0.57]],
-      @(0.57));
+  XCTAssertEqualObjects([testFormatter numberFromString:[self.slider thumbTrack:track
+                                                                 stringForValue:1]],
+                        @(1.));
+  XCTAssertEqualObjects([testFormatter numberFromString:[self.slider thumbTrack:track
+                                                                 stringForValue:(CGFloat)0.57]],
+                        @(0.57));
   XCTAssertEqualObjects(
       [testFormatter numberFromString:[self.slider thumbTrack:track
                                                stringForValue:(CGFloat)0.33333333]],

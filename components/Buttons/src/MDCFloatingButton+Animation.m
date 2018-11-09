@@ -114,8 +114,8 @@ static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = (CGFloat)0.150
                                                             self.layer.transform,
                                                             [MDCFloatingButton expandTransform])]
                    fromValue:nil
-              timingFunction:[[CAMediaTimingFunction alloc] initWithControlPoints:0
-                                                                                 :0:(CGFloat)0.2:1]
+              timingFunction:[[CAMediaTimingFunction alloc] initWithControlPoints:
+                                                                                0:0:(CGFloat)0.2:1]
                     fillMode:kCAFillModeForwards
                     duration:kMDCFloatingButtonEnterDuration
                  beginOffset:0];
