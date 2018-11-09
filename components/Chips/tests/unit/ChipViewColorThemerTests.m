@@ -68,7 +68,6 @@
                         [backgroundColor colorWithAlphaComponent:(CGFloat)0.38]);
   XCTAssertEqualObjects([self.chip titleColorForState:UIControlStateDisabled],
                         [textColor colorWithAlphaComponent:(CGFloat)0.38]);
-
 }
 
 - (void)testStrokedChipViewColorThemer {

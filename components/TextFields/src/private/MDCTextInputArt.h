@@ -141,7 +141,7 @@ static inline UIBezierPath *MDCPathForClearButtonLegacyImageFrame(CGRect frame) 
   UIBezierPath *ic_clear_path = [UIBezierPath bezierPath];
   [ic_clear_path moveToPoint:CGPointMake(CGRectGetMinX(innerBounds) + 1 * innerBounds.size.width,
                                          CGRectGetMinY(innerBounds) +
-                                            (CGFloat)0.10107 * innerBounds.size.height)];
+                                             (CGFloat)0.10107 * innerBounds.size.height)];
   [ic_clear_path
       addLineToPoint:CGPointMake(
                          CGRectGetMinX(innerBounds) + (CGFloat)0.89893 * innerBounds.size.width,
