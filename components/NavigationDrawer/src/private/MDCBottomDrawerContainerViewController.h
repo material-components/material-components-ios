@@ -107,4 +107,8 @@
  */
 @property(nonatomic, readonly) MDCBottomDrawerState drawerState;
 
+/**
+ Whether the content/drawer reaches the full screen of the device.
+ */
+@property(nonatomic, readonly) BOOL contentReachesFullscreen;
 @end

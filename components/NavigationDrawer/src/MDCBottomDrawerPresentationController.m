@@ -194,6 +194,10 @@ static CGFloat kTopHandleYCenter = (CGFloat)6.0;
   self.topHandle.backgroundColor = topHandleColor;
 }
 
+- (BOOL)contentReachesFullscreen {
+  return self.bottomDrawerContainerViewController.contentReachesFullscreen;
+}
+
 #pragma mark - Private
 
 - (void)hideDrawer {

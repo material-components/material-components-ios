@@ -125,25 +125,13 @@
   }
 }
 
-- (BOOL)isAccessibilityMode {
-  return UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning();
-}
-
-- (BOOL)isMobileLandscape {
-  return self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassCompact;
-}
-
-- (BOOL)shouldPresentFullScreen {
-  return [self isAccessibilityMode] || [self isMobileLandscape];
-}
-
 - (BOOL)contentReachesFullScreen {
-  if ([self shouldPresentFullScreen]) {
-    return YES;
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+        (MDCBottomDrawerPresentationController *)self.presentationController;
+    return bottomDrawerPresentationController.contentReachesFullscreen;
   }
-  return CGRectGetHeight(self.view.bounds) <=
-         self.headerViewController.preferredContentSize.height +
-             self.contentViewController.preferredContentSize.height;
+  return YES;
 }
 
 - (void)setTopHandleHidden:(BOOL)topHandleHidden {
