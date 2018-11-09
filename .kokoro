@@ -411,7 +411,7 @@ lint_clang_format() {
   CLANG_FORMAT_CI_VERSION="v1.*"
 
   if [ ! -d .clang-format-ci ]; then
-    git clone https://github.com/material-foundation/clang-format-ci.git .clang-format-ci
+    git clone --recurse-submodules https://github.com/material-foundation/clang-format-ci.git .clang-format-ci
   fi
 
   pushd .clang-format-ci
