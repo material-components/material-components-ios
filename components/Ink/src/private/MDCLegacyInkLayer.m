@@ -174,7 +174,7 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
   // This bezier curve is an approximation of a log curve.
   return
       [[CAMediaTimingFunction alloc] initWithControlPoints:(float)
-                                                    0.157:(float)0.72:(float)0.386:(float)0.987];
+                                                     0.157:(float)0.72:(float)0.386:(float)0.987];
 }
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)finished {

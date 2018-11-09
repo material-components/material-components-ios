@@ -184,7 +184,7 @@ static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = (CGFloat)0.150
                                                             self.layer.transform,
                                                             [MDCFloatingButton collapseTransform])]
                    fromValue:nil
-              timingFunction:[[CAMediaTimingFunction alloc] initWithControlPoints:(float)0.4:0:1:1]
+              timingFunction:[[CAMediaTimingFunction alloc] initWithControlPoints:(float) 0.4:0:1:1]
                     fillMode:kCAFillModeForwards
                     duration:kMDCFloatingButtonExitDuration
                  beginOffset:0];
@@ -197,7 +197,7 @@ static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = (CGFloat)0.150
                                                             self.imageView.layer.transform,
                                                             [MDCFloatingButton collapseTransform])]
                    fromValue:nil
-              timingFunction:[[CAMediaTimingFunction alloc] initWithControlPoints:(float)0.4:0:1:1]
+              timingFunction:[[CAMediaTimingFunction alloc] initWithControlPoints:(float) 0.4:0:1:1]
                     fillMode:kCAFillModeForwards
                     duration:kMDCFloatingButtonExitIconDuration
                  beginOffset:kMDCFloatingButtonExitIconOffset];
