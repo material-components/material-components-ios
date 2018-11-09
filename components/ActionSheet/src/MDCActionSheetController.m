@@ -176,7 +176,8 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
   if (fmod(maxTableHeight, cellHeight) > (cellHeight * (CGFloat)0.5)) {
     amountOfCellsToShow += 1;
   }
-  CGFloat preferredHeight = (((CGFloat)amountOfCellsToShow - (CGFloat)0.5) * cellHeight) + headerHeight;
+  CGFloat preferredHeight =
+      (((CGFloat)amountOfCellsToShow - (CGFloat)0.5) * cellHeight) + headerHeight;
   // When updating the preferredSheetHeight the presentation controller takes into account the
   // safe area so we have to remove that.
   if (@available(iOS 11.0, *)) {

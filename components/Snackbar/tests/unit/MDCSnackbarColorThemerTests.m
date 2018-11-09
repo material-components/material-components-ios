@@ -29,9 +29,9 @@
   MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
   colorScheme.surfaceColor = [UIColor redColor];
   colorScheme.onSurfaceColor = [UIColor blueColor];
-  UIColor *blendedBackgroundColor =
-      [MDCSemanticColorScheme blendColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.8]
-                     withBackgroundColor:colorScheme.surfaceColor];
+  UIColor *blendedBackgroundColor = [MDCSemanticColorScheme
+               blendColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.8]
+      withBackgroundColor:colorScheme.surfaceColor];
 
   // When
   [MDCSnackbarColorThemer applySemanticColorScheme:colorScheme toSnackbarManager:snackbarManager];

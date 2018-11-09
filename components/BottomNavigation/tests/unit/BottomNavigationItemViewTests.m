@@ -60,8 +60,7 @@ static UIImage *fakeImage(void) {
   CGFloat contentHeight =
       CGRectGetHeight(view.label.bounds) + CGRectGetHeight(view.iconImageView.bounds);
   CGFloat expectedDistance = contentHeight / 2 + view.contentVerticalMargin;
-  XCTAssertEqualWithAccuracy(view.label.center.y - view.iconImageView.center.y,
-                             expectedDistance,
+  XCTAssertEqualWithAccuracy(view.label.center.y - view.iconImageView.center.y, expectedDistance,
                              (CGFloat)0.001);
 }
 
@@ -83,8 +82,7 @@ static UIImage *fakeImage(void) {
   CGFloat contentWidth =
       CGRectGetWidth(view.label.bounds) + CGRectGetWidth(view.iconImageView.bounds);
   CGFloat expectedDistance = contentWidth / 2 + view.contentHorizontalMargin;
-  XCTAssertEqualWithAccuracy(view.label.center.x - view.iconImageView.center.x,
-                             expectedDistance,
+  XCTAssertEqualWithAccuracy(view.label.center.x - view.iconImageView.center.x, expectedDistance,
                              (CGFloat)0.001);
 }
 
@@ -109,8 +107,7 @@ static UIImage *fakeImage(void) {
   XCTAssert(view.iconImageView.center.x == CGRectGetMidX(contentRect));
   CGFloat contentSpan = CGRectGetMaxY(view.label.frame) - CGRectGetMinY(view.iconImageView.frame);
   XCTAssertEqualWithAccuracy(CGRectGetMinY(view.iconImageView.frame) + contentSpan / 2,
-                             CGRectGetMidY(contentRect),
-                             (CGFloat)0.001);
+                             CGRectGetMidY(contentRect), (CGFloat)0.001);
 }
 
 - (void)testSetSelectedItemTintColorUpdatesInkColor {

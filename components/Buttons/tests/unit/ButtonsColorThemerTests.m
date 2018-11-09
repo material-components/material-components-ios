@@ -115,12 +115,12 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
         XCTAssertEqual([button backgroundColorForState:state], colorScheme.primaryColor);
       }
     } else {
-      XCTAssert(
-          CGColorEqualToColor([button titleColorForState:state].CGColor,
-                              [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38].CGColor));
-      XCTAssert(
-          CGColorEqualToColor([button backgroundColorForState:state].CGColor,
-                              [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12].CGColor));
+      XCTAssert(CGColorEqualToColor(
+          [button titleColorForState:state].CGColor,
+          [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38].CGColor));
+      XCTAssert(CGColorEqualToColor(
+          [button backgroundColorForState:state].CGColor,
+          [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12].CGColor));
     }
   }
   XCTAssertEqualWithAccuracy(button.disabledAlpha, 1, (CGFloat)0.001);
@@ -157,10 +157,10 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
         XCTAssertEqual([button backgroundColorForState:state], UIColor.clearColor);
       }
     } else {
-      XCTAssert(
-          CGColorEqualToColor([button titleColorForState:state].CGColor,
-                              [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38].CGColor),
-          @"state:%lu", (unsigned long)state);
+      XCTAssert(CGColorEqualToColor(
+                    [button titleColorForState:state].CGColor,
+                    [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38].CGColor),
+                @"state:%lu", (unsigned long)state);
       XCTAssertEqual([button backgroundColorForState:state], UIColor.clearColor, @"state:%lu",
                      (unsigned long)state);
     }
@@ -200,12 +200,12 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
         XCTAssertEqual([button backgroundColorForState:state], colorScheme.primaryColor);
       }
     } else {
-      XCTAssert(
-          CGColorEqualToColor([button titleColorForState:state].CGColor,
-                              [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38].CGColor));
-      XCTAssert(
-          CGColorEqualToColor([button backgroundColorForState:state].CGColor,
-                              [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12].CGColor));
+      XCTAssert(CGColorEqualToColor(
+          [button titleColorForState:state].CGColor,
+          [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38].CGColor));
+      XCTAssert(CGColorEqualToColor(
+          [button backgroundColorForState:state].CGColor,
+          [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12].CGColor));
     }
   }
   XCTAssertEqualWithAccuracy(button.disabledAlpha, 1, (CGFloat)0.001);

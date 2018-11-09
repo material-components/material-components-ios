@@ -172,7 +172,9 @@ typedef NS_ENUM(NSInteger, MDCInkRippleState) {
 
 - (CAMediaTimingFunction *)logDecelerateEasing {
   // This bezier curve is an approximation of a log curve.
-  return [[CAMediaTimingFunction alloc] initWithControlPoints:(CGFloat)0.157:(CGFloat)0.72:(CGFloat)0.386:(CGFloat)0.987];
+  return [[CAMediaTimingFunction alloc]
+      initWithControlPoints:(CGFloat)
+                      0.157:(CGFloat)0.72:(CGFloat)0.386:(CGFloat)0.987];
 }
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)finished {
@@ -207,7 +209,8 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
 
 - (void)setupRipple {
   CGFloat random = MDCLegacyInkLayerRandom();
-  self.radius = (CGFloat)((CGFloat)0.9 + random * (CGFloat)0.1) * kInkLayerForegroundRadiusGrowthMultiplier;
+  self.radius =
+      (CGFloat)((CGFloat)0.9 + random * (CGFloat)0.1) * kInkLayerForegroundRadiusGrowthMultiplier;
   [super setupRipple];
 }
 
@@ -307,7 +310,8 @@ static NSString *const kInkLayerForegroundScaleAnim = @"foregroundScaleAnim";
       endPoint = self.customInkCenter;
     }
     endPoint = CGPointMake(endPoint.x + xOffset, endPoint.y + yOffset);
-    CGPoint centerOffsetPoint = MDCLegacyInkLayerInterpolatePoint(startPoint, endPoint, (CGFloat)0.3);
+    CGPoint centerOffsetPoint =
+        MDCLegacyInkLayerInterpolatePoint(startPoint, endPoint, (CGFloat)0.3);
     UIBezierPath *movePath = [UIBezierPath bezierPath];
     [movePath moveToPoint:startPoint];
     [movePath addLineToPoint:centerOffsetPoint];

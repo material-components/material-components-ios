@@ -19,13 +19,13 @@
 + (CAMediaTimingFunction *)mdc_functionWithType:(MDCAnimationTimingFunction)type {
   switch (type) {
     case MDCAnimationTimingFunctionStandard:
-      return [[CAMediaTimingFunction alloc] initWithControlPoints:(CGFloat)0.4:0:(CGFloat)0.2:1];
+      return [[CAMediaTimingFunction alloc] initWithControlPoints:(CGFloat) 0.4:0:(CGFloat)0.2:1];
     case MDCAnimationTimingFunctionDeceleration:
       return [[CAMediaTimingFunction alloc] initWithControlPoints:0:0:(CGFloat)0.2:1];
     case MDCAnimationTimingFunctionAcceleration:
-      return [[CAMediaTimingFunction alloc] initWithControlPoints:(CGFloat)0.4:0:1:1];
+      return [[CAMediaTimingFunction alloc] initWithControlPoints:(CGFloat) 0.4:0:1:1];
     case MDCAnimationTimingFunctionSharp:
-      return [[CAMediaTimingFunction alloc] initWithControlPoints:(CGFloat)0.4:0:(CGFloat)0.6:1];
+      return [[CAMediaTimingFunction alloc] initWithControlPoints:(CGFloat) 0.4:0:(CGFloat)0.6:1];
   }
   NSAssert(NO, @"Invalid MDCAnimationTimingFunction value %i.", (int)type);
   // Reasonable default to use in Release mode for garbage input.

@@ -238,7 +238,8 @@
   MDCThumbTrack *thumbTrack = [[MDCThumbTrack alloc] init];
 
   // Then
-  XCTAssertEqualObjects(thumbTrack.inkColor, [UIColor.blueColor colorWithAlphaComponent:(CGFloat)0.5]);
+  XCTAssertEqualObjects(thumbTrack.inkColor,
+                        [UIColor.blueColor colorWithAlphaComponent:(CGFloat)0.5]);
 }
 
 - (void)testSetInkColor {

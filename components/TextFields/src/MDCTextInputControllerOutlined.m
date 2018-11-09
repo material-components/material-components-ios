@@ -210,7 +210,8 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 
 - (CGRect)borderRect {
   CGRect pathRect = self.textInput.bounds;
-  pathRect.origin.y = pathRect.origin.y + self.textInput.placeholderLabel.font.lineHeight * (CGFloat).5;
+  pathRect.origin.y =
+      pathRect.origin.y + self.textInput.placeholderLabel.font.lineHeight * (CGFloat).5;
   pathRect.size.height = [self borderHeight];
   return pathRect;
 }

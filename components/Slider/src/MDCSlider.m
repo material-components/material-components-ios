@@ -23,7 +23,8 @@ static const CGFloat kSliderDefaultWidth = 100;
 static const CGFloat kSliderFrameHeight = 27;
 static const CGFloat kSliderMinTouchSize = 48;
 static const CGFloat kSliderDefaultThumbRadius = 6;
-static const CGFloat kSliderAccessibilityIncrement = (CGFloat)0.1;  // Matches UISlider's percent increment.
+// Matches UISlider's percent increment.
+static const CGFloat kSliderAccessibilityIncrement = (CGFloat)0.1;
 static const CGFloat kSliderLightThemeTrackAlpha = (CGFloat)0.26;
 
 static inline UIColor *MDCThumbTrackDefaultColor(void) {

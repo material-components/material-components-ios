@@ -129,7 +129,8 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
 }
 
 - (void)setRadiiWithRect:(CGRect)rect {
-  self.initialRadius = (CGFloat)(MDCHypot(CGRectGetHeight(rect), CGRectGetWidth(rect)) / 2 * (CGFloat)0.6);
+  self.initialRadius =
+      (CGFloat)(MDCHypot(CGRectGetHeight(rect), CGRectGetWidth(rect)) / 2 * (CGFloat)0.6);
   self.finalRadius = (CGFloat)(MDCHypot(CGRectGetHeight(rect), CGRectGetWidth(rect)) / 2 + 10);
 }
 
@@ -158,7 +159,7 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
     _startAnimationActive = YES;
 
     CAMediaTimingFunction *materialTimingFunction =
-        [[CAMediaTimingFunction alloc] initWithControlPoints:(CGFloat)0.4:0:(CGFloat)0.2:1];
+        [[CAMediaTimingFunction alloc] initWithControlPoints:(CGFloat) 0.4:0:(CGFloat)0.2:1];
 
     CGFloat scaleStart =
         MIN(CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds)) / MDCInkLayerScaleDivisor;

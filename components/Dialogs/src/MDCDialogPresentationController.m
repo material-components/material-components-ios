@@ -128,9 +128,11 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
                                        withParentContainerSize:standardPresentableBounds.size];
 
   presentedViewFrame.origin.x =
-    containerSafeAreaInsets.left + (standardPresentableBounds.size.width - presentedViewFrame.size.width) * (CGFloat)0.5;
+      containerSafeAreaInsets.left +
+      (standardPresentableBounds.size.width - presentedViewFrame.size.width) * (CGFloat)0.5;
   presentedViewFrame.origin.y =
-    containerSafeAreaInsets.top + (standardPresentableBounds.size.height - presentedViewFrame.size.height) * (CGFloat)0.5;
+      containerSafeAreaInsets.top +
+      (standardPresentableBounds.size.height - presentedViewFrame.size.height) * (CGFloat)0.5;
 
   presentedViewFrame.origin.x = (CGFloat)floor(presentedViewFrame.origin.x);
   presentedViewFrame.origin.y = (CGFloat)floor(presentedViewFrame.origin.y);

@@ -233,8 +233,8 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
         manager.messageTextColor ?: UIColor.whiteColor;
     _buttonTitleColors = [NSMutableDictionary dictionary];
     _buttonTitleColors[@(UIControlStateNormal)] =
-        [manager buttonTitleColorForState:UIControlStateNormal] ?:
-        MDCRGBAColor(0xFF, 0xFF, 0xFF, (CGFloat)0.6);
+        [manager buttonTitleColorForState:UIControlStateNormal]
+            ?: MDCRGBAColor(0xFF, 0xFF, 0xFF, (CGFloat)0.6);
     _buttonTitleColors[@(UIControlStateHighlighted)] =
         [manager buttonTitleColorForState:UIControlStateHighlighted] ?:
         UIColor.whiteColor;

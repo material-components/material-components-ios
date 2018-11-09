@@ -674,7 +674,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 /** Returns YES if the color is not transparent and is a "dark" color. */
 - (BOOL)isDarkColor:(UIColor *)color {
   // TODO: have a components/private/ColorCalculations/MDCColorCalculations.h|m
-  //  return ![self isTransparentColor:color] && [QTMColorGroup luminanceOfColor:color] < (CGFloat)0.5;
+  //  return ![self isTransparentColor:color] && [QTMColorGroup luminanceOfColor:color] < 0.5;
   return ![self isTransparentColor:color];
 }
 

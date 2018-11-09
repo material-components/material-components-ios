@@ -29,7 +29,8 @@
   [chip setTitleColor:customColor forState:UIControlStateNormal];
   [chip setBorderColor:customColor forState:UIControlStateNormal];
   [chip setBorderWidth:2 forState:UIControlStateNormal];
-  [chip setInkColor:[customColor colorWithAlphaComponent:(CGFloat)0.2] forState:UIControlStateNormal];
+  [chip setInkColor:[customColor colorWithAlphaComponent:(CGFloat)0.2]
+           forState:UIControlStateNormal];
 
   UIColor *customSelectedColor = [UIColor orangeColor];
   [chip setTitleColor:customSelectedColor forState:UIControlStateSelected];
@@ -38,7 +39,7 @@
   [chip setInkColor:[customSelectedColor colorWithAlphaComponent:(CGFloat)0.2]
            forState:UIControlStateSelected];
   [chip setInkColor:[customSelectedColor colorWithAlphaComponent:(CGFloat)0.2]
-           forState:UIControlStateSelected|UIControlStateHighlighted];
+           forState:UIControlStateSelected | UIControlStateHighlighted];
 }
 
 - (void)loadView {

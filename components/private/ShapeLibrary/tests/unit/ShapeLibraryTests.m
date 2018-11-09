@@ -94,10 +94,12 @@ void GetCGPathAddLineToPointValues(void *info, const CGPathElement *element);
 
 - (void)testPercentageValueEqualityForCorners {
   // Given
-  MDCRoundedCornerTreatment *corner = [[MDCRoundedCornerTreatment alloc] initWithRadius:(CGFloat)1.2];
+  MDCRoundedCornerTreatment *corner =
+      [[MDCRoundedCornerTreatment alloc] initWithRadius:(CGFloat)1.2];
   corner.valueType = MDCCornerTreatmentValueTypePercentage;
   MDCCornerTreatment *cornerTreatment =
-      [MDCCornerTreatment cornerWithRadius:(CGFloat)1.2 valueType:MDCCornerTreatmentValueTypePercentage];
+      [MDCCornerTreatment cornerWithRadius:(CGFloat)1.2
+                                 valueType:MDCCornerTreatmentValueTypePercentage];
 
   // Then
   XCTAssertEqualObjects(corner, cornerTreatment);
@@ -147,7 +149,8 @@ void GetCGPathAddLineToPointValues(void *info, const CGPathElement *element) {
 
 - (void)testCopyForCorners {
   // Given
-  MDCRoundedCornerTreatment *corner = [[MDCRoundedCornerTreatment alloc] initWithRadius:(CGFloat)1.2];
+  MDCRoundedCornerTreatment *corner =
+      [[MDCRoundedCornerTreatment alloc] initWithRadius:(CGFloat)1.2];
   corner.valueType = MDCCornerTreatmentValueTypePercentage;
 
   // When

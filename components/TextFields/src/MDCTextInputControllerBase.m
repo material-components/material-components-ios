@@ -32,7 +32,8 @@
 #pragma mark - Constants
 
 const CGFloat MDCTextInputControllerBaseDefaultBorderRadius = 4;
-static const CGFloat MDCTextInputControllerBaseDefaultFloatingPlaceholderScaleDefault = (CGFloat)0.75;
+static const CGFloat MDCTextInputControllerBaseDefaultFloatingPlaceholderScaleDefault =
+    (CGFloat)0.75;
 static const CGFloat MDCTextInputControllerBaseDefaultHintTextOpacity = (CGFloat)0.54;
 static const CGFloat MDCTextInputControllerBaseDefaultPadding = 8;
 

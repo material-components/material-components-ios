@@ -115,8 +115,9 @@
 
   [strokedChipView setTitleColor:[textColor colorWithAlphaComponent:(CGFloat)0.38]
                         forState:UIControlStateDisabled];
-  [strokedChipView setBackgroundColor:[colorScheme.surfaceColor colorWithAlphaComponent:(CGFloat)0.38]
-                             forState:UIControlStateDisabled];
+  [strokedChipView
+      setBackgroundColor:[colorScheme.surfaceColor colorWithAlphaComponent:(CGFloat)0.38]
+                forState:UIControlStateDisabled];
   [strokedChipView setBorderColor:[borderColor colorWithAlphaComponent:(CGFloat)0.38]
                          forState:UIControlStateDisabled];
 }

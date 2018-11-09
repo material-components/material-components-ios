@@ -38,9 +38,12 @@
 
 - (void)testInputChipViewColorThemer {
   [MDCChipViewColorThemer applySemanticColorScheme:self.colorScheme toChipView:self.chip];
-  UIColor *onSurface12Opacity = [self.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12];
-  UIColor *onSurface87Opacity = [self.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87];
-  UIColor *onSurface16Opacity = [self.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.16];
+  UIColor *onSurface12Opacity =
+      [self.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12];
+  UIColor *onSurface87Opacity =
+      [self.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87];
+  UIColor *onSurface16Opacity =
+      [self.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.16];
 
   UIColor *backgroundColor =
       [MDCSemanticColorScheme blendColor:onSurface12Opacity
@@ -71,9 +74,12 @@
 - (void)testStrokedChipViewColorThemer {
   [MDCChipViewColorThemer applyOutlinedVariantWithColorScheme:self.colorScheme
                                                    toChipView:self.chip];
-  UIColor *onSurface12Opacity = [self.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12];
-  UIColor *onSurface87Opacity = [self.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87];
-  UIColor *onSurface16Opacity = [self.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.16];
+  UIColor *onSurface12Opacity =
+      [self.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12];
+  UIColor *onSurface87Opacity =
+      [self.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87];
+  UIColor *onSurface16Opacity =
+      [self.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.16];
   UIColor *selectedBackgroundColor =
       [MDCSemanticColorScheme blendColor:onSurface12Opacity
                      withBackgroundColor:self.colorScheme.surfaceColor];

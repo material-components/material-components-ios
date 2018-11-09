@@ -89,9 +89,10 @@ static const CGFloat kFlexibleHeaderMinHeight = 200;
   CGFloat boundsWidth = CGRectGetWidth(self.fhvc.headerView.bounds);
   CGFloat boundsHeight = CGRectGetHeight(self.fhvc.headerView.bounds);
 
-  NSArray *pageColors = @[ [UIColor colorWithWhite:(CGFloat)0.1 alpha:1],
-                           [UIColor colorWithWhite:(CGFloat)0.2 alpha:1],
-                           [UIColor colorWithWhite:(CGFloat)0.3 alpha:1]];
+  NSArray *pageColors = @[
+    [UIColor colorWithWhite:(CGFloat)0.1 alpha:1], [UIColor colorWithWhite:(CGFloat)0.2 alpha:1],
+    [UIColor colorWithWhite:(CGFloat)0.3 alpha:1]
+  ];
 
   // Scroll view configuration
   CGRect pageScrollViewFrame = CGRectMake(0, 0, boundsWidth, boundsHeight);

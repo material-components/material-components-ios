@@ -22,10 +22,11 @@
 
 + (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
                toSnackbarManager:(MDCSnackbarManager *)snackbarManager {
-  snackbarManager.snackbarMessageViewBackgroundColor =
-      [MDCSemanticColorScheme blendColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.8]
-                     withBackgroundColor:colorScheme.surfaceColor];
-  snackbarManager.messageTextColor = [colorScheme.surfaceColor colorWithAlphaComponent:(CGFloat)0.87];
+  snackbarManager.snackbarMessageViewBackgroundColor = [MDCSemanticColorScheme
+               blendColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.8]
+      withBackgroundColor:colorScheme.surfaceColor];
+  snackbarManager.messageTextColor =
+      [colorScheme.surfaceColor colorWithAlphaComponent:(CGFloat)0.87];
   UIColor *buttonTitleColor = [colorScheme.surfaceColor colorWithAlphaComponent:(CGFloat)0.6];
   [snackbarManager setButtonTitleColor:buttonTitleColor forState:UIControlStateNormal];
   [snackbarManager setButtonTitleColor:buttonTitleColor forState:UIControlStateHighlighted];
