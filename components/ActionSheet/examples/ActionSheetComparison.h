@@ -16,7 +16,6 @@
 
 #import "MaterialColorScheme.h"
 #import "MaterialTypographyScheme.h"
-#import "MaterialActionSheet.h"
 
 @interface ActionSheetComparison : UIViewController
 

@@ -14,6 +14,7 @@
 
 #import "ActionSheetComparison.h"
 
+#import "MaterialActionSheet.h"
 #import "MaterialActionSheet+ActionSheetThemer.h"
 #import "MaterialButtons+ButtonThemer.h"
 #import "MaterialButtons.h"
