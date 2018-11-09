@@ -80,14 +80,14 @@
 
 - (void)showMaterialActionSheet {
   MDCActionSheetController *actionSheet =
-    [MDCActionSheetController actionSheetControllerWithTitle:@"Action Sheet Title"
-                                                     message:@"Action Sheet Message"];
+      [MDCActionSheetController actionSheetControllerWithTitle:@"Action Sheet Title"
+                                                       message:@"Action Sheet Message"];
   MDCActionSheetAction *homeAction =
-    [MDCActionSheetAction actionWithTitle:@"Home"
-                                    image:[UIImage imageNamed:@"Home"]
-                                  handler:^(MDCActionSheetAction *action) {
-                                    NSLog(@"Home Action");
-                                  }];
+      [MDCActionSheetAction actionWithTitle:@"Home"
+                                      image:[UIImage imageNamed:@"Home"]
+                                    handler:^(MDCActionSheetAction *action) {
+                                      NSLog(@"Home Action");
+                                    }];
   MDCActionSheetAction *favoriteAction =
       [MDCActionSheetAction actionWithTitle:@"Favorite"
                                       image:[UIImage imageNamed:@"Favorite"]
@@ -113,13 +113,13 @@
                                         message:@"Alert Message"
                                  preferredStyle:UIAlertControllerStyleActionSheet];
   UIAlertAction *homeAction =
-    [UIAlertAction actionWithTitle:@"Home" style:UIAlertActionStyleDefault handler:nil];
+      [UIAlertAction actionWithTitle:@"Home" style:UIAlertActionStyleDefault handler:nil];
   [alertController addAction:homeAction];
   UIAlertAction *favoriteAction =
-    [UIAlertAction actionWithTitle:@"Favorite" style:UIAlertActionStyleDefault handler:nil];
+      [UIAlertAction actionWithTitle:@"Favorite" style:UIAlertActionStyleDefault handler:nil];
   [alertController addAction:favoriteAction];
   UIAlertAction *emailAction =
-    [UIAlertAction actionWithTitle:@"Email" style:UIAlertActionStyleDefault handler:nil];
+      [UIAlertAction actionWithTitle:@"Email" style:UIAlertActionStyleDefault handler:nil];
   [alertController addAction:emailAction];
 
   [self presentViewController:alertController animated:YES completion:nil];
