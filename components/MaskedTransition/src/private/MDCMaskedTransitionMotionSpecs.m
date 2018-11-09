@@ -17,26 +17,17 @@
 @implementation MDCMaskedTransitionMotionSpecs
 
 + (MDMMotionCurve)easeInEaseOut {
-  // kokoro Xcode 9.1 job was failing with an "implicit conversion loses precision" when these
-  // values were cast within the method invocation directly. Extracting them to locals seems to fix
-  // the error.
   CGFloat a1 = (CGFloat)0.4;
   CGFloat a3 = (CGFloat)0.2;
   return MDMMotionCurveMakeBezier(a1, 0, a3, 1);
 }
 
 + (MDMMotionCurve)easeIn {
-  // kokoro Xcode 9.1 job was failing with an "implicit conversion loses precision" when these
-  // values were cast within the method invocation directly. Extracting them to locals seems to fix
-  // the error.
   CGFloat a1 = (CGFloat)0.4;
   return MDMMotionCurveMakeBezier(a1, 0, 1, 1);
 }
 
 + (MDMMotionCurve)easeOut {
-  // kokoro Xcode 9.1 job was failing with an "implicit conversion loses precision" when these
-  // values were cast within the method invocation directly. Extracting them to locals seems to fix
-  // the error.
   CGFloat a3 = (CGFloat)0.2;
   return MDMMotionCurveMakeBezier(0, 0, a3, 1);
 }
