@@ -354,7 +354,11 @@ generate_apidiff() {
   changelog_path=$(cat "$BUILDS_TMP_PATH/api_diff" | grep "Changelog=" | cut -d'=' -f2)
   error_path=$(cat "$BUILDS_TMP_PATH/api_diff" | grep "Errors=" | cut -d'=' -f2)
 
-  pushd scripts/github-comment >> /dev/null
+  if [ ! -f scripts/external/github-comment/.git ]; then
+    git submodule update --init --recursive scripts/external/github-comment
+  fi
+
+  pushd scripts/external/github-comment >> /dev/null
 
   if [ -f "$changelog_path" ]; then
     echo "## API diff detected the following changes" > "$changelog_path.tmp"
@@ -414,7 +418,15 @@ lint_clang_format() {
     echo
     echo "GITHUB_API_TOKEN -> Create a token here: https://github.com/settings/tokens."
     echo "                    Must have public_repo scope."
-    echo "KOKORO_GITHUB_PULL_REQUEST_NUMBER=\"###\" -> The PR # you want to post the API diff results to."
+    echo
+    echo "KOKORO_GITHUB_PULL_REQUEST_NUMBER=\"###\""
+    echo "    The pull request # you want to post the API diff results to."
+    echo
+    echo "KOKORO_GITHUB_PULL_REQUEST_COMMIT=\"###\""
+    echo "    The last commit of the pull request."
+    echo
+    echo "KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH=\"###\""
+    echo "    The branch that this pull request will be merged into."
   }
 
   if [ -z "$GITHUB_API_TOKEN" ]; then
@@ -434,6 +446,13 @@ lint_clang_format() {
     usage
     exit 1
   fi
+
+  if [ -z "$KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH" ]; then
+    echo "$KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH must be set to the target branch."
+    usage
+    exit 1
+  fi
+
 
   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
     select_xcode "$XCODE_VERSION"
@@ -480,67 +499,16 @@ lint_clang_format() {
     exit 1
   fi
 
-  base_sha=$(git merge-base origin/develop HEAD)
-
-  echo "Running clang-format on changes from $base_sha to HEAD..."
-  git clang-format "$base_sha"
-  if ! git diff-index --quiet HEAD --; then
-    echo
-    echo "clang-format requires the following stylistic changes to be made:"
-    echo
-    git --no-pager diff
-
-    COMMENT_TMP_PATH=$(mktemp -d)
-    COMMENT_TMP_FILE="$COMMENT_TMP_PATH/comment"
-    DIFF_TMP_FILE="$COMMENT_TMP_PATH/diff"
-
-    echo "clang-format suggested the following change:" > "$COMMENT_TMP_FILE"
-    git --no-pager diff -U0 > "$DIFF_TMP_FILE"
-
-    echo "Posting results to GitHub..."
-
-    pushd scripts/github-comment >> /dev/null
-
-    swift run github-comment \
-      --repo=material-components/material-components-ios \
-      --github_token="$GITHUB_API_TOKEN" \
-      --pull_request_number="$KOKORO_GITHUB_PULL_REQUEST_NUMBER" \
-      --commit="$KOKORO_GITHUB_PULL_REQUEST_COMMIT" \
-      --identifier=clang-format \
-      --comment_body="$COMMENT_TMP_FILE" \
-      --diff="$DIFF_TMP_FILE"
-
-    cat > "$COMMENT_TMP_FILE" <<EOL
-clang-format recommended changes.
-
-Consider installing [git-clang-format](https://github.com/llvm-mirror/clang/blob/master/tools/clang-format/git-clang-format) and running the following command:
-
-\`\`\`bash
-git clang-format \$(git merge-base origin/develop HEAD)
-\`\`\`
-EOL
-
-    swift run github-comment \
-      --repo=material-components/material-components-ios \
-      --github_token="$GITHUB_API_TOKEN" \
-      --pull_request_number="$KOKORO_GITHUB_PULL_REQUEST_NUMBER" \
-      --identifier=clang-format \
-      --comment_body="$COMMENT_TMP_FILE"
-
-    popd >> /dev/null
-
-    exit 1
-  else
-    pushd scripts/github-comment >> /dev/null
-    # No recommended changes, so delete any existing comment
-    swift run github-comment \
-      --repo=material-components/material-components-ios \
-      --github_token="$GITHUB_API_TOKEN" \
-      --pull_request_number="$KOKORO_GITHUB_PULL_REQUEST_NUMBER" \
-      --identifier=clang-format \
-      --delete
-    popd >> /dev/null
+  if [ ! -f scripts/external/clang-format-ci/.git ]; then
+    git submodule update --init --recursive scripts/external/clang-format-ci
   fi
+
+  scripts/external/clang-format-ci/check-pull-request.sh \
+    --api_token "$GITHUB_API_TOKEN" \
+    --repo "material-components/material-components-ios" \
+    --pr "$KOKORO_GITHUB_PULL_REQUEST_NUMBER" \
+    --commit "$KOKORO_GITHUB_PULL_REQUEST_COMMIT" \
+    --target_branch "$KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH"
 }
 
 # This command can be used when a pull request should always be put into a failure state.
