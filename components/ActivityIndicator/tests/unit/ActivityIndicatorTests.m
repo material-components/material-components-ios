@@ -127,9 +127,9 @@ static CGFloat randomNumber() {
   MDCActivityIndicator *indicator = [[MDCActivityIndicator alloc] init];
   indicator.indicatorMode = MDCActivityIndicatorModeDeterminate;
 
-  [indicator setProgress:(CGFloat)0.33 animated:NO];
+  [indicator setProgress:(float)0.33 animated:NO];
   XCTAssertEqual(indicator.strokeLayer.strokeStart, 0.0);
-  XCTAssertEqual(indicator.strokeLayer.strokeEnd, (CGFloat)0.33);
+  XCTAssertEqual(indicator.strokeLayer.strokeEnd, (float)0.33);
 }
 
 - (void)testSetProgressStrokeAnimated {
@@ -138,9 +138,9 @@ static CGFloat randomNumber() {
   indicator.indicatorMode = MDCActivityIndicatorModeDeterminate;
   [indicator startAnimating];
 
-  [indicator setProgress:(CGFloat)0.55 animated:YES];
+  [indicator setProgress:(float)0.55 animated:YES];
   XCTAssertEqual(indicator.strokeLayer.strokeStart, 0.0);
-  XCTAssertEqual(indicator.strokeLayer.strokeEnd, (CGFloat)0.55);
+  XCTAssertEqual(indicator.strokeLayer.strokeEnd, (float)0.55);
 }
 
 - (void)testSetAccessibiltyLabelProperty {
@@ -161,8 +161,8 @@ static CGFloat randomNumber() {
   [indicator setProgress:-5 animated:animated];
   XCTAssertEqual(indicator.progress, 0);
 
-  [indicator setProgress:(CGFloat)0.77 animated:animated];
-  XCTAssertEqual(indicator.progress, (CGFloat)0.77);
+  [indicator setProgress:(float)0.77 animated:animated];
+  XCTAssertEqual(indicator.progress, (float)0.77);
 
   [indicator setProgress:5 animated:animated];
   XCTAssertEqual(indicator.progress, 1);

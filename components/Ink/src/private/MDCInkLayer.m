@@ -159,7 +159,7 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
     _startAnimationActive = YES;
 
     CAMediaTimingFunction *materialTimingFunction =
-        [[CAMediaTimingFunction alloc] initWithControlPoints:(CGFloat) 0.4:0:(CGFloat)0.2:1];
+        [[CAMediaTimingFunction alloc] initWithControlPoints:(float) 0.4:0:(float)0.2:1];
 
     CGFloat scaleStart =
         MIN(CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds)) / MDCInkLayerScaleDivisor;

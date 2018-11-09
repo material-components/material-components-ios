@@ -43,7 +43,7 @@
 
   // TODO(#2018): These shadow attributes will be updated once specs are finalized.
   CGFloat scale = UIScreen.mainScreen.scale;
-  layer.shadowOpacity = (CGFloat)0.4;
+  layer.shadowOpacity = (float)0.4;
   layer.shadowRadius = 4;
   layer.shadowOffset = CGSizeMake(0, 2);
   layer.needsDisplayOnBoundsChange = YES;

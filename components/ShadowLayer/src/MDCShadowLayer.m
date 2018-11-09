@@ -15,8 +15,8 @@
 #import "MDCShadowLayer.h"
 
 static const CGFloat kShadowElevationDialog = 24.0;
-static const float kKeyShadowOpacity = (CGFloat)0.26;
-static const float kAmbientShadowOpacity = (CGFloat)0.08;
+static const float kKeyShadowOpacity = (float)0.26;
+static const float kAmbientShadowOpacity = (float)0.08;
 
 @interface MDCPendingAnimation : NSObject <CAAction>
 @property(nonatomic, weak) CALayer *animationSourceLayer;

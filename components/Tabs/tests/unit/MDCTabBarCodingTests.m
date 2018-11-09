@@ -27,22 +27,22 @@
   UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"item2" image:nil tag:2];
   tabBar.items = @[item1, item2];
   tabBar.selectedItem = item1;
-  tabBar.tintColor = [UIColor colorWithRed:(CGFloat)0.6
-                                     green:(CGFloat)0.2
-                                      blue:(CGFloat)0.3
+  tabBar.tintColor = [UIColor colorWithRed:(float)0.6
+                                     green:(float)0.2
+                                      blue:(float)0.3
                                      alpha:1];
-  tabBar.selectedItemTintColor = [UIColor colorWithRed:1 green:(CGFloat)0.5 blue:0 alpha:1];
-  tabBar.unselectedItemTintColor = [UIColor colorWithRed:(CGFloat)0.2
-                                                   green:(CGFloat)0.3
-                                                    blue:(CGFloat)0.3
+  tabBar.selectedItemTintColor = [UIColor colorWithRed:1 green:(float)0.5 blue:0 alpha:1];
+  tabBar.unselectedItemTintColor = [UIColor colorWithRed:(float)0.2
+                                                   green:(float)0.3
+                                                    blue:(float)0.3
                                                    alpha:1];
-  tabBar.inkColor = [UIColor colorWithRed:(CGFloat)0.5
-                                    green:(CGFloat)0.8
-                                     blue:(CGFloat)0.6
+  tabBar.inkColor = [UIColor colorWithRed:(float)0.5
+                                    green:(float)0.8
+                                     blue:(float)0.6
                                     alpha:1];
-  tabBar.barTintColor = [UIColor colorWithRed:(CGFloat)0.4
-                                        green:(CGFloat)0.7
-                                         blue:(CGFloat)0.4
+  tabBar.barTintColor = [UIColor colorWithRed:(float)0.4
+                                        green:(float)0.7
+                                         blue:(float)0.4
                                         alpha:1];
   tabBar.selectedItemTitleFont = [UIFont systemFontOfSize:20];
   tabBar.unselectedItemTitleFont = [UIFont systemFontOfSize:18];

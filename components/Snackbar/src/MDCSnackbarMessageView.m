@@ -234,7 +234,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     _buttonTitleColors = [NSMutableDictionary dictionary];
     _buttonTitleColors[@(UIControlStateNormal)] =
         [manager buttonTitleColorForState:UIControlStateNormal]
-            ?: MDCRGBAColor(0xFF, 0xFF, 0xFF, (CGFloat)0.6);
+            ?: MDCRGBAColor(0xFF, 0xFF, 0xFF, (float)0.6);
     _buttonTitleColors[@(UIControlStateHighlighted)] =
         [manager buttonTitleColorForState:UIControlStateHighlighted] ?:
         UIColor.whiteColor;
@@ -247,7 +247,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
     self.backgroundColor = _snackbarMessageViewBackgroundColor;
     self.layer.shadowColor = _snackbarMessageViewShadowColor.CGColor;
-    self.layer.shadowOpacity = kShadowAlpha;
+    self.layer.shadowOpacity = (float)kShadowAlpha;
     if (MDCSnackbarMessage.usesLegacySnackbar) {
       self.layer.cornerRadius = kLegacyCornerRadius;
       self.layer.shadowOffset = kLegacyShadowOffset;
@@ -488,7 +488,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
           break;
         case UIControlStateNormal:
         default:
-          defaultButtonTitleColor = MDCRGBAColor(0xFF, 0xFF, 0xFF, (CGFloat)0.6);
+          defaultButtonTitleColor = MDCRGBAColor(0xFF, 0xFF, 0xFF, (float)0.6);
           break;
       }
       [button setTitleColor:defaultButtonTitleColor forState:state];

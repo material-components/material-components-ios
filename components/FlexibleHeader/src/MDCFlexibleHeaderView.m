@@ -27,11 +27,11 @@ float UIAnimationDragCoefficient(void);  // Private API for simulator animation 
 #endif
 
 // The maximum default opacity of the shadow.
-static const float kDefaultVisibleShadowOpacity = (CGFloat)0.4;
+static const float kDefaultVisibleShadowOpacity = (float)0.4;
 
 // The percentage shifted threshold at which point the _viewsToHideWhenShifted should be fully
 // hidden.
-static const float kContentHidingThreshold = (CGFloat)0.5;
+static const float kContentHidingThreshold = (float)0.5;
 
 // This length defines the moment at which the shadow will be fully visible as the header shifts
 // on-screen.
@@ -42,7 +42,7 @@ static const NSTimeInterval kTrackingScrollViewDidChangeAnimationDuration = 0.2;
 
 // The epsilon used to determine when we've arrived at the destination while shifting the header
 // on/off-screen with the display link.
-static const float kShiftEpsilon = (CGFloat)0.1;
+static const float kShiftEpsilon = (float)0.1;
 
 // The epsilon used when comparing height values.
 static const CGFloat kHeightEpsilon = (CGFloat)0.001;
