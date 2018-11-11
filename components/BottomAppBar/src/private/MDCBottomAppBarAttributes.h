@@ -28,7 +28,7 @@ static const CGFloat kMDCBottomAppBarFloatingButtonPositionX = 64;
 static const CGFloat kMDCBottomAppBarFloatingButtonRadiusOffset = 4;
 
 // The duration of the enter animation of the path cut, same as floating button enter animation.
-static const NSTimeInterval kMDCFloatingButtonEnterDuration = (CGFloat)0.270;
+static const NSTimeInterval kMDCFloatingButtonEnterDuration = 0.270;
 
 // The duration of the exit animation of the path cut, same as floating button exit animation.
-static const NSTimeInterval kMDCFloatingButtonExitDuration = (CGFloat)0.180;
+static const NSTimeInterval kMDCFloatingButtonExitDuration = 0.180;

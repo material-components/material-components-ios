@@ -27,7 +27,7 @@ static const CGFloat MDCBottomNavigationItemViewTitleFontSize = 12;
 static const CGFloat kMDCBottomNavigationItemViewBadgeYOffset = 4;
 
 // The duration of the selection transition animation.
-static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = (CGFloat)0.180;
+static const NSTimeInterval kMDCBottomNavigationItemViewTransitionDuration = 0.180;
 
 // The Bundle for string resources.
 static NSString *const kMaterialBottomNavigationBundle = @"MaterialBottomNavigation.bundle";

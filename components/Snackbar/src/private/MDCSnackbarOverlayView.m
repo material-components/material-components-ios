@@ -28,9 +28,9 @@
 NSString *const MDCSnackbarOverlayIdentifier = @"MDCSnackbar";
 
 // The time it takes to show or hide the Snackbar.
-NSTimeInterval const MDCSnackbarEnterTransitionDuration = (CGFloat)0.15;
-NSTimeInterval const MDCSnackbarExitTransitionDuration = (CGFloat)0.075;
-NSTimeInterval const MDCSnackbarLegacyTransitionDuration = (CGFloat)0.5;
+NSTimeInterval const MDCSnackbarEnterTransitionDuration = 0.15;
+NSTimeInterval const MDCSnackbarExitTransitionDuration = 0.075;
+NSTimeInterval const MDCSnackbarLegacyTransitionDuration = 0.5;
 
 // The scaling starting point for presenting the new Snackbar.
 static const CGFloat MDCSnackbarEnterStartingScale = (CGFloat)0.8;

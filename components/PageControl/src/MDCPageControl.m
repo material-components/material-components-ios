@@ -37,7 +37,7 @@ static const CGFloat kPageControlIndicatorRadius = (CGFloat)3.5;
 static const CGFloat kPageControlIndicatorMargin = kPageControlIndicatorRadius * 2.5;
 
 // Delay for revealing indicators staggered towards current page indicator.
-static const NSTimeInterval kPageControlIndicatorShowDelay = (CGFloat)0.04;
+static const NSTimeInterval kPageControlIndicatorShowDelay = 0.04;
 
 // Default indicator opacity.
 static const CGFloat kPageControlIndicatorDefaultOpacity = (CGFloat)0.5;

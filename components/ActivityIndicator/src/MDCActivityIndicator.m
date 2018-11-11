@@ -26,7 +26,7 @@
 #import "private/MaterialActivityIndicatorStrings_table.h"
 
 static const NSInteger kTotalDetentCount = 5;
-static const NSTimeInterval kAnimateOutDuration = (CGFloat)0.1;
+static const NSTimeInterval kAnimateOutDuration = 0.1;
 static const CGFloat kCycleRotation = (CGFloat)(3.0 / 2);
 static const CGFloat kOuterRotationIncrement = (CGFloat)(1.0 / kTotalDetentCount) * (CGFloat)M_PI;
 static const CGFloat kSpinnerRadius = 12;

@@ -24,17 +24,17 @@ static NSString *const kMDCFloatingButtonOpacityKey = @"kMDCFloatingButtonOpacit
 // By using a power of 2 (2^-12), we can reduce rounding errors during transform multiplication
 static const CGFloat kMDCFloatingButtonTransformScale = (CGFloat)0.000244140625;
 
-static const NSTimeInterval kMDCFloatingButtonEnterDuration = (CGFloat)0.270;
-static const NSTimeInterval kMDCFloatingButtonExitDuration = (CGFloat)0.180;
+static const NSTimeInterval kMDCFloatingButtonEnterDuration = 0.270;
+static const NSTimeInterval kMDCFloatingButtonExitDuration = 0.180;
 
-static const NSTimeInterval kMDCFloatingButtonEnterIconDuration = (CGFloat)0.180;
-static const NSTimeInterval kMDCFloatingButtonEnterIconOffset = (CGFloat)0.090;
-static const NSTimeInterval kMDCFloatingButtonExitIconDuration = (CGFloat)0.135;
+static const NSTimeInterval kMDCFloatingButtonEnterIconDuration = 0.180;
+static const NSTimeInterval kMDCFloatingButtonEnterIconOffset = 0.090;
+static const NSTimeInterval kMDCFloatingButtonExitIconDuration = 0.135;
 static const NSTimeInterval kMDCFloatingButtonExitIconOffset = 0;
 
-static const NSTimeInterval kMDCFloatingButtonOpacityDuration = (CGFloat)0.015;
-static const NSTimeInterval kMDCFloatingButtonOpacityEnterOffset = (CGFloat)0.030;
-static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = (CGFloat)0.150;
+static const NSTimeInterval kMDCFloatingButtonOpacityDuration = 0.015;
+static const NSTimeInterval kMDCFloatingButtonOpacityEnterOffset = 0.030;
+static const NSTimeInterval kMDCFloatingButtonOpacityExitOffset = 0.150;
 
 @implementation MDCFloatingButton (Animation)
 
