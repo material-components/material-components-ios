@@ -91,7 +91,7 @@ static const NSTimeInterval kActivityIndicatorExampleAnimationDuration = 2.0 / 3
   CGPathCloseSubpath(refreshArrowPath);
 
   _refreshArrowPoint = [CAShapeLayer layer];
-  _refreshArrowPoint.anchorPoint = CGPointMake(.5, 1);
+  _refreshArrowPoint.anchorPoint = CGPointMake(0.5, 1);
   _refreshArrowPoint.path = refreshArrowPath;
   [_refreshArrowContainer addSublayer:_refreshArrowPoint];
 
@@ -102,10 +102,10 @@ static const NSTimeInterval kActivityIndicatorExampleAnimationDuration = 2.0 / 3
   _refreshStrokeLayer.fillColor = [UIColor clearColor].CGColor;
   _refreshStrokeLayer.strokeColor = [UIColor blackColor].CGColor;
   _refreshStrokeLayer.strokeStart = 0;
-  _refreshStrokeLayer.strokeEnd = (CGFloat).8;
+  _refreshStrokeLayer.strokeEnd = (CGFloat)0.8;
   [_rotationContainer addSublayer:_refreshStrokeLayer];
 
-  _rotationContainer.transform = CATransform3DMakeRotation((CGFloat)M_PI * (CGFloat).65, 0, 0, 1);
+  _rotationContainer.transform = CATransform3DMakeRotation((CGFloat)M_PI * (CGFloat)0.65, 0, 0, 1);
   _refreshArrowContainer.transform = CATransform3DMakeRotation((CGFloat)1.6 * (float)M_PI, 0, 0, 1);
 
   [CATransaction commit];
@@ -189,7 +189,7 @@ static const NSTimeInterval kActivityIndicatorExampleAnimationDuration = 2.0 / 3
   // Outer rotation
   CABasicAnimation *outerRotationAnimation =
       [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-  outerRotationAnimation.fromValue = @((CGFloat)M_PI * (CGFloat).65);
+  outerRotationAnimation.fromValue = @((CGFloat)M_PI * (CGFloat)0.65);
   outerRotationAnimation.toValue = @(strokeEnd * 2 * M_PI);
   outerRotationAnimation.fillMode = kCAFillModeForwards;
   outerRotationAnimation.removedOnCompletion = NO;
@@ -236,9 +236,9 @@ static const NSTimeInterval kActivityIndicatorExampleAnimationDuration = 2.0 / 3
                                                              strokeEnd:(CGFloat)strokeEnd {
   // Adjust stroke position to offset outer rotation angle and ensure stroke position is in range
   // [0,1] for smooth animation
-  strokeStart -= (CGFloat).325;
+  strokeStart -= (CGFloat)0.325;
   strokeStart = strokeStart < 0 ? strokeStart + 1 : strokeStart;
-  strokeEnd -= (CGFloat).325;
+  strokeEnd -= (CGFloat)0.325;
   strokeEnd = strokeEnd < 0 ? strokeEnd + 1 : strokeEnd;
 
   _rotationContainer.hidden = NO;
@@ -254,7 +254,7 @@ static const NSTimeInterval kActivityIndicatorExampleAnimationDuration = 2.0 / 3
   // Stroke end
   CABasicAnimation *strokeEndAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
   strokeEndAnimation.fromValue = @(strokeEnd);
-  strokeEndAnimation.toValue = @((CGFloat).8);
+  strokeEndAnimation.toValue = @((CGFloat)0.8);
   strokeEndAnimation.fillMode = kCAFillModeBoth;
   strokeEndAnimation.removedOnCompletion = NO;
   [_refreshStrokeLayer addAnimation:strokeEndAnimation forKey:@"strokeEnd"];
