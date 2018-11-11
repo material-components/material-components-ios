@@ -82,7 +82,7 @@
   if ([color getHue:&hue saturation:&saturation brightness:&brightness alpha:&alpha]) {
     return [UIColor colorWithHue:hue
                       saturation:saturation
-                      brightness:(CGFloat)fmin(brightness + 0.2, 1)
+                      brightness:(CGFloat)fminf((float)brightness + (float)0.2, 1)
                            alpha:alpha];
   }
   return nil;

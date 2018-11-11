@@ -1084,6 +1084,11 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 }
 
 - (void)testAccessibilityIncrementDiscreteSlider {
+  CGFloat singleWidth = (float)0.54;
+  CGFloat doubleWidthLong = (CGFloat)0.54000002145767212;
+  CGFloat doubleWidthShort = (CGFloat)0.54;
+  NSLog(@"\n S: %.024f\nDl: %.024f\nDs: %.024f\n", singleWidth, doubleWidthLong, doubleWidthShort);
+
   for (NSUInteger i = 2; i < 20; ++i) {
     // Given
     self.slider.numberOfDiscreteValues = i;
