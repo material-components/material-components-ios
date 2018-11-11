@@ -83,7 +83,7 @@ static NSString * const kCell = @"Cell";
 
   CGRect sliderFrame = CGRectMake(0, 0, 160, 27);
   self.slider = [[UISlider alloc] initWithFrame:sliderFrame];
-  self.slider.value = (float)kActivityInitialProgress;
+  self.slider.value = kActivityInitialProgress;
   [self.slider addTarget:self
                   action:@selector(didChangeSliderValue:)
         forControlEvents:UIControlEventValueChanged];
