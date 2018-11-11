@@ -39,8 +39,8 @@ static const CGFloat kBrightness500Min = (CGFloat)0.50;
 static const CGFloat kBrightness500Max = 1;
 
 // Observed quadratic brightness coefficients for tints >= 500.
-static const CGFloat kBrightnessQuadracticCoeff = -(CGFloat)0.00642857142857143;
-static const CGFloat kBrightnessLinearCoeff = -(CGFloat)0.03585714285714282;
+static const CGFloat kBrightnessQuadracticCoeff = (CGFloat)-0.00642857142857143;
+static const CGFloat kBrightnessLinearCoeff = (CGFloat)-0.03585714285714282;
 
 // Median saturation and brightness values for A100, A200, A400, A700.
 static const CGFloat kAccentSaturation[4] = {(CGFloat)0.49, (CGFloat)0.75, 1, 1};

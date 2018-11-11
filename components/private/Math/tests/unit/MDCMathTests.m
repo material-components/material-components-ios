@@ -109,9 +109,9 @@
  */
 - (void)testMDCRectAlignScaleNegativeRectangle {
   // Given
-  CGRect misalignedRect = CGRectMake(-(CGFloat)5.01, -(CGFloat)0.399, (CGFloat)8.35, (CGFloat)2.65);
+  CGRect misalignedRect = CGRectMake((CGFloat)-5.01, (CGFloat)-0.399, (CGFloat)8.35, (CGFloat)2.65);
   CGRect alignedScale1Rect = CGRectMake(-6, -1, 10, 4);
-  CGRect alignedScale2Rect = CGRectMake(-(CGFloat)5.5, -(CGFloat)0.5, 9, 3);
+  CGRect alignedScale2Rect = CGRectMake((CGFloat)-5.5, (CGFloat)-0.5, 9, 3);
   CGRect alignedScale3Rect = CGRectMake((CGFloat)(-16.0 / 3.0), (CGFloat)(-2.0 / 3.0), 9, 3);
 
   // Then
@@ -134,10 +134,10 @@
 - (void)testMDCRectAlignScaleNonStandardRectangle {
   // Given
   CGRect misalignedRect =
-      CGRectMake((CGFloat)17.9, -(CGFloat)4.44, -(CGFloat)10.10, -(CGFloat)15.85);
+      CGRectMake((CGFloat)17.9, (CGFloat)-4.44, (CGFloat)-10.10, (CGFloat)-15.85);
   // Standardized: (7.80, -20.29), (10.10, 15.85)
   CGRect alignedScale1Rect = CGRectMake(7, -21, 11, 17);
-  CGRect alignedScale2Rect = CGRectMake((CGFloat)7.5, -(CGFloat)20.5, (CGFloat)10.5, (CGFloat)16.5);
+  CGRect alignedScale2Rect = CGRectMake((CGFloat)7.5, (CGFloat)-20.5, (CGFloat)10.5, (CGFloat)16.5);
   CGRect alignedScale3Rect = CGRectMake((CGFloat)(23.0 / 3.0), (CGFloat)(-61.0 / 3.0),
                                         (CGFloat)(31.0 / 3.0), 16);
 
@@ -205,9 +205,9 @@
 
 - (void)testMDCPointRoundWithScale {
   // Given
-  CGPoint misalignedPoint = CGPointMake((CGFloat)0.7, -(CGFloat)1.3);
+  CGPoint misalignedPoint = CGPointMake((CGFloat)0.7, (CGFloat)-1.3);
   CGPoint alignedScale1Point = CGPointMake(1, -1);
-  CGPoint alignedScale2Point = CGPointMake((CGFloat)0.5, -(CGFloat)1.5);
+  CGPoint alignedScale2Point = CGPointMake((CGFloat)0.5, (CGFloat)-1.5);
   CGPoint alignedScale3Point = CGPointMake((CGFloat)(2.0 / 3.0), (CGFloat)(-4.0 / 3.0));
 
   // Then
@@ -229,10 +229,10 @@
 
 - (void)testMDCRoundCenterWithBoundsAndScale {
   // Given
-  CGPoint misalignedCenter = CGPointMake((CGFloat)0.7, -(CGFloat)1.3);
+  CGPoint misalignedCenter = CGPointMake((CGFloat)0.7, (CGFloat)-1.3);
   CGRect bounds = CGRectMake(0, 0, 20, 21);
-  CGPoint alignedScale1Center = CGPointMake(1, -(CGFloat)1.5);
-  CGPoint alignedScale2Center = CGPointMake((CGFloat)0.5, -(CGFloat)1.5);
+  CGPoint alignedScale1Center = CGPointMake(1, (CGFloat)-1.5);
+  CGPoint alignedScale2Center = CGPointMake((CGFloat)0.5, (CGFloat)-1.5);
   CGPoint alignedScale3Center = CGPointMake((CGFloat)(2.0 / 3.0), (CGFloat)(-7.0 / 6.0));
 
   // Then
