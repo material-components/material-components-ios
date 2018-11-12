@@ -30,9 +30,9 @@
       [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   colorScheme.surfaceColor = [UIColor redColor];
   colorScheme.onSurfaceColor = [UIColor blueColor];
-  UIColor *blendedBackgroundColor =
-      [MDCSemanticColorScheme blendColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.8f]
-                     withBackgroundColor:colorScheme.surfaceColor];
+  UIColor *blendedBackgroundColor = [MDCSemanticColorScheme
+               blendColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.8]
+      withBackgroundColor:colorScheme.surfaceColor];
 
   // When
   [MDCSnackbarColorThemer applySemanticColorScheme:colorScheme toSnackbarManager:snackbarManager];
@@ -40,11 +40,11 @@
   // Then
   XCTAssertEqualObjects(snackbarManager.snackbarMessageViewBackgroundColor, blendedBackgroundColor);
   XCTAssertEqualObjects(snackbarManager.messageTextColor,
-                        [colorScheme.surfaceColor colorWithAlphaComponent:0.87f]);
+                        [colorScheme.surfaceColor colorWithAlphaComponent:(CGFloat)0.87]);
   XCTAssertEqualObjects([snackbarManager buttonTitleColorForState:UIControlStateNormal],
-                        [colorScheme.surfaceColor colorWithAlphaComponent:0.6f]);
+                        [colorScheme.surfaceColor colorWithAlphaComponent:(CGFloat)0.6]);
   XCTAssertEqualObjects([snackbarManager buttonTitleColorForState:UIControlStateHighlighted],
-                        [colorScheme.surfaceColor colorWithAlphaComponent:0.6f]);
+                        [colorScheme.surfaceColor colorWithAlphaComponent:(CGFloat)0.6]);
 }
 
 @end

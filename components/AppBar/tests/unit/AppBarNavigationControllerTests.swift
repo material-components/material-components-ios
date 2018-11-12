@@ -160,7 +160,11 @@ class AppBarNavigationControllerTests: XCTestCase {
     let nestedContainer = UIViewController()
     nestedContainer.addChildViewController(container)
     nestedContainer.view.addSubview(container.view)
+    #if swift(>=4.2)
+    container.didMove(toParent: nestedContainer)
+    #else
     container.didMove(toParentViewController: nestedContainer)
+    #endif
 
     // When
     navigationController.pushViewController(nestedContainer, animated: false)
@@ -177,7 +181,11 @@ class AppBarNavigationControllerTests: XCTestCase {
     let fhvc = MDCFlexibleHeaderViewController()
     viewController.addChildViewController(fhvc)
     viewController.view.addSubview(fhvc.view)
+    #if swift(>=4.2)
+    fhvc.didMove(toParent: viewController)
+    #else
     fhvc.didMove(toParentViewController: viewController)
+    #endif
 
     // When
     navigationController.pushViewController(viewController, animated: false)

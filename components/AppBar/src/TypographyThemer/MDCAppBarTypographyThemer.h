@@ -29,7 +29,9 @@
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
        toAppBarViewController:(nonnull MDCAppBarViewController *)appBarViewController;
 
-#pragma mark - To be deprecated
+@end
+
+@interface MDCAppBarTypographyThemer (ToBeDeprecated)
 
 /**
  Applies a typography scheme's properties to an MDCAppBar.

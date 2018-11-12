@@ -14,7 +14,7 @@
 
 #import "MDCFloatingButtonShapeThemer.h"
 
-static const CGFloat kFloatingButtonBaselineShapePercentageValue = 0.5f;
+static const CGFloat kFloatingButtonBaselineShapePercentageValue = (CGFloat)0.5;
 
 @implementation MDCFloatingButtonShapeThemer
 

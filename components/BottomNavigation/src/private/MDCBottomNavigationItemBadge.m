@@ -14,9 +14,9 @@
 
 #import "MDCBottomNavigationItemBadge.h"
 
-static const CGFloat kMDCBottomNavigationItemBadgeFontSize = 10.f;
-static const CGFloat kMDCBottomNavigationItemBadgeXPadding = 8.f;
-static const CGFloat kMDCBottomNavigationItemBadgeYPadding = 2.f;
+static const CGFloat kMDCBottomNavigationItemBadgeFontSize = 10;
+static const CGFloat kMDCBottomNavigationItemBadgeXPadding = 8;
+static const CGFloat kMDCBottomNavigationItemBadgeYPadding = 2;
 
 @implementation MDCBottomNavigationItemBadge
 

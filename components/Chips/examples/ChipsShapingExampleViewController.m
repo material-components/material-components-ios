@@ -54,8 +54,8 @@
   _chipView.titleLabel.text = @"Material";
   _chipView.imageView.image = [self faceImage];
   _chipView.accessoryView = [self deleteButton];
-  _chipView.imagePadding = UIEdgeInsetsMake(0, 10.f, 0, 0);
-  _chipView.accessoryPadding = UIEdgeInsetsMake(0, 0, 0, 10.f);
+  _chipView.imagePadding = UIEdgeInsetsMake(0, 10, 0, 0);
+  _chipView.accessoryPadding = UIEdgeInsetsMake(0, 0, 0, 10);
   CGSize chipSize = [_chipView sizeThatFits:self.view.bounds.size];
   _chipView.frame = CGRectMake(20, 20, chipSize.width + 20, chipSize.height + 20);
   _chipView.shapeGenerator = _rectangleShapeGenerator;

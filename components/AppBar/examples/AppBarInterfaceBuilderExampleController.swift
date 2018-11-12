@@ -59,7 +59,11 @@ class AppBarInterfaceBuilderSwiftExample: UIViewController, UIScrollViewDelegate
     appBarViewController.headerView.trackingScrollView = scrollView
 
     view.addSubview(appBarViewController.view)
+    #if swift(>=4.2)
+    appBarViewController.didMove(toParent: self)
+    #else
     appBarViewController.didMove(toParentViewController: self)
+    #endif
   }
 
   override var preferredStatusBarStyle: UIStatusBarStyle {

@@ -33,11 +33,10 @@
   CGFloat boundsHeight = CGRectGetHeight(self.view.bounds);
 
   NSArray *pageColors = @[
-      [UIColor colorWithWhite:0.9f alpha:1.0f],
-      [UIColor colorWithWhite:0.8f alpha:1.0f],
-      [UIColor colorWithWhite:0.7f alpha:1.0f],
-      [UIColor colorWithWhite:0.6f alpha:1.0f],
-      [UIColor colorWithWhite:0.5f alpha:1.0f]  ];
+    [UIColor colorWithWhite:(CGFloat)0.9 alpha:1], [UIColor colorWithWhite:(CGFloat)0.8 alpha:1],
+    [UIColor colorWithWhite:(CGFloat)0.7 alpha:1], [UIColor colorWithWhite:(CGFloat)0.6 alpha:1],
+    [UIColor colorWithWhite:(CGFloat)0.5 alpha:1]
+  ];
 
   // Scroll view configuration
   _scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
@@ -56,7 +55,7 @@
     UILabel *page = [[UILabel alloc] initWithFrame:pageFrame];
     page.text = [NSString stringWithFormat:@"Page %lu", (unsigned long)(i + 1)];
     page.font = [UIFont systemFontOfSize:50];
-    page.textColor = [UIColor colorWithWhite:0 alpha:0.8f];
+    page.textColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.8];
     page.textAlignment = NSTextAlignmentCenter;
     page.backgroundColor = pageColors[i];
     page.autoresizingMask =

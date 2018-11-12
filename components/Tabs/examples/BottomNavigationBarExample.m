@@ -41,8 +41,11 @@
   _bottomNavigationBar.translatesAutoresizingMaskIntoConstraints = NO;
   _bottomNavigationBar.delegate = self;
   [MDCTabBarColorThemer applySemanticColorScheme:self.colorScheme toTabs:_bottomNavigationBar];
-  
-  _bottomNavigationBar.inkColor = [UIColor colorWithRed:0 green:0.5f blue:0 alpha:0.15f];
+
+  _bottomNavigationBar.inkColor = [UIColor colorWithRed:0
+                                                  green:(CGFloat)0.5
+                                                   blue:0
+                                                  alpha:(CGFloat)0.15];
 
   NSBundle *bundle = [NSBundle bundleForClass:[BottomNavigationBarExample class]];
   UIImage *infoImage =

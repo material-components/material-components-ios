@@ -28,7 +28,7 @@
   CGRect contentBounds = UIEdgeInsetsInsetRect(CGRectStandardize(self.contentView.bounds),
                                                UIEdgeInsetsMake(0, 16, 0, 16));
   self.contentView.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
-  if (CGRectGetHeight(contentBounds) < 0.01f) {
+  if (CGRectGetHeight(contentBounds) < (CGFloat)0.01) {
     contentBounds = CGRectMake(CGRectGetMinX(contentBounds), CGRectGetMinY(contentBounds),
                                CGRectGetWidth(contentBounds), CGRectGetHeight(self.bounds));
   }

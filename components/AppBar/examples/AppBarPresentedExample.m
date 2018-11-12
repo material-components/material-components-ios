@@ -35,7 +35,7 @@
 
 - (id)init {
   UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-  layout.minimumInteritemSpacing = 10.0f;
+  layout.minimumInteritemSpacing = 10;
 
   self = [super initWithCollectionViewLayout:layout];
 
@@ -108,13 +108,13 @@
   [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
   switch (indexPath.row%3) {
     case 0:
-      cell.backgroundColor = [UIColor colorWithWhite:0.2f alpha:1.0f];
+      cell.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.2 alpha:1];
       break;
     case 1:
-      cell.backgroundColor = [UIColor colorWithWhite:0.5f alpha:1.0f];
+      cell.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.5 alpha:1];
       break;
     case 2:
-      cell.backgroundColor = [UIColor colorWithWhite:0.7f alpha:1.0f];
+      cell.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.7 alpha:1];
       break;
     default:
       break;
@@ -127,7 +127,7 @@
                   layout:(UICollectionViewLayout*)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
   CGRect collectionViewFrame = collectionView.frame;
-  return CGSizeMake(collectionViewFrame.size.width/2.f - 14.f, 40.f);
+  return CGSizeMake(collectionViewFrame.size.width / 2 - 14, 40);
 }
 
 @end
@@ -145,7 +145,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = [UIColor colorWithWhite:0.95f alpha:1];
+  self.view.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.95 alpha:1];
 
   self.demoViewController = [[PresentedDemoViewController alloc] init];
   self.demoViewController.colorScheme = self.colorScheme;

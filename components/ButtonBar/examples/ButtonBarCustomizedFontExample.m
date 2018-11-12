@@ -42,7 +42,7 @@
 
   MDCButtonBar *buttonBar = [[MDCButtonBar alloc] init];
 
-  self.typographyScheme.button = [UIFont fontWithName:@"American Typewriter" size:10.0f];
+  self.typographyScheme.button = [UIFont fontWithName:@"American Typewriter" size:10];
   [MDCButtonBarTypographyThemer applyTypographyScheme:self.typographyScheme toButtonBar:buttonBar];
 
   [MDCButtonBarColorThemer applySemanticColorScheme:self.colorScheme toButtonBar:buttonBar];
@@ -74,7 +74,7 @@
   [self.view addSubview:buttonBar];
 
   // Ensure that the controller's view isn't transparent.
-  self.view.backgroundColor = [UIColor colorWithWhite:0.9f alpha:1.0f];
+  self.view.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
 }
 
 #pragma mark - User actions

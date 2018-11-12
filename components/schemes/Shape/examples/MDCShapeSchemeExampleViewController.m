@@ -223,7 +223,7 @@
   image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 
   UIButton *button = [[UIButton alloc] initWithFrame:CGRectZero];
-  button.tintColor = [UIColor colorWithWhite:0 alpha:0.7f];
+  button.tintColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.7];
   [button setImage:image forState:UIControlStateNormal];
 
   return button;

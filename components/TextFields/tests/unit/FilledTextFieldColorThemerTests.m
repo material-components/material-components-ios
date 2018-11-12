@@ -40,33 +40,33 @@
   // Then
   XCTAssertNil(textField.backgroundColor);
   XCTAssertEqualObjects(controller.borderFillColor,
-                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.04f]);
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.04]);
   XCTAssertEqualObjects(textField.borderView.borderFillColor, controller.borderFillColor);
   XCTAssertEqualObjects(controller.normalColor,
-                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.42f]);
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.42]);
   XCTAssertEqualObjects(textField.underline.color, controller.normalColor);
   XCTAssertEqualObjects(controller.inlinePlaceholderColor,
-                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.6f]);
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.6]);
   XCTAssertEqualObjects(textField.placeholderLabel.textColor, controller.inlinePlaceholderColor);
   XCTAssertEqualObjects(controller.leadingUnderlineLabelTextColor,
-                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.6f]);
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.6]);
   XCTAssertEqualObjects(textField.leadingUnderlineLabel.textColor,
                         controller.leadingUnderlineLabelTextColor);
   XCTAssertEqualObjects(controller.activeColor, colorScheme.primaryColor);
   // Set directly in the themer, not via the controller
   XCTAssertEqualObjects(textField.textColor,
-                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.87f]);
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87]);
   XCTAssertEqualObjects(controller.errorColor, colorScheme.errorColor);
   XCTAssertEqualObjects(controller.disabledColor,
-                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]);
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38]);
   XCTAssertEqualObjects(controller.floatingPlaceholderNormalColor,
-                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.6f]);
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.6]);
   XCTAssertEqualObjects(textField.placeholderLabel.textColor,
                         controller.floatingPlaceholderNormalColor);
   XCTAssertEqualObjects(controller.floatingPlaceholderActiveColor,
-                        [colorScheme.primaryColor colorWithAlphaComponent:0.87f]);
+                        [colorScheme.primaryColor colorWithAlphaComponent:(CGFloat)0.87]);
   XCTAssertEqualObjects(controller.textInputClearButtonTintColor,
-                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.54f]);
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.54]);
   XCTAssertEqualObjects(textField.clearButton.tintColor, controller.textInputClearButtonTintColor);
 }
 
@@ -87,7 +87,7 @@
 
   // Then
   XCTAssertEqualObjects(controller.disabledColor,
-                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]);
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38]);
   XCTAssertEqualObjects(textField.underline.color, controller.disabledColor);
 }
 
@@ -106,33 +106,33 @@
   // Then
   XCTAssertEqualObjects(textField.backgroundColor, UIColor.clearColor);
   XCTAssertEqualObjects(controller.borderFillColor,
-                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.04f]);
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.04]);
   XCTAssertEqualObjects(textField.borderView.borderFillColor, controller.borderFillColor);
   XCTAssertEqualObjects(controller.normalColor,
-                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.42f]);
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.42]);
   XCTAssertEqualObjects(textField.underline.color, controller.normalColor);
   XCTAssertEqualObjects(controller.inlinePlaceholderColor,
-                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.6f]);
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.6]);
   XCTAssertEqualObjects(textField.placeholderLabel.textColor, controller.inlinePlaceholderColor);
   XCTAssertEqualObjects(controller.leadingUnderlineLabelTextColor,
-                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.6f]);
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.6]);
   XCTAssertEqualObjects(textField.leadingUnderlineLabel.textColor,
                         controller.leadingUnderlineLabelTextColor);
   XCTAssertEqualObjects(controller.activeColor, colorScheme.primaryColor);
   // Set directly in the themer, not via the controller
   XCTAssertEqualObjects(textField.textColor,
-                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.87f]);
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87]);
   XCTAssertEqualObjects(controller.errorColor, colorScheme.errorColor);
   XCTAssertEqualObjects(controller.disabledColor,
-                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]);
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38]);
   XCTAssertEqualObjects(controller.floatingPlaceholderNormalColor,
-                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.6f]);
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.6]);
   XCTAssertEqualObjects(textField.placeholderLabel.textColor,
                         controller.floatingPlaceholderNormalColor);
   XCTAssertEqualObjects(controller.floatingPlaceholderActiveColor,
-                        [colorScheme.primaryColor colorWithAlphaComponent:0.87f]);
+                        [colorScheme.primaryColor colorWithAlphaComponent:(CGFloat)0.87]);
   XCTAssertEqualObjects(controller.textInputClearButtonTintColor,
-                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.54f]);
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.54]);
   XCTAssertEqualObjects(textField.clearButton.tintColor, controller.textInputClearButtonTintColor);
 }
 
@@ -153,7 +153,7 @@
 
   // Then
   XCTAssertEqualObjects(controller.disabledColor,
-                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]);
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38]);
   XCTAssertEqualObjects(textField.underline.color, controller.disabledColor);
 }
 

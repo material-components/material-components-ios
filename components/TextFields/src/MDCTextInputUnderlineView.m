@@ -16,7 +16,7 @@
 
 #import "MaterialPalettes.h"
 
-static const CGFloat MDCTextInputUnderlineDefaultHeight = 1.f;
+static const CGFloat MDCTextInputUnderlineDefaultHeight = 1;
 
 // TODO: (larche): Make disabled color parameterized?
 static inline UIColor *MDCTextInputUnderlineColor() {
@@ -83,7 +83,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 - (void)updateUnderlinePath {
   CGRect bounds = [self bounds];
   CGMutablePathRef path = CGPathCreateMutable();
-  CGFloat offSet = 1.f / [UIScreen mainScreen].scale;
+  CGFloat offSet = 1 / [UIScreen mainScreen].scale;
   CGPathMoveToPoint(path, NULL, CGRectGetMinX(bounds), CGRectGetMidY(bounds) + offSet);
   CGPathAddLineToPoint(path, NULL, CGRectGetMaxX(bounds), CGRectGetMidY(bounds) + offSet);
 
@@ -111,7 +111,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
       [self.layer addSublayer:_underline];
     }
 
-    _disabledUnderline.opacity = 0.f;
+    _disabledUnderline.opacity = 0;
   } else {
     if (!_disabledUnderline) {
       _disabledUnderline = [CAShapeLayer layer];
@@ -125,7 +125,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
       [self.layer addSublayer:_disabledUnderline];
     }
 
-    _disabledUnderline.opacity = 1.f;
+    _disabledUnderline.opacity = 1;
   }
 
   _underline.lineWidth = self.lineHeight;

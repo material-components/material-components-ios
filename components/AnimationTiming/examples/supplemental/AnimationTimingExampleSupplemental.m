@@ -16,12 +16,12 @@
 
 #import "MaterialTypography.h"
 
-const CGFloat kTopMargin = 16.f;
-const CGFloat kLeftGutter = 16.f;
-const CGFloat kTextOffset = 16.f;
+const CGFloat kTopMargin = 16;
+const CGFloat kLeftGutter = 16;
+const CGFloat kTextOffset = 16;
 
 // Size of the circle we animate.
-static const CGSize kAnimationCircleSize = {48.f, 48.f};
+static const CGSize kAnimationCircleSize = {48, 48};
 
 @implementation AnimationTimingExample (CatalogByConvention)
 
@@ -88,7 +88,7 @@ static const CGSize kAnimationCircleSize = {48.f, 48.f};
        ]];
   }
 
-  CGFloat lineSpace = (CGRectGetHeight(self.view.frame) - 50.f) / 5.f;
+  CGFloat lineSpace = (CGRectGetHeight(self.view.frame) - 50) / 5;
   UILabel *linearLabel = [AnimationTimingExample curveLabelWithTitle:@"Linear"];
   linearLabel.frame =
       CGRectMake(kLeftGutter, kTopMargin, linearLabel.frame.size.width, linearLabel.frame.size.height);
@@ -98,7 +98,7 @@ static const CGSize kAnimationCircleSize = {48.f, 48.f};
       CGRectMake(kLeftGutter, kTextOffset + kTopMargin, kAnimationCircleSize.width, kAnimationCircleSize.height);
   self.linearView = [[UIView alloc] initWithFrame:linearViewFrame];
   self.linearView.backgroundColor = [AnimationTimingExample defaultColors][0];
-  self.linearView.layer.cornerRadius = kAnimationCircleSize.width / 2.f;
+  self.linearView.layer.cornerRadius = kAnimationCircleSize.width / 2;
   [self.scrollView addSubview:self.linearView];
 
   UILabel *materialEaseInOutLabel =
@@ -113,50 +113,52 @@ static const CGSize kAnimationCircleSize = {48.f, 48.f};
                  kAnimationCircleSize.height);
   self.materialStandardView = [[UIView alloc] initWithFrame:materialEaseInOutViewFrame];
   self.materialStandardView.backgroundColor = [AnimationTimingExample defaultColors][1];
-  self.materialStandardView.layer.cornerRadius = kAnimationCircleSize.width / 2.f;
+  self.materialStandardView.layer.cornerRadius = kAnimationCircleSize.width / 2;
   [self.scrollView addSubview:self.materialStandardView];
 
   UILabel *materialEaseOutLabel =
       [AnimationTimingExample curveLabelWithTitle:@"MDCAnimationTimingFunctionDeceleration"];
   materialEaseOutLabel.frame =
-      CGRectMake(kLeftGutter, lineSpace * 2.f, materialEaseOutLabel.frame.size.width,
+      CGRectMake(kLeftGutter, lineSpace * 2, materialEaseOutLabel.frame.size.width,
                  materialEaseOutLabel.frame.size.height);
   [self.scrollView addSubview:materialEaseOutLabel];
 
   CGRect materialDecelerationViewFrame =
-      CGRectMake(kLeftGutter, lineSpace * 2.f + kTextOffset, kAnimationCircleSize.width,
+      CGRectMake(kLeftGutter, lineSpace * 2 + kTextOffset, kAnimationCircleSize.width,
                  kAnimationCircleSize.height);
   self.materialDecelerationView = [[UIView alloc] initWithFrame:materialDecelerationViewFrame];
   self.materialDecelerationView.backgroundColor = [AnimationTimingExample defaultColors][2];
-  self.materialDecelerationView.layer.cornerRadius = kAnimationCircleSize.width / 2.f;
+  self.materialDecelerationView.layer.cornerRadius = kAnimationCircleSize.width / 2;
   [self.scrollView addSubview:self.materialDecelerationView];
 
   UILabel *materialEaseInLabel =
       [AnimationTimingExample curveLabelWithTitle:@"MDCAnimationTimingFunctionAcceleration"];
   materialEaseInLabel.frame =
-      CGRectMake(kLeftGutter, lineSpace * 3.f, materialEaseInLabel.frame.size.width,
+      CGRectMake(kLeftGutter, lineSpace * 3, materialEaseInLabel.frame.size.width,
                  materialEaseInLabel.frame.size.height);
   [self.scrollView addSubview:materialEaseInLabel];
 
   CGRect materialAccelerationViewFrame =
-      CGRectMake(kLeftGutter, lineSpace * 3.f + kTextOffset, kAnimationCircleSize.width,
+      CGRectMake(kLeftGutter, lineSpace * 3 + kTextOffset, kAnimationCircleSize.width,
                  kAnimationCircleSize.height);
   self.materialAccelerationView = [[UIView alloc] initWithFrame:materialAccelerationViewFrame];
   self.materialAccelerationView.backgroundColor = [AnimationTimingExample defaultColors][3];
-  self.materialAccelerationView.layer.cornerRadius = kAnimationCircleSize.width / 2.f;
+  self.materialAccelerationView.layer.cornerRadius = kAnimationCircleSize.width / 2;
   [self.scrollView addSubview:self.materialAccelerationView];
    
    UILabel *materialSharpLabel =
        [AnimationTimingExample curveLabelWithTitle:@"MDCAnimationTimingFunctionSharp"];
    materialSharpLabel.frame =
-       CGRectMake(kLeftGutter, lineSpace * 4.f, CGRectGetWidth(materialSharpLabel.frame),
+       CGRectMake(kLeftGutter, lineSpace * 4, CGRectGetWidth(materialSharpLabel.frame),
                   CGRectGetHeight(materialSharpLabel.frame));
    [self.scrollView addSubview:materialSharpLabel];
-   
-   CGRect materialSharpViewFrame = CGRectMake(kLeftGutter, lineSpace * 4.f + kTextOffset, kAnimationCircleSize.width, kAnimationCircleSize.height);
+
+   CGRect materialSharpViewFrame =
+       CGRectMake(kLeftGutter, lineSpace * 4 + kTextOffset, kAnimationCircleSize.width,
+                  kAnimationCircleSize.height);
    self.materialSharpView = [[UIView alloc] initWithFrame:materialSharpViewFrame];
    self.materialSharpView.backgroundColor = [AnimationTimingExample defaultColors][4];
-   self.materialSharpView.layer.cornerRadius = kAnimationCircleSize.width / 2.f;
+   self.materialSharpView.layer.cornerRadius = kAnimationCircleSize.width / 2;
    [self.scrollView addSubview:self.materialSharpView];
 }
 
@@ -175,11 +177,11 @@ static const CGSize kAnimationCircleSize = {48.f, 48.f};
   dispatch_once(&onceToken, ^{
     UIColor *primaryColor = [UIColor darkGrayColor];
     defaultColors = @[
-      [primaryColor colorWithAlphaComponent:0.95f],
-      [primaryColor colorWithAlphaComponent:0.90f],
-      [primaryColor colorWithAlphaComponent:0.85f],
-      [primaryColor colorWithAlphaComponent:0.80f],
-      [primaryColor colorWithAlphaComponent:0.75f]
+      [primaryColor colorWithAlphaComponent:(CGFloat)0.95],
+      [primaryColor colorWithAlphaComponent:(CGFloat)0.90],
+      [primaryColor colorWithAlphaComponent:(CGFloat)0.85],
+      [primaryColor colorWithAlphaComponent:(CGFloat)0.80],
+      [primaryColor colorWithAlphaComponent:(CGFloat)0.75]
     ];
   });
   return defaultColors;

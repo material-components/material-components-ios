@@ -16,8 +16,8 @@
 #import "private/UIFont+MaterialTypographyPrivate.h"
 
 static id<MDCTypographyFontLoading> gFontLoader = nil;
-const CGFloat MDCTypographyStandardOpacity = 0.87f;
-const CGFloat MDCTypographySecondaryOpacity = 0.54f;
+const CGFloat MDCTypographyStandardOpacity = (CGFloat)0.87;
+const CGFloat MDCTypographySecondaryOpacity = (CGFloat)0.54;
 
 @implementation MDCTypography
 
