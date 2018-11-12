@@ -14,7 +14,7 @@
 
 import UIKit
 import MaterialComponentsAlpha.MaterialActionSheet
-import MaterialComponentsAlpha.MaterialActionSheetThemer
+import MaterialComponentsAlpha.MaterialActionSheet_ActionSheetThemer
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialTypographyScheme
 
