@@ -168,11 +168,11 @@ static NSString *const exampleExtraLongText =
   [self.view addSubview:bannerViewContainer];
   bannerViewContainer.backgroundColor = [UIColor whiteColor];
   self.bannerViewContainer = bannerViewContainer;
-  
+
   MDCBannerView *bannerView = [[MDCBannerView alloc] init];
   bannerView.image = [UIImage imageNamed:@"Email"];
   bannerView.text = exampleShortText;
-  
+
   MDCButton *button = [bannerView.buttons firstObject];
   [button setTitle:@"DISMISS" forState:UIControlStateNormal];
   UIFont *buttonFont = [MDCTypography body2Font];
@@ -180,7 +180,7 @@ static NSString *const exampleExtraLongText =
   [button setTitleFont:buttonFont forState:UIControlStateHighlighted];
   [button setTitleColor:self.colorScheme.primaryColor forState:UIControlStateNormal];
   button.backgroundColor = self.colorScheme.surfaceColor;
-  
+
   [self.bannerViewContainer addSubview:bannerView];
   [button addTarget:self
                 action:@selector(dismissBanner)

@@ -14,8 +14,8 @@
 
 #import "MDCBannerView.h"
 
-#import "MaterialButtons.h"
 #import "MDCBannerViewLayout.h"
+#import "MaterialButtons.h"
 
 static const CGFloat kIconImageContainerSideLength = 40.0f;
 static const CGFloat kIconImageSideLength = 24.0f;
@@ -107,7 +107,9 @@ static const NSUInteger kNumberOfButtonsLimit = 2;
 }
 
 - (void)setNumberOfButtons:(NSUInteger)numberOfButtons {
-  NSAssert(numberOfButtons <= kNumberOfButtonsLimit, @"%@ class doesn't support more than %lu buttons", NSStringFromClass([self class]), (unsigned long)kNumberOfButtonsLimit);
+  NSAssert(numberOfButtons <= kNumberOfButtonsLimit,
+           @"%@ class doesn't support more than %lu buttons", NSStringFromClass([self class]),
+           (unsigned long)kNumberOfButtonsLimit);
   if (numberOfButtons != self.buttons.count) {
     NSMutableArray *mutableButtons = [self.buttons mutableCopy];
     if (numberOfButtons > self.buttons.count) {
