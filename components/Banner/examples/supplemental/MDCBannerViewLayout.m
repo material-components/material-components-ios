@@ -49,44 +49,35 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutMode) {
 
 @implementation MDCBannerViewLayout
 
-- (instancetype)initWithSizeToFit:(CGSize)sizeToFit {
+- (instancetype)initWithSizeToFit:(CGSize)sizeToFit
+                        textLabel:(UILabel *)textLabel
+                   imageContainer:(UIView *)imageContainer
+                          buttons:(NSArray<__kindof UIButton *> *)buttons {
   self = [super init];
   if (self) {
     _sizeToFit = sizeToFit;
     _internalButtonFrames = [[NSMutableArray alloc] init];
+    
+    _imageContainer = [[UIView alloc] initWithFrame:imageContainer.frame];
+    _textLabel = [[UILabel alloc] initWithFrame:textLabel.frame];
+    _textLabel.text = textLabel.text;
+    _textLabel.font = textLabel.font;
+    _textLabel.numberOfLines = textLabel.numberOfLines;
+    
+    for (NSUInteger index = 0; index < buttons.count; ++index) {
+      UIButton *button = buttons[index];
+      [button sizeToFit];
+      [_internalButtonFrames addObject:[NSValue valueWithCGRect:button.frame]];
+    }
+    [self layout];
   }
   return self;
 }
 
-- (void)reloadData {
-  [self reloadViewModelsFromDataSource:self.dataSource];
+- (void)layout {
   self.style = [self layoutStyleForSizeToFit:self.sizeToFit];
   self.frameSize = [self frameSizeForLayoutStyle:self.style withSizeToFit:self.sizeToFit];
   [self updateLayoutWithStyle:self.style];
-}
-
-- (void)reloadViewModelsFromDataSource:(id<MDCBannerViewLayoutDataSource>)dataSource {
-  if (!dataSource) {
-    return;
-  }
-  NSInteger numberOfButtons = [self.dataSource numberOfButtonsForBannerViewLayout:self];
-  UIView *imageContainer = nil;
-  if ([self.dataSource respondsToSelector:@selector(imageContainerForBannerViewLayout:)]) {
-    imageContainer = [self.dataSource imageContainerForBannerViewLayout:self];
-  }
-  UILabel *textLabel = [self.dataSource textLabelForBannerViewLayout:self];
-
-  self.imageContainer = [[UIView alloc] initWithFrame:imageContainer.frame];
-  self.textLabel = [[UILabel alloc] initWithFrame:textLabel.frame];
-  self.textLabel.text = textLabel.text;
-  self.textLabel.font = textLabel.font;
-  self.textLabel.numberOfLines = textLabel.numberOfLines;
-  [self.internalButtonFrames removeAllObjects];
-  for (NSInteger index = 0; index < numberOfButtons; ++index) {
-    UIButton *button = [self.dataSource bannerViewLayout:self buttonAtIndex:index];
-    [button sizeToFit];
-    [self.internalButtonFrames addObject:[NSValue valueWithCGRect:button.frame]];
-  }
 }
 
 - (MDCBannerViewLayoutMode)layoutStyleForSizeToFit:(CGSize)sizeToFit {

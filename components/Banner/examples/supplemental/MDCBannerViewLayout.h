@@ -14,36 +14,6 @@
 
 #import <Foundation/Foundation.h>
 
-@class MDCBannerViewLayout;
-
-/**
- This protocol supplies the data models used for layout.
- */
-@protocol MDCBannerViewLayoutDataSource <NSObject>
-
-- (UILabel *)textLabelForBannerViewLayout:(MDCBannerViewLayout *)bannerViewLayout;
-
-/**
- Provides the number of buttons to the bannerViewLayout.
- 1 - 2 would be the suggested value to use for the layout.
- */
-- (NSInteger)numberOfButtonsForBannerViewLayout:(MDCBannerViewLayout *)bannerViewLayout;
-- (UIButton *)bannerViewLayout:(MDCBannerViewLayout *)bannerViewLayout
-                 buttonAtIndex:(NSInteger)index;
-
-@optional
-
-/**
- Provides the image container view object to the bannerViewLayout.
- Default is nil if not implemented
-
- @param bannerViewLayout The layout where image container is used
- @return The image container view object
- */
-- (UIView *)imageContainerForBannerViewLayout:(MDCBannerViewLayout *)bannerViewLayout;
-
-@end
-
 @interface MDCBannerViewLayout : NSObject
 
 @property(nonatomic, readonly, strong) NSArray *buttonFrames;
@@ -52,15 +22,11 @@
 
 @property(nonatomic, readonly, assign) CGSize frameSize;
 
-@property(nonatomic, weak, nullable) id<MDCBannerViewLayoutDataSource> dataSource;
-
-- (instancetype)initWithSizeToFit:(CGSize)sizeToFit NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithSizeToFit:(CGSize)sizeToFit
+                        textLabel:(UILabel *)textLabel
+                   imageContainer:(UIView *)imageContainer
+                          buttons:(NSArray<__kindof UIButton *> *)buttons NS_DESIGNATED_INITIALIZER;
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
-
-/**
- Reloads all data from dataSource and refresh the layout.
- */
-- (void)reloadData;
 
 @end

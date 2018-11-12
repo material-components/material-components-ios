@@ -24,7 +24,7 @@ static const CGFloat kTextFontSize = 14.0f;
 static const NSInteger kTextNumberOfLineLimit = 3;
 static const NSUInteger kNumberOfButtonsLimit = 2;
 
-@interface MDCBannerView () <MDCBannerViewLayoutDataSource>
+@interface MDCBannerView ()
 
 @property(nonatomic, readwrite, weak) UILabel *textLabel;
 @property(nonatomic, readwrite, weak) UIView *iconImageViewContainer;
@@ -102,7 +102,6 @@ static const NSUInteger kNumberOfButtonsLimit = 2;
     [self.iconImageViewContainer removeFromSuperview];
     self.iconImageViewContainer = nil;
   }
-  [self.layout reloadData];
   [self setNeedsLayout];
 }
 
@@ -127,7 +126,6 @@ static const NSUInteger kNumberOfButtonsLimit = 2;
     }
     self.buttons = [mutableButtons copy];
   }
-  [self.layout reloadData];
 }
 
 - (NSUInteger)numberOfButtons {
@@ -137,9 +135,10 @@ static const NSUInteger kNumberOfButtonsLimit = 2;
 #pragma mark - UIView overrides
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  self.layout = [[MDCBannerViewLayout alloc] initWithSizeToFit:size];
-  self.layout.dataSource = self;
-  [self.layout reloadData];
+  self.layout = [[MDCBannerViewLayout alloc] initWithSizeToFit:size
+                                                     textLabel:self.textLabel
+                                                imageContainer:self.iconImageViewContainer
+                                                       buttons:self.buttons];
   return [self.layout frameSize];
 }
 
@@ -147,25 +146,6 @@ static const NSUInteger kNumberOfButtonsLimit = 2;
   [super layoutSubviews];
 
   [self applyMDCBannerViewLayout:self.layout];
-}
-
-#pragma mark - MDCBannerViewLayoutDataSource
-
-- (UILabel *)textLabelForBannerViewLayout:(MDCBannerViewLayout *)bannerViewLayout {
-  return self.textLabel;
-}
-
-- (UIView *)imageContainerForBannerViewLayout:(MDCBannerViewLayout *)bannerViewLayout {
-  return self.iconImageViewContainer;
-}
-
-- (NSInteger)numberOfButtonsForBannerViewLayout:(MDCBannerViewLayout *)bannerViewLayout {
-  return self.buttons.count;
-}
-
-- (UIButton *)bannerViewLayout:(MDCBannerViewLayout *)bannerViewLayout
-                 buttonAtIndex:(NSInteger)index {
-  return self.buttons[index];
 }
 
 #pragma mark - Layout methods
