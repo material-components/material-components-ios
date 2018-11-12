@@ -32,6 +32,13 @@ static const CGFloat kBottomBarHeight = 44;
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+
+  if (!self.colorScheme) {
+    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+  }
+  if (!self.typographyScheme) {
+    self.typographyScheme = [[MDCTypographyScheme alloc] init];
+  }
   [self setupExampleViews:@[ @"Show Snackbar", @"Toggle bottom bar" ]];
   self.title = @"Snackbar Overlay View";
 

@@ -37,6 +37,13 @@ static NSString *const kCategoryB = @"CategoryB";
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+
+  if (!self.colorScheme) {
+    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+  }
+  if (!self.typographyScheme) {
+    self.typographyScheme = [[MDCTypographyScheme alloc] init];
+  }
   [self setupExampleViews:@[
       @"Show Category A Message",
       @"Show Category B Message",
