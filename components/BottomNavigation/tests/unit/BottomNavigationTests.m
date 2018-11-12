@@ -14,9 +14,9 @@
 
 #import <XCTest/XCTest.h>
 
+#import "../../src/private/MDCBottomNavigationItemView.h"
 #import "MaterialBottomNavigation.h"
 #import "MaterialShadowElevations.h"
-#import "../../src/private/MDCBottomNavigationItemView.h"
 
 @interface MDCBottomNavigationBar (Testing)
 @property(nonatomic, strong) NSMutableArray<MDCBottomNavigationItemView *> *itemViews;
