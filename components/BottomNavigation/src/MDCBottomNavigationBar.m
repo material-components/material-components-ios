@@ -119,7 +119,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 #else
   _shouldPretendToBeATabBar = YES;
 #endif
-  [self setElevation:MDCShadowElevationBottomNavigationBar];
+  _elevation = MDCShadowElevationBottomNavigationBar;
   _itemViews = [NSMutableArray array];
   _itemTitleFont = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleCaption];
 }
@@ -155,6 +155,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 }
 
 - (void)setElevation:(MDCShadowElevation)elevation {
+  _elevation = elevation;
   [(MDCShadowLayer *)self.layer setElevation:elevation];
 }
 
