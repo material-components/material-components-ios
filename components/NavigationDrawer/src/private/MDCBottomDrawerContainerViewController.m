@@ -24,7 +24,7 @@ static const CGFloat kVerticalDistanceThresholdForDismissal = 40;
 static const CGFloat kHeaderAnimationDistanceAddedDistanceFromTopSafeAreaInset = 20;
 // This epsilon is defined in units of screen points, and is supposed to be as small as possible
 // yet meaningful for comparison calculations.
-static const CGFloat kEpsilon = 0.001f;
+static const CGFloat kEpsilon = (CGFloat)0.001;
 // The buffer for the drawer's scroll view is neeeded to ensure that the KVO receiving the new
 // content offset, which is then changing the content offset of the tracking scroll view, will
 // be able to provide a value as if the scroll view is scrolling at natural speed. This is needed
@@ -36,7 +36,7 @@ static const CGFloat kDragVelocityThresholdForHidingDrawer = -2;
 static NSString *const kContentOffsetKeyPath = @"contentOffset";
 
 static UIColor *DrawerShadowColor(void) {
-  return [[UIColor blackColor] colorWithAlphaComponent:0.2f];
+  return [[UIColor blackColor] colorWithAlphaComponent:(CGFloat)0.2];
 }
 
 @interface MDCBottomDrawerContainerViewController (LayoutCalculations)
@@ -296,7 +296,7 @@ static UIColor *DrawerShadowColor(void) {
  the default value becomes 1.0.
  */
 - (CGFloat)initialDrawerFactor {
-  return [self shouldPresentFullScreen] ? 1 : 0.5f;
+  return [self shouldPresentFullScreen] ? 1 : (CGFloat)0.5;
 }
 
 - (void)addScrollViewObserver {

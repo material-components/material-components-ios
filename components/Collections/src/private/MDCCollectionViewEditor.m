@@ -23,10 +23,10 @@
 static const CGFloat kDismissalDistanceBeforeFading = 50;
 
 // Minimum alpha for an item being dismissed.
-static const CGFloat kDismissalMinimumAlpha = 0.5f;
+static const CGFloat kDismissalMinimumAlpha = (CGFloat)0.5;
 
 // Simple linear friction applied to swipe velocity.
-static const CGFloat kDismissalSwipeFriction = 0.05f;
+static const CGFloat kDismissalSwipeFriction = (CGFloat)0.05;
 
 // Animation duration for dismissal / restore.
 static const NSTimeInterval kDismissalAnimationDuration = 0.3;

@@ -64,7 +64,7 @@ class TextFieldControllerClassPropertiesLegacyTests: XCTestCase {
     // Test the values of the class properties.
     XCTAssertEqual(MDCTextInputControllerLegacyDefault.errorColorDefault, MDCPalette.red.accent400)
     XCTAssertEqual(MDCTextInputControllerLegacyDefault.inlinePlaceholderColorDefault,
-                   UIColor(white: 0, alpha: CGFloat(Float(0.54))))
+                   UIColor(white: 0, alpha: CGFloat(0.54)))
     XCTAssertEqual(MDCTextInputControllerLegacyDefault.mdc_adjustsFontForContentSizeCategoryDefault, false)
     XCTAssertEqual(MDCTextInputControllerLegacyDefault.activeColorDefault,
                    MDCPalette.blue.accent700)
@@ -73,9 +73,9 @@ class TextFieldControllerClassPropertiesLegacyTests: XCTestCase {
     XCTAssertEqual(MDCTextInputControllerLegacyDefault.underlineHeightNormalDefault, 1)
     XCTAssertEqual(MDCTextInputControllerLegacyDefault.underlineViewModeDefault, .whileEditing)
     XCTAssertEqual(MDCTextInputControllerLegacyDefault.leadingUnderlineLabelTextColorDefault,
-                   UIColor(white: 0, alpha: CGFloat(Float(0.54))))
+                   UIColor(white: 0, alpha: CGFloat(0.54)))
     XCTAssertEqual(MDCTextInputControllerLegacyDefault.trailingUnderlineLabelTextColorDefault,
-                   UIColor(white: 0, alpha: CGFloat(Float(0.54))))
+                   UIColor(white: 0, alpha: CGFloat(0.54)))
     XCTAssertEqual(MDCTextInputControllerLegacyDefault.leadingUnderlineLabelTextColorDefault,
                    MDCTextInputControllerLegacyDefault.inlinePlaceholderColorDefault)
     XCTAssertEqual(MDCTextInputControllerLegacyDefault.trailingUnderlineLabelTextColorDefault,
@@ -90,7 +90,7 @@ class TextFieldControllerClassPropertiesLegacyTests: XCTestCase {
 
     // Default specific properties
     XCTAssertEqual(MDCTextInputControllerLegacyDefault.floatingPlaceholderNormalColorDefault,
-                   UIColor(white: 0, alpha: CGFloat(Float(0.54))))
+                   UIColor(white: 0, alpha: CGFloat(0.54)))
     XCTAssertEqual(Float(MDCTextInputControllerLegacyDefault.floatingPlaceholderScaleDefault), 0.75)
     XCTAssertEqual(MDCTextInputControllerLegacyDefault.isFloatingEnabledDefault, true)
     
@@ -229,7 +229,7 @@ class TextFieldControllerClassPropertiesLegacyTests: XCTestCase {
     XCTAssertEqual(MDCTextInputControllerLegacyFullWidth.disabledColorDefault, .clear)
     XCTAssertEqual(MDCTextInputControllerLegacyFullWidth.errorColorDefault, MDCPalette.red.accent400)
     XCTAssertEqual(MDCTextInputControllerLegacyFullWidth.inlinePlaceholderColorDefault,
-                   UIColor(white: 0, alpha: CGFloat(Float(0.54))))
+                   UIColor(white: 0, alpha: CGFloat(0.54)))
     XCTAssertEqual(MDCTextInputControllerLegacyFullWidth.mdc_adjustsFontForContentSizeCategoryDefault,
                    false)
     XCTAssertEqual(MDCTextInputControllerLegacyFullWidth.activeColorDefault, .clear)
@@ -239,7 +239,7 @@ class TextFieldControllerClassPropertiesLegacyTests: XCTestCase {
     XCTAssertEqual(MDCTextInputControllerLegacyFullWidth.underlineViewModeDefault, .never)
     XCTAssertEqual(MDCTextInputControllerLegacyFullWidth.leadingUnderlineLabelTextColorDefault, .clear)
     XCTAssertEqual(MDCTextInputControllerLegacyFullWidth.trailingUnderlineLabelTextColorDefault,
-                   UIColor(white: 0, alpha: CGFloat(Float(0.54))))
+                   UIColor(white: 0, alpha: CGFloat(0.54)))
 
     XCTAssertEqual(MDCTextInputControllerLegacyFullWidth.inlinePlaceholderFontDefault,
                    UIFont.mdc_standardFont(forMaterialTextStyle: .body1))

@@ -28,8 +28,8 @@
     _item = item;
     _attachmentBehavior = [[UIAttachmentBehavior alloc] initWithItem:self.item
                                                     attachedToAnchor:CGPointZero];
-    _attachmentBehavior.frequency = 3.5f;
-    _attachmentBehavior.damping = 0.4f;
+    _attachmentBehavior.frequency = (CGFloat)3.5;
+    _attachmentBehavior.damping = (CGFloat)0.4;
     _attachmentBehavior.length = 0;
     [self addChildBehavior:_attachmentBehavior];
 

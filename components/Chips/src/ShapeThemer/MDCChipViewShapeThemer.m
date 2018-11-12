@@ -14,7 +14,7 @@
 
 #import "MDCChipViewShapeThemer.h"
 
-static const CGFloat kChipViewBaselineShapePercentageValue = 0.5f;
+static const CGFloat kChipViewBaselineShapePercentageValue = (CGFloat)0.5;
 
 @implementation MDCChipViewShapeThemer
 

@@ -177,11 +177,11 @@ static const CGSize kAnimationCircleSize = {48, 48};
   dispatch_once(&onceToken, ^{
     UIColor *primaryColor = [UIColor darkGrayColor];
     defaultColors = @[
-      [primaryColor colorWithAlphaComponent:0.95f],
-      [primaryColor colorWithAlphaComponent:0.90f],
-      [primaryColor colorWithAlphaComponent:0.85f],
-      [primaryColor colorWithAlphaComponent:0.80f],
-      [primaryColor colorWithAlphaComponent:0.75f]
+      [primaryColor colorWithAlphaComponent:(CGFloat)0.95],
+      [primaryColor colorWithAlphaComponent:(CGFloat)0.90],
+      [primaryColor colorWithAlphaComponent:(CGFloat)0.85],
+      [primaryColor colorWithAlphaComponent:(CGFloat)0.80],
+      [primaryColor colorWithAlphaComponent:(CGFloat)0.75]
     ];
   });
   return defaultColors;

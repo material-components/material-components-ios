@@ -26,11 +26,11 @@
 #import "private/MaterialActivityIndicatorStrings_table.h"
 
 static const NSInteger kTotalDetentCount = 5;
-static const NSTimeInterval kAnimateOutDuration = 0.1f;
+static const NSTimeInterval kAnimateOutDuration = 0.1;
 static const CGFloat kCycleRotation = (CGFloat)(3.0 / 2);
 static const CGFloat kOuterRotationIncrement = (CGFloat)(1.0 / kTotalDetentCount) * (CGFloat)M_PI;
 static const CGFloat kSpinnerRadius = 12;
-static const CGFloat kStrokeLength = 0.75f;
+static const CGFloat kStrokeLength = (CGFloat)0.75;
 
 #ifndef CGFLOAT_EPSILON
 #if CGFLOAT_IS_DOUBLE
@@ -355,7 +355,7 @@ static const CGFloat kSingleCycleRotation =
 
 - (void)setStrokeColor:(UIColor *)strokeColor {
   _strokeLayer.strokeColor = strokeColor.CGColor;
-  _trackLayer.strokeColor = [strokeColor colorWithAlphaComponent:0.3f].CGColor;
+  _trackLayer.strokeColor = [strokeColor colorWithAlphaComponent:(CGFloat)0.3].CGColor;
 }
 
 - (void)setIndicatorMode:(MDCActivityIndicatorMode)indicatorMode {
@@ -470,7 +470,7 @@ static const CGFloat kSingleCycleRotation =
 
   [self applyPropertiesWithoutAnimation:^{
     self.strokeLayer.strokeStart = 0;
-    self.strokeLayer.strokeEnd = 0.001f;
+    self.strokeLayer.strokeEnd = (CGFloat)0.001;
     self.strokeLayer.lineWidth = self.strokeWidth;
     self.trackLayer.lineWidth = self.strokeWidth;
 
@@ -654,7 +654,7 @@ static const CGFloat kSingleCycleRotation =
   _cycleCount = nearestCycle;
 
   CGFloat targetRotation = [self normalizedRotationForCycle:nearestCycle];
-  if (targetRotation <= 0.001f) {
+  if (targetRotation <= (CGFloat)0.001) {
     targetRotation = 1;
   }
   CGFloat pointCycleDuration = (CGFloat)MDCActivityIndicatorMotionSpec.pointCycleDuration;

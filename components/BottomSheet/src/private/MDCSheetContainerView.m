@@ -64,7 +64,7 @@ static const CGFloat kSheetBounceBuffer = 150;
 
     // Adjust the anchor point so all positions relate to the top edge rather than the actual
     // center.
-    _sheet.layer.anchorPoint = CGPointMake(0.5f, 0);
+    _sheet.layer.anchorPoint = CGPointMake((CGFloat)0.5, 0);
     _sheet.frame = self.bounds;
 
     _contentView = contentView;

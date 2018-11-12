@@ -25,7 +25,7 @@
 static NSString *const kMaterialFeatureHighlightBundle = @"MaterialFeatureHighlight.bundle";
 
 static const CGFloat kMDCFeatureHighlightLineSpacing = 1;
-static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = 1.5f;
+static const CGFloat kMDCFeatureHighlightPulseAnimationInterval = (CGFloat)1.5;
 
 @interface MDCFeatureHighlightViewController () <UIViewControllerTransitioningDelegate>
 @property(nonatomic, nullable, weak) MDCFeatureHighlightView *featureHighlightView;

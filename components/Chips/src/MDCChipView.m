@@ -53,10 +53,10 @@ static inline UIColor *MDCColorLighten(UIColor *color, CGFloat percent) {
 
 // TODO(samnm): Pull background color from MDCPalette
 static const uint32_t MDCChipBackgroundColor = 0xEBEBEB;
-static const CGFloat MDCChipSelectedDarkenPercent = 0.16f;
-static const CGFloat MDCChipDisabledLightenPercent = 0.38f;
-static const CGFloat MDCChipTitleColorWhite = 0.13f;
-static const CGFloat MDCChipTitleColorDisabledLightenPercent = 0.38f;
+static const CGFloat MDCChipSelectedDarkenPercent = (CGFloat)0.16;
+static const CGFloat MDCChipDisabledLightenPercent = (CGFloat)0.38;
+static const CGFloat MDCChipTitleColorWhite = (CGFloat)0.13;
+static const CGFloat MDCChipTitleColorDisabledLightenPercent = (CGFloat)0.38;
 
 static const UIEdgeInsets MDCChipContentPadding = {4, 4, 4, 4};
 static const UIEdgeInsets MDCChipImagePadding = {0, 0, 0, 0};
