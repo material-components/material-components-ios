@@ -23,14 +23,14 @@ static NSString *const MDCInkLayerInitialRadiusKey = @"MDCInkLayerInitialRadiusK
 static NSString *const MDCInkLayerMaxRippleRadiusKey = @"MDCInkLayerMaxRippleRadiusKey";
 static NSString *const MDCInkLayerInkColorKey = @"MDCInkLayerInkColorKey";
 
-static const CGFloat MDCInkLayerCommonDuration = 0.083f;
-static const CGFloat MDCInkLayerEndFadeOutDuration = 0.15f;
-static const CGFloat MDCInkLayerStartScalePositionDuration = 0.333f;
-static const CGFloat MDCInkLayerStartFadeHalfDuration = 0.167f;
-static const CGFloat MDCInkLayerStartFadeHalfBeginTimeFadeOutDuration = 0.25f;
+static const CGFloat MDCInkLayerCommonDuration = (CGFloat)0.083;
+static const CGFloat MDCInkLayerEndFadeOutDuration = (CGFloat)0.15;
+static const CGFloat MDCInkLayerStartScalePositionDuration = (CGFloat)0.333;
+static const CGFloat MDCInkLayerStartFadeHalfDuration = (CGFloat)0.167;
+static const CGFloat MDCInkLayerStartFadeHalfBeginTimeFadeOutDuration = (CGFloat)0.25;
 
-static const CGFloat MDCInkLayerScaleStartMin = 0.2f;
-static const CGFloat MDCInkLayerScaleStartMax = 0.6f;
+static const CGFloat MDCInkLayerScaleStartMin = (CGFloat)0.2;
+static const CGFloat MDCInkLayerScaleStartMax = (CGFloat)0.6;
 static const CGFloat MDCInkLayerScaleDivisor = 300;
 
 static NSString *const MDCInkLayerOpacityString = @"opacity";
@@ -129,7 +129,8 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
 }
 
 - (void)setRadiiWithRect:(CGRect)rect {
-  self.initialRadius = (CGFloat)(MDCHypot(CGRectGetHeight(rect), CGRectGetWidth(rect)) / 2 * 0.6f);
+  self.initialRadius =
+      (CGFloat)(MDCHypot(CGRectGetHeight(rect), CGRectGetWidth(rect)) / 2 * (CGFloat)0.6);
   self.finalRadius = (CGFloat)(MDCHypot(CGRectGetHeight(rect), CGRectGetWidth(rect)) / 2 + 10);
 }
 
@@ -158,7 +159,7 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
     _startAnimationActive = YES;
 
     CAMediaTimingFunction *materialTimingFunction =
-        [[CAMediaTimingFunction alloc] initWithControlPoints:0.4f:0:0.2f:1];
+        [[CAMediaTimingFunction alloc] initWithControlPoints:(float)0.4:0:(float)0.2:1];
 
     CGFloat scaleStart =
         MIN(CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds)) / MDCInkLayerScaleDivisor;

@@ -49,9 +49,9 @@ static const CGFloat kCollectionViewGridDefaultPadding = 4;
 /** The drawn cell background */
 static const CGSize kCellImageSize = {44, 44};
 static const CGFloat kCollectionViewCellDefaultBorderWidth = 1;
-static const CGFloat kCollectionViewCellDefaultBorderRadius = 1.5f;
+static const CGFloat kCollectionViewCellDefaultBorderRadius = (CGFloat)1.5;
 static inline UIColor *kCollectionViewCellDefaultBorderColor() {
-  return [UIColor colorWithWhite:0 alpha:0.05f];
+  return [UIColor colorWithWhite:0 alpha:(CGFloat)0.05];
 }
 
 /** Cell shadowing */
@@ -60,7 +60,7 @@ static inline CGSize kCollectionViewCellDefaultShadowOffset() {
   return CGSizeMake(0, 1);
 }
 static inline UIColor *kCollectionViewCellDefaultShadowColor() {
-  return [UIColor colorWithWhite:0 alpha:0.1f];
+  return [UIColor colorWithWhite:0 alpha:(CGFloat)0.1];
 }
 
 /** Animate cell on appearance settings */

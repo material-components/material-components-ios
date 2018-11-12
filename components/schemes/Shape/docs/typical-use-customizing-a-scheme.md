@@ -42,7 +42,7 @@ shapeScheme.mediumComponentShape =
 // Large Component Shape
 MDCShapeCategory *largeShapeCategory = [[MDCShapeCategory alloc] init];
 MDCCornerTreatment *rounded50PercentCorner =
-    [MDCCornerTreatment cornerWithRadius:0.5f valueType:MDCCornerTreatmentValueTypePercentage];
+    [MDCCornerTreatment cornerWithRadius:(CGFloat)0.5 valueType:MDCCornerTreatmentValueTypePercentage];
 MDCCornerTreatment *cut8PointsCorner = [MDCCornerTreatment cornerWithCut:8];
 largeShapeCategory.topLeftCorner = rounded50PercentCorner;
 largeShapeCategory.topRightCorner = rounded50PercentCorner;

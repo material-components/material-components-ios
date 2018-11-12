@@ -46,7 +46,7 @@ static const CGFloat kBorderWidth = 0;
 /**
  Shadow coloring.
  */
-static const CGFloat kShadowAlpha = 0.24f;
+static const CGFloat kShadowAlpha = (CGFloat)0.24;
 
 static const CGSize kShadowOffset = (CGSize){0.0, 2.0};
 static const CGSize kLegacyShadowOffset = (CGSize){0.0, 1.0};
@@ -171,7 +171,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   self = [super initWithFrame:frame];
   if (self) {
     self.inkMaxRippleRadius = kButtonInkRadius;
-    self.inkColor = [UIColor colorWithWhite:1 alpha:0.06f];
+    self.inkColor = [UIColor colorWithWhite:1 alpha:(CGFloat)0.06];
     self.inkStyle = MDCInkStyleUnbounded;
 
     CGFloat buttonContentPadding =
@@ -233,8 +233,8 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
         manager.messageTextColor ?: UIColor.whiteColor;
     _buttonTitleColors = [NSMutableDictionary dictionary];
     _buttonTitleColors[@(UIControlStateNormal)] =
-        [manager buttonTitleColorForState:UIControlStateNormal] ?:
-        MDCRGBAColor(0xFF, 0xFF, 0xFF, 0.6f);
+        [manager buttonTitleColorForState:UIControlStateNormal]
+            ?: MDCRGBAColor(0xFF, 0xFF, 0xFF, (float)0.6);
     _buttonTitleColors[@(UIControlStateHighlighted)] =
         [manager buttonTitleColorForState:UIControlStateHighlighted] ?:
         UIColor.whiteColor;
@@ -247,7 +247,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
     self.backgroundColor = _snackbarMessageViewBackgroundColor;
     self.layer.shadowColor = _snackbarMessageViewShadowColor.CGColor;
-    self.layer.shadowOpacity = kShadowAlpha;
+    self.layer.shadowOpacity = (float)kShadowAlpha;
     if (MDCSnackbarMessage.usesLegacySnackbar) {
       self.layer.cornerRadius = kLegacyCornerRadius;
       self.layer.shadowOffset = kLegacyShadowOffset;
@@ -488,7 +488,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
           break;
         case UIControlStateNormal:
         default:
-          defaultButtonTitleColor = MDCRGBAColor(0xFF, 0xFF, 0xFF, 0.6f);
+          defaultButtonTitleColor = MDCRGBAColor(0xFF, 0xFF, 0xFF, (float)0.6);
           break;
       }
       [button setTitleColor:defaultButtonTitleColor forState:state];

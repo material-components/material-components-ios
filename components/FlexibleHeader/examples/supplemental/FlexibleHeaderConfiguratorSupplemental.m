@@ -83,7 +83,7 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
   [self.view addSubview:self.fhvc.view];
   [self.fhvc didMoveToParentViewController:self];
 
-  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:0.1f alpha:1];
+  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.1 alpha:1];
 
   self.titleLabel = [[UILabel alloc] init];
   self.titleLabel.text = self.title;

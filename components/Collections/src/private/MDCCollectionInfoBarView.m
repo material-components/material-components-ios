@@ -18,7 +18,7 @@
 #import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
 
-const CGFloat MDCCollectionInfoBarAnimationDuration = 0.3f;
+const CGFloat MDCCollectionInfoBarAnimationDuration = (CGFloat)0.3;
 const CGFloat MDCCollectionInfoBarHeaderHeight = 48;
 const CGFloat MDCCollectionInfoBarFooterHeight = 48;
 
@@ -159,7 +159,7 @@ static inline UIColor *CollectionInfoBarRedColor(void) {
     self.tintColor = CollectionInfoBarBlueColor();
     self.titleLabel.textColor = [UIColor whiteColor];
     self.autoDismissAfterDuration = 1;
-    self.backgroundView.alpha = 0.9f;
+    self.backgroundView.alpha = (CGFloat)0.9;
   } else if (style == MDCCollectionInfoBarViewStyleActionable) {
     self.allowsTap = YES;
     self.shouldApplyBackgroundViewShadow = YES;
@@ -176,7 +176,7 @@ static inline UIColor *CollectionInfoBarRedColor(void) {
     self.backgroundView.clipsToBounds = YES;
     if (!_backgroundBorderLayer) {
       _backgroundBorderLayer = [CALayer layer];
-      _backgroundBorderLayer.borderColor = [UIColor colorWithWhite:0 alpha:0.1f].CGColor;
+      _backgroundBorderLayer.borderColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.1].CGColor;
       _backgroundBorderLayer.borderWidth = 1 / [[UIScreen mainScreen] scale];
       [self.backgroundView.layer addSublayer:_backgroundBorderLayer];
     }

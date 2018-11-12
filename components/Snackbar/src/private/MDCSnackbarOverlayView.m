@@ -28,12 +28,12 @@
 NSString *const MDCSnackbarOverlayIdentifier = @"MDCSnackbar";
 
 // The time it takes to show or hide the Snackbar.
-NSTimeInterval const MDCSnackbarEnterTransitionDuration = 0.15f;
-NSTimeInterval const MDCSnackbarExitTransitionDuration = 0.075f;
-NSTimeInterval const MDCSnackbarLegacyTransitionDuration = 0.5f;
+NSTimeInterval const MDCSnackbarEnterTransitionDuration = 0.15;
+NSTimeInterval const MDCSnackbarExitTransitionDuration = 0.075;
+NSTimeInterval const MDCSnackbarLegacyTransitionDuration = 0.5;
 
 // The scaling starting point for presenting the new Snackbar.
-static const CGFloat MDCSnackbarEnterStartingScale = 0.8f;
+static const CGFloat MDCSnackbarEnterStartingScale = (CGFloat)0.8;
 
 // How far from the bottom of the screen should the Snackbar be.
 static const CGFloat MDCSnackbarBottomMargin_iPhone = 8;

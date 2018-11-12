@@ -16,7 +16,7 @@
 #import "supplemental/AnimationTimingExampleSupplemental.h"
 
 const NSTimeInterval kAnimationTimeInterval = 1;
-const NSTimeInterval kAnimationTimeDelay = 0.5f;
+const NSTimeInterval kAnimationTimeDelay = 0.5;
 
 @interface AnimationTimingExample ()
 

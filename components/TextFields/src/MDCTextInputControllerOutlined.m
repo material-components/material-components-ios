@@ -144,7 +144,7 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 // clang-format on
 - (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets {
   UIEdgeInsets textInsets = [super textInsets:defaultInsets];
-  CGFloat textVerticalOffset = self.textInput.placeholderLabel.font.lineHeight * .5f;
+  CGFloat textVerticalOffset = self.textInput.placeholderLabel.font.lineHeight * (CGFloat)0.5;
 
   CGFloat scale = UIScreen.mainScreen.scale;
   CGFloat placeholderEstimatedHeight =
@@ -210,7 +210,8 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 
 - (CGRect)borderRect {
   CGRect pathRect = self.textInput.bounds;
-  pathRect.origin.y = pathRect.origin.y + self.textInput.placeholderLabel.font.lineHeight * .5f;
+  pathRect.origin.y =
+      pathRect.origin.y + self.textInput.placeholderLabel.font.lineHeight * (CGFloat)0.5;
   pathRect.size.height = [self borderHeight];
   return pathRect;
 }
@@ -270,7 +271,7 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
   CGFloat placeholderEstimatedHeight =
       MDCCeil(self.textInput.placeholderLabel.font.lineHeight * scale) / scale;
   CGFloat placeholderConstant = ([self borderHeight] / 2) - (placeholderEstimatedHeight / 2) +
-                                self.textInput.placeholderLabel.font.lineHeight * .5f;
+                                self.textInput.placeholderLabel.font.lineHeight * (CGFloat)0.5;
   if (!self.placeholderCenterY) {
     self.placeholderCenterY = [NSLayoutConstraint constraintWithItem:self.textInput.placeholderLabel
                                                            attribute:NSLayoutAttributeTop

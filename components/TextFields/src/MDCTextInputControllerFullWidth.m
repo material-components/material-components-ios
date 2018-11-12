@@ -26,7 +26,7 @@
 #import "MaterialPalettes.h"
 #import "MaterialTypography.h"
 
-static const CGFloat MDCTextInputControllerFullWidthHintTextOpacity = 0.54f;
+static const CGFloat MDCTextInputControllerFullWidthHintTextOpacity = (CGFloat)0.54;
 static const CGFloat MDCTextInputControllerFullWidthHorizontalInnerPadding = 8;
 static const CGFloat MDCTextInputControllerFullWidthHorizontalPadding = 16;
 static const CGFloat MDCTextInputControllerFullWidthVerticalPadding = 20;

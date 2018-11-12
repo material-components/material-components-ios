@@ -21,8 +21,8 @@ static const CGFloat kImagePadding = 16;
 static const CGFloat kImageHeight = 40;
 static const CGFloat kWithImageRightPadding = 12;
 static const CGFloat kTextVerticalPadding = 12;
-static const CGFloat kTitleColorOpacity = 0.87f;
-static const CGFloat kDetailsColorOpacity = 0.6f;
+static const CGFloat kTitleColorOpacity = (CGFloat)0.87;
+static const CGFloat kDetailsColorOpacity = (CGFloat)0.6;
 
 static inline UIFont *defaultTitleFont(void) { return [UIFont systemFontOfSize:16]; }
 

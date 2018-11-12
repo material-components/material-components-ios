@@ -42,12 +42,12 @@
           {
               .delay = pointCycleDuration / 2,
               .duration = pointCycleDuration / 2,
-              .curve = MDMMotionCurveMakeBezier(0.4f, 0, 0.2f, 1),
+              .curve = MDMMotionCurveMakeBezier((CGFloat)0.4, 0, (CGFloat)0.2, 1),
           },
       .strokeEnd =
           {
               .duration = pointCycleDuration,
-              .curve = MDMMotionCurveMakeBezier(0.4f, 0, 0.2f, 1),
+              .curve = MDMMotionCurveMakeBezier((CGFloat)0.4, 0, (CGFloat)0.2, 1),
           },
   };
 }
@@ -65,7 +65,7 @@
       .strokeEnd =
           {
               .duration = 1,
-              .curve = MDMMotionCurveMakeBezier(0.4f, 0, 0.2f, 1),
+              .curve = MDMMotionCurveMakeBezier((CGFloat)0.4, 0, (CGFloat)0.2, 1),
           },
   };
 }
@@ -75,11 +75,11 @@
       // Transition timing is calculated at runtime.
       .strokeStart =
           {
-              .curve = MDMMotionCurveMakeBezier(0.4f, 0, 0.2f, 1),
+              .curve = MDMMotionCurveMakeBezier((CGFloat)0.4, 0, (CGFloat)0.2, 1),
           },
       .strokeEnd =
           {
-              .curve = MDMMotionCurveMakeBezier(0.4f, 0, 0.2f, 1),
+              .curve = MDMMotionCurveMakeBezier((CGFloat)0.4, 0, (CGFloat)0.2, 1),
           },
   };
 }
@@ -88,7 +88,7 @@
   return (MDCActivityIndicatorMotionSpecProgress){
       .strokeEnd = {
           .duration = self.pointCycleDuration / 2,
-          .curve = MDMMotionCurveMakeBezier(0.4f, 0, 0.2f, 1),
+          .curve = MDMMotionCurveMakeBezier((CGFloat)0.4, 0, (CGFloat)0.2, 1),
       }};
 }
 

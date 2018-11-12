@@ -34,7 +34,7 @@ static const CGFloat MDCButtonDefaultCornerRadius = 2.0;
 static const NSTimeInterval MDCButtonAnimationDuration = 0.2;
 
 // https://material.io/go/design-buttons#buttons-main-buttons
-static const CGFloat MDCButtonDisabledAlpha = 0.12f;
+static const CGFloat MDCButtonDisabledAlpha = (CGFloat)0.12;
 
 // Blue 500 from https://material.io/go/design-color-theming#color-color-palette .
 static const uint32_t MDCButtonDefaultBackgroundColor = 0x191919;
@@ -195,7 +195,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   // Block users from activating multiple buttons simultaneously by default.
   self.exclusiveTouch = YES;
 
-  _inkView.inkColor = [UIColor colorWithWhite:1 alpha:0.2f];
+  _inkView.inkColor = [UIColor colorWithWhite:1 alpha:(CGFloat)0.2];
 
   // Uppercase all titles
   if (_uppercaseTitle) {
@@ -674,7 +674,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 /** Returns YES if the color is not transparent and is a "dark" color. */
 - (BOOL)isDarkColor:(UIColor *)color {
   // TODO: have a components/private/ColorCalculations/MDCColorCalculations.h|m
-  //  return ![self isTransparentColor:color] && [QTMColorGroup luminanceOfColor:color] < 0.5f;
+  //  return ![self isTransparentColor:color] && [QTMColorGroup luminanceOfColor:color] < 0.5;
   return ![self isTransparentColor:color];
 }
 

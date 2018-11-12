@@ -70,7 +70,7 @@
 
   // Then
   MDCRectangleShapeGenerator *rect = (MDCRectangleShapeGenerator *)FAB.shapeGenerator;
-  MDCCornerTreatment *corner = [MDCCornerTreatment cornerWithRadius:0.5f];
+  MDCCornerTreatment *corner = [MDCCornerTreatment cornerWithRadius:(CGFloat)0.5];
   corner.valueType = MDCCornerTreatmentValueTypePercentage;
   XCTAssertEqualObjects(rect.topLeftCorner, corner);
   XCTAssertEqualObjects(rect.topRightCorner, corner);

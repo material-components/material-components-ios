@@ -15,8 +15,8 @@
 #import "MDCShadowLayer.h"
 
 static const CGFloat kShadowElevationDialog = 24.0;
-static const float kKeyShadowOpacity = 0.26f;
-static const float kAmbientShadowOpacity = 0.08f;
+static const float kKeyShadowOpacity = (float)0.26;
+static const float kAmbientShadowOpacity = (float)0.08;
 
 @interface MDCPendingAnimation : NSObject <CAAction>
 @property(nonatomic, weak) CALayer *animationSourceLayer;
@@ -65,17 +65,17 @@ static const float kAmbientShadowOpacity = 0.08f;
 }
 
 + (CGFloat)ambientShadowBlur:(CGFloat)points {
-  CGFloat blur = 0.889544f * points - 0.003701f;
+  CGFloat blur = (CGFloat)0.889544 * points - (CGFloat)0.003701;
   return blur;
 }
 
 + (CGFloat)keyShadowBlur:(CGFloat)points {
-  CGFloat blur = 0.666920f * points - 0.001648f;
+  CGFloat blur = (CGFloat)0.666920 * points - (CGFloat)0.001648;
   return blur;
 }
 
 + (CGFloat)keyShadowYOff:(CGFloat)points {
-  CGFloat yOff = 1.23118f * points - 0.03933f;
+  CGFloat yOff = (CGFloat)1.23118 * points - (CGFloat)0.03933;
   return yOff;
 }
 

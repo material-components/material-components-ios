@@ -48,7 +48,7 @@ static const CGFloat MDCTextInputControllerFilledNormalPlaceholderPadding = 20;
 static const CGFloat MDCTextInputControllerFilledThreeQuartersPadding = 12;
 
 static inline UIColor *MDCTextInputControllerFilledDefaultBorderFillColorDefault() {
-  return [UIColor colorWithWhite:0 alpha:.06f];
+  return [UIColor colorWithWhite:0 alpha:(CGFloat)0.06];
 }
 
 #pragma mark - Class Properties

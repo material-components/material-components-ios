@@ -15,10 +15,10 @@
 #import "MDCOutlinedTextFieldColorThemer.h"
 #import "MDCTextInputControllerBase.h"
 
-static CGFloat const kOutlinedTextFieldActiveAlpha = 0.87f;
-static CGFloat const kOutlinedTextFieldOnSurfaceAlpha = 0.6f;
-static CGFloat const kOutlinedTextFieldDisabledAlpha = 0.38f;
-static CGFloat const kOutlinedTextFieldIconAlpha = 0.54f;
+static CGFloat const kOutlinedTextFieldActiveAlpha = (CGFloat)0.87;
+static CGFloat const kOutlinedTextFieldOnSurfaceAlpha = (CGFloat)0.6;
+static CGFloat const kOutlinedTextFieldDisabledAlpha = (CGFloat)0.38;
+static CGFloat const kOutlinedTextFieldIconAlpha = (CGFloat)0.54;
 
 @implementation MDCOutlinedTextFieldColorThemer
 

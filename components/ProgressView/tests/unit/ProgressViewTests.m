@@ -41,13 +41,13 @@
 }
 
 - (void)testSetProgress {
-  _progressView.progress = 0.1234f;
-  XCTAssertEqual(_progressView.progress, 0.1234f);
+  _progressView.progress = (float)0.1234;
+  XCTAssertEqual(_progressView.progress, (float)0.1234);
 }
 
 - (void)testSetProgressAnimated {
-  [_progressView setProgress:0.777f animated:YES completion:nil];
-  XCTAssertEqual(_progressView.progress, 0.777f);
+  [_progressView setProgress:(float)0.777 animated:YES completion:nil];
+  XCTAssertEqual(_progressView.progress, (float)0.777);
 
   [NSRunLoop.mainRunLoop runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1]];
 }

@@ -34,7 +34,7 @@ static NSString *const MDCTextInputUnderlineKVOKeyLineHeight = @"lineHeight";
 
 const CGFloat MDCTextInputBorderRadius = 4;
 static const CGFloat MDCTextInputClearButtonImageSquareWidthHeight = 24;
-static const CGFloat MDCTextInputHintTextOpacity = 0.54f;
+static const CGFloat MDCTextInputHintTextOpacity = (CGFloat)0.54;
 static const CGFloat MDCTextInputOverlayViewToEditingRectPadding = 2;
 const CGFloat MDCTextInputFullPadding = 16;
 const CGFloat MDCTextInputHalfPadding = 8;
