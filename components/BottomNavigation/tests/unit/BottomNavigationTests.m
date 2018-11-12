@@ -14,8 +14,9 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialBottomNavigation.h"
 #import "../../src/private/MDCBottomNavigationItemView.h"
+#import "MaterialBottomNavigation.h"
+#import "MaterialShadowElevations.h"
 
 @interface MDCBottomNavigationBar (Testing)
 @property(nonatomic, strong) NSMutableArray<MDCBottomNavigationItemView *> *itemViews;
@@ -161,6 +162,22 @@
   self.bottomNavBar.itemViews.lastObject.selected = NO;
   XCTAssert(!self.bottomNavBar.itemViews.firstObject.label.isHidden);
   XCTAssert(self.bottomNavBar.itemViews.lastObject.label.isHidden);
+}
+
+- (void)testDefaultElevation {
+  // Then
+  XCTAssertEqual(self.bottomNavBar.elevation, MDCShadowElevationBottomNavigationBar);
+}
+
+- (void)testCustomElevation {
+  // Given
+  CGFloat customElevation = 20;
+
+  // When
+  self.bottomNavBar.elevation = customElevation;
+
+  // Then
+  XCTAssertEqual(self.bottomNavBar.elevation, customElevation);
 }
 
 - (void)testViewForItemFound {
