@@ -30,7 +30,8 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
 
 - (void)testInitMatchesInitWithMaterialDefaults {
   // Given
-  MDCSemanticColorScheme *initScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *initScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   MDCSemanticColorScheme *mdDefaultScheme =
       [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 

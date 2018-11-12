@@ -105,7 +105,8 @@ static NSArray<UIFont *> *Fonts() {
 - (instancetype)init {
   self = [super initWithStyle:UITableViewStyleGrouped];
   if (self) {
-    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
     self.typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;

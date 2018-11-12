@@ -77,7 +77,7 @@ let typographyScheme = MDCTypographyScheme()
 #import "MaterialColorScheme.h"
 #import "MaterialTypographyScheme.h"
 
-MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 MDCShapeScheme *shapeScheme = [[MDCShapeScheme alloc] init];
 MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
 ```

@@ -21,7 +21,8 @@ static const CGFloat kCornerRadius = 4.0f;
 - (instancetype)init {
   self = [super init];
   if (self) {
-    _colorScheme = [[MDCSemanticColorScheme alloc] init];
+    _colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
     _typographyScheme = [[MDCTypographyScheme alloc] init];
     _buttonScheme = [[MDCButtonScheme alloc] init];
     _cornerRadius = kCornerRadius;

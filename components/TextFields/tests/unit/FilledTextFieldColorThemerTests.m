@@ -30,7 +30,8 @@
   MDCTextField *textField = [[MDCTextField alloc] init];
   MDCTextInputControllerFilled *controller =
       [[MDCTextInputControllerFilled alloc] initWithTextInput:textField];
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 
   // When
   [MDCFilledTextFieldColorThemer applySemanticColorScheme:colorScheme
@@ -76,7 +77,8 @@
   MDCTextField *textField = [[MDCTextField alloc] init];
   MDCTextInputControllerFilled *controller =
       [[MDCTextInputControllerFilled alloc] initWithTextInput:textField];
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 
   // When
   [MDCFilledTextFieldColorThemer applySemanticColorScheme:colorScheme
@@ -94,7 +96,8 @@
   MDCMultilineTextField *textField = [[MDCMultilineTextField alloc] init];
   MDCTextInputControllerFilled *controller =
       [[MDCTextInputControllerFilled alloc] initWithTextInput:textField];
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 
   // When
   [MDCFilledTextFieldColorThemer applySemanticColorScheme:colorScheme
@@ -140,7 +143,8 @@
   MDCMultilineTextField *textField = [[MDCMultilineTextField alloc] init];
   MDCTextInputControllerFilled *controller =
       [[MDCTextInputControllerFilled alloc] initWithTextInput:textField];
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 
   // When
   [MDCFilledTextFieldColorThemer applySemanticColorScheme:colorScheme

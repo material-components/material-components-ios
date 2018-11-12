@@ -26,7 +26,8 @@
 - (void)testSnackbarColorThemerChangesCorrectParameters {
   // Given
   MDCSnackbarManager *snackbarManager = [[MDCSnackbarManager alloc] init];
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   colorScheme.surfaceColor = [UIColor redColor];
   colorScheme.onSurfaceColor = [UIColor blueColor];
   UIColor *blendedBackgroundColor =

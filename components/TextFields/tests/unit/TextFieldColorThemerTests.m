@@ -64,7 +64,8 @@
 
 - (void)setUp{
   [super setUp];
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   [MDCTextFieldColorThemer applySemanticColorScheme:colorScheme
            toAllTextInputControllersOfClass:[MDCTextInputControllerFullWidth class]];
   [MDCTextFieldColorThemer applySemanticColorScheme:colorScheme
@@ -79,7 +80,8 @@
 }
 
 - (void)testDefaultValuesAreSet {
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   UIColor *primary87Opacity = [colorScheme.primaryColor colorWithAlphaComponent:0.87f];
   UIColor *onSurface87Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.87f];
   UIColor *onSurface60Opacity = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.60f];
@@ -106,7 +108,8 @@
 }
 
 - (void)testInstanceColorValuesAreSet {
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   colorScheme.primaryColor = [UIColor blueColor];
   colorScheme.errorColor = [UIColor yellowColor];
   colorScheme.onSurfaceColor = [UIColor greenColor];

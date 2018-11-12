@@ -28,7 +28,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 - (void)testTextButtonColorThemer {
   // Given
   MDCButton *button = [[MDCButton alloc] init];
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 
   // When
   [MDCTextButtonColorThemer applySemanticColorScheme:colorScheme toButton:button];
@@ -56,7 +57,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 - (void)testContainedButtonColorThemer {
   // Given
   MDCButton *button = [[MDCButton alloc] init];
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 
   // When
   [MDCContainedButtonColorThemer applySemanticColorScheme:colorScheme toButton:button];
@@ -85,7 +87,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testMDCButtonColorThemer {
   // Given
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   MDCButton *button = [[MDCButton alloc] init];
   [button setTitle:@"Hello World" forState:UIControlStateNormal];
   colorScheme.primaryColor = UIColor.redColor;
@@ -128,7 +131,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testMDCFlatButtonColorThemer {
   // Given
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   MDCFlatButton *button = [[MDCFlatButton alloc] init];
   [button setTitle:@"Hello World" forState:UIControlStateNormal];
   colorScheme.primaryColor = UIColor.redColor;
@@ -170,7 +174,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testMDCRaisedButtonColorThemer {
   // Given
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   MDCRaisedButton *button = [[MDCRaisedButton alloc] init];
   [button setTitle:@"Hello World" forState:UIControlStateNormal];
   colorScheme.primaryColor = UIColor.redColor;
@@ -213,7 +218,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testMDCFloatingButtonColorThemer {
   // Given
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   MDCFloatingButton *button = [[MDCFloatingButton alloc] init];
   colorScheme.secondaryColor = UIColor.redColor;
   [button setBackgroundColor:UIColor.purpleColor forState:UIControlStateNormal];
