@@ -14,20 +14,22 @@
 
 #import "MDCBannerView.h"
 
+#import "MaterialButtons.h"
 #import "MDCBannerViewLayout.h"
-#import "MaterialColorScheme.h"
 
 static const CGFloat kIconImageContainerSideLength = 40.0f;
 static const CGFloat kIconImageSideLength = 24.0f;
 static const CGFloat kTextColorOpacity = 0.87f;
 static const CGFloat kTextFontSize = 14.0f;
 static const NSInteger kTextNumberOfLineLimit = 3;
+static const NSUInteger kNumberOfButtonsLimit = 2;
 
 @interface MDCBannerView () <MDCBannerViewLayoutDataSource>
 
 @property(nonatomic, readwrite, weak) UILabel *textLabel;
 @property(nonatomic, readwrite, weak) UIView *iconImageViewContainer;
 @property(nonatomic, readwrite, weak) UIImageView *iconImageView;
+@property(nonatomic, readwrite, copy) NSArray<MDCButton *> *buttons;
 
 @property(nonatomic, readwrite, strong) MDCBannerViewLayout *layout;
 
@@ -53,31 +55,27 @@ static const NSInteger kTextNumberOfLineLimit = 3;
 
 - (void)commonBannerViewInit {
   self.backgroundColor = [UIColor whiteColor];
-  _buttons = [[NSMutableArray alloc] init];
+
+  _buttons = [[NSArray alloc] init];
+  self.numberOfButtons = 1;
+
+  UILabel *textLabel = [[UILabel alloc] init];
+  textLabel.font = [UIFont systemFontOfSize:kTextFontSize];
+  textLabel.textColor = [UIColor colorWithWhite:0 alpha:kTextColorOpacity];
+  textLabel.numberOfLines = kTextNumberOfLineLimit;
+  textLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+  _textLabel = textLabel;
+  [self addSubview:textLabel];
 }
 
 #pragma mark - Property Setter and Getter
 
 - (void)setText:(NSString *)text {
-  if (text) {
-    _text = text;
-    UILabel *textLabel = self.textLabel;
-    if (!textLabel) {
-      textLabel = [[UILabel alloc] init];
-      textLabel.font = [UIFont systemFontOfSize:kTextFontSize];
-      textLabel.textColor = [UIColor colorWithWhite:0 alpha:kTextColorOpacity];
-      textLabel.numberOfLines = kTextNumberOfLineLimit;
-      textLabel.lineBreakMode = NSLineBreakByTruncatingTail;
-      self.textLabel = textLabel;
-      [self addSubview:textLabel];
-    }
-    textLabel.text = text;
-  } else {
-    _text = nil;
-    [self.textLabel removeFromSuperview];
-  }
-  [self.layout reloadData];
-  [self setNeedsLayout];
+  self.textLabel.text = text;
+}
+
+- (NSString *)text {
+  return self.textLabel.text;
 }
 
 - (void)setImage:(UIImage *)image {
@@ -108,28 +106,30 @@ static const NSInteger kTextNumberOfLineLimit = 3;
   [self setNeedsLayout];
 }
 
-- (void)setButtons:(NSArray<__kindof UIButton *> *)buttons {
-  for (UIButton *button in _buttons) {
-    [button removeFromSuperview];
+- (void)setNumberOfButtons:(NSUInteger)numberOfButtons {
+  NSAssert(numberOfButtons <= kNumberOfButtonsLimit, @"%@ class doesn't support more than %lu buttons", NSStringFromClass([self class]), (unsigned long)kNumberOfButtonsLimit);
+  if (numberOfButtons != self.buttons.count) {
+    NSMutableArray *mutableButtons = [self.buttons mutableCopy];
+    if (numberOfButtons > self.buttons.count) {
+      for (NSUInteger index = self.buttons.count; index < numberOfButtons; ++index) {
+        MDCButton *button = [[MDCButton alloc] init];
+        [mutableButtons addObject:button];
+        [self addSubview:button];
+      }
+    } else if (numberOfButtons < self.buttons.count) {
+      for (NSUInteger index = numberOfButtons; index < self.buttons.count; ++index) {
+        MDCButton *lastObject = [mutableButtons lastObject];
+        [lastObject removeFromSuperview];
+        [mutableButtons removeLastObject];
+      }
+    }
+    self.buttons = [mutableButtons copy];
   }
-  for (UIButton *button in buttons) {
-    [self addSubview:button];
-  }
-  _buttons = buttons;
   [self.layout reloadData];
-  [self setNeedsLayout];
 }
 
-#pragma mark - Banner Views
-
-+ (MDCBannerView *)bannerWithText:(NSString *)text
-                            image:(UIImage *)image
-                          buttons:(NSArray<__kindof UIButton *> *)buttons {
-  MDCBannerView *mdcBannerView = [[MDCBannerView alloc] initWithFrame:CGRectZero];
-  mdcBannerView.text = text;
-  mdcBannerView.image = image;
-  mdcBannerView.buttons = buttons;
-  return mdcBannerView;
+- (NSUInteger)numberOfButtons {
+  return self.buttons.count;
 }
 
 #pragma mark - UIView overrides

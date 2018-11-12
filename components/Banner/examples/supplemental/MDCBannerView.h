@@ -14,19 +14,19 @@
 
 #import <UIKit/UIKit.h>
 
+@class MDCButton;
+
 __attribute__((objc_subclassing_restricted)) @interface MDCBannerView : UIView
 
 @property(nonatomic, copy, nonnull) NSString *text;
 
 @property(nonatomic, strong, nullable) UIImage *image;  // default is nil
 
+@property(nonatomic, assign) NSUInteger numberOfButtons;  // default is 1
+
 /**
  The buttons representing the banner's actions.
  */
-@property(nonatomic, copy, nonnull) NSArray<__kindof UIButton *> *buttons;
-
-+ (MDCBannerView *)bannerWithText:(NSString *)text
-                            image:(UIImage *)image
-                          buttons:(NSArray<__kindof UIButton *> *)buttons;
+@property(nonatomic, readonly, copy, nonnull) NSArray<MDCButton *> *buttons;
 
 @end

@@ -168,21 +168,19 @@ static NSString *const exampleExtraLongText =
   [self.view addSubview:bannerViewContainer];
   bannerViewContainer.backgroundColor = [UIColor whiteColor];
   self.bannerViewContainer = bannerViewContainer;
-
-  NSString *bannerText = exampleShortText;
-  MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectZero];
+  
+  MDCBannerView *bannerView = [[MDCBannerView alloc] init];
+  bannerView.image = [UIImage imageNamed:@"Email"];
+  bannerView.text = exampleShortText;
+  
+  MDCButton *button = [bannerView.buttons firstObject];
   [button setTitle:@"DISMISS" forState:UIControlStateNormal];
-  MDCBannerView *bannerView = [MDCBannerView bannerWithText:bannerText
-                                                      image:[UIImage imageNamed:@"Email"]
-                                                    buttons:@[
-                                                      button,
-                                                    ]];
   UIFont *buttonFont = [MDCTypography body2Font];
   [button setTitleFont:buttonFont forState:UIControlStateNormal];
   [button setTitleFont:buttonFont forState:UIControlStateHighlighted];
   [button setTitleColor:self.colorScheme.primaryColor forState:UIControlStateNormal];
   button.backgroundColor = self.colorScheme.surfaceColor;
-  [button sizeToFit];
+  
   [self.bannerViewContainer addSubview:bannerView];
   [button addTarget:self
                 action:@selector(dismissBanner)
@@ -209,10 +207,13 @@ static NSString *const exampleExtraLongText =
   bannerViewContainer.backgroundColor = [UIColor whiteColor];
   self.bannerViewContainer = bannerViewContainer;
 
-  NSString *bannerText = exampleLongText;
+  MDCBannerView *bannerView = [[MDCBannerView alloc] init];
+  bannerView.text = exampleLongText;
+  bannerView.image = [UIImage imageNamed:@"Email"];
+  bannerView.numberOfButtons = 2;
 
   UIFont *buttonFont = [MDCTypography body2Font];
-  MDCButton *dismissButton = [[MDCButton alloc] initWithFrame:CGRectZero];
+  MDCButton *dismissButton = bannerView.buttons[0];
   [dismissButton setTitle:@"DISMISS" forState:UIControlStateNormal];
   [dismissButton setTitleFont:buttonFont forState:UIControlStateNormal];
   [dismissButton setTitleFont:buttonFont forState:UIControlStateHighlighted];
@@ -222,7 +223,7 @@ static NSString *const exampleExtraLongText =
   [dismissButton addTarget:self
                     action:@selector(dismissBanner)
           forControlEvents:UIControlEventTouchUpInside];
-  MDCButton *changeTextButton = [[MDCButton alloc] initWithFrame:CGRectZero];
+  MDCButton *changeTextButton = bannerView.buttons[1];
   [changeTextButton setTitle:@"CHANGE TEXT" forState:UIControlStateNormal];
   [changeTextButton setTitleFont:buttonFont forState:UIControlStateNormal];
   [changeTextButton setTitleFont:buttonFont forState:UIControlStateHighlighted];
@@ -233,9 +234,6 @@ static NSString *const exampleExtraLongText =
                        action:@selector(changeText)
              forControlEvents:UIControlEventTouchUpInside];
 
-  MDCBannerView *bannerView = [MDCBannerView bannerWithText:bannerText
-                                                      image:[UIImage imageNamed:@"Email"]
-                                                    buttons:@[ changeTextButton, dismissButton ]];
   self.bannerView = bannerView;
   [self.bannerViewContainer addSubview:bannerView];
   CGSize bannerViewSize =
@@ -259,10 +257,13 @@ static NSString *const exampleExtraLongText =
   bannerViewContainer.backgroundColor = [UIColor whiteColor];
   self.bannerViewContainer = bannerViewContainer;
 
-  NSString *bannerText = exampleExtraLongText;
+  MDCBannerView *bannerView = [[MDCBannerView alloc] init];
+  bannerView.text = exampleExtraLongText;
+  bannerView.image = [UIImage imageNamed:@"Email"];
+  bannerView.numberOfButtons = 2;
 
   UIFont *buttonFont = [MDCTypography body2Font];
-  MDCButton *dismissButton = [[MDCButton alloc] initWithFrame:CGRectZero];
+  MDCButton *dismissButton = bannerView.buttons[0];
   [dismissButton setTitle:@"DISMISS" forState:UIControlStateNormal];
   [dismissButton setTitleFont:buttonFont forState:UIControlStateNormal];
   [dismissButton setTitleFont:buttonFont forState:UIControlStateHighlighted];
@@ -272,7 +273,7 @@ static NSString *const exampleExtraLongText =
   [dismissButton addTarget:self
                     action:@selector(dismissBanner)
           forControlEvents:UIControlEventTouchUpInside];
-  MDCButton *changeTextButton = [[MDCButton alloc] initWithFrame:CGRectZero];
+  MDCButton *changeTextButton = bannerView.buttons[1];
   [changeTextButton setTitle:@"CHANGE EXTRA LONG TEXT" forState:UIControlStateNormal];
   [changeTextButton setTitleFont:buttonFont forState:UIControlStateNormal];
   [changeTextButton setTitleFont:buttonFont forState:UIControlStateHighlighted];
@@ -283,9 +284,6 @@ static NSString *const exampleExtraLongText =
                        action:@selector(changeExtraLongText)
              forControlEvents:UIControlEventTouchUpInside];
 
-  MDCBannerView *bannerView = [MDCBannerView bannerWithText:bannerText
-                                                      image:[UIImage imageNamed:@"Email"]
-                                                    buttons:@[ changeTextButton, dismissButton ]];
   self.bannerView = bannerView;
   [self.bannerViewContainer addSubview:bannerView];
   CGSize bannerViewSize =

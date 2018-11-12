@@ -84,6 +84,7 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutMode) {
   [self.internalButtonFrames removeAllObjects];
   for (NSInteger index = 0; index < numberOfButtons; ++index) {
     UIButton *button = [self.dataSource bannerViewLayout:self buttonAtIndex:index];
+    [button sizeToFit];
     [self.internalButtonFrames addObject:[NSValue valueWithCGRect:button.frame]];
   }
 }
