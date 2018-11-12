@@ -48,7 +48,8 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
   [super setUp];
 
   self.actionSheet = [[MDCActionSheetController alloc] init];
-  self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+  self.colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   UIColor *surface = UIColor.blueColor;
   UIColor *onSurface = UIColor.redColor;
   self.colorScheme.surfaceColor = surface;
@@ -74,7 +75,8 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
   // Given
   MDCActionSheetScheme *defaultScheme = [[MDCActionSheetScheme alloc] init];
   MDCTypographyScheme *defaultTypographyScheme = [[MDCTypographyScheme alloc] init];
-  MDCSemanticColorScheme *defaultColorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *defaultColorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 
   // Then
   XCTAssertEqualObjects(defaultScheme.typographyScheme.subtitle1,

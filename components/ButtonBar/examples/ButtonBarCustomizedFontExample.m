@@ -28,7 +28,8 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
     self.typographyScheme = [[MDCTypographyScheme alloc] init];
     
     self.title = @"Button Bar";

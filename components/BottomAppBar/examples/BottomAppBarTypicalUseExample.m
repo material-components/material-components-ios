@@ -26,7 +26,8 @@
   self = [super init];
   if (self) {
     self.title = @"Bottom App Bar";
-    _colorScheme = [[MDCSemanticColorScheme alloc] init];
+    _colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
     _typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;

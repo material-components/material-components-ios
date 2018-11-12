@@ -28,7 +28,8 @@
 
 - (void)setUp {
   self.chip = [[MDCChipView alloc] init];
-  self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+  self.colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 }
 
 - (void)tearDown {

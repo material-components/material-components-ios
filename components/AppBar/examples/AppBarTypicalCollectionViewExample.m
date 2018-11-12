@@ -53,7 +53,8 @@
     [self addChildViewController:_appBarViewController];
     _appBarViewController.headerView.observesTrackingScrollViewScrollEvents = YES;
 
-    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
     self.typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;
