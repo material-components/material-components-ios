@@ -155,6 +155,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 }
 
 - (void)setElevation:(MDCShadowElevation)elevation {
+  _elevation = elevation;
   [(MDCShadowLayer *)self.layer setElevation:elevation];
 }
 
