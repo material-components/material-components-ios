@@ -45,7 +45,7 @@ CAMediaTimingFunction *timingFunction =
 
 ```objc
 MDCSnackbarManager *snackbarManager = [[MDCSnackbarManager alloc] init];
-MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
 [MDCSnackbarColorThemer applySemanticColorScheme:colorScheme toSnackbarManager:snackbarManager];
 ```
 
