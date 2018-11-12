@@ -27,10 +27,12 @@
   [super viewDidLoad];
 
   if (!self.colorScheme) {
-    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
   if (!self.typographyScheme) {
-    self.typographyScheme = [[MDCTypographyScheme alloc] init];
+    self.typographyScheme =
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
   }
   [self setupExampleViews:@[
       @"Simple Snackbar",
