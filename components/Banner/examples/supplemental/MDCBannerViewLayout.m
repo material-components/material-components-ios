@@ -57,13 +57,13 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutMode) {
   if (self) {
     _sizeToFit = sizeToFit;
     _internalButtonFrames = [[NSMutableArray alloc] init];
-    
+
     _imageContainer = [[UIView alloc] initWithFrame:imageContainer.frame];
     _textLabel = [[UILabel alloc] initWithFrame:textLabel.frame];
     _textLabel.text = textLabel.text;
     _textLabel.font = textLabel.font;
     _textLabel.numberOfLines = textLabel.numberOfLines;
-    
+
     for (NSUInteger index = 0; index < buttons.count; ++index) {
       UIButton *button = buttons[index];
       [button sizeToFit];
