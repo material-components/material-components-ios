@@ -269,7 +269,8 @@ static CGFloat const kSliderVerticalMargin = 12;
     model.enabled = NO;
     [_sliders addObject:model];
 
-    _colorScheme = [[MDCSemanticColorScheme alloc] init];
+    _colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
 
   return self;

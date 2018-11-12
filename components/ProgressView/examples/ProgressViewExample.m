@@ -98,7 +98,8 @@ static const CGFloat MDCProgressViewAnimationDuration = 1;
   [super viewDidLoad];
 
   if (!self.colorScheme) {
-    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
   if (!self.typographyScheme) {
     self.typographyScheme = [[MDCTypographyScheme alloc] init];

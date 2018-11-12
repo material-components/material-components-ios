@@ -36,7 +36,8 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   [MDCTextButtonThemer applyScheme:scheme toButton:button];
 
   // Then
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
   XCTAssertEqualWithAccuracy(button.minimumSize.height, 36, kEpsilonAccuracy);
   XCTAssertEqualObjects(button.backgroundColor, [UIColor clearColor]);
@@ -105,7 +106,8 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   [MDCContainedButtonThemer applyScheme:scheme toButton:button];
 
   // Then
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
   XCTAssertEqualWithAccuracy(button.minimumSize.height, 36, kEpsilonAccuracy);
   XCTAssertEqualObjects(button.backgroundColor, colorScheme.primaryColor);
@@ -139,7 +141,8 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   [MDCFloatingActionButtonThemer applyScheme:scheme toButton:button];
 
   // Then
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
   XCTAssertEqualObjects(button.backgroundColor, colorScheme.secondaryColor);
   XCTAssertEqualObjects([button imageTintColorForState:UIControlStateNormal],

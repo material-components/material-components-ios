@@ -66,7 +66,8 @@
 
 - (void)testSnackbarColorThemerChangesCorrectParameters {
   // Given
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   colorScheme.surfaceColor = [UIColor redColor];
   colorScheme.onSurfaceColor = [UIColor blueColor];
   MDCSnackbarManager.snackbarMessageViewBackgroundColor = [UIColor whiteColor];

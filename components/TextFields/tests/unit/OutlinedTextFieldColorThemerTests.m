@@ -30,7 +30,8 @@
   MDCTextField *textField = [[MDCTextField alloc] init];
   MDCTextInputControllerOutlined *controller =
       [[MDCTextInputControllerOutlined alloc] initWithTextInput:textField];
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 
   // When
   [MDCOutlinedTextFieldColorThemer applySemanticColorScheme:colorScheme
@@ -74,7 +75,8 @@
   MDCTextField *textField = [[MDCTextField alloc] init];
   MDCTextInputControllerOutlined *controller =
       [[MDCTextInputControllerOutlined alloc] initWithTextInput:textField];
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 
   // When
   [MDCOutlinedTextFieldColorThemer applySemanticColorScheme:colorScheme
@@ -92,7 +94,8 @@
   MDCMultilineTextField *textField = [[MDCMultilineTextField alloc] init];
   MDCTextInputControllerOutlinedTextArea *controller =
       [[MDCTextInputControllerOutlinedTextArea alloc] initWithTextInput:textField];
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 
   // When
   [MDCOutlinedTextFieldColorThemer applySemanticColorScheme:colorScheme
@@ -137,7 +140,8 @@
   MDCMultilineTextField *textField = [[MDCMultilineTextField alloc] init];
   MDCTextInputControllerOutlinedTextArea *controller =
       [[MDCTextInputControllerOutlinedTextArea alloc] initWithTextInput:textField];
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 
   // When
   [MDCOutlinedTextFieldColorThemer applySemanticColorScheme:colorScheme
