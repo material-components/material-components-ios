@@ -166,7 +166,8 @@
 
 - (void)testDefaultElevation {
   // Then
-  XCTAssertEqual(self.bottomNavBar.elevation, MDCShadowElevationBottomNavigationBar);
+  XCTAssertEqualWithAccuracy(self.bottomNavBar.elevation, MDCShadowElevationBottomNavigationBar,
+                             0.001);
 }
 
 - (void)testCustomElevation {
@@ -177,7 +178,7 @@
   self.bottomNavBar.elevation = customElevation;
 
   // Then
-  XCTAssertEqual(self.bottomNavBar.elevation, customElevation);
+  XCTAssertEqualWithAccuracy(self.bottomNavBar.elevation, customElevation, 0.001);
 }
 
 - (void)testViewForItemFound {
