@@ -354,6 +354,11 @@ Pod::Spec.new do |mdc|
         unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
         unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
       end
+      tests.test_spec 'ui' do |ui_tests|
+        ui_tests.source_files = "components/#{component.base_name}/tests/ui/*.{h,m,swift}", "components/#{component.base_name}/tests/ui/supplemental/*.{h,m,swift}"
+        ui_tests.resources = "components/#{component.base_name}/tests/ui/resources/*"
+        ui_tests.dependency 'iOSSnapshotTestCase', '2.2.0'
+      end
     end
   end
 
