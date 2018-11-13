@@ -448,7 +448,12 @@
 
 - (void)testBottomDrawerCornersAPIExpanded {
   // When
+  MDCBottomDrawerPresentationController *presentationController =
+  (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
+  presentationController.bottomDrawerContainerViewController = self.fakeBottomDrawer;
   self.drawerViewController.contentViewController.preferredContentSize = CGSizeMake(100, 100);
+  self.fakeBottomDrawer.contentViewController = self.drawerViewController.contentViewController;
+  [self.fakeBottomDrawer cacheLayoutCalculations];
   [self.drawerViewController setTopCornersRadius:5 forDrawerState:MDCBottomDrawerStateExpanded];
 
   // Then
@@ -457,7 +462,12 @@
 
 - (void)testBottomDrawerCornersAPIFullScreen {
   // When
+  MDCBottomDrawerPresentationController *presentationController =
+      (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
+  presentationController.bottomDrawerContainerViewController = self.fakeBottomDrawer;
   self.drawerViewController.contentViewController.preferredContentSize = CGSizeMake(100, 5000);
+  self.fakeBottomDrawer.contentViewController = self.drawerViewController.contentViewController;
+  [self.fakeBottomDrawer cacheLayoutCalculations];
   [self.drawerViewController setTopCornersRadius:3 forDrawerState:MDCBottomDrawerStateFullScreen];
 
   // Then
