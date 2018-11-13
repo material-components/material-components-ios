@@ -55,9 +55,10 @@
 
   // Add pages to scrollView.
   for (NSUInteger i = 0; i < pageColors.count; i++) {
-    CGFloat offsetMultiplier = [self offsetMultiplierForPage:i numberOfPages:pageColors.count];
-    CGRect pageFrame = CGRectOffset(self.view.bounds, offsetMultiplier * boundsWidth, 0);
+    CGFloat xOffset = [self xOffsetForPage:i numberOfPages:pageColors.count width:boundsWidth];
+    CGRect pageFrame = CGRectOffset(self.view.bounds, xOffset, 0);
     UILabel *page = [[UILabel alloc] initWithFrame:pageFrame];
+    CGFloat offsetMultiplier = [self isRTL] ? pageColors.count - i - 1 : i;
     page.text = [NSString stringWithFormat:@"Page %lu", (unsigned long)offsetMultiplier + 1];
     page.font = [UIFont systemFontOfSize:50];
     page.textColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.8];
@@ -98,16 +99,18 @@
   CGRect standardizedFrame = CGRectStandardize(self.view.frame);
   for (NSInteger i = 0; i < pageCount; i++) {
     UILabel *page = _pages[i];
-    CGFloat offsetMultiplier = [self offsetMultiplierForPage:i numberOfPages:pageCount];
-    page.frame =
-        CGRectOffset(self.view.bounds, offsetMultiplier * CGRectGetWidth(standardizedFrame), 0);
+    CGFloat xOffset = [self xOffsetForPage:i
+                             numberOfPages:pageCount
+                                     width:CGRectGetWidth(standardizedFrame)];
+    page.frame = CGRectOffset(self.view.bounds, xOffset, 0);
   }
   _scrollView.contentSize =
       CGSizeMake(CGRectGetWidth(standardizedFrame) * pageCount, CGRectGetHeight(standardizedFrame));
   CGPoint offset = _scrollView.contentOffset;
-  CGFloat offsetMultiplier = [self offsetMultiplierForPage:pageBeforeFrameChange
-                                             numberOfPages:pageCount];
-  offset.x = offsetMultiplier * CGRectGetWidth(standardizedFrame);
+  CGFloat xOffset = [self xOffsetForPage:pageBeforeFrameChange
+                           numberOfPages:pageCount
+                                   width:CGRectGetWidth(standardizedFrame)];
+  offset.x = xOffset;
   // This non-anmiated change of offset ensures we keep the same page
   [_scrollView setContentOffset:offset animated:NO];
   _scrollView.frame = self.view.bounds;
@@ -145,8 +148,8 @@
   NSInteger page = sender.currentPage;
   CGFloat pageWidth = CGRectGetWidth(_scrollView.bounds);
   CGPoint offset = _scrollView.contentOffset;
-  CGFloat offsetMultiplier = [self offsetMultiplierForPage:page numberOfPages:_pages.count];
-  offset.x = offsetMultiplier * pageWidth;
+  CGFloat xOffset = [self xOffsetForPage:page numberOfPages:_pages.count width:pageWidth];
+  offset.x = xOffset;
   [_scrollView setContentOffset:offset animated:YES];
 }
 
@@ -162,8 +165,11 @@
   };
 }
 
-- (CGFloat)offsetMultiplierForPage:(NSInteger)page numberOfPages:(NSInteger)numberOfPages {
-  return [self isRTL] ? numberOfPages - page - 1 : page;
+- (CGFloat)xOffsetForPage:(NSInteger)page
+            numberOfPages:(NSInteger)numberOfPages
+                    width:(CGFloat)width {
+  CGFloat offsetMultiplier = [self isRTL] ? numberOfPages - page - 1 : page;
+  return offsetMultiplier * width;
 }
 
 - (BOOL)isRTL {
