@@ -58,7 +58,7 @@
     CGFloat xOffset = [self xOffsetForPage:i numberOfPages:pageColors.count width:boundsWidth];
     CGRect pageFrame = CGRectOffset(self.view.bounds, xOffset, 0);
     UILabel *page = [[UILabel alloc] initWithFrame:pageFrame];
-    CGFloat offsetMultiplier = [self isRTL] ? pageColors.count - i - 1 : i;
+    CGFloat offsetMultiplier = [self offsetMultiplierForPage:i numberOfPages:pageColors.count];
     page.text = [NSString stringWithFormat:@"Page %lu", (unsigned long)offsetMultiplier + 1];
     page.font = [UIFont systemFontOfSize:50];
     page.textColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.8];
@@ -168,8 +168,11 @@
 - (CGFloat)xOffsetForPage:(NSInteger)page
             numberOfPages:(NSInteger)numberOfPages
                     width:(CGFloat)width {
-  CGFloat offsetMultiplier = [self isRTL] ? numberOfPages - page - 1 : page;
-  return offsetMultiplier * width;
+  return [self offsetMultiplierForPage:page numberOfPages:numberOfPages] * width;
+}
+
+- (CGFloat)offsetMultiplierForPage:(NSInteger)page numberOfPages:(NSInteger)numberOfPages {
+  return [self isRTL] ? numberOfPages - page - 1 : page;
 }
 
 - (BOOL)isRTL {
