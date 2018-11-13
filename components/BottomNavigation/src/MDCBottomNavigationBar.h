@@ -143,7 +143,7 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
 @property(nonatomic, assign) CGFloat itemsContentHorizontalMargin;
 
 /**
- The elevation of the bottom navigation bar. Defaults to 8.0.
+ The elevation of the bottom navigation bar. Defaults to @c MDCShadowElevationBottomNavigationBar .
  */
 @property(nonatomic, assign) MDCShadowElevation elevation;
 
