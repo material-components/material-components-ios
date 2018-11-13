@@ -30,7 +30,7 @@ NSString *const MDCSnackbarMessageBoldAttributeName = @"MDCSnackbarMessageBoldAt
 @end
 
 @implementation MDCSnackbarMessage
-static BOOL _usesLegacySnackbar = YES;
+static BOOL _usesLegacySnackbar = NO;
 @synthesize accessibilityIdentifier;
 @dynamic text;
 
