@@ -449,7 +449,7 @@
 - (void)testBottomDrawerCornersAPIExpanded {
   // When
   MDCBottomDrawerPresentationController *presentationController =
-  (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
+      (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
   presentationController.bottomDrawerContainerViewController = self.fakeBottomDrawer;
   self.drawerViewController.contentViewController.preferredContentSize = CGSizeMake(100, 100);
   self.fakeBottomDrawer.contentViewController = self.drawerViewController.contentViewController;
