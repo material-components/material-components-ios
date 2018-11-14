@@ -20,7 +20,7 @@
 
 static CGFloat kTopHandleHeight = (CGFloat)2.0;
 static CGFloat kTopHandleWidth = (CGFloat)24.0;
-static CGFloat kTopHandleYCenter = (CGFloat)6.0;
+static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
 
 @interface MDCBottomDrawerPresentationController () <UIGestureRecognizerDelegate,
                                                      MDCBottomDrawerContainerViewControllerDelegate>
@@ -105,17 +105,46 @@ static CGFloat kTopHandleYCenter = (CGFloat)6.0;
   self.topHandle.layer.cornerRadius = kTopHandleHeight * (CGFloat)0.5;
   self.topHandle.backgroundColor = self.topHandleColor ?: MDCPalette.greyPalette.tint300;
   self.topHandle.hidden = self.topHandleHidden;
-  self.topHandle.center = CGPointMake(
-      CGRectGetMidX(bottomDrawerContainerViewController.contentViewController.view.frame),
-      kTopHandleYCenter);
-  self.topHandle.autoresizingMask =
-      UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+  self.topHandle.translatesAutoresizingMaskIntoConstraints = NO;
+  UIView *handleSuperview = nil;
   if (bottomDrawerContainerViewController.headerViewController) {
-    [bottomDrawerContainerViewController.headerViewController.view addSubview:self.topHandle];
+    handleSuperview = bottomDrawerContainerViewController.headerViewController.view;
   } else {
-    [bottomDrawerContainerViewController.contentViewController.view addSubview:self.topHandle];
+    handleSuperview = bottomDrawerContainerViewController.contentViewController.view;
   }
-
+  [handleSuperview addSubview:self.topHandle];
+  [NSLayoutConstraint constraintWithItem:self.topHandle
+                               attribute:NSLayoutAttributeTop
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:handleSuperview
+                               attribute:NSLayoutAttributeTop
+                              multiplier:1.0
+                                constant:kTopHandleTopMargin]
+      .active = YES;
+  [NSLayoutConstraint constraintWithItem:self.topHandle
+                               attribute:NSLayoutAttributeCenterX
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:handleSuperview
+                               attribute:NSLayoutAttributeCenterX
+                              multiplier:1.0
+                                constant:0]
+      .active = YES;
+  [NSLayoutConstraint constraintWithItem:self.topHandle
+                               attribute:NSLayoutAttributeWidth
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:nil
+                               attribute:NSLayoutAttributeNotAnAttribute
+                              multiplier:1.0
+                                constant:kTopHandleWidth]
+      .active = YES;
+  [NSLayoutConstraint constraintWithItem:self.topHandle
+                               attribute:NSLayoutAttributeHeight
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:nil
+                               attribute:NSLayoutAttributeNotAnAttribute
+                              multiplier:1.0
+                                constant:kTopHandleHeight]
+      .active = YES;
   if ([self.presentedViewController isKindOfClass:[MDCBottomDrawerViewController class]]) {
     [self.presentedView addSubview:self.bottomDrawerContainerViewController.view];
   } else {
