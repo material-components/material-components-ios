@@ -24,7 +24,7 @@
 
 - (void)testDefaultCard {
   // Uncomment below to recreate the golden
-//  self.recordMode = YES;
+  //  self.recordMode = YES;
 
   MDCCard *card = [[MDCCard alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
   // purposely fail the test
