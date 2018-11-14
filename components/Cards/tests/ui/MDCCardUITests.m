@@ -27,6 +27,8 @@
 //  self.recordMode = YES;
 
   MDCCard *card = [[MDCCard alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+  // purposely fail the test
+  card.backgroundColor = UIColor.greenColor;
   FBSnapshotVerifyView(card, nil);
 }
 
