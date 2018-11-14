@@ -15,13 +15,11 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "MaterialScheme.h"
-
 /**
  A simple color scheme that provides semantic context for the colors it uses. There are no optional
  properties and all colors must be provided, supporting more reliable color theming.
  */
-@protocol MDCColorScheming <MDCScheming>
+@protocol MDCColorScheming
 
 /**
  Displayed most frequently across your app.

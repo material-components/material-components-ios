@@ -14,9 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialScheme.h"
-
-@protocol MDCMotionScheming <MDCScheming>
+@protocol MDCMotionScheming
 @end
 
 @interface MDCMotionScheme: NSObject <MDCMotionScheming>

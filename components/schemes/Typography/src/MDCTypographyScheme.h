@@ -14,13 +14,11 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialScheme.h"
-
 /**
  A simple typography scheme that provides semantic fonts. There are no optional
  properties, all fonts must be provided, supporting more reliable typography theming.
  */
-@protocol MDCTypographyScheming <MDCScheming>
+@protocol MDCTypographyScheming
 
 
 /**
