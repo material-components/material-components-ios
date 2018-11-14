@@ -100,7 +100,7 @@
  */
 - (void)setContentOffsetY:(CGFloat)contentOffsetY animated:(BOOL)animated;
 
-- (void)expandToFullScreenWithCompletion:(void (^ __nullable)(BOOL finished))completion;
+- (void)expandToFullScreenWithCompletion:(void (^__nullable)(BOOL finished))completion;
 
 @end
 

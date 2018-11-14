@@ -483,7 +483,7 @@ static UIColor *DrawerShadowColor(void) {
 
 - (void)expandToFullScreen {
   CGFloat topSafeArea = 0;
-  if (@available (iOS 11.0, *)) {
+  if (@available(iOS 11.0, *)) {
     topSafeArea = self.view.safeAreaInsets.top;
   }
   CGFloat contentYOffset = self.contentHeaderTopInset - topSafeArea;
