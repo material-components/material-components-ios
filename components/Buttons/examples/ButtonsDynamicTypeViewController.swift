@@ -28,7 +28,9 @@ class ButtonsDynamicTypeViewController: UIViewController {
 
   func containerToday() {
     // Shared app logic
-    let containerScheme = MDCContainerScheme(defaults: .defaults201811)
+    let containerScheme = MDCContainerScheme()
+    containerScheme.colorScheme = MDCSemanticColorScheme(defaults: .material201804)
+    containerScheme.typographyScheme = MDCTypographyScheme(defaults: .material201804)
 
     // Repeated frequently throughout the app
     let button = MDCButton()
@@ -42,7 +44,9 @@ class ButtonsDynamicTypeViewController: UIViewController {
     // All users of this scheme will automatically update with the new mappings.
 
     // Shared app logic
-    let containerScheme = MDCContainerScheme(defaults: .defaults201811)
+    let containerScheme = MDCContainerScheme()
+    containerScheme.colorScheme = MDCSemanticColorScheme(defaults: .material201804)
+    containerScheme.typographyScheme = MDCTypographyScheme(defaults: .material201804)
     containerScheme.motionScheme = MDCMotionScheme(/* defaults */) // New code
 
     // Repeated frequently throughout the app
@@ -54,7 +58,9 @@ class ButtonsDynamicTypeViewController: UIViewController {
 
   func containerTodayThirdParty() {
     // Shared app logic
-    let containerScheme = ThirdPartyContainerScheme(defaults: .defaults201811)
+    let containerScheme = ThirdPartyContainerScheme()
+    containerScheme.colorScheme = MDCSemanticColorScheme(defaults: .material201804)
+    containerScheme.typographyScheme = MDCTypographyScheme(defaults: .material201804)
 
     // Repeated frequently throughout the app
     let button = MDCButton()

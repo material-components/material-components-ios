@@ -16,22 +16,4 @@
 
 @implementation ThirdPartyContainerScheme
 
-- (nonnull instancetype)initWithDefaults:(ThirdPartyContainerSchemeDefaults)defaults {
-  self = [super init];
-  if (self) {
-    switch (defaults) {
-      case ThirdPartyContainerSchemeDefaults201811:
-        _colorScheme =
-            [[ThirdPartyColorScheme alloc] initWithDefaults:ThirdPartyColorSchemeDefaults201811];
-        _typographyScheme = [[MDCTypographyScheme alloc]
-            initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
-        break;
-
-      default:
-        break;
-    }
-  }
-  return self;
-}
-
 @end

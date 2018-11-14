@@ -20,13 +20,26 @@
 - (void)applyContainedThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
 #pragma mark - Today
 
-  [self _applyContainedThemeWithColorScheme:containerScheme.colorScheme];
-  [self _applyContainedThemeWithTypographyScheme:containerScheme.typographyScheme];
+  if (containerScheme.colorScheme) {
+    [self _applyContainedThemeWithColorScheme:containerScheme.colorScheme];
+  } else {
+    MDCSemanticColorScheme *colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    [self _applyContainedThemeWithColorScheme:colorScheme];
+  }
+
+  if (containerScheme.typographyScheme) {
+    [self _applyContainedThemeWithTypographyScheme:containerScheme.typographyScheme];
+  } else {
+    MDCTypographyScheme *typographyScheme =
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+    [self _applyContainedThemeWithTypographyScheme:typographyScheme];
+  }
 
   if (containerScheme.shapeScheme) {
     [self _applyContainedThemeWithShapeScheme:containerScheme.shapeScheme];
   } else {
-    // Reasonable defaults.
+    // Baseline defaults.
     self.layer.cornerRadius = 4;
   }
 
@@ -34,6 +47,8 @@
 
   if (containerScheme.motionScheme) {
     [self _applyContainedThemeWithMotionScheme:containerScheme.motionScheme];
+  } else {
+    // Baseline defaults.
   }
 
   self.minimumSize = CGSizeMake(0, 36);
@@ -47,18 +62,33 @@
 
   if (containerScheme.colorScheme) {
     [self _applyTextThemeWithColorScheme:containerScheme.colorScheme];
+  } else {
+    MDCSemanticColorScheme *colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    [self _applyTextThemeWithColorScheme:colorScheme];
   }
-  if (containerScheme.shapeScheme) {
-    [self _applyTextThemeWithShapeScheme:containerScheme.shapeScheme];
-  }
+
   if (containerScheme.typographyScheme) {
     [self _applyTextThemeWithTypographyScheme:containerScheme.typographyScheme];
+  } else {
+    MDCTypographyScheme *typographyScheme =
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+    [self _applyTextThemeWithTypographyScheme:typographyScheme];
+  }
+
+  if (containerScheme.shapeScheme) {
+    [self _applyTextThemeWithShapeScheme:containerScheme.shapeScheme];
+  } else {
+    // Baseline defaults.
+    self.layer.cornerRadius = 4;
   }
 
 #pragma mark - With a new subsystem
 
   if (containerScheme.motionScheme) {
     [self _applyTextThemeWithMotionScheme:containerScheme.motionScheme];
+  } else {
+    // Baseline defaults.
   }
 }
 

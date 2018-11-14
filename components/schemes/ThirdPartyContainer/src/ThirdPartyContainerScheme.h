@@ -21,24 +21,17 @@
 #pragma mark - Today
 
 // Overrides the parent type.
-@property(nonatomic, strong, nonnull, readonly) id<ThirdPartyColorScheming> colorScheme;
+@property(nonatomic, strong, nullable, readonly) id<ThirdPartyColorScheming> colorScheme;
 
 @end
-
-typedef NS_ENUM(NSInteger, ThirdPartyContainerSchemeDefaults) {
-  ThirdPartyContainerSchemeDefaults201811
-};
 
 __attribute__((objc_subclassing_restricted)) @interface ThirdPartyContainerScheme
     : NSObject<ThirdPartyContainerScheming>
 
-- (nonnull instancetype)initWithDefaults:(ThirdPartyContainerSchemeDefaults)defaults;
-- (nonnull instancetype)init NS_UNAVAILABLE;
-
 #pragma mark - Today
 
-@property(nonatomic, strong, nonnull) ThirdPartyColorScheme *colorScheme;
-@property(nonatomic, strong, nonnull) MDCTypographyScheme *typographyScheme;
+@property(nonatomic, strong, nullable) ThirdPartyColorScheme *colorScheme;
+@property(nonatomic, strong, nullable) MDCTypographyScheme *typographyScheme;
 
 @property(nonatomic, strong, nullable) MDCShapeScheme *shapeScheme;
 
