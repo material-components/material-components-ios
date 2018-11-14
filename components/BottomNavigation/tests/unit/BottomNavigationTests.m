@@ -147,9 +147,7 @@
 - (void)testAccessibilityLabelInitialValue {
   // Given
   NSString *initialLabel = @"initialLabel";
-  UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home"
-                                                           image:nil
-                                                             tag:0];
+  UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home" image:nil tag:0];
   tabBarItem.accessibilityLabel = initialLabel;
   MDCBottomNavigationBar *bar = [[MDCBottomNavigationBar alloc] init];
   // When
@@ -163,9 +161,7 @@
   // Given
   NSString *oldLabel = @"oldLabel";
   NSString *newLabel = @"newLabel";
-  UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home"
-                                                           image:nil
-                                                             tag:0];
+  UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home" image:nil tag:0];
   tabBarItem.accessibilityLabel = oldLabel;
   MDCBottomNavigationBar *bar = [[MDCBottomNavigationBar alloc] init];
   bar.items = @[ tabBarItem ];
@@ -180,9 +176,7 @@
 - (void)testAccessibilityHintInitialValue {
   // Given
   NSString *initialHint = @"initialHint";
-  UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home"
-                                                           image:nil
-                                                             tag:0];
+  UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home" image:nil tag:0];
   tabBarItem.accessibilityHint = initialHint;
   MDCBottomNavigationBar *bar = [[MDCBottomNavigationBar alloc] init];
   // When
@@ -196,9 +190,7 @@
   // Given
   NSString *oldHint = @"oldHint";
   NSString *newHint = @"newHint";
-  UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home"
-                                                           image:nil
-                                                             tag:0];
+  UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home" image:nil tag:0];
   tabBarItem.accessibilityHint = oldHint;
   MDCBottomNavigationBar *bar = [[MDCBottomNavigationBar alloc] init];
   bar.items = @[ tabBarItem ];
@@ -212,9 +204,7 @@
 
 - (void)testIsAccessibilityElementInitialValue {
   // Given
-  UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home"
-                                                           image:nil
-                                                             tag:0];
+  UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home" image:nil tag:0];
   tabBarItem.isAccessibilityElement = NO;
   MDCBottomNavigationBar *bar = [[MDCBottomNavigationBar alloc] init];
   // When
@@ -226,9 +216,7 @@
 
 - (void)testIsAccessibilityElementValueChanged {
   // Given
-  UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home"
-                                                           image:nil
-                                                             tag:0];
+  UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home" image:nil tag:0];
   tabBarItem.isAccessibilityElement = NO;
   MDCBottomNavigationBar *bar = [[MDCBottomNavigationBar alloc] init];
   bar.items = @[ tabBarItem ];

@@ -47,7 +47,6 @@ static NSString *const kMDCBottomNavigationBarAccessibilityLabel = @"accessibili
 static NSString *const kMDCBottomNavigationBarAccessibilityHint = @"accessibilityHint";
 static NSString *const kMDCBottomNavigationBarIsAccessibilityElement = @"isAccessibilityElement";
 
-
 static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 
 
