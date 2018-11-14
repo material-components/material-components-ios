@@ -14,39 +14,30 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MaterialColorScheme.h"
-#import "MaterialMotionScheme.h"
-#import "MaterialShapeScheme.h"
-#import "MaterialTypographyScheme.h"
+#import "MaterialContainerScheme.h"
 
-@protocol MDCContainerScheming
+@protocol ThirdPartyContainerScheming <MDCContainerScheming>
 
 #pragma mark - Today
 
-@property(nonatomic, strong, nonnull, readonly) id<MDCColorScheming> colorScheme;
-@property(nonatomic, strong, nonnull, readonly) id<MDCTypographyScheming> typographyScheme;
-
-@property(nonatomic, strong, nullable, readonly) id<MDCShapeScheming> shapeScheme;
-
-#pragma mark - With a new subsystem
-
-@property(nonatomic, strong, nullable) id<MDCMotionScheming> motionScheme;
+// Overrides the parent type.
+@property(nonatomic, strong, nonnull, readonly) id<ThirdPartyColorScheming> colorScheme;
 
 @end
 
-typedef NS_ENUM(NSInteger, MDCContainerSchemeDefaults) {
-  MDCContainerSchemeDefaults201811
+typedef NS_ENUM(NSInteger, ThirdPartyContainerSchemeDefaults) {
+  ThirdPartyContainerSchemeDefaults201811
 };
 
 __attribute__((objc_subclassing_restricted))
-@interface MDCContainerScheme : NSObject <MDCContainerScheming>
+@interface ThirdPartyContainerScheme : NSObject <ThirdPartyContainerScheming>
 
-- (nonnull instancetype)initWithDefaults:(MDCContainerSchemeDefaults)defaults;
+- (nonnull instancetype)initWithDefaults:(ThirdPartyContainerSchemeDefaults)defaults;
 - (nonnull instancetype)init NS_UNAVAILABLE;
 
 #pragma mark - Today
 
-@property(nonatomic, strong, nonnull) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong, nonnull) ThirdPartyColorScheme *colorScheme;
 @property(nonatomic, strong, nonnull) MDCTypographyScheme *typographyScheme;
 
 @property(nonatomic, strong, nullable) MDCShapeScheme *shapeScheme;

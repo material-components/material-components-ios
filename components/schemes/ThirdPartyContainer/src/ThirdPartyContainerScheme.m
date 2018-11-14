@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCContainerScheme.h"
+#import "ThirdPartyContainerScheme.h"
 
-@implementation MDCContainerScheme
+@implementation ThirdPartyContainerScheme
 
-- (instancetype)initWithDefaults:(MDCContainerSchemeDefaults)defaults {
+- (nonnull instancetype)initWithDefaults:(ThirdPartyContainerSchemeDefaults)defaults {
   self = [super init];
   if (self) {
     switch (defaults) {
-      case MDCContainerSchemeDefaults201811:
-        _colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+      case ThirdPartyContainerSchemeDefaults201811:
+        _colorScheme = [[ThirdPartyColorScheme alloc] initWithDefaults:ThirdPartyColorSchemeDefaults201811];
         _typographyScheme = [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
         break;
 

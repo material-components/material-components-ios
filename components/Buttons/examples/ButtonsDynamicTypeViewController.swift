@@ -14,7 +14,7 @@
 
 import UIKit
 
-import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialButtons_Theming
 
 class ButtonsDynamicTypeViewController: UIViewController {
 
@@ -28,15 +28,13 @@ class ButtonsDynamicTypeViewController: UIViewController {
 
   func containerToday() {
     // Shared app logic
-    let containerScheme = MDCContainerScheme()
-    containerScheme.colorScheme = MDCSemanticColorScheme(defaults: .material201804)
-    containerScheme.typographyScheme = MDCTypographyScheme(defaults: .material201804)
+    let containerScheme = MDCContainerScheme(defaults: .defaults201811)
 
     // Repeated frequently throughout the app
     let button = MDCButton()
-    button.applyContainedTheme(with: containerScheme)
+    button.applyContainedTheme(withScheme: containerScheme)
 
-    button.applyTextTheme(with: containerScheme)
+    button.applyTextTheme(withScheme: containerScheme)
   }
 
   func containerWithNewSubsystem() {
@@ -44,16 +42,25 @@ class ButtonsDynamicTypeViewController: UIViewController {
     // All users of this scheme will automatically update with the new mappings.
 
     // Shared app logic
-    let containerScheme = MDCContainerScheme()
-    containerScheme.colorScheme = MDCSemanticColorScheme(defaults: .material201804)
-    containerScheme.typographyScheme = MDCTypographyScheme(defaults: .material201804)
+    let containerScheme = MDCContainerScheme(defaults: .defaults201811)
     containerScheme.motionScheme = MDCMotionScheme(/* defaults */) // New code
 
     // Repeated frequently throughout the app
     let button = MDCButton()
-    button.applyContainedTheme(with: containerScheme) // Now uses motion
+    button.applyContainedTheme(withScheme: containerScheme) // Now uses motion
 
-    button.applyTextTheme(with: containerScheme) // Now uses motion
+    button.applyTextTheme(withScheme: containerScheme) // Now uses motion
+  }
+
+  func containerTodayThirdParty() {
+    // Shared app logic
+    let containerScheme = ThirdPartyContainerScheme(defaults: .defaults201811)
+
+    // Repeated frequently throughout the app
+    let button = MDCButton()
+    button.thirdparty_applyContainedTheme(withScheme: containerScheme)
+
+    button.thirdparty_applyFancyTheme(withScheme: containerScheme)
   }
 
   func explicitToday() {

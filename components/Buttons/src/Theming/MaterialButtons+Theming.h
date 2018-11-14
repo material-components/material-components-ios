@@ -13,6 +13,4 @@
 // limitations under the License.
 
 #import "MDCButton+MaterialTheming+Container.h"
-#import "MDCButton+MaterialTheming+Dictionary.h"
 #import "MDCButton+MaterialTheming+Explicit.h"
-#import "MDCButton+MaterialTheming+Set.h"

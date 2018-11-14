@@ -75,3 +75,26 @@ static CGFloat blendColorChannel(CGFloat value, CGFloat bValue, CGFloat alpha, C
 
 @end
 
+@implementation ThirdPartyColorScheme
+
+- (instancetype)initWithDefaults:(ThirdPartyColorSchemeDefaults)defaults {
+  self = [super init];
+  if (self) {
+    switch (defaults) {
+      case ThirdPartyColorSchemeDefaults201811: {
+        MDCSemanticColorScheme *mdcScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+        _primaryColor = mdcScheme.primaryColor;
+        _primaryColorVariant = mdcScheme.primaryColorVariant;
+        _secondaryColor = mdcScheme.secondaryColor;
+        // ...
+
+        _fancyColor = ColorFromRGB(0x123456);
+        break;
+      }
+    }
+  }
+  return self;
+}
+
+@end
+

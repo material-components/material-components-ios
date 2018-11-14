@@ -21,8 +21,8 @@
 
 #pragma mark - Today
 
-- (void)applyContainedThemeWithScheme:(nonnull MDCContainerScheme *)containerScheme;
-- (void)applyTextThemeWithScheme:(nonnull MDCContainerScheme *)containerScheme;
+- (void)applyContainedThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme;
+- (void)applyTextThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme;
 
 #pragma mark - With a new subsystem
 

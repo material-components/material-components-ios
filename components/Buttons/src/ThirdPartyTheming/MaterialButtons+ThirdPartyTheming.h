@@ -12,24 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCContainerScheme.h"
-
-@implementation MDCContainerScheme
-
-- (instancetype)initWithDefaults:(MDCContainerSchemeDefaults)defaults {
-  self = [super init];
-  if (self) {
-    switch (defaults) {
-      case MDCContainerSchemeDefaults201811:
-        _colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-        _typographyScheme = [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
-        break;
-
-      default:
-        break;
-    }
-  }
-  return self;
-}
-
-@end
+#import "MDCButton+ThirdPartyTheming+Container.h"
+#import "MDCButton+ThirdPartyTheming+Explicit.h"

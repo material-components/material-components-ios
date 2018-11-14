@@ -17,45 +17,49 @@
 
 @implementation MDCButton (MaterialThemingWithContainer)
 
-- (void)applyContainedThemeWithScheme:(nonnull MDCContainerScheme *)containerScheme {
+- (void)applyContainedThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
   
 #pragma mark - Today
 
-  if (containerScheme.colorScheme) {
-    [self _applyContainedThemeWithColorScheme:containerScheme.colorScheme];
-  }
+  [self _applyContainedThemeWithColorScheme:containerScheme.colorScheme];
+  [self _applyContainedThemeWithTypographyScheme:containerScheme.typographyScheme];
+
   if (containerScheme.shapeScheme) {
     [self _applyContainedThemeWithShapeScheme:containerScheme.shapeScheme];
-  }
-  if (containerScheme.typographyScheme) {
-    [self _applyContainedThemeWithTypographyScheme:containerScheme.typographyScheme];
+  } else {
+    // Reasonable defaults.
+    self.layer.cornerRadius = 4;
   }
 
 #pragma mark - With a new subsystem
 
   if (containerScheme.motionScheme) {
-    [self _applyContainedThemeWithTypographyScheme:containerScheme.typographyScheme];
+    [self _applyContainedThemeWithMotionScheme:containerScheme.motionScheme];
   }
 
+  self.minimumSize = CGSizeMake(0, 36);
+  [self setElevation:(CGFloat)2 forState:UIControlStateNormal];
+  [self setElevation:(CGFloat)8 forState:UIControlStateHighlighted];
+  [self setElevation:(CGFloat)0 forState:UIControlStateDisabled];
 }
 
-- (void)applyTextThemeWithScheme:(nonnull MDCContainerScheme *)containerScheme {
+- (void)applyTextThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
 #pragma mark - Today
 
   if (containerScheme.colorScheme) {
-    [self _applyContainedThemeWithColorScheme:containerScheme.colorScheme];
+    [self _applyTextThemeWithColorScheme:containerScheme.colorScheme];
   }
   if (containerScheme.shapeScheme) {
-    [self _applyContainedThemeWithShapeScheme:containerScheme.shapeScheme];
+    [self _applyTextThemeWithShapeScheme:containerScheme.shapeScheme];
   }
   if (containerScheme.typographyScheme) {
-    [self _applyContainedThemeWithTypographyScheme:containerScheme.typographyScheme];
+    [self _applyTextThemeWithTypographyScheme:containerScheme.typographyScheme];
   }
 
 #pragma mark - With a new subsystem
 
   if (containerScheme.motionScheme) {
-    [self _applyContainedThemeWithTypographyScheme:containerScheme.typographyScheme];
+    [self _applyTextThemeWithMotionScheme:containerScheme.motionScheme];
   }
 
 }

@@ -12,5 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#pragma mark - Today
+
+typedef NSString * const MDCSchemeName NS_EXTENSIBLE_STRING_ENUM;
+
+FOUNDATION_EXTERN MDCSchemeName _Nonnull MDCSchemeNameColor;
+FOUNDATION_EXTERN MDCSchemeName _Nonnull MDCSchemeNameShape;
+FOUNDATION_EXTERN MDCSchemeName _Nonnull MDCSchemeNameTypography;
+
+#pragma mark - With a new subsystem
+
+FOUNDATION_EXTERN const MDCSchemeName _Nonnull MDCSchemeNameMotion;
+
 @protocol MDCScheming <NSObject>
 @end

@@ -15,14 +15,14 @@
 #import <Foundation/Foundation.h>
 
 #import "MaterialButtons.h"
-#import "MaterialScheme.h"
+#import "ThirdPartyContainerScheme.h"
 
-@interface MDCButton (MaterialThemingWithSet)
+@interface MDCButton (ThirdPartyThemingWithContainer)
 
 #pragma mark - Today
 
-- (void)applyContainedThemeWithSchemes:(nonnull NSSet<id<MDCScheming>> *)schemes;
-- (void)applyTextThemeWithSchemes:(nonnull NSSet<id<MDCScheming>> *)schemes;
+- (void)thirdparty_applyContainedThemeWithScheme:(nonnull id<ThirdPartyContainerScheming>)containerScheme;
+- (void)thirdparty_applyFancyThemeWithScheme:(nonnull id<ThirdPartyContainerScheming>)containerScheme;
 
 #pragma mark - With a new subsystem
 

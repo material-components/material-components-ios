@@ -78,6 +78,7 @@
 @property(nonnull, readonly, nonatomic) UIColor *onBackgroundColor;
 @end
 
+
 /**
  An enum of default color schemes that are supported.
  */
@@ -125,5 +126,53 @@ typedef NS_ENUM(NSInteger, MDCColorSchemeDefaults) {
  */
 + (nonnull UIColor *)blendColor:(nonnull UIColor *)color
             withBackgroundColor:(nonnull UIColor *)backgroundColor;
+
+@end
+
+@protocol ThirdPartyColorScheming <MDCColorScheming>
+
+@property(nonnull, readonly, nonatomic) UIColor *fancyColor;
+
+@end
+
+/**
+ An enum of default color schemes that are supported.
+ */
+typedef NS_ENUM(NSInteger, ThirdPartyColorSchemeDefaults) {
+  /**
+   The Material defaults, circa April 2018.
+   */
+  ThirdPartyColorSchemeDefaults201811
+};
+
+/**
+ A simple implementation of @c MDCColorScheming that provides Material default color values from
+ which basic customizations can be made.
+ */
+@interface ThirdPartyColorScheme : NSObject <ThirdPartyColorScheming>
+
+// Redeclare protocol properties as readwrite
+@property(nonnull, readwrite, nonatomic) UIColor *primaryColor;
+@property(nonnull, readwrite, nonatomic) UIColor *primaryColorVariant;
+@property(nonnull, readwrite, nonatomic) UIColor *secondaryColor;
+@property(nonnull, readwrite, nonatomic) UIColor *errorColor;
+@property(nonnull, readwrite, nonatomic) UIColor *surfaceColor;
+@property(nonnull, readwrite, nonatomic) UIColor *backgroundColor;
+@property(nonnull, readwrite, nonatomic) UIColor *onPrimaryColor;
+@property(nonnull, readwrite, nonatomic) UIColor *onSecondaryColor;
+@property(nonnull, readwrite, nonatomic) UIColor *onSurfaceColor;
+@property(nonnull, readwrite, nonatomic) UIColor *onBackgroundColor;
+
+@property(nonnull, readwrite, nonatomic) UIColor *fancyColor;
+
+/**
+ Initializes the color scheme with the latest material defaults.
+ */
+- (nonnull instancetype)init NS_UNAVAILABLE;
+
+/**
+ Initializes the color scheme with the colors associated with the given defaults.
+ */
+- (nonnull instancetype)initWithDefaults:(ThirdPartyColorSchemeDefaults)defaults;
 
 @end
