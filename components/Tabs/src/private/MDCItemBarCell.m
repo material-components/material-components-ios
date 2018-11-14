@@ -37,8 +37,7 @@ static const CGFloat kBadgeTopPadding = 6;
 static const CGFloat kBadgeMaxWidth = 22;
 
 /// Outer edge padding from spec: https://material.io/go/design-tabs#spec.
-static const UIEdgeInsets kEdgeInsets = {
-    .top = 0, .right = 16, .bottom = 0, .left = 16};
+static const UIEdgeInsets kEdgeInsets = {.top = 0, .right = 16, .bottom = 0, .left = 16};
 
 /// File name of the bundle (without the '.bundle' extension) containing resources.
 static NSString *const kResourceBundleName = @"MaterialTabs";
