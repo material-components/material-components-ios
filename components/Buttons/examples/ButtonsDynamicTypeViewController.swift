@@ -73,6 +73,7 @@ class ButtonsDynamicTypeViewController: UIViewController {
     button
       .applyContainedTheme(withColorScheme: colorScheme)
       .applyContainedTheme(withTypographyScheme: typographyScheme)
+      // Where do straggler APIs get set in order to get this component to Baseline?
 
     button
       .applyTextTheme(withColorScheme: colorScheme)
