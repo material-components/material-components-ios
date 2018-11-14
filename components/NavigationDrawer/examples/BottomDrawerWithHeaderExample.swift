@@ -26,6 +26,8 @@ class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewContro
   let headerViewController = DrawerHeaderViewController()
   let contentViewController = DrawerContentViewController()
 
+  lazy var bottomDrawerViewController = MDCBottomDrawerViewController()
+
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = colorScheme.backgroundColor
@@ -62,7 +64,7 @@ class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewContro
   }
 
   @objc func presentNavigationDrawer() {
-    let bottomDrawerViewController = MDCBottomDrawerViewController()
+    layoutContentViewController()
     bottomDrawerViewController.setTopCornersRadius(24, for: .collapsed)
     bottomDrawerViewController.setTopCornersRadius(8, for: .expanded)
     bottomDrawerViewController.isTopHandleHidden = false
@@ -80,6 +82,23 @@ class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewContro
     headerViewController.titleLabel.center =
       CGPoint(x: headerViewController.view.frame.size.width / 2,
               y: (headerViewController.view.frame.size.height + topInset) / 2)
+  }
+
+  private func layoutContentViewController() {
+    let button = UIButton(frame: .zero)
+    button.contentEdgeInsets = UIEdgeInsets(top: 4, left: 12, bottom: 4, right: 12)
+    button.setTitle("Expand", for: .normal)
+    button.sizeToFit()
+    button.addTarget(self, action: #selector(expandBottomDrawer), for: .touchUpInside)
+    button.center = CGPoint(x: view.frame.width / 2, y: 50)
+    button.backgroundColor = .blue
+    contentViewController.view.addSubview(button)
+  }
+
+  @objc func expandBottomDrawer() {
+    bottomDrawerViewController.expandToFullScreen { _ in
+      self.bottomDrawerViewController.headerViewController?.view.backgroundColor = .blue
+    }
   }
 }
 

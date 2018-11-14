@@ -121,4 +121,6 @@
  */
 - (void)setContentOffsetY:(CGFloat)contentOffsetY animated:(BOOL)animated;
 
+- (void)expandToFullScreen;
+
 @end

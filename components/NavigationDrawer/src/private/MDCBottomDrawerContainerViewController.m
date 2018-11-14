@@ -481,6 +481,11 @@ static UIColor *DrawerShadowColor(void) {
   [self.view setNeedsLayout];
 }
 
+- (void)expandToFullScreen {
+  CGPoint contentOffset = CGPointMake(self.scrollView.contentOffset.x, 404);
+  [self.scrollView setContentOffset:contentOffset animated:YES];
+}
+
 #pragma mark Set ups (Private)
 
 - (void)setUpContentHeader {
