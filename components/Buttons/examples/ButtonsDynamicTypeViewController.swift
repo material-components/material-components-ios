@@ -59,7 +59,8 @@ class ButtonsDynamicTypeViewController: UIViewController {
   func containerTodayThirdParty() {
     // Shared app logic
     let containerScheme = ThirdPartyContainerScheme()
-    containerScheme.colorScheme = MDCSemanticColorScheme(defaults: .material201804)
+    containerScheme.colorScheme = ThirdPartyColorScheme(defaults: .defaults201811)
+    containerScheme.colorScheme?.primaryColor = .red
     containerScheme.typographyScheme = MDCTypographyScheme(defaults: .material201804)
 
     // Repeated frequently throughout the app
