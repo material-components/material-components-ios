@@ -136,8 +136,6 @@ static UIColor *DrawerShadowColor(void) {
 // The current bottom drawer state.
 @property(nonatomic) MDCBottomDrawerState drawerState;
 
-@property(nonatomic) CGFloat initialDrawerFactor;
-
 @end
 
 @implementation MDCBottomDrawerContainerViewController {
@@ -160,7 +158,6 @@ static UIColor *DrawerShadowColor(void) {
     _contentHeightSurplus = NSNotFound;
     _addedContentHeight = NSNotFound;
     _trackingScrollView = trackingScrollView;
-    _initialDrawerFactor = (CGFloat)0.5;
     _drawerState = MDCBottomDrawerStateCollapsed;
     _scrollToContentOffsetY = 0;
   }
@@ -297,15 +294,8 @@ static UIColor *DrawerShadowColor(void) {
  Default value is 0.5. If VoiceOver is enabled, or the mobile device is in landscape,
  the default value becomes 1.0.
  */
-/*- (CGFloat)initialDrawerFactor {
+- (CGFloat)initialDrawerFactor {
   return [self shouldPresentFullScreen] ? 1 : (CGFloat)0.5;
-}*/
-
-- (void)setInitialDrawerFactor:(CGFloat)initialDrawerFactor {
-  _initialDrawerFactor = initialDrawerFactor;
-  if ([self shouldPresentFullScreen]) {
-    _initialDrawerFactor = 1;
-  }
 }
 
 - (void)addScrollViewObserver {
@@ -498,8 +488,6 @@ static UIColor *DrawerShadowColor(void) {
   }
   CGFloat contentYOffset = self.contentHeaderTopInset - topSafeArea;
   CGPoint contentOffset = CGPointMake(self.scrollView.contentOffset.x, contentYOffset);
-  //self.initialDrawerFactor = 1;
-  [self cacheLayoutCalculations];
   [self.scrollView setContentOffset:contentOffset animated:YES];
 }
 
@@ -718,13 +706,13 @@ static UIColor *DrawerShadowColor(void) {
   CGFloat totalHeight = contentHeight + contentHeaderHeight;
   CGFloat contentHeightThresholdForScrollability =
       MIN(containerHeight - MDCDeviceTopSafeAreaInset(),
-          containerHeight * self.initialDrawerFactor + contentHeaderHeight);
+          containerHeight * [self initialDrawerFactor] + contentHeaderHeight);
   BOOL contentScrollsToReveal = totalHeight >= contentHeightThresholdForScrollability;
 
   if (_contentHeaderTopInset == NSNotFound) {
     // The content header top inset is only set once.
     if (contentScrollsToReveal) {
-      _contentHeaderTopInset = containerHeight * (1 - self.initialDrawerFactor);
+      _contentHeaderTopInset = containerHeight * (1 - [self initialDrawerFactor]);
       // The minimum inset value should be the size of the safe area inset, as
       // kInitialDrawerHeightFactor discounts the safe area when receiving the height factor.
       if (_contentHeaderTopInset <= self.topHeaderHeight - self.contentHeaderHeight) {
