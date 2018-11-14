@@ -99,6 +99,19 @@ __attribute__((objc_subclassing_restricted))
 - (nullable MDCAppBarViewController *)appBarViewControllerForViewController:
     (nonnull UIViewController *)viewController;
 
+#pragma mark - Custom presentation overrides
+
+/**
+ Pushes a view controller onto the navigation stack with control over whether an AppBar is injected.
+
+ @param viewController the view controller to push onto the navigation stack.
+ @param animated whether animations should be performed.
+ @param injectAppBar whether an AppBar should be injected into the pushed view controller.
+ */
+- (void)pushViewController:(nonnull UIViewController *)viewController
+                  animated:(BOOL)animated
+              injectAppBar:(BOOL)injectAppBar;
+
 @end
 
 @interface MDCAppBarNavigationController (ToBeDeprecated)
@@ -112,4 +125,3 @@ __attribute__((objc_subclassing_restricted))
 - (nullable MDCAppBar *)appBarForViewController:(nonnull UIViewController *)viewController;
 
 @end
-

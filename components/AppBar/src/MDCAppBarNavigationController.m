@@ -74,14 +74,22 @@
   return child; // Fall back to using the child if we didn't knowingly inject an app bar.
 }
 
-// Inject an App Bar, if necessary, when a view controller is pushed.
-- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
+- (void)pushViewController:(UIViewController *)viewController
+                  animated:(BOOL)animated
+              injectAppBar:(BOOL)injectAppBar {
   // We call this before invoking super because super immediately queries the pushed view controller
   // for things like status bar style, which we want to have rerouted to our flexible header view
   // controller.
-  [self injectAppBarIntoViewController:viewController];
+  if (injectAppBar) {
+    [self injectAppBarIntoViewController:viewController];
+  }
 
   [super pushViewController:viewController animated:animated];
+}
+
+// Inject an App Bar, if necessary, when a view controller is pushed.
+- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
+  [self pushViewController:viewController animated:animated injectAppBar:YES];
 }
 
 - (void)setViewControllers:(NSArray<UIViewController *> *)viewControllers animated:(BOOL)animated {
