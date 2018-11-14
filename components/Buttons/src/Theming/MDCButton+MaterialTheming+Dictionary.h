@@ -34,6 +34,7 @@ FOUNDATION_EXTERN const MDCSchemeName _Nonnull MDCSchemeNameMotion;
 #pragma mark - Today
 
 - (void)applyContainedThemeWithSchemeMap:(nonnull NSDictionary<MDCSchemeName, id<MDCScheming>> *)schemes;
+- (void)applyTextThemeWithSchemeMap:(nonnull NSDictionary<MDCSchemeName, id<MDCScheming>> *)schemes;
 
 #pragma mark - With a new subsystem
 

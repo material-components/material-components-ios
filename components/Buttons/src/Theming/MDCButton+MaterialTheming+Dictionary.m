@@ -48,4 +48,30 @@ const MDCSchemeName _Nonnull MDCSchemeNameMotion = @"motion";
 
 }
 
+- (void)applyTextThemeWithSchemeMap:(nonnull NSDictionary<MDCSchemeName, id<MDCScheming>> *)schemes {
+
+#pragma mark - Today
+
+  id<MDCColorScheming> colorScheme = (id<MDCColorScheming>)schemes[MDCSchemeNameColor];
+  if ([colorScheme conformsToProtocol:@protocol(MDCColorScheming)]) {
+    [self _applyContainedThemeWithColorScheme:colorScheme];
+  }
+  id<MDCShapeScheming> shapeScheme = (id<MDCShapeScheming>)schemes[MDCSchemeNameShape];
+  if ([shapeScheme conformsToProtocol:@protocol(MDCShapeScheming)]) {
+    [self _applyContainedThemeWithShapeScheme:shapeScheme];
+  }
+  id<MDCTypographyScheming> typographyScheme = (id<MDCTypographyScheming>)schemes[MDCSchemeNameTypography];
+  if ([typographyScheme conformsToProtocol:@protocol(MDCTypographyScheming)]) {
+    [self _applyContainedThemeWithTypographyScheme:typographyScheme];
+  }
+
+#pragma mark - With a new subsystem
+
+  id<MDCMotionScheming> motionScheme = (id<MDCMotionScheming>)schemes[MDCSchemeNameMotion];
+  if ([motionScheme conformsToProtocol:@protocol(MDCMotionScheming)]) {
+    [self _applyContainedThemeWithMotionScheme:motionScheme];
+  }
+
+}
+
 @end

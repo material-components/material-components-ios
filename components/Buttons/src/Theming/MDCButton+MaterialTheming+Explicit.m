@@ -34,9 +34,29 @@
   return self;
 }
 
+- (nonnull instancetype)applyTextThemeWithColorScheme:(nonnull id<MDCColorScheming>)scheme {
+  [self _applyContainedThemeWithColorScheme:scheme];
+  return self;
+}
+
+- (nonnull instancetype)applyTextThemeWithShapeScheme:(nonnull id<MDCShapeScheming>)scheme {
+  [self _applyContainedThemeWithShapeScheme:scheme];
+  return self;
+}
+
+- (nonnull instancetype)applyTextThemeWithTypographyScheme:(nonnull id<MDCTypographyScheming>)scheme {
+  [self _applyContainedThemeWithTypographyScheme:scheme];
+  return self;
+}
+
 #pragma mark - With a new subsystem
 
 - (nonnull instancetype)applyContainedThemeWithMotionScheme:(nonnull id<MDCMotionScheming>)scheme {
+  [self _applyContainedThemeWithMotionScheme:scheme];
+  return self;
+}
+
+- (nonnull instancetype)applTextThemeWithMotionScheme:(nonnull id<MDCMotionScheming>)scheme {
   [self _applyContainedThemeWithMotionScheme:scheme];
   return self;
 }

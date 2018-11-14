@@ -39,4 +39,25 @@
 
 }
 
+- (void)applyTextThemeWithScheme:(nonnull MDCContainerScheme *)containerScheme {
+#pragma mark - Today
+
+  if (containerScheme.colorScheme) {
+    [self _applyContainedThemeWithColorScheme:containerScheme.colorScheme];
+  }
+  if (containerScheme.shapeScheme) {
+    [self _applyContainedThemeWithShapeScheme:containerScheme.shapeScheme];
+  }
+  if (containerScheme.typographyScheme) {
+    [self _applyContainedThemeWithTypographyScheme:containerScheme.typographyScheme];
+  }
+
+#pragma mark - With a new subsystem
+
+  if (containerScheme.motionScheme) {
+    [self _applyContainedThemeWithTypographyScheme:containerScheme.typographyScheme];
+  }
+
+}
+
 @end

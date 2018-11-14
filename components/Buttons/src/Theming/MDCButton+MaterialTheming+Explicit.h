@@ -28,9 +28,15 @@
 - (nonnull instancetype)applyContainedThemeWithShapeScheme:(nonnull id<MDCShapeScheming>)scheme;
 - (nonnull instancetype)applyContainedThemeWithTypographyScheme:(nonnull id<MDCTypographyScheming>)scheme;
 
+- (nonnull instancetype)applyTextThemeWithColorScheme:(nonnull id<MDCColorScheming>)scheme;
+- (nonnull instancetype)applyTextThemeWithShapeScheme:(nonnull id<MDCShapeScheming>)scheme;
+- (nonnull instancetype)applyTextThemeWithTypographyScheme:(nonnull id<MDCTypographyScheming>)scheme;
+
 #pragma mark - With a new subsystem
 
 - (nonnull instancetype)applyContainedThemeWithMotionScheme:(nonnull id<MDCMotionScheming>)scheme;
+
+- (nonnull instancetype)applyTextThemeWithMotionScheme:(nonnull id<MDCMotionScheming>)scheme;
 
 #pragma mark - When a subsystem mapping is implemented
 

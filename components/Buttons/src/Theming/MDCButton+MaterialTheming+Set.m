@@ -45,4 +45,31 @@
   }
 }
 
+- (void)applyTextThemeWithSchemes:(nonnull NSSet<id<MDCScheming>> *)schemes {
+  for (id<MDCScheming> scheme in schemes) {
+
+#pragma mark - Today
+
+    if ([scheme conformsToProtocol:@protocol(MDCColorScheming)]) {
+      id<MDCColorScheming> colorScheme = (id<MDCColorScheming>)scheme;
+      [self _applyContainedThemeWithColorScheme:colorScheme];
+
+    } else if ([scheme conformsToProtocol:@protocol(MDCShapeScheming)]) {
+      id<MDCShapeScheming> shapeScheme = (id<MDCShapeScheming>)scheme;
+      [self _applyContainedThemeWithShapeScheme:shapeScheme];
+
+    } else if ([scheme conformsToProtocol:@protocol(MDCTypographyScheming)]) {
+      id<MDCTypographyScheming> typographyScheme = (id<MDCTypographyScheming>)scheme;
+      [self _applyContainedThemeWithTypographyScheme:typographyScheme];
+    }
+
+#pragma mark - With a new subsystem
+
+    else if ([scheme conformsToProtocol:@protocol(MDCMotionScheming)]) {
+      id<MDCMotionScheming> motionScheme = (id<MDCMotionScheming>)scheme;
+      [self _applyContainedThemeWithMotionScheme:motionScheme];
+    }
+  }
+}
+
 @end

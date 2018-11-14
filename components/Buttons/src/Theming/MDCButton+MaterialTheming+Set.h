@@ -22,6 +22,7 @@
 #pragma mark - Today
 
 - (void)applyContainedThemeWithSchemes:(nonnull NSSet<id<MDCScheming>> *)schemes;
+- (void)applyTextThemeWithSchemes:(nonnull NSSet<id<MDCScheming>> *)schemes;
 
 #pragma mark - With a new subsystem
 

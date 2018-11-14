@@ -35,6 +35,8 @@ class ButtonsDynamicTypeViewController: UIViewController {
     // Repeated frequently throughout the app
     let button = MDCButton()
     button.applyContainedTheme(with: containerScheme)
+
+    button.applyTextTheme(with: containerScheme)
   }
 
   func containerWithNewSubsystem() {
@@ -50,6 +52,8 @@ class ButtonsDynamicTypeViewController: UIViewController {
     // Repeated frequently throughout the app
     let button = MDCButton()
     button.applyContainedTheme(with: containerScheme) // Now uses motion
+
+    button.applyTextTheme(with: containerScheme) // Now uses motion
   }
 
   func explicitToday() {
@@ -62,6 +66,10 @@ class ButtonsDynamicTypeViewController: UIViewController {
     button
       .applyContainedTheme(withColorScheme: colorScheme)
       .applyContainedTheme(withTypographyScheme: typographyScheme)
+
+    button
+      .applyTextTheme(withColorScheme: colorScheme)
+      .applyTextTheme(withTypographyScheme: typographyScheme)
   }
 
   func explicitWithNewSubsystem() {
@@ -76,6 +84,11 @@ class ButtonsDynamicTypeViewController: UIViewController {
       .applyContainedTheme(withColorScheme: colorScheme)
       .applyContainedTheme(withTypographyScheme: typographyScheme)
       .applyContainedTheme(withMotionScheme: motionScheme) // New code
+
+    button
+      .applyTextTheme(withColorScheme: colorScheme)
+      .applyTextTheme(withTypographyScheme: typographyScheme)
+      .applyTextTheme(withMotionScheme: motionScheme) // New code
   }
 
   override func viewDidLoad() {
