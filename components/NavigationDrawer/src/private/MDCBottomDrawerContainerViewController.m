@@ -482,7 +482,12 @@ static UIColor *DrawerShadowColor(void) {
 }
 
 - (void)expandToFullScreen {
-  CGPoint contentOffset = CGPointMake(self.scrollView.contentOffset.x, 404);
+  CGFloat topSafeArea = 0;
+  if (@available (iOS 11.0, *)) {
+    topSafeArea = self.view.safeAreaInsets.top;
+  }
+  CGFloat contentYOffset = self.contentHeaderTopInset - topSafeArea;
+  CGPoint contentOffset = CGPointMake(self.scrollView.contentOffset.x, contentYOffset);
   [self.scrollView setContentOffset:contentOffset animated:YES];
 }
 
