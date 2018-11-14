@@ -144,6 +144,46 @@
   XCTAssert([bar.itemViews.firstObject.accessibilityIdentifier isEqualToString:newIdentifier]);
 }
 
+-(void)testAccessibilityLabel {
+  NSString *oldLabel = @"oldLabel";
+  NSString *newLabel = @"newLabel";
+  UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home"
+                                                           image:nil
+                                                             tag:0];
+  tabBarItem.accessibilityLabel = oldLabel;
+  MDCBottomNavigationBar *bar = [[MDCBottomNavigationBar alloc] init];
+  bar.items = @[ tabBarItem ];
+  XCTAssert([bar.itemViews.firstObject.accessibilityLabel isEqualToString:oldLabel]);
+  tabBarItem.accessibilityLabel = newLabel;
+  XCTAssert([bar.itemViews.firstObject.accessibilityLabel isEqualToString:newLabel]);
+}
+
+-(void)testAccessibilityHint {
+  NSString *oldHint = @"oldHint";
+  NSString *newHint = @"newHint";
+  UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home"
+                                                           image:nil
+                                                             tag:0];
+  tabBarItem.accessibilityHint = oldHint;
+  MDCBottomNavigationBar *bar = [[MDCBottomNavigationBar alloc] init];
+  bar.items = @[ tabBarItem ];
+  XCTAssert([bar.itemViews.firstObject.accessibilityHint isEqualToString:oldHint]);
+  tabBarItem.accessibilityHint = newHint;
+  XCTAssert([bar.itemViews.firstObject.accessibilityHint isEqualToString:newHint]);
+}
+
+-(void)testIsAccessibilityElement {
+  UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home"
+                                                           image:nil
+                                                             tag:0];
+  tabBarItem.isAccessibilityElement = NO;
+  MDCBottomNavigationBar *bar = [[MDCBottomNavigationBar alloc] init];
+  bar.items = @[ tabBarItem ];
+  XCTAssert(!bar.itemViews.firstObject.isAccessibilityElement);
+  tabBarItem.isAccessibilityElement = YES;
+  XCTAssert(bar.itemViews.firstObject.isAccessibilityElement);
+}
+
 -(void)testTitleVisibility {
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
   UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:0];
