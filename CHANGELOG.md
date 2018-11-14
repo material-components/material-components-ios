@@ -1,15 +1,19 @@
 # #develop#
 
 Replace this text with a summarized description of this release's contents.
+
 ## Breaking changes
 
 Replace this explanations for how to resolve the breaking changes.
+
 ## New deprecations
 
 Replace this text with links to deprecation guides.
+
 ## New features
 
 Replace this text with example code for each new feature.
+
 ## API changes
 
 ### AppBar+ColorThemer
@@ -18,30 +22,13 @@ Replace this text with example code for each new feature.
 
 *modified* class method: `+applySurfaceVariantWithColorScheme:toAppBar:` in `MDCAppBarColorThemer(ToBeDeprecated)`
 
-| Type of change: | parent.usr |
-|---|---|
-| From: | `c:objc(cs)MDCAppBarColorThemer` |
-| To: | `c:objc(cy)MDCAppBarColorThemer@ToBeDeprecated` |
-
 *modified* class method: `+applySemanticColorScheme:toAppBar:` in `MDCAppBarColorThemer(ToBeDeprecated)`
-
-| Type of change: | parent.usr |
-|---|---|
-| From: | `c:objc(cs)MDCAppBarColorThemer` |
-| To: | `c:objc(cy)MDCAppBarColorThemer@ToBeDeprecated` |
 
 ### AppBar+TypographyThemer
 
 #### MDCAppBarTypographyThemer(ToBeDeprecated)
 
-*new* category: `MDCAppBarTypographyThemer(ToBeDeprecated)`
-
 *modified* class method: `+applyTypographyScheme:toAppBar:` in `MDCAppBarTypographyThemer(ToBeDeprecated)`
-
-| Type of change: | parent.usr |
-|---|---|
-| From: | `c:objc(cs)MDCAppBarTypographyThemer` |
-| To: | `c:objc(cy)MDCAppBarTypographyThemer@ToBeDeprecated` |
 
 ### BottomNavigation
 
@@ -80,11 +67,6 @@ Replace this text with example code for each new feature.
 *removed* category: `MDCSnackbarMessageView()`
 
 *modified* property: `snackbarMessageViewTextColor` in `MDCSnackbarMessageView()`
-
-| Type of change: | parent.usr |
-|---|---|
-| From: | `c:objc(ext)MDCSnackbarMessageView@MDCSnackbarMessageView.h@3430` |
-| To: | `c:objc(ext)MDCSnackbarMessageView@MDCSnackbarMessageView.h@3438` |
 
 ## Component changes
 
