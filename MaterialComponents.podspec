@@ -255,6 +255,16 @@ Pod::Spec.new do |mdc|
     end
   end
 
+  mdc.subspec "Buttons+Theming" do |extension|
+    extension.ios.deployment_target = '8.0'
+    extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
+    extension.source_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}", "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/private/*.{h,m}"
+    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
+    extension.dependency "MaterialComponents/Buttons+ColorThemer"
+    extension.dependency "MaterialComponents/Buttons+ShapeThemer"
+    extension.dependency "MaterialComponents/Buttons+TypographyThemer"
+  end
+
   mdc.subspec "Buttons+ColorThemer" do |extension|
     extension.ios.deployment_target = '8.0'
     extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
@@ -1205,10 +1215,48 @@ Pod::Spec.new do |mdc|
   end
 
   mdc.subspec "schemes" do |scheme_spec|
+    scheme_spec.subspec "Scheme" do |scheme|
+      scheme.ios.deployment_target = '8.0'
+      scheme.public_header_files = "components/schemes/#{scheme.base_name}/src/*.h"
+      scheme.source_files = "components/schemes/#{scheme.base_name}/src/*.{h,m}"
+
+      scheme.test_spec 'tests' do |tests|
+        tests.test_spec 'unit' do |unit_tests|
+          unit_tests.source_files = "components/schemes/#{scheme.base_name}/tests/unit/*.{h,m,swift}", "components/schemes/#{scheme.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+          unit_tests.resources = "components/schemes/#{scheme.base_name}/tests/unit/resources/*"
+        end
+      end
+    end
+    scheme_spec.subspec "Container" do |scheme|
+      scheme.ios.deployment_target = '8.0'
+      scheme.public_header_files = "components/schemes/#{scheme.base_name}/src/*.h"
+      scheme.source_files = "components/schemes/#{scheme.base_name}/src/*.{h,m}"
+
+      scheme.test_spec 'tests' do |tests|
+        tests.test_spec 'unit' do |unit_tests|
+          unit_tests.source_files = "components/schemes/#{scheme.base_name}/tests/unit/*.{h,m,swift}", "components/schemes/#{scheme.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+          unit_tests.resources = "components/schemes/#{scheme.base_name}/tests/unit/resources/*"
+        end
+      end
+    end
     scheme_spec.subspec "Color" do |scheme|
       scheme.ios.deployment_target = '8.0'
       scheme.public_header_files = "components/schemes/#{scheme.base_name}/src/*.h"
       scheme.source_files = "components/schemes/#{scheme.base_name}/src/*.{h,m}"
+      scheme.dependency "MaterialComponents/schemes/Scheme"
+
+      scheme.test_spec 'tests' do |tests|
+        tests.test_spec 'unit' do |unit_tests|
+          unit_tests.source_files = "components/schemes/#{scheme.base_name}/tests/unit/*.{h,m,swift}", "components/schemes/#{scheme.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+          unit_tests.resources = "components/schemes/#{scheme.base_name}/tests/unit/resources/*"
+        end
+      end
+    end
+    scheme_spec.subspec "Motion" do |scheme|
+      scheme.ios.deployment_target = '8.0'
+      scheme.public_header_files = "components/schemes/#{scheme.base_name}/src/*.h"
+      scheme.source_files = "components/schemes/#{scheme.base_name}/src/*.{h,m}"
+      scheme.dependency "MaterialComponents/schemes/Scheme"
 
       scheme.test_spec 'tests' do |tests|
         tests.test_spec 'unit' do |unit_tests|
@@ -1223,6 +1271,7 @@ Pod::Spec.new do |mdc|
       scheme.source_files = "components/schemes/#{scheme.base_name}/src/*.{h,m}"
       scheme.dependency "MaterialComponents/private/ShapeLibrary"
       scheme.dependency "MaterialComponents/private/Shapes"
+      scheme.dependency "MaterialComponents/schemes/Scheme"
 
       scheme.test_spec 'tests' do |tests|
         tests.test_spec 'unit' do |unit_tests|
@@ -1235,6 +1284,7 @@ Pod::Spec.new do |mdc|
       scheme.ios.deployment_target = '8.0'
       scheme.public_header_files = "components/schemes/#{scheme.base_name}/src/*.h"
       scheme.source_files = "components/schemes/#{scheme.base_name}/src/*.{h,m}"
+      scheme.dependency "MaterialComponents/schemes/Scheme"
 
       scheme.test_spec 'tests' do |tests|
         tests.test_spec 'unit' do |unit_tests|

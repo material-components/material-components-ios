@@ -26,6 +26,58 @@ class ButtonsDynamicTypeViewController: UIViewController {
     ]
   }
 
+  func containerToday() {
+    // Shared app logic
+    let containerScheme = MDCContainerScheme()
+    containerScheme.colorScheme = MDCSemanticColorScheme(defaults: .material201804)
+    containerScheme.typographyScheme = MDCTypographyScheme(defaults: .material201804)
+
+    // Repeated frequently throughout the app
+    let button = MDCButton()
+    button.applyContainedTheme(with: containerScheme)
+  }
+
+  func containerWithNewSubsystem() {
+    // To opt in to the new subsystem, a new scheme must be created and configured.
+    // All users of this scheme will automatically update with the new mappings.
+
+    // Shared app logic
+    let containerScheme = MDCContainerScheme()
+    containerScheme.colorScheme = MDCSemanticColorScheme(defaults: .material201804)
+    containerScheme.typographyScheme = MDCTypographyScheme(defaults: .material201804)
+    containerScheme.motionScheme = MDCMotionScheme(/* defaults */) // New code
+
+    // Repeated frequently throughout the app
+    let button = MDCButton()
+    button.applyContainedTheme(with: containerScheme) // Now uses motion
+  }
+
+  func explicitToday() {
+    // Shared app logic
+    let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
+    let typographyScheme = MDCTypographyScheme(defaults: .material201804)
+
+    // Repeated frequently throughout the app
+    let button = MDCButton()
+    button
+      .applyContainedTheme(withColorScheme: colorScheme)
+      .applyContainedTheme(withTypographyScheme: typographyScheme)
+  }
+
+  func explicitWithNewSubsystem() {
+    // Shared app logic
+    let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
+    let typographyScheme = MDCTypographyScheme(defaults: .material201804)
+    let motionScheme = MDCMotionScheme(/* defaults */)
+
+    // Repeated frequently throughout the app
+    let button = MDCButton()
+    button
+      .applyContainedTheme(withColorScheme: colorScheme)
+      .applyContainedTheme(withTypographyScheme: typographyScheme)
+      .applyContainedTheme(withMotionScheme: motionScheme) // New code
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
 

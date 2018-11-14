@@ -14,6 +14,9 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+
+#import "MaterialScheme.h"
+
 #import "MDCShapeCategory.h"
 
 /**
@@ -23,7 +26,7 @@
  There are no optional properties and all shapes must be provided,
  supporting more reliable shape theming.
  */
-@protocol MDCShapeScheming
+@protocol MDCShapeScheming <MDCScheming>
 
 /**
  The shape defining small sized components.
