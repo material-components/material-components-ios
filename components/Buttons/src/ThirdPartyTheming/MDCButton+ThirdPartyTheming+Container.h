@@ -21,8 +21,10 @@
 
 #pragma mark - Today
 
-- (void)thirdparty_applyContainedThemeWithScheme:(nonnull id<ThirdPartyContainerScheming>)containerScheme;
-- (void)thirdparty_applyFancyThemeWithScheme:(nonnull id<ThirdPartyContainerScheming>)containerScheme;
+- (void)thirdparty_applyContainedThemeWithScheme:
+    (nonnull id<ThirdPartyContainerScheming>)containerScheme;
+- (void)thirdparty_applyFancyThemeWithScheme:
+    (nonnull id<ThirdPartyContainerScheming>)containerScheme;
 
 #pragma mark - With a new subsystem
 

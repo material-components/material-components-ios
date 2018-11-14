@@ -29,8 +29,8 @@ typedef NS_ENUM(NSInteger, ThirdPartyContainerSchemeDefaults) {
   ThirdPartyContainerSchemeDefaults201811
 };
 
-__attribute__((objc_subclassing_restricted))
-@interface ThirdPartyContainerScheme : NSObject <ThirdPartyContainerScheming>
+__attribute__((objc_subclassing_restricted)) @interface ThirdPartyContainerScheme
+    : NSObject<ThirdPartyContainerScheming>
 
 - (nonnull instancetype)initWithDefaults:(ThirdPartyContainerSchemeDefaults)defaults;
 - (nonnull instancetype)init NS_UNAVAILABLE;

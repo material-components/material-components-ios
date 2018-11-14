@@ -34,12 +34,10 @@
 
 @end
 
-typedef NS_ENUM(NSInteger, MDCContainerSchemeDefaults) {
-  MDCContainerSchemeDefaults201811
-};
+typedef NS_ENUM(NSInteger, MDCContainerSchemeDefaults) { MDCContainerSchemeDefaults201811 };
 
-__attribute__((objc_subclassing_restricted))
-@interface MDCContainerScheme : NSObject <MDCContainerScheming>
+__attribute__((objc_subclassing_restricted)) @interface MDCContainerScheme
+    : NSObject<MDCContainerScheming>
 
 - (nonnull instancetype)initWithDefaults:(MDCContainerSchemeDefaults)defaults;
 - (nonnull instancetype)init NS_UNAVAILABLE;

@@ -18,7 +18,6 @@
 @implementation MDCButton (MaterialThemingWithContainer)
 
 - (void)applyContainedThemeWithScheme:(nonnull id<MDCContainerScheming>)containerScheme {
-  
 #pragma mark - Today
 
   [self _applyContainedThemeWithColorScheme:containerScheme.colorScheme];
@@ -61,7 +60,6 @@
   if (containerScheme.motionScheme) {
     [self _applyTextThemeWithMotionScheme:containerScheme.motionScheme];
   }
-
 }
 
 @end

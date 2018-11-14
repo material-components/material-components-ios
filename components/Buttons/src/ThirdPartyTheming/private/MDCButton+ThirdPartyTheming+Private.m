@@ -23,25 +23,20 @@
 #pragma mark - Today
 
 - (void)_thirdparty_applyContainedThemeWithColorScheme:(nonnull id<ThirdPartyColorScheming>)scheme {
-
 }
 
 - (void)_thirdparty_applyFancyThemeWithColorScheme:(nonnull id<ThirdPartyColorScheming>)scheme {
-
 }
 
 - (void)_thirdparty_applyFancyThemeWithShapeScheme:(nonnull id<MDCShapeScheming>)scheme {
-
 }
 
 - (void)_thirdparty_applyFancyThemeWithTypographyScheme:(nonnull id<MDCTypographyScheming>)scheme {
-
 }
 
 #pragma mark - With a new subsystem
 
 - (void)_thirdparty_applyFancyThemeWithMotionScheme:(nonnull id<MDCMotionScheming>)scheme {
-
 }
 
 @end

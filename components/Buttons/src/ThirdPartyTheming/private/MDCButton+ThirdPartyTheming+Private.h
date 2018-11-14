@@ -17,9 +17,9 @@
 #import "MaterialButtons.h"
 
 #import "MaterialColorScheme.h"
+#import "MaterialMotionScheme.h"
 #import "MaterialShapeScheme.h"
 #import "MaterialTypographyScheme.h"
-#import "MaterialMotionScheme.h"
 
 @interface MDCButton (ThirdPartyThemingPrivate)
 

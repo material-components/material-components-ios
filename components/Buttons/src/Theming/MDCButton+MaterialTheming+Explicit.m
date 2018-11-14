@@ -29,7 +29,8 @@
   return self;
 }
 
-- (nonnull instancetype)applyContainedThemeWithTypographyScheme:(nonnull id<MDCTypographyScheming>)scheme {
+- (nonnull instancetype)applyContainedThemeWithTypographyScheme:
+    (nonnull id<MDCTypographyScheming>)scheme {
   [self _applyContainedThemeWithTypographyScheme:scheme];
   return self;
 }
@@ -44,7 +45,8 @@
   return self;
 }
 
-- (nonnull instancetype)applyTextThemeWithTypographyScheme:(nonnull id<MDCTypographyScheming>)scheme {
+- (nonnull instancetype)applyTextThemeWithTypographyScheme:
+    (nonnull id<MDCTypographyScheming>)scheme {
   [self _applyContainedThemeWithTypographyScheme:scheme];
   return self;
 }

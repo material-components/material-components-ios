@@ -23,37 +23,29 @@
 #pragma mark - Today
 
 - (void)_applyContainedThemeWithColorScheme:(nonnull id<MDCColorScheming>)scheme {
-
 }
 
 - (void)_applyContainedThemeWithShapeScheme:(nonnull id<MDCShapeScheming>)scheme {
-
 }
 
 - (void)_applyContainedThemeWithTypographyScheme:(nonnull id<MDCTypographyScheming>)scheme {
-
 }
 
 - (void)_applyTextThemeWithColorScheme:(nonnull id<MDCColorScheming>)scheme {
-
 }
 
 - (void)_applyTextThemeWithShapeScheme:(nonnull id<MDCShapeScheming>)scheme {
-
 }
 
 - (void)_applyTextThemeWithTypographyScheme:(nonnull id<MDCTypographyScheming>)scheme {
-
 }
 
 #pragma mark - With a new subsystem
 
 - (void)_applyContainedThemeWithMotionScheme:(nonnull id<MDCMotionScheming>)scheme {
-  
 }
 
 - (void)_applyTextThemeWithMotionScheme:(nonnull id<MDCMotionScheming>)scheme {
-
 }
 
 @end

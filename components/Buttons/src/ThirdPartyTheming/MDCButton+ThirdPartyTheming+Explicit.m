@@ -19,22 +19,26 @@
 
 #pragma mark - Today
 
-- (nonnull instancetype)thirdparty_applyContainedThemeWithColorScheme:(nonnull id<ThirdPartyColorScheming>)scheme {
+- (nonnull instancetype)thirdparty_applyContainedThemeWithColorScheme:
+    (nonnull id<ThirdPartyColorScheming>)scheme {
   [self _thirdparty_applyContainedThemeWithColorScheme:scheme];
   return self;
 }
 
-- (nonnull instancetype)thirdparty_applyTextThemeWithColorScheme:(nonnull id<ThirdPartyColorScheming>)scheme {
+- (nonnull instancetype)thirdparty_applyTextThemeWithColorScheme:
+    (nonnull id<ThirdPartyColorScheming>)scheme {
   [self _thirdparty_applyFancyThemeWithColorScheme:scheme];
   return self;
 }
 
-- (nonnull instancetype)thirdparty_applyTextThemeWithShapeScheme:(nonnull id<MDCShapeScheming>)scheme {
+- (nonnull instancetype)thirdparty_applyTextThemeWithShapeScheme:
+    (nonnull id<MDCShapeScheming>)scheme {
   [self _thirdparty_applyFancyThemeWithShapeScheme:scheme];
   return self;
 }
 
-- (nonnull instancetype)thirdparty_applyTextThemeWithTypographyScheme:(nonnull id<MDCTypographyScheming>)scheme {
+- (nonnull instancetype)thirdparty_applyTextThemeWithTypographyScheme:
+    (nonnull id<MDCTypographyScheming>)scheme {
   [self _thirdparty_applyFancyThemeWithTypographyScheme:scheme];
   return self;
 }

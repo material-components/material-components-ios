@@ -17,8 +17,8 @@
 #import "MaterialButtons.h"
 #import "MaterialColorScheme.h"
 #import "MaterialMotionScheme.h"
-#import "MaterialTypographyScheme.h"
 #import "MaterialShapeScheme.h"
+#import "MaterialTypographyScheme.h"
 
 @interface MDCButton (MaterialThemingWithExplicit)
 
@@ -26,11 +26,13 @@
 
 - (nonnull instancetype)applyContainedThemeWithColorScheme:(nonnull id<MDCColorScheming>)scheme;
 - (nonnull instancetype)applyContainedThemeWithShapeScheme:(nonnull id<MDCShapeScheming>)scheme;
-- (nonnull instancetype)applyContainedThemeWithTypographyScheme:(nonnull id<MDCTypographyScheming>)scheme;
+- (nonnull instancetype)applyContainedThemeWithTypographyScheme:
+    (nonnull id<MDCTypographyScheming>)scheme;
 
 - (nonnull instancetype)applyTextThemeWithColorScheme:(nonnull id<MDCColorScheming>)scheme;
 - (nonnull instancetype)applyTextThemeWithShapeScheme:(nonnull id<MDCShapeScheming>)scheme;
-- (nonnull instancetype)applyTextThemeWithTypographyScheme:(nonnull id<MDCTypographyScheming>)scheme;
+- (nonnull instancetype)applyTextThemeWithTypographyScheme:
+    (nonnull id<MDCTypographyScheming>)scheme;
 
 #pragma mark - With a new subsystem
 

@@ -19,8 +19,8 @@
 
 @implementation MDCButton (ThirdPartyThemingWithContainer)
 
-- (void)thirdparty_applyContainedThemeWithScheme:(nonnull id<ThirdPartyContainerScheming>)containerScheme {
-
+- (void)thirdparty_applyContainedThemeWithScheme:
+    (nonnull id<ThirdPartyContainerScheming>)containerScheme {
   // Start with the Material baseline theme.
   [self applyContainedThemeWithScheme:containerScheme];
 
@@ -30,7 +30,8 @@
   }
 }
 
-- (void)thirdparty_applyFancyThemeWithScheme:(nonnull id<ThirdPartyContainerScheming>)containerScheme {
+- (void)thirdparty_applyFancyThemeWithScheme:
+    (nonnull id<ThirdPartyContainerScheming>)containerScheme {
   // No call to MDC because this is a brand new type.
 
   if (containerScheme.colorScheme) {

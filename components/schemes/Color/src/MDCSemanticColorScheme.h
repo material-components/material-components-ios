@@ -76,7 +76,6 @@
 @property(nonnull, readonly, nonatomic) UIColor *onBackgroundColor;
 @end
 
-
 /**
  An enum of default color schemes that are supported.
  */

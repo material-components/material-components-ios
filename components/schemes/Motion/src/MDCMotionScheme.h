@@ -17,5 +17,5 @@
 @protocol MDCMotionScheming
 @end
 
-@interface MDCMotionScheme: NSObject <MDCMotionScheming>
+@interface MDCMotionScheme : NSObject <MDCMotionScheming>
 @end

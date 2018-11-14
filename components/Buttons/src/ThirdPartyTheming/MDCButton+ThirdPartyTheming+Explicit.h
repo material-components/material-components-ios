@@ -17,21 +17,26 @@
 #import "MaterialButtons.h"
 #import "MaterialColorScheme.h"
 #import "MaterialMotionScheme.h"
-#import "MaterialTypographyScheme.h"
 #import "MaterialShapeScheme.h"
+#import "MaterialTypographyScheme.h"
 
 @interface MDCButton (ThirdPartyThemingWithExplicit)
 
 #pragma mark - Today
 
-- (nonnull instancetype)thirdparty_applyContainedThemeWithColorScheme:(nonnull id<ThirdPartyColorScheming>)scheme;
+- (nonnull instancetype)thirdparty_applyContainedThemeWithColorScheme:
+    (nonnull id<ThirdPartyColorScheming>)scheme;
 
-- (nonnull instancetype)thirdparty_applyTextThemeWithColorScheme:(nonnull id<ThirdPartyColorScheming>)scheme;
-- (nonnull instancetype)thirdparty_applyTextThemeWithShapeScheme:(nonnull id<MDCShapeScheming>)scheme;
-- (nonnull instancetype)thirdparty_applyTextThemeWithTypographyScheme:(nonnull id<MDCTypographyScheming>)scheme;
+- (nonnull instancetype)thirdparty_applyTextThemeWithColorScheme:
+    (nonnull id<ThirdPartyColorScheming>)scheme;
+- (nonnull instancetype)thirdparty_applyTextThemeWithShapeScheme:
+    (nonnull id<MDCShapeScheming>)scheme;
+- (nonnull instancetype)thirdparty_applyTextThemeWithTypographyScheme:
+    (nonnull id<MDCTypographyScheming>)scheme;
 
 #pragma mark - With a new subsystem
 
-- (nonnull instancetype)thirdparty_applyTextThemeWithMotionScheme:(nonnull id<MDCMotionScheming>)scheme;
+- (nonnull instancetype)thirdparty_applyTextThemeWithMotionScheme:
+    (nonnull id<MDCMotionScheming>)scheme;
 
 @end

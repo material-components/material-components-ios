@@ -82,7 +82,8 @@ static CGFloat blendColorChannel(CGFloat value, CGFloat bValue, CGFloat alpha, C
   if (self) {
     switch (defaults) {
       case ThirdPartyColorSchemeDefaults201811: {
-        MDCSemanticColorScheme *mdcScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+        MDCSemanticColorScheme *mdcScheme =
+            [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
         _primaryColor = mdcScheme.primaryColor;
         _primaryColorVariant = mdcScheme.primaryColorVariant;
         _secondaryColor = mdcScheme.secondaryColor;
@@ -97,4 +98,3 @@ static CGFloat blendColorChannel(CGFloat value, CGFloat bValue, CGFloat alpha, C
 }
 
 @end
-
