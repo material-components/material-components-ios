@@ -91,6 +91,8 @@
  */
 - (CGFloat)topCornersRadiusForDrawerState:(MDCBottomDrawerState)drawerState;
 
+- (void)setContentOffset:(CGPoint)contentOffset animated:(BOOL)animated;
+
 @end
 
 /**
@@ -109,5 +111,6 @@
  */
 - (void)bottomDrawerControllerDidChangeTopInset:(nonnull MDCBottomDrawerViewController *)controller
                                        topInset:(CGFloat)topInset;
+
 
 @end

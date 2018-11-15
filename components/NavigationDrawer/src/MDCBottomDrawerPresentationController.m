@@ -230,4 +230,8 @@ static CGFloat kTopHandleYCenter = (CGFloat)6.0;
   }
 }
 
+- (void)setContentOffset:(CGPoint)contentOffset animated:(BOOL)animated {
+  [self.bottomDrawerContainerViewController setContentOffset:contentOffset animated:animated];
+}
+
 @end

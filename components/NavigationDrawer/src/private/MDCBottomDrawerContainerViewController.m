@@ -148,6 +148,7 @@ static UIColor *DrawerShadowColor(void) {
   CGFloat _contentHeightSurplus;
   CGFloat _addedContentHeight;
   CGFloat _contentVCPreferredContentSizeHeightCached;
+  CGFloat _currentContentOffset;
 }
 
 - (instancetype)initWithOriginalPresentingViewController:
@@ -198,6 +199,9 @@ static UIColor *DrawerShadowColor(void) {
                        context:(void *)context {
   if ([object isKindOfClass:[UIScrollView class]]) {
     CGPoint contentOffset = [(NSValue *)[change objectForKey:NSKeyValueChangeNewKey] CGPointValue];
+    _currentContentOffset = contentOffset.y;
+    NSLog(@"current content offset: %f", contentOffset.y);
+
     CGPoint oldContentOffset =
         [(NSValue *)[change objectForKey:NSKeyValueChangeOldKey] CGPointValue];
     self.scrollViewIsDraggedToBottom = contentOffset.y == oldContentOffset.y
@@ -214,6 +218,8 @@ static UIColor *DrawerShadowColor(void) {
     if (self.trackingScrollView != nil) {
       normalizedContentOffset.y = [self updateContentOffsetForPerformantScrolling:contentOffset.y];
     }
+    NSLog(@"content offset: %f", normalizedContentOffset.y);
+    NSLog(@"tracking scroll view content offset: %f", self.trackingScrollView.contentOffset.y);
 
     [self updateViewWithContentOffset:normalizedContentOffset];
   }
@@ -231,7 +237,7 @@ static UIColor *DrawerShadowColor(void) {
     topAreaInsetForHeader = kEpsilon;
   }
   CGFloat drawerOffset =
-      self.contentHeaderTopInset - topAreaInsetForHeader + kScrollViewBufferForPerformance;
+  self.contentHeaderTopInset - topAreaInsetForHeader + kScrollViewBufferForPerformance;
   CGFloat headerHeightWithoutInset = self.contentHeaderHeight - topAreaInsetForHeader;
   CGFloat contentDiff = contentYOffset - drawerOffset;
   CGFloat maxScrollOrigin = self.trackingScrollView.contentSize.height -
@@ -333,6 +339,27 @@ static UIColor *DrawerShadowColor(void) {
     self.drawerState = MDCBottomDrawerStateCollapsed;
   }
 }
+
+- (void)setContentOffset:(CGPoint)contentOffset animated:(BOOL)animated {
+//  if (self.trackingScrollView) {
+//    [self.trackingScrollView setContentOffset:contentOffset animated:animated];
+    CGFloat topAreaInsetForHeader = (self.headerViewController ? MDCDeviceTopSafeAreaInset() : 0);
+  CGFloat drawerOffset = self.contentHeaderTopInset - topAreaInsetForHeader;
+//    [self.scrollView setContentOffset:CGPointMake(0, 0)
+//                             animated:animated];
+//  } else {
+  NSLog(@"how much: %f", contentOffset.y - self.trackingScrollView.contentOffset.y + drawerOffset);
+    [self.scrollView setContentOffset:CGPointMake(contentOffset.x, contentOffset.y - self.trackingScrollView.contentOffset.y + drawerOffset) animated:NO];
+
+
+//  }
+}
+
+//- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+//  CGFloat topAreaInsetForHeader = (self.headerViewController ? MDCDeviceTopSafeAreaInset() : 0);
+//  CGFloat drawerOffset = self.contentHeaderTopInset - topAreaInsetForHeader;
+//  self.scrollView.contentOffset = CGPointMake(self.scrollView.contentOffset.x,drawerOffset);
+//}
 
 #pragma mark UIViewController
 

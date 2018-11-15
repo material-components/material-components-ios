@@ -107,4 +107,5 @@
  */
 @property(nonatomic, readonly) MDCBottomDrawerState drawerState;
 
+- (void)setContentOffset:(CGPoint)contentOffset animated:(BOOL)animated;
 @end

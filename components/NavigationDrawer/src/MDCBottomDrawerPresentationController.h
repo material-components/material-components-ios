@@ -87,4 +87,6 @@
  */
 @property(nonatomic, strong, nullable) UIColor *topHandleColor;
 
+- (void)setContentOffset:(CGPoint)contentOffset animated:(BOOL)animated;
+
 @end
