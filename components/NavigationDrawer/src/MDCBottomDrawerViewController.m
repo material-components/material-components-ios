@@ -214,11 +214,12 @@
   }
 }
 
-- (void)expandToFullScreenWithCompletion:(void (^)(BOOL))completion {
+- (void)expandToFullScreenWithDuration:(NSTimeInterval)duration
+                            completion:(void (^)(BOOL))completion {
   if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
     MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
         (MDCBottomDrawerPresentationController *)self.presentationController;
-    [bottomDrawerPresentationController expandToFullScreen];
+    [bottomDrawerPresentationController expandToFullScreenWithDuration:duration];
   }
   completion(YES);
 }

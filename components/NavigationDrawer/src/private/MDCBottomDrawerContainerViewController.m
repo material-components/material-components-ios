@@ -481,14 +481,20 @@ static UIColor *DrawerShadowColor(void) {
   [self.view setNeedsLayout];
 }
 
-- (void)expandToFullScreen {
+- (void)expandToFullScreenWithDuration:(NSTimeInterval)duration {
   CGFloat topSafeArea = 0;
   if (@available(iOS 11.0, *)) {
     topSafeArea = self.view.safeAreaInsets.top;
   }
   CGFloat contentYOffset = self.contentHeaderTopInset - topSafeArea;
   CGPoint contentOffset = CGPointMake(self.scrollView.contentOffset.x, contentYOffset);
-  [self.scrollView setContentOffset:contentOffset animated:YES];
+  CGRect contentViewControllerFrame = CGRectStandardize(self.contentViewController.view.frame);
+  contentViewControllerFrame.size.height += contentOffset.y;
+  self.contentViewController.view.frame = contentViewControllerFrame;
+  [self cacheLayoutCalculations];
+  [UIView animateWithDuration:duration animations:^{
+    [self.scrollView setContentOffset:contentOffset];
+  }];
 }
 
 #pragma mark Set ups (Private)
