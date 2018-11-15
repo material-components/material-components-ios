@@ -24,12 +24,18 @@
 
 - (void)testDefaultCard {
   // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
+    self.recordMode = YES;
 
+  UIView *backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 70, 70)];
+  backgroundView.backgroundColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1];
   MDCCard *card = [[MDCCard alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+  [backgroundView addSubview:card];
+  card.center = backgroundView.center;
   // purposely fail the test
-  card.backgroundColor = UIColor.greenColor;
-  FBSnapshotVerifyView(card, nil);
+//  card.backgroundColor = UIColor.greenColor;
+
+  [CATransaction flush];
+  FBSnapshotVerifyView(backgroundView, nil);
 }
 
 @end
