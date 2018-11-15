@@ -181,7 +181,7 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
   // When updating the preferredSheetHeight the presentation controller takes into account the
   // safe area so we have to remove that.
   if (@available(iOS 11.0, *)) {
-    preferredHeight = preferredHeight - self.tableView.adjustedContentInset.bottom;
+    preferredHeight = preferredHeight - self.view.safeAreaInset.bottom;
   }
   return MDCCeil(preferredHeight);
 }
