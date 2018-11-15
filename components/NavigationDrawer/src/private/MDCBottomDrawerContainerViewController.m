@@ -488,11 +488,14 @@ static UIColor *DrawerShadowColor(void) {
   }
   CGFloat contentYOffset = self.contentHeaderTopInset - topSafeArea;
   CGPoint contentOffset = CGPointMake(self.scrollView.contentOffset.x, contentYOffset);
+  CGRect headerViewControllerFrame = CGRectStandardize(self.headerViewController.view.frame);
+  headerViewControllerFrame.size.height += topSafeArea;
   CGRect contentViewControllerFrame = CGRectStandardize(self.contentViewController.view.frame);
   contentViewControllerFrame.size.height += contentOffset.y;
   self.contentViewController.view.frame = contentViewControllerFrame;
   [self cacheLayoutCalculations];
   [UIView animateWithDuration:duration animations:^{
+    self.headerViewController.view.frame = headerViewControllerFrame;
     [self.scrollView setContentOffset:contentOffset];
   }];
 }
