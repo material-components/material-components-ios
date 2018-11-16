@@ -2,6 +2,8 @@
 
 These instructions describe how to cut a new release.
 
+**You should always start from this doc when initiating a release.**
+
 MDC follows the ["git flow"](http://nvie.com/posts/a-successful-git-branching-model/) style of 
 development, where the default branch is called `develop`. `stable` (instead of the traditional
 `master`) is reserved for releases. The `develop` branch is periodically copied to a release candidate,
@@ -84,14 +86,14 @@ Other than the steps above regarding hotfixing, the entire release process stays
 
 ### Start internal testing
 
-You can now start the internal release testing process documented at [go/mdc-releasing](http://go/mdc-releasing).
+You can now start the internal release testing process documented at [go/mdc-releasing](http://go/mdc-releasing#import-the-release-candidate).
 
-### Resolve any failures
+#### Resolve any failures
 
 Push `release-candidate` to GitHub with `git push origin release-candidate` as you make changes.
 This allows other people and machines to track the progress of the release.
 
-#### Make any necessary changes
+##### Make any necessary changes
 
 You, or clients, may find problems with the release that need fixing before continuing. You have two
 options for making those changes:
@@ -194,19 +196,6 @@ Commit the results to your branch:
     git commit -am "Bumped version number to $(scripts/print_version)."
     git push origin release-candidate
 
-#### Verify CocoaPods podspec and trunk access
-
-Send our local podspec through the CocoaPods linter:
-
-    pod lib lint MaterialComponents.podspec --skip-tests
-
-CocoaPods publishes a directory of publicly available pods through its **trunk** service.
-Note: Ensure that you can [push the podspec](#publish-to-cocoapods) later by checking for `MaterialComponents` in your list of available `Pods` when you:
-
-    pod trunk me
-
-If this fails or MaterialComponents is not listed [register an account and session](https://guides.cocoapods.org/making/getting-setup-with-trunk.html).
-
 ## Testing with release-blocking clients
 
 Before you can merge the release branch into either develop or stable you **must** get the release
@@ -234,6 +223,19 @@ go-ahead from the following clients:
                 ///-._ _  _ _}    ~--------------
 
 ---
+
+#### Verify CocoaPods podspec and trunk access
+
+Send our local podspec through the CocoaPods linter:
+
+    pod lib lint MaterialComponents.podspec --skip-tests
+
+CocoaPods publishes a directory of publicly available pods through its **trunk** service.
+Note: Ensure that you can [push the podspec](#publish-to-cocoapods) later by checking for `MaterialComponents` in your list of available `Pods` when you:
+
+    pod trunk me
+
+If this fails or MaterialComponents is not listed [register an account and session](https://guides.cocoapods.org/making/getting-setup-with-trunk.html).
 
 ## Merge the release candidate branch
 
