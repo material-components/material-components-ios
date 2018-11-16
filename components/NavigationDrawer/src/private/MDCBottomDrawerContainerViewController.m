@@ -234,7 +234,7 @@ static UIColor *DrawerShadowColor(void) {
     topAreaInsetForHeader = kEpsilon;
   }
   CGFloat drawerOffset =
-  self.contentHeaderTopInset - topAreaInsetForHeader + kScrollViewBufferForPerformance;
+      self.contentHeaderTopInset - topAreaInsetForHeader + kScrollViewBufferForPerformance;
   CGFloat headerHeightWithoutInset = self.contentHeaderHeight - topAreaInsetForHeader;
   CGFloat contentDiff = contentYOffset - drawerOffset;
   CGFloat maxScrollOrigin = self.trackingScrollView.contentSize.height -

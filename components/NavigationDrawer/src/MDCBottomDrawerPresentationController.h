@@ -88,10 +88,11 @@
 @property(nonatomic, strong, nullable) UIColor *topHandleColor;
 
 /**
- <#Description#>
+ Sets the content offset Y of the drawer's content. If contentOffsetY is set to 0, the
+ drawer will scroll to the start of its content.
 
- @param contentOffsetY <#contentOffsetY description#>
- @param animated <#animated description#>
+ @param contentOffsetY the content offset Y of the scroll view.
+ @param animated a bool if to animate the scrolling.
  */
 - (void)setContentOffsetY:(CGFloat)contentOffsetY animated:(BOOL)animated;
 
