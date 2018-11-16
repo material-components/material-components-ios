@@ -443,7 +443,7 @@
                                     multiplier:1
                                       constant:self.textViewTrailing.constant];
   }
-  self.textViewTrailingTrailingViewLeading.active = !MDCCGFloatEqual([self trailingViewAlpha], 0.f);
+  self.textViewTrailingTrailingViewLeading.active = !MDCCGFloatEqual([self trailingViewAlpha], 0);
 }
 
 - (void)updateTrailingViewAlpha {
@@ -456,16 +456,16 @@
   CGFloat trailingViewAlpha;
   switch (self.trailingViewMode) {
     case UITextFieldViewModeAlways:
-      trailingViewAlpha = 1.f;
+      trailingViewAlpha = 1;
       break;
     case UITextFieldViewModeWhileEditing:
-      trailingViewAlpha = self.isEditing ? 1.f : 0.f;
+      trailingViewAlpha = self.isEditing ? 1 : 0;
       break;
     case UITextFieldViewModeUnlessEditing:
-      trailingViewAlpha = self.isEditing ? 0.f : 1.f;
+      trailingViewAlpha = self.isEditing ? 0 : 1;
       break;
     case UITextFieldViewModeNever:
-      trailingViewAlpha = 0.f;
+      trailingViewAlpha = 0;
       break;
     default:
       NSAssert(NO, @"Invalid enumeration value %li.", (long)self.trailingViewMode);

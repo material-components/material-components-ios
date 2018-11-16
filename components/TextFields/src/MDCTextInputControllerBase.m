@@ -31,15 +31,16 @@
 
 #pragma mark - Constants
 
-const CGFloat MDCTextInputControllerBaseDefaultBorderRadius = 4.f;
-static const CGFloat MDCTextInputControllerBaseDefaultFloatingPlaceholderScaleDefault = 0.75f;
-static const CGFloat MDCTextInputControllerBaseDefaultHintTextOpacity = 0.54f;
-static const CGFloat MDCTextInputControllerBaseDefaultPadding = 8.f;
+const CGFloat MDCTextInputControllerBaseDefaultBorderRadius = 4;
+static const CGFloat MDCTextInputControllerBaseDefaultFloatingPlaceholderScaleDefault =
+    (CGFloat)0.75;
+static const CGFloat MDCTextInputControllerBaseDefaultHintTextOpacity = (CGFloat)0.54;
+static const CGFloat MDCTextInputControllerBaseDefaultPadding = 8;
 
 static const NSTimeInterval
-    MDCTextInputControllerBaseDefaultFloatingPlaceholderDownAnimationDuration = 0.266666f;
+    MDCTextInputControllerBaseDefaultFloatingPlaceholderDownAnimationDuration = (CGFloat)0.266666;
 static const NSTimeInterval
-    MDCTextInputControllerBaseDefaultFloatingPlaceholderUpAnimationDuration = 0.3f;
+    MDCTextInputControllerBaseDefaultFloatingPlaceholderUpAnimationDuration = (CGFloat)0.3;
 
 static inline UIColor *MDCTextInputControllerBaseDefaultInlinePlaceholderTextColorDefault() {
   return [UIColor colorWithWhite:0 alpha:MDCTextInputControllerBaseDefaultHintTextOpacity];
@@ -619,7 +620,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   // Offsets needed due to transform working on normal (0.5,0.5) anchor point.
   // Why no anchor point of (0,0)? Because autolayout doesn't play well with anchor points.
   vertical -= self.textInput.placeholderLabel.font.lineHeight *
-              (1 - (CGFloat)self.floatingPlaceholderScale.floatValue) * .5f;
+              (1 - (CGFloat)self.floatingPlaceholderScale.floatValue) * (CGFloat)0.5;
 
   // Remember, the insets are always in LTR. It's automatically flipped when used in RTL.
   // See MDCTextInputController.h.
@@ -637,7 +638,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
   }
 
   CGFloat horizontal =
-      placeholderWidth * (1 - (CGFloat)self.floatingPlaceholderScale.floatValue) * .5f;
+      placeholderWidth * (1 - (CGFloat)self.floatingPlaceholderScale.floatValue) * (CGFloat)0.5;
 
   return UIOffsetMake(horizontal, vertical);
 }

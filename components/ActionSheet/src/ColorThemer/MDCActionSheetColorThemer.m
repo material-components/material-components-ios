@@ -14,9 +14,9 @@
 
 #import "MDCActionSheetColorThemer.h"
 
-static const CGFloat kHighAlpha = 0.87f;
-static const CGFloat kMediumAlpha = 0.6f;
-static const CGFloat kInkAlpha = 0.16f;
+static const CGFloat kHighAlpha = (CGFloat)0.87;
+static const CGFloat kMediumAlpha = (CGFloat)0.6;
+static const CGFloat kInkAlpha = (CGFloat)0.16;
 
 @implementation MDCActionSheetColorThemer
 

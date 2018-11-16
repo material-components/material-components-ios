@@ -33,9 +33,9 @@ NSString *const MDCTextInputDidToggleEnabledNotification =
 
 // The image we use for the clear button has a little too much air around it. So we have to shrink
 // by this amount on each side.
-static const CGFloat MDCTextInputClearButtonImageBuiltInPadding = -2.5f;
-static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2.f;
-static const CGFloat MDCTextInputTextRectYCorrection = 1.f;
+static const CGFloat MDCTextInputClearButtonImageBuiltInPadding = (CGFloat)-2.5;
+static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2;
+static const CGFloat MDCTextInputTextRectYCorrection = 1;
 
 @interface MDCTextField () {
   UIColor *_cursorColor;
@@ -495,12 +495,12 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1.f;
   // To keep things simple, we correct this so .leftView gets the value for leftViewRectForBounds
   // and .rightView gets the value for rightViewRectForBounds.
 
-  CGFloat leadingViewPadding = 0.f;
+  CGFloat leadingViewPadding = 0;
   if ([self.positioningDelegate respondsToSelector:@selector(leadingViewTrailingPaddingConstant)]) {
     leadingViewPadding = [self.positioningDelegate leadingViewTrailingPaddingConstant];
   }
 
-  CGFloat trailingViewPadding = 0.f;
+  CGFloat trailingViewPadding = 0;
   if ([self.positioningDelegate
           respondsToSelector:@selector(trailingViewTrailingPaddingConstant)]) {
     trailingViewPadding = [self.positioningDelegate trailingViewTrailingPaddingConstant];
@@ -553,9 +553,9 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1.f;
   // both. Don't know why. So, we have to leave the text rect as big as the bounds and move it to a
   // Y that works.
   CGFloat actualY =
-      (CGRectGetHeight(bounds) / 2.f) - MDCRint(MAX(self.font.lineHeight,
-                                                    self.placeholderLabel.font.lineHeight) /
-                                                2.f);  // Text field or placeholder
+      (CGRectGetHeight(bounds) / 2) - MDCRint(MAX(self.font.lineHeight,
+                                                  self.placeholderLabel.font.lineHeight) /
+                                              2);  // Text field or placeholder
   actualY = textInsets.top - actualY + MDCTextInputTextRectYCorrection;
   textRect.origin.y = actualY;
 
@@ -664,7 +664,7 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1.f;
 
 - (CGFloat)centerYForOverlayViews:(CGFloat)heightOfView {
   CGFloat centerY =
-      self.textInsets.top + (self.placeholderLabel.font.lineHeight / 2.f) - (heightOfView / 2.f);
+      self.textInsets.top + (self.placeholderLabel.font.lineHeight / 2) - (heightOfView / 2);
   return centerY;
 }
 

@@ -29,10 +29,10 @@
 // The Bundle for string resources.
 static NSString *const kMaterialBottomNavigationBundle = @"MaterialBottomNavigation.bundle";
 
-static const CGFloat kMDCBottomNavigationBarHeight = 56.f;
-static const CGFloat kMDCBottomNavigationBarHeightAdjacentTitles = 40.f;
-static const CGFloat kMDCBottomNavigationBarLandscapeContainerWidth = 320.f;
-static const CGFloat kMDCBottomNavigationBarItemsHorizontalMargin = 12.f;
+static const CGFloat kMDCBottomNavigationBarHeight = 56;
+static const CGFloat kMDCBottomNavigationBarHeightAdjacentTitles = 40;
+static const CGFloat kMDCBottomNavigationBarLandscapeContainerWidth = 320;
+static const CGFloat kMDCBottomNavigationBarItemsHorizontalMargin = 12;
 static NSString *const kMDCBottomNavigationBarBadgeColorString = @"badgeColor";
 static NSString *const kMDCBottomNavigationBarBadgeValueString = @"badgeValue";
 static NSString *const kMDCBottomNavigationBarAccessibilityValueString =
@@ -119,7 +119,8 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 #else
   _shouldPretendToBeATabBar = YES;
 #endif
-  [self setElevation:MDCShadowElevationBottomNavigationBar];
+  _elevation = MDCShadowElevationBottomNavigationBar;
+  [(MDCShadowLayer *)self.layer setElevation:_elevation];
   _itemViews = [NSMutableArray array];
   _itemTitleFont = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleCaption];
 }
@@ -155,6 +156,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 }
 
 - (void)setElevation:(MDCShadowElevation)elevation {
+  _elevation = elevation;
   [(MDCShadowLayer *)self.layer setElevation:elevation];
 }
 

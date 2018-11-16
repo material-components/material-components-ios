@@ -33,7 +33,8 @@
   self = [super init];
   if (self) {
     self.title = @"Action Sheet";
-    _colorScheme = [[MDCSemanticColorScheme alloc] init];
+    _colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
     _typographyScheme = [[MDCTypographyScheme alloc] init];
     _showButton = [[MDCButton alloc] init];
     _buttonScheme = [[MDCButtonScheme alloc] init];

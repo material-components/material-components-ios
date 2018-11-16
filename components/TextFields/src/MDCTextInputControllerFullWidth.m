@@ -26,10 +26,10 @@
 #import "MaterialPalettes.h"
 #import "MaterialTypography.h"
 
-static const CGFloat MDCTextInputControllerFullWidthHintTextOpacity = 0.54f;
-static const CGFloat MDCTextInputControllerFullWidthHorizontalInnerPadding = 8.f;
-static const CGFloat MDCTextInputControllerFullWidthHorizontalPadding = 16.f;
-static const CGFloat MDCTextInputControllerFullWidthVerticalPadding = 20.f;
+static const CGFloat MDCTextInputControllerFullWidthHintTextOpacity = (CGFloat)0.54;
+static const CGFloat MDCTextInputControllerFullWidthHorizontalInnerPadding = 8;
+static const CGFloat MDCTextInputControllerFullWidthHorizontalPadding = 16;
+static const CGFloat MDCTextInputControllerFullWidthVerticalPadding = 20;
 
 static inline UIColor *MDCTextInputControllerFullWidthInlinePlaceholderTextColorDefault() {
   return [UIColor colorWithWhite:0 alpha:MDCTextInputControllerFullWidthHintTextOpacity];
@@ -997,7 +997,7 @@ static UIFont *_trailingUnderlineLabelFontDefault;
 
   // The trailing label gets in the way. If it has a frame, it's used. But if not, an
   // estimate is made of the size the text will be.
-  if (CGRectGetWidth(self.textInput.trailingUnderlineLabel.frame) > 1.f) {
+  if (CGRectGetWidth(self.textInput.trailingUnderlineLabel.frame) > 1) {
     textInsets.right += MDCCeil(CGRectGetWidth(self.textInput.trailingUnderlineLabel.frame));
   } else if (self.characterCountMax) {
     CGRect charCountRect = [[self characterCountText]

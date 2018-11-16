@@ -206,8 +206,8 @@ func collectionView(_ collectionView: UICollectionView,
   [cell setSelectable:YES];
   
   [cell setSelectedImageTintColor:[UIColor blueColor]];
-  [cell setCornerRadius:8.f];
-  [cell setShadowElevation:6.f forState:MDCCardCellStateSelected];
+  [cell setCornerRadius:8];
+  [cell setShadowElevation:6 forState:MDCCardCellStateSelected];
   [cell setShadowColor:[UIColor blackColor] forState:MDCCardCellStateHighlighted];
 }
 ```
@@ -248,7 +248,7 @@ MDCCardsColorThemer.applySemanticColorScheme(colorScheme, to: component)
 #import "MaterialCards+ColorThemer.h"
 
 // Step 2: Create or get a color scheme
-id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 
 // Step 3: Apply the color scheme to your component
 [MDCCardsColorThemer applySemanticColorScheme:colorScheme

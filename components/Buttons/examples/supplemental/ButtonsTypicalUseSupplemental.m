@@ -22,7 +22,7 @@
 #import "MaterialMath.h"
 #import "MaterialTypography.h"
 
-static const CGFloat kViewOffsetToCenter = 20.0f;
+static const CGFloat kViewOffsetToCenter = 20;
 
 #pragma mark - ButtonsTypicalUseViewController
 

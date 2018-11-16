@@ -182,8 +182,8 @@ button.setElevation(12, for: .highlighted)
 #### Objective-C
 
 ```objc
-[button setElevation:6.0f forState:UIControlStateNormal];
-[button setElevation:12.0f forState:UIControlStateNormal];
+[button setElevation:6 forState:UIControlStateNormal];
+[button setElevation:12 forState:UIControlStateNormal];
 ```
 <!--</div>-->
 
@@ -373,7 +373,7 @@ MDCTextButtonColorThemer.applySemanticColorScheme(colorScheme, to: component)
 #import "MaterialButtons+ColorThemer.h"
 
 // Step 2: Create or get a color scheme
-id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 
 // Step 3: Apply the color scheme to your component using the desired button style
 [MDCContainedButtonColorThemer applySemanticColorScheme:colorScheme

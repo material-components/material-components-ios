@@ -16,7 +16,7 @@
 
 #import "MDCButtonBarButton.h"
 
-static const CGFloat kMinimumItemWidth = 36.f;
+static const CGFloat kMinimumItemWidth = 36;
 
 @implementation MDCButtonBarButton
 

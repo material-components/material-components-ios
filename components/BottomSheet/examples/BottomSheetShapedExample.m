@@ -47,7 +47,7 @@
       [[MDCBottomSheetController alloc] initWithContentViewController:container];
   bottomSheet.trackingScrollView = viewController.collectionView;
   MDCRectangleShapeGenerator *shapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
-  MDCCornerTreatment *cornerTreatment = [[MDCRoundedCornerTreatment alloc] initWithRadius:16.f];
+  MDCCornerTreatment *cornerTreatment = [[MDCRoundedCornerTreatment alloc] initWithRadius:16];
   shapeGenerator.topLeftCorner = cornerTreatment;
   shapeGenerator.topRightCorner = cornerTreatment;
   [bottomSheet setShapeGenerator:shapeGenerator forState:MDCSheetStatePreferred];

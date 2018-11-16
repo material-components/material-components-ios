@@ -46,7 +46,8 @@
 
     [self addChildViewController:_appBarViewController];
 
-    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
   return self;
 }

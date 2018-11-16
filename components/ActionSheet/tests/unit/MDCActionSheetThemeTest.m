@@ -21,9 +21,9 @@
 #import "MaterialActionSheet+ColorThemer.h"
 #import "MaterialActionSheet+TypographyThemer.h"
 
-static const CGFloat kHighAlpha = 0.87f;
-static const CGFloat kMediumAlpha = 0.6f;
-static const CGFloat kInkAlpha = 0.16f;
+static const CGFloat kHighAlpha = (CGFloat)0.87;
+static const CGFloat kMediumAlpha = (CGFloat)0.6;
+static const CGFloat kInkAlpha = (CGFloat)0.16;
 
 @interface MDCActionSheetHeaderView (Testing)
 @property(nonatomic, strong) UILabel *titleLabel;
@@ -48,7 +48,8 @@ static const CGFloat kInkAlpha = 0.16f;
   [super setUp];
 
   self.actionSheet = [[MDCActionSheetController alloc] init];
-  self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+  self.colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   UIColor *surface = UIColor.blueColor;
   UIColor *onSurface = UIColor.redColor;
   self.colorScheme.surfaceColor = surface;
@@ -74,7 +75,8 @@ static const CGFloat kInkAlpha = 0.16f;
   // Given
   MDCActionSheetScheme *defaultScheme = [[MDCActionSheetScheme alloc] init];
   MDCTypographyScheme *defaultTypographyScheme = [[MDCTypographyScheme alloc] init];
-  MDCSemanticColorScheme *defaultColorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *defaultColorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 
   // Then
   XCTAssertEqualObjects(defaultScheme.typographyScheme.subtitle1,

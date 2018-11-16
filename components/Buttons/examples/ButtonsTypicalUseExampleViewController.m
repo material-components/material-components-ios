@@ -32,7 +32,8 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
 - (id)init {
   self = [super init];
   if (self) {
-    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
     self.shapeScheme = [[MDCShapeScheme alloc] init];
     self.typographyScheme = [[MDCTypographyScheme alloc] init];
   }

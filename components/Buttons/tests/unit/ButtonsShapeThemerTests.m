@@ -41,7 +41,7 @@
   // Given
   self.shapeScheme.smallComponentShape =
       [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyCut andSize:10];
-  self.shapeScheme.smallComponentShape.topRightCorner = [MDCCornerTreatment cornerWithRadius:3.f];
+  self.shapeScheme.smallComponentShape.topRightCorner = [MDCCornerTreatment cornerWithRadius:3];
   self.button.shapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
 
   // When
@@ -70,7 +70,7 @@
 
   // Then
   MDCRectangleShapeGenerator *rect = (MDCRectangleShapeGenerator *)FAB.shapeGenerator;
-  MDCCornerTreatment *corner = [MDCCornerTreatment cornerWithRadius:0.5f];
+  MDCCornerTreatment *corner = [MDCCornerTreatment cornerWithRadius:(CGFloat)0.5];
   corner.valueType = MDCCornerTreatmentValueTypePercentage;
   XCTAssertEqualObjects(rect.topLeftCorner, corner);
   XCTAssertEqualObjects(rect.topRightCorner, corner);

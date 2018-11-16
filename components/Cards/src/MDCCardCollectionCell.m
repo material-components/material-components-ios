@@ -36,11 +36,11 @@ static NSString *const MDCCardCellVerticalImageAlignmentsKey =
     @"MDCCardCellVerticalImageAlignmentsKey";
 static NSString *const MDCCardCellIsInteractableKey = @"MDCCardCellIsInteractableKey";
 
-static const CGFloat MDCCardCellCornerRadiusDefault = 4.f;
+static const CGFloat MDCCardCellCornerRadiusDefault = 4;
 static const CGFloat MDCCardCellSelectedImagePadding = 8;
-static const CGFloat MDCCardCellShadowElevationHighlighted = 8.f;
-static const CGFloat MDCCardCellShadowElevationNormal = 1.f;
-static const CGFloat MDCCardCellShadowElevationSelected = 8.f;
+static const CGFloat MDCCardCellShadowElevationHighlighted = 8;
+static const CGFloat MDCCardCellShadowElevationNormal = 1;
+static const CGFloat MDCCardCellShadowElevationSelected = 8;
 static const BOOL MDCCardCellIsInteractableDefault = YES;
 
 @interface MDCCardCollectionCell ()
@@ -524,7 +524,7 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 - (void)updateInkForShape {
   CGRect boundingBox = CGPathGetBoundingBox(self.layer.shapeLayer.path);
   self.inkView.maxRippleRadius =
-  (CGFloat)(MDCHypot(CGRectGetHeight(boundingBox), CGRectGetWidth(boundingBox)) / 2 + 10.f);
+      (CGFloat)(MDCHypot(CGRectGetHeight(boundingBox), CGRectGetWidth(boundingBox)) / 2 + 10);
   self.inkView.layer.masksToBounds = NO;
 }
 

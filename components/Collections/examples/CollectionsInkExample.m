@@ -69,9 +69,9 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
         inkColorAtIndexPath:(NSIndexPath *)indexPath {
   // Update cell ink colors.
   if (indexPath.item == 1) {
-    return [MDCPalette.lightBluePalette.tint500 colorWithAlphaComponent:0.2f];
+    return [MDCPalette.lightBluePalette.tint500 colorWithAlphaComponent:(CGFloat)0.2];
   } else if (indexPath.item == 2) {
-    return [UIColor colorWithRed:1.0f green:0.0f blue:0.0f alpha:0.2f];
+    return [UIColor colorWithRed:1 green:0 blue:0 alpha:(CGFloat)0.2];
   }
   return nil;
 }

@@ -37,7 +37,7 @@
     _scrimView = [[UIView alloc] init];
     _scrimView.autoresizingMask = (UIViewAutoresizingFlexibleWidth
                                    | UIViewAutoresizingFlexibleHeight);
-    _scrimView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.3f];
+    _scrimView.backgroundColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.3];
 
     _calculateFrameOfPresentedView = [calculateFrameOfPresentedView copy];
     _sourceView = sourceView;

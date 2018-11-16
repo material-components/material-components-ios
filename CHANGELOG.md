@@ -1,3 +1,113 @@
+# 69.0.0
+
+This major release introduces a breaking change with Snackbar's default style. It also includes
+a new top handle and performance improvements for NavigationDrawer.
+
+## Breaking changes
+
+`usesLegacySnackbar` is now NO by default.
+
+## New features
+
+MDCBottomNavigationBar has a new `elevation` property.
+
+NavigationDrawer has the following changes:
+
+1. Added support for content in the drawer that is dynamically sized. Updating the
+   preferredContentSize at any time will cause the drawer to respond appropriately.
+2. Added a top handle that sits at the top of the drawer to show scrollability. It disappears
+   when the drawer goes to full screen or when there is no more to scroll.
+3. Added a way to customize the color of the top handle.
+4. The drawer's header height expands as it goes to full screen to cover the safe area and status
+   bar. We now provide a delegate to allow clients to be aware of the relevant top content inset so 
+   they lay out their header content appropriately based on height changes.
+5. Implemented performance improvements by removing some calls to preferredContentSize of the
+   contentViewController within the drawer implementation.
+
+## API changes
+
+### AppBar+ColorThemer
+
+#### MDCAppBarColorThemer(ToBeDeprecated)
+
+*modified* class method: `+applySurfaceVariantWithColorScheme:toAppBar:` in `MDCAppBarColorThemer(ToBeDeprecated)`
+
+*modified* class method: `+applySemanticColorScheme:toAppBar:` in `MDCAppBarColorThemer(ToBeDeprecated)`
+
+### AppBar+TypographyThemer
+
+#### MDCAppBarTypographyThemer(ToBeDeprecated)
+
+*modified* class method: `+applyTypographyScheme:toAppBar:` in `MDCAppBarTypographyThemer(ToBeDeprecated)`
+
+### BottomNavigation
+
+#### MDCBottomNavigationBar
+
+*new* property: `elevation` in `MDCBottomNavigationBar`
+
+### NavigationDrawer
+
+#### MDCBottomDrawerViewControllerDelegate
+
+*new* protocol: `MDCBottomDrawerViewControllerDelegate`
+
+*new* method: `-bottomDrawerControllerDidChangeTopInset:topInset:` in `MDCBottomDrawerViewControllerDelegate`
+
+#### MDCBottomDrawerPresentationController
+
+*new* property: `topHandleHidden` in `MDCBottomDrawerPresentationController`
+
+*new* property: `topHandleColor` in `MDCBottomDrawerPresentationController`
+
+#### MDCBottomDrawerViewController
+
+*new* property: `topHandleColor` in `MDCBottomDrawerViewController`
+
+*new* property: `delegate` in `MDCBottomDrawerViewController`
+
+*new* property: `topHandleHidden` in `MDCBottomDrawerViewController`
+
+## Component changes
+
+### ActionSheet
+
+* [Add example comparing Material and UIKit (#5724)](https://github.com/material-components/material-components-ios/commit/d90bf4cb8ccc9c1f1a42d029842200e89057bf8a) (ianegordon)
+* [Try to fix MaterialComponentsAlpha (#5541)](https://github.com/material-components/material-components-ios/commit/7472e8933ee5cb97bceac7427ff5e263f33776b4) (Andrew Overton)
+
+### AppBar
+
+* [Annotate APIs that need to be deprecated. (#5614)](https://github.com/material-components/material-components-ios/commit/4c50877338455f6c7300b267664beeec52237145) (featherless)
+
+### BottomNavigation
+
+* [Add elevation property (#5733)](https://github.com/material-components/material-components-ios/commit/e98a910e473850ed3d3a6b2cceab9df2791c7fcd) (Cody Weaver)
+* [Minor code clean-up. (#5742)](https://github.com/material-components/material-components-ios/commit/f1a6f507f2e4a6b982c212ae723be8d6d49941f3) (Robert Moore)
+
+### NavigationDrawer
+
+* [Add dynamically sizing support for the drawer + performance improvements (#5587)](https://github.com/material-components/material-components-ios/commit/31e3f33df361c63615aa5c5c94e8e7c55b25d674) (Yarden Eitan)
+* [Added Color API for the top handle. (#5592)](https://github.com/material-components/material-components-ios/commit/3693683b0ffe3d0ce7a9023e0f006c4b9fe6cf1a) (Yarden Eitan)
+* [Added a top handle to the drawer (#5591)](https://github.com/material-components/material-components-ios/commit/43a996674a4d52cbc61247437f34040ab88b8206) (Yarden Eitan)
+* [Adding a top inset delegate for the drawer (#5674)](https://github.com/material-components/material-components-ios/commit/c9f2279af98362ad38c7334aa721e700493bde82) (Yarden Eitan)
+* [added additional example with limited content that doesnt reach fullscreen (#5743)](https://github.com/material-components/material-components-ios/commit/380242e0b724e292df21a01678594c8523d7458c) (Yarden Eitan)
+* [call getter instead (#5710)](https://github.com/material-components/material-components-ios/commit/8b13168bf781274aa7f410ad4174d9e234705ec7) (Yarden Eitan)
+
+### Snackbar
+
+* [Fix for Snackbar themer breaking Snackbar examples on dragons (#5731)](https://github.com/material-components/material-components-ios/commit/ec206d593630f8c31d96e855f8f143d584baa900) (Yarden Eitan)
+* [change snackbar to default to use the new snackbar and not legacy (#5732)](https://github.com/material-components/material-components-ios/commit/038ba77126593ef203830681f9517223a5981dae) (Yarden Eitan)
+
+## Multi-component changes
+
+* [[MDC Swift] Add guards for Swift 4.2+ (#5634)](https://github.com/material-components/material-components-ios/commit/c1b1d25eec58475ffe3c1bffef4fb98774cd4800) (Robert Moore)
+* [Global replace of integral single-precision literals with integer literals. (#5709)](https://github.com/material-components/material-components-ios/commit/74a27253e833f5b378c2ee0de63f57a5e046f21c) (Robert Moore)
+* [Global replace of single-precision floats with CGFloat casts. (#5718)](https://github.com/material-components/material-components-ios/commit/03f3351ad5550fcc501e6ed841414c6e1a6d9494) (Robert Moore)
+* [No longer using `-init` for Color Scheme. (#5734)](https://github.com/material-components/material-components-ios/commit/372d6b24f9732a38a35a4ba7a1592b2f84dfeb46) (Robert Moore)
+* [fix typo UIConnect... -> UIContent... (#5735)](https://github.com/material-components/material-components-ios/commit/85f62c7b3dc1a7a3e33922befb729ee38480a6b6) (Ralph)
+
+---
+
 # 68.2.0
 
 In this minor release we have introduced an API for customizing the Navigation Drawer scrim color, an API for animating corner radius changes for `MDCShadowLayer`, an `MDCSnackbarManager` instance color themer, along with bug fixes and performance improvements.

@@ -21,8 +21,8 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 static NSString *const kExampleDetailText =
     @"Pellentesque non quam ornare, porta urna sed, malesuada felis. Praesent at gravida felis, "
      "non facilisis enim. Proin dapibus laoreet lorem, in viverra leo dapibus a.";
-static const CGFloat kSmallestCellHeight = 40.f;
-static const CGFloat kSmallArbitraryCellWidth = 100.f;
+static const CGFloat kSmallestCellHeight = 40;
+static const CGFloat kSmallArbitraryCellWidth = 100;
 
 @implementation CollectionListCellExampleTypicalUse {
   NSMutableArray *_content;

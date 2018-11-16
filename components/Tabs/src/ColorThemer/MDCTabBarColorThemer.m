@@ -14,9 +14,9 @@
 
 #import "MDCTabBarColorThemer.h"
 
-static const CGFloat kUnselectedTitleOpacity = 0.6f;
-static const CGFloat kUnselectedImageOpacity = 0.54f;
-static const CGFloat kBottomDividerOpacity = 0.12f;
+static const CGFloat kUnselectedTitleOpacity = (CGFloat)0.6;
+static const CGFloat kUnselectedImageOpacity = (CGFloat)0.54;
+static const CGFloat kBottomDividerOpacity = (CGFloat)0.12;
 
 @implementation MDCTabBarColorThemer
 

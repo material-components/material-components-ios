@@ -17,7 +17,7 @@ import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialNavigationDrawer
 
 class DrawerContentViewController: UIViewController {
-  let preferredHeight: CGFloat = 2000
+  var preferredHeight: CGFloat = 2000
 
   override var preferredContentSize: CGSize {
     get {
@@ -67,9 +67,7 @@ class DrawerHeaderViewController: UIViewController,MDCBottomDrawerHeader {
     view.addSubview(titleLabel)
   }
 
-  override func viewDidLayoutSubviews() {
-    super.viewDidLayoutSubviews()
-    
+  override func viewWillAppear(_ animated: Bool) {
     titleLabel.sizeToFit()
     titleLabel.center =
       CGPoint(x: self.view.frame.size.width / 2, y: self.view.frame.size.height / 2)
