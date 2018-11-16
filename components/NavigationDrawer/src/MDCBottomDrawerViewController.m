@@ -205,11 +205,11 @@
   [self.delegate bottomDrawerControllerDidChangeTopInset:self topInset:topInset];
 }
 
-- (void)setContentOffset:(CGPoint)contentOffset animated:(BOOL)animated {
+- (void)setContentOffsetY:(CGFloat)contentOffsetY animated:(BOOL)animated {
   if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
     MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
         (MDCBottomDrawerPresentationController *)self.presentationController;
-    [bottomDrawerPresentationController setContentOffset:contentOffset animated:animated];
+    [bottomDrawerPresentationController setContentOffsetY:contentOffsetY animated:animated];
   }
 }
 

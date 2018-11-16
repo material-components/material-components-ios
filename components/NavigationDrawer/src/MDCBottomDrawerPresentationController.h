@@ -87,6 +87,12 @@
  */
 @property(nonatomic, strong, nullable) UIColor *topHandleColor;
 
-- (void)setContentOffset:(CGPoint)contentOffset animated:(BOOL)animated;
+/**
+ <#Description#>
+
+ @param contentOffsetY <#contentOffsetY description#>
+ @param animated <#animated description#>
+ */
+- (void)setContentOffsetY:(CGFloat)contentOffsetY animated:(BOOL)animated;
 
 @end

@@ -116,7 +116,8 @@ class DrawerContentTableViewController: UITableViewController {
   }
 
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    drawerVC.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+    tableView.deselectRow(at: indexPath, animated: true)
+    drawerVC.setContentOffsetY(0, animated: false)
   }
 
 }

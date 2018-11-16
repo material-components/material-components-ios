@@ -107,5 +107,13 @@
  */
 @property(nonatomic, readonly) MDCBottomDrawerState drawerState;
 
-- (void)setContentOffset:(CGPoint)contentOffset animated:(BOOL)animated;
+/**
+ Sets the content offset Y of the drawer's content. If contentOffsetY is set to 0, the
+ drawer will scroll to the start of its content.
+
+ @param contentOffsetY the content offset Y of the scroll view.
+ @param animated a bool if to animate the scrolling.
+ */
+- (void)setContentOffsetY:(CGFloat)contentOffsetY animated:(BOOL)animated;
+
 @end
