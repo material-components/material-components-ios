@@ -66,16 +66,17 @@
 
 - (void)testSnackbarColorThemerChangesCorrectParameters {
   // Given
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   colorScheme.surfaceColor = [UIColor redColor];
   colorScheme.onSurfaceColor = [UIColor blueColor];
   MDCSnackbarManager.snackbarMessageViewBackgroundColor = [UIColor whiteColor];
   MDCSnackbarManager.messageTextColor = [UIColor whiteColor];
   [MDCSnackbarManager setButtonTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [MDCSnackbarManager setButtonTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
-  UIColor *blendedBackgroundColor =
-      [MDCSemanticColorScheme blendColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.8f]
-                     withBackgroundColor:colorScheme.surfaceColor];
+  UIColor *blendedBackgroundColor = [MDCSemanticColorScheme
+               blendColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.8]
+      withBackgroundColor:colorScheme.surfaceColor];
 
   // When
   [MDCSnackbarColorThemer applySemanticColorScheme:colorScheme];
@@ -84,11 +85,11 @@
   XCTAssertEqualObjects(MDCSnackbarManager.snackbarMessageViewBackgroundColor,
                         blendedBackgroundColor);
   XCTAssertEqualObjects(MDCSnackbarManager.messageTextColor,
-                        [colorScheme.surfaceColor colorWithAlphaComponent:0.87f]);
+                        [colorScheme.surfaceColor colorWithAlphaComponent:(CGFloat)0.87]);
   XCTAssertEqualObjects([MDCSnackbarManager buttonTitleColorForState:UIControlStateNormal],
-                        [colorScheme.surfaceColor colorWithAlphaComponent:0.6f]);
+                        [colorScheme.surfaceColor colorWithAlphaComponent:(CGFloat)0.6]);
   XCTAssertEqualObjects([MDCSnackbarManager buttonTitleColorForState:UIControlStateHighlighted],
-                        [colorScheme.surfaceColor colorWithAlphaComponent:0.6f]);
+                        [colorScheme.surfaceColor colorWithAlphaComponent:(CGFloat)0.6]);
 }
 
 @end

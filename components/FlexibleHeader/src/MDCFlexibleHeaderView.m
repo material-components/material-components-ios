@@ -29,11 +29,11 @@ float UIAnimationDragCoefficient(void);  // Private API for simulator animation 
 static const CGFloat kFlexibleHeaderDefaultHeight = 56;
 
 // The maximum default opacity of the shadow.
-static const float kDefaultVisibleShadowOpacity = 0.4f;
+static const float kDefaultVisibleShadowOpacity = (float)0.4;
 
 // The percentage shifted threshold at which point the _viewsToHideWhenShifted should be fully
 // hidden.
-static const float kContentHidingThreshold = 0.5f;
+static const float kContentHidingThreshold = (float)0.5;
 
 // This length defines the moment at which the shadow will be fully visible as the header shifts
 // on-screen.
@@ -44,13 +44,13 @@ static const NSTimeInterval kTrackingScrollViewDidChangeAnimationDuration = 0.2;
 
 // The epsilon used to determine when we've arrived at the destination while shifting the header
 // on/off-screen with the display link.
-static const float kShiftEpsilon = 0.1f;
+static const float kShiftEpsilon = (float)0.1;
 
 // The epsilon used when comparing height values.
-static const CGFloat kHeightEpsilon = 0.001f;
+static const CGFloat kHeightEpsilon = (CGFloat)0.001;
 
 // The epsilon used when comparing content offset values.
-static const CGFloat kContentOffsetEpsilon = 0.001f;
+static const CGFloat kContentOffsetEpsilon = (CGFloat)0.001;
 
 // The minimum delta y before we change the scroll direction.
 static const CGFloat kDeltaYSlop = 5;
@@ -282,8 +282,8 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 
   _defaultShadowLayer = [CALayer layer];
   _defaultShadowLayer.shadowColor = [[UIColor blackColor] CGColor];
-  _defaultShadowLayer.shadowOffset = CGSizeMake(0, 1.f);
-  _defaultShadowLayer.shadowRadius = 4.f;
+  _defaultShadowLayer.shadowOffset = CGSizeMake(0, 1);
+  _defaultShadowLayer.shadowRadius = 4;
   _defaultShadowLayer.shadowOpacity = 0;
   _defaultShadowLayer.hidden = YES;
   [self.layer addSublayer:_defaultShadowLayer];
@@ -310,7 +310,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 
   self.layer.shadowColor = [[UIColor blackColor] CGColor];
   self.layer.shadowOffset = CGSizeMake(0, 1);
-  self.layer.shadowRadius = 4.f;
+  self.layer.shadowRadius = 4;
   self.layer.shadowOpacity = 0;
 
   [[NSNotificationCenter defaultCenter] addObserver:self

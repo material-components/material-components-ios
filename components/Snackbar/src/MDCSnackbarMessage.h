@@ -100,7 +100,7 @@ extern NSString * __nonnull const MDCSnackbarMessageBoldAttributeName;
 /**
   The color used for button text on the Snackbar in normal state.
 
-  Default is nil, but MDCRGBAColor(0xFF, 0xFF, 0xFF, 0.6f) will be set as the default color
+  Default is nil, but MDCRGBAColor(0xFF, 0xFF, 0xFF, (CGFloat)0.6) will be set as the default color
   and is taken from MDCSnackbarMessageView's buttonTitleColorForState:
   */
 @property(nonatomic, strong, nullable) UIColor *buttonTextColor

@@ -84,7 +84,7 @@
   [self.view addSubview:self.fhvc.view];
   [self.fhvc didMoveToParentViewController:self];
 
-  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:0.1f alpha:1];
+  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.1 alpha:1];
 
   [self.scrollView setScrollEnabled:YES];
   [self.scrollView addSubview:self.wrappedViewController.view];
@@ -95,7 +95,7 @@
 
   [self.navigationController setNavigationBarHidden:YES animated:animated];
 
-  self.label.center = CGPointMake(self.wrappedViewController.view.frame.size.width / 2.f, 120.f);
+  self.label.center = CGPointMake(self.wrappedViewController.view.frame.size.width / 2, 120);
 }
 
 // This method must be implemented for MDCFlexibleHeaderViewController's
@@ -107,7 +107,7 @@
 
 - (void)viewWillTransitionToSize:(CGSize)size
        withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-  self.label.center = CGPointMake(size.width / 2.f, 120.f);
+  self.label.center = CGPointMake(size.width / 2, 120);
 }
 
 - (void)viewDidLayoutSubviews {

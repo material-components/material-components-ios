@@ -142,7 +142,7 @@
 
   UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectZero];
   infoLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  infoLabel.textColor = [MDCPalette.greyPalette.tint600 colorWithAlphaComponent:0.87f];
+  infoLabel.textColor = [MDCPalette.greyPalette.tint600 colorWithAlphaComponent:(CGFloat)0.87];
   infoLabel.numberOfLines = 0;
   infoLabel.text =
       @"Tabs enable content organization at a high level, such as switching between views";
@@ -234,8 +234,8 @@
   [self.starPage addSubview:starView];
   [starView sizeToFit];
 
-  CGFloat x = centered ? 1 : (arc4random_uniform(199) + 1.0f) / 100.0f;  // 0 < x <=2
-  CGFloat y = centered ? 1 : (arc4random_uniform(199) + 1.0f) / 100.0f;  // 0 < y <=2
+  CGFloat x = centered ? 1 : (arc4random_uniform(199) + 1) / 100;  // 0 < x <=2
+  CGFloat y = centered ? 1 : (arc4random_uniform(199) + 1) / 100;  // 0 < y <=2
 
   [NSLayoutConstraint constraintWithItem:starView
                                attribute:NSLayoutAttributeCenterX

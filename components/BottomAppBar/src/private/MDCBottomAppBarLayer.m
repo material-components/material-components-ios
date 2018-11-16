@@ -43,9 +43,9 @@
 
   // TODO(#2018): These shadow attributes will be updated once specs are finalized.
   CGFloat scale = UIScreen.mainScreen.scale;
-  layer.shadowOpacity = 0.4f;
-  layer.shadowRadius = 4.f;
-  layer.shadowOffset = CGSizeMake(0, 2.f);
+  layer.shadowOpacity = (float)0.4;
+  layer.shadowRadius = 4;
+  layer.shadowOffset = CGSizeMake(0, 2);
   layer.needsDisplayOnBoundsChange = YES;
   layer.contentsScale = scale;
   layer.rasterizationScale = scale;
@@ -63,8 +63,8 @@
       CGRectGetHeight(floatingButton.bounds) / 2 + kMDCBottomAppBarFloatingButtonRadiusOffset;
   CGFloat navigationBarYOffset = CGRectGetMinY(navigationBarFrame);
   CGFloat halfAngle = acosf((float)((navigationBarYOffset - floatingButton.center.y) / arcRadius));
-  CGFloat startAngle = (float)M_PI / 2.0f + halfAngle;
-  CGFloat endAngle = (float)M_PI / 2.0f - halfAngle;
+  CGFloat startAngle = (float)M_PI / 2 + halfAngle;
+  CGFloat endAngle = (float)M_PI / 2 - halfAngle;
 
   CGFloat width = CGRectGetWidth(rect);
   CGFloat height = CGRectGetHeight(rect);

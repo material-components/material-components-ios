@@ -28,25 +28,25 @@ static NSString *const kMaterialPageControlBundle = @"MaterialPageControl.bundle
 static NSString *const kMaterialPageControlScrollViewContentOffset = @"bounds.origin";
 
 // Matches native UIPageControl minimum height.
-static const CGFloat kPageControlMinimumHeight = 48.0f;
+static const CGFloat kPageControlMinimumHeight = 48;
 
 // Matches native UIPageControl indicator radius.
-static const CGFloat kPageControlIndicatorRadius = 3.5f;
+static const CGFloat kPageControlIndicatorRadius = (CGFloat)3.5;
 
 // Matches native UIPageControl indicator spacing margin.
 static const CGFloat kPageControlIndicatorMargin = kPageControlIndicatorRadius * 2.5;
 
 // Delay for revealing indicators staggered towards current page indicator.
-static const NSTimeInterval kPageControlIndicatorShowDelay = 0.04f;
+static const NSTimeInterval kPageControlIndicatorShowDelay = 0.04;
 
 // Default indicator opacity.
-static const CGFloat kPageControlIndicatorDefaultOpacity = 0.5f;
+static const CGFloat kPageControlIndicatorDefaultOpacity = (CGFloat)0.5;
 
 // Default white level for current page indicator color.
-static const CGFloat kPageControlCurrentPageIndicatorWhiteColor = 0.38f;
+static const CGFloat kPageControlCurrentPageIndicatorWhiteColor = (CGFloat)0.38;
 
 // Default white level for page indicator color.
-static const CGFloat kPageControlPageIndicatorWhiteColor = 0.62f;
+static const CGFloat kPageControlPageIndicatorWhiteColor = (CGFloat)0.62;
 
 // Normalize to [0,1] range.
 static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat maxRange) {

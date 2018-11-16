@@ -28,26 +28,26 @@
 NSString *const MDCSnackbarOverlayIdentifier = @"MDCSnackbar";
 
 // The time it takes to show or hide the Snackbar.
-NSTimeInterval const MDCSnackbarEnterTransitionDuration = 0.15f;
-NSTimeInterval const MDCSnackbarExitTransitionDuration = 0.075f;
-NSTimeInterval const MDCSnackbarLegacyTransitionDuration = 0.5f;
+NSTimeInterval const MDCSnackbarEnterTransitionDuration = 0.15;
+NSTimeInterval const MDCSnackbarExitTransitionDuration = 0.075;
+NSTimeInterval const MDCSnackbarLegacyTransitionDuration = 0.5;
 
 // The scaling starting point for presenting the new Snackbar.
-static const CGFloat MDCSnackbarEnterStartingScale = 0.8f;
+static const CGFloat MDCSnackbarEnterStartingScale = (CGFloat)0.8;
 
 // How far from the bottom of the screen should the Snackbar be.
-static const CGFloat MDCSnackbarBottomMargin_iPhone = 8.f;
-static const CGFloat MDCSnackbarBottomMargin_iPad = 24.f;
-static const CGFloat MDCSnackbarLegacyBottomMargin_iPhone = 0.f;
-static const CGFloat MDCSnackbarLegacyBottomMargin_iPad = 0.f;
+static const CGFloat MDCSnackbarBottomMargin_iPhone = 8;
+static const CGFloat MDCSnackbarBottomMargin_iPad = 24;
+static const CGFloat MDCSnackbarLegacyBottomMargin_iPhone = 0;
+static const CGFloat MDCSnackbarLegacyBottomMargin_iPad = 0;
 
 // How far from the sides of the screen should the Snackbar be.
-static const CGFloat MDCSnackbarSideMargin_CompactWidth = 8.f;
-static const CGFloat MDCSnackbarLegacySideMargin_CompactWidth = 0.f;
-static const CGFloat MDCSnackbarSideMargin_RegularWidth = 24.0f;
+static const CGFloat MDCSnackbarSideMargin_CompactWidth = 8;
+static const CGFloat MDCSnackbarLegacySideMargin_CompactWidth = 0;
+static const CGFloat MDCSnackbarSideMargin_RegularWidth = 24;
 
 // The maximum height of the Snackbar.
-static const CGFloat kMaximumHeight = 80.0f;
+static const CGFloat kMaximumHeight = 80;
 
 #if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
 @interface MDCSnackbarOverlayView () <CAAnimationDelegate>

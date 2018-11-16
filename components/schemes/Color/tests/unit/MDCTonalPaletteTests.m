@@ -39,16 +39,18 @@
 //                                       [MDCPalette purplePalette].tint900 ];
 
   // Given
-  NSArray<UIColor *> *tonalColors = @[ [UIColor colorWithRed:0.6f green:0.2f blue:0.3f alpha:1.0f],
-                                       [UIColor colorWithRed:1.0f green:0.5f blue:0 alpha:1.0f],
-                                       [UIColor colorWithRed:0.2f green:0.3f blue:0.3f alpha:1.0f],
-                                       [UIColor colorWithRed:0.5f green:0.8f blue:0.6f alpha:1.0f],
-                                       [UIColor colorWithRed:0.4f green:0.7f blue:0.4f alpha:1.0f],
-                                       [UIColor colorWithRed:0.8f green:0.3f blue:0.9f alpha:1.0f],
-                                       [UIColor colorWithRed:0.6f green:0.2f blue:0.3f alpha:1.0f],
-                                       [UIColor colorWithRed:0 green:0.8f blue:1.0f alpha:1.0f],
-                                       [UIColor colorWithRed:0.1f green:0.8f blue:0.3f alpha:1.0f],
-                                       [UIColor colorWithRed:1 green:0 blue:1 alpha:1.0f] ];
+  NSArray<UIColor *> *tonalColors = @[
+    [UIColor colorWithRed:(float)0.6 green:(float)0.2 blue:(float)0.3 alpha:1],
+    [UIColor colorWithRed:1 green:(float)0.5 blue:0 alpha:1],
+    [UIColor colorWithRed:(float)0.2 green:(float)0.3 blue:(float)0.3 alpha:1],
+    [UIColor colorWithRed:(float)0.5 green:(float)0.8 blue:(float)0.6 alpha:1],
+    [UIColor colorWithRed:(float)0.4 green:(float)0.7 blue:(float)0.4 alpha:1],
+    [UIColor colorWithRed:(float)0.8 green:(float)0.3 blue:(float)0.9 alpha:1],
+    [UIColor colorWithRed:(float)0.6 green:(float)0.2 blue:(float)0.3 alpha:1],
+    [UIColor colorWithRed:0 green:(float)0.8 blue:1 alpha:1],
+    [UIColor colorWithRed:(float)0.1 green:(float)0.8 blue:(float)0.3 alpha:1],
+    [UIColor colorWithRed:1 green:0 blue:1 alpha:1]
+  ];
 
   MDCTonalPalette *tonalPalette =
       [[MDCTonalPalette alloc] initWithColors:tonalColors

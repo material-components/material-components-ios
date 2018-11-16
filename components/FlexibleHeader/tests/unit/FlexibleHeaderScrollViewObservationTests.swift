@@ -43,10 +43,18 @@ class FlexibleHeaderScrollViewObservationTests: XCTestCase {
       CGSize(width: contentViewController.tableView.bounds.width,
              height: contentViewController.tableView.bounds.height * 2)
     fhvc.headerView.trackingScrollView = contentViewController.tableView
+    #if swift(>=4.2)
+    contentViewController.addChild(fhvc)
+    #else
     contentViewController.addChildViewController(fhvc)
+    #endif
     contentViewController.view.addSubview(fhvc.view)
+    #if swift(>=4.2)
+    fhvc.didMove(toParent: contentViewController)
+    #else
     fhvc.didMove(toParentViewController: contentViewController)
-
+    #endif
+    
     // When
     let overshoot: CGFloat = 10
     contentViewController.tableView.contentOffset =
@@ -66,9 +74,20 @@ class FlexibleHeaderScrollViewObservationTests: XCTestCase {
       CGSize(width: contentViewController.tableView.bounds.width,
              height: contentViewController.tableView.bounds.height * 2)
     fhvc.headerView.trackingScrollView = contentViewController.tableView
+
+    #if swift(>=4.2)
+    contentViewController.addChild(fhvc)
+    #else
     contentViewController.addChildViewController(fhvc)
+    #endif
+
     contentViewController.view.addSubview(fhvc.view)
+
+    #if swift(>=4.2)
+    fhvc.didMove(toParent: contentViewController)
+    #else
     fhvc.didMove(toParentViewController: contentViewController)
+    #endif
 
     // When
     let scrollAmount: CGFloat = fhvc.headerView.maximumHeight

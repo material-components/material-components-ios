@@ -87,9 +87,9 @@ card.shapeGenerator = shapeGenerator
 ```objc
 MDCCard *card = [[MDCCard alloc] init];
 MDCRectangleShapeGenerator *shapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
-MDCCutCornerTreatment *cutCornerTreatment = [[MDCCutCornerTreatment alloc] initWithCut: 4.f];
+MDCCutCornerTreatment *cutCornerTreatment = [[MDCCutCornerTreatment alloc] initWithCut: 4];
 [shapeGenerator setCorners:cutCornerTreatment];
-MDCTriangleEdgeTreatment *triangleEdgeTreatment = [[MDCTriangleEdgeTreatment alloc] initWithSize: 8.f style: MDCTriangleEdgeStyleCut];
+MDCTriangleEdgeTreatment *triangleEdgeTreatment = [[MDCTriangleEdgeTreatment alloc] initWithSize: 8 style: MDCTriangleEdgeStyleCut];
 [shapeGenerator setEdges:triangleEdgeTreatment];
 card.shapeGenerator = shapeGenerator;
 ```

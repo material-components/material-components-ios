@@ -57,7 +57,8 @@
   self.appBarViewController.inferTopSafeAreaInsetFromViewController = YES;
   self.appBarViewController.headerView.minMaxHeightIncludesSafeArea = NO;
 
-  self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+  self.colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   [self addChildViewController:self.appBarViewController];
 }
 

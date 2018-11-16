@@ -27,7 +27,7 @@ static NSString *const MDCFlatButtonHasOpaqueBackground = @"MDCFlatButtonHasOpaq
   [MDCFlatButton.appearance setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
   [MDCFlatButton.appearance setElevation:MDCShadowElevationNone forState:UIControlStateNormal];
   [MDCFlatButton.appearance setElevation:MDCShadowElevationNone forState:UIControlStateHighlighted];
-  MDCFlatButton.appearance.inkColor = [UIColor colorWithWhite:0 alpha:0.06f];
+  MDCFlatButton.appearance.inkColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.06];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {

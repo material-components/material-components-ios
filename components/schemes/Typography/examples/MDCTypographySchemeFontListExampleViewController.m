@@ -28,7 +28,7 @@
   CGRect contentBounds = UIEdgeInsetsInsetRect(CGRectStandardize(self.contentView.bounds),
                                                UIEdgeInsetsMake(0, 16, 0, 16));
   self.contentView.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
-  if (CGRectGetHeight(contentBounds) < 0.01f) {
+  if (CGRectGetHeight(contentBounds) < (CGFloat)0.01) {
     contentBounds = CGRectMake(CGRectGetMinX(contentBounds), CGRectGetMinY(contentBounds),
                                CGRectGetWidth(contentBounds), CGRectGetHeight(self.bounds));
   }
@@ -105,7 +105,8 @@ static NSArray<UIFont *> *Fonts() {
 - (instancetype)init {
   self = [super initWithStyle:UITableViewStyleGrouped];
   if (self) {
-    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
     self.typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;

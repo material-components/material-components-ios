@@ -22,11 +22,11 @@
 
 #pragma mark - Constants
 
-static const CGFloat MDCTextInputControllerLegacyDefaultClearButtonImageSquareWidthHeight = 24.f;
-static const CGFloat MDCTextInputControllerLegacyDefaultUnderlineActiveHeight = 2.f;
-static const CGFloat MDCTextInputControllerLegacyDefaultUnderlineNormalHeight = 1.f;
-static const CGFloat MDCTextInputControllerLegacyDefaultVerticalHalfPadding = 8.f;
-static const CGFloat MDCTextInputControllerLegacyDefaultVerticalPadding = 16.f;
+static const CGFloat MDCTextInputControllerLegacyDefaultClearButtonImageSquareWidthHeight = 24;
+static const CGFloat MDCTextInputControllerLegacyDefaultUnderlineActiveHeight = 2;
+static const CGFloat MDCTextInputControllerLegacyDefaultUnderlineNormalHeight = 1;
+static const CGFloat MDCTextInputControllerLegacyDefaultVerticalHalfPadding = 8;
+static const CGFloat MDCTextInputControllerLegacyDefaultVerticalPadding = 16;
 
 static inline UIBezierPath *MDCTextInputControllerLegacyDefaultEmptyPath() {
   return [UIBezierPath bezierPath];
@@ -146,7 +146,7 @@ static CGFloat _underlineHeightNormalLegacyDefault =
   // Offsets needed due to transform working on normal (0.5,0.5) anchor point.
   // Why no anchor point of (0,0)? Because autolayout doesn't play well with anchor points.
   vertical -= self.textInput.placeholderLabel.font.lineHeight *
-              (1 - (CGFloat)self.floatingPlaceholderScale.floatValue) * .5f;
+              (1 - (CGFloat)self.floatingPlaceholderScale.floatValue) * (CGFloat)0.5;
 
   // Remember, the insets are always in LTR. It's automatically flipped when used in RTL.
   // See MDCTextInputController.h.
@@ -164,7 +164,7 @@ static CGFloat _underlineHeightNormalLegacyDefault =
   }
 
   CGFloat horizontal =
-      placeholderWidth * (1 - (CGFloat)self.floatingPlaceholderScale.floatValue) * .5f;
+      placeholderWidth * (1 - (CGFloat)self.floatingPlaceholderScale.floatValue) * (CGFloat)0.5;
 
   return UIOffsetMake(horizontal, vertical);
 }

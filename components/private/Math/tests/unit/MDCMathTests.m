@@ -24,51 +24,57 @@
 #pragma mark - MDCCeilScaled and MDCFloorScaled
 
 - (void)testMDCFloorScaled {
-  CGFloat inputNumber = 1.3f;
+  CGFloat inputNumber = (CGFloat)1.3;
 
-  CGFloat scale = 4.0f;
-  CGFloat expectedOutputNumber = 1.25f;
-  XCTAssertEqualWithAccuracy(MDCFloorScaled(inputNumber, scale), expectedOutputNumber, 0.001f);
+  CGFloat scale = 4;
+  CGFloat expectedOutputNumber = (CGFloat)1.25;
+  XCTAssertEqualWithAccuracy(MDCFloorScaled(inputNumber, scale), expectedOutputNumber,
+                             (CGFloat)0.001);
 }
 
 - (void)testMDCFloorScaledWhenScaleIsZero {
-  CGFloat inputNumber = 1.3f;
+  CGFloat inputNumber = (CGFloat)1.3;
 
-  CGFloat scale = 0.0f;
-  CGFloat expectedOutputNumber = 0.0f;
-  XCTAssertEqualWithAccuracy(MDCFloorScaled(inputNumber, scale), expectedOutputNumber, 0.001f);
+  CGFloat scale = 0;
+  CGFloat expectedOutputNumber = 0;
+  XCTAssertEqualWithAccuracy(MDCFloorScaled(inputNumber, scale), expectedOutputNumber,
+                             (CGFloat)0.001);
 }
 
 - (void)testMDCFloorScaledWhenScaleIsNegative {
-  CGFloat inputNumber = 1.3f;
+  CGFloat inputNumber = (CGFloat)1.3;
 
-  CGFloat scale = -2.0f;
-  CGFloat expectedOutputNumber = 1.5f;
-  XCTAssertEqualWithAccuracy(MDCFloorScaled(inputNumber, scale), expectedOutputNumber, 0.001f);
+  CGFloat scale = -2;
+  CGFloat expectedOutputNumber = (CGFloat)1.5;
+  XCTAssertEqualWithAccuracy(MDCFloorScaled(inputNumber, scale), expectedOutputNumber,
+                             (CGFloat)0.001);
 }
 
 - (void)testMDCCeilScaled {
-  CGFloat inputNumber = 1.3f;
+  CGFloat inputNumber = (CGFloat)1.3;
 
-  CGFloat scale = 4.0f;
-  CGFloat expectedOutputNumber = 1.5f;
-  XCTAssertEqualWithAccuracy(MDCCeilScaled(inputNumber, scale), expectedOutputNumber, 0.001f);
+  CGFloat scale = 4;
+  CGFloat expectedOutputNumber = (CGFloat)1.5;
+  XCTAssertEqualWithAccuracy(MDCCeilScaled(inputNumber, scale), expectedOutputNumber,
+                             (CGFloat)0.001);
 }
 
 - (void)testMDCCeilScaledWhenScaleIsZero {
-  CGFloat inputNumber = 1.3f;
+  CGFloat inputNumber = (CGFloat)1.3;
 
-  CGFloat scale = 0.0f;
-  CGFloat expectedOutputNumber = 0.0f;
-  XCTAssertEqualWithAccuracy(MDCCeilScaled(inputNumber, scale), expectedOutputNumber, 0.001f);
+  CGFloat scale = 0;
+  CGFloat expectedOutputNumber = 0;
+  XCTAssertEqualWithAccuracy(MDCCeilScaled(inputNumber, scale), expectedOutputNumber,
+                             (CGFloat)0.001);
 }
 
 - (void)testMDCCeilScaledWhenScaleIsNegative {
-  CGFloat inputNumber = 1.3f;
+  CGFloat inputNumber = (CGFloat)1.3;
 
-  CGFloat scale = -2.0f;
-  CGFloat expectedOutputNumber = 1.0f;
-  XCTAssertEqualWithAccuracy(MDCCeilScaled(inputNumber, scale), expectedOutputNumber, 0.001f);
+  CGFloat scale = -2;
+  CGFloat expectedOutputNumber = 1;
+  XCTAssertEqualWithAccuracy(MDCCeilScaled(inputNumber, scale), expectedOutputNumber,
+                             (CGFloat)0.001);
 }
 
 #pragma mark - MDCRect
@@ -78,9 +84,9 @@
  */
 - (void)testMDCRectAlignScale {
   // Given
-  CGRect misalignedRect = CGRectMake(0.45f, 0.78f, 1.01f, 5.98f);
+  CGRect misalignedRect = CGRectMake((CGFloat)0.45, (CGFloat)0.78, (CGFloat)1.01, (CGFloat)5.98);
   CGRect alignedScale1Rect = CGRectMake(0, 0, 2, 7);
-  CGRect alignedScale2Rect = CGRectMake(0, 0.5f, 1.5f, 6.5f);
+  CGRect alignedScale2Rect = CGRectMake(0, (CGFloat)0.5, (CGFloat)1.5, (CGFloat)6.5);
   CGRect alignedScale3Rect = CGRectMake((CGFloat)(1.0 / 3.0), (CGFloat)(2.0 / 3.0),
                                         (CGFloat)(4.0 / 3.0), (CGFloat)(19.0 / 3.0));
 
@@ -103,9 +109,9 @@
  */
 - (void)testMDCRectAlignScaleNegativeRectangle {
   // Given
-  CGRect misalignedRect = CGRectMake(-5.01f, -0.399f, 8.35f, 2.65f);
+  CGRect misalignedRect = CGRectMake((CGFloat)-5.01, (CGFloat)-0.399, (CGFloat)8.35, (CGFloat)2.65);
   CGRect alignedScale1Rect = CGRectMake(-6, -1, 10, 4);
-  CGRect alignedScale2Rect = CGRectMake(-5.5f, -0.5f, 9, 3);
+  CGRect alignedScale2Rect = CGRectMake((CGFloat)-5.5, (CGFloat)-0.5, 9, 3);
   CGRect alignedScale3Rect = CGRectMake((CGFloat)(-16.0 / 3.0), (CGFloat)(-2.0 / 3.0), 9, 3);
 
   // Then
@@ -127,10 +133,11 @@
  */
 - (void)testMDCRectAlignScaleNonStandardRectangle {
   // Given
-  CGRect misalignedRect = CGRectMake(17.9f, -4.44f, -10.10f, -15.85f);
+  CGRect misalignedRect =
+      CGRectMake((CGFloat)17.9, (CGFloat)-4.44, (CGFloat)-10.10, (CGFloat)-15.85);
   // Standardized: (7.80, -20.29), (10.10, 15.85)
   CGRect alignedScale1Rect = CGRectMake(7, -21, 11, 17);
-  CGRect alignedScale2Rect = CGRectMake(7.5f, -20.5f, 10.5f, 16.5f);
+  CGRect alignedScale2Rect = CGRectMake((CGFloat)7.5, (CGFloat)-20.5, (CGFloat)10.5, (CGFloat)16.5);
   CGRect alignedScale3Rect = CGRectMake((CGFloat)(23.0 / 3.0), (CGFloat)(-61.0 / 3.0),
                                         (CGFloat)(31.0 / 3.0), 16);
 
@@ -154,7 +161,7 @@
 - (void)testMDCRectAlignScaleAlreadyAligned {
   // Given
   CGRect alignedScale1Rect = CGRectMake(10, 15, 5, 10);
-  CGRect alignedScale2Rect = CGRectMake(10.5f, 15.5f, 5.5f, 10.5f);
+  CGRect alignedScale2Rect = CGRectMake((CGFloat)10.5, (CGFloat)15.5, (CGFloat)5.5, (CGFloat)10.5);
   CGRect alignedScale3Rect = CGRectMake((CGFloat)(31.0 / 3.0), (CGFloat)(47.0 / 3.0),
                                         (CGFloat)(16.0 / 3.0), (CGFloat)(32.0 / 3.0));
 
@@ -187,7 +194,7 @@
  */
 - (void)testMDCRectAlignScaleZeroScale {
   // Given
-  CGRect rectangle = CGRectMake(1.1f, 2.2f, 3.3f, 4.4f);
+  CGRect rectangle = CGRectMake((CGFloat)1.1, (CGFloat)2.2, (CGFloat)3.3, (CGFloat)4.4);
 
   // Then
   XCTAssertTrue(CGRectEqualToRect(MDCRectAlignToScale(rectangle, 0),
@@ -198,9 +205,9 @@
 
 - (void)testMDCPointRoundWithScale {
   // Given
-  CGPoint misalignedPoint = CGPointMake(0.7f, -1.3f);
+  CGPoint misalignedPoint = CGPointMake((CGFloat)0.7, (CGFloat)-1.3);
   CGPoint alignedScale1Point = CGPointMake(1, -1);
-  CGPoint alignedScale2Point = CGPointMake(0.5f, -1.5f);
+  CGPoint alignedScale2Point = CGPointMake((CGFloat)0.5, (CGFloat)-1.5);
   CGPoint alignedScale3Point = CGPointMake((CGFloat)(2.0 / 3.0), (CGFloat)(-4.0 / 3.0));
 
   // Then
@@ -214,17 +221,18 @@
 
 - (void)testMDCPointRoundScaleZeroScale {
   // Then
-  XCTAssertTrue(CGPointEqualToPoint(CGPointZero, MDCPointRoundWithScale(CGPointMake(5.5f, 13), 0)));
+  XCTAssertTrue(
+      CGPointEqualToPoint(CGPointZero, MDCPointRoundWithScale(CGPointMake((CGFloat)5.5, 13), 0)));
 }
 
 #pragma mark - MDCCenter
 
 - (void)testMDCRoundCenterWithBoundsAndScale {
   // Given
-  CGPoint misalignedCenter = CGPointMake(0.7f, -1.3f);
+  CGPoint misalignedCenter = CGPointMake((CGFloat)0.7, (CGFloat)-1.3);
   CGRect bounds = CGRectMake(0, 0, 20, 21);
-  CGPoint alignedScale1Center = CGPointMake(1, -1.5f);
-  CGPoint alignedScale2Center = CGPointMake(0.5f, -1.5f);
+  CGPoint alignedScale1Center = CGPointMake(1, (CGFloat)-1.5);
+  CGPoint alignedScale2Center = CGPointMake((CGFloat)0.5, (CGFloat)-1.5);
   CGPoint alignedScale3Center = CGPointMake((CGFloat)(2.0 / 3.0), (CGFloat)(-7.0 / 6.0));
 
   // Then

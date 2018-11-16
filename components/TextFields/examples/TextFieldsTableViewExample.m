@@ -37,7 +37,7 @@ static NSString *const TSTTextFieldTableViewCellIdentifier = @"TSTTextFieldsTabl
 
   self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
   self.tableView.rowHeight = UITableViewAutomaticDimension;
-  self.tableView.estimatedRowHeight = 82.f;
+  self.tableView.estimatedRowHeight = 82;
   self.tableView.dataSource = self;
   [self.tableView registerClass:[TextFieldTableViewCell class] forCellReuseIdentifier:TSTTextFieldTableViewCellIdentifier];
 

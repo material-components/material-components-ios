@@ -38,7 +38,8 @@ static const CGFloat kScimAlpha = (CGFloat)0.32;
   self.bottomDrawer.headerViewController = self.headerViewController;
   self.bottomDrawer.contentViewController = self.contentViewController;
 
-  self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+  self.colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   self.colorScheme.surfaceColor = UIColor.blueColor;
   self.colorScheme.onSurfaceColor = UIColor.greenColor;
 }

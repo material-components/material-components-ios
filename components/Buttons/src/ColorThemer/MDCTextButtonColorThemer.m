@@ -22,13 +22,13 @@
   [button setBackgroundColor:UIColor.clearColor forState:UIControlStateNormal];
   [button setBackgroundColor:UIColor.clearColor forState:UIControlStateDisabled];
   [button setTitleColor:colorScheme.primaryColor forState:UIControlStateNormal];
-  [button setTitleColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]
+  [button setTitleColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38]
                forState:UIControlStateDisabled];
   [button setImageTintColor:colorScheme.primaryColor forState:UIControlStateNormal];
-  [button setImageTintColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]
+  [button setImageTintColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38]
                    forState:UIControlStateDisabled];
-  button.disabledAlpha = 1.f;
-  button.inkColor = [colorScheme.primaryColor colorWithAlphaComponent:0.16f];
+  button.disabledAlpha = 1;
+  button.inkColor = [colorScheme.primaryColor colorWithAlphaComponent:(CGFloat)0.16];
 }
 
 + (void)resetUIControlStatesForButtonTheming:(nonnull MDCButton *)button {

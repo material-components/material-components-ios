@@ -14,6 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialShadowElevations.h"
+
 @protocol MDCBottomNavigationBarDelegate;
 
 /** States used to configure bottom navigation on when to show item titles. */
@@ -139,6 +141,11 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
  12.
  */
 @property(nonatomic, assign) CGFloat itemsContentHorizontalMargin;
+
+/**
+ The elevation of the bottom navigation bar. Defaults to @c MDCShadowElevationBottomNavigationBar .
+ */
+@property(nonatomic, assign) MDCShadowElevation elevation;
 
 /**
  Returns the navigation bar subview associated with the specific item.

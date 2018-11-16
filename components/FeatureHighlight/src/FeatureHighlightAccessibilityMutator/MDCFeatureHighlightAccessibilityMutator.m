@@ -33,7 +33,7 @@
 
   UIColor *textColor = featureHighlightViewController.titleColor;
   UIColor *backgroundColor =
-      [featureHighlightViewController.outerHighlightColor colorWithAlphaComponent:1.0f];
+      [featureHighlightViewController.outerHighlightColor colorWithAlphaComponent:1];
   UIColor *titleColor =
       [MDCFeatureHighlightAccessibilityMutator accessibleColorForTextColor:textColor
                                                        withBackgroundColor:backgroundColor
@@ -60,7 +60,7 @@
 
   UIColor *textColor = featureHighlightViewController.bodyColor;
   UIColor *backgroundColor =
-      [featureHighlightViewController.outerHighlightColor colorWithAlphaComponent:1.0f];
+      [featureHighlightViewController.outerHighlightColor colorWithAlphaComponent:1];
   featureHighlightViewController.bodyColor =
       [MDCFeatureHighlightAccessibilityMutator accessibleColorForTextColor:textColor
                                                        withBackgroundColor:backgroundColor
