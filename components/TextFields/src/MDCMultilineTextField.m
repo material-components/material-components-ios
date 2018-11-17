@@ -1,18 +1,16 @@
-/*
- Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCMultilineTextField.h"
 
@@ -445,7 +443,7 @@
                                     multiplier:1
                                       constant:self.textViewTrailing.constant];
   }
-  self.textViewTrailingTrailingViewLeading.active = !MDCCGFloatEqual([self trailingViewAlpha], 0.f);
+  self.textViewTrailingTrailingViewLeading.active = !MDCCGFloatEqual([self trailingViewAlpha], 0);
 }
 
 - (void)updateTrailingViewAlpha {
@@ -458,16 +456,16 @@
   CGFloat trailingViewAlpha;
   switch (self.trailingViewMode) {
     case UITextFieldViewModeAlways:
-      trailingViewAlpha = 1.f;
+      trailingViewAlpha = 1;
       break;
     case UITextFieldViewModeWhileEditing:
-      trailingViewAlpha = self.isEditing ? 1.f : 0.f;
+      trailingViewAlpha = self.isEditing ? 1 : 0;
       break;
     case UITextFieldViewModeUnlessEditing:
-      trailingViewAlpha = self.isEditing ? 0.f : 1.f;
+      trailingViewAlpha = self.isEditing ? 0 : 1;
       break;
     case UITextFieldViewModeNever:
-      trailingViewAlpha = 0.f;
+      trailingViewAlpha = 0;
       break;
     default:
       NSAssert(NO, @"Invalid enumeration value %li.", (long)self.trailingViewMode);

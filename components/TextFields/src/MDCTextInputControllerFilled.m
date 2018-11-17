@@ -1,18 +1,16 @@
-/*
- Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCTextInputControllerFilled.h"
 
@@ -37,20 +35,20 @@
 
 #pragma mark - Constants
 
-static const CGFloat MDCTextInputControllerFilledClearButtonPaddingAddition = -2.f;
+static const CGFloat MDCTextInputControllerFilledClearButtonPaddingAddition = -2;
 static const CGFloat MDCTextInputControllerFilledDefaultUnderlineActiveHeight = 2;
 static const CGFloat MDCTextInputControllerFilledDefaultUnderlineNormalHeight = 1;
-static const CGFloat MDCTextInputControllerFilledFullPadding = 16.f;
+static const CGFloat MDCTextInputControllerFilledFullPadding = 16;
 
 // The guidelines have 8 points of padding but since the fonts on iOS are slightly smaller, we need
 // to add points to keep the versions at the same height.
-static const CGFloat MDCTextInputControllerFilledHalfPadding = 8.f;
-static const CGFloat MDCTextInputControllerFilledHalfPaddingAddition = 1.f;
-static const CGFloat MDCTextInputControllerFilledNormalPlaceholderPadding = 20.f;
-static const CGFloat MDCTextInputControllerFilledThreeQuartersPadding = 12.f;
+static const CGFloat MDCTextInputControllerFilledHalfPadding = 8;
+static const CGFloat MDCTextInputControllerFilledHalfPaddingAddition = 1;
+static const CGFloat MDCTextInputControllerFilledNormalPlaceholderPadding = 20;
+static const CGFloat MDCTextInputControllerFilledThreeQuartersPadding = 12;
 
 static inline UIColor *MDCTextInputControllerFilledDefaultBorderFillColorDefault() {
-  return [UIColor colorWithWhite:0 alpha:.06f];
+  return [UIColor colorWithWhite:0 alpha:(CGFloat)0.06];
 }
 
 #pragma mark - Class Properties
@@ -116,10 +114,10 @@ static CGFloat _underlineHeightNormalDefault =
                         ? -1 * MDCTextInputControllerFilledFullPadding
                         : MDCTextInputControllerFilledFullPadding;
 
-  leadingViewRect = CGRectOffset(leadingViewRect, xOffset, 0.f);
+  leadingViewRect = CGRectOffset(leadingViewRect, xOffset, 0);
 
-  leadingViewRect.origin.y = CGRectGetHeight(self.textInput.borderPath.bounds) / 2.f -
-                             CGRectGetHeight(leadingViewRect) / 2.f;
+  leadingViewRect.origin.y =
+      CGRectGetHeight(self.textInput.borderPath.bounds) / 2 - CGRectGetHeight(leadingViewRect) / 2;
 
   return leadingViewRect;
 }
@@ -135,10 +133,10 @@ static CGFloat _underlineHeightNormalDefault =
                         ? MDCTextInputControllerFilledThreeQuartersPadding
                         : -1 * MDCTextInputControllerFilledThreeQuartersPadding;
 
-  trailingViewRect = CGRectOffset(trailingViewRect, xOffset, 0.f);
+  trailingViewRect = CGRectOffset(trailingViewRect, xOffset, 0);
 
-  trailingViewRect.origin.y = CGRectGetHeight(self.textInput.borderPath.bounds) / 2.f -
-                              CGRectGetHeight(trailingViewRect) / 2.f;
+  trailingViewRect.origin.y =
+      CGRectGetHeight(self.textInput.borderPath.bounds) / 2 - CGRectGetHeight(trailingViewRect) / 2;
 
   return trailingViewRect;
 }

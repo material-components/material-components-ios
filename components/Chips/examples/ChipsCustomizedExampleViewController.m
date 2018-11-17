@@ -1,18 +1,16 @@
-/*
- Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "ChipsExamplesSupplemental.h"
 
@@ -24,23 +22,24 @@
 }
 
 + (void)configureChip:(MDCChipView *)chip {
-  UIFont *customTitleFont = [UIFont fontWithName:@"ChalkDuster" size:14.0f];
+  UIFont *customTitleFont = [UIFont fontWithName:@"ChalkDuster" size:14];
   chip.titleFont = customTitleFont;
 
   UIColor *customColor = [UIColor blueColor];
   [chip setTitleColor:customColor forState:UIControlStateNormal];
   [chip setBorderColor:customColor forState:UIControlStateNormal];
-  [chip setBorderWidth:2.0f forState:UIControlStateNormal];
-  [chip setInkColor:[customColor colorWithAlphaComponent:0.2f] forState:UIControlStateNormal];
+  [chip setBorderWidth:2 forState:UIControlStateNormal];
+  [chip setInkColor:[customColor colorWithAlphaComponent:(CGFloat)0.2]
+           forState:UIControlStateNormal];
 
   UIColor *customSelectedColor = [UIColor orangeColor];
   [chip setTitleColor:customSelectedColor forState:UIControlStateSelected];
   [chip setBorderColor:customSelectedColor forState:UIControlStateSelected];
-  [chip setBorderWidth:4.0f forState:UIControlStateSelected];
-  [chip setInkColor:[customSelectedColor colorWithAlphaComponent:0.2f]
+  [chip setBorderWidth:4 forState:UIControlStateSelected];
+  [chip setInkColor:[customSelectedColor colorWithAlphaComponent:(CGFloat)0.2]
            forState:UIControlStateSelected];
-  [chip setInkColor:[customSelectedColor colorWithAlphaComponent:0.2f]
-           forState:UIControlStateSelected|UIControlStateHighlighted];
+  [chip setInkColor:[customSelectedColor colorWithAlphaComponent:(CGFloat)0.2]
+           forState:UIControlStateSelected | UIControlStateHighlighted];
 }
 
 - (void)loadView {

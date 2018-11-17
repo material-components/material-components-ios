@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <XCTest/XCTest.h>
 
@@ -20,70 +18,77 @@
 #import "MaterialNavigationBar.h"
 #import "MaterialNavigationBar+TypographyThemer.h"
 
-static const CGFloat kEpsilonAccuracy = 0.001f;
+static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
 @interface MDCNavigationBar (Testing)
 @property(nonatomic) UILabel *titleLabel;
+- (MDCButtonBar *)leadingButtonBar;
+- (MDCButtonBar *)trailingButtonBar;
 @end
 
 @interface NavigationBarTests : XCTestCase
+@property(nonatomic) MDCNavigationBar *navBar;
 @end
 
 @implementation NavigationBarTests
 
+- (void)setUp {
+  [super setUp];
+  self.navBar = [[MDCNavigationBar alloc] init];
+}
+
+- (void)tearDown {
+  self.navBar = nil;
+  [super tearDown];
+}
+
 - (void)testSettingTextAlignmentToCenterMustCenterTheTitleLabel {
   // Given
-  MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
-  navBar.frame = CGRectMake(0, 0, 300, 25);
-  navBar.title = @"this is a Title";
+  self.navBar.frame = CGRectMake(0, 0, 300, 25);
+  self.navBar.title = @"this is a Title";
 
   // When
-  navBar.titleAlignment = MDCNavigationBarTitleAlignmentCenter;
-  [navBar layoutIfNeeded];
+  self.navBar.titleAlignment = MDCNavigationBarTitleAlignmentCenter;
+  [self.navBar layoutIfNeeded];
 
   // Then
-  XCTAssertEqualWithAccuracy(navBar.titleLabel.center.x, CGRectGetMidX(navBar.bounds),
+  XCTAssertEqualWithAccuracy(self.navBar.titleLabel.center.x, CGRectGetMidX(self.navBar.bounds),
                              kEpsilonAccuracy);
 }
 
 - (void)testChangingTextOfACenterTextAlignmentMustCenterTheTitleLabel {
   // Given
-  MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
-  navBar.frame = CGRectMake(0, 0, 300, 25);
-  navBar.title = @"this is a Title";
-  navBar.titleAlignment = MDCNavigationBarTitleAlignmentCenter;
+  self.navBar.frame = CGRectMake(0, 0, 300, 25);
+  self.navBar.title = @"this is a Title";
+  self.navBar.titleAlignment = MDCNavigationBarTitleAlignmentCenter;
 
   // When
-  navBar.title = @"..";
-  [navBar layoutIfNeeded];
+  self.navBar.title = @"..";
+  [self.navBar layoutIfNeeded];
 
   // Then
-  XCTAssertEqualWithAccuracy(navBar.titleLabel.center.x, CGRectGetMidX(navBar.bounds),
+  XCTAssertEqualWithAccuracy(self.navBar.titleLabel.center.x, CGRectGetMidX(self.navBar.bounds),
                              kEpsilonAccuracy);
 }
 
 - (void)testSettingTextAlignmentToLeftMustLeftAlignTheTitleLabel {
   // Given
-  MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
-  navBar.frame = CGRectMake(0, 0, 200, 25);
-  navBar.title = @"this is a Title";
-  navBar.titleAlignment = MDCNavigationBarTitleAlignmentCenter;
-  [navBar layoutIfNeeded];
+  self.navBar.frame = CGRectMake(0, 0, 200, 25);
+  self.navBar.title = @"this is a Title";
+  self.navBar.titleAlignment = MDCNavigationBarTitleAlignmentCenter;
+  [self.navBar layoutIfNeeded];
 
   // When
-  navBar.titleAlignment = MDCNavigationBarTitleAlignmentLeading;
-  [navBar layoutIfNeeded];
+  self.navBar.titleAlignment = MDCNavigationBarTitleAlignmentLeading;
+  [self.navBar layoutIfNeeded];
 
   // Then
-  XCTAssertLessThan(navBar.titleLabel.center.x, CGRectGetMidX(navBar.bounds));
+  XCTAssertLessThan(self.navBar.titleLabel.center.x, CGRectGetMidX(self.navBar.bounds));
 }
 
 - (void)testDefaultTextAlignment {
-  // Given
-  MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
-
   // When
-  MDCNavigationBarTitleAlignment alignment = navBar.titleAlignment;
+  MDCNavigationBarTitleAlignment alignment = self.navBar.titleAlignment;
 
   // Then
   XCTAssertEqual(alignment, MDCNavigationBarTitleAlignmentCenter);
@@ -91,190 +96,205 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testTitleViewIsCenteredWithNoButtonsAndFillBehavior {
   // Given
-  MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
-  navBar.frame = CGRectMake(0, 0, 300, 25);
-  navBar.titleView = [[UIView alloc] init];
-  navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorFill;
+  self.navBar.frame = CGRectMake(0, 0, 300, 25);
+  self.navBar.titleView = [[UIView alloc] init];
+  self.navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorFill;
 
   // When
-  [navBar layoutIfNeeded];
+  [self.navBar layoutIfNeeded];
 
   // Then
-  XCTAssertEqualWithAccuracy(navBar.titleView.center.x, CGRectGetMidX(navBar.bounds),
+  XCTAssertEqualWithAccuracy(self.navBar.titleView.center.x, CGRectGetMidX(self.navBar.bounds),
                              kEpsilonAccuracy);
 }
 
 - (void)testTitleViewShiftedRightWithLeadingButtonsAndFillBehavior {
   // Given
-  MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
-  navBar.frame = CGRectMake(0, 0, 300, 25);
-  navBar.titleView = [[UIView alloc] init];
-  navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorFill;
-  navBar.leadingBarButtonItems = @[[[UIBarButtonItem alloc] initWithTitle:@"Button"
-                                                                    style:UIBarButtonItemStylePlain
-                                                                   target:nil action:nil]];
+  self.navBar.frame = CGRectMake(0, 0, 300, 25);
+  self.navBar.titleView = [[UIView alloc] init];
+  self.navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorFill;
+  self.navBar.leadingBarButtonItems =
+      @[ [[UIBarButtonItem alloc] initWithTitle:@"Button"
+                                          style:UIBarButtonItemStylePlain
+                                         target:nil
+                                         action:nil] ];
 
   // When
-  [navBar layoutIfNeeded];
+  [self.navBar layoutIfNeeded];
 
   // Then
-  XCTAssertGreaterThan(navBar.titleView.center.x, CGRectGetMidX(navBar.bounds));
+  XCTAssertGreaterThan(self.navBar.titleView.center.x, CGRectGetMidX(self.navBar.bounds));
 }
 
 - (void)testTitleViewShiftedLeftWithTrailingButtonsAndFillBehavior {
   // Given
-  MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
-  navBar.frame = CGRectMake(0, 0, 300, 25);
-  navBar.titleView = [[UIView alloc] init];
-  navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorFill;
-  navBar.trailingBarButtonItems = @[[[UIBarButtonItem alloc] initWithTitle:@"Button"
-                                                                     style:UIBarButtonItemStylePlain
-                                                                    target:nil action:nil]];
+  self.navBar.frame = CGRectMake(0, 0, 300, 25);
+  self.navBar.titleView = [[UIView alloc] init];
+  self.navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorFill;
+  self.navBar.trailingBarButtonItems =
+      @[ [[UIBarButtonItem alloc] initWithTitle:@"Button"
+                                          style:UIBarButtonItemStylePlain
+                                         target:nil
+                                         action:nil] ];
 
   // When
-  [navBar layoutIfNeeded];
+  [self.navBar layoutIfNeeded];
 
   // Then
-  XCTAssertLessThan(navBar.titleView.center.x, CGRectGetMidX(navBar.bounds));
+  XCTAssertLessThan(self.navBar.titleView.center.x, CGRectGetMidX(self.navBar.bounds));
 }
 
 - (void)testTitleViewCenteredWithLeadingButtonsAndCenterBehavior {
   // Given
-  MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
-  navBar.frame = CGRectMake(0, 0, 300, 25);
-  navBar.titleView = [[UIView alloc] init];
-  navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorCenter;
-  navBar.leadingBarButtonItems = @[[[UIBarButtonItem alloc] initWithTitle:@"Button"
-                                                                    style:UIBarButtonItemStylePlain
-                                                                   target:nil action:nil]];
+  self.navBar.frame = CGRectMake(0, 0, 300, 25);
+  self.navBar.titleView = [[UIView alloc] init];
+  self.navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorCenter;
+  self.navBar.leadingBarButtonItems =
+      @[ [[UIBarButtonItem alloc] initWithTitle:@"Button"
+                                          style:UIBarButtonItemStylePlain
+                                         target:nil
+                                         action:nil] ];
 
   // When
-  [navBar layoutIfNeeded];
+  [self.navBar layoutIfNeeded];
 
   // Then
-  XCTAssertEqualWithAccuracy(navBar.titleView.center.x, CGRectGetMidX(navBar.bounds),
+  XCTAssertEqualWithAccuracy(self.navBar.titleView.center.x, CGRectGetMidX(self.navBar.bounds),
                              kEpsilonAccuracy);
 }
 
 - (void)testTitleViewCenteredWithTrailingButtonsAndCenterBehavior {
   // Given
-  MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
-  navBar.frame = CGRectMake(0, 0, 300, 25);
-  navBar.titleView = [[UIView alloc] init];
-  navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorCenter;
-  navBar.trailingBarButtonItems = @[[[UIBarButtonItem alloc] initWithTitle:@"Button"
-                                                                     style:UIBarButtonItemStylePlain
-                                                                    target:nil action:nil]];
+  self.navBar.frame = CGRectMake(0, 0, 300, 25);
+  self.navBar.titleView = [[UIView alloc] init];
+  self.navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorCenter;
+  self.navBar.trailingBarButtonItems =
+      @[ [[UIBarButtonItem alloc] initWithTitle:@"Button"
+                                          style:UIBarButtonItemStylePlain
+                                         target:nil
+                                         action:nil] ];
 
   // When
-  [navBar layoutIfNeeded];
+  [self.navBar layoutIfNeeded];
 
   // Then
-  XCTAssertEqualWithAccuracy(navBar.titleView.center.x, CGRectGetMidX(navBar.bounds),
+  XCTAssertEqualWithAccuracy(self.navBar.titleView.center.x, CGRectGetMidX(self.navBar.bounds),
                              kEpsilonAccuracy);
 }
 
 - (void)testTitleFontProperty {
-  MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
-  navBar.frame = CGRectMake(0, 0, 300, 25);
-  navBar.title = @"this is a Title";
-  navBar.titleAlignment = MDCNavigationBarTitleAlignmentCenter;
-  [navBar layoutIfNeeded];
+  // Given
+  self.navBar.title = @"this is a Title";
 
-  XCTAssertNotNil(navBar.titleFont);
-  XCTAssertEqual(navBar.titleLabel.font, navBar.titleFont);
+  // Then
+  XCTAssertNotNil(self.navBar.titleFont);
+  XCTAssertEqualObjects(self.navBar.titleLabel.font, self.navBar.titleFont);
 
+  // When
   UIFont *font = [UIFont systemFontOfSize:24];
-  navBar.titleFont = font;
+  self.navBar.titleFont = font;
 
-  UIFont *resultFont = navBar.titleLabel.font;
+  // Then
+  UIFont *resultFont = self.navBar.titleLabel.font;
   XCTAssertEqualObjects(resultFont.fontName, font.fontName);
-  XCTAssertEqualWithAccuracy(resultFont.pointSize, 24, 0.01);
+  XCTAssertEqualWithAccuracy(resultFont.pointSize, 20, 0.01);
 
+  // When
   NSDictionary <NSString *, NSNumber *> *fontTraits =
       [[font fontDescriptor] objectForKey:UIFontDescriptorTraitsAttribute];
   NSDictionary <NSString *, NSNumber *> *resultTraits =
       [[resultFont fontDescriptor] objectForKey:UIFontDescriptorTraitsAttribute];
 
-  XCTAssertEqual(fontTraits, resultTraits);
+  // Then
+  XCTAssertEqualObjects(fontTraits, resultTraits);
+}
+
+- (void)testTitleFontPropertyWithAllowAnyTitleFontSizeEnabled {
+  // Given
+  self.navBar.title = @"this is a Title";
+  self.navBar.allowAnyTitleFontSize = YES;
+
+  // Then
+  XCTAssertNotNil(self.navBar.titleFont);
+  XCTAssertEqualObjects(self.navBar.titleLabel.font, self.navBar.titleFont);
+
+  // When
+  UIFont *font = [UIFont systemFontOfSize:24];
+  self.navBar.titleFont = font;
+
+  // Then
+  UIFont *resultFont = self.navBar.titleLabel.font;
+  XCTAssertEqualObjects(resultFont.fontName, font.fontName);
+  XCTAssertEqualWithAccuracy(resultFont.pointSize, 24, 0.01);
+
+  // When
+  NSDictionary <NSString *, NSNumber *> *fontTraits =
+      [[font fontDescriptor] objectForKey:UIFontDescriptorTraitsAttribute];
+  NSDictionary <NSString *, NSNumber *> *resultTraits =
+      [[resultFont fontDescriptor] objectForKey:UIFontDescriptorTraitsAttribute];
+
+  // Then
+  XCTAssertEqualObjects(fontTraits, resultTraits);
 }
 
 #pragma mark - Accessibility
 
 - (void)testNavigationBarIsNotAccessibilityElement {
-  // Given
-  MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
-
   // Then
-  XCTAssertFalse(navBar.isAccessibilityElement);
+  XCTAssertFalse(self.navBar.isAccessibilityElement);
 }
 
 - (void)testAccessibilityItemsCountWithNoTitle {
-  // Given
-  MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
-
   // Then
   const NSInteger elementsCount = 3; // Leading bar, titleLabel, trailing bar
-  XCTAssertEqual(elementsCount, navBar.accessibilityElementCount);
+  XCTAssertEqual(elementsCount, self.navBar.accessibilityElementCount);
 }
 
 - (void)testAccessibilityItemsCountWithTitleView {
-  // Given
-  MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
-
   // When
-  navBar.titleView = [[UIView alloc] init];
+  self.navBar.titleView = [[UIView alloc] init];
 
   // Then
   const NSInteger elementsCount = 3; // Leading bar, titleView, trailing bar
-  XCTAssertEqual(elementsCount, navBar.accessibilityElementCount);
+  XCTAssertEqual(elementsCount, self.navBar.accessibilityElementCount);
 }
 
 - (void)testAccessibilityItemAtIndexDefault {
-  // Given
-  MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
-
   // Then
-  XCTAssertTrue([[navBar accessibilityElementAtIndex:0] isKindOfClass:[MDCButtonBar class]]);
-  XCTAssertEqual(navBar.titleLabel, [navBar accessibilityElementAtIndex:1]);
-  XCTAssertTrue([[navBar accessibilityElementAtIndex:2] isKindOfClass:[MDCButtonBar class]]);
+  XCTAssertTrue([[self.navBar accessibilityElementAtIndex:0] isKindOfClass:[MDCButtonBar class]]);
+  XCTAssertEqual(self.navBar.titleLabel, [self.navBar accessibilityElementAtIndex:1]);
+  XCTAssertTrue([[self.navBar accessibilityElementAtIndex:2] isKindOfClass:[MDCButtonBar class]]);
 }
 
 - (void)testIndexOfAccessibilityElementDefault {
-  // Given
-  MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
-
   // Then
-  XCTAssertEqual(1, [navBar indexOfAccessibilityElement:navBar.titleLabel]);
-  XCTAssertEqual(NSNotFound, [navBar indexOfAccessibilityElement:navBar.leftBarButtonItem]);
+  XCTAssertEqual(1, [self.navBar indexOfAccessibilityElement:self.navBar.titleLabel]);
+  XCTAssertEqual(NSNotFound,
+                 [self.navBar indexOfAccessibilityElement:self.navBar.leftBarButtonItem]);
 }
 
 - (void)testIndexOfAccessibilityElementWithTitleView {
-  // Given
-  MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
-
   // When
-  navBar.titleView = [[UIView alloc] init];
+  self.navBar.titleView = [[UIView alloc] init];
 
   // Then
-  XCTAssertEqual(1, [navBar indexOfAccessibilityElement:navBar.titleView]);
-  XCTAssertEqual(NSNotFound, [navBar indexOfAccessibilityElement:navBar.titleLabel]);
+  XCTAssertEqual(1, [self.navBar indexOfAccessibilityElement:self.navBar.titleView]);
+  XCTAssertEqual(NSNotFound, [self.navBar indexOfAccessibilityElement:self.navBar.titleLabel]);
 }
 
 - (void)testAccessibilityElementsWithNoTitle {
   // Given
-  MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
   UIBarButtonItem *leadingItem = [[UIBarButtonItem alloc] init];
   leadingItem.title = @"Leading";
   UIBarButtonItem *trailingItem = [[UIBarButtonItem alloc] init];
   trailingItem.title = @"Trailing";
 
   // When
-  navBar.leadingBarButtonItem = leadingItem;
-  navBar.trailingBarButtonItems = @[leadingItem, trailingItem];
+  self.navBar.leadingBarButtonItem = leadingItem;
+  self.navBar.trailingBarButtonItems = @[ leadingItem, trailingItem ];
 
   // Then
-  NSArray *elements = navBar.accessibilityElements;
+  NSArray *elements = self.navBar.accessibilityElements;
   XCTAssertNotNil(elements);
   XCTAssertEqual(3U, elements.count);
   id firstItem = elements[0];
@@ -283,7 +303,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
     MDCButtonBar *leadingButtonBar = (MDCButtonBar *)firstItem;
     XCTAssertEqual(1U, leadingButtonBar.subviews.count);
   }
-  XCTAssertEqualObjects(navBar.titleLabel, elements[1]);
+  XCTAssertEqualObjects(self.navBar.titleLabel, elements[1]);
   id secondItem = elements[2];
   XCTAssertTrue([secondItem isKindOfClass:[MDCButtonBar class]]);
   if ([secondItem isKindOfClass:[MDCButtonBar class]]) {
@@ -294,19 +314,18 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testAccessibilityElementsWithTitleView {
   // Given
-  MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
   UIBarButtonItem *leadingItem = [[UIBarButtonItem alloc] init];
   leadingItem.title = @"Leading";
   UIBarButtonItem *trailingItem = [[UIBarButtonItem alloc] init];
   trailingItem.title = @"Trailing";
 
   // When
-  navBar.titleView = [[UIView alloc] init];
-  navBar.leadingBarButtonItem = leadingItem;
-  navBar.trailingBarButtonItems = @[leadingItem, trailingItem];
+  self.navBar.titleView = [[UIView alloc] init];
+  self.navBar.leadingBarButtonItem = leadingItem;
+  self.navBar.trailingBarButtonItems = @[ leadingItem, trailingItem ];
 
   // Then
-  NSArray *elements = navBar.accessibilityElements;
+  NSArray *elements = self.navBar.accessibilityElements;
   XCTAssertNotNil(elements);
   XCTAssertEqual(3U, elements.count);
   id firstItem = elements[0];
@@ -315,7 +334,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
     MDCButtonBar *leadingButtonBar = (MDCButtonBar *)firstItem;
     XCTAssertEqual(1U, leadingButtonBar.subviews.count);
   }
-  XCTAssertEqualObjects(navBar.titleView, elements[1]);
+  XCTAssertEqualObjects(self.navBar.titleView, elements[1]);
   id secondItem = elements[2];
   XCTAssertTrue([secondItem isKindOfClass:[MDCButtonBar class]]);
   if ([secondItem isKindOfClass:[MDCButtonBar class]]) {
@@ -327,14 +346,13 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 #pragma mark - Typography
 
 - (void)testTypographyThemer {
-  MDCNavigationBar *navBar = [[MDCNavigationBar alloc] init];
   MDCTypographyScheme *scheme = [[MDCTypographyScheme alloc] init];
-  [MDCNavigationBarTypographyThemer applyTypographyScheme:scheme toNavigationBar:navBar];
+  [MDCNavigationBarTypographyThemer applyTypographyScheme:scheme toNavigationBar:self.navBar];
 
   // To enforce 20 point size we are using fontWithName:size: and for some reason even though the
   // printout looks idential comparing the fonts returns false. (Using fontWithSize: did not work
   // for system font medium, instead it returned a regular font).
-  UIFont *titleFont = navBar.titleLabel.font;
+  UIFont *titleFont = self.navBar.titleLabel.font;
   XCTAssertEqualObjects(titleFont.fontName, scheme.headline6.fontName);
   XCTAssertEqual(titleFont.pointSize, scheme.headline6.pointSize);
 
@@ -363,6 +381,60 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
   return weight;
 
+}
+
+#pragma mark - Color
+
+- (void)testLeadingButtonBarItemsTintColorDefaultsToNil {
+  // Then
+  XCTAssertNil(self.navBar.leadingBarItemsTintColor);
+}
+
+- (void)testLeadingButtonBarItemsTintColorOverridesButtonBarTintColor {
+  // When
+  self.navBar.tintColor = UIColor.purpleColor;
+  self.navBar.leadingBarItemsTintColor = UIColor.orangeColor;
+
+  // Then
+  XCTAssertEqualObjects([self.navBar leadingButtonBar].tintColor, UIColor.orangeColor);
+}
+
+- (void)testSetLeadingButtonBarItemsTintColorToNilRevertsToTintColor {
+  // Given
+  self.navBar.tintColor = UIColor.purpleColor;
+  self.navBar.leadingBarItemsTintColor = UIColor.orangeColor;
+
+  // When
+  self.navBar.leadingBarItemsTintColor = nil;
+
+  // Then
+  XCTAssertEqualObjects([self.navBar leadingButtonBar].tintColor, UIColor.purpleColor);
+}
+
+- (void)testTrailingButtonBarItemsTintColorDefaultsToNil {
+  // Then
+  XCTAssertNil(self.navBar.trailingBarItemsTintColor);
+}
+
+- (void)testTrailingButtonBarItemsTintColorOverridesButtonBarTintColor {
+  // When
+  self.navBar.tintColor = UIColor.cyanColor;
+  self.navBar.trailingBarItemsTintColor = UIColor.greenColor;
+
+  // Then
+  XCTAssertEqualObjects([self.navBar trailingButtonBar].tintColor, UIColor.greenColor);
+}
+
+- (void)testSetTrailingButtonBarItemsTintColorToNilRevertsToTintColor {
+  // Given
+  self.navBar.tintColor = UIColor.cyanColor;
+  self.navBar.trailingBarItemsTintColor = UIColor.greenColor;
+
+  // When
+  self.navBar.trailingBarItemsTintColor = nil;
+
+  // then
+  XCTAssertEqualObjects([self.navBar trailingButtonBar].tintColor, UIColor.cyanColor);
 }
 
 @end

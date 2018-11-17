@@ -1,18 +1,16 @@
-/*
- Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <XCTest/XCTest.h>
 
@@ -32,7 +30,8 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
 
 - (void)testInitMatchesInitWithMaterialDefaults {
   // Given
-  MDCSemanticColorScheme *initScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *initScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   MDCSemanticColorScheme *mdDefaultScheme =
       [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 
@@ -70,8 +69,7 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
 - (void)testColorMergeForOpaqueColor {
   UIColor *backgroundColor = [UIColor whiteColor];
   UIColor *blendColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:1.0];
-  UIColor *expectedColor =
-      [UIColor colorWithRed:0.f green:0.f blue:0.f alpha:1.0f];
+  UIColor *expectedColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:1];
   UIColor *resultColor =
       [MDCSemanticColorScheme blendColor:blendColor withBackgroundColor:backgroundColor];
   XCTAssertEqualObjects(resultColor, expectedColor);
@@ -79,9 +77,11 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
 
 - (void)testColorMergeFor50OpacityBlackOnWhite {
   UIColor *backgroundColor = [UIColor whiteColor];
-  UIColor *blendColor = [UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.5f];
-  UIColor *expectedColor =
-      [UIColor colorWithRed:0.5f green:0.5f blue:0.5f alpha:1.0f];
+  UIColor *blendColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:(CGFloat)0.5];
+  UIColor *expectedColor = [UIColor colorWithRed:(CGFloat)0.5
+                                           green:(CGFloat)0.5
+                                            blue:(CGFloat)0.5
+                                           alpha:1];
   UIColor *resultColor =
       [MDCSemanticColorScheme blendColor:blendColor withBackgroundColor:backgroundColor];
   XCTAssertEqualObjects(resultColor, expectedColor);
@@ -105,9 +105,11 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
 
 - (void)testColorMergeFor50OpacityWhiteOnBlack {
   UIColor *backgroundColor = [UIColor blackColor];
-  UIColor *blendColor = [UIColor colorWithRed:1.f green:1.f blue:1.f alpha:0.5f];
-  UIColor *expectedColor =
-      [UIColor colorWithRed:0.5f green:0.5f blue:0.5f alpha:1.0f];
+  UIColor *blendColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:(CGFloat)0.5];
+  UIColor *expectedColor = [UIColor colorWithRed:(CGFloat)0.5
+                                           green:(CGFloat)0.5
+                                            blue:(CGFloat)0.5
+                                           alpha:1];
   UIColor *resultColor =
       [MDCSemanticColorScheme blendColor:blendColor withBackgroundColor:backgroundColor];
   XCTAssertEqualObjects(resultColor, expectedColor);

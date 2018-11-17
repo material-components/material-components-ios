@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <QuartzCore/QuartzCore.h>
 
@@ -34,7 +32,10 @@ NSString *const MDCSnackbarMessageTitleAutomationIdentifier =
 static NSString *const kMaterialSnackbarBundle = @"MaterialSnackbar.bundle";
 
 static inline UIColor *MDCRGBAColor(uint8_t r, uint8_t g, uint8_t b, float a) {
-  return [UIColor colorWithRed:(r) / 255.0f green:(g) / 255.0f blue:(b) / 255.0f alpha:(a)];
+  return [UIColor colorWithRed:(r) / (CGFloat)255
+                         green:(g) / (CGFloat)255
+                          blue:(b) / (CGFloat)255
+                         alpha:(a)];
 }
 
 /**
@@ -45,13 +46,13 @@ static const CGFloat kBorderWidth = 0;
 /**
  Shadow coloring.
  */
-static const CGFloat kShadowAlpha = 0.24f;
+static const CGFloat kShadowAlpha = (CGFloat)0.24;
 
 static const CGSize kShadowOffset = (CGSize){0.0, 2.0};
 static const CGSize kLegacyShadowOffset = (CGSize){0.0, 1.0};
 
-static const CGFloat kShadowSpread = 4.0f;
-static const CGFloat kLegacyShadowSpread = 1.0f;
+static const CGFloat kShadowSpread = 4;
+static const CGFloat kLegacyShadowSpread = 1;
 
 /**
  The radius of the corners.
@@ -68,37 +69,36 @@ static UIEdgeInsets kLegacyContentMargin = (UIEdgeInsets){18.0, 24.0, 18.0, 24.0
 /**
  Padding between the image and the main title.
  */
-static const CGFloat kTitleImagePadding = 8.0f;
+static const CGFloat kTitleImagePadding = 8;
 
 /**
  Padding between the main title and the first button.
  */
-static const CGFloat kTitleButtonPadding = 8.0f;
+static const CGFloat kTitleButtonPadding = 8;
 
 /**
  Padding on the edges of the buttons.
  */
-static const CGFloat kLegacyButtonPadding = 5.0f;
-static const CGFloat kButtonPadding = 8.0f;
-
+static const CGFloat kLegacyButtonPadding = 5;
+static const CGFloat kButtonPadding = 8;
 
 /**
  Minimum padding for the vertical padding of the buttons to the Snackbar
  */
-static const CGFloat kMinVerticalButtonPadding = 6.0f;
+static const CGFloat kMinVerticalButtonPadding = 6;
 
 /**
  The width of the Snackbar.
  */
-static const CGFloat kMinimumViewWidth_iPad = 288.0f;
-static const CGFloat kMaximumViewWidth_iPad = 568.0f;
-static const CGFloat kMinimumViewWidth_iPhone = 320.0f;
-static const CGFloat kMaximumViewWidth_iPhone = 320.0f;
+static const CGFloat kMinimumViewWidth_iPad = 288;
+static const CGFloat kMaximumViewWidth_iPad = 568;
+static const CGFloat kMinimumViewWidth_iPhone = 320;
+static const CGFloat kMaximumViewWidth_iPhone = 320;
 
 /**
  The minimum height of the Snackbar.
  */
-static const CGFloat kMinimumHeight = 48.0f;
+static const CGFloat kMinimumHeight = 48;
 
 /**
  Each button will have a tag indexed starting from this value.
@@ -108,7 +108,7 @@ static const NSInteger kButtonTagStart = 20000;
 /**
  The ink radius of the action button.
  */
-static const CGFloat kButtonInkRadius = 64.0f;
+static const CGFloat kButtonInkRadius = 64;
 
 static const MDCFontTextStyle kMessageTextStyle = MDCFontTextStyleBody1;
 static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
@@ -171,7 +171,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   self = [super initWithFrame:frame];
   if (self) {
     self.inkMaxRippleRadius = kButtonInkRadius;
-    self.inkColor = [UIColor colorWithWhite:1 alpha:0.06f];
+    self.inkColor = [UIColor colorWithWhite:1 alpha:(CGFloat)0.06];
     self.inkStyle = MDCInkStyleUnbounded;
 
     CGFloat buttonContentPadding =
@@ -233,8 +233,8 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
         manager.messageTextColor ?: UIColor.whiteColor;
     _buttonTitleColors = [NSMutableDictionary dictionary];
     _buttonTitleColors[@(UIControlStateNormal)] =
-        [manager buttonTitleColorForState:UIControlStateNormal] ?:
-        MDCRGBAColor(0xFF, 0xFF, 0xFF, 0.6f);
+        [manager buttonTitleColorForState:UIControlStateNormal]
+            ?: MDCRGBAColor(0xFF, 0xFF, 0xFF, (float)0.6);
     _buttonTitleColors[@(UIControlStateHighlighted)] =
         [manager buttonTitleColorForState:UIControlStateHighlighted] ?:
         UIColor.whiteColor;
@@ -247,7 +247,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
     self.backgroundColor = _snackbarMessageViewBackgroundColor;
     self.layer.shadowColor = _snackbarMessageViewShadowColor.CGColor;
-    self.layer.shadowOpacity = kShadowAlpha;
+    self.layer.shadowOpacity = (float)kShadowAlpha;
     if (MDCSnackbarMessage.usesLegacySnackbar) {
       self.layer.cornerRadius = kLegacyCornerRadius;
       self.layer.shadowOffset = kLegacyShadowOffset;
@@ -349,16 +349,19 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
                                            [[self class] bundle],
                                            @"Dismissal accessibility hint for Snackbar");
 
-    // For VoiceOver purposes, the label is the primary 'button' for dismissing the Snackbar, so
-    // we'll make sure the label looks like a button.
+    // For UIAccessibility purposes, the label is the primary 'button' for dismissing the Snackbar,
+    // so we'll make sure the label is treated like a button.
     _label.accessibilityTraits = UIAccessibilityTraitButton;
     _label.accessibilityIdentifier = MDCSnackbarMessageTitleAutomationIdentifier;
     _label.accessibilityHint = accessibilityHint;
 
-    // If an accessibility label was set on the message model object, use that instead of the text
-    // in the label.
+    // If an accessibility label or hint was set on the message model object, use that instead of
+    // the text in the label or the default hint.
     if ([message.accessibilityLabel length]) {
       _label.accessibilityLabel = message.accessibilityLabel;
+    }
+    if (message.accessibilityHint.length) {
+      _label.accessibilityHint = message.accessibilityHint;
     }
 
     _label.textColor = _messageTextColor;
@@ -485,7 +488,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
           break;
         case UIControlStateNormal:
         default:
-          defaultButtonTitleColor = MDCRGBAColor(0xFF, 0xFF, 0xFF, 0.6f);
+          defaultButtonTitleColor = MDCRGBAColor(0xFF, 0xFF, 0xFF, (float)0.6);
           break;
       }
       [button setTitleColor:defaultButtonTitleColor forState:state];
@@ -943,11 +946,9 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   if (!self.anchoredToScreenBottom || !MDCSnackbarMessage.usesLegacySnackbar) {
     return 0;
   }
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     return self.window.safeAreaInsets.bottom;
   }
-#endif
   return 0;
 }
 
@@ -956,11 +957,9 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
       MDCSnackbarMessage.usesLegacySnackbar ? kLegacyContentMargin : kContentMargin;
 
   UIEdgeInsets safeAreaInsets = UIEdgeInsetsZero;
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     safeAreaInsets = self.window.safeAreaInsets;
   }
-#endif
 
   // We only take the left and right safeAreaInsets in to account because the bottom is
   // handled by contentSafeBottomInset and we will never overlap the top inset.

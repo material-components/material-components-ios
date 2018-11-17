@@ -1,18 +1,16 @@
-/*
- Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "DialogsRoundedCornerViewController.h"
 #import "MaterialButtons.h"
@@ -44,8 +42,6 @@
            forControlEvents:UIControlEventTouchUpInside];
 
   [self.view addSubview:_dismissButton];
-
-  self.view.layer.cornerRadius = 24.0;
 }
 
 - (void)viewWillLayoutSubviews {
@@ -107,26 +103,30 @@
 }
 
 - (IBAction)didTapPresent:(id)sender {
-  UIViewController *viewController =
+  DialogsRoundedCornerSimpleController *viewController =
       [[DialogsRoundedCornerSimpleController alloc] initWithNibName:nil bundle:nil];
 
   viewController.modalPresentationStyle = UIModalPresentationCustom;
   viewController.transitioningDelegate = self.transitionController;
 
+  // sets the dialog's corner radius
+  viewController.view.layer.cornerRadius = 24;
+
+  // ensure shadow/tracking layer matches the dialog's corner radius
+  MDCDialogPresentationController *controller = viewController.mdc_dialogPresentationController;
+  controller.dialogCornerRadius = viewController.view.layer.cornerRadius;
+
   [self presentViewController:viewController animated:YES completion:NULL];
 }
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Dialogs", @"Dialog with Rounded Corners" ];
-}
+#pragma mark - CatalogByConvention
 
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Dialogs", @"Dialog with Rounded Corners" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
-
-+ (BOOL)catalogIsPresentable {
-  return NO;
-}
-
 
 @end

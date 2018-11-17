@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCSnackbarOverlayView.h"
 
@@ -30,26 +28,26 @@
 NSString *const MDCSnackbarOverlayIdentifier = @"MDCSnackbar";
 
 // The time it takes to show or hide the Snackbar.
-NSTimeInterval const MDCSnackbarEnterTransitionDuration = 0.15f;
-NSTimeInterval const MDCSnackbarExitTransitionDuration = 0.075f;
-NSTimeInterval const MDCSnackbarLegacyTransitionDuration = 0.5f;
+NSTimeInterval const MDCSnackbarEnterTransitionDuration = 0.15;
+NSTimeInterval const MDCSnackbarExitTransitionDuration = 0.075;
+NSTimeInterval const MDCSnackbarLegacyTransitionDuration = 0.5;
 
 // The scaling starting point for presenting the new Snackbar.
-static const CGFloat MDCSnackbarEnterStartingScale = 0.8f;
+static const CGFloat MDCSnackbarEnterStartingScale = (CGFloat)0.8;
 
 // How far from the bottom of the screen should the Snackbar be.
-static const CGFloat MDCSnackbarBottomMargin_iPhone = 8.f;
-static const CGFloat MDCSnackbarBottomMargin_iPad = 24.f;
-static const CGFloat MDCSnackbarLegacyBottomMargin_iPhone = 0.f;
-static const CGFloat MDCSnackbarLegacyBottomMargin_iPad = 0.f;
+static const CGFloat MDCSnackbarBottomMargin_iPhone = 8;
+static const CGFloat MDCSnackbarBottomMargin_iPad = 24;
+static const CGFloat MDCSnackbarLegacyBottomMargin_iPhone = 0;
+static const CGFloat MDCSnackbarLegacyBottomMargin_iPad = 0;
 
 // How far from the sides of the screen should the Snackbar be.
-static const CGFloat MDCSnackbarSideMargin_CompactWidth = 8.f;
-static const CGFloat MDCSnackbarLegacySideMargin_CompactWidth = 0.f;
-static const CGFloat MDCSnackbarSideMargin_RegularWidth = 24.0f;
+static const CGFloat MDCSnackbarSideMargin_CompactWidth = 8;
+static const CGFloat MDCSnackbarLegacySideMargin_CompactWidth = 0;
+static const CGFloat MDCSnackbarSideMargin_RegularWidth = 24;
 
 // The maximum height of the Snackbar.
-static const CGFloat kMaximumHeight = 80.0f;
+static const CGFloat kMaximumHeight = 80;
 
 #if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0)
 @interface MDCSnackbarOverlayView () <CAAnimationDelegate>
@@ -222,11 +220,9 @@ static const CGFloat kMaximumHeight = 80.0f;
   CGFloat keyboardHeight = self.watcher.visibleKeyboardHeight;
   CGFloat userHeight = self.bottomOffset;
   if (!MDCSnackbarMessage.usesLegacySnackbar) {
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
     if (@available(iOS 11.0, *)) {
       userHeight = MAX(userHeight, self.safeAreaInsets.bottom);
     }
-#endif
   }
 
   return MAX(keyboardHeight, userHeight);
@@ -328,7 +324,6 @@ static const CGFloat kMaximumHeight = 80.0f;
                                                       multiplier:1.0
                                                         constant:[snackbarView maximumWidth]]];
       } else {
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
         if (@available(iOS 11.0, *)) {
           if (self.mdf_effectiveUserInterfaceLayoutDirection ==
               UIUserInterfaceLayoutDirectionLeftToRight) {
@@ -339,7 +334,6 @@ static const CGFloat kMaximumHeight = 80.0f;
             rightMargin += self.mdc_safeAreaInsets.left;
           }
         }
-#endif
 
         [container addConstraint:[NSLayoutConstraint constraintWithItem:snackbarView
                                                               attribute:NSLayoutAttributeLeading
@@ -437,13 +431,11 @@ static const CGFloat kMaximumHeight = 80.0f;
 - (CGFloat)maximumHeight {
   // Maximum height must be extended to include the bottom content safe area.
   CGFloat maximumHeight = kMaximumHeight;
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (self.anchoredToScreenBottom && MDCSnackbarMessage.usesLegacySnackbar) {
     if (@available(iOS 11.0, *)) {
       maximumHeight += self.safeAreaInsets.bottom;
     }
   }
-#endif
   return maximumHeight;
 }
 
@@ -460,12 +452,10 @@ static const CGFloat kMaximumHeight = 80.0f;
 
 - (UIEdgeInsets)mdc_safeAreaInsets {
   UIEdgeInsets insets = UIEdgeInsetsZero;
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     // Accommodate insets for iPhone X.
     insets = self.safeAreaInsets;
   }
-#endif
   return insets;
 }
 

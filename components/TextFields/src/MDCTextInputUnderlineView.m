@@ -1,24 +1,22 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCTextInputUnderlineView.h"
 
 #import "MaterialPalettes.h"
 
-static const CGFloat MDCTextInputUnderlineDefaultHeight = 1.f;
+static const CGFloat MDCTextInputUnderlineDefaultHeight = 1;
 
 // TODO: (larche): Make disabled color parameterized?
 static inline UIColor *MDCTextInputUnderlineColor() {
@@ -85,7 +83,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 - (void)updateUnderlinePath {
   CGRect bounds = [self bounds];
   CGMutablePathRef path = CGPathCreateMutable();
-  CGFloat offSet = 1.f / [UIScreen mainScreen].scale;
+  CGFloat offSet = 1 / [UIScreen mainScreen].scale;
   CGPathMoveToPoint(path, NULL, CGRectGetMinX(bounds), CGRectGetMidY(bounds) + offSet);
   CGPathAddLineToPoint(path, NULL, CGRectGetMaxX(bounds), CGRectGetMidY(bounds) + offSet);
 
@@ -113,7 +111,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
       [self.layer addSublayer:_underline];
     }
 
-    _disabledUnderline.opacity = 0.f;
+    _disabledUnderline.opacity = 0;
   } else {
     if (!_disabledUnderline) {
       _disabledUnderline = [CAShapeLayer layer];
@@ -127,7 +125,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
       [self.layer addSublayer:_disabledUnderline];
     }
 
-    _disabledUnderline.opacity = 1.f;
+    _disabledUnderline.opacity = 1;
   }
 
   _underline.lineWidth = self.lineHeight;

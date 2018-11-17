@@ -1,18 +1,16 @@
-/*
- Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCInkLayer.h"
 #import "MaterialMath.h"
@@ -25,15 +23,15 @@ static NSString *const MDCInkLayerInitialRadiusKey = @"MDCInkLayerInitialRadiusK
 static NSString *const MDCInkLayerMaxRippleRadiusKey = @"MDCInkLayerMaxRippleRadiusKey";
 static NSString *const MDCInkLayerInkColorKey = @"MDCInkLayerInkColorKey";
 
-static const CGFloat MDCInkLayerCommonDuration = 0.083f;
-static const CGFloat MDCInkLayerEndFadeOutDuration = 0.15f;
-static const CGFloat MDCInkLayerStartScalePositionDuration = 0.333f;
-static const CGFloat MDCInkLayerStartFadeHalfDuration = 0.167f;
-static const CGFloat MDCInkLayerStartFadeHalfBeginTimeFadeOutDuration = 0.25f;
+static const CGFloat MDCInkLayerCommonDuration = (CGFloat)0.083;
+static const CGFloat MDCInkLayerEndFadeOutDuration = (CGFloat)0.15;
+static const CGFloat MDCInkLayerStartScalePositionDuration = (CGFloat)0.333;
+static const CGFloat MDCInkLayerStartFadeHalfDuration = (CGFloat)0.167;
+static const CGFloat MDCInkLayerStartFadeHalfBeginTimeFadeOutDuration = (CGFloat)0.25;
 
-static const CGFloat MDCInkLayerScaleStartMin = 0.2f;
-static const CGFloat MDCInkLayerScaleStartMax = 0.6f;
-static const CGFloat MDCInkLayerScaleDivisor = 300.f;
+static const CGFloat MDCInkLayerScaleStartMin = (CGFloat)0.2;
+static const CGFloat MDCInkLayerScaleStartMax = (CGFloat)0.6;
+static const CGFloat MDCInkLayerScaleDivisor = 300;
 
 static NSString *const MDCInkLayerOpacityString = @"opacity";
 static NSString *const MDCInkLayerPositionString = @"position";
@@ -131,8 +129,9 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
 }
 
 - (void)setRadiiWithRect:(CGRect)rect {
-  self.initialRadius = (CGFloat)(MDCHypot(CGRectGetHeight(rect), CGRectGetWidth(rect)) / 2 * 0.6f);
-  self.finalRadius = (CGFloat)(MDCHypot(CGRectGetHeight(rect), CGRectGetWidth(rect)) / 2 + 10.f);
+  self.initialRadius =
+      (CGFloat)(MDCHypot(CGRectGetHeight(rect), CGRectGetWidth(rect)) / 2 * (CGFloat)0.6);
+  self.finalRadius = (CGFloat)(MDCHypot(CGRectGetHeight(rect), CGRectGetWidth(rect)) / 2 + 10);
 }
 
 - (void)startAnimationAtPoint:(CGPoint)point {
@@ -160,7 +159,7 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
     _startAnimationActive = YES;
 
     CAMediaTimingFunction *materialTimingFunction =
-        [[CAMediaTimingFunction alloc] initWithControlPoints:0.4f:0:0.2f:1.f];
+        [[CAMediaTimingFunction alloc] initWithControlPoints:(float)0.4:0:(float)0.2:1];
 
     CGFloat scaleStart =
         MIN(CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds)) / MDCInkLayerScaleDivisor;
@@ -173,7 +172,7 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
     CABasicAnimation *scaleAnim = [[CABasicAnimation alloc] init];
     scaleAnim.keyPath = MDCInkLayerScaleString;
     scaleAnim.fromValue = @(scaleStart);
-    scaleAnim.toValue = @1.0f;
+    scaleAnim.toValue = @1;
     scaleAnim.duration = MDCInkLayerStartScalePositionDuration;
     scaleAnim.beginTime = MDCInkLayerCommonDuration;
     scaleAnim.timingFunction = materialTimingFunction;
@@ -190,8 +189,8 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
     CAKeyframeAnimation *positionAnim = [[CAKeyframeAnimation alloc] init];
     positionAnim.keyPath = MDCInkLayerPositionString;
     positionAnim.path = centerPath.CGPath;
-    positionAnim.keyTimes = @[ @0, @1.0f ];
-    positionAnim.values = @[ @0, @1.0f ];
+    positionAnim.keyTimes = @[ @0, @1 ];
+    positionAnim.values = @[ @0, @1 ];
     positionAnim.duration = MDCInkLayerStartScalePositionDuration;
     positionAnim.beginTime = MDCInkLayerCommonDuration;
     positionAnim.timingFunction = materialTimingFunction;
@@ -201,7 +200,7 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
     CABasicAnimation *fadeInAnim = [[CABasicAnimation alloc] init];
     fadeInAnim.keyPath = MDCInkLayerOpacityString;
     fadeInAnim.fromValue = @0;
-    fadeInAnim.toValue = @1.0f;
+    fadeInAnim.toValue = @1;
     fadeInAnim.duration = MDCInkLayerCommonDuration;
     fadeInAnim.beginTime = MDCInkLayerCommonDuration;
     fadeInAnim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
@@ -236,7 +235,7 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
   CGFloat currOpacity = self.presentationLayer.opacity;
   CGFloat updatedOpacity = 0;
   if (viewContainsPoint) {
-    updatedOpacity = 1.0f;
+    updatedOpacity = 1;
   }
 
   CABasicAnimation *changeAnim = [[CABasicAnimation alloc] init];
@@ -261,7 +260,7 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
     self.endAnimationDelay = MDCInkLayerStartFadeHalfBeginTimeFadeOutDuration;
   }
 
-  CGFloat opacity = 1.0f;
+  CGFloat opacity = 1;
   BOOL viewContainsPoint = CGRectContainsPoint(self.bounds, point) ? YES : NO;
   if (!viewContainsPoint) {
     opacity = 0;

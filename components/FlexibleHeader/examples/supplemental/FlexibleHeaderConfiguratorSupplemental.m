@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 /** IMPORTANT:
  This file contains supplemental code used to populate the examples with dummy data and/or
@@ -27,20 +25,16 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
 
 @implementation FlexibleHeaderConfiguratorExample (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Flexible Header", @"Configurator" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Flexible Header", @"Configurator" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
 
 - (BOOL)catalogShouldHideNavigation {
   return YES;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return NO;
 }
 
 @end
@@ -89,7 +83,7 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
   [self.view addSubview:self.fhvc.view];
   [self.fhvc didMoveToParentViewController:self];
 
-  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:0.1f alpha:1.0f];
+  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.1 alpha:1];
 
   self.titleLabel = [[UILabel alloc] init];
   self.titleLabel.text = self.title;
@@ -137,6 +131,11 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
 
   [self.fhvc.headerView hideViewWhenShifted:self.titleLabel];
 
+  id (^buttonItem)(NSString *, FlexibleHeaderConfiguratorField) = ^(
+      NSString *title, FlexibleHeaderConfiguratorField field) {
+    FlexibleHeaderConfiguratorControlType type = FlexibleHeaderConfiguratorControlTypeButton;
+    return [FlexibleHeaderConfiguratorControlItem itemWithTitle:title controlType:type field:field];
+  };
   id (^switchItem)(NSString *, FlexibleHeaderConfiguratorField) = ^(
       NSString *title, FlexibleHeaderConfiguratorField field) {
     FlexibleHeaderConfiguratorControlType type = FlexibleHeaderConfiguratorControlTypeSwitch;
@@ -170,14 +169,18 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
     switchItem(@"Enabled", FlexibleHeaderConfiguratorFieldShiftBehaviorEnabled),
     switchItem(@"Enabled with status bar",
                FlexibleHeaderConfiguratorFieldShiftBehaviorEnabledWithStatusBar),
-    switchItem(@"Header content is important", FlexibleHeaderConfiguratorFieldContentImportance)
+    switchItem(@"Header content is important", FlexibleHeaderConfiguratorFieldContentImportance),
+    buttonItem(@"Shift header off-screen", FlexibleHeaderConfiguratorFieldShiftOffscreen),
+    buttonItem(@"Shift header on-screen", FlexibleHeaderConfiguratorFieldShiftOnscreen)
   ]);
 
   createSection(@"Header height", @[
     sliderItem(@"Minimum", FlexibleHeaderConfiguratorFieldMinimumHeight),
     sliderItem(@"Maximum", FlexibleHeaderConfiguratorFieldMaximumHeight),
     switchItem(@"Min / max height includes Safe Area",
-               FlexibleHeaderConfiguratorFieldMinMaxHeightIncludeSafeArea)
+               FlexibleHeaderConfiguratorFieldMinMaxHeightIncludeSafeArea),
+    switchItem(@"Can always expand to maximum height",
+               FlexibleHeaderConfiguratorFieldCanAlwaysExpandToMaximumHeight)
   ]);
 
   NSMutableArray *fillerItems = [NSMutableArray array];
@@ -194,6 +197,9 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
 
 - (UIControl *)controlForControlType:(FlexibleHeaderConfiguratorControlType)controlType {
   switch (controlType) {
+    case FlexibleHeaderConfiguratorControlTypeButton:
+      return nil;
+
     case FlexibleHeaderConfiguratorControlTypeSwitch:
       return [[UISwitch alloc] init];
 
@@ -271,7 +277,27 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
   return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+  id item = self.sections[indexPath.section][indexPath.row];
+  if ([item isKindOfClass:[FlexibleHeaderConfiguratorControlItem class]]) {
+    FlexibleHeaderConfiguratorControlItem *fieldItem =
+        (FlexibleHeaderConfiguratorControlItem *)item;
+    if (fieldItem.controlType == FlexibleHeaderConfiguratorControlTypeButton) {
+      [self field:(FlexibleHeaderConfiguratorField)fieldItem.field didChangeValue:nil];
+      [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
+  }
+}
+
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+  id item = self.sections[indexPath.section][indexPath.row];
+  if ([item isKindOfClass:[FlexibleHeaderConfiguratorControlItem class]]) {
+    FlexibleHeaderConfiguratorControlItem *fieldItem =
+        (FlexibleHeaderConfiguratorControlItem *)item;
+    if (fieldItem.controlType == FlexibleHeaderConfiguratorControlTypeButton) {
+      return YES;
+    }
+  }
   return NO;
 }
 

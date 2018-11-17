@@ -1,31 +1,29 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
-
-#import "supplemental/DialogsAlertViewControllerSupplemental.h"
+#import "MaterialDialogs+DialogThemer.h"
 #import "MaterialButtons.h"
 #import "MaterialDialogs.h"
-#import "MaterialDialogs+ColorThemer.h"
-#import "MaterialDialogs+TypographyThemer.h"
+#import "supplemental/DialogsAlertViewControllerSupplemental.h"
 
 @implementation DialogsAlertViewController
 
 - (id)init {
   self = [super init];
   if (self) {
-    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
     self.typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;
@@ -34,14 +32,10 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  [self loadCollectionView:
-    @[ @"Show Alert",
-       @"Show Long Alert",
-       @"Non-Dismissable Alert",
-       @"Alert (Dynamic Type enabled)",
-       @"Overpopulated Alert",
-       @"Style Alert",
-       @"Un-style Alert"]];
+  [self loadCollectionView:@[
+    @"Show Alert", @"Show Long Alert", @"Non-Dismissable Alert", @"Alert (Dynamic Type enabled)",
+    @"Overpopulated Alert", @"Style Alert", @"Un-style Alert", @"Low elevation Alert"
+  ]];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -68,13 +62,17 @@
     case 6:
       [self didTapUnstyleAlert];
       break;
+    case 7:
+      [self didTapLowElevationAlert];
+      break;
   }
 }
 
 - (void)themeAlertController:(MDCAlertController *)alertController {
-  [MDCAlertColorThemer applySemanticColorScheme:self.colorScheme toAlertController:alertController];
-  [MDCAlertTypographyThemer applyTypographyScheme:self.typographyScheme
-                                toAlertController:alertController];
+  MDCAlertScheme *alertScheme = [[MDCAlertScheme alloc] init];
+  alertScheme.colorScheme = self.colorScheme;
+  alertScheme.typographyScheme = self.typographyScheme;
+  [MDCAlertControllerThemer applyScheme:alertScheme toAlertController:alertController];
 }
 
 - (IBAction)didTapShowAlert {
@@ -368,7 +366,6 @@
 
   MDCAlertController *materialAlertController =
       [MDCAlertController alertControllerWithTitle:titleString message:messageString];
-  [self themeAlertController:materialAlertController];
 
   MDCAlertAction *agreeAaction = [MDCAlertAction actionWithTitle:@"AGREE"
                                                          handler:^(MDCAlertAction *action) {
@@ -385,6 +382,21 @@
   [self presentViewController:materialAlertController animated:YES completion:NULL];
 }
 
+- (IBAction)didTapLowElevationAlert {
+  NSString *titleString = @"Using Material alert controller?";
+  NSString *messageString = @"This is an alert controller with a low elevation.";
 
+  MDCAlertController *materialAlertController =
+      [MDCAlertController alertControllerWithTitle:titleString message:messageString];
+  [self themeAlertController:materialAlertController];
+
+  MDCAlertAction *okAction = [MDCAlertAction actionWithTitle:@"OK"
+                                                     handler:^(MDCAlertAction *action) {
+                                                       NSLog(@"%@", @"OK pressed");
+                                                     }];
+  [materialAlertController addAction:okAction];
+  materialAlertController.elevation = 2;
+  [self presentViewController:materialAlertController animated:YES completion:NULL];
+}
 
 @end

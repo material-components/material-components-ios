@@ -1,20 +1,251 @@
+<!--docs:
+title: "List"
+layout: detail
+section: components
+excerpt: "Material Design Lists are used to show continuous groups of images or text."
+iconId: <#icon_id#>
+path: /catalog/list/
+api_doc_root: true
+-->
+
+<!-- This file was auto-generated using ./scripts/generate_readme List -->
+
 # List
 
-Material Design Lists are a continuous group of text or images. The elements comprising Lists are referred to as List Items. The MDCBaseCell is a List Item at its simplest--a basic UICollectionViewCell subclass with Material Ink Ripple and Elevation.
+[![Open bugs badge](https://img.shields.io/badge/dynamic/json.svg?label=open%20bugs&url=https%3A%2F%2Fapi.github.com%2Fsearch%2Fissues%3Fq%3Dis%253Aopen%2Blabel%253Atype%253ABug%2Blabel%253A%255BList%255D&query=%24.total_count)](https://github.com/material-components/material-components-ios/issues?q=is%3Aopen+is%3Aissue+label%3Atype%3ABug+label%3A%5BList%5D)
 
-## Description
+Material Design Lists are continuous groups of text and/or images. The [Material guidelines](https://material.io/go/design-lists) for Lists are extensive, and there is no class at this time for implementing any one of them, let alone all of them. However, we are starting to add classes that represent individual List Items. We currently offer two List Item Cells:
 
-The [Material guidelines](https://material.io/go/design-lists) for Lists are extensive, and there is no class at this time for implementing any one of them, let alone all of them. However, the MDCBaseCell provides a starting point to build anything the guidelines provide.
+### MDCBaseCell
 
-To build a List using the MDCBaseCell simply treat it like you would any other UICollectionViewCell.
-
-The MDCBaseCell has two configurable properties--Ink Ripple color (`currentInkColor`) and Elevation (`elevation`).
+The MDCBaseCell is a List Item at its simplest--a basic UICollectionViewCell subclass with Material Ink Ripple and Elevation. The MDCBaseCell provides a starting point to build anything the guidelines provide. To build a List using the MDCBaseCell simply treat it like you would any other UICollectionViewCell.
 
 Below is an example:
 
 ![MDCBaseCell Example](https://user-images.githubusercontent.com/8020010/42164205-3a7f699a-7dfd-11e8-9109-a7a6040996db.gif)
 
-## Example Walkthrough / How to implement your own List Cell
+### MDCSelfSizingStereoCell
+
+The MDCSelfSizingStereoCell is a subclass of MDCBaseCell. It exposes two image views (trailing and leading) and two labels (title and detail) that the user can configure however they like.
+
+Below is an example:
+
+![MDCSelfSizingStereoCell Example](https://user-images.githubusercontent.com/8020010/44807557-dcf11a80-ab97-11e8-83a6-6d7b69e59ecd.gif)
+
+## Design & API documentation
+
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/go/lists">Material Design guidelines: Lists</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/list/api-docs/Classes/MDCBaseCell.html">MDCBaseCell</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/list/api-docs/Classes/MDCSelfSizingStereoCell.html">MDCSelfSizingStereoCell</a></li>
+</ul>
+
+## Table of contents
+
+- [Installation](#installation)
+  - [Installation with CocoaPods](#installation-with-cocoapods)
+  - [Importing](#importing)
+- [Usage](#usage)
+  - [Typical use](#typical-use)
+- [Extensions](#extensions)
+  - [Color Theming](#color-theming)
+  - [Typography Theming](#typography-theming)
+- [Accessibility](#accessibility)
+  - [Setting `-isAccessibilityElement`](#setting-`-isaccessibilityelement`)
+- [How to implement your own List Cell](#how-to-implement-your-own-list-cell)
+  - [Layout](#layout)
+  - [Ink Ripple](#ink-ripple)
+  - [Self Sizing](#self-sizing)
+  - [Typography](#typography)
+  - [Dynamic Type](#dynamic-type)
+  - [iPhone X Safe Area Support](#iphone-x-safe-area-support)
+  - [Landscape Support](#landscape-support)
+  - [Right to Left Text Support](#right-to-left-text-support)
+
+
+## Installation
+
+<!-- Extracted from docs/../../../docs/component-installation.md -->
+
+### Installation with CocoaPods
+
+Add the following to your `Podfile`:
+
+```bash
+pod 'MaterialComponents/List'
+```
+<!--{: .code-renderer.code-renderer--install }-->
+
+Then, run the following command:
+
+```bash
+pod install
+```
+
+### Importing
+
+To import the component:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+import MaterialComponents.MaterialList
+```
+
+#### Objective-C
+
+```objc
+#import "MaterialList.h"
+```
+<!--</div>-->
+
+
+## Usage
+
+<!-- Extracted from docs/typical-use.md -->
+
+### Typical use
+
+Because List Items ultimately inherit from UICollectionViewCell, clients are not expected to instantiate them themselves. Rather, cell classes are registered with UICollectionViews. Then, in `-collectionView:cellForItemAtIndexPath:`, the client is expected to cast the cell to a List Item class.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+```swift
+// registering the cell
+collectionView.register(MDCBaseCell.self, forCellWithReuseIdentifier: "baseCellIdentifier")
+
+// casting the cell to the desired type within `-collectionView:cellForItemAtIndexPath:`
+guard let cell = collectionView.cellForItem(at: indexPath) as? MDCBaseCell else { fatalError() }
+```
+
+#### Objective-C
+
+```objc
+// registering the cell
+[self.collectionView registerClass:[MDCBaseCell class]
+        forCellWithReuseIdentifier:@"BaseCellIdentifier"];
+
+// casting the cell to the desired type within `-collectionView:cellForItemAtIndexPath:`
+MDCBaseCell *cell =
+    [collectionView dequeueReusableCellWithReuseIdentifier:@"BaseCellIdentifier"
+                                              forIndexPath:indexPath];
+```
+<!--</div>-->
+
+
+## Extensions
+
+<!-- Extracted from docs/color-theming.md -->
+
+### Color Theming
+
+You can theme a List Item with your app's color scheme using the ColorThemer extension.
+
+You must first add the Color Themer extension to your project:
+
+```bash
+pod `MaterialComponents/List+ColorThemer`
+```
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+```swift
+// Step 1: Import the ColorThemer extension
+import MaterialComponents.MaterialList_ColorThemer
+
+// Step 2: Create or get a color scheme
+let colorScheme = MDCSemanticColorScheme()
+
+// Step 3: Apply the color scheme to your component from within `-collectionView:cellForItemAtIndexPath:`
+MDCListColorThemer.applySemanticColorScheme(colorScheme, to: cell)
+```
+
+#### Objective-C
+
+```objc
+// Step 1: Import the ColorThemer extension
+#import "MaterialList+ColorThemer.h"
+
+// Step 2: Create or get a color scheme
+id<MDCColorScheming> colorScheme = [[MDCSematnicColorScheme alloc] init];
+
+// Step 3: Apply the color scheme to your component from within `-collectionView:cellForItemAtIndexPath:`
+[MDCListColorThemer applySemanticColorScheme:colorScheme
+                                  toBaseCell:cell];
+```
+<!--</div>-->
+
+<!-- Extracted from docs/typography-theming.md -->
+
+### Typography Theming
+
+You can theme a List Item cell with your app's typography scheme using the TypographyThemer extension.
+
+You must first add the Typography Themer extension to your project:
+
+```bash
+pod `MaterialComponents/List+TypographyThemer`
+```
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// Step 1: Import the ColorThemer extension
+import MaterialComponents.MaterialList_TypographyThemer
+
+// Step 2: Create or get a color scheme
+let typographyScheme = MDCTypographyScheme()
+
+// Step 3: Apply the typography scheme to your component from within `-collectionView:cellForItemAtIndexPath:`
+MDCListTypographyThemer.applyTypographyScheme(typographyScheme, to: cell)
+```
+
+#### Objective-C
+
+```objc
+// Step 1: Import the Typography extension
+#import "MaterialList+TypographyThemer.h"
+
+// Step 2: Create or get a color scheme
+id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
+
+// Step 3: Apply the typography scheme to your component from within `-collectionView:cellForItemAtIndexPath:`
+[MDCListTypographyThemer applyTypographyScheme:self.typographyScheme
+                                    toBaseCell:cell];
+```
+<!--</div>-->
+
+
+<!-- Extracted from docs/accessibility.md -->
+
+## Accessibility
+
+To help ensure your Lists are accessible to as many users as possible, please be sure to review the following
+recommendations:
+
+### Setting `-isAccessibilityElement`
+
+It is generally recommended to set UICollectionViewCells (and UITableViewCells) as accessibilityElements. That way, VoiceOver doesn't traverse the entire cell and articulate an overwhelming amount of accessibility information for each of its subviews.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+cell.isAccessibilityElement = true
+```
+
+#### Objective-C
+
+```objc
+cell.isAccessibilityElement = YES;
+```
+<!--</div>-->
+
+
+## How to implement your own List Cell
+
+<!-- Extracted from docs/create-your-own.md -->
 
 The example files can be found <a href="examples/">here</a>
 
@@ -89,9 +320,9 @@ In order to have cells self-size based on content and not rely on magic number c
 You can see how it is achieved in the `(void)setupConstraints` method in our example. If you'll notice there are some constraints that are set up to be accessible throughout the file:
 
 ```objc
-  NSLayoutConstraint *_imageLeftPaddingConstraint;
-  NSLayoutConstraint *_imageRightPaddingConstraint;
-  NSLayoutConstraint *_imageWidthConstraint;
+NSLayoutConstraint *_imageLeftPaddingConstraint;
+NSLayoutConstraint *_imageRightPaddingConstraint;
+NSLayoutConstraint *_imageWidthConstraint;
 ``` 
 This is in order to support the changing layout if an image is set or not.
 
@@ -109,12 +340,12 @@ and then in the collection view's `cellForItemAtIndexPath` delegate method we se
 ```objc
 CGFloat cellWidth = CGRectGetWidth(collectionView.bounds);
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-  if (@available(iOS 11.0, *)) {
-    cellWidth -=
-        (collectionView.adjustedContentInset.left + collectionView.adjustedContentInset.right);
-  }
+if (@available(iOS 11.0, *)) {
+  cellWidth -=
+    (collectionView.adjustedContentInset.left + collectionView.adjustedContentInset.right);
+}
 #endif
-  [cell setCellWidth:cellWidth];
+[cell setCellWidth:cellWidth];
 ```
 
 
@@ -141,8 +372,8 @@ For our example we use a typography scheme to apply the fonts to our cell's `UIL
     _titleFont = defaultTitleFont();
   }
   _titleLabel.font =
-      [_titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
-                               scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
+    [_titleFont mdc_fontSizedForMaterialTextStyle:MDCFontTextStyleSubheadline
+                             scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
   [self setNeedsLayout];
 }
 ```
@@ -150,10 +381,11 @@ For our example we use a typography scheme to apply the fonts to our cell's `UIL
 2. Add an observer in the cell to check for the `UIContentSizeCategoryDidChangeNotification` which tells us the a system-wide text size has been changed.
 
 ```objc
-[[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(contentSizeCategoryDidChange:)
-                                                 name:UIContentSizeCategoryDidChangeNotification
-                                               object:nil];
+[[NSNotificationCenter defaultCenter]
+    addObserver:self
+       selector:@selector(contentSizeCategoryDidChange:)
+           name:UIContentSizeCategoryDidChangeNotification
+         object:nil];
 ```
 
 In the selector update the font sizes to reflect the change:
@@ -178,9 +410,9 @@ Our collection view needs to be aware of the safe areas when being presented on 
 
 ```objc
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-  if (@available(iOS 11.0, *)) {
-    self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
-  }
+if (@available(iOS 11.0, *)) {
+  self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
+}
 #endif
 ```
 
@@ -223,3 +455,4 @@ and for each of our cell's subviews me need to update the `autoResizingMask`:
 _titleLabel.autoresizingMask =
     MDFTrailingMarginAutoresizingMaskForLayoutDirection(self.mdf_effectiveUserInterfaceLayoutDirection);
 ``` 
+

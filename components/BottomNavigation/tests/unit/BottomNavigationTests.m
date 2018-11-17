@@ -1,23 +1,22 @@
-/*
- Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialBottomNavigation.h"
 #import "../../src/private/MDCBottomNavigationItemView.h"
+#import "MaterialBottomNavigation.h"
+#import "MaterialShadowElevations.h"
 
 @interface MDCBottomNavigationBar (Testing)
 @property(nonatomic, strong) NSMutableArray<MDCBottomNavigationItemView *> *itemViews;
@@ -163,6 +162,60 @@
   self.bottomNavBar.itemViews.lastObject.selected = NO;
   XCTAssert(!self.bottomNavBar.itemViews.firstObject.label.isHidden);
   XCTAssert(self.bottomNavBar.itemViews.lastObject.label.isHidden);
+}
+
+- (void)testDefaultElevation {
+  // Then
+  XCTAssertEqualWithAccuracy(self.bottomNavBar.elevation, MDCShadowElevationBottomNavigationBar,
+                             0.001);
+}
+
+- (void)testCustomElevation {
+  // Given
+  CGFloat customElevation = 20;
+
+  // When
+  self.bottomNavBar.elevation = customElevation;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.bottomNavBar.elevation, customElevation, 0.001);
+}
+
+- (void)testViewForItemFound {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:0];
+
+  // When
+  self.bottomNavBar.items = @[ item1, item2 ];
+
+  // Then
+  MDCBottomNavigationItemView *viewForItem1 =
+      (MDCBottomNavigationItemView *)[self.bottomNavBar viewForItem:item1];
+  MDCBottomNavigationItemView *viewForItem2 =
+      (MDCBottomNavigationItemView *)[self.bottomNavBar viewForItem:item2];
+  XCTAssertNotEqual(viewForItem1, viewForItem2);
+  XCTAssertTrue(
+      [self.bottomNavBar.itemViews containsObject:viewForItem1],
+      @"BottomNavBar.itemViews did not contain the view (%@) returned for UITabBarItem (%@)",
+      viewForItem1, item1);
+  XCTAssertTrue(
+      [self.bottomNavBar.itemViews containsObject:viewForItem2],
+      @"BottomNavBar.itemViews did not contain the view (%@) returned for UITabBarItem (%@)",
+      viewForItem2, item2);
+}
+
+- (void)testViewForItemNotFound {
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:0];
+  UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"3" image:nil tag:0];
+
+  // When
+  self.bottomNavBar.items = @[ item1, item2 ];
+
+  // Then
+  XCTAssert([self.bottomNavBar viewForItem:item3] == nil);
 }
 
 @end

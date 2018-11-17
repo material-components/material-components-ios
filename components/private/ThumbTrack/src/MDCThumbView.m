@@ -1,18 +1,16 @@
-/*
- Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCThumbView.h"
 
@@ -26,8 +24,6 @@
 @end
 
 @implementation MDCThumbView
-
-static const CGFloat kMinTouchSize = 48;
 
 + (Class)layerClass {
   return [MDCShadowLayer class];
@@ -75,18 +71,6 @@ static const CGFloat kMinTouchSize = 48;
   [super layoutSubviews];
   self.layer.shadowPath =
       [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:_cornerRadius].CGPath;
-}
-
-- (BOOL)pointInside:(CGPoint)point withEvent:(__unused UIEvent *)event {
-  CGFloat dx = MIN(0, _cornerRadius - kMinTouchSize / 2);
-  // Converts point to presentation layer coordinate system so gesture will land on the right visual
-  // position. Assuming superview is not animated.
-  if (self.layer.presentationLayer) {
-    point = [(CALayer *)self.layer.presentationLayer convertPoint:point
-                                                        fromLayer:self.layer.modelLayer];
-  }
-  CGRect rect = CGRectInset(self.bounds, dx, dx);
-  return CGRectContainsPoint(rect, point);
 }
 
 - (void)setIcon:(nullable UIImage *)icon {

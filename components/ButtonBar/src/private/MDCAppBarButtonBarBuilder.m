@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCAppBarButtonBarBuilder.h"
 
@@ -24,16 +22,16 @@
 #import "MDCButtonBar+Private.h"
 
 // Additional insets for the left-most or right-most items.
-static const CGFloat kEdgeButtonAdditionalMarginPhone = 4.f;
-static const CGFloat kEdgeButtonAdditionalMarginPad = 12.f;
+static const CGFloat kEdgeButtonAdditionalMarginPhone = 4;
+static const CGFloat kEdgeButtonAdditionalMarginPad = 12;
 
-// The default MDCButton's alpha for display state is 0.1f which in the context of bar buttons
-// makes it practically invisible. Setting button to a higher opacity is closer to what the
-// button should look like when it is disabled.
-static const CGFloat kDisabledButtonAlpha = 0.38f;
+// The default MDCButton's alpha for display state is 0.1 which in the context of bar buttons makes
+// it practically invisible. Setting button to a higher opacity is closer to what the button should
+// look like when it is disabled.
+static const CGFloat kDisabledButtonAlpha = (CGFloat)0.38;
 
 // Default content inset for buttons.
-static const UIEdgeInsets kButtonInset = {0, 12.0f, 0, 12.0f};
+static const UIEdgeInsets kButtonInset = {0, 12, 0, 12};
 
 // Indiana Jones style placeholder view for UINavigationBar. Ownership of UIBarButtonItem.customView
 // and UINavigationItem.titleView are normally transferred to UINavigationController but we plan to
@@ -129,6 +127,7 @@ static const UIEdgeInsets kButtonInset = {0, 12.0f, 0, 12.0f};
 
   [MDCAppBarButtonBarBuilder configureButton:button fromButtonItem:buttonItem];
 
+  button.uppercaseTitle = buttonBar.uppercasesButtonTitles;
   [button setTitleColor:self.buttonTitleColor forState:UIControlStateNormal];
   [button setUnderlyingColorHint:self.buttonUnderlyingColor];
   for (NSNumber *state in _fonts) {

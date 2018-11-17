@@ -1,18 +1,16 @@
-/*
- Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 
 #import <XCTest/XCTest.h>
@@ -57,34 +55,38 @@
 @implementation MDCTabBarControllerEncodingTests
 
 //TODO: (#3220) [TabBar] Re-enable test that is throwing an exception
-//- (void)testTabBarControllerEncoding {
-//  MDCTabBarViewController *tabBarVC = [[MDCTabBarViewController alloc] init];
-//  [tabBarVC.view setBackgroundColor:[UIColor clearColor]];
-//
-//  UIViewController *vc1 = [[UIViewController alloc] init];
-//  UIViewController *vc2 = [[UIViewController alloc] init];
-//  vc1.view.tag = 1;
-//  vc2.view.tag = 2;
-//  tabBarVC.viewControllers = @[vc1, vc2];
-//  tabBarVC.selectedViewController = vc1;
-//  tabBarVC.tabBar.tintColor = [UIColor colorWithRed:0.6f green:0.2f blue:0.3f alpha:1.0f];
-//  MDCTabBarViewControllerDelegateExample *delegate = [[MDCTabBarViewControllerDelegateExample alloc] init];
-//  tabBarVC.delegate = delegate;
-//  // force view did load
-//
-//  NSData *archivedData = [NSKeyedArchiver archivedDataWithRootObject:tabBarVC];
-//  MDCTabBarViewController *unarchivedTabBarVC =
-//      [NSKeyedUnarchiver unarchiveObjectWithData:archivedData];
-//  XCTAssertEqual(unarchivedTabBarVC.view.subviews.count, tabBarVC.view.subviews.count);
-//  XCTAssertEqual(unarchivedTabBarVC.viewControllers[0].view.tag,
-//                 tabBarVC.viewControllers[0].view.tag);
-//  XCTAssertEqual(unarchivedTabBarVC.viewControllers[1].view.tag,
-//                 tabBarVC.viewControllers[1].view.tag);
-//  XCTAssertEqual(unarchivedTabBarVC.selectedViewController.view.tag,
-//                 tabBarVC.selectedViewController.view.tag);
-//  XCTAssertEqualObjects(unarchivedTabBarVC.tabBar.tintColor, tabBarVC.tabBar.tintColor);
-//  XCTAssertNil(unarchivedTabBarVC.delegate);
-//}
+- (void)_disabled_testTabBarControllerEncoding {
+  MDCTabBarViewController *tabBarVC = [[MDCTabBarViewController alloc] init];
+  [tabBarVC.view setBackgroundColor:[UIColor clearColor]];
+
+  UIViewController *vc1 = [[UIViewController alloc] init];
+  UIViewController *vc2 = [[UIViewController alloc] init];
+  vc1.view.tag = 1;
+  vc2.view.tag = 2;
+  tabBarVC.viewControllers = @[ vc1, vc2 ];
+  tabBarVC.selectedViewController = vc1;
+  tabBarVC.tabBar.tintColor = [UIColor colorWithRed:(CGFloat)0.6
+                                              green:(CGFloat)0.2
+                                               blue:(CGFloat)0.3
+                                              alpha:1.0f];
+  MDCTabBarViewControllerDelegateExample *delegate =
+      [[MDCTabBarViewControllerDelegateExample alloc] init];
+  tabBarVC.delegate = delegate;
+  // force view did load
+
+  NSData *archivedData = [NSKeyedArchiver archivedDataWithRootObject:tabBarVC];
+  MDCTabBarViewController *unarchivedTabBarVC =
+      [NSKeyedUnarchiver unarchiveObjectWithData:archivedData];
+  XCTAssertEqual(unarchivedTabBarVC.view.subviews.count, tabBarVC.view.subviews.count);
+  XCTAssertEqual(unarchivedTabBarVC.viewControllers[0].view.tag,
+                 tabBarVC.viewControllers[0].view.tag);
+  XCTAssertEqual(unarchivedTabBarVC.viewControllers[1].view.tag,
+                 tabBarVC.viewControllers[1].view.tag);
+  XCTAssertEqual(unarchivedTabBarVC.selectedViewController.view.tag,
+                 tabBarVC.selectedViewController.view.tag);
+  XCTAssertEqualObjects(unarchivedTabBarVC.tabBar.tintColor, tabBarVC.tabBar.tintColor);
+  XCTAssertNil(unarchivedTabBarVC.delegate);
+}
 
 - (void)testTabBarControllerDelegateEncoding {
   MDCTabBarViewController *tabBarVC = [[MDCTabBarViewController alloc] init];

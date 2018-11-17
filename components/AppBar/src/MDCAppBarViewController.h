@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MaterialFlexibleHeader.h"
 #import "MaterialHeaderStackView.h"
@@ -107,28 +105,5 @@
  Default is NO.
  */
 @property(nonatomic) BOOL inferTopSafeAreaInsetFromViewController;
-
-@end
-
-/**
- The MDCAppBarTextColorAccessibilityMutator class creates an external object with which to work on
- an instance of a Material App Bar to activate and ensure accessibility on its title and buttons.
-
- ### Dependencies
-
- Material AppBarTextColorAccessibilityMutator depends on the AppBar material component and
- MDFTextAccessibility Framework.
-
- @note This API will be deprecated with no replacement.
- */
-__deprecated_msg("Use themers and MDFTextAccessibility directly instead.")
-@interface MDCAppBarTextColorAccessibilityMutator : NSObject
-
-/**
- Mutates title text color and navigation items' tint colors based on background color of
- app bar's navigation bar or header view background color.
- */
-- (void)mutate:(nonnull MDCAppBar *)appBar
-__deprecated_msg("Use themers and MDFTextAccessibility instead.");
 
 @end

@@ -27,7 +27,6 @@ The Material Design top app bar displays information and actions relating to the
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBar.html">MDCAppBar</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBarContainerViewController.html">MDCAppBarContainerViewController</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBarNavigationController.html">MDCAppBarNavigationController</a></li>
-  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBarTextColorAccessibilityMutator.html">MDCAppBarTextColorAccessibilityMutator</a></li>
   <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBarViewController.html">MDCAppBarViewController</a></li>
   <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/app-bars/api-docs/Protocols/MDCAppBarNavigationControllerDelegate.html">MDCAppBarNavigationControllerDelegate</a></li>
 </ul>
@@ -408,16 +407,29 @@ forward UIScrollViewDelegate events to the flexible header by enabling
 scroll view allows the flexible header to over-extend, if enabled, and allows the header's shadow to
 show and hide itself as the content is scrolled.
 
+**Note:** if you support pre-iOS 11 then you will also need to explicitly clear your tracking scroll
+view in your deinit/dealloc method.
+
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
 flexibleHeaderViewController.headerView.observesTrackingScrollViewScrollEvents = true
+
+deinit {
+  // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
+  appBarViewController.headerView.trackingScrollView = nil
+}
 ```
 
 #### Objective-C
 
 ```objc
 flexibleHeaderViewController.headerView.observesTrackingScrollViewScrollEvents = YES;
+
+- (void)dealloc {
+  // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
+  self.appBarViewController.headerView.trackingScrollView = nil;
+}
 ```
 <!--</div>-->
 
@@ -656,7 +668,7 @@ MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: component)
 #import "MaterialAppBar+ColorThemer.h"
 
 // Step 2: Create or get a color scheme
-id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 
 // Step 3: Apply the color scheme to your component
 [MDCAppBarColorThemer applySemanticColorScheme:colorScheme
@@ -763,6 +775,12 @@ like so:
 
 // Step 3
 -  appBar.addSubviewsToParent()
++  // Match the width of the parent view.
++  CGRect frame = appBarViewController.view.frame;
++  frame.origin.x = 0;
++  frame.size.width = appBarViewController.parentViewController.view.bounds.size.width;
++  appBarViewController.view.frame = frame;
++
 +  view.addSubview(appBarViewController.view)
 +  appBarViewController.didMove(toParentViewController: self)
 ```

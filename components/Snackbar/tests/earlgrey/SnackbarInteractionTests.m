@@ -40,7 +40,7 @@
                           withStep:(NSInteger)step
                             action:(nullable id<GREYAction>)action {
   if (step <= 0) {
-    step = [UIApplication sharedApplication].delegate.window.bounds.size.height / 2.0f;
+    step = [UIApplication sharedApplication].delegate.window.bounds.size.height / 2;
   }
 
   GREYElementInteraction *interaction = [EarlGrey selectElementWithMatcher:matcher];

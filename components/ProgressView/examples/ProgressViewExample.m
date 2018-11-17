@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <UIKit/UIKit.h>
 
@@ -21,9 +19,11 @@
 #import "MaterialProgressView.h"
 #import "MaterialTypographyScheme.h"
 
-static const CGFloat MDCProgressViewAnimationDuration = 1.f;
+static const CGFloat MDCProgressViewAnimationDuration = 1;
 
 @interface ProgressViewExample : UIViewController
+
+@property(nonatomic, strong) UIView *container;
 
 @property(nonatomic, strong) MDCProgressView *stockProgressView;
 @property(nonatomic, strong) UILabel *stockProgressLabel;
@@ -50,13 +50,13 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
 - (void)setupProgressViews {
   _stockProgressView = [[MDCProgressView alloc] init];
   _stockProgressView.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.view addSubview:_stockProgressView];
+  [self.container addSubview:_stockProgressView];
   // Hide the progress view at setup time.
   _stockProgressView.hidden = YES;
 
   _tintedProgressView = [[MDCProgressView alloc] init];
   _tintedProgressView.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.view addSubview:_tintedProgressView];
+  [self.container addSubview:_tintedProgressView];
   _tintedProgressView.progressTintColor = self.colorScheme.primaryColor;
   _tintedProgressView.trackTintColor =
       [self.colorScheme.primaryColor colorWithAlphaComponent:(CGFloat)0.24];
@@ -65,7 +65,7 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
 
   _fullyColoredProgressView = [[MDCProgressView alloc] init];
   _fullyColoredProgressView.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.view addSubview:_fullyColoredProgressView];
+  [self.container addSubview:_fullyColoredProgressView];
   _fullyColoredProgressView.progressTintColor = MDCPalette.greenPalette.tint500;
   _fullyColoredProgressView.trackTintColor = MDCPalette.yellowPalette.tint500;
   // Hide the progress view at setup time.
@@ -73,17 +73,17 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
 
   _backwardProgressResetView = [[MDCProgressView alloc] init];
   _backwardProgressResetView.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.view addSubview:_backwardProgressResetView];
+  [self.container addSubview:_backwardProgressResetView];
   // Have a non-zero progress at setup time.
-  _backwardProgressResetView.progress = 0.33f;
+  _backwardProgressResetView.progress = (float)0.33;
 
   _backwardProgressAnimateView = [[MDCProgressView alloc] init];
   _backwardProgressAnimateView.translatesAutoresizingMaskIntoConstraints = NO;
   _backwardProgressAnimateView.backwardProgressAnimationMode =
       MDCProgressViewBackwardAnimationModeAnimate;
-  [self.view addSubview:_backwardProgressAnimateView];
+  [self.container addSubview:_backwardProgressAnimateView];
   // Have a non-zero progress at setup time.
-  _backwardProgressAnimateView.progress = 0.33f;
+  _backwardProgressAnimateView.progress = (float)0.33;
 }
 
 @end
@@ -98,7 +98,8 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
   [super viewDidLoad];
 
   if (!self.colorScheme) {
-    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
   if (!self.typographyScheme) {
     self.typographyScheme = [[MDCTypographyScheme alloc] init];
@@ -107,6 +108,7 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
   self.title = @"Progress View";
   self.view.backgroundColor = self.colorScheme.backgroundColor;
 
+  [self setupContainer];
   [self setupProgressViews];
   [self setupLabels];
   [self setupConstraints];
@@ -119,45 +121,67 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
   self.navigationItem.rightBarButtonItem.accessibilityIdentifier = @"animate_button";
 }
 
+-(void)viewDidLayoutSubviews {
+  [super viewDidLayoutSubviews];
+  [self positionContainer];
+}
+
+-(void)setupContainer {
+  self.container = [[UIView alloc] initWithFrame:self.view.bounds];
+  [self.view addSubview:self.container];
+}
+
+- (void)positionContainer {
+  CGFloat originX = CGRectGetMinX(self.view.bounds) + self.view.layoutMargins.left;
+  CGFloat originY = CGRectGetMinY(self.view.bounds) + self.view.layoutMargins.top;
+  CGFloat width = self.view.bounds.size.width
+      - (self.view.layoutMargins.left + self.view.layoutMargins.right);
+  CGFloat height = self.view.bounds.size.height
+      - (self.view.layoutMargins.top + self.view.layoutMargins.bottom);
+  CGRect frame = CGRectMake(originX, originY, width, height);
+  self.container.frame = frame;
+}
+
 - (void)setupLabels {
   _stockProgressLabel = [[UILabel alloc] init];
   _stockProgressLabel.text = @"Progress";
   _stockProgressLabel.font = self.typographyScheme.caption;
   _stockProgressLabel.textColor = self.colorScheme.onBackgroundColor;
   _stockProgressLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.view addSubview:_stockProgressLabel];
+  [self.container addSubview:_stockProgressLabel];
 
   _tintedProgressLabel = [[UILabel alloc] init];
   _tintedProgressLabel.text = @"Progress with progress tint";
   _tintedProgressLabel.font = self.typographyScheme.caption;
   _tintedProgressLabel.textColor = self.colorScheme.onBackgroundColor;
   _tintedProgressLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.view addSubview:_tintedProgressLabel];
+  [self.container addSubview:_tintedProgressLabel];
 
   _fullyColoredProgressLabel = [[UILabel alloc] init];
   _fullyColoredProgressLabel.text = @"Progress with custom colors";
   _fullyColoredProgressLabel.font = self.typographyScheme.caption;
   _fullyColoredProgressLabel.textColor = self.colorScheme.onBackgroundColor;
   _fullyColoredProgressLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.view addSubview:_fullyColoredProgressLabel];
+  [self.container addSubview:_fullyColoredProgressLabel];
 
   _backwardProgressResetLabel = [[UILabel alloc] init];
   _backwardProgressResetLabel.text = @"Backward progress (reset)";
   _backwardProgressResetLabel.font = self.typographyScheme.caption;
   _backwardProgressResetLabel.textColor = self.colorScheme.onBackgroundColor;
   _backwardProgressResetLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.view addSubview:_backwardProgressResetLabel];
+  [self.container addSubview:_backwardProgressResetLabel];
 
   _backwardProgressAnimateLabel = [[UILabel alloc] init];
   _backwardProgressAnimateLabel.text = @"Backward progress (animate)";
   _backwardProgressAnimateLabel.font = self.typographyScheme.caption;
   _backwardProgressAnimateLabel.textColor = self.colorScheme.onBackgroundColor;
   _backwardProgressAnimateLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.view addSubview:_backwardProgressAnimateLabel];
+  [self.container addSubview:_backwardProgressAnimateLabel];
 }
 
 - (void)setupConstraints {
   NSDictionary *views = @{
+    @"container" : _container,
     @"stockView" : _stockProgressView,
     @"stockLabel" : _stockProgressLabel,
     @"tintedView" : _tintedProgressView,
@@ -170,13 +194,14 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
     @"backwardAnimateLabel" : _backwardProgressAnimateLabel,
   };
   NSDictionary *metrics = @{
-    @"p" : @20,
+    @"t" : @20,
+    @"p" : @0,
     @"s" : @40,
     @"h" : @2,
   };
 
   NSArray *verticalConstraints = [NSLayoutConstraint
-      constraintsWithVisualFormat:@"V:|-(p)-"
+      constraintsWithVisualFormat:@"V:|-(t)-"
                                    "[stockView(==h)]-(p)-[stockLabel]-(s)-"
                                    "[tintedView(==h)]-(p)-[tintedLabel]-(s)-"
                                    "[coloredView(==h)]-(p)-[coloredLabel]-(s)-"
@@ -194,11 +219,11 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
     @"H:|-(p)-[coloredView]-(p)-|",
     @"H:|-(p)-[backwardResetView]-(p)-|",
     @"H:|-(p)-[backwardAnimateView]-(p)-|",
-    @"H:|-(>=p)-[stockLabel]-(>=p)-|",
-    @"H:|-(>=p)-[tintedLabel]-(>=p)-|",
-    @"H:|-(>=p)-[coloredLabel]-(>=p)-|",
-    @"H:|-(>=p)-[backwardResetLabel]-(>=p)-|",
-    @"H:|-(>=p)-[backwardAnimateLabel]-(>=p)-|",
+    @"H:|-(p)-[stockLabel]-(p)-|",
+    @"H:|-(p)-[tintedLabel]-(p)-|",
+    @"H:|-(p)-[coloredLabel]-(p)-|",
+    @"H:|-(p)-[backwardResetLabel]-(p)-|",
+    @"H:|-(p)-[backwardAnimateLabel]-(p)-|",
   ];
   for (NSString *format in horizontalVisualFormats) {
     [horizontalConstraints
@@ -290,21 +315,14 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
 
 #pragma mark - CatalogByConvention
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Progress View", @"Progress View" ];
-}
-
-+ (NSString *)catalogDescription {
-  return @"Progress indicators display the length of a process or express an unspecified wait "
-          "time.";
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return YES;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Progress View", @"Progress View" ],
+    @"description": @"Progress indicators display the length of a process or express an "
+    @"unspecified wait time.",
+    @"primaryDemo": @YES,
+    @"presentable": @YES,
+  };
 }
 
 @end

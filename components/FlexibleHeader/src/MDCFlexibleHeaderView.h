@@ -1,18 +1,16 @@
-/*
- Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <UIKit/UIKit.h>
 
@@ -274,6 +272,18 @@ IB_DESIGNABLE
 
 @property(nonatomic) float visibleShadowOpacity;  ///< The visible shadow opacity. Default: 0.4
 
+/**
+ * Whether or not shadow opacity (if using the default shadow layer) should be reset to 0 when
+ * trackingScrollView is set to nil. If the flexible header view is created without ever setting
+ * trackingScrollView, it always has 0 opacity for the default shadow layer regardless of the value
+ * of this flag. If trackingScrollView is ever set, then this flag enables resetting the shadow
+ * opacity back to 0 when trackingScrollView is set to nil.
+ *
+ * Default: NO, but we are planning to change it to YES very soon, so all clients should set this
+ * property to YES.
+ */
+@property(nonatomic) BOOL resetShadowAfterTrackingScrollViewIsReset;
+
 #pragma mark Scroll View Tracking
 
 /**
@@ -338,6 +348,16 @@ IB_DESIGNABLE
  Default: NO
  */
 @property(nonatomic) BOOL sharedWithManyScrollViews;
+
+/**
+ If enabled, the trackingScrollView doesn't adjust the content inset when its
+ contentInsetAdjustmentBehavior is set to be UIScrollViewContentInsetAdjustmentNever.
+
+ Default: NO
+ */
+@property(nonatomic)
+    BOOL disableContentInsetAdjustmentWhenContentInsetAdjustmentBehaviorIsNever API_AVAILABLE(
+        ios(11.0), tvos(11.0));
 
 #pragma mark Header View Delegate
 

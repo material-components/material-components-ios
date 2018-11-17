@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <UIKit/UIKit.h>
 
@@ -132,6 +130,20 @@ IB_DESIGNABLE
 @property(nonatomic, strong, null_resettable) UIFont *titleFont;
 
 /**
+ A behavioral flag that affects whether titleFont can be set to a font of any size or not.
+
+ If enabled, titleFont can be set to a font of any size.
+
+ If disabled, titleFont's size will be adjusted to 20 regardless of the provided font size.
+
+ We intend to enable this property by default in the future and to remote this flag entirely.
+ Consider enabling this flag on your navigation bar instances.
+
+ Default is NO.
+ */
+@property(nonatomic) BOOL allowAnyTitleFontSize;
+
+/**
  The title label's text color.
 
  Default is nil (text draws black).
@@ -144,6 +156,15 @@ IB_DESIGNABLE
  If set to nil, button bar buttons use default ink color.
  */
 @property(nonatomic, strong, nullable) UIColor *inkColor;
+
+/**
+ If true, all button titles will be converted to uppercase.
+
+ Changing this property to NO will update the current title string for all buttons.
+
+ Default is YES.
+ */
+@property(nonatomic) BOOL uppercasesButtonTitles;
 
 /**
  Sets the title font for the given state for all buttons.
@@ -171,6 +192,18 @@ IB_DESIGNABLE
  @param state The state for which the color should be used.
  */
 - (void)setButtonsTitleColor:(nullable UIColor *)color forState:(UIControlState)state;
+
+/**
+ The tint color applied to the bar items on the leading side of the BottomAppBar. If unset, then
+ defaults to using this Navigation Bar's @c tintColor.
+ */
+@property(nullable, nonatomic, strong) UIColor *leadingBarItemsTintColor;
+
+/**
+ The tint color applied to the bar items on the trailing side of the BottomAppBar. If unset, then
+ defaults to using this NavigationBar's @c tintColor.
+ */
+@property(nullable, nonatomic, strong) UIColor *trailingBarItemsTintColor;
 
 /**
  Returns the color set for @c state that was set by setButtonsTitleColor:forState:.
@@ -275,13 +308,8 @@ IB_DESIGNABLE
 
  Note: this property will be deprecated in future, please use titleFont and titleTextColor instead.
  */
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
 @property(nonatomic, copy, nullable)
     NSDictionary<NSAttributedStringKey, id> *titleTextAttributes UI_APPEARANCE_SELECTOR;
-#else
-@property(nonatomic, copy, nullable)
-    NSDictionary<NSString *, id> *titleTextAttributes UI_APPEARANCE_SELECTOR;
-#endif
 
 #pragma mark - Deprecated
 

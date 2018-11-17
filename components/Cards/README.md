@@ -8,7 +8,7 @@ path: /catalog/cards/
 api_doc_root: true
 -->
 
-<!-- This file was auto-generated using ./scripts/generate_readme Cards -->
+<!-- This file was auto-generated using scripts/generate_readme Cards -->
 
 # Cards
 
@@ -46,6 +46,7 @@ purposes.
   - [Typical use: in a collection view](#typical-use-in-a-collection-view)
 - [Extensions](#extensions)
   - [Color Theming](#color-theming)
+  - [Shape Theming](#shape-theming)
 - [Accessibility](#accessibility)
   - [Card Accessibility](#card-accessibility)
 
@@ -205,8 +206,8 @@ func collectionView(_ collectionView: UICollectionView,
   [cell setSelectable:YES];
   
   [cell setSelectedImageTintColor:[UIColor blueColor]];
-  [cell setCornerRadius:8.f];
-  [cell setShadowElevation:6.f forState:MDCCardCellStateSelected];
+  [cell setCornerRadius:8];
+  [cell setShadowElevation:6 forState:MDCCardCellStateSelected];
   [cell setShadowColor:[UIColor blackColor] forState:MDCCardCellStateHighlighted];
 }
 ```
@@ -247,10 +248,50 @@ MDCCardsColorThemer.applySemanticColorScheme(colorScheme, to: component)
 #import "MaterialCards+ColorThemer.h"
 
 // Step 2: Create or get a color scheme
-id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 
 // Step 3: Apply the color scheme to your component
 [MDCCardsColorThemer applySemanticColorScheme:colorScheme
+     toCard:component];
+```
+<!--</div>-->
+
+<!-- Extracted from docs/shape-theming.md -->
+
+### Shape Theming
+
+You can theme a card with your app's shape scheme using the ShapeThemer extension.
+
+You must first add the ShapeThemer extension to your project:
+
+```bash
+pod 'MaterialComponents/Cards+ShapeThemer'
+```
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// Step 1: Import the ShapeThemer extension
+import MaterialComponents.MaterialCards_ShapeThemer
+
+// Step 2: Create or get a shape scheme
+let shapeScheme = MDCShapeScheme()
+
+// Step 3: Apply the shape scheme to your component
+MDCCardsShapeThemer.applyShapeScheme(shapeScheme, to: component)
+```
+
+#### Objective-C
+
+```objc
+// Step 1: Import the ShapeThemer extension
+#import "MaterialCards+ShapeThemer.h"
+
+// Step 2: Create or get a shape scheme
+id<MDCShapeScheming> shapeScheme = [[MDCShapeScheme alloc] init];
+
+// Step 3: Apply the shape scheme to your component
+[MDCCardsShapeThemer applyShapeScheme:shapeScheme
      toCard:component];
 ```
 <!--</div>-->

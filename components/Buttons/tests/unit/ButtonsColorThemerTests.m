@@ -1,25 +1,23 @@
-/*
- Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <XCTest/XCTest.h>
 
 #import "MaterialButtons.h"
 #import "MaterialButtons+ColorThemer.h"
 
-static const CGFloat kEpsilonAccuracy = 0.001f;
+static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
 @interface ButtonsColorThemerTests : XCTestCase
 
@@ -30,19 +28,20 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 - (void)testTextButtonColorThemer {
   // Given
   MDCButton *button = [[MDCButton alloc] init];
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 
   // When
   [MDCTextButtonColorThemer applySemanticColorScheme:colorScheme toButton:button];
 
   // Then
-  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1.f, kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1, kEpsilonAccuracy);
   XCTAssertEqualObjects([button backgroundColorForState:UIControlStateNormal], UIColor.clearColor);
   XCTAssertEqualObjects([button backgroundColorForState:UIControlStateDisabled],
                         UIColor.clearColor);
   XCTAssertEqualObjects([button titleColorForState:UIControlStateNormal], colorScheme.primaryColor);
   XCTAssertEqualObjects([button titleColorForState:UIControlStateDisabled],
-                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]);
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38]);
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
       UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
@@ -58,21 +57,22 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 - (void)testContainedButtonColorThemer {
   // Given
   MDCButton *button = [[MDCButton alloc] init];
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 
   // When
   [MDCContainedButtonColorThemer applySemanticColorScheme:colorScheme toButton:button];
 
   // Then
-  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1.f, kEpsilonAccuracy);
+  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1, kEpsilonAccuracy);
   XCTAssertEqualObjects([button backgroundColorForState:UIControlStateNormal],
                         colorScheme.primaryColor);
   XCTAssertEqualObjects([button backgroundColorForState:UIControlStateDisabled],
-                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f]);
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12]);
   XCTAssertEqualObjects([button titleColorForState:UIControlStateNormal],
                         colorScheme.onPrimaryColor);
   XCTAssertEqualObjects([button titleColorForState:UIControlStateDisabled],
-                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]);
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38]);
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
       UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
@@ -87,7 +87,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 
 - (void)testMDCButtonColorThemer {
   // Given
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   MDCButton *button = [[MDCButton alloc] init];
   [button setTitle:@"Hello World" forState:UIControlStateNormal];
   colorScheme.primaryColor = UIColor.redColor;
@@ -117,20 +118,21 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
         XCTAssertEqual([button backgroundColorForState:state], colorScheme.primaryColor);
       }
     } else {
-      XCTAssert(
-          CGColorEqualToColor([button titleColorForState:state].CGColor,
-                              [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f].CGColor));
-      XCTAssert(
-          CGColorEqualToColor([button backgroundColorForState:state].CGColor,
-                              [colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f].CGColor));
+      XCTAssert(CGColorEqualToColor(
+          [button titleColorForState:state].CGColor,
+          [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38].CGColor));
+      XCTAssert(CGColorEqualToColor(
+          [button backgroundColorForState:state].CGColor,
+          [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12].CGColor));
     }
   }
-  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1.f, 0.001f);
+  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1, (CGFloat)0.001);
 }
 
 - (void)testMDCFlatButtonColorThemer {
   // Given
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   MDCFlatButton *button = [[MDCFlatButton alloc] init];
   [button setTitle:@"Hello World" forState:UIControlStateNormal];
   colorScheme.primaryColor = UIColor.redColor;
@@ -159,20 +161,21 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
         XCTAssertEqual([button backgroundColorForState:state], UIColor.clearColor);
       }
     } else {
-      XCTAssert(
-          CGColorEqualToColor([button titleColorForState:state].CGColor,
-                              [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f].CGColor),
-          @"state:%lu", (unsigned long)state);
+      XCTAssert(CGColorEqualToColor(
+                    [button titleColorForState:state].CGColor,
+                    [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38].CGColor),
+                @"state:%lu", (unsigned long)state);
       XCTAssertEqual([button backgroundColorForState:state], UIColor.clearColor, @"state:%lu",
                      (unsigned long)state);
     }
   }
-  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1.f, 0.001f);
+  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1, (CGFloat)0.001);
 }
 
 - (void)testMDCRaisedButtonColorThemer {
   // Given
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   MDCRaisedButton *button = [[MDCRaisedButton alloc] init];
   [button setTitle:@"Hello World" forState:UIControlStateNormal];
   colorScheme.primaryColor = UIColor.redColor;
@@ -202,20 +205,21 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
         XCTAssertEqual([button backgroundColorForState:state], colorScheme.primaryColor);
       }
     } else {
-      XCTAssert(
-          CGColorEqualToColor([button titleColorForState:state].CGColor,
-                              [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f].CGColor));
-      XCTAssert(
-          CGColorEqualToColor([button backgroundColorForState:state].CGColor,
-                              [colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f].CGColor));
+      XCTAssert(CGColorEqualToColor(
+          [button titleColorForState:state].CGColor,
+          [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38].CGColor));
+      XCTAssert(CGColorEqualToColor(
+          [button backgroundColorForState:state].CGColor,
+          [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12].CGColor));
     }
   }
-  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1.f, 0.001f);
+  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1, (CGFloat)0.001);
 }
 
 - (void)testMDCFloatingButtonColorThemer {
   // Given
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   MDCFloatingButton *button = [[MDCFloatingButton alloc] init];
   colorScheme.secondaryColor = UIColor.redColor;
   [button setBackgroundColor:UIColor.purpleColor forState:UIControlStateNormal];
@@ -238,7 +242,7 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
     }
   }
 
-  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1.f, 0.001f);
+  XCTAssertEqualWithAccuracy(button.disabledAlpha, 1, (CGFloat)0.001);
 }
 
 

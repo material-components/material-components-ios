@@ -1,12 +1,12 @@
 /*
  Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
- 
+
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
- 
+
  http://www.apache.org/licenses/LICENSE-2.0
- 
+
  Unless required by applicable law or agreed to in writing, software
  distributed under the License is distributed on an "AS IS" BASIS,
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -30,7 +30,7 @@ class MDCDragonsController: UIViewController,
                             UITableViewDataSource,
                             UISearchBarDelegate,
                             UIGestureRecognizerDelegate {
-  
+
   fileprivate struct Constants {
     static let headerScrollThreshold: CGFloat = 50
     static let headerViewMaxHeight: CGFloat = 113
@@ -45,8 +45,11 @@ class MDCDragonsController: UIViewController,
   fileprivate var results: [DragonCell]!
   fileprivate var tableView: UITableView!
   fileprivate var isSearchActive = false
-  
-  fileprivate lazy var headerViewController = MDCFlexibleHeaderViewController()
+
+  fileprivate var headerViewController = MDCFlexibleHeaderViewController()
+
+  private let keyboardWatcher = MDCKeyboardWatcher()
+
   var headerView: HeaderView!
 
   init(node: CBCNode) {
@@ -58,25 +61,31 @@ class MDCDragonsController: UIViewController,
     super.init(nibName: nil, bundle: nil)
     results = getLeafNodes(node: node)
     searched = results
+
+    setUpKeyboardWatcher()
   }
-  
+
+  deinit {
+    NotificationCenter.default.removeObserver(self)
+  }
+
   func getLeafNodes(node: CBCNode) -> [DragonCell] {
     if node.children.count == 0 {
       return [DragonCell(node: node)]
     }
-    
+
     var cells = [DragonCell]()
     for child in node.children {
       cells += getLeafNodes(node: child)
     }
-    
+
     return cells
   }
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
-  
+
   override func viewDidLoad() {
     super.viewDidLoad()
     title = "Material Dragons"
@@ -120,17 +129,17 @@ class MDCDragonsController: UIViewController,
       }
     #endif
   }
-  
+
   func preiOS11Constraints() {
     tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
   }
-  
+
   func setupHeaderView() {
     headerView = HeaderView(frame: headerViewController.headerView.bounds)
     headerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     headerView.title.text = title!
     headerView.searchBar.delegate = self
-    
+
     headerViewController.headerView.addSubview(headerView)
     headerViewController.headerView.forwardTouchEvents(for: headerView)
     headerViewController.headerView.backgroundColor = Constants.headerColor
@@ -143,24 +152,24 @@ class MDCDragonsController: UIViewController,
     let offset = scrollView.contentOffset.y
     let inset = scrollView.contentInset.top
     let relativeOffset = inset + offset
-    
+
     headerView.imageView.alpha = 1 - (relativeOffset / Constants.headerScrollThreshold)
     headerView.title.alpha = 1 - (relativeOffset / Constants.headerScrollThreshold)
   }
-  
+
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     navigationController?.setNavigationBarHidden(true, animated: animated)
   }
-  
+
   override var childViewControllerForStatusBarStyle: UIViewController? {
     return headerViewController
   }
-  
+
   override var childViewControllerForStatusBarHidden: UIViewController? {
     return headerViewController
   }
-  
+
   // MARK: UITableViewDataSource
   func numberOfSections(in tableView: UITableView) -> Int {
     return isSearchActive ? 1 : 2
@@ -173,7 +182,7 @@ class MDCDragonsController: UIViewController,
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return isSearchActive ? searched.count : cellsBySection[section].count
   }
-  
+
   // MARK: UITableViewDelegate
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     guard let cell =
@@ -231,7 +240,7 @@ class MDCDragonsController: UIViewController,
       nodeData.expanded = !nodeData.expanded
     }
   }
-  
+
   func setupTransition(nodeData: DragonCell) {
     var vc = nodeData.node.createExampleViewController()
     if !vc.responds(to: NSSelectorFromString("catalogShouldHideNavigation")) {
@@ -243,7 +252,7 @@ class MDCDragonsController: UIViewController,
           NSFontAttributeName: UIFont.systemFont(ofSize: 16) ]
       container.isTopLayoutGuideAdjustmentEnabled = true
       vc.title = nodeData.node.title
-      
+
       let headerView = container.appBar.headerViewController.headerView
       if let collectionVC = vc as? UICollectionViewController {
         headerView.trackingScrollView = collectionVC.collectionView
@@ -254,32 +263,32 @@ class MDCDragonsController: UIViewController,
     }
     self.navigationController?.pushViewController(vc, animated: true)
   }
-  
+
 }
 
 // UIScrollViewDelegate
 extension MDCDragonsController {
-  
+
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
     if scrollView == headerViewController.headerView.trackingScrollView {
       self.headerViewController.headerView.trackingScrollDidScroll()
       self.adjustLogoForScrollView(scrollView)
     }
   }
-  
+
   func scrollViewDidEndDragging( _ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
     let headerView = headerViewController.headerView
     if scrollView == headerView.trackingScrollView {
       headerView.trackingScrollDidEndDraggingWillDecelerate(decelerate)
     }
   }
-  
+
   func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
     if scrollView == headerViewController.headerView.trackingScrollView {
       self.headerViewController.headerView.trackingScrollDidEndDecelerating()
     }
   }
-  
+
   func scrollViewWillEndDragging(_ scrollView: UIScrollView,
                                           withVelocity velocity: CGPoint,
                                           targetContentOffset: UnsafeMutablePointer<CGPoint>) {
@@ -294,7 +303,7 @@ extension MDCDragonsController {
 
 // UISearchBarDelegate
 extension MDCDragonsController {
-  
+
   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
     if searchText.isEmpty {
       isSearchActive = false
@@ -307,12 +316,12 @@ extension MDCDragonsController {
     }
     tableView.reloadData()
   }
-  
+
   func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
     searched = results
     tableView.reloadData()
   }
-  
+
   func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
     searchBar.endEditing(true)
   }
@@ -327,7 +336,7 @@ extension MDCDragonsController {
     isSearchActive = false
     tableView.reloadData()
   }
-  
+
   @objc(gestureRecognizer:shouldReceiveTouch:)
   func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
     if gestureRecognizer is UITapGestureRecognizer {
@@ -362,3 +371,42 @@ extension MDCDragonsController {
   }
 }
 
+extension MDCDragonsController {
+  func setUpKeyboardWatcher() {
+    NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: .MDCKeyboardWatcherKeyboardWillShow, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: .MDCKeyboardWatcherKeyboardWillHide, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame(notification:)), name: .MDCKeyboardWatcherKeyboardWillChangeFrame, object: nil)
+  }
+
+  func keyboardWillShow(notification: NSNotification) {
+    guard let userInfo = notification.userInfo else { return }
+    updateScrollViewWithKeyboardNotificationUserInfo(userInfo: userInfo)
+  }
+
+  func keyboardWillHide(notification: NSNotification) {
+    guard let userInfo = notification.userInfo else { return }
+    updateScrollViewWithKeyboardNotificationUserInfo(userInfo: userInfo)
+  }
+
+  func keyboardWillChangeFrame(notification: NSNotification) {
+    guard let userInfo = notification.userInfo else { return }
+    updateScrollViewWithKeyboardNotificationUserInfo(userInfo: userInfo)
+  }
+
+  func updateScrollViewWithKeyboardNotificationUserInfo(userInfo: [AnyHashable: Any]) {
+    guard let endFrame = userInfo[AnyHashable("UIKeyboardFrameEndUserInfoKey")] as? CGRect
+      else { return }
+    let endKeyboardFrameOriginInWindow = view.convert(endFrame.origin, from: nil)
+    let tableViewMaxY = tableView.frame.maxY
+    let baseInset = tableViewMaxY - endKeyboardFrameOriginInWindow.y
+    let scrollIndicatorInset = baseInset
+    var contentInset = baseInset
+    if #available(iOS 11, *) {
+      if endKeyboardFrameOriginInWindow.y < tableViewMaxY {
+        contentInset -= view.safeAreaInsets.bottom
+      }
+    }
+    tableView.contentInset.bottom = contentInset
+    tableView.scrollIndicatorInsets.bottom = scrollIndicatorInset
+  }
+}

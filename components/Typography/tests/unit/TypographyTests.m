@@ -1,27 +1,25 @@
-/*
- Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <XCTest/XCTest.h>
 
 #import "MaterialTypography.h"
 #import "../../src/private/UIFont+MaterialTypographyPrivate.h"
 
-static const CGFloat kEpsilon = 0.001f;
-static const CGFloat kOpacityLight = 0.54f;
-static const CGFloat kOpacityMedium = 0.87f;
+static const CGFloat kEpsilon = (CGFloat)0.001;
+static const CGFloat kOpacityLight = (CGFloat)0.54;
+static const CGFloat kOpacityMedium = (CGFloat)0.87;
 /**
  For our tests we are following a Given When Then structure as defined in
  http://martinfowler.com/bliki/GivenWhenThen.html

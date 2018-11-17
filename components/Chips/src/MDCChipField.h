@@ -1,18 +1,16 @@
-/*
- Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <UIKit/UIKit.h>
 #import <CoreGraphics/CoreGraphics.h>
@@ -86,6 +84,15 @@ typedef NS_OPTIONS(NSUInteger, MDCChipFieldDelimiter) {
  Default is YES.
  */
 @property(nonatomic, assign) BOOL showPlaceholderWithChips;
+
+/**
+ Enabling this property allows chips to be deleted by tapping on them.
+
+ @note This does not support the 48x48 touch targets that Google recommends. We recommend if this
+ behavior is enabled that a snackbar or dialog are used as well to allow the user to confirm if they
+ want to delete the chip.
+ */
+@property(nonatomic) BOOL showChipsDeleteButton;
 
 /**
  The delimiter used to create chips in the text field. Uses default value

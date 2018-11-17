@@ -1,30 +1,31 @@
-/*
- Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 import Foundation
 import UIKit
 
 import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialBottomAppBar
-import MaterialComponents.MaterialButtons_ColorThemer
+import MaterialComponents.MaterialBottomAppBar_ColorThemer
+import MaterialComponents.MaterialButtons_ButtonThemer
 
 class BottomAppBarTypicalUseSwiftExample: UIViewController {
 
   let appBarViewController = MDCAppBarViewController()
   let bottomBarView = MDCBottomAppBarView()
+  var colorScheme = MDCSemanticColorScheme()
+  var typographyScheme = MDCTypographyScheme()
 
   init() {
     super.init(nibName: nil, bundle: nil)
@@ -48,7 +49,11 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
     super.viewDidLoad()
 
     view.addSubview(appBarViewController.view)
+    #if swift(>=4.2)
+    appBarViewController.didMove(toParent: self)
+    #else
     appBarViewController.didMove(toParentViewController: self)
+    #endif
   }
 
   func commonInitBottomAppBarTypicalUseSwiftExample() {
@@ -61,23 +66,27 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
                                            for: .touchUpInside)
 
     // Set the image on the floating button.
-    let addImage = UIImage(named:"Add")
+    let addImage = UIImage(named:"Add")?.withRenderingMode(.alwaysTemplate)
     bottomBarView.floatingButton.setImage(addImage, for: .normal)
 
     // Set the position of the floating button.
     bottomBarView.floatingButtonPosition = .center
 
     // Theme the floating button.
-    let colorScheme = MDCBasicColorScheme(primaryColor: .white)
-    MDCButtonColorThemer.apply(colorScheme, to: bottomBarView.floatingButton)
+    let buttonScheme = MDCButtonScheme()
+    buttonScheme.colorScheme = colorScheme
+    buttonScheme.typographyScheme = typographyScheme
+    MDCFloatingActionButtonThemer.applyScheme(buttonScheme, to: bottomBarView.floatingButton)
+    MDCBottomAppBarColorThemer.applySurfaceVariant(withSemanticColorScheme: colorScheme,
+                                                   to: bottomBarView)
 
     // Configure the navigation buttons to be shown on the bottom app bar.
     let barButtonLeadingItem = UIBarButtonItem()
-    let menuImage = UIImage(named:"Menu")
+    let menuImage = UIImage(named:"Menu")?.withRenderingMode(.alwaysTemplate)
     barButtonLeadingItem.image = menuImage
 
     let barButtonTrailingItem = UIBarButtonItem()
-    let searchImage = UIImage(named:"Search")
+    let searchImage = UIImage(named:"Search")?.withRenderingMode(.alwaysTemplate)
     barButtonTrailingItem.image = searchImage
 
     bottomBarView.leadingBarButtonItems = [ barButtonLeadingItem ]
@@ -127,12 +136,13 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
 
 // MARK: Catalog by convention
 extension BottomAppBarTypicalUseSwiftExample {
-  @objc class func catalogBreadcrumbs() -> [String] {
-    return ["Bottom App Bar", "Bottom App Bar (Swift)"]
-  }
 
-  @objc class func catalogIsPrimaryDemo() -> Bool {
-    return false
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Bottom App Bar", "Bottom App Bar (Swift)"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
   }
 
   func catalogShouldHideNavigation() -> Bool {

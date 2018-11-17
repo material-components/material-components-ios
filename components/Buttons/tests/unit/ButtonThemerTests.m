@@ -1,18 +1,16 @@
-/*
- Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <XCTest/XCTest.h>
 
@@ -22,7 +20,7 @@
 #import "MaterialPalettes.h"
 #import "MaterialTypographyScheme.h"
 
-static const CGFloat kEpsilonAccuracy = 0.001f;
+static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
 @interface ButtonThemerTests : XCTestCase
 @end
@@ -38,7 +36,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   [MDCTextButtonThemer applyScheme:scheme toButton:button];
 
   // Then
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
   XCTAssertEqualWithAccuracy(button.minimumSize.height, 36, kEpsilonAccuracy);
   XCTAssertEqualObjects(button.backgroundColor, [UIColor clearColor]);
@@ -51,11 +50,11 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
                              kEpsilonAccuracy);
   XCTAssertEqualObjects([button titleFontForState:UIControlStateNormal], typographyScheme.button);
   XCTAssertEqualObjects(button.inkColor,
-                        [colorScheme.primaryColor colorWithAlphaComponent:0.16f]);
+                        [colorScheme.primaryColor colorWithAlphaComponent:(CGFloat)0.16]);
   XCTAssertEqualObjects([button titleColorForState:UIControlStateDisabled],
-                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]);
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38]);
   XCTAssertEqualObjects([button imageTintColorForState:UIControlStateDisabled],
-                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]);
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38]);
 }
 
 - (void)testOutlinedButtonThemer {
@@ -76,9 +75,9 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
                         scheme.colorScheme.primaryColor);
   XCTAssertEqualWithAccuracy(button.disabledAlpha, 1, kEpsilonAccuracy);
   XCTAssertEqualObjects(button.inkColor,
-                        [scheme.colorScheme.primaryColor colorWithAlphaComponent:0.16f]);
+                        [scheme.colorScheme.primaryColor colorWithAlphaComponent:(CGFloat)0.16]);
   XCTAssertEqualObjects([button borderColorForState:UIControlStateNormal],
-                        [scheme.colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f]);
+                        [scheme.colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12]);
   XCTAssertEqualObjects([button borderColorForState:UIControlStateDisabled],
                         nil);
 
@@ -107,7 +106,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   [MDCContainedButtonThemer applyScheme:scheme toButton:button];
 
   // Then
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
   XCTAssertEqualWithAccuracy(button.minimumSize.height, 36, kEpsilonAccuracy);
   XCTAssertEqualObjects(button.backgroundColor, colorScheme.primaryColor);
@@ -122,13 +122,14 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   XCTAssertEqualWithAccuracy([button elevationForState:UIControlStateDisabled], 0,
                              kEpsilonAccuracy);
   XCTAssertEqualObjects([button titleFontForState:UIControlStateNormal], typographyScheme.button);
-  XCTAssertEqualObjects(button.inkColor, [colorScheme.onPrimaryColor colorWithAlphaComponent:0.32f]);
+  XCTAssertEqualObjects(button.inkColor,
+                        [colorScheme.onPrimaryColor colorWithAlphaComponent:(CGFloat)0.32]);
   XCTAssertEqualObjects([button backgroundColorForState:UIControlStateDisabled],
-                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.12f]);
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.12]);
   XCTAssertEqualObjects([button titleColorForState:UIControlStateDisabled],
-                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]);
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38]);
   XCTAssertEqualObjects([button imageTintColorForState:UIControlStateDisabled],
-                        [colorScheme.onSurfaceColor colorWithAlphaComponent:0.38f]);
+                        [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.38]);
 }
 
 - (void)testFloatingButtonThemer {
@@ -140,7 +141,8 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
   [MDCFloatingActionButtonThemer applyScheme:scheme toButton:button];
 
   // Then
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
   XCTAssertEqualObjects(button.backgroundColor, colorScheme.secondaryColor);
   XCTAssertEqualObjects([button imageTintColorForState:UIControlStateNormal],

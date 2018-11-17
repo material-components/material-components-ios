@@ -54,6 +54,7 @@ mdc_objc_library(
     deps = [
         ":BottomAppBar",
         "//components/Themes",
+        "//components/schemes/Color",
     ],
     visibility = ["//visibility:public"],
 )
@@ -68,11 +69,13 @@ mdc_objc_library(
     sdk_frameworks = [
         "UIKit",
         "XCTest",
+        "CoreGraphics",
     ],
     deps = [
         ":BottomAppBar",
         ":ColorThemer",
         ":private",
+        "//components/NavigationBar",
     ],
     visibility = ["//visibility:private"],
 )

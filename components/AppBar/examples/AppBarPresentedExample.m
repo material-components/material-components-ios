@@ -1,18 +1,16 @@
-/*
- Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <UIKit/UIKit.h>
 
@@ -37,7 +35,7 @@
 
 - (id)init {
   UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-  layout.minimumInteritemSpacing = 10.0f;
+  layout.minimumInteritemSpacing = 10;
 
   self = [super initWithCollectionViewLayout:layout];
 
@@ -52,7 +50,8 @@
 
     [self addChildViewController:_appBarViewController];
 
-    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
     self.typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;
@@ -86,6 +85,10 @@
                                       action:@selector(dismiss)];
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+  return UIStatusBarStyleLightContent;
+}
+
 - (void)dismiss {
   [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
@@ -105,13 +108,13 @@
   [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
   switch (indexPath.row%3) {
     case 0:
-      cell.backgroundColor = [UIColor colorWithWhite:0.2f alpha:1.0f];
+      cell.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.2 alpha:1];
       break;
     case 1:
-      cell.backgroundColor = [UIColor colorWithWhite:0.5f alpha:1.0f];
+      cell.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.5 alpha:1];
       break;
     case 2:
-      cell.backgroundColor = [UIColor colorWithWhite:0.7f alpha:1.0f];
+      cell.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.7 alpha:1];
       break;
     default:
       break;
@@ -124,7 +127,7 @@
                   layout:(UICollectionViewLayout*)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
   CGRect collectionViewFrame = collectionView.frame;
-  return CGSizeMake(collectionViewFrame.size.width/2.f - 14.f, 40.f);
+  return CGSizeMake(collectionViewFrame.size.width / 2 - 14, 40);
 }
 
 @end
@@ -142,7 +145,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = [UIColor colorWithWhite:0.95f alpha:1];
+  self.view.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.95 alpha:1];
 
   self.demoViewController = [[PresentedDemoViewController alloc] init];
   self.demoViewController.colorScheme = self.colorScheme;
@@ -197,11 +200,9 @@
 
 - (void)presentDemoPopover {
   CGRect rect = CGRectMake(self.view.bounds.size.width / 2, self.topLayoutGuide.length, 1, 1);
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     rect = CGRectMake(self.view.bounds.size.width / 2, self.view.safeAreaInsets.top, 1, 1);
   }
-#endif
   
   self.demoViewController.modalPresentationStyle = UIModalPresentationPopover;
   self.demoViewController.popoverPresentationController.sourceView = self.view;
@@ -218,16 +219,12 @@
 
 @implementation AppBarPresentedExample (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"App Bar", @"Presented" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return YES;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"App Bar", @"Presented" ],
+    @"primaryDemo": @NO,
+    @"presentable": @YES,
+  };
 }
 
 @end

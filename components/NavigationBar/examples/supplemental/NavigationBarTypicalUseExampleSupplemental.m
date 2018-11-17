@@ -56,25 +56,18 @@
 
 @implementation NavigationBarTypicalUseExample (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Navigation Bar", @"Navigation Bar" ];
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Navigation Bar", @"Navigation Bar" ],
+    @"description": @"The Navigation Bar component is a view composed of a left and right Button "
+    @"Bar and either a title label or a custom title view.",
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
 
 - (BOOL)catalogShouldHideNavigation {
   return YES;
-}
-
-+ (NSString *)catalogDescription {
-  return @"The Navigation Bar component is a view composed of a left and right Button Bar and"
-          " either a title label or a custom title view.";
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return NO;
 }
 
 @end
@@ -95,12 +88,12 @@
   [[UIBezierPath bezierPathWithRect:rect] fill];
 
   CGSize textSize = [self textSizeForRect:rect];
-  CGRect rectForText = CGRectMake(rect.origin.x + rect.size.width / 2.f - textSize.width / 2.f,
-                                  rect.origin.y + rect.size.height / 2.f - textSize.height / 2.f,
+  CGRect rectForText = CGRectMake(rect.origin.x + rect.size.width / 2 - textSize.width / 2,
+                                  rect.origin.y + rect.size.height / 2 - textSize.height / 2,
                                   textSize.width, textSize.height);
   [[self instructionsString] drawInRect:rectForText];
-  [self drawArrowWithFrame:CGRectMake(rect.size.width / 2.f - 12.f,
-                                      rect.size.height / 2.f - 58.f - 12.f, 24.f, 24.f)];
+  [self drawArrowWithFrame:CGRectMake(rect.size.width / 2 - 12, rect.size.height / 2 - 58 - 12, 24,
+                                      24)];
 }
 
 - (CGSize)textSizeForRect:(CGRect)frame {
@@ -119,14 +112,14 @@
   NSDictionary *instructionAttributes1 = @{
     NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline],
     NSForegroundColorAttributeName :
-        [MDCPalette.greyPalette.tint600 colorWithAlphaComponent:0.87f],
+        [MDCPalette.greyPalette.tint600 colorWithAlphaComponent:(CGFloat)0.87],
     NSParagraphStyleAttributeName : style
   };
 
   NSDictionary *instructionAttributes2 = @{
     NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline],
     NSForegroundColorAttributeName :
-        [MDCPalette.greyPalette.tint600 colorWithAlphaComponent:0.87f],
+        [MDCPalette.greyPalette.tint600 colorWithAlphaComponent:(CGFloat)0.87],
     NSParagraphStyleAttributeName : style
   };
 
@@ -143,21 +136,23 @@
 - (void)drawArrowWithFrame:(CGRect)frame {
   UIBezierPath *bezierPath = [UIBezierPath bezierPath];
   [bezierPath moveToPoint:CGPointMake(CGRectGetMinX(frame) + 12, CGRectGetMinY(frame) + 4)];
+  [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + (CGFloat)10.59,
+                                         CGRectGetMinY(frame) + (CGFloat)5.41)];
   [bezierPath
-      addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 10.59f, CGRectGetMinY(frame) + 5.41f)];
-  [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 16.17f, CGRectGetMinY(frame) + 11)];
+      addLineToPoint:CGPointMake(CGRectGetMinX(frame) + (CGFloat)16.17, CGRectGetMinY(frame) + 11)];
   [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 4, CGRectGetMinY(frame) + 11)];
   [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 4, CGRectGetMinY(frame) + 13)];
-  [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 16.17f, CGRectGetMinY(frame) + 13)];
   [bezierPath
-      addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 10.59f, CGRectGetMinY(frame) + 18.59f)];
+      addLineToPoint:CGPointMake(CGRectGetMinX(frame) + (CGFloat)16.17, CGRectGetMinY(frame) + 13)];
+  [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + (CGFloat)10.59,
+                                         CGRectGetMinY(frame) + (CGFloat)18.59)];
   [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 12, CGRectGetMinY(frame) + 20)];
   [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 20, CGRectGetMinY(frame) + 12)];
   [bezierPath addLineToPoint:CGPointMake(CGRectGetMinX(frame) + 12, CGRectGetMinY(frame) + 4)];
   [bezierPath closePath];
   bezierPath.miterLimit = 4;
 
-  [[MDCPalette.greyPalette.tint600 colorWithAlphaComponent:0.87f] setFill];
+  [[MDCPalette.greyPalette.tint600 colorWithAlphaComponent:(CGFloat)0.87] setFill];
   [bezierPath fill];
 }
 

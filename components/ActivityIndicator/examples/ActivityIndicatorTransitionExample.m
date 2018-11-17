@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
- 
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
- 
- http://www.apache.org/licenses/LICENSE-2.0
- 
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <UIKit/UIKit.h>
 
@@ -20,8 +18,8 @@
 #import "MaterialButtons.h"
 #import "MaterialButtons+ButtonThemer.h"
 
-static const CGFloat kActivityIndicatorExampleArrowHeadSize = 5.0f;
-static const CGFloat kActivityIndicatorExampleStrokeWidth = 2.0f;
+static const CGFloat kActivityIndicatorExampleArrowHeadSize = 5;
+static const CGFloat kActivityIndicatorExampleStrokeWidth = 2;
 
 static const NSTimeInterval kActivityIndicatorExampleAnimationDuration = 2.0 / 3.0;
 
@@ -44,7 +42,8 @@ static const NSTimeInterval kActivityIndicatorExampleAnimationDuration = 2.0 / 3
   self = [super init];
   if (self) {
     self.title = @"Activity Indicator Transition";
-    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
     self.typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;
@@ -57,7 +56,9 @@ static const NSTimeInterval kActivityIndicatorExampleAnimationDuration = 2.0 / 3
 
   _activityIndicator = [[MDCActivityIndicator alloc] initWithFrame:CGRectZero];
   [_activityIndicator sizeToFit];
-  _activityIndicator.center = CGPointMake(self.view.bounds.size.width / 2, 100);
+  _activityIndicator.center = CGPointMake(self.view.bounds.size.width / 2, 130);
+  _activityIndicator.autoresizingMask =
+      UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
   _activityIndicator.delegate = self;
   [self.view addSubview:_activityIndicator];
 
@@ -72,6 +73,8 @@ static const NSTimeInterval kActivityIndicatorExampleAnimationDuration = 2.0 / 3
   [_button setTitle:@"Refresh" forState:UIControlStateNormal];
   [_button sizeToFit];
   _button.center = CGPointMake(self.view.bounds.size.width / 2, 200);
+  _button.autoresizingMask =
+      UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
   [self.view addSubview:_button];
 
   // Layers used in the custom transition animation.
@@ -89,7 +92,7 @@ static const NSTimeInterval kActivityIndicatorExampleAnimationDuration = 2.0 / 3
   CGPathCloseSubpath(refreshArrowPath);
 
   _refreshArrowPoint = [CAShapeLayer layer];
-  _refreshArrowPoint.anchorPoint = CGPointMake(.5, 1);
+  _refreshArrowPoint.anchorPoint = CGPointMake(0.5, 1);
   _refreshArrowPoint.path = refreshArrowPath;
   [_refreshArrowContainer addSublayer:_refreshArrowPoint];
 
@@ -100,11 +103,11 @@ static const NSTimeInterval kActivityIndicatorExampleAnimationDuration = 2.0 / 3
   _refreshStrokeLayer.fillColor = [UIColor clearColor].CGColor;
   _refreshStrokeLayer.strokeColor = [UIColor blackColor].CGColor;
   _refreshStrokeLayer.strokeStart = 0;
-  _refreshStrokeLayer.strokeEnd = .8f;
+  _refreshStrokeLayer.strokeEnd = (CGFloat)0.8;
   [_rotationContainer addSublayer:_refreshStrokeLayer];
 
-  _rotationContainer.transform = CATransform3DMakeRotation((CGFloat)M_PI * .65f, 0, 0, 1);
-  _refreshArrowContainer.transform = CATransform3DMakeRotation(1.6f * (float)M_PI, 0, 0, 1);
+  _rotationContainer.transform = CATransform3DMakeRotation((CGFloat)M_PI * (CGFloat)0.65, 0, 0, 1);
+  _refreshArrowContainer.transform = CATransform3DMakeRotation((CGFloat)1.6 * (float)M_PI, 0, 0, 1);
 
   [CATransaction commit];
 }
@@ -126,13 +129,13 @@ static const NSTimeInterval kActivityIndicatorExampleAnimationDuration = 2.0 / 3
   _refreshArrowContainer.position = _rotationContainer.position;
 
   _refreshArrowPoint.position =
-      CGPointMake(bounds.size.width / 2, kActivityIndicatorExampleStrokeWidth / 2.0f);
+      CGPointMake(bounds.size.width / 2, kActivityIndicatorExampleStrokeWidth / 2);
 
-  CGFloat offsetRadius = _activityIndicator.radius - kActivityIndicatorExampleStrokeWidth / 2.0f;
+  CGFloat offsetRadius = _activityIndicator.radius - kActivityIndicatorExampleStrokeWidth / 2;
   UIBezierPath *strokePath = [UIBezierPath bezierPathWithArcCenter:_refreshStrokeLayer.position
                                                             radius:offsetRadius
-                                                        startAngle:-1.0f * (CGFloat)M_PI_2
-                                                          endAngle:3.0f * (CGFloat)M_PI_2
+                                                        startAngle:-1 * (CGFloat)M_PI_2
+                                                          endAngle:3 * (CGFloat)M_PI_2
                                                          clockwise:YES];
   _refreshStrokeLayer.path = strokePath.CGPath;
 }
@@ -187,7 +190,7 @@ static const NSTimeInterval kActivityIndicatorExampleAnimationDuration = 2.0 / 3
   // Outer rotation
   CABasicAnimation *outerRotationAnimation =
       [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-  outerRotationAnimation.fromValue = @((CGFloat)M_PI * .65f);
+  outerRotationAnimation.fromValue = @((CGFloat)M_PI * (CGFloat)0.65);
   outerRotationAnimation.toValue = @(strokeEnd * 2 * M_PI);
   outerRotationAnimation.fillMode = kCAFillModeForwards;
   outerRotationAnimation.removedOnCompletion = NO;
@@ -199,7 +202,7 @@ static const NSTimeInterval kActivityIndicatorExampleAnimationDuration = 2.0 / 3
   CABasicAnimation *strokeStartAnimation = [CABasicAnimation animationWithKeyPath:@"strokeStart"];
   strokeStartAnimation.fromValue = @(0);
   // Ensure the stroke never disappears by never hitting stroke end's toValue.
-  strokeStartAnimation.toValue = @(1.0f - difference);
+  strokeStartAnimation.toValue = @(1 - difference);
   strokeStartAnimation.fillMode = kCAFillModeBoth;
   strokeStartAnimation.removedOnCompletion = NO;
   [_refreshStrokeLayer addAnimation:strokeStartAnimation forKey:@"strokeStart"];
@@ -215,7 +218,7 @@ static const NSTimeInterval kActivityIndicatorExampleAnimationDuration = 2.0 / 3
   // Refresh arrow rotation and scale
   CABasicAnimation *refreshArrowRotation =
       [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-  refreshArrowRotation.fromValue = @(M_PI * 1.6f);
+  refreshArrowRotation.fromValue = @(M_PI * (CGFloat)1.6);
   refreshArrowRotation.toValue = @(M_PI * 2);
   refreshArrowRotation.fillMode = kCAFillModeForwards;
   refreshArrowRotation.removedOnCompletion = NO;
@@ -234,9 +237,9 @@ static const NSTimeInterval kActivityIndicatorExampleAnimationDuration = 2.0 / 3
                                                              strokeEnd:(CGFloat)strokeEnd {
   // Adjust stroke position to offset outer rotation angle and ensure stroke position is in range
   // [0,1] for smooth animation
-  strokeStart -= .325f;
+  strokeStart -= (CGFloat)0.325;
   strokeStart = strokeStart < 0 ? strokeStart + 1 : strokeStart;
-  strokeEnd -= .325f;
+  strokeEnd -= (CGFloat)0.325;
   strokeEnd = strokeEnd < 0 ? strokeEnd + 1 : strokeEnd;
 
   _rotationContainer.hidden = NO;
@@ -252,7 +255,7 @@ static const NSTimeInterval kActivityIndicatorExampleAnimationDuration = 2.0 / 3
   // Stroke end
   CABasicAnimation *strokeEndAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
   strokeEndAnimation.fromValue = @(strokeEnd);
-  strokeEndAnimation.toValue = @(.8f);
+  strokeEndAnimation.toValue = @((CGFloat)0.8);
   strokeEndAnimation.fillMode = kCAFillModeBoth;
   strokeEndAnimation.removedOnCompletion = NO;
   [_refreshStrokeLayer addAnimation:strokeEndAnimation forKey:@"strokeEnd"];
@@ -261,7 +264,7 @@ static const NSTimeInterval kActivityIndicatorExampleAnimationDuration = 2.0 / 3
   CABasicAnimation *refreshArrowRotation =
       [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
   refreshArrowRotation.fromValue = @(strokeStart * 2 * M_PI);
-  refreshArrowRotation.toValue = @(1.6f * M_PI);
+  refreshArrowRotation.toValue = @((CGFloat)1.6 * M_PI);
   refreshArrowRotation.fillMode = kCAFillModeForwards;
   refreshArrowRotation.removedOnCompletion = NO;
   [_refreshArrowContainer addAnimation:refreshArrowRotation forKey:@"transform.rotation.z"];
@@ -277,16 +280,12 @@ static const NSTimeInterval kActivityIndicatorExampleAnimationDuration = 2.0 / 3
 
 #pragma mark - Catalog by Convention
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Activity Indicator", @"Activity Indicator Transition" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
-}
-
-+ (BOOL)catalogIsPresentable {
-  return YES;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Activity Indicator", @"Activity Indicator Transition" ],
+    @"primaryDemo": @NO,
+    @"presentable": @YES
+  };
 }
 
 @end

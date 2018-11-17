@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCTextInputCommonFundament.h"
 
@@ -34,12 +32,12 @@
 static NSString *const MDCTextInputUnderlineKVOKeyColor = @"color";
 static NSString *const MDCTextInputUnderlineKVOKeyLineHeight = @"lineHeight";
 
-const CGFloat MDCTextInputBorderRadius = 4.f;
-static const CGFloat MDCTextInputClearButtonImageSquareWidthHeight = 24.f;
-static const CGFloat MDCTextInputHintTextOpacity = 0.54f;
-static const CGFloat MDCTextInputOverlayViewToEditingRectPadding = 2.f;
-const CGFloat MDCTextInputFullPadding = 16.f;
-const CGFloat MDCTextInputHalfPadding = 8.f;
+const CGFloat MDCTextInputBorderRadius = 4;
+static const CGFloat MDCTextInputClearButtonImageSquareWidthHeight = 24;
+static const CGFloat MDCTextInputHintTextOpacity = (CGFloat)0.54;
+static const CGFloat MDCTextInputOverlayViewToEditingRectPadding = 2;
+const CGFloat MDCTextInputFullPadding = 16;
+const CGFloat MDCTextInputHalfPadding = 8;
 
 UIColor *_Nonnull MDCTextInputCursorColor() {
   return [MDCPalette bluePalette].accent700;
@@ -225,7 +223,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   UIEdgeInsets insets = [self textInsets];
   CGFloat scale = UIScreen.mainScreen.scale;
   CGFloat centerYConstant =
-      insets.top + (MDCCeil(self.textInput.font.lineHeight * scale) / scale) / 2.f;
+      insets.top + (MDCCeil(self.textInput.font.lineHeight * scale) / scale) / 2;
   self.clearButtonCenterY = [NSLayoutConstraint constraintWithItem:_clearButton
                                                          attribute:NSLayoutAttributeCenterY
                                                          relatedBy:NSLayoutRelationEqual
@@ -517,7 +515,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
   CGFloat scale = UIScreen.mainScreen.scale;
   CGFloat centerYConstant =
-      insets.top + (MDCCeil(self.textInput.font.lineHeight * scale) / scale) / 2.f;
+      insets.top + (MDCCeil(self.textInput.font.lineHeight * scale) / scale) / 2;
   if (self.clearButtonCenterY.constant != centerYConstant) {
     self.clearButtonCenterY.constant = centerYConstant;
     shouldInvalidateSize = YES;
@@ -550,7 +548,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     }
   }
 
-  if (self.trailingView.superview && !MDCCGFloatEqual(self.trailingView.alpha, 0.f)) {
+  if (self.trailingView.superview && !MDCCGFloatEqual(self.trailingView.alpha, 0)) {
     clearButtonAlpha = 0;
   }
 
@@ -598,9 +596,11 @@ static inline UIColor *MDCTextInputUnderlineColor() {
       [[NSNotificationCenter defaultCenter] postNotificationName:UITextViewTextDidChangeNotification
                                                           object:textField.textView];
     } else if ([self.textInput isKindOfClass:[UITextField class]]) {
+      UITextField *textField = (UITextField *)self.textInput;
       [[NSNotificationCenter defaultCenter]
           postNotificationName:UITextFieldTextDidChangeNotification
                         object:self.textInput];
+      [textField sendActionsForControlEvents:UIControlEventEditingChanged];
     }
   }
 }

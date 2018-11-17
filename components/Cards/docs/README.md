@@ -71,6 +71,7 @@ MDCCardThemer exposes apis to theme MDCCard and MDCCardCollectionCell instances 
 ## Extensions
 
 - [Color Theming](color-theming.md)
+- [Shape Theming](shape-theming.md)
 
 ## Accessibility
 

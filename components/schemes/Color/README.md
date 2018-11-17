@@ -88,7 +88,7 @@ colors that they meet [the accessibility guidelines for text and contrasting col
 Add the following to your `Podfile`:
 
 ```bash
-pod 'MaterialComponents/schemes/ColorScheme'
+pod 'MaterialComponents/schemes/Color'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
@@ -151,7 +151,7 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
                                  blue:(CGFloat)((colorValue & 0xFF) / 255.0) alpha:1];
 }
 
-MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 colorScheme.primaryColor = ColorFromRGB(0x212121);
 colorScheme.primaryColorVariant = ColorFromRGB(0x444444);
 
@@ -253,7 +253,7 @@ MDCBasicColorScheme *colorScheme =
       [[MDCBasicColorScheme alloc] initWithPrimaryColor:UIColor.whiteColor];
 
 // After
-MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 colorScheme.primaryColor = UIColor.whiteColor;
 colorScheme.onPrimaryColor = UIColor.blackColor;
 ```

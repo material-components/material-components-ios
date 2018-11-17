@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #include "MDCPaletteExpansions.h"
 
@@ -21,32 +19,32 @@
 #import "MDCPaletteNames.h"
 
 // Observed saturation ranges for tints 50, 500, 900.
-static const CGFloat kSaturation50Min = 0.06f;
-static const CGFloat kSaturation50Max = 0.12f;
-static const CGFloat kSaturation500Min = 0.60f;
-static const CGFloat kSaturation500Max = 1.00f;
-static const CGFloat kSaturation900Min = 0.70f;
-static const CGFloat kSaturation900Max = 1.00f;
+static const CGFloat kSaturation50Min = (CGFloat)0.06;
+static const CGFloat kSaturation50Max = (CGFloat)0.12;
+static const CGFloat kSaturation500Min = (CGFloat)0.60;
+static const CGFloat kSaturation500Max = 1;
+static const CGFloat kSaturation900Min = (CGFloat)0.70;
+static const CGFloat kSaturation900Max = 1;
 
 // Minimum value of saturation to consider a color "colorless" (e.g. white/black/grey).
-static const CGFloat kSaturationMinThreshold = 1 / 256.0f;
+static const CGFloat kSaturationMinThreshold = 1 / (CGFloat)256;
 
 // A small value for comparing floating point numbers that is appropriate for color components.
-static const CGFloat kComponentEpsilon = 0.5f / 256.0f;
+static const CGFloat kComponentEpsilon = (CGFloat)0.5 / 256;
 
 // Observed brightness ranges for tints 50, 500, 900.
-static const CGFloat kBrightness50Min = 0.95f;
-static const CGFloat kBrightness50Max = 1.00f;
-static const CGFloat kBrightness500Min = 0.50f;
-static const CGFloat kBrightness500Max = 1.00f;
+static const CGFloat kBrightness50Min = (CGFloat)0.95;
+static const CGFloat kBrightness50Max = 1;
+static const CGFloat kBrightness500Min = (CGFloat)0.50;
+static const CGFloat kBrightness500Max = 1;
 
 // Observed quadratic brightness coefficients for tints >= 500.
-static const CGFloat kBrightnessQuadracticCoeff = -0.00642857142857143f;
-static const CGFloat kBrightnessLinearCoeff = -0.03585714285714282f;
+static const CGFloat kBrightnessQuadracticCoeff = (CGFloat)-0.00642857142857143;
+static const CGFloat kBrightnessLinearCoeff = (CGFloat)-0.03585714285714282;
 
 // Median saturation and brightness values for A100, A200, A400, A700.
-static const CGFloat kAccentSaturation[4] = {0.49f, 0.75f, 1.00f, 1.00f};
-static const CGFloat kAccentBrightness[4] = {1.00f, 1.00f, 1.00f, 0.92f};
+static const CGFloat kAccentSaturation[4] = {(CGFloat)0.49, (CGFloat)0.75, 1, 1};
+static const CGFloat kAccentBrightness[4] = {1, 1, 1, (CGFloat)0.92};
 
 // Ordered indices of each of the tints/accents.
 static const int kQTMColorTint50Index = 0;

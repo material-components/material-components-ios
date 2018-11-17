@@ -1,18 +1,16 @@
-/*
- Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "private/MDCChipView+Private.h"
 
@@ -55,10 +53,10 @@ static inline UIColor *MDCColorLighten(UIColor *color, CGFloat percent) {
 
 // TODO(samnm): Pull background color from MDCPalette
 static const uint32_t MDCChipBackgroundColor = 0xEBEBEB;
-static const CGFloat MDCChipSelectedDarkenPercent = 0.16f;
-static const CGFloat MDCChipDisabledLightenPercent = 0.38f;
-static const CGFloat MDCChipTitleColorWhite = 0.13f;
-static const CGFloat MDCChipTitleColorDisabledLightenPercent = 0.38f;
+static const CGFloat MDCChipSelectedDarkenPercent = (CGFloat)0.16;
+static const CGFloat MDCChipDisabledLightenPercent = (CGFloat)0.38;
+static const CGFloat MDCChipTitleColorWhite = (CGFloat)0.13;
+static const CGFloat MDCChipTitleColorDisabledLightenPercent = (CGFloat)0.38;
 
 static const UIEdgeInsets MDCChipContentPadding = {4, 4, 4, 4};
 static const UIEdgeInsets MDCChipImagePadding = {0, 0, 0, 0};
@@ -162,7 +160,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
     _inkColors = [NSMutableDictionary dictionary];
 
-    UIColor *titleColor = [UIColor colorWithWhite:MDCChipTitleColorWhite alpha:1.0f];
+    UIColor *titleColor = [UIColor colorWithWhite:MDCChipTitleColorWhite alpha:1];
     _titleColors = [NSMutableDictionary dictionary];
     _titleColors[@(UIControlStateNormal)] = titleColor;
     _titleColors[@(UIControlStateDisabled)] =
@@ -315,6 +313,10 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   _backgroundColors[@(state)] = backgroundColor;
 
   [self updateBackgroundColor];
+}
+
+- (UIColor *)backgroundColor {
+  return self.layer.shapedBackgroundColor;
 }
 
 - (void)updateBackgroundColor {
@@ -603,12 +605,12 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
   // Calculate the minimum width needed for all the content. If it's less than contentSize.width,
   // then inset to center. If not, just return contentRect.
-  CGFloat neededContentWidth = 0.0f;
+  CGFloat neededContentWidth = 0;
   CGSize maxContentSize = contentRect.size;
 
   // If there's an imageView, add it and its padding.
   if (self.showImageView || self.showSelectedImageView) {
-    CGFloat maxImageWidth = 0.0f;
+    CGFloat maxImageWidth = 0;
     if (self.showImageView) {
       maxImageWidth = [self sizeForImageView:self.imageView maxSize:maxContentSize].width;
     }
@@ -630,8 +632,8 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   }
 
   CGFloat difference = maxContentSize.width - neededContentWidth;
-  if (difference > 0.0f) {
-    CGFloat padding = difference / 2.0f;
+  if (difference > 0) {
+    CGFloat padding = difference / 2;
     contentRect.size.width -= difference;
     contentRect.origin.x += padding;
   }
@@ -813,9 +815,9 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     return;
   }
   CGSize size = [self sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
-  CGFloat widthDiff = 24.f; // Difference between unselected and selected frame widths.
+  CGFloat widthDiff = 24;  // Difference between unselected and selected frame widths.
   _inkView.maxRippleRadius =
-      (CGFloat)(MDCHypot(size.height, size.width + widthDiff) / 2 + 10.f + widthDiff / 2);
+      (CGFloat)(MDCHypot(size.height, size.width + widthDiff) / 2 + 10 + widthDiff / 2);
 
   [_inkView startTouchBeganAnimationAtPoint:point completion:nil];
 }

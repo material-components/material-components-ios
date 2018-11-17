@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCItemBar.h"
 
@@ -30,16 +28,16 @@
 static NSString *const kItemReuseID = @"MDCItem";
 
 /// Default duration in seconds for selection change animations.
-static const NSTimeInterval kDefaultAnimationDuration = 0.3f;
+static const NSTimeInterval kDefaultAnimationDuration = 0.3;
 
 /// Placeholder width for cells, which get per-item sizing.
-static const CGFloat kPlaceholderCellWidth = 10.0f;
+static const CGFloat kPlaceholderCellWidth = 10;
 
 /// Horizontal insets in regular size class layouts.
-static const CGFloat kRegularInset = 56.0f;
+static const CGFloat kRegularInset = 56;
 
 /// Horizontal insets in compact size class layouts.
-static const CGFloat kCompactInset = 8.0f;
+static const CGFloat kCompactInset = 8;
 
 /// KVO context pointer identifying changes in MDCItemBarItem properties.
 static void *kItemPropertyContext = &kItemPropertyContext;
@@ -115,12 +113,10 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   collectionView.showsHorizontalScrollIndicator = NO;
   collectionView.showsVerticalScrollIndicator = NO;
 
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     collectionView.contentInsetAdjustmentBehavior =
         UIScrollViewContentInsetAdjustmentScrollableAxes;
   }
-#endif
 
   collectionView.dataSource = self;
   collectionView.delegate = self;
@@ -306,11 +302,9 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 }
 
 - (void)safeAreaInsetsDidChange {
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     [super safeAreaInsetsDidChange];
   }
-#endif
   [self setNeedsLayout];
 }
 
@@ -434,12 +428,10 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 #pragma mark - Private
 
 - (CGFloat)adjustedCollectionViewWidth {
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     return CGRectGetWidth(UIEdgeInsetsInsetRect(_collectionView.bounds,
                                                 _collectionView.adjustedContentInset));
   }
-#endif
   return CGRectGetWidth(_collectionView.bounds);
 }
 
@@ -524,8 +516,8 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   flowLayout.itemSize = CGSizeMake(kPlaceholderCellWidth, itemHeight);
   flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
   flowLayout.sectionInset = UIEdgeInsetsZero;
-  flowLayout.minimumInteritemSpacing = 0.0f;
-  flowLayout.minimumLineSpacing = 0.0f;
+  flowLayout.minimumInteritemSpacing = 0;
+  flowLayout.minimumLineSpacing = 0;
   return flowLayout;
 }
 
@@ -616,7 +608,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
         [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
     [CATransaction setAnimationTimingFunction:easeInOut];
     [UIView animateWithDuration:kDefaultAnimationDuration
-                          delay:0.0f
+                          delay:0
                         options:UIViewAnimationOptionBeginFromCurrentState
                      animations:animationBlock
                      completion:nil];
@@ -631,10 +623,6 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 }
 
 - (void)updateFlowLayoutMetrics {
-  // Layout metrics cannot be updated while offscreen.
-  if (!self.window) {
-    return;
-  }
 
   UIUserInterfaceSizeClass horizontalSizeClass = [self horizontalSizeClass];
 
@@ -664,7 +652,6 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   // This is not animated because -updateFlowLayoutMetrics may be called in an animation block and
   // the change will be still get animated anyway - using NO avoids 'double' animation and allows
   // this method to be used without animation.
-  NSAssert(_collectionView.window, @"Collection view must be in a window to update layout");
   [_collectionView setCollectionViewLayout:_flowLayout animated:NO];
 
   // Force immediate layout so the selection indicator can be placed accurately.
@@ -679,20 +666,18 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   const BOOL isRegular = (sizeClass == UIUserInterfaceSizeClassRegular);
   CGFloat inset = isRegular ? kRegularInset : kCompactInset;
   // If the collection view has Safe Area insets, we don't want to add an extra horizontal inset.
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     if (_collectionView.safeAreaInsets.left > 0 || _collectionView.safeAreaInsets.right > 0) {
       inset = 0;
     }
   }
-#endif
-  return UIEdgeInsetsMake(0.0f, inset, 0.0f, inset);
+  return UIEdgeInsetsMake(0, inset, 0, inset);
 }
 
 - (UIEdgeInsets)justifiedInsets {
   // Center items, which will be at most the width of the view.
   CGFloat itemWidths = [self totalWidthOfAllItems];
-  CGFloat sideInsets = floorf((float)([self adjustedCollectionViewWidth] - itemWidths) / 2.0f);
+  CGFloat sideInsets = floorf((float)([self adjustedCollectionViewWidth] - itemWidths) / 2);
   return UIEdgeInsetsMake(0.0, sideInsets, 0.0, sideInsets);
 }
 
@@ -701,7 +686,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   CGFloat viewWidth = [self adjustedCollectionViewWidth];
   UIEdgeInsets insets = [self leadingAlignedInsetsForHorizontalSizeClass:sizeClass];
   if (itemWidths <= (viewWidth - insets.left - insets.right)) {
-    CGFloat sideInsets = ([self adjustedCollectionViewWidth] - itemWidths) / 2.0f;
+    CGFloat sideInsets = ([self adjustedCollectionViewWidth] - itemWidths) / 2;
     return UIEdgeInsetsMake(0.0, sideInsets, 0.0, sideInsets);
   }
   return insets;
@@ -712,7 +697,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
   NSInteger count = [self collectionView:_collectionView numberOfItemsInSection:0];
   if (count > 0) {
-    CGFloat halfBoundsWidth = [self adjustedCollectionViewWidth] / 2.0f;
+    CGFloat halfBoundsWidth = [self adjustedCollectionViewWidth] / 2;
 
     CGSize firstSize = [self collectionView:_collectionView
                                      layout:_flowLayout
@@ -722,11 +707,11 @@ static void *kItemPropertyContext = &kItemPropertyContext;
                     sizeForItemAtIndexPath:[self indexPathForItemAtIndex:count - 1]];
 
     // Left inset is equal to the space to the left of the first item when centered.
-    CGFloat halfFirstWidth = firstSize.width / 2.0f;
+    CGFloat halfFirstWidth = firstSize.width / 2;
     sectionInset.left = halfBoundsWidth - halfFirstWidth;
 
     // Right inset is equal to the space to the right of the last item when centered.
-    CGFloat halfLastWidth = lastSize.width / 2.0f;
+    CGFloat halfLastWidth = lastSize.width / 2;
     sectionInset.right = halfBoundsWidth - halfLastWidth;
   }
   return sectionInset;
@@ -984,12 +969,10 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 }
 
 - (CGRect)adjustedCollectionViewBounds {
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11.0, *)) {
     return UIEdgeInsetsInsetRect(self.collectionView.bounds,
                                  self.collectionView.adjustedContentInset);
   }
-#endif
   return self.collectionView.bounds;
 }
 

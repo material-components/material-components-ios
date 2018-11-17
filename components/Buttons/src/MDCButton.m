@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCButton.h"
 
@@ -36,7 +34,7 @@ static const CGFloat MDCButtonDefaultCornerRadius = 2.0;
 static const NSTimeInterval MDCButtonAnimationDuration = 0.2;
 
 // https://material.io/go/design-buttons#buttons-main-buttons
-static const CGFloat MDCButtonDisabledAlpha = 0.12f;
+static const CGFloat MDCButtonDisabledAlpha = (CGFloat)0.12;
 
 // Blue 500 from https://material.io/go/design-color-theming#color-color-palette .
 static const uint32_t MDCButtonDefaultBackgroundColor = 0x191919;
@@ -197,7 +195,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   // Block users from activating multiple buttons simultaneously by default.
   self.exclusiveTouch = YES;
 
-  _inkView.inkColor = [UIColor colorWithWhite:1 alpha:0.2f];
+  _inkView.inkColor = [UIColor colorWithWhite:1 alpha:(CGFloat)0.2];
 
   // Uppercase all titles
   if (_uppercaseTitle) {
@@ -538,6 +536,10 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   [self updateBackgroundColor];
 }
 
+- (UIColor *)backgroundColor {
+  return self.layer.shapedBackgroundColor;
+}
+
 - (UIColor *)backgroundColorForState:(UIControlState)state {
   return _backgroundColors[@(state)];
 }
@@ -672,13 +674,13 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 /** Returns YES if the color is not transparent and is a "dark" color. */
 - (BOOL)isDarkColor:(UIColor *)color {
   // TODO: have a components/private/ColorCalculations/MDCColorCalculations.h|m
-  //  return ![self isTransparentColor:color] && [QTMColorGroup luminanceOfColor:color] < 0.5f;
+  //  return ![self isTransparentColor:color] && [QTMColorGroup luminanceOfColor:color] < 0.5;
   return ![self isTransparentColor:color];
 }
 
 /** Returns YES if the color is transparent (including a nil color). */
 - (BOOL)isTransparentColor:(UIColor *)color {
-  return !color || [color isEqual:[UIColor clearColor]] || CGColorGetAlpha(color.CGColor) == 0.0f;
+  return !color || [color isEqual:[UIColor clearColor]] || CGColorGetAlpha(color.CGColor) == 0;
 }
 
 - (void)touchDragEnter:(__unused MDCButton *)button forEvent:(UIEvent *)event {
@@ -827,7 +829,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (void)updateInkForShape {
   CGRect boundingBox = CGPathGetBoundingBox(self.layer.shapeLayer.path);
   self.inkView.maxRippleRadius =
-      (CGFloat)(MDCHypot(CGRectGetHeight(boundingBox), CGRectGetWidth(boundingBox)) / 2 + 10.f);
+      (CGFloat)(MDCHypot(CGRectGetHeight(boundingBox), CGRectGetWidth(boundingBox)) / 2 + 10);
   self.inkView.layer.masksToBounds = NO;
 }
 
