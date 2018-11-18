@@ -119,5 +119,4 @@
 - (void)bottomDrawerControllerDidChangeTopInset:(nonnull MDCBottomDrawerViewController *)controller
                                        topInset:(CGFloat)topInset;
 
-
 @end

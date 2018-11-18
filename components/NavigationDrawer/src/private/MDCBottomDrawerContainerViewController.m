@@ -343,9 +343,9 @@ static UIColor *DrawerShadowColor(void) {
   CGFloat drawerOffset = self.contentHeaderTopInset - topAreaInsetForHeader;
   CGFloat calculatedYContentOffset =
       contentOffsetY - self.trackingScrollView.contentOffset.y + drawerOffset;
-  [self.scrollView setContentOffset:CGPointMake(self.scrollView.contentOffset.x,
-                                                calculatedYContentOffset)
-                           animated:animated];
+  [self.scrollView
+      setContentOffset:CGPointMake(self.scrollView.contentOffset.x, calculatedYContentOffset)
+              animated:animated];
   if (!animated) {
     // There is an issue that is deriving from us setting a kScrollViewBufferForPerformance in our
     // scrolling logic that is influencing the drawer from sometimes getting to the exact offset
@@ -356,9 +356,9 @@ static UIColor *DrawerShadowColor(void) {
     // that we have opened a tracking bug for: b/119682487.
     calculatedYContentOffset =
         contentOffsetY - self.trackingScrollView.contentOffset.y + drawerOffset;
-    [self.scrollView setContentOffset:CGPointMake(self.scrollView.contentOffset.x,
-                                                  calculatedYContentOffset)
-                             animated:animated];
+    [self.scrollView
+        setContentOffset:CGPointMake(self.scrollView.contentOffset.x, calculatedYContentOffset)
+                animated:animated];
   }
 }
 
@@ -367,8 +367,8 @@ static UIColor *DrawerShadowColor(void) {
   CGFloat drawerOffset = self.contentHeaderTopInset - topAreaInsetForHeader;
   CGFloat calculatedYContentOffset =
       _scrollToContentOffset - self.trackingScrollView.contentOffset.y + drawerOffset;
-  self.scrollView.contentOffset = CGPointMake(self.scrollView.contentOffset.x,
-                                              calculatedYContentOffset);
+  self.scrollView.contentOffset =
+      CGPointMake(self.scrollView.contentOffset.x, calculatedYContentOffset);
   _scrollToContentOffset = 0;
 }
 
