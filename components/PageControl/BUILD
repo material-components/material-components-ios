@@ -28,6 +28,9 @@ mdc_public_objc_library(
         "CoreGraphics",
         "UIKit",
     ],
+    deps = [
+        "@material_internationalization_ios//:MDFInternationalization",
+    ],
 )
 
 filegroup(

@@ -894,6 +894,7 @@ Pod::Spec.new do |mdc|
     component.public_header_files = "components/#{component.base_name}/src/*.h"
     component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
     component.resources = ["components/#{component.base_name}/src/Material#{component.base_name}.bundle"]
+    component.dependency "MDFInternationalization"
 
     component.test_spec 'tests' do |tests|
       tests.test_spec 'unit' do |unit_tests|
