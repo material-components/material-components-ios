@@ -28,6 +28,7 @@
 
 @implementation MDCBottomDrawerViewController {
   NSMutableDictionary<NSNumber *, NSNumber *> *_topCornersRadius;
+  BOOL _maskApplied;
 }
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -52,13 +53,16 @@
   _topCornersRadius[@(MDCBottomDrawerStateCollapsed)] = @(0);
   _maskLayer = [[MDCBottomDrawerHeaderMask alloc] initWithMaximumCornerRadius:0
                                                           minimumCornerRadius:0];
+  _maskApplied = NO;
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
-
-  _maskLayer.minimumCornerRadius = [self minimumCornerRadius];
-  [_maskLayer applyMask];
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+  if (!_maskApplied) {
+    _maskLayer.minimumCornerRadius = [self minimumCornerRadius];
+    [_maskLayer applyMask];
+    _maskApplied = YES;
+  }
 }
 
 - (id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
@@ -125,13 +129,23 @@
   }
 }
 
+- (BOOL)isAccessibilityMode {
+  return UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning();
+}
+- (BOOL)isMobileLandscape {
+  return self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassCompact;
+}
+- (BOOL)shouldPresentFullScreen {
+  return [self isAccessibilityMode] || [self isMobileLandscape];
+}
+
 - (BOOL)contentReachesFullScreen {
   if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
     MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
         (MDCBottomDrawerPresentationController *)self.presentationController;
     return bottomDrawerPresentationController.contentReachesFullscreen;
   }
-  return YES;
+  return [self shouldPresentFullScreen];
 }
 
 - (void)setTopHandleHidden:(BOOL)topHandleHidden {
