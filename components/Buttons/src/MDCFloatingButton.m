@@ -83,10 +83,12 @@ static const UIEdgeInsets internalLayoutInsets = (UIEdgeInsets){0, 16, 0, 24};
   return self;
 }
 
-#pragma mark - NSCoding
-
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wobjc-designated-initializers"
+// https://stackoverflow.com/questions/24458608/convenience-initializer-missing-a-self-call-to-another-initializer
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
+#pragma clang diagnostic pop
   if (self) {
     // Required to migrate any previously-archived FloatingButtons from .largeIcon shape value
     if (@(_shape).integerValue >= 2) {

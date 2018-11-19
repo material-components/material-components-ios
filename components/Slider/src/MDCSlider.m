@@ -504,12 +504,6 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) {
   return YES;
 }
 
-#pragma mark - NSSecureCoding
-
-+ (BOOL)supportsSecureCoding {
-  return YES;
-}
-
 #pragma mark - Private
 
 - (void)thumbTrackValueChanged:(__unused MDCThumbTrack *)thumbTrack {
