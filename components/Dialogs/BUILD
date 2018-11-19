@@ -30,8 +30,6 @@ mdc_public_objc_library(
     ],
     deps = [
         "//components/Buttons",
-        "//components/Buttons:ColorThemer",
-        "//components/Buttons:TypographyThemer",
         "//components/ShadowElevations",
         "//components/ShadowLayer",
         "//components/Typography",
