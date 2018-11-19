@@ -12,19 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCLibraryInfo.h"
+#import <UIKit/UIKit.h>
 
-// The current version of the MDC-iOS library. DO NOT EDIT MANUALLY.
-//
-// This string is updated automatically as a part of the release process and should not be edited
-// manually. Do not rename this constant or change the formatting without updating the release
-// scripts.
-static NSString const *MDCLibraryInfoVersionString = @"69.0.0";
-
-@implementation MDCLibraryInfo
-
-+ (NSString *)versionString {
-  return [MDCLibraryInfoVersionString copy];  // Copy because caller isn't expecting `const`.
-}
-
+@interface MDCShapeExamplesDummyCollectionViewController : UICollectionViewController
+- (instancetype)initWithNumItems:(NSInteger)numItems NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout NS_UNAVAILABLE;
+- (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil
+                         bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
 @end

@@ -26,6 +26,8 @@ static const MDCFontTextStyle kTitleTextStyle = MDCFontTextStyleTitle;
 static const MDCFontTextStyle kMessageTextStyle = MDCFontTextStyleBody1;
 static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
+static const CGFloat MDCDialogMaximumWidth = 560.0f;
+
 static const UIEdgeInsets MDCDialogContentInsets = {24.0, 24.0, 24.0, 24.0};
 static const CGFloat MDCDialogContentVerticalPadding = 20.0;
 static const CGFloat MDCDialogTitleIconVerticalPadding = 12.0;
@@ -348,6 +350,10 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
 
 // @param boundsSize should not include any internal margins or padding
 - (CGSize)calculatePreferredContentSizeForBounds:(CGSize)boundsSize {
+
+  // Even if we have more room, limit our maximum width
+  boundsSize.width = MIN(boundsSize.width, MDCDialogMaximumWidth);
+
   // Content & Actions
   CGSize contentSize = [self calculateContentSizeThatFitsWidth:boundsSize.width];
   CGSize actionSize = [self calculateActionsSizeThatFitsWidth:boundsSize.width];

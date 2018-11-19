@@ -1,4 +1,4 @@
-// Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,16 +14,19 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialButtons.h"
-#import "MaterialColorScheme.h"
-#import "MaterialTypographyScheme.h"
+@class MDCButton;
 
-@interface BottomSheetPresenterViewController : UIViewController
+__attribute__((objc_subclassing_restricted)) @interface MDCBannerView : UIView
 
-@property(nonatomic, strong, readonly) MDCButton *button;
-@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
-@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
+@property(nonatomic, copy, nonnull) NSString *text;
 
-- (void)presentBottomSheet;
+@property(nonatomic, strong, nullable) UIImage *image;  // default is nil
+
+@property(nonatomic, assign) NSUInteger numberOfButtons;  // default is 1
+
+/**
+ The buttons representing the banner's actions.
+ */
+@property(nonatomic, readonly, copy, nonnull) NSArray<MDCButton *> *buttons;
 
 @end

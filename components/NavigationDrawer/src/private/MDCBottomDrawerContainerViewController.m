@@ -88,9 +88,6 @@ static UIColor *DrawerShadowColor(void) {
 // The presenting view's bounds after it has been standardized.
 @property(nonatomic, readonly) CGRect presentingViewBounds;
 
-// Whether the content reaches to fullscreen.
-@property(nonatomic, readonly) BOOL contentReachesFullscreen;
-
 // Whether the content height exceeds the visible height when it's first displayed.
 @property(nonatomic, readonly) BOOL contentScrollsToReveal;
 
@@ -452,7 +449,7 @@ static UIColor *DrawerShadowColor(void) {
       contentViewFrame.size.height += topAreaInsetForHeader;
     }
   } else {
-    contentViewFrame.size.height = self.contentViewController.preferredContentSize.height;
+    contentViewFrame.size.height = _contentVCPreferredContentSizeHeightCached;
     if ([self shouldPresentFullScreen]) {
       contentViewFrame.size.height =
           MAX(contentViewFrame.size.height,
