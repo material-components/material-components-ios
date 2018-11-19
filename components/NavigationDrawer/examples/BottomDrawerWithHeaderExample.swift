@@ -96,7 +96,6 @@ class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewContro
   }
 
   @objc func expandBottomDrawer() {
-    contentViewController.preferredContentSize = CGSize(width: contentViewController.preferredContentSize.width, height: 6000)
     bottomDrawerViewController.expandToFullScreen(withDuration: 3.2) { _ in
       UIView.animate(withDuration: 3.2, animations: {
         self.bottomDrawerViewController.headerViewController?.view.backgroundColor = .blue
@@ -112,7 +111,6 @@ extension BottomDrawerWithHeaderExample {
       "breadcrumbs": ["Navigation Drawer", "Bottom Drawer"],
       "primaryDemo": false,
       "presentable": false,
-      "debug": true
     ]
   }
 }
