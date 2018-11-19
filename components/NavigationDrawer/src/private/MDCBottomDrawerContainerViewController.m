@@ -515,7 +515,6 @@ static UIColor *DrawerShadowColor(void) {
     [UIView animateWithDuration:duration animations:^{
       [self.scrollView setContentOffset:contentOffset];
     } completion:^(BOOL finished) {
-      [self setDrawerState:MDCBottomDrawerStateExpanded];
       [self resetLayoutWithInitialDrawerFactor:precentageOfFullScreen];
     }];
   } else {
@@ -529,7 +528,6 @@ static UIColor *DrawerShadowColor(void) {
       // drawer factor.
       [self.scrollView setContentOffset:CGPointZero];
       [self resetLayoutWithInitialDrawerFactor:precentageOfFullScreen];
-      [self setDrawerState:MDCBottomDrawerStateFullScreen];
     }];
   }
 }
