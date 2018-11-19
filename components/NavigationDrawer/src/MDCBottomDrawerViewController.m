@@ -206,4 +206,12 @@
   [self.delegate bottomDrawerControllerDidChangeTopInset:self topInset:topInset];
 }
 
+- (void)setContentOffsetY:(CGFloat)contentOffsetY animated:(BOOL)animated {
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+        (MDCBottomDrawerPresentationController *)self.presentationController;
+    [bottomDrawerPresentationController setContentOffsetY:contentOffsetY animated:animated];
+  }
+}
+
 @end
