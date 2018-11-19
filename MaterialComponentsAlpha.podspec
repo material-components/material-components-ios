@@ -56,6 +56,23 @@ Pod::Spec.new do |mdc|
     extension.dependency "MaterialComponents/schemes/Typography"
   end
 
+  mdc.subspec "schemes" do |scheme_spec|
+    scheme_spec.subspec "Container" do |scheme|
+      scheme.ios.deployment_target = '8.0'
+      scheme.public_header_files = "components/schemes/#{scheme.base_name}/src/*.h"
+      scheme.source_files = "components/schemes/#{scheme.base_name}/src/*.{h,m}"
+      scheme.dependency "MaterialComponents/schemes/Color"
+      scheme.dependency "MaterialComponents/schemes/Typography"
+      scheme.dependency "MaterialComponents/schemes/Shape"
+
+      scheme.test_spec 'tests' do |tests|
+        tests.test_spec 'unit' do |unit_tests|
+          unit_tests.source_files = "components/schemes/#{scheme.base_name}/tests/unit/*.{h,m,swift}", "components/schemes/#{scheme.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        end
+      end
+    end
+  end
+
   # Private
 
   mdc.subspec "private" do |private_spec|

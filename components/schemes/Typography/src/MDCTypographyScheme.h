@@ -18,8 +18,7 @@
  A simple typography scheme that provides semantic fonts. There are no optional
  properties, all fonts must be provided, supporting more reliable typography theming.
  */
-@protocol MDCTypographyScheming
-
+@protocol MDCTypographyScheming <NSObject>
 
 /**
  The headline 1 font.

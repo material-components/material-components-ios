@@ -1,0 +1,4 @@
+module: ContainerScheme
+umbrella_header: src/MaterialContainerScheme.h
+objc: true
+sdk: iphonesimulator
