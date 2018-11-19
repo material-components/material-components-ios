@@ -14,10 +14,10 @@
 
 #import "MDCShapeSchemeExampleViewController.h"
 
-#import "../../../BottomSheet/examples/supplemental/BottomSheetDummyCollectionViewController.h"
 #import "supplemental/MDCBottomSheetControllerShapeThemerDefaultMapping.h"
 #import "supplemental/MDCChipViewShapeThemerDefaultMapping.h"
 #import "supplemental/MDCFloatingButtonShapeThemerDefaultMapping.h"
+#import "supplemental/MDCShapeExamplesDummyCollectionViewController.h"
 
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
@@ -184,8 +184,8 @@
 }
 
 - (void)presentBottomSheet {
-  BottomSheetDummyCollectionViewController *viewController =
-      [[BottomSheetDummyCollectionViewController alloc] initWithNumItems:102];
+  MDCShapeExamplesDummyCollectionViewController *viewController =
+      [[MDCShapeExamplesDummyCollectionViewController alloc] initWithNumItems:102];
   viewController.title = @"Shaped bottom sheet example";
 
   MDCAppBarContainerViewController *container =
