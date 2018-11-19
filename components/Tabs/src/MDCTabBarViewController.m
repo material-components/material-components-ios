@@ -91,7 +91,6 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = (CGFloat)0.3;
 }
 
 -(void)commonInit {
-  // Already been setup through encoding/decoding
   if (self.tabBar) {
     return;
   }
