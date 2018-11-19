@@ -527,6 +527,8 @@ static UIColor *DrawerShadowColor(void) {
     [UIView animateWithDuration:duration animations:^{
       [self.scrollView setContentOffset:contentOffset];
     } completion:^(BOOL finished) {
+      // Reset the content offset to 0 because we are going to recachelayout and reset initial
+      // drawer factor.
       [self.scrollView setContentOffset:CGPointZero];
       [self resetLayoutWithInitialDrawerFactor:precentageOfFullScreen];
     }];
