@@ -416,9 +416,8 @@ lint_clang_format() {
 
   pushd .clang-format-ci
   git fetch > /dev/null
-  #TAG=$(git tag --sort=v:refname -l "$CLANG_FORMAT_CI_VERSION" | tail -n1)
-  #git checkout "$TAG" > /dev/null
-  git checkout kokoro > /dev/null # TODO: Remove once the kokoro branch has been merged.
+  TAG=$(git tag --sort=v:refname -l "$CLANG_FORMAT_CI_VERSION" | tail -n1)
+  git checkout "$TAG" > /dev/null
   popd
 
   .clang-format-ci/from-kokoro.sh "material-components/material-components-ios"
