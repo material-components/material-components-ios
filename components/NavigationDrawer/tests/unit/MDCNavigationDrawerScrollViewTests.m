@@ -544,4 +544,13 @@
   XCTAssertEqualWithAccuracy(fakeHeader.topInset, (CGFloat)7.0, (CGFloat)0.001);
 }
 
+- (void)testContentOffsetY {
+  // Given
+
+  // When
+  [self.drawerViewController setContentOffsetY:0.f animated:YES];
+
+  // Then
+}
+
 @end

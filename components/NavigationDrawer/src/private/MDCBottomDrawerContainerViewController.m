@@ -148,7 +148,7 @@ static UIColor *DrawerShadowColor(void) {
   CGFloat _contentHeightSurplus;
   CGFloat _addedContentHeight;
   CGFloat _contentVCPreferredContentSizeHeightCached;
-  CGFloat _scrollToContentOffset;
+  CGFloat _scrollToContentOffsetY;
 }
 
 - (instancetype)initWithOriginalPresentingViewController:
@@ -162,7 +162,7 @@ static UIColor *DrawerShadowColor(void) {
     _addedContentHeight = NSNotFound;
     _trackingScrollView = trackingScrollView;
     _drawerState = MDCBottomDrawerStateCollapsed;
-    _scrollToContentOffset = 0;
+    _scrollToContentOffsetY = 0;
   }
   return self;
 }
@@ -338,7 +338,7 @@ static UIColor *DrawerShadowColor(void) {
 }
 
 - (void)setContentOffsetY:(CGFloat)contentOffsetY animated:(BOOL)animated {
-  _scrollToContentOffset = contentOffsetY;
+  _scrollToContentOffsetY = contentOffsetY;
   CGFloat topAreaInsetForHeader = (self.headerViewController ? MDCDeviceTopSafeAreaInset() : 0);
   CGFloat drawerOffset = self.contentHeaderTopInset - topAreaInsetForHeader;
   CGFloat calculatedYContentOffset =
@@ -353,7 +353,7 @@ static UIColor *DrawerShadowColor(void) {
     // we will need to set the content offset twice for non animated calls and set it the second
     // time in scrollViewDidEndScrollingAnimation for animated calls. As far as our research went
     // to get rid of kScrollViewBufferForPerformance, we will need to do some refactoring work
-    // that we have opened a tracking bug for: b/119682487.
+    // that we have opened a tracking bug for: GitHub issue #5785.
     calculatedYContentOffset =
         contentOffsetY - self.trackingScrollView.contentOffset.y + drawerOffset;
     [self.scrollView
@@ -366,10 +366,10 @@ static UIColor *DrawerShadowColor(void) {
   CGFloat topAreaInsetForHeader = (self.headerViewController ? MDCDeviceTopSafeAreaInset() : 0);
   CGFloat drawerOffset = self.contentHeaderTopInset - topAreaInsetForHeader;
   CGFloat calculatedYContentOffset =
-      _scrollToContentOffset - self.trackingScrollView.contentOffset.y + drawerOffset;
+      _scrollToContentOffsetY - self.trackingScrollView.contentOffset.y + drawerOffset;
   self.scrollView.contentOffset =
       CGPointMake(self.scrollView.contentOffset.x, calculatedYContentOffset);
-  _scrollToContentOffset = 0;
+  _scrollToContentOffsetY = 0;
 }
 
 #pragma mark UIViewController
