@@ -28,6 +28,7 @@
 
 @implementation MDCBottomDrawerViewController {
   NSMutableDictionary<NSNumber *, NSNumber *> *_topCornersRadius;
+  BOOL _isMaskAppliedFirstTime;
 }
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -54,11 +55,13 @@
                                                           minimumCornerRadius:0];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
-
-  _maskLayer.minimumCornerRadius = [self minimumCornerRadius];
-  [_maskLayer applyMask];
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+  if (!_isMaskAppliedFirstTime) {
+    _maskLayer.minimumCornerRadius = [self minimumCornerRadius];
+    [_maskLayer applyMask];
+    _isMaskAppliedFirstTime = YES;
+  }
 }
 
 - (id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
@@ -128,22 +131,20 @@
 - (BOOL)isAccessibilityMode {
   return UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning();
 }
-
 - (BOOL)isMobileLandscape {
   return self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassCompact;
 }
-
 - (BOOL)shouldPresentFullScreen {
   return [self isAccessibilityMode] || [self isMobileLandscape];
 }
 
 - (BOOL)contentReachesFullScreen {
-  if ([self shouldPresentFullScreen]) {
-    return YES;
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+        (MDCBottomDrawerPresentationController *)self.presentationController;
+    return bottomDrawerPresentationController.contentReachesFullscreen;
   }
-  return CGRectGetHeight(self.view.bounds) <=
-         self.headerViewController.preferredContentSize.height +
-             self.contentViewController.preferredContentSize.height;
+  return [self shouldPresentFullScreen];
 }
 
 - (void)setTopHandleHidden:(BOOL)topHandleHidden {

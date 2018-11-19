@@ -87,4 +87,9 @@
  */
 @property(nonatomic, strong, nullable) UIColor *topHandleColor;
 
+/**
+A boolean value that indicates whether the drawer is currently the full height of the window.
+ */
+@property(nonatomic, readonly) BOOL contentReachesFullscreen;
+
 @end

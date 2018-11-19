@@ -97,6 +97,10 @@
       initWithPresentedViewController:_drawerViewController
              presentingViewController:nil];
   _delegateTest = [[MDCBottomDrawerDelegateTest alloc] init];
+  MDCBottomDrawerPresentationController *presentationController =
+      (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
+  presentationController.bottomDrawerContainerViewController = self.fakeBottomDrawer;
+  self.fakeBottomDrawer.contentViewController = self.drawerViewController.contentViewController;
 }
 
 - (void)tearDown {
@@ -449,6 +453,7 @@
 - (void)testBottomDrawerCornersAPIExpanded {
   // When
   self.drawerViewController.contentViewController.preferredContentSize = CGSizeMake(100, 100);
+  [self.fakeBottomDrawer cacheLayoutCalculations];
   [self.drawerViewController setTopCornersRadius:5 forDrawerState:MDCBottomDrawerStateExpanded];
 
   // Then
@@ -458,6 +463,7 @@
 - (void)testBottomDrawerCornersAPIFullScreen {
   // When
   self.drawerViewController.contentViewController.preferredContentSize = CGSizeMake(100, 5000);
+  [self.fakeBottomDrawer cacheLayoutCalculations];
   [self.drawerViewController setTopCornersRadius:3 forDrawerState:MDCBottomDrawerStateFullScreen];
 
   // Then
@@ -542,6 +548,17 @@
 
   // Then
   XCTAssertEqualWithAccuracy(fakeHeader.topInset, (CGFloat)7.0, (CGFloat)0.001);
+}
+
+- (void)testContentReachesFullscreenPresentationControllerValue {
+  // When
+  [self.presentationController presentationTransitionWillBegin];
+  [self.presentationController.bottomDrawerContainerViewController cacheLayoutCalculations];
+
+  // Then
+  XCTAssertEqual(
+      self.presentationController.bottomDrawerContainerViewController.contentReachesFullscreen,
+      self.presentationController.contentReachesFullscreen);
 }
 
 @end
