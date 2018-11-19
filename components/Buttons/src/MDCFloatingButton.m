@@ -24,20 +24,6 @@ static const CGFloat MDCFloatingButtonMiniDimension = 40;
 static const CGFloat MDCFloatingButtonDefaultImageTitleSpace = 8;
 static const UIEdgeInsets internalLayoutInsets = (UIEdgeInsets){0, 16, 0, 24};
 
-static NSString *const MDCFloatingButtonShapeKey = @"MDCFloatingButtonShapeKey";
-static NSString *const MDCFloatingButtonModeKey = @"MDCFloatingButtonModeKey";
-static NSString *const MDCFloatingButtonImageLocationKey = @"MDCFloatingButtonImageLocationKey";
-static NSString *const MDCFloatingButtonImageTitleSpaceKey =
-    @"MDCFloatingButtonImageTitleSpaceKey";
-static NSString *const MDCFloatingButtonMinimumSizeDictionaryKey =
-    @"MDCFloatingButtonMinimumSizeDictionaryKey";
-static NSString *const MDCFloatingButtonMaximumSizeDictionaryKey =
-    @"MDCFloatingButtonMaximumSizeDictionaryKey";
-static NSString *const MDCFloatingButtonContentEdgeInsetsDictionaryKey =
-    @"MDCFloatingButtonContentEdgeInsetsDictionaryKey";
-static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
-    @"MDCFloatingButtonHitAreaInsetsDictionaryKey";
-
 @interface MDCFloatingButton ()
 
 @property(nonatomic, readonly) NSMutableDictionary<NSNumber *,
@@ -102,7 +88,6 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    _shape = [aDecoder decodeIntegerForKey:MDCFloatingButtonShapeKey];
     // Required to migrate any previously-archived FloatingButtons from .largeIcon shape value
     if (@(_shape).integerValue >= 2) {
       _shape = MDCFloatingButtonShapeDefault;
@@ -110,56 +95,9 @@ static NSString *const MDCFloatingButtonHitAreaInsetsDictionaryKey =
     // Shape must be set first before the common initialization
     [self commonMDCFloatingButtonInit];
 
-    if ([aDecoder containsValueForKey:MDCFloatingButtonModeKey]) {
-      _mode = [aDecoder decodeIntegerForKey:MDCFloatingButtonModeKey];
-    }
-    if ([aDecoder containsValueForKey:MDCFloatingButtonImageLocationKey]) {
-      _imageLocation = [aDecoder decodeIntegerForKey:MDCFloatingButtonImageLocationKey];
-    }
-    if ([aDecoder containsValueForKey:MDCFloatingButtonImageTitleSpaceKey]) {
-      _imageTitleSpace =
-          (CGFloat)[aDecoder decodeDoubleForKey:MDCFloatingButtonImageTitleSpaceKey];
-    }
-    if ([aDecoder containsValueForKey:MDCFloatingButtonMinimumSizeDictionaryKey]) {
-      _shapeToModeToMinimumSize =
-          [aDecoder decodeObjectOfClass:[NSMutableDictionary class]
-                                 forKey:MDCFloatingButtonMinimumSizeDictionaryKey];
-    }
-    if ([aDecoder containsValueForKey:MDCFloatingButtonMaximumSizeDictionaryKey]) {
-      _shapeToModeToMaximumSize =
-          [aDecoder decodeObjectOfClass:[NSMutableDictionary class]
-                                 forKey:MDCFloatingButtonMaximumSizeDictionaryKey];
-    }
-    if ([aDecoder containsValueForKey:MDCFloatingButtonContentEdgeInsetsDictionaryKey]) {
-      _shapeToModeToContentEdgeInsets =
-          [aDecoder decodeObjectOfClass:[NSMutableDictionary class]
-                                 forKey:MDCFloatingButtonContentEdgeInsetsDictionaryKey];
-    }
-    if ([aDecoder containsValueForKey:MDCFloatingButtonHitAreaInsetsDictionaryKey]) {
-      _shapeToModeToHitAreaInsets =
-          [aDecoder decodeObjectOfClass:[NSMutableDictionary class]
-                                 forKey:MDCFloatingButtonHitAreaInsetsDictionaryKey];
-    }
-
     [self updateShapeAndAllowResize:NO];
   }
   return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [super encodeWithCoder:aCoder];
-  [aCoder encodeInteger:_shape forKey:MDCFloatingButtonShapeKey];
-  [aCoder encodeInteger:self.mode forKey:MDCFloatingButtonModeKey];
-  [aCoder encodeInteger:self.imageLocation forKey:MDCFloatingButtonImageLocationKey];
-  [aCoder encodeDouble:self.imageTitleSpace forKey:MDCFloatingButtonImageTitleSpaceKey];
-  [aCoder encodeObject:self.shapeToModeToMinimumSize
-                forKey:MDCFloatingButtonMinimumSizeDictionaryKey];
-  [aCoder encodeObject:self.shapeToModeToMaximumSize
-                forKey:MDCFloatingButtonMaximumSizeDictionaryKey];
-  [aCoder encodeObject:self.shapeToModeToContentEdgeInsets
-                forKey:MDCFloatingButtonContentEdgeInsetsDictionaryKey];
-  [aCoder encodeObject:self.shapeToModeToHitAreaInsets
-                forKey:MDCFloatingButtonHitAreaInsetsDictionaryKey];
 }
 
 - (void)commonMDCFloatingButtonInit {
