@@ -89,6 +89,7 @@
                             target:(id)target
                           selector:(SEL)selector {
   MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectZero];
+  button.uppercaseTitle = NO;
   [button setTitle:action.title forState:UIControlStateNormal];
   button.accessibilityIdentifier = action.accessibilityIdentifier;
   [button addTarget:target action:selector forControlEvents:UIControlEventTouchUpInside];

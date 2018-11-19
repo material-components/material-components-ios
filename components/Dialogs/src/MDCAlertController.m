@@ -40,13 +40,17 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 + (instancetype)actionWithTitle:(nonnull NSString *)title
                         handler:(void (^__nullable)(MDCAlertAction *action))handler {
-  return [[MDCAlertAction alloc] initWithTitle:title emphasis:MDCActionEmphasisLow handler:handler];
+  return [[MDCAlertAction alloc] initWithTitle:[title uppercaseString]
+                                      emphasis:MDCActionEmphasisLow
+                                       handler:handler];
 }
 
 + (instancetype)actionWithTitle:(nonnull NSString *)title
                        emphasis:(MDCActionEmphasis)emphasis
                         handler:(void (^__nullable)(MDCAlertAction *action))handler {
-  return [[MDCAlertAction alloc] initWithTitle:title emphasis:emphasis handler:handler];
+  return [[MDCAlertAction alloc] initWithTitle:[title uppercaseString]
+                                      emphasis:emphasis
+                                       handler:handler];
 }
 
 - (instancetype)initWithTitle:(nonnull NSString *)title

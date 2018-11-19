@@ -65,7 +65,7 @@ class DialogsLongAlertViewController: UIViewController {
 
     let materialAlertController = MDCAlertController(title: nil, message: messageString)
 
-    let action = MDCAlertAction(title:"OK") { (_) in print("OK") }
+    let action = MDCAlertAction(title:"Ok") { (_) in print("OK") }
 
     materialAlertController.addAction(action)
 
