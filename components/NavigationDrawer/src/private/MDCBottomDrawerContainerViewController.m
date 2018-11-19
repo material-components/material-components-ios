@@ -509,37 +509,36 @@ static UIColor *DrawerShadowColor(void) {
     topSafeArea = self.view.safeAreaInsets.top;
   }
   CGFloat totalHeight = self.headerViewController.preferredContentSize.height +
-  self.contentViewController.preferredContentSize.height;
+      self.contentViewController.preferredContentSize.height;
   CGFloat precentageOfFullScreen = totalHeight / CGRectGetHeight(self.presentingViewBounds);
   if (CGRectGetHeight(self.presentingViewBounds) > totalHeight) {
-    CGFloat gapToTop = self.contentHeaderTopInset;
-    CGFloat max = CGRectGetHeight(self.presentingViewBounds) - totalHeight;
-    CGFloat contentYOffset = gapToTop - max;
+    CGFloat maxViewHeight = CGRectGetHeight(self.presentingViewBounds) - totalHeight;
+    CGFloat contentYOffset = self.contentHeaderTopInset - maxViewHeight;
     CGPoint contentOffset = CGPointMake(self.scrollView.contentOffset.x, contentYOffset);
     [UIView animateWithDuration:duration animations:^{
       [self.scrollView setContentOffset:contentOffset];
     } completion:^(BOOL finished) {
-      self.initialDrawerFactor = precentageOfFullScreen;
-      self->_contentHeaderTopInset = NSNotFound;
-      self->_contentHeightSurplus = NSNotFound;
-      self->_addedContentHeight = NSNotFound;
-      [self.view setNeedsLayout];
+      [self resetLayoutWithInitialDrawerFactor:precentageOfFullScreen];
     }];
   } else {
     CGFloat contentYOffset = self.contentHeaderTopInset - topSafeArea;
     CGPoint contentOffset = CGPointMake(self.scrollView.contentOffset.x, contentYOffset);
+    precentageOfFullScreen = (precentageOfFullScreen > 1) ? 1 : precentageOfFullScreen;
     [UIView animateWithDuration:duration animations:^{
       [self.scrollView setContentOffset:contentOffset];
     } completion:^(BOOL finished) {
-      self.initialDrawerFactor = precentageOfFullScreen;
-      self->_contentHeaderTopInset = NSNotFound;
-      self->_contentHeightSurplus = NSNotFound;
-      self->_addedContentHeight = NSNotFound;
-      [self.view setNeedsLayout];
+      [self.scrollView setContentOffset:CGPointZero];
+      [self resetLayoutWithInitialDrawerFactor:precentageOfFullScreen];
     }];
   }
+}
 
-
+- (void)resetLayoutWithInitialDrawerFactor:(CGFloat)initialDrawerFactor {
+  self.initialDrawerFactor = initialDrawerFactor;
+  _contentHeaderTopInset = NSNotFound;
+  _contentHeightSurplus = NSNotFound;
+  _addedContentHeight = NSNotFound;
+  [self.view setNeedsLayout];
 }
 
 #pragma mark Set ups (Private)
