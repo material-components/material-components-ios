@@ -14,7 +14,7 @@
 
 import XCTest
 import MaterialComponentsAlpha.MaterialActionSheet
-import MaterialComponents.MaterialActionSheet_ColorThemer // Alpha
+import MaterialComponentsAlpha.MaterialActionSheet_ColorThemer
 
 class ActionSheetTest: XCTestCase {
 
