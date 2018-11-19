@@ -263,4 +263,8 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   }
 }
 
+- (void)setContentOffsetY:(CGFloat)contentOffsetY animated:(BOOL)animated {
+  [self.bottomDrawerContainerViewController setContentOffsetY:contentOffsetY animated:animated];
+}
+
 @end
