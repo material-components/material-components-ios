@@ -197,7 +197,6 @@ static UIColor *DrawerShadowColor(void) {
                        context:(void *)context {
   if ([object isKindOfClass:[UIScrollView class]]) {
     CGPoint contentOffset = [(NSValue *)[change objectForKey:NSKeyValueChangeNewKey] CGPointValue];
-
     CGPoint oldContentOffset =
         [(NSValue *)[change objectForKey:NSKeyValueChangeOldKey] CGPointValue];
     self.scrollViewIsDraggedToBottom = contentOffset.y == oldContentOffset.y
