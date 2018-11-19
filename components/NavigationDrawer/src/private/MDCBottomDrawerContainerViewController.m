@@ -509,9 +509,8 @@ static UIColor *DrawerShadowColor(void) {
     topSafeArea = self.view.safeAreaInsets.top;
   }
   CGFloat totalHeight = self.headerViewController.preferredContentSize.height +
-      self.contentViewController.preferredContentSize.height;
+  self.contentViewController.preferredContentSize.height;
   CGFloat precentageOfFullScreen = totalHeight / CGRectGetHeight(self.presentingViewBounds);
-  self.initialDrawerFactor = precentageOfFullScreen;
   if (CGRectGetHeight(self.presentingViewBounds) > totalHeight) {
     CGFloat gapToTop = self.contentHeaderTopInset;
     CGFloat max = CGRectGetHeight(self.presentingViewBounds) - totalHeight;
@@ -519,14 +518,28 @@ static UIColor *DrawerShadowColor(void) {
     CGPoint contentOffset = CGPointMake(self.scrollView.contentOffset.x, contentYOffset);
     [UIView animateWithDuration:duration animations:^{
       [self.scrollView setContentOffset:contentOffset];
+    } completion:^(BOOL finished) {
+      self.initialDrawerFactor = precentageOfFullScreen;
+      self->_contentHeaderTopInset = NSNotFound;
+      self->_contentHeightSurplus = NSNotFound;
+      self->_addedContentHeight = NSNotFound;
+      [self.view setNeedsLayout];
     }];
   } else {
     CGFloat contentYOffset = self.contentHeaderTopInset - topSafeArea;
     CGPoint contentOffset = CGPointMake(self.scrollView.contentOffset.x, contentYOffset);
     [UIView animateWithDuration:duration animations:^{
       [self.scrollView setContentOffset:contentOffset];
+    } completion:^(BOOL finished) {
+      self.initialDrawerFactor = precentageOfFullScreen;
+      self->_contentHeaderTopInset = NSNotFound;
+      self->_contentHeightSurplus = NSNotFound;
+      self->_addedContentHeight = NSNotFound;
+      [self.view setNeedsLayout];
     }];
   }
+
+
 }
 
 #pragma mark Set ups (Private)
