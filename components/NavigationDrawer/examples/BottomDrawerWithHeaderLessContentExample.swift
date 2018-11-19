@@ -21,8 +21,27 @@ import MaterialComponents.MaterialNavigationDrawer
 class BottomDrawerWithHeaderLessContentExample: BottomDrawerWithHeaderExample {
 
   @objc override func presentNavigationDrawer() {
-    contentViewController.preferredHeight = 500
+    contentViewController.preferredHeight = 100
+    contentViewController.preferredContentSize = CGSize(width: view.bounds.width,
+                                                        height: contentViewController.preferredHeight)
+    layoutContentViewController()
     super.presentNavigationDrawer()
+  }
+
+  private func layoutContentViewController() {
+    let button = UIButton(frame: .zero)
+    button.contentEdgeInsets = UIEdgeInsets(top: 4, left: 12, bottom: 4, right: 12)
+    button.setTitle("Expand", for: .normal)
+    button.sizeToFit()
+    button.addTarget(self, action: #selector(expandBottomDrawer), for: .touchUpInside)
+    button.center = CGPoint(x: view.frame.width / 2, y: 50)
+    button.backgroundColor = .blue
+    contentViewController.view.addSubview(button)
+  }
+
+  @objc func expandBottomDrawer() {
+    bottomDrawerViewController.initialDrawerFactor = 1;
+    bottomDrawerViewController.setContentOffsetY(0, animated: true)
   }
 
   override class func catalogMetadata() -> [String: Any] {

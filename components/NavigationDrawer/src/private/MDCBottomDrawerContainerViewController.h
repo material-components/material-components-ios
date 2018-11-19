@@ -107,6 +107,8 @@
  */
 @property(nonatomic, readonly) MDCBottomDrawerState drawerState;
 
+@property(nonatomic, assign) CGFloat initialDrawerFactor;
+
 /**
  Sets the content offset Y of the drawer's content. If contentOffsetY is set to 0, the
  drawer will scroll to the start of its content.

@@ -25,6 +25,7 @@ class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewContro
 
   let headerViewController = DrawerHeaderViewController()
   let contentViewController = DrawerContentViewController()
+  lazy var bottomDrawerViewController = MDCBottomDrawerViewController()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -62,7 +63,6 @@ class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewContro
   }
 
   @objc func presentNavigationDrawer() {
-    let bottomDrawerViewController = MDCBottomDrawerViewController()
     bottomDrawerViewController.setTopCornersRadius(24, for: .collapsed)
     bottomDrawerViewController.setTopCornersRadius(8, for: .expanded)
     bottomDrawerViewController.isTopHandleHidden = false

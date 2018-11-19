@@ -151,6 +151,8 @@ static UIColor *DrawerShadowColor(void) {
   CGFloat _scrollToContentOffset;
 }
 
+@synthesize initialDrawerFactor = _initialDrawerFactor;
+
 - (instancetype)initWithOriginalPresentingViewController:
     (UIViewController *)originalPresentingViewController
                                       trackingScrollView:(UIScrollView *)trackingScrollView {
@@ -288,7 +290,7 @@ static UIColor *DrawerShadowColor(void) {
 }
 
 - (BOOL)shouldPresentFullScreen {
-  return [self isAccessibilityMode] || [self isMobileLandscape];
+  return [self isAccessibilityMode] || [self isMobileLandscape] || _initialDrawerFactor >= 1;
 }
 
 /**
@@ -298,9 +300,9 @@ static UIColor *DrawerShadowColor(void) {
  Default value is 0.5. If VoiceOver is enabled, or the mobile device is in landscape,
  the default value becomes 1.0.
  */
-- (CGFloat)initialDrawerFactor {
-  return [self shouldPresentFullScreen] ? 1 : (CGFloat)0.5;
-}
+//- (CGFloat)initialDrawerFactor {
+//  return [self shouldPresentFullScreen] ? 1 : (CGFloat)0.5;
+//}
 
 - (void)addScrollViewObserver {
   if (self.scrollViewObserved) {
@@ -393,6 +395,8 @@ static UIColor *DrawerShadowColor(void) {
     [self.scrollView addSubview:self.contentViewController.view];
     [self.contentViewController didMoveToParentViewController:self];
   }
+
+  self.initialDrawerFactor = [self shouldPresentFullScreen] ? 1 : (CGFloat)0.5;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -405,6 +409,26 @@ static UIColor *DrawerShadowColor(void) {
     self.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     self.scrollView.insetsLayoutMarginsFromSafeArea = NO;
   }
+}
+
+- (void)setInitialDrawerFactor:(CGFloat)initialDrawerFactor {
+  if ([self shouldPresentFullScreen]) {
+    _initialDrawerFactor = 1;
+  }
+  _initialDrawerFactor = initialDrawerFactor;
+  _contentHeaderTopInset = NSNotFound;
+  _contentHeightSurplus = NSNotFound;
+  _addedContentHeight = NSNotFound;
+  [UIView animateWithDuration:2.0 animations:^() {
+    [self.view setNeedsLayout];
+  }];
+}
+
+- (CGFloat)initialDrawerFactor {
+  if ([self shouldPresentFullScreen]) {
+    return 1;
+  }
+  return _initialDrawerFactor;
 }
 
 - (void)viewWillLayoutSubviews {

@@ -19,17 +19,18 @@ import MaterialComponents.MaterialNavigationDrawer
 class DrawerContentViewController: UIViewController {
   var preferredHeight: CGFloat = 2000
 
-  override var preferredContentSize: CGSize {
-    get {
-      return CGSize(width: view.bounds.width, height: preferredHeight)
-    }
-    set {
-      super.preferredContentSize = newValue
-    }
-  }
+//  override var preferredContentSize: CGSize {
+//    get {
+//      return CGSize(width: view.bounds.width, height: preferredHeight)
+//    }
+//    set {
+//      super.preferredContentSize = newValue
+//    }
+//  }
 
   init() {
     super.init(nibName: nil, bundle: nil)
+    self.preferredContentSize = CGSize(width: view.bounds.width, height: preferredHeight)
   }
 
   required init?(coder aDecoder: NSCoder) {

@@ -73,6 +73,9 @@
  */
 @property(nonatomic, weak, nullable) id<MDCBottomDrawerViewControllerDelegate> delegate;
 
+@property(nonatomic, assign) CGFloat initialDrawerFactor;
+
+
 /**
  Sets the top corners radius for an MDCBottomDrawerState drawerState
 

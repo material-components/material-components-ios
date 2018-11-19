@@ -164,6 +164,15 @@
   }
 }
 
+- (void)setInitialDrawerFactor:(CGFloat)initialDrawerFactor {
+  _initialDrawerFactor = initialDrawerFactor;
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+    (MDCBottomDrawerPresentationController *)self.presentationController;
+    bottomDrawerPresentationController.initialDrawerFactor = initialDrawerFactor;
+  }
+}
+
 #pragma mark UIAccessibilityAction
 
 // Adds the Z gesture for dismissal.

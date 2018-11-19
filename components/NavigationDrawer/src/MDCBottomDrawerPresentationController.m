@@ -194,6 +194,11 @@ static CGFloat kTopHandleYCenter = (CGFloat)6.0;
   self.topHandle.backgroundColor = topHandleColor;
 }
 
+- (void)setInitialDrawerFactor:(CGFloat)initialDrawerFactor {
+  _initialDrawerFactor = initialDrawerFactor;
+  self.bottomDrawerContainerViewController.initialDrawerFactor = initialDrawerFactor;
+}
+
 #pragma mark - Private
 
 - (void)hideDrawer {
