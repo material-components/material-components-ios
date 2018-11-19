@@ -566,9 +566,7 @@
   [self.drawerViewController setContentOffsetY:0 animated:YES];
 
   // Then
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.scrollView.contentOffset.y,
-                             500,
-                             (CGFloat)0.001);
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.scrollView.contentOffset.y, 500, (CGFloat)0.001);
 }
 
 @end
