@@ -100,7 +100,7 @@
   MDCBottomDrawerPresentationController *presentationController =
       (MDCBottomDrawerPresentationController *)self.drawerViewController.presentationController;
   presentationController.bottomDrawerContainerViewController = self.fakeBottomDrawer;
-  _fakeBottomDrawer.contentViewController = self.drawerViewController.contentViewController;
+  self.fakeBottomDrawer.contentViewController = self.drawerViewController.contentViewController;
 }
 
 - (void)tearDown {
@@ -548,6 +548,17 @@
 
   // Then
   XCTAssertEqualWithAccuracy(fakeHeader.topInset, (CGFloat)7.0, (CGFloat)0.001);
+}
+
+- (void)testContentReachesFullscreenPresentationControllerValue {
+  // When
+  [self.presentationController presentationTransitionWillBegin];
+  [self.presentationController.bottomDrawerContainerViewController cacheLayoutCalculations];
+
+  // Then
+  XCTAssertEqual(
+      self.presentationController.bottomDrawerContainerViewController.contentReachesFullscreen,
+      self.presentationController.contentReachesFullscreen);
 }
 
 @end

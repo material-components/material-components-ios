@@ -28,7 +28,7 @@
 
 @implementation MDCBottomDrawerViewController {
   NSMutableDictionary<NSNumber *, NSNumber *> *_topCornersRadius;
-  BOOL _maskApplied;
+  BOOL _isMaskAppliedFirstTime;
 }
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -53,15 +53,14 @@
   _topCornersRadius[@(MDCBottomDrawerStateCollapsed)] = @(0);
   _maskLayer = [[MDCBottomDrawerHeaderMask alloc] initWithMaximumCornerRadius:0
                                                           minimumCornerRadius:0];
-  _maskApplied = NO;
 }
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
-  if (!_maskApplied) {
+  if (!_isMaskAppliedFirstTime) {
     _maskLayer.minimumCornerRadius = [self minimumCornerRadius];
     [_maskLayer applyMask];
-    _maskApplied = YES;
+    _isMaskAppliedFirstTime = YES;
   }
 }
 
