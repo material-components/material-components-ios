@@ -14,10 +14,10 @@
 
 #import "MDCShapeSchemeExampleViewController.h"
 
-#import "supplemental/MDCShapeExamplesDummyCollectionViewController.h"
 #import "supplemental/MDCBottomSheetControllerShapeThemerDefaultMapping.h"
 #import "supplemental/MDCChipViewShapeThemerDefaultMapping.h"
 #import "supplemental/MDCFloatingButtonShapeThemerDefaultMapping.h"
+#import "supplemental/MDCShapeExamplesDummyCollectionViewController.h"
 
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
