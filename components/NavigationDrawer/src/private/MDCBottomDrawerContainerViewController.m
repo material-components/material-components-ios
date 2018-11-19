@@ -164,6 +164,7 @@ static UIColor *DrawerShadowColor(void) {
     _trackingScrollView = trackingScrollView;
     _drawerState = MDCBottomDrawerStateCollapsed;
     _scrollToContentOffsetY = 0;
+    _initialDrawerFactor = (CGFloat)0.5;
   }
   return self;
 }
@@ -291,17 +292,6 @@ static UIColor *DrawerShadowColor(void) {
   return [self isAccessibilityMode] || [self isMobileLandscape] || _initialDrawerFactor >= 1;
 }
 
-/**
- The drawer height factor defines how much percentage of the screen space the drawer will take up
- when displayed. The expected range is 0 - 1 (0% - 100%).
-
- Default value is 0.5. If VoiceOver is enabled, or the mobile device is in landscape,
- the default value becomes 1.0.
- */
-/*- (CGFloat)initialDrawerFactor {
-  return [self shouldPresentFullScreen] ? 1 : (CGFloat)0.5;
-}*/
-
 - (void)addScrollViewObserver {
   if (self.scrollViewObserved) {
     return;
@@ -328,6 +318,13 @@ static UIColor *DrawerShadowColor(void) {
   }
 }
 
+/**
+ The drawer height factor defines how much percentage of the screen space the drawer will take up
+ when displayed. The expected range is 0 - 1 (0% - 100%).
+
+ Default value is 0.5. If VoiceOver is enabled, or the mobile device is in landscape,
+ the default value becomes 1.0.
+ */
 - (CGFloat)initialDrawerFactor {
   if ([self shouldPresentFullScreen]) {
     return 1;
@@ -518,6 +515,7 @@ static UIColor *DrawerShadowColor(void) {
     [UIView animateWithDuration:duration animations:^{
       [self.scrollView setContentOffset:contentOffset];
     } completion:^(BOOL finished) {
+      [self setDrawerState:MDCBottomDrawerStateExpanded];
       [self resetLayoutWithInitialDrawerFactor:precentageOfFullScreen];
     }];
   } else {
@@ -531,6 +529,7 @@ static UIColor *DrawerShadowColor(void) {
       // drawer factor.
       [self.scrollView setContentOffset:CGPointZero];
       [self resetLayoutWithInitialDrawerFactor:precentageOfFullScreen];
+      [self setDrawerState:MDCBottomDrawerStateFullScreen];
     }];
   }
 }

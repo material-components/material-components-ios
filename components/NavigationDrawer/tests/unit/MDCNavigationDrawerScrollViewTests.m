@@ -569,4 +569,39 @@
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.scrollView.contentOffset.y, 500, (CGFloat)0.001);
 }
 
+- (void)testExpandToFullScreenAnimationWithFullScreenContent {
+  // Given
+  self.fakeBottomDrawer.originalPresentingViewController.view.bounds = CGRectMake(0, 0, 200, 100);
+  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(200, 5000);
+  CGSize fakePreferredContentSize = CGSizeMake(200, 400);
+  MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
+  [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
+  self.fakeBottomDrawer.headerViewController = fakeHeader;
+  self.fakeBottomDrawer.headerViewController.preferredContentSize = fakePreferredContentSize;
+
+  // When
+  [self.fakeBottomDrawer.view setNeedsLayout];
+  [self.fakeBottomDrawer.view layoutIfNeeded];
+  [self.fakeBottomDrawer expandToFullScreenWithDuration:0.0];
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.scrollView.contentOffset.y, 0, 0.001);
+  XCTAssertEqual(self.fakeBottomDrawer.drawerState, MDCBottomDrawerStateFullScreen);
+}
+
+- (void)testExpandToFullScreenAnimationWithSmallScreenContent {
+  // Given
+  self.fakeBottomDrawer.originalPresentingViewController.view.bounds = CGRectMake(0, 0, 100, 500);
+  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(200, 300);
+
+  // When
+  [self.fakeBottomDrawer expandToFullScreenWithDuration:0.0];
+
+  // Then
+  // If total preferred content size is more than half of the originalPresentView bounds then
+  // contentOffset is 0.
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.scrollView.contentOffset.y, 0, 0.001);
+  XCTAssertEqual(self.fakeBottomDrawer.drawerState, MDCBottomDrawerStateExpanded);
+}
+
 @end
