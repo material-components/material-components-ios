@@ -486,18 +486,29 @@ static UIColor *DrawerShadowColor(void) {
   if (@available(iOS 11.0, *)) {
     topSafeArea = self.view.safeAreaInsets.top;
   }
+//  CGFloat totalHeight = self.headerViewController.preferredContentSize.height +
+//  self.contentViewController.preferredContentSize.height;
   CGFloat contentYOffset = self.contentHeaderTopInset - topSafeArea;
   CGPoint contentOffset = CGPointMake(self.scrollView.contentOffset.x, contentYOffset);
-  CGRect headerViewControllerFrame = CGRectStandardize(self.headerViewController.view.frame);
-  headerViewControllerFrame.size.height += topSafeArea;
-  CGRect contentViewControllerFrame = CGRectStandardize(self.contentViewController.view.frame);
-  contentViewControllerFrame.size.height += contentOffset.y;
-  self.contentViewController.view.frame = contentViewControllerFrame;
   [self cacheLayoutCalculations];
   [UIView animateWithDuration:duration animations:^{
-    self.headerViewController.view.frame = headerViewControllerFrame;
     [self.scrollView setContentOffset:contentOffset];
   }];
+  /*if (CGRectGetHeight(self.presentingViewBounds) > totalHeight) {
+    CGFloat gapToTop = self.contentHeaderTopInset - topSafeArea;
+    CGFloat max = CGRectGetHeight(self.presentingViewBounds) - totalHeight;
+    CGFloat contentYOffset = gapToTop - max;
+    CGPoint contentOffset = CGPointMake(self.scrollView.contentOffset.x, contentYOffset);
+    [UIView animateWithDuration:duration animations:^{
+      [self.scrollView setContentOffset:contentOffset];
+    }];
+  } else {
+    CGFloat contentYOffset = self.contentHeaderTopInset - topSafeArea;
+    CGPoint contentOffset = CGPointMake(self.scrollView.contentOffset.x, contentYOffset);
+    [UIView animateWithDuration:duration animations:^{
+      [self.scrollView setContentOffset:contentOffset];
+    }];
+  }*/
 }
 
 #pragma mark Set ups (Private)
