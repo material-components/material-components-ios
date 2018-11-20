@@ -23,6 +23,7 @@ class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewContro
 
   var colorScheme = MDCSemanticColorScheme()
   let bottomAppBar = MDCBottomAppBarView()
+  var fullScreen: Bool = false
 
   let headerViewController = DrawerHeaderViewController()
   let contentViewController = DrawerContentViewController()
@@ -96,11 +97,18 @@ class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewContro
   }
 
   @objc func expandBottomDrawer() {
-    bottomDrawerViewController.expandToFullScreen(withDuration: 5) { _ in
+    var height: CGFloat = 0
+    if (!fullScreen) {
+      height = view.bounds.height - 80
+    } else {
+      height = 100
+    }
+    bottomDrawerViewController.expand(toPreferredContentHeight: height, withDuration: 5) { _ in
       if let drawerHeader =
           self.bottomDrawerViewController.headerViewController as? DrawerHeaderViewController {
         drawerHeader.titleLabel.text = "Done animating"
       }
+      self.fullScreen = !self.fullScreen
     }
     UIView.animate(withDuration: 5) { _ in
       self.bottomDrawerViewController.headerViewController?.view.backgroundColor =

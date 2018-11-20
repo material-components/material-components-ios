@@ -493,15 +493,15 @@ static UIColor *DrawerShadowColor(void) {
   [self.view setNeedsLayout];
 }
 
-- (void)expandToFullScreenWithDuration:(NSTimeInterval)duration
+- (void)expandToPreferredContentHeight:(CGFloat)preferredContentHeight
+                          withDuration:(NSTimeInterval)duration
                             completion:(void (^ _Nullable)(BOOL))completion {
   CGFloat topSafeArea = 0;
   if (@available(iOS 11.0, *)) {
     topSafeArea = self.view.safeAreaInsets.top;
   }
 
-  CGFloat totalHeight = self.headerViewController.preferredContentSize.height +
-                        _contentVCPreferredContentSizeHeightCached;
+  CGFloat totalHeight = self.headerViewController.preferredContentSize.height + preferredContentHeight;
   CGFloat precentageOfFullScreen = totalHeight / CGRectGetHeight(self.presentingViewBounds);
   CGPoint contentOffset = CGPointZero;
   if (CGRectGetHeight(self.presentingViewBounds) > totalHeight) {
@@ -519,6 +519,8 @@ static UIColor *DrawerShadowColor(void) {
     if (CGRectGetHeight(self.presentingViewBounds) < totalHeight) {
       [self.scrollView setContentOffset:CGPointZero];
     }
+    //CGSize size = CGSizeMake(self.contentViewController.preferredContentSize.width, preferredContentHeight);
+    //self.contentViewController.preferredContentSize = size;
     [self resetLayoutWithInitialDrawerFactor:precentageOfFullScreen];
     completion(YES);
   }];

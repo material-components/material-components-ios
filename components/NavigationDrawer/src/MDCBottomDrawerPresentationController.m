@@ -228,9 +228,11 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
 }
 
 
-- (void)expandToFullScreenWithDuration:(NSTimeInterval)duration
+- (void)expandToPreferredContentHeight:(CGFloat)preferredContentHeight
+                          withDuration:(NSTimeInterval)duration
                             completion:(void (^ _Nullable)(BOOL))completion {
-  [self.bottomDrawerContainerViewController expandToFullScreenWithDuration:duration
+  [self.bottomDrawerContainerViewController expandToPreferredContentHeight:preferredContentHeight
+                                                              withDuration:duration
                                                                 completion:completion];
 }
 
