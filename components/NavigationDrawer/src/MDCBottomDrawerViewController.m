@@ -214,13 +214,13 @@
   }
 }
 
-- (void)expandToPreferredContentHeight:(CGFloat)preferredContentHeight
+- (void)animateToPreferredContentHeight:(CGFloat)preferredContentHeight
                           withDuration:(NSTimeInterval)duration
                             completion:(void (^)(BOOL))completion {
   if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
     MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
         (MDCBottomDrawerPresentationController *)self.presentationController;
-    [bottomDrawerPresentationController expandToPreferredContentHeight:preferredContentHeight
+    [bottomDrawerPresentationController animateToPreferredContentHeight:preferredContentHeight
                                                           withDuration:duration
                                                             completion:completion];
   }

@@ -493,35 +493,44 @@ static UIColor *DrawerShadowColor(void) {
   [self.view setNeedsLayout];
 }
 
-- (void)expandToPreferredContentHeight:(CGFloat)preferredContentHeight
+- (void)animateToPreferredContentHeight:(CGFloat)preferredContentHeight
                           withDuration:(NSTimeInterval)duration
                             completion:(void (^ _Nullable)(BOOL))completion {
-  CGFloat topSafeArea = 0;
-  if (@available(iOS 11.0, *)) {
-    topSafeArea = self.view.safeAreaInsets.top;
-  }
-
-  CGFloat totalHeight = self.headerViewController.preferredContentSize.height + preferredContentHeight;
+  CGFloat totalHeight =
+      self.headerViewController.preferredContentSize.height + preferredContentHeight;
   CGFloat precentageOfFullScreen = totalHeight / CGRectGetHeight(self.presentingViewBounds);
   CGPoint contentOffset = CGPointZero;
+  CGFloat contentYOffset = 0;
   if (CGRectGetHeight(self.presentingViewBounds) > totalHeight) {
-    CGFloat maxViewHeight = CGRectGetHeight(self.presentingViewBounds) - totalHeight;
-    CGFloat contentYOffset = self.contentHeaderTopInset - maxViewHeight;
+    CGFloat spaceBetweenContentAndTop = CGRectGetHeight(self.presentingViewBounds) - totalHeight;
+    contentYOffset = self.contentHeaderTopInset - spaceBetweenContentAndTop;
     contentOffset = CGPointMake(self.scrollView.contentOffset.x, contentYOffset);
   } else {
-    CGFloat contentYOffset = self.contentHeaderTopInset - topSafeArea;
+    contentYOffset = self.contentHeaderTopInset - MDCDeviceTopSafeAreaInset();
     contentOffset = CGPointMake(self.scrollView.contentOffset.x, contentYOffset);
     precentageOfFullScreen = (precentageOfFullScreen > 1) ? 1 : precentageOfFullScreen;
   }
+  BOOL setContentHeight = NO;
+  CGSize newPreferredContentSize = CGSizeMake(CGRectGetWidth(self.view.bounds),
+                                              preferredContentHeight);
+  if (_contentVCPreferredContentSizeHeightCached > preferredContentHeight) {
+    setContentHeight = YES;
+  } else {
+    self.contentViewController.preferredContentSize = newPreferredContentSize;
+  }
+
   [UIView animateWithDuration:duration animations:^{
     [self.scrollView setContentOffset:contentOffset];
   } completion:^(BOOL finished) {
-    if (CGRectGetHeight(self.presentingViewBounds) < totalHeight) {
+    if (CGRectGetHeight(self.presentingViewBounds) <= totalHeight) {
       [self.scrollView setContentOffset:CGPointZero];
     }
-    //CGSize size = CGSizeMake(self.contentViewController.preferredContentSize.width, preferredContentHeight);
-    //self.contentViewController.preferredContentSize = size;
-    [self resetLayoutWithInitialDrawerFactor:precentageOfFullScreen];
+    if (setContentHeight) {
+      [self resetLayoutWithInitialDrawerFactor:precentageOfFullScreen
+                          preferredContentSize:newPreferredContentSize];
+    } else {
+      [self resetLayoutWithInitialDrawerFactor:precentageOfFullScreen];
+    }
     completion(YES);
   }];
 }
@@ -532,6 +541,12 @@ static UIColor *DrawerShadowColor(void) {
   _contentHeightSurplus = NSNotFound;
   _addedContentHeight = NSNotFound;
   [self.view setNeedsLayout];
+}
+
+- (void)resetLayoutWithInitialDrawerFactor:(CGFloat)initialDrawerFactor
+                           preferredContentSize:(CGSize)preferredContentSize {
+  self.contentViewController.preferredContentSize = preferredContentSize;
+  [self resetLayoutWithInitialDrawerFactor:initialDrawerFactor];
 }
 
 #pragma mark Set ups (Private)
