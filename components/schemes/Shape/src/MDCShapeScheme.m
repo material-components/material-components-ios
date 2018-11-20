@@ -37,19 +37,4 @@
   return self;
 }
 
-- (BOOL)isEqual:(id)object {
-  if (object == self) {
-    return YES;
-  }
-
-  if (!object || ![[object class] isEqual:[self class]]) {
-    return NO;
-  }
-
-  MDCShapeScheme *scheme = (MDCShapeScheme *)object;
-  return [self.smallComponentShape isEqual:scheme.smallComponentShape] &&
-         [self.mediumComponentShape isEqual:scheme.mediumComponentShape] &&
-         [self.largeComponentShape isEqual:scheme.largeComponentShape];
-}
-
 @end

@@ -61,28 +61,6 @@ static CGFloat blendColorChannel(CGFloat value, CGFloat bValue, CGFloat alpha, C
   return self;
 }
 
-- (BOOL)isEqual:(id)object {
-  if (object == self) {
-    return YES;
-  }
-
-  if (!object || ![[object class] isEqual:[self class]]) {
-    return NO;
-  }
-
-  MDCSemanticColorScheme *scheme = (MDCSemanticColorScheme *)object;
-  return [self.primaryColor isEqual:scheme.primaryColor] &&
-         [self.primaryColorVariant isEqual:scheme.primaryColorVariant] &&
-         [self.secondaryColor isEqual:scheme.secondaryColor] &&
-         [self.errorColor isEqual:scheme.errorColor] &&
-         [self.surfaceColor isEqual:scheme.surfaceColor] &&
-         [self.backgroundColor isEqual:scheme.backgroundColor] &&
-         [self.onPrimaryColor isEqual:scheme.onPrimaryColor] &&
-         [self.onSecondaryColor isEqual:scheme.onSecondaryColor] &&
-         [self.onSurfaceColor isEqual:scheme.onSurfaceColor] &&
-         [self.onBackgroundColor isEqual:scheme.onBackgroundColor];
-}
-
 + (UIColor *)blendColor:(UIColor *)color withBackgroundColor:(UIColor *)backgroundColor {
   CGFloat red = 0.0, green = 0.0, blue = 0.0, alpha = 0.0;
   [color getRed:&red green:&green blue:&blue alpha:&alpha];

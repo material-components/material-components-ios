@@ -21,22 +21,14 @@
 
 @implementation MDCContainerSchemeTests
 
-- (void)testInitWithMaterialDefaults {
+- (void)testWithMaterialInit {
   // Given
-  MDCContainerScheme *defaultContainerScheme =
-      [[MDCContainerScheme alloc] initWithDefaults:MDCContainerSchemeDefaultsMaterial201811];
+  MDCContainerScheme *defaultContainerScheme = [[MDCContainerScheme alloc] init];
 
-  MDCSemanticColorScheme *defaultColorScheme =
-      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-  XCTAssertEqualObjects(defaultContainerScheme.colorScheme, defaultColorScheme);
-
-  MDCTypographyScheme *defaultTypographyScheme =
-      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
-  XCTAssertEqualObjects(defaultContainerScheme.typographyScheme, defaultTypographyScheme);
-
-  MDCShapeScheme *defaultShapeScheme =
-      [[MDCShapeScheme alloc] initWithDefaults:MDCShapeSchemeDefaultsMaterial201809];
-  XCTAssertEqualObjects(defaultContainerScheme.shapeScheme, defaultShapeScheme);
+  // Then
+  XCTAssertNil(defaultContainerScheme.colorScheme);
+  XCTAssertNil(defaultContainerScheme.typographyScheme);
+  XCTAssertNil(defaultContainerScheme.shapeScheme);
 }
 
 @end

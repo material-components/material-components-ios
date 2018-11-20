@@ -18,6 +18,10 @@
 #import "MaterialShapeScheme.h"
 #import "MaterialTypographyScheme.h"
 
+/**
+ A class conforming to the MDCContainerScheming provides scheme properties for all the
+ theming systems (color, typography, shape, etc.) MDC supports.
+ */
 @protocol MDCContainerScheming <NSObject>
 
 @property(nonatomic, nullable, readonly) id<MDCColorScheming> colorScheme;
@@ -26,18 +30,15 @@
 
 @end
 
-typedef NS_ENUM(NSInteger, MDCContainerSchemeDefaults) {
-  MDCContainerSchemeDefaultsMaterial201811,
-};
+/**
+ MDCContainerScheme is a class conforming to MDCContainerScheming that provides
+ default schemes values for theming systems.
+ */
+__attribute__((objc_subclassing_restricted))
+@interface MDCContainerScheme : NSObject<MDCContainerScheming>
 
-__attribute__((objc_subclassing_restricted)) @interface MDCContainerScheme
-    : NSObject<MDCContainerScheming>
-
-@property(nonatomic, nullable) id<MDCColorScheming> colorScheme;
-@property(nonatomic, nullable) id<MDCTypographyScheming> typographyScheme;
-@property(nonatomic, nullable) id<MDCShapeScheming> shapeScheme;
-
-- (nonnull instancetype)initWithDefaults:(MDCContainerSchemeDefaults)defaults;
-- (instancetype)init NS_UNAVAILABLE;
+@property(nonatomic, nullable) MDCSemanticColorScheme *colorScheme;   // default is nil
+@property(nonatomic, nullable) MDCTypographyScheme *typographyScheme; // default is nil
+@property(nonatomic, nullable) MDCShapeScheme *shapeScheme;           // default is nil
 
 @end

@@ -19,7 +19,7 @@
  A simple color scheme that provides semantic context for the colors it uses. There are no optional
  properties and all colors must be provided, supporting more reliable color theming.
  */
-@protocol MDCColorScheming <NSObject>
+@protocol MDCColorScheming
 
 /**
  Displayed most frequently across your app.

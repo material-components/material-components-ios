@@ -16,39 +16,4 @@
 
 @implementation MDCContainerScheme
 
-- (instancetype)initWithDefaults:(MDCContainerSchemeDefaults)defaults {
-  self = [super init];
-  if (self) {
-    MDCColorSchemeDefaults colorSchemeDefaults;
-    MDCTypographySchemeDefaults typographySchemeDefaults;
-    MDCShapeSchemeDefaults shapeSchemeDefaults;
-    switch (defaults) {
-      case MDCContainerSchemeDefaultsMaterial201811:
-        colorSchemeDefaults = MDCColorSchemeDefaultsMaterial201804;
-        typographySchemeDefaults = MDCTypographySchemeDefaultsMaterial201804;
-        shapeSchemeDefaults = MDCShapeSchemeDefaultsMaterial201809;
-        break;
-    }
-    _colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:colorSchemeDefaults];
-    _typographyScheme = [[MDCTypographyScheme alloc] initWithDefaults:typographySchemeDefaults];
-    _shapeScheme = [[MDCShapeScheme alloc] initWithDefaults:shapeSchemeDefaults];
-  }
-  return self;
-}
-
-- (BOOL)isEqual:(id)object {
-  if (object == self) {
-    return YES;
-  }
-
-  if (!object || ![[object class] isEqual:[self class]]) {
-    return NO;
-  }
-
-  MDCContainerScheme *scheme = (MDCContainerScheme *)object;
-  return [self.colorScheme isEqual:scheme.colorScheme] &&
-         [self.typographyScheme isEqual:scheme.typographyScheme] &&
-         [self.shapeScheme isEqual:scheme.shapeScheme];
-}
-
 @end

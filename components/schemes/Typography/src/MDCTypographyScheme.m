@@ -67,23 +67,4 @@
   return self;
 }
 
-- (BOOL)isEqual:(id)object {
-  if (object == self) {
-    return YES;
-  }
-
-  if (!object || ![[object class] isEqual:[self class]]) {
-    return NO;
-  }
-
-  MDCTypographyScheme *scheme = (MDCTypographyScheme *)object;
-  return [self.headline1 isEqual:scheme.headline1] && [self.headline2 isEqual:scheme.headline2] &&
-         [self.headline3 isEqual:scheme.headline3] && [self.headline4 isEqual:scheme.headline4] &&
-         [self.headline5 isEqual:scheme.headline5] && [self.headline6 isEqual:scheme.headline6] &&
-         [self.subtitle1 isEqual:scheme.subtitle1] && [self.subtitle2 isEqual:scheme.subtitle2] &&
-         [self.body1 isEqual:scheme.body1] && [self.body2 isEqual:scheme.body2] &&
-         [self.caption isEqual:scheme.caption] && [self.button isEqual:scheme.button] &&
-         [self.overline isEqual:scheme.overline];
-}
-
 @end

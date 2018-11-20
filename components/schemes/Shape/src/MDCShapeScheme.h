@@ -23,7 +23,7 @@
  There are no optional properties and all shapes must be provided,
  supporting more reliable shape theming.
  */
-@protocol MDCShapeScheming <NSObject>
+@protocol MDCShapeScheming
 
 /**
  The shape defining small sized components.
