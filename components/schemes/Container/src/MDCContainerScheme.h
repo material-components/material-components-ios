@@ -22,7 +22,7 @@
  A class conforming to the MDCContainerScheming provides scheme properties for all the
  theming systems (color, typography, shape, etc.) MDC supports.
  */
-@protocol MDCContainerScheming <NSObject>
+@protocol MDCContainerScheming
 
 @property(nonatomic, nullable, readonly) id<MDCColorScheming> colorScheme;
 @property(nonatomic, nullable, readonly) id<MDCTypographyScheming> typographyScheme;
