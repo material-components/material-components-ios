@@ -1,15 +1,11 @@
-# #develop#
+# 70.0.0
 
-Replace this text with a summarized description of this release's contents.
+This major change removes all property coding behavior from our components.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
+Component properties are no longer encoded or decoded for any component.
 
-Replace this text with links to deprecation guides.
-## New features
-
-Replace this text with example code for each new feature.
 ## API changes
 
 ### Buttons
