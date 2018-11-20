@@ -6,6 +6,16 @@ This major change removes all property coding behavior from our components.
 
 Component properties are no longer encoded or decoded for any component.
 
+## New features
+
+Improvements made to Navigation Drawer:
+
+1. Improvements to the Navigation Drawer's performance by removing unneeded calls to the
+   contentViewController's preferredContentSize.
+2. A new API on `MDCBottomDrawerViewController:` `setContentOffsetY:contentOffsetY:animated:`
+   allowing to manually scroll the content to the desired offset. Setting the contentOffsetY to 0
+   will scroll the drawer to the top of the content.
+
 ## API changes
 
 ### Buttons
