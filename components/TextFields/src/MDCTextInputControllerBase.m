@@ -402,7 +402,10 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                               scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
     // TODO: (#4331) This needs to be converted to the new text scheme.
   }
-  self.textInput.font = font;
+
+  if (![self.textInput.font mdc_isSimplyEqual:font]){
+    self.textInput.font = font;
+  }
 }
 
 #pragma mark - Placeholder Customization
