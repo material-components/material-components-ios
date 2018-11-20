@@ -506,29 +506,33 @@ static UIColor *DrawerShadowColor(void) {
     topSafeArea = self.view.safeAreaInsets.top;
   }
   CGFloat totalHeight = self.headerViewController.preferredContentSize.height +
-      self.contentViewController.preferredContentSize.height;
+                        self.contentViewController.preferredContentSize.height;
   CGFloat precentageOfFullScreen = totalHeight / CGRectGetHeight(self.presentingViewBounds);
   if (CGRectGetHeight(self.presentingViewBounds) > totalHeight) {
     CGFloat maxViewHeight = CGRectGetHeight(self.presentingViewBounds) - totalHeight;
     CGFloat contentYOffset = self.contentHeaderTopInset - maxViewHeight;
     CGPoint contentOffset = CGPointMake(self.scrollView.contentOffset.x, contentYOffset);
-    [UIView animateWithDuration:duration animations:^{
-      [self.scrollView setContentOffset:contentOffset];
-    } completion:^(BOOL finished) {
-      [self resetLayoutWithInitialDrawerFactor:precentageOfFullScreen];
-    }];
+    [UIView animateWithDuration:duration
+        animations:^{
+          [self.scrollView setContentOffset:contentOffset];
+        }
+        completion:^(BOOL finished) {
+          [self resetLayoutWithInitialDrawerFactor:precentageOfFullScreen];
+        }];
   } else {
     CGFloat contentYOffset = self.contentHeaderTopInset - topSafeArea;
     CGPoint contentOffset = CGPointMake(self.scrollView.contentOffset.x, contentYOffset);
     precentageOfFullScreen = (precentageOfFullScreen > 1) ? 1 : precentageOfFullScreen;
-    [UIView animateWithDuration:duration animations:^{
-      [self.scrollView setContentOffset:contentOffset];
-    } completion:^(BOOL finished) {
-      // Reset the content offset to 0 because we are going to recachelayout and reset initial
-      // drawer factor.
-      [self.scrollView setContentOffset:CGPointZero];
-      [self resetLayoutWithInitialDrawerFactor:precentageOfFullScreen];
-    }];
+    [UIView animateWithDuration:duration
+        animations:^{
+          [self.scrollView setContentOffset:contentOffset];
+        }
+        completion:^(BOOL finished) {
+          // Reset the content offset to 0 because we are going to recachelayout and reset initial
+          // drawer factor.
+          [self.scrollView setContentOffset:CGPointZero];
+          [self resetLayoutWithInitialDrawerFactor:precentageOfFullScreen];
+        }];
   }
 }
 
