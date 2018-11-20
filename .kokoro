@@ -393,36 +393,6 @@ generate_apidiff() {
   fi
 }
 
-# Will run git clang-format on the branch's changes, reporting a failure if the linter generated any
-# stylistic changes.
-#
-# For local runs, you must set the following environment variables:
-#
-#   GITHUB_API_TOKEN -> Create a token here: https://github.com/settings/tokens.
-#                       Must have public_repo scope.
-#   KOKORO_GITHUB_PULL_REQUEST_NUMBER="###" -> The PR # you want to post the API diff results to.
-#   KOKORO_GITHUB_PULL_REQUEST_COMMIT="..." -> The PR commit you want to post to.
-#
-# And install the following tools:
-#
-# - clang-format
-# - git-clang-format
-lint_clang_format() {
-  CLANG_FORMAT_CI_VERSION="v1.*"
-
-  if [ ! -d .clang-format-ci ]; then
-    git clone --recurse-submodules https://github.com/material-foundation/clang-format-ci.git .clang-format-ci
-  fi
-
-  pushd .clang-format-ci
-  git fetch > /dev/null
-  TAG=$(git tag --sort=v:refname -l "$CLANG_FORMAT_CI_VERSION" | tail -n1)
-  git checkout "$TAG" > /dev/null
-  popd
-
-  .clang-format-ci/from-kokoro.sh "material-components/material-components-ios"
-}
-
 # This command can be used when a pull request should always be put into a failure state.
 # For example, we do not want to allow pull requests to be merged into stable.
 fail_immediately() {
@@ -497,7 +467,6 @@ fi
 
 case "$DEPENDENCY_SYSTEM" in
   "bazel")      run_bazel ;;
-  "clang-format")  lint_clang_format ;;
   "cocoapods")  run_cocoapods ;;
   "cocoapods-podspec")  run_cocoapods ;;
   "website")    generate_website ;;
