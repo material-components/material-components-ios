@@ -35,7 +35,6 @@ mdc_objc_library(
     testonly = 1,
     srcs = glob(["tests/unit/*.m"]),
     hdrs = glob(["tests/unit/*.h"]),
-    includes = ["src"],
     sdk_frameworks = [
         "XCTest",
     ],

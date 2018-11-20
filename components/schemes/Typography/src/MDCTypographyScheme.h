@@ -20,6 +20,7 @@
  */
 @protocol MDCTypographyScheming
 
+
 /**
  The headline 1 font.
  */
