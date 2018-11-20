@@ -1,6 +1,8 @@
 # 70.0.0
 
-This major change removes all property coding behavior from our components.
+This major change removes all property coding behavior from our components. It also includes
+performance improvements for NavigationDrawer and a new API for adjusting its content offset.
+PageControl now also supports RTL.
 
 ## Breaking changes
 
