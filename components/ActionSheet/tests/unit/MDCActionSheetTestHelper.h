@@ -35,4 +35,7 @@
 + (NSArray<MDCActionSheetItemTableViewCell *> *)getCellsFromActionSheet:
     (MDCActionSheetController *)actionSheet;
 
++ (MDCActionSheetItemTableViewCell *)getCellFromActionSheet:(MDCActionSheetController *)actionSheet
+                                                    atIndex:(NSInteger)index;
+
 @end

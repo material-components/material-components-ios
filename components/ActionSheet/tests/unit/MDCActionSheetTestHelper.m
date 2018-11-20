@@ -64,4 +64,17 @@
   return cellsArray;
 }
 
++ (MDCActionSheetItemTableViewCell *)getCellFromActionSheet:(MDCActionSheetController *)actionSheet
+                                                    atIndex:(NSInteger)index {
+  if (index < actionSheet.actions.count) {
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    UITableView *table = actionSheet.tableView;
+    UITableViewCell *cell = [table.dataSource tableView:table cellForRowAtIndexPath:indexPath];
+    if ([cell isKindOfClass:[MDCActionSheetItemTableViewCell class]]) {
+      return (MDCActionSheetItemTableViewCell *)cell;
+    }
+  }
+  return nil;
+}
+
 @end
