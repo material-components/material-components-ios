@@ -12,17 +12,37 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <UIKit/UIKit.h>
+
+#import "MaterialApplication.h"
+#import "MaterialCollections.h"
+#import "MaterialColorScheme.h"
 #import "MaterialDialogs.h"
-#import "supplemental/DialogsTypicalUseSupplemental.h"
+#import "MaterialTypographyScheme.h"
 #import "supplemental/DialogWithPreferredContentSizeViewController.h"
 
-@interface DialogsTypicalUseViewController ()
+#pragma mark - DialogsDismissingViewController Interfaces
 
+@interface DialogsDismissingViewController : MDCCollectionViewController
+@property(nonatomic, strong, nullable) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong, nullable) MDCTypographyScheme *typographyScheme;
+@property(nonatomic, strong, nullable) NSArray *modes;
 @property(nonatomic, strong) MDCDialogTransitionController *transitionController;
-
 @end
 
-@implementation DialogsTypicalUseViewController
+@interface DialogsDismissingViewController (Supplemental)
+- (void)loadCollectionView:(nullable NSArray *)modes;
+@end
+
+@interface ProgrammaticViewController : UIViewController
+@end
+
+@interface OpenURLViewController : UIViewController
+@end
+
+#pragma mark - DialogsDismissingViewController Implementation
+
+@implementation DialogsDismissingViewController
 
 - (id)init {
   self = [super init];
@@ -36,14 +56,17 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  [self loadCollectionView:@[@"Dismissable Programmatic", @"Dismissable Storyboard",
-                             @"Non-dismissable Programmatic", @"Open URL"]];
+  [self loadCollectionView:@[
+    @"Dismissable Programmatic", @"Dismissable Storyboard", @"Non-dismissable Programmatic",
+    @"Open URL"
+  ]];
   // We must create and store a strong reference to the transitionController.
   // A presented view controller will set this object as its transitioning delegate.
   self.transitionController = [[MDCDialogTransitionController alloc] init];
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+- (void)collectionView:(UICollectionView *)collectionView
+    didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
   if (indexPath.row == 0) {
     [self didTapProgrammatic];
@@ -57,8 +80,8 @@
 }
 
 - (IBAction)didTapProgrammatic {
-  UIViewController *viewController =
-      [[ProgrammaticViewController alloc] initWithNibName:nil bundle:nil];
+  UIViewController *viewController = [[ProgrammaticViewController alloc] initWithNibName:nil
+                                                                                  bundle:nil];
   viewController.modalPresentationStyle = UIModalPresentationCustom;
   viewController.transitioningDelegate = self.transitionController;
 
@@ -66,8 +89,8 @@
 }
 
 - (IBAction)didTapModalProgrammatic {
-  UIViewController *viewController =
-      [[ProgrammaticViewController alloc] initWithNibName:nil bundle:nil];
+  UIViewController *viewController = [[ProgrammaticViewController alloc] initWithNibName:nil
+                                                                                  bundle:nil];
   viewController.modalPresentationStyle = UIModalPresentationCustom;
   viewController.transitioningDelegate = self.transitionController;
 
@@ -81,8 +104,7 @@
 }
 
 - (IBAction)didTapOpenURL {
-  UIViewController *viewController =
-    [[OpenURLViewController alloc] initWithNibName:nil bundle:nil];
+  UIViewController *viewController = [[OpenURLViewController alloc] initWithNibName:nil bundle:nil];
   viewController.modalPresentationStyle = UIModalPresentationCustom;
   viewController.transitioningDelegate = self.transitionController;
 
@@ -91,9 +113,9 @@
 
 - (IBAction)didTapStoryboard {
   // If you are using this code outside of the MDCCatalog in your own app, your bundle may be nil.
-  NSBundle *bundle = [NSBundle bundleForClass:[DialogsTypicalUseViewController class]];
-  UIStoryboard *storyboard =
-      [UIStoryboard storyboardWithName:@"DialogWithPreferredContentSize" bundle:bundle];
+  NSBundle *bundle = [NSBundle bundleForClass:[DialogsDismissingViewController class]];
+  UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"DialogWithPreferredContentSize"
+                                                       bundle:bundle];
   NSString *identifier = @"DialogID";
 
   DialogWithPreferredContentSizeViewController *viewController =
@@ -103,6 +125,140 @@
   viewController.colorScheme = self.colorScheme;
   viewController.typographyScheme = self.typographyScheme;
   [self presentViewController:viewController animated:YES completion:NULL];
+}
+
+@end
+
+#pragma mark - DialogsDismissingViewController - Supplemental
+
+static NSString *const kReusableIdentifierItem = @"cell";
+
+@implementation DialogsDismissingViewController (Supplemental)
+
+- (void)loadCollectionView:(nullable NSArray *)modes {
+  [self.collectionView registerClass:[MDCCollectionViewTextCell class]
+          forCellWithReuseIdentifier:kReusableIdentifierItem];
+  self.modes = modes;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView
+     numberOfItemsInSection:(NSInteger)section {
+  return self.modes.count;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+  MDCCollectionViewTextCell *cell =
+      [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
+                                                forIndexPath:indexPath];
+  cell.textLabel.text = self.modes[indexPath.row];
+  return cell;
+}
+
+@end
+
+@implementation DialogsDismissingViewController (CatalogByConvention)
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs" : @[ @"Dialogs", @"Dismissing Dialogs" ],
+    @"description" : @"Exploring different aspects of dismissing Dialogs.",
+    @"primaryDemo" : @YES,
+    @"presentable" : @YES,
+  };
+}
+
+@end
+
+#pragma mark - ProgrammaticViewController
+
+@interface ProgrammaticViewController ()
+
+@property(nonatomic, strong) MDCFlatButton *dismissButton;
+
+@end
+
+@implementation ProgrammaticViewController
+
+- (void)viewDidLoad {
+  [super viewDidLoad];
+
+  self.view.backgroundColor = [UIColor whiteColor];
+
+  _dismissButton = [[MDCFlatButton alloc] init];
+  [_dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
+  [_dismissButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+  _dismissButton.autoresizingMask =
+      UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin |
+      UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
+  [_dismissButton addTarget:self
+                     action:@selector(dismiss:)
+           forControlEvents:UIControlEventTouchUpInside];
+
+  [self.view addSubview:_dismissButton];
+}
+
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+  [_dismissButton sizeToFit];
+  _dismissButton.center =
+      CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds));
+}
+
+- (CGSize)preferredContentSize {
+  return CGSizeMake(200.0, 140.0);
+}
+
+- (IBAction)dismiss:(id)sender {
+  [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
+}
+
+@end
+
+#pragma mark - OpenURLViewController
+
+@interface OpenURLViewController ()
+
+@property(nonatomic, strong) MDCFlatButton *dismissButton;
+
+@end
+
+@implementation OpenURLViewController
+
+- (void)viewDidLoad {
+  [super viewDidLoad];
+
+  self.view.backgroundColor = [UIColor whiteColor];
+
+  _dismissButton = [[MDCFlatButton alloc] init];
+  [_dismissButton setTitle:@"material.io" forState:UIControlStateNormal];
+  [_dismissButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+  _dismissButton.autoresizingMask =
+      UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin |
+      UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
+  [_dismissButton addTarget:self
+                     action:@selector(dismiss:)
+           forControlEvents:UIControlEventTouchUpInside];
+
+  [self.view addSubview:_dismissButton];
+}
+
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+  [_dismissButton sizeToFit];
+  _dismissButton.center =
+      CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds));
+}
+
+- (CGSize)preferredContentSize {
+  return CGSizeMake(200.0, 140.0);
+}
+
+- (IBAction)dismiss:(id)sender {
+  NSURL *testURL = [NSURL URLWithString:@"https://material.io"];
+  // Use mdc_safeSharedApplication to avoid a compiler warning about extensions
+  [[UIApplication mdc_safeSharedApplication] performSelector:@selector(openURL:)
+                                                  withObject:testURL];
 }
 
 @end
