@@ -16,6 +16,9 @@ Improvements made to Navigation Drawer:
    allowing to manually scroll the content to the desired offset. Setting the contentOffsetY to 0
    will scroll the drawer to the top of the content.
 
+MDCPageControl has a new `respectsUserInterfaceLayoutDirection` property that, when enabled, causes
+the page control to react to RTL layout.
+
 ## API changes
 
 ### Buttons
