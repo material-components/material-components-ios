@@ -10,6 +10,7 @@
 # *.js    @octocat @github/js
 
 # You can also use email addresses if you prefer.
+/components/ActionSheet/          @codeman7
 /components/AnimationTiming/      @yarneo
 /components/AppBar/               @jverkoey
 /components/BottomAppBar/         @wenyuzhang666
