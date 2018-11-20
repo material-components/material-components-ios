@@ -61,6 +61,9 @@
 @property(nullable, nonatomic, readonly) UIPresentationController *presentationController;
 - (void)cacheLayoutCalculations;
 - (void)updateDrawerState:(CGFloat)transitionPercentage;
+- (CGPoint)animateCalculationsWithPreferredContentHeight:(CGFloat)preferredContentHeight;
+- (CGFloat)precentageOfFullScreenWithPreferredContentHeight:(CGFloat)preferredContentHeight;
+- (CGFloat)totalHeightWithAddedContentHeight:(CGFloat)addedContentHeight;
 @end
 
 @interface MDCBottomDrawerPresentationController (ScrollViewTests) <
@@ -576,10 +579,10 @@
   self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(200, 5000);
 
   // When
-  [self.fakeBottomDrawer expandToFullScreenWithDuration:0];
+  [self.fakeBottomDrawer animateToPreferredContentHeight:5000 withDuration:0 completion:nil];
 
   // Then
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.scrollView.contentOffset.y, 250, 0.001);
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.scrollView.contentOffset.y, 230, 0.001);
 }
 
 - (void)testExpandToFullScreenAnimationWithSmallScreenContent {
@@ -589,7 +592,7 @@
   self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(200, 300);
 
   // When
-  [self.fakeBottomDrawer expandToFullScreenWithDuration:0];
+  [self.fakeBottomDrawer animateToPreferredContentHeight:300 withDuration:0 completion:nil];
 
   // Then
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.scrollView.contentOffset.y, 50, 0.001);

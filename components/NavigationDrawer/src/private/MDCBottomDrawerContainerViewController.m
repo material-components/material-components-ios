@@ -138,6 +138,24 @@ static UIColor *DrawerShadowColor(void) {
 
 @property(nonatomic) CGFloat initialDrawerFactor;
 
+/**
+ Calculates the contentOffset if contentViewController's preferredContentSize was set to @c
+ preferredContentSize.
+ */
+- (CGPoint)animateCalculationsWithPreferredContentHeight:(CGFloat)preferredContentHeight;
+
+/**
+ Calculates how much of the screen will be filled with contentViewController's preferredContentSize
+ being @c preferredContentSize.
+ */
+- (CGFloat)precentageOfFullScreenWithPreferredContentHeight:(CGFloat)preferredContentHeight;
+
+/**
+ Calculates the height of the headerViewController.preferredContentSize plus your desired added
+ content height.
+ */
+- (CGFloat)totalHeightWithAddedContentHeight:(CGFloat)addedContentHeight;
+
 @end
 
 @implementation MDCBottomDrawerContainerViewController {
@@ -496,20 +514,11 @@ static UIColor *DrawerShadowColor(void) {
 - (void)animateToPreferredContentHeight:(CGFloat)preferredContentHeight
                           withDuration:(NSTimeInterval)duration
                             completion:(void (^ _Nullable)(BOOL))completion {
-  CGFloat totalHeight =
-      self.headerViewController.preferredContentSize.height + preferredContentHeight;
-  CGFloat precentageOfFullScreen = totalHeight / CGRectGetHeight(self.presentingViewBounds);
-  CGPoint contentOffset = CGPointZero;
-  CGFloat contentYOffset = 0;
-  if (CGRectGetHeight(self.presentingViewBounds) > totalHeight) {
-    CGFloat spaceBetweenContentAndTop = CGRectGetHeight(self.presentingViewBounds) - totalHeight;
-    contentYOffset = self.contentHeaderTopInset - spaceBetweenContentAndTop;
-    contentOffset = CGPointMake(self.scrollView.contentOffset.x, contentYOffset);
-  } else {
-    contentYOffset = self.contentHeaderTopInset - MDCDeviceTopSafeAreaInset();
-    contentOffset = CGPointMake(self.scrollView.contentOffset.x, contentYOffset);
-    precentageOfFullScreen = (precentageOfFullScreen > 1) ? 1 : precentageOfFullScreen;
-  }
+  CGPoint contentOffset =
+      [self animateCalculationsWithPreferredContentHeight:preferredContentHeight];
+  CGFloat precentageOfFullScreen =
+      [self precentageOfFullScreenWithPreferredContentHeight:preferredContentHeight];
+  CGFloat totalHeight = [self totalHeightWithAddedContentHeight:preferredContentHeight];
   BOOL setContentHeight = NO;
   CGSize newPreferredContentSize = CGSizeMake(CGRectGetWidth(self.view.bounds),
                                               preferredContentHeight);
@@ -533,6 +542,31 @@ static UIColor *DrawerShadowColor(void) {
     }
     completion(YES);
   }];
+}
+
+- (CGPoint)animateCalculationsWithPreferredContentHeight:(CGFloat)preferredContentHeight {
+  CGFloat totalHeight = [self totalHeightWithAddedContentHeight:preferredContentHeight];
+  CGFloat contentYOffset = 0;
+  CGPoint contentOffset = CGPointZero;
+  if (CGRectGetHeight(self.presentingViewBounds) > totalHeight) {
+    CGFloat spaceBetweenContentAndTop = CGRectGetHeight(self.presentingViewBounds) - totalHeight;
+    contentYOffset = self.contentHeaderTopInset - spaceBetweenContentAndTop;
+    contentOffset = CGPointMake(self.scrollView.contentOffset.x, contentYOffset);
+  } else {
+    contentYOffset = self.contentHeaderTopInset - MDCDeviceTopSafeAreaInset();
+    contentOffset = CGPointMake(self.scrollView.contentOffset.x, contentYOffset);
+  }
+  return contentOffset;
+}
+
+- (CGFloat)precentageOfFullScreenWithPreferredContentHeight:(CGFloat)preferredContentHeight {
+  CGFloat totalHeight = [self totalHeightWithAddedContentHeight:preferredContentHeight];
+  CGFloat precentageOfFullScreen = totalHeight / CGRectGetHeight(self.presentingViewBounds);
+  return (precentageOfFullScreen > 1) ? 1 : precentageOfFullScreen;
+}
+
+- (CGFloat)totalHeightWithAddedContentHeight:(CGFloat)addedContentHeight {
+  return self.headerViewController.preferredContentSize.height + addedContentHeight;
 }
 
 - (void)resetLayoutWithInitialDrawerFactor:(CGFloat)initialDrawerFactor {
