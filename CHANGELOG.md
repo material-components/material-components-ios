@@ -1,3 +1,170 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+### Buttons
+
+#### MDCFloatingButton
+
+*removed* method: `-initWithCoder:` in `MDCFloatingButton`
+
+### Collections
+
+#### MDCCollectionViewEditing
+
+*new* method: `-updateReorderCellPosition` in `MDCCollectionViewEditing`
+
+### NavigationDrawer
+
+#### MDCBottomDrawerViewController
+
+*new* method: `-setContentOffsetY:animated:` in `MDCBottomDrawerViewController`
+
+#### MDCBottomDrawerPresentationController
+
+*new* property: `contentReachesFullscreen` in `MDCBottomDrawerPresentationController`
+
+*new* method: `-setContentOffsetY:animated:` in `MDCBottomDrawerPresentationController`
+
+### PageControl
+
+#### MDCPageControl
+
+*new* property: `respectsUserInterfaceLayoutDirection` in `MDCPageControl`
+
+### Slider
+
+#### MDCSlider
+
+*modified* class: `MDCSlider`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `class MDCSlider : UIControl, NSSecureCoding` |
+| To: | `class MDCSlider : UIControl` |
+
+*modified* class: `MDCSlider`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCSlider : UIControl <NSSecureCoding>` |
+| To: | `@interface MDCSlider : UIControl` |
+
+### ColorScheme
+
+#### MDCTonalPalette
+
+*removed* method: `-initWithCoder:` in `MDCTonalPalette`
+
+*modified* class: `MDCTonalPalette`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `class MDCTonalPalette : NSObject, NSCopying, NSSecureCoding` |
+| To: | `class MDCTonalPalette : NSObject, NSCopying` |
+
+*modified* class: `MDCTonalPalette`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCTonalPalette : NSObject <NSCopying, NSSecureCoding>` |
+| To: | `@interface MDCTonalPalette : NSObject <NSCopying>` |
+
+## Component changes
+
+### BottomNavigation
+
+* [Support `accessibilityLabel`, `accessibilityHint`, and `isAccessibilityElement` (#5736)](https://github.com/material-components/material-components-ios/commit/0affb857649cd620eac7912edf0a396f966b20a1) (andrewplai)
+
+### BottomSheet
+
+* [Add a Dragon to demonstrate issue #5778 (#5779)](https://github.com/material-components/material-components-ios/commit/ee8f1991ec88f69fc1819d0ea3ee0bc20bcd9960) (danblakemore)
+
+### Buttons
+
+#### Breaking changes
+
+* [**Breaking**:  Remove property coding support from MDCFloatingButton and MDCFlatButton. (#5787)](https://github.com/material-components/material-components-ios/commit/9564c50eaa08ee5cf79a0fc31adb9cd67972aa28) (featherless)
+
+* [[all]! Remove remaining property coding. (#5792)](https://github.com/material-components/material-components-ios/commit/d9c801e77306416af6e08bb96d364d65f1f9c340) (featherless)
+
+### Cards
+
+* [[all]! Remove remaining property coding. (#5792)](https://github.com/material-components/material-components-ios/commit/d9c801e77306416af6e08bb96d364d65f1f9c340) (featherless)
+
+### Chips
+
+* [[all]! Remove remaining property coding. (#5792)](https://github.com/material-components/material-components-ios/commit/d9c801e77306416af6e08bb96d364d65f1f9c340) (featherless)
+
+### Collections
+
+* [Adds ability to programmatically update the position of the reordering cell (#5560)](https://github.com/material-components/material-components-ios/commit/4daa8b4aa97338942246415e5e75b0c3b7f685a5) (Felix Emiliano)
+
+### Dialogs
+
+* [Add an Alert width upper bound (#4914)](https://github.com/material-components/material-components-ios/commit/a063cd7552ecf0fea5abebe071455f7b69d940f7) (ianegordon)
+* [Revert "[Dialogs, Shape] Fix cross-component imports. (#5786)" (#5793)](https://github.com/material-components/material-components-ios/commit/595127cd7bcd52f0cf4e531b9fc2e164efc29154) (Robert Moore)
+* [[Dialogs, Shape] Fix cross-component imports. (#5786)](https://github.com/material-components/material-components-ios/commit/58b7e388d458422a0d4e4f30d0f43ad9de73aecb) (Robert Moore)
+* [[Dialogs, Shape] Fix cross-component imports. (#5794)](https://github.com/material-components/material-components-ios/commit/6f7513d17ee1f3116f43fadc0ef4b6ebba3f700a) (Robert Moore)
+* [[all]! Remove remaining property coding. (#5792)](https://github.com/material-components/material-components-ios/commit/d9c801e77306416af6e08bb96d364d65f1f9c340) (featherless)
+
+### FlexibleHeader
+
+* [[all]! Remove remaining property coding. (#5792)](https://github.com/material-components/material-components-ios/commit/d9c801e77306416af6e08bb96d364d65f1f9c340) (featherless)
+
+### Ink
+
+* [[all]! Remove remaining property coding. (#5792)](https://github.com/material-components/material-components-ios/commit/d9c801e77306416af6e08bb96d364d65f1f9c340) (featherless)
+
+### List
+
+* [[all]! Remove remaining property coding. (#5792)](https://github.com/material-components/material-components-ios/commit/d9c801e77306416af6e08bb96d364d65f1f9c340) (featherless)
+
+### NavigationDrawer
+
+* [API to allow content to scroll to top (#5776)](https://github.com/material-components/material-components-ios/commit/137a3e920c7056a9a168b4889c27b119df1dee61) (Yarden Eitan)
+* [Improve performance for heavy preferredContentSize calls (#5744)](https://github.com/material-components/material-components-ios/commit/bccd163467bb1b61ded88256639c3c18b36fbeb8) (Yarden Eitan)
+* [Position handle using NSLayoutConstraints (#5760)](https://github.com/material-components/material-components-ios/commit/deac15a06c31d854d4fefd964905b48181469ebe) (Andrew Overton)
+
+### PageControl
+
+* [Add respectsUserInterfaceLayoutDirection to MDCPageControl (#5711)](https://github.com/material-components/material-components-ios/commit/21dfce7f5fb97038ae3b5e81b4acada796fa2c08) (Andrew Overton)
+
+### Slider
+
+* [[all]! Remove remaining property coding. (#5792)](https://github.com/material-components/material-components-ios/commit/d9c801e77306416af6e08bb96d364d65f1f9c340) (featherless)
+
+### Tabs
+
+* [Update MDCItemBarCell edge insets to 16.0f, per the material spec. (#5670)](https://github.com/material-components/material-components-ios/commit/e97f72ed9de31598eb0772ea4735a5c4198230ac) (Mark Klara)
+* [[all]! Remove remaining property coding. (#5792)](https://github.com/material-components/material-components-ios/commit/d9c801e77306416af6e08bb96d364d65f1f9c340) (featherless)
+
+### TextFields
+
+* [[all]! Remove remaining property coding. (#5792)](https://github.com/material-components/material-components-ios/commit/d9c801e77306416af6e08bb96d364d65f1f9c340) (featherless)
+
+### schemes/Color
+
+* [[all]! Remove remaining property coding. (#5792)](https://github.com/material-components/material-components-ios/commit/d9c801e77306416af6e08bb96d364d65f1f9c340) (featherless)
+
+### schemes/Shape
+
+* [Revert "[Dialogs, Shape] Fix cross-component imports. (#5786)" (#5793)](https://github.com/material-components/material-components-ios/commit/595127cd7bcd52f0cf4e531b9fc2e164efc29154) (Robert Moore)
+* [[Dialogs, Shape] Fix cross-component imports. (#5786)](https://github.com/material-components/material-components-ios/commit/58b7e388d458422a0d4e4f30d0f43ad9de73aecb) (Robert Moore)
+* [[Dialogs, Shape] Fix cross-component imports. (#5794)](https://github.com/material-components/material-components-ios/commit/6f7513d17ee1f3116f43fadc0ef4b6ebba3f700a) (Robert Moore)
+
+---
+
 # 69.0.0
 
 This major release introduces a breaking change with Snackbar's default style. It also includes
