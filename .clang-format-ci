@@ -18,7 +18,10 @@
 set -e
 
 # The tagged version of https://github.com/material-foundation/clang-format-ci to check out.
+# A * wildcard can be used to check out the latest release of a given version.
 CLANG_FORMAT_CI_VERSION="v1.*"
+
+CLANG_FORMAT_CI_SRC_DIR=".clang-format-ci-src"
 
 # Will run git clang-format on the branch's changes, reporting a failure if the linter generated any
 # stylistic changes.
@@ -35,14 +38,15 @@ CLANG_FORMAT_CI_VERSION="v1.*"
 # - clang-format
 # - git-clang-format
 lint_clang_format() {
-  if [ ! -d .clang-format-ci-src ]; then
-    git clone --recurse-submodules https://github.com/material-foundation/clang-format-ci.git .clang-format-ci-src
+  if [ ! -d "$CLANG_FORMAT_CI_SRC_DIR" ]; then
+    git clone --recurse-submodules https://github.com/material-foundation/clang-format-ci.git "$CLANG_FORMAT_CI_SRC_DIR"
   fi
 
-  pushd .clang-format-ci-src
+  pushd "$CLANG_FORMAT_CI_SRC_DIR"
   git fetch > /dev/null
   TAG=$(git tag --sort=v:refname -l "$CLANG_FORMAT_CI_VERSION" | tail -n1)
   git checkout "$TAG" > /dev/null
+  echo "Using clang-format-ci $TAG"
   popd
 
   .clang-format-ci-src/from-kokoro.sh "material-components/material-components-ios"
