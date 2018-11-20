@@ -163,8 +163,8 @@ static NSString *const kReusableIdentifierItem = @"cell";
   return @{
     @"breadcrumbs" : @[ @"Dialogs", @"Dismissing Dialogs" ],
     @"description" : @"Exploring different aspects of dismissing Dialogs.",
-    @"primaryDemo" : @YES,
-    @"presentable" : @YES,
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 
