@@ -37,7 +37,7 @@ typedef NS_ENUM(NSInteger, MDCCornerTreatmentValueType) {
  the top-left corner of a rectangle). MDCShapeModel will translate the generated
  MDCPathGenerator to the expected position and rotation.
  */
-@interface MDCCornerTreatment : NSObject <NSCopying, NSSecureCoding>
+@interface MDCCornerTreatment : NSObject <NSCopying>
 
 /**
  The value type of our corner treatment.
@@ -49,7 +49,6 @@ typedef NS_ENUM(NSInteger, MDCCornerTreatmentValueType) {
  */
 @property(assign, nonatomic) MDCCornerTreatmentValueType valueType;
 
-- (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init NS_DESIGNATED_INITIALIZER;
 
 /**

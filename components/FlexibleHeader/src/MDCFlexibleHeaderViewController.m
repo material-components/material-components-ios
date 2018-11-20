@@ -38,11 +38,6 @@ static inline BOOL ShouldUseLightStatusBarOnBackgroundColor(UIColor *color) {
                                  options:MDFTextAccessibilityOptionsNone];
 }
 
-static NSString *const MDCFlexibleHeaderViewControllerHeaderViewKey =
-    @"MDCFlexibleHeaderViewControllerHeaderViewKey";
-static NSString *const MDCFlexibleHeaderViewControllerLayoutDelegateKey =
-    @"MDCFlexibleHeaderViewControllerLayoutDelegateKey";
-
 // KVO contexts
 static char *const kKVOContextMDCFlexibleHeaderViewController =
     "kKVOContextMDCFlexibleHeaderViewController";
@@ -108,26 +103,9 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    if ([aDecoder containsValueForKey:MDCFlexibleHeaderViewControllerHeaderViewKey]) {
-      _headerView = [aDecoder decodeObjectOfClass:[MDCFlexibleHeaderView class]
-                                           forKey:MDCFlexibleHeaderViewControllerHeaderViewKey];
-    }
-
-    if ([aDecoder containsValueForKey:MDCFlexibleHeaderViewControllerLayoutDelegateKey]) {
-      _layoutDelegate =
-          [aDecoder decodeObjectForKey:MDCFlexibleHeaderViewControllerLayoutDelegateKey];
-    }
+    [self commonMDCFlexibleHeaderViewControllerInit];
   }
   return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [super encodeWithCoder:aCoder];
-  [aCoder encodeObject:self.headerView forKey:MDCFlexibleHeaderViewControllerHeaderViewKey];
-  if (_layoutDelegate) {
-    [aCoder encodeConditionalObject:self.layoutDelegate
-                             forKey:MDCFlexibleHeaderViewControllerLayoutDelegateKey];
-  }
 }
 
 - (void)commonMDCFlexibleHeaderViewControllerInit {

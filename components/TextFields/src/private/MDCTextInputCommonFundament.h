@@ -65,6 +65,4 @@ UIKIT_EXTERN UIColor *_Nonnull MDCTextInputCursorColor(void);
 /** Clear button did touch event. */
 - (void)clearButtonDidTouch;
 
-- (nullable instancetype)initWithCoder:(NSCoder *_Nonnull)aDecoder NS_DESIGNATED_INITIALIZER;
-
 @end

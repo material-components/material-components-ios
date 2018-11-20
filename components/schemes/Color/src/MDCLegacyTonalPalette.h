@@ -22,7 +22,7 @@
  color and another of the color variations is designated as a dark color in relation to the main
  color.
  */
-@interface MDCTonalPalette : NSObject <NSCopying, NSSecureCoding>
+@interface MDCTonalPalette : NSObject <NSCopying>
 
 /**
  The colors that comprise a tonal palette.
@@ -72,7 +72,5 @@
                        lightColorIndex:(NSUInteger)lightColorIndex
                         darkColorIndex:(NSUInteger)darkColorIndex
     NS_DESIGNATED_INITIALIZER;
-
-- (nonnull instancetype)initWithCoder:(nonnull NSCoder *)coder NS_DESIGNATED_INITIALIZER;
 
 @end

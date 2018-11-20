@@ -35,28 +35,11 @@
 
 @end
 
-@interface FakeMDCInkLayerAnimationDelegate : NSObject <MDCInkLayerDelegate, NSSecureCoding>
+@interface FakeMDCInkLayerAnimationDelegate : NSObject <MDCInkLayerDelegate>
 @property(nonatomic, strong) MDCInkLayer *inkLayer;
 @end
 
 @implementation FakeMDCInkLayerAnimationDelegate
-
-+ (BOOL)supportsSecureCoding {
-  return YES;
-}
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  self = [super init];
-  if (self) {
-    _inkLayer = [aDecoder decodeObjectOfClass:[MDCInkLayer class] forKey:@"inkLayer"];
-  }
-  return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [aCoder encodeObject:self.inkLayer forKey:@"inkLayer"];
-}
-
 @end
 
 #pragma mark - Tests
@@ -104,36 +87,6 @@
   XCTAssertEqualWithAccuracy(copiedLayer.maxRippleRadius, inkLayer.maxRippleRadius, 0.0001);
   XCTAssertEqualObjects(copiedLayer.inkColor, inkLayer.inkColor);
   XCTAssertEqual(copiedLayer.sublayers.count, inkLayer.sublayers.count);
-}
-
-- (void)testEncoding {
-  // Given
-  FakeMDCInkLayerAnimationDelegate *delegate = [[FakeMDCInkLayerAnimationDelegate alloc] init];
-  MDCInkLayer *inkLayer = [[MDCInkLayer alloc] init];
-  delegate.inkLayer = inkLayer;
-  inkLayer.animationDelegate = delegate;
-  inkLayer.endAnimationDelay = 1;
-  inkLayer.initialRadius = 2;
-  inkLayer.finalRadius = 3;
-  inkLayer.maxRippleRadius = 4;
-  inkLayer.inkColor = UIColor.magentaColor;
-
-  // When
-  NSData *archive = [NSKeyedArchiver archivedDataWithRootObject:delegate];
-  FakeMDCInkLayerAnimationDelegate *unarchivedDelegate =
-      [NSKeyedUnarchiver unarchiveObjectWithData:archive];
-  MDCInkLayer *unarchivedInkLayer = unarchivedDelegate.inkLayer;
-
-  // Then
-  XCTAssertEqual(unarchivedInkLayer.animationDelegate, unarchivedDelegate);
-  XCTAssertEqualWithAccuracy(unarchivedInkLayer.endAnimationDelay,
-                             inkLayer.endAnimationDelay,
-                             0.0001);
-  XCTAssertEqualWithAccuracy(unarchivedInkLayer.initialRadius, inkLayer.initialRadius, 0.0001);
-  XCTAssertEqualWithAccuracy(unarchivedInkLayer.finalRadius, inkLayer.finalRadius, 0.0001);
-  XCTAssertEqualWithAccuracy(unarchivedInkLayer.maxRippleRadius, inkLayer.maxRippleRadius, 0.0001);
-  XCTAssertEqualObjects(unarchivedInkLayer.inkColor, inkLayer.inkColor);
-  XCTAssertEqual(unarchivedInkLayer.sublayers.count, inkLayer.sublayers.count);
 }
 
 - (void)testEndAnimationTimingInTimeScaledLayer {

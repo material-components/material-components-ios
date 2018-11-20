@@ -18,9 +18,6 @@
 
 #import "private/MDCChipView+Private.h"
 
-static NSString *const MDCChipCollectionViewCellChipViewKey =
-    @"MDCChipCollectionViewCellChipViewKey";
-
 @implementation MDCChipCollectionViewCell
 
 - (instancetype)initWithFrame:(CGRect)rect {
@@ -29,20 +26,6 @@ static NSString *const MDCChipCollectionViewCellChipViewKey =
     [self.contentView addSubview:_chipView];
   }
   return self;
-}
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  if (self = [super initWithCoder:aDecoder]) {
-    _chipView = [aDecoder decodeObjectForKey:MDCChipCollectionViewCellChipViewKey];
-    // _chipView is already added to the view hierarchy by UIView initWithCoder.
-  }
-  return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [super encodeWithCoder:aCoder];
-
-  [aCoder encodeObject:self.chipView forKey:MDCChipCollectionViewCellChipViewKey];
 }
 
 - (void)setBounds:(CGRect)bounds {

@@ -19,33 +19,6 @@
 #import "MDCPathGenerator.h"
 #import "MaterialMath.h"
 
-static NSString *const MDCRectangleShapeGeneratorTopLeftCornerKey =
-    @"MDCRectangleShapeGeneratorTopLeftCornerKey";
-static NSString *const MDCRectangleShapeGeneratorTopRightCornerKey =
-    @"MDCRectangleShapeGeneratorTopRightCornerKey";
-static NSString *const MDCRectangleShapeGeneratorBottomRightCornerKey =
-    @"MDCRectangleShapeGeneratorBottomRightCornerKey";
-static NSString *const MDCRectangleShapeGeneratorBottomLeftCornerKey =
-    @"MDCRectangleShapeGeneratorBottomLeftCornerKey";
-
-static NSString *const MDCRectangleShapeGeneratorTopLeftCornerOffsetKey =
-    @"MDCRectangleShapeGeneratorTopLeftCornerOffsetKey";
-static NSString *const MDCRectangleShapeGeneratorTopRightCornerOffsetKey =
-    @"MDCRectangleShapeGeneratorTopRightCornerOffsetKey";
-static NSString *const MDCRectangleShapeGeneratorBottomRightCornerOffsetKey =
-    @"MDCRectangleShapeGeneratorBottomRightCornerOffsetKey";
-static NSString *const MDCRectangleShapeGeneratorBottomLeftCornerOffsetKey =
-    @"MDCRectangleShapeGeneratorBottomLeftCornerOffsetKey";
-
-static NSString *const MDCRectangleShapeGeneratorTopEdgeKey =
-    @"MDCRectangleShapeGeneratorTopEdgeKey";
-static NSString *const MDCRectangleShapeGeneratorRightEdgeKey =
-    @"MDCRectangleShapeGeneratorRightEdgeKey";
-static NSString *const MDCRectangleShapeGeneratorBottomEdgeKey =
-    @"MDCRectangleShapeGeneratorBottomEdgeKey";
-static NSString *const MDCRectangleShapeGeneratorLeftEdgeKey =
-    @"MDCRectangleShapeGeneratorLeftEdgeKey";
-
 static inline CGFloat CGPointDistanceToPoint(CGPoint a, CGPoint b) {
   return MDCHypot(a.x - b.x, a.y - b.y);
 }
@@ -74,67 +47,6 @@ typedef enum : NSUInteger {
     [self setCorners:[[MDCCornerTreatment alloc] init]];
   }
   return self;
-}
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  if (self = [super init]) {
-    self.topLeftCorner =
-        [aDecoder decodeObjectOfClass:[MDCCornerTreatment class]
-                               forKey:MDCRectangleShapeGeneratorTopLeftCornerKey];
-    self.topRightCorner =
-        [aDecoder decodeObjectOfClass:[MDCCornerTreatment class]
-                               forKey:MDCRectangleShapeGeneratorTopRightCornerKey];
-    self.bottomRightCorner =
-        [aDecoder decodeObjectOfClass:[MDCCornerTreatment class]
-                               forKey:MDCRectangleShapeGeneratorBottomRightCornerKey];
-    self.bottomLeftCorner =
-        [aDecoder decodeObjectOfClass:[MDCCornerTreatment class]
-                               forKey:MDCRectangleShapeGeneratorBottomLeftCornerKey];
-
-    self.topLeftCornerOffset =
-        [aDecoder decodeCGPointForKey:MDCRectangleShapeGeneratorTopLeftCornerOffsetKey];
-    self.topRightCornerOffset =
-        [aDecoder decodeCGPointForKey:MDCRectangleShapeGeneratorTopRightCornerOffsetKey];
-    self.bottomRightCornerOffset =
-        [aDecoder decodeCGPointForKey:MDCRectangleShapeGeneratorBottomRightCornerOffsetKey];
-    self.bottomLeftCornerOffset =
-        [aDecoder decodeCGPointForKey:MDCRectangleShapeGeneratorBottomLeftCornerOffsetKey];
-
-    self.topEdge = [aDecoder decodeObjectOfClass:[MDCEdgeTreatment class]
-                                          forKey:MDCRectangleShapeGeneratorTopEdgeKey];
-    self.rightEdge = [aDecoder decodeObjectOfClass:[MDCEdgeTreatment class]
-                                            forKey:MDCRectangleShapeGeneratorRightEdgeKey];
-    self.bottomEdge = [aDecoder decodeObjectOfClass:[MDCEdgeTreatment class]
-                                             forKey:MDCRectangleShapeGeneratorBottomEdgeKey];
-    self.leftEdge = [aDecoder decodeObjectOfClass:[MDCEdgeTreatment class]
-                                           forKey:MDCRectangleShapeGeneratorLeftEdgeKey];
-  }
-  return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [aCoder encodeObject:self.topLeftCorner
-                forKey:MDCRectangleShapeGeneratorTopLeftCornerKey];
-  [aCoder encodeObject:self.topRightCorner
-                forKey:MDCRectangleShapeGeneratorTopRightCornerKey];
-  [aCoder encodeObject:self.bottomRightCorner
-                forKey:MDCRectangleShapeGeneratorBottomRightCornerKey];
-  [aCoder encodeObject:self.bottomLeftCorner
-                forKey:MDCRectangleShapeGeneratorBottomLeftCornerKey];
-
-  [aCoder encodeCGPoint:self.topLeftCornerOffset
-                 forKey:MDCRectangleShapeGeneratorTopLeftCornerOffsetKey];
-  [aCoder encodeCGPoint:self.topRightCornerOffset
-                 forKey:MDCRectangleShapeGeneratorTopRightCornerOffsetKey];
-  [aCoder encodeCGPoint:self.bottomRightCornerOffset
-                 forKey:MDCRectangleShapeGeneratorBottomRightCornerOffsetKey];
-  [aCoder encodeCGPoint:self.bottomLeftCornerOffset
-                 forKey:MDCRectangleShapeGeneratorBottomLeftCornerOffsetKey];
-
-  [aCoder encodeObject:self.topEdge forKey:MDCRectangleShapeGeneratorTopEdgeKey];
-  [aCoder encodeObject:self.rightEdge forKey:MDCRectangleShapeGeneratorRightEdgeKey];
-  [aCoder encodeObject:self.bottomEdge forKey:MDCRectangleShapeGeneratorBottomEdgeKey];
-  [aCoder encodeObject:self.leftEdge forKey:MDCRectangleShapeGeneratorLeftEdgeKey];
 }
 
 - (id)copyWithZone:(NSZone *)zone {
@@ -337,10 +249,6 @@ typedef enum : NSUInteger {
 
   return CGPointMake(offset.x + translation.x,
                      offset.y + translation.y);
-}
-
-+ (BOOL)supportsSecureCoding {
-  return YES;
 }
 
 @end
