@@ -408,107 +408,19 @@ generate_apidiff() {
 # - clang-format
 # - git-clang-format
 lint_clang_format() {
-  usage() {
-    echo "Usage: $0 -d clang-format"
-    echo
-    echo "Will apply clang-format to changes made on the current branch from the merge-base of develop."
-    echo "The result will be posted to GitHub as a series of inline comments."
-    echo
-    echo "Must set the following environment variables to run locally:"
-    echo
-    echo "GITHUB_API_TOKEN -> Create a token here: https://github.com/settings/tokens."
-    echo "                    Must have public_repo scope."
-    echo
-    echo "KOKORO_GITHUB_PULL_REQUEST_NUMBER=\"###\""
-    echo "    The pull request # you want to post the API diff results to."
-    echo
-    echo "KOKORO_GITHUB_PULL_REQUEST_COMMIT=\"###\""
-    echo "    The last commit of the pull request."
-    echo
-    echo "KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH=\"###\""
-    echo "    The branch that this pull request will be merged into."
-  }
+  CLANG_FORMAT_CI_VERSION="v1.*"
 
-  if [ -z "$GITHUB_API_TOKEN" ]; then
-    echo "GITHUB_API_TOKEN must be set to a github token with public_repo scope."
-    usage
-    exit 1
+  if [ ! -d .clang-format-ci ]; then
+    git clone --recurse-submodules https://github.com/material-foundation/clang-format-ci.git .clang-format-ci
   fi
 
-  if [ -z "$KOKORO_GITHUB_PULL_REQUEST_NUMBER" ]; then
-    echo "KOKORO_GITHUB_PULL_REQUEST_NUMBER must be set to a github pull request number."
-    usage
-    exit 1
-  fi
+  pushd .clang-format-ci
+  git fetch > /dev/null
+  TAG=$(git tag --sort=v:refname -l "$CLANG_FORMAT_CI_VERSION" | tail -n1)
+  git checkout "$TAG" > /dev/null
+  popd
 
-  if [ -z "$KOKORO_GITHUB_PULL_REQUEST_COMMIT" ]; then
-    echo "KOKORO_GITHUB_PULL_REQUEST_COMMIT must be set to a commit."
-    usage
-    exit 1
-  fi
-
-  if [ -z "$KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH" ]; then
-    echo "$KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH must be set to the target branch."
-    usage
-    exit 1
-  fi
-
-
-  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
-    select_xcode "$XCODE_VERSION"
-
-    mkdir bin
-    pushd bin >> /dev/null
-
-    # Install clang-format
-    echo "Downloading clang-format..."
-    CLANG_FORMAT_SHA="7584ce5ff2633d3a38f41cc41906d328d07b0afdda4adb56edb6fef58042d33a"
-    curl -Ls "https://github.com/material-foundation/clang-format/releases/download/r345798/clang-format" -o "clang-format"
-    if openssl sha -sha256 "clang-format" | grep -q "$CLANG_FORMAT_SHA"; then
-      echo "SHAs match. Proceeding."
-    else
-      echo "clang-format does not match sha. Aborting."
-      exit 1
-    fi
-    chmod +x "clang-format"
-
-    echo "Downloading git-clang-format..."
-    # Install git-clang-format
-    GIT_CLANG_FORMAT_SHA="1f6cfad79f90ea202dcf2d52a360186341a589cdbfdee05b0e7694f912aa9820"
-    curl -Ls https://raw.githubusercontent.com/llvm-mirror/clang/c510fac5695e904b43d5bf0feee31cc9550f110e/tools/clang-format/git-clang-format -o "git-clang-format"
-    if openssl sha -sha256 "git-clang-format" | grep -q "$GIT_CLANG_FORMAT_SHA"; then
-      echo "SHAs match. Proceeding."
-    else
-      echo "git-clang-format does not match sha. Aborting."
-      exit 1
-    fi
-    chmod +x "git-clang-format"
-
-    export PATH="$(pwd):$PATH"
-
-    popd >> /dev/null
-
-    # Move into our cloned repo
-    cd github/repo
-  fi
-
-  if ! git clang-format -h > /dev/null 2> /dev/null; then
-    echo
-    echo "git clang-format is not configured correctly."
-    echo "Please ensure that the git-clang-format command is in your PATH and that it is executable."
-    exit 1
-  fi
-
-  if [ ! -f scripts/external/clang-format-ci/.git ]; then
-    git submodule update --init --recursive scripts/external/clang-format-ci
-  fi
-
-  scripts/external/clang-format-ci/check-pull-request.sh \
-    --api_token "$GITHUB_API_TOKEN" \
-    --repo "material-components/material-components-ios" \
-    --pr "$KOKORO_GITHUB_PULL_REQUEST_NUMBER" \
-    --commit "$KOKORO_GITHUB_PULL_REQUEST_COMMIT" \
-    --target_branch "$KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH"
+  .clang-format-ci/from-kokoro.sh "material-components/material-components-ios"
 }
 
 # This command can be used when a pull request should always be put into a failure state.
