@@ -573,14 +573,10 @@
   // Given
   self.fakeBottomDrawer.trackingScrollView = nil;
   self.fakeBottomDrawer.originalPresentingViewController.view.bounds = CGRectMake(0, 0, 200, 500);
-  UIViewController *fake = [[UIViewController alloc] init];
-  self.fakeBottomDrawer.contentViewController = fake;
   self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(200, 5000);
 
   // When
-  [self.fakeBottomDrawer.view setNeedsLayout];
-  [self.fakeBottomDrawer.view layoutIfNeeded];
-  [self.fakeBottomDrawer expandToFullScreenWithDuration:0.0];
+  [self.fakeBottomDrawer expandToFullScreenWithDuration:0];
 
   // Then
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.scrollView.contentOffset.y, 250, 0.001);
@@ -588,15 +584,12 @@
 
 - (void)testExpandToFullScreenAnimationWithSmallScreenContent {
   // Given
+  self.fakeBottomDrawer.trackingScrollView = nil;
   self.fakeBottomDrawer.originalPresentingViewController.view.bounds = CGRectMake(0, 0, 200, 500);
-  UIViewController *fakeContentViewController = [[UIViewController alloc] init];
-  self.fakeBottomDrawer.contentViewController = fakeContentViewController;
   self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(200, 300);
 
   // When
-  [self.fakeBottomDrawer.view setNeedsLayout];
-  [self.fakeBottomDrawer.view layoutIfNeeded];
-  [self.fakeBottomDrawer expandToFullScreenWithDuration:0.0];
+  [self.fakeBottomDrawer expandToFullScreenWithDuration:0];
 
   // Then
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.scrollView.contentOffset.y, 50, 0.001);

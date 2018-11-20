@@ -333,13 +333,7 @@ static UIColor *DrawerShadowColor(void) {
 }
 
 - (void)setInitialDrawerFactor:(CGFloat)initialDrawerFactor {
-  if ([self shouldPresentFullScreen]) {
-    _initialDrawerFactor = 1;
-  }
   _initialDrawerFactor = initialDrawerFactor;
-  _contentHeaderTopInset = NSNotFound;
-  _contentHeightSurplus = NSNotFound;
-  _addedContentHeight = NSNotFound;
 }
 
 - (void)updateDrawerState:(CGFloat)transitionPercentage {
@@ -391,7 +385,6 @@ static UIColor *DrawerShadowColor(void) {
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.initialDrawerFactor = [self shouldPresentFullScreen] ? 1 : (CGFloat)0.5;
   [self setUpContentHeader];
 
   self.view.backgroundColor = [UIColor clearColor];
@@ -500,40 +493,35 @@ static UIColor *DrawerShadowColor(void) {
   [self.view setNeedsLayout];
 }
 
-- (void)expandToFullScreenWithDuration:(NSTimeInterval)duration {
+- (void)expandToFullScreenWithDuration:(NSTimeInterval)duration
+                            completion:(void (^ _Nullable)(BOOL))completion {
   CGFloat topSafeArea = 0;
   if (@available(iOS 11.0, *)) {
     topSafeArea = self.view.safeAreaInsets.top;
   }
+
   CGFloat totalHeight = self.headerViewController.preferredContentSize.height +
-                        self.contentViewController.preferredContentSize.height;
+                        _contentVCPreferredContentSizeHeightCached;
   CGFloat precentageOfFullScreen = totalHeight / CGRectGetHeight(self.presentingViewBounds);
+  CGPoint contentOffset = CGPointZero;
   if (CGRectGetHeight(self.presentingViewBounds) > totalHeight) {
     CGFloat maxViewHeight = CGRectGetHeight(self.presentingViewBounds) - totalHeight;
     CGFloat contentYOffset = self.contentHeaderTopInset - maxViewHeight;
-    CGPoint contentOffset = CGPointMake(self.scrollView.contentOffset.x, contentYOffset);
-    [UIView animateWithDuration:duration
-        animations:^{
-          [self.scrollView setContentOffset:contentOffset];
-        }
-        completion:^(BOOL finished) {
-          [self resetLayoutWithInitialDrawerFactor:precentageOfFullScreen];
-        }];
+    contentOffset = CGPointMake(self.scrollView.contentOffset.x, contentYOffset);
   } else {
     CGFloat contentYOffset = self.contentHeaderTopInset - topSafeArea;
-    CGPoint contentOffset = CGPointMake(self.scrollView.contentOffset.x, contentYOffset);
+    contentOffset = CGPointMake(self.scrollView.contentOffset.x, contentYOffset);
     precentageOfFullScreen = (precentageOfFullScreen > 1) ? 1 : precentageOfFullScreen;
-    [UIView animateWithDuration:duration
-        animations:^{
-          [self.scrollView setContentOffset:contentOffset];
-        }
-        completion:^(BOOL finished) {
-          // Reset the content offset to 0 because we are going to recachelayout and reset initial
-          // drawer factor.
-          [self.scrollView setContentOffset:CGPointZero];
-          [self resetLayoutWithInitialDrawerFactor:precentageOfFullScreen];
-        }];
   }
+  [UIView animateWithDuration:duration animations:^{
+    [self.scrollView setContentOffset:contentOffset];
+  } completion:^(BOOL finished) {
+    if (CGRectGetHeight(self.presentingViewBounds) < totalHeight) {
+      [self.scrollView setContentOffset:CGPointZero];
+    }
+    [self resetLayoutWithInitialDrawerFactor:precentageOfFullScreen];
+    completion(YES);
+  }];
 }
 
 - (void)resetLayoutWithInitialDrawerFactor:(CGFloat)initialDrawerFactor {

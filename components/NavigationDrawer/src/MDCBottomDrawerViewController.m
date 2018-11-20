@@ -219,9 +219,9 @@
   if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
     MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
         (MDCBottomDrawerPresentationController *)self.presentationController;
-    [bottomDrawerPresentationController expandToFullScreenWithDuration:duration];
+    [bottomDrawerPresentationController expandToFullScreenWithDuration:duration
+                                                            completion:completion];
   }
-  completion(YES);
 }
 
 @end

@@ -127,6 +127,7 @@
 
  @param duration The duration of the animation
  */
-- (void)expandToFullScreenWithDuration:(NSTimeInterval)duration;
+- (void)expandToFullScreenWithDuration:(NSTimeInterval)duration
+                            completion:(void (^__nullable)(BOOL finished))completion;
 
 @end

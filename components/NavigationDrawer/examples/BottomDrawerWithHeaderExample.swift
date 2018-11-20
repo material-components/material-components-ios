@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import UIKit
+import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialBottomAppBar
 import MaterialComponents.MaterialBottomAppBar_ColorThemer
 import MaterialComponents.MaterialColorScheme
@@ -85,21 +86,25 @@ class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewContro
   }
 
   private func layoutContentViewController() {
-    let button = UIButton(frame: .zero)
-    button.contentEdgeInsets = UIEdgeInsets(top: 4, left: 12, bottom: 4, right: 12)
+    let button = MDCButton(frame: .zero)
     button.setTitle("Expand", for: .normal)
     button.sizeToFit()
     button.addTarget(self, action: #selector(expandBottomDrawer), for: .touchUpInside)
     button.center = CGPoint(x: view.frame.width / 2, y: 50)
-    button.backgroundColor = .blue
+    button.backgroundColor = colorScheme.primaryColor
     contentViewController.view.addSubview(button)
   }
 
   @objc func expandBottomDrawer() {
-    bottomDrawerViewController.expandToFullScreen(withDuration: 3.2) { _ in
-      UIView.animate(withDuration: 3.2, animations: {
-        self.bottomDrawerViewController.headerViewController?.view.backgroundColor = .blue
-      })
+    bottomDrawerViewController.expandToFullScreen(withDuration: 5) { _ in
+      if let drawerHeader =
+          self.bottomDrawerViewController.headerViewController as? DrawerHeaderViewController {
+        drawerHeader.titleLabel.text = "Done animating"
+      }
+    }
+    UIView.animate(withDuration: 5) { _ in
+      self.bottomDrawerViewController.headerViewController?.view.backgroundColor =
+        self.colorScheme.primaryColor
     }
   }
 }
