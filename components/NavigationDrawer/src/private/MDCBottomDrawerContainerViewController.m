@@ -142,7 +142,7 @@ static UIColor *DrawerShadowColor(void) {
  Calculates the contentOffset if contentViewController's preferredContentSize was set to @c
  preferredContentSize.
  */
-- (CGPoint)animateCalculationsWithPreferredContentHeight:(CGFloat)preferredContentHeight;
+- (CGPoint)calculateContentOffsetWithPreferredContentHeight:(CGFloat)preferredContentHeight;
 
 /**
  Calculates how much of the screen will be filled with contentViewController's preferredContentSize
@@ -515,7 +515,7 @@ static UIColor *DrawerShadowColor(void) {
                           withDuration:(NSTimeInterval)duration
                             completion:(void (^ _Nullable)(BOOL))completion {
   CGPoint contentOffset =
-      [self animateCalculationsWithPreferredContentHeight:preferredContentHeight];
+      [self calculateContentOffsetWithPreferredContentHeight:preferredContentHeight];
   CGFloat precentageOfFullScreen =
       [self precentageOfFullScreenWithPreferredContentHeight:preferredContentHeight];
   CGFloat totalHeight = [self totalHeightWithAddedContentHeight:preferredContentHeight];
@@ -544,7 +544,7 @@ static UIColor *DrawerShadowColor(void) {
   }];
 }
 
-- (CGPoint)animateCalculationsWithPreferredContentHeight:(CGFloat)preferredContentHeight {
+- (CGPoint)calculateContentOffsetWithPreferredContentHeight:(CGFloat)preferredContentHeight {
   CGFloat totalHeight = [self totalHeightWithAddedContentHeight:preferredContentHeight];
   CGFloat contentYOffset = 0;
   CGPoint contentOffset = CGPointZero;
