@@ -19,8 +19,7 @@
 #import "MaterialTypographyScheme.h"
 
 /**
- A MDCContainerScheming protocol provides scheme properties for all the
- theming systems (color, typography, shape, etc.) MDC supports.
+ A container scheme that exposes properties for all supported Material Theming subsystem schemes.
  */
 @protocol MDCContainerScheming
 
