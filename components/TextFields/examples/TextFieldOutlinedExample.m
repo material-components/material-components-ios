@@ -126,9 +126,12 @@
   textFieldState.delegate = self;
   textFieldState.clearButtonMode = UITextFieldViewModeUnlessEditing;
   textFieldState.backgroundColor = [UIColor whiteColor];
+  textFieldState.leadingUnderlineLabel.numberOfLines = 0;
 
   self.stateController = [[MDCTextInputControllerOutlined alloc] initWithTextInput:textFieldState];
   self.stateController.placeholderText = @"State";
+  self.stateController.helperText =
+      @"The two-character abbreviation for the state in which the contact resides.";
   [self styleTextInputController:self.stateController];
 
   MDCTextField *textFieldZip = [[MDCTextField alloc] init];

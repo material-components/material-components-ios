@@ -1381,10 +1381,43 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                    MDCTextInputControllerBaseDefaultPadding;
 
   CGFloat scale = UIScreen.mainScreen.scale;
-  CGFloat leadingOffset =
-      MDCCeil(self.textInput.leadingUnderlineLabel.font.lineHeight * scale) / scale;
-  CGFloat trailingOffset =
-      MDCCeil(self.textInput.trailingUnderlineLabel.font.lineHeight * scale) / scale;
+  CGFloat leadingOffset = MDCCeil(self.textInput.leadingUnderlineLabel.font.lineHeight * scale) / scale;
+  CGFloat trailingOffset = MDCCeil(self.textInput.trailingUnderlineLabel.font.lineHeight * scale) / scale;
+
+  UIFont *font = self.textInput.leadingUnderlineLabel.font;
+  if (font) {
+    NSMutableParagraphStyle* labelStyle = [NSMutableParagraphStyle new];
+    labelStyle.alignment = NSTextAlignmentNatural;
+
+    NSDictionary* labelFontAttributes = @{
+                                          NSFontAttributeName : font,
+                                          NSParagraphStyleAttributeName : labelStyle
+                                          };
+    CGRect leadingRect = [self.textInput.leadingUnderlineLabel.text boundingRectWithSize:CGSizeMake(CGRectGetWidth(_textInput.bounds), INFINITY)
+                                                                       options:NSStringDrawingUsesLineFragmentOrigin
+                                                                    attributes:labelFontAttributes
+                                                                       context:nil];
+
+    NSLog(@"LEAD: %@", NSStringFromCGRect(leadingRect));
+    leadingOffset = MDCCeil(CGRectGetHeight(leadingRect) * scale) / scale;
+  }
+  font = self.textInput.trailingUnderlineLabel.font;
+  if (font) {
+    NSMutableParagraphStyle* labelStyle = [NSMutableParagraphStyle new];
+    labelStyle.alignment = NSTextAlignmentNatural;
+
+    NSDictionary* labelFontAttributes = @{
+                                          NSFontAttributeName : font,
+                                          NSParagraphStyleAttributeName : labelStyle
+                                          };
+    CGRect trailingRect = [self.textInput.trailingUnderlineLabel.text boundingRectWithSize:CGSizeMake(CGRectGetWidth(_textInput.bounds), INFINITY)
+                                                                                   options:NSStringDrawingUsesLineFragmentOrigin
+                                                                                attributes:labelFontAttributes
+                                                                                   context:nil];
+
+    NSLog(@"TRAIL: %@", NSStringFromCGRect(trailingRect));
+    trailingOffset = MDCCeil(CGRectGetHeight(trailingRect) * scale) / scale;
+  }
 
   // The amount of space underneath the underline is variable. It could just be
   // MDCTextInputControllerBaseDefaultPadding or the biggest estimated underlineLabel height +
