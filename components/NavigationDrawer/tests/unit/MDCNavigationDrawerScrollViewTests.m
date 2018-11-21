@@ -61,6 +61,9 @@
 @property(nullable, nonatomic, readonly) UIPresentationController *presentationController;
 - (void)cacheLayoutCalculations;
 - (void)updateDrawerState:(CGFloat)transitionPercentage;
+- (CGPoint)animateCalculationsWithPreferredContentHeight:(CGFloat)preferredContentHeight;
+- (CGFloat)precentageOfFullScreenWithPreferredContentHeight:(CGFloat)preferredContentHeight;
+- (CGFloat)totalHeightWithAddedContentHeight:(CGFloat)addedContentHeight;
 @end
 
 @interface MDCBottomDrawerPresentationController (ScrollViewTests) <
@@ -87,8 +90,8 @@
   UIViewController *fakeViewController = [[UIViewController alloc] init];
   fakeViewController.view.frame = CGRectMake(0, 0, 200, 500);
 
-  _fakeScrollView = [[UIScrollView alloc] init];
-  _fakeBottomDrawer = [[MDCBottomDrawerContainerViewController alloc]
+  self.fakeScrollView = [[UIScrollView alloc] init];
+  self.fakeBottomDrawer = [[MDCBottomDrawerContainerViewController alloc]
       initWithOriginalPresentingViewController:fakeViewController
                             trackingScrollView:_fakeScrollView];
   _drawerViewController = [[MDCBottomDrawerViewController alloc] init];
@@ -567,6 +570,32 @@
 
   // Then
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.scrollView.contentOffset.y, 500, (CGFloat)0.001);
+}
+
+- (void)testExpandToFullScreenAnimationWithFullScreenContent {
+  // Given
+  self.fakeBottomDrawer.trackingScrollView = nil;
+  self.fakeBottomDrawer.originalPresentingViewController.view.bounds = CGRectMake(0, 0, 200, 500);
+  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(200, 5000);
+
+  // When
+  [self.fakeBottomDrawer animateToPreferredContentHeight:5000 withDuration:0 completion:nil];
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.scrollView.contentOffset.y, 230, 0.001);
+}
+
+- (void)testExpandToFullScreenAnimationWithSmallScreenContent {
+  // Given
+  self.fakeBottomDrawer.trackingScrollView = nil;
+  self.fakeBottomDrawer.originalPresentingViewController.view.bounds = CGRectMake(0, 0, 200, 500);
+  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(200, 300);
+
+  // When
+  [self.fakeBottomDrawer animateToPreferredContentHeight:300 withDuration:0 completion:nil];
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.scrollView.contentOffset.y, 50, 0.001);
 }
 
 @end

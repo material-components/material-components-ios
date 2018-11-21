@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import UIKit
+import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialBottomAppBar
 import MaterialComponents.MaterialBottomAppBar_ColorThemer
 import MaterialComponents.MaterialColorScheme
@@ -22,9 +23,12 @@ class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewContro
 
   var colorScheme = MDCSemanticColorScheme()
   let bottomAppBar = MDCBottomAppBarView()
+  var fullScreen: Bool = true
 
   let headerViewController = DrawerHeaderViewController()
   let contentViewController = DrawerContentViewController()
+
+  lazy var bottomDrawerViewController = MDCBottomDrawerViewController()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -62,7 +66,7 @@ class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewContro
   }
 
   @objc func presentNavigationDrawer() {
-    let bottomDrawerViewController = MDCBottomDrawerViewController()
+    layoutContentViewController()
     bottomDrawerViewController.setTopCornersRadius(24, for: .collapsed)
     bottomDrawerViewController.setTopCornersRadius(8, for: .expanded)
     bottomDrawerViewController.isTopHandleHidden = false
@@ -80,6 +84,36 @@ class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewContro
     headerViewController.titleLabel.center =
       CGPoint(x: headerViewController.view.frame.size.width / 2,
               y: (headerViewController.view.frame.size.height + topInset) / 2)
+  }
+
+  private func layoutContentViewController() {
+    let button = MDCButton(frame: .zero)
+    button.setTitle("Expand", for: .normal)
+    button.sizeToFit()
+    button.addTarget(self, action: #selector(expandBottomDrawer), for: .touchUpInside)
+    button.center = CGPoint(x: view.frame.width / 2, y: 50)
+    button.backgroundColor = colorScheme.primaryColor
+    contentViewController.view.addSubview(button)
+  }
+
+  @objc func expandBottomDrawer() {
+    var height: CGFloat = 0
+    if (!fullScreen) {
+      height = 100
+    } else {
+      height = 2000
+    }
+    bottomDrawerViewController.animate(toPreferredContentHeight: height, withDuration: 5) { _ in
+      if let drawerHeader =
+          self.bottomDrawerViewController.headerViewController as? DrawerHeaderViewController {
+        drawerHeader.titleLabel.text = "Done animating"
+      }
+      self.fullScreen = !self.fullScreen
+    }
+    UIView.animate(withDuration: 5, animations: {
+      self.bottomDrawerViewController.headerViewController?.view.backgroundColor =
+        self.colorScheme.primaryColor
+    })
   }
 }
 
