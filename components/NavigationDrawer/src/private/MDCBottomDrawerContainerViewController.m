@@ -512,38 +512,40 @@ static UIColor *DrawerShadowColor(void) {
 }
 
 - (void)animateToPreferredContentHeight:(CGFloat)preferredContentHeight
-                          withDuration:(NSTimeInterval)duration
-                            completion:(void (^ _Nullable)(BOOL))completion {
+                           withDuration:(NSTimeInterval)duration
+                             completion:(void (^_Nullable)(BOOL))completion {
   CGPoint contentOffset =
       [self calculateContentOffsetWithPreferredContentHeight:preferredContentHeight];
   CGFloat precentageOfFullScreen =
       [self precentageOfFullScreenWithPreferredContentHeight:preferredContentHeight];
   CGFloat totalHeight = [self totalHeightWithAddedContentHeight:preferredContentHeight];
   BOOL setContentHeight = NO;
-  CGSize newPreferredContentSize = CGSizeMake(CGRectGetWidth(self.view.bounds),
-                                              preferredContentHeight);
+  CGSize newPreferredContentSize =
+      CGSizeMake(CGRectGetWidth(self.view.bounds), preferredContentHeight);
   if (_contentVCPreferredContentSizeHeightCached > preferredContentHeight) {
     setContentHeight = YES;
   } else {
     self.contentViewController.preferredContentSize = newPreferredContentSize;
   }
 
-  [UIView animateWithDuration:duration animations:^{
-    [self.scrollView setContentOffset:contentOffset];
-  } completion:^(BOOL finished) {
-    if (CGRectGetHeight(self.presentingViewBounds) <= totalHeight) {
-      [self.scrollView setContentOffset:CGPointZero];
-    }
-    if (setContentHeight) {
-      [self resetLayoutWithInitialDrawerFactor:precentageOfFullScreen
-                          preferredContentSize:newPreferredContentSize];
-    } else {
-      [self resetLayoutWithInitialDrawerFactor:precentageOfFullScreen];
-    }
-    if (completion) {
-      completion(YES);
-    }
-  }];
+  [UIView animateWithDuration:duration
+      animations:^{
+        [self.scrollView setContentOffset:contentOffset];
+      }
+      completion:^(BOOL finished) {
+        if (CGRectGetHeight(self.presentingViewBounds) <= totalHeight) {
+          [self.scrollView setContentOffset:CGPointZero];
+        }
+        if (setContentHeight) {
+          [self resetLayoutWithInitialDrawerFactor:precentageOfFullScreen
+                              preferredContentSize:newPreferredContentSize];
+        } else {
+          [self resetLayoutWithInitialDrawerFactor:precentageOfFullScreen];
+        }
+        if (completion) {
+          completion(YES);
+        }
+      }];
 }
 
 - (CGPoint)calculateContentOffsetWithPreferredContentHeight:(CGFloat)preferredContentHeight {
@@ -580,7 +582,7 @@ static UIColor *DrawerShadowColor(void) {
 }
 
 - (void)resetLayoutWithInitialDrawerFactor:(CGFloat)initialDrawerFactor
-                           preferredContentSize:(CGSize)preferredContentSize {
+                      preferredContentSize:(CGSize)preferredContentSize {
   self.contentViewController.preferredContentSize = preferredContentSize;
   [self resetLayoutWithInitialDrawerFactor:initialDrawerFactor];
 }

@@ -108,7 +108,7 @@
 
 - (void)setupHeaderWithPreferredContentSize:(CGSize)size {
   MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
-  [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
+      [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
   fakeHeader.preferredContentSize = size;
   self.fakeBottomDrawer.headerViewController = fakeHeader;
 }

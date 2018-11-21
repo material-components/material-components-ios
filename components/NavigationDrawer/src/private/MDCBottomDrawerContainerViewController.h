@@ -128,7 +128,7 @@
  @param duration The duration of the animation
  */
 - (void)animateToPreferredContentHeight:(CGFloat)preferredContentHeight
-                          withDuration:(NSTimeInterval)duration
-                            completion:(void (^__nullable)(BOOL finished))completion;
+                           withDuration:(NSTimeInterval)duration
+                             completion:(void (^__nullable)(BOOL finished))completion;
 
 @end
