@@ -19,13 +19,24 @@
 #import "MaterialTypographyScheme.h"
 
 /**
- A class conforming to the MDCContainerScheming procotol provides scheme properties for all the
+ A MDCContainerScheming protocol provides scheme properties for all the
  theming systems (color, typography, shape, etc.) MDC supports.
  */
 @protocol MDCContainerScheming
 
+/**
+ The color scheme to use for the container scheme.
+ */
 @property(nonatomic, nullable, readonly) id<MDCColorScheming> colorScheme;
+
+/**
+ The typography scheme to use for the container scheme.
+ */
 @property(nonatomic, nullable, readonly) id<MDCTypographyScheming> typographyScheme;
+
+/**
+ The shape scheme to use for the container scheme.
+ */
 @property(nonatomic, nullable, readonly) id<MDCShapeScheming> shapeScheme;
 
 @end
@@ -34,13 +45,13 @@
  MDCContainerScheme is a class conforming to MDCContainerScheming that contains
  schemes values for theming systems.
 
- Default schemes value is not provided.
+ All scheme properties are @c nil by default.
  */
 __attribute__((objc_subclassing_restricted)) @interface MDCContainerScheme
     : NSObject<MDCContainerScheming>
 
-@property(nonatomic, nullable, readwrite) MDCSemanticColorScheme *colorScheme;    // default is nil
-@property(nonatomic, nullable, readwrite) MDCTypographyScheme *typographyScheme;  // default is nil
-@property(nonatomic, nullable, readwrite) MDCShapeScheme *shapeScheme;            // default is nil
+@property(nonatomic, nullable, readwrite) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, nullable, readwrite) MDCTypographyScheme *typographyScheme;
+@property(nonatomic, nullable, readwrite) MDCShapeScheme *shapeScheme;
 
 @end
