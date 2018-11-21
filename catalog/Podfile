@@ -54,6 +54,7 @@ target "MDCCatalog" do
   ]
   pod 'MaterialComponentsAlpha', :path => '../', :testspecs => [
     'ActionSheet/tests/unit',
+    'schemes/Container/tests/unit',
   ]
   pod 'CatalogByConvention', "~> 2.5"
   pod 'MaterialCatalog', :path => 'MaterialCatalog/'
