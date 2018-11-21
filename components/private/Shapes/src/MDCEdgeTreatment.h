@@ -24,10 +24,9 @@
  rectangle). MDCShapeModel will transform the generated MDCPathGenerator to the
  expected position and rotation.
  */
-@interface MDCEdgeTreatment : NSObject <NSCopying, NSSecureCoding>
+@interface MDCEdgeTreatment : NSObject <NSCopying>
 
 - (nonnull instancetype)init NS_DESIGNATED_INITIALIZER;
-- (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
 
 /**
  Generates an MDCPathGenerator object for an edge with the provided length.

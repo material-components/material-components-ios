@@ -2,6 +2,8 @@
 
 These instructions describe how to cut a new release.
 
+**You should always start from this doc when initiating a release.**
+
 MDC follows the ["git flow"](http://nvie.com/posts/a-successful-git-branching-model/) style of 
 development, where the default branch is called `develop`. `stable` (instead of the traditional
 `master`) is reserved for releases. The `develop` branch is periodically copied to a release candidate,
@@ -84,7 +86,7 @@ Other than the steps above regarding hotfixing, the entire release process stays
 
 ### Start internal testing
 
-You can now start the internal release testing process documented at [go/mdc-releasing](http://go/mdc-releasing).
+You can now start the internal release testing process documented at [go/mdc-releasing](http://go/mdc-releasing#import-the-release-candidate).
 
 ### Resolve any failures
 

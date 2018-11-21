@@ -130,8 +130,12 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   return self;
 }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wobjc-designated-initializers"
+// https://stackoverflow.com/questions/24458608/convenience-initializer-missing-a-self-call-to-another-initializer
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super init];
+#pragma clang diagnostic pop
   if (self) {
     [self commonMDCTextInputCommonFundamentInit];
 
