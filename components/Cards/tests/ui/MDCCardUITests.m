@@ -27,7 +27,7 @@
   //  self.recordMode = YES;
 
   UIView *backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 70, 70)];
-  backgroundView.backgroundColor = UIColor.whiteColor;
+  backgroundView.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1];
   MDCCard *card = [[MDCCard alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
   [backgroundView addSubview:card];
   card.center = backgroundView.center;
@@ -55,7 +55,6 @@
   UIImageView *imageView = [[UIImageView alloc] initWithFrame:view.frame];
   imageView.image = result;
   return imageView;
-
 }
 
 @end
