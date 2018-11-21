@@ -16,9 +16,6 @@
 
 #import "MDCCurvedCornerTreatment.h"
 
-static NSString *const MDCCurvedRectShapeGeneratorCornerSizeKey =
-    @"MDCCurvedRectShapeGeneratorCornerSizeKey";
-
 @implementation MDCCurvedRectShapeGenerator {
   MDCRectangleShapeGenerator *_rectGenerator;
   MDCCurvedCornerTreatment *_widthHeightCorner;
@@ -34,15 +31,6 @@ static NSString *const MDCCurvedRectShapeGeneratorCornerSizeKey =
     [self commonInit];
 
     self.cornerSize = cornerSize;
-  }
-  return self;
-}
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  if (self = [super init]) {
-    [self commonInit];
-
-    self.cornerSize = [aDecoder decodeCGSizeForKey:MDCCurvedRectShapeGeneratorCornerSizeKey];
   }
   return self;
 }
@@ -66,10 +54,6 @@ static NSString *const MDCCurvedRectShapeGeneratorCornerSizeKey =
   _heightWidthCorner.size = CGSizeMake(cornerSize.height, cornerSize.width);
 }
 
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [aCoder encodeCGSize:_cornerSize forKey:MDCCurvedRectShapeGeneratorCornerSizeKey];
-}
-
 - (id)copyWithZone:(nullable NSZone *)__unused zone {
   MDCCurvedRectShapeGenerator *copy = [[[self class] alloc] init];
   copy.cornerSize = self.cornerSize;
@@ -78,10 +62,6 @@ static NSString *const MDCCurvedRectShapeGeneratorCornerSizeKey =
 
 - (CGPathRef)pathForSize:(CGSize)size {
   return [_rectGenerator pathForSize:size];
-}
-
-+ (BOOL)supportsSecureCoding {
-  return YES;
 }
 
 @end

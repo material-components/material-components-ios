@@ -12,24 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCEdgeTreatment.h"
+#import <UIKit/UIKit.h>
 
-#import "MDCPathGenerator.h"
-
-@implementation MDCEdgeTreatment
-
-- (instancetype)init {
-  return [super init];
-}
-
-- (MDCPathGenerator *)pathGeneratorForEdgeWithLength:(CGFloat)length {
-  MDCPathGenerator *path = [MDCPathGenerator pathGeneratorWithStartPoint:CGPointZero];
-  [path addLineToPoint:CGPointMake(length, 0)];
-  return path;
-}
-
-- (id)copyWithZone:(nullable NSZone *)__unused zone {
-  return [[[self class] alloc] init];
-}
-
+@interface MDCShapeExamplesDummyCollectionViewController : UICollectionViewController
+- (instancetype)initWithNumItems:(NSInteger)numItems NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout NS_UNAVAILABLE;
+- (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil
+                         bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
 @end

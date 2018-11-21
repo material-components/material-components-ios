@@ -14,11 +14,6 @@
 
 #import "MDCLegacyTonalPalette.h"
 
-static NSString *const MDCTonalPaletteColorsKey = @"MDCTonalPaletteColorsKey";
-static NSString *const MDCTonalPaletteMainColorIndexKey = @"MDCTonalPaletteMainColorIndexKey";
-static NSString *const MDCTonalPaletteLightColorIndexKey = @"MDCTonalPaletteLightColorIndexKey";
-static NSString *const MDCTonalPaletteDarkColorIndexKey = @"MDCTonalPaletteDarkColorIndexKey";
-
 @interface MDCTonalPalette ()
 
 @property (nonatomic, copy, nonnull) NSArray<UIColor *> *colors;
@@ -53,35 +48,6 @@ static NSString *const MDCTonalPaletteDarkColorIndexKey = @"MDCTonalPaletteDarkC
   return self;
 }
 
-- (instancetype)initWithCoder:(NSCoder *)coder {
-  self = [super init];
-  if (self) {
-    if ([coder containsValueForKey:MDCTonalPaletteColorsKey]) {
-      _colors = [coder decodeObjectOfClass:[NSArray class] forKey:MDCTonalPaletteColorsKey];
-    }
-
-    if ([coder containsValueForKey:MDCTonalPaletteMainColorIndexKey]) {
-      _mainColorIndex = [coder decodeIntegerForKey:MDCTonalPaletteMainColorIndexKey];
-    }
-
-    if ([coder containsValueForKey:MDCTonalPaletteLightColorIndexKey]) {
-      _lightColorIndex = [coder decodeIntegerForKey:MDCTonalPaletteLightColorIndexKey];
-    }
-
-    if ([coder containsValueForKey:MDCTonalPaletteDarkColorIndexKey]) {
-      _darkColorIndex = [coder decodeIntegerForKey:MDCTonalPaletteDarkColorIndexKey];
-    }
-  }
-  return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [aCoder encodeObject:self.colors forKey:MDCTonalPaletteColorsKey];
-  [aCoder encodeInteger:self.mainColorIndex forKey:MDCTonalPaletteMainColorIndexKey];
-  [aCoder encodeInteger:self.lightColorIndex forKey:MDCTonalPaletteLightColorIndexKey];
-  [aCoder encodeInteger:self.darkColorIndex forKey:MDCTonalPaletteDarkColorIndexKey];
-}
-
 - (UIColor *)mainColor {
   return _colors[_mainColorIndex];
 }
@@ -105,12 +71,6 @@ static NSString *const MDCTonalPaletteDarkColorIndexKey = @"MDCTonalPaletteDarkC
     copy.darkColorIndex = [self darkColorIndex];
   }
   return copy;
-}
-
-#pragma mark - NSSecureCoding
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
 }
 
 @end

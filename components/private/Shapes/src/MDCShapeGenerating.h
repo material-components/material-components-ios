@@ -17,7 +17,7 @@
 /**
  A protocol for objects that create closed CGPaths of varying sizes.
  */
-@protocol MDCShapeGenerating <NSCopying, NSSecureCoding>
+@protocol MDCShapeGenerating <NSCopying>
 
 /**
  Creates a CGPath for the given size.
