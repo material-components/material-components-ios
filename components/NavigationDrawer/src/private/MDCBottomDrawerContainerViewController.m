@@ -540,7 +540,9 @@ static UIColor *DrawerShadowColor(void) {
     } else {
       [self resetLayoutWithInitialDrawerFactor:precentageOfFullScreen];
     }
-    completion(YES);
+    if (completion) {
+      completion(YES);
+    }
   }];
 }
 

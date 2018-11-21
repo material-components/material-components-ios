@@ -597,11 +597,32 @@
 }
 
 - (void)testCalculateContentOffsetWithSmallPreferredContentHeight {
+  // Given
+  [self setupHeaderWithPreferredContentSize:CGSizeZero];
+  CGFloat fakeAddedHeight = 200;
 
+  // When
+  CGPoint acutalContentOffset =
+      [self.fakeBottomDrawer calculateContentOffsetWithPreferredContentHeight:fakeAddedHeight];
+
+  // Then
+  XCTAssertEqualWithAccuracy(acutalContentOffset.y, 200, 0.001);
 }
 
 - (void)testCalculateContentOffsetWithLargePreferredContentHeight {
+  // Given
+  [self setupHeaderWithPreferredContentSize:CGSizeZero];
+  CGFloat fakeAddedHeight = 20000;
+  // Subtract 20 for the top safe area
+  CGFloat expectedYOffset =
+      CGRectGetHeight(self.fakeBottomDrawer.originalPresentingViewController.view.bounds) - 20;
 
+  // When
+  CGPoint acutalContentOffset =
+      [self.fakeBottomDrawer calculateContentOffsetWithPreferredContentHeight:fakeAddedHeight];
+
+  // Then
+  XCTAssertEqualWithAccuracy(acutalContentOffset.y, expectedYOffset, 0.001);
 }
 
 @end
