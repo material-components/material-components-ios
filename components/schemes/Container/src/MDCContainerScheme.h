@@ -36,11 +36,11 @@
 
  Default schemes value is not provided.
  */
-__attribute__((objc_subclassing_restricted))
-@interface MDCContainerScheme : NSObject<MDCContainerScheming>
+__attribute__((objc_subclassing_restricted)) @interface MDCContainerScheme
+    : NSObject<MDCContainerScheming>
 
-@property(nonatomic, nullable, readwrite) MDCSemanticColorScheme *colorScheme;   // default is nil
-@property(nonatomic, nullable, readwrite) MDCTypographyScheme *typographyScheme; // default is nil
-@property(nonatomic, nullable, readwrite) MDCShapeScheme *shapeScheme;           // default is nil
+@property(nonatomic, nullable, readwrite) MDCSemanticColorScheme *colorScheme;    // default is nil
+@property(nonatomic, nullable, readwrite) MDCTypographyScheme *typographyScheme;  // default is nil
+@property(nonatomic, nullable, readwrite) MDCShapeScheme *shapeScheme;            // default is nil
 
 @end
