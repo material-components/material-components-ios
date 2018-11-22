@@ -153,6 +153,7 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
 
   id<UIViewControllerTransitionCoordinator> transitionCoordinator =
       [[self presentingViewController] transitionCoordinator];
+  [[self presentedViewController] addChildViewController:self.bottomDrawerContainerViewController];
 
   // Fade in the scrim view during the transition.
   self.scrimView.alpha = 0.0;
