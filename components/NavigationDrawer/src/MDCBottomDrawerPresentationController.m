@@ -147,15 +147,13 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
       .active = YES;
   if ([self.presentedViewController isKindOfClass:[MDCBottomDrawerViewController class]]) {
     [self.presentedView addSubview:self.bottomDrawerContainerViewController.view];
+    [self.presentedViewController addChildViewController:self.bottomDrawerContainerViewController];
   } else {
     [self.containerView addSubview:self.bottomDrawerContainerViewController.view];
   }
 
   id<UIViewControllerTransitionCoordinator> transitionCoordinator =
       [[self presentingViewController] transitionCoordinator];
-  if ([self.presentedViewController isKindOfClass:[MDCBottomDrawerViewController class]]) {
-    [self.presentedViewController addChildViewController:self.bottomDrawerContainerViewController];
-  }
 
   // Fade in the scrim view during the transition.
   self.scrimView.alpha = 0.0;
