@@ -246,6 +246,9 @@ run_cocoapods() {
   if [ -n "$CODECOV_TOKEN" ]; then
     bash <(curl -s https://codecov.io/bash)
   fi
+
+  brew install git-lfs
+  git lfs install --local
 }
 
 # For local runs, you must set the following environment variables:
