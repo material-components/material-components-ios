@@ -33,7 +33,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "153B950E9F5C9E9E4BE2D402CB52E43A"
+               BlueprintIdentifier = "A967ED968E91853E5F7FB042E99AADC7"
                BuildableName = "MaterialComponents-Unit-Tests.xctest"
                BlueprintName = "MaterialComponents-Unit-Tests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -43,7 +43,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "47FB08CD9CD5B00DEC8D9A84BCFD9232"
+               BlueprintIdentifier = "B1F3C69C1D36933A3084623608ACD831"
                BuildableName = "MaterialComponentsAlpha-Unit-Tests.xctest"
                BlueprintName = "MaterialComponentsAlpha-Unit-Tests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -61,8 +61,8 @@
       </MacroExpansion>
       <EnvironmentVariables>
          <EnvironmentVariable
-            key = "DYLD_INSERT_LIBRARIES"
-            value = "@executable_path/EarlGrey.framework/EarlGrey"
+            key = "FB_REFERENCE_IMAGE_DIR"
+            value = "$(SOURCE_ROOT)/../ui_test_goldens/goldens"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>
