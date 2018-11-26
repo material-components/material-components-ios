@@ -511,12 +511,16 @@ static UIColor *DrawerShadowColor(void) {
 - (void)animateToPreferredContentHeight:(CGFloat)preferredContentHeight
                            withDuration:(NSTimeInterval)duration
                              completion:(void (^_Nullable)(BOOL))completion {
+  CGSize newPreferredContentSize =
+      CGSizeMake(CGRectGetWidth(self.view.bounds), preferredContentHeight);
+  if ([self isMobileLandscape]) {
+    self.contentViewController.preferredContentSize = newPreferredContentSize;
+    return;
+  }
   CGPoint contentOffset =
       [self calculateContentOffsetWithPreferredContentHeight:preferredContentHeight];
   CGFloat precentageOfFullScreen =
       [self precentageOfFullScreenWithPreferredContentHeight:preferredContentHeight];
-  CGSize newPreferredContentSize =
-      CGSizeMake(CGRectGetWidth(self.view.bounds), preferredContentHeight);
   BOOL shouldSetContentHeight = NO;
   if (_contentVCPreferredContentSizeHeightCached > preferredContentHeight) {
     shouldSetContentHeight = YES;
