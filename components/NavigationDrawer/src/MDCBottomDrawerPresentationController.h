@@ -102,10 +102,13 @@
 - (void)setContentOffsetY:(CGFloat)contentOffsetY animated:(BOOL)animated;
 
 /**
- Expands the navigation drawer to maximum height for the content. If content is larger than the
- screen bounds then animates to full screen.
+ Animates the navigation drawer to preferred content height. This ignores the initial height of 50%
+ and animates to full screen if content is large enough. If content is smaller than the screen
+ height then it animates to the height of the content.
 
+ @param preferredContentHeight The new preferred content size of the content view controller.
  @param duration The duration of the animation
+ @param completion The completion block once the animation is done
  */
 - (void)animateToPreferredContentHeight:(CGFloat)preferredContentHeight
                            withDuration:(NSTimeInterval)duration
