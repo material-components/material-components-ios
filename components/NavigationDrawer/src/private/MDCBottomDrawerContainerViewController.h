@@ -126,7 +126,8 @@
  and animates to full screen if content is large enough. If content is smaller than the screen
  height then it animates to the height of the content.
 
- @param preferredContentHeight The new preferred content size of the content view controller.
+ @param preferredContentHeight The new preferred content size of the content view controller. This
+ will set the preferred content height of the content view controller to the desired value.
  @param duration The duration of the animation
  @param completion The completion block once the animation is done
  */
