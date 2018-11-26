@@ -23,11 +23,11 @@ class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewContro
 
   var colorScheme = MDCSemanticColorScheme()
   let bottomAppBar = MDCBottomAppBarView()
-   var fullScreen: Bool = true
+  var fullScreen: Bool = true
 
   let headerViewController = DrawerHeaderViewController()
   let contentViewController = DrawerContentViewController()
-  var bottomDrawerViewController = MDCBottomDrawerViewController()
+  lazy var bottomDrawerViewController = MDCBottomDrawerViewController()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -86,7 +86,9 @@ class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewContro
     button.sizeToFit()
     button.addTarget(self, action: #selector(expandBottomDrawer), for: .touchUpInside)
     button.center = CGPoint(x: view.frame.width / 2, y: 50)
-    button.backgroundColor = colorScheme.primaryColor
+    let buttonScheme = MDCButtonScheme()
+    buttonScheme.colorScheme = colorScheme
+    MDCContainedButtonThemer.applyScheme(buttonScheme, to: button)
     contentViewController.view.addSubview(button)
   }
 
@@ -97,16 +99,12 @@ class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewContro
     } else {
       height = 2000
     }
-    bottomDrawerViewController.animate(toPreferredContentHeight: height, withDuration: 5) { _ in
-      if let drawerHeader =
-        self.bottomDrawerViewController.headerViewController as? DrawerHeaderViewController {
-        drawerHeader.titleLabel.text = "Done animating"
-      }
+    bottomDrawerViewController.animate(toPreferredContentHeight: height, withDuration: 0.2) { _ in
+      print("Animation completed")
       self.fullScreen = !self.fullScreen
     }
-    UIView.animate(withDuration: 5, animations: {
-      self.bottomDrawerViewController.headerViewController?.view.backgroundColor =
-        self.colorScheme.primaryColor
+    UIView.animate(withDuration: 0.2, animations: {
+      print("Insert custom animation here")
     })
   }
 

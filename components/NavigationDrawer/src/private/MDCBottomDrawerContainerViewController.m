@@ -136,17 +136,22 @@ static UIColor *DrawerShadowColor(void) {
 // The current bottom drawer state.
 @property(nonatomic) MDCBottomDrawerState drawerState;
 
+// The height of the drawer at time of layout, in relation to the screen height, 0.0 is totally
+// hidden and 1.0 is full screen.
 @property(nonatomic) CGFloat initialDrawerFactor;
+
 /**
- Calculates the contentOffset if contentViewController's preferredContentSize was set to @c
- preferredContentSize.
+ Calculates the contentOffset if contentViewController's preferredContentSize.height was set to
+ preferredContentHeight.
  */
 - (CGPoint)calculateContentOffsetWithPreferredContentHeight:(CGFloat)preferredContentHeight;
+
 /**
- Calculates how much of the screen will be filled with contentViewController's preferredContentSize
- being @c preferredContentSize.
+ Calculates how much of the screen will be filled with contentViewController's
+ preferredContentSize.height being preferredContentHeight.
  */
 - (CGFloat)precentageOfFullScreenWithPreferredContentHeight:(CGFloat)preferredContentHeight;
+
 /**
  Calculates the height of the headerViewController.preferredContentSize plus your desired added
  content height.
@@ -164,8 +169,6 @@ static UIColor *DrawerShadowColor(void) {
   CGFloat _contentVCPreferredContentSizeHeightCached;
   CGFloat _scrollToContentOffsetY;
 }
-
-@synthesize initialDrawerFactor = _initialDrawerFactor;
 
 - (instancetype)initWithOriginalPresentingViewController:
     (UIViewController *)originalPresentingViewController
@@ -320,10 +323,6 @@ static UIColor *DrawerShadowColor(void) {
     return 1;
   }
   return _initialDrawerFactor;
-}
-
-- (void)setInitialDrawerFactor:(CGFloat)initialDrawerFactor {
-  _initialDrawerFactor = initialDrawerFactor;
 }
 
 - (void)addScrollViewObserver {
@@ -513,8 +512,10 @@ static UIColor *DrawerShadowColor(void) {
                            withDuration:(NSTimeInterval)duration
                              completion:(void (^_Nullable)(BOOL))completion {
   CGSize newPreferredContentSize =
-      CGSizeMake(CGRectGetWidth(self.view.bounds), preferredContentHeight);
-  if ([self isMobileLandscape]) {
+      CGSizeMake(self.presentingViewBounds.size.width, preferredContentHeight);
+  // If we are in landscape or voiceover mode we don't need to animate because the drawer
+  // should always be full screen.
+  if ([self isMobileLandscape] || [self isAccessibilityMode]) {
     self.contentViewController.preferredContentSize = newPreferredContentSize;
     return;
   }
@@ -522,29 +523,44 @@ static UIColor *DrawerShadowColor(void) {
       [self calculateContentOffsetWithPreferredContentHeight:preferredContentHeight];
   CGFloat precentageOfFullScreen =
       [self precentageOfFullScreenWithPreferredContentHeight:preferredContentHeight];
+  // If the content is smaller than what we want to animate to, when we scroll we will see the scrim
+  // behind the content. This flag is to know later that we still haven't set the content height and
+  // will need to set it later.
   BOOL shouldSetContentHeight = NO;
   if (_contentVCPreferredContentSizeHeightCached > preferredContentHeight) {
     shouldSetContentHeight = YES;
   } else {
+    // We do set the preferredContentHeight if the content is small and going to be large so that
+    // we will not see the scrim view.
     if (_contentVCPreferredContentSizeHeightCached != preferredContentHeight) {
       // Calculate height before we set preferredContentSize
       CGFloat oldContentPreferredHeight = _contentVCPreferredContentSizeHeightCached;
       CGFloat oldTotalHeight = [self totalHeightWithAddedContentHeight:oldContentPreferredHeight];
       oldTotalHeight =
-          CGRectGetHeight(self.presentingViewBounds) - oldTotalHeight - MDCDeviceTopSafeAreaInset();
+          self.presentingViewBounds.size.height - oldTotalHeight - MDCDeviceTopSafeAreaInset();
       self.contentViewController.preferredContentSize = newPreferredContentSize;
+      // We cannot call setContentOffsetY:animated: because we are setting the scroll view directly
+      // and not the tracking scroll view.
       [self.scrollView setContentOffset:CGPointMake(0, oldTotalHeight)];
+      // We need to reset to layout the subview with the new preferredContentHeight and update the
+      // contentOffset so that the animation is aware of the change.
       [self resetLayoutWithInitialDrawerFactor:precentageOfFullScreen];
-      contentOffset = CGPointMake(0, oldTotalHeight * 2);
+      contentOffset = CGPointMake(0, oldTotalHeight + contentOffset.y);
     }
   }
+  // The duration is required so that clients can animate their content with a matching duration.
   [UIView animateWithDuration:duration
       animations:^{
         [self.scrollView setContentOffset:contentOffset];
       }
       completion:^(BOOL finished) {
+        // We set the scrollview content offset to zero in order to make sure the content view
+        // controller isn't scrolled up.
         [self.scrollView setContentOffset:CGPointZero];
+        // We reset to layout everything with the new preferredContentHeight.
         if (shouldSetContentHeight) {
+          // We have to reset the height because we are still acting as if the content height is
+          // larger than it really is.
           [self resetLayoutWithInitialDrawerFactor:precentageOfFullScreen
                               preferredContentSize:newPreferredContentSize];
         } else {
@@ -560,8 +576,8 @@ static UIColor *DrawerShadowColor(void) {
   CGFloat totalHeight = [self totalHeightWithAddedContentHeight:preferredContentHeight];
   CGFloat contentYOffset = 0;
   CGPoint contentOffset = CGPointZero;
-  if (CGRectGetHeight(self.presentingViewBounds) > totalHeight) {
-    CGFloat spaceBetweenContentAndTop = CGRectGetHeight(self.presentingViewBounds) - totalHeight;
+  if (self.presentingViewBounds.size.height > totalHeight) {
+    CGFloat spaceBetweenContentAndTop = self.presentingViewBounds.size.height - totalHeight;
     contentYOffset = self.contentHeaderTopInset - spaceBetweenContentAndTop;
     contentOffset = CGPointMake(self.scrollView.contentOffset.x, contentYOffset);
   } else {
@@ -573,7 +589,7 @@ static UIColor *DrawerShadowColor(void) {
 
 - (CGFloat)precentageOfFullScreenWithPreferredContentHeight:(CGFloat)preferredContentHeight {
   CGFloat totalHeight = [self totalHeightWithAddedContentHeight:preferredContentHeight];
-  CGFloat precentageOfFullScreen = totalHeight / CGRectGetHeight(self.presentingViewBounds);
+  CGFloat precentageOfFullScreen = totalHeight / self.presentingViewBounds.size.height;
   return (precentageOfFullScreen > 1) ? 1 : precentageOfFullScreen;
 }
 
