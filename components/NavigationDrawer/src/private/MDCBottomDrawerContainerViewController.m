@@ -304,6 +304,7 @@ static UIColor *DrawerShadowColor(void) {
 }
 
 - (BOOL)shouldPresentFullScreen {
+  // TODO: Github issue #5828
   return [self isAccessibilityMode] || [self isMobileLandscape] || _initialDrawerFactor >= 1;
 }
 
