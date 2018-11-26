@@ -228,6 +228,14 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   return self.bottomDrawerContainerViewController.contentReachesFullscreen;
 }
 
+- (void)animateToPreferredContentHeight:(CGFloat)preferredContentHeight
+                           withDuration:(NSTimeInterval)duration
+                             completion:(void (^_Nullable)(BOOL))completion {
+  [self.bottomDrawerContainerViewController animateToPreferredContentHeight:preferredContentHeight
+                                                               withDuration:duration
+                                                                 completion:completion];
+}
+
 #pragma mark - Private
 
 - (void)hideDrawer {

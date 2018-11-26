@@ -19,17 +19,10 @@ import MaterialComponents.MaterialNavigationDrawer
 class DrawerContentViewController: UIViewController {
   var preferredHeight: CGFloat = 2000
 
-  override var preferredContentSize: CGSize {
-    get {
-      return CGSize(width: view.bounds.width, height: preferredHeight)
-    }
-    set {
-      super.preferredContentSize = newValue
-    }
-  }
-
   init() {
     super.init(nibName: nil, bundle: nil)
+
+    preferredContentSize = CGSize(width: view.bounds.width, height: preferredHeight)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -45,17 +38,10 @@ class DrawerHeaderViewController: UIViewController,MDCBottomDrawerHeader {
     return label
   }()
 
-  override var preferredContentSize: CGSize {
-    get {
-      return CGSize(width: view.bounds.width, height: preferredHeight)
-    }
-    set {
-      super.preferredContentSize = newValue
-    }
-  }
-
   init() {
     super.init(nibName: nil, bundle: nil)
+
+    preferredContentSize = CGSize(width: view.bounds.width, height: preferredHeight)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -64,11 +50,19 @@ class DrawerHeaderViewController: UIViewController,MDCBottomDrawerHeader {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+
     view.addSubview(titleLabel)
   }
 
   override func viewWillAppear(_ animated: Bool) {
+    viewWillAppear(animated)
+
     titleLabel.sizeToFit()
+  }
+
+  override func viewWillLayoutSubviews() {
+    super.viewWillLayoutSubviews()
+
     titleLabel.center =
       CGPoint(x: self.view.frame.size.width / 2, y: self.view.frame.size.height / 2)
   }

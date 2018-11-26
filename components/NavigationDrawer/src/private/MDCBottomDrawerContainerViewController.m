@@ -136,6 +136,24 @@ static UIColor *DrawerShadowColor(void) {
 // The current bottom drawer state.
 @property(nonatomic) MDCBottomDrawerState drawerState;
 
+@property(nonatomic) CGFloat initialDrawerFactor;
+/**
+ Calculates the contentOffset if contentViewController's preferredContentSize was set to @c
+ preferredContentSize.
+ */
+- (CGPoint)calculateContentOffsetWithPreferredContentHeight:(CGFloat)preferredContentHeight;
+/**
+ Calculates how much of the screen will be filled with contentViewController's preferredContentSize
+ being @c preferredContentSize.
+ */
+- (CGFloat)precentageOfFullScreenWithPreferredContentHeight:(CGFloat)preferredContentHeight;
+/**
+ Calculates the height of the headerViewController.preferredContentSize plus your desired added
+ content height.
+ */
+- (CGFloat)totalHeightWithAddedContentHeight:(CGFloat)addedContentHeight;
+
+
 @end
 
 @implementation MDCBottomDrawerContainerViewController {
@@ -147,6 +165,8 @@ static UIColor *DrawerShadowColor(void) {
   CGFloat _contentVCPreferredContentSizeHeightCached;
   CGFloat _scrollToContentOffsetY;
 }
+
+@synthesize initialDrawerFactor = _initialDrawerFactor;
 
 - (instancetype)initWithOriginalPresentingViewController:
     (UIViewController *)originalPresentingViewController
@@ -160,6 +180,7 @@ static UIColor *DrawerShadowColor(void) {
     _trackingScrollView = trackingScrollView;
     _drawerState = MDCBottomDrawerStateCollapsed;
     _scrollToContentOffsetY = 0;
+    _initialDrawerFactor = (CGFloat)0.5;
   }
   return self;
 }
@@ -284,7 +305,7 @@ static UIColor *DrawerShadowColor(void) {
 }
 
 - (BOOL)shouldPresentFullScreen {
-  return [self isAccessibilityMode] || [self isMobileLandscape];
+  return [self isAccessibilityMode] || [self isMobileLandscape] || _initialDrawerFactor >= 1;
 }
 
 /**
@@ -295,8 +316,16 @@ static UIColor *DrawerShadowColor(void) {
  the default value becomes 1.0.
  */
 - (CGFloat)initialDrawerFactor {
-  return [self shouldPresentFullScreen] ? 1 : (CGFloat)0.5;
+  if ([self shouldPresentFullScreen]) {
+    return 1;
+  }
+  return _initialDrawerFactor;
 }
+
+- (void)setInitialDrawerFactor:(CGFloat)initialDrawerFactor {
+  _initialDrawerFactor = initialDrawerFactor;
+}
+
 
 - (void)addScrollViewObserver {
   if (self.scrollViewObserved) {
@@ -479,6 +508,80 @@ static UIColor *DrawerShadowColor(void) {
   _contentHeightSurplus = NSNotFound;
   _addedContentHeight = NSNotFound;
   [self.view setNeedsLayout];
+}
+
+- (void)animateToPreferredContentHeight:(CGFloat)preferredContentHeight
+                           withDuration:(NSTimeInterval)duration
+                             completion:(void (^_Nullable)(BOOL))completion {
+  CGPoint contentOffset =
+  [self calculateContentOffsetWithPreferredContentHeight:preferredContentHeight];
+  CGFloat precentageOfFullScreen =
+  [self precentageOfFullScreenWithPreferredContentHeight:preferredContentHeight];
+  CGFloat totalHeight = [self totalHeightWithAddedContentHeight:preferredContentHeight];
+  BOOL setContentHeight = NO;
+  CGSize newPreferredContentSize =
+  CGSizeMake(CGRectGetWidth(self.view.bounds), preferredContentHeight);
+  if (_contentVCPreferredContentSizeHeightCached > preferredContentHeight) {
+    setContentHeight = YES;
+  } else {
+    self.contentViewController.preferredContentSize = newPreferredContentSize;
+  }
+  [UIView animateWithDuration:duration
+                   animations:^{
+                     [self.scrollView setContentOffset:contentOffset];
+                   }
+                   completion:^(BOOL finished) {
+                     if (CGRectGetHeight(self.presentingViewBounds) <= totalHeight) {
+                       [self.scrollView setContentOffset:CGPointZero];
+                     }
+                     if (setContentHeight) {
+                       [self resetLayoutWithInitialDrawerFactor:precentageOfFullScreen
+                                           preferredContentSize:newPreferredContentSize];
+                     } else {
+                       [self resetLayoutWithInitialDrawerFactor:precentageOfFullScreen];
+                     }
+                     if (completion) {
+                       completion(YES);
+                     }
+                   }];
+}
+
+- (CGPoint)calculateContentOffsetWithPreferredContentHeight:(CGFloat)preferredContentHeight {
+  CGFloat totalHeight = [self totalHeightWithAddedContentHeight:preferredContentHeight];
+  CGFloat contentYOffset = 0;
+  CGPoint contentOffset = CGPointZero;
+  if (CGRectGetHeight(self.presentingViewBounds) > totalHeight) {
+    CGFloat spaceBetweenContentAndTop = CGRectGetHeight(self.presentingViewBounds) - totalHeight;
+    contentYOffset = self.contentHeaderTopInset - spaceBetweenContentAndTop;
+    contentOffset = CGPointMake(self.scrollView.contentOffset.x, contentYOffset);
+  } else {
+    contentYOffset = self.contentHeaderTopInset - MDCDeviceTopSafeAreaInset();
+    contentOffset = CGPointMake(self.scrollView.contentOffset.x, contentYOffset);
+  }
+  return contentOffset;
+}
+
+- (CGFloat)precentageOfFullScreenWithPreferredContentHeight:(CGFloat)preferredContentHeight {
+  CGFloat totalHeight = [self totalHeightWithAddedContentHeight:preferredContentHeight];
+  CGFloat precentageOfFullScreen = totalHeight / CGRectGetHeight(self.presentingViewBounds);
+  return (precentageOfFullScreen > 1) ? 1 : precentageOfFullScreen;
+}
+- (CGFloat)totalHeightWithAddedContentHeight:(CGFloat)addedContentHeight {
+  return self.headerViewController.preferredContentSize.height + addedContentHeight;
+}
+
+- (void)resetLayoutWithInitialDrawerFactor:(CGFloat)initialDrawerFactor {
+  self.initialDrawerFactor = initialDrawerFactor;
+  _contentHeaderTopInset = NSNotFound;
+  _contentHeightSurplus = NSNotFound;
+  _addedContentHeight = NSNotFound;
+  [self.view setNeedsLayout];
+}
+
+- (void)resetLayoutWithInitialDrawerFactor:(CGFloat)initialDrawerFactor
+                      preferredContentSize:(CGSize)preferredContentSize {
+  self.contentViewController.preferredContentSize = preferredContentSize;
+  [self resetLayoutWithInitialDrawerFactor:initialDrawerFactor];
 }
 
 #pragma mark Set ups (Private)
