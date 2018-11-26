@@ -575,6 +575,7 @@ static UIColor *DrawerShadowColor(void) {
   CGFloat precentageOfFullScreen = totalHeight / CGRectGetHeight(self.presentingViewBounds);
   return (precentageOfFullScreen > 1) ? 1 : precentageOfFullScreen;
 }
+
 - (CGFloat)totalHeightWithAddedContentHeight:(CGFloat)addedContentHeight {
   return self.headerViewController.preferredContentSize.height + addedContentHeight;
 }
