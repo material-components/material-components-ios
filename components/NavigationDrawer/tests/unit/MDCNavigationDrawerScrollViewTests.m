@@ -555,6 +555,7 @@
   // Then
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.scrollView.contentOffset.y, 230, 0.001);
 }
+
 - (void)testExpandToFullScreenAnimationWithSmallScreenContent {
   // Given
   self.fakeBottomDrawer.trackingScrollView = nil;
@@ -567,6 +568,7 @@
   // Then
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.scrollView.contentOffset.y, 50, 0.001);
 }
+
 - (void)testTotalHeightWithAddedContentHeight {
   // Given
   CGSize fakePreferredContentSize = CGSizeMake(200, 700);
@@ -580,6 +582,7 @@
   // Then
   XCTAssertEqualWithAccuracy(totalHeight, expectedHeight, 0.001);
 }
+
 - (void)testPrecentageOfFullScreenWithPreferredContentHeight {
   // Given
   [self setupHeaderWithPreferredContentSize:CGSizeZero];
@@ -592,6 +595,7 @@
   // Then
   XCTAssertEqualWithAccuracy(actualPercentage, (CGFloat)0.4, 0.001);
 }
+
 - (void)testCalculateContentOffsetWithSmallPreferredContentHeight {
   // Given
   [self setupHeaderWithPreferredContentSize:CGSizeZero];
@@ -604,6 +608,7 @@
   // Then
   XCTAssertEqualWithAccuracy(acutalContentOffset.y, 200, 0.001);
 }
+
 - (void)testCalculateContentOffsetWithLargePreferredContentHeight {
   // Given
   [self setupHeaderWithPreferredContentSize:CGSizeZero];
