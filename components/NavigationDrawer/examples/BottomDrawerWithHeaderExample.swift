@@ -97,14 +97,14 @@ class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewContro
     } else {
       height = 2000
     }
-    bottomDrawerViewController.animate(toPreferredContentHeight: height, withDuration: 5) { _ in
+    bottomDrawerViewController.animate(toPreferredContentHeight: height, withDuration: 1.5) { _ in
       if let drawerHeader =
         self.bottomDrawerViewController.headerViewController as? DrawerHeaderViewController {
         drawerHeader.titleLabel.text = "Done animating"
       }
       self.fullScreen = !self.fullScreen
     }
-    UIView.animate(withDuration: 5, animations: {
+    UIView.animate(withDuration: 1.5, animations: {
       self.bottomDrawerViewController.headerViewController?.view.backgroundColor =
         self.colorScheme.primaryColor
     })
@@ -125,6 +125,7 @@ extension BottomDrawerWithHeaderExample {
       "breadcrumbs": ["Navigation Drawer", "Bottom Drawer"],
       "primaryDemo": false,
       "presentable": false,
+      "debug": true,
     ]
   }
 }

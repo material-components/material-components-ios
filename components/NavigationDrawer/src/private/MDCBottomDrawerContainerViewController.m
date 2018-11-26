@@ -515,26 +515,31 @@ static UIColor *DrawerShadowColor(void) {
       [self calculateContentOffsetWithPreferredContentHeight:preferredContentHeight];
   CGFloat precentageOfFullScreen =
       [self precentageOfFullScreenWithPreferredContentHeight:preferredContentHeight];
-  CGFloat totalHeight = [self totalHeightWithAddedContentHeight:preferredContentHeight];
   CGSize newPreferredContentSize =
       CGSizeMake(CGRectGetWidth(self.view.bounds), preferredContentHeight);
-  BOOL setContentHeight = NO;
+  BOOL shouldSetContentHeight = NO;
   if (_contentVCPreferredContentSizeHeightCached > preferredContentHeight) {
-    setContentHeight = YES;
+    shouldSetContentHeight = YES;
   } else {
-    self.contentViewController.preferredContentSize = newPreferredContentSize;
-    // Set content offset here to animate correctly for small to large
+    if (_contentVCPreferredContentSizeHeightCached != preferredContentHeight) {
+      // Calculate height before we set preferredContentSize
+      CGFloat oldContentPreferredHeight = _contentVCPreferredContentSizeHeightCached;
+      CGFloat oldTotalHeight = [self totalHeightWithAddedContentHeight:oldContentPreferredHeight];
+      oldTotalHeight =
+          CGRectGetHeight(self.presentingViewBounds) - oldTotalHeight - MDCDeviceTopSafeAreaInset();
+      self.contentViewController.preferredContentSize = newPreferredContentSize;
+      [self.scrollView setContentOffset:CGPointMake(0, oldTotalHeight)];
+      [self resetLayoutWithInitialDrawerFactor:1];
+      contentOffset = CGPointMake(0, oldTotalHeight * 2);
+    }
   }
   [UIView animateWithDuration:duration
       animations:^{
         [self.scrollView setContentOffset:contentOffset];
       }
       completion:^(BOOL finished) {
-        if (CGRectGetHeight(self.presentingViewBounds) <= totalHeight) {
-          [self.scrollView setContentOffset:CGPointZero];
-        }
-        [self resetLayoutWithInitialDrawerFactor:precentageOfFullScreen preferredContentSize:newPreferredContentSize];
-        if (setContentHeight) {
+        [self.scrollView setContentOffset:CGPointZero];
+        if (shouldSetContentHeight) {
           [self resetLayoutWithInitialDrawerFactor:precentageOfFullScreen
                               preferredContentSize:newPreferredContentSize];
         } else {
