@@ -533,7 +533,7 @@ static UIColor *DrawerShadowColor(void) {
           CGRectGetHeight(self.presentingViewBounds) - oldTotalHeight - MDCDeviceTopSafeAreaInset();
       self.contentViewController.preferredContentSize = newPreferredContentSize;
       [self.scrollView setContentOffset:CGPointMake(0, oldTotalHeight)];
-      [self resetLayoutWithInitialDrawerFactor:1];
+      [self resetLayoutWithInitialDrawerFactor:precentageOfFullScreen];
       contentOffset = CGPointMake(0, oldTotalHeight * 2);
     }
   }
