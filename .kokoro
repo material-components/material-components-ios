@@ -229,6 +229,10 @@ run_cocoapods() {
 
     gem install xcpretty cocoapods --no-rdoc --no-ri --no-document --quiet
     pod --version
+
+    # Install git-lfs
+    brew install git-lfs
+    git lfs install --local
   fi
 
   if [ "$DEPENDENCY_SYSTEM" = "cocoapods" ]; then
@@ -246,9 +250,6 @@ run_cocoapods() {
   if [ -n "$CODECOV_TOKEN" ]; then
     bash <(curl -s https://codecov.io/bash)
   fi
-
-  brew install git-lfs
-  git lfs install --local
 }
 
 # For local runs, you must set the following environment variables:
