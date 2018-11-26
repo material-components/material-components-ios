@@ -124,7 +124,7 @@
 /**
  Expands the navigation drawer to maximum height for the content. If content is larger than the
  screen bounds then animates to full screen.
- 
+
  @param duration The duration of the animation
  */
 - (void)animateToPreferredContentHeight:(CGFloat)preferredContentHeight

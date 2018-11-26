@@ -108,7 +108,7 @@
 
 - (void)setupHeaderWithPreferredContentSize:(CGSize)size {
   MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
-  [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
+      [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
   fakeHeader.preferredContentSize = size;
   self.fakeBottomDrawer.headerViewController = fakeHeader;
 }
@@ -587,7 +587,7 @@
 
   // When
   CGFloat actualPercentage =
-  [self.fakeBottomDrawer precentageOfFullScreenWithPreferredContentHeight:fakeAddedHeight];
+      [self.fakeBottomDrawer precentageOfFullScreenWithPreferredContentHeight:fakeAddedHeight];
 
   // Then
   XCTAssertEqualWithAccuracy(actualPercentage, (CGFloat)0.4, 0.001);
@@ -599,7 +599,7 @@
 
   // When
   CGPoint acutalContentOffset =
-  [self.fakeBottomDrawer calculateContentOffsetWithPreferredContentHeight:fakeAddedHeight];
+      [self.fakeBottomDrawer calculateContentOffsetWithPreferredContentHeight:fakeAddedHeight];
 
   // Then
   XCTAssertEqualWithAccuracy(acutalContentOffset.y, 200, 0.001);
@@ -610,12 +610,12 @@
   CGFloat fakeAddedHeight = 20000;
   // Subtract 20 for the top safe area
   CGFloat expectedYOffset =
-  CGRectGetHeight(self.fakeBottomDrawer.originalPresentingViewController.view.bounds) - 20;
+      CGRectGetHeight(self.fakeBottomDrawer.originalPresentingViewController.view.bounds) - 20;
 
   // When
   CGPoint acutalContentOffset =
-  [self.fakeBottomDrawer calculateContentOffsetWithPreferredContentHeight:fakeAddedHeight];
-  
+      [self.fakeBottomDrawer calculateContentOffsetWithPreferredContentHeight:fakeAddedHeight];
+
   // Then
   XCTAssertEqualWithAccuracy(acutalContentOffset.y, expectedYOffset, 0.001);
 }

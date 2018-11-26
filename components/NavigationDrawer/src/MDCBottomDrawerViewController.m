@@ -219,7 +219,7 @@
                              completion:(void (^)(BOOL))completion {
   if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
     MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
-    (MDCBottomDrawerPresentationController *)self.presentationController;
+        (MDCBottomDrawerPresentationController *)self.presentationController;
     [bottomDrawerPresentationController animateToPreferredContentHeight:preferredContentHeight
                                                            withDuration:duration
                                                              completion:completion];

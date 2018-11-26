@@ -153,7 +153,6 @@ static UIColor *DrawerShadowColor(void) {
  */
 - (CGFloat)totalHeightWithAddedContentHeight:(CGFloat)addedContentHeight;
 
-
 @end
 
 @implementation MDCBottomDrawerContainerViewController {
@@ -325,7 +324,6 @@ static UIColor *DrawerShadowColor(void) {
 - (void)setInitialDrawerFactor:(CGFloat)initialDrawerFactor {
   _initialDrawerFactor = initialDrawerFactor;
 }
-
 
 - (void)addScrollViewObserver {
   if (self.scrollViewObserved) {
@@ -514,36 +512,36 @@ static UIColor *DrawerShadowColor(void) {
                            withDuration:(NSTimeInterval)duration
                              completion:(void (^_Nullable)(BOOL))completion {
   CGPoint contentOffset =
-  [self calculateContentOffsetWithPreferredContentHeight:preferredContentHeight];
+      [self calculateContentOffsetWithPreferredContentHeight:preferredContentHeight];
   CGFloat precentageOfFullScreen =
-  [self precentageOfFullScreenWithPreferredContentHeight:preferredContentHeight];
+      [self precentageOfFullScreenWithPreferredContentHeight:preferredContentHeight];
   CGFloat totalHeight = [self totalHeightWithAddedContentHeight:preferredContentHeight];
   BOOL setContentHeight = NO;
   CGSize newPreferredContentSize =
-  CGSizeMake(CGRectGetWidth(self.view.bounds), preferredContentHeight);
+      CGSizeMake(CGRectGetWidth(self.view.bounds), preferredContentHeight);
   if (_contentVCPreferredContentSizeHeightCached > preferredContentHeight) {
     setContentHeight = YES;
   } else {
     self.contentViewController.preferredContentSize = newPreferredContentSize;
   }
   [UIView animateWithDuration:duration
-                   animations:^{
-                     [self.scrollView setContentOffset:contentOffset];
-                   }
-                   completion:^(BOOL finished) {
-                     if (CGRectGetHeight(self.presentingViewBounds) <= totalHeight) {
-                       [self.scrollView setContentOffset:CGPointZero];
-                     }
-                     if (setContentHeight) {
-                       [self resetLayoutWithInitialDrawerFactor:precentageOfFullScreen
-                                           preferredContentSize:newPreferredContentSize];
-                     } else {
-                       [self resetLayoutWithInitialDrawerFactor:precentageOfFullScreen];
-                     }
-                     if (completion) {
-                       completion(YES);
-                     }
-                   }];
+      animations:^{
+        [self.scrollView setContentOffset:contentOffset];
+      }
+      completion:^(BOOL finished) {
+        if (CGRectGetHeight(self.presentingViewBounds) <= totalHeight) {
+          [self.scrollView setContentOffset:CGPointZero];
+        }
+        if (setContentHeight) {
+          [self resetLayoutWithInitialDrawerFactor:precentageOfFullScreen
+                              preferredContentSize:newPreferredContentSize];
+        } else {
+          [self resetLayoutWithInitialDrawerFactor:precentageOfFullScreen];
+        }
+        if (completion) {
+          completion(YES);
+        }
+      }];
 }
 
 - (CGPoint)calculateContentOffsetWithPreferredContentHeight:(CGFloat)preferredContentHeight {
