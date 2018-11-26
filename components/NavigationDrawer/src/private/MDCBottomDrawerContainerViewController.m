@@ -516,13 +516,14 @@ static UIColor *DrawerShadowColor(void) {
   CGFloat precentageOfFullScreen =
       [self precentageOfFullScreenWithPreferredContentHeight:preferredContentHeight];
   CGFloat totalHeight = [self totalHeightWithAddedContentHeight:preferredContentHeight];
-  BOOL setContentHeight = NO;
   CGSize newPreferredContentSize =
       CGSizeMake(CGRectGetWidth(self.view.bounds), preferredContentHeight);
+  BOOL setContentHeight = NO;
   if (_contentVCPreferredContentSizeHeightCached > preferredContentHeight) {
     setContentHeight = YES;
   } else {
     self.contentViewController.preferredContentSize = newPreferredContentSize;
+    // Set content offset here to animate correctly for small to large
   }
   [UIView animateWithDuration:duration
       animations:^{
@@ -532,6 +533,7 @@ static UIColor *DrawerShadowColor(void) {
         if (CGRectGetHeight(self.presentingViewBounds) <= totalHeight) {
           [self.scrollView setContentOffset:CGPointZero];
         }
+        [self resetLayoutWithInitialDrawerFactor:precentageOfFullScreen preferredContentSize:newPreferredContentSize];
         if (setContentHeight) {
           [self resetLayoutWithInitialDrawerFactor:precentageOfFullScreen
                               preferredContentSize:newPreferredContentSize];
