@@ -108,7 +108,7 @@ post_install do |installer|
   end
 
   # Set environment variables for iOSSnapshotTestCase
-  set_up_snapshot(installer)
+  # set_up_snapshot(installer)
 end
 
 def set_up_snapshot(installer)
