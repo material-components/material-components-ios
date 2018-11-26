@@ -55,7 +55,7 @@ class DrawerHeaderViewController: UIViewController,MDCBottomDrawerHeader {
   }
 
   override func viewWillAppear(_ animated: Bool) {
-    viewWillAppear(animated)
+    super.viewWillAppear(animated)
 
     titleLabel.sizeToFit()
   }
