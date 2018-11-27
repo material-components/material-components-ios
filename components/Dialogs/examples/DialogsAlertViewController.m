@@ -12,10 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <UIKit/UIKit.h>
+
 #import "MaterialDialogs+DialogThemer.h"
 #import "MaterialButtons.h"
+#import "MaterialCollections.h"
+#import "MaterialColorScheme.h"
 #import "MaterialDialogs.h"
-#import "supplemental/DialogsAlertViewControllerSupplemental.h"
+#import "MaterialTypography.h"
+#import "MaterialTypographyScheme.h"
+
+static NSString *const kReusableIdentifierItem = @"cell";
+
+@interface DialogsAlertViewController : MDCCollectionViewController
+@property(nonatomic, strong, nullable) NSArray *modes;
+@property(nonatomic, strong, nullable) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong, nullable) MDCTypographyScheme *typographyScheme;
+@end
+
+@interface DialogsAlertViewController (Supplemental)
+- (void)loadCollectionView:(nullable NSArray *)modes;
+@end
 
 @implementation DialogsAlertViewController
 
@@ -277,6 +294,42 @@
   [materialAlertController addAction:action9];
 
   [self presentViewController:materialAlertController animated:YES completion:NULL];
+}
+
+@end
+
+@implementation DialogsAlertViewController (Supplemental)
+
+- (void)loadCollectionView:(nullable NSArray *)modes {
+  [self.collectionView registerClass:[MDCCollectionViewTextCell class]
+          forCellWithReuseIdentifier:kReusableIdentifierItem];
+  self.modes = modes;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView
+     numberOfItemsInSection:(NSInteger)section {
+  return self.modes.count;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+  MDCCollectionViewTextCell *cell =
+  [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
+                                            forIndexPath:indexPath];
+  cell.textLabel.text = self.modes[indexPath.row];
+  return cell;
+}
+
+@end
+
+@implementation DialogsAlertViewController (CatalogByConvention)
+
++ (NSDictionary *)catalogMetadata {
+  return @{
+           @"breadcrumbs" : @[ @"Dialogs", @"Material Alert Examples" ],
+           @"primaryDemo" : @NO,
+           @"presentable" : @YES,
+           };
 }
 
 @end
