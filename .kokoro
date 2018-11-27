@@ -235,6 +235,8 @@ run_cocoapods() {
     git lfs install
     git lfs version
     ls -al ui_test_goldens/goldens_64/MDCCardSnapshotTests/
+    git lfs pull
+    ls -al ui_test_goldens/goldens_64/MDCCardSnapshotTests/
   fi
 
   if [ "$DEPENDENCY_SYSTEM" = "cocoapods" ]; then
