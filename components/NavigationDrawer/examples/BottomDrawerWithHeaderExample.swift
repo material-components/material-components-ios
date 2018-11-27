@@ -69,7 +69,6 @@ class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewContro
     bottomDrawerViewController = bottomNav
     layoutContentViewController()
     bottomDrawerViewController.setTopCornersRadius(24, for: .collapsed)
-    bottomDrawerViewController.setTopCornersRadius(8, for: .expanded)
     bottomDrawerViewController.isTopHandleHidden = false
     bottomDrawerViewController.topHandleColor = UIColor.lightGray
     bottomDrawerViewController.contentViewController = contentViewController
@@ -99,11 +98,11 @@ class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewContro
     } else {
       height = 2000
     }
-    bottomDrawerViewController.animate(toPreferredContentHeight: height, withDuration: 0.2) { _ in
+    bottomDrawerViewController.animate(toPreferredContentHeight: height, withDuration: 2) { _ in
       print("Animation completed")
       self.fullScreen = !self.fullScreen
     }
-    UIView.animate(withDuration: 0.2, animations: {
+    UIView.animate(withDuration: 2, animations: {
       print("Insert custom animation here")
     })
   }

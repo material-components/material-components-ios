@@ -140,6 +140,10 @@ static UIColor *DrawerShadowColor(void) {
 // hidden and 1.0 is full screen.
 @property(nonatomic) CGFloat initialDrawerFactor;
 
+// Should the bottom drawer listen to changes to the child view controller preferredContentSize
+// changes
+@property(nonatomic, assign) BOOL shouldSetChildPreferredContentSize;
+
 /**
  Calculates the contentOffset if contentViewController's preferredContentSize.height was set to
  preferredContentHeight.
@@ -501,16 +505,19 @@ static UIColor *DrawerShadowColor(void) {
 }
 
 - (void)preferredContentSizeDidChangeForChildContentContainer:(id<UIContentContainer>)container {
-  [super preferredContentSizeDidChangeForChildContentContainer:container];
-  _contentHeaderTopInset = NSNotFound;
-  _contentHeightSurplus = NSNotFound;
-  _addedContentHeight = NSNotFound;
-  [self.view setNeedsLayout];
+  if (self.shouldSetChildPreferredContentSize) {
+    [super preferredContentSizeDidChangeForChildContentContainer:container];
+    _contentHeaderTopInset = NSNotFound;
+    _contentHeightSurplus = NSNotFound;
+    _addedContentHeight = NSNotFound;
+    [self.view setNeedsLayout];
+  }
 }
 
 - (void)animateToPreferredContentHeight:(CGFloat)preferredContentHeight
                            withDuration:(NSTimeInterval)duration
                              completion:(void (^_Nullable)(BOOL))completion {
+  self.shouldSetChildPreferredContentSize = NO;
   CGSize newPreferredContentSize =
       CGSizeMake(self.presentingViewBounds.size.width, preferredContentHeight);
   // If we are in landscape or voiceover mode we don't need to animate because the drawer
@@ -552,6 +559,8 @@ static UIColor *DrawerShadowColor(void) {
   [UIView animateWithDuration:duration
       animations:^{
         [self.scrollView setContentOffset:contentOffset];
+        [self.delegate bottomDrawerContainerViewControllerTopTransitionRatio:self
+                                                             transitionRatio:1];
       }
       completion:^(BOOL finished) {
         // We set the scrollview content offset to zero in order to make sure the content view
