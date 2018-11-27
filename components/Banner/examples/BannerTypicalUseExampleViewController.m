@@ -14,8 +14,8 @@
 
 #import "BannerTypicalUseExampleViewController.h"
 
-#import "MDCButton.h"
-#import "MDCTypography.h"
+#import "MaterialButtons.h"
+#import "MaterialTypography.h"
 #import "MaterialColorScheme.h"
 #import "supplemental/MDCBannerView.h"
 
