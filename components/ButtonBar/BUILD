@@ -65,6 +65,21 @@ mdc_objc_library(
 )
 
 mdc_objc_library(
+    name = "Theming",
+    srcs = native.glob(["src/Theming/*.m"]),
+    hdrs = native.glob(["src/Theming/*.h"]),
+    includes = ["src/Theming"],
+    sdk_frameworks = [
+        "UIKit",
+    ],
+    deps = [
+        ":ButtonBar",
+        "//components/schemes/Container",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
     name = "private",
     hdrs = native.glob(["src/private/*.h"]),
     includes = ["src/private"],
@@ -85,6 +100,7 @@ mdc_objc_library(
     deps = [
         ":ButtonBar",
         ":ColorThemer",
+        ":Theming",
         ":private",
     ],
     visibility = ["//visibility:private"],
@@ -96,6 +112,7 @@ swift_library(
     deps = [
         ":ButtonBar",
         ":ColorThemer",
+        ":Theming",
         ":TypographyThemer",
         ":private",
     ],
