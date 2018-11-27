@@ -17,7 +17,7 @@ import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialNavigationDrawer
 
 class DrawerContentViewController: UIViewController {
-  var preferredHeight: CGFloat = 2000
+  var preferredHeight: CGFloat = 450
 
   override var preferredContentSize: CGSize {
     get {

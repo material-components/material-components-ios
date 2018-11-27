@@ -165,6 +165,24 @@
   }
 }
 
+- (void)expandToFullHeightWithDuration:(NSTimeInterval)duration completion:(void (^)(BOOL))completion {
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+    (MDCBottomDrawerPresentationController *)self.presentationController;
+    [bottomDrawerPresentationController expandToFullHeightWithDuration:duration completion:completion];
+  }
+}
+
+- (void)collapseToOriginalHeightWithDuration:(NSTimeInterval)duration
+                               completion:(void (^)(BOOL))completion {
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+    (MDCBottomDrawerPresentationController *)self.presentationController;
+    [bottomDrawerPresentationController collapseToOriginalHeightWithDuration:duration
+                                                               completion:completion];
+  }
+}
+
 #pragma mark UIAccessibilityAction
 
 // Adds the Z gesture for dismissal.

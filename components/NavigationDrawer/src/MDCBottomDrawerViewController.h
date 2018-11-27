@@ -100,6 +100,12 @@
  */
 - (void)setContentOffsetY:(CGFloat)contentOffsetY animated:(BOOL)animated;
 
+- (void)expandToFullHeightWithDuration:(NSTimeInterval)duration
+                           completion:(void (^__nullable)(BOOL finished))completion;
+
+- (void)collapseToOriginalHeightWithDuration:(NSTimeInterval)duration
+                               completion:(void (^__nullable)(BOOL finished))completion;
+
 @end
 
 /**

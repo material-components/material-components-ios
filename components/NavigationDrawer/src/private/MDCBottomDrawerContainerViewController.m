@@ -368,6 +368,49 @@ static UIColor *DrawerShadowColor(void) {
   _scrollToContentOffsetY = 0;
 }
 
+- (void)expandToFullHeightWithDuration:(NSTimeInterval)duration completion:(void (^)(BOOL))completion {
+  CGFloat contentYOffset = self.contentHeaderTopInset - MDCDeviceTopSafeAreaInset();
+  CGPoint contentOffset = CGPointMake(self.scrollView.contentOffset.x, contentYOffset);
+  CGFloat totalHeight = self.headerViewController.preferredContentSize.height +
+      _contentVCPreferredContentSizeHeightCached;
+  if (totalHeight < self.presentingViewBounds.size.height) {
+    CGFloat diff = self.presentingViewBounds.size.height - totalHeight - MDCDeviceTopSafeAreaInset();
+    contentOffset.y -= diff;
+  }
+  if (self.trackingScrollView != nil) {
+    contentOffset.y = [self updateContentOffsetForPerformantScrolling:contentOffset.y];
+  }
+  [self animateToContentOffset:contentOffset withTransitionRatio:1 duration:duration
+                    completion:completion];
+}
+
+- (void)collapseToOriginalHeightWithDuration:(NSTimeInterval)duration
+                               completion:(void (^)(BOOL))completion {
+  if ([self shouldPresentFullScreen]) {
+    return;
+  }
+  CGPoint contentOffset = CGPointZero;
+  if (self.trackingScrollView != nil) {
+    contentOffset.y = [self updateContentOffsetForPerformantScrolling:contentOffset.y];
+  }
+  [self animateToContentOffset:contentOffset withTransitionRatio:0 duration:duration
+                    completion:completion];
+}
+
+- (void)animateToContentOffset:(CGPoint)contentOffset withTransitionRatio:(CGFloat)transitionRatio
+                      duration:(NSTimeInterval)duration completion:(void (^)(BOOL))completion {
+  [UIView animateWithDuration:duration animations:^{
+    [self.delegate bottomDrawerContainerViewControllerTopTransitionRatio:self
+                                                         transitionRatio:transitionRatio];
+    [self.scrollView setContentOffset:contentOffset];
+  } completion:^(BOOL finished) {
+    [self updateViewWithContentOffset:contentOffset];
+    if (completion) {
+      completion(YES);
+    }
+  }];
+}
+
 #pragma mark UIViewController
 
 - (void)viewDidLoad {

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import UIKit
+import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialBottomAppBar
 import MaterialComponents.MaterialBottomAppBar_ColorThemer
 import MaterialComponents.MaterialColorScheme
@@ -25,6 +26,8 @@ class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewContro
 
   let headerViewController = DrawerHeaderViewController()
   let contentViewController = DrawerContentViewController()
+  lazy var bottomDrawerViewController = MDCBottomDrawerViewController()
+
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -62,7 +65,8 @@ class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewContro
   }
 
   @objc func presentNavigationDrawer() {
-    let bottomDrawerViewController = MDCBottomDrawerViewController()
+    bottomDrawerViewController = MDCBottomDrawerViewController()
+    layoutContentViewController()
     bottomDrawerViewController.setTopCornersRadius(24, for: .collapsed)
     bottomDrawerViewController.setTopCornersRadius(8, for: .expanded)
     bottomDrawerViewController.isTopHandleHidden = false
@@ -80,6 +84,42 @@ class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewContro
     headerViewController.titleLabel.center =
       CGPoint(x: headerViewController.view.frame.size.width / 2,
               y: (headerViewController.view.frame.size.height + topInset) / 2)
+  }
+
+  private func layoutContentViewController() {
+    let button = MDCButton(frame: .zero)
+    button.setTitle("Expand", for: .normal)
+    button.sizeToFit()
+    button.addTarget(self, action: #selector(expandBottomDrawer), for: .touchUpInside)
+    button.center = CGPoint(x: view.frame.width / 2, y: 50)
+    let buttonScheme = MDCButtonScheme()
+    buttonScheme.colorScheme = colorScheme
+    MDCContainedButtonThemer.applyScheme(buttonScheme, to: button)
+    contentViewController.view.addSubview(button)
+  }
+
+  @objc func expandBottomDrawer(sender: MDCButton) {
+    let shouldExpand = sender.titleLabel?.text == "EXPAND"
+    let newTitle = shouldExpand ? "COLLAPSE" : "EXPAND"
+    if (shouldExpand) {
+      bottomDrawerViewController.expandToFullHeight(withDuration: 5.2) { _ in
+        print("Expand complete")
+        sender.setTitle(newTitle, for: .normal)
+        sender.sizeToFit()
+      }
+      UIView.animate(withDuration: 5.2, animations: {
+        print("Insert custom animation here")
+      })
+    } else {
+      bottomDrawerViewController.collapseToOriginalHeight(withDuration: 5.2) { _ in
+        print("Collapse complete")
+        sender.setTitle(newTitle, for: .normal)
+        sender.sizeToFit()
+      }
+    }
+    UIView.animate(withDuration: 5.2, animations: {
+      print("Insert custom animation here")
+    })
   }
 }
 
