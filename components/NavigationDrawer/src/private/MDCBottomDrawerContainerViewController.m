@@ -140,10 +140,6 @@ static UIColor *DrawerShadowColor(void) {
 // hidden and 1.0 is full screen.
 @property(nonatomic) CGFloat initialDrawerFactor;
 
-// Should the bottom drawer listen to changes to the child view controller preferredContentSize
-// changes
-@property(nonatomic, assign) BOOL shouldSetChildPreferredContentSize;
-
 /**
  Calculates the contentOffset if contentViewController's preferredContentSize.height was set to
  preferredContentHeight.
@@ -505,19 +501,16 @@ static UIColor *DrawerShadowColor(void) {
 }
 
 - (void)preferredContentSizeDidChangeForChildContentContainer:(id<UIContentContainer>)container {
-  if (self.shouldSetChildPreferredContentSize) {
-    [super preferredContentSizeDidChangeForChildContentContainer:container];
-    _contentHeaderTopInset = NSNotFound;
-    _contentHeightSurplus = NSNotFound;
-    _addedContentHeight = NSNotFound;
-    [self.view setNeedsLayout];
-  }
+  [super preferredContentSizeDidChangeForChildContentContainer:container];
+  _contentHeaderTopInset = NSNotFound;
+  _contentHeightSurplus = NSNotFound;
+  _addedContentHeight = NSNotFound;
+  [self.view setNeedsLayout];
 }
 
 - (void)animateToPreferredContentHeight:(CGFloat)preferredContentHeight
                            withDuration:(NSTimeInterval)duration
                              completion:(void (^_Nullable)(BOOL))completion {
-  self.shouldSetChildPreferredContentSize = NO;
   CGSize newPreferredContentSize =
       CGSizeMake(self.presentingViewBounds.size.width, preferredContentHeight);
   // If we are in landscape or voiceover mode we don't need to animate because the drawer
