@@ -106,7 +106,6 @@ class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewContro
         print("Expand complete")
         sender.setTitle(newTitle, for: .normal)
         sender.sizeToFit()
-        sender.center = self.contentViewController.view.center
       }
       UIView.animate(withDuration: 5.2, animations: {
         print("Insert custom animation here")
@@ -116,7 +115,6 @@ class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewContro
         print("Collapse complete")
         sender.setTitle(newTitle, for: .normal)
         sender.sizeToFit()
-        sender.center = self.contentViewController.view.center
       }
     }
     UIView.animate(withDuration: 5.2, animations: {
