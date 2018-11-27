@@ -15,8 +15,8 @@
 #import "BannerTypicalUseExampleViewController.h"
 
 #import "MaterialButtons.h"
-#import "MaterialTypography.h"
 #import "MaterialColorScheme.h"
+#import "MaterialTypography.h"
 #import "supplemental/MDCBannerView.h"
 
 static const CGFloat exampleListTableViewHeight = 300.0f;
@@ -194,8 +194,8 @@ static NSString *const exampleExtraLongText =
   if (@available(iOS 11.0, *)) {
     topAreaInset = self.view.safeAreaInsets.top;
   }
-  self.bannerViewContainer.frame =
-      CGRectMake(0.0f, topAreaInset, [UIScreen mainScreen].bounds.size.width, bannerViewSize.height);
+  self.bannerViewContainer.frame = CGRectMake(
+      0.0f, topAreaInset, [UIScreen mainScreen].bounds.size.width, bannerViewSize.height);
   bannerView.center = CGPointMake(self.bannerViewContainer.frame.size.width / 2,
                                   self.bannerViewContainer.frame.size.height / 2);
 }
@@ -248,8 +248,8 @@ static NSString *const exampleExtraLongText =
   if (@available(iOS 11.0, *)) {
     topAreaInset = self.view.safeAreaInsets.top;
   }
-  self.bannerViewContainer.frame =
-  CGRectMake(0.0f, topAreaInset, [UIScreen mainScreen].bounds.size.width, bannerViewSize.height);
+  self.bannerViewContainer.frame = CGRectMake(
+      0.0f, topAreaInset, [UIScreen mainScreen].bounds.size.width, bannerViewSize.height);
   bannerView.center = CGPointMake(self.bannerViewContainer.frame.size.width / 2,
                                   self.bannerViewContainer.frame.size.height / 2);
 }
@@ -301,8 +301,8 @@ static NSString *const exampleExtraLongText =
   if (@available(iOS 11.0, *)) {
     topAreaInset = self.view.safeAreaInsets.top;
   }
-  self.bannerViewContainer.frame =
-  CGRectMake(0.0f, topAreaInset, [UIScreen mainScreen].bounds.size.width, bannerViewSize.height);
+  self.bannerViewContainer.frame = CGRectMake(
+      0.0f, topAreaInset, [UIScreen mainScreen].bounds.size.width, bannerViewSize.height);
   bannerView.center = CGPointMake(self.bannerViewContainer.frame.size.width / 2,
                                   self.bannerViewContainer.frame.size.height / 2);
 }
@@ -327,8 +327,8 @@ static NSString *const exampleExtraLongText =
   if (@available(iOS 11.0, *)) {
     topAreaInset = self.view.safeAreaInsets.top;
   }
-  self.bannerViewContainer.frame =
-  CGRectMake(0.0f, topAreaInset, [UIScreen mainScreen].bounds.size.width, bannerViewSize.height);
+  self.bannerViewContainer.frame = CGRectMake(
+      0.0f, topAreaInset, [UIScreen mainScreen].bounds.size.width, bannerViewSize.height);
   self.bannerView.center = CGPointMake(self.bannerViewContainer.frame.size.width / 2,
                                        self.bannerViewContainer.frame.size.height / 2);
 }
@@ -349,8 +349,8 @@ static NSString *const exampleExtraLongText =
   if (@available(iOS 11.0, *)) {
     topAreaInset = self.view.safeAreaInsets.top;
   }
-  self.bannerViewContainer.frame =
-  CGRectMake(0.0f, topAreaInset, [UIScreen mainScreen].bounds.size.width, bannerViewSize.height);
+  self.bannerViewContainer.frame = CGRectMake(
+      0.0f, topAreaInset, [UIScreen mainScreen].bounds.size.width, bannerViewSize.height);
   self.bannerView.center = CGPointMake(self.bannerViewContainer.frame.size.width / 2,
                                        self.bannerViewContainer.frame.size.height / 2);
 }
