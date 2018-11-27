@@ -86,6 +86,7 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
       "Right Aligned Title with a Large Icon",
       "Tinted Title Icon, No Title",
       "Darker Scrim",
+      "Low Elevation Alert",
       "Emphasis-based Button Theming",
       "Text Button Theming (will be deprecated)",
       "Text Button Theming (the right way)",
@@ -119,14 +120,16 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
     case 5:
       return performScrimColor()
     case 6:
-      return performEmphasisButtonTheming()
+      return performLowElevationAlert()
     case 7:
-      return performDeprecatedTextButtonTheming()   // b/117717380: Will be deprecated
+      return performEmphasisButtonTheming()
     case 8:
-      return performTextButtonThemingTheRightWay()
+      return performDeprecatedTextButtonTheming()   // b/117717380: Will be deprecated
     case 9:
-      return performCustomButtonTheming()
+      return performTextButtonThemingTheRightWay()
     case 10:
+      return performCustomButtonTheming()
+    case 11:
       return performUnthemed()
     default:
       print("No row is selected")
@@ -187,6 +190,19 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
     MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
     alert.scrimColor = UIColor.black.withAlphaComponent(0.6)
     return alert
+  }
+
+  func performLowElevationAlert() -> MDCAlertController {
+    let titleString = "Using Material alert controller?"
+    let messageString = "This is an alert controller with a low elevation."
+
+    let alertController = MDCAlertController(title: titleString, message: messageString)
+    alertController.addAction(MDCAlertAction(title:"OK", handler: handler))
+
+    MDCAlertControllerThemer.applyScheme(alertScheme, to: alertController)
+    alertController.elevation = ShadowElevation.appDialog
+
+    return alertController
   }
 
   func performEmphasisButtonTheming() -> MDCAlertController {
@@ -268,6 +284,13 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
     return alertController
   }
 
+}
+
+// app specific elevation constants
+extension ShadowElevation {
+  static var appDialog: ShadowElevation {
+    return ShadowElevation(2.0)
+  }
 }
 
 // MDCCollectionViewController Data Source
