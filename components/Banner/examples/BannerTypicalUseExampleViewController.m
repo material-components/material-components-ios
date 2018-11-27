@@ -190,9 +190,12 @@ static NSString *const exampleExtraLongText =
   bannerView.frame = CGRectMake(0.0f, 0.0f, bannerViewSize.width, bannerViewSize.height);
 
   // Adjust bannerViewContainer's frame
+  CGFloat topAreaInset = 0.0f;
+  if (@available(iOS 11.0, *)) {
+    topAreaInset = self.view.safeAreaInsets.top;
+  }
   self.bannerViewContainer.frame =
-      CGRectMake(0.0f, self.view.safeAreaInsets.top, [UIScreen mainScreen].bounds.size.width,
-                 bannerViewSize.height);
+      CGRectMake(0.0f, topAreaInset, [UIScreen mainScreen].bounds.size.width, bannerViewSize.height);
   bannerView.center = CGPointMake(self.bannerViewContainer.frame.size.width / 2,
                                   self.bannerViewContainer.frame.size.height / 2);
 }
@@ -241,9 +244,12 @@ static NSString *const exampleExtraLongText =
   bannerView.frame = CGRectMake(0.0f, 0.0f, bannerViewSize.width, bannerViewSize.height);
 
   // Adjust bannerViewContainer's frame
+  CGFloat topAreaInset = 0.0f;
+  if (@available(iOS 11.0, *)) {
+    topAreaInset = self.view.safeAreaInsets.top;
+  }
   self.bannerViewContainer.frame =
-      CGRectMake(0.0f, self.view.safeAreaInsets.top, [UIScreen mainScreen].bounds.size.width,
-                 bannerViewSize.height);
+  CGRectMake(0.0f, topAreaInset, [UIScreen mainScreen].bounds.size.width, bannerViewSize.height);
   bannerView.center = CGPointMake(self.bannerViewContainer.frame.size.width / 2,
                                   self.bannerViewContainer.frame.size.height / 2);
 }
@@ -291,9 +297,12 @@ static NSString *const exampleExtraLongText =
   bannerView.frame = CGRectMake(0.0f, 0.0f, bannerViewSize.width, bannerViewSize.height);
 
   // Adjust bannerViewContainer's frame
+  CGFloat topAreaInset = 0.0f;
+  if (@available(iOS 11.0, *)) {
+    topAreaInset = self.view.safeAreaInsets.top;
+  }
   self.bannerViewContainer.frame =
-      CGRectMake(0.0f, self.view.safeAreaInsets.top, [UIScreen mainScreen].bounds.size.width,
-                 bannerViewSize.height);
+  CGRectMake(0.0f, topAreaInset, [UIScreen mainScreen].bounds.size.width, bannerViewSize.height);
   bannerView.center = CGPointMake(self.bannerViewContainer.frame.size.width / 2,
                                   self.bannerViewContainer.frame.size.height / 2);
 }
@@ -313,9 +322,13 @@ static NSString *const exampleExtraLongText =
       [self.bannerView sizeThatFits:CGSizeMake(exampleBannerContentMultiLineWidth, CGFLOAT_MAX)];
   self.bannerView.frame = CGRectMake(0.0f, 0.0f, bannerViewSize.width, bannerViewSize.height);
 
+  // Adjust bannerViewContainer's frame
+  CGFloat topAreaInset = 0.0f;
+  if (@available(iOS 11.0, *)) {
+    topAreaInset = self.view.safeAreaInsets.top;
+  }
   self.bannerViewContainer.frame =
-      CGRectMake(0.0f, self.view.safeAreaInsets.top, [UIScreen mainScreen].bounds.size.width,
-                 bannerViewSize.height);
+  CGRectMake(0.0f, topAreaInset, [UIScreen mainScreen].bounds.size.width, bannerViewSize.height);
   self.bannerView.center = CGPointMake(self.bannerViewContainer.frame.size.width / 2,
                                        self.bannerViewContainer.frame.size.height / 2);
 }
@@ -331,9 +344,13 @@ static NSString *const exampleExtraLongText =
       [self.bannerView sizeThatFits:CGSizeMake(exampleBannerContentMultiLineWidth, CGFLOAT_MAX)];
   self.bannerView.frame = CGRectMake(0.0f, 0.0f, bannerViewSize.width, bannerViewSize.height);
 
+  // Adjust bannerViewContainer's frame
+  CGFloat topAreaInset = 0.0f;
+  if (@available(iOS 11.0, *)) {
+    topAreaInset = self.view.safeAreaInsets.top;
+  }
   self.bannerViewContainer.frame =
-      CGRectMake(0.0f, self.view.safeAreaInsets.top, [UIScreen mainScreen].bounds.size.width,
-                 bannerViewSize.height);
+  CGRectMake(0.0f, topAreaInset, [UIScreen mainScreen].bounds.size.width, bannerViewSize.height);
   self.bannerView.center = CGPointMake(self.bannerViewContainer.frame.size.width / 2,
                                        self.bannerViewContainer.frame.size.height / 2);
 }
