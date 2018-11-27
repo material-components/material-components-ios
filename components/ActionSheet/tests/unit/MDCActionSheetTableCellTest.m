@@ -163,6 +163,7 @@
   [self.actionSheet addAction:action];
   MDCActionSheetItemTableViewCell *cell =
       [MDCActionSheetTestHelper getCellFromActionSheet:self.actionSheet atIndex:0];
+
   // Then
   XCTAssertEqual(cell.actionLabel.accessibilityLabel, action.accessibilityLabel);
 }
