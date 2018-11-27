@@ -200,7 +200,7 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
     alertController.addAction(MDCAlertAction(title:"OK", handler: handler))
 
     MDCAlertControllerThemer.applyScheme(alertScheme, to: alertController)
-    alertController.elevation = ShadowElevation.appDialog
+    alertController.elevation = ShadowElevation.alertExampleDialog
 
     return alertController
   }
@@ -288,7 +288,7 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
 
 // app specific elevation constants
 extension ShadowElevation {
-  static var appDialog: ShadowElevation {
+  static var alertExampleDialog: ShadowElevation {
     return ShadowElevation(2.0)
   }
 }
