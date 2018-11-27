@@ -232,7 +232,9 @@ run_cocoapods() {
 
     # Install git-lfs
     brew install git-lfs
-    git lfs install --local
+    git lfs install
+    git lfs version
+    ls -al ui_test_goldens/goldens_64/MDCCardSnapshotTests/
   fi
 
   if [ "$DEPENDENCY_SYSTEM" = "cocoapods" ]; then
