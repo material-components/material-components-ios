@@ -165,21 +165,23 @@
   }
 }
 
-- (void)expandToFullHeightWithDuration:(NSTimeInterval)duration completion:(void (^)(BOOL))completion {
+- (void)expandToFullHeightWithDuration:(NSTimeInterval)duration
+                            completion:(void (^)(BOOL))completion {
   if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
     MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
-    (MDCBottomDrawerPresentationController *)self.presentationController;
-    [bottomDrawerPresentationController expandToFullHeightWithDuration:duration completion:completion];
+        (MDCBottomDrawerPresentationController *)self.presentationController;
+    [bottomDrawerPresentationController expandToFullHeightWithDuration:duration
+                                                            completion:completion];
   }
 }
 
 - (void)collapseToOriginalHeightWithDuration:(NSTimeInterval)duration
-                               completion:(void (^)(BOOL))completion {
+                                  completion:(void (^)(BOOL))completion {
   if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
     MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
-    (MDCBottomDrawerPresentationController *)self.presentationController;
+        (MDCBottomDrawerPresentationController *)self.presentationController;
     [bottomDrawerPresentationController collapseToOriginalHeightWithDuration:duration
-                                                               completion:completion];
+                                                                  completion:completion];
   }
 }
 

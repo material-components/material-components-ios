@@ -268,15 +268,16 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   [self.bottomDrawerContainerViewController setContentOffsetY:contentOffsetY animated:animated];
 }
 
-- (void)expandToFullHeightWithDuration:(NSTimeInterval)duration completion:(void (^)(BOOL))completion {
+- (void)expandToFullHeightWithDuration:(NSTimeInterval)duration
+                            completion:(void (^)(BOOL))completion {
   [self.bottomDrawerContainerViewController expandToFullHeightWithDuration:duration
-                                                             completion:completion];
+                                                                completion:completion];
 }
 
 - (void)collapseToOriginalHeightWithDuration:(NSTimeInterval)duration
-                               completion:(void (^)(BOOL))completion {
+                                  completion:(void (^)(BOOL))completion {
   [self.bottomDrawerContainerViewController collapseToOriginalHeightWithDuration:duration
-                                                                   completion:completion];
+                                                                      completion:completion];
 }
 
 @end
