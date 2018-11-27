@@ -33,8 +33,7 @@
   [super viewDidLoad];
 
   [self loadCollectionView:@[
-    @"Show Alert", @"Show Long Alert", @"Non-Dismissable Alert", @"Alert (Dynamic Type enabled)",
-    @"Overpopulated Alert", @"Style Alert", @"Un-style Alert"
+    @"Show Long Alert", @"Alert (Dynamic Type enabled)", @"Overpopulated Alert"
   ]];
 }
 
@@ -42,25 +41,13 @@
   [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
   switch (indexPath.row) {
     case 0:
-      [self didTapShowAlert];
-      break;
-    case 1:
       [self didTapShowLongAlert];
       break;
-    case 2:
-      [self didTapNondismissingAlert];
-      break;
-    case 3:
+    case 1:
       [self didTapDynamicAlert];
       break;
-    case 4:
+    case 2:
       [self didTapOverpopulatedAlert];
-      break;
-    case 5:
-      [self didTapStyleAlert];
-      break;
-    case 6:
-      [self didTapUnstyleAlert];
       break;
   }
 }
@@ -70,30 +57,6 @@
   alertScheme.colorScheme = self.colorScheme;
   alertScheme.typographyScheme = self.typographyScheme;
   [MDCAlertControllerThemer applyScheme:alertScheme toAlertController:alertController];
-}
-
-- (IBAction)didTapShowAlert {
-
-  NSString *titleString = @"Using Material alert controller?";
-  NSString *messageString = @"Be careful with modal alerts as they can be annoying if over-used.";
-
-  MDCAlertController *materialAlertController =
-      [MDCAlertController alertControllerWithTitle:titleString message:messageString];
-  [self themeAlertController:materialAlertController];
-
-  MDCAlertAction *agreeAaction = [MDCAlertAction actionWithTitle:@"AGREE"
-                                                         handler:^(MDCAlertAction *action) {
-                                                           NSLog(@"%@", @"AGREE pressed");
-                                                         }];
-  [materialAlertController addAction:agreeAaction];
-
-  MDCAlertAction *disagreeAaction = [MDCAlertAction actionWithTitle:@"DISAGREE"
-                                                            handler:^(MDCAlertAction *action) {
-                                                              NSLog(@"%@", @"DISAGREE pressed");
-                                                            }];
-  [materialAlertController addAction:disagreeAaction];
-
-  [self presentViewController:materialAlertController animated:YES completion:NULL];
 }
 
 - (IBAction)didTapShowLongAlert {
@@ -312,69 +275,6 @@
                                                       NSLog(@"%@", @"OK pressed");
                                                     }];
   [materialAlertController addAction:action9];
-
-  [self presentViewController:materialAlertController animated:YES completion:NULL];
-}
-
-- (IBAction)didTapStyleAlert {
-  [MDCAlertControllerView appearance].titleFont = [UIFont fontWithName:@"American Typewriter" size:16];
-  [MDCAlertControllerView appearance].titleColor = [UIColor greenColor];
-  [MDCAlertControllerView appearance].messageFont = [UIFont fontWithName:@"Chalkduster" size:14];
-  [MDCAlertControllerView appearance].messageColor = [UIColor blueColor];
-  [MDCAlertControllerView appearance].buttonFont = [UIFont fontWithName:@"Chalkduster" size:16];
-  [MDCAlertControllerView appearance].buttonColor = [UIColor purpleColor];
-  [MDCAlertControllerView appearance].mdc_adjustsFontForContentSizeCategory = YES;
-
-  NSString *titleString = @"Style an alert controller?";
-  NSString *messageString = @"Be careful with modal alerts as they can be annoying if over-used.";
-
-  MDCAlertController *materialAlertController =
-    [MDCAlertController alertControllerWithTitle:titleString message:messageString];
-  [self themeAlertController:materialAlertController];
-
-  MDCAlertAction *agreeAaction = [MDCAlertAction actionWithTitle:@"AGREE"
-                                                         handler:^(MDCAlertAction *action) {
-                                                           NSLog(@"%@", @"AGREE pressed");
-                                                         }];
-  [materialAlertController addAction:agreeAaction];
-
-  MDCAlertAction *disagreeAaction = [MDCAlertAction actionWithTitle:@"DISAGREE"
-                                                            handler:^(MDCAlertAction *action) {
-                                                              NSLog(@"%@", @"DISAGREE pressed");
-                                                            }];
-  [materialAlertController addAction:disagreeAaction];
-
-  [self presentViewController:materialAlertController animated:YES completion:NULL];
-}
-
-- (IBAction)didTapUnstyleAlert {
-  [MDCAlertControllerView appearance].titleFont = nil;
-  [MDCAlertControllerView appearance].titleColor = nil;
-  [MDCAlertControllerView appearance].messageFont = nil;
-  [MDCAlertControllerView appearance].messageColor = nil;
-  [MDCAlertControllerView appearance].buttonFont = nil;
-  // We must explicitly set the color to black since setting it to nil doesn't reset the color to
-  // black, but sets it to white
-  [MDCAlertControllerView appearance].buttonColor = [UIColor blackColor];
-  [MDCAlertControllerView appearance].mdc_adjustsFontForContentSizeCategory = NO;
-
-  NSString *titleString = @"Using Material alert controller?";
-  NSString *messageString = @"Be careful with modal alerts as they can be annoying if over-used.";
-
-  MDCAlertController *materialAlertController =
-      [MDCAlertController alertControllerWithTitle:titleString message:messageString];
-
-  MDCAlertAction *agreeAaction = [MDCAlertAction actionWithTitle:@"AGREE"
-                                                         handler:^(MDCAlertAction *action) {
-                                                           NSLog(@"%@", @"AGREE pressed");
-                                                         }];
-  [materialAlertController addAction:agreeAaction];
-
-  MDCAlertAction *disagreeAaction = [MDCAlertAction actionWithTitle:@"DISAGREE"
-                                                            handler:^(MDCAlertAction *action) {
-                                                              NSLog(@"%@", @"DISAGREE pressed");
-                                                            }];
-  [materialAlertController addAction:disagreeAaction];
 
   [self presentViewController:materialAlertController animated:YES completion:NULL];
 }
