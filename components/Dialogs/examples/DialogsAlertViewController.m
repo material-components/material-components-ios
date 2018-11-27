@@ -14,10 +14,10 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialDialogs+DialogThemer.h"
 #import "MaterialButtons.h"
 #import "MaterialCollections.h"
 #import "MaterialColorScheme.h"
+#import "MaterialDialogs+DialogThemer.h"
 #import "MaterialDialogs.h"
 #import "MaterialTypography.h"
 #import "MaterialTypographyScheme.h"
@@ -314,8 +314,8 @@ static NSString *const kReusableIdentifierItem = @"cell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   MDCCollectionViewTextCell *cell =
-  [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
-                                            forIndexPath:indexPath];
+      [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
+                                                forIndexPath:indexPath];
   cell.textLabel.text = self.modes[indexPath.row];
   return cell;
 }
@@ -326,10 +326,10 @@ static NSString *const kReusableIdentifierItem = @"cell";
 
 + (NSDictionary *)catalogMetadata {
   return @{
-           @"breadcrumbs" : @[ @"Dialogs", @"Material Alert Examples" ],
-           @"primaryDemo" : @NO,
-           @"presentable" : @YES,
-           };
+    @"breadcrumbs" : @[ @"Dialogs", @"More Material Alert Examples" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @YES,
+  };
 }
 
 @end
