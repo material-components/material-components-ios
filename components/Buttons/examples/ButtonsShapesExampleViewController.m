@@ -70,7 +70,7 @@
 
   MDCButton *containedButton = [[MDCButton alloc] init];
   [containedButton setTitle:@"Add To Cart" forState:UIControlStateNormal];
-  [containedButton applyContainedThemeWithScheme:[self containerScheme]];
+  [containedButton applyContainedThemeWithScheme:self.containerScheme];
 
   UIImage *plusImage = [UIImage imageNamed:@"Plus"];
   plusImage = [plusImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
