@@ -21,6 +21,11 @@ import MaterialComponents.MaterialTypographyScheme
 import MaterialComponentsAlpha.MaterialButtons_Theming
 
 class ButtonThemingTest: XCTestCase {
+
+  static let disabledOpacity: CGFloat = 0.38
+  static let disabledBackgroundOpacity: CGFloat = 0.12
+  static let inkOpacity: CGFloat = 0.32
+
   func testContainedTheme() {
     // Given
     let button = MDCButton()
@@ -35,12 +40,22 @@ class ButtonThemingTest: XCTestCase {
     // Then
     // Test Colors
     XCTAssertEqual(button.backgroundColor(for: .normal), colorScheme.primaryColor)
-    XCTAssertEqual(button.backgroundColor(for: .disabled), colorScheme.surfaceColor.withAlphaComponent(0.12))
+    XCTAssertEqual(button.backgroundColor(for: .disabled),
+                   colorScheme.surfaceColor.withAlphaComponent(disabledBackgroundOpacity))
     XCTAssertEqual(button.titleColor(for: .normal), colorScheme.onPrimaryColor)
-    XCTAssertEqual(button.titleColor(for: .disabled), colorScheme.onSurfaceColor.withAlphaComponent(0.38))
+    XCTAssertEqual(button.titleColor(for: .disabled),
+                   colorScheme.onSurfaceColor.withAlphaComponent(disabledOpacity))
     XCTAssertEqual(button.imageTintColor(for: .normal), colorScheme.onPrimaryColor)
-    XCTAssertEqual(button.imageTintColor(for: .disabled), colorScheme.onSurfaceColor.withAlphaComponent(0.38))
+    XCTAssertEqual(button.imageTintColor(for: .disabled),
+                   colorScheme.onSurfaceColor.withAlphaComponent(disabledOpacity))
+    XCTAssertEqual(button.inkColor, colorScheme.onPrimaryColor.withAlphaComponent(inkOpacity))
     // Test shape
+    let buttonShape = button.shapeGenerator
+    XCTAssertEqual(buttonShape.topLeftCorner, shapeScheme.smallComponentShape.topLeftCorner)
+    XCTAssertEqual(buttonShape.topRightCorner, shapeScheme.smallComponentShape.topRightCorner)
+    XCTAssertEqual(buttonShape.bottomRightCorner, shapeScheme.smallComponentShape.bottomRightCorner)
+    XCTAssertEqual(buttonShape.bottomLeftCorner, shapeScheme.smallComponentShape.bottomLeftCorner)
     // Test typography
+    XCTAssertEqual(button.titleFont(for: .normal), typographyScheme.button)
   }
 }
