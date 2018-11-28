@@ -88,7 +88,7 @@
   dispatch_async(dispatch_get_main_queue(), ^{
     [expectation fulfill];
   });
-  [self waitForExpectationsWithTimeout:1 handler:nil];
+  [self waitForExpectationsWithTimeout:3 handler:nil];
 
   // Then
   XCTAssertEqualObjects(self.delegate.presentedView.label.accessibilityLabel,
@@ -102,7 +102,7 @@
   dispatch_async(dispatch_get_main_queue(), ^{
     [expectation fulfill];
   });
-  [self waitForExpectationsWithTimeout:1 handler:nil];
+  [self waitForExpectationsWithTimeout:3 handler:nil];
 
   // Then
   XCTAssertNotNil(self.delegate.presentedView.label.accessibilityHint);
@@ -116,7 +116,7 @@
   dispatch_async(dispatch_get_main_queue(), ^{
     [expectation fulfill];
   });
-  [self waitForExpectationsWithTimeout:1 handler:nil];
+  [self waitForExpectationsWithTimeout:3 handler:nil];
 
   // Then
   XCTAssertEqualObjects(self.delegate.presentedView.label.accessibilityHint,
@@ -137,7 +137,7 @@
   dispatch_async(dispatch_get_main_queue(), ^{
     [expectation fulfill];
   });
-  [self waitForExpectationsWithTimeout:1 handler:nil];
+  [self waitForExpectationsWithTimeout:3 handler:nil];
 
   // Then
   XCTAssertTrue(self.manager.internalManager.overlayView.accessibilityViewIsModal);
@@ -153,7 +153,7 @@
   dispatch_async(dispatch_get_main_queue(), ^{
     [expectation fulfill];
   });
-  [self waitForExpectationsWithTimeout:1 handler:nil];
+  [self waitForExpectationsWithTimeout:3 handler:nil];
 
   // Then
   XCTAssertFalse(self.manager.internalManager.overlayView.accessibilityViewIsModal);
@@ -173,7 +173,7 @@
   dispatch_async(dispatch_get_main_queue(), ^{
     [expectation fulfill];
   });
-  [self waitForExpectationsWithTimeout:1 handler:nil];
+  [self waitForExpectationsWithTimeout:3 handler:nil];
 
   // Then
   XCTAssertFalse(self.manager.internalManager.overlayView.accessibilityViewIsModal);
@@ -189,7 +189,7 @@
   dispatch_async(dispatch_get_main_queue(), ^{
     [expectation fulfill];
   });
-  [self waitForExpectationsWithTimeout:1 handler:nil];
+  [self waitForExpectationsWithTimeout:3 handler:nil];
 
   // Then
   XCTAssertFalse(self.manager.internalManager.overlayView.accessibilityViewIsModal);
