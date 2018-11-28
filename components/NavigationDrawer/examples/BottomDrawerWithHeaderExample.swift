@@ -99,23 +99,8 @@ class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewContro
   }
 
   @objc func expandBottomDrawer(sender: MDCButton) {
-    let shouldExpand = sender.titleLabel?.text == "EXPAND"
-    let newTitle = shouldExpand ? "COLLAPSE" : "EXPAND"
-    if (shouldExpand) {
-      bottomDrawerViewController.expandToFullHeight(withDuration: 5.2) { _ in
-        print("Expand complete")
-        sender.setTitle(newTitle, for: .normal)
-        sender.sizeToFit()
-      }
-      UIView.animate(withDuration: 5.2, animations: {
-        print("Insert custom animation here")
-      })
-    } else {
-      bottomDrawerViewController.collapseToOriginalHeight(withDuration: 5.2) { _ in
-        print("Collapse complete")
-        sender.setTitle(newTitle, for: .normal)
-        sender.sizeToFit()
-      }
+    bottomDrawerViewController.expandToFullHeight(withDuration: 0.2) { _ in
+      print("Expand complete")
     }
     UIView.animate(withDuration: 5.2, animations: {
       print("Insert custom animation here")
