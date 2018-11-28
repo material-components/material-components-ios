@@ -11,3 +11,47 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
+#import "MDCButton+Theming.h"
+
+#import "MaterialButtons+ColorThemer.h"
+#import "MaterialButtons+ShapeThemer.h"
+#import "MaterialButtons+TypographyThemer.h"
+
+@implementation MDCButton (MaterialTheming)
+
+- (void)applyContainedThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme {
+  id<MDCColorScheming> colorScheme = scheme.colorScheme;
+  if (!colorScheme) {
+    colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  }
+  [self applyContainedThemeWithColorScheme:colorScheme];
+
+  id<MDCShapeScheming> shapeScheme = scheme.shapeScheme;
+  if (!shapeScheme) {
+    shapeScheme = [[MDCShapeScheme alloc] initWithDefaults:MDCShapeSchemeDefaultsMaterial201809];
+  }
+  [self applyContainedThemeWithShapeScheme:shapeScheme];
+
+  id<MDCTypographyScheming> typographyScheme = scheme.typographyScheme;
+  if (!typographyScheme) {
+    typographyScheme =
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+  }
+  [self applyContainedThemeWithTypographyScheme:typographyScheme];
+}
+
+- (void)applyContainedThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
+  [MDCContainedButtonColorThemer applySemanticColorScheme:colorScheme toButton:self];
+}
+
+- (void)applyContainedThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
+  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:self];
+}
+
+- (void)applyContainedThemeWithShapeScheme:(id<MDCShapeScheming>)shapeScheme {
+  [MDCButtonShapeThemer applyShapeScheme:shapeScheme toButton:self];
+}
+
+@end
