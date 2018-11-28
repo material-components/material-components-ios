@@ -91,7 +91,8 @@
                         self.message.accessibilityLabel);
 }
 
-- (void)testAccessibilityHintDefaultIsNotNil {
+// TODO (b/120145862) Deflake and reenable this test
+- (void)_disabled_testAccessibilityHintDefaultIsNotNil {
   // When
   [self.manager showMessage:self.message];
   [NSRunLoop.mainRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
