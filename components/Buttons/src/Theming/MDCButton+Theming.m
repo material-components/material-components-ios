@@ -17,6 +17,7 @@
 #import "MaterialButtons+ColorThemer.h"
 #import "MaterialButtons+ShapeThemer.h"
 #import "MaterialButtons+TypographyThemer.h"
+#import "MaterialShadowElevations.h"
 
 @implementation MDCButton (MaterialTheming)
 
@@ -41,6 +42,11 @@
         [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
   }
   [self applyContainedThemeWithTypographyScheme:typographyScheme];
+
+  [self setElevation:MDCShadowElevationRaisedButtonResting forState:UIControlStateNormal];
+  [self setElevation:MDCShadowElevationRaisedButtonPressed forState:UIControlStateHighlighted];
+  [self setElevation:MDCShadowElevationNone forState:UIControlStateDisabled];
+  self.minimumSize = CGSizeMake(0, 36);
 }
 
 - (void)applyContainedThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {

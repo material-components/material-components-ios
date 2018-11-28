@@ -16,6 +16,7 @@ import XCTest
 
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialShadowElevations
 import MaterialComponents.MaterialShapeScheme
 import MaterialComponents.MaterialShapeLibrary
 import MaterialComponents.MaterialTypographyScheme
@@ -58,6 +59,12 @@ class ButtonsThemingTest: XCTestCase {
     XCTAssertEqual(button.layer.cornerRadius, baselineCornerRadius, accuracy: 0.001)
     // Test typography
     XCTAssertEqual(button.titleFont(for: .normal), typographyScheme.button)
+    // Test remaining properties
+    XCTAssertEqual(button.elevation(for: .normal), ShadowElevation.raisedButtonResting)
+    XCTAssertEqual(button.elevation(for: .highlighted), ShadowElevation.raisedButtonPressed)
+    XCTAssertEqual(button.elevation(for: .disabled), ShadowElevation.none)
+    XCTAssertEqual(button.minimumSize.width, 0)
+    XCTAssertEqual(button.minimumSize.height, 36)
   }
 
   func testContainedThemeWithShapeScheme() {
