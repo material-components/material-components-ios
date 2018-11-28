@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialButtons.h"
-#import "MaterialButtons+ButtonThemer.h"
-#import "MaterialButtons+Theming.h"
-#import "MaterialButtons+ColorThemer.h"
-#import "MaterialButtons+TypographyThemer.h"
-#import "MaterialTypography.h"
 #import "MDCTextButtonThemer.h"
+#import "MaterialButtons+ButtonThemer.h"
+#import "MaterialButtons+ColorThemer.h"
+#import "MaterialButtons+Theming.h"
+#import "MaterialButtons+TypographyThemer.h"
+#import "MaterialButtons.h"
+#import "MaterialTypography.h"
 
 #import "supplemental/ButtonsTypicalUseSupplemental.h"
 
