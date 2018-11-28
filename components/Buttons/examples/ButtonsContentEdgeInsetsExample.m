@@ -14,8 +14,9 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialButtons.h"
 #import "MaterialButtons+ButtonThemer.h"
+#import "MaterialButtons+Theming.h"
+#import "MaterialButtons.h"
 
 @interface ButtonsContentEdgeInsetsExample : UIViewController
 @property(weak, nonatomic) IBOutlet MDCButton *textButton;
@@ -43,8 +44,8 @@
   [super viewDidLoad];
 
   MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
-  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:self.containedButton];
   [MDCTextButtonThemer applyScheme:buttonScheme toButton:self.textButton];
+  [self.containedButton applyContainedThemeWithScheme:[self containerScheme]];
 
   self.textButton.contentEdgeInsets = UIEdgeInsetsMake(64, 64, 0, 0);
   self.containedButton.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 64, 64);
@@ -53,6 +54,17 @@
                                            inMode:MDCFloatingButtonModeNormal];
 
   [self updateInkStyle:self.inkBoundingSwitch.isOn ? MDCInkStyleBounded : MDCInkStyleUnbounded];
+}
+
+- (MDCContainerScheme *)containerScheme {
+  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
+  scheme.colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  scheme.shapeScheme =
+      [[MDCShapeScheme alloc] initWithDefaults:MDCShapeSchemeDefaultsMaterial201809];
+  scheme.typographyScheme =
+      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+  return scheme;
 }
 
 - (void)updateInkStyle:(MDCInkStyle)inkStyle {
