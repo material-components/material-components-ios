@@ -143,7 +143,10 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
  */
 // clang-format on
 - (UIEdgeInsets)textInsets:(UIEdgeInsets)defaultInsets {
-  UIEdgeInsets textInsets = [super textInsets:defaultInsets];
+  UIEdgeInsets textInsets = defaultInsets;
+  textInsets.left = MDCTextInputOutlinedTextFieldFullPadding;
+  textInsets.right = MDCTextInputOutlinedTextFieldFullPadding;
+  textInsets = [super textInsets:textInsets];
   CGFloat textVerticalOffset = self.textInput.placeholderLabel.font.lineHeight * (CGFloat)0.5;
 
   CGFloat scale = UIScreen.mainScreen.scale;
@@ -151,9 +154,6 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
       MDCCeil(self.textInput.placeholderLabel.font.lineHeight * scale) / scale;
   textInsets.top = [self borderHeight] - MDCTextInputOutlinedTextFieldFullPadding -
                    placeholderEstimatedHeight + textVerticalOffset;
-
-  textInsets.left = MDCTextInputOutlinedTextFieldFullPadding;
-  textInsets.right = MDCTextInputOutlinedTextFieldFullPadding;
 
   return textInsets;
 }
