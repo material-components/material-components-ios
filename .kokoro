@@ -320,6 +320,10 @@ generate_apidiff() {
 
     # Install sourcekitten, a dependency of the apidiff tool
     brew install sourcekitten
+    
+    # 0.21.3 is the last version of sourcekitten to support Xcode 9
+    # https://github.com/jpsim/SourceKitten/releases/tag/0.21.3
+    brew switch sourcekitten 0.21.3
   fi
 
   usage() {
