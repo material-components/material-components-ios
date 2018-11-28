@@ -20,7 +20,7 @@ set -e
 # To install homebrew formulas at specific versions we need to point directly
 # to the desired sha in the homebrew formula repository.
 # See https://danepowell.com/blog/homebrew-formula-versions for more details.
-# This points to version: 0.21.3
+# This currently points to version 0.21.3, the last version that supports Xcode 9
 SOURCEKITTEN_FORMULA="https://raw.githubusercontent.com/Homebrew/homebrew-core/c5a8a094f9e1dd8e41ed24785acef07ef7092d0d/Formula/sourcekitten.rb"
 
 fix_bazel_imports() {
