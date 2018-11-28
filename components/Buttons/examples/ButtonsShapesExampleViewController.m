@@ -14,6 +14,7 @@
 
 #import "MaterialButtons.h"
 #import "MaterialButtons+ButtonThemer.h"
+#import "MaterialButtons+Theming.h"
 #import "MaterialButtons+ColorThemer.h"
 #import "MaterialButtons+TypographyThemer.h"
 #import "MaterialShapes.h"
@@ -32,9 +33,19 @@
   if (self) {
     self.colorScheme =
         [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    self.typographyScheme = [[MDCTypographyScheme alloc] init];
+    self.typographyScheme =
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
   }
   return self;
+}
+
+- (MDCContainerScheme *)containerScheme {
+  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
+  scheme.colorScheme = self.colorScheme;
+  scheme.shapeScheme =
+      [[MDCShapeScheme alloc] initWithDefaults:MDCShapeSchemeDefaultsMaterial201809];
+  scheme.typographyScheme = self.typographyScheme;
+  return scheme;
 }
 
 - (MDCButton *)buildCustomStrokedButton {
@@ -59,7 +70,7 @@
 
   MDCButton *containedButton = [[MDCButton alloc] init];
   [containedButton setTitle:@"Add To Cart" forState:UIControlStateNormal];
-  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:containedButton];
+  [containedButton applyContainedThemeWithScheme:[self containerScheme]];
 
   UIImage *plusImage = [UIImage imageNamed:@"Plus"];
   plusImage = [plusImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
@@ -80,7 +91,7 @@
 
   MDCButton *disabledContainedButton = [[MDCButton alloc] init];
   [disabledContainedButton setTitle:@"Disabled" forState:UIControlStateNormal];
-  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:disabledContainedButton];
+  [disabledContainedButton applyContainedThemeWithScheme:self.containerScheme];
 
   MDCRectangleShapeGenerator *disabledRaisedShapeGenerator =
       [[MDCRectangleShapeGenerator alloc] init];
