@@ -51,6 +51,7 @@ mdc_objc_library(
         ":ColorThemer",
         ":ShapeThemer",
         ":TypographyThemer",
+        "//components/ShadowElevations",
         "//components/schemes/Container",
     ],
     visibility = ["//visibility:public"],
