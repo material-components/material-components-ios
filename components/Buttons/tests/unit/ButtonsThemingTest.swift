@@ -34,6 +34,7 @@ class ButtonsThemingTest: XCTestCase {
     let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
     let shapeScheme = MDCShapeScheme(defaults: .material201809)
     let typographyScheme = MDCTypographyScheme(defaults: .material201804)
+    let baselineCornerRadius: CGFloat = 4
 
     // When
     button.applyContainedTheme(withScheme: scheme)
@@ -55,14 +56,14 @@ class ButtonsThemingTest: XCTestCase {
     XCTAssertEqual(button.inkColor,
                    colorScheme.onPrimaryColor.withAlphaComponent(ButtonsThemingTest.inkOpacity))
     // Test shape
-    guard let buttonShape = button.shapeGenerator as? MDCRectangleShapeGenerator else {
-      XCTFail("Shape generator failed to cast as MDCRectangleShapeGenerator")
-      return
+    if let buttonShape = button.shapeGenerator as? MDCRectangleShapeGenerator {
+      XCTAssertEqual(buttonShape.topLeftCorner, shapeScheme.smallComponentShape.topLeftCorner)
+      XCTAssertEqual(buttonShape.topRightCorner, shapeScheme.smallComponentShape.topRightCorner)
+      XCTAssertEqual(buttonShape.bottomRightCorner, shapeScheme.smallComponentShape.bottomRightCorner)
+      XCTAssertEqual(buttonShape.bottomLeftCorner, shapeScheme.smallComponentShape.bottomLeftCorner)
+    } else {
+      XCTAssertEqual(button.layer.cornerRadius, baselineCornerRadius, accuracy: 0.001)
     }
-    XCTAssertEqual(buttonShape.topLeftCorner, shapeScheme.smallComponentShape.topLeftCorner)
-    XCTAssertEqual(buttonShape.topRightCorner, shapeScheme.smallComponentShape.topRightCorner)
-    XCTAssertEqual(buttonShape.bottomRightCorner, shapeScheme.smallComponentShape.bottomRightCorner)
-    XCTAssertEqual(buttonShape.bottomLeftCorner, shapeScheme.smallComponentShape.bottomLeftCorner)
 
     // Test typography
     XCTAssertEqual(button.titleFont(for: .normal), typographyScheme.button)

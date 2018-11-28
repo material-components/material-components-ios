@@ -29,10 +29,11 @@
   [self applyContainedThemeWithColorScheme:colorScheme];
 
   id<MDCShapeScheming> shapeScheme = scheme.shapeScheme;
-  if (!shapeScheme) {
-    shapeScheme = [[MDCShapeScheme alloc] initWithDefaults:MDCShapeSchemeDefaultsMaterial201809];
+  if (shapeScheme) {
+    [self applyContainedThemeWithShapeScheme:shapeScheme];
+  } else {
+    self.layer.cornerRadius = (CGFloat)4;
   }
-  [self applyContainedThemeWithShapeScheme:shapeScheme];
 
   id<MDCTypographyScheming> typographyScheme = scheme.typographyScheme;
   if (!typographyScheme) {
