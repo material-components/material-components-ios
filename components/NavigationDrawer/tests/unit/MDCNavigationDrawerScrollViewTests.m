@@ -569,4 +569,12 @@
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.scrollView.contentOffset.y, 500, (CGFloat)0.001);
 }
 
+- (void)testExpandToFullScreen {
+  // When
+  [self.drawerViewController expandToFullHeightWithDuration:0.0 completion:nil];
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.scrollView.contentOffset.y, 0.0, 0.001);
+}
+
 @end
