@@ -84,4 +84,29 @@ class ButtonsThemingTest: XCTestCase {
     XCTAssertEqual(buttonShape.bottomRightCorner, shapeScheme.smallComponentShape.bottomRightCorner)
     XCTAssertEqual(buttonShape.bottomLeftCorner, shapeScheme.smallComponentShape.bottomLeftCorner)
   }
+  
+  func testFloatingButtonSecondaryTheme() {
+    // Given
+    let button = MDCFloatingButton()
+    let scheme = MDCContainerScheme()
+    let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
+    let typographyScheme = MDCTypographyScheme(defaults: .material201804)
+
+    // When
+    button.applySecondaryTheme(withScheme: scheme)
+    
+    // Then
+    XCTAssertEqual(button.backgroundColor(for: .normal), colorScheme.secondaryColor)
+    XCTAssertEqual(button.imageTintColor(for: .normal), colorScheme.onSecondaryColor)
+    
+    XCTAssertEqual(button.titleFont(for: .normal), typographyScheme.button)
+    
+    let buttonShape = button.shapeGenerator as! MDCRectangleShapeGenerator
+    let corner = MDCCornerTreatment.corner(withRadius: 0.5)
+    corner?.valueType = .percentage
+    XCTAssertEqual(buttonShape.topLeftCorner, corner)
+    XCTAssertEqual(buttonShape.topRightCorner, corner)
+    XCTAssertEqual(buttonShape.bottomRightCorner, corner)
+    XCTAssertEqual(buttonShape.bottomLeftCorner, corner)
+  }
 }
