@@ -582,8 +582,7 @@
   // Then
   // Safe area is always 20 in test unless explicitly set otherwise
   CGFloat safeArea = 20;
-  CGFloat expectedContentOffset =
-      self.fakeBottomDrawer.presentingViewBounds.size.height - safeArea;
+  CGFloat expectedContentOffset = self.fakeBottomDrawer.presentingViewBounds.size.height - safeArea;
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.scrollView.contentOffset.y + safeArea,
                              expectedContentOffset, 0.001);
 }
