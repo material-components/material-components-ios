@@ -569,12 +569,23 @@
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.scrollView.contentOffset.y, 500, (CGFloat)0.001);
 }
 
-- (void)testExpandToFullScreen {
+- (void)testExpandToFullHeightLargeContent {
+  // Given
+  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(200, 5000);
+  self.fakeBottomDrawer.originalPresentingViewController.view.bounds = CGRectMake(0, 0, 200, 500);
+
   // When
-  [self.drawerViewController expandToFullHeightWithDuration:0.0 completion:nil];
+  [self.fakeBottomDrawer.view setNeedsLayout];
+  [self.fakeBottomDrawer.view layoutIfNeeded];
+  [self.fakeBottomDrawer expandToFullHeightWithDuration:0 completion:nil];
 
   // Then
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.scrollView.contentOffset.y, 0.0, 0.001);
+  // Safe area is always 20 in test unless explicitly set otherwise
+  CGFloat safeArea = 20;
+  CGFloat expectedContentOffset =
+      self.fakeBottomDrawer.presentingViewBounds.size.height - safeArea;
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.scrollView.contentOffset.y + safeArea,
+                             expectedContentOffset, 0.001);
 }
 
 @end
