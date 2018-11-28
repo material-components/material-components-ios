@@ -12,12 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialButtons.h"
+#import "MDCTextButtonThemer.h"
 #import "MaterialButtons+ButtonThemer.h"
 #import "MaterialButtons+ColorThemer.h"
+#import "MaterialButtons+Theming.h"
 #import "MaterialButtons+TypographyThemer.h"
+#import "MaterialButtons.h"
 #import "MaterialTypography.h"
-#import "MDCTextButtonThemer.h"
 
 #import "supplemental/ButtonsTypicalUseSupplemental.h"
 
@@ -34,8 +35,14 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
   if (self) {
     self.colorScheme =
         [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    self.shapeScheme = [[MDCShapeScheme alloc] init];
-    self.typographyScheme = [[MDCTypographyScheme alloc] init];
+    self.shapeScheme =
+        [[MDCShapeScheme alloc] initWithDefaults:MDCShapeSchemeDefaultsMaterial201809];
+    self.typographyScheme =
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+    self.containerScheme = [[MDCContainerScheme alloc] init];
+    self.containerScheme.colorScheme = self.colorScheme;
+    self.containerScheme.shapeScheme = self.shapeScheme;
+    self.containerScheme.typographyScheme = self.typographyScheme;
   }
   return self;
 }
@@ -54,7 +61,7 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
 
   MDCButton *containedButton = [[MDCButton alloc] init];
   [containedButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:containedButton];
+  [containedButton applyContainedThemeWithScheme:self.containerScheme];
   [containedButton sizeToFit];
   CGFloat containedButtonVerticalInset =
       MIN(0, -(kMinimumAccessibleButtonSize.height - CGRectGetHeight(containedButton.bounds)) / 2);
@@ -72,7 +79,7 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
 
   MDCButton *disabledContainedButton = [[MDCButton alloc] init];
   [disabledContainedButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:disabledContainedButton];
+  [disabledContainedButton applyContainedThemeWithScheme:self.containerScheme];
   [disabledContainedButton sizeToFit];
   [disabledContainedButton addTarget:self
                               action:@selector(didTap:)
