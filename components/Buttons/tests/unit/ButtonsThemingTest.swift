@@ -32,7 +32,6 @@ class ButtonsThemingTest: XCTestCase {
     let button = MDCButton()
     let scheme = MDCContainerScheme()
     let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
-    let shapeScheme = MDCShapeScheme(defaults: .material201809)
     let typographyScheme = MDCTypographyScheme(defaults: .material201804)
     let baselineCornerRadius: CGFloat = 4
 
@@ -56,16 +55,26 @@ class ButtonsThemingTest: XCTestCase {
     XCTAssertEqual(button.inkColor,
                    colorScheme.onPrimaryColor.withAlphaComponent(ButtonsThemingTest.inkOpacity))
     // Test shape
-    if let buttonShape = button.shapeGenerator as? MDCRectangleShapeGenerator {
-      XCTAssertEqual(buttonShape.topLeftCorner, shapeScheme.smallComponentShape.topLeftCorner)
-      XCTAssertEqual(buttonShape.topRightCorner, shapeScheme.smallComponentShape.topRightCorner)
-      XCTAssertEqual(buttonShape.bottomRightCorner, shapeScheme.smallComponentShape.bottomRightCorner)
-      XCTAssertEqual(buttonShape.bottomLeftCorner, shapeScheme.smallComponentShape.bottomLeftCorner)
-    } else {
-      XCTAssertEqual(button.layer.cornerRadius, baselineCornerRadius, accuracy: 0.001)
-    }
-
+    XCTAssertEqual(button.layer.cornerRadius, baselineCornerRadius, accuracy: 0.001)
     // Test typography
     XCTAssertEqual(button.titleFont(for: .normal), typographyScheme.button)
+  }
+
+  func testContainedThemeWithShapeScheme() {
+    // Given
+    let button = MDCButton()
+    let scheme = MDCContainerScheme()
+    let shapeScheme = MDCShapeScheme()
+    scheme.shapeScheme = shapeScheme
+
+    // When
+    button.applyContainedTheme(withScheme: scheme)
+
+    // Then
+    let buttonShape = button.shapeGenerator as! MDCRectangleShapeGenerator
+    XCTAssertEqual(buttonShape.topLeftCorner, shapeScheme.smallComponentShape.topLeftCorner)
+    XCTAssertEqual(buttonShape.topRightCorner, shapeScheme.smallComponentShape.topRightCorner)
+    XCTAssertEqual(buttonShape.bottomRightCorner, shapeScheme.smallComponentShape.bottomRightCorner)
+    XCTAssertEqual(buttonShape.bottomLeftCorner, shapeScheme.smallComponentShape.bottomLeftCorner)
   }
 }
