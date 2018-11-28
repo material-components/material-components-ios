@@ -1,15 +1,13 @@
-# #develop#
+# 70.1.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+This minor release introduces a new Alpha ContainerScheme type and several bug fixes.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
+A new ContainerScheme type has been introduced that can be used to represent the complete collection
+of Material Theming subsystem schemes. This new scheme type is an Alpha component at this point in
+time and is not yet intended for general use.
+
 ## API changes
 
 ### ContainerScheme
@@ -22,7 +20,7 @@ Replace this text with example code for each new feature.
 
 ### ActionSheet
 
-* [[ActionSheet]Action sheet safe area fix (#5769)](https://github.com/material-components/material-components-ios/commit/95513c069bd76df869c9ca421dd843cce4f3932a) (Colemalban)
+* [Action sheet safe area fix (#5769)](https://github.com/material-components/material-components-ios/commit/95513c069bd76df869c9ca421dd843cce4f3932a) (Colemalban)
 
 ### Cards
 
@@ -38,7 +36,7 @@ Replace this text with example code for each new feature.
 
 * [Add the bottom drawer container view controller as a child view controller (#5821)](https://github.com/material-components/material-components-ios/commit/7edf376e83e3cb8af51b120e099d976c8e9266e1) (guylivneh)
 
-## Multi-component changes
+### schemes/Container
 
 * [implement a container scheme (#5801)](https://github.com/material-components/material-components-ios/commit/f55c9a611e45a17c8f166f1e42ae87109ae45d58) (Wenyu Zhang)
 
