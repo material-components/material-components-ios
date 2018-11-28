@@ -1,3 +1,49 @@
+# #develop#
+
+Replace this text with a summarized description of this release's contents.
+## Breaking changes
+
+Replace this explanations for how to resolve the breaking changes.
+## New deprecations
+
+Replace this text with links to deprecation guides.
+## New features
+
+Replace this text with example code for each new feature.
+## API changes
+
+### ContainerScheme
+
+**New component.**
+
+## Component changes
+
+## Changes
+
+### ActionSheet
+
+* [[ActionSheet]Action sheet safe area fix (#5769)](https://github.com/material-components/material-components-ios/commit/95513c069bd76df869c9ca421dd843cce4f3932a) (Colemalban)
+
+### Cards
+
+* [Have updates to MDCCardCollectionCell setState properly respect the animated flag. (#5780)](https://github.com/material-components/material-components-ios/commit/42079f46485e750eaf5b5270ea7c7fb7526c477d) (Yarden Eitan)
+
+### Dialogs
+
+* [Example: merged supplemental code into a single file: DialogsDismissingViewController (#5808)](https://github.com/material-components/material-components-ios/commit/14d870e5d6e6283409088de338efebfaf69bd924) (Galia Kaufman)
+* [Move non-typical demo to Dragons. (#5829)](https://github.com/material-components/material-components-ios/commit/74cb507b3046d269683a01497ac1649d17b6ea77) (Robert Moore)
+* [renmaing typical use example (#5807)](https://github.com/material-components/material-components-ios/commit/767c482eb0ad095f0500b0ab970916bb9e07de6b) (Galia Kaufman)
+
+### NavigationDrawer
+
+* [Add the bottom drawer container view controller as a child view controller (#5821)](https://github.com/material-components/material-components-ios/commit/7edf376e83e3cb8af51b120e099d976c8e9266e1) (guylivneh)
+
+## Multi-component changes
+
+* [implement a container scheme (#5801)](https://github.com/material-components/material-components-ios/commit/f55c9a611e45a17c8f166f1e42ae87109ae45d58) (Wenyu Zhang)
+
+---
+
 # 70.0.0
 
 This major change removes all property coding behavior from our components. It also includes
