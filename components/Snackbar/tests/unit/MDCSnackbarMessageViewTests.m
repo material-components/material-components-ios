@@ -80,8 +80,6 @@
   XCTAssertNil(self.delegate.presentedView.label.accessibilityLabel);
 }
 
-// TODO (b/120145862) Deflake and reenable the following tests
-
 - (void)testAccessibilityLabelSetFromSnackbarMessageProperty {
   // When
   self.message.accessibilityLabel = @"not message text";
