@@ -147,6 +147,7 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
       .active = YES;
   if ([self.presentedViewController isKindOfClass:[MDCBottomDrawerViewController class]]) {
     [self.presentedView addSubview:self.bottomDrawerContainerViewController.view];
+    [self.presentedViewController addChildViewController:self.bottomDrawerContainerViewController];
   } else {
     [self.containerView addSubview:self.bottomDrawerContainerViewController.view];
   }
@@ -190,6 +191,9 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
 
 - (void)dismissalTransitionDidEnd:(BOOL)completed {
   if (completed) {
+    if ([self.presentedViewController isKindOfClass:[MDCBottomDrawerViewController class]]) {
+      [self.bottomDrawerContainerViewController removeFromParentViewController];
+    }
     [self.scrimView removeFromSuperview];
     [self.topHandle removeFromSuperview];
   }

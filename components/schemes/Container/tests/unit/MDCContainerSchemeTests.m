@@ -12,25 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "BannerTypicalUseExampleViewController.h"
+#import <XCTest/XCTest.h>
 
-@interface BannerTypicalUseExampleViewController ()
+#import "MaterialContainerScheme.h"
 
+@interface MDCContainerSchemeTests : XCTestCase
 @end
 
-@implementation BannerTypicalUseExampleViewController
+@implementation MDCContainerSchemeTests
 
-- (void)viewDidLoad {
-  [super viewDidLoad];
-  // Do any additional setup after loading the view.
-}
+- (void)testWithMaterialInit {
+  // Given
+  MDCContainerScheme *defaultContainerScheme = [[MDCContainerScheme alloc] init];
 
-+ (NSDictionary *)catalogMetadata {
-  return @{
-    @"breadcrumbs" : @[ @"Banner", @"Typical use" ],
-    @"primaryDemo" : @YES,
-    @"presentable" : @NO,
-  };
+  // Then
+  XCTAssertNil(defaultContainerScheme.colorScheme);
+  XCTAssertNil(defaultContainerScheme.typographyScheme);
+  XCTAssertNil(defaultContainerScheme.shapeScheme);
 }
 
 @end

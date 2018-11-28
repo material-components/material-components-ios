@@ -17,6 +17,12 @@
 # Fail on any error.
 set -e
 
+# To install homebrew formulas at specific versions we need to point directly
+# to the desired sha in the homebrew formula repository.
+# See https://danepowell.com/blog/homebrew-formula-versions for more details.
+# This currently points to version 0.21.3, the last version that supports Xcode 9
+SOURCEKITTEN_FORMULA="https://raw.githubusercontent.com/Homebrew/homebrew-core/c5a8a094f9e1dd8e41ed24785acef07ef7092d0d/Formula/sourcekitten.rb"
+
 fix_bazel_imports() {
   echo "Rewriting imports for bazel..."
 
@@ -319,7 +325,9 @@ generate_apidiff() {
     cd github/repo
 
     # Install sourcekitten, a dependency of the apidiff tool
-    brew install sourcekitten
+    brew install "$SOURCEKITTEN_FORMULA"
+
+    sourcekitten version
   fi
 
   usage() {

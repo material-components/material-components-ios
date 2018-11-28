@@ -157,7 +157,7 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
   self.header.frame = CGRectMake(0, 0, self.view.bounds.size.width, size.height);
   UIEdgeInsets insets = UIEdgeInsetsMake(self.header.frame.size.height, 0, 0, 0);
   if (@available(iOS 11.0, *)) {
-    insets.bottom = self.view.safeAreaInsets.bottom;
+    insets.bottom = self.tableView.adjustedContentInset.bottom;
   }
   self.tableView.contentInset = insets;
   self.tableView.contentOffset = CGPointMake(0, -size.height);
@@ -181,7 +181,7 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
   // When updating the preferredSheetHeight the presentation controller takes into account the
   // safe area so we have to remove that.
   if (@available(iOS 11.0, *)) {
-    preferredHeight = preferredHeight - self.view.safeAreaInsets.bottom;
+    preferredHeight = preferredHeight - self.tableView.adjustedContentInset.bottom;
   }
   return MDCCeil(preferredHeight);
 }

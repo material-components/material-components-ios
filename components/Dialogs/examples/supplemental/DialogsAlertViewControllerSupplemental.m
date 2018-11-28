@@ -54,9 +54,9 @@ static NSString *const kReusableIdentifierItem = @"cell";
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Dialogs", @"AlertController" ],
-    @"primaryDemo": @NO,
-    @"presentable": @YES,
+    @"breadcrumbs" : @[ @"Dialogs", @"AlertController" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

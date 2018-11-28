@@ -12,25 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "BannerTypicalUseExampleViewController.h"
-
-@interface BannerTypicalUseExampleViewController ()
-
-@end
-
-@implementation BannerTypicalUseExampleViewController
-
-- (void)viewDidLoad {
-  [super viewDidLoad];
-  // Do any additional setup after loading the view.
-}
-
-+ (NSDictionary *)catalogMetadata {
-  return @{
-    @"breadcrumbs" : @[ @"Banner", @"Typical use" ],
-    @"primaryDemo" : @YES,
-    @"presentable" : @NO,
-  };
-}
-
-@end
+#import "MDCContainerScheme.h"
