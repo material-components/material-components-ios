@@ -17,10 +17,11 @@ import XCTest
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialShapeScheme
+import MaterialComponents.MaterialShapeLibrary
 import MaterialComponents.MaterialTypographyScheme
 import MaterialComponentsAlpha.MaterialButtons_Theming
 
-class ButtonThemingTest: XCTestCase {
+class ButtonsThemingTest: XCTestCase {
 
   static let disabledOpacity: CGFloat = 0.38
   static let disabledBackgroundOpacity: CGFloat = 0.12
@@ -35,28 +36,34 @@ class ButtonThemingTest: XCTestCase {
     let typographyScheme = MDCTypographyScheme(defaults: .material201804)
 
     // When
-    button.applyContainerTheme(withScheme: scheme)
+    button.applyContainedTheme(withScheme: scheme)
 
     // Then
     // Test Colors
     XCTAssertEqual(button.backgroundColor(for: .normal), colorScheme.primaryColor)
     XCTAssertEqual(
         button.backgroundColor(for: .disabled),
-        colorScheme.surfaceColor.withAlphaComponent(ButtonThemingTest.disabledBackgroundOpacity))
+        colorScheme.onSurfaceColor.withAlphaComponent(ButtonsThemingTest.disabledBackgroundOpacity))
     XCTAssertEqual(button.titleColor(for: .normal), colorScheme.onPrimaryColor)
-    XCTAssertEqual(button.titleColor(for: .disabled),
-                   colorScheme.onSurfaceColor.withAlphaComponent(ButtonThemingTest.disabledOpacity))
+    XCTAssertEqual(
+        button.titleColor(for: .disabled),
+        colorScheme.onSurfaceColor.withAlphaComponent(ButtonsThemingTest.disabledOpacity))
     XCTAssertEqual(button.imageTintColor(for: .normal), colorScheme.onPrimaryColor)
-    XCTAssertEqual(button.imageTintColor(for: .disabled),
-                   colorScheme.onSurfaceColor.withAlphaComponent(ButtonThemingTest.disabledOpacity))
+    XCTAssertEqual(
+        button.imageTintColor(for: .disabled),
+        colorScheme.onSurfaceColor.withAlphaComponent(ButtonsThemingTest.disabledOpacity))
     XCTAssertEqual(button.inkColor,
-                   colorScheme.onPrimaryColor.withAlphaComponent(ButtonThemingTest.inkOpacity))
+                   colorScheme.onPrimaryColor.withAlphaComponent(ButtonsThemingTest.inkOpacity))
     // Test shape
-    let buttonShape = button.shapeGenerator
+    guard let buttonShape = button.shapeGenerator as? MDCRectangleShapeGenerator else {
+      XCTFail("Shape generator failed to cast as MDCRectangleShapeGenerator")
+      return
+    }
     XCTAssertEqual(buttonShape.topLeftCorner, shapeScheme.smallComponentShape.topLeftCorner)
     XCTAssertEqual(buttonShape.topRightCorner, shapeScheme.smallComponentShape.topRightCorner)
     XCTAssertEqual(buttonShape.bottomRightCorner, shapeScheme.smallComponentShape.bottomRightCorner)
     XCTAssertEqual(buttonShape.bottomLeftCorner, shapeScheme.smallComponentShape.bottomLeftCorner)
+
     // Test typography
     XCTAssertEqual(button.titleFont(for: .normal), typographyScheme.button)
   }
