@@ -388,21 +388,6 @@ static UIColor *DrawerShadowColor(void) {
                     completion:completion];
 }
 
-- (void)collapseToOriginalHeightWithDuration:(NSTimeInterval)duration
-                                  completion:(void (^)(BOOL))completion {
-  if ([self shouldPresentFullScreen]) {
-    return;
-  }
-  CGPoint contentOffset = CGPointZero;
-  if (self.trackingScrollView != nil) {
-    contentOffset.y = [self updateContentOffsetForPerformantScrolling:contentOffset.y];
-  }
-  [self animateToContentOffset:contentOffset
-           withTransitionRatio:0
-                      duration:duration
-                    completion:completion];
-}
-
 - (void)animateToContentOffset:(CGPoint)contentOffset
            withTransitionRatio:(CGFloat)transitionRatio
                       duration:(NSTimeInterval)duration

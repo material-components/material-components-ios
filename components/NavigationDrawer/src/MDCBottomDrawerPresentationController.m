@@ -274,10 +274,4 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
                                                                 completion:completion];
 }
 
-- (void)collapseToOriginalHeightWithDuration:(NSTimeInterval)duration
-                                  completion:(void (^)(BOOL))completion {
-  [self.bottomDrawerContainerViewController collapseToOriginalHeightWithDuration:duration
-                                                                      completion:completion];
-}
-
 @end
