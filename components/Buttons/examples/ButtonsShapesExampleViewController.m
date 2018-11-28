@@ -35,17 +35,13 @@
         [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
     self.typographyScheme =
         [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+    self.containerScheme = [[MDCContainerScheme alloc] init];
+    self.containerScheme.colorScheme = self.colorScheme;
+    self.containerScheme.shapeScheme =
+        [[MDCShapeScheme alloc] initWithDefaults:MDCShapeSchemeDefaultsMaterial201809];
+    self.containerScheme.typographyScheme = self.typographyScheme;
   }
   return self;
-}
-
-- (MDCContainerScheme *)containerScheme {
-  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
-  scheme.colorScheme = self.colorScheme;
-  scheme.shapeScheme =
-      [[MDCShapeScheme alloc] initWithDefaults:MDCShapeSchemeDefaultsMaterial201809];
-  scheme.typographyScheme = self.typographyScheme;
-  return scheme;
 }
 
 - (MDCButton *)buildCustomStrokedButton {
