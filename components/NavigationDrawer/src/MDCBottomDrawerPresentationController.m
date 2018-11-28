@@ -190,6 +190,7 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
 
 - (void)dismissalTransitionDidEnd:(BOOL)completed {
   if (completed) {
+    [self.bottomDrawerContainerViewController removeFromParentViewController];
     [self.scrimView removeFromSuperview];
     [self.topHandle removeFromSuperview];
   }
