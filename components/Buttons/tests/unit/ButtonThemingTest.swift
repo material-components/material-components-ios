@@ -35,20 +35,20 @@ class ButtonThemingTest: XCTestCase {
     let typographyScheme = MDCTypographyScheme(defaults: .material201804)
 
     // When
-    button.applyContainerThemeWithScheme(scheme)
+    button.applyContainerTheme(withScheme: scheme)
 
     // Then
     // Test Colors
     XCTAssertEqual(button.backgroundColor(for: .normal), colorScheme.primaryColor)
     XCTAssertEqual(button.backgroundColor(for: .disabled),
-                   colorScheme.surfaceColor.withAlphaComponent(disabledBackgroundOpacity))
+                   colorScheme.surfaceColor.withAlphaComponent(ButtonThemingTest.disabledBackgroundOpacity))
     XCTAssertEqual(button.titleColor(for: .normal), colorScheme.onPrimaryColor)
     XCTAssertEqual(button.titleColor(for: .disabled),
-                   colorScheme.onSurfaceColor.withAlphaComponent(disabledOpacity))
+                   colorScheme.onSurfaceColor.withAlphaComponent(ButtonThemingTest.disabledOpacity))
     XCTAssertEqual(button.imageTintColor(for: .normal), colorScheme.onPrimaryColor)
     XCTAssertEqual(button.imageTintColor(for: .disabled),
-                   colorScheme.onSurfaceColor.withAlphaComponent(disabledOpacity))
-    XCTAssertEqual(button.inkColor, colorScheme.onPrimaryColor.withAlphaComponent(inkOpacity))
+                   colorScheme.onSurfaceColor.withAlphaComponent(ButtonThemingTest.disabledOpacity))
+    XCTAssertEqual(button.inkColor, colorScheme.onPrimaryColor.withAlphaComponent(ButtonThemingTest.inkOpacity))
     // Test shape
     let buttonShape = button.shapeGenerator
     XCTAssertEqual(buttonShape.topLeftCorner, shapeScheme.smallComponentShape.topLeftCorner)
