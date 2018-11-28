@@ -48,6 +48,9 @@ mdc_objc_library(
     includes = ["src/Theming"],
     deps = [
         ":Buttons",
+        ":ColorThemer",
+        ":ShapeThemer",
+        ":TypographyThemer",
         "//components/schemes/Container",
     ],
     visibility = ["//visibility:public"],
