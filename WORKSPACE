@@ -41,7 +41,7 @@ git_repository(
 git_repository(
     name = "material_internationalization_ios",
     remote = "https://github.com/material-foundation/material-internationalization-ios.git",
-    tag = "v1.0.4",
+    tag = "v1.1.0",
 )
 
 git_repository(
