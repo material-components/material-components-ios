@@ -17,17 +17,17 @@
 #import "MaterialActivityIndicator.h"
 #import "MaterialActivityIndicator+ColorThemer.h"
 #import "MaterialPalettes.h"
-#import "supplemental/ActivityIndicatorExampleSupplemental.h"
+#import "supplemental/ActivityIndicatorExampleViewControllerSupplemental.h"
 
 #define MDC_CATALOG_BLACK [UIColor colorWithWhite:(CGFloat)0.1 alpha:1]
 #define MDC_CATALOG_GREY [UIColor colorWithWhite:(CGFloat)0.9 alpha:1]
 #define MDC_CATALOG_GREEN [UIColor colorWithRed:0 green:0xe6/255.0f blue:0x76/255.0f alpha:1]
 
-@interface ActivityIndicatorExample ()
+@interface ActivityIndicatorExampleViewController ()
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @end
 
-@implementation ActivityIndicatorExample
+@implementation ActivityIndicatorExampleViewController
 
 - (id)init {
   self = [super init];
@@ -41,7 +41,7 @@
 
 @end
 
-@implementation ActivityIndicatorExample (CatalogByConvention)
+@implementation ActivityIndicatorExampleViewController (CatalogByConvention)
 
 - (void)viewDidLoad {
   [super viewDidLoad];

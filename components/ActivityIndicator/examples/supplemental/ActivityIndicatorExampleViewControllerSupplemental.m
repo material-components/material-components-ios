@@ -17,7 +17,7 @@
  instructions. It is not necessary to import this file to use Material Components for iOS.
  */
 
-#import "ActivityIndicatorExampleSupplemental.h"
+#import "ActivityIndicatorExampleViewControllerSupplemental.h"
 
 #import "MaterialTypography.h"
 
@@ -26,7 +26,7 @@
 static NSString * const kCell = @"Cell";
 
 
-@implementation ActivityIndicatorExample (CatalogByConvention)
+@implementation ActivityIndicatorExampleViewController (CatalogByConvention)
 
 + (NSDictionary *)catalogMetadata {
   return @{
@@ -40,7 +40,7 @@ static NSString * const kCell = @"Cell";
 
 @end
 
-@implementation ActivityIndicatorExample (Supplemental)
+@implementation ActivityIndicatorExampleViewController (Supplemental)
 
 - (void)setupExampleViews {
   [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kCell];
