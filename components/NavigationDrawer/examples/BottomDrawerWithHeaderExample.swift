@@ -98,11 +98,11 @@ class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewContro
     } else {
       height = 2000
     }
-    bottomDrawerViewController.animate(toPreferredContentHeight: height, withDuration: 2) { _ in
+    bottomDrawerViewController.animate(toPreferredContentHeight: height, withDuration: 5) { _ in
       print("Animation completed")
       self.fullScreen = !self.fullScreen
     }
-    UIView.animate(withDuration: 2, animations: {
+    UIView.animate(withDuration: 5, animations: {
       print("Insert custom animation here")
     })
   }
