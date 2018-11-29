@@ -19,7 +19,7 @@
  */
 @interface MDCBottomDrawerBackgroundView : UIView
 
-// The view that will be tracked for visual changes.
-@property(nonatomic, weak, nullable) UIView *trackedView;
+// The view controller that will be tracked for visual changes.
+@property(nonatomic, weak, nullable) UIViewController *trackedViewController;
 
 @end

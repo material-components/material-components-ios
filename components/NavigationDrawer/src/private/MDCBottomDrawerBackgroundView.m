@@ -15,7 +15,7 @@
 #import "MDCBottomDrawerBackgroundView.h"
 
 static NSString *const kBackgroundColorKeyPath = @"backgroundColor";
-static NSString *const kFrameKeyPath = @"frame";
+static NSString *const kPreferredContentSizeKeyPath = @"preferredContentSize";
 
 @implementation MDCBottomDrawerBackgroundView
 
@@ -23,26 +23,26 @@ static NSString *const kFrameKeyPath = @"frame";
   [self removeObservers];
 }
 
-- (void)setTrackedView:(UIView *)trackedView {
-  if (trackedView) {
+- (void)setTrackedViewController:(UIViewController *)trackedViewController {
+  if (trackedViewController) {
     [self addObservers];
   } else {
     [self removeObservers];
   }
-  _trackedView = trackedView;
+  _trackedViewController = trackedViewController;
 }
 
 - (void)addObservers {
-  [self.trackedView addObserver:self forKeyPath:kBackgroundColorKeyPath
+  [self.trackedViewController.view addObserver:self forKeyPath:kBackgroundColorKeyPath
                         options:NSKeyValueObservingOptionNew context:nil];
-  [self.trackedView addObserver:self forKeyPath:kFrameKeyPath options:NSKeyValueObservingOptionNew
-                        context:nil];
+  [self.trackedViewController addObserver:self forKeyPath:kPreferredContentSizeKeyPath
+                                  options:NSKeyValueObservingOptionNew context:nil];
 }
 
 - (void)removeObservers {
   @try {
-    [self.trackedView removeObserver:self forKeyPath:kBackgroundColorKeyPath];
-    [self.trackedView removeObserver:self forKeyPath:kFrameKeyPath];
+    [self.trackedViewController.view removeObserver:self forKeyPath:kBackgroundColorKeyPath];
+    [self.trackedViewController removeObserver:self forKeyPath:kPreferredContentSizeKeyPath];
   }
   @catch (NSException *exception) {
     if (exception) {
@@ -56,8 +56,11 @@ static NSString *const kFrameKeyPath = @"frame";
                        context:(void *)context {
   if ([keyPath isEqualToString:kBackgroundColorKeyPath]) {
     self.backgroundColor = change[NSKeyValueChangeNewKey];
-  } else if ([keyPath isEqualToString:kFrameKeyPath]) {
-    self.frame = [change[NSKeyValueChangeNewKey] CGRectValue];
+  } else if ([keyPath isEqualToString:kPreferredContentSizeKeyPath]) {
+    CGSize newSize = [change[NSKeyValueChangeNewKey] CGSizeValue];
+    CGRect newFrame = CGRectStandardize(self.frame);
+    newFrame.size = newSize;
+    self.frame = newFrame;
   }
 }
 
