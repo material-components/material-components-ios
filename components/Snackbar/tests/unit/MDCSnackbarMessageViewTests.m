@@ -80,9 +80,7 @@
   XCTAssertNil(self.delegate.presentedView.label.accessibilityLabel);
 }
 
-// TODO (b/120145862) Deflake and reenable the following tests
-
-- (void)_disabled_testAccessibilityLabelSetFromSnackbarMessageProperty {
+- (void)testAccessibilityLabelSetFromSnackbarMessageProperty {
   // When
   self.message.accessibilityLabel = @"not message text";
   [self.manager showMessage:self.message];
@@ -110,7 +108,7 @@
   XCTAssertNotNil(self.delegate.presentedView.label.accessibilityHint);
 }
 
-- (void)_disabled_testAccessibilityHintSetFromSnackbarMessageProperty {
+- (void)testAccessibilityHintSetFromSnackbarMessageProperty {
   // When
   self.message.accessibilityHint = @"a hint";
   [self.manager showMessage:self.message];
@@ -125,7 +123,7 @@
                         self.message.accessibilityHint);
 }
 
-- (void)_disabled_testSnackbarSetAccessibiltyViewIsModalForActionSnacbars {
+- (void)testSnackbarSetAccessibiltyViewIsModalForActionSnacbars {
   // Given
   self.manager.internalManager.isVoiceOverRunningOverride = YES;
   MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
@@ -145,7 +143,7 @@
   XCTAssertTrue(self.manager.internalManager.overlayView.accessibilityViewIsModal);
 }
 
-- (void)_disabled_testSnackbarAccessibiltyViewIsModalShouldBeNoWithNoActions {
+- (void)testSnackbarAccessibiltyViewIsModalShouldBeNoWithNoActions {
   // Given
   self.manager.shouldEnableAccessibilityViewIsModal = YES;
 
@@ -161,7 +159,7 @@
   XCTAssertFalse(self.manager.internalManager.overlayView.accessibilityViewIsModal);
 }
 
-- (void)_disabled_testSnackbarSetAccessibiltyViewIsModalShouldBeNoForActionSnacbarsWhenManagerIsNo {
+- (void)testSnackbarSetAccessibiltyViewIsModalShouldBeNoForActionSnacbarsWhenManagerIsNo {
   // Given
   self.manager.internalManager.isVoiceOverRunningOverride = YES;
   MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
@@ -181,7 +179,7 @@
   XCTAssertFalse(self.manager.internalManager.overlayView.accessibilityViewIsModal);
 }
 
-- (void)_disabled_testSnackbarAccessibiltyViewIsModalShouldBeNoByDefault {
+- (void)testSnackbarAccessibiltyViewIsModalShouldBeNoByDefault {
   // Given
   self.manager.shouldEnableAccessibilityViewIsModal = NO;
 
