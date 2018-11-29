@@ -1,0 +1,1 @@
+snapshot_test_goldens/**/*.png filter=lfs diff=lfs merge=lfs -text
