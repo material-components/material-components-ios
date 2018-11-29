@@ -67,9 +67,9 @@
   self.activityIndicator3 = [[MDCActivityIndicator alloc] init];
   self.activityIndicator3.delegate = self;
   self.activityIndicator3.indicatorMode = MDCActivityIndicatorModeDeterminate;
-  self.activityIndicator3.cycleColors =  @[
-      [MDCPalette bluePalette].tint500, [MDCPalette redPalette].tint500,
-      [MDCPalette greenPalette].tint500, [MDCPalette yellowPalette].tint500
+  self.activityIndicator3.cycleColors = @[
+    [MDCPalette bluePalette].tint500, [MDCPalette redPalette].tint500,
+    [MDCPalette greenPalette].tint500, [MDCPalette yellowPalette].tint500
   ];
   [self.activityIndicator3 sizeToFit];
 
