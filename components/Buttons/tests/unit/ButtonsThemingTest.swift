@@ -84,4 +84,52 @@ class ButtonsThemingTest: XCTestCase {
     XCTAssertEqual(buttonShape.bottomRightCorner, shapeScheme.smallComponentShape.bottomRightCorner)
     XCTAssertEqual(buttonShape.bottomLeftCorner, shapeScheme.smallComponentShape.bottomLeftCorner)
   }
+
+  func testOutlinedTheme() {
+    // Given
+    let button = MDCButton()
+    let scheme = MDCContainerScheme()
+    let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
+    let typographyScheme = MDCTypographyScheme(defaults: .material201804)
+    let baselineCornerRadius: CGFloat = 4
+
+    // When
+    button.applyOutlinedTheme(withScheme: scheme)
+
+    // Then
+    // Test Colors
+    XCTAssertEqual(button.backgroundColor(for: .normal), .clear)
+    XCTAssertEqual(button.titleColor(for: .normal), colorScheme.primaryColor)
+    XCTAssertEqual(button.titleColor(for: .disabled), colorScheme.onSurfaceColor.withAlphaComponent(0.38))
+    XCTAssertEqual(button.disabledAlpha,1)
+    XCTAssertEqual(button.inkColor,colorScheme.primaryColor.withAlphaComponent(0.16))
+    XCTAssertEqual(button.borderColor(for: .normal), colorScheme.onSurfaceColor.withAlphaComponent(0.12))
+    // Test shape
+    XCTAssertEqual(button.layer.cornerRadius, baselineCornerRadius, accuracy: 0.001)
+    // Test typography
+    XCTAssertEqual(button.titleFont(for: .normal), typographyScheme.button)
+    // Test remaining properties
+    XCTAssertEqual(button.minimumSize.width, 0)
+    XCTAssertEqual(button.minimumSize.height, 36)
+  }
+
+  func testOutlinedThemeWithShapeScheme() {
+    // Given
+    let button = MDCButton()
+    let scheme = MDCContainerScheme()
+    let shapeScheme = MDCShapeScheme()
+    scheme.shapeScheme = shapeScheme
+
+    // When
+    button.applyOutlinedTheme(withScheme: scheme)
+
+    // Then
+    let buttonShape = button.shapeGenerator as! MDCRectangleShapeGenerator
+    XCTAssertEqual(buttonShape.topLeftCorner, shapeScheme.smallComponentShape.topLeftCorner)
+    XCTAssertEqual(buttonShape.topRightCorner, shapeScheme.smallComponentShape.topRightCorner)
+    XCTAssertEqual(buttonShape.bottomRightCorner, shapeScheme.smallComponentShape.bottomRightCorner)
+    XCTAssertEqual(buttonShape.bottomLeftCorner, shapeScheme.smallComponentShape.bottomLeftCorner)
+  }
+
+
 }
