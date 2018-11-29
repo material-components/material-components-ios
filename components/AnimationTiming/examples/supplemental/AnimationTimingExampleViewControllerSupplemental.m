@@ -158,7 +158,7 @@ static const CGSize kAnimationCircleSize = {48, 48};
 
   CGRect materialSharpViewFrame =
       CGRectMake(kLeftGutter, lineSpace * 4 + kTextOffset, kAnimationCircleSize.width,
-                kAnimationCircleSize.height);
+                 kAnimationCircleSize.height);
   self.materialSharpView = [[UIView alloc] initWithFrame:materialSharpViewFrame];
   self.materialSharpView.backgroundColor = [AnimationTimingExampleViewController defaultColors][4];
   self.materialSharpView.layer.cornerRadius = kAnimationCircleSize.width / 2;
