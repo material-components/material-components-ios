@@ -14,6 +14,7 @@
 
 #import "MDCBottomDrawerContainerViewController.h"
 
+#import "MDCBottomDrawerBackgroundView.h"
 #import "MDCBottomDrawerHeader.h"
 #import "MDCBottomDrawerHeaderMask.h"
 #import "MaterialShadowLayer.h"
@@ -136,6 +137,8 @@ static UIColor *DrawerShadowColor(void) {
 // The current bottom drawer state.
 @property(nonatomic) MDCBottomDrawerState drawerState;
 
+@property(nonatomic, strong, nonnull) MDCBottomDrawerBackgroundView *backgroundView;
+
 @end
 
 @implementation MDCBottomDrawerContainerViewController {
@@ -160,6 +163,7 @@ static UIColor *DrawerShadowColor(void) {
     _trackingScrollView = trackingScrollView;
     _drawerState = MDCBottomDrawerStateCollapsed;
     _scrollToContentOffsetY = 0;
+    _backgroundView = [[MDCBottomDrawerBackgroundView alloc] initWithFrame:CGRectZero];
   }
   return self;
 }
@@ -383,10 +387,13 @@ static UIColor *DrawerShadowColor(void) {
   // Top header shadow layer starts as hidden.
   self.headerShadowLayer.hidden = YES;
 
+  [self setupBackgroundView];
+
   // Set up the content.
   if (self.contentViewController) {
     [self addChildViewController:self.contentViewController];
     [self.scrollView addSubview:self.contentViewController.view];
+    [self.scrollView addSubview:self.backgroundView];
     [self.contentViewController didMoveToParentViewController:self];
   }
 }
@@ -513,6 +520,14 @@ static UIColor *DrawerShadowColor(void) {
   self.headerShadowLayer.shadowColor = DrawerShadowColor().CGColor;
   [self.headerViewController.view.layer addSublayer:self.headerShadowLayer];
   self.headerShadowLayer.hidden = YES;
+}
+
+- (void)setupBackgroundView {
+  if (self.contentViewController) {
+    self.backgroundView.trackedView = self.contentViewController.view;
+  } else if (self.headerViewController) {
+    self.backgroundView.trackedView = self.headerViewController.view;
+  }
 }
 
 #pragma mark Content Offset Adaptions (Private)
