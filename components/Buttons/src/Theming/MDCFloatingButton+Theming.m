@@ -23,10 +23,11 @@
 - (void)applySecondaryThemeWithScheme:(id<MDCContainerScheming>)scheme {
   id<MDCColorScheming> colorScheme = scheme.colorScheme;
   if (!colorScheme) {
-    colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
   [self applySecondaryThemeWithColorScheme:colorScheme];
-  
+
   id<MDCShapeScheming> shapeScheme = scheme.shapeScheme;
   if (!shapeScheme) {
     shapeScheme = [[MDCShapeScheme alloc] initWithDefaults:MDCShapeSchemeDefaultsMaterial201809];
@@ -35,11 +36,11 @@
 
   id<MDCTypographyScheming> typographyScheme = scheme.typographyScheme;
   if (!typographyScheme) {
-    typographyScheme = [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+    typographyScheme =
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
   }
   [self applySecondaryThemeWithTypographyScheme:typographyScheme];
-  
-  
+
   [self setElevation:(CGFloat)6 forState:UIControlStateNormal];
   [self setElevation:(CGFloat)12 forState:UIControlStateHighlighted];
   [self setElevation:(CGFloat)0 forState:UIControlStateDisabled];
