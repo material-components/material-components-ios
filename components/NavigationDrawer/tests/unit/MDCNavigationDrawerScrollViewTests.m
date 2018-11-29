@@ -578,7 +578,6 @@
 }
 
 - (void)testAddedHeightWithHeaderViewController {
-
 }
 
 @end

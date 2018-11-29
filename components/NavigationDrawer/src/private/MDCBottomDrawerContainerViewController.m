@@ -597,13 +597,13 @@ static UIColor *DrawerShadowColor(void) {
   CGFloat heightToAdd = self.addedHeight - previousAddedHeight;
   if (self.contentViewController) {
     CGRect contentViewFrame = CGRectStandardize(self.contentViewController.view.frame);
-    contentViewFrame.size = CGSizeMake(contentViewFrame.size.width,
-                                       contentViewFrame.size.height + heightToAdd);
+    contentViewFrame.size =
+        CGSizeMake(contentViewFrame.size.width, contentViewFrame.size.height + heightToAdd);
     self.contentViewController.view.frame = contentViewFrame;
   } else if (self.headerViewController) {
     CGRect headerViewFrame = CGRectStandardize(self.headerViewController.view.frame);
-    headerViewFrame.size = CGSizeMake(headerViewFrame.size.width,
-                                       headerViewFrame.size.height + heightToAdd);
+    headerViewFrame.size =
+        CGSizeMake(headerViewFrame.size.width, headerViewFrame.size.height + heightToAdd);
     self.headerViewController.view.frame = headerViewFrame;
   }
 }
