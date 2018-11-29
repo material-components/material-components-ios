@@ -27,11 +27,11 @@ static const CGSize kAnimationCircleSize = {48, 48};
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Animation Timing", @"Animation Timing" ],
-    @"description": @"Animation timing easing curves create smooth and consistent motion. "
-    @"Easing curves allow elements to move between positions or states.",
-    @"primaryDemo": @YES,
-    @"presentable": @YES
+    @"breadcrumbs" : @[ @"Animation Timing", @"Animation Timing" ],
+    @"description" : @"Animation timing easing curves create smooth and consistent motion. "
+                     @"Easing curves allow elements to move between positions or states.",
+    @"primaryDemo" : @YES,
+    @"presentable" : @YES
   };
 }
 
@@ -45,8 +45,8 @@ static const CGSize kAnimationCircleSize = {48, 48};
 
   self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
 
-  self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.view.frame),
-                                           CGRectGetHeight(self.view.frame) + kTopMargin);
+  self.scrollView.contentSize =
+      CGSizeMake(CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) + kTopMargin);
   self.scrollView.clipsToBounds = YES;
   [self.view addSubview:self.scrollView];
 
@@ -56,36 +56,36 @@ static const CGSize kAnimationCircleSize = {48, 48};
         UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   } else {
     self.scrollView.translatesAutoresizingMaskIntoConstraints = NO;
-    [NSLayoutConstraint activateConstraints:
-     @[[NSLayoutConstraint constraintWithItem:self.scrollView
-                                    attribute:NSLayoutAttributeTop
-                                    relatedBy:NSLayoutRelationEqual
-                                       toItem:self.topLayoutGuide
-                                    attribute:NSLayoutAttributeBottom
-                                   multiplier:1.0
-                                     constant:0],
-       [NSLayoutConstraint constraintWithItem:self.scrollView
-                                    attribute:NSLayoutAttributeBottom
-                                    relatedBy:NSLayoutRelationEqual
-                                       toItem:self.view
-                                    attribute:NSLayoutAttributeBottom
-                                   multiplier:1.0
-                                     constant:0],
-       [NSLayoutConstraint constraintWithItem:self.scrollView
-                                    attribute:NSLayoutAttributeLeft
-                                    relatedBy:NSLayoutRelationEqual
-                                       toItem:self.view
-                                    attribute:NSLayoutAttributeLeft
-                                   multiplier:1.0
-                                     constant:0],
-       [NSLayoutConstraint constraintWithItem:self.scrollView
-                                    attribute:NSLayoutAttributeRight
-                                    relatedBy:NSLayoutRelationEqual
-                                       toItem:self.view
-                                    attribute:NSLayoutAttributeRight
-                                   multiplier:1.0
-                                     constant:0]
-       ]];
+    [NSLayoutConstraint activateConstraints:@[
+      [NSLayoutConstraint constraintWithItem:self.scrollView
+                                   attribute:NSLayoutAttributeTop
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:self.topLayoutGuide
+                                   attribute:NSLayoutAttributeBottom
+                                  multiplier:1.0
+                                    constant:0],
+      [NSLayoutConstraint constraintWithItem:self.scrollView
+                                   attribute:NSLayoutAttributeBottom
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:self.view
+                                   attribute:NSLayoutAttributeBottom
+                                  multiplier:1.0
+                                    constant:0],
+      [NSLayoutConstraint constraintWithItem:self.scrollView
+                                   attribute:NSLayoutAttributeLeft
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:self.view
+                                   attribute:NSLayoutAttributeLeft
+                                  multiplier:1.0
+                                    constant:0],
+      [NSLayoutConstraint constraintWithItem:self.scrollView
+                                   attribute:NSLayoutAttributeRight
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:self.view
+                                   attribute:NSLayoutAttributeRight
+                                  multiplier:1.0
+                                    constant:0]
+    ]];
   }
 
   CGFloat lineSpace = (CGRectGetHeight(self.view.frame) - 50) / 5;
@@ -101,9 +101,8 @@ static const CGSize kAnimationCircleSize = {48, 48};
   self.linearView.layer.cornerRadius = kAnimationCircleSize.width / 2;
   [self.scrollView addSubview:self.linearView];
 
-  UILabel *materialEaseInOutLabel =
-      [AnimationTimingExampleViewController
-          curveLabelWithTitle:@"MDCAnimationTimingFunctionStandard"];
+  UILabel *materialEaseInOutLabel = [AnimationTimingExampleViewController
+      curveLabelWithTitle:@"MDCAnimationTimingFunctionStandard"];
   materialEaseInOutLabel.frame =
       CGRectMake(kLeftGutter, lineSpace, materialEaseInOutLabel.frame.size.width,
                  materialEaseInOutLabel.frame.size.height);
@@ -118,9 +117,8 @@ static const CGSize kAnimationCircleSize = {48, 48};
   self.materialStandardView.layer.cornerRadius = kAnimationCircleSize.width / 2;
   [self.scrollView addSubview:self.materialStandardView];
 
-  UILabel *materialEaseOutLabel =
-      [AnimationTimingExampleViewController
-          curveLabelWithTitle:@"MDCAnimationTimingFunctionDeceleration"];
+  UILabel *materialEaseOutLabel = [AnimationTimingExampleViewController
+      curveLabelWithTitle:@"MDCAnimationTimingFunctionDeceleration"];
   materialEaseOutLabel.frame =
       CGRectMake(kLeftGutter, lineSpace * 2, materialEaseOutLabel.frame.size.width,
                  materialEaseOutLabel.frame.size.height);
@@ -135,9 +133,8 @@ static const CGSize kAnimationCircleSize = {48, 48};
   self.materialDecelerationView.layer.cornerRadius = kAnimationCircleSize.width / 2;
   [self.scrollView addSubview:self.materialDecelerationView];
 
-  UILabel *materialEaseInLabel =
-      [AnimationTimingExampleViewController
-          curveLabelWithTitle:@"MDCAnimationTimingFunctionAcceleration"];
+  UILabel *materialEaseInLabel = [AnimationTimingExampleViewController
+      curveLabelWithTitle:@"MDCAnimationTimingFunctionAcceleration"];
   materialEaseInLabel.frame =
       CGRectMake(kLeftGutter, lineSpace * 3, materialEaseInLabel.frame.size.width,
                  materialEaseInLabel.frame.size.height);
@@ -151,12 +148,12 @@ static const CGSize kAnimationCircleSize = {48, 48};
       [AnimationTimingExampleViewController defaultColors][3];
   self.materialAccelerationView.layer.cornerRadius = kAnimationCircleSize.width / 2;
   [self.scrollView addSubview:self.materialAccelerationView];
-   
+
   UILabel *materialSharpLabel =
       [AnimationTimingExampleViewController curveLabelWithTitle:@"MDCAnimationTimingFunctionSharp"];
   materialSharpLabel.frame =
       CGRectMake(kLeftGutter, lineSpace * 4, CGRectGetWidth(materialSharpLabel.frame),
-                CGRectGetHeight(materialSharpLabel.frame));
+                 CGRectGetHeight(materialSharpLabel.frame));
   [self.scrollView addSubview:materialSharpLabel];
 
   CGRect materialSharpViewFrame =

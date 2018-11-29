@@ -64,12 +64,12 @@ const NSTimeInterval kAnimationTimeDelay = 0.5;
   [self applyAnimationToView:_materialAccelerationView
           withTimingFunction:materialAccelerationCurve
                   completion:nil];
-   
+
   CAMediaTimingFunction *materialSharpCurve =
       [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionSharp];
-   [self applyAnimationToView:_materialSharpView
-           withTimingFunction:materialSharpCurve
-                   completion:completion];
+  [self applyAnimationToView:_materialSharpView
+          withTimingFunction:materialSharpCurve
+                  completion:completion];
 }
 
 - (void)applyAnimationToView:(UIView *)view
