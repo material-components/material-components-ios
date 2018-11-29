@@ -229,6 +229,11 @@ run_cocoapods() {
 
     gem install xcpretty cocoapods --no-rdoc --no-ri --no-document --quiet
     pod --version
+
+    # Install git-lfs
+    brew install git-lfs
+    git lfs install
+    git lfs pull
   fi
 
   if [ "$DEPENDENCY_SYSTEM" = "cocoapods" ]; then
