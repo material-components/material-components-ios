@@ -25,7 +25,6 @@
 
 static NSString *const kCell = @"Cell";
 
-
 @implementation ActivityIndicatorExampleViewController (CatalogByConvention)
 
 + (NSDictionary *)catalogMetadata {
