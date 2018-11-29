@@ -522,11 +522,27 @@ static UIColor *DrawerShadowColor(void) {
   self.headerShadowLayer.hidden = YES;
 }
 
+- (void)setContentViewController:(UIViewController *)contentViewController {
+  if (self.backgroundView) {
+    self.backgroundView.trackedViewController = contentViewController;
+  }
+  _contentViewController = contentViewController;
+}
+
+- (void)setHeaderViewController:(UIViewController<MDCBottomDrawerHeader> *)headerViewController {
+  if (self.backgroundView) {
+    if (!self.contentViewController) {
+      self.backgroundView.trackedViewController = headerViewController;
+    }
+  }
+  _headerViewController = headerViewController;
+}
+
 - (void)setupBackgroundView {
   if (self.contentViewController) {
-    self.backgroundView.trackedView = self.contentViewController.view;
+    self.backgroundView.trackedViewController = self.contentViewController;
   } else if (self.headerViewController) {
-    self.backgroundView.trackedView = self.headerViewController.view;
+    self.backgroundView.trackedViewController = self.headerViewController;
   }
 }
 
