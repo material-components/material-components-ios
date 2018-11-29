@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "AnimationTimingExampleSupplemental.h"
+#import "AnimationTimingExampleViewControllerSupplemental.h"
 
 #import "MaterialTypography.h"
 
@@ -23,7 +23,7 @@ const CGFloat kTextOffset = 16;
 // Size of the circle we animate.
 static const CGSize kAnimationCircleSize = {48, 48};
 
-@implementation AnimationTimingExample (CatalogByConvention)
+@implementation AnimationTimingExampleViewController (CatalogByConvention)
 
 + (NSDictionary *)catalogMetadata {
   return @{
@@ -37,7 +37,7 @@ static const CGSize kAnimationCircleSize = {48, 48};
 
 @end
 
-@implementation AnimationTimingExample (Supplemental)
+@implementation AnimationTimingExampleViewController (Supplemental)
 
 - (void)setupExampleViews {
   self.view.backgroundColor = UIColor.whiteColor;
@@ -89,7 +89,7 @@ static const CGSize kAnimationCircleSize = {48, 48};
   }
 
   CGFloat lineSpace = (CGRectGetHeight(self.view.frame) - 50) / 5;
-  UILabel *linearLabel = [AnimationTimingExample curveLabelWithTitle:@"Linear"];
+  UILabel *linearLabel = [AnimationTimingExampleViewController curveLabelWithTitle:@"Linear"];
   linearLabel.frame =
       CGRectMake(kLeftGutter, kTopMargin, linearLabel.frame.size.width, linearLabel.frame.size.height);
   [self.scrollView addSubview:linearLabel];
@@ -97,12 +97,12 @@ static const CGSize kAnimationCircleSize = {48, 48};
   CGRect linearViewFrame =
       CGRectMake(kLeftGutter, kTextOffset + kTopMargin, kAnimationCircleSize.width, kAnimationCircleSize.height);
   self.linearView = [[UIView alloc] initWithFrame:linearViewFrame];
-  self.linearView.backgroundColor = [AnimationTimingExample defaultColors][0];
+  self.linearView.backgroundColor = [AnimationTimingExampleViewController defaultColors][0];
   self.linearView.layer.cornerRadius = kAnimationCircleSize.width / 2;
   [self.scrollView addSubview:self.linearView];
 
   UILabel *materialEaseInOutLabel =
-      [AnimationTimingExample curveLabelWithTitle:@"MDCAnimationTimingFunctionStandard"];
+      [AnimationTimingExampleViewController curveLabelWithTitle:@"MDCAnimationTimingFunctionStandard"];
   materialEaseInOutLabel.frame =
       CGRectMake(kLeftGutter, lineSpace, materialEaseInOutLabel.frame.size.width,
                  materialEaseInOutLabel.frame.size.height);
@@ -112,12 +112,12 @@ static const CGSize kAnimationCircleSize = {48, 48};
       CGRectMake(kLeftGutter, lineSpace + kTextOffset, kAnimationCircleSize.width,
                  kAnimationCircleSize.height);
   self.materialStandardView = [[UIView alloc] initWithFrame:materialEaseInOutViewFrame];
-  self.materialStandardView.backgroundColor = [AnimationTimingExample defaultColors][1];
+  self.materialStandardView.backgroundColor = [AnimationTimingExampleViewController defaultColors][1];
   self.materialStandardView.layer.cornerRadius = kAnimationCircleSize.width / 2;
   [self.scrollView addSubview:self.materialStandardView];
 
   UILabel *materialEaseOutLabel =
-      [AnimationTimingExample curveLabelWithTitle:@"MDCAnimationTimingFunctionDeceleration"];
+      [AnimationTimingExampleViewController curveLabelWithTitle:@"MDCAnimationTimingFunctionDeceleration"];
   materialEaseOutLabel.frame =
       CGRectMake(kLeftGutter, lineSpace * 2, materialEaseOutLabel.frame.size.width,
                  materialEaseOutLabel.frame.size.height);
@@ -127,12 +127,12 @@ static const CGSize kAnimationCircleSize = {48, 48};
       CGRectMake(kLeftGutter, lineSpace * 2 + kTextOffset, kAnimationCircleSize.width,
                  kAnimationCircleSize.height);
   self.materialDecelerationView = [[UIView alloc] initWithFrame:materialDecelerationViewFrame];
-  self.materialDecelerationView.backgroundColor = [AnimationTimingExample defaultColors][2];
+  self.materialDecelerationView.backgroundColor = [AnimationTimingExampleViewController defaultColors][2];
   self.materialDecelerationView.layer.cornerRadius = kAnimationCircleSize.width / 2;
   [self.scrollView addSubview:self.materialDecelerationView];
 
   UILabel *materialEaseInLabel =
-      [AnimationTimingExample curveLabelWithTitle:@"MDCAnimationTimingFunctionAcceleration"];
+      [AnimationTimingExampleViewController curveLabelWithTitle:@"MDCAnimationTimingFunctionAcceleration"];
   materialEaseInLabel.frame =
       CGRectMake(kLeftGutter, lineSpace * 3, materialEaseInLabel.frame.size.width,
                  materialEaseInLabel.frame.size.height);
@@ -142,12 +142,12 @@ static const CGSize kAnimationCircleSize = {48, 48};
       CGRectMake(kLeftGutter, lineSpace * 3 + kTextOffset, kAnimationCircleSize.width,
                  kAnimationCircleSize.height);
   self.materialAccelerationView = [[UIView alloc] initWithFrame:materialAccelerationViewFrame];
-  self.materialAccelerationView.backgroundColor = [AnimationTimingExample defaultColors][3];
+  self.materialAccelerationView.backgroundColor = [AnimationTimingExampleViewController defaultColors][3];
   self.materialAccelerationView.layer.cornerRadius = kAnimationCircleSize.width / 2;
   [self.scrollView addSubview:self.materialAccelerationView];
    
    UILabel *materialSharpLabel =
-       [AnimationTimingExample curveLabelWithTitle:@"MDCAnimationTimingFunctionSharp"];
+       [AnimationTimingExampleViewController curveLabelWithTitle:@"MDCAnimationTimingFunctionSharp"];
    materialSharpLabel.frame =
        CGRectMake(kLeftGutter, lineSpace * 4, CGRectGetWidth(materialSharpLabel.frame),
                   CGRectGetHeight(materialSharpLabel.frame));
@@ -157,7 +157,7 @@ static const CGSize kAnimationCircleSize = {48, 48};
        CGRectMake(kLeftGutter, lineSpace * 4 + kTextOffset, kAnimationCircleSize.width,
                   kAnimationCircleSize.height);
    self.materialSharpView = [[UIView alloc] initWithFrame:materialSharpViewFrame];
-   self.materialSharpView.backgroundColor = [AnimationTimingExample defaultColors][4];
+   self.materialSharpView.backgroundColor = [AnimationTimingExampleViewController defaultColors][4];
    self.materialSharpView.layer.cornerRadius = kAnimationCircleSize.width / 2;
    [self.scrollView addSubview:self.materialSharpView];
 }

@@ -13,16 +13,16 @@
 // limitations under the License.
 
 #import "MaterialAnimationTiming.h"
-#import "supplemental/AnimationTimingExampleSupplemental.h"
+#import "supplemental/AnimationTimingExampleViewControllerSupplemental.h"
 
 const NSTimeInterval kAnimationTimeInterval = 1;
 const NSTimeInterval kAnimationTimeDelay = 0.5;
 
-@interface AnimationTimingExample ()
+@interface AnimationTimingExampleViewController ()
 
 @end
 
-@implementation AnimationTimingExample
+@implementation AnimationTimingExampleViewController
 
 - (void)didTapAnimateButton:(UIButton *)sender {
   sender.enabled = NO;
