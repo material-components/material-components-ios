@@ -12,19 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "ActionSheetTypicalUse.h"
+#import "ActionSheetTypicalUseExampleViewController.h"
 
 #import "MaterialActionSheet+ActionSheetThemer.h"
 #import "MaterialButtons+ButtonThemer.h"
 #import "MaterialButtons.h"
 
-@interface ActionSheetTypicalUse ()
+@interface ActionSheetTypicalUseExampleViewController ()
 
 @property(nonatomic, strong) MDCButton *showButton;
 
 @end
 
-@implementation ActionSheetTypicalUse {
+@implementation ActionSheetTypicalUseExampleViewController {
   MDCButtonScheme *_buttonScheme;
   MDCActionSheetScheme *_actionSheetScheme;
 }
@@ -95,7 +95,7 @@
 
 @end
 
-@implementation ActionSheetTypicalUse (CatalogByConvention)
+@implementation ActionSheetTypicalUseExampleViewController (CatalogByConvention)
 
 + (NSDictionary *)catalogMetadata {
   return @{

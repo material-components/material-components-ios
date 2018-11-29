@@ -12,21 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "ActionSheetComparison.h"
+#import "ActionSheetComparisonExampleViewController.h"
 
 #import "MaterialActionSheet.h"
 #import "MaterialActionSheet+ActionSheetThemer.h"
 #import "MaterialButtons+ButtonThemer.h"
 #import "MaterialButtons.h"
 
-@interface ActionSheetComparison ()
+@interface ActionSheetComparisonExampleViewController ()
 
 @property(nonatomic, strong) MDCButton *showMaterialButton;
 @property(nonatomic, strong) MDCButton *showUIKitButton;
 
 @end
 
-@implementation ActionSheetComparison {
+@implementation ActionSheetComparisonExampleViewController {
   MDCButtonScheme *_buttonScheme;
   MDCActionSheetScheme *_actionSheetScheme;
 }
@@ -128,7 +128,7 @@
 
 @end
 
-@implementation ActionSheetComparison (CatalogByConvention)
+@implementation ActionSheetComparisonExampleViewController (CatalogByConvention)
 
 + (NSDictionary *)catalogMetadata {
   return @{
