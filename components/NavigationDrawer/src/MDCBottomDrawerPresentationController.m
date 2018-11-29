@@ -147,6 +147,7 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
       .active = YES;
   if ([self.presentedViewController isKindOfClass:[MDCBottomDrawerViewController class]]) {
     [self.presentedView addSubview:self.bottomDrawerContainerViewController.view];
+    [self.presentedViewController addChildViewController:self.bottomDrawerContainerViewController];
   } else {
     [self.containerView addSubview:self.bottomDrawerContainerViewController.view];
   }
