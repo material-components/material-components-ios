@@ -14,7 +14,6 @@
 
 #import "MDCBottomDrawerContainerViewController.h"
 
-#import "MDCBottomDrawerBackgroundView.h"
 #import "MDCBottomDrawerHeader.h"
 #import "MDCBottomDrawerHeaderMask.h"
 #import "MaterialShadowLayer.h"
@@ -137,8 +136,6 @@ static UIColor *DrawerShadowColor(void) {
 // The current bottom drawer state.
 @property(nonatomic) MDCBottomDrawerState drawerState;
 
-@property(nonatomic, strong, nonnull) MDCBottomDrawerBackgroundView *backgroundView;
-
 @end
 
 @implementation MDCBottomDrawerContainerViewController {
@@ -163,7 +160,6 @@ static UIColor *DrawerShadowColor(void) {
     _trackingScrollView = trackingScrollView;
     _drawerState = MDCBottomDrawerStateCollapsed;
     _scrollToContentOffsetY = 0;
-    _backgroundView = [[MDCBottomDrawerBackgroundView alloc] initWithFrame:CGRectZero];
   }
   return self;
 }
@@ -387,13 +383,10 @@ static UIColor *DrawerShadowColor(void) {
   // Top header shadow layer starts as hidden.
   self.headerShadowLayer.hidden = YES;
 
-  [self setupBackgroundView];
-
   // Set up the content.
   if (self.contentViewController) {
     [self addChildViewController:self.contentViewController];
     [self.scrollView addSubview:self.contentViewController.view];
-    [self.scrollView addSubview:self.backgroundView];
     [self.contentViewController didMoveToParentViewController:self];
   }
 }
@@ -454,13 +447,15 @@ static UIColor *DrawerShadowColor(void) {
     if (self.contentHeaderTopInset > topAreaInsetForHeader + kEpsilon) {
       contentViewFrame.size.height += topAreaInsetForHeader;
     }
+    contentViewFrame.size.height += (self.presentingViewBounds.size.height * 2);
   } else {
-    contentViewFrame.size.height = _contentVCPreferredContentSizeHeightCached;
-    if ([self shouldPresentFullScreen]) {
+    contentViewFrame.size.height = _contentVCPreferredContentSizeHeightCached +
+        (self.presentingViewBounds.size.height * 2);
+    /*if ([self shouldPresentFullScreen]) {
       contentViewFrame.size.height =
           MAX(contentViewFrame.size.height,
               self.presentingViewBounds.size.height - self.topHeaderHeight);
-    }
+    }*/
   }
   self.contentViewController.view.frame = contentViewFrame;
   if (self.trackingScrollView != nil) {
@@ -520,30 +515,6 @@ static UIColor *DrawerShadowColor(void) {
   self.headerShadowLayer.shadowColor = DrawerShadowColor().CGColor;
   [self.headerViewController.view.layer addSublayer:self.headerShadowLayer];
   self.headerShadowLayer.hidden = YES;
-}
-
-- (void)setContentViewController:(UIViewController *)contentViewController {
-  if (self.backgroundView) {
-    self.backgroundView.trackedViewController = contentViewController;
-  }
-  _contentViewController = contentViewController;
-}
-
-- (void)setHeaderViewController:(UIViewController<MDCBottomDrawerHeader> *)headerViewController {
-  if (self.backgroundView) {
-    if (!self.contentViewController) {
-      self.backgroundView.trackedViewController = headerViewController;
-    }
-  }
-  _headerViewController = headerViewController;
-}
-
-- (void)setupBackgroundView {
-  if (self.contentViewController) {
-    self.backgroundView.trackedViewController = self.contentViewController;
-  } else if (self.headerViewController) {
-    self.backgroundView.trackedViewController = self.headerViewController;
-  }
 }
 
 #pragma mark Content Offset Adaptions (Private)
