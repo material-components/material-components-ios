@@ -569,4 +569,16 @@
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.scrollView.contentOffset.y, 500, (CGFloat)0.001);
 }
 
+- (void)testAddedHeightWithContentViewController {
+  // Given
+  CGFloat contentViewControllerHeight =
+      CGRectStandardize(self.fakeBottomDrawer.contentViewController.view.frame).size.height;
+  [self.fakeBottomDrawer.scrollView setContentOffset:CGPointMake(0, 100)];
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.addedHeight, contentViewControllerHeight, 0.001);
+}
+
+- (void)testAddedHeightWithHeaderViewController {
+
+}
+
 @end
