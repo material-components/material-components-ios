@@ -13,6 +13,7 @@ target "MDCCatalog" do
     'BottomNavigation/tests/unit',
     'BottomSheet/tests/unit',
     'Buttons/tests/unit',
+    'Cards/tests/snapshot',
     'Cards/tests/unit',
     'Chips/tests/unit',
     'CollectionCells/tests/unit',
