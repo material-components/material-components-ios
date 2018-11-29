@@ -447,15 +447,12 @@ static UIColor *DrawerShadowColor(void) {
     if (self.contentHeaderTopInset > topAreaInsetForHeader + kEpsilon) {
       contentViewFrame.size.height += topAreaInsetForHeader;
     }
-    contentViewFrame.size.height += (self.presentingViewBounds.size.height * 2);
   } else {
-    contentViewFrame.size.height = _contentVCPreferredContentSizeHeightCached +
-        (self.presentingViewBounds.size.height * 2);
-    /*if ([self shouldPresentFullScreen]) {
+    if ([self shouldPresentFullScreen]) {
       contentViewFrame.size.height =
           MAX(contentViewFrame.size.height,
               self.presentingViewBounds.size.height - self.topHeaderHeight);
-    }*/
+    }
   }
   self.contentViewController.view.frame = contentViewFrame;
   if (self.trackingScrollView != nil) {
@@ -536,6 +533,7 @@ static UIColor *DrawerShadowColor(void) {
   [self updateContentHeaderWithTransitionToTop:headerTransitionToTop
                         fullscreenHeaderHeight:fullscreenHeaderHeight];
   [self updateTopHeaderBottomShadowWithContentOffset:contentOffset];
+  [self updateContentWithHeight:contentOffset.y];
 }
 
 - (void)updateContentHeaderWithTransitionToTop:(CGFloat)headerTransitionToTop
@@ -586,6 +584,27 @@ static UIColor *DrawerShadowColor(void) {
         transitionPercentageForContentOffset:contentOffset
                                       offset:-kVerticalShadowAnimationDistance
                                     distance:kVerticalShadowAnimationDistance];
+  }
+}
+
+- (void)updateContentWithHeight:(CGFloat)height {
+  if (height < 0) {
+    height = 0;
+  }
+  // This is added so we don't recursively add height
+  CGFloat previousAddedHeight = self.addedHeight;
+  self.addedHeight = height;
+  CGFloat heightToAdd = self.addedHeight - previousAddedHeight;
+  if (self.contentViewController) {
+    CGRect contentViewFrame = CGRectStandardize(self.contentViewController.view.frame);
+    contentViewFrame.size = CGSizeMake(contentViewFrame.size.width,
+                                       contentViewFrame.size.height + heightToAdd);
+    self.contentViewController.view.frame = contentViewFrame;
+  } else if (self.headerViewController) {
+    CGRect headerViewFrame = CGRectStandardize(self.headerViewController.view.frame);
+    headerViewFrame.size = CGSizeMake(headerViewFrame.size.width,
+                                       headerViewFrame.size.height + heightToAdd);
+    self.headerViewController.view.frame = headerViewFrame;
   }
 }
 

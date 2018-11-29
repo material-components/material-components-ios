@@ -121,4 +121,10 @@
  */
 - (void)setContentOffsetY:(CGFloat)contentOffsetY animated:(BOOL)animated;
 
+/**
+ The height added to the bottom of the navigation drawer to hide the scrim.
+ Defaults to 0.
+ */
+@property(nonatomic, assign) CGFloat addedHeight;
+
 @end
