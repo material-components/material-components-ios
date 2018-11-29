@@ -519,6 +519,7 @@ static UIColor *DrawerShadowColor(void) {
     self.contentViewController.preferredContentSize = newPreferredContentSize;
     return;
   }
+  BOOL shouldExitEarly = NO;
   CGPoint contentOffset =
       [self calculateContentOffsetWithPreferredContentHeight:preferredContentHeight];
   CGFloat precentageOfFullScreen =
@@ -528,7 +529,15 @@ static UIColor *DrawerShadowColor(void) {
   // will need to set it later.
   BOOL shouldSetContentHeight = NO;
   if (_contentVCPreferredContentSizeHeightCached > preferredContentHeight) {
-    shouldSetContentHeight = YES;
+    if (self.scrollView.contentOffset.y != 0) {
+      self.contentViewController.preferredContentSize = newPreferredContentSize;
+      contentOffset.y *= -1;
+      [self.scrollView setContentOffset:contentOffset];
+      shouldExitEarly = YES;
+      [self resetLayoutWithInitialDrawerFactor:precentageOfFullScreen];
+    } else {
+      shouldSetContentHeight = YES;
+    }
   } else {
     // We do set the preferredContentHeight if the content is small and going to be large so that
     // we will not see the scrim view.
@@ -547,6 +556,9 @@ static UIColor *DrawerShadowColor(void) {
       [self resetLayoutWithInitialDrawerFactor:precentageOfFullScreen];
       contentOffset = CGPointMake(0, oldTotalHeight + contentOffset.y);
     }
+  }
+  if (shouldExitEarly) {
+    return;
   }
   // The duration is required so that clients can animate their content with a matching duration.
   [UIView animateWithDuration:duration
