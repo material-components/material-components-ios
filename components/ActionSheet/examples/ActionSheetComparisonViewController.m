@@ -47,7 +47,7 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  
+
   self.view.backgroundColor = _colorScheme.backgroundColor;
   [_showMaterialButton setTitle:@"Show Material Action sheet" forState:UIControlStateNormal];
   [_showMaterialButton sizeToFit];
@@ -110,17 +110,20 @@
 
 - (void)showUIKitActionSheet {
   UIAlertController *alertController =
-    [UIAlertController alertControllerWithTitle:@"Alert Title"
-                                        message:@"Alert Message"
-                                 preferredStyle:UIAlertControllerStyleActionSheet];
-  UIAlertAction *homeAction =
-      [UIAlertAction actionWithTitle:@"Home" style:UIAlertActionStyleDefault handler:nil];
+      [UIAlertController alertControllerWithTitle:@"Alert Title"
+                                          message:@"Alert Message"
+                                   preferredStyle:UIAlertControllerStyleActionSheet];
+  UIAlertAction *homeAction = [UIAlertAction actionWithTitle:@"Home"
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:nil];
   [alertController addAction:homeAction];
-  UIAlertAction *favoriteAction =
-      [UIAlertAction actionWithTitle:@"Favorite" style:UIAlertActionStyleDefault handler:nil];
+  UIAlertAction *favoriteAction = [UIAlertAction actionWithTitle:@"Favorite"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:nil];
   [alertController addAction:favoriteAction];
-  UIAlertAction *emailAction =
-      [UIAlertAction actionWithTitle:@"Email" style:UIAlertActionStyleDefault handler:nil];
+  UIAlertAction *emailAction = [UIAlertAction actionWithTitle:@"Email"
+                                                        style:UIAlertActionStyleDefault
+                                                      handler:nil];
   [alertController addAction:emailAction];
 
   [self presentViewController:alertController animated:YES completion:nil];
