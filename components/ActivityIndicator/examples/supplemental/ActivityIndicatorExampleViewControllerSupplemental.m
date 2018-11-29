@@ -21,9 +21,9 @@
 
 #import "MaterialTypography.h"
 
-#define MDC_CATALOG_GREEN [UIColor colorWithRed:0 green:0xe6/255.0f blue:0x76/255.0f alpha:1]
+#define MDC_CATALOG_GREEN [UIColor colorWithRed:0 green:0xe6 / 255.0f blue:0x76 / 255.0f alpha:1]
 
-static NSString * const kCell = @"Cell";
+static NSString *const kCell = @"Cell";
 
 
 @implementation ActivityIndicatorExampleViewController (CatalogByConvention)

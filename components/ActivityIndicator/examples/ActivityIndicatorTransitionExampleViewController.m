@@ -23,8 +23,8 @@ static const CGFloat kActivityIndicatorExampleStrokeWidth = 2;
 
 static const NSTimeInterval kActivityIndicatorExampleAnimationDuration = 2.0 / 3.0;
 
-@interface ActivityIndicatorTransitionExampleViewController : UIViewController
-    <MDCActivityIndicatorDelegate>
+@interface ActivityIndicatorTransitionExampleViewController
+    : UIViewController <MDCActivityIndicatorDelegate>
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 @end
