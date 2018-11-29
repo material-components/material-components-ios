@@ -29,11 +29,12 @@ static NSString *const kCell = @"Cell";
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Activity Indicator", @"Activity Indicator" ],
-    @"description": @"Activity Indicator is a visual indication of an app loading content. "
-    @"It can display how long an operation will take or visualize an unspecified wait time.",
-    @"primaryDemo": @YES,
-    @"presentable": @YES
+    @"breadcrumbs" : @[ @"Activity Indicator", @"Activity Indicator" ],
+    @"description" :
+        @"Activity Indicator is a visual indication of an app loading content. "
+        @"It can display how long an operation will take or visualize an unspecified wait time.",
+    @"primaryDemo" : @YES,
+    @"presentable" : @YES
   };
 }
 
@@ -55,16 +56,16 @@ static NSString *const kCell = @"Cell";
 
   self.activityIndicator1.center =
       CGPointMake(indicators.bounds.size.width / 3, indicators.bounds.size.height / 2);
-  self.activityIndicator1.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin |
-                                              UIViewAutoresizingFlexibleRightMargin);
+  self.activityIndicator1.autoresizingMask =
+      (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin);
   self.activityIndicator2.center =
       CGPointMake(indicators.bounds.size.width / 2, indicators.bounds.size.height / 2);
-  self.activityIndicator2.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin |
-                                              UIViewAutoresizingFlexibleRightMargin);
+  self.activityIndicator2.autoresizingMask =
+      (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin);
   self.activityIndicator3.center =
       CGPointMake(2 * indicators.bounds.size.width / 3, indicators.bounds.size.height / 2);
-  self.activityIndicator3.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin |
-                                              UIViewAutoresizingFlexibleRightMargin);
+  self.activityIndicator3.autoresizingMask =
+      (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin);
 
   self.indicators = indicators;
 
@@ -125,8 +126,8 @@ static NSString *const kCell = @"Cell";
   self.activityIndicator1.progress = slider.value;
   self.activityIndicator2.progress = slider.value;
   self.activityIndicator3.progress = slider.value;
-  UITableViewCell *cell =
-      [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+  UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1
+                                                                                   inSection:0]];
   cell.textLabel.text = [NSString stringWithFormat:@"%.00f%%", slider.value * 100];
   [cell setNeedsDisplay];
 }
@@ -141,14 +142,14 @@ static NSString *const kCell = @"Cell";
   if (indexPath.row == 0) {
     return 160;
   }
-  
+
   return 56;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  UITableViewCell *cell =
-      [tableView dequeueReusableCellWithIdentifier:kCell forIndexPath:indexPath];
+  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCell
+                                                          forIndexPath:indexPath];
   cell.textLabel.text = @"";
   cell.selectionStyle = UITableViewCellSelectionStyleNone;
   switch (indexPath.row) {

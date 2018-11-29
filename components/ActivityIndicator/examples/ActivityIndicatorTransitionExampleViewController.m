@@ -15,8 +15,8 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialActivityIndicator.h"
-#import "MaterialButtons.h"
 #import "MaterialButtons+ButtonThemer.h"
+#import "MaterialButtons.h"
 
 static const CGFloat kActivityIndicatorExampleArrowHeadSize = 5;
 static const CGFloat kActivityIndicatorExampleStrokeWidth = 2;
@@ -69,8 +69,8 @@ static const NSTimeInterval kActivityIndicatorExampleAnimationDuration = 2.0 / 3
   buttonScheme.typographyScheme = self.typographyScheme;
   [MDCContainedButtonThemer applyScheme:buttonScheme toButton:_button];
   [_button addTarget:self
-              action:@selector(startRefreshing)
-    forControlEvents:UIControlEventTouchUpInside];
+                action:@selector(startRefreshing)
+      forControlEvents:UIControlEventTouchUpInside];
   [_button setTitle:@"Refresh" forState:UIControlStateNormal];
   [_button sizeToFit];
   _button.center = CGPointMake(self.view.bounds.size.width / 2, 200);
@@ -157,15 +157,13 @@ static const NSTimeInterval kActivityIndicatorExampleAnimationDuration = 2.0 / 3
     [self->_refreshArrowPoint removeAllAnimations];
     [CATransaction commit];
 
-    dispatch_time_t stopTime =
-        dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC));
+    dispatch_time_t stopTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC));
     dispatch_after(stopTime, dispatch_get_main_queue(), ^{
       [self stopRefreshing];
     });
   };
 
-  [_activityIndicator startAnimatingWithTransition:transition
-                                   cycleStartIndex:1];
+  [_activityIndicator startAnimatingWithTransition:transition cycleStartIndex:1];
 }
 
 - (void)stopRefreshing {
@@ -283,9 +281,9 @@ static const NSTimeInterval kActivityIndicatorExampleAnimationDuration = 2.0 / 3
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Activity Indicator", @"Activity Indicator Transition" ],
-    @"primaryDemo": @NO,
-    @"presentable": @YES
+    @"breadcrumbs" : @[ @"Activity Indicator", @"Activity Indicator Transition" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @YES
   };
 }
 
