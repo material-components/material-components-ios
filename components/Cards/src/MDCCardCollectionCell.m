@@ -185,8 +185,8 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
       // Note: setHighlighted: can get getting more calls with YES than NO when clicking rapidly.
       // To guard against ink never going away and darkening our card we call
       // startTouchEndedAnimationAtPoint:completion:.
-      [self.inkView startTouchEndedAnimationAtPoint:_lastTouch completion:nil];
-      [self.inkView startTouchBeganAnimationAtPoint:_lastTouch completion:nil];
+      [self.inkView startTouchEndAtPoint:_lastTouch animated:animated withCompletion:nil];
+      [self.inkView startTouchBeganAtPoint:_lastTouch animated:animated withCompletion:nil];
       break;
     }
   }
