@@ -356,11 +356,11 @@ Pod::Spec.new do |mdc|
         unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
         unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
       end
-      tests.test_spec 'ui' do |ui_tests|
-        ui_tests.requires_app_host = true
-        ui_tests.source_files = "components/#{component.base_name}/tests/ui/*.{h,m,swift}", "components/#{component.base_name}/tests/ui/supplemental/*.{h,m,swift}"
-        ui_tests.resources = "components/#{component.base_name}/tests/ui/resources/*"
-        ui_tests.dependency 'iOSSnapshotTestCase', '2.2.0'
+      tests.test_spec 'snapshot' do |snapshot_tests|
+        snapshot_tests.requires_app_host = true
+        snapshot_tests.source_files = "components/#{component.base_name}/tests/snapshot/*.{h,m,swift}", "components/#{component.base_name}/tests/snapshot/supplemental/*.{h,m,swift}"
+        snapshot_tests.resources = "components/#{component.base_name}/tests/snapshot/resources/*"
+        snapshot_tests.dependency 'iOSSnapshotTestCase', '2.2.0'
       end
     end
   end

@@ -33,7 +33,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A967ED968E91853E5F7FB042E99AADC7"
+               BlueprintIdentifier = "C513816E6BA200E1B2FC1E985E620012"
                BuildableName = "MaterialComponents-Unit-Tests.xctest"
                BlueprintName = "MaterialComponents-Unit-Tests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -43,7 +43,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B1F3C69C1D36933A3084623608ACD831"
+               BlueprintIdentifier = "3171F7594A536C448D38F6611EB2A7B7"
                BuildableName = "MaterialComponentsAlpha-Unit-Tests.xctest"
                BlueprintName = "MaterialComponentsAlpha-Unit-Tests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -62,7 +62,7 @@
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "FB_REFERENCE_IMAGE_DIR"
-            value = "$(SOURCE_ROOT)/../ui_test_goldens/goldens"
+            value = "$(SOURCE_ROOT)/../snapshot_test_goldens/goldens"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>

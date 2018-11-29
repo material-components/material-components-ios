@@ -16,11 +16,11 @@
 
 #import "MaterialCards.h"
 
-@interface MDCCardUITests : FBSnapshotTestCase
+@interface MDCCardSnapshotTests : FBSnapshotTestCase
 
 @end
 
-@implementation MDCCardUITests
+@implementation MDCCardSnapshotTests
 
 - (void)testDefaultCard {
   // Uncomment below to recreate the golden
