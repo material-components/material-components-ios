@@ -14,9 +14,9 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialActionSheet.h"
 #import "MaterialColorScheme.h"
 #import "MaterialTypographyScheme.h"
-#import "MaterialActionSheet.h"
 
 @interface ActionSheetTypicalUseExampleViewController : UIViewController
 
