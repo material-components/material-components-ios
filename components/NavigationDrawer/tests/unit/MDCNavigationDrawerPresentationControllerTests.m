@@ -34,7 +34,7 @@
 
 @implementation MDCNavigationDrawerPresentationControllerTests
 
-- (void)testAddedHeight {
+- (void)testDismissViewController {
   // Given
   CGRect fakeInitialContentFrame = CGRectMake(0, 0, 200, 300);
   UIViewController *fakeContentViewController = [[UIViewController alloc] init];
@@ -46,9 +46,9 @@
       [[MDCBottomDrawerPresentationController alloc]
           initWithPresentedViewController:fakeBottomDrawer
                  presentingViewController:fakePresentingViewController];
+  [presentationController presentationTransitionWillBegin];
 
   // When
-  [presentationController presentationTransitionWillBegin];
   [presentationController.bottomDrawerContainerViewController
       updateViewWithContentOffset:CGPointMake(0, 100)];
   [presentationController dismissalTransitionDidEnd:YES];
