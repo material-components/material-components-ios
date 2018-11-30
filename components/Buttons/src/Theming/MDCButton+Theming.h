@@ -29,4 +29,12 @@
  */
 - (void)applyContainedThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
 
+/**
+ Applies the theme for an outlined button to this instance.
+
+ @param scheme A container scheme instance containing any desired customizations to the theming
+ system.
+ */
+- (void)applyOutlinedThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
+
 @end

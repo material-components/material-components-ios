@@ -61,4 +61,46 @@
   [MDCButtonShapeThemer applyShapeScheme:shapeScheme toButton:self];
 }
 
+- (void)applyOutlinedThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme {
+  id<MDCColorScheming> colorScheme = scheme.colorScheme;
+  if (!colorScheme) {
+    colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  }
+  [self applyOutlinedThemeWithColorScheme:colorScheme];
+
+  id<MDCShapeScheming> shapeScheme = scheme.shapeScheme;
+  if (shapeScheme) {
+    [self applyOutlinedThemeWithShapeScheme:shapeScheme];
+  } else {
+    self.layer.cornerRadius = (CGFloat)4;
+  }
+
+  id<MDCTypographyScheming> typographyScheme = scheme.typographyScheme;
+  if (!typographyScheme) {
+    typographyScheme =
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+  }
+  [self applyOutlinedThemeWithTypographyScheme:typographyScheme];
+
+  self.minimumSize = CGSizeMake(0, 36);
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+                                 UIControlStateHighlighted | UIControlStateDisabled;
+  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
+    [self setBorderWidth:1 forState:state];
+  }
+}
+
+- (void)applyOutlinedThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
+  [MDCOutlinedButtonColorThemer applySemanticColorScheme:colorScheme toButton:self];
+}
+
+- (void)applyOutlinedThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
+  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:self];
+}
+
+- (void)applyOutlinedThemeWithShapeScheme:(id<MDCShapeScheming>)shapeScheme {
+  [MDCButtonShapeThemer applyShapeScheme:shapeScheme toButton:self];
+}
+
 @end
