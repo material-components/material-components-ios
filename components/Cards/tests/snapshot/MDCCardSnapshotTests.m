@@ -53,6 +53,15 @@
 
 // TODO: To be extracted into FBSnapshotTestCase common subclass
 - (void)snapshotVerifyView:(UIView *)view {
+  // TODO(https://github.com/material-components/material-components-ios/issues/5888)
+  // Support multiple OS versions for snapshots
+  if (NSProcessInfo.processInfo.operatingSystemVersion.majorVersion != 11 ||
+      NSProcessInfo.processInfo.operatingSystemVersion.minorVersion != 2 ||
+      NSProcessInfo.processInfo.operatingSystemVersion.patchVersion != 0) {
+    NSLog(@"Skipping this test. Snapshot tests currently only run on iOS 11.2.");
+    return;
+  }
+
   UIImage *result = nil;
 
   if (@available(iOS 10, *)) {
