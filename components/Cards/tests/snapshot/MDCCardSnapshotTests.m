@@ -22,6 +22,11 @@
 
 @implementation MDCCardSnapshotTests
 
+- (void)setUp {
+  [super setUp];
+  self.agnosticOptions = FBSnapshotTestCaseAgnosticOptionOS;
+}
+
 - (void)testDefaultCard {
   // Uncomment below to recreate the golden
   //  self.recordMode = YES;
@@ -32,11 +37,11 @@
   [backgroundView addSubview:card];
   card.center = backgroundView.center;
 
-  FBSnapshotVerifyView([self imageViewSnapshotOfView:backgroundView], nil);
+  [self snapshotVerifyView:backgroundView];
 }
 
 // TODO: To be extracted into test helper method
-- (UIImageView *)imageViewSnapshotOfView:(UIView *)view {
+- (void)snapshotVerifyView:(UIView *)view {
   UIImage *result = nil;
 
   if (@available(iOS 10, *)) {
@@ -49,12 +54,14 @@
 
     NSAssert(result != nil, @"View %@ must render image", view);
   } else {
-    NSAssert(NO, @"This test requires iOS 10.0 or later.");
+    NSLog(@"Skipping this test. Snapshot tests require iOS 10.0 or later.");
+    return;
   }
 
   UIImageView *imageView = [[UIImageView alloc] initWithFrame:view.frame];
   imageView.image = result;
-  return imageView;
+
+  FBSnapshotVerifyView(imageView, nil);
 }
 
 @end

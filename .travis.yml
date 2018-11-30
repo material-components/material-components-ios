@@ -25,7 +25,7 @@ matrix:
       # The iPhone X was chosen because it is a device with a strange screen size and
       # the 'notch'.
       # 11.0 was chosen as the latest generally available iOS version.
-      env: DESTINATION="platform=iOS Simulator,name=iPhone X,OS=11.0" SDK="iphonesimulator11.0"
+      env: DESTINATION="platform=iOS Simulator,name=iPhone X,OS=11.0.1" SDK="iphonesimulator11.0.1"
     - osx_image: xcode9
       # The iPhone 7 Plus was chosen because it is a device with a 3x screen and also changes
       # its size category trait on rotation.
@@ -38,6 +38,11 @@ matrix:
 
 before_install:
   - gem install cocoapods xcpretty --no-rdoc --no-ri --no-document --quiet
+  - brew install git-lfs
+  - git lfs install
+
+before_script:
+  - git lfs pull
 
 # The travis_wait prefix ensures that the build doesn't error out because too much time went past
 # without any output being produced.
