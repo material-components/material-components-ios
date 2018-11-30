@@ -22,6 +22,7 @@
 
 @implementation MDCCardSnapshotTests
 
+// TODO: To be extracted into FBSnapshotTestCase common subclass
 - (void)setUp {
   [super setUp];
   self.agnosticOptions = FBSnapshotTestCaseAgnosticOptionOS;
@@ -31,16 +32,28 @@
   // Uncomment below to recreate the golden
   //  self.recordMode = YES;
 
-  UIView *backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 70, 70)];
-  backgroundView.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1];
+  // Given
   MDCCard *card = [[MDCCard alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-  [backgroundView addSubview:card];
-  card.center = backgroundView.center;
+  UIView *backgroundView = [self addBackgroundViewToView:card];
 
+  // Then
   [self snapshotVerifyView:backgroundView];
 }
 
-// TODO: To be extracted into test helper method
+// TODO: To be extracted into FBSnapshotTestCase common subclass
+- (UIView *)addBackgroundViewToView:(UIView *)view {
+  UIView *backgroundView =
+      [[UIView alloc] initWithFrame:CGRectMake(0,
+                                               0,
+                                               CGRectGetWidth(view.bounds) + 20,
+                                               CGRectGetHeight(view.bounds) + 20)];
+  backgroundView.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1];
+  [backgroundView addSubview:view];
+  view.center = backgroundView.center;
+  return backgroundView;
+}
+
+// TODO: To be extracted into FBSnapshotTestCase common subclass
 - (void)snapshotVerifyView:(UIView *)view {
   UIImage *result = nil;
 
