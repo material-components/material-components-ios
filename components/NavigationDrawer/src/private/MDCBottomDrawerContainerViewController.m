@@ -448,6 +448,7 @@ static UIColor *DrawerShadowColor(void) {
       contentViewFrame.size.height += topAreaInsetForHeader;
     }
   } else {
+    contentViewFrame.size.height = _contentVCPreferredContentSizeHeightCached;
     if ([self shouldPresentFullScreen]) {
       contentViewFrame.size.height =
           MAX(contentViewFrame.size.height,
@@ -600,11 +601,6 @@ static UIColor *DrawerShadowColor(void) {
     contentViewFrame.size =
         CGSizeMake(contentViewFrame.size.width, contentViewFrame.size.height + heightToAdd);
     self.contentViewController.view.frame = contentViewFrame;
-  } else if (self.headerViewController) {
-    CGRect headerViewFrame = CGRectStandardize(self.headerViewController.view.frame);
-    headerViewFrame.size =
-        CGSizeMake(headerViewFrame.size.width, headerViewFrame.size.height + heightToAdd);
-    self.headerViewController.view.frame = headerViewFrame;
   }
 }
 
