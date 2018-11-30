@@ -17,6 +17,7 @@
 #import "../../src/private/MDCBottomDrawerContainerViewController.h"
 #import "../../src/private/MDCBottomDrawerHeaderMask.h"
 #import "MDCNavigationDrawerFakes.h"
+#import "MaterialUIMetrics.h"
 
 @interface MDCBottomDrawerDelegateTest
     : UIViewController <MDCBottomDrawerPresentationControllerDelegate>
@@ -183,8 +184,6 @@
 
 - (void)testTopHeaderHeightWithHeader {
   // Given
-  // MDCDeviceTopSafeAreaInset adds 20 if there is no safe area and you are not in an application
-  CGFloat mdcDeviceTopSafeArea = 20;
   CGSize fakePreferredContentSize = CGSizeMake(200, 300);
   MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
       [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
@@ -195,7 +194,7 @@
 
   // Then
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.topHeaderHeight,
-                             mdcDeviceTopSafeArea + fakePreferredContentSize.height, 0.001);
+                             MDCDeviceTopSafeAreaInset() + fakePreferredContentSize.height, 0.001);
 }
 
 - (void)testContentHeaderTopInsetWithHeaderAndContentViewController {
