@@ -121,7 +121,7 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
 
   MDCButton *outlinedButton = [[MDCButton alloc] init];
   [outlinedButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCOutlinedButtonThemer applyScheme:buttonScheme toButton:outlinedButton];
+  [outlinedButton applyOutlinedThemeWithScheme:self.containerScheme];
   [outlinedButton sizeToFit];
   CGFloat outlineButtonVerticalInset =
       MIN(0, -(kMinimumAccessibleButtonSize.height - CGRectGetHeight(outlinedButton.frame)) / 2);
@@ -139,7 +139,7 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
 
   MDCButton *disabledOutlinedButton = [[MDCButton alloc] init];
   [disabledOutlinedButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCOutlinedButtonThemer applyScheme:buttonScheme toButton:disabledOutlinedButton];
+  [disabledOutlinedButton applyOutlinedThemeWithScheme:self.containerScheme];
   [disabledOutlinedButton sizeToFit];
   [disabledOutlinedButton addTarget:self
                              action:@selector(didTap:)
