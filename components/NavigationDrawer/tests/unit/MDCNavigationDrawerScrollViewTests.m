@@ -60,6 +60,7 @@
 @property(nonatomic) MDCBottomDrawerState drawerState;
 @property(nullable, nonatomic, readonly) UIPresentationController *presentationController;
 - (void)cacheLayoutCalculations;
+- (void)updateViewWithContentOffset:(CGPoint)contentOffset;
 - (void)updateDrawerState:(CGFloat)transitionPercentage;
 @end
 
@@ -569,15 +570,38 @@
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.scrollView.contentOffset.y, 500, (CGFloat)0.001);
 }
 
-- (void)testAddedHeightWithContentViewController {
+- (void)testAddedHeight {
   // Given
   CGFloat contentViewControllerHeight =
       CGRectStandardize(self.fakeBottomDrawer.contentViewController.view.frame).size.height;
-  [self.fakeBottomDrawer.scrollView setContentOffset:CGPointMake(0, 100)];
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.addedHeight, contentViewControllerHeight, 0.001);
+  CGFloat fakeHeight = 100;
+
+  // When
+  [self.fakeBottomDrawer updateViewWithContentOffset:CGPointMake(0, fakeHeight)];
+
+  // Then
+  CGFloat newContentViewControllerHeight =
+      CGRectGetHeight(self.fakeBottomDrawer.contentViewController.view.frame);
+  CGFloat expectedHeight = contentViewControllerHeight + fakeHeight;
+  XCTAssertEqualWithAccuracy(newContentViewControllerHeight, expectedHeight, 0.001);
 }
 
-- (void)testAddedHeightWithHeaderViewController {
+- (void)testAddedHeightWithMultipleScrolls {
+  // Given
+  CGFloat contentViewControllerHeight =
+      CGRectStandardize(self.fakeBottomDrawer.contentViewController.view.frame).size.height;
+  CGFloat fakeFirstHeight = 80;
+  CGFloat fakeSecondHeight = 100;
+
+  // When
+  [self.fakeBottomDrawer updateViewWithContentOffset:CGPointMake(0, fakeFirstHeight)];
+  [self.fakeBottomDrawer updateViewWithContentOffset:CGPointMake(0, fakeSecondHeight)];
+
+  // Then
+  CGFloat newContentViewControllerHeight =
+      CGRectGetHeight(self.fakeBottomDrawer.contentViewController.view.frame);
+  CGFloat expectedHeight = contentViewControllerHeight + fakeSecondHeight;
+  XCTAssertEqualWithAccuracy(newContentViewControllerHeight, expectedHeight, 0.001);
 }
 
 @end

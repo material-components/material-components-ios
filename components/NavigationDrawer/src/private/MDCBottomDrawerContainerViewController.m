@@ -136,6 +136,9 @@ static UIColor *DrawerShadowColor(void) {
 // The current bottom drawer state.
 @property(nonatomic) MDCBottomDrawerState drawerState;
 
+// Updates both the header and content based off content offset of the scroll view.
+- (void)updateViewWithContentOffset:(CGPoint)contentOffset;
+
 @end
 
 @implementation MDCBottomDrawerContainerViewController {
