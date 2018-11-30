@@ -43,9 +43,7 @@
 // TODO: To be extracted into FBSnapshotTestCase common subclass
 - (UIView *)addBackgroundViewToView:(UIView *)view {
   UIView *backgroundView =
-      [[UIView alloc] initWithFrame:CGRectMake(0,
-                                               0,
-                                               CGRectGetWidth(view.bounds) + 20,
+      [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(view.bounds) + 20,
                                                CGRectGetHeight(view.bounds) + 20)];
   backgroundView.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1];
   [backgroundView addSubview:view];
