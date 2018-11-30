@@ -120,6 +120,7 @@ mdc_objc_library(
         ":Tabs",
         ":TypographyThemer",
         ":private",
+        "@material_internationalization_ios//:MDFInternationalization",
     ],
 )
 
