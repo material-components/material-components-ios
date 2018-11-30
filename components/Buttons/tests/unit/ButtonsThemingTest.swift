@@ -63,8 +63,8 @@ class ButtonsThemingTest: XCTestCase {
     XCTAssertEqual(button.elevation(for: .normal), ShadowElevation.raisedButtonResting)
     XCTAssertEqual(button.elevation(for: .highlighted), ShadowElevation.raisedButtonPressed)
     XCTAssertEqual(button.elevation(for: .disabled), ShadowElevation.none)
-    XCTAssertEqual(button.minimumSize.width, 0)
-    XCTAssertEqual(button.minimumSize.height, 36)
+    XCTAssertEqual(button.minimumSize.width, 0, accuracy: 0.001)
+    XCTAssertEqual(button.minimumSize.height, 36, accuracy: 0.001)
   }
 
   func testContainedThemeWithShapeScheme() {
@@ -109,8 +109,12 @@ class ButtonsThemingTest: XCTestCase {
     // Test typography
     XCTAssertEqual(button.titleFont(for: .normal), typographyScheme.button)
     // Test remaining properties
-    XCTAssertEqual(button.minimumSize.width, 0)
-    XCTAssertEqual(button.minimumSize.height, 36)
+    XCTAssertEqual(button.minimumSize.width, 0, accuracy: 0.001)
+    XCTAssertEqual(button.minimumSize.height, 36, accuracy: 0.001)
+    XCTAssertEqual(button.borderWidth(for: .normal), 1, accuracy: 0.001)
+    XCTAssertEqual(button.borderWidth(for: .selected), 1, accuracy: 0.001)
+    XCTAssertEqual(button.borderWidth(for: .highlighted), 1, accuracy: 0.001)
+    XCTAssertEqual(button.borderWidth(for: .disabled), 1, accuracy: 0.001)
   }
 
   func testOutlinedThemeWithShapeScheme() {
