@@ -192,7 +192,8 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
 - (void)dismissalTransitionDidEnd:(BOOL)completed {
   if (completed) {
     if ([self.presentedViewController isKindOfClass:[MDCBottomDrawerViewController class]]) {
-      CGRect newFrame = CGRectStandardize(self.bottomDrawerContainerViewController.contentViewController.view.frame);
+      CGRect newFrame = CGRectStandardize(
+          self.bottomDrawerContainerViewController.contentViewController.view.frame);
       newFrame.size.height -= self.bottomDrawerContainerViewController.addedHeight;
       self.bottomDrawerContainerViewController.contentViewController.view.frame = newFrame;
       [self.bottomDrawerContainerViewController removeFromParentViewController];

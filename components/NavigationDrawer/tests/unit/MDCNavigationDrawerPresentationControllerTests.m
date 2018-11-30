@@ -14,9 +14,9 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MDCBottomDrawerViewController.h"
-#import "MDCBottomDrawerPresentationController.h"
 #import "../../src/private/MDCBottomDrawerContainerViewController.h"
+#import "MDCBottomDrawerPresentationController.h"
+#import "MDCBottomDrawerViewController.h"
 
 @interface MDCBottomDrawerPresentationController (Testing)
 @property(nonatomic) UIView *scrimView;
@@ -44,22 +44,26 @@
   UIViewController *fakePresentingViewController = [[UIViewController alloc] init];
   MDCBottomDrawerPresentationController *presentationController =
       [[MDCBottomDrawerPresentationController alloc]
-       initWithPresentedViewController:fakeBottomDrawer
-       presentingViewController:fakePresentingViewController];
+          initWithPresentedViewController:fakeBottomDrawer
+                 presentingViewController:fakePresentingViewController];
 
   // When
   [presentationController presentationTransitionWillBegin];
-  [presentationController.bottomDrawerContainerViewController updateViewWithContentOffset:CGPointMake(0, 100)];
+  [presentationController.bottomDrawerContainerViewController
+      updateViewWithContentOffset:CGPointMake(0, 100)];
   [presentationController dismissalTransitionDidEnd:YES];
 
   // Then
   XCTAssertNil(presentationController.topHandle.superview);
   XCTAssertNil(presentationController.scrimView.superview);
-  CGRect finalContentFrame = CGRectStandardize(presentationController.bottomDrawerContainerViewController.contentViewController.view.frame);
+  CGRect finalContentFrame = CGRectStandardize(
+      presentationController.bottomDrawerContainerViewController.contentViewController.view.frame);
   XCTAssertEqualWithAccuracy(finalContentFrame.origin.x, fakeInitialContentFrame.origin.x, 0.001);
   XCTAssertEqualWithAccuracy(finalContentFrame.origin.y, fakeInitialContentFrame.origin.y, 0.001);
-  XCTAssertEqualWithAccuracy(finalContentFrame.size.width, fakeInitialContentFrame.size.width, 0.001);
-  XCTAssertEqualWithAccuracy(finalContentFrame.size.height, fakeInitialContentFrame.size.height, 0.001);
+  XCTAssertEqualWithAccuracy(finalContentFrame.size.width, fakeInitialContentFrame.size.width,
+                             0.001);
+  XCTAssertEqualWithAccuracy(finalContentFrame.size.height, fakeInitialContentFrame.size.height,
+                             0.001);
 }
 
 @end
