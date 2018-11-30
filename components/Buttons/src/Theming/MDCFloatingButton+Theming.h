@@ -20,9 +20,11 @@
 @interface MDCFloatingButton (MaterialTheming)
 
 /**
- Apply the secondary theme to this MDCFloatingButton instances.
+ Applies the secondary Floating Action Button style to an MDCFloatingButton instance.
  @param scheme A container scheme instance containing any desired customizations to the theming
  system.
+ 
+ Learn more at the [Material spec](https://material.io/design/components/buttons-floating-action-button.html#theming)
  */
 - (void)applySecondaryThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
 

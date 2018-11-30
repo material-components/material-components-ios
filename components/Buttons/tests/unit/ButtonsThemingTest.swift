@@ -102,6 +102,7 @@ class ButtonsThemingTest: XCTestCase {
     XCTAssertEqual(button.titleFont(for: .normal), typographyScheme.button)
     
     let buttonShape = button.shapeGenerator as! MDCRectangleShapeGenerator
+    XCTAssertNotNil(buttonShape)
     let corner = MDCCornerTreatment.corner(withRadius: 0.5)
     corner?.valueType = .percentage
     XCTAssertEqual(buttonShape.topLeftCorner, corner)
