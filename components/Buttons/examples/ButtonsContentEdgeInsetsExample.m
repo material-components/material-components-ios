@@ -43,8 +43,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
-  [MDCTextButtonThemer applyScheme:buttonScheme toButton:self.textButton];
+  [self.textButton applyTextThemeWithScheme:self.containerScheme];
   [self.containedButton applyContainedThemeWithScheme:[self containerScheme]];
 
   self.textButton.contentEdgeInsets = UIEdgeInsetsMake(64, 64, 0, 0);

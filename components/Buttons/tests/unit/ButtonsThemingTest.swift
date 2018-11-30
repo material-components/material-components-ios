@@ -135,5 +135,79 @@ class ButtonsThemingTest: XCTestCase {
     XCTAssertEqual(buttonShape.bottomLeftCorner, shapeScheme.smallComponentShape.bottomLeftCorner)
   }
 
+  func testTextThemeWithDefaultScheme() {
+    // Given
+    let button = MDCButton()
+    let scheme = MDCContainerScheme()
+
+    // When
+    button.applyTextTheme(withScheme: scheme)
+
+    // Then
+    helperAssertTextTheme(button: button)
+  }
+
+  func testTextThemeWithColorScheme() {
+    // Given
+    let button = MDCButton()
+    let scheme = MDCContainerScheme()
+    let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
+    let customColor = UIColor.orange
+    colorScheme.primaryColor = customColor
+    scheme.colorScheme = colorScheme
+
+    // When
+    button.applyTextTheme(withScheme: scheme)
+
+    // Then
+    XCTAssertEqual(button.titleColor(for: .normal), customColor)
+    XCTAssertEqual(button.imageTintColor(for: .normal), customColor)
+  }
+
+  func testConvertContainedToTextTheme() {
+    // Given
+    let button = MDCButton()
+    let scheme = MDCContainerScheme()
+
+    // When
+    button.applyContainedTheme(withScheme: scheme)
+    button.applyTextTheme(withScheme: scheme)
+
+    // Then
+    helperAssertTextTheme(button: button)
+  }
+
+  // MARK: Helpers
+
+  func helperAssertTextTheme(button: MDCButton) {
+    let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
+    let typographyScheme = MDCTypographyScheme(defaults: .material201804)
+
+    // Test colors
+    XCTAssertEqual(button.backgroundColor(for: .normal), .clear)
+    XCTAssertEqual(button.borderColor(for: .normal), nil)
+    XCTAssertEqual(button.inkColor, colorScheme.primaryColor.withAlphaComponent(0.16))
+    XCTAssertEqual(button.titleColor(for: [.normal, .highlighted]), colorScheme.primaryColor)
+    XCTAssertEqual(button.titleColor(for: .disabled),
+                   colorScheme.onSurfaceColor.withAlphaComponent(0.38))
+    [.normal, .highlighted].forEach {
+      XCTAssertEqual(button.imageTintColor(for: $0), colorScheme.primaryColor)
+    }
+    XCTAssertEqual(button.imageTintColor(for: .disabled),
+                   colorScheme.onSurfaceColor.withAlphaComponent(0.38))
+
+    // Test typography
+    XCTAssertEqual(button.titleFont(for: .normal), typographyScheme.button)
+
+    // Test shape
+    XCTAssertEqual(button.layer.cornerRadius, 4.0, accuracy: 0.001)
+
+    // Test remaining properties
+    [.normal, .highlighted, .selected, .disabled].forEach {
+      XCTAssertEqual(button.elevation(for: $0), ShadowElevation.none)
+    }
+    XCTAssertEqual(button.minimumSize.height, 36.0, accuracy: 0.001)
+  }
+
 
 }

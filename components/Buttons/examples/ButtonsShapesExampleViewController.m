@@ -107,7 +107,7 @@
 
   MDCButton *flatButton = [[MDCButton alloc] init];
   [flatButton setTitle:@"Oval Flat" forState:UIControlStateNormal];
-  [MDCTextButtonThemer applyScheme:buttonScheme toButton:flatButton];
+  [flatButton applyTextThemeWithScheme:self.containerScheme];
 
   MDCPillShapeGenerator *flatShapeGenerator = [[MDCPillShapeGenerator alloc] init];
   flatButton.shapeGenerator = flatShapeGenerator;
