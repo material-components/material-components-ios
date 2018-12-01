@@ -17,18 +17,6 @@
 
 #import <UIKit/UIKit.h>
 
-static NSString *const MDCLegacyInkLayerBoundedKey = @"MDCLegacyInkLayerBoundedKey";
-static NSString *const MDCLegacyInkLayerMaxRippleRadiusKey = @"MDCLegacyInkLayerMaxRippleRadiusKey";
-static NSString *const MDCLegacyInkLayerInkColorKey = @"MDCLegacyInkLayerInkColorKey";
-static NSString *const MDCLegacyInkLayerSpreadDurationKey = @"MDCLegacyInkLayerSpreadDurationKey";
-static NSString *const MDCLegacyInkLayerEvaporateDurationKey =
-    @"MDCLegacyInkLayerEvaporateDurationKey";
-static NSString *const MDCLegacyInkLayerUseCustomInkCenterKey =
-    @"MDCLegacyInkLayerUseCustomInkCenterKey";
-static NSString *const MDCLegacyInkLayerCustomInkCenterKey = @"MDCLegacyInkLayerCustomInkCenterKey";
-static NSString *const MDCLegacyInkLayerUseLinearExpansionKey =
-    @"MDCLegacyInkLayerUseLinearExpansionKey";
-
 static inline CGPoint MDCLegacyInkLayerInterpolatePoint(CGPoint start,
                                                         CGPoint end,
                                                         CGFloat offsetPercent) {
@@ -485,10 +473,6 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
 
 @implementation MDCLegacyInkLayer
 
-+ (BOOL)supportsSecureCoding {
-  return YES;
-}
-
 - (instancetype)init {
   self = [super init];
   if (self) {
@@ -507,36 +491,8 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   self = [super initWithCoder:aDecoder];
 
   if (self) {
-    if ([aDecoder containsValueForKey:MDCLegacyInkLayerBoundedKey]) {
-      _bounded = [aDecoder decodeBoolForKey:MDCLegacyInkLayerBoundedKey];
-    } else {
-      _bounded = YES;
-    }
-    if ([aDecoder containsValueForKey:MDCLegacyInkLayerMaxRippleRadiusKey]) {
-      _maxRippleRadius = (CGFloat)[aDecoder decodeDoubleForKey:MDCLegacyInkLayerMaxRippleRadiusKey];
-    }
-    if ([aDecoder containsValueForKey:MDCLegacyInkLayerInkColorKey]) {
-      _inkColor = [aDecoder decodeObjectOfClass:[UIColor class]
-                                         forKey:MDCLegacyInkLayerInkColorKey];
-    } else {
-      _inkColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.08];
-    }
-    if ([aDecoder containsValueForKey:MDCLegacyInkLayerSpreadDurationKey]) {
-      _spreadDuration = [aDecoder decodeDoubleForKey:MDCLegacyInkLayerSpreadDurationKey];
-    }
-    if ([aDecoder containsValueForKey:MDCLegacyInkLayerEvaporateDurationKey]) {
-      _evaporateDuration = [aDecoder decodeDoubleForKey:MDCLegacyInkLayerEvaporateDurationKey];
-    }
-    if ([aDecoder containsValueForKey:MDCLegacyInkLayerUseCustomInkCenterKey]) {
-      _useCustomInkCenter = [aDecoder decodeBoolForKey:MDCLegacyInkLayerUseCustomInkCenterKey];
-    }
-    if ([aDecoder containsValueForKey:MDCLegacyInkLayerCustomInkCenterKey]) {
-      _customInkCenter = [aDecoder decodeCGPointForKey:MDCLegacyInkLayerCustomInkCenterKey];
-    }
-    if ([aDecoder containsValueForKey:MDCLegacyInkLayerUseLinearExpansionKey]) {
-      _userLinearExpansion = [aDecoder decodeBoolForKey:MDCLegacyInkLayerUseLinearExpansionKey];
-    }
-
+    _bounded = YES;
+    _inkColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.08];
     // Discard any sublayers, which should be the composite ripple and any active ripples
     if (self.sublayers.count > 0) {
       NSArray<CALayer *> *sublayers = [self.sublayers copy];
@@ -551,18 +507,6 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
   }
 
   return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [super encodeWithCoder:aCoder];
-  [aCoder encodeBool:self.bounded forKey:MDCLegacyInkLayerBoundedKey];
-  [aCoder encodeDouble:self.maxRippleRadius forKey:MDCLegacyInkLayerMaxRippleRadiusKey];
-  [aCoder encodeObject:self.inkColor forKey:MDCLegacyInkLayerInkColorKey];
-  [aCoder encodeDouble:self.spreadDuration forKey:MDCLegacyInkLayerSpreadDurationKey];
-  [aCoder encodeDouble:self.evaporateDuration forKey:MDCLegacyInkLayerEvaporateDurationKey];
-  [aCoder encodeBool:self.useCustomInkCenter forKey:MDCLegacyInkLayerUseCustomInkCenterKey];
-  [aCoder encodeCGPoint:self.customInkCenter forKey:MDCLegacyInkLayerCustomInkCenterKey];
-  [aCoder encodeBool:self.userLinearExpansion forKey:MDCLegacyInkLayerUseLinearExpansionKey];
 }
 
 - (void)layoutSublayers {

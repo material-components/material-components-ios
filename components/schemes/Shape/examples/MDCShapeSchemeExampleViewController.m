@@ -14,10 +14,10 @@
 
 #import "MDCShapeSchemeExampleViewController.h"
 
-#import "../../../BottomSheet/examples/supplemental/BottomSheetDummyCollectionViewController.h"
 #import "supplemental/MDCBottomSheetControllerShapeThemerDefaultMapping.h"
 #import "supplemental/MDCChipViewShapeThemerDefaultMapping.h"
 #import "supplemental/MDCFloatingButtonShapeThemerDefaultMapping.h"
+#import "supplemental/MDCShapeExamplesDummyCollectionViewController.h"
 
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
@@ -26,6 +26,7 @@
 #import "MaterialBottomSheet.h"
 #import "MaterialButtons+ButtonThemer.h"
 #import "MaterialButtons+ShapeThemer.h"
+#import "MaterialButtons+Theming.h"
 #import "MaterialButtons.h"
 #import "MaterialCards+CardThemer.h"
 #import "MaterialCards+ShapeThemer.h"
@@ -42,6 +43,7 @@
 @property(strong, nonatomic) MDCSemanticColorScheme *colorScheme;
 @property(strong, nonatomic) MDCShapeScheme *shapeScheme;
 @property(strong, nonatomic) MDCTypographyScheme *typographyScheme;
+@property(strong, nonatomic) MDCContainerScheme *containerScheme;
 
 @property(weak, nonatomic) IBOutlet MDCShapedView *smallComponentShape;
 @property(weak, nonatomic) IBOutlet MDCShapedView *mediumComponentShape;
@@ -83,10 +85,15 @@
 }
 
 - (void)commonShapeSchemeExampleInit {
-  _colorScheme =
+  self.colorScheme =
       [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-  _shapeScheme = [[MDCShapeScheme alloc] init];
-  _typographyScheme = [[MDCTypographyScheme alloc] init];
+  self.shapeScheme = [[MDCShapeScheme alloc] initWithDefaults:MDCShapeSchemeDefaultsMaterial201809];
+  self.typographyScheme =
+      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+  self.containerScheme = [[MDCContainerScheme alloc] init];
+  self.containerScheme.colorScheme = self.colorScheme;
+  self.containerScheme.shapeScheme = self.shapeScheme;
+  self.containerScheme.typographyScheme = self.typographyScheme;
 }
 
 - (void)viewDidLoad {
@@ -154,7 +161,7 @@
 
   self.presentBottomSheetButton = [[MDCButton alloc] init];
   [self.presentBottomSheetButton setTitle:@"Present Bottom Sheet" forState:UIControlStateNormal];
-  [MDCOutlinedButtonThemer applyScheme:buttonScheme toButton:self.presentBottomSheetButton];
+  [self.presentBottomSheetButton applyOutlinedThemeWithScheme:self.containerScheme];
   self.presentBottomSheetButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.componentContentView addSubview:self.presentBottomSheetButton];
   [self.presentBottomSheetButton addTarget:self
@@ -184,8 +191,8 @@
 }
 
 - (void)presentBottomSheet {
-  BottomSheetDummyCollectionViewController *viewController =
-      [[BottomSheetDummyCollectionViewController alloc] initWithNumItems:102];
+  MDCShapeExamplesDummyCollectionViewController *viewController =
+      [[MDCShapeExamplesDummyCollectionViewController alloc] initWithNumItems:102];
   viewController.title = @"Shaped bottom sheet example";
 
   MDCAppBarContainerViewController *container =

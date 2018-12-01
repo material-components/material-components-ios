@@ -43,6 +43,5 @@ typedef enum : NSUInteger {
     NS_DESIGNATED_INITIALIZER;
 
 - (nonnull instancetype)init NS_UNAVAILABLE;
-- (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
 
 @end

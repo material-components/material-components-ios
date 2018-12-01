@@ -2,7 +2,7 @@ load 'scripts/generated/icons.rb'
 
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponents"
-  mdc.version      = "69.0.0"
+  mdc.version      = "70.1.0"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone production-ready UI libraries focused on design details."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -251,6 +251,8 @@ Pod::Spec.new do |mdc|
       tests.test_spec 'unit' do |unit_tests|
         unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
         unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+
+        unit_tests.dependency "MaterialComponentsAlpha/#{component.base_name}+Theming"
       end
     end
   end

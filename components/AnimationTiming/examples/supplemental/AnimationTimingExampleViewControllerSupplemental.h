@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AnimationTimingExample : UIViewController
+@interface AnimationTimingExampleViewController : UIViewController
 
 @property(nonatomic, strong) NSTimer *animationLoop;
 @property(nonatomic, strong) UIScrollView *scrollView;
@@ -26,7 +26,7 @@
 
 @end
 
-@interface AnimationTimingExample (Supplemental)
+@interface AnimationTimingExampleViewController (Supplemental)
 
 - (void)setupExampleViews;
 

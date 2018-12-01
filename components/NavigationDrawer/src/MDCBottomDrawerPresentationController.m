@@ -147,6 +147,7 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
       .active = YES;
   if ([self.presentedViewController isKindOfClass:[MDCBottomDrawerViewController class]]) {
     [self.presentedView addSubview:self.bottomDrawerContainerViewController.view];
+    [self.presentedViewController addChildViewController:self.bottomDrawerContainerViewController];
   } else {
     [self.containerView addSubview:self.bottomDrawerContainerViewController.view];
   }
@@ -190,6 +191,9 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
 
 - (void)dismissalTransitionDidEnd:(BOOL)completed {
   if (completed) {
+    if ([self.presentedViewController isKindOfClass:[MDCBottomDrawerViewController class]]) {
+      [self.bottomDrawerContainerViewController removeFromParentViewController];
+    }
     [self.scrimView removeFromSuperview];
     [self.topHandle removeFromSuperview];
   }
@@ -221,6 +225,10 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
 - (void)setTopHandleColor:(UIColor *)topHandleColor {
   _topHandleColor = topHandleColor;
   self.topHandle.backgroundColor = topHandleColor;
+}
+
+- (BOOL)contentReachesFullscreen {
+  return self.bottomDrawerContainerViewController.contentReachesFullscreen;
 }
 
 #pragma mark - Private
@@ -257,6 +265,10 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
     [strongDelegate bottomDrawerTopTransitionRatio:self transitionRatio:transitionRatio];
     self.topHandle.alpha = (CGFloat)1.0 - transitionRatio;
   }
+}
+
+- (void)setContentOffsetY:(CGFloat)contentOffsetY animated:(BOOL)animated {
+  [self.bottomDrawerContainerViewController setContentOffsetY:contentOffsetY animated:animated];
 }
 
 @end

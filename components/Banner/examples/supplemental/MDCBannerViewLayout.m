@@ -12,9 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCBannerViewLayout.h"
+#import <UIKit/UIKit.h>
 
 #import "MDCBannerView.h"
+#import "MDCBannerViewLayout.h"
 
 static const CGFloat kLeadingPadding = 16.0f;
 static const CGFloat kTrailingPadding = 8.0f;
