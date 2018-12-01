@@ -213,6 +213,14 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 
 #pragma mark - Properties
 
+- (void)setScrimColor:(UIColor *)scrimColor {
+  _dimmingView.backgroundColor = scrimColor;
+}
+
+- (UIColor *)scrimColor {
+  return _dimmingView.backgroundColor;
+}
+
 - (void)setIsScrimAccessibilityElement:(BOOL)isScrimAccessibilityElement {
   _scrimIsAccessibilityElement = isScrimAccessibilityElement;
   _dimmingView.isAccessibilityElement = isScrimAccessibilityElement;
