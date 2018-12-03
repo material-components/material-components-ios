@@ -106,8 +106,9 @@
 
 - (void)setViewControllers:(NSArray<UIViewController *> *)viewControllers {
   [self deselectCurrentItem];
-  _navigationBar.items = [self tabBarItemsForViewControllers:viewControllers];
-  _viewControllers = viewControllers;
+  NSArray *viewControllersCopy = [viewControllers copy];
+  _navigationBar.items = [self tabBarItemsForViewControllers:viewControllersCopy];
+  _viewControllers = viewControllersCopy;
 }
 
 - (UIViewController *)childViewControllerForStatusBarStyle {
