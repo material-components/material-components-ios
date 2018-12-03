@@ -48,7 +48,7 @@
   // Given
   MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
   MDCTypographyScheme *typographySchemeCopy = [typographyScheme copy];
-  
+
   //Then
   XCTAssertFalse(typographyScheme == typographySchemeCopy);
   XCTAssertEqual(typographyScheme.headline1, typographySchemeCopy.headline1);
