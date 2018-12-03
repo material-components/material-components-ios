@@ -28,12 +28,10 @@ Pod::Spec.new do |s|
   # Private for Snapshot test helpers
 
   s.subspec "private" do |private_spec|
-    private_spec.subspec "Snapshot" do |snapshot|
+    private_spec.test_spec "Snapshot" do |snapshot|
       snapshot.ios.deployment_target = '8.0'
-      snapshot.public_header_files = "components/private/#{snapshot.base_name}/*.h"
       snapshot.source_files = "components/private/#{snapshot.base_name}/*.{h,m,swift}"
       snapshot.dependency 'iOSSnapshotTestCase', '2.2.0'
-      snapshot.framework = 'XCTest'
     end
   end
 end
