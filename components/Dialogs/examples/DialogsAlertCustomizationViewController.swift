@@ -57,14 +57,7 @@ class CustomAlertViewController: UIViewController {
 
 class DialogsAlertCustomizationViewController: MDCCollectionViewController {
 
-  var colorScheme = MDCSemanticColorScheme()
-  var typographyScheme = MDCTypographyScheme()
-  var alertScheme: MDCAlertScheme {
-    let scheme = MDCAlertScheme()
-    scheme.colorScheme = self.colorScheme
-    scheme.typographyScheme = self.typographyScheme
-    return scheme
-  }
+  var scheme: MDCContainerScheme = MDCContainerScheme()
 
   let kReusableIdentifierItem = "customCell"
 
@@ -147,7 +140,7 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
   func performCenteredTitle() -> MDCAlertController {
     let alert = createMDCAlertController(title: "Center Aligned Title")
     alert.titleAlignment = .center
-    MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
+    alert.applyTheme(withScheme: scheme)
     return alert
   }
 
@@ -155,14 +148,14 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
     let alert = createMDCAlertController(title: "Center Aligned Title")
     alert.titleIcon = sampleIcon()
     alert.titleAlignment = .center
-    MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
+    alert.applyTheme(withScheme: scheme)
     return alert
   }
 
   func performNaturalTitleWithIcon() -> MDCAlertController {
     let alert = createMDCAlertController(title: "Default (Natural) Title Alignment")
     alert.titleIcon = sampleIcon()
-    MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
+    alert.applyTheme(withScheme: scheme)
     return alert
   }
 
@@ -170,14 +163,14 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
     let alert = createMDCAlertController(title: "Right Aligned Title")
     alert.titleIcon = sampleIcon(isStandardSize: false)
     alert.titleAlignment = .right
-    MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
+    alert.applyTheme(withScheme: scheme)
     return alert
   }
 
   func performTintedTitleIconNoTitle() -> MDCAlertController {
     let alert = createMDCAlertController(title: nil)
     alert.titleIcon = sampleIcon()
-    MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
+    alert.applyTheme(withScheme: scheme)
 
     // Theming override: set the titleIconTintColor after the color scheme has been applied
     alert.titleIconTintColor = .red
@@ -187,7 +180,7 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
 
   func performScrimColor() -> MDCAlertController {
     let alert = createMDCAlertController(title: "Darker Scrim")
-    MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
+    alert.applyTheme(withScheme: scheme)
     alert.scrimColor = UIColor.black.withAlphaComponent(0.6)
     return alert
   }
@@ -199,7 +192,7 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
     let alertController = MDCAlertController(title: titleString, message: messageString)
     alertController.addAction(MDCAlertAction(title:"OK", handler: handler))
 
-    MDCAlertControllerThemer.applyScheme(alertScheme, to: alertController)
+    alertController.applyTheme(withScheme: scheme)
     alertController.elevation = ShadowElevation.alertExampleDialog
 
     return alertController
@@ -210,7 +203,7 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
     alert.addAction(MDCAlertAction(title:"High", emphasis: .high, handler: handler))
     alert.addAction(MDCAlertAction(title:"Medium", emphasis: .medium, handler: handler))
     alert.addAction(MDCAlertAction(title:"Low", emphasis: .low, handler: handler))
-    MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
+    alert.applyTheme(withScheme: scheme)
     return alert
   }
 
@@ -221,7 +214,7 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
     alert.addAction(MDCAlertAction(title:"Text", handler: handler))
     alert.addAction(MDCAlertAction(title:"Text", handler: handler))
     alert.addAction(MDCAlertAction(title:"Text", handler: handler))
-    MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
+    alert.applyTheme(withScheme: scheme)
     alert.buttonTitleColor = .orange   // b/117717380: will be deprecated
     return alert
   }
@@ -234,7 +227,7 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
     alert.addAction(MDCAlertAction(title:"Text", emphasis: .low, handler: handler))
     alert.addAction(MDCAlertAction(title:"Text", emphasis: .low, handler: handler))
     alert.addAction(MDCAlertAction(title:"Text", emphasis: .low, handler: handler))
-    MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
+    alert.applyTheme(withScheme: scheme)
     return alert
   }
 
@@ -248,20 +241,11 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
     alert.addAction(MDCAlertAction(title:"Medium", emphasis: .medium, handler: handler))
     alert.addAction(MDCAlertAction(title:"Low", emphasis: .low, handler: handler))
 
-    let scheme = MDCAlertScheme()
-    scheme.typographyScheme = self.typographyScheme
-
-    // Create a color theme with a different primary color
+    let scheme = MDCContainerScheme()
     let colorScheme = MDCSemanticColorScheme()
     colorScheme.primaryColor = .blue
-
-    // Assign the new color theme to both the button and the alert schemes.
-    let buttonScheme = MDCButtonScheme()
-    buttonScheme.colorScheme = colorScheme
     scheme.colorScheme = colorScheme
-    scheme.buttonScheme = buttonScheme
-
-    MDCAlertControllerThemer.applyScheme(scheme, to: alert)
+    alert.applyTheme(withScheme: scheme)
     return alert
   }
 

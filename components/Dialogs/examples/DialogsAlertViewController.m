@@ -17,7 +17,7 @@
 #import "MaterialButtons.h"
 #import "MaterialCollections.h"
 #import "MaterialColorScheme.h"
-#import "MaterialDialogs+DialogThemer.h"
+#import "MaterialDialogs+Theming.h"
 #import "MaterialDialogs.h"
 #import "MaterialTypography.h"
 #import "MaterialTypographyScheme.h"
@@ -26,8 +26,6 @@ static NSString *const kReusableIdentifierItem = @"cell";
 
 @interface DialogsAlertViewController : MDCCollectionViewController
 @property(nonatomic, strong, nullable) NSArray *modes;
-@property(nonatomic, strong, nullable) MDCSemanticColorScheme *colorScheme;
-@property(nonatomic, strong, nullable) MDCTypographyScheme *typographyScheme;
 @end
 
 @interface DialogsAlertViewController (Supplemental)
@@ -35,16 +33,6 @@ static NSString *const kReusableIdentifierItem = @"cell";
 @end
 
 @implementation DialogsAlertViewController
-
-- (id)init {
-  self = [super init];
-  if (self) {
-    self.colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    self.typographyScheme = [[MDCTypographyScheme alloc] init];
-  }
-  return self;
-}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -70,10 +58,8 @@ static NSString *const kReusableIdentifierItem = @"cell";
 }
 
 - (void)themeAlertController:(MDCAlertController *)alertController {
-  MDCAlertScheme *alertScheme = [[MDCAlertScheme alloc] init];
-  alertScheme.colorScheme = self.colorScheme;
-  alertScheme.typographyScheme = self.typographyScheme;
-  [MDCAlertControllerThemer applyScheme:alertScheme toAlertController:alertController];
+  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
+  [alertController applyThemeWithScheme:scheme];
 }
 
 - (IBAction)didTapShowLongAlert {
