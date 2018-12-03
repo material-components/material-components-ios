@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <FBSnapshotTestCase/FBSnapshotTestCase.h>
-
 #import "MDCSnapshotTestCase.h"
 #import "MaterialCards.h"
 
