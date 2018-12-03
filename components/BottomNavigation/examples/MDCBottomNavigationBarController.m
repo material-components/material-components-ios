@@ -62,7 +62,7 @@
 - (void)setSelectedViewController:(nullable UIViewController *)selectedViewController {
   // Assert that the given VC is one of our view controllers or it is nil (we are unselecting)
   NSAssert(
-      selectedViewController == nil || [_viewControllers containsObject:selectedViewController],
+      selectedViewController == nil || [self.viewControllers containsObject:selectedViewController],
       @"Attempting to set BottomBarViewControllers to a view controller it does not contain");
 
   // Early return if we are already set to the given VC
@@ -71,12 +71,12 @@
   }
 
   // Remove current VC and add new one.
-  [self removeContentViewController:_selectedViewController];
+  [self removeContentViewController:self.selectedViewController];
   [self addContentViewController:selectedViewController];
 
   // Set the iVar and update selected index
   _selectedViewController = selectedViewController;
-  self.selectedIndex = [_viewControllers indexOfObject:selectedViewController];
+  self.selectedIndex = [self.viewControllers indexOfObject:selectedViewController];
 }
 
 - (void)setSelectedIndex:(NSUInteger)selectedIndex {
@@ -86,8 +86,8 @@
     return;
   }
 
-  BOOL outOfBounds =
-      selectedIndex >= [_viewControllers count] || selectedIndex >= [_navigationBar.items count];
+  BOOL outOfBounds = selectedIndex >= [self.viewControllers count] ||
+                     selectedIndex >= [_navigationBar.items count];
 
   NSAssert(!outOfBounds,
            @"Attempting to set BottomBarViewController's selectedIndex to %li. This"
@@ -106,21 +106,16 @@
 
 - (void)setViewControllers:(NSArray<UIViewController *> *)viewControllers {
   [self deselectCurrentItem];
-  NSMutableArray<UITabBarItem *> *tabBarItems = [NSMutableArray array];
-  for (UIViewController *viewController in viewControllers) {
-    [tabBarItems addObject:viewController.tabBarItem];
-  }
-
-  _navigationBar.items = tabBarItems;
+  _navigationBar.items = [self tabBarItemsForViewControllers:viewControllers];
   _viewControllers = viewControllers;
 }
 
 - (UIViewController *)childViewControllerForStatusBarStyle {
-  return _selectedViewController;
+  return self.selectedViewController;
 }
 
 - (UIViewController *)childViewControllerForStatusBarHidden {
-  return _selectedViewController;
+  return self.selectedViewController;
 }
 
 #pragma mark - MDCBottomNavigationBarDelegate
@@ -129,7 +124,7 @@
               didSelectItem:(UITabBarItem *)item {
   // Early return if we cannot find the view controller.
   NSUInteger index = [_navigationBar.items indexOfObject:item];
-  if (index >= [self.viewControllers count]) {
+  if (index >= [self.viewControllers count] || index == NSNotFound) {
     return;
   }
 
@@ -147,7 +142,7 @@
 - (BOOL)bottomNavigationBar:(MDCBottomNavigationBar *)bottomNavigationBar
            shouldSelectItem:(UITabBarItem *)item {
   NSUInteger index = [_navigationBar.items indexOfObject:item];
-  if (index >= [self.viewControllers count]) {
+  if (index >= [self.viewControllers count] || index == NSNotFound) {
     return NO;
   }
 
@@ -204,7 +199,7 @@
  */
 - (void)updateViewsForSelectedIndex:(NSUInteger)index {
   // Update the selected view controller
-  UIViewController *selectedViewController = [_viewControllers objectAtIndex:index];
+  UIViewController *selectedViewController = [self.viewControllers objectAtIndex:index];
   self.selectedViewController = selectedViewController;
 
   // Update the navigation bar's selected item.
@@ -231,9 +226,6 @@
   [_navigationBar.topAnchor constraintEqualToAnchor:_content.bottomAnchor].active = YES;
   [_navigationBar.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = YES;
 
-  [_navigationBar setContentHuggingPriority:UILayoutPriorityDefaultHigh
-                                    forAxis:UILayoutConstraintAxisHorizontal];
-
   // Content View Constraints
   [self.view.leftAnchor constraintEqualToAnchor:_content.leftAnchor].active = YES;
   [self.view.rightAnchor constraintEqualToAnchor:_content.rightAnchor].active = YES;
@@ -254,12 +246,32 @@
 
 /** Returns the desired height of the navigation bar. **/
 - (CGFloat)calculateNavigationBarHeight {
-  return [_navigationBar sizeThatFits:self.view.bounds.size].height;
+  CGSize fitSize = CGSizeMake(CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds));
+  return [_navigationBar sizeThatFits:fitSize].height;
 }
 
 /** Sets the navigation bar's height based on its desired size **/
 - (void)updateNavigationBarHeight {
   _navigationBarHeightConstraint.constant = [self calculateNavigationBarHeight];
+}
+
+/** Maps an array of view controllers to their corrisponding tab bar items **/
+- (NSArray<UITabBarItem *> *)tabBarItemsForViewControllers:
+    (NSArray<UIViewController *> *)viewControllers {
+  NSMutableArray<UITabBarItem *> *tabBarItems = [NSMutableArray array];
+  for (UIViewController *viewController in viewControllers) {
+    UITabBarItem *tabBarItem = viewController.tabBarItem;
+    NSAssert(tabBarItem != nil,
+             @"%@'s tabBarItem is nil. Please ensure that each view controller "
+              "added to %@ has set its tab bar item property",
+             viewController, NSStringFromClass([self class]));
+
+    if (tabBarItem) {
+      [tabBarItems addObject:tabBarItem];
+    }
+  }
+
+  return tabBarItems;
 }
 
 @end

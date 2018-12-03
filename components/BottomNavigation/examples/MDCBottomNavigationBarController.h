@@ -31,7 +31,7 @@ NS_CLASS_AVAILABLE_IOS(9_0)
 /**
  * The bottom navigation bar that hosts the tab bar items.
  * @warning This controller sets itself as the navigation bar's delegate.  If you would like to
- * observe changes to the navigation bar, conform to \c MDCBottomNavigationBarControllerDelegate
+ * observe changes to the navigation bar, conform to @c MDCBottomNavigationBarControllerDelegate
  * and set the delegate property of this controller.
  */
 @property(nonatomic, strong, readonly, nonnull) MDCBottomNavigationBar *navigationBar;
