@@ -35,10 +35,5 @@ Pod::Spec.new do |s|
       snapshot.dependency 'iOSSnapshotTestCase', '2.2.0'
       snapshot.framework = 'XCTest'
     end
-    # private_spec.test_spec "Snapshot" do |snapshot|
-    #   snapshot.ios.deployment_target = '8.0'
-    #   snapshot.source_files = "components/private/#{snapshot.base_name}/*.{h,m,swift}"
-    #   snapshot_tests.dependency 'iOSSnapshotTestCase', '2.2.0'
-    # end
   end
 end
