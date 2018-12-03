@@ -74,6 +74,8 @@ mdc_objc_library(
     ],
     deps = [
         ":ButtonBar",
+        ":ColorThemer",
+        ":TypographyThemer",
         "//components/schemes/Container",
     ],
     visibility = ["//visibility:public"],
