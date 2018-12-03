@@ -23,8 +23,8 @@
 
 - (UIView *)addBackgroundViewToView:(UIView *)view {
   UIView *backgroundView =
-  [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(view.bounds) + 20,
-                                           CGRectGetHeight(view.bounds) + 20)];
+      [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(view.bounds) + 20,
+                                               CGRectGetHeight(view.bounds) + 20)];
   backgroundView.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1];
   [backgroundView addSubview:view];
   view.center = backgroundView.center;
@@ -45,7 +45,7 @@
 
   if (@available(iOS 10, *)) {
     UIGraphicsImageRenderer *renderer =
-    [[UIGraphicsImageRenderer alloc] initWithSize:view.frame.size];
+        [[UIGraphicsImageRenderer alloc] initWithSize:view.frame.size];
     result = [renderer imageWithActions:^(UIGraphicsImageRendererContext *_Nonnull context) {
       BOOL success = [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:YES];
       NSAssert(success, @"View %@ must draw correctly", view);

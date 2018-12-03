@@ -14,8 +14,8 @@
 
 #import <FBSnapshotTestCase/FBSnapshotTestCase.h>
 
-#import "MaterialCards.h"
 #import "MDCSnapshotTestCase.h"
+#import "MaterialCards.h"
 
 @interface MDCCardSnapshotTests : MDCSnapshotTestCase
 
