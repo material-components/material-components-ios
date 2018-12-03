@@ -85,7 +85,7 @@ class ButtonsThemingTest: XCTestCase {
     XCTAssertEqual(buttonShape.bottomLeftCorner, shapeScheme.smallComponentShape.bottomLeftCorner)
   }
   
-  func testFloatingButtonSecondaryTheme() {
+  func testFloatingButtonSecondaryThemeWithNoCustomThemes() {
     // Given
     let button = MDCFloatingButton()
     let scheme = MDCContainerScheme()
@@ -94,13 +94,13 @@ class ButtonsThemingTest: XCTestCase {
 
     // When
     button.applySecondaryTheme(withScheme: scheme)
-    
+
     // Then
     XCTAssertEqual(button.backgroundColor(for: .normal), colorScheme.secondaryColor)
     XCTAssertEqual(button.imageTintColor(for: .normal), colorScheme.onSecondaryColor)
-    
+
     XCTAssertEqual(button.titleFont(for: .normal), typographyScheme.button)
-    
+
     let buttonShape = button.shapeGenerator as! MDCRectangleShapeGenerator
     XCTAssertNotNil(buttonShape)
     let corner = MDCCornerTreatment.corner(withRadius: 0.5)
@@ -109,5 +109,37 @@ class ButtonsThemingTest: XCTestCase {
     XCTAssertEqual(buttonShape.topRightCorner, corner)
     XCTAssertEqual(buttonShape.bottomRightCorner, corner)
     XCTAssertEqual(buttonShape.bottomLeftCorner, corner)
+  }
+
+  func testFloatingButtonSecondaryThemeWithCustomColorTheme() {
+    // Given
+    let button = MDCFloatingButton()
+    let scheme = MDCContainerScheme()
+    let customColorScheme = MDCSemanticColorScheme()
+    customColorScheme.secondaryColor = .purple
+    customColorScheme.onSecondaryColor = .purple
+    scheme.colorScheme = customColorScheme
+
+    // When
+    button.applySecondaryTheme(withScheme: scheme)
+
+    // Then
+    XCTAssertEqual(button.backgroundColor(for: .normal), customColorScheme.secondaryColor)
+    XCTAssertEqual(button.imageTintColor(for: .normal), customColorScheme.onSecondaryColor)
+  }
+
+  func testFloatingButtonSecondaryThemeWithCustomTypographyTheme() {
+    // Given
+    let button = MDCFloatingButton()
+    let scheme = MDCContainerScheme()
+    let customTypographyScheme = MDCTypographyScheme()
+    customTypographyScheme.button = UIFont.systemFont(ofSize: 19)
+    scheme.typographyScheme = customTypographyScheme
+
+    // When
+    button.applySecondaryTheme(withScheme: scheme)
+
+    // Then
+    XCTAssertEqual(button.titleFont(for: .normal), customTypographyScheme.button)
   }
 }
