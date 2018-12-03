@@ -177,4 +177,21 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
           MDCCGFloatEqual(fAlpha, sAlpha));
 }
 
+- (void)testColorSchemeCopyTest {
+  // Given
+  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorSchemeCopy = [colorScheme copy];
+  XCTAssertFalse(colorScheme == colorSchemeCopy);
+  XCTAssertEqual(colorScheme.primaryColor, colorSchemeCopy.primaryColor);
+  XCTAssertEqual(colorScheme.primaryColorVariant, colorSchemeCopy.primaryColorVariant);
+  XCTAssertEqual(colorScheme.secondaryColor, colorSchemeCopy.secondaryColor);
+  XCTAssertEqual(colorScheme.surfaceColor, colorSchemeCopy.surfaceColor);
+  XCTAssertEqual(colorScheme.backgroundColor, colorSchemeCopy.backgroundColor);
+  XCTAssertEqual(colorScheme.errorColor, colorSchemeCopy.errorColor);
+  XCTAssertEqual(colorScheme.onPrimaryColor, colorSchemeCopy.onPrimaryColor);
+  XCTAssertEqual(colorScheme.onSecondaryColor, colorSchemeCopy.onSecondaryColor);
+  XCTAssertEqual(colorScheme.onSurfaceColor, colorSchemeCopy.onSurfaceColor);
+  XCTAssertEqual(colorScheme.onBackgroundColor, colorSchemeCopy.onBackgroundColor);
+}
+
 @end
