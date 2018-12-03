@@ -41,9 +41,9 @@
   }
   [self applySecondaryThemeWithTypographyScheme:typographyScheme];
 
-  [self setElevation:(CGFloat)6 forState:UIControlStateNormal];
-  [self setElevation:(CGFloat)12 forState:UIControlStateHighlighted];
-  [self setElevation:(CGFloat)0 forState:UIControlStateDisabled];
+  [self setElevation:MDCShadowElevationFABResting forState:UIControlStateNormal];
+  [self setElevation:MDCShadowElevationFABPressed forState:UIControlStateHighlighted];
+  [self setElevation:MDCShadowElevationNone forState:UIControlStateDisabled];
 }
 
 - (void)applySecondaryThemeWithColorScheme:(id<MDCColorScheming>)scheme {
