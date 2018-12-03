@@ -85,6 +85,7 @@ static const CGFloat kFlexibleHeaderDefaultHeight = 56;
   _minMaxHeightIncludesSafeArea = minMaxHeightIncludesSafeArea;
 
   // Update default values accordingly.
+  // Note that we intentionally set the ivars because we do not want to invoke the setter delegates.
   if (!_hasExplicitlySetMinHeight) {
     if (_minMaxHeightIncludesSafeArea) {
       _minimumHeight = kFlexibleHeaderDefaultHeight + [self.topSafeArea topSafeAreaInset];
@@ -94,9 +95,9 @@ static const CGFloat kFlexibleHeaderDefaultHeight = 56;
   }
   if (!_hasExplicitlySetMaxHeight) {
     if (_minMaxHeightIncludesSafeArea) {
-      self.maximumHeight = kFlexibleHeaderDefaultHeight + [self.topSafeArea topSafeAreaInset];
+      _maximumHeight = kFlexibleHeaderDefaultHeight + [self.topSafeArea topSafeAreaInset];
     } else {
-      self.maximumHeight = kFlexibleHeaderDefaultHeight;
+      _maximumHeight = kFlexibleHeaderDefaultHeight;
     }
   }
 }
@@ -107,8 +108,10 @@ static const CGFloat kFlexibleHeaderDefaultHeight = 56;
   BOOL hasSetMinOrMaxHeight = self.hasExplicitlySetMinHeight || self.hasExplicitlySetMaxHeight;
   if (!hasSetMinOrMaxHeight && self.minMaxHeightIncludesSafeArea) {
     // If we're using the defaults we need to update them to account for the new Safe Area inset.
-    self.minimumHeight = kFlexibleHeaderDefaultHeight + self.topSafeArea.topSafeAreaInset;
-    self.maximumHeight = self.minimumHeight;
+    // Note that we intentionally set the ivars because we do not want to invoke the setter
+    // delegates.
+    _minimumHeight = kFlexibleHeaderDefaultHeight + self.topSafeArea.topSafeAreaInset;
+    _maximumHeight = self.minimumHeight;
   }
 }
 
