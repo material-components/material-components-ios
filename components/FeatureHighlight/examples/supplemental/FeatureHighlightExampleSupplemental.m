@@ -15,8 +15,6 @@
 #import "FeatureHighlightExampleSupplemental.h"
 
 #import "MaterialButtons+ButtonThemer.h"
-#import "MaterialButtons+Theming.h"
-#import "MaterialButtons.h"
 #import "MaterialMath.h"
 #import "MaterialPalettes.h"
 #import "MaterialTypography.h"
@@ -210,7 +208,8 @@ static NSString *const reuseIdentifier = @"Cell";
   self.button = fab;
   [self.view addSubview:self.button];
 
-  [fab applySecondaryThemeWithScheme:self.containerScheme];
+  [MDCFloatingActionButtonThemer applyScheme:buttonScheme toButton:fab];
+
 
   MDCButton *actionButton = [[MDCButton alloc] init];
   self.actionButton = actionButton;

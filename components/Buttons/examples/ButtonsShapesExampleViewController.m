@@ -180,7 +180,7 @@
       setCorners:[[MDCCutCornerTreatment alloc]
                      initWithCut:CGRectGetWidth(self.floatingButton.bounds) / 2]];
   self.floatingButton.shapeGenerator = floatingShapeGenerator;
-  [self.floatingButton applySecondaryThemeWithScheme:self.containerScheme];
+  [MDCFloatingActionButtonThemer applyScheme:buttonScheme toButton:self.floatingButton];
 
   [self.floatingButton addTarget:self
                           action:@selector(didTap:)

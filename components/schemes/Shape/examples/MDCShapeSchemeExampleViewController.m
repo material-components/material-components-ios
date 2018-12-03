@@ -35,7 +35,6 @@
 #import "MaterialChips+ShapeThemer.h"
 #import "MaterialChips.h"
 #import "MaterialColorScheme.h"
-#import "MaterialContainerScheme.h"
 #import "MaterialShapeLibrary.h"
 #import "MaterialShapeScheme.h"
 #import "MaterialTypographyScheme.h"
@@ -91,14 +90,6 @@
   _typographyScheme = [[MDCTypographyScheme alloc] init];
 }
 
-- (MDCContainerScheme *)containerScheme {
-  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
-  scheme.colorScheme = self.colorScheme;
-  scheme.shapeScheme = self.shapeScheme;
-  scheme.typographyScheme = self.typographyScheme;
-  return scheme;
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
 
@@ -126,7 +117,7 @@
   UIImage *plusImage =
       [[UIImage imageNamed:@"Plus"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [self.floatingButton setImage:plusImage forState:UIControlStateNormal];
-  [self.floatingButton applySecondaryThemeWithScheme:[self containerScheme]];
+  [MDCFloatingActionButtonThemer applyScheme:buttonScheme toButton:self.floatingButton];
   [self.floatingButton sizeToFit];
   self.floatingButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.componentContentView addSubview:self.floatingButton];

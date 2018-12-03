@@ -16,7 +16,7 @@
 
 #import "MaterialBottomAppBar+ColorThemer.h"
 #import "MaterialBottomAppBar.h"
-#import "MaterialButtons+Theming.h"
+#import "MaterialButtons+ButtonThemer.h"
 
 #import "supplemental/BottomAppBarTypicalUseSupplemental.h"
 
@@ -31,13 +31,6 @@
     _typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;
-}
-
-- (MDCContainerScheme *)containerScheme {
-  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
-  scheme.colorScheme = self.colorScheme;
-  scheme.typographyScheme = self.typographyScheme;
-  return scheme;
 }
 
 - (void)commonBottomBarSetup {
@@ -80,7 +73,11 @@
   [super viewDidLoad];
   [self commonBottomBarSetup];
 
-  [self.bottomBarView.floatingButton applySecondaryThemeWithScheme:[self containerScheme]];
+  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
+  buttonScheme.colorScheme = self.colorScheme;
+  buttonScheme.typographyScheme = self.typographyScheme;
+  [MDCFloatingActionButtonThemer applyScheme:buttonScheme
+                                    toButton:self.bottomBarView.floatingButton];
   [MDCBottomAppBarColorThemer applySurfaceVariantWithSemanticColorScheme:self.colorScheme
                                                       toBottomAppBarView:self.bottomBarView];
 }
