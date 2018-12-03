@@ -184,6 +184,8 @@
 
 - (void)testTopHeaderHeightWithHeader {
   // Given
+  // MDCDeviceTopSafeAreaInset adds 20 if there is no safe area and you are not in an application
+  CGFloat mdcDeviceTopSafeArea = 20;
   CGSize fakePreferredContentSize = CGSizeMake(200, 300);
   MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
       [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
@@ -194,7 +196,7 @@
 
   // Then
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.topHeaderHeight,
-                             MDCDeviceTopSafeAreaInset() + fakePreferredContentSize.height, 0.001);
+                             mdcDeviceTopSafeArea + fakePreferredContentSize.height, 0.001);
 }
 
 - (void)testContentHeaderTopInsetWithHeaderAndContentViewController {

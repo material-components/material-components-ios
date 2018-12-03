@@ -14,25 +14,18 @@
 
 #import <FBSnapshotTestCase/FBSnapshotTestCase.h>
 
-#import "MaterialCards.h"
-#import "MDCSnapshotTestCase.h"
+@interface MDCSnapshotTestCase : FBSnapshotTestCase
 
-@interface MDCCardSnapshotTests : MDCSnapshotTestCase
+/**
+ * This method will take a view and add it to as a subview to a new view with a size slightly
+ * larger than the argument view.
+ */
+- (UIView *)addBackgroundViewToView:(UIView *)view;
 
-@end
-
-@implementation MDCCardSnapshotTests
-
-- (void)testDefaultCard {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
-  // Given
-  MDCCard *card = [[MDCCard alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-  UIView *backgroundView = [self addBackgroundViewToView:card];
-
-  // Then
-  [self snapshotVerifyView:backgroundView];
-}
+/**
+ * This will call FBSnapshotVerifyView but first check for supported iOS versions. Additionally,
+ * this will use UIGraphicsImageRenderer to render the view correctly (including shadows).
+ */
+- (void)snapshotVerifyView:(UIView *)view;
 
 @end
