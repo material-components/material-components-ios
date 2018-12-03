@@ -181,6 +181,8 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
   // Given
   MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
   MDCSemanticColorScheme *colorSchemeCopy = [colorScheme copy];
+
+  // Then
   XCTAssertFalse(colorScheme == colorSchemeCopy);
   XCTAssertEqual(colorScheme.primaryColor, colorSchemeCopy.primaryColor);
   XCTAssertEqual(colorScheme.primaryColorVariant, colorSchemeCopy.primaryColorVariant);
