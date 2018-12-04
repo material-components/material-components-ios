@@ -12,21 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "ActionSheetComparison.h"
+#import "ActionSheetComparisonExampleViewController.h"
 
-#import "MaterialActionSheet.h"
 #import "MaterialActionSheet+ActionSheetThemer.h"
+#import "MaterialActionSheet.h"
 #import "MaterialButtons+ButtonThemer.h"
 #import "MaterialButtons.h"
 
-@interface ActionSheetComparison ()
+@interface ActionSheetComparisonExampleViewController ()
 
 @property(nonatomic, strong) MDCButton *showMaterialButton;
 @property(nonatomic, strong) MDCButton *showUIKitButton;
 
 @end
 
-@implementation ActionSheetComparison {
+@implementation ActionSheetComparisonExampleViewController {
   MDCButtonScheme *_buttonScheme;
   MDCActionSheetScheme *_actionSheetScheme;
 }
@@ -47,7 +47,7 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  
+
   self.view.backgroundColor = _colorScheme.backgroundColor;
   [_showMaterialButton setTitle:@"Show Material Action sheet" forState:UIControlStateNormal];
   [_showMaterialButton sizeToFit];
@@ -110,17 +110,20 @@
 
 - (void)showUIKitActionSheet {
   UIAlertController *alertController =
-    [UIAlertController alertControllerWithTitle:@"Alert Title"
-                                        message:@"Alert Message"
-                                 preferredStyle:UIAlertControllerStyleActionSheet];
-  UIAlertAction *homeAction =
-      [UIAlertAction actionWithTitle:@"Home" style:UIAlertActionStyleDefault handler:nil];
+      [UIAlertController alertControllerWithTitle:@"Alert Title"
+                                          message:@"Alert Message"
+                                   preferredStyle:UIAlertControllerStyleActionSheet];
+  UIAlertAction *homeAction = [UIAlertAction actionWithTitle:@"Home"
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:nil];
   [alertController addAction:homeAction];
-  UIAlertAction *favoriteAction =
-      [UIAlertAction actionWithTitle:@"Favorite" style:UIAlertActionStyleDefault handler:nil];
+  UIAlertAction *favoriteAction = [UIAlertAction actionWithTitle:@"Favorite"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:nil];
   [alertController addAction:favoriteAction];
-  UIAlertAction *emailAction =
-      [UIAlertAction actionWithTitle:@"Email" style:UIAlertActionStyleDefault handler:nil];
+  UIAlertAction *emailAction = [UIAlertAction actionWithTitle:@"Email"
+                                                        style:UIAlertActionStyleDefault
+                                                      handler:nil];
   [alertController addAction:emailAction];
 
   [self presentViewController:alertController animated:YES completion:nil];
@@ -128,7 +131,7 @@
 
 @end
 
-@implementation ActionSheetComparison (CatalogByConvention)
+@implementation ActionSheetComparisonExampleViewController (CatalogByConvention)
 
 + (NSDictionary *)catalogMetadata {
   return @{

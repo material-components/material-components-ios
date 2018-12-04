@@ -14,12 +14,19 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialColorScheme.h"
-#import "MaterialTypographyScheme.h"
+@class MDCButton;
 
-@interface ActionSheetComparison : UIViewController
+__attribute__((objc_subclassing_restricted)) @interface MDCBannerView : UIView
 
-@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
-@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
+@property(nonatomic, copy, nonnull) NSString *text;
+
+@property(nonatomic, strong, nullable) UIImage *image;  // default is nil
+
+@property(nonatomic, assign) NSUInteger numberOfButtons;  // default is 1
+
+/**
+ The buttons representing the banner's actions.
+ */
+@property(nonatomic, readonly, copy, nonnull) NSArray<MDCButton *> *buttons;
 
 @end

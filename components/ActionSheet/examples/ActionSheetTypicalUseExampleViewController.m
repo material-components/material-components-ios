@@ -12,19 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "ActionSheetTypicalUse.h"
+#import "ActionSheetTypicalUseExampleViewController.h"
 
 #import "MaterialActionSheet+ActionSheetThemer.h"
 #import "MaterialButtons+ButtonThemer.h"
 #import "MaterialButtons.h"
 
-@interface ActionSheetTypicalUse ()
+@interface ActionSheetTypicalUseExampleViewController ()
 
 @property(nonatomic, strong) MDCButton *showButton;
 
 @end
 
-@implementation ActionSheetTypicalUse {
+@implementation ActionSheetTypicalUseExampleViewController {
   MDCButtonScheme *_buttonScheme;
   MDCActionSheetScheme *_actionSheetScheme;
 }
@@ -45,7 +45,7 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  
+
   self.view.backgroundColor = _colorScheme.backgroundColor;
   [_showButton setTitle:@"Show action sheet" forState:UIControlStateNormal];
   [_showButton sizeToFit];
@@ -67,23 +67,20 @@
   _showButton.center = CGPointMake(self.view.center.x, self.view.center.y - 80);
 }
 
-
-
 - (void)showActionSheet {
   MDCActionSheetController *actionSheet = [[MDCActionSheetController alloc] init];
-  MDCActionSheetAction *homeAction = [MDCActionSheetAction actionWithTitle:@"Home"
-                                                                 image:[UIImage imageNamed:@"Home"]
-                                                               handler:nil];
+  MDCActionSheetAction *homeAction =
+      [MDCActionSheetAction actionWithTitle:@"Home" image:[UIImage imageNamed:@"Home"] handler:nil];
   MDCActionSheetAction *favoriteAction =
       [MDCActionSheetAction actionWithTitle:@"Favorite"
                                       image:[UIImage imageNamed:@"Favorite"]
-                                    handler:^(MDCActionSheetAction *action){
+                                    handler:^(MDCActionSheetAction *action) {
                                       NSLog(@"Favorite Action");
                                     }];
   MDCActionSheetAction *emailAction =
       [MDCActionSheetAction actionWithTitle:@"Email"
                                       image:[UIImage imageNamed:@"Email"]
-                                    handler:^(MDCActionSheetAction *action){
+                                    handler:^(MDCActionSheetAction *action) {
                                       NSLog(@"Email Action");
                                     }];
   [actionSheet addAction:homeAction];
@@ -95,7 +92,7 @@
 
 @end
 
-@implementation ActionSheetTypicalUse (CatalogByConvention)
+@implementation ActionSheetTypicalUseExampleViewController (CatalogByConvention)
 
 + (NSDictionary *)catalogMetadata {
   return @{
