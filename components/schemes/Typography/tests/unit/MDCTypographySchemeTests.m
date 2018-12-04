@@ -44,26 +44,28 @@
   XCTAssertEqual(latestScheme.overline, scheme201804.overline);
 }
 
-- (void)testTypographySchemeCopyTest {
+- (void)testTypographySchemeCopy {
   // Given
   MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
+
+  // When
   MDCTypographyScheme *typographySchemeCopy = [typographyScheme copy];
 
   // Then
-  XCTAssertFalse(typographyScheme == typographySchemeCopy);
-  XCTAssertEqual(typographyScheme.headline1, typographySchemeCopy.headline1);
-  XCTAssertEqual(typographyScheme.headline2, typographySchemeCopy.headline2);
-  XCTAssertEqual(typographyScheme.headline3, typographySchemeCopy.headline3);
-  XCTAssertEqual(typographyScheme.headline4, typographySchemeCopy.headline4);
-  XCTAssertEqual(typographyScheme.headline5, typographySchemeCopy.headline5);
-  XCTAssertEqual(typographyScheme.headline6, typographySchemeCopy.headline6);
-  XCTAssertEqual(typographyScheme.subtitle1, typographySchemeCopy.subtitle1);
-  XCTAssertEqual(typographyScheme.subtitle2, typographySchemeCopy.subtitle2);
-  XCTAssertEqual(typographyScheme.body1, typographySchemeCopy.body1);
-  XCTAssertEqual(typographyScheme.body2, typographySchemeCopy.body2);
-  XCTAssertEqual(typographyScheme.caption, typographySchemeCopy.caption);
-  XCTAssertEqual(typographyScheme.button, typographySchemeCopy.button);
-  XCTAssertEqual(typographyScheme.overline, typographySchemeCopy.overline);
+  XCTAssertNotEqual(typographyScheme, typographySchemeCopy);
+  XCTAssertEqualObjects(typographyScheme.headline1, typographySchemeCopy.headline1);
+  XCTAssertEqualObjects(typographyScheme.headline2, typographySchemeCopy.headline2);
+  XCTAssertEqualObjects(typographyScheme.headline3, typographySchemeCopy.headline3);
+  XCTAssertEqualObjects(typographyScheme.headline4, typographySchemeCopy.headline4);
+  XCTAssertEqualObjects(typographyScheme.headline5, typographySchemeCopy.headline5);
+  XCTAssertEqualObjects(typographyScheme.headline6, typographySchemeCopy.headline6);
+  XCTAssertEqualObjects(typographyScheme.subtitle1, typographySchemeCopy.subtitle1);
+  XCTAssertEqualObjects(typographyScheme.subtitle2, typographySchemeCopy.subtitle2);
+  XCTAssertEqualObjects(typographyScheme.body1, typographySchemeCopy.body1);
+  XCTAssertEqualObjects(typographyScheme.body2, typographySchemeCopy.body2);
+  XCTAssertEqualObjects(typographyScheme.caption, typographySchemeCopy.caption);
+  XCTAssertEqualObjects(typographyScheme.button, typographySchemeCopy.button);
+  XCTAssertEqualObjects(typographyScheme.overline, typographySchemeCopy.overline);
 }
 
 @end
