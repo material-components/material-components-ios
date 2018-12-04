@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCTextButtonThemer.h"
 #import "MaterialButtons+ButtonThemer.h"
 #import "MaterialButtons+ColorThemer.h"
 #import "MaterialButtons+Theming.h"
@@ -90,7 +89,7 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
   // Text button
 
   MDCButton *textButton = [[MDCButton alloc] init];
-  [MDCTextButtonThemer applyScheme:buttonScheme toButton:textButton];
+  [textButton applyTextThemeWithScheme:self.containerScheme];
   [textButton setTitle:@"Button" forState:UIControlStateNormal];
   [textButton sizeToFit];
   CGFloat textButtonVerticalInset =
@@ -109,7 +108,7 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
 
   MDCButton *disabledTextButton = [[MDCButton alloc] init];
   [disabledTextButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCTextButtonThemer applyScheme:buttonScheme toButton:disabledTextButton];
+  [disabledTextButton applyTextThemeWithScheme:self.containerScheme];
   [disabledTextButton sizeToFit];
   [disabledTextButton addTarget:self
                          action:@selector(didTap:)
