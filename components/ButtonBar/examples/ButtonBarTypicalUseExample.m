@@ -14,12 +14,12 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialButtonBar+Theming.h"
 #import "MaterialButtonBar.h"
-#import "MaterialColorScheme.h"
-#import "MaterialButtonBar+ColorThemer.h"
 
 @interface ButtonBarTypicalUseExample : UIViewController
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 @end
 
 @implementation ButtonBarTypicalUseExample
@@ -29,15 +29,26 @@
   if (self) {
     self.colorScheme =
         [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    self.typographyScheme =
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
     self.title = @"Button Bar";
   }
   return self;
+}
+
+- (MDCContainerScheme *)containerScheme {
+  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
+  scheme.colorScheme = self.colorScheme;
+  scheme.typographyScheme = self.typographyScheme;
+  return scheme;
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
 
   MDCButtonBar *buttonBar = [[MDCButtonBar alloc] init];
+  MDCContainerScheme *scheme = [self containerScheme];
+  [buttonBar applyPrimaryThemeWithScheme:scheme];
 
   // MDCButtonBar ignores the style of UIBarButtonItem.
   UIBarButtonItemStyle ignored = UIBarButtonItemStyleDone;
@@ -54,8 +65,6 @@
                                       action:@selector(didTapActionButton:)];
 
   buttonBar.items = @[ actionItem, secondActionItem ];
-
-  [MDCButtonBarColorThemer applySemanticColorScheme:self.colorScheme toButtonBar:buttonBar];
 
   // MDCButtonBar's sizeThatFits gives a "best-fit" size of the provided items.
   CGSize size = [buttonBar sizeThatFits:self.view.bounds.size];
