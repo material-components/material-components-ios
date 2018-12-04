@@ -110,6 +110,13 @@
   [super tearDown];
 }
 
+- (void)setupHeaderWithPreferredContentSize:(CGSize)preferredContentSize {
+  MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
+      [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
+  self.fakeBottomDrawer.headerViewController = fakeHeader;
+  self.fakeBottomDrawer.headerViewController.preferredContentSize = preferredContentSize;
+}
+
 - (void)testScrollViewNotNil {
   // Then
   XCTAssertNotNil(self.fakeBottomDrawer.scrollView);
@@ -161,12 +168,9 @@
 - (void)testContentHeaderHeightWithHeader {
   // Given
   CGSize fakePreferredContentSize = CGSizeMake(200, 300);
-  MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
-      [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
-  self.fakeBottomDrawer.headerViewController = fakeHeader;
 
   // When
-  self.fakeBottomDrawer.headerViewController.preferredContentSize = fakePreferredContentSize;
+  [self setupHeaderWithPreferredContentSize:fakePreferredContentSize];
 
   // Then
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderHeight,
@@ -186,12 +190,9 @@
   // MDCDeviceTopSafeAreaInset adds 20 if there is no safe area and you are not in an application
   CGFloat mdcDeviceTopSafeArea = 20;
   CGSize fakePreferredContentSize = CGSizeMake(200, 300);
-  MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
-      [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
-  self.fakeBottomDrawer.headerViewController = fakeHeader;
 
   // When
-  self.fakeBottomDrawer.headerViewController.preferredContentSize = fakePreferredContentSize;
+  [self setupHeaderWithPreferredContentSize:fakePreferredContentSize];
 
   // Then
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.topHeaderHeight,
@@ -202,10 +203,7 @@
   // Given
   // Setup gives us presentingViewBounds of (0, 0, 200, 500)
   CGSize fakePreferredContentSize = CGSizeMake(200, 300);
-  MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
-      [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
-  fakeHeader.preferredContentSize = fakePreferredContentSize;
-  self.fakeBottomDrawer.headerViewController = fakeHeader;
+  [self setupHeaderWithPreferredContentSize:fakePreferredContentSize];
   self.fakeBottomDrawer.contentViewController =
       [[MDCNavigationDrawerFakeTableViewController alloc] init];
   self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(200, 100);
@@ -238,10 +236,7 @@
   // Given
   // Setup gives us presentingViewBounds of (0, 0, 200, 500)
   CGSize fakePreferredContentSize = CGSizeMake(200, 300);
-  MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
-      [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
-  fakeHeader.preferredContentSize = fakePreferredContentSize;
-  self.fakeBottomDrawer.headerViewController = fakeHeader;
+  [self setupHeaderWithPreferredContentSize:fakePreferredContentSize];
 
   // When
   [self.fakeBottomDrawer cacheLayoutCalculations];
@@ -274,10 +269,7 @@
   // Given
   // Setup gives us presentingViewBoudns of (0, 0, 200, 500)
   CGSize fakePreferredContentSize = CGSizeMake(200, 700);
-  MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
-      [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
-  fakeHeader.preferredContentSize = fakePreferredContentSize;
-  self.fakeBottomDrawer.headerViewController = fakeHeader;
+  [self setupHeaderWithPreferredContentSize:fakePreferredContentSize];
 
   // When
   [self.fakeBottomDrawer cacheLayoutCalculations];
@@ -308,10 +300,7 @@
   // Given
   // Setup gives us presentingViewBounds of (0, 0, 200, 500)
   CGSize fakePreferredContentSize = CGSizeMake(200, 700);
-  MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
-      [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
-  fakeHeader.preferredContentSize = fakePreferredContentSize;
-  self.fakeBottomDrawer.headerViewController = fakeHeader;
+  [self setupHeaderWithPreferredContentSize:fakePreferredContentSize];
   self.fakeBottomDrawer.contentViewController =
       [[MDCNavigationDrawerFakeTableViewController alloc] init];
   self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(200, 1000);
@@ -333,10 +322,7 @@
 - (void)testContentHeightSurplusWithScrollabelContent {
   // Given
   CGSize fakePreferredContentSize = CGSizeMake(200, 1000);
-  MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
-      [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
-  fakeHeader.preferredContentSize = fakePreferredContentSize;
-  self.fakeBottomDrawer.headerViewController = fakeHeader;
+  [self setupHeaderWithPreferredContentSize:fakePreferredContentSize];
   self.fakeBottomDrawer.contentViewController =
       [[MDCNavigationDrawerFakeTableViewController alloc] init];
   self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(200, 1500);
@@ -355,10 +341,7 @@
 
 - (void)testContentScrollsToRevealTrue {
   CGSize fakePreferredContentSize = CGSizeMake(200, 1000);
-  MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
-      [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
-  fakeHeader.preferredContentSize = fakePreferredContentSize;
-  self.fakeBottomDrawer.headerViewController = fakeHeader;
+  [self setupHeaderWithPreferredContentSize:fakePreferredContentSize];
   self.fakeBottomDrawer.contentViewController =
       [[MDCNavigationDrawerFakeTableViewController alloc] init];
   self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(200, 1500);
@@ -372,10 +355,7 @@
 
 - (void)testBottomDrawerStateCollapsed {
   CGSize fakePreferredContentSize = CGSizeMake(200, 1000);
-  MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
-      [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
-  fakeHeader.preferredContentSize = fakePreferredContentSize;
-  self.fakeBottomDrawer.headerViewController = fakeHeader;
+  [self setupHeaderWithPreferredContentSize:fakePreferredContentSize];
   self.fakeBottomDrawer.contentViewController =
       [[MDCNavigationDrawerFakeTableViewController alloc] init];
 
@@ -389,10 +369,7 @@
 
 - (void)testBottomDrawerStateExpanded {
   CGSize fakePreferredContentSize = CGSizeMake(200, 100);
-  MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
-      [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
-  fakeHeader.preferredContentSize = fakePreferredContentSize;
-  self.fakeBottomDrawer.headerViewController = fakeHeader;
+  [self setupHeaderWithPreferredContentSize:fakePreferredContentSize];
   self.fakeBottomDrawer.contentViewController =
       [[MDCNavigationDrawerFakeTableViewController alloc] init];
 
@@ -406,10 +383,7 @@
 
 - (void)testBottomDrawerStateFullScreen {
   CGSize fakePreferredContentSize = CGSizeMake(200, 2000);
-  MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
-      [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
-  fakeHeader.preferredContentSize = fakePreferredContentSize;
-  self.fakeBottomDrawer.headerViewController = fakeHeader;
+  [self setupHeaderWithPreferredContentSize:fakePreferredContentSize];
   self.fakeBottomDrawer.contentViewController =
       [[MDCNavigationDrawerFakeTableViewController alloc] init];
 
@@ -423,10 +397,7 @@
 
 - (void)testBottomDrawerStateCallback {
   CGSize fakePreferredContentSize = CGSizeMake(200, 1000);
-  MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
-      [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
-  fakeHeader.preferredContentSize = fakePreferredContentSize;
-  self.fakeBottomDrawer.headerViewController = fakeHeader;
+  [self setupHeaderWithPreferredContentSize:fakePreferredContentSize];
   self.fakeBottomDrawer.contentViewController =
       [[MDCNavigationDrawerFakeTableViewController alloc] init];
 
