@@ -78,11 +78,15 @@ class ButtonsThemingTest: XCTestCase {
     button.applyContainedTheme(withScheme: scheme)
 
     // Then
-    let buttonShape = button.shapeGenerator as! MDCRectangleShapeGenerator
-    XCTAssertEqual(buttonShape.topLeftCorner, shapeScheme.smallComponentShape.topLeftCorner)
-    XCTAssertEqual(buttonShape.topRightCorner, shapeScheme.smallComponentShape.topRightCorner)
-    XCTAssertEqual(buttonShape.bottomRightCorner, shapeScheme.smallComponentShape.bottomRightCorner)
-    XCTAssertEqual(buttonShape.bottomLeftCorner, shapeScheme.smallComponentShape.bottomLeftCorner)
+    if let buttonShape = button.shapeGenerator as? MDCRectangleShapeGenerator {
+      XCTAssertEqual(buttonShape.topLeftCorner, shapeScheme.smallComponentShape.topLeftCorner)
+      XCTAssertEqual(buttonShape.topRightCorner, shapeScheme.smallComponentShape.topRightCorner)
+      XCTAssertEqual(buttonShape.bottomRightCorner,
+                     shapeScheme.smallComponentShape.bottomRightCorner)
+      XCTAssertEqual(buttonShape.bottomLeftCorner, shapeScheme.smallComponentShape.bottomLeftCorner)
+    } else {
+      XCTFail("Button.shapeGenerator was not a MDCRectangularShapeGenerator")
+    }
   }
 
   func testOutlinedTheme() {
@@ -128,11 +132,14 @@ class ButtonsThemingTest: XCTestCase {
     button.applyOutlinedTheme(withScheme: scheme)
 
     // Then
-    let buttonShape = button.shapeGenerator as! MDCRectangleShapeGenerator
-    XCTAssertEqual(buttonShape.topLeftCorner, shapeScheme.smallComponentShape.topLeftCorner)
-    XCTAssertEqual(buttonShape.topRightCorner, shapeScheme.smallComponentShape.topRightCorner)
-    XCTAssertEqual(buttonShape.bottomRightCorner, shapeScheme.smallComponentShape.bottomRightCorner)
-    XCTAssertEqual(buttonShape.bottomLeftCorner, shapeScheme.smallComponentShape.bottomLeftCorner)
+    if let buttonShape = button.shapeGenerator as? MDCRectangleShapeGenerator {
+      XCTAssertEqual(buttonShape.topLeftCorner, shapeScheme.smallComponentShape.topLeftCorner)
+      XCTAssertEqual(buttonShape.topRightCorner, shapeScheme.smallComponentShape.topRightCorner)
+      XCTAssertEqual(buttonShape.bottomRightCorner, shapeScheme.smallComponentShape.bottomRightCorner)
+      XCTAssertEqual(buttonShape.bottomLeftCorner, shapeScheme.smallComponentShape.bottomLeftCorner)
+    } else {
+      XCTFail("Button.shapeGenerator was not a MDCRectangularShapeGenerator")
+    }
   }
 
   func testTextThemeWithDefaultScheme() {
