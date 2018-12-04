@@ -13,6 +13,7 @@
 // limitations under the License.
 #import <UIKit/UIKit.h>
 
+#import "MaterialButtons+Theming.h"
 #import "MaterialCollections.h"
 #import "MaterialColorScheme.h"
 #import "MaterialDialogs+DialogThemer.h"
@@ -22,6 +23,7 @@
 #pragma mark - DialogsTypicalUseViewController
 
 @interface DialogsTypicalUseViewController : UIViewController
+@property(nonatomic, strong, nullable) MDCContainerScheme *containerScheme;
 @property(nonatomic, strong, nullable) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong, nullable) MDCTypographyScheme *typographyScheme;
 @property(nonatomic, strong, nullable) MDCButtonScheme *buttonScheme;
@@ -35,6 +37,9 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  if (!self.containerScheme) {
+    self.containerScheme = [[MDCContainerScheme alloc] init];
+  }
   if (!self.colorScheme) {
     self.colorScheme =
         [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
@@ -66,7 +71,7 @@
           forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:dismissButton];
 
-  [MDCTextButtonThemer applyScheme:self.buttonScheme toButton:dismissButton];
+  [dismissButton applyTextThemeWithScheme:self.containerScheme];
 
   [self.view addConstraints:@[
     [NSLayoutConstraint constraintWithItem:dismissButton

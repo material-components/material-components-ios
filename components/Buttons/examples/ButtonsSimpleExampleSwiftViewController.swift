@@ -46,7 +46,7 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
     view.addSubview(containedButton)
 
     let textButton = MDCButton()
-    MDCTextButtonThemer.applyScheme(buttonScheme, to: textButton)
+    textButton.applyTextTheme(withScheme: MDCContainerScheme())
     textButton.setTitle("Touch me", for: UIControlState())
     textButton.sizeToFit()
     let textButtonVerticalInset =
