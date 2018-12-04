@@ -19,6 +19,7 @@
 static const NSTimeInterval MDCBottomSheetTransitionDuration = 0.25;
 
 @implementation MDCBottomSheetTransitionController {
+  @protected UIColor *_scrimColor;
   @protected BOOL _isScrimAccessibilityElement;
   @protected NSString *_scrimAccessibilityLabel;
   @protected NSString *_scrimAccessibilityHint;
@@ -44,6 +45,7 @@ static const NSTimeInterval MDCBottomSheetTransitionDuration = 0.25;
                                                            presentingViewController:presenting];
   presentationController.trackingScrollView = self.trackingScrollView;
   presentationController.dismissOnBackgroundTap = self.dismissOnBackgroundTap;
+  presentationController.scrimColor = _scrimColor;
   presentationController.scrimAccessibilityTraits = _scrimAccessibilityTraits;
   presentationController.isScrimAccessibilityElement = _isScrimAccessibilityElement;
   presentationController.scrimAccessibilityHint = _scrimAccessibilityHint;
@@ -145,6 +147,14 @@ static const NSTimeInterval MDCBottomSheetTransitionDuration = 0.25;
   } else {
     return containerView.frame;
   }
+}
+
+- (void)setScrimColor:(UIColor *)scrimColor {
+  _scrimColor = scrimColor;
+}
+
+- (UIColor *)scrimColor {
+  return _scrimColor;
 }
 
 - (void)setIsScrimAccessibilityElement:(BOOL)isScrimAccessibilityElement {

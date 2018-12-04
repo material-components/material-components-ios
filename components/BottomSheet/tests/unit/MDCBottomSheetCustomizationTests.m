@@ -35,10 +35,8 @@
   [super setUp];
 
   self.dummyContentViewController = [[UIViewController alloc] init];
-  self.bottomSheet =
-      [[MDCBottomSheetController alloc]
-          initWithContentViewController:self.dummyContentViewController];
-  self.presentationController = self.bottomSheet.mdc_bottomSheetPresentationController;
+  self.bottomSheet = [[MDCBottomSheetController alloc]
+      initWithContentViewController:self.dummyContentViewController];
 }
 
 - (void)tearDown {
@@ -53,6 +51,7 @@
 - (void)testApplyingScrimColorToPresentationController {
   // Make a scrim color.
   UIColor *scrimColor = [UIColor.orangeColor colorWithAlphaComponent:(CGFloat)0.5];
+  self.presentationController = self.bottomSheet.mdc_bottomSheetPresentationController;
 
   // Ensure that the bottom sheet has created all of the necessary internal storage for
   // presentation by pretending to start the presentation.
@@ -62,6 +61,27 @@
   self.presentationController.scrimColor = scrimColor;
 
   // Check that it had any effect.
+  XCTAssertEqualObjects(self.presentationController.scrimColor, scrimColor);
+}
+
+// Test that the presentation controller's scrim color is set when setting it on the sheet.
+- (void)testApplyingScrimColorToSheet {
+  // Make a scrim color and set it on the controller.
+  UIColor *scrimColor = [UIColor.blueColor colorWithAlphaComponent:(CGFloat)0.3];
+  self.bottomSheet.scrimColor = scrimColor;
+
+  // Ensure that the presentation controller is allocated after the bottom sheet because the color
+  // is set on the presentation controller via the transition controller which keeps references to
+  // the properties it sets on the presentaiton controller but not the presentation conrollter
+  // itself. This means that once it is created by the transition controller, the scrim color cannot
+  // be changed via the bottom sheet controller API, like the scrim a11y properties.
+  self.presentationController = self.bottomSheet.mdc_bottomSheetPresentationController;
+
+  // Ensure that the bottom sheet has created all of the necessary internal storage for
+  // presentation by pretending to start the presentation.
+  [self.presentationController presentationTransitionWillBegin];
+
+  // Check that setting it on the controller sets it on the presentation controller.
   XCTAssertEqualObjects(self.presentationController.scrimColor, scrimColor);
 }
 

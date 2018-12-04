@@ -48,6 +48,7 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 
 @implementation MDCBottomSheetPresentationController {
   UIView *_dimmingView;
+  @private UIColor *_scrimColor;
   @private BOOL _scrimIsAccessibilityElement;
   @private NSString *_scrimAccessibilityLabel;
   @private NSString *_scrimAccessibilityHint;
@@ -214,11 +215,12 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 #pragma mark - Properties
 
 - (void)setScrimColor:(UIColor *)scrimColor {
+  _scrimColor = scrimColor;
   _dimmingView.backgroundColor = scrimColor;
 }
 
 - (UIColor *)scrimColor {
-  return _dimmingView.backgroundColor;
+  return _scrimColor;
 }
 
 - (void)setIsScrimAccessibilityElement:(BOOL)isScrimAccessibilityElement {
