@@ -25,10 +25,11 @@
 static const CGFloat kActivityIndicatorRadius = 72;
 static const CGFloat kActivityInitialProgress = (CGFloat)0.6;
 
-@class ActivityIndicatorExample;
+@class ActivityIndicatorExampleViewController;
 @class MDCActivityIndicator;
 
-@interface ActivityIndicatorExample : UITableViewController <MDCActivityIndicatorDelegate>
+@interface ActivityIndicatorExampleViewController
+    : UITableViewController <MDCActivityIndicatorDelegate>
 
 @property(nonatomic, strong) MDCActivityIndicator *activityIndicator1;
 @property(nonatomic, strong) MDCActivityIndicator *activityIndicator2;
@@ -41,7 +42,7 @@ static const CGFloat kActivityInitialProgress = (CGFloat)0.6;
 
 @end
 
-@interface ActivityIndicatorExample (Supplemental)
+@interface ActivityIndicatorExampleViewController (Supplemental)
 
 - (void)setupExampleViews;
 

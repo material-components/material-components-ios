@@ -12,6 +12,7 @@ target "MDCCatalog" do
     'BottomAppBar/tests/unit',
     'BottomNavigation/tests/unit',
     'BottomSheet/tests/unit',
+    'ButtonBar/tests/unit',
     'Buttons/tests/unit',
     'Cards/tests/unit',
     'Chips/tests/unit',

@@ -29,4 +29,19 @@
  */
 - (void)applyContainedThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
 
+/**
+ Applies the theme for an outlined button to this instance.
+
+ @param scheme A container scheme instance containing any desired customizations to the theming
+ system.
+ */
+- (void)applyOutlinedThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
+
+/**
+ Applies the Material Text Button style to an MDCButton instance.
+
+ @param scheme A container of material schemes used in customizing the appearance of the button.
+ */
+- (void)applyTextThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
+
 @end

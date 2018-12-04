@@ -15,7 +15,7 @@
 import UIKit
 import MaterialComponents.MaterialActivityIndicator
 
-class ActivityIndicatorSwiftController: UIViewController {
+class ActivityIndicatorSwiftExampleViewController: UIViewController {
 
    struct MDCPalette {
       static let blue: UIColor = UIColor(red: 0.129, green: 0.588, blue: 0.953, alpha: 1.0)
@@ -78,7 +78,7 @@ class ActivityIndicatorSwiftController: UIViewController {
    }
 }
 
-extension ActivityIndicatorSwiftController : MDCActivityIndicatorDelegate {
+extension ActivityIndicatorSwiftExampleViewController : MDCActivityIndicatorDelegate {
    func activityIndicatorAnimationDidFinish(_ activityIndicator: MDCActivityIndicator) {
       return
    }

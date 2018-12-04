@@ -34,10 +34,7 @@ class CardExampleViewController: UIViewController {
     bundle.loadNibNamed("CardExampleViewController", owner: self, options: nil)
     view.frame = self.view.bounds
 
-    let buttonScheme = MDCButtonScheme();
-    buttonScheme.colorScheme = colorScheme
-    buttonScheme.typographyScheme = typographyScheme
-    MDCTextButtonThemer.applyScheme(buttonScheme, to: button)
+    button.applyTextTheme(withScheme: MDCContainerScheme())
 
     let cardScheme = MDCCardScheme();
     cardScheme.colorScheme = colorScheme
