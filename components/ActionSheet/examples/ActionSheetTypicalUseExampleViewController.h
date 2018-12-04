@@ -14,10 +14,11 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialActionSheet.h"
 #import "MaterialColorScheme.h"
 #import "MaterialTypographyScheme.h"
 
-@interface ActionSheetComparison : UIViewController
+@interface ActionSheetTypicalUseExampleViewController : UIViewController
 
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
