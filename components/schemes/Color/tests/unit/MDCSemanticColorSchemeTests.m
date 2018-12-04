@@ -177,23 +177,25 @@ static UIColor *ColorFromRGB(uint32_t colorValue) {
           MDCCGFloatEqual(fAlpha, sAlpha));
 }
 
-- (void)testColorSchemeCopyTest {
+- (void)testColorSchemeCopy {
   // Given
   MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+
+  // When
   MDCSemanticColorScheme *colorSchemeCopy = [colorScheme copy];
 
   // Then
-  XCTAssertFalse(colorScheme == colorSchemeCopy);
-  XCTAssertEqual(colorScheme.primaryColor, colorSchemeCopy.primaryColor);
-  XCTAssertEqual(colorScheme.primaryColorVariant, colorSchemeCopy.primaryColorVariant);
-  XCTAssertEqual(colorScheme.secondaryColor, colorSchemeCopy.secondaryColor);
-  XCTAssertEqual(colorScheme.surfaceColor, colorSchemeCopy.surfaceColor);
-  XCTAssertEqual(colorScheme.backgroundColor, colorSchemeCopy.backgroundColor);
-  XCTAssertEqual(colorScheme.errorColor, colorSchemeCopy.errorColor);
-  XCTAssertEqual(colorScheme.onPrimaryColor, colorSchemeCopy.onPrimaryColor);
-  XCTAssertEqual(colorScheme.onSecondaryColor, colorSchemeCopy.onSecondaryColor);
-  XCTAssertEqual(colorScheme.onSurfaceColor, colorSchemeCopy.onSurfaceColor);
-  XCTAssertEqual(colorScheme.onBackgroundColor, colorSchemeCopy.onBackgroundColor);
+  XCTAssertNotEqual(colorScheme, colorSchemeCopy);
+  XCTAssertEqualObjects(colorScheme.primaryColor, colorSchemeCopy.primaryColor);
+  XCTAssertEqualObjects(colorScheme.primaryColorVariant, colorSchemeCopy.primaryColorVariant);
+  XCTAssertEqualObjects(colorScheme.secondaryColor, colorSchemeCopy.secondaryColor);
+  XCTAssertEqualObjects(colorScheme.surfaceColor, colorSchemeCopy.surfaceColor);
+  XCTAssertEqualObjects(colorScheme.backgroundColor, colorSchemeCopy.backgroundColor);
+  XCTAssertEqualObjects(colorScheme.errorColor, colorSchemeCopy.errorColor);
+  XCTAssertEqualObjects(colorScheme.onPrimaryColor, colorSchemeCopy.onPrimaryColor);
+  XCTAssertEqualObjects(colorScheme.onSecondaryColor, colorSchemeCopy.onSecondaryColor);
+  XCTAssertEqualObjects(colorScheme.onSurfaceColor, colorSchemeCopy.onSurfaceColor);
+  XCTAssertEqualObjects(colorScheme.onBackgroundColor, colorSchemeCopy.onBackgroundColor);
 }
 
 @end
