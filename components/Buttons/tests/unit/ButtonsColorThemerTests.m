@@ -234,12 +234,21 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   NSUInteger maximumStateValue =
       UIControlStateSelected | UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
+    // TODO(https://github.com/material-components/material-components-ios/issues/3411 ):
+    //   MDCButton does not return the correct value for `backgroundColorForState:`
     if (state == UIControlStateNormal) {
-      XCTAssertEqual([button backgroundColorForState:state], colorScheme.secondaryColor);
-      XCTAssertEqual([button imageTintColorForState:state], colorScheme.onSecondaryColor);
-   } else {
+      XCTAssertEqualObjects([button backgroundColorForState:state], colorScheme.secondaryColor,
+                            @"Background color (%@) is not equal to (%@) for state (%lu).",
+                            [button backgroundColorForState:state], colorScheme.secondaryColor,
+                            (unsigned long)state);
+    } else {
       XCTAssertEqual([button backgroundColorForState:state], nil);
     }
+
+    XCTAssertEqualObjects([button imageTintColorForState:state], colorScheme.onSecondaryColor,
+                          @"Image tint color (%@) is not equal to (%@) for state (%lu).",
+                          [button imageTintColorForState:state], colorScheme.onSecondaryColor,
+                          (unsigned long)state);
   }
 
   XCTAssertEqualWithAccuracy(button.disabledAlpha, 1, (CGFloat)0.001);
