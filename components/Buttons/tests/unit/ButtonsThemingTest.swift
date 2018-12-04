@@ -219,6 +219,7 @@ class ButtonsThemingTest: XCTestCase {
   func testFloatingButtonSecondaryThemeWithNoCustomThemes() {
     // Given
     let button = MDCFloatingButton()
+    let defaultButton = MDCFloatingButton()
     let scheme = MDCContainerScheme()
     let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
     let typographyScheme = MDCTypographyScheme(defaults: .material201804)
@@ -229,6 +230,9 @@ class ButtonsThemingTest: XCTestCase {
     // Then
     XCTAssertEqual(button.backgroundColor(for: .normal), colorScheme.secondaryColor)
     XCTAssertEqual(button.imageTintColor(for: .normal), colorScheme.onSecondaryColor)
+    // XCTAssertEqual(button.titleColor(for: .normal), colorScheme.onSecondaryColor)
+    XCTAssertEqual(button.shadowColor(for: .normal), defaultButton.shadowColor(for: .normal))
+    XCTAssertEqual(button.inkColor, defaultButton.inkColor)
 
     XCTAssertEqual(button.titleFont(for: .normal), typographyScheme.button)
 
@@ -242,11 +246,22 @@ class ButtonsThemingTest: XCTestCase {
     } else {
       XCTFail("Button.shapeGenerator was not a MDCRectangularShapeGenerator")
     }
+
+    // Test remaining properties
+    XCTAssertEqual(button.elevation(for: .normal), ShadowElevation.fabResting)
+    XCTAssertEqual(button.elevation(for: .highlighted), ShadowElevation.fabPressed)
+    XCTAssertEqual(button.elevation(for: .disabled), ShadowElevation.none)
+
+    XCTAssertEqual(button.borderWidth(for: .normal), defaultButton.borderWidth(for: .normal), accuracy: 0.001)
+    XCTAssertEqual(button.borderWidth(for: .selected), defaultButton.borderWidth(for: .selected), accuracy: 0.001)
+    XCTAssertEqual(button.borderWidth(for: .highlighted), defaultButton.borderWidth(for: .highlighted), accuracy: 0.001)
+    XCTAssertEqual(button.borderWidth(for: .disabled), defaultButton.borderWidth(for: .disabled), accuracy: 0.001)
   }
 
   func testFloatingButtonSecondaryThemeWithCustomColorTheme() {
     // Given
     let button = MDCFloatingButton()
+    let defaultButton = MDCFloatingButton()
     let scheme = MDCContainerScheme()
     let customColorScheme = MDCSemanticColorScheme()
     customColorScheme.secondaryColor = .purple
@@ -260,6 +275,9 @@ class ButtonsThemingTest: XCTestCase {
     // Then
     XCTAssertEqual(button.backgroundColor(for: .normal), customColorScheme.secondaryColor)
     XCTAssertEqual(button.imageTintColor(for: .normal), customColorScheme.onSecondaryColor)
+    // XCTAssertEqual(button.titleColor(for: .normal), colorScheme.onSecondaryColor)
+    XCTAssertEqual(button.shadowColor(for: .normal), defaultButton.shadowColor(for: .normal))
+    XCTAssertEqual(button.inkColor, defaultButton.inkColor)
 
     XCTAssertEqual(button.titleFont(for: .normal), typographyScheme.button)
 
@@ -273,11 +291,22 @@ class ButtonsThemingTest: XCTestCase {
     } else {
       XCTFail("Button.shapeGenerator was not a MDCRectangularShapeGenerator")
     }
+
+    // Test remaining properties
+    XCTAssertEqual(button.elevation(for: .normal), ShadowElevation.fabResting)
+    XCTAssertEqual(button.elevation(for: .highlighted), ShadowElevation.fabPressed)
+    XCTAssertEqual(button.elevation(for: .disabled), ShadowElevation.none)
+
+    XCTAssertEqual(button.borderWidth(for: .normal), defaultButton.borderWidth(for: .normal), accuracy: 0.001)
+    XCTAssertEqual(button.borderWidth(for: .selected), defaultButton.borderWidth(for: .selected), accuracy: 0.001)
+    XCTAssertEqual(button.borderWidth(for: .highlighted), defaultButton.borderWidth(for: .highlighted), accuracy: 0.001)
+    XCTAssertEqual(button.borderWidth(for: .disabled), defaultButton.borderWidth(for: .disabled), accuracy: 0.001)
   }
 
   func testFloatingButtonSecondaryThemeWithCustomTypographyTheme() {
     // Given
     let button = MDCFloatingButton()
+    let defaultButton = MDCFloatingButton()
     let scheme = MDCContainerScheme()
     let customTypographyScheme = MDCTypographyScheme()
     customTypographyScheme.button = UIFont.systemFont(ofSize: 19)
@@ -290,6 +319,9 @@ class ButtonsThemingTest: XCTestCase {
     // Then
     XCTAssertEqual(button.backgroundColor(for: .normal), colorScheme.secondaryColor)
     XCTAssertEqual(button.imageTintColor(for: .normal), colorScheme.onSecondaryColor)
+    // XCTAssertEqual(button.titleColor(for: .normal), colorScheme.onSecondaryColor)
+    XCTAssertEqual(button.shadowColor(for: .normal), defaultButton.shadowColor(for: .normal))
+    XCTAssertEqual(button.inkColor, defaultButton.inkColor)
 
     XCTAssertEqual(button.titleFont(for: .normal), customTypographyScheme.button)
 
@@ -303,5 +335,15 @@ class ButtonsThemingTest: XCTestCase {
     } else {
       XCTFail("Button.shapeGenerator was not a MDCRectangularShapeGenerator")
     }
+
+    // Test remaining properties
+    XCTAssertEqual(button.elevation(for: .normal), ShadowElevation.fabResting)
+    XCTAssertEqual(button.elevation(for: .highlighted), ShadowElevation.fabPressed)
+    XCTAssertEqual(button.elevation(for: .disabled), ShadowElevation.none)
+
+    XCTAssertEqual(button.borderWidth(for: .normal), defaultButton.borderWidth(for: .normal), accuracy: 0.001)
+    XCTAssertEqual(button.borderWidth(for: .selected), defaultButton.borderWidth(for: .selected), accuracy: 0.001)
+    XCTAssertEqual(button.borderWidth(for: .highlighted), defaultButton.borderWidth(for: .highlighted), accuracy: 0.001)
+    XCTAssertEqual(button.borderWidth(for: .disabled), defaultButton.borderWidth(for: .disabled), accuracy: 0.001)
   }
 }
