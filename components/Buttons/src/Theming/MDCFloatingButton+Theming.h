@@ -25,7 +25,7 @@
  system.
 
  Learn more at the [Material
- spec](https://material.io/design/components/buttons-floating-action-button.html#theming)
+ Guidelines](https://material.io/design/components/buttons-floating-action-button.html#theming)
  */
 - (void)applySecondaryThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
 

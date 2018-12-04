@@ -101,14 +101,16 @@ class ButtonsThemingTest: XCTestCase {
 
     XCTAssertEqual(button.titleFont(for: .normal), typographyScheme.button)
 
-    let buttonShape = button.shapeGenerator as! MDCRectangleShapeGenerator
-    XCTAssertNotNil(buttonShape)
-    let corner = MDCCornerTreatment.corner(withRadius: 0.5)
-    corner?.valueType = .percentage
-    XCTAssertEqual(buttonShape.topLeftCorner, corner)
-    XCTAssertEqual(buttonShape.topRightCorner, corner)
-    XCTAssertEqual(buttonShape.bottomRightCorner, corner)
-    XCTAssertEqual(buttonShape.bottomLeftCorner, corner)
+    if let buttonShape = button.shapeGenerator as? MDCRectangleShapeGenerator {
+      let corner = MDCCornerTreatment.corner(withRadius: 0.5)
+      corner?.valueType = .percentage
+      XCTAssertEqual(buttonShape.topLeftCorner, corner)
+      XCTAssertEqual(buttonShape.topRightCorner, corner)
+      XCTAssertEqual(buttonShape.bottomRightCorner, corner)
+      XCTAssertEqual(buttonShape.bottomLeftCorner, corner)
+    } else {
+      XCTFail("Button.shapeGenerator was not a MDCRectangularShapeGenerator")
+    }
   }
 
   func testFloatingButtonSecondaryThemeWithCustomColorTheme() {
@@ -119,6 +121,7 @@ class ButtonsThemingTest: XCTestCase {
     customColorScheme.secondaryColor = .purple
     customColorScheme.onSecondaryColor = .purple
     scheme.colorScheme = customColorScheme
+    let typographyScheme = MDCTypographyScheme(defaults: .material201804)
 
     // When
     button.applySecondaryTheme(withScheme: scheme)
@@ -126,6 +129,19 @@ class ButtonsThemingTest: XCTestCase {
     // Then
     XCTAssertEqual(button.backgroundColor(for: .normal), customColorScheme.secondaryColor)
     XCTAssertEqual(button.imageTintColor(for: .normal), customColorScheme.onSecondaryColor)
+    
+    XCTAssertEqual(button.titleFont(for: .normal), typographyScheme.button)
+    
+    if let buttonShape = button.shapeGenerator as? MDCRectangleShapeGenerator {
+      let corner = MDCCornerTreatment.corner(withRadius: 0.5)
+      corner?.valueType = .percentage
+      XCTAssertEqual(buttonShape.topLeftCorner, corner)
+      XCTAssertEqual(buttonShape.topRightCorner, corner)
+      XCTAssertEqual(buttonShape.bottomRightCorner, corner)
+      XCTAssertEqual(buttonShape.bottomLeftCorner, corner)
+    } else {
+      XCTFail("Button.shapeGenerator was not a MDCRectangularShapeGenerator")
+    }
   }
 
   func testFloatingButtonSecondaryThemeWithCustomTypographyTheme() {
@@ -135,11 +151,26 @@ class ButtonsThemingTest: XCTestCase {
     let customTypographyScheme = MDCTypographyScheme()
     customTypographyScheme.button = UIFont.systemFont(ofSize: 19)
     scheme.typographyScheme = customTypographyScheme
+    let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
 
     // When
     button.applySecondaryTheme(withScheme: scheme)
 
     // Then
+    XCTAssertEqual(button.backgroundColor(for: .normal), colorScheme.secondaryColor)
+    XCTAssertEqual(button.imageTintColor(for: .normal), colorScheme.onSecondaryColor)
+
     XCTAssertEqual(button.titleFont(for: .normal), customTypographyScheme.button)
+
+    if let buttonShape = button.shapeGenerator as? MDCRectangleShapeGenerator {
+      let corner = MDCCornerTreatment.corner(withRadius: 0.5)
+      corner?.valueType = .percentage
+      XCTAssertEqual(buttonShape.topLeftCorner, corner)
+      XCTAssertEqual(buttonShape.topRightCorner, corner)
+      XCTAssertEqual(buttonShape.bottomRightCorner, corner)
+      XCTAssertEqual(buttonShape.bottomLeftCorner, corner)
+    } else {
+      XCTFail("Button.shapeGenerator was not a MDCRectangularShapeGenerator")
+    }
   }
 }
