@@ -115,7 +115,6 @@
       [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
   self.fakeBottomDrawer.headerViewController = fakeHeader;
   self.fakeBottomDrawer.headerViewController.preferredContentSize = preferredContentSize;
-
 }
 
 - (void)testScrollViewNotNil {
