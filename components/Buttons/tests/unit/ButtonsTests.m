@@ -360,8 +360,8 @@ static NSString *controlStateDescription(UIControlState controlState) {
   UIButton *uiButton = [[UIButton alloc] init];
 
   // When
-  UIControlState maxState = UIControlStateNormal | UIControlStateHighlighted
-      | UIControlStateDisabled | UIControlStateSelected;
+  UIControlState maxState = UIControlStateNormal | UIControlStateHighlighted |
+                            UIControlStateDisabled | UIControlStateSelected;
   for (UIControlState state = 0; state <= maxState; ++state) {
     UIColor *color = [UIColor colorWithWhite:0 alpha:(CGFloat)(state / (CGFloat)maxState)];
     [testButton setBackgroundColor:color forState:state];
@@ -382,8 +382,8 @@ static NSString *controlStateDescription(UIControlState controlState) {
   UIButton *uiButton = [[UIButton alloc] init];
 
   // When
-  UIControlState maxState = UIControlStateNormal | UIControlStateHighlighted
-      | UIControlStateDisabled | UIControlStateSelected;
+  UIControlState maxState = UIControlStateNormal | UIControlStateHighlighted |
+                            UIControlStateDisabled | UIControlStateSelected;
   for (NSInteger state = maxState; state >= 0; --state) {
     UIColor *color = [UIColor colorWithWhite:0 alpha:(CGFloat)(state / (CGFloat)maxState)];
     [testButton setBackgroundColor:color forState:(UIControlState)state];
