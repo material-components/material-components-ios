@@ -230,9 +230,7 @@ class ButtonsThemingTest: XCTestCase {
     // Then
     XCTAssertEqual(button.backgroundColor(for: .normal), colorScheme.secondaryColor)
     XCTAssertEqual(button.imageTintColor(for: .normal), colorScheme.onSecondaryColor)
-    // TODO: Uncomment the assertion line below after fixing
-    // https://github.com/material-components/material-components-ios/issues/5911
-    // XCTAssertEqual(button.titleColor(for: .normal), colorScheme.onSecondaryColor)
+    XCTAssertEqual(button.titleColor(for: .normal), colorScheme.onSecondaryColor)
     XCTAssertEqual(button.shadowColor(for: .normal), defaultButton.shadowColor(for: .normal))
     XCTAssertEqual(button.inkColor, defaultButton.inkColor)
 
@@ -277,9 +275,7 @@ class ButtonsThemingTest: XCTestCase {
     // Then
     XCTAssertEqual(button.backgroundColor(for: .normal), customColorScheme.secondaryColor)
     XCTAssertEqual(button.imageTintColor(for: .normal), customColorScheme.onSecondaryColor)
-    // TODO: Uncomment the assertion line below after fixing
-    // https://github.com/material-components/material-components-ios/issues/5911
-    // XCTAssertEqual(button.titleColor(for: .normal), colorScheme.onSecondaryColor)
+    XCTAssertEqual(button.titleColor(for: .normal), customColorScheme.onSecondaryColor)
     XCTAssertEqual(button.shadowColor(for: .normal), defaultButton.shadowColor(for: .normal))
     XCTAssertEqual(button.inkColor, defaultButton.inkColor)
 
@@ -323,9 +319,7 @@ class ButtonsThemingTest: XCTestCase {
     // Then
     XCTAssertEqual(button.backgroundColor(for: .normal), colorScheme.secondaryColor)
     XCTAssertEqual(button.imageTintColor(for: .normal), colorScheme.onSecondaryColor)
-    // TODO: Uncomment the assertion line below after fixing
-    // https://github.com/material-components/material-components-ios/issues/5911
-    // XCTAssertEqual(button.titleColor(for: .normal), colorScheme.onSecondaryColor)
+    XCTAssertEqual(button.titleColor(for: .normal), colorScheme.onSecondaryColor)
     XCTAssertEqual(button.shadowColor(for: .normal), defaultButton.shadowColor(for: .normal))
     XCTAssertEqual(button.inkColor, defaultButton.inkColor)
 
