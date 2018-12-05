@@ -46,6 +46,14 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
   return self;
 }
 
+- (MDCContainerScheme *)containerScheme {
+  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
+  scheme.colorScheme = self.colorScheme;
+  scheme.shapeScheme = self.shapeScheme;
+  scheme.typographyScheme = self.typographyScheme;
+  return scheme;
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
 
@@ -157,7 +165,7 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
   UIImage *plusImage =
       [[UIImage imageNamed:@"Plus"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [self.floatingButton setImage:plusImage forState:UIControlStateNormal];
-  [MDCFloatingActionButtonThemer applyScheme:buttonScheme toButton:self.floatingButton];
+  [self.floatingButton applySecondaryThemeWithScheme:[self containerScheme]];
   self.floatingButton.accessibilityLabel = @"Create";
   [self.view addSubview:self.floatingButton];
 
