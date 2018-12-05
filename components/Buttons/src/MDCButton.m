@@ -47,6 +47,9 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
                          alpha:1];
 }
 
+static const UIControlState kDisabledHighlighted =
+    (UIControlStateDisabled | UIControlStateHighlighted);
+
 static NSAttributedString *uppercaseAttributedString(NSAttributedString *string) {
   // Store the attributes.
   NSMutableArray<NSDictionary *> *attributes = [NSMutableArray array];
@@ -541,11 +544,20 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (UIColor *)backgroundColorForState:(UIControlState)state {
+  if ((state & kDisabledHighlighted) == kDisabledHighlighted) {
+    state = state & ~UIControlStateDisabled;
+  }
   return _backgroundColors[@(state)];
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor forState:(UIControlState)state {
-  _backgroundColors[@(state)] = backgroundColor;
+  UIControlState storageState = state;
+  if ((state & kDisabledHighlighted) == kDisabledHighlighted) {
+    storageState = state & ~UIControlStateDisabled;
+  }
+  if (storageState == state || _backgroundColors[@(storageState)] != nil) {
+    _backgroundColors[@(storageState)] = backgroundColor;
+  }
   [self updateAlphaAndBackgroundColorAnimated:NO];
 }
 
