@@ -48,9 +48,12 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
     if ((state == UIControlStateNormal)||(state == UIControlStateDisabled))  {
       continue; // These two states are manually checked above.
     }
-    XCTAssertNil([button backgroundColorForState:state], @"state:%lu", (unsigned long)state);
-    XCTAssertEqualObjects([button titleColorForState:state], colorScheme.primaryColor, @"state:%lu",
+    XCTAssertEqualObjects([button backgroundColorForState:state],
+                          [button backgroundColorForState:UIControlStateNormal], @"state:%lu",
                           (unsigned long)state);
+    XCTAssertEqualObjects(
+        [button titleColorForState:state], [button titleColorForState:UIControlStateNormal],
+        @"state:%lu", (unsigned long)state);
   }
 }
 
@@ -79,9 +82,12 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
     if ((state == UIControlStateNormal)||(state == UIControlStateDisabled))  {
       continue; // These two states are manually checked above.
     }
-    XCTAssertNil([button backgroundColorForState:state], @"state:%lu", (unsigned long)state);
-    XCTAssertEqualObjects([button titleColorForState:state], colorScheme.onPrimaryColor,
-                          @"state:%lu", (unsigned long)state);
+    XCTAssertEqualObjects([button backgroundColorForState:state],
+                          [button backgroundColorForState:UIControlStateNormal], @"state:%lu",
+                          (unsigned long)state);
+    XCTAssertEqualObjects(
+        [button titleColorForState:state], [button titleColorForState:UIControlStateNormal],
+        @"state:%lu", (unsigned long)state);
   }
 }
 
@@ -238,7 +244,8 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
       XCTAssertEqual([button backgroundColorForState:state], colorScheme.secondaryColor);
       XCTAssertEqual([button imageTintColorForState:state], colorScheme.onSecondaryColor);
     } else {
-      XCTAssertEqual([button backgroundColorForState:state], nil);
+      XCTAssertEqual([button backgroundColorForState:state],
+                     [button backgroundColorForState:UIControlStateNormal]);
     }
 
     // TODO(https://github.com/material-components/material-components-ios/issues/3062 ):

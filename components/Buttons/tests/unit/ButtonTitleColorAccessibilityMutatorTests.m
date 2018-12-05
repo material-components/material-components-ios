@@ -39,7 +39,11 @@ static NSString *controlStateDescription(UIControlState controlState);
 
 - (void)testMutateChangesTextColor {
   for (UIColor *color in testColors()) {
-    for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
+    for (NSUInteger controlState = 0; controlState <= kNumUIControlStates; ++controlState) {
+      if ((controlState & kUIControlStateDisabledHighlighted) ==
+          kUIControlStateDisabledHighlighted) {
+        continue;
+      }
       // Given
       MDCButton *button = [[MDCButton alloc] init];
       // Making the background color the same as the title color.
@@ -91,7 +95,11 @@ static NSString *controlStateDescription(UIControlState controlState);
 
 - (void)testMutateUsesUnderlyingColorIfButtonBackgroundColorIsTransparent {
   for (UIColor *color in testColors()) {
-    for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
+    for (NSUInteger controlState = 0; controlState <= kNumUIControlStates; ++controlState) {
+      if ((controlState & kUIControlStateDisabledHighlighted) ==
+          kUIControlStateDisabledHighlighted) {
+        continue;
+      }
       // Given
       MDCButton *button = [[MDCButton alloc] init];
       button.underlyingColorHint = color;

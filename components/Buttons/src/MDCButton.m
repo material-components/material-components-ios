@@ -30,6 +30,9 @@
 static const CGFloat MDCButtonMinimumTouchTargetHeight = 48;
 static const CGFloat MDCButtonMinimumTouchTargetWidth = 48;
 static const CGFloat MDCButtonDefaultCornerRadius = 2.0;
+static const UIControlState kDisabledHighlighted =
+    (UIControlStateDisabled | UIControlStateHighlighted);
+
 
 static const NSTimeInterval MDCButtonAnimationDuration = 0.2;
 
@@ -541,11 +544,20 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (UIColor *)backgroundColorForState:(UIControlState)state {
-  return _backgroundColors[@(state)];
+  if ((state & kDisabledHighlighted) == kDisabledHighlighted) {
+    state = state & ~UIControlStateDisabled;
+  }
+  return _backgroundColors[@(state)] ?: _backgroundColors[@(UIControlStateNormal)];
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor forState:(UIControlState)state {
-  _backgroundColors[@(state)] = backgroundColor;
+  UIControlState storageState = state;
+  if ((state & kDisabledHighlighted) == kDisabledHighlighted) {
+    storageState = state & ~UIControlStateDisabled;
+  }
+  if (storageState == state || _backgroundColors[@(storageState)] != nil) {
+    _backgroundColors[@(storageState)] = backgroundColor;
+  }
   [self updateAlphaAndBackgroundColorAnimated:NO];
 }
 
@@ -650,22 +662,15 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 #pragma mark - Private methods
 
-- (UIColor *)currentBackgroundColor {
-  UIColor *color = _backgroundColors[@(self.state)];
-  if (color) {
-    return color;
-  }
-  return [self backgroundColorForState:UIControlStateNormal];
-}
-
 /**
  The background color that a user would see for this button. If self.backgroundColor is not
  transparent, then returns that. Otherwise, returns self.underlyingColorHint.
  @note If self.underlyingColorHint is not set, then this method will return nil.
  */
 - (UIColor *)effectiveBackgroundColor {
-  if (![self isTransparentColor:self.currentBackgroundColor]) {
-    return self.currentBackgroundColor;
+  UIColor *currentBackgroundColor = [self backgroundColorForState:self.state];
+  if (![self isTransparentColor:currentBackgroundColor]) {
+    return currentBackgroundColor;
   } else {
     return self.underlyingColorHint;
   }
@@ -742,7 +747,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 - (void)updateBackgroundColor {
   // When shapeGenerator is unset then self.layer.shapedBackgroundColor sets the layer's
   // backgroundColor. Whereas when shapeGenerator is set the sublayer's fillColor is set.
-  self.layer.shapedBackgroundColor = self.currentBackgroundColor;
+  self.layer.shapedBackgroundColor = [self backgroundColorForState:self.state];
   [self updateDisabledTitleColor];
 }
 

@@ -281,6 +281,37 @@ static NSString *controlStateDescription(UIControlState controlState) {
   }
 }
 
+// Behavioral test to verify that MDCButton's `backgroundColor:forState:` matches the behavior of
+// UIButton's `titleColor:forState:`.  Specifically, to ensure that the special handling of
+// (UIControlStateDisabled | UIControlStateHighlighted) is identical.
+//
+// This test is valuable because clients who are familiar with the fallback behavior of
+// `titleColor:forState:` may be surprised if the MDCButton APIs don't match. For example, setting
+// the titleColor for (UIControlStateDisabled | UIControlStateHighlighted) will actually update the
+// value assigned for UIControlStateHighlighted, but ONLY if it has already been assigned. Otherwise
+// no update will take place.
+- (void)testBackgroundColorForStateBehaviorMatchesTitleColorForState {
+  for (NSInteger lowestAssignState = 7; lowestAssignState >= 0; --lowestAssignState) {
+    MDCButton *testButton = [[MDCButton alloc] init];
+    UIButton *uiButton = [[UIButton alloc] init];
+    [uiButton setTitleColor:[testButton backgroundColorForState:UIControlStateNormal]
+                   forState:UIControlStateNormal];
+
+    for (UIControlState assignState = (NSUInteger)lowestAssignState; assignState <= 7; ++assignState) {
+      [testButton setBackgroundColor:[UIColor colorWithWhite:(CGFloat)(lowestAssignState / 8.0) alpha:(CGFloat)(assignState / 8.0)]
+                            forState:assignState];
+      [uiButton setTitleColor:[UIColor colorWithWhite:(CGFloat)(lowestAssignState / 8.0) alpha:(CGFloat)(assignState / 8.0)]
+                     forState:assignState];
+    }
+    for (UIControlState testState = 0; testState <= 7; ++testState ) {
+      XCTAssertEqualObjects([testButton backgroundColorForState:testState],
+                            [uiButton titleColorForState:testState],
+                            @" for Lowest = (%ld), Test = (%lu)",
+                            lowestAssignState, testState);
+    }
+  }
+}
+
 #pragma mark - shadowColor:forState:
 
 - (void)testRemovedShadowColorForState {
