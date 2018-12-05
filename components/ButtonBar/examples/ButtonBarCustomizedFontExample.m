@@ -16,6 +16,7 @@
 
 #import "MaterialButtonBar+Theming.h"
 #import "MaterialButtonBar.h"
+#import "MaterialContainerScheme.h"
 
 @interface ButtonBarCustomizedFontExample : UIViewController
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
