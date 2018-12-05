@@ -55,10 +55,10 @@ objc_bundle(
 )
 
 mdc_objc_library(
-    name = "Theming",
-    srcs = native.glob(["src/Theming/*.m"]),
-    hdrs = native.glob(["src/Theming/*.h"]),
-    includes = ["src/Theming"],
+    name = "MaterialTheming",
+    srcs = native.glob(["src/MaterialTheming/*.m"]),
+    hdrs = native.glob(["src/MaterialTheming/*.h"]),
+    includes = ["src/MaterialTheming"],
     deps = [
         ":Dialogs",
         ":ColorThemer",

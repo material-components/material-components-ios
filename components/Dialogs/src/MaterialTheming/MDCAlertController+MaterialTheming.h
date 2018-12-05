@@ -17,7 +17,7 @@
 
 /**
  This category is used to style MDCAlertController instances to a specific Material style which can
- be found within the [Material Guidelines](https://material.io/design/components/buttons.html).
+ be found within the [Material Guidelines](https://material.io/design/components/dialogs.html).
  */
 @interface MDCAlertController (MaterialTheming)
 
