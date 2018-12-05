@@ -249,10 +249,22 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
                           @"Image tint color (%@) is not equal to (%@) for state (%lu).",
                           [button imageTintColorForState:state], colorScheme.onSecondaryColor,
                           (unsigned long)state);
+
+    // TODO(https://github.com/material-components/material-components-ios/issues/3062 ):
+    //   Title color for state is forced to UIColor.black in disabled state unless a disabled color
+    //   is set explicitly.
+    if (state == UIControlStateDisabled) {
+      XCTAssertEqualObjects([button titleColorForState:state], UIColor.blackColor,
+                            @"Title color for the disabled state should be black.");
+    } else {
+      XCTAssertEqualObjects([button titleColorForState:state], colorScheme.onSecondaryColor,
+                            @"Title color (%@) is not equal to (%@) for state (%lu).)",
+                            [button titleColorForState:state], colorScheme.onSecondaryColor,
+                            (unsigned long)state);
+    }
   }
 
   XCTAssertEqualWithAccuracy(button.disabledAlpha, 1, (CGFloat)0.001);
 }
-
 
 @end
