@@ -360,14 +360,16 @@ static NSString *controlStateDescription(UIControlState controlState) {
   UIButton *uiButton = [[UIButton alloc] init];
 
   // When
-  for (UIControlState state = 0; state < 8; ++state) {
-    UIColor *color = [UIColor colorWithWhite:0 alpha:(CGFloat)(state / 8.0)];
+  UIControlState maxState = UIControlStateNormal | UIControlStateHighlighted
+      | UIControlStateDisabled | UIControlStateSelected;
+  for (UIControlState state = 0; state <= maxState; ++state) {
+    UIColor *color = [UIColor colorWithWhite:0 alpha:(CGFloat)(state / (CGFloat)maxState)];
     [testButton setBackgroundColor:color forState:state];
     [uiButton setTitleColor:color forState:state];
   }
 
   // Then
-  for (UIControlState state = 0; state < 8; ++state) {
+  for (UIControlState state = 0; state <= maxState; ++state) {
     XCTAssertEqualObjects([testButton backgroundColorForState:state],
                           [uiButton titleColorForState:state], @" for state (%lu)",
                           (unsigned long)state);
@@ -380,14 +382,16 @@ static NSString *controlStateDescription(UIControlState controlState) {
   UIButton *uiButton = [[UIButton alloc] init];
 
   // When
-  for (NSInteger state = 7; state >= 0; --state) {
-    UIColor *color = [UIColor colorWithWhite:0 alpha:(CGFloat)(state / 8.0)];
+  UIControlState maxState = UIControlStateNormal | UIControlStateHighlighted
+      | UIControlStateDisabled | UIControlStateSelected;
+  for (NSInteger state = maxState; state >= 0; --state) {
+    UIColor *color = [UIColor colorWithWhite:0 alpha:(CGFloat)(state / (CGFloat)maxState)];
     [testButton setBackgroundColor:color forState:(UIControlState)state];
     [uiButton setTitleColor:color forState:(UIControlState)state];
   }
 
   // Then
-  for (UIControlState state = 0; state < 8; ++state) {
+  for (UIControlState state = 0; state <= maxState; ++state) {
     XCTAssertEqualObjects([testButton backgroundColorForState:state],
                           [uiButton titleColorForState:state], @" for state (%lu)",
                           (unsigned long)state);
