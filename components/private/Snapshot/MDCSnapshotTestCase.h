@@ -12,14 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <Foundation/Foundation.h>
+#import <FBSnapshotTestCase/FBSnapshotTestCase.h>
 
-#import "../../../src/private/MDCFlexibleHeaderTopSafeArea.h"
+@interface MDCSnapshotTestCase : FBSnapshotTestCase
 
-@interface FlexibleHeaderTopSafeAreaTestsFakeTopSafeAreaDelegate
-    : NSObject <MDCFlexibleHeaderSafeAreaDelegate>
-@property(nonatomic) BOOL isStatusBarShifted;
-@property(nonatomic) BOOL topSafeAreaInsetDidChangeWasCalled;
-@property(nonatomic) CGFloat deviceTopSafeAreaInset;
-@property(nonatomic, weak) id<MDCFlexibleHeaderSafeAreaDelegate> forwardingDelegate;
+/**
+ * This method will take a view and add it to as a subview to a new view with a size slightly
+ * larger than the argument view.
+ */
+- (UIView *)addBackgroundViewToView:(UIView *)view;
+
+/**
+ * This will call FBSnapshotVerifyView but first check for supported iOS versions. Additionally,
+ * this will use UIGraphicsImageRenderer to render the view correctly (including shadows).
+ */
+- (void)snapshotVerifyView:(UIView *)view;
+
 @end

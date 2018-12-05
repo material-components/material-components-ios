@@ -12,14 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <Foundation/Foundation.h>
+#import "MDCSnapshotTestCase.h"
+#import "MaterialCards.h"
 
-#import "../../../src/private/MDCFlexibleHeaderTopSafeArea.h"
+@interface MDCCardSnapshotTests : MDCSnapshotTestCase
 
-@interface FlexibleHeaderTopSafeAreaTestsFakeTopSafeAreaDelegate
-    : NSObject <MDCFlexibleHeaderSafeAreaDelegate>
-@property(nonatomic) BOOL isStatusBarShifted;
-@property(nonatomic) BOOL topSafeAreaInsetDidChangeWasCalled;
-@property(nonatomic) CGFloat deviceTopSafeAreaInset;
-@property(nonatomic, weak) id<MDCFlexibleHeaderSafeAreaDelegate> forwardingDelegate;
+@end
+
+@implementation MDCCardSnapshotTests
+
+- (void)testDefaultCard {
+  // Uncomment below to recreate the golden
+  //  self.recordMode = YES;
+
+  // Given
+  MDCCard *card = [[MDCCard alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+  UIView *backgroundView = [self addBackgroundViewToView:card];
+
+  // Then
+  [self snapshotVerifyView:backgroundView];
+}
+
 @end

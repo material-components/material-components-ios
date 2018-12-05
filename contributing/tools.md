@@ -50,3 +50,11 @@ git clang-format -h
 https://github.com/material-foundation/github-squash-and-merge-pr-descriptions.
 
 This tool ensures that your pull request's merge commit matches your PR description.
+
+## Using git-lfs
+
+Snapshot tests utilize git-lfs to store the reference images. Please install and configure git-lfs in order to run and write snapshot tests. Perform the following steps:
+
+1. `brew install git-lfs`
+2. `git lfs install`
+3. `git lfs pull`
