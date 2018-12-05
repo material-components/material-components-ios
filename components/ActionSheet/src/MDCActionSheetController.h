@@ -24,15 +24,18 @@
 
  A Material Action Sheet consists of a title, message and a list of actions.
 
- Learn more about [Material bottom
- sheet](https://material.io/design/components/sheets-bottom.html)
- [Material spec list](https://material.io/design/components/lists.html)
+ The [Material Guidelines article for Bottom
+ Sheets](https://material.io/design/components/sheets-bottom.html) and the
+ [Material Guidelines article for Lists](https://material.io/design/components/lists.html) have more
+ detailed guidance about how to style and use Action Sheets.
 
  To learn more about
  [UIAlertController](https://developer.apple.com/documentation/uikit/uialertcontroller)
- or [UIAlertControllerStyleActionSheet](https://developer.apple.com/documentation/uikit/uialertcontrollerstyle/uialertcontrollerstyleactionsheet)
+ or
+ [UIAlertControllerStyleActionSheet](https://developer.apple.com/documentation/uikit/uialertcontrollerstyle/uialertcontrollerstyleactionsheet)
 
- MDCActionSheetController does not support UIPopoverController, instead it will always be presented in a sheet from the bottom.
+ MDCActionSheetController does not support UIPopoverController, instead it will always be presented
+ in a sheet from the bottom.
 
  */
 __attribute__((objc_subclassing_restricted))
