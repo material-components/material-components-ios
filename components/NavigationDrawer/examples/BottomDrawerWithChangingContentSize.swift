@@ -63,6 +63,9 @@ class BottomDrawerWithChangingContentSizeExample: UIViewController {
 
   @objc func presentNavigationDrawer() {
     let bottomDrawerViewController = MDCBottomDrawerViewController()
+    bottomDrawerViewController.setTopCornersRadius(8, for: .collapsed)
+    bottomDrawerViewController.setTopCornersRadius(0, for: .expanded)
+    bottomDrawerViewController.isTopHandleHidden = false
     bottomDrawerViewController.contentViewController = contentViewController
     bottomDrawerViewController.headerViewController = headerViewController
     bottomDrawerViewController.trackingScrollView = contentViewController.collectionView
