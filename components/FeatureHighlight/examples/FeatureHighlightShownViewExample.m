@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialButtons.h"
 #import "MaterialButtons+Theming.h"
-#import "MaterialFeatureHighlight.h"
+#import "MaterialButtons.h"
 #import "MaterialFeatureHighlight+ColorThemer.h"
 #import "MaterialFeatureHighlight+FeatureHighlightAccessibilityMutator.h"
 #import "MaterialFeatureHighlight+TypographyThemer.h"
+#import "MaterialFeatureHighlight.h"
 #import "supplemental/FeatureHighlightExampleSupplemental.h"
 
 @implementation FeatureHighlightShownViewExample

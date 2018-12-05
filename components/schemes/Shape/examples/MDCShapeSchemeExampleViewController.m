@@ -25,7 +25,6 @@
 #import "MaterialBottomSheet+ShapeThemer.h"
 #import "MaterialBottomSheet.h"
 #import "MaterialButtons+ButtonThemer.h"
-#import "MaterialButtons+Theming.h"
 #import "MaterialButtons+ShapeThemer.h"
 #import "MaterialButtons+Theming.h"
 #import "MaterialButtons.h"
