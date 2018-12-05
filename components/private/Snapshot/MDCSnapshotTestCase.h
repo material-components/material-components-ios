@@ -12,15 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <UIKit/UIKit.h>
+#import <FBSnapshotTestCase/FBSnapshotTestCase.h>
 
-#import "MaterialColorScheme.h"
-#import "MaterialTypographyScheme.h"
-#import "MaterialActionSheet.h"
+@interface MDCSnapshotTestCase : FBSnapshotTestCase
 
-@interface ActionSheetTypicalUse : UIViewController
+/**
+ * This method will take a view and add it to as a subview to a new view with a size slightly
+ * larger than the argument view.
+ */
+- (UIView *)addBackgroundViewToView:(UIView *)view;
 
-@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
-@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
+/**
+ * This will call FBSnapshotVerifyView but first check for supported iOS versions. Additionally,
+ * this will use UIGraphicsImageRenderer to render the view correctly (including shadows).
+ */
+- (void)snapshotVerifyView:(UIView *)view;
 
 @end

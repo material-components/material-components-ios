@@ -12,14 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <UIKit/UIKit.h>
+#import "MaterialButtonBar.h"
+#import "MaterialContainerScheme.h"
 
-#import "MaterialColorScheme.h"
-#import "MaterialTypographyScheme.h"
+// This category applies Material themes that are defined in the Material Guidelines:
+// https://material.io/design/components/app-bars-top.html
+@interface MDCButtonBar (MaterialTheming)
 
-@interface ActionSheetComparison : UIViewController
+/**
+ Apply the primary theme to this instance.
 
-@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
-@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
+ @param scheme A container scheme instance containing any desired customizations to the theming
+ system.
+ */
+- (void)applyPrimaryThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
 
 @end

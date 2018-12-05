@@ -12,12 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialButtons.h"
 #import "MaterialButtons+ButtonThemer.h"
 #import "MaterialButtons+ColorThemer.h"
+#import "MaterialButtons+Theming.h"
 #import "MaterialButtons+TypographyThemer.h"
-#import "MaterialShapes.h"
+#import "MaterialButtons.h"
 #import "MaterialShapeLibrary.h"
+#import "MaterialShapes.h"
 #import "MaterialTypography.h"
 #import "supplemental/ButtonsTypicalUseSupplemental.h"
 
@@ -32,7 +33,13 @@
   if (self) {
     self.colorScheme =
         [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    self.typographyScheme = [[MDCTypographyScheme alloc] init];
+    self.typographyScheme =
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+    self.containerScheme = [[MDCContainerScheme alloc] init];
+    self.containerScheme.colorScheme = self.colorScheme;
+    self.containerScheme.shapeScheme =
+        [[MDCShapeScheme alloc] initWithDefaults:MDCShapeSchemeDefaultsMaterial201809];
+    self.containerScheme.typographyScheme = self.typographyScheme;
   }
   return self;
 }
@@ -59,7 +66,7 @@
 
   MDCButton *containedButton = [[MDCButton alloc] init];
   [containedButton setTitle:@"Add To Cart" forState:UIControlStateNormal];
-  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:containedButton];
+  [containedButton applyContainedThemeWithScheme:self.containerScheme];
 
   UIImage *plusImage = [UIImage imageNamed:@"Plus"];
   plusImage = [plusImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
@@ -80,7 +87,7 @@
 
   MDCButton *disabledContainedButton = [[MDCButton alloc] init];
   [disabledContainedButton setTitle:@"Disabled" forState:UIControlStateNormal];
-  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:disabledContainedButton];
+  [disabledContainedButton applyContainedThemeWithScheme:self.containerScheme];
 
   MDCRectangleShapeGenerator *disabledRaisedShapeGenerator =
       [[MDCRectangleShapeGenerator alloc] init];
@@ -100,7 +107,7 @@
 
   MDCButton *flatButton = [[MDCButton alloc] init];
   [flatButton setTitle:@"Oval Flat" forState:UIControlStateNormal];
-  [MDCTextButtonThemer applyScheme:buttonScheme toButton:flatButton];
+  [flatButton applyTextThemeWithScheme:self.containerScheme];
 
   MDCPillShapeGenerator *flatShapeGenerator = [[MDCPillShapeGenerator alloc] init];
   flatButton.shapeGenerator = flatShapeGenerator;
