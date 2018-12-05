@@ -16,6 +16,7 @@
 
 #import "MDCBottomDrawerHeader.h"
 #import "MDCBottomDrawerHeaderMask.h"
+#import "MaterialMath.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialUIMetrics.h"
 
@@ -136,8 +137,13 @@ static UIColor *DrawerShadowColor(void) {
 // The current bottom drawer state.
 @property(nonatomic) MDCBottomDrawerState drawerState;
 
-// The height of the drawer at time of layout, in relation to the screen height, 0.0 is totally
-// hidden and 1.0 is full screen.
+/**
+ The height of the drawer at initial layout. This value is a percentage between 0-100% (0-1).
+ - 1 or 100% indicates the drawer is full screen.
+ - 0 or 0% indicates that drawer if hidden.
+
+ @note In voiceover and landscape this value will be 1.
+ */
 @property(nonatomic) CGFloat initialDrawerFactor;
 
 @end
@@ -290,7 +296,7 @@ static UIColor *DrawerShadowColor(void) {
 
 - (BOOL)shouldPresentFullScreen {
   // TODO: Github issue #5828
-  return [self isAccessibilityMode] || [self isMobileLandscape] || _initialDrawerFactor >= 1;
+  return [self isAccessibilityMode] || [self isMobileLandscape];
 }
 
 /**
@@ -498,7 +504,7 @@ static UIColor *DrawerShadowColor(void) {
 }
 
 - (void)resetInitialDrawerFactorWithHeight:(CGFloat)height {
-  if (_contentVCPreferredContentSizeHeightCached == 0) {
+  if (MDCCGFloatEqual(_contentVCPreferredContentSizeHeightCached, 0)) {
     [self cacheLayoutCalculations];
   }
   CGFloat totalHeight = self.headerViewController.preferredContentSize.height +
