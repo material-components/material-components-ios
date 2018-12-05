@@ -23,9 +23,6 @@ import MaterialComponents.MaterialTypographyScheme
 /// Controller.
 class DialogsAlertComparison: UIViewController {
 
-  var colorScheme = MDCSemanticColorScheme()
-  var typographyScheme = MDCTypographyScheme()
-
   private let materialButton = MDCFlatButton()
   private let themedButton = MDCFlatButton()
   private let uikitButton = MDCFlatButton()
@@ -114,14 +111,9 @@ class DialogsAlertComparison: UIViewController {
   }
 
   @objc func tapThemed(_ sender: Any) {
-
     let alertController = createMDCAlertController()
-
-    let scheme = MDCAlertScheme()
-    scheme.colorScheme = self.colorScheme
-    scheme.typographyScheme = self.typographyScheme
-
-    MDCAlertControllerThemer.applyScheme(scheme, to: alertController)
+    let scheme = MDCContainerScheme()
+    alertController.applyTheme(withScheme: scheme)
     self.present(alertController, animated: true, completion: nil)
   }
 
