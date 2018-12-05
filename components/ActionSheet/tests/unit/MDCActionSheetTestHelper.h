@@ -36,6 +36,6 @@
     (MDCActionSheetController *)actionSheet;
 
 + (MDCActionSheetItemTableViewCell *)getCellFromActionSheet:(MDCActionSheetController *)actionSheet
-                                                    atIndex:(NSInteger)index;
+                                                    atIndex:(NSUInteger)index;
 
 @end

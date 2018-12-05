@@ -65,7 +65,7 @@
 }
 
 + (MDCActionSheetItemTableViewCell *)getCellFromActionSheet:(MDCActionSheetController *)actionSheet
-                                                    atIndex:(NSInteger)index {
+                                                    atIndex:(NSUInteger)index {
   if (index < actionSheet.actions.count) {
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
     UITableView *table = actionSheet.tableView;
