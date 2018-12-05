@@ -339,9 +339,9 @@ static NSString *controlStateDescription(UIControlState controlState) {
     button.selected = isSelected;
     button.highlighted = isHighlighted;
 
-    XCTAssertEqualObjects(
-        button.backgroundColor, [button backgroundColorForState:UIControlStateNormal],
-        @"for state (%lu).", (unsigned long)controlState);
+    XCTAssertEqualObjects(button.backgroundColor,
+                          [button backgroundColorForState:UIControlStateNormal],
+                          @"for state (%lu).", (unsigned long)controlState);
   }
 }
 
