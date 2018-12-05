@@ -26,6 +26,17 @@
                           arcRadius:(CGFloat)arcRadius
                          startAngle:(CGFloat)startAngle
                            endAngle:(CGFloat)endAngle;
+- (UIBezierPath *)drawWithPathToCut:(UIBezierPath *)bottomBarPath
+                            yOffset:(CGFloat)yOffset
+                              width:(CGFloat)width
+                             height:(CGFloat)height
+                          arcRadius:(CGFloat)arcRadius
+                         arcCenter1:(CGPoint)arcCenter1
+                        startAngle1:(CGFloat)startAngle1
+                          endAngle1:(CGFloat)endAngle1
+                         arcCenter2:(CGPoint)arcCenter2
+                        startAngle2:(CGFloat)startAngle2
+                          endAngle2:(CGFloat)endAngle2;
 - (UIBezierPath *)drawWithPlainPath:(UIBezierPath *)bottomBarPath
                             yOffset:(CGFloat)yOffset
                               width:(CGFloat)width
@@ -59,26 +70,56 @@
                 shouldCut:(BOOL)shouldCut {
   UIBezierPath *bottomBarPath = [UIBezierPath bezierPath];
 
-  CGFloat arcRadius =
-      CGRectGetHeight(floatingButton.bounds) / 2 + kMDCBottomAppBarFloatingButtonRadiusOffset;
   CGFloat navigationBarYOffset = CGRectGetMinY(navigationBarFrame);
-  CGFloat halfAngle = acosf((float)((navigationBarYOffset - floatingButton.center.y) / arcRadius));
-  CGFloat startAngle = (float)M_PI / 2 + halfAngle;
-  CGFloat endAngle = (float)M_PI / 2 - halfAngle;
 
   CGFloat width = CGRectGetWidth(rect);
   CGFloat height = CGRectGetHeight(rect);
 
   if (shouldCut) {
-    [self drawWithPathToCut:bottomBarPath
-                    yOffset:navigationBarYOffset
-                      width:width
-                     height:height
-                  arcCenter:floatingButton.center
-                  arcRadius:arcRadius
-                 startAngle:startAngle
-                   endAngle:endAngle];
+    if (floatingButton.mode == MDCFloatingButtonModeExpanded) {
+      CGFloat arcRadius =
+      CGRectGetHeight(floatingButton.bounds) / 2 + kMDCBottomAppBarFloatingButtonRadiusOffset;
+
+      CGPoint arcCenter1 = CGPointMake(floatingButton.center.x - CGRectGetWidth(floatingButton.bounds) / 2 + arcRadius - kMDCBottomAppBarFloatingButtonRadiusOffset, floatingButton.center.y);
+      CGFloat startAngle1 = (float)M_PI;
+      CGFloat endAngle1 = (float)M_PI_2;
+
+      CGPoint arcCenter2 = CGPointMake(floatingButton.center.x + CGRectGetWidth(floatingButton.bounds) / 2 - arcRadius + kMDCBottomAppBarFloatingButtonRadiusOffset, floatingButton.center.y);
+      CGFloat startAngle2 = (float)M_PI_2;
+      CGFloat endAngle2 = 0;
+
+
+      [self drawWithPathToCut:bottomBarPath
+                      yOffset:navigationBarYOffset
+                        width:width
+                       height:height
+                    arcRadius:arcRadius
+                   arcCenter1:arcCenter1
+                  startAngle1:startAngle1
+                    endAngle1:endAngle1
+                   arcCenter2:arcCenter2
+                  startAngle2:startAngle2
+                    endAngle2:endAngle2];
+    }
+    else {
+      CGFloat arcRadius =
+      CGRectGetHeight(floatingButton.bounds) / 2 + kMDCBottomAppBarFloatingButtonRadiusOffset;
+      CGFloat halfAngle = acosf((float)((navigationBarYOffset - floatingButton.center.y) / arcRadius));
+      CGFloat startAngle = (float)M_PI / 2 + halfAngle;
+      CGFloat endAngle = (float)M_PI / 2 - halfAngle;
+
+      [self drawWithPathToCut:bottomBarPath
+                      yOffset:navigationBarYOffset
+                        width:width
+                       height:height
+                    arcCenter:floatingButton.center
+                    arcRadius:arcRadius
+                   startAngle:startAngle
+                     endAngle:endAngle];
+    }
   } else {
+    CGFloat arcRadius =
+    CGRectGetHeight(floatingButton.bounds) / 2 + kMDCBottomAppBarFloatingButtonRadiusOffset;
     [self drawWithPlainPath:bottomBarPath
                     yOffset:navigationBarYOffset
                       width:width
@@ -112,6 +153,38 @@
   [bottomBarPath closePath];
   return bottomBarPath;
 }
+
+- (UIBezierPath *)drawWithPathToCut:(UIBezierPath *)bottomBarPath
+                            yOffset:(CGFloat)yOffset
+                              width:(CGFloat)width
+                             height:(CGFloat)height
+                          arcRadius:(CGFloat)arcRadius
+                         arcCenter1:(CGPoint)arcCenter1
+                        startAngle1:(CGFloat)startAngle1
+                          endAngle1:(CGFloat)endAngle1
+                         arcCenter2:(CGPoint)arcCenter2
+                        startAngle2:(CGFloat)startAngle2
+                          endAngle2:(CGFloat)endAngle2 {
+
+  [bottomBarPath moveToPoint:CGPointMake(0, yOffset)];
+  [bottomBarPath addArcWithCenter:arcCenter1
+                           radius:arcRadius
+                       startAngle:startAngle1
+                         endAngle:endAngle1
+                        clockwise:NO];
+
+  [bottomBarPath addArcWithCenter:arcCenter2
+                           radius:arcRadius
+                       startAngle:startAngle2
+                         endAngle:endAngle2
+                        clockwise:NO];
+  [bottomBarPath addLineToPoint:CGPointMake(width, yOffset)];
+  [bottomBarPath addLineToPoint:CGPointMake(width, height * 2 + yOffset)];
+  [bottomBarPath addLineToPoint:CGPointMake(0, height * 2 + yOffset)];
+  [bottomBarPath closePath];
+  return bottomBarPath;
+}
+
 
 - (UIBezierPath *)drawWithPlainPath:(UIBezierPath *)bottomBarPath
                             yOffset:(CGFloat)yOffset
