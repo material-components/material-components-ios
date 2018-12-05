@@ -368,9 +368,9 @@ static NSString *controlStateDescription(UIControlState controlState) {
 
   // Then
   for (UIControlState state = 0; state < 8; ++state) {
-    XCTAssertEqualObjects(
-        [testButton backgroundColorForState:state], [uiButton titleColorForState:state],
-        @" for state (%lu)", (unsigned long)state);
+    XCTAssertEqualObjects([testButton backgroundColorForState:state],
+                          [uiButton titleColorForState:state], @" for state (%lu)",
+                          (unsigned long)state);
   }
 }
 
@@ -388,9 +388,9 @@ static NSString *controlStateDescription(UIControlState controlState) {
 
   // Then
   for (UIControlState state = 0; state < 8; ++state) {
-    XCTAssertEqualObjects(
-                          [testButton backgroundColorForState:state], [uiButton titleColorForState:state],
-                          @" for state (%lu)", (unsigned long)state);
+    XCTAssertEqualObjects([testButton backgroundColorForState:state],
+                          [uiButton titleColorForState:state], @" for state (%lu)",
+                          (unsigned long)state);
   }
 }
 
