@@ -15,6 +15,7 @@
 import UIKit
 import MaterialComponents.MaterialButtons_ButtonThemer
 import MaterialComponents.MaterialCards_CardThemer
+import MaterialComponentsAlpha.MaterialContainerScheme
 
 class CardExampleViewController: UIViewController {
   @IBOutlet weak var imageView: CardImageView!
