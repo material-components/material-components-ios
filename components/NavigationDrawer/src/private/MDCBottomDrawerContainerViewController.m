@@ -516,7 +516,9 @@ static UIColor *DrawerShadowColor(void) {
   self.initialDrawerFactor = precentageOfFullScreen;
   if (![self shouldPresentFullScreen]) {
     CGFloat diff = _contentVCPreferredContentSizeHeightCached - height;
-    [self.scrollView setContentOffset:CGPointMake(0, diff)];
+    CGPoint contentOffset = CGPointMake(0, diff);
+    [self.scrollView setContentOffset:contentOffset];
+    [self updateViewWithContentOffset:contentOffset];
   }
 }
 
