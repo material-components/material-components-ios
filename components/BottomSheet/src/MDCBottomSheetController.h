@@ -52,6 +52,8 @@
 
 /**
  The color applied to the sheet's background when presented by MDCBottomSheetPresentationController.
+
+ Defaults to a semi-transparent Black.
  */
 @property(nonatomic, strong, nullable) UIColor *scrimColor;
 
