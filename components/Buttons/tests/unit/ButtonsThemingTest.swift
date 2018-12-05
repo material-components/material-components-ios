@@ -216,5 +216,140 @@ class ButtonsThemingTest: XCTestCase {
     XCTAssertEqual(button.minimumSize.height, 36.0, accuracy: 0.001)
   }
 
+  func testFloatingButtonSecondaryThemeWithNoCustomThemes() {
+    // Given
+    let button = MDCFloatingButton()
+    let defaultButton = MDCFloatingButton()
+    let scheme = MDCContainerScheme()
+    let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
+    let typographyScheme = MDCTypographyScheme(defaults: .material201804)
 
+    // When
+    button.applySecondaryTheme(withScheme: scheme)
+
+    // Then
+    XCTAssertEqual(button.backgroundColor(for: .normal), colorScheme.secondaryColor)
+    XCTAssertEqual(button.imageTintColor(for: .normal), colorScheme.onSecondaryColor)
+    // TODO: Uncomment the assertion line below after fixing
+    // https://github.com/material-components/material-components-ios/issues/5911
+    // XCTAssertEqual(button.titleColor(for: .normal), colorScheme.onSecondaryColor)
+    XCTAssertEqual(button.shadowColor(for: .normal), defaultButton.shadowColor(for: .normal))
+    XCTAssertEqual(button.inkColor, defaultButton.inkColor)
+
+    XCTAssertEqual(button.titleFont(for: .normal), typographyScheme.button)
+
+    if let buttonShape = button.shapeGenerator as? MDCRectangleShapeGenerator {
+      let corner = MDCCornerTreatment.corner(withRadius: 0.5)
+      corner?.valueType = .percentage
+      XCTAssertEqual(buttonShape.topLeftCorner, corner)
+      XCTAssertEqual(buttonShape.topRightCorner, corner)
+      XCTAssertEqual(buttonShape.bottomRightCorner, corner)
+      XCTAssertEqual(buttonShape.bottomLeftCorner, corner)
+    } else {
+      XCTFail("Button.shapeGenerator was not a MDCRectangularShapeGenerator")
+    }
+
+    // Test remaining properties
+    XCTAssertEqual(button.elevation(for: .normal), ShadowElevation.fabResting)
+    XCTAssertEqual(button.elevation(for: .highlighted), ShadowElevation.fabPressed)
+    XCTAssertEqual(button.elevation(for: .disabled), ShadowElevation.none)
+
+    XCTAssertEqual(button.borderWidth(for: .normal), 0, accuracy: 0.001)
+    XCTAssertEqual(button.borderWidth(for: .selected), 0, accuracy: 0.001)
+    XCTAssertEqual(button.borderWidth(for: .highlighted), 0, accuracy: 0.001)
+    XCTAssertEqual(button.borderWidth(for: .disabled), 0, accuracy: 0.001)
+  }
+
+  func testFloatingButtonSecondaryThemeWithCustomColorTheme() {
+    // Given
+    let button = MDCFloatingButton()
+    let defaultButton = MDCFloatingButton()
+    let scheme = MDCContainerScheme()
+    let customColorScheme = MDCSemanticColorScheme()
+    customColorScheme.secondaryColor = .purple
+    customColorScheme.onSecondaryColor = .purple
+    scheme.colorScheme = customColorScheme
+    let typographyScheme = MDCTypographyScheme(defaults: .material201804)
+
+    // When
+    button.applySecondaryTheme(withScheme: scheme)
+
+    // Then
+    XCTAssertEqual(button.backgroundColor(for: .normal), customColorScheme.secondaryColor)
+    XCTAssertEqual(button.imageTintColor(for: .normal), customColorScheme.onSecondaryColor)
+    // TODO: Uncomment the assertion line below after fixing
+    // https://github.com/material-components/material-components-ios/issues/5911
+    // XCTAssertEqual(button.titleColor(for: .normal), colorScheme.onSecondaryColor)
+    XCTAssertEqual(button.shadowColor(for: .normal), defaultButton.shadowColor(for: .normal))
+    XCTAssertEqual(button.inkColor, defaultButton.inkColor)
+
+    XCTAssertEqual(button.titleFont(for: .normal), typographyScheme.button)
+
+    if let buttonShape = button.shapeGenerator as? MDCRectangleShapeGenerator {
+      let corner = MDCCornerTreatment.corner(withRadius: 0.5)
+      corner?.valueType = .percentage
+      XCTAssertEqual(buttonShape.topLeftCorner, corner)
+      XCTAssertEqual(buttonShape.topRightCorner, corner)
+      XCTAssertEqual(buttonShape.bottomRightCorner, corner)
+      XCTAssertEqual(buttonShape.bottomLeftCorner, corner)
+    } else {
+      XCTFail("Button.shapeGenerator was not a MDCRectangularShapeGenerator")
+    }
+
+    // Test remaining properties
+    XCTAssertEqual(button.elevation(for: .normal), ShadowElevation.fabResting)
+    XCTAssertEqual(button.elevation(for: .highlighted), ShadowElevation.fabPressed)
+    XCTAssertEqual(button.elevation(for: .disabled), ShadowElevation.none)
+
+    XCTAssertEqual(button.borderWidth(for: .normal), 0, accuracy: 0.001)
+    XCTAssertEqual(button.borderWidth(for: .selected), 0, accuracy: 0.001)
+    XCTAssertEqual(button.borderWidth(for: .highlighted), 0, accuracy: 0.001)
+    XCTAssertEqual(button.borderWidth(for: .disabled), 0, accuracy: 0.001)
+  }
+
+  func testFloatingButtonSecondaryThemeWithCustomTypographyTheme() {
+    // Given
+    let button = MDCFloatingButton()
+    let defaultButton = MDCFloatingButton()
+    let scheme = MDCContainerScheme()
+    let customTypographyScheme = MDCTypographyScheme()
+    customTypographyScheme.button = UIFont.systemFont(ofSize: 19)
+    scheme.typographyScheme = customTypographyScheme
+    let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
+
+    // When
+    button.applySecondaryTheme(withScheme: scheme)
+
+    // Then
+    XCTAssertEqual(button.backgroundColor(for: .normal), colorScheme.secondaryColor)
+    XCTAssertEqual(button.imageTintColor(for: .normal), colorScheme.onSecondaryColor)
+    // TODO: Uncomment the assertion line below after fixing
+    // https://github.com/material-components/material-components-ios/issues/5911
+    // XCTAssertEqual(button.titleColor(for: .normal), colorScheme.onSecondaryColor)
+    XCTAssertEqual(button.shadowColor(for: .normal), defaultButton.shadowColor(for: .normal))
+    XCTAssertEqual(button.inkColor, defaultButton.inkColor)
+
+    XCTAssertEqual(button.titleFont(for: .normal), customTypographyScheme.button)
+
+    if let buttonShape = button.shapeGenerator as? MDCRectangleShapeGenerator {
+      let corner = MDCCornerTreatment.corner(withRadius: 0.5)
+      corner?.valueType = .percentage
+      XCTAssertEqual(buttonShape.topLeftCorner, corner)
+      XCTAssertEqual(buttonShape.topRightCorner, corner)
+      XCTAssertEqual(buttonShape.bottomRightCorner, corner)
+      XCTAssertEqual(buttonShape.bottomLeftCorner, corner)
+    } else {
+      XCTFail("Button.shapeGenerator was not a MDCRectangularShapeGenerator")
+    }
+
+    // Test remaining properties
+    XCTAssertEqual(button.elevation(for: .normal), ShadowElevation.fabResting)
+    XCTAssertEqual(button.elevation(for: .highlighted), ShadowElevation.fabPressed)
+    XCTAssertEqual(button.elevation(for: .disabled), ShadowElevation.none)
+
+    XCTAssertEqual(button.borderWidth(for: .normal), 0, accuracy: 0.001)
+    XCTAssertEqual(button.borderWidth(for: .selected), 0, accuracy: 0.001)
+    XCTAssertEqual(button.borderWidth(for: .highlighted), 0, accuracy: 0.001)
+    XCTAssertEqual(button.borderWidth(for: .disabled), 0, accuracy: 0.001)
+  }
 }
