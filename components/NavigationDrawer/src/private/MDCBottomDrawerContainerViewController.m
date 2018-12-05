@@ -146,6 +146,9 @@ static UIColor *DrawerShadowColor(void) {
  */
 @property(nonatomic) CGFloat initialDrawerFactor;
 
+// Calculates the initial drawer factor.
+- (CGFloat)calculateInitialDrawerFactor;
+
 @end
 
 @implementation MDCBottomDrawerContainerViewController {
@@ -492,8 +495,7 @@ static UIColor *DrawerShadowColor(void) {
   if ([container isKindOfClass:[UIViewController class]]) {
     UIViewController *containerViewController = (UIViewController *)container;
     if (containerViewController == self.contentViewController) {
-      CGFloat height = containerViewController.preferredContentSize.height;
-      self.initialDrawerFactor = [self calculateInitialDrawerFactorWithHeight:height];
+      self.initialDrawerFactor = [self calculateInitialDrawerFactor];
     }
   }
   _contentHeaderTopInset = NSNotFound;
@@ -502,7 +504,7 @@ static UIColor *DrawerShadowColor(void) {
   [self.view setNeedsLayout];
 }
 
-- (CGFloat)calculateInitialDrawerFactorWithHeight:(CGFloat)height {
+- (CGFloat)calculateInitialDrawerFactor {
   if (MDCCGFloatEqual(_contentVCPreferredContentSizeHeightCached, 0)) {
     [self cacheLayoutCalculations];
   }
