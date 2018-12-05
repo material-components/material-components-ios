@@ -21,4 +21,5 @@
 @property(nonatomic) BOOL isStatusBarShifted;
 @property(nonatomic) BOOL topSafeAreaInsetDidChangeWasCalled;
 @property(nonatomic) CGFloat deviceTopSafeAreaInset;
+@property(nonatomic, weak) id<MDCFlexibleHeaderSafeAreaDelegate> forwardingDelegate;
 @end

@@ -89,6 +89,9 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 // Exposed via the FlexibleHeader+CanAlwaysExpandToMaximumHeight target.
 @property(nonatomic) BOOL canAlwaysExpandToMaximumHeight;
 
+// Extracted logic units
+@property(nonatomic, strong) MDCFlexibleHeaderTopSafeArea *topSafeArea;
+
 @end
 
 // All injections into the content and scroll indicator insets are tracked here. It's super
@@ -196,9 +199,6 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   // Keeps track of whether the client called ...WillEndDraggingWithVelocity:...
   BOOL _didAdjustTargetContentOffset;
 #endif
-
-  // Extracted logic units
-  MDCFlexibleHeaderTopSafeArea *_topSafeArea;
 }
 
 // Owned by _topSafeArea
