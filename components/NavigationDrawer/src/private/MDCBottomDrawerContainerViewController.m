@@ -494,7 +494,7 @@ static UIColor *DrawerShadowColor(void) {
     UIViewController *containerViewController = (UIViewController *)container;
     if (containerViewController == self.contentViewController) {
       CGFloat height = containerViewController.preferredContentSize.height;
-      [self resetInitialDrawerFactorWithHeight:height];
+      self.initialDrawerFactor = [self calculateInitialDrawerFactorWithHeight:height];
     }
   }
   _contentHeaderTopInset = NSNotFound;
@@ -503,7 +503,7 @@ static UIColor *DrawerShadowColor(void) {
   [self.view setNeedsLayout];
 }
 
-- (void)resetInitialDrawerFactorWithHeight:(CGFloat)height {
+- (CGFloat)calculateInitialDrawerFactorWithHeight:(CGFloat)height {
   if (MDCCGFloatEqual(_contentVCPreferredContentSizeHeightCached, 0)) {
     [self cacheLayoutCalculations];
   }
@@ -513,7 +513,7 @@ static UIColor *DrawerShadowColor(void) {
   if (precentageOfFullScreen > 0.5) {
     precentageOfFullScreen = 0.5;
   }
-  self.initialDrawerFactor = precentageOfFullScreen;
+  return precentageOfFullScreen;
 }
 
 #pragma mark Set ups (Private)
