@@ -56,11 +56,9 @@
 
 - (void)testDefaults {
   XCTAssertEqualWithAccuracy(_flexibleHeaderView.minimumHeight,
-                             56 + _delegate.deviceTopSafeAreaInset,
-                             (CGFloat)0.0001);
+                             56 + _delegate.deviceTopSafeAreaInset, (CGFloat)0.0001);
   XCTAssertEqualWithAccuracy(_flexibleHeaderView.maximumHeight,
-                             56 + _delegate.deviceTopSafeAreaInset,
-                             (CGFloat)0.0001);
+                             56 + _delegate.deviceTopSafeAreaInset, (CGFloat)0.0001);
 }
 
 - (void)testSettingMaxGreaterThanMinDoesNotAdjustMin {
