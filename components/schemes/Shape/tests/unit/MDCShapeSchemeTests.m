@@ -68,4 +68,37 @@
                                                                 andSize:4]);
 }
 
+- (void)testShapeCategoryCopy {
+  // Given
+  MDCShapeCategory *cat = [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyCut
+                                                                   andSize:(CGFloat)2.2];
+
+  // When
+  MDCShapeCategory *copiedCat = [cat copy];
+
+  // Then
+  XCTAssertNotEqual(cat, copiedCat);
+  XCTAssertEqualObjects(cat, copiedCat);
+  XCTAssertEqualObjects(cat.topRightCorner, copiedCat.topRightCorner);
+  XCTAssertEqualObjects(cat.topLeftCorner, copiedCat.topLeftCorner);
+  XCTAssertEqualObjects(cat.bottomRightCorner, copiedCat.bottomRightCorner);
+  XCTAssertEqualObjects(cat.bottomLeftCorner, copiedCat.bottomLeftCorner);
+}
+
+- (void)testShapeSchemeCopy {
+  // Given
+  MDCShapeScheme *shapeScheme =
+  [[MDCShapeScheme alloc] initWithDefaults:MDCShapeSchemeDefaultsMaterial201809];
+  shapeScheme.smallComponentShape.topRightCorner = [MDCCornerTreatment cornerWithRadius:3];
+
+  // When
+  MDCShapeScheme *copiedShapeScheme= [shapeScheme copy];
+
+  // Then
+  XCTAssertNotEqual(shapeScheme, copiedShapeScheme);
+  XCTAssertEqualObjects(shapeScheme.smallComponentShape, copiedShapeScheme.smallComponentShape);
+  XCTAssertEqualObjects(shapeScheme.mediumComponentShape, copiedShapeScheme.mediumComponentShape);
+  XCTAssertEqualObjects(shapeScheme.largeComponentShape, copiedShapeScheme.largeComponentShape);
+}
+
 @end

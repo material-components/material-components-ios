@@ -28,17 +28,17 @@
 /**
  The shape defining small sized components.
  */
-@property(nonnull, readonly, nonatomic) MDCShapeCategory *smallComponentShape;
+@property(nonnull, readonly, nonatomic, copy) MDCShapeCategory *smallComponentShape;
 
 /**
  The shape defining medium sized components.
  */
-@property(nonnull, readonly, nonatomic) MDCShapeCategory *mediumComponentShape;
+@property(nonnull, readonly, nonatomic, copy) MDCShapeCategory *mediumComponentShape;
 
 /**
  The shape defining large sized components.
  */
-@property(nonnull, readonly, nonatomic) MDCShapeCategory *largeComponentShape;
+@property(nonnull, readonly, nonatomic, copy) MDCShapeCategory *largeComponentShape;
 
 @end
 
@@ -56,12 +56,12 @@ typedef NS_ENUM(NSInteger, MDCShapeSchemeDefaults) {
  A simple implementation of @c MDCShapeScheming that provides Material default shape values from
  which basic customizations can be made.
  */
-@interface MDCShapeScheme : NSObject <MDCShapeScheming>
+@interface MDCShapeScheme : NSObject <MDCShapeScheming, NSCopying>
 
 // Redeclare protocol properties as readwrite
-@property(nonnull, readwrite, nonatomic) MDCShapeCategory *smallComponentShape;
-@property(nonnull, readwrite, nonatomic) MDCShapeCategory *mediumComponentShape;
-@property(nonnull, readwrite, nonatomic) MDCShapeCategory *largeComponentShape;
+@property(nonnull, readwrite, nonatomic, copy) MDCShapeCategory *smallComponentShape;
+@property(nonnull, readwrite, nonatomic, copy) MDCShapeCategory *mediumComponentShape;
+@property(nonnull, readwrite, nonatomic, copy) MDCShapeCategory *largeComponentShape;
 
 /**
  Initializes the shape scheme with the latest material defaults.
