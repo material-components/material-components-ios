@@ -319,9 +319,8 @@ static NSString *controlStateDescription(UIControlState controlState) {
     button.selected = isSelected;
     button.highlighted = isHighlighted;
 
-    XCTAssertEqualObjects(button.backgroundColor, color,
-                          @"Background color (%@) does not equal (%@) for state (%lu).",
-                          button.backgroundColor, color, (unsigned long)testState);
+    XCTAssertEqualObjects(button.backgroundColor, color, @"for state (%lu).",
+                          (unsigned long)testState);
   }
 }
 
@@ -340,12 +339,9 @@ static NSString *controlStateDescription(UIControlState controlState) {
     button.selected = isSelected;
     button.highlighted = isHighlighted;
 
-    XCTAssertEqualObjects(button.backgroundColor,
-                          [button backgroundColorForState:UIControlStateNormal],
-                          @"Background color (%@) does not equal (%@) for state (%lu).",
-                          button.backgroundColor,
-                          [button backgroundColorForState:UIControlStateNormal],
-                          (unsigned long)controlState);
+    XCTAssertEqualObjects(
+        button.backgroundColor, [button backgroundColorForState:UIControlStateNormal],
+        @"for state (%lu).", (unsigned long)controlState);
   }
 }
 
