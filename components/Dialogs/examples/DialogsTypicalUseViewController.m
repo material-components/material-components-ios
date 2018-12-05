@@ -16,7 +16,7 @@
 #import "MaterialButtons+Theming.h"
 #import "MaterialCollections.h"
 #import "MaterialColorScheme.h"
-#import "MaterialDialogs+DialogThemer.h"
+#import "MaterialDialogs+MaterialTheming.h"
 #import "MaterialDialogs.h"
 #import "MaterialContainerScheme.h"
 #import "MaterialTypographyScheme.h"
@@ -26,9 +26,6 @@
 @interface DialogsTypicalUseViewController : UIViewController
 @property(nonatomic, strong, nullable) MDCContainerScheme *containerScheme;
 @property(nonatomic, strong, nullable) MDCSemanticColorScheme *colorScheme;
-@property(nonatomic, strong, nullable) MDCTypographyScheme *typographyScheme;
-@property(nonatomic, strong, nullable) MDCButtonScheme *buttonScheme;
-@property(nonatomic, strong, nullable) MDCAlertScheme *alertScheme;
 @property(nonatomic, strong, nullable) NSArray *modes;
 @property(nonatomic, strong, nullable) MDCButton *button;
 @end
@@ -45,22 +42,6 @@
     self.colorScheme =
         [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
-  if (!self.typographyScheme) {
-    self.typographyScheme = [[MDCTypographyScheme alloc] init];
-  }
-  if (!self.buttonScheme) {
-    self.buttonScheme = [[MDCButtonScheme alloc] init];
-    self.buttonScheme.colorScheme = self.colorScheme;
-    self.buttonScheme.typographyScheme = self.typographyScheme;
-    self.buttonScheme.shapeScheme = [[MDCShapeScheme alloc] init];
-  }
-  if (!self.alertScheme) {
-    self.alertScheme = [[MDCAlertScheme alloc] init];
-    self.alertScheme.colorScheme = self.colorScheme;
-    self.alertScheme.typographyScheme = self.typographyScheme;
-    self.alertScheme.buttonScheme = self.buttonScheme;
-  }
-
   self.view.backgroundColor = self.colorScheme.backgroundColor;
 
   MDCButton *dismissButton = [[MDCButton alloc] initWithFrame:CGRectZero];
@@ -113,7 +94,7 @@
                                                            emphasis:MDCActionEmphasisLow
                                                             handler:handler];
   [alert addAction:disagreeAaction];
-  [MDCAlertControllerThemer applyScheme:self.alertScheme toAlertController:alert];
+  [alert applyThemeWithScheme:self.containerScheme];
 
   [self presentViewController:alert animated:YES completion:NULL];
 }
