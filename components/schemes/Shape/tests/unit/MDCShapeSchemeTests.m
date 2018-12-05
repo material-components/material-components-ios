@@ -71,7 +71,7 @@
 - (void)testShapeCategoryCopy {
   // Given
   MDCShapeCategory *cat = [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyCut
-                                                                   andSize:(CGFloat)2.2];
+                                                                  andSize:(CGFloat)2.2];
 
   // When
   MDCShapeCategory *copiedCat = [cat copy];
@@ -88,11 +88,11 @@
 - (void)testShapeSchemeCopy {
   // Given
   MDCShapeScheme *shapeScheme =
-  [[MDCShapeScheme alloc] initWithDefaults:MDCShapeSchemeDefaultsMaterial201809];
+      [[MDCShapeScheme alloc] initWithDefaults:MDCShapeSchemeDefaultsMaterial201809];
   shapeScheme.smallComponentShape.topRightCorner = [MDCCornerTreatment cornerWithRadius:3];
 
   // When
-  MDCShapeScheme *copiedShapeScheme= [shapeScheme copy];
+  MDCShapeScheme *copiedShapeScheme = [shapeScheme copy];
 
   // Then
   XCTAssertNotEqual(shapeScheme, copiedShapeScheme);

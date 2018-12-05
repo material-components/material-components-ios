@@ -67,8 +67,8 @@
 }
 
 - (NSUInteger)hash {
-  return (self.topRightCorner.hash ^ self.topLeftCorner.hash ^
-          self.bottomRightCorner.hash ^ self.bottomLeftCorner.hash);
+  return (self.topRightCorner.hash ^ self.topLeftCorner.hash ^ self.bottomRightCorner.hash ^
+          self.bottomLeftCorner.hash);
 }
 
 @end
