@@ -24,8 +24,9 @@
  @param scheme A container scheme instance containing any desired customizations to the theming
  system.
 
- Learn more at the [Material
- Guidelines](https://material.io/design/components/buttons-floating-action-button.html#theming)
+ The [Material Guidelines article for Floating Action
+ Buttons](https://material.io/design/components/buttons-floating-action-button.html#theming) has
+ more details about how Floating Action Buttons can be styled and used.
  */
 - (void)applySecondaryThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
 
