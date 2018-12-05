@@ -136,6 +136,10 @@ static UIColor *DrawerShadowColor(void) {
 // The current bottom drawer state.
 @property(nonatomic) MDCBottomDrawerState drawerState;
 
+// The height of the drawer at time of layout, in relation to the screen height, 0.0 is totally
+// hidden and 1.0 is full screen.
+@property(nonatomic) CGFloat initialDrawerFactor;
+
 @end
 
 @implementation MDCBottomDrawerContainerViewController {
@@ -160,6 +164,7 @@ static UIColor *DrawerShadowColor(void) {
     _trackingScrollView = trackingScrollView;
     _drawerState = MDCBottomDrawerStateCollapsed;
     _scrollToContentOffsetY = 0;
+    _initialDrawerFactor = (CGFloat)0.5;
   }
   return self;
 }
@@ -284,7 +289,8 @@ static UIColor *DrawerShadowColor(void) {
 }
 
 - (BOOL)shouldPresentFullScreen {
-  return [self isAccessibilityMode] || [self isMobileLandscape];
+  // TODO: Github issue #5828
+  return [self isAccessibilityMode] || [self isMobileLandscape] || _initialDrawerFactor >= 1;
 }
 
 /**
@@ -295,7 +301,10 @@ static UIColor *DrawerShadowColor(void) {
  the default value becomes 1.0.
  */
 - (CGFloat)initialDrawerFactor {
-  return [self shouldPresentFullScreen] ? 1 : (CGFloat)0.5;
+  if ([self shouldPresentFullScreen]) {
+    return 1;
+  }
+  return _initialDrawerFactor;
 }
 
 - (void)addScrollViewObserver {
@@ -475,10 +484,32 @@ static UIColor *DrawerShadowColor(void) {
 
 - (void)preferredContentSizeDidChangeForChildContentContainer:(id<UIContentContainer>)container {
   [super preferredContentSizeDidChangeForChildContentContainer:container];
+  if ([container isKindOfClass:[UIViewController class]]) {
+    UIViewController *containerViewController = (UIViewController *)container;
+    if (containerViewController == self.contentViewController) {
+      CGFloat height = containerViewController.preferredContentSize.height;
+      [self resetInitialDrawerFactorWithHeight:height];
+    }
+  }
   _contentHeaderTopInset = NSNotFound;
   _contentHeightSurplus = NSNotFound;
   _addedContentHeight = NSNotFound;
   [self.view setNeedsLayout];
+}
+
+- (void)resetInitialDrawerFactorWithHeight:(CGFloat)height {
+  if (_contentVCPreferredContentSizeHeightCached == 0) {
+    [self cacheLayoutCalculations];
+  }
+  CGFloat totalHeight = self.headerViewController.preferredContentSize.height +
+                        _contentVCPreferredContentSizeHeightCached;
+  CGFloat precentageOfFullScreen = totalHeight / self.presentingViewBounds.size.height;
+  if (precentageOfFullScreen > 0.5) {
+    precentageOfFullScreen = 0.5;
+  }
+  self.initialDrawerFactor = precentageOfFullScreen;
+  CGFloat diff = _contentVCPreferredContentSizeHeightCached - height;
+  [self.scrollView setContentOffset:CGPointMake(0, diff)];
 }
 
 #pragma mark Set ups (Private)
