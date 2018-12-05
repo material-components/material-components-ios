@@ -857,6 +857,7 @@ Pod::Spec.new do |mdc|
 
     component.dependency "MaterialComponents/Palettes"
     component.dependency "MaterialComponents/ShadowLayer"
+    component.dependency "MaterialComponents/private/Math"
     component.dependency "MaterialComponents/private/UIMetrics"
 
     component.test_spec 'tests' do |tests|

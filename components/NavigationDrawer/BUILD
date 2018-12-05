@@ -30,6 +30,7 @@ mdc_public_objc_library(
     deps = [
         "//components/Palettes",
         "//components/ShadowLayer",
+        "//components/private/Math",
         "//components/private/UIMetrics",
     ],
 )

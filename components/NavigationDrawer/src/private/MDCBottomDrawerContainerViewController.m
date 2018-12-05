@@ -16,6 +16,7 @@
 
 #import "MDCBottomDrawerHeader.h"
 #import "MDCBottomDrawerHeaderMask.h"
+#import "MaterialMath.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialUIMetrics.h"
 
@@ -136,6 +137,18 @@ static UIColor *DrawerShadowColor(void) {
 // The current bottom drawer state.
 @property(nonatomic) MDCBottomDrawerState drawerState;
 
+/**
+ The height of the drawer at initial layout. This value is a percentage between 0-100% (0-1).
+ - 1 or 100% indicates the drawer is full screen.
+ - 0 or 0% indicates that drawer if hidden.
+
+ @note In voiceover and landscape this value will be 1.
+ */
+@property(nonatomic) CGFloat initialDrawerFactor;
+
+// Calculates the initial drawer factor.
+- (CGFloat)calculateInitialDrawerFactor;
+
 @end
 
 @implementation MDCBottomDrawerContainerViewController {
@@ -160,6 +173,7 @@ static UIColor *DrawerShadowColor(void) {
     _trackingScrollView = trackingScrollView;
     _drawerState = MDCBottomDrawerStateCollapsed;
     _scrollToContentOffsetY = 0;
+    _initialDrawerFactor = (CGFloat)0.5;
   }
   return self;
 }
@@ -295,7 +309,10 @@ static UIColor *DrawerShadowColor(void) {
  the default value becomes 1.0.
  */
 - (CGFloat)initialDrawerFactor {
-  return [self shouldPresentFullScreen] ? 1 : (CGFloat)0.5;
+  if ([self shouldPresentFullScreen]) {
+    return 1;
+  }
+  return _initialDrawerFactor;
 }
 
 - (void)addScrollViewObserver {
@@ -475,10 +492,29 @@ static UIColor *DrawerShadowColor(void) {
 
 - (void)preferredContentSizeDidChangeForChildContentContainer:(id<UIContentContainer>)container {
   [super preferredContentSizeDidChangeForChildContentContainer:container];
+  if ([container isKindOfClass:[UIViewController class]]) {
+    UIViewController *containerViewController = (UIViewController *)container;
+    if (containerViewController == self.contentViewController) {
+      self.initialDrawerFactor = [self calculateInitialDrawerFactor];
+    }
+  }
   _contentHeaderTopInset = NSNotFound;
   _contentHeightSurplus = NSNotFound;
   _addedContentHeight = NSNotFound;
   [self.view setNeedsLayout];
+}
+
+- (CGFloat)calculateInitialDrawerFactor {
+  if (MDCCGFloatEqual(_contentVCPreferredContentSizeHeightCached, 0)) {
+    [self cacheLayoutCalculations];
+  }
+  CGFloat totalHeight = self.headerViewController.preferredContentSize.height +
+                        _contentVCPreferredContentSizeHeightCached;
+  CGFloat precentageOfFullScreen = totalHeight / self.presentingViewBounds.size.height;
+  if (precentageOfFullScreen > 0.5) {
+    precentageOfFullScreen = 0.5;
+  }
+  return precentageOfFullScreen;
 }
 
 #pragma mark Set ups (Private)
