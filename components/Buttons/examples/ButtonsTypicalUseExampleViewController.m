@@ -38,10 +38,6 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
         [[MDCShapeScheme alloc] initWithDefaults:MDCShapeSchemeDefaultsMaterial201809];
     self.typographyScheme =
         [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
-    self.containerScheme = [[MDCContainerScheme alloc] init];
-    self.containerScheme.colorScheme = self.colorScheme;
-    self.containerScheme.shapeScheme = self.shapeScheme;
-    self.containerScheme.typographyScheme = self.typographyScheme;
   }
   return self;
 }

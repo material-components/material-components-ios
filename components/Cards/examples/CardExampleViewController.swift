@@ -24,6 +24,13 @@ class CardExampleViewController: UIViewController {
   var colorScheme = MDCSemanticColorScheme()
   var shapeScheme = MDCShapeScheme()
   var typographyScheme = MDCTypographyScheme()
+  var containerScheme: MDCContainerScheme {
+    let scheme = MDCContainerScheme()
+    scheme.colorScheme = self.colorScheme
+    scheme.typographyScheme = self.typographyScheme
+    scheme.shapeScheme = self.shapeScheme
+    return scheme
+  }
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -34,7 +41,7 @@ class CardExampleViewController: UIViewController {
     bundle.loadNibNamed("CardExampleViewController", owner: self, options: nil)
     view.frame = self.view.bounds
 
-    button.applyTextTheme(withScheme: MDCContainerScheme())
+    button.applyTextTheme(withScheme: self.containerScheme)
 
     let cardScheme = MDCCardScheme();
     cardScheme.colorScheme = colorScheme

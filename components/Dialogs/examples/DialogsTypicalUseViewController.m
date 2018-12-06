@@ -34,9 +34,6 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  if (!self.containerScheme) {
-    self.containerScheme = [[MDCContainerScheme alloc] init];
-  }
   if (!self.colorScheme) {
     self.colorScheme =
         [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
@@ -70,6 +67,19 @@
                                 multiplier:1.0
                                   constant:0.0]
   ]];
+}
+
+- (MDCContainerScheme *)containerScheme {
+  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
+  scheme.colorScheme = self.colorScheme;
+  scheme.shapeScheme =
+      [[MDCShapeScheme alloc] initWithDefaults:MDCShapeSchemeDefaultsMaterial201809];
+  scheme.typographyScheme =
+      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+  if (!_containerScheme) {
+    _containerScheme = scheme;
+  }
+  return _containerScheme;
 }
 
 - (void)showAlert:(UIButton *)button {
