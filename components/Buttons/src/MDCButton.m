@@ -251,7 +251,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
     CGFloat offsetX = contentCenterPoint.x - boundsCenterPoint.x;
     CGFloat offsetY = contentCenterPoint.y - boundsCenterPoint.y;
-    _inkView.frame = CGRectMake(offsetX, offsetY, self.bounds.size.width, self.bounds.size.height);
+    _inkView.frame =
+        CGRectMake(offsetX, offsetY, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
   } else {
     _inkView.frame = self.bounds;
   }
