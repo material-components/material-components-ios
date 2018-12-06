@@ -16,6 +16,8 @@
 
 @interface MDCSnapshotTestCase : FBSnapshotTestCase
 
+@property(nonatomic, strong) UIView *testView;
+
 /**
  * This method will take a view and add it to as a subview to a new view with a size slightly
  * larger than the argument view.

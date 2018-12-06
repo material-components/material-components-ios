@@ -21,6 +21,22 @@
   self.agnosticOptions = FBSnapshotTestCaseAgnosticOptionOS;
 }
 
+- (void)tearDown {
+  // TODO(https://github.com/material-components/material-components-ios/issues/5888)
+  // Support multiple OS versions for snapshots
+  if (NSProcessInfo.processInfo.operatingSystemVersion.majorVersion != 11 ||
+      NSProcessInfo.processInfo.operatingSystemVersion.minorVersion != 2 ||
+      NSProcessInfo.processInfo.operatingSystemVersion.patchVersion != 0) {
+    NSLog(@"Skipping this test. Snapshot tests currently only run on iOS 11.2.0");
+    [super tearDown];
+    return;
+  }
+
+  NSAssert(self.testView, @"Snapshot tests must set `testView` to the view for snapshotting.");
+  [self snapshotVerifyView:self.testView];
+  [super tearDown];
+}
+
 - (UIView *)addBackgroundViewToView:(UIView *)view {
   UIView *backgroundView =
       [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(view.bounds) + 20,
@@ -32,15 +48,6 @@
 }
 
 - (void)snapshotVerifyView:(UIView *)view {
-  // TODO(https://github.com/material-components/material-components-ios/issues/5888)
-  // Support multiple OS versions for snapshots
-  if (NSProcessInfo.processInfo.operatingSystemVersion.majorVersion != 11 ||
-      NSProcessInfo.processInfo.operatingSystemVersion.minorVersion != 2 ||
-      NSProcessInfo.processInfo.operatingSystemVersion.patchVersion != 0) {
-    NSLog(@"Skipping this test. Snapshot tests currently only run on iOS 11.2.0");
-    return;
-  }
-
   UIImage *result = nil;
 
   if (@available(iOS 10, *)) {
