@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "DialogsRoundedCornerViewController.h"
+#import "DialogsRoundedCornerExampleViewController.h"
 #import "MaterialButtons.h"
 #import "MaterialDialogs.h"
 
@@ -62,14 +62,14 @@
 @end
 
 
-@interface DialogsRoundedCornerViewController ()
+@interface DialogsRoundedCornerExampleViewController ()
 
 @property(nonatomic, strong) MDCFlatButton *presentButton;
 @property(nonatomic, strong) MDCDialogTransitionController *transitionController;
 
 @end
 
-@implementation DialogsRoundedCornerViewController
+@implementation DialogsRoundedCornerExampleViewController
 
 - (void)viewDidLoad {
   [super viewDidLoad];

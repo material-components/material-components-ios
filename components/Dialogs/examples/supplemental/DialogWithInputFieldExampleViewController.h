@@ -17,12 +17,7 @@
  instructions. It is not necessary to import this file to use Material Components for iOS.
  */
 
-#import "DialogWithInputFieldViewController.h"
+#import <UIKit/UIKit.h>
 
-@implementation DialogWithInputFieldViewController
-
-- (IBAction)buttonPushed:(id)sender {
-  [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
-}
-
+@interface DialogWithInputFieldExampleViewController : UIViewController
 @end

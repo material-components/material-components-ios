@@ -24,15 +24,15 @@
 
 static NSString *const kReusableIdentifierItem = @"cell";
 
-@interface DialogsAlertViewController : MDCCollectionViewController
+@interface DialogsAlertExampleViewController : MDCCollectionViewController
 @property(nonatomic, strong, nullable) NSArray *modes;
 @end
 
-@interface DialogsAlertViewController (Supplemental)
+@interface DialogsAlertExampleViewController (Supplemental)
 - (void)loadCollectionView:(nullable NSArray *)modes;
 @end
 
-@implementation DialogsAlertViewController
+@implementation DialogsAlertExampleViewController
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -284,7 +284,7 @@ static NSString *const kReusableIdentifierItem = @"cell";
 
 @end
 
-@implementation DialogsAlertViewController (Supplemental)
+@implementation DialogsAlertExampleViewController (Supplemental)
 
 - (void)loadCollectionView:(nullable NSArray *)modes {
   [self.collectionView registerClass:[MDCCollectionViewTextCell class]
@@ -308,7 +308,7 @@ static NSString *const kReusableIdentifierItem = @"cell";
 
 @end
 
-@implementation DialogsAlertViewController (CatalogByConvention)
+@implementation DialogsAlertExampleViewController (CatalogByConvention)
 
 + (NSDictionary *)catalogMetadata {
   return @{

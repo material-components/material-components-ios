@@ -1,4 +1,4 @@
-// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,11 +13,13 @@
 // limitations under the License.
 
 /* IMPORTANT:
- This file contains supplemental code used to populate the examples with dummy data and/or
- instructions. It is not necessary to import this file to use Material Components for iOS.
+ This class demonstrates a shadow rendering error when presenting a view controller with a
+ non-zero corner radius.
  */
 
 #import <UIKit/UIKit.h>
 
-@interface DialogWithInputFieldViewController : UIViewController
+@interface DialogsRoundedCornerExampleViewController : UIViewController
+
 @end
+

@@ -17,14 +17,14 @@
  instructions. It is not necessary to import this file to use Material Components for iOS.
  */
 
-#import "DialogsKeyboardViewControllerSupplemental.h"
+#import "DialogsKeyboardExampleViewControllerSupplemental.h"
 
-#pragma mark - DialogsKeyboardViewController
+#pragma mark - DialogsKeyboardExampleViewController
 
 static NSString * const kReusableIdentifierItem = @"cell";
 
 
-@implementation DialogsKeyboardViewController (Supplemental)
+@implementation DialogsKeyboardExampleViewController (Supplemental)
 
 - (void)loadCollectionView {
   [self.collectionView registerClass:[MDCCollectionViewTextCell class]
@@ -47,7 +47,7 @@ static NSString * const kReusableIdentifierItem = @"cell";
 @end
 
 
-@implementation DialogsKeyboardViewController (CatalogByConvention)
+@implementation DialogsKeyboardExampleViewController (CatalogByConvention)
 
 + (NSDictionary *)catalogMetadata {
   return @{

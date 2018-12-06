@@ -55,7 +55,7 @@ class CustomAlertViewController: UIViewController {
   }
 }
 
-class DialogsAlertCustomizationViewController: MDCCollectionViewController {
+class DialogsAlertCustomizationExampleViewController: MDCCollectionViewController {
 
   var containerScheme: MDCContainerScheme = MDCContainerScheme()
 
@@ -131,7 +131,7 @@ class DialogsAlertCustomizationViewController: MDCCollectionViewController {
   }
 
   func sampleIcon(isStandardSize: Bool = true) -> UIImage? {
-    let bundle = Bundle(for: DialogsAlertCustomizationViewController.self)
+    let bundle = Bundle(for: DialogsAlertCustomizationExampleViewController.self)
     return UIImage(
       named: isStandardSize ? "outline_lock_black_24pt" : "baseline_alarm_on_black_48pt",
       in: bundle, compatibleWith: nil)
@@ -278,7 +278,7 @@ extension ShadowElevation {
 }
 
 // MDCCollectionViewController Data Source
-extension DialogsAlertCustomizationViewController {
+extension DialogsAlertCustomizationExampleViewController {
 
   override func numberOfSections(in collectionView: UICollectionView) -> Int {
     return 1
@@ -301,7 +301,7 @@ extension DialogsAlertCustomizationViewController {
 }
 
 // MARK: Catalog by convention
-extension DialogsAlertCustomizationViewController {
+extension DialogsAlertCustomizationExampleViewController {
 
   class func catalogMetadata() -> [String: Any] {
     return [

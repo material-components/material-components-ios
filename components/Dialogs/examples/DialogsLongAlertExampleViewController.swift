@@ -16,7 +16,7 @@ import Foundation
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialDialogs
 
-class DialogsLongAlertViewController: UIViewController {
+class DialogsLongAlertExampleViewController: UIViewController {
 
   let flatButton = MDCFlatButton()
 
@@ -74,7 +74,7 @@ class DialogsLongAlertViewController: UIViewController {
 }
 
 // MARK: Catalog by convention
-extension DialogsLongAlertViewController {
+extension DialogsLongAlertExampleViewController {
 
   class func catalogMetadata() -> [String: Any] {
     return [

@@ -17,7 +17,7 @@
  instructions. It is not necessary to import this file to use Material Components for iOS.
  */
 
-#import "DialogDismissalOverPresentedControllerViewController.h"
+#import "DialogDismissalOverPresentedControllerExampleViewController.h"
 #import "MaterialButtons.h"
 #import "MaterialDialogs.h"
 
@@ -149,13 +149,13 @@
 
 #pragma mark - Supplemental View Controller
 
-@interface DialogDismissalOverPresentedControllerViewController ()
+@interface DialogDismissalOverPresentedControllerExampleViewController ()
 
 @property(nonatomic, strong) MDCFlatButton *presentButton;
 
 @end
 
-@implementation DialogDismissalOverPresentedControllerViewController
+@implementation DialogDismissalOverPresentedControllerExampleViewController
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -212,7 +212,7 @@
 
 @end
 
-@implementation DialogDismissalOverPresentedControllerViewController (CatalogByConvention)
+@implementation DialogDismissalOverPresentedControllerExampleViewController (CatalogByConvention)
 
 + (NSDictionary *)catalogMetadata {
   return @{
