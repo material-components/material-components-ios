@@ -18,7 +18,7 @@ import MaterialComponentsAlpha.MaterialActionSheet_ActionSheetThemer
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialTypographyScheme
 
-class ActionSheetSwiftExample: UIViewController {
+class ActionSheetSwiftExampleViewController: UIViewController {
 
   var colorScheme = MDCSemanticColorScheme()
   var typographyScheme = MDCTypographyScheme()
@@ -61,19 +61,19 @@ class ActionSheetSwiftExample: UIViewController {
     let actionSheet: MDCActionSheetController
     switch type {
     case .typical:
-      actionSheet = ActionSheetSwiftExample.typical()
+      actionSheet = ActionSheetSwiftExampleViewController.typical()
     case .title:
-      actionSheet = ActionSheetSwiftExample.title()
+      actionSheet = ActionSheetSwiftExampleViewController.title()
     case .message:
-      actionSheet = ActionSheetSwiftExample.message()
+      actionSheet = ActionSheetSwiftExampleViewController.message()
     case .noIcons:
-      actionSheet = ActionSheetSwiftExample.noIcons()
+      actionSheet = ActionSheetSwiftExampleViewController.noIcons()
     case .titleAndMessage:
-      actionSheet = ActionSheetSwiftExample.titleAndMessage()
+      actionSheet = ActionSheetSwiftExampleViewController.titleAndMessage()
     case .dynamicType:
-      actionSheet = ActionSheetSwiftExample.dynamic()
+      actionSheet = ActionSheetSwiftExampleViewController.dynamic()
     case .delayed:
-      actionSheet = ActionSheetSwiftExample.titleAndMessage()
+      actionSheet = ActionSheetSwiftExampleViewController.titleAndMessage()
       let action = MDCActionSheetAction(title: "Home", image: UIImage(named: "Home")) { _ in
         print("Second home action")
       }
@@ -86,7 +86,7 @@ class ActionSheetSwiftExample: UIViewController {
         actionSheet.backgroundColor = .green
       }
     case .thirtyOptions:
-      actionSheet = ActionSheetSwiftExample.thirtyOptions()
+      actionSheet = ActionSheetSwiftExampleViewController.thirtyOptions()
     }
     actionSheetScheme.colorScheme = colorScheme
     actionSheetScheme.typographyScheme = typographyScheme
@@ -96,7 +96,7 @@ class ActionSheetSwiftExample: UIViewController {
 }
 
 // MARK: Catalog by Convensions
-extension ActionSheetSwiftExample {
+extension ActionSheetSwiftExampleViewController {
 
   class func catalogMetadata() -> [String: Any] {
     return [
@@ -108,13 +108,13 @@ extension ActionSheetSwiftExample {
 
 }
 
-extension ActionSheetSwiftExample : UITableViewDelegate {
+extension ActionSheetSwiftExampleViewController : UITableViewDelegate {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     showActionSheet(data[indexPath.row].type)
   }
 }
 
-extension ActionSheetSwiftExample : UITableViewDataSource {
+extension ActionSheetSwiftExampleViewController : UITableViewDataSource {
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
     cell.textLabel?.text = data[indexPath.row].label
@@ -126,7 +126,7 @@ extension ActionSheetSwiftExample : UITableViewDataSource {
   }
 }
 
-extension ActionSheetSwiftExample {
+extension ActionSheetSwiftExampleViewController {
   static var actionOne: MDCActionSheetAction {
     return MDCActionSheetAction(title: "Home",
                                 image: UIImage(named: "Home")!) { (_) in

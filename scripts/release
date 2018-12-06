@@ -586,7 +586,9 @@ generate_release_notes() {
     path="$2"
     git diff-tree --no-commit-id --name-only -r "$sha" \
       | grep -v "$path" \
-      | grep -v "MaterialComponents.podspec"
+      | grep -v "MaterialComponents.podspec" \
+      | grep -v "MaterialComponentsAlpha.podspec" \
+      | grep -v "catalog/Podfile"
   }
   # Echoes a list of changelog entries that affect a given path and only that path.
   changes_for_path() {

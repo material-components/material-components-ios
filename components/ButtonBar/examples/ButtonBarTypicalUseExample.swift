@@ -13,15 +13,27 @@
 // limitations under the License.
 
 import Foundation
-import MaterialComponents.MaterialButtonBar_ColorThemer
+import MaterialComponents.MaterialButtonBar
+import MaterialComponentsAlpha.MaterialButtonBar_Theming
+import MaterialComponentsAlpha.MaterialContainerScheme
 
 class ButtonBarTypicalUseSwiftExample: UIViewController {
-  var colorScheme = MDCSemanticColorScheme()
+  var colorScheme = MDCSemanticColorScheme(defaults: .material201804)
+  var typographyScheme = MDCTypographyScheme(defaults: .material201804)
+
+  var scheme: MDCContainerScheming {
+    let scheme = MDCContainerScheme()
+    scheme.colorScheme = colorScheme
+    scheme.typographyScheme = typographyScheme
+    return scheme
+  }
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
     let buttonBar = MDCButtonBar()
+    buttonBar.applyPrimaryTheme(withScheme: scheme)
+
     // MDCButtonBar ignores the style of UIBarButtonItem.
     let ignored: UIBarButtonItemStyle = .done
 
@@ -40,8 +52,6 @@ class ButtonBarTypicalUseSwiftExample: UIViewController {
     )
 
     buttonBar.items = [actionItem, secondActionItem]
-
-    MDCButtonBarColorThemer.applySemanticColorScheme(colorScheme, to: buttonBar)
 
     // MDCButtonBar's sizeThatFits gives a "best-fit" size of the provided items.
     let size = buttonBar.sizeThatFits(self.view.bounds.size)
