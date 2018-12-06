@@ -19,11 +19,16 @@
 static const NSTimeInterval MDCBottomSheetTransitionDuration = 0.25;
 
 @implementation MDCBottomSheetTransitionController {
-  @protected UIColor *_scrimColor;
-  @protected BOOL _isScrimAccessibilityElement;
-  @protected NSString *_scrimAccessibilityLabel;
-  @protected NSString *_scrimAccessibilityHint;
-  @protected UIAccessibilityTraits _scrimAccessibilityTraits;
+ @protected
+  UIColor *_scrimColor;
+ @protected
+  BOOL _isScrimAccessibilityElement;
+ @protected
+  NSString *_scrimAccessibilityLabel;
+ @protected
+  NSString *_scrimAccessibilityHint;
+ @protected
+  UIAccessibilityTraits _scrimAccessibilityTraits;
 }
 
 #pragma mark - UIViewControllerTransitioningDelegate
