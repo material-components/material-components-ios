@@ -143,6 +143,7 @@ static const CGFloat kActionItemTitleVerticalPadding = 18;
 - (void)layoutSubviews {
   [super layoutSubviews];
 
+  self.actionLabel.accessibilityLabel = _itemAction.accessibilityLabel;
   self.actionLabel.text = _itemAction.title;
   CGFloat leadingConstant;
   if (_itemAction.image) {
@@ -159,6 +160,7 @@ static const CGFloat kActionItemTitleVerticalPadding = 18;
 
 - (void)setAction:(MDCActionSheetAction *)action {
   _itemAction = [action copy];
+  self.actionLabel.accessibilityLabel = _itemAction.accessibilityLabel;
   self.actionLabel.text = _itemAction.title;
   self.actionImageView.image = _itemAction.image;
   [self setNeedsLayout];

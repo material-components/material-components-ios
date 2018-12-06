@@ -56,6 +56,7 @@ static const CGFloat kActionTextAlpha = (CGFloat)0.87;
                                                          image:self.image
                                                        handler:self.completionHandler];
   action.accessibilityIdentifier = self.accessibilityIdentifier;
+  action.accessibilityLabel = self.accessibilityLabel;
   return action;
 }
 
