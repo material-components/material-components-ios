@@ -19,10 +19,10 @@
 
 #import "DialogWithPreferredContentSizeExampleViewController.h"
 
-#import "MaterialButtons.h"
 #import "MaterialButtons+ButtonThemer.h"
+#import "MaterialButtons.h"
 
-@interface DialogWithPreferredContentSizeExampleViewController()
+@interface DialogWithPreferredContentSizeExampleViewController ()
 @property(nonatomic, strong) IBOutlet MDCButton *button;
 @end
 

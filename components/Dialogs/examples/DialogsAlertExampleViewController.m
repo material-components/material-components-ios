@@ -42,7 +42,8 @@ static NSString *const kReusableIdentifierItem = @"cell";
   ]];
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+- (void)collectionView:(UICollectionView *)collectionView
+    didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
   switch (indexPath.row) {
     case 0:
@@ -108,8 +109,8 @@ static NSString *const kReusableIdentifierItem = @"cell";
 
   MDCAlertAction *okAction = [MDCAlertAction actionWithTitle:@"OK"
                                                      handler:^(MDCAlertAction *action) {
-                                                     NSLog(@"%@", @"OK pressed");
-                                                   }];
+                                                       NSLog(@"%@", @"OK pressed");
+                                                     }];
   [materialAlertController addAction:okAction];
 
   [self presentViewController:materialAlertController animated:YES completion:NULL];
@@ -183,42 +184,42 @@ static NSString *const kReusableIdentifierItem = @"cell";
   NSString *titleString = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur";
   NSString *messageString =
       @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur "
-      "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus "
-      "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, "
-      "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. "
-      "Aliquam fringilla neque at augue dictum iaculis. Etiam ac pellentesque lectus. Aenean "
-      "vestibulum, tortor nec cursus euismod, lectus tortor rhoncus massa, eu interdum lectus "
-      "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus "
-      "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, "
-      "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. "
-      "Aliquam fringilla neque at augue dictum iaculis. Etiam ac pellentesque lectus. Aenean "
-      "vestibulum, tortor nec cursus euismod, lectus tortor rhoncus massa, eu interdum lectus "
-      "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus "
-      "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, "
-      "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. "
-      "Aliquam fringilla neque at augue dictum iaculis. Etiam ac pellentesque lectus. Aenean "
-      "vestibulum, tortor nec cursus euismod, lectus tortor rhoncus massa, eu interdum lectus "
-      "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus "
-      "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, "
-      "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. "
-      "Aliquam fringilla neque at augue dictum iaculis. Etiam ac pellentesque lectus. Aenean "
-      "vestibulum, tortor nec cursus euismod, lectus tortor rhoncus massa, eu interdum lectus "
-      "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus "
-      "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, "
-      "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. "
-      "Aliquam fringilla neque at augue dictum iaculis. Etiam ac pellentesque lectus. Aenean "
-      "vestibulum, tortor nec cursus euismod, lectus tortor rhoncus massa, eu interdum lectus "
-      "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus "
-      "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, "
-      "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. "
-      "Aliquam fringilla neque at augue dictum iaculis. Etiam ac pellentesque lectus. Aenean "
-      "vestibulum, tortor nec cursus euismod, lectus tortor rhoncus massa, eu interdum lectus "
-      "urna "
-      "ut nulla. Phasellus elementum lorem sit amet sapien dictum, vel cursus est semper. Aenean "
-      "vel turpis maximus, accumsan dui quis, cursus turpis. Nunc a tincidunt nunc, ut tempus "
-      "libero. Morbi ut orci laoreet, luctus neque nec, rhoncus enim. Cras dui erat, blandit ac "
-      "malesuada vitae, fringilla ac ante. Nullam dui diam, condimentum vitae mi et, dictum "
-      "euismod libero. Aliquam commodo urna vitae massa convallis aliquet.";
+       "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus "
+       "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, "
+       "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. "
+       "Aliquam fringilla neque at augue dictum iaculis. Etiam ac pellentesque lectus. Aenean "
+       "vestibulum, tortor nec cursus euismod, lectus tortor rhoncus massa, eu interdum lectus "
+       "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus "
+       "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, "
+       "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. "
+       "Aliquam fringilla neque at augue dictum iaculis. Etiam ac pellentesque lectus. Aenean "
+       "vestibulum, tortor nec cursus euismod, lectus tortor rhoncus massa, eu interdum lectus "
+       "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus "
+       "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, "
+       "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. "
+       "Aliquam fringilla neque at augue dictum iaculis. Etiam ac pellentesque lectus. Aenean "
+       "vestibulum, tortor nec cursus euismod, lectus tortor rhoncus massa, eu interdum lectus "
+       "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus "
+       "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, "
+       "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. "
+       "Aliquam fringilla neque at augue dictum iaculis. Etiam ac pellentesque lectus. Aenean "
+       "vestibulum, tortor nec cursus euismod, lectus tortor rhoncus massa, eu interdum lectus "
+       "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus "
+       "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, "
+       "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. "
+       "Aliquam fringilla neque at augue dictum iaculis. Etiam ac pellentesque lectus. Aenean "
+       "vestibulum, tortor nec cursus euismod, lectus tortor rhoncus massa, eu interdum lectus "
+       "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus "
+       "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, "
+       "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. "
+       "Aliquam fringilla neque at augue dictum iaculis. Etiam ac pellentesque lectus. Aenean "
+       "vestibulum, tortor nec cursus euismod, lectus tortor rhoncus massa, eu interdum lectus "
+       "urna "
+       "ut nulla. Phasellus elementum lorem sit amet sapien dictum, vel cursus est semper. Aenean "
+       "vel turpis maximus, accumsan dui quis, cursus turpis. Nunc a tincidunt nunc, ut tempus "
+       "libero. Morbi ut orci laoreet, luctus neque nec, rhoncus enim. Cras dui erat, blandit ac "
+       "malesuada vitae, fringilla ac ante. Nullam dui diam, condimentum vitae mi et, dictum "
+       "euismod libero. Aliquam commodo urna vitae massa convallis aliquet.";
 
   MDCAlertController *materialAlertController =
       [MDCAlertController alertControllerWithTitle:titleString message:messageString];
@@ -232,9 +233,9 @@ static NSString *const kReusableIdentifierItem = @"cell";
   [materialAlertController addAction:okAction];
 
   MDCAlertAction *action2 = [MDCAlertAction actionWithTitle:@"OK - 2"
-                                                   handler:^(MDCAlertAction *action) {
-                                                     NSLog(@"%@", @"OK pressed");
-                                                   }];
+                                                    handler:^(MDCAlertAction *action) {
+                                                      NSLog(@"%@", @"OK pressed");
+                                                    }];
   [materialAlertController addAction:action2];
 
   MDCAlertAction *action3 = [MDCAlertAction actionWithTitle:@"OK - 3"

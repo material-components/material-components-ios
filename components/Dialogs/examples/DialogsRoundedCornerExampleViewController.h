@@ -22,4 +22,3 @@
 @interface DialogsRoundedCornerExampleViewController : UIViewController
 
 @end
-
