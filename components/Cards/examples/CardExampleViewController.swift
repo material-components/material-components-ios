@@ -15,6 +15,8 @@
 import UIKit
 import MaterialComponents.MaterialButtons_ButtonThemer
 import MaterialComponents.MaterialCards_CardThemer
+import MaterialComponentsAlpha.MaterialContainerScheme
+import MaterialComponentsAlpha.MaterialButtons_Theming
 
 class CardExampleViewController: UIViewController {
   @IBOutlet weak var imageView: CardImageView!
@@ -34,10 +36,7 @@ class CardExampleViewController: UIViewController {
     bundle.loadNibNamed("CardExampleViewController", owner: self, options: nil)
     view.frame = self.view.bounds
 
-    let buttonScheme = MDCButtonScheme();
-    buttonScheme.colorScheme = colorScheme
-    buttonScheme.typographyScheme = typographyScheme
-    MDCTextButtonThemer.applyScheme(buttonScheme, to: button)
+    button.applyTextTheme(withScheme: MDCContainerScheme())
 
     let cardScheme = MDCCardScheme();
     cardScheme.colorScheme = colorScheme

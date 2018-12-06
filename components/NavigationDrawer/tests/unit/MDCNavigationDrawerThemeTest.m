@@ -15,8 +15,8 @@
 #import <XCTest/XCTest.h>
 
 #import "MDCNavigationDrawerFakes.h"
-#import "MaterialNavigationDrawer+ColorThemer.h"
 #import "MaterialNavigationDrawer.h"
+#import "MaterialNavigationDrawer+ColorThemer.h"
 
 static const CGFloat kScimAlpha = (CGFloat)0.32;
 
