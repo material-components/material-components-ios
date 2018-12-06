@@ -28,7 +28,7 @@
   // Given
   MDCCard *card = [[MDCCard alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
 
-  // When
+  // Then
   self.testView = [self addBackgroundViewToView:card];
 }
 
