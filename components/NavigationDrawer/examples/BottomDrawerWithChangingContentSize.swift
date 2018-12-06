@@ -17,6 +17,7 @@ import MaterialComponents.MaterialBottomAppBar
 import MaterialComponents.MaterialBottomAppBar_ColorThemer
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialNavigationDrawer
+import MaterialComponents.MaterialNavigationDrawer_ColorThemer
 
 class BottomDrawerWithChangingContentSizeExample: UIViewController {
   var colorScheme = MDCSemanticColorScheme()
@@ -63,6 +64,9 @@ class BottomDrawerWithChangingContentSizeExample: UIViewController {
 
   @objc func presentNavigationDrawer() {
     let bottomDrawerViewController = MDCBottomDrawerViewController()
+    bottomDrawerViewController.setTopCornersRadius(8, for: .collapsed)
+    bottomDrawerViewController.setTopCornersRadius(0, for: .expanded)
+    bottomDrawerViewController.isTopHandleHidden = false
     bottomDrawerViewController.contentViewController = contentViewController
     bottomDrawerViewController.headerViewController = headerViewController
     bottomDrawerViewController.trackingScrollView = contentViewController.collectionView

@@ -21,6 +21,8 @@
 
 @implementation MDCButton (MaterialTheming)
 
+#pragma mark - Contained Button Themers
+
 - (void)applyContainedThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme {
   id<MDCColorScheming> colorScheme = scheme.colorScheme;
   if (!colorScheme) {
@@ -61,6 +63,8 @@
   [MDCButtonShapeThemer applyShapeScheme:shapeScheme toButton:self];
 }
 
+#pragma mark - Outlined Button Themers
+
 - (void)applyOutlinedThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme {
   id<MDCColorScheming> colorScheme = scheme.colorScheme;
   if (!colorScheme) {
@@ -100,6 +104,50 @@
 }
 
 - (void)applyOutlinedThemeWithShapeScheme:(id<MDCShapeScheming>)shapeScheme {
+  [MDCButtonShapeThemer applyShapeScheme:shapeScheme toButton:self];
+}
+
+#pragma mark - Text Button Themers
+
+- (void)applyTextThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme {
+  id<MDCColorScheming> colorScheme = scheme.colorScheme;
+  if (!colorScheme) {
+    colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  }
+  [self applyTextThemeWithColorScheme:colorScheme];
+
+  id<MDCTypographyScheming> typographyScheme = scheme.typographyScheme;
+  if (!typographyScheme) {
+    typographyScheme =
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+  }
+  [self applyTextThemeWithTypographyScheme:typographyScheme];
+
+  id<MDCShapeScheming> shapeScheme = scheme.shapeScheme;
+  if (shapeScheme) {
+    [self applyTextThemeWithShapeScheme:shapeScheme];
+  } else {
+    self.layer.cornerRadius = (CGFloat)4.0;
+  }
+
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+                                 UIControlStateHighlighted | UIControlStateDisabled;
+  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
+    [self setElevation:MDCShadowElevationNone forState:state];
+  }
+  self.minimumSize = CGSizeMake(0, 36);
+}
+
+- (void)applyTextThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
+  [MDCTextButtonColorThemer applySemanticColorScheme:colorScheme toButton:self];
+}
+
+- (void)applyTextThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
+  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:self];
+}
+
+- (void)applyTextThemeWithShapeScheme:(id<MDCShapeScheming>)shapeScheme {
   [MDCButtonShapeThemer applyShapeScheme:shapeScheme toButton:self];
 }
 

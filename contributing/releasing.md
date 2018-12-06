@@ -42,6 +42,10 @@ will be working day-to-day with a fork, consider creating a separate clone just 
     git clone git@github.com:material-components/material-components-ios.git mdc-ios-release
     cd mdc-ios-release
 
+### Install git-lfs
+
+Please follow [using git-lfs instructions](https://github.com/material-components/material-components-ios/blob/2b6da5f10438081e5a7b2211e27336c6846433e5/contributing/tools.md#using-git-lfs)
+
 ## Cutting and testing the release
 
 Our entire release process is encoded into the `release` script in the scripts/ directory.

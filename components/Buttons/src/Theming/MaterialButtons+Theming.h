@@ -13,3 +13,4 @@
 // limitations under the License.
 
 #import "MDCButton+Theming.h"
+#import "MDCFloatingButton+Theming.h"
