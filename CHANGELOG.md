@@ -91,7 +91,12 @@ We have created a global container scheme to hold all subsystems schemes. We hav
 * [Add themer for contained buttons with container scheme (#5849)](https://github.com/material-components/material-components-ios/commit/4f0786a2bfb51de3cc0019645c1be425289ffc05) (Cody Weaver)
 * [Floating Action Button Theming Extension (#5869)](https://github.com/material-components/material-components-ios/commit/f47f5049deecb417a44bd4ff28645bc32da90b91) (Wenyu Zhang)
 * [Refactor button test (#5898)](https://github.com/material-components/material-components-ios/commit/fa1652724f5c8399eeffecbdf7ac82df6f92d7c4) (Cody Weaver)
+* [added missing imports for Buttons_Theming](https://github.com/material-components/material-components-ios/commit/aa1a1a5778ccc9bef2483ef7d0850c4e09675b1b) (Randall Li)
 * [{WIP} [Buttons] Fix titleColorForState in Floating Button themer. (#5912)](https://github.com/material-components/material-components-ios/commit/df96ba447e2ace5554eb3acdfb483cae57ddc21e) (Robert Moore)
+
+### Cards
+
+* [added missing imports for Buttons_Theming](https://github.com/material-components/material-components-ios/commit/a37f0d1bf74e68681b62b00b1a3658eb5dca7958) (Randall Li)
 
 ### Dialogs
 
@@ -101,8 +106,10 @@ We have created a global container scheme to hold all subsystems schemes. We hav
 
 ### NavigationDrawer
 
+* [Fix jump when perferredContentSize changes (#5928)](https://github.com/material-components/material-components-ios/commit/e2b2240618814e8b59101d1dac6f305dfd2913c6) (Cody Weaver)
 * [Refactor test (#5910)](https://github.com/material-components/material-components-ios/commit/b96909eba02d2b80560001055a7e690b23e3cdcf) (Cody Weaver)
 * [Remove bottom drawer container view as child upon dismissal (#5853)](https://github.com/material-components/material-components-ios/commit/7aa674b57d1944e3feef404af822c41efbaccdb8) (Michael Cheung)
+* [add missing imports to MaterialNavigationDrawer+ColorThemer](https://github.com/material-components/material-components-ios/commit/487a45d09b9eeba26da3d27e3d688950eeef3af8) (Randall Li)
 
 ### Snackbar
 
@@ -120,7 +127,9 @@ We have created a global container scheme to hold all subsystems schemes. We hav
 ## Multi-component changes
 
 * [Add button theming category method for outlined theming (#5878)](https://github.com/material-components/material-components-ios/commit/748a9128e3cf0522f72a9f74720e36135b727526) (Andrew Overton)
+* [Add imports for MaterialContainerScheme](https://github.com/material-components/material-components-ios/commit/371f3ac9a75273ca158125591086bcb4adb9cf92) (Randall Li)
 * [Add text button themer (#5885)](https://github.com/material-components/material-components-ios/commit/9e80ade17323860f7b2bca7fe8ea3de2d00bc684) (Galia Kaufman)
+* [Bumped version number to 72.0.0.](https://github.com/material-components/material-components-ios/commit/2a334c409ab2cb505909e82a53c01e47d1524893) (Randall Li)
 * [Revert "Snapshot Testing Proof of Concept" (#5883)](https://github.com/material-components/material-components-ios/commit/13781e6d452bc8c2e38bb7d55717872fec45f306) (Robert Moore)
 * [Snapshot Testing Proof of Concept (#5754)](https://github.com/material-components/material-components-ios/commit/c6a300ff2cc31901d9acbaf527952ad912c15322) (rami-a)
 * [Snapshot Testing Proof of Concept (#5887)](https://github.com/material-components/material-components-ios/commit/615a0e406158dba0f168e1e24bd3884209cc137d) (rami-a)
