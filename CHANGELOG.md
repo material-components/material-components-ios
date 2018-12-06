@@ -1,9 +1,11 @@
-# #develop#
+# 71.0.0
 
-Replace this text with a summarized description of this release's contents.
+In this release we fixed some NavigationDrawer/BottomDrawer bugs and started using the theming extensions. This includes using categories on the components and a global container scheme.
+
 ## Breaking changes
 
-Replace this explanations for how to resolve the breaking changes.
+* MDCColorScheming has added the copy attribute to its properties.
+
 ## New deprecations
 
 Replace this text with links to deprecation guides.
