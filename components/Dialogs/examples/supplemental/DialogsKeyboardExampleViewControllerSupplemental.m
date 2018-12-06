@@ -17,21 +17,21 @@
  instructions. It is not necessary to import this file to use Material Components for iOS.
  */
 
-#import "DialogsKeyboardViewControllerSupplemental.h"
+#import "DialogsKeyboardExampleViewControllerSupplemental.h"
 
-#pragma mark - DialogsKeyboardViewController
+#pragma mark - DialogsKeyboardExampleViewController
 
-static NSString * const kReusableIdentifierItem = @"cell";
+static NSString *const kReusableIdentifierItem = @"cell";
 
-
-@implementation DialogsKeyboardViewController (Supplemental)
+@implementation DialogsKeyboardExampleViewController (Supplemental)
 
 - (void)loadCollectionView {
   [self.collectionView registerClass:[MDCCollectionViewTextCell class]
           forCellWithReuseIdentifier:kReusableIdentifierItem];
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+- (NSInteger)collectionView:(UICollectionView *)collectionView
+     numberOfItemsInSection:(NSInteger)section {
   return 1;
 }
 
@@ -46,14 +46,13 @@ static NSString * const kReusableIdentifierItem = @"cell";
 
 @end
 
-
-@implementation DialogsKeyboardViewController (CatalogByConvention)
+@implementation DialogsKeyboardExampleViewController (CatalogByConvention)
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Dialogs", @"Dialog with an Input Field" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Dialogs", @"Dialog with an Input Field" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

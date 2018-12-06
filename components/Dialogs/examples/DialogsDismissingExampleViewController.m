@@ -19,18 +19,18 @@
 #import "MaterialColorScheme.h"
 #import "MaterialDialogs.h"
 #import "MaterialTypographyScheme.h"
-#import "supplemental/DialogWithPreferredContentSizeViewController.h"
+#import "supplemental/DialogWithPreferredContentSizeExampleViewController.h"
 
-#pragma mark - DialogsDismissingViewController Interfaces
+#pragma mark - DialogsDismissingExampleViewController Interfaces
 
-@interface DialogsDismissingViewController : MDCCollectionViewController
+@interface DialogsDismissingExampleViewController : MDCCollectionViewController
 @property(nonatomic, strong, nullable) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong, nullable) MDCTypographyScheme *typographyScheme;
 @property(nonatomic, strong, nullable) NSArray *modes;
 @property(nonatomic, strong) MDCDialogTransitionController *transitionController;
 @end
 
-@interface DialogsDismissingViewController (Supplemental)
+@interface DialogsDismissingExampleViewController (Supplemental)
 - (void)loadCollectionView:(nullable NSArray *)modes;
 @end
 
@@ -40,9 +40,9 @@
 @interface OpenURLViewController : UIViewController
 @end
 
-#pragma mark - DialogsDismissingViewController Implementation
+#pragma mark - DialogsDismissingExampleViewController Implementation
 
-@implementation DialogsDismissingViewController
+@implementation DialogsDismissingExampleViewController
 
 - (id)init {
   self = [super init];
@@ -113,12 +113,12 @@
 
 - (IBAction)didTapStoryboard {
   // If you are using this code outside of the MDCCatalog in your own app, your bundle may be nil.
-  NSBundle *bundle = [NSBundle bundleForClass:[DialogsDismissingViewController class]];
+  NSBundle *bundle = [NSBundle bundleForClass:[DialogsDismissingExampleViewController class]];
   UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"DialogWithPreferredContentSize"
                                                        bundle:bundle];
   NSString *identifier = @"DialogID";
 
-  DialogWithPreferredContentSizeViewController *viewController =
+  DialogWithPreferredContentSizeExampleViewController *viewController =
       [storyboard instantiateViewControllerWithIdentifier:identifier];
   viewController.modalPresentationStyle = UIModalPresentationCustom;
   viewController.transitioningDelegate = self.transitionController;
@@ -129,11 +129,11 @@
 
 @end
 
-#pragma mark - DialogsDismissingViewController - Supplemental
+#pragma mark - DialogsDismissingExampleViewController - Supplemental
 
 static NSString *const kReusableIdentifierItem = @"cell";
 
-@implementation DialogsDismissingViewController (Supplemental)
+@implementation DialogsDismissingExampleViewController (Supplemental)
 
 - (void)loadCollectionView:(nullable NSArray *)modes {
   [self.collectionView registerClass:[MDCCollectionViewTextCell class]
@@ -157,7 +157,7 @@ static NSString *const kReusableIdentifierItem = @"cell";
 
 @end
 
-@implementation DialogsDismissingViewController (CatalogByConvention)
+@implementation DialogsDismissingExampleViewController (CatalogByConvention)
 
 + (NSDictionary *)catalogMetadata {
   return @{

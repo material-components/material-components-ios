@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "DialogsRoundedCornerViewController.h"
+#import "DialogsRoundedCornerExampleViewController.h"
 #import "MaterialButtons.h"
 #import "MaterialDialogs.h"
 
@@ -33,10 +33,8 @@
   [_dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
   [_dismissButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
   _dismissButton.autoresizingMask =
-      UIViewAutoresizingFlexibleTopMargin |
-      UIViewAutoresizingFlexibleLeftMargin |
-      UIViewAutoresizingFlexibleRightMargin |
-      UIViewAutoresizingFlexibleBottomMargin;
+      UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin |
+      UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
   [_dismissButton addTarget:self
                      action:@selector(dismiss:)
            forControlEvents:UIControlEventTouchUpInside];
@@ -47,8 +45,8 @@
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
   [_dismissButton sizeToFit];
-  _dismissButton.center = CGPointMake(CGRectGetMidX(self.view.bounds),
-                                      CGRectGetMidY(self.view.bounds));
+  _dismissButton.center =
+      CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds));
 }
 
 - (CGSize)preferredContentSize {
@@ -61,15 +59,14 @@
 
 @end
 
-
-@interface DialogsRoundedCornerViewController ()
+@interface DialogsRoundedCornerExampleViewController ()
 
 @property(nonatomic, strong) MDCFlatButton *presentButton;
 @property(nonatomic, strong) MDCDialogTransitionController *transitionController;
 
 @end
 
-@implementation DialogsRoundedCornerViewController
+@implementation DialogsRoundedCornerExampleViewController
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -84,10 +81,8 @@
   [_presentButton setTitle:@"Present" forState:UIControlStateNormal];
   [_presentButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
   _presentButton.autoresizingMask =
-      UIViewAutoresizingFlexibleTopMargin |
-      UIViewAutoresizingFlexibleLeftMargin |
-      UIViewAutoresizingFlexibleRightMargin |
-      UIViewAutoresizingFlexibleBottomMargin;
+      UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin |
+      UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
   [_presentButton addTarget:self
                      action:@selector(didTapPresent:)
            forControlEvents:UIControlEventTouchUpInside];
@@ -98,8 +93,8 @@
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
   [_presentButton sizeToFit];
-  _presentButton.center = CGPointMake(CGRectGetMidX(self.view.bounds),
-                                      CGRectGetMidY(self.view.bounds));
+  _presentButton.center =
+      CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds));
 }
 
 - (IBAction)didTapPresent:(id)sender {
@@ -123,9 +118,9 @@
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Dialogs", @"Dialog with Rounded Corners" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Dialogs", @"Dialog with Rounded Corners" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 

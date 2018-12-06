@@ -20,16 +20,16 @@
 #import "MaterialDialogs.h"
 #import "MaterialTypographyScheme.h"
 
-#pragma mark - DialogsTypicalUseViewController
+#pragma mark - DialogsTypicalUseExampleViewController
 
-@interface DialogsTypicalUseViewController : UIViewController
+@interface DialogsTypicalUseExampleViewController : UIViewController
 @property(nonatomic, strong, nullable) MDCContainerScheme *containerScheme;
 @property(nonatomic, strong, nullable) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong, nullable) NSArray *modes;
 @property(nonatomic, strong, nullable) MDCButton *button;
 @end
 
-@implementation DialogsTypicalUseViewController
+@implementation DialogsTypicalUseExampleViewController
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -100,9 +100,9 @@
 
 @end
 
-#pragma mark - DialogsTypicalUseViewController - CatalogByConvention
+#pragma mark - DialogsTypicalUseExampleViewController - CatalogByConvention
 
-@implementation DialogsTypicalUseViewController (CatalogByConvention)
+@implementation DialogsTypicalUseExampleViewController (CatalogByConvention)
 
 + (NSDictionary *)catalogMetadata {
   return @{
