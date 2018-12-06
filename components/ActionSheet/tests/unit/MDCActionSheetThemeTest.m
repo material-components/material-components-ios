@@ -71,6 +71,14 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
 
 #pragma mark - Scheme test
 
+- (void)testActionSheetThemer {
+  // Given
+
+  // When
+
+  // Then
+}
+
 - (void)testDefaultScheme {
   // Given
   MDCActionSheetScheme *defaultScheme = [[MDCActionSheetScheme alloc] init];
