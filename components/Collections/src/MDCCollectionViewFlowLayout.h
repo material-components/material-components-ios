@@ -18,8 +18,9 @@
  The MDCCollectionViewFlowLayout class provides a Material Design layout implementation of a
  UICollectionViewFlowLayout layout.
 
- Learn more at the
- [Material spec](https://material.io/go/design-lists#lists-specs)
+ The [Material Guidelines article for
+ Lists](https://material.io/design/components/lists.html#lists-specs) has more details about how
+ Lists can be styled and used.
  */
 @interface MDCCollectionViewFlowLayout : UICollectionViewFlowLayout
 

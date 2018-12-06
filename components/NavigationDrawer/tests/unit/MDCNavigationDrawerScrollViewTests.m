@@ -58,9 +58,11 @@
 @property(nonatomic, readonly) CGFloat contentHeightSurplus;
 @property(nonatomic, readonly) BOOL contentScrollsToReveal;
 @property(nonatomic) MDCBottomDrawerState drawerState;
+@property(nonatomic) CGFloat initialDrawerFactor;
 @property(nullable, nonatomic, readonly) UIPresentationController *presentationController;
 - (void)cacheLayoutCalculations;
 - (void)updateDrawerState:(CGFloat)transitionPercentage;
+- (CGFloat)calculateInitialDrawerFactor;
 @end
 
 @interface MDCBottomDrawerPresentationController (ScrollViewTests) <
@@ -538,6 +540,32 @@
 
   // Then
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.scrollView.contentOffset.y, 500, (CGFloat)0.001);
+}
+
+- (void)testCalculateInitialDrawerFactorWithSmallHeight {
+  // Given
+  CGRect fakeRect = CGRectMake(0, 0, 250, 500);
+  self.fakeBottomDrawer.originalPresentingViewController.view.bounds = fakeRect;
+  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(250, 100);
+
+  // When
+  CGFloat drawerFactor = [self.fakeBottomDrawer calculateInitialDrawerFactor];
+
+  // Then
+  XCTAssertEqualWithAccuracy(drawerFactor, 0.2, 0.001);
+}
+
+- (void)testCalculateInitialDrawerFactorWithLargeHeight {
+  // Given
+  CGRect fakeRect = CGRectMake(0, 0, 250, 500);
+  self.fakeBottomDrawer.originalPresentingViewController.view.bounds = fakeRect;
+  self.fakeBottomDrawer.contentViewController.preferredContentSize = CGSizeMake(250, 1000);
+
+  // When
+  CGFloat drawerFactor = [self.fakeBottomDrawer calculateInitialDrawerFactor];
+
+  // Then
+  XCTAssertEqualWithAccuracy(drawerFactor, 0.5, 0.001);
 }
 
 @end

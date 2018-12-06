@@ -12,22 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialButtons.h"
 #import "MaterialContainerScheme.h"
-
-#import <Foundation/Foundation.h>
-
-@interface MDCFloatingButton (MaterialTheming)
+#import "MaterialDialogs.h"
 
 /**
- Applies the secondary Floating Action Button style to an MDCFloatingButton instance.
+ This category is used to style MDCAlertController instances to a specific Material style which can
+ be found within the [Material Guidelines](https://material.io/design/components/dialogs.html).
+ */
+@interface MDCAlertController (MaterialTheming)
+
+/**
+ Applies a container scheme to this instance.
+
  @param scheme A container scheme instance containing any desired customizations to the theming
  system.
-
- The [Material Guidelines article for Floating Action
- Buttons](https://material.io/design/components/buttons-floating-action-button.html#theming) has
- more details about how Floating Action Buttons can be styled and used.
  */
-- (void)applySecondaryThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
+- (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
 
 @end
