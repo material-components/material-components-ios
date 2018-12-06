@@ -47,9 +47,6 @@ static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
                          alpha:1];
 }
 
-static const UIControlState kDisabledHighlighted =
-    (UIControlStateDisabled | UIControlStateHighlighted);
-
 static NSAttributedString *uppercaseAttributedString(NSAttributedString *string) {
   // Store the attributes.
   NSMutableArray<NSDictionary *> *attributes = [NSMutableArray array];
@@ -544,7 +541,8 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (UIColor *)backgroundColorForState:(UIControlState)state {
-  if ((state & kDisabledHighlighted) == kDisabledHighlighted) {
+  // If the `.highlighted` flag is set, turn off the `.disabled` flag
+  if ((state & UIControlStateHighlighted) == UIControlStateHighlighted) {
     state = state & ~UIControlStateDisabled;
   }
   return _backgroundColors[@(state)];
@@ -552,13 +550,18 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor forState:(UIControlState)state {
   UIControlState storageState = state;
-  if ((state & kDisabledHighlighted) == kDisabledHighlighted) {
+  // If the `.highlighted` flag is set, turn off the `.disabled` flag
+  if ((state & UIControlStateHighlighted) == UIControlStateHighlighted) {
     storageState = state & ~UIControlStateDisabled;
   }
-  if (storageState == state || _backgroundColors[@(storageState)] != nil) {
+
+  // Only update the backing dictionary if:
+  // 1. The `state` argument is the same as the "storage" state, OR
+  // 2. There is already a value in the "storage" state.
+  if (storageState == state && _backgroundColors[@(storageState)] != nil) {
     _backgroundColors[@(storageState)] = backgroundColor;
+    [self updateAlphaAndBackgroundColorAnimated:NO];
   }
-  [self updateAlphaAndBackgroundColorAnimated:NO];
 }
 
 #pragma mark - Image Tint Color
