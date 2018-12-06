@@ -13,15 +13,15 @@
 // limitations under the License.
 
 #import "MaterialDialogs.h"
-#import "supplemental/DialogsKeyboardViewControllerSupplemental.h"
+#import "supplemental/DialogsKeyboardExampleViewControllerSupplemental.h"
 
-@interface DialogsKeyboardViewController ()
+@interface DialogsKeyboardExampleViewController ()
 
 @property(nonatomic, strong) MDCDialogTransitionController *transitionController;
 
 @end
 
-@implementation DialogsKeyboardViewController
+@implementation DialogsKeyboardExampleViewController
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -31,13 +31,14 @@
   self.transitionController = [[MDCDialogTransitionController alloc] init];
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+- (void)collectionView:(UICollectionView *)collectionView
+    didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   [super collectionView:collectionView didSelectItemAtIndexPath:indexPath];
 
   // If you are using this code outside of the MDCCatalog in your own app, your bundle may be nil.
-  NSBundle *bundle = [NSBundle bundleForClass:[DialogsKeyboardViewController class]];
-  UIStoryboard *storyboard =
-      [UIStoryboard storyboardWithName:@"DialogWithInputField" bundle:bundle];
+  NSBundle *bundle = [NSBundle bundleForClass:[DialogsKeyboardExampleViewController class]];
+  UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"DialogWithInputField"
+                                                       bundle:bundle];
   NSString *identifier = @"DialogID";
 
   UIViewController *viewController =

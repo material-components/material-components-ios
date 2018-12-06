@@ -17,28 +17,7 @@
  instructions. It is not necessary to import this file to use Material Components for iOS.
  */
 
-#import "DialogWithPreferredContentSizeViewController.h"
+#import <UIKit/UIKit.h>
 
-#import "MaterialButtons.h"
-#import "MaterialButtons+ButtonThemer.h"
-
-@interface DialogWithPreferredContentSizeViewController()
-@property(nonatomic, strong) IBOutlet MDCButton *button;
-@end
-
-@implementation DialogWithPreferredContentSizeViewController
-
-- (void)viewDidLoad {
-  [super viewDidLoad];
-
-  MDCButtonScheme *scheme = [[MDCButtonScheme alloc] init];
-  scheme.colorScheme = self.colorScheme;
-  scheme.typographyScheme = self.typographyScheme;
-  [MDCContainedButtonThemer applyScheme:scheme toButton:self.button];
-}
-
-- (IBAction)buttonPushed:(id)sender {
-  [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
-}
-
+@interface DialogWithInputFieldExampleViewController : UIViewController
 @end

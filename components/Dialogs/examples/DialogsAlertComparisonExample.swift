@@ -21,7 +21,7 @@ import MaterialComponents.MaterialTypographyScheme
 
 /// This interface allows a user to present a UIKit Alert Controller and a Material Alert
 /// Controller.
-class DialogsAlertComparison: UIViewController {
+class DialogsAlertComparisonExample: UIViewController {
 
   private let materialButton = MDCFlatButton()
   private let themedButton = MDCFlatButton()
@@ -184,7 +184,7 @@ class DialogsAlertComparison: UIViewController {
 }
 
 // MARK: Catalog by convention
-extension DialogsAlertComparison {
+extension DialogsAlertComparisonExample {
 
   class func catalogMetadata() -> [String: Any] {
     return [
