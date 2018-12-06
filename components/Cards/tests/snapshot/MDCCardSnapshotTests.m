@@ -27,10 +27,9 @@
 
   // Given
   MDCCard *card = [[MDCCard alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-  UIView *backgroundView = [self addBackgroundViewToView:card];
 
-  // Then
-  [self snapshotVerifyView:backgroundView];
+  // When
+  self.testView = [self addBackgroundViewToView:card];
 }
 
 @end
