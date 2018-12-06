@@ -54,11 +54,11 @@ In this release we fixed some NavigationDrawer/BottomDrawer bugs and started usi
 ```
 ## Component changes
 
-### MDCFloatingButtonThemer changes its mapping to use a title color [#5912](https://github.com/material-components/material-components-ios/commit/df96ba447e2ace5554eb3acdfb483cae57ddc21e)
-
+### Buttons
+MDCFloatingButtonThemer changes its mapping to use a title color [#5912](https://github.com/material-components/material-components-ios/commit/df96ba447e2ace5554eb3acdfb483cae57ddc21e)
 ### Banner
 
-A MVP view with layout was added to examples.
+An MVP view with layout was added to examples.
 
 ### Container scheme
 
