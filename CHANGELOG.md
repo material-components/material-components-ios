@@ -17,7 +17,14 @@ In this release we fixed some NavigationDrawer/BottomDrawer bugs and started usi
 
 ### ButtonBar theming
 ```
-  [buttonBar applyPrimaryThemeWithScheme:scheme];
+  var scheme: MDCContainerScheming {
+    let scheme = MDCContainerScheme()
+    scheme.colorScheme = colorScheme
+    scheme.typographyScheme = typographyScheme
+    return scheme
+  }
+  ...
+  buttonBar.applyPrimaryTheme(withScheme: scheme)
 ```
 ### Dialogs usage example
 ```
@@ -45,9 +52,20 @@ In this release we fixed some NavigationDrawer/BottomDrawer bugs and started usi
 
   [self presentViewController:alert animated:YES completion:NULL];
 ```
-## API changes
-
 ## Component changes
+
+### MDCFloatingButtonThemer changes its mapping to use a title color [#5912](https://github.com/material-components/material-components-ios/commit/df96ba447e2ace5554eb3acdfb483cae57ddc21e)
+
+### Banner
+
+A MVP view with layout was added to examples.
+
+### Container scheme
+
+We have created a global container scheme to hold all subsystems schemes. We have started to move our theming APIs into class extensions/catgories. These are the components that have landed some of these changes:
+
+* ButtonBar
+* Button
 
 ## Changes
 
