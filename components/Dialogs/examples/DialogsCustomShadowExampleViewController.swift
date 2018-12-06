@@ -52,7 +52,7 @@ class CustomShadowViewController: UIViewController {
 
 }
 
-class DialogsCustomShadowViewController: UIViewController {
+class DialogsCustomShadowExampleViewController: UIViewController {
 
   let flatButton = MDCFlatButton()
   let transitionController = MDCDialogTransitionController()

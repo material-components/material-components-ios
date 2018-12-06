@@ -17,7 +17,7 @@
  instructions. It is not necessary to import this file to use Material Components for iOS.
  */
 
-#import "DialogDismissalOverPresentedControllerViewController.h"
+#import "DialogDismissalOverPresentedControllerExampleViewController.h"
 #import "MaterialButtons.h"
 #import "MaterialDialogs.h"
 
@@ -78,33 +78,29 @@
   NSDictionary *views = NSDictionaryOfVariableBindings(_topLeftLabel, _topRightLabel,
                                                        _bottomLeftLabel, _bottomRightLabel);
 
-  NSArray *constraints =
-      [NSLayoutConstraint
-          constraintsWithVisualFormat:@"H:|[_topLeftLabel][_topRightLabel(_topLeftLabel)]|"
-                              options:0
-                              metrics:nil
-                                views:views];
+  NSArray *constraints = [NSLayoutConstraint
+      constraintsWithVisualFormat:@"H:|[_topLeftLabel][_topRightLabel(_topLeftLabel)]|"
+                          options:0
+                          metrics:nil
+                            views:views];
   [NSLayoutConstraint activateConstraints:constraints];
-  constraints =
-      [NSLayoutConstraint
-          constraintsWithVisualFormat:@"H:|[_bottomLeftLabel][_bottomRightLabel(_bottomLeftLabel)]|"
-                              options:0
-                              metrics:nil
-                                views:views];
+  constraints = [NSLayoutConstraint
+      constraintsWithVisualFormat:@"H:|[_bottomLeftLabel][_bottomRightLabel(_bottomLeftLabel)]|"
+                          options:0
+                          metrics:nil
+                            views:views];
   [NSLayoutConstraint activateConstraints:constraints];
-  constraints =
-      [NSLayoutConstraint
-          constraintsWithVisualFormat:@"V:|[_topLeftLabel][_bottomLeftLabel(_topLeftLabel)]|"
-                              options:0
-                              metrics:nil
-                                views:views];
+  constraints = [NSLayoutConstraint
+      constraintsWithVisualFormat:@"V:|[_topLeftLabel][_bottomLeftLabel(_topLeftLabel)]|"
+                          options:0
+                          metrics:nil
+                            views:views];
   [NSLayoutConstraint activateConstraints:constraints];
-  constraints =
-      [NSLayoutConstraint
-          constraintsWithVisualFormat:@"V:|[_topRightLabel][_bottomRightLabel(_topRightLabel)]|"
-                              options:0
-                              metrics:nil
-                                views:views];
+  constraints = [NSLayoutConstraint
+      constraintsWithVisualFormat:@"V:|[_topRightLabel][_bottomRightLabel(_topRightLabel)]|"
+                          options:0
+                          metrics:nil
+                            views:views];
   [NSLayoutConstraint activateConstraints:constraints];
 
   // Add a button to show the dialog from this presented view controller.
@@ -114,8 +110,8 @@
   [_dialogButton setTitle:@"Show Dialog" forState:UIControlStateNormal];
   _dialogButton.translatesAutoresizingMaskIntoConstraints = NO;
   [_dialogButton addTarget:self
-                     action:@selector(showDialog:)
-           forControlEvents:UIControlEventTouchUpInside];
+                    action:@selector(showDialog:)
+          forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:_dialogButton];
 
   [[NSLayoutConstraint constraintWithItem:_dialogButton
@@ -136,8 +132,8 @@
 
 - (void)showDialog:(UIButton *)sender {
   MDCAlertController *dialog =
-      [MDCAlertController  alertControllerWithTitle:@"This is a normal MDCAlertController"
-                                            message:@"When this dialog is dismissed, the content"
+      [MDCAlertController alertControllerWithTitle:@"This is a normal MDCAlertController"
+                                           message:@"When this dialog is dismissed, the content"
                                                     " of the view controller underneath should"
                                                     " remain unchanged and all four sections should"
                                                     " continue to be fully visible."];
@@ -149,13 +145,13 @@
 
 #pragma mark - Supplemental View Controller
 
-@interface DialogDismissalOverPresentedControllerViewController ()
+@interface DialogDismissalOverPresentedControllerExampleViewController ()
 
 @property(nonatomic, strong) MDCFlatButton *presentButton;
 
 @end
 
-@implementation DialogDismissalOverPresentedControllerViewController
+@implementation DialogDismissalOverPresentedControllerExampleViewController
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -201,9 +197,7 @@
   UINavigationController *navController =
       [[UINavigationController alloc] initWithRootViewController:presentedViewController];
   navController.modalPresentationStyle = UIModalPresentationFormSheet;
-  [self.navigationController presentViewController:navController
-                                          animated:YES
-                                        completion:nil];
+  [self.navigationController presentViewController:navController animated:YES completion:nil];
 }
 
 - (void)dismissPresentedViewController {
@@ -212,13 +206,13 @@
 
 @end
 
-@implementation DialogDismissalOverPresentedControllerViewController (CatalogByConvention)
+@implementation DialogDismissalOverPresentedControllerExampleViewController (CatalogByConvention)
 
 + (NSDictionary *)catalogMetadata {
   return @{
-    @"breadcrumbs": @[ @"Dialogs", @"Dialog Over Presented View Controller on iPad" ],
-    @"primaryDemo": @NO,
-    @"presentable": @NO,
+    @"breadcrumbs" : @[ @"Dialogs", @"Dialog Over Presented View Controller on iPad" ],
+    @"primaryDemo" : @NO,
+    @"presentable" : @NO,
   };
 }
 
