@@ -558,7 +558,7 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
   // Only update the backing dictionary if:
   // 1. The `state` argument is the same as the "storage" state, OR
   // 2. There is already a value in the "storage" state.
-  if (storageState == state && _backgroundColors[@(storageState)] != nil) {
+  if (storageState == state || _backgroundColors[@(storageState)] != nil) {
     _backgroundColors[@(storageState)] = backgroundColor;
     [self updateAlphaAndBackgroundColorAnimated:NO];
   }
