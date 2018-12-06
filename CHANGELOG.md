@@ -5,13 +5,46 @@ In this release we fixed some NavigationDrawer/BottomDrawer bugs and started usi
 ## Breaking changes
 
 * MDCColorScheming has added the copy attribute to its properties.
+* MDCTypographyScheming has added the copy attribute to its properties.
+* MDCFloatingButtonThemer changes its mapping to use a title color [#5912](https://github.com/material-components/material-components-ios/commit/df96ba447e2ace5554eb3acdfb483cae57ddc21e)
 
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
+### Button theming
+```
+    textButton.applyTextTheme(withScheme: MDCContainerScheme())
+```
+
+### ButtonBar theming
+```
+  [buttonBar applyPrimaryThemeWithScheme:scheme];
+```
+### Dialogs usage example
+```
+  NSString *titleString = @"Reset Settings?";
+  NSString *messageString = @"This will reset your device to its default factory settings.";
+
+  MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:titleString
+                                                                   message:messageString];
+  alert.mdc_adjustsFontForContentSizeCategory = YES;
+
+  MDCActionHandler handler = ^(MDCAlertAction *action) {
+    NSLog(@"action pressed: %@", action.title);
+  };
+
+  MDCAlertAction *agreeAaction = [MDCAlertAction actionWithTitle:@"Cancel"
+                                                        emphasis:MDCActionEmphasisLow
+                                                         handler:handler];
+  [alert addAction:agreeAaction];
+
+  MDCAlertAction *disagreeAaction = [MDCAlertAction actionWithTitle:@"Accept"
+                                                           emphasis:MDCActionEmphasisLow
+                                                            handler:handler];
+  [alert addAction:disagreeAaction];
+  [MDCAlertControllerThemer applyScheme:self.alertScheme toAlertController:alert];
+
+  [self presentViewController:alert animated:YES completion:NULL];
+```
 ## API changes
 
 ## Component changes
