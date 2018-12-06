@@ -19,7 +19,7 @@
 #import "MaterialColorScheme.h"
 #import "MaterialDialogs.h"
 #import "MaterialTypographyScheme.h"
-#import "supplemental/DialogWithPreferredContentSizeViewController.h"
+#import "supplemental/DialogWithPreferredContentSizeExampleViewController.h"
 
 #pragma mark - DialogsDismissingExampleViewController Interfaces
 
@@ -118,7 +118,7 @@
                                                        bundle:bundle];
   NSString *identifier = @"DialogID";
 
-  DialogWithPreferredContentSizeViewController *viewController =
+  DialogWithPreferredContentSizeExampleViewController *viewController =
       [storyboard instantiateViewControllerWithIdentifier:identifier];
   viewController.modalPresentationStyle = UIModalPresentationCustom;
   viewController.transitioningDelegate = self.transitionController;

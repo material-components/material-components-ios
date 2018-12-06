@@ -20,41 +20,6 @@ import MaterialComponents.MaterialCollections
 import MaterialComponents.MaterialDialogs_DialogThemer
 import MaterialComponents.MaterialTypographyScheme
 
-class CustomAlertViewController: UIViewController {
-
-  let bodyLabel = UILabel()
-  let dismissButton = MDCFlatButton()
-
-  var cornerRadius: CGFloat {
-    set { view.layer.cornerRadius = newValue }
-    get { return view.layer.cornerRadius }
-  }
-
-  override var preferredContentSize: CGSize {
-    get { return CGSize(width:200.0, height:140.0); }
-    set { super.preferredContentSize = newValue }
-  }
-
-  override func viewDidLoad() {
-
-    super.viewDidLoad()
-    view.backgroundColor = UIColor.white
-
-    bodyLabel.text = "This is a view controller."
-    bodyLabel.translatesAutoresizingMaskIntoConstraints = false
-    bodyLabel.numberOfLines = 0
-    bodyLabel.sizeToFit()
-    self.view.addSubview(bodyLabel)
-
-    NSLayoutConstraint.activate(
-      NSLayoutConstraint.constraints(withVisualFormat: "H:|-[body]-|", options: [],
-                                     metrics: nil, views: ["body": bodyLabel]))
-    NSLayoutConstraint.activate(
-      NSLayoutConstraint.constraints(withVisualFormat: "V:|-[body]-|", options: [],
-                                     metrics: nil, views: ["body": bodyLabel]))
-  }
-}
-
 class DialogsAlertCustomizationExampleViewController: MDCCollectionViewController {
 
   var containerScheme: MDCContainerScheme = MDCContainerScheme()
