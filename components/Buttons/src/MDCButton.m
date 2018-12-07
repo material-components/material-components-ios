@@ -541,12 +541,27 @@ static NSAttributedString *uppercaseAttributedString(NSAttributedString *string)
 }
 
 - (UIColor *)backgroundColorForState:(UIControlState)state {
+  // If the `.highlighted` flag is set, turn off the `.disabled` flag
+  if ((state & UIControlStateHighlighted) == UIControlStateHighlighted) {
+    state = state & ~UIControlStateDisabled;
+  }
   return _backgroundColors[@(state)];
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor forState:(UIControlState)state {
-  _backgroundColors[@(state)] = backgroundColor;
-  [self updateAlphaAndBackgroundColorAnimated:NO];
+  UIControlState storageState = state;
+  // If the `.highlighted` flag is set, turn off the `.disabled` flag
+  if ((state & UIControlStateHighlighted) == UIControlStateHighlighted) {
+    storageState = state & ~UIControlStateDisabled;
+  }
+
+  // Only update the backing dictionary if:
+  // 1. The `state` argument is the same as the "storage" state, OR
+  // 2. There is already a value in the "storage" state.
+  if (storageState == state || _backgroundColors[@(storageState)] != nil) {
+    _backgroundColors[@(storageState)] = backgroundColor;
+    [self updateAlphaAndBackgroundColorAnimated:NO];
+  }
 }
 
 #pragma mark - Image Tint Color
