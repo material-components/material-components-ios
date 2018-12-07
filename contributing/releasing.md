@@ -213,6 +213,14 @@ Note: Ensure that you can [push the podspec](#publish-to-cocoapods) later by che
 
 If this fails or MaterialComponents is not listed [register an account and session](https://guides.cocoapods.org/making/getting-setup-with-trunk.html).
 
+## Consider running `scripts/release notes` again
+
+Run `scripts/release notes` again and copy paste it into the `CHANGELOG.md` after `## Changes` if
+you
+
+* cherry picked a change to add it to the release or
+* reverted any commit to rollback any PR.
+
 ## Testing with release-blocking clients
 
 Before you can merge the release branch into either develop or stable you **must** get the release
