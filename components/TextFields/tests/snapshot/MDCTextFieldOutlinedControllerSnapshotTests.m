@@ -38,7 +38,7 @@
   [super tearDown];
 }
 
-#pragma marMDCTextFieldSnapshotTests - Helpers
+#pragma mark - Helpers
 
 - (void)triggerTextFieldLayout {
   CGSize aSize = [self.textField sizeThatFits:CGSizeMake(300, INFINITY)];
@@ -52,7 +52,7 @@
   self.testView = [self addBackgroundViewToView:self.textField];
 }
 
-#pragma marMDCTextFieldSnapshotTests - Tests
+#pragma mark - Tests
 
 - (void)testOutlinedTextFieldEmpty {
   // Uncomment below to recreate the golden
@@ -62,7 +62,7 @@
   [self generateSnapshotAndVerify];
 }
 
-#pragma marMDCTextFieldSnapshotTests - Single field tests
+#pragma mark - Single field tests
 
 - (void)testOutlinedTextFieldWithShortPlaceholderText {
   // Uncomment below to recreate the golden
@@ -154,7 +154,7 @@
   [self generateSnapshotAndVerify];
 }
 
-#pragma marMDCTextFieldSnapshotTests - Multiple field tests
+#pragma mark - Multiple field tests
 
 - (void)testOutlinedTextFieldWithShortInputPlaceholderHelperTexts {
   // Uncomment below to recreate the golden
