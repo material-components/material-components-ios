@@ -68,23 +68,6 @@
                                                                 andSize:4]);
 }
 
-- (void)testShapeCategoryCopy {
-  // Given
-  MDCShapeCategory *cat = [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyCut
-                                                                  andSize:(CGFloat)2.2];
-
-  // When
-  MDCShapeCategory *copiedCat = [cat copy];
-
-  // Then
-  XCTAssertNotEqual(cat, copiedCat);
-  XCTAssertEqualObjects(cat, copiedCat);
-  XCTAssertEqualObjects(cat.topRightCorner, copiedCat.topRightCorner);
-  XCTAssertEqualObjects(cat.topLeftCorner, copiedCat.topLeftCorner);
-  XCTAssertEqualObjects(cat.bottomRightCorner, copiedCat.bottomRightCorner);
-  XCTAssertEqualObjects(cat.bottomLeftCorner, copiedCat.bottomLeftCorner);
-}
-
 - (void)testShapeSchemeCopy {
   // Given
   MDCShapeScheme *shapeScheme =

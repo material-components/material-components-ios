@@ -57,18 +57,4 @@
          [_bottomRightCorner isEqual:other.bottomRightCorner];
 }
 
-- (id)copyWithZone:(NSZone *)zone {
-  MDCShapeCategory *copy = [[MDCShapeCategory alloc] init];
-  copy.topLeftCorner = self.topLeftCorner;
-  copy.topRightCorner = self.topRightCorner;
-  copy.bottomLeftCorner = self.bottomLeftCorner;
-  copy.bottomRightCorner = self.bottomRightCorner;
-  return copy;
-}
-
-- (NSUInteger)hash {
-  return (self.topRightCorner.hash ^ self.topLeftCorner.hash ^ self.bottomRightCorner.hash ^
-          self.bottomLeftCorner.hash);
-}
-
 @end

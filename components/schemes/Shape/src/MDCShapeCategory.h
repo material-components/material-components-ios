@@ -32,27 +32,27 @@ typedef NS_ENUM(NSInteger, MDCShapeCornerFamily) {
 
  MDCShapeCategory is built from 4 corners, that can be set to alter the shape value.
  */
-@interface MDCShapeCategory : NSObject <NSCopying>
+@interface MDCShapeCategory : NSObject
 
 /**
  This property represents the shape of the top left corner of the shape.
  */
-@property(nonatomic, copy) MDCCornerTreatment *topLeftCorner;
+@property(strong, nonatomic) MDCCornerTreatment *topLeftCorner;
 
 /**
  This property represents the shape of the top right corner of the shape.
  */
-@property(nonatomic, copy) MDCCornerTreatment *topRightCorner;
+@property(strong, nonatomic) MDCCornerTreatment *topRightCorner;
 
 /**
  This property represents the shape of the bottom left corner of the shape.
  */
-@property(nonatomic, copy) MDCCornerTreatment *bottomLeftCorner;
+@property(strong, nonatomic) MDCCornerTreatment *bottomLeftCorner;
 
 /**
  This property represents the shape of the bottom right corner of the shape.
  */
-@property(nonatomic, copy) MDCCornerTreatment *bottomRightCorner;
+@property(strong, nonatomic) MDCCornerTreatment *bottomRightCorner;
 
 /**
  The default init of the class. It sets all 4 corners with a corner family of
