@@ -36,7 +36,8 @@
 
 - (void)testColorScheming {
   // Given
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   colorScheme.primaryColor = [UIColor redColor];
   colorScheme.onPrimaryColor = [UIColor blueColor];
   UITabBarItem *item = [[UITabBarItem alloc] init];

@@ -145,8 +145,6 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonImageLocation) {
  */
 - (nonnull instancetype)init;
 
-- (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
-
 - (void)setMinimumSize:(CGSize)size NS_UNAVAILABLE;
 
 /**

@@ -17,8 +17,6 @@
 #import "MaterialShadowElevations.h"
 #import "private/MDCButton+Subclassing.h"
 
-static NSString *const MDCFlatButtonHasOpaqueBackground = @"MDCFlatButtonHasOpaqueBackground";
-
 @implementation MDCFlatButton
 
 + (void)initialize {
@@ -27,22 +25,7 @@ static NSString *const MDCFlatButtonHasOpaqueBackground = @"MDCFlatButtonHasOpaq
   [MDCFlatButton.appearance setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
   [MDCFlatButton.appearance setElevation:MDCShadowElevationNone forState:UIControlStateNormal];
   [MDCFlatButton.appearance setElevation:MDCShadowElevationNone forState:UIControlStateHighlighted];
-  MDCFlatButton.appearance.inkColor = [UIColor colorWithWhite:0 alpha:0.06f];
-}
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  self = [super initWithCoder:aDecoder];
-  if (self) {
-    if ([aDecoder containsValueForKey:MDCFlatButtonHasOpaqueBackground]) {
-      self.hasOpaqueBackground = [aDecoder decodeBoolForKey:MDCFlatButtonHasOpaqueBackground];
-    }
-  }
-  return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [super encodeWithCoder:aCoder];
-  [aCoder encodeBool:_hasOpaqueBackground forKey:MDCFlatButtonHasOpaqueBackground];
+  MDCFlatButton.appearance.inkColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.06];
 }
 
 #pragma mark - MDCButton Subclassing

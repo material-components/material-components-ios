@@ -70,7 +70,7 @@
   // Then
   for (MDCActionSheetItemTableViewCell *cell in cells) {
     XCTAssertEqualObjects(cell.actionLabel.textColor,
-                          [UIColor.blackColor colorWithAlphaComponent:0.87f]);
+                          [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.87]);
   }
 }
 
@@ -95,7 +95,7 @@
   // Then
   for (MDCActionSheetItemTableViewCell *cell in cells) {
     XCTAssertEqualObjects(cell.actionImageView.tintColor,
-                          [UIColor.blackColor colorWithAlphaComponent:0.6f]);
+                          [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.6]);
   }
 }
 
@@ -120,7 +120,7 @@
   // Then
   for (MDCActionSheetItemTableViewCell *cell in cells) {
     XCTAssertEqualObjects(cell.inkTouchController.defaultInkView.inkColor,
-                          [[UIColor alloc] initWithWhite:0 alpha:0.14f]);
+                          [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14]);
   }
 }
 
@@ -150,6 +150,22 @@
     // Then
     XCTAssertEqual(cell.actionLabel.font, actionFont);
   }
+}
+
+- (void)testSetActionItemAccessibilityLabel {
+  // Given
+  MDCActionSheetAction *action = [MDCActionSheetAction actionWithTitle:@"Resume"
+                                                                 image:nil
+                                                               handler:nil];
+  action.accessibilityLabel = @"Résumé";
+
+  // When
+  [self.actionSheet addAction:action];
+  MDCActionSheetItemTableViewCell *cell =
+      [MDCActionSheetTestHelper getCellFromActionSheet:self.actionSheet atIndex:0];
+
+  // Then
+  XCTAssertEqual(cell.actionLabel.accessibilityLabel, action.accessibilityLabel);
 }
 
 @end

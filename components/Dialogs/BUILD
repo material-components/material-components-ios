@@ -30,6 +30,8 @@ mdc_public_objc_library(
     ],
     deps = [
         "//components/Buttons",
+        "//components/Buttons:ColorThemer",
+        "//components/Buttons:TypographyThemer",
         "//components/ShadowElevations",
         "//components/ShadowLayer",
         "//components/Typography",
@@ -50,6 +52,22 @@ filegroup(
 objc_bundle(
     name = "Bundle",
     bundle_imports = [":BundleFiles"],
+)
+
+mdc_objc_library(
+    name = "MaterialTheming",
+    srcs = native.glob(["src/MaterialTheming/*.m"]),
+    hdrs = native.glob(["src/MaterialTheming/*.h"]),
+    includes = ["src/MaterialTheming"],
+    deps = [
+        ":Dialogs",
+        ":ColorThemer",
+        ":TypographyThemer",
+        "//components/Buttons:Theming",
+        "//components/ShadowElevations",
+        "//components/schemes/Container",
+    ],
+    visibility = ["//visibility:public"],
 )
 
 mdc_objc_library(

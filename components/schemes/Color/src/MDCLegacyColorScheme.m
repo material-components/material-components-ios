@@ -82,7 +82,7 @@
   if ([color getHue:&hue saturation:&saturation brightness:&brightness alpha:&alpha]) {
     return [UIColor colorWithHue:hue
                       saturation:saturation
-                      brightness:(CGFloat)fminf((float)brightness + 0.2f, 1.0f)
+                      brightness:(CGFloat)fminf((float)brightness + (float)0.2, 1)
                            alpha:alpha];
   }
   return nil;
@@ -93,7 +93,7 @@
   if ([color getHue:&hue saturation:&saturation brightness:&brightness alpha:&alpha]) {
     return [UIColor colorWithHue:hue
                       saturation:saturation
-                      brightness:(CGFloat)fmaxf((float)brightness - 0.2f, 0.0f)
+                      brightness:(CGFloat)fmaxf((float)brightness - (float)0.2, 0)
                            alpha:alpha];
   }
   return nil;

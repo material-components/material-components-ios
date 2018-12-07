@@ -17,9 +17,9 @@
 #import "MaterialTypography.h"
 #import "../../src/private/UIFont+MaterialTypographyPrivate.h"
 
-static const CGFloat kEpsilon = 0.001f;
-static const CGFloat kOpacityLight = 0.54f;
-static const CGFloat kOpacityMedium = 0.87f;
+static const CGFloat kEpsilon = (CGFloat)0.001;
+static const CGFloat kOpacityLight = (CGFloat)0.54;
+static const CGFloat kOpacityMedium = (CGFloat)0.87;
 /**
  For our tests we are following a Given When Then structure as defined in
  http://martinfowler.com/bliki/GivenWhenThen.html

@@ -26,6 +26,8 @@ static const MDCFontTextStyle kTitleTextStyle = MDCFontTextStyleTitle;
 static const MDCFontTextStyle kMessageTextStyle = MDCFontTextStyleBody1;
 static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
+static const CGFloat MDCDialogMaximumWidth = 560.0f;
+
 static const UIEdgeInsets MDCDialogContentInsets = {24.0, 24.0, 24.0, 24.0};
 static const CGFloat MDCDialogContentVerticalPadding = 20.0;
 static const CGFloat MDCDialogTitleIconVerticalPadding = 12.0;
@@ -35,9 +37,9 @@ static const CGFloat MDCDialogActionsHorizontalPadding = 8.0;
 static const CGFloat MDCDialogActionsVerticalPadding = 12.0;
 static const CGFloat MDCDialogActionButtonHeight = 36.0;
 static const CGFloat MDCDialogActionButtonMinimumWidth = 48.0;
-static const CGFloat MDCDialogActionMinTouchTarget = 48.f;
+static const CGFloat MDCDialogActionMinTouchTarget = 48;
 
-static const CGFloat MDCDialogMessageOpacity = 0.54f;
+static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
 
 @interface MDCAlertControllerView ()
 
@@ -89,7 +91,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     } else {
       self.messageLabel.font = [MDCTypography body1Font];
     }
-    self.messageLabel.textColor = [UIColor colorWithWhite:0.0f alpha:MDCDialogMessageOpacity];
+    self.messageLabel.textColor = [UIColor colorWithWhite:0 alpha:MDCDialogMessageOpacity];
     [self.contentScrollView addSubview:self.messageLabel];
 
     [self setNeedsLayout];
@@ -137,8 +139,8 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   [button setBackgroundColor:UIColor.clearColor forState:UIControlStateNormal];
   [button setTitleColor:themeColor forState:UIControlStateNormal];
   [button setImageTintColor:themeColor forState:UIControlStateNormal];
-  [button setInkColor:[UIColor colorWithWhite:0 alpha:0.06f]];
-  button.disabledAlpha = 1.f;
+  [button setInkColor:[UIColor colorWithWhite:0 alpha:(CGFloat)0.06]];
+  button.disabledAlpha = 1;
   [button setElevation:MDCShadowElevationNone forState:UIControlStateNormal];
 }
 
@@ -348,6 +350,10 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
 // @param boundsSize should not include any internal margins or padding
 - (CGSize)calculatePreferredContentSizeForBounds:(CGSize)boundsSize {
+
+  // Even if we have more room, limit our maximum width
+  boundsSize.width = MIN(boundsSize.width, MDCDialogMaximumWidth);
+
   // Content & Actions
   CGSize contentSize = [self calculateContentSizeThatFitsWidth:boundsSize.width];
   CGSize actionSize = [self calculateActionsSizeThatFitsWidth:boundsSize.width];
@@ -382,7 +388,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   if ((0.0 < titleSize.height || 0.0 < titleIconSize.height) && 0.0 < messageSize.height) {
     contentInternalVerticalPadding = MDCDialogContentVerticalPadding;
   }
-  CGFloat contentTitleIconVerticalPadding = 0.0f;
+  CGFloat contentTitleIconVerticalPadding = 0;
   if (0.0 < titleSize.height && 0.0 < titleIconSize.height) {
     contentTitleIconVerticalPadding = MDCDialogTitleIconVerticalPadding;
   }
@@ -479,7 +485,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   if ((0.0 < titleSize.height || 0.0 < titleIconSize.height) && 0.0 < messageSize.height) {
     contentInternalVerticalPadding = MDCDialogContentVerticalPadding;
   }
-  CGFloat contentTitleIconVerticalPadding = 0.0f;
+  CGFloat contentTitleIconVerticalPadding = 0;
   if (0.0 < titleSize.height && 0.0 < titleIconSize.height) {
     contentTitleIconVerticalPadding = MDCDialogTitleIconVerticalPadding;
   }
@@ -499,7 +505,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     // match the titleIcon alignment to the title alignment
     CGFloat titleIconPosition = titleFrame.origin.x;
     if (self.titleAlignment == NSTextAlignmentCenter) {
-      titleIconPosition = (contentSize.width - titleIconSize.width) / 2.0f;
+      titleIconPosition = (contentSize.width - titleIconSize.width) / 2;
     } else if (self.titleAlignment == NSTextAlignmentRight ||
                (self.titleAlignment == NSTextAlignmentNatural &&
                 [self mdf_effectiveUserInterfaceLayoutDirection] ==
@@ -531,7 +537,7 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
   // Place buttons in actionsScrollView
   if (self.isVerticalActionsLayout) {
     CGPoint buttonCenter;
-    buttonCenter.x = self.actionsScrollView.contentSize.width * 0.5f;
+    buttonCenter.x = self.actionsScrollView.contentSize.width * (CGFloat)0.5;
     buttonCenter.y = self.actionsScrollView.contentSize.height - MDCDialogActionsInsets.bottom;
     for (UIButton *button in buttons) {
       CGRect buttonRect = button.frame;
@@ -590,11 +596,11 @@ static const CGFloat MDCDialogMessageOpacity = 0.54f;
     self.actionsScrollView.frame = actionsScrollViewRect;
   } else {
     // Complex layout case : Split the space between the two scrollviews
-    if (CGRectGetHeight(contentScrollViewRect) < CGRectGetHeight(self.bounds) * 0.5f) {
+    if (CGRectGetHeight(contentScrollViewRect) < CGRectGetHeight(self.bounds) * (CGFloat)0.5) {
       actionsScrollViewRect.size.height =
       CGRectGetHeight(self.bounds) - contentScrollViewRect.size.height;
     } else {
-      CGFloat maxActionsHeight = CGRectGetHeight(self.bounds) * 0.5f;
+      CGFloat maxActionsHeight = CGRectGetHeight(self.bounds) * (CGFloat)0.5;
       actionsScrollViewRect.size.height = MIN(maxActionsHeight, actionsScrollViewRect.size.height);
     }
     actionsScrollViewRect.origin.y =

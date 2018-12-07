@@ -14,16 +14,13 @@
 
 #import "BottomSheetPresenterViewController.h"
 
-#import "MaterialButtons.h"
-
-@implementation BottomSheetPresenterViewController {
-  MDCButton *_button;
-}
+@implementation BottomSheetPresenterViewController
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
-    _colorScheme = [[MDCSemanticColorScheme alloc] init];
+    _colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
     _typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;

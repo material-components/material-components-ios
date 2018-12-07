@@ -17,6 +17,23 @@
 #import "MaterialMath.h"
 #import "MDCBottomAppBarAttributes.h"
 
+@interface MDCBottomAppBarLayer (PathGenerators)
+- (UIBezierPath *)drawWithPathToCut:(UIBezierPath *)bottomBarPath
+                            yOffset:(CGFloat)yOffset
+                              width:(CGFloat)width
+                             height:(CGFloat)height
+                          arcCenter:(CGPoint)arcCenter
+                          arcRadius:(CGFloat)arcRadius
+                         startAngle:(CGFloat)startAngle
+                           endAngle:(CGFloat)endAngle;
+- (UIBezierPath *)drawWithPlainPath:(UIBezierPath *)bottomBarPath
+                            yOffset:(CGFloat)yOffset
+                              width:(CGFloat)width
+                             height:(CGFloat)height
+                          arcCenter:(CGPoint)arcCenter
+                          arcRadius:(CGFloat)arcRadius;
+@end
+
 @implementation MDCBottomAppBarLayer
 
 + (instancetype)layer {
@@ -26,9 +43,9 @@
 
   // TODO(#2018): These shadow attributes will be updated once specs are finalized.
   CGFloat scale = UIScreen.mainScreen.scale;
-  layer.shadowOpacity = 0.4f;
-  layer.shadowRadius = 4.f;
-  layer.shadowOffset = CGSizeMake(0, 2.f);
+  layer.shadowOpacity = (float)0.4;
+  layer.shadowRadius = 4;
+  layer.shadowOffset = CGSizeMake(0, 2);
   layer.needsDisplayOnBoundsChange = YES;
   layer.contentsScale = scale;
   layer.rasterizationScale = scale;
@@ -46,9 +63,8 @@
       CGRectGetHeight(floatingButton.bounds) / 2 + kMDCBottomAppBarFloatingButtonRadiusOffset;
   CGFloat navigationBarYOffset = CGRectGetMinY(navigationBarFrame);
   CGFloat halfAngle = acosf((float)((navigationBarYOffset - floatingButton.center.y) / arcRadius));
-  CGFloat startAngle = (float)M_PI / 2.0f + halfAngle;
-  CGFloat endAngle = (float)M_PI / 2.0f - halfAngle;
-  CGFloat halfOfHypotenuseLength = sinf((float)halfAngle) * arcRadius;
+  CGFloat startAngle = (float)M_PI / 2 + halfAngle;
+  CGFloat endAngle = (float)M_PI / 2 - halfAngle;
 
   CGFloat width = CGRectGetWidth(rect);
   CGFloat height = CGRectGetHeight(rect);
@@ -68,7 +84,7 @@
                       width:width
                      height:height
                   arcCenter:floatingButton.center
-           hypotenuseLength:halfOfHypotenuseLength * 2];
+                  arcRadius:arcRadius];
   }
 
   return bottomBarPath.CGPath;
@@ -102,12 +118,13 @@
                               width:(CGFloat)width
                              height:(CGFloat)height
                           arcCenter:(CGPoint)arcCenter
-                   hypotenuseLength:(CGFloat)hypotenuseLength {
-  CGFloat halfOfHypotenuseLength = hypotenuseLength / 2;
+                          arcRadius:(CGFloat)arcRadius {
   [bottomBarPath moveToPoint:CGPointMake(0, yOffset)];
-  [bottomBarPath addLineToPoint:CGPointMake(arcCenter.x - halfOfHypotenuseLength, yOffset)];
+  [bottomBarPath addLineToPoint:CGPointMake(arcCenter.x - arcRadius, yOffset)];
   [bottomBarPath addLineToPoint:CGPointMake(arcCenter.x, yOffset)];
-  [bottomBarPath addLineToPoint:CGPointMake(arcCenter.x + halfOfHypotenuseLength, yOffset)];
+  [bottomBarPath addLineToPoint:CGPointMake(arcCenter.x + arcRadius, yOffset)];
+  // The extra line is needed to have the same number of control points in boths paths.
+  [bottomBarPath addLineToPoint:CGPointMake(arcCenter.x + arcRadius, yOffset)];
   [bottomBarPath addLineToPoint:CGPointMake(width, yOffset)];
   [bottomBarPath addLineToPoint:CGPointMake(width, height * 2 + yOffset)];
   [bottomBarPath addLineToPoint:CGPointMake(0, height * 2 + yOffset)];

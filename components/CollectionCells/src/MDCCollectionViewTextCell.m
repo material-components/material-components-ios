@@ -21,10 +21,10 @@
 #include <tgmath.h>
 
 // Default cell heights.
-const CGFloat MDCCellDefaultOneLineHeight = 48.0f;
-const CGFloat MDCCellDefaultOneLineWithAvatarHeight = 56.0f;
-const CGFloat MDCCellDefaultTwoLineHeight = 72.0f;
-const CGFloat MDCCellDefaultThreeLineHeight = 88.0f;
+const CGFloat MDCCellDefaultOneLineHeight = 48;
+const CGFloat MDCCellDefaultOneLineWithAvatarHeight = 56;
+const CGFloat MDCCellDefaultTwoLineHeight = 72;
+const CGFloat MDCCellDefaultThreeLineHeight = 88;
 
 // Default cell fonts.
 static inline UIFont *CellDefaultTextFont(void) {

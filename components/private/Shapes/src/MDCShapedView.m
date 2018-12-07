@@ -29,9 +29,13 @@
   return [MDCShapedShadowLayer class];
 }
 
-- (nullable instancetype)initWithCoder:(nullable NSCoder *)aDecoder {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wobjc-designated-initializers"
+// https://stackoverflow.com/questions/24458608/convenience-initializer-missing-a-self-call-to-another-initializer
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
   return [super initWithCoder:aDecoder];
 }
+#pragma clang diagnostic pop
 
 - (nonnull instancetype)initWithFrame:(CGRect)frame {
   return [self initWithFrame:frame shapeGenerator:nil];

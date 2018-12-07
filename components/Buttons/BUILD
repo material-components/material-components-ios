@@ -42,6 +42,23 @@ mdc_public_objc_library(
 )
 
 mdc_objc_library(
+    name = "Theming",
+    srcs = native.glob(["src/Theming/*.m"]),
+    hdrs = native.glob(["src/Theming/*.h"]),
+    includes = ["src/Theming"],
+    deps = [
+        ":Buttons",
+        ":ColorThemer",
+        ":ShapeThemer",
+        ":TypographyThemer",
+        "//components/ShadowElevations",
+        "//components/schemes/Container",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+
+mdc_objc_library(
     name = "ColorThemer",
     srcs = native.glob(["src/ColorThemer/*.m"]),
     hdrs = native.glob(["src/ColorThemer/*.h"]),

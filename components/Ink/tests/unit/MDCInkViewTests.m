@@ -16,28 +16,6 @@
 
 #import "MaterialInk.h"
 
-#pragma mark - Fake classes
-
-@interface FakeMDCInkViewAnimationDelegate : NSObject <MDCInkViewDelegate, NSCoding>
-@property(nonatomic, strong) MDCInkView *inkView;
-@end
-
-@implementation FakeMDCInkViewAnimationDelegate
-
-- (void)encodeWithCoder:(nonnull NSCoder *)aCoder {
-  [aCoder encodeObject:self.inkView forKey:@"inkView"];
-}
-
-- (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder {
-  self = [super init];
-  if (self) {
-    _inkView = [aDecoder decodeObjectForKey:@"inkView"];
-  }
-  return self;
-}
-
-@end
-
 #pragma mark - Tests
 
 @interface MDCInkViewTests : XCTestCase

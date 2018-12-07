@@ -30,41 +30,41 @@ typedef NS_OPTIONS(NSUInteger, BackgroundCacheKey) {
   BackgroundCacheKeyMax = 1 << 5,
 };
 
-const CGFloat MDCCollectionViewCellStyleCardSectionInset = 8.0f;
+const CGFloat MDCCollectionViewCellStyleCardSectionInset = 8;
 
 /** Cell content view insets for card-style cells */
-static const CGFloat kFourThirds = 4.0f / 3.0f;
+static const CGFloat kFourThirds = (CGFloat)4 / 3;
 static const UIEdgeInsets kCollectionViewCellContentInsetsRetina3x = {kFourThirds, kFourThirds,
                                                                       kFourThirds, kFourThirds};
 static const UIEdgeInsets kCollectionViewCellContentInsetsRetina = {1.5, 1.5, 1.5, 1.5};
 static const UIEdgeInsets kCollectionViewCellContentInsets = {1, 2, 1, 2};
 
 /** Default cell separator style settings */
-static const CGFloat kCollectionViewCellSeparatorDefaultHeightInPixels = 1.0f;
+static const CGFloat kCollectionViewCellSeparatorDefaultHeightInPixels = 1;
 
 /** Grid layout defaults */
 static const NSInteger kCollectionViewGridDefaultColumnCount = 2;
-static const CGFloat kCollectionViewGridDefaultPadding = 4.0f;
+static const CGFloat kCollectionViewGridDefaultPadding = 4;
 
 /** The drawn cell background */
 static const CGSize kCellImageSize = {44, 44};
-static const CGFloat kCollectionViewCellDefaultBorderWidth = 1.0f;
-static const CGFloat kCollectionViewCellDefaultBorderRadius = 1.5f;
+static const CGFloat kCollectionViewCellDefaultBorderWidth = 1;
+static const CGFloat kCollectionViewCellDefaultBorderRadius = (CGFloat)1.5;
 static inline UIColor *kCollectionViewCellDefaultBorderColor() {
-  return [UIColor colorWithWhite:0 alpha:0.05f];
+  return [UIColor colorWithWhite:0 alpha:(CGFloat)0.05];
 }
 
 /** Cell shadowing */
-static const CGFloat kCollectionViewCellDefaultShadowWidth = 1.0f;
+static const CGFloat kCollectionViewCellDefaultShadowWidth = 1;
 static inline CGSize kCollectionViewCellDefaultShadowOffset() {
   return CGSizeMake(0, 1);
 }
 static inline UIColor *kCollectionViewCellDefaultShadowColor() {
-  return [UIColor colorWithWhite:0 alpha:0.1f];
+  return [UIColor colorWithWhite:0 alpha:(CGFloat)0.1];
 }
 
 /** Animate cell on appearance settings */
-static const CGFloat kCollectionViewAnimatedAppearancePadding = 20.0f;
+static const CGFloat kCollectionViewAnimatedAppearancePadding = 20;
 static const NSTimeInterval kCollectionViewAnimatedAppearanceDelay = 0.1;
 static const NSTimeInterval kCollectionViewAnimatedAppearanceDuration = 0.3;
 
@@ -501,7 +501,7 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
     // If not card or grouped style, revert @c isBottom to allow drawing separator at bottom.
     isBottom = NO;
   }
-  CGFloat borderRadius = (isCardStyle) ? _cardBorderRadius : 0.0f;
+  CGFloat borderRadius = (isCardStyle) ? _cardBorderRadius : 0;
 
   // Allowance for grid decoration view.
   if (isGridLayout) {
@@ -668,7 +668,7 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
 // We want to draw the borders and shadows on single retina-pixel boundaries if possible, but
 // we need to avoid doing this on non-retina devices because it'll look blurry.
 - (CGFloat)minPixelOffset {
-  return 1.0f / [[UIScreen mainScreen] scale];
+  return 1 / [[UIScreen mainScreen] scale];
 }
 
 - (UIImage *)resizableImage:(UIImage *)image {
@@ -686,7 +686,7 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
                               isCard:(BOOL)isCard
                         borderRadius:(CGFloat)borderRadius {
   // Draw background paths for cell.
-  CGFloat minPixelOffset = (isCard) ? [self minPixelOffset] : 0.0f;
+  CGFloat minPixelOffset = (isCard) ? [self minPixelOffset] : 0;
   CGFloat minX = CGRectGetMinX(rect) + minPixelOffset;
   CGFloat midX = CGRectGetMidX(rect) + minPixelOffset;
   CGFloat maxX = CGRectGetMaxX(rect) - minPixelOffset;
@@ -726,7 +726,7 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
                           isCard:(BOOL)isCard
                     borderRadius:(CGFloat)borderRadius {
   // Draw border paths for cell.
-  CGFloat minPixelOffset = (isCard) ? [self minPixelOffset] : 0.0f;
+  CGFloat minPixelOffset = (isCard) ? [self minPixelOffset] : 0;
   CGFloat minX = CGRectGetMinX(rect) + minPixelOffset;
   CGFloat midX = CGRectGetMidX(rect) + minPixelOffset;
   CGFloat maxX = CGRectGetMaxX(rect) - minPixelOffset;

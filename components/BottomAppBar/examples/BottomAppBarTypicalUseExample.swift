@@ -49,7 +49,11 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
     super.viewDidLoad()
 
     view.addSubview(appBarViewController.view)
+    #if swift(>=4.2)
+    appBarViewController.didMove(toParent: self)
+    #else
     appBarViewController.didMove(toParentViewController: self)
+    #endif
   }
 
   func commonInitBottomAppBarTypicalUseSwiftExample() {

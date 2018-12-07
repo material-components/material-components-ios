@@ -275,8 +275,8 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
   }
   // Set top/bottom insets.
   if (isCardStyle || isGroupedStyle) {
-    insets.top = (CGFloat)floor((isTop) ? inset : inset / 2.0f);
-    insets.bottom = (CGFloat)floor((isBottom) ? inset : inset / 2.0f);
+    insets.top = (CGFloat)floor((isTop) ? inset : inset / 2);
+    insets.bottom = (CGFloat)floor((isBottom) ? inset : inset / 2);
   }
   return insets;
 }

@@ -47,8 +47,9 @@
  A Material App Bar consists of a Flexible Header View with a shadow, a Navigation Bar, and space
  for flexible content such as a photo.
 
- Learn more at the [Material
- spec](https://material.io/guidelines/patterns/scrolling-techniques.html)
+ The [Material Guidelines article for Scrolling
+ Techniques](https://material.io/archive/guidelines/patterns/scrolling-techniques.html) has more
+ detailed recommendations and guidance.
 
  ### Dependencies
 

@@ -17,9 +17,9 @@
 #import "MaterialMath.h"
 #import "MaterialShapes.h"
 
-static const CGFloat MDCCardShadowElevationNormal = 1.f;
-static const CGFloat MDCCardShadowElevationHighlighted = 8.f;
-static const CGFloat MDCCardCornerRadiusDefault = 4.f;
+static const CGFloat MDCCardShadowElevationNormal = 1;
+static const CGFloat MDCCardShadowElevationHighlighted = 8;
+static const CGFloat MDCCardCornerRadiusDefault = 4;
 static const BOOL MDCCardIsInteractableDefault = YES;
 
 @interface MDCCard ()
@@ -265,7 +265,7 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 - (void)updateInkForShape {
   CGRect boundingBox = CGPathGetBoundingBox(self.layer.shapeLayer.path);
   self.inkView.maxRippleRadius =
-      (CGFloat)(MDCHypot(CGRectGetHeight(boundingBox), CGRectGetWidth(boundingBox)) / 2 + 10.f);
+      (CGFloat)(MDCHypot(CGRectGetHeight(boundingBox), CGRectGetWidth(boundingBox)) / 2 + 10);
   self.inkView.layer.masksToBounds = NO;
 }
 

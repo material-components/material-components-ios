@@ -15,8 +15,10 @@
 #import <XCTest/XCTest.h>
 
 #import "MDCNavigationDrawerFakes.h"
-#import "MaterialNavigationDrawer+ColorThemer.h"
 #import "MaterialNavigationDrawer.h"
+#import "MaterialNavigationDrawer+ColorThemer.h"
+
+static const CGFloat kScimAlpha = (CGFloat)0.32;
 
 @interface MDCNavigationDrawerThemeTest : XCTestCase
 @property(nonatomic, strong) MDCBottomDrawerViewController *bottomDrawer;
@@ -36,8 +38,10 @@
   self.bottomDrawer.headerViewController = self.headerViewController;
   self.bottomDrawer.contentViewController = self.contentViewController;
 
-  self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+  self.colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   self.colorScheme.surfaceColor = UIColor.blueColor;
+  self.colorScheme.onSurfaceColor = UIColor.greenColor;
 }
 
 - (void)tearDown {
@@ -57,6 +61,8 @@
                         self.colorScheme.surfaceColor);
   XCTAssertEqualObjects(self.contentViewController.view.backgroundColor,
                         self.colorScheme.surfaceColor);
+  XCTAssertEqualObjects(self.bottomDrawer.scrimColor,
+                        [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kScimAlpha]);
 }
 
 @end

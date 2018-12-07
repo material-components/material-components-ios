@@ -64,9 +64,9 @@
 
   // Then
   XCTAssertEqualObjects(messageView.snackbarMessageViewBackgroundColor,
-                        [UIColor colorWithRed:(float)(0x32 / 255.0)
-                                        green:(float)(0x32 / 255.0)
-                                         blue:(float)(0x32 / 255.0)
+                        [UIColor colorWithRed:(CGFloat)(0x32 / 255.0)
+                                        green:(CGFloat)(0x32 / 255.0)
+                                         blue:(CGFloat)(0x32 / 255.0)
                                         alpha:1]);
   XCTAssertEqualObjects(messageView.snackbarMessageViewShadowColor, UIColor.blackColor);
   XCTAssertEqualObjects(messageView.messageTextColor, UIColor.whiteColor);
@@ -84,7 +84,11 @@
   // When
   self.message.accessibilityLabel = @"not message text";
   [self.manager showMessage:self.message];
-  [NSRunLoop.mainRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [expectation fulfill];
+  });
+  [self waitForExpectationsWithTimeout:3 handler:nil];
 
   // Then
   XCTAssertEqualObjects(self.delegate.presentedView.label.accessibilityLabel,
@@ -94,7 +98,11 @@
 - (void)testAccessibilityHintDefaultIsNotNil {
   // When
   [self.manager showMessage:self.message];
-  [NSRunLoop.mainRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [expectation fulfill];
+  });
+  [self waitForExpectationsWithTimeout:3 handler:nil];
 
   // Then
   XCTAssertNotNil(self.delegate.presentedView.label.accessibilityHint);
@@ -104,7 +112,11 @@
   // When
   self.message.accessibilityHint = @"a hint";
   [self.manager showMessage:self.message];
-  [NSRunLoop.mainRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [expectation fulfill];
+  });
+  [self waitForExpectationsWithTimeout:3 handler:nil];
 
   // Then
   XCTAssertEqualObjects(self.delegate.presentedView.label.accessibilityHint,
@@ -121,7 +133,11 @@
 
   // When
   [self.manager showMessage:self.message];
-  [NSRunLoop.mainRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [expectation fulfill];
+  });
+  [self waitForExpectationsWithTimeout:3 handler:nil];
 
   // Then
   XCTAssertTrue(self.manager.internalManager.overlayView.accessibilityViewIsModal);
@@ -133,7 +149,11 @@
 
   // When
   [self.manager showMessage:self.message];
-  [NSRunLoop.mainRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [expectation fulfill];
+  });
+  [self waitForExpectationsWithTimeout:3 handler:nil];
 
   // Then
   XCTAssertFalse(self.manager.internalManager.overlayView.accessibilityViewIsModal);
@@ -149,7 +169,11 @@
 
   // When
   [self.manager showMessage:self.message];
-  [NSRunLoop.mainRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [expectation fulfill];
+  });
+  [self waitForExpectationsWithTimeout:3 handler:nil];
 
   // Then
   XCTAssertFalse(self.manager.internalManager.overlayView.accessibilityViewIsModal);
@@ -161,7 +185,11 @@
 
   // When
   [self.manager showMessage:self.message];
-  [NSRunLoop.mainRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [expectation fulfill];
+  });
+  [self waitForExpectationsWithTimeout:3 handler:nil];
 
   // Then
   XCTAssertFalse(self.manager.internalManager.overlayView.accessibilityViewIsModal);

@@ -17,14 +17,14 @@
 #import "MaterialMath.h"
 #import "MaterialTypography.h"
 
-static const CGFloat kTitleLabelAlpha = 0.87f;
-static const CGFloat kMessageLabelAlpha = 0.6f;
-static const CGFloat kMessageOnlyPadding = 23.f;
-static const CGFloat kLeadingPadding = 16.f;
-static const CGFloat kTopStandardPadding = 16.f;
-static const CGFloat kTrailingPadding = 16.f;
-static const CGFloat kTitleOnlyPadding = 18.f;
-static const CGFloat kMiddlePadding = 8.f;
+static const CGFloat kTitleLabelAlpha = (CGFloat)0.87;
+static const CGFloat kMessageLabelAlpha = (CGFloat)0.6;
+static const CGFloat kMessageOnlyPadding = 23;
+static const CGFloat kLeadingPadding = 16;
+static const CGFloat kTopStandardPadding = 16;
+static const CGFloat kTrailingPadding = 16;
+static const CGFloat kTitleOnlyPadding = 18;
+static const CGFloat kMiddlePadding = 8;
 
 @interface MDCActionSheetHeaderView ()
 @property(nonatomic, strong) UILabel *titleLabel;
@@ -104,7 +104,7 @@ static const CGFloat kMiddlePadding = 8.f;
   UIEdgeInsets safeAreaInsets = UIEdgeInsetsZero;
   if (@available(iOS 11.0, *)) {
     safeAreaInsets = self.safeAreaInsets;
-    safeAreaInsets.top = 0.f;
+    safeAreaInsets.top = 0;
   }
   return UIEdgeInsetsInsetRect(frame, safeAreaInsets);
 }

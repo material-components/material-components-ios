@@ -20,8 +20,8 @@
 #import "private/MDCActionSheetItemTableViewCell.h"
 
 static NSString *const kReuseIdentifier = @"BaseCell";
-static const CGFloat kActionImageAlpha = 0.6f;
-static const CGFloat kActionTextAlpha = 0.87f;
+static const CGFloat kActionImageAlpha = (CGFloat)0.6;
+static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 
 @interface MDCActionSheetAction ()
 
@@ -56,6 +56,7 @@ static const CGFloat kActionTextAlpha = 0.87f;
                                                          image:self.image
                                                        handler:self.completionHandler];
   action.accessibilityIdentifier = self.accessibilityIdentifier;
+  action.accessibilityLabel = self.accessibilityLabel;
   return action;
 }
 
@@ -103,7 +104,7 @@ static const CGFloat kActionTextAlpha = 0.87f;
                                    | UIViewAutoresizingFlexibleHeight);
     _tableView.delegate = self;
     _tableView.dataSource = self;
-    _tableView.estimatedRowHeight = 56.f;
+    _tableView.estimatedRowHeight = 56;
     _tableView.rowHeight = UITableViewAutomaticDimension;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [_tableView registerClass:[MDCActionSheetItemTableViewCell class]
@@ -157,7 +158,7 @@ static const CGFloat kActionTextAlpha = 0.87f;
   self.header.frame = CGRectMake(0, 0, self.view.bounds.size.width, size.height);
   UIEdgeInsets insets = UIEdgeInsetsMake(self.header.frame.size.height, 0, 0, 0);
   if (@available(iOS 11.0, *)) {
-    insets.bottom = self.view.safeAreaInsets.bottom;
+    insets.bottom = self.tableView.adjustedContentInset.bottom;
   }
   self.tableView.contentInset = insets;
   self.tableView.contentOffset = CGPointMake(0, -size.height);
@@ -173,14 +174,15 @@ static const CGFloat kActionTextAlpha = 0.87f;
   CGFloat maxTableHeight = maxHeight - headerHeight;
   NSInteger amountOfCellsToShow = (NSInteger)(maxTableHeight / cellHeight);
   // There is already a partially shown cell that is showing and more than half is visable
-  if (fmod(maxTableHeight, cellHeight) > (cellHeight * 0.5f)) {
+  if (fmod(maxTableHeight, cellHeight) > (cellHeight * (CGFloat)0.5)) {
     amountOfCellsToShow += 1;
   }
-  CGFloat preferredHeight = (((CGFloat)amountOfCellsToShow - 0.5f) * cellHeight) + headerHeight;
+  CGFloat preferredHeight =
+      (((CGFloat)amountOfCellsToShow - (CGFloat)0.5) * cellHeight) + headerHeight;
   // When updating the preferredSheetHeight the presentation controller takes into account the
   // safe area so we have to remove that.
   if (@available(iOS 11.0, *)) {
-    preferredHeight = preferredHeight - self.view.safeAreaInsets.bottom;
+    preferredHeight = preferredHeight - self.tableView.adjustedContentInset.bottom;
   }
   return MDCCeil(preferredHeight);
 }

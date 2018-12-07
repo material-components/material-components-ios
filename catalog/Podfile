@@ -12,6 +12,7 @@ target "MDCCatalog" do
     'BottomAppBar/tests/unit',
     'BottomNavigation/tests/unit',
     'BottomSheet/tests/unit',
+    'ButtonBar/tests/unit',
     'Buttons/tests/unit',
     'Cards/tests/unit',
     'Chips/tests/unit',
@@ -54,6 +55,11 @@ target "MDCCatalog" do
   ]
   pod 'MaterialComponentsAlpha', :path => '../', :testspecs => [
     'ActionSheet/tests/unit',
+    'schemes/Container/tests/unit',
+  ]
+  pod 'MaterialComponentsSnapshotTests', :path => '../', :testspecs => [
+    'Cards/tests/snapshot',
+    'TextFields/tests/snapshot',
   ]
   pod 'CatalogByConvention', "~> 2.5"
   pod 'MaterialCatalog', :path => 'MaterialCatalog/'
@@ -80,6 +86,7 @@ target "MDCDragons" do
   pod 'MaterialComponents', :path => '../'
   pod 'MaterialComponentsAlpha', :path => '../'
   pod 'MaterialComponentsExamples', :path => '../'
+  pod 'MaterialComponentsSnapshotTests', :path => '../'
   use_frameworks!
 end
 

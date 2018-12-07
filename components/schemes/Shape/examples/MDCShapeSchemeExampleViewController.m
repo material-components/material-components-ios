@@ -14,10 +14,10 @@
 
 #import "MDCShapeSchemeExampleViewController.h"
 
-#import "../../../BottomSheet/examples/supplemental/BottomSheetDummyCollectionViewController.h"
 #import "supplemental/MDCBottomSheetControllerShapeThemerDefaultMapping.h"
 #import "supplemental/MDCChipViewShapeThemerDefaultMapping.h"
 #import "supplemental/MDCFloatingButtonShapeThemerDefaultMapping.h"
+#import "supplemental/MDCShapeExamplesDummyCollectionViewController.h"
 
 #import "MaterialAppBar+ColorThemer.h"
 #import "MaterialAppBar+TypographyThemer.h"
@@ -26,6 +26,7 @@
 #import "MaterialBottomSheet.h"
 #import "MaterialButtons+ButtonThemer.h"
 #import "MaterialButtons+ShapeThemer.h"
+#import "MaterialButtons+Theming.h"
 #import "MaterialButtons.h"
 #import "MaterialCards+CardThemer.h"
 #import "MaterialCards+ShapeThemer.h"
@@ -34,6 +35,7 @@
 #import "MaterialChips+ShapeThemer.h"
 #import "MaterialChips.h"
 #import "MaterialColorScheme.h"
+#import "MaterialContainerScheme.h"
 #import "MaterialShapeLibrary.h"
 #import "MaterialShapeScheme.h"
 #import "MaterialTypographyScheme.h"
@@ -42,6 +44,7 @@
 @property(strong, nonatomic) MDCSemanticColorScheme *colorScheme;
 @property(strong, nonatomic) MDCShapeScheme *shapeScheme;
 @property(strong, nonatomic) MDCTypographyScheme *typographyScheme;
+@property(strong, nonatomic) MDCContainerScheme *containerScheme;
 
 @property(weak, nonatomic) IBOutlet MDCShapedView *smallComponentShape;
 @property(weak, nonatomic) IBOutlet MDCShapedView *mediumComponentShape;
@@ -83,9 +86,15 @@
 }
 
 - (void)commonShapeSchemeExampleInit {
-  _colorScheme = [[MDCSemanticColorScheme alloc] init];
-  _shapeScheme = [[MDCShapeScheme alloc] init];
-  _typographyScheme = [[MDCTypographyScheme alloc] init];
+  self.colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  self.shapeScheme = [[MDCShapeScheme alloc] initWithDefaults:MDCShapeSchemeDefaultsMaterial201809];
+  self.typographyScheme =
+      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+  self.containerScheme = [[MDCContainerScheme alloc] init];
+  self.containerScheme.colorScheme = self.colorScheme;
+  self.containerScheme.shapeScheme = self.shapeScheme;
+  self.containerScheme.typographyScheme = self.typographyScheme;
 }
 
 - (void)viewDidLoad {
@@ -115,7 +124,7 @@
   UIImage *plusImage =
       [[UIImage imageNamed:@"Plus"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [self.floatingButton setImage:plusImage forState:UIControlStateNormal];
-  [MDCFloatingActionButtonThemer applyScheme:buttonScheme toButton:self.floatingButton];
+  [self.floatingButton applySecondaryThemeWithScheme:[self containerScheme]];
   [self.floatingButton sizeToFit];
   self.floatingButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.componentContentView addSubview:self.floatingButton];
@@ -153,7 +162,7 @@
 
   self.presentBottomSheetButton = [[MDCButton alloc] init];
   [self.presentBottomSheetButton setTitle:@"Present Bottom Sheet" forState:UIControlStateNormal];
-  [MDCOutlinedButtonThemer applyScheme:buttonScheme toButton:self.presentBottomSheetButton];
+  [self.presentBottomSheetButton applyOutlinedThemeWithScheme:self.containerScheme];
   self.presentBottomSheetButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.componentContentView addSubview:self.presentBottomSheetButton];
   [self.presentBottomSheetButton addTarget:self
@@ -183,8 +192,8 @@
 }
 
 - (void)presentBottomSheet {
-  BottomSheetDummyCollectionViewController *viewController =
-      [[BottomSheetDummyCollectionViewController alloc] initWithNumItems:102];
+  MDCShapeExamplesDummyCollectionViewController *viewController =
+      [[MDCShapeExamplesDummyCollectionViewController alloc] initWithNumItems:102];
   viewController.title = @"Shaped bottom sheet example";
 
   MDCAppBarContainerViewController *container =
@@ -222,7 +231,7 @@
   image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 
   UIButton *button = [[UIButton alloc] initWithFrame:CGRectZero];
-  button.tintColor = [UIColor colorWithWhite:0 alpha:0.7f];
+  button.tintColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.7];
   [button setImage:image forState:UIControlStateNormal];
 
   return button;

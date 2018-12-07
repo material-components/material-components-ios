@@ -2,6 +2,8 @@
 
 These instructions describe how to cut a new release.
 
+**You should always start from this doc when initiating a release.**
+
 MDC follows the ["git flow"](http://nvie.com/posts/a-successful-git-branching-model/) style of 
 development, where the default branch is called `develop`. `stable` (instead of the traditional
 `master`) is reserved for releases. The `develop` branch is periodically copied to a release candidate,
@@ -39,6 +41,10 @@ will be working day-to-day with a fork, consider creating a separate clone just 
 
     git clone git@github.com:material-components/material-components-ios.git mdc-ios-release
     cd mdc-ios-release
+
+### Install git-lfs
+
+Please follow [using git-lfs instructions](https://github.com/material-components/material-components-ios/blob/2b6da5f10438081e5a7b2211e27336c6846433e5/contributing/tools.md#using-git-lfs)
 
 ## Cutting and testing the release
 
@@ -84,7 +90,7 @@ Other than the steps above regarding hotfixing, the entire release process stays
 
 ### Start internal testing
 
-You can now start the internal release testing process documented at [go/mdc-releasing](http://go/mdc-releasing).
+You can now start the internal release testing process documented at [go/mdc-releasing](http://go/mdc-releasing#import-the-release-candidate).
 
 ### Resolve any failures
 
@@ -206,6 +212,14 @@ Note: Ensure that you can [push the podspec](#publish-to-cocoapods) later by che
     pod trunk me
 
 If this fails or MaterialComponents is not listed [register an account and session](https://guides.cocoapods.org/making/getting-setup-with-trunk.html).
+
+## Consider running `scripts/release notes` again
+
+Run `scripts/release notes` again and copy paste it into the `CHANGELOG.md` after `## Changes` if
+you
+
+* cherry picked a change to add it to the release or
+* reverted any commit to rollback any PR.
 
 ## Testing with release-blocking clients
 
