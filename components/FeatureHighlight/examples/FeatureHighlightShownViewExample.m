@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialButtons+Theming.h"
+#import "MaterialButtons+MaterialTheming.h"
 #import "MaterialButtons.h"
 #import "MaterialFeatureHighlight+ColorThemer.h"
 #import "MaterialFeatureHighlight+FeatureHighlightAccessibilityMutator.h"

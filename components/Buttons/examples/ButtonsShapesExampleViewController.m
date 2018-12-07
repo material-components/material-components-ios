@@ -14,7 +14,7 @@
 
 #import "MaterialButtons+ButtonThemer.h"
 #import "MaterialButtons+ColorThemer.h"
-#import "MaterialButtons+Theming.h"
+#import "MaterialButtons+MaterialTheming.h"
 #import "MaterialButtons+TypographyThemer.h"
 #import "MaterialButtons.h"
 #import "MaterialContainerScheme.h"

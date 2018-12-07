@@ -15,7 +15,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialButtons+ButtonThemer.h"
-#import "MaterialButtons+Theming.h"
+#import "MaterialButtons+MaterialTheming.h"
 #import "MaterialButtons.h"
 #import "MaterialContainerScheme.h"
 
