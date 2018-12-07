@@ -28,13 +28,13 @@
   cornerTreatment1.valueType = MDCCornerTreatmentValueTypeAbsolute;
   MDCCornerTreatment *cornerTreatment2 = [[MDCCornerTreatment alloc] init];
   cornerTreatment2.valueType = MDCCornerTreatmentValueTypePercentage;
-  
+
   // Then
   XCTAssertNotEqualObjects(cornerTreatment1, cornerTreatment2);
-  
+
   // When
   cornerTreatment2.valueType = MDCCornerTreatmentValueTypeAbsolute;
-  
+
   // Then
   XCTAssertEqual(cornerTreatment1.hash, cornerTreatment2.hash);
   XCTAssertEqualObjects(cornerTreatment1, cornerTreatment2);
