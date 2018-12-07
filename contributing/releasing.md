@@ -62,7 +62,7 @@ Note: if for some reason `cut` fails, first ensure that nobody else is in the mi
 You will now have a local `release-candidate` branch, a new section in CHANGELOG.md titled
 "release-candidate", and the `release-candidate` branch will have been pushed to GitHub.
 
-#### Create the PR fore the PR
+#### Create a Pull Request for the Release Branch
 
 If you have not clicked [the
 link](https://github.com/material-components/material-components-ios/compare/stable...release-candidate)
