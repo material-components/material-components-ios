@@ -111,7 +111,7 @@
   _viewControllers = viewControllersCopy;
 }
 
-- (UIViewController *)childViewControllerForStatusBarStyle {  
+- (UIViewController *)childViewControllerForStatusBarStyle {
   return self.selectedViewController;
 }
 
