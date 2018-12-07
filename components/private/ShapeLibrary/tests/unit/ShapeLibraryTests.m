@@ -39,7 +39,6 @@ void GetCGPathAddLineToPointValues(void *info, const CGPathElement *element);
   MDCCornerTreatment *cornerTreatment = [MDCCornerTreatment cornerWithCurve:CGSizeMake(2, 5)];
 
   // When
-  XCTAssertNotEqual(curvedCorner.hash, curvedCorner2.hash);
   XCTAssertNotEqualObjects(curvedCorner, curvedCorner2);
   curvedCorner2.size = CGSizeMake(2, 5);
 
