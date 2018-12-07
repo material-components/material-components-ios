@@ -48,8 +48,10 @@
 
 - (void)generateSnapshotAndVerify {
   [self triggerTextFieldLayout];
+  UIView *snapshotView = [self addBackgroundViewToView:self.textField];
 
-  self.testView = [self addBackgroundViewToView:self.textField];
+  // Perform the actual verification.
+  [self snapshotVerifyView:snapshotView];
 }
 
 #pragma mark - Tests
