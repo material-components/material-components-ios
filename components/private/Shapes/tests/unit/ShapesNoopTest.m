@@ -27,4 +27,23 @@
   XCTAssertNotNil(view);
 }
 
+- (void)testCornerTreatmentEquality {
+  // Given
+  MDCCornerTreatment *cornerTreatment1 = [[MDCCornerTreatment alloc] init];
+  cornerTreatment1.valueType = MDCCornerTreatmentValueTypeAbsolute;
+  MDCCornerTreatment *cornerTreatment2 = [[MDCCornerTreatment alloc] init];
+  cornerTreatment2.valueType = MDCCornerTreatmentValueTypePercentage;
+
+  // Then
+  XCTAssertNotEqual(cornerTreatment1.hash, cornerTreatment2.hash);
+  XCTAssertNotEqualObjects(cornerTreatment1, cornerTreatment2);
+
+  // When
+  cornerTreatment2.valueType = MDCCornerTreatmentValueTypeAbsolute;
+
+  // Then
+  XCTAssertEqual(cornerTreatment1.hash, cornerTreatment2.hash);
+  XCTAssertEqualObjects(cornerTreatment1, cornerTreatment2);
+}
+
 @end
