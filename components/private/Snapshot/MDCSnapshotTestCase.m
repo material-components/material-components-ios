@@ -29,11 +29,13 @@
       NSProcessInfo.processInfo.operatingSystemVersion.patchVersion != 0) {
     NSLog(@"Skipping this test. Snapshot tests currently only run on iOS 11.2.0");
     [super tearDown];
+    self.testView = nil;
     return;
   }
 
   NSAssert(self.testView, @"Snapshot tests must set `testView` to the view for snapshotting.");
   [self snapshotVerifyView:self.testView];
+  self.testView = nil;
   [super tearDown];
 }
 
