@@ -30,7 +30,7 @@
 
   self.textField = [[MDCTextField alloc] init];
   self.textFieldController =
-  [[MDCTextInputControllerOutlined alloc] initWithTextInput:self.textField];
+      [[MDCTextInputControllerOutlined alloc] initWithTextInput:self.textField];
   MDCSemanticColorScheme *colorScheme =
       [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   MDCTypographyScheme *typographyScheme =
@@ -40,8 +40,7 @@
                                       toTextInputController:self.textFieldController];
   [MDCTextFieldTypographyThemer applyTypographyScheme:typographyScheme
                                 toTextInputController:self.textFieldController];
-  [MDCTextFieldTypographyThemer applyTypographyScheme:typographyScheme
-                                          toTextInput:self.textField];
+  [MDCTextFieldTypographyThemer applyTypographyScheme:typographyScheme toTextInput:self.textField];
 }
 
 - (void)tearDown {
