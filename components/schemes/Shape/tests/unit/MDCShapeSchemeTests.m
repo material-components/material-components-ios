@@ -25,19 +25,19 @@
 
 - (void)testShapeCategoryEquality {
   // Given
-  MDCShapeCategory *cat1 = [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyCut
+  MDCShapeCategory *originalCategory = [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyCut
                                                                    andSize:(CGFloat)2.1];
-  MDCShapeCategory *cat2 = [[MDCShapeCategory alloc] init];
+  MDCShapeCategory *testCategory = [[MDCShapeCategory alloc] init];
   MDCCornerTreatment *corner =
       [MDCCornerTreatment cornerWithCut:(CGFloat)2.1 valueType:MDCCornerTreatmentValueTypeAbsolute];
-  cat2.topLeftCorner = corner;
-  cat2.topRightCorner = corner;
-  cat2.bottomLeftCorner = corner;
-  cat2.bottomRightCorner = corner;
+  testCategory.topLeftCorner = corner;
+  testCategory.topRightCorner = corner;
+  testCategory.bottomLeftCorner = corner;
+  testCategory.bottomRightCorner = corner;
 
   // Then
-  XCTAssertEqual(cat1.hash, cat2.hash);
-  XCTAssertEqualObjects(cat1, cat2);
+  XCTAssertEqual(originalCategory.hash, testCategory.hash);
+  XCTAssertEqualObjects(originalCategory, testCategory);
 }
 
 - (void)testInitMatchesInitWithMaterialDefaults {
