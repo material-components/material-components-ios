@@ -92,7 +92,7 @@
   NSAssert(!outOfBounds,
            @"Attempting to set BottomBarViewController's selectedIndex to %li. This"
             " value is not within the bounds of the navigation bar's items and/or view controllers",
-           selectedIndex);
+           (unsigned long)selectedIndex);
 
   // Early return if we are out of bounds or if the the index is already selected.
   if (outOfBounds || selectedIndex == _selectedIndex) {
@@ -111,7 +111,7 @@
   _viewControllers = viewControllersCopy;
 }
 
-- (UIViewController *)childViewControllerForStatusBarStyle {
+- (UIViewController *)childViewControllerForStatusBarStyle {  
   return self.selectedViewController;
 }
 
