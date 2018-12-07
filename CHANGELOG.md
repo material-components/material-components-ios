@@ -1,3 +1,7 @@
+# 72.0.1
+
+Corrected readme version to match cocopods version.
+
 # 71.0.0
 
 In this release we fixed some NavigationDrawer/BottomDrawer bugs and started using the theming extensions. This includes using categories on the components and a global container scheme.
