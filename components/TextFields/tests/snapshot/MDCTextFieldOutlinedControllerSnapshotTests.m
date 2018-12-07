@@ -16,7 +16,6 @@
 #import "MDCTextFieldSnapshotTestsStrings.h"
 #import "MaterialTextFields.h"
 
-
 @interface MDCTextFieldOutlinedControllerSnapshotTests : MDCSnapshotTestCase
 @property(nonatomic, strong) MDCTextField *textField;
 @property(nonatomic, strong) MDCTextInputControllerOutlined *textFieldController;
