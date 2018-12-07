@@ -17,6 +17,7 @@ import MaterialComponents.MaterialBottomAppBar
 import MaterialComponents.MaterialBottomAppBar_ColorThemer
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialNavigationDrawer
+import MaterialComponents.MaterialNavigationDrawer_ColorThemer
 
 class BottomDrawerInfiniteScrollingExample: UIViewController {
   var colorScheme = MDCSemanticColorScheme()
@@ -64,6 +65,7 @@ class BottomDrawerInfiniteScrollingExample: UIViewController {
   @objc private func presentNavigationDrawer() {
     let bottomDrawerViewController = MDCBottomDrawerViewController()
     bottomDrawerViewController.contentViewController = contentViewController
+    contentViewController.drawerVC = bottomDrawerViewController
     bottomDrawerViewController.headerViewController = headerViewController
     bottomDrawerViewController.trackingScrollView = contentViewController.tableView
     MDCBottomDrawerColorThemer.applySemanticColorScheme(colorScheme,
@@ -74,6 +76,7 @@ class BottomDrawerInfiniteScrollingExample: UIViewController {
 
 class DrawerContentTableViewController: UITableViewController {
   var colorScheme: MDCSemanticColorScheme!
+  weak var drawerVC: MDCBottomDrawerViewController!
 
   override var preferredContentSize: CGSize {
     get {
@@ -95,7 +98,6 @@ class DrawerContentTableViewController: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-    self.tableView.isScrollEnabled = false
   }
 
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -113,6 +115,12 @@ class DrawerContentTableViewController: UITableViewController {
   override func numberOfSections(in tableView: UITableView) -> Int {
     return 1
   }
+
+  override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    tableView.deselectRow(at: indexPath, animated: true)
+    drawerVC.setContentOffsetY(0, animated: false)
+  }
+
 }
 
 extension BottomDrawerInfiniteScrollingExample {

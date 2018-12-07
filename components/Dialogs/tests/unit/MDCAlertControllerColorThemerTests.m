@@ -53,7 +53,8 @@
 - (void)testApplyingColorScheme {
   MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:@"title"
                                                                    message:@"message"];
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   [MDCAlertColorThemer applySemanticColorScheme:colorScheme toAlertController:alert];
 
   MDCAlertControllerView *view = (MDCAlertControllerView *)alert.view;

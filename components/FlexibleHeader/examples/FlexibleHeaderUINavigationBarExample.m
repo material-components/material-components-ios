@@ -18,7 +18,7 @@
 #import "MaterialFlexibleHeader.h"
 #import "supplemental/FlexibleHeaderUINavigationBarSupplemental.h"
 
-static const CGFloat kFlexibleHeaderMinHeight = 200.f;
+static const CGFloat kFlexibleHeaderMinHeight = 200;
 
 @interface FlexibleHeaderUINavigationBarExample () <UIScrollViewDelegate>
 
@@ -155,7 +155,7 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
   [self.view addSubview:self.fhvc.view];
   [self.fhvc didMoveToParentViewController:self];
 
-  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:0.1f alpha:1.0f];
+  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.1 alpha:1];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -163,7 +163,7 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 
   [self.navigationController setNavigationBarHidden:YES animated:animated];
   self.button.center = CGPointMake(CGRectGetMidX(self.fhvc.headerView.frame),
-                                   CGRectGetMidY(self.fhvc.headerView.frame) + 50.f);
+                                   CGRectGetMidY(self.fhvc.headerView.frame) + 50);
 }
 
 // This method must be implemented for MDCFlexibleHeaderViewController's

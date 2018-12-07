@@ -28,7 +28,9 @@ mdc_public_objc_library(
         "UIKit",
     ],
     deps = [
+        "//components/Palettes",
         "//components/ShadowLayer",
+        "//components/private/Math",
         "//components/private/UIMetrics",
     ],
 )

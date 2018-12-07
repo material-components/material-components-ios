@@ -110,7 +110,7 @@
  UIContentSizeCategory is changed.
 
  This property is modeled after the adjustsFontForContentSizeCategory property in the
- UIConnectSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
+ UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
 
  If set to YES, this button will base its text font on MDCFontTextStyleButton.
 

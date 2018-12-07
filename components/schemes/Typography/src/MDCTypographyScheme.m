@@ -67,4 +67,25 @@
   return self;
 }
 
+#pragma mark - NSCopying
+
+- (id)copyWithZone:(NSZone *)zone {
+  MDCTypographyScheme *copy = [[MDCTypographyScheme alloc] init];
+  copy.headline1 = self.headline1;
+  copy.headline2 = self.headline2;
+  copy.headline3 = self.headline3;
+  copy.headline4 = self.headline4;
+  copy.headline5 = self.headline5;
+  copy.headline6 = self.headline6;
+  copy.subtitle1 = self.subtitle1;
+  copy.subtitle2 = self.subtitle2;
+  copy.body1 = self.body1;
+  copy.body2 = self.body2;
+  copy.caption = self.caption;
+  copy.button = self.button;
+  copy.overline = self.overline;
+
+  return copy;
+}
+
 @end

@@ -25,6 +25,15 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+
+  if (!self.colorScheme) {
+    self.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  }
+  if (!self.typographyScheme) {
+    self.typographyScheme =
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+  }
   [self setupExampleViews:@[
       @"Simple Snackbar",
       @"Snackbar with Action Button",
@@ -134,11 +143,11 @@
 }
 
 - (void)showCustomizedSnackbar:(id)sender {
-  UIFont *customMessageFont = [UIFont fontWithName:@"Zapfino" size:14.0f];
+  UIFont *customMessageFont = [UIFont fontWithName:@"Zapfino" size:14];
   NSAssert(customMessageFont, @"Unable to instantiate font");
   MDCSnackbarManager.messageFont = customMessageFont;
 
-  UIFont *customButtonFont = [UIFont fontWithName:@"ChalkDuster" size:14.0f];
+  UIFont *customButtonFont = [UIFont fontWithName:@"ChalkDuster" size:14];
   NSAssert(customButtonFont, @"Unable to instantiate font");
   MDCSnackbarManager.buttonFont = customButtonFont;
 

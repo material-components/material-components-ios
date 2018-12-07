@@ -21,8 +21,8 @@
 #import "MaterialTypographyScheme.h"
 
 static NSString *const kReusableIdentifierItem = @"sliderItemCellIdentifier";
-static CGFloat const kSliderHorizontalMargin = 16.f;
-static CGFloat const kSliderVerticalMargin = 12.f;
+static CGFloat const kSliderHorizontalMargin = 16;
+static CGFloat const kSliderVerticalMargin = 12;
 
 @interface MDCSliderModel : NSObject
 
@@ -224,52 +224,53 @@ static CGFloat const kSliderVerticalMargin = 12.f;
 
     model = [[MDCSliderModel alloc] init];
     model.labelString = @"Default slider";
-    model.value = 0.66f;
+    model.value = (CGFloat)0.66;
     [_sliders addObject:model];
 
     model = [[MDCSliderModel alloc] init];
     model.labelString = @"Green slider without hollow circle at 0";
     model.sliderColor = MDCPalette.greenPalette.tint800;
     model.hollowCircle = NO;
-    model.value = 0.f;
+    model.value = 0;
     [_sliders addObject:model];
 
     model = [[MDCSliderModel alloc] init];
     model.labelString = @"Discrete slider with numeric value label";
     model.numDiscreteValues = 5;
-    model.value = 0.2f;
+    model.value = (CGFloat)0.2;
     [_sliders addObject:model];
 
     model = [[MDCSliderModel alloc] init];
     model.labelString = @"Discrete slider without numeric value label";
     model.numDiscreteValues = 7;
-    model.value = 1.f;
+    model.value = 1;
     model.discreteValueLabel = NO;
     [_sliders addObject:model];
 
     model = [[MDCSliderModel alloc] init];
     model.labelString = @"Dark themed slider";
     model.labelColor = [UIColor whiteColor];
-    model.trackBackgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.3f];
+    model.trackBackgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:(CGFloat)0.3];
     model.sliderColor = MDCPalette.bluePalette.tint500;
     model.bgColor = [UIColor darkGrayColor];
-    model.value = 0.2f;
+    model.value = (CGFloat)0.2;
     [_sliders addObject:model];
 
     model = [[MDCSliderModel alloc] init];
     model.labelString = @"Anchored slider";
-    model.anchorValue = 0.5f;
-    model.value = 0.7f;
+    model.anchorValue = (CGFloat)0.5;
+    model.value = (CGFloat)0.7;
     [_sliders addObject:model];
 
     model = [[MDCSliderModel alloc] init];
     model.labelString = @"Disabled slider";
-    model.value = 0.5f;
-    model.anchorValue = 0.1f;
+    model.value = (CGFloat)0.5;
+    model.anchorValue = (CGFloat)0.1;
     model.enabled = NO;
     [_sliders addObject:model];
 
-    _colorScheme = [[MDCSemanticColorScheme alloc] init];
+    _colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
 
   return self;

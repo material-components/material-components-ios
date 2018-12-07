@@ -13,6 +13,43 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
+#import "MDCBottomDrawerState.h"
+
+@class MDCBottomDrawerPresentationController;
+
+/**
+ Delegate for MDCBottomSheetPresentationController.
+ */
+@protocol MDCBottomDrawerPresentationControllerDelegate <UIAdaptivePresentationControllerDelegate>
+/**
+ This method is called when the bottom drawer will change its presented state to one of the
+ MDCBottomDrawerState states.
+
+ @param presentationController presentation controller of the bottom drawer
+ @param drawerState the drawer's state
+ */
+- (void)bottomDrawerWillChangeState:
+            (nonnull MDCBottomDrawerPresentationController *)presentationController
+                        drawerState:(MDCBottomDrawerState)drawerState;
+
+/**
+ This method is called when the drawer is scrolled/dragged and provides a transition ratio value
+ between 0-100% (0-1) that indicates the percentage in which the drawer is close to reaching the end
+ of its scrolling. If the drawer is about to reach fullscreen, its percentage moves between 0-100%
+ as it starts covering the safe area and status bar. If the drawer doesn't reach full screen, it
+ moves between 0-100% as it reaches 20 points away from being fully expanded.
+ - 1 or 100% indicates the drawer has reached the end of its scrolling upwards to reveal content.
+ - 0 or 0% indicates that there is more scrolling to be done for the drawer to either present
+ more content or to transition to full screen.
+
+ @param presentationController the bottom drawer presentation controller.
+ @param transitionRatio The transition ratio betwen 0-100% (0-1).
+ */
+- (void)bottomDrawerTopTransitionRatio:
+            (nonnull MDCBottomDrawerPresentationController *)presentationController
+                       transitionRatio:(CGFloat)transitionRatio;
+
+@end
 
 /**
  The presentation controller to use for presenting an MDC bottom drawer.
@@ -26,5 +63,42 @@
  and allow to reuse the cells when using a UICollectionView or UITableView.
  */
 @property(nonatomic, weak, nullable) UIScrollView *trackingScrollView;
+
+/**
+  The color applied to the background scrim.
+ */
+@property(nonatomic, strong, nullable) UIColor *scrimColor;
+
+/**
+ Delegate to tell the presenter when the drawer will change state.
+ */
+@property(nonatomic, weak, nullable) id<MDCBottomDrawerPresentationControllerDelegate> delegate;
+
+/**
+ A Boolean value that determines whether the top handle of the drawer is hidden.
+ Default is YES.
+ */
+@property(nonatomic, assign, getter=isTopHandleHidden) BOOL topHandleHidden;
+
+/**
+ The color applied to the top handle.
+ Note: Make sure that topHandleHidden is set to NO to have the top handle be visible.
+ Default is set to 0xE0E0E0.
+ */
+@property(nonatomic, strong, nullable) UIColor *topHandleColor;
+
+/**
+ A boolean value that indicates whether the drawer is currently the full height of the window.
+ */
+@property(nonatomic, readonly) BOOL contentReachesFullscreen;
+
+/**
+ Sets the content offset Y of the drawer's content. If contentOffsetY is set to 0, the
+ drawer will scroll to the start of its content.
+
+ @param contentOffsetY the content offset Y of the scroll view.
+ @param animated a bool if to animate the scrolling.
+ */
+- (void)setContentOffsetY:(CGFloat)contentOffsetY animated:(BOOL)animated;
 
 @end

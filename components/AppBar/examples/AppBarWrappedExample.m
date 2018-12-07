@@ -29,7 +29,7 @@
 
   self.title = @"Wrapped App Bar";
 
-  self.view.backgroundColor = [UIColor colorWithWhite:0.95f alpha:1];
+  self.view.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.95 alpha:1];
 
   UILabel *label = [[UILabel alloc] init];
   label.text = @"Wrapped UIViewController";

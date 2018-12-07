@@ -20,23 +20,23 @@
 #include <tgmath.h>
 
 // Distance from center before we start fading the item.
-static const CGFloat kDismissalDistanceBeforeFading = 50.0f;
+static const CGFloat kDismissalDistanceBeforeFading = 50;
 
 // Minimum alpha for an item being dismissed.
-static const CGFloat kDismissalMinimumAlpha = 0.5f;
+static const CGFloat kDismissalMinimumAlpha = (CGFloat)0.5;
 
 // Simple linear friction applied to swipe velocity.
-static const CGFloat kDismissalSwipeFriction = 0.05f;
+static const CGFloat kDismissalSwipeFriction = (CGFloat)0.05;
 
 // Animation duration for dismissal / restore.
 static const NSTimeInterval kDismissalAnimationDuration = 0.3;
 static const NSTimeInterval kRestoreAnimationDuration = 0.2;
 
 // Distance from collection view bounds that reorder panning should trigger autoscroll.
-static const CGFloat kMDCAutoscrollPanningBuffer = 60.0f;
+static const CGFloat kMDCAutoscrollPanningBuffer = 60;
 
 // Distance collection view should offset during autoscroll.
-static const CGFloat kMDCAutoscrollPanningOffset = 10.0f;
+static const CGFloat kMDCAutoscrollPanningOffset = 10;
 
 /** Autoscroll panning direction. */
 typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
@@ -154,6 +154,13 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
     }];
   }
   [CATransaction commit];
+}
+
+- (void)updateReorderCellPosition {
+  if (_reorderingCellIndexPath) {
+    CGPoint userTouchPosition = [_longPressGestureRecognizer locationInView:self.collectionView];
+    [self updateCellSnapshotPosition:userTouchPosition];
+  }
 }
 
 #pragma mark - Private

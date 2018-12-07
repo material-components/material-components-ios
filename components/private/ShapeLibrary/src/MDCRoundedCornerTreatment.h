@@ -35,6 +35,4 @@
  */
 - (nonnull instancetype)init;
 
-- (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
-
 @end

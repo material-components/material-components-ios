@@ -32,12 +32,12 @@
 static NSString *const MDCTextInputUnderlineKVOKeyColor = @"color";
 static NSString *const MDCTextInputUnderlineKVOKeyLineHeight = @"lineHeight";
 
-const CGFloat MDCTextInputBorderRadius = 4.f;
-static const CGFloat MDCTextInputClearButtonImageSquareWidthHeight = 24.f;
-static const CGFloat MDCTextInputHintTextOpacity = 0.54f;
-static const CGFloat MDCTextInputOverlayViewToEditingRectPadding = 2.f;
-const CGFloat MDCTextInputFullPadding = 16.f;
-const CGFloat MDCTextInputHalfPadding = 8.f;
+const CGFloat MDCTextInputBorderRadius = 4;
+static const CGFloat MDCTextInputClearButtonImageSquareWidthHeight = 24;
+static const CGFloat MDCTextInputHintTextOpacity = (CGFloat)0.54;
+static const CGFloat MDCTextInputOverlayViewToEditingRectPadding = 2;
+const CGFloat MDCTextInputFullPadding = 16;
+const CGFloat MDCTextInputHalfPadding = 8;
 
 UIColor *_Nonnull MDCTextInputCursorColor() {
   return [MDCPalette bluePalette].accent700;
@@ -130,8 +130,12 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   return self;
 }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wobjc-designated-initializers"
+// https://stackoverflow.com/questions/24458608/convenience-initializer-missing-a-self-call-to-another-initializer
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super init];
+#pragma clang diagnostic pop
   if (self) {
     [self commonMDCTextInputCommonFundamentInit];
 
@@ -223,7 +227,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   UIEdgeInsets insets = [self textInsets];
   CGFloat scale = UIScreen.mainScreen.scale;
   CGFloat centerYConstant =
-      insets.top + (MDCCeil(self.textInput.font.lineHeight * scale) / scale) / 2.f;
+      insets.top + (MDCCeil(self.textInput.font.lineHeight * scale) / scale) / 2;
   self.clearButtonCenterY = [NSLayoutConstraint constraintWithItem:_clearButton
                                                          attribute:NSLayoutAttributeCenterY
                                                          relatedBy:NSLayoutRelationEqual
@@ -515,7 +519,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
   CGFloat scale = UIScreen.mainScreen.scale;
   CGFloat centerYConstant =
-      insets.top + (MDCCeil(self.textInput.font.lineHeight * scale) / scale) / 2.f;
+      insets.top + (MDCCeil(self.textInput.font.lineHeight * scale) / scale) / 2;
   if (self.clearButtonCenterY.constant != centerYConstant) {
     self.clearButtonCenterY.constant = centerYConstant;
     shouldInvalidateSize = YES;
@@ -548,7 +552,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     }
   }
 
-  if (self.trailingView.superview && !MDCCGFloatEqual(self.trailingView.alpha, 0.f)) {
+  if (self.trailingView.superview && !MDCCGFloatEqual(self.trailingView.alpha, 0)) {
     clearButtonAlpha = 0;
   }
 

@@ -20,6 +20,20 @@
                ReferencedContainer = "container:MDCCatalog.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "35D26A7363E6FB07B90E850D9E3F37D5"
+               BuildableName = "MaterialComponentsSnapshotTests-Unit-Tests.xctest"
+               BlueprintName = "MaterialComponentsSnapshotTests-Unit-Tests"
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -33,7 +47,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "153B950E9F5C9E9E4BE2D402CB52E43A"
+               BlueprintIdentifier = "7D83333945994E6457973778931CC2E1"
                BuildableName = "MaterialComponents-Unit-Tests.xctest"
                BlueprintName = "MaterialComponents-Unit-Tests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -43,9 +57,19 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "47FB08CD9CD5B00DEC8D9A84BCFD9232"
+               BlueprintIdentifier = "3171F7594A536C448D38F6611EB2A7B7"
                BuildableName = "MaterialComponentsAlpha-Unit-Tests.xctest"
                BlueprintName = "MaterialComponentsAlpha-Unit-Tests"
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "35D26A7363E6FB07B90E850D9E3F37D5"
+               BuildableName = "MaterialComponentsSnapshotTests-Unit-Tests.xctest"
+               BlueprintName = "MaterialComponentsSnapshotTests-Unit-Tests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -61,8 +85,8 @@
       </MacroExpansion>
       <EnvironmentVariables>
          <EnvironmentVariable
-            key = "DYLD_INSERT_LIBRARIES"
-            value = "@executable_path/EarlGrey.framework/EarlGrey"
+            key = "FB_REFERENCE_IMAGE_DIR"
+            value = "$(SOURCE_ROOT)/../snapshot_test_goldens/goldens"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>

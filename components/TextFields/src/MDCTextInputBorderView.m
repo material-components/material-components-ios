@@ -91,7 +91,7 @@ static inline NSString *_Nullable MDCNSStringFromCGLineJoin(CGLineJoin lineJoin)
   self.borderLayer.opaque = NO;
   self.borderLayer.rasterizationScale = self.borderLayer.contentsScale;
   self.borderLayer.shouldRasterize = YES;
-  self.borderLayer.zPosition = -1.f;
+  self.borderLayer.zPosition = -1;
 }
 
 - (void)updateBorder {
