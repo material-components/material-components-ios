@@ -1,6 +1,6 @@
 # 72.1.0
 
-This is a release fixes a ChipField RTL issue.
+This minor release fixes a ChipField RTL issue.
 
 ## Component Changes
 
