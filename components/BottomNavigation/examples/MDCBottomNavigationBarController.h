@@ -38,8 +38,8 @@ NS_CLASS_AVAILABLE_IOS(9_0)
 
 /**
  * An array of view controllers to display when their corresponding tab bar item is selected in the
- * navigation bar.  When this property is set, the navigation bar's \c items property will be set to
- * an array composed of the \c tabBarItem property of each view controller in this array.
+ * navigation bar.  When this property is set, the navigation bar's @c items property will be set to
+ * an array composed of the @c tabBarItem property of each view controller in this array.
  * @see UIViewController#tabBarItem
  */
 @property(nonatomic, copy, nonnull) NSArray<__kindof UIViewController *> *viewControllers;
@@ -51,13 +51,13 @@ NS_CLASS_AVAILABLE_IOS(9_0)
 
 /**
  * The current selected view controller.  When setting this property, the view controller must
- * be in \c viewControllers .
+ * be in @c viewControllers .
  */
 @property(nonatomic, assign, nullable) __kindof UIViewController *selectedViewController;
 
 /**
  * The index of the current selected tab item.  When setting this property the value must be in
- * bounds of \c viewcontrollers .
+ * bounds of @c viewcontrollers .
  * If no tab item is selected it will be set to NSNotFound.
  */
 @property(nonatomic) NSUInteger selectedIndex;
