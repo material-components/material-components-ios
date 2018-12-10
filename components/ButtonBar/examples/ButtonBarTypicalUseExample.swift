@@ -14,7 +14,6 @@
 
 import Foundation
 import MaterialComponents.MaterialButtonBar
-import MaterialComponentsAlpha
 import MaterialComponentsAlpha.MaterialButtonBar_Theming
 import MaterialComponentsAlpha.MaterialContainerScheme
 
