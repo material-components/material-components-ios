@@ -16,9 +16,9 @@
 #import "MaterialButtons+Theming.h"
 #import "MaterialCollections.h"
 #import "MaterialColorScheme.h"
-#import "MaterialDialogs+MaterialTheming.h"
-#import "MaterialDialogs.h"
 #import "MaterialContainerScheme.h"
+#import "MaterialDialogs+Theming.h"
+#import "MaterialDialogs.h"
 #import "MaterialTypographyScheme.h"
 
 #pragma mark - DialogsTypicalUseExampleViewController
