@@ -17,7 +17,7 @@
 #import <sys/utsname.h>
 
 NSString *const iPhone7ModelA = @"iPhone9,1";
-NSString *const iPhone7ModelB = @"iPhone9,3";
+static NSString *const kiPhone7ModelB = @"iPhone9,3";
 
 @implementation MDCSnapshotTestCase
 
