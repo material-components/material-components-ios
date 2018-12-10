@@ -26,7 +26,6 @@
 - (void)setUp {
   [super setUp];
 
-  self.recordMode = YES;
   self.textField = [[MDCTextField alloc] init];
   self.textFieldController =
       [[MDCTextInputControllerFullWidth alloc] initWithTextInput:self.textField];
