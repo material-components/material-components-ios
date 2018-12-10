@@ -32,12 +32,11 @@
  */
 - (void)snapshotVerifyView:(UIView *)view;
 
-
 /**
  * This will call FBSnapshotVerifyView but first check for supported iOS versions. Additionally,
  * this will use UIGraphicsImageRenderer to render the view correctly (including shadows).
  * @param view the view to use for snapshot comparison.
- * @param tolerancePercent the percentage of pixels that can differ while still passing.
+ * @param tolerancePercent the percentage (0.0 - 1.0) of pixels that can differ while still passing.
  */
 - (void)snapshotVerifyView:(UIView *)view tolerance:(CGFloat)tolerancePercent;
 
