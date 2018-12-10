@@ -90,8 +90,7 @@ NSString *const iPhone7ModelB = @"iPhone9,3";
 #else
   struct utsname systemInfo;
   uname(&systemInfo);
-  deviceName = [NSString stringWithCString:systemInfo.machine
-                                  encoding:NSUTF8StringEncoding];
+  deviceName = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
 #endif
   return deviceName;
 }
