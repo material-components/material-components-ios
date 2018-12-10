@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCButton+Theming.h"
+#import "MDCButton+MaterialTheming.h"
 
 #import "../MDCAlertController+ButtonForAction.h"
 #import "MaterialButtons+Theming.h"

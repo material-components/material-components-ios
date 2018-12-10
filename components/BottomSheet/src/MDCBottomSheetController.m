@@ -172,6 +172,14 @@
   return;
 }
 
+- (void)setScrimColor:(UIColor *)scrimColor {
+  _transitionController.scrimColor = scrimColor;
+}
+
+- (UIColor *)scrimColor {
+  return _transitionController.scrimColor;
+}
+
 - (void)setIsScrimAccessibilityElement:(BOOL)isScrimAccessibilityElement {
   _transitionController.isScrimAccessibilityElement = isScrimAccessibilityElement;
 }
