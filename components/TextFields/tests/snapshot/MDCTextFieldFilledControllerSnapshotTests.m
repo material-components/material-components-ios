@@ -27,6 +27,8 @@
   [super setUp];
 
   self.textField = [[MDCTextField alloc] init];
+  self.textField.clearButtonMode = UITextFieldViewModeAlways;
+
   self.textFieldController =
       [[MDCTextInputControllerFilled alloc] initWithTextInput:self.textField];
 }
