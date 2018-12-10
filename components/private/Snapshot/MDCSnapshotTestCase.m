@@ -14,6 +14,11 @@
 
 #import "MDCSnapshotTestCase.h"
 
+#import <sys/utsname.h>
+
+NSString *const iPhone7ModelA = @"iPhone9,1";
+NSString *const iPhone7ModelB = @"iPhone9,3";
+
 @implementation MDCSnapshotTestCase
 
 - (void)setUp {
@@ -32,17 +37,7 @@
 }
 
 - (void)snapshotVerifyView:(UIView *)view {
-  // TODO(https://github.com/material-components/material-components-ios/issues/5888)
-  // Support multiple OS versions for snapshots
-  if (NSProcessInfo.processInfo.operatingSystemVersion.majorVersion != 11 ||
-      NSProcessInfo.processInfo.operatingSystemVersion.minorVersion != 2 ||
-      NSProcessInfo.processInfo.operatingSystemVersion.patchVersion != 0) {
-    NSLog(@"Skipping this test. Snapshot tests currently only run on iOS 11.2.0");
-    return;
-  }
-
-  if (UIScreen.mainScreen.scale != 2.0) {
-    NSLog(@"Skipping this test. Snapshot tests currently only run at 2x screen scale");
+  if (![self isSupportedDevice]) {
     return;
   }
 
@@ -66,6 +61,39 @@
   imageView.image = result;
 
   FBSnapshotVerifyView(imageView, nil);
+}
+
+// TODO(https://github.com/material-components/material-components-ios/issues/5888)
+// Support multiple OS versions and devices for snapshots
+- (BOOL)isSupportedDevice {
+  if (NSProcessInfo.processInfo.operatingSystemVersion.majorVersion != 11 ||
+      NSProcessInfo.processInfo.operatingSystemVersion.minorVersion != 2 ||
+      NSProcessInfo.processInfo.operatingSystemVersion.patchVersion != 0) {
+    NSLog(@"Skipping this test. Snapshot tests currently only run on iOS 11.2.0");
+    return NO;
+  }
+
+  NSString *deviceName = [self getDeviceName];
+  if (![deviceName isEqualToString:iPhone7ModelA] && ![deviceName isEqualToString:iPhone7ModelB]) {
+    NSLog(@"Skipping this test. Snapshot tests currently only run on iPhone 7");
+    return NO;
+  }
+
+  return YES;
+}
+
+- (NSString *)getDeviceName {
+  NSString *deviceName;
+#if TARGET_OS_SIMULATOR
+  // This solution was found here: https://stackoverflow.com/a/26680063
+  deviceName = [NSProcessInfo processInfo].environment[@"SIMULATOR_MODEL_IDENTIFIER"];
+#else
+  struct utsname systemInfo;
+  uname(&systemInfo);
+  deviceName = [NSString stringWithCString:systemInfo.machine
+                                  encoding:NSUTF8StringEncoding];
+#endif
+  return deviceName;
 }
 
 @end
