@@ -56,7 +56,7 @@
 
 #pragma mark - Tests
 
-- (void)testOutlinedTextFieldEmpty {
+- (void)testFullWidthTextFieldEmpty {
   // Uncomment below to recreate the golden
   //  self.recordMode = YES;
 
@@ -66,7 +66,7 @@
 
 #pragma mark - Single field tests
 
-- (void)testOutlinedTextFieldWithShortPlaceholderText {
+- (void)testFullWidthTextFieldWithShortPlaceholderText {
   // Uncomment below to recreate the golden
   //  self.recordMode = YES;
 
@@ -77,7 +77,7 @@
   [self generateSnapshotAndVerify];
 }
 
-- (void)testOutlinedTextFieldWithLongPlaceholderText {
+- (void)testFullWidthTextFieldWithLongPlaceholderText {
   // Uncomment below to recreate the golden
   //  self.recordMode = YES;
 
@@ -88,7 +88,7 @@
   [self generateSnapshotAndVerify];
 }
 
-- (void)testOutlinedTextFieldWithShortHelperText {
+- (void)testFullWidthTextFieldWithShortHelperText {
   // Uncomment below to recreate the golden
   //  self.recordMode = YES;
 
@@ -99,7 +99,7 @@
   [self generateSnapshotAndVerify];
 }
 
-- (void)testOutlinedTextFieldWithLongHelperText {
+- (void)testFullWidthTextFieldWithLongHelperText {
   // Uncomment below to recreate the golden
   //  self.recordMode = YES;
 
@@ -110,7 +110,7 @@
   [self generateSnapshotAndVerify];
 }
 
-- (void)testOutlinedTextFieldWithShortErrorText {
+- (void)testFullWidthTextFieldWithShortErrorText {
   // Uncomment below to recreate the golden
   //  self.recordMode = YES;
 
@@ -122,7 +122,7 @@
   [self generateSnapshotAndVerify];
 }
 
-- (void)testOutlinedTextFieldWithLongErrorText {
+- (void)testFullWidthTextFieldWithLongErrorText {
   // Uncomment below to recreate the golden
   //  self.recordMode = YES;
 
@@ -134,7 +134,7 @@
   [self generateSnapshotAndVerify];
 }
 
-- (void)testOutlinedTextFieldWithShortInputText {
+- (void)testFullWidthTextFieldWithShortInputText {
   // Uncomment below to recreate the golden
   //  self.recordMode = YES;
 
@@ -145,7 +145,7 @@
   [self generateSnapshotAndVerify];
 }
 
-- (void)testOutlinedTextFieldWithLongInputText {
+- (void)testFullWidthTextFieldWithLongInputText {
   // Uncomment below to recreate the golden
   //  self.recordMode = YES;
 
@@ -158,7 +158,7 @@
 
 #pragma mark - Multiple field tests
 
-- (void)testOutlinedTextFieldWithShortInputPlaceholderHelperTexts {
+- (void)testFullWidthTextFieldWithShortInputPlaceholderHelperTexts {
   // Uncomment below to recreate the golden
   //  self.recordMode = YES;
 
@@ -171,7 +171,7 @@
   [self generateSnapshotAndVerify];
 }
 
-- (void)testOutlinedTextFieldWithLongInputPlaceholderHelperTexts {
+- (void)testFullWidthTextFieldWithLongInputPlaceholderHelperTexts {
   // Uncomment below to recreate the golden
   //  self.recordMode = YES;
 
@@ -184,7 +184,7 @@
   [self generateSnapshotAndVerify];
 }
 
-- (void)testOutlinedTextFieldWithShortInputPlaceholderErrorTexts {
+- (void)testFullWidthTextFieldWithShortInputPlaceholderErrorTexts {
   // Uncomment below to recreate the golden
   //  self.recordMode = YES;
 
@@ -198,7 +198,7 @@
   [self generateSnapshotAndVerify];
 }
 
-- (void)testOutlinedTextFieldWithLongInputPlaceholderErrorTexts {
+- (void)testFullWidthTextFieldWithLongInputPlaceholderErrorTexts {
   // Uncomment below to recreate the golden
   //  self.recordMode = YES;
 
