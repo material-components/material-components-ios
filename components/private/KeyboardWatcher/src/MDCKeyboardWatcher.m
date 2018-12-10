@@ -93,13 +93,14 @@ static MDCKeyboardWatcher *_sKeyboardWatcher;
     return;
   }
 
+  CGRect keyWindowBounds = [UIApplication mdc_safeSharedApplication].keyWindow.bounds;
   CGRect screenBounds = [[UIScreen mainScreen] bounds];
   CGRect intersection = CGRectIntersection(screenBounds, keyboardRect);
 
   // If the extent of the keyboard is at or below the bottom of the screen it is docked.
   // This handles the case of an external keyboard on iOS8+ where the entire frame of the keyboard
   // view is used, but on the top, the input accessory section is show.
-  BOOL dockedKeyboard = CGRectGetMaxY(screenBounds) <= CGRectGetMaxY(keyboardRect);
+  BOOL dockedKeyboard = CGRectGetMaxY(keyWindowBounds) <= CGRectGetMaxY(keyboardRect);
 
   // If the bottom of the keyboard isn't at the bottom of the screen, then it is undocked, and we
   // shouldn't try to account for it.
