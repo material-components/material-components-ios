@@ -80,8 +80,8 @@ static NSString *const kiPhone7ModelB = @"iPhone9,3";
   }
 
   NSString *deviceName = [self getDeviceName];
-  if (![deviceName isEqualToString:kiPhone7ModelA] &&
-      ![deviceName isEqualToString:kiPhone7ModelB]) {
+  if (!([deviceName isEqualToString:kiPhone7ModelA] ||
+        [deviceName isEqualToString:kiPhone7ModelB])) {
     NSLog(@"Unsupported device. Snapshot tests currently only run on iPhone 7");
     return NO;
   }
