@@ -16,16 +16,17 @@
 #import "MDCTextFieldSnapshotTestsStrings.h"
 #import "MaterialTextFields.h"
 
-@interface MDCTextFullWidthControllerSnapshotTests : MDCSnapshotTestCase
+@interface MDCTextFieldFullWidthControllerSnapshotTests : MDCSnapshotTestCase
 @property(nonatomic, strong) MDCTextField *textField;
 @property(nonatomic, strong) MDCTextInputControllerFullWidth *textFieldController;
 @end
 
-@implementation MDCTextFullWidthControllerSnapshotTests
+@implementation MDCTextFieldFullWidthControllerSnapshotTests
 
 - (void)setUp {
   [super setUp];
 
+  self.recordMode = YES;
   self.textField = [[MDCTextField alloc] init];
   self.textFieldController =
       [[MDCTextInputControllerFullWidth alloc] initWithTextInput:self.textField];
