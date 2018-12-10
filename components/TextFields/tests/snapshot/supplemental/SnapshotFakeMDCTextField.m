@@ -28,7 +28,12 @@
 
 - (void)MDCtest_setIsEditing:(BOOL)isEditing {
   _isEditingOverridden = YES;
+  if (isEditing == _isEditing) {
+    return;
+  }
   _isEditing = isEditing;
+  [NSNotificationCenter.defaultCenter
+   postNotificationName:UITextFieldTextDidBeginEditingNotification object:self];
 }
 
 @end
