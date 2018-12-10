@@ -15,7 +15,7 @@
 #import "MDCButton+MaterialTheming.h"
 
 #import "../MDCAlertController+ButtonForAction.h"
-#import "MaterialButtons+MaterialTheming.h"
+#import "MaterialButtons+Theming.h"
 #import "MaterialDialogs+ColorThemer.h"
 #import "MaterialDialogs+TypographyThemer.h"
 #import "MaterialShadowElevations.h"

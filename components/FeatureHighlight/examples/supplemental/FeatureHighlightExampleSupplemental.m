@@ -15,7 +15,7 @@
 #import "FeatureHighlightExampleSupplemental.h"
 
 #import "MaterialButtons+ButtonThemer.h"
-#import "MaterialButtons+MaterialTheming.h"
+#import "MaterialButtons+Theming.h"
 #import "MaterialButtons.h"
 #import "MaterialMath.h"
 #import "MaterialPalettes.h"

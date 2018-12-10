@@ -13,11 +13,11 @@
 // limitations under the License.
 #import <UIKit/UIKit.h>
 
-#import "MaterialButtons+MaterialTheming.h"
+#import "MaterialButtons+Theming.h"
 #import "MaterialCollections.h"
 #import "MaterialColorScheme.h"
 #import "MaterialContainerScheme.h"
-#import "MaterialDialogs+MaterialTheming.h"
+#import "MaterialDialogs+Theming.h"
 #import "MaterialDialogs.h"
 #import "MaterialTypographyScheme.h"
 
