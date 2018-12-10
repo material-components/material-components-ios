@@ -41,6 +41,11 @@
     return;
   }
 
+  if (UIScreen.mainScreen.scale != 2.0) {
+    NSLog(@"Skipping this test. Snapshot tests currently only run at 2x screen scale");
+    return;
+  }
+
   UIImage *result = nil;
 
   if (@available(iOS 10, *)) {
