@@ -33,7 +33,8 @@
   }
   _isEditing = isEditing;
   [NSNotificationCenter.defaultCenter
-      postNotificationName:UITextFieldTextDidBeginEditingNotification object:self];
+      postNotificationName:UITextFieldTextDidBeginEditingNotification
+                    object:self];
 }
 
 @end
