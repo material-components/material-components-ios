@@ -1,3 +1,15 @@
+# 72.1.0
+
+This minor release fixes a ChipField RTL issue.
+
+## Component Changes
+
+### Chips
+
+* [Account for RTL in textRectForBounds override in MDCChipTextField (#5935)](https://github.com/material-components/material-components-ios/commit/c6860181b11fd6dad4eaa65e21d3a9adf2967f5a) (Andrew Overton)
+
+---
+
 # 72.0.1
 
 Corrected readme version to match cocopods version.

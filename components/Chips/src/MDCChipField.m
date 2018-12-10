@@ -50,6 +50,15 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
 
 @implementation MDCChipTextField
 
+- (CGRect)textRectForBounds:(CGRect)bounds {
+  CGRect textRect = [super textRectForBounds:bounds];
+  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+    textRect = MDFRectFlippedHorizontally(textRect, CGRectGetWidth(self.bounds));
+    textRect.origin.x += 5;
+  }
+  return textRect;
+}
+
 #pragma mark UIKeyInput
 
 - (void)deleteBackward {
