@@ -25,6 +25,10 @@ In this minor release we added scrimColor support for MDCBottomSheetController a
   alertController.applyTheme(withScheme: scheme)
 ```
 
+## Bug fixes
+
+{Git-LFS} Exclude git-lfs from `stable` #5977
+
 ## API changes
 
 ## Component changes
