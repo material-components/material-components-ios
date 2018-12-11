@@ -32,7 +32,7 @@
     return;
   }
   _isEditing = isEditing;
-  
+
   // MDCTextInputControllers use the UITextField notifications to allow clients to be the text field
   // delegate. As a result, we need to post the relevant notifications when we programmatically
   // change the value of `isEditing` in tests.
