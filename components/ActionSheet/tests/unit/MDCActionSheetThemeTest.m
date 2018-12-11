@@ -19,7 +19,6 @@
 #import "MDCActionSheetTestHelper.h"
 #import "MaterialActionSheet+ActionSheetThemer.h"
 #import "MaterialActionSheet+ColorThemer.h"
-#import "MaterialActionSheet+Theming.h"
 #import "MaterialActionSheet+TypographyThemer.h"
 
 static const CGFloat kHighAlpha = (CGFloat)0.87;
@@ -40,7 +39,6 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
 @interface MDCActionSheetThemeTest : XCTestCase
 @property(nonatomic, strong) MDCActionSheetController *actionSheet;
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
-@property(nonatomic, strong) MDCContainerScheme *containerScheme;
 @property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 @end
 
@@ -61,14 +59,10 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
   UIFont *body2 = [UIFont systemFontOfSize:10.0 weight:UIFontWeightLight];
   self.typographyScheme.subtitle1 = subtitle;
   self.typographyScheme.body2 = body2;
-  self.containerScheme = [[MDCContainerScheme alloc] init];
-  self.containerScheme.colorScheme = self.colorScheme;
-  self.containerScheme.typographyScheme = self.typographyScheme;
 }
 
 - (void)tearDown {
   self.typographyScheme = nil;
-  self.containerScheme = nil;
   self.colorScheme = nil;
   self.actionSheet = nil;
 
@@ -76,38 +70,6 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
 }
 
 #pragma mark - Scheme test
-
-- (void)testActionSheetThemer {
-  // When
-  [self.actionSheet applyThemeWithScheme:self.containerScheme];
-  NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheet];
-
-  // Then
-  // Color
-  XCTAssertEqualObjects(self.actionSheet.backgroundColor,
-                        self.containerScheme.colorScheme.surfaceColor);
-
-  // Typography
-  XCTAssertEqualObjects(self.actionSheet.header.titleLabel.font,
-                        self.containerScheme.typographyScheme.subtitle1);
-  XCTAssertEqualObjects(self.actionSheet.header.messageLabel.font,
-                        self.containerScheme.typographyScheme.body2);
-
-  // Cells
-  XCTAssertNotEqual(cells.count, 0U);
-  for (MDCActionSheetItemTableViewCell *cell in cells) {
-    XCTAssertEqualObjects(
-        cell.actionImageView.tintColor,
-        [self.containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:kMediumAlpha]);
-    XCTAssertEqualObjects(
-        cell.actionLabel.textColor,
-        [self.containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha]);
-    XCTAssertEqualObjects(
-        cell.inkTouchController.defaultInkView.inkColor,
-        [self.containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:kInkAlpha]);
-    XCTAssertEqualObjects(cell.actionLabel.font, self.containerScheme.typographyScheme.subtitle1);
-  }
-}
 
 - (void)testDefaultScheme {
   // Given
