@@ -14,7 +14,7 @@
 
 import UIKit
 import MaterialComponentsAlpha.MaterialActionSheet
-import MaterialComponentsAlpha.MaterialActionSheet_ActionSheetThemer
+import MaterialComponentsAlpha.MaterialActionSheet_Theming
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialTypographyScheme
 
@@ -22,7 +22,12 @@ class ActionSheetSwiftExampleViewController: UIViewController {
 
   var colorScheme = MDCSemanticColorScheme()
   var typographyScheme = MDCTypographyScheme()
-  var actionSheetScheme = MDCActionSheetScheme()
+  var containerScheme: MDCContainerScheming {
+    let scheme = MDCContainerScheme()
+    scheme.colorScheme = colorScheme
+    scheme.typographyScheme = typographyScheme
+    return scheme
+  }
   let tableView = UITableView()
   enum ActionSheetExampleType {
     case typical, title, message, noIcons, titleAndMessage, dynamicType, delayed, thirtyOptions
@@ -88,9 +93,7 @@ class ActionSheetSwiftExampleViewController: UIViewController {
     case .thirtyOptions:
       actionSheet = ActionSheetSwiftExampleViewController.thirtyOptions()
     }
-    actionSheetScheme.colorScheme = colorScheme
-    actionSheetScheme.typographyScheme = typographyScheme
-    MDCActionSheetThemer.applyScheme(actionSheetScheme, to: actionSheet)
+    actionSheet.applyTheme(withScheme: containerScheme)
     present(actionSheet, animated: true, completion: nil)
   }
 }
