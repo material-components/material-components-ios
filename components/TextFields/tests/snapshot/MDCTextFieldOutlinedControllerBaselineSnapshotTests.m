@@ -136,7 +136,13 @@
   [self.textField MDCtest_setIsEditing:YES];
 
   // Then
-  [self generateSnapshotAndVerify];
+  [self triggerTextFieldLayout];
+  UIView *snapshotView = [self addBackgroundViewToView:self.textField];
+
+  // Perform the actual verification.
+  // TODO(https://github.com/material-components/material-components-ios/issues/5970 ): Fix this
+  // flaky layout of long placeholder labels when floating.
+  [self snapshotVerifyView:snapshotView tolerance:0.05];
 }
 
 - (void)testOutlinedTextFieldWithShortHelperText {
