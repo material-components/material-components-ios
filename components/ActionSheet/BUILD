@@ -125,6 +125,7 @@ mdc_objc_library(
     ],
     deps = [
          ":ActionSheet",
+         ":Theming",
          ":ActionSheetThemer",
          ":ColorThemer",
          ":TypographyThemer",
