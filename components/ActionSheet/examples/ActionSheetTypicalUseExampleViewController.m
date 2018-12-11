@@ -14,19 +14,19 @@
 
 #import "ActionSheetTypicalUseExampleViewController.h"
 
-#import "MaterialActionSheet+ActionSheetThemer.h"
+#import "MaterialActionSheet+Theming.h"
 #import "MaterialButtons+ButtonThemer.h"
 #import "MaterialButtons.h"
 
 @interface ActionSheetTypicalUseExampleViewController ()
 
 @property(nonatomic, strong) MDCButton *showButton;
+@property(nonatomic, strong) MDCContainerScheme *containerScheme;
 
 @end
 
 @implementation ActionSheetTypicalUseExampleViewController {
   MDCButtonScheme *_buttonScheme;
-  MDCActionSheetScheme *_actionSheetScheme;
 }
 
 - (instancetype)init {
@@ -38,9 +38,17 @@
     _typographyScheme = [[MDCTypographyScheme alloc] init];
     _showButton = [[MDCButton alloc] init];
     _buttonScheme = [[MDCButtonScheme alloc] init];
-    _actionSheetScheme = [[MDCActionSheetScheme alloc] init];
   }
   return self;
+}
+
+- (MDCContainerScheme *)containerScheme {
+  if (!_containerScheme) {
+    _containerScheme = [[MDCContainerScheme alloc] init];
+  }
+  _containerScheme.colorScheme = self.colorScheme;
+  _containerScheme.typographyScheme = self.typographyScheme;
+  return _containerScheme;
 }
 
 - (void)viewDidLoad {
@@ -56,9 +64,6 @@
                   action:@selector(showActionSheet)
         forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:_showButton];
-
-  _actionSheetScheme.colorScheme = self.colorScheme;
-  _actionSheetScheme.typographyScheme = self.typographyScheme;
 }
 
 - (void)viewDidLayoutSubviews {
@@ -86,7 +91,7 @@
   [actionSheet addAction:homeAction];
   [actionSheet addAction:favoriteAction];
   [actionSheet addAction:emailAction];
-  [MDCActionSheetThemer applyScheme:_actionSheetScheme toActionSheetController:actionSheet];
+  [actionSheet applyThemeWithScheme:self.containerScheme];
   [self presentViewController:actionSheet animated:YES completion:nil];
 }
 

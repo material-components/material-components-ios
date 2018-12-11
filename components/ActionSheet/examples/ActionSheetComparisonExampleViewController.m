@@ -14,7 +14,7 @@
 
 #import "ActionSheetComparisonExampleViewController.h"
 
-#import "MaterialActionSheet+ActionSheetThemer.h"
+#import "MaterialActionSheet+Theming.h"
 #import "MaterialActionSheet.h"
 #import "MaterialButtons+ButtonThemer.h"
 #import "MaterialButtons.h"
@@ -23,12 +23,12 @@
 
 @property(nonatomic, strong) MDCButton *showMaterialButton;
 @property(nonatomic, strong) MDCButton *showUIKitButton;
+@property(nonatomic, strong) MDCContainerScheme *containerScheme;
 
 @end
 
 @implementation ActionSheetComparisonExampleViewController {
   MDCButtonScheme *_buttonScheme;
-  MDCActionSheetScheme *_actionSheetScheme;
 }
 
 - (instancetype)init {
@@ -40,9 +40,17 @@
     _showMaterialButton = [[MDCButton alloc] init];
     _showUIKitButton = [[MDCButton alloc] init];
     _buttonScheme = [[MDCButtonScheme alloc] init];
-    _actionSheetScheme = [[MDCActionSheetScheme alloc] init];
   }
   return self;
+}
+
+- (MDCContainerScheme *)containerScheme {
+  if (!_containerScheme) {
+    _containerScheme = [[MDCContainerScheme alloc] init];
+  }
+  _containerScheme.colorScheme = self.colorScheme;
+  _containerScheme.typographyScheme = self.typographyScheme;
+  return _containerScheme;
 }
 
 - (void)viewDidLoad {
@@ -65,9 +73,6 @@
                        action:@selector(showUIKitActionSheet)
              forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:_showUIKitButton];
-
-  _actionSheetScheme.colorScheme = self.colorScheme;
-  _actionSheetScheme.typographyScheme = self.typographyScheme;
 }
 
 - (void)viewDidLayoutSubviews {
@@ -104,7 +109,7 @@
   [actionSheet addAction:homeAction];
   [actionSheet addAction:favoriteAction];
   [actionSheet addAction:emailAction];
-  [MDCActionSheetThemer applyScheme:_actionSheetScheme toActionSheetController:actionSheet];
+  [actionSheet applyThemeWithScheme:self.containerScheme];
   [self presentViewController:actionSheet animated:YES completion:nil];
 }
 
