@@ -28,7 +28,23 @@
 
 - (void)MDCtest_setIsEditing:(BOOL)isEditing {
   _isEditingOverridden = YES;
+  if (_isEditing == isEditing) {
+    return;
+  }
   _isEditing = isEditing;
+  
+  // MDCTextInputControllers use the UITextField notifications to allow clients to be the text field
+  // delegate. As a result, we need to post the relevant notifications when we programmatically
+  // change the value of `isEditing` in tests.
+  if (_isEditing) {
+    [NSNotificationCenter.defaultCenter
+        postNotificationName:UITextFieldTextDidBeginEditingNotification
+                      object:self];
+  } else {
+    [NSNotificationCenter.defaultCenter
+        postNotificationName:UITextFieldTextDidEndEditingNotification
+                      object:self];
+  }
 }
 
 @end
