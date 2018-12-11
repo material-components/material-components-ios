@@ -47,7 +47,7 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
 
   self.actionSheet = [[MDCActionSheetController alloc] init];
   self.colorScheme =
-  [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   self.containerScheme = [[MDCContainerScheme alloc] init];
 }
 
@@ -61,8 +61,8 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
 
 - (void)testActionSheetThemingTest {
   // Given
-  MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
-
+  MDCTypographyScheme *typographyScheme =
+      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
 
   // When
   [self.actionSheet applyThemeWithScheme:self.containerScheme];
@@ -126,7 +126,6 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
                         [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kHighAlpha]);
   XCTAssertEqualObjects(self.actionSheet.header.messageLabel.textColor,
                         [self.colorScheme.onSurfaceColor colorWithAlphaComponent:kMediumAlpha]);
-
 }
 
 @end
