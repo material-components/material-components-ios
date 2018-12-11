@@ -43,6 +43,10 @@ static NSString *const kiPhone7ModelB = @"iPhone9,3";
 }
 
 - (void)snapshotVerifyView:(UIView *)view {
+  [self snapshotVerifyView:view tolerance:0];
+}
+
+- (void)snapshotVerifyView:(UIView *)view tolerance:(CGFloat)tolerancePercent {
   if (![self isSupportedDevice]) {
     return;
   }
@@ -66,7 +70,8 @@ static NSString *const kiPhone7ModelB = @"iPhone9,3";
   UIImageView *imageView = [[UIImageView alloc] initWithFrame:view.frame];
   imageView.image = result;
 
-  FBSnapshotVerifyView(imageView, nil);
+  FBSnapshotVerifyViewWithOptions(imageView, nil, FBSnapshotTestCaseDefaultSuffixes(),
+                                  tolerancePercent);
 }
 
 // TODO(https://github.com/material-components/material-components-ios/issues/5888)
