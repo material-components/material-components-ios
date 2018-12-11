@@ -18,6 +18,7 @@ import MaterialComponents.MaterialDialogs
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialTypographyScheme
 import MaterialComponents.MaterialShadowElevations
+import MaterialComponentsAlpha.MaterialContainerScheme
 import MaterialComponentsAlpha.MaterialDialogs_Theming
 
 class DialogsMaterialThemingTests: XCTestCase {
