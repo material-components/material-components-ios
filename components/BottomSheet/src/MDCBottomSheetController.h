@@ -51,6 +51,13 @@
 @property(nonatomic, assign) BOOL dismissOnBackgroundTap;
 
 /**
+ The color applied to the sheet's background when presented by MDCBottomSheetPresentationController.
+
+ Defaults to a semi-transparent Black.
+ */
+@property(nonatomic, strong, nullable) UIColor *scrimColor;
+
+/**
  If @c YES, then the dimmed scrim view will act as an accessibility element for dismissing the
  bottom sheet.
 

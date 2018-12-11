@@ -18,7 +18,7 @@ static const CGFloat kFloatingButtonBaselineShapePercentageValue = (CGFloat)0.5;
 
 @implementation MDCFloatingButtonShapeThemer
 
-+ (void)applyShapeScheme:(nonnull id<MDCShapeScheming>)shapeScheme
++ (void)applyShapeScheme:(nonnull id<MDCShapeScheming> __unused)shapeScheme
                 toButton:(nonnull MDCFloatingButton *)button {
   // This is an override of the default scheme to fit the baseline values.
   MDCRectangleShapeGenerator *rectangleShape = [[MDCRectangleShapeGenerator alloc] init];
