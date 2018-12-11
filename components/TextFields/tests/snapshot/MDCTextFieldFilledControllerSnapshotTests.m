@@ -128,6 +128,8 @@
   UIView *snapshotView = [self addBackgroundViewToView:self.textField];
 
   // Perform the actual verification.
+  // TODO(https://github.com/material-components/material-components-ios/issues/5970 ): Fix
+  // the flaky floating placeholder position when the placeholder text is "too" long.
   [self snapshotVerifyView:snapshotView tolerance:0.04];
 }
 
