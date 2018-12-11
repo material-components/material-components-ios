@@ -124,7 +124,11 @@
   [self.textField MDCtest_setIsEditing:YES];
 
   // Then
-  [self generateSnapshotAndVerify];
+  [self triggerTextFieldLayout];
+  UIView *snapshotView = [self addBackgroundViewToView:self.textField];
+
+  // Perform the actual verification.
+  [self snapshotVerifyView:snapshotView tolerance:0.04];
 }
 
 - (void)testFilledTextFieldWithShortHelperText {
