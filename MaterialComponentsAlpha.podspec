@@ -27,6 +27,7 @@ Pod::Spec.new do |mdc|
     component.test_spec 'tests' do |tests|
       tests.test_spec 'unit' do |unit_tests|
         unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.dependency "MaterialComponentsAlpha/#{component.base_name}+Theming"
       end
     end
   end
