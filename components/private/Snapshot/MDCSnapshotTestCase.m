@@ -14,6 +14,17 @@
 
 #import "MDCSnapshotTestCase.h"
 
+#import <sys/utsname.h>
+
+/*
+ Due to differences between the iPhone 6 and iPhone 7 snapshots (when working with textfields), we
+ will limit the snapshot tests to only run on the iPhone 7 until we have a better solution for
+ generating the matrix of devices and OS's that we want to support.
+ https://github.com/material-components/material-components-ios/issues/5888
+ */
+static NSString *const kiPhone7ModelA = @"iPhone9,1";
+static NSString *const kiPhone7ModelB = @"iPhone9,3";
+
 @implementation MDCSnapshotTestCase
 
 - (void)setUp {
@@ -32,12 +43,11 @@
 }
 
 - (void)snapshotVerifyView:(UIView *)view {
-  // TODO(https://github.com/material-components/material-components-ios/issues/5888)
-  // Support multiple OS versions for snapshots
-  if (NSProcessInfo.processInfo.operatingSystemVersion.majorVersion != 11 ||
-      NSProcessInfo.processInfo.operatingSystemVersion.minorVersion != 2 ||
-      NSProcessInfo.processInfo.operatingSystemVersion.patchVersion != 0) {
-    NSLog(@"Skipping this test. Snapshot tests currently only run on iOS 11.2.0");
+  [self snapshotVerifyView:view tolerance:0];
+}
+
+- (void)snapshotVerifyView:(UIView *)view tolerance:(CGFloat)tolerancePercent {
+  if (![self isSupportedDevice]) {
     return;
   }
 
@@ -60,7 +70,41 @@
   UIImageView *imageView = [[UIImageView alloc] initWithFrame:view.frame];
   imageView.image = result;
 
-  FBSnapshotVerifyView(imageView, nil);
+  FBSnapshotVerifyViewWithOptions(imageView, nil, FBSnapshotTestCaseDefaultSuffixes(),
+                                  tolerancePercent);
+}
+
+// TODO(https://github.com/material-components/material-components-ios/issues/5888)
+// Support multiple OS versions and devices for snapshots
+- (BOOL)isSupportedDevice {
+  if (NSProcessInfo.processInfo.operatingSystemVersion.majorVersion != 11 ||
+      NSProcessInfo.processInfo.operatingSystemVersion.minorVersion != 2 ||
+      NSProcessInfo.processInfo.operatingSystemVersion.patchVersion != 0) {
+    NSLog(@"Unsupported device. Snapshot tests currently only run on iOS 11.2.0");
+    return NO;
+  }
+
+  NSString *deviceName = [self getDeviceName];
+  if (!([deviceName isEqualToString:kiPhone7ModelA] ||
+        [deviceName isEqualToString:kiPhone7ModelB])) {
+    NSLog(@"Unsupported device. Snapshot tests currently only run on iPhone 7");
+    return NO;
+  }
+
+  return YES;
+}
+
+- (NSString *)getDeviceName {
+  NSString *deviceName;
+#if TARGET_OS_SIMULATOR
+  // This solution was found here: https://stackoverflow.com/a/26680063
+  deviceName = [NSProcessInfo processInfo].environment[@"SIMULATOR_MODEL_IDENTIFIER"];
+#else
+  struct utsname systemInfo;
+  uname(&systemInfo);
+  deviceName = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+#endif
+  return deviceName;
 }
 
 @end
