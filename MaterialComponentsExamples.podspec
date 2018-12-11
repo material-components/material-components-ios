@@ -1,3 +1,9 @@
+experimental = [
+  'components/*/examples/experimental/supplemental/*.{h,m,swift}',
+  'components/*/examples/experimental/*.{h,m,swift}',
+  'components/*/examples/experimental/resources/*'
+]
+
 Pod::Spec.new do |s|
   s.name         = "MaterialComponentsExamples"
   s.version      = "72.2.0"
@@ -9,7 +15,8 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/material-components/material-components-ios.git", :tag => "v#{s.version}" }
   s.platform     = :ios, '8.0'
   s.requires_arc = true
-  s.source_files = 'components/*/examples/*.{h,m,swift}', 'components/*/examples/supplemental/*.{h,m,swift}', 'components/private/*/examples/*.{h,m,swift}', 'components/schemes/*/examples/*.{h,m,swift}', 'components/schemes/*/examples/supplemental/*.{h,m,swift}'
+  s.source_files = experimental + ['components/*/examples/*.{h,m,swift}', 'components/*/examples/supplemental/*.{h,m,swift}', 'components/private/*/examples/*.{h,m,swift}', 'components/schemes/*/examples/*.{h,m,swift}', 'components/schemes/*/examples/supplemental/*.{h,m,swift}']
+  
   s.resources = ['components/*/examples/resources/*', 'components/private/*/examples/resources/*', 'components/schemes/*/examples/resources/*']
   s.dependency 'MaterialComponents'
   s.dependency 'MaterialComponentsBeta'
