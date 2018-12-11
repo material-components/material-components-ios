@@ -70,15 +70,15 @@
 }
 
 - (MDCContainerScheme *)containerScheme {
-  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
-  scheme.colorScheme = self.colorScheme;
-  scheme.shapeScheme =
-      [[MDCShapeScheme alloc] initWithDefaults:MDCShapeSchemeDefaultsMaterial201809];
-  scheme.typographyScheme =
-      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
   if (!_containerScheme) {
-    _containerScheme = scheme;
+    _containerScheme = [[MDCContainerScheme alloc] init];
   }
+  _containerScheme.colorScheme = self.colorScheme;
+  _containerScheme.shapeScheme =
+      [[MDCShapeScheme alloc] initWithDefaults:MDCShapeSchemeDefaultsMaterial201809];
+  _containerScheme.typographyScheme =
+      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+
   return _containerScheme;
 }
 
