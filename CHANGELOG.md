@@ -1,15 +1,30 @@
-# #develop#
+# 72.2.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+In this major release we added scrimColor support for MDCBottomSheetController and added a theming extension support for MDCAlertController. We also added TextFields screenshot testing along with various bug fixes.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
+### Bottom Sheet scrimColor API usage example
+```
+  MDCBottomSheetController *bottomSheet =
+      [[MDCBottomSheetController alloc] initWithContentViewController:viewController];
+  bottomSheet.scrimColor = UIColor.blueColor;
+  [self presentViewController:bottomSheet animated:YES completion:nil];
+```
+
+### Dialogs Theming Extension usage example
+```
+  var scheme: MDCContainerScheming {
+    let scheme = MDCContainerScheme()
+    scheme.colorScheme = colorScheme
+    scheme.typographyScheme = typographyScheme
+    return scheme
+  }
+  ...
+  let alertController = MDCAlertController(title: "Title", message: "Message")
+  alertController.applyTheme(withScheme: scheme)
+```
+
 ## API changes
 
 ## Component changes
