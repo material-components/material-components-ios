@@ -80,21 +80,18 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
 - (void)testActionSheetThemer {
   // When
   [self.actionSheet applyThemeWithScheme:self.containerScheme];
-  [self.actionSheet loadView];
   NSArray *cells = [MDCActionSheetTestHelper getCellsFromActionSheet:self.actionSheet];
 
   // Then
   // Color
   XCTAssertEqualObjects(self.actionSheet.backgroundColor,
                         self.containerScheme.colorScheme.surfaceColor);
-  XCTAssertEqualObjects(self.actionSheet.view.backgroundColor,
-                        self.containerScheme.colorScheme.surfaceColor);
 
   // Typography
-  XCTAssertEqualObjects(self.actionSheet.header.titleFont,
+  XCTAssertEqualObjects(self.actionSheet.header.titleLabel.font,
                         self.containerScheme.typographyScheme.subtitle1);
-  XCTAssertEqualObjects(self.actionSheet.header.messageFont,
-                        self.containerScheme.typographyScheme.body1);
+  XCTAssertEqualObjects(self.actionSheet.header.messageLabel.font,
+                        self.containerScheme.typographyScheme.body2);
 
   // Cells
   XCTAssertNotEqual(cells.count, 0U);
