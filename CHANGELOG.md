@@ -1,3 +1,101 @@
+# 72.2.0
+
+In this minor release we added scrimColor support for MDCBottomSheetController and added a theming extension support for MDCAlertController. We also added TextFields snapshot testing along with various bug fixes.
+
+## New features
+
+### Bottom Sheet scrimColor API usage example
+```objc
+  MDCBottomSheetController *bottomSheet =
+      [[MDCBottomSheetController alloc] initWithContentViewController:viewController];
+  bottomSheet.scrimColor = UIColor.blueColor;
+  [self presentViewController:bottomSheet animated:YES completion:nil];
+```
+
+### Dialogs Theming Extension usage example
+```swift
+  var scheme: MDCContainerScheming {
+    let scheme = MDCContainerScheme()
+    scheme.colorScheme = colorScheme
+    scheme.typographyScheme = typographyScheme
+    return scheme
+  }
+  ...
+  let alertController = MDCAlertController(title: "Title", message: "Message")
+  alertController.applyTheme(withScheme: scheme)
+```
+
+## Bug fixes
+
+{Git-LFS} Exclude git-lfs from `stable` #5977
+
+## API changes
+
+## Component changes
+
+## Changes
+
+### ActionSheet
+
+* [Allow changing action item accessibility labels. (#5803)](https://github.com/material-components/material-components-ios/commit/f60be3313114c06309803be2f17f029155ee0c3d) (lightboys22)
+
+### BottomSheet
+
+* [Create property to allow scrim color to be set on presentation controller. (#5892)](https://github.com/material-components/material-components-ios/commit/cf81763cdc68fe82afa0b5efc1ea8daee533f6c9) (danblakemore)
+
+### Buttons
+
+* [Correct FAB Shape themer documentation. (#5900)](https://github.com/material-components/material-components-ios/commit/af92829cc69acdf7f9bcc3205cad0fc49135f66d) (Robert Moore)
+* [Fix unsafe access to self.bounds.size (#5930)](https://github.com/material-components/material-components-ios/commit/9d6f0533985914752bb203d60f58b8fb2523e949) (Robert Moore)
+* [Improve color themer tests. (#5913)](https://github.com/material-components/material-components-ios/commit/ae060e8225cc82b33f32fb885b904152199537d1) (Robert Moore)
+* [Match backgroundColor to titleColor API (#5919)](https://github.com/material-components/material-components-ios/commit/71b24fe3b95c5989f7cb7c7de4e8c661f996fb16) (Robert Moore)
+* [uncomment the test for verifying theming FAB title color (#5923)](https://github.com/material-components/material-components-ios/commit/89301b38eacc36d26dff33d55a8dd8a96c35b746) (Wenyu Zhang)
+
+### Chips
+
+* [Account for RTL in textRectForBounds override in MDCChipTextField (#5935)](https://github.com/material-components/material-components-ios/commit/a8be59547749dc2606e88a4bbcc2dd4d4e47638e) (Andrew Overton)
+
+### Dialogs
+
+* [ [Dialogs] Renaming example view controllers (#5932)](https://github.com/material-components/material-components-ios/commit/3f3e5b0efcd056ee8c31433adbac26d7c4c20462) (Galia Kaufman)
+* [Add dialog category for theming (#5905)](https://github.com/material-components/material-components-ios/commit/68ea954882ad6db03ef982b5a051c3509b7ce5c4) (Andrew Overton)
+
+### FlexibleHeader
+
+* [Add basic minimumHeight/maximumHeight behavior tests. (#5908)](https://github.com/material-components/material-components-ios/commit/b3afc1eae9c207dfdf383c451557063aa84150f8) (featherless)
+
+### NavigationDrawer
+
+* [Fix jump when perferredContentSize changes (#5928)](https://github.com/material-components/material-components-ios/commit/f8d595ef04c1db795c7426fa419b5c764ac10696) (Cody Weaver)
+* [Remove clipping view (#5897)](https://github.com/material-components/material-components-ios/commit/be33ef513ede24882ee04fc7cda122e7a68677b2) (Cody Weaver)
+
+### private/KeyboardWatcher
+
+* [fix keyboard watcher not taking into regards compatibility mode (#5957)](https://github.com/material-components/material-components-ios/commit/39a2a282f5070ae51bfa42fe029b3b232756f01e) (Yarden Eitan)
+
+### Textfields
+
+* [Add FullWidth snapshot tests. (#5953)](https://github.com/material-components/material-components-ios/commit/ab7a6467db5edb7dc87de589fa09e073db8e8d65) (Robert Moore)
+* [Add Outlined snapshot tests (#5939)](https://github.com/material-components/material-components-ios/commit/495a29ca69305acde9dff9d1c67f7939011548b1) (Robert Moore)
+* [Add OutlinedTextArea snapshot tests (#5950)](https://github.com/material-components/material-components-ios/commit/930965b1bc2cb784854f3a48a02f2ae587d958d5) (Robert Moore)
+* [Add `editing` snapshots for Outlined (#5964)](https://github.com/material-components/material-components-ios/commit/7daa9d169b769a73c8f4ae61300fdfe00a9a5e5e) (Robert Moore)
+* [Add clearButton to filled snapshots (#5963)](https://github.com/material-components/material-components-ios/commit/6b4913db25d8a1d6046360f068083660c1b795db) (Robert Moore)
+* [Post notifications when `isEditing` changes. (#5972)](https://github.com/material-components/material-components-ios/commit/fc05538fd5b81839df4870cde3b0e4dab21389e3) (Robert Moore)
+* [Show clearButton in baseline snapshot (#5962)](https://github.com/material-components/material-components-ios/commit/1a25e695acc053ab8ffcfcee8d9dfe57af3881e3) (Robert Moore)
+* [Show clearButton in outlined snapshots. (#5961)](https://github.com/material-components/material-components-ios/commit/004b49d774a02a9b0971efb6da09d563c12a605a) (Robert Moore)
+* [Snapshot test for themed Outlined. (#5951)](https://github.com/material-components/material-components-ios/commit/f7ac13089ed573426f46e7bff09adfc9f8ce06a8) (Robert Moore)
+* [Snapshot tests for Filled. (#5949)](https://github.com/material-components/material-components-ios/commit/e36da4d68eac2febe8225b14e838a9e06f3c8695) (Robert Moore)
+
+## Multi-component changes
+
+* [Clean up doc links to guidelines (#5927)](https://github.com/material-components/material-components-ios/commit/d40ccbaa6c01c509141baf05e8632109df35bbc3) (Robert Moore)
+* [Move verification into test methods (#5947)](https://github.com/material-components/material-components-ios/commit/5b4c5e5272670acf44d53ae45466719f1cfad044) (Robert Moore)
+* [Tweak snapshot test base class to handle the verify in tearDown (#5933)](https://github.com/material-components/material-components-ios/commit/7ff5daf101d40baabbf91bff093c651deea9531d) (rami-a)
+* [Update our theming extensions (#5945)](https://github.com/material-components/material-components-ios/commit/1ca10a8669675d8cd358dbe2641c9551592c6894) (Cody Weaver)
+* [Update secondary floating action button themer examples (#5922)](https://github.com/material-components/material-components-ios/commit/6267009748828eaebd64616092671eb43249f0e5) (Wenyu Zhang)
+
+---
+
 # 72.1.0
 
 This minor release fixes a ChipField RTL issue.
