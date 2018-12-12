@@ -49,4 +49,8 @@
   return self.valueType == otherCorner.valueType;
 }
 
+- (NSUInteger)hash {
+  return (NSUInteger)self.valueType;
+}
+
 @end
