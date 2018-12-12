@@ -27,6 +27,8 @@
   [super setUp];
 
   self.textField = [[MDCMultilineTextField alloc] init];
+  self.textField.clearButtonMode = UITextFieldViewModeAlways;
+
   self.textFieldController =
       [[MDCTextInputControllerOutlinedTextArea alloc] initWithTextInput:self.textField];
 }
