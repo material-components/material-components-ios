@@ -15,9 +15,10 @@
 #import "MDCSnapshotTestCase.h"
 #import "MDCTextFieldSnapshotTestsStrings.h"
 #import "MaterialTextFields.h"
+#import "SnapshotFakeMDCMultilineTextField.h"
 
 @interface MDCTextFieldOutlinedTextAreaControllerSnapshotTests : MDCSnapshotTestCase
-@property(nonatomic, strong) MDCMultilineTextField *textField;
+@property(nonatomic, strong) SnapshotFakeMDCMultilineTextField *textField;
 @property(nonatomic, strong) MDCTextInputControllerOutlinedTextArea *textFieldController;
 @end
 
@@ -26,7 +27,8 @@
 - (void)setUp {
   [super setUp];
 
-  self.textField = [[MDCMultilineTextField alloc] init];
+  self.textField = [[SnapshotFakeMDCMultilineTextField alloc] init];
+
   self.textFieldController =
       [[MDCTextInputControllerOutlinedTextArea alloc] initWithTextInput:self.textField];
 }
