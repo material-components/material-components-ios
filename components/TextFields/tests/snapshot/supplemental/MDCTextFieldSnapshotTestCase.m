@@ -14,8 +14,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "SnapshotFakeMDCTextField.h"
 #import "MDCTextFieldSnapshotTestCase.h"
+#import "SnapshotFakeMDCTextField.h"
 
 @implementation MDCTextFieldSnapshotTestCase
 
