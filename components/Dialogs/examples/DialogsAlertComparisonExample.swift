@@ -18,6 +18,8 @@ import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialDialogs
 import MaterialComponents.MaterialDialogs_DialogThemer
 import MaterialComponents.MaterialTypographyScheme
+import MaterialComponentsAlpha.MaterialContainerScheme
+import MaterialComponentsAlpha.MaterialDialogs_Theming
 
 /// This interface allows a user to present a UIKit Alert Controller and a Material Alert
 /// Controller.
