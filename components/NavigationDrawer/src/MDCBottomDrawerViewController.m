@@ -214,4 +214,14 @@
   }
 }
 
+- (void)expandToFullHeightWithDuration:(NSTimeInterval)duration
+                            completion:(void (^)(BOOL))completion {
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+    (MDCBottomDrawerPresentationController *)self.presentationController;
+    [bottomDrawerPresentationController expandToFullHeightWithDuration:duration
+                                                            completion:completion];
+  }
+}
+
 @end

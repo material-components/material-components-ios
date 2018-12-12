@@ -371,6 +371,49 @@ static UIColor *DrawerShadowColor(void) {
   }
 }
 
+- (void)expandToFullHeightWithDuration:(NSTimeInterval)duration
+                            completion:(void (^)(BOOL))completion {
+  CGFloat contentYOffset = self.contentHeaderTopInset - MDCDeviceTopSafeAreaInset();
+  CGPoint contentOffset = CGPointMake(self.scrollView.contentOffset.x, contentYOffset);
+  CGFloat totalHeight = self.headerViewController.preferredContentSize.height +
+      _contentVCPreferredContentSizeHeightCached;
+  if (totalHeight < self.presentingViewBounds.size.height) {
+    CGFloat newHeight = self.presentingViewBounds.size.height - MDCDeviceTopSafeAreaInset() - self.headerViewController.preferredContentSize.height;
+    newHeight += (kEpsilon * 2);
+    self.contentViewController.preferredContentSize =
+        CGSizeMake(self.presentingViewBounds.size.width, newHeight);
+  }
+  if (self.trackingScrollView != nil) {
+    contentOffset.y = [self updateContentOffsetForPerformantScrolling:contentOffset.y];
+  }
+  [UIView animateWithDuration:duration animations:^{
+    [self.scrollView setContentOffset:contentOffset];
+  } completion:^(BOOL finished) {
+    [self updateViewWithContentOffset:contentOffset];
+    if (completion) {
+      completion(YES);
+    }
+  }]
+}
+
+- (void)animateToContentOffset:(CGPoint)contentOffset
+           withTransitionRatio:(CGFloat)transitionRatio
+                      duration:(NSTimeInterval)duration
+                    completion:(void (^)(BOOL))completion {
+  [UIView animateWithDuration:duration
+                   animations:^{
+                     [self.delegate bottomDrawerContainerViewControllerTopTransitionRatio:self
+                                                                          transitionRatio:transitionRatio];
+                     [self.scrollView setContentOffset:contentOffset];
+                   }
+                   completion:^(BOOL finished) {
+                     [self updateViewWithContentOffset:contentOffset];
+                     if (completion) {
+                       completion(YES);
+                     }
+                   }];
+}
+
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
   CGFloat topAreaInsetForHeader = (self.headerViewController ? MDCDeviceTopSafeAreaInset() : 0);
   CGFloat drawerOffset = self.contentHeaderTopInset - topAreaInsetForHeader;
