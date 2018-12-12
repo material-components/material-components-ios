@@ -155,6 +155,7 @@ static UIColor *DrawerShadowColor(void) {
   CGFloat _addedContentHeight;
   CGFloat _contentVCPreferredContentSizeHeightCached;
   CGFloat _scrollToContentOffsetY;
+  BOOL _shouldPresentAtFullscreen;
 }
 
 - (instancetype)initWithOriginalPresentingViewController:
@@ -170,6 +171,7 @@ static UIColor *DrawerShadowColor(void) {
     _drawerState = MDCBottomDrawerStateCollapsed;
     _scrollToContentOffsetY = 0;
     _initialDrawerFactor = (CGFloat)0.5;
+    _shouldPresentAtFullscreen = NO;
   }
   return self;
 }
@@ -294,7 +296,7 @@ static UIColor *DrawerShadowColor(void) {
 }
 
 - (BOOL)shouldPresentFullScreen {
-  return [self isAccessibilityMode] || [self isMobileLandscape];
+  return [self isAccessibilityMode] || [self isMobileLandscape] || _shouldPresentAtFullscreen;
 }
 
 /**
@@ -381,6 +383,20 @@ static UIColor *DrawerShadowColor(void) {
   _scrollToContentOffsetY = 0;
 }
 
+- (void)presentAtFullscreenWithDuration:(CGFloat)duration
+                             completion:(void (^ __nullable)(BOOL finished))completion {
+  _contentHeaderTopInset = NSNotFound;
+  _contentHeightSurplus = NSNotFound;
+  _addedContentHeight = NSNotFound;
+  _shouldPresentAtFullscreen = YES;
+  [self cacheLayoutCalculations];
+  [UIView animateWithDuration:duration animations:^{
+    [self setupLayout];
+  } completion:^(BOOL completed) {
+    completion(completed);
+  }];
+}
+
 #pragma mark UIViewController
 
 - (void)viewDidLoad {
@@ -415,9 +431,7 @@ static UIColor *DrawerShadowColor(void) {
   }
 }
 
-- (void)viewWillLayoutSubviews {
-  [super viewWillLayoutSubviews];
-
+- (void)setupLayout {
   // Layout the clipping view and the scroll view.
   if (self.currentlyFullscreen) {
     CGRect scrollViewFrame = self.presentingViewBounds;
@@ -426,7 +440,7 @@ static UIColor *DrawerShadowColor(void) {
     CGRect scrollViewFrame = self.presentingViewBounds;
     if (self.animatingPresentation) {
       CGFloat heightSurplusForSpringAnimationOvershooting =
-          self.presentingViewBounds.size.height / 2;
+      self.presentingViewBounds.size.height / 2;
       scrollViewFrame.size.height += heightSurplusForSpringAnimationOvershooting;
     }
     self.scrollView.frame = scrollViewFrame;
@@ -457,8 +471,8 @@ static UIColor *DrawerShadowColor(void) {
     contentViewFrame.size.height = _contentVCPreferredContentSizeHeightCached;
     if ([self shouldPresentFullScreen]) {
       contentViewFrame.size.height =
-          MAX(contentViewFrame.size.height,
-              self.presentingViewBounds.size.height - self.topHeaderHeight);
+      MAX(contentViewFrame.size.height,
+          self.presentingViewBounds.size.height - self.topHeaderHeight);
     }
   }
   self.contentViewController.view.frame = contentViewFrame;
@@ -466,7 +480,12 @@ static UIColor *DrawerShadowColor(void) {
     contentViewFrame.origin.y = self.trackingScrollView.frame.origin.y;
     self.trackingScrollView.frame = contentViewFrame;
   }
+}
 
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+
+  [self setupLayout];
   [self.headerViewController.view.superview bringSubviewToFront:self.headerViewController.view];
   [self updateViewWithContentOffset:self.scrollView.contentOffset];
 }
@@ -487,6 +506,7 @@ static UIColor *DrawerShadowColor(void) {
       self.initialDrawerFactor = [self calculateInitialDrawerFactor];
     }
   }
+  _shouldPresentAtFullscreen = NO;
   _contentHeaderTopInset = NSNotFound;
   _contentHeightSurplus = NSNotFound;
   _addedContentHeight = NSNotFound;
@@ -716,7 +736,7 @@ static UIColor *DrawerShadowColor(void) {
 
   if (_contentHeaderTopInset == NSNotFound) {
     // The content header top inset is only set once.
-    if (contentScrollsToReveal) {
+    if (contentScrollsToReveal || _shouldPresentAtFullscreen) {
       _contentHeaderTopInset = containerHeight * (1 - [self initialDrawerFactor]);
       // The minimum inset value should be the size of the safe area inset, as
       // kInitialDrawerHeightFactor discounts the safe area when receiving the height factor.

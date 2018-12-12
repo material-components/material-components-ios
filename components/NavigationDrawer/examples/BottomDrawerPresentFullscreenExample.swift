@@ -19,12 +19,12 @@ import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialNavigationDrawer
 import MaterialComponents.MaterialNavigationDrawer_ColorThemer
 
-class BottomDrawerInfiniteScrollingExample: UIViewController {
+class BottomDrawerPresentFullscreenExample: UIViewController {
   var colorScheme = MDCSemanticColorScheme()
   let bottomAppBar = MDCBottomAppBarView()
 
   let headerViewController = DrawerHeaderViewController()
-  let contentViewController = DrawerContentTableViewController()
+  let contentViewController = PresentFullscreenContentViewController()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -74,18 +74,9 @@ class BottomDrawerInfiniteScrollingExample: UIViewController {
   }
 }
 
-class DrawerContentTableViewController: UITableViewController {
+class PresentFullscreenContentViewController: UITableViewController {
   var colorScheme: MDCSemanticColorScheme!
   weak var drawerVC: MDCBottomDrawerViewController!
-
-  override var preferredContentSize: CGSize {
-    get {
-      return CGSize(width: view.bounds.width, height: tableView.contentSize.height)
-    }
-    set {
-      super.preferredContentSize = newValue
-    }
-  }
 
   init() {
     super.init(nibName: nil, bundle: nil)
@@ -100,6 +91,12 @@ class DrawerContentTableViewController: UITableViewController {
     self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
   }
 
+  override func viewWillAppear(_ animated: Bool) {
+    self.tableView.layoutIfNeeded()
+    self.preferredContentSize = CGSize(width: view.bounds.width,
+                                       height: tableView.contentSize.height)
+  }
+
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
     cell.textLabel?.text = "cell #\(indexPath.item)"
@@ -109,7 +106,7 @@ class DrawerContentTableViewController: UITableViewController {
   }
 
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 100
+    return 4
   }
 
   override func numberOfSections(in tableView: UITableView) -> Int {
@@ -118,19 +115,22 @@ class DrawerContentTableViewController: UITableViewController {
 
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
-    drawerVC.setContentOffsetY(0, animated: false)
+    drawerVC.presentAtFullscreen(withDuration: 0.2, completion: { (completed: Bool) in
+      print("finished presenting");
+    })
   }
 
 }
 
-extension BottomDrawerInfiniteScrollingExample {
+extension BottomDrawerPresentFullscreenExample {
 
   class func catalogMetadata() -> [String: Any] {
     return [
-      "breadcrumbs": ["Navigation Drawer", "Bottom Drawer Infinite Scrolling"],
+      "breadcrumbs": ["Navigation Drawer", "BottomDrawer Present at Fullscreen Example"],
       "description": "Navigation Drawer",
       "primaryDemo": true,
       "presentable": true,
+      "debug": true,
     ]
   }
 }
