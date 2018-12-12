@@ -4,6 +4,7 @@
 
 #import "MaterialColorScheme.h"
 
+#import "MaterialContainerScheme.h"
 
 
 /**
@@ -47,6 +48,7 @@
 @property (nonatomic, assign) UITextFieldViewMode trailingViewMode;
 
 
+@property (strong, nonatomic) MDCContainerScheme *containerScheme;
 
 /**
  This property toggles a state (similar to @c isHighlighted, @c isEnabled, @c isSelected, etc.) that
@@ -73,14 +75,5 @@
  */
 @property (nonatomic, assign) CGFloat customUnderlineLabelDrawPriority;
 
-
-- (void)setColorScheme:(MDCSemanticColorScheme *)colorScheme
-              forState:(TextFieldState)textFieldState;
-
-- (MDCSemanticColorScheme *)colorSchemeForState:(TextFieldState)textFieldState;
-
-- (void)applyColorScheme:(MDCSemanticColorScheme *)colorScheme;
-
-+ (MDCSemanticColorScheme *)defaultColorSchemeForState:(TextFieldState)textFieldState;
 
 @end

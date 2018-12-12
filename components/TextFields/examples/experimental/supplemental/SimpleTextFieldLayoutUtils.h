@@ -14,7 +14,6 @@ static const CGFloat kFloatingPlaceholderAnimationDuration = 0.15;
 static const CGFloat kLeadingMargin = 16.0;
 static const CGFloat kTrailingMargin = 16.0;
 
-static const CGFloat kFilledTextFieldUnderlineHeight = 3;
 static const CGFloat kFilledTextFieldTopCornerRadius = 4.0;
 static const CGFloat kOutlinedTextFieldCornerRadius = 4.0;
 //static const CGFloat kFloatingPlaceholderTopMargin = 5.0;

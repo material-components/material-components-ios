@@ -19,46 +19,46 @@
 
 #pragma mark Object Lifecycle
 
-- (instancetype)initWithTextFieldBounds:(CGRect)textFieldBounds
-                         textFieldStyle:(TextFieldStyle)textFieldStyle
-                                   text:(NSString *)text
-                            placeholder:(NSString *)placeholder
-                                   font:(UIFont *)font
-                floatingPlaceholderFont:(UIFont *)floatingPlaceholderFont
-                    canPlaceholderFloat:(BOOL)canPlaceholderFloat
-                               leftView:(UIView *)leftView
-                           leftViewMode:(UITextFieldViewMode)leftViewMode
-                              rightView:(UIView *)rightView
-                          rightViewMode:(UITextFieldViewMode)rightViewMode
-                            clearButton:(UIButton *)clearButton
-                        clearButtonMode:(UITextFieldViewMode)clearButtonMode
-                     leftUnderlineLabel:(UILabel *)leftUnderlineLabel
-                    rightUnderlineLabel:(UILabel *)rightUnderlineLabel
-             underlineLabelDrawPriority:(UnderlineLabelDrawPriority)underlineLabelDrawPriority
-       customUnderlineLabelDrawPriority:(CGFloat)customUnderlineLabelDrawPriority
-                                  isRTL:(BOOL)isRTL
-                              isEditing:(BOOL)isEditing {
+- (instancetype)initWithTextFieldSize:(CGSize)textFieldSize
+                       textFieldStyle:(TextFieldStyle)textFieldStyle
+                                 text:(NSString *)text
+                          placeholder:(NSString *)placeholder
+                                 font:(UIFont *)font
+              floatingPlaceholderFont:(UIFont *)floatingPlaceholderFont
+                  canPlaceholderFloat:(BOOL)canPlaceholderFloat
+                             leftView:(UIView *)leftView
+                         leftViewMode:(UITextFieldViewMode)leftViewMode
+                            rightView:(UIView *)rightView
+                        rightViewMode:(UITextFieldViewMode)rightViewMode
+                          clearButton:(UIButton *)clearButton
+                      clearButtonMode:(UITextFieldViewMode)clearButtonMode
+                   leftUnderlineLabel:(UILabel *)leftUnderlineLabel
+                  rightUnderlineLabel:(UILabel *)rightUnderlineLabel
+           underlineLabelDrawPriority:(UnderlineLabelDrawPriority)underlineLabelDrawPriority
+     customUnderlineLabelDrawPriority:(CGFloat)customUnderlineLabelDrawPriority
+                                isRTL:(BOOL)isRTL
+                            isEditing:(BOOL)isEditing {
   self = [super init];
   if (self) {
-    [self calculateLayoutWithTextFieldBounds:textFieldBounds
-                              textFieldStyle:textFieldStyle
-                                        text:text
-                                 placeholder:placeholder
-                                        font:font
-                     floatingPlaceholderFont:floatingPlaceholderFont
-                         canPlaceholderFloat:canPlaceholderFloat
-                                    leftView:leftView
-                                leftViewMode:leftViewMode
-                                   rightView:rightView
-                               rightViewMode:rightViewMode
-                                 clearButton:clearButton
-                             clearButtonMode:clearButtonMode
-                          leftUnderlineLabel:leftUnderlineLabel
-                         rightUnderlineLabel:rightUnderlineLabel
-                  underlineLabelDrawPriority:underlineLabelDrawPriority
-            customUnderlineLabelDrawPriority:customUnderlineLabelDrawPriority
-                                       isRTL:isRTL
-                                   isEditing:isEditing];
+    [self calculateLayoutWithTextFieldSize:textFieldSize
+                            textFieldStyle:textFieldStyle
+                                      text:text
+                               placeholder:placeholder
+                                      font:font
+                   floatingPlaceholderFont:floatingPlaceholderFont
+                       canPlaceholderFloat:canPlaceholderFloat
+                                  leftView:leftView
+                              leftViewMode:leftViewMode
+                                 rightView:rightView
+                             rightViewMode:rightViewMode
+                               clearButton:clearButton
+                           clearButtonMode:clearButtonMode
+                        leftUnderlineLabel:leftUnderlineLabel
+                       rightUnderlineLabel:rightUnderlineLabel
+                underlineLabelDrawPriority:underlineLabelDrawPriority
+          customUnderlineLabelDrawPriority:customUnderlineLabelDrawPriority
+                                     isRTL:isRTL
+                                 isEditing:isEditing];
     return self;
   }
   return nil;
@@ -66,25 +66,25 @@
 
 #pragma mark Layout Calculation
 
-- (void)calculateLayoutWithTextFieldBounds:(CGRect)textFieldBounds
-                            textFieldStyle:(TextFieldStyle)textFieldStyle
-                                      text:(NSString *)text
-                               placeholder:(NSString *)placeholder
-                                      font:(UIFont *)font
-                   floatingPlaceholderFont:(UIFont *)floatingPlaceholderFont
-                       canPlaceholderFloat:(BOOL)canPlaceholderFloat
-                                  leftView:(UIView *)leftView
-                              leftViewMode:(UITextFieldViewMode)leftViewMode
-                                 rightView:(UIView *)rightView
-                             rightViewMode:(UITextFieldViewMode)rightViewMode
-                               clearButton:(UIButton *)clearButton
-                           clearButtonMode:(UITextFieldViewMode)clearButtonMode
-                        leftUnderlineLabel:(UILabel *)leftUnderlineLabel
-                       rightUnderlineLabel:(UILabel *)rightUnderlineLabel
-                underlineLabelDrawPriority:(UnderlineLabelDrawPriority)underlineLabelDrawPriority
-          customUnderlineLabelDrawPriority:(CGFloat)customUnderlineLabelDrawPriority
-                                     isRTL:(BOOL)isRTL
-                                 isEditing:(BOOL)isEditing {
+- (void)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize
+                          textFieldStyle:(TextFieldStyle)textFieldStyle
+                                    text:(NSString *)text
+                             placeholder:(NSString *)placeholder
+                                    font:(UIFont *)font
+                 floatingPlaceholderFont:(UIFont *)floatingPlaceholderFont
+                     canPlaceholderFloat:(BOOL)canPlaceholderFloat
+                                leftView:(UIView *)leftView
+                            leftViewMode:(UITextFieldViewMode)leftViewMode
+                               rightView:(UIView *)rightView
+                           rightViewMode:(UITextFieldViewMode)rightViewMode
+                             clearButton:(UIButton *)clearButton
+                         clearButtonMode:(UITextFieldViewMode)clearButtonMode
+                      leftUnderlineLabel:(UILabel *)leftUnderlineLabel
+                     rightUnderlineLabel:(UILabel *)rightUnderlineLabel
+              underlineLabelDrawPriority:(UnderlineLabelDrawPriority)underlineLabelDrawPriority
+        customUnderlineLabelDrawPriority:(CGFloat)customUnderlineLabelDrawPriority
+                                   isRTL:(BOOL)isRTL
+                               isEditing:(BOOL)isEditing {
 
   BOOL shouldAttemptToDisplayLeftView = [self shouldAttemptToDisplaySideView:leftView
                                                                     viewMode:leftViewMode
@@ -106,7 +106,7 @@
     leftViewMaxX = leftViewMinX + leftViewWidth;
   }
 
-  CGFloat textFieldWidth = CGRectGetWidth(textFieldBounds);
+  CGFloat textFieldWidth = textFieldSize.width;
   CGFloat rightViewMinX = 0;
   if (shouldAttemptToDisplayRightView) {
     rightViewMinX = [self minXForRightView:rightView

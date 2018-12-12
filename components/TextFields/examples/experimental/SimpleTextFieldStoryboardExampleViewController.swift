@@ -14,8 +14,8 @@
 
 final class SimpleTextFieldStoryboardExampleViewController: UIViewController {
 
-  @IBOutlet var filledTextField: UIView!
-  @IBOutlet weak var outletTextFields: UITextField!
+  @IBOutlet var filledTextField: UITextField!
+  @IBOutlet weak var outlinedTextField: UITextField!
   
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
@@ -28,6 +28,7 @@ final class SimpleTextFieldStoryboardExampleViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     registerKeyboardNotifications()
+
   }
 
 }

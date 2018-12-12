@@ -27,6 +27,8 @@
 
 @interface SimpleTextFieldManualLayoutExampleViewController ()
 
+@property (strong, nonatomic) UIScrollView *scrollView;
+
 @property (strong, nonatomic) MDCButton *resignFirstResponderButton;
 @property (strong, nonatomic) SimpleTextField *filledTextField;
 @property (strong, nonatomic) SimpleTextField *outlinedTextField;
@@ -47,25 +49,38 @@
 
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
-  [self positionSubviews];
+  [self positionScrollView];
+  [self positionScrollViewSubviews];
+  [self updateScrollViewContentSize];
 }
 
 - (void)addSubviews {
+  [self addScrollView];
   [self addResignFirstResponderButton];
   [self addFilledTextField];
   [self addOutlinedTextField];
   [self addUiTextField];
 }
 
-- (void)positionSubviews {
-  CGFloat appBarSafeArea = CGRectGetMinY(self.view.bounds);
+- (void)positionScrollView {
+  CGFloat originX = self.view.bounds.origin.x;
+  CGFloat originY = self.view.bounds.origin.y;
+  CGFloat width = self.view.bounds.size.width;
+  CGFloat height = self.view.bounds.size.height;
   if (@available(iOS 11.0, *)) {
-    appBarSafeArea = self.view.safeAreaInsets.top;
+    originX += self.view.safeAreaInsets.left;
+    originY += self.view.safeAreaInsets.top;
+    width -= (self.view.safeAreaInsets.left + self.view.safeAreaInsets.right);
+    height -= (self.view.safeAreaInsets.top + self.view.safeAreaInsets.bottom);
   }
-  
+  CGRect frame = CGRectMake(originX, originY, width, height);
+  self.scrollView.frame = frame;
+}
+
+- (void)positionScrollViewSubviews {
   CGFloat padding = 30;
   CGFloat resignFirstResponderButtonMinX = padding;
-  CGFloat resignFirstResponderButtonMinY = appBarSafeArea + padding;
+  CGFloat resignFirstResponderButtonMinY = padding;
   CGFloat resignFirstResponderButtonWidth = CGRectGetWidth(self.resignFirstResponderButton.frame);
   CGFloat resignFirstResponderButtonHeight = CGRectGetHeight(self.resignFirstResponderButton.frame);
   CGRect resignFirstResponderButtonFrame = CGRectMake(resignFirstResponderButtonMinX,
@@ -74,38 +89,58 @@
                                                       resignFirstResponderButtonHeight);
   self.resignFirstResponderButton.frame = resignFirstResponderButtonFrame;
 
+  CGFloat textFieldWidth = CGRectGetWidth(self.scrollView.frame) - (2 * padding);
+  CGSize textFieldFittingSize = CGSizeMake(textFieldWidth, CGFLOAT_MAX);
+  
   CGFloat filledTextFieldMinX = padding;
   CGFloat filledTextFieldMinY = resignFirstResponderButtonMinY + resignFirstResponderButtonHeight + padding;
-  [self.filledTextField sizeToFit];
-  CGFloat filledTextFieldWidth = CGRectGetWidth(self.filledTextField.frame);
-  CGFloat filledTextFieldHeight = CGRectGetHeight(self.filledTextField.frame);
+  CGSize filledTextFieldSize = [self.filledTextField sizeThatFits:textFieldFittingSize];
   CGRect filledTextFieldButtonFrame = CGRectMake(filledTextFieldMinX,
                                                  filledTextFieldMinY,
-                                                 filledTextFieldWidth,
-                                                 filledTextFieldHeight);
+                                                 filledTextFieldSize.width,
+                                                 filledTextFieldSize.height);
   self.filledTextField.frame = filledTextFieldButtonFrame;
 
   CGFloat outlinedTextFieldMinX = padding;
-  CGFloat outlinedTextFieldMinY = filledTextFieldMinY + filledTextFieldHeight + padding;
-  [self.outlinedTextField sizeToFit];
-  CGFloat outlinedTextFieldWidth = CGRectGetWidth(self.outlinedTextField.frame);
-  CGFloat outlinedTextFieldHeight = CGRectGetHeight(self.outlinedTextField.frame);
+  CGFloat outlinedTextFieldMinY = filledTextFieldMinY + filledTextFieldSize.height + padding;
+  CGSize outlinedTextFieldSize = [self.outlinedTextField sizeThatFits:textFieldFittingSize];
   CGRect outlinedTextFieldFrame = CGRectMake(outlinedTextFieldMinX,
                                              outlinedTextFieldMinY,
-                                             outlinedTextFieldWidth,
-                                             outlinedTextFieldHeight);
+                                             outlinedTextFieldSize.width,
+                                             outlinedTextFieldSize.height);
   self.outlinedTextField.frame = outlinedTextFieldFrame;
   
   CGFloat uiTextFieldMinX = padding;
-  CGFloat uiTextFieldMinY = outlinedTextFieldMinY + outlinedTextFieldHeight + padding;
-  CGFloat uiTextFieldWidth = CGRectGetWidth(self.uiTextField.frame);
-  CGFloat uiTextFieldHeight = CGRectGetHeight(self.uiTextField.frame);
+  CGFloat uiTextFieldMinY = outlinedTextFieldMinY + outlinedTextFieldSize.height + padding;
   CGRect uiTextFieldFrame = CGRectMake(uiTextFieldMinX,
                                        uiTextFieldMinY,
-                                       uiTextFieldWidth,
-                                       uiTextFieldHeight);
+                                       textFieldWidth,
+                                       CGRectGetHeight(self.uiTextField.frame));
   self.uiTextField.frame = uiTextFieldFrame;
 }
+
+- (void)updateScrollViewContentSize {
+  CGFloat maxX = 0;
+  CGFloat maxY = 0;
+  for (UIView *subview in self.scrollView.subviews) {
+    CGFloat subViewMaxX = CGRectGetMaxX(subview.frame);
+    if (subViewMaxX > maxX) {
+      maxX = subViewMaxX;
+    }
+    CGFloat subViewMaxY = CGRectGetMaxY(subview.frame);
+    if (subViewMaxY > maxY) {
+      maxY = subViewMaxY;
+    }
+  }
+  self.scrollView.contentSize = CGSizeMake(maxX, maxY);
+}
+
+
+- (void)addScrollView {
+  self.scrollView = [[UIScrollView alloc] init];
+  [self.view addSubview:self.scrollView];
+}
+
 
 - (void)addResignFirstResponderButton {
   self.resignFirstResponderButton = [[MDCButton alloc] init];
@@ -115,14 +150,11 @@
         forControlEvents:UIControlEventTouchUpInside];
   [self.resignFirstResponderButton applyContainedThemeWithScheme:self.containerScheme];
   [self.resignFirstResponderButton sizeToFit];
-  [self.view addSubview:self.resignFirstResponderButton];
+  [self.scrollView addSubview:self.resignFirstResponderButton];
 }
 
 - (void)addFilledTextField {
-  CGFloat textFieldWidth = CGRectGetWidth(self.view.frame) - 100;
-  CGRect frame = CGRectMake(0, 0, textFieldWidth, 100);
-  self.filledTextField = [[SimpleTextField alloc] initWithFrame:frame];
-  [self.view addSubview:self.filledTextField];
+  self.filledTextField = [[SimpleTextField alloc] init];
   self.filledTextField.textFieldStyle = TextFieldStyleFilled;
   self.filledTextField.placeholder = @"This is a placeholder";
   self.filledTextField.canPlaceholderFloat = YES;
@@ -149,28 +181,22 @@
 
   self.filledTextField.underlineLabelDrawPriority = UnderlineLabelDrawPriorityLeading;
   self.filledTextField.underlineLabelDrawPriority = UnderlineLabelDrawPriorityTrailing;
-  // leading and trailing underline views
-//  self.filledTextField.leadingUnderlineLabel.text = @"Vivamus finibus egestas dolor, id facilisis lacus hendrerit ac. Nunc molestie dolor felis, et rutrum tellus tristique sit amet. Donec sollicitudin, nisi ac suscipit mattis, orci urna gravida sem, non molestie mi est sed leo.";
-//  self.filledTextField.trailingUnderlineLabel.text = @"Hello world";
+  self.filledTextField.leadingUnderlineLabel.text = @"Vivamus finibus egestas dolor, id facilisis lacus hendrerit ac. Nunc molestie dolor felis, et rutrum tellus tristique sit amet. Donec sollicitudin, nisi ac suscipit mattis, orci urna gravida sem, non molestie mi est sed leo.";
+  self.filledTextField.trailingUnderlineLabel.text = @"Hello world";
   [self.filledTextField sizeToFit];
-  self.filledTextField.center = CGPointMake(CGRectGetMidX(self.view.frame), 125);
+  [self.scrollView addSubview:self.filledTextField];
 }
 
 
 - (void)addOutlinedTextField {
-  CGFloat textFieldWidth = CGRectGetWidth(self.view.frame) - 100;
-  CGRect frame = CGRectMake(0, 0, textFieldWidth, 100);
-  self.outlinedTextField = [[SimpleTextField alloc] initWithFrame:frame];
-  [self.view addSubview:self.outlinedTextField];
+  self.outlinedTextField = [[SimpleTextField alloc] init];
   self.outlinedTextField.textFieldStyle = TextFieldStyleOutline;
-  //  self.outlinedTextField.textFieldStyle = TextFieldStyleFilled;
   self.outlinedTextField.placeholder = @"placeholder";
   self.outlinedTextField.canPlaceholderFloat = YES;
-  //  self.outlinedTextField.leadingViewMode = UITextFieldViewModeWhileEditing;
-  //  self.outlinedTextField.trailingViewMode = UITextFieldViewModeAlways;
   self.outlinedTextField.leadingViewMode = UITextFieldViewModeNever;
   self.outlinedTextField.trailingViewMode = UITextFieldViewModeNever;
   self.outlinedTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+  self.outlinedTextField.underlineLabelDrawPriority = UnderlineLabelDrawPriorityCustom;
 
   CGRect trailingViewFrame = CGRectMake(0, 0, 20, 20);
   UILabel *trailingView = [[UILabel alloc] initWithFrame:trailingViewFrame];
@@ -184,34 +210,14 @@
   leadingView.text = @"L";
   self.outlinedTextField.leadingView = leadingView;
 
-  self.outlinedTextField.underlineLabelDrawPriority = UnderlineLabelDrawPriorityCustom;
-//  self.outlinedTextField.customUnderlineLabelDrawPriority = 0.75;
-  //  self.outlinedTextField.underlineLabelDrawPriority = UnderlineLabelDrawPriorityLeading;
-  //  self.outlinedTextField.underlineLabelDrawPriority = UnderlineLabelDrawPriorityTrailing;
-
-  // leading and trailing underline views
-//  self.outlinedTextField.leadingUnderlineLabel.text = @"Vivamus finibus egestas dolor, id facilisis lacus hendrerit ac. Nunc molestie dolor felis, et rutrum tellus tristique sit amet. Donec sollicitudin, nisi ac suscipit mattis, orci urna gravida sem, non molestie mi est sed leo.";
-//  self.outlinedTextField.trailingUnderlineLabel.text = @"Hello world";
-  self.outlinedTextField.center = CGPointMake(CGRectGetMidX(self.view.frame), 225);
-//  CGRect frame2 = self.outlinedTextField.frame;
-  [self.outlinedTextField sizeToFit];
-//  CGRect f = self.outlinedTextField.frame;
-//  f.size.height += 70;
-//  self.outlinedTextField.frame = f;
-  //  self.outlinedTextField.layer.borderColor = UIColor.blueColor.CGColor;
-//  self.outlinedTextField.layer.borderWidth = 2;
-
+  [self.scrollView addSubview:self.outlinedTextField];
 }
 
 - (void)addUiTextField {
-  CGFloat textFieldWidth = CGRectGetWidth(self.view.frame) - 100;
-  CGRect frame = CGRectMake(0, 0, textFieldWidth, 50);
-  self.uiTextField = [[UITextField alloc] initWithFrame:frame];
-  //  self.uiTextField.backgroundColor = [UIColor blueColor];
+  self.uiTextField = [[UITextField alloc] init];
   self.uiTextField.borderStyle = UITextBorderStyleRoundedRect;
   self.uiTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
   self.uiTextField.leftViewMode = UITextFieldViewModeNever;
-  [self.view addSubview:self.uiTextField];
 
   CGRect accessoryViewFrame = CGRectMake(0, 0, 20, 20);
   UILabel *accessoryView = [[UILabel alloc] initWithFrame:accessoryViewFrame];
@@ -219,15 +225,7 @@
   accessoryView.text = @"L";
   self.uiTextField.leftView = accessoryView;
 
-  self.uiTextField.center = CGPointMake(CGRectGetMidX(self.view.frame), 275);
-  
-//  self.uiTextField.selected = YES;
-  self.uiTextField.enabled = NO;
-
-  
-
-
-
+  [self.scrollView addSubview:self.uiTextField];
 }
 
 #pragma mark Theming

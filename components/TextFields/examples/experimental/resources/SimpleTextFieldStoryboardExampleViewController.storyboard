@@ -45,8 +45,8 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="filledTextField" destination="UE3-bb-fYA" id="R1V-WG-yPu"/>
-                        <outlet property="outletTextFields" destination="0wE-6b-dmp" id="tAR-Py-4Ig"/>
+                        <outlet property="filledTextField" destination="pr7-c9-ngn" id="GbE-SG-Umb"/>
+                        <outlet property="outlinedTextField" destination="0wE-6b-dmp" id="RPR-U3-VZh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1ue-b6-bbM" userLabel="First Responder" sceneMemberID="firstResponder"/>

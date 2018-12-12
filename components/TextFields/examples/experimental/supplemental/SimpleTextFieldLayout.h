@@ -32,25 +32,25 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) CGFloat calculatedHeight;
 @property (nonatomic, assign) CGFloat topRowBottomRowDividerY;
 
-- (instancetype)initWithTextFieldBounds:(CGRect)textFieldBounds
-                         textFieldStyle:(TextFieldStyle)textFieldStyle
-                                   text:(NSString *)text
-                            placeholder:(NSString *)placeholder
-                                   font:(UIFont *)font
-                floatingPlaceholderFont:(UIFont *)floatingPlaceholderFont
-                    canPlaceholderFloat:(BOOL)canPlaceholderFloat
-                               leftView:(UIView *)leftView
-                           leftViewMode:(UITextFieldViewMode)leftViewMode
-                              rightView:(UIView *)rightView
-                          rightViewMode:(UITextFieldViewMode)rightViewMode
-                            clearButton:(UIButton *)clearButton
-                        clearButtonMode:(UITextFieldViewMode)clearButtonMode
-                     leftUnderlineLabel:(UILabel *)leftUnderlineLabel
-                    rightUnderlineLabel:(UILabel *)rightUnderlineLabel
-             underlineLabelDrawPriority:(UnderlineLabelDrawPriority)underlineLabelDrawPriority
-       customUnderlineLabelDrawPriority:(CGFloat)customUnderlineLabelDrawPriority
-                                  isRTL:(BOOL)isRTL
-                              isEditing:(BOOL)isEditing;
+- (instancetype)initWithTextFieldSize:(CGSize)textFieldSize
+                       textFieldStyle:(TextFieldStyle)textFieldStyle
+                                 text:(NSString *)text
+                          placeholder:(NSString *)placeholder
+                                 font:(UIFont *)font
+              floatingPlaceholderFont:(UIFont *)floatingPlaceholderFont
+                  canPlaceholderFloat:(BOOL)canPlaceholderFloat
+                             leftView:(UIView *)leftView
+                         leftViewMode:(UITextFieldViewMode)leftViewMode
+                            rightView:(UIView *)rightView
+                        rightViewMode:(UITextFieldViewMode)rightViewMode
+                          clearButton:(UIButton *)clearButton
+                      clearButtonMode:(UITextFieldViewMode)clearButtonMode
+                   leftUnderlineLabel:(UILabel *)leftUnderlineLabel
+                  rightUnderlineLabel:(UILabel *)rightUnderlineLabel
+           underlineLabelDrawPriority:(UnderlineLabelDrawPriority)underlineLabelDrawPriority
+     customUnderlineLabelDrawPriority:(CGFloat)customUnderlineLabelDrawPriority
+                                isRTL:(BOOL)isRTL
+                            isEditing:(BOOL)isEditing;
 
 
 @end
