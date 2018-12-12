@@ -14,6 +14,8 @@
 #import "SimpleTextFieldLayout.h"
 #import "SimpleTextFieldLayoutUtils.h"
 
+#import <Foundation/Foundation.h>
+
 @interface SimpleTextField ()
 
 @property (strong, nonatomic) UIFont *floatingPlaceholderFont;
@@ -22,6 +24,7 @@
 @property (strong, nonatomic) UIButton *clearButton;
 @property (strong, nonatomic) UIImageView *clearButtonImageView;
 @property (strong, nonatomic) UILabel *placeholderLabel;
+
 @property (strong, nonatomic) UILabel *leftUnderlineLabel;
 @property (strong, nonatomic) UILabel *rightUnderlineLabel;
 
@@ -32,6 +35,11 @@
 @property (strong, nonatomic) CAShapeLayer *filledSublayerUnderline;
 
 @property (nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
+
+@property (nonatomic, assign) TextFieldState textFieldState;
+@property (nonatomic, assign) PlaceholderState placeholderState;
+
+@property (nonatomic, strong) NSMutableDictionary<NSNumber *, MDCSemanticColorScheme *> *stateColorSchemeDictionary;
 
 @end
 
@@ -66,8 +74,8 @@
 
 - (void)commonSimpleTextFieldInit {
   [self addObservers];
-  [self setUpFonts];
-  [self setUpLayoutDirection];
+  [self initializeProperties];
+  [self setUpColorSchemes];
   [self setUpPlaceholderLabel];
   [self setUpUnderlineLabels];
   [self setUpClearButton];
@@ -80,15 +88,66 @@
 
 #pragma mark View Setup
 
+- (void)initializeProperties {
+  [self setUpLayoutDirection];
+  [self setUpFonts];
+  self.textFieldState = [self determineCurrentTextFieldState];
+  self.stateColorSchemeDictionary = [NSMutableDictionary init];
+}
+
+
 - (void)setUpLayoutDirection {
   self.layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
 }
 
 - (void)setUpFonts {
-  self.placeholderFont = self.effectiveFont;
-  self.floatingPlaceholderFont = [self floatingPlaceholderFontWithFont:self.effectiveFont
+  self.placeholderFont = [self determineEffectiveFont];
+  self.floatingPlaceholderFont = [self floatingPlaceholderFontWithFont:[self determineEffectiveFont]
                                                         textFieldStyle:self.textFieldStyle];
 }
+
+- (void)setUpColorSchemes {
+  MDCSemanticColorScheme *normalScheme = [self.class defaultColorSchemeForState:TextFieldStateNormal];
+  MDCSemanticColorScheme *focusedScheme = [self.class defaultColorSchemeForState:TextFieldStateFocused];
+  MDCSemanticColorScheme *activatedScheme = [self.class defaultColorSchemeForState:TextFieldStateActivated];
+  MDCSemanticColorScheme *erroredScheme = [self.class defaultColorSchemeForState:TextFieldStateErrored];
+  MDCSemanticColorScheme *disabledScheme = [self.class defaultColorSchemeForState:TextFieldStateDisabled];
+  [self setColorScheme:normalScheme forState:TextFieldStateNormal];
+  [self setColorScheme:focusedScheme forState:TextFieldStateFocused];
+  [self setColorScheme:activatedScheme forState:TextFieldStateActivated];
+  [self setColorScheme:erroredScheme forState:TextFieldStateErrored];
+  [self setColorScheme:disabledScheme forState:TextFieldStateDisabled];
+}
+
+- (void)setUpUnderlineLabels {
+  self.leftUnderlineLabel = [[UILabel alloc] init];
+  [self addSubview:self.leadingUnderlineLabel];
+  self.rightUnderlineLabel = [[UILabel alloc] init];
+  [self addSubview:self.trailingUnderlineLabel];
+}
+
+- (void)setUpPlaceholderLabel {
+  self.placeholderLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, -10, 200, 60)];
+  [self addSubview:self.placeholderLabel];
+}
+
+- (void)setUpClearButton {
+  CGRect clearButtonFrame = CGRectMake(0, 0, kClearButtonTouchTargetSideLength, kClearButtonTouchTargetSideLength);
+  self.clearButton = [[UIButton alloc] initWithFrame:clearButtonFrame];
+  [self.clearButton addTarget:self
+                       action:@selector(clearButtonPressed:)
+             forControlEvents:UIControlEventTouchUpInside];
+  
+  CGFloat clearButtonImageViewSideLength = [self clearButtonImageViewSideLength];
+  CGRect clearButtonImageViewRect = CGRectMake(0, 0, clearButtonImageViewSideLength, clearButtonImageViewSideLength);
+  self.clearButtonImageView = [[UIImageView alloc] initWithFrame:clearButtonImageViewRect];
+  self.clearButtonImageView.image = [self clearButtonImage];
+  self.clearButtonImageView.tintColor = UIColor.lightGrayColor;
+  [self.clearButton addSubview:self.clearButtonImageView];
+  [self addSubview:self.clearButton];
+  self.clearButtonImageView.center = self.clearButton.center;
+}
+
 
 - (void)setUpStyleLayers {
   [self setUpOutlineSublayer];
@@ -114,34 +173,6 @@
   [self.filledSublayer addSublayer:self.filledSublayerUnderline];
 }
 
-- (void)setUpUnderlineLabels {
-  self.leftUnderlineLabel = [[UILabel alloc] init];
-  [self addSubview:self.leadingUnderlineLabel];
-  self.rightUnderlineLabel = [[UILabel alloc] init];
-  [self addSubview:self.trailingUnderlineLabel];
-}
-
-- (void)setUpPlaceholderLabel {
-  self.placeholderLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, -10, 200, 60)];
-  [self addSubview:self.placeholderLabel];
-}
-
-- (void)setUpClearButton {
-  CGRect clearButtonFrame = CGRectMake(0, 0, kClearButtonTouchTargetSideLength, kClearButtonTouchTargetSideLength);
-  self.clearButton = [[UIButton alloc] initWithFrame:clearButtonFrame];
-  [self.clearButton addTarget:self
-                       action:@selector(clearButtonPressed:)
-             forControlEvents:UIControlEventTouchUpInside];
-
-  CGFloat clearButtonImageViewSideLength = [self clearButtonImageViewSideLength];
-  CGRect clearButtonImageViewRect = CGRectMake(0, 0, clearButtonImageViewSideLength, clearButtonImageViewSideLength);
-  self.clearButtonImageView = [[UIImageView alloc] initWithFrame:clearButtonImageViewRect];
-  self.clearButtonImageView.image = [self clearButtonImage];
-  self.clearButtonImageView.tintColor = UIColor.lightGrayColor;
-  [self.clearButton addSubview:self.clearButtonImageView];
-  [self addSubview:self.clearButton];
-  self.clearButtonImageView.center = self.clearButton.center;
-}
 
 - (void)addObservers {
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidEndEditingWithNotification:) name:UITextFieldTextDidEndEditingNotification object:nil];
@@ -151,7 +182,7 @@
 #pragma mark UIView Overrides
 
 - (SimpleTextFieldLayout *)calculateLayoutWithTextFieldBounds:(CGRect)textFieldBounds {
-  UIFont *effectiveFont = self.effectiveFont;
+  UIFont *effectiveFont = [self determineEffectiveFont];
   UIFont *floatingFont = [self floatingPlaceholderFontWithFont:effectiveFont
                                                 textFieldStyle:self.textFieldStyle];
   CGFloat normalizedCustomUnderlineLabelDrawPriority =
@@ -178,20 +209,22 @@
 }
 
 -(void)layoutSubviews {
+  // Layout methods like -textRectForBounds: that are called in the super class implementation of
+  // layoutSubviews depend on values in the layout object, so we need to create the layout object
+  // before calling super.
   self.layout = [self calculateLayoutWithTextFieldBounds:self.bounds];
-  // important layout methods like -textRectForBounds: are called in the super class implementation
-  // so we want to have values for them figured out ahead of time.
   [super layoutSubviews];
 
-  PlaceholderState state = [self determineCurrentPlaceholderState];
-  [self layOutPlaceholderWithState:state];
+  self.placeholderState = [self determineCurrentPlaceholderState];
+  self.textFieldState = [self determineCurrentTextFieldState];
 
-  BOOL isFloatingPlaceholder = state == PlaceholderStateFloating;
+  [self layOutPlaceholderWithState:self.placeholderState];
   [self applyTextFieldStyle:self.textFieldStyle
+             textFieldState:self.textFieldState
             textFieldBounds:self.bounds
    floatingPlaceholderFrame:self.layout.placeholderFrameFloating
     topRowBottomRowDividerY:self.layout.topRowBottomRowDividerY
-      isFloatingPlaceholder:isFloatingPlaceholder];
+      isFloatingPlaceholder:self.placeholderState == PlaceholderStateFloating];
 
   self.clearButton.frame = self.layout.clearButtonFrame;
   self.clearButton.hidden = self.layout.clearButtonHidden;
@@ -200,10 +233,10 @@
   self.leftView.hidden = self.layout.leftViewHidden;
   self.rightView.hidden = self.layout.rightViewHidden;
 
-
+  MDCSemanticColorScheme *colorScheme = [self colorSchemeForState:self.textFieldState];
+  [self applyColorScheme:colorScheme];
   // TODO: Hide any views that the layout says to hide
   // TODO: Hide views that won't fit by validating frames (checking if they fit inside the bounds and don't overlap)
-  [self determineCurrentTextFieldState];
 }
 
 // UIView's sizeToFit calls this method.
@@ -475,7 +508,7 @@
 
 #pragma mark Fonts
 
-- (UIFont *)effectiveFont {
+- (UIFont *)determineEffectiveFont {
   return self.font ?: [self uiTextFieldDefaultFont];
 }
 
@@ -753,16 +786,14 @@
 
 #pragma mark Style Management
 
-- (void)applyCurrentStyle {
-  
-}
-
 - (void)applyTextFieldStyle:(TextFieldStyle)textFieldStyle
+             textFieldState:(TextFieldState)textFieldState
             textFieldBounds:(CGRect)textFieldBounds
    floatingPlaceholderFrame:(CGRect)floatingPlaceholderFrame
     topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
       isFloatingPlaceholder:(BOOL)isFloatingPlaceholder {
   [self applyOutlinedStyle:textFieldStyle == TextFieldStyleOutline
+            textFieldState:textFieldState
            textFieldBounds:textFieldBounds
   floatingPlaceholderFrame:floatingPlaceholderFrame
    topRowBottomRowDividerY:topRowBottomRowDividerY
@@ -773,6 +804,7 @@
 }
 
 - (void)applyOutlinedStyle:(BOOL)isOutlined
+            textFieldState:(TextFieldState)textFieldState
            textFieldBounds:(CGRect)textFieldBounds
   floatingPlaceholderFrame:(CGRect)floatingPlaceholderFrame
    topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
@@ -1026,77 +1058,115 @@
 
 
 - (TextFieldState)determineCurrentTextFieldState {
-  NSString *stateString = @"NA";
-  switch (self.state) {
-    case UIControlStateNormal:
-      stateString = @"Normal";
-      break;
-    case UIControlStateHighlighted:
-      stateString = @"Highlighted";
-      break;
-    case UIControlStateDisabled:
-      stateString = @"Disabled";
-      break;
-    case UIControlStateSelected:
-      stateString = @"Selected";
-      break;
-    case UIControlStateFocused:
-      stateString = @"Focused";
-      break;
-    case UIControlStateApplication:
-      stateString = @"Application";
-      break;
-    case UIControlStateReserved:
-      stateString = @"Reserved";
-      break;
-  }
-
-  NSLog(@"----------");
-  NSLog(@"isHighlighted: %@",@(self.isHighlighted));
-  NSLog(@"isSelected: %@",@(self.isSelected));
-  NSLog(@"isFirstResponder: %@",@(self.isFirstResponder));
-  NSLog(@"state: %@",stateString);
-  NSLog(@"----------");
-
   if (self.isEnabled) {
     if (self.isErrored) {
-      // Error
+      return TextFieldStateErrored;
     } else {
-      if (self.isSelected || self.isActivated) {
-        // activated
-        
+      if (self.isEditing) {
+        return TextFieldStateFocused;
       } else {
-        // normal
-        
+        if (self.isSelected || self.isActivated) {
+          return TextFieldStateActivated;
+        } else {
+          return TextFieldStateNormal;
+        }
       }
     }
   } else {
-    // disabled
+    return TextFieldStateDisabled;
   }
-  
-  if (self.isErrored) {
-    
-  } else {
-    
-  }
-  
 }
 
 - (void)setColorScheme:(MDCSemanticColorScheme *)colorScheme
               forState:(TextFieldState)textFieldState {
-  
+  self.stateColorSchemeDictionary[@(textFieldState)] = colorScheme;
+  if (textFieldState == self.textFieldState) {
+    [self applyColorScheme:colorScheme];
+  }
 }
 
-- (MDCSemanticColorScheme *)colorScheme:(MDCSemanticColorScheme *)colorScheme
-                               forState:(TextFieldState)textFieldState {
-  
+- (MDCSemanticColorScheme *)colorSchemeForState:(TextFieldState)textFieldState {
+  return self.stateColorSchemeDictionary[@(textFieldState)];
 }
 
+/*
+_primaryColor = ColorFromRGB(0x6200EE); // purple
+_primaryColorVariant = ColorFromRGB(0x3700B3); //dark purple
+_secondaryColor = ColorFromRGB(0x03DAC6); // seafoam green
+_errorColor = ColorFromRGB(0xB00020); // royal red
+_surfaceColor = ColorFromRGB(0xFFFFFF); // white
+_backgroundColor = ColorFromRGB(0xFFFFFF); // white
+_onPrimaryColor = ColorFromRGB(0xFFFFFF); // white
+_onSecondaryColor = ColorFromRGB(0x000000); // black
+_onSurfaceColor = ColorFromRGB(0x000000);  // black
+_onBackgroundColor = ColorFromRGB(0x000000);  // black
+*/
 
-
-/**
- Focused -
+/*
+ _primaryColor = ColorFromRGB(0x6200EE); // purple
+ _errorColor = ColorFromRGB(0xB00020); // royal red
+ _surfaceColor = ColorFromRGB(0xFFFFFF); // white
+ _backgroundColor = ColorFromRGB(0xFFFFFF); // white
+ _onPrimaryColor = ColorFromRGB(0xFFFFFF); // white
+ _onSecondaryColor = ColorFromRGB(0x000000); // black
+ _onSurfaceColor = ColorFromRGB(0x000000);  // black
+ _onBackgroundColor = ColorFromRGB(0x000000);  // black
  */
 
+
+- (void)applyColorScheme:(MDCSemanticColorScheme *)colorScheme {
+  UIColor *placeholderLabelColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.30];
+  UIColor *outlineColor = colorScheme.onSurfaceColor;
+  switch (self.textFieldState) {
+    case TextFieldStateNormal:
+      if (self.placeholderState == PlaceholderStateFloating) {
+        placeholderLabelColor = colorScheme.primaryColor;
+        outlineColor = colorScheme.primaryColor;
+      } else {
+        placeholderLabelColor = colorScheme.onSurfaceColor;
+      }
+      break;
+    case TextFieldStateActivated:
+      placeholderLabelColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.30];
+      break;
+    case TextFieldStateDisabled:
+      placeholderLabelColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.10];
+      break;
+    case TextFieldStateErrored:
+      placeholderLabelColor = colorScheme.errorColor;
+      break;
+    case TextFieldStateFocused:
+      placeholderLabelColor = colorScheme.onSurfaceColor;
+      break;
+    default:
+      break;
+  }
+  if (self.textFieldState) {
+    
+  }
+  
+  
+  self.outlinedSublayer.strokeColor = outlineColor.CGColor;
+  self.placeholderLabel.textColor = placeholderLabelColor;
+
+}
+
++ (MDCSemanticColorScheme *)defaultColorSchemeForState:(TextFieldState)textFieldState {
+  MDCSemanticColorScheme *scheme = [[MDCSemanticColorScheme alloc] init];
+  switch (textFieldState) {
+    case TextFieldStateNormal:
+      return scheme;
+    case TextFieldStateFocused:
+      return scheme;
+    case TextFieldStateActivated:
+      return scheme;
+    case TextFieldStateErrored:
+      return scheme;
+    case TextFieldStateDisabled:
+      return scheme;
+    default:
+      return nil;
+  }
+}
 
 @end

@@ -4,18 +4,28 @@
 
 #import "MaterialColorScheme.h"
 
+
+
+/**
+ A UITextField that attempts to do the following:
+ 
+ - Earnestly interpret and actualize the Material guidelines for text fields, which can be found here:
+ https://material.io/design/components/text-fields.html#outlined-text-field
+
+ - Feel intuitive for someone used to the conventions of iOS development and UIKit controls.
+ 
+ - Enable easy set up and reliable and predictable behavior.
+ 
+ */
 @interface SimpleTextField : UITextField
 
+/**
+  property acts as a complement of @c UIControl's state system
+ as well as an interpretation of the state soutlined in the Material guidelines for Text Fields,
+ which can be found here:
+ https://material.io/design/components/text-fields.html#outlined-text-field
+ */
 @property (nonatomic, assign) TextFieldStyle textFieldStyle;
-@property (nonatomic, assign) BOOL canPlaceholderFloat;
-@property (strong, nonatomic, readonly, nonnull) UILabel *leadingUnderlineLabel;
-@property (strong, nonatomic, readonly, nonnull) UILabel *trailingUnderlineLabel;
-@property (nonatomic, assign) UnderlineLabelDrawPriority underlineLabelDrawPriority;
-@property (strong, nonatomic, nullable) UIView *leadingView;
-@property (strong, nonatomic, nullable) UIView *trailingView;
-@property (nonatomic, assign) UITextFieldViewMode leadingViewMode;
-@property (nonatomic, assign) UITextFieldViewMode trailingViewMode;
-
 
 /**
  This class-specific @c TextFieldState property acts as a complement of @c UIControl's state system
@@ -24,6 +34,19 @@
  https://material.io/design/components/text-fields.html#outlined-text-field
  */
 @property (nonatomic, assign, readonly) TextFieldState textFieldState;
+
+@property (nonatomic, assign) BOOL canPlaceholderFloat;
+
+@property (strong, nonatomic, readonly, nonnull) UILabel *leadingUnderlineLabel;
+@property (strong, nonatomic, readonly, nonnull) UILabel *trailingUnderlineLabel;
+@property (nonatomic, assign) UnderlineLabelDrawPriority underlineLabelDrawPriority;
+
+@property (strong, nonatomic, nullable) UIView *leadingView;
+@property (strong, nonatomic, nullable) UIView *trailingView;
+@property (nonatomic, assign) UITextFieldViewMode leadingViewMode;
+@property (nonatomic, assign) UITextFieldViewMode trailingViewMode;
+
+
 
 /**
  This property toggles a state (similar to @c isHighlighted, @c isEnabled, @c isSelected, etc.) that
@@ -54,7 +77,10 @@
 - (void)setColorScheme:(MDCSemanticColorScheme *)colorScheme
               forState:(TextFieldState)textFieldState;
 
-- (MDCSemanticColorScheme *)colorScheme:(MDCSemanticColorScheme *)colorScheme
-                               foletextrState:(TextFieldState)textFieldState;
+- (MDCSemanticColorScheme *)colorSchemeForState:(TextFieldState)textFieldState;
+
+- (void)applyColorScheme:(MDCSemanticColorScheme *)colorScheme;
+
++ (MDCSemanticColorScheme *)defaultColorSchemeForState:(TextFieldState)textFieldState;
 
 @end

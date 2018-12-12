@@ -40,7 +40,8 @@ typedef NS_ENUM(NSUInteger, TextFieldMode) {
 };
 
 /**
- Dictates what type of text field it will be from a cosmetic standpoint.
+ Dictates what type of text field it will be from a cosmetic standpoint. The values are derived from
+ the styles outlined in the Material Guidelines for Text Fields.
  */
 typedef NS_ENUM(NSUInteger, TextFieldStyle) {
   TextFieldStyleFilled,
@@ -77,13 +78,13 @@ typedef NS_ENUM(NSUInteger, PlaceholderState) {
 
 /**
  A representation of Text Field state that is compatible with UIControlState as well as an
- interpretation of the states outlined in the Material guidelines for Text Fields, which can be
- found here: https://material.io/design/components/text-fields.html#outlined-text-field
+ interpretation of the states outlined in the Material guidelines for Text Fields.
  */
 typedef NS_ENUM(NSUInteger, TextFieldState) {
   TextFieldStateNormal,
+  TextFieldStateFocused,
   TextFieldStateActivated,
-  TextFieldStateError,
+  TextFieldStateErrored,
   TextFieldStateDisabled,
 };
 
