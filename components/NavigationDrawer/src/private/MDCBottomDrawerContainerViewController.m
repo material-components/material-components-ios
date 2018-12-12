@@ -396,24 +396,6 @@ static UIColor *DrawerShadowColor(void) {
   }];
 }
 
-- (void)animateToContentOffset:(CGPoint)contentOffset
-           withTransitionRatio:(CGFloat)transitionRatio
-                      duration:(NSTimeInterval)duration
-                    completion:(void (^)(BOOL))completion {
-  [UIView animateWithDuration:duration
-                   animations:^{
-                     [self.delegate bottomDrawerContainerViewControllerTopTransitionRatio:self
-                                                                          transitionRatio:transitionRatio];
-                     [self.scrollView setContentOffset:contentOffset];
-                   }
-                   completion:^(BOOL finished) {
-                     [self updateViewWithContentOffset:contentOffset];
-                     if (completion) {
-                       completion(YES);
-                     }
-                   }];
-}
-
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
   CGFloat topAreaInsetForHeader = (self.headerViewController ? MDCDeviceTopSafeAreaInset() : 0);
   CGFloat drawerOffset = self.contentHeaderTopInset - topAreaInsetForHeader;
