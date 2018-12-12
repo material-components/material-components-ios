@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCSnapshotTestCase.h"
+#import "MDCTextFieldSnapshotTestCase.h"
 #import "MDCTextFieldSnapshotTestsStrings.h"
 #import "MaterialTextFields.h"
 
-@interface MDCTextFieldFullWidthControllerSnapshotTests : MDCSnapshotTestCase
-@property(nonatomic, strong) MDCTextField *textField;
+@interface MDCTextFieldFullWidthControllerSnapshotTests : MDCTextFieldSnapshotTestCase
 @property(nonatomic, strong) MDCTextInputControllerFullWidth *textFieldController;
 @end
 
@@ -26,32 +25,14 @@
 - (void)setUp {
   [super setUp];
 
-  self.textField = [[MDCTextField alloc] init];
   self.textFieldController =
       [[MDCTextInputControllerFullWidth alloc] initWithTextInput:self.textField];
 }
 
 - (void)tearDown {
   self.textFieldController = nil;
-  self.textField = nil;
 
   [super tearDown];
-}
-
-#pragma mark - Helpers
-
-- (void)triggerTextFieldLayout {
-  CGSize aSize = [self.textField sizeThatFits:CGSizeMake(300, INFINITY)];
-  self.textField.bounds = CGRectMake(0, 0, aSize.width, aSize.height);
-  [self.textField layoutIfNeeded];
-}
-
-- (void)generateSnapshotAndVerify {
-  [self triggerTextFieldLayout];
-  UIView *snapshotView = [self addBackgroundViewToView:self.textField];
-
-  // Perform the actual verification.
-  [self snapshotVerifyView:snapshotView];
 }
 
 #pragma mark - Tests

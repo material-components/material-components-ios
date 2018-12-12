@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCSnapshotTestCase.h"
+#import "MDCTextFieldSnapshotTestCase.h"
 #import "MDCTextFieldSnapshotTestsStrings.h"
 #import "MaterialTextFields+ColorThemer.h"
 #import "MaterialTextFields+TypographyThemer.h"
 #import "MaterialTextFields.h"
 #import "SnapshotFakeMDCTextField.h"
 
-@interface MDCTextFieldOutlinedControllerBaselineSnapshotTests : MDCSnapshotTestCase
-@property(nonatomic, strong) SnapshotFakeMDCTextField *textField;
+@interface MDCTextFieldOutlinedControllerBaselineSnapshotTests : MDCTextFieldSnapshotTestCase
 @property(nonatomic, strong) MDCTextInputControllerOutlined *textFieldController;
 @end
 
@@ -29,7 +28,6 @@
 - (void)setUp {
   [super setUp];
 
-  self.textField = [[SnapshotFakeMDCTextField alloc] init];
   self.textField.clearButtonMode = UITextFieldViewModeAlways;
 
   self.textFieldController =
@@ -48,26 +46,8 @@
 
 - (void)tearDown {
   self.textFieldController = nil;
-  self.textField = nil;
 
   [super tearDown];
-}
-
-#pragma mark - Helpers
-
-- (void)triggerTextFieldLayout {
-  CGSize aSize = [self.textField sizeThatFits:CGSizeMake(300, INFINITY)];
-  self.textField.bounds = CGRectMake(0, 0, aSize.width, aSize.height);
-  [self.textField setNeedsUpdateConstraints];
-  [self.textField layoutIfNeeded];
-}
-
-- (void)generateSnapshotAndVerify {
-  [self triggerTextFieldLayout];
-  UIView *snapshotView = [self addBackgroundViewToView:self.textField];
-
-  // Perform the actual verification.
-  [self snapshotVerifyView:snapshotView];
 }
 
 #pragma mark - Tests
@@ -136,13 +116,10 @@
   [self.textField MDCtest_setIsEditing:YES];
 
   // Then
-  [self triggerTextFieldLayout];
-  UIView *snapshotView = [self addBackgroundViewToView:self.textField];
 
-  // Perform the actual verification.
   // TODO(https://github.com/material-components/material-components-ios/issues/5970 ): Fix this
   // flaky layout of long placeholder labels when floating.
-  [self snapshotVerifyView:snapshotView tolerance:0.05];
+  [self generateSnapshotAndVerifyWithTolerance:(CGFloat)0.05];
 }
 
 - (void)testOutlinedTextFieldWithShortHelperText {
