@@ -77,14 +77,23 @@ class DrawerContentTableViewController: UITableViewController {
   var colorScheme: MDCSemanticColorScheme!
   weak var drawerVC: MDCBottomDrawerViewController!
 
-  override var preferredContentSize: CGSize {
-    get {
-      return CGSize(width: view.bounds.width, height: tableView.contentSize.height)
-    }
-    set {
-      super.preferredContentSize = newValue
-    }
-  }
+//  override var preferredContentSize: CGSize {
+//    get {
+//      if preferredContentSize
+//      return CGSize(width: view.bounds.width, height: tableView.contentSize.height)
+//    }
+//    set {
+//      super.preferredContentSize = newValue
+//    }
+//  }
+
+//  override var preferredContentSize: CGSize {
+//    get {
+//      self.tableView.layoutIfNeeded()
+//      return self.tableView.contentSize
+//    }
+//    set {}
+//  }
 
   init() {
     super.init(nibName: nil, bundle: nil)
@@ -99,6 +108,12 @@ class DrawerContentTableViewController: UITableViewController {
     self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
   }
 
+  override func viewWillAppear(_ animated: Bool) {
+    self.tableView.layoutIfNeeded()
+    self.preferredContentSize = CGSize(width: view.bounds.width,
+                                       height: tableView.contentSize.height)
+  }
+
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
     cell.textLabel?.text = "cell #\(indexPath.item)"
@@ -108,7 +123,7 @@ class DrawerContentTableViewController: UITableViewController {
   }
 
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 100
+    return 4
   }
 
   override func numberOfSections(in tableView: UITableView) -> Int {
@@ -117,7 +132,8 @@ class DrawerContentTableViewController: UITableViewController {
 
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
-    drawerVC.setContentOffsetY(0, animated: false)
+    self.preferredContentSize = CGSize(width: view.bounds.width, height: 600)
+//    drawerVC.setContentOffsetY(0, animated: false)
   }
 
 }
@@ -130,6 +146,7 @@ extension BottomDrawerInfiniteScrollingExample {
       "description": "Navigation Drawer",
       "primaryDemo": true,
       "presentable": true,
+      "debug": true,
     ]
   }
 }
