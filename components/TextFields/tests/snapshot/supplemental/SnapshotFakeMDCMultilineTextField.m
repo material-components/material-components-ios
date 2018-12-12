@@ -38,14 +38,13 @@
   // change the value of `isEditing` in tests.
   if (_isEditing) {
     [NSNotificationCenter.defaultCenter
-     postNotificationName:UITextFieldTextDidBeginEditingNotification
-     object:self];
+        postNotificationName:UITextFieldTextDidBeginEditingNotification
+                      object:self];
   } else {
     [NSNotificationCenter.defaultCenter
-     postNotificationName:UITextFieldTextDidEndEditingNotification
-     object:self];
+        postNotificationName:UITextFieldTextDidEndEditingNotification
+                      object:self];
   }
 }
-
 
 @end
