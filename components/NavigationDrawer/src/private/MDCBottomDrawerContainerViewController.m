@@ -384,17 +384,19 @@ static UIColor *DrawerShadowColor(void) {
 }
 
 - (void)presentAtFullscreenWithDuration:(CGFloat)duration
-                             completion:(void (^ __nullable)(BOOL finished))completion {
+                             completion:(void (^__nullable)(BOOL finished))completion {
   _contentHeaderTopInset = NSNotFound;
   _contentHeightSurplus = NSNotFound;
   _addedContentHeight = NSNotFound;
   _shouldPresentAtFullscreen = YES;
   [self cacheLayoutCalculations];
-  [UIView animateWithDuration:duration animations:^{
-    [self setupLayout];
-  } completion:^(BOOL completed) {
-    completion(completed);
-  }];
+  [UIView animateWithDuration:duration
+      animations:^{
+        [self setupLayout];
+      }
+      completion:^(BOOL completed) {
+        completion(completed);
+      }];
 }
 
 #pragma mark UIViewController
@@ -440,7 +442,7 @@ static UIColor *DrawerShadowColor(void) {
     CGRect scrollViewFrame = self.presentingViewBounds;
     if (self.animatingPresentation) {
       CGFloat heightSurplusForSpringAnimationOvershooting =
-      self.presentingViewBounds.size.height / 2;
+          self.presentingViewBounds.size.height / 2;
       scrollViewFrame.size.height += heightSurplusForSpringAnimationOvershooting;
     }
     self.scrollView.frame = scrollViewFrame;
@@ -471,8 +473,8 @@ static UIColor *DrawerShadowColor(void) {
     contentViewFrame.size.height = _contentVCPreferredContentSizeHeightCached;
     if ([self shouldPresentFullScreen]) {
       contentViewFrame.size.height =
-      MAX(contentViewFrame.size.height,
-          self.presentingViewBounds.size.height - self.topHeaderHeight);
+          MAX(contentViewFrame.size.height,
+              self.presentingViewBounds.size.height - self.topHeaderHeight);
     }
   }
   self.contentViewController.view.frame = contentViewFrame;

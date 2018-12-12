@@ -272,7 +272,7 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
 }
 
 - (void)presentAtFullscreenWithDuration:(CGFloat)duration
-                             completion:(void (^ __nullable)(BOOL finished))completion {
+                             completion:(void (^__nullable)(BOOL finished))completion {
   [self.bottomDrawerContainerViewController presentAtFullscreenWithDuration:duration
                                                                  completion:completion];
 }
