@@ -4,9 +4,6 @@
 
 @interface SimpleTextField : UITextField
 
-/**
- The default style is .underline
- */
 @property (nonatomic, assign) TextFieldStyle textFieldStyle;
 @property (nonatomic, assign) BOOL canPlaceholderFloat;
 @property (strong, nonatomic, readonly, nonnull) UILabel *leadingUnderlineLabel;
@@ -17,9 +14,14 @@
 @property (nonatomic, assign) UITextFieldViewMode leadingViewMode;
 @property (nonatomic, assign) UITextFieldViewMode trailingViewMode;
 
-// 0 means only trailing. .5 means 50/50. 1 means only leading. only used if draw priority is .custom.
+/**
+ When @c underlineLabelDrawPriority is set to @c .custom the value of this property helps determine
+ what percentage of the available width each underline label gets. It can be thought of as a
+ divider. A value of @c 0 would result in the trailing underline label getting all the available
+ width. A value of @c 1 would result in the leading underline label getting all the available width.
+ A value of @c .5 would result in each underline label getting 50% of the available width.
+ */
 @property (nonatomic, assign) CGFloat customUnderlineLabelDrawPriority;
-
 
 
 @end
