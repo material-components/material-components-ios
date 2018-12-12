@@ -29,7 +29,7 @@
  @param drawerState the drawer's state
  */
 - (void)bottomDrawerWillChangeState:
-(nonnull MDCBottomDrawerPresentationController *)presentationController
+            (nonnull MDCBottomDrawerPresentationController *)presentationController
                         drawerState:(MDCBottomDrawerState)drawerState;
 
 /**
@@ -46,7 +46,7 @@
  @param transitionRatio The transition ratio betwen 0-100% (0-1).
  */
 - (void)bottomDrawerTopTransitionRatio:
-(nonnull MDCBottomDrawerPresentationController *)presentationController
+            (nonnull MDCBottomDrawerPresentationController *)presentationController
                        transitionRatio:(CGFloat)transitionRatio;
 
 @end

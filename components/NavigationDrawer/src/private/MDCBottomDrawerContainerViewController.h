@@ -31,7 +31,7 @@
  @param drawerState the drawer's state.
  */
 - (void)bottomDrawerContainerViewControllerWillChangeState:
-(nonnull MDCBottomDrawerContainerViewController *)containerViewController
+            (nonnull MDCBottomDrawerContainerViewController *)containerViewController
                                                drawerState:(MDCBottomDrawerState)drawerState;
 
 /**
@@ -48,7 +48,7 @@
  @param transitionRatio The transition ratio betwen 0-100% (0-1).
  */
 - (void)bottomDrawerContainerViewControllerTopTransitionRatio:
-(nonnull MDCBottomDrawerContainerViewController *)containerViewController
+            (nonnull MDCBottomDrawerContainerViewController *)containerViewController
                                               transitionRatio:(CGFloat)transitionRatio;
 @end
 
@@ -63,8 +63,10 @@
  @param originalPresentingViewController The original presenting view controller.
  */
 - (nonnull instancetype)initWithOriginalPresentingViewController:
-(nonnull UIViewController *)originalPresentingViewController
-                                              trackingScrollView:(nullable UIScrollView *)trackingScrollView NS_DESIGNATED_INITIALIZER;
+                            (nonnull UIViewController *)originalPresentingViewController
+                                              trackingScrollView:
+                                                  (nullable UIScrollView *)trackingScrollView
+    NS_DESIGNATED_INITIALIZER;
 
 - (nonnull instancetype)init NS_UNAVAILABLE;
 - (nonnull instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;
