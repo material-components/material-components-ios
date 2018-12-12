@@ -38,12 +38,4 @@
  */
 - (void)generateSnapshotAndVerify;
 
-/**
- Generates a snapshotted view of @c self.textField and verifies it against the golden image.
-
- @param tolerance the percentage (0 - 1) difference allowed between the snapshot and the golden
-                  image.
- **/
-- (void)generateSnapshotAndVerifyWithTolerance:(CGFloat)tolerance;
-
 @end

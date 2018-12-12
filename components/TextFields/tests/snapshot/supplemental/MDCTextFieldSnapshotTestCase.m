@@ -53,10 +53,6 @@
 }
 
 - (void)generateSnapshotAndVerify {
-  [self generateSnapshotAndVerifyWithTolerance:0];
-}
-
-- (void)generateSnapshotAndVerifyWithTolerance:(CGFloat)tolerance {
   [self triggerTextFieldLayout];
   UIView *snapshotView = [self addBackgroundViewToView:self.textField];
 
