@@ -19,7 +19,7 @@ static const CGFloat kFilledTextFieldTopCornerRadius = 4.0;
 static const CGFloat kOutlinedTextFieldCornerRadius = 4.0;
 //static const CGFloat kFloatingPlaceholderTopMargin = 5.0;
 static const CGFloat kFloatingPlaceholderSideMargin = 5.0;
-static const CGFloat kFloatingPlaceholderXOffsetFromTextArea = 4.0;
+static const CGFloat kFloatingPlaceholderXOffsetFromTextArea = 3.0;
 static const CGFloat kTopMargin = 5.0;
 
 static const CGFloat kClearButtonTouchTargetSideLength = 30.0;

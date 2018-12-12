@@ -476,13 +476,31 @@
   return sharedCenterY;
 }
 
+- (CGFloat)maxPlaceholderWidthWithTextAreaWidth:(CGFloat)textAreaWidth
+                               placeholderState:(PlaceholderState)placeholderState {
+  CGFloat maxPlaceholderWidth = 0;
+  switch (placeholderState) {
+    case PlaceholderStateNone:
+      break;
+    case PlaceholderStateFloating:
+      maxPlaceholderWidth = textAreaWidth - (2 * kFloatingPlaceholderXOffsetFromTextArea);
+      break;
+    case PlaceholderStateNormal:
+      maxPlaceholderWidth = textAreaWidth;
+      break;
+    default:
+      break;
+  }
+  return maxPlaceholderWidth;
+}
+
 - (CGSize)placeholderSizeWithPlaceholder:(NSString *)placeholder
-                           textAreaWidth:(CGFloat)textAreaWidth
+                     maxPlaceholderWidth:(CGFloat)maxPlaceholderWidth
                                     font:(UIFont *)font {
   if (!font) {
     return CGSizeZero;
   }
-  CGSize fittingSize = CGSizeMake(textAreaWidth, CGFLOAT_MAX);
+  CGSize fittingSize = CGSizeMake(maxPlaceholderWidth, CGFLOAT_MAX);
   NSDictionary *attributes = @{NSFontAttributeName: font};
   CGRect rect = [placeholder boundingRectWithSize:fittingSize
                                           options:NSStringDrawingUsesLineFragmentOrigin
@@ -499,6 +517,8 @@
                   floatingPlaceholderMinY:(CGFloat)floatingPlaceholderMinY
                              textAreaRect:(CGRect)textAreaRect {
   CGFloat textAreaWidth = CGRectGetWidth(textAreaRect);
+  CGFloat maxPlaceholderWidth = [self maxPlaceholderWidthWithTextAreaWidth:textAreaWidth
+                                                          placeholderState:placeholderState];
   CGFloat textAreaMinX = CGRectGetMinX(textAreaRect);
   CGFloat textAreaMidY = CGRectGetMidY(textAreaRect);
   CGSize size = CGSizeZero;
@@ -510,18 +530,15 @@
       break;
     case PlaceholderStateFloating:
       size = [self placeholderSizeWithPlaceholder:placeholder
-                                    textAreaWidth:textAreaWidth
+                              maxPlaceholderWidth:maxPlaceholderWidth
                                              font:floatingPlaceholderFont];
       originY = floatingPlaceholderMinY;
-      originX = textAreaMinX;
-      if (textFieldStyle == TextFieldStyleOutline) {
-        originX += kFloatingPlaceholderXOffsetFromTextArea;
-      }
+      originX = textAreaMinX + kFloatingPlaceholderXOffsetFromTextArea;
       rect = CGRectMake(originX, originY, size.width, size.height);
       break;
     case PlaceholderStateNormal:
       size = [self placeholderSizeWithPlaceholder:placeholder
-                                    textAreaWidth:textAreaWidth
+                              maxPlaceholderWidth:maxPlaceholderWidth
                                              font:font];
       originY = textAreaMidY - (0.5 * size.height);
       originX = textAreaMinX;
