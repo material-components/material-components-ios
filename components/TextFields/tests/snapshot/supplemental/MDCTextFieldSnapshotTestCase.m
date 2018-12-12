@@ -31,24 +31,43 @@
   [super tearDown];
 }
 
+#pragma mark - Private methods
+
+/**
+ Inserts a semaphore block into the main run loop and then waits for that sempahore to be executed.
+ This enables other queued actions on the main loop to issue within unit tests.  For example, it can
+ allow animation blocks to execute, but does not necessarily wait for them to complete.
+
+ Note: Although an imperfect solution, it unblocks snapshot testing for now and reduces flakiness.
+ */
+- (void)drainMainRunLoop {
+  XCTestExpectation *expectation = [self expectationWithDescription:@"draining the main run loop"];
+
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [expectation fulfill];
+  });
+
+  [self waitForExpectationsWithTimeout:1 handler:nil];
+}
+
 #pragma mark - Helpers
 
 - (void)triggerTextFieldLayout {
   CGSize aSize = [self.textField sizeThatFits:CGSizeMake(300, INFINITY)];
   self.textField.bounds = CGRectMake(0, 0, aSize.width, aSize.height);
   [self.textField layoutIfNeeded];
+
+  // Allow animation blocks to issue through the main run loop. This may not be sufficient for all
+  // animations, but it appears to correct and deflake the rendering of long placeholder text.
+  [self drainMainRunLoop];
 }
 
 - (void)generateSnapshotAndVerify {
-  [self generateSnapshotAndVerifyWithTolerance:0];
-}
-
-- (void)generateSnapshotAndVerifyWithTolerance:(CGFloat)tolerance {
   [self triggerTextFieldLayout];
   UIView *snapshotView = [self addBackgroundViewToView:self.textField];
 
   // Perform the actual verification.
-  [self snapshotVerifyView:snapshotView tolerance:tolerance];
+  [self snapshotVerifyView:snapshotView];
 }
 
 @end
