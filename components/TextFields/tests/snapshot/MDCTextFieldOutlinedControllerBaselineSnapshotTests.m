@@ -116,10 +116,7 @@
   [self.textField MDCtest_setIsEditing:YES];
 
   // Then
-
-  // TODO(https://github.com/material-components/material-components-ios/issues/5970 ): Fix this
-  // flaky layout of long placeholder labels when floating.
-  [self generateSnapshotAndVerifyWithTolerance:(CGFloat)0.05];
+  [self generateSnapshotAndVerify];
 }
 
 - (void)testOutlinedTextFieldWithShortHelperText {
