@@ -262,7 +262,7 @@
   [self generateSnapshotAndVerify];
 }
 
-- (void)testOutlinedTextFieldWithShortInputPlaceholderHelperTextsIsEditing{
+- (void)testOutlinedTextFieldWithShortInputPlaceholderHelperTextsIsEditing {
   // Uncomment below to recreate the golden
   //  self.recordMode = YES;
 
