@@ -55,7 +55,6 @@
 - (void)triggerTextFieldLayout {
   CGSize aSize = [self.textField sizeThatFits:CGSizeMake(300, INFINITY)];
   self.textField.bounds = CGRectMake(0, 0, aSize.width, aSize.height);
-  [self.textField setNeedsUpdateConstraints];;
   [self.textField layoutIfNeeded];
 
   // Allow animation blocks to issue through the main run loop. This may not be sufficient for all
