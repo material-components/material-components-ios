@@ -31,12 +31,25 @@
   [super tearDown];
 }
 
+#pragma mark - Private methods
+
+- (void)drainMainRunLoop {
+  XCTestExpectation *expectation = [self expectationWithDescription:@"draining the main run loop"];
+
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [expectation fulfill];
+  });
+
+  [self waitForExpectations:@[expectation] timeout:1];
+}
+
 #pragma mark - Helpers
 
 - (void)triggerTextFieldLayout {
   CGSize aSize = [self.textField sizeThatFits:CGSizeMake(300, INFINITY)];
   self.textField.bounds = CGRectMake(0, 0, aSize.width, aSize.height);
   [self.textField layoutIfNeeded];
+  [self drainMainRunLoop];
 }
 
 - (void)generateSnapshotAndVerify {
@@ -48,7 +61,7 @@
   UIView *snapshotView = [self addBackgroundViewToView:self.textField];
 
   // Perform the actual verification.
-  [self snapshotVerifyView:snapshotView tolerance:tolerance];
+  [self snapshotVerifyView:snapshotView];
 }
 
 @end
