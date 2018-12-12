@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="EkN-UR-mAg">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Simple Text Field Storyboard Example View Controller-->
+        <scene sceneID="Ver-Oe-5lZ">
+            <objects>
+                <viewController id="EkN-UR-mAg" customClass="SimpleTextFieldStoryboardExampleViewController" customModule="MaterialComponentsExamples" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="EjN-PI-765"/>
+                        <viewControllerLayoutGuide type="bottom" id="Z2k-fX-Sgr"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="UE3-bb-fYA">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pr7-c9-ngn" customClass="SimpleTextField">
+                                <rect key="frame" x="50" y="70" width="275" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0wE-6b-dmp" customClass="SimpleTextField">
+                                <rect key="frame" x="50" y="150" width="275" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="pr7-c9-ngn" firstAttribute="top" secondItem="EjN-PI-765" secondAttribute="bottom" constant="50" id="NtI-1Y-7UZ"/>
+                            <constraint firstAttribute="trailing" secondItem="pr7-c9-ngn" secondAttribute="trailing" constant="50" id="RnL-sP-ZPc"/>
+                            <constraint firstItem="0wE-6b-dmp" firstAttribute="leading" secondItem="UE3-bb-fYA" secondAttribute="leading" constant="50" id="RqY-GK-Ptq"/>
+                            <constraint firstAttribute="trailing" secondItem="0wE-6b-dmp" secondAttribute="trailing" constant="50" id="fG4-Ws-dHp"/>
+                            <constraint firstItem="pr7-c9-ngn" firstAttribute="leading" secondItem="UE3-bb-fYA" secondAttribute="leading" constant="50" id="l64-zo-HdD"/>
+                            <constraint firstItem="0wE-6b-dmp" firstAttribute="top" secondItem="pr7-c9-ngn" secondAttribute="bottom" constant="50" id="nT7-ba-4KV"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="filledTextField" destination="UE3-bb-fYA" id="R1V-WG-yPu"/>
+                        <outlet property="outletTextFields" destination="0wE-6b-dmp" id="tAR-Py-4Ig"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1ue-b6-bbM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-273" y="4"/>
+        </scene>
+    </scenes>
+</document>
