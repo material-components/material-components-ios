@@ -43,6 +43,7 @@ fix_bazel_imports() {
 
   stashed_dir=""
   rewrite_tests "s/import MaterialComponents.Material(.+)_(.+)/import components_\1_\2/"
+  rewrite_tests "s/import MaterialComponentsAlpha.Material(.+)Scheme/import components_schemes_\1_\1 \/\/ Alpha/"
   rewrite_tests "s/import MaterialComponents.Material(.+)Scheme/import components_schemes_\1_\1/"
   private_components | while read private_component; do
     if [ -z "$private_component" ]; then
@@ -64,6 +65,7 @@ fix_bazel_imports() {
 
     # Undoes our source changes from above.
     rewrite_tests "s/import components_(.+)_\1 \/\/ Alpha/import MaterialComponentsAlpha.Material\1/"
+    rewrite_tests "s/import components_schemes_(.+)_.+ \/\/ Alpha/import MaterialComponentsAlpha.Material\1Scheme/"
     rewrite_tests "s/import components_schemes_(.+)_.+/import MaterialComponents.Material\1Scheme/"
     rewrite_tests "s/import components_private_(.+)_.+/import MaterialComponents.Material\1/"
     rewrite_tests "s/import components_(.+)_\1/import MaterialComponents.Material\1/"
@@ -229,6 +231,11 @@ run_cocoapods() {
 
     gem install xcpretty cocoapods --no-rdoc --no-ri --no-document --quiet
     pod --version
+
+    # Install git-lfs
+    brew install git-lfs
+    git lfs install
+    git lfs pull
   fi
 
   if [ "$DEPENDENCY_SYSTEM" = "cocoapods" ]; then

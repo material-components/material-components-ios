@@ -43,6 +43,7 @@ void GetCGPathAddLineToPointValues(void *info, const CGPathElement *element);
   curvedCorner2.size = CGSizeMake(2, 5);
 
   // Then
+  XCTAssertEqual(curvedCorner.hash, curvedCorner2.hash);
   XCTAssertEqualObjects(curvedCorner, cornerTreatment);
   XCTAssertEqualObjects(curvedCorner, curvedCorner2);
   XCTAssertEqualObjects(curvedCorner, curvedCorner);
@@ -57,10 +58,12 @@ void GetCGPathAddLineToPointValues(void *info, const CGPathElement *element);
   MDCCornerTreatment *cornerTreatment = [MDCCornerTreatment cornerWithRadius:(CGFloat)3.2];
 
   // When
+  XCTAssertNotEqual(roundedCorner.hash, roundedCorner2.hash);
   XCTAssertNotEqualObjects(roundedCorner, roundedCorner2);
   roundedCorner2.radius = (CGFloat)3.2;
 
   // Then
+  XCTAssertEqual(roundedCorner.hash, roundedCorner2.hash);
   XCTAssertEqualObjects(roundedCorner, cornerTreatment);
   XCTAssertEqualObjects(roundedCorner, roundedCorner2);
   XCTAssertEqualObjects(roundedCorner, roundedCorner);
@@ -73,10 +76,12 @@ void GetCGPathAddLineToPointValues(void *info, const CGPathElement *element);
   MDCCornerTreatment *cornerTreatment = [MDCCornerTreatment cornerWithCut:(CGFloat)3.2];
 
   // When
+  XCTAssertNotEqual(cutCorner.hash, cutCorner2.hash);
   XCTAssertNotEqualObjects(cutCorner, cutCorner2);
   cutCorner2.cut = (CGFloat)3.2;
 
   // Then
+  XCTAssertEqual(cutCorner.hash, cutCorner2.hash);
   XCTAssertEqualObjects(cutCorner, cornerTreatment);
   XCTAssertEqualObjects(cutCorner, cutCorner2);
   XCTAssertEqualObjects(cutCorner, cutCorner);

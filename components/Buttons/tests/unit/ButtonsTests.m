@@ -281,6 +281,123 @@ static NSString *controlStateDescription(UIControlState controlState) {
   }
 }
 
+// TODO(https://github.com/material-components/material-components-ios/issues/3411 ): Enable this
+//   test when the behavior in MDCButton is fixed.
+- (void)_disabled_testBackgroundColorForStateFallbackBehavior {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+
+  // When
+  [button setBackgroundColor:UIColor.purpleColor forState:UIControlStateNormal];
+
+  // Then
+  for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
+    XCTAssertEqualObjects([button backgroundColorForState:controlState], UIColor.purpleColor);
+  }
+}
+
+- (void)testBackgroundColorForStateUpdatesBackgroundColor {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+
+  for (NSUInteger controlState = 0; controlState <= kNumUIControlStates; ++controlState) {
+    // Disabling the button removes any highlighted state
+    UIControlState testState = controlState;
+    if ((testState & UIControlStateDisabled) == UIControlStateDisabled) {
+      testState &= ~UIControlStateHighlighted;
+    }
+    BOOL isDisabled = (testState & UIControlStateDisabled) == UIControlStateDisabled;
+    BOOL isSelected = (testState & UIControlStateSelected) == UIControlStateSelected;
+    BOOL isHighlighted = (testState & UIControlStateHighlighted) == UIControlStateHighlighted;
+
+    // Also given
+    UIColor *color = randomColor();
+    [button setBackgroundColor:color forState:testState];
+
+    // When
+    button.enabled = !isDisabled;
+    button.selected = isSelected;
+    button.highlighted = isHighlighted;
+
+    XCTAssertEqualObjects(button.backgroundColor, color, @"for state (%lu).",
+                          (unsigned long)testState);
+  }
+}
+
+- (void)testBackgroundColorForStateUpdatesBackgroundColorWithFallback {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  [button setBackgroundColor:UIColor.magentaColor forState:UIControlStateNormal];
+
+  for (NSUInteger controlState = 0; controlState <= kNumUIControlStates; ++controlState) {
+    BOOL isDisabled = (controlState & UIControlStateDisabled) == UIControlStateDisabled;
+    BOOL isSelected = (controlState & UIControlStateSelected) == UIControlStateSelected;
+    BOOL isHighlighted = (controlState & UIControlStateHighlighted) == UIControlStateHighlighted;
+
+    // When
+    button.enabled = !isDisabled;
+    button.selected = isSelected;
+    button.highlighted = isHighlighted;
+
+    XCTAssertEqualObjects(button.backgroundColor,
+                          [button backgroundColorForState:UIControlStateNormal],
+                          @"for state (%lu).", (unsigned long)controlState);
+  }
+}
+
+// Behavioral test to verify that MDCButton's `backgroundColor:forState:` matches the behavior of
+// UIButton's `titleColor:forState:`.  Specifically, to ensure that the special handling of
+// (UIControlStateDisabled | UIControlStateHighlighted) is identical.
+//
+// This test is valuable because clients who are familiar with the fallback behavior of
+// `titleColor:forState:` may be surprised if the MDCButton APIs don't match. For example, setting
+// the titleColor for (UIControlStateDisabled | UIControlStateHighlighted) will actually update the
+// value assigned for UIControlStateHighlighted, but ONLY if it has already been assigned. Otherwise
+// no update will take place.
+- (void)testBackgroundColorForStateBehaviorMatchesTitleColorForStateWithoutFallbackForward {
+  // Given
+  MDCButton *testButton = [[MDCButton alloc] init];
+  UIButton *uiButton = [[UIButton alloc] init];
+
+  // When
+  UIControlState maxState = UIControlStateNormal | UIControlStateHighlighted |
+                            UIControlStateDisabled | UIControlStateSelected;
+  for (UIControlState state = 0; state <= maxState; ++state) {
+    UIColor *color = [UIColor colorWithWhite:0 alpha:(CGFloat)(state / (CGFloat)maxState)];
+    [testButton setBackgroundColor:color forState:state];
+    [uiButton setTitleColor:color forState:state];
+  }
+
+  // Then
+  for (UIControlState state = 0; state <= maxState; ++state) {
+    XCTAssertEqualObjects([testButton backgroundColorForState:state],
+                          [uiButton titleColorForState:state], @" for state (%lu)",
+                          (unsigned long)state);
+  }
+}
+
+- (void)testBackgroundColorForStateBehaviorMatchesTitleColorForStateWithoutFallbackBackward {
+  // Given
+  MDCButton *testButton = [[MDCButton alloc] init];
+  UIButton *uiButton = [[UIButton alloc] init];
+
+  // When
+  UIControlState maxState = UIControlStateNormal | UIControlStateHighlighted |
+                            UIControlStateDisabled | UIControlStateSelected;
+  for (NSInteger state = maxState; state >= 0; --state) {
+    UIColor *color = [UIColor colorWithWhite:0 alpha:(CGFloat)(state / (CGFloat)maxState)];
+    [testButton setBackgroundColor:color forState:(UIControlState)state];
+    [uiButton setTitleColor:color forState:(UIControlState)state];
+  }
+
+  // Then
+  for (UIControlState state = 0; state <= maxState; ++state) {
+    XCTAssertEqualObjects([testButton backgroundColorForState:state],
+                          [uiButton titleColorForState:state], @" for state (%lu)",
+                          (unsigned long)state);
+  }
+}
+
 #pragma mark - shadowColor:forState:
 
 - (void)testRemovedShadowColorForState {

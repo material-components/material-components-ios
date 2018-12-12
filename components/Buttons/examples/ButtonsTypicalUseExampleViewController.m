@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCTextButtonThemer.h"
 #import "MaterialButtons+ButtonThemer.h"
 #import "MaterialButtons+ColorThemer.h"
 #import "MaterialButtons+Theming.h"
 #import "MaterialButtons+TypographyThemer.h"
 #import "MaterialButtons.h"
+#import "MaterialContainerScheme.h"
 #import "MaterialTypography.h"
 
 #import "supplemental/ButtonsTypicalUseSupplemental.h"
@@ -45,6 +45,14 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
     self.containerScheme.typographyScheme = self.typographyScheme;
   }
   return self;
+}
+
+- (MDCContainerScheme *)containerScheme {
+  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
+  scheme.colorScheme = self.colorScheme;
+  scheme.shapeScheme = self.shapeScheme;
+  scheme.typographyScheme = self.typographyScheme;
+  return scheme;
 }
 
 - (void)viewDidLoad {
@@ -90,7 +98,7 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
   // Text button
 
   MDCButton *textButton = [[MDCButton alloc] init];
-  [MDCTextButtonThemer applyScheme:buttonScheme toButton:textButton];
+  [textButton applyTextThemeWithScheme:self.containerScheme];
   [textButton setTitle:@"Button" forState:UIControlStateNormal];
   [textButton sizeToFit];
   CGFloat textButtonVerticalInset =
@@ -109,7 +117,7 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
 
   MDCButton *disabledTextButton = [[MDCButton alloc] init];
   [disabledTextButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCTextButtonThemer applyScheme:buttonScheme toButton:disabledTextButton];
+  [disabledTextButton applyTextThemeWithScheme:self.containerScheme];
   [disabledTextButton sizeToFit];
   [disabledTextButton addTarget:self
                          action:@selector(didTap:)
@@ -158,7 +166,7 @@ const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
   UIImage *plusImage =
       [[UIImage imageNamed:@"Plus"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [self.floatingButton setImage:plusImage forState:UIControlStateNormal];
-  [MDCFloatingActionButtonThemer applyScheme:buttonScheme toButton:self.floatingButton];
+  [self.floatingButton applySecondaryThemeWithScheme:[self containerScheme]];
   self.floatingButton.accessibilityLabel = @"Create";
   [self.view addSubview:self.floatingButton];
 

@@ -65,4 +65,8 @@
   return self.radius == otherRoundedCorner.radius;
 }
 
+- (NSUInteger)hash {
+  return @(self.radius).hash ^ (NSUInteger)self.valueType;
+}
+
 @end

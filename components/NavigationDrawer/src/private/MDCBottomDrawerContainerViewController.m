@@ -16,6 +16,7 @@
 
 #import "MDCBottomDrawerHeader.h"
 #import "MDCBottomDrawerHeaderMask.h"
+#import "MaterialMath.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialUIMetrics.h"
 
@@ -127,20 +128,28 @@ static UIColor *DrawerShadowColor(void) {
 // The main scroll view.
 @property(nonatomic, readonly) UIScrollView *scrollView;
 
-// View that functions as the superview of |scrollView|. Used to clip the top of the scroll view.
-@property(nonatomic, readonly) UIView *scrollViewClippingView;
-
 // The top header bottom shadow layer.
 @property(nonatomic) MDCShadowLayer *headerShadowLayer;
 
 // The current bottom drawer state.
 @property(nonatomic) MDCBottomDrawerState drawerState;
 
+/**
+ The height of the drawer at initial layout. This value is a percentage between 0-100% (0-1).
+ - 1 or 100% indicates the drawer is full screen.
+ - 0 or 0% indicates that drawer if hidden.
+
+ @note In voiceover and landscape this value will be 1.
+ */
+@property(nonatomic) CGFloat initialDrawerFactor;
+
+// Calculates the initial drawer factor.
+- (CGFloat)calculateInitialDrawerFactor;
+
 @end
 
 @implementation MDCBottomDrawerContainerViewController {
   UIScrollView *_scrollView;
-  UIView *_scrollViewClippingView;
   CGFloat _contentHeaderTopInset;
   CGFloat _contentHeightSurplus;
   CGFloat _addedContentHeight;
@@ -160,6 +169,7 @@ static UIColor *DrawerShadowColor(void) {
     _trackingScrollView = trackingScrollView;
     _drawerState = MDCBottomDrawerStateCollapsed;
     _scrollToContentOffsetY = 0;
+    _initialDrawerFactor = (CGFloat)0.5;
   }
   return self;
 }
@@ -295,7 +305,10 @@ static UIColor *DrawerShadowColor(void) {
  the default value becomes 1.0.
  */
 - (CGFloat)initialDrawerFactor {
-  return [self shouldPresentFullScreen] ? 1 : (CGFloat)0.5;
+  if ([self shouldPresentFullScreen]) {
+    return 1;
+  }
+  return _initialDrawerFactor;
 }
 
 - (void)addScrollViewObserver {
@@ -377,8 +390,7 @@ static UIColor *DrawerShadowColor(void) {
 
   self.view.backgroundColor = [UIColor clearColor];
 
-  [self.view addSubview:self.scrollViewClippingView];
-  [self.scrollViewClippingView addSubview:self.scrollView];
+  [self.view addSubview:self.scrollView];
 
   // Top header shadow layer starts as hidden.
   self.headerShadowLayer.hidden = YES;
@@ -408,12 +420,7 @@ static UIColor *DrawerShadowColor(void) {
 
   // Layout the clipping view and the scroll view.
   if (self.currentlyFullscreen) {
-    CGRect scrollViewClippingViewFrame = self.presentingViewBounds;
-    scrollViewClippingViewFrame.origin.y = self.topHeaderHeight;
-    scrollViewClippingViewFrame.size.height -= self.topHeaderHeight;
-    self.scrollViewClippingView.frame = scrollViewClippingViewFrame;
     CGRect scrollViewFrame = self.presentingViewBounds;
-    scrollViewFrame.origin.y = -self.topHeaderHeight;
     self.scrollView.frame = scrollViewFrame;
   } else {
     CGRect scrollViewFrame = self.presentingViewBounds;
@@ -422,7 +429,6 @@ static UIColor *DrawerShadowColor(void) {
           self.presentingViewBounds.size.height / 2;
       scrollViewFrame.size.height += heightSurplusForSpringAnimationOvershooting;
     }
-    self.scrollViewClippingView.frame = scrollViewFrame;
     self.scrollView.frame = scrollViewFrame;
   }
 
@@ -475,10 +481,29 @@ static UIColor *DrawerShadowColor(void) {
 
 - (void)preferredContentSizeDidChangeForChildContentContainer:(id<UIContentContainer>)container {
   [super preferredContentSizeDidChangeForChildContentContainer:container];
+  if ([container isKindOfClass:[UIViewController class]]) {
+    UIViewController *containerViewController = (UIViewController *)container;
+    if (containerViewController == self.contentViewController) {
+      self.initialDrawerFactor = [self calculateInitialDrawerFactor];
+    }
+  }
   _contentHeaderTopInset = NSNotFound;
   _contentHeightSurplus = NSNotFound;
   _addedContentHeight = NSNotFound;
   [self.view setNeedsLayout];
+}
+
+- (CGFloat)calculateInitialDrawerFactor {
+  if (MDCCGFloatEqual(_contentVCPreferredContentSizeHeightCached, 0)) {
+    [self cacheLayoutCalculations];
+  }
+  CGFloat totalHeight = self.headerViewController.preferredContentSize.height +
+                        _contentVCPreferredContentSizeHeightCached;
+  CGFloat precentageOfFullScreen = totalHeight / self.presentingViewBounds.size.height;
+  if (precentageOfFullScreen > 0.5) {
+    precentageOfFullScreen = 0.5;
+  }
+  return precentageOfFullScreen;
 }
 
 #pragma mark Set ups (Private)
@@ -559,14 +584,12 @@ static UIColor *DrawerShadowColor(void) {
     // is shown in fullscreen.
     [contentHeaderView removeFromSuperview];
     [self.view addSubview:contentHeaderView];
-    self.scrollViewClippingView.clipsToBounds = YES;
     [self.view setNeedsLayout];
   } else if (!self.currentlyFullscreen && contentHeaderView.superview != self.scrollView) {
     // The content header should be scrolled together with the rest of the content when the drawer
     // is not in fullscreen.
     [contentHeaderView removeFromSuperview];
     [self.scrollView addSubview:contentHeaderView];
-    self.scrollViewClippingView.clipsToBounds = NO;
     [self.view setNeedsLayout];
   }
   CGFloat contentHeaderViewWidth = self.presentingViewBounds.size.width;
@@ -599,14 +622,6 @@ static UIColor *DrawerShadowColor(void) {
     _scrollView.delegate = self;
   }
   return _scrollView;
-}
-
-- (UIView *)scrollViewClippingView {
-  if (!_scrollViewClippingView) {
-    _scrollViewClippingView = [[UIView alloc] init];
-    _scrollViewClippingView.backgroundColor = [UIColor clearColor];
-  }
-  return _scrollViewClippingView;
 }
 
 - (CGFloat)contentHeaderTopInset {

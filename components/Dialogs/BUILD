@@ -55,6 +55,22 @@ objc_bundle(
 )
 
 mdc_objc_library(
+    name = "Theming",
+    srcs = native.glob(["src/Theming/*.m"]),
+    hdrs = native.glob(["src/Theming/*.h"]),
+    includes = ["src/Theming"],
+    deps = [
+        ":Dialogs",
+        ":ColorThemer",
+        ":TypographyThemer",
+        "//components/Buttons:Theming",
+        "//components/ShadowElevations",
+        "//components/schemes/Container",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
     name = "DialogThemer",
     srcs = native.glob(["src/DialogThemer/*.m"]),
     hdrs = native.glob(["src/DialogThemer/*.h"]),

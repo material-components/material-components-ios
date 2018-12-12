@@ -16,6 +16,7 @@
 
 #import "MaterialCollections.h"
 #import "MaterialColorScheme.h"
+#import "MaterialContainerScheme.h"
 #import "MaterialTypographyScheme.h"
 
 @interface FeatureHighlightTypicalUseViewController : UIViewController
@@ -47,6 +48,7 @@
 
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
+@property(nonatomic, readonly, strong) MDCContainerScheme *containerScheme;
 
 - (void)didTapButton:(id)sender;
 @end

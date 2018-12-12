@@ -63,4 +63,8 @@
   return CGSizeEqualToSize(self.size, otherCurvedCorner.size);
 }
 
+- (NSUInteger)hash {
+  return @(self.size.height).hash ^ @(self.size.width).hash ^ (NSUInteger)self.valueType;
+}
+
 @end

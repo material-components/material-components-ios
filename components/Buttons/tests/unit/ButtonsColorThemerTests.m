@@ -234,16 +234,37 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   NSUInteger maximumStateValue =
       UIControlStateSelected | UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
+    // TODO(https://github.com/material-components/material-components-ios/issues/3411 ):
+    //   MDCButton does not return the correct value for `backgroundColorForState:`
     if (state == UIControlStateNormal) {
-      XCTAssertEqual([button backgroundColorForState:state], colorScheme.secondaryColor);
-      XCTAssertEqual([button imageTintColorForState:state], colorScheme.onSecondaryColor);
-   } else {
+      XCTAssertEqualObjects([button backgroundColorForState:state], colorScheme.secondaryColor,
+                            @"Background color (%@) is not equal to (%@) for state (%lu).",
+                            [button backgroundColorForState:state], colorScheme.secondaryColor,
+                            (unsigned long)state);
+    } else {
       XCTAssertEqual([button backgroundColorForState:state], nil);
+    }
+
+    XCTAssertEqualObjects([button imageTintColorForState:state], colorScheme.onSecondaryColor,
+                          @"Image tint color (%@) is not equal to (%@) for state (%lu).",
+                          [button imageTintColorForState:state], colorScheme.onSecondaryColor,
+                          (unsigned long)state);
+
+    // TODO(https://github.com/material-components/material-components-ios/issues/3062 ):
+    //   Title color for state is forced to UIColor.black in disabled state unless a disabled color
+    //   is set explicitly.
+    if (state == UIControlStateDisabled) {
+      XCTAssertEqualObjects([button titleColorForState:state], UIColor.blackColor,
+                            @"Title color for the disabled state should be black.");
+    } else {
+      XCTAssertEqualObjects([button titleColorForState:state], colorScheme.onSecondaryColor,
+                            @"Title color (%@) is not equal to (%@) for state (%lu).)",
+                            [button titleColorForState:state], colorScheme.onSecondaryColor,
+                            (unsigned long)state);
     }
   }
 
   XCTAssertEqualWithAccuracy(button.disabledAlpha, 1, (CGFloat)0.001);
 }
-
 
 @end

@@ -17,6 +17,7 @@
 #import "MaterialButtons+ButtonThemer.h"
 #import "MaterialButtons+Theming.h"
 #import "MaterialButtons.h"
+#import "MaterialContainerScheme.h"
 
 @interface ButtonsContentEdgeInsetsExample : UIViewController
 @property(weak, nonatomic) IBOutlet MDCButton *textButton;
@@ -43,8 +44,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
-  [MDCTextButtonThemer applyScheme:buttonScheme toButton:self.textButton];
+  [self.textButton applyTextThemeWithScheme:self.containerScheme];
   [self.containedButton applyContainedThemeWithScheme:[self containerScheme]];
 
   self.textButton.contentEdgeInsets = UIEdgeInsetsMake(64, 64, 0, 0);
