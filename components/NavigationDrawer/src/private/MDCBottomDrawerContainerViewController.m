@@ -393,7 +393,7 @@ static UIColor *DrawerShadowColor(void) {
     if (completion) {
       completion(YES);
     }
-  }]
+  }];
 }
 
 - (void)animateToContentOffset:(CGPoint)contentOffset

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import UIKit
+import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialBottomAppBar
 import MaterialComponents.MaterialBottomAppBar_ColorThemer
 import MaterialComponents.MaterialColorScheme
@@ -26,6 +27,7 @@ class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewContro
 
   let headerViewController = DrawerHeaderViewController()
   let contentViewController = DrawerContentViewController()
+  lazy var bottomDrawerViewController = MDCBottomDrawerViewController()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -63,7 +65,8 @@ class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewContro
   }
 
   @objc func presentNavigationDrawer() {
-    let bottomDrawerViewController = MDCBottomDrawerViewController()
+    bottomDrawerViewController = MDCBottomDrawerViewController()
+    layoutContentViewController()
     bottomDrawerViewController.setTopCornersRadius(24, for: .collapsed)
     bottomDrawerViewController.setTopCornersRadius(8, for: .expanded)
     bottomDrawerViewController.isTopHandleHidden = false
@@ -74,6 +77,26 @@ class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewContro
     MDCBottomDrawerColorThemer.applySemanticColorScheme(colorScheme,
                                                         toBottomDrawer: bottomDrawerViewController)
     present(bottomDrawerViewController, animated: true, completion: nil)
+  }
+
+  private func layoutContentViewController() {
+    let button = MDCButton(frame: .zero)
+    button.setTitle("Expand", for: .normal)
+    button.sizeToFit()
+    button.addTarget(self, action: #selector(expandBottomDrawer), for: .touchUpInside)
+    button.center = CGPoint(x: view.frame.width / 2, y: 50)
+    let buttonScheme = MDCButtonScheme()
+    buttonScheme.colorScheme = colorScheme
+    MDCContainedButtonThemer.applyScheme(buttonScheme, to: button)
+    contentViewController.view.addSubview(button)
+  }
+  @objc func expandBottomDrawer(sender: MDCButton) {
+    bottomDrawerViewController.expandToFullHeight(withDuration: 2.2) { _ in
+      print("Expand complete")
+    }
+    UIView.animate(withDuration: 5.2, animations: {
+      print("Insert custom animation here")
+    })
   }
 
   func bottomDrawerControllerDidChangeTopInset(_ controller: MDCBottomDrawerViewController,

@@ -25,6 +25,7 @@ class BottomDrawerInfiniteScrollingExample: UIViewController {
 
   let headerViewController = DrawerHeaderViewController()
   let contentViewController = DrawerContentTableViewController()
+  lazy var bottomDrawerViewController = MDCBottomDrawerViewController()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -63,7 +64,6 @@ class BottomDrawerInfiniteScrollingExample: UIViewController {
   }
 
   @objc private func presentNavigationDrawer() {
-    let bottomDrawerViewController = MDCBottomDrawerViewController()
     bottomDrawerViewController.contentViewController = contentViewController
     contentViewController.drawerVC = bottomDrawerViewController
     bottomDrawerViewController.headerViewController = headerViewController
@@ -109,7 +109,7 @@ class DrawerContentTableViewController: UITableViewController {
   }
 
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 100
+    return 4
   }
 
   override func numberOfSections(in tableView: UITableView) -> Int {
@@ -118,7 +118,7 @@ class DrawerContentTableViewController: UITableViewController {
 
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
-    drawerVC.setContentOffsetY(0, animated: false)
+    drawerVC.expandToFullHeight(withDuration: 5, completion: nil)
   }
 
 }
