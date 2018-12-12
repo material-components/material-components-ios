@@ -31,19 +31,13 @@ static const CGFloat kTopRowSubviewVerticalPadding = 10.0;
 
 static const UIControlState UIControlStateError = 1 << 10;
 
-
-
 /**
  Dictates the input style.
  */
 typedef NS_ENUM(NSUInteger, TextFieldMode) {
   TextFieldModeNormal,
   TextFieldModeInputChip,
-
-  
-  
 };
-
 
 /**
  Dictates what type of text field it will be from a cosmetic standpoint.
@@ -71,14 +65,28 @@ typedef NS_ENUM(NSUInteger, UnderlineLabelDrawPriority) {
   UnderlineLabelDrawPriorityCustom,
 };
 
+/**
+ This enum allows us to differentiate between traditional UITextField placeholders and the
+ "floating" style customary in Text Fields outlined in the Material guidelines.
+ */
 typedef NS_ENUM(NSUInteger, PlaceholderState) {
   PlaceholderStateNone,
   PlaceholderStateFloating,
   PlaceholderStateNormal,
 };
 
-//typedef NS_ENUM(NSUInteger, TextFieldState) {
-//  
-//}
+/**
+ A representation of Text Field state that is compatible with UIControlState as well as an
+ interpretation of the states outlined in the Material guidelines for Text Fields, which can be
+ found here: https://material.io/design/components/text-fields.html#outlined-text-field
+ */
+typedef NS_ENUM(NSUInteger, TextFieldState) {
+  TextFieldStateNormal,
+  TextFieldStateActivated,
+  TextFieldStateError,
+  TextFieldStateDisabled,
+};
+
+
 
 #endif /* SimpleTextFieldLayoutUtils_h */

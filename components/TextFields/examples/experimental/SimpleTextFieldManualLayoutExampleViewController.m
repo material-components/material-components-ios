@@ -124,7 +124,7 @@
   self.filledTextField = [[SimpleTextField alloc] initWithFrame:frame];
   [self.view addSubview:self.filledTextField];
   self.filledTextField.textFieldStyle = TextFieldStyleFilled;
-  self.filledTextField.placeholder = @"placeholder";
+  self.filledTextField.placeholder = @"This is a placeholder";
   self.filledTextField.canPlaceholderFloat = YES;
   self.filledTextField.leadingViewMode = UITextFieldViewModeWhileEditing;
   self.filledTextField.trailingViewMode = UITextFieldViewModeAlways;
@@ -220,6 +220,14 @@
   self.uiTextField.leftView = accessoryView;
 
   self.uiTextField.center = CGPointMake(CGRectGetMidX(self.view.frame), 275);
+  
+//  self.uiTextField.selected = YES;
+  self.uiTextField.enabled = NO;
+
+  
+
+
+
 }
 
 #pragma mark Theming

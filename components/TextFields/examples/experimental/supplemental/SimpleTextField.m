@@ -203,6 +203,7 @@
 
   // TODO: Hide any views that the layout says to hide
   // TODO: Hide views that won't fit by validating frames (checking if they fit inside the bounds and don't overlap)
+  [self determineCurrentTextFieldState];
 }
 
 // UIView's sizeToFit calls this method.
@@ -1024,6 +1025,78 @@
 
 
 
-- (IBAction)outletTextField:(id)sender {
+- (TextFieldState)determineCurrentTextFieldState {
+  NSString *stateString = @"NA";
+  switch (self.state) {
+    case UIControlStateNormal:
+      stateString = @"Normal";
+      break;
+    case UIControlStateHighlighted:
+      stateString = @"Highlighted";
+      break;
+    case UIControlStateDisabled:
+      stateString = @"Disabled";
+      break;
+    case UIControlStateSelected:
+      stateString = @"Selected";
+      break;
+    case UIControlStateFocused:
+      stateString = @"Focused";
+      break;
+    case UIControlStateApplication:
+      stateString = @"Application";
+      break;
+    case UIControlStateReserved:
+      stateString = @"Reserved";
+      break;
+  }
+
+  NSLog(@"----------");
+  NSLog(@"isHighlighted: %@",@(self.isHighlighted));
+  NSLog(@"isSelected: %@",@(self.isSelected));
+  NSLog(@"isFirstResponder: %@",@(self.isFirstResponder));
+  NSLog(@"state: %@",stateString);
+  NSLog(@"----------");
+
+  if (self.isEnabled) {
+    if (self.isErrored) {
+      // Error
+    } else {
+      if (self.isSelected || self.isActivated) {
+        // activated
+        
+      } else {
+        // normal
+        
+      }
+    }
+  } else {
+    // disabled
+  }
+  
+  if (self.isErrored) {
+    
+  } else {
+    
+  }
+  
 }
+
+- (void)setColorScheme:(MDCSemanticColorScheme *)colorScheme
+              forState:(TextFieldState)textFieldState {
+  
+}
+
+- (MDCSemanticColorScheme *)colorScheme:(MDCSemanticColorScheme *)colorScheme
+                               forState:(TextFieldState)textFieldState {
+  
+}
+
+
+
+/**
+ Focused -
+ */
+
+
 @end

@@ -2,6 +2,8 @@
 
 #import "SimpleTextFieldLayoutUtils.h"
 
+#import "MaterialColorScheme.h"
+
 @interface SimpleTextField : UITextField
 
 @property (nonatomic, assign) TextFieldStyle textFieldStyle;
@@ -14,6 +16,31 @@
 @property (nonatomic, assign) UITextFieldViewMode leadingViewMode;
 @property (nonatomic, assign) UITextFieldViewMode trailingViewMode;
 
+
+/**
+ This class-specific @c TextFieldState property acts as a complement of @c UIControl's state system
+ as well as an interpretation of the state soutlined in the Material guidelines for Text Fields,
+ which can be found here:
+ https://material.io/design/components/text-fields.html#outlined-text-field
+ */
+@property (nonatomic, assign, readonly) TextFieldState textFieldState;
+
+/**
+ This property toggles a state (similar to @c isHighlighted, @c isEnabled, @c isSelected, etc.) that
+ is part of a general interpretation of the states outlined in the Material guidelines for Text
+ Fields, which can be found here:
+ https://material.io/design/components/text-fields.html#outlined-text-field
+ */
+@property (nonatomic, assign) BOOL isErrored;
+
+/**
+ This property toggles a state (similar to @c isHighlighted, @c isEnabled, @c isSelected, etc.) that
+ is part of a general interpretation of the states outlined in the Material guidelines for Text
+ Fields, which can be found here:
+ https://material.io/design/components/text-fields.html#outlined-text-field
+ */
+@property (nonatomic, assign) BOOL isActivated;
+
 /**
  When @c underlineLabelDrawPriority is set to @c .custom the value of this property helps determine
  what percentage of the available width each underline label gets. It can be thought of as a
@@ -23,5 +50,11 @@
  */
 @property (nonatomic, assign) CGFloat customUnderlineLabelDrawPriority;
 
+
+- (void)setColorScheme:(MDCSemanticColorScheme *)colorScheme
+              forState:(TextFieldState)textFieldState;
+
+- (MDCSemanticColorScheme *)colorScheme:(MDCSemanticColorScheme *)colorScheme
+                               foletextrState:(TextFieldState)textFieldState;
 
 @end
