@@ -29,7 +29,7 @@
  @param drawerState the drawer's state
  */
 - (void)bottomDrawerWillChangeState:
-            (nonnull MDCBottomDrawerPresentationController *)presentationController
+(nonnull MDCBottomDrawerPresentationController *)presentationController
                         drawerState:(MDCBottomDrawerState)drawerState;
 
 /**
@@ -46,7 +46,7 @@
  @param transitionRatio The transition ratio betwen 0-100% (0-1).
  */
 - (void)bottomDrawerTopTransitionRatio:
-            (nonnull MDCBottomDrawerPresentationController *)presentationController
+(nonnull MDCBottomDrawerPresentationController *)presentationController
                        transitionRatio:(CGFloat)transitionRatio;
 
 @end
@@ -65,7 +65,7 @@
 @property(nonatomic, weak, nullable) UIScrollView *trackingScrollView;
 
 /**
-  The color applied to the background scrim.
+ The color applied to the background scrim.
  */
 @property(nonatomic, strong, nullable) UIColor *scrimColor;
 
@@ -101,4 +101,6 @@
  */
 - (void)setContentOffsetY:(CGFloat)contentOffsetY animated:(BOOL)animated;
 
+- (void)presentAtFullscreenWithDuration:(CGFloat)duration
+                             completion:(void (^__nullable)(BOOL finished))completion;
 @end

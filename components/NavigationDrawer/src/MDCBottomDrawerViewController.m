@@ -95,8 +95,8 @@
 
 - (CGFloat)minimumCornerRadius {
   return [self contentReachesFullScreen]
-             ? [self topCornersRadiusForDrawerState:MDCBottomDrawerStateFullScreen]
-             : [self topCornersRadiusForDrawerState:MDCBottomDrawerStateExpanded];
+  ? [self topCornersRadiusForDrawerState:MDCBottomDrawerStateFullScreen]
+  : [self topCornersRadiusForDrawerState:MDCBottomDrawerStateExpanded];
 }
 
 - (CGFloat)topCornersRadiusForDrawerState:(MDCBottomDrawerState)drawerState {
@@ -123,7 +123,7 @@
   _scrimColor = scrimColor;
   if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
     MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
-        (MDCBottomDrawerPresentationController *)self.presentationController;
+    (MDCBottomDrawerPresentationController *)self.presentationController;
     bottomDrawerPresentationController.scrimColor = scrimColor;
   }
 }
@@ -141,7 +141,7 @@
 - (BOOL)contentReachesFullScreen {
   if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
     MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
-        (MDCBottomDrawerPresentationController *)self.presentationController;
+    (MDCBottomDrawerPresentationController *)self.presentationController;
     return bottomDrawerPresentationController.contentReachesFullscreen;
   }
   return [self shouldPresentFullScreen];
@@ -151,7 +151,7 @@
   _topHandleHidden = topHandleHidden;
   if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
     MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
-        (MDCBottomDrawerPresentationController *)self.presentationController;
+    (MDCBottomDrawerPresentationController *)self.presentationController;
     bottomDrawerPresentationController.topHandleHidden = topHandleHidden;
   }
 }
@@ -160,7 +160,7 @@
   _topHandleColor = topHandleColor;
   if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
     MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
-        (MDCBottomDrawerPresentationController *)self.presentationController;
+    (MDCBottomDrawerPresentationController *)self.presentationController;
     bottomDrawerPresentationController.topHandleColor = topHandleColor;
   }
 }
@@ -174,7 +174,7 @@
 }
 
 - (void)bottomDrawerTopTransitionRatio:
-            (nonnull MDCBottomDrawerPresentationController *)presentationController
+(nonnull MDCBottomDrawerPresentationController *)presentationController
                        transitionRatio:(CGFloat)transitionRatio {
   [_maskLayer animateWithPercentage:1 - transitionRatio];
   if (self.delegate) {
@@ -183,7 +183,7 @@
 }
 
 - (void)bottomDrawerWillChangeState:
-            (nonnull MDCBottomDrawerPresentationController *)presentationController
+(nonnull MDCBottomDrawerPresentationController *)presentationController
                         drawerState:(MDCBottomDrawerState)drawerState {
   _drawerState = drawerState;
   CGFloat minimumCornerRadius = [self minimumCornerRadius];
@@ -209,8 +209,18 @@
 - (void)setContentOffsetY:(CGFloat)contentOffsetY animated:(BOOL)animated {
   if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
     MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
-        (MDCBottomDrawerPresentationController *)self.presentationController;
+    (MDCBottomDrawerPresentationController *)self.presentationController;
     [bottomDrawerPresentationController setContentOffsetY:contentOffsetY animated:animated];
+  }
+}
+
+- (void)presentAtFullscreenWithDuration:(CGFloat)duration
+                             completion:(void (^__nullable)(BOOL finished))completion {
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+    (MDCBottomDrawerPresentationController *)self.presentationController;
+    [bottomDrawerPresentationController presentAtFullscreenWithDuration:duration
+                                                             completion:completion];
   }
 }
 

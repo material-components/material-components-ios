@@ -23,7 +23,7 @@ static CGFloat kTopHandleWidth = (CGFloat)24.0;
 static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
 
 @interface MDCBottomDrawerPresentationController () <UIGestureRecognizerDelegate,
-                                                     MDCBottomDrawerContainerViewControllerDelegate>
+MDCBottomDrawerContainerViewControllerDelegate>
 
 /**
  A semi-transparent scrim view that darkens the visible main view when the drawer is displayed.
@@ -68,21 +68,21 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
 
 - (void)presentationTransitionWillBegin {
   MDCBottomDrawerContainerViewController *bottomDrawerContainerViewController =
-      [[MDCBottomDrawerContainerViewController alloc]
-          initWithOriginalPresentingViewController:self.presentingViewController
-                                trackingScrollView:self.trackingScrollView];
+  [[MDCBottomDrawerContainerViewController alloc]
+   initWithOriginalPresentingViewController:self.presentingViewController
+   trackingScrollView:self.trackingScrollView];
   if ([self.presentedViewController isKindOfClass:[MDCBottomDrawerViewController class]]) {
     // If in fact the presentedViewController is an MDCBottomDrawerViewController,
     // we then know there is a content and an (optional) header view controller.
     // We pass those view controllers to the MDCBottomDrawerContainerViewController that
     // consists of the drawer logic.
     MDCBottomDrawerViewController *bottomDrawerViewController =
-        (MDCBottomDrawerViewController *)self.presentedViewController;
+    (MDCBottomDrawerViewController *)self.presentedViewController;
     self.delegate = bottomDrawerViewController;
     bottomDrawerContainerViewController.contentViewController =
-        bottomDrawerViewController.contentViewController;
+    bottomDrawerViewController.contentViewController;
     bottomDrawerContainerViewController.headerViewController =
-        bottomDrawerViewController.headerViewController;
+    bottomDrawerViewController.headerViewController;
   } else {
     bottomDrawerContainerViewController.contentViewController = self.presentedViewController;
   }
@@ -92,16 +92,16 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
 
   self.scrimView = [[UIView alloc] initWithFrame:self.containerView.bounds];
   self.scrimView.backgroundColor =
-      self.scrimColor ?: [UIColor colorWithWhite:0 alpha:(CGFloat)0.32];
+  self.scrimColor ?: [UIColor colorWithWhite:0 alpha:(CGFloat)0.32];
   self.scrimView.autoresizingMask =
-      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   self.scrimView.accessibilityIdentifier = @"Close drawer";
   self.scrimView.accessibilityTraits |= UIAccessibilityTraitButton;
 
   [self.containerView addSubview:self.scrimView];
 
   self.topHandle =
-      [[UIView alloc] initWithFrame:CGRectMake(0, 0, kTopHandleWidth, kTopHandleHeight)];
+  [[UIView alloc] initWithFrame:CGRectMake(0, 0, kTopHandleWidth, kTopHandleHeight)];
   self.topHandle.layer.cornerRadius = kTopHandleHeight * (CGFloat)0.5;
   self.topHandle.backgroundColor = self.topHandleColor ?: MDCPalette.greyPalette.tint300;
   self.topHandle.hidden = self.topHandleHidden;
@@ -120,7 +120,7 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
                                attribute:NSLayoutAttributeTop
                               multiplier:1.0
                                 constant:kTopHandleTopMargin]
-      .active = YES;
+  .active = YES;
   [NSLayoutConstraint constraintWithItem:self.topHandle
                                attribute:NSLayoutAttributeCenterX
                                relatedBy:NSLayoutRelationEqual
@@ -128,7 +128,7 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
                                attribute:NSLayoutAttributeCenterX
                               multiplier:1.0
                                 constant:0]
-      .active = YES;
+  .active = YES;
   [NSLayoutConstraint constraintWithItem:self.topHandle
                                attribute:NSLayoutAttributeWidth
                                relatedBy:NSLayoutRelationEqual
@@ -136,7 +136,7 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
                                attribute:NSLayoutAttributeNotAnAttribute
                               multiplier:1.0
                                 constant:kTopHandleWidth]
-      .active = YES;
+  .active = YES;
   [NSLayoutConstraint constraintWithItem:self.topHandle
                                attribute:NSLayoutAttributeHeight
                                relatedBy:NSLayoutRelationEqual
@@ -144,7 +144,7 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
                                attribute:NSLayoutAttributeNotAnAttribute
                               multiplier:1.0
                                 constant:kTopHandleHeight]
-      .active = YES;
+  .active = YES;
   if ([self.presentedViewController isKindOfClass:[MDCBottomDrawerViewController class]]) {
     [self.presentedView addSubview:self.bottomDrawerContainerViewController.view];
     [self.presentedViewController addChildViewController:self.bottomDrawerContainerViewController];
@@ -153,15 +153,15 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   }
 
   id<UIViewControllerTransitionCoordinator> transitionCoordinator =
-      [[self presentingViewController] transitionCoordinator];
+  [[self presentingViewController] transitionCoordinator];
 
   // Fade in the scrim view during the transition.
   self.scrimView.alpha = 0.0;
   [transitionCoordinator
-      animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        self.scrimView.alpha = 1.0;
-      }
-                      completion:nil];
+   animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+     self.scrimView.alpha = 1.0;
+   }
+   completion:nil];
 }
 
 - (void)presentationTransitionDidEnd:(BOOL)completed {
@@ -181,12 +181,12 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
 
 - (void)dismissalTransitionWillBegin {
   id<UIViewControllerTransitionCoordinator> transitionCoordinator =
-      [[self presentingViewController] transitionCoordinator];
+  [[self presentingViewController] transitionCoordinator];
   [transitionCoordinator
-      animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        self.scrimView.alpha = 0.0;
-      }
-                      completion:nil];
+   animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+     self.scrimView.alpha = 0.0;
+   }
+   completion:nil];
 }
 
 - (void)dismissalTransitionDidEnd:(BOOL)completed {
@@ -248,7 +248,7 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
 #pragma mark - MDCBottomDrawerContainerViewControllerDelegate
 
 - (void)bottomDrawerContainerViewControllerWillChangeState:
-            (MDCBottomDrawerContainerViewController *)containerViewController
+(MDCBottomDrawerContainerViewController *)containerViewController
                                                drawerState:(MDCBottomDrawerState)drawerState {
   id<MDCBottomDrawerPresentationControllerDelegate> strongDelegate = self.delegate;
   if ([strongDelegate respondsToSelector:@selector(bottomDrawerWillChangeState:drawerState:)]) {
@@ -257,11 +257,11 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
 }
 
 - (void)bottomDrawerContainerViewControllerTopTransitionRatio:
-            (MDCBottomDrawerContainerViewController *)containerViewController
+(MDCBottomDrawerContainerViewController *)containerViewController
                                               transitionRatio:(CGFloat)transitionRatio {
   id<MDCBottomDrawerPresentationControllerDelegate> strongDelegate = self.delegate;
   if ([strongDelegate respondsToSelector:@selector(bottomDrawerTopTransitionRatio:
-                                                                  transitionRatio:)]) {
+                                                   transitionRatio:)]) {
     [strongDelegate bottomDrawerTopTransitionRatio:self transitionRatio:transitionRatio];
     self.topHandle.alpha = (CGFloat)1.0 - transitionRatio;
   }
@@ -269,6 +269,12 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
 
 - (void)setContentOffsetY:(CGFloat)contentOffsetY animated:(BOOL)animated {
   [self.bottomDrawerContainerViewController setContentOffsetY:contentOffsetY animated:animated];
+}
+
+- (void)presentAtFullscreenWithDuration:(CGFloat)duration
+                             completion:(void (^__nullable)(BOOL finished))completion {
+  [self.bottomDrawerContainerViewController presentAtFullscreenWithDuration:duration
+                                                                 completion:completion];
 }
 
 @end
