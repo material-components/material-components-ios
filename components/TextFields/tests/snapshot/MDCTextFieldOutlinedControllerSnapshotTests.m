@@ -49,7 +49,8 @@
 }
 
 - (void)testOutlinedTextFieldEmptyIsEditing {
-  // self.textField MDCtest_setIsEditing:YES];
+  // When
+  [self.textField MDCtest_setIsEditing:YES];
 
   // Then
   [self generateSnapshotAndVerify];
