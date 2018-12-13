@@ -36,19 +36,19 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
     MDCChipFieldVerticalInset, MDCChipFieldHorizontalInset, MDCChipFieldVerticalInset,
     MDCChipFieldHorizontalInset};
 
-@protocol MDCChipTextFieldDelegate <NSObject>
+@protocol MDCChipFieldTextFieldDelegate <NSObject>
 
 - (void)textFieldShouldRespondToDeleteBackward:(UITextField *)textField;
 
 @end
 
-@interface MDCChipTextField : MDCTextField
+@interface MDCChipFieldTextField : MDCTextField
 
-@property(nonatomic, weak) id<MDCChipTextFieldDelegate> deletionDelegate;
+@property(nonatomic, weak) id<MDCChipFieldTextFieldDelegate> deletionDelegate;
 
 @end
 
-@implementation MDCChipTextField
+@implementation MDCChipFieldTextField
 
 - (CGRect)textRectForBounds:(CGRect)bounds {
   CGRect textRect = [super textRectForBounds:bounds];
@@ -108,7 +108,7 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
 @end
 
 @interface MDCChipField ()
-    <MDCChipTextFieldDelegate, MDCTextInputPositioningDelegate, UITextFieldDelegate>
+    <MDCChipFieldTextFieldDelegate, MDCTextInputPositioningDelegate, UITextFieldDelegate>
 @end
 
 @implementation MDCChipField {
@@ -122,7 +122,7 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
 
     _chips = [NSMutableArray array];
 
-    MDCChipTextField *chipTextField = [[MDCChipTextField alloc] initWithFrame:self.bounds];
+    MDCChipFieldTextField *chipTextField = [[MDCChipFieldTextField alloc] initWithFrame:self.bounds];
     chipTextField.underline.hidden = YES;
     chipTextField.delegate = self;
     chipTextField.deletionDelegate = self;
