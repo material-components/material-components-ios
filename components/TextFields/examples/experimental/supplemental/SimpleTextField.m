@@ -368,6 +368,7 @@
 - (void)setAttributedPlaceholder:(NSAttributedString *)attributedPlaceholder {
   self.placeholderLabel.text = [attributedPlaceholder string];
   self.placeholderLabel.attributedText = [attributedPlaceholder copy];
+  // TODO: Actually support this by incorporating it into the layout calculations
 }
 
 - (NSAttributedString *)attributedPlaceholder {

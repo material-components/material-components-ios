@@ -195,6 +195,7 @@
   self.filledTextField.placeholder = @"This is a placeholder";
   self.filledTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
   self.filledTextField.leadingUnderlineLabel.numberOfLines = 0;
+  self.filledTextField.leadingUnderlineLabel.text = @"This is helper text.";
   [self.scrollView addSubview:self.filledTextField];
 }
 

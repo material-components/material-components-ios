@@ -67,10 +67,10 @@ static CGFloat blendColorChannel(CGFloat value, CGFloat bValue, CGFloat alpha, C
   CGFloat bRed = 0.0, bGreen = 0.0, bBlue = 0.0, bAlpha = 0.0;
   [backgroundColor getRed:&bRed green:&bGreen blue:&bBlue alpha:&bAlpha];
 
-  return [UIColor colorWithRed:blendColorChannel(red, bRed, alpha, bAlpha)  //
+  return [UIColor colorWithRed:blendColorChannel(red, bRed, alpha, bAlpha)
                          green:blendColorChannel(green, bGreen, alpha, bAlpha)
                           blue:blendColorChannel(blue, bBlue, alpha, bAlpha)
-                         alpha:alpha + bAlpha * (1 - alpha)];
+                         alpha:alpha + bAlpha*(1 - alpha)];
 }
 
 #pragma mark - NSCopying
