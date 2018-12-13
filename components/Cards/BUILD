@@ -13,10 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("//:material_components_ios.bzl",
-     "mdc_public_objc_library",
-     "mdc_objc_library",
-     "mdc_unit_test_suite")
+load(
+    "//:material_components_ios.bzl",
+    "mdc_objc_library",
+    "mdc_public_objc_library",
+    "mdc_unit_test_suite",
+)
 load("@build_bazel_rules_apple//apple:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
@@ -30,8 +32,8 @@ mdc_public_objc_library(
     deps = [
         "//components/Ink",
         "//components/ShadowLayer",
-        "//components/private/Math",
         "//components/private/Icons/icons/ic_check_circle",
+        "//components/private/Math",
         "//components/private/ShapeLibrary",
         "//components/private/Shapes",
     ],
@@ -42,12 +44,12 @@ mdc_objc_library(
     srcs = native.glob(["src/CardThemer/*.m"]),
     hdrs = native.glob(["src/CardThemer/*.h"]),
     includes = ["src/CardThemer"],
+    visibility = ["//visibility:public"],
     deps = [
         ":Cards",
         ":ColorThemer",
         ":ShapeThemer",
     ],
-    visibility = ["//visibility:public"],
 )
 
 mdc_objc_library(
@@ -58,11 +60,11 @@ mdc_objc_library(
     sdk_frameworks = [
         "UIKit",
     ],
+    visibility = ["//visibility:public"],
     deps = [
         ":Cards",
         "//components/schemes/Color",
     ],
-    visibility = ["//visibility:public"],
 )
 
 mdc_objc_library(
@@ -73,22 +75,22 @@ mdc_objc_library(
     sdk_frameworks = [
         "UIKit",
     ],
+    visibility = ["//visibility:public"],
     deps = [
         ":Cards",
         "//components/schemes/Shape",
     ],
-    visibility = ["//visibility:public"],
 )
 
 swift_library(
     name = "unit_test_swift_sources",
     srcs = glob(["tests/unit/*.swift"]),
+    visibility = ["//visibility:private"],
     deps = [
         ":Cards",
         ":ColorThemer",
         ":ShapeThemer",
     ],
-    visibility = ["//visibility:private"],
 )
 
 mdc_objc_library(
@@ -102,17 +104,16 @@ mdc_objc_library(
         "UIKit",
         "XCTest",
     ],
+    visibility = ["//visibility:private"],
     deps = [
         ":Cards",
         "//components/private/Icons/icons/ic_info",
     ],
-    visibility = ["//visibility:private"],
 )
 
 mdc_unit_test_suite(
     deps = [
-      ":unit_test_sources",
-      ":unit_test_swift_sources"
+        ":unit_test_sources",
+        ":unit_test_swift_sources",
     ],
 )
-

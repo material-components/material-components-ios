@@ -13,10 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("//:material_components_ios.bzl",
-     "mdc_public_objc_library",
-     "mdc_objc_library",
-     "mdc_unit_test_suite")
+load(
+    "//:material_components_ios.bzl",
+    "mdc_objc_library",
+    "mdc_public_objc_library",
+    "mdc_unit_test_suite",
+)
 
 licenses(["notice"])  # Apache 2.0
 
@@ -27,8 +29,8 @@ mdc_public_objc_library(
         "UIKit",
     ],
     deps = [
-        "//components/Ink",
         "//components/CollectionLayoutAttributes",
+        "//components/Ink",
         "//components/Palettes",
         "//components/Typography",
         "//components/private/Icons",
@@ -66,14 +68,14 @@ mdc_objc_library(
         "UIKit",
         "XCTest",
     ],
+    visibility = ["//visibility:private"],
     deps = [
         ":CollectionCells",
     ],
-    visibility = ["//visibility:private"],
 )
 
 mdc_unit_test_suite(
     deps = [
-      ":unit_test_sources",
+        ":unit_test_sources",
     ],
 )
