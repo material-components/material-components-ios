@@ -13,10 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("//:material_components_ios.bzl",
-     "mdc_public_objc_library",
-     "mdc_objc_library",
-     "mdc_unit_test_suite")
+load(
+    "//:material_components_ios.bzl",
+    "mdc_objc_library",
+    "mdc_public_objc_library",
+    "mdc_unit_test_suite",
+)
 load("@build_bazel_rules_apple//apple:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
@@ -36,13 +38,13 @@ mdc_objc_library(
     srcs = native.glob(["src/Theming/*.m"]),
     hdrs = native.glob(["src/Theming/*.h"]),
     includes = ["src/Theming"],
+    visibility = ["//visibility:public"],
     deps = [
         ":ActionSheet",
         ":ColorThemer",
         ":TypographyThemer",
         "//components/schemes/Container",
     ],
-    visibility = ["//visibility:public"],
 )
 
 mdc_objc_library(
@@ -51,12 +53,12 @@ mdc_objc_library(
     hdrs = native.glob(["src/ActionSheetThemer/*.h"]),
     includes = ["src/ActionSheetThemer"],
     sdk_frameworks = ["UIKit"],
+    visibility = ["//visibility:public"],
     deps = [
         ":ActionSheet",
-        ":TypographyThemer",
         ":ColorThemer",
+        ":TypographyThemer",
     ],
-    visibility = ["//visibility:public"],
 )
 
 mdc_objc_library(
@@ -65,11 +67,11 @@ mdc_objc_library(
     hdrs = native.glob(["src/TypographyThemer/*.h"]),
     includes = ["src/TypographyThemer"],
     sdk_frameworks = ["UIKit"],
+    visibility = ["//visibility:public"],
     deps = [
         ":ActionSheet",
         "//components/schemes/Typography",
     ],
-    visibility = ["//visibility:public"],
 )
 
 mdc_objc_library(
@@ -78,11 +80,11 @@ mdc_objc_library(
     hdrs = native.glob(["src/ColorThemer/*.h"]),
     includes = ["src/ColorThemer"],
     sdk_frameworks = ["UIKit"],
+    visibility = ["//visibility:public"],
     deps = [
         ":ActionSheet",
         "//components/schemes/Color",
     ],
-    visibility = ["//visibility:public"],
 )
 
 mdc_objc_library(
@@ -103,12 +105,12 @@ mdc_objc_library(
 swift_library(
     name = "unit_test_swift_sources",
     srcs = glob(["tests/unit/*.swift"]),
+    visibility = ["//visibility:private"],
     deps = [
         ":ActionSheet",
         ":ColorThemer",
         ":private",
     ],
-    visibility = ["//visibility:private"],
 )
 
 mdc_objc_library(
@@ -123,20 +125,20 @@ mdc_objc_library(
         "CoreImage",
         "XCTest",
     ],
-    deps = [
-         ":ActionSheet",
-         ":Theming",
-         ":ActionSheetThemer",
-         ":ColorThemer",
-         ":TypographyThemer",
-         ":privateHeaders"
-    ],
     visibility = ["//visibility:private"],
+    deps = [
+        ":ActionSheet",
+        ":ActionSheetThemer",
+        ":ColorThemer",
+        ":Theming",
+        ":TypographyThemer",
+        ":privateHeaders",
+    ],
 )
 
 mdc_unit_test_suite(
     deps = [
         ":unit_test_sources",
-        ":unit_test_swift_sources"
-    ]
+        ":unit_test_swift_sources",
+    ],
 )

@@ -12,10 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("//:material_components_ios.bzl",
-     "mdc_public_objc_library",
-     "mdc_objc_library",
-     "mdc_unit_test_suite")
+load(
+    "//:material_components_ios.bzl",
+    "mdc_objc_library",
+    "mdc_public_objc_library",
+    "mdc_unit_test_suite",
+)
 load("@build_bazel_rules_apple//apple:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
@@ -27,8 +29,8 @@ mdc_public_objc_library(
 swift_library(
     name = "unit_test_swift_sources",
     srcs = glob(["tests/unit/*.swift"]),
-    deps = [":Palettes"],
     visibility = ["//visibility:private"],
+    deps = [":Palettes"],
 )
 
 mdc_objc_library(
@@ -39,13 +41,13 @@ mdc_objc_library(
         "UIKit",
         "XCTest",
     ],
-    deps = [":Palettes"],
     visibility = ["//visibility:private"],
+    deps = [":Palettes"],
 )
 
 mdc_unit_test_suite(
     deps = [
-      ":unit_test_sources",
-      ":unit_test_swift_sources",
+        ":unit_test_sources",
+        ":unit_test_swift_sources",
     ],
 )

@@ -12,10 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("//:material_components_ios.bzl",
-     "mdc_public_objc_library",
-     "mdc_objc_library",
-     "mdc_unit_test_suite")
+load(
+    "//:material_components_ios.bzl",
+    "mdc_objc_library",
+    "mdc_public_objc_library",
+    "mdc_unit_test_suite",
+)
 
 licenses(["notice"])  # Apache 2.0
 
@@ -27,8 +29,8 @@ mdc_public_objc_library(
     ],
     deps = [
         "//components/Ink",
-        "//components/ShadowLayer",
         "//components/ShadowElevations",
+        "//components/ShadowLayer",
         "//components/Typography",
         "@material_internationalization_ios//:MDFInternationalization",
     ],
@@ -40,11 +42,11 @@ mdc_objc_library(
     hdrs = native.glob(["src/TypographyThemer/*.h"]),
     includes = ["src/TypographyThemer"],
     sdk_frameworks = ["UIKit"],
+    visibility = ["//visibility:public"],
     deps = [
         ":List",
         "//components/schemes/Typography",
     ],
-    visibility = ["//visibility:public"],
 )
 
 mdc_objc_library(
@@ -53,11 +55,11 @@ mdc_objc_library(
     hdrs = native.glob(["src/ColorThemer/*.h"]),
     includes = ["src/ColorThemer"],
     sdk_frameworks = ["UIKit"],
+    visibility = ["//visibility:public"],
     deps = [
         ":List",
         "//components/schemes/Color",
     ],
-    visibility = ["//visibility:public"],
 )
 
 mdc_objc_library(
@@ -66,12 +68,12 @@ mdc_objc_library(
     hdrs = native.glob(["src/ListThemer/*.h"]),
     includes = ["src/ListThemer"],
     sdk_frameworks = ["UIKit"],
+    visibility = ["//visibility:public"],
     deps = [
+        ":ColorThemer",
         ":List",
         ":TypographyThemer",
-        ":ColorThemer",
     ],
-    visibility = ["//visibility:public"],
 )
 
 mdc_objc_library(
@@ -84,17 +86,17 @@ mdc_objc_library(
         "UIKit",
         "XCTest",
     ],
-    deps = [
-         ":List",
-         ":ListThemer",
-         ":ColorThemer",
-         ":TypographyThemer",
-    ],
     visibility = ["//visibility:private"],
+    deps = [
+        ":ColorThemer",
+        ":List",
+        ":ListThemer",
+        ":TypographyThemer",
+    ],
 )
 
 mdc_unit_test_suite(
     deps = [
         ":unit_test_sources",
-    ]
+    ],
 )
