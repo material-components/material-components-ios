@@ -29,7 +29,7 @@
   MDCTabBar *tabBar = [[MDCTabBar alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"first" image:nil tag:0];
   UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"second" image:nil tag:0];
-  tabBar.items = @[item1, item2];
+  tabBar.items = @[ item1, item2 ];
   [tabBar setNeedsLayout];
   [tabBar layoutIfNeeded];
 
@@ -60,8 +60,7 @@
   CGFloat leftInset = flowLayout.sectionInset.left;
   XCTAssertEqualWithAccuracy(firstItemCell.frame.origin.x, leftInset, FLT_EPSILON);
   XCTAssertEqualWithAccuracy(secondItemCell.frame.origin.x,
-                             leftInset + firstItemCell.frame.size.width,
-                             FLT_EPSILON);
+                             leftInset + firstItemCell.frame.size.width, FLT_EPSILON);
 
   // Adjust the attribute and force a re-layout.
   tabBar.mdf_semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
@@ -88,4 +87,3 @@
 }
 
 @end
-
