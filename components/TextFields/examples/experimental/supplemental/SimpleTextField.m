@@ -34,23 +34,23 @@
 @property(strong, nonatomic) UIColor *clearButtonTintColor;
 
 - (instancetype)initWithColorScheme:(nonnull MDCSemanticColorScheme *)colorScheme
-                 withTextFieldState:(TextFieldState)textFieldState;
+                     textFieldState:(TextFieldState)textFieldState;
 
 @end
 
 @implementation SimpleTextFieldColorAdapter
 
 - (instancetype)initWithColorScheme:(MDCSemanticColorScheme *)colorScheme
-                 withTextFieldState:(TextFieldState)textFieldState {
+                     textFieldState:(TextFieldState)textFieldState {
   self = [super init];
   if (self) {
-    [self assignPropertiesWithColorScheme:colorScheme withTextFieldState:textFieldState];
+    [self assignPropertiesWithColorScheme:colorScheme textFieldState:textFieldState];
   }
   return self;
 }
 
 - (void)assignPropertiesWithColorScheme:(MDCSemanticColorScheme *)colorScheme
-                     withTextFieldState:(TextFieldState)textFieldState {
+                         textFieldState:(TextFieldState)textFieldState {
   UIColor *placeholderLabelColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.60];
   UIColor *underlineLabelColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.60];
   UIColor *outlineColor = colorScheme.onSurfaceColor;
@@ -208,9 +208,8 @@
                        action:@selector(clearButtonPressed:)
              forControlEvents:UIControlEventTouchUpInside];
 
-  CGFloat clearButtonImageViewSideLength = [self clearButtonImageViewSideLength];
   CGRect clearButtonImageViewRect =
-      CGRectMake(0, 0, clearButtonImageViewSideLength, clearButtonImageViewSideLength);
+      CGRectMake(0, 0, kClearButtonImageViewSideLength, kClearButtonImageViewSideLength);
   self.clearButtonImageView = [[UIImageView alloc] initWithFrame:clearButtonImageViewRect];
   UIImage *clearButtonImage =
       [[self untintedClearButtonImage] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
@@ -281,7 +280,7 @@
   self.placeholderState = [self determineCurrentPlaceholderState];
   SimpleTextFieldColorAdapter *colorAdapter =
       [[SimpleTextFieldColorAdapter alloc] initWithColorScheme:self.containerScheme.colorScheme
-                                            withTextFieldState:self.textFieldState];
+                                                textFieldState:self.textFieldState];
   [self applyColorAdapter:colorAdapter];
   [self applyTypographyScheme:self.containerScheme.typographyScheme];
   CGSize fittingSize = CGSizeMake(CGRectGetWidth(self.frame), CGFLOAT_MAX);
@@ -540,12 +539,22 @@
                     systemDefinedHeight);
 }
 
+// TODO: Explain why this confusing implementation is the way it is.
 - (CGRect)leftViewRectForBounds:(CGRect)bounds {
-  return self.layout.leftViewFrame;
+  if ([self isRTL]) {
+    return self.layout.rightViewFrame;
+  } else {
+    return self.layout.leftViewFrame;
+  }
 }
 
+// TODO: Explain why this confusing implementation is the way it is.
 - (CGRect)rightViewRectForBounds:(CGRect)bounds {
-  return self.layout.rightViewFrame;
+  if ([self isRTL]) {
+    return self.layout.leftViewFrame;
+  } else {
+    return self.layout.rightViewFrame;
+  }
 }
 
 - (CGRect)borderRectForBounds:(CGRect)bounds {
@@ -608,9 +617,8 @@
 #pragma mark Clear Button
 
 - (UIImage *)untintedClearButtonImage {
-  CGFloat clearButtonImageViewSideLength = [self clearButtonImageViewSideLength];
   CGSize clearButtonSize =
-      CGSizeMake(clearButtonImageViewSideLength, clearButtonImageViewSideLength);
+      CGSizeMake(kClearButtonImageViewSideLength, kClearButtonImageViewSideLength);
   CGRect rect = CGRectMake(0, 0, clearButtonSize.width, clearButtonSize.height);
   UIGraphicsBeginImageContextWithOptions(rect.size, false, 0);
   [[UIColor blackColor] setFill];
@@ -619,10 +627,6 @@
   UIGraphicsEndImageContext();
   image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   return image;
-}
-
-- (CGFloat)clearButtonImageViewSideLength {
-  return kClearButtonTouchTargetSideLength - kTextRectSidePadding;
 }
 
 // This generated code is taken from the MDCTextField.
@@ -977,9 +981,9 @@
   [path moveToPoint:startingPoint];
   if (isFloatingPlaceholder) {
     CGFloat leftLineBreak =
-        CGRectGetMinX(floatingPlaceholderFrame) - kFloatingPlaceholderSideMargin;
+        CGRectGetMinX(floatingPlaceholderFrame) - kFloatingPlaceholderOutlineSidePadding;
     CGFloat rightLineBreak =
-        CGRectGetMaxX(floatingPlaceholderFrame) + kFloatingPlaceholderSideMargin;
+        CGRectGetMaxX(floatingPlaceholderFrame) + kFloatingPlaceholderOutlineSidePadding;
     [path addLineToPoint:CGPointMake(leftLineBreak, sublayerMinY)];
     [path moveToPoint:CGPointMake(rightLineBreak, sublayerMinY)];
     [path addLineToPoint:CGPointMake(rightLineBreak, sublayerMinY)];

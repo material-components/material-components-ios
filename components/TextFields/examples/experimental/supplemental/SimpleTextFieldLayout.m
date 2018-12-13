@@ -116,14 +116,33 @@
   }
 
   CGFloat clearButtonMinX = 0;
+  CGFloat rightViewWidth = CGRectGetWidth(rightView.frame);
+  CGFloat clearButtonImageViewSideMargin =
+      (kClearButtonTouchTargetSideLength - kClearButtonImageViewSideLength) * 0.5;
   if (shouldAttemptToDisplayClearButton) {
-    CGFloat leftMargin = isRTL ? kLeadingMargin : kTrailingMargin;
-    CGFloat rightMargin = isRTL ? kTrailingMargin : kLeadingMargin;
-    CGFloat lowestPossibleMinX = shouldAttemptToDisplayLeftView ? leftViewMaxX : leftMargin;
-    CGFloat highestPossibleMaxX =
-        shouldAttemptToDisplayRightView ? rightViewMinX : textFieldWidth - rightMargin;
+    // RTL
+    CGFloat uncorrectedVisualLeftMargin = isRTL ? kTrailingMargin : kLeadingMargin;
+    CGFloat correctedVisualLeftMargin = uncorrectedVisualLeftMargin - clearButtonImageViewSideMargin;
+    CGFloat lowestPossibleMinX = 0;
+    if (shouldAttemptToDisplayLeftView) {
+      lowestPossibleMinX = leftViewMaxX + correctedVisualLeftMargin;
+    } else {
+      lowestPossibleMinX = correctedVisualLeftMargin;
+    }
+
+    // LTR
+    CGFloat uncorrectedVisualRightMargin = isRTL ? kLeadingMargin : kTrailingMargin;
+    CGFloat correctedVisualRightMargin = uncorrectedVisualRightMargin - clearButtonImageViewSideMargin;
+    CGFloat highestPossibleMaxX = 0;
+    if (shouldAttemptToDisplayRightView) {
+      highestPossibleMaxX = rightViewMinX - correctedVisualRightMargin;
+    } else {
+      highestPossibleMaxX = textFieldWidth - correctedVisualRightMargin;
+    }
+
     clearButtonMinX = [self clearButtonMinXWithLowestPossibleMinX:lowestPossibleMinX
                                               highestPossibleMaxX:highestPossibleMaxX
+                                                 clearButtonWidth:kClearButtonTouchTargetSideLength
                                                             isRTL:isRTL];
   }
   CGFloat floatingPlaceholderHeight =
@@ -173,28 +192,31 @@
   CGFloat textAreaMinX = 0;
   CGFloat textAreaMaxX = 0;
   if (isRTL) {
-    textAreaMinX = kTrailingMargin;
     if (shouldAttemptToDisplayClearButton) {
-      CGFloat clearButtonMaxX = clearButtonMinX + kClearButtonTouchTargetSideLength;
+      CGFloat clearButtonMaxX = clearButtonMinX + kClearButtonTouchTargetSideLength + clearButtonImageViewSideMargin;
       textAreaMinX = clearButtonMaxX;
     } else if (shouldAttemptToDisplayLeftView) {
-      textAreaMinX = leftViewMaxX + kTextRectSidePadding;
+      textAreaMinX = leftViewMaxX + kTrailingMargin;
+    } else {
+      textAreaMinX = kTrailingMargin;
     }
-
-    textAreaMaxX = textFieldWidth - kLeadingMargin;
     if (shouldAttemptToDisplayRightView) {
-      textAreaMaxX = rightViewMinX - kTextRectSidePadding;
+      textAreaMaxX = rightViewMinX - kLeadingMargin;
+    } else {
+      textAreaMaxX = textFieldWidth - kLeadingMargin;
     }
   } else {
-    textAreaMinX = kLeadingMargin;
     if (shouldAttemptToDisplayLeftView) {
-      textAreaMinX = leftViewMaxX + kTextRectSidePadding;
+      textAreaMinX = leftViewMaxX + kLeadingMargin;
+    } else {
+      textAreaMinX = kLeadingMargin;
     }
-    textAreaMaxX = textFieldWidth - kTrailingMargin;
     if (shouldAttemptToDisplayClearButton) {
-      textAreaMaxX = clearButtonMinX - kTextRectSidePadding;
+      textAreaMaxX = clearButtonMinX - clearButtonImageViewSideMargin;
     } else if (shouldAttemptToDisplayRightView) {
-      textAreaMaxX = rightViewMinX - kTextRectSidePadding;
+      textAreaMaxX = rightViewMinX - kTrailingMargin;
+    } else {
+      textAreaMaxX = textFieldWidth - kTrailingMargin;
     }
   }
 
@@ -203,7 +225,6 @@
   CGFloat textAreaMaxY = textAreaMinY + textAreaHeight;
   CGRect textAreaFrame = CGRectMake(textAreaMinX, textAreaMinY, textAreaWidth, textAreaHeight);
   CGRect leftViewFrame = CGRectMake(leftViewMinX, leftViewMinY, leftViewWidth, leftViewHeight);
-  CGFloat rightViewWidth = CGRectGetWidth(rightView.frame);
   CGRect rightViewFrame = CGRectMake(rightViewMinX, rightViewMinY, rightViewWidth, rightViewHeight);
   CGRect clearButtonFrame =
       CGRectMake(clearButtonMinX, clearButtonMinY, kClearButtonTouchTargetSideLength,
@@ -240,10 +261,10 @@
   if (textFieldStyle == TextFieldStyleOutline) {
     topRowBottomRowDividerY = topRowSubviewCenterY * 2;
   } else if (textFieldStyle == TextFieldStyleFilled) {
-    topRowBottomRowDividerY = topRowSubviewMaxY + kTopRowSubviewVerticalPadding;
+    topRowBottomRowDividerY = topRowSubviewMaxY + kTopRowBottomRowDividerVerticalPadding;
   }
 
-  CGFloat underlineLabelsCombinedMinY = topRowBottomRowDividerY + kUnderlineLabelsTopPadding;
+  CGFloat underlineLabelsCombinedMinY = topRowBottomRowDividerY + kTopRowBottomRowDividerVerticalPadding;
   CGFloat leadingUnderlineLabelWidth = 0;
   CGFloat trailingUnderlineLabelWidth = 0;
   CGSize leadingUnderlineLabelSize = CGSizeZero;
@@ -363,12 +384,13 @@
 
 - (CGFloat)clearButtonMinXWithLowestPossibleMinX:(CGFloat)lowestPossibleMinX
                              highestPossibleMaxX:(CGFloat)highestPossibleMaxX
+                                clearButtonWidth:(CGFloat)clearButtonWidth
                                            isRTL:(BOOL)isRTL {
   CGFloat minX = 0;
   if (isRTL) {
     minX = lowestPossibleMinX;
   } else {
-    minX = highestPossibleMaxX - kClearButtonTouchTargetSideLength;
+    minX = highestPossibleMaxX - clearButtonWidth;
   }
   return minX;
 }
@@ -447,7 +469,7 @@
         floatingPlaceholderMaxY + spaceBetweenPlaceholderAndTextArea;
     return lowestAllowableTextAreaMinY + (0.5 * textAreaHeight);
   } else {
-    CGFloat lowestAllowableTextAreaMinY = kTopRowSubviewVerticalPadding;
+    CGFloat lowestAllowableTextAreaMinY = kTopRowBottomRowDividerVerticalPadding;
     return lowestAllowableTextAreaMinY + (0.5 * textAreaHeight);
   }
 }

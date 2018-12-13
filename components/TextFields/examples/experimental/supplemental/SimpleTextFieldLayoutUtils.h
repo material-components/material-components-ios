@@ -20,19 +20,17 @@ static const CGFloat kFloatingPlaceholderAnimationDuration = 0.15;
 static const CGFloat kLeadingMargin = 12.0;
 static const CGFloat kTrailingMargin = 12.0;
 
+static const CGFloat kFloatingPlaceholderOutlineSidePadding = 5.0;
+static const CGFloat kFloatingPlaceholderXOffsetFromTextArea = 3.0;
+
 static const CGFloat kFilledTextFieldTopCornerRadius = 4.0;
 static const CGFloat kOutlinedTextFieldCornerRadius = 4.0;
-static const CGFloat kFloatingPlaceholderSideMargin = 5.0;
-static const CGFloat kFloatingPlaceholderXOffsetFromTextArea = 3.0;
-static const CGFloat kTopMargin = 5.0;
 
 static const CGFloat kClearButtonTouchTargetSideLength = 30.0;
-static const CGFloat kTextRectSidePadding = 12.0;
+static const CGFloat kClearButtonImageViewSideLength = 18.0;
 
-static const CGFloat kUnderlineLabelsTopPadding = 8.0;
-static const CGFloat kTopRowSubviewVerticalPadding = 10.0;
-
-static const UIControlState UIControlStateError = 1 << 10;
+static const CGFloat kTopMargin = 5.0;
+static const CGFloat kTopRowBottomRowDividerVerticalPadding = 9.0;
 
 /**
  TextFieldStyle dictates what type of text field it will be from a cosmetic standpoint. The values

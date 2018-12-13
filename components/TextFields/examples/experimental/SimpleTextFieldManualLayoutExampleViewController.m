@@ -211,13 +211,7 @@
   self.uiTextField = [[UITextField alloc] init];
   self.uiTextField.borderStyle = UITextBorderStyleRoundedRect;
   self.uiTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-  self.uiTextField.leftViewMode = UITextFieldViewModeNever;
 
-  CGRect accessoryViewFrame = CGRectMake(0, 0, 20, 20);
-  UILabel *accessoryView = [[UILabel alloc] initWithFrame:accessoryViewFrame];
-  accessoryView.backgroundColor = [UIColor magentaColor];
-  accessoryView.text = @"L";
-  self.uiTextField.leftView = accessoryView;
 
   [self.scrollView addSubview:self.uiTextField];
 }
