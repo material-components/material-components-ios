@@ -40,9 +40,6 @@
   //  self.recordMode = YES;
 
   self.textField.clearButtonMode = UITextFieldViewModeAlways;
-
-  self.textFieldController =
-      [[MDCTextInputControllerOutlined alloc] initWithTextInput:self.textField];
   self.textFieldController.characterCountViewMode = UITextFieldViewModeAlways;
   self.textFieldController.characterCountMax = 50;
 
