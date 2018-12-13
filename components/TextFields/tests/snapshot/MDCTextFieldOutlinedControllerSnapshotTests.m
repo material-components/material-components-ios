@@ -12,13 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCTextFieldSnapshotTestCase.h"
+#import "MDCTextFieldOutlinedControllerSnapshotTests.h"
 #import "MDCTextFieldSnapshotTestsStrings.h"
-#import "MaterialTextFields.h"
-
-@interface MDCTextFieldOutlinedControllerSnapshotTests : MDCTextFieldSnapshotTestCase
-@property(nonatomic, strong) MDCTextInputControllerOutlined *textFieldController;
-@end
 
 @implementation MDCTextFieldOutlinedControllerSnapshotTests
 
