@@ -33,6 +33,10 @@ mdc_public_objc_library(
 swift_library(
     name = "unit_test_swift_sources",
     srcs = glob(["tests/unit/*.swift"]),
+    copts = [
+        "-swift-version",
+        "3",
+    ],
     visibility = ["//visibility:private"],
     deps = [":LibraryInfo"],
 )
