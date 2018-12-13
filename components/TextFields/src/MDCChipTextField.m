@@ -34,12 +34,13 @@
     _chipsView.backgroundColor = [UIColor yellowColor];
     self.leftView = _chipsView;
 
-    // question: i think observers need to be released when the element is dallocated?
-    //           does it make more sense in this case to add it as a target action?
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(chipTextFieldTextDidChange:)
-                                                 name:UITextFieldTextDidChangeNotification
-                                               object:self];
+    [self addTarget:self
+             action:@selector(chipTextFieldTextDidChange)
+   forControlEvents:UIControlEventEditingChanged];
+    // TODO: Adding this target action causes the textfield to resign first responder on return, why?
+    [self addTarget:self
+             action:@selector(chipTextFieldDidReturn)
+   forControlEvents:UIControlEventEditingDidEndOnExit];
 
     _chips = [NSMutableArray array];
   }
@@ -75,7 +76,7 @@
   self.leftViewMode = UITextFieldViewModeAlways;
 }
 
-- (void)chipTextFieldTextDidChange:(__unused NSNotification *)note {
+- (void)chipTextFieldTextDidChange {
   [self deselectAllChips];
 
   if (self.text.length) {
@@ -88,6 +89,10 @@
   }
 
   [self setupEditingRect];
+}
+
+- (void)chipTextFieldDidReturn {
+  NSLog(@"return pressed");
 }
 
 - (void)setupEditingRect {
