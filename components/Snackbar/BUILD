@@ -13,10 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("//:material_components_ios.bzl",
-     "mdc_public_objc_library",
-     "mdc_objc_library",
-     "mdc_unit_test_suite")
+load(
+    "//:material_components_ios.bzl",
+    "mdc_objc_library",
+    "mdc_public_objc_library",
+    "mdc_unit_test_suite",
+)
 load("@build_bazel_rules_apple//apple:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
@@ -61,11 +63,11 @@ mdc_objc_library(
     sdk_frameworks = [
         "UIKit",
     ],
+    visibility = ["//visibility:public"],
     deps = [
         ":Snackbar",
         "//components/schemes/Color",
     ],
-    visibility = ["//visibility:public"],
 )
 
 mdc_objc_library(
@@ -76,11 +78,11 @@ mdc_objc_library(
     sdk_frameworks = [
         "UIKit",
     ],
+    visibility = ["//visibility:public"],
     deps = [
         ":Snackbar",
         "//components/Themes",
     ],
-    visibility = ["//visibility:public"],
 )
 
 mdc_objc_library(
@@ -88,11 +90,11 @@ mdc_objc_library(
     srcs = native.glob(["src/TypographyThemer/*.m"]),
     hdrs = native.glob(["src/TypographyThemer/*.h"]),
     includes = ["src/TypographyThemer"],
+    visibility = ["//visibility:public"],
     deps = [
         ":Snackbar",
         "//components/schemes/Typography",
     ],
-    visibility = ["//visibility:public"],
 )
 
 mdc_objc_library(
@@ -105,13 +107,13 @@ mdc_objc_library(
 swift_library(
     name = "unit_test_swift_sources",
     srcs = glob(["tests/unit/*.swift"]),
-    deps = [
-        ":Snackbar",
-        ":private",
-        ":ColorThemer",
-        ":TypographyThemer",
-    ],
     visibility = ["//visibility:private"],
+    deps = [
+        ":ColorThemer",
+        ":Snackbar",
+        ":TypographyThemer",
+        ":private",
+    ],
 )
 
 mdc_objc_library(
@@ -127,19 +129,18 @@ mdc_objc_library(
         "UIKit",
         "XCTest",
     ],
+    visibility = ["//visibility:private"],
     deps = [
-        ":Snackbar",
         ":ColorThemer",
         ":FontThemer",
+        ":Snackbar",
         ":private",
     ],
-    visibility = ["//visibility:private"],
 )
 
 mdc_unit_test_suite(
     deps = [
-      ":unit_test_sources",
-      ":unit_test_swift_sources",
+        ":unit_test_sources",
+        ":unit_test_swift_sources",
     ],
 )
-

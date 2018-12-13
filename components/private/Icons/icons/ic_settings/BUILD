@@ -10,12 +10,12 @@
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
 # implied.
-# See the License for the specific language governing permissions and 
+# See the License for the specific language governing permissions and
 # limitations under the License.
 
 load("//:material_components_ios.bzl", "mdc_public_objc_library")
 
-licenses(["notice"])  # Apache 2.0 
+licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
     name = "ic_settings",
@@ -33,4 +33,3 @@ objc_bundle(
     name = "Bundle",
     bundle_imports = [":BundleFiles"],
 )
-

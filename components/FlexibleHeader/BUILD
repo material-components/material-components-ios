@@ -12,10 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("//:material_components_ios.bzl",
-     "mdc_public_objc_library",
-     "mdc_objc_library",
-     "mdc_unit_test_suite")
+load(
+    "//:material_components_ios.bzl",
+    "mdc_objc_library",
+    "mdc_public_objc_library",
+    "mdc_unit_test_suite",
+)
 load("@build_bazel_rules_apple//apple:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
@@ -27,9 +29,9 @@ mdc_public_objc_library(
         "UIKit",
     ],
     deps = [
-      "//components/private/Application",
-      "//components/private/UIMetrics",
-      "@material_text_accessibility_ios//:MDFTextAccessibility",
+        "//components/private/Application",
+        "//components/private/UIMetrics",
+        "@material_text_accessibility_ios//:MDFTextAccessibility",
     ],
 )
 
@@ -41,11 +43,11 @@ mdc_objc_library(
     sdk_frameworks = [
         "UIKit",
     ],
+    visibility = ["//visibility:public"],
     deps = [
         ":FlexibleHeader",
         "//components/schemes/Color",
     ],
-    visibility = ["//visibility:public"],
 )
 
 mdc_objc_library(
@@ -70,21 +72,21 @@ mdc_objc_library(
     sdk_frameworks = [
         "UIKit",
     ],
+    visibility = ["//visibility:public"],
     deps = [
         ":FlexibleHeader",
     ],
-    visibility = ["//visibility:public"],
 )
 
 swift_library(
     name = "unit_test_swift_sources",
     srcs = glob(["tests/unit/*.swift"]),
-    deps = [
-        ":FlexibleHeader",
-        ":ColorThemer",
-        ":CanAlwaysExpandToMaximumHeight",
-    ],
     visibility = ["//visibility:private"],
+    deps = [
+        ":CanAlwaysExpandToMaximumHeight",
+        ":ColorThemer",
+        ":FlexibleHeader",
+    ],
 )
 
 mdc_objc_library(
@@ -100,18 +102,18 @@ mdc_objc_library(
         "UIKit",
         "XCTest",
     ],
-    deps = [
-        ":private",
-        ":FlexibleHeader",
-        ":ColorThemer",
-        ":CanAlwaysExpandToMaximumHeight",
-    ],
     visibility = ["//visibility:private"],
+    deps = [
+        ":CanAlwaysExpandToMaximumHeight",
+        ":ColorThemer",
+        ":FlexibleHeader",
+        ":private",
+    ],
 )
 
 mdc_unit_test_suite(
     deps = [
-      ":unit_test_sources",
-      ":unit_test_swift_sources"
+        ":unit_test_sources",
+        ":unit_test_swift_sources",
     ],
 )
