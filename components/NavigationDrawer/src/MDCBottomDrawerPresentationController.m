@@ -191,9 +191,6 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
 
 - (void)dismissalTransitionDidEnd:(BOOL)completed {
   if (completed) {
-    if ([self.presentedViewController isKindOfClass:[MDCBottomDrawerViewController class]]) {
-      [self.bottomDrawerContainerViewController removeFromParentViewController];
-    }
     [self.scrimView removeFromSuperview];
     [self.topHandle removeFromSuperview];
   }

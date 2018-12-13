@@ -495,6 +495,10 @@ static UIColor *DrawerShadowColor(void) {
 - (void)viewDidDisappear:(BOOL)animated {
   [super viewDidDisappear:animated];
 
+  [self willMoveToParentViewController:nil];
+  [self.view removeFromSuperview];
+  [self removeFromParentViewController];
+
   [self removeScrollViewObserver];
   [self.headerShadowLayer removeFromSuperlayer];
   self.headerShadowLayer = nil;
