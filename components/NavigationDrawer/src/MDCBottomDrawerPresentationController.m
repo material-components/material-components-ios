@@ -271,9 +271,9 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   [self.bottomDrawerContainerViewController setContentOffsetY:contentOffsetY animated:animated];
 }
 
-- (void)presentAtFullscreenWithDuration:(CGFloat)duration
+- (void)expandToFullscreenWithDuration:(CGFloat)duration
                              completion:(void (^__nullable)(BOOL finished))completion {
-  [self.bottomDrawerContainerViewController presentAtFullscreenWithDuration:duration
+  [self.bottomDrawerContainerViewController expandToFullscreenWithDuration:duration
                                                                  completion:completion];
 }
 

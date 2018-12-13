@@ -115,8 +115,8 @@ class PresentFullscreenContentViewController: UITableViewController {
 
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
-    drawerVC.presentAtFullscreen(withDuration: 0.2, completion: { (completed: Bool) in
-      print("finished presenting");
+    drawerVC.expandToFullscreen(withDuration: 4.0, completion: { _ in
+      print("finished expanding");
     })
   }
 
@@ -130,7 +130,6 @@ extension BottomDrawerPresentFullscreenExample {
       "description": "Navigation Drawer",
       "primaryDemo": true,
       "presentable": true,
-      "debug": true,
     ]
   }
 }

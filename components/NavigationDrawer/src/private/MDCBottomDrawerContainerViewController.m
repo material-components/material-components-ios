@@ -383,7 +383,7 @@ static UIColor *DrawerShadowColor(void) {
   _scrollToContentOffsetY = 0;
 }
 
-- (void)presentAtFullscreenWithDuration:(CGFloat)duration
+- (void)expandToFullscreenWithDuration:(CGFloat)duration
                              completion:(void (^__nullable)(BOOL finished))completion {
   _contentHeaderTopInset = NSNotFound;
   _contentHeightSurplus = NSNotFound;
