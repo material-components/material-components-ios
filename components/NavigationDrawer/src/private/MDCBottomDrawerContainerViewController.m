@@ -384,7 +384,7 @@ static UIColor *DrawerShadowColor(void) {
 }
 
 - (void)expandToFullscreenWithDuration:(CGFloat)duration
-                             completion:(void (^__nullable)(BOOL finished))completion {
+                            completion:(void (^__nullable)(BOOL finished))completion {
   _contentHeaderTopInset = NSNotFound;
   _contentHeightSurplus = NSNotFound;
   _addedContentHeight = NSNotFound;

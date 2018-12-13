@@ -585,11 +585,12 @@
   // Then
   [self.drawerViewController expandToFullscreenWithDuration:(CGFloat)0.2
                                                  completion:^(BOOL completed) {
-    [expectation fulfill];
-  }];
+                                                   [expectation fulfill];
+                                                 }];
   [self waitForExpectationsWithTimeout:1 handler:nil];
 
-  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.trackingScrollView.frame.origin.y, 0, (CGFloat)0.01);
+  XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.trackingScrollView.frame.origin.y, 0,
+                             (CGFloat)0.01);
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.scrollView.frame.origin.y, 0, (CGFloat)0.01);
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 20, (CGFloat)0.01);
 }

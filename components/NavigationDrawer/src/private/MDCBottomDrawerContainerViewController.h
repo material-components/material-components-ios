@@ -123,7 +123,6 @@
  */
 - (void)setContentOffsetY:(CGFloat)contentOffsetY animated:(BOOL)animated;
 
-
 /**
  Expands the drawer to fullscreen with animation.
 
@@ -139,6 +138,6 @@
  this block is performed at the beginning of the next run loop cycle. This parameter may be NULL.
  */
 - (void)expandToFullscreenWithDuration:(CGFloat)duration
-                             completion:(void (^__nullable)(BOOL finished))completion;
+                            completion:(void (^__nullable)(BOOL finished))completion;
 
 @end
