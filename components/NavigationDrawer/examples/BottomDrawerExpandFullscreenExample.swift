@@ -19,12 +19,12 @@ import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialNavigationDrawer
 import MaterialComponents.MaterialNavigationDrawer_ColorThemer
 
-class BottomDrawerPresentFullscreenExample: UIViewController {
+class BottomDrawerExpandFullscreenExample: UIViewController {
   var colorScheme = MDCSemanticColorScheme()
   let bottomAppBar = MDCBottomAppBarView()
 
   let headerViewController = DrawerHeaderViewController()
-  let contentViewController = PresentFullscreenContentViewController()
+  let contentViewController = ExpandFullscreenContentViewController()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -74,7 +74,7 @@ class BottomDrawerPresentFullscreenExample: UIViewController {
   }
 }
 
-class PresentFullscreenContentViewController: UITableViewController {
+class ExpandFullscreenContentViewController: UITableViewController {
   var colorScheme: MDCSemanticColorScheme!
   weak var drawerVC: MDCBottomDrawerViewController!
 
@@ -115,18 +115,18 @@ class PresentFullscreenContentViewController: UITableViewController {
 
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
-    drawerVC.expandToFullscreen(withDuration: 4.0, completion: { _ in
+    drawerVC.expandToFullscreen(withDuration: 0.2, completion: { _ in
       print("finished expanding");
     })
   }
 
 }
 
-extension BottomDrawerPresentFullscreenExample {
+extension BottomDrawerExpandFullscreenExample {
 
   class func catalogMetadata() -> [String: Any] {
     return [
-      "breadcrumbs": ["Navigation Drawer", "BottomDrawer Present at Fullscreen Example"],
+      "breadcrumbs": ["Navigation Drawer", "Expand to Fullscreen Example"],
       "description": "Navigation Drawer",
       "primaryDemo": true,
       "presentable": true,
