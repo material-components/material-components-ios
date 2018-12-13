@@ -59,9 +59,6 @@
 }
 
 - (void)testFilledFloatingTextFieldEmpty {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textFieldController.floatingEnabled = YES;
 
@@ -70,9 +67,6 @@
 }
 
 - (void)testFilledFloatingTextFieldEmptyIsEditing {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textFieldController.floatingEnabled = YES;
   [self.textField MDCtest_setIsEditing:YES];
@@ -101,9 +95,6 @@
 }
 
 - (void)testFilledFloatingTextFieldWithShortPlaceholderText {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textFieldController.floatingEnabled = YES;
   self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderShortTextLatin;
@@ -113,9 +104,6 @@
 }
 
 - (void)testFilledFloatingTextFieldWithShortPlaceholderTextIsEditing {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textFieldController.floatingEnabled = YES;
   self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderShortTextLatin;
@@ -143,9 +131,6 @@
 }
 
 - (void)testFilledFloatingTextFieldWithLongPlaceholderText {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
 
   // When
@@ -157,9 +142,6 @@
 }
 
 - (void)testFilledFloatingTextFieldWithLongPlaceholderTextIsEditing {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textFieldController.floatingEnabled = YES;
   self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderLongTextLatin;
@@ -187,9 +169,6 @@
 }
 
 - (void)testFilledFloatingTextFieldWithShortHelperText {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textFieldController.floatingEnabled = YES;
   self.textFieldController.helperText = MDCTextFieldSnapshotTestsHelperShortTextLatin;
@@ -199,9 +178,6 @@
 }
 
 - (void)testFilledFloatingTextFieldWithShortHelperTextIsEditing {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textFieldController.floatingEnabled = YES;
   self.textFieldController.helperText = MDCTextFieldSnapshotTestsHelperShortTextLatin;
@@ -229,9 +205,6 @@
 }
 
 - (void)testFilledFloatingTextFieldWithLongHelperText {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textFieldController.floatingEnabled = YES;
   self.textFieldController.helperText = MDCTextFieldSnapshotTestsHelperLongTextLatin;
@@ -241,9 +214,6 @@
 }
 
 - (void)testFilledFloatingTextFieldWithLongHelperTextIsEditing {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textFieldController.floatingEnabled = YES;
   self.textFieldController.helperText = MDCTextFieldSnapshotTestsHelperLongTextLatin;
@@ -273,9 +243,6 @@
 }
 
 - (void)testFilledFloatingTextFieldWithShortErrorText {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textFieldController.floatingEnabled = YES;
   [self.textFieldController setErrorText:MDCTextFieldSnapshotTestsErrorShortTextLatin
@@ -286,9 +253,6 @@
 }
 
 - (void)testFilledFloatingTextFieldWithShortErrorTextIsEditing {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textFieldController.floatingEnabled = YES;
   [self.textFieldController setErrorText:MDCTextFieldSnapshotTestsErrorShortTextLatin
@@ -319,9 +283,6 @@
 }
 
 - (void)testFilledFloatingTextFieldWithLongErrorText {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textFieldController.floatingEnabled = YES;
   [self.textFieldController setErrorText:MDCTextFieldSnapshotTestsErrorLongTextLatin
@@ -332,9 +293,6 @@
 }
 
 - (void)testFilledFloatingTextFieldWithLongErrorTextIsEditing {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textFieldController.floatingEnabled = YES;
   [self.textFieldController setErrorText:MDCTextFieldSnapshotTestsErrorLongTextLatin
@@ -363,9 +321,6 @@
 }
 
 - (void)testFilledFloatingTextFieldWithShortInputText {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textFieldController.floatingEnabled = YES;
   self.textField.text = MDCTextFieldSnapshotTestsInputShortTextLatin;
@@ -375,9 +330,6 @@
 }
 
 - (void)testFilledFloatingTextFieldWithShortInputTextIsEditing {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textFieldController.floatingEnabled = YES;
   self.textField.text = MDCTextFieldSnapshotTestsInputShortTextLatin;
@@ -405,9 +357,6 @@
 }
 
 - (void)testFilledFloatingTextFieldWithLongInputText {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textFieldController.floatingEnabled = YES;
   self.textField.text = MDCTextFieldSnapshotTestsInputLongTextLatin;
@@ -417,9 +366,6 @@
 }
 
 - (void)testFilledFloatingTextFieldWithLongInputTextIsEditing {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textFieldController.floatingEnabled = YES;
   self.textField.text = MDCTextFieldSnapshotTestsInputLongTextLatin;
@@ -453,9 +399,6 @@
 }
 
 - (void)testFilledFloatingTextFieldWithShortInputPlaceholderHelperTexts {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textFieldController.floatingEnabled = YES;
   self.textField.text = MDCTextFieldSnapshotTestsInputShortTextLatin;
@@ -467,9 +410,6 @@
 }
 
 - (void)testFilledFloatingTextFieldWithShortInputPlaceholderHelperTextsIsEditing {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textFieldController.floatingEnabled = YES;
   self.textField.text = MDCTextFieldSnapshotTestsInputShortTextLatin;
@@ -503,9 +443,6 @@
 }
 
 - (void)testFilledFloatingTextFieldWithLongInputPlaceholderHelperTexts {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textFieldController.floatingEnabled = YES;
   self.textField.text = MDCTextFieldSnapshotTestsInputLongTextLatin;
@@ -517,9 +454,6 @@
 }
 
 - (void)testFilledFloatingTextFieldWithLongInputPlaceholderHelperTextsIsEditing {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textFieldController.floatingEnabled = YES;
   self.textField.text = MDCTextFieldSnapshotTestsInputLongTextLatin;
@@ -555,9 +489,6 @@
 }
 
 - (void)testFilledFloatingTextFieldWithShortInputPlaceholderErrorTexts {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textFieldController.floatingEnabled = YES;
   self.textField.text = MDCTextFieldSnapshotTestsInputShortTextLatin;
@@ -570,9 +501,6 @@
 }
 
 - (void)testFilledFloatingTextFieldWithShortInputPlaceholderErrorTextsIsEditing {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textFieldController.floatingEnabled = YES;
   self.textField.text = MDCTextFieldSnapshotTestsInputShortTextLatin;
@@ -609,9 +537,6 @@
 }
 
 - (void)testFilledFloatingTextFieldWithLongInputPlaceholderErrorTexts {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textFieldController.floatingEnabled = YES;
   self.textField.text = MDCTextFieldSnapshotTestsInputLongTextLatin;
@@ -624,9 +549,6 @@
 }
 
 - (void)testFilledFloatingTextFieldWithLongInputPlaceholderErrorTextsIsEditing {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textFieldController.floatingEnabled = YES;
   self.textField.text = MDCTextFieldSnapshotTestsInputLongTextLatin;
