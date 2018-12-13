@@ -28,6 +28,10 @@
 - (void)setUp {
   [super setUp];
 
+  // Uncomment below to recreate the golden images for all test methods. Add it to a test method to
+  // update only that golden image.
+  //  self.recordMode = YES;
+
   self.textField.clearButtonMode = UITextFieldViewModeAlways;
 
   self.textFieldController =
@@ -53,17 +57,11 @@
 #pragma mark - Tests
 
 - (void)testOutlinedTextFieldEmpty {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // Then
   [self generateSnapshotAndVerify];
 }
 
 - (void)testOutlinedTextFieldEmptyIsEditing {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   [self.textField MDCtest_setIsEditing:YES];
 
@@ -74,9 +72,6 @@
 #pragma mark - Single field tests
 
 - (void)testOutlinedTextFieldWithShortPlaceholderText {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderShortTextLatin;
 
@@ -85,9 +80,6 @@
 }
 
 - (void)testOutlinedTextFieldWithShortPlaceholderTextIsEditing {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderShortTextLatin;
   self.textField.text = MDCTextFieldSnapshotTestsInputShortTextLatin;
@@ -97,9 +89,6 @@
 }
 
 - (void)testOutlinedTextFieldWithLongPlaceholderText {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderLongTextLatin;
 
@@ -108,9 +97,6 @@
 }
 
 - (void)testOutlinedTextFieldWithLongPlaceholderTextIsEditing {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderLongTextLatin;
   [self.textField MDCtest_setIsEditing:YES];
@@ -120,9 +106,6 @@
 }
 
 - (void)testOutlinedTextFieldWithShortHelperText {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textFieldController.helperText = MDCTextFieldSnapshotTestsHelperShortTextLatin;
 
@@ -131,9 +114,6 @@
 }
 
 - (void)testOutlinedTextFieldWithShortHelperTextIsEditing {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textFieldController.helperText = MDCTextFieldSnapshotTestsHelperShortTextLatin;
   [self.textField MDCtest_setIsEditing:YES];
@@ -143,9 +123,6 @@
 }
 
 - (void)testOutlinedTextFieldWithLongHelperText {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textFieldController.helperText = MDCTextFieldSnapshotTestsHelperLongTextLatin;
 
@@ -154,9 +131,6 @@
 }
 
 - (void)testOutlinedTextFieldWithLongHelperTextIsEditing {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textFieldController.helperText = MDCTextFieldSnapshotTestsHelperLongTextLatin;
   [self.textField MDCtest_setIsEditing:YES];
@@ -166,9 +140,6 @@
 }
 
 - (void)testOutlinedTextFieldWithShortErrorText {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   [self.textFieldController setErrorText:MDCTextFieldSnapshotTestsErrorShortTextLatin
                  errorAccessibilityValue:MDCTextFieldSnapshotTestsErrorShortTextLatin];
@@ -178,9 +149,6 @@
 }
 
 - (void)testOutlinedTextFieldWithShortErrorTextIsEditing {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   [self.textFieldController setErrorText:MDCTextFieldSnapshotTestsErrorShortTextLatin
                  errorAccessibilityValue:MDCTextFieldSnapshotTestsErrorShortTextLatin];
@@ -191,9 +159,6 @@
 }
 
 - (void)testOutlinedTextFieldWithLongErrorText {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   [self.textFieldController setErrorText:MDCTextFieldSnapshotTestsErrorLongTextLatin
                  errorAccessibilityValue:MDCTextFieldSnapshotTestsErrorLongTextLatin];
@@ -203,9 +168,6 @@
 }
 
 - (void)testOutlinedTextFieldWithLongErrorTextIsEditing {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   [self.textFieldController setErrorText:MDCTextFieldSnapshotTestsErrorLongTextLatin
                  errorAccessibilityValue:MDCTextFieldSnapshotTestsErrorLongTextLatin];
@@ -216,9 +178,6 @@
 }
 
 - (void)testOutlinedTextFieldWithShortInputText {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textField.text = MDCTextFieldSnapshotTestsInputShortTextLatin;
 
@@ -227,9 +186,6 @@
 }
 
 - (void)testOutlinedTextFieldWithShortInputTextIsEditing {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textField.text = MDCTextFieldSnapshotTestsInputShortTextLatin;
   [self.textField MDCtest_setIsEditing:YES];
@@ -239,9 +195,6 @@
 }
 
 - (void)testOutlinedTextFieldWithLongInputText {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textField.text = MDCTextFieldSnapshotTestsInputLongTextLatin;
 
@@ -250,9 +203,6 @@
 }
 
 - (void)testOutlinedTextFieldWithLongInputTextIsEditing {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textField.text = MDCTextFieldSnapshotTestsInputLongTextLatin;
   [self.textField MDCtest_setIsEditing:YES];
@@ -264,9 +214,6 @@
 #pragma mark - Multiple field tests
 
 - (void)testOutlinedTextFieldWithShortInputPlaceholderHelperTexts {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textField.text = MDCTextFieldSnapshotTestsInputShortTextLatin;
   self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderShortTextLatin;
@@ -277,9 +224,6 @@
 }
 
 - (void)testOutlinedTextFieldWithShortInputPlaceholderHelperTextsIsEditing {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textField.text = MDCTextFieldSnapshotTestsInputShortTextLatin;
   self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderShortTextLatin;
@@ -291,9 +235,6 @@
 }
 
 - (void)testOutlinedTextFieldWithLongInputPlaceholderHelperTexts {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textField.text = MDCTextFieldSnapshotTestsInputLongTextLatin;
   self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderLongTextLatin;
@@ -304,9 +245,6 @@
 }
 
 - (void)testOutlinedTextFieldWithLongInputPlaceholderHelperTextsIsEditing {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textField.text = MDCTextFieldSnapshotTestsInputLongTextLatin;
   self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderLongTextLatin;
@@ -318,9 +256,6 @@
 }
 
 - (void)testOutlinedTextFieldWithShortInputPlaceholderErrorTexts {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textField.text = MDCTextFieldSnapshotTestsInputShortTextLatin;
   self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderShortTextLatin;
@@ -332,9 +267,6 @@
 }
 
 - (void)testOutlinedTextFieldWithShortInputPlaceholderErrorTextsIsEditing {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textField.text = MDCTextFieldSnapshotTestsInputShortTextLatin;
   self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderShortTextLatin;
@@ -347,9 +279,6 @@
 }
 
 - (void)testOutlinedTextFieldWithLongInputPlaceholderErrorTexts {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textField.text = MDCTextFieldSnapshotTestsInputLongTextLatin;
   self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderLongTextLatin;
@@ -361,9 +290,6 @@
 }
 
 - (void)testOutlinedTextFieldWithLongInputPlaceholderErrorTextsIsEditing {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textField.text = MDCTextFieldSnapshotTestsInputLongTextLatin;
   self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderLongTextLatin;
