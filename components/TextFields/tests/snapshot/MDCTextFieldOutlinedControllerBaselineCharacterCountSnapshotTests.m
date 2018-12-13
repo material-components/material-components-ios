@@ -18,7 +18,6 @@
 #import "MaterialTextFields+ColorThemer.h"
 #import "MaterialTextFields+TypographyThemer.h"
 
-
 /**
  Snapshot tests for MDCTextInputControllerOutlined with:
 
@@ -27,8 +26,8 @@
  + Character counts always shown.
 
  */
-@interface MDCTextFieldOutlinedControllerBaselineCharacterCountSnapshotTests :
-    MDCTextFieldOutlinedControllerSnapshotTests
+@interface MDCTextFieldOutlinedControllerBaselineCharacterCountSnapshotTests
+    : MDCTextFieldOutlinedControllerSnapshotTests
 
 @end
 
@@ -38,7 +37,7 @@
   [super setUp];
   // Uncomment below to recreate the golden images for all test methods. Add it to a test method to
   // update only that golden image.
-  //  self.recordMode = YES;
+//    self.recordMode = YES;
 
   self.textField.clearButtonMode = UITextFieldViewModeAlways;
 
@@ -59,6 +58,6 @@
   [MDCTextFieldTypographyThemer applyTypographyScheme:typographyScheme toTextInput:self.textField];
 }
 
-// NOTE: All actual test methods are defined in MDCTextFieldOutlinedControllerSnapshotTests.
+// NOTE: All actual test methods are defined in MDCTextFieldOutlinedControllerSnapshotTests.m
 
 @end
