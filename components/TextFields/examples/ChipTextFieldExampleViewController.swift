@@ -16,13 +16,17 @@ import UIKit
 
 class ChipTextFieldExampleViewController: UIViewController {
 
-  let textField = MDCChipTextField()
+  let chipTextField = MDCChipTextField()
+  let chipInputController: MDCTextInputControllerOutlined
+  let textField = MDCTextField()
   let inputController: MDCTextInputControllerOutlined
   let resignButton = MDCButton()
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    chipInputController = MDCTextInputControllerOutlined(textInput: chipTextField)
+    chipInputController.placeholderText = "With Chips"
     inputController = MDCTextInputControllerOutlined(textInput: textField)
-    inputController.placeholderText = "Name"
+    inputController.placeholderText = "Regular"
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
 
@@ -38,11 +42,30 @@ class ChipTextFieldExampleViewController: UIViewController {
   }
 
   func setupExample() {
-    textField.translatesAutoresizingMaskIntoConstraints = false
-    textField.backgroundColor = .white
+    chipTextField.translatesAutoresizingMaskIntoConstraints = false
+    chipTextField.backgroundColor = .white
 
     // when on, enter responds to auto-correction which is confusing when we're trying to create "chips"
-    textField.autocorrectionType = UITextAutocorrectionType.no
+    chipTextField.autocorrectionType = UITextAutocorrectionType.no
+    view.addSubview(chipTextField)
+
+    // position the textfield somewhere in the screen
+    if #available(iOSApplicationExtension 11.0, *) {
+      let guide = view.safeAreaLayoutGuide
+      chipTextField.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: 20.0).isActive = true
+      chipTextField.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -20.0).isActive = true
+      chipTextField.topAnchor.constraint(equalTo: guide.topAnchor, constant: 40.0).isActive = true
+    } else if #available(iOSApplicationExtension 9.0, *) {
+      chipTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20.0).isActive = true
+      chipTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20.0).isActive = true
+      chipTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: 40.0).isActive = true
+    } else {
+      // Fallback on earlier versions
+      print("This example is supported on iOS version 9 or later.")
+    }
+
+    textField.translatesAutoresizingMaskIntoConstraints = false
+    textField.backgroundColor = .white
     view.addSubview(textField)
 
     // position the textfield somewhere in the screen
@@ -50,11 +73,11 @@ class ChipTextFieldExampleViewController: UIViewController {
       let guide = view.safeAreaLayoutGuide
       textField.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: 20.0).isActive = true
       textField.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -20.0).isActive = true
-      textField.topAnchor.constraint(equalTo: guide.topAnchor, constant: 40.0).isActive = true
+      textField.topAnchor.constraint(equalTo: chipTextField.bottomAnchor, constant: 20.0).isActive = true
     } else if #available(iOSApplicationExtension 9.0, *) {
       textField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20.0).isActive = true
       textField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20.0).isActive = true
-      textField.topAnchor.constraint(equalTo: view.topAnchor, constant: 40.0).isActive = true
+      textField.topAnchor.constraint(equalTo: chipTextField.bottomAnchor, constant: 20.0).isActive = true
     } else {
       // Fallback on earlier versions
       print("This example is supported on iOS version 9 or later.")
@@ -74,6 +97,7 @@ class ChipTextFieldExampleViewController: UIViewController {
   }
 
   @objc func resignTapped(_ sender: Any) {
+    chipTextField.resignFirstResponder()
     textField.resignFirstResponder()
   }
 }
