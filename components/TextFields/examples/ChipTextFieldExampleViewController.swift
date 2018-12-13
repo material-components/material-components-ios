@@ -17,6 +17,18 @@ import UIKit
 class ChipTextFieldExampleViewController: UIViewController {
 
   let textField = MDCChipTextField()
+  let inputController: MDCTextInputControllerOutlined
+  let resignButton = MDCButton()
+
+  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    inputController = MDCTextInputControllerOutlined(textInput: textField)
+    inputController.placeholderText = "Name"
+    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -26,12 +38,8 @@ class ChipTextFieldExampleViewController: UIViewController {
   }
 
   func setupExample() {
-    let inputController = MDCTextInputControllerOutlined(textInput: textField)
-    inputController.placeholderText = "Name"
-
     textField.translatesAutoresizingMaskIntoConstraints = false
     textField.backgroundColor = .white
-    textField.text = "Hit Enter Here"
 
     // when on, enter responds to auto-correction which is confusing when we're trying to create "chips"
     textField.autocorrectionType = UITextAutocorrectionType.no
@@ -51,6 +59,22 @@ class ChipTextFieldExampleViewController: UIViewController {
       // Fallback on earlier versions
       print("This example is supported on iOS version 9 or later.")
     }
+
+    resignButton.setTitle("Resign", for: .normal)
+    resignButton.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(resignButton)
+
+    resignButton.applyContainedTheme(withScheme: MDCContainerScheme())
+    resignButton.addTarget(self, action: #selector(resignTapped), for: .touchUpInside)
+
+    if #available(iOSApplicationExtension 9.0, *) {
+      resignButton.leadingAnchor.constraint(equalTo: textField.leadingAnchor).isActive = true
+      resignButton.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 20.0).isActive = true
+    }
+  }
+
+  @objc func resignTapped(_ sender: Any) {
+    textField.resignFirstResponder()
   }
 }
 

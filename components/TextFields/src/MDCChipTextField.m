@@ -33,7 +33,6 @@
     _chipsView.translatesAutoresizingMaskIntoConstraints = NO;
     _chipsView.backgroundColor = [UIColor yellowColor];
     self.leftView = _chipsView;
-    self.leftViewMode = UITextFieldViewModeAlways;
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(chipTextFieldTextDidChange:)
@@ -65,9 +64,13 @@
     [self.chipsView addConstraint:[NSLayoutConstraint constraintWithItem:lastChip attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:chip attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0]];
   }
 
-  [chip layoutIfNeeded];
   self.insetX = CGRectGetMaxX(chip.frame) + 10;
   [self.chips addObject:chip];
+
+  [self invalidateIntrinsicContentSize];
+  [self setNeedsLayout];
+
+  self.leftViewMode = UITextFieldViewModeAlways;
 }
 
 - (void)chipTextFieldTextDidChange:(__unused NSNotification *)note {
@@ -133,10 +136,18 @@
 }
 
 - (void)removeChip:(MDCChipView *)chip {
-  [_chips removeObject:chip];
+  [self.chips removeObject:chip];
   [chip removeFromSuperview];
+
+  MDCChipView *lastChip = [self.chips lastObject];
+  self.insetX = CGRectGetMaxX(lastChip.frame) + 10;
+
   [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];
+
+  if (self.chips.count == 0) {
+    self.leftViewMode = UITextFieldViewModeNever;
+  }
 }
 
 - (void)removeSelectedChips {
