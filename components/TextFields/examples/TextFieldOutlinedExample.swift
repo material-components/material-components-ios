@@ -31,8 +31,8 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
     return name
   }()
 
-  let address: MDCChipTextField = {
-    let address = MDCChipTextField()
+  let address: MDCTextField = {
+    let address = MDCTextField()
     address.translatesAutoresizingMaskIntoConstraints = false
     address.autocapitalizationType = .words
     address.backgroundColor = .white
