@@ -113,6 +113,10 @@ mdc_objc_library(
 swift_library(
     name = "unit_test_swift_sources",
     srcs = native.glob(["tests/unit/*.swift"]),
+    copts = [
+        "-swift-version",
+        "3",
+    ],
     visibility = ["//visibility:private"],
     deps = [
         ":ButtonBar",
