@@ -1,0 +1,153 @@
+// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#import "MDCChipTextField.h"
+#import "MaterialChips.h"
+
+@interface MDCChipTextField ()
+
+@property (nonatomic, strong) UIView *chipsView;
+@property (nonatomic) CGFloat insetX;
+@property(nonatomic, strong) NSMutableArray<MDCChipView *> *chips;
+
+@end
+
+@implementation MDCChipTextField
+
+- (instancetype)initWithFrame:(CGRect)frame {
+  self = [super initWithFrame:frame];
+  if (self) {
+    _chipsView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 160, frame.size.height)];
+    _chipsView.translatesAutoresizingMaskIntoConstraints = NO;
+    _chipsView.backgroundColor = [UIColor yellowColor];
+    self.leftView = _chipsView;
+    self.leftViewMode = UITextFieldViewModeAlways;
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(chipTextFieldTextDidChange:)
+                                                 name:UITextFieldTextDidChangeNotification
+                                               object:self];
+
+    _chips = [NSMutableArray array];
+
+    [self insertChipWithText:@"hi"];
+    [self insertChipWithText:@"hello"];
+  }
+  return self;
+}
+
+- (void)insertChipWithText:(NSString *)text {
+  MDCChipView *chip = [[MDCChipView alloc] init];
+  chip.titleLabel.text = text;
+  chip.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.chipsView addSubview:chip];
+
+  // Constraints
+
+  [self.chips addObject:chip];
+}
+
+- (void)chipTextFieldTextDidChange:(__unused NSNotification *)note {
+  [self deselectAllChips];
+
+  // TODO:
+//  if ([text isEqualToString:@"\n"]) {
+//    [self insertChipWithText:[self.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+//    self.text = @"";
+//  }
+}
+
+#pragma mark - UITextField overrides
+
+- (void)deleteBackward {
+  if (self.text.length == 0) {
+    [self respondToDeleteBackward];
+  }
+  [super deleteBackward];
+}
+
+- (CGRect)textRectForBounds:(CGRect)bounds {
+  return [super textRectForBounds:bounds];
+}
+
+- (CGRect)editingRectForBounds:(CGRect)bounds {
+  return [super editingRectForBounds:bounds];
+}
+
+- (CGRect)leftViewRectForBounds:(CGRect)bounds {
+  CGRect leftViewRect = [super leftViewRectForBounds:bounds];
+  leftViewRect.size.width = self.chipsView.bounds.size.width; // TODO
+  return leftViewRect;
+}
+
+#pragma mark - Deletion
+
+- (void)deselectAllChipsExceptChip:(MDCChipView *)chip {
+  for (MDCChipView *otherChip in self.chips) {
+    if (chip != otherChip) {
+      otherChip.selected = NO;
+    }
+  }
+}
+
+- (void)selectLastChip {
+  MDCChipView *lastChip = self.chips.lastObject;
+  [self deselectAllChipsExceptChip:lastChip];
+  lastChip.selected = YES;
+  UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification,
+                                  [lastChip accessibilityLabel]);
+}
+
+- (void)deselectAllChips {
+  [self deselectAllChipsExceptChip:nil];
+}
+
+- (void)removeChip:(MDCChipView *)chip {
+  [_chips removeObject:chip];
+  [chip removeFromSuperview];
+  [self invalidateIntrinsicContentSize];
+  [self setNeedsLayout];
+}
+
+- (void)removeSelectedChips {
+  NSMutableArray *chipsToRemove = [NSMutableArray array];
+  for (MDCChipView *chip in self.chips) {
+    if (chip.isSelected) {
+      [chipsToRemove addObject:chip];
+    }
+  }
+  for (MDCChipView *chip in chipsToRemove) {
+    [self removeChip:chip];
+  }
+}
+
+- (BOOL)isAnyChipSelected {
+  for (MDCChipView *chip in self.chips) {
+    if (chip.isSelected) {
+      return YES;
+    }
+  }
+  return NO;
+}
+
+- (void)respondToDeleteBackward {
+  if ([self isAnyChipSelected]) {
+    [self removeSelectedChips];
+    [self deselectAllChips];
+  } else {
+    [self selectLastChip];
+  }
+}
+
+@end
