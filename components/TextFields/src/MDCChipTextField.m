@@ -34,6 +34,8 @@
     _chipsView.backgroundColor = [UIColor yellowColor];
     self.leftView = _chipsView;
 
+    // question: i think observers need to be released when the element is dallocated?
+    //           does it make more sense in this case to add it as a target action?
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(chipTextFieldTextDidChange:)
                                                  name:UITextFieldTextDidChangeNotification
@@ -65,10 +67,8 @@
     [self.chipsView addConstraint:[NSLayoutConstraint constraintWithItem:lastChip attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:chip attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0]];
   }
 
-  [self invalidateIntrinsicContentSize];
-  [self setNeedsLayout];
-  [self layoutIfNeeded];
-
+  // recalculate the layout to get a correct chip frame values
+  [self.chipsView layoutIfNeeded];
   self.insetX = CGRectGetMaxX(chip.frame);
   [self.chips addObject:chip];
 
@@ -113,20 +113,30 @@
 
 - (CGRect)textRectForBounds:(CGRect)bounds {
   CGRect textRect = [super textRectForBounds:bounds];
-  textRect.origin.x = self.insetX;
+  textRect.origin.x = MAX(self.insetX, textRect.origin.x);
+  //  editingRect.origin.x = self.insetX;
   return textRect;
 }
 
 - (CGRect)editingRectForBounds:(CGRect)bounds {
   CGRect editingRect = [super editingRectForBounds:bounds];
-  editingRect.origin.x = self.insetX;
+  editingRect.origin.x = MAX(self.insetX, editingRect.origin.x);
+  // editingRect.origin.x = self.insetX;
   return editingRect;
 }
 
 - (CGRect)leftViewRectForBounds:(CGRect)bounds {
   CGRect leftViewRect = [super leftViewRectForBounds:bounds];
-  leftViewRect.size.width = self.insetX;
+  leftViewRect.size.width = MAX(self.insetX, leftViewRect.size.width);
+  // leftViewRect.size.width = self.insetX;
   return leftViewRect;
+}
+
+- (CGRect)rightViewRectForBounds:(CGRect)bounds {
+  CGRect viewRect = [super rightViewRectForBounds:bounds];
+  viewRect.size.width = MAX(self.insetX, viewRect.size.width);
+  //viewRect.size.width = self.insetX;
+  return viewRect;
 }
 
 #pragma mark - Deletion
