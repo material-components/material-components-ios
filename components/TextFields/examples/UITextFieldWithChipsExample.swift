@@ -19,6 +19,7 @@ import UIKit
   * scroll labels/chips view to the left, when not enough room for typing
  todo:
   * change labels to buttons (verifying interactivity of individual chips)
+  * "enter" to create a chip - usability issue
   * scrolling through label/chips.
   * scroll the overlay view to correct position on focus and un-focus events (textFieldDidBeginEditing: ?)
   * RTL Support
@@ -41,8 +42,12 @@ class UITextFieldWithChipsExample: UIViewController {
     self.view.backgroundColor = UIColor.white
 
     setupExample()
+    additionalTextField()
 
-    textField.becomeFirstResponder()
+    // this fixes the issue of the cursor becoming half size when the field is empty
+    DispatchQueue.main.async {
+      self.textField.becomeFirstResponder()
+    }
   }
 
   func setupExample() {
@@ -85,6 +90,31 @@ class UITextFieldWithChipsExample: UIViewController {
     textField.leftViewMode = .always
   }
 
+  func additionalTextField() {
+    let additionalTextField = PlainTextField()
+    additionalTextField.translatesAutoresizingMaskIntoConstraints = false
+    additionalTextField.backgroundColor = UIColor.orange.withAlphaComponent(0.05)
+    additionalTextField.layer.borderWidth = 1.0
+    additionalTextField.layer.borderColor = UIColor.orange.cgColor
+    additionalTextField.textColor = .orange
+    additionalTextField.text = "Just a Textfield"
+
+    // when on, enter responds to auto-correction which is confusing when we're trying to create "chips"
+    additionalTextField.autocorrectionType = UITextAutocorrectionType.no
+
+    view.addSubview(additionalTextField)
+
+    // position the textfield somewhere in the screen
+    if #available(iOSApplicationExtension 9.0, *) {
+      additionalTextField.leadingAnchor.constraint(equalTo: textField.leadingAnchor).isActive = true
+      additionalTextField.trailingAnchor.constraint(equalTo: textField.trailingAnchor).isActive = true
+      additionalTextField.topAnchor.constraint(equalTo: textField.topAnchor, constant: 40.0).isActive = true
+    } else {
+      // Fallback on earlier versions
+      print("This example is supported on iOS version 9 or later.")
+    }
+  }
+
   func appendLabel(text: String) {
 
     let pad: CGFloat = 5.0
@@ -102,7 +132,7 @@ class UITextFieldWithChipsExample: UIViewController {
       if let lastLabel = lastLabel {
         label.leadingAnchor.constraint(equalTo: lastLabel.trailingAnchor, constant: pad).isActive = true
         //label.leadingAnchor.constraint(equalTo: lastLabel.trailingAnchor, constant: pad).isActive = true
-        lastmax = lastLabel.frame.maxX
+        //lastmax = lastLabel.frame.maxX
       } else {
         leadingConstraint = label.leadingAnchor.constraint(equalTo: leftView.leadingAnchor)
         leadingConstraint?.priority = UILayoutPriorityDefaultLow
@@ -119,9 +149,9 @@ class UITextFieldWithChipsExample: UIViewController {
     }
 
     // adjust text field's inset and width
-    label.layoutIfNeeded()
-    label.frame.origin.x = lastmax
-    textField.insetX = label.frame.maxX + 10
+    leftView.layoutIfNeeded()
+    //label.frame.origin.x = lastmax
+    textField.insetX = label.frame.maxX
   }
 
   func newLabel(text: String) -> UILabel {
@@ -144,8 +174,8 @@ extension UITextFieldWithChipsExample: UITextFieldDelegate {
   // listen to "enter" key
   func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
     if string == "\n" {
-      if let text = textField.text {
-        appendLabel(text: text)
+      if let trimmedText = textField.text?.trimmingCharacters(in: .whitespaces), trimmedText.count > 0 {
+        appendLabel(text: trimmedText)
         textField.text = ""
       }
     }
@@ -182,13 +212,13 @@ extension UITextFieldWithChipsExample: UITextFieldDelegate {
       let textWidth = firstrect.width
       let fieldWidth = textrect.width
       let space = fieldWidth - textWidth
-      print("[\(string)]: space:\(space) \(space < START_SCROLL_POS ? "SMALL" : "") firstrect:\(firstrect.width) textrect:\(textrect.width) textInput:\(textInputViewRect.width)")
-      if space < START_SCROLL_POS {
+      //if space < START_SCROLL_POS {
 //        print("(need more space!) cursorPosition:\(cursorPosition) space: \(space) textWidth:\(textWidth)")
-        insetTextField.insetX -= space
+      if space < 0 {
+        insetTextField.insetX += space
         if let leadingConstraint = leadingConstraint {
           //leftView.removeConstraint(leadingConstraint)
-          leadingConstraint.constant -= space
+          leadingConstraint.constant += space
         }
         insetTextField.layoutIfNeeded()
         let textrange1 = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
@@ -196,9 +226,11 @@ extension UITextFieldWithChipsExample: UITextFieldDelegate {
 //        print("  new insetX:\(insetTextField.insetX) | rect-after:\(rect2)")
       }
 
-      insetTextField.layoutIfNeeded()
-      let textrange1 = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
-      let rect2 = textField.firstRect(for: textrange)
+      print("[\(string)]: space:\(space) \(space < 0 ? "OFFSET" : "") firstrect:\(firstrect.width) insetX:\(insetTextField.insetX) textrect:\(textrect.width) textInput:\(textInputViewRect.width)")
+
+//      insetTextField.layoutIfNeeded()
+//      let textrange1 = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
+//      let rect2 = textField.firstRect(for: textrange)
     }
   }
 
@@ -231,10 +263,10 @@ class InsetTextField: UITextField {
 
   // the split point: this is the x position where chips view ends and text begins.
   // Updating this property moves the split point between chips & text.
-  var insetX: CGFloat = 0
+  var insetX: CGFloat = 8.0
 
   // default padding for the textfield, taking insetX into account for the left position
-  let insetRect = UIEdgeInsets(top: 5.0, left: 0, bottom: 5.0, right: 0)
+  let insetRect = UIEdgeInsets(top: 5.0, left: 8.0, bottom: 5.0, right: 8.0)
 
   // text bounds
   override func textRect(forBounds bounds: CGRect) -> CGRect {
@@ -260,6 +292,26 @@ class InsetTextField: UITextField {
     var newbounds = superbounds
     newbounds.size.width = insetX //- 10
 //    print(". leftViewRect: \(newbounds.origin.x)-\(newbounds.width) insetX:\(insetX) | leftView: \(leftView!.frame.origin.x)-\(leftView!.frame.width)")
+    return newbounds
+  }
+}
+
+class PlainTextField: UITextField {
+
+  // default padding for the textfield, taking insetX into account for the left position
+  let insetRect = UIEdgeInsets(top: 5.0, left: 8.0, bottom: 5.0, right: 8.0)
+
+  // text bounds
+  override func textRect(forBounds bounds: CGRect) -> CGRect {
+    let superbounds = super.textRect(forBounds: bounds)
+    let newbounds = UIEdgeInsetsInsetRect(superbounds, insetRect)
+    return newbounds
+  }
+
+  // text bounds while editing
+  override func editingRect(forBounds bounds: CGRect) -> CGRect {
+    let superbounds = super.editingRect(forBounds: bounds)
+    let newbounds = UIEdgeInsetsInsetRect(superbounds, insetRect)
     return newbounds
   }
 }
