@@ -59,7 +59,8 @@
 
   MDCChipView *lastChip = [self.chips lastObject];
   if (lastChip == nil) {
-    [self.chipsView addConstraint:[NSLayoutConstraint constraintWithItem:self.chipsView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:chip attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0]];
+    self.leadingConstraint = [NSLayoutConstraint constraintWithItem:self.chipsView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:chip attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0];
+    [self.chipsView addConstraint:self.leadingConstraint];
   } else {
     [self.chipsView addConstraint:[NSLayoutConstraint constraintWithItem:lastChip attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:chip attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0]];
   }
@@ -68,7 +69,7 @@
   [self setNeedsLayout];
   [self layoutIfNeeded];
 
-  self.insetX = CGRectGetMaxX(chip.frame) + 10;
+  self.insetX = CGRectGetMaxX(chip.frame);
   [self.chips addObject:chip];
 
   self.leftViewMode = UITextFieldViewModeAlways;
@@ -84,6 +85,20 @@
       [self appendChipWithText:[self.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
       self.text = @"";
     }
+  }
+
+  [self setupEditingRect];
+}
+
+- (void)setupEditingRect {
+  CGRect textRect = [self textRectForBounds:self.bounds];
+  UITextRange *textRange = [self textRangeFromPosition:self.beginningOfDocument toPosition:self.endOfDocument];
+  CGRect inputRect = [self firstRectForRange:textRange];
+
+  CGFloat space = textRect.size.width - inputRect.size.width;
+  if (space < 0) {
+    self.insetX += space;
+    self.leadingConstraint.constant += space;
   }
 }
 
