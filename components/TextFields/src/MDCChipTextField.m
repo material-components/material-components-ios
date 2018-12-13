@@ -19,7 +19,8 @@
 
 @property (nonatomic, strong) UIView *chipsView;
 @property (nonatomic) CGFloat insetX;
-@property(nonatomic, strong) NSMutableArray<MDCChipView *> *chips;
+@property (nonatomic, strong) NSLayoutConstraint *leadingConstraint;
+@property (nonatomic, strong) NSMutableArray<MDCChipView *> *chips;
 
 @end
 
@@ -40,32 +41,46 @@
                                                object:self];
 
     _chips = [NSMutableArray array];
-
-    [self insertChipWithText:@"hi"];
-    [self insertChipWithText:@"hello"];
   }
   return self;
 }
 
-- (void)insertChipWithText:(NSString *)text {
+- (void)appendChipWithText:(NSString *)text {
   MDCChipView *chip = [[MDCChipView alloc] init];
   chip.titleLabel.text = text;
   chip.translatesAutoresizingMaskIntoConstraints = NO;
+
   [self.chipsView addSubview:chip];
 
   // Constraints
+  [self.chipsView addConstraints:@[
+     [NSLayoutConstraint constraintWithItem:self.chipsView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:chip attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0],
+     [NSLayoutConstraint constraintWithItem:self.chipsView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:chip attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]
+     ]];
 
+  MDCChipView *lastChip = [self.chips lastObject];
+  if (lastChip == nil) {
+    [self.chipsView addConstraint:[NSLayoutConstraint constraintWithItem:self.chipsView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:chip attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0]];
+  } else {
+    [self.chipsView addConstraint:[NSLayoutConstraint constraintWithItem:lastChip attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:chip attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0]];
+  }
+
+  [chip layoutIfNeeded];
+  self.insetX = CGRectGetMaxX(chip.frame) + 10;
   [self.chips addObject:chip];
 }
 
 - (void)chipTextFieldTextDidChange:(__unused NSNotification *)note {
   [self deselectAllChips];
 
-  // TODO:
-//  if ([text isEqualToString:@"\n"]) {
-//    [self insertChipWithText:[self.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
-//    self.text = @"";
-//  }
+  if (self.text.length) {
+    NSString *lastCharacter = [self.text substringFromIndex:self.text.length - 1];
+//    if ([lastCharacter rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet]].location != NSNotFound){
+    if ([lastCharacter isEqualToString:@";"]) { // hack for now
+      [self appendChipWithText:[self.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+      self.text = @"";
+    }
+  }
 }
 
 #pragma mark - UITextField overrides
@@ -78,16 +93,20 @@
 }
 
 - (CGRect)textRectForBounds:(CGRect)bounds {
-  return [super textRectForBounds:bounds];
+  CGRect textRect = [super textRectForBounds:bounds];
+  textRect.origin.x = self.insetX;
+  return textRect;
 }
 
 - (CGRect)editingRectForBounds:(CGRect)bounds {
-  return [super editingRectForBounds:bounds];
+  CGRect editingRect = [super editingRectForBounds:bounds];
+  editingRect.origin.x = self.insetX;
+  return editingRect;
 }
 
 - (CGRect)leftViewRectForBounds:(CGRect)bounds {
   CGRect leftViewRect = [super leftViewRectForBounds:bounds];
-  leftViewRect.size.width = self.chipsView.bounds.size.width; // TODO
+  leftViewRect.size.width = self.insetX;
   return leftViewRect;
 }
 
