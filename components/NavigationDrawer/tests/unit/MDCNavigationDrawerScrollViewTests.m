@@ -584,9 +584,11 @@
 
   // Then
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.trackingScrollView.frame.origin.y, 0, 0.001);
-  CGFloat expectedHeight =
-      self.fakeBottomDrawer.presentingViewBounds.size.height - fakeHeader.preferredContentSize.height;
-  XCTAssertEqualWithAccuracy(CGRectGetHeight(self.fakeBottomDrawer.contentViewController.view.frame), expectedHeight, 0.001);
+  CGFloat expectedHeight = self.fakeBottomDrawer.presentingViewBounds.size.height -
+                           fakeHeader.preferredContentSize.height;
+  XCTAssertEqualWithAccuracy(
+      CGRectGetHeight(self.fakeBottomDrawer.contentViewController.view.frame), expectedHeight,
+      0.001);
   XCTAssertEqualWithAccuracy(CGRectGetMinY(self.fakeBottomDrawer.scrollView.frame), 0, 0.001);
   XCTAssertEqualWithAccuracy(self.fakeBottomDrawer.contentHeaderTopInset, 20, 0.01);
 }
