@@ -774,8 +774,8 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   if (frame.size.height < self.minMaxHeight.maximumHeightWithTopSafeArea) {
     _scrollPhase = MDCFlexibleHeaderScrollPhaseCollapsing;
 
-    CGFloat heightLength =
-        self.minMaxHeight.maximumHeightWithTopSafeArea - self.minMaxHeight.minimumHeightWithTopSafeArea;
+    CGFloat heightLength = self.minMaxHeight.maximumHeightWithTopSafeArea -
+                           self.minMaxHeight.minimumHeightWithTopSafeArea;
     if (heightLength > 0) {
       _scrollPhasePercentage =
           (frame.size.height - self.minMaxHeight.minimumHeightWithTopSafeArea) / heightLength;
@@ -788,8 +788,9 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 
   _scrollPhase = MDCFlexibleHeaderScrollPhaseOverExtending;
   if (self.minMaxHeight.maximumHeightWithTopSafeArea > 0) {
-    _scrollPhasePercentage = 1 + (frame.size.height - self.minMaxHeight.maximumHeightWithTopSafeArea) /
-                                     self.minMaxHeight.maximumHeightWithTopSafeArea;
+    _scrollPhasePercentage =
+        1 + (frame.size.height - self.minMaxHeight.maximumHeightWithTopSafeArea) /
+                self.minMaxHeight.maximumHeightWithTopSafeArea;
   } else {
     _scrollPhasePercentage = 0;
   }
@@ -905,9 +906,9 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
   if (self.hidesStatusBarWhenCollapsed) {
     // Calculate the desired shadow strength for the offset & accumulator and then take the
     // weakest strength.
-    CGFloat accumulator = MAX(
-        0,
-        MIN(kShadowScaleLength, self.minMaxHeight.minimumHeightWithTopSafeArea - boundedAccumulator));
+    CGFloat accumulator =
+        MAX(0, MIN(kShadowScaleLength,
+                   self.minMaxHeight.minimumHeightWithTopSafeArea - boundedAccumulator));
     if (self.isInFrontOfInfiniteContent) {
       // When in front of infinite content we only care to hide the shadow when our header is
       // off-screen.
@@ -1138,8 +1139,8 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
     CGFloat additionalHeightInjection = MAX(0, -_shiftAccumulator);
 
     if (_canOverExtend && !UIAccessibilityIsVoiceOverRunning()) {
-      bounds.size.height =
-          MAX(self.minMaxHeight.minimumHeightWithTopSafeArea, headerHeight) + additionalHeightInjection;
+      bounds.size.height = MAX(self.minMaxHeight.minimumHeightWithTopSafeArea, headerHeight) +
+                           additionalHeightInjection;
     } else {
       bounds.size.height = (MAX(self.minMaxHeight.minimumHeightWithTopSafeArea,
                                 MIN(self.minMaxHeight.maximumHeightWithTopSafeArea, headerHeight)) +
