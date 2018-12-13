@@ -16,14 +16,14 @@ static const CGFloat kTrailingMargin = 16.0;
 
 static const CGFloat kFilledTextFieldTopCornerRadius = 4.0;
 static const CGFloat kOutlinedTextFieldCornerRadius = 4.0;
-//static const CGFloat kFloatingPlaceholderTopMargin = 5.0;
+// static const CGFloat kFloatingPlaceholderTopMargin = 5.0;
 static const CGFloat kFloatingPlaceholderSideMargin = 5.0;
 static const CGFloat kFloatingPlaceholderXOffsetFromTextArea = 3.0;
 static const CGFloat kTopMargin = 5.0;
 
 static const CGFloat kClearButtonTouchTargetSideLength = 30.0;
 static const CGFloat kTextRectSidePadding = 12.0;
-//static const CGFloat kLeftRightViewSidePadding = 5.0;
+// static const CGFloat kLeftRightViewSidePadding = 5.0;
 
 static const CGFloat kUnderlineLabelsTopPadding = 8.0;
 static const CGFloat kTopRowSubviewVerticalPadding = 10.0;
@@ -52,15 +52,20 @@ typedef NS_ENUM(NSUInteger, TextFieldStyle) {
  */
 typedef NS_ENUM(NSUInteger, UnderlineLabelDrawPriority) {
   /**
-   When the priority is @c .leading, the @c leadingUnderlineLabel will be laid out first within the horizontal space available for @b both underline labels. Any remaining space will then be given for the @c trailingUnderlineLabel.
+   When the priority is @c .leading, the @c leadingUnderlineLabel will be laid out first within the
+   horizontal space available for @b both underline labels. Any remaining space will then be given
+   for the @c trailingUnderlineLabel.
    */
   UnderlineLabelDrawPriorityLeading,
   /**
-   When the priority is @c .trailing, the @c trailingUnderlineLabel will be laid out first within the horizontal space available for @b both underline labels. Any remaining space will then be given for the @c leadingUnderlineLabel.
+   When the priority is @c .trailing, the @c trailingUnderlineLabel will be laid out first within
+   the horizontal space available for @b both underline labels. Any remaining space will then be
+   given for the @c leadingUnderlineLabel.
    */
   UnderlineLabelDrawPriorityTrailing,
   /**
-   When the priority is @c .custom, the @c customUnderlineLabelDrawPriority property will be used to divide the space available for the two underline labels.
+   When the priority is @c .custom, the @c customUnderlineLabelDrawPriority property will be used to
+   divide the space available for the two underline labels.
    */
   UnderlineLabelDrawPriorityCustom,
 };
@@ -86,7 +91,5 @@ typedef NS_ENUM(NSUInteger, TextFieldState) {
   TextFieldStateErrored,
   TextFieldStateDisabled,
 };
-
-
 
 #endif /* SimpleTextFieldLayoutUtils_h */

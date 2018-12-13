@@ -11,7 +11,6 @@
 #import "SimpleTextField.h"
 #import "SimpleTextFieldLayoutUtils.h"
 
-
 @interface SimpleTextFieldLayout ()
 @end
 
@@ -85,7 +84,6 @@
         customUnderlineLabelDrawPriority:(CGFloat)customUnderlineLabelDrawPriority
                                    isRTL:(BOOL)isRTL
                                isEditing:(BOOL)isEditing {
-
   BOOL shouldAttemptToDisplayLeftView = [self shouldAttemptToDisplaySideView:leftView
                                                                     viewMode:leftViewMode
                                                                    isEditing:isEditing];
@@ -101,17 +99,14 @@
   CGFloat leftViewMinX = 0;
   CGFloat leftViewMaxX = 0;
   if (shouldAttemptToDisplayLeftView) {
-    leftViewMinX = [self minXForLeftView:leftView
-                                   isRTL:isRTL];
+    leftViewMinX = [self minXForLeftView:leftView isRTL:isRTL];
     leftViewMaxX = leftViewMinX + leftViewWidth;
   }
 
   CGFloat textFieldWidth = textFieldSize.width;
   CGFloat rightViewMinX = 0;
   if (shouldAttemptToDisplayRightView) {
-    rightViewMinX = [self minXForRightView:rightView
-                            textFieldWidth:textFieldWidth
-                                     isRTL:isRTL];
+    rightViewMinX = [self minXForRightView:rightView textFieldWidth:textFieldWidth isRTL:isRTL];
   }
 
   CGFloat clearButtonMinX = 0;
@@ -119,7 +114,8 @@
     CGFloat leftMargin = isRTL ? kLeadingMargin : kTrailingMargin;
     CGFloat rightMargin = isRTL ? kTrailingMargin : kLeadingMargin;
     CGFloat lowestPossibleMinX = shouldAttemptToDisplayLeftView ? leftViewMaxX : leftMargin;
-    CGFloat highestPossibleMaxX = shouldAttemptToDisplayRightView ? rightViewMinX : textFieldWidth - rightMargin;
+    CGFloat highestPossibleMaxX =
+        shouldAttemptToDisplayRightView ? rightViewMinX : textFieldWidth - rightMargin;
     clearButtonMinX = [self clearButtonMinXWithLowestPossibleMinX:lowestPossibleMinX
                                               highestPossibleMaxX:highestPossibleMaxX
                                                             isRTL:isRTL];
@@ -127,8 +123,8 @@
   CGFloat floatingPlaceholderHeight =
       canPlaceholderFloat ? [self textHeightWithFont:floatingPlaceholderFont] : 0;
   CGFloat floatingPlaceholderMinY =
-        [self floatingPlaceholderMinYWithFloatingHeight:floatingPlaceholderHeight
-                                         textFieldStyle:textFieldStyle];
+      [self floatingPlaceholderMinYWithFloatingHeight:floatingPlaceholderHeight
+                                       textFieldStyle:textFieldStyle];
 
   CGFloat textAreaHeight = [self textHeightWithFont:font];
   CGFloat lowestAllowableTextAreaCenterY =
@@ -139,19 +135,18 @@
                                                   placeholderCanFloat:canPlaceholderFloat];
 
   CGFloat topRowSubviewCenterY =
-  [self topRowSubviewCenterYWithLeftView:leftView
-                               rightView:rightView
-                                    font:font
-                            floatingFont:floatingPlaceholderFont
-                          textFieldStyle:textFieldStyle
-          lowestAllowableTextAreaCenterY:lowestAllowableTextAreaCenterY];
+      [self topRowSubviewCenterYWithLeftView:leftView
+                                   rightView:rightView
+                                        font:font
+                                floatingFont:floatingPlaceholderFont
+                              textFieldStyle:textFieldStyle
+              lowestAllowableTextAreaCenterY:lowestAllowableTextAreaCenterY];
 
   CGFloat leftViewHeight = CGRectGetHeight(leftView.frame);
   CGFloat leftViewMinY = 0;
   CGFloat leftViewMaxY = 0;
   if (shouldAttemptToDisplayLeftView) {
-    leftViewMinY = [self minYForSubviewWithHeight:leftViewHeight
-                                          centerY:topRowSubviewCenterY];
+    leftViewMinY = [self minYForSubviewWithHeight:leftViewHeight centerY:topRowSubviewCenterY];
     leftViewMaxY = leftViewMinY + leftViewHeight;
   }
 
@@ -159,8 +154,7 @@
   CGFloat rightViewMinY = 0;
   CGFloat rightViewMaxY = 0;
   if (shouldAttemptToDisplayRightView) {
-    rightViewMinY = [self minYForSubviewWithHeight:rightViewHeight
-                                           centerY:topRowSubviewCenterY];
+    rightViewMinY = [self minYForSubviewWithHeight:rightViewHeight centerY:topRowSubviewCenterY];
     rightViewMaxY = rightViewMinY + rightViewHeight;
   }
 
@@ -205,7 +199,9 @@
   CGRect leftViewFrame = CGRectMake(leftViewMinX, leftViewMinY, leftViewWidth, leftViewHeight);
   CGFloat rightViewWidth = CGRectGetWidth(rightView.frame);
   CGRect rightViewFrame = CGRectMake(rightViewMinX, rightViewMinY, rightViewWidth, rightViewHeight);
-  CGRect clearButtonFrame = CGRectMake(clearButtonMinX, clearButtonMinY, kClearButtonTouchTargetSideLength, kClearButtonTouchTargetSideLength);
+  CGRect clearButtonFrame =
+      CGRectMake(clearButtonMinX, clearButtonMinY, kClearButtonTouchTargetSideLength,
+                 kClearButtonTouchTargetSideLength);
 
   CGRect placeholderFrameNormal = [self placeholderFrameWithPlaceholder:placeholder
                                                          textFieldStyle:textFieldStyle
@@ -223,8 +219,10 @@
                                                              textAreaRect:textAreaFrame];
 
   CGFloat underlineLabelsCombinedMinX = isRTL ? kTrailingMargin : kLeadingMargin;
-  CGFloat underlineLabelsCombinedMaxX = isRTL ? textFieldWidth - kLeadingMargin : textFieldWidth - kTrailingMargin;
-  CGFloat underlineLabelsCombinedMaxWidth = underlineLabelsCombinedMaxX - underlineLabelsCombinedMinX;
+  CGFloat underlineLabelsCombinedMaxX =
+      isRTL ? textFieldWidth - kLeadingMargin : textFieldWidth - kTrailingMargin;
+  CGFloat underlineLabelsCombinedMaxWidth =
+      underlineLabelsCombinedMaxX - underlineLabelsCombinedMinX;
 
   CGFloat topRowSubviewMaxY = [self topRowSubviewMaxYWithTextAreaMaxY:textAreaMaxY
                                                          leftViewMaxY:leftViewMaxY
@@ -246,8 +244,10 @@
   UILabel *trailingUnderlineLabel = isRTL ? leftUnderlineLabel : rightUnderlineLabel;
   switch (underlineLabelDrawPriority) {
     case UnderlineLabelDrawPriorityCustom:
-      leadingUnderlineLabelWidth = [self leadingUnderlineLabelWidthWithCombinedUnderlineLabelsWidth:underlineLabelsCombinedMaxWidth
-                                                                                 customDrawPriority:customUnderlineLabelDrawPriority];
+      leadingUnderlineLabelWidth = [self
+          leadingUnderlineLabelWidthWithCombinedUnderlineLabelsWidth:underlineLabelsCombinedMaxWidth
+                                                  customDrawPriority:
+                                                      customUnderlineLabelDrawPriority];
       trailingUnderlineLabelWidth = underlineLabelsCombinedMaxWidth - leadingUnderlineLabelWidth;
       leadingUnderlineLabelSize = [self underlineLabelSizeWithLabel:leadingUnderlineLabel
                                                  constrainedToWidth:leadingUnderlineLabelWidth];
@@ -255,16 +255,22 @@
                                                   constrainedToWidth:trailingUnderlineLabelWidth];
       break;
     case UnderlineLabelDrawPriorityLeading:
-      leadingUnderlineLabelSize = [self underlineLabelSizeWithLabel:leadingUnderlineLabel
-                                                 constrainedToWidth:underlineLabelsCombinedMaxWidth];
-      trailingUnderlineLabelSize = [self underlineLabelSizeWithLabel:trailingUnderlineLabel
-                                                  constrainedToWidth:underlineLabelsCombinedMaxWidth - leadingUnderlineLabelSize.width];
+      leadingUnderlineLabelSize =
+          [self underlineLabelSizeWithLabel:leadingUnderlineLabel
+                         constrainedToWidth:underlineLabelsCombinedMaxWidth];
+      trailingUnderlineLabelSize =
+          [self underlineLabelSizeWithLabel:trailingUnderlineLabel
+                         constrainedToWidth:underlineLabelsCombinedMaxWidth -
+                                            leadingUnderlineLabelSize.width];
       break;
     case UnderlineLabelDrawPriorityTrailing:
-      trailingUnderlineLabelSize = [self underlineLabelSizeWithLabel:trailingUnderlineLabel
-                                                  constrainedToWidth:underlineLabelsCombinedMaxWidth];
-      leadingUnderlineLabelSize = [self underlineLabelSizeWithLabel:leadingUnderlineLabel
-                                                 constrainedToWidth:underlineLabelsCombinedMaxWidth - trailingUnderlineLabelSize.width];
+      trailingUnderlineLabelSize =
+          [self underlineLabelSizeWithLabel:trailingUnderlineLabel
+                         constrainedToWidth:underlineLabelsCombinedMaxWidth];
+      leadingUnderlineLabelSize =
+          [self underlineLabelSizeWithLabel:leadingUnderlineLabel
+                         constrainedToWidth:underlineLabelsCombinedMaxWidth -
+                                            trailingUnderlineLabelSize.width];
       break;
     default:
       break;
@@ -275,16 +281,14 @@
   CGRect leftUnderlineLabelFrame = CGRectZero;
   CGRect rightUnderlineLabelFrame = CGRectZero;
   if (!CGSizeEqualToSize(leftUnderlineLabelSize, CGSizeZero)) {
-    leftUnderlineLabelFrame = CGRectMake(underlineLabelsCombinedMinX,
-                                         underlineLabelsCombinedMinY,
-                                         leftUnderlineLabelSize.width,
-                                         leftUnderlineLabelSize.height);
+    leftUnderlineLabelFrame =
+        CGRectMake(underlineLabelsCombinedMinX, underlineLabelsCombinedMinY,
+                   leftUnderlineLabelSize.width, leftUnderlineLabelSize.height);
   }
   if (!CGSizeEqualToSize(rightUnderlineLabelSize, CGSizeZero)) {
-    rightUnderlineLabelFrame = CGRectMake(underlineLabelsCombinedMaxX - rightUnderlineLabelSize.width,
-                                          underlineLabelsCombinedMinY,
-                                          rightUnderlineLabelSize.width,
-                                          rightUnderlineLabelSize.height);
+    rightUnderlineLabelFrame = CGRectMake(
+        underlineLabelsCombinedMaxX - rightUnderlineLabelSize.width, underlineLabelsCombinedMinY,
+        rightUnderlineLabelSize.width, rightUnderlineLabelSize.height);
   }
 
   self.leftViewFrame = leftViewFrame;
@@ -311,8 +315,7 @@
   return max;
 }
 
-- (CGSize)underlineLabelSizeWithLabel:(UILabel *)label
-                   constrainedToWidth:(CGFloat)maxWidth {
+- (CGSize)underlineLabelSizeWithLabel:(UILabel *)label constrainedToWidth:(CGFloat)maxWidth {
   if (maxWidth <= 0 || label.text.length <= 0 || label.hidden) {
     return CGSizeZero;
   }
@@ -324,25 +327,21 @@
   return size;
 }
 
-- (CGFloat)leadingUnderlineLabelWidthWithCombinedUnderlineLabelsWidth:(CGFloat)totalUnderlineLabelsWidth
+- (CGFloat)leadingUnderlineLabelWidthWithCombinedUnderlineLabelsWidth:
+               (CGFloat)totalUnderlineLabelsWidth
                                                    customDrawPriority:(CGFloat)customDrawPriority {
   return customDrawPriority * totalUnderlineLabelsWidth;
 }
 
-
-- (CGFloat)minXForLeftUnderlineLabel:(UILabel *)label
-                               isRTL:(BOOL)isRTL {
+- (CGFloat)minXForLeftUnderlineLabel:(UILabel *)label isRTL:(BOOL)isRTL {
   return isRTL ? kTrailingMargin : kLeadingMargin;
 }
 
-- (CGFloat)maxXForRightUnderlineLabel:(UILabel *)label
-                                isRTL:(BOOL)isRTL {
+- (CGFloat)maxXForRightUnderlineLabel:(UILabel *)label isRTL:(BOOL)isRTL {
   return isRTL ? kTrailingMargin : kLeadingMargin;
 }
 
-
-- (CGFloat)minXForLeftView:(UIView *)leftView
-                     isRTL:(BOOL)isRTL {
+- (CGFloat)minXForLeftView:(UIView *)leftView isRTL:(BOOL)isRTL {
   return isRTL ? kTrailingMargin : kLeadingMargin;
 }
 
@@ -395,7 +394,6 @@
   return shouldAttemptToDisplaySideView;
 }
 
-
 - (BOOL)shouldAttemptToDisplayClearButton:(UIButton *)clearButton
                                  viewMode:(UITextFieldViewMode)viewMode
                                 isEditing:(BOOL)isEditing
@@ -421,11 +419,12 @@
   return shouldAttemptToDisplayClearButton;
 }
 
-- (CGFloat)lowestAllowableTextAreaCenterYWithFloatingPlaceholderMinY:(CGFloat)floatingPlaceholderMinY
-                                           floatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight
-                                                      textAreaHeight:(CGFloat)textAreaHeight
-                                                      textFieldStyle:(TextFieldStyle)textFieldStyle
-                                                 placeholderCanFloat:(BOOL)placeholderCanFloat {
+- (CGFloat)
+    lowestAllowableTextAreaCenterYWithFloatingPlaceholderMinY:(CGFloat)floatingPlaceholderMinY
+                                    floatingPlaceholderHeight:(CGFloat)floatingPlaceholderHeight
+                                               textAreaHeight:(CGFloat)textAreaHeight
+                                               textFieldStyle:(TextFieldStyle)textFieldStyle
+                                          placeholderCanFloat:(BOOL)placeholderCanFloat {
   if (placeholderCanFloat) {
     CGFloat spaceBetweenPlaceholderAndTextArea = 0;
     CGFloat floatingPlaceholderMaxY = floatingPlaceholderMinY + floatingPlaceholderHeight;
@@ -433,9 +432,11 @@
     if (textFieldStyle == TextFieldStyleFilled) {
       spaceBetweenPlaceholderAndTextArea = (0.25 * floatingPlaceholderMaxY);
     } else if (textFieldStyle == TextFieldStyleOutline) {
-      spaceBetweenPlaceholderAndTextArea = floatingPlaceholderMaxY + outlinedTextFieldSpaceHeuristic;
+      spaceBetweenPlaceholderAndTextArea =
+          floatingPlaceholderMaxY + outlinedTextFieldSpaceHeuristic;
     }
-    CGFloat lowestAllowableTextAreaMinY = floatingPlaceholderMaxY + spaceBetweenPlaceholderAndTextArea;
+    CGFloat lowestAllowableTextAreaMinY =
+        floatingPlaceholderMaxY + spaceBetweenPlaceholderAndTextArea;
     return lowestAllowableTextAreaMinY + (0.5 * textAreaHeight);
   } else {
     CGFloat lowestAllowableTextAreaMinY = kTopRowSubviewVerticalPadding;
@@ -452,7 +453,8 @@
   CGFloat floatingPlaceholderMinY = 0;
   switch (textFieldStyle) {
     case TextFieldStyleFilled:
-      floatingPlaceholderMinY = filledPlaceholderTopPaddingScaleHeuristic * floatingPlaceholderHeight;
+      floatingPlaceholderMinY =
+          filledPlaceholderTopPaddingScaleHeuristic * floatingPlaceholderHeight;
       break;
     case TextFieldStyleOutline:
       floatingPlaceholderMinY = 0 - (0.5 * floatingPlaceholderHeight);
@@ -470,7 +472,8 @@
                                floatingFont:(UIFont *)floatingFont
                              textFieldStyle:(TextFieldStyle)textFieldStyle
              lowestAllowableTextAreaCenterY:(CGFloat)lowestAllowableTextAreaCenterY {
-  CGFloat sideViewMaxHeight = MAX(CGRectGetHeight(leftView.bounds), CGRectGetHeight(rightView.bounds));
+  CGFloat sideViewMaxHeight =
+      MAX(CGRectGetHeight(leftView.bounds), CGRectGetHeight(rightView.bounds));
   CGFloat lowestAllowableSideViewCenterY = kTopMargin + (0.5 * sideViewMaxHeight);
   CGFloat sharedCenterY = MAX(lowestAllowableTextAreaCenterY, lowestAllowableSideViewCenterY);
   return sharedCenterY;
@@ -501,7 +504,7 @@
     return CGSizeZero;
   }
   CGSize fittingSize = CGSizeMake(maxPlaceholderWidth, CGFLOAT_MAX);
-  NSDictionary *attributes = @{NSFontAttributeName: font};
+  NSDictionary *attributes = @{NSFontAttributeName : font};
   CGRect rect = [placeholder boundingRectWithSize:fittingSize
                                           options:NSStringDrawingUsesLineFragmentOrigin
                                        attributes:attributes
@@ -550,8 +553,6 @@
   return rect;
 }
 
-
-
 - (CGFloat)textHeightWithFont:(UIFont *)font {
   return ceil((double)font.lineHeight);
 }
@@ -595,6 +596,5 @@
   }
   return maxY;
 }
-
 
 @end

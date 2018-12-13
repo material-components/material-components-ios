@@ -15,22 +15,22 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SimpleTextFieldLayout : NSObject
 
-@property (nonatomic, assign) BOOL leftViewHidden;
-@property (nonatomic, assign) BOOL rightViewHidden;
-@property (nonatomic, assign) BOOL clearButtonHidden;
-@property (nonatomic, assign) BOOL placeholderHidden;
+@property(nonatomic, assign) BOOL leftViewHidden;
+@property(nonatomic, assign) BOOL rightViewHidden;
+@property(nonatomic, assign) BOOL clearButtonHidden;
+@property(nonatomic, assign) BOOL placeholderHidden;
 
-@property (nonatomic, assign) CGRect placeholderFrameFloating;
-@property (nonatomic, assign) CGRect placeholderFrameNormal;
-@property (nonatomic, assign) CGRect textAreaFrame;
-@property (nonatomic, assign) CGRect clearButtonFrame;
-@property (nonatomic, assign) CGRect leftViewFrame;
-@property (nonatomic, assign) CGRect rightViewFrame;
-@property (nonatomic, assign) CGRect leftUnderlineLabelFrame;
-@property (nonatomic, assign) CGRect rightUnderlineLabelFrame;
+@property(nonatomic, assign) CGRect placeholderFrameFloating;
+@property(nonatomic, assign) CGRect placeholderFrameNormal;
+@property(nonatomic, assign) CGRect textAreaFrame;
+@property(nonatomic, assign) CGRect clearButtonFrame;
+@property(nonatomic, assign) CGRect leftViewFrame;
+@property(nonatomic, assign) CGRect rightViewFrame;
+@property(nonatomic, assign) CGRect leftUnderlineLabelFrame;
+@property(nonatomic, assign) CGRect rightUnderlineLabelFrame;
 
-@property (nonatomic, readonly) CGFloat calculatedHeight;
-@property (nonatomic, assign) CGFloat topRowBottomRowDividerY;
+@property(nonatomic, readonly) CGFloat calculatedHeight;
+@property(nonatomic, assign) CGFloat topRowBottomRowDividerY;
 
 - (instancetype)initWithTextFieldSize:(CGSize)textFieldSize
                        textFieldStyle:(TextFieldStyle)textFieldStyle
@@ -51,7 +51,6 @@ NS_ASSUME_NONNULL_BEGIN
      customUnderlineLabelDrawPriority:(CGFloat)customUnderlineLabelDrawPriority
                                 isRTL:(BOOL)isRTL
                             isEditing:(BOOL)isEditing;
-
 
 @end
 

@@ -16,28 +16,94 @@
 
 #import <Foundation/Foundation.h>
 
+@interface SimpleTextFieldColorAdapter : NSObject
+
+@property(strong, nonatomic) UIColor *underlineLabelColor;
+@property(strong, nonatomic) UIColor *outlineColor;
+@property(strong, nonatomic) UIColor *placeholderLabelColor;
+@property(strong, nonatomic) UIColor *filledSublayerFillColor;
+@property(strong, nonatomic) UIColor *filledSublayerUnderlineFillColor;
+@property(strong, nonatomic) UIColor *clearButtonTintColor;
+
+- (instancetype)initWithColorScheme:(nonnull MDCSemanticColorScheme *)colorScheme
+                 withTextFieldState:(TextFieldState)textFieldState;
+
+@end
+
+@implementation SimpleTextFieldColorAdapter
+
+- (instancetype)initWithColorScheme:(MDCSemanticColorScheme *)colorScheme
+                 withTextFieldState:(TextFieldState)textFieldState {
+  self = [super init];
+  if (self) {
+    [self assignPropertiesWithColorScheme:colorScheme withTextFieldState:textFieldState];
+  }
+  return self;
+}
+
+- (void)assignPropertiesWithColorScheme:(MDCSemanticColorScheme *)colorScheme
+                     withTextFieldState:(TextFieldState)textFieldState {
+  UIColor *placeholderLabelColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.60];
+  UIColor *underlineLabelColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.60];
+  UIColor *outlineColor = colorScheme.onSurfaceColor;
+  UIColor *filledSublayerUnderlineFillColor = colorScheme.onSurfaceColor;
+  UIColor *filledSublayerFillColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.15];
+  UIColor *clearButtonTintColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.20];
+
+  switch (textFieldState) {
+    case TextFieldStateNormal:
+      break;
+    case TextFieldStateActivated:
+      break;
+    case TextFieldStateDisabled:
+      placeholderLabelColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.10];
+      break;
+    case TextFieldStateErrored:
+      placeholderLabelColor = colorScheme.errorColor;
+      underlineLabelColor = colorScheme.errorColor;
+      filledSublayerUnderlineFillColor = colorScheme.errorColor;
+      outlineColor = colorScheme.errorColor;
+      break;
+    case TextFieldStateFocused:
+      outlineColor = colorScheme.primaryColor;
+      placeholderLabelColor = colorScheme.primaryColor;
+      filledSublayerUnderlineFillColor = colorScheme.primaryColor;
+      break;
+    default:
+      break;
+  }
+  self.filledSublayerFillColor = filledSublayerFillColor;
+  self.filledSublayerUnderlineFillColor = filledSublayerUnderlineFillColor;
+  self.underlineLabelColor = underlineLabelColor;
+  self.outlineColor = outlineColor;
+  self.placeholderLabelColor = placeholderLabelColor;
+  self.clearButtonTintColor = clearButtonTintColor;
+}
+
+@end
+
 @interface SimpleTextField ()
 
-@property (strong, nonatomic) UIFont *floatingPlaceholderFont;
-@property (strong, nonatomic) UIFont *placeholderFont;
+@property(strong, nonatomic) UIFont *floatingPlaceholderFont;
+@property(strong, nonatomic) UIFont *placeholderFont;
 
-@property (strong, nonatomic) UIButton *clearButton;
-@property (strong, nonatomic) UIImageView *clearButtonImageView;
-@property (strong, nonatomic) UILabel *placeholderLabel;
+@property(strong, nonatomic) UIButton *clearButton;
+@property(strong, nonatomic) UIImageView *clearButtonImageView;
+@property(strong, nonatomic) UILabel *placeholderLabel;
 
-@property (strong, nonatomic) UILabel *leftUnderlineLabel;
-@property (strong, nonatomic) UILabel *rightUnderlineLabel;
+@property(strong, nonatomic) UILabel *leftUnderlineLabel;
+@property(strong, nonatomic) UILabel *rightUnderlineLabel;
 
-@property (strong, nonatomic) SimpleTextFieldLayout *layout;
+@property(strong, nonatomic) SimpleTextFieldLayout *layout;
 
-@property (strong, nonatomic) CAShapeLayer *outlinedSublayer;
-@property (strong, nonatomic) CAShapeLayer *filledSublayer;
-@property (strong, nonatomic) CAShapeLayer *filledSublayerUnderline;
+@property(strong, nonatomic) CAShapeLayer *outlinedSublayer;
+@property(strong, nonatomic) CAShapeLayer *filledSublayer;
+@property(strong, nonatomic) CAShapeLayer *filledSublayerUnderline;
 
-@property (nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
+@property(nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
 
-@property (nonatomic, assign) TextFieldState textFieldState;
-@property (nonatomic, assign) PlaceholderState placeholderState;
+@property(nonatomic, assign) TextFieldState textFieldState;
+@property(nonatomic, assign) PlaceholderState placeholderState;
 
 @end
 
@@ -46,7 +112,7 @@
 
 #pragma mark Object Lifecycle
 
--(instancetype)initWithFrame:(CGRect)frame {
+- (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
     [self commonSimpleTextFieldInit];
@@ -54,7 +120,7 @@
   return self;
 }
 
--(instancetype)initWithCoder:(NSCoder *)aDecoder {
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
     [self commonSimpleTextFieldInit];
@@ -122,32 +188,32 @@
 }
 
 - (void)setUpClearButton {
-  CGRect clearButtonFrame = CGRectMake(0, 0, kClearButtonTouchTargetSideLength, kClearButtonTouchTargetSideLength);
+  CGRect clearButtonFrame =
+      CGRectMake(0, 0, kClearButtonTouchTargetSideLength, kClearButtonTouchTargetSideLength);
   self.clearButton = [[UIButton alloc] initWithFrame:clearButtonFrame];
   [self.clearButton addTarget:self
                        action:@selector(clearButtonPressed:)
              forControlEvents:UIControlEventTouchUpInside];
-  
+
   CGFloat clearButtonImageViewSideLength = [self clearButtonImageViewSideLength];
-  CGRect clearButtonImageViewRect = CGRectMake(0, 0, clearButtonImageViewSideLength, clearButtonImageViewSideLength);
+  CGRect clearButtonImageViewRect =
+      CGRectMake(0, 0, clearButtonImageViewSideLength, clearButtonImageViewSideLength);
   self.clearButtonImageView = [[UIImageView alloc] initWithFrame:clearButtonImageViewRect];
-  self.clearButtonImageView.image = [self clearButtonImage];
-  self.clearButtonImageView.tintColor = UIColor.lightGrayColor;
+  UIImage *clearButtonImage =
+      [[self untintedClearButtonImage] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  self.clearButtonImageView.image = clearButtonImage;
   [self.clearButton addSubview:self.clearButtonImageView];
   [self addSubview:self.clearButton];
   self.clearButtonImageView.center = self.clearButton.center;
 }
 
-
 - (void)setUpStyleLayers {
   [self setUpOutlineSublayer];
   [self setUpFilledSublayer];
-  // TODO: Underline
 }
 
 - (void)setUpOutlineSublayer {
   self.outlinedSublayer = [[CAShapeLayer alloc] init];
-  self.outlinedSublayer.strokeColor = [UIColor purpleColor].CGColor;
   self.outlinedSublayer.fillColor = [UIColor clearColor].CGColor;
   self.outlinedSublayer.lineWidth = [self outlineLineWidthForState:self.textFieldState];
 }
@@ -169,20 +235,23 @@
 }
 
 - (void)setUpFilledSublayer {
-  UIColor *fillColor = [UIColor colorWithWhite:0 alpha:0.2];
-  UIColor *underlineFillColor = [UIColor purpleColor];
   self.filledSublayer = [[CAShapeLayer alloc] init];
-  self.filledSublayer.fillColor = fillColor.CGColor;
   self.filledSublayer.lineWidth = 0.0;
   self.filledSublayerUnderline = [[CAShapeLayer alloc] init];
-  self.filledSublayerUnderline.fillColor = underlineFillColor.CGColor;
   [self.filledSublayer addSublayer:self.filledSublayerUnderline];
 }
 
-
 - (void)addObservers {
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidEndEditingWithNotification:) name:UITextFieldTextDidEndEditingNotification object:nil];
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidBeginEditingWithNotification:) name:UITextFieldTextDidBeginEditingNotification object:nil];
+  [[NSNotificationCenter defaultCenter]
+      addObserver:self
+         selector:@selector(textFieldDidEndEditingWithNotification:)
+             name:UITextFieldTextDidEndEditingNotification
+           object:nil];
+  [[NSNotificationCenter defaultCenter]
+      addObserver:self
+         selector:@selector(textFieldDidBeginEditingWithNotification:)
+             name:UITextFieldTextDidBeginEditingNotification
+           object:nil];
 }
 
 #pragma mark UIView Overrides
@@ -192,29 +261,30 @@
   UIFont *floatingFont = [self floatingPlaceholderFontWithFont:effectiveFont
                                                 textFieldStyle:self.textFieldStyle];
   CGFloat normalizedCustomUnderlineLabelDrawPriority =
-  [self normalizedCustomUnderlineLabelDrawPriority:self.customUnderlineLabelDrawPriority];
-  return [[SimpleTextFieldLayout alloc] initWithTextFieldSize:textFieldSize
-                                                 textFieldStyle:self.textFieldStyle
-                                                           text:self.text
-                                                    placeholder:self.placeholder
-                                                           font:effectiveFont
-                                        floatingPlaceholderFont:floatingFont
-                                            canPlaceholderFloat:self.canPlaceholderFloat
-                                                       leftView:self.leftView
-                                                   leftViewMode:self.leftViewMode
-                                                      rightView:self.rightView
-                                                  rightViewMode:self.rightViewMode
-                                                    clearButton:self.clearButton
-                                                clearButtonMode:self.clearButtonMode
-                                             leftUnderlineLabel:self.leftUnderlineLabel
-                                            rightUnderlineLabel:self.rightUnderlineLabel
-                                     underlineLabelDrawPriority:self.underlineLabelDrawPriority
-                               customUnderlineLabelDrawPriority:normalizedCustomUnderlineLabelDrawPriority
-                                                          isRTL:[self isRTL]
-                                                      isEditing:self.isEditing];
+      [self normalizedCustomUnderlineLabelDrawPriority:self.customUnderlineLabelDrawPriority];
+  return [[SimpleTextFieldLayout alloc]
+                 initWithTextFieldSize:textFieldSize
+                        textFieldStyle:self.textFieldStyle
+                                  text:self.text
+                           placeholder:self.placeholder
+                                  font:effectiveFont
+               floatingPlaceholderFont:floatingFont
+                   canPlaceholderFloat:self.canPlaceholderFloat
+                              leftView:self.leftView
+                          leftViewMode:self.leftViewMode
+                             rightView:self.rightView
+                         rightViewMode:self.rightViewMode
+                           clearButton:self.clearButton
+                       clearButtonMode:self.clearButtonMode
+                    leftUnderlineLabel:self.leftUnderlineLabel
+                   rightUnderlineLabel:self.rightUnderlineLabel
+            underlineLabelDrawPriority:self.underlineLabelDrawPriority
+      customUnderlineLabelDrawPriority:normalizedCustomUnderlineLabelDrawPriority
+                                 isRTL:[self isRTL]
+                             isEditing:self.isEditing];
 }
 
--(void)layoutSubviews {
+- (void)layoutSubviews {
   [self preLayoutSubviews];
   [super layoutSubviews];
   [self postLayoutSubviews];
@@ -223,8 +293,10 @@
 - (void)preLayoutSubviews {
   self.textFieldState = [self determineCurrentTextFieldState];
   self.placeholderState = [self determineCurrentPlaceholderState];
-  [self applyColorScheme:self.containerScheme.colorScheme
-      withTextFieldState:self.textFieldState];
+  SimpleTextFieldColorAdapter *colorAdapter =
+      [[SimpleTextFieldColorAdapter alloc] initWithColorScheme:self.containerScheme.colorScheme
+                                            withTextFieldState:self.textFieldState];
+  [self applyColorAdapter:colorAdapter];
   [self applyTypographyScheme:self.containerScheme.typographyScheme];
   CGSize fittingSize = CGSizeMake(CGRectGetWidth(self.frame), CGFLOAT_MAX);
   self.layout = [self calculateLayoutWithTextFieldSize:fittingSize];
@@ -232,11 +304,11 @@
 
 - (void)postLayoutSubviews {
   [self applyTextFieldStyle:self.textFieldStyle
-             textFieldState:self.textFieldState
-            textFieldBounds:self.bounds
-   floatingPlaceholderFrame:self.layout.placeholderFrameFloating
-    topRowBottomRowDividerY:self.layout.topRowBottomRowDividerY
-      isFloatingPlaceholder:self.placeholderState == PlaceholderStateFloating];
+                textFieldState:self.textFieldState
+               textFieldBounds:self.bounds
+      floatingPlaceholderFrame:self.layout.placeholderFrameFloating
+       topRowBottomRowDividerY:self.layout.topRowBottomRowDividerY
+         isFloatingPlaceholder:self.placeholderState == PlaceholderStateFloating];
   [self layOutPlaceholderWithState:self.placeholderState];
   self.clearButton.frame = self.layout.clearButtonFrame;
   self.clearButton.hidden = self.layout.clearButtonHidden;
@@ -254,7 +326,7 @@
 // A vanilla UITextField returns a 9x21 size as the smallest UITextFields
 // It does so irrespective of leftView/rightView, but it does take into account text.
 // I think that this implementation should calculate a height for size.width.
--(CGSize)sizeThatFits:(CGSize)size {
+- (CGSize)sizeThatFits:(CGSize)size {
   return [self preferredSizeWithWidth:size.width];
 }
 
@@ -264,7 +336,7 @@
   return CGSizeMake(width, layout.calculatedHeight);
 }
 
--(CGSize)intrinsicContentSize {
+- (CGSize)intrinsicContentSize {
   return [self preferredSizeWithWidth:CGRectGetWidth(self.bounds)];
 }
 
@@ -274,8 +346,8 @@
   NSLayoutConstraint *result = nil;
   for (NSLayoutConstraint *constraint in view.constraints) {
     BOOL isAHeightConstraintOnSelf =
-    (constraint.firstItem == view && constraint.firstAttribute == attribute) ||
-    (constraint.secondItem == view && constraint.secondAttribute == attribute);
+        (constraint.firstItem == view && constraint.firstAttribute == attribute) ||
+        (constraint.secondItem == view && constraint.secondAttribute == attribute);
     if (isAHeightConstraintOnSelf && constraint.priority > maxPriority) {
       result = constraint;
     }
@@ -283,77 +355,76 @@
   return result;
 }
 
-- (CGSize)systemLayoutSizeFittingSize:(CGSize)targetSize {
-  NSLog(@"TODO: Implement systemLayoutSizeFittingSize:");
-  return [super systemLayoutSizeFittingSize:targetSize];
-}
-
--(void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
   [super traitCollectionDidChange:previousTraitCollection];
   [self setUpLayoutDirection];
 }
 
 #pragma mark UITextField Accessor Overrides
 
--(void)setFont:(UIFont *)font {
+- (void)setFont:(UIFont *)font {
   [super setFont:font];
   [self setUpFonts];
 }
 
--(void)setPlaceholder:(NSString *)placeholder {
+- (void)setPlaceholder:(NSString *)placeholder {
   self.placeholderLabel.attributedText = nil;
   self.placeholderLabel.text = [placeholder copy];
   // TODO: Determine if setNeedsLayout is necessary here. I think it might be...
 }
 
--(NSString *)placeholder {
+- (NSString *)placeholder {
   return self.placeholderLabel.text;
 }
 
--(void)setAttributedPlaceholder:(NSAttributedString *)attributedPlaceholder {
+- (void)setAttributedPlaceholder:(NSAttributedString *)attributedPlaceholder {
   self.placeholderLabel.text = nil;
   self.placeholderLabel.attributedText = attributedPlaceholder;
   // TODO: Determine if setNeedsLayout is necessary here. I think it might be...
   // TODO: Also make layout aware of attributedPlaceholder
 }
 
--(NSAttributedString *)attributedPlaceholder {
+- (NSAttributedString *)attributedPlaceholder {
   return self.placeholderLabel.attributedText;
 }
 
--(void)setLeftViewMode:(UITextFieldViewMode)leftViewMode {
-  NSLog(@"Setting leftViewMode is not recommended. Consider setting leadingViewMode and trailingViewMode instead.");
+- (void)setLeftViewMode:(UITextFieldViewMode)leftViewMode {
+  NSLog(@"Setting leftViewMode is not recommended. Consider setting leadingViewMode and "
+        @"trailingViewMode instead.");
   [self mdc_setLeftViewMode:leftViewMode];
 }
 
--(void)setRightViewMode:(UITextFieldViewMode)rightViewMode {
-  NSLog(@"Setting rightViewMode is not recommended. Consider setting leadingViewMode and trailingViewMode instead.");
+- (void)setRightViewMode:(UITextFieldViewMode)rightViewMode {
+  NSLog(@"Setting rightViewMode is not recommended. Consider setting leadingViewMode and "
+        @"trailingViewMode instead.");
   [self mdc_setRightViewMode:rightViewMode];
 }
 
--(void)setLeftView:(UIView *)leftView {
-  NSLog(@"Setting rightView and leftView are not recommended. Consider setting leadingView and trailingView instead.");
+- (void)setLeftView:(UIView *)leftView {
+  NSLog(@"Setting rightView and leftView are not recommended. Consider setting leadingView and "
+        @"trailingView instead.");
   [self mdc_setLeftView:leftView];
 }
 
--(void)setRightView:(UIView *)rightView {
-  NSLog(@"Setting rightView and leftView are not recommended. Consider setting leadingView and trailingView instead.");
+- (void)setRightView:(UIView *)rightView {
+  NSLog(@"Setting rightView and leftView are not recommended. Consider setting leadingView and "
+        @"trailingView instead.");
   [self mdc_setRightView:rightView];
 }
 
--(void)setClearButtonMode:(UITextFieldViewMode)clearButtonMode {
+- (void)setClearButtonMode:(UITextFieldViewMode)clearButtonMode {
   [super setClearButtonMode:clearButtonMode];
-  //TODO: determine whether a call to setNeedsLayout is necessary. I don't think it is...
+  // TODO: determine whether a call to setNeedsLayout is necessary. I don't think it is...
 }
 
--(void)setBorderStyle:(UITextBorderStyle)borderStyle {
+- (void)setBorderStyle:(UITextBorderStyle)borderStyle {
   // enforce UITextBorderStyle.none
   [super setBorderStyle:UITextBorderStyleNone];
 }
 
 #pragma mark Custom Accessors
 
--(UILabel *)leadingUnderlineLabel {
+- (UILabel *)leadingUnderlineLabel {
   if ([self isRTL]) {
     return self.rightUnderlineLabel;
   } else {
@@ -361,7 +432,7 @@
   }
 }
 
--(UILabel *)trailingUnderlineLabel {
+- (UILabel *)trailingUnderlineLabel {
   if ([self isRTL]) {
     return self.leftUnderlineLabel;
   } else {
@@ -369,7 +440,7 @@
   }
 }
 
--(void)setLayoutDirection:(UIUserInterfaceLayoutDirection)layoutDirection {
+- (void)setLayoutDirection:(UIUserInterfaceLayoutDirection)layoutDirection {
   if (_layoutDirection == layoutDirection) {
     return;
   }
@@ -377,7 +448,7 @@
   [self setNeedsLayout];
 }
 
--(void)setTrailingView:(UIView *)trailingView {
+- (void)setTrailingView:(UIView *)trailingView {
   if ([self isRTL]) {
     [self mdc_setLeftView:trailingView];
   } else {
@@ -385,7 +456,7 @@
   }
 }
 
--(UIView *)trailingView {
+- (UIView *)trailingView {
   if ([self isRTL]) {
     return self.leftView;
   } else {
@@ -393,7 +464,7 @@
   }
 }
 
--(void)setLeadingView:(UIView *)leadingView {
+- (void)setLeadingView:(UIView *)leadingView {
   if ([self isRTL]) {
     [self mdc_setRightView:leadingView];
   } else {
@@ -401,7 +472,7 @@
   }
 }
 
--(UIView *)leadingView {
+- (UIView *)leadingView {
   if ([self isRTL]) {
     return self.rightView;
   } else {
@@ -418,7 +489,7 @@
   [super setRightView:rightView];
 }
 
--(void)setTrailingViewMode:(UITextFieldViewMode)trailingViewMode {
+- (void)setTrailingViewMode:(UITextFieldViewMode)trailingViewMode {
   if ([self isRTL]) {
     [self mdc_setLeftViewMode:trailingViewMode];
   } else {
@@ -426,7 +497,7 @@
   }
 }
 
--(UITextFieldViewMode)trailingViewMode {
+- (UITextFieldViewMode)trailingViewMode {
   if ([self isRTL]) {
     return self.leftViewMode;
   } else {
@@ -434,7 +505,7 @@
   }
 }
 
--(void)setLeadingViewMode:(UITextFieldViewMode)leadingViewMode {
+- (void)setLeadingViewMode:(UITextFieldViewMode)leadingViewMode {
   if ([self isRTL]) {
     [self mdc_setRightViewMode:leadingViewMode];
   } else {
@@ -442,7 +513,7 @@
   }
 }
 
--(UITextFieldViewMode)leadingViewMode {
+- (UITextFieldViewMode)leadingViewMode {
   if ([self isRTL]) {
     return self.rightViewMode;
   } else {
@@ -458,7 +529,7 @@
   [super setRightViewMode:rightViewMode];
 }
 
--(void)setCanPlaceholderFloat:(BOOL)canPlaceholderFloat {
+- (void)setCanPlaceholderFloat:(BOOL)canPlaceholderFloat {
   if (_canPlaceholderFloat == canPlaceholderFloat) {
     return;
   }
@@ -468,28 +539,28 @@
 
 #pragma mark UITextField Layout Overrides
 
--(CGRect)textRectForBounds:(CGRect)bounds {
+- (CGRect)textRectForBounds:(CGRect)bounds {
   return [self adjustTextAreaFrame:self.layout.textAreaFrame
       withParentClassTextAreaFrame:[super textRectForBounds:bounds]];
 }
 
--(CGRect)editingRectForBounds:(CGRect)bounds {
+- (CGRect)editingRectForBounds:(CGRect)bounds {
   return [self adjustTextAreaFrame:self.layout.textAreaFrame
       withParentClassTextAreaFrame:[super editingRectForBounds:bounds]];
 }
 
 - (CGRect)adjustTextAreaFrame:(CGRect)textAreaFrame
- withParentClassTextAreaFrame:(CGRect)parentClassTextAreaFrame {
+    withParentClassTextAreaFrame:(CGRect)parentClassTextAreaFrame {
   CGFloat height = CGRectGetHeight(parentClassTextAreaFrame);
   CGFloat minY = CGRectGetMidY(textAreaFrame) - (height * 0.5);
   return CGRectMake(CGRectGetMinX(textAreaFrame), minY, CGRectGetWidth(textAreaFrame), height);
 }
 
--(CGRect)leftViewRectForBounds:(CGRect)bounds {
+- (CGRect)leftViewRectForBounds:(CGRect)bounds {
   return self.layout.leftViewFrame;
 }
 
--(CGRect)rightViewRectForBounds:(CGRect)bounds {
+- (CGRect)rightViewRectForBounds:(CGRect)bounds {
   return self.layout.rightViewFrame;
 }
 
@@ -512,7 +583,6 @@
   }
   return value;
 }
-
 
 #pragma mark Fonts
 
@@ -538,12 +608,13 @@
 
 #pragma mark Clear Button
 
-- (UIImage *)clearButtonImage {
+- (UIImage *)untintedClearButtonImage {
   CGFloat clearButtonImageViewSideLength = [self clearButtonImageViewSideLength];
-  CGSize clearButtonSize = CGSizeMake(clearButtonImageViewSideLength, clearButtonImageViewSideLength);
+  CGSize clearButtonSize =
+      CGSizeMake(clearButtonImageViewSideLength, clearButtonImageViewSideLength);
   CGRect rect = CGRectMake(0, 0, clearButtonSize.width, clearButtonSize.height);
   UIGraphicsBeginImageContextWithOptions(rect.size, false, 0);
-  [[UIColor grayColor] setFill];
+  [[UIColor blackColor] setFill];
   [[self pathForClearButtonImageWithFrame:rect] fill];
   UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
   UIGraphicsEndImageContext();
@@ -554,113 +625,113 @@
 // This generated code is taken from the MDCTextField.
 - (UIBezierPath *)pathForClearButtonImageWithFrame:(CGRect)frame {
   CGRect innerBounds =
-  CGRectMake(CGRectGetMinX(frame) + 2, CGRectGetMinY(frame) + 2,
-             MDCFloor((frame.size.width - 2) * (CGFloat)0.90909 + (CGFloat)0.5),
-             MDCFloor((frame.size.height - 2) * (CGFloat)0.90909 + (CGFloat)0.5));
+      CGRectMake(CGRectGetMinX(frame) + 2, CGRectGetMinY(frame) + 2,
+                 MDCFloor((frame.size.width - 2) * (CGFloat)0.90909 + (CGFloat)0.5),
+                 MDCFloor((frame.size.height - 2) * (CGFloat)0.90909 + (CGFloat)0.5));
 
   UIBezierPath *ic_clear_path = [UIBezierPath bezierPath];
   [ic_clear_path moveToPoint:CGPointMake(CGRectGetMinX(innerBounds) +
-                                         (CGFloat)0.50000 * innerBounds.size.width,
+                                             (CGFloat)0.50000 * innerBounds.size.width,
                                          CGRectGetMinY(innerBounds) + 0 * innerBounds.size.height)];
   [ic_clear_path
-   addCurveToPoint:CGPointMake(
-                               CGRectGetMinX(innerBounds) + 1 * innerBounds.size.width,
-                               CGRectGetMinY(innerBounds) + (CGFloat)0.50000 * innerBounds.size.height)
-   controlPoint1:CGPointMake(
-                             CGRectGetMinX(innerBounds) + (CGFloat)0.77600 * innerBounds.size.width,
-                             CGRectGetMinY(innerBounds) + 0 * innerBounds.size.height)
-   controlPoint2:CGPointMake(
-                             CGRectGetMinX(innerBounds) + 1 * innerBounds.size.width,
-                             CGRectGetMinY(innerBounds) + (CGFloat)0.22400 * innerBounds.size.height)];
+      addCurveToPoint:CGPointMake(
+                          CGRectGetMinX(innerBounds) + 1 * innerBounds.size.width,
+                          CGRectGetMinY(innerBounds) + (CGFloat)0.50000 * innerBounds.size.height)
+        controlPoint1:CGPointMake(
+                          CGRectGetMinX(innerBounds) + (CGFloat)0.77600 * innerBounds.size.width,
+                          CGRectGetMinY(innerBounds) + 0 * innerBounds.size.height)
+        controlPoint2:CGPointMake(
+                          CGRectGetMinX(innerBounds) + 1 * innerBounds.size.width,
+                          CGRectGetMinY(innerBounds) + (CGFloat)0.22400 * innerBounds.size.height)];
   [ic_clear_path
-   addCurveToPoint:CGPointMake(
-                               CGRectGetMinX(innerBounds) + (CGFloat)0.50000 * innerBounds.size.width,
-                               CGRectGetMinY(innerBounds) + 1 * innerBounds.size.height)
-   controlPoint1:CGPointMake(
-                             CGRectGetMinX(innerBounds) + 1 * innerBounds.size.width,
-                             CGRectGetMinY(innerBounds) + (CGFloat)0.77600 * innerBounds.size.height)
-   controlPoint2:CGPointMake(
-                             CGRectGetMinX(innerBounds) + (CGFloat)0.77600 * innerBounds.size.width,
-                             CGRectGetMinY(innerBounds) + 1 * innerBounds.size.height)];
+      addCurveToPoint:CGPointMake(
+                          CGRectGetMinX(innerBounds) + (CGFloat)0.50000 * innerBounds.size.width,
+                          CGRectGetMinY(innerBounds) + 1 * innerBounds.size.height)
+        controlPoint1:CGPointMake(
+                          CGRectGetMinX(innerBounds) + 1 * innerBounds.size.width,
+                          CGRectGetMinY(innerBounds) + (CGFloat)0.77600 * innerBounds.size.height)
+        controlPoint2:CGPointMake(
+                          CGRectGetMinX(innerBounds) + (CGFloat)0.77600 * innerBounds.size.width,
+                          CGRectGetMinY(innerBounds) + 1 * innerBounds.size.height)];
   [ic_clear_path
-   addCurveToPoint:CGPointMake(
-                               CGRectGetMinX(innerBounds) + 0 * innerBounds.size.width,
-                               CGRectGetMinY(innerBounds) + (CGFloat)0.50000 * innerBounds.size.height)
-   controlPoint1:CGPointMake(
-                             CGRectGetMinX(innerBounds) + (CGFloat)0.22400 * innerBounds.size.width,
-                             CGRectGetMinY(innerBounds) + 1 * innerBounds.size.height)
-   controlPoint2:CGPointMake(
-                             CGRectGetMinX(innerBounds) + 0 * innerBounds.size.width,
-                             CGRectGetMinY(innerBounds) + (CGFloat)0.77600 * innerBounds.size.height)];
+      addCurveToPoint:CGPointMake(
+                          CGRectGetMinX(innerBounds) + 0 * innerBounds.size.width,
+                          CGRectGetMinY(innerBounds) + (CGFloat)0.50000 * innerBounds.size.height)
+        controlPoint1:CGPointMake(
+                          CGRectGetMinX(innerBounds) + (CGFloat)0.22400 * innerBounds.size.width,
+                          CGRectGetMinY(innerBounds) + 1 * innerBounds.size.height)
+        controlPoint2:CGPointMake(
+                          CGRectGetMinX(innerBounds) + 0 * innerBounds.size.width,
+                          CGRectGetMinY(innerBounds) + (CGFloat)0.77600 * innerBounds.size.height)];
   [ic_clear_path
-   addCurveToPoint:CGPointMake(
-                               CGRectGetMinX(innerBounds) + (CGFloat)0.50000 * innerBounds.size.width,
-                               CGRectGetMinY(innerBounds) + 0 * innerBounds.size.height)
-   controlPoint1:CGPointMake(
-                             CGRectGetMinX(innerBounds) + 0 * innerBounds.size.width,
-                             CGRectGetMinY(innerBounds) + (CGFloat)0.22400 * innerBounds.size.height)
-   controlPoint2:CGPointMake(
-                             CGRectGetMinX(innerBounds) + (CGFloat)0.22400 * innerBounds.size.width,
-                             CGRectGetMinY(innerBounds) + 0 * innerBounds.size.height)];
+      addCurveToPoint:CGPointMake(
+                          CGRectGetMinX(innerBounds) + (CGFloat)0.50000 * innerBounds.size.width,
+                          CGRectGetMinY(innerBounds) + 0 * innerBounds.size.height)
+        controlPoint1:CGPointMake(
+                          CGRectGetMinX(innerBounds) + 0 * innerBounds.size.width,
+                          CGRectGetMinY(innerBounds) + (CGFloat)0.22400 * innerBounds.size.height)
+        controlPoint2:CGPointMake(
+                          CGRectGetMinX(innerBounds) + (CGFloat)0.22400 * innerBounds.size.width,
+                          CGRectGetMinY(innerBounds) + 0 * innerBounds.size.height)];
   [ic_clear_path closePath];
   [ic_clear_path
-   moveToPoint:CGPointMake(
-                           CGRectGetMinX(innerBounds) + (CGFloat)0.73417 * innerBounds.size.width,
-                           CGRectGetMinY(innerBounds) + (CGFloat)0.31467 * innerBounds.size.height)];
+      moveToPoint:CGPointMake(
+                      CGRectGetMinX(innerBounds) + (CGFloat)0.73417 * innerBounds.size.width,
+                      CGRectGetMinY(innerBounds) + (CGFloat)0.31467 * innerBounds.size.height)];
   [ic_clear_path
-   addLineToPoint:CGPointMake(
-                              CGRectGetMinX(innerBounds) + (CGFloat)0.68700 * innerBounds.size.width,
-                              CGRectGetMinY(innerBounds) + (CGFloat)0.26750 * innerBounds.size.height)];
+      addLineToPoint:CGPointMake(
+                         CGRectGetMinX(innerBounds) + (CGFloat)0.68700 * innerBounds.size.width,
+                         CGRectGetMinY(innerBounds) + (CGFloat)0.26750 * innerBounds.size.height)];
   [ic_clear_path
-   addLineToPoint:CGPointMake(
-                              CGRectGetMinX(innerBounds) + (CGFloat)0.50083 * innerBounds.size.width,
-                              CGRectGetMinY(innerBounds) + (CGFloat)0.45367 * innerBounds.size.height)];
+      addLineToPoint:CGPointMake(
+                         CGRectGetMinX(innerBounds) + (CGFloat)0.50083 * innerBounds.size.width,
+                         CGRectGetMinY(innerBounds) + (CGFloat)0.45367 * innerBounds.size.height)];
   [ic_clear_path
-   addLineToPoint:CGPointMake(
-                              CGRectGetMinX(innerBounds) + (CGFloat)0.31467 * innerBounds.size.width,
-                              CGRectGetMinY(innerBounds) + (CGFloat)0.26750 * innerBounds.size.height)];
+      addLineToPoint:CGPointMake(
+                         CGRectGetMinX(innerBounds) + (CGFloat)0.31467 * innerBounds.size.width,
+                         CGRectGetMinY(innerBounds) + (CGFloat)0.26750 * innerBounds.size.height)];
   [ic_clear_path
-   addLineToPoint:CGPointMake(
-                              CGRectGetMinX(innerBounds) + (CGFloat)0.26750 * innerBounds.size.width,
-                              CGRectGetMinY(innerBounds) + (CGFloat)0.31467 * innerBounds.size.height)];
+      addLineToPoint:CGPointMake(
+                         CGRectGetMinX(innerBounds) + (CGFloat)0.26750 * innerBounds.size.width,
+                         CGRectGetMinY(innerBounds) + (CGFloat)0.31467 * innerBounds.size.height)];
   [ic_clear_path
-   addLineToPoint:CGPointMake(
-                              CGRectGetMinX(innerBounds) + (CGFloat)0.45367 * innerBounds.size.width,
-                              CGRectGetMinY(innerBounds) + (CGFloat)0.50083 * innerBounds.size.height)];
+      addLineToPoint:CGPointMake(
+                         CGRectGetMinX(innerBounds) + (CGFloat)0.45367 * innerBounds.size.width,
+                         CGRectGetMinY(innerBounds) + (CGFloat)0.50083 * innerBounds.size.height)];
   [ic_clear_path
-   addLineToPoint:CGPointMake(
-                              CGRectGetMinX(innerBounds) + (CGFloat)0.26750 * innerBounds.size.width,
-                              CGRectGetMinY(innerBounds) + (CGFloat)0.68700 * innerBounds.size.height)];
+      addLineToPoint:CGPointMake(
+                         CGRectGetMinX(innerBounds) + (CGFloat)0.26750 * innerBounds.size.width,
+                         CGRectGetMinY(innerBounds) + (CGFloat)0.68700 * innerBounds.size.height)];
   [ic_clear_path
-   addLineToPoint:CGPointMake(
-                              CGRectGetMinX(innerBounds) + (CGFloat)0.31467 * innerBounds.size.width,
-                              CGRectGetMinY(innerBounds) + (CGFloat)0.73417 * innerBounds.size.height)];
+      addLineToPoint:CGPointMake(
+                         CGRectGetMinX(innerBounds) + (CGFloat)0.31467 * innerBounds.size.width,
+                         CGRectGetMinY(innerBounds) + (CGFloat)0.73417 * innerBounds.size.height)];
   [ic_clear_path
-   addLineToPoint:CGPointMake(
-                              CGRectGetMinX(innerBounds) + (CGFloat)0.50083 * innerBounds.size.width,
-                              CGRectGetMinY(innerBounds) + (CGFloat)0.54800 * innerBounds.size.height)];
+      addLineToPoint:CGPointMake(
+                         CGRectGetMinX(innerBounds) + (CGFloat)0.50083 * innerBounds.size.width,
+                         CGRectGetMinY(innerBounds) + (CGFloat)0.54800 * innerBounds.size.height)];
   [ic_clear_path
-   addLineToPoint:CGPointMake(
-                              CGRectGetMinX(innerBounds) + (CGFloat)0.68700 * innerBounds.size.width,
-                              CGRectGetMinY(innerBounds) + (CGFloat)0.73417 * innerBounds.size.height)];
+      addLineToPoint:CGPointMake(
+                         CGRectGetMinX(innerBounds) + (CGFloat)0.68700 * innerBounds.size.width,
+                         CGRectGetMinY(innerBounds) + (CGFloat)0.73417 * innerBounds.size.height)];
   [ic_clear_path
-   addLineToPoint:CGPointMake(
-                              CGRectGetMinX(innerBounds) + (CGFloat)0.73417 * innerBounds.size.width,
-                              CGRectGetMinY(innerBounds) + (CGFloat)0.68700 * innerBounds.size.height)];
+      addLineToPoint:CGPointMake(
+                         CGRectGetMinX(innerBounds) + (CGFloat)0.73417 * innerBounds.size.width,
+                         CGRectGetMinY(innerBounds) + (CGFloat)0.68700 * innerBounds.size.height)];
   [ic_clear_path
-   addLineToPoint:CGPointMake(
-                              CGRectGetMinX(innerBounds) + (CGFloat)0.54800 * innerBounds.size.width,
-                              CGRectGetMinY(innerBounds) + (CGFloat)0.50083 * innerBounds.size.height)];
+      addLineToPoint:CGPointMake(
+                         CGRectGetMinX(innerBounds) + (CGFloat)0.54800 * innerBounds.size.width,
+                         CGRectGetMinY(innerBounds) + (CGFloat)0.50083 * innerBounds.size.height)];
   [ic_clear_path
-   addLineToPoint:CGPointMake(
-                              CGRectGetMinX(innerBounds) + (CGFloat)0.73417 * innerBounds.size.width,
-                              CGRectGetMinY(innerBounds) + (CGFloat)0.31467 * innerBounds.size.height)];
+      addLineToPoint:CGPointMake(
+                         CGRectGetMinX(innerBounds) + (CGFloat)0.73417 * innerBounds.size.width,
+                         CGRectGetMinY(innerBounds) + (CGFloat)0.31467 * innerBounds.size.height)];
   [ic_clear_path closePath];
 
   return ic_clear_path;
 }
 
--(void)prepareForInterfaceBuilder {
+- (void)prepareForInterfaceBuilder {
   [super prepareForInterfaceBuilder];
   [self invalidateIntrinsicContentSize];
 }
@@ -670,7 +741,6 @@
 - (void)layOutPlaceholderWithState:(PlaceholderState)state {
   UIFont *font = nil;
   CGRect frame = CGRectZero;
-  // TODO: Take color into account
   BOOL placeholderShouldHide = NO;
   switch (state) {
     case PlaceholderStateFloating:
@@ -694,10 +764,11 @@
   // TODO: Figure out a better way of doing this.
   // One idea: Make it so placeholder animation is actually of a layer transform
   // but at the end you really change the font and frame and stuff.
-  [UIView animateWithDuration:kFloatingPlaceholderAnimationDuration animations:^{
-    weakSelf.placeholderLabel.frame = frame;
-    weakSelf.placeholderLabel.font = font;
-  }];
+  [UIView animateWithDuration:kFloatingPlaceholderAnimationDuration
+                   animations:^{
+                     weakSelf.placeholderLabel.frame = frame;
+                     weakSelf.placeholderLabel.font = font;
+                   }];
 }
 
 - (PlaceholderState)placeholderStateWithPlaceholder:(NSString *)placeholder
@@ -736,10 +807,12 @@
   CGFloat filledFloatingPlaceholderScale = (CGFloat)53 / (CGFloat)71;
   switch (textFieldStyle) {
     case TextFieldStyleFilled:
-      floatingPlaceholderFontSize = round((double)(font.pointSize * filledFloatingPlaceholderScale));
+      floatingPlaceholderFontSize =
+          round((double)(font.pointSize * filledFloatingPlaceholderScale));
       break;
     case TextFieldStyleOutline:
-      floatingPlaceholderFontSize = round((double)(font.pointSize * outlinedFloatingPlaceholderScale));
+      floatingPlaceholderFontSize =
+          round((double)(font.pointSize * outlinedFloatingPlaceholderScale));
       break;
     default:
       break;
@@ -755,7 +828,8 @@
 
 - (void)clearButtonPressed:(UIButton *)clearButton {
   self.text = nil;
-  // TODO: I'm pretty sure there is a control event or notification UITextField sens or posts here. Add it!
+  // TODO: I'm pretty sure there is a control event or notification UITextField sens or posts here.
+  // Add it!
 }
 
 #pragma mark Notification Listener Methods
@@ -792,29 +866,29 @@
 #pragma mark Style Management
 
 - (void)applyTextFieldStyle:(TextFieldStyle)textFieldStyle
-             textFieldState:(TextFieldState)textFieldState
-            textFieldBounds:(CGRect)textFieldBounds
-   floatingPlaceholderFrame:(CGRect)floatingPlaceholderFrame
-    topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
-      isFloatingPlaceholder:(BOOL)isFloatingPlaceholder {
+              textFieldState:(TextFieldState)textFieldState
+             textFieldBounds:(CGRect)textFieldBounds
+    floatingPlaceholderFrame:(CGRect)floatingPlaceholderFrame
+     topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
+       isFloatingPlaceholder:(BOOL)isFloatingPlaceholder {
   [self applyOutlinedStyle:textFieldStyle == TextFieldStyleOutline
-            textFieldState:textFieldState
-           textFieldBounds:textFieldBounds
-  floatingPlaceholderFrame:floatingPlaceholderFrame
-   topRowBottomRowDividerY:topRowBottomRowDividerY
-     isFloatingPlaceholder:isFloatingPlaceholder];
+                textFieldState:textFieldState
+               textFieldBounds:textFieldBounds
+      floatingPlaceholderFrame:floatingPlaceholderFrame
+       topRowBottomRowDividerY:topRowBottomRowDividerY
+         isFloatingPlaceholder:isFloatingPlaceholder];
   [self applyFilledStyle:textFieldStyle == TextFieldStyleFilled
-      WithTextFieldState:textFieldState
-         textFieldBounds:textFieldBounds
- topRowBottomRowDividerY:topRowBottomRowDividerY];
+           WithTextFieldState:textFieldState
+              textFieldBounds:textFieldBounds
+      topRowBottomRowDividerY:topRowBottomRowDividerY];
 }
 
 - (void)applyOutlinedStyle:(BOOL)isOutlined
-            textFieldState:(TextFieldState)textFieldState
-           textFieldBounds:(CGRect)textFieldBounds
-  floatingPlaceholderFrame:(CGRect)floatingPlaceholderFrame
-   topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
-     isFloatingPlaceholder:(BOOL)isFloatingPlaceholder {
+              textFieldState:(TextFieldState)textFieldState
+             textFieldBounds:(CGRect)textFieldBounds
+    floatingPlaceholderFrame:(CGRect)floatingPlaceholderFrame
+     topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
+       isFloatingPlaceholder:(BOOL)isFloatingPlaceholder {
   if (!isOutlined) {
     [self.outlinedSublayer removeFromSuperlayer];
     return;
@@ -833,20 +907,22 @@
 }
 
 - (void)applyFilledStyle:(BOOL)isFilled
-      WithTextFieldState:(TextFieldState)textFieldState
-         textFieldBounds:(CGRect)textFieldBounds
- topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY {
+         WithTextFieldState:(TextFieldState)textFieldState
+            textFieldBounds:(CGRect)textFieldBounds
+    topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY {
   if (!isFilled) {
     [self.filledSublayer removeFromSuperlayer];
     return;
   }
 
-  UIBezierPath *filledSublayerPath = [self filledSublayerPathWithTextFieldBounds:textFieldBounds
-                                                         topRowBottomRowDividerY:topRowBottomRowDividerY];
+  UIBezierPath *filledSublayerPath =
+      [self filledSublayerPathWithTextFieldBounds:textFieldBounds
+                          topRowBottomRowDividerY:topRowBottomRowDividerY];
   CGFloat underlineThickness = [self underlineThicknessWithTextFieldState:textFieldState];
-  UIBezierPath *filledSublayerUnderlinePath = [self filledSublayerUnderlinePathWithTextFieldBounds:textFieldBounds
-                                                                           topRowBottomRowDividerY:topRowBottomRowDividerY
-                                                                                underlineThickness:underlineThickness];
+  UIBezierPath *filledSublayerUnderlinePath =
+      [self filledSublayerUnderlinePathWithTextFieldBounds:textFieldBounds
+                                   topRowBottomRowDividerY:topRowBottomRowDividerY
+                                        underlineThickness:underlineThickness];
   self.filledSublayer.path = filledSublayerPath.CGPath;
   self.filledSublayerUnderline.path = filledSublayerUnderlinePath.CGPath;
   if (self.filledSublayer.superlayer != self.layer) {
@@ -878,21 +954,22 @@
                                        lineWidth:(CGFloat)lineWidth
                            isFloatingPlaceholder:(BOOL)isFloatingPlaceholder {
   UIBezierPath *path = [[UIBezierPath alloc] init];
-  //TODO: inject state so you can set width and color correctly
   CGFloat radius = kOutlinedTextFieldCornerRadius;
   CGFloat textFieldWidth = CGRectGetWidth(textFieldBounds);
   CGFloat sublayerMinY = 0;
-//  if (CGSizeEqualToSize(CGSizeZero, floatingPlaceholderFrame.size)) {
-//    sublayerMinY = CGRectGetMidY(floatingPlaceholderFrame);
-//  }
+  //  if (CGSizeEqualToSize(CGSizeZero, floatingPlaceholderFrame.size)) {
+  //    sublayerMinY = CGRectGetMidY(floatingPlaceholderFrame);
+  //  }
   CGFloat sublayerMaxY = topRowBottomRowDividerY;
 
   CGPoint startingPoint = CGPointMake(radius, sublayerMinY);
   CGPoint topRightCornerPoint1 = CGPointMake(textFieldWidth - radius, sublayerMinY);
   [path moveToPoint:startingPoint];
   if (isFloatingPlaceholder) {
-    CGFloat leftLineBreak = CGRectGetMinX(floatingPlaceholderFrame) - kFloatingPlaceholderSideMargin;
-    CGFloat rightLineBreak = CGRectGetMaxX(floatingPlaceholderFrame) + kFloatingPlaceholderSideMargin;
+    CGFloat leftLineBreak =
+        CGRectGetMinX(floatingPlaceholderFrame) - kFloatingPlaceholderSideMargin;
+    CGFloat rightLineBreak =
+        CGRectGetMaxX(floatingPlaceholderFrame) + kFloatingPlaceholderSideMargin;
     [path addLineToPoint:CGPointMake(leftLineBreak, sublayerMinY)];
     [path moveToPoint:CGPointMake(rightLineBreak, sublayerMinY)];
     [path addLineToPoint:CGPointMake(rightLineBreak, sublayerMinY)];
@@ -983,7 +1060,6 @@
 - (UIBezierPath *)filledSublayerUnderlinePathWithTextFieldBounds:(CGRect)textFieldBounds
                                          topRowBottomRowDividerY:(CGFloat)topRowBottomRowDividerY
                                               underlineThickness:(CGFloat)underlineThickness {
-  //TODO: Consider underline labels, don't place underline under them
   UIBezierPath *path = [[UIBezierPath alloc] init];
   CGFloat textFieldWidth = CGRectGetWidth(textFieldBounds);
   CGFloat sublayerMaxY = topRowBottomRowDividerY;
@@ -1027,12 +1103,11 @@
   return path;
 }
 
-
 - (void)addTopRightCornerToPath:(UIBezierPath *)path
                       fromPoint:(CGPoint)point1
                         toPoint:(CGPoint)point2
                      withRadius:(CGFloat)radius {
-  CGFloat startAngle = - (CGFloat)(M_PI / 2);
+  CGFloat startAngle = -(CGFloat)(M_PI / 2);
   CGFloat endAngle = 0;
   CGPoint center = CGPointMake(point1.x, point2.y);
   [path addArcWithCenter:center
@@ -1047,7 +1122,7 @@
                            toPoint:(CGPoint)point2
                         withRadius:(CGFloat)radius {
   CGFloat startAngle = 0;
-  CGFloat endAngle = - (CGFloat)((M_PI * 3) / 2);
+  CGFloat endAngle = -(CGFloat)((M_PI * 3) / 2);
   CGPoint center = CGPointMake(point2.x, point1.y);
   [path addArcWithCenter:center
                   radius:radius
@@ -1060,8 +1135,8 @@
                         fromPoint:(CGPoint)point1
                           toPoint:(CGPoint)point2
                        withRadius:(CGFloat)radius {
-  CGFloat startAngle = - (CGFloat)((M_PI * 3) / 2);
-  CGFloat endAngle = - (CGFloat)M_PI;
+  CGFloat startAngle = -(CGFloat)((M_PI * 3) / 2);
+  CGFloat endAngle = -(CGFloat)M_PI;
   CGPoint center = CGPointMake(point1.x, point2.y);
   [path addArcWithCenter:center
                   radius:radius
@@ -1074,8 +1149,8 @@
                      fromPoint:(CGPoint)point1
                        toPoint:(CGPoint)point2
                     withRadius:(CGFloat)radius {
-  CGFloat startAngle = - (CGFloat)M_PI;
-  CGFloat endAngle = - (CGFloat)(M_PI / 2);
+  CGFloat startAngle = -(CGFloat)M_PI;
+  CGFloat endAngle = -(CGFloat)(M_PI / 2);
   CGPoint center = CGPointMake(point1.x + radius, point2.y + radius);
   [path addArcWithCenter:center
                   radius:radius
@@ -1116,30 +1191,19 @@
   }
 }
 
+#pragma mark Theming
 
-/*
-_primaryColor = ColorFromRGB(0x6200EE); // purple
-_primaryColorVariant = ColorFromRGB(0x3700B3); //dark purple
-_secondaryColor = ColorFromRGB(0x03DAC6); // seafoam green
-_errorColor = ColorFromRGB(0xB00020); // royal red
-_surfaceColor = ColorFromRGB(0xFFFFFF); // white
-_backgroundColor = ColorFromRGB(0xFFFFFF); // white
-_onPrimaryColor = ColorFromRGB(0xFFFFFF); // white
-_onSecondaryColor = ColorFromRGB(0x000000); // black
-_onSurfaceColor = ColorFromRGB(0x000000);  // black
-_onBackgroundColor = ColorFromRGB(0x000000);  // black
-*/
+- (void)applyColorAdapter:(SimpleTextFieldColorAdapter *)colorAdapter {
+  self.leadingUnderlineLabel.textColor = colorAdapter.underlineLabelColor;
+  self.trailingUnderlineLabel.textColor = colorAdapter.underlineLabelColor;
+  self.placeholderLabel.textColor = colorAdapter.placeholderLabelColor;
 
-/*
- _primaryColor = ColorFromRGB(0x6200EE); // purple
- _errorColor = ColorFromRGB(0xB00020); // royal red
- _surfaceColor = ColorFromRGB(0xFFFFFF); // white
- _backgroundColor = ColorFromRGB(0xFFFFFF); // white
- _onPrimaryColor = ColorFromRGB(0xFFFFFF); // white
- _onSecondaryColor = ColorFromRGB(0x000000); // black
- _onSurfaceColor = ColorFromRGB(0x000000);  // black
- _onBackgroundColor = ColorFromRGB(0x000000);  // black
- */
+  self.clearButtonImageView.tintColor = colorAdapter.clearButtonTintColor;
+
+  self.outlinedSublayer.strokeColor = colorAdapter.outlineColor.CGColor;
+  self.filledSublayerUnderline.fillColor = colorAdapter.filledSublayerUnderlineFillColor.CGColor;
+  self.filledSublayer.fillColor = colorAdapter.filledSublayerFillColor.CGColor;
+}
 
 - (void)applyTypographyScheme:(MDCTypographyScheme *)typographyScheme {
   self.font = typographyScheme.subtitle1;
@@ -1150,50 +1214,4 @@ _onBackgroundColor = ColorFromRGB(0x000000);  // black
   self.trailingUnderlineLabel.font = typographyScheme.caption;
 }
 
-- (void)applyColorScheme:(MDCSemanticColorScheme *)colorScheme
-      withTextFieldState:(TextFieldState)textFieldState {
-  UIColor *placeholderLabelColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.60];
-  UIColor *filledUnderlineFillColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.60];
-  UIColor *outlineColor = colorScheme.onSurfaceColor;
-  UIColor *filledSublayerUnderlineColor = colorScheme.onSurfaceColor;
-  switch (textFieldState) {
-    case TextFieldStateNormal:
-      break;
-    case TextFieldStateActivated:
-      break;
-    case TextFieldStateDisabled:
-      placeholderLabelColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.10];
-      break;
-    case TextFieldStateErrored:
-      placeholderLabelColor = colorScheme.errorColor;
-      break;
-    case TextFieldStateFocused:
-      outlineColor = colorScheme.primaryColor;
-      placeholderLabelColor = colorScheme.primaryColor;
-      filledSublayerUnderlineColor = colorScheme.primaryColor;
-      filledUnderlineFillColor = colorScheme.primaryColor;
-      break;
-    default:
-      break;
-  }
-  if (self.textFieldState) {
-    
-  }
-  
-  self.leadingUnderlineLabel.textColor = placeholderLabelColor;
-  self.trailingUnderlineLabel.textColor = placeholderLabelColor;
-  self.outlinedSublayer.strokeColor = outlineColor.CGColor;
-  self.placeholderLabel.textColor = placeholderLabelColor;
-  self.filledSublayerUnderline.fillColor = filledSublayerUnderlineColor.CGColor;
-}
-
 @end
-
-
-//@interface SimpleTextFieldColorAdapter : NSObject
-//@property (strong, nonatomic) UIColor *placeholderLabelColor;
-//@property (strong, nonatomic) UIColor *placeholderLabelColor;
-//@end
-//
-//@implementation SimpleTextFieldColorAdapter
-//@end
