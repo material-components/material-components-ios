@@ -1,10 +1,16 @@
+// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
 //
-//  SimpleTextFieldLayoutUtils.h
-//  ComponentsProject
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
 //
-//  Created by Andrew Overton on 12/6/18.
-//  Copyright © 2018 andrewoverton. All rights reserved.
+// http://www.apache.org/licenses/LICENSE-2.0
 //
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #ifndef SimpleTextFieldLayoutUtils_h
 #define SimpleTextFieldLayoutUtils_h
@@ -16,14 +22,12 @@ static const CGFloat kTrailingMargin = 16.0;
 
 static const CGFloat kFilledTextFieldTopCornerRadius = 4.0;
 static const CGFloat kOutlinedTextFieldCornerRadius = 4.0;
-// static const CGFloat kFloatingPlaceholderTopMargin = 5.0;
 static const CGFloat kFloatingPlaceholderSideMargin = 5.0;
 static const CGFloat kFloatingPlaceholderXOffsetFromTextArea = 3.0;
 static const CGFloat kTopMargin = 5.0;
 
 static const CGFloat kClearButtonTouchTargetSideLength = 30.0;
 static const CGFloat kTextRectSidePadding = 12.0;
-// static const CGFloat kLeftRightViewSidePadding = 5.0;
 
 static const CGFloat kUnderlineLabelsTopPadding = 8.0;
 static const CGFloat kTopRowSubviewVerticalPadding = 10.0;
@@ -31,16 +35,8 @@ static const CGFloat kTopRowSubviewVerticalPadding = 10.0;
 static const UIControlState UIControlStateError = 1 << 10;
 
 /**
- Dictates the input style.
- */
-typedef NS_ENUM(NSUInteger, TextFieldMode) {
-  TextFieldModeNormal,
-  TextFieldModeInputChip,
-};
-
-/**
- Dictates what type of text field it will be from a cosmetic standpoint. The values are derived from
- the styles outlined in the Material Guidelines for Text Fields.
+ TextFieldStyle dictates what type of text field it will be from a cosmetic standpoint. The values
+ are derived from the styles outlined in the Material Guidelines for Text Fields.
  */
 typedef NS_ENUM(NSUInteger, TextFieldStyle) {
   TextFieldStyleFilled,

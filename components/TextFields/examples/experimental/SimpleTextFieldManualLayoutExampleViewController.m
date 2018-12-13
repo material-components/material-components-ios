@@ -193,7 +193,6 @@
   self.filledTextField = [[SimpleTextField alloc] init];
   self.filledTextField.textFieldStyle = TextFieldStyleFilled;
   self.filledTextField.placeholder = @"This is a placeholder";
-  self.filledTextField.canPlaceholderFloat = YES;
   self.filledTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
   self.filledTextField.leadingUnderlineLabel.numberOfLines = 0;
   [self.scrollView addSubview:self.filledTextField];
@@ -203,7 +202,6 @@
   self.outlinedTextField = [[SimpleTextField alloc] init];
   self.outlinedTextField.textFieldStyle = TextFieldStyleOutline;
   self.outlinedTextField.placeholder = @"This is another placeholder";
-  self.outlinedTextField.canPlaceholderFloat = YES;
   self.outlinedTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
   [self.scrollView addSubview:self.outlinedTextField];
 }

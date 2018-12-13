@@ -1,10 +1,16 @@
+// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
 //
-//  TextField.m
-//  ComponentsProject
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
 //
-//  Created by Andrew Overton on 9/6/18.
-//  Copyright © 2018 andrewoverton. All rights reserved.
+// http://www.apache.org/licenses/LICENSE-2.0
 //
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "SimpleTextField.h"
 
@@ -16,6 +22,8 @@
 
 #import <Foundation/Foundation.h>
 
+// TODO: Consider extracting this to its own file and renaming/refactoring it. Is it really an
+// adapter?
 @interface SimpleTextFieldColorAdapter : NSObject
 
 @property(strong, nonatomic) UIColor *underlineLabelColor;
@@ -144,11 +152,16 @@
 #pragma mark View Setup
 
 - (void)initializeProperties {
+  [self setUpCanPlaceholderFloat];
   [self setUpLayoutDirection];
   [self setUpFonts];
   [self setUpContainerScheme];
   [self setUpPlaceholderState];
   [self setUpTextFieldState];
+}
+
+- (void)setUpCanPlaceholderFloat {
+  self.canPlaceholderFloat = YES;
 }
 
 - (void)setUpTextFieldState {
@@ -177,13 +190,13 @@
 
 - (void)setUpUnderlineLabels {
   self.leftUnderlineLabel = [[UILabel alloc] init];
-  [self addSubview:self.leadingUnderlineLabel];
   self.rightUnderlineLabel = [[UILabel alloc] init];
-  [self addSubview:self.trailingUnderlineLabel];
+  [self addSubview:self.leftUnderlineLabel];
+  [self addSubview:self.rightUnderlineLabel];
 }
 
 - (void)setUpPlaceholderLabel {
-  self.placeholderLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, -10, 200, 60)];
+  self.placeholderLabel = [[UILabel alloc] init];
   [self addSubview:self.placeholderLabel];
 }
 
@@ -218,22 +231,6 @@
   self.outlinedSublayer.lineWidth = [self outlineLineWidthForState:self.textFieldState];
 }
 
-- (CGFloat)outlineLineWidthForState:(TextFieldState)textFieldState {
-  CGFloat defaultLineWidth = 1;
-  switch (textFieldState) {
-    case TextFieldStateActivated:
-    case TextFieldStateErrored:
-    case TextFieldStateFocused:
-      defaultLineWidth = 2;
-      break;
-    case TextFieldStateNormal:
-    case TextFieldStateDisabled:
-    default:
-      break;
-  }
-  return defaultLineWidth;
-}
-
 - (void)setUpFilledSublayer {
   self.filledSublayer = [[CAShapeLayer alloc] init];
   self.filledSublayer.lineWidth = 0.0;
@@ -255,6 +252,58 @@
 }
 
 #pragma mark UIView Overrides
+
+- (void)layoutSubviews {
+  [self preLayoutSubviews];
+  [super layoutSubviews];
+  [self postLayoutSubviews];
+}
+
+// UITextField's sizeToFit calls this method and then also calls setNeedsLayout.
+// When the system calls this method the size parameter is the view's current size.
+- (CGSize)sizeThatFits:(CGSize)size {
+  return [self preferredSizeWithWidth:size.width];
+}
+
+- (CGSize)intrinsicContentSize {
+  return [self preferredSizeWithWidth:CGRectGetWidth(self.bounds)];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+  [self setUpLayoutDirection];
+}
+
+#pragma mark Layout
+
+- (void)preLayoutSubviews {
+  self.textFieldState = [self determineCurrentTextFieldState];
+  self.placeholderState = [self determineCurrentPlaceholderState];
+  SimpleTextFieldColorAdapter *colorAdapter =
+      [[SimpleTextFieldColorAdapter alloc] initWithColorScheme:self.containerScheme.colorScheme
+                                            withTextFieldState:self.textFieldState];
+  [self applyColorAdapter:colorAdapter];
+  [self applyTypographyScheme:self.containerScheme.typographyScheme];
+  CGSize fittingSize = CGSizeMake(CGRectGetWidth(self.frame), CGFLOAT_MAX);
+  self.layout = [self calculateLayoutWithTextFieldSize:fittingSize];
+}
+
+- (void)postLayoutSubviews {
+  [self applyTextFieldStyle:self.textFieldStyle
+                textFieldState:self.textFieldState
+               textFieldBounds:self.bounds
+      floatingPlaceholderFrame:self.layout.placeholderFrameFloating
+       topRowBottomRowDividerY:self.layout.topRowBottomRowDividerY
+         isFloatingPlaceholder:self.placeholderState == PlaceholderStateFloating];
+  [self layOutPlaceholderWithState:self.placeholderState];
+  self.clearButton.frame = self.layout.clearButtonFrame;
+  self.clearButton.hidden = self.layout.clearButtonHidden;
+  self.leftUnderlineLabel.frame = self.layout.leftUnderlineLabelFrame;
+  self.rightUnderlineLabel.frame = self.layout.rightUnderlineLabelFrame;
+  self.leftView.hidden = self.layout.leftViewHidden;
+  self.rightView.hidden = self.layout.rightViewHidden;
+  // TODO: Consider hiding views that don't actually fit in the frame
+}
 
 - (SimpleTextFieldLayout *)calculateLayoutWithTextFieldSize:(CGSize)textFieldSize {
   UIFont *effectiveFont = [self determineEffectiveFont];
@@ -284,80 +333,20 @@
                              isEditing:self.isEditing];
 }
 
-- (void)layoutSubviews {
-  [self preLayoutSubviews];
-  [super layoutSubviews];
-  [self postLayoutSubviews];
-}
-
-- (void)preLayoutSubviews {
-  self.textFieldState = [self determineCurrentTextFieldState];
-  self.placeholderState = [self determineCurrentPlaceholderState];
-  SimpleTextFieldColorAdapter *colorAdapter =
-      [[SimpleTextFieldColorAdapter alloc] initWithColorScheme:self.containerScheme.colorScheme
-                                            withTextFieldState:self.textFieldState];
-  [self applyColorAdapter:colorAdapter];
-  [self applyTypographyScheme:self.containerScheme.typographyScheme];
-  CGSize fittingSize = CGSizeMake(CGRectGetWidth(self.frame), CGFLOAT_MAX);
-  self.layout = [self calculateLayoutWithTextFieldSize:fittingSize];
-}
-
-- (void)postLayoutSubviews {
-  [self applyTextFieldStyle:self.textFieldStyle
-                textFieldState:self.textFieldState
-               textFieldBounds:self.bounds
-      floatingPlaceholderFrame:self.layout.placeholderFrameFloating
-       topRowBottomRowDividerY:self.layout.topRowBottomRowDividerY
-         isFloatingPlaceholder:self.placeholderState == PlaceholderStateFloating];
-  [self layOutPlaceholderWithState:self.placeholderState];
-  self.clearButton.frame = self.layout.clearButtonFrame;
-  self.clearButton.hidden = self.layout.clearButtonHidden;
-  self.leftUnderlineLabel.frame = self.layout.leftUnderlineLabelFrame;
-  self.rightUnderlineLabel.frame = self.layout.rightUnderlineLabelFrame;
-  self.leftView.hidden = self.layout.leftViewHidden;
-  self.rightView.hidden = self.layout.rightViewHidden;
-  // TODO: Consider hiding views that won't fit by validating frames
-  // (checking if they fit inside the bounds and don't overlap)
-}
-
-// UIView's sizeToFit calls this method.
-// UITextField's sizeToFit calls this method and then also calls setNeedsLayout.
-// When the system calls this method the size parameter is the view's current size.
-// A vanilla UITextField returns a 9x21 size as the smallest UITextFields
-// It does so irrespective of leftView/rightView, but it does take into account text.
-// I think that this implementation should calculate a height for size.width.
-- (CGSize)sizeThatFits:(CGSize)size {
-  return [self preferredSizeWithWidth:size.width];
+- (CGFloat)normalizedCustomUnderlineLabelDrawPriority:(CGFloat)customPriority {
+  CGFloat value = customPriority;
+  if (value < 0) {
+    value = 0;
+  } else if (value > 1) {
+    value = 1;
+  }
+  return value;
 }
 
 - (CGSize)preferredSizeWithWidth:(CGFloat)width {
   CGSize fittingSize = CGSizeMake(width, CGFLOAT_MAX);
   SimpleTextFieldLayout *layout = [self calculateLayoutWithTextFieldSize:fittingSize];
   return CGSizeMake(width, layout.calculatedHeight);
-}
-
-- (CGSize)intrinsicContentSize {
-  return [self preferredSizeWithWidth:CGRectGetWidth(self.bounds)];
-}
-
-- (NSLayoutConstraint *)highestPriorityConstraintOnView:(UIView *)view
-                                          withAttribute:(NSLayoutAttribute)attribute {
-  UILayoutPriority maxPriority = 0;
-  NSLayoutConstraint *result = nil;
-  for (NSLayoutConstraint *constraint in view.constraints) {
-    BOOL isAHeightConstraintOnSelf =
-        (constraint.firstItem == view && constraint.firstAttribute == attribute) ||
-        (constraint.secondItem == view && constraint.secondAttribute == attribute);
-    if (isAHeightConstraintOnSelf && constraint.priority > maxPriority) {
-      result = constraint;
-    }
-  }
-  return result;
-}
-
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-  [super traitCollectionDidChange:previousTraitCollection];
-  [self setUpLayoutDirection];
 }
 
 #pragma mark UITextField Accessor Overrides
@@ -370,7 +359,6 @@
 - (void)setPlaceholder:(NSString *)placeholder {
   self.placeholderLabel.attributedText = nil;
   self.placeholderLabel.text = [placeholder copy];
-  // TODO: Determine if setNeedsLayout is necessary here. I think it might be...
 }
 
 - (NSString *)placeholder {
@@ -378,10 +366,8 @@
 }
 
 - (void)setAttributedPlaceholder:(NSAttributedString *)attributedPlaceholder {
-  self.placeholderLabel.text = nil;
-  self.placeholderLabel.attributedText = attributedPlaceholder;
-  // TODO: Determine if setNeedsLayout is necessary here. I think it might be...
-  // TODO: Also make layout aware of attributedPlaceholder
+  self.placeholderLabel.text = [attributedPlaceholder string];
+  self.placeholderLabel.attributedText = [attributedPlaceholder copy];
 }
 
 - (NSAttributedString *)attributedPlaceholder {
@@ -412,14 +398,9 @@
   [self mdc_setRightView:rightView];
 }
 
-- (void)setClearButtonMode:(UITextFieldViewMode)clearButtonMode {
-  [super setClearButtonMode:clearButtonMode];
-  // TODO: determine whether a call to setNeedsLayout is necessary. I don't think it is...
-}
-
 - (void)setBorderStyle:(UITextBorderStyle)borderStyle {
-  // enforce UITextBorderStyle.none
-  [super setBorderStyle:UITextBorderStyleNone];
+  UITextBorderStyle enforcedNoneStyle = UITextBorderStyleNone;
+  [super setBorderStyle:enforcedNoneStyle];
 }
 
 #pragma mark Custom Accessors
@@ -438,14 +419,6 @@
   } else {
     return self.rightUnderlineLabel;
   }
-}
-
-- (void)setLayoutDirection:(UIUserInterfaceLayoutDirection)layoutDirection {
-  if (_layoutDirection == layoutDirection) {
-    return;
-  }
-  _layoutDirection = layoutDirection;
-  [self setNeedsLayout];
 }
 
 - (void)setTrailingView:(UIView *)trailingView {
@@ -482,11 +455,12 @@
 
 - (void)mdc_setLeftView:(UIView *)leftView {
   [super setLeftView:leftView];
-  // TODO: Determine if a call to setNeedsLayout is necessary
+  // TODO: Determine if a call to setNeedsLayout is necessary or if super calls it
 }
 
 - (void)mdc_setRightView:(UIView *)rightView {
   [super setRightView:rightView];
+  // TODO: Determine if a call to setNeedsLayout is necessary or if super calls it
 }
 
 - (void)setTrailingViewMode:(UITextFieldViewMode)trailingViewMode {
@@ -529,6 +503,14 @@
   [super setRightViewMode:rightViewMode];
 }
 
+- (void)setLayoutDirection:(UIUserInterfaceLayoutDirection)layoutDirection {
+  if (_layoutDirection == layoutDirection) {
+    return;
+  }
+  _layoutDirection = layoutDirection;
+  [self setNeedsLayout];
+}
+
 - (void)setCanPlaceholderFloat:(BOOL)canPlaceholderFloat {
   if (_canPlaceholderFloat == canPlaceholderFloat) {
     return;
@@ -551,9 +533,10 @@
 
 - (CGRect)adjustTextAreaFrame:(CGRect)textAreaFrame
     withParentClassTextAreaFrame:(CGRect)parentClassTextAreaFrame {
-  CGFloat height = CGRectGetHeight(parentClassTextAreaFrame);
-  CGFloat minY = CGRectGetMidY(textAreaFrame) - (height * 0.5);
-  return CGRectMake(CGRectGetMinX(textAreaFrame), minY, CGRectGetWidth(textAreaFrame), height);
+  CGFloat systemDefinedHeight = CGRectGetHeight(parentClassTextAreaFrame);
+  CGFloat minY = CGRectGetMidY(textAreaFrame) - (systemDefinedHeight * 0.5);
+  return CGRectMake(CGRectGetMinX(textAreaFrame), minY, CGRectGetWidth(textAreaFrame),
+                    systemDefinedHeight);
 }
 
 - (CGRect)leftViewRectForBounds:(CGRect)bounds {
@@ -572,26 +555,7 @@
   return CGRectZero;
 }
 
-#pragma mark Custom Layout Methods
-
-- (CGFloat)normalizedCustomUnderlineLabelDrawPriority:(CGFloat)customPriority {
-  CGFloat value = customPriority;
-  if (value < 0) {
-    value = 0;
-  } else if (value > 1) {
-    value = 1;
-  }
-  return value;
-}
-
 #pragma mark Fonts
-
-- (PlaceholderState)determineCurrentPlaceholderState {
-  return [self placeholderStateWithPlaceholder:self.placeholder
-                                          text:self.text
-                           canPlaceholderFloat:self.canPlaceholderFloat
-                                     isEditing:self.isEditing];
-}
 
 - (UIFont *)determineEffectiveFont {
   return self.font ?: [self uiTextFieldDefaultFont];
@@ -604,6 +568,40 @@
     font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
   });
   return font;
+}
+
+#pragma mark Text Field State
+
+- (TextFieldState)determineCurrentTextFieldState {
+  return [self textFieldStateWithIsEnabled:self.isEnabled
+                                 isErrored:self.isErrored
+                                 isEditing:self.isEditing
+                                isSelected:self.isSelected
+                               isActivated:self.isActivated];
+}
+
+- (TextFieldState)textFieldStateWithIsEnabled:(BOOL)isEnabled
+                                    isErrored:(BOOL)isErrored
+                                    isEditing:(BOOL)isEditing
+                                   isSelected:(BOOL)isSelected
+                                  isActivated:(BOOL)isActivated {
+  if (isEnabled) {
+    if (isErrored) {
+      return TextFieldStateErrored;
+    } else {
+      if (isEditing) {
+        return TextFieldStateFocused;
+      } else {
+        if (isSelected || isActivated) {
+          return TextFieldStateActivated;
+        } else {
+          return TextFieldStateNormal;
+        }
+      }
+    }
+  } else {
+    return TextFieldStateDisabled;
+  }
 }
 
 #pragma mark Clear Button
@@ -620,6 +618,10 @@
   UIGraphicsEndImageContext();
   image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   return image;
+}
+
+- (CGFloat)clearButtonImageViewSideLength {
+  return kClearButtonTouchTargetSideLength - kTextRectSidePadding;
 }
 
 // This generated code is taken from the MDCTextField.
@@ -731,12 +733,14 @@
   return ic_clear_path;
 }
 
-- (void)prepareForInterfaceBuilder {
-  [super prepareForInterfaceBuilder];
-  [self invalidateIntrinsicContentSize];
-}
+#pragma mark Placeholder
 
-#pragma mark Placeholder Management
+- (PlaceholderState)determineCurrentPlaceholderState {
+  return [self placeholderStateWithPlaceholder:self.placeholder
+                                          text:self.text
+                           canPlaceholderFloat:self.canPlaceholderFloat
+                                     isEditing:self.isEditing];
+}
 
 - (void)layOutPlaceholderWithState:(PlaceholderState)state {
   UIFont *font = nil;
@@ -820,10 +824,6 @@
   return [font fontWithSize:floatingPlaceholderFontSize];
 }
 
-- (CGFloat)clearButtonImageViewSideLength {
-  return kClearButtonTouchTargetSideLength - kTextRectSidePadding;
-}
-
 #pragma mark User Actions
 
 - (void)clearButtonPressed:(UIButton *)clearButton {
@@ -832,6 +832,7 @@
   // Add it!
 }
 
+// TODO: Do something with these or get rid of them.
 #pragma mark Notification Listener Methods
 
 - (void)textFieldDidEndEditingWithNotification:(NSNotification *)notification {
@@ -840,16 +841,11 @@
   }
 }
 
-//- (void)textFieldDidChangeWithNotification:(NSNotification *)notification {
-//  if (notification.object != self) {
-//    return;
-//  }
-//  BOOL shouldHidePlaceholder = NO;
-//  if (self.text.length > 0 && !self.canPlaceholderFloat) {
-//    shouldHidePlaceholder = YES;
-//  }
-//  self.placeholderLabel.hidden = shouldHidePlaceholder;
-//}
+- (void)textFieldDidChangeWithNotification:(NSNotification *)notification {
+  if (notification.object != self) {
+    return;
+  }
+}
 
 - (void)textFieldDidBeginEditingWithNotification:(NSNotification *)notification {
   if (notification.object != self) {
@@ -930,6 +926,22 @@
   }
 }
 
+- (CGFloat)outlineLineWidthForState:(TextFieldState)textFieldState {
+  CGFloat defaultLineWidth = 1;
+  switch (textFieldState) {
+    case TextFieldStateActivated:
+    case TextFieldStateErrored:
+    case TextFieldStateFocused:
+      defaultLineWidth = 2;
+      break;
+    case TextFieldStateNormal:
+    case TextFieldStateDisabled:
+    default:
+      break;
+  }
+  return defaultLineWidth;
+}
+
 - (CGFloat)underlineThicknessWithTextFieldState:(TextFieldState)textFieldState {
   CGFloat underlineThickness = 1;
   switch (textFieldState) {
@@ -957,9 +969,6 @@
   CGFloat radius = kOutlinedTextFieldCornerRadius;
   CGFloat textFieldWidth = CGRectGetWidth(textFieldBounds);
   CGFloat sublayerMinY = 0;
-  //  if (CGSizeEqualToSize(CGSizeZero, floatingPlaceholderFrame.size)) {
-  //    sublayerMinY = CGRectGetMidY(floatingPlaceholderFrame);
-  //  }
   CGFloat sublayerMaxY = topRowBottomRowDividerY;
 
   CGPoint startingPoint = CGPointMake(radius, sublayerMinY);
@@ -1157,38 +1166,6 @@
               startAngle:startAngle
                 endAngle:endAngle
                clockwise:YES];
-}
-
-- (TextFieldState)determineCurrentTextFieldState {
-  return [self textFieldStateWithIsEnabled:self.isEnabled
-                                 isErrored:self.isErrored
-                                 isEditing:self.isEditing
-                                isSelected:self.isSelected
-                               isActivated:self.isActivated];
-}
-
-- (TextFieldState)textFieldStateWithIsEnabled:(BOOL)isEnabled
-                                    isErrored:(BOOL)isErrored
-                                    isEditing:(BOOL)isEditing
-                                   isSelected:(BOOL)isSelected
-                                  isActivated:(BOOL)isActivated {
-  if (isEnabled) {
-    if (isErrored) {
-      return TextFieldStateErrored;
-    } else {
-      if (isEditing) {
-        return TextFieldStateFocused;
-      } else {
-        if (isSelected || isActivated) {
-          return TextFieldStateActivated;
-        } else {
-          return TextFieldStateNormal;
-        }
-      }
-    }
-  } else {
-    return TextFieldStateDisabled;
-  }
 }
 
 #pragma mark Theming

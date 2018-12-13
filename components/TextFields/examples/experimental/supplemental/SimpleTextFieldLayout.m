@@ -1,10 +1,16 @@
+// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
 //
-//  SimpleTextFieldLayout.m
-//  ComponentsProject
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
 //
-//  Created by Andrew Overton on 12/6/18.
-//  Copyright © 2018 andrewoverton. All rights reserved.
+// http://www.apache.org/licenses/LICENSE-2.0
 //
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "SimpleTextFieldLayout.h"
 
@@ -209,14 +215,16 @@
                                                                    font:font
                                                 floatingPlaceholderFont:floatingPlaceholderFont
                                                 floatingPlaceholderMinY:floatingPlaceholderMinY
-                                                           textAreaRect:textAreaFrame];
+                                                           textAreaRect:textAreaFrame
+                                                                  isRTL:isRTL];
   CGRect placeholderFrameFloating = [self placeholderFrameWithPlaceholder:placeholder
                                                            textFieldStyle:textFieldStyle
                                                          placeholderState:PlaceholderStateFloating
                                                                      font:font
                                                   floatingPlaceholderFont:floatingPlaceholderFont
                                                   floatingPlaceholderMinY:floatingPlaceholderMinY
-                                                             textAreaRect:textAreaFrame];
+                                                             textAreaRect:textAreaFrame
+                                                                    isRTL:isRTL];
 
   CGFloat underlineLabelsCombinedMinX = isRTL ? kTrailingMargin : kLeadingMargin;
   CGFloat underlineLabelsCombinedMaxX =
@@ -518,11 +526,13 @@
                                      font:(UIFont *)font
                   floatingPlaceholderFont:(UIFont *)floatingPlaceholderFont
                   floatingPlaceholderMinY:(CGFloat)floatingPlaceholderMinY
-                             textAreaRect:(CGRect)textAreaRect {
+                             textAreaRect:(CGRect)textAreaRect
+                                    isRTL:(BOOL)isRTL {
   CGFloat textAreaWidth = CGRectGetWidth(textAreaRect);
   CGFloat maxPlaceholderWidth = [self maxPlaceholderWidthWithTextAreaWidth:textAreaWidth
                                                           placeholderState:placeholderState];
   CGFloat textAreaMinX = CGRectGetMinX(textAreaRect);
+  CGFloat textAreaMaxX = CGRectGetMaxX(textAreaRect);
   CGFloat textAreaMidY = CGRectGetMidY(textAreaRect);
   CGSize size = CGSizeZero;
   CGRect rect = CGRectZero;
@@ -536,7 +546,11 @@
                               maxPlaceholderWidth:maxPlaceholderWidth
                                              font:floatingPlaceholderFont];
       originY = floatingPlaceholderMinY;
-      originX = textAreaMinX + kFloatingPlaceholderXOffsetFromTextArea;
+      if (isRTL) {
+        originX = textAreaMaxX - kFloatingPlaceholderXOffsetFromTextArea - size.width;
+      } else {
+        originX = textAreaMinX + kFloatingPlaceholderXOffsetFromTextArea;
+      }
       rect = CGRectMake(originX, originY, size.width, size.height);
       break;
     case PlaceholderStateNormal:
@@ -544,7 +558,11 @@
                               maxPlaceholderWidth:maxPlaceholderWidth
                                              font:font];
       originY = textAreaMidY - (0.5 * size.height);
-      originX = textAreaMinX;
+      if (isRTL) {
+        originX = textAreaMaxX - size.width;
+      } else {
+        originX = textAreaMinX;
+      }
       rect = CGRectMake(originX, originY, size.width, size.height);
       break;
     default:
