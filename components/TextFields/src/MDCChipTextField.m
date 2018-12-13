@@ -64,11 +64,12 @@
     [self.chipsView addConstraint:[NSLayoutConstraint constraintWithItem:lastChip attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:chip attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0]];
   }
 
-  self.insetX = CGRectGetMaxX(chip.frame) + 10;
-  [self.chips addObject:chip];
-
   [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];
+  [self layoutIfNeeded];
+
+  self.insetX = CGRectGetMaxX(chip.frame) + 10;
+  [self.chips addObject:chip];
 
   self.leftViewMode = UITextFieldViewModeAlways;
 }
