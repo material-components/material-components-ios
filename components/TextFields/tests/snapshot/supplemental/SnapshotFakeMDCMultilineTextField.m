@@ -18,7 +18,7 @@
 @implementation SnapshotFakeMDCMultilineTextField {
   BOOL _isEditing;
   BOOL _isEditingOverridden;
-  BOOL _effectiveUserInterfaceLayoutDirection;
+  UIUserInterfaceLayoutDirection _effectiveUserInterfaceLayoutDirection;
   BOOL _isEffectiveUserInterfaceLayoutDirectionOverridden;
 }
 
@@ -57,7 +57,7 @@
   return [self mdf_effectiveUserInterfaceLayoutDirection];
 }
 
-- (void)MDCtest_setMDFEffectiveUserInterfaceLayoutDirection:
+- (void)MDCtest_setEffectiveUserInterfaceLayoutDirection:
     (UIUserInterfaceLayoutDirection)direction {
   _isEffectiveUserInterfaceLayoutDirectionOverridden = YES;
   _effectiveUserInterfaceLayoutDirection = direction;
