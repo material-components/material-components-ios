@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#pragma mark - Latin text
+
 static NSString *const MDCTextFieldSnapshotTestsPlaceholderShortTextLatin = @"P text";
 static NSString *const MDCTextFieldSnapshotTestsPlaceholderLongTextLatin =
     @"Placeholder text placeholder text placeholder text placeholder text placeholder text.";
@@ -24,3 +26,18 @@ static NSString *const MDCTextFieldSnapshotTestsErrorLongTextLatin =
 static NSString *const MDCTextFieldSnapshotTestsInputShortTextLatin = @"I text";
 static NSString *const MDCTextFieldSnapshotTestsInputLongTextLatin =
     @"Input text input text input text input text input text input text input text input text.";
+
+#pragma mark - Arabic text
+
+static NSString *const MDCTextFieldSnapshotTestsPlaceholderShortTextArabic = @"P text";
+static NSString *const MDCTextFieldSnapshotTestsPlaceholderLongTextArabic =
+    @"بـ أخر جسيمة نتيجة بالرّغم, إذ لهيمنة بالولايات غير, أي ذلك بخطوط ليبين العظمى. في لان.";
+static NSString *const MDCTextFieldSnapshotTestsHelperShortTextArabic = @"H text";
+static NSString *const MDCTextFieldSnapshotTestsHelperLongTextArabic =
+    @"أن حلّت أعمال وقد, انه ان قادة سبتمبر حاملات, عدد قد وعلى الأثناء،. ما حتى مكّن.";
+static NSString *const MDCTextFieldSnapshotTestsErrorShortTextArabic = @"E text";
+static NSString *const MDCTextFieldSnapshotTestsErrorLongTextArabic =
+    @"أسر وتنامت الإتفاقية بـ, قد منتصف التنازلي عدد. الى و أطراف الصين. علاقة مساعدة تلك ما.";
+static NSString *const MDCTextFieldSnapshotTestsInputShortTextArabic = @"I text";
+static NSString *const MDCTextFieldSnapshotTestsInputLongTextArabic =
+    @"إيو التخطيط استمرار اليابان، من. دار خلاف للمجهود تم. يتم من لأداء ومطالبة, كل الهجوم مسؤولية.";
