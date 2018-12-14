@@ -16,4 +16,11 @@
 
 @interface MDCChipTextField : MDCTextField
 
+/*
+ Appends a chip to the beginning of the text field.
+
+ @param text The string to display in the chip.
+ */
+- (void)appendChipWithText:(nonnull NSString *)text;
+
 @end

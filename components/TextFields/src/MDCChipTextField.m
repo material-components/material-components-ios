@@ -19,11 +19,9 @@
  in progress:
  * scroll labels/chips view to the left, when not enough room for typing
  todo:
- * "enter" to create a chip
- * usability issue with autocorrect
- * implementation issue with resign/become first responder
+ * "enter" to create a chip - usability issue with autocorrect
  * scrolling through chips.
- * scroll the overlay view to correct position on focus and un-focus events (textFieldDidBeginEditing: ?)
+    * scroll the overlay view to correct position on focus and un-focus events (textFieldDidBeginEditing: ?)
  * RTL Support
  * tap to select a chip + another tap to remove it - if in the middle of the list. required?
  * drag&drop support eventually
@@ -33,6 +31,7 @@
  * backspace to select and then delete an entire chip
  * convert text to chip when pressing enter
  * Adding just white space shouldn't create a chip
+ * "enter" to create a chip - implementation issue with resign/become first responder
  future work:
  * drag&drop support eventually
  */
@@ -60,9 +59,6 @@
     [self addTarget:self
              action:@selector(chipTextFieldTextDidChange)
    forControlEvents:UIControlEventEditingChanged];
-    [self addTarget:self
-             action:@selector(chipTextFieldDidReturn)
-   forControlEvents:UIControlEventEditingDidEndOnExit];
 
     _chips = [NSMutableArray array];
   }
@@ -101,22 +97,6 @@
 - (void)chipTextFieldTextDidChange {
   [self deselectAllChips];
   [self setupEditingRect];
-}
-
-- (void)chipTextFieldDidReturn {
-  [self deselectAllChips];
-
-  NSString *chipText =
-      [self.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-  if (chipText.length) {
-    [self appendChipWithText:chipText];
-    self.text = @"";
-  }
-
-  // TODO: This is needed to maintain focus but is causing wonky behavior
-  dispatch_async(dispatch_get_main_queue(), ^{
-    [self becomeFirstResponder];
-  });
 }
 
 - (void)setupEditingRect {

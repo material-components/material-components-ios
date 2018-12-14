@@ -44,6 +44,7 @@ class ChipTextFieldExampleViewController: UIViewController {
   func setupExample() {
     chipTextField.translatesAutoresizingMaskIntoConstraints = false
     chipTextField.backgroundColor = .white
+    chipTextField.delegate = self
 
     // when on, enter responds to auto-correction which is confusing when we're trying to create "chips"
     chipTextField.autocorrectionType = UITextAutocorrectionType.no
@@ -99,6 +100,17 @@ class ChipTextFieldExampleViewController: UIViewController {
   @objc func resignTapped(_ sender: Any) {
     chipTextField.resignFirstResponder()
     textField.resignFirstResponder()
+  }
+}
+
+extension ChipTextFieldExampleViewController: UITextFieldDelegate {
+
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    if let chipText = textField.text?.trimmingCharacters(in: .whitespacesAndNewlines), chipText.count > 0 {
+      chipTextField.appendChip(withText: chipText)
+      chipTextField.text = ""
+    }
+    return true
   }
 }
 
