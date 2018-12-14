@@ -16,6 +16,58 @@
 #import "MaterialTextFields.h"
 
 @interface MDCAbstractTextFieldSnapshotTests : MDCTextFieldSnapshotTestCase
+
+/**
+ The text input controller used during testing.
+ */
 @property(nonatomic, strong) NSObject<MDCTextInputController> *textFieldController;
+
+/**
+ A short input text string. When rendered, it should be significantly shorter than the width of the
+ text field.
+ */
+@property(nonatomic, copy) NSString *shortInputText;
+
+/**
+ A long input text string. When rendered, it should be significantly longer than the width of the
+ text field.
+ */
+@property(nonatomic, copy) NSString *longInputText;
+
+/**
+ A short placeholder string. When rendered, it should be significantly shorter than the width of the
+ text field.
+ */
+@property(nonatomic, copy) NSString *shortPlaceholderText;
+
+/**
+ A long placeholder string. When rendered, it should be significantly longer than the width of the
+ text field.
+ */
+@property(nonatomic, copy) NSString *longPlaceholderText;
+
+/**
+ A short helper string. When rendered, it should be significantly shorter than the width of the text
+ field.
+ */
+@property(nonatomic, copy) NSString *shortHelperText;
+
+/**
+ A long helper string. When rendered, it should be significantly longer than the width of the text
+ field.
+ */
+@property(nonatomic, copy) NSString *longHelperText;
+
+/**
+ A short error string. When rendered, it should be significantly shorter than the width of the text
+ field.
+ */
+@property(nonatomic, copy) NSString *shortErrorText;
+
+/**
+ A long error string. When rendered, it should be significantly longer than the width of the text
+ field.
+ */
+@property(nonatomic, copy) NSString *longErrorText;
 
 @end

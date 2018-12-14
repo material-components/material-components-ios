@@ -12,23 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <Foundation/Foundation.h>
+#import "MDCAbstractTextFieldSnapshotTests.h"
 
-#import "MaterialTextFields.h"
+@interface MDCAbstractTextFieldSnapshotTests (I18N)
 
-/**
- Protocol for snapshot testing fakes used in Material Text Fields tests.
- */
-@protocol MDCSnapshotFakeTextInput <MDCTextInput>
+- (void)changeStringsToArabic;
 
-/**
- Overrides the value returned by `-isEditing`.
- */
-- (void)MDCtest_setIsEditing:(BOOL)isEditing;
-
-/**
- Overrides the value returned by @c effectiveUserInterfaceLayoutDirection.
- */
-- (void)MDCtest_setEffectiveUserInterfaceLayoutDirection:(UIUserInterfaceLayoutDirection)direction;
+- (void)changeLayoutToRTL;
 
 @end
