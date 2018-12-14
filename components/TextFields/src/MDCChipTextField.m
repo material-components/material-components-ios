@@ -197,6 +197,12 @@
   MDCChipView *lastChip = [self.chips lastObject];
   self.insetX = CGRectGetMaxX(lastChip.frame) + 10;
 
+  CGFloat textFieldWidth = CGRectGetWidth([self textRectForBounds:self.bounds]);
+  if (self.leadingConstraint.constant > 0 &&  textFieldWidth > 0 ) {
+    self.insetX += textFieldWidth;
+    self.leadingConstraint.constant -= textFieldWidth;
+  }
+
   [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];
 
