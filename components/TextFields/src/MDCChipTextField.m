@@ -37,7 +37,6 @@
     [self addTarget:self
              action:@selector(chipTextFieldTextDidChange)
    forControlEvents:UIControlEventEditingChanged];
-    // TODO: Adding this target action causes the textfield to resign first responder on return, why?
     [self addTarget:self
              action:@selector(chipTextFieldDidReturn)
    forControlEvents:UIControlEventEditingDidEndOnExit];
@@ -78,21 +77,21 @@
 
 - (void)chipTextFieldTextDidChange {
   [self deselectAllChips];
-
-  if (self.text.length) {
-    NSString *lastCharacter = [self.text substringFromIndex:self.text.length - 1];
-//    if ([lastCharacter rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet]].location != NSNotFound){
-    if ([lastCharacter isEqualToString:@";"]) { // hack for now
-      [self appendChipWithText:[self.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
-      self.text = @"";
-    }
-  }
-
   [self setupEditingRect];
 }
 
 - (void)chipTextFieldDidReturn {
-  NSLog(@"return pressed");
+  [self deselectAllChips];
+
+  if (self.text.length) {
+    [self appendChipWithText:[self.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+    self.text = @"";
+  }
+
+  // TODO: This is needed to maintain focus but is causing wonky behavior
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [self becomeFirstResponder];
+  });
 }
 
 - (void)setupEditingRect {
@@ -108,6 +107,11 @@
 }
 
 #pragma mark - UITextField overrides
+
+- (BOOL)shouldChangeTextInRange:(UITextRange *)range replacementText:(NSString *)text {
+  NSLog(@"should change");
+  return [super shouldChangeTextInRange:range replacementText:text];
+}
 
 - (void)deleteBackward {
   if (self.text.length == 0) {
