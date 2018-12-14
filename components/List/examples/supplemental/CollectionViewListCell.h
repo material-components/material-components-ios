@@ -52,7 +52,7 @@
  Default value is NO.
  */
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
-BOOL mdc_adjustsFontForContentSizeCategory;
+    BOOL mdc_adjustsFontForContentSizeCategory;
 
 /**
  Sets the cell width for the self-sizing cell.

@@ -176,7 +176,7 @@ IB_DESIGNABLE
 
 /**
  Sets the color of the title for the specified state.
- 
+
  If the @c MDCTabBarItemState value is not set, then defaults to a default value. Therefore,
  at a minimum, you should set the value for MDCTabBarItemStateNormal.
  */

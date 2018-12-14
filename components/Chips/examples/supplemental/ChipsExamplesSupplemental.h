@@ -23,30 +23,29 @@
 @interface ExampleChipCollectionViewController : UICollectionViewController
 @end
 
-@interface ChipsChoiceExampleViewController : UIViewController
-    <UICollectionViewDelegate, UICollectionViewDataSource>
+@interface ChipsChoiceExampleViewController
+    : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource>
 @property(nonatomic, strong) NSArray<NSString *> *titles;
 @property(nonatomic, strong) UICollectionView *collectionView;
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong) MDCShapeScheme *shapeScheme;
 @end
 
-@interface ChipsActionExampleViewController : UIViewController
-    <UICollectionViewDelegate, UICollectionViewDataSource>
+@interface ChipsActionExampleViewController
+    : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource>
 @property(nonatomic, strong) NSArray<NSString *> *titles;
 @property(nonatomic, strong) UICollectionView *collectionView;
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong) MDCShapeScheme *shapeScheme;
 @end
 
-@interface ChipsCollectionExampleViewController : ExampleChipCollectionViewController
-    <UICollectionViewDelegate, UICollectionViewDataSource>
+@interface ChipsCollectionExampleViewController
+    : ExampleChipCollectionViewController <UICollectionViewDelegate, UICollectionViewDataSource>
 @property(nonatomic, strong) NSArray<NSString *> *titles;
 @end
 
-
-@interface ChipsCustomizedExampleViewController : UIViewController
-    <UICollectionViewDelegate, UICollectionViewDataSource>
+@interface ChipsCustomizedExampleViewController
+    : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource>
 @property(nonatomic, strong) NSArray<NSString *> *titles;
 @end
 
@@ -54,15 +53,15 @@
 - (UIImage *)doneImage;
 @end
 
-@interface ChipsFilterExampleViewController : UIViewController
-    <UICollectionViewDelegate, UICollectionViewDataSource>
+@interface ChipsFilterExampleViewController
+    : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource>
 @property(nonatomic, strong) NSArray<NSString *> *titles;
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong) MDCShapeScheme *shapeScheme;
 @end
 
-@interface ChipsFilterAnimatedExampleViewController : ChipsFilterExampleViewController
-<UICollectionViewDelegate, UICollectionViewDataSource>
+@interface ChipsFilterAnimatedExampleViewController
+    : ChipsFilterExampleViewController <UICollectionViewDelegate, UICollectionViewDataSource>
 @end
 
 @interface ChipsFilterExampleViewController (Supplemental)
@@ -83,8 +82,10 @@
 - (UIButton *)deleteButton;
 @end
 
-@interface ChipsTypicalUseViewController : ExampleChipCollectionViewController
-    <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+@interface ChipsTypicalUseViewController
+    : ExampleChipCollectionViewController <UICollectionViewDelegate,
+                                           UICollectionViewDataSource,
+                                           UICollectionViewDelegateFlowLayout>
 @property(nonatomic, strong) NSArray<ChipModel *> *model;
 @property(nonatomic, strong) MDCShapeScheme *shapeScheme;
 @property(nonatomic, strong) MDCTypographyScheme *typographyScheme;

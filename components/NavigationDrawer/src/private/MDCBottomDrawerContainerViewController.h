@@ -63,8 +63,10 @@
  @param originalPresentingViewController The original presenting view controller.
  */
 - (nonnull instancetype)initWithOriginalPresentingViewController:
-    (nonnull UIViewController *)originalPresentingViewController
-    trackingScrollView:(nullable UIScrollView *)trackingScrollView NS_DESIGNATED_INITIALIZER;
+                            (nonnull UIViewController *)originalPresentingViewController
+                                              trackingScrollView:
+                                                  (nullable UIScrollView *)trackingScrollView
+    NS_DESIGNATED_INITIALIZER;
 
 - (nonnull instancetype)init NS_UNAVAILABLE;
 - (nonnull instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;

@@ -38,8 +38,8 @@
  applied to.
  */
 + (void)applyTypographyScheme:(nonnull id<MDCTypographyScheming>)typographyScheme
-  toAllTextInputControllersOfClass:(nonnull Class<MDCTextInputController>)textInputControllerClass
-  NS_SWIFT_NAME(apply(_:toAllControllersOfClass:));
+    toAllTextInputControllersOfClass:(nonnull Class<MDCTextInputController>)textInputControllerClass
+    NS_SWIFT_NAME(apply(_:toAllControllersOfClass:));
 
 /**
  Applies a typography scheme's properties to a text input.

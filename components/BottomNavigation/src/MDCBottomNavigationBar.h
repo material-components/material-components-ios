@@ -66,8 +66,8 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
  Configures when item titles should be displayed.
  Default is MDCBottomNavigationBarTitleVisibilitySelected.
  */
-@property(nonatomic, assign) MDCBottomNavigationBarTitleVisibility titleVisibility
-    UI_APPEARANCE_SELECTOR;
+@property(nonatomic, assign)
+    MDCBottomNavigationBarTitleVisibility titleVisibility UI_APPEARANCE_SELECTOR;
 
 /**
  Configures item space distribution and title orientation in landscape mode.
@@ -98,8 +98,8 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
  Color of selected item. Applies color to items' icons and text. If set also sets
  selectedItemTitleColor. Default color is black.
  */
-@property (nonatomic, strong, readwrite, nonnull) UIColor *selectedItemTintColor
-    UI_APPEARANCE_SELECTOR;
+@property(nonatomic, strong, readwrite, nonnull)
+    UIColor *selectedItemTintColor UI_APPEARANCE_SELECTOR;
 
 /**
  Color of the selected item's title text. Default color is black.
@@ -110,8 +110,8 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
  Color of unselected items. Applies color to items' icons. Text is not displayed in unselected mode.
  Default color is dark gray.
  */
-@property (nonatomic, strong, readwrite, nonnull) UIColor *unselectedItemTintColor
-    UI_APPEARANCE_SELECTOR;
+@property(nonatomic, strong, readwrite, nonnull)
+    UIColor *unselectedItemTintColor UI_APPEARANCE_SELECTOR;
 
 /**
  Color of the background of bottom navigation bar and the bar items.
@@ -121,7 +121,7 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
 /**
  To color the background of the view use -barTintColor instead.
  */
-@property(nullable, nonatomic,copy) UIColor *backgroundColor UI_APPEARANCE_SELECTOR;
+@property(nullable, nonatomic, copy) UIColor *backgroundColor UI_APPEARANCE_SELECTOR;
 
 /**
  The inset applied to each items bounds to determine the rect in which the items' contents will be

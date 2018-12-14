@@ -45,7 +45,7 @@
  Initializes an App Bar container view controller instance with the given content view controller.
  */
 - (nonnull instancetype)initWithContentViewController:
-        (nonnull UIViewController *)contentViewController NS_DESIGNATED_INITIALIZER;
+    (nonnull UIViewController *)contentViewController NS_DESIGNATED_INITIALIZER;
 
 - (nonnull instancetype)initWithNibName:(nullable NSString *)nibNameOrNil
                                  bundle:(nullable NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
@@ -97,4 +97,3 @@
 @property(nonatomic, strong, nonnull, readonly) MDCAppBar *appBar;
 
 @end
-

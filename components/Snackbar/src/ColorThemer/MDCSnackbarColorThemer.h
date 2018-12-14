@@ -52,7 +52,7 @@
  @param snackbarMessageView A MDCSnackbarMessageView instance to apply a color scheme.
  */
 + (void)applyColorScheme:(nonnull id<MDCColorScheme>)colorScheme
-   toSnackbarMessageView:(nonnull MDCSnackbarMessageView *)snackbarMessageView
-       __deprecated_msg("use applySemanticColorScheme: instead.");
+    toSnackbarMessageView:(nonnull MDCSnackbarMessageView *)snackbarMessageView
+    __deprecated_msg("use applySemanticColorScheme: instead.");
 
 @end
