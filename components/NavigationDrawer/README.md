@@ -79,7 +79,7 @@ To import the component:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
-import MaterialComponentsAlpha.MaterialNavigationDrawer
+import MaterialComponentsBeta.MaterialNavigationDrawer
 ```
 
 #### Objective-C

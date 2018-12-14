@@ -16,8 +16,8 @@ import Foundation
 import UIKit
 
 import MaterialComponents.MaterialButtons_ButtonThemer
-import MaterialComponentsAlpha.MaterialButtons_Theming
-import MaterialComponentsAlpha.MaterialContainerScheme
+import MaterialComponentsBeta.MaterialButtons_Theming
+import MaterialComponentsBeta.MaterialContainerScheme
 
 class ButtonsSimpleExampleSwiftViewController: UIViewController {
 
