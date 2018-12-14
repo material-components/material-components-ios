@@ -28,11 +28,11 @@
  * tap to select a chip + another tap to remove it - if in the middle of the list. required?
  * drag&drop support eventually
  * MDCTextField placeholder stays floating after adding chips, removing them, then resigning
- * Adding just white space shouldn't create a chip
  * Should we use subclass or extension?
  done:
  * backspace to select and then delete an entire chip
  * convert text to chip when pressing enter
+ * Adding just white space shouldn't create a chip
  future work:
  * drag&drop support eventually
  */
@@ -106,8 +106,10 @@
 - (void)chipTextFieldDidReturn {
   [self deselectAllChips];
 
-  if (self.text.length) {
-    [self appendChipWithText:[self.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+  NSString *chipText =
+      [self.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+  if (chipText.length) {
+    [self appendChipWithText:chipText];
     self.text = @"";
   }
 
