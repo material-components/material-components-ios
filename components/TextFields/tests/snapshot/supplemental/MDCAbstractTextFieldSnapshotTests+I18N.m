@@ -31,6 +31,8 @@
   self.longErrorText = MDCTextFieldSnapshotTestsErrorLongTextArabic;
 }
 
+// TODO(https://github.com/material-components/material-components-ios/issues/6022 ): Get Arabic
+// input text to be on the right side. Get placeholder text to move to the right side.
 - (void)changeLayoutToRTL {
   // Setting semanticContentAttribute results in a call to effectiveUserInterfaceLayoutDirection, so
   // make sure we set it first.
