@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCTextFieldSnapshotTestCase.h"
+#import "MDCTextFieldOutlinedControllerSnapshotTests.h"
 #import "MDCTextFieldSnapshotTestsStrings.h"
 #import "MaterialTextFields+ColorThemer.h"
 #import "MaterialTextFields+TypographyThemer.h"
 #import "MaterialTextFields.h"
 #import "SnapshotFakeMDCTextField.h"
 
-@interface MDCTextFieldOutlinedControllerBaselineSnapshotTests : MDCTextFieldSnapshotTestCase
-@property(nonatomic, strong) MDCTextInputControllerOutlined *textFieldController;
+@interface MDCTextFieldOutlinedControllerBaselineSnapshotTests
+    : MDCTextFieldOutlinedControllerSnapshotTests
 @end
 
 @implementation MDCTextFieldOutlinedControllerBaselineSnapshotTests
@@ -34,8 +34,6 @@
 
   self.textField.clearButtonMode = UITextFieldViewModeAlways;
 
-  self.textFieldController =
-      [[MDCTextInputControllerOutlined alloc] initWithTextInput:self.textField];
   MDCSemanticColorScheme *colorScheme =
       [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   MDCTypographyScheme *typographyScheme =
@@ -48,257 +46,6 @@
   [MDCTextFieldTypographyThemer applyTypographyScheme:typographyScheme toTextInput:self.textField];
 }
 
-- (void)tearDown {
-  self.textFieldController = nil;
-
-  [super tearDown];
-}
-
-#pragma mark - Tests
-
-- (void)testOutlinedTextFieldEmpty {
-  // Then
-  [self generateSnapshotAndVerify];
-}
-
-- (void)testOutlinedTextFieldEmptyIsEditing {
-  // When
-  [self.textField MDCtest_setIsEditing:YES];
-
-  // Then
-  [self generateSnapshotAndVerify];
-}
-
-#pragma mark - Single field tests
-
-- (void)testOutlinedTextFieldWithShortPlaceholderText {
-  // When
-  self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderShortTextLatin;
-
-  // Then
-  [self generateSnapshotAndVerify];
-}
-
-- (void)testOutlinedTextFieldWithShortPlaceholderTextIsEditing {
-  // When
-  self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderShortTextLatin;
-  self.textField.text = MDCTextFieldSnapshotTestsInputShortTextLatin;
-
-  // Then
-  [self generateSnapshotAndVerify];
-}
-
-- (void)testOutlinedTextFieldWithLongPlaceholderText {
-  // When
-  self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderLongTextLatin;
-
-  // Then
-  [self generateSnapshotAndVerify];
-}
-
-- (void)testOutlinedTextFieldWithLongPlaceholderTextIsEditing {
-  // When
-  self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderLongTextLatin;
-  [self.textField MDCtest_setIsEditing:YES];
-
-  // Then
-  [self generateSnapshotAndVerify];
-}
-
-- (void)testOutlinedTextFieldWithShortHelperText {
-  // When
-  self.textFieldController.helperText = MDCTextFieldSnapshotTestsHelperShortTextLatin;
-
-  // Then
-  [self generateSnapshotAndVerify];
-}
-
-- (void)testOutlinedTextFieldWithShortHelperTextIsEditing {
-  // When
-  self.textFieldController.helperText = MDCTextFieldSnapshotTestsHelperShortTextLatin;
-  [self.textField MDCtest_setIsEditing:YES];
-
-  // Then
-  [self generateSnapshotAndVerify];
-}
-
-- (void)testOutlinedTextFieldWithLongHelperText {
-  // When
-  self.textFieldController.helperText = MDCTextFieldSnapshotTestsHelperLongTextLatin;
-
-  // Then
-  [self generateSnapshotAndVerify];
-}
-
-- (void)testOutlinedTextFieldWithLongHelperTextIsEditing {
-  // When
-  self.textFieldController.helperText = MDCTextFieldSnapshotTestsHelperLongTextLatin;
-  [self.textField MDCtest_setIsEditing:YES];
-
-  // Then
-  [self generateSnapshotAndVerify];
-}
-
-- (void)testOutlinedTextFieldWithShortErrorText {
-  // When
-  [self.textFieldController setErrorText:MDCTextFieldSnapshotTestsErrorShortTextLatin
-                 errorAccessibilityValue:MDCTextFieldSnapshotTestsErrorShortTextLatin];
-
-  // Then
-  [self generateSnapshotAndVerify];
-}
-
-- (void)testOutlinedTextFieldWithShortErrorTextIsEditing {
-  // When
-  [self.textFieldController setErrorText:MDCTextFieldSnapshotTestsErrorShortTextLatin
-                 errorAccessibilityValue:MDCTextFieldSnapshotTestsErrorShortTextLatin];
-  [self.textField MDCtest_setIsEditing:YES];
-
-  // Then
-  [self generateSnapshotAndVerify];
-}
-
-- (void)testOutlinedTextFieldWithLongErrorText {
-  // When
-  [self.textFieldController setErrorText:MDCTextFieldSnapshotTestsErrorLongTextLatin
-                 errorAccessibilityValue:MDCTextFieldSnapshotTestsErrorLongTextLatin];
-
-  // Then
-  [self generateSnapshotAndVerify];
-}
-
-- (void)testOutlinedTextFieldWithLongErrorTextIsEditing {
-  // When
-  [self.textFieldController setErrorText:MDCTextFieldSnapshotTestsErrorLongTextLatin
-                 errorAccessibilityValue:MDCTextFieldSnapshotTestsErrorLongTextLatin];
-  [self.textField MDCtest_setIsEditing:YES];
-
-  // Then
-  [self generateSnapshotAndVerify];
-}
-
-- (void)testOutlinedTextFieldWithShortInputText {
-  // When
-  self.textField.text = MDCTextFieldSnapshotTestsInputShortTextLatin;
-
-  // Then
-  [self generateSnapshotAndVerify];
-}
-
-- (void)testOutlinedTextFieldWithShortInputTextIsEditing {
-  // When
-  self.textField.text = MDCTextFieldSnapshotTestsInputShortTextLatin;
-  [self.textField MDCtest_setIsEditing:YES];
-
-  // Then
-  [self generateSnapshotAndVerify];
-}
-
-- (void)testOutlinedTextFieldWithLongInputText {
-  // When
-  self.textField.text = MDCTextFieldSnapshotTestsInputLongTextLatin;
-
-  // Then
-  [self generateSnapshotAndVerify];
-}
-
-- (void)testOutlinedTextFieldWithLongInputTextIsEditing {
-  // When
-  self.textField.text = MDCTextFieldSnapshotTestsInputLongTextLatin;
-  [self.textField MDCtest_setIsEditing:YES];
-
-  // Then
-  [self generateSnapshotAndVerify];
-}
-
-#pragma mark - Multiple field tests
-
-- (void)testOutlinedTextFieldWithShortInputPlaceholderHelperTexts {
-  // When
-  self.textField.text = MDCTextFieldSnapshotTestsInputShortTextLatin;
-  self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderShortTextLatin;
-  self.textFieldController.helperText = MDCTextFieldSnapshotTestsHelperShortTextLatin;
-
-  // Then
-  [self generateSnapshotAndVerify];
-}
-
-- (void)testOutlinedTextFieldWithShortInputPlaceholderHelperTextsIsEditing {
-  // When
-  self.textField.text = MDCTextFieldSnapshotTestsInputShortTextLatin;
-  self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderShortTextLatin;
-  self.textFieldController.helperText = MDCTextFieldSnapshotTestsHelperShortTextLatin;
-  [self.textField MDCtest_setIsEditing:YES];
-
-  // Then
-  [self generateSnapshotAndVerify];
-}
-
-- (void)testOutlinedTextFieldWithLongInputPlaceholderHelperTexts {
-  // When
-  self.textField.text = MDCTextFieldSnapshotTestsInputLongTextLatin;
-  self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderLongTextLatin;
-  self.textFieldController.helperText = MDCTextFieldSnapshotTestsHelperLongTextLatin;
-
-  // Then
-  [self generateSnapshotAndVerify];
-}
-
-- (void)testOutlinedTextFieldWithLongInputPlaceholderHelperTextsIsEditing {
-  // When
-  self.textField.text = MDCTextFieldSnapshotTestsInputLongTextLatin;
-  self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderLongTextLatin;
-  self.textFieldController.helperText = MDCTextFieldSnapshotTestsHelperLongTextLatin;
-  [self.textField MDCtest_setIsEditing:YES];
-
-  // Then
-  [self generateSnapshotAndVerify];
-}
-
-- (void)testOutlinedTextFieldWithShortInputPlaceholderErrorTexts {
-  // When
-  self.textField.text = MDCTextFieldSnapshotTestsInputShortTextLatin;
-  self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderShortTextLatin;
-  [self.textFieldController setErrorText:MDCTextFieldSnapshotTestsErrorShortTextLatin
-                 errorAccessibilityValue:MDCTextFieldSnapshotTestsErrorShortTextLatin];
-
-  // Then
-  [self generateSnapshotAndVerify];
-}
-
-- (void)testOutlinedTextFieldWithShortInputPlaceholderErrorTextsIsEditing {
-  // When
-  self.textField.text = MDCTextFieldSnapshotTestsInputShortTextLatin;
-  self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderShortTextLatin;
-  [self.textFieldController setErrorText:MDCTextFieldSnapshotTestsErrorShortTextLatin
-                 errorAccessibilityValue:MDCTextFieldSnapshotTestsErrorShortTextLatin];
-  [self.textField MDCtest_setIsEditing:YES];
-
-  // Then
-  [self generateSnapshotAndVerify];
-}
-
-- (void)testOutlinedTextFieldWithLongInputPlaceholderErrorTexts {
-  // When
-  self.textField.text = MDCTextFieldSnapshotTestsInputLongTextLatin;
-  self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderLongTextLatin;
-  [self.textFieldController setErrorText:MDCTextFieldSnapshotTestsErrorLongTextLatin
-                 errorAccessibilityValue:MDCTextFieldSnapshotTestsErrorLongTextLatin];
-
-  // Then
-  [self generateSnapshotAndVerify];
-}
-
-- (void)testOutlinedTextFieldWithLongInputPlaceholderErrorTextsIsEditing {
-  // When
-  self.textField.text = MDCTextFieldSnapshotTestsInputLongTextLatin;
-  self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderLongTextLatin;
-  [self.textFieldController setErrorText:MDCTextFieldSnapshotTestsErrorLongTextLatin
-                 errorAccessibilityValue:MDCTextFieldSnapshotTestsErrorLongTextLatin];
-  [self.textField MDCtest_setIsEditing:YES];
-
-  // Then
-  [self generateSnapshotAndVerify];
-}
+// NOTE: All actual test methods are defined in MDCTextFieldOutlinedControllerSnapshotTests.m
 
 @end
