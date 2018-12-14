@@ -24,7 +24,7 @@
  */
 @interface MDCTextFieldSnapshotTestCase : MDCSnapshotTestCase
 
-@property(nonatomic, strong) SnapshotFakeMDCTextField *textField;
+@property(nonatomic, strong) UIView<MDCTextInput, MDCSnapshotFakeTextInput> *textField;
 
 /**
  Attempts to update the text field's layout to how it would appear within a view hierarchy on a
