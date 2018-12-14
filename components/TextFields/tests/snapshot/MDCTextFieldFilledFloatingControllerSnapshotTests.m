@@ -16,11 +16,11 @@
 #import "MDCTextFieldSnapshotTestsStrings.h"
 #import "MaterialTextFields.h"
 
-@interface MDCTextFieldFilledControllerSnapshotTests : MDCAbstractTextFieldSnapshotTests
+@interface MDCTextFieldFilledFloatingControllerSnapshotTests : MDCAbstractTextFieldSnapshotTests
 @property(nonatomic, strong) MDCTextInputControllerFilled *textFieldController;
 @end
 
-@implementation MDCTextFieldFilledControllerSnapshotTests
+@implementation MDCTextFieldFilledFloatingControllerSnapshotTests
 @dynamic textFieldController;
 
 - (void)setUp {
@@ -34,7 +34,7 @@
 
   self.textFieldController =
       [[MDCTextInputControllerFilled alloc] initWithTextInput:self.textField];
-  self.textFieldController.floatingEnabled = NO;
+  self.textFieldController.floatingEnabled = YES;
 }
 
 // NOTE: Additional test methods can be found in MDCAbstractTextFieldSnapshotTests.m
