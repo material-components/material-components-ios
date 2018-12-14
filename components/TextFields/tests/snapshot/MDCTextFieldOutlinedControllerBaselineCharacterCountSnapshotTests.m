@@ -14,7 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MDCTextFieldOutlinedControllerSnapshotTests.h"
+#import "MDCAbstractTextFieldSnapshotTests.h"
 #import "MaterialTextFields+ColorThemer.h"
 #import "MaterialTextFields+TypographyThemer.h"
 
@@ -27,7 +27,7 @@
 
  */
 @interface MDCTextFieldOutlinedControllerBaselineCharacterCountSnapshotTests
-    : MDCTextFieldOutlinedControllerSnapshotTests
+    : MDCAbstractTextFieldSnapshotTests
 
 @end
 
@@ -41,6 +41,9 @@
   //  self.recordMode = YES;
 
   self.textField.clearButtonMode = UITextFieldViewModeAlways;
+
+  self.textFieldController =
+      [[MDCTextInputControllerOutlined alloc] initWithTextInput:self.textField];
   self.textFieldController.characterCountViewMode = UITextFieldViewModeAlways;
   self.textFieldController.characterCountMax = 50;
 
@@ -56,6 +59,6 @@
   [MDCTextFieldTypographyThemer applyTypographyScheme:typographyScheme toTextInput:self.textField];
 }
 
-// NOTE: All actual test methods are defined in MDCTextFieldOutlinedControllerSnapshotTests.m
+// NOTE: Additional test methods can be found in MDCAbstractTextFieldSnapshotTests.m
 
 @end
