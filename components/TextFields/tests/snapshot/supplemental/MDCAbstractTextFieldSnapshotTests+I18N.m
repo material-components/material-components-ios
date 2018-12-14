@@ -38,7 +38,7 @@
   // make sure we set it first.
   [self.textField
       MDCtest_setEffectiveUserInterfaceLayoutDirection:UIUserInterfaceLayoutDirectionRightToLeft];
-  
+
   // UISemanticContentAttribute was added in iOS SDK 9.0 but is available on devices running earlier
   // version of iOS. We ignore the partial-availability warning that gets thrown on our use of this
   // symbol.
