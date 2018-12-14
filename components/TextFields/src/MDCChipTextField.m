@@ -103,7 +103,7 @@
   CGFloat space = textRect.size.width - inputRect.size.width;
   if (space < 0) {
     self.insetX += space;
-    self.leadingConstraint.constant += space;
+    self.leadingConstraint.constant -= space;
   }
 }
 
