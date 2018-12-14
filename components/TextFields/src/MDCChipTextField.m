@@ -25,13 +25,13 @@
  * RTL Support
  * tap to select a chip + another tap to remove it - if in the middle of the list. required?
  * drag&drop support eventually
- * MDCTextField placeholder stays floating after adding chips, removing them, then resigning
  * Should we use subclass or extension?
  done:
  * backspace to select and then delete an entire chip
  * convert text to chip when pressing enter
  * Adding just white space shouldn't create a chip
  * "enter" to create a chip - implementation issue with resign/become first responder
+ * MDCTextField placeholder stays floating after adding chips, removing them, then resigning
  future work:
  * drag&drop support eventually
  */
