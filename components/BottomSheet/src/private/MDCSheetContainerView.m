@@ -105,6 +105,7 @@ static const CGFloat kSheetBounceBuffer = 150;
     if (@available(iOS 11.0, *)) {
       scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     }
+    scrollView.preservesSuperviewLayoutMargins = YES;
   }
   return self;
 }

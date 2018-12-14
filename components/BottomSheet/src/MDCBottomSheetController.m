@@ -50,6 +50,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  self.view.preservesSuperviewLayoutMargins = YES;
   self.contentViewController.view.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   self.contentViewController.view.frame = self.view.bounds;
