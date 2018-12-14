@@ -75,6 +75,17 @@
   [self generateSnapshotAndVerify];
 }
 
+- (void)testTextFieldEmptyDisabled {
+  if (![self shouldTestExecute]) {
+    return;
+  }
+
+  self.textField.enabled = NO;
+
+  // Then
+  [self generateSnapshotAndVerify];
+}
+
 #pragma mark - Single field tests
 
 - (void)testTextFieldWithShortPlaceholderText {
@@ -97,6 +108,19 @@
   // When
   self.textFieldController.placeholderText = self.shortPlaceholderText;
   [self.textField MDCtest_setIsEditing:YES];
+
+  // Then
+  [self generateSnapshotAndVerify];
+}
+
+- (void)testTextFieldWithShortPlaceholderTextDisabled {
+  if (![self shouldTestExecute]) {
+    return;
+  }
+
+  // When
+  self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderShortTextLatin;
+  self.textField.enabled = NO;
 
   // Then
   [self generateSnapshotAndVerify];
@@ -127,6 +151,19 @@
   [self generateSnapshotAndVerify];
 }
 
+- (void)testTextFieldWithLongPlaceholderTextDisabled {
+  if (![self shouldTestExecute]) {
+    return;
+  }
+
+  // When
+  self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderLongTextLatin;
+  self.textField.enabled = NO;
+
+  // Then
+  [self generateSnapshotAndVerify];
+}
+
 - (void)testTextFieldWithShortHelperText {
   if (![self shouldTestExecute]) {
     return;
@@ -152,6 +189,19 @@
   [self generateSnapshotAndVerify];
 }
 
+- (void)testTextFieldWithShortHelperTextDisabled {
+  if (![self shouldTestExecute]) {
+    return;
+  }
+
+  // When
+  self.textFieldController.helperText = MDCTextFieldSnapshotTestsHelperShortTextLatin;
+  self.textField.enabled = NO;
+
+  // Then
+  [self generateSnapshotAndVerify];
+}
+
 - (void)testTextFieldWithLongHelperText {
   if (![self shouldTestExecute]) {
     return;
@@ -172,6 +222,19 @@
   // When
   self.textFieldController.helperText = self.longHelperText;
   [self.textField MDCtest_setIsEditing:YES];
+
+  // Then
+  [self generateSnapshotAndVerify];
+}
+
+- (void)testTextFieldWithLongHelperTextDisabled {
+  if (![self shouldTestExecute]) {
+    return;
+  }
+
+  // When
+  self.textFieldController.helperText = MDCTextFieldSnapshotTestsHelperLongTextLatin;
+  self.textField.enabled = NO;
 
   // Then
   [self generateSnapshotAndVerify];
@@ -204,6 +267,20 @@
   [self generateSnapshotAndVerify];
 }
 
+- (void)testTextFieldWithShortErrorTextDisabled {
+  if (![self shouldTestExecute]) {
+    return;
+  }
+
+  // When
+  [self.textFieldController setErrorText:MDCTextFieldSnapshotTestsErrorShortTextLatin
+                 errorAccessibilityValue:MDCTextFieldSnapshotTestsErrorShortTextLatin];
+  self.textField.enabled = NO;
+
+  // Then
+  [self generateSnapshotAndVerify];
+}
+
 - (void)testTextFieldWithLongErrorText {
   if (![self shouldTestExecute]) {
     return;
@@ -226,6 +303,20 @@
   [self.textFieldController setErrorText:self.longErrorText
                  errorAccessibilityValue:self.longErrorText];
   [self.textField MDCtest_setIsEditing:YES];
+
+  // Then
+  [self generateSnapshotAndVerify];
+}
+
+- (void)testTextFieldWithLongErrorTextDisabled {
+  if (![self shouldTestExecute]) {
+    return;
+  }
+
+  // When
+  [self.textFieldController setErrorText:MDCTextFieldSnapshotTestsErrorLongTextLatin
+                 errorAccessibilityValue:MDCTextFieldSnapshotTestsErrorLongTextLatin];
+  self.textField.enabled = NO;
 
   // Then
   [self generateSnapshotAndVerify];
@@ -256,6 +347,19 @@
   [self generateSnapshotAndVerify];
 }
 
+- (void)testTextFieldWithShortInputTextDisabled {
+  if (![self shouldTestExecute]) {
+    return;
+  }
+
+  // When
+  self.textField.text = MDCTextFieldSnapshotTestsInputShortTextLatin;
+  self.textField.enabled = NO;
+
+  // Then
+  [self generateSnapshotAndVerify];
+}
+
 - (void)testTextFieldWithLongInputText {
   if (![self shouldTestExecute]) {
     return;
@@ -276,6 +380,19 @@
   // When
   self.textField.text = self.longInputText;
   [self.textField MDCtest_setIsEditing:YES];
+
+  // Then
+  [self generateSnapshotAndVerify];
+}
+
+- (void)testTextFieldWithLongInputTextDisabled {
+  if (![self shouldTestExecute]) {
+    return;
+  }
+
+  // When
+  self.textField.text = MDCTextFieldSnapshotTestsInputLongTextLatin;
+  self.textField.enabled = NO;
 
   // Then
   [self generateSnapshotAndVerify];
@@ -312,6 +429,21 @@
   [self generateSnapshotAndVerify];
 }
 
+- (void)testTextFieldWithShortInputPlaceholderHelperTextsDisabled {
+  if (![self shouldTestExecute]) {
+    return;
+  }
+
+  // When
+  self.textField.text = MDCTextFieldSnapshotTestsInputShortTextLatin;
+  self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderShortTextLatin;
+  self.textFieldController.helperText = MDCTextFieldSnapshotTestsHelperShortTextLatin;
+  self.textField.enabled = NO;
+
+  // Then
+  [self generateSnapshotAndVerify];
+}
+
 - (void)testTextFieldWithLongInputPlaceholderHelperTexts {
   if (![self shouldTestExecute]) {
     return;
@@ -336,6 +468,21 @@
   self.textFieldController.placeholderText = self.longPlaceholderText;
   self.textFieldController.helperText = self.longHelperText;
   [self.textField MDCtest_setIsEditing:YES];
+
+  // Then
+  [self generateSnapshotAndVerify];
+}
+
+- (void)testTextFieldWithLongInputPlaceholderHelperTextsDisabled {
+  if (![self shouldTestExecute]) {
+    return;
+  }
+
+  // When
+  self.textField.text = MDCTextFieldSnapshotTestsInputLongTextLatin;
+  self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderLongTextLatin;
+  self.textFieldController.helperText = MDCTextFieldSnapshotTestsHelperLongTextLatin;
+  self.textField.enabled = NO;
 
   // Then
   [self generateSnapshotAndVerify];
@@ -372,6 +519,22 @@
   [self generateSnapshotAndVerify];
 }
 
+- (void)testTextFieldWithShortInputPlaceholderErrorTextsDisabled {
+  if (![self shouldTestExecute]) {
+    return;
+  }
+
+  // When
+  self.textField.text = MDCTextFieldSnapshotTestsInputShortTextLatin;
+  self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderShortTextLatin;
+  [self.textFieldController setErrorText:MDCTextFieldSnapshotTestsErrorShortTextLatin
+                 errorAccessibilityValue:MDCTextFieldSnapshotTestsErrorShortTextLatin];
+  self.textField.enabled = NO;
+
+  // Then
+  [self generateSnapshotAndVerify];
+}
+
 - (void)testTextFieldWithLongInputPlaceholderErrorTexts {
   if (![self shouldTestExecute]) {
     return;
@@ -398,6 +561,22 @@
   [self.textFieldController setErrorText:self.longErrorText
                  errorAccessibilityValue:self.longErrorText];
   [self.textField MDCtest_setIsEditing:YES];
+
+  // Then
+  [self generateSnapshotAndVerify];
+}
+
+- (void)testTextFieldWithLongInputPlaceholderErrorTextsDisabled {
+  if (![self shouldTestExecute]) {
+    return;
+  }
+
+  // When
+  self.textField.text = MDCTextFieldSnapshotTestsInputLongTextLatin;
+  self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderLongTextLatin;
+  [self.textFieldController setErrorText:MDCTextFieldSnapshotTestsErrorLongTextLatin
+                 errorAccessibilityValue:MDCTextFieldSnapshotTestsErrorLongTextLatin];
+  self.textField.enabled = NO;
 
   // Then
   [self generateSnapshotAndVerify];
