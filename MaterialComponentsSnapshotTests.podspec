@@ -33,6 +33,7 @@ Pod::Spec.new do |s|
         snapshot_tests.source_files = "components/#{component.base_name}/tests/snapshot/*.{h,m,swift}", "components/#{component.base_name}/tests/snapshot/supplemental/*.{h,m,swift}"
         snapshot_tests.resources = "components/#{component.base_name}/tests/snapshot/resources/*"
         snapshot_tests.dependency "MaterialComponentsSnapshotTests/private/Snapshot"
+        snapshot_tests.dependency "MDFInternationalization"
       end
     end
   end

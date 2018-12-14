@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <UIKit/UIKit.h>
+
 #import "MDCAbstractTextFieldSnapshotTests+I18N.h"
 #import "MDCTextFieldSnapshotTestsStrings.h"
 #import <MDFInternationalization/MDFInternationalization.h>
@@ -29,14 +31,19 @@
   self.longErrorText = MDCTextFieldSnapshotTestsErrorLongTextArabic;
 }
 
-// UISemanticContentAttribute was added in iOS SDK 9.0 but is available on devices running earlier
-// version of iOS. We ignore the partial-availability warning that gets thrown on our use of this
-// symbol.
+- (void)changeLayoutToRTL {
+  // Setting semanticContentAttribute results in a call to effectiveUserInterfaceLayoutDirection, so
+  // make sure we set it first.
+  [self.textField
+       MDCtest_setEffectiveUserInterfaceLayoutDirection:UIUserInterfaceLayoutDirectionRightToLeft];
+  
+  // UISemanticContentAttribute was added in iOS SDK 9.0 but is available on devices running earlier
+  // version of iOS. We ignore the partial-availability warning that gets thrown on our use of this
+  // symbol.
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wpartial-availability"
-- (void)changeLayoutToRTL {
-  self.textField.mdf_semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
-}
+  self.textField.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
 #pragma clang diagnostic pop
+}
 
 @end

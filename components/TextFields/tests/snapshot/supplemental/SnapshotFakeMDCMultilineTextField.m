@@ -13,10 +13,13 @@
 // limitations under the License.
 
 #import "SnapshotFakeMDCMultilineTextField.h"
+#import <MDFInternationalization/MDFInternationalization.h>
 
 @implementation SnapshotFakeMDCMultilineTextField {
   BOOL _isEditing;
   BOOL _isEditingOverridden;
+  BOOL _effectiveUserInterfaceLayoutDirection;
+  BOOL _isEffectiveUserInterfaceLayoutDirectionOverridden;
 }
 
 - (BOOL)isEditing {
@@ -45,6 +48,19 @@
         postNotificationName:UITextFieldTextDidEndEditingNotification
                       object:self];
   }
+}
+
+- (UIUserInterfaceLayoutDirection)effectiveUserInterfaceLayoutDirection {
+  if (_isEffectiveUserInterfaceLayoutDirectionOverridden) {
+    return _effectiveUserInterfaceLayoutDirection;
+  }
+  return [self mdf_effectiveUserInterfaceLayoutDirection];
+}
+
+- (void)MDCtest_setMDFEffectiveUserInterfaceLayoutDirection:
+    (UIUserInterfaceLayoutDirection)direction {
+  _isEffectiveUserInterfaceLayoutDirectionOverridden = YES;
+  _effectiveUserInterfaceLayoutDirection = direction;
 }
 
 @end

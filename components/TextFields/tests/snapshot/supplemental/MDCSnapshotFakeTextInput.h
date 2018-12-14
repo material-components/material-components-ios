@@ -26,4 +26,9 @@
  */
 - (void)MDCtest_setIsEditing:(BOOL)isEditing;
 
+/**
+ Overrides the value returned by @c effectiveUserInterfaceLayoutDirection.
+ */
+- (void)MDCtest_setEffectiveUserInterfaceLayoutDirection:(UIUserInterfaceLayoutDirection)direction;
+
 @end
