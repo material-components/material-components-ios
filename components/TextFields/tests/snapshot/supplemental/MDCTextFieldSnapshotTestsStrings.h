@@ -40,4 +40,4 @@ static NSString *const MDCTextFieldSnapshotTestsErrorLongTextArabic =
     @"أسر وتنامت الإتفاقية بـ, قد منتصف التنازلي عدد. الى و أطراف الصين. علاقة مساعدة تلك ما.";
 static NSString *const MDCTextFieldSnapshotTestsInputShortTextArabic = @"ذلك في.";
 static NSString *const MDCTextFieldSnapshotTestsInputLongTextArabic =
-    @"إيو التخطيط استمرار اليابان، من. دار خلاف للمجهود تم. يتم من لأداء ومطالبة, كل الهجوم مسؤولية.";
+    @"دول السيطرة استطاعوا ٣٠. مليون وفرنسا أوراقهم انه تم, نفس قد والديون العالمية. دون ما تنفّس.";

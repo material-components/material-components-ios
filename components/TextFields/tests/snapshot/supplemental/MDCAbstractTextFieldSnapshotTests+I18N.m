@@ -13,10 +13,10 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
+#import <MDFInternationalization/MDFInternationalization.h>
 
 #import "MDCAbstractTextFieldSnapshotTests+I18N.h"
 #import "MDCTextFieldSnapshotTestsStrings.h"
-#import <MDFInternationalization/MDFInternationalization.h>
 
 @implementation MDCAbstractTextFieldSnapshotTests (I18N)
 
@@ -35,7 +35,7 @@
   // Setting semanticContentAttribute results in a call to effectiveUserInterfaceLayoutDirection, so
   // make sure we set it first.
   [self.textField
-       MDCtest_setEffectiveUserInterfaceLayoutDirection:UIUserInterfaceLayoutDirectionRightToLeft];
+      MDCtest_setEffectiveUserInterfaceLayoutDirection:UIUserInterfaceLayoutDirectionRightToLeft];
   
   // UISemanticContentAttribute was added in iOS SDK 9.0 but is available on devices running earlier
   // version of iOS. We ignore the partial-availability warning that gets thrown on our use of this

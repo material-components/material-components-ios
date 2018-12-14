@@ -57,8 +57,7 @@
   return [self mdf_effectiveUserInterfaceLayoutDirection];
 }
 
-- (void)MDCtest_setEffectiveUserInterfaceLayoutDirection:
-    (UIUserInterfaceLayoutDirection)direction {
+- (void)MDCtest_setEffectiveUserInterfaceLayoutDirection:(UIUserInterfaceLayoutDirection)direction {
   _isEffectiveUserInterfaceLayoutDirectionOverridden = YES;
   _effectiveUserInterfaceLayoutDirection = direction;
 }
