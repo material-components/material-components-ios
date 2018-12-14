@@ -48,6 +48,7 @@
     _chipsView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 160, frame.size.height)];
     _chipsView.translatesAutoresizingMaskIntoConstraints = NO;
     _chipsView.backgroundColor = [UIColor yellowColor];
+    _chipsView.clipsToBounds = YES;
     self.leftView = _chipsView;
 
     [self addTarget:self
@@ -117,7 +118,7 @@
   CGRect inputRect = [self firstRectForRange:textRange];
 
   CGFloat space = textRect.size.width - inputRect.size.width;
-  if (space < 0) {
+  if (space < 0 || self.leadingConstraint.constant > 0) {
     self.insetX += space;
     self.leadingConstraint.constant -= space;
   }
