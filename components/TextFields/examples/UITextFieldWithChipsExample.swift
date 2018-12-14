@@ -86,6 +86,7 @@ class UITextFieldWithChipsExample: UIViewController {
     leftView.translatesAutoresizingMaskIntoConstraints = false
     leftView.backgroundColor = UIColor.yellow.withAlphaComponent(0.5)
 
+    leftView.clipsToBounds = true
     textField.leftView = leftView
     textField.leftViewMode = .always
   }
