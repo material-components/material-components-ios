@@ -77,6 +77,13 @@
 @property(nonatomic, assign) CGFloat preferredSheetHeight;
 
 /**
+ Customize the color of the background scrim.
+
+ Defaults to a semi-transparent Black.
+ */
+@property(nonatomic, strong, nullable) UIColor *scrimColor;
+
+/**
  If @c YES, then the dimmed scrim view will act as an accessibility element for dismissing the
  bottom sheet.
 

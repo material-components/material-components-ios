@@ -63,5 +63,9 @@ static NSString *const MDCCutCornerTreatmentCutKey = @"MDCCutCornerTreatmentCutK
   return self.cut == otherCutCorner.cut;
 }
 
+- (NSUInteger)hash {
+  return @(self.cut).hash ^ (NSUInteger)self.valueType;
+}
+
 @end
 

@@ -12,35 +12,36 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCButtonBar+Theming.h"
+#import "MDCActionSheetController+MaterialTheming.h"
 
-#import "MaterialButtonBar+ColorThemer.h"
-#import "MaterialButtonBar+TypographyThemer.h"
+#import "MaterialActionSheet+ColorThemer.h"
+#import "MaterialActionSheet+TypographyThemer.h"
 
-@implementation MDCButtonBar (MaterialTheming)
+@implementation MDCActionSheetController (MaterialTheming)
 
-- (void)applyPrimaryThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme {
+- (void)applyThemeWithScheme:(id<MDCContainerScheming>)scheme {
   id<MDCColorScheming> colorScheme = scheme.colorScheme;
   if (!colorScheme) {
     colorScheme =
         [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
-  [self applyPrimaryThemeWithColorScheme:colorScheme];
+  [self applyThemeWithColorScheme:colorScheme];
 
   id<MDCTypographyScheming> typographyScheme = scheme.typographyScheme;
   if (!typographyScheme) {
     typographyScheme =
         [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
   }
-  [self applyPrimaryThemeWithTypographyScheme:typographyScheme];
+  [self applyThemeWithTypographyScheme:typographyScheme];
 }
 
-- (void)applyPrimaryThemeWithColorScheme:(nonnull id<MDCColorScheming>)scheme {
-  [MDCButtonBarColorThemer applySemanticColorScheme:scheme toButtonBar:self];
+- (void)applyThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
+  [MDCActionSheetColorThemer applySemanticColorScheme:colorScheme toActionSheetController:self];
 }
 
-- (void)applyPrimaryThemeWithTypographyScheme:(nonnull id<MDCTypographyScheming>)scheme {
-  [MDCButtonBarTypographyThemer applyTypographyScheme:scheme toButtonBar:self];
+- (void)applyThemeWithTypographyScheme:(id<MDCTypographyScheming>)typographyScheme {
+  [MDCActionSheetTypographyThemer applyTypographyScheme:typographyScheme
+                                toActionSheetController:self];
 }
 
 @end

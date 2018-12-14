@@ -19,6 +19,8 @@ import MaterialComponents.MaterialDialogs
 import MaterialComponents.MaterialCollections
 import MaterialComponents.MaterialDialogs_DialogThemer
 import MaterialComponents.MaterialTypographyScheme
+import MaterialComponentsAlpha.MaterialContainerScheme
+import MaterialComponentsAlpha.MaterialDialogs_Theming
 
 class DialogsAlertCustomizationExampleViewController: MDCCollectionViewController {
 

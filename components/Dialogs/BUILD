@@ -13,11 +13,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("//:material_components_ios.bzl",
-     "mdc_public_objc_library",
-     "mdc_objc_library",
-     "mdc_unit_test_suite")
-load("@build_bazel_rules_apple//apple:swift.bzl", "swift_library")
+load(
+    "//:material_components_ios.bzl",
+    "mdc_objc_library",
+    "mdc_public_objc_library",
+    "mdc_unit_test_suite",
+)
+load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
@@ -55,19 +57,19 @@ objc_bundle(
 )
 
 mdc_objc_library(
-    name = "MaterialTheming",
-    srcs = native.glob(["src/MaterialTheming/*.m"]),
-    hdrs = native.glob(["src/MaterialTheming/*.h"]),
-    includes = ["src/MaterialTheming"],
+    name = "Theming",
+    srcs = native.glob(["src/Theming/*.m"]),
+    hdrs = native.glob(["src/Theming/*.h"]),
+    includes = ["src/Theming"],
+    visibility = ["//visibility:public"],
     deps = [
-        ":Dialogs",
         ":ColorThemer",
+        ":Dialogs",
         ":TypographyThemer",
         "//components/Buttons:Theming",
         "//components/ShadowElevations",
         "//components/schemes/Container",
     ],
-    visibility = ["//visibility:public"],
 )
 
 mdc_objc_library(
@@ -78,15 +80,15 @@ mdc_objc_library(
     sdk_frameworks = [
         "UIKit",
     ],
+    visibility = ["//visibility:public"],
     deps = [
+        ":ColorThemer",
         ":Dialogs",
-        "//components/Themes",
+        ":TypographyThemer",
         "//components/Buttons:ButtonThemer",
         "//components/Buttons:ColorThemer",
-        ":ColorThemer",
-        ":TypographyThemer",
+        "//components/Themes",
     ],
-    visibility = ["//visibility:public"],
 )
 
 mdc_objc_library(
@@ -97,12 +99,12 @@ mdc_objc_library(
     sdk_frameworks = [
         "UIKit",
     ],
+    visibility = ["//visibility:public"],
     deps = [
         ":Dialogs",
-        "//components/Themes",
         "//components/Buttons:ColorThemer",
+        "//components/Themes",
     ],
-    visibility = ["//visibility:public"],
 )
 
 mdc_objc_library(
@@ -113,12 +115,12 @@ mdc_objc_library(
     sdk_frameworks = [
         "UIKit",
     ],
+    visibility = ["//visibility:public"],
     deps = [
         ":Dialogs",
-        "//components/schemes/Typography",
         "//components/Buttons:TypographyThemer",
+        "//components/schemes/Typography",
     ],
-    visibility = ["//visibility:public"],
 )
 
 mdc_objc_library(
@@ -139,18 +141,18 @@ mdc_objc_library(
         "UIKit",
         "XCTest",
     ],
+    visibility = ["//visibility:private"],
     deps = [
-        ":Dialogs",
-        ":DialogThemer",
         ":ColorThemer",
+        ":DialogThemer",
+        ":Dialogs",
         ":TypographyThemer",
         ":private",
     ],
-    visibility = ["//visibility:private"],
 )
 
 mdc_unit_test_suite(
     deps = [
-      ":unit_test_sources",
+        ":unit_test_sources",
     ],
 )

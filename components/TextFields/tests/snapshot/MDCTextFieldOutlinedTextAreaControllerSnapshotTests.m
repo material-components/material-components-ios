@@ -15,9 +15,10 @@
 #import "MDCSnapshotTestCase.h"
 #import "MDCTextFieldSnapshotTestsStrings.h"
 #import "MaterialTextFields.h"
+#import "SnapshotFakeMDCMultilineTextField.h"
 
 @interface MDCTextFieldOutlinedTextAreaControllerSnapshotTests : MDCSnapshotTestCase
-@property(nonatomic, strong) MDCMultilineTextField *textField;
+@property(nonatomic, strong) SnapshotFakeMDCMultilineTextField *textField;
 @property(nonatomic, strong) MDCTextInputControllerOutlinedTextArea *textFieldController;
 @end
 
@@ -26,7 +27,13 @@
 - (void)setUp {
   [super setUp];
 
-  self.textField = [[MDCMultilineTextField alloc] init];
+  // Uncomment below to recreate the golden images for all test methods. Add it to a test method to
+  // update only that golden image.
+  //  self.recordMode = YES;
+
+  self.textField = [[SnapshotFakeMDCMultilineTextField alloc] init];
+  self.textField.clearButtonMode = UITextFieldViewModeAlways;
+
   self.textFieldController =
       [[MDCTextInputControllerOutlinedTextArea alloc] initWithTextInput:self.textField];
 }
@@ -57,8 +64,13 @@
 #pragma mark - Tests
 
 - (void)testOutlinedTextFieldEmpty {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
+  // Then
+  [self generateSnapshotAndVerify];
+}
+
+- (void)testOutlinedTextFieldEmptyIsEditing {
+  // When
+  [self.textField MDCtest_setIsEditing:YES];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -67,9 +79,6 @@
 #pragma mark - Single field tests
 
 - (void)testOutlinedTextFieldWithShortPlaceholderText {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderShortTextLatin;
 
@@ -77,10 +86,16 @@
   [self generateSnapshotAndVerify];
 }
 
-- (void)testOutlinedTextFieldWithLongPlaceholderText {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
+- (void)testOutlinedTextFieldWithShortPlaceholderTextIsEditing {
+  // When
+  self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderShortTextLatin;
+  [self.textField MDCtest_setIsEditing:YES];
 
+  // Then
+  [self generateSnapshotAndVerify];
+}
+
+- (void)testOutlinedTextFieldWithLongPlaceholderText {
   // When
   self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderLongTextLatin;
 
@@ -88,10 +103,16 @@
   [self generateSnapshotAndVerify];
 }
 
-- (void)testOutlinedTextFieldWithShortHelperText {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
+- (void)testOutlinedTextFieldWithLongPlaceholderTextIsEditing {
+  // When
+  self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderLongTextLatin;
+  [self.textField MDCtest_setIsEditing:YES];
 
+  // Then
+  [self generateSnapshotAndVerify];
+}
+
+- (void)testOutlinedTextFieldWithShortHelperText {
   // When
   self.textFieldController.helperText = MDCTextFieldSnapshotTestsHelperShortTextLatin;
 
@@ -99,10 +120,16 @@
   [self generateSnapshotAndVerify];
 }
 
-- (void)testOutlinedTextFieldWithLongHelperText {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
+- (void)testOutlinedTextFieldWithShortHelperTextIsEditing {
+  // When
+  self.textFieldController.helperText = MDCTextFieldSnapshotTestsHelperShortTextLatin;
+  [self.textField MDCtest_setIsEditing:YES];
 
+  // Then
+  [self generateSnapshotAndVerify];
+}
+
+- (void)testOutlinedTextFieldWithLongHelperText {
   // When
   self.textFieldController.helperText = MDCTextFieldSnapshotTestsHelperLongTextLatin;
 
@@ -110,10 +137,16 @@
   [self generateSnapshotAndVerify];
 }
 
-- (void)testOutlinedTextFieldWithShortErrorText {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
+- (void)testOutlinedTextFieldWithLongHelperTextIsEditing {
+  // When
+  self.textFieldController.helperText = MDCTextFieldSnapshotTestsHelperLongTextLatin;
+  [self.textField MDCtest_setIsEditing:YES];
 
+  // Then
+  [self generateSnapshotAndVerify];
+}
+
+- (void)testOutlinedTextFieldWithShortErrorText {
   // When
   [self.textFieldController setErrorText:MDCTextFieldSnapshotTestsErrorShortTextLatin
                  errorAccessibilityValue:MDCTextFieldSnapshotTestsErrorShortTextLatin];
@@ -122,10 +155,17 @@
   [self generateSnapshotAndVerify];
 }
 
-- (void)testOutlinedTextFieldWithLongErrorText {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
+- (void)testOutlinedTextFieldWithShortErrorTextIsEditing {
+  // When
+  [self.textFieldController setErrorText:MDCTextFieldSnapshotTestsErrorShortTextLatin
+                 errorAccessibilityValue:MDCTextFieldSnapshotTestsErrorShortTextLatin];
+  [self.textField MDCtest_setIsEditing:YES];
 
+  // Then
+  [self generateSnapshotAndVerify];
+}
+
+- (void)testOutlinedTextFieldWithLongErrorText {
   // When
   [self.textFieldController setErrorText:MDCTextFieldSnapshotTestsErrorLongTextLatin
                  errorAccessibilityValue:MDCTextFieldSnapshotTestsErrorLongTextLatin];
@@ -134,10 +174,17 @@
   [self generateSnapshotAndVerify];
 }
 
-- (void)testOutlinedTextFieldWithShortInputText {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
+- (void)testOutlinedTextFieldWithLongErrorTextIsEditing {
+  // When
+  [self.textFieldController setErrorText:MDCTextFieldSnapshotTestsErrorLongTextLatin
+                 errorAccessibilityValue:MDCTextFieldSnapshotTestsErrorLongTextLatin];
+  [self.textField MDCtest_setIsEditing:YES];
 
+  // Then
+  [self generateSnapshotAndVerify];
+}
+
+- (void)testOutlinedTextFieldWithShortInputText {
   // When
   self.textField.text = MDCTextFieldSnapshotTestsInputShortTextLatin;
 
@@ -145,12 +192,27 @@
   [self generateSnapshotAndVerify];
 }
 
-- (void)testOutlinedTextFieldWithLongInputText {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
+- (void)testOutlinedTextFieldWithShortInputTextIsEditing {
+  // When
+  self.textField.text = MDCTextFieldSnapshotTestsInputShortTextLatin;
+  [self.textField MDCtest_setIsEditing:YES];
 
+  // Then
+  [self generateSnapshotAndVerify];
+}
+
+- (void)testOutlinedTextFieldWithLongInputText {
   // When
   self.textField.text = MDCTextFieldSnapshotTestsInputLongTextLatin;
+
+  // Then
+  [self generateSnapshotAndVerify];
+}
+
+- (void)testOutlinedTextFieldWithLongInputTextIsEditing {
+  // When
+  self.textField.text = MDCTextFieldSnapshotTestsInputLongTextLatin;
+  [self.textField MDCtest_setIsEditing:YES];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -159,9 +221,6 @@
 #pragma mark - Multiple field tests
 
 - (void)testOutlinedTextFieldWithShortInputPlaceholderHelperTexts {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
   // When
   self.textField.text = MDCTextFieldSnapshotTestsInputShortTextLatin;
   self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderShortTextLatin;
@@ -171,10 +230,18 @@
   [self generateSnapshotAndVerify];
 }
 
-- (void)testOutlinedTextFieldWithLongInputPlaceholderHelperTexts {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
+- (void)testOutlinedTextFieldWithShortInputPlaceholderHelperTextsIsEditing {
+  // When
+  self.textField.text = MDCTextFieldSnapshotTestsInputShortTextLatin;
+  self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderShortTextLatin;
+  self.textFieldController.helperText = MDCTextFieldSnapshotTestsHelperShortTextLatin;
+  [self.textField MDCtest_setIsEditing:YES];
 
+  // Then
+  [self generateSnapshotAndVerify];
+}
+
+- (void)testOutlinedTextFieldWithLongInputPlaceholderHelperTexts {
   // When
   self.textField.text = MDCTextFieldSnapshotTestsInputLongTextLatin;
   self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderLongTextLatin;
@@ -184,10 +251,18 @@
   [self generateSnapshotAndVerify];
 }
 
-- (void)testOutlinedTextFieldWithShortInputPlaceholderErrorTexts {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
+- (void)testOutlinedTextFieldWithLongInputPlaceholderHelperTextsIsEditing {
+  // When
+  self.textField.text = MDCTextFieldSnapshotTestsInputLongTextLatin;
+  self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderLongTextLatin;
+  self.textFieldController.helperText = MDCTextFieldSnapshotTestsHelperLongTextLatin;
+  [self.textField MDCtest_setIsEditing:YES];
 
+  // Then
+  [self generateSnapshotAndVerify];
+}
+
+- (void)testOutlinedTextFieldWithShortInputPlaceholderErrorTexts {
   // When
   self.textField.text = MDCTextFieldSnapshotTestsInputShortTextLatin;
   self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderShortTextLatin;
@@ -198,15 +273,36 @@
   [self generateSnapshotAndVerify];
 }
 
-- (void)testOutlinedTextFieldWithLongInputPlaceholderErrorTexts {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
+- (void)testOutlinedTextFieldWithShortInputPlaceholderErrorTextsIsEditing {
+  // When
+  self.textField.text = MDCTextFieldSnapshotTestsInputShortTextLatin;
+  self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderShortTextLatin;
+  [self.textFieldController setErrorText:MDCTextFieldSnapshotTestsErrorShortTextLatin
+                 errorAccessibilityValue:MDCTextFieldSnapshotTestsErrorShortTextLatin];
+  [self.textField MDCtest_setIsEditing:YES];
 
+  // Then
+  [self generateSnapshotAndVerify];
+}
+
+- (void)testOutlinedTextFieldWithLongInputPlaceholderErrorTexts {
   // When
   self.textField.text = MDCTextFieldSnapshotTestsInputLongTextLatin;
   self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderLongTextLatin;
   [self.textFieldController setErrorText:MDCTextFieldSnapshotTestsErrorLongTextLatin
                  errorAccessibilityValue:MDCTextFieldSnapshotTestsErrorLongTextLatin];
+
+  // Then
+  [self generateSnapshotAndVerify];
+}
+
+- (void)testOutlinedTextFieldWithLongInputPlaceholderErrorTextsIsEditing {
+  // When
+  self.textField.text = MDCTextFieldSnapshotTestsInputLongTextLatin;
+  self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderLongTextLatin;
+  [self.textFieldController setErrorText:MDCTextFieldSnapshotTestsErrorLongTextLatin
+                 errorAccessibilityValue:MDCTextFieldSnapshotTestsErrorLongTextLatin];
+  [self.textField MDCtest_setIsEditing:YES];
 
   // Then
   [self generateSnapshotAndVerify];

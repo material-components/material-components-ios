@@ -13,10 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("//:material_components_ios.bzl",
-     "mdc_public_objc_library",
-     "mdc_objc_library",
-     "mdc_unit_test_suite")
+load(
+    "//:material_components_ios.bzl",
+    "mdc_objc_library",
+    "mdc_public_objc_library",
+    "mdc_unit_test_suite",
+)
 
 licenses(["notice"])  # Apache 2.0
 
@@ -50,11 +52,11 @@ mdc_objc_library(
     srcs = native.glob(["src/ColorThemer/*.m"]),
     hdrs = native.glob(["src/ColorThemer/*.h"]),
     includes = ["src/ColorThemer"],
+    visibility = ["//visibility:public"],
     deps = [
         ":PageControl",
         "//components/Themes",
     ],
-    visibility = ["//visibility:public"],
 )
 
 mdc_objc_library(
@@ -74,15 +76,15 @@ mdc_objc_library(
     sdk_frameworks = [
         "XCTest",
     ],
-    deps = [
-        ":PageControl",
-        ":ColorThemer",
-    ],
     visibility = ["//visibility:private"],
+    deps = [
+        ":ColorThemer",
+        ":PageControl",
+    ],
 )
 
 mdc_unit_test_suite(
     deps = [
-      ":unit_test_sources",
+        ":unit_test_sources",
     ],
 )
