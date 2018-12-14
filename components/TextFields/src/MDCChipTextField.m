@@ -15,6 +15,22 @@
 #import "MDCChipTextField.h"
 #import "MaterialChips.h"
 
+/*
+ in progress:
+ * scroll labels/chips view to the left, when not enough room for typing
+ todo:
+ * change labels to buttons (verifying interactivity of individual chips)
+ * "enter" to create a chip - usability issue
+ * scrolling through label/chips.
+ * scroll the overlay view to correct position on focus and un-focus events (textFieldDidBeginEditing: ?)
+ * RTL Support
+ * tap to select a chip + another tap to remove it - if in the middle of the list. required?
+ * MDCTextField placeholder stays floating after adding chips, removing them, then resigning
+ done:
+ * backspace to select and then delete an entire label/chip
+ * convert text to label when pressing enter
+ */
+
 @interface MDCChipTextField ()
 
 @property (nonatomic, strong) UIView *chipsView;
