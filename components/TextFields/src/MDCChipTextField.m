@@ -96,7 +96,8 @@
 
 - (void)setupEditingRect {
   CGRect textRect = [self textRectForBounds:self.bounds];
-  UITextRange *textRange = [self textRangeFromPosition:self.beginningOfDocument toPosition:self.endOfDocument];
+  UITextRange *textRange = [self textRangeFromPosition:self.beginningOfDocument
+                                              toPosition:self.endOfDocument];
   CGRect inputRect = [self firstRectForRange:textRange];
 
   CGFloat space = textRect.size.width - inputRect.size.width;
@@ -114,7 +115,9 @@
 }
 
 - (void)deleteBackward {
-  if (self.text.length == 0) {
+  NSInteger cursorPosition = [self offsetFromPosition:self.beginningOfDocument
+                                           toPosition:self.selectedTextRange.start];
+  if (cursorPosition == 0) {
     [self respondToDeleteBackward];
   }
   [super deleteBackward];
