@@ -37,6 +37,7 @@ static const CGFloat kTopRowBottomRowDividerVerticalPadding = 9.0;
  are derived from the styles outlined in the Material Guidelines for Text Fields.
  */
 typedef NS_ENUM(NSUInteger, TextFieldStyle) {
+  TextFieldStyleNone,
   TextFieldStyleFilled,
   TextFieldStyleOutline,
 };

@@ -26,6 +26,7 @@
 // adapter?
 @interface SimpleTextFieldColorAdapter : NSObject
 
+@property(strong, nonatomic) UIColor *textColor;
 @property(strong, nonatomic) UIColor *underlineLabelColor;
 @property(strong, nonatomic) UIColor *outlineColor;
 @property(strong, nonatomic) UIColor *placeholderLabelColor;
@@ -51,8 +52,9 @@
 
 - (void)assignPropertiesWithColorScheme:(MDCSemanticColorScheme *)colorScheme
                          textFieldState:(TextFieldState)textFieldState {
-  UIColor *placeholderLabelColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.60];
+  UIColor *textColor = colorScheme.onSurfaceColor;
   UIColor *underlineLabelColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.60];
+  UIColor *placeholderLabelColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.60];
   UIColor *outlineColor = colorScheme.onSurfaceColor;
   UIColor *filledSublayerUnderlineFillColor = colorScheme.onSurfaceColor;
   UIColor *filledSublayerFillColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.15];
@@ -80,6 +82,7 @@
     default:
       break;
   }
+  self.textColor = textColor;
   self.filledSublayerFillColor = filledSublayerFillColor;
   self.filledSublayerUnderlineFillColor = filledSublayerUnderlineFillColor;
   self.underlineLabelColor = underlineLabelColor;
@@ -398,11 +401,6 @@
   [self mdc_setRightView:rightView];
 }
 
-- (void)setBorderStyle:(UITextBorderStyle)borderStyle {
-  UITextBorderStyle enforcedNoneStyle = UITextBorderStyleNone;
-  [super setBorderStyle:enforcedNoneStyle];
-}
-
 #pragma mark Custom Accessors
 
 - (UILabel *)leadingUnderlineLabel {
@@ -539,7 +537,11 @@
                     systemDefinedHeight);
 }
 
-// TODO: Explain why this confusing implementation is the way it is.
+// The implementations for this method and the method below deserve some context! Unfortunately,
+// Apple's RTL behavior with these methods is very unintuitive. Imagine you're in an RTL locale and
+// you set @c leftView on a standard UITextField. Even though the property that you set is called @c
+// leftView, the method @c -rightViewRectForBounds: will be called. They are treating @c leftView as
+// @c rightView, even though @c rightView is nil. It's bonkers.
 - (CGRect)leftViewRectForBounds:(CGRect)bounds {
   if ([self isRTL]) {
     return self.layout.rightViewFrame;
@@ -548,7 +550,6 @@
   }
 }
 
-// TODO: Explain why this confusing implementation is the way it is.
 - (CGRect)rightViewRectForBounds:(CGRect)bounds {
   if ([self isRTL]) {
     return self.layout.leftViewFrame;
@@ -558,6 +559,9 @@
 }
 
 - (CGRect)borderRectForBounds:(CGRect)bounds {
+  if (self.textFieldStyle == TextFieldStyleNone) {
+    return [super borderRectForBounds:bounds];
+  }
   return CGRectZero;
 }
 
@@ -747,11 +751,11 @@
                                      isEditing:self.isEditing];
 }
 
-- (void)layOutPlaceholderWithState:(PlaceholderState)state {
+- (void)layOutPlaceholderWithState:(PlaceholderState)placeholderState {
   UIFont *font = nil;
   CGRect frame = CGRectZero;
   BOOL placeholderShouldHide = NO;
-  switch (state) {
+  switch (placeholderState) {
     case PlaceholderStateFloating:
       font = self.floatingPlaceholderFont;
       frame = self.layout.placeholderFrameFloating;
@@ -815,15 +819,15 @@
   CGFloat outlinedFloatingPlaceholderScale = (CGFloat)41 / (CGFloat)55;
   CGFloat filledFloatingPlaceholderScale = (CGFloat)53 / (CGFloat)71;
   switch (textFieldStyle) {
+    case TextFieldStyleNone:
     case TextFieldStyleFilled:
+    default:
       floatingPlaceholderFontSize =
           round((double)(font.pointSize * filledFloatingPlaceholderScale));
       break;
     case TextFieldStyleOutline:
       floatingPlaceholderFontSize =
           round((double)(font.pointSize * outlinedFloatingPlaceholderScale));
-      break;
-    default:
       break;
   }
   return [font fontWithSize:floatingPlaceholderFontSize];
@@ -1176,6 +1180,7 @@
 #pragma mark Theming
 
 - (void)applyColorAdapter:(SimpleTextFieldColorAdapter *)colorAdapter {
+  self.textColor = colorAdapter.textColor;
   self.leadingUnderlineLabel.textColor = colorAdapter.underlineLabelColor;
   self.trailingUnderlineLabel.textColor = colorAdapter.underlineLabelColor;
   self.placeholderLabel.textColor = colorAdapter.placeholderLabelColor;

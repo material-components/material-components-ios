@@ -212,7 +212,6 @@
   self.uiTextField.borderStyle = UITextBorderStyleRoundedRect;
   self.uiTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
 
-
   [self.scrollView addSubview:self.uiTextField];
 }
 

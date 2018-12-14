@@ -122,7 +122,8 @@
   if (shouldAttemptToDisplayClearButton) {
     // RTL
     CGFloat uncorrectedVisualLeftMargin = isRTL ? kTrailingMargin : kLeadingMargin;
-    CGFloat correctedVisualLeftMargin = uncorrectedVisualLeftMargin - clearButtonImageViewSideMargin;
+    CGFloat correctedVisualLeftMargin =
+        uncorrectedVisualLeftMargin - clearButtonImageViewSideMargin;
     CGFloat lowestPossibleMinX = 0;
     if (shouldAttemptToDisplayLeftView) {
       lowestPossibleMinX = leftViewMaxX + correctedVisualLeftMargin;
@@ -132,7 +133,8 @@
 
     // LTR
     CGFloat uncorrectedVisualRightMargin = isRTL ? kLeadingMargin : kTrailingMargin;
-    CGFloat correctedVisualRightMargin = uncorrectedVisualRightMargin - clearButtonImageViewSideMargin;
+    CGFloat correctedVisualRightMargin =
+        uncorrectedVisualRightMargin - clearButtonImageViewSideMargin;
     CGFloat highestPossibleMaxX = 0;
     if (shouldAttemptToDisplayRightView) {
       highestPossibleMaxX = rightViewMinX - correctedVisualRightMargin;
@@ -193,7 +195,8 @@
   CGFloat textAreaMaxX = 0;
   if (isRTL) {
     if (shouldAttemptToDisplayClearButton) {
-      CGFloat clearButtonMaxX = clearButtonMinX + kClearButtonTouchTargetSideLength + clearButtonImageViewSideMargin;
+      CGFloat clearButtonMaxX =
+          clearButtonMinX + kClearButtonTouchTargetSideLength + clearButtonImageViewSideMargin;
       textAreaMinX = clearButtonMaxX;
     } else if (shouldAttemptToDisplayLeftView) {
       textAreaMinX = leftViewMaxX + kTrailingMargin;
@@ -257,14 +260,22 @@
                                                          leftViewMaxY:leftViewMaxY
                                                         rightViewMaxY:rightViewMaxY];
 
-  CGFloat topRowBottomRowDividerY = topRowSubviewCenterY;
-  if (textFieldStyle == TextFieldStyleOutline) {
-    topRowBottomRowDividerY = topRowSubviewCenterY * 2;
-  } else if (textFieldStyle == TextFieldStyleFilled) {
-    topRowBottomRowDividerY = topRowSubviewMaxY + kTopRowBottomRowDividerVerticalPadding;
+  CGFloat topRowBottomRowDividerY = 0;
+  switch (textFieldStyle) {
+    case TextFieldStyleNone:
+      topRowBottomRowDividerY = topRowSubviewMaxY;
+      break;
+    case TextFieldStyleFilled:
+    default:
+      topRowBottomRowDividerY = topRowSubviewMaxY + kTopRowBottomRowDividerVerticalPadding;
+      break;
+    case TextFieldStyleOutline:
+      topRowBottomRowDividerY = topRowSubviewCenterY * 2;
+      break;
   }
 
-  CGFloat underlineLabelsCombinedMinY = topRowBottomRowDividerY + kTopRowBottomRowDividerVerticalPadding;
+  CGFloat underlineLabelsCombinedMinY =
+      topRowBottomRowDividerY + kTopRowBottomRowDividerVerticalPadding;
   CGFloat leadingUnderlineLabelWidth = 0;
   CGFloat trailingUnderlineLabelWidth = 0;
   CGSize leadingUnderlineLabelSize = CGSizeZero;
@@ -459,11 +470,16 @@
     CGFloat spaceBetweenPlaceholderAndTextArea = 0;
     CGFloat floatingPlaceholderMaxY = floatingPlaceholderMinY + floatingPlaceholderHeight;
     CGFloat outlinedTextFieldSpaceHeuristic = floatingPlaceholderHeight * 0.22;
-    if (textFieldStyle == TextFieldStyleFilled) {
-      spaceBetweenPlaceholderAndTextArea = (0.25 * floatingPlaceholderMaxY);
-    } else if (textFieldStyle == TextFieldStyleOutline) {
-      spaceBetweenPlaceholderAndTextArea =
-          floatingPlaceholderMaxY + outlinedTextFieldSpaceHeuristic;
+    switch (textFieldStyle) {
+      case TextFieldStyleNone:
+      case TextFieldStyleFilled:
+      default:
+        spaceBetweenPlaceholderAndTextArea = (0.25 * floatingPlaceholderMaxY);
+        break;
+      case TextFieldStyleOutline:
+        spaceBetweenPlaceholderAndTextArea =
+            floatingPlaceholderMaxY + outlinedTextFieldSpaceHeuristic;
+        break;
     }
     CGFloat lowestAllowableTextAreaMinY =
         floatingPlaceholderMaxY + spaceBetweenPlaceholderAndTextArea;
@@ -482,15 +498,14 @@
   CGFloat filledPlaceholderTopPaddingScaleHeuristic = ((CGFloat)50.0 / (CGFloat)70.0);
   CGFloat floatingPlaceholderMinY = 0;
   switch (textFieldStyle) {
-    case TextFieldStyleFilled:
-      floatingPlaceholderMinY =
-          filledPlaceholderTopPaddingScaleHeuristic * floatingPlaceholderHeight;
-      break;
     case TextFieldStyleOutline:
       floatingPlaceholderMinY = 0 - (0.5 * floatingPlaceholderHeight);
       break;
+    case TextFieldStyleNone:
+    case TextFieldStyleFilled:
     default:
-      floatingPlaceholderMinY = kTopMargin;
+      floatingPlaceholderMinY =
+          filledPlaceholderTopPaddingScaleHeuristic * floatingPlaceholderHeight;
       break;
   }
   return floatingPlaceholderMinY;
