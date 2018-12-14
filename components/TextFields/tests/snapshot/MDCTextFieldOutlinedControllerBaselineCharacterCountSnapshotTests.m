@@ -35,14 +35,12 @@
 
 - (void)setUp {
   [super setUp];
+
   // Uncomment below to recreate the golden images for all test methods. Add it to a test method to
   // update only that golden image.
   //  self.recordMode = YES;
 
   self.textField.clearButtonMode = UITextFieldViewModeAlways;
-
-  self.textFieldController =
-      [[MDCTextInputControllerOutlined alloc] initWithTextInput:self.textField];
   self.textFieldController.characterCountViewMode = UITextFieldViewModeAlways;
   self.textFieldController.characterCountMax = 50;
 
