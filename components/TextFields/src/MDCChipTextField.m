@@ -19,16 +19,22 @@
  in progress:
  * scroll labels/chips view to the left, when not enough room for typing
  todo:
- * change labels to buttons (verifying interactivity of individual chips)
- * "enter" to create a chip - usability issue
- * scrolling through label/chips.
+ * "enter" to create a chip
+ * usability issue with autocorrect
+ * implementation issue with resign/become first responder
+ * scrolling through chips.
  * scroll the overlay view to correct position on focus and un-focus events (textFieldDidBeginEditing: ?)
  * RTL Support
  * tap to select a chip + another tap to remove it - if in the middle of the list. required?
+ * drag&drop support eventually
  * MDCTextField placeholder stays floating after adding chips, removing them, then resigning
+ * Adding just white space shouldn't create a chip
+ * Should we use subclass or extension?
  done:
- * backspace to select and then delete an entire label/chip
- * convert text to label when pressing enter
+ * backspace to select and then delete an entire chip
+ * convert text to chip when pressing enter
+ future work:
+ * drag&drop support eventually
  */
 
 @interface MDCChipTextField ()
