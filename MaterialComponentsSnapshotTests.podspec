@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '8.0'
   s.requires_arc = true
   s.dependency 'MaterialComponents'
-  s.dependency 'MaterialComponentsAlpha'
+  s.dependency 'MaterialComponentsBeta'
 
   # Cards
 
