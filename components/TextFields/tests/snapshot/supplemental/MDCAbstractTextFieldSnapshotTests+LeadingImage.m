@@ -21,11 +21,10 @@
 
 - (void)addLeadingImage {
   XCTAssertTrue([self.textField conformsToProtocol:@protocol(MDCLeadingViewTextInput)]);
-  if(![self.textField conformsToProtocol:@protocol(MDCLeadingViewTextInput)]) {
+  if (![self.textField conformsToProtocol:@protocol(MDCLeadingViewTextInput)]) {
     return;
   }
-  NSBundle *imageBundle =
-      [NSBundle bundleForClass:[MDCAbstractTextFieldSnapshotTests class]];
+  NSBundle *imageBundle = [NSBundle bundleForClass:[MDCAbstractTextFieldSnapshotTests class]];
   UIImage *leadingImage = [UIImage imageNamed:@"ic_search"
                                      inBundle:imageBundle
                 compatibleWithTraitCollection:nil];

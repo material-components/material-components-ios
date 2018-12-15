@@ -17,7 +17,8 @@
 #import "MDCTextFieldSnapshotTestsStrings.h"
 #import "MaterialTextFields.h"
 
-@interface MDCTextFieldFilledFloatingControllerLeadingImageSnapshotTests : MDCAbstractTextFieldSnapshotTests
+@interface MDCTextFieldFilledFloatingControllerLeadingImageSnapshotTests
+    : MDCAbstractTextFieldSnapshotTests
 @property(nonatomic, strong) MDCTextInputControllerFilled *textFieldController;
 @end
 

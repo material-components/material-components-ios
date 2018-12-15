@@ -34,7 +34,7 @@
   self.textField.clearButtonMode = UITextFieldViewModeAlways;
 
   [self addLeadingImage];
-  
+
   self.textFieldController =
       [[MDCTextInputControllerOutlined alloc] initWithTextInput:self.textField];
   MDCSemanticColorScheme *colorScheme =

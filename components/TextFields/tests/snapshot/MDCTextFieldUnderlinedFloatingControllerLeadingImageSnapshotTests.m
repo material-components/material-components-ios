@@ -33,7 +33,7 @@
   self.textField.clearButtonMode = UITextFieldViewModeAlways;
 
   [self addLeadingImage];
-  
+
   MDCTextInputControllerUnderline *underlineController =
       [[MDCTextInputControllerUnderline alloc] initWithTextInput:self.textField];
   underlineController.floatingEnabled = YES;
