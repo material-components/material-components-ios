@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import "MDCAbstractTextFieldSnapshotTests+LeadingImage.h"
 #import "MDCAbstractTextFieldSnapshotTests.h"
 #import "MDCTextFieldSnapshotTestsStrings.h"
 #import "MaterialTextFields.h"
@@ -30,15 +31,7 @@
 
   self.textField.clearButtonMode = UITextFieldViewModeAlways;
 
-  NSBundle *imageBundle = [NSBundle bundleForClass:
-                           [MDCTextFieldFullWidthControllerLeadingImageSnapshotTests class]];
-  UIImage *leadingImage = [UIImage imageNamed:@"ic_search"
-                                     inBundle:imageBundle
-                compatibleWithTraitCollection:nil];
-  leadingImage = [leadingImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  UIView<MDCLeadingViewTextInput> *textField = (UIView<MDCLeadingViewTextInput> *)self.textField;
-  textField.leadingViewMode = UITextFieldViewModeAlways;
-  textField.leadingView = [[UIImageView alloc] initWithImage:leadingImage];
+  [self addLeadingImage];
 
   self.textField.clearButtonMode = UITextFieldViewModeAlways;
   self.textFieldController =
