@@ -16,7 +16,7 @@
 
 #import "MDCBottomNavigationBarController.h"
 
-CGFloat const kDefaultExpectationTimeout = 15.f;
+static CGFloat const kDefaultExpectationTimeout = 15;
 
 @interface MDCBottomNavigationControllerTests
     : XCTestCase <MDCBottomNavigationBarControllerDelegate>
@@ -40,7 +40,7 @@ CGFloat const kDefaultExpectationTimeout = 15.f;
 /**
  * The return value a delegate method should return with.
  */
-@property(nonatomic, strong, nullable) id returnValue;
+@property(nonatomic, strong, nullable) id delegateReturnValue;
 
 @end
 
@@ -48,164 +48,191 @@ CGFloat const kDefaultExpectationTimeout = 15.f;
 
 - (void)setUp {
   [super setUp];
-  _bottomNavigationBarController = [[MDCBottomNavigationBarController alloc] init];
+  self.bottomNavigationBarController = [[MDCBottomNavigationBarController alloc] init];
+}
+
+- (void)tearDown {
+  [super tearDown];
+
+  _bottomNavigationBarController = nil;
 }
 
 - (void)testSetViewControllers {
-  // Setup items.
+  // Given
   UITabBarItem *tabBarItem1 = [[UITabBarItem alloc] initWithTitle:@"Title1" image:nil tag:0];
   UITabBarItem *tabBarItem2 = [[UITabBarItem alloc] initWithTitle:@"Title2" image:nil tag:1];
   NSArray<UITabBarItem *> *tabBarItems = @[ tabBarItem1, tabBarItem2 ];
 
-  // Setup view controllers
   UIViewController *viewController1 = [[UIViewController alloc] init];
   UIViewController *viewController2 = [[UIViewController alloc] init];
 
-  // Assign the tab bar items to the view controllers
   viewController1.tabBarItem = tabBarItem1;
   viewController2.tabBarItem = tabBarItem2;
 
-  _bottomNavigationBarController.viewControllers = @[ viewController1, viewController2 ];
+  // When
+  self.bottomNavigationBarController.viewControllers = @[ viewController1, viewController2 ];
 
-  XCTAssert([tabBarItems count] == [_bottomNavigationBarController.navigationBar.items count],
-            @"The number of items in the bottom navigation bar's items property does not match the "
-            @"number of items set in the test");
-  int count = (int)[tabBarItems count];
+  // Then
+  XCTAssertEqual(
+      self.bottomNavigationBarController.navigationBar.items.count, tabBarItems.count,
+      @"The number of items in the bottom navigation bar's items property does not match the "
+      @"number of items set in the test");
 
   // Check each item in the navigation bar.
+  int count = (int)[tabBarItems count];
   for (int i = 0; i < count; i++) {
     UITabBarItem *expectedItem = [tabBarItems objectAtIndex:i];
-    UITabBarItem *item = [_bottomNavigationBarController.navigationBar.items objectAtIndex:i];
-    XCTAssert([expectedItem.title isEqualToString:item.title] && expectedItem.tag == item.tag,
-              @"The item at index %i of the bottom navigation bar's items property is not the "
-              @"expected item",
-              i);
+    UITabBarItem *item = [self.bottomNavigationBarController.navigationBar.items objectAtIndex:i];
+    XCTAssertEqualObjects(expectedItem.title, item.title, @"Unexpected title value at index: %i",
+                          i);
+    XCTAssertEqual(expectedItem.tag, item.tag, @"Unexpected tag value at index: %i", i);
   }
 }
 
 - (void)testFreshSelectionBySettingSelectedIndex {
-  _bottomNavigationBarController.viewControllers = [self createArrayOfTwoFakeViewControllers];
+  // Given
+  self.bottomNavigationBarController.viewControllers = [self createArrayOfTwoFakeViewControllers];
 
+  // When
   NSUInteger index = 0;
-  _bottomNavigationBarController.selectedIndex = index;
+  self.bottomNavigationBarController.selectedIndex = index;
+
+  // Then
   [self verifyStateOfSelectedIndex:index];
 }
 
 - (void)testItemToItemSelectionBySettingSelectedIndex {
-  _bottomNavigationBarController.viewControllers = [self createArrayOfTwoFakeViewControllers];
+  // Given
+  self.bottomNavigationBarController.viewControllers = [self createArrayOfTwoFakeViewControllers];
 
-  // Set selection to initial view controller.
   NSUInteger index = 0;
-  _bottomNavigationBarController.selectedIndex = index;
+  self.bottomNavigationBarController.selectedIndex = index;
 
-  // Increment index and set selection to new index
+  // When
   index++;
-  _bottomNavigationBarController.selectedIndex = index;
+  self.bottomNavigationBarController.selectedIndex = index;
 
+  // Then
   [self verifyStateOfSelectedIndex:index];
 }
 
 - (void)testDeselectBySettingSelectedIndex {
-  _bottomNavigationBarController.viewControllers = [self createArrayOfTwoFakeViewControllers];
-  _bottomNavigationBarController.selectedIndex = 0;
-  _bottomNavigationBarController.selectedIndex = NSNotFound;
+  // Given
+  self.bottomNavigationBarController.viewControllers = [self createArrayOfTwoFakeViewControllers];
+  self.bottomNavigationBarController.selectedIndex = 0;
 
+  // When
+  self.bottomNavigationBarController.selectedIndex = NSNotFound;
+
+  // Then
   [self verifyDeselect];
 }
 
 - (void)testFreshSelectionBySettingSelectedViewController {
-  _bottomNavigationBarController.viewControllers = [self createArrayOfTwoFakeViewControllers];
+  // Given
+  self.bottomNavigationBarController.viewControllers = [self createArrayOfTwoFakeViewControllers];
 
+  // Then
   NSUInteger index = 0;
   UIViewController *selectedViewController =
-      [_bottomNavigationBarController.viewControllers objectAtIndex:index];
-  _bottomNavigationBarController.selectedViewController = selectedViewController;
+      [self.bottomNavigationBarController.viewControllers objectAtIndex:index];
+  self.bottomNavigationBarController.selectedViewController = selectedViewController;
 
+  // Then
   [self verifyStateOfSelectedIndex:index];
 }
 
 - (void)testItemToItemSelectionBySettingSelectedViewController {
-  _bottomNavigationBarController.viewControllers = [self createArrayOfTwoFakeViewControllers];
+  // Given
+  self.bottomNavigationBarController.viewControllers = [self createArrayOfTwoFakeViewControllers];
 
-  // Select the initial view controller
   NSUInteger index = 0;
   UIViewController *selectedVC =
-      [_bottomNavigationBarController.viewControllers objectAtIndex:index];
-  _bottomNavigationBarController.selectedViewController = selectedVC;
+      [self.bottomNavigationBarController.viewControllers objectAtIndex:index];
+  self.bottomNavigationBarController.selectedViewController = selectedVC;
 
-  // Set the view controller to the next item.
+  // When
   index++;
-  selectedVC = [_bottomNavigationBarController.viewControllers objectAtIndex:index];
-  _bottomNavigationBarController.selectedViewController = selectedVC;
+  selectedVC = [self.bottomNavigationBarController.viewControllers objectAtIndex:index];
+  self.bottomNavigationBarController.selectedViewController = selectedVC;
 
+  // Then
   [self verifyStateOfSelectedIndex:index];
 }
 
 - (void)testDeselectBySettingSelectedViewController {
-  _bottomNavigationBarController.viewControllers = [self createArrayOfTwoFakeViewControllers];
-  UIViewController *firstSelect = [_bottomNavigationBarController.viewControllers objectAtIndex:0];
-  _bottomNavigationBarController.selectedViewController = firstSelect;
-  _bottomNavigationBarController.selectedViewController = nil;
+  // Given
+  self.bottomNavigationBarController.viewControllers = [self createArrayOfTwoFakeViewControllers];
+  UIViewController *firstSelect =
+      [self.bottomNavigationBarController.viewControllers objectAtIndex:0];
+  self.bottomNavigationBarController.selectedViewController = firstSelect;
 
+  // When
+  self.bottomNavigationBarController.selectedViewController = nil;
+
+  // Then
   [self verifyDeselect];
 }
 
 - (void)testOutOfBoundsSelectionBySettingSelectedIndex {
-  _bottomNavigationBarController.viewControllers = [self createArrayOfTwoFakeViewControllers];
-  // Initial selection
-  _bottomNavigationBarController.selectedIndex = 0;
+  // Given
+  self.bottomNavigationBarController.viewControllers = [self createArrayOfTwoFakeViewControllers];
+  self.bottomNavigationBarController.selectedIndex = 0;
 
+  // When/Then
   XCTAssertThrowsSpecificNamed(
-      [_bottomNavigationBarController setSelectedIndex:100], NSException,
+      [self.bottomNavigationBarController setSelectedIndex:100], NSException,
       NSInternalInconsistencyException,
       @"Expected NSAssert to fire exception when setting an index out of bounds");
 }
 
 - (void)testOutOfBoundsSelectionBySettingSelectedViewController {
-  _bottomNavigationBarController.viewControllers = [self createArrayOfTwoFakeViewControllers];
-  // Initial selection
-  _bottomNavigationBarController.selectedViewController =
-      [_bottomNavigationBarController.viewControllers objectAtIndex:0];
+  // Given
+  self.bottomNavigationBarController.viewControllers = [self createArrayOfTwoFakeViewControllers];
+  self.bottomNavigationBarController.selectedViewController =
+      [self.bottomNavigationBarController.viewControllers objectAtIndex:0];
 
+  // When/Then
   UIViewController *newViewController = [[UIViewController alloc] init];
-
   XCTAssertThrowsSpecificNamed(
-      [_bottomNavigationBarController setSelectedViewController:newViewController], NSException,
+      [self.bottomNavigationBarController setSelectedViewController:newViewController], NSException,
       NSInternalInconsistencyException,
       @"Expected NSAssert to fire an exception when setting the bottom bar's selected view "
       @"controller to one it does not own");
 }
 
 - (void)testDidSelectItemDelegateMethod {
-  // Setup the navigation controller
-  _bottomNavigationBarController.delegate = self;
-  _bottomNavigationBarController.viewControllers = [self createArrayOfTwoFakeViewControllers];
+  // Given
+  self.bottomNavigationBarController.delegate = self;
+  self.bottomNavigationBarController.viewControllers = [self createArrayOfTwoFakeViewControllers];
 
   // Create the expectation
   NSString *signature = NSStringFromSelector(@selector(bottomNavigationBarController:
                                                              didSelectViewController:));
-  _delegateExpecation = [self expectationWithDescription:signature];
+  self.delegateExpecation = [self expectationWithDescription:signature];
 
   // The index of the view controller we want to select.
   NSUInteger index = 0;
   UIViewController *selectedViewController =
-      [_bottomNavigationBarController.viewControllers objectAtIndex:index];
+      [self.bottomNavigationBarController.viewControllers objectAtIndex:index];
 
   // The corresponding tab bar item we want to select.
   UITabBarItem *selectedItem =
-      [_bottomNavigationBarController.navigationBar.items objectAtIndex:index];
+      [self.bottomNavigationBarController.navigationBar.items objectAtIndex:index];
 
   // The arguments we are expecting from the delegate.
-  _expectedArguments = @[ _bottomNavigationBarController, selectedViewController ];
+  self.expectedArguments = @[ self.bottomNavigationBarController, selectedViewController ];
 
-  // Fake a navigation bar selection call.
-  [_bottomNavigationBarController bottomNavigationBar:_bottomNavigationBarController.navigationBar
-                                        didSelectItem:selectedItem];
+  // When
+  [self.bottomNavigationBarController
+      bottomNavigationBar:self.bottomNavigationBarController.navigationBar
+            didSelectItem:selectedItem];
 
-  XCTAssertEqual(selectedViewController, _bottomNavigationBarController.selectedViewController,
+  // Then
+  XCTAssertEqual(selectedViewController, self.bottomNavigationBarController.selectedViewController,
                  @"Expected the selected view controller of the navigation controller to be equal "
                  @"to the navigation bar's tab bar item's corresponding view controller.");
-  XCTAssertEqual(index, _bottomNavigationBarController.selectedIndex,
+  XCTAssertEqual(index, self.bottomNavigationBarController.selectedIndex,
                  @"Expected the selected index of the navigation controller to be equal to the "
                  @"selected view controller.");
 
@@ -214,33 +241,34 @@ CGFloat const kDefaultExpectationTimeout = 15.f;
 }
 
 - (void)testShouldNotSelectItemDelegateMethod {
-  // Setup the navigation controller.
-  _bottomNavigationBarController.delegate = self;
-  _bottomNavigationBarController.viewControllers = [self createArrayOfTwoFakeViewControllers];
+  // Given
+  self.bottomNavigationBarController.delegate = self;
+  self.bottomNavigationBarController.viewControllers = [self createArrayOfTwoFakeViewControllers];
 
   // Get the selected view controller and items for an index.
   NSUInteger index = 0;
   UIViewController *shouldSelectViewController =
-      [_bottomNavigationBarController.viewControllers objectAtIndex:index];
+      [self.bottomNavigationBarController.viewControllers objectAtIndex:index];
   UITabBarItem *selectedItem =
-      [_bottomNavigationBarController.navigationBar.items objectAtIndex:index];
-  _expectedArguments = @[ _bottomNavigationBarController, shouldSelectViewController ];
-  _returnValue = [NSNumber numberWithBool:NO];
+      [self.bottomNavigationBarController.navigationBar.items objectAtIndex:index];
+  self.expectedArguments = @[ self.bottomNavigationBarController, shouldSelectViewController ];
+  self.delegateReturnValue = [NSNumber numberWithBool:NO];
 
   // Create the expectation.
   NSString *signature = NSStringFromSelector(@selector(bottomNavigationBarController:
                                                           shouldSelectViewController:));
-  _delegateExpecation = [self expectationWithDescription:signature];
+  self.delegateExpecation = [self expectationWithDescription:signature];
 
-  // Call the navigation bar's delegate method.
-  BOOL returnValue = [_bottomNavigationBarController
-      bottomNavigationBar:_bottomNavigationBarController.navigationBar
+  // When
+  BOOL returnValue = [self.bottomNavigationBarController
+      bottomNavigationBar:self.bottomNavigationBarController.navigationBar
          shouldSelectItem:selectedItem];
 
-  // Test the return value.
-  XCTAssertEqual([_returnValue boolValue], returnValue,
+  // Then
+  XCTAssertEqual([self.delegateReturnValue boolValue], returnValue,
                  @"Expected %@ to return with %@.  Received: %@", signature,
-                 [self boolToString:[_returnValue boolValue]], [self boolToString:returnValue]);
+                 [self boolToString:[self.delegateReturnValue boolValue]],
+                 [self boolToString:returnValue]);
 
   // Test that the delegate method was called.
   [self waitForExpectationsWithTimeout:kDefaultExpectationTimeout handler:nil];
@@ -266,9 +294,9 @@ CGFloat const kDefaultExpectationTimeout = 15.f;
                                                           shouldSelectViewController:));
   NSArray *arguments = @[ bottomNavigationBarController, viewController ];
   [self verifyDelegateMethodCall:signature arguments:arguments];
-  [_delegateExpecation fulfill];
+  [self.delegateExpecation fulfill];
 
-  return [_returnValue boolValue];
+  return [self.delegateReturnValue boolValue];
 }
 
 #pragma mark - Helper Methods
@@ -289,21 +317,22 @@ CGFloat const kDefaultExpectationTimeout = 15.f;
  * Verifies the state of the bottom navigation bar controller for the given expected selected index.
  */
 - (void)verifyStateOfSelectedIndex:(NSUInteger)index {
-  XCTAssert(_bottomNavigationBarController.selectedIndex == index,
-            @"Expected bottom navigation bar controller's selected index to be %lu. Received: %li",
-            index, _bottomNavigationBarController.selectedIndex);
+  XCTAssertEqual(
+      self.bottomNavigationBarController.selectedIndex, index,
+      @"Expected bottom navigation bar controller's selected index to be %lu. Received: %li", index,
+      self.bottomNavigationBarController.selectedIndex);
 
   UIViewController *expectedVC =
-      [_bottomNavigationBarController.viewControllers objectAtIndex:index];
-  XCTAssertEqualObjects(expectedVC, _bottomNavigationBarController.selectedViewController,
+      [self.bottomNavigationBarController.viewControllers objectAtIndex:index];
+  XCTAssertEqualObjects(expectedVC, self.bottomNavigationBarController.selectedViewController,
                         @"Expected bottom navigation bar's selected view controller to be equal to "
                         @"the view controller at index: %li",
                         index);
 
   UITabBarItem *expectedItem =
-      [_bottomNavigationBarController.navigationBar.items objectAtIndex:index];
+      [self.bottomNavigationBarController.navigationBar.items objectAtIndex:index];
   XCTAssertEqualObjects(
-      expectedItem, _bottomNavigationBarController.navigationBar.selectedItem,
+      expectedItem, self.bottomNavigationBarController.navigationBar.selectedItem,
       @"Expected bottom navigation bar's selected item to be equal to the item at index: %li",
       index);
 }
@@ -312,11 +341,11 @@ CGFloat const kDefaultExpectationTimeout = 15.f;
  * Verifies that the bottom navigation controller has no view controller selected.
  */
 - (void)verifyDeselect {
-  XCTAssertNil(_bottomNavigationBarController.selectedViewController,
+  XCTAssertNil(self.bottomNavigationBarController.selectedViewController,
                @"Expected bottom navigation bar's selected view controller to be nil on deselect.");
-  XCTAssertNil(_bottomNavigationBarController.navigationBar.selectedItem,
+  XCTAssertNil(self.bottomNavigationBarController.navigationBar.selectedItem,
                @"Expected bottom navigation bar's selected item to be nil on deselect");
-  XCTAssertEqual(_bottomNavigationBarController.selectedIndex, NSNotFound,
+  XCTAssertEqual(self.bottomNavigationBarController.selectedIndex, NSNotFound,
                  @"Expected bottom navigation bar's selected index to be NSNotFound");
 }
 
@@ -325,19 +354,19 @@ CGFloat const kDefaultExpectationTimeout = 15.f;
  * arguments.
  */
 - (void)verifyDelegateMethodCall:(NSString *)signature arguments:(NSArray<id> *)arguments {
-  XCTAssertEqual(arguments.count, _expectedArguments.count,
+  XCTAssertEqual(arguments.count, self.expectedArguments.count,
                  @"The expected arguments and given arguments lengths of the method, %@, are "
                  @"different lengths.",
-                 _delegateExpecation.description);
-  XCTAssert([signature isEqualToString:_delegateExpecation.description],
-            @"Expected %@ method signature, received %@", _delegateExpecation.description,
-            signature);
+                 self.delegateExpecation.description);
+  XCTAssertEqualObjects(self.delegateExpecation.description, signature,
+                        @"Expected %@ method signature, received %@",
+                        self.delegateExpecation.description, signature);
 
   for (NSUInteger i = 0; i < arguments.count; i++) {
-    XCTAssertEqualObjects(arguments[i], _expectedArguments[i],
+    XCTAssertEqualObjects(arguments[i], self.expectedArguments[i],
                           @"The method argument at index %lu did not equal the expected value. "
                           @"Expected: %@ Received: %@",
-                          (unsigned long)i, _expectedArguments[i], arguments[i]);
+                          (unsigned long)i, self.expectedArguments[i], arguments[i]);
   }
 }
 
