@@ -229,10 +229,10 @@ static CGFloat const kDefaultExpectationTimeout = 15;
             didSelectItem:selectedItem];
 
   // Then
-  XCTAssertEqual(selectedViewController, self.bottomNavigationBarController.selectedViewController,
+  XCTAssertEqual(self.bottomNavigationBarController.selectedViewController, selectedViewController,
                  @"Expected the selected view controller of the navigation controller to be equal "
                  @"to the navigation bar's tab bar item's corresponding view controller.");
-  XCTAssertEqual(index, self.bottomNavigationBarController.selectedIndex,
+  XCTAssertEqual(self.bottomNavigationBarController.selectedIndex, index,
                  @"Expected the selected index of the navigation controller to be equal to the "
                  @"selected view controller.");
 
@@ -324,7 +324,7 @@ static CGFloat const kDefaultExpectationTimeout = 15;
 
   UIViewController *expectedVC =
       [self.bottomNavigationBarController.viewControllers objectAtIndex:index];
-  XCTAssertEqualObjects(expectedVC, self.bottomNavigationBarController.selectedViewController,
+  XCTAssertEqualObjects(self.bottomNavigationBarController.selectedViewController, expectedVC,
                         @"Expected bottom navigation bar's selected view controller to be equal to "
                         @"the view controller at index: %li",
                         index);
@@ -332,7 +332,7 @@ static CGFloat const kDefaultExpectationTimeout = 15;
   UITabBarItem *expectedItem =
       [self.bottomNavigationBarController.navigationBar.items objectAtIndex:index];
   XCTAssertEqualObjects(
-      expectedItem, self.bottomNavigationBarController.navigationBar.selectedItem,
+      self.bottomNavigationBarController.navigationBar.selectedItem, expectedItem,
       @"Expected bottom navigation bar's selected item to be equal to the item at index: %li",
       index);
 }
@@ -354,7 +354,7 @@ static CGFloat const kDefaultExpectationTimeout = 15;
  * arguments.
  */
 - (void)verifyDelegateMethodCall:(NSString *)signature arguments:(NSArray<id> *)arguments {
-  XCTAssertEqual(arguments.count, self.expectedArguments.count,
+  XCTAssertEqual(self.expectedArguments.count, arguments.count,
                  @"The expected arguments and given arguments lengths of the method, %@, are "
                  @"different lengths.",
                  self.delegateExpecation.description);
@@ -363,7 +363,7 @@ static CGFloat const kDefaultExpectationTimeout = 15;
                         self.delegateExpecation.description, signature);
 
   for (NSUInteger i = 0; i < arguments.count; i++) {
-    XCTAssertEqualObjects(arguments[i], self.expectedArguments[i],
+    XCTAssertEqualObjects(self.expectedArguments[i], arguments[i],
                           @"The method argument at index %lu did not equal the expected value. "
                           @"Expected: %@ Received: %@",
                           (unsigned long)i, self.expectedArguments[i], arguments[i]);
