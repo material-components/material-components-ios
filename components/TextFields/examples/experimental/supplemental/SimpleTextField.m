@@ -53,12 +53,15 @@
 - (void)assignPropertiesWithColorScheme:(MDCSemanticColorScheme *)colorScheme
                          textFieldState:(TextFieldState)textFieldState {
   UIColor *textColor = colorScheme.onSurfaceColor;
-  UIColor *underlineLabelColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.60];
-  UIColor *placeholderLabelColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.60];
+  UIColor *underlineLabelColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
+  UIColor *placeholderLabelColor =
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
   UIColor *outlineColor = colorScheme.onSurfaceColor;
   UIColor *filledSublayerUnderlineFillColor = colorScheme.onSurfaceColor;
-  UIColor *filledSublayerFillColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.15];
-  UIColor *clearButtonTintColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.20];
+  UIColor *filledSublayerFillColor =
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.15];
+  UIColor *clearButtonTintColor =
+      [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.20];
 
   switch (textFieldState) {
     case TextFieldStateNormal:
@@ -66,7 +69,7 @@
     case TextFieldStateActivated:
       break;
     case TextFieldStateDisabled:
-      placeholderLabelColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:0.10];
+      placeholderLabelColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.10];
       break;
     case TextFieldStateErrored:
       placeholderLabelColor = colorScheme.errorColor;
@@ -532,7 +535,7 @@
 - (CGRect)adjustTextAreaFrame:(CGRect)textAreaFrame
     withParentClassTextAreaFrame:(CGRect)parentClassTextAreaFrame {
   CGFloat systemDefinedHeight = CGRectGetHeight(parentClassTextAreaFrame);
-  CGFloat minY = CGRectGetMidY(textAreaFrame) - (systemDefinedHeight * 0.5);
+  CGFloat minY = CGRectGetMidY(textAreaFrame) - (systemDefinedHeight * (CGFloat)0.5);
   return CGRectMake(CGRectGetMinX(textAreaFrame), minY, CGRectGetWidth(textAreaFrame),
                     systemDefinedHeight);
 }
@@ -823,11 +826,11 @@
     case TextFieldStyleFilled:
     default:
       floatingPlaceholderFontSize =
-          round((double)(font.pointSize * filledFloatingPlaceholderScale));
+          (CGFloat)round((double)(font.pointSize * filledFloatingPlaceholderScale));
       break;
     case TextFieldStyleOutline:
       floatingPlaceholderFontSize =
-          round((double)(font.pointSize * outlinedFloatingPlaceholderScale));
+          (CGFloat)round((double)(font.pointSize * outlinedFloatingPlaceholderScale));
       break;
   }
   return [font fontWithSize:floatingPlaceholderFontSize];

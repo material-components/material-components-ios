@@ -224,7 +224,8 @@
   }
 
   CGFloat textAreaWidth = textAreaMaxX - textAreaMinX;
-  CGFloat textAreaMinY = round((double)(topRowSubviewCenterY - (textAreaHeight * 0.5)));
+  CGFloat textAreaMinY =
+      (CGFloat)round((double)(topRowSubviewCenterY - (textAreaHeight * (CGFloat)0.5)));
   CGFloat textAreaMaxY = textAreaMinY + textAreaHeight;
   CGRect textAreaFrame = CGRectMake(textAreaMinX, textAreaMinY, textAreaWidth, textAreaHeight);
   CGRect leftViewFrame = CGRectMake(leftViewMinX, leftViewMinY, leftViewWidth, leftViewHeight);
@@ -407,7 +408,7 @@
 }
 
 - (CGFloat)minYForSubviewWithHeight:(CGFloat)height centerY:(CGFloat)centerY {
-  return round((double)(centerY - (0.5 * height)));
+  return (CGFloat)round((double)(centerY - ((CGFloat)0.5 * height)));
 }
 
 - (BOOL)shouldAttemptToDisplaySideView:(UIView *)subview
@@ -469,12 +470,12 @@
   if (placeholderCanFloat) {
     CGFloat spaceBetweenPlaceholderAndTextArea = 0;
     CGFloat floatingPlaceholderMaxY = floatingPlaceholderMinY + floatingPlaceholderHeight;
-    CGFloat outlinedTextFieldSpaceHeuristic = floatingPlaceholderHeight * 0.22;
+    CGFloat outlinedTextFieldSpaceHeuristic = floatingPlaceholderHeight * (CGFloat)0.22;
     switch (textFieldStyle) {
       case TextFieldStyleNone:
       case TextFieldStyleFilled:
       default:
-        spaceBetweenPlaceholderAndTextArea = (0.25 * floatingPlaceholderMaxY);
+        spaceBetweenPlaceholderAndTextArea = ((CGFloat)0.25 * floatingPlaceholderMaxY);
         break;
       case TextFieldStyleOutline:
         spaceBetweenPlaceholderAndTextArea =
@@ -483,10 +484,10 @@
     }
     CGFloat lowestAllowableTextAreaMinY =
         floatingPlaceholderMaxY + spaceBetweenPlaceholderAndTextArea;
-    return lowestAllowableTextAreaMinY + (0.5 * textAreaHeight);
+    return lowestAllowableTextAreaMinY + ((CGFloat)0.5 * textAreaHeight);
   } else {
     CGFloat lowestAllowableTextAreaMinY = kTopRowBottomRowDividerVerticalPadding;
-    return lowestAllowableTextAreaMinY + (0.5 * textAreaHeight);
+    return lowestAllowableTextAreaMinY + ((CGFloat)0.5 * textAreaHeight);
   }
 }
 
@@ -499,7 +500,7 @@
   CGFloat floatingPlaceholderMinY = 0;
   switch (textFieldStyle) {
     case TextFieldStyleOutline:
-      floatingPlaceholderMinY = 0 - (0.5 * floatingPlaceholderHeight);
+      floatingPlaceholderMinY = (CGFloat)0 - ((CGFloat)0.5 * floatingPlaceholderHeight);
       break;
     case TextFieldStyleNone:
     case TextFieldStyleFilled:
@@ -519,7 +520,7 @@
              lowestAllowableTextAreaCenterY:(CGFloat)lowestAllowableTextAreaCenterY {
   CGFloat sideViewMaxHeight =
       MAX(CGRectGetHeight(leftView.bounds), CGRectGetHeight(rightView.bounds));
-  CGFloat lowestAllowableSideViewCenterY = kTopMargin + (0.5 * sideViewMaxHeight);
+  CGFloat lowestAllowableSideViewCenterY = kTopMargin + ((CGFloat)0.5 * sideViewMaxHeight);
   CGFloat sharedCenterY = MAX(lowestAllowableTextAreaCenterY, lowestAllowableSideViewCenterY);
   return sharedCenterY;
 }
@@ -594,7 +595,7 @@
       size = [self placeholderSizeWithPlaceholder:placeholder
                               maxPlaceholderWidth:maxPlaceholderWidth
                                              font:font];
-      originY = textAreaMidY - (0.5 * size.height);
+      originY = textAreaMidY - ((CGFloat)0.5 * size.height);
       if (isRTL) {
         originX = textAreaMaxX - size.width;
       } else {
@@ -609,7 +610,7 @@
 }
 
 - (CGFloat)textHeightWithFont:(UIFont *)font {
-  return ceil((double)font.lineHeight);
+  return (CGFloat)ceil((double)font.lineHeight);
 }
 
 - (CGFloat)calculatedHeight {

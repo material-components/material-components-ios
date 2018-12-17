@@ -93,7 +93,7 @@
 /**
  Setting this property determines the typography and coloring of the text field.
  */
-@property(strong, nonatomic) MDCContainerScheme *containerScheme;
+@property(strong, nonatomic, nullable) MDCContainerScheme *containerScheme;
 
 /**
  This property toggles a state (similar to @c isHighlighted, @c isEnabled, @c isSelected, etc.) that

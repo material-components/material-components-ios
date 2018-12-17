@@ -15,22 +15,22 @@
 #ifndef SimpleTextFieldLayoutUtils_h
 #define SimpleTextFieldLayoutUtils_h
 
-static const CGFloat kFloatingPlaceholderAnimationDuration = 0.15;
+static const CGFloat kFloatingPlaceholderAnimationDuration = (CGFloat)0.15;
 
-static const CGFloat kLeadingMargin = 12.0;
-static const CGFloat kTrailingMargin = 12.0;
+static const CGFloat kLeadingMargin = (CGFloat)12.0;
+static const CGFloat kTrailingMargin = (CGFloat)12.0;
 
-static const CGFloat kFloatingPlaceholderOutlineSidePadding = 5.0;
-static const CGFloat kFloatingPlaceholderXOffsetFromTextArea = 3.0;
+static const CGFloat kFloatingPlaceholderOutlineSidePadding = (CGFloat)5.0;
+static const CGFloat kFloatingPlaceholderXOffsetFromTextArea = (CGFloat)3.0;
 
-static const CGFloat kFilledTextFieldTopCornerRadius = 4.0;
-static const CGFloat kOutlinedTextFieldCornerRadius = 4.0;
+static const CGFloat kFilledTextFieldTopCornerRadius = (CGFloat)4.0;
+static const CGFloat kOutlinedTextFieldCornerRadius = (CGFloat)4.0;
 
-static const CGFloat kClearButtonTouchTargetSideLength = 30.0;
-static const CGFloat kClearButtonImageViewSideLength = 18.0;
+static const CGFloat kClearButtonTouchTargetSideLength = (CGFloat)30.0;
+static const CGFloat kClearButtonImageViewSideLength = (CGFloat)18.0;
 
-static const CGFloat kTopMargin = 5.0;
-static const CGFloat kTopRowBottomRowDividerVerticalPadding = 9.0;
+static const CGFloat kTopMargin = (CGFloat)5.0;
+static const CGFloat kTopRowBottomRowDividerVerticalPadding = (CGFloat)9.0;
 
 /**
  TextFieldStyle dictates what type of text field it will be from a cosmetic standpoint. The values
