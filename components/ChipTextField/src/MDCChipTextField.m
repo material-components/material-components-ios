@@ -17,10 +17,10 @@
 
 @interface MDCChipTextField ()
 
-@property(nonatomic, strong) UIView *chipsView;
-@property(nonatomic) CGFloat insetX;
-@property(nonatomic, strong) NSLayoutConstraint *leadingConstraint;
-@property(nonatomic, strong) NSMutableArray<MDCChipView *> *chips;
+@property (nonatomic, strong) UIView *chipsView;
+@property (nonatomic) CGFloat insetX;
+@property (nonatomic, strong) NSLayoutConstraint *leadingConstraint;
+@property (nonatomic, strong) NSMutableArray<MDCChipView *> *chips;
 
 @end
 
@@ -36,8 +36,8 @@
     self.leftView = _chipsView;
 
     [self addTarget:self
-                  action:@selector(chipTextFieldTextDidChange)
-        forControlEvents:UIControlEventEditingChanged];
+             action:@selector(chipTextFieldTextDidChange)
+   forControlEvents:UIControlEventEditingChanged];
 
     _chips = [NSMutableArray array];
   }
