@@ -108,6 +108,7 @@ swift_library(
         ":Cards",
         ":ColorThemer",
         ":ShapeThemer",
+        ":Theming",
     ],
 )
 
