@@ -14,7 +14,7 @@
 
 import UIKit
 import MaterialComponents.MaterialButtons_ButtonThemer
-import MaterialComponents.MaterialCards_CardThemer
+import MaterialComponentsBeta.MaterialCards_Theming
 import MaterialComponentsBeta.MaterialContainerScheme
 import MaterialComponentsBeta.MaterialButtons_Theming
 

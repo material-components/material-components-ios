@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import UIKit
-import MaterialComponents.MaterialCards_CardThemer
 import MaterialComponents.MaterialTypographyScheme
+import MaterialComponentsBeta.MaterialCards_Theming
 
 class CardEditReorderCollectionCell: MDCCardCollectionCell {
 
