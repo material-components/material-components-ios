@@ -29,6 +29,8 @@ class CardsMaterialThemingTests: XCTestCase {
     let scheme = MDCContainerScheme()
     let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
     let shapeScheme = MDCShapeScheme(defaults: .material201809)
+    scheme.colorScheme = colorScheme
+    scheme.shapeScheme = shapeScheme
 
     // When
     card.applyTheme(withScheme: scheme)
@@ -54,12 +56,27 @@ class CardsMaterialThemingTests: XCTestCase {
     XCTAssertTrue(card.isInteractable)
   }
 
+  func testThemedCardWithoutShapeScheme() {
+    // Given
+    let card = MDCCard()
+    let scheme = MDCContainerScheme()
+
+    // When
+    card.applyTheme(withScheme: scheme)
+
+    // Then
+    XCTAssertEqual(card.layer.cornerRadius, 4, accuracy: 0.001)
+    XCTAssertNil(card.shapeGenerator)
+  }
+
   func testOutlinedThemedCard() {
     // Given
     let card = MDCCard()
     let scheme = MDCContainerScheme()
     let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
     let shapeScheme = MDCShapeScheme(defaults: .material201809)
+    scheme.colorScheme = colorScheme
+    scheme.shapeScheme = shapeScheme
 
     // When
     card.applyOutlinedTheme(withScheme: scheme)
@@ -89,12 +106,27 @@ class CardsMaterialThemingTests: XCTestCase {
     XCTAssertEqual(card.shadowElevation(for: .highlighted), ShadowElevation(rawValue: 4))
   }
 
+  func testOutlinedThemedCardWithoutShapeScheme() {
+    // Given
+    let card = MDCCard()
+    let scheme = MDCContainerScheme()
+
+    // When
+    card.applyOutlinedTheme(withScheme: scheme)
+
+    // Then
+    XCTAssertEqual(card.layer.cornerRadius, 4, accuracy: 0.001)
+    XCTAssertNil(card.shapeGenerator)
+  }
+
   func testThemedCardCell() {
     // Given
     let cardCell = MDCCardCollectionCell()
     let scheme = MDCContainerScheme()
     let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
     let shapeScheme = MDCShapeScheme(defaults: .material201809)
+    scheme.colorScheme = colorScheme
+    scheme.shapeScheme = shapeScheme
 
     // When
     cardCell.applyTheme(withScheme: scheme)
@@ -121,12 +153,27 @@ class CardsMaterialThemingTests: XCTestCase {
     XCTAssertTrue(cardCell.isInteractable)
   }
 
+  func testThemedCardCellWithoutShapeScheme() {
+    // Given
+    let cardCell = MDCCardCollectionCell()
+    let scheme = MDCContainerScheme()
+
+    // When
+    cardCell.applyTheme(withScheme: scheme)
+
+    // Then
+    XCTAssertEqual(cardCell.layer.cornerRadius, 4, accuracy: 0.001)
+    XCTAssertNil(cardCell.shapeGenerator)
+  }
+
   func testOutlinedThemedCardCell() {
     // Given
     let cardCell = MDCCardCollectionCell()
     let scheme = MDCContainerScheme()
     let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
     let shapeScheme = MDCShapeScheme(defaults: .material201809)
+    scheme.colorScheme = colorScheme
+    scheme.shapeScheme = shapeScheme
 
     // When
     cardCell.applyOutlinedTheme(withScheme: scheme)
@@ -154,5 +201,18 @@ class CardsMaterialThemingTests: XCTestCase {
     XCTAssertEqual(cardCell.borderWidth(for: .highlighted), 1, accuracy: 0.001)
     XCTAssertEqual(cardCell.shadowElevation(for: .highlighted), ShadowElevation(rawValue: 4))
     XCTAssertEqual(cardCell.shadowElevation(for: .selected), ShadowElevation(rawValue: 4))
+  }
+
+  func testOutlinedThemedCardCellWithoutShapeScheme() {
+    // Given
+    let cardCell = MDCCardCollectionCell()
+    let scheme = MDCContainerScheme()
+
+    // When
+    cardCell.applyOutlinedTheme(withScheme: scheme)
+
+    // Then
+    XCTAssertEqual(cardCell.layer.cornerRadius, 4, accuracy: 0.001)
+    XCTAssertNil(cardCell.shapeGenerator)
   }
 }

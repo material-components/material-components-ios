@@ -34,14 +34,15 @@ static const CGFloat kBorderWidth = 1;
   [self applyThemeWithColorScheme:colorScheme];
 
   id<MDCShapeScheming> shapeScheme = scheme.shapeScheme;
-  if (!shapeScheme) {
-    shapeScheme = [[MDCShapeScheme alloc] initWithDefaults:MDCShapeSchemeDefaultsMaterial201809];
+  if (shapeScheme) {
+    [self applyThemeWithShapeScheme:shapeScheme];
+  } else {
+    self.layer.cornerRadius = (CGFloat)4;
   }
-  [self applyThemeWithShapeScheme:shapeScheme];
 
   [self setShadowElevation:kNormalElevation forState:UIControlStateNormal];
   [self setShadowElevation:kHighlightedElevation forState:UIControlStateHighlighted];
-  self.interactable = YES;
+  self.interactable = YES; // To achieve baseline themed, the card should be interactable.
 }
 
 - (void)applyThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
@@ -63,10 +64,11 @@ static const CGFloat kBorderWidth = 1;
   [self applyOutlinedThemeWithColorScheme:colorScheme];
 
   id<MDCShapeScheming> shapeScheme = scheme.shapeScheme;
-  if (!shapeScheme) {
-    shapeScheme = [[MDCShapeScheme alloc] initWithDefaults:MDCShapeSchemeDefaultsMaterial201809];
+  if (shapeScheme) {
+    [self applyThemeWithShapeScheme:shapeScheme];
+  } else {
+    self.layer.cornerRadius = (CGFloat)4;
   }
-  [self applyThemeWithShapeScheme:shapeScheme];
 
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
                                  UIControlStateHighlighted | UIControlStateDisabled;
