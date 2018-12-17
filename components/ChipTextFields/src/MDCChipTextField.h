@@ -17,8 +17,8 @@
 /*
  MDCChipTextField is a sublcass of MDCTextField which is a subclass of UITextField.
  MDCChipTextField adds chip support to MDCTextField, including adding and removing chips
-    with default layout and scroll behavior, as specified by the [Material Guidelines] (https://material.io/design/components/chips.html#input-chips).
- Adding chips:
+    and default layout and scrolling support, as specified by the
+    [Material Guidelines](https://material.io/design/components/chips.html#input-chips).
 */
 @interface MDCChipTextField : MDCTextField
 
@@ -37,7 +37,8 @@
     replacementString string: String) -> Bool {
 
     if string == "\n" {
-        if let trimmedText = textField.text?.trimmingCharacters(in: .whitespaces), trimmedText.count > 0 {
+        if let trimmedText = textField.text?.trimmingCharacters(in: .whitespaces), trimmedText.count
+ > 0 {
             // add a chip with the current text (alternatively present list of options based on
             //  the current text).
             appendChip(text: trimmedText)
@@ -46,7 +47,6 @@
     }
     return true
  }
-
 
  @param text The string to display in the chip.
  */

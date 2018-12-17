@@ -17,10 +17,10 @@
 
 @interface MDCChipTextField ()
 
-@property (nonatomic, strong) UIView *chipsView;
-@property (nonatomic) CGFloat insetX;
-@property (nonatomic, strong) NSLayoutConstraint *leadingConstraint;
-@property (nonatomic, strong) NSMutableArray<MDCChipView *> *chips;
+@property(nonatomic, strong) UIView *chipsView;
+@property(nonatomic) CGFloat insetX;
+@property(nonatomic, strong) NSLayoutConstraint *leadingConstraint;
+@property(nonatomic, strong) NSMutableArray<MDCChipView *> *chips;
 
 @end
 
@@ -36,8 +36,8 @@
     self.leftView = _chipsView;
 
     [self addTarget:self
-             action:@selector(chipTextFieldTextDidChange)
-   forControlEvents:UIControlEventEditingChanged];
+                  action:@selector(chipTextFieldTextDidChange)
+        forControlEvents:UIControlEventEditingChanged];
 
     _chips = [NSMutableArray array];
   }
@@ -53,16 +53,40 @@
 
   // Constraints
   [self.chipsView addConstraints:@[
-     [NSLayoutConstraint constraintWithItem:self.chipsView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:chip attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0],
-     [NSLayoutConstraint constraintWithItem:self.chipsView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:chip attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]
-     ]];
+    [NSLayoutConstraint constraintWithItem:self.chipsView
+                                 attribute:NSLayoutAttributeTop
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:chip
+                                 attribute:NSLayoutAttributeTop
+                                multiplier:1.0
+                                  constant:0.0],
+    [NSLayoutConstraint constraintWithItem:self.chipsView
+                                 attribute:NSLayoutAttributeBottom
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:chip
+                                 attribute:NSLayoutAttributeBottom
+                                multiplier:1.0
+                                  constant:0.0]
+  ]];
 
   MDCChipView *lastChip = [self.chips lastObject];
   if (lastChip == nil) {
-    self.leadingConstraint = [NSLayoutConstraint constraintWithItem:self.chipsView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:chip attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0];
+    self.leadingConstraint = [NSLayoutConstraint constraintWithItem:self.chipsView
+                                                          attribute:NSLayoutAttributeLeading
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:chip
+                                                          attribute:NSLayoutAttributeLeading
+                                                         multiplier:1.0
+                                                           constant:0];
     [self.chipsView addConstraint:self.leadingConstraint];
   } else {
-    [self.chipsView addConstraint:[NSLayoutConstraint constraintWithItem:lastChip attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:chip attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0]];
+    [self.chipsView addConstraint:[NSLayoutConstraint constraintWithItem:lastChip
+                                                               attribute:NSLayoutAttributeTrailing
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:chip
+                                                               attribute:NSLayoutAttributeLeading
+                                                              multiplier:1.0
+                                                                constant:0]];
   }
 
   // recalculate the layout to get a correct chip frame values
@@ -81,7 +105,7 @@
 - (void)setupEditingRect {
   CGRect textRect = [self textRectForBounds:self.bounds];
   UITextRange *textRange = [self textRangeFromPosition:self.beginningOfDocument
-                                              toPosition:self.endOfDocument];
+                                            toPosition:self.endOfDocument];
   CGRect inputRect = [self firstRectForRange:textRange];
 
   CGFloat space = textRect.size.width - inputRect.size.width;
@@ -161,7 +185,7 @@
   self.insetX = CGRectGetMaxX(lastChip.frame) + 10;
 
   CGFloat textFieldWidth = CGRectGetWidth([self textRectForBounds:self.bounds]);
-  if (self.leadingConstraint.constant > 0 &&  textFieldWidth > 0 ) {
+  if (self.leadingConstraint.constant > 0 && textFieldWidth > 0) {
     self.insetX += textFieldWidth;
     self.leadingConstraint.constant -= textFieldWidth;
   }
