@@ -15,27 +15,6 @@
 #import "MDCChipTextField.h"
 #import "MaterialChips.h"
 
-/*
- in progress:
- * scroll labels/chips view to the left, when not enough room for typing
- todo:
- * "enter" to create a chip - usability issue with autocorrect
- * scrolling through chips.
-    * scroll the overlay view to correct position on focus and un-focus events (textFieldDidBeginEditing: ?)
- * RTL Support
- * tap to select a chip + another tap to remove it - if in the middle of the list. required?
- * drag&drop support eventually
- * Should we use subclass or extension?
- done:
- * backspace to select and then delete an entire chip
- * convert text to chip when pressing enter
- * Adding just white space shouldn't create a chip
- * "enter" to create a chip - implementation issue with resign/become first responder
- * MDCTextField placeholder stays floating after adding chips, removing them, then resigning
- future work:
- * drag&drop support eventually
- */
-
 @interface MDCChipTextField ()
 
 @property (nonatomic, strong) UIView *chipsView;
@@ -115,7 +94,6 @@
 #pragma mark - UITextField overrides
 
 - (BOOL)shouldChangeTextInRange:(UITextRange *)range replacementText:(NSString *)text {
-  NSLog(@"should change");
   return [super shouldChangeTextInRange:range replacementText:text];
 }
 
@@ -138,21 +116,18 @@
 - (CGRect)editingRectForBounds:(CGRect)bounds {
   CGRect editingRect = [super editingRectForBounds:bounds];
   editingRect.origin.x = MAX(self.insetX, editingRect.origin.x);
-  // editingRect.origin.x = self.insetX;
   return editingRect;
 }
 
 - (CGRect)leftViewRectForBounds:(CGRect)bounds {
   CGRect leftViewRect = [super leftViewRectForBounds:bounds];
   leftViewRect.size.width = MAX(self.insetX, leftViewRect.size.width);
-  // leftViewRect.size.width = self.insetX;
   return leftViewRect;
 }
 
 - (CGRect)rightViewRectForBounds:(CGRect)bounds {
   CGRect viewRect = [super rightViewRectForBounds:bounds];
   viewRect.size.width = MAX(self.insetX, viewRect.size.width);
-  //viewRect.size.width = self.insetX;
   return viewRect;
 }
 

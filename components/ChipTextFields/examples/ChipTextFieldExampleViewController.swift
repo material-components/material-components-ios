@@ -26,7 +26,7 @@ class ChipTextFieldExampleViewController: UIViewController {
     chipInputController = MDCTextInputControllerOutlined(textInput: chipTextField)
     chipInputController.placeholderText = "With Chips"
     inputController = MDCTextInputControllerOutlined(textInput: textField)
-    inputController.placeholderText = "Regular"
+    inputController.placeholderText = "Regular MDCTextField"
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
 
@@ -107,7 +107,7 @@ extension ChipTextFieldExampleViewController: UITextFieldDelegate {
 
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     if let chipText = textField.text?.trimmingCharacters(in: .whitespacesAndNewlines), chipText.count > 0 {
-      chipTextField.appendChip(withText: chipText)
+      chipTextField.appendChip(text: chipText)
       chipTextField.text = ""
     }
     return true
@@ -118,7 +118,7 @@ extension ChipTextFieldExampleViewController {
 
   class func catalogMetadata() -> [String: Any] {
     return [
-      "breadcrumbs": ["Action Sheet", "A Chip Text Field"],
+      "breadcrumbs": ["Chip Text Field", "A Chip Text Field"],
       "primaryDemo": false,
       "presentable": false,
     ]
