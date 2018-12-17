@@ -3,9 +3,15 @@ experimental_sources = [
   'components/*/examples/experimental/*.{h,m,swift}',
 ]
 
+experimental_headers = [
+  'components/*/examples/experimental/supplemental/*.h',
+  'components/*/examples/experimental/*.h',
+]
+
 experimental_resources = [
   'components/*/examples/experimental/resources/*'
 ]
+
 
 Pod::Spec.new do |s|
   s.name         = "MaterialComponentsExamples"
@@ -23,5 +29,5 @@ Pod::Spec.new do |s|
   s.resources = experimental_resources + ['components/*/examples/resources/*', 'components/private/*/examples/resources/*', 'components/schemes/*/examples/resources/*']
   s.dependency 'MaterialComponents'
   s.dependency 'MaterialComponentsBeta'
-  s.public_header_files = 'components/*/examples/*.h', 'components/*/examples/supplemental/*.h', 'components/private/*/examples/*.h', 'components/schemes/*/examples/*.h'
+  s.public_header_files = experimental_headers + ['components/*/examples/*.h', 'components/*/examples/supplemental/*.h', 'components/private/*/examples/*.h', 'components/schemes/*/examples/*.h']
 end
