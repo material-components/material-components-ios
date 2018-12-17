@@ -44,7 +44,7 @@ static const CGFloat kBorderWidth = 1;
   [self setShadowElevation:kNormalElevation forState:MDCCardCellStateNormal];
   [self setShadowElevation:kHighlightedElevation forState:MDCCardCellStateHighlighted];
   [self setShadowElevation:kSelectedElevation forState:MDCCardCellStateSelected];
-  self.interactable = YES; // To achieve baseline themed, the card should be interactable.
+  self.interactable = YES;  // To achieve baseline themed, the card should be interactable.
 }
 
 - (void)applyThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {

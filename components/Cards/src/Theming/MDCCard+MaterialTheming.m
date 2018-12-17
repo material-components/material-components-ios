@@ -42,7 +42,7 @@ static const CGFloat kBorderWidth = 1;
 
   [self setShadowElevation:kNormalElevation forState:UIControlStateNormal];
   [self setShadowElevation:kHighlightedElevation forState:UIControlStateHighlighted];
-  self.interactable = YES; // To achieve baseline themed, the card should be interactable.
+  self.interactable = YES;  // To achieve baseline themed, the card should be interactable.
 }
 
 - (void)applyThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
