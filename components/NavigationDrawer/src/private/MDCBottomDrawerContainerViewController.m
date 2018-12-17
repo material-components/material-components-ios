@@ -494,6 +494,11 @@ static UIColor *DrawerShadowColor(void) {
   [self updateViewWithContentOffset:self.scrollView.contentOffset];
 }
 
+- (void)viewDidDisappear:(BOOL)animated {
+  [super viewDidDisappear:animated];
+  [self removeScrollViewObserver];
+}
+
 - (void)preferredContentSizeDidChangeForChildContentContainer:(id<UIContentContainer>)container {
   [super preferredContentSizeDidChangeForChildContentContainer:container];
   if ([container isKindOfClass:[UIViewController class]]) {
