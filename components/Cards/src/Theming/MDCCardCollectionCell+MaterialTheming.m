@@ -30,7 +30,7 @@ static const CGFloat kBorderWidth = 1;
   id<MDCColorScheming> colorScheme = scheme.colorScheme;
   if (!colorScheme) {
     colorScheme =
-    [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
   [self applyThemeWithColorScheme:colorScheme];
 
@@ -60,7 +60,7 @@ static const CGFloat kBorderWidth = 1;
   id<MDCColorScheming> colorScheme = scheme.colorScheme;
   if (!colorScheme) {
     colorScheme =
-    [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
   [self applyOutlinedThemeWithColorScheme:colorScheme];
 

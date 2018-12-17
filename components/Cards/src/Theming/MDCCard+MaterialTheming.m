@@ -58,7 +58,7 @@ static const CGFloat kBorderWidth = 1;
   id<MDCColorScheming> colorScheme = scheme.colorScheme;
   if (!colorScheme) {
     colorScheme =
-    [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
   [self applyOutlinedThemeWithColorScheme:colorScheme];
 
@@ -68,9 +68,8 @@ static const CGFloat kBorderWidth = 1;
   }
   [self applyThemeWithShapeScheme:shapeScheme];
 
-  NSUInteger maximumStateValue =
-      UIControlStateNormal | UIControlStateSelected | UIControlStateHighlighted |
-      UIControlStateDisabled;
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+                                 UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     [self setBorderWidth:kBorderWidth forState:state];
   }
