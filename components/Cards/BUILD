@@ -40,6 +40,20 @@ mdc_public_objc_library(
 )
 
 mdc_objc_library(
+    name = "Theming",
+    srcs = native.glob(["src/Theming/*.m"]),
+    hdrs = native.glob(["src/Theming/*.h"]),
+    includes = ["src/Theming"],
+    deps = [
+        ":Cards",
+        ":ColorThemer",
+        ":ShapeThemer",
+        "//components/schemes/Container",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+mdc_objc_library(
     name = "CardThemer",
     srcs = native.glob(["src/CardThemer/*.m"]),
     hdrs = native.glob(["src/CardThemer/*.h"]),
