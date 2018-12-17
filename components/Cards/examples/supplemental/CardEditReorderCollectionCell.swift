@@ -52,8 +52,8 @@ class CardEditReorderCollectionCell: MDCCardCollectionCell {
     addConstraints()
   }
 
-  func apply(cardScheme: MDCCardScheme, typographyScheme: MDCTypographyScheme) {
-    MDCCardThemer.applyScheme(cardScheme, toCardCell: self)
+  func apply(containerScheme: MDCContainerScheming, typographyScheme: MDCTypographyScheme) {
+    self.applyTheme(withScheme: containerScheme)
     self.titleLabel.font = typographyScheme.caption
   }
 
