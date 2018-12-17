@@ -29,9 +29,9 @@
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    _chipsView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 160, frame.size.height)];
+    _chipsView = [[UIView alloc] initWithFrame:CGRectZero];
     _chipsView.translatesAutoresizingMaskIntoConstraints = NO;
-    _chipsView.backgroundColor = [UIColor yellowColor];
+    //_chipsView.backgroundColor = [UIColor yellowColor];
     _chipsView.clipsToBounds = YES;
     self.leftView = _chipsView;
 

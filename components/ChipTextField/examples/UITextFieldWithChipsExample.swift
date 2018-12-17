@@ -82,7 +82,7 @@ class UITextFieldWithChipsExample: UIViewController {
     additionalTextField.layer.borderWidth = 1.0
     additionalTextField.layer.borderColor = UIColor.black.cgColor
     additionalTextField.textColor = .darkGray
-    additionalTextField.text = "Regulard UITextfield"
+    additionalTextField.text = "Regular UITextfield"
 
     // when on, enter responds to auto-correction which is confusing when we're trying to create "chips"
     additionalTextField.autocorrectionType = UITextAutocorrectionType.no
