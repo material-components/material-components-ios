@@ -1,45 +1,32 @@
-/*
- Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCDraggableView.h"
 
-@interface UIGestureRecognizer (Cancelling)
-// Cancels an active gesture.
-- (void)mdc_cancel;
-@end
-
-@implementation UIGestureRecognizer (Cancelling)
-
-- (void)mdc_cancel {
-  if (self.enabled) {
+static void CancelGestureRecognizer(UIGestureRecognizer *gesture) {
+  if (gesture.enabled) {
     // Setting enabled to NO while a gesture recognizer is currently recognizing a gesture will
     // transition it to a cancelled state.
-    self.enabled = NO;
-    self.enabled = YES;
+    gesture.enabled = NO;
+    gesture.enabled = YES;
   }
 }
-
-@end
-
 
 @interface MDCDraggableView ()<UIGestureRecognizerDelegate>
 @property(nonatomic) UIPanGestureRecognizer *dragRecognizer;
 @property(nonatomic, strong) UIScrollView *scrollView;
 @end
-
 
 @implementation MDCDraggableView
 
@@ -52,6 +39,8 @@
     _dragRecognizer.maximumNumberOfTouches = 1;
     _dragRecognizer.delegate = self;
     [self addGestureRecognizer:_dragRecognizer];
+
+    self.clipsToBounds = YES;
   }
   return self;
 }
@@ -96,7 +85,7 @@
 
   if ([self.delegate draggableView:self shouldBeginDraggingWithVelocity:velocity]) {
     // If dragging the pane, don't allow the content to scroll at the same time.
-    [self.scrollView.panGestureRecognizer mdc_cancel];
+    CancelGestureRecognizer(self.scrollView.panGestureRecognizer);
     return YES;
   } else {
     return NO;

@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 /* IMPORTANT:
  This file contains supplemental code used to populate the examples with dummy data and/or
  instructions. It is not necessary to import this file to use Material Components for iOS.
@@ -20,10 +18,11 @@
 
 #import "TabBarIconExampleSupplemental.h"
 
-@import MaterialComponents.MaterialAppBar;
-@import MaterialComponents.MaterialButtons;
-@import MaterialComponents.MaterialPalettes;
-@import MaterialComponents.MaterialTabs;
+#import "MaterialAppBar+ColorThemer.h"
+#import "MaterialAppBar+TypographyThemer.h"
+#import "MaterialButtons+ButtonThemer.h"
+#import "MaterialPalettes.h"
+#import "MaterialTabs+TypographyThemer.h"
 
 // Exposing selectors defined in the main example class
 @interface TabBarIconExample ()
@@ -40,10 +39,18 @@
   [self setupScrollingContent];
 
   [self setupAlignmentButton];
+
+  [MDCTabBarTypographyThemer applyTypographyScheme:self.typographyScheme toTabBar:self.tabBar];
 }
 
 - (void)setupAlignmentButton {
-  self.alignmentButton = [[MDCRaisedButton alloc] init];
+  self.alignmentButton = [[MDCButton alloc] init];
+
+  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
+  buttonScheme.colorScheme = self.colorScheme;
+  buttonScheme.typographyScheme = self.typographyScheme;
+  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:self.alignmentButton];
+
   [self.view addSubview:self.alignmentButton];
 
   self.alignmentButton.translatesAutoresizingMaskIntoConstraints = NO;
@@ -65,8 +72,6 @@
       .active = YES;
 
   [self.alignmentButton setTitle:@"Change Alignment" forState:UIControlStateNormal];
-  [self.alignmentButton setBackgroundColor:[UIColor blackColor] forState:UIControlStateNormal];
-  [self.alignmentButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [self.alignmentButton addTarget:self
                            action:@selector(changeAlignment:)
                  forControlEvents:UIControlEventTouchUpInside];
@@ -75,41 +80,32 @@
 - (void)setupAppBar {
   self.view.backgroundColor = [UIColor whiteColor];
 
-  self.appBar = [[MDCAppBar alloc] init];
-  [self addChildViewController:self.appBar.headerViewController];
+  self.appBarViewController = [[MDCAppBarViewController alloc] init];
+  [self addChildViewController:self.appBarViewController];
 
-  self.appBar.headerViewController.headerView.tintColor = [UIColor whiteColor];
-  self.appBar.headerViewController.headerView.minimumHeight = 76 + 72;
+  self.appBarViewController.headerView.tintColor = [UIColor whiteColor];
+  self.appBarViewController.headerView.minMaxHeightIncludesSafeArea = NO;
+  self.appBarViewController.headerView.minimumHeight = 56 + 72;
 
-   UIFont *font;
-   if ([UIFont respondsToSelector:@selector(monospacedDigitSystemFontOfSize:weight:)]) {
-      font = [UIFont monospacedDigitSystemFontOfSize:14 weight:UIFontWeightRegular];
-   } else {
-      font = [UIFont systemFontOfSize:14];
-      UIFontDescriptor *descriptor =
-          [[font fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitMonoSpace];
-      if (descriptor) {
-         font = [UIFont fontWithDescriptor:descriptor size:0.0];
-      }
-   }
+  UIFont *font;
+  if ([UIFont respondsToSelector:@selector(monospacedDigitSystemFontOfSize:weight:)]) {
+    font = [UIFont monospacedDigitSystemFontOfSize:14 weight:UIFontWeightRegular];
+  } else {
+    font = [UIFont systemFontOfSize:14];
+    UIFontDescriptor *descriptor =
+        [[font fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitMonoSpace];
+    if (descriptor) {
+      font = [UIFont fontWithDescriptor:descriptor size:0.0];
+    }
+  }
 
-  self.appBar.navigationBar.titleTextAttributes = @{
-    NSForegroundColorAttributeName : [UIColor whiteColor],
-    NSFontAttributeName : font
-  };
+  [self.view addSubview:self.appBarViewController.view];
+  [self.appBarViewController didMoveToParentViewController:self];
 
-  [self.appBar addSubviewsToParent];
-
-  UIBarButtonItem *badgeIncrementItem =
-      [[UIBarButtonItem alloc] initWithTitle:@"Add"
-                                       style:UIBarButtonItemStylePlain
-                                      target:self
-                                      action:@selector(incrementDidTouch:)];
-
-  self.navigationItem.rightBarButtonItem = badgeIncrementItem;
-  self.appBar.navigationBar.tintColor = UIColor.whiteColor;
-
-  self.title = @"Tabs With Icons";
+  [MDCAppBarColorThemer applyColorScheme:self.colorScheme
+                  toAppBarViewController:self.appBarViewController];
+  [MDCAppBarTypographyThemer applyTypographyScheme:self.typographyScheme
+                            toAppBarViewController:self.appBarViewController];
 }
 
 - (void)setupScrollView {
@@ -120,7 +116,7 @@
   [self.view addSubview:self.scrollView];
 
   NSDictionary *viewsScrollView =
-      @{@"scrollView" : self.scrollView, @"header" : self.appBar.headerStackView};
+      @{@"scrollView" : self.scrollView, @"header" : self.appBarViewController.headerStackView};
   [NSLayoutConstraint
       activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[header][scrollView]|"
                                                                   options:0
@@ -146,7 +142,7 @@
 
   UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectZero];
   infoLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  infoLabel.textColor = [MDCPalette.greyPalette.tint600 colorWithAlphaComponent:0.87f];
+  infoLabel.textColor = [MDCPalette.greyPalette.tint600 colorWithAlphaComponent:(CGFloat)0.87];
   infoLabel.numberOfLines = 0;
   infoLabel.text =
       @"Tabs enable content organization at a high level, such as switching between views";
@@ -238,8 +234,8 @@
   [self.starPage addSubview:starView];
   [starView sizeToFit];
 
-  CGFloat x = centered ? 1 : (arc4random_uniform(199) + 1.0) / 100.0;  // 0 < x <=2
-  CGFloat y = centered ? 1 : (arc4random_uniform(199) + 1.0) / 100.0;  // 0 < y <=2
+  CGFloat x = centered ? 1 : (arc4random_uniform(199) + 1) / 100;  // 0 < x <=2
+  CGFloat y = centered ? 1 : (arc4random_uniform(199) + 1) / 100;  // 0 < y <=2
 
   [NSLayoutConstraint constraintWithItem:starView
                                attribute:NSLayoutAttributeCenterX
@@ -260,7 +256,7 @@
 }
 
 - (UIViewController *)childViewControllerForStatusBarStyle {
-  return self.appBar.headerViewController;
+  return self.appBarViewController;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -282,20 +278,14 @@
 
 @implementation TabBarIconExample (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Tab Bar", @"Icons and Text" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
-}
-
-+ (NSString *)catalogDescription {
-  return @"The tab bar is a component for switching between views of grouped content.";
-}
-
-- (BOOL)catalogShouldHideNavigation {
-  return YES;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Tab Bar", @"Tabs with Icons" ],
+    @"description": @"Tabs organize content across different screens, data sets, and "
+    @"other interactions.",
+    @"primaryDemo": @YES,
+    @"presentable": @YES,
+  };
 }
 
 @end

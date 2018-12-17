@@ -1,39 +1,46 @@
-/*
-Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
+// Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 import UIKit
 
 import CatalogByConvention
-import MaterialComponents
+import MaterialComponents.MaterialAppBar
+import MaterialComponents.MaterialAppBar_ColorThemer
+import MaterialComponents.MaterialAppBar_TypographyThemer
+import MaterialComponents.MaterialBottomSheet
+import MaterialComponents.MaterialCollections
+import MaterialComponents.MaterialIcons_ic_more_horiz
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, MDCAppBarNavigationControllerDelegate {
 
   var window: UIWindow?
-  var colorScheme: (MDCColorScheme & NSObjectProtocol)!
+
+  let navigationController = MDCAppBarNavigationController()
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions
                    launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
     self.window = MDCCatalogWindow(frame: UIScreen.main.bounds)
-    UIApplication.shared.statusBarStyle = .lightContent
 
-    let tree = CBCCreateNavigationTree()
+    // The navigation tree will only take examples that implement
+    // and return YES to catalogIsPresentable.
+    let tree = CBCCreatePresentableNavigationTree()
+
+    navigationController.delegate = self
 
     let rootNodeViewController = MDCCatalogComponentsController(node: tree)
-    let navigationController = UINavigationController(rootViewController: rootNodeViewController)
+    navigationController.pushViewController(rootNodeViewController, animated: false)
 
     // In the event that an example view controller hides the navigation bar we generally want to
     // ensure that the edge-swipe pop gesture can still take effect. This may be overly-assumptive
@@ -44,37 +51,70 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     self.window?.rootViewController = navigationController
     self.window?.makeKeyAndVisible()
 
-    colorScheme = MDCBasicColorScheme(primaryColor: UIColor.init(white: 0.2, alpha: 1),
-                                      primaryLightColor: .init(white: 0.7, alpha: 1),
-                                      primaryDarkColor: .init(white: 0, alpha: 1))
-
-    // Apply color scheme to material design components using component themers.
-    MDCActivityIndicatorColorThemer.apply(colorScheme, to: MDCActivityIndicator.appearance())
-    MDCAlertColorThemer.apply(colorScheme)
-    MDCButtonBarColorThemer.apply(colorScheme, to: MDCButtonBar.appearance())
-    MDCButtonColorThemer.apply(colorScheme, to: MDCButton.appearance())
-    let clearScheme = MDCBasicColorScheme(primaryColor: .clear)
-    MDCButtonColorThemer.apply(clearScheme, to:MDCFlatButton.appearance())
-    MDCFeatureHighlightColorThemer.apply(colorScheme, to: MDCFeatureHighlightView.appearance())
-    MDCFlexibleHeaderColorThemer.apply(colorScheme, to: MDCFlexibleHeaderView.appearance())
-    MDCHeaderStackViewColorThemer.apply(colorScheme, to: MDCHeaderStackView.appearance())
-    MDCNavigationBarColorThemer.apply(colorScheme, to: MDCNavigationBar.appearance())
-    MDCPageControlColorThemer.apply(colorScheme, to: MDCPageControl.appearance())
-    MDCProgressViewColorThemer.apply(colorScheme, to: MDCProgressView.appearance())
-    MDCSliderColorThemer.apply(colorScheme, to: MDCSlider.appearance())
-    MDCTabBarColorThemer.apply(colorScheme, to: MDCTabBar.appearance())
-    MDCTextFieldColorThemer.applyColorScheme(toAllTextInputControllerDefault: colorScheme)
-
-    // Apply color scheme to UIKit components.
-    UISlider.appearance().tintColor = colorScheme?.primaryColor
-    UISwitch.appearance().onTintColor = colorScheme?.primaryColor
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(self.themeDidChange),
+      name: AppTheme.didChangeGlobalThemeNotificationName,
+      object: nil)
 
     return true
+  }
+
+  func themeDidChange(notification: NSNotification) {
+    guard let colorScheme = notification.userInfo?[AppTheme.globalThemeNotificationColorSchemeKey]
+      as? MDCColorScheming else {
+        return
+    }
+    for viewController in navigationController.childViewControllers {
+      guard let appBar = navigationController.appBar(for: viewController) else {
+        continue
+      }
+
+      MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
+    }
+  }
+
+  // MARK: MDCAppBarNavigationControllerInjectorDelegate
+
+  func appBarNavigationController(_ navigationController: MDCAppBarNavigationController,
+                                  willAdd appBarViewController: MDCAppBarViewController,
+                                  asChildOf viewController: UIViewController) {
+    MDCAppBarColorThemer.applyColorScheme(AppTheme.globalTheme.colorScheme,
+                                                        to: appBarViewController)
+    MDCAppBarTypographyThemer.applyTypographyScheme(AppTheme.globalTheme.typographyScheme,
+                                                    to: appBarViewController)
+
+    if let injectee = viewController as? CatalogAppBarInjectee {
+      injectee.appBarNavigationControllerInjector(willAdd: appBarViewController)
+    }
   }
 }
 
 extension UINavigationController: UIGestureRecognizerDelegate {
   public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
     return viewControllers.count > 1
+  }
+}
+
+protocol CatalogAppBarInjectee {
+  func appBarNavigationControllerInjector(willAdd appBarViewController: MDCAppBarViewController)
+}
+
+extension UINavigationController {
+  func presentMenu() {
+    let menuViewController = MDCMenuViewController(style: .plain)
+    let bottomSheet = MDCBottomSheetController(contentViewController: menuViewController)
+    self.present(bottomSheet, animated: true, completion: nil)
+  }
+
+  func setMenuBarButton(for viewController: UIViewController) {
+    let dotsImage = MDCIcons.imageFor_ic_more_horiz()?.withRenderingMode(.alwaysTemplate)
+    let menuItem = UIBarButtonItem(image: dotsImage,
+                                   style: .plain,
+                                   target: self,
+                                   action: #selector(presentMenu))
+    menuItem.accessibilityLabel = "Menu"
+    menuItem.accessibilityHint = "Opens catalog configuration options."
+    viewController.navigationItem.rightBarButtonItem = menuItem
   }
 }

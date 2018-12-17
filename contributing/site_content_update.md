@@ -1,10 +1,10 @@
 # Site Content Update
 
 ## Overview
-Material Components for iOS site consists of 2 parts: [document site](https
-://material-ext.appspot.com/mdc-ios-preview/) and API reference site of each
+Material Components for iOS site consists of 2 parts:
+[document site](https://material.io/components/ios/) and API reference site of each
 components (e.g,
-[AppBar API](https://material-ext.appspot.com/mdc-ios-preview/components/AppBar/apidocs/Classes/MDCAppBarContainerViewController.html), etc...)
+[AppBar API](https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBarContainerViewController.html), etc...)
 
 This document will walk you through the process for updating the contents on
 document site and API reference, or adding new sections to the document site.
@@ -30,8 +30,8 @@ to [Writing READMES](./writing_readmes.md) for the syntax we use.
 The document site and GitHub README.md have the exact 1:1 mapping structure, except for the homepage.
 
 - homepage -> site-index.md
-- howto -> howto/README.md
-- howto/[tutorial_name] -> howto/[tutorial_name]/README.md
+- docs -> docs/README.md
+- docs/[tutorial_name] -> docs/[tutorial_name]/README.md
 - components -> components/README.md
 - components/[component_name] -> components/[component_name]/README.md
 - contributing -> contributing/README.md
@@ -76,7 +76,7 @@ You need to be one of the Material Components for iOS core members in order to d
 
 If you are able to deploy the site, run
 
-``` bash
+```bash
 # Run these to install gsutil for the first time
 curl https://sdk.cloud.google.com | bash
 exec -l $SHELL
@@ -87,4 +87,5 @@ gcloud init
 scripts/build_site.sh --deploy production
 ```
 
-Open the [Material Components for iOS](https://material-ext.appspot.com/mdc-ios-preview) site and make sure your modification is there.
+Open the [Material Components for iOS](https://material.io/components/ios/) site
+and make sure your modification is there.

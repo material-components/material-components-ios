@@ -1,22 +1,20 @@
-/*
- Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <UIKit/UIKit.h>
 
-#import "MDCPageControl.h"
+#import "MaterialPageControl.h"
 
 @interface PageControlAnimationBlockExample : UIViewController <UIScrollViewDelegate>
 @end
@@ -36,11 +34,11 @@
   CGFloat boundsHeight = CGRectGetHeight(self.view.bounds);
 
   NSArray *pageColors = @[
-    [UIColor colorWithWhite:0.2 alpha:1.0],
-    [UIColor colorWithWhite:0.3 alpha:1.0],
-    [UIColor colorWithWhite:0.4 alpha:1.0],
-    [UIColor colorWithWhite:0.5 alpha:1.0],
-    [UIColor colorWithWhite:0.6 alpha:1.0],
+    [UIColor colorWithWhite:(CGFloat)0.2 alpha:1],
+    [UIColor colorWithWhite:(CGFloat)0.3 alpha:1],
+    [UIColor colorWithWhite:(CGFloat)0.4 alpha:1],
+    [UIColor colorWithWhite:(CGFloat)0.5 alpha:1],
+    [UIColor colorWithWhite:(CGFloat)0.6 alpha:1],
   ];
 
   // Scroll view configuration
@@ -55,12 +53,12 @@
   NSMutableArray *pages = [NSMutableArray array];
 
   // Add pages to scrollView.
-  for (NSInteger i = 0; i < pageColors.count; i++) {
+  for (NSUInteger i = 0; i < pageColors.count; i++) {
     CGRect pageFrame = CGRectOffset(self.view.bounds, i * boundsWidth, 0);
     UILabel *page = [[UILabel alloc] initWithFrame:pageFrame];
-    page.text = [NSString stringWithFormat:@"Page %zd", i + 1];
+    page.text = [NSString stringWithFormat:@"Page %lu", (unsigned long)(i + 1)];
     page.font = [UIFont systemFontOfSize:24];
-    page.textColor = [UIColor colorWithWhite:1 alpha:0.8];
+    page.textColor = [UIColor colorWithWhite:1 alpha:(CGFloat)0.8];
     page.textAlignment = NSTextAlignmentCenter;
     page.backgroundColor = pageColors[i];
     page.autoresizingMask =
@@ -89,8 +87,6 @@
   _incrementButton = [UIButton buttonWithType:UIButtonTypeCustom];
   [_incrementButton setTitle:@"+2 Pages" forState:UIControlStateNormal];
   [_incrementButton sizeToFit];
-  _incrementButton.center =
-      CGPointMake(boundsWidth - _incrementButton.frame.size.width / 2 - 16, _pageControl.center.y);
   _incrementButton.autoresizingMask =
       UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin;
   [_incrementButton addTarget:self
@@ -100,9 +96,6 @@
 
   _decrementButton = [UIButton buttonWithType:UIButtonTypeCustom];
   [_decrementButton setTitle:@"-2 Pages" forState:UIControlStateNormal];
-  [_decrementButton sizeToFit];
-  _decrementButton.center =
-      CGPointMake(_decrementButton.frame.size.width / 2 + 16, _pageControl.center.y);
   _decrementButton.autoresizingMask =
       UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin;
   [_decrementButton addTarget:self
@@ -117,8 +110,8 @@
   [super viewWillLayoutSubviews];
   NSInteger pageBeforeFrameChange = _pageControl.currentPage;
   NSInteger pageCount = _pages.count;
-  CGFloat boundsWidth = CGRectGetWidth(self.view.bounds);
-  CGFloat boundsHeight = CGRectGetHeight(self.view.bounds);
+  CGFloat boundsWidth = CGRectGetWidth(self.view.frame);
+  CGFloat boundsHeight = CGRectGetHeight(self.view.frame);
   for (NSInteger i = 0; i < pageCount; i++) {
     UILabel *page = [_pages objectAtIndex:i];
     page.frame = CGRectOffset(self.view.bounds, i * boundsWidth, 0);
@@ -128,6 +121,29 @@
   offset.x = pageBeforeFrameChange * boundsWidth;
   // This non-anmiated change of offset ensures we keep the same page
   [_scrollView setContentOffset:offset animated:NO];
+
+  // We want the page control to span the bottom of the screen.
+  CGRect standardizedFrame = CGRectStandardize(self.view.frame);
+  [_pageControl sizeThatFits:standardizedFrame.size];
+  UIEdgeInsets edgeInsets = UIEdgeInsetsZero;
+  if (@available(iOS 11.0, *)) {
+    // Accommodate insets for iPhone X.
+    edgeInsets = self.view.safeAreaInsets;
+  }
+  CGFloat yOffset =
+      CGRectGetHeight(self.view.frame) - CGRectGetHeight(_pageControl.frame) - edgeInsets.bottom;
+  _pageControl.frame =
+      CGRectMake(0, yOffset, CGRectGetWidth(self.view.frame), CGRectGetHeight(_pageControl.frame));
+
+  CGFloat buttonCenterX;
+
+  [_incrementButton sizeToFit];
+  buttonCenterX = boundsWidth - CGRectGetWidth(_incrementButton.frame) / 2 - 16 - edgeInsets.right;
+  _incrementButton.center = CGPointMake(buttonCenterX, _pageControl.center.y);
+
+  [_decrementButton sizeToFit];
+  buttonCenterX = CGRectGetWidth(_decrementButton.frame) / 2 + 16 + edgeInsets.left;
+  _decrementButton.center = CGPointMake(buttonCenterX, _pageControl.center.y);
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -167,19 +183,19 @@
                         delay:0
                       options:UIViewAnimationOptionCurveEaseOut
                    animations:^{
-                     _scrollView.contentOffset = offset;
+                     self->_scrollView.contentOffset = offset;
                    }
                    completion:nil];
 }
 
 #pragma mark - CatalogByConvention
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Page Control", @"Page Control with animation block" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Page Control", @"Page Control with animation block" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
 
 @end

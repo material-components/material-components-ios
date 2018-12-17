@@ -6,7 +6,7 @@ app to explore, experiment, and experience.
 ## Generation
 
 The catalog app is generated dynamically via CocoaPods wildcards inclusion in
-[`MaterialComponentsCatalog.podspec`](../MaterialComponentsCatalog.podspec) The CocoaPods setup
+[`MaterialComponentsExamples.podspec`](../MaterialComponentsExamples.podspec) The CocoaPods setup
 includes:
 
 - The source for each component
@@ -101,10 +101,10 @@ Use the `supplemental` folder to keep your example code clean and instructive.
 
 ## Useful Links
 
-- [How To Use MDC-iOS](../howto/)
+- [How To Use MDC-iOS](../docs/)
 - [All Components](../components/)
 - [Demo Apps](../demos/)
 - [Contributing](../contributing/)
 - [MDC-iOS on Stack Overflow](https://www.stackoverflow.com/questions/tagged/material-components+ios) (external site)
-- [Material.io](https://www.material.io) (external site)
+- [Material.io](https://material.io) (external site)
 - [Material Design Guidelines](https://material.io/guidelines) (external site)

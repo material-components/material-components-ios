@@ -70,9 +70,9 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
     pageControl.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     let pageControlSize = pageControl.sizeThatFits(bounds.size)
     pageControl.frame = CGRect(x: 0,
-      y: boundsHeight - pageControlSize.height,
-      width: boundsWidth,
-      height: pageControlSize.height)
+                               y: boundsHeight - pageControlSize.height,
+                               width: boundsWidth,
+                               height: pageControlSize.height)
     pageControl.addTarget(self, action: #selector(didChangePage),
                           for: UIControlEvents.valueChanged)
     addSubview(pageControl)
@@ -108,7 +108,12 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
 
   override func layoutSubviews() {
     super.layoutSubviews()
-
+    var safeAreaInset: CGFloat = 0
+    #if swift(>=3.2)
+      if #available(iOS 11.0, *) {
+        safeAreaInset = min(self.safeAreaInsets.top, 10)
+      }
+    #endif
     let boundsWidth = bounds.width
     let boundsHeight = bounds.height
     for i in 0...pages.count - 1 {
@@ -126,8 +131,8 @@ class ShrineHeaderContentView: UIView, UIScrollViewDelegate {
 
     let scrollViewOffsetX = CGFloat(pageControl.currentPage) * boundsWidth
     scrollView.setContentOffset(CGPoint(x: scrollViewOffsetX, y: 0), animated: false)
-    logoImageView.center = CGPoint(x: (frame.size.width) / 2, y: 44)
-    logoTextImageView.center = CGPoint(x: (frame.size.width) / 2, y: 44)
+    logoImageView.center = CGPoint(x: (frame.size.width) / 2, y: 44 + safeAreaInset)
+    logoTextImageView.center = CGPoint(x: (frame.size.width) / 2, y: 44 + safeAreaInset)
 
     let labelWidth = CGFloat(250)
     let labelWidthFrame = CGRect(x: frame.size.width - labelWidth,

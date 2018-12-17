@@ -1,0 +1,4 @@
+module: ColorScheme
+umbrella_header: src/MaterialColorScheme.h
+objc: true
+sdk: iphonesimulator

@@ -1,27 +1,29 @@
-/*
- Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCShadowLayer.h"
 
 static const CGFloat kShadowElevationDialog = 24.0;
-static const float kKeyShadowOpacity = 0.26f;
-static const float kAmbientShadowOpacity = 0.08f;
+static const float kKeyShadowOpacity = (float)0.26;
+static const float kAmbientShadowOpacity = (float)0.08;
 
-static NSString *const MDCShadowLayerElevationKey = @"MDCShadowLayerElevationKey";
-static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShadowMaskEnabledKey";
+@interface MDCPendingAnimation : NSObject <CAAction>
+@property(nonatomic, weak) CALayer *animationSourceLayer;
+@property(nonatomic, strong) NSString *keyPath;
+@property(nonatomic, strong) id fromValue;
+@property(nonatomic, strong) id toValue;
+@end
 
 @implementation MDCShadowMetrics
 
@@ -53,27 +55,27 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
     emptyShadowMetrics = [[MDCShadowMetrics alloc] init];
     emptyShadowMetrics->_topShadowRadius = (CGFloat)0.0;
     emptyShadowMetrics->_topShadowOffset = CGSizeMake(0.0, 0.0);
-    emptyShadowMetrics->_topShadowOpacity = 0.0f;
+    emptyShadowMetrics->_topShadowOpacity = 0;
     emptyShadowMetrics->_bottomShadowRadius = (CGFloat)0.0;
     emptyShadowMetrics->_bottomShadowOffset = CGSizeMake(0.0, 0.0);
-    emptyShadowMetrics->_bottomShadowOpacity = 0.0f;
+    emptyShadowMetrics->_bottomShadowOpacity = 0;
   });
 
   return emptyShadowMetrics;
 }
 
 + (CGFloat)ambientShadowBlur:(CGFloat)points {
-  CGFloat blur = 0.889544f * points - 0.003701f;
+  CGFloat blur = (CGFloat)0.889544 * points - (CGFloat)0.003701;
   return blur;
 }
 
 + (CGFloat)keyShadowBlur:(CGFloat)points {
-  CGFloat blur = 0.666920f * points - 0.001648f;
+  CGFloat blur = (CGFloat)0.666920 * points - (CGFloat)0.001648;
   return blur;
 }
 
 + (CGFloat)keyShadowYOff:(CGFloat)points {
-  CGFloat yOff = 1.23118f * points - 0.03933f;
+  CGFloat yOff = (CGFloat)1.23118 * points - (CGFloat)0.03933;
   return yOff;
 }
 
@@ -83,16 +85,21 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
 
 @property(nonatomic, strong) CAShapeLayer *topShadow;
 @property(nonatomic, strong) CAShapeLayer *bottomShadow;
+@property(nonatomic, strong) CAShapeLayer *topShadowMask;
+@property(nonatomic, strong) CAShapeLayer *bottomShadowMask;
 
 @end
 
-@implementation MDCShadowLayer
+@implementation MDCShadowLayer {
+  BOOL _shadowPathIsInvalid;
+}
 
 - (instancetype)init {
   self = [super init];
   if (self) {
     _elevation = 0;
     _shadowMaskEnabled = YES;
+    _shadowPathIsInvalid = YES;
 
     [self commonMDCShadowLayerInit];
   }
@@ -102,13 +109,6 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
 - (nullable instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    if ([aDecoder containsValueForKey:MDCShadowLayerElevationKey]) {
-      _elevation = (CGFloat)[aDecoder decodeDoubleForKey:MDCShadowLayerElevationKey];
-    }
-    if ([aDecoder containsValueForKey:MDCShadowLayerShadowMaskEnabledKey]) {
-      _shadowMaskEnabled = [aDecoder decodeBoolForKey:MDCShadowLayerShadowMaskEnabledKey];
-    }
-
     [self commonMDCShadowLayerInit];
   }
   return self;
@@ -122,6 +122,8 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
       _shadowMaskEnabled = otherLayer.isShadowMaskEnabled;
       _bottomShadow = [[CAShapeLayer alloc] initWithLayer:otherLayer.bottomShadow];
       _topShadow = [[CAShapeLayer alloc] initWithLayer:otherLayer.topShadow];
+      _topShadowMask = [[CAShapeLayer alloc] initWithLayer:otherLayer.topShadowMask];
+      _bottomShadowMask = [[CAShapeLayer alloc] initWithLayer:otherLayer.bottomShadowMask];
       [self commonMDCShadowLayerInit];
     }
   }
@@ -137,6 +139,7 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
     _bottomShadow = [CAShapeLayer layer];
     _bottomShadow.backgroundColor = [UIColor clearColor].CGColor;
     _bottomShadow.shadowColor = [UIColor blackColor].CGColor;
+    _bottomShadow.delegate = self;
     [self addSublayer:_bottomShadow];
   }
 
@@ -144,6 +147,7 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
     _topShadow = [CAShapeLayer layer];
     _topShadow.backgroundColor = [UIColor clearColor].CGColor;
     _topShadow.shadowColor = [UIColor blackColor].CGColor;
+    _topShadow.delegate = self;
     [self addSublayer:_topShadow];
   }
 
@@ -156,19 +160,22 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
   _bottomShadow.shadowRadius = shadowMetrics.bottomShadowRadius;
   _bottomShadow.shadowOpacity = shadowMetrics.bottomShadowOpacity;
 
+  if (!_topShadowMask) {
+    _topShadowMask = [CAShapeLayer layer];
+    _topShadowMask.delegate = self;
+  }
+  if (!_bottomShadowMask) {
+    _bottomShadowMask = [CAShapeLayer layer];
+    _bottomShadowMask.delegate = self;
+  }
+
   // TODO(#1021): We shouldn't be calling property accessors in an init method.
   if (_shadowMaskEnabled) {
-    _topShadow.mask = [self shadowLayerMaskForLayer:_topShadow];
-    _bottomShadow.mask = [self shadowLayerMaskForLayer:_bottomShadow];
+    [self configureShadowLayerMaskForLayer:_topShadowMask];
+    [self configureShadowLayerMaskForLayer:_bottomShadowMask];
+    _topShadow.mask = _topShadowMask;
+    _bottomShadow.mask = _bottomShadowMask;
   }
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [super encodeWithCoder:aCoder];
-  [aCoder encodeDouble:_elevation forKey:MDCShadowLayerElevationKey];
-  [aCoder encodeBool:_shadowMaskEnabled forKey:MDCShadowLayerShadowMaskEnabledKey];
-  // Additional state is calculated at deserialization time based on _elevation and
-  // _shadowMaskEnabled so we don't need to store them.
 }
 
 - (void)layoutSublayers {
@@ -180,9 +187,7 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
   BOOL sizeChanged = !CGSizeEqualToSize(self.bounds.size, bounds.size);
   [super setBounds:bounds];
   if (sizeChanged) {
-    // Invalidate our shadow paths.
-    _bottomShadow.shadowPath = nil;
-    _topShadow.shadowPath = nil;
+    _shadowPathIsInvalid = YES;
     [self setNeedsLayout];
   }
 }
@@ -198,13 +203,26 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
   return [UIBezierPath bezierPathWithRect:self.bounds];
 }
 
+- (void)setCornerRadius:(CGFloat)cornerRadius {
+  super.cornerRadius = cornerRadius;
+
+  _topShadow.cornerRadius = cornerRadius;
+  _bottomShadow.cornerRadius = cornerRadius;
+  if (_shadowMaskEnabled) {
+    [self configureShadowLayerMaskForLayer:_topShadowMask];
+    [self configureShadowLayerMaskForLayer:_bottomShadowMask];
+    _topShadow.mask = _topShadowMask;
+    _bottomShadow.mask = _bottomShadowMask;
+  }
+}
+
 - (void)setShadowPath:(CGPathRef)shadowPath {
   super.shadowPath = shadowPath;
   _topShadow.shadowPath = shadowPath;
   _bottomShadow.shadowPath = shadowPath;
   if (_shadowMaskEnabled) {
-    _topShadow.mask = [self shadowLayerMaskForLayer:_topShadow];
-    _bottomShadow.mask = [self shadowLayerMaskForLayer:_bottomShadow];
+    [self configureShadowLayerMaskForLayer:_topShadowMask];
+    [self configureShadowLayerMaskForLayer:_bottomShadowMask];
   }
 }
 
@@ -242,8 +260,10 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
 - (void)setShadowMaskEnabled:(BOOL)shadowMaskEnabled {
   _shadowMaskEnabled = shadowMaskEnabled;
   if (_shadowMaskEnabled) {
-    _topShadow.mask = [self shadowLayerMaskForLayer:_topShadow];
-    _bottomShadow.mask = [self shadowLayerMaskForLayer:_bottomShadow];
+    [self configureShadowLayerMaskForLayer:_topShadowMask];
+    [self configureShadowLayerMaskForLayer:_bottomShadowMask];
+    _topShadow.mask = _topShadowMask;
+    _bottomShadow.mask = _bottomShadowMask;
   } else {
     _topShadow.mask = nil;
     _bottomShadow.mask = nil;
@@ -253,14 +273,8 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
 // Creates a layer mask that has a hole cut inside so that the original contents
 // of the view is no obscured by the shadow the top/bottom pseudo shadow layers
 // cast.
-- (CAShapeLayer *)shadowLayerMaskForLayer:(CALayer *)layer {
-  CAShapeLayer *maskLayer = [CAShapeLayer layer];
-
-  CGSize shadowSpread = [MDCShadowLayer shadowSpreadForElevation:kShadowElevationDialog];
-  CGRect bounds = layer.bounds;
-  CGRect maskRect = CGRectInset(bounds, -shadowSpread.width * 2, -shadowSpread.height * 2);
-
-  UIBezierPath *path = [UIBezierPath bezierPathWithRect:maskRect];
+- (void)configureShadowLayerMaskForLayer:(CAShapeLayer *)maskLayer {
+  UIBezierPath *path = [self outerMaskPath];
   UIBezierPath *innerPath = nil;
   if (self.shadowPath != nil) {
     innerPath = [UIBezierPath bezierPathWithCGPath:(_Nonnull CGPathRef)self.shadowPath];
@@ -272,66 +286,51 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
   [path appendPath:innerPath];
   [path setUsesEvenOddFillRule:YES];
 
-  maskLayer.position = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds));
-  maskLayer.bounds = maskRect;
+  maskLayer.position = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
+  maskLayer.bounds = [self maskRect];
   maskLayer.path = path.CGPath;
   maskLayer.fillRule = kCAFillRuleEvenOdd;
   maskLayer.fillColor = [UIColor blackColor].CGColor;
-  return maskLayer;
+}
+
+- (CGRect)maskRect {
+  CGSize shadowSpread = [MDCShadowLayer shadowSpreadForElevation:kShadowElevationDialog];
+  CGRect bounds = self.bounds;
+  return CGRectInset(bounds, -shadowSpread.width * 2, -shadowSpread.height * 2);
+}
+
+- (UIBezierPath *)outerMaskPath {
+  return [UIBezierPath bezierPathWithRect:[self maskRect]];
 }
 
 - (void)setElevation:(CGFloat)elevation {
   _elevation = elevation;
+
   MDCShadowMetrics *shadowMetrics = [MDCShadowMetrics metricsWithElevation:elevation];
-  [self setMetrics:shadowMetrics];
-}
 
-- (void)setMetrics:(MDCShadowMetrics *)shadowMetrics {
-  CABasicAnimation *topOffsetAnimation = [CABasicAnimation animationWithKeyPath:@"shadowOffset"];
-  topOffsetAnimation.fromValue = nil;
-  topOffsetAnimation.toValue = [NSValue valueWithCGSize:shadowMetrics.topShadowOffset];
-
-  CABasicAnimation *bottomOffsetAnimation = [CABasicAnimation animationWithKeyPath:@"shadowOffset"];
-  bottomOffsetAnimation.fromValue = nil;
-  bottomOffsetAnimation.toValue = [NSValue valueWithCGSize:shadowMetrics.bottomShadowOffset];
-
-  CABasicAnimation *topRadiusAnimation = [CABasicAnimation animationWithKeyPath:@"shadowRadius"];
-  topRadiusAnimation.fromValue = nil;
-  topRadiusAnimation.toValue = @(shadowMetrics.topShadowRadius);
-
-  CABasicAnimation *bottomRadiusAnimation = [CABasicAnimation animationWithKeyPath:@"shadowRadius"];
-  bottomRadiusAnimation.fromValue = nil;
-  bottomRadiusAnimation.toValue = @(shadowMetrics.bottomShadowRadius);
-
-  CABasicAnimation *topOpacityAnimation = [CABasicAnimation animationWithKeyPath:@"shadowOpacity"];
-  topOpacityAnimation.fromValue = nil;
-  topOpacityAnimation.toValue = @(shadowMetrics.topShadowOpacity);
-
-  CABasicAnimation *bottomOpacityAnimation =
-      [CABasicAnimation animationWithKeyPath:@"shadowOpacity"];
-  bottomOpacityAnimation.fromValue = nil;
-  bottomOpacityAnimation.toValue = @(shadowMetrics.bottomShadowOpacity);
-
-  // Group all animations together.
-  CAAnimationGroup *topAnimations = [CAAnimationGroup animation];
-  topAnimations.animations = @[ topOffsetAnimation, topRadiusAnimation, topOpacityAnimation ];
-
-  CAAnimationGroup *bottomAnimations = [CAAnimationGroup animation];
-  bottomAnimations.animations =
-      @[ bottomOffsetAnimation, bottomRadiusAnimation, bottomOpacityAnimation ];
-
-  [_topShadow removeAllAnimations];
-  [_bottomShadow removeAllAnimations];
-  [_topShadow addAnimation:topAnimations forKey:nil];
-  [_bottomShadow addAnimation:bottomAnimations forKey:nil];
-
-  // Set the final animation value in to the model layer.
   _topShadow.shadowOffset = shadowMetrics.topShadowOffset;
   _topShadow.shadowRadius = shadowMetrics.topShadowRadius;
   _topShadow.shadowOpacity = shadowMetrics.topShadowOpacity;
   _bottomShadow.shadowOffset = shadowMetrics.bottomShadowOffset;
   _bottomShadow.shadowRadius = shadowMetrics.bottomShadowRadius;
   _bottomShadow.shadowOpacity = shadowMetrics.bottomShadowOpacity;
+}
+
+#pragma mark - CALayerDelegate
+
+- (id<CAAction>)actionForLayer:(CALayer *)layer forKey:(NSString *)event {
+  if ([event isEqualToString:@"path"] || [event isEqualToString:@"shadowPath"]) {
+    // We have to create a pending animation because if we are inside a UIKit animation block we
+    // won't know any properties of the animation block until it is commited.
+    MDCPendingAnimation *pendingAnim = [[MDCPendingAnimation alloc] init];
+    pendingAnim.animationSourceLayer = self;
+    pendingAnim.fromValue = [layer.presentationLayer valueForKey:event];
+    pendingAnim.toValue = nil;
+    pendingAnim.keyPath = event;
+
+    return pendingAnim;
+  }
+  return nil;
 }
 
 #pragma mark - Private
@@ -345,23 +344,114 @@ static NSString *const MDCShadowLayerShadowMaskEnabledKey = @"MDCShadowLayerShad
   _topShadow.bounds = bounds;
 
   if (_shadowMaskEnabled) {
-    _bottomShadow.mask = [self shadowLayerMaskForLayer:_bottomShadow];
-    _topShadow.mask = [self shadowLayerMaskForLayer:_topShadow];
+    [self configureShadowLayerMaskForLayer:_topShadowMask];
+    [self configureShadowLayerMaskForLayer:_bottomShadowMask];
   }
   // Enforce shadowPaths because otherwise no shadows can be drawn. If a shadowPath
   // is already set, use that, otherwise fallback to just a regular rect because path.
-  if (!_bottomShadow.shadowPath) {
+  if (!_bottomShadow.shadowPath || _shadowPathIsInvalid) {
     if (self.shadowPath) {
       _bottomShadow.shadowPath = self.shadowPath;
     } else {
       _bottomShadow.shadowPath = [self defaultShadowPath].CGPath;
     }
   }
-  if (!_topShadow.shadowPath) {
+  if (!_topShadow.shadowPath || _shadowPathIsInvalid) {
     if (self.shadowPath) {
       _topShadow.shadowPath = self.shadowPath;
     } else {
       _topShadow.shadowPath = [self defaultShadowPath].CGPath;
+    }
+  }
+  _shadowPathIsInvalid = NO;
+}
+
+- (void)animateCornerRadius:(CGFloat)cornerRadius
+         withTimingFunction:(CAMediaTimingFunction *)timingFunction
+                   duration:(NSTimeInterval)duration {
+  [CATransaction begin];
+  [CATransaction setDisableActions:YES];
+  CGFloat currentCornerRadius = (self.cornerRadius <= 0) ? (CGFloat)0.001 : self.cornerRadius;
+  CGFloat newCornerRadius = (cornerRadius <= 0) ? (CGFloat)0.001 : cornerRadius;
+  // Create the paths
+  UIBezierPath *currentLayerPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds
+                                                              cornerRadius:currentCornerRadius];
+  UIBezierPath *newLayerPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds
+                                                          cornerRadius:newCornerRadius];
+
+  UIBezierPath *currentMaskPath = [self outerMaskPath];
+  [currentMaskPath appendPath:currentLayerPath];
+  currentMaskPath.usesEvenOddFillRule = YES;
+
+  UIBezierPath *newMaskPath = [self outerMaskPath];
+  [newMaskPath appendPath:newLayerPath];
+  newMaskPath.usesEvenOddFillRule = YES;
+
+  // Animate the top layers
+  NSString *shadowPathKey = @"shadowPath";
+  CABasicAnimation *topLayerAnimation = [CABasicAnimation animationWithKeyPath:shadowPathKey];
+  topLayerAnimation.fromValue = (__bridge id)currentLayerPath.CGPath;
+  topLayerAnimation.toValue = (__bridge id)newLayerPath.CGPath;
+  topLayerAnimation.duration = duration;
+  topLayerAnimation.timingFunction = timingFunction;
+  self.topShadow.shadowPath = newLayerPath.CGPath;
+  [self.topShadow addAnimation:topLayerAnimation forKey:shadowPathKey];
+  CABasicAnimation *bottomLayerAnimation = [CABasicAnimation animationWithKeyPath:shadowPathKey];
+  bottomLayerAnimation.fromValue = (__bridge id)currentLayerPath.CGPath;
+  bottomLayerAnimation.toValue = (__bridge id)newLayerPath.CGPath;
+  bottomLayerAnimation.duration = duration;
+  bottomLayerAnimation.timingFunction = timingFunction;
+  self.bottomShadow.shadowPath = newLayerPath.CGPath;
+  [self.bottomShadow addAnimation:bottomLayerAnimation forKey:shadowPathKey];
+
+  // Animate the masks
+  if (self.shadowMaskEnabled) {
+    NSString *pathKey = @"path";
+    CABasicAnimation *topMaskLayerAnimation = [CABasicAnimation animationWithKeyPath:pathKey];
+    topMaskLayerAnimation.fromValue = (__bridge id)currentMaskPath.CGPath;
+    topMaskLayerAnimation.toValue = (__bridge id)newMaskPath.CGPath;
+    topMaskLayerAnimation.duration = duration;
+    topMaskLayerAnimation.timingFunction = timingFunction;
+    self.topShadowMask.path = newMaskPath.CGPath;
+    [self.topShadowMask addAnimation:topMaskLayerAnimation forKey:pathKey];
+    CABasicAnimation *bottomMaskLayerAnimation = [CABasicAnimation animationWithKeyPath:pathKey];
+    bottomMaskLayerAnimation.fromValue = (__bridge id)currentMaskPath.CGPath;
+    bottomMaskLayerAnimation.toValue = (__bridge id)newMaskPath.CGPath;
+    bottomMaskLayerAnimation.duration = duration;
+    bottomMaskLayerAnimation.timingFunction = timingFunction;
+    self.bottomShadowMask.path = newMaskPath.CGPath;
+    [self.bottomShadowMask addAnimation:bottomMaskLayerAnimation forKey:pathKey];
+  }
+
+  // Animate the corner radius
+  CABasicAnimation *cornerRadiusAnimation = [CABasicAnimation animationWithKeyPath:@"cornerRadius"];
+  cornerRadiusAnimation.fromValue = @((CGFloat)currentCornerRadius);
+  cornerRadiusAnimation.toValue = @((CGFloat)newCornerRadius);
+  cornerRadiusAnimation.duration = duration;
+  cornerRadiusAnimation.timingFunction = timingFunction;
+  self.cornerRadius = cornerRadius;
+  [self addAnimation:cornerRadiusAnimation forKey:@"cornerRadius"];
+  [CATransaction commit];
+}
+
+@end
+
+@implementation MDCPendingAnimation
+
+- (void)runActionForKey:(NSString *)event object:(id)anObject arguments:(NSDictionary *)dict {
+  if ([anObject isKindOfClass:[CAShapeLayer class]]) {
+    CAShapeLayer *layer = (CAShapeLayer *)anObject;
+
+    // In order to synchronize our animation with UIKit animations we have to fetch the resizing
+    // animation created by UIKit and copy the configuration to our custom animation.
+    CAAnimation *boundsAction = [self.animationSourceLayer animationForKey:@"bounds.size"];
+    if ([boundsAction isKindOfClass:[CABasicAnimation class]]) {
+      CABasicAnimation *animation = (CABasicAnimation *)[boundsAction copy];
+      animation.keyPath = self.keyPath;
+      animation.fromValue = self.fromValue;
+      animation.toValue = self.toValue;
+
+      [layer addAnimation:animation forKey:event];
     }
   }
 }

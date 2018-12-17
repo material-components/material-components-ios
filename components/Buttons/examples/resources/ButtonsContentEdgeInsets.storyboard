@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Uhh-iX-aVf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13770" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Uhh-iX-aVf">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13770"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -21,25 +21,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bvE-5P-0PG" customClass="MDCFlatButton">
-                                <rect key="frame" x="127.5" y="83" width="120" height="34"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bvE-5P-0PG" customClass="MDCButton">
+                                <rect key="frame" x="104.5" y="83" width="166" height="38"/>
                                 <color key="tintColor" red="0.19254023644059035" green="0.53181806153905575" blue="0.91669365284974091" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="16" maxY="16"/>
-                                <state key="normal" title="Flat Button">
+                                <state key="normal" title="Text Button">
                                     <color key="titleColor" cocoaTouchSystemColor="lightTextColor"/>
                                 </state>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dqo-nu-adB" customClass="MDCRaisedButton">
-                                <rect key="frame" x="127" y="133" width="120" height="18"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dqo-nu-adB" customClass="MDCRaisedButton">
+                                <rect key="frame" x="104" y="137" width="166" height="22"/>
                                 <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="24" maxY="0.0"/>
-                                <state key="normal" title="Raised Button">
+                                <state key="normal" title="Contained Button">
                                     <color key="titleColor" cocoaTouchSystemColor="lightTextColor"/>
                                 </state>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YCS-6P-hwz" customClass="MDCFloatingButton">
-                                <rect key="frame" x="174" y="167" width="26" height="34"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YCS-6P-hwz" customClass="MDCFloatingButton">
+                                <rect key="frame" x="161" y="175" width="52" height="52"/>
                                 <inset key="contentEdgeInsets" minX="16" minY="16" maxX="0.0" maxY="0.0"/>
-                                <state key="normal" title="+">
+                                <state key="normal" image="plus_white_36">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
@@ -84,10 +84,10 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="flatButton" destination="bvE-5P-0PG" id="8px-6Z-f5o"/>
+                        <outlet property="containedButton" destination="Dqo-nu-adB" id="wM8-hW-eZt"/>
                         <outlet property="floatingActionButton" destination="YCS-6P-hwz" id="Mw6-3r-5YL"/>
                         <outlet property="inkBoundingSwitch" destination="2pb-ML-fiY" id="LUP-MI-2Lq"/>
-                        <outlet property="raisedButton" destination="Dqo-nu-adB" id="rEm-SL-wQr"/>
+                        <outlet property="textButton" destination="bvE-5P-0PG" id="8px-6Z-f5o"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z12-Wq-Srl" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -95,5 +95,8 @@
             <point key="canvasLocation" x="-298" y="87"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="plus_white_36" width="36" height="36"/>
+    </resources>
     <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

@@ -1,31 +1,27 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License. */
-
-/** Protocol implemented by a text field controlled by a |MDCTextFieldController|. */
-
-#import "MaterialTextFields.h"
+#import "MDCTextInput.h"
 
 extern const CGFloat MDCTextInputBorderRadius;
 extern const CGFloat MDCTextInputFullPadding;
 extern const CGFloat MDCTextInputHalfPadding;
 
-/** A controller for common traits shared by text inputs. */
-@interface MDCTextInputCommonFundament : NSObject <MDCTextInput, NSCopying, NSCoding>
+UIKIT_EXTERN UIColor *_Nonnull MDCTextInputCursorColor(void);
 
-/** The color of the caret indicating where inputted characters will be placed (in the text.) */
-@property(nonatomic, nullable, strong) UIColor *cursorColor;
+/** A controller for common traits shared by text inputs. */
+@interface MDCTextInputCommonFundament : NSObject <MDCTextInput, NSCopying>
 
 /**
  An overlay view on the side of the input where reading and writing lines begin. In LTR this is
@@ -66,6 +62,7 @@ extern const CGFloat MDCTextInputHalfPadding;
 /** Mirror of UIView's updateConstraints(). */
 - (void)updateConstraintsOfInput;
 
-- (nullable instancetype)initWithCoder:(NSCoder *_Nonnull)aDecoder NS_DESIGNATED_INITIALIZER;
+/** Clear button did touch event. */
+- (void)clearButtonDidTouch;
 
 @end

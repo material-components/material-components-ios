@@ -1,31 +1,36 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <UIKit/UIKit.h>
 
 #import "MaterialAppBar.h"
+#import "MaterialAppBar+ColorThemer.h"
 
 @interface AppBarInterfaceBuilderExample : UIViewController <UIScrollViewDelegate>
 
 @property(nonatomic, weak) IBOutlet UIScrollView *scrollView;
-@property(nonatomic, strong) MDCAppBar *appBar;
+@property(nonatomic, strong) MDCAppBarViewController *appBarViewController;
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 
 @end
 
 @implementation AppBarInterfaceBuilderExample
+
+- (void)dealloc {
+  // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
+  self.appBarViewController.headerView.trackingScrollView = nil;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -46,24 +51,29 @@
 }
 
 - (void)commonAppBarInterfaceBuilderExampleSetup {
-  self.appBar = [[MDCAppBar alloc] init];
-  [self addChildViewController:self.appBar.headerViewController];
-  UIColor *headerColor = [UIColor colorWithWhite:0.2 alpha:1];
-  self.appBar.headerViewController.headerView.backgroundColor = headerColor;
+  self.appBarViewController = [[MDCAppBarViewController alloc] init];
 
-  MDCAppBarTextColorAccessibilityMutator *mutator =
-      [[MDCAppBarTextColorAccessibilityMutator alloc] init];
-  [mutator mutate:_appBar];
+  // Behavioral flags.
+  self.appBarViewController.inferTopSafeAreaInsetFromViewController = YES;
+  self.appBarViewController.headerView.minMaxHeightIncludesSafeArea = NO;
+
+  self.colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  [self addChildViewController:self.appBarViewController];
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.appBar.headerViewController.headerView.trackingScrollView = self.scrollView;
+  [MDCAppBarColorThemer applyColorScheme:self.colorScheme toAppBarViewController:self.appBarViewController];
 
-  self.scrollView.delegate = self.appBar.headerViewController;
+  // Allows us to avoid forwarding events, but means we can't enable shift behaviors.
+  self.appBarViewController.headerView.observesTrackingScrollViewScrollEvents = YES;
 
-  [self.appBar addSubviewsToParent];
+  self.appBarViewController.headerView.trackingScrollView = self.scrollView;
+
+  [self.view addSubview:self.appBarViewController.view];
+  [self.appBarViewController didMoveToParentViewController:self];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -75,16 +85,13 @@
 
 @implementation AppBarInterfaceBuilderExample (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"App Bar", @"Interface Builder" ];
-}
-
-+ (NSString *)catalogStoryboardName {
-  return @"AppBarInterfaceBuilderExampleController";
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"App Bar", @"Interface Builder" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+    @"storyboardName": @"AppBarInterfaceBuilderExampleController"
+  };
 }
 
 - (BOOL)catalogShouldHideNavigation {

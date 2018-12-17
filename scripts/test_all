@@ -33,41 +33,28 @@ function guess_failure() {
   fi
 }
 
-if [[ $# -lt 1 ]]; then
-  WORKSPACE_SCHEMES=$("$SCRIPTS_DIR"/xcode/list_all_xcode_schemes)
-else
-  WORKSPACE_SCHEMES=$*
+xcodebuid_test() {
+  if hash xcpretty 2>/dev/null; then
+    set -o pipefail # Required for xcpretty to propagate failure.
+    xcodebuild test "${@:1}" "$COVERAGE_OPTIONS" -destination "$DESTINATION" | xcpretty
+  else
+    xcodebuild test "${@:1}" "$COVERAGE_OPTIONS" -destination "$DESTINATION"
+  fi
+}
+
+if [ ! -d "$ROOT_DIR/catalog/MDCCatalog.xcworkspace" ]; then
+  pod install --project-directory="$ROOT_DIR/catalog"
 fi
 
-all_tests_ok=1
-for workspace_scheme in $WORKSPACE_SCHEMES; do
-  workspace=$(echo $workspace_scheme | cut -d: -f1)
-  scheme=$(echo $workspace_scheme | cut -d: -f2)
+did_any_fail=false
 
-  # Assume any scheme with the name "*Tests*" is a testing scheme.
-  if [[ $scheme != *Tests* ]]; then
-    continue
-  fi
-  echo $workspace $scheme
-  log_file=$(dirname "$workspace")/"test_log_for_scheme_${scheme}.txt"
-  options="-workspace $workspace -scheme $scheme"
-  if xcodebuild test $options $COVERAGE_OPTIONS -destination "$DESTINATION" >"$log_file" 2>&1; then
-    rm "$log_file"
-  else
-    all_tests_ok=0
-    echo
-    echo "Failed to test $scheme in $workspace."
-    guess_failure "$log_file"
-    echo "Log left in $log_file."
-    echo "Continuing with next test..."
-    echo
-  fi
-done
+xcodebuid_test \
+  -workspace "$ROOT_DIR/catalog/MDCCatalog.xcworkspace" \
+  -scheme "MDCCatalog"
+if [ $? -ne 0 ]; then
+  did_any_fail=true
+fi
 
-# If any test failed, exit with a failure exit status so continuous integration
-# tools can react appropriately.
-if [ "$all_tests_ok" -eq 1 ]; then
-  exit 0
-else
+if $did_any_fail; then
   exit 1
 fi

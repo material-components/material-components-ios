@@ -1,13 +1,18 @@
 <!--docs:
-title: "Feature Highlights"
+title: "Feature highlight"
 layout: detail
 section: components
-excerpt: "Feature Highlight highlights a part of the screen in order to introduce users to new features and functionality."
+excerpt: "Feature highlight highlights a part of the screen in order to introduce users to new features and functionality."
 iconId: feature_highlight
 path: /catalog/feature-highlights/
+api_doc_root: true
 -->
 
-# Feature Highlight
+<!-- This file was auto-generated using ./scripts/generate_readme FeatureHighlight -->
+
+# Feature highlight
+
+[![Open bugs badge](https://img.shields.io/badge/dynamic/json.svg?label=open%20bugs&url=https%3A%2F%2Fapi.github.com%2Fsearch%2Fissues%3Fq%3Dis%253Aopen%2Blabel%253Atype%253ABug%2Blabel%253A%255BFeatureHighlight%255D&query=%24.total_count)](https://github.com/material-components/material-components-ios/issues?q=is%3Aopen+is%3Aissue+label%3Atype%3ABug+label%3A%5BFeatureHighlight%5D)
 
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/feature_highlight.png" alt="Feature Highlight" width="375">
@@ -15,61 +20,72 @@ path: /catalog/feature-highlights/
 
 The Feature Highlight component is a way to visually highlight a part of the screen in order to introduce users to new features and functionality.
 
-## Design & API Documentation
+## Design & API documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/growth-communications/feature-discovery.html">Material Design guidelines: Feature Discovery</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/feature-highlights/api-docs/Classes/MDCFeatureHighlightView.html">MDCFeatureHighlightView</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/feature-highlights/api-docs/Classes/MDCFeatureHighlightViewController.html">MDCFeatureHighlightViewController</a></li>
 </ul>
+
+## Table of contents
+
+- [Installation](#installation)
+  - [Installation with CocoaPods](#installation-with-cocoapods)
+  - [Importing](#importing)
+- [Usage](#usage)
+  - [Typical use: highlight a view](#typical-use-highlight-a-view)
+- [Extensions](#extensions)
+  - [Color Theming](#color-theming)
+  - [Typography Theming](#typography-theming)
 
 - - -
 
 ## Installation
 
-### Requirements
-
-- Xcode 7.0 or higher.
-- iOS SDK version 7.0 or higher.
+<!-- Extracted from docs/../../../docs/component-installation.md -->
 
 ### Installation with CocoaPods
 
-To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
+Add the following to your `Podfile`:
 
-```
+```bash
 pod 'MaterialComponents/FeatureHighlight'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 
-``` bash
+```bash
 pod install
 ```
 
-- - -
-
-## Usage
-
 ### Importing
 
-Before using Feature Highlight, you'll need to import it:
+To import the component:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 import MaterialComponents.MaterialFeatureHighlight
 ```
 
 #### Objective-C
-``` objc
+
+```objc
 #import "MaterialFeatureHighlight.h"
 ```
 <!--</div>-->
 
-### Highlighting a view
+
+## Usage
+
+<!-- Extracted from docs/typical-use-highlight-a-view.md -->
+
+### Typical use: highlight a view
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 let completion = {(accepted: Bool) in
   // perform analytics here
   // and record whether the highlight was accepted
@@ -85,7 +101,7 @@ present(highlightController, animated: true, completion:nil)
 ```
 
 #### Objective-C
-``` objc
+```objc
 MDCFeatureHighlightCompletion completion = ^(BOOL accepted) {
   // perform analytics here
   // and record whether the highlight was accepted
@@ -106,7 +122,7 @@ Often when highlighting a view you will want to display a different view to the 
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 let displayedButton = UIButton(type: .system)
 displayedButton.setTitle(highlightedButton.title(for: .normal), for: .normal)
 displayedButton.setTitleColor(highlightedButton.backgroundColor, for: .normal)
@@ -116,7 +132,7 @@ let highlightController = MDCFeatureHighlightViewController(highlightedView: hig
 ```
 
 #### Objective-C
-``` objc
+```objc
 UIButton *displayedButton = [UIButton buttonWithType:UIButtonTypeSystem];
 [displayedButton setTitle:[highlightedButton titleForState:UIControlStateNormal]
                  forState:UIControlStateNormal];
@@ -128,3 +144,87 @@ MDCFeatureHighlightViewController *highlightController =
                                                         completion:completion];
 ```
 <!--</div>-->
+
+
+## Extensions
+
+<!-- Extracted from docs/color-theming.md -->
+
+### Color Theming
+
+You can theme feature highlight with your app's color scheme using the ColorThemer extension.
+
+You must first add the Color Themer extension to your project:
+
+```bash
+pod 'MaterialComponents/FeatureHighlight+ColorThemer'
+```
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// Step 1: Import the ColorThemer extension
+import MaterialComponents.MaterialFeatureHighlight_ColorThemer
+
+// Step 2: Create or get a color scheme
+let colorScheme = MDCSemanticColorScheme()
+
+// Step 3: Apply the color scheme to your component
+MDCFeatureHighlightColorThemer.applySemanticColorScheme(colorScheme, to: component)
+```
+
+#### Objective-C
+
+```objc
+// Step 1: Import the ColorThemer extension
+#import "MaterialFeatureHighlight+ColorThemer.h"
+
+// Step 2: Create or get a color scheme
+id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+
+// Step 3: Apply the color scheme to your component
+[MDCFeatureHighlightColorThemer applySemanticColorScheme:colorScheme
+     toFeatureHighlightViewController:component];
+```
+<!--</div>-->
+
+<!-- Extracted from docs/typography-theming.md -->
+
+### Typography Theming
+
+You can theme feature highlight with your app's typography scheme using the TypographyThemer extension.
+
+You must first add the Typography Themer extension to your project:
+
+```bash
+pod 'MaterialComponents/FeatureHighlight+TypographyThemer'
+```
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// Step 1: Import the TypographyThemer extension
+import MaterialComponents.MaterialFeatureHighlight_TypographyThemer
+
+// Step 2: Create or get a typography scheme
+let typographyScheme = MDCTypographyScheme()
+
+// Step 3: Apply the typography scheme to your component
+MDCFeatureHighlightTypographyThemer.applyTypographyScheme(typographyScheme, to: component)
+```
+
+#### Objective-C
+
+```objc
+// Step 1: Import the TypographyThemer extension
+#import "MaterialFeatureHighlight+TypographyThemer.h"
+
+// Step 2: Create or get a typography scheme
+id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
+
+// Step 3: Apply the typography scheme to your component
+[MDCFeatureHighlightTypographyThemer applyTypographyScheme:colorScheme
+     toFeatureHighlightViewController:component];
+```
+<!--</div>-->
+

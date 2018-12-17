@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 // swiftlint:disable function_body_length
 
@@ -151,6 +149,15 @@ final class TextFieldLegacySwiftExample: UIViewController {
 
     scrollView.addSubview(message)
     let messageController = MDCTextInputControllerLegacyDefault(textInput: message)
+    #if swift(>=3.2)
+      message.text = """
+      This is where you could put a multi-line message like an email.
+
+      It can even handle new lines.
+      """
+    #else
+      message.text = "This is where you could put a multi-line message like an email. It can even handle new lines./n"
+    #endif
     message.textView?.delegate = self
     messageController.placeholderText = "Message"
     allTextFieldControllers.append(messageController)
@@ -321,10 +328,10 @@ extension TextFieldLegacySwiftExample: UITextFieldDelegate {
 
     if textField == zip {
       if let range = fullString.rangeOfCharacter(from: CharacterSet.letters),
-        fullString[range].characters.count > 0 {
+        fullString[range].characterCount > 0 {
         zipController.setErrorText("Error: Zip can only contain numbers",
                                    errorAccessibilityValue: nil)
-      } else if fullString.characters.count > 5 {
+      } else if fullString.characterCount > 5 {
         zipController.setErrorText("Error: Zip can only contain five digits",
                                    errorAccessibilityValue: nil)
       } else {
@@ -332,7 +339,7 @@ extension TextFieldLegacySwiftExample: UITextFieldDelegate {
       }
     } else if textField == city {
       if let range = fullString.rangeOfCharacter(from: CharacterSet.decimalDigits),
-        fullString[range].characters.count > 0 {
+        fullString[range].characterCount > 0 {
         cityController.setErrorText("Error: City can only contain letters",
                                     errorAccessibilityValue: nil)
       } else {
@@ -407,8 +414,12 @@ extension TextFieldLegacySwiftExample {
 }
 
 extension TextFieldLegacySwiftExample {
-  class func catalogBreadcrumbs() -> [String] {
-    return ["Text Field", "[Legacy] Typical Use"]
-  }
 
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Text Field", "[Legacy] Typical Use"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
+  }
 }

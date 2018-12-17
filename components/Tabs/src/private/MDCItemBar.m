@@ -1,43 +1,43 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCItemBar.h"
 
+#import <MDFInternationalization/MDFInternationalization.h>
+
 #import "MDCItemBarCell.h"
 #import "MDCItemBarStyle.h"
+#import "MDCTabBarIndicatorAttributes.h"
+#import "MDCTabBarIndicatorTemplate.h"
+#import "MDCTabBarIndicatorView.h"
+#import "MDCTabBarPrivateIndicatorContext.h"
 #import "MaterialAnimationTiming.h"
-#import "MaterialRTL.h"
-
-/// Height in points of the bar shown under selected items.
-static const CGFloat kSelectionIndicatorHeight = 2.0f;
 
 /// Cell reuse identifier for item bar cells.
 static NSString *const kItemReuseID = @"MDCItem";
 
 /// Default duration in seconds for selection change animations.
-static const NSTimeInterval kDefaultAnimationDuration = 0.3f;
+static const NSTimeInterval kDefaultAnimationDuration = 0.3;
 
 /// Placeholder width for cells, which get per-item sizing.
-static const CGFloat kPlaceholderCellWidth = 10.0f;
+static const CGFloat kPlaceholderCellWidth = 10;
 
 /// Horizontal insets in regular size class layouts.
-static const CGFloat kRegularInset = 56.0f;
+static const CGFloat kRegularInset = 56;
 
 /// Horizontal insets in compact size class layouts.
-static const CGFloat kCompactInset = 8.0f;
+static const CGFloat kCompactInset = 8;
 
 /// KVO context pointer identifying changes in MDCItemBarItem properties.
 static void *kItemPropertyContext = &kItemPropertyContext;
@@ -65,14 +65,14 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   UICollectionView *_collectionView;
   UICollectionViewFlowLayout *_flowLayout;
 
-  /// Underline displayed under the active item.
-  UIView *_selectionIndicator;
+  /// Indicator layered under the active item.
+  MDCTabBarIndicatorView *_selectionIndicator;
 
   /// Size of the view at last layout, for deduplicating changes.
   CGSize _lastSize;
 
-  /// Horizontal size class at the last item metrics update. Used to calculate deltas.
-  UIUserInterfaceSizeClass _horizontalSizeClassAtLastMetricsUpdate;
+  /// Width of the collection view accounting for SafeAreaInsets at last layout.
+  CGFloat _lastAdjustedCollectionViewWidth;
 
   /// Current style properties.
   MDCItemBarStyle *_style;
@@ -102,31 +102,31 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   _alignment = MDCItemBarAlignmentLeading;
   _style = [[MDCItemBarStyle alloc] init];
   _items = @[];
-  _horizontalSizeClassAtLastMetricsUpdate = UIUserInterfaceSizeClassUnspecified;
 
   // Configure the collection view.
   _flowLayout = [self generatedFlowLayout];
   UICollectionView *collectionView =
       [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:_flowLayout];
   collectionView.backgroundColor = [UIColor clearColor];
-  collectionView.clipsToBounds = YES;
+  collectionView.clipsToBounds = NO;
   collectionView.scrollsToTop = NO;
   collectionView.showsHorizontalScrollIndicator = NO;
   collectionView.showsVerticalScrollIndicator = NO;
+
+  if (@available(iOS 11.0, *)) {
+    collectionView.contentInsetAdjustmentBehavior =
+        UIScrollViewContentInsetAdjustmentScrollableAxes;
+  }
+
   collectionView.dataSource = self;
   collectionView.delegate = self;
-  collectionView.autoresizingMask =
-      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   [collectionView registerClass:[MDCItemBarCell class] forCellWithReuseIdentifier:kItemReuseID];
 
   _collectionView = collectionView;
   [self addSubview:_collectionView];
 
   // Configure the selection indicator view.
-  _selectionIndicator =
-      [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 0.0f, kSelectionIndicatorHeight)];
-  _selectionIndicator.backgroundColor = [UIColor whiteColor];
-  _selectionIndicator.opaque = YES;
+  _selectionIndicator = [[MDCTabBarIndicatorView alloc] initWithFrame:CGRectZero];
   [_collectionView addSubview:_selectionIndicator];
 
   // Set initial properties.
@@ -153,6 +153,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
     [self updateColors];
     [self updateAlignmentAnimated:NO];
     [self updateSelectionIndicatorVisibility];
+    [self updateSelectionIndicatorToIndex:[self indexForItem:_selectedItem]];
     [self configureVisibleCells];
     [self invalidateIntrinsicContentSize];
   }
@@ -275,13 +276,20 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   _collectionView.frame = bounds;
 
   // Update collection metrics if the size has changed.
-  if (!CGSizeEqualToSize(bounds.size, _lastSize)) {
+  if (!CGSizeEqualToSize(bounds.size, _lastSize) ||
+      [self adjustedCollectionViewWidth] != _lastAdjustedCollectionViewWidth) {
     [self updateFlowLayoutMetrics];
 
-    // Ensure selected item is aligned properly on resize.
+    // Ensure selected item is aligned properly on resize, forcing the new layout to take effect.
+    [_collectionView layoutIfNeeded];
+
     [self selectItemAtIndex:[self indexForItem:_selectedItem] animated:NO];
   }
   _lastSize = bounds.size;
+  _lastAdjustedCollectionViewWidth = [self adjustedCollectionViewWidth];
+
+  // The selection indicator must be behind all cells, regardless of the collection view's layout.
+  [_collectionView sendSubviewToBack:_selectionIndicator];
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
@@ -291,6 +299,13 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
 - (CGSize)intrinsicContentSize {
   return CGSizeMake(UIViewNoIntrinsicMetric, [[self class] defaultHeightForStyle:_style]);
+}
+
+- (void)safeAreaInsetsDidChange {
+  if (@available(iOS 11.0, *)) {
+    [super safeAreaInsetsDidChange];
+  }
+  [self setNeedsLayout];
 }
 
 - (void)didMoveToWindow {
@@ -387,14 +402,13 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
   // Size cell to fit content.
   size = [MDCItemBarCell sizeThatFits:size
-                  horizontalSizeClass:[self horizontalSizeClass]
                                  item:item
                                 style:_style];
 
   // Divide justified items evenly across the view.
   if (_alignment == MDCItemBarAlignmentJustified) {
     NSInteger count = [self collectionView:_collectionView numberOfItemsInSection:0];
-    size.width = _collectionView.bounds.size.width / MAX(count, 1);
+    size.width = [self adjustedCollectionViewWidth] / MAX(count, 1);
   }
 
   // Constrain to style-based width if necessary.
@@ -403,15 +417,22 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   }
 
   // Constrain to view width
-  size.width = MIN(size.width, CGRectGetWidth(collectionView.frame));
+  size.width = MIN(size.width, [self adjustedCollectionViewWidth]);
 
   // Force height to our height.
   size.height = itemHeight;
-
   return size;
 }
 
 #pragma mark - Private
+
+- (CGFloat)adjustedCollectionViewWidth {
+  if (@available(iOS 11.0, *)) {
+    return CGRectGetWidth(UIEdgeInsetsInsetRect(_collectionView.bounds,
+                                                _collectionView.adjustedContentInset));
+  }
+  return CGRectGetWidth(_collectionView.bounds);
+}
 
 + (NSArray *)observableItemKeys {
   static dispatch_once_t onceToken;
@@ -450,14 +471,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 }
 
 - (UIUserInterfaceSizeClass)horizontalSizeClass {
-  // Use trait collection's horizontalSizeClass if available.
-  if ([self respondsToSelector:@selector(traitCollection)]) {
-    return self.traitCollection.horizontalSizeClass;
-  }
-
-  // Pre-iOS 8: Use fixed size class for device.
-  BOOL isPad = ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad);
-  return isPad ? UIUserInterfaceSizeClassRegular : UIUserInterfaceSizeClassCompact;
+  return self.traitCollection.horizontalSizeClass;
 }
 
 - (void)selectItemAtIndex:(NSUInteger)index animated:(BOOL)animated {
@@ -501,25 +515,33 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   flowLayout.itemSize = CGSizeMake(kPlaceholderCellWidth, itemHeight);
   flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
   flowLayout.sectionInset = UIEdgeInsetsZero;
-  flowLayout.minimumInteritemSpacing = 0.0f;
-  flowLayout.minimumLineSpacing = 0.0f;
+  flowLayout.minimumInteritemSpacing = 0;
+  flowLayout.minimumLineSpacing = 0;
   return flowLayout;
 }
 
 - (void)didSelectItemAtIndex:(NSInteger)index animateTransition:(BOOL)animate {
   void (^animationBlock)(void) = ^{
     [self updateSelectionIndicatorToIndex:index];
+
+    // Force layout so any changes to the selection indicator are captured by the animation block.
+    [self->_selectionIndicator layoutIfNeeded];
   };
 
   if (animate) {
     CAMediaTimingFunction *easeInOutFunction =
         [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
-    [UIView mdc_animateWithTimingFunction:easeInOutFunction
-                                 duration:kDefaultAnimationDuration
-                                    delay:0
-                                  options:UIViewAnimationOptionBeginFromCurrentState
-                               animations:animationBlock
-                               completion:nil];
+    // Wrap in explicit CATransaction to allow layer-based animations with the correct duration.
+    [CATransaction begin];
+    [CATransaction setAnimationDuration:kDefaultAnimationDuration];
+    [CATransaction setAnimationTimingFunction:easeInOutFunction];
+    [UIView animateWithDuration:kDefaultAnimationDuration
+                          delay:0
+                        options:UIViewAnimationOptionBeginFromCurrentState
+                     animations:animationBlock
+                     completion:nil];
+    [CATransaction commit];
+
   } else {
     animationBlock();
   }
@@ -540,20 +562,38 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   }
 
   // Use layout attributes as the cell may not be visible or loaded yet.
-  UICollectionViewLayoutAttributes *attributes =
-      [_flowLayout layoutAttributesForItemAtIndexPath:[self indexPathForItemAtIndex:index]];
+  NSIndexPath *indexPath = [self indexPathForItemAtIndex:index];
+  UICollectionViewLayoutAttributes *layoutAttributes =
+      [_flowLayout layoutAttributesForItemAtIndexPath:indexPath];
 
-  // Size selection indicator to a fixed height, equal in width to the selected item's cell.
-  CGRect selectionIndicatorBounds = attributes.bounds;
-  selectionIndicatorBounds.size.height = kSelectionIndicatorHeight;
-
-  // Center selection indicator under cell.
-  CGPoint selectionIndicatorCenter = attributes.center;
-  selectionIndicatorCenter.y =
-      CGRectGetMaxY(_collectionView.bounds) - (kSelectionIndicatorHeight / 2.0f);
-
+  // Place selection indicator under the item's cell.
+  CGRect selectionIndicatorBounds = layoutAttributes.bounds;
+  CGPoint selectionIndicatorCenter = layoutAttributes.center;
   _selectionIndicator.bounds = selectionIndicatorBounds;
   _selectionIndicator.center = selectionIndicatorCenter;
+
+  // Extract content frame from cell.
+  CGRect contentFrame = selectionIndicatorBounds;
+  UICollectionViewCell *cell = [_collectionView cellForItemAtIndexPath:indexPath];
+  if ([cell isKindOfClass:[MDCItemBarCell class]]) {
+    MDCItemBarCell *itemBarCell = (MDCItemBarCell *)cell;
+    contentFrame = [cell convertRect:itemBarCell.contentFrame fromView:cell];
+  }
+
+  // Construct a context object describing the selected tab.
+  UITabBarItem *item = [self itemAtIndexPath:indexPath];
+  MDCTabBarPrivateIndicatorContext *context =
+      [[MDCTabBarPrivateIndicatorContext alloc] initWithItem:item
+                                                      bounds:selectionIndicatorBounds
+                                                contentFrame:contentFrame];
+
+  // Ask the template for attributes.
+  id<MDCTabBarIndicatorTemplate> template = _style.selectionIndicatorTemplate;
+  MDCTabBarIndicatorAttributes *indicatorAttributes =
+      [template indicatorAttributesForContext:context];
+
+  // Update the selection indicator.
+  [_selectionIndicator applySelectionIndicatorAttributes:indicatorAttributes];
 }
 
 - (void)updateFlowLayoutMetricsAnimated:(BOOL)animate {
@@ -562,14 +602,16 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   };
 
   if (animate) {
-    CAMediaTimingFunction *easeInOutFunction =
+    [CATransaction begin];
+    CAMediaTimingFunction *easeInOut =
         [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
-    [UIView mdc_animateWithTimingFunction:easeInOutFunction
-                                 duration:kDefaultAnimationDuration
-                                    delay:0.0f
-                                  options:UIViewAnimationOptionBeginFromCurrentState
-                               animations:animationBlock
-                               completion:nil];
+    [CATransaction setAnimationTimingFunction:easeInOut];
+    [UIView animateWithDuration:kDefaultAnimationDuration
+                          delay:0
+                        options:UIViewAnimationOptionBeginFromCurrentState
+                     animations:animationBlock
+                     completion:nil];
+    [CATransaction commit];
   } else {
     animationBlock();
   }
@@ -580,10 +622,6 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 }
 
 - (void)updateFlowLayoutMetrics {
-  // Layout metrics cannot be updated while offscreen.
-  if (!self.window) {
-    return;
-  }
 
   UIUserInterfaceSizeClass horizontalSizeClass = [self horizontalSizeClass];
 
@@ -603,14 +641,6 @@ static void *kItemPropertyContext = &kItemPropertyContext;
       break;
   }
 
-  UIEdgeInsets oldSectionInset = _flowLayout.sectionInset;
-  if (UIEdgeInsetsEqualToEdgeInsets(oldSectionInset, newSectionInset) &&
-      _alignment != MDCItemBarAlignmentJustified) {
-    // No change - can bail early, except when the item alignment is "justified". When justified,
-    // the layout metrics need updating due to change in view size or orientation.
-    return;
-  }
-
   // Rather than just updating the sectionInset on the existing flowLayout, a new layout object
   // is created. This gives more control over whether the change is animated or not - as there is
   // no control when updating flow layout sectionInset (it's always animated).
@@ -621,35 +651,41 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   // This is not animated because -updateFlowLayoutMetrics may be called in an animation block and
   // the change will be still get animated anyway - using NO avoids 'double' animation and allows
   // this method to be used without animation.
-  NSAssert(_collectionView.window, @"Collection view must be in a window to update layout");
   [_collectionView setCollectionViewLayout:_flowLayout animated:NO];
+
+  // Force immediate layout so the selection indicator can be placed accurately.
+  [_collectionView layoutIfNeeded];
 
   // Update selection indicator to potentially new location and size
   // Not animated for the same reason as mentioned above.
   [self updateSelectionIndicatorToIndex:[self indexForItem:_selectedItem]];
-
-  _horizontalSizeClassAtLastMetricsUpdate = horizontalSizeClass;
 }
 
 - (UIEdgeInsets)leadingAlignedInsetsForHorizontalSizeClass:(UIUserInterfaceSizeClass)sizeClass {
   const BOOL isRegular = (sizeClass == UIUserInterfaceSizeClassRegular);
-  const CGFloat inset = isRegular ? kRegularInset : kCompactInset;
-  return UIEdgeInsetsMake(0.0f, inset, 0.0f, inset);
+  CGFloat inset = isRegular ? kRegularInset : kCompactInset;
+  // If the collection view has Safe Area insets, we don't want to add an extra horizontal inset.
+  if (@available(iOS 11.0, *)) {
+    if (_collectionView.safeAreaInsets.left > 0 || _collectionView.safeAreaInsets.right > 0) {
+      inset = 0;
+    }
+  }
+  return UIEdgeInsetsMake(0, inset, 0, inset);
 }
 
 - (UIEdgeInsets)justifiedInsets {
   // Center items, which will be at most the width of the view.
   CGFloat itemWidths = [self totalWidthOfAllItems];
-  CGFloat sideInsets = floorf((float)(_collectionView.bounds.size.width - itemWidths) / 2.0f);
+  CGFloat sideInsets = floorf((float)([self adjustedCollectionViewWidth] - itemWidths) / 2);
   return UIEdgeInsetsMake(0.0, sideInsets, 0.0, sideInsets);
 }
 
 - (UIEdgeInsets)centeredInsetsForHorizontalSizeClass:(UIUserInterfaceSizeClass)sizeClass {
   CGFloat itemWidths = [self totalWidthOfAllItems];
-  CGFloat viewWidth = _collectionView.bounds.size.width;
+  CGFloat viewWidth = [self adjustedCollectionViewWidth];
   UIEdgeInsets insets = [self leadingAlignedInsetsForHorizontalSizeClass:sizeClass];
   if (itemWidths <= (viewWidth - insets.left - insets.right)) {
-    CGFloat sideInsets = (_collectionView.bounds.size.width - itemWidths) / 2.0f;
+    CGFloat sideInsets = ([self adjustedCollectionViewWidth] - itemWidths) / 2;
     return UIEdgeInsetsMake(0.0, sideInsets, 0.0, sideInsets);
   }
   return insets;
@@ -660,8 +696,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
   NSInteger count = [self collectionView:_collectionView numberOfItemsInSection:0];
   if (count > 0) {
-    CGRect bounds = _collectionView.bounds;
-    CGFloat halfBoundsWidth = bounds.size.width / 2.0f;
+    CGFloat halfBoundsWidth = [self adjustedCollectionViewWidth] / 2;
 
     CGSize firstSize = [self collectionView:_collectionView
                                      layout:_flowLayout
@@ -671,11 +706,11 @@ static void *kItemPropertyContext = &kItemPropertyContext;
                     sizeForItemAtIndexPath:[self indexPathForItemAtIndex:count - 1]];
 
     // Left inset is equal to the space to the left of the first item when centered.
-    CGFloat halfFirstWidth = firstSize.width / 2.0f;
+    CGFloat halfFirstWidth = firstSize.width / 2;
     sectionInset.left = halfBoundsWidth - halfFirstWidth;
 
     // Right inset is equal to the space to the right of the last item when centered.
-    CGFloat halfLastWidth = lastSize.width / 2.0f;
+    CGFloat halfLastWidth = lastSize.width / 2;
     sectionInset.right = halfBoundsWidth - halfLastWidth;
   }
   return sectionInset;
@@ -710,7 +745,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 - (void)updateColors {
   [self configureVisibleCells];
 
-  _selectionIndicator.backgroundColor = _style.selectionIndicatorColor;
+  _selectionIndicator.tintColor = _style.selectionIndicatorColor;
 }
 
 - (void)updateSelectionIndicatorVisibility {
@@ -719,7 +754,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
 @end
 
-#pragma mark -
+#pragma mark - MDCItemBarFlowLayout
 
 @implementation MDCItemBarFlowLayout {
   /// Map from item index paths to RTL-corrected layout attributes. If no RTL correction is in
@@ -776,7 +811,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   // Apply global content size padding.
   if (shouldPadContentSizeForRTL) {
     _isPaddingCollectionViewContentSize = YES;
-    _paddedCollectionViewContentSize = self.collectionView.bounds.size;
+    _paddedCollectionViewContentSize = [self adjustedCollectionViewBounds].size;
   } else {
     _isPaddingCollectionViewContentSize = NO;
   }
@@ -832,27 +867,18 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
   // Must call super here to ensure we have the original collection bounds.
   CGRect collectionBounds = {CGPointZero, [super collectionViewContentSize]};
-  newAttributes.frame = MDCRectFlippedForRTL(itemFrame, CGRectGetWidth(collectionBounds),
-                                             UIUserInterfaceLayoutDirectionRightToLeft);
+  newAttributes.frame = MDFRectFlippedHorizontally(itemFrame, CGRectGetWidth(collectionBounds));
 
   return newAttributes;
 }
 
 - (BOOL)shouldEnforceRightToLeftLayout {
-  BOOL enforceRTL = NO;
-
   // Prior to iOS 9 RTL was not automatically applied, so we don't need to apply any fixes.
   NSOperatingSystemVersion iOS9Version = {9, 0, 0};
+  UIUserInterfaceLayoutDirection rtl = UIUserInterfaceLayoutDirectionRightToLeft;
   NSProcessInfo *processInfo = [NSProcessInfo processInfo];
-  if ([processInfo respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)] &&
-      [processInfo isOperatingSystemAtLeastVersion:iOS9Version]) {
-    if (self.collectionView.mdc_effectiveUserInterfaceLayoutDirection ==
-        UIUserInterfaceLayoutDirectionRightToLeft) {
-      enforceRTL = YES;
-    }
-  }
-
-  return enforceRTL;
+  return [processInfo isOperatingSystemAtLeastVersion:iOS9Version] &&
+    self.collectionView.mdf_effectiveUserInterfaceLayoutDirection == rtl;
 }
 
 /// Indicates if the superclass' layout appears to have been layed out in a left-to-right order. If
@@ -918,7 +944,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   // on the left to prevent the layout from "jumping" to the origin under various situations.
   // Must call super here to ensure we have the original collection content size.
   CGSize contentSize = [super collectionViewContentSize];
-  CGRect scrollBounds = self.collectionView.bounds;
+  CGRect scrollBounds = [self adjustedCollectionViewBounds];
   return contentSize.width < CGRectGetWidth(scrollBounds);
 }
 
@@ -926,7 +952,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
         (UICollectionViewLayoutAttributes *)attributes {
   // Must call super here to ensure we have the original collection content size.
   CGSize contentSize = [super collectionViewContentSize];
-  CGRect scrollBounds = self.collectionView.bounds;
+  CGRect scrollBounds = [self adjustedCollectionViewBounds];
 
   CGFloat leftPadding = CGRectGetWidth(scrollBounds) - contentSize.width;
 
@@ -939,6 +965,14 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   newAttributes.frame = itemFrame;
 
   return newAttributes;
+}
+
+- (CGRect)adjustedCollectionViewBounds {
+  if (@available(iOS 11.0, *)) {
+    return UIEdgeInsetsInsetRect(self.collectionView.bounds,
+                                 self.collectionView.adjustedContentInset);
+  }
+  return self.collectionView.bounds;
 }
 
 @end

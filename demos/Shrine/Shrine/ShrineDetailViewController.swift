@@ -144,8 +144,15 @@ class ShrineDetailViewController: UIViewController {
   }
 
   override func viewWillLayoutSubviews() {
-    floatingButton.frame = CGRect(x: view.frame.width - floatingButton.frame.width - fabPadding,
-                                  y: view.frame.height - floatingButton.frame.height - fabPadding,
+    var safeAreaInset: CGFloat = 0
+    #if swift(>=3.2)
+      if #available(iOS 11.0, *) {
+        safeAreaInset = self.view.safeAreaInsets.bottom
+      }
+    #endif
+    let updatedFabPadding = max(fabPadding, safeAreaInset)
+    floatingButton.frame = CGRect(x: view.frame.width - floatingButton.frame.width - updatedFabPadding,
+                                  y: view.frame.height - floatingButton.frame.height - updatedFabPadding,
                                   width: floatingButton.frame.width,
                                   height: floatingButton.frame.height)
   }

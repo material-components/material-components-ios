@@ -1,17 +1,19 @@
-/*
- Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
- http://www.apache.org/licenses/LICENSE-2.0
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
-*/
+// Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "TypographyCustomFontViewController.h"
+
 #import "MaterialTypography.h"
 
 @implementation TypographyCustomFontViewController {
@@ -74,17 +76,17 @@ static inline UIFont *customFont(MDCFontTextStyle style) {
                    ];
 
    _opacities = @[
-                  [NSNumber numberWithFloat:[MDCTypography headlineFontOpacity]],
-                  [NSNumber numberWithFloat:[MDCTypography titleFontOpacity]],
-                  [NSNumber numberWithFloat:[MDCTypography subheadFontOpacity]],
-                  [NSNumber numberWithFloat:[MDCTypography body2FontOpacity]],
-                  [NSNumber numberWithFloat:[MDCTypography body1FontOpacity]],
-                  [NSNumber numberWithFloat:[MDCTypography captionFontOpacity]],
-                  [NSNumber numberWithFloat:[MDCTypography buttonFontOpacity]],
-                  [NSNumber numberWithFloat:[MDCTypography display1FontOpacity]],
-                  [NSNumber numberWithFloat:[MDCTypography display2FontOpacity]],
-                  [NSNumber numberWithFloat:[MDCTypography display3FontOpacity]],
-                  [NSNumber numberWithFloat:[MDCTypography display4FontOpacity]]
+                  @([MDCTypography headlineFontOpacity]),
+                  @([MDCTypography titleFontOpacity]),
+                  @([MDCTypography subheadFontOpacity]),
+                  @([MDCTypography body2FontOpacity]),
+                  @([MDCTypography body1FontOpacity]),
+                  @([MDCTypography captionFontOpacity]),
+                  @([MDCTypography buttonFontOpacity]),
+                  @([MDCTypography display1FontOpacity]),
+                  @([MDCTypography display2FontOpacity]),
+                  @([MDCTypography display3FontOpacity]),
+                  @([MDCTypography display4FontOpacity])
                   ];
 
    [[NSNotificationCenter defaultCenter] addObserver:self
@@ -149,12 +151,12 @@ static inline UIFont *customFont(MDCFontTextStyle style) {
 
 #pragma mark - CatalogByConvention
 
-+ (NSArray *)catalogBreadcrumbs {
-   return @[ @"Typography Custom Fonts", @"Material Font Styles" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-   return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Typography and Fonts", @"Custom Font Example" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
 
 @end

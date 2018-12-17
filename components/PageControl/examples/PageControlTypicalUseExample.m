@@ -1,22 +1,21 @@
-/*
- Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
-
+#import <MDFInternationalization/MDFInternationalization.h>
 #import <UIKit/UIKit.h>
 
-#import "MDCPageControl.h"
+#import "MaterialPageControl.h"
 
 @interface PageControlTypicalUseViewController : UIViewController <UIScrollViewDelegate>
 @end
@@ -30,17 +29,21 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  CGFloat boundsWidth = CGRectGetWidth(self.view.bounds);
-  CGFloat boundsHeight = CGRectGetHeight(self.view.bounds);
+  CGRect standardizedFrame = CGRectStandardize(self.view.frame);
+  CGFloat boundsWidth = CGRectGetWidth(standardizedFrame);
+  CGFloat boundsHeight = CGRectGetHeight(standardizedFrame);
 
   NSArray *pageColors = @[
-      [UIColor colorWithWhite:0.9 alpha:1.0],
-      [UIColor colorWithWhite:0.8 alpha:1.0],
-      [UIColor colorWithWhite:0.7 alpha:1.0],
+    [UIColor colorWithWhite:(CGFloat)0.9 alpha:1],
+    [UIColor colorWithWhite:(CGFloat)0.8 alpha:1],
+    [UIColor colorWithWhite:(CGFloat)0.7 alpha:1],
   ];
 
   // Scroll view configuration
   _scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+  if (@available(iOS 11.0, *)) {
+    _scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+  }
   _scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   _scrollView.delegate = self;
   _scrollView.pagingEnabled = YES;
@@ -51,29 +54,31 @@
   NSMutableArray *pages = [NSMutableArray array];
 
   // Add pages to scrollView.
-  for (NSInteger i = 0; i < pageColors.count; i++) {
-    CGRect pageFrame = CGRectOffset(self.view.bounds, i * boundsWidth, 0);
+  for (NSUInteger i = 0; i < pageColors.count; i++) {
+    CGFloat xOffset = [self xOffsetForPage:i numberOfPages:pageColors.count width:boundsWidth];
+    CGRect pageFrame = CGRectOffset(self.view.bounds, xOffset, 0);
     UILabel *page = [[UILabel alloc] initWithFrame:pageFrame];
-    page.text = [NSString stringWithFormat:@"Page %zd", i + 1];
+    CGFloat offsetMultiplier = [self offsetMultiplierForPage:i numberOfPages:pageColors.count];
+    page.text = [NSString stringWithFormat:@"Page %lu", (unsigned long)offsetMultiplier + 1];
     page.font = [UIFont systemFontOfSize:50];
-    page.textColor = [UIColor colorWithWhite:0 alpha:0.8];
+    page.textColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.8];
     page.textAlignment = NSTextAlignmentCenter;
     page.backgroundColor = pageColors[i];
     page.autoresizingMask =
         UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
     [_scrollView addSubview:page];
-    [pages addObject:page];
+    if ([self isRTL]) {
+      [pages insertObject:page atIndex:0];
+    } else {
+      [pages addObject:page];
+    }
   }
   _pages = [pages copy];
 
   // Page control configuration.
-  _pageControl = [[MDCPageControl alloc] init];
+  _pageControl = [[MDCPageControl alloc] initWithFrame:CGRectZero];
   _pageControl.numberOfPages = pageColors.count;
-
-  // We want the page control to span the bottom of the screen.
-  CGSize pageControlSize = [_pageControl sizeThatFits:self.view.bounds.size];
-  _pageControl.frame =
-      CGRectMake(0, boundsHeight - pageControlSize.height, boundsWidth, pageControlSize.height);
+  _pageControl.respectsUserInterfaceLayoutDirection = YES;
 
   [_pageControl addTarget:self
                    action:@selector(didChangePage:)
@@ -81,6 +86,8 @@
   _pageControl.autoresizingMask =
       UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
   [self.view addSubview:_pageControl];
+
+  [self.view setNeedsLayout];
 }
 
 #pragma mark - Frame changes
@@ -89,17 +96,36 @@
   [super viewWillLayoutSubviews];
   NSInteger pageBeforeFrameChange = _pageControl.currentPage;
   NSInteger pageCount = _pages.count;
-  CGFloat boundsWidth = CGRectGetWidth(self.view.bounds);
-  CGFloat boundsHeight = CGRectGetHeight(self.view.bounds);
+  CGRect standardizedFrame = CGRectStandardize(self.view.frame);
   for (NSInteger i = 0; i < pageCount; i++) {
-    UILabel *page = [_pages objectAtIndex:i];
-    page.frame = CGRectOffset(self.view.bounds, i * boundsWidth, 0);
+    UILabel *page = _pages[i];
+    CGFloat xOffset = [self xOffsetForPage:i
+                             numberOfPages:pageCount
+                                     width:CGRectGetWidth(standardizedFrame)];
+    page.frame = CGRectOffset(self.view.bounds, xOffset, 0);
   }
-  _scrollView.contentSize = CGSizeMake(boundsWidth * pageCount, boundsHeight);
+  _scrollView.contentSize =
+      CGSizeMake(CGRectGetWidth(standardizedFrame) * pageCount, CGRectGetHeight(standardizedFrame));
   CGPoint offset = _scrollView.contentOffset;
-  offset.x = pageBeforeFrameChange * boundsWidth;
+  CGFloat xOffset = [self xOffsetForPage:pageBeforeFrameChange
+                           numberOfPages:pageCount
+                                   width:CGRectGetWidth(standardizedFrame)];
+  offset.x = xOffset;
   // This non-anmiated change of offset ensures we keep the same page
   [_scrollView setContentOffset:offset animated:NO];
+  _scrollView.frame = self.view.bounds;
+
+  // We want the page control to hug the bottom of the screen.
+  UIEdgeInsets edgeInsets = UIEdgeInsetsZero;
+  if (@available(iOS 11.0, *)) {
+    // Accommodate insets for iPhone X.
+    edgeInsets = self.view.safeAreaInsets;
+  }
+  [_pageControl sizeToFit];
+  CGFloat yOffset =
+      CGRectGetHeight(self.view.frame) - CGRectGetHeight(_pageControl.frame) - edgeInsets.bottom;
+  _pageControl.frame =
+      CGRectMake(0, yOffset, CGRectGetWidth(self.view.frame), CGRectGetHeight(_pageControl.frame));
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -119,24 +145,39 @@
 #pragma mark - User events
 
 - (void)didChangePage:(MDCPageControl *)sender {
+  NSInteger page = sender.currentPage;
+  CGFloat pageWidth = CGRectGetWidth(_scrollView.bounds);
   CGPoint offset = _scrollView.contentOffset;
-  offset.x = sender.currentPage * _scrollView.bounds.size.width;
+  CGFloat xOffset = [self xOffsetForPage:page numberOfPages:_pages.count width:pageWidth];
+  offset.x = xOffset;
   [_scrollView setContentOffset:offset animated:YES];
 }
 
 #pragma mark - CatalogByConvention
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Page Control", @"Page Control" ];
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Page Control", @"Page Control" ],
+    @"description": @"This control is designed to be a drop-in replacement for UIPageControl, "
+    @"with a user experience influenced by Material Design.",
+    @"primaryDemo": @YES,
+    @"presentable": @YES,
+  };
 }
 
-+ (NSString *)catalogDescription {
-  return @"This control is designed to be a drop-in replacement for UIPageControl, with a user"
-  " experience influenced by Material Design.";
+- (CGFloat)xOffsetForPage:(NSInteger)page
+            numberOfPages:(NSInteger)numberOfPages
+                    width:(CGFloat)width {
+  return [self offsetMultiplierForPage:page numberOfPages:numberOfPages] * width;
 }
 
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
+- (CGFloat)offsetMultiplierForPage:(NSInteger)page numberOfPages:(NSInteger)numberOfPages {
+  return [self isRTL] ? numberOfPages - page - 1 : page;
+}
+
+- (BOOL)isRTL {
+  return self.view.mdf_effectiveUserInterfaceLayoutDirection ==
+         UIUserInterfaceLayoutDirectionRightToLeft;
 }
 
 @end

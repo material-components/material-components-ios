@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <UIKit/UIKit.h>
 
@@ -71,66 +69,66 @@ CG_EXTERN const MDCPaletteAccent _Nonnull MDCPaletteAccent700Name;
  class provides access to the pre-defined set of Material palettes. MDCPalette objects are
  immutable; it is safe to use them from multiple threads in your app.
 
- @see https://material.io/guidelines/style/color.html#color-color-palette
+ @see https://material.io/go/design-color-theming#color-color-palette
  */
 @interface MDCPalette : NSObject
 
 /** The red palette. */
-@property(class, readonly, strong, nonnull) MDCPalette *redPalette;
+@property(class, nonatomic, readonly, strong, nonnull) MDCPalette *redPalette;
 
 /** The pink palette. */
-@property(class, readonly, strong, nonnull) MDCPalette *pinkPalette;
+@property(class, nonatomic, readonly, strong, nonnull) MDCPalette *pinkPalette;
 
 /** The purple palette. */
-@property(class, readonly, strong, nonnull) MDCPalette *purplePalette;
+@property(class, nonatomic, readonly, strong, nonnull) MDCPalette *purplePalette;
 
 /** The deep purple palette. */
-@property(class, readonly, strong, nonnull) MDCPalette *deepPurplePalette;
+@property(class, nonatomic, readonly, strong, nonnull) MDCPalette *deepPurplePalette;
 
 /** The indigo palette. */
-@property(class, readonly, strong, nonnull) MDCPalette *indigoPalette;
+@property(class, nonatomic, readonly, strong, nonnull) MDCPalette *indigoPalette;
 
 /** The blue palette. */
-@property(class, readonly, strong, nonnull) MDCPalette *bluePalette;
+@property(class, nonatomic, readonly, strong, nonnull) MDCPalette *bluePalette;
 
 /** The light blue palette. */
-@property(class, readonly, strong, nonnull) MDCPalette *lightBluePalette;
+@property(class, nonatomic, readonly, strong, nonnull) MDCPalette *lightBluePalette;
 
 /** The cyan palette. */
-@property(class, readonly, strong, nonnull) MDCPalette *cyanPalette;
+@property(class, nonatomic, readonly, strong, nonnull) MDCPalette *cyanPalette;
 
 /** The teal palette. */
-@property(class, readonly, strong, nonnull) MDCPalette *tealPalette;
+@property(class, nonatomic, readonly, strong, nonnull) MDCPalette *tealPalette;
 
 /** The green palette. */
-@property(class, readonly, strong, nonnull) MDCPalette *greenPalette;
+@property(class, nonatomic, readonly, strong, nonnull) MDCPalette *greenPalette;
 
 /** The light green palette. */
-@property(class, readonly, strong, nonnull) MDCPalette *lightGreenPalette;
+@property(class, nonatomic, readonly, strong, nonnull) MDCPalette *lightGreenPalette;
 
 /** The lime palette. */
-@property(class, readonly, strong, nonnull) MDCPalette *limePalette;
+@property(class, nonatomic, readonly, strong, nonnull) MDCPalette *limePalette;
 
 /** The yellow palette. */
-@property(class, readonly, strong, nonnull) MDCPalette *yellowPalette;
+@property(class, nonatomic, readonly, strong, nonnull) MDCPalette *yellowPalette;
 
 /** The amber palette. */
-@property(class, readonly, strong, nonnull) MDCPalette *amberPalette;
+@property(class, nonatomic, readonly, strong, nonnull) MDCPalette *amberPalette;
 
 /** The orange palette. */
-@property(class, readonly, strong, nonnull) MDCPalette *orangePalette;
+@property(class, nonatomic, readonly, strong, nonnull) MDCPalette *orangePalette;
 
 /** The deep orange palette. */
-@property(class, readonly, strong, nonnull) MDCPalette *deepOrangePalette;
+@property(class, nonatomic, readonly, strong, nonnull) MDCPalette *deepOrangePalette;
 
 /** The brown palette (no accents). */
-@property(class, readonly, strong, nonnull) MDCPalette *brownPalette;
+@property(class, nonatomic, readonly, strong, nonnull) MDCPalette *brownPalette;
 
 /** The grey palette (no accents). */
-@property(class, readonly, strong, nonnull) MDCPalette *greyPalette;
+@property(class, nonatomic, readonly, strong, nonnull) MDCPalette *greyPalette;
 
 /** The blue grey palette (no accents). */
-@property(class, readonly, strong, nonnull) MDCPalette *blueGreyPalette;
+@property(class, nonatomic, readonly, strong, nonnull) MDCPalette *blueGreyPalette;
 
 /**
  Returns a palette generated from a single target 500 tint color.

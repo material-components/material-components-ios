@@ -19,7 +19,7 @@ args=$*
 
 # Checking prerequisites for folders
 # Getting the link for github repository
-GITHUB_REMOTE="git@github.com:material-components/material-components-site-generator.git"
+GITHUB_REMOTE="https://github.com/material-components/material-components-site-generator.git"
 SITE_SOURCE_BRANCH='master'
 SITE_SOURCE_FOLDER='docsite-generator'
 

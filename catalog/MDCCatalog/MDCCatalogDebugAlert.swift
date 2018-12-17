@@ -1,20 +1,20 @@
-/*
- Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 import UIKit
+
+import MDFInternationalization
 
 import MaterialComponents.MaterialDialogs
 
@@ -56,7 +56,6 @@ class MDCCatalogDebugAlert: UICollectionViewController {
 
     layout.minimumLineSpacing = 0
     layout.minimumInteritemSpacing = 0
-    layout.itemSize = CGSize(width: 400, height: 44)
 
     super.init(collectionViewLayout: layout)
 
@@ -146,10 +145,14 @@ fileprivate class MDCCatalogDebugToggleCell: UICollectionViewCell {
     let height = contentView.bounds.height
 
     let switchSize = toggleSwitch.sizeThatFits(contentView.bounds.size)
-    toggleSwitch.frame = CGRect(x: width - switchSize.width - 10,
-                                y: (height - switchSize.height) / 2.0,
-                                width: switchSize.width,
-                                height: switchSize.height)
+    var toggleSwitchFrame = CGRect(x: width - switchSize.width - 10,
+                                   y: (height - switchSize.height) / 2.0,
+                                   width: switchSize.width,
+                                   height: switchSize.height)
+    if (self.mdf_effectiveUserInterfaceLayoutDirection == .rightToLeft) {
+      toggleSwitchFrame = MDFRectFlippedHorizontally(toggleSwitchFrame, width)
+    }
+    toggleSwitch.frame = toggleSwitchFrame
 
     label.frame = contentView.bounds.insetBy(dx: 10, dy: 10)
   }
@@ -166,7 +169,7 @@ fileprivate class MDCCatalogDebugToggleCell: UICollectionViewCell {
   }
 }
 
-fileprivate class MDCCatalogDebugDismissCell: UICollectionViewCell {
+class MDCCatalogDebugDismissCell: UICollectionViewCell {
   let label = UILabel()
 
   override var isHighlighted: Bool {
@@ -191,6 +194,9 @@ fileprivate class MDCCatalogDebugDismissCell: UICollectionViewCell {
     super.init(frame: frame)
     label.text = "DISMISS"
     label.textAlignment = .center
+    isAccessibilityElement = true
+    accessibilityTraits = UIAccessibilityTraitButton
+    accessibilityLabel = label.text
     contentView.addSubview(label)
   }
 

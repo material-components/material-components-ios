@@ -1,29 +1,22 @@
-/*
- Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
- http://www.apache.org/licenses/LICENSE-2.0
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
-
+// Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
 //
-//  NavigationBarLayoutExample.m
-//  Pods
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
 //
-//  Created by Rob Moore on 7/28/17.
+// http://www.apache.org/licenses/LICENSE-2.0
 //
-//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MaterialIcons+ic_arrow_back.h"
 #import "MaterialNavigationBar.h"
 #import "MaterialTextFields.h"
-#import "UIImage+MaterialRTL.h"
-#import "UIView+MaterialRTL.h"
+#import "MaterialNavigationBar+ColorThemer.h"
+#import <MDFInternationalization/MDFInternationalization.h>
 
 @interface NavigationBarLayoutExample : UIViewController <UITextFieldDelegate>
 
@@ -36,9 +29,19 @@
 @property(nonatomic, strong) MDCTextField *titleField;
 @property(nonatomic, weak) UIBarButtonItem *trailingBarButtonItem;
 @property(nonatomic, weak) UIBarButtonItem *leadingBarButtonItem;
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 
 @end
 @implementation NavigationBarLayoutExample
+
+- (id)init {
+  self = [super init];
+  if (self) {
+    self.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  }
+  return self;
+}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -49,19 +52,10 @@
   self.navigationBar = [[MDCNavigationBar alloc] initWithFrame:CGRectZero];
   self.navigationBar.translatesAutoresizingMaskIntoConstraints = NO;
   [self.navigationBar observeNavigationItem:self.navigationItem];
-  self.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : UIColor.whiteColor};
   [self.view addSubview:self.navigationBar];
 
-  self.navigationItem.hidesBackButton = NO;
-
-  UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc]
-      initWithImage:[[[MDCIcons imageFor_ic_arrow_back]
-                        mdc_imageFlippedForRightToLeftLayoutDirection]
-                        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
-              style:UIBarButtonItemStylePlain
-             target:self
-             action:@selector(didTapBackButton)];
-  backButtonItem.tintColor = UIColor.whiteColor;
+  [MDCNavigationBarColorThemer applySemanticColorScheme:self.colorScheme
+                                        toNavigationBar:self.navigationBar];
 
   UIBarButtonItem *leadingButtonItem =
       [[UIBarButtonItem alloc] initWithTitle:@"L"
@@ -74,7 +68,6 @@
                                       target:nil
                                       action:nil];
 
-  self.navigationBar.tintColor = UIColor.whiteColor;
   self.leadingBarButtonItem = leadingButtonItem;
   self.trailingBarButtonItem = trailingButtonItem;
   self.navigationItem.hidesBackButton = NO;
@@ -107,15 +100,41 @@
   [self.view addSubview:self.trailingItemField];
   [self.view addSubview:self.titleField];
 
+  if (@available(iOS 11.0, *)) {
+    [self.view.safeAreaLayoutGuide.topAnchor constraintEqualToAnchor:self.navigationBar.topAnchor].active = YES;
+  } else {
+    [NSLayoutConstraint constraintWithItem:self.topLayoutGuide
+                                 attribute:NSLayoutAttributeBottom
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.navigationBar
+                                 attribute:NSLayoutAttributeTop
+                                multiplier:1.0
+                                  constant:0].active = YES;
+  }
+  [NSLayoutConstraint constraintWithItem:self.navigationBar
+                               attribute:NSLayoutAttributeBottom
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.leadingItemField
+                               attribute:NSLayoutAttributeTop
+                              multiplier:1.0
+                                constant:0].active = YES;
+  [NSLayoutConstraint constraintWithItem:self.leadingItemField
+                               attribute:NSLayoutAttributeBottom
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.titleField
+                               attribute:NSLayoutAttributeTop
+                              multiplier:1.0
+                                constant:0].active = YES;
+  [NSLayoutConstraint constraintWithItem:self.titleField
+                               attribute:NSLayoutAttributeBottom
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.trailingItemField
+                               attribute:NSLayoutAttributeTop
+                              multiplier:1.0
+                                constant:0].active = YES;
+
   NSDictionary *viewsBindings = NSDictionaryOfVariableBindings(_navigationBar, _leadingItemField,
                                                                _titleField, _trailingItemField);
-  [NSLayoutConstraint
-      activateConstraints:[NSLayoutConstraint
-                              constraintsWithVisualFormat:@"V:|[_navigationBar]-[_leadingItemField]"
-                                                          @"-[_titleField]-[_trailingItemField]"
-                                                  options:0
-                                                  metrics:nil
-                                                    views:viewsBindings]];
   [NSLayoutConstraint
       activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_navigationBar]|"
                                                                   options:0
@@ -194,12 +213,12 @@
 
 @implementation NavigationBarLayoutExample (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Navigation Bar", @"Navigation Bar Item Layout" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Navigation Bar", @"Navigation Bar Item Layout" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
 
 - (BOOL)catalogShouldHideNavigation {

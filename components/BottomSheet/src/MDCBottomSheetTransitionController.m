@@ -1,33 +1,62 @@
-/*
- Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
+#import "MDCBottomSheetTransitionController.h"
 
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
-
-#import "MaterialBottomSheet.h"
+#import "MDCBottomSheetPresentationController.h"
 
 static const NSTimeInterval MDCBottomSheetTransitionDuration = 0.25;
 
-@implementation MDCBottomSheetTransitionController
+@implementation MDCBottomSheetTransitionController {
+ @protected
+  UIColor *_scrimColor;
+ @protected
+  BOOL _isScrimAccessibilityElement;
+ @protected
+  NSString *_scrimAccessibilityLabel;
+ @protected
+  NSString *_scrimAccessibilityHint;
+ @protected
+  UIAccessibilityTraits _scrimAccessibilityTraits;
+}
 
 #pragma mark - UIViewControllerTransitioningDelegate
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    _scrimAccessibilityTraits = UIAccessibilityTraitButton;
+  }
+  return self;
+}
 
 - (UIPresentationController *)
     presentationControllerForPresentedViewController:(UIViewController *)presented
                             presentingViewController:(UIViewController *)presenting
                                 sourceViewController:(__unused UIViewController *)source {
-  return [[MDCBottomSheetPresentationController alloc] initWithPresentedViewController:presented
-                                                              presentingViewController:presenting];
+  MDCBottomSheetPresentationController *presentationController =
+      [[MDCBottomSheetPresentationController alloc] initWithPresentedViewController:presented
+                                                           presentingViewController:presenting];
+  presentationController.trackingScrollView = self.trackingScrollView;
+  presentationController.dismissOnBackgroundTap = self.dismissOnBackgroundTap;
+  presentationController.scrimColor = _scrimColor;
+  presentationController.scrimAccessibilityTraits = _scrimAccessibilityTraits;
+  presentationController.isScrimAccessibilityElement = _isScrimAccessibilityElement;
+  presentationController.scrimAccessibilityHint = _scrimAccessibilityHint;
+  presentationController.scrimAccessibilityLabel = _scrimAccessibilityLabel;
+  presentationController.preferredSheetHeight = _preferredSheetHeight;
+  return presentationController;
 }
 
 - (nullable id <UIViewControllerAnimatedTransitioning>)
@@ -123,6 +152,46 @@ static const NSTimeInterval MDCBottomSheetTransitionDuration = 0.25;
   } else {
     return containerView.frame;
   }
+}
+
+- (void)setScrimColor:(UIColor *)scrimColor {
+  _scrimColor = scrimColor;
+}
+
+- (UIColor *)scrimColor {
+  return _scrimColor;
+}
+
+- (void)setIsScrimAccessibilityElement:(BOOL)isScrimAccessibilityElement {
+  _isScrimAccessibilityElement = isScrimAccessibilityElement;
+}
+
+- (BOOL)isScrimAccessibilityElement {
+  return _isScrimAccessibilityElement;
+}
+
+- (void)setScrimAccessibilityLabel:(NSString *)scrimAccessibilityLabel {
+  _scrimAccessibilityLabel = scrimAccessibilityLabel;
+}
+
+- (NSString *)scrimAccessibilityLabel {
+  return _scrimAccessibilityLabel;
+}
+
+- (void)setScrimAccessibilityHint:(NSString *)scrimAccessibilityHint {
+  _scrimAccessibilityHint = scrimAccessibilityHint;
+}
+
+- (NSString *)scrimAccessibilityHint {
+  return _scrimAccessibilityHint;
+}
+
+- (void)setScrimAccessibilityTraits:(UIAccessibilityTraits)scrimAccessibilityTraits {
+  _scrimAccessibilityTraits = scrimAccessibilityTraits;
+}
+
+- (UIAccessibilityTraits)scrimAccessibilityTraits {
+  return _scrimAccessibilityTraits;
 }
 
 @end

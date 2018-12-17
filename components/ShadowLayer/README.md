@@ -1,24 +1,24 @@
 <!--docs:
-title: "Shadow Layer"
+title: "Shadow layer"
 layout: detail
 section: components
-excerpt: "The Shadow Layer component implements the Material Design specifications for elevation and shadows."
+excerpt: "The shadow layer component implements the Material Design specifications for elevation and shadows."
 iconId: shadow
-path: /catalog/shadows/shadow-layers/
+path: /catalog/shadows/
 api_doc_root: true
 -->
 
-# Shadow Layer
+# Shadow layer
+
+Shadow layer implements the Material Design specifications for elevation and shadows.
+By simulating the physical properties of paper, elevation and light source, shadows give
+visual depth to components. Shadow layer provides an elevation property which affects
+a shadow's depth and strength, automatically handling shadow diffusion based on the shadow's
+elevation.
 
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/shadow_layer.png" width="375">
 </div>
-
-Shadow Layer implements the Material Design specifications for elevation and shadows.
-By simulating the physical properties of paper, elevation and light source, shadows give
-visual depth to components. Shadow Layer provides an elevation property which affects
-a shadow's depth and strength, automatically handling shadow diffusion based on the shadow's
-elevation.
 
 ## Design & API Documentation
 
@@ -31,13 +31,14 @@ elevation.
 ### MDCShadowLayer
 
 `MDCShadowLayer` provides a Core Animation `CALayer` that will render a shadow based on its
-elevation property. `UIViews` can utilize this by overriding their layerClass method to
+elevation property. `UIViews` can use this by overriding their layerClass method to
 return `MDCShadowLayer`.
 
 `elevation` sets the diffusion level of the shadow. The higher the shadow elevation, the more
 diffused the shadow becomes. Elevation uses points as a unit to specify height. Common shadow
 elevations are defined in [MDCShadowElevations](../ShadowElevations/) and range from 0 to 24 points.
-The shadow diffusion effect diminishes as elevations exceed 24 points.
+The shadow diffusion effect diminishes as elevations exceed 24 points.  The default value is 0 (no
+shadow).
 
 Set `shadowMaskEnabled` to ensure the interior, non-shadow portion of the layer is visible.
 This is enabled by default and the internal portion of the layer is cut out.
@@ -52,24 +53,18 @@ shadow that adheres to defined height and light source principles.
 
 ## Installation
 
-### Requirements
-
-- Xcode 7.0 or higher.
-- iOS SDK version 7.0 or higher.
-
-
 ### Installation with CocoaPods
 
 To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-``` bash
+```bash
 pod 'MaterialComponents/ShadowLayer'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
 Then, run the following command:
 
-``` bash
+```bash
 pod install
 ```
 
@@ -80,18 +75,18 @@ pod install
 
 ### Importing
 
-Before using Shadow Layer, you'll need to import it:
+Before using shadow layer, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-``` swift
+```swift
 import MaterialComponents
 ```
 
 #### Objective-C
 
-``` objc
+```objc
 #import "MaterialShadowLayer.h"
 ```
 <!--</div>-->
@@ -101,7 +96,7 @@ Example of a custom button based on UIButton with Material Design shadows:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 class ShadowButton: UIButton {
 
   override class var layerClass: AnyClass {
@@ -112,7 +107,7 @@ class ShadowButton: UIButton {
 ```
 
 #### Objective C
-``` objc
+```objc
 @interface ShadowButton : UIButton
 
 @end
@@ -132,7 +127,7 @@ Add the custom button to view:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 let button = ShadowButton(type: .system)
 button.frame = CGRect(x: 100, y: 100, width: 200, height: 50)
 button.setTitle("Button", for: .normal)
@@ -142,11 +137,11 @@ addSubview(button)
 ```
 
 #### Objective C
-``` objc
+```objc
 ShadowButton *button = [ShadowButton buttonWithType:UIButtonTypeSystem];
 button.frame = CGRectMake(100, 100, 200, 50);
 [button setTitle: @"Button" forState:UIControlStateNormal];
-[(MDCShadowLayer *)button.layer setElevation:6.f];
+[(MDCShadowLayer *)button.layer setElevation:6];
 [self addSubview:button];
 
 ```
@@ -157,7 +152,7 @@ Creating a custom UIView with a shadow:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 class ShadowedView: UIView {
 
   override class var layerClass: AnyClass {
@@ -181,7 +176,7 @@ class ShadowedView: UIView {
 ```
 
 #### Objective C
-``` objc
+```objc
 @interface ShadowedView : UIView
 @end
 
@@ -209,7 +204,7 @@ animating or changing size.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 
 layer.shouldRasterize = true
 layer.rasterizationScale = UIScreen.main.scale
@@ -217,7 +212,7 @@ layer.rasterizationScale = UIScreen.main.scale
 ```
 
 #### Objective C
-``` objc
+```objc
 
 self.layer.shouldRasterize = YES;
 self.layer.rasterizationScale = [UIScreen mainScreen].scale;

@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <XCTest/XCTest.h>
 #import "MaterialActivityIndicator.h"
@@ -20,6 +18,12 @@
 static CGFloat randomNumber() {
   return arc4random_uniform(64) + 8;
 }
+
+@interface MDCActivityIndicator (Private)
+
+@property(nonatomic, strong, readonly, nullable) CAShapeLayer *strokeLayer;
+
+@end
 
 @interface ActivityIndicatorTests : XCTestCase
 
@@ -32,11 +36,11 @@ static CGFloat randomNumber() {
   MDCActivityIndicator *indicator = [[MDCActivityIndicator alloc] init];
 
   // When
-  indicator.radius = 2.0f;
+  indicator.radius = 2;
 
   // Then
-  XCTAssertGreaterThanOrEqual(indicator.radius, 5.0f);
-  XCTAssertLessThanOrEqual(indicator.radius, 72.0f);
+  XCTAssertGreaterThanOrEqual(indicator.radius, 5);
+  XCTAssertLessThanOrEqual(indicator.radius, 72);
 }
 
 - (void)testSetRadiusMax {
@@ -44,11 +48,11 @@ static CGFloat randomNumber() {
   MDCActivityIndicator *indicator = [[MDCActivityIndicator alloc] init];
 
   // When
-  indicator.radius = 80.0f;
+  indicator.radius = 80;
 
   // Then
-  XCTAssertGreaterThanOrEqual(indicator.radius, 8.0f);
-  XCTAssertLessThanOrEqual(indicator.radius, 72.0f);
+  XCTAssertGreaterThanOrEqual(indicator.radius, 8);
+  XCTAssertLessThanOrEqual(indicator.radius, 72);
 }
 
 - (void)testSetRadius {
@@ -60,8 +64,8 @@ static CGFloat randomNumber() {
   indicator.radius = random;
 
   // Then
-  XCTAssertGreaterThanOrEqual(indicator.radius, 8.0f);
-  XCTAssertLessThanOrEqual(indicator.radius, 72.0f);
+  XCTAssertGreaterThanOrEqual(indicator.radius, 8);
+  XCTAssertLessThanOrEqual(indicator.radius, 72);
   XCTAssertEqual(indicator.radius, random);
 }
 
@@ -99,6 +103,69 @@ static CGFloat randomNumber() {
   XCTAssertEqualObjects(indicator.cycleColors, cycleColors,
                         @"With a non-empty array, the |cycleColors| property should override the"
                         " default value.");
+}
+
+- (void)testSetProgressValue {
+  // Make sure that setting progress with or without animation work regardless of whether indicator
+  // mode is determinate or indeterminate, and make sure that setting progress value doesn't change
+  // the mode.
+  MDCActivityIndicator *indicator = [[MDCActivityIndicator alloc] init];
+
+  indicator.indicatorMode = MDCActivityIndicatorModeDeterminate;
+  [self verifySettingProgressOnIndicator:indicator animated:NO];
+  [self verifySettingProgressOnIndicator:indicator animated:YES];
+  XCTAssertEqual(indicator.indicatorMode, MDCActivityIndicatorModeDeterminate);
+
+  indicator.indicatorMode = MDCActivityIndicatorModeIndeterminate;
+  [self verifySettingProgressOnIndicator:indicator animated:NO];
+  [self verifySettingProgressOnIndicator:indicator animated:YES];
+  XCTAssertEqual(indicator.indicatorMode, MDCActivityIndicatorModeIndeterminate);
+}
+
+- (void)testSetProgressStrokeNonanimated {
+  // Make sure that the stroke layer updates accordingly when we set determinate progress.
+  MDCActivityIndicator *indicator = [[MDCActivityIndicator alloc] init];
+  indicator.indicatorMode = MDCActivityIndicatorModeDeterminate;
+
+  [indicator setProgress:(float)0.33 animated:NO];
+  XCTAssertEqual(indicator.strokeLayer.strokeStart, 0.0);
+  XCTAssertEqual(indicator.strokeLayer.strokeEnd, (float)0.33);
+}
+
+- (void)testSetProgressStrokeAnimated {
+  // Make sure that the stroke layer updates accordingly when we set determinate progress.
+  MDCActivityIndicator *indicator = [[MDCActivityIndicator alloc] init];
+  indicator.indicatorMode = MDCActivityIndicatorModeDeterminate;
+  [indicator startAnimating];
+
+  [indicator setProgress:(float)0.55 animated:YES];
+  XCTAssertEqual(indicator.strokeLayer.strokeStart, 0.0);
+  XCTAssertEqual(indicator.strokeLayer.strokeEnd, (float)0.55);
+}
+
+- (void)testSetAccessibiltyLabelProperty {
+  // Given
+  MDCActivityIndicator *indicator = [[MDCActivityIndicator alloc] init];
+  NSString *testString = @"test this label";
+
+  // When
+  indicator.accessibilityLabel = testString;
+
+  // Then
+  XCTAssertEqualObjects(indicator.accessibilityLabel, testString);
+}
+
+#pragma mark - Helpers
+
+- (void)verifySettingProgressOnIndicator:(MDCActivityIndicator *)indicator animated:(BOOL)animated {
+  [indicator setProgress:-5 animated:animated];
+  XCTAssertEqual(indicator.progress, 0);
+
+  [indicator setProgress:(float)0.77 animated:animated];
+  XCTAssertEqual(indicator.progress, (float)0.77);
+
+  [indicator setProgress:5 animated:animated];
+  XCTAssertEqual(indicator.progress, 1);
 }
 
 @end

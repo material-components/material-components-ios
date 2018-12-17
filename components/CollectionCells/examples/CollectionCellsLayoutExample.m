@@ -1,22 +1,19 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
-
-#import "CollectionCellsLayoutExample.h"
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MaterialTypography.h"
+#import "supplemental/CollectionCellsLayoutExample.h"
 
 @interface SimpleModel : NSObject
 @property(nonatomic, strong, nullable) NSString *text;
@@ -69,7 +66,7 @@ static NSString *const kExampleDetailText =
      "non facilisis enim. Proin dapibus laoreet lorem, in viverra leo dapibus a.";
 
 #define RGBCOLOR(r, g, b) \
-  [UIColor colorWithRed:(r) / 255.0f green:(g) / 255.0f blue:(b) / 255.0f alpha:1]
+  [UIColor colorWithRed:(r) / (CGFloat)255 green:(g) / (CGFloat)255 blue:(b) / (CGFloat)255 alpha:1]
 #define HEXCOLOR(hex) RGBCOLOR((((hex) >> 16) & 0xFF), (((hex) >> 8) & 0xFF), ((hex)&0xFF))
 
 @implementation CollectionCellsLayoutExample {
@@ -230,12 +227,12 @@ static NSString *const kExampleDetailText =
 
 #pragma mark - CatalogByConvention
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Collection Cells", @"Cell Layout Example" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Collection Cells", @"Cell Layout Example" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
 
 @end

@@ -1,18 +1,20 @@
-/*
- Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+#import <math.h>
+#import <Foundation/Foundation.h>
+#import <CoreGraphics/CoreGraphics.h>
 
 static inline CGFloat MDCSin(CGFloat value) {
 #if CGFLOAT_IS_DOUBLE
@@ -58,11 +60,11 @@ static inline CGFloat MDCDegreesToRadians(CGFloat degrees) {
 #if CGFLOAT_IS_DOUBLE
   return degrees * (CGFloat)M_PI / 180.0;
 #else
-  return degrees * (CGFloat)M_PI / 180.f;
+  return degrees * (CGFloat)M_PI / 180;
 #endif
 }
 
-static inline bool MDCCGFloatEqual(CGFloat a, CGFloat b) {
+static inline BOOL MDCCGFloatEqual(CGFloat a, CGFloat b) {
   const CGFloat constantK = 3;
 #if CGFLOAT_IS_DOUBLE
   const CGFloat epsilon = DBL_EPSILON;
@@ -91,9 +93,7 @@ static inline CGFloat MDCHypot(CGFloat x, CGFloat y) {
 }
 
 // Checks whether the provided floating point number is exactly zero.
-static inline BOOL MDCCGFloatIsExactlyZero(CGFloat value) {
-  return (value == 0.f);
-}
+static inline BOOL MDCCGFloatIsExactlyZero(CGFloat value) { return (value == 0); }
 
 static inline CGFloat MDCPow(CGFloat value, CGFloat power) {
 #if CGFLOAT_IS_DOUBLE
@@ -125,6 +125,38 @@ static inline CGFloat MDCSqrt(CGFloat value) {
 #else
   return sqrtf(value);
 #endif
+}
+
+/**
+ Round the given value to ceiling with provided scale factor.
+ If @c scale is zero, then the rounded value will be zero.
+
+ @param value The value to round
+ @param scale The scale factor
+ @return The ceiling value calculated using the provided scale factor
+ */
+static inline CGFloat MDCCeilScaled(CGFloat value, CGFloat scale) {
+  if (MDCCGFloatEqual(scale, 0)) {
+    return 0;
+  }
+
+  return MDCCeil(value * scale) / scale;
+}
+
+/**
+ Round the given value to floor with provided scale factor.
+ If @c scale is zero, then the rounded value will be zero.
+
+ @param value The value to round
+ @param scale The scale factor
+ @return The floor value calculated using the provided scale factor
+ */
+static inline CGFloat MDCFloorScaled(CGFloat value, CGFloat scale) {
+  if (MDCCGFloatEqual(scale, 0)) {
+    return 0;
+  }
+
+  return MDCFloor(value * scale) / scale;
 }
 
 /**
@@ -166,6 +198,23 @@ static inline CGPoint MDCPointRoundWithScale(CGPoint point, CGFloat scale) {
   }
 
   return CGPointMake(MDCRound(point.x * scale) / scale, MDCRound(point.y * scale) / scale);
+}
+
+/**
+ Expand `size' to the closest larger pixel-aligned value.
+ If @c scale is zero, then a CGSizeZero will be returned.
+
+ @param size the size to align.
+ @param scale the scale factor to use for pixel alignment.
+
+ @return the size aligned to the closest larger pixel-aligned value using the provided scale factor.
+ */
+static inline CGSize MDCSizeCeilWithScale(CGSize size, CGFloat scale) {
+  if (MDCCGFloatEqual(scale, 0)) {
+    return CGSizeZero;
+  }
+
+  return CGSizeMake(MDCCeil(size.width * scale) / scale, MDCCeil(size.height * scale) / scale);
 }
 
 /**

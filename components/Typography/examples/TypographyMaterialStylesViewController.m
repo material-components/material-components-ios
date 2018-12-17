@@ -1,18 +1,16 @@
-/*
- Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "TypographyMaterialStylesViewController.h"
 
@@ -44,31 +42,53 @@
   _styleNames = @[
                   // Common UI fonts.
                   @"Headline Font",
+                  @"Headline Font (Dynamic Type-enabled)",
                   @"Title Font",
+                  @"Title Font (Dynamic Type-enabled)",
                   @"Subhead Font",
+                  @"Subhead Font (Dynamic Type-enabled)",
                   @"Body 2 Font",
+                  @"Body 2 Font (Dynamic Type-enabled)",
                   @"Body 1 Font",
+                  @"Body 1 Font (Dynamic Type-enabled)",
                   @"Caption Font",
+                  @"Caption Font (Dynamic Type-enabled)",
                   @"Button Font",
+                  @"Button Font (Dynamic Type-enabled)",
 
                   // Display fonts (extra large fonts)
                   @"Display 1 Font",
+                  @"Display 1 Font (Dynamic Type-enabled)",
                   @"Display 2 Font",
+                  @"Display 2 Font (Dynamic Type-enabled)",
                   @"Display 3 Font",
-                  @"Display 4 Font"
+                  @"Display 3 Font (Dynamic Type-enabled)",
+                  @"Display 4 Font",
+                  @"Display 4 Font (Dynamic Type-enabled)"
                   ];
 
   _styleFonts = @[
+                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleHeadline],
                   [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleHeadline],
+                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleTitle],
                   [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleTitle],
+                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline],
                   [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleSubheadline],
+                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody2],
                   [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody2],
+                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody1],
                   [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1],
+                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleCaption],
                   [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleCaption],
+                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleButton],
                   [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleButton],
+                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleDisplay1],
                   [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay1],
+                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleDisplay2],
                   [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay2],
+                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleDisplay3],
                   [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay3],
+                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleDisplay4],
                   [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay4]
                   ];
 
@@ -109,16 +129,27 @@
 
   // Update font array to reflect new size category
   _styleFonts = @[
+                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleHeadline],
                   [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleHeadline],
+                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleTitle],
                   [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleTitle],
+                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleSubheadline],
                   [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleSubheadline],
+                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody2],
                   [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody2],
+                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody1],
                   [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1],
+                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleCaption],
                   [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleCaption],
+                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleButton],
                   [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleButton],
+                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleDisplay1],
                   [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay1],
+                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleDisplay2],
                   [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay2],
+                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleDisplay3],
                   [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay3],
+                  [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleDisplay4],
                   [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay4]
                   ];
 
@@ -132,7 +163,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  return _styleFonts.count;
+  return _styleNames.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
@@ -161,12 +192,12 @@
 
 #pragma mark - CatalogByConvention
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Typography and Fonts", @"Material Font Styles" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Typography and Fonts", @"Material Font Styles" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
 
 @end

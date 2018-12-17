@@ -1,45 +1,54 @@
 <!--docs:
-title: "Bottom App Bar"
+title: "App bars: bottom"
 layout: detail
 section: components
-excerpt: "Bottom app bar provides a bar at the bottom of the screen with primary action and navigation buttons."
-icon_id: bottom_app_bar
+excerpt: "A bottom app bar displays navigation and key actions at the bottom of the screen."
+iconId: bottom_app_bar
 path: /catalog/bottomappbar/
 api_doc_root: true
 -->
 
-# Bottom App Bar
+<!-- This file was auto-generated using ./scripts/generate_readme BottomAppBar -->
+
+# App bars: bottom
+
+[![Open bugs badge](https://img.shields.io/badge/dynamic/json.svg?label=open%20bugs&url=https%3A%2F%2Fapi.github.com%2Fsearch%2Fissues%3Fq%3Dis%253Aopen%2Blabel%253Atype%253ABug%2Blabel%253A%255BBottomAppBar%255D&query=%24.total_count)](https://github.com/material-components/material-components-ios/issues?q=is%3Aopen+is%3Aissue+label%3Atype%3ABug+label%3A%5BBottomAppBar%5D)
+
+A bottom app bar displays navigation and key actions at the bottom of the screen. Bottom app bars
+work like [navigation bars](../NavigationBar), but with the additional option to show a
+[floating action button](../Buttons).
 
 <div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/bottomappbar.png" alt="Text Fields" width="375">
+  <img src="docs/assets/bottomappbar.png" alt="A screenshot of a bottom app bar." width="375">
 </div>
 
-A bottom app bar provides a docked bar at the bottom of the screen for common application actions. The bottom app bar includes a <a href="https://material.io/components/ios/catalog/buttons/api-docs/Classes/MDCFloatingButton.html">floating button</a> for a primary action and a <a href="https://material.io/components/ios/catalog/flexible-headers/navigation-bars/">navigation bar</a> area for secondary actions. Transition animations are provided when the floating button shifts left or right, based on the application navigation state, and when the floating action button changes elevation or is hidden.
+## Design & API documentation
 
-## Installation
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-app-bar-bottom">Material Design guidelines: App bars: bottom</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/bottomappbar/api-docs/Classes/MDCBottomAppBarView.html">MDCBottomAppBarView</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/bottomappbar/api-docs/Enums.html">Enumerations</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/bottomappbar/api-docs/Enums/MDCBottomAppBarFloatingButtonElevation.html">MDCBottomAppBarFloatingButtonElevation</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/bottomappbar/api-docs/Enums/MDCBottomAppBarFloatingButtonPosition.html">MDCBottomAppBarFloatingButtonPosition</a></li>
+</ul>
 
-### Requirements
+## Table of contents
 
-- Xcode 8.0 or higher.
-- iOS SDK version 8.0 or higher.
-
-### Installation with CocoaPods
-
-To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
-
-~~~
-pod 'MaterialComponents/BottomAppBar'
-~~~
-
-Then run the following command:
-
-~~~ bash
-pod install
-~~~
+- [Overview](#overview)
+- [Installation](#installation)
+  - [Installation with CocoaPods](#installation-with-cocoapods)
+  - [Importing](#importing)
+- [Usage](#usage)
+  - [Typical use](#typical-use)
+- [Extensions](#extensions)
+  - [Color Theming](#color-theming)
+- [Accessibility](#accessibility)
+  - [Set `-accessibilityLabel`](#set-`-accessibilitylabel`)
+  - [Set `-accessibilityHint`](#set-`-accessibilityhint`)
 
 - - -
 
-### Overview
+## Overview
 
 Bottom app bars follow a recommended Material Design interaction design pattern for providing primary and secondary actions that are easily accessible. With a bottom app bar users are more easily able to use single-handed touch interaction with an application since actions are displayed close to the bottom of the screen within easy reach of a user's thumb.
 
@@ -51,106 +60,183 @@ UIBarButtonItems can be added to the navigation bar of the MDCBottomAppBarView. 
 
 Transitions between floating action button position, elevation and visibility states are animated by default, but can be disabled if desired.
 
-## Usage
+## Installation
 
-MDCBottomAppBarView can be added to a view hierarchy like any UIView. Material Design guidelines recommend always placing the bottom app bar at the bottom of the screen.
+<!-- Extracted from docs/../../../docs/component-installation.md -->
+
+### Installation with CocoaPods
+
+Add the following to your `Podfile`:
+
+```bash
+pod 'MaterialComponents/BottomAppBar'
+```
+<!--{: .code-renderer.code-renderer--install }-->
+
+Then, run the following command:
+
+```bash
+pod install
+```
 
 ### Importing
 
-Before using Bottom App Bar, you'll need to import it:
+To import the component:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-
-``` swift
+```swift
 import MaterialComponents.MaterialBottomAppBar
 ```
 
 #### Objective-C
 
-``` objc
+```objc
 #import "MaterialBottomAppBar.h"
 ```
 <!--</div>-->
 
-## Examples
 
-### Bottom App Bar with floating action button and navigation
+## Usage
+
+<!-- Extracted from docs/typical-use.md -->
+
+### Typical use
+
+MDCBottomAppBarView can be added to a view hierarchy like any UIView. Material Design guidelines
+recommend always placing the bottom app bar at the bottom of the screen.
+
+
+## Extensions
+
+<!-- Extracted from docs/color-theming.md -->
+
+### Color Theming
+
+Note: At present, Bottom App Bar only has a "Surface Variant" color themer for the Material Design color
+system.
+
+- Task: [Implement a primary variant color
+  themer](https://github.com/material-components/material-components-ios/issues/3929)
+
+You can theme a Bottom App Bar with your app's color scheme using the ColorThemer extension.
+
+You must first add the ColorThemer extension to your project:
+
+```ruby
+pod 'MaterialComponents/BottomAppBar+ColorThemer'
+```
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
+```swift
+// Step 1: Import the ColorThemer extension and Buttons Themers
+import MaterialComponents.MaterialBottomAppBar_ColorThemer
+import MaterialComponents.MaterialButtons_ButtonThemer
 
-``` swift
-let bottomBarView = MDCBottomAppBarView(frame: frame)
-view.addSubview(bottomBarView)
+// Step 2: Create or get a color scheme and typography scheme
+let colorScheme = MDCSemanticColorScheme()
+let typgoraphyScheme = MDCTypographyScheme()
+let buttonScheme = MDCButtonScheme()
+buttonScheme.colorScheme = colorScheme
+buttonScheme.typographyScheme = typographyScheme
 
-// Add touch handler to the floating button.
-bottomBarView.floatingButton.addTarget(self,
-                                       action: #selector(didTapFloatingButton(_:)),
-                                       for: .touchUpInside)
-
-// Set the image on the floating button.
-let addImage = UIImage(named:"Add")
-bottomBarView.floatingButton.setImage(addImage, for: .normal)
-
-// Theme the floating button (optional).
-let colorScheme = MDCBasicColorScheme(primaryColor: .white)
-MDCButtonColorThemer.apply(colorScheme, to: bottomBarView.floatingButton)
-
-// Configure the navigation buttons to be shown on the bottom app bar.
-let barButtonLeadingItem = UIBarButtonItem()
-let menuImage = UIImage(named:"Menu")
-barButtonLeadingItem.image = menuImage
-
-let barButtonTrailingItem = UIBarButtonItem()
-let searchImage = UIImage(named:"Search")
-barButtonTrailingItem.image = searchImage
-
-bottomBarView.leadingBarButtonItems = [ barButtonLeadingItem ]
-bottomBarView.trailingBarButtonItems = [ barButtonTrailingItem ]
+// Step 3: Apply the button scheme to the Bottom App Bar's floating button and
+// the color scheme to your Bottom App Bar
+MDCFloatingActionButtonThemer.applyScheme(buttonScheme, to: bottomBarView.floatingButton)
+MDCBottomAppBarColorThemer.applySurfaceVariant(withSemanticColorScheme: colorScheme,
+                                               to: bottomBarView)
 ```
 
 #### Objective-C
 
-``` objc
-MDCBottomAppBarView *bottomBarView = [[MDCBottomAppBarView alloc] initWithFrame:frame];
-[view addSubview:bottomBarView];
+```objc
+// Step 1: Import the ColorThemer extension and Buttons Themers
+#import "MaterialBottomAppBar+ColorThemer.h"
+#import "MaterialButtons+ButtonThemer.h"
 
-// Add touch handler to the floating button.
-[self.bottomBarView.floatingButton addTarget:self
-                                      action:@selector(didTapFloatingButton:)
-                            forControlEvents:UIControlEventTouchUpInside];
+// Step 2: Create or get a color scheme and typography scheme
+id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
+MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
+buttonScheme.colorScheme = colorScheme;
+buttonScheme.typographyScheme = typographyScheme;
 
-// Set the image on the floating button.
-UIImage *addImage = [UIImage imageNamed:@"Add"];
-[bottomBarView.floatingButton setImage:addImage forState:UIControlStateNormal];
+// Step 3: Apply the button scheme to the Bottom App Bar's floating button and
+// the color scheme to your Bottom App Bar
+[MDCFloatingActionButtonThemer applyScheme:buttonScheme
+                                  toButton:self.bottomBarView.floatingButton];
+[MDCBottomAppBarColorThemer applySurfaceVariantWithSemanticColorScheme:colorScheme
+                                                    toBottomAppBarView:bottomAppBarView];
+```
+<!--</div>-->
 
-// Theme the floating button (optional).
-MDCBasicColorScheme *colorScheme =
-    [[MDCBasicColorScheme alloc] initWithPrimaryColor:[UIColor whiteColor]];
-[MDCButtonColorThemer applyColorScheme:colorScheme
-                              toButton:self.bottomBarView.floatingButton];
 
-// Configure the navigation buttons to be shown on the bottom app bar.
-UIBarButtonItem *barButtonLeadingItem =
-    [[UIBarButtonItem alloc] initWithTitle:nil
-                                     style:UIBarButtonItemStylePlain
-                                    target:self
-                                    action:@selector(didTapMenu:)];
-UIImage *menuImage = [UIImage imageNamed:@"Menu"];
-[barButtonLeadingItem setImage:menuImage];
 
-UIBarButtonItem *barButtonTrailingItem =
-    [[UIBarButtonItem alloc] initWithTitle:nil
-                                     style:UIBarButtonItemStylePlain
-                                    target:self
-                                    action:@selector(didTapSearch:)];
-UIImage *searchImage = [UIImage imageNamed:@"Search"];
-[barButtonTrailingItem setImage:searchImage];
+## Accessibility
 
-[bottomBarView setLeadingBarButtonItems:@[ barButtonLeadingItem ]];
-[bottomBarView setTrailingBarButtonItems:@[ barButtonTrailingItem ]];
+<!-- Extracted from docs/accessibility.md -->
+
+To help ensure your bottom app bar is accessible to as many users as possible, please be sure to review the
+following recommendations:
+
+### Set `-accessibilityLabel`
+
+Set an appropriate
+[`accessibilityLabel`](https://developer.apple.com/documentation/uikit/uiaccessibilityelement/1619577-accessibilitylabel)
+to all buttons within the bottom app bar.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+```swift
+bottomAppBar.floatingButton.accessibilityLabel = "Compose"
+let trailingButton = UIBarButtonItem()
+trailingButton.accessibilityLabel = "Buy"
+bottomAppBar.trailingBarButtonItems = [ trailingButton ]
 ```
 
+#### Objective-C
+
+```objc
+bottomAppBar.floatingButton.accessibilityLabel = @"Compose";
+UIBarButtonItem *trailingButton = 
+    [[UIBarButtonItem alloc] initWithTitle:nil
+                                     style:UIBarButtonItemStylePlain
+                                    target:self
+                                    action:@selector(didTapTrailing:)];
+trailingButton.accessibilityLabel = @"Buy";
+[bottomAppBar setTrailingBarButtonItems:@[ trailingButton ]];
+```
+<!--</div>-->
+
+### Set `-accessibilityHint`
+
+Set an appropriate
+[`accessibilityHint`](https://developer.apple.com/documentation/objectivec/nsobject/1615093-accessibilityhint)
+to all buttons within the bottom app bar.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+
+```swift
+bottomAppBar.floatingButton.accessibilityHint = "Create new email"
+let trailingButton = UIBarButtonItem()
+trailingButton.accessibilityHint = "Purchase the item"
+bottomAppBar.trailingBarButtonItems = [ trailingButton ]
+```
+
+#### Objective-C
+
+```objc
+bottomAppBar.floatingButton.accessibilityHint = @"Create new email";
+UIBarButtonItem *trailingButton = 
+    [[UIBarButtonItem alloc] initWithTitle:nil
+                                     style:UIBarButtonItemStylePlain
+                                    target:self
+                                    action:@selector(didTapTrailing:)];
+trailingButton.accessibilityHint = @"Purchase the item";
+[bottomAppBar setTrailingBarButtonItems:@[ trailingButton ]];
+```
 <!--</div>-->
 

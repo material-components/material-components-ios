@@ -1,28 +1,29 @@
-/*
- Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 #import <UIKit/UIKit.h>
 
 #import "NavigationBarTypicalUseExampleSupplemental.h"
+
+#import <MDFInternationalization/MDFInternationalization.h>
 
 #import "MaterialIcons+ic_arrow_back.h"
 #import "MaterialIcons+ic_info.h"
 #import "MaterialIcons+ic_reorder.h"
 #import "MaterialNavigationBar.h"
-#import "UIImage+MaterialRTL.h"
-#import "UIView+MaterialRTL.h"
+#import "MaterialNavigationBar+ColorThemer.h"
+#import "MaterialNavigationBar+TypographyThemer.h"
+#import "supplemental/NavigationBarTypicalUseExampleSupplemental.h"
 
 @interface NavigationBarIconsExample ()
 
@@ -33,6 +34,16 @@
 @end
 @implementation NavigationBarIconsExample
 
+- (id)init {
+  self = [super init];
+  if (self) {
+    self.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    self.typographyScheme = [[MDCTypographyScheme alloc] init];
+  }
+  return self;
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
 
@@ -42,17 +53,20 @@
   self.navigationBar = [[MDCNavigationBar alloc] initWithFrame:CGRectZero];
   self.navigationBar.translatesAutoresizingMaskIntoConstraints = NO;
   [self.navigationBar observeNavigationItem:self.navigationItem];
-  self.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : UIColor.whiteColor};
+  [MDCNavigationBarTypographyThemer applyTypographyScheme:self.typographyScheme
+                                          toNavigationBar:self.navigationBar];
   [self.view addSubview:self.navigationBar];
+
+  [MDCNavigationBarColorThemer applySemanticColorScheme:self.colorScheme
+                                        toNavigationBar:self.navigationBar];
 
   UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc]
       initWithImage:[[[MDCIcons imageFor_ic_arrow_back]
-                        mdc_imageFlippedForRightToLeftLayoutDirection]
+                        mdf_imageWithHorizontallyFlippedOrientation]
                         imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
               style:UIBarButtonItemStylePlain
              target:self
              action:@selector(didTapBackButton)];
-  //  backButtonItem.tintColor = UIColor.whiteColor;
 
   UIBarButtonItem *leadingButtonItem = [[UIBarButtonItem alloc]
       initWithImage:[[MDCIcons imageFor_ic_info]
@@ -60,16 +74,13 @@
               style:UIBarButtonItemStylePlain
              target:nil
              action:nil];
-  //  leadingButtonItem.tintColor = UIColor.whiteColor;
   UIBarButtonItem *trailingButtonItem = [[UIBarButtonItem alloc]
       initWithImage:[[MDCIcons imageFor_ic_reorder]
                         imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
               style:UIBarButtonItemStylePlain
              target:nil
              action:nil];
-  //  trailingButtonItem.tintColor = UIColor.whiteColor;
 
-  self.navigationBar.tintColor = UIColor.whiteColor;
   self.leadingBarButtonItem = leadingButtonItem;
   self.trailingBarButtonItem = trailingButtonItem;
   self.navigationItem.hidesBackButton = NO;
@@ -77,9 +88,8 @@
   self.navigationItem.rightBarButtonItem = trailingButtonItem;
   self.navigationItem.backBarButtonItem = backButtonItem;
 
-  if ([self.view respondsToSelector:@selector(safeAreaLayoutGuide)]) {
-    UILayoutGuide *layoutGuide = [self.view performSelector:@selector(safeAreaLayoutGuide)];
-    [layoutGuide.topAnchor constraintEqualToAnchor:self.navigationBar.topAnchor].active = YES;
+  if (@available(iOS 11.0, *)) {
+    [self.view.safeAreaLayoutGuide.topAnchor constraintEqualToAnchor:self.navigationBar.topAnchor].active = YES;
   } else {
     [NSLayoutConstraint constraintWithItem:self.topLayoutGuide
                                  attribute:NSLayoutAttributeBottom
@@ -87,8 +97,7 @@
                                     toItem:self.navigationBar
                                  attribute:NSLayoutAttributeTop
                                 multiplier:1.0
-                                  constant:0]
-        .active = YES;
+                                  constant:0].active = YES;
   }
   NSDictionary *viewsBindings = NSDictionaryOfVariableBindings(_navigationBar);
 
@@ -117,12 +126,12 @@
 
 @implementation NavigationBarIconsExample (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Navigation Bar", @"Navigation Bar With Icons" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Navigation Bar", @"Navigation Bar With Icons" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
 
 - (BOOL)catalogShouldHideNavigation {

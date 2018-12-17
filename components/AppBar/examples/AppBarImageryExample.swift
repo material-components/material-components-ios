@@ -1,29 +1,34 @@
-/*
-Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 import Foundation
-import MaterialComponents
+import MaterialComponents.MaterialAppBar
+import MaterialComponents.MaterialAppBar_ColorThemer
 
 class AppBarImagerySwiftExample: UITableViewController {
-  let appBar = MDCAppBar()
+  let appBarViewController = MDCAppBarViewController()
+  var colorScheme = MDCSemanticColorScheme()
+
+  deinit {
+    // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
+    appBarViewController.headerView.trackingScrollView = nil
+  }
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    let headerView = appBar.headerViewController.headerView
+    let headerView = appBarViewController.headerView
 
     // Create our custom image view and add it to the header view.
     let imageView = UIImageView(image: self.headerBackgroundImage())
@@ -41,22 +46,25 @@ class AppBarImagerySwiftExample: UITableViewController {
     // The header view does not clip to bounds by default so we ensure that the image is clipped.
     imageView.clipsToBounds = true
 
-    // We want navigation bar + status bar tint color to be white, so we set tint color here and
-    // implement -preferredStatusBarStyle.
-    appBar.navigationBar.tintColor = UIColor.white
-    appBar.navigationBar.titleTextAttributes =
-      [ NSForegroundColorAttributeName: UIColor.white ]
+    MDCAppBarColorThemer.applyColorScheme(colorScheme, to: appBarViewController)
 
     // Make sure navigation bar background color is clear so the image view is visible.
-    appBar.navigationBar.backgroundColor = UIColor.clear
+    appBarViewController.navigationBar.backgroundColor = UIColor.clear
 
     // Allow the header to show more of the image.
     headerView.maximumHeight = 200
 
-    headerView.trackingScrollView = self.tableView
-    self.tableView.delegate = appBar.headerViewController
+    // Allows us to avoid forwarding events, but means we can't enable shift behaviors.
+    headerView.observesTrackingScrollViewScrollEvents = true
 
-    appBar.addSubviewsToParent()
+    headerView.trackingScrollView = self.tableView
+
+    view.addSubview(appBarViewController.view)
+    #if swift(>=4.2)
+    appBarViewController.didMove(toParent: self)
+    #else
+    appBarViewController.didMove(toParentViewController: self)
+    #endif
   }
 
   override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -71,28 +79,33 @@ class AppBarImagerySwiftExample: UITableViewController {
 
     self.title = "Imagery (Swift)"
 
-    self.addChildViewController(appBar.headerViewController)
+    // Behavioral flags.
+    appBarViewController.inferTopSafeAreaInsetFromViewController = true
+    appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
+
+    self.addChildViewController(appBarViewController)
   }
 
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
   }
 
-  func headerBackgroundImage() -> UIImage {
-    let bundle = Bundle(for: AppBarImagerySwiftExample.self)
-    let imagePath = bundle.path(forResource: "mdc_theme", ofType: "png")!
-    return UIImage(contentsOfFile: imagePath)!
+  func headerBackgroundImage() -> UIImage? {
+    return UIImage(named: "mdc_theme",
+                   in: Bundle(for: AppBarImagerySwiftExample.self),
+                   compatibleWith: nil)
   }
 }
 
 // MARK: Catalog by convention
 extension AppBarImagerySwiftExample {
-  class func catalogBreadcrumbs() -> [String] {
-    return ["App Bar", "Imagery (Swift)"]
-  }
 
-  class func catalogIsPrimaryDemo() -> Bool {
-    return false
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["App Bar", "Imagery (Swift)"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
   }
 
   func catalogShouldHideNavigation() -> Bool {
@@ -116,7 +129,7 @@ extension AppBarImagerySwiftExample {
       if cell == nil {
         cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
       }
-      cell!.layoutMargins = UIEdgeInsets.zero
+      cell!.selectionStyle = .none
       return cell!
   }
 }

@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 // swiftlint:disable function_body_length
 // swiftlint:disable type_body_length
@@ -23,6 +21,8 @@ import MaterialComponents.MaterialTextFields
 class MultilineTextFieldTests: XCTestCase {
   func testAttributedSetters() {
     let textField = MDCMultilineTextField()
+
+    XCTAssertNotNil(textField.textView)
 
     let string = "attributed"
     textField.attributedPlaceholder = NSAttributedString(string: string)
@@ -42,13 +42,14 @@ class MultilineTextFieldTests: XCTestCase {
     textField.borderView?.borderStrokeColor = .green
     textField.clearButton.tintColor = .red
     textField.clearButtonMode = .always
+    textField.cursorColor = .white
     textField.font = UIFont.systemFont(ofSize: UIFont.labelFontSize)
     textField.hidesPlaceholderOnInput = false
     textField.isEnabled = false
-    textField.mdc_adjustsFontForContentSizeCategory = true
     textField.placeholder = "test"
     textField.text = "test"
     textField.textColor = .red
+    textField.trailingViewMode = .never
     textField.underline?.color = .red
     textField.underline?.lineHeight = 10
 
@@ -65,6 +66,7 @@ class MultilineTextFieldTests: XCTestCase {
       XCTAssertEqual(textField.borderView?.borderStrokeColor, textFieldCopy.borderView?.borderStrokeColor)
       XCTAssertEqual(textField.clearButton.tintColor, textFieldCopy.clearButton.tintColor)
       XCTAssertEqual(textField.clearButtonMode, textFieldCopy.clearButtonMode)
+      XCTAssertEqual(textField.cursorColor, textFieldCopy.cursorColor)
       XCTAssertEqual(textField.font, textFieldCopy.font)
       XCTAssertEqual(textField.hidesPlaceholderOnInput, textFieldCopy.hidesPlaceholderOnInput)
       XCTAssertEqual(textField.isEnabled, textFieldCopy.isEnabled)
@@ -73,6 +75,7 @@ class MultilineTextFieldTests: XCTestCase {
       XCTAssertEqual(textField.placeholder, textFieldCopy.placeholder)
       XCTAssertEqual(textField.text, textFieldCopy.text)
       XCTAssertEqual(textField.textColor, textFieldCopy.textColor)
+      XCTAssertEqual(textField.trailingViewMode, textFieldCopy.trailingViewMode)
       XCTAssertEqual(textField.underline?.color, textFieldCopy.underline?.color)
       XCTAssertEqual(textField.underline?.lineHeight, textFieldCopy.underline?.lineHeight)
     } else {
@@ -95,41 +98,6 @@ class MultilineTextFieldTests: XCTestCase {
     XCTAssertTrue(textField.mdc_adjustsFontForContentSizeCategory)
   }
 
-  func testSerialization() {
-    let textField = MDCMultilineTextField()
-    textField.translatesAutoresizingMaskIntoConstraints = false
-    textField.text = "Lorem ipsum dolor sit amet, consectetuer adipiscing"
-
-    let controller = MDCTextInputControllerDefault(textInput: textField)
-    XCTAssertNotNil(controller.textInput)
-
-    let leadingText = "Serialized Helper Test"
-    controller.helperText = leadingText
-    controller.characterCountMax = 40
-    textField.textInsetsMode = .never
-
-    let serializedInput = NSKeyedArchiver.archivedData(withRootObject: textField)
-    XCTAssertNotNil(serializedInput)
-
-    let unserializedInput =
-      NSKeyedUnarchiver.unarchiveObject(with: serializedInput) as? MDCMultilineTextField
-    XCTAssertNotNil(unserializedInput)
-
-    XCTAssertEqual(textField.translatesAutoresizingMaskIntoConstraints,
-                   unserializedInput?.translatesAutoresizingMaskIntoConstraints)
-    XCTAssertEqual(textField.text,
-                   unserializedInput?.text)
-
-    XCTAssertEqual(textField.leadingUnderlineLabel.text,
-                   unserializedInput?.leadingUnderlineLabel.text)
-
-    XCTAssertEqual(textField.trailingUnderlineLabel.text, "51 / 40")
-    XCTAssertEqual(textField.trailingUnderlineLabel.text,
-                   unserializedInput?.trailingUnderlineLabel.text)
-
-    XCTAssertEqual(textField.textInsetsMode, unserializedInput?.textInsetsMode)
-  }
-
   func testSizing() {
     let textField = MDCMultilineTextField(frame: CGRect(x: 0, y: 0, width: 300, height: 0))
     XCTAssertEqual(textField.frame.height, 0)
@@ -146,6 +114,14 @@ class MultilineTextFieldTests: XCTestCase {
 
     textField.textInsetsMode = .never
     XCTAssertEqual(textField.textInsetsMode, .never)
+  }
+
+  func testTrailingView() {
+    let trailingView = UIView()
+    let textField = MDCMultilineTextField()
+
+    textField.trailingView = trailingView
+    XCTAssertEqual(textField.trailingView, trailingView)
   }
 
   func testUnderlineSetters() {

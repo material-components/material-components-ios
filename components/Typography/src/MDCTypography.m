@@ -1,25 +1,23 @@
-/*
- Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCTypography.h"
 #import "private/UIFont+MaterialTypographyPrivate.h"
 
 static id<MDCTypographyFontLoading> gFontLoader = nil;
-const CGFloat MDCTypographyStandardOpacity = 0.87f;
-const CGFloat MDCTypographySecondaryOpacity = 0.54f;
+const CGFloat MDCTypographyStandardOpacity = (CGFloat)0.87;
+const CGFloat MDCTypographySecondaryOpacity = (CGFloat)0.54;
 
 @implementation MDCTypography
 
@@ -221,12 +219,14 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
     return font;
   }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpartial-availability"
   if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
     font = [UIFont systemFontOfSize:fontSize weight:UIFontWeightLight];
   } else {
     font = [UIFont fontWithName:@"HelveticaNeue-Light" size:fontSize];
   }
-
+#pragma clang diagnostic pop
   if (font) {
     [self.fontCache setObject:font forKey:cacheKey];
   }
@@ -240,11 +240,14 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
     return font;
   }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpartial-availability"
   if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
     font = [UIFont systemFontOfSize:fontSize weight:UIFontWeightRegular];
   } else {
     font = [UIFont systemFontOfSize:fontSize];
   }
+#pragma clang diagnostic pop
 
   [self.fontCache setObject:font forKey:cacheKey];
 
@@ -258,11 +261,15 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
     return font;
   }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpartial-availability"
   if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
     font = [UIFont systemFontOfSize:fontSize weight:UIFontWeightMedium];
   } else {
     font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:fontSize];
   }
+#pragma clang diagnostic pop
+
   if (font) {
     [self.fontCache setObject:font forKey:cacheKey];
   }
@@ -276,11 +283,14 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
     return font;
   }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpartial-availability"
   if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
     font = [UIFont systemFontOfSize:fontSize weight:UIFontWeightSemibold];
   } else {
     font = [UIFont boldSystemFontOfSize:fontSize];
   }
+  #pragma clang diagnostic pop
 
   [self.fontCache setObject:font forKey:cacheKey];
 
@@ -344,6 +354,7 @@ const CGFloat MDCTypographySecondaryOpacity = 0.54f;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wtautological-pointer-compare"
 #pragma clang diagnostic ignored "-Wunreachable-code"
+#pragma clang diagnostic ignored "-Wpartial-availability"
   if (&UIFontWeightMedium != NULL) {
     MDCFontWeightMedium = UIFontWeightMedium;
   }

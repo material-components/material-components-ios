@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <UIKit/UIKit.h>
 
@@ -24,6 +22,24 @@ typedef NS_ENUM(NSInteger, MDCNavigationBarTitleAlignment) {
   MDCNavigationBarTitleAlignmentCenter,
   /** Aligns the title to the left/leading of the NavigationBar. */
   MDCNavigationBarTitleAlignmentLeading
+};
+
+/**
+ Behaviors that affect the layout of an |MDCNavigationBar|'s titleView.
+ */
+typedef NS_ENUM(NSInteger, MDCNavigationBarTitleViewLayoutBehavior) {
+  /**
+   The title view's width will equal the navigation bar's width minus any space consumed by the
+   leading and trailing buttons.
+
+   The title view's center may not align with the navigation bar's center in this case.
+   */
+  MDCNavigationBarTitleViewLayoutBehaviorFill,
+
+  /**
+   Align the title view's center with the navigation bar's center, if possible.
+   */
+  MDCNavigationBarTitleViewLayoutBehaviorCenter
 };
 
 /**
@@ -99,18 +115,106 @@ IB_DESIGNABLE
 @property(nonatomic, strong, nullable) UIView *titleView;
 
 /**
- Display attributes for the titleView's title text.
+ The behavior that determines how to position the title view.
 
- Setting this property will render an NSAttributedString with the assigned attributes across the
- entire text.
+ By default this is MDCNavigationBarTitleViewLayoutBehaviorFill.
  */
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-@property(nonatomic, copy, nullable)
-    NSDictionary<NSAttributedStringKey, id> *titleTextAttributes UI_APPEARANCE_SELECTOR;
-#else
-@property(nonatomic, copy, nullable)
-    NSDictionary<NSString *, id> *titleTextAttributes UI_APPEARANCE_SELECTOR;
-#endif
+@property(nonatomic) MDCNavigationBarTitleViewLayoutBehavior titleViewLayoutBehavior;
+
+/**
+ The font applied to the title of navigation bar.
+ Font size is enforced to 20.
+ Both Default and null_resettable value is MDCTypography's titleFont.
+ Note that the font attribute of titleTextAttributes will take precedence over this property.
+ */
+@property(nonatomic, strong, null_resettable) UIFont *titleFont;
+
+/**
+ A behavioral flag that affects whether titleFont can be set to a font of any size or not.
+
+ If enabled, titleFont can be set to a font of any size.
+
+ If disabled, titleFont's size will be adjusted to 20 regardless of the provided font size.
+
+ We intend to enable this property by default in the future and to remote this flag entirely.
+ Consider enabling this flag on your navigation bar instances.
+
+ Default is NO.
+ */
+@property(nonatomic) BOOL allowAnyTitleFontSize;
+
+/**
+ The title label's text color.
+
+ Default is nil (text draws black).
+ */
+@property(nonatomic, strong, nullable) UIColor *titleTextColor;
+
+/**
+ The inkColor that is used for all buttons in trailing and leading button bars.
+
+ If set to nil, button bar buttons use default ink color.
+ */
+@property(nonatomic, strong, nullable) UIColor *inkColor;
+
+/**
+ If true, all button titles will be converted to uppercase.
+
+ Changing this property to NO will update the current title string for all buttons.
+
+ Default is YES.
+ */
+@property(nonatomic) BOOL uppercasesButtonTitles;
+
+/**
+ Sets the title font for the given state for all buttons.
+
+ @param font The font that should be displayed on text buttons for the given state.
+ @param state The state for which the font should be displayed.
+ */
+- (void)setButtonsTitleFont:(nullable UIFont *)font forState:(UIControlState)state;
+
+/**
+ Returns the font set for @c state that was set by setButtonsTitleFont:forState:.
+
+ If no font has been set for a given state, the returned value will fall back to the value
+ set for UIControlStateNormal.
+
+ @param state The state for which the font should be returned.
+ @return The font associated with the given state.
+ */
+- (nullable UIFont *)buttonsTitleFontForState:(UIControlState)state;
+
+/**
+ Sets the title label color for the given state for all buttons.
+
+ @param color The color that should be used on text buttons labels for the given state.
+ @param state The state for which the color should be used.
+ */
+- (void)setButtonsTitleColor:(nullable UIColor *)color forState:(UIControlState)state;
+
+/**
+ The tint color applied to the bar items on the leading side of the BottomAppBar. If unset, then
+ defaults to using this Navigation Bar's @c tintColor.
+ */
+@property(nullable, nonatomic, strong) UIColor *leadingBarItemsTintColor;
+
+/**
+ The tint color applied to the bar items on the trailing side of the BottomAppBar. If unset, then
+ defaults to using this NavigationBar's @c tintColor.
+ */
+@property(nullable, nonatomic, strong) UIColor *trailingBarItemsTintColor;
+
+/**
+ Returns the color set for @c state that was set by setButtonsTitleColor:forState:.
+
+ If no value has been set for a given state, the returned value will fall back to the value
+ set for UIControlStateNormal.
+
+ @param state The state for which the color should be returned.
+ @return The color associated with the given state.
+ */
+- (nullable UIColor *)buttonsTitleColorForState:(UIControlState)state;
 
 /** The back button to be displayed, if any. */
 @property(nonatomic, strong, nullable) UIBarButtonItem *backItem;
@@ -192,6 +296,22 @@ IB_DESIGNABLE
 
 /* Equivalent to leadingItemsSupplementBackButton. */
 @property(nonatomic) BOOL leftItemsSupplementBackButton;
+
+#pragma mark - To be deprecated
+
+/**
+ Display attributes for the titleView's title text.
+
+ Font attribute will take precedence over titleFont property.
+ Setting this property will render an NSAttributedString with the assigned attributes across the
+ entire text.
+
+ Note: this property will be deprecated in future, please use titleFont and titleTextColor instead.
+ */
+@property(nonatomic, copy, nullable)
+    NSDictionary<NSAttributedStringKey, id> *titleTextAttributes UI_APPEARANCE_SELECTOR;
+
+#pragma mark - Deprecated
 
 /** The text alignment of the navigation bar title. Defaults to NSTextAlignmentLeft. */
 @property(nonatomic) NSTextAlignment textAlignment __deprecated_msg("Use titleAlignment instead.");

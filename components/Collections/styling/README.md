@@ -1,12 +1,11 @@
-<!--docs:
-title: "Styling the collection view"
-navTitle: Styling
-layout: detail
-section: components
-iconId: list
-path: /catalog/collections/styling/
--->
 # Styling the collection view
+
+**Notice**: This component will be deprecated over the next few months in favor of the
+[Cards](../../Cards) and [List](../../List) components. See our
+[public tracker](https://www.pivotaltracker.com/epic/show/3938766) for more details on timing and
+the deprecation plan.
+
+---
 
 `MDCCollectionViewController` provides a `styler` property that conforms to the
 `MDCCollectionViewStyling` protocol. By using this property, styling can be easily set for the
@@ -63,7 +62,7 @@ self.styler.cellStyle = MDCCollectionViewCellStyleCard;
 
 ### Cell Height
 
-The styling delegate protocol can be used to override the default cell height of `48.0f`.
+The styling delegate protocol can be used to override the default cell height of `48`.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
@@ -82,9 +81,9 @@ override func collectionView(_ collectionView: UICollectionView,
 - (CGFloat)collectionView:(UICollectionView *)collectionView
     cellHeightAtIndexPath:(NSIndexPath *)indexPath {
   if (indexPath.item == 0) {
-    return 80.0f;
+    return 80;
   }
-  return 48.0f;
+  return 48;
 }
 ```
 <!--</div>-->
@@ -149,7 +148,7 @@ self.styler.separatorColor = [UIColor redColor];
 self.styler.separatorInset = UIEdgeInsetsMake(0, 16, 0, 16);
 
 // Set separator line height.
-self.styler.separatorLineHeight = 1.0f;
+self.styler.separatorLineHeight = 1;
 
 // Whether to hide separators.
 self.styler.shouldHideSeparators = NO;

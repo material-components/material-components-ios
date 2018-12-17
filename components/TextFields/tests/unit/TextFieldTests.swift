@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 import XCTest
 import MaterialComponents.MaterialTextFields
@@ -53,11 +51,11 @@ class TextFieldTests: XCTestCase {
     textField.borderView?.borderStrokeColor = .yellow
     textField.clearButton.tintColor = .red
     textField.clearButtonMode = .always
+    textField.cursorColor = .white
     textField.font = UIFont.systemFont(ofSize: UIFont.labelFontSize)
     textField.hidesPlaceholderOnInput = false
     textField.isEnabled = false
     textField.leadingViewMode = .unlessEditing
-    textField.mdc_adjustsFontForContentSizeCategory = true
     textField.placeholder = "test"
     textField.text = "test"
     textField.textColor = .red
@@ -74,6 +72,7 @@ class TextFieldTests: XCTestCase {
       XCTAssertEqual(textField.borderView?.borderStrokeColor, textFieldCopy.borderView?.borderStrokeColor)
       XCTAssertEqual(textField.clearButton.tintColor, textFieldCopy.clearButton.tintColor)
       XCTAssertEqual(textField.clearButtonMode, textFieldCopy.clearButtonMode)
+      XCTAssertEqual(textField.cursorColor, textFieldCopy.cursorColor)
       XCTAssertEqual(textField.font, textFieldCopy.font)
       XCTAssertEqual(textField.hidesPlaceholderOnInput, textFieldCopy.hidesPlaceholderOnInput)
       XCTAssertEqual(textField.isEnabled, textFieldCopy.isEnabled)
@@ -97,6 +96,14 @@ class TextFieldTests: XCTestCase {
     textField.font = UIFont.systemFont(ofSize: UIFont.labelFontSize)
     XCTAssertEqual(UIFont.systemFont(ofSize: UIFont.labelFontSize), textField.font)
     XCTAssertNotEqual(UIFont.systemFont(ofSize: UIFont.smallSystemFontSize), textField.font)
+  }
+
+  func testLeadingingView() {
+    let leadingView = UIView()
+    let textField = MDCTextField()
+
+    textField.leadingView = leadingView
+    XCTAssertEqual(textField.leadingView, leadingView)
   }
 
   func testMDCDynamicTypeAPI() {
@@ -143,80 +150,6 @@ class TextFieldTests: XCTestCase {
         XCTAssertEqual(textField.trailingView, textField.leftView)
       }
     }
-  }
-
-  func testSerializationTextField() {
-    let textField = MDCTextField()
-
-    textField.borderView?.borderFillColor = .purple
-    textField.borderView?.borderPath = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: 100, height: 100))
-    textField.borderView?.borderStrokeColor = .yellow
-
-    let leadingView = UILabel()
-    leadingView.text = "$"
-
-    textField.leadingView = leadingView
-    textField.leadingViewMode = .unlessEditing
-
-    let trailingView = UILabel()
-    trailingView.text = ".com"
-
-    textField.trailingView = trailingView
-    textField.trailingViewMode = .unlessEditing
-
-    textField.translatesAutoresizingMaskIntoConstraints = false
-    textField.text = "Lorem ipsum dolor sit amet, consectetuer adipiscing"
-
-    let controller = MDCTextInputControllerDefault(textInput: textField)
-    XCTAssertNotNil(controller.textInput)
-
-    let leadingText = "Serialized Helper Test"
-    controller.helperText = leadingText
-    controller.characterCountMax = 40
-
-    textField.textInsetsMode = .never
-
-    let serializedInput = NSKeyedArchiver.archivedData(withRootObject: textField)
-    XCTAssertNotNil(serializedInput)
-
-    let unserializedInput =
-      NSKeyedUnarchiver.unarchiveObject(with: serializedInput) as? MDCTextField
-    XCTAssertNotNil(unserializedInput)
-
-    XCTAssertEqual(textField.translatesAutoresizingMaskIntoConstraints,
-                   unserializedInput?.translatesAutoresizingMaskIntoConstraints)
-    XCTAssertEqual(textField.text,
-                   unserializedInput?.text)
-
-    XCTAssertTrue(unserializedInput?.borderView != nil)
-    XCTAssertEqual(textField.borderView?.borderFillColor, unserializedInput?.borderView?.borderFillColor)
-
-    // Because of floating point inaccuracies, we can't compare the paths for equality. So, we
-    // compare the bounding box. But this too may be innaccurate. Revisit this if it starts failing.
-    XCTAssertEqual(textField.borderView?.borderPath?.bounds.integral, unserializedInput?.borderView?.borderPath?.bounds.integral)
-    XCTAssertEqual(textField.borderView?.borderStrokeColor, unserializedInput?.borderView?.borderStrokeColor)
-    XCTAssertEqual(textField.leadingUnderlineLabel.text,
-                   unserializedInput?.leadingUnderlineLabel.text)
-
-    XCTAssertEqual(textField.trailingUnderlineLabel.text, "51 / 40")
-    XCTAssertEqual(textField.trailingUnderlineLabel.text,
-                   unserializedInput?.trailingUnderlineLabel.text)
-
-    XCTAssertEqual(textField.textInsetsMode, unserializedInput?.textInsetsMode)
-
-    if let leadingViewUnserialized = unserializedInput?.leadingView as? UILabel {
-      XCTAssertEqual(leadingViewUnserialized.text, leadingView.text)
-    } else {
-      XCTFail("No leading view or it isn't a UILabel")
-    }
-    XCTAssertEqual(unserializedInput?.leadingViewMode, .unlessEditing)
-
-    if let trailingViewUnserialized = unserializedInput?.trailingView as? UILabel {
-      XCTAssertEqual(trailingViewUnserialized.text, trailingView.text)
-    } else {
-      XCTFail("No trailing view or it isn't a UILabel")
-    }
-    XCTAssertEqual(unserializedInput?.trailingViewMode, .unlessEditing)
   }
 
   func testSizing() {

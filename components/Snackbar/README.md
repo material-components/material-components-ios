@@ -1,51 +1,61 @@
 <!--docs:
-title: "Snackbars"
+title: "Snackbar"
 layout: detail
 section: components
 excerpt: "Snackbars provide brief feedback about an operation through a message at the bottom of the screen."
 iconId: toast
 path: /catalog/snackbars/
+api_doc_root: true
 -->
+
+<!-- This file was auto-generated using ./scripts/generate_readme Snackbar -->
 
 # Snackbar
 
-<div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/snackbar.png" alt="Snackbar" width="375">
-</div>
+[![Open bugs badge](https://img.shields.io/badge/dynamic/json.svg?label=open%20bugs&url=https%3A%2F%2Fapi.github.com%2Fsearch%2Fissues%3Fq%3Dis%253Aopen%2Blabel%253Atype%253ABug%2Blabel%253A%255BSnackbar%255D&query=%24.total_count)](https://github.com/material-components/material-components-ios/issues?q=is%3Aopen+is%3Aissue+label%3Atype%3ABug+label%3A%5BSnackbar%5D)
 
 Snackbars provide brief feedback about an operation through a message at the bottom of the screen.
 Snackbars contain up to two lines of text directly related to the operation performed. They may
 contain a text action, but no icons.
 
-## Design & API Documentation
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/snackbar.png" alt="Snackbar" width="375">
+</div>
+
+## Design & API documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/snackbars-toasts.html">Material Design guidelines: Snackbars</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-snackbar">Material Design guidelines: Snack Bar</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/snackbars/api-docs/Classes/MDCSnackbarManager.html">MDCSnackbarManager</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/snackbars/api-docs/Classes/MDCSnackbarMessage.html">MDCSnackbarMessage</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/snackbars/api-docs/Classes/MDCSnackbarMessageAction.html">MDCSnackbarMessageAction</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/snackbars/api-docs/Classes/MDCSnackbarMessageView.html">MDCSnackbarMessageView</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/snackbars/api-docs/Protocols.html#/c:objc(pl)MDCSnackbarSuspensionToken">MDCSnackbarSuspensionToken</a></li>
+  <li class="icon-list-item icon-list-item--link">Protocol: <a href="https://material.io/components/ios/catalog/snackbars/api-docs/Protocols/MDCSnackbarManagerDelegate.html">MDCSnackbarManagerDelegate</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/snackbars/api-docs/Enums.html">Enumerations</a></li>
+  <li class="icon-list-item icon-list-item--link">Enumeration: <a href="https://material.io/components/ios/catalog/snackbars/api-docs/Enums/MDCSnackbarAlignment.html">MDCSnackbarAlignment</a></li>
 </ul>
 
-- - -
+## Related components
 
-## Installation
+<ul class="icon-list">
+  <li class="icon-list-item icon-list-item--link"><a href="../OverlayWindow">OverlayWindow</a></li>
+</ul>
 
-### Requirements
+## Table of contents
 
-- Xcode 7.0 or higher.
-- iOS SDK version 7.0 or higher.
-
-### Installation with CocoaPods
-
-To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
-
-```
-pod 'MaterialComponents/Snackbar'
-```
-<!--{: .code-renderer.code-renderer--install }-->
-
-Then, run the following command:
-
-``` bash
-pod install
-```
+- [Overview](#overview)
+  - [Snackbar Manager and Message](#snackbar-manager-and-message)
+  - [Suspending and Resuming Display of Messages](#suspending-and-resuming-display-of-messages)
+- [Installation](#installation)
+  - [Installation with CocoaPods](#installation-with-cocoapods)
+  - [Importing](#importing)
+- [Usage](#usage)
+  - [Typical use: display a message](#typical-use-display-a-message)
+  - [Typical use: display a message with an action](#typical-use-display-a-message-with-an-action)
+- [Extensions](#extensions)
+  - [Color Theming](#color-theming)
+  - [Typography Theming](#typography-theming)
 
 - - -
 
@@ -64,7 +74,42 @@ messages are suspended the manager provides a suspension token that the client m
 messages are suspended. When the client releases the suspension token or calls the manager's resume
 method with the suspension token, then messages will resume being displayed.
 
-- - -
+## Installation
+
+<!-- Extracted from docs/../../../docs/component-installation.md -->
+
+### Installation with CocoaPods
+
+Add the following to your `Podfile`:
+
+```bash
+pod 'MaterialComponents/Snackbar'
+```
+<!--{: .code-renderer.code-renderer--install }-->
+
+Then, run the following command:
+
+```bash
+pod install
+```
+
+### Importing
+
+To import the component:
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+import MaterialComponents.MaterialSnackbar
+```
+
+#### Objective-C
+
+```objc
+#import "MaterialSnackbar.h"
+```
+<!--</div>-->
+
 
 ## Usage
 
@@ -74,32 +119,14 @@ pass the MDCSnackbarMessage to the MDCSnackbarManager with the static showMessag
 automatically construct an MDCSnackbarMessageView and appropriate overlay views so the snackbar is
 visible to the user.
 
-### Importing
+<!-- Extracted from docs/typical-use-display-a-message.md -->
 
-Before using Snackbar, you'll need to import it:
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-``` swift
-import MaterialComponents.MaterialSnackbar
-```
-
-#### Objective-C
-``` objc
-#import "MaterialSnackbar.h"
-```
-<!--</div>-->
-
-- - -
-
-## Examples
-
-### Display a Snackbar Message
+### Typical use: display a message
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-``` swift
+```swift
 let message = MDCSnackbarMessage()
 message.text = "The groundhog (Marmota monax) is also known as a woodchuck or whistlepig."
 MDCSnackbarManager.show(message)
@@ -107,19 +134,21 @@ MDCSnackbarManager.show(message)
 
 #### Objective-C
 
-``` objc
+```objc
 MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
 message.text = @"How much wood would a woodchuck chuck if a woodchuck could chuck wood?";
 [MDCSnackbarManager showMessage:message];
 ```
 <!--</div>-->
 
-### Display a Snackbar Message with an Action
+<!-- Extracted from docs/typical-use-display-a-message-with-action.md -->
+
+### Typical use: display a message with an action
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-``` swift
+```swift
 let action = MDCSnackbarMessageAction()
 let actionHandler = {() in
   let answerMessage = MDCSnackbarMessage()
@@ -133,7 +162,7 @@ message.action = action
 
 #### Objective-C
 
-``` objc
+```objc
 MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
 void (^actionHandler)() = ^() {
   MDCSnackbarMessage *answerMessage = [[MDCSnackbarMessage alloc] init];
@@ -146,10 +175,84 @@ message.action = action;
 ```
 <!--</div>-->
 
-- - -
 
-## Related Components
+## Extensions
 
-<ul class="icon-list">
-  <li class="icon-list-item icon-list-item--components"><a href="../OverlayWindow">Overlay Windows</a></li>
-</ul>
+<!-- Extracted from docs/color-theming.md -->
+
+### Color Theming
+
+You can theme an snackbar with your app's color scheme using the ColorThemer extension.
+
+You must first add the Color Themer extension to your project:
+
+```bash
+pod 'MaterialComponents/Snackbar+ColorThemer'
+```
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// Step 1: Import the ColorThemer extension
+import MaterialComponents.MaterialSnackbar_ColorThemer
+
+// Step 2: Create or get a color scheme
+let colorScheme = MDCSemanticColorScheme()
+
+// Step 3: Apply the color scheme to your component
+MDCSnackbarColorThemer.applySemanticColorScheme(colorScheme)
+```
+
+#### Objective-C
+
+```objc
+// Step 1: Import the ColorThemer extension
+#import "MaterialSnackbar+ColorThemer.h"
+
+// Step 2: Create or get a color scheme
+id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+
+// Step 3: Apply the color scheme to your component
+[MDCSnackbarColorThemer applySemanticColorScheme:colorScheme];
+```
+<!--</div>-->
+
+<!-- Extracted from docs/typography-theming.md -->
+
+### Typography Theming
+
+You can theme an snackbar with your app's typography scheme using the TypographyThemer extension.
+
+You must first add the Typography Themer extension to your project:
+
+```bash
+pod 'MaterialComponents/Snackbar+TypographyThemer'
+```
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// Step 1: Import the TypographyThemer extension
+import MaterialComponents.MaterialSnackbar_TypographyThemer
+
+// Step 2: Create or get a typography scheme
+let typographyScheme = MDCTypographyScheme()
+
+// Step 3: Apply the typography scheme to your component
+MDCSnackbarTypographyThemer.applyTypographyScheme(typographyScheme)
+```
+
+#### Objective-C
+
+```objc
+// Step 1: Import the TypographyThemer extension
+#import "MaterialSnackbar+TypographyThemer.h"
+
+// Step 2: Create or get a typography scheme
+id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
+
+// Step 3: Apply the typography scheme to your component
+[MDCSnackbarTypographyThemer applyTypographyScheme:colorScheme];
+```
+<!--</div>-->
+

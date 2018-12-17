@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <UIKit/UIKit.h>
 
@@ -56,5 +54,20 @@
  @param animated YES the transition will be animated; otherwise, NO.
  */
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated;
+
+/**
+ Updates the position of the cell being reordered to match the user's touch location. This method
+ is a no-op if a cell is not currently being reordered.
+
+ While the reordering cell's location is updated automatically to match the user's touch location,
+ this method allows for the explicit update of the cell's position which may be required when the
+ cell's location changes due to a layout update (such as performing collection view changes while
+ the user is reordering).
+
+ For example, you can call this in the MDCCollectionViewEditingDelegate's implementation of
+ -collectionView:willBeginDraggingItemAtIndexPath: after performing updates to the collection view
+ in preparation for the user's move of an item.
+ */
+- (void)updateReorderCellPosition;
 
 @end

@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCKeyboardWatcher.h"
 #import "MaterialApplication.h"
@@ -52,20 +50,21 @@ static MDCKeyboardWatcher *_sKeyboardWatcher;
 - (instancetype)init {
   self = [super init];
   if (self) {
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow:)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
+    NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+    [defaultCenter addObserver:self
+                      selector:@selector(keyboardWillShow:)
+                          name:UIKeyboardWillShowNotification
+                        object:nil];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillHide:)
-                                                 name:UIKeyboardWillHideNotification
-                                               object:nil];
+    [defaultCenter addObserver:self
+                      selector:@selector(keyboardWillHide:)
+                          name:UIKeyboardWillHideNotification
+                        object:nil];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillChangeFrame:)
-                                                 name:UIKeyboardWillChangeFrameNotification
-                                               object:nil];
+    [defaultCenter addObserver:self
+                      selector:@selector(keyboardWillChangeFrame:)
+                          name:UIKeyboardWillChangeFrameNotification
+                        object:nil];
   }
 
   return self;
@@ -94,13 +93,14 @@ static MDCKeyboardWatcher *_sKeyboardWatcher;
     return;
   }
 
+  CGRect keyWindowBounds = [UIApplication mdc_safeSharedApplication].keyWindow.bounds;
   CGRect screenBounds = [[UIScreen mainScreen] bounds];
   CGRect intersection = CGRectIntersection(screenBounds, keyboardRect);
 
   // If the extent of the keyboard is at or below the bottom of the screen it is docked.
   // This handles the case of an external keyboard on iOS8+ where the entire frame of the keyboard
   // view is used, but on the top, the input accessory section is show.
-  BOOL dockedKeyboard = CGRectGetMaxY(screenBounds) <= CGRectGetMaxY(keyboardRect);
+  BOOL dockedKeyboard = CGRectGetMaxY(keyWindowBounds) <= CGRectGetMaxY(keyboardRect);
 
   // If the bottom of the keyboard isn't at the bottom of the screen, then it is undocked, and we
   // shouldn't try to account for it.

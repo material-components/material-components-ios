@@ -1,39 +1,45 @@
-/*
-Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 import Foundation
-import MaterialComponents
+import MaterialComponents.MaterialAppBar
+import MaterialComponents.MaterialAppBar_ColorThemer
+import MaterialComponents.MaterialAppBar_TypographyThemer
 
 class AppBarTypicalUseSwiftExample: UITableViewController {
 
   // Step 1: Create and initialize an App Bar.
-  let appBar = MDCAppBar()
+  let appBarViewController = MDCAppBarViewController()
+  var colorScheme = MDCSemanticColorScheme()
+  var typographyScheme = MDCTypographyScheme()
+
+  deinit {
+    // Required for pre-iOS 11 devices because we've enabled observesTrackingScrollViewScrollEvents.
+    appBarViewController.headerView.trackingScrollView = nil
+  }
 
   init() {
     super.init(nibName: nil, bundle: nil)
 
     self.title = "App Bar (Swift)"
 
-    // Step 2: Add the headerViewController as a child.
-    self.addChildViewController(appBar.headerViewController)
+    // Behavioral flags.
+    appBarViewController.inferTopSafeAreaInsetFromViewController = true
+    appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
 
-    let color = UIColor(white: 0.2, alpha:1)
-    appBar.headerViewController.headerView.backgroundColor = color
-    appBar.navigationBar.tintColor = UIColor.white
-    appBar.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
+    // Step 2: Add the headerViewController as a child.
+    self.addChildViewController(appBarViewController)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -43,19 +49,22 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    MDCAppBarColorThemer.applyColorScheme(colorScheme, to: appBarViewController)
+    MDCAppBarTypographyThemer.applyTypographyScheme(typographyScheme, to: appBarViewController)
+
+    // Allows us to avoid forwarding events, but means we can't enable shift behaviors.
+    appBarViewController.headerView.observesTrackingScrollViewScrollEvents = true
+
     // Recommended step: Set the tracking scroll view.
-    appBar.headerViewController.headerView.trackingScrollView = self.tableView
+    appBarViewController.headerView.trackingScrollView = self.tableView
 
-    // Choice: If you do not need to implement any delegate methods and you are not using a
-    //         collection view, you can use the headerViewController as the delegate.
-    // Alternative: See AppBarDelegateForwardingExample.
-    self.tableView.delegate = appBar.headerViewController
-
-    // Step 3: Register the App Bar views.
-    appBar.addSubviewsToParent()
-
-    self.tableView.layoutMargins = UIEdgeInsets.zero
-    self.tableView.separatorInset = UIEdgeInsets.zero
+    // Step 2: Register the App Bar views.
+    view.addSubview(appBarViewController.view)
+    #if swift(>=4.2)
+    appBarViewController.didMove(toParent: self)
+    #else
+    appBarViewController.didMove(toParentViewController: self)
+    #endif
 
     self.navigationItem.rightBarButtonItem =
       UIBarButtonItem(title: "Right", style: .done, target: nil, action: nil)
@@ -64,13 +73,13 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
   // Optional step: If you allow the header view to hide the status bar you must implement this
   //                method and return the headerViewController.
   override var childViewControllerForStatusBarHidden: UIViewController? {
-    return appBar.headerViewController
+    return appBarViewController
   }
 
   // Optional step: The Header View Controller does basic inspection of the header view's background
   //                color to identify whether the status bar should be light or dark-themed.
   override var childViewControllerForStatusBarStyle: UIViewController? {
-    return appBar.headerViewController
+    return appBarViewController
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -82,12 +91,13 @@ class AppBarTypicalUseSwiftExample: UITableViewController {
 
 // MARK: Catalog by convention
 extension AppBarTypicalUseSwiftExample {
-  class func catalogBreadcrumbs() -> [String] {
-    return ["App Bar", "App Bar (Swift)"]
-  }
 
-  class func catalogIsPrimaryDemo() -> Bool {
-    return false
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["App Bar", "App Bar (Swift)"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
   }
 
   func catalogShouldHideNavigation() -> Bool {
@@ -112,6 +122,7 @@ extension AppBarTypicalUseSwiftExample {
         cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
       }
       cell!.layoutMargins = UIEdgeInsets.zero
+      cell!.selectionStyle = .none
       return cell!
   }
 

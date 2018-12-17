@@ -1,26 +1,39 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
+#import "supplemental/TabBarIconExampleSupplemental.h"
 
- http://www.apache.org/licenses/LICENSE-2.0
+#import "MaterialAppBar.h"
+#import "MaterialColorScheme.h"
+#import "MaterialTabs.h"
+#import "MaterialTabs+ColorThemer.h"
 
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
-
-#import "TabBarIconExampleSupplemental.h"
-
-@import MaterialComponents.MaterialAppBar;
-@import MaterialComponents.MaterialPalettes;
-@import MaterialComponents.MaterialTabs;
+@interface TabBarIconExample ()
+@property(nonatomic, strong)UIBarButtonItem *addStarButtonItem;
+@end
 
 @implementation TabBarIconExample
+
+- (id)init {
+  self = [super init];
+  if (self) {
+    self.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    self.typographyScheme = [[MDCTypographyScheme alloc] init];
+  }
+  return self;
+}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -28,6 +41,11 @@
   [self setupExampleViews];
 
   [self loadTabBar];
+
+  self.addStarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add"
+                                                            style:UIBarButtonItemStylePlain
+                                                           target:self
+                                                           action:@selector(incrementDidTouch:)];
 }
 
 #pragma mark - Action
@@ -72,18 +90,14 @@
   // Give the second item a badge
   [tabBar.items[1] setBadgeValue:@"1"];
 
-  UIColor *green =  [UIColor colorWithRed:11/255.0f green:232/255.0f blue:94/255.0f alpha:1];
+  [MDCTabBarColorThemer applySemanticColorScheme:self.colorScheme toTabs:tabBar];
 
-  tabBar.barTintColor = [UIColor colorWithWhite:0.1f alpha:1.0];
-  tabBar.tintColor = green;
-  tabBar.inkColor = [[UIColor whiteColor] colorWithAlphaComponent:0.1];
-  tabBar.selectedItemTintColor = [[UIColor whiteColor] colorWithAlphaComponent:.87f];
-  tabBar.unselectedItemTintColor = [[UIColor whiteColor] colorWithAlphaComponent:.38f];
+  tabBar.inkColor = [[UIColor whiteColor] colorWithAlphaComponent:(CGFloat)0.1];
   tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
 
   self.tabBar = tabBar;
-  self.appBar.headerStackView.bottomBar = self.tabBar;
-  [self.appBar.headerStackView setNeedsLayout];
+  self.appBarViewController.headerStackView.bottomBar = self.tabBar;
+  [self.appBarViewController.headerStackView setNeedsLayout];
 }
 
 - (void)changeAlignment:(id)sender {
@@ -91,6 +105,8 @@
       [UIAlertController alertControllerWithTitle:nil
                                           message:nil
                                    preferredStyle:UIAlertControllerStyleActionSheet];
+  sheet.popoverPresentationController.sourceView = self.alignmentButton;
+  sheet.popoverPresentationController.sourceRect = self.alignmentButton.bounds;
   [sheet addAction:[UIAlertAction actionWithTitle:@"Leading"
                                             style:UIAlertActionStyleDefault
                                           handler:^(UIAlertAction *_Nonnull action) {
@@ -126,6 +142,11 @@
 
   [self.scrollView setContentOffset:CGPointMake(index * CGRectGetWidth(self.view.bounds), 0)
                            animated:YES];
+  if (index == 0) {
+    self.navigationItem.rightBarButtonItem = nil;
+  } else {
+    self.navigationItem.rightBarButtonItem = self.addStarButtonItem;
+  }
 }
 
 @end

@@ -31,3 +31,11 @@ Either:
 header docs—do not count), or
 - Component changes *only include bug fixes with no apparent behavioral changes*.
 
+## What is the source of truth for MDC's version number?
+
+The [VERSION](https://github.com/material-components/material-components-ios/blob/develop/VERSION)
+file contains the current version as a simple string (and nothing else). Our `scripts/release/bump`
+script updates that number and copies it into all the locations that it needs to end up, e.g.
+CocoaPods podspecs, etc. You can use the `scripts/print_version` script to print out the version
+number of the library.
+

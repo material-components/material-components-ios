@@ -1,9 +1,19 @@
+bazel-*
+.kokoro-ios-runner
+.clang-format-ci-src
+gh-pages/
+
+node_modules/
+yarn.lock
+
 # MDC
 
 build_tests/CocoapodsObjCApp/CocoapodsObjCApp.xcworkspace
 build_tests/CocoapodsSwiftApp/CocoapodsSwiftApp.xcworkspace
 scripts/external/material-design-icons/
 scripts/external/objc-diff/
+
+*apidocs/
 
 # Xcode
 #
@@ -48,7 +58,7 @@ xcuserdata
 #
 Pods/
 demos/**/Pods/
-catalog/Podfile.lock
+Podfile.lock
 
 # Carthage
 #

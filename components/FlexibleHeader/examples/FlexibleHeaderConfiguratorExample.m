@@ -1,26 +1,25 @@
-/*
- Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <UIKit/UIKit.h>
 
 #import "MaterialFlexibleHeader.h"
+#import "supplemental/FlexibleHeaderConfiguratorSupplemental.h"
 
-#import "FlexibleHeaderConfiguratorSupplemental.h"
+#import "MaterialFlexibleHeader+CanAlwaysExpandToMaximumHeight.h"
 
-@interface FlexibleHeaderConfiguratorExample () <MDCFlexibleHeaderViewLayoutDelegate>
+@interface FlexibleHeaderConfiguratorExample ()
 @property(nonatomic) BOOL overrideStatusBarHidden;
 @end
 
@@ -86,7 +85,17 @@
                              : MDCFlexibleHeaderContentImportanceDefault);
       break;
 
-    // Header height
+    case FlexibleHeaderConfiguratorFieldShiftOffscreen: {
+      [headerView shiftHeaderOffScreenAnimated:YES];
+      break;
+    }
+
+    case FlexibleHeaderConfiguratorFieldShiftOnscreen: {
+      [headerView shiftHeaderOnScreenAnimated:YES];
+      break;
+    }
+
+      // Header height
 
     case FlexibleHeaderConfiguratorFieldMinimumHeight:
       headerView.minimumHeight = [self heightDenormalized:[value floatValue]];
@@ -98,6 +107,10 @@
 
     case FlexibleHeaderConfiguratorFieldMinMaxHeightIncludeSafeArea:
       headerView.minMaxHeightIncludesSafeArea = [value boolValue];
+      break;
+
+    case FlexibleHeaderConfiguratorFieldCanAlwaysExpandToMaximumHeight:
+      headerView.canAlwaysExpandToMaximumHeight = [value boolValue];
       break;
   }
 }
@@ -148,26 +161,6 @@
   }
 }
 
-#pragma mark - MDCFlexibleHeaderViewLayoutDelegate
-
-- (void)flexibleHeaderViewController:
-            (nonnull MDCFlexibleHeaderViewController *)flexibleHeaderViewController
-    flexibleHeaderViewFrameDidChange:(nonnull MDCFlexibleHeaderView *)flexibleHeaderView {
-  CGFloat headerContentAlpha;
-  switch (flexibleHeaderView.scrollPhase) {
-    case MDCFlexibleHeaderScrollPhaseCollapsing:
-    case MDCFlexibleHeaderScrollPhaseOverExtending:
-      headerContentAlpha = 1;
-      break;
-    case MDCFlexibleHeaderScrollPhaseShifting:
-      headerContentAlpha = 1 - flexibleHeaderView.scrollPhasePercentage;
-      break;
-  }
-  for (UIView *subview in self.fhvc.headerView.subviews) {
-    subview.alpha = headerContentAlpha;
-  }
-}
-
 #pragma mark - Field data manipulation
 
 static const CGFloat kHeightScalar = 300;
@@ -205,6 +198,11 @@ static const CGFloat kHeightScalar = 300;
       return @(enabled);
     }
 
+    // Buttons have no value
+    case FlexibleHeaderConfiguratorFieldShiftOffscreen:
+    case FlexibleHeaderConfiguratorFieldShiftOnscreen:
+      return nil;
+
     case FlexibleHeaderConfiguratorFieldInFrontOfInfiniteContent:
       return @(self.fhvc.headerView.inFrontOfInfiniteContent);
 
@@ -213,8 +211,12 @@ static const CGFloat kHeightScalar = 300;
 
     case FlexibleHeaderConfiguratorFieldMaximumHeight:
       return @([self normalizedHeight:self.fhvc.headerView.maximumHeight]);
+
     case FlexibleHeaderConfiguratorFieldMinMaxHeightIncludeSafeArea:
       return @(self.fhvc.headerView.minMaxHeightIncludesSafeArea);
+
+    case FlexibleHeaderConfiguratorFieldCanAlwaysExpandToMaximumHeight:
+      return @(self.fhvc.headerView.canAlwaysExpandToMaximumHeight);
   }
 }
 

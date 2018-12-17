@@ -1,26 +1,32 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 // swiftlint:disable function_body_length
 // swiftlint:disable type_body_length
 
 import XCTest
+import MaterialComponents.MaterialMath
+import MaterialComponents.MaterialPalettes
 import MaterialComponents.MaterialTextFields
 
 class TextFieldControllerDefaultLegacyTests: XCTestCase {
+  override class func tearDown() {
+    RunLoop.main.run(until: Date.init(timeIntervalSinceNow: 1))
+
+    super.tearDown()
+  }
+
   func testCopyingLegacyDefault() {
     let textField = MDCTextField()
 
@@ -246,7 +252,7 @@ class TextFieldControllerDefaultLegacyTests: XCTestCase {
     textField.text = "Set Text"
     textField.setNeedsLayout()
     textField.layoutIfNeeded()
-    
+
     let estimatedTextFrame = UIEdgeInsetsInsetRect(textField.bounds, controller.textInsets(UIEdgeInsets()))
     XCTAssertFalse(textField.placeholderLabel.frame.intersects(estimatedTextFrame))
   }
@@ -288,7 +294,6 @@ class TextFieldControllerDefaultLegacyTests: XCTestCase {
   func testPresentationLegacyDefault() {
     let textField = MDCTextField()
     let controller = MDCTextInputControllerLegacyDefault(textInput: textField)
-
     XCTAssertEqual(controller.isFloatingEnabled, true)
     controller.isFloatingEnabled = false
     XCTAssertEqual(controller.isFloatingEnabled, false)
@@ -299,7 +304,7 @@ class TextFieldControllerDefaultLegacyTests: XCTestCase {
 
     controller.helperText = "Helper"
     textField.sizeToFit()
-    XCTAssertTrue(MDCCGFloatEqual(MDCCeil(textField.frame.height), 85.0))
+    XCTAssertEqual(MDCCeil(textField.frame.height), 85.0)
 
     controller.characterCountViewMode = .never
     XCTAssertEqual(.clear, textField.trailingUnderlineLabel.textColor)
@@ -332,76 +337,4 @@ class TextFieldControllerDefaultLegacyTests: XCTestCase {
     controller.disabledColor = .red
     XCTAssertEqual(controller.disabledColor, .clear)
   }
-
-  func testSerializationLegacyDefault() {
-    let textField = MDCTextField()
-
-    let controller = MDCTextInputControllerLegacyDefault(textInput: textField)
-    controller.characterCountMax = 25
-    controller.characterCountViewMode = .always
-    controller.disabledColor = .yellow
-    controller.isFloatingEnabled = false
-    controller.floatingPlaceholderNormalColor = .purple
-    controller.floatingPlaceholderScale = 0.1
-    controller.helperText = "Helper"
-    controller.inlinePlaceholderColor = .green
-    controller.activeColor = .blue
-    controller.normalColor = .white
-    controller.underlineViewMode = .always
-
-    let serializedController = NSKeyedArchiver.archivedData(withRootObject: controller)
-    XCTAssertNotNil(serializedController)
-
-    let unserializedController =
-      NSKeyedUnarchiver.unarchiveObject(with: serializedController) as?
-      MDCTextInputControllerLegacyDefault
-    XCTAssertNotNil(unserializedController)
-
-    unserializedController?.textInput = textField
-    XCTAssertEqual(controller.characterCountMax, unserializedController?.characterCountMax)
-    XCTAssertEqual(controller.characterCountViewMode,
-                   unserializedController?.characterCountViewMode)
-    XCTAssertEqual(controller.disabledColor, unserializedController?.disabledColor)
-    XCTAssertEqual(controller.isFloatingEnabled, unserializedController?.isFloatingEnabled)
-    XCTAssertEqual(controller.floatingPlaceholderNormalColor,
-                   unserializedController?.floatingPlaceholderNormalColor)
-    XCTAssertEqual(controller.floatingPlaceholderScale,
-                   unserializedController?.floatingPlaceholderScale)
-    XCTAssertEqual(controller.helperText, unserializedController?.helperText)
-    XCTAssertEqual(controller.inlinePlaceholderColor,
-                   unserializedController?.inlinePlaceholderColor)
-    XCTAssertEqual(controller.activeColor, unserializedController?.activeColor)
-    XCTAssertEqual(controller.normalColor, unserializedController?.normalColor)
-    XCTAssertEqual(controller.underlineViewMode, unserializedController?.underlineViewMode)
-  }
-
-  func testSerializationLegacyFullWidth() {
-    let textField = MDCTextField()
-
-    let controller = MDCTextInputControllerLegacyFullWidth(textInput: textField)
-    controller.characterCountMax = 25
-    controller.characterCountViewMode = .always
-    controller.disabledColor = .yellow
-    controller.errorColor = .blue
-    controller.inlinePlaceholderColor = .green
-
-    let serializedController = NSKeyedArchiver.archivedData(withRootObject: controller)
-    XCTAssertNotNil(serializedController)
-
-    let unserializedController =
-      NSKeyedUnarchiver.unarchiveObject(with: serializedController) as?
-      MDCTextInputControllerLegacyFullWidth
-    XCTAssertNotNil(unserializedController)
-
-    unserializedController?.textInput = textField
-    XCTAssertEqual(controller.characterCountMax, unserializedController?.characterCountMax)
-    XCTAssertEqual(controller.characterCountViewMode,
-                   unserializedController?.characterCountViewMode)
-    XCTAssertEqual(unserializedController?.disabledColor, .clear)
-    XCTAssertEqual(controller.errorColor, unserializedController?.errorColor)
-    XCTAssertEqual(controller.helperText, unserializedController?.helperText)
-    XCTAssertEqual(controller.inlinePlaceholderColor,
-                   unserializedController?.inlinePlaceholderColor)
-  }
-
 }

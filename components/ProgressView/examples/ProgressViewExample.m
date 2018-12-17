@@ -1,28 +1,29 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialColorScheme.h"
 #import "MaterialPalettes.h"
 #import "MaterialProgressView.h"
-#import "MaterialTypography.h"
+#import "MaterialTypographyScheme.h"
 
-static const CGFloat MDCProgressViewAnimationDuration = 1.f;
+static const CGFloat MDCProgressViewAnimationDuration = 1;
 
 @interface ProgressViewExample : UIViewController
+
+@property(nonatomic, strong) UIView *container;
 
 @property(nonatomic, strong) MDCProgressView *stockProgressView;
 @property(nonatomic, strong) UILabel *stockProgressLabel;
@@ -39,6 +40,9 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
 @property(nonatomic, strong) MDCProgressView *backwardProgressAnimateView;
 @property(nonatomic, strong) UILabel *backwardProgressAnimateLabel;
 
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
+
 @end
 
 @implementation ProgressViewExample
@@ -46,22 +50,22 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
 - (void)setupProgressViews {
   _stockProgressView = [[MDCProgressView alloc] init];
   _stockProgressView.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.view addSubview:_stockProgressView];
+  [self.container addSubview:_stockProgressView];
   // Hide the progress view at setup time.
   _stockProgressView.hidden = YES;
 
   _tintedProgressView = [[MDCProgressView alloc] init];
   _tintedProgressView.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.view addSubview:_tintedProgressView];
-  _tintedProgressView.progressTintColor = MDCPalette.redPalette.tint500;
-  // Reset the track tint color to be based off of the progress tint color.
-  _tintedProgressView.trackTintColor = nil;
+  [self.container addSubview:_tintedProgressView];
+  _tintedProgressView.progressTintColor = self.colorScheme.primaryColor;
+  _tintedProgressView.trackTintColor =
+      [self.colorScheme.primaryColor colorWithAlphaComponent:(CGFloat)0.24];
   // Hide the progress view at setup time.
   _tintedProgressView.hidden = YES;
 
   _fullyColoredProgressView = [[MDCProgressView alloc] init];
   _fullyColoredProgressView.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.view addSubview:_fullyColoredProgressView];
+  [self.container addSubview:_fullyColoredProgressView];
   _fullyColoredProgressView.progressTintColor = MDCPalette.greenPalette.tint500;
   _fullyColoredProgressView.trackTintColor = MDCPalette.yellowPalette.tint500;
   // Hide the progress view at setup time.
@@ -69,17 +73,17 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
 
   _backwardProgressResetView = [[MDCProgressView alloc] init];
   _backwardProgressResetView.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.view addSubview:_backwardProgressResetView];
+  [self.container addSubview:_backwardProgressResetView];
   // Have a non-zero progress at setup time.
-  _backwardProgressResetView.progress = 0.33;
+  _backwardProgressResetView.progress = (float)0.33;
 
   _backwardProgressAnimateView = [[MDCProgressView alloc] init];
   _backwardProgressAnimateView.translatesAutoresizingMaskIntoConstraints = NO;
   _backwardProgressAnimateView.backwardProgressAnimationMode =
       MDCProgressViewBackwardAnimationModeAnimate;
-  [self.view addSubview:_backwardProgressAnimateView];
+  [self.container addSubview:_backwardProgressAnimateView];
   // Have a non-zero progress at setup time.
-  _backwardProgressAnimateView.progress = 0.33;
+  _backwardProgressAnimateView.progress = (float)0.33;
 }
 
 @end
@@ -92,53 +96,92 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  self.title = @"Progress View";
-  self.view.backgroundColor = [UIColor whiteColor];
 
+  if (!self.colorScheme) {
+    self.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  }
+  if (!self.typographyScheme) {
+    self.typographyScheme = [[MDCTypographyScheme alloc] init];
+  }
+
+  self.title = @"Progress View";
+  self.view.backgroundColor = self.colorScheme.backgroundColor;
+
+  [self setupContainer];
   [self setupProgressViews];
   [self setupLabels];
   [self setupConstraints];
+
+  self.navigationItem.rightBarButtonItem =
+      [[UIBarButtonItem alloc] initWithTitle:@"Animate"
+                                       style:UIBarButtonItemStylePlain
+                                      target:self
+                                      action:@selector(didPressAnimateButton:)];
+  self.navigationItem.rightBarButtonItem.accessibilityIdentifier = @"animate_button";
+}
+
+-(void)viewDidLayoutSubviews {
+  [super viewDidLayoutSubviews];
+  [self positionContainer];
+}
+
+-(void)setupContainer {
+  self.container = [[UIView alloc] initWithFrame:self.view.bounds];
+  [self.view addSubview:self.container];
+}
+
+- (void)positionContainer {
+  CGFloat originX = CGRectGetMinX(self.view.bounds) + self.view.layoutMargins.left;
+  CGFloat originY = CGRectGetMinY(self.view.bounds) + self.view.layoutMargins.top;
+  CGFloat width = self.view.bounds.size.width
+      - (self.view.layoutMargins.left + self.view.layoutMargins.right);
+  CGFloat height = self.view.bounds.size.height
+      - (self.view.layoutMargins.top + self.view.layoutMargins.bottom);
+  CGRect frame = CGRectMake(originX, originY, width, height);
+  self.container.frame = frame;
 }
 
 - (void)setupLabels {
   _stockProgressLabel = [[UILabel alloc] init];
   _stockProgressLabel.text = @"Progress";
-  _stockProgressLabel.font = [MDCTypography captionFont];
-  _stockProgressLabel.alpha = [MDCTypography captionFontOpacity];
+  _stockProgressLabel.font = self.typographyScheme.caption;
+  _stockProgressLabel.textColor = self.colorScheme.onBackgroundColor;
   _stockProgressLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.view addSubview:_stockProgressLabel];
+  [self.container addSubview:_stockProgressLabel];
 
   _tintedProgressLabel = [[UILabel alloc] init];
   _tintedProgressLabel.text = @"Progress with progress tint";
-  _tintedProgressLabel.font = [MDCTypography captionFont];
-  _tintedProgressLabel.alpha = [MDCTypography captionFontOpacity];
+  _tintedProgressLabel.font = self.typographyScheme.caption;
+  _tintedProgressLabel.textColor = self.colorScheme.onBackgroundColor;
   _tintedProgressLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.view addSubview:_tintedProgressLabel];
+  [self.container addSubview:_tintedProgressLabel];
 
   _fullyColoredProgressLabel = [[UILabel alloc] init];
   _fullyColoredProgressLabel.text = @"Progress with custom colors";
-  _fullyColoredProgressLabel.font = [MDCTypography captionFont];
-  _fullyColoredProgressLabel.alpha = [MDCTypography captionFontOpacity];
+  _fullyColoredProgressLabel.font = self.typographyScheme.caption;
+  _fullyColoredProgressLabel.textColor = self.colorScheme.onBackgroundColor;
   _fullyColoredProgressLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.view addSubview:_fullyColoredProgressLabel];
+  [self.container addSubview:_fullyColoredProgressLabel];
 
   _backwardProgressResetLabel = [[UILabel alloc] init];
   _backwardProgressResetLabel.text = @"Backward progress (reset)";
-  _backwardProgressResetLabel.font = [MDCTypography captionFont];
-  _backwardProgressResetLabel.alpha = [MDCTypography captionFontOpacity];
+  _backwardProgressResetLabel.font = self.typographyScheme.caption;
+  _backwardProgressResetLabel.textColor = self.colorScheme.onBackgroundColor;
   _backwardProgressResetLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.view addSubview:_backwardProgressResetLabel];
+  [self.container addSubview:_backwardProgressResetLabel];
 
   _backwardProgressAnimateLabel = [[UILabel alloc] init];
   _backwardProgressAnimateLabel.text = @"Backward progress (animate)";
-  _backwardProgressAnimateLabel.font = [MDCTypography captionFont];
-  _backwardProgressAnimateLabel.alpha = [MDCTypography captionFontOpacity];
+  _backwardProgressAnimateLabel.font = self.typographyScheme.caption;
+  _backwardProgressAnimateLabel.textColor = self.colorScheme.onBackgroundColor;
   _backwardProgressAnimateLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.view addSubview:_backwardProgressAnimateLabel];
+  [self.container addSubview:_backwardProgressAnimateLabel];
 }
 
 - (void)setupConstraints {
   NSDictionary *views = @{
+    @"container" : _container,
     @"stockView" : _stockProgressView,
     @"stockLabel" : _stockProgressLabel,
     @"tintedView" : _tintedProgressView,
@@ -151,13 +194,14 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
     @"backwardAnimateLabel" : _backwardProgressAnimateLabel,
   };
   NSDictionary *metrics = @{
-    @"p" : @20,
+    @"t" : @20,
+    @"p" : @0,
     @"s" : @40,
     @"h" : @2,
   };
 
   NSArray *verticalConstraints = [NSLayoutConstraint
-      constraintsWithVisualFormat:@"V:|-(p)-"
+      constraintsWithVisualFormat:@"V:|-(t)-"
                                    "[stockView(==h)]-(p)-[stockLabel]-(s)-"
                                    "[tintedView(==h)]-(p)-[tintedLabel]-(s)-"
                                    "[coloredView(==h)]-(p)-[coloredLabel]-(s)-"
@@ -175,11 +219,11 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
     @"H:|-(p)-[coloredView]-(p)-|",
     @"H:|-(p)-[backwardResetView]-(p)-|",
     @"H:|-(p)-[backwardAnimateView]-(p)-|",
-    @"H:|-(>=p)-[stockLabel]-(>=p)-|",
-    @"H:|-(>=p)-[tintedLabel]-(>=p)-|",
-    @"H:|-(>=p)-[coloredLabel]-(>=p)-|",
-    @"H:|-(>=p)-[backwardResetLabel]-(>=p)-|",
-    @"H:|-(>=p)-[backwardAnimateLabel]-(>=p)-|",
+    @"H:|-(p)-[stockLabel]-(p)-|",
+    @"H:|-(p)-[tintedLabel]-(p)-|",
+    @"H:|-(p)-[coloredLabel]-(p)-|",
+    @"H:|-(p)-[backwardResetLabel]-(p)-|",
+    @"H:|-(p)-[backwardAnimateLabel]-(p)-|",
   ];
   for (NSString *format in horizontalVisualFormats) {
     [horizontalConstraints
@@ -191,13 +235,16 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
   [self.view addConstraints:horizontalConstraints];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-  [super viewDidAppear:animated];
+- (void)didPressAnimateButton:(UIButton *)sender {
+  sender.enabled = NO;
   [self animateStep1:_stockProgressView];
   [self animateStep1:_tintedProgressView];
   [self animateStep1:_fullyColoredProgressView];
-  [self animateBackwardProgressResetView];
-  [self animateBackwardProgressAnimateView];
+  [self animateBackwardProgressResetViewWithCountdown:4];
+  [self animateBackwardProgressAnimateViewWithCountdown:4 completion:^(BOOL ignored) {
+    sender.enabled = YES;
+  }];
+
 }
 
 - (void)animateStep1:(MDCProgressView *)progressView {
@@ -227,55 +274,55 @@ static const CGFloat MDCProgressViewAnimationDuration = 1.f;
 }
 
 - (void)animateStep4:(MDCProgressView *)progressView {
-  __weak MDCProgressView *weakProgressView = progressView;
   [progressView setHidden:YES
                  animated:YES
-               completion:^(BOOL finished) {
-                 [self performSelector:@selector(animateStep1:)
-                            withObject:weakProgressView
-                            afterDelay:MDCProgressViewAnimationDuration];
-               }];
+               completion:nil];
 }
 
-- (void)animateBackwardProgressResetView {
+- (void)animateBackwardProgressResetViewWithCountdown:(NSInteger)remainingCounts {
+  --remainingCounts;
   __weak ProgressViewExample *weakSelf = self;
 
   [_backwardProgressResetView setProgress:1 - _backwardProgressResetView.progress
                                  animated:YES
-                               completion:^(BOOL finished) {
-                                 [weakSelf
-                                     performSelector:@selector(animateBackwardProgressResetView)
-                                          withObject:nil
-                                          afterDelay:MDCProgressViewAnimationDuration];
-                               }];
+                               completion:nil];
+  if (remainingCounts > 0) {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
+                                 (int64_t)(MDCProgressViewAnimationDuration * NSEC_PER_SEC)),
+                   dispatch_get_main_queue(), ^{
+      [weakSelf animateBackwardProgressResetViewWithCountdown:remainingCounts];
+    });
+  }
 }
 
-- (void)animateBackwardProgressAnimateView {
+- (void)animateBackwardProgressAnimateViewWithCountdown:(NSInteger)remainingCounts
+                                             completion:(void (^)(BOOL))completion {
+  --remainingCounts;
   __weak ProgressViewExample *weakSelf = self;
 
-  [_backwardProgressAnimateView setProgress:1 - _backwardProgressResetView.progress
+  [_backwardProgressAnimateView setProgress:1 - _backwardProgressAnimateView.progress
                                    animated:YES
-                                 completion:^(BOOL finished) {
-                                   [weakSelf
-                                       performSelector:@selector(animateBackwardProgressAnimateView)
-                                            withObject:nil
-                                            afterDelay:MDCProgressViewAnimationDuration];
-                                 }];
+                                 completion:remainingCounts == 0 ? completion : nil];
+  if (remainingCounts) {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
+                                 (int64_t)(MDCProgressViewAnimationDuration * NSEC_PER_SEC)),
+                   dispatch_get_main_queue(), ^{
+      [weakSelf animateBackwardProgressAnimateViewWithCountdown:remainingCounts
+                                                     completion:completion];
+    });
+  }
 }
 
 #pragma mark - CatalogByConvention
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Progress View", @"Progress View" ];
-}
-
-+ (NSString *)catalogDescription {
-  return @"Progress View is a visual indication of an app loading content. It can display how "
-         @"long an operation will take.";
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return YES;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Progress View", @"Progress View" ],
+    @"description": @"Progress indicators display the length of a process or express an "
+    @"unspecified wait time.",
+    @"primaryDemo": @YES,
+    @"presentable": @YES,
+  };
 }
 
 @end

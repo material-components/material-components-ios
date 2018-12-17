@@ -1,18 +1,16 @@
-/*
-Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 import UIKit
 
@@ -25,14 +23,13 @@ import MaterialComponents.MaterialDialogs
  Triple tapping anywhere will toggle the visible touches.
  */
 class MDCCatalogWindow: MDCOverlayWindow {
-  var debugUIEnabled = true
   var showTouches = false
 
   fileprivate let fadeDuration: TimeInterval = 0.2
   fileprivate var touchViews = [Int: UIView]()
   fileprivate var edgeView = MDCDebugSafeAreaInsetsView()
 
-  var showSafeAreaEdgeInsets:Bool {
+  var showSafeAreaEdgeInsets: Bool {
     set {
       if newValue {
         edgeView.frame = bounds
@@ -61,12 +58,7 @@ class MDCCatalogWindow: MDCOverlayWindow {
           continue
         case .stationary:
           continue
-        case .ended:
-          if touch.tapCount == 3 && debugUIEnabled {
-            showDebugSettings()
-          }
-          fallthrough
-        case .cancelled:
+        case .cancelled, .ended:
           endDisplayingTouch(touch)
           continue
         }
@@ -76,7 +68,7 @@ class MDCCatalogWindow: MDCOverlayWindow {
     super.sendEvent(event)
   }
 
-  fileprivate func showDebugSettings() {
+  func showDebugSettings() {
     let touches = MDCCatalogDebugSetting(title: "Show touches")
     touches.getter = { self.showTouches }
     touches.setter = { newValue in self.showTouches = newValue }
@@ -85,11 +77,7 @@ class MDCCatalogWindow: MDCOverlayWindow {
     safeAreaInsets.getter = { self.showSafeAreaEdgeInsets }
     safeAreaInsets.setter = { newValue in self.showSafeAreaEdgeInsets = newValue }
 
-    let dontShow = MDCCatalogDebugSetting(title: "Don't show this again")
-    dontShow.getter = { !self.debugUIEnabled }
-    dontShow.setter = { newValue in self.debugUIEnabled = !newValue }
-
-    let debugUI = MDCCatalogDebugAlert(settings: [touches, safeAreaInsets, dontShow])
+    let debugUI = MDCCatalogDebugAlert(settings: [touches, safeAreaInsets])
     rootViewController?.present(debugUI, animated: true, completion: nil)
   }
 

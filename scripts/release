@@ -1,0 +1,810 @@
+#!/bin/bash +e
+#
+# Copyright 2017-present The Material Motion and Material Components for
+# iOS Authors. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+parentcmd=$(basename "${BASH_SOURCE[1]}")
+cmd=$(basename "${BASH_SOURCE[0]}")
+dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+usage() {
+  "$dir/readme_to_console" "$dir/README-release.md"
+}
+
+# HELPER METHODS
+
+current_branch() {
+  git rev-parse --abbrev-ref HEAD
+}
+
+enforce_clean_state() {
+  if [[ $(git status --porcelain) ]]; then
+    echo "${B}Your git repo is not in a clean state.${N}"
+    echo "Please revert or commit all changes before cutting a release."
+    git status
+    exit 1
+  fi
+}
+
+enforce_release_cut() {
+  if [ ! $(git rev-parse --verify release-candidate 2> /dev/null) ]; then
+    echo "No release in progress."
+    exit 1
+  fi
+}
+
+enforce_changelog_version() {
+  changelog_version=$(awk '/# (.+)/ { print $2; exit}' "$rootdir/CHANGELOG.md")
+  changelog_version=$(version_for_platform $changelog_version)
+  if [ "$changelog_version" == "#develop#" ]; then
+    echo "${B}You haven't updated CHANGELOG.md with the current version yet.${N}"
+    echo "Please run '$parentcmd $cmd bump [version]' before running this command again."
+    exit 1
+  elif [ "$version" != "$changelog_version" ]; then
+    echo "Mismatch in CHANGELOG.md's latest version."
+    echo
+    echo "    CHANGELOG.md latest version: $changelog_version"
+    echo "                Desired version: $version"
+    echo
+    echo "Please edit CHANGELOG.md or change your version number."
+    echo
+    exit 1
+  fi
+}
+
+get_latest_branch() {
+  if [ ! $(git rev-parse --verify release-candidate 2> /dev/null) ]; then
+    echo "HEAD"
+  else
+    echo "release-candidate"
+  fi
+}
+
+version_for_platform() {
+  user_version="$1"
+
+  if [ -f "$rootdir/Podfile" ]; then
+    echo "v${user_version#v}"
+  elif [ -f "$rootdir/build.gradle" ]; then
+    echo "${user_version#v}"
+  else
+    echo "v${user_version#v}"
+  fi
+}
+
+# COMMAND METHODS
+
+# Creates a release-candidate branch based off the latest origin/develop
+cut_release() {
+  isHotFix=false;
+
+  while test $# -gt 0; do
+    case "$1" in
+      --hotfix)
+        isHotFix=true;
+        shift
+        ;;
+    esac
+  done
+
+  if [ $(git rev-parse --verify release-candidate 2> /dev/null) ]; then
+    echo "${B}Release already cut.${N}"
+    echo "Consider deleting your existing release-candidate branch."
+    exit 1
+  fi
+
+  git fetch
+
+  git show develop >> /dev/null 2>&1 || { git checkout -b develop origin/develop; }
+
+  deviance=$(git log develop..origin/develop --oneline | wc -l)
+  if [ $deviance -ne 0 ]; then
+    echo
+    echo "    Your local develop branch is behind origin/develop."
+    echo "    Refusing to continue until you've rebased off of origin/develop."
+    echo
+    echo "    git checkout develop"
+    echo "    git rebase origin/develop"
+    echo
+    exit 1
+  fi
+
+  deviance=$(git log origin/develop..develop --oneline | wc -l)
+  if [ $deviance -ne "0" ]; then
+    echo
+    echo "    Your local develop branch is ahead of origin/develop."
+    echo "    Refusing to continue until you've landed your local changes into origin/develop."
+    echo
+    exit 1 # TODO: Revert this line so we bail out.
+  fi
+
+  if $isHotFix; then
+    branch=origin/stable
+    branch_message="This is a hotfix... branching off $branch"
+  else
+    branch=origin/develop
+    branch_message="This is a normal release... branching off $branch"
+  fi
+  echo $branch_message
+  git checkout -b release-candidate $branch
+
+  touch "$rootdir/CHANGELOG.md"
+  if ! grep "# #develop#" "$rootdir/CHANGELOG.md" >> /dev/null; then
+    echo "Generating API diff..."
+    CHANGELOG_TMP_PATH=$(mktemp -d)
+    generate_release_apidiff | tee "$CHANGELOG_TMP_PATH/api_diff"
+
+    CHANGELOG_PATH=$(cat "$CHANGELOG_TMP_PATH/api_diff" | grep "Changelog=" | cut -d'=' -f2)
+
+    # Add the new changelog contents in reverse order:
+    echo -e "\n---\n" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
+    generate_release_notes | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
+    echo -e "\n## Component changes" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
+    cat "$CHANGELOG_PATH" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
+    echo -e "## API changes" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
+    echo -e "Replace this text with example code for each new feature." | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
+    echo -e "## New features\n" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
+    echo -e "Replace this text with links to deprecation guides." | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
+    echo -e "## New deprecations\n" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
+    echo -e "Replace this explanations for how to resolve the breaking changes." | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
+    echo -e "## Breaking changes\n" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
+    echo -e "Replace this text with a summarized description of this release's contents." | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
+    echo -e "# #develop#\n" | cat - "$rootdir/CHANGELOG.md" > /tmp/out && mv /tmp/out "$rootdir/CHANGELOG.md"
+  fi
+  git add "$rootdir/CHANGELOG.md"
+  git commit -m "Automatic changelog preparation for release."
+  git push origin release-candidate -u
+
+  RELEASE_SHA=$(git merge-base --fork-point release-candidate $branch)
+  PULL_REQUEST_URL="https://github.com/material-components/material-components-ios/compare/stable...release-candidate"
+  echo "${B}You can now start the release-candidate pull request:${N}"
+  echo
+  echo "    $PULL_REQUEST_URL"
+  echo
+  echo "This will initiate public testing of the release candidate."
+  echo
+  echo "${B}You can now kick off internal testing.${N}"
+}
+
+abort_release() {
+  enforce_release_cut
+
+  echo "${B}About to abort the release candidate.${N}"
+  echo "${B}${U}This action is not easily reversible.${N}"
+  echo
+  echo -n "Press enter to continue..."
+  read
+
+  git checkout origin/develop
+  git branch -D release-candidate
+  git push origin :release-candidate
+}
+
+test_release() {
+  "$dir/prep_all"
+  "$dir/build_all" --verbose
+  "$dir/test_all"
+  "$dir/build_codelabs"
+}
+
+bump_release() {
+  if [ -z "$1" ]; then
+    echo "Missing desired version."
+    echo
+    echo "Usage: $parentcmd $cmd bump <desired version> [<old version>]"
+    echo
+    exit 1
+  fi
+
+  enforce_release_cut
+
+  new_version="$1"
+  new_version=${new_version#v}
+
+  if [ -z "$2" ]; then
+    last_version=$(git describe --tags $(git rev-list --tags --max-count=1))
+  else
+    last_version="$2"
+  fi
+  last_version=${last_version#v}
+
+  grep -FIlr "$last_version" . 2>/dev/null | grep -v -f "$dir/versionignore" | while read line; do
+    sed -i.bak "s:$last_version:$new_version:g" "$line"
+    rm "$line.bak"
+  done
+
+  grep -FIlr "#develop#" . 2>/dev/null | grep -v -f "$dir/versionignore" | while read line; do
+    sed -i.bak "s:#develop#:$new_version:g" "$line"
+    rm "$line.bak"
+  done
+}
+
+merge_release() {
+  enforce_release_cut
+
+  version=$(version_for_platform $1)
+  if [ -z "$version" ]; then
+    echo "Must provide a ${U}version${N} argument."
+    exit 1
+  fi
+
+  current_branch=$(current_branch)
+  if [ "$current_branch" != "release-candidate" ]; then
+    echo "Checking out the release-candidate branch..."
+    git checkout release-candidate
+  fi
+
+  enforce_changelog_version
+
+  if [ $(git rev-list --tags --max-count=1 2> /dev/null) ]; then
+    last_version=$(git describe --tags $(git rev-list --tags --max-count=1))
+    last_version=${last_version#v}
+    last_version=$(echo "$last_version" | sed "s:\.:\\\\.:g")
+    if grep -Ilr "$last_version" . | grep -v -f "$dir/versionignore"; then
+      echo "Old version $last_version found in the files above."
+      read -r -p "Continue? [y/N] " response
+      case $response in
+        [yY][eE][sS]|[yY]) ;;
+        *)
+          echo "Aborting release merge. Please run $parentcmd $cmd bump"
+          exit 1
+          ;;
+      esac
+    fi
+  fi
+
+  echo "Merging release-candidate into stable and develop..."
+
+  # Merge in to stable.
+  git fetch
+  if [ ! $(git rev-parse --verify stable 2> /dev/null) ]; then
+    git checkout -b stable origin/stable
+  else
+    git checkout stable
+  fi
+  git rebase origin/stable
+  git merge --no-ff release-candidate --no-edit
+
+  if [ ! $(git rev-parse --verify develop 2> /dev/null) ]; then
+    git checkout -b develop origin/develop
+  else
+    git checkout develop
+  fi
+  git rebase origin/develop
+  git merge --no-ff release-candidate --no-edit
+
+  git branch -D release-candidate
+
+  git checkout stable
+}
+
+publish_release() {
+  version=$(version_for_platform $1)
+  if [ -z "$version" ]; then
+    echo "Must provide a ${U}version${N} argument."
+    exit 1
+  fi
+
+  current_branch=$(current_branch)
+  if [ "$current_branch" != "stable" ]; then
+    echo "This command must be run from the ${B}stable${N} branch."
+    echo
+    echo "Your current branch: $current_branch"
+    exit 1
+  fi
+
+  enforce_changelog_version
+
+  ghtoken=$(cat ~/.gh.json | grep "github_token" | cut -d'"' -f4)
+  if [ -z "$ghtoken" ]; then
+    echo "Must be authenticated with gh."
+    echo
+    echo "Install gh by running:"
+    echo
+    echo "    npm install -g gh"
+    echo
+    echo "And then get an auth token by running:"
+    echo
+    echo "    gh user --whoami"
+    echo
+    exit 1
+  fi
+
+  curl -sH "Authorization: token $ghtoken" \
+    "https://api.github.com/repos/material-components/material-components-ios/releases/tags/$version" \
+    | grep -q 'message": "Not Found'
+
+  if [ $? -ne 0 ]; then # Found the release
+    echo "Release already cut."
+    echo
+    echo "    Release URL: https://github.com/material-components/material-components-ios/releases/tag/$version"
+    open "https://github.com/material-components/material-components-ios/releases/tag/$version"
+    exit 0
+  fi
+
+  git push origin stable develop
+
+  tmp_path=$(mktemp -d)
+
+  curl -s \
+    -H "Authorization: token $ghtoken" \
+    -H "Content-Type: application/json" \
+    -X POST \
+    -d '{"tag_name":"'$version'","target_commitish":"stable","name":"'$version'","draft":true}' \
+    "https://api.github.com/repos/material-components/material-components-ios/releases" > "$tmp_path/release"
+
+  if [ $? -ne 0 ]; then # Found the release
+    echo "Failed to draft the release. Check that it doesn't already exist before continuing."
+    echo "https://api.github.com/repos/material-components/material-components-ios/releases"
+    exit 1
+  fi
+
+  htmlurl=$(cat "$tmp_path/release" | grep '^  "html_url' | cut -d'"' -f4)
+  htmlurl=$(echo $htmlurl | sed "s:/tag/:/edit/:")
+
+  echo "A draft release has been made."
+  echo
+  echo "    Edit the draft: $htmlurl"
+  echo
+  echo "Update the release's description with the following:${B}"
+  awk '/# / { print $0; while(getline > 0) {if (/^# /) exit; print $0 }}' "$rootdir/CHANGELOG.md" | tail -n +2
+  echo ${N}
+
+  echo "Deleting remote release-candidate..."
+  git push origin :release-candidate
+
+  git checkout develop
+
+  echo "Press enter to open the release draft url in your browser:"
+  read
+
+  if [ "$(uname)" == "Darwin" ]; then
+    open $htmlurl
+  elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+    xdg-open $htmlurl
+  fi
+}
+
+publish_podspec() {
+  cat <<EOL
+          |\\___/|
+         (,\\  /,)\\
+         /     /  \\       DRAGON SAYS HALT:
+        (@_^_@)/   \\      HAS THE INTERNAL CL LANDED?
+         W//W_/     \\     DO NOT PUBLISH THIS RELEASE UNTIL
+       (//) |        \\    IT HAS LANDED.
+     (/ /) _|_ /   )  \\
+   (// /) '/,_ _ _/  (~^-.
+ (( // )) ,-{        _    \`.
+(( /// ))  '/\\      /       \\
+(( ///))     \`.   {       }  \\
+ ((/ ))    .----~-.\\   \\-'    ~-__
+          ///.----..>   \\ \\_      ~--____
+           ///-._ _  _ _}    ~--------------
+EOL
+  echo "Press enter to confirm that the internal CL has landed."
+  read
+
+  cd "$rootdir"
+  echo "Verifying Cocoapod trunk permissions"
+  pod trunk me > cocoapods_permissions.log
+  if grep -Fq "MaterialComponents" cocoapods_permissions.log; then
+    echo "Running a pod trunk push from stable..."
+    git checkout stable
+    pod trunk push MaterialComponents.podspec
+    rm cocoapods_permissions.log
+  else
+    echo "You do not have the right permissions to push the pod via the CocoaPods API. See cocoapods_permissions.log for more info."
+  fi
+}
+
+# Generators
+
+generate_release_apidiff() {
+  CHANGELOG_TMP_PATH=$(mktemp -d)
+
+  validate_commit() {
+    git cat-file -t $1 >> /dev/null 2> /dev/null || { echo "$1 is not a valid commit."; exit 1; }
+  }
+
+  # Verify commits
+  if [ -n "$1" ]; then
+    old_commit=$(git rev-list -n 1 $1)
+  else
+    old_commit=$(git rev-list -n 1 origin/stable)
+  fi
+  new_commit=$(git rev-list -n 1 $(get_latest_branch))
+
+  if [[ -z "$old_commit" || -z "$new_commit" ]]; then
+    echo "Unable to get commit shas."
+    exit 1
+  fi
+
+  validate_commit $old_commit
+  validate_commit $new_commit
+
+  TMP_PATH=$(mktemp -d)
+  OLD_ROOT_PATH="$TMP_PATH/old"
+  NEW_ROOT_PATH="$TMP_PATH/new"
+  clean_clones() {
+    if [ ! -z "$OLD_ROOT_PATH" ]; then
+      rm -rf "$OLD_ROOT_PATH"
+    fi
+    if [ ! -z "$NEW_ROOT_PATH" ]; then
+      rm -rf "$NEW_ROOT_PATH"
+    fi
+  }
+  trap clean_clones EXIT
+  "$dir/temporary_clone_at_ref" "$OLD_ROOT_PATH" $old_commit
+  "$dir/temporary_clone_at_ref" "$NEW_ROOT_PATH" $new_commit
+
+  # Find command in all component src directories and grab search path for "Material$component.h"
+  old_header_search_paths=""
+  new_header_search_paths=""
+  for d in $NEW_ROOT_PATH/components/*/src; do
+    folder=$(dirname $d)
+    component=$(basename $folder)
+    old_header_search_paths="$old_header_search_paths --oldargs -I$OLD_ROOT_PATH/components/$component/src/ "
+    new_header_search_paths="$new_header_search_paths --newargs -I$NEW_ROOT_PATH/components/$component/src/ "
+  done
+
+  if [ ! -f "$dir/external/material-motion-apidiff/src/pathapidiff" ]; then
+    git submodule update --init --recursive
+  fi
+
+  ALL_CHANGELOG_PATH="$TMP_PATH/changelog"
+  ALL_ERROR_LOG_PATH="$TMP_PATH/errlog"
+
+  echo "Changelog=$ALL_CHANGELOG_PATH"
+  echo "Errors=$ALL_ERROR_LOG_PATH"
+
+  # Run new pathdiff script on each umbrella header in array
+  for umbrella_header_path in $(generate_release_umbrella_headers "$old_commit" | grep -v "private"); do
+    umbrella_header=$(basename "$umbrella_header_path")
+    component=$(echo "$umbrella_header" | cut -d'.' -f1 | sed 's:^Material::')
+    component_path=$(dirname "$umbrella_header_path")
+
+    echo -n "Diffing $component ($component_path)..."
+
+    if [ ! -f "$OLD_ROOT_PATH/$umbrella_header_path" ]; then
+      echo >> $ALL_CHANGELOG_PATH
+      echo "### $component" >> $ALL_CHANGELOG_PATH
+      echo >> $ALL_CHANGELOG_PATH
+      if [[ "$component" = *"+"* ]]; then
+        echo "**New extension.**" >> $ALL_CHANGELOG_PATH
+      else
+        echo "**New component.**" >> $ALL_CHANGELOG_PATH
+      fi
+
+      echo "New!"
+      continue
+    fi
+
+    CHANGES_PATH="$TMP_PATH/${component}changes"
+    ERROR_PATH="$TMP_PATH/${component}errlog"
+
+    "$dir/external/material-motion-apidiff/src/pathapidiff" \
+       "$OLD_ROOT_PATH" "$NEW_ROOT_PATH" objc "/$umbrella_header_path" \
+       >> "$CHANGES_PATH" \
+       2>> "$ERROR_PATH"
+
+    if [ -s "$CHANGES_PATH" ]; then
+      echo >> $ALL_CHANGELOG_PATH
+      echo "### $component" >> $ALL_CHANGELOG_PATH
+      cat "$CHANGES_PATH" >> $ALL_CHANGELOG_PATH
+
+      echo -n " Changes detected."
+    fi
+
+    if [ -s "$ERROR_PATH" ]; then
+      echo "### $component" >> "$ALL_ERROR_LOG_PATH"
+      cat "$ERROR_PATH" >> "$ALL_ERROR_LOG_PATH"
+    fi
+
+    echo
+  done
+}
+
+generate_release_authors() {
+  git log origin/stable...$(get_latest_branch) --format="%ae" | sort | uniq
+}
+
+generate_release_components() {
+  if [ -n "$1" ]; then
+    old_commit="$1"
+  else
+    old_commit=origin/stable
+  fi
+  git diff --name-only "$old_commit"..$(get_latest_branch) components/ \
+    | grep "src/" | cut -d'/' -f2- | rev | cut -d'/' -f3- | rev | sed 's|/src||' | sort | uniq
+}
+
+generate_release_files() {
+  if [ -n "$1" ]; then
+    old_commit="$1"
+  else
+    old_commit=origin/stable
+  fi
+  git diff --name-only "$old_commit"..$(get_latest_branch) components/
+}
+
+generate_release_umbrella_headers() {
+  for file in $(generate_release_files "$@"); do
+    file_dir=$(dirname $file)
+    if ls "$file_dir"/Material*.h 1> /dev/null 2>&1; then
+      ls "$file_dir"/Material*.h | grep -v "_table"
+    fi
+  done | sort | uniq
+}
+
+generate_release_headers() {
+  git diff --name-only origin/stable..$(get_latest_branch) components/ \
+    | grep -i -e "components\/.*\/src\/.*\.h" \
+    | grep -v -i -e "\/private\/"
+}
+
+generate_release_log() {
+  git --no-pager log  origin/stable..$(get_latest_branch) "$@"
+}
+
+generate_release_diff() {
+  git_diff=diff
+  if [ "$1" == "--use_diff_tool" ]; then
+    git_diff=difftool
+    shift 1
+  fi
+
+  git $git_diff origin/stable..$(get_latest_branch) "$@"
+}
+
+generate_release_notes() {
+  # Echoes the SHA's title as a CHANGELOG.md entry.
+  sha_to_changelog_entry() {
+    sha="$1"
+    git log \
+      -1 \
+      --pretty="* [%s](https://github.com/material-components/material-components-ios/commit/%H) (%an)" \
+      --no-merges \
+      "$sha"
+  }
+  # Returns a non-zero value if the given SHA affects any paths other than the given path.
+  # Ignores modifications to MaterialComponents.podspec.
+  does_commit_affect_other_paths() {
+    sha="$1"
+    path="$2"
+    git diff-tree --no-commit-id --name-only -r "$sha" \
+      | grep -v "$path" \
+      | grep -v "MaterialComponents.podspec" \
+      | grep -v "MaterialComponentsBeta.podspec" \
+      | grep -v "catalog/Podfile"
+  }
+  # Echoes a list of changelog entries that affect a given path and only that path.
+  changes_for_path() {
+    path="${1:-components/}"
+    git log \
+        --pretty="%H" \
+        --no-merges \
+        origin/stable..$(get_latest_branch) "$path" | while read sha; do
+      if [[ ! $(does_commit_affect_other_paths "$sha" "$path") ]]; then
+        sha_to_changelog_entry "$sha"
+      fi
+    done
+  }
+  # Echoes a list of changes that affect the given path AND other paths.
+  changes_for_multiple_paths() {
+    path="${1:-components/}"
+    git log \
+        --pretty="%H" \
+        --no-merges \
+        origin/stable..$(get_latest_branch) "$path" | while read sha; do
+      if [[ $(does_commit_affect_other_paths "$sha" "$path") ]]; then
+        sha_to_changelog_entry "$sha"
+      fi
+    done
+  }
+  # Echoes a list of breaking changelog entries for a given path.
+  filter_breaking_changes() {
+    cat - | grep "\[.*\]\!" | perl -pe "s|\* \[\[.+?\]!|* [**Breaking**:|" | sort
+  }
+  # Echoes a list of non-breaking changelog entries for a given path.
+  filter_non_breaking_changes() {
+    cat - | grep -v "\[.*\]\!" | perl -pe "s|\* \[\[.+?\] |* [|" | sort
+  }
+
+  has_breaking_changes=false
+  has_non_breaking_changes=false
+
+  # Output breaking changes that affect specific components.
+
+  find components -type d -name 'src' | sort | while read path; do
+    folder=$(dirname $path)
+
+    if [[ $(changes_for_path "$folder" | filter_breaking_changes) ]]; then
+      component=$(echo $folder | cut -d'/' -f2-)
+
+      if [ "$has_breaking_changes" = false ]; then
+        has_breaking_changes=true
+        echo
+        echo "## Breaking changes"
+      fi
+      echo
+      echo "### $component"
+      echo
+
+      changes_for_path "$folder" | filter_breaking_changes
+    fi
+  done
+
+  # Output breaking changes that affect multiple components.
+
+  all_breaking_changes_for_multiple_paths() {
+    find components -type d -name 'src' | while read path; do
+      folder=$(dirname $path)
+      changes_for_multiple_paths "$folder" | filter_breaking_changes
+    done | sort | uniq
+  }
+  if [[ $(all_breaking_changes_for_multiple_paths) ]]; then
+    has_breaking_changes=true
+    echo
+    echo "## Multi-component breaking changes"
+    echo
+    all_breaking_changes_for_multiple_paths
+  fi
+
+  # Output changes that affect specific components.
+
+  find components -type d -name 'src' | sort | while read path; do
+    folder=$(dirname $path)
+
+    if [[ $(changes_for_path "$folder" | filter_non_breaking_changes) ]]; then
+      component=$(echo $folder | cut -d'/' -f2-)
+
+      if [ "$has_non_breaking_changes" = false ]; then
+        has_non_breaking_changes=true
+        echo
+        echo "## Changes"
+      fi
+      echo
+      echo "### $component"
+      echo
+
+      changes_for_path "$folder" | filter_non_breaking_changes
+    fi
+  done
+
+  # Output changes that affect multiple components.
+
+  all_non_breaking_changes_for_multiple_paths() {
+    find components -type d -name 'src' | while read path; do
+      folder=$(dirname $path)
+      changes_for_multiple_paths "$folder" | filter_non_breaking_changes
+    done | sort | uniq
+  }
+  if [[ $(all_non_breaking_changes_for_multiple_paths) ]]; then
+    has_non_breaking_changes=true
+    echo
+    echo "## Multi-component changes"
+    echo
+    all_non_breaking_changes_for_multiple_paths
+  fi
+}
+
+other_thing() {
+  find components -type d -name 'src' | sort | while read path; do
+    folder=$(dirname $path)
+    component=$(echo $folder | cut -d'/' -f2-)
+
+    if [[ $component == private* ]]; then
+      continue;
+    fi
+
+    if [ $(git log --pretty=oneline --no-merges origin/stable..$(get_latest_branch) $folder \
+           | wc -l) == "0" ]; then
+      continue
+    fi
+
+    componentdiff() {
+      git log \
+        --pretty="* [%s](https://github.com/material-components/material-components-ios/commit/%H) (%an)" \
+        --no-merges \
+        origin/stable..$(get_latest_branch) \
+        $folder | grep -v "\[automated\]"
+    }
+
+    if [[ $(componentdiff) ]]; then
+      echo
+      echo "### $component"
+
+      if [[ $(componentdiff | grep "\[$component\]\!") ]]; then
+        echo
+        echo "#### Breaking changes"
+        echo
+
+        componentdiff \
+          | grep "\[$component\]\!" \
+          | sed "s|\[$component\]!|**Breaking**: |" \
+          | sort
+      fi
+
+      if [[ $(componentdiff | grep -v "\[$component\]\!") ]]; then
+        echo
+
+        componentdiff \
+          | grep -v "\[$component\]!" \
+          | sed "s|\[$component\] ||" \
+          | sort
+      fi
+    fi
+
+  done
+}
+
+generate_release_source() {
+  git diff --name-only origin/stable..$(get_latest_branch) components/ \
+    | grep "src/"
+}
+
+generate_release_stories() {
+  generate_release_log | grep -i pivotal
+}
+
+if [ $# -eq 0 ]; then
+  usage
+  exit 1
+fi
+
+if [ ! $(git rev-parse --is-inside-work-tree -q 2> /dev/null) ]; then
+  echo "Must be run from a git directory."
+  exit 1
+fi
+
+if [ -t 1 ] ; then # We're writing directly to terminal
+  readonly B=$(tput bold)
+  readonly U=$(tput smul)
+  readonly N=$(tput sgr0)
+else # We're in a pipe
+  readonly B=""
+  readonly U=""
+  readonly N=""
+fi
+
+rootdir=$( cd "$(dirname $(git rev-parse --git-dir))" && pwd )
+
+#enforce_clean_state
+
+case "$1" in
+  cut)        cut_release ${@:2} ;;
+  test)       test_release ${@:2} ;;
+  bump)       bump_release ${@:2} ;;
+  merge)      merge_release ${@:2} ;;
+  publish)    publish_release ${@:2} ;;
+  podspec)    publish_podspec ${@:2} ;;
+
+  apidiff)    generate_release_apidiff ${@:2} ;; # args: [base sha]
+  authors)    generate_release_authors ${@:2} ;;
+  components) generate_release_components ${@:2} ;; # args: [base sha]
+  diff)       generate_release_diff ${@:2} ;;
+  files)      generate_release_files ${@:2} ;; # args: [base sha]
+  headers)    generate_release_headers ${@:2} ;;
+  log)        generate_release_log ${@:2} ;;
+  notes)      generate_release_notes ${@:2} ;;
+  source)     generate_release_source ${@:2} ;;
+  stories)    generate_release_stories ${@:2} ;;
+  umbrellas)  generate_release_umbrella_headers ${@:2} ;; # args: [base sha]
+
+  abort)      abort_release ${@:2} ;;
+
+  *)          usage ;;
+esac

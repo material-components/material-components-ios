@@ -1,32 +1,29 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 import Foundation
-import MaterialComponents
+import UIKit
+
+import MaterialComponents.MaterialButtons_ButtonThemer
 
 class ButtonsSwiftAndStoryboardController: UIViewController {
 
-  let raisedButton = MDCRaisedButton()
+  let containedButton = MDCButton()
   let flatButton = MDCFlatButton()
   let floatingButton = MDCFloatingButton()
 
-  // UIAppearance colors will overwrite values set in storyboards. In order to see the values set in
-  // ButtonsStoryboardAndProgrammatic.storyboard comment out the MDCButtonColorThemer.apply(...)
-  // call in AppDelegate.swift.
-  @IBOutlet weak var storyboardRaised: MDCRaisedButton!
+  @IBOutlet weak var storyboardContained: MDCButton!
   @IBOutlet weak var storyboardFlat: MDCFlatButton!
   @IBOutlet weak var storyboardFloating: MDCFloatingButton!
 
@@ -133,16 +130,17 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
   }
 
   private func buttonSetup() {
-    let titleColor = UIColor.white
     let backgroundColor = UIColor(white: 0.1, alpha: 1.0)
 
-    raisedButton.setTitle("Programmatic", for: .normal)
-    raisedButton.setTitleColor(titleColor, for: .normal)
-    raisedButton.backgroundColor = backgroundColor
-    raisedButton.sizeToFit()
-    raisedButton.translatesAutoresizingMaskIntoConstraints = false
-    raisedButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
-    innerContainerView.addSubview(raisedButton)
+    let buttonScheme = MDCButtonScheme()
+    MDCContainedButtonThemer.applyScheme(buttonScheme, to: containedButton)
+    MDCContainedButtonThemer.applyScheme(buttonScheme, to: storyboardContained)
+
+    containedButton.setTitle("Programmatic", for: .normal)
+    containedButton.sizeToFit()
+    containedButton.translatesAutoresizingMaskIntoConstraints = false
+    containedButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
+    innerContainerView.addSubview(containedButton)
 
     flatButton.setTitleColor(.gray, for: .normal)
     flatButton.setTitle("Programmatic", for: .normal)
@@ -159,13 +157,13 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
 
   private func addButtonConstraints() {
     let views = [
-      "raised": raisedButton,
+      "raised": containedButton,
       "flat": flatButton,
       "floating": floatingButton
     ]
 
     view.addConstraint(NSLayoutConstraint(
-      item: raisedButton,
+      item: containedButton,
       attribute: .leading,
       relatedBy: .equal,
       toItem: innerContainerView,
@@ -174,7 +172,7 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
       constant: 0))
 
     view.addConstraint(NSLayoutConstraint(
-      item: raisedButton,
+      item: containedButton,
       attribute: .trailing,
       relatedBy: .equal,
       toItem: innerContainerView,
@@ -183,7 +181,7 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
       constant: 0))
 
     view.addConstraint(NSLayoutConstraint(
-      item: raisedButton,
+      item: containedButton,
       attribute: .top,
       relatedBy: .equal,
       toItem: innerContainerView,
@@ -205,15 +203,13 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
 }
 
 extension ButtonsSwiftAndStoryboardController {
-  class func catalogBreadcrumbs() -> [String] {
-    return ["Buttons", "Buttons (Swift and Storyboard)"]
-  }
 
-  class func catalogStoryboardName() -> String {
-    return "ButtonsStoryboardAndProgrammatic"
-  }
-
-  class func catalogIsPrimaryDemo() -> Bool {
-    return false
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Buttons", "Buttons (Swift and Storyboard)"],
+      "primaryDemo": false,
+      "presentable": false,
+      "storyboardName": "ButtonsStoryboardAndProgrammatic",
+    ]
   }
 }

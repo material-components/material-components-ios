@@ -1,20 +1,41 @@
-/*
-Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+import MaterialComponents.MaterialPalettes
+import MDFTextAccessibility
 
-http://www.apache.org/licenses/LICENSE-2.0
+/**
+ Returns a high-contrast color for text against @c backgroundColor. If no such color can be found,
+ returns black.
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
+ @params backgroundColor the background color to use for contrast calculations.
 
-import MaterialComponents
+ @returns a color with sufficiently-high contrast against @c backgroundColor, else just returns
+          black.
+ */
+func TextColorFor(backgroundColor: UIColor) -> UIColor {
+  if let safeColor = MDFTextAccessibility.textColor(fromChoices: [.black, .white],
+                                                    onBackgroundColor: backgroundColor,
+                                                    options: [ .enhancedContrast, .preferDarker ]) {
+    return safeColor
+  } else if let safeColor = MDFTextAccessibility.textColor(fromChoices: [.black, .white],
+                                                           onBackgroundColor: backgroundColor,
+                                                            options: .preferDarker) {
+    return safeColor
+  }
+  return .black
+}
 
 typealias ExampleTone = (name: String, tone: UIColor)
 
@@ -62,9 +83,21 @@ class PalettesExampleViewController: UITableViewController {
     let tones = ExampleTonesForPalette(paletteInfo.palette)
     cell!.textLabel!.text = tones[indexPath.row].name
     cell!.backgroundColor = tones[indexPath.row].tone
+    cell!.textLabel!.textColor = TextColorFor(backgroundColor: cell!.backgroundColor!)
     cell!.selectionStyle = .none
 
     return cell!
+  }
+  override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView,
+                          forSection section: Int) {
+    if let headerView = view as? UITableViewHeaderFooterView {
+      if let backgroundColor = headerView.backgroundColor != nil ? headerView.backgroundColor
+                                                                 : tableView.backgroundColor {
+        headerView.textLabel?.textColor = TextColorFor(backgroundColor: backgroundColor)
+      } else {
+        headerView.textLabel?.textColor = .black
+      }
+    }
   }
 
   override func tableView(_ tableView: UITableView,

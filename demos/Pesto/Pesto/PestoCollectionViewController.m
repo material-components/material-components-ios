@@ -26,9 +26,9 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 
 static CGFloat kPestoCollectionViewControllerAnimationDuration = 0.33f;
 static CGFloat kPestoCollectionViewControllerCellHeight = 300.f;
-static CGFloat kPestoCollectionViewControllerDefaultHeaderHeight = 240.f;
+static CGFloat kPestoCollectionViewControllerDefaultHeaderHeight = 220.f;
 static CGFloat kPestoCollectionViewControllerInset = 5.f;
-static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 76.f;
+static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 56.f;
 
 @interface PestoCollectionViewController ()
 
@@ -207,6 +207,7 @@ static CGFloat kPestoCollectionViewControllerSmallHeaderHeight = 76.f;
   headerView.trackingScrollView = self.collectionView;
   headerView.maximumHeight = kPestoCollectionViewControllerDefaultHeaderHeight;
   headerView.minimumHeight = kPestoCollectionViewControllerSmallHeaderHeight;
+  headerView.minMaxHeightIncludesSafeArea = NO;
   [headerView addSubview:[self pestoHeaderView]];
 
   // Use a custom shadow under the flexible header.

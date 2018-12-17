@@ -8,9 +8,9 @@ instead.**
 ## Overview
 
 Material Components for iOS site consists of 2 parts: [document
-site](https://material-ext.appspot.com/mdc-ios-preview/) and API reference site of each components
+site](https://material.io/components/ios/) and API reference site of each components
 (e.g, [AppBar
-API](https://material-ext.appspot.com/mdc-ios-preview/components/AppBar/apidocs/Classes/MDCAppBarContainerViewController.html),
+API](https://material.io/components/ios/catalog/app-bars/api-docs/Classes/MDCAppBarContainerViewController.html),
 etc...)
 
 This document will walk you through how you get the sources, modify and deploy the site. If you are
@@ -56,7 +56,7 @@ overview of the directory structure for mdc:
     - _layout: the style defined for document site. You will modify this file for most of the cases.
 
     - _layout-api: the style defined for API reference site. This is a bit confusing but API
-      reference is actually built in as part of the document site and we want to utilize the syle we
+      reference is actually built in as part of the document site and we want to use the syle we
 have for the document site.
 
     - _icons & _step-sequence & _codemirror-syntax-highlighting: These are the utility class for all
@@ -68,7 +68,7 @@ have for the document site.
 
 - other assets: images, js, thirdparty
 
-Attention should be paid that *components*, *contributing*, *howto* are all copied files and will be
+Attention should be paid that *components*, *contributing*, *docs* are all copied files and will be
 override at the time when document site is built. So if you are trying to modify the content of
 these files, please read [Site Content Update](/site_content_update.md).
 
@@ -134,8 +134,8 @@ gcloud init
 scripts/build_site.sh --deploy production
 ```
 
-Open [Material Component site](https://material-ext.appspot.com/mdc-ios-preview) and make sure your
-modification is there.
+Open [Material Component site](https://material.io/components/ios/) and make
+sure your modification is there.
 
 
 ## TODO: Modify the site build script

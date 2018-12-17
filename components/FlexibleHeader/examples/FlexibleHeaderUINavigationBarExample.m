@@ -1,27 +1,24 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <UIKit/UIKit.h>
 
-#import "FlexibleHeaderUINavigationBarSupplemental.h"
-
 #import "MaterialButtons.h"
 #import "MaterialFlexibleHeader.h"
+#import "supplemental/FlexibleHeaderUINavigationBarSupplemental.h"
 
-static const CGFloat kFlexibleHeaderMinHeight = 200.f;
+static const CGFloat kFlexibleHeaderMinHeight = 200;
 
 @interface FlexibleHeaderUINavigationBarExample () <UIScrollViewDelegate>
 
@@ -58,7 +55,13 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 
 - (void)commonMDCFlexibleHeaderViewControllerInit {
   _fhvc = [[MDCFlexibleHeaderViewController alloc] initWithNibName:nil bundle:nil];
-  _fhvc.headerView.minimumHeight = kFlexibleHeaderMinHeight;
+  
+  // Behavioral flags.
+  _fhvc.topLayoutGuideAdjustmentEnabled = YES;
+  _fhvc.inferTopSafeAreaInsetFromViewController = YES;
+  _fhvc.headerView.minMaxHeightIncludesSafeArea = NO;
+
+  _fhvc.headerView.maximumHeight = kFlexibleHeaderMinHeight;
   [self addChildViewController:_fhvc];
 
   // Use a standard UINavigationBar in the flexible header.
@@ -67,10 +70,41 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
   [navBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
   navBar.shadowImage = [[UIImage alloc] init];
   navBar.translucent = YES;
-  navBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   navBar.tintColor = [UIColor whiteColor];
 
   [self.fhvc.headerView addSubview:navBar];
+
+  navBar.translatesAutoresizingMaskIntoConstraints = NO;
+  [NSLayoutConstraint activateConstraints:
+   @[[NSLayoutConstraint constraintWithItem:navBar
+                                  attribute:NSLayoutAttributeTop
+                                  relatedBy:NSLayoutRelationEqual
+                                     toItem:self.fhvc.headerView.topSafeAreaGuide
+                                  attribute:NSLayoutAttributeBottom
+                                 multiplier:1.0
+                                   constant:0],
+     [NSLayoutConstraint constraintWithItem:navBar
+                                  attribute:NSLayoutAttributeBottom
+                                  relatedBy:NSLayoutRelationEqual
+                                     toItem:self.fhvc.headerView
+                                  attribute:NSLayoutAttributeBottom
+                                 multiplier:1.0
+                                   constant:0],
+     [NSLayoutConstraint constraintWithItem:navBar
+                                  attribute:NSLayoutAttributeLeft
+                                  relatedBy:NSLayoutRelationEqual
+                                     toItem:self.fhvc.headerView
+                                  attribute:NSLayoutAttributeLeft
+                                 multiplier:1.0
+                                   constant:0],
+     [NSLayoutConstraint constraintWithItem:navBar
+                                  attribute:NSLayoutAttributeRight
+                                  relatedBy:NSLayoutRelationEqual
+                                     toItem:self.fhvc.headerView
+                                  attribute:NSLayoutAttributeRight
+                                 multiplier:1.0
+                                   constant:0]
+     ]];
 
   UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:@"Back"
                                                                style:UIBarButtonItemStylePlain
@@ -81,10 +115,10 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
                                                               target:self
                                                               action:@selector(doneAction:)];
 
-  UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:@"UINavigationBar"];
-  [navItem setLeftBarButtonItem:backItem animated:YES];
-  [navItem setRightBarButtonItem:doneItem animated:YES];
-  [navBar setItems:[NSArray arrayWithObject:navItem] animated:YES];
+
+  [self.navigationItem setLeftBarButtonItem:backItem animated:YES];
+  [self.navigationItem setRightBarButtonItem:doneItem animated:YES];
+  [navBar setItems:@[self.navigationItem] animated:YES];
 
   self.button = [[UIButton alloc] init];
   [self.button setTitle:@"UIButton" forState:UIControlStateNormal];
@@ -98,7 +132,7 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 }
 
 - (void)didTapButton:(id)sender {
-  NSLog(@"Button Tapped");
+  NSLog(@"Button Tapped: %@", sender);
 }
 
 - (void)doneAction:(id)sender {
@@ -121,7 +155,7 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
   [self.view addSubview:self.fhvc.view];
   [self.fhvc didMoveToParentViewController:self];
 
-  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:1.0];
+  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.1 alpha:1];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -129,7 +163,7 @@ static const CGFloat kFlexibleHeaderMinHeight = 200.f;
 
   [self.navigationController setNavigationBarHidden:YES animated:animated];
   self.button.center = CGPointMake(CGRectGetMidX(self.fhvc.headerView.frame),
-                                   CGRectGetMidY(self.fhvc.headerView.frame) + 50.f);
+                                   CGRectGetMidY(self.fhvc.headerView.frame) + 50);
 }
 
 // This method must be implemented for MDCFlexibleHeaderViewController's

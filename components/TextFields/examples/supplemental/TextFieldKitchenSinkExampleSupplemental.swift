@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 // swiftlint:disable file_length
 // swiftlint:disable line_length
@@ -20,6 +18,10 @@
 // swiftlint:disable function_body_length
 
 import UIKit
+
+import MaterialComponents.MaterialAppBar
+import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialTextFields
 
 extension TextFieldKitchenSinkSwiftExample {
 
@@ -30,14 +32,14 @@ extension TextFieldKitchenSinkSwiftExample {
 
     let textFieldControllersFullWidth = setupFullWidthTextFields()
 
-    allTextFieldControllers = [setupFilledTextFields(), setupDefaultTextFields(),
+    allTextFieldControllers = [setupFilledTextFields(), setupInlineUnderlineTextFields(),
                                textFieldControllersFullWidth,
-                               setupFloatingTextFields(),
+                               setupFloatingUnderlineTextFields(),
                                setupSpecialTextFields()].flatMap { $0 as! [MDCTextInputController] }
 
     let multilineTextFieldControllersFullWidth = setupFullWidthMultilineTextFields()
 
-    allMultilineTextFieldControllers = [setupAreaTextFields(), setupDefaultMultilineTextFields(),
+    allMultilineTextFieldControllers = [setupAreaTextFields(), setupUnderlineMultilineTextFields(),
                               multilineTextFieldControllersFullWidth,
                               setupFloatingMultilineTextFields(),
                               setupSpecialMultilineTextFields()].flatMap { $0 as! [MDCTextInputController] }
@@ -490,11 +492,12 @@ extension TextFieldKitchenSinkSwiftExample {
 }
 
 extension TextFieldKitchenSinkSwiftExample {
-  class func catalogBreadcrumbs() -> [String] {
-    return ["Text Field", "Kitchen Sink"]
-  }
 
-  class func catalogIsPrimaryDemo() -> Bool {
-    return false
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Text Field", "Kitchen Sink"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
   }
 }

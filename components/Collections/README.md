@@ -1,14 +1,11 @@
-<!--docs:
-title: "Collections"
-layout: detail
-section: components
-excerpt: "Collection view classes that adhere to Material Design layout and styling."
-iconId: list
-path: /catalog/collections/
-api_doc_root: true
--->
-
 # Collections
+
+**Notice**: This component will be deprecated over the next few months in favor of the
+[Cards](../Cards) and [List](../List) components. See our
+[public tracker](https://www.pivotaltracker.com/epic/show/3938766) for more details on timing and
+the deprecation plan.
+
+---
 
 <div class="article__asset article__asset--screenshot">
   <img src="docs/assets/collections.png" alt="Collections" width="375">
@@ -19,7 +16,7 @@ Collection view classes that adhere to Material Design layout and styling.
 ## Design & API Documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/guidelines/components/lists.html#lists-specs">Material Design guidelines: Collection List Specs</a></li>
+  <li class="icon-list-item icon-list-item--spec"><a href="https://material.io/go/design-lists#lists-specs">Material Design guidelines: Collection List Specs</a></li>
   <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/collections/api-docs/Classes/MDCCollectionViewController.html">API: MDCCollectionViewController</a></li>
   <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/collections/api-docs/Protocols/MDCCollectionViewEditing.html">API: MDCCollectionViewEditing</a></li>
   <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/collections/api-docs/Protocols/MDCCollectionViewEditingDelegate.html">API: MDCCollectionViewEditingDelegate</a></li>
@@ -30,11 +27,6 @@ Collection view classes that adhere to Material Design layout and styling.
 - - -
 
 ## Installation
-
-### Requirements
-
-- Xcode 7.0 or higher.
-- iOS SDK version 7.0 or higher.
 
 ### Installation with CocoaPods
 
@@ -47,7 +39,7 @@ pod 'MaterialComponents/Collections'
 
 Then, run the following command:
 
-``` bash
+```bash
 pod install
 ```
 
@@ -92,12 +84,12 @@ Before using Collections, you'll need to import it:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 import MaterialComponents.MaterialCollections
 ```
 
 #### Objective-C
-``` objc
+```objc
 #import "MaterialCollections.h"
 ```
 <!--</div>-->
@@ -111,7 +103,7 @@ Step 1: **Subclass `MDCCollectionViewController` in your view controller interfa
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 import MaterialComponents.MaterialCollections
 
 class MyCollectionsExample: MDCCollectionViewController {
@@ -119,7 +111,7 @@ class MyCollectionsExample: MDCCollectionViewController {
 ```
 
 #### Objective-C
-``` objc
+```objc
 #import "MaterialCollections.h"
 
 @interface MyCollectionsExample : MDCCollectionViewController
@@ -131,12 +123,12 @@ Step 2: **Setup your data**.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 let colors = [ "red", "blue", "green", "black", "yellow", "purple" ]
 ```
 
 #### Objective-C
-``` objc
+```objc
 NSArray *colors = @[ @"red", @"blue", @"green", @"black", @"yellow", @"purple" ];
 ```
 <!--</div>-->
@@ -145,13 +137,13 @@ Step 3: **Register a cell class**.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 self.collectionView?.register(MDCCollectionViewTextCell.self,
                               forCellWithReuseIdentifier: reusableIdentifierItem)
 ```
 
 #### Objective-C
-``` objc
+```objc
 [self.collectionView registerClass:[MDCCollectionViewTextCell class]
         forCellWithReuseIdentifier:kReusableIdentifierItem];
 ```
@@ -161,7 +153,7 @@ Step 4: **Override `UICollectionViewDataSource` protocol required methods**.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 override func collectionView(_ collectionView: UICollectionView,
                              numberOfItemsInSection section: Int) -> Int {
   return colors.count
@@ -180,7 +172,7 @@ override func collectionView(_ collectionView: UICollectionView, cellForItemAt i
 ```
 
 #### Objective-C
-``` objc
+```objc
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
   return colors.count;
@@ -205,7 +197,7 @@ capabilities that the `MDCCollectionViewController` class provides.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 override func viewDidLoad() {
   super.viewDidLoad()
 
@@ -217,7 +209,7 @@ override func viewDidLoad() {
 ```
 
 #### Objective-C
-``` objc
+```objc
 - (void)viewDidLoad {
   [super viewDidLoad];
 

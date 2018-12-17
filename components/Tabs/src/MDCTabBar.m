@@ -1,21 +1,21 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCTabBar.h"
 
+#import "MDCTabBarIndicatorTemplate.h"
+#import "MDCTabBarUnderlineIndicatorTemplate.h"
 #import "MaterialInk.h"
 #import "MaterialTypography.h"
 #import "private/MDCItemBar.h"
@@ -28,7 +28,7 @@ static const CGFloat kImageTitleSpecPadding = 10;
 /// Adjustment added to spec measurements to compensate for internal paddings.
 static const CGFloat kImageTitlePaddingAdjustment = -3;
 
-// Heights based on the spec: https://material.io/guidelines/components/tabs.html
+// Heights based on the spec: https://material.io/go/design-tabs
 
 /// Height for image-only tab bars, in points.
 static const CGFloat kImageOnlyBarHeight = 48;
@@ -48,6 +48,9 @@ static const CGFloat kBottomNavigationMaximumItemWidth = 168;
 /// Title-image padding for bottom navigation bars, in points.
 static const CGFloat kBottomNavigationTitleImagePadding = 3;
 
+/// Height for the bottom divider.
+static const CGFloat kBottomNavigationBarDividerHeight = 1;
+
 static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignment alignment) {
   switch (alignment) {
     case MDCTabBarAlignmentCenter:
@@ -63,7 +66,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
       return MDCItemBarAlignmentCenterSelected;
   }
 
-  NSCAssert(0, @"Invalid alignment value %zd", alignment);
+  NSCAssert(0, @"Invalid alignment value %ld", (long)alignment);
   return MDCItemBarAlignmentLeading;
 }
 
@@ -74,36 +77,32 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   /// Item bar responsible for displaying the actual tab bar content.
   MDCItemBar *_itemBar;
 
+  UIView *_dividerBar;
+
   // Flags tracking if properties are unset and using default values.
   BOOL _hasDefaultAlignment;
   BOOL _hasDefaultItemAppearance;
-  BOOL _hasDefaultDisplaysUppercaseTitles;
 
   // For properties which have been set, these store the new fixed values.
   MDCTabBarAlignment _alignmentOverride;
   MDCTabBarItemAppearance _itemAppearanceOverride;
-  BOOL _displaysUppercaseTitlesOverride;
+
+  UIColor *_selectedTitleColor;
+  UIColor *_unselectedTitleColor;
 }
 // Inherit UIView's tintColor logic.
 @dynamic tintColor;
 @synthesize alignment = _alignment;
 @synthesize barPosition = _barPosition;
-@synthesize displaysUppercaseTitles = _displaysUppercaseTitles;
 @synthesize itemAppearance = _itemAppearance;
 
 #pragma mark - Initialization
-
-+ (void)initialize {
-  [[[self class] appearance] setSelectedItemTintColor:[UIColor whiteColor]];
-  [[[self class] appearance] setUnselectedItemTintColor:[UIColor colorWithWhite:1.0 alpha:0.7f]];
-  [[[self class] appearance] setInkColor:[UIColor colorWithWhite:1.0 alpha:0.7f]];
-  [[[self class] appearance] setBarTintColor:nil];
-}
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
     [self commonMDCTabBarInit];
+    [self updateItemBarStyle];
   }
   return self;
 }
@@ -117,15 +116,25 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 }
 
 - (void)commonMDCTabBarInit {
+  _bottomDividerColor = [UIColor clearColor];
+  _selectedItemTintColor = [UIColor whiteColor];
+  _unselectedItemTintColor = [UIColor colorWithWhite:1 alpha:(CGFloat)0.7];
+  _selectedTitleColor = _selectedItemTintColor;
+  _unselectedTitleColor = _unselectedItemTintColor;
+  _inkColor = [UIColor colorWithWhite:1 alpha:(CGFloat)0.7];
+
+  self.clipsToBounds = YES;
   _barPosition = UIBarPositionAny;
   _hasDefaultItemAppearance = YES;
   _hasDefaultAlignment = YES;
-  _hasDefaultDisplaysUppercaseTitles = YES;
 
   // Set default values
   _alignment = [self computedAlignment];
-  _displaysUppercaseTitles = [self computedDisplaysUppercaseTitles];
+  _titleTextTransform = MDCTabBarTextTransformAutomatic;
   _itemAppearance = [self computedItemAppearance];
+  _selectionIndicatorTemplate = [MDCTabBar defaultSelectionIndicatorTemplate];
+  _selectedItemTitleFont = [MDCTypography buttonFont];
+  _unselectedItemTitleFont = [MDCTypography buttonFont];
 
   // Create item bar.
   _itemBar = [[MDCItemBar alloc] initWithFrame:self.bounds];
@@ -134,13 +143,96 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   _itemBar.alignment = MDCItemBarAlignmentForTabBarAlignment(_alignment);
   [self addSubview:_itemBar];
 
+  CGFloat dividerTop = CGRectGetMaxY(self.bounds) - kBottomNavigationBarDividerHeight;
+  _dividerBar =
+      [[UIView alloc] initWithFrame:CGRectMake(0,
+                                               dividerTop,
+                                               CGRectGetWidth(self.bounds),
+                                               kBottomNavigationBarDividerHeight)];
+  _dividerBar.autoresizingMask =
+      UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
+  _dividerBar.backgroundColor = _bottomDividerColor;
+  [self addSubview:_dividerBar];
+
   [self updateItemBarStyle];
+}
+
+- (void)layoutSubviews {
+  [super layoutSubviews];
+
+  CGSize sizeThatFits = [_itemBar sizeThatFits:self.bounds.size];
+  _itemBar.frame = CGRectMake(0, 0, sizeThatFits.width, sizeThatFits.height);
 }
 
 #pragma mark - Public
 
++ (CGFloat)defaultHeightForBarPosition:(UIBarPosition)position
+                        itemAppearance:(MDCTabBarItemAppearance)appearance {
+  if ([self isTopTabsForPosition:position]) {
+    switch (appearance) {
+      case MDCTabBarItemAppearanceTitledImages:
+        return kTitledImageBarHeight;
+
+      case MDCTabBarItemAppearanceTitles:
+        return kTitleOnlyBarHeight;
+
+      case MDCTabBarItemAppearanceImages:
+        return kImageOnlyBarHeight;
+    }
+  } else {
+    // Bottom navigation has a fixed height.
+    return kBottomNavigationBarHeight;
+  }
+}
+
 + (CGFloat)defaultHeightForItemAppearance:(MDCTabBarItemAppearance)appearance {
-  return [self defaultHeightForPosition:UIBarPositionAny itemAppearance:appearance];
+  return [self defaultHeightForBarPosition:UIBarPositionAny itemAppearance:appearance];
+}
+
+- (void)setTitleColor:(nullable UIColor *)color forState:(MDCTabBarItemState)state {
+  switch (state) {
+    case MDCTabBarItemStateNormal:
+      _unselectedTitleColor = color;
+      break;
+    case MDCTabBarItemStateSelected:
+      _selectedTitleColor = color;
+      break;
+  }
+  [self updateItemBarStyle];
+}
+
+- (nullable UIColor *)titleColorForState:(MDCTabBarItemState)state {
+  switch (state) {
+    case MDCTabBarItemStateNormal:
+      return _unselectedTitleColor;
+      break;
+    case MDCTabBarItemStateSelected:
+      return _selectedTitleColor;
+      break;
+  }
+}
+
+- (void)setImageTintColor:(nullable UIColor *)color forState:(MDCTabBarItemState)state {
+  switch (state) {
+    case MDCTabBarItemStateNormal:
+      _unselectedItemTintColor = color;
+      break;
+    case MDCTabBarItemStateSelected:
+      _selectedItemTintColor = color;
+      break;
+  }
+  [self updateItemBarStyle];
+}
+
+- (nullable UIColor *)imageTintColorForState:(MDCTabBarItemState)state {
+  switch (state) {
+    case MDCTabBarItemStateNormal:
+      return _unselectedItemTintColor;
+      break;
+    case MDCTabBarItemStateSelected:
+      return _selectedItemTintColor;
+      break;
+  }
 }
 
 - (void)setDelegate:(id<MDCTabBarDelegate>)delegate {
@@ -157,7 +249,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 }
 
 - (void)setItems:(NSArray<UITabBarItem *> *)items {
-  [_itemBar setItems:items];
+  _itemBar.items = items;
 }
 
 - (UITabBarItem *)selectedItem {
@@ -165,7 +257,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 }
 
 - (void)setSelectedItem:(UITabBarItem *)selectedItem {
-  [_itemBar setSelectedItem:selectedItem];
+  _itemBar.selectedItem = selectedItem;
 }
 
 - (void)setSelectedItem:(UITabBarItem *)selectedItem animated:(BOOL)animated {
@@ -177,7 +269,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
     _barTintColor = barTintColor;
 
     // Update background color.
-    _itemBar.backgroundColor = barTintColor;
+    self.backgroundColor = barTintColor;
   }
 }
 
@@ -185,6 +277,22 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   if (_inkColor != inkColor && ![_inkColor isEqual:inkColor]) {
     _inkColor = inkColor;
 
+    [self updateItemBarStyle];
+  }
+}
+
+- (void)setUnselectedItemTitleFont:(UIFont *)unselectedItemTitleFont {
+  if ((unselectedItemTitleFont != _unselectedItemTitleFont) &&
+      ![unselectedItemTitleFont isEqual:_unselectedItemTitleFont]) {
+    _unselectedItemTitleFont = unselectedItemTitleFont;
+    [self updateItemBarStyle];
+  }
+}
+
+- (void)setSelectedItemTitleFont:(UIFont *)selectedItemTitleFont {
+  if ((selectedItemTitleFont != _selectedItemTitleFont) &&
+      ![selectedItemTitleFont isEqual:_selectedItemTitleFont]) {
+    _selectedItemTitleFont = selectedItemTitleFont;
     [self updateItemBarStyle];
   }
 }
@@ -209,6 +317,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   if (_selectedItemTintColor != selectedItemTintColor &&
       ![_selectedItemTintColor isEqual:selectedItemTintColor]) {
     _selectedItemTintColor = selectedItemTintColor;
+    _selectedTitleColor = selectedItemTintColor;
 
     [self updateItemBarStyle];
   }
@@ -218,15 +327,51 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   if (_unselectedItemTintColor != unselectedItemTintColor &&
       ![_unselectedItemTintColor isEqual:unselectedItemTintColor]) {
     _unselectedItemTintColor = unselectedItemTintColor;
+    _unselectedTitleColor = unselectedItemTintColor;
 
     [self updateItemBarStyle];
   }
 }
 
+- (BOOL)displaysUppercaseTitles {
+  switch (self.titleTextTransform) {
+    case MDCTabBarTextTransformAutomatic:
+      return [MDCTabBar displaysUppercaseTitlesByDefaultForPosition:_barPosition];
+
+    case MDCTabBarTextTransformNone:
+      return NO;
+
+    case MDCTabBarTextTransformUppercase:
+      return YES;
+  }
+}
+
 - (void)setDisplaysUppercaseTitles:(BOOL)displaysUppercaseTitles {
-  _hasDefaultDisplaysUppercaseTitles = NO;
-  _displaysUppercaseTitlesOverride = displaysUppercaseTitles;
-  [self internalSetDisplaysUppercaseTitles:[self computedDisplaysUppercaseTitles]];
+  self.titleTextTransform =
+      displaysUppercaseTitles ? MDCTabBarTextTransformUppercase : MDCTabBarTextTransformNone;
+}
+
+- (void)setTitleTextTransform:(MDCTabBarTextTransform)titleTextTransform {
+  if (titleTextTransform != _titleTextTransform) {
+    _titleTextTransform = titleTextTransform;
+    [self updateItemBarStyle];
+  }
+}
+
+- (void)setSelectionIndicatorTemplate:(id<MDCTabBarIndicatorTemplate>)selectionIndicatorTemplate {
+  id<MDCTabBarIndicatorTemplate> template = selectionIndicatorTemplate;
+  if (!template) {
+    template = [MDCTabBar defaultSelectionIndicatorTemplate];
+  }
+  _selectionIndicatorTemplate = template;
+  [self updateItemBarStyle];
+}
+
+- (void)setBottomDividerColor:(UIColor *)bottomDividerColor {
+  if (_bottomDividerColor != bottomDividerColor) {
+    _bottomDividerColor = bottomDividerColor;
+    _dividerBar.backgroundColor = _bottomDividerColor;
+  }
 }
 
 #pragma mark - MDCAccessibility
@@ -281,25 +426,6 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 
 #pragma mark - Private
 
-+ (CGFloat)defaultHeightForPosition:(UIBarPosition)position
-                     itemAppearance:(MDCTabBarItemAppearance)appearance {
-  if ([self isTopTabsForPosition:position]) {
-    switch (appearance) {
-      case MDCTabBarItemAppearanceTitledImages:
-        return kTitledImageBarHeight;
-
-      case MDCTabBarItemAppearanceTitles:
-        return kTitleOnlyBarHeight;
-
-      case MDCTabBarItemAppearanceImages:
-        return kImageOnlyBarHeight;
-    }
-  } else {
-    // Bottom navigation has a fixed height.
-    return kBottomNavigationBarHeight;
-  }
-}
-
 + (MDCItemBarStyle *)defaultStyleForPosition:(UIBarPosition)position
                               itemAppearance:(MDCTabBarItemAppearance)appearance {
   MDCItemBarStyle *style = [[MDCItemBarStyle alloc] init];
@@ -309,7 +435,6 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
     // Top tabs
     style.shouldDisplaySelectionIndicator = YES;
     style.shouldGrowOnSelection = NO;
-    style.titleFont = [MDCTypography buttonFont];
     style.inkStyle = MDCInkStyleBounded;
     style.titleImagePadding = (kImageTitleSpecPadding + kImageTitlePaddingAdjustment);
     style.textOnlyNumberOfLines = 2;
@@ -318,7 +443,6 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
     style.shouldDisplaySelectionIndicator = NO;
     style.shouldGrowOnSelection = YES;
     style.maximumItemWidth = kBottomNavigationMaximumItemWidth;
-    style.titleFont = [[MDCTypography fontLoader] regularFontOfSize:12];
     style.inkStyle = MDCInkStyleUnbounded;
     style.titleImagePadding = kBottomNavigationTitleImagePadding;
     style.textOnlyNumberOfLines = 1;
@@ -342,7 +466,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
       break;
 
     default:
-      NSAssert(0, @"Invalid appearance value %zd", appearance);
+      NSAssert(0, @"Invalid appearance value %ld", (long)appearance);
       displayTitle = YES;
       break;
   }
@@ -350,9 +474,9 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   style.shouldDisplayTitle = displayTitle;
 
   // Update default height
-  CGFloat defaultHeight = [self defaultHeightForPosition:position itemAppearance:appearance];
+  CGFloat defaultHeight = [self defaultHeightForBarPosition:position itemAppearance:appearance];
   if (defaultHeight == 0) {
-    NSAssert(0, @"Missing default height for %zd", appearance);
+    NSAssert(0, @"Missing default height for %ld", (long)appearance);
     defaultHeight = kTitleOnlyBarHeight;
   }
   style.defaultHeight = defaultHeight;
@@ -423,6 +547,10 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   }
 }
 
++ (id<MDCTabBarIndicatorTemplate>)defaultSelectionIndicatorTemplate {
+  return [[MDCTabBarUnderlineIndicatorTemplate alloc] init];
+}
+
 - (MDCTabBarAlignment)computedAlignment {
   if (_hasDefaultAlignment) {
     return [[self class] defaultAlignmentForPosition:_barPosition];
@@ -439,25 +567,10 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
   }
 }
 
-- (BOOL)computedDisplaysUppercaseTitles {
-  if (_hasDefaultDisplaysUppercaseTitles) {
-    return [[self class] displaysUppercaseTitlesByDefaultForPosition:_barPosition];
-  } else {
-    return _displaysUppercaseTitlesOverride;
-  }
-}
-
 - (void)internalSetAlignment:(MDCTabBarAlignment)alignment animated:(BOOL)animated {
   if (_alignment != alignment) {
     _alignment = alignment;
     [_itemBar setAlignment:MDCItemBarAlignmentForTabBarAlignment(_alignment) animated:animated];
-  }
-}
-
-- (void)internalSetDisplaysUppercaseTitles:(BOOL)displaysUppercaseTitles {
-  if (_displaysUppercaseTitles != displaysUppercaseTitles) {
-    _displaysUppercaseTitles = displaysUppercaseTitles;
-    [self updateItemBarStyle];
   }
 }
 
@@ -485,7 +598,6 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 - (void)updatePositionDerivedDefaultValues {
   [self internalSetAlignment:[self computedAlignment] animated:NO];
   [self internalSetItemAppearance:[self computedItemAppearance]];
-  [self internalSetDisplaysUppercaseTitles:[self computedDisplaysUppercaseTitles]];
 }
 
 /// Update the item bar's style property, which depends on the bar position and item appearance.
@@ -494,13 +606,30 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(MDCTabBarAlignm
 
   style = [[self class] defaultStyleForPosition:_barPosition itemAppearance:_itemAppearance];
 
+  if ([MDCTabBar isTopTabsForPosition:_barPosition]) {
+    // Top tabs: Use provided fonts.
+    style.selectedTitleFont = self.selectedItemTitleFont;
+    style.unselectedTitleFont = self.unselectedItemTitleFont;
+  } else {
+    // Bottom navigation: Ignore provided fonts.
+    style.selectedTitleFont = [[MDCTypography fontLoader] regularFontOfSize:12];
+    style.unselectedTitleFont = [[MDCTypography fontLoader] regularFontOfSize:12];
+  }
+
+  style.selectionIndicatorTemplate = self.selectionIndicatorTemplate;
   style.selectionIndicatorColor = self.tintColor;
   style.inkColor = _inkColor;
-  style.selectedTitleColor = (_selectedItemTintColor ? _selectedItemTintColor : self.tintColor);
-  style.titleColor = _unselectedItemTintColor;
-  style.displaysUppercaseTitles = _displaysUppercaseTitles;
+  style.displaysUppercaseTitles = self.displaysUppercaseTitles;
+
+  style.selectedTitleColor = _selectedTitleColor ?: self.tintColor;
+  style.titleColor = _unselectedTitleColor;
+  style.selectedImageTintColor = _selectedItemTintColor ?: self.tintColor;
+  style.imageTintColor = _unselectedItemTintColor;
 
   [_itemBar applyStyle:style];
+
+  // Layout depends on -[MDCItemBar sizeThatFits], which depends on the style.
+  [self setNeedsLayout];
 }
 
 @end

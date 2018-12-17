@@ -1,71 +1,49 @@
 <!--docs:
-title: "Page Control"
+title: "Page control"
 layout: detail
 section: components
-excerpt: "Page Control is a drop-in Material Design replacement for UIPageControl that implements Material Design animation and layout."
+excerpt: "Page control is a drop-in Material Design replacement for UIPageControl that implements Material Design animation and layout."
+iconId: <#icon_id#>
 path: /catalog/page-controls/
 api_doc_root: true
 -->
 
-# Page Control
+<!-- This file was auto-generated using ./scripts/generate_readme PageControl -->
 
-<div class="article__asset article__asset--screenshot">
-  <img src="docs/assets/page_control.png" alt="Page Control" width="375">
-</div>
+# Page control
+
+[![Open bugs badge](https://img.shields.io/badge/dynamic/json.svg?label=open%20bugs&url=https%3A%2F%2Fapi.github.com%2Fsearch%2Fissues%3Fq%3Dis%253Aopen%2Blabel%253Atype%253ABug%2Blabel%253A%255BPageControl%255D&query=%24.total_count)](https://github.com/material-components/material-components-ios/issues?q=is%3Aopen+is%3Aissue+label%3Atype%3ABug+label%3A%5BPageControl%5D)
 
 This control is designed to be a drop-in replacement for `UIPageControl`, with a user experience
 influenced by Material Design specifications for animation and layout. The API methods are the
 same as a `UIPageControl`, with the addition of a few key methods required to achieve the
 desired animation of the control.
 
-## Design & API Documentation
+<div class="article__asset article__asset--screenshot">
+  <img src="docs/assets/pagecontrol.gif" alt="An animation demonstrating a page control alternating between three pages." width="190">
+</div>
+
+## Design & API documentation
 
 <ul class="icon-list">
-  <li class="icon-list-item icon-list-item--link"><a href="https://material.io/components/ios/catalog/page-controls/api-docs/Classes/MDCPageControl.html">API: MDCPageControl</a></li>
+  <li class="icon-list-item icon-list-item--link">Class: <a href="https://material.io/components/ios/catalog/page-controls/api-docs/Classes/MDCPageControl.html">MDCPageControl</a></li>
 </ul>
 
-- - -
+## Table of contents
 
-## Installation
-
-### Requirements
-
-- Xcode 7.0 or higher
-- iOS SDK version 7.0 or higher
-
-### Installation with CocoaPods
-
-To add this component to your Xcode project using CocoaPods, add the following to your `Podfile`:
-
-``` bash
-pod 'MaterialComponents/PageControl'
-```
-<!--{: .code-renderer.code-renderer--install }-->
-
-Then, run the following command:
-
-``` bash
-pod install
-```
-
+- [Overview](#overview)
+- [Installation](#installation)
+  - [Installation with CocoaPods](#installation-with-cocoapods)
+  - [Importing](#importing)
+- [Usage](#usage)
+  - [Typical use](#typical-use)
+  - [Differences From UIPageControl](#differences-from-uipagecontrol)
+- [Extensions](#extensions)
+  - [Color Theming](#color-theming)
 
 - - -
 
-## Differences From UIPageControl
-
-This page control provides an animation effect that keeps a page indicator in sync with the
-scrolling of a designated scroll view. This is in contrast to a native `UIPageControl`, which
-shows the current page indicator without any animated transitions between changes.
-
-As the user scrolls, a track will be drawn with animation from the current indicator position
-towards the next indicator position that is being scrolled towards. The current indicator will
-float along this track and position itself based on the percent scrolled between the pages.
-When the scroll view finishes scrolling, the track will disappear with animation towards the
-final position of the new page.
-
-
-#### Example Screenshots
-
+## Overview
 
 <img src="docs/assets/MDCPageControl_screenshot-1.png" alt="screenshot-1" width="375">
 <!--{: .article__asset.article__asset--screenshot }-->
@@ -79,32 +57,53 @@ Page control showing animated track with current page indicator positioned along
 <!--{: .article__asset.article__asset--screenshot }-->
 Page control showing new current page.
 
+## Installation
 
-- - -
+<!-- Extracted from docs/../../../docs/component-installation.md -->
 
-## Usage
+### Installation with CocoaPods
+
+Add the following to your `Podfile`:
+
+```bash
+pod 'MaterialComponents/PageControl'
+```
+<!--{: .code-renderer.code-renderer--install }-->
+
+Then, run the following command:
+
+```bash
+pod install
+```
 
 ### Importing
 
-Before using Page Control, you'll need to import it:
+To import the component:
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
-``` swift
+```swift
 import MaterialComponents.MaterialPageControl
 ```
 
 #### Objective-C
 
-``` objc
+```objc
 #import "MaterialPageControl.h"
 ```
 <!--</div>-->
 
+
+## Usage
+
+<!-- Extracted from docs/typical-use.md -->
+
+### Typical use
+
 Integrating the page control requires two steps. First, add a page control with companion scroll
 view, and second, forward the scroll view delegate methods to the page control.
 
-### Step 1: Add the page control to a view
+**Step 1: Add the page control to a view**
 
 Add the page control to a view and set the desired page control properties. This step is done
 similarly to a native `UIPageControl`. In addition, provide a tap gesture handler for the control to
@@ -114,7 +113,7 @@ notified of page changes.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-``` swift
+```swift
 let pageControl = MDCPageControl()
 let scrollView = UIScrollView()
 let pages = NSMutableArray()
@@ -144,7 +143,7 @@ func didChangePage(sender: MDCPageControl){
 
 #### Objective-C
 
-``` objc
+```objc
 - (void)viewDidLoad {
   [super viewDidLoad];
 
@@ -170,7 +169,7 @@ func didChangePage(sender: MDCPageControl){
 ```
 <!--</div>-->
 
-### Step 2: Forwarding the required scroll view delegate methods
+**Step 2: Forwarding the required scroll view delegate methods**
 
 This page control is designed to be used in conjunction with a scroll view. To achieve the desired
 page control animation effects, there are three scroll view delegate methods that must be forwarded
@@ -181,7 +180,7 @@ scrolling movement of the designated scroll view.
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
-``` swift
+```swift
 func scrollViewDidScroll(_ scrollView: UIScrollView) {
   pageControl.scrollViewDidScroll(scrollView)
 }
@@ -197,7 +196,7 @@ func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
 
 #### Objective-C
 
-``` objc
+```objc
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
   [self.pageControl scrollViewDidScroll:scrollView];
 }
@@ -211,3 +210,30 @@ func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
 }
 ```
 <!--</div>-->
+
+<!-- Extracted from docs/differences-from-uipagecontrol.md -->
+
+### Differences From UIPageControl
+
+This page control provides an animation effect that keeps a page indicator in sync with the
+scrolling of a designated scroll view. This is in contrast to a native `UIPageControl`, which
+shows the current page indicator without any animated transitions between changes.
+
+As the user scrolls, a track will be drawn with animation from the current indicator position
+towards the next indicator position that is being scrolled towards. The current indicator will
+float along this track and position itself based on the percent scrolled between the pages.
+When the scroll view finishes scrolling, the track will disappear with animation towards the
+final position of the new page.
+
+
+## Extensions
+
+<!-- Extracted from docs/color-theming.md -->
+
+### Color Theming
+
+Page Control does not yet have a Material Design color system themer. The following tasks are
+tracking its development:
+
+- Task: [Implement a color themer](https://www.pivotaltracker.com/story/show/157072365)
+

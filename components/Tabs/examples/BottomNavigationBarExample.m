@@ -1,43 +1,51 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
-
-@import MaterialComponents.MaterialTabs;
+#import "MaterialColorScheme.h"
+#import "MaterialTabs.h"
+#import "MaterialTabs+ColorThemer.h"
 
 @interface BottomNavigationBarExample : UIViewController <MDCTabBarDelegate>
+@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @end
 
 @implementation BottomNavigationBarExample {
   MDCTabBar *_bottomNavigationBar;
-
   NSArray<UIColor *> *_colors;
+}
+
+- (id)init {
+  self = [super init];
+  if (self) {
+    self.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+  }
+  return self;
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
 
   _bottomNavigationBar = [[MDCTabBar alloc] initWithFrame:CGRectZero];
-  _bottomNavigationBar.autoresizingMask =
-      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+  _bottomNavigationBar.translatesAutoresizingMaskIntoConstraints = NO;
   _bottomNavigationBar.delegate = self;
+  [MDCTabBarColorThemer applySemanticColorScheme:self.colorScheme toTabs:_bottomNavigationBar];
 
-  _bottomNavigationBar.barTintColor = [UIColor whiteColor];
-  _bottomNavigationBar.selectedItemTintColor = nil;
-  _bottomNavigationBar.unselectedItemTintColor = [UIColor colorWithWhite:0 alpha:0.50];
-  _bottomNavigationBar.tintColor = [UIColor colorWithRed:0 green:0.5 blue:0 alpha:1];
-  _bottomNavigationBar.inkColor = [UIColor colorWithRed:0 green:0.5 blue:0 alpha:0.15];
+  _bottomNavigationBar.inkColor = [UIColor colorWithRed:0
+                                                  green:(CGFloat)0.5
+                                                   blue:0
+                                                  alpha:(CGFloat)0.15];
 
   NSBundle *bundle = [NSBundle bundleForClass:[BottomNavigationBarExample class]];
   UIImage *infoImage =
@@ -55,34 +63,29 @@
   ];
 
   [self.view addSubview:_bottomNavigationBar];
-
   [self updateDisplay];
-}
 
-- (void)viewWillLayoutSubviews {
-  [super viewWillLayoutSubviews];
-
-  CGRect bounds = self.view.bounds;
-
-  // Place bar at bottom of view
-  CGRect barFrame = CGRectZero;
-  barFrame.size = [_bottomNavigationBar sizeThatFits:self.view.bounds.size];
-
-  // On the iPhone X, we need to offset
-  if ([self.view respondsToSelector:@selector(safeAreaInsets)]) {
-    NSMethodSignature *safeAreaSignature =
-        [[UIView class] instanceMethodSignatureForSelector:@selector(safeAreaInsets)];
-    NSInvocation *safeAreaInvocation =
-        [NSInvocation invocationWithMethodSignature:safeAreaSignature];
-    [safeAreaInvocation setSelector:@selector(safeAreaInsets)];
-    [safeAreaInvocation setTarget:self.view];
-    [safeAreaInvocation invoke];
-    UIEdgeInsets safeAreaInsets;
-    [safeAreaInvocation getReturnValue:&safeAreaInsets];
-    bounds = UIEdgeInsetsInsetRect(bounds, safeAreaInsets);
-  }
-  barFrame.origin.y = CGRectGetMaxY(bounds) - barFrame.size.height;
-  _bottomNavigationBar.frame = barFrame;
+  [NSLayoutConstraint constraintWithItem:_bottomNavigationBar
+                               attribute:NSLayoutAttributeBottom
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.view
+                               attribute:NSLayoutAttributeBottom
+                              multiplier:1
+                                constant:0].active = YES;
+  [NSLayoutConstraint constraintWithItem:_bottomNavigationBar
+                               attribute:NSLayoutAttributeLeft
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.view
+                               attribute:NSLayoutAttributeLeft
+                              multiplier:1
+                                constant:0].active = YES;
+  [NSLayoutConstraint constraintWithItem:_bottomNavigationBar
+                               attribute:NSLayoutAttributeRight
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.view
+                               attribute:NSLayoutAttributeRight
+                              multiplier:1
+                                constant:0].active = YES;
 }
 
 #pragma mark - MDCTabBarDelegate
@@ -117,12 +120,12 @@
 
 @implementation BottomNavigationBarExample (CatalogByConvention)
 
-+ (NSArray *)catalogBreadcrumbs {
-  return @[ @"Tab Bar", @"Bottom Navigation" ];
-}
-
-+ (BOOL)catalogIsPrimaryDemo {
-  return NO;
++ (NSDictionary *)catalogMetadata {
+  return @{
+    @"breadcrumbs": @[ @"Tab Bar", @"Bottom Navigation" ],
+    @"primaryDemo": @NO,
+    @"presentable": @NO,
+  };
 }
 
 @end

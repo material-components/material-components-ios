@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCCollectionViewFlowLayout.h"
 
@@ -182,11 +180,18 @@ static const NSInteger kSupplementaryViewZIndex = 99;
       attr.size = CGSizeMake(CGRectGetWidth(currentBounds), MDCCollectionInfoBarHeaderHeight);
       // Allow header to move upwards with scroll, but prevent from moving downwards with scroll.
       CGFloat insetTop = self.collectionView.contentInset.top;
+      if (@available(iOS 11.0, *)) {
+        insetTop = self.collectionView.adjustedContentInset.top;
+      }
       CGFloat boundsY = currentBounds.origin.y;
       CGFloat maxOffsetY = MAX(boundsY + insetTop, 0);
       offsetY = boundsY + (attr.size.height / 2) + insetTop - maxOffsetY;
     } else if ([kind isEqualToString:MDCCollectionInfoBarKindFooter]) {
-      attr.size = CGSizeMake(CGRectGetWidth(currentBounds), MDCCollectionInfoBarFooterHeight);
+      CGFloat height = MDCCollectionInfoBarFooterHeight;
+      if (@available(iOS 11.0, *)) {
+        height += self.collectionView.safeAreaInsets.bottom;
+      }
+      attr.size = CGSizeMake(CGRectGetWidth(currentBounds), height);
       offsetY = currentBounds.origin.y + currentBounds.size.height - (attr.size.height / 2);
     }
     attr.center = CGPointMake(CGRectGetMidX(currentBounds), offsetY);
@@ -394,7 +399,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
   // view rows.
   CGRect insetFrame = attr.frame;
   if (!CGRectIsEmpty(insetFrame)) {
-    UIEdgeInsets insets = self.sectionInset;
+    UIEdgeInsets insets;
 
     // Retrieve the insets from the Flow Layout delegate to maintain consistency with the CVC
     if ([self.collectionView.delegate
@@ -439,8 +444,8 @@ static const NSInteger kSupplementaryViewZIndex = 99;
   }
   // Set top/bottom insets.
   if (isCardStyle || isGroupedStyle) {
-    insets.top = (CGFloat)floor((isTop) ? inset : inset / 2.0f);
-    insets.bottom = (CGFloat)floor((isBottom) ? inset : inset / 2.0f);
+    insets.top = (CGFloat)floor((isTop) ? inset : inset / 2);
+    insets.bottom = (CGFloat)floor((isBottom) ? inset : inset / 2);
   }
   return insets;
 }
@@ -456,7 +461,7 @@ static const NSInteger kSupplementaryViewZIndex = 99;
   BOOL isBottom = NO;
   BOOL hasSectionHeader = [_headerSections containsIndex:indexPath.section];
   BOOL hasSectionFooter = [_footerSections containsIndex:indexPath.section];
-  BOOL hasSectionItems = YES;
+  BOOL hasSectionItems = [self numberOfItemsInSection:indexPath.section] > 0;
 
   BOOL hidesHeaderBackground = NO;
   if ([self.styler.delegate

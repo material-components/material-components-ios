@@ -1,18 +1,16 @@
-/*
- Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCShapedView.h"
 
@@ -23,9 +21,7 @@
 @property(nonatomic, readonly) CGSize pathSize;
 @end
 
-@implementation MDCShapedView {
-  UIColor *_fillColor;
-}
+@implementation MDCShapedView
 
 @dynamic layer;
 
@@ -33,12 +29,13 @@
   return [MDCShapedShadowLayer class];
 }
 
-- (nullable instancetype)initWithCoder:(nullable NSCoder *)aDecoder {
-  if (self = [super initWithCoder:aDecoder]) {
-    _fillColor = [UIColor colorWithCGColor:self.layer.fillColor];
-  }
-  return self;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wobjc-designated-initializers"
+// https://stackoverflow.com/questions/24458608/convenience-initializer-missing-a-self-call-to-another-initializer
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+  return [super initWithCoder:aDecoder];
 }
+#pragma clang diagnostic pop
 
 - (nonnull instancetype)initWithFrame:(CGRect)frame {
   return [self initWithFrame:frame shapeGenerator:nil];
@@ -74,13 +71,11 @@
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
   // We intentionally capture this and don't send it to super so that the UIView backgroundColor is
   // fixed to [UIColor clearColor].
-  _fillColor = backgroundColor;
-
-  self.layer.fillColor = backgroundColor.CGColor;
+  self.layer.shapedBackgroundColor = backgroundColor;
 }
 
 - (UIColor *)backgroundColor {
-  return _fillColor;
+  return self.layer.shapedBackgroundColor;
 }
 
 @end

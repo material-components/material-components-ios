@@ -1,18 +1,16 @@
-/*
- Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCStatusBarShifter.h"
 
@@ -52,6 +50,8 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
 
   // While our snapshot is invalid we have slightly different status bar visibility.
   BOOL _prefersStatusBarHiddenWhileInvalid;
+
+  BOOL _isChangingInterfaceOrientation;
 
   BOOL _prefersStatusBarHidden;
   MDCStatusBarShifterState _snapshotState;
@@ -150,6 +150,14 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
     snapshotState = MDCStatusBarShifterStateInvalidSnapshot;
   }
 
+  // Invalidate the snapshot if our replica view is currently hidden and we're attempting to take
+  // a new snapshot. This handles the case where you're running on an iPhone X in landscape, you
+  // hide the header, and then rotate back to portrait. It is at this point that we want to
+  // invalidate the snapshot.
+  if (_isChangingInterfaceOrientation && snapshotState == MDCStatusBarShifterStateIsSnapshot) {
+    snapshotState = MDCStatusBarShifterStateInvalidSnapshot;
+  }
+
   [_replicaInvalidatorTimer invalidate];
 
   _snapshotState = snapshotState;
@@ -235,7 +243,7 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
       // If we're in an invalid state then we have to manage the visibility directly.
       [UIView animateWithDuration:kStatusBarBecomesInvalidAnimationDuration
                        animations:^{
-                         self.prefersStatusBarHidden = _prefersStatusBarHiddenWhileInvalid;
+                         self.prefersStatusBarHidden = self->_prefersStatusBarHiddenWhileInvalid;
                        }];
 
     } else {
@@ -273,10 +281,16 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
 
 - (void)interfaceOrientationWillChange {
   _statusBarReplicaView.hidden = YES;
+  _isChangingInterfaceOrientation = YES;
 }
 
 - (void)interfaceOrientationDidChange {
   _statusBarReplicaView.hidden = NO;
+  _isChangingInterfaceOrientation = NO;
+}
+
+- (void)didMoveToWindow {
+  _originalStatusBarHeight = [UIApplication mdc_safeSharedApplication].statusBarFrame.size.height;
 }
 
 @end

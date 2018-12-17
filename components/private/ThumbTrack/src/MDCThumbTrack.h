@@ -1,20 +1,20 @@
-/*
- Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <UIKit/UIKit.h>
+
+#import "MaterialShadowElevations.h"
 
 @class MDCThumbView;
 @protocol MDCThumbTrackDelegate;
@@ -24,20 +24,51 @@
 /** The delegate for the thumb track. */
 @property(nullable, nonatomic, weak) id<MDCThumbTrackDelegate> delegate;
 
-/** The color of the thumb and left track. */
-@property(nullable, nonatomic, strong) UIColor *primaryColor;
+/**
+ The color of the thumb when enabled.
 
-/** The color of the thumb off color. */
-@property(nullable, nonatomic, strong) UIColor *thumbOffColor;
+ Defaults and resets to blue.
+ */
+@property(null_resettable, nonatomic, strong) UIColor *thumbEnabledColor;
 
-/** The color of the track off color. */
-@property(nullable, nonatomic, strong) UIColor *trackOffColor;
-
-/** The color of the thumb disabled color. */
+/** The color of the thumb when disabled. */
 @property(nullable, nonatomic, strong) UIColor *thumbDisabledColor;
 
-/** The color of the track disabled color. */
+/**
+ The color of the 'on' portion of the track.
+
+ Defaults and resets to blue.
+ */
+@property(null_resettable, nonatomic, strong) UIColor *trackOnColor;
+
+/** The color of the 'off' portion of the track. */
+@property(nullable, nonatomic, strong) UIColor *trackOffColor;
+
+/** The color of the track when disabled. */
 @property(nullable, nonatomic, strong) UIColor *trackDisabledColor;
+
+/** The color of the discrete "ticks" in the "on" portion of the track. */
+@property(nullable, nonatomic, strong) UIColor *trackOnTickColor;
+
+/** The color of the discrete "ticks" in the "off" portion of the track. */
+@property(nullable, nonatomic, strong) UIColor *trackOffTickColor;
+
+/** The color of the Ink ripple. */
+@property(nullable, nonatomic, strong) UIColor *inkColor;
+
+/**
+ The color of the value label's text.
+
+ Defaults and resets to white.
+ */
+@property(null_resettable, nonatomic, strong) UIColor *valueLabelTextColor;
+
+/**
+ The color of the value label's background.
+
+ Defaults and resets to blue.
+ */
+@property(null_resettable, nonatomic, strong) UIColor *valueLabelBackgroundColor;
 
 /**
  The number of discrete values that the thumb can take along the track. If this property is zero,
@@ -94,6 +125,9 @@
 /** The radius of the track thumb that moves along the track. */
 @property(nonatomic, assign) CGFloat thumbRadius;
 
+/** The elevation of the track thumb that moves along the track. */
+@property(nonatomic, assign) MDCShadowElevation thumbElevation;
+
 /** Whether or not the thumb should be smaller when the track is disabled. Defaults to NO. */
 @property(nonatomic, assign) BOOL thumbIsSmallerWhenDisabled;
 
@@ -115,7 +149,11 @@
 /** Whether or not to display dots indicating discrete locations. Default is NO. */
 @property(nonatomic, assign) BOOL shouldDisplayDiscreteDots;
 
-/** Whether or not to show the numeric value label when dragging a discrete slider. */
+/**
+ Whether or not to show the numeric value label when dragging a discrete slider.
+
+ Defaults to NO.
+ */
 @property(nonatomic, assign) BOOL shouldDisplayDiscreteValueLabel;
 
 /**
@@ -214,6 +252,17 @@
 
 /** Disable setting multitouch. Has to be NO. */
 - (void)setMultipleTouchEnabled:(BOOL)multipleTouchEnabled NS_UNAVAILABLE;
+
+#pragma mark - To be deprecated
+
+/**
+ The color of the thumb and left track.
+
+ @note This API will be deprecated. Use @c thumbEnabledColor, @c trackOnColor, and
+       @c inkColor instead.
+ */
+@property(nullable, nonatomic, strong) UIColor *primaryColor;
+
 
 @end
 

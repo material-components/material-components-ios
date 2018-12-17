@@ -1,21 +1,20 @@
-/*
- Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCInkTouchController.h"
 
+#import "MDCInkGestureRecognizer.h"
 #import "MDCInkView.h"
 
 static const NSTimeInterval kInkTouchDelayInterval = 0.1;
@@ -140,7 +139,7 @@ static const NSTimeInterval kInkTouchDelayInterval = 0.1;
       dispatch_time_t delayTime =
           dispatch_time(DISPATCH_TIME_NOW, (int64_t)(NSEC_PER_SEC * kInkTouchDelayInterval));
       dispatch_after(_delaysInkSpread ? delayTime : 0, dispatch_get_main_queue(), ^(void) {
-        [self touchBeganAtPoint:[recognizer locationInView:_addedInkView]
+        [self touchBeganAtPoint:[recognizer locationInView:self.addedInkView]
                   touchLocation:touchLocation];
       });
       break;

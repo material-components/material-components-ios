@@ -1,26 +1,27 @@
-/*
- Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2017-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 // swiftlint:disable function_body_length
 
-import MaterialComponents.MaterialTextFields
+import MaterialComponents.MaterialTextFields_ColorThemer
+import MaterialComponents.MaterialTextFields_TypographyThemer
 
 final class TextFieldFilledSwiftExample: UIViewController {
 
   let scrollView = UIScrollView()
+  var colorScheme = MDCSemanticColorScheme()
+  var typographyScheme = MDCTypographyScheme()
 
   let name: MDCTextField = {
     let name = MDCTextField()
@@ -73,6 +74,18 @@ final class TextFieldFilledSwiftExample: UIViewController {
 
   var allTextFieldControllers = [MDCTextInputControllerFilled]()
 
+  let leadingImage: UIImage = {
+    return UIImage.init(named: "ic_search",
+                        in: Bundle(for: TextFieldFilledSwiftExample.self),
+                        compatibleWith: nil)!
+  }()
+
+  let trailingImage: UIImage = {
+    return UIImage.init(named: "ic_done",
+                        in: Bundle(for: TextFieldFilledSwiftExample.self),
+                        compatibleWith: nil)!
+  }()
+
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     cityController = MDCTextInputControllerFilled(textInput: city)
     stateController = MDCTextInputControllerFilled(textInput: state)
@@ -107,11 +120,23 @@ final class TextFieldFilledSwiftExample: UIViewController {
     self.navigationItem.rightBarButtonItem = styleButton
   }
 
+  func style(textInputController:MDCTextInputControllerFilled) {
+    MDCFilledTextFieldColorThemer.applySemanticColorScheme(colorScheme, to: textInputController)
+    MDCTextFieldTypographyThemer.applyTypographyScheme(typographyScheme, to: textInputController)
+    if let textInput = textInputController.textInput as? MDCTextInput {
+      MDCTextFieldTypographyThemer.applyTypographyScheme(typographyScheme, to: textInput)
+    }
+  }
+
   func setupTextFields() {
     scrollView.addSubview(name)
     let nameController = MDCTextInputControllerFilled(textInput: name)
     name.delegate = self
     name.text = "Grace Hopper"
+    name.leadingView = UIImageView(image: leadingImage)
+    name.leadingViewMode = .always
+    name.trailingView = UIImageView(image: trailingImage)
+    name.trailingViewMode = .always
     nameController.placeholderText = "Name"
     nameController.helperText = "First and Last"
     allTextFieldControllers.append(nameController)
@@ -141,7 +166,7 @@ final class TextFieldFilledSwiftExample: UIViewController {
     stateZip.addSubview(zip)
     zip.delegate = self
     zipController.placeholderText = "Zip Code"
-    zipController.helperText = "XXXXX"
+    zipController.setHelperText("XXXXX", helperAccessibilityLabel: "5 digits")
     allTextFieldControllers.append(zipController)
 
     scrollView.addSubview(phone)
@@ -153,12 +178,22 @@ final class TextFieldFilledSwiftExample: UIViewController {
     scrollView.addSubview(message)
     let messageController = MDCTextInputControllerFilled(textInput: message)
     message.textView?.delegate = self
+    #if swift(>=3.2)
+      message.text = """
+      This is where you could put a multi-line message like an email.
+
+      It can even handle new lines.
+      """
+    #else
+      message.text = "This is where you could put a multi-line message like an email.\n\nIt can even handle new lines."
+    #endif
     messageController.placeholderText = "Message"
     allTextFieldControllers.append(messageController)
 
     var tag = 0
     for controller in allTextFieldControllers {
       guard let textField = controller.textInput as? MDCTextField else { continue }
+      style(textInputController: controller);
       textField.tag = tag
       tag += 1
     }
@@ -277,7 +312,7 @@ final class TextFieldFilledSwiftExample: UIViewController {
 
     scrollView.layoutMargins = margins
   }
-
+  
   func addGestureRecognizer() {
     let tapRecognizer = UITapGestureRecognizer(target: self,
                                                action: #selector(tapDidTouch(sender: )))
@@ -326,17 +361,17 @@ extension TextFieldFilledSwiftExample: UITextFieldDelegate {
 
     if textField == state {
       if let range = fullString.rangeOfCharacter(from: CharacterSet.letters.inverted),
-        fullString[range].characters.count > 0 {
+        fullString[range].characterCount > 0 {
         stateController.setErrorText("Error: State can only contain letters",
                                      errorAccessibilityValue: nil)
       } else {
         stateController.setErrorText(nil, errorAccessibilityValue: nil)
       }
     } else if textField == zip {      if let range = fullString.rangeOfCharacter(from: CharacterSet.letters),
-        fullString[range].characters.count > 0 {
+        fullString[range].characterCount > 0 {
         zipController.setErrorText("Error: Zip can only contain numbers",
                                    errorAccessibilityValue: nil)
-      } else if fullString.characters.count > 5 {
+      } else if fullString.characterCount > 5 {
         zipController.setErrorText("Error: Zip can only contain five digits",
                                    errorAccessibilityValue: nil)
       } else {
@@ -344,7 +379,7 @@ extension TextFieldFilledSwiftExample: UITextFieldDelegate {
       }
     } else if textField == city {
       if let range = fullString.rangeOfCharacter(from: CharacterSet.decimalDigits),
-        fullString[range].characters.count > 0 {
+        fullString[range].characterCount > 0 {
         cityController.setErrorText("Error: City can only contain letters",
                                     errorAccessibilityValue: nil)
       } else {
@@ -419,7 +454,12 @@ extension TextFieldFilledSwiftExample {
 }
 
 extension TextFieldFilledSwiftExample {
-  class func catalogBreadcrumbs() -> [String] {
-    return ["Text Field", "Filled Text Fields"]
+
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Text Field", "Filled Text Fields"],
+      "primaryDemo": false,
+      "presentable": true,
+    ]
   }
 }

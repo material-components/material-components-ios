@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="rmZ-Mt-scB">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13770" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="rmZ-Mt-scB">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13770"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -14,7 +14,7 @@
         <!--Buttons Swift And Storyboard Controller-->
         <scene sceneID="4Dd-I6-MBs">
             <objects>
-                <viewController id="rmZ-Mt-scB" customClass="ButtonsSwiftAndStoryboardController" customModule="MaterialComponentsCatalog" sceneMemberID="viewController">
+                <viewController id="rmZ-Mt-scB" customClass="ButtonsSwiftAndStoryboardController" customModule="MaterialComponentsExamples" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="dkA-v6-Opi"/>
                         <viewControllerLayoutGuide type="bottom" id="QjK-x9-gr9"/>
@@ -29,7 +29,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VTp-Pq-SmW" userLabel="Inner Button Container">
                                         <rect key="frame" x="48.5" y="254.5" width="91" height="138"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ixI-3k-a3r" customClass="MDCRaisedButton">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ixI-3k-a3r" userLabel="Storyboard Contained" customClass="MDCButton">
                                                 <rect key="frame" x="0.0" y="0.0" width="91" height="34"/>
                                                 <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <color key="tintColor" white="0.1007254635" alpha="1" colorSpace="calibratedWhite"/>
@@ -92,9 +92,9 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="storyboardContained" destination="ixI-3k-a3r" id="5z9-aK-IJ5"/>
                         <outlet property="storyboardFlat" destination="1Dc-Q4-b6Z" id="tf2-SG-2uQ"/>
                         <outlet property="storyboardFloating" destination="BDu-tK-SwC" id="AIX-u6-JAL"/>
-                        <outlet property="storyboardRaised" destination="ixI-3k-a3r" id="5z9-aK-IJ5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LO5-z8-Ix6" userLabel="First Responder" sceneMemberID="firstResponder"/>

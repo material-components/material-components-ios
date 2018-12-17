@@ -1,20 +1,20 @@
-/*
- Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <UIKit/UIKit.h>
+
+#pragma mark - Soon to be deprecated
 
 /**
  MDCTypography uses this protocol to delegate responsibility of loading the custom fonts.
@@ -22,7 +22,10 @@
  The spec defines the Roboto font family and uses three fonts in the named styles. Use this
  protocol to define your own fonts if there is a brand need.
 
- @see https://material.io/guidelines/style/typography.html#typography-styles
+ @warning This protocol will soon be deprecated. Consider using MDCTypographyScheme from the
+ schemes/Typography component instead.
+
+ @see https://material.io/go/design-typography#typography-styles
  */
 @protocol MDCTypographyFontLoading <NSObject>
 @required
@@ -71,7 +74,10 @@
 
  To use these fonts, you must add MaterialTypography.bundle to your target.
 
- @see https://material.io/guidelines/style/typography.html#typography-styles
+ @warning This class will soon be deprecated. Consider using MDCTypographyScheme from the
+ schemes/Typography component instead.
+
+ @see https://material.io/go/design-typography#typography-styles
  */
 @interface MDCTypography : NSObject
 
@@ -176,6 +182,9 @@
 
 /**
  MDCSystemFontLoader allows you to use the system font for @c MDCTypography.
+
+ @warning This class will soon be deprecated. Consider using MDCTypographyScheme from the
+ schemes/Typography component instead.
 
  #### Example
 

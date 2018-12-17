@@ -1,26 +1,26 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <XCTest/XCTest.h>
 
 #import "MaterialButtons.h"
 #import "MaterialShadowElevations.h"
+#import "MaterialShapes.h"
+#import "MaterialShadowLayer.h"
 #import "MaterialTypography.h"
 
-static const CGFloat kEpsilonAccuracy = 0.001f;
+static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 // A value greater than the largest value created by combining normal values of UIControlState.
 // This is a complete hack, but UIControlState doesn't expose anything useful here.
 // This assumes that UIControlState is actually a set of bitfields and ignores application-specific
@@ -82,6 +82,36 @@ static NSString *controlStateDescription(UIControlState controlState) {
   return [string copy];
 }
 
+@interface FakeShadowLayer : MDCShapedShadowLayer
+@property(nonatomic, assign) NSInteger elevationAssignmentCount;
+@end
+
+@implementation FakeShadowLayer
+
+- (void)setElevation:(MDCShadowElevation)elevation {
+  ++self.elevationAssignmentCount;
+  [super setElevation:elevation];
+}
+@end
+
+@interface TestButton : MDCButton
+@property(nonatomic, strong) FakeShadowLayer *shadowLayer;
+@end
+
+@implementation TestButton
++ (Class)layerClass {
+  return [FakeShadowLayer class];
+}
+
+- (instancetype)initWithFrame:(CGRect)frame {
+  self = [super initWithFrame:frame];
+  if (self) {
+    _shadowLayer = (FakeShadowLayer *)self.layer;
+  }
+  return self;
+}
+@end
+
 @interface ButtonsTests : XCTestCase
 @end
 
@@ -122,6 +152,8 @@ static NSString *controlStateDescription(UIControlState controlState) {
   // When
   button.uppercaseTitle = NO;
   [button setTitle:originalTitle forState:UIControlStateNormal];
+  [button setTitle:originalTitle forState:UIControlStateHighlighted];
+  [button setTitle:originalTitle forState:UIControlStateDisabled];
   button.uppercaseTitle = YES;
 
   // Then
@@ -137,6 +169,8 @@ static NSString *controlStateDescription(UIControlState controlState) {
   // When
   button.uppercaseTitle = YES;
   [button setTitle:originalTitle forState:UIControlStateNormal];
+  [button setTitle:originalTitle forState:UIControlStateHighlighted];
+  [button setTitle:originalTitle forState:UIControlStateDisabled];
   button.uppercaseTitle = NO;
 
   // Then
@@ -173,6 +207,36 @@ static NSString *controlStateDescription(UIControlState controlState) {
     // Then
     XCTAssertEqual([button elevationForState:controlState], elevation);
   }
+}
+
+- (void)testSetElevationOnlyUpdatesCurrentState {
+  // Given
+  TestButton *selectedButton = [[TestButton alloc] init];
+  TestButton *highlightedButton = [[TestButton alloc] init];
+
+  XCTAssertEqualWithAccuracy([selectedButton elevationForState:UIControlStateNormal],
+                             [selectedButton elevationForState:UIControlStateHighlighted],
+                             0.0001,
+                             @"This test assumes that .normal and .highlighted start with the same "
+                              "elevation values.");
+
+  [selectedButton setSelected:YES];
+  [highlightedButton setHighlighted:YES];
+  NSInteger selectedButtonElevationCount = selectedButton.shadowLayer.elevationAssignmentCount;
+  NSInteger highlightedButtonElevationCount =
+      highlightedButton.shadowLayer.elevationAssignmentCount;
+
+  // When
+  [selectedButton setElevation:77 forState:UIControlStateHighlighted];
+  [highlightedButton setElevation:75 forState:UIControlStateNormal];
+
+  // Then
+  XCTAssertEqual(selectedButton.shadowLayer.elevationAssignmentCount,
+                 selectedButtonElevationCount,
+                 @"Updating an unrelated elevation should not update the layer elevation.");
+  XCTAssertEqual(highlightedButtonElevationCount + 1,
+                 highlightedButton.shadowLayer.elevationAssignmentCount,
+                 @"Updating the current elevation should cause one elevation update.");
 }
 
 - (void)testElevationNormal {
@@ -214,6 +278,123 @@ static NSString *controlStateDescription(UIControlState controlState) {
 
     // Then
     XCTAssertEqualObjects([button backgroundColorForState:controlState], color);
+  }
+}
+
+// TODO(https://github.com/material-components/material-components-ios/issues/3411 ): Enable this
+//   test when the behavior in MDCButton is fixed.
+- (void)_disabled_testBackgroundColorForStateFallbackBehavior {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+
+  // When
+  [button setBackgroundColor:UIColor.purpleColor forState:UIControlStateNormal];
+
+  // Then
+  for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
+    XCTAssertEqualObjects([button backgroundColorForState:controlState], UIColor.purpleColor);
+  }
+}
+
+- (void)testBackgroundColorForStateUpdatesBackgroundColor {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+
+  for (NSUInteger controlState = 0; controlState <= kNumUIControlStates; ++controlState) {
+    // Disabling the button removes any highlighted state
+    UIControlState testState = controlState;
+    if ((testState & UIControlStateDisabled) == UIControlStateDisabled) {
+      testState &= ~UIControlStateHighlighted;
+    }
+    BOOL isDisabled = (testState & UIControlStateDisabled) == UIControlStateDisabled;
+    BOOL isSelected = (testState & UIControlStateSelected) == UIControlStateSelected;
+    BOOL isHighlighted = (testState & UIControlStateHighlighted) == UIControlStateHighlighted;
+
+    // Also given
+    UIColor *color = randomColor();
+    [button setBackgroundColor:color forState:testState];
+
+    // When
+    button.enabled = !isDisabled;
+    button.selected = isSelected;
+    button.highlighted = isHighlighted;
+
+    XCTAssertEqualObjects(button.backgroundColor, color, @"for state (%lu).",
+                          (unsigned long)testState);
+  }
+}
+
+- (void)testBackgroundColorForStateUpdatesBackgroundColorWithFallback {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  [button setBackgroundColor:UIColor.magentaColor forState:UIControlStateNormal];
+
+  for (NSUInteger controlState = 0; controlState <= kNumUIControlStates; ++controlState) {
+    BOOL isDisabled = (controlState & UIControlStateDisabled) == UIControlStateDisabled;
+    BOOL isSelected = (controlState & UIControlStateSelected) == UIControlStateSelected;
+    BOOL isHighlighted = (controlState & UIControlStateHighlighted) == UIControlStateHighlighted;
+
+    // When
+    button.enabled = !isDisabled;
+    button.selected = isSelected;
+    button.highlighted = isHighlighted;
+
+    XCTAssertEqualObjects(button.backgroundColor,
+                          [button backgroundColorForState:UIControlStateNormal],
+                          @"for state (%lu).", (unsigned long)controlState);
+  }
+}
+
+// Behavioral test to verify that MDCButton's `backgroundColor:forState:` matches the behavior of
+// UIButton's `titleColor:forState:`.  Specifically, to ensure that the special handling of
+// (UIControlStateDisabled | UIControlStateHighlighted) is identical.
+//
+// This test is valuable because clients who are familiar with the fallback behavior of
+// `titleColor:forState:` may be surprised if the MDCButton APIs don't match. For example, setting
+// the titleColor for (UIControlStateDisabled | UIControlStateHighlighted) will actually update the
+// value assigned for UIControlStateHighlighted, but ONLY if it has already been assigned. Otherwise
+// no update will take place.
+- (void)testBackgroundColorForStateBehaviorMatchesTitleColorForStateWithoutFallbackForward {
+  // Given
+  MDCButton *testButton = [[MDCButton alloc] init];
+  UIButton *uiButton = [[UIButton alloc] init];
+
+  // When
+  UIControlState maxState = UIControlStateNormal | UIControlStateHighlighted |
+                            UIControlStateDisabled | UIControlStateSelected;
+  for (UIControlState state = 0; state <= maxState; ++state) {
+    UIColor *color = [UIColor colorWithWhite:0 alpha:(CGFloat)(state / (CGFloat)maxState)];
+    [testButton setBackgroundColor:color forState:state];
+    [uiButton setTitleColor:color forState:state];
+  }
+
+  // Then
+  for (UIControlState state = 0; state <= maxState; ++state) {
+    XCTAssertEqualObjects([testButton backgroundColorForState:state],
+                          [uiButton titleColorForState:state], @" for state (%lu)",
+                          (unsigned long)state);
+  }
+}
+
+- (void)testBackgroundColorForStateBehaviorMatchesTitleColorForStateWithoutFallbackBackward {
+  // Given
+  MDCButton *testButton = [[MDCButton alloc] init];
+  UIButton *uiButton = [[UIButton alloc] init];
+
+  // When
+  UIControlState maxState = UIControlStateNormal | UIControlStateHighlighted |
+                            UIControlStateDisabled | UIControlStateSelected;
+  for (NSInteger state = maxState; state >= 0; --state) {
+    UIColor *color = [UIColor colorWithWhite:0 alpha:(CGFloat)(state / (CGFloat)maxState)];
+    [testButton setBackgroundColor:color forState:(UIControlState)state];
+    [uiButton setTitleColor:color forState:(UIControlState)state];
+  }
+
+  // Then
+  for (UIControlState state = 0; state <= maxState; ++state) {
+    XCTAssertEqualObjects([testButton backgroundColorForState:state],
+                          [uiButton titleColorForState:state], @" for state (%lu)",
+                          (unsigned long)state);
   }
 }
 
@@ -302,6 +483,91 @@ static NSString *controlStateDescription(UIControlState controlState) {
     UIColor *layerShadowColor = [UIColor colorWithCGColor:button.layer.shadowColor];
     XCTAssertEqualObjects([button shadowColorForState:effectiveControlState], layerShadowColor);
   }
+}
+
+#pragma mark - imageTintColor:forState:
+
+- (void)testRemovedImageTintColorForState {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+
+  // When
+  [button setImageTintColor:nil forState:UIControlStateNormal];
+
+  // Then
+  XCTAssertNil([button imageTintColorForState:UIControlStateNormal]);
+  XCTAssertNil([button imageTintColorForState:UIControlStateHighlighted]);
+}
+
+- (void)testDefaultImageTintColorForState {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+
+  // Then
+  XCTAssertNil([button imageTintColorForState:UIControlStateSelected]);
+}
+
+- (void)testImageTintForUnspecifiedStateEqualsNormalState {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  UIColor *color = randomColor();
+
+  // When
+  [button setImageTintColor:color forState:UIControlStateNormal];
+
+  XCTAssertEqual([button imageTintColorForState:UIControlStateHighlighted], color);
+}
+
+- (void)testImageTintColorForState {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+
+  for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
+    // And given
+    UIColor *color = randomColor();
+
+    // When
+    [button setImageTintColor:color forState:controlState];
+
+    // Then
+    XCTAssertEqualObjects([button imageTintColorForState:controlState], color);
+  }
+}
+
+- (void)testImageTintColorForStateFallsBackToDefault {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  UIColor *normalTint = [UIColor yellowColor];
+  UIColor *selectedTint = [UIColor redColor];
+
+  // When
+  [button setImageTintColor:normalTint forState:UIControlStateNormal];
+  [button setImageTintColor:selectedTint forState:UIControlStateSelected];
+
+  // Then
+  XCTAssertEqualObjects([button imageTintColorForState:UIControlStateNormal], normalTint);
+  XCTAssertEqualObjects([button imageTintColorForState:UIControlStateSelected], selectedTint);
+  XCTAssertEqualObjects([button imageTintColorForState:UIControlStateHighlighted], normalTint);
+}
+
+- (void)testImageTintColorForStateSetsImageViewTintColor {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+  UIColor *normalTint = [UIColor yellowColor];
+  UIColor *selectedTint = [UIColor redColor];
+
+  // When
+  [button setImageTintColor:normalTint forState:UIControlStateNormal];
+  [button setImageTintColor:selectedTint forState:UIControlStateSelected];
+
+  // Then
+  XCTAssertEqualObjects(button.imageView.tintColor, normalTint);
+
+  // When
+  button.selected = YES;
+
+  // Then
+  XCTAssertEqualObjects(button.imageView.tintColor, selectedTint);
 }
 
 #pragma mark - backgroundColor:forState:
@@ -444,7 +710,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
 - (void)testAlphaRestoredWhenReenabled {
   // Given
   MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectMake(0, 0, 80, 48)];
-  CGFloat alpha = 0.5;
+  CGFloat alpha = (CGFloat)0.5;
 
   // When
   button.alpha = alpha;
@@ -458,7 +724,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
 - (void)testEnabledAlphaNotSetWhileDisabled {
   // Given
   MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectMake(0, 0, 80, 48)];
-  CGFloat alpha = 0.2;
+  CGFloat alpha = (CGFloat)0.2;
 
   // When
   button.alpha = alpha;
@@ -467,7 +733,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
   button.enabled = YES;
 
   // Then
-  XCTAssertEqualWithAccuracy(alpha, button.alpha, 0.0001);
+  XCTAssertEqualWithAccuracy(alpha, button.alpha, (CGFloat)0.0001);
 }
 
 - (void)testDisabledAlpha {
@@ -480,91 +746,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
   button.enabled = NO;
 
   // Then
-  XCTAssertEqualWithAccuracy(alpha, button.alpha, 0.0001);
-}
-
-- (void)testEncode {
-  // Given
-  MDCButton *button = [[MDCButton alloc] init];
-  button.inkStyle = arc4random_uniform(2) ? MDCInkStyleBounded : MDCInkStyleUnbounded;
-  button.inkMaxRippleRadius = randomNumber();
-  button.uppercaseTitle = arc4random_uniform(2) ? YES : NO;
-  button.hitAreaInsets = UIEdgeInsetsMake(10, 10, 10, 10);
-  button.inkColor = randomColor();
-  button.underlyingColorHint = randomColor();
-  CGFloat buttonAlpha = 0.5;
-  button.alpha = buttonAlpha;
-  button.enabled = NO;
-
-  for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
-    [button setBackgroundColor:randomColor() forState:controlState];
-    [button setElevation:randomNumber() forState:controlState];
-    [button setShadowColor:randomColor() forState:controlState];
-  }
-  NSData *data = [NSKeyedArchiver archivedDataWithRootObject:button];
-
-  // When
-  MDCButton *unarchivedButton = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-
-  // Then
-  XCTAssertEqualObjects(button.inkColor, unarchivedButton.inkColor);
-  XCTAssertEqual(button.uppercaseTitle, unarchivedButton.uppercaseTitle);
-  XCTAssertEqual(button.inkStyle, unarchivedButton.inkStyle);
-  XCTAssertEqualWithAccuracy(button.inkMaxRippleRadius,
-                             unarchivedButton.inkMaxRippleRadius,
-                             kEpsilonAccuracy);
-  XCTAssertEqualWithAccuracy(button.hitAreaInsets.bottom,
-                             unarchivedButton.hitAreaInsets.bottom,
-                             kEpsilonAccuracy);
-  XCTAssertEqualWithAccuracy(button.hitAreaInsets.top,
-                             unarchivedButton.hitAreaInsets.top,
-                             kEpsilonAccuracy);
-  XCTAssertEqualWithAccuracy(button.hitAreaInsets.right,
-                             unarchivedButton.hitAreaInsets.right,
-                             kEpsilonAccuracy);
-  XCTAssertEqualWithAccuracy(button.hitAreaInsets.left,
-                             unarchivedButton.hitAreaInsets.left,
-                             kEpsilonAccuracy);
-  XCTAssertEqualObjects(button.underlyingColorHint, unarchivedButton.underlyingColorHint);
-  XCTAssertEqual(button.enabled, unarchivedButton.enabled);
-  XCTAssertEqualWithAccuracy(button.alpha, unarchivedButton.alpha, 0.0001);
-  unarchivedButton.enabled = YES;
-  XCTAssertEqualWithAccuracy(buttonAlpha, unarchivedButton.alpha, 0.0001);
-
-  for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
-    XCTAssertEqualWithAccuracy([button elevationForState:controlState],
-                               [unarchivedButton elevationForState:controlState],
-                               kEpsilonAccuracy);
-    XCTAssertEqualObjects([button backgroundColorForState:controlState],
-                   [unarchivedButton backgroundColorForState:controlState]);
-    XCTAssertEqualObjects([button shadowColorForState:controlState],
-                          [unarchivedButton shadowColorForState:controlState]);
-  }
-}
-
-- (void)testDecodeOnUpgradeFromVersionWithoutShadowColors {
-  // Given
-  MDCButton *button = [[MDCButton alloc] init];
-
-  for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
-    [button setShadowColor:randomColor() forState:controlState];
-  }
-
-  // When
-  id shadowColorsValue = [button valueForKey:@"_shadowColors"];
-  [button setValue:nil forKey:@"_shadowColors"];
-
-  NSData *data = [NSKeyedArchiver archivedDataWithRootObject:button];
-  [button setValue:shadowColorsValue forKey:@"_shadowColors"];
-  MDCButton *unarchivedButton = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-
-  // Then
-  UIColor *normalStateShadowColor = [unarchivedButton shadowColorForState:UIControlStateNormal];
-  XCTAssertNotNil(normalStateShadowColor);
-  for (NSUInteger controlState = 0; controlState < kNumUIControlStates; ++controlState) {
-    XCTAssertEqualObjects(normalStateShadowColor,
-                          [unarchivedButton shadowColorForState:controlState]);
-  }
+  XCTAssertEqualWithAccuracy(alpha, button.alpha, (CGFloat)0.0001);
 }
 
 - (void)testPointInsideWithoutHitAreaInsets {
@@ -572,11 +754,11 @@ static NSString *controlStateDescription(UIControlState controlState) {
   MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectMake(0, 0, 80, 50)];
 
   CGPoint touchPointInsideBoundsTopLeft = CGPointMake(0, 0);
-  CGPoint touchPointInsideBoundsTopRight = CGPointMake(79.9, 0);
-  CGPoint touchPointInsideBoundsBottomRight = CGPointMake(79.9, 49.9);
-  CGPoint touchPointInsideBoundsBottomLeft = CGPointMake(0, 49.9);
+  CGPoint touchPointInsideBoundsTopRight = CGPointMake((CGFloat)79.9, 0);
+  CGPoint touchPointInsideBoundsBottomRight = CGPointMake((CGFloat)79.9, (CGFloat)49.9);
+  CGPoint touchPointInsideBoundsBottomLeft = CGPointMake(0, (CGFloat)49.9);
 
-  CGPoint touchPointOutsideBoundsTopLeft = CGPointMake(0, -0.1);
+  CGPoint touchPointOutsideBoundsTopLeft = CGPointMake(0, (CGFloat)-0.1);
   CGPoint touchPointOutsideBoundsTopRight = CGPointMake(80, 0);
   CGPoint touchPointOutsideBoundsBottomRight = CGPointMake(80, 50);
   CGPoint touchPointOutsideBoundsBottomLeft = CGPointMake(0, 50);
@@ -598,11 +780,11 @@ static NSString *controlStateDescription(UIControlState controlState) {
   MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
 
   CGPoint touchPointInsideBoundsTopLeft = CGPointMake(0, 0);
-  CGPoint touchPointInsideBoundsTopRight = CGPointMake(9.9, 0);
-  CGPoint touchPointInsideBoundsBottomRight = CGPointMake(9.9, 9.9);
-  CGPoint touchPointInsideBoundsBottomLeft = CGPointMake(0, 9.9);
+  CGPoint touchPointInsideBoundsTopRight = CGPointMake((CGFloat)9.9, 0);
+  CGPoint touchPointInsideBoundsBottomRight = CGPointMake((CGFloat)9.9, (CGFloat)9.9);
+  CGPoint touchPointInsideBoundsBottomLeft = CGPointMake(0, (CGFloat)9.9);
 
-  CGPoint touchPointOutsideBoundsTopLeft = CGPointMake(0, -0.1);
+  CGPoint touchPointOutsideBoundsTopLeft = CGPointMake(0, (CGFloat)-0.1);
   CGPoint touchPointOutsideBoundsTopRight = CGPointMake(10, 0);
   CGPoint touchPointOutsideBoundsBottomRight = CGPointMake(10, 10);
   CGPoint touchPointOutsideBoundsBottomLeft = CGPointMake(0, 10);
@@ -624,11 +806,11 @@ static NSString *controlStateDescription(UIControlState controlState) {
   MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
 
   CGPoint touchPointInsideHitAreaTopLeft = CGPointMake(-5, -5);
-  CGPoint touchPointInsideHitAreaTopRight = CGPointMake(-5, 14.9);
-  CGPoint touchPointInsideHitAreaBottomRight = CGPointMake(14.9, 14.9);
-  CGPoint touchPointInsideHitAreaBottomLeft = CGPointMake(14.9, -5);
+  CGPoint touchPointInsideHitAreaTopRight = CGPointMake(-5, (CGFloat)14.9);
+  CGPoint touchPointInsideHitAreaBottomRight = CGPointMake((CGFloat)14.9, (CGFloat)14.9);
+  CGPoint touchPointInsideHitAreaBottomLeft = CGPointMake((CGFloat)14.9, -5);
 
-  CGPoint touchPointOutsideHitAreaTopLeft = CGPointMake(-5.1, -5);
+  CGPoint touchPointOutsideHitAreaTopLeft = CGPointMake((CGFloat)-5.1, -5);
   CGPoint touchPointOutsideHitAreaTopRight = CGPointMake(-5, 15);
   CGPoint touchPointOutsideHitAreaBottomRight = CGPointMake(15, 15);
   CGPoint touchPointOutsideHitAreaBottomLeft = CGPointMake(15, -5);
@@ -657,11 +839,11 @@ static NSString *controlStateDescription(UIControlState controlState) {
   UIEdgeInsets insets = UIEdgeInsetsMake(-10, -5, -10, -5);
 
   CGPoint touchPointInsideHitAreaTopLeft = CGPointMake(-15, -20);
-  CGPoint touchPointInsideHitAreaTopRight = CGPointMake(14.9, -20);
-  CGPoint touchPointInsideHitAreaBottomRight = CGPointMake(14.9, 19.9);
-  CGPoint touchPointInsideHitAreaBottomLeft = CGPointMake(-15, 19.9);
+  CGPoint touchPointInsideHitAreaTopRight = CGPointMake((CGFloat)14.9, -20);
+  CGPoint touchPointInsideHitAreaBottomRight = CGPointMake((CGFloat)14.9, (CGFloat)19.9);
+  CGPoint touchPointInsideHitAreaBottomLeft = CGPointMake(-15, (CGFloat)19.9);
 
-  CGPoint touchPointOutsideHitAreaTopLeft = CGPointMake(-15.1, -20);
+  CGPoint touchPointOutsideHitAreaTopLeft = CGPointMake((CGFloat)-15.1, -20);
   CGPoint touchPointOutsideHitAreaTopRight = CGPointMake(20, -20);
   CGPoint touchPointOutsideHitAreaBottomRight = CGPointMake(15, 20);
   CGPoint touchPointOutsideHitAreaBottomLeft = CGPointMake(-15, 20);
@@ -734,9 +916,9 @@ static NSString *controlStateDescription(UIControlState controlState) {
 - (void)testEnabled {
   // Given
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-  button.highlighted = arc4random_uniform(2);
-  button.selected = arc4random_uniform(2);
-  button.enabled = arc4random_uniform(2);
+  button.highlighted = (BOOL)arc4random_uniform(2);
+  button.selected = (BOOL)arc4random_uniform(2);
+  button.enabled = (BOOL)arc4random_uniform(2);
 
   // When
   button.enabled = YES;
@@ -749,9 +931,9 @@ static NSString *controlStateDescription(UIControlState controlState) {
 - (void)testDisabled {
   // Given
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-  button.highlighted = arc4random_uniform(2);
-  button.selected = arc4random_uniform(2);
-  button.enabled = arc4random_uniform(2);
+  button.highlighted = (BOOL)arc4random_uniform(2);
+  button.selected = (BOOL)arc4random_uniform(2);
+  button.enabled = (BOOL)arc4random_uniform(2);
 
   // When
   button.enabled = NO;
@@ -765,7 +947,7 @@ static NSString *controlStateDescription(UIControlState controlState) {
   // Given
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
   button.highlighted = NO;
-  button.selected = arc4random_uniform(2);
+  button.selected = (BOOL)arc4random_uniform(2);
 
   // For some reason we can only set the highlighted state to YES if its enabled is also YES.
   button.enabled = YES;
@@ -786,8 +968,8 @@ static NSString *controlStateDescription(UIControlState controlState) {
   // Given
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
   button.highlighted = YES;
-  button.selected = arc4random_uniform(2);
-  button.enabled = arc4random_uniform(2);
+  button.selected = (BOOL)arc4random_uniform(2);
+  button.enabled = (BOOL)arc4random_uniform(2);
   UIControlState oldState = button.state;
   XCTAssertTrue(button.highlighted);
 
@@ -803,9 +985,9 @@ static NSString *controlStateDescription(UIControlState controlState) {
 - (void)testSelected {
   // Given
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-  button.highlighted = arc4random_uniform(2);
+  button.highlighted = (BOOL)arc4random_uniform(2);
   button.selected = NO;
-  button.enabled = arc4random_uniform(2);
+  button.enabled = (BOOL)arc4random_uniform(2);
   UIControlState oldState = button.state;
 
   // When
@@ -820,9 +1002,9 @@ static NSString *controlStateDescription(UIControlState controlState) {
 - (void)testUnselected {
   // Given
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-  button.highlighted = arc4random_uniform(2);
+  button.highlighted = (BOOL)arc4random_uniform(2);
   button.selected = YES;
-  button.enabled = arc4random_uniform(2);
+  button.enabled = (BOOL)arc4random_uniform(2);
 
   // When
   button.selected = NO;
@@ -830,6 +1012,14 @@ static NSString *controlStateDescription(UIControlState controlState) {
   // Then
   XCTAssertFalse(button.selected);
   XCTAssertFalse(button.state & UIControlStateSelected);
+}
+
+- (void)testDefaultFont {
+  // Given
+  MDCButton *button = [[MDCButton alloc] init];
+
+  // Then
+  XCTAssertEqualObjects(button.titleLabel.font, [MDCTypography buttonFont]);
 }
 
 - (void)testDefaultAdjustsFontProperty {
@@ -854,6 +1044,66 @@ static NSString *controlStateDescription(UIControlState controlState) {
                              preferredFont.pointSize,
                              kEpsilonAccuracy,
                              @"Font size should be equal to MDCFontTextStyleButton's.");
+}
+
+#pragma mark - Size-related tests
+
+- (void)testSizeThatFitsWithMinimumOnly {
+  // Given
+  MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectZero];
+  [button sizeToFit];
+  CGRect expectedFrame = CGRectMake(0, 0,
+                                    CGRectGetWidth(button.frame) + 15,
+                                    CGRectGetHeight(button.frame) + 21);
+
+  // When
+  button.minimumSize = expectedFrame.size;
+  [button sizeToFit];
+
+  // Then
+  XCTAssertTrue(CGRectEqualToRect(expectedFrame, button.frame),
+                @"\nE: %@\nA: %@",
+                NSStringFromCGRect(expectedFrame),
+                NSStringFromCGRect(button.frame));
+}
+
+- (void)testSizeThatFitsWithMaximumOnly {
+  // Given
+  MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectZero];
+  [button sizeToFit];
+  CGRect expectedFrame = CGRectMake(0, 0,
+                                    CGRectGetWidth(button.frame) - 7,
+                                    CGRectGetHeight(button.frame) - 3);
+
+  // When
+  button.maximumSize = expectedFrame.size;
+  [button sizeToFit];
+
+  // Then
+  XCTAssertTrue(CGRectEqualToRect(expectedFrame, button.frame),
+                @"\nE: %@\nA: %@",
+                NSStringFromCGRect(expectedFrame),
+                NSStringFromCGRect(button.frame));
+}
+
+- (void)testSizeThatFitsWithMinimumAndMaximum {
+  // Given
+  MDCButton *button = [[MDCButton alloc] initWithFrame:CGRectZero];
+  [button sizeToFit];
+  CGRect expectedFrame = CGRectMake(0, 0,
+                                    CGRectGetWidth(button.frame) + 21,
+                                    CGRectGetHeight(button.frame) - 4);
+
+  // When
+  button.maximumSize = CGSizeMake(0, CGRectGetHeight(expectedFrame)); // Only bound max height
+  button.minimumSize = CGSizeMake(CGRectGetWidth(expectedFrame), 0); // Only bound min width
+  [button sizeToFit];
+
+  // Then
+  XCTAssertTrue(CGRectEqualToRect(expectedFrame, button.frame),
+                @"\nE: %@\nA: %@",
+                NSStringFromCGRect(expectedFrame),
+                NSStringFromCGRect(button.frame));
 }
 
 @end

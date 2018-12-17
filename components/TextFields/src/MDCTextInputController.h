@@ -1,18 +1,16 @@
-/*
- Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <UIKit/UIKit.h>
 
@@ -22,7 +20,7 @@
 @protocol MDCTextInputCharacterCounter;
 
 /** Controllers that manipulate styling and animation of text inputs. */
-@protocol MDCTextInputController <NSObject, NSCoding, NSCopying, MDCTextInputPositioningDelegate>
+@protocol MDCTextInputController <NSObject, NSCopying, MDCTextInputPositioningDelegate>
 
 /**
  Color for decorations that indicates the input is currently editing.
@@ -33,8 +31,6 @@
 
 /**
  Default value for activeColor.
-
- Default is blue.
  */
 @property(class, nonatomic, null_resettable, strong) UIColor *activeColorDefault;
 
@@ -59,32 +55,14 @@
  Note: setErrorText:errorAccessibilityValue: also sets these MDCTextInput properties.
 
  There is no support for a minimum character count.
-
- Default is 0.
  */
 @property(nonatomic, assign) IBInspectable NSUInteger characterCountMax;
 
 /**
  Controls when the character count will be shown and therefore whether character counting determines
  error state.
-
- Default is UITextFieldViewModeNever.
  */
 @property(nonatomic, assign) UITextFieldViewMode characterCountViewMode;
-
-/**
- The corners to be rounded in the border area.
-
- Default is roundedCornersDefault.
- */
-@property(nonatomic, assign) UIRectCorner roundedCorners;
-
-/**
- Default for roundedCorners.
-
- Default is top right and top left.
- */
-@property(class, nonatomic, assign) UIRectCorner roundedCornersDefault;
 
 /**
  Color for decorations that indicates the input is not enabled / not accepting touch.
@@ -93,11 +71,7 @@
  */
 @property(nonatomic, null_resettable, strong) UIColor *disabledColor;
 
-/**
- Default value for disabledColor.
-
- Default is blue.
- */
+/** Default value for disabledColor. */
 @property(class, nonatomic, null_resettable, strong) UIColor *disabledColorDefault;
 
 /**
@@ -108,11 +82,7 @@
  */
 @property(nonatomic, null_resettable, strong) UIColor *errorColor;
 
-/**
- Default value for errorColor.
-
- Default is red.
- */
+/** Default value for errorColor. */
 @property(class, nonatomic, null_resettable, strong) UIColor *errorColorDefault;
 
 /**
@@ -137,12 +107,20 @@
  */
 @property(nonatomic, null_resettable, strong) UIColor *inlinePlaceholderColor;
 
-/**
- Default value for inlinePlaceholderColor.
-
- Default is black with Material Design hint text opacity.
- */
+/** Default value for inlinePlaceholderColor. */
 @property(class, nonatomic, null_resettable, strong) UIColor *inlinePlaceholderColorDefault;
+
+/**
+ The font applied to the text input.
+
+ Default or in case this property is nil, the value will be textInputFontDefault.
+ If textInputFontDefault is nil, textInput.font would be the fallback.
+ */
+@property(nonatomic, null_resettable, strong) UIFont *textInputFont;
+
+/** Default value for textInputFontDefault. If nil, textInput.font would be the fallback.  */
+@property(class, nonatomic, nullable, strong) UIFont *textInputFontDefault;
+
 
 /**
  The font applied to the placeholder when inline (not floating).
@@ -151,39 +129,27 @@
  */
 @property(nonatomic, null_resettable, strong) UIFont *inlinePlaceholderFont;
 
-/**
- Default value for inlinePlaceholderFont.
-
- Default is MDCFontTextStyleBody1.
- */
+/** Default value for inlinePlaceholderFont. */
 @property(class, nonatomic, null_resettable, strong) UIFont *inlinePlaceholderFontDefault;
 
 /**
  The font applied to the leading side underline label.
 
- Default is leadingUnderlineLabelFontDefault;
+ Default is leadingUnderlineLabelFontDefault.
  */
 @property(nonatomic, null_resettable, strong) UIFont *leadingUnderlineLabelFont;
 
-/**
- Default value for leadingUnderlineLabelFont.
-
- Default is MDCFontTextStyleCaption.
- */
+/** Default value for leadingUnderlineLabelFont. */
 @property(class, nonatomic, null_resettable, strong) UIFont *leadingUnderlineLabelFontDefault;
 
 /**
  The color applied to the leading side underline label when not in error state.
 
- Default is leadingUnderlineLabelTextColorDefault;
+ Default is leadingUnderlineLabelTextColorDefault.
  */
 @property(nonatomic, null_resettable, strong) UIColor *leadingUnderlineLabelTextColor;
 
-/**
- Default value for leadingUnderlineLabelTextColor.
-
- Default is black with Material Design hint text opacity.
- */
+/** Default value for leadingUnderlineLabelTextColor. */
 @property(class, nonatomic, null_resettable, strong) UIColor *leadingUnderlineLabelTextColorDefault;
 
 /*
@@ -191,18 +157,14 @@
  UIContentSizeCategory changes.
 
  This property is modeled after the adjustsFontForContentSizeCategory property in the
- UIConnectSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
+ UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
 
  Default is mdc_adjustsFontForContentSizeCategoryDefault.
  */
 @property(nonatomic, assign, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
     BOOL mdc_adjustsFontForContentSizeCategory;
 
-/**
- Default value for mdc_adjustsFontForContentSizeCategory.
-
- Default is NO.
- */
+/** Default value for mdc_adjustsFontForContentSizeCategory. */
 @property(class, nonatomic, assign) BOOL mdc_adjustsFontForContentSizeCategoryDefault;
 
 /**
@@ -212,46 +174,73 @@
  */
 @property(nonatomic, null_resettable, strong) UIColor *normalColor;
 
-/**
- Default value for normalColor.
-
- Default is black with Material Design hint text opacity which is the same as
- inlinePlaceholderColorDefault.
- */
+/** Default value for normalColor. */
 @property(class, nonatomic, null_resettable, strong) UIColor *normalColorDefault;
 
 /** The text displayed in the placeholder label.*/
 @property(nonatomic, nullable, copy) NSString *placeholderText;
 
+/**
+ The corners to be rounded in the border area.
+
+ Default is roundedCornersDefault.
+ */
+@property(nonatomic, assign) UIRectCorner roundedCorners;
+
+/** Default for roundedCorners. */
+@property(class, nonatomic, assign) UIRectCorner roundedCornersDefault;
+
 /** The text input the controller is affecting. */
 @property(nonatomic, nullable, strong) UIView<MDCTextInput> *textInput;
 
 /**
+ The tintColor applied to the textInput's clear button.
+ See @c UIImageView.tintColor for additional details.
+ */
+@property(nonatomic, null_resettable, strong) UIColor *textInputClearButtonTintColor;
+
+/**
+ Default value for @c textInputClearButtonTintColor. */
+@property(class, nonatomic, nullable, strong) UIColor *textInputClearButtonTintColorDefault;
+
+/**
  The font applied to the trailing side underline label.
 
- Default is trailingUnderlineLabelFontDefault;
+ Default is trailingUnderlineLabelFontDefault.
  */
 @property(nonatomic, null_resettable, strong) UIFont *trailingUnderlineLabelFont;
 
-/**
- Default value for trailingUnderlineLabelFont.
-
- Default is MDCFontTextStyleCaption.
- */
+/** Default value for trailingUnderlineLabelFont. */
 @property(class, nonatomic, null_resettable, strong) UIFont *trailingUnderlineLabelFontDefault;
 /**
  The color applied to the trailing side underline label when not in error state.
 
- Default is trailingUnderlineLabelTextColorDefault;
+ Default is trailingUnderlineLabelTextColorDefault.
  */
 @property(nonatomic, nullable, strong) UIColor *trailingUnderlineLabelTextColor;
 
-/**
- Default value for trailingUnderlineLabelTextColor.
-
- Default is black with Material Design hint text opacity.
- */
+/** Default value for trailingUnderlineLabelTextColor. */
 @property(class, nonatomic, nullable, strong) UIColor *trailingUnderlineLabelTextColorDefault;
+
+/**
+ Height of the underline when text field is first responder.
+
+ Default is underlineHeightActiveDefault.
+ */
+@property(nonatomic, assign) CGFloat underlineHeightActive;
+
+/** Default value for underlineHeightActive. */
+@property(class, nonatomic, assign) CGFloat underlineHeightActiveDefault;
+
+/**
+ Height of the underline when NOT first responder.
+
+ Default is underlineHeightNormalDefault.
+ */
+@property(nonatomic, assign) CGFloat underlineHeightNormal;
+
+/** Default value for underlineHeightNormal. */
+@property(class, nonatomic, assign) CGFloat underlineHeightNormalDefault;
 
 /**
  Controls when the underline will be shown.
@@ -262,11 +251,7 @@
  */
 @property(nonatomic, assign) UITextFieldViewMode underlineViewMode;
 
-/**
- Default value for underlineViewMode.
-
- Default is UITextFieldViewModeAlways.
- */
+/** Default value for underlineViewMode. */
 @property(class, nonatomic, assign) UITextFieldViewMode underlineViewModeDefault;
 
 /**
@@ -310,5 +295,23 @@
  */
 - (void)setErrorText:(nullable NSString *)errorText
     errorAccessibilityValue:(nullable NSString *)errorAccessibilityValue;
+
+/**
+ Sets helper text and a corresponding accessibilityLabel.
+
+ @param helperText               The helper text to be shown as leading underline text. (Copied.)
+ @param helperAccessibilityLabel Optional override of leading underline accessibilityLabel when
+                                 helper text is displayed. (Copied.)
+
+ If the TextField is in an error state helperText is saved as the previousLeadingText, and
+ helperAccessibilityLabel is saved in an instance variable. When the TextField eventually leaves the
+ error state the previousLeadingText becomes the leadingUnderlineLabel's text and the
+ helperAccessibilityLabel becomes the leadingUnderlinLabel's accessibilityLabel.
+
+ If the TextField is not in an error state helperText is set as the leadingUnderlineLabel's text and
+ helperAccessibilityLabel is set as the leadingUnderlineLabel's accessibilityLabel.
+ */
+-(void)setHelperText:(nullable NSString *)helperText
+    helperAccessibilityLabel:(nullable NSString *)helperAccessibilityLabel;
 
 @end

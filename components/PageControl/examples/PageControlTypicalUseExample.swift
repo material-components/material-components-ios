@@ -1,22 +1,21 @@
-/*
-Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
+// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 import Foundation
 
 import MaterialComponents.MaterialPageControl
+import MaterialComponents.MaterialPalettes
 
 class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDelegate {
 
@@ -66,11 +65,6 @@ class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDeleg
 
     pageControl.numberOfPages = pageLabels.count
 
-    let pageControlSize = pageControl.sizeThatFits(view.bounds.size)
-    pageControl.frame = CGRect(x: 0,
-                               y: view.bounds.height - pageControlSize.height,
-                               width: view.bounds.width,
-                               height: pageControlSize.height)
     pageControl.addTarget(self, action: #selector(didChangePage), for: .valueChanged)
     pageControl.autoresizingMask = [.flexibleTopMargin, .flexibleWidth]
     view.addSubview(pageControl)
@@ -90,6 +84,17 @@ class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDeleg
     offset.x = CGFloat(pageBeforeFrameChange) * view.bounds.width
     // This non-anmiated change of offset ensures we keep the same page
     scrollView.contentOffset = offset
+
+    var edgeInsets = UIEdgeInsets.zero;
+    #if swift(>=3.2)
+      if #available(iOS 11, *) {
+        edgeInsets = self.view.safeAreaInsets
+      }
+    #endif
+    let pageControlSize = pageControl.sizeThatFits(view.bounds.size)
+    let yOffset = self.view.bounds.height - pageControlSize.height - 8 - edgeInsets.bottom;
+    pageControl.frame =
+        CGRect(x: 0, y: yOffset, width: view.bounds.width, height: pageControlSize.height)
   }
 
   // MARK: - UIScrollViewDelegate
@@ -114,22 +119,13 @@ class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDeleg
     scrollView.setContentOffset(offset, animated: true)
   }
 
-  // Creates a UIColor from a 24-bit RGB color encoded as an integer.
-  // Pass in hex color values like so: ColorFromRGB(0x1EAAF1).
-  class func ColorFromRGB(_ rgbValue: UInt32) -> UIColor {
-    return UIColor.init(red: ((CGFloat)((rgbValue & 0xFF0000) >> 16)) / 255,
-        green: ((CGFloat)((rgbValue & 0x00FF00) >> 8)) / 255,
-        blue: ((CGFloat)((rgbValue & 0x0000FF) >> 0)) / 255,
-        alpha: 1)
-  }
-
   // MARK: - CatalogByConvention
 
-  class func catalogBreadcrumbs() -> [String] {
-    return [ "Page Control", "Swift example"]
-  }
-
-  class func catalogIsPrimaryDemo() -> Bool {
-    return false
+  class func catalogMetadata() -> [String: Any] {
+    return [
+      "breadcrumbs": ["Page Control", "Swift example"],
+      "primaryDemo": false,
+      "presentable": false,
+    ]
   }
 }

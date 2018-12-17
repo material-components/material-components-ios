@@ -1,26 +1,24 @@
-/*
- Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+// Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MDCNumericValueLabel.h"
 
 #import "MaterialTypography.h"
 
-static const CGFloat kAnchorPointY = 1.15f;
-static const CGFloat kBezierSmoothingFactor = 0.0625f;
-static const CGFloat kLabelInsetSize = 6.f;
+static const CGFloat kAnchorPointY = (CGFloat)1.15;
+static const CGFloat kBezierSmoothingFactor = (CGFloat)0.0625;
+static const CGFloat kLabelInsetSize = 6;
 
 @implementation MDCNumericValueLabel {
   CAShapeLayer *_marker;
@@ -45,13 +43,13 @@ static const CGFloat kLabelInsetSize = 6.f;
     _label.textColor = [UIColor whiteColor];  // Default text color, override by setting textColor
     _label.font = [MDCTypography body1Font];  // Default font size, override by setting fontSize
     _label.adjustsFontSizeToFitWidth = YES;
-    _label.minimumScaleFactor = 0.7f;
+    _label.minimumScaleFactor = (CGFloat)0.7;
     [self addSubview:_label];
 
     // So that scaling happens in relation to slightly below the thumb track. Also has the nice
     // effect of letting us set the view's "center" to be on the track, but have the view actually
     // appear above the thumb track.
-    self.layer.anchorPoint = CGPointMake(0.5f, kAnchorPointY);
+    self.layer.anchorPoint = CGPointMake((CGFloat)0.5, kAnchorPointY);
   }
   return self;
 }
