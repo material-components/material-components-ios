@@ -26,13 +26,17 @@
 
 @implementation MDCBottomNavigationBarController
 
+- (void)MDCBottomNavigationBarController_commonInit {
+  _navigationBar = [[MDCBottomNavigationBar alloc] init];
+  _content = [[UIView alloc] init];
+  _viewControllers = @[];
+  _selectedIndex = NSNotFound;
+}
+
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
-    _navigationBar = [[MDCBottomNavigationBar alloc] init];
-    _content = [[UIView alloc] init];
-    _viewControllers = @[];
-    _selectedIndex = NSNotFound;
+    [self MDCBottomNavigationBarController_commonInit];
   }
 
   return self;
@@ -41,10 +45,7 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    _navigationBar = [[MDCBottomNavigationBar alloc] init];
-    _content = [[UIView alloc] init];
-    _viewControllers = @[];
-    _selectedIndex = NSNotFound;
+    [self MDCBottomNavigationBarController_commonInit];
   }
   return self;
 }
