@@ -18,7 +18,6 @@
 
 @interface MDCCardSnapshotTests : MDCSnapshotTestCase
 
-@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong) MDCContainerScheme *containerScheme;
 @property(nonatomic, strong) MDCCard *card;
 @property(nonatomic, strong) MDCCardCollectionCell *cardCell;
@@ -36,15 +35,14 @@
 
   self.card = [[MDCCard alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
   self.cardCell = [[MDCCardCollectionCell alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
-  self.colorScheme =
-      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   self.containerScheme = [[MDCContainerScheme alloc] init];
+  self.containerScheme.colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 }
 
 - (void)tearDown {
   self.card = nil;
   self.cardCell = nil;
-  self.colorScheme = nil;
   self.containerScheme = nil;
 
   [super tearDown];
