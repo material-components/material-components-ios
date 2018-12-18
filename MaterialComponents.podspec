@@ -181,7 +181,7 @@ Pod::Spec.new do |mdc|
 
     component.test_spec 'tests' do |tests|
       tests.test_spec 'unit' do |unit_tests|
-        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}", "components/#{component.base_name}/examples/*.{h,m,swift}", "components/#{component.base_name}/examples/supplemental/*.{h,m,swift}", "components/#{component.base_name}/examples/tests/unit/*.{h,m,swift}"
+        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
         unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
       end
     end
