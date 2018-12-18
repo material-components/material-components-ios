@@ -75,8 +75,8 @@ static const CGFloat kBorderWidth = 1;
   for (MDCCardCellState state = MDCCardCellStateNormal; state <= MDCCardCellStateSelected;
        state++) {
     [self setBorderWidth:kBorderWidth forState:state];
+    [self setShadowElevation:0 forState:state];
   }
-  [self setShadowElevation:kHighlightedElevation forState:MDCCardCellStateHighlighted];
   [self setShadowElevation:kSelectedElevation forState:MDCCardCellStateSelected];
 }
 
