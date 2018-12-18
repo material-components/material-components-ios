@@ -963,6 +963,16 @@ Pod::Spec.new do |mdc|
     extension.dependency "MaterialComponents/Themes"
   end
 
+    # Ripple
+
+  mdc.subspec "Ripple" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+
+    component.dependency "MaterialComponents/private/Math"
+  end
+
   # ShadowElevations
 
   mdc.subspec "ShadowElevations" do |component|
