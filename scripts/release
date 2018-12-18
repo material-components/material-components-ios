@@ -454,6 +454,8 @@ generate_release_apidiff() {
 
   "$dir/temporary_clone_at_ref" "$OLD_ROOT_PATH" $old_commit
   "$dir/temporary_clone_at_ref" "$NEW_ROOT_PATH" $new_commit
+  
+  unset GIT_LFS_SKIP_SMUDGE
 
   # Find command in all component src directories and grab search path for "Material$component.h"
   old_header_search_paths=""
