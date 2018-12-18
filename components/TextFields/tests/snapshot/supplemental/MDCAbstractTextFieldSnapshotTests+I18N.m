@@ -20,6 +20,40 @@
 
 @implementation MDCAbstractTextFieldSnapshotTests (I18N)
 
+- (void)MDCForceTextInputRightToLeft:(UIView *)view {
+  if ([view conformsToProtocol:@protocol(UITextInput)]) {
+    id<UITextInput> textInput = (id<UITextInput>)view;
+    UITextRange *textRange = [textInput textRangeFromPosition:textInput.beginningOfDocument
+                                                   toPosition:textInput.endOfDocument];
+    if (textRange) {
+      [textInput setBaseWritingDirection:UITextWritingDirectionRightToLeft forRange:textRange];
+    } else {
+      XCTAssertNotNil(textRange);
+    }
+  }
+  for (UIView *subview in view.subviews) {
+    [self MDCForceTextInputRightToLeft:subview];
+  }
+}
+
+- (void)MDCForceViewLayoutRightToLeft:(UIView *)view {
+  // Setting semanticContentAttribute results in a call to effectiveUserInterfaceLayoutDirection, so
+  // make sure we set it first.
+  [self.textField
+      MDCtest_setEffectiveUserInterfaceLayoutDirection:UIUserInterfaceLayoutDirectionRightToLeft];
+
+  // UISemanticContentAttribute was added in iOS SDK 9.0 but is available on devices running earlier
+  // version of iOS. We ignore the partial-availability warning that gets thrown on our use of this
+  // symbol.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpartial-availability"
+    view.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
+#pragma clang diagnostic pop
+  for (UIView *subview in view.subviews) {
+    [self MDCForceViewLayoutRightToLeft:subview];
+  }
+}
+
 - (void)changeStringsToArabic {
   self.shortInputText = MDCTextFieldSnapshotTestsInputShortTextArabic;
   self.longInputText = MDCTextFieldSnapshotTestsInputLongTextArabic;
@@ -34,18 +68,7 @@
 // TODO(https://github.com/material-components/material-components-ios/issues/6022 ): Get Arabic
 // input text to be on the right side. Get placeholder text to move to the right side.
 - (void)changeLayoutToRTL {
-  // Setting semanticContentAttribute results in a call to effectiveUserInterfaceLayoutDirection, so
-  // make sure we set it first.
-  [self.textField
-      MDCtest_setEffectiveUserInterfaceLayoutDirection:UIUserInterfaceLayoutDirectionRightToLeft];
-
-  // UISemanticContentAttribute was added in iOS SDK 9.0 but is available on devices running earlier
-  // version of iOS. We ignore the partial-availability warning that gets thrown on our use of this
-  // symbol.
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wpartial-availability"
-  self.textField.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
-#pragma clang diagnostic pop
+  [self MDCForceTextInputRightToLeft:self.textField];
 }
 
 @end
