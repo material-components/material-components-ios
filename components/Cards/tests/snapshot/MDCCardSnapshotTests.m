@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #import "MDCSnapshotTestCase.h"
-#import "MaterialCards.h"
 #import "MaterialCards+Theming.h"
+#import "MaterialCards.h"
 
 @interface MDCCardSnapshotTests : MDCSnapshotTestCase
 
