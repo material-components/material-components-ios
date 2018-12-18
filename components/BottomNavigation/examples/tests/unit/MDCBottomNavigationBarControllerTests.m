@@ -57,6 +57,22 @@ static CGFloat const kDefaultExpectationTimeout = 15;
   _bottomNavigationBarController = nil;
 }
 
+- (void)testInitWithNibNameBundle {
+  // Given
+  MDCBottomNavigationBarController *controller =
+      [[MDCBottomNavigationBarController alloc] initWithNibName:nil bundle:nil];
+
+  // When
+  if (@available(iOS 9.0, *)) {
+    [controller loadViewIfNeeded];
+  } else {
+    (void)controller.view;
+  }
+
+  // Then
+  XCTAssertNotNil(controller.navigationBar);
+}
+
 - (void)testSetViewControllers {
   // Given
   UITabBarItem *tabBarItem1 = [[UITabBarItem alloc] initWithTitle:@"Title1" image:nil tag:0];
