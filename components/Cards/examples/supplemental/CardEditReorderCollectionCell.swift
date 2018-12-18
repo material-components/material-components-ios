@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import UIKit
+import MaterialComponents.MaterialCards_CardThemer
 import MaterialComponents.MaterialTypographyScheme
-import MaterialComponentsBeta.MaterialCards_Theming
 
 class CardEditReorderCollectionCell: MDCCardCollectionCell {
 
@@ -52,8 +52,8 @@ class CardEditReorderCollectionCell: MDCCardCollectionCell {
     addConstraints()
   }
 
-  func apply(containerScheme: MDCContainerScheming, typographyScheme: MDCTypographyScheme) {
-    self.applyTheme(withScheme: containerScheme)
+  func apply(cardScheme: MDCCardScheme, typographyScheme: MDCTypographyScheme) {
+    MDCCardThemer.applyScheme(cardScheme, toCardCell: self)
     self.titleLabel.font = typographyScheme.caption
   }
 
