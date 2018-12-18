@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCInkView.h"
+#import "MDCRippleView.h"
 
 #import "MaterialMath.h"
-#import "private/MDCInkLayer.h"
+#import "private/MDCRippleLayer.h"
 
 @interface MDCInkPendingAnimation : NSObject <CAAction>
 
