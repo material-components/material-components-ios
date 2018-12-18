@@ -447,6 +447,11 @@ generate_release_apidiff() {
     fi
   }
   trap clean_clones EXIT
+
+  # We do not need LFS for the temporary clones; they are used solely to do API diffs.
+  # See https://github.com/git-lfs/git-lfs/issues/2406 for where this flag came from.
+  export GIT_LFS_SKIP_SMUDGE=1
+
   "$dir/temporary_clone_at_ref" "$OLD_ROOT_PATH" $old_commit
   "$dir/temporary_clone_at_ref" "$NEW_ROOT_PATH" $new_commit
 
