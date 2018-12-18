@@ -100,8 +100,13 @@ class CardsMaterialThemingTests: XCTestCase {
 
     // Test remaining properties
     [UIControlState.normal, .highlighted, .selected, .disabled].forEach {
-      XCTAssertEqual(card.shadowElevation(for: $0), ShadowElevation.none)
-      XCTAssertEqual(card.borderWidth(for: $0), 1, accuracy: 0.001)
+      XCTAssertEqual(card.shadowElevation(for: $0),
+                     ShadowElevation.none,
+                     "Shadow elevation incorrect for state \($0)")
+      XCTAssertEqual(card.borderWidth(for: $0),
+                     1,
+                     accuracy: 0.001,
+                     "Border width incorrect for state \($0)")
     }
   }
 
