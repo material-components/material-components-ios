@@ -39,7 +39,7 @@ static const int kMDCButtonAnimationDuration = 200;
 // Allows touch events to pass through so MDCBottomAppBarController can handle touch events.
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
   UIView *view = [super hitTest:point withEvent:event];
-  return view == self ? nil : view;
+  return (view == self) ? nil : view;
 }
 
 @end
@@ -278,7 +278,8 @@ static const int kMDCButtonAnimationDuration = 200;
     return self.floatingButton;
   }
   UIView *view = [super hitTest:point withEvent:event];
-  return view;
+  // Only subviews can receive events.
+  return (view == self) ? nil : view;
 }
 
 #pragma mark - CAAnimationDelegate
