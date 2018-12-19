@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
-#import "MaterialInk.h"
+#import <MaterialComponents/MaterialInk.h>
 #import "MDCActionSheetController.h"
 
 @interface MDCActionSheetItemTableViewCell : UITableViewCell
