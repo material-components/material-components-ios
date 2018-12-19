@@ -17,12 +17,6 @@
 @interface MDCSnapshotTestCase : FBSnapshotTestCase
 
 /**
- * This method will take a view and add it to as a subview to a new view with a size slightly
- * larger than the argument view.
- */
-- (UIView *)addBackgroundViewToView:(UIView *)view;
-
-/**
  * This will call FBSnapshotVerifyView but first check for supported iOS versions. Additionally,
  * this will use UIGraphicsImageRenderer to render the view correctly (including shadows).
  *
