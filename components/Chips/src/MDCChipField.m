@@ -107,8 +107,9 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
 
 @end
 
-@interface MDCChipField ()
-    <MDCChipFieldTextFieldDelegate, MDCTextInputPositioningDelegate, UITextFieldDelegate>
+@interface MDCChipField () <MDCChipFieldTextFieldDelegate,
+                            MDCTextInputPositioningDelegate,
+                            UITextFieldDelegate>
 @end
 
 @implementation MDCChipField {
@@ -122,7 +123,8 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
 
     _chips = [NSMutableArray array];
 
-    MDCChipFieldTextField *chipTextField = [[MDCChipFieldTextField alloc] initWithFrame:self.bounds];
+    MDCChipFieldTextField *chipTextField =
+        [[MDCChipFieldTextField alloc] initWithFrame:self.bounds];
     chipTextField.underline.hidden = YES;
     chipTextField.delegate = self;
     chipTextField.deletionDelegate = self;
