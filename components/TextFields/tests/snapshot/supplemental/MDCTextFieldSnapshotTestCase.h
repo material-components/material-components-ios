@@ -14,7 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MDCSnapshotTestCase.h"
+#import "MaterialSnapshot.h"
 #import "MaterialTextFields.h"
 #import "SnapshotFakeMDCTextField.h"
 
