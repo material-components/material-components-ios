@@ -15,10 +15,10 @@
 #import "MDCButton+MaterialTheming.h"
 
 #import <MaterialComponents/MDCAlertController+ButtonForAction.h>
-#import "MaterialButtons+Theming.h"
 #import <MaterialComponents/MaterialDialogs+ColorThemer.h>
 #import <MaterialComponents/MaterialDialogs+TypographyThemer.h>
 #import <MaterialComponents/MaterialShadowElevations.h>
+#import "MaterialButtons+Theming.h"
 
 static const CGFloat kCornerRadius = 4;
 

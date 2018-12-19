@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialContainerScheme.h"
 #import <MaterialComponents/MaterialDialogs.h>
+#import "MaterialContainerScheme.h"
 
 /**
  This category is used to style MDCAlertController instances to a specific Material style which can

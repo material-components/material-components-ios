@@ -56,7 +56,7 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
   self.colorScheme.surfaceColor = surface;
   self.colorScheme.onSurfaceColor = onSurface;
   self.typographyScheme = [[MDCTypographyScheme alloc] init];
-  
+
 #if defined(__IPHONE_8_2)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wpartial-availability"
