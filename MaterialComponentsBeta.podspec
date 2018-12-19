@@ -90,22 +90,6 @@ Pod::Spec.new do |mdc|
     extension.dependency "MaterialComponentsBeta/schemes/Container"
   end
 
-  mdc.subspec "ChipTextField" do |component|
-    component.ios.deployment_target = '8.0'
-    component.public_header_files = "components/#{component.base_name}/src/*.h"
-    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
-    
-    component.dependency "MaterialComponents/Chips"
-    component.dependency "MaterialComponents/TextFields"
-
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'unit' do |unit_tests|
-        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}", "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-      end
-    end
-  end
-
   mdc.subspec "Dialogs+Theming" do |extension|
     extension.ios.deployment_target = '8.0'
     extension.public_header_files = "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
