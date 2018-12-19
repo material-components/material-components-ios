@@ -178,7 +178,7 @@ run_bazel_affected() {
     TARGET="$(scripts/affected_targets $rule_kind)"
     
     if [ -n "$KOKORO_BUILD_NUMBER" ]; then
-      popd github/repo >> /dev/null
+      popd >> /dev/null
     fi
   fi
   
