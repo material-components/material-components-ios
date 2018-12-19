@@ -16,11 +16,11 @@
 
 @implementation UIView (MDCSnapshot)
 
-- (UIView *)addToBackgroundView {
-  return [self addToBackgroundViewWithInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
+- (UIView *)mdc_addToBackgroundView {
+  return [self mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
 }
 
-- (UIView *)addToBackgroundViewWithInsets:(UIEdgeInsets)insets {
+- (UIView *)mdc_addToBackgroundViewWithInsets:(UIEdgeInsets)insets {
   UIView *backgroundView = [[UIView alloc]
       initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds) + insets.left + insets.right,
                                CGRectGetHeight(self.bounds) + insets.top + insets.bottom)];

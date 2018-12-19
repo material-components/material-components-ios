@@ -18,14 +18,17 @@
 
 /**
  * This method will embed the view in a new larger view with a 10pt inset on all 4 sides.
+ *
+ * @return The background view that was created.
  */
-- (UIView *)addToBackgroundView;
+- (UIView *)mdc_addToBackgroundView;
 
 /**
  * This method will embed the view in a new view with the provided insets.
  *
  * @param insets The insets around the view embedded in a background view.
+ * @return The background view that was created.
  */
-- (UIView *)addToBackgroundViewWithInsets:(UIEdgeInsets)insets;
+- (UIView *)mdc_addToBackgroundViewWithInsets:(UIEdgeInsets)insets;
 
 @end
