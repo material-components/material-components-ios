@@ -187,6 +187,11 @@ run_bazel_affected() {
   if [ -z "$TARGET" ]; then
     TARGET="$(scripts/affected_targets test)"
   fi
+  
+  if [ -z "$TARGET" ]; then
+    echo "Nothing to build."
+    exit 0
+  fi
 
   # Run against whichever Xcode is currently selected.
   selected_xcode_developer_path=$(xcode-select -p)
