@@ -14,7 +14,7 @@
 
 import UIKit
 import MaterialComponents.MaterialButtons_ButtonThemer
-import MaterialComponentsBeta.MaterialCards_Theming
+import MaterialComponents.MaterialCards_CardThemer
 import MaterialComponentsBeta.MaterialContainerScheme
 import MaterialComponentsBeta.MaterialButtons_Theming
 
@@ -27,14 +27,6 @@ class CardExampleViewController: UIViewController {
   var shapeScheme = MDCShapeScheme()
   var typographyScheme = MDCTypographyScheme()
 
-  var scheme: MDCContainerScheming {
-    let scheme = MDCContainerScheme()
-    scheme.colorScheme = colorScheme
-    scheme.typographyScheme = typographyScheme
-    scheme.shapeScheme = shapeScheme
-    return scheme
-  }
-
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -44,8 +36,12 @@ class CardExampleViewController: UIViewController {
     bundle.loadNibNamed("CardExampleViewController", owner: self, options: nil)
     view.frame = self.view.bounds
 
-    button.applyTextTheme(withScheme: scheme)
-    card.applyTheme(withScheme: scheme)
+    button.applyTextTheme(withScheme: MDCContainerScheme())
+
+    let cardScheme = MDCCardScheme();
+    cardScheme.colorScheme = colorScheme
+    cardScheme.shapeScheme = shapeScheme
+    MDCCardThemer.applyScheme(cardScheme, to: card)
     card.isInteractable = false
 
     imageView.isAccessibilityElement = true
