@@ -170,6 +170,13 @@ run_bazel_affected() {
     bazel version
   fi
 
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    select_xcode "$XCODE_VERSION"
+
+    # Move into our cloned repo
+    cd github/repo
+  fi
+
   if [ -n "$VERBOSE_OUTPUT" ]; then
     verbosity_args="-s"
   fi
@@ -179,13 +186,6 @@ run_bazel_affected() {
   fi
   if [ -z "$TARGET" ]; then
     TARGET="$(scripts/affected_targets test)"
-  fi
-
-  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
-    select_xcode "$XCODE_VERSION"
-
-    # Move into our cloned repo
-    cd github/repo
   fi
 
   # Run against whichever Xcode is currently selected.
