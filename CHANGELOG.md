@@ -1,6 +1,6 @@
 # 73.0.0
 
-This is a major release that introduces `copy` semantics in MDCShapeCategory, part of the Shapes scheme. Also in this release is a new API in NavigationDrawer provides a way to expand the  bottom drawer to full height.
+This is a major release that introduces `copy` semantics in MDCShapeCategory, part of the Shapes scheme. Also in this release is a new API in NavigationDrawer that provides a way to expand the  bottom drawer to full height.
 
 ## New features
 
