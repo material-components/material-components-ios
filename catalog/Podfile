@@ -61,6 +61,7 @@ target "MDCCatalog" do
     'Ripple/tests/unit',
     'Buttons+Theming/UnitTests',
     'ButtonBar+Theming/UnitTests',
+    'Cards+Theming/UnitTests',
     'Dialogs+Theming/UnitTests',
     'schemes/Container/UnitTests',
   ]
