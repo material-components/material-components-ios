@@ -21,6 +21,7 @@ import MaterialComponents.MaterialDialogs_DialogThemer
 import MaterialComponents.MaterialTypographyScheme
 import MaterialComponentsBeta.MaterialContainerScheme
 import MaterialComponentsBeta.MaterialDialogs_Theming
+import MaterialComponents.MaterialPalettes
 
 class DialogsAlertCustomizationExampleViewController: MDCCollectionViewController {
 
@@ -51,6 +52,7 @@ class DialogsAlertCustomizationExampleViewController: MDCCollectionViewControlle
       "Text Button Theming (will be deprecated)",
       "Text Button Theming (the right way)",
       "Custom Button Theming",
+      "Dark Theme",
       "Unthemed Alert",
     ])
   }
@@ -90,6 +92,8 @@ class DialogsAlertCustomizationExampleViewController: MDCCollectionViewControlle
     case 10:
       return performCustomButtonTheming()
     case 11:
+      return performDarkThemed()
+    case 12:
       return performUnthemed()
     default:
       print("No row is selected")
@@ -216,6 +220,33 @@ class DialogsAlertCustomizationExampleViewController: MDCCollectionViewControlle
     return alert
   }
 
+  func performDarkThemed() -> MDCAlertController {
+    let alert = MDCAlertController(title: "Dark Theme",
+                                   message: "Lorem ipsum dolor sit amet, consectetur adipiscing")
+    alert.titleIcon = sampleIcon()
+
+    alert.addAction(MDCAlertAction(title:"All Right", emphasis: .high, handler: handler))
+    alert.addAction(MDCAlertAction(title:"Not Now", emphasis: .medium, handler: handler))
+    alert.addAction(MDCAlertAction(title:"Later", emphasis: .low, handler: handler))
+
+    let darkScheme: MDCContainerScheme = {
+      // creating an ad-hoc dark theme based off of the default schemes
+      let scheme = MDCContainerScheme()
+      let colorScheme = MDCSemanticColorScheme()
+      colorScheme.surfaceColor = .black
+      colorScheme.onSurfaceColor = .white
+      colorScheme.primaryColor = MDCPalette.deepPurple.tint300
+      colorScheme.onPrimaryColor = .black
+      colorScheme.backgroundColor = .black
+      scheme.colorScheme = colorScheme
+      return scheme
+    }()
+
+    alert.applyDarkTheme(withScheme: darkScheme)
+
+    return alert
+  }
+
   func performUnthemed() -> MDCAlertController {
     let alert = MDCAlertController(title: "Unthemed Alert",
                                    message: "Lorem ipsum dolor sit amet, consectetur adipiscing...")
@@ -266,6 +297,37 @@ extension DialogsAlertCustomizationExampleViewController {
     return customCell
   }
 }
+
+private extension MDCAlertController {
+
+  // a workaround to get a correct outline color for dark
+  // themed dialogs with medium emphasis actions
+  func applyDarkTheme(withScheme scheme: MDCContainerScheming) {
+    // apply the default alert themer
+    self.applyTheme(withScheme: scheme)
+    // call a dark themer for outline buttons (which are medium emphasis)
+    for action in self.actions {
+      if action.emphasis == .medium {
+        if let mediumButton = button(for: action) {
+          mediumButton.applyDarkOutlinedTheme(withScheme: scheme)
+        }
+      }
+    }
+  }
+}
+
+private extension MDCButton {
+
+  // a workaround to get a correct outline color for dark themed outline buttons
+  func applyDarkOutlinedTheme(withScheme scheme: MDCContainerScheming) {
+    // apply the default outline themer
+    self.applyOutlinedTheme(withScheme: scheme)
+    // changing the opacity of the border color to make it visible on a dark background
+    let borderColor = scheme.colorScheme?.onSurfaceColor.withAlphaComponent(0.36) ?? .gray
+    self.setBorderColor(borderColor, for: .normal)
+  }
+}
+
 
 // MARK: Catalog by convention
 extension DialogsAlertCustomizationExampleViewController {

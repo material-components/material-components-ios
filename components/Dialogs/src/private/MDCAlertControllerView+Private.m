@@ -65,11 +65,11 @@ static const CGFloat MDCDialogMessageOpacity = (CGFloat)0.54;
     self.clipsToBounds = YES;
 
     self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
-    self.contentScrollView.backgroundColor = [UIColor whiteColor];
+    self.contentScrollView.backgroundColor = [UIColor clearColor];
     [self addSubview:self.contentScrollView];
 
     self.actionsScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
-    self.actionsScrollView.backgroundColor = [UIColor whiteColor];
+    self.actionsScrollView.backgroundColor = [UIColor clearColor];
     [self addSubview:self.actionsScrollView];
 
     self.titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
