@@ -24,7 +24,7 @@ class MDCAlertControllerAlertThemerTests: XCTestCase {
   let defaultElevation: ShadowElevation = .dialog
   var alertScheme: MDCAlertScheme! = MDCAlertScheme()
   var alert: MDCAlertController! = MDCAlertController(title: "Title", message: "Message")
-  var alertView: MDCAlertControllerView! { return alert.view as! MDCAlertControllerView }
+  var alertView: MDCAlertControllerView { return alert.view as! MDCAlertControllerView }
 
   override func setUp() {
     super.setUp()

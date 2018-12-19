@@ -17,6 +17,7 @@
 #import "../../src/private/MDCActionSheetHeaderView.h"
 #import "../../src/private/MDCActionSheetItemTableViewCell.h"
 #import "MDCActionSheetTestHelper.h"
+
 #import "MaterialActionSheet+ActionSheetThemer.h"
 #import "MaterialActionSheet+ColorThemer.h"
 #import "MaterialActionSheet+TypographyThemer.h"
@@ -55,8 +56,20 @@ static const CGFloat kInkAlpha = (CGFloat)0.16;
   self.colorScheme.surfaceColor = surface;
   self.colorScheme.onSurfaceColor = onSurface;
   self.typographyScheme = [[MDCTypographyScheme alloc] init];
+  
+#if defined(__IPHONE_8_2)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpartial-availability"
+#pragma clang diagnostic ignored "-Wtautological-pointer-compare"
   UIFont *subtitle = [UIFont systemFontOfSize:12.0 weight:UIFontWeightBold];
   UIFont *body2 = [UIFont systemFontOfSize:10.0 weight:UIFontWeightLight];
+#pragma clang diagnostic pop
+#else
+  // TODO(#1296): Remove after we drop support for iOS 8
+  UIFont *subtitle = [UIFont systemFontOfSize:12.0];
+  UIFont *body2 = [UIFont systemFontOfSize:10.0];
+#endif
+
   self.typographyScheme.subtitle1 = subtitle;
   self.typographyScheme.body2 = body2;
 }
