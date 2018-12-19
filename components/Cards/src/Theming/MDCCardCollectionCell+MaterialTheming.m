@@ -77,7 +77,6 @@ static const CGFloat kBorderWidth = 1;
     [self setBorderWidth:kBorderWidth forState:state];
     [self setShadowElevation:0 forState:state];
   }
-  [self setShadowElevation:kSelectedElevation forState:MDCCardCellStateSelected];
 }
 
 - (void)applyOutlinedThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {

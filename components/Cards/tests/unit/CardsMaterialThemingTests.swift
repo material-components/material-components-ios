@@ -205,7 +205,7 @@ class CardsMaterialThemingTests: XCTestCase {
     XCTAssertEqual(cardCell.borderWidth(for: .selected), 1, accuracy: 0.001)
     XCTAssertEqual(cardCell.shadowElevation(for: .normal), ShadowElevation.none)
     XCTAssertEqual(cardCell.shadowElevation(for: .highlighted), ShadowElevation.none)
-    XCTAssertEqual(cardCell.shadowElevation(for: .selected), ShadowElevation(rawValue: 4))
+    XCTAssertEqual(cardCell.shadowElevation(for: .selected), ShadowElevation.none)
   }
 
   func testOutlinedThemedCardCellWithoutShapeScheme() {

@@ -64,7 +64,6 @@ static const CGFloat kBorderWidth = 1;
     [cardCell setBorderWidth:kBorderWidth forState:state];
     [cardCell setShadowElevation:0 forState:state];
   }
-  [cardCell setShadowElevation:kSelectedElevation forState:MDCCardCellStateSelected];
 
   [MDCCardsColorThemer applyOutlinedVariantWithColorScheme:scheme.colorScheme toCardCell:cardCell];
   [MDCCardsShapeThemer applyShapeScheme:scheme.shapeScheme toCardCell:cardCell];
