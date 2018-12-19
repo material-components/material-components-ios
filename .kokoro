@@ -158,72 +158,36 @@ upload_bazel_test_artifacts() {
 }
 
 run_bazel_affected() {
-  echo "Running bazel affected..."
-
-  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
-    move_derived_data_to_tmp
-  fi
-
-  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
-    bazel version
-    use_bazel.sh 0.20.0
-    bazel version
-  fi
-
-  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
-    select_xcode "$XCODE_VERSION"
-
-    # Move into our cloned repo
-    cd github/repo
-  fi
-
-  if [ -n "$VERBOSE_OUTPUT" ]; then
-    verbosity_args="-s"
-  fi
-
+  echo "Checking affected targets..."
   if [ -z "$COMMAND" ]; then
     COMMAND="test"
   fi
   if [ -z "$TARGET" ]; then
-    TARGET="$(scripts/affected_targets test)"
+    if [ "$COMMAND" == "test" ]; then
+      # Only return test targets.
+      rule_kind="test"
+    else
+      # Return all affected targets.
+      rule_kind="rule"
+    fi
+
+    if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+      pushd github/repo >> /dev/null
+    fi
+
+    TARGET="$(scripts/affected_targets $rule_kind)"
+    
+    if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+      popd github/repo >> /dev/null
+    fi
   fi
   
   if [ -z "$TARGET" ]; then
     echo "Nothing to build."
     exit 0
   fi
-
-  # Run against whichever Xcode is currently selected.
-  selected_xcode_developer_path=$(xcode-select -p)
-  selected_xcode_contents_path=$(dirname "$selected_xcode_developer_path")
-
-  xcode_version=$(cat "$selected_xcode_contents_path/version.plist" \
-    | grep "CFBundleShortVersionString" -A1 \
-    | grep string \
-    | cut -d'>' -f2 \
-    | cut -d'<' -f1)
-
-  if [ "$COMMAND" == "build" ]; then
-    echo "🏗️  $COMMAND with Xcode $xcode_version..."
-  elif [ "$COMMAND" == "test" ]; then
-    echo "🛠️  $COMMAND with Xcode $xcode_version..."
-
-    if [ -n "$VERBOSE_OUTPUT" ]; then
-      extra_args="--test_output=all"
-    else
-      extra_args="--test_output=errors"
-    fi
-  fi
-
-  fix_bazel_imports
-  if [ -n "$KOKORO_ARTIFACTS_DIR" ]; then
-    # Especially in the event of failure, we want our test artifacts to be uploaded.
-    trap upload_bazel_test_artifacts EXIT
-  fi
-
-  echo "Running bazel $COMMAND with the following target(s):"
-  echo "$TARGET"
-  bazel $COMMAND $TARGET --xcode_version $xcode_version --ios_minimum_os=8.0 --ios_multi_cpus=i386,x86_64 $extra_args $verbosity_args
+  
+  run_bazel
 }
 
 run_bazel() {
