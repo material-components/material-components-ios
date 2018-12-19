@@ -150,9 +150,12 @@ class UITextFieldWithChipsExample: UIViewController {
 extension UITextFieldWithChipsExample: UITextFieldDelegate {
 
   // listen to "enter" key
-  func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+  func textField(_ textField: UITextField,
+                 shouldChangeCharactersIn range: NSRange,
+                 replacementString string: String) -> Bool {
     if string == "\n" {
-      if let trimmedText = textField.text?.trimmingCharacters(in: .whitespaces), trimmedText.count > 0 {
+      if let trimmedText = textField.text?.trimmingCharacters(in: .whitespaces),
+        trimmedText.count > 0 {
         appendLabel(text: trimmedText)
         textField.text = ""
       }

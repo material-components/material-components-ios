@@ -37,8 +37,8 @@
     replacementString string: String) -> Bool {
 
     if string == "\n" {
-        if let trimmedText = textField.text?.trimmingCharacters(in: .whitespaces), 
-                                                                    trimmedText.count > 0 {
+        if let trimmedText = textField.text?.trimmingCharacters(in: .whitespaces),
+           trimmedText.count > 0 {
             // add a chip with the current text (alternatively present list of options based on
             //  the current text).
             appendChip(text: trimmedText)
