@@ -22,7 +22,6 @@ drawerVC.expandToFullscreen(withDuration: 0.2, completion: { finished in
 })
 ```
 
-
 ## API changes
 
 ### ActionSheet+Theming
