@@ -99,11 +99,15 @@ class CardsMaterialThemingTests: XCTestCase {
     }
 
     // Test remaining properties
-    XCTAssertEqual(card.borderWidth(for: .normal), 1, accuracy: 0.001)
-    XCTAssertEqual(card.borderWidth(for: .selected), 1, accuracy: 0.001)
-    XCTAssertEqual(card.borderWidth(for: .highlighted), 1, accuracy: 0.001)
-    XCTAssertEqual(card.borderWidth(for: .disabled), 1, accuracy: 0.001)
-    XCTAssertEqual(card.shadowElevation(for: .highlighted), ShadowElevation(rawValue: 4))
+    [UIControlState.normal, .highlighted, .selected, .disabled].forEach {
+      XCTAssertEqual(card.shadowElevation(for: $0),
+                     ShadowElevation.none,
+                     "Shadow elevation incorrect for state \($0)")
+      XCTAssertEqual(card.borderWidth(for: $0),
+                     1,
+                     accuracy: 0.001,
+                     "Border width incorrect for state \($0)")
+    }
   }
 
   func testOutlinedThemedCardWithoutShapeScheme() {
@@ -197,10 +201,11 @@ class CardsMaterialThemingTests: XCTestCase {
 
     // Test remaining properties
     XCTAssertEqual(cardCell.borderWidth(for: .normal), 1, accuracy: 0.001)
-    XCTAssertEqual(cardCell.borderWidth(for: .selected), 1, accuracy: 0.001)
     XCTAssertEqual(cardCell.borderWidth(for: .highlighted), 1, accuracy: 0.001)
-    XCTAssertEqual(cardCell.shadowElevation(for: .highlighted), ShadowElevation(rawValue: 4))
-    XCTAssertEqual(cardCell.shadowElevation(for: .selected), ShadowElevation(rawValue: 4))
+    XCTAssertEqual(cardCell.borderWidth(for: .selected), 1, accuracy: 0.001)
+    XCTAssertEqual(cardCell.shadowElevation(for: .normal), ShadowElevation.none)
+    XCTAssertEqual(cardCell.shadowElevation(for: .highlighted), ShadowElevation.none)
+    XCTAssertEqual(cardCell.shadowElevation(for: .selected), ShadowElevation.none)
   }
 
   func testOutlinedThemedCardCellWithoutShapeScheme() {

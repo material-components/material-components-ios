@@ -74,8 +74,8 @@ static const CGFloat kBorderWidth = 1;
                                  UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     [self setBorderWidth:kBorderWidth forState:state];
+    [self setShadowElevation:0 forState:state];
   }
-  [self setShadowElevation:kHighlightedElevation forState:UIControlStateHighlighted];
 }
 
 - (void)applyOutlinedThemeWithColorScheme:(id<MDCColorScheming>)colorScheme {
