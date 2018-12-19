@@ -16,8 +16,11 @@
 #
 # Finds all targets of a given kind affected by changes since origin/develop.
 
+# type should be a bazel `kind` type. E.g. test or rule.
+# https://docs.bazel.build/versions/master/query.html#kind
 type="$1"
 
+# Generates a list of files that were modified since origin/develop.
 modified_files() {
   git log --name-only --pretty=oneline --full-index $(git merge-base origin/develop HEAD)...HEAD \
     | grep -vE '^[0-9a-f]{40} ' \
@@ -27,6 +30,7 @@ modified_files() {
 
 # TODO: Add check for whether we need to rebuild everything.
 
+# Generates a list of targets that are affected by the files modified since origin/develop.
 directly_modified_targets() {
   for line in $(modified_files); do
     label=$(bazel query $line 2>/dev/null)
@@ -39,6 +43,8 @@ directly_modified_targets() {
   done | sort | uniq
 }
 
+# Reads a list of targets and generates a transitive list of dependencies that depend on on those
+# targets.
 indirectly_modified_targets() {
   type="$1"
   while read target; do
@@ -46,4 +52,5 @@ indirectly_modified_targets() {
   done | sort | uniq
 }
 
+# Generate the transitive list of affected targets.
 directly_modified_targets | indirectly_modified_targets "$type"
