@@ -43,7 +43,7 @@ directly_modified_targets() {
   done | sort | uniq
 }
 
-# Reads a list of targets and generates a transitive list of dependencies that depend on on those
+# Reads a list of targets and generates a transitive list of dependencies that depend on those
 # targets.
 indirectly_modified_targets() {
   type="$1"
