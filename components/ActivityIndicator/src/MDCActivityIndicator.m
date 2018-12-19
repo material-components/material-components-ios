@@ -221,6 +221,11 @@ static const CGFloat kSingleCycleRotation =
   return CGSizeMake(edge, edge);
 }
 
+- (void)setHidden:(BOOL)hidden {
+  [super setHidden:hidden];
+  [self stopAnimating];
+}
+
 #pragma mark - Public methods
 
 - (void)startAnimating {
