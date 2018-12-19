@@ -1,6 +1,8 @@
 workspace 'MDCCatalog.xcworkspace'
 project 'MDCCatalog.xcodeproj'
 
+install! 'cocoapods', :disable_input_output_paths => true
+
 target "MDCCatalog" do
   platform :ios, '8.0'
   project 'MDCCatalog.xcodeproj'
