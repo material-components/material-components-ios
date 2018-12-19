@@ -124,13 +124,15 @@ static NSArray<UICollectionViewCell *> *SortedCellsFromCollectionView(
     [_tabBar layoutIfNeeded];
 
     // Then
-    XCTAssertEqual(_tabBar.mdf_semanticContentAttribute, UISemanticContentAttributeForceRightToLeft);
-    XCTAssertEqual(_tabBar.mdf_effectiveUserInterfaceLayoutDirection, UIUserInterfaceLayoutDirectionRightToLeft);
+    XCTAssertEqual(_tabBar.mdf_semanticContentAttribute,
+                   UISemanticContentAttributeForceRightToLeft);
+    XCTAssertEqual(_tabBar.mdf_effectiveUserInterfaceLayoutDirection,
+                   UIUserInterfaceLayoutDirectionRightToLeft);
     NSArray<UICollectionViewCell *> *sortedVisibleItems =
         SortedCellsFromCollectionView(collectionView);
     XCTAssertEqual(sortedVisibleItems.count, 2ul);
     if (sortedVisibleItems.count != 2ul) {
-    // Return early if something went catastrophically wrong with UICollectionView.
+      // Return early if something went catastrophically wrong with UICollectionView.
       return;
     }
     UICollectionViewCell *firstItemCell = sortedVisibleItems.firstObject;
@@ -140,7 +142,8 @@ static NSArray<UICollectionViewCell *> *SortedCellsFromCollectionView(
     CGFloat expectedFirstItemOriginX = totalWidth - leftInset - CGRectGetWidth(firstItemCell.frame);
     XCTAssertEqualWithAccuracy(CGRectGetMinX(firstItemCell.frame), expectedFirstItemOriginX,
                                (CGFloat)0.001);
-    CGFloat expectedSecondItemOriginX = expectedFirstItemOriginX - CGRectGetWidth(secondItemCell.frame);
+    CGFloat expectedSecondItemOriginX =
+        expectedFirstItemOriginX - CGRectGetWidth(secondItemCell.frame);
     XCTAssertEqualWithAccuracy(CGRectGetMinX(secondItemCell.frame), expectedSecondItemOriginX,
                                (CGFloat)0.001);
   }
