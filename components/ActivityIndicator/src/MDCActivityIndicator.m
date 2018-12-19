@@ -223,7 +223,10 @@ static const CGFloat kSingleCycleRotation =
 
 - (void)setHidden:(BOOL)hidden {
   [super setHidden:hidden];
-  [self stopAnimating];
+
+  if (hidden) {
+    [self stopAnimating];
+  }
 }
 
 #pragma mark - Public methods
