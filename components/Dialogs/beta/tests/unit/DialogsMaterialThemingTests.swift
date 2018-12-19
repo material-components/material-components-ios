@@ -23,6 +23,9 @@ import MaterialComponentsBeta.MaterialButtons_Theming
 
 class DialogsMaterialThemingTests: XCTestCase {
 
+  let disabledOpacity: CGFloat = 0.38
+  let disabledBackgroundOpacity: CGFloat = 0.12
+  let inkOpacity: CGFloat = 0.32
   let kCornerRadius: CGFloat = 4;
 
   func testAlertThemingWithContainerScheme() {
@@ -106,17 +109,17 @@ class DialogsMaterialThemingTests: XCTestCase {
         XCTAssertEqual(button.backgroundColor(for: .normal), colorScheme.primaryColor)
         XCTAssertEqual(
           button.backgroundColor(for: .disabled),
-          colorScheme.onSurfaceColor.withAlphaComponent(ButtonsThemingTest.disabledBackgroundOpacity))
+          colorScheme.onSurfaceColor.withAlphaComponent(disabledBackgroundOpacity))
         XCTAssertEqual(button.titleColor(for: .normal), colorScheme.onPrimaryColor)
         XCTAssertEqual(
           button.titleColor(for: .disabled),
-          colorScheme.onSurfaceColor.withAlphaComponent(ButtonsThemingTest.disabledOpacity))
+          colorScheme.onSurfaceColor.withAlphaComponent(disabledOpacity))
         XCTAssertEqual(button.imageTintColor(for: .normal), colorScheme.onPrimaryColor)
         XCTAssertEqual(
           button.imageTintColor(for: .disabled),
-          colorScheme.onSurfaceColor.withAlphaComponent(ButtonsThemingTest.disabledOpacity))
+          colorScheme.onSurfaceColor.withAlphaComponent(disabledOpacity))
         XCTAssertEqual(button.inkColor,
-                       colorScheme.onPrimaryColor.withAlphaComponent(ButtonsThemingTest.inkOpacity))
+                       colorScheme.onPrimaryColor.withAlphaComponent(inkOpacity))
         // Test shape
         XCTAssertEqual(button.layer.cornerRadius, kCornerRadius, accuracy: 0.001)
         // Test typography

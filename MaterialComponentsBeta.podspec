@@ -151,7 +151,6 @@ Pod::Spec.new do |mdc|
       "components/#{extension.base_name.split('+')[0]}/beta/tests/unit/supplemental/*.{h,m,swift}"
       ]
       unit_tests.resources = "components/#{extension.base_name.split('+')[0]}/beta/tests/unit/resources/*"
-      unit_tests.dependency "MaterialComponentsBeta/Buttons+Theming/UnitTests"
     end
   end
 
