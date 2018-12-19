@@ -13,10 +13,13 @@
 // limitations under the License.
 
 #import "SnapshotFakeMDCTextField.h"
+#import <MDFInternationalization/MDFInternationalization.h>
 
 @implementation SnapshotFakeMDCTextField {
   BOOL _isEditing;
   BOOL _isEditingOverridden;
+  UIUserInterfaceLayoutDirection _effectiveUserInterfaceLayoutDirection;
+  BOOL _isEffectiveUserInterfaceLayoutDirectionOverridden;
 }
 
 - (BOOL)isEditing {
@@ -45,6 +48,22 @@
         postNotificationName:UITextFieldTextDidEndEditingNotification
                       object:self];
   }
+}
+
+- (UIUserInterfaceLayoutDirection)effectiveUserInterfaceLayoutDirection {
+  if (_isEffectiveUserInterfaceLayoutDirectionOverridden) {
+    return _effectiveUserInterfaceLayoutDirection;
+  }
+
+  if (@available(iOS 10.0, *)) {
+    return [super effectiveUserInterfaceLayoutDirection];
+  }
+  return UIApplication.sharedApplication.userInterfaceLayoutDirection;
+}
+
+- (void)MDCtest_setEffectiveUserInterfaceLayoutDirection:(UIUserInterfaceLayoutDirection)direction {
+  _isEffectiveUserInterfaceLayoutDirectionOverridden = YES;
+  _effectiveUserInterfaceLayoutDirection = direction;
 }
 
 @end

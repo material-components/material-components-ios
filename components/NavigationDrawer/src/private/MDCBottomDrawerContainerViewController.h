@@ -63,8 +63,10 @@
  @param originalPresentingViewController The original presenting view controller.
  */
 - (nonnull instancetype)initWithOriginalPresentingViewController:
-    (nonnull UIViewController *)originalPresentingViewController
-    trackingScrollView:(nullable UIScrollView *)trackingScrollView NS_DESIGNATED_INITIALIZER;
+                            (nonnull UIViewController *)originalPresentingViewController
+                                              trackingScrollView:
+                                                  (nullable UIScrollView *)trackingScrollView
+    NS_DESIGNATED_INITIALIZER;
 
 - (nonnull instancetype)init NS_UNAVAILABLE;
 - (nonnull instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;
@@ -120,5 +122,22 @@
  @param animated a bool if to animate the scrolling.
  */
 - (void)setContentOffsetY:(CGFloat)contentOffsetY animated:(BOOL)animated;
+
+/**
+ Expands the drawer to fullscreen with animation.
+
+ note: If the drawer has less content than the full screen,
+ this method will still expand the drawer to fullscreen.
+
+ @param duration The total duration of the animations, measured in seconds. If you specify a
+ negative value or 0, the changes are made without animating them.
+
+ @param completion A block object to be executed when the animation sequence ends. This block has
+ no return value and takes a single Boolean argument that indicates whether or not the animations
+ actually finished before the completion handler was called. If the duration of the animation is 0,
+ this block is performed at the beginning of the next run loop cycle. This parameter may be NULL.
+ */
+- (void)expandToFullscreenWithDuration:(CGFloat)duration
+                            completion:(void (^__nullable)(BOOL finished))completion;
 
 @end

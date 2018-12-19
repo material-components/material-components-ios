@@ -13,12 +13,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("//:material_components_ios.bzl",
-     "mdc_public_objc_library",
-     "mdc_objc_library",
-     "mdc_unit_test_suite")
+load(
+    "//:material_components_ios.bzl",
+    "mdc_objc_library",
+    "mdc_public_objc_library",
+    "mdc_unit_test_suite",
+)
+load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
-load("@build_bazel_rules_apple//apple:swift.bzl", "swift_library")
 licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
@@ -41,11 +43,11 @@ mdc_objc_library(
     hdrs = native.glob(["src/ColorThemer/*.h"]),
     includes = ["src/ColorThemer"],
     sdk_frameworks = ["UIKit"],
-    deps = [
-      ":NavigationDrawer",
-      "//components/schemes/Color",
-    ],
     visibility = ["//visibility:public"],
+    deps = [
+        ":NavigationDrawer",
+        "//components/schemes/Color",
+    ],
 )
 
 mdc_objc_library(
@@ -53,7 +55,6 @@ mdc_objc_library(
     hdrs = native.glob(["src/private/*.h"]),
     includes = ["src/private"],
     visibility = ["//visibility:private"],
-
 )
 
 mdc_objc_library(
@@ -67,16 +68,16 @@ mdc_objc_library(
         "UIKit",
         "XCTest",
     ],
-    deps = [
-         ":NavigationDrawer",
-         ":ColorThemer",
-         ":private",
-    ],
     visibility = ["//visibility:private"],
+    deps = [
+        ":ColorThemer",
+        ":NavigationDrawer",
+        ":private",
+    ],
 )
 
 mdc_unit_test_suite(
     deps = [
         ":unit_test_sources",
-    ]
+    ],
 )

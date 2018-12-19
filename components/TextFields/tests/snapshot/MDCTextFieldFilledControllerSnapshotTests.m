@@ -12,206 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCSnapshotTestCase.h"
+#import "MDCAbstractTextFieldSnapshotTests.h"
 #import "MDCTextFieldSnapshotTestsStrings.h"
 #import "MaterialTextFields.h"
 
-@interface MDCTextFieldFilledControllerSnapshotTests : MDCSnapshotTestCase
-@property(nonatomic, strong) MDCTextField *textField;
+@interface MDCTextFieldFilledControllerSnapshotTests : MDCAbstractTextFieldSnapshotTests
 @property(nonatomic, strong) MDCTextInputControllerFilled *textFieldController;
 @end
 
 @implementation MDCTextFieldFilledControllerSnapshotTests
+@dynamic textFieldController;
 
 - (void)setUp {
   [super setUp];
 
-  self.textField = [[MDCTextField alloc] init];
+  // Uncomment below to recreate the golden images for all test methods. Add it to a test method to
+  // update only that golden image.
+  //  self.recordMode = YES;
+
   self.textField.clearButtonMode = UITextFieldViewModeAlways;
 
   self.textFieldController =
       [[MDCTextInputControllerFilled alloc] initWithTextInput:self.textField];
+  self.textFieldController.floatingEnabled = NO;
 }
 
-- (void)tearDown {
-  self.textFieldController = nil;
-  self.textField = nil;
-
-  [super tearDown];
-}
-
-#pragma mark - Helpers
-
-- (void)triggerTextFieldLayout {
-  CGSize aSize = [self.textField sizeThatFits:CGSizeMake(300, INFINITY)];
-  self.textField.bounds = CGRectMake(0, 0, aSize.width, aSize.height);
-  [self.textField layoutIfNeeded];
-}
-
-- (void)generateSnapshotAndVerify {
-  [self triggerTextFieldLayout];
-  UIView *snapshotView = [self addBackgroundViewToView:self.textField];
-
-  // Perform the actual verification.
-  [self snapshotVerifyView:snapshotView];
-}
-
-#pragma mark - Tests
-
-- (void)testFilledTextFieldEmpty {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
-  // Then
-  [self generateSnapshotAndVerify];
-}
-
-#pragma mark - Single field tests
-
-- (void)testFilledTextFieldWithShortPlaceholderText {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
-  // When
-  self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderShortTextLatin;
-
-  // Then
-  [self generateSnapshotAndVerify];
-}
-
-- (void)testFilledTextFieldWithLongPlaceholderText {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
-  // When
-  self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderLongTextLatin;
-
-  // Then
-  [self generateSnapshotAndVerify];
-}
-
-- (void)testFilledTextFieldWithShortHelperText {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
-  // When
-  self.textFieldController.helperText = MDCTextFieldSnapshotTestsHelperShortTextLatin;
-
-  // Then
-  [self generateSnapshotAndVerify];
-}
-
-- (void)testFilledTextFieldWithLongHelperText {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
-  // When
-  self.textFieldController.helperText = MDCTextFieldSnapshotTestsHelperLongTextLatin;
-
-  // Then
-  [self generateSnapshotAndVerify];
-}
-
-- (void)testFilledTextFieldWithShortErrorText {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
-  // When
-  [self.textFieldController setErrorText:MDCTextFieldSnapshotTestsErrorShortTextLatin
-                 errorAccessibilityValue:MDCTextFieldSnapshotTestsErrorShortTextLatin];
-
-  // Then
-  [self generateSnapshotAndVerify];
-}
-
-- (void)testFilledTextFieldWithLongErrorText {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
-  // When
-  [self.textFieldController setErrorText:MDCTextFieldSnapshotTestsErrorLongTextLatin
-                 errorAccessibilityValue:MDCTextFieldSnapshotTestsErrorLongTextLatin];
-
-  // Then
-  [self generateSnapshotAndVerify];
-}
-
-- (void)testFilledTextFieldWithShortInputText {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
-  // When
-  self.textField.text = MDCTextFieldSnapshotTestsInputShortTextLatin;
-
-  // Then
-  [self generateSnapshotAndVerify];
-}
-
-- (void)testFilledTextFieldWithLongInputText {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
-  // When
-  self.textField.text = MDCTextFieldSnapshotTestsInputLongTextLatin;
-
-  // Then
-  [self generateSnapshotAndVerify];
-}
-
-#pragma mark - Multiple field tests
-
-- (void)testFilledTextFieldWithShortInputPlaceholderHelperTexts {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
-  // When
-  self.textField.text = MDCTextFieldSnapshotTestsInputShortTextLatin;
-  self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderShortTextLatin;
-  self.textFieldController.helperText = MDCTextFieldSnapshotTestsHelperShortTextLatin;
-
-  // Then
-  [self generateSnapshotAndVerify];
-}
-
-- (void)testFilledTextFieldWithLongInputPlaceholderHelperTexts {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
-  // When
-  self.textField.text = MDCTextFieldSnapshotTestsInputLongTextLatin;
-  self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderLongTextLatin;
-  self.textFieldController.helperText = MDCTextFieldSnapshotTestsHelperLongTextLatin;
-
-  // Then
-  [self generateSnapshotAndVerify];
-}
-
-- (void)testFilledTextFieldWithShortInputPlaceholderErrorTexts {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
-  // When
-  self.textField.text = MDCTextFieldSnapshotTestsInputShortTextLatin;
-  self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderShortTextLatin;
-  [self.textFieldController setErrorText:MDCTextFieldSnapshotTestsErrorShortTextLatin
-                 errorAccessibilityValue:MDCTextFieldSnapshotTestsErrorShortTextLatin];
-
-  // Then
-  [self generateSnapshotAndVerify];
-}
-
-- (void)testFilledTextFieldWithLongInputPlaceholderErrorTexts {
-  // Uncomment below to recreate the golden
-  //  self.recordMode = YES;
-
-  // When
-  self.textField.text = MDCTextFieldSnapshotTestsInputLongTextLatin;
-  self.textFieldController.placeholderText = MDCTextFieldSnapshotTestsPlaceholderLongTextLatin;
-  [self.textFieldController setErrorText:MDCTextFieldSnapshotTestsErrorLongTextLatin
-                 errorAccessibilityValue:MDCTextFieldSnapshotTestsErrorLongTextLatin];
-
-  // Then
-  [self generateSnapshotAndVerify];
-}
+// NOTE: Additional test methods can be found in MDCAbstractTextFieldSnapshotTests.m
 
 @end

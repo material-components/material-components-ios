@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import XCTest
-import MaterialComponentsAlpha.MaterialActionSheet
-import MaterialComponentsAlpha.MaterialActionSheet_ColorThemer
+import MaterialComponentsBeta.MaterialActionSheet
+import MaterialComponentsBeta.MaterialActionSheet_ColorThemer
 
 class ActionSheetTest: XCTestCase {
 

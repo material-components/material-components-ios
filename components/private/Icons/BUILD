@@ -13,10 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("//:material_components_ios.bzl",
-     "mdc_public_objc_library",
-     "mdc_objc_library",
-     "mdc_unit_test_suite")
+load(
+    "//:material_components_ios.bzl",
+    "mdc_objc_library",
+    "mdc_public_objc_library",
+    "mdc_unit_test_suite",
+)
 
 licenses(["notice"])  # Apache 2.0
 
@@ -35,6 +37,7 @@ mdc_objc_library(
         "UIKit",
         "XCTest",
     ],
+    visibility = ["//visibility:private"],
     deps = [
         ":Icons",
         "//components/private/Icons/icons/ic_arrow_back",
@@ -48,11 +51,10 @@ mdc_objc_library(
         "//components/private/Icons/icons/ic_radio_button_unchecked",
         "//components/private/Icons/icons/ic_reorder",
     ],
-    visibility = ["//visibility:private"],
 )
 
 mdc_unit_test_suite(
     deps = [
-      ":unit_test_sources",
+        ":unit_test_sources",
     ],
 )
