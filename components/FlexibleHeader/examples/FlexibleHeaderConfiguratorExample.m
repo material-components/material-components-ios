@@ -25,6 +25,14 @@
 
 @implementation FlexibleHeaderConfiguratorExample
 
+#pragma mark - MDCFlexibleHeaderViewLayoutDelegate
+
+- (void)flexibleHeaderViewController:
+(MDCFlexibleHeaderViewController *)flexibleHeaderViewController
+    flexibleHeaderViewFrameDidChange:(MDCFlexibleHeaderView *)flexibleHeaderView {
+  NSLog(@"Scroll phase: %@ percentage: %@ value: %@", @(flexibleHeaderView.scrollPhase), @(flexibleHeaderView.scrollPhasePercentage), @(flexibleHeaderView.scrollPhaseValue));
+}
+
 // Invoked when the user has changed a control's value.
 - (void)field:(FlexibleHeaderConfiguratorField)field didChangeValue:(NSNumber *)value {
   MDCFlexibleHeaderView *headerView = self.fhvc.headerView;

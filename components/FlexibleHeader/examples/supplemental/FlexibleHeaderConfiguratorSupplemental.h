@@ -38,7 +38,7 @@ typedef enum : NSUInteger {
   FlexibleHeaderConfiguratorFieldCanAlwaysExpandToMaximumHeight,
 } FlexibleHeaderConfiguratorField;
 
-@interface FlexibleHeaderConfiguratorExample : UITableViewController
+@interface FlexibleHeaderConfiguratorExample : UITableViewController <MDCFlexibleHeaderViewLayoutDelegate>
 
 - (NSNumber *)valueForField:(FlexibleHeaderConfiguratorField)field;
 - (void)field:(FlexibleHeaderConfiguratorField)field didChangeValue:(NSNumber *)value;
