@@ -109,14 +109,9 @@
 }
 
 - (void)initializeComponentry {
-  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
-  buttonScheme.colorScheme = self.colorScheme;
-  buttonScheme.shapeScheme = self.shapeScheme;
-  buttonScheme.typographyScheme = self.typographyScheme;
-
   self.containedButton = [[MDCButton alloc] init];
   [self.containedButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:self.containedButton];
+  [self.containedButton applyContainedThemeWithScheme:self.containerScheme];
   self.containedButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.componentContentView addSubview:self.containedButton];
 

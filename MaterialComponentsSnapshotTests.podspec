@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "MaterialComponentsSnapshotTests"
-  s.version      = "72.2.0"
+  s.version      = "73.0.0"
   s.authors      = "The Material Components authors."
   s.summary      = "This spec is an aggregate of all the Material Components snapshot tests."
   s.homepage     = "https://github.com/material-components/material-components-ios"
@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '8.0'
   s.requires_arc = true
   s.dependency 'MaterialComponents'
-  s.dependency 'MaterialComponentsAlpha'
+  s.dependency 'MaterialComponentsBeta'
 
   # Cards
 
@@ -33,6 +33,7 @@ Pod::Spec.new do |s|
         snapshot_tests.source_files = "components/#{component.base_name}/tests/snapshot/*.{h,m,swift}", "components/#{component.base_name}/tests/snapshot/supplemental/*.{h,m,swift}"
         snapshot_tests.resources = "components/#{component.base_name}/tests/snapshot/resources/*"
         snapshot_tests.dependency "MaterialComponentsSnapshotTests/private/Snapshot"
+        snapshot_tests.dependency "MDFInternationalization"
       end
     end
   end

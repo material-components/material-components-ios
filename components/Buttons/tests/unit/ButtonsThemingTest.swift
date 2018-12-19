@@ -20,8 +20,8 @@ import MaterialComponents.MaterialShadowElevations
 import MaterialComponents.MaterialShapeScheme
 import MaterialComponents.MaterialShapeLibrary
 import MaterialComponents.MaterialTypographyScheme
-import MaterialComponentsAlpha.MaterialButtons_Theming
-import MaterialComponentsAlpha.MaterialContainerScheme
+import MaterialComponentsBeta.MaterialButtons_Theming
+import MaterialComponentsBeta.MaterialContainerScheme
 
 class ButtonsThemingTest: XCTestCase {
 

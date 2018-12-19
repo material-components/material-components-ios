@@ -12,5 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// This header's sole purpose is to provide a single file for the MaterialComponentsAlpha
+// This header's sole purpose is to provide a single file for the MaterialComponentsBeta
 // podspec to pick up, in the event that we have no components presently in an Alpha state.
