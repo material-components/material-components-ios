@@ -106,31 +106,36 @@ static NSArray<UICollectionViewCell *> *SortedCellsFromCollectionView(
 // Tests that setting UISemanticContentAttributeForceRightToLeft causes the tab bar's collection
 // view to lay out the cells in RTL (right-to-left) manner.
 - (void)testRightToLeftLayout {
-  // Given
-  UICollectionView *collectionView = ExtractCollectionViewFromTabBar(_tabBar);
-  UICollectionViewFlowLayout *flowLayout =
-      (UICollectionViewFlowLayout *)collectionView.collectionViewLayout;
+  // UIKit doesn't support semanticContentAttribute until iOS 9, so only execute the test
+  // conditions when running on iOS 9+.
+  if (@available(iOS 9.0, *)) {
+    // Given
+    UICollectionView *collectionView = ExtractCollectionViewFromTabBar(_tabBar);
+    UICollectionViewFlowLayout *flowLayout =
+        (UICollectionViewFlowLayout *)collectionView.collectionViewLayout;
 
-  // When
-  _tabBar.mdf_semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
-  [_tabBar setNeedsLayout];
-  [_tabBar layoutIfNeeded];
+    // When
+    _tabBar.mdf_semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
+    [_tabBar setNeedsLayout];
+    [_tabBar layoutIfNeeded];
 
-  // Then
-  XCTAssertEqual(_tabBar.mdf_semanticContentAttribute, UISemanticContentAttributeForceRightToLeft);
-  NSArray<UICollectionViewCell *> *sortedVisibleItems =
-      SortedCellsFromCollectionView(collectionView);
-  XCTAssertEqual(sortedVisibleItems.count, 2ul);
-  UICollectionViewCell *firstItemCell = sortedVisibleItems.firstObject;
-  UICollectionViewCell *secondItemCell = sortedVisibleItems.lastObject;
-  CGFloat totalWidth = _tabBar.frame.size.width;
-  CGFloat leftInset = flowLayout.sectionInset.left;
-  CGFloat expectedFirstItemOriginX = totalWidth - leftInset - firstItemCell.frame.size.width;
-  XCTAssertEqualWithAccuracy(firstItemCell.frame.origin.x, expectedFirstItemOriginX,
-                             (CGFloat)0.001);
-  CGFloat expectedSecondItemOriginX = expectedFirstItemOriginX - secondItemCell.frame.size.width;
-  XCTAssertEqualWithAccuracy(secondItemCell.frame.origin.x, expectedSecondItemOriginX,
-                             (CGFloat)0.001);
+    // Then
+    XCTAssertEqual(_tabBar.mdf_semanticContentAttribute, UISemanticContentAttributeForceRightToLeft);
+    XCTAssertEqual(_tabBar.mdf_effectiveUserInterfaceLayoutDirection, UIUserInterfaceLayoutDirectionRightToLeft);
+    NSArray<UICollectionViewCell *> *sortedVisibleItems =
+        SortedCellsFromCollectionView(collectionView);
+    XCTAssertEqual(sortedVisibleItems.count, 2ul);
+    UICollectionViewCell *firstItemCell = sortedVisibleItems.firstObject;
+    UICollectionViewCell *secondItemCell = sortedVisibleItems.lastObject;
+    CGFloat totalWidth = _tabBar.frame.size.width;
+    CGFloat leftInset = flowLayout.sectionInset.left;
+    CGFloat expectedFirstItemOriginX = totalWidth - leftInset - firstItemCell.frame.size.width;
+    XCTAssertEqualWithAccuracy(firstItemCell.frame.origin.x, expectedFirstItemOriginX,
+                               (CGFloat)0.001);
+    CGFloat expectedSecondItemOriginX = expectedFirstItemOriginX - secondItemCell.frame.size.width;
+    XCTAssertEqualWithAccuracy(secondItemCell.frame.origin.x, expectedSecondItemOriginX,
+                               (CGFloat)0.001);
+  }
 }
 
 @end
