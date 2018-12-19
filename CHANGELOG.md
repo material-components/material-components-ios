@@ -2,13 +2,15 @@
 
 This is a major release that introduces `copy` semantics in MDCShapeCategory, part of the Shapes scheme. Also in this release is a new API in NavigationDrawer provides a way to expand the  bottom drawer to full height.
 
-## Breaking changes
-
-Replace this explanations for how to resolve the breaking changes.
-
 ## New features
 
 ### NavigationDrawer expansion
+
+The NavigationDrawer component's `MDCBottomDrawerViewController` has a new API
+that allows clients to programmatically expand the bottom drawer to the full
+height of the presenting view.
+
+**Example (Swift)**
 
 ```swift
 drawerVC.expandToFullscreen(withDuration: 0.2, completion: { finished in
