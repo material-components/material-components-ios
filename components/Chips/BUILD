@@ -147,6 +147,9 @@ swift_library(
     deps = [
         ":Chips",
         ":Theming",
+        "//components/schemes/Color",
+        "//components/schemes/Shape",
+        "//components/schemes/Typography",
     ],
 )
 
