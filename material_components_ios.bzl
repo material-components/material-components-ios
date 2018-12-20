@@ -21,6 +21,23 @@ def mdc_objc_library(
       copts = copts,
       **kwargs)
 
+def mdc_private_hdrs_objc_library(
+    deps = [],
+    **kwargs):
+  """Declare a target for exposing private component headers for testing
+
+  Args:
+    deps: The dependencies of the library. Typically the main target.
+    **kwargs: Any arguments accepted by _mdc_objc_library().
+  """
+  mdc_objc_library(
+    name = "privateHeaders",
+    deps = deps,
+    testonly = 1,
+    hdrs = native.glob(["src/private/*.h"]),
+    includes = ["src/private"],
+    **kwargs)
+
 def mdc_public_objc_library(
     name,
     deps = [],
