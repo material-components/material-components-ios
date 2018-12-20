@@ -51,7 +51,7 @@
 #pragma mark - Helpers
 
 - (void)generateSnapshotAndVerifyForView:(UIView *)view {
-  UIView *snapshotView = [self addBackgroundViewToView:view];
+  UIView *snapshotView = [view mdc_addToBackgroundView];
   [self snapshotVerifyView:snapshotView];
 }
 
