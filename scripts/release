@@ -1,4 +1,4 @@
-#!/bin/bash +e
+#!/bin/bash
 #
 # Copyright 2017-present The Material Motion and Material Components for
 # iOS Authors. All Rights Reserved.
@@ -14,6 +14,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+# Abort if any command returns an error
+set -e
 
 parentcmd=$(basename "${BASH_SOURCE[1]}")
 cmd=$(basename "${BASH_SOURCE[0]}")
