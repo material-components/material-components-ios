@@ -32,8 +32,7 @@
 
   id<MDCShapeScheming> shapeScheme = scheme.shapeScheme;
   if (!shapeScheme) {
-    shapeScheme =
-        [[MDCShapeScheme alloc] initWithDefaults:MDCShapeSchemeDefaultsMaterial201809];
+    shapeScheme = [[MDCShapeScheme alloc] initWithDefaults:MDCShapeSchemeDefaultsMaterial201809];
   }
   [self applyThemeWithShapeScheme:shapeScheme];
 
@@ -44,9 +43,8 @@
   }
   [self applyThemeWithTypographyScheme:typographyScheme];
 
-  NSUInteger maximumStateValue =
-      UIControlStateNormal | UIControlStateSelected | UIControlStateHighlighted |
-      UIControlStateDisabled;
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+                                 UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     [self setBorderWidth:0 forState:state];
   }
@@ -76,8 +74,7 @@
 
   id<MDCShapeScheming> shapeScheme = scheme.shapeScheme;
   if (!shapeScheme) {
-    shapeScheme =
-        [[MDCShapeScheme alloc] initWithDefaults:MDCShapeSchemeDefaultsMaterial201809];
+    shapeScheme = [[MDCShapeScheme alloc] initWithDefaults:MDCShapeSchemeDefaultsMaterial201809];
   }
   [self applyThemeWithShapeScheme:shapeScheme];
 
@@ -88,9 +85,8 @@
   }
   [self applyThemeWithTypographyScheme:typographyScheme];
 
-  NSUInteger maximumStateValue =
-      UIControlStateNormal | UIControlStateSelected | UIControlStateHighlighted |
-      UIControlStateDisabled;
+  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
+                                 UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
     [self setBorderWidth:1 forState:state];
   }
