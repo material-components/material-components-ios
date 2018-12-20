@@ -95,15 +95,9 @@ mdc_objc_library(
     deps = [":ActionSheet"],
 )
 
-mdc_objc_library(
-    name = "private",
-    hdrs = native.glob(["src/private/*.h"]),
-    includes = ["src/private"],
-    visibility = ["//visibility:private"],
-)
-
 swift_library(
     name = "unit_test_swift_sources",
+    testonly = 1,
     srcs = glob(["tests/unit/*.swift"]),
     copts = [
         "-swift-version",
@@ -113,7 +107,7 @@ swift_library(
     deps = [
         ":ActionSheet",
         ":ColorThemer",
-        ":private",
+        ":privateHeaders",
     ],
 )
 
