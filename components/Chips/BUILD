@@ -47,7 +47,6 @@ mdc_objc_library(
     srcs = native.glob(["src/Theming/*.m"]),
     hdrs = native.glob(["src/Theming/*.h"]),
     includes = ["src/Theming"],
-    visibility = ["//visibility:public"],
     deps = [
         ":Chips",
         ":ColorThemer",
@@ -147,10 +146,7 @@ swift_library(
     visibility = ["//visibility:private"],
     deps = [
         ":Chips",
-        ":ColorThemer",
-        ":ShapeThemer",
         ":Theming",
-        ":TypographyThemer",
     ],
 )
 
