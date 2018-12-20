@@ -32,16 +32,6 @@ static NSString *const kiPhone7ModelB = @"iPhone9,3";
   self.agnosticOptions = FBSnapshotTestCaseAgnosticOptionOS;
 }
 
-- (UIView *)addBackgroundViewToView:(UIView *)view {
-  UIView *backgroundView =
-      [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(view.bounds) + 20,
-                                               CGRectGetHeight(view.bounds) + 20)];
-  backgroundView.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1];
-  [backgroundView addSubview:view];
-  view.center = backgroundView.center;
-  return backgroundView;
-}
-
 - (void)snapshotVerifyView:(UIView *)view {
   [self snapshotVerifyView:view tolerance:0];
 }
