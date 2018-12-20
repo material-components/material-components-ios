@@ -14,7 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Finds all targets of a given kind affected by changes since origin/develop.
+# Finds all targets of a given kind affected by changes in a given commit range.
+
+SCRIPT_NAME=$(basename "$0")
 
 # type should be a bazel `kind` type. E.g. test or rule.
 # https://docs.bazel.build/versions/master/query.html#kind
@@ -50,7 +52,11 @@ modified_files() {
 # Reads a list of files and generates a list of files that will affect the entire
 # build system.
 files_that_affect_everything() {
-  grep -e "\.bzl$" -e "WORKSPACE" -e "\.kokoro" "$@"
+  grep -e "\.bzl$" \
+    -e "WORKSPACE" \
+    -e "\.kokoro" \
+    -e "$SCRIPT_NAME" \
+    "$@"
 }
 
 if modified_files | files_that_affect_everything -q; then
