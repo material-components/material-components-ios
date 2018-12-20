@@ -12,15 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCTextFieldOutlinedControllerSnapshotTests.h"
-#import "MDCTextFieldSnapshotTestsStrings.h"
+#import "MDCAbstractTextFieldSnapshotTests.h"
 #import "MaterialTextFields+ColorThemer.h"
 #import "MaterialTextFields+TypographyThemer.h"
 #import "MaterialTextFields.h"
-#import "SnapshotFakeMDCTextField.h"
 
-@interface MDCTextFieldOutlinedControllerBaselineSnapshotTests
-    : MDCTextFieldOutlinedControllerSnapshotTests
+@interface MDCTextFieldOutlinedControllerBaselineSnapshotTests : MDCAbstractTextFieldSnapshotTests
 @end
 
 @implementation MDCTextFieldOutlinedControllerBaselineSnapshotTests
@@ -34,6 +31,8 @@
 
   self.textField.clearButtonMode = UITextFieldViewModeAlways;
 
+  self.textFieldController =
+      [[MDCTextInputControllerOutlined alloc] initWithTextInput:self.textField];
   MDCSemanticColorScheme *colorScheme =
       [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   MDCTypographyScheme *typographyScheme =
@@ -46,6 +45,6 @@
   [MDCTextFieldTypographyThemer applyTypographyScheme:typographyScheme toTextInput:self.textField];
 }
 
-// NOTE: All actual test methods are defined in MDCTextFieldOutlinedControllerSnapshotTests.m
+// NOTE: Additional test methods can be found in MDCAbstractTextFieldSnapshotTests.m
 
 @end

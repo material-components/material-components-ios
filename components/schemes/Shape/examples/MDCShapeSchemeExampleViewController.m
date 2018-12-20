@@ -28,8 +28,8 @@
 #import "MaterialButtons+ShapeThemer.h"
 #import "MaterialButtons+Theming.h"
 #import "MaterialButtons.h"
-#import "MaterialCards+CardThemer.h"
 #import "MaterialCards+ShapeThemer.h"
+#import "MaterialCards+Theming.h"
 #import "MaterialCards.h"
 #import "MaterialChips+ChipThemer.h"
 #import "MaterialChips+ShapeThemer.h"
@@ -109,14 +109,9 @@
 }
 
 - (void)initializeComponentry {
-  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
-  buttonScheme.colorScheme = self.colorScheme;
-  buttonScheme.shapeScheme = self.shapeScheme;
-  buttonScheme.typographyScheme = self.typographyScheme;
-
   self.containedButton = [[MDCButton alloc] init];
   [self.containedButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:self.containedButton];
+  [self.containedButton applyContainedThemeWithScheme:self.containerScheme];
   self.containedButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.componentContentView addSubview:self.containedButton];
 
@@ -143,13 +138,9 @@
   [MDCChipViewThemer applyScheme:chipViewScheme toChipView:self.chipView];
   [self.componentContentView addSubview:self.chipView];
 
-  MDCCardScheme *cardScheme = [[MDCCardScheme alloc] init];
-  cardScheme.colorScheme = self.colorScheme;
-  cardScheme.shapeScheme = self.shapeScheme;
-
   self.card = [[MDCCard alloc] init];
   self.card.translatesAutoresizingMaskIntoConstraints = NO;
-  [MDCCardThemer applyScheme:cardScheme toCard:self.card];
+  [self.card applyThemeWithScheme:self.containerScheme];
   self.card.backgroundColor = _colorScheme.primaryColor;
   [self.componentContentView addSubview:self.card];
 

@@ -14,7 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MDCSnapshotTestCase.h"
+#import "MaterialSnapshot.h"
 #import "MaterialTextFields.h"
 #import "SnapshotFakeMDCTextField.h"
 
@@ -24,7 +24,7 @@
  */
 @interface MDCTextFieldSnapshotTestCase : MDCSnapshotTestCase
 
-@property(nonatomic, strong) SnapshotFakeMDCTextField *textField;
+@property(nonatomic, strong) UIView<UITextInput, MDCTextInput, MDCSnapshotFakeTextInput> *textField;
 
 /**
  Attempts to update the text field's layout to how it would appear within a view hierarchy on a

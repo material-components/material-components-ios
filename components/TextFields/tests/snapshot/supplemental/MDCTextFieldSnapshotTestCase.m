@@ -64,7 +64,7 @@
 
 - (void)generateSnapshotAndVerify {
   [self triggerTextFieldLayout];
-  UIView *snapshotView = [self addBackgroundViewToView:self.textField];
+  UIView *snapshotView = [self.textField mdc_addToBackgroundView];
 
   // Perform the actual verification.
   [self snapshotVerifyView:snapshotView];

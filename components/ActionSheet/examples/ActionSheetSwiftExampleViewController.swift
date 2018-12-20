@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import UIKit
-import MaterialComponentsAlpha.MaterialActionSheet
-import MaterialComponentsAlpha.MaterialActionSheet_Theming
+import MaterialComponentsBeta.MaterialActionSheet
+import MaterialComponentsBeta.MaterialActionSheet_Theming
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialTypographyScheme
 

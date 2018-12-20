@@ -91,7 +91,6 @@ mdc_objc_library(
     name = "privateHeaders",
     testonly = 1,
     hdrs = native.glob(["src/private/*.h"]),
-    visibility = ["//visibility:private"],
     deps = [":ActionSheet"],
 )
 
@@ -99,7 +98,35 @@ mdc_objc_library(
     name = "private",
     hdrs = native.glob(["src/private/*.h"]),
     includes = ["src/private"],
-    visibility = ["//visibility:private"],
+)
+
+mdc_objc_library(
+    name = "ObjcExamples",
+    srcs = glob([
+        "examples/*.m",
+        "examples/*.h",
+        "examples/supplemental/*.m",
+        "examples/supplemental/*.h",
+    ]),
+    deps = [
+        ":ActionSheet",
+        ":Theming",
+        "//components/Buttons:ButtonThemer",
+        "//components/schemes/Color",
+        "//components/schemes/Typography",
+    ],
+)
+
+swift_library(
+    name = "SwiftExamples",
+    srcs = glob([
+        "examples/*.swift",
+        "examples/supplemental/*.swift",
+    ]),
+    deps = [
+        ":ActionSheet",
+        ":Theming",
+    ],
 )
 
 swift_library(
@@ -109,7 +136,6 @@ swift_library(
         "-swift-version",
         "3",
     ],
-    visibility = ["//visibility:private"],
     deps = [
         ":ActionSheet",
         ":ColorThemer",
@@ -129,7 +155,6 @@ mdc_objc_library(
         "CoreImage",
         "XCTest",
     ],
-    visibility = ["//visibility:private"],
     deps = [
         ":ActionSheet",
         ":ActionSheetThemer",

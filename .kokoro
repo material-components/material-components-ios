@@ -34,6 +34,14 @@ fix_bazel_imports() {
     find "${stashed_dir}"components/private/*/tests/unit -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
     find "${stashed_dir}"components/*/tests/unit -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
   }
+  rewrite_examples() {
+    find "${stashed_dir}"components/private/*/examples -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/private/*/examples -type f -name '*.h' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/private/*/examples -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/*/examples -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/*/examples -type f -name '*.h' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/*/examples -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
+  }
   rewrite_source() {
     find "${stashed_dir}"components/private/*/src -type f -name '*.h' -exec perl -pi -e "$1" {} + || true
     find "${stashed_dir}"components/private/*/src -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
@@ -43,17 +51,24 @@ fix_bazel_imports() {
 
   stashed_dir=""
   rewrite_tests "s/import MaterialComponents.Material(.+)_(.+)/import components_\1_\2/"
-  rewrite_tests "s/import MaterialComponentsAlpha.Material(.+)Scheme/import components_schemes_\1_\1 \/\/ Alpha/"
+  rewrite_tests "s/import MaterialComponentsBeta.Material(.+)Scheme/import components_schemes_\1_\1 \/\/ Beta/"
   rewrite_tests "s/import MaterialComponents.Material(.+)Scheme/import components_schemes_\1_\1/"
+  rewrite_examples "s/import MaterialComponents.Material(.+)_(.+)/import components_\1_\2/"
+  rewrite_examples "s/import MaterialComponentsBeta.Material(.+)Scheme/import components_schemes_\1_\1 \/\/ Beta/"
+  rewrite_examples "s/import MaterialComponents.Material(.+)Scheme/import components_schemes_\1_\1/"
   private_components | while read private_component; do
     if [ -z "$private_component" ]; then
       continue
     fi
     rewrite_tests "s/import MaterialComponents.Material$private_component/import components_private_${private_component}_${private_component}/"
+    rewrite_examples "s/import MaterialComponents.Material$private_component/import components_private_${private_component}_${private_component}/"
   done
-  rewrite_tests "s/import MaterialComponentsAlpha.Material(.+)_(.+)/import components_\1_\2 \/\/ Alpha/"
-  rewrite_tests "s/import MaterialComponentsAlpha.Material(.+)/import components_\1_\1 \/\/ Alpha/"
+  rewrite_tests "s/import MaterialComponentsBeta.Material(.+)_(.+)/import components_\1_\2 \/\/ Beta/"
+  rewrite_tests "s/import MaterialComponentsBeta.Material(.+)/import components_\1_\1 \/\/ Beta/"
   rewrite_tests "s/import MaterialComponents.Material(.+)/import components_\1_\1/"
+  rewrite_examples "s/import MaterialComponentsBeta.Material(.+)_(.+)/import components_\1_\2 \/\/ Beta/"
+  rewrite_examples "s/import MaterialComponentsBeta.Material(.+)/import components_\1_\1 \/\/ Beta/"
+  rewrite_examples "s/import MaterialComponents.Material(.+)/import components_\1_\1/"
   rewrite_source "s/import <Motion(.+)\/Motion.+\.h>/import \"Motion\1.h\"/"
   rewrite_source "s/import <MDFTextAccessibility\/MDFTextAccessibility\.h>/import \"MDFTextAccessibility.h\"/"
   rewrite_source "s/import <MaterialComponents\/Material(.+)\.h>/import\/\*framework import\*\/ \"Material\1.h\"/"
@@ -64,12 +79,20 @@ fix_bazel_imports() {
     echo "Undoing import rewrites for bazel..."
 
     # Undoes our source changes from above.
-    rewrite_tests "s/import components_(.+)_\1 \/\/ Alpha/import MaterialComponentsAlpha.Material\1/"
-    rewrite_tests "s/import components_schemes_(.+)_.+ \/\/ Alpha/import MaterialComponentsAlpha.Material\1Scheme/"
+    rewrite_tests "s/import components_(.+)_\1 \/\/ Beta/import MaterialComponentsBeta.Material\1/"
+    rewrite_tests "s/import components_schemes_(.+)_.+ \/\/ Beta/import MaterialComponentsBeta.Material\1Scheme/"
     rewrite_tests "s/import components_schemes_(.+)_.+/import MaterialComponents.Material\1Scheme/"
     rewrite_tests "s/import components_private_(.+)_.+/import MaterialComponents.Material\1/"
     rewrite_tests "s/import components_(.+)_\1/import MaterialComponents.Material\1/"
+    rewrite_tests "s/import components_(.+)_(.+) \/\/ Beta/import MaterialComponentsBeta.Material\1_\2/"
     rewrite_tests "s/import components_(.+)_(.+)/import MaterialComponents.Material\1_\2/"
+    rewrite_examples "s/import components_(.+)_\1 \/\/ Beta/import MaterialComponentsBeta.Material\1/"
+    rewrite_examples "s/import components_schemes_(.+)_.+ \/\/ Beta/import MaterialComponentsBeta.Material\1Scheme/"
+    rewrite_examples "s/import components_schemes_(.+)_.+/import MaterialComponents.Material\1Scheme/"
+    rewrite_examples "s/import components_private_(.+)_.+/import MaterialComponents.Material\1/"
+    rewrite_examples "s/import components_(.+)_\1/import MaterialComponents.Material\1/"
+    rewrite_examples "s/import components_(.+)_(.+) \/\/ Beta/import MaterialComponentsBeta.Material\1_\2/"
+    rewrite_examples "s/import components_(.+)_(.+)/import MaterialComponents.Material\1_\2/"
     rewrite_source "s/import \"Motion(.+)\.h\"/import <Motion\1\/Motion\1.h>/"
     rewrite_source "s/import \"MDFTextAccessibility\.h\"/import <MDFTextAccessibility\/MDFTextAccessibility.h>/"
     rewrite_source "s/import\/\*framework import\*\/ \"Material(.+)\.h\"/import <MaterialComponents\/Material\1\.h>/"
@@ -154,6 +177,39 @@ upload_bazel_test_artifacts() {
   # artifacts directory.
   find -L . -name "test.xml" -type f -exec rename 's/test.xml/sponge_log.xml/' {} \;
   find -L . -name "sponge_log.xml" -type f | copy_to_artifacts
+}
+
+run_bazel_affected() {
+  echo "Checking affected targets..."
+  if [ -z "$COMMAND" ]; then
+    COMMAND="test"
+  fi
+  if [ -z "$TARGET" ]; then
+    if [ "$COMMAND" == "test" ]; then
+      # Only return test targets.
+      rule_kind="test"
+    else
+      # Return all affected targets.
+      rule_kind="rule"
+    fi
+
+    if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+      pushd github/repo >> /dev/null
+    fi
+
+    TARGET="$(scripts/affected_targets $rule_kind)"
+    
+    if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+      popd >> /dev/null
+    fi
+  fi
+  
+  if [ -z "$TARGET" ]; then
+    echo "Nothing to build."
+    exit 0
+  fi
+  
+  run_bazel
 }
 
 run_bazel() {
@@ -484,6 +540,7 @@ fi
 
 case "$DEPENDENCY_SYSTEM" in
   "bazel")      run_bazel ;;
+  "bazel-affected")      run_bazel_affected ;;
   "cocoapods")  run_cocoapods ;;
   "cocoapods-podspec")  run_cocoapods ;;
   "website")    generate_website ;;

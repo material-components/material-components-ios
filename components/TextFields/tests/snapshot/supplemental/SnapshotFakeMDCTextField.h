@@ -12,14 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialTextFields.h"
-
 #import <UIKit/UIKit.h>
+
+#import "MDCSnapshotFakeTextInput.h"
+#import "MaterialTextFields.h"
 
 /**
  A test fake MDCTextField implementation for Snapshot testing.
  */
-@interface SnapshotFakeMDCTextField : MDCTextField
+@interface SnapshotFakeMDCTextField : MDCTextField <MDCSnapshotFakeTextInput>
 
 /**
  Overrides the value returned by `-isEditing`.
