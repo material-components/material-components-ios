@@ -91,7 +91,6 @@ mdc_objc_library(
     name = "privateHeaders",
     testonly = 1,
     hdrs = native.glob(["src/private/*.h"]),
-    visibility = ["//visibility:private"],
     deps = [":ActionSheet"],
 )
 
@@ -99,7 +98,6 @@ mdc_objc_library(
     name = "private",
     hdrs = native.glob(["src/private/*.h"]),
     includes = ["src/private"],
-    visibility = ["//visibility:private"],
 )
 
 mdc_objc_library(
@@ -138,7 +136,6 @@ swift_library(
         "-swift-version",
         "3",
     ],
-    visibility = ["//visibility:private"],
     deps = [
         ":ActionSheet",
         ":ColorThemer",
@@ -158,7 +155,6 @@ mdc_objc_library(
         "CoreImage",
         "XCTest",
     ],
-    visibility = ["//visibility:private"],
     deps = [
         ":ActionSheet",
         ":ActionSheetThemer",
