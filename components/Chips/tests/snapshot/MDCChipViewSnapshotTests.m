@@ -18,6 +18,7 @@
 
 @interface MDCChipViewSnapshotTests : MDCSnapshotTestCase
 
+@property(nonatomic, strong) MDCContainerScheme *scheme;
 @property(nonatomic, strong) MDCChipView *chip;
 
 @end
@@ -29,10 +30,11 @@
 
   // Uncomment below to recreate all the goldens (or add the following line to the specific
   // test you wish to recreate the golden for).
-    self.recordMode = YES;
+  //  self.recordMode = YES;
 
   self.chip = [[MDCChipView alloc] init];
   self.chip.titleLabel.text = @"A Chip";
+  self.scheme = [[MDCContainerScheme alloc] init];
 }
 
 - (void)tearDown {
@@ -55,6 +57,22 @@
 #pragma mark - Tests
 
 - (void)testDefaultChip {
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
+- (void)testBaselineThemedChip {
+  // When
+  [self.chip applyThemeWithScheme:self.scheme];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
+- (void)testOutlinedThemedChip {
+  // When
+  [self.chip applyOutlinedThemeWithScheme:self.scheme];
+
   // Then
   [self generateSnapshotAndVerifyForView:self.chip];
 }
