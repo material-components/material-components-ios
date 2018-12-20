@@ -15,6 +15,7 @@
 
 load(
     "//:material_components_ios.bzl",
+    "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
     "mdc_unit_test_suite",
@@ -42,11 +43,8 @@ mdc_public_objc_library(
     ],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "Theming",
-    srcs = native.glob(["src/Theming/*.m"]),
-    hdrs = native.glob(["src/Theming/*.h"]),
-    includes = ["src/Theming"],
     deps = [
         ":Chips",
         ":ColorThemer",
@@ -56,12 +54,8 @@ mdc_objc_library(
     ],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "ChipThemer",
-    srcs = native.glob(["src/ChipThemer/*.m"]),
-    hdrs = native.glob(["src/ChipThemer/*.h"]),
-    includes = ["src/ChipThemer"],
-    visibility = ["//visibility:public"],
     deps = [
         ":Chips",
         ":ColorThemer",
@@ -77,51 +71,32 @@ mdc_objc_library(
     deps = [":Chips"],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "FontThemer",
-    srcs = native.glob(["src/FontThemer/*.m"]),
-    hdrs = native.glob(["src/FontThemer/*.h"]),
-    includes = ["src/FontThemer"],
-    visibility = ["//visibility:public"],
     deps = [
         ":Chips",
         "//components/Themes",
     ],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "ColorThemer",
-    srcs = native.glob(["src/ColorThemer/*.m"]),
-    hdrs = native.glob(["src/ColorThemer/*.h"]),
-    includes = ["src/ColorThemer"],
-    visibility = ["//visibility:public"],
     deps = [
         ":Chips",
         "//components/schemes/Color",
     ],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "ShapeThemer",
-    srcs = native.glob(["src/ShapeThemer/*.m"]),
-    hdrs = native.glob(["src/ShapeThemer/*.h"]),
-    includes = ["src/ShapeThemer"],
-    sdk_frameworks = [
-        "UIKit",
-    ],
-    visibility = ["//visibility:public"],
     deps = [
         ":Chips",
         "//components/schemes/Shape",
     ],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "TypographyThemer",
-    srcs = native.glob(["src/TypographyThemer/*.m"]),
-    hdrs = native.glob(["src/TypographyThemer/*.h"]),
-    includes = ["src/TypographyThemer"],
-    visibility = ["//visibility:public"],
     deps = [
         ":Chips",
         "//components/schemes/Typography",

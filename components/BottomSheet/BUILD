@@ -14,6 +14,7 @@
 
 load(
     "//:material_components_ios.bzl",
+    "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
     "mdc_unit_test_suite",
@@ -43,15 +44,8 @@ mdc_objc_library(
     deps = [":BottomSheet"],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "ShapeThemer",
-    srcs = native.glob(["src/ShapeThemer/*.m"]),
-    hdrs = native.glob(["src/ShapeThemer/*.h"]),
-    includes = ["src/ShapeThemer"],
-    sdk_frameworks = [
-        "UIKit",
-    ],
-    visibility = ["//visibility:public"],
     deps = [
         ":BottomSheet",
         "//components/schemes/Shape",
