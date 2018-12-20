@@ -81,7 +81,6 @@ def mdc_extension_objc_library(
     **kwarrgs: Any arrguments accepted by _mdc_objc_library().
   """
   mdc_objc_library(
-  
       name = name,
       deps = deps,
       sdk_frameworks = sdk_frameworks,
