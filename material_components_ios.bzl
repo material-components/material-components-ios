@@ -56,6 +56,28 @@ def mdc_public_objc_library(
       enable_modules = 1,
       **kwargs)
 
+def mdc_theming_objc_library(
+    deps = [],
+    sdk_frameworks = [],
+    **kwargs):
+  """Declare a public MDC component Theming extension
+
+  Args:
+    deps: The dependencies of the library.
+    sdk_frameworks: The SDK Frameworks needed (e.g., "CoreGraphics").
+    **kwargs: Any arguments accepted by _mdc_objc_library().
+  """
+  mdc_objc_library(
+    name = "Theming",
+    deps = deps,
+    sdk_frameworks = sdk_frameworks,
+    visibility = ["//visibility:public"],
+    srcs = native.glob(["src/Theming/*.m"]),
+    hdrs = native.glob(["src/Theming/*.h"]),
+    includes = ["src/Theming"],
+    enable_modules = 1,
+    **kwargs)
+
 def mdc_unit_test_suite(
     name = "unit_tests",
     deps = [],
