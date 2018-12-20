@@ -237,7 +237,6 @@ class DialogsAlertCustomizationExampleViewController: MDCCollectionViewControlle
       colorScheme.onSurfaceColor = .white
       colorScheme.primaryColor = MDCPalette.deepPurple.tint300
       colorScheme.onPrimaryColor = .black
-      colorScheme.backgroundColor = .black
       scheme.colorScheme = colorScheme
       return scheme
     }()

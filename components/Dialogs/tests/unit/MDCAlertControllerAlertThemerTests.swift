@@ -145,4 +145,26 @@ class MDCAlertControllerAlertThemerTests: XCTestCase {
     XCTAssertEqual(alert.elevation.rawValue, elevation.rawValue, accuracy: 0.001)
     XCTAssertNotEqual(alertScheme.elevation.rawValue, defaultElevation.rawValue, accuracy: 0.001)
   }
+
+  func testApplyingAlertSchemeWithBackgroundColor() {
+    // Given
+    let colorScheme = MDCSemanticColorScheme()
+    colorScheme.surfaceColor = .black
+    colorScheme.onSurfaceColor = .orange
+    colorScheme.primaryColor = .green
+    alertScheme.colorScheme = colorScheme
+
+    // When
+    MDCAlertControllerThemer.applyScheme(alertScheme, to: alert)
+
+    // Then
+    XCTAssertEqual(alertScheme.colorScheme.onSurfaceColor, colorScheme.onSurfaceColor)
+    XCTAssertEqual(alertScheme.colorScheme.surfaceColor, colorScheme.surfaceColor)
+    XCTAssertEqual(alertView.titleColor,
+                   alertScheme.colorScheme.onSurfaceColor.withAlphaComponent(0.87))
+    XCTAssertNotEqual(alertView.titleColor,
+                      MDCSemanticColorScheme().onSurfaceColor.withAlphaComponent(0.87))
+    XCTAssertEqual(alertView.titleIconTintColor, colorScheme.primaryColor)
+    XCTAssertEqual(alertView.backgroundColor, colorScheme.surfaceColor);
+  }
 }

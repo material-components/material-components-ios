@@ -45,6 +45,7 @@ class DialogsMaterialThemingTests: XCTestCase {
     XCTAssertEqual(alert.messageColor, colorScheme.onSurfaceColor.withAlphaComponent(0.60))
     XCTAssertEqual(alert.titleIconTintColor, colorScheme.primaryColor)
     XCTAssertEqual(alert.scrimColor, colorScheme.onSurfaceColor.withAlphaComponent(0.32))
+    XCTAssertEqual(alert.backgroundColor, colorScheme.surfaceColor);
 
     // Typography
     XCTAssertEqual(alert.titleFont, typographyScheme.headline6)
