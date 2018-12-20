@@ -20,6 +20,7 @@ load(
     "mdc_public_objc_library",
     "mdc_unit_test_suite",
 )
+load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
@@ -39,6 +40,17 @@ mdc_public_objc_library(
         "//components/private/ShapeLibrary",
         "//components/private/Shapes",
         "@material_internationalization_ios//:MDFInternationalization",
+    ],
+)
+
+mdc_extension_objc_library(
+    name = "Theming",
+    deps = [
+        ":Chips",
+        ":ColorThemer",
+        ":ShapeThemer",
+        ":TypographyThemer",
+        "//components/schemes/Container",
     ],
 )
 
@@ -97,6 +109,23 @@ mdc_objc_library(
     hdrs = native.glob(["src/private/*.h"]),
     includes = ["src/private"],
     visibility = ["//visibility:private"],
+)
+
+swift_library(
+    name = "unit_test_swift_sources",
+    srcs = glob(["tests/unit/*.swift"]),
+    copts = [
+        "-swift-version",
+        "3",
+    ],
+    visibility = ["//visibility:private"],
+    deps = [
+        ":Chips",
+        ":Theming",
+        "//components/schemes/Color",
+        "//components/schemes/Shape",
+        "//components/schemes/Typography",
+    ],
 )
 
 mdc_objc_library(
