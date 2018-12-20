@@ -20,19 +20,47 @@
 # https://docs.bazel.build/versions/master/query.html#kind
 type="$1"
 
+# range should be a valid git diff/log range. E.g. origin/develop...HEAD
+range="$2"
+
+if [ -z "$type" ]; then
+  echo "Please provide a blaze rule type to query for."
+  exit 1
+fi
+
+if [ -z "$range" ]; then
+  echo "Please provide a diff range."
+  exit 1
+fi
+
+if [ $(git branch --list "$TARGET_BRANCH") ]; then
+  base_sha=$(git merge-base "$TARGET_BRANCH" HEAD)
+else
+  base_sha="HEAD^"
+fi
+
 # Generates a list of files that were modified since origin/develop.
 modified_files() {
-  git log --name-only --pretty=oneline --full-index $(git merge-base origin/develop HEAD)...HEAD \
+  git log --name-only --pretty=oneline --full-index "$range" \
     | grep -vE '^[0-9a-f]{40} ' \
     | sort \
     | uniq
 }
 
-# TODO: Add check for whether we need to rebuild everything.
+# Reads a list of files and generates a list of files that will affect the entire
+# build system.
+files_that_affect_everything() {
+  grep -e "\.bzl$" -e "WORKSPACE" -e "\.kokoro" "$@"
+}
+
+if modified_files | files_that_affect_everything -q; then
+  echo "//..."
+  exit 0
+fi
 
 # Generates a list of targets that are affected by the files modified since origin/develop.
 directly_modified_targets() {
-  for line in $(modified_files); do
+  while read line; do
     label=$(bazel query $line 2>/dev/null)
     if [ "$(basename $line)" == "BUILD" ]; then
       # All targets are affected
@@ -53,4 +81,4 @@ indirectly_modified_targets() {
 }
 
 # Generate the transitive list of affected targets.
-directly_modified_targets | indirectly_modified_targets "$type"
+modified_files | directly_modified_targets | indirectly_modified_targets "$type"
