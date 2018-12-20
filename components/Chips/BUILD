@@ -42,6 +42,21 @@ mdc_public_objc_library(
 )
 
 mdc_objc_library(
+    name = "Theming",
+    srcs = native.glob(["src/Theming/*.m"]),
+    hdrs = native.glob(["src/Theming/*.h"]),
+    includes = ["src/Theming"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":Chips",
+        ":ColorThemer",
+        ":ShapeThemer",
+        ":TypographyThemer",
+        "//components/schemes/Container",
+    ],
+)
+
+mdc_objc_library(
     name = "ChipThemer",
     srcs = native.glob(["src/ChipThemer/*.m"]),
     hdrs = native.glob(["src/ChipThemer/*.h"]),
@@ -119,6 +134,23 @@ mdc_objc_library(
     hdrs = native.glob(["src/private/*.h"]),
     includes = ["src/private"],
     visibility = ["//visibility:private"],
+)
+
+swift_library(
+    name = "unit_test_swift_sources",
+    srcs = glob(["tests/unit/*.swift"]),
+    copts = [
+        "-swift-version",
+        "3",
+    ],
+    visibility = ["//visibility:private"],
+    deps = [
+        ":Chips",
+        ":ColorThemer",
+        ":ShapeThemer",
+        ":Theming",
+        ":TypographyThemer",
+    ],
 )
 
 mdc_objc_library(
