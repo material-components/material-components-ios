@@ -57,7 +57,7 @@ def mdc_public_objc_library(
       **kwargs)
 
 def mdc_unit_test_suite(
-    name = "unit_tests",
+    name,
     deps = [],
     minimum_os_version = "8.0",
     visibility = ["//visibility:private"],
