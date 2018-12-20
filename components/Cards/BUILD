@@ -44,13 +44,13 @@ mdc_objc_library(
     srcs = native.glob(["src/Theming/*.m"]),
     hdrs = native.glob(["src/Theming/*.h"]),
     includes = ["src/Theming"],
+    visibility = ["//visibility:public"],
     deps = [
         ":Cards",
         ":ColorThemer",
         ":ShapeThemer",
         "//components/schemes/Container",
     ],
-    visibility = ["//visibility:public"],
 )
 
 mdc_objc_library(
