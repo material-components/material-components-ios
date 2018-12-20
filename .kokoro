@@ -179,6 +179,39 @@ upload_bazel_test_artifacts() {
   find -L . -name "sponge_log.xml" -type f | copy_to_artifacts
 }
 
+run_bazel_affected() {
+  echo "Checking affected targets..."
+  if [ -z "$COMMAND" ]; then
+    COMMAND="test"
+  fi
+  if [ -z "$TARGET" ]; then
+    if [ "$COMMAND" == "test" ]; then
+      # Only return test targets.
+      rule_kind="test"
+    else
+      # Return all affected targets.
+      rule_kind="rule"
+    fi
+
+    if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+      pushd github/repo >> /dev/null
+    fi
+
+    TARGET="$(scripts/affected_targets $rule_kind)"
+    
+    if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+      popd >> /dev/null
+    fi
+  fi
+  
+  if [ -z "$TARGET" ]; then
+    echo "Nothing to build."
+    exit 0
+  fi
+  
+  run_bazel
+}
+
 run_bazel() {
   echo "Running bazel builds..."
 
@@ -507,6 +540,7 @@ fi
 
 case "$DEPENDENCY_SYSTEM" in
   "bazel")      run_bazel ;;
+  "bazel-affected")      run_bazel_affected ;;
   "cocoapods")  run_cocoapods ;;
   "cocoapods-podspec")  run_cocoapods ;;
   "website")    generate_website ;;
