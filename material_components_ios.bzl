@@ -57,18 +57,20 @@ def mdc_public_objc_library(
       **kwargs)
 
 def mdc_theming_objc_library(
+    name = "Theming",
     deps = [],
     sdk_frameworks = [],
     **kwargs):
   """Declare a public MDC component Theming extension
 
   Args:
+    name: The name of the library.
     deps: The dependencies of the library.
     sdk_frameworks: The SDK Frameworks needed (e.g., "CoreGraphics").
     **kwargs: Any arguments accepted by _mdc_objc_library().
   """
   mdc_objc_library(
-    name = "Theming",
+    name = name,
     deps = deps,
     sdk_frameworks = sdk_frameworks,
     visibility = ["//visibility:public"],
