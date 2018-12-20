@@ -297,10 +297,14 @@
   XCTAssertEqual(shadowView.elevation, elevation);
 }
 
+- (void)testDialogBackgroundColorIsNotClearWhenNoThemingIsApllied {
+  // Then
+  XCTAssertNotNil(self.alert.view.backgroundColor);
+}
+
 - (void)testDialogCustomBackgroundColorAfterPresentation {
   // Given
   UIColor *testColor = UIColor.redColor;
-  XCTAssertNil(self.alert.view.backgroundColor);
 
   // When
   [self.alert setBackgroundColor:testColor];
