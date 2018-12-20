@@ -501,6 +501,12 @@ protect_stable_from_undesired_merges() {
   echo "Validated that this branch is a release-candidate being merged in to stable."
 }
 
+# The fall-through case for unknown jobs.
+unknown_job() {
+  echo "The following job is unknown and will not be run: $DEPENDENCY_SYSTEM"
+  exit 1
+}
+
 POSITIONAL=()
 while [[ $# -gt 0 ]]; do
   key="$1"
@@ -549,7 +555,7 @@ case "$DEPENDENCY_SYSTEM" in
   "fail")       fail_immediately ;;
   "protect-stable-from-undesired-merges") protect_stable_from_undesired_merges ;;
 
-  *)            run_bazel ;;
+  *)            unknown_job ;;
 esac
 
 echo "Success!"
