@@ -43,7 +43,7 @@ fix_bazel_imports() {
 
   stashed_dir=""
   rewrite_tests "s/import MaterialComponents.Material(.+)_(.+)/import components_\1_\2/"
-  rewrite_tests "s/import MaterialComponentsBeta.Material(.+)Scheme/import components_schemes_\1_\1 \/\/ Alpha/"
+  rewrite_tests "s/import MaterialComponentsBeta.Material(.+)Scheme/import components_schemes_\1_\1 \/\/ Beta/"
   rewrite_tests "s/import MaterialComponents.Material(.+)Scheme/import components_schemes_\1_\1/"
   private_components | while read private_component; do
     if [ -z "$private_component" ]; then
@@ -51,8 +51,8 @@ fix_bazel_imports() {
     fi
     rewrite_tests "s/import MaterialComponents.Material$private_component/import components_private_${private_component}_${private_component}/"
   done
-  rewrite_tests "s/import MaterialComponentsBeta.Material(.+)_(.+)/import components_\1_\2 \/\/ Alpha/"
-  rewrite_tests "s/import MaterialComponentsBeta.Material(.+)/import components_\1_\1 \/\/ Alpha/"
+  rewrite_tests "s/import MaterialComponentsBeta.Material(.+)_(.+)/import components_\1_\2 \/\/ Beta/"
+  rewrite_tests "s/import MaterialComponentsBeta.Material(.+)/import components_\1_\1 \/\/ Beta/"
   rewrite_tests "s/import MaterialComponents.Material(.+)/import components_\1_\1/"
   rewrite_source "s/import <Motion(.+)\/Motion.+\.h>/import \"Motion\1.h\"/"
   rewrite_source "s/import <MDFTextAccessibility\/MDFTextAccessibility\.h>/import \"MDFTextAccessibility.h\"/"
@@ -64,11 +64,12 @@ fix_bazel_imports() {
     echo "Undoing import rewrites for bazel..."
 
     # Undoes our source changes from above.
-    rewrite_tests "s/import components_(.+)_\1 \/\/ Alpha/import MaterialComponentsBeta.Material\1/"
-    rewrite_tests "s/import components_schemes_(.+)_.+ \/\/ Alpha/import MaterialComponentsBeta.Material\1Scheme/"
+    rewrite_tests "s/import components_(.+)_\1 \/\/ Beta/import MaterialComponentsBeta.Material\1/"
+    rewrite_tests "s/import components_schemes_(.+)_.+ \/\/ Beta/import MaterialComponentsBeta.Material\1Scheme/"
     rewrite_tests "s/import components_schemes_(.+)_.+/import MaterialComponents.Material\1Scheme/"
     rewrite_tests "s/import components_private_(.+)_.+/import MaterialComponents.Material\1/"
     rewrite_tests "s/import components_(.+)_\1/import MaterialComponents.Material\1/"
+    rewrite_tests "s/import components_(.+)_(.+) \/\/ Beta/import MaterialComponentsBeta.Material\1_\2/"
     rewrite_tests "s/import components_(.+)_(.+)/import MaterialComponents.Material\1_\2/"
     rewrite_source "s/import \"Motion(.+)\.h\"/import <Motion\1\/Motion\1.h>/"
     rewrite_source "s/import \"MDFTextAccessibility\.h\"/import <MDFTextAccessibility\/MDFTextAccessibility.h>/"

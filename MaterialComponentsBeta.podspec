@@ -1,6 +1,6 @@
 Pod::Spec.new do |mdc|
   mdc.name         = "MaterialComponentsBeta"
-  mdc.version      = "72.2.0"
+  mdc.version      = "73.0.0"
   mdc.authors      = "The Material Components authors."
   mdc.summary      = "A collection of stand-alone alpha UI libraries that are not yet guaranteed to be ready for general production use. Use with caution."
   mdc.homepage     = "https://github.com/material-components/material-components-ios"
@@ -133,8 +133,8 @@ Pod::Spec.new do |mdc|
 
   mdc.subspec "private" do |private_spec|
     # CocoaPods requires at least one file to show up in a subspec, so we depend on the fake
-    # "Alpha" component as a baseline.
-    private_spec.subspec "Alpha" do |component|
+    # "Beta" component as a baseline.
+    private_spec.subspec "Beta" do |component|
       component.ios.deployment_target = '8.0'
       component.public_header_files = "components/private/#{component.base_name}/src/*.h"
       component.source_files = "components/private/#{component.base_name}/src/*.{h,m}"
