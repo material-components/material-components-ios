@@ -70,7 +70,7 @@ directly_modified_targets() {
     label=$(bazel query $line 2>/dev/null)
     if [ "$(basename $line)" == "BUILD" ]; then
       # All targets are affected
-      echo "$(dirname $line)/..."
+      echo "//$(dirname $line)/..."
       continue
     fi
     bazel query "attr('srcs', $label, ${label//:*/}:*) union attr('hdrs', $label, ${label//:*/}:*)" 2>/dev/null
