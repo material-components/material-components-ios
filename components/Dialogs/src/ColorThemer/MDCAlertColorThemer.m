@@ -26,7 +26,7 @@
   alertController.messageColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60];
   alertController.titleIconTintColor = colorScheme.primaryColor;
   alertController.scrimColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.32];
-  alertController.backgroundColor = colorScheme.backgroundColor;
+  alertController.backgroundColor = colorScheme.surfaceColor;
 
   // Apply theming to buttons based on the action emphasis
   for (MDCAlertAction *action in alertController.actions) {
