@@ -270,7 +270,6 @@ run_bazel() {
     # Especially in the event of failure, we want our test artifacts to be uploaded.
     trap upload_bazel_test_artifacts EXIT
   fi
-  bazel clean
   bazel $COMMAND $TARGET --xcode_version $xcode_version --ios_minimum_os=8.0 --ios_multi_cpus=i386,x86_64 $extra_args $verbosity_args
 }
 
