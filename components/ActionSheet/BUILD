@@ -15,6 +15,7 @@
 
 load(
     "//:material_components_ios.bzl",
+    "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
     "mdc_unit_test_suite",
@@ -33,12 +34,8 @@ mdc_public_objc_library(
     ],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "Theming",
-    srcs = native.glob(["src/Theming/*.m"]),
-    hdrs = native.glob(["src/Theming/*.h"]),
-    includes = ["src/Theming"],
-    visibility = ["//visibility:public"],
     deps = [
         ":ActionSheet",
         ":ColorThemer",
@@ -47,13 +44,8 @@ mdc_objc_library(
     ],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "ActionSheetThemer",
-    srcs = native.glob(["src/ActionSheetThemer/*.m"]),
-    hdrs = native.glob(["src/ActionSheetThemer/*.h"]),
-    includes = ["src/ActionSheetThemer"],
-    sdk_frameworks = ["UIKit"],
-    visibility = ["//visibility:public"],
     deps = [
         ":ActionSheet",
         ":ColorThemer",
@@ -61,26 +53,16 @@ mdc_objc_library(
     ],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "TypographyThemer",
-    srcs = native.glob(["src/TypographyThemer/*.m"]),
-    hdrs = native.glob(["src/TypographyThemer/*.h"]),
-    includes = ["src/TypographyThemer"],
-    sdk_frameworks = ["UIKit"],
-    visibility = ["//visibility:public"],
     deps = [
         ":ActionSheet",
         "//components/schemes/Typography",
     ],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "ColorThemer",
-    srcs = native.glob(["src/ColorThemer/*.m"]),
-    hdrs = native.glob(["src/ColorThemer/*.h"]),
-    includes = ["src/ColorThemer"],
-    sdk_frameworks = ["UIKit"],
-    visibility = ["//visibility:public"],
     deps = [
         ":ActionSheet",
         "//components/schemes/Color",
