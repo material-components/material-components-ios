@@ -17,6 +17,15 @@
 # Fail on any error.
 set -e
 
+if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+  # Import source methods for managing GitHub comments
+  scripts_dir='github/repo/scripts'
+else
+  scripts_dir="$(dirname $0)/scripts"
+fi
+
+source "${scripts_dir}/github-comments.sh"
+
 # To install homebrew formulas at specific versions we need to point directly
 # to the desired sha in the homebrew formula repository.
 # See https://danepowell.com/blog/homebrew-formula-versions for more details.
@@ -116,95 +125,6 @@ move_derived_data_to_tmp() {
   if [[ -d "$targetDir" ]]; then
     mv "$targetDir" /tmpfs/
     ln -sf /tmpfs/DerivedData "$targetDir"
-  fi
-}
-
-# Posts a comment to the current pull request.
-# Args:
-#   $1: A unique identifier for this comment.
-#   $2: A path to a file containing the body of the comment to post.
-post_comment() {
-  identifier="$1"
-  comment_body_file="$2"
-
-  if [ -z "$identifier" ]; then
-    echo "Please pass an identifier as the first argument."
-    exit 1
-  fi
-
-  if [ -z "$comment_body_file" ]; then
-    echo "Please pass the path to a comment_body file as the second argument."
-    exit 1
-  fi
-
-  if [ -z "$GITHUB_API_TOKEN" ]; then
-    echo "No GITHUB_API_TOKEN provided; can't post a comment."
-    exit 1
-  fi
-
-  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
-    # Move into our cloned repo
-    pushd github/repo
-  fi
-
-  if [ ! -f scripts/external/github-comment/.git ]; then
-    git submodule update --init --recursive scripts/external/github-comment
-  fi
-
-  pushd scripts/external/github-comment >> /dev/null
-
-  swift run github-comment \
-    --repo=material-components/material-components-ios \
-    --github_token="$GITHUB_API_TOKEN" \
-    --pull_request_number="$KOKORO_GITHUB_PULL_REQUEST_NUMBER" \
-    --identifier="$identifier" \
-    --comment_body="$comment_body_file"
-
-  popd >> /dev/null
-
-  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
-    popd >> /dev/null
-  fi
-}
-
-# Posts a comment from the current pull request.
-# Args:
-#   $1: A unique identifier for this comment.
-delete_comment() {
-  identifier="$1"
-
-  if [ -z "$identifier" ]; then
-    echo "Please pass an identifier as the first argument."
-    exit 1
-  fi
-
-  if [ -z "$GITHUB_API_TOKEN" ]; then
-    echo "No GITHUB_API_TOKEN provided; can't post a comment."
-    exit 1
-  fi
-
-  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
-    # Move into our cloned repo
-    pushd github/repo
-  fi
-
-  if [ ! -f scripts/external/github-comment/.git ]; then
-    git submodule update --init --recursive scripts/external/github-comment
-  fi
-
-  pushd scripts/external/github-comment >> /dev/null
-
-  swift run github-comment \
-    --repo=material-components/material-components-ios \
-    --github_token="$GITHUB_API_TOKEN" \
-    --pull_request_number="$KOKORO_GITHUB_PULL_REQUEST_NUMBER" \
-    --identifier="$identifier" \
-    --delete
-
-  popd >> /dev/null
-
-  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
-    popd >> /dev/null
   fi
 }
 
