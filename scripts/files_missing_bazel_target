@@ -21,8 +21,6 @@ echo "Bazel target detection v${script_version}"
 
 # Generates a list of files that were modified since the target branch 
 modified_files() {
-  echo "Entered 'modified_files'"
-
   # Move to our cloned repository
   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
     pushd github/repo >> /dev/null
@@ -36,19 +34,13 @@ modified_files() {
     target_branch=develop
   fi
 
-  echo "Target branch: ${target_branch}"
-
   # `base_sha` is the merge base of `target_branch` and the current HEAD.
-  echo "git merge-base ${target_branch} HEAD"
   base_sha=$(git merge-base "${target_branch}" HEAD)
-
-  echo "Base SHA: ${base_sha}"
 
   # `TARGET` is then all bazel targets affected by changes in the commit range between `base_sha`
   # and `HEAD`.  By default, that becomes all changes between the `develop` branch and the latest
   #  commit.
   range="${base_sha}...HEAD"
-
   
   git log --name-only --pretty=oneline --full-index "${range}" \
     | grep -vE '^[0-9a-f]{40} ' \
@@ -63,8 +55,6 @@ modified_files() {
 
 # Determines if any of the modified files are not included in a bazel rule.
 check_files_covered() {
-  echo "Enter 'check_files_covered'"
-
   files=$(modified_files)
   if [ -z "$files" ]; then
     echo "No source files were modified"
@@ -91,7 +81,6 @@ check_files_covered() {
     fi
   done 
   
-
   if (( exit_status != 0 )); then
     echo  -e "The following files are not in any BUILD targets:\n\n${missing_targets}" | sort | uniq
     exit $exit_status
