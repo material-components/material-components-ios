@@ -223,8 +223,42 @@ run_bazel_affected() {
     exit 0
   fi
 
-  echo "$TARGET"
-  
+  if [ ! -f scripts/external/github-comment/.git ]; then
+    git submodule update --init --recursive scripts/external/github-comment
+  fi
+
+  pushd scripts/external/github-comment >> /dev/null
+
+  comment_tmp_path=$(mktemp -d)
+  comment_tmp_file="$comment_tmp_path/comment.tmp"
+  echo "bazel detected changes to the following targets:" > "$comment_tmp_file"
+  echo "$TARGET" >> "$comment_tmp_file"
+
+  if [ -z "$TARGET" ]; then
+    echo "Nothing to build."
+
+    # No changelog, so delete any existing comment
+    swift run github-comment \
+      --repo=material-components/material-components-ios \
+      --github_token="$GITHUB_API_TOKEN" \
+      --pull_request_number="$KOKORO_GITHUB_PULL_REQUEST_NUMBER" \
+      --identifier=affected-targets \
+      --delete
+
+    exit 0
+  else
+    echo "$TARGET"
+
+    swift run github-comment \
+      --repo=material-components/material-components-ios \
+      --github_token="$GITHUB_API_TOKEN" \
+      --pull_request_number="$KOKORO_GITHUB_PULL_REQUEST_NUMBER" \
+      --identifier=affected-targets \
+      --comment_body="$comment_tmp_file"
+  fi
+
+  popd >> /dev/null
+
   run_bazel
 }
 
