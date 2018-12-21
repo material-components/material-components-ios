@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 # Finds all newly-added files that are missing BUILD targets
-script_version=0.0.5
+script_version=0.0.6
 
 set -x -e
 
@@ -44,7 +44,7 @@ modified_files() {
   echo "Target branch: ${target_branch}"
 
   # `base_sha` is the merge base of `target_branch` and the current HEAD.
-  echo "git merge-base '${target_branch}' HEAD"
+  echo "git merge-base ${target_branch} HEAD"
   base_sha=$(git merge-base "${target_branch}" HEAD)
 
   echo "Base SHA: ${base_sha}"
