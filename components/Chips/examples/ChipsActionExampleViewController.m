@@ -14,8 +14,9 @@
 
 #import "ChipsExamplesSupplemental.h"
 
+#import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
-#import "MaterialChips+ChipThemer.h"
+#import "MaterialContainerScheme.h"
 
 @implementation ChipsActionExampleViewController {
   UICollectionView *_collectionView;
@@ -31,6 +32,13 @@
     self.shapeScheme = [[MDCShapeScheme alloc] init];
   }
   return self;
+}
+
+- (MDCContainerScheme *)containerScheme {
+  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
+  scheme.colorScheme = self.colorScheme;
+  scheme.shapeScheme = self.shapeScheme;
+  return scheme;
 }
 
 - (void)loadView {
@@ -111,15 +119,11 @@
   // Customize Chip
   chipView.titleLabel.text = self.titles[indexPath.row];
 
-  MDCChipViewScheme *scheme = [[MDCChipViewScheme alloc] init];
-  scheme.colorScheme = self.colorScheme;
-  scheme.shapeScheme = self.shapeScheme;
-
   // Apply Theming
   if (_isOutlined) {
-    [MDCChipViewThemer applyOutlinedVariantWithScheme:scheme toChipView:chipView];
+    [chipView applyOutlinedThemeWithScheme:[self containerScheme]];
   } else {
-    [MDCChipViewThemer applyScheme:scheme toChipView:chipView];
+    [chipView applyThemeWithScheme:[self containerScheme]];
   }
 
   return cell;
