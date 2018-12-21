@@ -15,9 +15,7 @@
 # limitations under the License.
 #
 # Finds all newly-added files that are missing BUILD targets
-script_version=0.0.8
-
-set -x -e
+script_version=0.0.9
 
 echo "Bazel target detection v${script_version}"
 
@@ -29,10 +27,6 @@ modified_files() {
   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
     pushd github/repo >> /dev/null
   fi
-
-  pwd
-  git fetch
-  git branch -a
 
   # `target_branch` is either the Pull Request destination branch (where it will be merged) or if
   # none can be determined, defaults to `develop`.
