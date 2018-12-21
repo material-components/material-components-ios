@@ -30,6 +30,8 @@
     self.colorScheme =
         [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
     self.shapeScheme = [[MDCShapeScheme alloc] init];
+    self.typographyScheme =
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
   }
   return self;
 }
@@ -38,6 +40,7 @@
   MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
   scheme.colorScheme = self.colorScheme;
   scheme.shapeScheme = self.shapeScheme;
+  scheme.typographyScheme = self.typographyScheme;
   return scheme;
 }
 

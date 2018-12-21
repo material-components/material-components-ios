@@ -24,6 +24,7 @@
 
 @interface ChipsShapingExampleViewController()
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong) MDCShapeScheme *shapeScheme;
 @property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 @end
 
@@ -39,6 +40,7 @@
   if (self) {
     _colorScheme =
         [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    _shapeScheme = [[MDCShapeScheme alloc] init];
     _typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;
@@ -47,6 +49,7 @@
 - (MDCContainerScheme *)containerScheme {
   MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
   scheme.colorScheme = self.colorScheme;
+  scheme.shapeScheme = self.shapeScheme;
   scheme.typographyScheme = self.typographyScheme;
   return scheme;
 }

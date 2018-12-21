@@ -21,12 +21,14 @@ import MaterialComponentsBeta.MaterialContainerScheme
 
 class ChipsFieldDeleteEnabledViewController : UIViewController, MDCChipFieldDelegate {
   var colorScheme = MDCSemanticColorScheme()
+  var shapeScheme = MDCShapeScheme()
   var typographyScheme = MDCTypographyScheme()
   var chipField = MDCChipField()
 
   var scheme: MDCContainerScheming {
     let scheme = MDCContainerScheme()
     scheme.colorScheme = colorScheme
+    scheme.shapeScheme = shapeScheme
     scheme.typographyScheme = typographyScheme
     return scheme
   }
