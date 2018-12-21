@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 # Finds all newly-added files that are missing BUILD targets
-script_version=0.0.6
+script_version=0.0.7
 
 set -x -e
 
@@ -32,6 +32,7 @@ modified_files() {
 
   pwd
   git fetch
+  git branch -a
 
   # `target_branch` is either the Pull Request destination branch (where it will be merged) or if
   # none can be determined, defaults to `develop`.
