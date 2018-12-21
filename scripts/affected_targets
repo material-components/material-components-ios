@@ -55,7 +55,8 @@ files_that_affect_everything() {
   grep -e "\.bzl$" \
     -e "WORKSPACE" \
     -e "\.kokoro" \
-    -e "$SCRIPT_NAME" \
+    -e "\.gitattributes" \
+    -e "${SCRIPT_NAME/\./\\.}" \
     "$@"
 }
 
@@ -64,27 +65,27 @@ if modified_files | files_that_affect_everything -q; then
   exit 0
 fi
 
-# Generates a list of targets that are affected by the files modified since origin/develop.
-directly_modified_targets() {
-  while read line; do
-    label=$(bazel query $line 2>/dev/null)
-    if [ "$(basename $line)" == "BUILD" ]; then
+# Reads a list of file paths and generates a list of bazel targets that would be affected by changes
+# to these files.
+affected_targets() {
+  while read file_path; do
+    if [ "$(basename $file_path)" == "BUILD" ]; then
       # All targets are affected
-      echo "//$(dirname $line)/..."
-      continue
+      query="//$(dirname $file_path)/..."
+    else
+      query="$file_path"
     fi
-    bazel query "attr('srcs', $label, ${label//:*/}:*) union attr('hdrs', $label, ${label//:*/}:*)" 2>/dev/null
-  done | sort | uniq
-}
 
-# Reads a list of targets and generates a transitive list of dependencies that depend on those
-# targets.
-indirectly_modified_targets() {
-  type="$1"
-  while read target; do
-    bazel query --universe_scope=//... --order_output=no "kind($type, allrdeps($target))" 2>/dev/null
+    # allrdeps is part of Sky Query, which can only be accessed when universe_scope and order_output
+    # are provided. See the following docs for more details:
+    # https://docs.bazel.build/versions/master/query.html#sky-query
+    bazel query \
+      --universe_scope=//... \
+      --order_output=no \
+      "kind($type, allrdeps($query))" \
+      2>/dev/null
   done | sort | uniq
 }
 
 # Generate the transitive list of affected targets.
-modified_files | directly_modified_targets | indirectly_modified_targets "$type"
+modified_files | affected_targets "$type"
