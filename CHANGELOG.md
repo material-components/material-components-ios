@@ -1,3 +1,160 @@
+# 73.0.0
+
+This is a major release that introduces `copy` semantics in MDCShapeCategory, part of the Shapes scheme. Also in this release is a new API in NavigationDrawer that provides a way to expand the  bottom drawer to full height.
+
+## New features
+
+### NavigationDrawer expansion
+
+The NavigationDrawer component's `MDCBottomDrawerViewController` has a new API
+that allows clients to programmatically expand the bottom drawer to the full
+height of the presenting view.
+
+**Example (Swift)**
+
+```swift
+drawerVC.expandToFullscreen(withDuration: 0.2, completion: { finished in
+  if finished {
+    print("expansion complete");
+  } else {
+    print("expansion cancelled");
+  }
+})
+```
+
+## API changes
+
+### ActionSheet+Theming
+
+**New extension.**
+
+### NavigationDrawer
+
+#### MDCBottomDrawerViewController
+
+*new* method: `-expandToFullscreenWithDuration:completion:` in `MDCBottomDrawerViewController`
+
+#### MDCBottomDrawerPresentationController
+
+*new* method: `-expandToFullscreenWithDuration:completion:` in `MDCBottomDrawerPresentationController`
+
+### ShapeScheme
+
+#### MDCShapeCategory
+
+*modified* property: `bottomLeftCorner` in `MDCShapeCategory`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@property(strong, nonatomic) MDCCornerTreatment *bottomLeftCorner` |
+| To: | `@property(nonatomic, copy) MDCCornerTreatment *bottomLeftCorner` |
+
+*modified* class: `MDCShapeCategory`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `class MDCShapeCategory : NSObject` |
+| To: | `class MDCShapeCategory : NSObject, NSCopying` |
+
+*modified* class: `MDCShapeCategory`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCShapeCategory : NSObject` |
+| To: | `@interface MDCShapeCategory : NSObject <NSCopying>` |
+
+*modified* property: `bottomRightCorner` in `MDCShapeCategory`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@property(strong, nonatomic) MDCCornerTreatment *bottomRightCorner` |
+| To: | `@property(nonatomic, copy) MDCCornerTreatment *bottomRightCorner` |
+
+*modified* property: `topLeftCorner` in `MDCShapeCategory`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@property(strong, nonatomic) MDCCornerTreatment *topLeftCorner` |
+| To: | `@property(nonatomic, copy) MDCCornerTreatment *topLeftCorner` |
+
+*modified* property: `topRightCorner` in `MDCShapeCategory`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@property(strong, nonatomic) MDCCornerTreatment *topRightCorner` |
+| To: | `@property(nonatomic, copy) MDCCornerTreatment *topRightCorner` |
+
+## Component changes
+
+## Changes
+
+### ActionSheet
+
+* [Update examples (#5979)](https://github.com/material-components/material-components-ios/commit/86cdea966a562b24f2639a0f7d0bb8b68e6b7d9c) (Cody Weaver)
+
+### BottomNavigation
+
+* [Initial implementation of the Bottom Navigation Controller (#5886)](https://github.com/material-components/material-components-ios/commit/2bddd177f3c7f03444f401d2f2554014562bae51) (Eric Lee)
+* [Revert "[BottomNavigation]Adds Initial tests for MDCBottomNavigationBarController" (#6039)](https://github.com/material-components/material-components-ios/commit/430e37b0d126769aa6ae6112e166d8dee9307bee) (Robert Moore)
+* [[BottomNavigation]Adds Initial tests for MDCBottomNavigationBarController (#6012)](https://github.com/material-components/material-components-ios/commit/0f1a7c7fad1657a7e9dc8748a613a9d376c3f3c6) (Eric Lee)
+
+### BottomSheet
+
+* [fix bottom sheet layout for safe area (#6024)](https://github.com/material-components/material-components-ios/commit/78070d8b8916b44413cd82961b4fb4d6566156ee) (Yarden Eitan)
+
+### FlexibleHeader
+
+* [Refactor min/max height behavior to a separate object. (#5896)](https://github.com/material-components/material-components-ios/commit/c15c78c8ad65b404cd6d85bda66b39029eb27a73) (featherless)
+
+### NavigationDrawer
+
+* [Attempt to fix header shadow not being removed (#6010)](https://github.com/material-components/material-components-ios/commit/f7b717b81f075df8bb9460074cf968e18d4fccb2) (Michael Cheung)
+* [Navigation Drawer Present at Fullscreen (#5995)](https://github.com/material-components/material-components-ios/commit/5a98df2b39247e0a6acdd5ea4083948cb746d11f) (Yarden Eitan)
+
+### TextFields
+
+* [Refactor test classes to use subclassing. (#6008)](https://github.com/material-components/material-components-ios/commit/ed26c83431b172ae27ede6bf5c9a1b0d34589e05) (Robert Moore)
+* ["Filled" snapshots use abstract class (#6013)](https://github.com/material-components/material-components-ios/commit/d97dad18ab9a32f189e88fd77b1e69a236fcb130) (Robert Moore)
+* ["FullWidth" snapshots use abstract class (#6014)](https://github.com/material-components/material-components-ios/commit/df9d979c73a073ec786f6a4c76d54348a25fc9b8) (Robert Moore)
+* ["SimpleTextField" Example Prototype (#6003)](https://github.com/material-components/material-components-ios/commit/bc45f4d212e292a7a62b7ff2eaf65d095a1eb162) (Andrew Overton)
+* [Add "unfloating" filled style snapshots. (#5997)](https://github.com/material-components/material-components-ios/commit/ed534a8aabb23c3a9b124437cc9bab7ef4f2c26b) (Robert Moore)
+* [Add Baseline Filled snapshots. (#6029)](https://github.com/material-components/material-components-ios/commit/1481114ba65cff6acbb214a1be91dcfb2b49d3d2) (Robert Moore)
+* [Add FullWidth snapshots with character counts. (#6025)](https://github.com/material-components/material-components-ios/commit/5aff8a9c5e3293460e175a3beeca771a9ff5bc8a) (Robert Moore)
+* [Add `isEditing` snapshots for Filled style (#5988)](https://github.com/material-components/material-components-ios/commit/0e123ef867aa37831bf241bbacb3ba178d186ab4) (Robert Moore)
+* [Add `isEditing` snapshots for Full Width (#5989)](https://github.com/material-components/material-components-ios/commit/2ace39ab61f956cbd8912cddf69ba13264f28206) (Robert Moore)
+* [Add `isEditing` snapshots for Outlined Text Area (#5994)](https://github.com/material-components/material-components-ios/commit/39e655a18904b649429eb0947304dc4bb82a3925) (Robert Moore)
+* [Add `isEditing` snapshots for Outlined style (#5990)](https://github.com/material-components/material-components-ios/commit/4fee7d0096b259c4414957bdfd8dae96b56c526c) (Robert Moore)
+* [Add `leadingImage` snapshots. (#6028)](https://github.com/material-components/material-components-ios/commit/8d91cf7343642cf9151ff664e918f6427d6312d2) (Robert Moore)
+* [Add clearButton to Outlined TextArea (#5992)](https://github.com/material-components/material-components-ios/commit/724b4b3cba79bcb86753580acbca3a903da4fc7d) (Robert Moore)
+* [Add extension for theming (#5975)](https://github.com/material-components/material-components-ios/commit/47b1d0da5dcab8de3ac24aa97d3d2d5ee7f41388) (Cody Weaver)
+* [Add snapshots for `disabled` state (#6026)](https://github.com/material-components/material-components-ios/commit/bc4596247995de4d12952f9f1bb1a0d4bb117b50) (Robert Moore)
+* [Add snapshots for outlined, baseline, character counts. (#6001)](https://github.com/material-components/material-components-ios/commit/e4aec8f5eee9f5b91f9cf40a12645390e37fa53e) (Robert Moore)
+* [Add underlined snapshot tests. (#6021)](https://github.com/material-components/material-components-ios/commit/20212bf72d30fcdbe8395f40aaac9adf4f7e9244) (Robert Moore)
+* [Allow animations to execute in tests. (#5987)](https://github.com/material-components/material-components-ios/commit/7d31824b8a17d42ae807995493c787e4c4632506) (Robert Moore)
+* [Incomplete snapshot RTL/Arabic support (#6023)](https://github.com/material-components/material-components-ios/commit/ced82748669b1ef0bf1f06bce27f189fc546d489) (Robert Moore)
+* [Outlined TextArea uses abstract test class (#6017)](https://github.com/material-components/material-components-ios/commit/0532bb1e25fd6a05ce54ec2122ffa1425d1e2247) (Robert Moore)
+* [Outlined controller snapshots use abstract class (#6019)](https://github.com/material-components/material-components-ios/commit/4a5b9787b3a5eff21740a04247d0482614fcedd0) (Robert Moore)
+* [Outlined, themed snapshots use abstract class (#6016)](https://github.com/material-components/material-components-ios/commit/b9634794d1e6bf7a1a3be0863818a822d84365f3) (Robert Moore)
+* [Outlined, themed, character count tests use abstract class. (#6015)](https://github.com/material-components/material-components-ios/commit/d5d33581b9eed4cc17b3db7ef1b414b99571db3c) (Robert Moore)
+* [Refactor snapshot test class (#5982)](https://github.com/material-components/material-components-ios/commit/962e9439e8b6285ea420f84214a47808102601cd) (Robert Moore)
+* [Refactor snapshot tests into abstract class. (#6009)](https://github.com/material-components/material-components-ios/commit/9c500463e2a8028b163a7123e3cabaa7fd518646) (Robert Moore)
+* [Refactor textArea snapshot tests. (#5991)](https://github.com/material-components/material-components-ios/commit/b336f35686ab017ea893274d07104b621234f1c4) (Robert Moore)
+* [Refactor: Move `recordMode` to `-setUp` (#5998)](https://github.com/material-components/material-components-ios/commit/375b72f82cb27332a6a323eeaef69d22298703e9) (Robert Moore)
+
+### schemes/Shape
+
+* [Fix shape example to use new contained button theming (#6034)](https://github.com/material-components/material-components-ios/commit/2bb5f72548c49b45ccfc0e2f72cab0e6524002f8) (rami-a)
+
+## Multi-component changes
+
+* [Pin all swift_library targets to Swift 3. (#6000)](https://github.com/material-components/material-components-ios/commit/bf7ca2e96dcd98bd0ddd1f350977ca72618671a9) (featherless)
+* [Ran buildifier against all BUILD files. (#5999)](https://github.com/material-components/material-components-ios/commit/dae4e37ea5d51f684ca2fd1deb994d95f0a56122) (featherless)
+* [Rename MaterialComponentsAlpha to MaterialComponentsBeta. (#6018)](https://github.com/material-components/material-components-ios/commit/73bdc03c2bd2abd032b0b69f05cd76928361aa37) (featherless)
+* [Update bazel to 0.20 and all dependencies as a result (#5926)](https://github.com/material-components/material-components-ios/commit/a247edea76df5f02bf0ac7bcfeabe07c28bf2cfe) (featherless)
+* [add hash function to MDCCornerTreatment (#5954)](https://github.com/material-components/material-components-ios/commit/0e4da65df8a39b8394cbf5e9d792737604e94222) (Wenyu Zhang)
+
+---
+
 # 72.2.0
 
 In this minor release we added scrimColor support for MDCBottomSheetController and added a theming extension support for MDCAlertController. We also added TextFields snapshot testing along with various bug fixes.

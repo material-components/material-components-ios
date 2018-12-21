@@ -56,8 +56,45 @@ def mdc_public_objc_library(
       enable_modules = 1,
       **kwargs)
 
+def mdc_extension_objc_library(
+    name,
+    deps = [],
+    sdk_frameworks = [],
+    visibility = ["//visibility:public"],
+    **kwargs):
+  """Declare a public MDC component extension as an Objective-C library according to MDC's 
+     conventions.
+
+  The conventions for an MDC component extensino are:
+  - The public implementation lives in `src/$name/`.
+  - The private implementation lives in `src/$name/private`.
+
+  The default visibility can be overridde.
+
+  Args:
+    name: The name of the extension. It must match the folder it resides in.
+    deps: The dependencies of the extension.
+    sdk_frameworks: Extra SDK frameworks (e.g., CoreGraphics) required by the extension.
+    visibility: The visibility of the extension.
+    **kwarrgs: Any arrguments accepted by _mdc_objc_library().
+  """
+  mdc_objc_library(
+      name = name,
+      deps = deps,
+      sdk_frameworks = sdk_frameworks,
+      visibility = visibility,
+      srcs = native.glob([
+          "src/" + name + "/*.m",
+          "src/" + name + "/private/*.m",
+          "src/" + name + "/private/*.h",
+      ]),
+      hdrs = native.glob(["src/" + name + "/*.h"]),
+      includes = ["src/" + name],
+      enable_modules = 1,
+      **kwargs)
+
 def mdc_unit_test_suite(
-    name = "unit_tests",
+    name,
     deps = [],
     minimum_os_version = "8.0",
     visibility = ["//visibility:private"],

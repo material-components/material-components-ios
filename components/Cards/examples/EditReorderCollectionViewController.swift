@@ -14,7 +14,6 @@
 
 import UIKit
 
-import MaterialComponents.MaterialCards_CardThemer
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialTypographyScheme
 import MaterialComponentsBeta.MaterialContainerScheme

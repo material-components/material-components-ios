@@ -34,6 +34,14 @@ fix_bazel_imports() {
     find "${stashed_dir}"components/private/*/tests/unit -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
     find "${stashed_dir}"components/*/tests/unit -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
   }
+  rewrite_examples() {
+    find "${stashed_dir}"components/private/*/examples -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/private/*/examples -type f -name '*.h' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/private/*/examples -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/*/examples -type f -name '*.swift' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/*/examples -type f -name '*.h' -exec perl -pi -e "$1" {} + || true
+    find "${stashed_dir}"components/*/examples -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
+  }
   rewrite_source() {
     find "${stashed_dir}"components/private/*/src -type f -name '*.h' -exec perl -pi -e "$1" {} + || true
     find "${stashed_dir}"components/private/*/src -type f -name '*.m' -exec perl -pi -e "$1" {} + || true
@@ -45,15 +53,22 @@ fix_bazel_imports() {
   rewrite_tests "s/import MaterialComponents.Material(.+)_(.+)/import components_\1_\2/"
   rewrite_tests "s/import MaterialComponentsBeta.Material(.+)Scheme/import components_schemes_\1_\1 \/\/ Beta/"
   rewrite_tests "s/import MaterialComponents.Material(.+)Scheme/import components_schemes_\1_\1/"
+  rewrite_examples "s/import MaterialComponents.Material(.+)_(.+)/import components_\1_\2/"
+  rewrite_examples "s/import MaterialComponentsBeta.Material(.+)Scheme/import components_schemes_\1_\1 \/\/ Beta/"
+  rewrite_examples "s/import MaterialComponents.Material(.+)Scheme/import components_schemes_\1_\1/"
   private_components | while read private_component; do
     if [ -z "$private_component" ]; then
       continue
     fi
     rewrite_tests "s/import MaterialComponents.Material$private_component/import components_private_${private_component}_${private_component}/"
+    rewrite_examples "s/import MaterialComponents.Material$private_component/import components_private_${private_component}_${private_component}/"
   done
   rewrite_tests "s/import MaterialComponentsBeta.Material(.+)_(.+)/import components_\1_\2 \/\/ Beta/"
   rewrite_tests "s/import MaterialComponentsBeta.Material(.+)/import components_\1_\1 \/\/ Beta/"
   rewrite_tests "s/import MaterialComponents.Material(.+)/import components_\1_\1/"
+  rewrite_examples "s/import MaterialComponentsBeta.Material(.+)_(.+)/import components_\1_\2 \/\/ Beta/"
+  rewrite_examples "s/import MaterialComponentsBeta.Material(.+)/import components_\1_\1 \/\/ Beta/"
+  rewrite_examples "s/import MaterialComponents.Material(.+)/import components_\1_\1/"
   rewrite_source "s/import <Motion(.+)\/Motion.+\.h>/import \"Motion\1.h\"/"
   rewrite_source "s/import <MDFTextAccessibility\/MDFTextAccessibility\.h>/import \"MDFTextAccessibility.h\"/"
   rewrite_source "s/import <MaterialComponents\/Material(.+)\.h>/import\/\*framework import\*\/ \"Material\1.h\"/"
@@ -71,6 +86,13 @@ fix_bazel_imports() {
     rewrite_tests "s/import components_(.+)_\1/import MaterialComponents.Material\1/"
     rewrite_tests "s/import components_(.+)_(.+) \/\/ Beta/import MaterialComponentsBeta.Material\1_\2/"
     rewrite_tests "s/import components_(.+)_(.+)/import MaterialComponents.Material\1_\2/"
+    rewrite_examples "s/import components_(.+)_\1 \/\/ Beta/import MaterialComponentsBeta.Material\1/"
+    rewrite_examples "s/import components_schemes_(.+)_.+ \/\/ Beta/import MaterialComponentsBeta.Material\1Scheme/"
+    rewrite_examples "s/import components_schemes_(.+)_.+/import MaterialComponents.Material\1Scheme/"
+    rewrite_examples "s/import components_private_(.+)_.+/import MaterialComponents.Material\1/"
+    rewrite_examples "s/import components_(.+)_\1/import MaterialComponents.Material\1/"
+    rewrite_examples "s/import components_(.+)_(.+) \/\/ Beta/import MaterialComponentsBeta.Material\1_\2/"
+    rewrite_examples "s/import components_(.+)_(.+)/import MaterialComponents.Material\1_\2/"
     rewrite_source "s/import \"Motion(.+)\.h\"/import <Motion\1\/Motion\1.h>/"
     rewrite_source "s/import \"MDFTextAccessibility\.h\"/import <MDFTextAccessibility\/MDFTextAccessibility.h>/"
     rewrite_source "s/import\/\*framework import\*\/ \"Material(.+)\.h\"/import <MaterialComponents\/Material\1\.h>/"
@@ -157,6 +179,55 @@ upload_bazel_test_artifacts() {
   find -L . -name "sponge_log.xml" -type f | copy_to_artifacts
 }
 
+run_bazel_affected() {
+  echo "Checking affected targets..."
+  if [ -z "$COMMAND" ]; then
+    COMMAND="test"
+  fi
+  if [ -z "$TARGET" ]; then
+    if [ "$COMMAND" == "test" ]; then
+      # Only return test targets.
+      bazel_kind="test"
+    else
+      # Return all affected targets.
+      bazel_kind="rule"
+    fi
+
+    if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+      pushd github/repo >> /dev/null
+    fi
+
+    # `target_branch` is either the Pull Request destination branch (where it will be merged) or if
+    # none can be determined, defaults to `develop`.
+    if [ -n "$KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH" ]; then
+      target_branch="$KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH"
+    else
+      target_branch=develop
+    fi
+
+    # `base_sha` is the merge base of `target_branch` and the current HEAD.
+    base_sha=$(git merge-base "$target_branch" HEAD)
+
+    # `TARGET` is then all bazel targets affected by changes in the commit range between `base_sha`
+    # and `HEAD`.  By default, that becomes all changes between the `develop` branch and the latest
+    #  commit.
+    TARGET="$(scripts/affected_targets $bazel_kind $base_sha...HEAD)"
+
+    if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+      popd >> /dev/null
+    fi
+  fi
+  
+  if [ -z "$TARGET" ]; then
+    echo "Nothing to build."
+    exit 0
+  fi
+
+  echo "$TARGET"
+  
+  run_bazel
+}
+
 run_bazel() {
   echo "Running bazel builds..."
 
@@ -215,7 +286,6 @@ run_bazel() {
     # Especially in the event of failure, we want our test artifacts to be uploaded.
     trap upload_bazel_test_artifacts EXIT
   fi
-  bazel clean
   bazel $COMMAND $TARGET --xcode_version $xcode_version --ios_minimum_os=8.0 --ios_multi_cpus=i386,x86_64 $extra_args $verbosity_args
 }
 
@@ -250,7 +320,7 @@ run_cocoapods() {
       bash scripts/test_all catalog/MDCCatalog.xcworkspace:MDCCatalog
     fi
   elif [ "$DEPENDENCY_SYSTEM" = "cocoapods-podspec" ]; then
-    pod lib lint MaterialComponents.podspec --verbose --skip-tests
+    pod lib lint MaterialComponents.podspec --skip-tests
   fi
 
   if [ -n "$CODECOV_TOKEN" ]; then
@@ -446,6 +516,12 @@ protect_stable_from_undesired_merges() {
   echo "Validated that this branch is a release-candidate being merged in to stable."
 }
 
+# The fall-through case for unknown jobs.
+unknown_job() {
+  echo "The following job is unknown and will not be run: $DEPENDENCY_SYSTEM"
+  exit 1
+}
+
 POSITIONAL=()
 while [[ $# -gt 0 ]]; do
   key="$1"
@@ -485,6 +561,7 @@ fi
 
 case "$DEPENDENCY_SYSTEM" in
   "bazel")      run_bazel ;;
+  "bazel-affected")      run_bazel_affected ;;
   "cocoapods")  run_cocoapods ;;
   "cocoapods-podspec")  run_cocoapods ;;
   "website")    generate_website ;;
@@ -493,7 +570,7 @@ case "$DEPENDENCY_SYSTEM" in
   "fail")       fail_immediately ;;
   "protect-stable-from-undesired-merges") protect_stable_from_undesired_merges ;;
 
-  *)            run_bazel ;;
+  *)            unknown_job ;;
 esac
 
 echo "Success!"

@@ -15,10 +15,12 @@
 
 load(
     "//:material_components_ios.bzl",
+    "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
     "mdc_unit_test_suite",
 )
+load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
@@ -41,12 +43,19 @@ mdc_public_objc_library(
     ],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
+    name = "Theming",
+    deps = [
+        ":Chips",
+        ":ColorThemer",
+        ":ShapeThemer",
+        ":TypographyThemer",
+        "//components/schemes/Container",
+    ],
+)
+
+mdc_extension_objc_library(
     name = "ChipThemer",
-    srcs = native.glob(["src/ChipThemer/*.m"]),
-    hdrs = native.glob(["src/ChipThemer/*.h"]),
-    includes = ["src/ChipThemer"],
-    visibility = ["//visibility:public"],
     deps = [
         ":Chips",
         ":ColorThemer",
@@ -62,51 +71,32 @@ mdc_objc_library(
     deps = [":Chips"],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "FontThemer",
-    srcs = native.glob(["src/FontThemer/*.m"]),
-    hdrs = native.glob(["src/FontThemer/*.h"]),
-    includes = ["src/FontThemer"],
-    visibility = ["//visibility:public"],
     deps = [
         ":Chips",
         "//components/Themes",
     ],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "ColorThemer",
-    srcs = native.glob(["src/ColorThemer/*.m"]),
-    hdrs = native.glob(["src/ColorThemer/*.h"]),
-    includes = ["src/ColorThemer"],
-    visibility = ["//visibility:public"],
     deps = [
         ":Chips",
         "//components/schemes/Color",
     ],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "ShapeThemer",
-    srcs = native.glob(["src/ShapeThemer/*.m"]),
-    hdrs = native.glob(["src/ShapeThemer/*.h"]),
-    includes = ["src/ShapeThemer"],
-    sdk_frameworks = [
-        "UIKit",
-    ],
-    visibility = ["//visibility:public"],
     deps = [
         ":Chips",
         "//components/schemes/Shape",
     ],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "TypographyThemer",
-    srcs = native.glob(["src/TypographyThemer/*.m"]),
-    hdrs = native.glob(["src/TypographyThemer/*.h"]),
-    includes = ["src/TypographyThemer"],
-    visibility = ["//visibility:public"],
     deps = [
         ":Chips",
         "//components/schemes/Typography",
@@ -119,6 +109,23 @@ mdc_objc_library(
     hdrs = native.glob(["src/private/*.h"]),
     includes = ["src/private"],
     visibility = ["//visibility:private"],
+)
+
+swift_library(
+    name = "unit_test_swift_sources",
+    srcs = glob(["tests/unit/*.swift"]),
+    copts = [
+        "-swift-version",
+        "3",
+    ],
+    visibility = ["//visibility:private"],
+    deps = [
+        ":Chips",
+        ":Theming",
+        "//components/schemes/Color",
+        "//components/schemes/Shape",
+        "//components/schemes/Typography",
+    ],
 )
 
 mdc_objc_library(
@@ -148,6 +155,7 @@ mdc_objc_library(
 )
 
 mdc_unit_test_suite(
+    name = "unit_tests",
     deps = [
         ":unit_test_sources",
     ],
