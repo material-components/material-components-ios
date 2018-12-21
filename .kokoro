@@ -267,7 +267,10 @@ run_bazel_affected() {
       comment_tmp_path=$(mktemp -d)
       comment_tmp_file="$comment_tmp_path/comment.tmp"
       echo "bazel detected changes to the following targets:" > "$comment_tmp_file"
+      echo >> "$comment_tmp_file"
+      echo '```' >> "$comment_tmp_file"
       echo "$TARGET" >> "$comment_tmp_file"
+      echo '```' >> "$comment_tmp_file"
 
       if [ ! -f scripts/external/github-comment/.git ]; then
         git submodule update --init --recursive scripts/external/github-comment
