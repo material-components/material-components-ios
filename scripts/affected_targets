@@ -18,15 +18,15 @@
 
 SCRIPT_NAME=$(basename "$0")
 
-# type should be a bazel `kind` type. E.g. test or rule.
+# rule_kind should be a bazel `kind` type. E.g. test or rule.
 # https://docs.bazel.build/versions/master/query.html#kind
-type="$1"
+rule_kind="$1"
 
 # range should be a valid git diff/log range. E.g. origin/develop...HEAD
 range="$2"
 
-if [ -z "$type" ]; then
-  echo "Please provide a blaze rule type to query for."
+if [ -z "$rule_kind" ]; then
+  echo "Please provide a blaze rule kind to query for."
   exit 1
 fi
 
@@ -82,10 +82,10 @@ affected_targets() {
     bazel query \
       --universe_scope=//... \
       --order_output=no \
-      "kind($type, allrdeps('$query'))" \
+      "kind($rule_kind, allrdeps('$query'))" \
       2>/dev/null
   done | sort | uniq
 }
 
 # Generate the transitive list of affected targets.
-modified_files | affected_targets "$type"
+modified_files | affected_targets
