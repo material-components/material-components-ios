@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 # Finds all newly-added files that are missing BUILD targets
-script_version=0.0.7
+script_version=0.0.8
 
 set -x -e
 
@@ -37,7 +37,7 @@ modified_files() {
   # `target_branch` is either the Pull Request destination branch (where it will be merged) or if
   # none can be determined, defaults to `develop`.
   if [ -n "$KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH" ]; then
-    target_branch="$KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH"
+    target_branch="origin/${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH}"
   else
     target_branch=develop
   fi
