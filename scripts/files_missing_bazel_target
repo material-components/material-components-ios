@@ -15,12 +15,14 @@
 # limitations under the License.
 #
 # Finds all newly-added files that are missing BUILD targets
-script_version=0.0.2
+script_version=0.0.3
 
 echo "Bazel target detection v${script_version}"
 
 # Generates a list of files that were modified since the target branch 
 modified_files() {
+  echo "Entered 'modified_files'"
+
   # Move to our cloned repository
   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
     pushd github/repo >> /dev/null
@@ -39,6 +41,7 @@ modified_files() {
   echo "Target branch: ${target_branch}"
 
   # `base_sha` is the merge base of `target_branch` and the current HEAD.
+  git merge-base "${target_branch}" HEAD
   base_sha=$(git merge-base "${target_branch}" HEAD)
 
   echo "Base SHA: ${base_sha}"
@@ -83,7 +86,7 @@ check_files_covered() {
     fi
     ((current_index++))
     if (( current_index%10==1 )); then
-      (>&2 echo "$current_index / $num_files" )
+      echo "$current_index / $num_files" 
     fi
   done 
   
