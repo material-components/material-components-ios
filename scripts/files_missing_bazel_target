@@ -30,7 +30,7 @@ modified_files() {
   fi
 
   # `base_sha` is the merge base of `target_branch` and the current HEAD.
-  base_sha=$(git merge-base "$target_branch" HEAD)
+  base_sha=$(git merge-base "${target_branch}" HEAD)
 
   # `TARGET` is then all bazel targets affected by changes in the commit range between `base_sha`
   # and `HEAD`.  By default, that becomes all changes between the `develop` branch and the latest
@@ -82,7 +82,7 @@ check_files_covered() {
   fi
 
   if (( exit_status != 0 )); then
-    echo  -e "The following files are not in any BUILD targets:\n\n$missing_targets" | sort | uniq
+    echo  -e "The following files are not in any BUILD targets:\n\n${missing_targets}" | sort | uniq
     exit $exit_status
   fi 
 } 
