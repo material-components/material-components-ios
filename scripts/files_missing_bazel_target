@@ -15,7 +15,9 @@
 # limitations under the License.
 #
 # Finds all newly-added files that are missing BUILD targets
+VERSION=0.0.1
 
+echo "Bazel target detection v$VERSION"
 # Generates a list of files that were modified since the target branch 
 modified_files() {
   # `target_branch` is either the Pull Request destination branch (where it will be merged) or if
@@ -43,6 +45,11 @@ modified_files() {
 }
 
 check_files_covered() {
+  # Move to our cloned repository
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    pushd github/repo >> /dev/null
+  fi
+
   all_files=$(modified_files)
   if [ -z "$all_files" ]; then
     exit 0
@@ -67,6 +74,11 @@ check_files_covered() {
       (>&2 echo "$current_index / $num_files" )
     fi
   done 
+  
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    popd >> /dev/null
+  fi
+
   if (( EXIT_STATUS != 0 )); then
     echo  -e "The following files are not in any BUILD targets:\n\n$MISSING_TARGETS" | sort | uniq
     exit $EXIT_STATUS
