@@ -98,7 +98,7 @@ def mdc_extension_objc_library(
 def mdc_unit_test_suite(
     name,
     deps = [],
-    minimum_os_version = IOS_MINIMUM_Os,
+    minimum_os_version = IOS_MINIMUM_OS,
     visibility = ["//visibility:private"],
     size = "medium",
     **kwargs):
