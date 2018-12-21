@@ -54,9 +54,9 @@ modified_files() {
 files_that_affect_everything() {
   grep -e "\.bzl$" \
     -e "WORKSPACE" \
-    -e "\.kokoro" \
+    #-e "\.kokoro" \
     -e "\.gitattributes" \
-    -e "${SCRIPT_NAME/\./\\.}" \
+    #-e "${SCRIPT_NAME/\./\\.}" \
     "$@"
 }
 
@@ -86,6 +86,8 @@ affected_targets() {
       2>/dev/null
   done | sort | uniq
 }
+
+modified_files
 
 # Generate the transitive list of affected targets.
 modified_files | affected_targets

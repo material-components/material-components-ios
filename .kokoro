@@ -297,9 +297,11 @@ run_bazel_affected() {
     # `base_sha` is the merge base of `target_branch` and the current HEAD.
     base_sha=$(git merge-base "$target_branch" HEAD)
 
+    echo "$base_sha...HEAD"
     # `TARGET` is then all bazel targets affected by changes in the commit range between `base_sha`
     # and `HEAD`.  By default, that becomes all changes between the `develop` branch and the latest
     #  commit.
+    scripts/affected_targets $bazel_kind $base_sha...HEAD
     TARGET="$(scripts/affected_targets $bazel_kind $base_sha...HEAD)"
 
     if [ -n "$KOKORO_BUILD_NUMBER" ]; then
