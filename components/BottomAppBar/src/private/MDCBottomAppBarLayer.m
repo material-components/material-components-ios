@@ -75,73 +75,76 @@
   CGFloat width = CGRectGetWidth(rect);
   CGFloat height = CGRectGetHeight(rect);
   CGFloat arcRadius =
-    CGRectGetHeight(floatingButton.bounds) / 2 + kMDCBottomAppBarFloatingButtonRadiusOffset;
+      CGRectGetHeight(floatingButton.bounds) / 2 + kMDCBottomAppBarFloatingButtonRadiusOffset;
 
-  CGPoint arcCenter1 = CGPointMake(floatingButton.center.x -
-                                   CGRectGetWidth(floatingButton.bounds) / 2 + arcRadius -
-                                   kMDCBottomAppBarFloatingButtonRadiusOffset,
-                                   floatingButton.center.y);
-  CGPoint arcCenter2 = CGPointMake(floatingButton.center.x +
-                                   CGRectGetWidth(floatingButton.bounds) / 2 - arcRadius +
-                                   kMDCBottomAppBarFloatingButtonRadiusOffset,
-                                   floatingButton.center.y);
+  CGPoint arcCenter1 =
+      CGPointMake(floatingButton.center.x - CGRectGetWidth(floatingButton.bounds) / 2 + arcRadius -
+                      kMDCBottomAppBarFloatingButtonRadiusOffset,
+                  floatingButton.center.y);
+  CGPoint arcCenter2 =
+      CGPointMake(floatingButton.center.x + CGRectGetWidth(floatingButton.bounds) / 2 - arcRadius +
+                      kMDCBottomAppBarFloatingButtonRadiusOffset,
+                  floatingButton.center.y);
 
   if (shouldCut) {
-    [bottomBarPath moveToPoint: CGPointMake(width, yOffset)];
-    [bottomBarPath addCurveToPoint: CGPointMake(width, yOffset)
-                     controlPoint1: CGPointMake(width, yOffset)
-                     controlPoint2: CGPointMake(width, yOffset)];
-    [bottomBarPath addLineToPoint: CGPointMake(width, height)];
-    [bottomBarPath addLineToPoint: CGPointMake(0, height)];
-    [bottomBarPath addLineToPoint: CGPointMake(0, yOffset)];
-    [bottomBarPath addLineToPoint: CGPointMake(arcCenter1.x - arcRadius, yOffset)];
+    [bottomBarPath moveToPoint:CGPointMake(width, yOffset)];
+    [bottomBarPath addCurveToPoint:CGPointMake(width, yOffset)
+                     controlPoint1:CGPointMake(width, yOffset)
+                     controlPoint2:CGPointMake(width, yOffset)];
 
-    [bottomBarPath addCurveToPoint: CGPointMake(arcCenter1.x - arcRadius, yOffset)
-                     controlPoint1: CGPointMake(arcCenter1.x - arcRadius, yOffset)
-                     controlPoint2: CGPointMake(arcCenter1.x - arcRadius, yOffset)];
-    [bottomBarPath addCurveToPoint: CGPointMake(arcCenter1.x, arcRadius + yOffset)
-                     controlPoint1: CGPointMake(arcCenter1.x - arcRadius, arcRadius / 2 + yOffset)
-                     controlPoint2: CGPointMake(arcCenter1.x - arcRadius / 2, arcRadius + yOffset)];
+    [bottomBarPath addLineToPoint:CGPointMake(width, height)];
 
-    [bottomBarPath addLineToPoint: CGPointMake(arcCenter2.x, arcRadius + yOffset)];
+    [bottomBarPath addLineToPoint:CGPointMake(0, height)];
 
-    [bottomBarPath addCurveToPoint: CGPointMake(arcCenter2.x + arcRadius, yOffset)
-                     controlPoint1: CGPointMake(arcCenter2.x + arcRadius - arcRadius / 2, yOffset + arcRadius)
-                     controlPoint2: CGPointMake(arcCenter2.x + arcRadius, yOffset + arcRadius / 2)];
-    [bottomBarPath addCurveToPoint: CGPointMake(arcCenter2.x + arcRadius, yOffset)
-                     controlPoint1: CGPointMake(arcCenter2.x + arcRadius, yOffset)
-                     controlPoint2: CGPointMake(arcCenter2.x + arcRadius, yOffset)];
+    [bottomBarPath addLineToPoint:CGPointMake(0, yOffset)];
+    [bottomBarPath addLineToPoint:CGPointMake(arcCenter1.x - arcRadius, yOffset)];
 
-    [bottomBarPath addLineToPoint: CGPointMake(width, yOffset)];
+    [bottomBarPath addCurveToPoint:CGPointMake(arcCenter1.x - arcRadius, yOffset)
+                     controlPoint1:CGPointMake(arcCenter1.x - arcRadius, yOffset)
+                     controlPoint2:CGPointMake(arcCenter1.x - arcRadius, yOffset)];
+    [bottomBarPath addCurveToPoint:CGPointMake(arcCenter1.x, arcRadius + yOffset)
+                     controlPoint1:CGPointMake(arcCenter1.x - arcRadius, arcRadius / 2 + yOffset)
+                     controlPoint2:CGPointMake(arcCenter1.x - arcRadius / 2, arcRadius + yOffset)];
+
+    [bottomBarPath addLineToPoint:CGPointMake(arcCenter2.x, arcRadius + yOffset)];
+
+    [bottomBarPath
+        addCurveToPoint:CGPointMake(arcCenter2.x + arcRadius, yOffset)
+          controlPoint1:CGPointMake(arcCenter2.x + arcRadius - arcRadius / 2, yOffset + arcRadius)
+          controlPoint2:CGPointMake(arcCenter2.x + arcRadius, yOffset + arcRadius / 2)];
+    [bottomBarPath addCurveToPoint:CGPointMake(arcCenter2.x + arcRadius, yOffset)
+                     controlPoint1:CGPointMake(arcCenter2.x + arcRadius, yOffset)
+                     controlPoint2:CGPointMake(arcCenter2.x + arcRadius, yOffset)];
+
+    [bottomBarPath addLineToPoint:CGPointMake(width, yOffset)];
     [bottomBarPath closePath];
-  }
-  else {
-    [bottomBarPath moveToPoint: CGPointMake(width, yOffset)];
-    [bottomBarPath addCurveToPoint: CGPointMake(width, yOffset)
-                     controlPoint1: CGPointMake(width, yOffset)
-                     controlPoint2: CGPointMake(width, yOffset)];
-    [bottomBarPath addLineToPoint: CGPointMake(width, height)];
-    [bottomBarPath addLineToPoint: CGPointMake(0, height)];
-    [bottomBarPath addLineToPoint: CGPointMake(0, yOffset)];
-    [bottomBarPath addLineToPoint: CGPointMake(arcCenter1.x - arcRadius, yOffset)];
+  } else {
+    [bottomBarPath moveToPoint:CGPointMake(width, yOffset)];
+    [bottomBarPath addCurveToPoint:CGPointMake(width, yOffset)
+                     controlPoint1:CGPointMake(width, yOffset)
+                     controlPoint2:CGPointMake(width, yOffset)];
+    [bottomBarPath addLineToPoint:CGPointMake(width, height)];
+    [bottomBarPath addLineToPoint:CGPointMake(0, height)];
+    [bottomBarPath addLineToPoint:CGPointMake(0, yOffset)];
+    [bottomBarPath addLineToPoint:CGPointMake(arcCenter1.x - arcRadius, yOffset)];
 
-    [bottomBarPath addCurveToPoint: CGPointMake(arcCenter1.x - arcRadius, yOffset)
-                     controlPoint1: CGPointMake(arcCenter1.x - arcRadius, yOffset)
-                     controlPoint2: CGPointMake(arcCenter1.x - arcRadius, yOffset)];
-    [bottomBarPath addCurveToPoint: CGPointMake(arcCenter1.x, yOffset)
-                     controlPoint1: CGPointMake(arcCenter1.x - arcRadius, yOffset)
-                     controlPoint2: CGPointMake(arcCenter1.x - arcRadius / 2, yOffset)];
+    [bottomBarPath addCurveToPoint:CGPointMake(arcCenter1.x - arcRadius, yOffset)
+                     controlPoint1:CGPointMake(arcCenter1.x - arcRadius, yOffset)
+                     controlPoint2:CGPointMake(arcCenter1.x - arcRadius, yOffset)];
+    [bottomBarPath addCurveToPoint:CGPointMake(arcCenter1.x, yOffset)
+                     controlPoint1:CGPointMake(arcCenter1.x - arcRadius, yOffset)
+                     controlPoint2:CGPointMake(arcCenter1.x - arcRadius / 2, yOffset)];
 
-    [bottomBarPath addLineToPoint: CGPointMake(arcCenter2.x, yOffset)];
+    [bottomBarPath addLineToPoint:CGPointMake(arcCenter2.x, yOffset)];
 
-    [bottomBarPath addCurveToPoint: CGPointMake(arcCenter2.x + arcRadius, yOffset)
-                     controlPoint1: CGPointMake(arcCenter2.x + arcRadius - arcRadius / 2, yOffset)
-                     controlPoint2: CGPointMake(arcCenter2.x + arcRadius, yOffset)];
-    [bottomBarPath addCurveToPoint: CGPointMake(arcCenter2.x + arcRadius, yOffset)
-                     controlPoint1: CGPointMake(arcCenter2.x + arcRadius, yOffset)
-                     controlPoint2: CGPointMake(arcCenter2.x + arcRadius, yOffset)];
+    [bottomBarPath addCurveToPoint:CGPointMake(arcCenter2.x + arcRadius, yOffset)
+                     controlPoint1:CGPointMake(arcCenter2.x + arcRadius - arcRadius / 2, yOffset)
+                     controlPoint2:CGPointMake(arcCenter2.x + arcRadius, yOffset)];
+    [bottomBarPath addCurveToPoint:CGPointMake(arcCenter2.x + arcRadius, yOffset)
+                     controlPoint1:CGPointMake(arcCenter2.x + arcRadius, yOffset)
+                     controlPoint2:CGPointMake(arcCenter2.x + arcRadius, yOffset)];
 
-    [bottomBarPath addLineToPoint: CGPointMake(width, yOffset)];
+    [bottomBarPath addLineToPoint:CGPointMake(width, yOffset)];
     [bottomBarPath closePath];
   }
 
