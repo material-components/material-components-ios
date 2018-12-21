@@ -15,7 +15,9 @@
 # limitations under the License.
 #
 # Finds all newly-added files that are missing BUILD targets
-script_version=0.0.4
+script_version=0.0.5
+
+set -x -e
 
 echo "Bazel target detection v${script_version}"
 
@@ -29,6 +31,7 @@ modified_files() {
   fi
 
   pwd
+  git fetch
 
   # `target_branch` is either the Pull Request destination branch (where it will be merged) or if
   # none can be determined, defaults to `develop`.
