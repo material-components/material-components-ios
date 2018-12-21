@@ -74,7 +74,6 @@ affected_targets() {
       query="$file_path"
     fi
 
-    >&2 echo "Getting reverse dependencies for $file_path..."
     # allrdeps is part of Sky Query, which can only be accessed when universe_scope and order_output
     # are provided. See the following docs for more details:
     # https://docs.bazel.build/versions/master/query.html#sky-query
