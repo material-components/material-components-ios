@@ -92,9 +92,9 @@ class DialogsAlertCustomizationExampleViewController: MDCCollectionViewControlle
     case 10:
       return performCustomButtonTheming()
     case 11:
-      return performDarkThemed()
+      return performDarkTheming()
     case 12:
-      return performUnthemed()
+      return performNoTheming()
     default:
       print("No row is selected")
       return nil
@@ -220,7 +220,7 @@ class DialogsAlertCustomizationExampleViewController: MDCCollectionViewControlle
     return alert
   }
 
-  func performDarkThemed() -> MDCAlertController {
+  func performDarkTheming() -> MDCAlertController {
     let alert = MDCAlertController(title: "Dark Theme",
                                    message: "Lorem ipsum dolor sit amet, consectetur adipiscing")
     alert.titleIcon = sampleIcon()
@@ -246,7 +246,7 @@ class DialogsAlertCustomizationExampleViewController: MDCCollectionViewControlle
     return alert
   }
 
-  func performUnthemed() -> MDCAlertController {
+  func performNoTheming() -> MDCAlertController {
     let alert = MDCAlertController(title: "Unthemed Alert",
                                    message: "Lorem ipsum dolor sit amet, consectetur adipiscing...")
     alert.addAction(MDCAlertAction(title:"High", emphasis: .high, handler: handler))
@@ -299,12 +299,15 @@ extension DialogsAlertCustomizationExampleViewController {
 
 private extension MDCAlertController {
 
-  // a workaround to get a correct outline color for dark
-  // themed dialogs with medium emphasis actions
+  // A workaround to get a correct outline color & scrim color for dark
+  //      themed dialogs with medium emphasis actions
   func applyDarkTheme(withScheme scheme: MDCContainerScheming) {
     // apply the default alert themer
     self.applyTheme(withScheme: scheme)
-    // call a dark themer for outline buttons (which are medium emphasis)
+
+    self.scrimColor = MDCPalette.grey.tint900.withAlphaComponent(0.4)
+
+    // Apply a dark themer for outline buttons (which are medium emphasis)
     for action in self.actions {
       if action.emphasis == .medium {
         if let mediumButton = button(for: action) {
@@ -317,12 +320,12 @@ private extension MDCAlertController {
 
 private extension MDCButton {
 
-  // a workaround to get a correct outline color for dark themed outline buttons
+  // A workaround to get a correct outline color for dark themed outline buttons.
   func applyDarkOutlinedTheme(withScheme scheme: MDCContainerScheming) {
-    // apply the default outline themer
+    // Apply the default outline themer
     self.applyOutlinedTheme(withScheme: scheme)
-    // changing the opacity of the border color to make it visible on a dark background
-    let borderColor = scheme.colorScheme?.onSurfaceColor.withAlphaComponent(0.36) ?? .gray
+    // Changing the border color to make it visible on a dark background
+    let borderColor = MDCPalette.grey.tint700
     self.setBorderColor(borderColor, for: .normal)
   }
 }
