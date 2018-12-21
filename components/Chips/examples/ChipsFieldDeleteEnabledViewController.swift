@@ -15,13 +15,23 @@
 import UIKit
 
 import MaterialComponents.MaterialChips
-import MaterialComponents.MaterialChips_ChipThemer
 import MaterialComponents.MaterialTextFields
+import MaterialComponentsBeta.MaterialChips_Theming
+import MaterialComponentsBeta.MaterialContainerScheme
 
 class ChipsFieldDeleteEnabledViewController : UIViewController, MDCChipFieldDelegate {
   var colorScheme = MDCSemanticColorScheme()
+  var shapeScheme = MDCShapeScheme()
   var typographyScheme = MDCTypographyScheme()
   var chipField = MDCChipField()
+
+  var scheme: MDCContainerScheming {
+    let scheme = MDCContainerScheme()
+    scheme.colorScheme = colorScheme
+    scheme.shapeScheme = shapeScheme
+    scheme.typographyScheme = typographyScheme
+    return scheme
+  }
 
   init() {
     super.init(nibName: nil, bundle: nil)
@@ -60,10 +70,7 @@ class ChipsFieldDeleteEnabledViewController : UIViewController, MDCChipFieldDele
   }
 
   func chipField(_ chipField: MDCChipField, didAddChip chip: MDCChipView) {
-    let scheme = MDCChipViewScheme()
-    scheme.colorScheme = colorScheme
-    scheme.typographyScheme = typographyScheme
-    MDCChipViewThemer.applyScheme(scheme, to: chip)
+    chip.applyTheme(withScheme: scheme)
     chip.sizeToFit()
     let chipVerticalInset = min(0, chip.bounds.height - 48 / 2)
     chip.hitAreaInsets = UIEdgeInsetsMake(chipVerticalInset, 0, chipVerticalInset, 0)

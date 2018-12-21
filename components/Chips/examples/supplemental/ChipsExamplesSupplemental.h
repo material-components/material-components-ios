@@ -37,6 +37,7 @@
 @property(nonatomic, strong) UICollectionView *collectionView;
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong) MDCShapeScheme *shapeScheme;
+@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 @end
 
 @interface ChipsCollectionExampleViewController : ExampleChipCollectionViewController
@@ -59,6 +60,7 @@
 @property(nonatomic, strong) NSArray<NSString *> *titles;
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
 @property(nonatomic, strong) MDCShapeScheme *shapeScheme;
+@property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 @end
 
 @interface ChipsFilterAnimatedExampleViewController : ChipsFilterExampleViewController

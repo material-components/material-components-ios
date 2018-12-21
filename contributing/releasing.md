@@ -161,7 +161,7 @@ We do not presently have an automated way to identify visual changes between rel
 issue #290](https://github.com/material-components/material-components-ios/issues/290) for a
 discussion on the topic.
 
-### Sanity check: inspect the changes
+### [Optional] Sanity check: inspect the changes
 
 #### Diff just the components
 
