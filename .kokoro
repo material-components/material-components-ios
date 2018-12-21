@@ -187,18 +187,32 @@ run_bazel_affected() {
   if [ -z "$TARGET" ]; then
     if [ "$COMMAND" == "test" ]; then
       # Only return test targets.
-      rule_kind="test"
+      bazel_kind="test"
     else
       # Return all affected targets.
-      rule_kind="rule"
+      bazel_kind="rule"
     fi
 
     if [ -n "$KOKORO_BUILD_NUMBER" ]; then
       pushd github/repo >> /dev/null
     fi
 
-    TARGET="$(scripts/affected_targets $rule_kind)"
-    
+    # `target_branch` is either the Pull Request destination branch (where it will be merged) or if
+    # none can be determined, defaults to `develop`.
+    if [ -n "$KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH" ]; then
+      target_branch="$KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH"
+    else
+      target_branch=develop
+    fi
+
+    # `base_sha` is the merge base of `target_branch` and the current HEAD.
+    base_sha=$(git merge-base "$target_branch" HEAD)
+
+    # `TARGET` is then all bazel targets affected by changes in the commit range between `base_sha`
+    # and `HEAD`.  By default, that becomes all changes between the `develop` branch and the latest
+    #  commit.
+    TARGET="$(scripts/affected_targets $bazel_kind $base_sha...HEAD)"
+
     if [ -n "$KOKORO_BUILD_NUMBER" ]; then
       popd >> /dev/null
     fi
@@ -208,6 +222,8 @@ run_bazel_affected() {
     echo "Nothing to build."
     exit 0
   fi
+
+  echo "$TARGET"
   
   run_bazel
 }
@@ -270,7 +286,6 @@ run_bazel() {
     # Especially in the event of failure, we want our test artifacts to be uploaded.
     trap upload_bazel_test_artifacts EXIT
   fi
-  bazel clean
   bazel $COMMAND $TARGET --xcode_version $xcode_version --ios_minimum_os=8.0 --ios_multi_cpus=i386,x86_64 $extra_args $verbosity_args
 }
 
@@ -305,7 +320,7 @@ run_cocoapods() {
       bash scripts/test_all catalog/MDCCatalog.xcworkspace:MDCCatalog
     fi
   elif [ "$DEPENDENCY_SYSTEM" = "cocoapods-podspec" ]; then
-    pod lib lint MaterialComponents.podspec --verbose --skip-tests
+    pod lib lint MaterialComponents.podspec --skip-tests
   fi
 
   if [ -n "$CODECOV_TOKEN" ]; then
@@ -501,6 +516,12 @@ protect_stable_from_undesired_merges() {
   echo "Validated that this branch is a release-candidate being merged in to stable."
 }
 
+# The fall-through case for unknown jobs.
+unknown_job() {
+  echo "The following job is unknown and will not be run: $DEPENDENCY_SYSTEM"
+  exit 1
+}
+
 POSITIONAL=()
 while [[ $# -gt 0 ]]; do
   key="$1"
@@ -549,7 +570,7 @@ case "$DEPENDENCY_SYSTEM" in
   "fail")       fail_immediately ;;
   "protect-stable-from-undesired-merges") protect_stable_from_undesired_merges ;;
 
-  *)            run_bazel ;;
+  *)            unknown_job ;;
 esac
 
 echo "Success!"
