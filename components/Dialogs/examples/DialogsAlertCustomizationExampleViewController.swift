@@ -92,9 +92,9 @@ class DialogsAlertCustomizationExampleViewController: MDCCollectionViewControlle
     case 10:
       return performCustomButtonTheming()
     case 11:
-      return performDarkThemed()
+      return performDarkTheming()
     case 12:
-      return performUnthemed()
+      return performNoTheming()
     default:
       print("No row is selected")
       return nil
@@ -220,7 +220,7 @@ class DialogsAlertCustomizationExampleViewController: MDCCollectionViewControlle
     return alert
   }
 
-  func performDarkThemed() -> MDCAlertController {
+  func performDarkTheming() -> MDCAlertController {
     let alert = MDCAlertController(title: "Dark Theme",
                                    message: "Lorem ipsum dolor sit amet, consectetur adipiscing")
     alert.titleIcon = sampleIcon()
@@ -246,7 +246,7 @@ class DialogsAlertCustomizationExampleViewController: MDCCollectionViewControlle
     return alert
   }
 
-  func performUnthemed() -> MDCAlertController {
+  func performNoTheming() -> MDCAlertController {
     let alert = MDCAlertController(title: "Unthemed Alert",
                                    message: "Lorem ipsum dolor sit amet, consectetur adipiscing...")
     alert.addAction(MDCAlertAction(title:"High", emphasis: .high, handler: handler))
