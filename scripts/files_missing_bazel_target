@@ -14,25 +14,64 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Finds all files that are missing BUILD targets
+# Finds all newly-added files that are missing BUILD targets
 
-# SEARCH_PATHS should be the set of paths to search for uncovered files
-SEARCH_PATHS="$1"
+# Generates a list of files that were modified since the target branch 
+modified_files() {
+  # `target_branch` is either the Pull Request destination branch (where it will be merged) or if
+  # none can be determined, defaults to `develop`.
+  if [ -n "$KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH" ]; then
+    target_branch="$KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH"
+  else
+    target_branch=develop
+  fi
 
-[[ -z "$SEARCH_PATHS" ]] && SEARCH_PATHS="components"
+  # `base_sha` is the merge base of `target_branch` and the current HEAD.
+  base_sha=$(git merge-base "$target_branch" HEAD)
 
-EXIT_STATUS=0
-MISSING_TARGETS=""
+  # `TARGET` is then all bazel targets affected by changes in the commit range between `base_sha`
+  # and `HEAD`.  By default, that becomes all changes between the `develop` branch and the latest
+  #  commit.
+  range="${base_sha}...HEAD"
 
-while read LINE; do 
-  label=$(bazel query \'$LINE\' 2>/dev/null); 
-  if [ -z $label ]; then
-    MISSING_TARGETS="$MISSING_TARGETS""$LINE""\n";
-    EXIT_STATUS=1;
+  
+  git log --name-only --pretty=oneline --full-index "$range" \
+    | grep -vE '^[0-9a-f]{40} ' \
+    | grep -E '(\.swift|\.h|\.m)' \
+    | sort \
+    | uniq
+}
+
+check_files_covered() {
+  all_files=$(modified_files)
+  if [ -z "$all_files" ]; then
+    exit 0
+  fi
+  num_files="${#all_files[@]}"
+  current_index=0
+  for file_path in "${all_files[@]}"; do
+    # allrdeps is part of Sky Query, which can only be accessed when universe_scope and order_output
+    # are provided. See the following docs for more details:
+    # https://docs.bazel.build/versions/master/query.html#sky-query
+    targets=$(bazel query \
+      --universe_scope=//... \
+      --order_output=no \
+      "kind(rule, allrdeps('$file_path'))" \
+      2>/dev/null ) 
+    if [ -z "$targets" ]; then
+      MISSING_TARGETS="${MISSING_TARGETS}${file_path}\n"
+      EXIT_STATUS=1
+    fi
+    ((current_index++))
+    if (( current_index%10==1 )); then
+      (>&2 echo "$current_index / $num_files" )
+    fi
+  done 
+  if (( EXIT_STATUS != 0 )); then
+    echo  -e "The following files are not in any BUILD targets:\n\n$MISSING_TARGETS" | sort | uniq
+    exit $EXIT_STATUS
   fi 
-  bazel query "attr('srcs', $label, ${label//:*/}:*) union attr('hdrs', $label, ${label//:*/}:*)" 2>/dev/null >/dev/null; 
-done <<< "$(find "$SEARCH_PATHS" -type f \( -name "*.swift" -or -name "*.h" -or -name "*.m" \))"
+} 
 
-echo -e "$MISSING_TARGETS" | sort -u
+check_files_covered
 
-exit $EXIT_STATUS
