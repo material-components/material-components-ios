@@ -14,7 +14,9 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol MDCInkViewDelegate;
+@protocol MDCRippleViewDelegate;
+
+typedef void (^MDCRippleCompletionBlock)(void);
 
 typedef NS_ENUM(NSInteger, MDCRippleStyle) {
   MDCRippleStyleBounded = 0,
