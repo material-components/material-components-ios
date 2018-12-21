@@ -307,7 +307,7 @@ run_bazel_affected() {
     
     # Output the affected targets to the logs. This also gives the affected_targets script the
     # opportunity to fail.
-    scripts/affected_targets $bazel_kind $base_sha...HEAD)
+    scripts/affected_targets "$bazel_kind" "$base_sha...HEAD"
 
     # `TARGET` is then all bazel targets affected by changes in the commit range between `base_sha`
     # and `HEAD`.  By default, that becomes all changes between the `develop` branch and the latest
