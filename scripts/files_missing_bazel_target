@@ -15,12 +15,19 @@
 # limitations under the License.
 #
 # Finds all newly-added files that are missing BUILD targets
-script_version=0.0.1
+script_version=0.0.2
 
 echo "Bazel target detection v${script_version}"
 
 # Generates a list of files that were modified since the target branch 
 modified_files() {
+  # Move to our cloned repository
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    pushd github/repo >> /dev/null
+  fi
+
+  pwd
+
   # `target_branch` is either the Pull Request destination branch (where it will be merged) or if
   # none can be determined, defaults to `develop`.
   if [ -n "$KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH" ]; then
@@ -29,8 +36,12 @@ modified_files() {
     target_branch=develop
   fi
 
+  echo "Target branch: ${target_branch}"
+
   # `base_sha` is the merge base of `target_branch` and the current HEAD.
-  base_sha=$(git merge-base "$target_branch" HEAD)
+  base_sha=$(git merge-base "${target_branch}" HEAD)
+
+  echo "Base SHA: ${base_sha}"
 
   # `TARGET` is then all bazel targets affected by changes in the commit range between `base_sha`
   # and `HEAD`.  By default, that becomes all changes between the `develop` branch and the latest
@@ -38,20 +49,19 @@ modified_files() {
   range="${base_sha}...HEAD"
 
   
-  git log --name-only --pretty=oneline --full-index "$range" \
+  git log --name-only --pretty=oneline --full-index "${range}" \
     | grep -vE '^[0-9a-f]{40} ' \
     | grep -E '(\.swift|\.h|\.m)' \
     | sort \
     | uniq
+
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    popd >> /dev/null
+  fi
 }
 
 # Determines if any of the modified files are not included in a bazel rule.
 check_files_covered() {
-  # Move to our cloned repository
-  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
-    pushd github/repo >> /dev/null
-  fi
-
   files=$(modified_files)
   if [ -z "$files" ]; then
     exit 0
@@ -77,12 +87,9 @@ check_files_covered() {
     fi
   done 
   
-  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
-    popd >> /dev/null
-  fi
 
   if (( exit_status != 0 )); then
-    echo  -e "The following files are not in any BUILD targets:\n\n$missing_targets" | sort | uniq
+    echo  -e "The following files are not in any BUILD targets:\n\n${missing_targets}" | sort | uniq
     exit $exit_status
   fi 
 } 
