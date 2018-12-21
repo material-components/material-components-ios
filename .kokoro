@@ -119,6 +119,97 @@ move_derived_data_to_tmp() {
   fi
 }
 
+# Posts a comment to the current pull request.
+# Args:
+#   $1: A unique identifier for this comment.
+#   $2: A path to a file containing the body of the comment to post.
+post_comment() {
+  identifier="$1"
+  comment_body_file="$2"
+
+  if [ -z "$identifier" ]; then
+    echo "Please pass an identifier as the first argument."
+    exit 1
+  fi
+
+  if [ -z "$comment_body_file" ]; then
+    echo "Please pass the path to a comment_body file as the second argument."
+    exit 1
+  fi
+
+  if [ -z "$GITHUB_API_TOKEN" ]; then
+    echo "No GITHUB_API_TOKEN provided; can't post a comment."
+    exit 1
+  fi
+
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    # Move into our cloned repo
+    pushd github/repo
+  fi
+
+  if [ ! -f scripts/external/github-comment/.git ]; then
+    git submodule update --init --recursive scripts/external/github-comment
+  fi
+
+  pushd scripts/external/github-comment >> /dev/null
+
+  swift run github-comment \
+    --repo=material-components/material-components-ios \
+    --github_token="$GITHUB_API_TOKEN" \
+    --pull_request_number="$KOKORO_GITHUB_PULL_REQUEST_NUMBER" \
+    --identifier="$identifier" \
+    --comment_body="$comment_body_file"
+
+  popd >> /dev/null
+
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    # Move into our cloned repo
+    popd >> /dev/null
+  fi
+}
+
+# Posts a comment from the current pull request.
+# Args:
+#   $1: A unique identifier for this comment.
+delete_comment() {
+  identifier="$1"
+
+  if [ -z "$identifier" ]; then
+    echo "Please pass an identifier as the first argument."
+    exit 1
+  fi
+
+  if [ -z "$GITHUB_API_TOKEN" ]; then
+    echo "No GITHUB_API_TOKEN provided; can't post a comment."
+    exit 1
+  fi
+
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    # Move into our cloned repo
+    pushd github/repo
+  fi
+
+  if [ ! -f scripts/external/github-comment/.git ]; then
+    git submodule update --init --recursive scripts/external/github-comment
+  fi
+
+  pushd scripts/external/github-comment >> /dev/null
+
+  swift run github-comment \
+    --repo=material-components/material-components-ios \
+    --github_token="$GITHUB_API_TOKEN" \
+    --pull_request_number="$KOKORO_GITHUB_PULL_REQUEST_NUMBER" \
+    --identifier="$identifier" \
+    --delete
+
+  popd >> /dev/null
+
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    # Move into our cloned repo
+    popd >> /dev/null
+  fi
+}
+
 # xcode-select's the provided xcode version.
 # Usage example:
 #     select_xcode 9.2.0
@@ -222,36 +313,14 @@ run_bazel_affected() {
     echo "Nothing to build."
     exit 0
   fi
+  
+  comment_identifier="affected-targets"
 
   if [ -z "$TARGET" ]; then
     echo "Nothing to build."
 
     if [ -n "$GITHUB_API_TOKEN" ]; then
-      if [ -n "$KOKORO_BUILD_NUMBER" ]; then
-        # Move into our cloned repo
-        pushd github/repo
-      fi
-
-      if [ ! -f scripts/external/github-comment/.git ]; then
-        git submodule update --init --recursive scripts/external/github-comment
-      fi
-
-      pushd scripts/external/github-comment >> /dev/null
-
-      # No changelog, so delete any existing comment
-      swift run github-comment \
-        --repo=material-components/material-components-ios \
-        --github_token="$GITHUB_API_TOKEN" \
-        --pull_request_number="$KOKORO_GITHUB_PULL_REQUEST_NUMBER" \
-        --identifier=affected-targets \
-        --delete
-
-      popd >> /dev/null
-
-      if [ -n "$KOKORO_BUILD_NUMBER" ]; then
-        # Move into our cloned repo
-        popd >> /dev/null
-      fi
+      delete_comment "$comment_identifier"
     fi
 
     exit 0
@@ -259,11 +328,6 @@ run_bazel_affected() {
     echo "$TARGET"
 
     if [ -n "$GITHUB_API_TOKEN" ]; then
-      if [ -n "$KOKORO_BUILD_NUMBER" ]; then
-        # Move into our cloned repo
-        pushd github/repo
-      fi
-
       comment_tmp_path=$(mktemp -d)
       comment_tmp_file="$comment_tmp_path/comment.tmp"
       echo "bazel detected changes to the following targets:" > "$comment_tmp_file"
@@ -272,25 +336,7 @@ run_bazel_affected() {
       echo "$TARGET" >> "$comment_tmp_file"
       echo '```' >> "$comment_tmp_file"
 
-      if [ ! -f scripts/external/github-comment/.git ]; then
-        git submodule update --init --recursive scripts/external/github-comment
-      fi
-
-      pushd scripts/external/github-comment >> /dev/null
-
-      swift run github-comment \
-        --repo=material-components/material-components-ios \
-        --github_token="$GITHUB_API_TOKEN" \
-        --pull_request_number="$KOKORO_GITHUB_PULL_REQUEST_NUMBER" \
-        --identifier=affected-targets \
-        --comment_body="$comment_tmp_file"
-
-      popd >> /dev/null
-
-      if [ -n "$KOKORO_BUILD_NUMBER" ]; then
-        # Move into our cloned repo
-        popd >> /dev/null
-      fi
+      post_comment "$comment_identifier" "$comment_tmp_file"
     fi
   fi
 
