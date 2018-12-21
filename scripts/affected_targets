@@ -18,14 +18,14 @@
 
 SCRIPT_NAME=$(basename "$0")
 
-# rule_kind should be a bazel `kind` type. E.g. test or rule.
+# bazel_kind should be a bazel `kind` type. E.g. test or rule.
 # https://docs.bazel.build/versions/master/query.html#kind
-rule_kind="$1"
+bazel_kind="$1"
 
 # range should be a valid git diff/log range. E.g. origin/develop...HEAD
 range="$2"
 
-if [ -z "$rule_kind" ]; then
+if [ -z "$bazel_kind" ]; then
   echo "Please provide a blaze rule kind to query for."
   exit 1
 fi
@@ -82,7 +82,7 @@ affected_targets() {
     bazel query \
       --universe_scope=//... \
       --order_output=no \
-      "kind($rule_kind, allrdeps('$query'))" \
+      "kind($bazel_kind, allrdeps('$query'))" \
       2>/dev/null
   done | sort | uniq
 }
