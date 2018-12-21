@@ -43,6 +43,9 @@ modified_files() {
 }
 
 check_files_covered() {
+  # Move to our cloned repository
+  cd github/repo
+
   all_files=$(modified_files)
   if [ -z "$all_files" ]; then
     exit 0
