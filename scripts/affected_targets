@@ -54,9 +54,7 @@ modified_files() {
 files_that_affect_everything() {
   grep -e "\.bzl$" \
     -e "WORKSPACE" \
-    #-e "\.kokoro" \
     -e "\.gitattributes" \
-    #-e "${SCRIPT_NAME/\./\\.}" \
     "$@"
 }
 
