@@ -163,7 +163,6 @@ post_comment() {
   popd >> /dev/null
 
   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
-    # Move into our cloned repo
     popd >> /dev/null
   fi
 }
@@ -205,7 +204,6 @@ delete_comment() {
   popd >> /dev/null
 
   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
-    # Move into our cloned repo
     popd >> /dev/null
   fi
 }
