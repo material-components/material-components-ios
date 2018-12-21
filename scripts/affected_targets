@@ -82,7 +82,7 @@ affected_targets() {
     bazel query \
       --universe_scope=//... \
       --order_output=no \
-      "kind($type, allrdeps($query))" \
+      "kind($type, allrdeps('$query'))" \
       2>/dev/null
   done | sort | uniq
 }
