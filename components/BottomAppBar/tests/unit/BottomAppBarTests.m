@@ -25,15 +25,15 @@
                             yOffset:(CGFloat)yOffset
                               width:(CGFloat)width
                              height:(CGFloat)height
-                          arcCenter:(CGPoint)arcCenter
                           arcRadius:(CGFloat)arcRadius
-                         startAngle:(CGFloat)startAngle
-                           endAngle:(CGFloat)endAngle;
+                         arcCenter1:(CGPoint)arcCenter1
+                         arcCenter2:(CGPoint)arcCenter2;
 - (UIBezierPath *)drawWithPlainPath:(UIBezierPath *)bottomBarPath
                             yOffset:(CGFloat)yOffset
                               width:(CGFloat)width
                              height:(CGFloat)height
-                          arcCenter:(CGPoint)arcCenter
+                         arcCenter1:(CGPoint)arcCenter1
+                         arcCenter2:(CGPoint)arcCenter2
                           arcRadius:(CGFloat)arcRadius;
 @end
 
@@ -115,15 +115,15 @@
                                          yOffset:fakeYOffset
                                            width:fakeWidth
                                           height:fakeHeight
-                                       arcCenter:fakeCenter
                                        arcRadius:fakeArcRadius
-                                      startAngle:(CGFloat)M_PI
-                                        endAngle:(CGFloat)M_PI_2];
+                                      arcCenter1:fakeCenter
+                                      arcCenter2:fakeCenter];
   fakeFromPath = [bottomAppLayer drawWithPlainPath:fakeFromPath
                                            yOffset:fakeYOffset
                                              width:fakeWidth
                                             height:fakeHeight
-                                         arcCenter:fakeCenter
+                                        arcCenter1:fakeCenter
+                                        arcCenter2:fakeCenter
                                          arcRadius:fakeArcRadius];
 
   // Then
