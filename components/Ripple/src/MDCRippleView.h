@@ -31,10 +31,11 @@ typedef NS_ENUM(NSInteger, MDCRippleState) {
 
 @interface MDCRippleView : UIView
 
-@property (nonatomic, weak, nullable) id<MDCRippleViewDelegate> animationDelegate;
+@property (nonatomic, weak, nullable) id<MDCRippleViewDelegate> rippleViewDelegate;
 @property (nonatomic, assign) MDCRippleStyle rippleStyle;
 @property (nonatomic, assign) CGFloat unboundedMaxRippleRadius;
 @property (nonatomic) BOOL allowsSelection;
+@property (nonatomic, readonly) MDCRippleState state;
 
 - (void)setRippleColor:(nullable UIColor *)rippleColor forState:(MDCRippleState)state;
 - (nullable UIColor *)rippleColorForState:(MDCRippleState)state;

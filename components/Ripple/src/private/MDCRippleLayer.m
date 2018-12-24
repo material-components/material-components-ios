@@ -1,4 +1,4 @@
-// Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCInkLayer.h"
+#import "MDCRippleLayer.h"
 #import "MaterialMath.h"
 
 static const CGFloat MDCInkLayerCommonDuration = (CGFloat)0.083;
@@ -29,15 +29,7 @@ static NSString *const MDCInkLayerOpacityString = @"opacity";
 static NSString *const MDCInkLayerPositionString = @"position";
 static NSString *const MDCInkLayerScaleString = @"transform.scale";
 
-@implementation MDCInkLayer
-
-- (instancetype)init {
-  self = [super init];
-  if (self) {
-    _inkColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.08];
-  }
-  return self;
-}
+@implementation MDCRippleLayer
 
 - (instancetype)initWithLayer:(id)layer {
   self = [super initWithLayer:layer];
@@ -45,30 +37,29 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
     _endAnimationDelay = 0;
     _finalRadius = 0;
     _initialRadius = 0;
-    _inkColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.08];
     _startAnimationActive = NO;
-    if ([layer isKindOfClass:[MDCInkLayer class]]) {
-      MDCInkLayer *inkLayer = (MDCInkLayer *)layer;
-      _endAnimationDelay = inkLayer.endAnimationDelay;
-      _finalRadius = inkLayer.finalRadius;
-      _initialRadius = inkLayer.initialRadius;
-      _maxRippleRadius = inkLayer.maxRippleRadius;
-      _inkColor = inkLayer.inkColor;
-      _startAnimationActive = NO;
-    }
+//    if ([layer isKindOfClass:[MDCRippleLayer class]]) {
+//      MDCRippleLayer *rippleLayer = (MDCInkLayer *)layer;
+//      _endAnimationDelay = rippleLayer.endAnimationDelay;
+//      _finalRadius = rippleLayer.finalRadius;
+//      _initialRadius = rippleLayer.initialRadius;
+//      _maxRippleRadius = rippleLayer.maxRippleRadius;
+//      _inkColor = rippleLayer.inkColor;
+//      _startAnimationActive = NO;
+//    }
   }
   return self;
 }
 
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  self = [super initWithCoder:aDecoder];
-
-  if (self) {
-    _inkColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.08];
-  }
-
-  return self;
-}
+//- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+//  self = [super initWithCoder:aDecoder];
+//
+//  if (self) {
+//    _inkColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.08];
+//  }
+//
+//  return self;
+//}
 
 - (void)setNeedsLayout {
   [super setNeedsLayout];
@@ -85,7 +76,7 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
   [self startInkAtPoint:point animated:YES];
 }
 
-- (void)startInkAtPoint:(CGPoint)point animated:(BOOL)animated {
+- (void)startRippleAtPoint:(CGPoint)point animated:(BOOL)animated {
   CGFloat radius = self.finalRadius;
   if (self.maxRippleRadius > 0) {
     radius = self.maxRippleRadius;
@@ -171,38 +162,11 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
   }
 }
 
-- (void)changeAnimationAtPoint:(CGPoint)point {
-  CGFloat animationDelay = 0;
-  if (self.startAnimationActive) {
-    animationDelay = MDCInkLayerStartFadeHalfBeginTimeFadeOutDuration +
-        MDCInkLayerStartFadeHalfDuration;
-  }
-
-  BOOL viewContainsPoint = CGRectContainsPoint(self.bounds, point) ? YES : NO;
-  CGFloat currOpacity = self.presentationLayer.opacity;
-  CGFloat updatedOpacity = 0;
-  if (viewContainsPoint) {
-    updatedOpacity = 1;
-  }
-
-  CABasicAnimation *changeAnim = [[CABasicAnimation alloc] init];
-  changeAnim.keyPath = MDCInkLayerOpacityString;
-  changeAnim.fromValue = @(currOpacity);
-  changeAnim.toValue = @(updatedOpacity);
-  changeAnim.duration = MDCInkLayerCommonDuration;
-  changeAnim.beginTime = [self convertTime:(CACurrentMediaTime() + animationDelay) fromLayer:nil];
-  changeAnim.timingFunction =
-      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
-  changeAnim.fillMode = kCAFillModeForwards;
-  changeAnim.removedOnCompletion = NO;
-  [self addAnimation:changeAnim forKey:nil];
+- (void)endAnimation  {
+  [self endRippleAnimated:YES];
 }
 
-- (void)endAnimationAtPoint:(CGPoint)point {
-  [self endInkAtPoint:point animated:YES];
-}
-
-- (void)endInkAtPoint:(CGPoint)point animated:(BOOL)animated {
+- (void)endRippleAnimated:(BOOL)animated {
   if (self.startAnimationActive) {
     self.endAnimationDelay = MDCInkLayerStartFadeHalfBeginTimeFadeOutDuration;
   }
