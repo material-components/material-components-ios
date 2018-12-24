@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import "MDCRippleView.h"
+#import "private/MDCRippleLayer.h"
 
 #import "MaterialMath.h"
 

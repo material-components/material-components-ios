@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
-#import "private/MDCRippleLayer.h"
 
+typedef NS_ENUM(NSInteger, MDCRippleState);
 @protocol MDCRippleViewDelegate;
 
 typedef void (^MDCRippleCompletionBlock)(void);
