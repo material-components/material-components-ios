@@ -15,7 +15,6 @@
 #import "MDCRippleView.h"
 
 #import "MaterialMath.h"
-#import "private/MDCRippleLayer.h"
 
 @interface MDCRippleView () <CALayerDelegate, MDCRippleLayerDelegate>
 
@@ -70,6 +69,7 @@
 
 - (void)updateRippleColor {
   UIColor *rippleColor = [self rippleColorForState:self.state];
+  self.activeRippleLayer.fillColor = rippleColor.CGColor;
 //  self.rippleLayer.rippleColor = rippleColor;
 }
 
@@ -135,7 +135,7 @@
     if ([layer isKindOfClass:[MDCRippleLayer class]]) {
       MDCRippleLayer *rippleLayer = (MDCRippleLayer *)layer;
       if (animated) {
-        [rippleLayer endAnimationAtPoint:CGPointZero];
+        [rippleLayer endAnimation];
       } else {
         [rippleLayer removeFromSuperlayer];
       }
@@ -153,13 +153,13 @@
   rippleLayer.opacity = 0;
   rippleLayer.frame = self.bounds;
   [self.layer addSublayer:rippleLayer];
-  [rippleLayer startInkAtPoint:point animated:animated];
+  [rippleLayer startRippleAtPoint:point animated:animated];
   self.activeRippleLayer = rippleLayer;
 }
 
 - (void)BeginRipplePressUpAnimated:(BOOL)animated
                         completion:(nullable MDCRippleCompletionBlock)completionBlock {
-  [self.activeRippleLayer endInkAtPoint:point animated:animated];
+  [self.activeRippleLayer endRippleAnimated:animated];
 }
 
 //+ (MDCInkView *)injectedInkViewForView:(UIView *)view {

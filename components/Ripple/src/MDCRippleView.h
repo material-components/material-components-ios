@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
+#import "private/MDCRippleLayer.h"
 
 @protocol MDCRippleViewDelegate;
 
@@ -21,12 +22,6 @@ typedef void (^MDCRippleCompletionBlock)(void);
 typedef NS_ENUM(NSInteger, MDCRippleStyle) {
   MDCRippleStyleBounded = 0,
   MDCRippleStyleUnbounded,
-};
-
-typedef NS_ENUM(NSInteger, MDCRippleState) {
-  MDCRippleStateNormal = 0, // No Ripple
-  MDCRippleStateHighlighted, // Ripple has been triggered
-  MDCRippleStateSelected, // Ripple has spread and is staying
 };
 
 @interface MDCRippleView : UIView

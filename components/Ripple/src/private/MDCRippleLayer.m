@@ -18,7 +18,7 @@
 static const CGFloat MDCInkLayerCommonDuration = (CGFloat)0.083;
 static const CGFloat MDCInkLayerEndFadeOutDuration = (CGFloat)0.15;
 static const CGFloat MDCInkLayerStartScalePositionDuration = (CGFloat)0.333;
-static const CGFloat MDCInkLayerStartFadeHalfDuration = (CGFloat)0.167;
+//static const CGFloat MDCInkLayerStartFadeHalfDuration = (CGFloat)0.167;
 static const CGFloat MDCInkLayerStartFadeHalfBeginTimeFadeOutDuration = (CGFloat)0.25;
 
 static const CGFloat MDCInkLayerScaleStartMin = (CGFloat)0.2;
@@ -73,7 +73,7 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
 }
 
 - (void)startAnimationAtPoint:(CGPoint)point {
-  [self startInkAtPoint:point animated:YES];
+  [self startRippleAtPoint:point animated:YES];
 }
 
 - (void)startRippleAtPoint:(CGPoint)point animated:(BOOL)animated {
@@ -87,7 +87,7 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
                                radius * 2);
   UIBezierPath *circlePath = [UIBezierPath bezierPathWithOvalInRect:ovalRect];
   self.path = circlePath.CGPath;
-  self.fillColor = self.inkColor.CGColor;
+  self.fillColor = self.rippleColors[@(MDCRippleStateNormal)].CGColor;
   if (!animated) {
     self.opacity = 1;
     self.position = CGPointMake(CGRectGetWidth(self.bounds) / 2, CGRectGetHeight(self.bounds) / 2);
@@ -157,8 +157,8 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
     [self addAnimation:animGroup forKey:nil];
     [CATransaction commit];
   }
-  if ([self.animationDelegate respondsToSelector:@selector(inkLayerAnimationDidStart:)]) {
-    [self.animationDelegate inkLayerAnimationDidStart:self];
+  if ([self.rippleLayerDelegate respondsToSelector:@selector(rippleLayerAnimationDidStart:)]) {
+    [self.rippleLayerDelegate rippleLayerAnimationDidStart:self];
   }
 }
 
@@ -171,16 +171,16 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
     self.endAnimationDelay = MDCInkLayerStartFadeHalfBeginTimeFadeOutDuration;
   }
 
-  CGFloat opacity = 1;
-  BOOL viewContainsPoint = CGRectContainsPoint(self.bounds, point) ? YES : NO;
-  if (!viewContainsPoint) {
-    opacity = 0;
-  }
+  CGFloat opacity = 0;
+//  BOOL viewContainsPoint = CGRectContainsPoint(self.bounds, point) ? YES : NO;
+//  if (!viewContainsPoint) {
+//    opacity = 0;
+//  }
 
   if (!animated) {
     self.opacity = 0;
-    if ([self.animationDelegate respondsToSelector:@selector(inkLayerAnimationDidEnd:)]) {
-      [self.animationDelegate inkLayerAnimationDidEnd:self];
+    if ([self.rippleLayerDelegate respondsToSelector:@selector(rippleLayerAnimationDidEnd:)]) {
+      [self.rippleLayerDelegate rippleLayerAnimationDidEnd:self];
     }
     [self removeFromSuperlayer];
   } else {
@@ -197,8 +197,8 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
     fadeOutAnim.fillMode = kCAFillModeForwards;
     fadeOutAnim.removedOnCompletion = NO;
     [CATransaction setCompletionBlock:^{
-      if ([self.animationDelegate respondsToSelector:@selector(inkLayerAnimationDidEnd:)]) {
-        [self.animationDelegate inkLayerAnimationDidEnd:self];
+      if ([self.rippleLayerDelegate respondsToSelector:@selector(rippleLayerAnimationDidEnd:)]) {
+        [self.rippleLayerDelegate rippleLayerAnimationDidEnd:self];
       }
       [self removeFromSuperlayer];
     }];

@@ -15,6 +15,12 @@
 #import <QuartzCore/QuartzCore.h>
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, MDCRippleState) {
+  MDCRippleStateNormal = 0, // No Ripple
+  MDCRippleStateHighlighted, // Ripple has been triggered
+  MDCRippleStateSelected, // Ripple has spread and is staying
+};
+
 @protocol MDCRippleLayerDelegate;
 
 @interface MDCRippleLayer : CAShapeLayer
@@ -55,8 +61,6 @@
 /**
  Ends the ink ripple
 
- @param point the point where to end the ink ripple
- @param animated if to animate the ripple or not
  */
 - (void)endRippleAnimated:(BOOL)animated;
 
@@ -73,14 +77,12 @@
 /**
  Called when the ink ripple animation begins.
 
- @param inkLayer The MDCInkLayer that starts animating.
  */
 - (void)rippleLayerAnimationDidStart:(nonnull MDCRippleLayer *)rippleLayer;
 
 /**
  Called when the ink ripple animation ends.
 
- @param inkLayer The MDCInkLayer that ends animating.
  */
 - (void)rippleLayerAnimationDidEnd:(nonnull MDCRippleLayer *)rippleLayer;
 
