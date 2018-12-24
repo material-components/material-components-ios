@@ -61,13 +61,12 @@ static const BOOL MDCCardIsInteractableDefault = YES;
   self.layer.cornerRadius = MDCCardCornerRadiusDefault;
   _interactable = MDCCardIsInteractableDefault;
 
-  if (_inkView == nil) {
-    _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
-    _inkView.autoresizingMask = (UIViewAutoresizingFlexibleWidth |
+  if (_rippleView == nil) {
+    _rippleView = [[MDCRippleView alloc] initWithFrame:self.bounds];
+    _rippleView.autoresizingMask = (UIViewAutoresizingFlexibleWidth |
                                  UIViewAutoresizingFlexibleHeight);
-    _inkView.usesLegacyInkRipple = NO;
-    _inkView.layer.zPosition = FLT_MAX;
-    [self addSubview:_inkView];
+    _rippleView.layer.zPosition = FLT_MAX;
+    [self addSubview:_rippleView];
   }
 
   if (_shadowElevations == nil) {
@@ -214,9 +213,9 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 
 - (void)setHighlighted:(BOOL)highlighted {
   if (highlighted && !self.highlighted) {
-    [self.inkView startTouchBeganAnimationAtPoint:_lastTouch completion:nil];
+    [self.rippleView BeginRipplePressDownAtPoint:_lastTouch animated:true completion:nil];
   } else if (!highlighted && self.highlighted) {
-    [self.inkView startTouchEndedAnimationAtPoint:_lastTouch completion:nil];
+    [self.rippleView BeginRipplePressUpAnimated:true completion:nil];
   }
   [super setHighlighted:highlighted];
   [self updateShadowElevation];
@@ -264,9 +263,9 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 
 - (void)updateInkForShape {
   CGRect boundingBox = CGPathGetBoundingBox(self.layer.shapeLayer.path);
-  self.inkView.maxRippleRadius =
+  self.rippleView.unboundedMaxRippleRadius =
       (CGFloat)(MDCHypot(CGRectGetHeight(boundingBox), CGRectGetWidth(boundingBox)) / 2 + 10);
-  self.inkView.layer.masksToBounds = NO;
+  self.rippleView.layer.masksToBounds = NO;
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {

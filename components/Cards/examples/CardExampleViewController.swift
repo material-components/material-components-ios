@@ -19,9 +19,9 @@ import MaterialComponentsBeta.MaterialContainerScheme
 import MaterialComponentsBeta.MaterialButtons_Theming
 
 class CardExampleViewController: UIViewController {
-  @IBOutlet weak var imageView: CardImageView!
+//  @IBOutlet weak var imageView: CardImageView!
   @IBOutlet weak var card: MDCCard!
-  @IBOutlet weak var button: MDCButton!
+//  @IBOutlet weak var button: MDCButton!
 
   var colorScheme = MDCSemanticColorScheme()
   var shapeScheme = MDCShapeScheme()
@@ -36,16 +36,16 @@ class CardExampleViewController: UIViewController {
     bundle.loadNibNamed("CardExampleViewController", owner: self, options: nil)
     view.frame = self.view.bounds
 
-    button.applyTextTheme(withScheme: MDCContainerScheme())
+//    button.applyTextTheme(withScheme: MDCContainerScheme())
 
     let cardScheme = MDCCardScheme();
     cardScheme.colorScheme = colorScheme
     cardScheme.shapeScheme = shapeScheme
     MDCCardThemer.applyScheme(cardScheme, to: card)
-    card.isInteractable = false
+//    card.isInteractable = false
 
-    imageView.isAccessibilityElement = true
-    imageView.accessibilityLabel = "Missing Dish"
+//    imageView.isAccessibilityElement = true
+//    imageView.accessibilityLabel = "Missing Dish"
   }
 
   override public var traitCollection: UITraitCollection {
@@ -66,6 +66,7 @@ extension CardExampleViewController {
       "description": "Cards contain content and actions about a single subject.",
       "primaryDemo": true,
       "presentable": true,
+      "debug": true,
     ]
   }
 }
