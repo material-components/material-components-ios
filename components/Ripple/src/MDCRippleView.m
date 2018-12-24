@@ -52,12 +52,14 @@
   self.userInteractionEnabled = NO;
   self.backgroundColor = [UIColor clearColor];
   self.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-  self.layer.delegate = self;
 
   if (_rippleColors == nil) {
     _rippleColors = [NSMutableDictionary dictionary];
     _rippleColors[@(MDCRippleStateNormal)] = [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14];
   }
+
+  _rippleStyle = MDCRippleStyleBounded;
+  self.layer.masksToBounds = YES;
 
   [self updateRippleColor];
 }
@@ -85,25 +87,30 @@
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-//  CGRect inkBounds = CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
-//  self.layer.bounds = inkBounds;
-//
-//  // When bounds change ensure all ink layer bounds are changed too.
-//  for (CALayer *layer in self.layer.sublayers) {
-//    if ([layer isKindOfClass:[MDCInkLayer class]]) {
-//      MDCInkLayer *inkLayer = (MDCInkLayer *)layer;
-//      inkLayer.bounds = inkBounds;
-//    }
-//  }
+  // this is for layout changes like landscape etc. should be moved to separate method.
+  /**
+  CGRect inkBounds = CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
+  self.layer.bounds = inkBounds;
+
+  // When bounds change ensure all ink layer bounds are changed too.
+  for (CALayer *layer in self.layer.sublayers) {
+    if ([layer isKindOfClass:[MDCRippleLayer class]]) {
+      MDCRippleLayer *inkLayer = (MDCRippleLayer *)layer;
+      inkLayer.bounds = inkBounds;
+    }
+  }
+  */
 }
 
 - (void)setRippleStyle:(MDCRippleStyle)rippleStyle {
   _rippleStyle = rippleStyle;
   switch(rippleStyle) {
     case MDCRippleStyleBounded:
+      self.layer.masksToBounds = NO;
 //      self.inkLayer.maxRippleRadius = 0;
       break;
     case MDCRippleStyleUnbounded:
+      self.layer.masksToBounds = YES;
 //      self.inkLayer.maxRippleRadius = _maxRippleRadius;
       break;
   }

@@ -31,25 +31,25 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
 
 @implementation MDCRippleLayer
 
-- (instancetype)initWithLayer:(id)layer {
-  self = [super initWithLayer:layer];
-  if (self) {
-    _endAnimationDelay = 0;
-    _finalRadius = 0;
-    _initialRadius = 0;
-    _startAnimationActive = NO;
-//    if ([layer isKindOfClass:[MDCRippleLayer class]]) {
-//      MDCRippleLayer *rippleLayer = (MDCInkLayer *)layer;
-//      _endAnimationDelay = rippleLayer.endAnimationDelay;
-//      _finalRadius = rippleLayer.finalRadius;
-//      _initialRadius = rippleLayer.initialRadius;
-//      _maxRippleRadius = rippleLayer.maxRippleRadius;
-//      _inkColor = rippleLayer.inkColor;
-//      _startAnimationActive = NO;
-//    }
-  }
-  return self;
-}
+//- (instancetype)initWithLayer:(id)layer {
+//  self = [super initWithLayer:layer];
+//  if (self) {
+//    _endAnimationDelay = 0;
+//    _finalRadius = 0;
+//    _initialRadius = 0;
+//    _startAnimationActive = NO;
+////    if ([layer isKindOfClass:[MDCRippleLayer class]]) {
+////      MDCRippleLayer *rippleLayer = (MDCInkLayer *)layer;
+////      _endAnimationDelay = rippleLayer.endAnimationDelay;
+////      _finalRadius = rippleLayer.finalRadius;
+////      _initialRadius = rippleLayer.initialRadius;
+////      _maxRippleRadius = rippleLayer.maxRippleRadius;
+////      _inkColor = rippleLayer.inkColor;
+////      _startAnimationActive = NO;
+////    }
+//  }
+//  return self;
+//}
 
 //- (instancetype)initWithCoder:(NSCoder *)aDecoder {
 //  self = [super initWithCoder:aDecoder];
