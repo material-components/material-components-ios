@@ -55,11 +55,11 @@
 
   if (_rippleColors == nil) {
     _rippleColors = [NSMutableDictionary dictionary];
-    _rippleColors[@(MDCRippleStateNormal)] = [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14];
+    _rippleColors[@(MDCRippleStateNormal)] = [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.16];
   }
 
   _rippleStyle = MDCRippleStyleBounded;
-//  self.layer.masksToBounds = YES;
+  self.layer.masksToBounds = YES;
 
   [self updateRippleColor];
 }

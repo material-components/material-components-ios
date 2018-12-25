@@ -16,10 +16,10 @@
 #import "MaterialMath.h"
 
 //static const CGFloat MDCInkLayerCommonDuration = (CGFloat)0.083;
-static const CGFloat MDCInkLayerEndFadeOutDuration = (CGFloat)0.15;
+//static const CGFloat MDCInkLayerEndFadeOutDuration = (CGFloat)0.15;
 //static const CGFloat MDCInkLayerStartScalePositionDuration = (CGFloat)0.333;
 //static const CGFloat MDCInkLayerStartFadeHalfDuration = (CGFloat)0.167;
-static const CGFloat MDCInkLayerStartFadeHalfBeginTimeFadeOutDuration = (CGFloat)0.25;
+//static const CGFloat MDCInkLayerStartFadeHalfBeginTimeFadeOutDuration = (CGFloat)0.25;
 
 //static const CGFloat MDCInkLayerScaleStartMin = (CGFloat)0.2;
 //static const CGFloat MDCInkLayerScaleStartMax = (CGFloat)0.6;
@@ -67,10 +67,7 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
 }
 
 - (void)setRadiiWithRect:(CGRect)rect {
-//  self.initialRadius =
-//      (CGFloat)(MDCHypot(CGRectGetHeight(rect), CGRectGetWidth(rect)) / 2 * (CGFloat)0.6);
-  self.finalRadius = (CGFloat)(MDCHypot(CGRectGetMidX(rect), CGRectGetMidY(rect)));// + 10);
-  NSLog(@"radius: %f", self.finalRadius);
+  self.finalRadius = (CGFloat)(MDCHypot(CGRectGetMidX(rect), CGRectGetMidY(rect)) + 10);
 }
 
 - (void)startAnimationAtPoint:(CGPoint)point {
@@ -169,8 +166,10 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
 }
 
 - (void)endRippleAnimated:(BOOL)animated {
+  CGFloat delay = 0;
   if (self.startAnimationActive) {
-    self.endAnimationDelay = MDCInkLayerStartFadeHalfBeginTimeFadeOutDuration;
+    delay = (CGFloat)0.225;
+//    self.endAnimationDelay = MDCInkLayerStartFadeHalfBeginTimeFadeOutDuration;
   }
 
   CGFloat opacity = 0;
@@ -191,8 +190,8 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
     fadeOutAnim.keyPath = MDCInkLayerOpacityString;
     fadeOutAnim.fromValue = @(opacity);
     fadeOutAnim.toValue = @0;
-    fadeOutAnim.duration = MDCInkLayerEndFadeOutDuration;
-    fadeOutAnim.beginTime = [self convertTime:(CACurrentMediaTime() + self.endAnimationDelay)
+    fadeOutAnim.duration = (CGFloat)0.15;
+    fadeOutAnim.beginTime = [self convertTime:(CACurrentMediaTime() + delay)
                                     fromLayer:nil];
     fadeOutAnim.timingFunction =
         [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
