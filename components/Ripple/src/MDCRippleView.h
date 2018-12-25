@@ -42,10 +42,10 @@ typedef NS_ENUM(NSInteger, MDCRippleStyle) {
 
 - (void)BeginRipplePressDownAtPoint:(CGPoint)point
                            animated:(BOOL)animated
-                         completion:(nullable MDCRippleCompletionBlock)completionBlock;
+                         completion:(nullable MDCRippleCompletionBlock)completion;
 
 - (void)BeginRipplePressUpAnimated:(BOOL)animated
-                        completion:(nullable MDCRippleCompletionBlock)completionBlock;
+                        completion:(nullable MDCRippleCompletionBlock)completion;
 @end
 
 @protocol MDCRippleViewDelegate <NSObject>

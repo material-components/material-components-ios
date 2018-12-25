@@ -40,7 +40,9 @@ static NSString *const MDCRippleLayerScaleString = @"transform.scale";
   self.finalRadius = (CGFloat)(MDCHypot(CGRectGetMidX(rect), CGRectGetMidY(rect)) + 10);
 }
 
-- (void)startRippleAtPoint:(CGPoint)point animated:(BOOL)animated {
+- (void)startRippleAtPoint:(CGPoint)point
+                  animated:(BOOL)animated
+                completion:(MDCRippleCompletionBlock)completion {
   CGFloat radius = self.finalRadius;
   if (self.unboundedMaxRippleRadius > 0) {
     radius = self.unboundedMaxRippleRadius;
@@ -118,6 +120,7 @@ static NSString *const MDCRippleLayerScaleString = @"transform.scale";
     animGroup.removedOnCompletion = NO;
     [CATransaction setCompletionBlock:^{
       self->_startAnimationActive = NO;
+      completion();
     }];
     [self addAnimation:animGroup forKey:nil];
     [CATransaction commit];
@@ -127,7 +130,7 @@ static NSString *const MDCRippleLayerScaleString = @"transform.scale";
   }
 }
 
-- (void)endRippleAnimated:(BOOL)animated {
+- (void)endRippleAnimated:(BOOL)animated completion:(MDCRippleCompletionBlock)completion {
   CGFloat delay = 0;
   if (self.startAnimationActive) {
     delay = (CGFloat)0.225;
@@ -163,6 +166,7 @@ static NSString *const MDCRippleLayerScaleString = @"transform.scale";
       if ([self.rippleLayerDelegate respondsToSelector:@selector(rippleLayerAnimationDidEnd:)]) {
         [self.rippleLayerDelegate rippleLayerAnimationDidEnd:self];
       }
+      completion();
       [self removeFromSuperlayer];
     }];
     [self addAnimation:fadeOutAnim forKey:nil];

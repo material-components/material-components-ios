@@ -21,6 +21,8 @@ typedef NS_ENUM(NSInteger, MDCRippleState) {
   MDCRippleStateSelected, // Ripple has spread and is staying
 };
 
+typedef void (^MDCRippleCompletionBlock)(void);
+
 @protocol MDCRippleLayerDelegate;
 
 @interface MDCRippleLayer : CAShapeLayer
@@ -35,8 +37,10 @@ typedef NS_ENUM(NSInteger, MDCRippleState) {
 
 @property(nonatomic, strong, nonnull) NSDictionary<NSNumber *, UIColor *> *rippleColors;
 
-- (void)startRippleAtPoint:(CGPoint)point animated:(BOOL)animated;
-- (void)endRippleAnimated:(BOOL)animated;
+- (void)startRippleAtPoint:(CGPoint)point
+                  animated:(BOOL)animated
+                completion:(nullable MDCRippleCompletionBlock)completion;
+- (void)endRippleAnimated:(BOOL)animated completion:(nullable MDCRippleCompletionBlock)completion;
 
 @end
 

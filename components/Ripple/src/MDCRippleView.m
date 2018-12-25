@@ -109,7 +109,7 @@
     if ([layer isKindOfClass:[MDCRippleLayer class]]) {
       MDCRippleLayer *rippleLayer = (MDCRippleLayer *)layer;
       if (animated) {
-        [rippleLayer endRippleAnimated:animated];
+        [rippleLayer endRippleAnimated:animated completion:nil];
       } else {
         [rippleLayer removeFromSuperlayer];
       }
@@ -119,20 +119,20 @@
 
 - (void)BeginRipplePressDownAtPoint:(CGPoint)point
                            animated:(BOOL)animated
-                         completion:(nullable MDCRippleCompletionBlock)completionBlock {
+                         completion:(nullable MDCRippleCompletionBlock)completion {
   MDCRippleLayer *rippleLayer = [MDCRippleLayer layer];
   rippleLayer.rippleColors = _rippleColors;
   rippleLayer.unboundedMaxRippleRadius = self.unboundedMaxRippleRadius;
   rippleLayer.rippleLayerDelegate = self;
   rippleLayer.frame = self.bounds;
   [self.layer addSublayer:rippleLayer];
-  [rippleLayer startRippleAtPoint:point animated:animated];
+  [rippleLayer startRippleAtPoint:point animated:animated completion:completion];
   self.activeRippleLayer = rippleLayer;
 }
 
 - (void)BeginRipplePressUpAnimated:(BOOL)animated
-                        completion:(nullable MDCRippleCompletionBlock)completionBlock {
-  [self.activeRippleLayer endRippleAnimated:animated];
+                        completion:(nullable MDCRippleCompletionBlock)completion {
+  [self.activeRippleLayer endRippleAnimated:animated completion:completion];
 }
 
 //+ (MDCInkView *)injectedInkViewForView:(UIView *)view {

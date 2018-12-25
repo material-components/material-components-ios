@@ -66,7 +66,7 @@ extension CardExampleViewController {
       "description": "Cards contain content and actions about a single subject.",
       "primaryDemo": true,
       "presentable": true,
-      "debug": true,
+      "debug": false,
     ]
   }
 }
