@@ -59,7 +59,7 @@
   }
 
   _rippleStyle = MDCRippleStyleBounded;
-  self.layer.masksToBounds = YES;
+//  self.layer.masksToBounds = YES;
 
   [self updateRippleColor];
 }
