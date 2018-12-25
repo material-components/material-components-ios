@@ -45,9 +45,10 @@ typedef void (^MDCRippleCompletionBlock)(void);
 @end
 
 @protocol MDCRippleLayerDelegate <CALayerDelegate>
+- (void)rippleLayerPressDownAnimationDidBegin:(nonnull MDCRippleLayer *)rippleLayer;
+- (void)rippleLayerPressDownAnimationDidEnd:(nonnull MDCRippleLayer *)rippleLayer;
+- (void)rippleLayerPressUpAnimationDidBegin:(nonnull MDCRippleLayer *)rippleLayer;
+- (void)rippleLayerPressUpAnimationDidEnd:(nonnull MDCRippleLayer *)rippleLayer;
 
-@optional
-- (void)rippleLayerAnimationDidStart:(nonnull MDCRippleLayer *)rippleLayer;
-- (void)rippleLayerAnimationDidEnd:(nonnull MDCRippleLayer *)rippleLayer;
 
 @end

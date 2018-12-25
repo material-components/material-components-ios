@@ -54,9 +54,11 @@ static NSString *const MDCRippleLayerScaleString = @"transform.scale";
   UIBezierPath *circlePath = [UIBezierPath bezierPathWithOvalInRect:ovalRect];
   self.path = circlePath.CGPath;
   self.fillColor = self.rippleColors[@(MDCRippleStateNormal)].CGColor;
+  [self.rippleLayerDelegate rippleLayerPressDownAnimationDidBegin:self];
   if (!animated) {
     self.opacity = 1;
     self.position = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
+    [self.rippleLayerDelegate rippleLayerPressDownAnimationDidEnd:self];
   } else {
     self.opacity = 0;
     self.position = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
@@ -120,13 +122,13 @@ static NSString *const MDCRippleLayerScaleString = @"transform.scale";
     animGroup.removedOnCompletion = NO;
     [CATransaction setCompletionBlock:^{
       self->_startAnimationActive = NO;
-      completion();
+      if (completion) {
+        completion();
+      }
+      [self.rippleLayerDelegate rippleLayerPressDownAnimationDidEnd:self];
     }];
     [self addAnimation:animGroup forKey:nil];
     [CATransaction commit];
-  }
-  if ([self.rippleLayerDelegate respondsToSelector:@selector(rippleLayerAnimationDidStart:)]) {
-    [self.rippleLayerDelegate rippleLayerAnimationDidStart:self];
   }
 }
 
@@ -142,12 +144,10 @@ static NSString *const MDCRippleLayerScaleString = @"transform.scale";
 //  if (!viewContainsPoint) {
 //    opacity = 0;
 //  }
-
+  [self.rippleLayerDelegate rippleLayerPressUpAnimationDidBegin:self];
   if (!animated) {
     self.opacity = 0;
-    if ([self.rippleLayerDelegate respondsToSelector:@selector(rippleLayerAnimationDidEnd:)]) {
-      [self.rippleLayerDelegate rippleLayerAnimationDidEnd:self];
-    }
+    [self.rippleLayerDelegate rippleLayerPressUpAnimationDidEnd:self];
     [self removeFromSuperlayer];
   } else {
     [CATransaction begin];
@@ -163,10 +163,10 @@ static NSString *const MDCRippleLayerScaleString = @"transform.scale";
     fadeOutAnim.fillMode = kCAFillModeForwards;
     fadeOutAnim.removedOnCompletion = NO;
     [CATransaction setCompletionBlock:^{
-      if ([self.rippleLayerDelegate respondsToSelector:@selector(rippleLayerAnimationDidEnd:)]) {
-        [self.rippleLayerDelegate rippleLayerAnimationDidEnd:self];
+      if (completion) {
+        completion();
       }
-      completion();
+      [self.rippleLayerDelegate rippleLayerPressUpAnimationDidEnd:self];
       [self removeFromSuperlayer];
     }];
     [self addAnimation:fadeOutAnim forKey:nil];

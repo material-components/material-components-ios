@@ -18,7 +18,7 @@ import MaterialComponents.MaterialCards_CardThemer
 import MaterialComponentsBeta.MaterialContainerScheme
 import MaterialComponentsBeta.MaterialButtons_Theming
 
-class CardExampleViewController: UIViewController {
+class CardExampleViewController: UIViewController, MDCRippleViewDelegate {
 //  @IBOutlet weak var imageView: CardImageView!
   @IBOutlet weak var card: MDCCard!
 //  @IBOutlet weak var button: MDCButton!
@@ -46,6 +46,7 @@ class CardExampleViewController: UIViewController {
 
 //    imageView.isAccessibilityElement = true
 //    imageView.accessibilityLabel = "Missing Dish"
+    card.rippleView.rippleViewDelegate = self
   }
 
   override public var traitCollection: UITraitCollection {
@@ -56,6 +57,21 @@ class CardExampleViewController: UIViewController {
     return super.traitCollection
   }
 
+  func ripplePressDownAnimationDidBegin(_ rippleView: MDCRippleView) {
+    print("ripplePressDownAnimationDidBegin")
+  }
+
+  func ripplePressDownAnimationDidEnd(_ rippleView: MDCRippleView) {
+    print("ripplePressDownAnimationDidEnd")
+  }
+
+  func ripplePressUpAnimationDidBegin(_ rippleView: MDCRippleView) {
+    print("ripplePressUpAnimationDidBegin")
+  }
+
+  func ripplePressUpAnimationDidEnd(_ rippleView: MDCRippleView) {
+    print("ripplePressUpAnimationDidEnd")
+  }
 }
 
 extension CardExampleViewController {

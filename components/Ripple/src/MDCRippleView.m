@@ -152,27 +152,27 @@
 //  return foundInkView;
 //}
 
-#pragma mark - MDCRippleViewDelegate
+#pragma mark - MDCRippleLayerDelegate
 
-- (void)ripplePressDownAnimationDidBegin:(MDCRippleView *)rippleView {
+- (void)rippleLayerPressDownAnimationDidBegin:(MDCRippleLayer *)rippleLayer {
   if ([self.rippleViewDelegate respondsToSelector:@selector(ripplePressDownAnimationDidBegin:)]) {
     [self.rippleViewDelegate ripplePressDownAnimationDidBegin:self];
   }
 }
 
-- (void)ripplePressDownAnimationDidEnd:(MDCRippleView *)rippleView {
+- (void)rippleLayerPressDownAnimationDidEnd:(MDCRippleLayer *)rippleLayer {
   if ([self.rippleViewDelegate respondsToSelector:@selector(ripplePressDownAnimationDidEnd:)]) {
     [self.rippleViewDelegate ripplePressDownAnimationDidEnd:self];
   }
 }
 
-- (void)ripplePressUpAnimationDidBegin:(MDCRippleView *)rippleView {
+- (void)rippleLayerPressUpAnimationDidBegin:(MDCRippleLayer *)rippleLayer {
   if ([self.rippleViewDelegate respondsToSelector:@selector(ripplePressUpAnimationDidBegin:)]) {
     [self.rippleViewDelegate ripplePressUpAnimationDidBegin:self];
   }
 }
 
-- (void)ripplePressUpAnimationDidEnd:(MDCRippleView *)rippleView {
+- (void)rippleLayerPressUpAnimationDidEnd:(MDCRippleLayer *)rippleLayer {
   if ([self.rippleViewDelegate respondsToSelector:@selector(ripplePressUpAnimationDidEnd:)]) {
     [self.rippleViewDelegate ripplePressUpAnimationDidEnd:self];
   }
