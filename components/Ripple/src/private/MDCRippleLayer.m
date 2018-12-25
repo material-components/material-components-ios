@@ -31,36 +31,6 @@ static NSString *const MDCRippleLayerScaleString = @"transform.scale";
 
 @implementation MDCRippleLayer
 
-//- (instancetype)initWithLayer:(id)layer {
-//  self = [super initWithLayer:layer];
-//  if (self) {
-//    _endAnimationDelay = 0;
-//    _finalRadius = 0;
-//    _initialRadius = 0;
-//    _startAnimationActive = NO;
-////    if ([layer isKindOfClass:[MDCRippleLayer class]]) {
-////      MDCRippleLayer *rippleLayer = (MDCInkLayer *)layer;
-////      _endAnimationDelay = rippleLayer.endAnimationDelay;
-////      _finalRadius = rippleLayer.finalRadius;
-////      _initialRadius = rippleLayer.initialRadius;
-////      _maxRippleRadius = rippleLayer.maxRippleRadius;
-////      _inkColor = rippleLayer.inkColor;
-////      _startAnimationActive = NO;
-////    }
-//  }
-//  return self;
-//}
-
-//- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-//  self = [super initWithCoder:aDecoder];
-//
-//  if (self) {
-//    _inkColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.08];
-//  }
-//
-//  return self;
-//}
-
 - (void)setNeedsLayout {
   [super setNeedsLayout];
   [self setRadiiWithRect:self.bounds];
@@ -70,14 +40,10 @@ static NSString *const MDCRippleLayerScaleString = @"transform.scale";
   self.finalRadius = (CGFloat)(MDCHypot(CGRectGetMidX(rect), CGRectGetMidY(rect)) + 10);
 }
 
-- (void)startAnimationAtPoint:(CGPoint)point {
-  [self startRippleAtPoint:point animated:YES];
-}
-
 - (void)startRippleAtPoint:(CGPoint)point animated:(BOOL)animated {
   CGFloat radius = self.finalRadius;
-  if (self.maxRippleRadius > 0) {
-    radius = self.maxRippleRadius;
+  if (self.unboundedMaxRippleRadius > 0) {
+    radius = self.unboundedMaxRippleRadius;
   }
   CGRect ovalRect = CGRectMake(CGRectGetMidX(self.bounds) - radius,
                                CGRectGetMidY(self.bounds) - radius,
@@ -159,10 +125,6 @@ static NSString *const MDCRippleLayerScaleString = @"transform.scale";
   if ([self.rippleLayerDelegate respondsToSelector:@selector(rippleLayerAnimationDidStart:)]) {
     [self.rippleLayerDelegate rippleLayerAnimationDidStart:self];
   }
-}
-
-- (void)endAnimation  {
-  [self endRippleAnimated:YES];
 }
 
 - (void)endRippleAnimated:(BOOL)animated {

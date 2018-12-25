@@ -28,10 +28,6 @@
   NSMutableDictionary<NSNumber *, UIColor *> *_rippleColors;
 }
 
-//+ (Class)layerClass {
-//  return [MDCLegacyInkLayer class];
-//}
-
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
@@ -104,37 +100,7 @@
 
 - (void)setRippleStyle:(MDCRippleStyle)rippleStyle {
   _rippleStyle = rippleStyle;
-  switch(rippleStyle) {
-    case MDCRippleStyleBounded:
-      self.layer.masksToBounds = NO;
-//      self.inkLayer.maxRippleRadius = 0;
-      break;
-    case MDCRippleStyleUnbounded:
-      self.layer.masksToBounds = YES;
-//      self.inkLayer.maxRippleRadius = _maxRippleRadius;
-      break;
-  }
-}
-
-- (CGFloat)unboundedMaxRippleRadius {
-  return _unboundedMaxRippleRadius;
-//  return self.inkLayer.maxRippleRadius;
-}
-
-- (void)setUnboundedMaxRippleRadius:(CGFloat)unboundedMaxRippleRadius {
-  _unboundedMaxRippleRadius = unboundedMaxRippleRadius;
-//  if (MDCCGFloatEqual(self.inkLayer.maxRippleRadius, radius)) {
-//    return;
-//  }
-
-  switch(self.rippleStyle) {
-    case MDCRippleStyleUnbounded:
-//      self.inkLayer.maxRippleRadius = radius;
-      break;
-    case MDCRippleStyleBounded:
-      // No-op
-      break;
-  }
+  self.layer.masksToBounds = (rippleStyle == MDCRippleStyleBounded);
 }
 
 - (void)cancelAllRipplesAnimated:(BOOL)animated {
@@ -143,7 +109,7 @@
     if ([layer isKindOfClass:[MDCRippleLayer class]]) {
       MDCRippleLayer *rippleLayer = (MDCRippleLayer *)layer;
       if (animated) {
-        [rippleLayer endAnimation];
+        [rippleLayer endRippleAnimated:animated];
       } else {
         [rippleLayer removeFromSuperlayer];
       }
@@ -156,9 +122,8 @@
                          completion:(nullable MDCRippleCompletionBlock)completionBlock {
   MDCRippleLayer *rippleLayer = [MDCRippleLayer layer];
   rippleLayer.rippleColors = _rippleColors;
-  rippleLayer.maxRippleRadius = self.unboundedMaxRippleRadius;
+  rippleLayer.unboundedMaxRippleRadius = self.unboundedMaxRippleRadius;
   rippleLayer.rippleLayerDelegate = self;
-  rippleLayer.opacity = 0;
   rippleLayer.frame = self.bounds;
   [self.layer addSublayer:rippleLayer];
   [rippleLayer startRippleAtPoint:point animated:animated];

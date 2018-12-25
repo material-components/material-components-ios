@@ -31,55 +31,19 @@ typedef NS_ENUM(NSInteger, MDCRippleState) {
 
 @property(nonatomic, assign) CGFloat finalRadius;
 
-@property(nonatomic, assign) CGFloat maxRippleRadius;
+@property(nonatomic, assign) CGFloat unboundedMaxRippleRadius;
 
 @property(nonatomic, strong, nonnull) NSDictionary<NSNumber *, UIColor *> *rippleColors;
 
-/**
- Starts the ink ripple animation at a specified point.
- */
-- (void)startAnimationAtPoint:(CGPoint)point;
-
-/**
- Starts the ink ripple
-
- @param point the point where to start the ink ripple
- @param animated if to animate the ripple or not
- */
 - (void)startRippleAtPoint:(CGPoint)point animated:(BOOL)animated;
-
-/**
- Ends the ink ripple animation.
- */
-- (void)endAnimation;
-
-
-/**
- Ends the ink ripple
-
- */
 - (void)endRippleAnimated:(BOOL)animated;
 
 @end
 
-/**
- Delegate protocol for the MDCInkLayer. Clients may implement this protocol to receive updates when
- ink layer animations start and end.
- */
 @protocol MDCRippleLayerDelegate <CALayerDelegate>
 
 @optional
-
-/**
- Called when the ink ripple animation begins.
-
- */
 - (void)rippleLayerAnimationDidStart:(nonnull MDCRippleLayer *)rippleLayer;
-
-/**
- Called when the ink ripple animation ends.
-
- */
 - (void)rippleLayerAnimationDidEnd:(nonnull MDCRippleLayer *)rippleLayer;
 
 @end
