@@ -25,9 +25,9 @@
 //static const CGFloat MDCInkLayerScaleStartMax = (CGFloat)0.6;
 //static const CGFloat MDCInkLayerScaleDivisor = 300;
 
-static NSString *const MDCInkLayerOpacityString = @"opacity";
-static NSString *const MDCInkLayerPositionString = @"position";
-static NSString *const MDCInkLayerScaleString = @"transform.scale";
+static NSString *const MDCRippleLayerOpacityString = @"opacity";
+static NSString *const MDCRippleLayerPositionString = @"position";
+static NSString *const MDCRippleLayerScaleString = @"transform.scale";
 
 @implementation MDCRippleLayer
 
@@ -107,7 +107,7 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
     CGFloat scaleStart = (CGFloat)0.6;
 
     CABasicAnimation *scaleAnim = [[CABasicAnimation alloc] init];
-    scaleAnim.keyPath = MDCInkLayerScaleString;
+    scaleAnim.keyPath = MDCRippleLayerScaleString;
     scaleAnim.fromValue = @(scaleStart);
     scaleAnim.toValue = @1;
     scaleAnim.duration = (CGFloat)0.225;// MDCInkLayerStartScalePositionDuration;
@@ -124,7 +124,7 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
     [centerPath closePath];
 
     CAKeyframeAnimation *positionAnim = [[CAKeyframeAnimation alloc] init];
-    positionAnim.keyPath = MDCInkLayerPositionString;
+    positionAnim.keyPath = MDCRippleLayerPositionString;
     positionAnim.path = centerPath.CGPath;
     positionAnim.keyTimes = @[ @0, @1 ];
     positionAnim.values = @[ @0, @1 ];
@@ -135,7 +135,7 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
     positionAnim.removedOnCompletion = NO;
 
     CABasicAnimation *fadeInAnim = [[CABasicAnimation alloc] init];
-    fadeInAnim.keyPath = MDCInkLayerOpacityString;
+    fadeInAnim.keyPath = MDCRippleLayerOpacityString;
     fadeInAnim.fromValue = @0;
     fadeInAnim.toValue = @1;
     fadeInAnim.duration = (CGFloat)0.075;//MDCInkLayerCommonDuration;
@@ -187,7 +187,7 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
   } else {
     [CATransaction begin];
     CABasicAnimation *fadeOutAnim = [[CABasicAnimation alloc] init];
-    fadeOutAnim.keyPath = MDCInkLayerOpacityString;
+    fadeOutAnim.keyPath = MDCRippleLayerOpacityString;
     fadeOutAnim.fromValue = @(opacity);
     fadeOutAnim.toValue = @0;
     fadeOutAnim.duration = (CGFloat)0.15;

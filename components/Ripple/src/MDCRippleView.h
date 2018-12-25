@@ -28,7 +28,10 @@ typedef NS_ENUM(NSInteger, MDCRippleStyle) {
 
 @property (nonatomic, weak, nullable) id<MDCRippleViewDelegate> rippleViewDelegate;
 @property (nonatomic, assign) MDCRippleStyle rippleStyle;
+
+//Shouldn't really be used or exposed?
 @property (nonatomic, assign) CGFloat unboundedMaxRippleRadius;
+
 @property (nonatomic) BOOL allowsSelection;
 @property (nonatomic, readonly) MDCRippleState state;
 

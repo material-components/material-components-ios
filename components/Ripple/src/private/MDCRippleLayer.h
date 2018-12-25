@@ -29,11 +29,7 @@ typedef NS_ENUM(NSInteger, MDCRippleState) {
 
 @property(nonatomic, assign, readonly, getter=isStartAnimationActive) BOOL startAnimationActive;
 
-@property(nonatomic, assign) CGFloat endAnimationDelay;
-
 @property(nonatomic, assign) CGFloat finalRadius;
-
-//@property(nonatomic, assign) CGFloat initialRadius;
 
 @property(nonatomic, assign) CGFloat maxRippleRadius;
 
