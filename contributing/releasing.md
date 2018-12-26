@@ -51,7 +51,7 @@ Please follow [using git-lfs instructions](https://github.com/material-component
 Our entire release process is encoded into the `release` script in the scripts/ directory.
 Read the [tool's readme](../scripts/README-release.md) to learn more about the tool.
 
-### Cut a release branch and create a pull request
+### Cut a release branch
 
 Run the following command to cut a release:
 
@@ -61,6 +61,12 @@ Note: if for some reason `cut` fails, first ensure that nobody else is in the mi
 
 You will now have a local `release-candidate` branch, a new section in CHANGELOG.md titled
 "release-candidate", and the `release-candidate` branch will have been pushed to GitHub.
+
+#### Create a Pull Request for the Release Branch
+
+If you have not clicked [the
+link](https://github.com/material-components/material-components-ios/compare/stable...release-candidate)
+provided in the script do so now.
 
 At this point you should also create the initial Release Candidate pull request using the URL
 that the `cut` script generated.
@@ -161,7 +167,7 @@ We do not presently have an automated way to identify visual changes between rel
 issue #290](https://github.com/material-components/material-components-ios/issues/290) for a
 discussion on the topic.
 
-### Sanity check: inspect the changes
+### [Optional] Sanity check: inspect the changes
 
 #### Diff just the components
 

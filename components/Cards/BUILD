@@ -15,6 +15,7 @@
 
 load(
     "//:material_components_ios.bzl",
+    "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
     "mdc_unit_test_suite",
@@ -39,26 +40,18 @@ mdc_public_objc_library(
     ],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "Theming",
-    srcs = native.glob(["src/Theming/*.m"]),
-    hdrs = native.glob(["src/Theming/*.h"]),
-    includes = ["src/Theming"],
     deps = [
         ":Cards",
         ":ColorThemer",
         ":ShapeThemer",
         "//components/schemes/Container",
     ],
-    visibility = ["//visibility:public"],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "CardThemer",
-    srcs = native.glob(["src/CardThemer/*.m"]),
-    hdrs = native.glob(["src/CardThemer/*.h"]),
-    includes = ["src/CardThemer"],
-    visibility = ["//visibility:public"],
     deps = [
         ":Cards",
         ":ColorThemer",
@@ -66,30 +59,16 @@ mdc_objc_library(
     ],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "ColorThemer",
-    srcs = native.glob(["src/ColorThemer/*.m"]),
-    hdrs = native.glob(["src/ColorThemer/*.h"]),
-    includes = ["src/ColorThemer"],
-    sdk_frameworks = [
-        "UIKit",
-    ],
-    visibility = ["//visibility:public"],
     deps = [
         ":Cards",
         "//components/schemes/Color",
     ],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "ShapeThemer",
-    srcs = native.glob(["src/ShapeThemer/*.m"]),
-    hdrs = native.glob(["src/ShapeThemer/*.h"]),
-    includes = ["src/ShapeThemer"],
-    sdk_frameworks = [
-        "UIKit",
-    ],
-    visibility = ["//visibility:public"],
     deps = [
         ":Cards",
         "//components/schemes/Shape",
@@ -131,6 +110,7 @@ mdc_objc_library(
 )
 
 mdc_unit_test_suite(
+    name = "unit_tests",
     deps = [
         ":unit_test_sources",
         ":unit_test_swift_sources",

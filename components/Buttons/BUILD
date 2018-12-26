@@ -16,6 +16,7 @@
 
 load(
     "//:material_components_ios.bzl",
+    "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
     "mdc_unit_test_suite",
@@ -43,12 +44,8 @@ mdc_public_objc_library(
     ],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "Theming",
-    srcs = native.glob(["src/Theming/*.m"]),
-    hdrs = native.glob(["src/Theming/*.h"]),
-    includes = ["src/Theming"],
-    visibility = ["//visibility:public"],
     deps = [
         ":Buttons",
         ":ColorThemer",
@@ -59,60 +56,40 @@ mdc_objc_library(
     ],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "ColorThemer",
-    srcs = native.glob(["src/ColorThemer/*.m"]),
-    hdrs = native.glob(["src/ColorThemer/*.h"]),
-    includes = ["src/ColorThemer"],
-    visibility = ["//visibility:public"],
     deps = [
         ":Buttons",
         "//components/schemes/Color",
     ],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "TitleColorAccessibilityMutator",
-    srcs = native.glob(["src/TitleColorAccessibilityMutator/*.m"]),
-    hdrs = native.glob(["src/TitleColorAccessibilityMutator/*.h"]),
-    includes = ["src/TitleColorAccessibilityMutator"],
-    visibility = ["//visibility:public"],
     deps = [
         ":Buttons",
         "@material_text_accessibility_ios//:MDFTextAccessibility",
     ],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "ShapeThemer",
-    srcs = native.glob(["src/ShapeThemer/*.m"]),
-    hdrs = native.glob(["src/ShapeThemer/*.h"]),
-    includes = ["src/ShapeThemer"],
-    visibility = ["//visibility:public"],
     deps = [
         ":Buttons",
         "//components/schemes/Shape",
     ],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "TypographyThemer",
-    srcs = native.glob(["src/TypographyThemer/*.m"]),
-    hdrs = native.glob(["src/TypographyThemer/*.h"]),
-    includes = ["src/TypographyThemer"],
-    visibility = ["//visibility:public"],
     deps = [
         ":Buttons",
         "//components/schemes/Typography",
     ],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "ButtonThemer",
-    srcs = native.glob(["src/ButtonThemer/*.m"]),
-    hdrs = native.glob(["src/ButtonThemer/*.h"]),
-    includes = ["src/ButtonThemer"],
-    visibility = ["//visibility:public"],
     deps = [
         ":Buttons",
         ":ColorThemer",
@@ -163,6 +140,7 @@ mdc_objc_library(
 )
 
 mdc_unit_test_suite(
+    name = "unit_tests",
     deps = [
         ":unit_test_sources",
     ],

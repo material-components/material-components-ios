@@ -14,6 +14,7 @@
 
 load(
     "//:material_components_ios.bzl",
+    "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
     "mdc_unit_test_suite",
@@ -35,15 +36,8 @@ mdc_public_objc_library(
     ],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "ColorThemer",
-    srcs = native.glob(["src/ColorThemer/*.m"]),
-    hdrs = native.glob(["src/ColorThemer/*.h"]),
-    includes = ["src/ColorThemer"],
-    sdk_frameworks = [
-        "UIKit",
-    ],
-    visibility = ["//visibility:public"],
     deps = [
         ":FlexibleHeader",
         "//components/schemes/Color",
@@ -64,15 +58,8 @@ package_group(
     ],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "CanAlwaysExpandToMaximumHeight",
-    srcs = native.glob(["src/CanAlwaysExpandToMaximumHeight/*.m"]),
-    hdrs = native.glob(["src/CanAlwaysExpandToMaximumHeight/*.h"]),
-    includes = ["src/CanAlwaysExpandToMaximumHeight"],
-    sdk_frameworks = [
-        "UIKit",
-    ],
-    visibility = ["//visibility:public"],
     deps = [
         ":FlexibleHeader",
     ],
@@ -116,6 +103,7 @@ mdc_objc_library(
 )
 
 mdc_unit_test_suite(
+    name = "unit_tests",
     deps = [
         ":unit_test_sources",
         ":unit_test_swift_sources",

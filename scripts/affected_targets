@@ -1,0 +1,91 @@
+#!/bin/bash
+#
+# Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# Finds all targets of a given kind affected by changes in a given commit range.
+
+SCRIPT_NAME=$(basename "$0")
+
+# bazel_kind should be a bazel `kind` type. E.g. test or rule.
+# https://docs.bazel.build/versions/master/query.html#kind
+bazel_kind="$1"
+
+# range should be a valid git diff/log range. E.g. origin/develop...HEAD
+range="$2"
+
+if [ -z "$bazel_kind" ]; then
+  echo "Please provide a blaze rule kind to query for."
+  exit 1
+fi
+
+if [ -z "$range" ]; then
+  echo "Please provide a diff range."
+  exit 1
+fi
+
+if [ $(git branch --list "$TARGET_BRANCH") ]; then
+  base_sha=$(git merge-base "$TARGET_BRANCH" HEAD)
+else
+  base_sha="HEAD^"
+fi
+
+# Generates a list of files that were modified within $range.
+modified_files() {
+  git log --name-only --pretty=oneline --full-index "$range" \
+    | grep -vE '^[0-9a-f]{40} ' \
+    | sort \
+    | uniq
+}
+
+# Reads a list of files and generates a list of files that will affect the entire
+# build system.
+files_that_affect_everything() {
+  grep -e "\.bzl$" \
+    -e "WORKSPACE" \
+    -e "\.kokoro" \
+    -e "\.gitattributes" \
+    -e "${SCRIPT_NAME/\./\\.}" \
+    "$@"
+}
+
+if modified_files | files_that_affect_everything -q; then
+  echo "//..."
+  exit 0
+fi
+
+# Reads a list of file paths and generates a list of bazel targets that would be affected by changes
+# to these files.
+affected_targets() {
+  while read file_path; do
+    if [ "$(basename $file_path)" == "BUILD" ]; then
+      # All targets are affected
+      query="//$(dirname $file_path)/..."
+    else
+      query="$file_path"
+    fi
+
+    # allrdeps is part of Sky Query, which can only be accessed when universe_scope and order_output
+    # are provided. See the following docs for more details:
+    # https://docs.bazel.build/versions/master/query.html#sky-query
+    bazel query \
+      --universe_scope=//... \
+      --order_output=no \
+      "kind($bazel_kind, allrdeps('$query'))" \
+      2>/dev/null
+  done | sort | uniq
+}
+
+# Generate the transitive list of affected targets.
+modified_files | affected_targets
