@@ -48,8 +48,6 @@ post_comment() {
 
   pushd scripts/external/github-comment >> /dev/null
 
-  swift --version
-
   swift run github-comment \
     --repo=material-components/material-components-ios \
     --github_token="$GITHUB_API_TOKEN" \
@@ -87,15 +85,10 @@ delete_comment() {
 
   if [ ! -f scripts/external/github-comment/.git ]; then
     git submodule update --init --recursive scripts/external/github-comment
-    git -C scripts/external/github-comment checkout develop
   fi
 
-  pushd scripts/external/github-comment
-  
-  pwd
-  ls -la
-  git status
-
+  pushd scripts/external/github-comment >> /dev/null
+ 
   swift run github-comment \
     --repo=material-components/material-components-ios \
     --github_token="$GITHUB_API_TOKEN" \

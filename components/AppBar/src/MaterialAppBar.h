@@ -19,5 +19,3 @@
 #pragma mark - To be deprecated
 
 #import "MDCAppBar.h"
-
-// Comment
