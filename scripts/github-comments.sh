@@ -87,7 +87,9 @@ delete_comment() {
     git submodule update --init --recursive scripts/external/github-comment
   fi
 
-  pushd scripts/external/github-comment >> /dev/null
+  pushd scripts/external/github-comment
+  
+  pwd
 
   swift run github-comment \
     --repo=material-components/material-components-ios \
