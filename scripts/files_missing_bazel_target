@@ -100,7 +100,6 @@ check_files_covered() {
   SAVEIFS=$IFS
   IFS=$'\n'
   files=($files)
-  echo "Modified files: (${files[@]})"
   IFS=$SAVEIFS
 
   if [ -z "$files" ]; then
@@ -119,9 +118,7 @@ check_files_covered() {
   num_files="${#files[@]}"
   current_index=0
   for file in "${files[@]}"; do
-    targets=$(bazel query \
-      "kind(rule, deps('$file'))" \
-      2>/dev/null ) 
+    targets=$(bazel query "'$file'" --output=package 2>/dev/null) 
     if [ -z "$targets" ]; then
       if [ -z "$missing_targets" ]; then
         missing_targets="$file"
