@@ -16,6 +16,19 @@
 #
 # Finds all newly-added files that are missing BUILD targets
 
+# Unique identifier for GitHub comments posted by this script.
+COMMENT_IDENTIFIER='bazel-rule-coverage'
+
+
+if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+  # Import source methods for managing GitHub comments
+  scripts_dir='github/repo/scripts'
+else
+  scripts_dir="$(dirname $0)"
+fi
+
+source "${scripts_dir}/github-comments.sh"
+
 # Generates a list of files that were modified since the target branch 
 modified_files() {
   # Move to our cloned repository
@@ -58,6 +71,27 @@ modified_files() {
   fi
 }
 
+# Deletes any previously-posted comment and posts a comment to GitHub with
+# the list of source files not in a bazel target.
+update_comment() {
+  if [ -n "$GITHUB_API_TOKEN" ]; then
+    delete_comment "$COMMENT_IDENTIFIER"
+  fi
+  
+  if [ -n "$1" ]; then
+    if [ -n "$GITHUB_API_TOKEN" ]; then
+      comment_tmp_path=$(mktemp -d)
+      comment_tmp_file="${comment_tmp_path}/comment.tmp"
+      echo -e "The following files are not in any BUILD targets:\n" >> "$comment_tmp_file"
+      echo -e "\`\`\`\n${1}\n\`\`\`\n" >> "$comment_tmp_file"
+      post_comment "$COMMENT_IDENTIFIER" "$comment_tmp_file"
+    else
+      echo -e "The following files are not in any BUILD targets:\n"
+      echo -e "\`\`\`\n${1}\n\`\`\`\n"
+    fi
+  fi
+}
+
 # Determines if any of the modified files are not included in a bazel rule.
 check_files_covered() {
   files=$(modified_files)
@@ -77,7 +111,11 @@ check_files_covered() {
       "kind(rule, deps('$file'))" \
       2>/dev/null ) 
     if [ -z "$targets" ]; then
-      missing_targets="${missing_targets}${file}\n"
+      if [ -z "$missing_targets" ]; then
+        missing_targets="$file"
+      else
+        missing_targets="${missing_targets}\n${file}"
+      fi
       exit_status=1
     fi
     ((current_index++))
@@ -87,7 +125,8 @@ check_files_covered() {
   done 
   
   if (( exit_status != 0 )); then
-    echo  -e "[FAILURE] The following files are not in any BUILD targets:\n\n${missing_targets}" | sort | uniq
+    missing_targets=$(echo -e "$missing_targets" | sort | uniq)
+    update_comment "$missing_targets"
     exit $exit_status
   fi 
 } 
