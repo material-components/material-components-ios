@@ -14,43 +14,78 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Finds all targets of a given kind affected by changes since origin/develop.
+# Finds all targets of a given kind affected by changes in a given commit range.
 
-# type should be a bazel `kind` type. E.g. test or rule.
+SCRIPT_NAME=$(basename "$0")
+
+# bazel_kind should be a bazel `kind` type. E.g. test or rule.
 # https://docs.bazel.build/versions/master/query.html#kind
-type="$1"
+bazel_kind="$1"
 
-# Generates a list of files that were modified since origin/develop.
+# range should be a valid git diff/log range. E.g. origin/develop...HEAD
+range="$2"
+
+if [ -z "$bazel_kind" ]; then
+  echo "Please provide a blaze rule kind to query for."
+  exit 1
+fi
+
+if [ -z "$range" ]; then
+  echo "Please provide a diff range."
+  exit 1
+fi
+
+if [ $(git branch --list "$TARGET_BRANCH") ]; then
+  base_sha=$(git merge-base "$TARGET_BRANCH" HEAD)
+else
+  base_sha="HEAD^"
+fi
+
+# Generates a list of files that were modified within $range.
 modified_files() {
-  git log --name-only --pretty=oneline --full-index $(git merge-base origin/develop HEAD)...HEAD \
+  git log --name-only --pretty=oneline --full-index "$range" \
     | grep -vE '^[0-9a-f]{40} ' \
     | sort \
     | uniq
 }
 
-# TODO: Add check for whether we need to rebuild everything.
-
-# Generates a list of targets that are affected by the files modified since origin/develop.
-directly_modified_targets() {
-  for line in $(modified_files); do
-    label=$(bazel query $line 2>/dev/null)
-    if [ "$(basename $line)" == "BUILD" ]; then
-      # All targets are affected
-      echo "$(dirname $line)/..."
-      continue
-    fi
-    bazel query "attr('srcs', $label, ${label//:*/}:*) union attr('hdrs', $label, ${label//:*/}:*)" 2>/dev/null
-  done | sort | uniq
+# Reads a list of files and generates a list of files that will affect the entire
+# build system.
+files_that_affect_everything() {
+  grep -e "\.bzl$" \
+    -e "WORKSPACE" \
+    -e "\.kokoro" \
+    -e "\.gitattributes" \
+    -e "${SCRIPT_NAME/\./\\.}" \
+    "$@"
 }
 
-# Reads a list of targets and generates a transitive list of dependencies that depend on those
-# targets.
-indirectly_modified_targets() {
-  type="$1"
-  while read target; do
-    bazel query --universe_scope=//... --order_output=no "kind($type, allrdeps($target))" 2>/dev/null
+if modified_files | files_that_affect_everything -q; then
+  echo "//..."
+  exit 0
+fi
+
+# Reads a list of file paths and generates a list of bazel targets that would be affected by changes
+# to these files.
+affected_targets() {
+  while read file_path; do
+    if [ "$(basename $file_path)" == "BUILD" ]; then
+      # All targets are affected
+      query="//$(dirname $file_path)/..."
+    else
+      query="$file_path"
+    fi
+
+    # allrdeps is part of Sky Query, which can only be accessed when universe_scope and order_output
+    # are provided. See the following docs for more details:
+    # https://docs.bazel.build/versions/master/query.html#sky-query
+    bazel query \
+      --universe_scope=//... \
+      --order_output=no \
+      "kind($bazel_kind, allrdeps('$query'))" \
+      2>/dev/null
   done | sort | uniq
 }
 
 # Generate the transitive list of affected targets.
-directly_modified_targets | indirectly_modified_targets "$type"
+modified_files | affected_targets
