@@ -62,7 +62,7 @@ modified_files() {
   git log --name-only --pretty=oneline --full-index "${range}" \
     | grep -vE '^[0-9a-f]{40} ' \
     | grep -E '(\.swift|\.h|\.m)$' \
-    | grep -E '\/tests\/snapshot\/'
+    | grep -vE '\/tests\/snapshot\/'
     | sort \
     | uniq
 
