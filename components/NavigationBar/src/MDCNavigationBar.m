@@ -26,7 +26,6 @@
 static const NSUInteger kTitleFontSize = 20;
 static const CGFloat kNavigationBarDefaultHeight = 56;
 static const CGFloat kNavigationBarMinHeight = 24;
-static const UIEdgeInsets kTextInsets = {0, 16, 0, 16};
 
 // KVO contexts
 static char *const kKVOContextMDCNavigationBar = "kKVOContextMDCNavigationBar";
@@ -135,6 +134,7 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 }
 
 - (void)commonMDCNavigationBarInit {
+  _horizontalTextInsets = 16;
   _uppercasesButtonTitles = YES;
   _observedNavigationItemLock = [[NSObject alloc] init];
   _titleFont = [MDCTypography titleFont];
@@ -267,7 +267,8 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   _leadingButtonBar.frame = leadingButtonBarFrame;
   _trailingButtonBar.frame = trailingButtonBarFrame;
 
-  UIEdgeInsets textInsets = kTextInsets;
+  UIEdgeInsets textInsets = UIEdgeInsetsMake(0, self.horizontalTextInsets,
+                                             0, self.horizontalTextInsets);
 
   // textFrame is used to determine layout of both TitleLabel and TitleView
   CGRect textFrame = UIEdgeInsetsInsetRect(self.bounds, textInsets);
@@ -488,15 +489,12 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 
       MDCButtonBar *leftButtonBar = self.leadingButtonBar;
       MDCButtonBar *rightButtonBar = self.trailingButtonBar;
-      UIEdgeInsets textInsets = kTextInsets;
-      CGFloat titleLeftInset = textInsets.left;
-      CGFloat titleRightInset = textInsets.right;
+      CGFloat titleLeftInset = self.horizontalTextInsets;
+      CGFloat titleRightInset = self.horizontalTextInsets;
 
       if (isRTL) {
         leftButtonBar = self.trailingButtonBar;
         rightButtonBar = self.leadingButtonBar;
-        titleLeftInset = textInsets.right;
-        titleRightInset = textInsets.left;
       }
 
       // Determine how much space is available to the left/right of the navigation bar's midpoint

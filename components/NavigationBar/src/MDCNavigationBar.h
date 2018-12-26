@@ -122,6 +122,13 @@ IB_DESIGNABLE
 @property(nonatomic) MDCNavigationBarTitleViewLayoutBehavior titleViewLayoutBehavior;
 
 /**
+ The horizontal insets that the MDCNavigationBar uses for both the title and titleView.
+
+ Defaults to 16.
+ */
+@property(nonatomic, assign) CGFloat horizontalTextInsets;
+
+/**
  The font applied to the title of navigation bar.
  Font size is enforced to 20.
  Both Default and null_resettable value is MDCTypography's titleFont.
