@@ -49,7 +49,11 @@
                                 toTextInputController:self.textFieldController];
   [MDCTextFieldTypographyThemer applyTypographyScheme:typographyScheme toTextInput:self.textField];
   [self changeStringsToArabic];
-  [self changeLayoutToRTL];
+  if (@available(iOS 9.0, *)) {
+    [self changeLayoutToRTL];
+  } else {
+    XCTAssertTrue(NO, @"RTL tests can only run on iOS 9 or later.");
+  }
 }
 
 // NOTE: Additional test methods can be found in MDCAbstractTextFieldSnapshotTests.m
