@@ -69,6 +69,7 @@
 // input text to be on the right side. Get placeholder text to move to the right side.
 - (void)changeLayoutToRTL {
   [self MDCForceTextInputRightToLeft:self.textField];
+  [self MDCForceViewLayoutRightToLeft:self.textField];
 }
 
 @end
