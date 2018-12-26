@@ -29,6 +29,14 @@ fi
 
 source "${scripts_dir}/github-comments.sh"
 
+# We must upgrade bazel prior to running bazel query because we rely on features in bazel
+# 0.20.
+if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+  bazel version > /dev/null 2>&1
+  use_bazel.sh 0.20.0 > /dev/null 2>&1
+  bazel version > /dev/null 2>&1
+fi
+  
 # Generates a list of files that were modified since the target branch 
 modified_files() {
   # Move to our cloned repository
@@ -52,14 +60,7 @@ modified_files() {
   #  commit.
   range="${base_sha}...HEAD"
 
-  # We must upgrade bazel prior to running bazel query because we rely on features in bazel
-  # 0.20.
-  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
-    bazel version
-    use_bazel.sh 0.20.0
-    bazel version
-  fi
-  
+ 
   git log --name-only --pretty=oneline --full-index "${range}" \
     | grep -vE '^[0-9a-f]{40} ' \
     | grep -E '(\.swift|\.h|\.m)$' \
@@ -97,7 +98,7 @@ check_files_covered() {
   SAVEIFS=$IFS
   IFS=$'\n'
   files=($files)
-  echo "Modified files: ${files[@]}"
+  echo "Modified files: (${files[@]})"
   IFS=$SAVEIFS
 
   if [ -z "$files" ]; then
