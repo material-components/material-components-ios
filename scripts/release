@@ -242,6 +242,27 @@ merge_release() {
     echo "Must provide a ${U}version${N} argument."
     exit 1
   fi
+  
+  deviance=$(git log develop..origin/develop --oneline | wc -l)
+  if [ $deviance -ne 0 ]; then
+    echo
+    echo "    Your local develop branch is behind origin/develop."
+    echo "    Refusing to continue until you've rebased off of origin/develop."
+    echo
+    echo "    git checkout develop"
+    echo "    git rebase origin/develop"
+    echo
+    exit 1
+  fi
+  
+  deviance=$(git log origin/develop..develop --oneline | wc -l)
+  if [ $deviance -ne "0" ]; then
+    echo
+    echo "    Your local develop branch is ahead of origin/develop."
+    echo "    Refusing to continue until you've landed your local changes into origin/develop."
+    echo
+    exit 1 # TODO: Revert this line so we bail out.
+  fi
 
   current_branch=$(current_branch)
   if [ "$current_branch" != "release-candidate" ]; then
