@@ -184,10 +184,8 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
 - (void)testTitleViewDefaultInsets {
   // Given
-  self.navBar.frame = CGRectMake(0, 0, 300, 25);
-  self.navBar.titleView = [[UIView alloc] init];
-  self.navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorCenter;
-
+  [self setUpNavBarWithTitleViewLayoutBehavior:MDCNavigationBarTitleViewLayoutBehaviorCenter];
+  
   // When
   [self.navBar layoutIfNeeded];
 
@@ -197,9 +195,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
 - (void)testTitleViewDefaultInsetsWithFillBehavior {
   // Given
-  self.navBar.frame = CGRectMake(0, 0, 300, 25);
-  self.navBar.titleView = [[UIView alloc] init];
-  self.navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorFill;
+  [self setUpNavBarWithTitleViewLayoutBehavior:MDCNavigationBarTitleViewLayoutBehaviorFill];
 
   // When
   [self.navBar layoutIfNeeded];
@@ -210,9 +206,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
 - (void)testTitleViewInsetWithCustomValue {
   // Given
-  self.navBar.frame = CGRectMake(0, 0, 300, 25);
-  self.navBar.titleView = [[UIView alloc] init];
-  self.navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorFill;
+  [self setUpNavBarWithTitleViewLayoutBehavior:MDCNavigationBarTitleViewLayoutBehaviorFill];
 
   // When
   self.navBar.horizontalTextInsets = 0;
