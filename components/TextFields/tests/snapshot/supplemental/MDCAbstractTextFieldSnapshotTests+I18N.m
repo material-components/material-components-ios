@@ -28,6 +28,7 @@
     if (textRange) {
       [textInput setBaseWritingDirection:UITextWritingDirectionRightToLeft forRange:textRange];
     } else {
+      // Fail the test if `textRange` is nil since even an empty range should be non-nil.
       XCTAssertNotNil(textRange);
     }
   }
