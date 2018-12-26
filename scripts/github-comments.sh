@@ -88,7 +88,7 @@ delete_comment() {
   fi
 
   pushd scripts/external/github-comment >> /dev/null
- 
+
   swift run github-comment \
     --repo=material-components/material-components-ios \
     --github_token="$GITHUB_API_TOKEN" \
