@@ -119,8 +119,6 @@ check_files_covered() {
   num_files="${#files[@]}"
   current_index=0
   for file in "${files[@]}"; do
-    bazel query \
-      "kind(rule, deps('$file'))" 
     targets=$(bazel query \
       "kind(rule, deps('$file'))" \
       2>/dev/null ) 
