@@ -38,6 +38,14 @@ modified_files() {
   # and `HEAD`.  By default, that becomes all changes between the `develop` branch and the latest
   #  commit.
   range="${base_sha}...HEAD"
+
+   # We must upgrade bazel prior to running bazel query because we rely on features in bazel
+   # 0.20.
+   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+     bazel version
+     use_bazel.sh 0.20.0
+     bazel version
+   fi
   
   git log --name-only --pretty=oneline --full-index "${range}" \
     | grep -vE '^[0-9a-f]{40} ' \
@@ -65,18 +73,8 @@ check_files_covered() {
   num_files="${#files[@]}"
   current_index=0
   for file in "${files[@]}"; do
-<<<<<<< HEAD
-    # allrdeps is part of Sky Query, which can only be accessed when universe_scope and order_output
-    # are provided. See the following docs for more details:
-    # https://docs.bazel.build/versions/master/query.html#sky-query
-    targets=$(bazel query \
-      --universe_scope=//... \
-      --order_output=no \
-      "kind(rule, allrdeps('$file'))" \
-=======
     targets=$(bazel query \
       "kind(rule, deps('$file'))" \
->>>>>>> develop
       2>/dev/null ) 
     if [ -z "$targets" ]; then
       missing_targets="${missing_targets}${file}\n"
