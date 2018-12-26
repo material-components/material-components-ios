@@ -92,6 +92,10 @@ update_comment() {
 
 # Determines if any of the modified files are not included in a bazel rule.
 check_files_covered() {
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    pushd github/repo >> /dev/null
+  fi
+
   files=$(modified_files)
   SAVEIFS=$IFS
   IFS=$'\n'
@@ -139,6 +143,10 @@ check_files_covered() {
     update_comment "$missing_targets"
     exit $exit_status
   fi 
+
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    popd >> /dev/null
+  fi
 } 
 
 check_files_covered
