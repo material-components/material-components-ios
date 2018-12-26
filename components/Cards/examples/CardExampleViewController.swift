@@ -49,7 +49,6 @@ class CardExampleViewController: UIViewController, MDCRippleViewDelegate {
 //    imageView.accessibilityLabel = "Missing Dish"
     card.rippleView.rippleViewDelegate = self
     card.rippleView.allowsSelection = true
-    card.rippleView.rippleStyle = MDCRippleStyle.unbounded
 //    card.rippleView.setRippleColor(.blue state:MDCRippleState.normal)
 //    card.rippleView.
 
