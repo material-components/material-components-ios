@@ -228,6 +228,51 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   XCTAssertEqualWithAccuracy(CGRectStandardize(self.navBar.titleView.frame).origin.x, 150, 0.001);
 }
 
+- (void)testTitleViewInsetWithCustomValueAndCenterAlignment {
+  // Given
+  [self setUpNavBarWithTitleViewLayoutBehavior:MDCNavigationBarTitleViewLayoutBehaviorCenter];
+
+  // When
+  self.navBar.horizontalTextInsets = 50;
+  [self.navBar layoutIfNeeded];
+
+  // Then
+  XCTAssertEqualWithAccuracy(CGRectStandardize(self.navBar.titleView.frame).origin.x, 50, 0.001);
+}
+
+- (void)testTitleLabelDefaultInsets {
+  // Given
+  CGFloat navBarWidth = 300;
+  self.navBar.frame = CGRectMake(0, 0, navBarWidth, 25);
+  self.navBar.title = @"Foo";
+
+  // When
+  [self.navBar layoutIfNeeded];
+  CGFloat titleWidth = CGRectGetWidth(self.navBar.titleLabel.frame);
+
+  // Then
+  CGFloat expectedValue = (navBarWidth - titleWidth) / 2;
+  XCTAssertEqualWithAccuracy(CGRectStandardize(self.navBar.titleLabel.frame).origin.x,
+                             expectedValue, 0.001);
+}
+
+- (void)testTitleLabelWithCustomHorizontalInsets {
+  // Given
+  CGFloat navBarWidth = 300;
+  self.navBar.frame = CGRectMake(0, 0, navBarWidth, 25);
+  self.navBar.title = @"Foo";
+
+  // When
+  self.navBar.horizontalTextInsets = 24;
+  [self.navBar layoutIfNeeded];
+  CGFloat titleWidth = CGRectGetWidth(self.navBar.titleLabel.frame);
+
+  // Then
+  CGFloat expectedValue = (navBarWidth - titleWidth) / 2;
+  XCTAssertEqualWithAccuracy(CGRectStandardize(self.navBar.titleLabel.frame).origin.x,
+                             expectedValue, 0.001);
+}
+
 - (void)setUpNavBarWithTitleViewLayoutBehavior:
     (MDCNavigationBarTitleViewLayoutBehavior)layoutBahavior {
   self.navBar.frame = CGRectMake(0, 0, 300, 25);
