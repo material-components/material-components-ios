@@ -182,6 +182,64 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
                              kEpsilonAccuracy);
 }
 
+- (void)testTitleViewDefaultInsets {
+  // Given
+  self.navBar.frame = CGRectMake(0, 0, 300, 25);
+  self.navBar.titleView = [[UIView alloc] init];
+  self.navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorCenter;
+
+  // When
+  [self.navBar layoutIfNeeded];
+
+  // Then
+  XCTAssertEqualWithAccuracy(CGRectStandardize(self.navBar.titleView.frame).origin.x, 16, 0.001);
+}
+
+- (void)testTitleViewDefaultInsetsWithFillBehavior {
+  // Given
+  self.navBar.frame = CGRectMake(0, 0, 300, 25);
+  self.navBar.titleView = [[UIView alloc] init];
+  self.navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorFill;
+
+  // When
+  [self.navBar layoutIfNeeded];
+
+  // Then
+  XCTAssertEqualWithAccuracy(CGRectStandardize(self.navBar.titleView.frame).origin.x, 16, 0.001);
+}
+
+- (void)testTitleViewInsetWithCustomValue {
+  // Given
+  self.navBar.frame = CGRectMake(0, 0, 300, 25);
+  self.navBar.titleView = [[UIView alloc] init];
+  self.navBar.titleViewLayoutBehavior = MDCNavigationBarTitleViewLayoutBehaviorFill;
+
+  // When
+  self.navBar.horizontalTextInsets = 0;
+  [self.navBar layoutIfNeeded];
+
+  // Then
+  XCTAssertEqualWithAccuracy(CGRectStandardize(self.navBar.titleView.frame).origin.x, 0, 0.001);
+}
+
+- (void)testTitleViewInsetWithLargeValue {
+  // Given
+  [self setUpNavBarWithTitleViewLayoutBehavior:MDCNavigationBarTitleViewLayoutBehaviorFill];
+
+  // When
+  self.navBar.horizontalTextInsets = 200;
+  [self.navBar layoutIfNeeded];
+
+  // Then
+  XCTAssertEqualWithAccuracy(CGRectStandardize(self.navBar.titleView.frame).origin.x, 150, 0.001);
+}
+
+- (void)setUpNavBarWithTitleViewLayoutBehavior:(MDCNavigationBarTitleViewLayoutBehavior)layoutBahavior {
+  self.navBar.frame = CGRectMake(0, 0, 300, 25);
+  self.navBar.titleView = [[UIView alloc] init];
+  self.navBar.titleViewLayoutBehavior = layoutBahavior;
+}
+
 - (void)testTitleFontProperty {
   // Given
   self.navBar.title = @"this is a Title";

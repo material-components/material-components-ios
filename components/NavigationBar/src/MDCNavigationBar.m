@@ -599,6 +599,10 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   [self setNeedsLayout];
 }
 
+- (void)setHorizontalTextInsets:(CGFloat)horizontalTextInsets {
+  _horizontalTextInsets = MIN(horizontalTextInsets, CGRectGetWidth(self.bounds) / 2);
+}
+
 - (void)setTitleTextAttributes:(NSDictionary<NSString *, id> *)titleTextAttributes {
   // If title dictionary is equivalent, no need to make changes
   if ([_titleTextAttributes isEqualToDictionary:titleTextAttributes]) {
