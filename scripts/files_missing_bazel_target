@@ -30,9 +30,11 @@ fi
 source "${scripts_dir}/github-comments.sh"
 
 # Required for posting and deleting comments
-source "${scripts_dir}/xcode-select.sh"
+source "${scripts_dir}/select_xcode.sh"
 
-xcode_select "$XCODE_VERSION"
+if [ -n "$XCODE_VERSION" ]; then
+  select_xcode "$XCODE_VERSION"
+fi
 
 # Generates a list of files that were modified since the target branch 
 modified_files() {
