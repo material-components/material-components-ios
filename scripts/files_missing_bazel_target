@@ -52,13 +52,13 @@ modified_files() {
   #  commit.
   range="${base_sha}...HEAD"
 
-   # We must upgrade bazel prior to running bazel query because we rely on features in bazel
-   # 0.20.
-   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
-     bazel version
-     use_bazel.sh 0.20.0
-     bazel version
-   fi
+  # We must upgrade bazel prior to running bazel query because we rely on features in bazel
+  # 0.20.
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    bazel version
+    use_bazel.sh 0.20.0
+    bazel version
+  fi
   
   git log --name-only --pretty=oneline --full-index "${range}" \
     | grep -vE '^[0-9a-f]{40} ' \
@@ -97,6 +97,7 @@ check_files_covered() {
   SAVEIFS=$IFS
   IFS=$'\n'
   files=($files)
+  echo "Modified files: ${files[@]}"
   IFS=$SAVEIFS
 
   if [ -z "$files" ]; then
