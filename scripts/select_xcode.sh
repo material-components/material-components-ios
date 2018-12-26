@@ -17,6 +17,15 @@
 # Fail on any error.
 set -e
 
+version_as_number() {
+  padded_version="${1%.}" # Strip any trailing dots
+  # Pad with .0 until we get a M.m.p version string.
+  while [ $(grep -o "\." <<< "$padded_version" | wc -l) -lt "2" ]; do
+    padded_version=${padded_version}.0
+  done
+  echo "${padded_version//.}"
+}
+
 # xcode-select's the provided xcode version.
 # Usage example:
 #     select_xcode 9.2.0
