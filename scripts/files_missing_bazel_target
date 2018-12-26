@@ -19,7 +19,7 @@
 # Unique identifier for GitHub comments posted by this script.
 COMMENT_IDENTIFIER='bazel-rule-coverage'
 
-
+## Import Github Comment library script
 if [ -n "$KOKORO_BUILD_NUMBER" ]; then
   # Import source methods for managing GitHub comments
   scripts_dir='github/repo/scripts'
@@ -29,14 +29,7 @@ fi
 
 source "${scripts_dir}/github-comments.sh"
 
-# We must upgrade bazel prior to running bazel query because we rely on features in bazel
-# 0.20.
-if [ -n "$KOKORO_BUILD_NUMBER" ]; then
-  bazel version > /dev/null 2>&1
-  use_bazel.sh 0.20.0 > /dev/null 2>&1
-  bazel version > /dev/null 2>&1
-fi
-  
+
 # Generates a list of files that were modified since the target branch 
 modified_files() {
   # Move to our cloned repository
@@ -60,7 +53,6 @@ modified_files() {
   #  commit.
   range="${base_sha}...HEAD"
 
- 
   git log --name-only --pretty=oneline --full-index "${range}" \
     | grep -vE '^[0-9a-f]{40} ' \
     | grep -E '(\.swift|\.h|\.m)$' \
@@ -105,6 +97,15 @@ check_files_covered() {
     echo "No source files were modified"
     exit 0
   fi
+
+  # We must upgrade bazel prior to running bazel query because we rely on features in bazel
+  # 0.20.
+  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    bazel version
+    use_bazel.sh 0.20.0
+    bazel version
+  fi
+ 
   num_files="${#files[@]}"
   current_index=0
   for file in "${files[@]}"; do
