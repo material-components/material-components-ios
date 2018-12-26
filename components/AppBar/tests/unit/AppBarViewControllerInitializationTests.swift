@@ -15,6 +15,7 @@
 import XCTest
 import MaterialComponents.MaterialAppBar
 
+// Test comment to trigger affected target
 class AppBarViewControllerInitializationTests: XCTestCase {
 
   func testHeaderStackViewTopBarIsTheNavigationBarAfterInitialization() {
