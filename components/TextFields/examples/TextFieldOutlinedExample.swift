@@ -83,14 +83,14 @@ final class TextFieldOutlinedSwiftExample: UIViewController {
 
   let leadingImage: UIImage = {
     return UIImage.init(named: "ic_search",
-                        in: Bundle(for: TextFieldOutlinedSwiftExample.self),
-                        compatibleWith: nil)!
+                             in: Bundle(for: TextFieldOutlinedSwiftExample.self),
+                             compatibleWith: nil) ?? UIImage()
   }()
 
   let trailingImage: UIImage = {
     return UIImage.init(named: "ic_done",
                         in: Bundle(for: TextFieldOutlinedSwiftExample.self),
-                        compatibleWith: nil)!
+                        compatibleWith: nil) ?? UIImage()
   }()
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
