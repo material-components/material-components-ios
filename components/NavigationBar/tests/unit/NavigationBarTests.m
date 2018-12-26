@@ -241,34 +241,40 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 }
 
 - (void)testTitleLabelDefaultInsets {
-  // Given
-  CGFloat navBarWidth = 300;
-  self.navBar.frame = CGRectMake(0, 0, navBarWidth, 25);
-  self.navBar.title = @"Foo";
-
-  // When
-  [self.navBar layoutIfNeeded];
-  CGFloat titleWidth = CGRectGetWidth(self.navBar.titleLabel.frame);
-
-  // Then
-  CGFloat expectedValue = (navBarWidth - titleWidth) / 2;
-  XCTAssertEqualWithAccuracy(CGRectStandardize(self.navBar.titleLabel.frame).origin.x,
-                             expectedValue, 0.001);
+  [self helperTestTitleLabelWithHorizontalInset:self.navBar.horizontalTextInsets
+                                 titleAlignment:MDCNavigationBarTitleAlignmentCenter];
 }
 
 - (void)testTitleLabelWithCustomHorizontalInsets {
+  [self helperTestTitleLabelWithHorizontalInset:24
+                                 titleAlignment:MDCNavigationBarTitleAlignmentCenter];
+}
+
+- (void)testTitleLabelWithCustomHorizontalInsetAndLeadingAlignment {
+  [self helperTestTitleLabelWithHorizontalInset:24
+                                 titleAlignment:MDCNavigationBarTitleAlignmentLeading];
+}
+
+- (void)helperTestTitleLabelWithHorizontalInset:(CGFloat)horizontalInset
+                                 titleAlignment:(MDCNavigationBarTitleAlignment)titleAlignment {
   // Given
   CGFloat navBarWidth = 300;
   self.navBar.frame = CGRectMake(0, 0, navBarWidth, 25);
   self.navBar.title = @"Foo";
 
   // When
-  self.navBar.horizontalTextInsets = 24;
+  self.navBar.titleAlignment = titleAlignment;
+  self.navBar.horizontalTextInsets = horizontalInset;
   [self.navBar layoutIfNeeded];
   CGFloat titleWidth = CGRectGetWidth(self.navBar.titleLabel.frame);
 
   // Then
-  CGFloat expectedValue = (navBarWidth - titleWidth) / 2;
+  CGFloat expectedValue;
+  if (titleAlignment == MDCNavigationBarTitleAlignmentLeading) {
+    expectedValue = horizontalInset;
+  } else {
+    expectedValue = (navBarWidth - titleWidth) / 2;
+  }
   XCTAssertEqualWithAccuracy(CGRectStandardize(self.navBar.titleLabel.frame).origin.x,
                              expectedValue, 0.001);
 }
