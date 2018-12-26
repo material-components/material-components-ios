@@ -17,15 +17,15 @@
 @implementation MDCMaskedTransitionMotionSpecs
 
 + (MDMMotionCurve)easeInEaseOut {
-  return MDMMotionCurveMakeBezier(0.4f, 0.0f, 0.2f, 1.0f);
+  return MDMMotionCurveMakeBezier((CGFloat)0.4, 0, (CGFloat)0.2, 1);
 }
 
 + (MDMMotionCurve)easeIn {
-  return MDMMotionCurveMakeBezier(0.4f, 0.0f, 1.0f, 1.0f);
+  return MDMMotionCurveMakeBezier((CGFloat)0.4, 0, 1, 1);
 }
 
 + (MDMMotionCurve)easeOut {
-  return MDMMotionCurveMakeBezier(0.0f, 0.0f, 0.2f, 1.0f);
+  return MDMMotionCurveMakeBezier(0, 0, (CGFloat)0.2, 1);
 }
 
 + (MDCMaskedTransitionMotionSpec)fullscreen {

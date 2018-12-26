@@ -14,20 +14,20 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MDCAlertActionManager.h"
 #import "MaterialButtons.h"
-
-@class MDCFlatButton;
 
 @interface MDCAlertControllerView ()
 
 @property(nonatomic, nonnull, strong) UILabel *titleLabel;
 @property(nonatomic, nonnull, strong) UILabel *messageLabel;
 
-@property(nonatomic, nonnull, strong, readonly) NSArray<MDCFlatButton *> *actionButtons;
+@property(nonatomic, nullable, strong) UIImageView *titleIconImageView;
 
-- (nonnull MDCButton *)addActionButtonTitle:(NSString *_Nonnull)actionTitle
-                                     target:(nullable id)target
-                                   selector:(SEL _Nonnull)selector;
+@property(nonatomic, nullable, weak) MDCAlertActionManager *actionManager;
+
+- (void)addActionButton:(nonnull MDCButton *)button;
++ (void)styleAsTextButton:(nonnull MDCButton *)button;
 
 - (CGSize)calculatePreferredContentSizeForBounds:(CGSize)boundsSize;
 

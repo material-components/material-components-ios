@@ -1,3 +1,1764 @@
+# 73.0.0
+
+This is a major release that introduces `copy` semantics in MDCShapeCategory, part of the Shapes scheme. Also in this release is a new API in NavigationDrawer that provides a way to expand the  bottom drawer to full height.
+
+## New features
+
+### NavigationDrawer expansion
+
+The NavigationDrawer component's `MDCBottomDrawerViewController` has a new API
+that allows clients to programmatically expand the bottom drawer to the full
+height of the presenting view.
+
+**Example (Swift)**
+
+```swift
+drawerVC.expandToFullscreen(withDuration: 0.2, completion: { finished in
+  if finished {
+    print("expansion complete");
+  } else {
+    print("expansion cancelled");
+  }
+})
+```
+
+## API changes
+
+### ActionSheet+Theming
+
+**New extension.**
+
+### NavigationDrawer
+
+#### MDCBottomDrawerViewController
+
+*new* method: `-expandToFullscreenWithDuration:completion:` in `MDCBottomDrawerViewController`
+
+#### MDCBottomDrawerPresentationController
+
+*new* method: `-expandToFullscreenWithDuration:completion:` in `MDCBottomDrawerPresentationController`
+
+### ShapeScheme
+
+#### MDCShapeCategory
+
+*modified* property: `bottomLeftCorner` in `MDCShapeCategory`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@property(strong, nonatomic) MDCCornerTreatment *bottomLeftCorner` |
+| To: | `@property(nonatomic, copy) MDCCornerTreatment *bottomLeftCorner` |
+
+*modified* class: `MDCShapeCategory`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `class MDCShapeCategory : NSObject` |
+| To: | `class MDCShapeCategory : NSObject, NSCopying` |
+
+*modified* class: `MDCShapeCategory`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCShapeCategory : NSObject` |
+| To: | `@interface MDCShapeCategory : NSObject <NSCopying>` |
+
+*modified* property: `bottomRightCorner` in `MDCShapeCategory`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@property(strong, nonatomic) MDCCornerTreatment *bottomRightCorner` |
+| To: | `@property(nonatomic, copy) MDCCornerTreatment *bottomRightCorner` |
+
+*modified* property: `topLeftCorner` in `MDCShapeCategory`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@property(strong, nonatomic) MDCCornerTreatment *topLeftCorner` |
+| To: | `@property(nonatomic, copy) MDCCornerTreatment *topLeftCorner` |
+
+*modified* property: `topRightCorner` in `MDCShapeCategory`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@property(strong, nonatomic) MDCCornerTreatment *topRightCorner` |
+| To: | `@property(nonatomic, copy) MDCCornerTreatment *topRightCorner` |
+
+## Component changes
+
+## Changes
+
+### ActionSheet
+
+* [Update examples (#5979)](https://github.com/material-components/material-components-ios/commit/86cdea966a562b24f2639a0f7d0bb8b68e6b7d9c) (Cody Weaver)
+
+### BottomNavigation
+
+* [Initial implementation of the Bottom Navigation Controller (#5886)](https://github.com/material-components/material-components-ios/commit/2bddd177f3c7f03444f401d2f2554014562bae51) (Eric Lee)
+* [Revert "[BottomNavigation]Adds Initial tests for MDCBottomNavigationBarController" (#6039)](https://github.com/material-components/material-components-ios/commit/430e37b0d126769aa6ae6112e166d8dee9307bee) (Robert Moore)
+* [[BottomNavigation]Adds Initial tests for MDCBottomNavigationBarController (#6012)](https://github.com/material-components/material-components-ios/commit/0f1a7c7fad1657a7e9dc8748a613a9d376c3f3c6) (Eric Lee)
+
+### BottomSheet
+
+* [fix bottom sheet layout for safe area (#6024)](https://github.com/material-components/material-components-ios/commit/78070d8b8916b44413cd82961b4fb4d6566156ee) (Yarden Eitan)
+
+### FlexibleHeader
+
+* [Refactor min/max height behavior to a separate object. (#5896)](https://github.com/material-components/material-components-ios/commit/c15c78c8ad65b404cd6d85bda66b39029eb27a73) (featherless)
+
+### NavigationDrawer
+
+* [Attempt to fix header shadow not being removed (#6010)](https://github.com/material-components/material-components-ios/commit/f7b717b81f075df8bb9460074cf968e18d4fccb2) (Michael Cheung)
+* [Navigation Drawer Present at Fullscreen (#5995)](https://github.com/material-components/material-components-ios/commit/5a98df2b39247e0a6acdd5ea4083948cb746d11f) (Yarden Eitan)
+
+### TextFields
+
+* [Refactor test classes to use subclassing. (#6008)](https://github.com/material-components/material-components-ios/commit/ed26c83431b172ae27ede6bf5c9a1b0d34589e05) (Robert Moore)
+* ["Filled" snapshots use abstract class (#6013)](https://github.com/material-components/material-components-ios/commit/d97dad18ab9a32f189e88fd77b1e69a236fcb130) (Robert Moore)
+* ["FullWidth" snapshots use abstract class (#6014)](https://github.com/material-components/material-components-ios/commit/df9d979c73a073ec786f6a4c76d54348a25fc9b8) (Robert Moore)
+* ["SimpleTextField" Example Prototype (#6003)](https://github.com/material-components/material-components-ios/commit/bc45f4d212e292a7a62b7ff2eaf65d095a1eb162) (Andrew Overton)
+* [Add "unfloating" filled style snapshots. (#5997)](https://github.com/material-components/material-components-ios/commit/ed534a8aabb23c3a9b124437cc9bab7ef4f2c26b) (Robert Moore)
+* [Add Baseline Filled snapshots. (#6029)](https://github.com/material-components/material-components-ios/commit/1481114ba65cff6acbb214a1be91dcfb2b49d3d2) (Robert Moore)
+* [Add FullWidth snapshots with character counts. (#6025)](https://github.com/material-components/material-components-ios/commit/5aff8a9c5e3293460e175a3beeca771a9ff5bc8a) (Robert Moore)
+* [Add `isEditing` snapshots for Filled style (#5988)](https://github.com/material-components/material-components-ios/commit/0e123ef867aa37831bf241bbacb3ba178d186ab4) (Robert Moore)
+* [Add `isEditing` snapshots for Full Width (#5989)](https://github.com/material-components/material-components-ios/commit/2ace39ab61f956cbd8912cddf69ba13264f28206) (Robert Moore)
+* [Add `isEditing` snapshots for Outlined Text Area (#5994)](https://github.com/material-components/material-components-ios/commit/39e655a18904b649429eb0947304dc4bb82a3925) (Robert Moore)
+* [Add `isEditing` snapshots for Outlined style (#5990)](https://github.com/material-components/material-components-ios/commit/4fee7d0096b259c4414957bdfd8dae96b56c526c) (Robert Moore)
+* [Add `leadingImage` snapshots. (#6028)](https://github.com/material-components/material-components-ios/commit/8d91cf7343642cf9151ff664e918f6427d6312d2) (Robert Moore)
+* [Add clearButton to Outlined TextArea (#5992)](https://github.com/material-components/material-components-ios/commit/724b4b3cba79bcb86753580acbca3a903da4fc7d) (Robert Moore)
+* [Add extension for theming (#5975)](https://github.com/material-components/material-components-ios/commit/47b1d0da5dcab8de3ac24aa97d3d2d5ee7f41388) (Cody Weaver)
+* [Add snapshots for `disabled` state (#6026)](https://github.com/material-components/material-components-ios/commit/bc4596247995de4d12952f9f1bb1a0d4bb117b50) (Robert Moore)
+* [Add snapshots for outlined, baseline, character counts. (#6001)](https://github.com/material-components/material-components-ios/commit/e4aec8f5eee9f5b91f9cf40a12645390e37fa53e) (Robert Moore)
+* [Add underlined snapshot tests. (#6021)](https://github.com/material-components/material-components-ios/commit/20212bf72d30fcdbe8395f40aaac9adf4f7e9244) (Robert Moore)
+* [Allow animations to execute in tests. (#5987)](https://github.com/material-components/material-components-ios/commit/7d31824b8a17d42ae807995493c787e4c4632506) (Robert Moore)
+* [Incomplete snapshot RTL/Arabic support (#6023)](https://github.com/material-components/material-components-ios/commit/ced82748669b1ef0bf1f06bce27f189fc546d489) (Robert Moore)
+* [Outlined TextArea uses abstract test class (#6017)](https://github.com/material-components/material-components-ios/commit/0532bb1e25fd6a05ce54ec2122ffa1425d1e2247) (Robert Moore)
+* [Outlined controller snapshots use abstract class (#6019)](https://github.com/material-components/material-components-ios/commit/4a5b9787b3a5eff21740a04247d0482614fcedd0) (Robert Moore)
+* [Outlined, themed snapshots use abstract class (#6016)](https://github.com/material-components/material-components-ios/commit/b9634794d1e6bf7a1a3be0863818a822d84365f3) (Robert Moore)
+* [Outlined, themed, character count tests use abstract class. (#6015)](https://github.com/material-components/material-components-ios/commit/d5d33581b9eed4cc17b3db7ef1b414b99571db3c) (Robert Moore)
+* [Refactor snapshot test class (#5982)](https://github.com/material-components/material-components-ios/commit/962e9439e8b6285ea420f84214a47808102601cd) (Robert Moore)
+* [Refactor snapshot tests into abstract class. (#6009)](https://github.com/material-components/material-components-ios/commit/9c500463e2a8028b163a7123e3cabaa7fd518646) (Robert Moore)
+* [Refactor textArea snapshot tests. (#5991)](https://github.com/material-components/material-components-ios/commit/b336f35686ab017ea893274d07104b621234f1c4) (Robert Moore)
+* [Refactor: Move `recordMode` to `-setUp` (#5998)](https://github.com/material-components/material-components-ios/commit/375b72f82cb27332a6a323eeaef69d22298703e9) (Robert Moore)
+
+### schemes/Shape
+
+* [Fix shape example to use new contained button theming (#6034)](https://github.com/material-components/material-components-ios/commit/2bb5f72548c49b45ccfc0e2f72cab0e6524002f8) (rami-a)
+
+## Multi-component changes
+
+* [Pin all swift_library targets to Swift 3. (#6000)](https://github.com/material-components/material-components-ios/commit/bf7ca2e96dcd98bd0ddd1f350977ca72618671a9) (featherless)
+* [Ran buildifier against all BUILD files. (#5999)](https://github.com/material-components/material-components-ios/commit/dae4e37ea5d51f684ca2fd1deb994d95f0a56122) (featherless)
+* [Rename MaterialComponentsAlpha to MaterialComponentsBeta. (#6018)](https://github.com/material-components/material-components-ios/commit/73bdc03c2bd2abd032b0b69f05cd76928361aa37) (featherless)
+* [Update bazel to 0.20 and all dependencies as a result (#5926)](https://github.com/material-components/material-components-ios/commit/a247edea76df5f02bf0ac7bcfeabe07c28bf2cfe) (featherless)
+* [add hash function to MDCCornerTreatment (#5954)](https://github.com/material-components/material-components-ios/commit/0e4da65df8a39b8394cbf5e9d792737604e94222) (Wenyu Zhang)
+
+---
+
+# 72.2.0
+
+In this minor release we added scrimColor support for MDCBottomSheetController and added a theming extension support for MDCAlertController. We also added TextFields snapshot testing along with various bug fixes.
+
+## New features
+
+### Bottom Sheet scrimColor API usage example
+```objc
+  MDCBottomSheetController *bottomSheet =
+      [[MDCBottomSheetController alloc] initWithContentViewController:viewController];
+  bottomSheet.scrimColor = UIColor.blueColor;
+  [self presentViewController:bottomSheet animated:YES completion:nil];
+```
+
+### Dialogs Theming Extension usage example
+```swift
+  var scheme: MDCContainerScheming {
+    let scheme = MDCContainerScheme()
+    scheme.colorScheme = colorScheme
+    scheme.typographyScheme = typographyScheme
+    return scheme
+  }
+  ...
+  let alertController = MDCAlertController(title: "Title", message: "Message")
+  alertController.applyTheme(withScheme: scheme)
+```
+
+## Bug fixes
+
+{Git-LFS} Exclude git-lfs from `stable` #5977
+
+## API changes
+
+## Component changes
+
+## Changes
+
+### ActionSheet
+
+* [Allow changing action item accessibility labels. (#5803)](https://github.com/material-components/material-components-ios/commit/f60be3313114c06309803be2f17f029155ee0c3d) (lightboys22)
+
+### BottomSheet
+
+* [Create property to allow scrim color to be set on presentation controller. (#5892)](https://github.com/material-components/material-components-ios/commit/cf81763cdc68fe82afa0b5efc1ea8daee533f6c9) (danblakemore)
+
+### Buttons
+
+* [Correct FAB Shape themer documentation. (#5900)](https://github.com/material-components/material-components-ios/commit/af92829cc69acdf7f9bcc3205cad0fc49135f66d) (Robert Moore)
+* [Fix unsafe access to self.bounds.size (#5930)](https://github.com/material-components/material-components-ios/commit/9d6f0533985914752bb203d60f58b8fb2523e949) (Robert Moore)
+* [Improve color themer tests. (#5913)](https://github.com/material-components/material-components-ios/commit/ae060e8225cc82b33f32fb885b904152199537d1) (Robert Moore)
+* [Match backgroundColor to titleColor API (#5919)](https://github.com/material-components/material-components-ios/commit/71b24fe3b95c5989f7cb7c7de4e8c661f996fb16) (Robert Moore)
+* [uncomment the test for verifying theming FAB title color (#5923)](https://github.com/material-components/material-components-ios/commit/89301b38eacc36d26dff33d55a8dd8a96c35b746) (Wenyu Zhang)
+
+### Chips
+
+* [Account for RTL in textRectForBounds override in MDCChipTextField (#5935)](https://github.com/material-components/material-components-ios/commit/a8be59547749dc2606e88a4bbcc2dd4d4e47638e) (Andrew Overton)
+
+### Dialogs
+
+* [ [Dialogs] Renaming example view controllers (#5932)](https://github.com/material-components/material-components-ios/commit/3f3e5b0efcd056ee8c31433adbac26d7c4c20462) (Galia Kaufman)
+* [Add dialog category for theming (#5905)](https://github.com/material-components/material-components-ios/commit/68ea954882ad6db03ef982b5a051c3509b7ce5c4) (Andrew Overton)
+
+### FlexibleHeader
+
+* [Add basic minimumHeight/maximumHeight behavior tests. (#5908)](https://github.com/material-components/material-components-ios/commit/b3afc1eae9c207dfdf383c451557063aa84150f8) (featherless)
+
+### NavigationDrawer
+
+* [Fix jump when perferredContentSize changes (#5928)](https://github.com/material-components/material-components-ios/commit/f8d595ef04c1db795c7426fa419b5c764ac10696) (Cody Weaver)
+* [Remove clipping view (#5897)](https://github.com/material-components/material-components-ios/commit/be33ef513ede24882ee04fc7cda122e7a68677b2) (Cody Weaver)
+
+### private/KeyboardWatcher
+
+* [fix keyboard watcher not taking into regards compatibility mode (#5957)](https://github.com/material-components/material-components-ios/commit/39a2a282f5070ae51bfa42fe029b3b232756f01e) (Yarden Eitan)
+
+### Textfields
+
+* [Add FullWidth snapshot tests. (#5953)](https://github.com/material-components/material-components-ios/commit/ab7a6467db5edb7dc87de589fa09e073db8e8d65) (Robert Moore)
+* [Add Outlined snapshot tests (#5939)](https://github.com/material-components/material-components-ios/commit/495a29ca69305acde9dff9d1c67f7939011548b1) (Robert Moore)
+* [Add OutlinedTextArea snapshot tests (#5950)](https://github.com/material-components/material-components-ios/commit/930965b1bc2cb784854f3a48a02f2ae587d958d5) (Robert Moore)
+* [Add `editing` snapshots for Outlined (#5964)](https://github.com/material-components/material-components-ios/commit/7daa9d169b769a73c8f4ae61300fdfe00a9a5e5e) (Robert Moore)
+* [Add clearButton to filled snapshots (#5963)](https://github.com/material-components/material-components-ios/commit/6b4913db25d8a1d6046360f068083660c1b795db) (Robert Moore)
+* [Post notifications when `isEditing` changes. (#5972)](https://github.com/material-components/material-components-ios/commit/fc05538fd5b81839df4870cde3b0e4dab21389e3) (Robert Moore)
+* [Show clearButton in baseline snapshot (#5962)](https://github.com/material-components/material-components-ios/commit/1a25e695acc053ab8ffcfcee8d9dfe57af3881e3) (Robert Moore)
+* [Show clearButton in outlined snapshots. (#5961)](https://github.com/material-components/material-components-ios/commit/004b49d774a02a9b0971efb6da09d563c12a605a) (Robert Moore)
+* [Snapshot test for themed Outlined. (#5951)](https://github.com/material-components/material-components-ios/commit/f7ac13089ed573426f46e7bff09adfc9f8ce06a8) (Robert Moore)
+* [Snapshot tests for Filled. (#5949)](https://github.com/material-components/material-components-ios/commit/e36da4d68eac2febe8225b14e838a9e06f3c8695) (Robert Moore)
+
+## Multi-component changes
+
+* [Clean up doc links to guidelines (#5927)](https://github.com/material-components/material-components-ios/commit/d40ccbaa6c01c509141baf05e8632109df35bbc3) (Robert Moore)
+* [Move verification into test methods (#5947)](https://github.com/material-components/material-components-ios/commit/5b4c5e5272670acf44d53ae45466719f1cfad044) (Robert Moore)
+* [Tweak snapshot test base class to handle the verify in tearDown (#5933)](https://github.com/material-components/material-components-ios/commit/7ff5daf101d40baabbf91bff093c651deea9531d) (rami-a)
+* [Update our theming extensions (#5945)](https://github.com/material-components/material-components-ios/commit/1ca10a8669675d8cd358dbe2641c9551592c6894) (Cody Weaver)
+* [Update secondary floating action button themer examples (#5922)](https://github.com/material-components/material-components-ios/commit/6267009748828eaebd64616092671eb43249f0e5) (Wenyu Zhang)
+
+---
+
+# 72.1.0
+
+This minor release fixes a ChipField RTL issue.
+
+## Component Changes
+
+### Chips
+
+* [Account for RTL in textRectForBounds override in MDCChipTextField (#5935)](https://github.com/material-components/material-components-ios/commit/c6860181b11fd6dad4eaa65e21d3a9adf2967f5a) (Andrew Overton)
+
+---
+
+# 72.0.1
+
+Corrected readme version to match cocopods version.
+
+# 71.0.0
+
+In this release we fixed some NavigationDrawer/BottomDrawer bugs and started using the theming extensions. This includes using categories on the components and a global container scheme.
+
+## Breaking changes
+
+* MDCColorScheming has added the copy attribute to its properties.
+* MDCTypographyScheming has added the copy attribute to its properties.
+* MDCFloatingButtonThemer changes its mapping to use a title color [#5912](https://github.com/material-components/material-components-ios/commit/df96ba447e2ace5554eb3acdfb483cae57ddc21e)
+
+## New features
+
+### Button theming
+```
+    textButton.applyTextTheme(withScheme: MDCContainerScheme())
+```
+
+### ButtonBar theming
+```
+  var scheme: MDCContainerScheming {
+    let scheme = MDCContainerScheme()
+    scheme.colorScheme = colorScheme
+    scheme.typographyScheme = typographyScheme
+    return scheme
+  }
+  ...
+  buttonBar.applyPrimaryTheme(withScheme: scheme)
+```
+### Dialogs usage example
+```
+  NSString *titleString = @"Reset Settings?";
+  NSString *messageString = @"This will reset your device to its default factory settings.";
+
+  MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:titleString
+                                                                   message:messageString];
+  alert.mdc_adjustsFontForContentSizeCategory = YES;
+
+  MDCActionHandler handler = ^(MDCAlertAction *action) {
+    NSLog(@"action pressed: %@", action.title);
+  };
+
+  MDCAlertAction *agreeAaction = [MDCAlertAction actionWithTitle:@"Cancel"
+                                                        emphasis:MDCActionEmphasisLow
+                                                         handler:handler];
+  [alert addAction:agreeAaction];
+
+  MDCAlertAction *disagreeAaction = [MDCAlertAction actionWithTitle:@"Accept"
+                                                           emphasis:MDCActionEmphasisLow
+                                                            handler:handler];
+  [alert addAction:disagreeAaction];
+  [MDCAlertControllerThemer applyScheme:self.alertScheme toAlertController:alert];
+
+  [self presentViewController:alert animated:YES completion:NULL];
+```
+## Component changes
+
+### Buttons
+MDCFloatingButtonThemer changes its mapping to use a title color [#5912](https://github.com/material-components/material-components-ios/commit/df96ba447e2ace5554eb3acdfb483cae57ddc21e)
+### Banner
+
+An MVP view with layout was added to examples.
+
+### Container scheme
+
+We have created a global container scheme to hold all subsystems schemes. We have started to move our theming APIs into class extensions/catgories. These are the components that have landed some of these changes:
+
+* ButtonBar
+* Button
+
+## Changes
+
+### ActionSheet
+
+* [Rename example view controllers. (#5866)](https://github.com/material-components/material-components-ios/commit/d0073c8da2ba58ecbe8cc417844f9cdc2af166b9) (Robert Moore)
+
+### ActivityIndicator
+
+* [Rename examples (#5867)](https://github.com/material-components/material-components-ios/commit/4a9c905b96d22e28ed719ba05d3afbeda3a53095) (Robert Moore)
+
+### AnimationTiming
+
+* [Rename examples view controllers (#5868)](https://github.com/material-components/material-components-ios/commit/31371e832b70befa743538eaae65b8e463bc984a) (Robert Moore)
+
+### ButtonBar
+
+* [Add a Theming extension. (#5843)](https://github.com/material-components/material-components-ios/commit/88068212436e2f2ff4cae138718b1f6a6ccd4af6) (featherless)
+
+### Buttons
+
+* [Add tests for backgroundColorForState: (#5916)](https://github.com/material-components/material-components-ios/commit/8a9e628bdf26c7bd3418f737d699a43e6d573b7c) (Robert Moore)
+* [Add themer for contained buttons with container scheme (#5849)](https://github.com/material-components/material-components-ios/commit/4f0786a2bfb51de3cc0019645c1be425289ffc05) (Cody Weaver)
+* [Floating Action Button Theming Extension (#5869)](https://github.com/material-components/material-components-ios/commit/f47f5049deecb417a44bd4ff28645bc32da90b91) (Wenyu Zhang)
+* [Refactor button test (#5898)](https://github.com/material-components/material-components-ios/commit/fa1652724f5c8399eeffecbdf7ac82df6f92d7c4) (Cody Weaver)
+* [added missing imports for Buttons_Theming](https://github.com/material-components/material-components-ios/commit/aa1a1a5778ccc9bef2483ef7d0850c4e09675b1b) (Randall Li)
+* [{WIP} [Buttons] Fix titleColorForState in Floating Button themer. (#5912)](https://github.com/material-components/material-components-ios/commit/df96ba447e2ace5554eb3acdfb483cae57ddc21e) (Robert Moore)
+
+### Cards
+
+* [added missing imports for Buttons_Theming](https://github.com/material-components/material-components-ios/commit/a37f0d1bf74e68681b62b00b1a3658eb5dca7958) (Randall Li)
+
+### Dialogs
+
+* [New typical use example (#5809)](https://github.com/material-components/material-components-ios/commit/caba6198f43baefbf681e766b665379e4ac101a7) (Galia Kaufman)
+* [Refactor Material Alert Controller Examples (#5838)](https://github.com/material-components/material-components-ios/commit/ffe2ccbbe1b762682df7d3ad6c326bdecc5ccea5) (Galia Kaufman)
+* [Refactor low elevation example (#5862)](https://github.com/material-components/material-components-ios/commit/fa775c6692fd51eda086340a146c74ecbca02ac6) (Galia Kaufman)
+
+### NavigationDrawer
+
+* [Fix jump when perferredContentSize changes (#5928)](https://github.com/material-components/material-components-ios/commit/e2b2240618814e8b59101d1dac6f305dfd2913c6) (Cody Weaver)
+* [Refactor test (#5910)](https://github.com/material-components/material-components-ios/commit/b96909eba02d2b80560001055a7e690b23e3cdcf) (Cody Weaver)
+* [Remove bottom drawer container view as child upon dismissal (#5853)](https://github.com/material-components/material-components-ios/commit/7aa674b57d1944e3feef404af822c41efbaccdb8) (Michael Cheung)
+* [add missing imports to MaterialNavigationDrawer+ColorThemer](https://github.com/material-components/material-components-ios/commit/487a45d09b9eeba26da3d27e3d688950eeef3af8) (Randall Li)
+
+### Snackbar
+
+* [Disable potentially flaky test (#5861)](https://github.com/material-components/material-components-ios/commit/865418952de3b993f85fcd47891b57c29c4257cb) (rami-a)
+* [Updates the snackbar tests to use XCTestExpectation (#5864)](https://github.com/material-components/material-components-ios/commit/dd8706b49548af9949ae2b3474932078ad532d22) (Yarden Eitan)
+
+### schemes/Color
+
+* [Make MDCColorScheme conform to NSCopying (#5881)](https://github.com/material-components/material-components-ios/commit/f56320985781f0c0d88b0b3bd08f755e23b928cb) (Wenyu Zhang)
+
+### schemes/Typography
+
+* [make MDCTypography conform to NSCopying (#5890)](https://github.com/material-components/material-components-ios/commit/836f2a4f0d8dd9a790a1b2ceb1c2d085e45d60e2) (Wenyu Zhang)
+
+## Multi-component changes
+
+* [Add button theming category method for outlined theming (#5878)](https://github.com/material-components/material-components-ios/commit/748a9128e3cf0522f72a9f74720e36135b727526) (Andrew Overton)
+* [Add imports for MaterialContainerScheme](https://github.com/material-components/material-components-ios/commit/371f3ac9a75273ca158125591086bcb4adb9cf92) (Randall Li)
+* [Add text button themer (#5885)](https://github.com/material-components/material-components-ios/commit/9e80ade17323860f7b2bca7fe8ea3de2d00bc684) (Galia Kaufman)
+* [Bumped version number to 72.0.0.](https://github.com/material-components/material-components-ios/commit/2a334c409ab2cb505909e82a53c01e47d1524893) (Randall Li)
+* [Revert "Snapshot Testing Proof of Concept" (#5883)](https://github.com/material-components/material-components-ios/commit/13781e6d452bc8c2e38bb7d55717872fec45f306) (Robert Moore)
+* [Snapshot Testing Proof of Concept (#5754)](https://github.com/material-components/material-components-ios/commit/c6a300ff2cc31901d9acbaf527952ad912c15322) (rami-a)
+* [Snapshot Testing Proof of Concept (#5887)](https://github.com/material-components/material-components-ios/commit/615a0e406158dba0f168e1e24bd3884209cc137d) (rami-a)
+
+---
+
+# 70.1.0
+
+This minor release introduces a new Alpha ContainerScheme type and several bug fixes.
+
+## New features
+
+A new ContainerScheme type has been introduced that can be used to represent the complete collection
+of Material Theming subsystem schemes. This new scheme type is an Alpha component at this point in
+time and is not yet intended for general use.
+
+## API changes
+
+### ContainerScheme
+
+**New component.**
+
+## Component changes
+
+## Changes
+
+### ActionSheet
+
+* [Action sheet safe area fix (#5769)](https://github.com/material-components/material-components-ios/commit/95513c069bd76df869c9ca421dd843cce4f3932a) (Colemalban)
+
+### Cards
+
+* [Have updates to MDCCardCollectionCell setState properly respect the animated flag. (#5780)](https://github.com/material-components/material-components-ios/commit/42079f46485e750eaf5b5270ea7c7fb7526c477d) (Yarden Eitan)
+
+### Dialogs
+
+* [Example: merged supplemental code into a single file: DialogsDismissingViewController (#5808)](https://github.com/material-components/material-components-ios/commit/14d870e5d6e6283409088de338efebfaf69bd924) (Galia Kaufman)
+* [Move non-typical demo to Dragons. (#5829)](https://github.com/material-components/material-components-ios/commit/74cb507b3046d269683a01497ac1649d17b6ea77) (Robert Moore)
+* [renmaing typical use example (#5807)](https://github.com/material-components/material-components-ios/commit/767c482eb0ad095f0500b0ab970916bb9e07de6b) (Galia Kaufman)
+
+### NavigationDrawer
+
+* [Add the bottom drawer container view controller as a child view controller (#5821)](https://github.com/material-components/material-components-ios/commit/7edf376e83e3cb8af51b120e099d976c8e9266e1) (guylivneh)
+
+### schemes/Container
+
+* [implement a container scheme (#5801)](https://github.com/material-components/material-components-ios/commit/f55c9a611e45a17c8f166f1e42ae87109ae45d58) (Wenyu Zhang)
+
+---
+
+# 70.0.0
+
+This major change removes all property coding behavior from our components. It also includes
+performance improvements for NavigationDrawer and a new API for adjusting its content offset.
+PageControl now also supports RTL.
+
+## Breaking changes
+
+Component properties are no longer encoded or decoded for any component.
+
+## New features
+
+Improvements made to Navigation Drawer:
+
+1. Improvements to the Navigation Drawer's performance by removing unneeded calls to the
+   contentViewController's preferredContentSize.
+2. A new API on `MDCBottomDrawerViewController:` `setContentOffsetY:contentOffsetY:animated:`
+   allowing to manually scroll the content to the desired offset. Setting the contentOffsetY to 0
+   will scroll the drawer to the top of the content.
+
+MDCPageControl has a new `respectsUserInterfaceLayoutDirection` property that, when enabled, causes
+the page control to react to RTL layout.
+
+## API changes
+
+### Buttons
+
+#### MDCFloatingButton
+
+*removed* method: `-initWithCoder:` in `MDCFloatingButton`
+
+### Collections
+
+#### MDCCollectionViewEditing
+
+*new* method: `-updateReorderCellPosition` in `MDCCollectionViewEditing`
+
+### NavigationDrawer
+
+#### MDCBottomDrawerViewController
+
+*new* method: `-setContentOffsetY:animated:` in `MDCBottomDrawerViewController`
+
+#### MDCBottomDrawerPresentationController
+
+*new* property: `contentReachesFullscreen` in `MDCBottomDrawerPresentationController`
+
+*new* method: `-setContentOffsetY:animated:` in `MDCBottomDrawerPresentationController`
+
+### PageControl
+
+#### MDCPageControl
+
+*new* property: `respectsUserInterfaceLayoutDirection` in `MDCPageControl`
+
+### Slider
+
+#### MDCSlider
+
+*modified* class: `MDCSlider`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `class MDCSlider : UIControl, NSSecureCoding` |
+| To: | `class MDCSlider : UIControl` |
+
+*modified* class: `MDCSlider`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCSlider : UIControl <NSSecureCoding>` |
+| To: | `@interface MDCSlider : UIControl` |
+
+### ColorScheme
+
+#### MDCTonalPalette
+
+*removed* method: `-initWithCoder:` in `MDCTonalPalette`
+
+*modified* class: `MDCTonalPalette`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `class MDCTonalPalette : NSObject, NSCopying, NSSecureCoding` |
+| To: | `class MDCTonalPalette : NSObject, NSCopying` |
+
+*modified* class: `MDCTonalPalette`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCTonalPalette : NSObject <NSCopying, NSSecureCoding>` |
+| To: | `@interface MDCTonalPalette : NSObject <NSCopying>` |
+
+## Component changes
+
+## Breaking changes
+
+### Buttons
+
+* [**Breaking**: Remove property coding support from MDCFloatingButton and MDCFlatButton. (#5787)](https://github.com/material-components/material-components-ios/commit/9564c50eaa08ee5cf79a0fc31adb9cd67972aa28) (featherless)
+
+## Multi-component breaking changes
+
+* [**Breaking**: Remove remaining property coding. (#5792)](https://github.com/material-components/material-components-ios/commit/d9c801e77306416af6e08bb96d364d65f1f9c340) (featherless)
+
+## Changes
+
+### BottomNavigation
+
+* [Support `accessibilityLabel`, `accessibilityHint`, and `isAccessibilityElement` (#5736)](https://github.com/material-components/material-components-ios/commit/0affb857649cd620eac7912edf0a396f966b20a1) (andrewplai)
+
+### BottomSheet
+
+* [Add a Dragon to demonstrate issue #5778 (#5779)](https://github.com/material-components/material-components-ios/commit/ee8f1991ec88f69fc1819d0ea3ee0bc20bcd9960) (danblakemore)
+
+### Collections
+
+* [Adds ability to programmatically update the position of the reordering cell (#5560)](https://github.com/material-components/material-components-ios/commit/4daa8b4aa97338942246415e5e75b0c3b7f685a5) (Felix Emiliano)
+
+### Dialogs
+
+* [Add an Alert width upper bound (#4914)](https://github.com/material-components/material-components-ios/commit/a063cd7552ecf0fea5abebe071455f7b69d940f7) (ianegordon)
+
+### NavigationDrawer
+
+* [API to allow content to scroll to top (#5776)](https://github.com/material-components/material-components-ios/commit/137a3e920c7056a9a168b4889c27b119df1dee61) (Yarden Eitan)
+* [Improve performance for heavy preferredContentSize calls (#5744)](https://github.com/material-components/material-components-ios/commit/bccd163467bb1b61ded88256639c3c18b36fbeb8) (Yarden Eitan)
+* [Position handle using NSLayoutConstraints (#5760)](https://github.com/material-components/material-components-ios/commit/deac15a06c31d854d4fefd964905b48181469ebe) (Andrew Overton)
+
+### PageControl
+
+* [Add respectsUserInterfaceLayoutDirection to MDCPageControl (#5711)](https://github.com/material-components/material-components-ios/commit/21dfce7f5fb97038ae3b5e81b4acada796fa2c08) (Andrew Overton)
+
+### Tabs
+
+* [Update MDCItemBarCell edge insets to 16.0f, per the material spec. (#5670)](https://github.com/material-components/material-components-ios/commit/e97f72ed9de31598eb0772ea4735a5c4198230ac) (Mark Klara)
+
+## Multi-component changes
+
+* [Fix cross-component imports. (#5786)](https://github.com/material-components/material-components-ios/commit/58b7e388d458422a0d4e4f30d0f43ad9de73aecb) (Robert Moore)
+* [Fix cross-component imports. (#5794)](https://github.com/material-components/material-components-ios/commit/6f7513d17ee1f3116f43fadc0ef4b6ebba3f700a) (Robert Moore)
+* [Revert "[Dialogs, Shape] Fix cross-component imports. (#5786)" (#5793)](https://github.com/material-components/material-components-ios/commit/595127cd7bcd52f0cf4e531b9fc2e164efc29154) (Robert Moore)
+
+---
+
+# 69.0.0
+
+This major release introduces a breaking change with Snackbar's default style. It also includes
+a new top handle and performance improvements for NavigationDrawer.
+
+## Breaking changes
+
+`usesLegacySnackbar` is now NO by default.
+
+## New features
+
+MDCBottomNavigationBar has a new `elevation` property.
+
+NavigationDrawer has the following changes:
+
+1. Added support for content in the drawer that is dynamically sized. Updating the
+   preferredContentSize at any time will cause the drawer to respond appropriately.
+2. Added a top handle that sits at the top of the drawer to show scrollability. It disappears
+   when the drawer goes to full screen or when there is no more to scroll.
+3. Added a way to customize the color of the top handle.
+4. The drawer's header height expands as it goes to full screen to cover the safe area and status
+   bar. We now provide a delegate to allow clients to be aware of the relevant top content inset so 
+   they lay out their header content appropriately based on height changes.
+5. Implemented performance improvements by removing some calls to preferredContentSize of the
+   contentViewController within the drawer implementation.
+
+## API changes
+
+### AppBar+ColorThemer
+
+#### MDCAppBarColorThemer(ToBeDeprecated)
+
+*modified* class method: `+applySurfaceVariantWithColorScheme:toAppBar:` in `MDCAppBarColorThemer(ToBeDeprecated)`
+
+*modified* class method: `+applySemanticColorScheme:toAppBar:` in `MDCAppBarColorThemer(ToBeDeprecated)`
+
+### AppBar+TypographyThemer
+
+#### MDCAppBarTypographyThemer(ToBeDeprecated)
+
+*modified* class method: `+applyTypographyScheme:toAppBar:` in `MDCAppBarTypographyThemer(ToBeDeprecated)`
+
+### BottomNavigation
+
+#### MDCBottomNavigationBar
+
+*new* property: `elevation` in `MDCBottomNavigationBar`
+
+### NavigationDrawer
+
+#### MDCBottomDrawerViewControllerDelegate
+
+*new* protocol: `MDCBottomDrawerViewControllerDelegate`
+
+*new* method: `-bottomDrawerControllerDidChangeTopInset:topInset:` in `MDCBottomDrawerViewControllerDelegate`
+
+#### MDCBottomDrawerPresentationController
+
+*new* property: `topHandleHidden` in `MDCBottomDrawerPresentationController`
+
+*new* property: `topHandleColor` in `MDCBottomDrawerPresentationController`
+
+#### MDCBottomDrawerViewController
+
+*new* property: `topHandleColor` in `MDCBottomDrawerViewController`
+
+*new* property: `delegate` in `MDCBottomDrawerViewController`
+
+*new* property: `topHandleHidden` in `MDCBottomDrawerViewController`
+
+## Component changes
+
+### ActionSheet
+
+* [Add example comparing Material and UIKit (#5724)](https://github.com/material-components/material-components-ios/commit/d90bf4cb8ccc9c1f1a42d029842200e89057bf8a) (ianegordon)
+* [Try to fix MaterialComponentsAlpha (#5541)](https://github.com/material-components/material-components-ios/commit/7472e8933ee5cb97bceac7427ff5e263f33776b4) (Andrew Overton)
+
+### AppBar
+
+* [Annotate APIs that need to be deprecated. (#5614)](https://github.com/material-components/material-components-ios/commit/4c50877338455f6c7300b267664beeec52237145) (featherless)
+
+### BottomNavigation
+
+* [Add elevation property (#5733)](https://github.com/material-components/material-components-ios/commit/e98a910e473850ed3d3a6b2cceab9df2791c7fcd) (Cody Weaver)
+* [Minor code clean-up. (#5742)](https://github.com/material-components/material-components-ios/commit/f1a6f507f2e4a6b982c212ae723be8d6d49941f3) (Robert Moore)
+
+### NavigationDrawer
+
+* [Add dynamically sizing support for the drawer + performance improvements (#5587)](https://github.com/material-components/material-components-ios/commit/31e3f33df361c63615aa5c5c94e8e7c55b25d674) (Yarden Eitan)
+* [Added Color API for the top handle. (#5592)](https://github.com/material-components/material-components-ios/commit/3693683b0ffe3d0ce7a9023e0f006c4b9fe6cf1a) (Yarden Eitan)
+* [Added a top handle to the drawer (#5591)](https://github.com/material-components/material-components-ios/commit/43a996674a4d52cbc61247437f34040ab88b8206) (Yarden Eitan)
+* [Adding a top inset delegate for the drawer (#5674)](https://github.com/material-components/material-components-ios/commit/c9f2279af98362ad38c7334aa721e700493bde82) (Yarden Eitan)
+* [added additional example with limited content that doesnt reach fullscreen (#5743)](https://github.com/material-components/material-components-ios/commit/380242e0b724e292df21a01678594c8523d7458c) (Yarden Eitan)
+* [call getter instead (#5710)](https://github.com/material-components/material-components-ios/commit/8b13168bf781274aa7f410ad4174d9e234705ec7) (Yarden Eitan)
+
+### Snackbar
+
+* [Fix for Snackbar themer breaking Snackbar examples on dragons (#5731)](https://github.com/material-components/material-components-ios/commit/ec206d593630f8c31d96e855f8f143d584baa900) (Yarden Eitan)
+* [change snackbar to default to use the new snackbar and not legacy (#5732)](https://github.com/material-components/material-components-ios/commit/038ba77126593ef203830681f9517223a5981dae) (Yarden Eitan)
+
+## Multi-component changes
+
+* [[MDC Swift] Add guards for Swift 4.2+ (#5634)](https://github.com/material-components/material-components-ios/commit/c1b1d25eec58475ffe3c1bffef4fb98774cd4800) (Robert Moore)
+* [Global replace of integral single-precision literals with integer literals. (#5709)](https://github.com/material-components/material-components-ios/commit/74a27253e833f5b378c2ee0de63f57a5e046f21c) (Robert Moore)
+* [Global replace of single-precision floats with CGFloat casts. (#5718)](https://github.com/material-components/material-components-ios/commit/03f3351ad5550fcc501e6ed841414c6e1a6d9494) (Robert Moore)
+* [No longer using `-init` for Color Scheme. (#5734)](https://github.com/material-components/material-components-ios/commit/372d6b24f9732a38a35a4ba7a1592b2f84dfeb46) (Robert Moore)
+* [fix typo UIConnect... -> UIContent... (#5735)](https://github.com/material-components/material-components-ios/commit/85f62c7b3dc1a7a3e33922befb729ee38480a6b6) (Ralph)
+
+---
+
+# 68.2.0
+
+In this minor release we have introduced an API for customizing the Navigation Drawer scrim color, an API for animating corner radius changes for `MDCShadowLayer`, an `MDCSnackbarManager` instance color themer, along with bug fixes and performance improvements.
+
+## New features
+
+Navigation Drawer now supports customizing its scrim color as follows:
+
+```swift
+let bottomDrawerViewController = MDCBottomDrawerViewController()
+// Set the drawer scrim color.
+bottomDrawerViewController.scrimColor = UIColor.blue.withAlphaComponent(0.5)
+
+bottomDrawerViewController.contentViewController = contentViewController
+bottomDrawerViewController.headerViewController = headerViewController
+MDCBottomDrawerColorThemer.applySemanticColorScheme(colorScheme,
+                                                    toBottomDrawer: bottomDrawerViewController)
+present(bottomDrawerViewController, animated: true, completion: nil)
+```
+
+`MDCShadowLayer` now supports animating corner radius changes:
+
+```objc
+@interface CustomView : UIView
+@end
+
+@implementation CustomView
++ (Class)layerClass {
+  return [MDCShadowLayer class];
+}
+
+- (MDCShadowLayer *)shadowLayer {
+  return (MDCShadowLayer *)self.layer;
+}
+ @end
+
+CAMediaTimingFunction *timingFunction =
+    [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
+[self.customView.shadowLayer animateCornerRadius:(CGFloat)25.0
+                              withTimingFunction:timingFunction
+                                        duration:(CGFloat)2.5];
+```
+
+`MDCSnackbarManager` instances can now be themed using a color scheme:
+
+```objc
+MDCSnackbarManager *snackbarManager = [[MDCSnackbarManager alloc] init];
+MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+[MDCSnackbarColorThemer applySemanticColorScheme:colorScheme toSnackbarManager:snackbarManager];
+```
+
+## API changes
+
+### NavigationDrawer
+
+#### MDCBottomDrawerViewController
+
+*new* property: `scrimColor` in `MDCBottomDrawerViewController`
+
+#### MDCBottomDrawerPresentationController
+
+*new* property: `scrimColor` in `MDCBottomDrawerPresentationController`
+
+### ShadowLayer
+
+#### MDCShadowLayer
+
+*new* method: `-animateCornerRadius:withTimingFunction:duration:` in `MDCShadowLayer`
+
+### Snackbar+ColorThemer
+
+#### MDCSnackbarColorThemer
+
+*new* class method: `+applySemanticColorScheme:toSnackbarManager:` in `MDCSnackbarColorThemer`
+
+## Component changes
+
+### AnimationTiming
+
+* [fix swift debugging (#5569)](https://github.com/material-components/material-components-ios/commit/3442cf9deb1c31b0962dab4906177dd2306ed7c2) (Yarden Eitan)
+
+### BottomAppBar
+
+* [Fix path animation (#5611)](https://github.com/material-components/material-components-ios/commit/7b51a89030ec32d617e11794adfd50741aa3e951) (Cody Weaver)
+
+### BottomNavigation
+
+* [Fix selection animation for badge (#5571)](https://github.com/material-components/material-components-ios/commit/9147435cf7e6624b0876d07389374d039b0ccf69) (Cody Weaver)
+
+### FlexibleHeader
+
+* [Fix an edge case in resetShadowAfterTrackingScrollViewIsReset (#5561)](https://github.com/material-components/material-components-ios/commit/91186a3182ce3e0e207ee93ff3c75f0095d4895a) (Ali Rabbani)
+* [Fix animation glitches when switching between UITableView tabs (#5540)](https://github.com/material-components/material-components-ios/commit/0124394a1d03b8e9a06c759028250b775e56321b) (featherless)
+
+### NavigationDrawer
+
+* [Add scrim color to color themer (#5570)](https://github.com/material-components/material-components-ios/commit/71c4da9404f3ffb5ca75b145592b189215297a16) (Cody Weaver)
+* [Add support for scrimColor (#5568)](https://github.com/material-components/material-components-ios/commit/51f69ae40255cbccddf18d551962e81a60e96c97) (Cody Weaver)
+* [automatically disable scrolling (#5586)](https://github.com/material-components/material-components-ios/commit/2127004680f3ed66716750ef435b79e665ed9201) (Yarden Eitan)
+* [fix spacing (#5590)](https://github.com/material-components/material-components-ios/commit/dd26cfa95b60b3575b61f9423111b84cbfe35a7c) (Yarden Eitan)
+
+### ShadowElevations
+
+* [Remove .m file (#5583)](https://github.com/material-components/material-components-ios/commit/8d26cb5bb9e4efc81657b44726ef8ed418b96bc3) (Cody Weaver)
+
+### ShadowLayer
+
+* [Add API to animate corner radius (#5585)](https://github.com/material-components/material-components-ios/commit/a0810b574649546bd27e330818e1575c5e0a6518) (Cody Weaver)
+
+### Snackbar
+
+* [Add support to pass MDCSnackbarManager instances to color themer (#5582)](https://github.com/material-components/material-components-ios/commit/c724f4ae4bded239fd18db09baccbd33a8162990) (rami-a)
+
+### Typography
+
+* [Cache standard font for text style. (#5533)](https://github.com/material-components/material-components-ios/commit/64d6535f2a4a26681bb3c97361979466e8ba3523) (Robert Moore)
+
+---
+
+# 68.1.0
+
+In this minor release we have added a top corners API and a state system for Navigation Drawer along with bug fixes and additional examples.
+
+## New features
+
+By using Navigation Drawer's `MDCBottomDrawerViewController`, you can now set the top corners radius of your drawer for each of its 
+different presentation states `MDCBottomDrawerState`.
+
+```swift
+let bottomDrawerViewController = MDCBottomDrawerViewController()
+// Set the drawer top corners for the drawer states.
+bottomDrawerViewController.setTopCornersRadius(24, for: .collapsed)
+bottomDrawerViewController.setTopCornersRadius(8, for: .expanded)
+
+bottomDrawerViewController.contentViewController = contentViewController
+bottomDrawerViewController.headerViewController = headerViewController
+MDCBottomDrawerColorThemer.applySemanticColorScheme(colorScheme,
+                                                    toBottomDrawer: bottomDrawerViewController)
+present(bottomDrawerViewController, animated: true, completion: nil)
+```
+
+## API changes
+
+### NavigationDrawer
+
+#### MDCBottomDrawerViewController
+
+*new* method: `-topCornersRadiusForDrawerState:` in `MDCBottomDrawerViewController`
+
+*new* method: `-setTopCornersRadius:forDrawerState:` in `MDCBottomDrawerViewController`
+
+*new* property: `drawerState` in `MDCBottomDrawerViewController`
+
+*modified* class: `MDCBottomDrawerViewController`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `class MDCBottomDrawerViewController : UIViewController` |
+| To: | `class MDCBottomDrawerViewController : UIViewController, MDCBottomDrawerPresentationControllerDelegate` |
+
+*modified* class: `MDCBottomDrawerViewController`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@interface MDCBottomDrawerViewController : UIViewController` |
+| To: | `@interface MDCBottomDrawerViewController     : UIViewController <MDCBottomDrawerPresentationControllerDelegate>` |
+
+#### MDCBottomDrawerState
+
+*new* enum: `MDCBottomDrawerState`
+
+*new* enum value: `MDCBottomDrawerStateExpanded` in `MDCBottomDrawerState`
+
+*new* enum value: `MDCBottomDrawerStateCollapsed` in `MDCBottomDrawerState`
+
+*new* typedef: `MDCBottomDrawerState`
+
+*new* enum value: `MDCBottomDrawerStateFullScreen` in `MDCBottomDrawerState`
+
+#### MDCBottomDrawerPresentationController
+
+*new* property: `delegate` in `MDCBottomDrawerPresentationController`
+
+#### MDCBottomDrawerPresentationControllerDelegate
+
+*new* method: `-bottomDrawerWillChangeState:drawerState:` in `MDCBottomDrawerPresentationControllerDelegate`
+
+*new* method: `-bottomDrawerTopTransitionRatio:transitionRatio:` in `MDCBottomDrawerPresentationControllerDelegate`
+
+*new* protocol: `MDCBottomDrawerPresentationControllerDelegate`
+
+## Component changes
+
+### ActionSheet
+
+* [Fix rotation bug  (#5505)](https://github.com/material-components/material-components-ios/commit/07ed3771dc34de4806b62db187e68b669bbcfa2b) (Cody Weaver)
+
+### AppBar
+
+* [Initial frame wrong in MDCAppBarViewController for iPad split screen (#5497)](https://github.com/material-components/material-components-ios/commit/1d9b984cb3a146008779fa12e4e60dc5862789af) (rami-a)
+
+### List
+
+* [Use ListThemer for List example (#5502)](https://github.com/material-components/material-components-ios/commit/49b29af661b7d6c3cc7c79de59b21eb5a92af434) (Andrew Overton)
+* [[List Items] Improve BiDi example performance. (#5506)](https://github.com/material-components/material-components-ios/commit/410f2f55e7976570ceabe0d4276c385ed90ef930) (Robert Moore)
+
+### NavigationDrawer
+
+* [Added a state system to the Nav Drawer (#5520)](https://github.com/material-components/material-components-ios/commit/a8d3794de3dff0163126726f8b4dd997fa1fec68) (Yarden Eitan)
+* [Added a top corners radius for state API. (#5543)](https://github.com/material-components/material-components-ios/commit/bc584d9e0e74118caea241959de2aa64dd245695) (Yarden Eitan)
+* [Fix the init of the MDCBottomDrawerViewController to use the designated inits (#5546)](https://github.com/material-components/material-components-ios/commit/bfa674da949b3f7a51610c29a95994d2bfd44526) (guylivneh)
+* [[BottomDrawer] Adding an example for dynamically changing content size (#5545)](https://github.com/material-components/material-components-ios/commit/08b71a81eee40c0b8a71f35e3275acfd13b741eb) (guylivneh)
+
+### Snackbar
+
+* [Update MDCSnackbarColorThemer to set correct background color to match the spec (#5517)](https://github.com/material-components/material-components-ios/commit/479eaa84af054ade867b331b50854c917f82068a) (rami-a)
+
+### schemes/Color
+
+* [Fix pod name (#5532)](https://github.com/material-components/material-components-ios/commit/92c8f03d3079d1034ed6cc22c73c0799200e9add) (Cody Weaver)
+
+### schemes/Typography
+
+* [Fix pod name (#5532)](https://github.com/material-components/material-components-ios/commit/92c8f03d3079d1034ed6cc22c73c0799200e9add) (Cody Weaver)
+
+---
+
+# 68.0.0
+
+This major release includes a breaking change in behavior for Bottom Sheet's shapes themer, a
+variety of bug fixes, a new color themer for NavigationDrawer, and documentation for the Shape
+theming system.
+
+## Breaking changes
+
+Bottom Sheet's shape themer behavior has changed:
+
+> Bottom Sheet now maps the top 2 corners to the Large Component Shape category when the sheet isn't
+> in a full screen state. When the sheet is in full screen, we do not map it or shape it at all.
+
+## New features
+
+NavigationDrawer now has a color themer.
+
+Sliders now respect exclusive touches.
+
+## API changes
+
+### NavigationDrawer+ColorThemer
+
+**New extension.**
+
+## Component changes
+
+### AppBar
+
+* [Add dragons example for appbar that demonstrates issue #5412 (#5471)](https://github.com/material-components/material-components-ios/commit/1ecf3e341a7d6922cecc383603c19ff92611fec5) (rami-a)
+
+### BottomSheet
+
+* [Respect safe area after upward nudge (#5486)](https://github.com/material-components/material-components-ios/commit/fb59ac5f1ba6c86f21849af6db9e911feae70504) (Cody Weaver)
+* [[Docs] Adds the shape themer API to the supporting components using the doc generation (#5464)](https://github.com/material-components/material-components-ios/commit/d7f566994a63e293392d8e0328406b6d1dd67dae) (Yarden Eitan)
+* [[Shape]! Update to the Bottom Sheet Shape Themer (#5503)](https://github.com/material-components/material-components-ios/commit/03691cad8e4b9d1539271d6cfea8e97491e7ee84) (Yarden Eitan)
+* [adjust code wrapper tags on bottom sheet read me (#5404) (#5446)](https://github.com/material-components/material-components-ios/commit/ba950c82fba9ce9095899a203b53456da2b7d67a) (Cody Weaver)
+
+### Buttons
+
+* [[Docs] Adds the shape themer API to the supporting components using the doc generation (#5464)](https://github.com/material-components/material-components-ios/commit/d7f566994a63e293392d8e0328406b6d1dd67dae) (Yarden Eitan)
+
+### Cards
+
+* [[Docs] Adds the shape themer API to the supporting components using the doc generation (#5464)](https://github.com/material-components/material-components-ios/commit/d7f566994a63e293392d8e0328406b6d1dd67dae) (Yarden Eitan)
+
+### Chips
+
+* [[Docs] Adds the shape themer API to the supporting components using the doc generation (#5464)](https://github.com/material-components/material-components-ios/commit/d7f566994a63e293392d8e0328406b6d1dd67dae) (Yarden Eitan)
+
+### Collections
+
+* [Ensures that the cell snapshot generated by MDCCollectionViewEditor reflects changes made to the cell (#5336)](https://github.com/material-components/material-components-ios/commit/f62f5369ecdb586e78bd7f2dc22435dfcee54074) (Felix Emiliano)
+* [Updates MDCCollectionViewEditor panning to use cell's center property instead of transform to update its position (#5329)](https://github.com/material-components/material-components-ios/commit/f375ef350d64b1b45c03b4fa77e5efb4c40ee9d6) (Felix Emiliano)
+
+### Dialogs
+
+* [Fix elevation to use MDCShadowElevation](https://github.com/material-components/material-components-ios/commit/f18085def5a7ccfd216401a6ca8d339ff93d971e) (Cody Weaver)
+* [Refactor test to use setup and teardown (#5482)](https://github.com/material-components/material-components-ios/commit/dd79e5c6b1cbc2df97daa7e603e1c73d494cd670) (Cody Weaver)
+* [Theming action buttons in DialogThemer  (#5416)](https://github.com/material-components/material-components-ios/commit/d55d7ab9f2cea94318ca0ccb6676685a39806984) (Galia Kaufman)
+* [Upgrade buttons class to MDCButton (b/117543195) (#5401)](https://github.com/material-components/material-components-ios/commit/c793fcf75380fb07306cc055144f55343b583fdd) (Galia Kaufman)
+
+### List
+
+* [Add RTL arabic text to list example (#5500)](https://github.com/material-components/material-components-ios/commit/d1961ea5d737c766c187f6f5eb8ffea82d76f230) (Andrew Overton)
+* [Allow stereo cell labels to take up all available space (#5476)](https://github.com/material-components/material-components-ios/commit/b47b889166ab197cef442ee9815012a996717cab) (Andrew Overton)
+* [Do not enforce label text alignment based off effective user interface layout direction (#5475)](https://github.com/material-components/material-components-ios/commit/14f66dc4267715221dcda37880b5cebfd3629f7a) (Andrew Overton)
+* [SelfSizingStereoCell should invalidate its layout on re-use (#5439)](https://github.com/material-components/material-components-ios/commit/e96d185e2e59a91d75a53c4738ef3e686d5c54db) (Julien Poumailloux)
+
+### NavigationDrawer
+
+* [Add Color Themer support (#5458)](https://github.com/material-components/material-components-ios/commit/70457a398a8445f13969f72d2f35509776d45829) (rami-a)
+* [Add Fakes files for tests (#5453)](https://github.com/material-components/material-components-ios/commit/596f72b395039e3250338f45198f424f7aa90c04) (Cody Weaver)
+* [Add scroll view test (#5445)](https://github.com/material-components/material-components-ios/commit/90d84a4bf57fb54c18af14a13d1612b4dc559d34) (Cody Weaver)
+* [Add test for contentHeaderTopInset and presentingViewBounds (#5465)](https://github.com/material-components/material-components-ios/commit/b2c690d209226c609631aa7af015f9a3c5648530) (Cody Weaver)
+* [Add unit test for height related properties (#5461)](https://github.com/material-components/material-components-ios/commit/f925ce48db8c0dd9130775ae629d3a4eb04934ef) (Cody Weaver)
+* [Present the drawer in full screen when in a compact size class (#5443)](https://github.com/material-components/material-components-ios/commit/8c3aedd5ea994341e7eab32fb59611299bb8c1a0) (Yarden Eitan)
+* [Test content height surplus and scrolls to reveal (#5466)](https://github.com/material-components/material-components-ios/commit/690b81efdd16c7aff6063f524d77bf6428a71e9a) (Cody Weaver)
+* [fix drawer not dismissing in full screen on 32 bit devices (#5454)](https://github.com/material-components/material-components-ios/commit/58380e7c7538701ad5e82080f50d997167cb7d64) (Yarden Eitan)
+* [graduate navigation drawer from Beta to Ready (#5470)](https://github.com/material-components/material-components-ios/commit/5dafdbaa86031bd15d43ef13ba8f506e254a6910) (Yarden Eitan)
+
+### Slider
+
+* [[MDCSlider] Allow setting exclusiveTouch on Sliders. (#5326)](https://github.com/material-components/material-components-ios/commit/f5a7a0d474b139531f7b87b6691f72fadd2d4d06) (Gabe Giosia)
+
+### schemes/Shape
+
+* [[Shapes] Added initial documentation for Shape Theming (#5460)](https://github.com/material-components/material-components-ios/commit/83fffdb4cc8b6ce36579f2abce55caee9cdb45f2) (Yarden Eitan)
+
+---
+
+# 67.2.0
+
+This minor release introduces new functionality for theming individual buttons of an
+MDCAlertController.
+
+## New features
+
+It is now possible to theme MDCAlertController buttons individually using the new `emphasis`
+property on `MDCAlertAction` in conjunction with the `MDCAlertControllerThemer`.
+
+```swift
+let alert = MDCAlertController(title: "Button Theming", message: "High, Medium & Low Emphasis")
+
+alert.addAction(MDCAlertAction(title:"High", emphasis: .high, handler: <#handler#>))
+alert.addAction(MDCAlertAction(title:"Medium", emphasis: .medium, handler: <#handler#>))
+alert.addAction(MDCAlertAction(title:"Low", emphasis: .low, handler: <#handler#>))
+
+MDCAlertControllerThemer.applyScheme(<#alertScheme#>, to: alert)
+
+self.present(alert, animated: true, completion: nil)
+```
+
+## API changes
+
+### Dialogs+DialogThemer
+
+#### MDCAlertScheming
+
+*new* property: `buttonScheme` in `MDCAlertScheming`
+
+#### MDCAlertScheme
+
+*new* property: `buttonScheme` in `MDCAlertScheme`
+
+### Dialogs
+
+#### MDCAlertController
+
+*modified* property: `elevation` in `MDCAlertController`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `var elevation: CGFloat { get set }` |
+| To: | `var elevation: Int32 { get set }` |
+
+*modified* property: `elevation` in `MDCAlertController`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@property (assign, readwrite, nonatomic) CGFloat elevation;` |
+| To: | `@property (assign, readwrite, nonatomic) int elevation;` |
+
+#### MDCActionEmphasis
+
+*new* enum: `MDCActionEmphasis`
+
+*new* enum value: `MDCActionEmphasisLow` in `MDCActionEmphasis`
+
+*new* enum value: `MDCActionEmphasisMedium` in `MDCActionEmphasis`
+
+*new* enum value: `MDCActionEmphasisHigh` in `MDCActionEmphasis`
+
+#### MDCDialogPresentationController
+
+*modified* property: `dialogElevation` in `MDCDialogPresentationController`
+
+| Type of change: | Swift declaration |
+|---|---|
+| From: | `var dialogElevation: CGFloat { get set }` |
+| To: | `var dialogElevation: Int32 { get set }` |
+
+*modified* property: `dialogElevation` in `MDCDialogPresentationController`
+
+| Type of change: | Declaration |
+|---|---|
+| From: | `@property (assign, readwrite, nonatomic) CGFloat dialogElevation;` |
+| To: | `@property (assign, readwrite, nonatomic) int dialogElevation;` |
+
+#### MDCAlertAction
+
+*new* property: `emphasis` in `MDCAlertAction`
+
+*new* class method: `+actionWithTitle:emphasis:handler:` in `MDCAlertAction`
+
+## Component changes
+
+### Dialogs
+
+* [Fix elevation to use MDCShadowElevation](https://github.com/material-components/material-components-ios/commit/c7d4f27d0c8ee7027519196480ae3e7c0f65d8c5) (Cody Weaver)
+* [Theming action buttons in DialogThemer  (#5416)](https://github.com/material-components/material-components-ios/commit/325772ba5e40ce8c27cadab5f0da727dea3d05a9) (Galia Kaufman)
+* [Upgrade buttons class to MDCButton (b/117543195) (#5401)](https://github.com/material-components/material-components-ios/commit/9122fc2fcba1d7464d66edc761ce9ab07db318f2) (Galia Kaufman)
+
+---
+
+# 67.1.0
+
+In this minor release we provide a shadow opacity reset toggle for Flexible Header, VoiceOver and rounded corners support for the Navigation Drawer, along with bug fixes and unit tests improvements.
+
+## New features
+
+### Flexible Header
+
+* Flexible Header supports resetting the visible shadow opacity to 0 when setting trackingScrollView to `nil` by setting the BOOL property `resetShadowAfterTrackingScrollViewIsReset`.
+
+### Navigation Drawer
+* When VoiceOver or Switch Control is turned on in your app, Navigation Drawer will always show up in full screen.
+
+* Navigation Drawer has rounded corners when there is more scrollable content to scroll in the drawer.
+
+## Component changes
+
+### ActionSheet
+
+* [Remove remaining _IPHONE_11 checks (#5417)](https://github.com/material-components/material-components-ios/commit/d85eee86cbe97a79fb1a59db8b85f693360d7a81) (Cody Weaver)
+* [Update examples to use global themer](https://github.com/material-components/material-components-ios/commit/1c95887654c9abf9a294ec8260e7fda817bcb284) (Cody Weaver)
+* [{Tests} Deallocate test objects at the end of tests. (#5397)](https://github.com/material-components/material-components-ios/commit/675235ed050bb959dcbae957c78a58bbb3567eb3) (Robert Moore)
+
+### ActivityIndicator
+
+* [Fix ActivityIndicatorTransitionExample layout when rotating device (#5392)](https://github.com/material-components/material-components-ios/commit/545eea116151e6e7c39c6c87298ecfe4f8bf94eb) (rami-a)
+
+### AppBar
+
+* [{Tests} Deallocate test objects at the end of tests. (#5397)](https://github.com/material-components/material-components-ios/commit/675235ed050bb959dcbae957c78a58bbb3567eb3) (Robert Moore)
+
+### BottomAppBar
+
+* [{Tests} Deallocate test objects at the end of tests. (#5397)](https://github.com/material-components/material-components-ios/commit/675235ed050bb959dcbae957c78a58bbb3567eb3) (Robert Moore)
+
+### BottomSheet
+
+* [{Tests} Deallocate test objects at the end of tests. (#5397)](https://github.com/material-components/material-components-ios/commit/675235ed050bb959dcbae957c78a58bbb3567eb3) (Robert Moore)
+
+### Buttons
+
+* [[MaskedTransition] Apply safe area to floating button example and masked transition example (#5389)](https://github.com/material-components/material-components-ios/commit/bff3fcf7f1e8e14eb17899c7675ae7fc90a4f343) (rami-a)
+
+### Cards
+
+* [{Tests} Deallocate test objects at the end of tests. (#5397)](https://github.com/material-components/material-components-ios/commit/675235ed050bb959dcbae957c78a58bbb3567eb3) (Robert Moore)
+
+### Chips
+
+* [Fix layout when Chip added programmatically. (#5425)](https://github.com/material-components/material-components-ios/commit/e54b0bbf00be014992b852284a80fb73ca859e64) (Robert Moore)
+* [{Tests} Deallocate test objects at the end of tests. (#5397)](https://github.com/material-components/material-components-ios/commit/675235ed050bb959dcbae957c78a58bbb3567eb3) (Robert Moore)
+
+### CollectionCells
+
+* [{Tests} Deallocate test objects at the end of tests. (#5397)](https://github.com/material-components/material-components-ios/commit/675235ed050bb959dcbae957c78a58bbb3567eb3) (Robert Moore)
+
+### CollectionLayoutAttributes
+
+* [{Tests} Deallocate test objects at the end of tests. (#5397)](https://github.com/material-components/material-components-ios/commit/675235ed050bb959dcbae957c78a58bbb3567eb3) (Robert Moore)
+
+### Dialogs
+
+* [Enable misspelled test. (#5399)](https://github.com/material-components/material-components-ios/commit/d994fe7531a66a5625a8ed28ad9078cf6a172d93) (Robert Moore)
+* [{Tests} Deallocate test objects at the end of tests. (#5397)](https://github.com/material-components/material-components-ios/commit/675235ed050bb959dcbae957c78a58bbb3567eb3) (Robert Moore)
+
+### FeatureHighlight
+
+* [{Tests} Deallocate test objects at the end of tests. (#5397)](https://github.com/material-components/material-components-ios/commit/675235ed050bb959dcbae957c78a58bbb3567eb3) (Robert Moore)
+
+### FlexibleHeader
+
+* [Allow clearing shadow when trackingScrollView is emptied (#5385)](https://github.com/material-components/material-components-ios/commit/968f6dfaaa3e5f58501b39e61ecd86fd8b4a9931) (Ali Rabbani)
+* [{Tests} Deallocate test objects at the end of tests. (#5397)](https://github.com/material-components/material-components-ios/commit/675235ed050bb959dcbae957c78a58bbb3567eb3) (Robert Moore)
+
+### List
+
+* [BaseCell shouldn't display Ink on tap if -collectionView:shouldHighlightItemAtIndexPath: returns NO (#5393)](https://github.com/material-components/material-components-ios/commit/0383d68a198a55d080e9ce96b3b6d83c217db1f2) (Julien Poumailloux)
+* [Fix example import. (#5426)](https://github.com/material-components/material-components-ios/commit/12773d3289c484bf1534f68632d73c1b565f0dab) (Robert Moore)
+* [Initialize layoutCache in SelfSizingStereoCell (#5422)](https://github.com/material-components/material-components-ios/commit/4d2d2cda26e3ac493b8f8e8136e72dd2de03b8b8) (Andrew Overton)
+* [Revert "SelfSizingStereoCell should use MDCTypography instead of hardcoding its own font opacity (#5361)" (#5405)](https://github.com/material-components/material-components-ios/commit/95a5f36125f5ba8694a9971b114002d7368bb2ed) (Julien Poumailloux)
+* [Update List readme to include information on accessibility and color/… (#5403)](https://github.com/material-components/material-components-ios/commit/a19aac07b747bdb948972bf3d6860b02a934862a) (Andrew Overton)
+
+### MaskedTransition
+
+* [[Buttons] Apply safe area to floating button example and masked transition example (#5389)](https://github.com/material-components/material-components-ios/commit/bff3fcf7f1e8e14eb17899c7675ae7fc90a4f343) (rami-a)
+
+### NavigationBar
+
+* [{Tests} Deallocate test objects at the end of tests. (#5397)](https://github.com/material-components/material-components-ios/commit/675235ed050bb959dcbae957c78a58bbb3567eb3) (Robert Moore)
+
+### NavigationDrawer
+
+* [Add buttons to example to present navigation drawer (#5419)](https://github.com/material-components/material-components-ios/commit/d1a8746ad1041f2359a0983d88d66725d5b53766) (Cody Weaver)
+* [Add rounded corners when there is scrollable content (#5410)](https://github.com/material-components/material-components-ios/commit/d9c9e741d99f991c10bcee404ccb1055d1388ff1) (Cody Weaver)
+* [Added VoiceOver support to have the drawer show at full screen. (#5411)](https://github.com/material-components/material-components-ios/commit/6e31fd6d79093d31e222746530145ebf2c8a1aa3) (Yarden Eitan)
+* [Made DrawerHeaderViewController.swift file to conform to MDCBottomDrawerHeader to fix header not showing issue in components examples (#5325)](https://github.com/material-components/material-components-ios/commit/b71390dbc48100f2fd6a45949ca0c4ec871a75dc) (Anuran Barman)
+* [Remove remaining _IPHONE_11 checks (#5417)](https://github.com/material-components/material-components-ios/commit/d85eee86cbe97a79fb1a59db8b85f693360d7a81) (Cody Weaver)
+* [Setup for tests (#5423)](https://github.com/material-components/material-components-ios/commit/b18f9987b6b898c489920182eb346ea792b5e898) (Cody Weaver)
+
+### ProgressView
+
+* [{Tests} Deallocate test objects at the end of tests. (#5397)](https://github.com/material-components/material-components-ios/commit/675235ed050bb959dcbae957c78a58bbb3567eb3) (Robert Moore)
+
+### ShadowLayer
+
+* [Corner radius (#5390) (#5398)](https://github.com/material-components/material-components-ios/commit/7806ee3c3e1568e8af450ed4a64e4b53e7cd8ea8) (Cody Weaver)
+* [Subclass UIView in corner radius example (#5388)](https://github.com/material-components/material-components-ios/commit/3c636c17040ea7667b198381083f7d1ef5d62683) (Cody Weaver)
+
+### Snackbar
+
+* [Clean up unit test. (#5394)](https://github.com/material-components/material-components-ios/commit/4ab529d31647e8dc3ec0633fe43e27663821e8e6) (Robert Moore)
+* [{Tests} Deallocate test objects at the end of tests. (#5397)](https://github.com/material-components/material-components-ios/commit/675235ed050bb959dcbae957c78a58bbb3567eb3) (Robert Moore)
+
+### Tabs
+
+* [{Tests} Deallocate test objects at the end of tests. (#5397)](https://github.com/material-components/material-components-ios/commit/675235ed050bb959dcbae957c78a58bbb3567eb3) (Robert Moore)
+
+### TextFields
+
+* [{Tests} Deallocate test objects at the end of tests. (#5397)](https://github.com/material-components/material-components-ios/commit/675235ed050bb959dcbae957c78a58bbb3567eb3) (Robert Moore)
+
+---
+
+# 67.0.0
+
+There are some rendering changes that have lead to classifying this as a major release. There are no major API changes.
+
+We've added some new theming capabilities for Action Sheets and Lists.
+
+## API changes
+
+### ActionSheet+ActionSheetThemer
+
+**New extension.**
+
+### List+ColorThemer
+
+**New extension.**
+
+### List+ListThemer
+
+**New extension.**
+
+## Component changes
+
+### ActionSheet
+
+* [Add action sheet themer (#5345)](https://github.com/material-components/material-components-ios/commit/85718988e52f3752465eafb59e6669b578aa2f42) (Cody Weaver)
+
+### AppBar
+
+* [Fix status bar color appearing incorrect in some Catalog examples (#5363)](https://github.com/material-components/material-components-ios/commit/160f5b15c1d3b0d2af07bd2cc424c2e8c9f50927) (rami-a)
+
+### BottomAppBar
+
+* [Fix status bar color appearing incorrect in some Catalog examples (#5363)](https://github.com/material-components/material-components-ios/commit/160f5b15c1d3b0d2af07bd2cc424c2e8c9f50927) (rami-a)
+
+### BottomNavigation
+
+* [Change badge position (#5339)](https://github.com/material-components/material-components-ios/commit/5db5057aafdb09c3d0f6e46de2489d99099b1491) (Cody Weaver)
+
+### ButtonBar
+
+* [Fix incorrect casts in ButtonBar (#5358)](https://github.com/material-components/material-components-ios/commit/4766299a56d7ab42fdf56526bc66235134ff302c) (rami-a)
+
+### Buttons
+
+* [Fix a typo around text vs contained button (#5367)](https://github.com/material-components/material-components-ios/commit/30138a90827f92830b1ee54c4516dc33567b6021) (Louis Romero)
+
+### Chips
+
+* [Add support for third party keyboards (#5342)](https://github.com/material-components/material-components-ios/commit/190b2c47ea9fd67e98e310b5b1a9152ff65c8a85) (Cody Weaver)
+* [Fix placeholder for manually adding chips (#5343)](https://github.com/material-components/material-components-ios/commit/04415cc92425f52a4e47039c7384be1b3fba7c1d) (Cody Weaver)
+* [Respect safe area for Chips examples (#5377)](https://github.com/material-components/material-components-ios/commit/ae6d459a349d95632243c6c999ad22d2c44fd989) (rami-a)
+
+### Dialogs
+
+* [Update README for new themer](https://github.com/material-components/material-components-ios/commit/95fbb31946b5d64cc0eb18d68ee3b7ad377ccd1e) (Cody Weaver)
+* [Update the themer and scheme to have elevation (#5301)](https://github.com/material-components/material-components-ios/commit/20b759081d5d69303e1cfa31302a36d56ea96334) (Cody Weaver)
+* [Update to match spec (#5309)](https://github.com/material-components/material-components-ios/commit/abd24015d89410d1782d6ec067591b39eb7812ad) (Cody Weaver)
+* [add scrimColor to MDCAlertController (#5362)](https://github.com/material-components/material-components-ios/commit/0beee09b20046fc5e0b8d5901244f7bdd3756df4) (Galia Kaufman)
+
+### List
+
+* [Add MDCSelfSizingStereoCellColorThemer (#5311)](https://github.com/material-components/material-components-ios/commit/0aabda44b39b74b931858a4566c6ce4e92b27ae1) (Andrew Overton)
+* [Add global themer for List component (#5378)](https://github.com/material-components/material-components-ios/commit/395825465a53650f0272e969f6c0f74cddbe0278) (Andrew Overton)
+* [Add tests for List themers (#5315)](https://github.com/material-components/material-components-ios/commit/4afe7a81f1bfb9d035d3e2290ce1d7643db84480) (Andrew Overton)
+* [Fix MDCSelfSizingStereoCell not using the right text color and not resetting all label properties on re-use (#5341)](https://github.com/material-components/material-components-ios/commit/d55b6bb37fa0f591b730704c2e863d977ade35a1) (Julien Poumailloux)
+* [Generalize List themers (#5357)](https://github.com/material-components/material-components-ios/commit/d5547090997a754392d043a34b9f5c50a508c9fa) (Andrew Overton)
+* [SelfSizingStereoCell is not resetting its -mdc_adjustsFontForContentSizeCategory in -prepareForReuse (#5364)](https://github.com/material-components/material-components-ios/commit/542040d93fb4261acdcd457b344c92f0987cc487) (Julien Poumailloux)
+* [SelfSizingStereoCell should use MDCTypography instead of hardcoding its own font opacity (#5361)](https://github.com/material-components/material-components-ios/commit/5dbec5b8a9b7324d1f02bbfd0eaf877fc8b6bb50) (Julien Poumailloux)
+
+### NavigationDrawer
+
+* [Performance improvements and increased support for customizing initial drawer percentage height (#5255)](https://github.com/material-components/material-components-ios/commit/0f35751373fa197d8bd2ea4b760dfa196724f8e5) (Yarden Eitan)
+* [Support any kInitialDrawerHeightFactor value (#5337)](https://github.com/material-components/material-components-ios/commit/4c5dfa93bded0c21b79a1e6e3e293de218e26cc2) (Yarden Eitan)
+
+### TextFields
+
+* [TextFields: Fix the error accessibility label, the value was not respected previously. (#5300)](https://github.com/material-components/material-components-ios/commit/cfaf6d7a2d3edd56e53c7ee8d6c499f8b41ffb82) (Yilei (Dolee) Yang)
+
+---
+
+# 66.0.0
+
+Shapes updated it's interface.
+ActionSheet improvements.
+List added a typography themer.
+
+## Breaking changes
+
+Shapes updated its API. See [#5247](https://github.com/material-components/material-components-ios/pull/5247) for details.
+
+## API changes
+
+### List+TypographyThemer
+
+**New extension.**
+
+## Component changes
+
+### ActionSheet
+
+* [Fix ink color for themer (#5287)](https://github.com/material-components/material-components-ios/commit/a411e7143dcc85157983b5a97b3385f607ad3832) (Cody Weaver)
+* [Match spec (#5291)](https://github.com/material-components/material-components-ios/commit/7ad817606a824335c09f553c85066312f5cb29b9) (Cody Weaver)
+* [Update MDCActionSheetHelperTest (#5248)](https://github.com/material-components/material-components-ios/commit/31a2aadeb62b704bb16c40b93708be51a07bbe16) (Cody Weaver)
+
+### BottomNavigation
+
+* [Fix example (#5242)](https://github.com/material-components/material-components-ios/commit/e0fef69db32a21ad88206e1614564653d6391e8d) (Cody Weaver)
+
+### BottomSheet
+
+* [[Shape]! Terminology updates to the Shape Scheme (#5247)](https://github.com/material-components/material-components-ios/commit/bfc674a631a0214a5b7182a629ab40121b6a25a0) (Yarden Eitan)
+
+### Buttons
+
+* [[Shape]! Terminology updates to the Shape Scheme (#5247)](https://github.com/material-components/material-components-ios/commit/bfc674a631a0214a5b7182a629ab40121b6a25a0) (Yarden Eitan)
+
+### Cards
+
+* [[Shape]! Terminology updates to the Shape Scheme (#5247)](https://github.com/material-components/material-components-ios/commit/bfc674a631a0214a5b7182a629ab40121b6a25a0) (Yarden Eitan)
+
+### Chips
+
+* [[Shape]! Terminology updates to the Shape Scheme (#5247)](https://github.com/material-components/material-components-ios/commit/bfc674a631a0214a5b7182a629ab40121b6a25a0) (Yarden Eitan)
+
+### Dialogs
+
+* [Add shadow elevation (#5296)](https://github.com/material-components/material-components-ios/commit/cba82b4d060f7dccef13d7513628ad22c0bf4afe) (Cody Weaver)
+* [Customize alert title icon (#5167)](https://github.com/material-components/material-components-ios/commit/dc184ba549a5eeaac727723189c147c24d4b74ca) (Galia Kaufman)
+* [Customize tint color of alert title icon (#5159)](https://github.com/material-components/material-components-ios/commit/d065e4536f4f19660149875ec3f014dd2947d31d) (Galia Kaufman)
+* [Customizing scrim color in presentation controller (#5283)](https://github.com/material-components/material-components-ios/commit/1137a62d92b8a983a7c9feea57a3f4a884134749) (Galia Kaufman)
+
+### FlexibleHeader
+
+* [Update MDCFlexibleHeaderView.m (#5259)](https://github.com/material-components/material-components-ios/commit/a1f6658af968f12d354a10aed19f7848abe30579) (Ali Rabbani)
+
+### List
+
+* [Add TypographyThemer to MDCSelfSizingStereoCell (#5298)](https://github.com/material-components/material-components-ios/commit/0fb7ec971299f8a8f0814a9186c16ddfee5edd2a) (Andrew Overton)
+
+### NavigationDrawer
+
+* [Fix iOS 9 bottom drawer dismissals (#5202)](https://github.com/material-components/material-components-ios/commit/d56a82e0e568a464c070fc36766d3a24f8d7840f) (Andrew Overton)
+* [Use CGRect accessor methods (#5244)](https://github.com/material-components/material-components-ios/commit/07981be315fb404a53abf81603dcdca324851e0b) (Andrew Overton)
+
+### Tabs
+
+* [[MDCTabBar] Remove dependence on a UIWindow for rendering/layout of MDCTabBa (#5285)](https://github.com/material-components/material-components-ios/commit/696e3768cdfaebeebc69378e8028d453867b2954) (Sam Duke)
+
+### TextFields
+
+* [Override System Initiated VoiceOver Message When Leaving Error State (#5251)](https://github.com/material-components/material-components-ios/commit/7672bcf7a61d48af4da9947efdbbe2d34d241b09) (Andrew Overton)
+
+### schemes/Shape
+
+* [[Shape]! Terminology updates to the Shape Scheme (#5247)](https://github.com/material-components/material-components-ios/commit/bfc674a631a0214a5b7182a629ab40121b6a25a0) (Yarden Eitan)
+* [[Shapes] Addition of a shape theming example to our dragons (#5239)](https://github.com/material-components/material-components-ios/commit/956761ed4d567ef1aaf29370bc2b5be11215128a) (Yarden Eitan)
+
+---
+
+# 65.0.0
+
+Bottom App Bar got a `floatingButtonVerticalOffset` property.
+ActionSheets continued work. (still in alpha).
+AlertController in dialogs: Incremental improvements to bring it up to the design guidelines and so that a themer can style it.
+Snackbar API for accessibility. 
+MDCAppBarTextColorAccessibilityMutator a deprecated class got deleted.
+
+## Breaking changes
+
+MDCAppBarTextColorAccessibilityMutator a deprecated class got deleted.
+
+## New features
+
+### ActionSheet
+
+Action sheet got the color and typography themers.
+```swift
+let actionSheet = MDCActionSheetController()
+MDCActionSheetColorThemer.applySemanticColorScheme(colorScheme, to: actionSheet)
+```
+```swift
+MDCActionSheetTypographyThemer.applyTypographyScheme(typographyScheme, to: actionSheet)
+```
+
+### BottomAppBar
+
+Bottom App Bar got a new property to offset the floating button.
+```objc
+bottomAppBar.floatingButtonVerticalOffset = 5.0f;
+```
+
+### AlertController
+
+AlertController got a themer
+
+```objc
+ MDCAlertScheme *alertScheme = [[MDCAlertScheme alloc] init];
+alertScheme.colorScheme = self.colorScheme;
+alertScheme.typographyScheme = self.typographyScheme;
+[MDCAlertControllerThemer applyScheme:alertScheme toAlertController:alertController];
+```
+
+### Snackbar
+
+To make Snackbars with action require a user action set the this property to YES.
+```
+manager.shouldEnableAccessibilityViewIsModal = YES;
+```
+
+## API changes
+
+### ActionSheet+ColorThemer
+
+**New extension.**
+
+### ActionSheet
+
+#### MDCActionSheetController
+
+*new* property: `messageTextColor` in `MDCActionSheetController`
+
+*new* property: `titleTextColor` in `MDCActionSheetController`
+
+*new* property: `inkColor` in `MDCActionSheetController`
+
+*new* property: `actionTintColor` in `MDCActionSheetController`
+
+*new* property: `imageRenderingMode` in `MDCActionSheetController`
+
+*new* property: `actionTextColor` in `MDCActionSheetController`
+
+### BottomAppBar
+
+#### MDCBottomAppBarView
+
+*new* property: `floatingButtonVerticalOffset` in `MDCBottomAppBarView`
+
+### Dialogs
+
+#### MDCAlertController
+
+*new* property: `titleAlignment` in `MDCAlertController`
+
+#### MDCAlertControllerView
+
+*new* property: `titleAlignment` in `MDCAlertControllerView`
+
+### Snackbar
+
+#### MDCSnackbarManager
+
+*new* property: `shouldEnableAccessibilityViewIsModal` in `MDCSnackbarManager`
+
+## Component changes
+
+### ActionSheet
+
+* [Add color properties to header labels (#5168)](https://github.com/material-components/material-components-ios/commit/6e91d5889980d6ab58eec7c9b7e7ab17858afe4b) (Cody Weaver)
+* [Add color themer (#5207)](https://github.com/material-components/material-components-ios/commit/b52096c7e85c88df89a26117360f1099ed4900b5) (Cody Weaver)
+* [Add test for setting fonts (#5225)](https://github.com/material-components/material-components-ios/commit/da96510c4cdad7c587bacbee02417b76799ea368) (Cody Weaver)
+* [Add test for typography theme (#5226)](https://github.com/material-components/material-components-ios/commit/f2c65f6e5270912340ec3ba887102c58733dc271) (Cody Weaver)
+* [Expose ink touch (#5201)](https://github.com/material-components/material-components-ios/commit/ff598f5da3262381e7a844cc75e4b3c922619f1b) (Cody Weaver)
+* [Expose properties for the table (#5195)](https://github.com/material-components/material-components-ios/commit/a5a4e0928ef3c4cde904bbe55634abf6fbdbf007) (Cody Weaver)
+* [Fix path for ObjC test source. (#5227)](https://github.com/material-components/material-components-ios/commit/274d492718ecd842ef003154ea685ac77aea9053) (featherless)
+* [Initial commit (#5232)](https://github.com/material-components/material-components-ios/commit/06e9b7f902fbfa8507737c791724c5f89549970b) (Cody Weaver)
+* [Open to the correct height (#5184)](https://github.com/material-components/material-components-ios/commit/886f2661a71a714a695073d94867f597874afd65) (Cody Weaver)
+* [Refactor test (#5186)](https://github.com/material-components/material-components-ios/commit/6e5f3abab68b68511cef3b56c53dc0c1bc9b6bf2) (Cody Weaver)
+* [Update cells to be testable (#5190)](https://github.com/material-components/material-components-ios/commit/75cc150e3cd5f941460fd7538d5871eae040ca3f) (Cody Weaver)
+* [Update docs to include themers (#5209)](https://github.com/material-components/material-components-ios/commit/255f6e99b4c2c371a275ab5e221a29385186d8e5) (Cody Weaver)
+* [Use correct style (#5196)](https://github.com/material-components/material-components-ios/commit/8cdd4a6330ead570e56a0c86708f0f7e2842fa31) (Cody Weaver)
+
+### AppBar
+
+* [Add an example demonstrating manual tab management. (#5161)](https://github.com/material-components/material-components-ios/commit/3ea86babf14323eef6e886252eb4e2ce51314635) (featherless)
+* [Add frame setting recommendation to app bar view controller migration guide. (#5180)](https://github.com/material-components/material-components-ios/commit/eebbe49e2f5ea02db09979fe89b3028f719dd751) (featherless)
+* [Delete the deprecated MDCAppBarTextColorAccessibilityMutator API. (#5220)](https://github.com/material-components/material-components-ios/commit/e4ff45c76eaa217a43ac733d80802421ecba9070) (featherless)
+
+### BottomAppBar
+
+* [clean up how bottom app bar path renders to avoid using hardcoded values (#5155)](https://github.com/material-components/material-components-ios/commit/c7c7b49a2e26257a9fb879fb2baba3f6ff092ccf) (Wenyu Zhang)
+* [enable customizing the vertical position of FAB   (#5138)](https://github.com/material-components/material-components-ios/commit/766a6a7697c755e6cbd012da8339e5536bd1b6ae) (Wenyu Zhang)
+
+### Dialogs
+
+* [Add/update examples for dialog themer (#5158)](https://github.com/material-components/material-components-ios/commit/5b34c0eb3a923560d81859f97f799f456a3bf554) (Galia Kaufman)
+* [Customize alert title alignment (#5164)](https://github.com/material-components/material-components-ios/commit/80145df58ed24b8e10c62f64481d722b28e3c3fc) (Galia Kaufman)
+
+### FlexibleHeader
+
+* [Extract height matching to a separate function. (#5162)](https://github.com/material-components/material-components-ios/commit/0a9206b5fd4121d6661a4e2f57cd5757199380ff) (featherless)
+* [Improve tracking scroll view switching logic. (#5178)](https://github.com/material-components/material-components-ios/commit/54853b4e1dcfabcd85bae450c2dc33d2be89089b) (featherless)
+* [[CocoaPods] Remove our tests podspec in favor of official test_spec targets. (#5204)](https://github.com/material-components/material-components-ios/commit/d238c86d47eb072617d285106147ace613321aee) (featherless)
+
+### NavigationDrawer
+
+* [Fix bug where BottomDrawer layout breaks when there isn't enough cont… (#5179)](https://github.com/material-components/material-components-ios/commit/fbaa6b5fcbb10d021f16ade8745e4322b8b43f3f) (Andrew Overton)
+
+### ShadowLayer
+
+* [Add support for responding to cornerRadius changes. (#5224)](https://github.com/material-components/material-components-ios/commit/b3e2a1e283febfd90b6f5d575c18b7bf7d51408e) (featherless)
+* [Fix layout of shadow layer example. (#5222)](https://github.com/material-components/material-components-ios/commit/d70676231566f1fe5cc8f209ca9f2027ae236d88) (featherless)
+* [Revert "Add support for responding to cornerRadius changes. (#5224)" (#5231)](https://github.com/material-components/material-components-ios/commit/cee6ae6a0f4e362c26e20ccf4d1ad9549001fec8) (featherless)
+
+### Snackbar
+
+* [Added API to make snackbar messages keep focus until an action is taken. (#5219)](https://github.com/material-components/material-components-ios/commit/669bfa82f04dbdc462eab5e56a0c6845bd5224ab) (Randall Li)
+
+### TextFields
+
+* [Remove extension check (#5182)](https://github.com/material-components/material-components-ios/commit/ebd792126341918415b0e193fe0780b61a4eb06b) (Cody Weaver)
+
+---
+
+# 64.0.0
+
+In this release
+  AlertControllers added a `cornerRadius` property to specify its shape.
+  FlexibleHeader added `disableContentInsetAdjustmentWhenContentInsetAdjustmentBehaviorIsNever` to let clients choose if the scrollview can adjust the contentInsets.
+  ChipField added `showChipsDeleteButton` to turn on the delete button on chips.
+  BottonSheet added `preferredSheetHeight` to let clients define a non half screen height.
+  Shape Subsystem integrated into many components including Button Cards and Chips.
+
+## Breaking changes
+
+Card Buttons and Chips all are using the shape subsystem, which subtly changed the way their corner
+radii are rendered.
+
+## New features
+
+### AlertControllers added a `cornerRadius`
+
+A property to specify its shape.
+
+```objc
+MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:@"title"
+                                                               message:@"message"];
+[alert addAction:[MDCAlertAction actionWithTitle:@"action1" handler:nil]];
+alert.cornerRadius = cornerRadius;
+```
+
+### FlexibleHeader added `disableContentInsetAdjustmentWhenContentInsetAdjustmentBehaviorIsNever`
+
+To make it easier to support scrollviews and content insets
+
+```objc
+_scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+if (@available(iOS 11.0, *)) {
+_scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+}
+```
+
+### ChipField added `showChipsDeleteButton` 
+
+Turns on the delete button on chips.
+
+```swift
+var chipField = MDCChipField()
+chipField.frame = .zero
+chipField.delegate = self
+chipField.textField.placeholderLabel.text = "This is a chip field."
+chipField.showChipsDeleteButton = true
+```
+
+### BottonSheet added `preferredSheetHeight` to let clients define a non half screen height.
+
+```objc
+presentationController = [[MDCBottomSheetPresentationController alloc]
+      initWithPresentedViewController:stubPresentedViewController
+             presentingViewController:stubPresentingViewController];
+presentationController.preferredSheetHeight = 100;
+```
+
+## API changes
+
+### BottomSheet
+
+#### MDCBottomSheetTransitionController
+
+*new* property: `preferredSheetHeight` in `MDCBottomSheetTransitionController`
+
+#### MDCBottomSheetPresentationController
+
+*new* property: `preferredSheetHeight` in `MDCBottomSheetPresentationController`
+
+### Buttons+ButtonThemer
+
+#### MDCButtonScheming
+
+*new* property: `shapeScheme` in `MDCButtonScheming`
+
+#### MDCButtonScheme
+
+*new* property: `shapeScheme` in `MDCButtonScheme`
+
+### Buttons+ShapeThemer
+
+**New component.**
+
+### Chips+ChipThemer
+
+#### MDCChipViewScheming
+
+*new* property: `shapeScheme` in `MDCChipViewScheming`
+
+#### MDCChipViewScheme
+
+*new* property: `shapeScheme` in `MDCChipViewScheme`
+
+### Chips
+
+#### MDCChipField
+
+*new* property: `showChipsDeleteButton` in `MDCChipField`
+
+
+### Chips+ShapeThemer
+
+**New component.**
+
+### Dialogs+DialogThemer
+
+**New component.**
+
+### Dialogs
+
+#### MDCAlertController
+
+*new* property: `cornerRadius` in `MDCAlertController`
+
+#### MDCAlertControllerView
+
+*new* property: `cornerRadius` in `MDCAlertControllerView`
+
+### FlexibleHeader
+
+#### MDCFlexibleHeaderView
+
+*new* property: `disableContentInsetAdjustmentWhenContentInsetAdjustmentBehaviorIsNever` in `MDCFlexibleHeaderView`
+
+## Component changes
+
+### ActionSheet
+
+* [Initial commit (#5157)](https://github.com/material-components/material-components-ios/commit/c14604f16a587e2cd80d4a50f629d315c54a7210) (Cody Weaver)
+* [Labels use text color instead of alpha (#5142)](https://github.com/material-components/material-components-ios/commit/dc3b9619de1c7afad4d342ba315753c6cd31b944) (Cody Weaver)
+* [Make header and table properties](https://github.com/material-components/material-components-ios/commit/98ff77c0a74d3badc268439e558d68cb0fa615b4) (Cody Weaver)
+* [Update the docs (#5134)](https://github.com/material-components/material-components-ios/commit/99f8e4c27e6dfe137b1cbbef5e3e00136c8a0dbb) (Cody Weaver)
+
+### AppBar
+
+* [[FlexibleHeaderView] Make FexibleHeaderView respect contentInsetAdjustmentBehavior (#4970) (#5073)](https://github.com/material-components/material-components-ios/commit/2fee13665fdc0052d1c9df2f8c187109730a50a3) (Wenyu Zhang)
+
+### BottomSheet
+
+* [Add property so clients can set a custom height for bottom sheet (#5139)](https://github.com/material-components/material-components-ios/commit/553fb019e7399876a4c34bc417194ef6721af47a) (Cody Weaver)
+* [Add tests for `updatePreferredSheetHeight`. (#5115)](https://github.com/material-components/material-components-ios/commit/db3f1f287bd13c5357c33fce6b05e0e8599eca8e) (Robert Moore)
+* [Make `sheetView` a property. (#5122)](https://github.com/material-components/material-components-ios/commit/c906e41fe6797559363c44e5a6953ca1675be36e) (Robert Moore)
+* [Use setter for sheet view height. (#5125)](https://github.com/material-components/material-components-ios/commit/b5c096009f604061fb10a2208a0445bffb5df2b9) (Robert Moore)
+* [[Shape]! Provide more granularity for corner setting for the theming (#5116)](https://github.com/material-components/material-components-ios/commit/c741ba49044e613faa0925e8b817783631629573) (Yarden Eitan)
+
+### Buttons
+
+#### Breaking changes
+
+* [**Breaking**:  Integrate the shape themer into the MDCButton themer (#5120)](https://github.com/material-components/material-components-ios/commit/b27c6f5654add48315b5ad50361fdfa768b6229d) (Yarden Eitan)
+
+* [Add the Floating Button Shape themer to the Floating Button themer (#5132)](https://github.com/material-components/material-components-ios/commit/a7810bbc5e3cc19c32d861a5d8a42ab22e1b7efa) (Yarden Eitan)
+* [Addition of a FAB shape themer (#5131)](https://github.com/material-components/material-components-ios/commit/a87ad9a1214793afffcd422d7041c8e796dd05cd) (Yarden Eitan)
+* [Addition of a Shape Themer for MDCButton (#5119)](https://github.com/material-components/material-components-ios/commit/d884aeccf1ee70c493cb1a500200015bc323c816) (Yarden Eitan)
+* [Integrate the FAB shape themer into our examples (#5133)](https://github.com/material-components/material-components-ios/commit/4e456f88ce45cea64bd2ce329a3a39807884c110) (Yarden Eitan)
+* [Integration of the button shape themer into the examples (#5121)](https://github.com/material-components/material-components-ios/commit/08bb1d707ab76589da992fa190cc20f39fd84475) (Yarden Eitan)
+* [[Shapes] Bug fix for getting the wrong backgroundColor when shapeGenerator is set. (#5127)](https://github.com/material-components/material-components-ios/commit/e785745070762f6779c359a77801e5961e4092c8) (Yarden Eitan)
+
+### Cards
+
+* [[Shape]! Provide more granularity for corner setting for the theming (#5116)](https://github.com/material-components/material-components-ios/commit/c741ba49044e613faa0925e8b817783631629573) (Yarden Eitan)
+
+### Chips
+
+#### Breaking changes
+
+* [**Breaking**:  Integrate the shape themer into the chip themer (#5112)](https://github.com/material-components/material-components-ios/commit/67ddf9b6caf0cbb2f2051150f28d2a203ec1ad0b) (Yarden Eitan)
+
+* [Add client the ability to delete chips in a chip field (#5135)](https://github.com/material-components/material-components-ios/commit/f233981e2fbcfa40ef1573ff333eed2b22465080) (Cody Weaver)
+* [Addition of a Shape Themer (#5111)](https://github.com/material-components/material-components-ios/commit/9faa1295b87feaec96b8fc0a38cd018cb5a9ac47) (Yarden Eitan)
+* [Integration of the chip themer into the examples (#5113)](https://github.com/material-components/material-components-ios/commit/31e4007ec0e7e6dca4e9359a3f2e14d20ebbba15) (Yarden Eitan)
+* [Support RTL in MDCChipCollectionViewFlowLayout (#5079)](https://github.com/material-components/material-components-ios/commit/1d0153ad6c07c60088cd24b6ecbd1bad0e19caa0) (jsaletta)
+* [Update example (#5118)](https://github.com/material-components/material-components-ios/commit/d57e6b724f148eaec173944f082c2c0d7998b509) (Cody Weaver)
+* [[Shapes] Bug fix for getting the wrong backgroundColor when shapeGenerator is set. (#5127)](https://github.com/material-components/material-components-ios/commit/e785745070762f6779c359a77801e5961e4092c8) (Yarden Eitan)
+
+### Dialogs
+
+* [Add a dialog themer](https://github.com/material-components/material-components-ios/commit/faea5d127ba60c54cbf45f34d008889026adb861) (Galia Kaufman)
+* [Expose corner radius property (#4988)](https://github.com/material-components/material-components-ios/commit/fcd70cad6ec577e1fb4033b2fb2f72748bb56cad) (Galia Kaufman)
+
+### FlexibleHeader
+
+* [Avoid nil logic in multiple tracking scroll view setting. (#5163)](https://github.com/material-components/material-components-ios/commit/128e6fe66795221d4061fd240e2565228ee7dff5) (featherless)
+* [[FlexibleHeaderView] Make FexibleHeaderView respect contentInsetAdjustmentBehavior (#4970) (#5073)](https://github.com/material-components/material-components-ios/commit/2fee13665fdc0052d1c9df2f8c187109730a50a3) (Wenyu Zhang)
+
+### PageControl
+
+* [[FlexibleHeaderView] Make FexibleHeaderView respect contentInsetAdjustmentBehavior (#4970) (#5073)](https://github.com/material-components/material-components-ios/commit/2fee13665fdc0052d1c9df2f8c187109730a50a3) (Wenyu Zhang)
+
+### Tabs
+
+* [Fix an example bug (#5106)](https://github.com/material-components/material-components-ios/commit/a37d4a4f3a57ffca55adaa2904f9a5a4a4e8735f) (Cody Weaver)
+
+### TextFields
+
+* [Send .editingChanged control event on clear button touch (#5144)](https://github.com/material-components/material-components-ios/commit/fec74d5e0de26314d832dd43812be04caf77df77) (Andrew Overton)
+
+### schemes/Shape
+
+* [[Shape Scheme] Addition of Unit Tests for the Shape Scheme (#5137)](https://github.com/material-components/material-components-ios/commit/f43e3e73862a0840396b5b6bb8ff4992ba69bd31) (Yarden Eitan)
+
+---
+
 # 63.0.0
 
 This major release adds additional support for shape theming to BottomSheet and Cards and

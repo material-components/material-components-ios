@@ -26,7 +26,7 @@
   if (self = [super init]) {
     MDCCornerTreatment *cornerTreatment;
     switch (cornerFamily) {
-      case MDCShapeCornerFamilyAngled:
+      case MDCShapeCornerFamilyCut:
         cornerTreatment = [MDCCornerTreatment cornerWithCut:cornerSize];
         break;
       case MDCShapeCornerFamilyRounded:
@@ -39,6 +39,36 @@
     _bottomRightCorner = cornerTreatment;
   }
   return self;
+}
+
+- (BOOL)isEqual:(id)object {
+  if (object == self) {
+    return YES;
+  }
+
+  if (!object || ![[object class] isEqual:[self class]]) {
+    return NO;
+  }
+
+  MDCShapeCategory *other = (MDCShapeCategory *)object;
+  return [_topLeftCorner isEqual:other.topLeftCorner] &&
+         [_topRightCorner isEqual:other.topRightCorner] &&
+         [_bottomLeftCorner isEqual:other.bottomLeftCorner] &&
+         [_bottomRightCorner isEqual:other.bottomRightCorner];
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+  MDCShapeCategory *copy = [[MDCShapeCategory alloc] init];
+  copy.topLeftCorner = self.topLeftCorner;
+  copy.topRightCorner = self.topRightCorner;
+  copy.bottomLeftCorner = self.bottomLeftCorner;
+  copy.bottomRightCorner = self.bottomRightCorner;
+  return copy;
+}
+
+- (NSUInteger)hash {
+  return (self.topRightCorner.hash ^ self.topLeftCorner.hash ^ self.bottomRightCorner.hash ^
+          self.bottomLeftCorner.hash);
 }
 
 @end

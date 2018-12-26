@@ -16,8 +16,6 @@
 
 #import "MaterialMath.h"
 
-static NSString *const MDCRoundedCornerTreatmentRadiusKey = @"MDCRoundedCornerTreatmentRadiusKey";
-
 @implementation MDCRoundedCornerTreatment
 
 - (instancetype)init {
@@ -29,18 +27,6 @@ static NSString *const MDCRoundedCornerTreatmentRadiusKey = @"MDCRoundedCornerTr
     _radius = radius;
   }
   return self;
-}
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  if (self = [super initWithCoder:aDecoder]) {
-    _radius = (CGFloat)[aDecoder decodeDoubleForKey:MDCRoundedCornerTreatmentRadiusKey];
-  }
-  return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [super encodeWithCoder:aCoder];
-  [aCoder encodeDouble:_radius forKey:MDCRoundedCornerTreatmentRadiusKey];
 }
 
 - (id)copyWithZone:(NSZone *)zone {
@@ -77,6 +63,10 @@ static NSString *const MDCRoundedCornerTreatmentRadiusKey = @"MDCRoundedCornerTr
   }
   MDCRoundedCornerTreatment *otherRoundedCorner = (MDCRoundedCornerTreatment *)object;
   return self.radius == otherRoundedCorner.radius;
+}
+
+- (NSUInteger)hash {
+  return @(self.radius).hash ^ (NSUInteger)self.valueType;
 }
 
 @end

@@ -24,7 +24,7 @@ static void *kContentSizeContext = &kContentSizeContext;
 
 // We add an extra padding to the sheet height, so that if the user swipes upwards, fast, the
 // bounce does not reveal a gap between the sheet and the bottom of the screen.
-static const CGFloat kSheetBounceBuffer = 150.0f;
+static const CGFloat kSheetBounceBuffer = 150;
 
 @interface MDCSheetContainerView () <MDCDraggableViewDelegate>
 
@@ -64,7 +64,7 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
 
     // Adjust the anchor point so all positions relate to the top edge rather than the actual
     // center.
-    _sheet.layer.anchorPoint = CGPointMake(0.5f, 0.f);
+    _sheet.layer.anchorPoint = CGPointMake((CGFloat)0.5, 0);
     _sheet.frame = self.bounds;
 
     _contentView = contentView;
@@ -105,6 +105,7 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
     if (@available(iOS 11.0, *)) {
       scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     }
+    scrollView.preservesSuperviewLayoutMargins = YES;
   }
   return self;
 }
@@ -161,8 +162,7 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
     self.sheet.scrollView.contentInset = contentInset;
 
     CGRect scrollViewFrame = CGRectStandardize(self.sheet.scrollView.frame);
-    scrollViewFrame.size = CGSizeMake(scrollViewFrame.size.width,
-                                      CGRectGetHeight(self.frame) - self.safeAreaInsets.top);
+    scrollViewFrame.size = CGSizeMake(scrollViewFrame.size.width, CGRectGetHeight(self.frame));
     self.sheet.scrollView.frame = scrollViewFrame;
   }
 }

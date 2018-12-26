@@ -14,9 +14,12 @@
 
 #import "MDCSelfSizingStereoCellExample.h"
 
-#import "MDCSelfSizingStereoCell.h"
+#import <MDFInternationalization/MDFInternationalization.h>
 
-static CGFloat const kArbitraryCellHeight = 75.f;
+#import "MaterialList+ListThemer.h"
+#import "MaterialList.h"
+
+static CGFloat const kArbitraryCellHeight = 75;
 static NSString *const kSelfSizingStereoCellIdentifier = @"kSelfSizingStereoCellIdentifier";
 static NSString *const kSelfSizingStereoCellExampleComponent = @"List Items";
 static NSString *const kSelfSizingStereoCellExampleDescription =
@@ -27,6 +30,7 @@ static NSString *const kSelfSizingStereoCellExampleDescription =
 @property(nonatomic, strong) UICollectionView *collectionView;
 @property(nonatomic, strong) UICollectionViewFlowLayout *collectionViewLayout;
 @property(nonatomic, strong) NSArray *randomStrings;
+@property(nonatomic, strong) MDCListScheme *listScheme;
 @property(nonatomic, assign) NSInteger numberOfCells;
 @end
 
@@ -36,6 +40,7 @@ static NSString *const kSelfSizingStereoCellExampleDescription =
   [super viewDidLoad];
   self.parentViewController.automaticallyAdjustsScrollViewInsets = NO;
   self.automaticallyAdjustsScrollViewInsets = NO;
+  self.listScheme = [[MDCListScheme alloc] init];
   [self createDataSource];
   [self createCollectionView];
 }
@@ -104,8 +109,8 @@ static NSString *const kSelfSizingStereoCellExampleDescription =
                                                 forIndexPath:indexPath];
   cell.titleLabel.text = self.randomStrings[indexPath.item];
   cell.detailLabel.text = self.randomStrings[(indexPath.item + 1) % self.randomStrings.count];
-  cell.titleLabel.textColor = [UIColor darkGrayColor];
-  cell.detailLabel.textColor = [UIColor darkGrayColor];
+  cell.titleLabel.textAlignment = [self textAlignmentForText:cell.titleLabel.text];
+  cell.detailLabel.textAlignment = [self textAlignmentForText:cell.detailLabel.text];
   cell.leadingImageView.image =
       [[UIImage imageNamed:@"Cake"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   cell.trailingImageView.image =
@@ -113,24 +118,55 @@ static NSString *const kSelfSizingStereoCellExampleDescription =
   cell.leadingImageView.tintColor = [UIColor darkGrayColor];
   cell.trailingImageView.tintColor = [UIColor darkGrayColor];
   cell.mdc_adjustsFontForContentSizeCategory = YES;
+  [MDCListThemer applyScheme:self.listScheme toSelfSizingStereoCell:cell];
   return cell;
 }
 
-- (NSString *)generateRandomString {
-  NSInteger numberOfWords = 0 + arc4random() % (25 - 0);
-  NSMutableArray *wordArray = [[NSMutableArray alloc] initWithCapacity:numberOfWords];
-  for (NSInteger i = 0; i < numberOfWords; i++) {
-    NSInteger lengthOfWord = 0 + arc4random() % (10 - 0);
-    NSMutableArray *letterArray = [[NSMutableArray alloc] initWithCapacity:lengthOfWord];
-    for (NSInteger j = 0; j < lengthOfWord; j++) {
-      int asciiCode = 97 + arc4random() % (122 - 97);
-      NSString *characterString = [NSString stringWithFormat:@"%c", asciiCode];
-      [letterArray addObject:characterString];
+- (NSTextAlignment)textAlignmentForText:(NSString *)text {
+  if (text.length > 0) {
+    NSLocaleLanguageDirection textDirection = text.mdf_calculatedLanguageDirection;
+    if (textDirection == NSLocaleLanguageDirectionLeftToRight) {
+      return NSTextAlignmentLeft;
+    } else if (textDirection == NSLocaleLanguageDirectionRightToLeft) {
+      return NSTextAlignmentRight;
     }
-    NSString *word = [letterArray componentsJoinedByString:@""];
-    [wordArray addObject:word];
   }
-  return [wordArray componentsJoinedByString:@" "];
+  return NSTextAlignmentNatural;
+}
+
+- (NSString *)generateRandomString {
+  static NSArray<NSString *> *ltrStrings;
+  static NSArray<NSString *> *rtlStrings;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    ltrStrings = @[
+      @"Lorem ipsum dolor sit amet, ", @"consectetur adipiscing elit, ",
+      @"sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+      @"Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea \
+commodo consequat. ",
+      @"Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat \
+nulla pariatur. ",
+      @"Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit \
+anim id est laborum."
+    ];
+    rtlStrings = @[
+      @"أوه ، من أي قوة قد تملكها هذه القوة ،",
+      @"مع عدم كفاية قلبي للتأثير؟",
+      @"لإعطائي الكذبة لوجهتي الحقيقية",
+      @"وأقسم أن السطوع لا نعمة اليوم؟",
+      @"   من اين اصبحت هذه الامور مريضة",
+      @"       هذا في رفض جدا من أفعالك",
+      @"هناك مثل هذه القوة وتضمن المهارة ،",
+      @"هذا ، في رأيي ، أسوأ ما تفوق كل شيء أفضل؟",
+    ];
+  });
+  NSArray<NSString *> *strings = arc4random_uniform(2) == 0 ? ltrStrings : rtlStrings;
+  int numStrings = arc4random_uniform(4);
+  NSMutableString *string = [strings[arc4random_uniform((unsigned int)strings.count)] mutableCopy];
+  for (int i = 1; i < numStrings; ++i) {
+    [string appendString:strings[arc4random_uniform((unsigned int)strings.count)]];
+  }
+  return [string copy];
 }
 
 #pragma mark - CatalogByConvention

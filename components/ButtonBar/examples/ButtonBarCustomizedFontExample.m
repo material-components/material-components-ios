@@ -14,9 +14,9 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialButtonBar+Theming.h"
 #import "MaterialButtonBar.h"
-#import "MaterialButtonBar+ColorThemer.h"
-#import "MaterialButtonBar+TypographyThemer.h"
+#import "MaterialContainerScheme.h"
 
 @interface ButtonBarCustomizedFontExample : UIViewController
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
@@ -28,12 +28,21 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
-    self.typographyScheme = [[MDCTypographyScheme alloc] init];
-    
+    self.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    self.typographyScheme =
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
+
     self.title = @"Button Bar";
   }
   return self;
+}
+
+- (MDCContainerScheme *)containerScheme {
+  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
+  scheme.colorScheme = self.colorScheme;
+  scheme.typographyScheme = self.typographyScheme;
+  return scheme;
 }
 
 - (void)viewDidLoad {
@@ -41,10 +50,10 @@
 
   MDCButtonBar *buttonBar = [[MDCButtonBar alloc] init];
 
-  self.typographyScheme.button = [UIFont fontWithName:@"American Typewriter" size:10.0f];
-  [MDCButtonBarTypographyThemer applyTypographyScheme:self.typographyScheme toButtonBar:buttonBar];
+  MDCContainerScheme *scheme = [self containerScheme];
+  scheme.typographyScheme.button = [UIFont fontWithName:@"American Typewriter" size:10];
 
-  [MDCButtonBarColorThemer applySemanticColorScheme:self.colorScheme toButtonBar:buttonBar];
+  [buttonBar applyPrimaryThemeWithScheme:scheme];
 
   // MDCButtonBar ignores the style of UIBarButtonItem.
   UIBarButtonItemStyle ignored = UIBarButtonItemStyleDone;
@@ -73,7 +82,7 @@
   [self.view addSubview:buttonBar];
 
   // Ensure that the controller's view isn't transparent.
-  self.view.backgroundColor = [UIColor colorWithWhite:0.9f alpha:1.0f];
+  self.view.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
 }
 
 #pragma mark - User actions

@@ -18,18 +18,10 @@
 
 #import "MaterialFlexibleHeader.h"
 
-#import "../../src/private/MDCFlexibleHeaderTopSafeArea.h"
-
+#import "supplemental/FlexibleHeaderTopSafeAreaTestsFakeTopSafeAreaDelegate.h"
 #import "supplemental/FlexibleHeaderTopSafeAreaTestsFakeViewController.h"
 
 @interface FlexibleHeaderTopSafeAreaTests : XCTestCase
-@end
-
-@interface FlexibleHeaderTopSafeAreaTestsFakeTopSafeAreaDelegate
-    : NSObject <MDCFlexibleHeaderSafeAreaDelegate>
-@property(nonatomic) BOOL isStatusBarShifted;
-@property(nonatomic) BOOL topSafeAreaInsetDidChangeWasCalled;
-@property(nonatomic) CGFloat deviceTopSafeAreaInset;
 @end
 
 @implementation FlexibleHeaderTopSafeAreaTests {
@@ -42,6 +34,13 @@
 
   _topSafeArea = [[MDCFlexibleHeaderTopSafeArea alloc] init];
   _delegate = [[FlexibleHeaderTopSafeAreaTestsFakeTopSafeAreaDelegate alloc] init];
+}
+
+- (void)tearDown {
+  _topSafeArea = nil;
+  _delegate = nil;
+
+  [super tearDown];
 }
 
 #pragma mark - When inferTopSafeAreaInsetFromViewController is disabled
@@ -222,26 +221,6 @@
 
   // Then
   XCTAssertEqualWithAccuracy(_topSafeArea.topSafeAreaInset, 88, 0.0001);
-}
-
-@end
-
-#pragma mark - Fake implementations
-
-@implementation FlexibleHeaderTopSafeAreaTestsFakeTopSafeAreaDelegate
-
-#pragma mark MDCFlexibleHeaderTopSafeAreaDelegate
-
-- (BOOL)flexibleHeaderSafeAreaIsStatusBarShifted:(MDCFlexibleHeaderTopSafeArea *)safeAreas {
-  return self.isStatusBarShifted;
-}
-
-- (void)flexibleHeaderSafeAreaTopSafeAreaInsetDidChange:(MDCFlexibleHeaderTopSafeArea *)safeAreas {
-  self.topSafeAreaInsetDidChangeWasCalled = YES;
-}
-
-- (CGFloat)flexibleHeaderSafeAreaDeviceTopSafeAreaInset:(MDCFlexibleHeaderTopSafeArea *)safeAreas {
-  return self.deviceTopSafeAreaInset;
 }
 
 @end

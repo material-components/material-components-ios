@@ -18,29 +18,11 @@
 #import "MaterialIcons+ic_check_circle.h"
 #import "MaterialShapes.h"
 
-static NSString *const MDCCardCellBackgroundColorsKey = @"MDCCardCellBackgroundColorsKey";
-static NSString *const MDCCardCellBorderWidthsKey = @"MDCCardCellBorderWidthsKey";
-static NSString *const MDCCardCellBorderColorsKey = @"MDCCardCellBorderColorsKey";
-static NSString *const MDCCardCellCornerRadiusKey = @"MDCCardCellCornerRadiusKey";
-static NSString *const MDCCardCellHorizontalImageAlignmentsKey =
-@"MDCCardCellHorizontalImageAlignmentsKey";
-static NSString *const MDCCardCellImageTintColorsKey = @"MDCCardCellImageTintColorsKey";
-static NSString *const MDCCardCellImagesKey = @"MDCCardCellImagesKey";
-static NSString *const MDCCardCellInkViewKey = @"MDCCardCellInkViewKey";
-static NSString *const MDCCardCellSelectableKey = @"MDCCardCellSelectableKey";
-static NSString *const MDCCardCellSelectedImageViewKey = @"MDCCardCellSelectedImageViewKey";
-static NSString *const MDCCardCellShadowElevationsKey = @"MDCCardCellShadowElevationsKey";
-static NSString *const MDCCardCellShadowColorsKey = @"MDCCardCellShadowColorsKey";
-static NSString *const MDCCardCellStateKey = @"MDCCardCellStateKey";
-static NSString *const MDCCardCellVerticalImageAlignmentsKey =
-    @"MDCCardCellVerticalImageAlignmentsKey";
-static NSString *const MDCCardCellIsInteractableKey = @"MDCCardCellIsInteractableKey";
-
-static const CGFloat MDCCardCellCornerRadiusDefault = 4.f;
+static const CGFloat MDCCardCellCornerRadiusDefault = 4;
 static const CGFloat MDCCardCellSelectedImagePadding = 8;
-static const CGFloat MDCCardCellShadowElevationHighlighted = 8.f;
-static const CGFloat MDCCardCellShadowElevationNormal = 1.f;
-static const CGFloat MDCCardCellShadowElevationSelected = 8.f;
+static const CGFloat MDCCardCellShadowElevationHighlighted = 8;
+static const CGFloat MDCCardCellShadowElevationNormal = 1;
+static const CGFloat MDCCardCellShadowElevationSelected = 8;
 static const BOOL MDCCardCellIsInteractableDefault = YES;
 
 @interface MDCCardCollectionCell ()
@@ -70,43 +52,8 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 - (instancetype)initWithCoder:(NSCoder *)coder {
   self = [super initWithCoder:coder];
   if (self) {
-    _shadowElevations = [coder decodeObjectOfClass:[NSMutableDictionary class]
-                                            forKey:MDCCardCellShadowElevationsKey];
-    _shadowColors = [coder decodeObjectOfClass:[NSMutableDictionary class]
-                                        forKey:MDCCardCellShadowColorsKey];
-    _borderWidths = [coder decodeObjectOfClass:[NSMutableDictionary class]
-                                        forKey:MDCCardCellBorderWidthsKey];
-    _borderColors = [coder decodeObjectOfClass:[NSMutableDictionary class]
-                                        forKey:MDCCardCellBorderColorsKey];
-    _inkView = [coder decodeObjectOfClass:[MDCInkView class] forKey:MDCCardCellInkViewKey];
-    _selectedImageView = [coder decodeObjectOfClass:[UIImageView class]
-                                             forKey:MDCCardCellSelectedImageViewKey];
-    _state = [coder decodeIntegerForKey:MDCCardCellStateKey];
-    _selectable = [coder decodeBoolForKey:MDCCardCellSelectableKey];
-    _images = [coder decodeObjectOfClass:[NSMutableDictionary class]
-                                  forKey:MDCCardCellImagesKey];
-    _horizontalImageAlignments =
-        [coder decodeObjectOfClass:[NSMutableDictionary class]
-                            forKey:MDCCardCellHorizontalImageAlignmentsKey];
-    _verticalImageAlignments = [coder decodeObjectOfClass:[NSMutableDictionary class]
-                                                   forKey:MDCCardCellVerticalImageAlignmentsKey];
-    _imageTintColors = [coder decodeObjectOfClass:[NSMutableDictionary class]
-                                           forKey:MDCCardCellImageTintColorsKey];
-    if ([coder containsValueForKey:MDCCardCellCornerRadiusKey]) {
-      self.layer.cornerRadius = (CGFloat)[coder decodeDoubleForKey:MDCCardCellCornerRadiusKey];
-    } else {
-      self.layer.cornerRadius = MDCCardCellCornerRadiusDefault;
-    }
-    if ([coder containsValueForKey:MDCCardCellBackgroundColorsKey]) {
-      [self.layer setShapedBackgroundColor:
-          [coder decodeObjectOfClass:[UIColor class]
-                              forKey:MDCCardCellBackgroundColorsKey]];
-    }
-    if ([coder containsValueForKey:MDCCardCellIsInteractableKey]) {
-      _interactable = [coder decodeBoolForKey:MDCCardCellIsInteractableKey];
-    } else {
-      _interactable = MDCCardCellIsInteractableDefault;
-    }
+    self.layer.cornerRadius = MDCCardCellCornerRadiusDefault;
+    _interactable = MDCCardCellIsInteractableDefault;
     [self commonMDCCardCollectionCellInit];
   }
   return self;
@@ -196,25 +143,6 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
   [self updateBackgroundColor];
 }
 
-- (void)encodeWithCoder:(NSCoder *)coder {
-  [super encodeWithCoder:coder];
-  [coder encodeObject:_shadowElevations forKey:MDCCardCellShadowElevationsKey];
-  [coder encodeObject:_shadowColors forKey:MDCCardCellShadowColorsKey];
-  [coder encodeObject:_borderWidths forKey:MDCCardCellBorderWidthsKey];
-  [coder encodeObject:_borderColors forKey:MDCCardCellBorderColorsKey];
-  [coder encodeObject:_inkView forKey:MDCCardCellInkViewKey];
-  [coder encodeObject:_selectedImageView forKey:MDCCardCellSelectedImageViewKey];
-  [coder encodeInteger:_state forKey:MDCCardCellStateKey];
-  [coder encodeBool:_selectable forKey:MDCCardCellSelectableKey];
-  [coder encodeDouble:self.layer.cornerRadius forKey:MDCCardCellCornerRadiusKey];
-  [coder encodeObject:_images forKey:MDCCardCellImagesKey];
-  [coder encodeObject:_horizontalImageAlignments forKey:MDCCardCellHorizontalImageAlignmentsKey];
-  [coder encodeObject:_verticalImageAlignments forKey:MDCCardCellVerticalImageAlignmentsKey];
-  [coder encodeObject:_imageTintColors forKey:MDCCardCellImageTintColorsKey];
-  [coder encodeObject:self.layer.shapedBackgroundColor forKey:MDCCardCellBackgroundColorsKey];
-  [coder encodeBool:_interactable forKey:MDCCardCellIsInteractableKey];
-}
-
 - (void)layoutSubviews {
   [super layoutSubviews];
   if (!self.layer.shapeGenerator) {
@@ -257,8 +185,8 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
       // Note: setHighlighted: can get getting more calls with YES than NO when clicking rapidly.
       // To guard against ink never going away and darkening our card we call
       // startTouchEndedAnimationAtPoint:completion:.
-      [self.inkView startTouchEndedAnimationAtPoint:_lastTouch completion:nil];
-      [self.inkView startTouchBeganAnimationAtPoint:_lastTouch completion:nil];
+      [self.inkView startTouchEndAtPoint:_lastTouch animated:animated withCompletion:nil];
+      [self.inkView startTouchBeganAtPoint:_lastTouch animated:animated withCompletion:nil];
       break;
     }
   }
@@ -524,7 +452,7 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 - (void)updateInkForShape {
   CGRect boundingBox = CGPathGetBoundingBox(self.layer.shapeLayer.path);
   self.inkView.maxRippleRadius =
-  (CGFloat)(MDCHypot(CGRectGetHeight(boundingBox), CGRectGetWidth(boundingBox)) / 2 + 10.f);
+      (CGFloat)(MDCHypot(CGRectGetHeight(boundingBox), CGRectGetWidth(boundingBox)) / 2 + 10);
   self.inkView.layer.masksToBounds = NO;
 }
 

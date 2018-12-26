@@ -246,6 +246,10 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
   [super didMoveToParentViewController:parent];
 
   [self.navigationBar observeNavigationItem:parent.navigationItem];
+
+  CGRect frame = self.view.frame;
+  frame.size.width = CGRectGetWidth(parent.view.bounds);
+  self.view.frame = frame;
 }
 
 - (BOOL)accessibilityPerformEscape {
@@ -324,40 +328,3 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
 }
 
 @end
-
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-implementations"
-@implementation MDCAppBarTextColorAccessibilityMutator
-
-- (void)mutate:(nonnull MDCAppBar *)appBar {
-  // Determine what is the appropriate background color
-  // Because navigation bar renders above headerview, it takes presedence
-  UIColor *backgroundColor = appBar.navigationBar.backgroundColor ?:
-  appBar.headerViewController.headerView.backgroundColor;
-  if (!backgroundColor) {
-    return;
-  }
-
-  // Update title label color based on navigationBar/headerView backgroundColor
-  NSMutableDictionary *textAttr =
-  [NSMutableDictionary dictionaryWithDictionary:[appBar.navigationBar titleTextAttributes]];
-  MDFTextAccessibilityOptions options = 0;
-  BOOL isLarge =
-  [MDCTypography isLargeForContrastRatios:[textAttr objectForKey:NSFontAttributeName]];
-  if (isLarge) {
-    options |= MDFTextAccessibilityOptionsLargeFont;
-  }
-  UIColor *textColor =
-  [MDFTextAccessibility textColorOnBackgroundColor:backgroundColor
-                                   targetTextAlpha:1.0
-                                           options:options];
-
-  [textAttr setObject:textColor forKey:NSForegroundColorAttributeName];
-  [appBar.navigationBar setTitleTextAttributes:textAttr];
-
-  // Update button's tint color based on navigationBar backgroundColor
-  appBar.navigationBar.tintColor = textColor;
-}
-
-@end
-#pragma clang diagnostic pop

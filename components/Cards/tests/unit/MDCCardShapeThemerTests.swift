@@ -23,8 +23,8 @@ class CardShapeThemerTests: XCTestCase {
     // Given
     let shapeScheme = MDCShapeScheme()
     let card = MDCCard()
-    shapeScheme.mediumSurfaceShape = MDCShapeCategory(cornersWith: .angled, andSize: 10)
-    shapeScheme.mediumSurfaceShape.topRightCorner = MDCCornerTreatment.corner(withRadius: 3)
+    shapeScheme.mediumComponentShape = MDCShapeCategory(cornersWith: .cut, andSize: 10)
+    shapeScheme.mediumComponentShape.topRightCorner = MDCCornerTreatment.corner(withRadius: 3)
     card.shapeGenerator = MDCRectangleShapeGenerator()
 
     // When
@@ -33,20 +33,20 @@ class CardShapeThemerTests: XCTestCase {
     // Then
     XCTAssert(card.shapeGenerator is MDCRectangleShapeGenerator);
     XCTAssertEqual((card.shapeGenerator as! MDCRectangleShapeGenerator).topLeftCorner,
-                   shapeScheme.mediumSurfaceShape.topLeftCorner)
+                   shapeScheme.mediumComponentShape.topLeftCorner)
     XCTAssertEqual((card.shapeGenerator as! MDCRectangleShapeGenerator).topRightCorner,
-                   shapeScheme.mediumSurfaceShape.topRightCorner)
+                   shapeScheme.mediumComponentShape.topRightCorner)
     XCTAssertEqual((card.shapeGenerator as! MDCRectangleShapeGenerator).bottomLeftCorner,
-                   shapeScheme.mediumSurfaceShape.bottomLeftCorner)
+                   shapeScheme.mediumComponentShape.bottomLeftCorner)
     XCTAssertEqual((card.shapeGenerator as! MDCRectangleShapeGenerator).bottomRightCorner,
-                   shapeScheme.mediumSurfaceShape.bottomRightCorner)
+                   shapeScheme.mediumComponentShape.bottomRightCorner)
   }
 
   func testCardCollectionCellShapeThemer() {
     // Given
     let shapeScheme = MDCShapeScheme()
     let cardCell = MDCCardCollectionCell()
-    shapeScheme.mediumSurfaceShape = MDCShapeCategory(cornersWith: .angled, andSize: 10)
+    shapeScheme.mediumComponentShape = MDCShapeCategory(cornersWith: .cut, andSize: 10)
     cardCell.shapeGenerator = MDCRectangleShapeGenerator()
 
     // When
@@ -55,12 +55,12 @@ class CardShapeThemerTests: XCTestCase {
     // Then
     XCTAssert(cardCell.shapeGenerator is MDCRectangleShapeGenerator);
     XCTAssertEqual((cardCell.shapeGenerator as! MDCRectangleShapeGenerator).topLeftCorner,
-                   shapeScheme.mediumSurfaceShape.topLeftCorner)
+                   shapeScheme.mediumComponentShape.topLeftCorner)
     XCTAssertEqual((cardCell.shapeGenerator as! MDCRectangleShapeGenerator).topRightCorner,
-                   shapeScheme.mediumSurfaceShape.topRightCorner)
+                   shapeScheme.mediumComponentShape.topRightCorner)
     XCTAssertEqual((cardCell.shapeGenerator as! MDCRectangleShapeGenerator).bottomLeftCorner,
-                   shapeScheme.mediumSurfaceShape.bottomLeftCorner)
+                   shapeScheme.mediumComponentShape.bottomLeftCorner)
     XCTAssertEqual((cardCell.shapeGenerator as! MDCRectangleShapeGenerator).bottomRightCorner,
-                   shapeScheme.mediumSurfaceShape.bottomRightCorner)
+                   shapeScheme.mediumComponentShape.bottomRightCorner)
   }
 }

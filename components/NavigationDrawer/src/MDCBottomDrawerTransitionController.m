@@ -18,7 +18,7 @@
 
 static const NSTimeInterval kOpenAnimationDuration = 0.34;
 static const NSTimeInterval kCloseAnimationDuration = 0.3;
-static const CGFloat kOpenAnimationSpringDampingRatio = 0.85f;
+static const CGFloat kOpenAnimationSpringDampingRatio = (CGFloat)0.85;
 
 @implementation MDCBottomDrawerTransitionController
 
@@ -40,19 +40,11 @@ static const CGFloat kOpenAnimationSpringDampingRatio = 0.85f;
     presentationControllerForPresentedViewController:(UIViewController *)presented
                             presentingViewController:(UIViewController *)presenting
                                 sourceViewController:(UIViewController *)source {
-  BOOL enableAccessibilityMode =
-      UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning();
-
-  if (enableAccessibilityMode) {
-    // TODO: (#4899) Display drawer in full screen. To be done in a follow up PR.
-    return nil;
-  } else {
-    MDCBottomDrawerPresentationController *presentationController =
-        [[MDCBottomDrawerPresentationController alloc] initWithPresentedViewController:presented
-                                                              presentingViewController:presenting];
-    presentationController.trackingScrollView = self.trackingScrollView;
-    return presentationController;
-  }
+  MDCBottomDrawerPresentationController *presentationController =
+      [[MDCBottomDrawerPresentationController alloc] initWithPresentedViewController:presented
+                                                            presentingViewController:presenting];
+  presentationController.trackingScrollView = self.trackingScrollView;
+  return presentationController;
 }
 
 #pragma mark UIViewControllerAnimatedTransitioning
@@ -95,7 +87,7 @@ static const CGFloat kOpenAnimationSpringDampingRatio = 0.85f;
     [UIView animateWithDuration:kOpenAnimationDuration
         delay:0
         usingSpringWithDamping:kOpenAnimationSpringDampingRatio
-        initialSpringVelocity:0.f
+        initialSpringVelocity:0
         options:UIViewAnimationOptionCurveEaseOut
         animations:^{
           animatingView.frame = containerView.bounds;

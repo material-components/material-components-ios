@@ -17,10 +17,6 @@
 #import "MaterialInk.h"
 #import "MaterialShadowLayer.h"
 
-static NSString *const MDCListBaseCellInkViewKey = @"MDCListBaseCellInkViewKey";
-static NSString *const MDCListBaseCellCurrentInkColorKey = @"MDCListBaseCellCurrentInkColorKey";
-static NSString *const MDCListBaseCellCurrentElevationKey = @"MDCListBaseCellCurrentElevationKey";
-
 @interface MDCBaseCell ()
 
 @property (nonatomic, assign) CGPoint lastTouch;
@@ -43,32 +39,9 @@ static NSString *const MDCListBaseCellCurrentElevationKey = @"MDCListBaseCellCur
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    MDCInkView *decodedInkView = [aDecoder decodeObjectOfClass:[MDCInkView class]
-                                                        forKey:MDCListBaseCellInkViewKey];
-    if (decodedInkView) {
-      self.inkView = decodedInkView;
-    }
-    UIColor *decodedColor = [aDecoder decodeObjectOfClass:[UIColor class]
-                                                   forKey:MDCListBaseCellCurrentInkColorKey];
-    if (decodedColor) {
-      self.inkView.inkColor = decodedColor;
-    }
-    NSNumber *decodedElevation = [aDecoder decodeObjectOfClass:[NSNumber class]
-                                                        forKey:MDCListBaseCellCurrentElevationKey];
-    if (decodedElevation) {
-      self.elevation = (CGFloat)[decodedElevation doubleValue];
-    }
     [self commonMDCBaseCellInit];
   }
   return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)coder {
-  [super encodeWithCoder:coder];
-  [coder encodeObject:_inkView forKey:MDCListBaseCellInkViewKey];
-  [coder encodeObject:_inkView.inkColor forKey:MDCListBaseCellCurrentInkColorKey];
-  [coder encodeObject:[NSNumber numberWithDouble:(double)_elevation]
-               forKey:MDCListBaseCellCurrentInkColorKey];
 }
 
 #pragma mark Setup
@@ -109,16 +82,11 @@ static NSString *const MDCListBaseCellCurrentElevationKey = @"MDCListBaseCellCur
 #pragma mark - UIResponder
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-  [super touchesBegan:touches withEvent:event];
   UITouch *touch = [touches anyObject];
   CGPoint location = [touch locationInView:self];
   self.lastTouch = location;
-  [self startInk];
-}
-
-- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  [super touchesEnded:touches withEvent:event];
-  [self endInk];
+  // Call super only after -lastTouch has been recorded, since super can call -setHighlighted:.
+  [super touchesBegan:touches withEvent:event];
 }
 
 #pragma mark UIView Overrides
@@ -137,7 +105,9 @@ static NSString *const MDCListBaseCellCurrentElevationKey = @"MDCListBaseCellCur
 
 - (void)setHighlighted:(BOOL)highlighted {
   [super setHighlighted:highlighted];
-  if (!highlighted) {
+  if (highlighted) {
+    [self startInk];
+  } else {
     [self endInk];
   }
 }

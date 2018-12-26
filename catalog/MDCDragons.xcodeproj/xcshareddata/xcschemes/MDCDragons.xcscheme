@@ -20,22 +20,56 @@
                ReferencedContainer = "container:MDCDragons.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "9926820AE994504EC996875C055C2135"
+               BuildableName = "MaterialComponentsSnapshotTests-Unit-Tests.xctest"
+               BlueprintName = "MaterialComponentsSnapshotTests-Unit-Tests"
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "NO">
       <Testables>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "66CB712B1C853DB30099B932"
-               BuildableName = "MDCUnitTests.xctest"
-               BlueprintName = "MDCUnitTests"
-               ReferencedContainer = "container:MDCUnitTests.xcodeproj">
+               BlueprintIdentifier = "9BDB8B8616CA4B2FED889BF1D1C2AFB1"
+               BuildableName = "MaterialComponents-Unit-Tests.xctest"
+               BlueprintName = "MaterialComponents-Unit-Tests"
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "3171F7594A536C448D38F6611EB2A7B7"
+               BuildableName = "MaterialComponentsBeta-Unit-Tests.xctest"
+               BlueprintName = "MaterialComponentsBeta-Unit-Tests"
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "9926820AE994504EC996875C055C2135"
+               BuildableName = "MaterialComponentsSnapshotTests-Unit-Tests.xctest"
+               BlueprintName = "MaterialComponentsSnapshotTests-Unit-Tests"
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -48,6 +82,13 @@
             ReferencedContainer = "container:MDCDragons.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "FB_REFERENCE_IMAGE_DIR"
+            value = "$(SOURCE_ROOT)/../snapshot_test_goldens/goldens"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>

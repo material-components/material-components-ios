@@ -16,115 +16,86 @@
 #import "MaterialButtons.h"
 #import "MaterialDialogs.h"
 
+#import "../../src/private/MDCDialogShadowedView.h"
 #import "MDCAlertControllerView+Private.h"
 
 #pragma mark - Subclasses for testing
-
-static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertControllerSubclassValueKey";
 
 @interface MDCAlertController (Testing)
 @property(nonatomic, nullable, weak) MDCAlertControllerView *alertView;
 @end
 
-@interface MDCAlertControllerSubclass : MDCAlertController
-@property(nonatomic, assign) NSInteger value;
-@end
-
-@implementation MDCAlertControllerSubclass
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  self = [super initWithCoder:aDecoder];
-  if (self) {
-    _value = [aDecoder decodeIntegerForKey:MDCAlertControllerSubclassValueKey];
-  }
-  return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [super encodeWithCoder:aCoder];
-  [aCoder encodeInteger:self.value forKey:MDCAlertControllerSubclassValueKey];
-}
-
+@interface MDCDialogPresentationController (Testing)
+@property(nonatomic) MDCDialogShadowedView *trackingView;
 @end
 
 #pragma mark - Tests
 
 @interface MDCAlertControllerTests : XCTestCase
-
+@property(nonatomic, nullable) MDCAlertController *alert;
 @end
 
 @implementation MDCAlertControllerTests
 
-- (void)testInit {
-  // Given
-  MDCAlertController *alert = [[MDCAlertController alloc] init];
+- (void)setUp {
+  [super setUp];
 
+  self.alert = [MDCAlertController alertControllerWithTitle:@"title" message:@"message"];
+}
+
+- (void)tearDown {
+  self.alert = nil;
+
+  [super tearDown];
+}
+
+- (void)testInit {
   // Then
-  XCTAssertNotNil(alert.actions);
-  XCTAssertNil(alert.title);
-  XCTAssertNil(alert.message);
+  XCTAssertNotNil(self.alert.actions);
+  XCTAssertNotNil(self.alert.title);
+  XCTAssertNotNil(self.alert.message);
 }
 
 - (void)testAlertControllerWithTitleMessage {
-  // Given
-  MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:@"title"
-                                                                   message:@"message"];
-
   // Then
-  XCTAssertNotNil(alert.actions);
-  XCTAssertEqualObjects(alert.title, @"title");
-  XCTAssertEqualObjects(alert.message, @"message");
-}
-
-- (void)testSubclassEncodingFails {
-  // Given
-  MDCAlertControllerSubclass *subclass = [[MDCAlertControllerSubclass alloc] init];
-  subclass.value = 7;
-  subclass.title = @"title";
-  subclass.message = @"message";
-  subclass.modalInPopover = YES;
-
-  // When
-  NSData *archive = [NSKeyedArchiver archivedDataWithRootObject:subclass];
-  MDCAlertControllerSubclass *unarchivedSubclass =
-      [NSKeyedUnarchiver unarchiveObjectWithData:archive];
-
-  // Then
-  XCTAssertEqual(unarchivedSubclass.value, subclass.value);
-  XCTAssertNil(unarchivedSubclass.title);
-  XCTAssertNil(unarchivedSubclass.message);
-  XCTAssertEqual(unarchivedSubclass.isModalInPopover, NO);
+  XCTAssertNotNil(self.alert.actions);
+  XCTAssertEqualObjects(self.alert.title, @"title");
+  XCTAssertEqualObjects(self.alert.message, @"message");
 }
 
 - (void)testAlertControllerTyphography {
-  MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:@"title"
-                                                                   message:@"message"];
+  // Given
   UIFont *testFont = [UIFont boldSystemFontOfSize:30];
-  alert.titleFont = testFont;
-  alert.messageFont = testFont;
-  alert.buttonFont = testFont;
 
-  MDCAlertControllerView *view = (MDCAlertControllerView *)alert.view;
+  // When
+  self.alert.titleFont = testFont;
+  self.alert.messageFont = testFont;
+  self.alert.buttonFont = testFont;
+
+  // Then
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertEqual(view.titleLabel.font, testFont);
   XCTAssertEqual(view.messageLabel.font, testFont);
-  for (UIButton *button in view.actionButtons) {
+  for (UIButton *button in view.actionManager.buttonsInActionOrder) {
     XCTAssertEqual(button.titleLabel.font, testFont);
   }
 }
 
 - (void)testAlertControllerColorSetting {
-  MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:@"title"
-                                                                   message:@"message"];
+  // Given
   UIColor *testColor = [UIColor redColor];
-  alert.titleColor = testColor;
-  alert.messageColor = testColor;
-  alert.buttonTitleColor = testColor;
-  alert.buttonInkColor = testColor;
 
-  MDCAlertControllerView *view = (MDCAlertControllerView *)alert.view;
+  // When
+  self.alert.titleColor = testColor;
+  self.alert.messageColor = testColor;
+  self.alert.buttonTitleColor = testColor;
+  self.alert.buttonInkColor = testColor;
+
+  // Then
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertEqual(view.titleLabel.textColor, testColor);
   XCTAssertEqual(view.messageLabel.textColor, testColor);
-  for (UIButton *button in view.actionButtons) {
+  for (UIButton *button in view.actionManager.buttonsInActionOrder) {
     XCTAssertEqual([button titleColorForState:UIControlStateNormal], testColor);
     XCTAssertTrue([button isKindOfClass:[MDCButton class]]);
     XCTAssertEqual([(MDCButton *)button inkColor], testColor);
@@ -134,23 +105,23 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
 - (void)testAlertControllerColorSettingBeforeActions {
   // Given
   UIColor *testColor = [UIColor redColor];
-  MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:@"title"
-                                                                   message:@"message"];
-  // When
-  alert.titleColor = testColor;
-  alert.messageColor = testColor;
-  alert.buttonTitleColor = testColor;
-  alert.buttonInkColor = testColor;
 
-  [alert addAction:[MDCAlertAction actionWithTitle:@"action1" handler:nil]];
-  [alert addAction:[MDCAlertAction actionWithTitle:@"action2" handler:nil]];
+  // When
+  self.alert.titleColor = testColor;
+  self.alert.messageColor = testColor;
+  self.alert.buttonTitleColor = testColor;
+  self.alert.buttonInkColor = testColor;
+
+  [self.alert addAction:[MDCAlertAction actionWithTitle:@"action1" handler:nil]];
+  [self.alert addAction:[MDCAlertAction actionWithTitle:@"action2" handler:nil]];
 
   // Then
-  MDCAlertControllerView *view = (MDCAlertControllerView *)alert.view;
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertEqual(view.titleLabel.textColor, testColor);
   XCTAssertEqual(view.messageLabel.textColor, testColor);
-  XCTAssertEqual((int)view.actionButtons.count, 2);
-  for (UIButton *button in view.actionButtons) {
+  NSArray<MDCButton *> *buttons = view.actionManager.buttonsInActionOrder;
+  XCTAssertEqual((int)buttons.count, 2);
+  for (UIButton *button in buttons) {
     XCTAssertEqual([button titleColorForState:UIControlStateNormal], testColor);
     XCTAssertTrue([button isKindOfClass:[MDCButton class]]);
     XCTAssertEqual([(MDCButton *)button inkColor], testColor);
@@ -160,23 +131,23 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
 - (void)testAlertControllerColorSettingAfterActions {
   // Given
   UIColor *testColor = [UIColor redColor];
-  MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:@"title"
-                                                                   message:@"message"];
-  // When
-  [alert addAction:[MDCAlertAction actionWithTitle:@"action1" handler:nil]];
-  [alert addAction:[MDCAlertAction actionWithTitle:@"action2" handler:nil]];
 
-  alert.titleColor = testColor;
-  alert.messageColor = testColor;
-  alert.buttonTitleColor = testColor;
-  alert.buttonInkColor = testColor;
+  // When
+  [self.alert addAction:[MDCAlertAction actionWithTitle:@"action1" handler:nil]];
+  [self.alert addAction:[MDCAlertAction actionWithTitle:@"action2" handler:nil]];
+
+  self.alert.titleColor = testColor;
+  self.alert.messageColor = testColor;
+  self.alert.buttonTitleColor = testColor;
+  self.alert.buttonInkColor = testColor;
 
   // Then
-  MDCAlertControllerView *view = (MDCAlertControllerView *)alert.view;
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertEqual(view.titleLabel.textColor, testColor);
   XCTAssertEqual(view.messageLabel.textColor, testColor);
-  XCTAssertEqual((int)view.actionButtons.count, 2);
-  for (UIButton *button in view.actionButtons) {
+  NSArray<MDCButton *> *buttons = view.actionManager.buttonsInActionOrder;
+  XCTAssertEqual((int)buttons.count, 2);
+  for (UIButton *button in buttons) {
     XCTAssertEqual([button titleColorForState:UIControlStateNormal], testColor);
     XCTAssertTrue([button isKindOfClass:[MDCButton class]]);
     XCTAssertEqual([(MDCButton *)button inkColor], testColor);
@@ -186,24 +157,24 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
 - (void)testAlertControllerColorSettingBetweenActions {
   // Given
   UIColor *testColor = [UIColor redColor];
-  MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:@"title"
-                                                                   message:@"message"];
+
   // When
-  [alert addAction:[MDCAlertAction actionWithTitle:@"action1" handler:nil]];
+  [self.alert addAction:[MDCAlertAction actionWithTitle:@"action1" handler:nil]];
 
-  alert.titleColor = testColor;
-  alert.messageColor = testColor;
-  alert.buttonTitleColor = testColor;
-  alert.buttonInkColor = testColor;
+  self.alert.titleColor = testColor;
+  self.alert.messageColor = testColor;
+  self.alert.buttonTitleColor = testColor;
+  self.alert.buttonInkColor = testColor;
 
-  [alert addAction:[MDCAlertAction actionWithTitle:@"action2" handler:nil]];
+  [self.alert addAction:[MDCAlertAction actionWithTitle:@"action2" handler:nil]];
 
   // Then
-  MDCAlertControllerView *view = (MDCAlertControllerView *)alert.view;
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertEqual(view.titleLabel.textColor, testColor);
   XCTAssertEqual(view.messageLabel.textColor, testColor);
-  XCTAssertEqual((int)view.actionButtons.count, 2);
-  for (UIButton *button in view.actionButtons) {
+  NSArray<MDCButton *> *buttons = view.actionManager.buttonsInActionOrder;
+  XCTAssertEqual((int)buttons.count, 2);
+  for (UIButton *button in buttons) {
     XCTAssertEqual([button titleColorForState:UIControlStateNormal], testColor);
     XCTAssertTrue([button isKindOfClass:[MDCButton class]]);
     XCTAssertEqual([(MDCButton *)button inkColor], testColor);
@@ -211,56 +182,54 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
 }
 
 - (void)testAlertControllerSettingTitleAndMessage {
+  // Given
   NSString *title = @"title";
   NSString *message = @"message";
-  MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:title
-                                                                   message:message];
-  alert.titleFont = [UIFont systemFontOfSize:25];
 
-  MDCAlertControllerView *view = (MDCAlertControllerView *)alert.view;
+  // When
+  self.alert.titleFont = [UIFont systemFontOfSize:25];
+
+  // Then
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertEqual(view.titleLabel.text, title);
   XCTAssertEqual(view.messageLabel.text, message);
 }
 
 - (void)testTheViewIsNotLoadedWhenPropertiesAreSet {
-  MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:@"title"
-                                                                   message:@"message"];
   UIColor *testColor = [UIColor redColor];
-  alert.titleColor = testColor;
-  alert.messageColor = testColor;
-  alert.buttonTitleColor = testColor;
-  alert.buttonInkColor = testColor;
-  alert.titleFont = [UIFont systemFontOfSize:12];
-  alert.messageFont = [UIFont systemFontOfSize:14];
-  alert.buttonFont = [UIFont systemFontOfSize:10];
-  [alert addAction:[MDCAlertAction actionWithTitle:@"test"
-                                           handler:^(MDCAlertAction * _Nonnull action) {
-                                           }]];
-  XCTAssertFalse(alert.isViewLoaded);
+  self.alert.titleColor = testColor;
+  self.alert.messageColor = testColor;
+  self.alert.buttonTitleColor = testColor;
+  self.alert.buttonInkColor = testColor;
+  self.alert.titleFont = [UIFont systemFontOfSize:12];
+  self.alert.messageFont = [UIFont systemFontOfSize:14];
+  self.alert.buttonFont = [UIFont systemFontOfSize:10];
+  [self.alert addAction:[MDCAlertAction actionWithTitle:@"test"
+                                                handler:^(MDCAlertAction *_Nonnull action){
+                                                }]];
+  XCTAssertFalse(self.alert.isViewLoaded);
 }
 
 - (void)testAccessibilityIdentifiersAppliesToAlertControllerViewButtons {
   // Given
-  MDCAlertController *alertController = [MDCAlertController alertControllerWithTitle:@"Title"
-                                                                             message:@"message"];
   MDCAlertAction *action1 = [MDCAlertAction actionWithTitle:@"button1" handler:nil];
   action1.accessibilityIdentifier = @"1";
   MDCAlertAction *action2 = [MDCAlertAction actionWithTitle:@"buttonA" handler:nil];
   action2.accessibilityIdentifier = @"A";
 
   // When
-  [alertController addAction:action1];
-  [alertController addAction:action2];
-  
+  [self.alert addAction:action1];
+  [self.alert addAction:action2];
+
   // Force the view to load
   if (@available(iOS 9.0, *)) {
-    [alertController loadViewIfNeeded];
+    [self.alert loadViewIfNeeded];
   } else {
-    (void)alertController.view;
+    (void)self.alert.view;
   }
 
   // Then
-  NSArray<UIButton *> *buttons = alertController.alertView.actionButtons;
+  NSArray<UIButton *> *buttons = self.alert.alertView.actionManager.buttonsInActionOrder;
   XCTAssertEqual(buttons.count, 2U);
   UIButton *button1 = buttons.firstObject;
   UIButton *button2 = buttons.lastObject;
@@ -273,35 +242,59 @@ static NSString *const MDCAlertControllerSubclassValueKey = @"MDCAlertController
   XCTAssertEqualObjects(button2.accessibilityIdentifier, @"A");
 }
 
-- (void)tesDefaultCornerRadius {
-  // Given
-  MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:@"title"
-                                                                   message:@"message"];
-  [alert addAction:[MDCAlertAction actionWithTitle:@"action1" handler:nil]];
-  [alert addAction:[MDCAlertAction actionWithTitle:@"action2" handler:nil]];
-
+- (void)testDefaultCornerRadius {
   // Then
-  MDCAlertControllerView *view = (MDCAlertControllerView *)alert.view;
-  XCTAssertEqualWithAccuracy(view.layer.cornerRadius, 0.0, 0.0);
-  XCTAssertEqualWithAccuracy(alert.mdc_dialogPresentationController.dialogCornerRadius, 0.0, 0.0);
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
+  XCTAssertEqualWithAccuracy(view.layer.cornerRadius, 0.0, 0.001);
+  XCTAssertEqualWithAccuracy(self.alert.mdc_dialogPresentationController.dialogCornerRadius, 0.0,
+                             0.001);
 }
 
 - (void)testCustomCornerRadius {
   // Given
   CGFloat cornerRadius = (CGFloat)36.0;
-  MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:@"title"
-                                                                   message:@"message"];
-  [alert addAction:[MDCAlertAction actionWithTitle:@"action1" handler:nil]];
-  [alert addAction:[MDCAlertAction actionWithTitle:@"action2" handler:nil]];
 
   // When
-  alert.cornerRadius = cornerRadius;
+  self.alert.cornerRadius = cornerRadius;
 
   // Then
-  MDCAlertControllerView *view = (MDCAlertControllerView *)alert.view;
-  XCTAssertEqualWithAccuracy(view.layer.cornerRadius, cornerRadius, 0.0);
-  XCTAssertEqualWithAccuracy(alert.mdc_dialogPresentationController.dialogCornerRadius,
-                             cornerRadius, 0.0);
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
+  XCTAssertEqualWithAccuracy(view.layer.cornerRadius, cornerRadius, 0.001);
+  XCTAssertEqualWithAccuracy(self.alert.mdc_dialogPresentationController.dialogCornerRadius,
+                             cornerRadius, 0.001);
+}
+
+- (void)testDefaultElevation {
+  // Given
+  CGFloat elevation = (CGFloat)MDCShadowElevationDialog;
+
+  // Then
+  MDCDialogShadowedView *shadowView = self.alert.mdc_dialogPresentationController.trackingView;
+  XCTAssertEqual(shadowView.elevation, elevation);
+}
+
+- (void)testCustomElevation {
+  // Given
+  CGFloat elevation = (CGFloat)2.0;
+
+  // When
+  self.alert.elevation = elevation;
+
+  // Then
+  MDCDialogShadowedView *shadowView = self.alert.mdc_dialogPresentationController.trackingView;
+  XCTAssertEqual(shadowView.elevation, elevation);
+}
+
+- (void)testCustomDialogPresentationElevation {
+  // Given
+  CGFloat elevation = (CGFloat)2.0;
+
+  // When
+  self.alert.mdc_dialogPresentationController.dialogElevation = elevation;
+
+  // Then
+  MDCDialogShadowedView *shadowView = self.alert.mdc_dialogPresentationController.trackingView;
+  XCTAssertEqual(shadowView.elevation, elevation);
 }
 
 @end

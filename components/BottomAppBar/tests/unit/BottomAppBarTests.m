@@ -14,9 +14,28 @@
 
 #import "MaterialBottomAppBar.h"
 
+#import <CoreGraphics/CoreGraphics.h>
 #import <XCTest/XCTest.h>
 
+#import "../../src/private/MDCBottomAppBarLayer.h"
 #import "MaterialNavigationBar.h"
+
+@interface MDCBottomAppBarLayer (Testing)
+- (UIBezierPath *)drawWithPathToCut:(UIBezierPath *)bottomBarPath
+                            yOffset:(CGFloat)yOffset
+                              width:(CGFloat)width
+                             height:(CGFloat)height
+                          arcCenter:(CGPoint)arcCenter
+                          arcRadius:(CGFloat)arcRadius
+                         startAngle:(CGFloat)startAngle
+                           endAngle:(CGFloat)endAngle;
+- (UIBezierPath *)drawWithPlainPath:(UIBezierPath *)bottomBarPath
+                            yOffset:(CGFloat)yOffset
+                              width:(CGFloat)width
+                             height:(CGFloat)height
+                          arcCenter:(CGPoint)arcCenter
+                          arcRadius:(CGFloat)arcRadius;
+@end
 
 @interface MDCBottomAppBarView (Testing)
 @property(nonatomic, strong) MDCNavigationBar *navBar;
@@ -31,6 +50,11 @@
 - (void)setUp {
   [super setUp];
   self.bottomAppBar = [[MDCBottomAppBarView alloc] init];
+}
+
+- (void)tearDown {
+  self.bottomAppBar = nil;
+  [super tearDown];
 }
 
 #pragma mark - Color
@@ -59,6 +83,80 @@
 
   // Then
   XCTAssertEqualObjects(self.bottomAppBar.navBar.trailingBarItemsTintColor, UIColor.purpleColor);
+}
+
+#pragma mark - Floating Button
+
+- (void)testCustomizedFloatingButtonVerticalHeight {
+  CGFloat veriticalOffset = 5;
+  self.bottomAppBar.floatingButtonVerticalOffset = veriticalOffset;
+  [self.bottomAppBar layoutSubviews];
+  CGPoint floatingButtonPosition = self.bottomAppBar.floatingButton.center;
+  CGPoint navigationBarPosition = self.bottomAppBar.navBar.frame.origin;
+  XCTAssertEqualWithAccuracy(floatingButtonPosition.y + veriticalOffset, navigationBarPosition.y,
+                             (CGFloat)0.001);
+}
+
+#pragma mark - Path test
+
+- (void)testPathToAndFromEqualNumberOfPoints {
+  // Given
+  MDCBottomAppBarLayer *bottomAppLayer = [[MDCBottomAppBarLayer alloc] init];
+  UIBezierPath *fakeToPath = [[UIBezierPath alloc] init];
+  UIBezierPath *fakeFromPath = [[UIBezierPath alloc] init];
+  CGFloat fakeYOffset = 38;
+  CGFloat fakeWidth = 414;
+  CGFloat fakeHeight = 130;
+  CGFloat fakeArcRadius = 32;
+  CGPoint fakeCenter = CGPointMake(207, 38);
+
+  // When
+  fakeToPath = [bottomAppLayer drawWithPathToCut:fakeToPath
+                                         yOffset:fakeYOffset
+                                           width:fakeWidth
+                                          height:fakeHeight
+                                       arcCenter:fakeCenter
+                                       arcRadius:fakeArcRadius
+                                      startAngle:(CGFloat)M_PI
+                                        endAngle:(CGFloat)M_PI_2];
+  fakeFromPath = [bottomAppLayer drawWithPlainPath:fakeFromPath
+                                           yOffset:fakeYOffset
+                                             width:fakeWidth
+                                            height:fakeHeight
+                                         arcCenter:fakeCenter
+                                         arcRadius:fakeArcRadius];
+
+  // Then
+  XCTAssertEqual([self numberOfPointsInPath:fakeToPath], [self numberOfPointsInPath:fakeFromPath]);
+}
+
+- (int)numberOfPointsInPath:(UIBezierPath *)bezierPath {
+  __block int numberOfPoints = 0;
+  if (@available(iOS 11.0, *)) {
+    CGPathApplyWithBlock(bezierPath.CGPath, ^(const CGPathElement *_Nonnull element) {
+      switch (element->type) {
+        case kCGPathElementMoveToPoint:
+          numberOfPoints = numberOfPoints + 1;
+          break;
+        case kCGPathElementAddLineToPoint:
+          numberOfPoints = numberOfPoints + 1;
+          break;
+        case kCGPathElementAddCurveToPoint:
+          numberOfPoints = numberOfPoints + 3;
+          break;
+        case kCGPathElementAddQuadCurveToPoint:
+          numberOfPoints = numberOfPoints + 2;
+          break;
+        case kCGPathElementCloseSubpath:
+          break;
+        default:
+          break;
+      }
+    });
+    return numberOfPoints;
+  } else {
+    return numberOfPoints;
+  }
 }
 
 @end

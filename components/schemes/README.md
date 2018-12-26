@@ -38,6 +38,7 @@ secondary colors to match your brand colors.
 
 <ul class="icon-list">
   <li class="icon-list-item icon-list-item--link"><a href="Color/">Color scheme</a></li>
+  <li class="icon-list-item icon-list-item--link"><a href="Shape/">Shape scheme</a></li>
   <li class="icon-list-item icon-list-item--link"><a href="Typography/">Typography scheme</a></li>
 </ul>
 
@@ -49,6 +50,7 @@ In order to access the scheme APIs you'll first need to add the scheme target to
 
 ```bash
 pod 'MaterialComponents/schemes/Color'
+pod 'MaterialComponents/schemes/Shape'
 pod 'MaterialComponents/schemes/Typography'
 ```
 
@@ -61,9 +63,11 @@ the MDCCatalog, but the approach you take should be influenced by your app's arc
 
 ```swift
 import MaterialColorScheme
+import MaterialShapeScheme
 import MaterialTypographyScheme
 
 let colorScheme = MDCSemanticColorScheme()
+let shapeScheme = MDCShapeScheme()
 let typographyScheme = MDCTypographyScheme()
 ```
 
@@ -73,7 +77,8 @@ let typographyScheme = MDCTypographyScheme()
 #import "MaterialColorScheme.h"
 #import "MaterialTypographyScheme.h"
 
-MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+MDCShapeScheme *shapeScheme = [[MDCShapeScheme alloc] init];
 MDCTypographyScheme *typographyScheme = [[MDCTypographyScheme alloc] init];
 ```
 <!--</div>-->
@@ -85,34 +90,39 @@ Podfile. You can see which themers a given component supports by looking at the 
 directory.
 
 ```bash
-pod 'MaterialComponents/AppBar+ColorThemer'
-pod 'MaterialComponents/AppBar+TypographyThemer'
+pod 'MaterialComponents/Buttons+ColorThemer'
+pod 'MaterialComponents/Buttons+ShapeThemer'
+pod 'MaterialComponents/Buttons+TypographyThemer'
 ```
 
-You can now access the AppBar themers.
+You can now access the Button themers.
 
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 
 ```swift
-import MaterialComponents.MaterialAppBar_ColorThemer
-import MaterialComponents.MaterialAppBar_TypographyThemer
+import MaterialComponents.MaterialButtons_ColorThemer
+import MaterialComponents.MaterialButtons_ShapeThemer
+import MaterialComponents.MaterialButtons_TypographyThemer
 
-func applyGlobalTheme(to appBar: MDCAppBar) {
-  MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
-  MDCAppBarTypographyThemer.apply(typographyScheme, to: appBar)
+func applyGlobalTheme(to button: MDCButton) {
+  MDCButtonColorThemer.applySemanticColorScheme(colorScheme, to: button)
+  MDCButtonShapeThemer.apply(shapeScheme, to: button)
+  MDCButtonTypographyThemer.apply(typographyScheme, to: button)
 }
 ```
 
 #### Objective-C
 
 ```objc
-#import "MaterialAppBar+ColorThemer.h"
-#import "MaterialAppBar+TypographyThemer.h"
+#import "MaterialButtons+ColorThemer.h"
+#import "MaterialButtons+ShapeThemer.h"
+#import "MaterialButtons+TypographyThemer.h"
 
-void ApplyGlobalThemeToAppBar(MDCAppBar *appBar) {
-  [MDCAppBarColorThemer applySemanticColorScheme:colorScheme toAppBar:appBar];
-  [MDCAppBarTypographyThemer applyTypographyScheme:typographyScheme toAppBar:appBar];
+void ApplyGlobalThemeToButton(MDCButton *button) {
+  [MDCButtonColorThemer applySemanticColorScheme:colorScheme toButton:button];
+  [MDCButtonShapeThemer applyShapeScheme:shapeScheme toButton:button];
+  [MDCButtonTypographyThemer applyTypographyScheme:typographyScheme toButton:button];
 }
 ```
 <!--</div>-->

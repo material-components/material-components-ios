@@ -12,11 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("//:material_components_ios.bzl",
-     "mdc_public_objc_library",
-     "mdc_objc_library",
-     "mdc_unit_test_suite")
-load("@build_bazel_rules_apple//apple:swift.bzl", "swift_library")
+load(
+    "//:material_components_ios.bzl",
+    "mdc_extension_objc_library",
+    "mdc_objc_library",
+    "mdc_public_objc_library",
+    "mdc_unit_test_suite",
+)
+load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
@@ -31,8 +34,8 @@ mdc_public_objc_library(
         "//components/Palettes",
         "//components/private/Application",
         "@material_internationalization_ios//:MDFInternationalization",
-        "@motion_interchange_objc//:MotionInterchange",
         "@motion_animator_objc//:MotionAnimator",
+        "@motion_interchange_objc//:MotionInterchange",
     ],
 )
 
@@ -48,29 +51,26 @@ objc_bundle(
     bundle_imports = [":BundleFiles"],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "ColorThemer",
-    srcs = native.glob(["src/ColorThemer/*.m"]),
-    hdrs = native.glob(["src/ColorThemer/*.h"]),
-    includes = ["src/ColorThemer"],
-    sdk_frameworks = [
-        "UIKit",
-    ],
     deps = [
         ":ActivityIndicator",
         "//components/schemes/Color",
     ],
-    visibility = ["//visibility:public"],
 )
 
 swift_library(
     name = "unit_test_swift_sources",
     srcs = glob(["tests/unit/*.swift"]),
+    copts = [
+        "-swift-version",
+        "3",
+    ],
+    visibility = ["//visibility:private"],
     deps = [
         ":ActivityIndicator",
         ":ColorThemer",
     ],
-    visibility = ["//visibility:private"],
 )
 
 mdc_objc_library(
@@ -82,16 +82,17 @@ mdc_objc_library(
         "UIKit",
         "XCTest",
     ],
+    visibility = ["//visibility:private"],
     deps = [
         ":ActivityIndicator",
         ":ColorThemer",
     ],
-    visibility = ["//visibility:private"],
 )
 
 mdc_unit_test_suite(
+    name = "unit_tests",
     deps = [
-      ":unit_test_sources",
-      ":unit_test_swift_sources"
+        ":unit_test_sources",
+        ":unit_test_swift_sources",
     ],
 )

@@ -17,14 +17,7 @@
 #import "MaterialShadowElevations.h"
 #import "MaterialShadowLayer.h"
 
-static NSString *const MDCTabBarViewControllerViewControllersKey =
-    @"MDCTabBarViewControllerViewControllersKey";
-static NSString *const MDCTabBarViewControllerSelectedViewControllerKey =
-    @"MDCTabBarViewControllerSelectedViewControllerKey";
-static NSString *const MDCTabBarViewControllerDelegateKey = @"MDCTabBarViewControllerDelegateKey";
-static NSString *const MDCTabBarViewControllerTabBarKey = @"MDCTabBarViewControllerTabBarKey";
-
-const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
+const CGFloat MDCTabBarViewControllerAnimationDuration = (CGFloat)0.3;
 
 /**
  * View to host shadow for the tab bar.
@@ -76,14 +69,6 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
 - (nullable instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
-    _viewControllers = [aDecoder decodeObjectOfClass:[NSArray class]
-                                              forKey:MDCTabBarViewControllerViewControllersKey];
-    self.selectedViewController =
-        [aDecoder decodeObjectOfClass:[UIViewController class]
-                               forKey:MDCTabBarViewControllerSelectedViewControllerKey];
-    _tabBar = [aDecoder decodeObjectOfClass:[MDCTabBar class]
-                                     forKey:MDCTabBarViewControllerTabBarKey];
-    _delegate = [aDecoder decodeObjectForKey:MDCTabBarViewControllerDelegateKey];
     [self commonInit];
   }
   return self;
@@ -106,7 +91,6 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
 }
 
 -(void)commonInit {
-  // Already been setup through encoding/decoding
   if (self.tabBar) {
     return;
   }
@@ -115,15 +99,6 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = 0.3f;
   tabBar.delegate = self;
   self.tabBar = tabBar;
   _tabBarShadow = [[MDCTabBarShadowView alloc] initWithFrame:CGRectZero];
-}
-
-- (void)encodeWithCoder:(NSCoder *)coder {
-  [super encodeWithCoder:coder];
-  [coder encodeObject:_viewControllers forKey:MDCTabBarViewControllerViewControllersKey];
-  [coder encodeConditionalObject:_selectedViewController
-                          forKey:MDCTabBarViewControllerSelectedViewControllerKey];
-  [coder encodeObject:_tabBar forKey:MDCTabBarViewControllerTabBarKey];
-  [coder encodeConditionalObject:_delegate forKey:MDCTabBarViewControllerDelegateKey];
 }
 
 - (void)viewDidLoad {

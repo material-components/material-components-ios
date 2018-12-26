@@ -29,18 +29,6 @@ static NSString *const MDCCutCornerTreatmentCutKey = @"MDCCutCornerTreatmentCutK
   return self;
 }
 
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  if (self = [super initWithCoder:aDecoder]) {
-    _cut = (CGFloat)[aDecoder decodeDoubleForKey:MDCCutCornerTreatmentCutKey];
-  }
-  return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [super encodeWithCoder:aCoder];
-  [aCoder encodeDouble:_cut forKey:MDCCutCornerTreatmentCutKey];
-}
-
 - (id)copyWithZone:(NSZone *)zone {
   MDCCutCornerTreatment *copy = [super copyWithZone:zone];
   copy.cut = _cut;
@@ -73,6 +61,10 @@ static NSString *const MDCCutCornerTreatmentCutKey = @"MDCCutCornerTreatmentCutK
   }
   MDCCutCornerTreatment *otherCutCorner = (MDCCutCornerTreatment *)object;
   return self.cut == otherCutCorner.cut;
+}
+
+- (NSUInteger)hash {
+  return @(self.cut).hash ^ (NSUInteger)self.valueType;
 }
 
 @end

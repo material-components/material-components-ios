@@ -28,7 +28,8 @@
   self = [super initWithCollectionViewLayout:layout];
   if (self) {
     [self setupExampleViews:@[@"Change Alignment", @"Toggle Case", @"Clear Selection"]];
-    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
   return self;
 }
@@ -55,8 +56,7 @@
   const CGRect bounds = self.view.bounds;
 
   // Long tab bar with lots of items of varying length. Also demonstrates configurable accent color.
-  self.tabBar =
-      [[MDCTabBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(bounds) - 20.0f, 0)];
+  self.tabBar = [[MDCTabBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(bounds) - 20, 0)];
   self.tabBar.items = @[
     [[UITabBarItem alloc] initWithTitle:@"This Is" image:nil tag:0],
     [[UITabBarItem alloc] initWithTitle:@"A" image:nil tag:0],

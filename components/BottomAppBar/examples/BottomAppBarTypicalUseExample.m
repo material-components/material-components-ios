@@ -16,7 +16,7 @@
 
 #import "MaterialBottomAppBar+ColorThemer.h"
 #import "MaterialBottomAppBar.h"
-#import "MaterialButtons+ButtonThemer.h"
+#import "MaterialButtons+Theming.h"
 
 #import "supplemental/BottomAppBarTypicalUseSupplemental.h"
 
@@ -26,10 +26,18 @@
   self = [super init];
   if (self) {
     self.title = @"Bottom App Bar";
-    _colorScheme = [[MDCSemanticColorScheme alloc] init];
+    _colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
     _typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;
+}
+
+- (MDCContainerScheme *)containerScheme {
+  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
+  scheme.colorScheme = self.colorScheme;
+  scheme.typographyScheme = self.typographyScheme;
+  return scheme;
 }
 
 - (void)commonBottomBarSetup {
@@ -68,19 +76,15 @@
   [self.bottomBarView setTrailingBarButtonItems:@[ barButtonTrailingItem ]];
 }
 
-
 - (void)viewDidLoad {
   [super viewDidLoad];
   [self commonBottomBarSetup];
 
-  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
-  buttonScheme.colorScheme = self.colorScheme;
-  buttonScheme.typographyScheme = self.typographyScheme;
-  [MDCFloatingActionButtonThemer applyScheme:buttonScheme
-                                    toButton:self.bottomBarView.floatingButton];
+  [self.bottomBarView.floatingButton applySecondaryThemeWithScheme:[self containerScheme]];
   [MDCBottomAppBarColorThemer applySurfaceVariantWithSemanticColorScheme:self.colorScheme
                                                       toBottomAppBarView:self.bottomBarView];
 }
+
 - (void)didTapFloatingButton:(id)sender {
   [self.bottomBarView setFloatingButtonHidden:YES animated:YES];
 }

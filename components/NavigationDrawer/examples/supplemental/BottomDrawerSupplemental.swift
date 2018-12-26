@@ -13,12 +13,11 @@
 // limitations under the License.
 
 import UIKit
-import MaterialComponentsAlpha.MaterialNavigationDrawer
 import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialNavigationDrawer
 
 class DrawerContentViewController: UIViewController {
-  var colorScheme = MDCSemanticColorScheme()
-  let preferredHeight: CGFloat = 2000
+  var preferredHeight: CGFloat = 2000
 
   override var preferredContentSize: CGSize {
     get {
@@ -35,17 +34,17 @@ class DrawerContentViewController: UIViewController {
 
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
-  }
-
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    view.backgroundColor = colorScheme.primaryColor
   }
 }
 
-class DrawerHeaderViewController: UIViewController {
-  var colorScheme = MDCSemanticColorScheme()
+class DrawerHeaderViewController: UIViewController,MDCBottomDrawerHeader {
   let preferredHeight: CGFloat = 80
+  let titleLabel : UILabel = {
+    let label = UILabel(frame: .zero)
+    label.text = "Example Header"
+    label.sizeToFit()
+    return label
+  }()
 
   override var preferredContentSize: CGSize {
     get {
@@ -66,6 +65,13 @@ class DrawerHeaderViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = colorScheme.secondaryColor
+    view.addSubview(titleLabel)
   }
+
+  override func viewWillLayoutSubviews() {
+    super.viewWillLayoutSubviews()
+    titleLabel.center =
+      CGPoint(x: self.view.frame.size.width / 2, y: self.preferredHeight - 20)
+  }
+
 }

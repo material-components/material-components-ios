@@ -12,11 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("//:material_components_ios.bzl",
-     "mdc_public_objc_library",
-     "mdc_objc_library",
-     "mdc_unit_test_suite")
-load("@build_bazel_rules_apple//apple:swift.bzl", "swift_library")
+load(
+    "//:material_components_ios.bzl",
+    "mdc_extension_objc_library",
+    "mdc_objc_library",
+    "mdc_public_objc_library",
+    "mdc_unit_test_suite",
+)
+load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
@@ -27,25 +30,18 @@ mdc_public_objc_library(
         "UIKit",
     ],
     deps = [
-      "//components/private/Application",
-      "//components/private/UIMetrics",
-      "@material_text_accessibility_ios//:MDFTextAccessibility",
+        "//components/private/Application",
+        "//components/private/UIMetrics",
+        "@material_text_accessibility_ios//:MDFTextAccessibility",
     ],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "ColorThemer",
-    srcs = native.glob(["src/ColorThemer/*.m"]),
-    hdrs = native.glob(["src/ColorThemer/*.h"]),
-    includes = ["src/ColorThemer"],
-    sdk_frameworks = [
-        "UIKit",
-    ],
     deps = [
         ":FlexibleHeader",
         "//components/schemes/Color",
     ],
-    visibility = ["//visibility:public"],
 )
 
 mdc_objc_library(
@@ -62,29 +58,26 @@ package_group(
     ],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "CanAlwaysExpandToMaximumHeight",
-    srcs = native.glob(["src/CanAlwaysExpandToMaximumHeight/*.m"]),
-    hdrs = native.glob(["src/CanAlwaysExpandToMaximumHeight/*.h"]),
-    includes = ["src/CanAlwaysExpandToMaximumHeight"],
-    sdk_frameworks = [
-        "UIKit",
-    ],
     deps = [
         ":FlexibleHeader",
     ],
-    visibility = ["//visibility:public"],
 )
 
 swift_library(
     name = "unit_test_swift_sources",
     srcs = glob(["tests/unit/*.swift"]),
-    deps = [
-        ":FlexibleHeader",
-        ":ColorThemer",
-        ":CanAlwaysExpandToMaximumHeight",
+    copts = [
+        "-swift-version",
+        "3",
     ],
     visibility = ["//visibility:private"],
+    deps = [
+        ":CanAlwaysExpandToMaximumHeight",
+        ":ColorThemer",
+        ":FlexibleHeader",
+    ],
 )
 
 mdc_objc_library(
@@ -100,18 +93,19 @@ mdc_objc_library(
         "UIKit",
         "XCTest",
     ],
-    deps = [
-        ":private",
-        ":FlexibleHeader",
-        ":ColorThemer",
-        ":CanAlwaysExpandToMaximumHeight",
-    ],
     visibility = ["//visibility:private"],
+    deps = [
+        ":CanAlwaysExpandToMaximumHeight",
+        ":ColorThemer",
+        ":FlexibleHeader",
+        ":private",
+    ],
 )
 
 mdc_unit_test_suite(
+    name = "unit_tests",
     deps = [
-      ":unit_test_sources",
-      ":unit_test_swift_sources"
+        ":unit_test_sources",
+        ":unit_test_swift_sources",
     ],
 )

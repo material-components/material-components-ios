@@ -89,7 +89,7 @@ typedef NS_ENUM(NSUInteger, MDCCollectionViewCellLayoutType) {
 /** The cell style. Not animated. @c setCellStyle:animated: for animated layout type changes. */
 @property(nonatomic, assign) MDCCollectionViewCellStyle cellStyle;
 
-/** The border radius of a card cell. Defaults to 1.5f */
+/** The border radius of a card cell. Defaults to 1.5 */
 @property(nonatomic) CGFloat cardBorderRadius;
 
 /**
@@ -137,7 +137,7 @@ typedef NS_ENUM(NSUInteger, MDCCollectionViewCellLayoutType) {
 /** Separator inset. Defaults to UIEdgeInsetsZero. */
 @property(nonatomic) UIEdgeInsets separatorInset;
 
-/** Separator line height. Defaults to 1.0f */
+/** Separator line height. Defaults to 1 */
 @property(nonatomic) CGFloat separatorLineHeight;
 
 /* Whether to hide the cell separators. Defaults to NO. */

@@ -14,15 +14,17 @@
 
 #import "ChipsExamplesSupplemental.h"
 
+#import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
-#import "MaterialChips+ChipThemer.h"
-#import "MaterialSlider.h"
-#import "MaterialSlider+ColorThemer.h"
-#import "MaterialShapes.h"
+#import "MaterialContainerScheme.h"
 #import "MaterialShapeLibrary.h"
+#import "MaterialShapes.h"
+#import "MaterialSlider+ColorThemer.h"
+#import "MaterialSlider.h"
 
 @interface ChipsShapingExampleViewController()
 @property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong) MDCShapeScheme *shapeScheme;
 @property(nonatomic, strong) MDCTypographyScheme *typographyScheme;
 @end
 
@@ -36,10 +38,20 @@
 - (id)init {
   self = [super init];
   if (self) {
-    _colorScheme = [[MDCSemanticColorScheme alloc] init];
+    _colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
+    _shapeScheme = [[MDCShapeScheme alloc] init];
     _typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;
+}
+
+- (MDCContainerScheme *)containerScheme {
+  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
+  scheme.colorScheme = self.colorScheme;
+  scheme.shapeScheme = self.shapeScheme;
+  scheme.typographyScheme = self.typographyScheme;
+  return scheme;
 }
 
 - (void)viewDidLoad {
@@ -53,16 +65,12 @@
   _chipView.titleLabel.text = @"Material";
   _chipView.imageView.image = [self faceImage];
   _chipView.accessoryView = [self deleteButton];
-  _chipView.imagePadding = UIEdgeInsetsMake(0, 10.f, 0, 0);
-  _chipView.accessoryPadding = UIEdgeInsetsMake(0, 0, 0, 10.f);
+  _chipView.imagePadding = UIEdgeInsetsMake(0, 10, 0, 0);
+  _chipView.accessoryPadding = UIEdgeInsetsMake(0, 0, 0, 10);
   CGSize chipSize = [_chipView sizeThatFits:self.view.bounds.size];
   _chipView.frame = CGRectMake(20, 20, chipSize.width + 20, chipSize.height + 20);
+  [_chipView applyThemeWithScheme:[self containerScheme]];
   _chipView.shapeGenerator = _rectangleShapeGenerator;
-
-  MDCChipViewScheme *chipScheme = [[MDCChipViewScheme alloc] init];
-  chipScheme.colorScheme = _colorScheme;
-  chipScheme.typographyScheme = _typographyScheme;
-  [MDCChipViewThemer applyScheme:chipScheme toChipView:_chipView];
   [self.view addSubview:_chipView];
 
   _cornerSlider = [[MDCSlider alloc] initWithFrame:CGRectZero];

@@ -28,7 +28,8 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
     self.typographyScheme = [[MDCTypographyScheme alloc] init];
   }
   return self;
@@ -91,7 +92,7 @@
 
   [MDCTabBarColorThemer applySemanticColorScheme:self.colorScheme toTabs:tabBar];
 
-  tabBar.inkColor = [[UIColor whiteColor] colorWithAlphaComponent:0.1f];
+  tabBar.inkColor = [[UIColor whiteColor] colorWithAlphaComponent:(CGFloat)0.1];
   tabBar.itemAppearance = MDCTabBarItemAppearanceTitledImages;
 
   self.tabBar = tabBar;

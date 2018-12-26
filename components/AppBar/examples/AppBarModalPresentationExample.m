@@ -48,7 +48,8 @@
     // Set preferred content size
     self.preferredContentSize = CGSizeMake(250, 500);
 
-    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   }
   return self;
 }

@@ -13,11 +13,15 @@
 // limitations under the License.
 
 import UIKit
-import MaterialComponentsAlpha.MaterialNavigationDrawer
+import MaterialComponents.MaterialBottomAppBar
+import MaterialComponents.MaterialBottomAppBar_ColorThemer
 import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialNavigationDrawer
+import MaterialComponents.MaterialNavigationDrawer_ColorThemer
 
 class BottomDrawerInfiniteScrollingExample: UIViewController {
   var colorScheme = MDCSemanticColorScheme()
+  let bottomAppBar = MDCBottomAppBarView()
 
   let headerViewController = DrawerHeaderViewController()
   let contentViewController = DrawerContentTableViewController()
@@ -26,21 +30,53 @@ class BottomDrawerInfiniteScrollingExample: UIViewController {
     super.viewDidLoad()
     view.backgroundColor = colorScheme.backgroundColor
     contentViewController.colorScheme = colorScheme
+
+    bottomAppBar.isFloatingButtonHidden = true
+    let barButtonLeadingItem = UIBarButtonItem()
+    let menuImage = UIImage(named:"Menu")?.withRenderingMode(.alwaysTemplate)
+    barButtonLeadingItem.image = menuImage
+    barButtonLeadingItem.target = self
+    barButtonLeadingItem.action = #selector(presentNavigationDrawer)
+    bottomAppBar.leadingBarButtonItems = [ barButtonLeadingItem ]
+    MDCBottomAppBarColorThemer.applySurfaceVariant(withSemanticColorScheme: colorScheme,
+                                                   to: bottomAppBar)
+    view.addSubview(bottomAppBar)
   }
 
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
+  private func layoutBottomAppBar() {
+    let size = bottomAppBar.sizeThatFits(view.bounds.size)
+    var bottomBarViewFrame = CGRect(x: 0,
+                                    y: view.bounds.size.height - size.height,
+                                    width: size.width,
+                                    height: size.height)
+    if #available(iOS 11.0, *) {
+      bottomBarViewFrame.size.height += view.safeAreaInsets.bottom
+      bottomBarViewFrame.origin.y -= view.safeAreaInsets.bottom
+    }
+    bottomAppBar.frame = bottomBarViewFrame
+  }
+
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+
+    layoutBottomAppBar()
+  }
+
+  @objc private func presentNavigationDrawer() {
     let bottomDrawerViewController = MDCBottomDrawerViewController()
     bottomDrawerViewController.contentViewController = contentViewController
+    contentViewController.drawerVC = bottomDrawerViewController
     bottomDrawerViewController.headerViewController = headerViewController
     bottomDrawerViewController.trackingScrollView = contentViewController.tableView
+    MDCBottomDrawerColorThemer.applySemanticColorScheme(colorScheme,
+                                                        toBottomDrawer: bottomDrawerViewController)
     present(bottomDrawerViewController, animated: true, completion: nil)
   }
-
 }
 
 class DrawerContentTableViewController: UITableViewController {
   var colorScheme: MDCSemanticColorScheme!
+  weak var drawerVC: MDCBottomDrawerViewController!
 
   override var preferredContentSize: CGSize {
     get {
@@ -61,9 +97,7 @@ class DrawerContentTableViewController: UITableViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = colorScheme.primaryColor
     self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-    self.tableView.isScrollEnabled = false
   }
 
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -81,6 +115,12 @@ class DrawerContentTableViewController: UITableViewController {
   override func numberOfSections(in tableView: UITableView) -> Int {
     return 1
   }
+
+  override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    tableView.deselectRow(at: indexPath, animated: true)
+    drawerVC.setContentOffsetY(0, animated: false)
+  }
+
 }
 
 extension BottomDrawerInfiniteScrollingExample {

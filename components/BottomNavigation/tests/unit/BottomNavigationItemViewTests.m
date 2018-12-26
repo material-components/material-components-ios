@@ -14,6 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
+#import "../../src/private/MDCBottomNavigationItemBadge.h"
 #import "../../src/private/MDCBottomNavigationItemView.h"
 
 #import "MaterialInk.h"
@@ -31,6 +32,8 @@ static UIImage *fakeImage(void) {
 @interface MDCBottomNavigationItemView (Testing)
 @property(nonatomic, strong) UIImageView *iconImageView;
 @property(nonatomic, strong) UILabel *label;
+@property(nonatomic, strong) MDCBottomNavigationItemBadge *badge;
+- (CGPoint)badgeCenterFromIconFrame:(CGRect)iconFrame isRTL:(BOOL)isRTL;
 @end
 
 @interface BottomNavigationItemViewTests : XCTestCase
@@ -57,9 +60,8 @@ static UIImage *fakeImage(void) {
   CGFloat contentHeight =
       CGRectGetHeight(view.label.bounds) + CGRectGetHeight(view.iconImageView.bounds);
   CGFloat expectedDistance = contentHeight / 2 + view.contentVerticalMargin;
-  XCTAssertEqualWithAccuracy(view.label.center.y - view.iconImageView.center.y,
-                             expectedDistance,
-                             0.001f);
+  XCTAssertEqualWithAccuracy(view.label.center.y - view.iconImageView.center.y, expectedDistance,
+                             (CGFloat)0.001);
 }
 
 - (void)testHorizontalMarginLayout {
@@ -80,9 +82,8 @@ static UIImage *fakeImage(void) {
   CGFloat contentWidth =
       CGRectGetWidth(view.label.bounds) + CGRectGetWidth(view.iconImageView.bounds);
   CGFloat expectedDistance = contentWidth / 2 + view.contentHorizontalMargin;
-  XCTAssertEqualWithAccuracy(view.label.center.x - view.iconImageView.center.x,
-                             expectedDistance,
-                             0.001f);
+  XCTAssertEqualWithAccuracy(view.label.center.x - view.iconImageView.center.x, expectedDistance,
+                             (CGFloat)0.001);
 }
 
 - (void)testContentInsetLayout {
@@ -106,8 +107,7 @@ static UIImage *fakeImage(void) {
   XCTAssert(view.iconImageView.center.x == CGRectGetMidX(contentRect));
   CGFloat contentSpan = CGRectGetMaxY(view.label.frame) - CGRectGetMinY(view.iconImageView.frame);
   XCTAssertEqualWithAccuracy(CGRectGetMinY(view.iconImageView.frame) + contentSpan / 2,
-                             CGRectGetMidY(contentRect),
-                             0.001f);
+                             CGRectGetMidY(contentRect), (CGFloat)0.001);
 }
 
 - (void)testSetSelectedItemTintColorUpdatesInkColor {
@@ -125,6 +125,35 @@ static UIImage *fakeImage(void) {
   // Then
   XCTAssertNotEqualObjects(item1.inkView.inkColor, item1DefaultInkColor);
   XCTAssertNotEqualObjects(item2.inkView.inkColor, item2DefaultInkColor);
+}
+
+- (void)testBadgeCenterIsCorrectWithoutRTL {
+  // Given
+  MDCBottomNavigationItemView *itemView = [[MDCBottomNavigationItemView alloc] init];
+  itemView.iconImageView.frame = CGRectMake(8, 8, 24, 24);
+  CGPoint expectedCenter = CGPointMake(32, 12);
+
+  // When
+  CGPoint badgePoint =
+      [itemView badgeCenterFromIconFrame:CGRectStandardize(itemView.iconImageView.frame) isRTL:NO];
+  // Then
+  XCTAssertEqualWithAccuracy(badgePoint.x, expectedCenter.x, 0.001);
+  XCTAssertEqualWithAccuracy(badgePoint.y, expectedCenter.y, 0.001);
+}
+
+- (void)testBadgeCenterIsCorrectWithRTL {
+  // Given
+  MDCBottomNavigationItemView *itemView = [[MDCBottomNavigationItemView alloc] init];
+  itemView.iconImageView.frame = CGRectMake(8, 8, 24, 24);
+  CGPoint expectedCenter = CGPointMake(8, 12);
+
+  // When
+  CGPoint badgePoint =
+      [itemView badgeCenterFromIconFrame:CGRectStandardize(itemView.iconImageView.frame) isRTL:YES];
+
+  // Then
+  XCTAssertEqualWithAccuracy(badgePoint.x, expectedCenter.x, 0.001);
+  XCTAssertEqualWithAccuracy(badgePoint.y, expectedCenter.y, 0.001);
 }
 
 @end

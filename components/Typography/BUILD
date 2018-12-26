@@ -12,10 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("//:material_components_ios.bzl",
-     "mdc_public_objc_library",
-     "mdc_objc_library",
-     "mdc_unit_test_suite")
+load(
+    "//:material_components_ios.bzl",
+    "mdc_objc_library",
+    "mdc_public_objc_library",
+    "mdc_unit_test_suite",
+)
 
 licenses(["notice"])  # Apache 2.0
 
@@ -28,7 +30,7 @@ mdc_public_objc_library(
     deps = [
         "//components/private/Application",
         "//components/private/Math",
-        "@material_internationalization_ios//:MDFInternationalization"
+        "@material_internationalization_ios//:MDFInternationalization",
     ],
 )
 
@@ -48,15 +50,16 @@ mdc_objc_library(
         "UIKit",
         "XCTest",
     ],
+    visibility = ["//visibility:private"],
     deps = [
         ":Typography",
         ":private",
     ],
-    visibility = ["//visibility:private"],
 )
 
 mdc_unit_test_suite(
+    name = "unit_tests",
     deps = [
-      ":unit_test_sources",
+        ":unit_test_sources",
     ],
 )

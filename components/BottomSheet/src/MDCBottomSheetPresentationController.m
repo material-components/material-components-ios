@@ -48,10 +48,16 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 
 @implementation MDCBottomSheetPresentationController {
   UIView *_dimmingView;
-  @private BOOL _scrimIsAccessibilityElement;
-  @private NSString *_scrimAccessibilityLabel;
-  @private NSString *_scrimAccessibilityHint;
-  @private UIAccessibilityTraits _scrimAccessibilityTraits;
+ @private
+  UIColor *_scrimColor;
+ @private
+  BOOL _scrimIsAccessibilityElement;
+ @private
+  NSString *_scrimAccessibilityLabel;
+ @private
+  NSString *_scrimAccessibilityHint;
+ @private
+  UIAccessibilityTraits _scrimAccessibilityTraits;
 }
 
 @synthesize delegate;
@@ -84,7 +90,7 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   UIView *containerView = [self containerView];
 
   _dimmingView = [[UIView alloc] initWithFrame:self.containerView.bounds];
-  _dimmingView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.4f];
+  _dimmingView.backgroundColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.4];
   _dimmingView.translatesAutoresizingMaskIntoConstraints = NO;
   _dimmingView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -108,7 +114,7 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   [containerView addSubview:_dimmingView];
   [containerView addSubview:self.sheetView];
 
-  [self setPreferredSheetHeight:self.presentedViewController.preferredContentSize.height];
+  [self updatePreferredSheetHeight];
 
   // Add tap handler to dismiss the sheet.
   UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
@@ -155,7 +161,7 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   [super preferredContentSizeDidChangeForChildContentContainer:container];
   self.sheetView.frame = [self frameOfPresentedViewInContainerView];
   [self.sheetView layoutIfNeeded];
-  [self setPreferredSheetHeight:self.presentedViewController.preferredContentSize.height];
+  [self updatePreferredSheetHeight];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size
@@ -167,7 +173,7 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
           __unused id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
         self.sheetView.frame = [self frameOfPresentedViewInContainerView];
         [self.sheetView layoutIfNeeded];
-        [self setPreferredSheetHeight:self.presentedViewController.preferredContentSize.height];
+        [self updatePreferredSheetHeight];
       }
                       completion:nil];
 }
@@ -176,11 +182,16 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
  Sets the new value of @c sheetView.preferredSheetHeight.
  If @c preferredContentHeight is non-positive, it will set it to half of sheetView's
  frame's height.
-
- @param preferredSheetHeight If positive, the new value for @sheetView.preferredSheetHeight.
  */
-- (void)setPreferredSheetHeight:(CGFloat)preferredSheetHeight {
+- (void)updatePreferredSheetHeight {
   // If |preferredSheetHeight| has not been specified, use half of the current height.
+  CGFloat preferredSheetHeight;
+  if (self.preferredSheetHeight > 0) {
+    preferredSheetHeight = self.preferredSheetHeight;
+  } else {
+    preferredSheetHeight = self.presentedViewController.preferredContentSize.height;
+  }
+
   if (MDCCGFloatEqual(preferredSheetHeight, 0)) {
     preferredSheetHeight = MDCRound(CGRectGetHeight(self.sheetView.frame) / 2);
   }
@@ -207,6 +218,15 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 }
 
 #pragma mark - Properties
+
+- (void)setScrimColor:(UIColor *)scrimColor {
+  _scrimColor = scrimColor;
+  _dimmingView.backgroundColor = scrimColor;
+}
+
+- (UIColor *)scrimColor {
+  return _scrimColor;
+}
 
 - (void)setIsScrimAccessibilityElement:(BOOL)isScrimAccessibilityElement {
   _scrimIsAccessibilityElement = isScrimAccessibilityElement;
@@ -242,6 +262,11 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
 
 - (UIAccessibilityTraits)scrimAccessibilityTraits {
   return _scrimAccessibilityTraits;
+}
+
+- (void)setPreferredSheetHeight:(CGFloat)preferredSheetHeight {
+  _preferredSheetHeight = preferredSheetHeight;
+  [self updatePreferredSheetHeight];
 }
 
 #pragma mark - MDCSheetContainerViewDelegate

@@ -23,13 +23,6 @@
   return [super init];
 }
 
-- (instancetype)initWithCoder:(NSCoder *)__unused aDecoder {
-  if (self = [super init]) {
-    // MDCCornerTreatment has no params so nothing to decode here.
-  }
-  return self;
-}
-
 - (MDCPathGenerator *)pathGeneratorForCornerWithAngle:(CGFloat)__unused angle {
   return [MDCPathGenerator pathGeneratorWithStartPoint:CGPointZero];
 }
@@ -39,18 +32,10 @@
   return [MDCPathGenerator pathGeneratorWithStartPoint:CGPointZero];
 }
 
-- (void)encodeWithCoder:(NSCoder *)__unused aCoder {
-  // MDCCornerTreatment has no params, so nothing to encode here.
-}
-
 - (id)copyWithZone:(nullable NSZone *)__unused zone {
   MDCCornerTreatment *copy = [[[self class] alloc] init];
   copy.valueType = _valueType;
   return copy;
-}
-
-+ (BOOL)supportsSecureCoding {
-  return YES;
 }
 
 - (BOOL)isEqual:(id)object {
@@ -62,6 +47,10 @@
   }
   MDCCornerTreatment *otherCorner = (MDCCornerTreatment *)object;
   return self.valueType == otherCorner.valueType;
+}
+
+- (NSUInteger)hash {
+  return (NSUInteger)self.valueType;
 }
 
 @end

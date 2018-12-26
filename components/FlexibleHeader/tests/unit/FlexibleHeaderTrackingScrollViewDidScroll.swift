@@ -25,6 +25,8 @@ class FlexibleHeaderTrackingScrollViewDidScroll: XCTestCase {
   var scrollView: UIScrollView!
 
   override func setUp() {
+    super.setUp()
+
     view = MDCFlexibleHeaderView()
 
     let originalFrame = CGRect(x: 0, y: 0, width: 100, height: 50)
@@ -38,6 +40,14 @@ class FlexibleHeaderTrackingScrollViewDidScroll: XCTestCase {
     scrollView.frame = CGRect(x: 0, y: 0, width: originalFrame.size.width, height: 250)
 
     view.trackingScrollView = scrollView
+  }
+
+  override func tearDown() {
+    view.trackingScrollView = nil
+    scrollView = nil
+    view = nil
+
+    super.tearDown()
   }
 
   // MARK: Initial changes are ignored.

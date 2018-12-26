@@ -13,10 +13,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("//:material_components_ios.bzl",
-     "mdc_public_objc_library",
-     "mdc_objc_library",
-     "mdc_unit_test_suite")
+load(
+    "//:material_components_ios.bzl",
+    "mdc_extension_objc_library",
+    "mdc_objc_library",
+    "mdc_public_objc_library",
+    "mdc_unit_test_suite",
+)
 
 licenses(["notice"])  # Apache 2.0
 
@@ -29,9 +32,9 @@ mdc_public_objc_library(
     deps = [
         "//components/AnimationTiming",
         "//components/Ink",
-        "//components/Typography",
         "//components/ShadowElevations",
         "//components/ShadowLayer",
+        "//components/Typography",
         "@material_internationalization_ios//:MDFInternationalization",
     ],
 )
@@ -48,49 +51,28 @@ objc_bundle(
     bundle_imports = [":BundleFiles"],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "ColorThemer",
-    srcs = native.glob(["src/ColorThemer/*.m"]),
-    hdrs = native.glob(["src/ColorThemer/*.h"]),
-    includes = ["src/ColorThemer"],
-    sdk_frameworks = [
-        "UIKit",
-    ],
     deps = [
         ":Tabs",
         "//components/schemes/Color",
     ],
-    visibility = ["//visibility:public"],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "FontThemer",
-    srcs = native.glob(["src/FontThemer/*.m"]),
-    hdrs = native.glob(["src/FontThemer/*.h"]),
-    includes = ["src/FontThemer"],
-    sdk_frameworks = [
-        "UIKit",
-    ],
     deps = [
         ":Tabs",
         "//components/Themes",
     ],
-    visibility = ["//visibility:public"],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "TypographyThemer",
-    srcs = native.glob(["src/TypographyThemer/*.m"]),
-    hdrs = native.glob(["src/TypographyThemer/*.h"]),
-    includes = ["src/TypographyThemer"],
-    sdk_frameworks = [
-        "UIKit",
-    ],
     deps = [
         ":Tabs",
         "//components/schemes/Typography",
     ],
-    visibility = ["//visibility:public"],
 )
 
 mdc_objc_library(
@@ -111,18 +93,20 @@ mdc_objc_library(
         "UIKit",
         "XCTest",
     ],
+    visibility = ["//visibility:private"],
     deps = [
-        ":Tabs",
         ":ColorThemer",
         ":FontThemer",
+        ":Tabs",
         ":TypographyThemer",
         ":private",
+        "@material_internationalization_ios//:MDFInternationalization",
     ],
-    visibility = ["//visibility:private"],
 )
 
 mdc_unit_test_suite(
+    name = "unit_tests",
     deps = [
-      ":unit_test_sources",
+        ":unit_test_sources",
     ],
 )

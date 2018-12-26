@@ -221,6 +221,12 @@
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
     BOOL mdc_adjustsFontForContentSizeCategory;
 
+/**
+ If enabled, accessibilityViewIsModal will be enabled for all non-transient snackbar views.
+
+ Default is set to NO.
+ */
+@property(nonatomic, assign) BOOL shouldEnableAccessibilityViewIsModal;
 
 /**
  The delegate for MDCSnackbarManager through which it may inform of snackbar presentation updates.

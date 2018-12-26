@@ -14,6 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MDCDialogShadowedView : UIView
+#import "MaterialShadowElevations.h"
 
+@interface MDCDialogShadowedView : UIView
+@property(nonatomic, assign) MDCShadowElevation elevation;
 @end

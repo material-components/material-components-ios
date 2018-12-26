@@ -14,8 +14,9 @@
 
 #import "ChipsExamplesSupplemental.h"
 
+#import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
-#import "MaterialChips+ChipThemer.h"
+#import "MaterialContainerScheme.h"
 
 @implementation ChipsFilterExampleViewController {
   UICollectionView *_collectionView;
@@ -27,10 +28,21 @@
 - (id)init {
   self = [super init];
   if (self) {
-    self.colorScheme = [[MDCSemanticColorScheme alloc] init];
+    self.colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
     self.shapeScheme = [[MDCShapeScheme alloc] init];
+    self.typographyScheme =
+        [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
   }
   return self;
+}
+
+- (MDCContainerScheme *)containerScheme {
+  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
+  scheme.colorScheme = self.colorScheme;
+  scheme.shapeScheme = self.shapeScheme;
+  scheme.typographyScheme = self.typographyScheme;
+  return scheme;
 }
 
 - (void)loadView {
@@ -57,6 +69,10 @@
   _collectionView.contentInset = UIEdgeInsetsMake(4, 8, 4, 8);
   [_collectionView registerClass:[MDCChipCollectionViewCell class]
       forCellWithReuseIdentifier:@"Cell"];
+
+  if (@available(iOS 11.0, *)) {
+    _collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
+  }
 
   // This is used to calculate the size of each chip based on the chip setup
   _sizingChip = [[MDCChipView alloc] init];
@@ -109,18 +125,14 @@
   chipView.selectedImageView.image =
       [[self doneImage] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   chipView.selectedImageView.tintColor =
-      [_colorScheme.onSurfaceColor colorWithAlphaComponent:0.54f];
+      [_colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.54];
   chipView.selected = [_selectedIndecies containsObject:indexPath];
   cell.alwaysAnimateResize = [self shouldAnimateResize];
- 
-  MDCChipViewScheme *scheme = [[MDCChipViewScheme alloc] init];
-  scheme.colorScheme = self.colorScheme;
-  scheme.shapeScheme = self.shapeScheme;
 
   if (_isOutlined) {
-    [MDCChipViewThemer applyOutlinedVariantWithScheme:scheme toChipView:chipView];
+    [chipView applyOutlinedThemeWithScheme:[self containerScheme]];
   } else {
-    [MDCChipViewThemer applyScheme:scheme toChipView:chipView];
+    [chipView applyThemeWithScheme:[self containerScheme]];
   }
 
   return cell;

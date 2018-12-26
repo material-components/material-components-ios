@@ -17,12 +17,17 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 
+#import "../../src/private/MDCDraggableView.h"
 #import "../../src/private/MDCSheetContainerView.h"
 
 // Exposing internal methods for unit testing
 @interface MDCBottomSheetPresentationController (Testing)
 @property(nonatomic, strong) MDCSheetContainerView *sheetView;
-- (void)setPreferredSheetHeight:(CGFloat)preferredSheetHeight;
+- (void)updatePreferredSheetHeight;
+@end
+
+@interface MDCSheetContainerView (Testing)
+@property(nonatomic) MDCDraggableView *sheet;
 @end
 
 /**
@@ -79,53 +84,177 @@
   self.presentationController.sheetView = self.sheetView;
 }
 
-- (void)testSetPreferredSheetHeightZeroWhenSheetViewHasStandardizedFrame {
+- (void)tearDown {
+  self.presentationController.sheetView = nil;
+  self.presentationController = nil;
+  self.sheetView = nil;
+
+  [super tearDown];
+}
+
+- (void)testUpdatePreferredSheetHeightZeroWhenSheetViewHasStandardizedFrame {
   // Given
   CGFloat sheetFrameHeight = 80;
   self.sheetView.frame = CGRectMake(0, 0, 75, sheetFrameHeight);
 
   // When
-  [self.presentationController setPreferredSheetHeight:0];
+  [self.presentationController updatePreferredSheetHeight];
 
   // Then
   XCTAssertEqualWithAccuracy(self.sheetView.preferredSheetHeight, sheetFrameHeight / 2, 0.001);
 }
 
-- (void)testSetPreferredSheetHeightZeroWhenSheetViewHasUnstandardizedFrame {
+- (void)testUpdatePreferredSheetHeightZeroWhenSheetViewHasUnstandardizedFrame {
   // Given
   CGFloat sheetFrameHeight = -80;
   self.sheetView.frame = CGRectMake(75, 80, -75, sheetFrameHeight);
 
   // When
-  [self.presentationController setPreferredSheetHeight:0];
+  [self.presentationController updatePreferredSheetHeight];
 
   // Then
   XCTAssertEqualWithAccuracy(self.sheetView.preferredSheetHeight,
                              (CGFloat)fabs(sheetFrameHeight / 2), 0.001);
 }
 
-- (void)testSetPreferredSheetHeightPositiveValue {
+- (void)testUpdatePreferredSheetHeightPositiveValue {
   // Given
   CGFloat preferredSheetHeight = 120;
+  self.presentationController.presentedViewController.preferredContentSize =
+      CGSizeMake(100, preferredSheetHeight);
   self.sheetView.frame = CGRectMake(0, 0, 75, 80);
 
   // When
-  [self.presentationController setPreferredSheetHeight:preferredSheetHeight];
+  [self.presentationController updatePreferredSheetHeight];
 
   // Then
   XCTAssertEqualWithAccuracy(self.sheetView.preferredSheetHeight, preferredSheetHeight, 0.001);
 }
 
-- (void)testSetPreferredSheetHeightNegativeValue {
+- (void)testUpdatePreferredSheetHeightNegativeValue {
   // Given
   CGFloat preferredSheetHeight = -120;
+  self.presentationController.presentedViewController.preferredContentSize =
+      CGSizeMake(0, preferredSheetHeight);
   self.sheetView.frame = CGRectMake(0, 0, 75, -80);
 
   // When
-  [self.presentationController setPreferredSheetHeight:preferredSheetHeight];
+  [self.presentationController updatePreferredSheetHeight];
 
   // Then
   XCTAssertEqualWithAccuracy(self.sheetView.preferredSheetHeight, preferredSheetHeight, 0.001);
+}
+
+- (void)testUpdatePreferredSheetHeight {
+  // Given
+  CGFloat preferredSheetHeight = 100;
+  self.presentationController.preferredSheetHeight = preferredSheetHeight;
+
+  // When
+  [self.presentationController updatePreferredSheetHeight];
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.sheetView.preferredSheetHeight, preferredSheetHeight, 0.001);
+}
+
+- (void)testUpdateNegativePreferredSheetHeight {
+  // Given
+  CGFloat preferrredSheetHeight = -100;
+  self.presentationController.preferredSheetHeight = preferrredSheetHeight;
+  CGFloat sheetHeight = 250;
+  self.sheetView.frame = CGRectMake(0, 0, 75, sheetHeight);
+
+  // When
+  [self.presentationController updatePreferredSheetHeight];
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.sheetView.preferredSheetHeight, (CGFloat)(sheetHeight / 2),
+                             0.001);
+}
+
+- (void)testUpdatePreferredSheetHeightAndPreferredContentSize {
+  // Given
+  CGSize preferredContentSize = CGSizeMake(100, 100);
+  CGFloat preferredSheetHeight = 200;
+  self.presentationController.presentedViewController.preferredContentSize = preferredContentSize;
+  self.presentationController.preferredSheetHeight = preferredSheetHeight;
+
+  // When
+  [self.presentationController updatePreferredSheetHeight];
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.sheetView.preferredSheetHeight, preferredSheetHeight, 0.001);
+}
+
+- (void)testPreferredSheetHeightNegativeAndPreferredContentSizePositive {
+  // Given
+  CGSize preferredContentSize = CGSizeMake(100, 100);
+  CGFloat preferredSheetHeight = -200;
+  self.presentationController.presentedViewController.preferredContentSize = preferredContentSize;
+  self.presentationController.preferredSheetHeight = preferredSheetHeight;
+
+  // When
+  [self.presentationController updatePreferredSheetHeight];
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.sheetView.preferredSheetHeight, preferredContentSize.height,
+                             0.001);
+}
+
+- (void)testPreferredSheetHeightNonZeroThenZero {
+  // Given
+  CGFloat preferredSheetHeight = 200;
+  self.presentationController.preferredSheetHeight = preferredSheetHeight;
+  CGFloat sheetHeight = 300;
+  self.sheetView.frame = CGRectMake(0, 0, 200, sheetHeight);
+
+  // When
+  [self.presentationController updatePreferredSheetHeight];
+  self.presentationController.preferredSheetHeight = 0;
+  [self.presentationController updatePreferredSheetHeight];
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.sheetView.preferredSheetHeight, (CGFloat)(sheetHeight / 2),
+                             0.001);
+}
+
+- (void)testVeryLargePreferredSheetHeightAndSmallContent {
+  // Given
+  CGFloat scrollViewHeight = 100;
+  CGRect smallFrame = CGRectMake(0, 0, 200, scrollViewHeight);
+  UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:smallFrame];
+  FakeSheetView *sheetView =
+      [[FakeSheetView alloc] initWithFrame:smallFrame
+                               contentView:[[UIView alloc] initWithFrame:smallFrame]
+                                scrollView:scrollView];
+
+  self.presentationController.sheetView = sheetView;
+  self.presentationController.preferredSheetHeight = 5000;
+
+  // When
+  [self.presentationController updatePreferredSheetHeight];
+
+  // Then
+  XCTAssertEqualWithAccuracy(CGRectGetHeight(sheetView.frame), CGRectGetHeight(smallFrame), 0.001);
+}
+
+- (void)testSheetViewFrameMatchesScrollViewFrame {
+  // Given
+  CGFloat scrollViewHeight = 100;
+  CGRect fakeFrame = CGRectMake(0, 0, 200, scrollViewHeight);
+  UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
+  MDCSheetContainerView *fakeSheet =
+      [[MDCSheetContainerView alloc] initWithFrame:fakeFrame
+                                       contentView:[[UIView alloc] initWithFrame:fakeFrame]
+                                        scrollView:scrollView];
+
+  // When
+  [fakeSheet setNeedsLayout];
+  [fakeSheet layoutIfNeeded];
+
+  // Then
+  CGRect scrollViewFrame = CGRectStandardize(fakeSheet.sheet.frame);
+  XCTAssertEqualWithAccuracy(scrollViewFrame.size.height, scrollViewHeight, 0.001);
 }
 
 @end

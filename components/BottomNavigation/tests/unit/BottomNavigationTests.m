@@ -14,8 +14,9 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialBottomNavigation.h"
 #import "../../src/private/MDCBottomNavigationItemView.h"
+#import "MaterialBottomNavigation.h"
+#import "MaterialShadowElevations.h"
 
 @interface MDCBottomNavigationBar (Testing)
 @property(nonatomic, strong) NSMutableArray<MDCBottomNavigationItemView *> *itemViews;
@@ -144,6 +145,90 @@
   XCTAssert([bar.itemViews.firstObject.accessibilityIdentifier isEqualToString:newIdentifier]);
 }
 
+- (void)testAccessibilityLabelInitialValue {
+  // Given
+  NSString *initialLabel = @"initialLabel";
+  UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home" image:nil tag:0];
+  tabBarItem.accessibilityLabel = initialLabel;
+  MDCBottomNavigationBar *bar = [[MDCBottomNavigationBar alloc] init];
+  // When
+  bar.items = @[ tabBarItem ];
+
+  // Then
+  XCTAssert([bar.itemViews.firstObject.accessibilityLabel isEqualToString:initialLabel]);
+}
+
+- (void)testAccessibilityLabelValueChanged {
+  // Given
+  NSString *oldLabel = @"oldLabel";
+  NSString *newLabel = @"newLabel";
+  UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home" image:nil tag:0];
+  tabBarItem.accessibilityLabel = oldLabel;
+  MDCBottomNavigationBar *bar = [[MDCBottomNavigationBar alloc] init];
+  bar.items = @[ tabBarItem ];
+
+  // When
+  tabBarItem.accessibilityLabel = newLabel;
+
+  // Then
+  XCTAssert([bar.itemViews.firstObject.accessibilityLabel isEqualToString:newLabel]);
+}
+
+- (void)testAccessibilityHintInitialValue {
+  // Given
+  NSString *initialHint = @"initialHint";
+  UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home" image:nil tag:0];
+  tabBarItem.accessibilityHint = initialHint;
+  MDCBottomNavigationBar *bar = [[MDCBottomNavigationBar alloc] init];
+  // When
+  bar.items = @[ tabBarItem ];
+
+  // Then
+  XCTAssert([bar.itemViews.firstObject.accessibilityHint isEqualToString:initialHint]);
+}
+
+- (void)testAccessibilityHintValueChanged {
+  // Given
+  NSString *oldHint = @"oldHint";
+  NSString *newHint = @"newHint";
+  UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home" image:nil tag:0];
+  tabBarItem.accessibilityHint = oldHint;
+  MDCBottomNavigationBar *bar = [[MDCBottomNavigationBar alloc] init];
+  bar.items = @[ tabBarItem ];
+
+  // When
+  tabBarItem.accessibilityHint = newHint;
+
+  // Then
+  XCTAssert([bar.itemViews.firstObject.accessibilityHint isEqualToString:newHint]);
+}
+
+- (void)testIsAccessibilityElementInitialValue {
+  // Given
+  UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home" image:nil tag:0];
+  tabBarItem.isAccessibilityElement = NO;
+  MDCBottomNavigationBar *bar = [[MDCBottomNavigationBar alloc] init];
+  // When
+  bar.items = @[ tabBarItem ];
+
+  // Then
+  XCTAssert(!bar.itemViews.firstObject.isAccessibilityElement);
+}
+
+- (void)testIsAccessibilityElementValueChanged {
+  // Given
+  UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home" image:nil tag:0];
+  tabBarItem.isAccessibilityElement = NO;
+  MDCBottomNavigationBar *bar = [[MDCBottomNavigationBar alloc] init];
+  bar.items = @[ tabBarItem ];
+
+  // When
+  tabBarItem.isAccessibilityElement = YES;
+
+  // Then
+  XCTAssert(bar.itemViews.firstObject.isAccessibilityElement);
+}
+
 -(void)testTitleVisibility {
   UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
   UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:0];
@@ -161,6 +246,23 @@
   self.bottomNavBar.itemViews.lastObject.selected = NO;
   XCTAssert(!self.bottomNavBar.itemViews.firstObject.label.isHidden);
   XCTAssert(self.bottomNavBar.itemViews.lastObject.label.isHidden);
+}
+
+- (void)testDefaultElevation {
+  // Then
+  XCTAssertEqualWithAccuracy(self.bottomNavBar.elevation, MDCShadowElevationBottomNavigationBar,
+                             0.001);
+}
+
+- (void)testCustomElevation {
+  // Given
+  CGFloat customElevation = 20;
+
+  // When
+  self.bottomNavBar.elevation = customElevation;
+
+  // Then
+  XCTAssertEqualWithAccuracy(self.bottomNavBar.elevation, customElevation, 0.001);
 }
 
 - (void)testViewForItemFound {

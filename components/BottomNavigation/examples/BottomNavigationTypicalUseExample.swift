@@ -25,6 +25,7 @@ class BottomNavigationTypicalUseSwiftExample: UIViewController {
 
   init() {
     super.init(nibName: nil, bundle: nil)
+    commonBottomNavigationTypicalUseSwiftExampleInit()
   }
 
   @available(*, unavailable)
@@ -56,10 +57,14 @@ class BottomNavigationTypicalUseSwiftExample: UIViewController {
   
   func layoutBottomNavBar() {
     let size = bottomNavBar.sizeThatFits(view.bounds.size)
-    let bottomNavBarFrame = CGRect(x: 0,
+    var bottomNavBarFrame = CGRect(x: 0,
                                    y: view.bounds.height - size.height,
                                    width: size.width,
                                    height: size.height)
+    if #available(iOS 11.0, *) {
+      bottomNavBarFrame.size.height += view.safeAreaInsets.bottom
+      bottomNavBarFrame.origin.y -= view.safeAreaInsets.bottom
+    }
     bottomNavBar.frame = bottomNavBarFrame
   }
 
@@ -67,14 +72,6 @@ class BottomNavigationTypicalUseSwiftExample: UIViewController {
     super.viewWillLayoutSubviews()
     layoutBottomNavBar()
   }
-
-  #if swift(>=3.2)
-  @available(iOS 11, *)
-  override func viewSafeAreaInsetsDidChange() {
-    super.viewSafeAreaInsetsDidChange()
-    layoutBottomNavBar()
-  }
-  #endif
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)

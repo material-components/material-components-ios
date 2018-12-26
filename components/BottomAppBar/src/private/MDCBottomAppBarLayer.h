@@ -18,12 +18,9 @@
 
 @interface MDCBottomAppBarLayer : CAShapeLayer
 
-- (CGPathRef)pathWithCutFromRect:(CGRect)rect
-          floatingButtonPosition:(MDCBottomAppBarFloatingButtonPosition)floatingButtonPosition
-                 layoutDirection:(UIUserInterfaceLayoutDirection)layoutDirection;
-
-- (CGPathRef)pathWithoutCutFromRect:(CGRect)rect
-             floatingButtonPosition:(MDCBottomAppBarFloatingButtonPosition)floatingButtonPosition
-                    layoutDirection:(UIUserInterfaceLayoutDirection)layoutDirection;
+- (CGPathRef)pathFromRect:(CGRect)rect
+           floatingButton:(MDCFloatingButton *)floatingButton
+       navigationBarFrame:(CGRect)navigationBarFrame
+                shouldCut:(BOOL)shouldCut;
 
 @end

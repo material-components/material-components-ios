@@ -14,23 +14,12 @@
 
 #import "MDCTriangleEdgeTreatment.h"
 
-static NSString *const MDCTriangleEdgeTreatmentSizeKey = @"MDCTriangleEdgeTreatmentSizeKey";
-static NSString *const MDCTriangleEdgeTreatmentStyleKey = @"MDCTriangleEdgeTreatmentStyleKey";
-
 @implementation MDCTriangleEdgeTreatment
 
 - (instancetype)initWithSize:(CGFloat)size style:(MDCTriangleEdgeStyle)style {
   if (self = [super init]) {
     _size = size;
     _style = style;
-  }
-  return self;
-}
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  if (self = [super initWithCoder:aDecoder]) {
-    _size = (CGFloat)[aDecoder decodeDoubleForKey:MDCTriangleEdgeTreatmentSizeKey];
-    _style = [aDecoder decodeIntegerForKey:MDCTriangleEdgeTreatmentStyleKey];
   }
   return self;
 }
@@ -43,12 +32,6 @@ static NSString *const MDCTriangleEdgeTreatmentStyleKey = @"MDCTriangleEdgeTreat
   [path addLineToPoint:CGPointMake(length/2 + _size, 0)];
   [path addLineToPoint:CGPointMake(length, 0)];
   return path;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [super encodeWithCoder:aCoder];
-  [aCoder encodeDouble:_size forKey:MDCTriangleEdgeTreatmentSizeKey];
-  [aCoder encodeInteger:_style forKey:MDCTriangleEdgeTreatmentStyleKey];
 }
 
 - (id)copyWithZone:(NSZone *)__unused zone {

@@ -29,10 +29,10 @@
 // The Bundle for string resources.
 static NSString *const kMaterialBottomNavigationBundle = @"MaterialBottomNavigation.bundle";
 
-static const CGFloat kMDCBottomNavigationBarHeight = 56.f;
-static const CGFloat kMDCBottomNavigationBarHeightAdjacentTitles = 40.f;
-static const CGFloat kMDCBottomNavigationBarLandscapeContainerWidth = 320.f;
-static const CGFloat kMDCBottomNavigationBarItemsHorizontalMargin = 12.f;
+static const CGFloat kMDCBottomNavigationBarHeight = 56;
+static const CGFloat kMDCBottomNavigationBarHeightAdjacentTitles = 40;
+static const CGFloat kMDCBottomNavigationBarLandscapeContainerWidth = 320;
+static const CGFloat kMDCBottomNavigationBarItemsHorizontalMargin = 12;
 static NSString *const kMDCBottomNavigationBarBadgeColorString = @"badgeColor";
 static NSString *const kMDCBottomNavigationBarBadgeValueString = @"badgeValue";
 static NSString *const kMDCBottomNavigationBarAccessibilityValueString =
@@ -43,7 +43,9 @@ static NSString *const kMDCBottomNavigationBarSelectedImageString = @"selectedIm
 static NSString *const kMDCBottomNavigationBarNewString = @"new";
 static NSString *const kMDCBottomNavigationBarTitleString = @"title";
 static NSString *const kMDCBottomNavigationBarAccessibilityIdentifier = @"accessibilityIdentifier";
-
+static NSString *const kMDCBottomNavigationBarAccessibilityLabel = @"accessibilityLabel";
+static NSString *const kMDCBottomNavigationBarAccessibilityHint = @"accessibilityHint";
+static NSString *const kMDCBottomNavigationBarIsAccessibilityElement = @"isAccessibilityElement";
 
 static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 
@@ -119,7 +121,8 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 #else
   _shouldPretendToBeATabBar = YES;
 #endif
-  [self setElevation:MDCShadowElevationBottomNavigationBar];
+  _elevation = MDCShadowElevationBottomNavigationBar;
+  [(MDCShadowLayer *)self.layer setElevation:_elevation];
   _itemViews = [NSMutableArray array];
   _itemTitleFont = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleCaption];
 }
@@ -155,6 +158,7 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
 }
 
 - (void)setElevation:(MDCShadowElevation)elevation {
+  _elevation = elevation;
   [(MDCShadowLayer *)self.layer setElevation:elevation];
 }
 
@@ -254,6 +258,18 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
            forKeyPath:kMDCBottomNavigationBarAccessibilityIdentifier
               options:NSKeyValueObservingOptionNew
               context:nil];
+    [item addObserver:self
+           forKeyPath:kMDCBottomNavigationBarAccessibilityLabel
+              options:NSKeyValueObservingOptionNew
+              context:nil];
+    [item addObserver:self
+           forKeyPath:kMDCBottomNavigationBarAccessibilityHint
+              options:NSKeyValueObservingOptionNew
+              context:nil];
+    [item addObserver:self
+           forKeyPath:kMDCBottomNavigationBarIsAccessibilityElement
+              options:NSKeyValueObservingOptionNew
+              context:nil];
   }
 }
 
@@ -269,6 +285,9 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
                 forKeyPath:kMDCBottomNavigationBarSelectedImageString];
       [item removeObserver:self forKeyPath:kMDCBottomNavigationBarTitleString];
       [item removeObserver:self forKeyPath:kMDCBottomNavigationBarAccessibilityIdentifier];
+      [item removeObserver:self forKeyPath:kMDCBottomNavigationBarAccessibilityLabel];
+      [item removeObserver:self forKeyPath:kMDCBottomNavigationBarAccessibilityHint];
+      [item removeObserver:self forKeyPath:kMDCBottomNavigationBarIsAccessibilityElement];
     }
     @catch (NSException *exception) {
       if (exception) {
@@ -307,6 +326,12 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
       itemView.title = change[kMDCBottomNavigationBarNewString];
     } else if ([keyPath isEqualToString:kMDCBottomNavigationBarAccessibilityIdentifier]) {
       itemView.accessibilityIdentifier = change[kMDCBottomNavigationBarNewString];
+    } else if ([keyPath isEqualToString:kMDCBottomNavigationBarAccessibilityLabel]) {
+      itemView.accessibilityLabel = change[kMDCBottomNavigationBarNewString];
+    } else if ([keyPath isEqualToString:kMDCBottomNavigationBarAccessibilityHint]) {
+      itemView.accessibilityHint = change[kMDCBottomNavigationBarNewString];
+    } else if ([keyPath isEqualToString:kMDCBottomNavigationBarIsAccessibilityElement]) {
+      itemView.isAccessibilityElement = [change[kMDCBottomNavigationBarNewString] boolValue];
     }
   }
 }
@@ -403,6 +428,9 @@ static NSString *const kMDCBottomNavigationBarOfAnnouncement = @"of";
     itemView.titleBelowIcon = self.titleBelowItem;
     itemView.accessibilityValue = item.accessibilityValue;
     itemView.accessibilityIdentifier = item.accessibilityIdentifier;
+    itemView.accessibilityLabel = item.accessibilityLabel;
+    itemView.accessibilityHint = item.accessibilityHint;
+    itemView.isAccessibilityElement = item.isAccessibilityElement;
     itemView.contentInsets = self.itemsContentInsets;
     itemView.contentVerticalMargin = self.itemsContentVerticalMargin;
     itemView.contentHorizontalMargin = self.itemsContentHorizontalMargin;

@@ -14,7 +14,7 @@
 
 #import "MDCCardsColorThemer.h"
 
-static const CGFloat kStrokeVariantBorderOpacity = 0.37f;
+static const CGFloat kStrokeVariantBorderOpacity = (CGFloat)0.37;
 
 @implementation MDCCardsColorThemer
 

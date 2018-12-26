@@ -8,7 +8,7 @@ path: /catalog/chips/
 api_doc_root: true
 -->
 
-<!-- This file was auto-generated using ./scripts/generate_readme Chips -->
+<!-- This file was auto-generated using scripts/generate_readme Chips -->
 
 # Chips
 
@@ -44,11 +44,14 @@ Chips are compact elements that represent an input, attribute, or action.
   - [Stateful properties](#stateful-properties)
   - [Selected Image View](#selected-image-view)
   - [Padding](#padding)
+- [Behavioral flags](#behavioral-flags)
+  - [Accessibility](#accessibility)
 - [Examples](#examples)
   - [Create a single Chip](#create-a-single-chip)
 - [Extensions](#extensions)
   - [Chip Color Theming](#chip-color-theming)
   - [Typography Theming](#typography-theming)
+  - [Shape Theming](#shape-theming)
 
 - - -
 
@@ -289,6 +292,33 @@ uses these property to determine `intrinsicContentSize` and `sizeThatFits`.
 - - -
 
 
+## Behavioral flags
+
+<!-- Extracted from docs/enable-chips-that-delete.md -->
+
+If within your `MDCChipField` you want chips that can be deleted follow these steps.
+
+### Accessibility
+
+Enabling this flag will add 24x24 touch targets within the chip view. This goes against Google's recommended 
+48x48 touch targets. We recommend if you enable this behavior your associate it with a `MDCSnackbar` or 
+`MDCDialog` to confirm allow the user to confirm their behavior.
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+let chipField = MDCChipField()
+chipField.showChipsDeleteButton = true
+```
+
+#### Objective-C
+```objc
+MDCChipField *chipField = [[MDCChipField alloc] init];
+chipField.showChipsDeleteButton = YES;
+```
+<!--</div>-->
+
+
 ## Examples
 
 <!-- Extracted from docs/Examples.md -->
@@ -355,14 +385,13 @@ MDCChipViewColorThemer.applySemanticColorScheme(colorScheme, to: component)
 #import "MaterialChips+ColorThemer.h"
 
 // Step 2: Create or get a color scheme
-id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 
 // Step 3: Apply the color scheme to your component
 [MDCChipViewColorThemer applySemanticColorScheme:colorScheme
      toChipView:component];
 ```
 <!--</div>-->
-
 
 <!-- Extracted from docs/typography-theming.md -->
 
@@ -400,6 +429,46 @@ id<MDCTypographyScheming> typographyScheme = [[MDCTypographyScheme alloc] init];
 
 // Step 3: Apply the typography scheme to your component
 [MDCChipViewTypographyThemer applyTypographyScheme:colorScheme
+     toChipView:component];
+```
+<!--</div>-->
+
+<!-- Extracted from docs/shape-theming.md -->
+
+### Shape Theming
+
+You can theme a chip with your app's shape scheme using the ShapeThemer extension.
+
+You must first add the ShapeThemer extension to your project:
+
+```bash
+pod 'MaterialComponents/Chips+ShapeThemer'
+```
+
+<!--<div class="material-code-render" markdown="1">-->
+#### Swift
+```swift
+// Step 1: Import the ShapeThemer extension
+import MaterialComponents.MaterialChips_ShapeThemer
+
+// Step 2: Create or get a shape scheme
+let shapeScheme = MDCShapeScheme()
+
+// Step 3: Apply the shape scheme to your component
+MDCChipViewShapeThemer.applyShapeScheme(shapeScheme, to: component)
+```
+
+#### Objective-C
+
+```objc
+// Step 1: Import the ShapeThemer extension
+#import "MaterialChips+ShapeThemer.h"
+
+// Step 2: Create or get a shape scheme
+id<MDCShapeScheming> shapeScheme = [[MDCShapeScheme alloc] init];
+
+// Step 3: Apply the shape scheme to your component
+[MDCChipViewShapeThemer applyShapeScheme:shapeScheme
      toChipView:component];
 ```
 <!--</div>-->

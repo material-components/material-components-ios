@@ -14,11 +14,14 @@
 
 #import "MDCActionSheetController.h"
 
-#import "private/MDCActionSheetItemTableViewCell.h"
-#import "private/MDCActionSheetHeaderView.h"
+#import "MaterialMath.h"
 #import "MaterialTypography.h"
+#import "private/MDCActionSheetHeaderView.h"
+#import "private/MDCActionSheetItemTableViewCell.h"
 
-static NSString *const ReuseIdentifier = @"BaseCell";
+static NSString *const kReuseIdentifier = @"BaseCell";
+static const CGFloat kActionImageAlpha = (CGFloat)0.6;
+static const CGFloat kActionTextAlpha = (CGFloat)0.87;
 
 @interface MDCActionSheetAction ()
 
@@ -53,6 +56,7 @@ static NSString *const ReuseIdentifier = @"BaseCell";
                                                          image:self.image
                                                        handler:self.completionHandler];
   action.accessibilityIdentifier = self.accessibilityIdentifier;
+  action.accessibilityLabel = self.accessibilityLabel;
   return action;
 }
 
@@ -60,12 +64,11 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 
 @interface MDCActionSheetController () <MDCBottomSheetPresentationControllerDelegate,
     UITableViewDelegate, UITableViewDataSource>
-
+@property(nonatomic, strong) UITableView *tableView;
+@property(nonatomic, strong) MDCActionSheetHeaderView *header;
 @end
 
 @implementation MDCActionSheetController {
-  MDCActionSheetHeaderView *_header;
-  UITableView *_tableView;
   NSMutableArray<MDCActionSheetAction *> *_actions;
 }
 
@@ -101,11 +104,11 @@ static NSString *const ReuseIdentifier = @"BaseCell";
                                    | UIViewAutoresizingFlexibleHeight);
     _tableView.delegate = self;
     _tableView.dataSource = self;
-    _tableView.estimatedRowHeight = 56.f;
+    _tableView.estimatedRowHeight = 56;
     _tableView.rowHeight = UITableViewAutomaticDimension;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [_tableView registerClass:[MDCActionSheetItemTableViewCell class]
-       forCellReuseIdentifier:ReuseIdentifier];
+        forCellReuseIdentifier:kReuseIdentifier];
 
     _header = [[MDCActionSheetHeaderView alloc] initWithFrame:CGRectZero];
     _header.title = [title copy];
@@ -113,6 +116,9 @@ static NSString *const ReuseIdentifier = @"BaseCell";
     _backgroundColor = UIColor.whiteColor;
     _header.backgroundColor = _backgroundColor;
     _tableView.backgroundColor = _backgroundColor;
+    _actionTextColor = [UIColor.blackColor colorWithAlphaComponent:kActionTextAlpha];
+    _actionTintColor = [UIColor.blackColor colorWithAlphaComponent:kActionImageAlpha];
+    _imageRenderingMode = UIImageRenderingModeAlwaysTemplate;
   }
 
   return self;
@@ -135,24 +141,50 @@ static NSString *const ReuseIdentifier = @"BaseCell";
   [super viewDidLoad];
 
   self.view.backgroundColor = self.backgroundColor;
-  _tableView.frame = self.view.bounds;
-  [self.view addSubview:_tableView];
-  [self.view addSubview:_header];
+  self.tableView.frame = self.view.bounds;
+  [self.view addSubview:self.tableView];
+  [self.view addSubview:self.header];
 }
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
 
-  CGSize size = [_header sizeThatFits:CGRectStandardize(self.view.bounds).size];
-  _header.frame = CGRectMake(0, 0, self.view.bounds.size.width, size.height);
-  UIEdgeInsets insets = UIEdgeInsetsMake(_header.frame.size.height, 0, 0, 0);
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-  if (@available(iOS 11.0, *)) {
-    insets.bottom = self.view.safeAreaInsets.bottom;
+  if (self.tableView.contentSize.height > (CGRectGetHeight(self.view.bounds) / 2)) {
+    self.mdc_bottomSheetPresentationController.preferredSheetHeight = [self openingSheetHeight];
+  } else {
+    self.mdc_bottomSheetPresentationController.preferredSheetHeight = 0;
   }
-#endif
-  _tableView.contentInset = insets;
-  _tableView.contentOffset = CGPointMake(0, -size.height);
+  CGSize size = [self.header sizeThatFits:CGRectStandardize(self.view.bounds).size];
+  self.header.frame = CGRectMake(0, 0, self.view.bounds.size.width, size.height);
+  UIEdgeInsets insets = UIEdgeInsetsMake(self.header.frame.size.height, 0, 0, 0);
+  if (@available(iOS 11.0, *)) {
+    insets.bottom = self.tableView.adjustedContentInset.bottom;
+  }
+  self.tableView.contentInset = insets;
+  self.tableView.contentOffset = CGPointMake(0, -size.height);
+}
+
+- (CGFloat)openingSheetHeight {
+  // If there are too many options to fit on half of the screen then show as many options as
+  // possible minus half a cell, to allow for bleeding and signal to the user that the sheet is
+  // scrollable content.
+  CGFloat maxHeight = CGRectGetHeight(self.view.bounds) / 2;
+  CGFloat headerHeight = [self.header sizeThatFits:CGRectStandardize(self.view.bounds).size].height;
+  CGFloat cellHeight = self.tableView.contentSize.height / (CGFloat)_actions.count;
+  CGFloat maxTableHeight = maxHeight - headerHeight;
+  NSInteger amountOfCellsToShow = (NSInteger)(maxTableHeight / cellHeight);
+  // There is already a partially shown cell that is showing and more than half is visable
+  if (fmod(maxTableHeight, cellHeight) > (cellHeight * (CGFloat)0.5)) {
+    amountOfCellsToShow += 1;
+  }
+  CGFloat preferredHeight =
+      (((CGFloat)amountOfCellsToShow - (CGFloat)0.5) * cellHeight) + headerHeight;
+  // When updating the preferredSheetHeight the presentation controller takes into account the
+  // safe area so we have to remove that.
+  if (@available(iOS 11.0, *)) {
+    preferredHeight = preferredHeight - self.tableView.adjustedContentInset.bottom;
+  }
+  return MDCCeil(preferredHeight);
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -213,26 +245,11 @@ static NSString *const ReuseIdentifier = @"BaseCell";
   return;
 }
 
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:
-    (id<UIViewControllerTransitionCoordinator>)coordinator {
-  [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-
-  [coordinator animateAlongsideTransition:
-      ^(__unused id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
-        CGRect frame = self.view.bounds;
-        frame.size = size;
-        frame.origin = CGPointZero;
-        self.view.frame = frame;
-        [self.view setNeedsLayout];
-        [self.view layoutIfNeeded];
-      }                        completion:nil];
-}
-
 #pragma mark - Table view
 
 - (void)updateTable {
-  [_tableView reloadData];
-  [_tableView setNeedsLayout];
+  [self.tableView reloadData];
+  [self.tableView setNeedsLayout];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -256,62 +273,82 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   MDCActionSheetItemTableViewCell *cell =
-      [tableView dequeueReusableCellWithIdentifier:ReuseIdentifier forIndexPath:indexPath];
+      [tableView dequeueReusableCellWithIdentifier:kReuseIdentifier forIndexPath:indexPath];
   MDCActionSheetAction *action = _actions[indexPath.row];
   cell.action = action;
   cell.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
   cell.backgroundColor = self.backgroundColor;
   cell.actionFont = self.actionFont;
   cell.accessibilityIdentifier = action.accessibilityIdentifier;
+  cell.inkColor = self.inkColor;
+  cell.tintColor = self.actionTintColor;
+  cell.imageRenderingMode = self.imageRenderingMode;
+  cell.actionTextColor = self.actionTextColor;
   return cell;
 }
 
 - (void)setTitle:(NSString *)title {
-  _header.title = title;
+  self.header.title = title;
   [self.view setNeedsLayout];
 }
 
 - (NSString *)title {
-  return _header.title;
+  return self.header.title;
 }
 
 - (void)setMessage:(NSString *)message {
-  _header.message = message;
+  self.header.message = message;
   [self.view setNeedsLayout];
 }
 
 - (NSString *)message {
-  return _header.message;
+  return self.header.message;
 }
 
 - (void)setTitleFont:(UIFont *)titleFont {
-  _header.titleFont = titleFont;
+  self.header.titleFont = titleFont;
 }
 
 - (UIFont *)titleFont {
-  return _header.titleFont;
+  return self.header.titleFont;
 }
 
 - (void)setMessageFont:(UIFont *)messageFont {
-  _header.messageFont = messageFont;
+  self.header.messageFont = messageFont;
 }
 
 - (UIFont *)messageFont {
-  return _header.messageFont;
+  return self.header.messageFont;
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
   _backgroundColor = backgroundColor;
   self.view.backgroundColor = backgroundColor;
-  _tableView.backgroundColor = backgroundColor;
-  _header.backgroundColor = backgroundColor;
+  self.tableView.backgroundColor = backgroundColor;
+  self.header.backgroundColor = backgroundColor;
+}
+
+- (void)setTitleTextColor:(UIColor *)titleTextColor {
+  self.header.titleTextColor = titleTextColor;
+}
+
+- (UIColor *)titleTextColor {
+  return self.header.titleTextColor;
+}
+
+- (void)setMessageTextColor:(UIColor *)messageTextColor {
+  self.header.messageTextColor = messageTextColor;
+}
+
+- (UIColor *)messageTextColor {
+  return self.header.messageTextColor;
 }
 
 #pragma mark - Dynamic Type
 
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
   _mdc_adjustsFontForContentSizeCategory = adjusts;
-  _header.mdc_adjustsFontForContentSizeCategory = adjusts;
+  self.header.mdc_adjustsFontForContentSizeCategory = adjusts;
   [self updateFontsForDynamicType];
   if (_mdc_adjustsFontForContentSizeCategory) {
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -341,6 +378,33 @@ static NSString *const ReuseIdentifier = @"BaseCell";
 - (void)updateFontsForDynamicType {
   [self updateTableFonts];
   [self.view setNeedsLayout];
+}
+
+#pragma mark - Table customization
+
+- (void)setActionFont:(UIFont *)actionFont {
+  _actionFont = actionFont;
+  [self.tableView reloadData];
+}
+
+- (void)setActionTextColor:(UIColor *)actionTextColor {
+  _actionTextColor = actionTextColor;
+  [self.tableView reloadData];
+}
+
+- (void)setActionTintColor:(UIColor *)actionTintColor {
+  _actionTintColor = actionTintColor;
+  [self.tableView reloadData];
+}
+
+- (void)setImageRenderingMode:(UIImageRenderingMode)imageRenderingMode {
+  _imageRenderingMode = imageRenderingMode;
+  [self.tableView reloadData];
+}
+
+- (void)setInkColor:(UIColor *)inkColor {
+  _inkColor = inkColor;
+  [self.tableView reloadData];
 }
 
 @end

@@ -12,8 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("//:material_components_ios.bzl",
-     "mdc_public_objc_library")
+load(
+    "//:material_components_ios.bzl",
+    "mdc_extension_objc_library",
+    "mdc_objc_library",
+    "mdc_public_objc_library",
+    "mdc_unit_test_suite",
+)
 
 licenses(["notice"])  # Apache 2.0
 
@@ -25,9 +30,60 @@ mdc_public_objc_library(
     ],
     deps = [
         "//components/Ink",
-        "//components/ShadowLayer",
         "//components/ShadowElevations",
+        "//components/ShadowLayer",
         "//components/Typography",
         "@material_internationalization_ios//:MDFInternationalization",
+    ],
+)
+
+mdc_extension_objc_library(
+    name = "TypographyThemer",
+    deps = [
+        ":List",
+        "//components/schemes/Typography",
+    ],
+)
+
+mdc_extension_objc_library(
+    name = "ColorThemer",
+    deps = [
+        ":List",
+        "//components/schemes/Color",
+    ],
+)
+
+mdc_extension_objc_library(
+    name = "ListThemer",
+    deps = [
+        ":ColorThemer",
+        ":List",
+        ":TypographyThemer",
+    ],
+)
+
+mdc_objc_library(
+    name = "unit_test_sources",
+    testonly = 1,
+    srcs = native.glob([
+        "tests/unit/*.m",
+    ]),
+    sdk_frameworks = [
+        "UIKit",
+        "XCTest",
+    ],
+    visibility = ["//visibility:private"],
+    deps = [
+        ":ColorThemer",
+        ":List",
+        ":ListThemer",
+        ":TypographyThemer",
+    ],
+)
+
+mdc_unit_test_suite(
+    name = "unit_tests",
+    deps = [
+        ":unit_test_sources",
     ],
 )

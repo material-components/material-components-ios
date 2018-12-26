@@ -15,13 +15,13 @@
 #import "MDCSliderColorThemer.h"
 #import "MaterialPalettes.h"
 
-static const CGFloat kSliderThemerLightAlpha = 0.26f;
-static const CGFloat kSliderThemerDarkAlpha = 0.3f;
-static const CGFloat kSliderBaselineDisabledFillAlpha = 0.32f;
-static const CGFloat kSliderBaselineEnabledBackgroundAlpha = 0.24f;
-static const CGFloat kSliderBaselineDisabledBackgroundAlpha = 0.12f;
-static const CGFloat kSliderBaselineEnabledTicksAlpha = 0.54f;
-static const CGFloat kSliderBaselineDisabledTicksAlpha = 0.12f;
+static const CGFloat kSliderThemerLightAlpha = (CGFloat)0.26;
+static const CGFloat kSliderThemerDarkAlpha = (CGFloat)0.3;
+static const CGFloat kSliderBaselineDisabledFillAlpha = (CGFloat)0.32;
+static const CGFloat kSliderBaselineEnabledBackgroundAlpha = (CGFloat)0.24;
+static const CGFloat kSliderBaselineDisabledBackgroundAlpha = (CGFloat)0.12;
+static const CGFloat kSliderBaselineEnabledTicksAlpha = (CGFloat)0.54;
+static const CGFloat kSliderBaselineDisabledTicksAlpha = (CGFloat)0.12;
 
 @implementation MDCSliderColorThemer
 

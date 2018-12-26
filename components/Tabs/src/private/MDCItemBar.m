@@ -28,16 +28,16 @@
 static NSString *const kItemReuseID = @"MDCItem";
 
 /// Default duration in seconds for selection change animations.
-static const NSTimeInterval kDefaultAnimationDuration = 0.3f;
+static const NSTimeInterval kDefaultAnimationDuration = 0.3;
 
 /// Placeholder width for cells, which get per-item sizing.
-static const CGFloat kPlaceholderCellWidth = 10.0f;
+static const CGFloat kPlaceholderCellWidth = 10;
 
 /// Horizontal insets in regular size class layouts.
-static const CGFloat kRegularInset = 56.0f;
+static const CGFloat kRegularInset = 56;
 
 /// Horizontal insets in compact size class layouts.
-static const CGFloat kCompactInset = 8.0f;
+static const CGFloat kCompactInset = 8;
 
 /// KVO context pointer identifying changes in MDCItemBarItem properties.
 static void *kItemPropertyContext = &kItemPropertyContext;
@@ -328,6 +328,21 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   [self updateColors];
 }
 
+// UISemanticContentAttribute was added in iOS SDK 9.0 but is available on devices running earlier
+// version of iOS. We ignore the partial-availability warning that gets thrown on our use of this
+// symbol.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpartial-availability"
+- (void)mdf_setSemanticContentAttribute:(UISemanticContentAttribute)semanticContentAttribute {
+  if (semanticContentAttribute == self.mdf_semanticContentAttribute) {
+    return;
+  }
+  [super mdf_setSemanticContentAttribute:semanticContentAttribute];
+  _collectionView.mdf_semanticContentAttribute = semanticContentAttribute;
+  [_collectionView.collectionViewLayout invalidateLayout];
+}
+#pragma clang diagnostic pop
+
 #pragma mark - UICollectionViewDelegate
 
 - (BOOL)collectionView:(UICollectionView *)collectionView
@@ -402,7 +417,6 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
   // Size cell to fit content.
   size = [MDCItemBarCell sizeThatFits:size
-                  horizontalSizeClass:[self horizontalSizeClass]
                                  item:item
                                 style:_style];
 
@@ -516,8 +530,8 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   flowLayout.itemSize = CGSizeMake(kPlaceholderCellWidth, itemHeight);
   flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
   flowLayout.sectionInset = UIEdgeInsetsZero;
-  flowLayout.minimumInteritemSpacing = 0.0f;
-  flowLayout.minimumLineSpacing = 0.0f;
+  flowLayout.minimumInteritemSpacing = 0;
+  flowLayout.minimumLineSpacing = 0;
   return flowLayout;
 }
 
@@ -608,7 +622,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
         [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
     [CATransaction setAnimationTimingFunction:easeInOut];
     [UIView animateWithDuration:kDefaultAnimationDuration
-                          delay:0.0f
+                          delay:0
                         options:UIViewAnimationOptionBeginFromCurrentState
                      animations:animationBlock
                      completion:nil];
@@ -623,10 +637,6 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 }
 
 - (void)updateFlowLayoutMetrics {
-  // Layout metrics cannot be updated while offscreen.
-  if (!self.window) {
-    return;
-  }
 
   UIUserInterfaceSizeClass horizontalSizeClass = [self horizontalSizeClass];
 
@@ -656,7 +666,6 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   // This is not animated because -updateFlowLayoutMetrics may be called in an animation block and
   // the change will be still get animated anyway - using NO avoids 'double' animation and allows
   // this method to be used without animation.
-  NSAssert(_collectionView.window, @"Collection view must be in a window to update layout");
   [_collectionView setCollectionViewLayout:_flowLayout animated:NO];
 
   // Force immediate layout so the selection indicator can be placed accurately.
@@ -676,13 +685,13 @@ static void *kItemPropertyContext = &kItemPropertyContext;
       inset = 0;
     }
   }
-  return UIEdgeInsetsMake(0.0f, inset, 0.0f, inset);
+  return UIEdgeInsetsMake(0, inset, 0, inset);
 }
 
 - (UIEdgeInsets)justifiedInsets {
   // Center items, which will be at most the width of the view.
   CGFloat itemWidths = [self totalWidthOfAllItems];
-  CGFloat sideInsets = floorf((float)([self adjustedCollectionViewWidth] - itemWidths) / 2.0f);
+  CGFloat sideInsets = floorf((float)([self adjustedCollectionViewWidth] - itemWidths) / 2);
   return UIEdgeInsetsMake(0.0, sideInsets, 0.0, sideInsets);
 }
 
@@ -691,7 +700,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   CGFloat viewWidth = [self adjustedCollectionViewWidth];
   UIEdgeInsets insets = [self leadingAlignedInsetsForHorizontalSizeClass:sizeClass];
   if (itemWidths <= (viewWidth - insets.left - insets.right)) {
-    CGFloat sideInsets = ([self adjustedCollectionViewWidth] - itemWidths) / 2.0f;
+    CGFloat sideInsets = ([self adjustedCollectionViewWidth] - itemWidths) / 2;
     return UIEdgeInsetsMake(0.0, sideInsets, 0.0, sideInsets);
   }
   return insets;
@@ -702,7 +711,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
   NSInteger count = [self collectionView:_collectionView numberOfItemsInSection:0];
   if (count > 0) {
-    CGFloat halfBoundsWidth = [self adjustedCollectionViewWidth] / 2.0f;
+    CGFloat halfBoundsWidth = [self adjustedCollectionViewWidth] / 2;
 
     CGSize firstSize = [self collectionView:_collectionView
                                      layout:_flowLayout
@@ -712,11 +721,11 @@ static void *kItemPropertyContext = &kItemPropertyContext;
                     sizeForItemAtIndexPath:[self indexPathForItemAtIndex:count - 1]];
 
     // Left inset is equal to the space to the left of the first item when centered.
-    CGFloat halfFirstWidth = firstSize.width / 2.0f;
+    CGFloat halfFirstWidth = firstSize.width / 2;
     sectionInset.left = halfBoundsWidth - halfFirstWidth;
 
     // Right inset is equal to the space to the right of the last item when centered.
-    CGFloat halfLastWidth = lastSize.width / 2.0f;
+    CGFloat halfLastWidth = lastSize.width / 2;
     sectionInset.right = halfBoundsWidth - halfLastWidth;
   }
   return sectionInset;

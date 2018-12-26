@@ -13,11 +13,15 @@
 // limitations under the License.
 
 import UIKit
-import MaterialComponentsAlpha.MaterialNavigationDrawer
+import MaterialComponents.MaterialBottomAppBar
+import MaterialComponents.MaterialBottomAppBar_ColorThemer
 import MaterialComponents.MaterialColorScheme
+import MaterialComponents.MaterialNavigationDrawer
+import MaterialComponents.MaterialNavigationDrawer_ColorThemer
 
 class BottomDrawerWithScrollableContentExample: UIViewController {
   var colorScheme = MDCSemanticColorScheme()
+  let bottomAppBar = MDCBottomAppBarView()
 
   let headerViewController = DrawerHeaderViewController()
   let contentViewController = DrawerContentWithScrollViewController()
@@ -25,19 +29,48 @@ class BottomDrawerWithScrollableContentExample: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = colorScheme.backgroundColor
-    headerViewController.colorScheme = colorScheme
     contentViewController.colorScheme = colorScheme
+
+    bottomAppBar.isFloatingButtonHidden = true
+    let barButtonLeadingItem = UIBarButtonItem()
+    let menuImage = UIImage(named:"Menu")?.withRenderingMode(.alwaysTemplate)
+    barButtonLeadingItem.image = menuImage
+    barButtonLeadingItem.target = self
+    barButtonLeadingItem.action = #selector(presentNavigationDrawer)
+    bottomAppBar.leadingBarButtonItems = [ barButtonLeadingItem ]
+    MDCBottomAppBarColorThemer.applySurfaceVariant(withSemanticColorScheme: colorScheme,
+                                                   to: bottomAppBar)
+    view.addSubview(bottomAppBar)
   }
 
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
+  private func layoutBottomAppBar() {
+    let size = bottomAppBar.sizeThatFits(view.bounds.size)
+    var bottomBarViewFrame = CGRect(x: 0,
+                                    y: view.bounds.size.height - size.height,
+                                    width: size.width,
+                                    height: size.height)
+    if #available(iOS 11.0, *) {
+      bottomBarViewFrame.size.height += view.safeAreaInsets.bottom
+      bottomBarViewFrame.origin.y -= view.safeAreaInsets.bottom
+    }
+    bottomAppBar.frame = bottomBarViewFrame
+  }
+
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+
+    layoutBottomAppBar()
+  }
+
+  @objc func presentNavigationDrawer() {
     let bottomDrawerViewController = MDCBottomDrawerViewController()
     bottomDrawerViewController.contentViewController = contentViewController
     bottomDrawerViewController.headerViewController = headerViewController
     bottomDrawerViewController.trackingScrollView = contentViewController.collectionView
+    MDCBottomDrawerColorThemer.applySemanticColorScheme(colorScheme,
+                                                        toBottomDrawer: bottomDrawerViewController)
     present(bottomDrawerViewController, animated: true, completion: nil)
   }
-
 }
 
 class DrawerContentWithScrollViewController: UIViewController,
@@ -46,15 +79,6 @@ class DrawerContentWithScrollViewController: UIViewController,
 
   let collectionView: UICollectionView
   let layout = UICollectionViewFlowLayout()
-  override var preferredContentSize: CGSize {
-    get {
-      return CGSize(width: view.bounds.width,
-                    height: layout.collectionViewContentSize.height)
-    }
-    set {
-      super.preferredContentSize = newValue
-    }
-  }
 
   init() {
     collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -68,13 +92,12 @@ class DrawerContentWithScrollViewController: UIViewController,
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = colorScheme.primaryColor
     collectionView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width,
                              height: self.view.bounds.height)
     collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
-    collectionView.isScrollEnabled = false
     collectionView.delegate = self
     collectionView.dataSource = self
+    collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     layout.minimumLineSpacing = 0
     layout.minimumInteritemSpacing = 0
     self.view.addSubview(collectionView)
@@ -84,6 +107,8 @@ class DrawerContentWithScrollViewController: UIViewController,
     super.viewWillLayoutSubviews()
     let s = self.view.frame.size.width / 3
     layout.itemSize = CGSize(width: s, height: s)
+    self.preferredContentSize = CGSize(width: view.bounds.width,
+                                       height: layout.collectionViewContentSize.height)
   }
 
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

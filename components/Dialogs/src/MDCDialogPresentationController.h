@@ -14,6 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MaterialShadowElevations.h"
+
 /**
  MDCDialogPresentationController will present a modal ViewController as a dialog according to the
  Material spec.
@@ -48,6 +50,20 @@
  Defaults to 0.0.
  */
 @property(nonatomic, assign) CGFloat dialogCornerRadius;
+
+/**
+ Customize the elevation of the shadow to match the presented view's shadow.
+
+ Defaults to 24.0.
+ */
+@property(nonatomic, assign) MDCShadowElevation dialogElevation;
+
+/**
+ Customize the color of the background scrim.
+
+ Defaults to a semi-transparent Black.
+ */
+@property(nonatomic, strong, nullable) UIColor *scrimColor;
 
 /**
  Returns the size of the specified child view controller's content.

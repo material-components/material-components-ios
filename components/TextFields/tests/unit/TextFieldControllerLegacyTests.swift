@@ -21,6 +21,12 @@ import MaterialComponents.MaterialPalettes
 import MaterialComponents.MaterialTextFields
 
 class TextFieldControllerDefaultLegacyTests: XCTestCase {
+  override class func tearDown() {
+    RunLoop.main.run(until: Date.init(timeIntervalSinceNow: 1))
+
+    super.tearDown()
+  }
+
   func testCopyingLegacyDefault() {
     let textField = MDCTextField()
 

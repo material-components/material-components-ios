@@ -33,9 +33,12 @@
 }
 
 - (void)tearDown {
-  [super tearDown];
+  for (UIView *subview in self.showView.subviews) {
+    [subview removeFromSuperview];
+  }
   self.showView = nil;
   self.highlightedView = nil;
+  [super tearDown];
 }
 
 - (void)testFeaturehighlightSemanticColorThemer {
@@ -43,7 +46,8 @@
       [[MDCFeatureHighlightViewController alloc] initWithHighlightedView:self.highlightedView
                                                              andShowView:self.showView
                                                               completion:nil];
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   [MDCFeatureHighlightColorThemer applySemanticColorScheme:colorScheme
                           toFeatureHighlightViewController:featureHighlightViewController];
   XCTAssertEqualObjects(featureHighlightViewController.titleColor, colorScheme.onPrimaryColor);

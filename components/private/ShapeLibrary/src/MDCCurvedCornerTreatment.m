@@ -14,8 +14,6 @@
 
 #import "MDCCurvedCornerTreatment.h"
 
-static NSString *const MDCCurvedCornerTreatmentSizeKey = @"MDCCurvedCornerTreatmentSizeKey";
-
 @implementation MDCCurvedCornerTreatment
 
 - (instancetype)init {
@@ -25,13 +23,6 @@ static NSString *const MDCCurvedCornerTreatmentSizeKey = @"MDCCurvedCornerTreatm
 - (instancetype)initWithSize:(CGSize)size {
   if (self = [super init]) {
     _size = size;
-  }
-  return self;
-}
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  if (self = [super initWithCoder:aDecoder]) {
-    _size = [aDecoder decodeCGSizeForKey:MDCCurvedCornerTreatmentSizeKey];
   }
   return self;
 }
@@ -53,19 +44,10 @@ static NSString *const MDCCurvedCornerTreatmentSizeKey = @"MDCCurvedCornerTreatm
   return path;
 }
 
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [super encodeWithCoder:aCoder];
-  [aCoder encodeCGSize:_size forKey:MDCCurvedCornerTreatmentSizeKey];
-}
-
 - (id)copyWithZone:(NSZone *)zone {
   MDCCurvedCornerTreatment *copy = [super copyWithZone:zone];
   copy.size = _size;
   return copy;
-}
-
-+ (BOOL)supportsSecureCoding {
-  return YES;
 }
 
 - (BOOL)isEqual:(id)object {
@@ -79,6 +61,10 @@ static NSString *const MDCCurvedCornerTreatmentSizeKey = @"MDCCurvedCornerTreatm
   }
   MDCCurvedCornerTreatment *otherCurvedCorner = (MDCCurvedCornerTreatment *)object;
   return CGSizeEqualToSize(self.size, otherCurvedCorner.size);
+}
+
+- (NSUInteger)hash {
+  return @(self.size.height).hash ^ @(self.size.width).hash ^ (NSUInteger)self.valueType;
 }
 
 @end

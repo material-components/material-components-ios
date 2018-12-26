@@ -13,6 +13,9 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
+#import "MaterialButtons.h"
+
+#import "MaterialShadowElevations.h"
 
 @class MDCAlertAction;
 
@@ -47,31 +50,20 @@
 /** Alert controllers must be created with alertControllerWithTitle:message: */
 - (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;
 
-/**
- Adds an action to the alert dialog.
-
- Actions are the possible reactions of the user to the presented alert. Actions are added as a
- button at the bottom of the alert. Affirmative actions should be added before dismissive actions.
- Action buttons will be laid out from right to left if possible or top to bottom depending on space.
-
- Material spec recommends alerts should not have more than two actions.
-
- @param action Will be added to the end of MDCAlertController.actions.
- */
-- (void)addAction:(nonnull MDCAlertAction *)action;
-
-/**
- The actions that the user can take in response to the alert.
-
- The order of the actions in the array matches the order in which they were added to the alert.
- */
-@property(nonatomic, nonnull, readonly) NSArray<MDCAlertAction *> *actions;
-
 /** The font applied to the title of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIFont *titleFont;
 
 /** The color applied to the title of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIColor *titleColor;
+
+/** The alignment applied to the title of the Alert Controller.*/
+@property(nonatomic, assign) NSTextAlignment titleAlignment;
+
+/** An optional icon appearing above the title of the Alert Controller.*/
+@property(nonatomic, strong, nullable) UIImage *titleIcon;
+
+/** The tint color applied to the titleIcon. Leave empty to preserve original image color(s).*/
+@property(nonatomic, strong, nullable) UIColor *titleIconTintColor;
 
 /** The font applied to the message of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIFont *messageFont;
@@ -79,17 +71,26 @@
 /** The color applied to the message of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIColor *messageColor;
 
+// b/117717380: Will be deprecated
 /** The font applied to the button of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIFont *buttonFont;
 
+// b/117717380: Will be deprecated
 /** The color applied to the button title text of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIColor *buttonTitleColor;
 
+// b/117717380: Will be deprecated
 /** The color applied to the button ink effect of Alert Controller.*/
 @property(nonatomic, strong, nullable) UIColor *buttonInkColor;
 
+/** The color applied to the Alert's background when presented by MDCDialogPresentationController.*/
+@property(nonatomic, strong, nullable) UIColor *scrimColor;
+
 /** The corner radius applied to the Alert Controller view. Default to 0 (no round corners) */
 @property(nonatomic, assign) CGFloat cornerRadius;
+
+/** The elevation that will be applied to the Alert Controller view. Default to 24. */
+@property(nonatomic, assign) MDCShadowElevation elevation;
 
 // TODO(iangordon): Add support for preferredAction to match UIAlertController.
 // TODO(iangordon): Consider adding support for UITextFields to match UIAlertController.
@@ -119,12 +120,41 @@
 
 /** MDCAlertController handles its own transitioning delegate. */
 - (void)setTransitioningDelegate:
-        (_Nullable id<UIViewControllerTransitioningDelegate>)transitioningDelegate NS_UNAVAILABLE;
+    (_Nullable id<UIViewControllerTransitioningDelegate>)transitioningDelegate NS_UNAVAILABLE;
 
 /** MDCAlertController.modalPresentationStyle is always UIModalPresentationCustom. */
 - (void)setModalPresentationStyle:(UIModalPresentationStyle)modalPresentationStyle NS_UNAVAILABLE;
 
+/**
+ The actions that the user can take in response to the alert.
+
+ The order of the actions in the array matches the order in which they were added to the alert.
+ */
+@property(nonatomic, nonnull, readonly) NSArray<MDCAlertAction *> *actions;
+
+/**
+ Adds an action to the alert dialog.
+
+ Actions are the possible reactions of the user to the presented alert. Actions are added as a
+ button at the bottom of the alert. Affirmative actions should be added before dismissive actions.
+ Action buttons will be laid out from right to left if possible or top to bottom depending on space.
+
+ Material spec recommends alerts should not have more than two actions.
+
+ @param action Will be added to the end of MDCAlertController.actions.
+ */
+- (void)addAction:(nonnull MDCAlertAction *)action;
+
 @end
+
+typedef NS_ENUM(NSInteger, MDCActionEmphasis) {
+  /* Low emphasis attribute produces low emphasis appearance when attached to actions or buttons */
+  MDCActionEmphasisLow = 0,
+  /* a Medium emphasis attribute produces a medium emphasis appearance */
+  MDCActionEmphasisMedium = 1,
+  /* a High emphasis attribute produces a high emphasis appearance */
+  MDCActionEmphasisHigh = 2,
+};
 
 /**
  MDCActionHandler is a block that will be invoked when the action is selected.
@@ -137,7 +167,8 @@ typedef void (^MDCActionHandler)(MDCAlertAction *_Nonnull action);
 @interface MDCAlertAction : NSObject <NSCopying, UIAccessibilityIdentification>
 
 /**
- Action alerts control the buttons that will be displayed on the bottom of an alert controller.
+ A convenience method for adding actions that will be rendered as low emphasis buttons at the
+ bottom of an alert controller.
 
  @param title The title of the button shown on the alert dialog.
  @param handler A block to execute when the user selects the action.
@@ -146,15 +177,32 @@ typedef void (^MDCActionHandler)(MDCAlertAction *_Nonnull action);
 + (nonnull instancetype)actionWithTitle:(nonnull NSString *)title
                                 handler:(__nullable MDCActionHandler)handler;
 
+/**
+ An action that renders at the bottom of an alert controller as a button of the given emphasis.
+
+ @param title The title of the button shown on the alert dialog.
+ @param emphasis The emphasis of the button that will be rendered in the alert dialog.
+        Unthemed actions will render all emphases as text. Apply themers to the alert
+        to achieve different appearance for different emphases.
+ @param handler A block to execute when the user selects the action.
+ @return An initialized MDCActionAlert object.
+ */
++ (nonnull instancetype)actionWithTitle:(nonnull NSString *)title
+                               emphasis:(MDCActionEmphasis)emphasis
+                                handler:(__nullable MDCActionHandler)handler;
+
 /** Alert actions must be created with actionWithTitle:handler: */
 - (nonnull instancetype)init NS_UNAVAILABLE;
 
 /**
  Title of the button shown on the alert dialog.
-
- Alert actions titles must be set in the actionWithTitle:handler: method.
  */
 @property(nonatomic, nullable, readonly) NSString *title;
+
+/**
+ The MDCActionEmphasis emphasis of the button that will be rendered for the action.
+ */
+@property(nonatomic, readonly) MDCActionEmphasis emphasis;
 
 // TODO(iangordon): Add support for enabled property to match UIAlertAction
 

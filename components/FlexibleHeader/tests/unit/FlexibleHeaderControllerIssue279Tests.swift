@@ -25,15 +25,32 @@ class FlexibleHeaderControllerIssue279Tests: XCTestCase {
   var tableViewController: UITableViewController!
 
   override func setUp() {
+    super.setUp()
+
     fhvc = MDCFlexibleHeaderViewController()
 
     tableViewController = UITableViewController()
+    #if swift(>=4.2)
+    tableViewController.addChild(fhvc)
+    #else
     tableViewController.addChildViewController(fhvc)
+    #endif
     tableViewController.view.addSubview(fhvc.headerView)
 
     fhvc.headerView.trackingScrollView = tableViewController.tableView
 
+    #if swift(>=4.2)
+    fhvc.didMove(toParent: tableViewController)
+    #else
     fhvc.didMove(toParentViewController: tableViewController)
+    #endif
+  }
+
+  override func tearDown() {
+    tableViewController = nil
+    fhvc = nil
+    
+    super.tearDown()
   }
 
   func testIsFrontMostView() {

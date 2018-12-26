@@ -38,6 +38,22 @@
 
 @end
 
+@implementation BottomSheetPresentationExample (CatalogByConvention)
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Bottom Sheet", @"Presentation from Modal" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
++ (BOOL)catalogIsPresentable {
+  return NO;
+}
+
+@end
+
 @implementation BottomSheetShortCollectionExample (CatalogByConvention)
 
 + (NSDictionary *)catalogMetadata {

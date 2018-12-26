@@ -16,6 +16,8 @@ import Foundation
 import UIKit
 
 import MaterialComponents.MaterialButtons_ButtonThemer
+import MaterialComponentsBeta.MaterialButtons_Theming
+import MaterialComponentsBeta.MaterialContainerScheme
 
 class ButtonsSimpleExampleSwiftViewController: UIViewController {
 
@@ -46,7 +48,7 @@ class ButtonsSimpleExampleSwiftViewController: UIViewController {
     view.addSubview(containedButton)
 
     let textButton = MDCButton()
-    MDCTextButtonThemer.applyScheme(buttonScheme, to: textButton)
+    textButton.applyTextTheme(withScheme: MDCContainerScheme())
     textButton.setTitle("Touch me", for: UIControlState())
     textButton.sizeToFit()
     let textButtonVerticalInset =

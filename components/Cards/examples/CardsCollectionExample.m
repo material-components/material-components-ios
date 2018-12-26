@@ -70,7 +70,10 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
   MDCCardCollectionCell *cell =
   [collectionView dequeueReusableCellWithReuseIdentifier:kReusableIdentifierItem
                                             forIndexPath:indexPath];
-  [cell setBackgroundColor:[UIColor colorWithRed:107/255.f green:63/255.f blue:238/255.f alpha:1]];
+  [cell setBackgroundColor:[UIColor colorWithRed:107 / (CGFloat)255
+                                           green:63 / (CGFloat)255
+                                            blue:238 / (CGFloat)255
+                                           alpha:1]];
   return cell;
 }
 
@@ -92,13 +95,13 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
 - (CGFloat)collectionView:(UICollectionView *)collectionView
                    layout:(UICollectionViewLayout*)collectionViewLayout
 minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-  return 8.f;
+  return 8;
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView
                    layout:(UICollectionViewLayout*)collectionViewLayout
 minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
-  return 8.f;
+  return 8;
 }
 
 #pragma mark - Reordering

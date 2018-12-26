@@ -25,15 +25,12 @@
   if (self) {
     switch (defaults) {
       case MDCShapeSchemeDefaultsMaterial201809:
-        _smallSurfaceShape =
-            [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyRounded
-                                                    andSize:4.f];
-        _mediumSurfaceShape =
-            [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyRounded
-                                                    andSize:4.f];
-        _largeSurfaceShape =
-            [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyRounded
-                                                    andSize:0.f];
+        _smallComponentShape =
+            [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyRounded andSize:4];
+        _mediumComponentShape =
+            [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyRounded andSize:4];
+        _largeComponentShape =
+            [[MDCShapeCategory alloc] initCornersWithFamily:MDCShapeCornerFamilyRounded andSize:0];
         break;
     }
   }

@@ -12,9 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import "MaterialChips.h"
+
 #import <XCTest/XCTest.h>
 
-#import "MaterialChips.h"
+#import "../../src/MDCChipField.h"
+
+// Expose internal methods for testing
+@interface MDCChipField (Testing)
+- (void)createNewChipFromInput;
+@end
 
 static inline UIColor *MDCColorFromRGB(uint32_t rgbValue) {
   return [UIColor colorWithRed:((CGFloat)((rgbValue & 0xFF0000) >> 16)) / 255
@@ -89,17 +96,17 @@ static inline UIImage *TestImage(CGSize size) {
   XCTAssertNil(chip.shapeGenerator);
   // Background color
   XCTAssertEqualObjects([chip backgroundColorForState:UIControlStateDisabled],
-                        MDCColorLighten(MDCColorFromRGB(0xEBEBEB), 0.38f));
+                        MDCColorLighten(MDCColorFromRGB(0xEBEBEB), (CGFloat)0.38));
   XCTAssertEqualObjects([chip backgroundColorForState:UIControlStateSelected],
-                        MDCColorDarken(MDCColorFromRGB(0xEBEBEB), 0.16f));
+                        MDCColorDarken(MDCColorFromRGB(0xEBEBEB), (CGFloat)0.16));
 
   // Elevation
   XCTAssertEqualWithAccuracy([chip elevationForState:UIControlStateHighlighted], 8, 0.001);
 
   // Title color
-  UIColor *normalTitleColor = [UIColor colorWithWhite:0.13f alpha:1.0f];
+  UIColor *normalTitleColor = [UIColor colorWithWhite:(CGFloat)0.13 alpha:1];
   XCTAssertEqualObjects([chip titleColorForState:UIControlStateDisabled],
-                        MDCColorLighten(normalTitleColor, 0.38f));
+                        MDCColorLighten(normalTitleColor, (CGFloat)0.38));
 
   UIControlState maximumState =
       UIControlStateDisabled | UIControlStateSelected | UIControlStateHighlighted;
@@ -285,6 +292,109 @@ static inline UIImage *TestImage(CGSize size) {
   XCTAssertFalse([chip pointInside:CGPointMake(CGRectGetMaxX(chipBounds) - hitAreaInsets.right,
                                                CGRectGetMaxY(chipBounds) - hitAreaInsets.bottom)
                         withEvent:nil]);
+}
+
+- (void)testRemoveChipsManually {
+  // Given
+  MDCChipField *field = [[MDCChipField alloc] init];
+  field.frame = CGRectMake(0, 0, 200, 50);
+  field.textField.text = @"Test";
+  field.textField.placeholder = @"Test";
+  [field setNeedsLayout];
+  [field layoutIfNeeded];
+
+  // When
+  [field createNewChipFromInput];
+  [field layoutIfNeeded];
+  CGFloat placeholderWithChipOriginX =
+      CGRectStandardize(field.textField.placeholderLabel.frame).origin.x;
+  MDCChipView *chip = field.chips[0];
+  [field removeChip:chip];
+  [field layoutIfNeeded];
+
+  // Then
+  CGFloat finalPlaceholderPositionOriginX =
+      CGRectStandardize(field.textField.placeholderLabel.frame).origin.x;
+  XCTAssertGreaterThan(placeholderWithChipOriginX, finalPlaceholderPositionOriginX);
+}
+
+- (void)testAddChipsManuallyPlaceholderCorrectPosition {
+  // Given
+  MDCChipView *fakeChip = [[MDCChipView alloc] init];
+  fakeChip.titleLabel.text = @"Fake chip";
+  MDCChipField *fakeField = [[MDCChipField alloc] init];
+  fakeField.frame = CGRectMake(0, 0, 200, 100);
+  fakeField.textField.placeholder = @"Test";
+
+  // When
+  [fakeField setNeedsLayout];
+  [fakeField layoutIfNeeded];
+  CGFloat initialPlaceholderOriginX =
+      CGRectStandardize(fakeField.textField.placeholderLabel.frame).origin.x;
+  [fakeField addChip:fakeChip];
+  fakeField.textField.placeholder = fakeField.textField.placeholder;
+  [fakeField setNeedsLayout];
+  [fakeField layoutIfNeeded];
+
+  // Then
+  CGFloat finalPlaceholderOriginX =
+      CGRectStandardize(fakeField.textField.placeholderLabel.frame).origin.x;
+  XCTAssertGreaterThan(finalPlaceholderOriginX, initialPlaceholderOriginX);
+}
+
+- (void)testChipsWithoutDeleteEnabled {
+  // Given
+  MDCChipField *field = [[MDCChipField alloc] init];
+  field.textField.text = @"Test";
+
+  // When
+  [field createNewChipFromInput];
+  NSUInteger chipCount = field.chips.count;
+
+  // Then
+  XCTAssertEqual(chipCount, (NSUInteger)1);
+
+  // Given
+  NSUInteger controlViewCount = 0;
+  MDCChipView *chip = field.chips[0];
+
+  // When
+  for (UIView *subview in chip.subviews) {
+    if ([subview isKindOfClass:[UIControl class]]) {
+      controlViewCount += 1;
+    }
+  }
+
+  // Then
+  XCTAssertEqual(controlViewCount, (NSUInteger)0);
+}
+
+- (void)testChipsWithDeleteEnabled {
+  // Given
+  MDCChipField *field = [[MDCChipField alloc] init];
+  field.showChipsDeleteButton = YES;
+  field.textField.text = @"Test";
+
+  // When
+  [field createNewChipFromInput];
+  NSUInteger chipCount = field.chips.count;
+
+  // Then
+  XCTAssertEqual(chipCount, (NSUInteger)1);
+
+  // Given
+  NSUInteger controlViewCount = 0;
+  MDCChipView *chip = field.chips[0];
+
+  // When
+  for (UIView *subview in chip.subviews) {
+    if ([subview isKindOfClass:[UIControl class]]) {
+      controlViewCount += 1;
+    }
+  }
+
+  // Then
+  XCTAssertEqual(controlViewCount, (NSUInteger)1);
 }
 
 @end

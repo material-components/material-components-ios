@@ -15,23 +15,20 @@
 #import <UIKit/UIKit.h>
 
 // The height of the bottom app bar navigation area in collapsed state.
-static const CGFloat kMDCBottomAppBarHeight = 96.f;
+static const CGFloat kMDCBottomAppBarHeight = 96;
 
-// The offset of the top of the containing view of the bottom app bar and the visible layer of the
-// bottom app bar.
-static const CGFloat kMDCBottomAppBarYOffset = 38.f;
+// The offset from the top of the navigation view of the bottom app bar to the
+// bottom app bar position
+static const CGFloat kMDCBottomAppBarNavigationViewYOffset = 38;
 
 // The horizontal position of the center of the floating button when in leading or trailing state.
-static const CGFloat kMDCBottomAppBarFloatingButtonPositionX = 64.f;
+static const CGFloat kMDCBottomAppBarFloatingButtonPositionX = 64;
 
-// The vertical position of the center of the floating button.
-static const CGFloat kMDCBottomAppBarFloatingButtonPositionY = 10.f;
-
-// The radius of the path cut for the floating button.
-static const CGFloat kMDCBottomAppBarFloatingButtonRadius = 32.f;
+// The delta radius of the path cut for the floating button to the floating button's radius.
+static const CGFloat kMDCBottomAppBarFloatingButtonRadiusOffset = 4;
 
 // The duration of the enter animation of the path cut, same as floating button enter animation.
-static const NSTimeInterval kMDCFloatingButtonEnterDuration = 0.270f;
+static const NSTimeInterval kMDCFloatingButtonEnterDuration = 0.270;
 
 // The duration of the exit animation of the path cut, same as floating button exit animation.
-static const NSTimeInterval kMDCFloatingButtonExitDuration = 0.180f;
+static const NSTimeInterval kMDCFloatingButtonExitDuration = 0.180;

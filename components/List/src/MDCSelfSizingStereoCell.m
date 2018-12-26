@@ -24,8 +24,8 @@
 
 #import "private/MDCSelfSizingStereoCellLayout.h"
 
-static const CGFloat kTitleColorOpacity = 0.87f;
-static const CGFloat kDetailColorOpacity = 0.6f;
+static const CGFloat kTitleColorOpacity = (CGFloat)0.87;
+static const CGFloat kDetailColorOpacity = (CGFloat)0.6;
 
 @interface MDCSelfSizingStereoCell ()
 
@@ -72,6 +72,7 @@ static const CGFloat kDetailColorOpacity = 0.6f;
 }
 
 - (void)commonMDCSelfSizingStereoCellInit {
+  self.cachedLayouts = [[NSMutableDictionary alloc] init];
   [self createSubviews];
 }
 
@@ -86,13 +87,9 @@ static const CGFloat kDetailColorOpacity = 0.6f;
   [self.contentView addSubview:self.textContainer];
 
   self.titleLabel = [[UILabel alloc] init];
-  self.titleLabel.font = self.defaultTitleLabelFont;
-  self.titleLabel.numberOfLines = 0;
   [self.textContainer addSubview:self.titleLabel];
 
   self.detailLabel = [[UILabel alloc] init];
-  self.detailLabel.font = self.defaultDetailLabelFont;
-  self.detailLabel.numberOfLines = 0;
   [self.textContainer addSubview:self.detailLabel];
 
   self.leadingImageView = [[UIImageView alloc] init];
@@ -100,6 +97,18 @@ static const CGFloat kDetailColorOpacity = 0.6f;
 
   self.trailingImageView = [[UIImageView alloc] init];
   [self.contentView addSubview:self.trailingImageView];
+
+  [self resetMDCSelfSizingStereoCellLabelProperties];
+}
+
+- (void)resetMDCSelfSizingStereoCellLabelProperties {
+  self.titleLabel.font = self.defaultTitleLabelFont;
+  self.titleLabel.textColor = self.defaultTitleLabelTextColor;
+  self.titleLabel.numberOfLines = 0;
+
+  self.detailLabel.font = self.defaultDetailLabelFont;
+  self.detailLabel.textColor = self.defaultDetailLabelTextColor;
+  self.detailLabel.numberOfLines = 0;
 }
 
 #pragma mark UIView Overrides
@@ -114,8 +123,6 @@ static const CGFloat kDetailColorOpacity = 0.6f;
   self.leadingImageView.frame = layout.leadingImageViewFrame;
   self.trailingImageView.frame = layout.trailingImageViewFrame;
   if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
-    self.titleLabel.textAlignment = NSTextAlignmentRight;
-    self.detailLabel.textAlignment = NSTextAlignmentRight;
     self.leadingImageView.frame =
         MDFRectFlippedHorizontally(self.leadingImageView.frame, layout.cellWidth);
     self.trailingImageView.frame =
@@ -126,9 +133,6 @@ static const CGFloat kDetailColorOpacity = 0.6f;
         MDFRectFlippedHorizontally(self.titleLabel.frame, self.textContainer.frame.size.width);
     self.detailLabel.frame =
         MDFRectFlippedHorizontally(self.detailLabel.frame, self.textContainer.frame.size.width);
-  } else {
-    self.titleLabel.textAlignment = NSTextAlignmentLeft;
-    self.detailLabel.textAlignment = NSTextAlignmentLeft;
   }
 }
 
@@ -147,13 +151,15 @@ static const CGFloat kDetailColorOpacity = 0.6f;
 - (void)prepareForReuse {
   [super prepareForReuse];
 
-  [self invalidateCachedLayouts];
   self.titleLabel.text = nil;
-  self.titleLabel.font = self.defaultTitleLabelFont;
   self.detailLabel.text = nil;
-  self.detailLabel.font = self.defaultDetailLabelFont;
   self.leadingImageView.image = nil;
   self.trailingImageView.image = nil;
+
+  [self setNeedsLayout];
+
+  [self mdc_setAdjustsFontForContentSizeCategory:NO];
+  [self resetMDCSelfSizingStereoCellLabelProperties];
 }
 
 #pragma mark Layout
@@ -184,6 +190,10 @@ static const CGFloat kDetailColorOpacity = 0.6f;
 }
 
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
+  if (adjusts == _mdc_adjustsFontForContentSizeCategory) {
+    return;
+  }
+
   _mdc_adjustsFontForContentSizeCategory = adjusts;
 
   if (_mdc_adjustsFontForContentSizeCategory) {

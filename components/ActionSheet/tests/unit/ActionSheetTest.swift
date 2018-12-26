@@ -13,7 +13,8 @@
 // limitations under the License.
 
 import XCTest
-import MaterialComponentsAlpha.MaterialActionSheet
+import MaterialComponentsBeta.MaterialActionSheet
+import MaterialComponentsBeta.MaterialActionSheet_ColorThemer
 
 class ActionSheetTest: XCTestCase {
 
@@ -23,6 +24,12 @@ class ActionSheetTest: XCTestCase {
     super.setUp()
 
     actionSheet = MDCActionSheetController()
+  }
+
+  override func tearDown() {
+    actionSheet = nil
+
+    super.tearDown()
   }
 
   func testNumberOfActions() {
@@ -90,17 +97,6 @@ class ActionSheetTest: XCTestCase {
     }
   }
 
-  func testSetBackgroundColor() {
-    // Given
-    let newBackgroundColor: UIColor = .green
-
-    // When
-    actionSheet.backgroundColor = newBackgroundColor
-
-    // Then
-    XCTAssertEqual(actionSheet.backgroundColor, newBackgroundColor)
-  }
-
   func testBackgroundColorMatchesViewBackgroundColor() {
     // Given
     let newBackgroundColor: UIColor = .green
@@ -112,5 +108,20 @@ class ActionSheetTest: XCTestCase {
     // Then
     XCTAssertEqual(actionSheet.view.backgroundColor, actionSheet.backgroundColor)
     XCTAssertEqual(actionSheet.view.backgroundColor, newBackgroundColor)
+  }
+
+  func testApplyThemerToBackgroundColor() {
+    // Given
+    let surfaceColor: UIColor = .blue
+    let colorScheme = MDCSemanticColorScheme()
+    colorScheme.surfaceColor = surfaceColor
+
+    // When
+    MDCActionSheetColorThemer.applySemanticColorScheme(colorScheme, to: actionSheet)
+    let _ = actionSheet.view
+
+    // Then
+    XCTAssertEqual(actionSheet.view.backgroundColor, surfaceColor)
+    XCTAssertEqual(actionSheet.backgroundColor, surfaceColor)
   }
 }

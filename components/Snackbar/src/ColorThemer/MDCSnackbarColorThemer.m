@@ -16,16 +16,20 @@
 
 @implementation MDCSnackbarColorThemer
 
-+ (void)applySemanticColorScheme:(nonnull id<MDCColorScheming>)colorScheme {
-  MDCSnackbarManager.snackbarMessageViewBackgroundColor =
-      [colorScheme.onSurfaceColor colorWithAlphaComponent:0.8f];
-  MDCSnackbarManager.messageTextColor = [colorScheme.surfaceColor colorWithAlphaComponent:0.87f];
-  UIColor *buttonTitleColor = [colorScheme.surfaceColor
-                                       colorWithAlphaComponent:0.6f];
-  [MDCSnackbarManager setButtonTitleColor:buttonTitleColor
-                                 forState:UIControlStateNormal];
-  [MDCSnackbarManager setButtonTitleColor:buttonTitleColor
-                                 forState:UIControlStateHighlighted];
++ (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme {
+  [self applySemanticColorScheme:colorScheme toSnackbarManager:MDCSnackbarManager.defaultManager];
+}
+
++ (void)applySemanticColorScheme:(id<MDCColorScheming>)colorScheme
+               toSnackbarManager:(MDCSnackbarManager *)snackbarManager {
+  snackbarManager.snackbarMessageViewBackgroundColor = [MDCSemanticColorScheme
+               blendColor:[colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.8]
+      withBackgroundColor:colorScheme.surfaceColor];
+  snackbarManager.messageTextColor =
+      [colorScheme.surfaceColor colorWithAlphaComponent:(CGFloat)0.87];
+  UIColor *buttonTitleColor = [colorScheme.surfaceColor colorWithAlphaComponent:(CGFloat)0.6];
+  [snackbarManager setButtonTitleColor:buttonTitleColor forState:UIControlStateNormal];
+  [snackbarManager setButtonTitleColor:buttonTitleColor forState:UIControlStateHighlighted];
 }
 
 #pragma clang diagnostic push

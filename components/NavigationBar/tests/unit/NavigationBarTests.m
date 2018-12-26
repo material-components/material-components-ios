@@ -18,7 +18,7 @@
 #import "MaterialNavigationBar.h"
 #import "MaterialNavigationBar+TypographyThemer.h"
 
-static const CGFloat kEpsilonAccuracy = 0.001f;
+static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
 @interface MDCNavigationBar (Testing)
 @property(nonatomic) UILabel *titleLabel;
@@ -35,6 +35,11 @@ static const CGFloat kEpsilonAccuracy = 0.001f;
 - (void)setUp {
   [super setUp];
   self.navBar = [[MDCNavigationBar alloc] init];
+}
+
+- (void)tearDown {
+  self.navBar = nil;
+  [super tearDown];
 }
 
 - (void)testSettingTextAlignmentToCenterMustCenterTheTitleLabel {

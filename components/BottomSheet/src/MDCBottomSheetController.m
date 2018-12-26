@@ -50,6 +50,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  self.view.preservesSuperviewLayoutMargins = YES;
   self.contentViewController.view.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   self.contentViewController.view.frame = self.view.bounds;
@@ -170,6 +171,14 @@
 - (void)setModalPresentationStyle:(__unused UIModalPresentationStyle)modalPresentationStyle {
   NSAssert(NO, @"MDCBottomSheetController.modalPresentationStyle cannot be changed.");
   return;
+}
+
+- (void)setScrimColor:(UIColor *)scrimColor {
+  _transitionController.scrimColor = scrimColor;
+}
+
+- (UIColor *)scrimColor {
+  return _transitionController.scrimColor;
 }
 
 - (void)setIsScrimAccessibilityElement:(BOOL)isScrimAccessibilityElement {

@@ -78,12 +78,13 @@ static const UITableViewStyle kStyle = UITableViewStyleGrouped;
   self.minimumHeaderHeight = 0;
 
   self.fhvc.headerView.trackingScrollView = self.tableView;
+  self.fhvc.layoutDelegate = self;
 
   self.fhvc.view.frame = self.view.bounds;
   [self.view addSubview:self.fhvc.view];
   [self.fhvc didMoveToParentViewController:self];
 
-  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:0.1f alpha:1.0f];
+  self.fhvc.headerView.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.1 alpha:1];
 
   self.titleLabel = [[UILabel alloc] init];
   self.titleLabel.text = self.title;

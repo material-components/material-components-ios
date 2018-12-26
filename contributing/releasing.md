@@ -2,6 +2,8 @@
 
 These instructions describe how to cut a new release.
 
+**You should always start from this doc when initiating a release.**
+
 MDC follows the ["git flow"](http://nvie.com/posts/a-successful-git-branching-model/) style of 
 development, where the default branch is called `develop`. `stable` (instead of the traditional
 `master`) is reserved for releases. The `develop` branch is periodically copied to a release candidate,
@@ -27,6 +29,8 @@ typical weekly release.
 If you are not able to cut a release Wednesday morning, cut it Tuesday evening before you leave the
 office.
 
+For Googlers, also read [go/mdc-release-engineering](http://go/mdc-release-engineering) for additional details.
+
 ## Before you start
 
 ### Create a clean clone
@@ -38,16 +42,42 @@ will be working day-to-day with a fork, consider creating a separate clone just 
     git clone git@github.com:material-components/material-components-ios.git mdc-ios-release
     cd mdc-ios-release
 
+### Install git-lfs
+
+Please follow [using git-lfs instructions](https://github.com/material-components/material-components-ios/blob/2b6da5f10438081e5a7b2211e27336c6846433e5/contributing/tools.md#using-git-lfs)
+
 ## Cutting and testing the release
 
 Our entire release process is encoded into the `release` script in the scripts/ directory.
 Read the [tool's readme](../scripts/README-release.md) to learn more about the tool.
 
-### Cut a release branch and notify clients
+### Cut a release branch
 
 Run the following command to cut a release:
 
     scripts/release cut
+
+Note: if for some reason `cut` fails, first ensure that nobody else is in the middle of cutting a release by visiting the repo and verifying that a release-candidate does not already exist because aborting the release will delete the remote release candidate. If that isn't the case, then please run `scripts/release abort` and try again.
+
+You will now have a local `release-candidate` branch, a new section in CHANGELOG.md titled
+"release-candidate", and the `release-candidate` branch will have been pushed to GitHub.
+
+#### Create a Pull Request for the Release Branch
+
+If you have not clicked [the
+link](https://github.com/material-components/material-components-ios/compare/stable...release-candidate)
+provided in the script do so now.
+
+At this point you should also create the initial Release Candidate pull request using the URL
+that the `cut` script generated.
+
+Name the Pull Request title "[WIP] Release Candidate." until you are able to provide the version as the title.
+
+Add the group `material-components/release-blocking-clients` to the pull request's reviewers. This is the mechanism by which
+release-blocking clients are notified of a new release.
+
+**Do not use GitHub's big green button to merge the approved pull request.** Release are an
+exception to our normal squash-and-merge procedure.
 
 #### Hotfixing
 
@@ -64,22 +94,9 @@ After that PR is merged, you should cherry-pick the revert commit into the `rele
 
 Other than the steps above regarding hotfixing, the entire release process stays the same.
 
-Note: if for some reason `cut` fails, first ensure that nobody else is in the middle of cutting a release by visiting the repo and verifying that a release-candidate does not already exist because aborting the release will delete the remote release candidate. If that isn't the case, then please run `scripts/release abort` and try again.
-
-You will now have a local `release-candidate` branch, a new section in CHANGELOG.md titled
-"release-candidate", and the `release-candidate` branch will have been pushed to GitHub.
-
-At this point you should also create the initial Release Candidate pull request using the URL
-that the `cut` script generated.
-
-Name the Pull Request title "[WIP] Release Candidate." until you are able to provide the version as the title.
-
-**Do not use GitHub's big green button to merge the approved pull request.** Release are an
-exception to our normal squash-and-merge procedure.
-
 ### Start internal testing
 
-You can now start the internal release testing process documented at [go/mdc-releasing](http://go/mdc-releasing).
+You can now start the internal release testing process documented at [go/mdc-releasing](http://go/mdc-releasing#import-the-release-candidate).
 
 ### Resolve any failures
 
@@ -150,13 +167,13 @@ We do not presently have an automated way to identify visual changes between rel
 issue #290](https://github.com/material-components/material-components-ios/issues/290) for a
 discussion on the topic.
 
-### Sanity check: inspect the changes
+### [Optional] Sanity check: inspect the changes
 
 #### Diff just the components
 
 The final sanity check is to visually inspect the diff.
 
-> If you have configured Git with a GUI diff tool (`git difftool`), then you can add
+> If you have configured Git with a GUI diff tool (`git difftool`) like [Kaleidoscope](https://itunes.apple.com/us/app/kaleidoscope/id587512244?mt=12), then you can add
 > `--use_diff_tool` to `scripts/release diff` below.
 
 Generate a list of component public header changes:
@@ -193,7 +210,7 @@ Commit the results to your branch:
 
 Send our local podspec through the CocoaPods linter:
 
-    pod lib lint MaterialComponents.podspec
+    pod lib lint MaterialComponents.podspec --skip-tests
 
 CocoaPods publishes a directory of publicly available pods through its **trunk** service.
 Note: Ensure that you can [push the podspec](#publish-to-cocoapods) later by checking for `MaterialComponents` in your list of available `Pods` when you:
@@ -201,6 +218,14 @@ Note: Ensure that you can [push the podspec](#publish-to-cocoapods) later by che
     pod trunk me
 
 If this fails or MaterialComponents is not listed [register an account and session](https://guides.cocoapods.org/making/getting-setup-with-trunk.html).
+
+## Consider running `scripts/release notes` again
+
+Run `scripts/release notes` again and copy paste it into the `CHANGELOG.md` after `## Changes` if
+you
+
+* cherry picked a change to add it to the release or
+* reverted any commit to rollback any PR.
 
 ## Testing with release-blocking clients
 
@@ -274,9 +299,11 @@ You can now publish the release to GitHub:
 ## Publish to Cocoapods
 
     git checkout stable
-    pod trunk push MaterialComponents.podspec
+    pod trunk push MaterialComponents.podspec --skip-tests
 
 ## Coordinate with release-blocking clients to finish work
 
 Any work that was started by the [Release-blocking clients](#release-blocking-clients)
 (dragon) step above may need to be finalized.
+
+Also follow last instructions in the [internal release instructions](http://go/mdc-releasing)

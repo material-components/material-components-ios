@@ -29,6 +29,11 @@
   self.bottomAppBar = [[MDCBottomAppBarView alloc] init];
 }
 
+- (void)tearDown {
+  self.bottomAppBar = nil;
+  [super tearDown];
+}
+
 - (void)testPrimaryColorAppliedToBarTintColor {
   // Given
   MDCBasicColorScheme *scheme =
@@ -43,7 +48,8 @@
 
 - (void)testSurfaceVariantColorThemer {
   // Given
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   colorScheme.primaryColor = UIColor.orangeColor;
   colorScheme.onPrimaryColor = UIColor.cyanColor;
   colorScheme.surfaceColor = UIColor.blueColor;

@@ -50,10 +50,11 @@
           && fabs(alpha1 - alpha2) < CGFLOAT_EPSILON);
 }
 
-- (void)testApplyingTypographyScheme {
+- (void)testApplyingColorScheme {
   MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:@"title"
                                                                    message:@"message"];
-  MDCSemanticColorScheme *colorScheme = [[MDCSemanticColorScheme alloc] init];
+  MDCSemanticColorScheme *colorScheme =
+      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
   [MDCAlertColorThemer applySemanticColorScheme:colorScheme toAlertController:alert];
 
   MDCAlertControllerView *view = (MDCAlertControllerView *)alert.view;
@@ -61,7 +62,7 @@
                 equalsColor2:[colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.87]]);
   XCTAssertTrue([self color1:view.messageLabel.textColor
                 equalsColor2:[colorScheme.onSurfaceColor colorWithAlphaComponent:(CGFloat)0.60]]);
-  for (UIButton *button in view.actionButtons) {
+  for (UIButton *button in view.actionManager.buttonsInActionOrder) {
     XCTAssertTrue([self color1:button.titleLabel.textColor equalsColor2:colorScheme.primaryColor]);
   }
 }

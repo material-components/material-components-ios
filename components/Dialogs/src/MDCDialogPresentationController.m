@@ -15,9 +15,10 @@
 #import "MDCDialogPresentationController.h"
 
 #import "MaterialKeyboardWatcher.h"
+#import "MaterialShadowLayer.h"
 #import "private/MDCDialogShadowedView.h"
 
-static CGFloat MDCDialogMinimumWidth = 280.0f;
+static CGFloat MDCDialogMinimumWidth = 280;
 // TODO: Spec indicates 40 side margins and 280 minimum width.
 // That is incompatible with a 320 wide device.
 // Side margins set to 20 until we have a resolution
@@ -30,7 +31,7 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
 
 // Tracking view that adds a shadow under the presented view. This view's frame should always match
 // the presented view's.
-@property(nonatomic) UIView *trackingView;
+@property(nonatomic) MDCDialogShadowedView *trackingView;
 
 @end
 
@@ -60,14 +61,30 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
   return _trackingView.layer.cornerRadius;
 }
 
+- (void)setScrimColor:(UIColor *)scrimColor {
+  self.dimmingView.backgroundColor = scrimColor;
+}
+
+- (UIColor *)scrimColor {
+  return self.dimmingView.backgroundColor;
+}
+
+- (void)setDialogElevation:(MDCShadowElevation)dialogElevation {
+  _trackingView.elevation = dialogElevation;
+}
+
+- (CGFloat)dialogElevation {
+  return _trackingView.elevation;
+}
+
 - (instancetype)initWithPresentedViewController:(UIViewController *)presentedViewController
                        presentingViewController:(UIViewController *)presentingViewController {
   self = [super initWithPresentedViewController:presentedViewController
                        presentingViewController:presentingViewController];
   if (self) {
     _dimmingView = [[UIView alloc] initWithFrame:CGRectZero];
-    _dimmingView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.4f];
-    _dimmingView.alpha = 0.0f;
+    _dimmingView.backgroundColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.32];
+    _dimmingView.alpha = 0;
     _dismissGestureRecognizer =
         [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss:)];
     [_dimmingView addGestureRecognizer:_dismissGestureRecognizer];
@@ -111,9 +128,11 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
                                        withParentContainerSize:standardPresentableBounds.size];
 
   presentedViewFrame.origin.x =
-    containerSafeAreaInsets.left + (standardPresentableBounds.size.width - presentedViewFrame.size.width) * 0.5f;
+      containerSafeAreaInsets.left +
+      (standardPresentableBounds.size.width - presentedViewFrame.size.width) * (CGFloat)0.5;
   presentedViewFrame.origin.y =
-    containerSafeAreaInsets.top + (standardPresentableBounds.size.height - presentedViewFrame.size.height) * 0.5f;
+      containerSafeAreaInsets.top +
+      (standardPresentableBounds.size.height - presentedViewFrame.size.height) * (CGFloat)0.5;
 
   presentedViewFrame.origin.x = (CGFloat)floor(presentedViewFrame.origin.x);
   presentedViewFrame.origin.y = (CGFloat)floor(presentedViewFrame.origin.y);
@@ -128,13 +147,13 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
 
   // Set the dimming view to the container's bounds and fully transparent.
   self.dimmingView.frame = self.containerView.bounds;
-  self.dimmingView.alpha = 0.0f;
+  self.dimmingView.alpha = 0;
   [self.containerView addSubview:self.dimmingView];
 
   // Set the shadowing view to the same frame as the presented view.
   CGRect presentedFrame = [self frameOfPresentedViewInContainerView];
   self.trackingView.frame = presentedFrame;
-  self.trackingView.alpha = 0.0f;
+  self.trackingView.alpha = 0;
   [self.containerView addSubview:self.trackingView];
 
   // Fade-in chrome views to be fully visible.
@@ -142,15 +161,15 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
       [self.presentedViewController transitionCoordinator];
   if (transitionCoordinator) {
     [transitionCoordinator
-        animateAlongsideTransition:
-            ^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
-          self.dimmingView.alpha = 1.0f;
-          self.trackingView.alpha = 1.0f;
+        animateAlongsideTransition:^(
+            __unused id<UIViewControllerTransitionCoordinatorContext> context) {
+          self.dimmingView.alpha = 1;
+          self.trackingView.alpha = 1;
         }
                         completion:NULL];
   } else {
-    self.dimmingView.alpha = 1.0f;
-    self.trackingView.alpha = 1.0f;
+    self.dimmingView.alpha = 1;
+    self.trackingView.alpha = 1;
   }
 }
 
@@ -176,15 +195,15 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
       [self.presentedViewController transitionCoordinator];
   if (transitionCoordinator != nil) {
     [transitionCoordinator
-        animateAlongsideTransition:
-            ^(__unused id<UIViewControllerTransitionCoordinatorContext> context) {
-          self.dimmingView.alpha = 0.0f;
-          self.trackingView.alpha = 0.0f;
+        animateAlongsideTransition:^(
+            __unused id<UIViewControllerTransitionCoordinatorContext> context) {
+          self.dimmingView.alpha = 0;
+          self.trackingView.alpha = 0;
         }
                         completion:NULL];
   } else {
-    self.dimmingView.alpha = 0.0f;
-    self.trackingView.alpha = 0.0f;
+    self.dimmingView.alpha = 0;
+    self.trackingView.alpha = 0;
   }
 }
 
@@ -230,7 +249,7 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
     targetSize = preferredContentSize;
 
     // If the targetSize.width is greater than 0.0 it must be at least MDCDialogMinimumWidth.
-    if (0.0f < targetSize.width && targetSize.width < MDCDialogMinimumWidth) {
+    if (0 < targetSize.width && targetSize.width < MDCDialogMinimumWidth) {
       targetSize.width = MDCDialogMinimumWidth;
     }
     // targetSize cannot exceed parentSize.
@@ -331,7 +350,7 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
       [MDCKeyboardWatcher animationCurveOptionFromKeyboardNotification:aNotification];
 
   [UIView animateWithDuration:animationDuration
-                        delay:0.0f
+                        delay:0
                       options:animationCurveOption | UIViewAnimationOptionTransitionNone
                    animations:^{
                      CGRect presentedViewFrame = [self frameOfPresentedViewInContainerView];

@@ -32,7 +32,8 @@
 - (id)init {
   self = [super init];
   if (self) {
-    _colorScheme = [[MDCSemanticColorScheme alloc] init];
+    _colorScheme =
+        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 
     _appBarViewController = [[MDCAppBarViewController alloc] init];
 

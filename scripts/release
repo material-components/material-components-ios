@@ -1,4 +1,4 @@
-#!/bin/bash +e
+#!/bin/bash
 #
 # Copyright 2017-present The Material Motion and Material Components for
 # iOS Authors. All Rights Reserved.
@@ -14,6 +14,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+# Abort if any command returns an error
+set -e
 
 parentcmd=$(basename "${BASH_SOURCE[1]}")
 cmd=$(basename "${BASH_SOURCE[0]}")
@@ -239,6 +242,27 @@ merge_release() {
     echo "Must provide a ${U}version${N} argument."
     exit 1
   fi
+  
+  deviance=$(git log develop..origin/develop --oneline | wc -l)
+  if [ $deviance -ne 0 ]; then
+    echo
+    echo "    Your local develop branch is behind origin/develop."
+    echo "    Refusing to continue until you've rebased off of origin/develop."
+    echo
+    echo "    git checkout develop"
+    echo "    git rebase origin/develop"
+    echo
+    exit 1
+  fi
+  
+  deviance=$(git log origin/develop..develop --oneline | wc -l)
+  if [ $deviance -ne "0" ]; then
+    echo
+    echo "    Your local develop branch is ahead of origin/develop."
+    echo "    Refusing to continue until you've landed your local changes into origin/develop."
+    echo
+    exit 1 # TODO: Revert this line so we bail out.
+  fi
 
   current_branch=$(current_branch)
   if [ "$current_branch" != "release-candidate" ]; then
@@ -447,8 +471,15 @@ generate_release_apidiff() {
     fi
   }
   trap clean_clones EXIT
+
+  # We do not need LFS for the temporary clones; they are used solely to do API diffs.
+  # See https://github.com/git-lfs/git-lfs/issues/2406 for where this flag came from.
+  export GIT_LFS_SKIP_SMUDGE=1
+
   "$dir/temporary_clone_at_ref" "$OLD_ROOT_PATH" $old_commit
   "$dir/temporary_clone_at_ref" "$NEW_ROOT_PATH" $new_commit
+  
+  unset GIT_LFS_SKIP_SMUDGE
 
   # Find command in all component src directories and grab search path for "Material$component.h"
   old_header_search_paths=""
@@ -482,7 +513,11 @@ generate_release_apidiff() {
       echo >> $ALL_CHANGELOG_PATH
       echo "### $component" >> $ALL_CHANGELOG_PATH
       echo >> $ALL_CHANGELOG_PATH
-      echo "**New component.**" >> $ALL_CHANGELOG_PATH
+      if [[ "$component" = *"+"* ]]; then
+        echo "**New extension.**" >> $ALL_CHANGELOG_PATH
+      else
+        echo "**New component.**" >> $ALL_CHANGELOG_PATH
+      fi
 
       echo "New!"
       continue
@@ -566,6 +601,138 @@ generate_release_diff() {
 }
 
 generate_release_notes() {
+  # Echoes the SHA's title as a CHANGELOG.md entry.
+  sha_to_changelog_entry() {
+    sha="$1"
+    git log \
+      -1 \
+      --pretty="* [%s](https://github.com/material-components/material-components-ios/commit/%H) (%an)" \
+      --no-merges \
+      "$sha"
+  }
+  # Returns a non-zero value if the given SHA affects any paths other than the given path.
+  # Ignores modifications to MaterialComponents.podspec.
+  does_commit_affect_other_paths() {
+    sha="$1"
+    path="$2"
+    git diff-tree --no-commit-id --name-only -r "$sha" \
+      | grep -v "$path" \
+      | grep -v "MaterialComponents.podspec" \
+      | grep -v "MaterialComponentsBeta.podspec" \
+      | grep -v "catalog/Podfile"
+  }
+  # Echoes a list of changelog entries that affect a given path and only that path.
+  changes_for_path() {
+    path="${1:-components/}"
+    git log \
+        --pretty="%H" \
+        --no-merges \
+        origin/stable..$(get_latest_branch) "$path" | while read sha; do
+      if [[ ! $(does_commit_affect_other_paths "$sha" "$path") ]]; then
+        sha_to_changelog_entry "$sha"
+      fi
+    done
+  }
+  # Echoes a list of changes that affect the given path AND other paths.
+  changes_for_multiple_paths() {
+    path="${1:-components/}"
+    git log \
+        --pretty="%H" \
+        --no-merges \
+        origin/stable..$(get_latest_branch) "$path" | while read sha; do
+      if [[ $(does_commit_affect_other_paths "$sha" "$path") ]]; then
+        sha_to_changelog_entry "$sha"
+      fi
+    done
+  }
+  # Echoes a list of breaking changelog entries for a given path.
+  filter_breaking_changes() {
+    cat - | grep "\[.*\]\!" | perl -pe "s|\* \[\[.+?\]!|* [**Breaking**:|" | sort
+  }
+  # Echoes a list of non-breaking changelog entries for a given path.
+  filter_non_breaking_changes() {
+    cat - | grep -v "\[.*\]\!" | perl -pe "s|\* \[\[.+?\] |* [|" | sort
+  }
+
+  has_breaking_changes=false
+  has_non_breaking_changes=false
+
+  # Output breaking changes that affect specific components.
+
+  find components -type d -name 'src' | sort | while read path; do
+    folder=$(dirname $path)
+
+    if [[ $(changes_for_path "$folder" | filter_breaking_changes) ]]; then
+      component=$(echo $folder | cut -d'/' -f2-)
+
+      if [ "$has_breaking_changes" = false ]; then
+        has_breaking_changes=true
+        echo
+        echo "## Breaking changes"
+      fi
+      echo
+      echo "### $component"
+      echo
+
+      changes_for_path "$folder" | filter_breaking_changes
+    fi
+  done
+
+  # Output breaking changes that affect multiple components.
+
+  all_breaking_changes_for_multiple_paths() {
+    find components -type d -name 'src' | while read path; do
+      folder=$(dirname $path)
+      changes_for_multiple_paths "$folder" | filter_breaking_changes
+    done | sort | uniq
+  }
+  if [[ $(all_breaking_changes_for_multiple_paths) ]]; then
+    has_breaking_changes=true
+    echo
+    echo "## Multi-component breaking changes"
+    echo
+    all_breaking_changes_for_multiple_paths
+  fi
+
+  # Output changes that affect specific components.
+
+  find components -type d -name 'src' | sort | while read path; do
+    folder=$(dirname $path)
+
+    if [[ $(changes_for_path "$folder" | filter_non_breaking_changes) ]]; then
+      component=$(echo $folder | cut -d'/' -f2-)
+
+      if [ "$has_non_breaking_changes" = false ]; then
+        has_non_breaking_changes=true
+        echo
+        echo "## Changes"
+      fi
+      echo
+      echo "### $component"
+      echo
+
+      changes_for_path "$folder" | filter_non_breaking_changes
+    fi
+  done
+
+  # Output changes that affect multiple components.
+
+  all_non_breaking_changes_for_multiple_paths() {
+    find components -type d -name 'src' | while read path; do
+      folder=$(dirname $path)
+      changes_for_multiple_paths "$folder" | filter_non_breaking_changes
+    done | sort | uniq
+  }
+  if [[ $(all_non_breaking_changes_for_multiple_paths) ]]; then
+    has_non_breaking_changes=true
+    echo
+    echo "## Multi-component changes"
+    echo
+    all_non_breaking_changes_for_multiple_paths
+  fi
+}
+
+other_thing() {
   find components -type d -name 'src' | sort | while read path; do
     folder=$(dirname $path)
     component=$(echo $folder | cut -d'/' -f2-)

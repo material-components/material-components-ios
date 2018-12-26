@@ -1090,7 +1090,7 @@ MDCFlexibleHeaderColorThemer.applySemanticColorScheme(colorScheme, to: component
 #import "MaterialFlexibleHeader+ColorThemer.h"
 
 // Step 2: Create or get a color scheme
-id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] init];
+id<MDCColorScheming> colorScheme = [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
 
 // Step 3: Apply the color scheme to your component
 [MDCFlexibleHeaderColorThemer applySemanticColorScheme:colorScheme

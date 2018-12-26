@@ -31,13 +31,6 @@
   return self;
 }
 
-- (instancetype)initWithCoder:(NSCoder *)__unused aDecoder {
-  if (self = [super init]) {
-    [self commonInit];
-  }
-  return self;
-}
-
 - (id)copyWithZone:(NSZone *)__unused zone {
   return [[[self class] alloc] init];
 }
@@ -48,20 +41,12 @@
   [_rectangleGenerator setCorners:_cornerShape];
 }
 
-- (void)encodeWithCoder:(NSCoder *)__unused aCoder {
-  // no-op, we have no params
-}
-
 - (CGPathRef)pathForSize:(CGSize)size {
-  CGFloat radius = 0.5f * MIN(MDCFabs(size.width), MDCFabs(size.height));
+  CGFloat radius = (CGFloat)0.5 * MIN(MDCFabs(size.width), MDCFabs(size.height));
   if (radius > 0) {
     [_rectangleGenerator setCorners:[[MDCRoundedCornerTreatment alloc] initWithRadius:radius]];
   }
   return [_rectangleGenerator pathForSize:size];
-}
-
-+ (BOOL)supportsSecureCoding {
-  return YES;
 }
 
 @end

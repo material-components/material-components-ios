@@ -17,6 +17,23 @@
 #import "MaterialMath.h"
 #import "MDCBottomAppBarAttributes.h"
 
+@interface MDCBottomAppBarLayer (PathGenerators)
+- (UIBezierPath *)drawWithPathToCut:(UIBezierPath *)bottomBarPath
+                            yOffset:(CGFloat)yOffset
+                              width:(CGFloat)width
+                             height:(CGFloat)height
+                          arcCenter:(CGPoint)arcCenter
+                          arcRadius:(CGFloat)arcRadius
+                         startAngle:(CGFloat)startAngle
+                           endAngle:(CGFloat)endAngle;
+- (UIBezierPath *)drawWithPlainPath:(UIBezierPath *)bottomBarPath
+                            yOffset:(CGFloat)yOffset
+                              width:(CGFloat)width
+                             height:(CGFloat)height
+                          arcCenter:(CGPoint)arcCenter
+                          arcRadius:(CGFloat)arcRadius;
+@end
+
 @implementation MDCBottomAppBarLayer
 
 + (instancetype)layer {
@@ -26,9 +43,9 @@
 
   // TODO(#2018): These shadow attributes will be updated once specs are finalized.
   CGFloat scale = UIScreen.mainScreen.scale;
-  layer.shadowOpacity = 0.4f;
-  layer.shadowRadius = 4.f;
-  layer.shadowOffset = CGSizeMake(0, 2.f);
+  layer.shadowOpacity = (float)0.4;
+  layer.shadowRadius = 4;
+  layer.shadowOffset = CGSizeMake(0, 2);
   layer.needsDisplayOnBoundsChange = YES;
   layer.contentsScale = scale;
   layer.rasterizationScale = scale;
@@ -36,228 +53,81 @@
   return layer;
 }
 
-- (CGPathRef)pathWithCutFromRect:(CGRect)rect
-          floatingButtonPosition:(MDCBottomAppBarFloatingButtonPosition)floatingButtonPosition
-                 layoutDirection:(UIUserInterfaceLayoutDirection)layoutDirection {
+- (CGPathRef)pathFromRect:(CGRect)rect
+           floatingButton:(MDCFloatingButton *)floatingButton
+       navigationBarFrame:(CGRect)navigationBarFrame
+                shouldCut:(BOOL)shouldCut {
   UIBezierPath *bottomBarPath = [UIBezierPath bezierPath];
 
-  static CGFloat kStartAngle;
-  static CGFloat kEndAngle;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    // Since we know the hypotenuse (radius) and opposite side (height above the line) we can
-    // compute the angle.
-    // sin( θ ) = opposite / hypotenuse
-    // θ = arcsin( opposite / hypotenuse )
-    // More reading: https://www.mathsisfun.com/algebra/trig-finding-angle-right-triangle.html
-    kEndAngle = (CGFloat)asin(kMDCBottomAppBarFloatingButtonPositionY /
-                              kMDCBottomAppBarFloatingButtonRadius);
-    kStartAngle = (CGFloat)(M_PI - kEndAngle);
-  });
+  CGFloat arcRadius =
+      CGRectGetHeight(floatingButton.bounds) / 2 + kMDCBottomAppBarFloatingButtonRadiusOffset;
+  CGFloat navigationBarYOffset = CGRectGetMinY(navigationBarFrame);
+  CGFloat halfAngle = acosf((float)((navigationBarYOffset - floatingButton.center.y) / arcRadius));
+  CGFloat startAngle = (float)M_PI / 2 + halfAngle;
+  CGFloat endAngle = (float)M_PI / 2 - halfAngle;
 
   CGFloat width = CGRectGetWidth(rect);
   CGFloat height = CGRectGetHeight(rect);
-  CGFloat midX = CGRectGetMidX(rect);
 
-  // Paths generated below differ based on the placement of the floating button.
-  switch (floatingButtonPosition) {
-    case MDCBottomAppBarFloatingButtonPositionLeading: {
-      if (layoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
-        [self pathWithCutRight:bottomBarPath
-                         width:width
-                        height:height
-                    startAngle:kStartAngle
-                      endAngle:kEndAngle];
-      } else {
-        [self pathWithCutLeft:bottomBarPath
-                        width:width
-                       height:height
-                   startAngle:kStartAngle
-                     endAngle:kEndAngle];
-      }
-      break;
-    }
-    case MDCBottomAppBarFloatingButtonPositionCenter: {
-      [bottomBarPath moveToPoint:CGPointMake(0, kMDCBottomAppBarYOffset)];
-      CGPoint centerPath = CGPointMake(midX,
-                                       kMDCBottomAppBarYOffset -
-                                       kMDCBottomAppBarFloatingButtonPositionY);
-      [bottomBarPath addArcWithCenter:centerPath
-                               radius:kMDCBottomAppBarFloatingButtonRadius
-                           startAngle:kStartAngle
-                             endAngle:kEndAngle
-                            clockwise:NO];
-      [bottomBarPath addLineToPoint:CGPointMake(width, kMDCBottomAppBarYOffset)];
-      [bottomBarPath addLineToPoint:CGPointMake(width, height * 2)];
-      [bottomBarPath addLineToPoint:CGPointMake(0, height * 2)];
-      [bottomBarPath closePath];
-      break;
-    }
-    case MDCBottomAppBarFloatingButtonPositionTrailing: {
-      if (layoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
-        [self pathWithCutLeft:bottomBarPath
-                        width:width
-                       height:height
-                   startAngle:kStartAngle
-                     endAngle:kEndAngle];
-      } else {
-        [self pathWithCutRight:bottomBarPath
-                         width:width
-                        height:height
-                    startAngle:kStartAngle
-                      endAngle:kEndAngle];
-      }
-      break;
-    }
-    default: {
-
-      // The default path does not contain a cut for the floating button. However, it is necessary
-      // to include the same number of points as the cut path version so there is a smooth
-      // transition between cut and without cut paths.
-      [bottomBarPath moveToPoint:CGPointMake(0, kMDCBottomAppBarYOffset)];
-      [bottomBarPath addLineToPoint:CGPointMake(height, kMDCBottomAppBarYOffset)];
-      [bottomBarPath addLineToPoint:CGPointMake(height,
-                                                height * 2 + kMDCBottomAppBarYOffset)];
-      [bottomBarPath addLineToPoint:CGPointMake(0, height * 2 + kMDCBottomAppBarYOffset)];
-      [bottomBarPath closePath];
-      break;
-    }
+  if (shouldCut) {
+    [self drawWithPathToCut:bottomBarPath
+                    yOffset:navigationBarYOffset
+                      width:width
+                     height:height
+                  arcCenter:floatingButton.center
+                  arcRadius:arcRadius
+                 startAngle:startAngle
+                   endAngle:endAngle];
+  } else {
+    [self drawWithPlainPath:bottomBarPath
+                    yOffset:navigationBarYOffset
+                      width:width
+                     height:height
+                  arcCenter:floatingButton.center
+                  arcRadius:arcRadius];
   }
+
   return bottomBarPath.CGPath;
 }
 
-- (UIBezierPath *)pathWithCutLeft:(UIBezierPath *)bottomBarPath
-                            width:(CGFloat)width
-                           height:(CGFloat)height
-                       startAngle:(CGFloat)startAngle
-                         endAngle:(CGFloat)endAngle {
-  [bottomBarPath moveToPoint:CGPointMake(0, kMDCBottomAppBarYOffset)];
-  CGPoint centerPath = CGPointMake(kMDCBottomAppBarFloatingButtonPositionX,
-                                   kMDCBottomAppBarYOffset -
-                                   kMDCBottomAppBarFloatingButtonPositionY);
-  [bottomBarPath addArcWithCenter:centerPath
-                           radius:kMDCBottomAppBarFloatingButtonRadius
+#pragma mark - Draw Helpers
+
+- (UIBezierPath *)drawWithPathToCut:(UIBezierPath *)bottomBarPath
+                            yOffset:(CGFloat)yOffset
+                              width:(CGFloat)width
+                             height:(CGFloat)height
+                          arcCenter:(CGPoint)arcCenter
+                          arcRadius:(CGFloat)arcRadius
+                         startAngle:(CGFloat)startAngle
+                           endAngle:(CGFloat)endAngle {
+  [bottomBarPath moveToPoint:CGPointMake(0, yOffset)];
+  [bottomBarPath addArcWithCenter:arcCenter
+                           radius:arcRadius
                        startAngle:startAngle
                          endAngle:endAngle
                         clockwise:NO];
-  [bottomBarPath addLineToPoint:CGPointMake(width, kMDCBottomAppBarYOffset)];
-  [bottomBarPath addLineToPoint:CGPointMake(width,
-                                            height * 2 + kMDCBottomAppBarYOffset)];
-  [bottomBarPath addLineToPoint:CGPointMake(0, height * 2 + kMDCBottomAppBarYOffset)];
+  [bottomBarPath addLineToPoint:CGPointMake(width, yOffset)];
+  [bottomBarPath addLineToPoint:CGPointMake(width, height * 2 + yOffset)];
+  [bottomBarPath addLineToPoint:CGPointMake(0, height * 2 + yOffset)];
   [bottomBarPath closePath];
   return bottomBarPath;
 }
 
-- (UIBezierPath *)pathWithCutRight:(UIBezierPath *)bottomBarPath
-                             width:(CGFloat)width
-                            height:(CGFloat)height
-                        startAngle:(CGFloat)startAngle
-                          endAngle:(CGFloat)endAngle {
-  [bottomBarPath moveToPoint:CGPointMake(0, kMDCBottomAppBarYOffset)];
-  CGPoint centerPath = CGPointMake(width - kMDCBottomAppBarFloatingButtonPositionX,
-                                   kMDCBottomAppBarYOffset -
-                                   kMDCBottomAppBarFloatingButtonPositionY);
-  [bottomBarPath addArcWithCenter:centerPath
-                           radius:kMDCBottomAppBarFloatingButtonRadius
-                       startAngle:startAngle
-                         endAngle:endAngle
-                        clockwise:NO];
-  [bottomBarPath addLineToPoint:CGPointMake(width, kMDCBottomAppBarYOffset)];
-  [bottomBarPath addLineToPoint:CGPointMake(width, height * 2 + kMDCBottomAppBarYOffset)];
-  [bottomBarPath addLineToPoint:CGPointMake(0, height * 2 + kMDCBottomAppBarYOffset)];
-  [bottomBarPath closePath];
-  return bottomBarPath;
-}
-
-- (CGPathRef)pathWithoutCutFromRect:(CGRect)rect
-             floatingButtonPosition:(MDCBottomAppBarFloatingButtonPosition)floatingButtonPosition
-                    layoutDirection:(UIUserInterfaceLayoutDirection)layoutDirection {
-
-  CGFloat height = CGRectGetHeight(rect);
-  CGFloat width = CGRectGetWidth(rect);
-  CGFloat midX = CGRectGetMidX(rect);
-
-  UIBezierPath *bottomBarPath = [UIBezierPath bezierPath];
-  switch (floatingButtonPosition) {
-    case MDCBottomAppBarFloatingButtonPositionLeading: {
-      if (layoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
-        [self pathWithoutCutRight:bottomBarPath width:width height:height];
-      } else {
-        [self pathWithoutCutLeft:bottomBarPath width:width height:height];
-      }
-      break;
-    }
-    case MDCBottomAppBarFloatingButtonPositionCenter: {
-      CGFloat offsetRadiusDiff = kMDCBottomAppBarYOffset - kMDCBottomAppBarFloatingButtonRadius;
-      [bottomBarPath moveToPoint:CGPointMake(0, kMDCBottomAppBarYOffset)];
-      [bottomBarPath addLineToPoint:CGPointMake(midX - offsetRadiusDiff,
-                                                kMDCBottomAppBarYOffset)];
-      [bottomBarPath addLineToPoint:CGPointMake(midX, kMDCBottomAppBarYOffset)];
-      [bottomBarPath addLineToPoint:CGPointMake(midX + offsetRadiusDiff,
-                                                kMDCBottomAppBarYOffset)];
-      [bottomBarPath addLineToPoint:CGPointMake(width, kMDCBottomAppBarYOffset)];
-      [bottomBarPath addLineToPoint:CGPointMake(width, height * 2 + kMDCBottomAppBarYOffset)];
-      [bottomBarPath addLineToPoint:CGPointMake(0, height * 2 + kMDCBottomAppBarYOffset)];
-      [bottomBarPath closePath];
-      break;
-    }
-    case MDCBottomAppBarFloatingButtonPositionTrailing: {
-      if (layoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
-        [self pathWithoutCutLeft:bottomBarPath width:width height:height];
-      } else {
-        [self pathWithoutCutRight:bottomBarPath width:width height:height];
-      }
-      break;
-    }
-    default: {
-      [bottomBarPath moveToPoint:CGPointMake(0, kMDCBottomAppBarYOffset)];
-      [bottomBarPath addLineToPoint:CGPointMake(height, kMDCBottomAppBarYOffset)];
-      [bottomBarPath addLineToPoint:CGPointMake(height,
-                                                height * 2 + kMDCBottomAppBarYOffset)];
-      [bottomBarPath addLineToPoint:CGPointMake(0, height * 2 + kMDCBottomAppBarYOffset)];
-      [bottomBarPath closePath];
-      break;
-    }
-  }
-  return bottomBarPath.CGPath;
-}
-
-- (UIBezierPath *)pathWithoutCutLeft:(UIBezierPath *)bottomBarPath
-                               width:(CGFloat)width
-                              height:(CGFloat)height {
-  CGFloat offsetRadiusDiff = kMDCBottomAppBarYOffset - kMDCBottomAppBarFloatingButtonRadius;
-  [bottomBarPath moveToPoint:CGPointMake(0, kMDCBottomAppBarYOffset)];
-  [bottomBarPath addLineToPoint:CGPointMake(kMDCBottomAppBarFloatingButtonPositionX -
-                                            offsetRadiusDiff,
-                                            kMDCBottomAppBarYOffset)];
-  [bottomBarPath addLineToPoint:CGPointMake(kMDCBottomAppBarFloatingButtonPositionX,
-                                            kMDCBottomAppBarYOffset)];
-  [bottomBarPath addLineToPoint:CGPointMake(kMDCBottomAppBarFloatingButtonPositionX +
-                                            offsetRadiusDiff,
-                                            kMDCBottomAppBarYOffset)];
-  [bottomBarPath addLineToPoint:CGPointMake(width, kMDCBottomAppBarYOffset)];
-  [bottomBarPath addLineToPoint:CGPointMake(width, height * 2 + kMDCBottomAppBarYOffset)];
-  [bottomBarPath addLineToPoint:CGPointMake(0, height * 2 + kMDCBottomAppBarYOffset)];
-  [bottomBarPath closePath];
-  return bottomBarPath;
-}
-
-- (UIBezierPath *)pathWithoutCutRight:(UIBezierPath *)bottomBarPath
-                                width:(CGFloat)width
-                               height:(CGFloat)height {
-  CGFloat offsetRadiusDiff = kMDCBottomAppBarYOffset - kMDCBottomAppBarFloatingButtonRadius;
-  [bottomBarPath moveToPoint:CGPointMake(0, kMDCBottomAppBarYOffset)];
-  [bottomBarPath addLineToPoint:CGPointMake(width - kMDCBottomAppBarFloatingButtonPositionX -
-                                            offsetRadiusDiff,
-                                            kMDCBottomAppBarYOffset)];
-  [bottomBarPath addLineToPoint:CGPointMake(width - kMDCBottomAppBarFloatingButtonPositionX,
-                                            kMDCBottomAppBarYOffset)];
-  [bottomBarPath addLineToPoint:CGPointMake(width - kMDCBottomAppBarFloatingButtonPositionX +
-                                            offsetRadiusDiff,
-                                            kMDCBottomAppBarYOffset)];
-  [bottomBarPath addLineToPoint:CGPointMake(width, kMDCBottomAppBarYOffset)];
-  [bottomBarPath addLineToPoint:CGPointMake(width, height * 2 + kMDCBottomAppBarYOffset)];
-  [bottomBarPath addLineToPoint:CGPointMake(0, height * 2 + kMDCBottomAppBarYOffset)];
+- (UIBezierPath *)drawWithPlainPath:(UIBezierPath *)bottomBarPath
+                            yOffset:(CGFloat)yOffset
+                              width:(CGFloat)width
+                             height:(CGFloat)height
+                          arcCenter:(CGPoint)arcCenter
+                          arcRadius:(CGFloat)arcRadius {
+  [bottomBarPath moveToPoint:CGPointMake(0, yOffset)];
+  [bottomBarPath addLineToPoint:CGPointMake(arcCenter.x - arcRadius, yOffset)];
+  [bottomBarPath addLineToPoint:CGPointMake(arcCenter.x, yOffset)];
+  [bottomBarPath addLineToPoint:CGPointMake(arcCenter.x + arcRadius, yOffset)];
+  // The extra line is needed to have the same number of control points in boths paths.
+  [bottomBarPath addLineToPoint:CGPointMake(arcCenter.x + arcRadius, yOffset)];
+  [bottomBarPath addLineToPoint:CGPointMake(width, yOffset)];
+  [bottomBarPath addLineToPoint:CGPointMake(width, height * 2 + yOffset)];
+  [bottomBarPath addLineToPoint:CGPointMake(0, height * 2 + yOffset)];
   [bottomBarPath closePath];
   return bottomBarPath;
 }

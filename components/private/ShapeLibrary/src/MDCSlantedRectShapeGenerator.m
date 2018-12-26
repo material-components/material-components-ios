@@ -14,9 +14,6 @@
 
 #import "MDCSlantedRectShapeGenerator.h"
 
-static NSString *const MDCSlantedRectShapeGeneratorSlantKey =
-    @"MDCSlantedRectShapeGeneratorSlantKey";
-
 @implementation MDCSlantedRectShapeGenerator {
   MDCRectangleShapeGenerator *_rectangleGenerator;
 }
@@ -28,21 +25,8 @@ static NSString *const MDCSlantedRectShapeGeneratorSlantKey =
   return self;
 }
 
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  if (self = [super init]) {
-    [self commonMDCSlantedRectShapeGeneratorInit];
-
-    _slant = (CGFloat)[aDecoder decodeDoubleForKey:MDCSlantedRectShapeGeneratorSlantKey];
-  }
-  return self;
-}
-
 - (void)commonMDCSlantedRectShapeGeneratorInit {
   _rectangleGenerator = [[MDCRectangleShapeGenerator alloc] init];
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [aCoder encodeDouble:_slant forKey:MDCSlantedRectShapeGeneratorSlantKey];
 }
 
 - (id)copyWithZone:(NSZone *)__unused zone {
@@ -62,10 +46,6 @@ static NSString *const MDCSlantedRectShapeGeneratorSlantKey =
 
 - (CGPathRef)pathForSize:(CGSize)size {
   return [_rectangleGenerator pathForSize:size];
-}
-
-+ (BOOL)supportsSecureCoding {
-  return YES;
 }
 
 @end

@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialBottomSheet.h"
+#import <MaterialComponents/MaterialBottomSheet.h>
 
 @class MDCActionSheetAction;
 
@@ -24,15 +24,18 @@
 
  A Material Action Sheet consists of a title, message and a list of actions.
 
- Learn more about [Material bottom
- sheet](https://material.io/design/components/sheets-bottom.html)
- [Material spec list](https://material.io/design/components/lists.html)
+ The [Material Guidelines article for Bottom
+ Sheets](https://material.io/design/components/sheets-bottom.html) and the
+ [Material Guidelines article for Lists](https://material.io/design/components/lists.html) have more
+ detailed guidance about how to style and use Action Sheets.
 
  To learn more about
  [UIAlertController](https://developer.apple.com/documentation/uikit/uialertcontroller)
- or [UIAlertControllerStyleActionSheet](https://developer.apple.com/documentation/uikit/uialertcontrollerstyle/uialertcontrollerstyleactionsheet)
+ or
+ [UIAlertControllerStyleActionSheet](https://developer.apple.com/documentation/uikit/uialertcontrollerstyle/uialertcontrollerstyleactionsheet)
 
- MDCActionSheetController does not support UIPopoverController, instead it will always be presented in a sheet from the bottom.
+ MDCActionSheetController does not support UIPopoverController, instead it will always be presented
+ in a sheet from the bottom.
 
  */
 __attribute__((objc_subclassing_restricted))
@@ -142,6 +145,42 @@ __attribute__((objc_subclassing_restricted))
  The color applied to the sheet view of the action sheet controller.
  */
 @property(nonatomic, nonnull, strong) UIColor *backgroundColor;
+
+/**
+ The color applied to the title of the action sheet controller.
+
+ @note If only using a title and the actions have no icons make sure they are different colors so
+ there is a distinction between the title and actions.
+ */
+@property(nonatomic, strong, nullable) UIColor *titleTextColor;
+
+/**
+ The color applied to the message of the action sheet controller.
+
+ @note To make for a better user experience we recommend using a different color for the message and
+ actions if there are no icons so there is a distinction between the message and actions.
+ */
+@property(nonatomic, strong, nullable) UIColor *messageTextColor;
+
+/**
+ The color for the text for all action items within an action sheet.
+ */
+@property(nonatomic, strong, nullable) UIColor *actionTextColor;
+
+/**
+ The tint color for the action items within an action sheet.
+ */
+@property(nonatomic, strong, nullable) UIColor *actionTintColor;
+
+/**
+ The ink color for the action items within an action sheet.
+ */
+@property(nonatomic, strong, nullable) UIColor *inkColor;
+
+/**
+ The image rendering mode for all actions within an action sheet.
+ */
+@property(nonatomic) UIImageRenderingMode imageRenderingMode;
 
 @property(nonatomic, strong, readonly, nonnull)
     MDCBottomSheetTransitionController *transitionController;

@@ -37,7 +37,7 @@
      making the slider a snap to discrete values via @c numberOfDiscreteValues.
  */
 IB_DESIGNABLE
-@interface MDCSlider : UIControl <NSSecureCoding>
+@interface MDCSlider : UIControl
 
 /** When @c YES, the forState: APIs are enabled. Defaults to @c NO. */
 @property(nonatomic, assign, getter=isStatefulAPIEnabled) BOOL statefulAPIEnabled;

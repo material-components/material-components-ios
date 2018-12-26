@@ -35,4 +35,12 @@
   return self;
 }
 
+- (MDCShadowElevation)elevation {
+  return [self shadowLayer].elevation;
+}
+
+- (void)setElevation:(MDCShadowElevation)elevation {
+  [[self shadowLayer] setElevation:elevation];
+}
+
 @end
