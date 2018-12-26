@@ -15,9 +15,6 @@
 # limitations under the License.
 #
 # Finds all newly-added files that are missing BUILD targets
-script_version=0.0.10
-
-echo "Bazel target detection v${script_version}"
 
 # Generates a list of files that were modified since the target branch 
 modified_files() {
@@ -68,6 +65,7 @@ check_files_covered() {
   num_files="${#files[@]}"
   current_index=0
   for file in "${files[@]}"; do
+<<<<<<< HEAD
     # allrdeps is part of Sky Query, which can only be accessed when universe_scope and order_output
     # are provided. See the following docs for more details:
     # https://docs.bazel.build/versions/master/query.html#sky-query
@@ -75,6 +73,10 @@ check_files_covered() {
       --universe_scope=//... \
       --order_output=no \
       "kind(rule, allrdeps('$file'))" \
+=======
+    targets=$(bazel query \
+      "kind(rule, deps('$file'))" \
+>>>>>>> develop
       2>/dev/null ) 
     if [ -z "$targets" ]; then
       missing_targets="${missing_targets}${file}\n"

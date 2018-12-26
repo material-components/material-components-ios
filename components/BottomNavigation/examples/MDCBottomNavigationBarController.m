@@ -44,8 +44,8 @@
   self.navigationBar.delegate = self;
 
   // Add subviews and create their constraints
-  [self.view addSubview:self.navigationBar];
   [self.view addSubview:self.content];
+  [self.view addSubview:self.navigationBar];
   [self loadConstraints];
 }
 
