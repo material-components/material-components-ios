@@ -79,15 +79,14 @@ update_comment() {
   fi
   
   if [ -n "$1" ]; then
+    comment_tmp_path=$(mktemp -d)
+    comment_tmp_file="${comment_tmp_path}/comment.tmp"
+    echo -e "The following files are not in any BUILD targets:\n" >> "$comment_tmp_file"
+    echo -e "\`\`\`\n${1}\n\`\`\`\n" >> "$comment_tmp_file"
+
+    cat "$comment_tmp_file"
     if [ -n "$GITHUB_API_TOKEN" ]; then
-      comment_tmp_path=$(mktemp -d)
-      comment_tmp_file="${comment_tmp_path}/comment.tmp"
-      echo -e "The following files are not in any BUILD targets:\n" >> "$comment_tmp_file"
-      echo -e "\`\`\`\n${1}\n\`\`\`\n" >> "$comment_tmp_file"
       post_comment "$COMMENT_IDENTIFIER" "$comment_tmp_file"
-    else
-      echo -e "The following files are not in any BUILD targets:\n"
-      echo -e "\`\`\`\n${1}\n\`\`\`\n"
     fi
   fi
 }
