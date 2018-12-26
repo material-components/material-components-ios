@@ -90,6 +90,8 @@ delete_comment() {
   pushd scripts/external/github-comment
   
   pwd
+  ls -la
+  git status
 
   swift run github-comment \
     --repo=material-components/material-components-ios \
