@@ -14,6 +14,5 @@
 
 typedef NS_ENUM(NSInteger, MDCRippleState) {
   MDCRippleStateNormal = 0, // No Ripple
-  MDCRippleStateHighlighted, // Ripple has been triggered
   MDCRippleStateSelected, // Ripple has spread and is staying
 };
