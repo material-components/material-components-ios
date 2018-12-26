@@ -18,6 +18,6 @@
 
 - (void)changeStringsToArabic;
 
-- (void)changeLayoutToRTL;
+- (void)changeLayoutToRTL NS_AVAILABLE_IOS(9.0);
 
 @end
