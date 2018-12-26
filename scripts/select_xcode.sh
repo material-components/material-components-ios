@@ -14,9 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Fail on any error.
-set -e
-
 version_as_number() {
   padded_version="${1%.}" # Strip any trailing dots
   # Pad with .0 until we get a M.m.p version string.
