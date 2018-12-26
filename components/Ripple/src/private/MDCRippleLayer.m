@@ -34,6 +34,7 @@ static NSString *const MDCRippleLayerScaleString = @"transform.scale";
 - (void)setNeedsLayout {
   [super setNeedsLayout];
   [self setRadiiWithRect:self.bounds];
+  [self updateRippleColor];
 }
 
 - (void)setRadiiWithRect:(CGRect)rect {
@@ -53,7 +54,6 @@ static NSString *const MDCRippleLayerScaleString = @"transform.scale";
                                radius * 2);
   UIBezierPath *circlePath = [UIBezierPath bezierPathWithOvalInRect:ovalRect];
   self.path = circlePath.CGPath;
-  self.fillColor = self.rippleColors[@(MDCRippleStateNormal)].CGColor;
   [self.rippleLayerDelegate rippleLayerPressDownAnimationDidBegin:self];
   if (!animated) {
     self.opacity = 1;
@@ -121,6 +121,9 @@ static NSString *const MDCRippleLayerScaleString = @"transform.scale";
     animGroup.fillMode = kCAFillModeForwards;
     animGroup.removedOnCompletion = NO;
     [CATransaction setCompletionBlock:^{
+      if (self.allowsSelection) {
+        [self setState:MDCRippleStateSelected];
+      }
       self->_startAnimationActive = NO;
       if (completion) {
         completion();
@@ -172,6 +175,24 @@ static NSString *const MDCRippleLayerScaleString = @"transform.scale";
     [self addAnimation:fadeOutAnim forKey:nil];
     [CATransaction commit];
   }
+}
+
+- (UIColor *)rippleColorForState:(MDCRippleState)state {
+  UIColor *rippleColor = _rippleColors[@(state)];
+  if (state != MDCRippleStateNormal && rippleColor == nil) {
+    rippleColor = _rippleColors[@(MDCRippleStateNormal)];
+  }
+  return rippleColor;
+}
+
+- (void)updateRippleColor {
+  UIColor *rippleColor = [self rippleColorForState:self.state];
+  self.fillColor = rippleColor.CGColor;
+}
+
+- (void)setState:(MDCRippleState)state {
+  _state = state;
+  [self updateRippleColor];
 }
 
 @end

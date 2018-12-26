@@ -20,6 +20,7 @@
 @interface MDCRippleView () <CALayerDelegate, MDCRippleLayerDelegate>
 
 @property(nonatomic, strong) MDCRippleLayer *activeRippleLayer;
+@property(nonatomic, strong) CAShapeLayer *maskLayer;
 
 @end
 
@@ -57,50 +58,55 @@
   _rippleStyle = MDCRippleStyleBounded;
   self.layer.masksToBounds = YES;
 
-  [self updateRippleColor];
+  // Use mask layer when the superview has a shadowPath.
+  _maskLayer = [CAShapeLayer layer];
+  _maskLayer.delegate = self;
 }
 
 - (void)setRippleColor:(UIColor *)rippleColor forState:(MDCRippleState)state {
   _rippleColors[@(state)] = rippleColor;
-
-  [self updateRippleColor];
-}
-
-- (void)updateRippleColor {
-  UIColor *rippleColor = [self rippleColorForState:self.state];
-  self.activeRippleLayer.fillColor = rippleColor.CGColor;
-//  self.rippleLayer.rippleColor = rippleColor;
 }
 
 - (UIColor *)rippleColorForState:(MDCRippleState)state {
-  UIColor *rippleColor = _rippleColors[@(state)];
-  if (state != MDCRippleStateNormal && rippleColor == nil) {
-    rippleColor = _rippleColors[@(MDCRippleStateNormal)];
-  }
-  return rippleColor;
+  return _rippleColors[@(state)];
 }
 
 - (void)layoutSubviews {
   [super layoutSubviews];
 
   // this is for layout changes like landscape etc. should be moved to separate method.
-  /**
-  CGRect inkBounds = CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
-  self.layer.bounds = inkBounds;
 
-  // When bounds change ensure all ink layer bounds are changed too.
-  for (CALayer *layer in self.layer.sublayers) {
-    if ([layer isKindOfClass:[MDCRippleLayer class]]) {
-      MDCRippleLayer *inkLayer = (MDCRippleLayer *)layer;
-      inkLayer.bounds = inkBounds;
-    }
-  }
-  */
+//  CGRect inkBounds = CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
+//  self.layer.bounds = inkBounds;
+//
+//  // When bounds change ensure all ink layer bounds are changed too.
+//  for (CALayer *layer in self.layer.sublayers) {
+//    if ([layer isKindOfClass:[MDCRippleLayer class]]) {
+//      MDCRippleLayer *inkLayer = (MDCRippleLayer *)layer;
+//      inkLayer.bounds = inkBounds;
+//    }
+//  }
+  [self updateRippleStyle];
 }
 
 - (void)setRippleStyle:(MDCRippleStyle)rippleStyle {
   _rippleStyle = rippleStyle;
-  self.layer.masksToBounds = (rippleStyle == MDCRippleStyleBounded);
+  [self updateRippleStyle];
+}
+
+- (void)updateRippleStyle {
+  self.layer.masksToBounds = (self.rippleStyle == MDCRippleStyleBounded);
+  if (self.rippleStyle == MDCRippleStyleBounded) {
+    if (self.superview.layer.shadowPath) {
+      self.maskLayer.path = self.superview.layer.shadowPath;
+      self.layer.mask = _maskLayer;
+    } else {
+      self.superview.clipsToBounds = YES;
+    }
+  } else {
+    self.layer.mask = nil;
+    self.superview.clipsToBounds = NO;
+  }
 }
 
 - (void)cancelAllRipplesAnimated:(BOOL)animated {
@@ -122,6 +128,7 @@
                          completion:(nullable MDCRippleCompletionBlock)completion {
   MDCRippleLayer *rippleLayer = [MDCRippleLayer layer];
   rippleLayer.rippleColors = _rippleColors;
+  rippleLayer.allowsSelection = self.allowsSelection;
   rippleLayer.unboundedMaxRippleRadius = self.unboundedMaxRippleRadius;
   rippleLayer.rippleLayerDelegate = self;
   rippleLayer.frame = self.bounds;

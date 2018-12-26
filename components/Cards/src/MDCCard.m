@@ -66,6 +66,7 @@ static const BOOL MDCCardIsInteractableDefault = YES;
     _rippleView.autoresizingMask = (UIViewAutoresizingFlexibleWidth |
                                  UIViewAutoresizingFlexibleHeight);
     _rippleView.layer.zPosition = FLT_MAX;
+    [_rippleView setRippleColor:UIColor.blueColor forState:MDCRippleStateSelected];
     [self addSubview:_rippleView];
   }
 

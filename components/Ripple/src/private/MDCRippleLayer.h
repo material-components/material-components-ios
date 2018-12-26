@@ -14,12 +14,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import <UIKit/UIKit.h>
-
-typedef NS_ENUM(NSInteger, MDCRippleState) {
-  MDCRippleStateNormal = 0, // No Ripple
-  MDCRippleStateHighlighted, // Ripple has been triggered
-  MDCRippleStateSelected, // Ripple has spread and is staying
-};
+#import "MDCRippleState.h"
 
 typedef void (^MDCRippleCompletionBlock)(void);
 
@@ -35,7 +30,12 @@ typedef void (^MDCRippleCompletionBlock)(void);
 
 @property(nonatomic, assign) CGFloat unboundedMaxRippleRadius;
 
+@property (nonatomic, readonly) MDCRippleState state;
+
 @property(nonatomic, strong, nonnull) NSDictionary<NSNumber *, UIColor *> *rippleColors;
+
+@property (nonatomic) BOOL allowsSelection;
+
 
 - (void)startRippleAtPoint:(CGPoint)point
                   animated:(BOOL)animated

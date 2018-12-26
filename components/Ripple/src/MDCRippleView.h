@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
+#import "MDCRippleState.h"
 
-typedef NS_ENUM(NSInteger, MDCRippleState);
 @protocol MDCRippleViewDelegate;
 
 typedef void (^MDCRippleCompletionBlock)(void);
@@ -33,9 +33,9 @@ typedef NS_ENUM(NSInteger, MDCRippleStyle) {
 @property (nonatomic, assign) CGFloat unboundedMaxRippleRadius;
 
 @property (nonatomic) BOOL allowsSelection;
-@property (nonatomic, readonly) MDCRippleState state;
 
 - (void)setRippleColor:(nullable UIColor *)rippleColor forState:(MDCRippleState)state;
+
 - (nullable UIColor *)rippleColorForState:(MDCRippleState)state;
 
 - (void)cancelAllRipplesAnimated:(BOOL)animated;
@@ -46,6 +46,7 @@ typedef NS_ENUM(NSInteger, MDCRippleStyle) {
 
 - (void)BeginRipplePressUpAnimated:(BOOL)animated
                         completion:(nullable MDCRippleCompletionBlock)completion;
+
 @end
 
 @protocol MDCRippleViewDelegate <NSObject>
