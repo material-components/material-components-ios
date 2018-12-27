@@ -12,12 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCAbstractTextFieldSnapshotTests+LeadingImage.h"
 #import "MDCAbstractTextFieldSnapshotTests+I18N.h"
+#import "MDCAbstractTextFieldSnapshotTests+LeadingImage.h"
 #import "MDCAbstractTextFieldSnapshotTests.h"
+#import "MaterialTextFields.h"
 
-@interface MDCTextFieldFullWidthControllerLeadingImageArabicSnapshotTests : MDCAbstractTextFieldSnapshotTests
-
+@interface MDCTextFieldFullWidthControllerLeadingImageArabicSnapshotTests
+    : MDCAbstractTextFieldSnapshotTests
 @end
 
 @implementation MDCTextFieldFullWidthControllerLeadingImageArabicSnapshotTests
