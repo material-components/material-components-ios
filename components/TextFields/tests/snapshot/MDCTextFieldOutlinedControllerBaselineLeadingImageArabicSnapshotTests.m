@@ -56,8 +56,6 @@
   }
 }
 
-#pragma mark - Disabled tests
-
 // NOTE: Additional test methods can be found in MDCAbstractTextFieldSnapshotTests.m
 
 @end
