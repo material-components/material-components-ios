@@ -36,7 +36,7 @@
         // iOS before 11 would return `nil` for `beginningOfDocument` unless the UITextInput was
         // in a view hierarchy, the first responder, and (for UITextView) selectable.
         NSLog(@"[ERROR] Setting the base writing direction on an UITextInput only works on iOS "
-              "11+.");
+               "11+.");
       }
     }
   }
