@@ -46,36 +46,12 @@
 - (nonnull instancetype)initWithView:(nonnull UIView *)view NS_DESIGNATED_INITIALIZER;
 
 /**
- When called the @c defaultRippleView is added to the @c view.
-
- This method is a no-op when the delegate conforms to @c rippleTouchController:rippleViewAtTouchLocation:
- because this is how a client specifies a custom ripple view.
-
- If you want to specify a specific z-index order for your rippleView please conform to
- @c rippleTouchController:insertRippleView:intoView: and do so there.
- */
-//- (void)addRippleView;
-
-/**
  Cancels all touch processing and dissipates the ripple.
 
  This is useful if your application needs to remove the ripple on scrolling, when preparing a view
  for reuse, etc.
  */
 - (void)cancelRippleTouchProcessing;
-
-/**
- Returns the ripple view at a particular touch location.
-
- If the delegate responds to @c rippleTouchController:rippleViewAtLocation: then this method queries it.
- Otherwise, if @c addRippleView has been called and @c location is in the bounds of
- @c self.defaultView, then that view is returned. If none of these conditions are met, @c nil is
- returned.
-
- @param location The query location in the coordinates of @c self.view.
- @return The ripple view at the touch location, or nil.
-*/
-//- (MDCRippleView *_Nullable)rippleViewAtTouchLocation:(CGPoint)location;
 
 @end
 
