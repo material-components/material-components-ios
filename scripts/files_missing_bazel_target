@@ -137,12 +137,15 @@ check_files_covered() {
   if (( exit_status != 0 )); then
     missing_targets=$(echo -e "$missing_targets" | sort | uniq)
     update_comment "$missing_targets"
-    exit $exit_status
+  else
+    update_comment # Deletes any previously-posted comment
   fi 
 
   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
     popd >> /dev/null
   fi
+
+  exit $exit_status
 } 
 
 check_files_covered
