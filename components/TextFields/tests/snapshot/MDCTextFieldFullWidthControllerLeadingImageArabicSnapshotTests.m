@@ -18,7 +18,7 @@
 #import "MaterialTextFields.h"
 
 @interface MDCTextFieldFullWidthControllerLeadingImageArabicSnapshotTests
-    : MDCAbstractTextFieldSnapshotTests
+    : MDCAbstractTextFieldSnapshotTests <MDCTextFieldSnapshotTestCaseHooking>
 @end
 
 @implementation MDCTextFieldFullWidthControllerLeadingImageArabicSnapshotTests
@@ -38,6 +38,9 @@
       [[MDCTextInputControllerFullWidth alloc] initWithTextInput:self.textField];
 
   [self changeStringsToArabic];
+}
+
+- (void)beforeGenerateSnapshotAndVerify {
   if (@available(iOS 9.0, *)) {
     [self changeLayoutToRTL];
   } else {
