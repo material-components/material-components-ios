@@ -123,7 +123,7 @@
 //        recognizer.targetBounds = [_defaultRippleView convertRect:_addedRippleView.bounds toView:_view];
 //      }
 //
-//      _shouldRespondToTouch = YES;
+      _shouldRespondToTouch = YES;
 //      dispatch_time_t delayTime =
 //          dispatch_time(DISPATCH_TIME_NOW, (int64_t)(NSEC_PER_SEC * kRippleTouchDelayInterval));
 //      dispatch_after(_delaysRippleSpread ? delayTime : 0, dispatch_get_main_queue(), ^(void) {

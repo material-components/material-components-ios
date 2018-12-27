@@ -18,14 +18,13 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "MaterialRipple.h"
 
 @interface RippleSurfaces : UIView
 @end
 
 @class RippleTypicalUseExample;
 
-@interface RippleTypicalUseExample : UIViewController <MDCRippleTouchControllerDelegate>
+@interface RippleTypicalUseExample : UIViewController
 
 @property(nonatomic, strong) RippleSurfaces *surfaces;
 @property(nonatomic, weak) UIView *containerView;

@@ -1,4 +1,4 @@
-// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,7 +19,12 @@
 
 #import "supplemental/RippleExampleSupplemental.h"
 
-@implementation RippleTypicalUseExample
+@interface RippleTypicalUseExample () <MDCRippleTouchControllerDelegate>
+@end
+
+@implementation RippleTypicalUseExample {
+  NSMutableArray *_rippleTouchControllers;
+}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -33,13 +38,16 @@
   UIColor *blueColor = MDCPalette.bluePalette.tint500;
   CGRect customFrame = CGRectMake(0, 0, 200, 200);
 
+  // ExampleShapes is a custom UIView with several subviews of various shapes.
   self.surfaces = [[RippleSurfaces alloc] initWithFrame:customFrame];
 
+  _rippleTouchControllers = [[NSMutableArray alloc] init];
+
   for (UIView *view in self.surfaces.subviews) {
-    MDCRippleTouchController *rippleTouchController =
-        [[MDCRippleTouchController alloc] initWithView:view];
+    MDCRippleTouchController *rippleTouchController = [[MDCRippleTouchController alloc] initWithView:view];
     rippleTouchController.delegate = self;
     [rippleTouchController.rippleView setRippleColor:blueColor forState:MDCRippleStateNormal];
+    [_rippleTouchControllers addObject:rippleTouchController];
   }
   [containerView addSubview:self.surfaces];
 }
