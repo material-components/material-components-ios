@@ -23,13 +23,21 @@
 - (void)MDCForceTextInputRightToLeft:(UIView *)view {
   if ([view conformsToProtocol:@protocol(UITextInput)]) {
     id<UITextInput> textInput = (id<UITextInput>)view;
+    [((UITextField *)textInput) becomeFirstResponder];
     UITextRange *textRange = [textInput textRangeFromPosition:textInput.beginningOfDocument
                                                    toPosition:textInput.endOfDocument];
     if (textRange) {
       [textInput setBaseWritingDirection:UITextWritingDirectionRightToLeft forRange:textRange];
     } else {
-      // Fail the test if `textRange` is nil since even an empty range should be non-nil.
-      XCTAssertNotNil(textRange);
+      if (@available(iOS 11.0, *)) {
+        // Fail the test if `textRange` is nil since even an empty range should be non-nil.
+        XCTAssertNotNil(textRange);
+      } else {
+        // iOS before 11 would return `nil` for `beginningOfDocument` unless the UITextInput was
+        // in a view hierarchy, the first responder, and (for UITextView) selectable.
+        NSLog(@"[ERROR] Setting the base writing direction on an UITextInput only works on iOS "
+              "11+.");
+      }
     }
   }
   for (UIView *subview in view.subviews) {
