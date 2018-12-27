@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCInkGestureRecognizer.h"
+#import "MDCRippleGestureRecognizer.h"
 
 #import <UIKit/UIGestureRecognizerSubclass.h>
 
-static const CGFloat kInkGestureDefaultDragCancelDistance = 20;
+static const CGFloat kRippleGestureDefaultDragCancelDistance = 20;
 
-@implementation MDCInkGestureRecognizer {
+@implementation MDCRippleGestureRecognizer {
   CGPoint _touchStartLocation;
   CGPoint _touchCurrentLocation;
   BOOL _cancelOnDragOut;
@@ -28,7 +28,7 @@ static const CGFloat kInkGestureDefaultDragCancelDistance = 20;
   self = [super initWithTarget:target action:action];
   if (self) {
     _cancelOnDragOut = YES;
-    _dragCancelDistance = kInkGestureDefaultDragCancelDistance;
+    _dragCancelDistance = kRippleGestureDefaultDragCancelDistance;
     _targetBounds = CGRectNull;
     self.cancelsTouchesInView = NO;
     self.delaysTouchesEnded = NO;

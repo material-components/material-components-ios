@@ -15,13 +15,13 @@
 #import <UIKit/UIKit.h>
 
 /**
- Custom gesture recognizer to observe the various ink response states.
+ Custom gesture recognizer to observe the various ripple response states.
 
- MDCInkGestureRecognizer is a continuous recognizer that tracks single touches and optionally
+ MDCRippleGestureRecognizer is a continuous recognizer that tracks single touches and optionally
  fails if the touch moves outside the recongizer's view. Multiple touches will cause the
  recognizer to transition to the UIGestureRecognizerStateCancelled state.
  */
-@interface MDCInkGestureRecognizer : UIGestureRecognizer
+@interface MDCRippleGestureRecognizer : UIGestureRecognizer
 
 /**
  Set the distance that causes the recognizer to cancel.
@@ -36,7 +36,7 @@
 @property(nonatomic, assign) BOOL cancelOnDragOut;
 
 /**
- Bounds inside of which the recognizer will recognize ink gestures, relative to self.view.frame.
+ Bounds inside of which the recognizer will recognize ripple gestures, relative to self.view.frame.
 
  If set to CGRectNull (the default), then the recognizer will use self.view.bounds as the target
  bounds.
@@ -47,7 +47,7 @@
 @property(nonatomic) CGRect targetBounds;
 
 /**
- Returns the point where the ink starts spreading from.
+ Returns the point where the ripple starts spreading from.
 
  @param view View which the point is relative to.
  */
