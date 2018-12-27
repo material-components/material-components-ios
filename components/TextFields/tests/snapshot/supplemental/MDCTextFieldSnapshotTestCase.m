@@ -47,7 +47,7 @@
     [expectation fulfill];
   });
 
-  [self waitForExpectationsWithTimeout:1 handler:nil];
+  [self waitForExpectationsWithTimeout:2 handler:nil];
 }
 
 #pragma mark - Helpers
