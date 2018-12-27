@@ -56,7 +56,8 @@
   self = [super init];
   if (self) {
     _gestureRecognizer =
-        [[MDCRippleGestureRecognizer alloc] initWithTarget:self action:@selector(handleRippleGesture:)];
+        [[MDCRippleGestureRecognizer alloc] initWithTarget:self
+                                                    action:@selector(handleRippleGesture:)];
     _gestureRecognizer.delegate = self;
 
     _view = view;

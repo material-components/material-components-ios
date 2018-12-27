@@ -31,9 +31,3 @@
 @property(nonatomic, weak) UIView *containerView;
 
 @end
-
-@interface RippleTypicalUseExample (Supplemental)
-
-- (void)setupExampleViews;
-
-@end

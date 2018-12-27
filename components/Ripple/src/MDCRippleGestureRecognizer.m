@@ -36,9 +36,9 @@ static const CGFloat kRippleGestureDefaultDragCancelDistance = 20;
   return self;
 }
 
-- (CGPoint)touchStartLocationInView:(UIView *)view {
-  return [view convertPoint:_touchStartLocation fromView:nil];
-}
+//- (CGPoint)touchStartLocationInView:(UIView *)view {
+//  return [view convertPoint:_touchStartLocation fromView:nil];
+//}
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
   [super touchesBegan:touches withEvent:event];

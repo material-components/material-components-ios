@@ -24,6 +24,8 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  self.view.backgroundColor = UIColor.whiteColor;
+  
   UIView *containerView = [[UIView alloc] initWithFrame:self.view.frame];
   [self.view addSubview:containerView];
   self.containerView = containerView;
@@ -31,10 +33,7 @@
   UIColor *blueColor = MDCPalette.bluePalette.tint500;
   CGRect customFrame = CGRectMake(0, 0, 200, 200);
 
-  // ExampleShapes is a custom UIView with several subviews of various shapes.
   self.surfaces = [[RippleSurfaces alloc] initWithFrame:customFrame];
-
-  [self setupExampleViews];
 
   for (UIView *view in self.surfaces.subviews) {
     MDCRippleTouchController *rippleTouchController =
@@ -50,8 +49,8 @@
 - (void)rippleTouchController:(MDCRippleTouchController *)rippleTouchController
          didProcessRippleView:(MDCRippleView *)rippleView
            atTouchLocation:(CGPoint)location {
-  NSLog(@"RippleTouchController %p did process ripple view: %p at touch location: %@", rippleTouchController,
-        rippleView, NSStringFromCGPoint(location));
+  NSLog(@"RippleTouchController %p did process ripple view: %p at touch location: %@",
+        rippleTouchController, rippleView, NSStringFromCGPoint(location));
 }
 
 @end

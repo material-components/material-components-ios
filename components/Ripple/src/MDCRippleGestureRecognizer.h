@@ -51,7 +51,7 @@
 
  @param view View which the point is relative to.
  */
-- (CGPoint)touchStartLocationInView:(UIView *)view;
+//- (CGPoint)touchStartLocationInView:(UIView *)view;
 
 /** Returns YES if the touch's current location is still within the target bounds. */
 - (BOOL)isTouchWithinTargetBounds;
