@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
-#import "MaterialInk.h"
+#import "MaterialRipple.h"
 #import "MaterialShadowLayer.h"
 
 @protocol MDCShapeGenerating;
@@ -86,7 +86,7 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
 /**
  The inkView for the card that is initiated on tap
  */
-@property(nonatomic, readonly, strong, nonnull) MDCInkView *inkView;
+@property(nonatomic, readonly, strong, nonnull) MDCRippleView *rippleView;
 
 /**
  This property defines if a card as a whole should be interactable or not.

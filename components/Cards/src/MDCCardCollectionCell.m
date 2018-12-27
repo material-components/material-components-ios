@@ -70,17 +70,17 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 }
 
 - (void)commonMDCCardCollectionCellInit {
-  if (_inkView == nil) {
-    _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
-    _inkView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-    _inkView.usesLegacyInkRipple = NO;
-    _inkView.layer.zPosition = FLT_MAX;
-    [self addSubview:_inkView];
+  if (_rippleView == nil) {
+    _rippleView = [[MDCRippleView alloc] initWithFrame:self.bounds];
+    _rippleView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+//    _rippleView.usesLegacyInkRipple = NO;
+    _rippleView.layer.zPosition = FLT_MAX;
+    [self addSubview:_rippleView];
   }
 
   if (_selectedImageView == nil) {
     _selectedImageView = [[UIImageView alloc] init];
-    _selectedImageView.layer.zPosition = _inkView.layer.zPosition - 1;
+    _selectedImageView.layer.zPosition = _rippleView.layer.zPosition - 1;
     _selectedImageView.autoresizingMask =
     (UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin |
      UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin);
@@ -165,28 +165,26 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
     case MDCCardCellStateSelected: {
       if (_state != MDCCardCellStateHighlighted) {
         if (animated) {
-          [self.inkView startTouchBeganAnimationAtPoint:_lastTouch completion:nil];
+          [self.rippleView BeginRipplePressDownAtPoint:_lastTouch animated:YES completion:nil];
         } else {
-          [self.inkView cancelAllAnimationsAnimated:NO];
-          [self.inkView startTouchBeganAtPoint:self.center
-                                      animated:NO
-                                withCompletion:nil];
+          [self.rippleView cancelAllRipplesAnimated:NO];
+          [self.rippleView BeginRipplePressDownAtPoint:self.center
+                                      animated:YES
+                                completion:nil];
         }
       }
       break;
     }
     case MDCCardCellStateNormal: {
-      [self.inkView startTouchEndAtPoint:_lastTouch
-                                animated:animated
-                          withCompletion:nil];
+      [self.rippleView BeginRipplePressUpAnimated:animated completion:nil];
       break;
     }
     case MDCCardCellStateHighlighted: {
       // Note: setHighlighted: can get getting more calls with YES than NO when clicking rapidly.
       // To guard against ink never going away and darkening our card we call
       // startTouchEndedAnimationAtPoint:completion:.
-      [self.inkView startTouchEndAtPoint:_lastTouch animated:animated withCompletion:nil];
-      [self.inkView startTouchBeganAtPoint:_lastTouch animated:animated withCompletion:nil];
+      [self.rippleView BeginRipplePressUpAnimated:animated completion:nil];
+      [self.rippleView BeginRipplePressDownAtPoint:_lastTouch animated:animated completion:nil];
       break;
     }
   }
@@ -450,10 +448,10 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
 }
 
 - (void)updateInkForShape {
-  CGRect boundingBox = CGPathGetBoundingBox(self.layer.shapeLayer.path);
-  self.inkView.maxRippleRadius =
-      (CGFloat)(MDCHypot(CGRectGetHeight(boundingBox), CGRectGetWidth(boundingBox)) / 2 + 10);
-  self.inkView.layer.masksToBounds = NO;
+//  CGRect boundingBox = CGPathGetBoundingBox(self.layer.shapeLayer.path);
+//  self.rippleView.maxRippleRadius =
+//      (CGFloat)(MDCHypot(CGRectGetHeight(boundingBox), CGRectGetWidth(boundingBox)) / 2 + 10);
+  self.rippleView.layer.masksToBounds = NO;
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
