@@ -58,17 +58,6 @@
 
 #pragma mark - Disabled tests
 
-// TODO(https://github.com/material-components/material-components-ios/issues/6125 ): Determine
-// why this test is flaky and fix it.
-//- (void)testTextFieldWithShortPlaceholderText {
-//}
-//
-//// TODO(https://github.com/material-components/material-components-ios/issues/6125 ): Determine
-//// why this test is flaky and fix it.
-//- (void)testTextFieldWithLongPlaceholderText {
-//}
-
-
 // NOTE: Additional test methods can be found in MDCAbstractTextFieldSnapshotTests.m
 
 @end
