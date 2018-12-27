@@ -52,7 +52,7 @@
   if (@available(iOS 9.0, *)) {
     [self changeLayoutToRTL];
   } else {
-    XCTAssertTrue(NO, @"RTL tests can only run on iOS 9 or later.");
+    NSLog(@"[ERROR] RTL tests can only run on iOS 9 or later.");
   }
 }
 
