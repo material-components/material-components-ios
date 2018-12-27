@@ -134,7 +134,7 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 }
 
 - (void)commonMDCNavigationBarInit {
-  _horizontalTextInsets = 16;
+  _titleInsets = UIEdgeInsetsMake(0, 16, 0, 16);
   _uppercasesButtonTitles = YES;
   _observedNavigationItemLock = [[NSObject alloc] init];
   _titleFont = [MDCTypography titleFont];
@@ -268,7 +268,7 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   _trailingButtonBar.frame = trailingButtonBarFrame;
 
   UIEdgeInsets textInsets =
-      UIEdgeInsetsMake(0, self.horizontalTextInsets, 0, self.horizontalTextInsets);
+      UIEdgeInsetsMake(0, self.titleInsets.left, 0, self.titleInsets.right);
 
   // textFrame is used to determine layout of both TitleLabel and TitleView
   CGRect textFrame = UIEdgeInsetsInsetRect(self.bounds, textInsets);
@@ -489,12 +489,14 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
 
       MDCButtonBar *leftButtonBar = self.leadingButtonBar;
       MDCButtonBar *rightButtonBar = self.trailingButtonBar;
-      CGFloat titleLeftInset = self.horizontalTextInsets;
-      CGFloat titleRightInset = self.horizontalTextInsets;
+      CGFloat titleLeftInset = self.titleInsets.left;
+      CGFloat titleRightInset = self.titleInsets.right;
 
       if (isRTL) {
         leftButtonBar = self.trailingButtonBar;
         rightButtonBar = self.leadingButtonBar;
+        titleLeftInset = self.titleInsets.right;
+        titleRightInset = self.titleInsets.left;
       }
 
       // Determine how much space is available to the left/right of the navigation bar's midpoint
@@ -597,10 +599,6 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   _titleLabel.hidden = _titleView != nil;
     
   [self setNeedsLayout];
-}
-
-- (void)setHorizontalTextInsets:(CGFloat)horizontalTextInsets {
-  _horizontalTextInsets = MIN(horizontalTextInsets, CGRectGetWidth(self.bounds) / 2);
 }
 
 - (void)setTitleTextAttributes:(NSDictionary<NSString *, id> *)titleTextAttributes {

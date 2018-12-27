@@ -124,9 +124,9 @@ IB_DESIGNABLE
 /**
  The horizontal insets that the MDCNavigationBar uses for both the title and titleView.
 
- Defaults to 16.
+ Defaults to UIEdgeInsets(0, 16, 0, 16).
  */
-@property(nonatomic, assign) CGFloat horizontalTextInsets;
+@property(nonatomic, assign) CGFloat titleInsets;
 
 /**
  The font applied to the title of navigation bar.
