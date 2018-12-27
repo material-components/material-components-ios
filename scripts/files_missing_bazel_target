@@ -22,12 +22,12 @@ COMMENT_IDENTIFIER='bazel-rule-coverage'
 ## Import Github Comment library script
 if [ -n "$KOKORO_BUILD_NUMBER" ]; then
   # Import source methods for managing GitHub comments
-  scripts_dir='github/repo/scripts'
+  scripts_dir='github/repo/scripts/lib'
 else
-  scripts_dir="$(dirname $0)"
+  scripts_dir="$(dirname $0)/lib"
 fi
 
-source "${scripts_dir}/github-comments.sh"
+source "${scripts_dir}/github_comments.sh"
 
 # Required for posting and deleting comments
 source "${scripts_dir}/select_xcode.sh"
