@@ -242,21 +242,21 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
 - (void)testTitleLabelDefaultInsets {
   [self helperTestTitleLabelWithTitleInsets:self.navBar.titleInsets
-                                 titleAlignment:MDCNavigationBarTitleAlignmentCenter];
+                             titleAlignment:MDCNavigationBarTitleAlignmentCenter];
 }
 
 - (void)testTitleLabelWithCustomHorizontalInsets {
   [self helperTestTitleLabelWithTitleInsets:UIEdgeInsetsMake(0, 24, 0, 24)
-                                 titleAlignment:MDCNavigationBarTitleAlignmentCenter];
+                             titleAlignment:MDCNavigationBarTitleAlignmentCenter];
 }
 
 - (void)testTitleLabelWithCustomHorizontalInsetAndLeadingAlignment {
   [self helperTestTitleLabelWithTitleInsets:UIEdgeInsetsMake(0, 24, 0, 24)
-                                 titleAlignment:MDCNavigationBarTitleAlignmentLeading];
+                             titleAlignment:MDCNavigationBarTitleAlignmentLeading];
 }
 
 - (void)helperTestTitleLabelWithTitleInsets:(UIEdgeInsets)titleInsets
-                                 titleAlignment:(MDCNavigationBarTitleAlignment)titleAlignment {
+                             titleAlignment:(MDCNavigationBarTitleAlignment)titleAlignment {
   // Given
   CGFloat navBarWidth = 300;
   self.navBar.frame = CGRectMake(0, 0, navBarWidth, 25);

@@ -267,8 +267,7 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   _leadingButtonBar.frame = leadingButtonBarFrame;
   _trailingButtonBar.frame = trailingButtonBarFrame;
 
-  UIEdgeInsets textInsets =
-      UIEdgeInsetsMake(0, self.titleInsets.left, 0, self.titleInsets.right);
+  UIEdgeInsets textInsets = UIEdgeInsetsMake(0, self.titleInsets.left, 0, self.titleInsets.right);
 
   // textFrame is used to determine layout of both TitleLabel and TitleView
   CGRect textFrame = UIEdgeInsetsInsetRect(self.bounds, textInsets);
