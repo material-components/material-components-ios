@@ -17,11 +17,9 @@
 #import "MaterialTextFields.h"
 
 @interface MDCTextFieldFilledFloatingControllerSnapshotTests : MDCAbstractTextFieldSnapshotTests
-@property(nonatomic, strong) MDCTextInputControllerFilled *textFieldController;
 @end
 
 @implementation MDCTextFieldFilledFloatingControllerSnapshotTests
-@dynamic textFieldController;
 
 - (void)setUp {
   [super setUp];
@@ -32,9 +30,10 @@
 
   self.textField.clearButtonMode = UITextFieldViewModeAlways;
 
-  self.textFieldController =
+  MDCTextInputControllerFilled *controller =
       [[MDCTextInputControllerFilled alloc] initWithTextInput:self.textField];
-  self.textFieldController.floatingEnabled = YES;
+  controller.floatingEnabled = YES;
+  self.textFieldController = controller;
 }
 
 // NOTE: Additional test methods can be found in MDCAbstractTextFieldSnapshotTests.m

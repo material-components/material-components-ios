@@ -52,12 +52,25 @@
   return YES;
 }
 
+- (void)invokeBeforeGenerateSnapshotAndVerify {
+  if ([self conformsToProtocol:@protocol(MDCTextFieldSnapshotTestCaseHooking)]) {
+    if ([self respondsToSelector:@selector(beforeGenerateSnapshotAndVerify)]) {
+      id<MDCTextFieldSnapshotTestCaseHooking> selfAsHooking =
+          (id<MDCTextFieldSnapshotTestCaseHooking>)self;
+      [selfAsHooking beforeGenerateSnapshotAndVerify];
+    }
+  }
+}
+
 #pragma mark - Tests
 
 - (void)testTextFieldEmpty {
   if (![self shouldTestExecute]) {
     return;
   }
+
+  // When
+  [self invokeBeforeGenerateSnapshotAndVerify];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -70,6 +83,7 @@
 
   // When
   [self.textField MDCtest_setIsEditing:YES];
+  [self invokeBeforeGenerateSnapshotAndVerify];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -81,6 +95,7 @@
   }
 
   self.textField.enabled = NO;
+  [self invokeBeforeGenerateSnapshotAndVerify];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -95,6 +110,7 @@
 
   // When
   self.textFieldController.placeholderText = self.shortPlaceholderText;
+  [self invokeBeforeGenerateSnapshotAndVerify];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -108,6 +124,7 @@
   // When
   self.textFieldController.placeholderText = self.shortPlaceholderText;
   [self.textField MDCtest_setIsEditing:YES];
+  [self invokeBeforeGenerateSnapshotAndVerify];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -121,6 +138,7 @@
   // When
   self.textFieldController.placeholderText = self.shortPlaceholderText;
   self.textField.enabled = NO;
+  [self invokeBeforeGenerateSnapshotAndVerify];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -133,6 +151,7 @@
 
   // When
   self.textFieldController.placeholderText = self.longPlaceholderText;
+  [self invokeBeforeGenerateSnapshotAndVerify];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -146,6 +165,7 @@
   // When
   self.textFieldController.placeholderText = self.longPlaceholderText;
   [self.textField MDCtest_setIsEditing:YES];
+  [self invokeBeforeGenerateSnapshotAndVerify];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -159,6 +179,7 @@
   // When
   self.textFieldController.placeholderText = self.longPlaceholderText;
   self.textField.enabled = NO;
+  [self invokeBeforeGenerateSnapshotAndVerify];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -171,6 +192,7 @@
 
   // When
   self.textFieldController.helperText = self.shortHelperText;
+  [self invokeBeforeGenerateSnapshotAndVerify];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -184,6 +206,7 @@
   // When
   self.textFieldController.helperText = self.shortHelperText;
   [self.textField MDCtest_setIsEditing:YES];
+  [self invokeBeforeGenerateSnapshotAndVerify];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -197,6 +220,7 @@
   // When
   self.textFieldController.helperText = self.shortHelperText;
   self.textField.enabled = NO;
+  [self invokeBeforeGenerateSnapshotAndVerify];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -209,6 +233,7 @@
 
   // When
   self.textFieldController.helperText = self.longHelperText;
+  [self invokeBeforeGenerateSnapshotAndVerify];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -222,6 +247,7 @@
   // When
   self.textFieldController.helperText = self.longHelperText;
   [self.textField MDCtest_setIsEditing:YES];
+  [self invokeBeforeGenerateSnapshotAndVerify];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -235,6 +261,7 @@
   // When
   self.textFieldController.helperText = self.longHelperText;
   self.textField.enabled = NO;
+  [self invokeBeforeGenerateSnapshotAndVerify];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -248,6 +275,7 @@
   // When
   [self.textFieldController setErrorText:self.shortErrorText
                  errorAccessibilityValue:self.shortErrorText];
+  [self invokeBeforeGenerateSnapshotAndVerify];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -262,6 +290,7 @@
   [self.textFieldController setErrorText:self.shortErrorText
                  errorAccessibilityValue:self.shortErrorText];
   [self.textField MDCtest_setIsEditing:YES];
+  [self invokeBeforeGenerateSnapshotAndVerify];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -276,6 +305,7 @@
   [self.textFieldController setErrorText:self.shortErrorText
                  errorAccessibilityValue:self.shortErrorText];
   self.textField.enabled = NO;
+  [self invokeBeforeGenerateSnapshotAndVerify];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -289,6 +319,7 @@
   // When
   [self.textFieldController setErrorText:self.longErrorText
                  errorAccessibilityValue:self.longErrorText];
+  [self invokeBeforeGenerateSnapshotAndVerify];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -303,6 +334,7 @@
   [self.textFieldController setErrorText:self.longErrorText
                  errorAccessibilityValue:self.longErrorText];
   [self.textField MDCtest_setIsEditing:YES];
+  [self invokeBeforeGenerateSnapshotAndVerify];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -317,6 +349,7 @@
   [self.textFieldController setErrorText:self.longErrorText
                  errorAccessibilityValue:self.longErrorText];
   self.textField.enabled = NO;
+  [self invokeBeforeGenerateSnapshotAndVerify];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -329,6 +362,7 @@
 
   // When
   self.textField.text = self.shortInputText;
+  [self invokeBeforeGenerateSnapshotAndVerify];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -342,6 +376,7 @@
   // When
   self.textField.text = self.shortInputText;
   [self.textField MDCtest_setIsEditing:YES];
+  [self invokeBeforeGenerateSnapshotAndVerify];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -355,6 +390,7 @@
   // When
   self.textField.text = self.shortInputText;
   self.textField.enabled = NO;
+  [self invokeBeforeGenerateSnapshotAndVerify];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -367,6 +403,7 @@
 
   // When
   self.textField.text = self.longInputText;
+  [self invokeBeforeGenerateSnapshotAndVerify];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -380,6 +417,7 @@
   // When
   self.textField.text = self.longInputText;
   [self.textField MDCtest_setIsEditing:YES];
+  [self invokeBeforeGenerateSnapshotAndVerify];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -393,6 +431,7 @@
   // When
   self.textField.text = self.longInputText;
   self.textField.enabled = NO;
+  [self invokeBeforeGenerateSnapshotAndVerify];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -409,6 +448,7 @@
   self.textField.text = self.shortInputText;
   self.textFieldController.placeholderText = self.shortPlaceholderText;
   self.textFieldController.helperText = self.shortHelperText;
+  [self invokeBeforeGenerateSnapshotAndVerify];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -424,6 +464,7 @@
   self.textFieldController.placeholderText = self.shortPlaceholderText;
   self.textFieldController.helperText = self.shortHelperText;
   [self.textField MDCtest_setIsEditing:YES];
+  [self invokeBeforeGenerateSnapshotAndVerify];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -439,6 +480,7 @@
   self.textFieldController.placeholderText = self.shortPlaceholderText;
   self.textFieldController.helperText = self.shortHelperText;
   self.textField.enabled = NO;
+  [self invokeBeforeGenerateSnapshotAndVerify];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -453,6 +495,7 @@
   self.textField.text = self.longInputText;
   self.textFieldController.placeholderText = self.longPlaceholderText;
   self.textFieldController.helperText = self.longHelperText;
+  [self invokeBeforeGenerateSnapshotAndVerify];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -468,6 +511,7 @@
   self.textFieldController.placeholderText = self.longPlaceholderText;
   self.textFieldController.helperText = self.longHelperText;
   [self.textField MDCtest_setIsEditing:YES];
+  [self invokeBeforeGenerateSnapshotAndVerify];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -483,6 +527,7 @@
   self.textFieldController.placeholderText = self.longPlaceholderText;
   self.textFieldController.helperText = self.longHelperText;
   self.textField.enabled = NO;
+  [self invokeBeforeGenerateSnapshotAndVerify];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -498,6 +543,7 @@
   self.textFieldController.placeholderText = self.shortPlaceholderText;
   [self.textFieldController setErrorText:self.shortErrorText
                  errorAccessibilityValue:self.shortErrorText];
+  [self invokeBeforeGenerateSnapshotAndVerify];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -514,6 +560,7 @@
   [self.textFieldController setErrorText:self.shortErrorText
                  errorAccessibilityValue:self.shortErrorText];
   [self.textField MDCtest_setIsEditing:YES];
+  [self invokeBeforeGenerateSnapshotAndVerify];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -530,6 +577,7 @@
   [self.textFieldController setErrorText:self.shortErrorText
                  errorAccessibilityValue:self.shortErrorText];
   self.textField.enabled = NO;
+  [self invokeBeforeGenerateSnapshotAndVerify];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -545,6 +593,7 @@
   self.textFieldController.placeholderText = self.longPlaceholderText;
   [self.textFieldController setErrorText:self.longErrorText
                  errorAccessibilityValue:self.longErrorText];
+  [self invokeBeforeGenerateSnapshotAndVerify];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -561,6 +610,7 @@
   [self.textFieldController setErrorText:self.longErrorText
                  errorAccessibilityValue:self.longErrorText];
   [self.textField MDCtest_setIsEditing:YES];
+  [self invokeBeforeGenerateSnapshotAndVerify];
 
   // Then
   [self generateSnapshotAndVerify];
@@ -577,6 +627,7 @@
   [self.textFieldController setErrorText:self.longErrorText
                  errorAccessibilityValue:self.longErrorText];
   self.textField.enabled = NO;
+  [self invokeBeforeGenerateSnapshotAndVerify];
 
   // Then
   [self generateSnapshotAndVerify];
