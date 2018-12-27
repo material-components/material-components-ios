@@ -32,31 +32,8 @@
 /** Delegate to extend the behavior of the touch control. */
 @property(nonatomic, weak, nullable) id<MDCRippleTouchControllerDelegate> delegate;
 
-/** If YES, the gesture recognizer should delay the start of ripple spread. Default is NO. */
-//@property(nonatomic, assign) BOOL delaysRippleSpread;
-
-/** The distance that causes the recognizer to cancel. Defaults to 20pt. */
-@property(nonatomic, assign) CGFloat dragCancelDistance;
-
-/**
- Whether dragging outside of the view causes the gesture recognizer to cancel.
- Defaults to YES.
- */
-@property(nonatomic, assign) BOOL cancelsOnDragOut;
-
-/**
- Bounds inside of which the recognizer will recognize ripple gestures, relative to self.view.frame.
-
- If set to CGRectNull (the default), then the recognizer will use self.view.bounds as the target
- bounds.
-
- If cancelsOnDragOut is YES and the user's touch moves beyond the target bounds inflated by
- dragCancelDistance then the gesture is cancelled.
- */
-@property(nonatomic) CGRect targetBounds;
-
 /** Gesture recognizer used to bind touch events to ripple. */
-@property(nonatomic, strong, readonly, nonnull) MDCRippleGestureRecognizer *gestureRecognizer;
+@property(nonatomic, strong, readonly, nonnull) UILongPressGestureRecognizer *gestureRecognizer;
 
 /** Unavailable, please use initWithView: instead. */
 - (nonnull instancetype)init NS_UNAVAILABLE;

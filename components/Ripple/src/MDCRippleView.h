@@ -39,6 +39,10 @@ typedef NS_ENUM(NSInteger, MDCRippleStyle) {
 - (nullable UIColor *)rippleColorForState:(MDCRippleState)state;
 
 - (void)cancelAllRipplesAnimated:(BOOL)animated;
+- (void)fadeInRippleAnimated:(BOOL)animated
+                  completion:(nullable MDCRippleCompletionBlock)completion;
+- (void)fadeOutRippleAnimated:(BOOL)animated
+                   completion:(nullable MDCRippleCompletionBlock)completion;
 
 - (void)BeginRipplePressDownAtPoint:(CGPoint)point
                            animated:(BOOL)animated

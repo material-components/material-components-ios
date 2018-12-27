@@ -17,48 +17,20 @@
 #import "MDCRippleGestureRecognizer.h"
 #import "MDCRippleView.h"
 
-//static const NSTimeInterval kRippleTouchDelayInterval = 0.1;
-
-@interface MDCRippleTouchController ()
-//@property(nonatomic, strong) MDCRippleView *addedRippleView;
-//@property(nonatomic, strong) MDCRippleView *defaultRippleView;
-@property(nonatomic, assign) BOOL shouldRespondToTouch;
-@property(nonatomic, assign) CGPoint previousLocation;
-@end
-
-@implementation MDCRippleTouchController
-
-- (CGFloat)dragCancelDistance {
-  return _gestureRecognizer.dragCancelDistance;
+@implementation MDCRippleTouchController {
+  BOOL _tapWentOutsideOfBounds;
 }
-
-- (void)setDragCancelDistance:(CGFloat)dragCancelDistance {
-  _gestureRecognizer.dragCancelDistance = dragCancelDistance;
-}
-
-- (BOOL)cancelsOnDragOut {
-  return _gestureRecognizer.cancelOnDragOut;
-}
-
-- (void)setCancelsOnDragOut:(BOOL)cancelsOnDragOut {
-  _gestureRecognizer.cancelOnDragOut = cancelsOnDragOut;
-}
-
-//- (CGRect)targetBounds {
-//  return _gestureRecognizer.targetBounds;
-//}
-//
-//- (void)setTargetBounds:(CGRect)targetBounds {
-//  _gestureRecognizer.targetBounds = targetBounds;
-//}
 
 - (instancetype)initWithView:(UIView *)view {
   self = [super init];
   if (self) {
     _gestureRecognizer =
-        [[MDCRippleGestureRecognizer alloc] initWithTarget:self
+        [[UILongPressGestureRecognizer alloc] initWithTarget:self
                                                     action:@selector(handleRippleGesture:)];
+    _gestureRecognizer.minimumPressDuration = 0;
     _gestureRecognizer.delegate = self;
+    _gestureRecognizer.cancelsTouchesInView = NO;
+    _gestureRecognizer.delaysTouchesEnded = NO;
 
     _view = view;
     [_view addGestureRecognizer:_gestureRecognizer];
@@ -68,6 +40,7 @@
 //    _defaultRippleView.rippleColor = _defaultRippleView.defaultRippleColor;
 //    _defaultRippleView.autoresizingMask =
 //        UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    _tapWentOutsideOfBounds = NO;
   }
   return self;
 }
@@ -111,6 +84,7 @@
 
   switch (recognizer.state) {
     case UIGestureRecognizerStateBegan: {
+      _tapWentOutsideOfBounds = NO;
 //      if ([_delegate respondsToSelector:@selector(rippleTouchController:rippleViewAtTouchLocation:)]) {
 //        _defaultRippleView = [_delegate rippleTouchController:self rippleViewAtTouchLocation:touchLocation];
 //        if (!_defaultRippleView) {
@@ -123,7 +97,7 @@
 //        recognizer.targetBounds = [_defaultRippleView convertRect:_addedRippleView.bounds toView:_view];
 //      }
 //
-      _shouldRespondToTouch = YES;
+//      _shouldRespondToTouch = YES;
 //      dispatch_time_t delayTime =
 //          dispatch_time(DISPATCH_TIME_NOW, (int64_t)(NSEC_PER_SEC * kRippleTouchDelayInterval));
 //      dispatch_after(_delaysRippleSpread ? delayTime : 0, dispatch_get_main_queue(), ^(void) {
@@ -138,30 +112,38 @@
       // Due to force touch,
       // @c UIGestureRecognizerStateChanged constantly fires. However, we do not want to cancel the
       // ripple unless the users moves.
-      if (_shouldRespondToTouch && !CGPointEqualToPoint(touchLocation, _previousLocation)) {
-        _shouldRespondToTouch = NO;
+//      if (_shouldRespondToTouch && !CGPointEqualToPoint(touchLocation, _previousLocation)) {
+//        _shouldRespondToTouch = NO;
+//      }
+      BOOL pointContainedinBounds = CGRectContainsPoint(self.view.bounds, touchLocation);
+      if (pointContainedinBounds && _tapWentOutsideOfBounds) {
+        _tapWentOutsideOfBounds = NO;
+        [self.rippleView fadeInRippleAnimated:YES completion:nil];
+      } else if (!pointContainedinBounds && !_tapWentOutsideOfBounds) {
+        _tapWentOutsideOfBounds = YES;
+        [self.rippleView fadeOutRippleAnimated:YES completion:nil];
       }
       break;
     }
     case UIGestureRecognizerStateCancelled:
       [self.rippleView cancelAllRipplesAnimated:YES];
-      _shouldRespondToTouch = NO;
+//      _shouldRespondToTouch = NO;
       break;
-    case UIGestureRecognizerStateRecognized:
+    case UIGestureRecognizerStateEnded:
       [self.rippleView BeginRipplePressUpAnimated:YES completion:nil];
-      _shouldRespondToTouch = NO;
+//      _shouldRespondToTouch = NO;
       break;
     case UIGestureRecognizerStateFailed:
       [self.rippleView cancelAllRipplesAnimated:YES];
-      _shouldRespondToTouch = NO;
+//      _shouldRespondToTouch = NO;
       break;
   }
 
-  if (_shouldRespondToTouch) {
-    _previousLocation = touchLocation;
-  } else {
-    _previousLocation = CGPointZero;
-  }
+//  if (_shouldRespondToTouch) {
+//    _previousLocation = touchLocation;
+//  } else {
+//    _previousLocation = CGPointZero;
+//  }
 }
 
 //- (void)cancelRippleGestureWithRecognizer:(MDCRippleGestureRecognizer *)recognizer {
@@ -172,7 +154,7 @@
 //}
 
 - (void)touchBeganAtPoint:(CGPoint)point touchLocation:(CGPoint)touchLocation {
-  if (_shouldRespondToTouch) {
+//  if (_shouldRespondToTouch) {
     [self.rippleView BeginRipplePressDownAtPoint:point animated:YES completion:nil];
 //    if ([_delegate
 //            respondsToSelector:@selector(rippleTouchController:didProcessRippleView:atTouchLocation:)]) {
@@ -180,8 +162,8 @@
 //                  didProcessRippleView:_addedRippleView
 //                    atTouchLocation:touchLocation];
 //    }
-    _shouldRespondToTouch = NO;
-  }
+//    _shouldRespondToTouch = NO;
+//  }
 }
 
 #pragma mark - UIGestureRecognizerDelegate

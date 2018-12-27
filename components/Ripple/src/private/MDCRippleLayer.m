@@ -29,7 +29,9 @@ static NSString *const MDCRippleLayerOpacityString = @"opacity";
 static NSString *const MDCRippleLayerPositionString = @"position";
 static NSString *const MDCRippleLayerScaleString = @"transform.scale";
 
-@implementation MDCRippleLayer
+@implementation MDCRippleLayer {
+  CFTimeInterval _beginPressDownRippleTime;
+}
 
 - (void)setNeedsLayout {
   [super setNeedsLayout];
@@ -131,8 +133,49 @@ static NSString *const MDCRippleLayerScaleString = @"transform.scale";
       [self.rippleLayerDelegate rippleLayerPressDownAnimationDidEnd:self];
     }];
     [self addAnimation:animGroup forKey:nil];
+    _beginPressDownRippleTime = CACurrentMediaTime();
     [CATransaction commit];
   }
+}
+
+- (void)fadeInRippleAnimated:(BOOL)animated completion:(MDCRippleCompletionBlock)completion {
+  [CATransaction begin];
+  CABasicAnimation *fadeInAnim = [[CABasicAnimation alloc] init];
+  fadeInAnim.keyPath = MDCRippleLayerOpacityString;
+  fadeInAnim.fromValue = @0;
+  fadeInAnim.toValue = @1;
+  fadeInAnim.duration = animated ? (CGFloat)0.075 : 0;
+  fadeInAnim.timingFunction =
+      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+  fadeInAnim.fillMode = kCAFillModeForwards;
+  fadeInAnim.removedOnCompletion = NO;
+  [CATransaction setCompletionBlock:^{
+    if (completion) {
+      completion();
+    }
+  }];
+  [self addAnimation:fadeInAnim forKey:nil];
+  [CATransaction commit];
+}
+
+- (void)fadeOutRippleAnimated:(BOOL)animated completion:(MDCRippleCompletionBlock)completion {
+  [CATransaction begin];
+  CABasicAnimation *fadeInAnim = [[CABasicAnimation alloc] init];
+  fadeInAnim.keyPath = MDCRippleLayerOpacityString;
+  fadeInAnim.fromValue = @1;
+  fadeInAnim.toValue = @0;
+  fadeInAnim.duration = animated ? (CGFloat)0.075 : 0;
+  fadeInAnim.timingFunction =
+      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+  fadeInAnim.fillMode = kCAFillModeForwards;
+  fadeInAnim.removedOnCompletion = NO;
+  [CATransaction setCompletionBlock:^{
+    if (completion) {
+      completion();
+    }
+  }];
+  [self addAnimation:fadeInAnim forKey:nil];
+  [CATransaction commit];
 }
 
 - (void)endRippleAnimated:(BOOL)animated completion:(MDCRippleCompletionBlock)completion {
@@ -142,25 +185,19 @@ static NSString *const MDCRippleLayerScaleString = @"transform.scale";
 //    self.endAnimationDelay = MDCInkLayerStartFadeHalfBeginTimeFadeOutDuration;
   }
 
-  CGFloat opacity = 0;
+//  CGFloat opacity = 0;
 //  BOOL viewContainsPoint = CGRectContainsPoint(self.bounds, point) ? YES : NO;
 //  if (!viewContainsPoint) {
 //    opacity = 0;
 //  }
   [self.rippleLayerDelegate rippleLayerPressUpAnimationDidBegin:self];
-  if (!animated) {
-    self.opacity = 0;
-    [self.rippleLayerDelegate rippleLayerPressUpAnimationDidEnd:self];
-    [self removeFromSuperlayer];
-  } else {
     [CATransaction begin];
     CABasicAnimation *fadeOutAnim = [[CABasicAnimation alloc] init];
     fadeOutAnim.keyPath = MDCRippleLayerOpacityString;
-    fadeOutAnim.fromValue = @(opacity);
+    fadeOutAnim.fromValue = @1;
     fadeOutAnim.toValue = @0;
-    fadeOutAnim.duration = (CGFloat)0.15;
-    fadeOutAnim.beginTime = [self convertTime:(CACurrentMediaTime() + delay)
-                                    fromLayer:nil];
+    fadeOutAnim.duration = animated ? (CGFloat)0.15 : 0;
+    fadeOutAnim.beginTime = _beginPressDownRippleTime + delay;
     fadeOutAnim.timingFunction =
         [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
     fadeOutAnim.fillMode = kCAFillModeForwards;
@@ -174,7 +211,6 @@ static NSString *const MDCRippleLayerScaleString = @"transform.scale";
     }];
     [self addAnimation:fadeOutAnim forKey:nil];
     [CATransaction commit];
-  }
 }
 
 - (UIColor *)rippleColorForState:(MDCRippleState)state {

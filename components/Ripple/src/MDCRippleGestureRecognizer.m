@@ -16,29 +16,19 @@
 
 #import <UIKit/UIGestureRecognizerSubclass.h>
 
-static const CGFloat kRippleGestureDefaultDragCancelDistance = 20;
-
 @implementation MDCRippleGestureRecognizer {
   CGPoint _touchStartLocation;
   CGPoint _touchCurrentLocation;
-  BOOL _cancelOnDragOut;
 }
 
 - (instancetype)initWithTarget:(id)target action:(SEL)action {
   self = [super initWithTarget:target action:action];
   if (self) {
-    _cancelOnDragOut = YES;
-    _dragCancelDistance = kRippleGestureDefaultDragCancelDistance;
-//    _targetBounds = CGRectNull;
     self.cancelsTouchesInView = NO;
     self.delaysTouchesEnded = NO;
   }
   return self;
 }
-
-//- (CGPoint)touchStartLocationInView:(UIView *)view {
-//  return [view convertPoint:_touchStartLocation fromView:nil];
-//}
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
   [super touchesBegan:touches withEvent:event];
@@ -59,8 +49,7 @@ static const CGFloat kRippleGestureDefaultDragCancelDistance = 20;
 
   _touchCurrentLocation = [[touches anyObject] locationInView:self.view];
 
-  // Cancel the gesture if it is too far away.
-  if (_cancelOnDragOut && ![self isTouchWithinTargetBounds]) {
+  if (![self isTouchWithinTargetBounds]) {
     self.state = UIGestureRecognizerStateCancelled;
   } else {
     self.state = UIGestureRecognizerStateChanged;
@@ -78,15 +67,7 @@ static const CGFloat kRippleGestureDefaultDragCancelDistance = 20;
 }
 
 - (BOOL)isTouchWithinTargetBounds {
-  CGRect boundsWithInset =
-      CGRectInset(self.view.bounds, -self.dragCancelDistance, -self.dragCancelDistance);
-  return CGRectContainsPoint(boundsWithInset, _touchCurrentLocation);
+  return CGRectContainsPoint(self.view.bounds, _touchCurrentLocation);
 }
-
-//#pragma mark - Private methods
-//
-//- (CGRect)effectiveTargetBounds {
-//  return CGRectEqualToRect(_targetBounds, CGRectNull) ? self.view.bounds : _targetBounds;
-//}
 
 @end

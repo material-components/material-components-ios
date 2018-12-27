@@ -142,6 +142,14 @@
   [self.activeRippleLayer endRippleAnimated:animated completion:completion];
 }
 
+- (void)fadeInRippleAnimated:(BOOL)animated completion:(MDCRippleCompletionBlock)completion {
+  [self.activeRippleLayer fadeInRippleAnimated:animated completion:completion];
+}
+
+- (void)fadeOutRippleAnimated:(BOOL)animated completion:(MDCRippleCompletionBlock)completion {
+  [self.activeRippleLayer fadeOutRippleAnimated:animated completion:completion];
+}
+
 //+ (MDCInkView *)injectedInkViewForView:(UIView *)view {
 //  MDCInkView *foundInkView = nil;
 //  for (MDCInkView *subview in view.subviews) {

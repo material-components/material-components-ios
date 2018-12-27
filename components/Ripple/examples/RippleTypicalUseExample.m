@@ -44,7 +44,8 @@
   _rippleTouchControllers = [[NSMutableArray alloc] init];
 
   for (UIView *view in self.surfaces.subviews) {
-    MDCRippleTouchController *rippleTouchController = [[MDCRippleTouchController alloc] initWithView:view];
+    MDCRippleTouchController *rippleTouchController =
+        [[MDCRippleTouchController alloc] initWithView:view];
     rippleTouchController.delegate = self;
     [rippleTouchController.rippleView setRippleColor:blueColor forState:MDCRippleStateNormal];
     [_rippleTouchControllers addObject:rippleTouchController];

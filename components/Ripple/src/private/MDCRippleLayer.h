@@ -41,6 +41,10 @@ typedef void (^MDCRippleCompletionBlock)(void);
                   animated:(BOOL)animated
                 completion:(nullable MDCRippleCompletionBlock)completion;
 - (void)endRippleAnimated:(BOOL)animated completion:(nullable MDCRippleCompletionBlock)completion;
+- (void)fadeInRippleAnimated:(BOOL)animated
+                  completion:(nullable MDCRippleCompletionBlock)completion;
+- (void)fadeOutRippleAnimated:(BOOL)animated
+                   completion:(nullable MDCRippleCompletionBlock)completion;
 
 @end
 
