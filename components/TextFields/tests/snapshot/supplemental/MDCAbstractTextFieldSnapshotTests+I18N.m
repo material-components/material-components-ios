@@ -23,7 +23,6 @@
 - (void)MDCForceTextInputRightToLeft:(UIView *)view {
   if ([view conformsToProtocol:@protocol(UITextInput)]) {
     id<UITextInput> textInput = (id<UITextInput>)view;
-    [((UITextField *)textInput) becomeFirstResponder];
     UITextRange *textRange = [textInput textRangeFromPosition:textInput.beginningOfDocument
                                                    toPosition:textInput.endOfDocument];
     if (textRange) {
