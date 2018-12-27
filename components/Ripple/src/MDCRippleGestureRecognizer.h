@@ -1,4 +1,4 @@
-// Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -44,7 +44,7 @@
  If cancelOnDragOut is YES and the user's touch moves beyond the target bounds inflated by
  dragCancelDistance then the gesture is cancelled.
  */
-@property(nonatomic) CGRect targetBounds;
+//@property(nonatomic) CGRect targetBounds;
 
 /**
  Returns the point where the ripple starts spreading from.

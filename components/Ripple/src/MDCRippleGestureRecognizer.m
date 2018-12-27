@@ -1,4 +1,4 @@
-// Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ static const CGFloat kRippleGestureDefaultDragCancelDistance = 20;
   if (self) {
     _cancelOnDragOut = YES;
     _dragCancelDistance = kRippleGestureDefaultDragCancelDistance;
-    _targetBounds = CGRectNull;
+//    _targetBounds = CGRectNull;
     self.cancelsTouchesInView = NO;
     self.delaysTouchesEnded = NO;
   }
@@ -42,12 +42,12 @@ static const CGFloat kRippleGestureDefaultDragCancelDistance = 20;
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
   [super touchesBegan:touches withEvent:event];
-  if ([touches count] == 1) {
+  if (touches.count == 1) {
     self.state = UIGestureRecognizerStateBegan;
-    _touchStartLocation = [[touches anyObject] locationInView:nil];
+    _touchStartLocation = [touches.anyObject locationInView:self.view];
     _touchCurrentLocation = _touchStartLocation;
   } else {
-    self.state = UIGestureRecognizerStateCancelled;
+    self.state = UIGestureRecognizerStateFailed;
   }
 }
 
@@ -57,7 +57,7 @@ static const CGFloat kRippleGestureDefaultDragCancelDistance = 20;
     return;
   }
 
-  _touchCurrentLocation = [[touches anyObject] locationInView:nil];
+  _touchCurrentLocation = [[touches anyObject] locationInView:self.view];
 
   // Cancel the gesture if it is too far away.
   if (_cancelOnDragOut && ![self isTouchWithinTargetBounds]) {
@@ -78,17 +78,15 @@ static const CGFloat kRippleGestureDefaultDragCancelDistance = 20;
 }
 
 - (BOOL)isTouchWithinTargetBounds {
-  CGRect targetBounds = [self effectiveTargetBounds];
-  CGRect boundsInWindowCoord = [self.view convertRect:targetBounds toView:nil];
-  boundsInWindowCoord =
-      CGRectInset(boundsInWindowCoord, -_dragCancelDistance, -_dragCancelDistance);
-  return CGRectContainsPoint(boundsInWindowCoord, _touchCurrentLocation);
+  CGRect boundsWithInset =
+      CGRectInset(self.view.bounds, -self.dragCancelDistance, -self.dragCancelDistance);
+  return CGRectContainsPoint(boundsWithInset, _touchCurrentLocation);
 }
 
-#pragma mark - Private methods
-
-- (CGRect)effectiveTargetBounds {
-  return CGRectEqualToRect(_targetBounds, CGRectNull) ? self.view.bounds : _targetBounds;
-}
+//#pragma mark - Private methods
+//
+//- (CGRect)effectiveTargetBounds {
+//  return CGRectEqualToRect(_targetBounds, CGRectNull) ? self.view.bounds : _targetBounds;
+//}
 
 @end

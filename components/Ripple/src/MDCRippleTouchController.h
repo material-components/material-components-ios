@@ -1,4 +1,4 @@
-// Copyright 2015-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@
 @property(nonatomic, weak, nullable) id<MDCRippleTouchControllerDelegate> delegate;
 
 /** If YES, the gesture recognizer should delay the start of ripple spread. Default is NO. */
-@property(nonatomic, assign) BOOL delaysRippleSpread;
+//@property(nonatomic, assign) BOOL delaysRippleSpread;
 
 /** The distance that causes the recognizer to cancel. Defaults to 20pt. */
 @property(nonatomic, assign) CGFloat dragCancelDistance;
