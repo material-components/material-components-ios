@@ -190,93 +190,108 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   [self.navBar layoutIfNeeded];
 
   // Then
-  XCTAssertEqualWithAccuracy(CGRectStandardize(self.navBar.titleView.frame).origin.x, 16, 0.001);
+  CGRect expectedRect = CGRectMake(16, 0, 268, 25);
+  [self helperTestView:self.navBar.titleView withExpectedRect:expectedRect];
 }
 
-- (void)testTitleViewDefaultInsetsWithFillBehavior {
-  // Given
-  [self setUpNavBarWithTitleViewLayoutBehavior:MDCNavigationBarTitleViewLayoutBehaviorFill];
-
-  // When
-  [self.navBar layoutIfNeeded];
-
-  // Then
-  XCTAssertEqualWithAccuracy(CGRectStandardize(self.navBar.titleView.frame).origin.x, 16, 0.001);
-}
-
-- (void)testTitleViewInsetWithCustomValue {
-  // Given
-  [self setUpNavBarWithTitleViewLayoutBehavior:MDCNavigationBarTitleViewLayoutBehaviorFill];
-
-  // When
-  self.navBar.titleInsets = UIEdgeInsetsMake(0, 0, 0, 0);
-  [self.navBar layoutIfNeeded];
-
-  // Then
-  XCTAssertEqualWithAccuracy(CGRectStandardize(self.navBar.titleView.frame).origin.x, 0, 0.001);
-}
-
-- (void)testTitleViewInsetWithLargeValue {
-  // Given
-  [self setUpNavBarWithTitleViewLayoutBehavior:MDCNavigationBarTitleViewLayoutBehaviorFill];
-
-  // When
-  self.navBar.titleInsets = UIEdgeInsetsMake(0, 200, 0, 200);
-  [self.navBar layoutIfNeeded];
-
-  // Then
-  XCTAssertEqualWithAccuracy(CGRectStandardize(self.navBar.titleView.frame).origin.x, 100, 0.001);
-}
-
-- (void)testTitleViewInsetWithCustomValueAndCenterAlignment {
+- (void)testTitleViewWithCustomInsets {
   // Given
   [self setUpNavBarWithTitleViewLayoutBehavior:MDCNavigationBarTitleViewLayoutBehaviorCenter];
 
   // When
-  self.navBar.titleInsets = UIEdgeInsetsMake(0, 50, 0, 50);
+  self.navBar.titleInsets = UIEdgeInsetsZero;
   [self.navBar layoutIfNeeded];
 
   // Then
-  XCTAssertEqualWithAccuracy(CGRectStandardize(self.navBar.titleView.frame).origin.x, 50, 0.001);
+  CGRect expectedRect = CGRectMake(0, 0, 300, 25);
+  [self helperTestView:self.navBar.titleView withExpectedRect:expectedRect];
 }
 
-- (void)testTitleLabelDefaultInsets {
-  [self helperTestTitleLabelWithTitleInsets:self.navBar.titleInsets
-                             titleAlignment:MDCNavigationBarTitleAlignmentCenter];
-}
-
-- (void)testTitleLabelWithCustomHorizontalInsets {
-  [self helperTestTitleLabelWithTitleInsets:UIEdgeInsetsMake(0, 24, 0, 24)
-                             titleAlignment:MDCNavigationBarTitleAlignmentCenter];
-}
-
-- (void)testTitleLabelWithCustomHorizontalInsetAndLeadingAlignment {
-  [self helperTestTitleLabelWithTitleInsets:UIEdgeInsetsMake(0, 24, 0, 24)
-                             titleAlignment:MDCNavigationBarTitleAlignmentLeading];
-}
-
-- (void)helperTestTitleLabelWithTitleInsets:(UIEdgeInsets)titleInsets
-                             titleAlignment:(MDCNavigationBarTitleAlignment)titleAlignment {
+- (void)testTitleViewWithDefaultInsetsAndFillBehavior {
   // Given
-  CGFloat navBarWidth = 300;
-  self.navBar.frame = CGRectMake(0, 0, navBarWidth, 25);
+  [self setUpNavBarWithTitleViewLayoutBehavior:MDCNavigationBarTitleViewLayoutBehaviorFill];
+
+  // When
+  [self.navBar layoutIfNeeded];
+
+  // Then
+  CGRect expectedRect = CGRectMake(16, 0, 268, 25);
+  [self helperTestView:self.navBar.titleView withExpectedRect:expectedRect];
+}
+
+- (void)testTitleViewWithCustomInsetsAndFillBehavior {
+  // Given
+  [self setUpNavBarWithTitleViewLayoutBehavior:MDCNavigationBarTitleViewLayoutBehaviorFill];
+
+  // When
+  self.navBar.titleInsets = UIEdgeInsetsZero;
+  [self.navBar layoutIfNeeded];
+
+  // Then
+  CGRect expectedRect = CGRectMake(0, 0, 300, 25);
+  [self helperTestView:self.navBar.titleView withExpectedRect:expectedRect];
+}
+
+- (void)testTitleLabelWithDefaultInsets {
+  // Given
   self.navBar.title = @"Foo";
 
   // When
-  self.navBar.titleAlignment = titleAlignment;
-  self.navBar.titleInsets = titleInsets;
   [self.navBar layoutIfNeeded];
-  CGFloat titleWidth = CGRectGetWidth(self.navBar.titleLabel.frame);
 
   // Then
-  UIEdgeInsets expectedValue = UIEdgeInsetsZero;
-  if (titleAlignment == MDCNavigationBarTitleAlignmentLeading) {
-    expectedValue = titleInsets;
-  } else {
-    expectedValue.left = (navBarWidth - titleWidth) / 2;
+  CGRect expectedRect = CGRectMake(16, 0, 268, 25);
+  [self helperTestView:self.navBar.titleLabel withExpectedRect:expectedRect];
+}
+
+- (void)testTitleLabelWithCustomInsets {
+  // Given
+  self.navBar.title = @"Foo";
+
+  // When
+  self.navBar.titleInsets = UIEdgeInsetsZero;
+  [self.navBar layoutIfNeeded];
+
+  // Then
+  CGRect expectedRect = CGRectMake(0, 0, 300, 25);
+  [self helperTestView:self.navBar.titleLabel withExpectedRect:expectedRect];
+}
+
+- (void)testTitleLabelWithDefaultInsetsAndLeadingAlignment {
+  // Given
+  self.navBar.title = @"Foo";
+
+  // When
+  self.navBar.titleAlignment = MDCNavigationBarTitleAlignmentLeading;
+  [self.navBar layoutIfNeeded];
+
+  // Then
+  CGRect expectedRect = CGRectMake(16, 0, 268, 25);
+  [self helperTestView:self.navBar.titleLabel withExpectedRect:expectedRect];
+}
+
+- (void)testTitleLabelWithCustomInsetsAndLeadingAlignment {
+  // Given
+  self.navBar.title = @"Foo";
+
+  // When
+  self.navBar.titleInsets = UIEdgeInsetsZero;
+  self.navBar.titleAlignment = MDCNavigationBarTitleAlignmentLeading;
+  [self.navBar layoutIfNeeded];
+
+  // Then
+  CGRect expectedRect = CGRectMake(0, 0, 300, 25);
+  [self helperTestView:self.navBar.titleLabel withExpectedRect:expectedRect];
+}
+
+- (void)helperTestView:(UIView *)view withExpectedRect:(CGRect)expectedRect {
+  CGRect viewRect = CGRectStandardize(view.frame);
+  XCTAssertEqualWithAccuracy(viewRect.origin.x, expectedRect.origin.x, 0.001);
+  XCTAssertEqualWithAccuracy(viewRect.origin.y, expectedRect.origin.y, 0.001);
+  if (![view isKindOfClass:[UILabel class]]) {
+    XCTAssertEqualWithAccuracy(viewRect.size.width, expectedRect.size.width, 0.001);
+    XCTAssertEqualWithAccuracy(viewRect.size.height, expectedRect.size.height, 0.001);
   }
-  XCTAssertEqualWithAccuracy(CGRectStandardize(self.navBar.titleLabel.frame).origin.x,
-                             expectedValue.left, 0.001);
 }
 
 - (void)setUpNavBarWithTitleViewLayoutBehavior:

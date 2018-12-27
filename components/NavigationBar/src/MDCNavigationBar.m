@@ -267,10 +267,8 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   _leadingButtonBar.frame = leadingButtonBarFrame;
   _trailingButtonBar.frame = trailingButtonBarFrame;
 
-  UIEdgeInsets textInsets = UIEdgeInsetsMake(0, self.titleInsets.left, 0, self.titleInsets.right);
-
   // textFrame is used to determine layout of both TitleLabel and TitleView
-  CGRect textFrame = UIEdgeInsetsInsetRect(self.bounds, textInsets);
+  CGRect textFrame = UIEdgeInsetsInsetRect(self.bounds, self.titleInsets);
   textFrame.origin.x += _leadingButtonBar.frame.size.width;
   textFrame.size.width -= _leadingButtonBar.frame.size.width + _trailingButtonBar.frame.size.width;
   if (@available(iOS 11.0, *)) {
@@ -315,7 +313,7 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
       break;
 
     case MDCNavigationBarTitleViewLayoutBehaviorCenter: {
-      CGFloat availableWidth = UIEdgeInsetsInsetRect(self.bounds, textInsets).size.width;
+      CGFloat availableWidth = UIEdgeInsetsInsetRect(self.bounds, self.titleInsets).size.width;
       availableWidth -= MAX(_leadingButtonBar.frame.size.width,
                             _trailingButtonBar.frame.size.width) * 2;
       if (@available(iOS 11.0, *)) {
