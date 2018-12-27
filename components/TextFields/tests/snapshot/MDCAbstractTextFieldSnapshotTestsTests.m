@@ -86,8 +86,8 @@
  A test fake implementation of MDCAbstractTextFieldSnapshotTests that conforms to the
  @c MDCTextFieldSnapshotTestCaseHooking protocol.
  */
-@interface MDCAbstractTextFieldSnapshotTestsHookingFake : MDCAbstractTextFieldSnapshotTestsFake
-    <MDCTextFieldSnapshotTestCaseHooking>
+@interface MDCAbstractTextFieldSnapshotTestsHookingFake
+    : MDCAbstractTextFieldSnapshotTestsFake <MDCTextFieldSnapshotTestCaseHooking>
 @property(nonatomic, assign) BOOL beforeGenerateSnapshotAndVerifyCalled;
 @end
 
