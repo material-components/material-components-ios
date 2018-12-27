@@ -15,6 +15,30 @@
 #import "MDCTextFieldSnapshotTestCase.h"
 #import "MaterialTextFields.h"
 
+/**
+ Defines several methods that allow subclasses to define "hook" methods that execute after different
+ portions of the test lifecycle.
+
+ In general, the test method lifecycle is:
+
+ -   Call @c setUp
+ -   Assign strings to the relevant properties.
+ -   Call @c beforeGenerateSnapshotAndVerify
+ -   Call @c generateSnapshotAndVerify
+ -   Call @c tearDown
+ */
+@protocol MDCTextFieldSnapshotTestCaseHooking
+
+@optional
+
+/**
+ Hook for test classes to execute any additional code desired before `generateSnapshotAndVerify` is
+ called.
+ */
+- (void)beforeGenerateSnapshotAndVerify;
+
+@end
+
 @interface MDCAbstractTextFieldSnapshotTests : MDCTextFieldSnapshotTestCase
 
 /**

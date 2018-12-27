@@ -23,7 +23,6 @@
 @end
 
 @implementation MDCTextFieldFilledFloatingControllerLeadingImageSnapshotTests
-@dynamic textFieldController;
 
 - (void)setUp {
   [super setUp];
