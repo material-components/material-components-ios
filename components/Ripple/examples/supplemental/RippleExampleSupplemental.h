@@ -1,4 +1,4 @@
-// Copyright 2016-present the Material Components for iOS authors. All Rights Reserved.
+// Copyright 2018-present the Material Components for iOS authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,22 +18,21 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "MaterialRipple.h"
 
-@interface ExampleShapes : UIView
-
+@interface RippleSurfaces : UIView
 @end
 
-@class InkTypicalUseViewController;
+@class RippleTypicalUseExample;
 
-@interface InkTypicalUseViewController : UIViewController
+@interface RippleTypicalUseExample : UIViewController <MDCRippleTouchControllerDelegate>
 
-@property(nonatomic, strong) ExampleShapes *shapes;
-@property(nonatomic, strong) UIView *legacyShape;
+@property(nonatomic, strong) RippleSurfaces *surfaces;
 @property(nonatomic, weak) UIView *containerView;
 
 @end
 
-@interface InkTypicalUseViewController (Supplemental)
+@interface RippleTypicalUseExample (Supplemental)
 
 - (void)setupExampleViews;
 
