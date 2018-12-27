@@ -34,7 +34,6 @@
 
   [self addLeadingImage];
 
-  self.textField.clearButtonMode = UITextFieldViewModeAlways;
   self.textFieldController =
       [[MDCTextInputControllerFullWidth alloc] initWithTextInput:self.textField];
 }
