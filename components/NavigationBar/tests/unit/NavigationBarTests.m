@@ -209,7 +209,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   [self setUpNavBarWithTitleViewLayoutBehavior:MDCNavigationBarTitleViewLayoutBehaviorFill];
 
   // When
-  self.navBar.horizontalTextInsets = 0;
+  self.navBar.titleInsets = UIEdgeInsetsMake(0, 0, 0, 0);
   [self.navBar layoutIfNeeded];
 
   // Then
@@ -221,11 +221,11 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   [self setUpNavBarWithTitleViewLayoutBehavior:MDCNavigationBarTitleViewLayoutBehaviorFill];
 
   // When
-  self.navBar.horizontalTextInsets = 200;
+  self.navBar.titleInsets = UIEdgeInsetsMake(0, 200, 0, 200);
   [self.navBar layoutIfNeeded];
 
   // Then
-  XCTAssertEqualWithAccuracy(CGRectStandardize(self.navBar.titleView.frame).origin.x, 150, 0.001);
+  XCTAssertEqualWithAccuracy(CGRectStandardize(self.navBar.titleView.frame).origin.x, 100, 0.001);
 }
 
 - (void)testTitleViewInsetWithCustomValueAndCenterAlignment {
@@ -233,7 +233,7 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   [self setUpNavBarWithTitleViewLayoutBehavior:MDCNavigationBarTitleViewLayoutBehaviorCenter];
 
   // When
-  self.navBar.horizontalTextInsets = 50;
+  self.navBar.titleInsets = UIEdgeInsetsMake(0, 50, 0, 50);
   [self.navBar layoutIfNeeded];
 
   // Then
@@ -241,21 +241,21 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 }
 
 - (void)testTitleLabelDefaultInsets {
-  [self helperTestTitleLabelWithHorizontalInset:self.navBar.horizontalTextInsets
+  [self helperTestTitleLabelWithTitleInsets:self.navBar.titleInsets
                                  titleAlignment:MDCNavigationBarTitleAlignmentCenter];
 }
 
 - (void)testTitleLabelWithCustomHorizontalInsets {
-  [self helperTestTitleLabelWithHorizontalInset:24
+  [self helperTestTitleLabelWithTitleInsets:UIEdgeInsetsMake(0, 24, 0, 24)
                                  titleAlignment:MDCNavigationBarTitleAlignmentCenter];
 }
 
 - (void)testTitleLabelWithCustomHorizontalInsetAndLeadingAlignment {
-  [self helperTestTitleLabelWithHorizontalInset:24
+  [self helperTestTitleLabelWithTitleInsets:UIEdgeInsetsMake(0, 24, 0, 24)
                                  titleAlignment:MDCNavigationBarTitleAlignmentLeading];
 }
 
-- (void)helperTestTitleLabelWithHorizontalInset:(CGFloat)horizontalInset
+- (void)helperTestTitleLabelWithTitleInsets:(UIEdgeInsets)titleInsets
                                  titleAlignment:(MDCNavigationBarTitleAlignment)titleAlignment {
   // Given
   CGFloat navBarWidth = 300;
@@ -264,19 +264,19 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 
   // When
   self.navBar.titleAlignment = titleAlignment;
-  self.navBar.horizontalTextInsets = horizontalInset;
+  self.navBar.titleInsets = titleInsets;
   [self.navBar layoutIfNeeded];
   CGFloat titleWidth = CGRectGetWidth(self.navBar.titleLabel.frame);
 
   // Then
-  CGFloat expectedValue;
+  UIEdgeInsets expectedValue = UIEdgeInsetsZero;
   if (titleAlignment == MDCNavigationBarTitleAlignmentLeading) {
-    expectedValue = horizontalInset;
+    expectedValue = titleInsets;
   } else {
-    expectedValue = (navBarWidth - titleWidth) / 2;
+    expectedValue.left = (navBarWidth - titleWidth) / 2;
   }
   XCTAssertEqualWithAccuracy(CGRectStandardize(self.navBar.titleLabel.frame).origin.x,
-                             expectedValue, 0.001);
+                             expectedValue.left, 0.001);
 }
 
 - (void)setUpNavBarWithTitleViewLayoutBehavior:

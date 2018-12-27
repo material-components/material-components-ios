@@ -126,7 +126,7 @@ IB_DESIGNABLE
 
  Defaults to UIEdgeInsets(0, 16, 0, 16).
  */
-@property(nonatomic, assign) CGFloat titleInsets;
+@property(nonatomic, assign) UIEdgeInsets titleInsets;
 
 /**
  The font applied to the title of navigation bar.
