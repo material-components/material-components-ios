@@ -25,6 +25,7 @@ else
 fi
 
 source "${scripts_dir}/github-comments.sh"
+source "${scripts_dir}/select_xcode.sh"
 
 # To install homebrew formulas at specific versions we need to point directly
 # to the desired sha in the homebrew formula repository.
@@ -111,54 +112,12 @@ fix_bazel_imports() {
   trap reset_imports EXIT
 }
 
-version_as_number() {
-  padded_version="${1%.}" # Strip any trailing dots
-  # Pad with .0 until we get a M.m.p version string.
-  while [ $(grep -o "\." <<< "$padded_version" | wc -l) -lt "2" ]; do
-    padded_version=${padded_version}.0
-  done
-  echo "${padded_version//.}"
-}
-
 move_derived_data_to_tmp() {
   targetDir="${HOME}/Library/Developer/Xcode/DerivedData"
   if [[ -d "$targetDir" ]]; then
     mv "$targetDir" /tmpfs/
     ln -sf /tmpfs/DerivedData "$targetDir"
   fi
-}
-
-# xcode-select's the provided xcode version.
-# Usage example:
-#     select_xcode 9.2.0
-select_xcode() {
-  desired_version="$1"
-  if [ -z "$desired_version" ]; then
-    return # No Xcode version to select.
-  fi
-
-  xcodes=$(ls /Applications/ | grep "Xcode")
-  for xcode_path in $xcodes; do
-    xcode_version=$(cat /Applications/$xcode_path/Contents/version.plist \
-      | grep "CFBundleShortVersionString" -A1 \
-      | grep string \
-      | cut -d'>' -f2 \
-      | cut -d'<' -f1)
-    xcode_version_as_number="$(version_as_number $xcode_version)"
-
-    if [ "$xcode_version_as_number" -ne "$(version_as_number $desired_version)" ]; then
-      continue
-    fi
-
-    sudo xcode-select --switch /Applications/$xcode_path/Contents/Developer
-    xcodebuild -version
-
-    # Resolves the following crash when switching Xcode versions:
-    # "Failed to locate a valid instance of CoreSimulatorService in the bootstrap"
-    launchctl remove com.apple.CoreSimulator.CoreSimulatorService || true
-
-    break
-  done
 }
 
 # Uploads all of the bazel test artifacts to Kokoro's artifacts storage.
