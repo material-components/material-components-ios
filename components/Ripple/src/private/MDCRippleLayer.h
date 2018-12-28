@@ -27,8 +27,6 @@ typedef void (^MDCRippleCompletionBlock)(void);
 
 @property(nonatomic, assign) CGFloat finalRadius;
 
-@property(nonatomic, assign) CGFloat unboundedMaxRippleRadius;
-
 @property(nonatomic, assign) CFTimeInterval beginPressDownRippleTime;
 
 - (void)startRippleAtPoint:(CGPoint)point

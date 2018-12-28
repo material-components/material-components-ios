@@ -263,10 +263,8 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 }
 
 - (void)updateInkForShape {
-  CGRect boundingBox = CGPathGetBoundingBox(self.layer.shapeLayer.path);
-  self.rippleView.unboundedMaxRippleRadius =
-      (CGFloat)(MDCHypot(CGRectGetHeight(boundingBox), CGRectGetWidth(boundingBox)) / 2 + 10);
-  self.rippleView.layer.masksToBounds = NO;
+//  CGRect boundingBox = CGPathGetBoundingBox(self.layer.shapeLayer.path);
+//  self.rippleView.layer.masksToBounds = NO;
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {

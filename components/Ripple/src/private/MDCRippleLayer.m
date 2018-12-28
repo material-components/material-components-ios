@@ -15,16 +15,6 @@
 #import "MDCRippleLayer.h"
 #import "MaterialMath.h"
 
-//static const CGFloat MDCInkLayerCommonDuration = (CGFloat)0.083;
-//static const CGFloat MDCInkLayerEndFadeOutDuration = (CGFloat)0.15;
-//static const CGFloat MDCInkLayerStartScalePositionDuration = (CGFloat)0.333;
-//static const CGFloat MDCInkLayerStartFadeHalfDuration = (CGFloat)0.167;
-//static const CGFloat MDCInkLayerStartFadeHalfBeginTimeFadeOutDuration = (CGFloat)0.25;
-
-//static const CGFloat MDCInkLayerScaleStartMin = (CGFloat)0.2;
-//static const CGFloat MDCInkLayerScaleStartMax = (CGFloat)0.6;
-//static const CGFloat MDCInkLayerScaleDivisor = 300;
-
 static const CGFloat kExpandRippleBeyondSurface = 10;
 static const CGFloat kRippleStartingScale = (CGFloat)0.6;
 static const CGFloat kRipplePressDownDuration = (CGFloat)0.225;
@@ -59,9 +49,6 @@ static NSString *const kRippleLayerScaleString = @"transform.scale";
                   animated:(BOOL)animated
                 completion:(MDCRippleCompletionBlock)completion {
   CGFloat radius = self.finalRadius;
-  if (self.unboundedMaxRippleRadius > 0) {
-    radius = self.unboundedMaxRippleRadius;
-  }
   CGRect ovalRect = CGRectMake(CGRectGetMidX(self.bounds) - radius,
                                CGRectGetMidY(self.bounds) - radius,
                                radius * 2,

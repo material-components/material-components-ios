@@ -24,9 +24,10 @@
 
 @end
 
-@implementation MDCRippleView {
-  CGFloat _unboundedMaxRippleRadius;
-}
+static const CGFloat kRippleDefaultAlpha = (CGFloat)0.16;
+static const CGFloat kRippleFadeOutDelay = (CGFloat)0.225;
+
+@implementation MDCRippleView
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -49,7 +50,7 @@
   self.backgroundColor = [UIColor clearColor];
   self.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
 
-  _rippleColor = [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.16];
+  _rippleColor = [[UIColor alloc] initWithWhite:0 alpha:kRippleDefaultAlpha];
 
   _rippleStyle = MDCRippleStyleBounded;
   self.layer.masksToBounds = YES;
@@ -61,19 +62,6 @@
 
 - (void)layoutSubviews {
   [super layoutSubviews];
-
-  // this is for layout changes like landscape etc. should be moved to separate method.
-
-//  CGRect inkBounds = CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
-//  self.layer.bounds = inkBounds;
-//
-//  // When bounds change ensure all ink layer bounds are changed too.
-//  for (CALayer *layer in self.layer.sublayers) {
-//    if ([layer isKindOfClass:[MDCRippleLayer class]]) {
-//      MDCRippleLayer *inkLayer = (MDCRippleLayer *)layer;
-//      inkLayer.bounds = inkBounds;
-//    }
-//  }
   [self updateRippleStyle];
 }
 
@@ -112,7 +100,8 @@
       if ([layer isKindOfClass:[MDCRippleLayer class]]) {
         MDCRippleLayer *rippleLayer = (MDCRippleLayer *)layer;
         if (!rippleLayer.isStartAnimationActive) {
-          rippleLayer.beginPressDownRippleTime = latestBeginPressDownRippleTime + (CGFloat)0.225;
+          rippleLayer.beginPressDownRippleTime =
+              latestBeginPressDownRippleTime + kRippleFadeOutDelay;
         }
         [rippleLayer endRippleAnimated:animated completion:nil];
       }
@@ -131,7 +120,6 @@
                            animated:(BOOL)animated
                          completion:(nullable MDCRippleCompletionBlock)completion {
   MDCRippleLayer *rippleLayer = [MDCRippleLayer layer];
-  rippleLayer.unboundedMaxRippleRadius = self.unboundedMaxRippleRadius;
   rippleLayer.rippleLayerDelegate = self;
   rippleLayer.fillColor = self.rippleColor.CGColor;
   rippleLayer.frame = self.bounds;
@@ -159,23 +147,6 @@
   }
   self.activeRippleLayer.fillColor = rippleColor.CGColor;
 }
-
-//+ (MDCInkView *)injectedInkViewForView:(UIView *)view {
-//  MDCInkView *foundInkView = nil;
-//  for (MDCInkView *subview in view.subviews) {
-//    if ([subview isKindOfClass:[MDCInkView class]]) {
-//      foundInkView = subview;
-//      break;
-//    }
-//  }
-//  if (!foundInkView) {
-//    foundInkView = [[MDCInkView alloc] initWithFrame:view.bounds];
-//    foundInkView.autoresizingMask =
-//        UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-//    [view addSubview:foundInkView];
-//  }
-//  return foundInkView;
-//}
 
 #pragma mark - MDCRippleLayerDelegate
 
