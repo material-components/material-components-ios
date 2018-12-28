@@ -62,6 +62,7 @@ modified_files() {
   git diff --name-only "${range}" \
     | grep -E '(\.swift|\.h|\.m)$' \
     | grep -vE '\/tests\/snapshot\/' \
+    | grep -vE '^components\/private\/Snapshot\/' \
     | sort \
     | uniq
 
