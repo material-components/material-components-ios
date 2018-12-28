@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #import "MDCAbstractTextFieldSnapshotTests.h"
-#import "MDCSnapshotTestsStrings.h"
 #import "MaterialTextFields.h"
 
 @interface MDCTextFieldOutlinedControllerSnapshotTests : MDCAbstractTextFieldSnapshotTests
