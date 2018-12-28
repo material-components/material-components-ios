@@ -35,7 +35,6 @@
   [self.view addSubview:containerView];
   self.containerView = containerView;
 
-  UIColor *blueColor = MDCPalette.bluePalette.tint500;
   CGRect customFrame = CGRectMake(0, 0, 200, 200);
 
   // ExampleShapes is a custom UIView with several subviews of various shapes.
@@ -47,7 +46,6 @@
     MDCRippleTouchController *rippleTouchController =
         [[MDCRippleTouchController alloc] initWithView:view];
     rippleTouchController.delegate = self;
-    [rippleTouchController setRippleColor:blueColor forState:MDCRippleStateNormal];
     rippleTouchController.allowsSelection = YES;
     [_rippleTouchControllers addObject:rippleTouchController];
   }
