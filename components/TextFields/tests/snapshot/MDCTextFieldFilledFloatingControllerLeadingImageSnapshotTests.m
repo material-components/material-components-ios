@@ -19,7 +19,6 @@
 
 @interface MDCTextFieldFilledFloatingControllerLeadingImageSnapshotTests
     : MDCAbstractTextFieldSnapshotTests
-@property(nonatomic, strong) MDCTextInputControllerFilled *textFieldController;
 @end
 
 @implementation MDCTextFieldFilledFloatingControllerLeadingImageSnapshotTests
@@ -35,9 +34,10 @@
 
   [self addLeadingImage];
 
-  self.textFieldController =
+  MDCTextInputControllerFilled *controller =
       [[MDCTextInputControllerFilled alloc] initWithTextInput:self.textField];
-  self.textFieldController.floatingEnabled = YES;
+  controller.floatingEnabled = YES;
+  self.textFieldController = controller;
 }
 
 // NOTE: Additional test methods can be found in MDCAbstractTextFieldSnapshotTests.m

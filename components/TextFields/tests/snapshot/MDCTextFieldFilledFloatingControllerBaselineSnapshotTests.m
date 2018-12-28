@@ -43,7 +43,7 @@
       [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
 
   [MDCFilledTextFieldColorThemer applySemanticColorScheme:colorScheme
-                              toTextInputControllerFilled:self.textFieldController];
+                              toTextInputControllerFilled:controller];
   [MDCTextFieldTypographyThemer applyTypographyScheme:typographyScheme
                                 toTextInputController:self.textFieldController];
   [MDCTextFieldTypographyThemer applyTypographyScheme:typographyScheme toTextInput:self.textField];
