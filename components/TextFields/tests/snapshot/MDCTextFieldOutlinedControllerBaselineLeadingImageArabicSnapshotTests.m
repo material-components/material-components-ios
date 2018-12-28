@@ -20,7 +20,7 @@
 #import "MaterialTextFields.h"
 
 @interface MDCTextFieldOutlinedControllerBaselineLeadingImageArabicSnapshotTests
-    : MDCAbstractTextFieldSnapshotTests
+    : MDCAbstractTextFieldSnapshotTests <MDCTextFieldSnapshotTestCaseHooking>
 @end
 
 @implementation MDCTextFieldOutlinedControllerBaselineLeadingImageArabicSnapshotTests
@@ -49,6 +49,9 @@
                                 toTextInputController:self.textFieldController];
   [MDCTextFieldTypographyThemer applyTypographyScheme:typographyScheme toTextInput:self.textField];
   [self changeStringsToArabic];
+}
+
+- (void)beforeGenerateSnapshotAndVerify {
   if (@available(iOS 9.0, *)) {
     [self changeLayoutToRTL];
   } else {
