@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #import "MDCAbstractTextFieldSnapshotTests+I18N.h"
-#import "MDCAbstractTextFieldSnapshotTests+LeadingImage.h"
 #import "MDCAbstractTextFieldSnapshotTests.h"
 #import "MaterialTextFields+ColorThemer.h"
 #import "MaterialTextFields+TypographyThemer.h"
