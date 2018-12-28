@@ -20,8 +20,6 @@
 
 @implementation MDCAbstractTextFieldSnapshotTests (I18N)
 
-#pragma mark - Internal helpers
-
 - (void)MDCForceTextInputRightToLeft:(UIView *)view {
   if ([view conformsToProtocol:@protocol(UITextInput)]) {
     id<UITextInput> textInput = (id<UITextInput>)view;
@@ -58,8 +56,6 @@
   }
 }
 
-#pragma mark - Public API
-
 - (void)changeStringsToArabic {
   self.shortInputText = MDCTextFieldSnapshotTestsInputShortTextArabic;
   self.longInputText = MDCTextFieldSnapshotTestsInputLongTextArabic;
@@ -69,39 +65,6 @@
   self.longHelperText = MDCTextFieldSnapshotTestsHelperLongTextArabic;
   self.shortErrorText = MDCTextFieldSnapshotTestsErrorShortTextArabic;
   self.longErrorText = MDCTextFieldSnapshotTestsErrorLongTextArabic;
-}
-
-- (void)changeStringsToCyrillic {
-  self.shortInputText = MDCTextFieldSnapshotTestsInputShortTextCyrillic;
-  self.longInputText = MDCTextFieldSnapshotTestsInputLongTextCyrillic;
-  self.shortPlaceholderText = MDCTextFieldSnapshotTestsPlaceholderShortTextCyrillic;
-  self.longPlaceholderText = MDCTextFieldSnapshotTestsPlaceholderLongTextCyrillic;
-  self.shortHelperText = MDCTextFieldSnapshotTestsHelperShortTextCyrillic;
-  self.longHelperText = MDCTextFieldSnapshotTestsHelperLongTextCyrillic;
-  self.shortErrorText = MDCTextFieldSnapshotTestsErrorShortTextCyrillic;
-  self.longErrorText = MDCTextFieldSnapshotTestsErrorLongTextCyrillic;
-}
-
-- (void)changeStringsToHindi {
-  self.shortInputText = MDCTextFieldSnapshotTestsInputShortTextHindi;
-  self.longInputText = MDCTextFieldSnapshotTestsInputLongTextHindi;
-  self.shortPlaceholderText = MDCTextFieldSnapshotTestsPlaceholderShortTextHindi;
-  self.longPlaceholderText = MDCTextFieldSnapshotTestsPlaceholderLongTextHindi;
-  self.shortHelperText = MDCTextFieldSnapshotTestsHelperShortTextHindi;
-  self.longHelperText = MDCTextFieldSnapshotTestsHelperLongTextHindi;
-  self.shortErrorText = MDCTextFieldSnapshotTestsErrorShortTextHindi;
-  self.longErrorText = MDCTextFieldSnapshotTestsErrorLongTextHindi;
-}
-
-- (void)changeStringsToKorean {
-  self.shortInputText = MDCTextFieldSnapshotTestsInputShortTextKorean;
-  self.longInputText = MDCTextFieldSnapshotTestsInputLongTextKorean;
-  self.shortPlaceholderText = MDCTextFieldSnapshotTestsPlaceholderShortTextKorean;
-  self.longPlaceholderText = MDCTextFieldSnapshotTestsPlaceholderLongTextKorean;
-  self.shortHelperText = MDCTextFieldSnapshotTestsHelperShortTextKorean;
-  self.longHelperText = MDCTextFieldSnapshotTestsHelperLongTextKorean;
-  self.shortErrorText = MDCTextFieldSnapshotTestsErrorShortTextKorean;
-  self.longErrorText = MDCTextFieldSnapshotTestsErrorLongTextKorean;
 }
 
 - (void)changeLayoutToRTL {
