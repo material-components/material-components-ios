@@ -95,7 +95,7 @@
   return self.textView.markedTextStyle;
 }
 
-- (void)setMarkedTextStyle:(NSDictionary<NSAttributedStringKey,id> *)markedTextStyle {
+- (void)setMarkedTextStyle:(NSDictionary<NSAttributedStringKey, id> *)markedTextStyle {
   self.textView.markedTextStyle = markedTextStyle;
 }
 
