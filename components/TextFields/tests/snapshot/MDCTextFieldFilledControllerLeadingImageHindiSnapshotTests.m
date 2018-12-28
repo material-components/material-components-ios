@@ -35,7 +35,7 @@
   [self addLeadingImage];
 
   MDCTextInputControllerFilled *controller =
-  [[MDCTextInputControllerFilled alloc] initWithTextInput:self.textField];
+      [[MDCTextInputControllerFilled alloc] initWithTextInput:self.textField];
   controller.floatingEnabled = NO;
   self.textFieldController = controller;
 
