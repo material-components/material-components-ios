@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #import "MDCAbstractTextFieldSnapshotTests.h"
-#import "MDCTextFieldSnapshotTestsStrings.h"
+#import "MDCSnapshotTestsStrings.h"
 
 @implementation MDCAbstractTextFieldSnapshotTests
 
@@ -21,14 +21,14 @@
   [super setUp];
 
   // Default to Latin strings
-  self.shortInputText = MDCTextFieldSnapshotTestsInputShortTextLatin;
-  self.longInputText = MDCTextFieldSnapshotTestsInputLongTextLatin;
-  self.shortPlaceholderText = MDCTextFieldSnapshotTestsPlaceholderShortTextLatin;
-  self.longPlaceholderText = MDCTextFieldSnapshotTestsPlaceholderLongTextLatin;
-  self.shortHelperText = MDCTextFieldSnapshotTestsHelperShortTextLatin;
-  self.longHelperText = MDCTextFieldSnapshotTestsHelperLongTextLatin;
-  self.shortErrorText = MDCTextFieldSnapshotTestsErrorShortTextLatin;
-  self.longErrorText = MDCTextFieldSnapshotTestsErrorLongTextLatin;
+  self.shortInputText = MDCSnapshotTestsInputShortTextLatin;
+  self.longInputText = MDCSnapshotTestsInputLongTextLatin;
+  self.shortPlaceholderText = MDCSnapshotTestsPlaceholderShortTextLatin;
+  self.longPlaceholderText = MDCSnapshotTestsPlaceholderLongTextLatin;
+  self.shortHelperText = MDCSnapshotTestsHelperShortTextLatin;
+  self.longHelperText = MDCSnapshotTestsHelperLongTextLatin;
+  self.shortErrorText = MDCSnapshotTestsErrorShortTextLatin;
+  self.longErrorText = MDCSnapshotTestsErrorLongTextLatin;
 }
 
 - (void)tearDown {

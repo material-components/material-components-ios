@@ -16,7 +16,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MDCAbstractTextFieldSnapshotTests+I18N.h"
-#import "MDCTextFieldSnapshotTestsStrings.h"
+#import "MDCSnapshotTestsStrings.h"
 
 @implementation MDCAbstractTextFieldSnapshotTests (I18N)
 
@@ -57,14 +57,14 @@
 }
 
 - (void)changeStringsToArabic {
-  self.shortInputText = MDCTextFieldSnapshotTestsInputShortTextArabic;
-  self.longInputText = MDCTextFieldSnapshotTestsInputLongTextArabic;
-  self.shortPlaceholderText = MDCTextFieldSnapshotTestsPlaceholderShortTextArabic;
-  self.longPlaceholderText = MDCTextFieldSnapshotTestsPlaceholderLongTextArabic;
-  self.shortHelperText = MDCTextFieldSnapshotTestsHelperShortTextArabic;
-  self.longHelperText = MDCTextFieldSnapshotTestsHelperLongTextArabic;
-  self.shortErrorText = MDCTextFieldSnapshotTestsErrorShortTextArabic;
-  self.longErrorText = MDCTextFieldSnapshotTestsErrorLongTextArabic;
+  self.shortInputText = MDCSnapshotTestsInputShortTextArabic;
+  self.longInputText = MDCSnapshotTestsInputLongTextArabic;
+  self.shortPlaceholderText = MDCSnapshotTestsPlaceholderShortTextArabic;
+  self.longPlaceholderText = MDCSnapshotTestsPlaceholderLongTextArabic;
+  self.shortHelperText = MDCSnapshotTestsHelperShortTextArabic;
+  self.longHelperText = MDCSnapshotTestsHelperLongTextArabic;
+  self.shortErrorText = MDCSnapshotTestsErrorShortTextArabic;
+  self.longErrorText = MDCSnapshotTestsErrorLongTextArabic;
 }
 
 - (void)changeLayoutToRTL {

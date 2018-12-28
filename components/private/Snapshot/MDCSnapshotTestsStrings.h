@@ -14,30 +14,30 @@
 
 #pragma mark - Latin text
 
-static NSString *const MDCTextFieldSnapshotTestsPlaceholderShortTextLatin = @"P text";
-static NSString *const MDCTextFieldSnapshotTestsPlaceholderLongTextLatin =
+static NSString *const MDCSnapshotTestsPlaceholderShortTextLatin = @"P text";
+static NSString *const MDCSnapshotTestsPlaceholderLongTextLatin =
     @"Placeholder text placeholder text placeholder text placeholder text placeholder text.";
-static NSString *const MDCTextFieldSnapshotTestsHelperShortTextLatin = @"H text";
-static NSString *const MDCTextFieldSnapshotTestsHelperLongTextLatin =
+static NSString *const MDCSnapshotTestsHelperShortTextLatin = @"H text";
+static NSString *const MDCSnapshotTestsHelperLongTextLatin =
     @"Helper text helper text helper text helper text helper text helper text helper text.";
-static NSString *const MDCTextFieldSnapshotTestsErrorShortTextLatin = @"E text";
-static NSString *const MDCTextFieldSnapshotTestsErrorLongTextLatin =
+static NSString *const MDCSnapshotTestsErrorShortTextLatin = @"E text";
+static NSString *const MDCSnapshotTestsErrorLongTextLatin =
     @"Error text error text error text error text error text error text error text error text.";
-static NSString *const MDCTextFieldSnapshotTestsInputShortTextLatin = @"I text";
-static NSString *const MDCTextFieldSnapshotTestsInputLongTextLatin =
+static NSString *const MDCSnapshotTestsInputShortTextLatin = @"I text";
+static NSString *const MDCSnapshotTestsInputLongTextLatin =
     @"Input text input text input text input text input text input text input text input text.";
 
 #pragma mark - Arabic text
 
-static NSString *const MDCTextFieldSnapshotTestsPlaceholderShortTextArabic = @"تلك أي.";
-static NSString *const MDCTextFieldSnapshotTestsPlaceholderLongTextArabic =
+static NSString *const MDCSnapshotTestsPlaceholderShortTextArabic = @"تلك أي.";
+static NSString *const MDCSnapshotTestsPlaceholderLongTextArabic =
     @"بـ أخر جسيمة نتيجة بالرّغم, إذ لهيمنة بالولايات غير, أي ذلك بخطوط ليبين العظمى. في لان.";
-static NSString *const MDCTextFieldSnapshotTestsHelperShortTextArabic = @"العظمى الخطّة.";
-static NSString *const MDCTextFieldSnapshotTestsHelperLongTextArabic =
+static NSString *const MDCSnapshotTestsHelperShortTextArabic = @"العظمى الخطّة.";
+static NSString *const MDCSnapshotTestsHelperLongTextArabic =
     @"أن حلّت أعمال وقد, انه ان قادة سبتمبر حاملات, عدد قد وعلى الأثناء،. ما حتى مكّن.";
-static NSString *const MDCTextFieldSnapshotTestsErrorShortTextArabic = @"على الطرفين.";
-static NSString *const MDCTextFieldSnapshotTestsErrorLongTextArabic =
+static NSString *const MDCSnapshotTestsErrorShortTextArabic = @"على الطرفين.";
+static NSString *const MDCSnapshotTestsErrorLongTextArabic =
     @"أسر وتنامت الإتفاقية بـ, قد منتصف التنازلي عدد. الى و أطراف الصين. علاقة مساعدة تلك ما.";
-static NSString *const MDCTextFieldSnapshotTestsInputShortTextArabic = @"ذلك في.";
-static NSString *const MDCTextFieldSnapshotTestsInputLongTextArabic =
+static NSString *const MDCSnapshotTestsInputShortTextArabic = @"ذلك في.";
+static NSString *const MDCSnapshotTestsInputLongTextArabic =
     @"دول السيطرة استطاعوا ٣٠. مليون وفرنسا أوراقهم انه تم, نفس قد والديون العالمية. دون ما تنفّس.";

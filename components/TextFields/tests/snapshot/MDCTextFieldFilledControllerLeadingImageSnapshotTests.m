@@ -16,7 +16,7 @@
 
 #import "MDCAbstractTextFieldSnapshotTests+LeadingImage.h"
 #import "MDCAbstractTextFieldSnapshotTests.h"
-#import "MDCTextFieldSnapshotTestsStrings.h"
+#import "MDCSnapshotTestsStrings.h"
 #import "MaterialTextFields.h"
 
 @interface MDCTextFieldFilledControllerLeadingImageSnapshotTests : MDCAbstractTextFieldSnapshotTests
