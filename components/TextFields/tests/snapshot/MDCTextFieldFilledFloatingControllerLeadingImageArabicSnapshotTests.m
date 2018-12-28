@@ -17,7 +17,8 @@
 #import "MDCAbstractTextFieldSnapshotTests.h"
 #import "MaterialTextFields.h"
 
-@interface MDCTextFieldFilledFloatingControllerLeadingImageArabicSnapshotTests : MDCAbstractTextFieldSnapshotTests
+@interface MDCTextFieldFilledFloatingControllerLeadingImageArabicSnapshotTests
+    : MDCAbstractTextFieldSnapshotTests <MDCTextFieldSnapshotTestCaseHooking>
 
 @end
 
@@ -34,9 +35,20 @@
 
   [self addLeadingImage];
 
-  self.textFieldController =
-  [[MDCTextInputControllerFilled alloc] initWithTextInput:self.textField];
-  self.textFieldController.floatingEnabled = YES;
+  MDCTextInputControllerFilled *controller =
+      [[MDCTextInputControllerFilled alloc] initWithTextInput:self.textField];
+  controller.floatingEnabled = YES;
+  self.textFieldController = controller;
+
+  [self changeStringsToArabic];
+}
+
+- (void)beforeGenerateSnapshotAndVerify {
+  if (@available(iOS 9.0, *)) {
+    [self changeLayoutToRTL];
+  } else {
+    NSLog(@"[ERROR] RTL tests can only run on iOS 9 or later.");
+  }
 }
 
 // NOTE: Additional test methods can be found in MDCAbstractTextFieldSnapshotTests.m
