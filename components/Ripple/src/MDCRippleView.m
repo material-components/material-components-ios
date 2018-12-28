@@ -104,10 +104,8 @@
     for (CALayer *layer in sublayers) {
       if ([layer isKindOfClass:[MDCRippleLayer class]]) {
         MDCRippleLayer *rippleLayer = (MDCRippleLayer *)layer;
-        if (rippleLayer.isStartAnimationActive) {
-          latestBeginPressDownRippleTime =
-              MAX(latestBeginPressDownRippleTime, rippleLayer.beginPressDownRippleTime);
-        }
+        latestBeginPressDownRippleTime =
+            MAX(latestBeginPressDownRippleTime, rippleLayer.beginPressDownRippleTime);
       }
     }
     for (CALayer *layer in sublayers) {
@@ -155,8 +153,7 @@
   [self.activeRippleLayer fadeOutRippleAnimated:animated completion:completion];
 }
 
-- (void)setRippleColor:(UIColor *)rippleColor {
-  _rippleColor = rippleColor;
+- (void)setActiveRippleColor:(UIColor *)rippleColor {
   if (rippleColor == nil) {
     return;
   }

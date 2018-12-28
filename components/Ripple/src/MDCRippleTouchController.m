@@ -20,7 +20,6 @@
 @implementation MDCRippleTouchController {
   BOOL _tapWentOutsideOfBounds;
   NSMutableDictionary<NSNumber *, UIColor *> *_rippleColors;
-  BOOL _selectionMode;
 }
 
 - (instancetype)initWithView:(UIView *)view {
@@ -70,7 +69,12 @@
 
 - (void)updateRippleColor {
   UIColor *rippleColor = [self rippleColorForState:self.state];
-  self.rippleView.rippleColor = rippleColor;
+  [self.rippleView setRippleColor:rippleColor];
+}
+
+- (void)updateActiveRippleColor {
+  UIColor *rippleColor = [self rippleColorForState:self.state];
+  [self.rippleView setActiveRippleColor:rippleColor];
 }
 
 - (void)setRippleColor:(UIColor *)rippleColor forState:(MDCRippleState)state {
@@ -81,7 +85,7 @@
 
 - (void)setState:(MDCRippleState)state {
   _state = state;
-  [self updateRippleColor];
+  [self updateActiveRippleColor];
 }
 
 - (void)setAllowsSelection:(BOOL)allowsSelection {
@@ -102,9 +106,9 @@
   }
 }
 
-- (void)setSelectionMode:(BOOL)selectionMode {
-  _selectionMode = selectionMode;
-  [self setState:selectionMode ? MDCRippleStateSelected : MDCRippleStateNormal];
+- (void)setSelected:(BOOL)selected {
+  _selected = selected;
+  [self setState:selected? MDCRippleStateSelected : MDCRippleStateNormal];
 }
 
 - (void)cancelRippleTouchProcessing {
@@ -117,7 +121,14 @@
   switch (recognizer.state) {
     case UIGestureRecognizerStateBegan: {
       _tapWentOutsideOfBounds = NO;
-      [self.rippleView BeginRipplePressDownAtPoint:touchLocation animated:YES completion:nil];
+      [self.rippleView BeginRipplePressDownAtPoint:touchLocation animated:YES completion:^{
+        if (self.selectionMode) {
+          self.selected = !self.selected;
+          if (!self.selected) {
+            [self.rippleView cancelAllRipplesAnimated:YES];
+          }
+        }
+      }];
       break;
     }
     case UIGestureRecognizerStatePossible:  // Ignored
@@ -136,10 +147,7 @@
     case UIGestureRecognizerStateEnded:
       if (!_selectionMode) {
         [self.rippleView BeginRipplePressUpAnimated:YES completion:nil];
-      } else if (self.selected) {
-        [self.rippleView cancelAllRipplesAnimated:YES];
       }
-      self.selected = !_selected;
       break;
     case UIGestureRecognizerStateCancelled:
     case UIGestureRecognizerStateFailed:
@@ -152,7 +160,13 @@
   switch (recognizer.state) {
     case UIGestureRecognizerStateBegan: {
       [self setSelectionMode:!_selectionMode];
-      self.selected = !_selectionMode;
+      if (self.selectionMode) {
+        self.selected = YES;
+      } else {
+        if (!self.selected) {
+          [self.rippleView cancelAllRipplesAnimated:YES];
+        }
+      }
       break;
     }
     case UIGestureRecognizerStatePossible:  // Ignored

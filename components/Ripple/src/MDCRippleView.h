@@ -29,6 +29,7 @@ typedef NS_ENUM(NSInteger, MDCRippleStyle) {
 @property (nonatomic, assign) MDCRippleStyle rippleStyle;
 
 @property(nonatomic, strong, nonnull) UIColor *rippleColor;
+- (void)setActiveRippleColor:(UIColor *)rippleColor;
 
 //Shouldn't really be used or exposed?
 @property (nonatomic, assign) CGFloat unboundedMaxRippleRadius;
