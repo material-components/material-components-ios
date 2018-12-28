@@ -47,7 +47,8 @@
     MDCRippleTouchController *rippleTouchController =
         [[MDCRippleTouchController alloc] initWithView:view];
     rippleTouchController.delegate = self;
-    [rippleTouchController.rippleView setRippleColor:blueColor forState:MDCRippleStateNormal];
+    [rippleTouchController setRippleColor:blueColor forState:MDCRippleStateNormal];
+    rippleTouchController.allowsSelection = YES;
     [_rippleTouchControllers addObject:rippleTouchController];
   }
   [containerView addSubview:self.surfaces];

@@ -32,7 +32,9 @@
     CGRect bigViewFrame =
         CGRectMake(padding, padding, CGRectGetWidth(frame) - 2 * padding, bigViewFrameHeight);
     UIView *bigView = [[UIView alloc] initWithFrame:bigViewFrame];
-    bigView.backgroundColor = MDCPalette.greyPalette.tint800;
+    bigView.backgroundColor = UIColor.whiteColor;
+    bigView.layer.borderColor = UIColor.lightGrayColor.CGColor;
+    bigView.layer.borderWidth = (CGFloat)0.5;
     [self addSubview:bigView];
 
     CGFloat buttonViewDim = 50;
@@ -42,7 +44,9 @@
         padding, padding + bigViewFrameHeight + fabPadding + padding,
         frame.size.width - 2 * padding - buttonViewDim - fabPadding * 3, pseudoButtonViewHeight);
     UIView *pseudoButtonView = [[UIView alloc] initWithFrame:pseudoButtonViewFrame];
-    pseudoButtonView.backgroundColor = MDCPalette.greyPalette.tint800;
+    pseudoButtonView.backgroundColor = UIColor.whiteColor;
+    pseudoButtonView.layer.borderColor = UIColor.lightGrayColor.CGColor;
+    pseudoButtonView.layer.borderWidth = (CGFloat)0.5;
     pseudoButtonView.layer.cornerRadius = 5;
     pseudoButtonView.clipsToBounds = YES;
     [self addSubview:pseudoButtonView];
@@ -53,7 +57,9 @@
         CGRectMake(pseudoFABViewFrameLeft, padding + bigViewFrameHeight + padding,
                    buttonViewDim + fabPadding, buttonViewDim + fabPadding);
     UIView *pseudoFABView = [[UIView alloc] initWithFrame:pseudoFABViewFrame];
-    pseudoFABView.backgroundColor = MDCPalette.greyPalette.tint800;
+    pseudoFABView.backgroundColor = UIColor.whiteColor;
+    pseudoFABView.layer.borderColor = UIColor.lightGrayColor.CGColor;
+    pseudoFABView.layer.borderWidth = (CGFloat)0.5;
     pseudoFABView.layer.cornerRadius = 28;
     pseudoFABView.clipsToBounds = YES;
     [self addSubview:pseudoFABView];
@@ -78,6 +84,7 @@
                      @"expanding outward from the user's touch.",
     @"primaryDemo" : @YES,
     @"presentable" : @YES,
+    @"debug": @YES,
   };
 }
 

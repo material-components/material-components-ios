@@ -19,6 +19,11 @@
 @class MDCRippleView;
 @protocol MDCRippleTouchControllerDelegate;
 
+typedef NS_ENUM(NSInteger, MDCRippleState) {
+  MDCRippleStateNormal = 0, // No Ripple
+  MDCRippleStateSelected, // Ripple has spread and is staying
+};
+
 @interface MDCRippleTouchController : NSObject <UIGestureRecognizerDelegate>
 
 /** Weak reference to the view that responds to touch events. */
@@ -34,6 +39,19 @@
 
 /** Gesture recognizer used to bind touch events to ripple. */
 @property(nonatomic, strong, readonly, nonnull) UILongPressGestureRecognizer *gestureRecognizer;
+
+@property(nonatomic, strong, readonly, nullable)
+    UILongPressGestureRecognizer *selectionGestureRecognizer;
+
+
+@property (nonatomic) BOOL allowsSelection;
+@property (nonatomic, getter=isSelected) BOOL selected;
+
+- (void)setRippleColor:(nullable UIColor *)rippleColor forState:(MDCRippleState)state;
+
+- (nullable UIColor *)rippleColorForState:(MDCRippleState)state;
+
+@property (nonatomic, readonly) MDCRippleState state;
 
 /** Unavailable, please use initWithView: instead. */
 - (nonnull instancetype)init NS_UNAVAILABLE;

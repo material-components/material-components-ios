@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
-#import "MDCRippleState.h"
 
 @protocol MDCRippleViewDelegate;
 
@@ -29,14 +28,10 @@ typedef NS_ENUM(NSInteger, MDCRippleStyle) {
 @property (nonatomic, weak, nullable) id<MDCRippleViewDelegate> rippleViewDelegate;
 @property (nonatomic, assign) MDCRippleStyle rippleStyle;
 
+@property(nonatomic, strong, nonnull) UIColor *rippleColor;
+
 //Shouldn't really be used or exposed?
 @property (nonatomic, assign) CGFloat unboundedMaxRippleRadius;
-
-@property (nonatomic) BOOL allowsSelection;
-
-- (void)setRippleColor:(nullable UIColor *)rippleColor forState:(MDCRippleState)state;
-
-- (nullable UIColor *)rippleColorForState:(MDCRippleState)state;
 
 - (void)cancelAllRipplesAnimated:(BOOL)animated;
 - (void)fadeInRippleAnimated:(BOOL)animated

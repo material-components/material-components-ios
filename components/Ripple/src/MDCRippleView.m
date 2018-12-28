@@ -26,7 +26,6 @@
 
 @implementation MDCRippleView {
   CGFloat _unboundedMaxRippleRadius;
-  NSMutableDictionary<NSNumber *, UIColor *> *_rippleColors;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -50,10 +49,7 @@
   self.backgroundColor = [UIColor clearColor];
   self.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
 
-  if (_rippleColors == nil) {
-    _rippleColors = [NSMutableDictionary dictionary];
-    _rippleColors[@(MDCRippleStateNormal)] = [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.16];
-  }
+  _rippleColor = [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.16];
 
   _rippleStyle = MDCRippleStyleBounded;
   self.layer.masksToBounds = YES;
@@ -61,14 +57,6 @@
   // Use mask layer when the superview has a shadowPath.
   _maskLayer = [CAShapeLayer layer];
   _maskLayer.delegate = self;
-}
-
-- (void)setRippleColor:(UIColor *)rippleColor forState:(MDCRippleState)state {
-  _rippleColors[@(state)] = rippleColor;
-}
-
-- (UIColor *)rippleColorForState:(MDCRippleState)state {
-  return _rippleColors[@(state)];
 }
 
 - (void)layoutSubviews {
@@ -111,12 +99,30 @@
 
 - (void)cancelAllRipplesAnimated:(BOOL)animated {
   NSArray<CALayer *> *sublayers = [self.layer.sublayers copy];
-  for (CALayer *layer in sublayers) {
-    if ([layer isKindOfClass:[MDCRippleLayer class]]) {
-      MDCRippleLayer *rippleLayer = (MDCRippleLayer *)layer;
-      if (animated) {
+  if (animated) {
+    CGFloat latestBeginPressDownRippleTime = CGFLOAT_MIN;
+    for (CALayer *layer in sublayers) {
+      if ([layer isKindOfClass:[MDCRippleLayer class]]) {
+        MDCRippleLayer *rippleLayer = (MDCRippleLayer *)layer;
+        if (rippleLayer.isStartAnimationActive) {
+          latestBeginPressDownRippleTime =
+              MAX(latestBeginPressDownRippleTime, rippleLayer.beginPressDownRippleTime);
+        }
+      }
+    }
+    for (CALayer *layer in sublayers) {
+      if ([layer isKindOfClass:[MDCRippleLayer class]]) {
+        MDCRippleLayer *rippleLayer = (MDCRippleLayer *)layer;
+        if (!rippleLayer.isStartAnimationActive) {
+          rippleLayer.beginPressDownRippleTime = latestBeginPressDownRippleTime + (CGFloat)0.225;
+        }
         [rippleLayer endRippleAnimated:animated completion:nil];
-      } else {
+      }
+    }
+  } else {
+    for (CALayer *layer in sublayers) {
+      if ([layer isKindOfClass:[MDCRippleLayer class]]) {
+        MDCRippleLayer *rippleLayer = (MDCRippleLayer *)layer;
         [rippleLayer removeFromSuperlayer];
       }
     }
@@ -127,10 +133,9 @@
                            animated:(BOOL)animated
                          completion:(nullable MDCRippleCompletionBlock)completion {
   MDCRippleLayer *rippleLayer = [MDCRippleLayer layer];
-  rippleLayer.rippleColors = _rippleColors;
-  rippleLayer.allowsSelection = self.allowsSelection;
   rippleLayer.unboundedMaxRippleRadius = self.unboundedMaxRippleRadius;
   rippleLayer.rippleLayerDelegate = self;
+  rippleLayer.fillColor = self.rippleColor.CGColor;
   rippleLayer.frame = self.bounds;
   [self.layer addSublayer:rippleLayer];
   [rippleLayer startRippleAtPoint:point animated:animated completion:completion];
@@ -148,6 +153,14 @@
 
 - (void)fadeOutRippleAnimated:(BOOL)animated completion:(MDCRippleCompletionBlock)completion {
   [self.activeRippleLayer fadeOutRippleAnimated:animated completion:completion];
+}
+
+- (void)setRippleColor:(UIColor *)rippleColor {
+  _rippleColor = rippleColor;
+  if (rippleColor == nil) {
+    return;
+  }
+  self.activeRippleLayer.fillColor = rippleColor.CGColor;
 }
 
 //+ (MDCInkView *)injectedInkViewForView:(UIView *)view {

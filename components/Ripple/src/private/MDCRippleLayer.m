@@ -30,13 +30,11 @@ static NSString *const MDCRippleLayerPositionString = @"position";
 static NSString *const MDCRippleLayerScaleString = @"transform.scale";
 
 @implementation MDCRippleLayer {
-  CFTimeInterval _beginPressDownRippleTime;
 }
 
 - (void)setNeedsLayout {
   [super setNeedsLayout];
   [self setRadiiWithRect:self.bounds];
-  [self updateRippleColor];
 }
 
 - (void)setRadiiWithRect:(CGRect)rect {
@@ -123,9 +121,6 @@ static NSString *const MDCRippleLayerScaleString = @"transform.scale";
     animGroup.fillMode = kCAFillModeForwards;
     animGroup.removedOnCompletion = NO;
     [CATransaction setCompletionBlock:^{
-      if (self.allowsSelection) {
-        [self setState:MDCRippleStateSelected];
-      }
       self->_startAnimationActive = NO;
       if (completion) {
         completion();
@@ -134,6 +129,7 @@ static NSString *const MDCRippleLayerScaleString = @"transform.scale";
     }];
     [self addAnimation:animGroup forKey:nil];
     _beginPressDownRippleTime = CACurrentMediaTime();
+    NSLog(@"instance: %@ start time: %f", self, _beginPressDownRippleTime);
     [CATransaction commit];
   }
 }
@@ -197,6 +193,7 @@ static NSString *const MDCRippleLayerScaleString = @"transform.scale";
     fadeOutAnim.fromValue = @1;
     fadeOutAnim.toValue = @0;
     fadeOutAnim.duration = animated ? (CGFloat)0.15 : 0;
+  NSLog(@"instance: %@ end time: %f proposed end time: %f", self, CACurrentMediaTime(), _beginPressDownRippleTime + delay);
     fadeOutAnim.beginTime = _beginPressDownRippleTime + delay;
     fadeOutAnim.timingFunction =
         [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
@@ -211,24 +208,6 @@ static NSString *const MDCRippleLayerScaleString = @"transform.scale";
     }];
     [self addAnimation:fadeOutAnim forKey:nil];
     [CATransaction commit];
-}
-
-- (UIColor *)rippleColorForState:(MDCRippleState)state {
-  UIColor *rippleColor = _rippleColors[@(state)];
-  if (state != MDCRippleStateNormal && rippleColor == nil) {
-    rippleColor = _rippleColors[@(MDCRippleStateNormal)];
-  }
-  return rippleColor;
-}
-
-- (void)updateRippleColor {
-  UIColor *rippleColor = [self rippleColorForState:self.state];
-  self.fillColor = rippleColor.CGColor;
-}
-
-- (void)setState:(MDCRippleState)state {
-  _state = state;
-  [self updateRippleColor];
 }
 
 @end
