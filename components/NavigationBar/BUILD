@@ -26,8 +26,11 @@ licenses(["notice"])  # Apache 2.0
 
 mdc_public_objc_library(
     name = "NavigationBar",
+    srcs = glob(["src/*.m"]),
+    hdrs = glob(["src/*.h"]),
     sdk_frameworks = [
         "CoreGraphics",
+        "UIKit",
     ],
     deps = [
         "//components/ButtonBar",
