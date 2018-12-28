@@ -17,7 +17,8 @@
 #import "MDCAbstractTextFieldSnapshotTests.h"
 #import "MaterialTextFields.h"
 
-@interface MDCTextFieldUnderlinedFloatingControllerLeadingImageHindiSnapshotTests : MDCAbstractTextFieldSnapshotTests
+@interface MDCTextFieldUnderlinedFloatingControllerLeadingImageHindiSnapshotTests
+    : MDCAbstractTextFieldSnapshotTests
 @end
 
 @implementation MDCTextFieldUnderlinedFloatingControllerLeadingImageHindiSnapshotTests
