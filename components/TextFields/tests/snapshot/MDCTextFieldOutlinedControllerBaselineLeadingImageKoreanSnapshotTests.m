@@ -49,7 +49,7 @@
   [MDCTextFieldTypographyThemer applyTypographyScheme:typographyScheme
                                 toTextInputController:self.textFieldController];
   [MDCTextFieldTypographyThemer applyTypographyScheme:typographyScheme toTextInput:self.textField];
-  [self changeStringsToArabic];
+  [self changeStringsToKorean];
 }
 
 // NOTE: Additional test methods can be found in MDCAbstractTextFieldSnapshotTests.m
