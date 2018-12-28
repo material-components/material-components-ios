@@ -14,7 +14,6 @@
 
 #import "MDCRippleTouchController.h"
 
-#import "MDCRippleGestureRecognizer.h"
 #import "MDCRippleView.h"
 
 @implementation MDCRippleTouchController {
