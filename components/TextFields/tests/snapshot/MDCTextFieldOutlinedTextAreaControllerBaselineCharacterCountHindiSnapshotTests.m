@@ -50,7 +50,7 @@
   [MDCTextFieldTypographyThemer applyTypographyScheme:typographyScheme
                                 toTextInputController:self.textFieldController];
   [MDCTextFieldTypographyThemer applyTypographyScheme:typographyScheme toTextInput:self.textField];
-  
+
   [self changeStringsToHindi];
 }
 
