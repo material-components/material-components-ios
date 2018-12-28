@@ -20,7 +20,8 @@
 /**
  A test fake MDCMultilineTextField implementation for Snapshot testing.
  */
-@interface SnapshotFakeMDCMultilineTextField : MDCMultilineTextField <MDCSnapshotFakeTextInput>
+@interface SnapshotFakeMDCMultilineTextField
+    : MDCMultilineTextField <UITextInput, MDCSnapshotFakeTextInput>
 
 /**
  Overrides the value returned by `-isEditing`.
