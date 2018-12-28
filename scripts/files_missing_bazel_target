@@ -59,8 +59,7 @@ modified_files() {
   #  commit.
   range="${base_sha}...HEAD"
 
-  git log --name-only --pretty=oneline --full-index "${range}" \
-    | grep -vE '^[0-9a-f]{40} ' \
+  git diff --name-only "${range}" \
     | grep -E '(\.swift|\.h|\.m)$' \
     | grep -vE '\/tests\/snapshot\/' \
     | sort \
