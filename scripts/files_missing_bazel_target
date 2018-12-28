@@ -88,6 +88,7 @@ update_comment() {
     if [ -n "$GITHUB_API_TOKEN" ]; then
       post_comment "$COMMENT_IDENTIFIER" "$comment_tmp_file"
     fi
+    rm -f "$comment_tmp_file"
   fi
 }
 
