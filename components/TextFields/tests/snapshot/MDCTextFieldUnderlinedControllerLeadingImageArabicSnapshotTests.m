@@ -18,7 +18,7 @@
 #import "MaterialTextFields.h"
 
 @interface MDCTextFieldUnderlinedControllerLeadingImageArabicSnapshotTests
-    : MDCAbstractTextFieldSnapshotTests
+    : MDCAbstractTextFieldSnapshotTests <MDCTextFieldSnapshotTestCaseHooking>
 
 @end
 
@@ -40,6 +40,9 @@
   self.textFieldController = controller;
 
   [self changeStringsToArabic];
+}
+
+- (void)beforeGenerateSnapshotAndVerify {
   if (@available(iOS 9.0, *)) {
     [self changeLayoutToRTL];
   } else {
