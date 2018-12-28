@@ -55,7 +55,7 @@ Pod::Spec.new do |s|
   s.subspec "private" do |private_spec|
     private_spec.test_spec "Snapshot" do |snapshot|
       snapshot.ios.deployment_target = '8.0'
-      snapshot.source_files = "components/private/#{snapshot.base_name}/*.{h,m,swift}"
+      snapshot.source_files = "components/private/#{snapshot.base_name}/src/*.{h,m,swift}"
       snapshot.dependency 'iOSSnapshotTestCase', '2.2.0'
     end
   end
