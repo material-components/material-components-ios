@@ -20,6 +20,7 @@
 @implementation MDCRippleTouchController {
   BOOL _tapWentOutsideOfBounds;
   NSMutableDictionary<NSNumber *, UIColor *> *_rippleColors;
+  NSMutableDictionary<NSNumber *, NSNumber *> *_rippleAlphas;
 }
 
 - (instancetype)initWithView:(UIView *)view {
@@ -42,9 +43,15 @@
 
     if (_rippleColors == nil) {
       _rippleColors = [NSMutableDictionary dictionary];
-      _rippleColors[@(MDCRippleStateNormal)] = [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.16];
+      _rippleColors[@(MDCRippleStateNormal)] = [UIColor blackColor];
       _rippleColors[@(MDCRippleStateSelected)] =
-          [UIColor colorWithRed:(CGFloat)0.384 green:0 blue:(CGFloat)0.933 alpha:(CGFloat)0.08];
+          [UIColor colorWithRed:(CGFloat)0.384 green:0 blue:(CGFloat)0.933 alpha:1];
+    }
+
+    if (_rippleAlphas == nil) {
+      _rippleAlphas = [NSMutableDictionary dictionary];
+      _rippleAlphas[@(MDCRippleStateNormal)] = @(0.16);
+      _rippleAlphas[@(MDCRippleStateSelected)] = @(0.08);
     }
 
     _selectionMode = NO;
@@ -73,7 +80,7 @@
 }
 
 - (void)updateActiveRippleColor {
-  UIColor *rippleColor = [self rippleColorForState:self.state];
+  UIColor *rippleColor = [self constructedColorByState];
   [self.rippleView setActiveRippleColor:rippleColor];
 }
 
@@ -81,6 +88,23 @@
   _rippleColors[@(state)] = rippleColor;
 
   [self updateRippleColor];
+}
+
+- (CGFloat)rippleAlphaForState:(MDCRippleState)state {
+  NSNumber *rippleAlpha = _rippleAlphas[@(state)];
+  if (state != MDCRippleStateNormal && rippleAlpha == nil) {
+    rippleAlpha = _rippleAlphas[@(MDCRippleStateNormal)];
+  }
+  return [rippleAlpha doubleValue];
+}
+
+- (void)setRippleAlpha:(CGFloat)rippleAlpha forState:(MDCRippleState)state {
+  _rippleAlphas[@(state)] = @(rippleAlpha);
+}
+
+- (UIColor *)constructedColorByState {
+  UIColor *rippleColor = [self rippleColorForState:self.state];
+  return [rippleColor colorWithAlphaComponent:[self rippleAlphaForState:self.state]];
 }
 
 - (void)setState:(MDCRippleState)state {
@@ -109,6 +133,15 @@
 - (void)setSelected:(BOOL)selected {
   _selected = selected;
   [self setState:selected? MDCRippleStateSelected : MDCRippleStateNormal];
+}
+
+- (void)setSelectionMode:(BOOL)selectionMode {
+  _selectionMode = selectionMode;
+  UIColor *rippleColor =
+      [self rippleColorForState: selectionMode ? MDCRippleStateSelected : MDCRippleStateNormal];
+  rippleColor =
+      [rippleColor colorWithAlphaComponent:[self rippleAlphaForState:MDCRippleStateNormal]];
+  [self.rippleView setRippleColor: rippleColor];
 }
 
 - (void)cancelRippleTouchProcessing {

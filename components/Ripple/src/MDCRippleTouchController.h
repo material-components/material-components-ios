@@ -49,8 +49,9 @@ typedef NS_ENUM(NSInteger, MDCRippleState) {
 @property (nonatomic) BOOL selectionMode;
 
 - (void)setRippleColor:(nullable UIColor *)rippleColor forState:(MDCRippleState)state;
-
 - (nullable UIColor *)rippleColorForState:(MDCRippleState)state;
+- (void)setRippleAlpha:(CGFloat)rippleAlpha forState:(MDCRippleState)state;
+- (CGFloat)rippleAlphaForState:(MDCRippleState)state;
 
 @property (nonatomic, readonly) MDCRippleState state;
 
