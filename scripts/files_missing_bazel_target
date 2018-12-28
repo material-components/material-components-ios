@@ -93,9 +93,7 @@ update_comment() {
 
 # Determines if any of the modified files are not included in a bazel rule.
 check_files_covered() {
-  if [ -n "$KOKORO_BUILD_NUMBER" ]; then
-    pushd github/repo >> /dev/null
-  fi
+  update_comment # Deletes any previously-posted comment
 
   files=$(modified_files)
   SAVEIFS=$IFS
@@ -108,9 +106,11 @@ check_files_covered() {
     exit 0
   fi
 
-  # We must upgrade bazel prior to running bazel query because we rely on features in bazel
-  # 0.20.
   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
+    pushd github/repo >> /dev/null
+    
+    # We must upgrade bazel prior to running bazel query because we rely on features in bazel
+    # 0.20.
     bazel version
     use_bazel.sh 0.20.0
     bazel version
@@ -134,16 +134,14 @@ check_files_covered() {
     fi
   done 
   
-  if (( exit_status != 0 )); then
-    missing_targets=$(echo -e "$missing_targets" | sort | uniq)
-    update_comment "$missing_targets"
-  else
-    update_comment # Deletes any previously-posted comment
-  fi 
-
   if [ -n "$KOKORO_BUILD_NUMBER" ]; then
     popd >> /dev/null
   fi
+
+  if (( exit_status != 0 )); then
+    missing_targets=$(echo -e "$missing_targets" | sort | uniq)
+    update_comment "$missing_targets"
+  fi 
 
   exit $exit_status
 } 
