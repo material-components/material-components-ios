@@ -57,17 +57,19 @@ open class MaskedTransitionTypicalUseSwiftExample: UIViewController {
     view.addSubview(leftFAB)
 
     targets.append(.init(name: "Bottom sheet", viewControllerType: ModalViewController.self, calculateFrame: { info in
-      let size = CGSize(width: info.containerView!.bounds.width, height: 300)
-      return CGRect(x: info.containerView!.bounds.minX,
-                    y: info.containerView!.bounds.height - size.height,
+      let containerBounds = info.frameOfPresentedViewInContainerView
+      let size = CGSize(width: containerBounds.width, height: 300)
+      return CGRect(x: containerBounds.minX,
+                    y: containerBounds.height - size.height,
                     width: size.width,
                     height: size.height)
     }, autoresizingMask: [.flexibleWidth, .flexibleTopMargin], useSafeAreaInsets: true))
 
     targets.append(.init(name: "Centered card", viewControllerType: ModalViewController.self, calculateFrame: { info in
+      let containerBounds = info.frameOfPresentedViewInContainerView
       let size = CGSize(width: 200, height: 200)
-      return CGRect(x: (info.containerView!.bounds.width - size.width) / 2,
-                    y: (info.containerView!.bounds.height - size.height) / 2,
+      return CGRect(x: (containerBounds.width - size.width) / 2,
+                    y: (containerBounds.height - size.height) / 2,
                     width: size.width,
                     height: size.height)
     }, autoresizingMask: [.flexibleLeftMargin, .flexibleTopMargin,
@@ -117,27 +119,29 @@ open class MaskedTransitionTypicalUseSwiftExample: UIViewController {
 
   var transitionController: MDCMaskedTransitionController? = nil
   func didTapFab(fab: UIView) {
-    let target = targets[tableView.indexPathForSelectedRow!.row]
-    let vc = target.viewControllerType.init()
-
-    if #available(iOS 11.0, *), target.useSafeAreaInsets {
-      vc.additionalSafeAreaInsets = view.safeAreaInsets
+    if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
+        let target = targets[indexPathForSelectedRow.row]
+        let vc = target.viewControllerType.init()
+        
+        if #available(iOS 11.0, *), target.useSafeAreaInsets {
+            vc.additionalSafeAreaInsets = view.safeAreaInsets
+        }
+        
+        vc.view.autoresizingMask = target.autoresizingMask
+        
+        // Customize the transition
+        let transitionController = MDCMaskedTransitionController(sourceView: fab)
+        if target.calculateFrame != nil {
+            transitionController.calculateFrameOfPresentedView = target.calculateFrame
+            vc.modalPresentationStyle = .custom
+        }
+        vc.transitioningDelegate = transitionController
+        
+        // Must keep a reference to the transition controller
+        self.transitionController = transitionController
+        
+        showDetailViewController(vc, sender: self)
     }
-
-    vc.view.autoresizingMask = target.autoresizingMask
-
-    // Customize the transition
-    let transitionController = MDCMaskedTransitionController(sourceView: fab)
-    if target.calculateFrame != nil {
-      transitionController.calculateFrameOfPresentedView = target.calculateFrame
-      vc.modalPresentationStyle = .custom
-    }
-    vc.transitioningDelegate = transitionController
-
-    // Must keep a reference to the transition controller
-    self.transitionController = transitionController
-
-    showDetailViewController(vc, sender: self)
   }
 }
 

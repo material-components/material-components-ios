@@ -131,20 +131,23 @@ extension ActionSheetSwiftExampleViewController : UITableViewDataSource {
 
 extension ActionSheetSwiftExampleViewController {
   static var actionOne: MDCActionSheetAction {
+    let image = UIImage(named: "Home") ?? UIImage()
     return MDCActionSheetAction(title: "Home",
-                                image: UIImage(named: "Home")!) { (_) in
+                                image: image) { (_) in
                                   print("Home action") }
   }
 
   static var actionTwo: MDCActionSheetAction {
+    let image = UIImage(named: "Favorite") ?? UIImage()
     return MDCActionSheetAction(title: "Favorite",
-                                image: UIImage(named: "Favorite")!) { (_) in
+                                image: image) { (_) in
                                   print("Favorite action") }
   }
 
   static var actionThree: MDCActionSheetAction {
+    let image = UIImage(named: "Email") ?? UIImage()
     return MDCActionSheetAction(title: "Email",
-                                image: UIImage(named: "Email")!) { (_) in
+                                image: image) { (_) in
                                   print("Email action") }
   }
 
@@ -210,7 +213,7 @@ extension ActionSheetSwiftExampleViewController {
     let actionSheet = MDCActionSheetController(title: "Action sheet", message: messageString)
     actionSheet.mdc_adjustsFontForContentSizeCategory = true
     let actionThree = MDCActionSheetAction(title: "Email",
-                                           image: UIImage(named: "Email")!,
+                                           image: UIImage(named: "Email") ?? UIImage(),
                                            handler: nil)
     actionSheet.addAction(actionOne)
     actionSheet.addAction(actionTwo)

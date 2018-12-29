@@ -190,7 +190,7 @@ class EditReorderShapedCollectionViewController: UIViewController,
         }
         collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
       case .changed:
-        collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view!))
+        collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view))
       case .ended:
         collectionView.endInteractiveMovement()
       default:
