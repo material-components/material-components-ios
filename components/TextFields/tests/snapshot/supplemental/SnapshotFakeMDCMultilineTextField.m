@@ -65,4 +65,145 @@
   _effectiveUserInterfaceLayoutDirection = direction;
 }
 
+#pragma mark - Methods required to conform to UITextInput without warnings.
+
+- (UITextPosition *)beginningOfDocument {
+  return self.textView.beginningOfDocument;
+}
+
+- (UITextPosition *)endOfDocument {
+  return self.textView.endOfDocument;
+}
+
+- (BOOL)hasText {
+  return self.textView.hasText;
+}
+
+- (id<UITextInputDelegate>)inputDelegate {
+  return self.textView.inputDelegate;
+}
+
+- (void)setInputDelegate:(id<UITextInputDelegate>)inputDelegate {
+  self.textView.inputDelegate = inputDelegate;
+}
+
+- (UITextRange *)markedTextRange {
+  return self.textView.markedTextRange;
+}
+
+- (NSDictionary<NSAttributedStringKey, id> *)markedTextStyle {
+  return self.textView.markedTextStyle;
+}
+
+- (void)setMarkedTextStyle:(NSDictionary<NSAttributedStringKey, id> *)markedTextStyle {
+  self.textView.markedTextStyle = markedTextStyle;
+}
+
+- (UITextRange *)selectedTextRange {
+  return self.textView.selectedTextRange;
+}
+
+- (void)setSelectedTextRange:(UITextRange *)selectedTextRange {
+  self.textView.selectedTextRange = selectedTextRange;
+}
+
+- (void)deleteBackward {
+  [self.textView deleteBackward];
+}
+
+- (void)insertText:(nonnull NSString *)text {
+  [self.textView insertText:text];
+}
+
+- (UITextWritingDirection)baseWritingDirectionForPosition:(nonnull UITextPosition *)position
+                                              inDirection:(UITextStorageDirection)direction {
+  return [self.textView baseWritingDirectionForPosition:position inDirection:direction];
+}
+
+- (CGRect)caretRectForPosition:(nonnull UITextPosition *)position {
+  return [self.textView caretRectForPosition:position];
+}
+
+- (nullable UITextRange *)characterRangeAtPoint:(CGPoint)point {
+  return [self.textView characterRangeAtPoint:point];
+}
+
+- (nullable UITextRange *)characterRangeByExtendingPosition:(nonnull UITextPosition *)position
+                                                inDirection:(UITextLayoutDirection)direction {
+  return [self.textView characterRangeByExtendingPosition:position inDirection:direction];
+}
+
+- (nullable UITextPosition *)closestPositionToPoint:(CGPoint)point {
+  return [self.textView closestPositionToPoint:point];
+}
+
+- (nullable UITextPosition *)closestPositionToPoint:(CGPoint)point
+                                        withinRange:(nonnull UITextRange *)range {
+  return [self.textView closestPositionToPoint:point withinRange:range];
+}
+
+- (NSComparisonResult)comparePosition:(nonnull UITextPosition *)position
+                           toPosition:(nonnull UITextPosition *)other {
+  return [self.textView comparePosition:position toPosition:other];
+}
+
+- (CGRect)firstRectForRange:(nonnull UITextRange *)range {
+  return [self.textView firstRectForRange:range];
+}
+
+- (NSInteger)offsetFromPosition:(nonnull UITextPosition *)from
+                     toPosition:(nonnull UITextPosition *)toPosition {
+  return [self.textView offsetFromPosition:from toPosition:toPosition];
+}
+
+- (nullable UITextPosition *)positionFromPosition:(nonnull UITextPosition *)position
+                                      inDirection:(UITextLayoutDirection)direction
+                                           offset:(NSInteger)offset {
+  return [self.textView positionFromPosition:position inDirection:direction offset:offset];
+}
+
+- (nullable UITextPosition *)positionFromPosition:(nonnull UITextPosition *)position
+                                           offset:(NSInteger)offset {
+  return [self.textView positionFromPosition:position offset:offset];
+}
+
+- (nullable UITextPosition *)positionWithinRange:(nonnull UITextRange *)range
+                             farthestInDirection:(UITextLayoutDirection)direction {
+  return [self.textView positionWithinRange:range farthestInDirection:direction];
+}
+
+- (void)replaceRange:(nonnull UITextRange *)range withText:(nonnull NSString *)text {
+  [self.textView replaceRange:range withText:text];
+}
+
+- (nonnull NSArray<UITextSelectionRect *> *)selectionRectsForRange:(nonnull UITextRange *)range {
+  return [self.textView selectionRectsForRange:range];
+}
+
+- (void)setBaseWritingDirection:(UITextWritingDirection)writingDirection
+                       forRange:(nonnull UITextRange *)range {
+  return [self.textView setBaseWritingDirection:writingDirection forRange:range];
+}
+
+- (void)setMarkedText:(nullable NSString *)markedText selectedRange:(NSRange)selectedRange {
+  [self.textView setMarkedText:markedText selectedRange:selectedRange];
+}
+
+- (nullable NSString *)textInRange:(nonnull UITextRange *)range {
+  return [self.textView textInRange:range];
+}
+
+- (nullable UITextRange *)textRangeFromPosition:(nonnull UITextPosition *)fromPosition
+                                     toPosition:(nonnull UITextPosition *)toPosition {
+  return [self.textView textRangeFromPosition:fromPosition toPosition:toPosition];
+}
+
+- (void)unmarkText {
+  [self.textView unmarkText];
+}
+
+- (id<UITextInputTokenizer>)tokenizer {
+  return self.textView.tokenizer;
+}
+
 @end
