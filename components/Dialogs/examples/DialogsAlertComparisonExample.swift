@@ -34,9 +34,11 @@ class DialogsAlertComparisonExample: UIViewController {
 
     view.backgroundColor = UIColor.white
 
+    let scheme = MDCButtonScheme()
+    
+    MDCTextButtonThemer.applyScheme(scheme, to: materialButton)
     materialButton.translatesAutoresizingMaskIntoConstraints = false
     materialButton.setTitle("Material Alert", for: .normal)
-    materialButton.setTitleColor(UIColor(white: 0.1, alpha:1), for: .normal)
     materialButton.sizeToFit()
     materialButton.addTarget(self, action: #selector(tapMaterial), for: .touchUpInside)
     self.view.addSubview(materialButton)
@@ -58,9 +60,9 @@ class DialogsAlertComparisonExample: UIViewController {
                        constant: 0.0)
       ])
 
+    MDCTextButtonThemer.applyScheme(scheme, to: themedButton)
     themedButton.translatesAutoresizingMaskIntoConstraints = false
     themedButton.setTitle("Material Alert (Themed)", for: .normal)
-    themedButton.setTitleColor(UIColor(white: 0.1, alpha:1), for: .normal)
     themedButton.sizeToFit()
     themedButton.addTarget(self, action: #selector(tapThemed), for: .touchUpInside)
     self.view.addSubview(themedButton)
@@ -82,9 +84,9 @@ class DialogsAlertComparisonExample: UIViewController {
                          constant: 8.0)
       ])
 
+      MDCTextButtonThemer.applyScheme(scheme, to: uikitButton)
       uikitButton.translatesAutoresizingMaskIntoConstraints = false
       uikitButton.setTitle("UIKit Alert", for: UIControlState())
-      uikitButton.setTitleColor(UIColor(white: 0.1, alpha:1), for: .normal)
       uikitButton.sizeToFit()
       uikitButton.addTarget(self, action: #selector(tapUIKit), for: .touchUpInside)
       self.view.addSubview(uikitButton)

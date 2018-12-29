@@ -62,8 +62,9 @@ class DialogsCustomShadowExampleViewController: UIViewController {
 
     view.backgroundColor = UIColor.white
 
+    let scheme = MDCButtonScheme()
+    MDCTextButtonThemer.applyScheme(scheme, to: flatButton)
     flatButton.setTitle("PRESENT ALERT", for: UIControlState())
-    flatButton.setTitleColor(UIColor(white: 0.1, alpha:1), for: UIControlState())
     flatButton.sizeToFit()
     flatButton.translatesAutoresizingMaskIntoConstraints = false
     flatButton.addTarget(self, action: #selector(tap), for: .touchUpInside)

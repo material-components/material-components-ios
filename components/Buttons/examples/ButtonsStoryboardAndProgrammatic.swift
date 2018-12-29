@@ -135,6 +135,7 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
     let buttonScheme = MDCButtonScheme()
     MDCContainedButtonThemer.applyScheme(buttonScheme, to: containedButton)
     MDCContainedButtonThemer.applyScheme(buttonScheme, to: storyboardContained)
+    MDCTextButtonThemer.applyScheme(buttonScheme, to: flatButton)
 
     containedButton.setTitle("Programmatic", for: .normal)
     containedButton.sizeToFit()
@@ -142,7 +143,6 @@ class ButtonsSwiftAndStoryboardController: UIViewController {
     containedButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
     innerContainerView.addSubview(containedButton)
 
-    flatButton.setTitleColor(.gray, for: .normal)
     flatButton.setTitle("Programmatic", for: .normal)
     flatButton.sizeToFit()
     flatButton.translatesAutoresizingMaskIntoConstraints = false
