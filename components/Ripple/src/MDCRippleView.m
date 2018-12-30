@@ -17,7 +17,7 @@
 
 #import "MaterialMath.h"
 
-@interface MDCRippleView () <CALayerDelegate, MDCRippleLayerDelegate>
+@interface MDCRippleView () <MDCRippleLayerDelegate>
 @property(nonatomic, strong) MDCRippleLayer *activeRippleLayer;
 @property(nonatomic, strong) CAShapeLayer *maskLayer;
 @end
@@ -55,7 +55,6 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.225;
 
   // Use mask layer when the superview has a shadowPath.
   _maskLayer = [CAShapeLayer layer];
-  _maskLayer.delegate = self;
 }
 
 - (void)layoutSubviews {
@@ -171,23 +170,5 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.225;
     [self.rippleViewDelegate rippleTouchUpAnimationDidEnd:self];
   }
 }
-
-//#pragma mark - CALayerDelegate
-//
-//- (id<CAAction>)actionForLayer:(CALayer *)layer forKey:(NSString *)event {
-//  if ([event isEqualToString:@"path"] || [event isEqualToString:@"shadowPath"]) {
-//
-//    // We have to create a pending animation because if we are inside a UIKit animation block we
-//    // won't know any properties of the animation block until it is commited.
-//    MDCInkPendingAnimation *pendingAnim = [[MDCInkPendingAnimation alloc] init];
-//    pendingAnim.animationSourceLayer = self.superview.layer;
-//    pendingAnim.fromValue = [layer.presentationLayer valueForKey:event];
-//    pendingAnim.toValue = nil;
-//    pendingAnim.keyPath = event;
-//
-//    return pendingAnim;
-//  }
-//  return nil;
-//}
 
 @end
