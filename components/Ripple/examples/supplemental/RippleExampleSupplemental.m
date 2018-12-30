@@ -84,7 +84,7 @@
                      @"expanding outward from the user's touch.",
     @"primaryDemo" : @YES,
     @"presentable" : @YES,
-    @"debug": @YES,
+    @"debug" : @YES,
   };
 }
 
@@ -95,26 +95,26 @@
 - (void)viewWillLayoutSubviews {
   if (@available(iOS 11.0, *)) {
     UIEdgeInsets safeAreaInsets = self.view.safeAreaInsets;
-    self.containerView.frame = CGRectMake(safeAreaInsets.left,
-                                          safeAreaInsets.top,
-                                          CGRectGetWidth(self.view.frame) - safeAreaInsets.left - safeAreaInsets.right,
-                                          CGRectGetHeight(self.view.frame) - safeAreaInsets.top - safeAreaInsets.bottom);
+    self.containerView.frame =
+        CGRectMake(safeAreaInsets.left, safeAreaInsets.top,
+                   CGRectGetWidth(self.view.frame) - safeAreaInsets.left - safeAreaInsets.right,
+                   CGRectGetHeight(self.view.frame) - safeAreaInsets.top - safeAreaInsets.bottom);
   } else {
-    self.containerView.frame = CGRectMake(0,
-                                          self.topLayoutGuide.length,
-                                          CGRectGetWidth(self.view.frame),
-                                          CGRectGetHeight(self.view.frame) - self.topLayoutGuide.length);
+    self.containerView.frame =
+        CGRectMake(0, self.topLayoutGuide.length, CGRectGetWidth(self.view.frame),
+                   CGRectGetHeight(self.view.frame) - self.topLayoutGuide.length);
   }
 
   CGFloat offset = 8;
   CGFloat shapeDimension = 200;
   CGFloat spacing = 16;
   if (CGRectGetHeight(self.containerView.frame) > CGRectGetWidth(self.containerView.frame)) {
-    self.surfaces.center =
-        CGPointMake(self.containerView.center.x, self.containerView.center.y - shapeDimension - offset);
+    self.surfaces.center = CGPointMake(self.containerView.center.x,
+                                       self.containerView.center.y - shapeDimension - offset);
   } else {
-    self.surfaces.center = CGPointMake(self.containerView.center.x - shapeDimension / 2 - spacing * 2,
-                                     self.containerView.center.y / 2 + spacing * 2);
+    self.surfaces.center =
+        CGPointMake(self.containerView.center.x - shapeDimension / 2 - spacing * 2,
+                    self.containerView.center.y / 2 + spacing * 2);
   }
 }
 

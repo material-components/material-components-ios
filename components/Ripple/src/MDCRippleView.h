@@ -49,12 +49,12 @@ typedef NS_ENUM(NSInteger, MDCRippleStyle) {
 /**
  The ripple view delegate.
  */
-@property (nonatomic, weak, nullable) id<MDCRippleViewDelegate> rippleViewDelegate;
+@property(nonatomic, weak, nullable) id<MDCRippleViewDelegate> rippleViewDelegate;
 
 /**
  The ripple style indicating if the ripple is bounded or unbounded to the view.
  */
-@property (nonatomic, assign) MDCRippleStyle rippleStyle;
+@property(nonatomic, assign) MDCRippleStyle rippleStyle;
 
 /**
  The ripple's color.

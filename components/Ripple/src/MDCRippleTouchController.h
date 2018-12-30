@@ -75,7 +75,7 @@ typedef NS_ENUM(NSInteger, MDCRippleState) {
 
  Defaults to NO.
  */
-@property (nonatomic) BOOL allowsSelection;
+@property(nonatomic) BOOL allowsSelection;
 
 /**
  This BOOL is set to YES if the ripple is currently selected, or NO otherwise.
@@ -83,14 +83,14 @@ typedef NS_ENUM(NSInteger, MDCRippleState) {
 
  Defaults to NO.
  */
-@property (nonatomic, getter=isSelected) BOOL selected;
+@property(nonatomic, getter=isSelected) BOOL selected;
 
 /**
  This BOOL is set to YES if the ripple is currently in the selection mode, or NO otherwise.
 
  Defaults to NO.
  */
-@property (nonatomic) BOOL selectionMode;
+@property(nonatomic) BOOL selectionMode;
 
 /**
  Sets the color of the ripple for state.
@@ -127,7 +127,7 @@ typedef NS_ENUM(NSInteger, MDCRippleState) {
 /**
  The current state of the ripple.
  */
-@property (nonatomic, readonly) MDCRippleState state;
+@property(nonatomic, readonly) MDCRippleState state;
 
 /** Unavailable, please use initWithView: instead. */
 
@@ -181,6 +181,6 @@ typedef NS_ENUM(NSInteger, MDCRippleState) {
  */
 - (void)rippleTouchController:(nonnull MDCRippleTouchController *)rippleTouchController
          didProcessRippleView:(nonnull MDCRippleView *)rippleView
-           atTouchLocation:(CGPoint)location;
+              atTouchLocation:(CGPoint)location;
 
 @end

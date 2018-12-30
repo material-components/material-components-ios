@@ -63,10 +63,10 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 
   if (_rippleView == nil) {
     _rippleView = [[MDCRippleView alloc] initWithFrame:self.bounds];
-    _rippleView.autoresizingMask = (UIViewAutoresizingFlexibleWidth |
-                                 UIViewAutoresizingFlexibleHeight);
+    _rippleView.autoresizingMask =
+        (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     _rippleView.layer.zPosition = FLT_MAX;
-//    [_rippleView setRippleColor:UIColor.blueColor forState:MDCRippleStateSelected];
+    //    [_rippleView setRippleColor:UIColor.blueColor forState:MDCRippleStateSelected];
     [self addSubview:_rippleView];
   }
 
@@ -263,8 +263,8 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 }
 
 - (void)updateInkForShape {
-//  CGRect boundingBox = CGPathGetBoundingBox(self.layer.shapeLayer.path);
-//  self.rippleView.layer.masksToBounds = NO;
+  //  CGRect boundingBox = CGPathGetBoundingBox(self.layer.shapeLayer.path);
+  //  self.rippleView.layer.masksToBounds = NO;
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {

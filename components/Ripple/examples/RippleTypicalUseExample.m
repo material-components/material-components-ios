@@ -14,8 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialRipple.h"
 #import "MaterialPalettes.h"
+#import "MaterialRipple.h"
 
 #import "supplemental/RippleExampleSupplemental.h"
 
@@ -30,7 +30,7 @@
   [super viewDidLoad];
 
   self.view.backgroundColor = UIColor.whiteColor;
-  
+
   UIView *containerView = [[UIView alloc] initWithFrame:self.view.frame];
   [self.view addSubview:containerView];
   self.containerView = containerView;
@@ -56,7 +56,7 @@
 
 - (void)rippleTouchController:(MDCRippleTouchController *)rippleTouchController
          didProcessRippleView:(MDCRippleView *)rippleView
-           atTouchLocation:(CGPoint)location {
+              atTouchLocation:(CGPoint)location {
   NSLog(@"RippleTouchController %p did process ripple view: %p at touch location: %@",
         rippleTouchController, rippleView, NSStringFromCGPoint(location));
 }

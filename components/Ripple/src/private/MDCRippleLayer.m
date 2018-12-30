@@ -23,9 +23,8 @@ static const CGFloat kRippleFadeInDuration = (CGFloat)0.075;
 static const CGFloat kRippleFadeOutDuration = (CGFloat)0.075;
 static const CGFloat kRippleFadeOutDelay = (CGFloat)0.225;
 
-
 static CAMediaTimingFunction *materialTimingFunction(void) {
-  return [[CAMediaTimingFunction alloc] initWithControlPoints:(float)0.4:0:(float)0.2:1];
+  return [[CAMediaTimingFunction alloc] initWithControlPoints:(float) 0.4:0:(float)0.2:1];
 }
 
 static NSString *const kRippleLayerOpacityString = @"opacity";
@@ -49,10 +48,9 @@ static NSString *const kRippleLayerScaleString = @"transform.scale";
 - (void)startRippleAtPoint:(CGPoint)point
                   animated:(BOOL)animated
                 completion:(MDCRippleCompletionBlock)completion {
-  CGRect ovalRect = CGRectMake(CGRectGetMidX(self.bounds) - _rippleRadius,
-                               CGRectGetMidY(self.bounds) - _rippleRadius,
-                               _rippleRadius * 2,
-                               _rippleRadius * 2);
+  CGRect ovalRect =
+      CGRectMake(CGRectGetMidX(self.bounds) - _rippleRadius,
+                 CGRectGetMidY(self.bounds) - _rippleRadius, _rippleRadius * 2, _rippleRadius * 2);
   UIBezierPath *circlePath = [UIBezierPath bezierPathWithOvalInRect:ovalRect];
   self.path = circlePath.CGPath;
   [self.rippleLayerDelegate rippleLayerTouchDownAnimationDidBegin:self];
@@ -96,7 +94,8 @@ static NSString *const kRippleLayerScaleString = @"transform.scale";
     fadeInAnim.fromValue = @0;
     fadeInAnim.toValue = @1;
     fadeInAnim.duration = kRippleFadeInDuration;
-    fadeInAnim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+    fadeInAnim.timingFunction =
+        [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
     fadeInAnim.fillMode = kCAFillModeForwards;
     fadeInAnim.removedOnCompletion = NO;
 
@@ -126,8 +125,7 @@ static NSString *const kRippleLayerScaleString = @"transform.scale";
   fadeInAnim.fromValue = @0;
   fadeInAnim.toValue = @1;
   fadeInAnim.duration = animated ? kRippleFadeInDuration : 0;
-  fadeInAnim.timingFunction =
-      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+  fadeInAnim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
   fadeInAnim.fillMode = kCAFillModeForwards;
   fadeInAnim.removedOnCompletion = NO;
   [CATransaction setCompletionBlock:^{
@@ -146,8 +144,7 @@ static NSString *const kRippleLayerScaleString = @"transform.scale";
   fadeInAnim.fromValue = @1;
   fadeInAnim.toValue = @0;
   fadeInAnim.duration = animated ? kRippleFadeOutDuration : 0;
-  fadeInAnim.timingFunction =
-      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+  fadeInAnim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
   fadeInAnim.fillMode = kCAFillModeForwards;
   fadeInAnim.removedOnCompletion = NO;
   [CATransaction setCompletionBlock:^{
@@ -165,26 +162,26 @@ static NSString *const kRippleLayerScaleString = @"transform.scale";
     delay = kRippleFadeOutDelay;
   }
   [self.rippleLayerDelegate rippleLayerTouchUpAnimationDidBegin:self];
-    [CATransaction begin];
-    CABasicAnimation *fadeOutAnim = [[CABasicAnimation alloc] init];
-    fadeOutAnim.keyPath = kRippleLayerOpacityString;
-    fadeOutAnim.fromValue = @1;
-    fadeOutAnim.toValue = @0;
-    fadeOutAnim.duration = animated ? kRippleTouchUpDuration : 0;
-    fadeOutAnim.beginTime = _rippleTouchDownStartTime + delay;
-    fadeOutAnim.timingFunction =
-        [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
-    fadeOutAnim.fillMode = kCAFillModeForwards;
-    fadeOutAnim.removedOnCompletion = NO;
-    [CATransaction setCompletionBlock:^{
-      if (completion) {
-        completion();
-      }
-      [self.rippleLayerDelegate rippleLayerTouchUpAnimationDidEnd:self];
-      [self removeFromSuperlayer];
-    }];
-    [self addAnimation:fadeOutAnim forKey:nil];
-    [CATransaction commit];
+  [CATransaction begin];
+  CABasicAnimation *fadeOutAnim = [[CABasicAnimation alloc] init];
+  fadeOutAnim.keyPath = kRippleLayerOpacityString;
+  fadeOutAnim.fromValue = @1;
+  fadeOutAnim.toValue = @0;
+  fadeOutAnim.duration = animated ? kRippleTouchUpDuration : 0;
+  fadeOutAnim.beginTime = _rippleTouchDownStartTime + delay;
+  fadeOutAnim.timingFunction =
+      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+  fadeOutAnim.fillMode = kCAFillModeForwards;
+  fadeOutAnim.removedOnCompletion = NO;
+  [CATransaction setCompletionBlock:^{
+    if (completion) {
+      completion();
+    }
+    [self.rippleLayerDelegate rippleLayerTouchUpAnimationDidEnd:self];
+    [self removeFromSuperlayer];
+  }];
+  [self addAnimation:fadeOutAnim forKey:nil];
+  [CATransaction commit];
 }
 
 @end

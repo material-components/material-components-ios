@@ -30,7 +30,7 @@ static const CGFloat kBorderWidth = 1;
   [card setShadowElevation:kHighlightedElevation forState:UIControlStateHighlighted];
   card.interactable = YES;
   [MDCCardsColorThemer applySemanticColorScheme:scheme.colorScheme toCard:card];
-//  [MDCCardsShapeThemer applyShapeScheme:scheme.shapeScheme toCard:card];
+  //  [MDCCardsShapeThemer applyShapeScheme:scheme.shapeScheme toCard:card];
 }
 
 + (void)applyScheme:(nonnull id<MDCCardScheming>)scheme

@@ -117,5 +117,4 @@ typedef void (^MDCRippleCompletionBlock)(void);
  */
 - (void)rippleLayerTouchUpAnimationDidEnd:(nonnull MDCRippleLayer *)rippleLayer;
 
-
 @end

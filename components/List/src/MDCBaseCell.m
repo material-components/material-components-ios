@@ -21,7 +21,7 @@
 @interface MDCBaseCell ()
 
 @property (nonatomic, assign) CGPoint lastTouch;
-@property (strong, nonatomic, nonnull) MDCRippleView *rippleView;
+@property(strong, nonatomic, nonnull) MDCRippleView *rippleView;
 
 @end
 
@@ -51,7 +51,7 @@
   if (!self.rippleView) {
     self.rippleView = [[MDCRippleView alloc] initWithFrame:self.bounds];
   }
-//  _inkView.usesLegacyInkRipple = NO;
+  //  _inkView.usesLegacyInkRipple = NO;
   [self addSubview:_rippleView];
 }
 
@@ -59,16 +59,16 @@
 
 - (void)startInk {
   [self.rippleView BeginRippleTouchDownAtPoint:_lastTouch animated:YES completion:nil];
-//  [self.rippleView startTouchBeganAtPoint:_lastTouch
-//                              animated:YES
-//                        withCompletion:nil];
+  //  [self.rippleView startTouchBeganAtPoint:_lastTouch
+  //                              animated:YES
+  //                        withCompletion:nil];
 }
 
 - (void)endInk {
   [self.rippleView BeginRippleTouchUpAnimated:YES completion:nil];
-//  [self.rippleView startTouchEndAtPoint:_lastTouch
-//                            animated:YES
-//                      withCompletion:nil];
+  //  [self.rippleView startTouchEndAtPoint:_lastTouch
+  //                            animated:YES
+  //                      withCompletion:nil];
 }
 
 #pragma mark Shadow
@@ -101,7 +101,7 @@
 - (void)layoutSubviews {
   [super layoutSubviews];
   [self updateShadowElevation];
-//  self.inkView.frame = self.bounds;
+  //  self.inkView.frame = self.bounds;
 }
 
 #pragma mark UICollectionViewCell Overrides
@@ -119,7 +119,7 @@
   [super prepareForReuse];
   self.elevation = 0;
   [self.rippleView cancelAllRipplesAnimated:NO];
-//  [self.inkView cancelAllAnimationsAnimated:NO];
+  //  [self.inkView cancelAllAnimationsAnimated:NO];
 }
 
 #pragma mark Accessors
