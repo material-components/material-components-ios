@@ -214,9 +214,9 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 
 - (void)setHighlighted:(BOOL)highlighted {
   if (highlighted && !self.highlighted) {
-    [self.rippleView BeginRipplePressDownAtPoint:_lastTouch animated:true completion:nil];
+    [self.rippleView BeginRippleTouchDownAtPoint:_lastTouch animated:true completion:nil];
   } else if (!highlighted && self.highlighted) {
-    [self.rippleView BeginRipplePressUpAnimated:true completion:nil];
+    [self.rippleView BeginRippleTouchUpAnimated:true completion:nil];
   }
   [super setHighlighted:highlighted];
   [self updateShadowElevation];

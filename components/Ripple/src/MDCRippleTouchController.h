@@ -20,171 +20,145 @@
 @protocol MDCRippleTouchControllerDelegate;
 
 /**
- <#Description#>
+ Provides the current state of the ripple. The ripple is either in its normal state, or in the
+ selected state where the ripple remains spread on the view.
 
- - MDCRippleStateNormal: <#MDCRippleStateNormal description#>
+ - MDCRippleStateNormal: The ripple is in its normal state.
+ - MDCRippleStateSelected: The ripple is in the selected state.
  */
 typedef NS_ENUM(NSInteger, MDCRippleState) {
-  MDCRippleStateNormal = 0, // No Ripple
-  MDCRippleStateSelected, // Ripple has spread and is staying
+  MDCRippleStateNormal = 0,
+  MDCRippleStateSelected,
 };
 
 /**
- <#Description#>
+ The MDCRippleTouchController is a convenience controller that adds all the needed touch tracking
+ and logic to provide the correct ripple effect based on the user interacting with the view the
+ ripple is added to.
  */
 @interface MDCRippleTouchController : NSObject <UIGestureRecognizerDelegate>
 
-/** Weak reference to the view that responds to touch events. */
 /**
- <#Description#>
+ A weak reference to the view that the ripple is added to, and that responds to the user
+ events.
  */
 @property(nonatomic, weak, readonly, nullable) UIView *view;
 
 /**
- The ripple view for clients who do not create their own ripple views via the delegate.
+ The ripple view added to the view.
  */
 @property(nonatomic, strong, readonly, nonnull) MDCRippleView *rippleView;
 
 /** Delegate to extend the behavior of the touch control. */
 
 /**
- <#Description#>
+ A delegate to extend the behavior of the touch controller.
  */
 @property(nonatomic, weak, nullable) id<MDCRippleTouchControllerDelegate> delegate;
 
 /** Gesture recognizer used to bind touch events to ripple. */
 
 /**
- <#Description#>
+ The gesture recognizer used to bind the touch events to the ripple.
  */
 @property(nonatomic, strong, readonly, nonnull) UILongPressGestureRecognizer *gestureRecognizer;
 
 /**
- <#Description#>
+ The selection gesture recognizer used to bind the touch events related to selection to the ripple.
  */
 @property(nonatomic, strong, readonly, nullable)
     UILongPressGestureRecognizer *selectionGestureRecognizer;
 
-
 /**
- <#Description#>
+ This BOOL tells the touch controller if to allow selection and all the logic and visuals
+ that come with it, for this ripple.
+
+ Defaults to NO.
  */
 @property (nonatomic) BOOL allowsSelection;
 
 /**
- <#Description#>
+ This BOOL is set to YES if the ripple is currently selected, or NO otherwise.
+ It only has significance if selectionMode is activated.
+
+ Defaults to NO.
  */
 @property (nonatomic, getter=isSelected) BOOL selected;
 
 /**
- <#Description#>
+ This BOOL is set to YES if the ripple is currently in the selection mode, or NO otherwise.
+
+ Defaults to NO.
  */
 @property (nonatomic) BOOL selectionMode;
 
 /**
- <#Description#>
+ Sets the color of the ripple for state.
 
- @param rippleColor <#rippleColor description#>
- @param state <#state description#>
+ @param rippleColor The ripple color to set the ripple to.
+ @param state The state of the ripple in which to set the ripple color.
  */
 - (void)setRippleColor:(nullable UIColor *)rippleColor forState:(MDCRippleState)state;
 
 /**
- <#Description#>
+ Gets the ripple color for the given state.
 
- @param state <#state description#>
- @return <#return value description#>
+ @param state The ripple's state.
+ @return the color of the ripple for state.
  */
 - (nullable UIColor *)rippleColorForState:(MDCRippleState)state;
 
 /**
- <#Description#>
+ Sets the alpha of the ripple for state.
 
- @param rippleAlpha <#rippleAlpha description#>
- @param state <#state description#>
+ @param rippleAlpha The ripple alpha to set the ripple to.
+ @param state The state of the ripple in which to set the ripple alpha.
  */
 - (void)setRippleAlpha:(CGFloat)rippleAlpha forState:(MDCRippleState)state;
 
 /**
- <#Description#>
+ Gets the ripple alpha for the given state.
 
- @param state <#state description#>
- @return <#return value description#>
+ @param state The ripple's state.
+ @return the alpha of the ripple for state.
  */
 - (CGFloat)rippleAlphaForState:(MDCRippleState)state;
 
 /**
- <#Description#>
+ The current state of the ripple.
  */
 @property (nonatomic, readonly) MDCRippleState state;
 
 /** Unavailable, please use initWithView: instead. */
 
 /**
- <#Description#>
-
- @return <#return value description#>
+ Unavailable, please use `initWithView` instead.
  */
 - (nonnull instancetype)init NS_UNAVAILABLE;
 
 /**
  Initializes the controller.
 
- @param view View that responds to touch events for ripple.
+ @param view The view that responds to the touch events for the ripple, and the view which the
+ ripple is added as a subview to.
  */
 - (nonnull instancetype)initWithView:(nonnull UIView *)view NS_DESIGNATED_INITIALIZER;
 
-/**
- Cancels all touch processing and dissipates the ripple.
-
- This is useful if your application needs to remove the ripple on scrolling, when preparing a view
- for reuse, etc.
- */
-- (void)cancelRippleTouchProcessing;
-
 @end
 
-/** Delegate methods for MDCRippleTouchController. */
+/**
+ Delegate methods for MDCRippleTouchController.
+ */
 @protocol MDCRippleTouchControllerDelegate <NSObject>
 @optional
-
-/**
- Inserts the ripple view into the given view.
-
- If this method is not implemented, the ripple view is added as a subview of the view when the
- controller's addRippleView method is called. Delegates can choose to insert the ripple view below the
- contents as a background view. When rippleTouchController:rippleViewAtTouchLocation is implemented
- this method will not be invoked.
-
- @param rippleTouchController The ripple touch controller.
- @param rippleView The ripple view.
- @param view The view to add the ripple view to.
- */
-- (void)rippleTouchController:(nonnull MDCRippleTouchController *)rippleTouchController
-             insertRippleView:(nonnull UIView *)rippleView
-                  intoView:(nonnull UIView *)view;
-
-/**
- Returns the ripple view to use for a touch located at location in rippleTouchController.view.
-
- If the delegate implements this method, the controller will not create an ripple view of its own and
- rippleTouchController:insertRippleView:intoView: will not be called. This method allows the delegate
- to control the creation and reuse of ripple views.
-
- @param rippleTouchController The ripple touch controller.
- @param location The touch location in the coords of @c rippleTouchController.view.
- @return An ripple view to use at the touch location.
- */
-- (nullable MDCRippleView *)rippleTouchController:(nonnull MDCRippleTouchController *)rippleTouchController
-                     rippleViewAtTouchLocation:(CGPoint)location;
 
 /**
  Controls whether the ripple touch controller should be processing touches.
 
  The touch controller will query this method to determine if it should start or continue to
- process touches controlling the ripple. Returning NO at the start of a gesture will prevent any ripple
- from being displayed, and returning NO in the middle of a gesture will cancel that gesture and
- evaporate the ripple.
+ process touches controlling the ripple. Returning NO at the start of a gesture will prevent any
+ ripple from being displayed, and returning NO in the middle of a gesture will cancel that gesture
+ and evaporate the ripple.
 
  If not implemented then YES is assumed.
 

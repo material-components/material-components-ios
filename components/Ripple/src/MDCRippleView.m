@@ -91,14 +91,14 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.225;
       if ([layer isKindOfClass:[MDCRippleLayer class]]) {
         MDCRippleLayer *rippleLayer = (MDCRippleLayer *)layer;
         latestBeginTouchDownRippleTime =
-            MAX(latestBeginTouchDownRippleTime, rippleLayer.beginTouchDownRippleTime);
+            MAX(latestBeginTouchDownRippleTime, rippleLayer.rippleTouchDownStartTime);
       }
     }
     for (CALayer *layer in sublayers) {
       if ([layer isKindOfClass:[MDCRippleLayer class]]) {
         MDCRippleLayer *rippleLayer = (MDCRippleLayer *)layer;
         if (!rippleLayer.isStartAnimationActive) {
-          rippleLayer.beginTouchDownRippleTime =
+          rippleLayer.rippleTouchDownStartTime =
               latestBeginTouchDownRippleTime + kRippleFadeOutDelay;
         }
         [rippleLayer endRippleAnimated:animated completion:nil];

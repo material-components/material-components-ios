@@ -39,6 +39,11 @@ typedef void (^MDCRippleCompletionBlock)(void);
  */
 @property(nonatomic, assign, readonly, getter=isStartAnimationActive) BOOL startAnimationActive;
 
+/**
+ The ripple's touch down animation start time. It is measured in seconds
+ as the current absolute time when the animation begins.
+ */
+@property(nonatomic, assign) CFTimeInterval rippleTouchDownStartTime;
 
 /**
  Starts the ripple at the given point.

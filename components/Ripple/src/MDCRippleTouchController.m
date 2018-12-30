@@ -153,7 +153,7 @@
   switch (recognizer.state) {
     case UIGestureRecognizerStateBegan: {
       _tapWentOutsideOfBounds = NO;
-      [self.rippleView BeginRipplePressDownAtPoint:touchLocation animated:YES completion:^{
+      [self.rippleView BeginRippleTouchDownAtPoint:touchLocation animated:YES completion:^{
         if (self.selectionMode) {
           self.selected = !self.selected;
           if (!self.selected) {
@@ -161,6 +161,11 @@
           }
         }
       }];
+      if ([_delegate
+           respondsToSelector:@selector(rippleTouchController:didProcessRippleView:atTouchLocation:)]) {
+        [_delegate rippleTouchController:self didProcessRippleView:_rippleView atTouchLocation:touchLocation];
+
+      }
       break;
     }
     case UIGestureRecognizerStatePossible:  // Ignored
@@ -178,7 +183,7 @@
     }
     case UIGestureRecognizerStateEnded:
       if (!_selectionMode) {
-        [self.rippleView BeginRipplePressUpAnimated:YES completion:nil];
+        [self.rippleView BeginRippleTouchUpAnimated:YES completion:nil];
       }
       break;
     case UIGestureRecognizerStateCancelled:

@@ -34,7 +34,6 @@ static NSString *const kRippleLayerScaleString = @"transform.scale";
 
 @implementation MDCRippleLayer {
   CGFloat _rippleRadius;
-  CFTimeInterval _rippleTouchDownStartTime;
 }
 
 - (void)setNeedsLayout {
