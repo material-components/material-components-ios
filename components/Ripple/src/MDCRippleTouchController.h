@@ -19,14 +19,25 @@
 @class MDCRippleView;
 @protocol MDCRippleTouchControllerDelegate;
 
+/**
+ <#Description#>
+
+ - MDCRippleStateNormal: <#MDCRippleStateNormal description#>
+ */
 typedef NS_ENUM(NSInteger, MDCRippleState) {
   MDCRippleStateNormal = 0, // No Ripple
   MDCRippleStateSelected, // Ripple has spread and is staying
 };
 
+/**
+ <#Description#>
+ */
 @interface MDCRippleTouchController : NSObject <UIGestureRecognizerDelegate>
 
 /** Weak reference to the view that responds to touch events. */
+/**
+ <#Description#>
+ */
 @property(nonatomic, weak, readonly, nullable) UIView *view;
 
 /**
@@ -35,27 +46,85 @@ typedef NS_ENUM(NSInteger, MDCRippleState) {
 @property(nonatomic, strong, readonly, nonnull) MDCRippleView *rippleView;
 
 /** Delegate to extend the behavior of the touch control. */
+
+/**
+ <#Description#>
+ */
 @property(nonatomic, weak, nullable) id<MDCRippleTouchControllerDelegate> delegate;
 
 /** Gesture recognizer used to bind touch events to ripple. */
+
+/**
+ <#Description#>
+ */
 @property(nonatomic, strong, readonly, nonnull) UILongPressGestureRecognizer *gestureRecognizer;
 
+/**
+ <#Description#>
+ */
 @property(nonatomic, strong, readonly, nullable)
     UILongPressGestureRecognizer *selectionGestureRecognizer;
 
 
+/**
+ <#Description#>
+ */
 @property (nonatomic) BOOL allowsSelection;
+
+/**
+ <#Description#>
+ */
 @property (nonatomic, getter=isSelected) BOOL selected;
+
+/**
+ <#Description#>
+ */
 @property (nonatomic) BOOL selectionMode;
 
+/**
+ <#Description#>
+
+ @param rippleColor <#rippleColor description#>
+ @param state <#state description#>
+ */
 - (void)setRippleColor:(nullable UIColor *)rippleColor forState:(MDCRippleState)state;
+
+/**
+ <#Description#>
+
+ @param state <#state description#>
+ @return <#return value description#>
+ */
 - (nullable UIColor *)rippleColorForState:(MDCRippleState)state;
+
+/**
+ <#Description#>
+
+ @param rippleAlpha <#rippleAlpha description#>
+ @param state <#state description#>
+ */
 - (void)setRippleAlpha:(CGFloat)rippleAlpha forState:(MDCRippleState)state;
+
+/**
+ <#Description#>
+
+ @param state <#state description#>
+ @return <#return value description#>
+ */
 - (CGFloat)rippleAlphaForState:(MDCRippleState)state;
 
+/**
+ <#Description#>
+ */
 @property (nonatomic, readonly) MDCRippleState state;
 
 /** Unavailable, please use initWithView: instead. */
+
+/**
+ <#Description#>
+
+ @return <#return value description#>
+ */
 - (nonnull instancetype)init NS_UNAVAILABLE;
 
 /**

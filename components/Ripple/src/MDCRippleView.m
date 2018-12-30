@@ -18,10 +18,8 @@
 #import "MaterialMath.h"
 
 @interface MDCRippleView () <CALayerDelegate, MDCRippleLayerDelegate>
-
 @property(nonatomic, strong) MDCRippleLayer *activeRippleLayer;
 @property(nonatomic, strong) CAShapeLayer *maskLayer;
-
 @end
 
 static const CGFloat kRippleDefaultAlpha = (CGFloat)0.16;
@@ -88,20 +86,20 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.225;
 - (void)cancelAllRipplesAnimated:(BOOL)animated {
   NSArray<CALayer *> *sublayers = [self.layer.sublayers copy];
   if (animated) {
-    CGFloat latestBeginPressDownRippleTime = CGFLOAT_MIN;
+    CGFloat latestBeginTouchDownRippleTime = CGFLOAT_MIN;
     for (CALayer *layer in sublayers) {
       if ([layer isKindOfClass:[MDCRippleLayer class]]) {
         MDCRippleLayer *rippleLayer = (MDCRippleLayer *)layer;
-        latestBeginPressDownRippleTime =
-            MAX(latestBeginPressDownRippleTime, rippleLayer.beginPressDownRippleTime);
+        latestBeginTouchDownRippleTime =
+            MAX(latestBeginTouchDownRippleTime, rippleLayer.beginTouchDownRippleTime);
       }
     }
     for (CALayer *layer in sublayers) {
       if ([layer isKindOfClass:[MDCRippleLayer class]]) {
         MDCRippleLayer *rippleLayer = (MDCRippleLayer *)layer;
         if (!rippleLayer.isStartAnimationActive) {
-          rippleLayer.beginPressDownRippleTime =
-              latestBeginPressDownRippleTime + kRippleFadeOutDelay;
+          rippleLayer.beginTouchDownRippleTime =
+              latestBeginTouchDownRippleTime + kRippleFadeOutDelay;
         }
         [rippleLayer endRippleAnimated:animated completion:nil];
       }
@@ -116,7 +114,7 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.225;
   }
 }
 
-- (void)BeginRipplePressDownAtPoint:(CGPoint)point
+- (void)BeginRippleTouchDownAtPoint:(CGPoint)point
                            animated:(BOOL)animated
                          completion:(nullable MDCRippleCompletionBlock)completion {
   MDCRippleLayer *rippleLayer = [MDCRippleLayer layer];
@@ -128,7 +126,7 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.225;
   self.activeRippleLayer = rippleLayer;
 }
 
-- (void)BeginRipplePressUpAnimated:(BOOL)animated
+- (void)BeginRippleTouchUpAnimated:(BOOL)animated
                         completion:(nullable MDCRippleCompletionBlock)completion {
   [self.activeRippleLayer endRippleAnimated:animated completion:completion];
 }
@@ -150,27 +148,27 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.225;
 
 #pragma mark - MDCRippleLayerDelegate
 
-- (void)rippleLayerPressDownAnimationDidBegin:(MDCRippleLayer *)rippleLayer {
-  if ([self.rippleViewDelegate respondsToSelector:@selector(ripplePressDownAnimationDidBegin:)]) {
-    [self.rippleViewDelegate ripplePressDownAnimationDidBegin:self];
+- (void)rippleLayerTouchDownAnimationDidBegin:(MDCRippleLayer *)rippleLayer {
+  if ([self.rippleViewDelegate respondsToSelector:@selector(rippleTouchDownAnimationDidBegin:)]) {
+    [self.rippleViewDelegate rippleTouchDownAnimationDidBegin:self];
   }
 }
 
-- (void)rippleLayerPressDownAnimationDidEnd:(MDCRippleLayer *)rippleLayer {
-  if ([self.rippleViewDelegate respondsToSelector:@selector(ripplePressDownAnimationDidEnd:)]) {
-    [self.rippleViewDelegate ripplePressDownAnimationDidEnd:self];
+- (void)rippleLayerTouchDownAnimationDidEnd:(MDCRippleLayer *)rippleLayer {
+  if ([self.rippleViewDelegate respondsToSelector:@selector(rippleTouchDownAnimationDidEnd:)]) {
+    [self.rippleViewDelegate rippleTouchDownAnimationDidEnd:self];
   }
 }
 
-- (void)rippleLayerPressUpAnimationDidBegin:(MDCRippleLayer *)rippleLayer {
-  if ([self.rippleViewDelegate respondsToSelector:@selector(ripplePressUpAnimationDidBegin:)]) {
-    [self.rippleViewDelegate ripplePressUpAnimationDidBegin:self];
+- (void)rippleLayerTouchUpAnimationDidBegin:(MDCRippleLayer *)rippleLayer {
+  if ([self.rippleViewDelegate respondsToSelector:@selector(rippleTouchUpAnimationDidBegin:)]) {
+    [self.rippleViewDelegate rippleTouchUpAnimationDidBegin:self];
   }
 }
 
-- (void)rippleLayerPressUpAnimationDidEnd:(MDCRippleLayer *)rippleLayer {
-  if ([self.rippleViewDelegate respondsToSelector:@selector(ripplePressUpAnimationDidEnd:)]) {
-    [self.rippleViewDelegate ripplePressUpAnimationDidEnd:self];
+- (void)rippleLayerTouchUpAnimationDidEnd:(MDCRippleLayer *)rippleLayer {
+  if ([self.rippleViewDelegate respondsToSelector:@selector(rippleTouchUpAnimationDidEnd:)]) {
+    [self.rippleViewDelegate rippleTouchUpAnimationDidEnd:self];
   }
 }
 

@@ -15,36 +15,102 @@
 #import <QuartzCore/QuartzCore.h>
 #import <UIKit/UIKit.h>
 
+/**
+ Convenience naming for the completion blocks the ripple animation provides.
+ */
 typedef void (^MDCRippleCompletionBlock)(void);
 
 @protocol MDCRippleLayerDelegate;
 
+/**
+ The Ripple Layer presents and animates the ripple. There can be multiple Ripple Layers
+ as sublayers for MDCRippleView. The Ripple Layer subclasses CAShapeLayer to leverage the path
+ property so we can conveniently draw the ripple circle.
+ */
 @interface MDCRippleLayer : CAShapeLayer
 
+/**
+ The ripple layer delegate.
+ */
 @property(nonatomic, weak, nullable) id<MDCRippleLayerDelegate> rippleLayerDelegate;
 
+/**
+ A bool indicating if the start animation is currently active for this ripple layer.
+ */
 @property(nonatomic, assign, readonly, getter=isStartAnimationActive) BOOL startAnimationActive;
 
-@property(nonatomic, assign) CGFloat finalRadius;
 
-@property(nonatomic, assign) CFTimeInterval beginPressDownRippleTime;
+/**
+ Starts the ripple at the given point.
 
+ @param point The point to start the ripple animation.
+ @param animated Whether or not the ripple should be animated or not.
+ @param completion A completion block called after the completion of the animation.
+ */
 - (void)startRippleAtPoint:(CGPoint)point
                   animated:(BOOL)animated
                 completion:(nullable MDCRippleCompletionBlock)completion;
+
+/**
+ Ends the ripple.
+
+ @param animated Whether or not the ripple should be animated or not.
+ @param completion A completion block called after the completion of the animation.
+ */
 - (void)endRippleAnimated:(BOOL)animated completion:(nullable MDCRippleCompletionBlock)completion;
+
+/**
+ Fades the ripple in by changing the layer's opacity.
+
+ @param animated Whether or not the fade in should be animated or not.
+ @param completion A completion block called after the completion of the animation.
+ */
 - (void)fadeInRippleAnimated:(BOOL)animated
                   completion:(nullable MDCRippleCompletionBlock)completion;
+
+/**
+ Fades the ripple out by changing the layer's opacity.
+
+ @param animated Whether or not the fade out should be animated or not.
+ @param completion A completion block called after the completion of the animation.
+ */
 - (void)fadeOutRippleAnimated:(BOOL)animated
                    completion:(nullable MDCRippleCompletionBlock)completion;
-
 @end
 
+/**
+ The ripple layer delegate protocol to let MDCRippleView know of the layer's
+ ripple animation timeline.
+ */
 @protocol MDCRippleLayerDelegate <CALayerDelegate>
-- (void)rippleLayerPressDownAnimationDidBegin:(nonnull MDCRippleLayer *)rippleLayer;
-- (void)rippleLayerPressDownAnimationDidEnd:(nonnull MDCRippleLayer *)rippleLayer;
-- (void)rippleLayerPressUpAnimationDidBegin:(nonnull MDCRippleLayer *)rippleLayer;
-- (void)rippleLayerPressUpAnimationDidEnd:(nonnull MDCRippleLayer *)rippleLayer;
+
+/**
+ Called when the ripple layer began its touch down animation.
+
+ @param rippleLayer The MDCRippleLayer.
+ */
+- (void)rippleLayerTouchDownAnimationDidBegin:(nonnull MDCRippleLayer *)rippleLayer;
+
+/**
+ Called when the ripple layer ended its touch down animation.
+
+ @param rippleLayer The MDCRippleLayer.
+ */
+- (void)rippleLayerTouchDownAnimationDidEnd:(nonnull MDCRippleLayer *)rippleLayer;
+
+/**
+ Called when the ripple layer began its touch up animation.
+
+ @param rippleLayer The MDCRippleLayer.
+ */
+- (void)rippleLayerTouchUpAnimationDidBegin:(nonnull MDCRippleLayer *)rippleLayer;
+
+/**
+ Called when the ripple layer ended its touch up animation.
+
+ @param rippleLayer The MDCRippleLayer.
+ */
+- (void)rippleLayerTouchUpAnimationDidEnd:(nonnull MDCRippleLayer *)rippleLayer;
 
 
 @end

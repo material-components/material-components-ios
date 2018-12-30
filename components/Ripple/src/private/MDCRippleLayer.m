@@ -17,8 +17,8 @@
 
 static const CGFloat kExpandRippleBeyondSurface = 10;
 static const CGFloat kRippleStartingScale = (CGFloat)0.6;
-static const CGFloat kRipplePressDownDuration = (CGFloat)0.225;
-static const CGFloat kRipplePressUpDuration = (CGFloat)0.15;
+static const CGFloat kRippleTouchDownDuration = (CGFloat)0.225;
+static const CGFloat kRippleTouchUpDuration = (CGFloat)0.15;
 static const CGFloat kRippleFadeInDuration = (CGFloat)0.075;
 static const CGFloat kRippleFadeOutDuration = (CGFloat)0.075;
 static const CGFloat kRippleFadeOutDelay = (CGFloat)0.225;
@@ -33,6 +33,8 @@ static NSString *const kRippleLayerPositionString = @"position";
 static NSString *const kRippleLayerScaleString = @"transform.scale";
 
 @implementation MDCRippleLayer {
+  CGFloat _rippleRadius;
+  CFTimeInterval _rippleTouchDownStartTime;
 }
 
 - (void)setNeedsLayout {
@@ -41,25 +43,24 @@ static NSString *const kRippleLayerScaleString = @"transform.scale";
 }
 
 - (void)setRadiiWithRect:(CGRect)rect {
-  self.finalRadius =
+  _rippleRadius =
       (CGFloat)(MDCHypot(CGRectGetMidX(rect), CGRectGetMidY(rect)) + kExpandRippleBeyondSurface);
 }
 
 - (void)startRippleAtPoint:(CGPoint)point
                   animated:(BOOL)animated
                 completion:(MDCRippleCompletionBlock)completion {
-  CGFloat radius = self.finalRadius;
-  CGRect ovalRect = CGRectMake(CGRectGetMidX(self.bounds) - radius,
-                               CGRectGetMidY(self.bounds) - radius,
-                               radius * 2,
-                               radius * 2);
+  CGRect ovalRect = CGRectMake(CGRectGetMidX(self.bounds) - _rippleRadius,
+                               CGRectGetMidY(self.bounds) - _rippleRadius,
+                               _rippleRadius * 2,
+                               _rippleRadius * 2);
   UIBezierPath *circlePath = [UIBezierPath bezierPathWithOvalInRect:ovalRect];
   self.path = circlePath.CGPath;
-  [self.rippleLayerDelegate rippleLayerPressDownAnimationDidBegin:self];
+  [self.rippleLayerDelegate rippleLayerTouchDownAnimationDidBegin:self];
   if (!animated) {
     self.opacity = 1;
     self.position = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
-    [self.rippleLayerDelegate rippleLayerPressDownAnimationDidEnd:self];
+    [self.rippleLayerDelegate rippleLayerTouchDownAnimationDidEnd:self];
   } else {
     self.opacity = 0;
     self.position = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
@@ -103,7 +104,7 @@ static NSString *const kRippleLayerScaleString = @"transform.scale";
     [CATransaction begin];
     CAAnimationGroup *animGroup = [[CAAnimationGroup alloc] init];
     animGroup.animations = @[ scaleAnim, positionAnim, fadeInAnim ];
-    animGroup.duration = kRipplePressDownDuration;
+    animGroup.duration = kRippleTouchDownDuration;
     animGroup.fillMode = kCAFillModeForwards;
     animGroup.removedOnCompletion = NO;
     [CATransaction setCompletionBlock:^{
@@ -111,10 +112,10 @@ static NSString *const kRippleLayerScaleString = @"transform.scale";
       if (completion) {
         completion();
       }
-      [self.rippleLayerDelegate rippleLayerPressDownAnimationDidEnd:self];
+      [self.rippleLayerDelegate rippleLayerTouchDownAnimationDidEnd:self];
     }];
     [self addAnimation:animGroup forKey:nil];
-    _beginPressDownRippleTime = CACurrentMediaTime();
+    _rippleTouchDownStartTime = CACurrentMediaTime();
     [CATransaction commit];
   }
 }
@@ -164,14 +165,14 @@ static NSString *const kRippleLayerScaleString = @"transform.scale";
   if (self.startAnimationActive) {
     delay = kRippleFadeOutDelay;
   }
-  [self.rippleLayerDelegate rippleLayerPressUpAnimationDidBegin:self];
+  [self.rippleLayerDelegate rippleLayerTouchUpAnimationDidBegin:self];
     [CATransaction begin];
     CABasicAnimation *fadeOutAnim = [[CABasicAnimation alloc] init];
     fadeOutAnim.keyPath = kRippleLayerOpacityString;
     fadeOutAnim.fromValue = @1;
     fadeOutAnim.toValue = @0;
-    fadeOutAnim.duration = animated ? kRipplePressUpDuration : 0;
-    fadeOutAnim.beginTime = _beginPressDownRippleTime + delay;
+    fadeOutAnim.duration = animated ? kRippleTouchUpDuration : 0;
+    fadeOutAnim.beginTime = _rippleTouchDownStartTime + delay;
     fadeOutAnim.timingFunction =
         [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
     fadeOutAnim.fillMode = kCAFillModeForwards;
@@ -180,7 +181,7 @@ static NSString *const kRippleLayerScaleString = @"transform.scale";
       if (completion) {
         completion();
       }
-      [self.rippleLayerDelegate rippleLayerPressUpAnimationDidEnd:self];
+      [self.rippleLayerDelegate rippleLayerTouchUpAnimationDidEnd:self];
       [self removeFromSuperlayer];
     }];
     [self addAnimation:fadeOutAnim forKey:nil];
