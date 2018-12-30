@@ -383,6 +383,7 @@ static NSString *const kMDCBottomNavigationItemViewTabString = @"tab";
 -(void)setTitleVisibility:(MDCBottomNavigationBarTitleVisibility)titleVisibility {
   _titleVisibility = titleVisibility;
   [self updateLabelVisibility];
+  [self centerLayoutAnimated:YES];
 }
 
 - (void)setItemTitleFont:(UIFont *)itemTitleFont {
