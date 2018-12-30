@@ -62,6 +62,29 @@ See [deprecation_policy.md](deprecation_policy.md) for details.
 MDC-iOS uses GitHub to file and track issues.
 To find an issue to work on, filter the issues list by the ["is:fixit" label](https://github.com/material-components/material-components-ios/labels/is%3Afixit).
 
+## Getting started
+
+If you're new to iOS development and have a computer running OS X, these steps should help you get all the prerequisites. More experienced users may just need to see the last steps.
+
+1. Install XCode from the App Store.
+1. Install [Homebrew](https://docs.brew.sh/Installation).
+1. Install [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
+1. Install [git lfs](https://github.com/material-components/material-components-ios/blob/develop/contributing/tools.md#using-git-lfs).
+1. Install [cocoapods](https://guides.cocoapods.org/using/getting-started.html#installation).
+1. Near the top of this repository's [homepage](https://github.com/material-components/material-components-ios), click "Fork".
+1. Once a fork has been created, a new page should load whose URL looks like `https://github.com/<#YourGithubUsername>/material-components-ios`. Click the green "Clone or download" button, and copy the path.
+1. Make a directory somewhere on your machine, such as `development`, and navigate to it in a terminal.
+1. Type `git clone <paste>`. The result will look something like `git clone https://github.com/<#YourGithubUsername>/material-components-ios.git`
+1. Navigate to the `material-components-ios`  subdirectory of the directory you just made.
+1. Create and check out a new branch for your work with `git checkout -b <#awesomefeature>`
+1. Navigate to the `catalog` subdirectory of `material-components-ios`
+1. Run `pod install`
+1. Open up `MDCCatalog.xcworkspace` in XCode.
+1. Navigate to the component you want to work on in Pods -> Development Pods -> Material Components -> <#component>.
+
+Once you've made your code changes, you can run the demo app by choosing the `MDCDragons` target and pressing the play button. You can run tests by selecting Test from the Product menu. Once you've committed your changes to Github, you can send a pull request. 
+
+
 ## The small print
 
 Contributions made by corporations are covered by a different agreement than the one above, the [Software Grant and Corporate Contributor License Agreement](https://cla.developers.google.com/about/google-corporate).
