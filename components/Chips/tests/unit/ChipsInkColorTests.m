@@ -16,9 +16,10 @@
 
 #import "MaterialChips.h"
 #import "MaterialInk.h"
+#import "MaterialRipple.h"
 
 @interface MDCChipView (PrivateTesting)
-- (MDCInkView *)inkView;
+- (MDCRippleView *)inkView;
 @end
 
 @interface ChipsInkColorTests : XCTestCase
@@ -34,7 +35,7 @@
 
   // Then
   XCTAssertNil([chip inkColorForState:UIControlStateNormal]);
-  XCTAssertEqualObjects(inkView.defaultInkColor, chip.inkView.inkColor);
+  XCTAssertEqualObjects(inkView.defaultInkColor, chip.inkView.rippleColor);
 }
 
 - (void)testCustom {
@@ -47,7 +48,7 @@
 
   // Then
   XCTAssertEqualObjects(cyan, [chip inkColorForState:UIControlStateNormal]);
-  XCTAssertEqualObjects(cyan, chip.inkView.inkColor);
+  XCTAssertEqualObjects(cyan, chip.inkView.rippleColor);
 }
 
 - (void)testResetting {
@@ -62,7 +63,7 @@
 
   // Then
   XCTAssertNil([chip inkColorForState:UIControlStateNormal]);
-  XCTAssertEqualObjects(inkView.defaultInkColor, chip.inkView.inkColor);
+  XCTAssertEqualObjects(inkView.defaultInkColor, chip.inkView.rippleColor);
 }
 
 @end

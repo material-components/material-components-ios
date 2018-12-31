@@ -18,12 +18,11 @@
 
 #pragma mark - Fake classes
 
-@interface CapturingMDCRippleLayerSubclass : MDCRippleLayer
+@interface CapturingAnimationsMDCRippleLayer : MDCRippleLayer
 @property(nonatomic, strong) NSMutableArray *addedAnimations;
-
 @end
 
-@implementation CapturingMDCRippleLayerSubclass
+@implementation CapturingAnimationsMDCRippleLayer
 
 - (void)addAnimation:(CAAnimation *)anim forKey:(NSString *)key {
   if (!self.addedAnimations) {
@@ -37,9 +36,30 @@
 
 @interface FakeMDCRippleLayerAnimationDelegate : NSObject <MDCRippleLayerDelegate>
 @property(nonatomic, strong) MDCRippleLayer *rippleLayer;
+@property(nonatomic, assign) BOOL rippleTouchDownDidBegin;
+@property(nonatomic, assign) BOOL rippleTouchDownDidEnd;
+@property(nonatomic, assign) BOOL rippleTouchUpDidBegin;
+@property(nonatomic, assign) BOOL rippleTouchUpDidEnd;
+
 @end
 
 @implementation FakeMDCRippleLayerAnimationDelegate
+- (void)rippleLayerTouchDownAnimationDidBegin:(nonnull MDCRippleLayer *)rippleLayer {
+  _rippleTouchDownDidBegin = YES;
+}
+
+- (void)rippleLayerTouchDownAnimationDidEnd:(nonnull MDCRippleLayer *)rippleLayer {
+  _rippleTouchDownDidEnd = YES;
+}
+
+- (void)rippleLayerTouchUpAnimationDidBegin:(nonnull MDCRippleLayer *)rippleLayer {
+  _rippleTouchUpDidBegin = YES;
+}
+
+- (void)rippleLayerTouchUpAnimationDidEnd:(nonnull MDCRippleLayer *)rippleLayer {
+  _rippleTouchUpDidEnd = YES;
+}
+
 @end
 
 #pragma mark - Tests
@@ -57,74 +77,91 @@
   // Then
   XCTAssertNil(rippleLayer.delegate);
   XCTAssertFalse(rippleLayer.isStartAnimationActive);
-  XCTAssertEqualWithAccuracy(rippleLayer.endAnimationDelay, 0, 0.0001);
-  XCTAssertEqualWithAccuracy(rippleLayer.initialRadius, 0, 0.0001);
-  XCTAssertEqualWithAccuracy(rippleLayer.finalRadius, 0, 0.0001);
-  XCTAssertEqualWithAccuracy(rippleLayer.maxRippleRadius, 0, 0.0001);
-  XCTAssertEqualObjects(rippleLayer.rippleColor, [UIColor colorWithWhite:0 alpha:(CGFloat)0.08]);
+  XCTAssertEqualWithAccuracy(rippleLayer.rippleTouchDownStartTime, 0, 0.0001);
 }
 
-- (void)testInitWithLayer {
+- (void)testLayerTouchDownDidBeginDelegate {
   // Given
   FakeMDCRippleLayerAnimationDelegate *delegate = [[FakeMDCRippleLayerAnimationDelegate alloc] init];
   MDCRippleLayer *rippleLayer = [[MDCRippleLayer alloc] init];
+  rippleLayer.rippleLayerDelegate = delegate;
   delegate.rippleLayer = rippleLayer;
-  rippleLayer.delegate = delegate;
-  rippleLayer.endAnimationDelay = 1;
-  rippleLayer.initialRadius = 2;
-  rippleLayer.finalRadius = 3;
-  rippleLayer.maxRippleRadius = 4;
-  rippleLayer.rippleColor = UIColor.magentaColor;
 
   // When
-  MDCRippleLayer *copiedLayer = [[MDCRippleLayer alloc] initWithLayer:rippleLayer];
+  [rippleLayer startRippleAtPoint:CGPointMake(0, 0) animated:YES completion:nil];
 
   // Then
-  XCTAssertNil(copiedLayer.delegate);
-  XCTAssertEqualWithAccuracy(copiedLayer.endAnimationDelay, rippleLayer.endAnimationDelay, 0.0001);
-  XCTAssertEqualWithAccuracy(copiedLayer.initialRadius, rippleLayer.initialRadius, 0.0001);
-  XCTAssertEqualWithAccuracy(copiedLayer.finalRadius, rippleLayer.finalRadius, 0.0001);
-  XCTAssertEqualWithAccuracy(copiedLayer.maxRippleRadius, rippleLayer.maxRippleRadius, 0.0001);
-  XCTAssertEqualObjects(copiedLayer.rippleColor, rippleLayer.rippleColor);
-  XCTAssertEqual(copiedLayer.sublayers.count, rippleLayer.sublayers.count);
+  XCTAssertTrue(delegate.rippleTouchDownDidBegin);
 }
 
-- (void)testEndAnimationTimingInTimeScaledLayer {
+- (void)testLayerTouchDownDidEndDelegate {
   // Given
-  CapturingMDCRippleLayerSubclass *rippleLayer = [[CapturingMDCRippleLayerSubclass alloc] init];
-  rippleLayer.bounds = CGRectMake(0, 0, 10, 10);
-  rippleLayer.speed = (CGFloat)0.5;
-  rippleLayer.endAnimationDelay = (CGFloat)0.9;
+  FakeMDCRippleLayerAnimationDelegate *delegate = [[FakeMDCRippleLayerAnimationDelegate alloc] init];
+  MDCRippleLayer *rippleLayer = [[MDCRippleLayer alloc] init];
+  rippleLayer.rippleLayerDelegate = delegate;
+  delegate.rippleLayer = rippleLayer;
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
 
   // When
-  [rippleLayer endAnimationAtPoint:CGPointMake(5, 5)];
+  [rippleLayer startRippleAtPoint:CGPointMake(0, 0) animated:YES completion:^{
+    [expectation fulfill];
+  }];
+  [self waitForExpectationsWithTimeout:3 handler:nil];
+
+  // Then
+  XCTAssertTrue(delegate.rippleTouchDownDidEnd);
+}
+
+- (void)testLayerTouchUpDidBeginDelegate {
+  // Given
+  FakeMDCRippleLayerAnimationDelegate *delegate = [[FakeMDCRippleLayerAnimationDelegate alloc] init];
+  MDCRippleLayer *rippleLayer = [[MDCRippleLayer alloc] init];
+  rippleLayer.rippleLayerDelegate = delegate;
+  delegate.rippleLayer = rippleLayer;
+
+  // When
+  [rippleLayer endRippleAnimated:YES completion:nil];
+
+  // Then
+  XCTAssertTrue(delegate.rippleTouchUpDidBegin);
+}
+
+- (void)testLayerTouchUpDidEndDelegate {
+  // Given
+  FakeMDCRippleLayerAnimationDelegate *delegate = [[FakeMDCRippleLayerAnimationDelegate alloc] init];
+  MDCRippleLayer *rippleLayer = [[MDCRippleLayer alloc] init];
+  rippleLayer.rippleLayerDelegate = delegate;
+  delegate.rippleLayer = rippleLayer;
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+
+  // When
+  [rippleLayer endRippleAnimated:YES completion:^{
+    [expectation fulfill];
+  }];
+  [self waitForExpectationsWithTimeout:3 handler:nil];
+
+  // Then
+  XCTAssertTrue(delegate.rippleTouchUpDidEnd);
+}
+
+- (void)testEndAnimationTimingInSpeedScaledLayer {
+  // Given
+  CapturingAnimationsMDCRippleLayer *rippleLayer = [[CapturingAnimationsMDCRippleLayer alloc] init];
+  rippleLayer.bounds = CGRectMake(0, 0, 10, 10);
+  rippleLayer.speed = (CGFloat)0.5;
+  CGFloat rippleDelay = 0.225;
+
+  // When
+  [rippleLayer startRippleAtPoint:CGPointMake(0, 0) animated:YES completion:nil];
+  [rippleLayer endRippleAnimated:YES completion:nil];
   NSTimeInterval startTime = CACurrentMediaTime();
 
   // Then
-  XCTAssertEqual(rippleLayer.addedAnimations.count, 1U);
-  CAAnimation *animation = rippleLayer.addedAnimations.firstObject;
+  XCTAssertEqual(rippleLayer.addedAnimations.count, 2U);
+  CAAnimation *animation = rippleLayer.addedAnimations.lastObject;
   if (animation) {
-    startTime = [rippleLayer convertTime:(startTime + 0.9) fromLayer:nil];
+    startTime = [rippleLayer convertTime:startTime + rippleDelay fromLayer:nil];
     XCTAssertEqualWithAccuracy(animation.beginTime, startTime, 0.010);
-  }
-}
-
-- (void)testChangeAnimationTimingInTimeScaledLayer {
-  // Given
-  CapturingMDCRippleLayerSubclass *rippleLayer = [[CapturingMDCRippleLayerSubclass alloc] init];
-  rippleLayer.bounds = CGRectMake(0, 0, 10, 10);
-  rippleLayer.speed = (CGFloat)0.5;
-
-  // When
-  [rippleLayer changeAnimationAtPoint:CGPointMake(5, 5)];
-  NSTimeInterval startTime = CACurrentMediaTime();
-
-  // Then
-  XCTAssertEqual(rippleLayer.addedAnimations.count, 1U);
-  CAAnimation *animation = rippleLayer.addedAnimations.firstObject;
-  if (animation) {
-    startTime = [rippleLayer convertTime:startTime fromLayer:nil];
-    XCTAssertEqualWithAccuracy(animation.beginTime, startTime, (CGFloat)0.1);
   }
 }
 
