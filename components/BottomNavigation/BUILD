@@ -97,10 +97,13 @@ mdc_objc_library(
 
 swift_library(
     name = "SwiftExamples",
-    srcs = native.glob([
-        "examples/*.swift",
-        "examples/supplemental/*.swift",
-    ]),
+    srcs = native.glob(
+        [
+            "examples/*.swift",
+            "examples/supplemental/*.swift",
+        ],
+        exclude = ["examples/BottomNavigationBarControllerExampleViewController.swift"],
+    ),
     copts = [
         "-swift-version",
         "3",
