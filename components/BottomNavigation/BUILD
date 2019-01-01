@@ -77,16 +77,21 @@ mdc_objc_library(
 )
 
 mdc_objc_library(
-    name = "ObjcExamples"
+    name = "ObjcExamples",
     srcs = native.glob([
         "examples/*.m",
         "examples/*.h",
         "examples/supplemental/*.m",
         "examples/supplemental/*.h",
     ]),
+    includes = ["examples/supplemental"],
     deps = [
         ":BottomNavigation",
+        ":ColorThemer",
+        ":TypographyThemer",
         "//components/Palettes",
+        "//components/schemes/Color",
+        "//components/schemes/Typography",
     ],
 )
 
@@ -96,8 +101,17 @@ swift_library(
         "examples/*.swift",
         "examples/supplemental/*.swift",
     ]),
+    copts = [
+        "-swift-version",
+        "3",
+    ],
     deps = [
         ":BottomNavigation",
+        ":ColorThemer",
+        ":ObjcExamples",
+        ":TypographyThemer",
+        "//components/AppBar",
+        "//components/Buttons",
         "//components/Palettes",
     ],
 )
