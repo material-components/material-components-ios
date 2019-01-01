@@ -20,6 +20,7 @@ load(
     "mdc_public_objc_library",
     "mdc_unit_test_suite",
 )
+load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 licenses(["notice"])  # Apache 2.0
 
@@ -73,6 +74,32 @@ mdc_objc_library(
     hdrs = native.glob(["src/private/*.h"]),
     includes = ["src/private"],
     visibility = ["//visibility:private"],
+)
+
+mdc_objc_library(
+    name = "ObjcExamples"
+    srcs = native.glob([
+        "examples/*.m",
+        "examples/*.h",
+        "examples/supplemental/*.m",
+        "examples/supplemental/*.h",
+    ]),
+    deps = [
+        ":BottomNavigation",
+        "//components/Palettes",
+    ],
+)
+
+swift_library(
+    name = "SwiftExamples",
+    srcs = native.glob([
+        "examples/*.swift",
+        "examples/supplemental/*.swift",
+    ]),
+    deps = [
+        ":BottomNavigation",
+        "//components/Palettes",
+    ],
 )
 
 mdc_objc_library(
