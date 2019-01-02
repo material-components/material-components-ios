@@ -520,7 +520,12 @@ protect_stable_from_undesired_merges() {
 
 # The fall-through case for unknown jobs.
 unknown_job() {
-  echo "The following job is unknown and will not be run: $DEPENDENCY_SYSTEM"
+  if [ -n "$DEPENDENCY_SYSTEM" ]; then
+    echo "The following job is unknown and will not be run: $DEPENDENCY_SYSTEM"
+  else
+    echo "You must provide a depenency system with '-d' or the environment "
+    echo "variable 'DEPENDENCY_SYSTEM'."
+  fi
   exit 1
 }
 
