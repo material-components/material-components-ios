@@ -94,7 +94,7 @@
   if (state != MDCRippleStateNormal && rippleAlpha == nil) {
     rippleAlpha = _rippleAlphas[@(MDCRippleStateNormal)];
   }
-  return [rippleAlpha doubleValue];
+  return (CGFloat)rippleAlpha.doubleValue;
 }
 
 - (void)setRippleAlpha:(CGFloat)rippleAlpha forState:(MDCRippleState)state {
