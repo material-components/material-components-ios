@@ -40,7 +40,6 @@
   self.textFieldController = controller;
   self.textFieldController.characterCountMax = 50;
   self.textFieldController.characterCountViewMode = UITextFieldViewModeAlways;
-
 }
 
 // NOTE: Additional test methods can be found in MDCAbstractTextFieldSnapshotTests.m
