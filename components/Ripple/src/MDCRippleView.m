@@ -85,7 +85,7 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
 - (void)cancelAllRipplesAnimated:(BOOL)animated {
   NSArray<CALayer *> *sublayers = [self.layer.sublayers copy];
   if (animated) {
-    CGFloat latestBeginTouchDownRippleTime = CGFLOAT_MIN;
+    CFTimeInterval latestBeginTouchDownRippleTime = DBL_MIN;
     for (CALayer *layer in sublayers) {
       if ([layer isKindOfClass:[MDCRippleLayer class]]) {
         MDCRippleLayer *rippleLayer = (MDCRippleLayer *)layer;
