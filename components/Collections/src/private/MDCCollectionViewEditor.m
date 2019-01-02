@@ -556,20 +556,30 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
         }
 
         // Check delegate for permission to swipe item.
-        if ([_delegate
-                respondsToSelector:@selector(collectionView:canSwipeToDismissItemAtIndexPath:)]) {
-          if ([_delegate collectionView:_collectionView
-                  canSwipeToDismissItemAtIndexPath:_dismissingCellIndexPath]) {
-            // Notify delegate.
-            if ([_delegate respondsToSelector:@selector
-                           (collectionView:willBeginSwipeToDismissItemAtIndexPath:)]) {
+        BOOL canSwipeToDismiss = NO;
+        if ([_delegate respondsToSelector:@selector(collectionView:
+                                               canSwipeInDirection:toDismissItemAtIndexPath:)]) {
+          canSwipeToDismiss =
               [_delegate collectionView:_collectionView
-                  willBeginSwipeToDismissItemAtIndexPath:_dismissingCellIndexPath];
-            }
-          } else {
-            // Cannot swipe so exit.
-            return [self exitPanToDismissWithRecognizer:recognizer];
+                       canSwipeInDirection:(velocity.x > 0 ? UISwipeGestureRecognizerDirectionRight
+                                                           : UISwipeGestureRecognizerDirectionLeft)
+                  toDismissItemAtIndexPath:_dismissingCellIndexPath];
+        } else if ([_delegate respondsToSelector:@selector(collectionView:
+                                                     canSwipeToDismissItemAtIndexPath:)]) {
+          canSwipeToDismiss = [_delegate collectionView:_collectionView
+                       canSwipeToDismissItemAtIndexPath:_dismissingCellIndexPath];
+        }
+
+        if (canSwipeToDismiss) {
+          // Notify delegate.
+          if ([_delegate respondsToSelector:@selector(collectionView:
+                                                willBeginSwipeToDismissItemAtIndexPath:)]) {
+            [_delegate collectionView:_collectionView
+                willBeginSwipeToDismissItemAtIndexPath:_dismissingCellIndexPath];
           }
+        } else {
+          // Cannot swipe so exit.
+          return [self exitPanToDismissWithRecognizer:recognizer];
         }
 
         // Create item snapshot.
@@ -580,6 +590,18 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
     }
 
     case UIGestureRecognizerStateChanged: {
+      if ([_delegate respondsToSelector:@selector(collectionView:
+                                             canSwipeInDirection:toDismissItemAtIndexPath:)]) {
+        // Do not allow swiping in a not allowed direction over the starting point, once the swiping
+        // has already started.
+        if (![_delegate collectionView:_collectionView
+                     canSwipeInDirection:(translation.x > 0 ? UISwipeGestureRecognizerDirectionRight
+                                                            : UISwipeGestureRecognizerDirectionLeft)
+                toDismissItemAtIndexPath:_dismissingCellIndexPath]) {
+          return;
+        }
+      }
+
       // Update the tracked item's position and alpha.
       CGAffineTransform transform;
       CGFloat alpha;
@@ -603,6 +625,18 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
       // if the item should be dismissed.
       CGFloat momentumX = velocity.x * kDismissalSwipeFriction;
       CGFloat translationX = translation.x + momentumX;
+
+      if ([_delegate respondsToSelector:@selector(collectionView:
+                                             canSwipeInDirection:toDismissItemAtIndexPath:)]) {
+        // Do not allow to swipe to dismiss by ending the swipe towards a not allowed direction.
+        if (![_delegate collectionView:_collectionView
+                     canSwipeInDirection:(translationX > 0 ? UISwipeGestureRecognizerDirectionRight
+                                                           : UISwipeGestureRecognizerDirectionLeft)
+                toDismissItemAtIndexPath:_dismissingCellIndexPath]) {
+          [self restorePanningItemIfNecessaryWithMomentumX:momentumX];
+          return;
+        }
+      }
 
       if (fabs(translationX) > [self distanceThresholdForDismissal]) {
         // @c translationX is only guaranteed to be over the dismissal threshold;
