@@ -76,11 +76,6 @@ static CGFloat const kChipsSpacing = 0.0f;
   [self updateChipViewTrailingConstraints];
 }
 
-- (void)handleTextFieldReturnWithText:(NSString *)text {
-  [self appendChipWithText:text];
-  [self clearChipsContainerOffset];
-}
-
 - (void)appendChipWithText:(NSString *)text {
   MDCChipView *chipView = [[MDCChipView alloc] init];
   chipView.titleLabel.text = text;
@@ -91,6 +86,8 @@ static CGFloat const kChipsSpacing = 0.0f;
   // recalculate the layout to get a correct chip frame values
   [self.chipsContainerView layoutIfNeeded];
   [self.chipViews addObject:chipView];
+
+  [self clearChipsContainerOffset];
 }
 
 - (void)clearChipsContainerOffset {

@@ -107,7 +107,7 @@ extension ChipTextFieldExampleViewController: UITextFieldDelegate {
 
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     if let chipText = textField.text?.trimmingCharacters(in: .whitespacesAndNewlines), chipText.count > 0 {
-      chipTextField.handleTextFieldReturn(text: chipText)
+      chipTextField.appendChip(text: chipText)
       chipTextField.text = ""
     }
     return true
