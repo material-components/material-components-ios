@@ -92,6 +92,26 @@ typedef NS_ENUM(NSInteger, MDCRippleState) {
 @property(nonatomic) BOOL selectionMode;
 
 /**
+ The current state of the ripple.
+ */
+@property(nonatomic, readonly) MDCRippleState state;
+
+
+/**
+ Unavailable, please use `initWithView` instead.
+ */
+- (nonnull instancetype)init NS_UNAVAILABLE;
+
+/**
+ Initializes the controller.
+
+ @param view The view that responds to the touch events for the ripple, and the view which the
+ ripple is added as a subview to.
+ */
+- (nonnull instancetype)initWithView:(nonnull UIView *)view NS_DESIGNATED_INITIALIZER;
+
+
+/**
  Sets the color of the ripple for state.
 
  @param rippleColor The ripple color to set the ripple to.
@@ -122,26 +142,6 @@ typedef NS_ENUM(NSInteger, MDCRippleState) {
  @return the alpha of the ripple for state.
  */
 - (CGFloat)rippleAlphaForState:(MDCRippleState)state;
-
-/**
- The current state of the ripple.
- */
-@property(nonatomic, readonly) MDCRippleState state;
-
-/** Unavailable, please use initWithView: instead. */
-
-/**
- Unavailable, please use `initWithView` instead.
- */
-- (nonnull instancetype)init NS_UNAVAILABLE;
-
-/**
- Initializes the controller.
-
- @param view The view that responds to the touch events for the ripple, and the view which the
- ripple is added as a subview to.
- */
-- (nonnull instancetype)initWithView:(nonnull UIView *)view NS_DESIGNATED_INITIALIZER;
 
 @end
 
