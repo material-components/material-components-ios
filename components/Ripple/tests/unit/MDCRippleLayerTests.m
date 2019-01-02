@@ -197,7 +197,9 @@
       } else if ([basicAnimation.keyPath isEqualToString:@"transform.scale"]) {
         animationsCount += 1;
         XCTAssertEqualObjects(@1, basicAnimation.toValue);
-        XCTAssertEqualWithAccuracy(0.6, ((NSNumber *)basicAnimation.fromValue).doubleValue, 0.0001);
+        XCTAssertEqualWithAccuracy((CGFloat)0.6,
+                                   (CGFloat)((NSNumber *)basicAnimation.fromValue).doubleValue,
+                                   0.0001);
       }
     } else if ([animation isKindOfClass:[CAKeyframeAnimation class]]) {
       animationsCount += 1;
