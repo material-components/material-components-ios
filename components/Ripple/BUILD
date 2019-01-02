@@ -29,6 +29,7 @@ mdc_public_objc_library(
         "UIKit",
     ],
     deps = [
+        "//components/AnimationTiming",
         "//components/private/Math",
     ],
 )

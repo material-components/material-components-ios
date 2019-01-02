@@ -14,6 +14,7 @@
 
 #import "MDCRippleLayer.h"
 #import "MaterialMath.h"
+#import "MaterialAnimationTiming.h"
 
 static const CGFloat kExpandRippleBeyondSurface = 10;
 static const CGFloat kRippleStartingScale = (CGFloat)0.6;
@@ -22,10 +23,6 @@ static const CGFloat kRippleTouchUpDuration = (CGFloat)0.15;
 static const CGFloat kRippleFadeInDuration = (CGFloat)0.075;
 static const CGFloat kRippleFadeOutDuration = (CGFloat)0.075;
 static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
-
-static CAMediaTimingFunction *materialTimingFunction(void) {
-  return [[CAMediaTimingFunction alloc] initWithControlPoints:(float) 0.4:0:(float)0.2:1];
-}
 
 static NSString *const kRippleLayerOpacityString = @"opacity";
 static NSString *const kRippleLayerPositionString = @"position";
@@ -63,13 +60,12 @@ static NSString *const kRippleLayerScaleString = @"transform.scale";
     self.position = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
     _startAnimationActive = YES;
 
-    CAMediaTimingFunction *timingFunction = materialTimingFunction();
-
     CABasicAnimation *scaleAnim = [[CABasicAnimation alloc] init];
     scaleAnim.keyPath = kRippleLayerScaleString;
     scaleAnim.fromValue = @(kRippleStartingScale);
     scaleAnim.toValue = @1;
-    scaleAnim.timingFunction = timingFunction;
+    scaleAnim.timingFunction =
+        [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionStandard];
     scaleAnim.fillMode = kCAFillModeForwards;
     scaleAnim.removedOnCompletion = NO;
 
@@ -85,7 +81,8 @@ static NSString *const kRippleLayerScaleString = @"transform.scale";
     positionAnim.path = centerPath.CGPath;
     positionAnim.keyTimes = @[ @0, @1 ];
     positionAnim.values = @[ @0, @1 ];
-    positionAnim.timingFunction = timingFunction;
+    positionAnim.timingFunction =
+        [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionStandard];
     positionAnim.fillMode = kCAFillModeForwards;
     positionAnim.removedOnCompletion = NO;
 
