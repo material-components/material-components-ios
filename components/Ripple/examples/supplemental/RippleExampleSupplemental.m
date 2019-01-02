@@ -19,9 +19,6 @@
 
 #import "RippleExampleSupplemental.h"
 
-#import "MaterialPalettes.h"
-#import "MaterialTypography.h"
-
 @implementation RippleSurfaces
 
 - (id)initWithFrame:(CGRect)frame {
