@@ -156,7 +156,7 @@
   CapturingAnimationsMDCRippleLayer *rippleLayer = [[CapturingAnimationsMDCRippleLayer alloc] init];
   rippleLayer.bounds = CGRectMake(0, 0, 10, 10);
   rippleLayer.speed = (CGFloat)0.5;
-  CGFloat rippleDelay = (CGFloat)0.225;
+  CGFloat rippleDelay = (CGFloat)0.15;
 
   // When
   [rippleLayer startRippleAtPoint:CGPointMake(0, 0) animated:YES completion:nil];

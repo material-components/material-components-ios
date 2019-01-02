@@ -14,7 +14,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialPalettes.h"
 #import "MaterialRipple.h"
 
 #import "supplemental/RippleExampleSupplemental.h"
