@@ -18,7 +18,6 @@
 
 @interface MDCTextAreaUnderlinedControllerCharacterCountSnapshotTests :
     MDCAbstractTextFieldSnapshotTests
-
 @end
 
 @implementation MDCTextAreaUnderlinedControllerCharacterCountSnapshotTests
@@ -30,8 +29,7 @@
   // update only that golden image.
   //  self.recordMode = YES;
 
-  SnapshotFakeMDCMultilineTextField *textField =
-      [[SnapshotFakeMDCMultilineTextField alloc] init];
+  SnapshotFakeMDCMultilineTextField *textField = [[SnapshotFakeMDCMultilineTextField alloc] init];
   self.textField = textField;
   self.textField.clearButtonMode = UITextFieldViewModeAlways;
 
