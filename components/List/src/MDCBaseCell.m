@@ -14,14 +14,13 @@
 
 #import "MDCBaseCell.h"
 
-//#import "MaterialInk.h"
-#import "MaterialRipple.h"
+#import "MaterialInk.h"
 #import "MaterialShadowLayer.h"
 
 @interface MDCBaseCell ()
 
 @property (nonatomic, assign) CGPoint lastTouch;
-@property(strong, nonatomic, nonnull) MDCRippleView *rippleView;
+@property (strong, nonatomic, nonnull) MDCInkView *inkView;
 
 @end
 
@@ -48,27 +47,25 @@
 #pragma mark Setup
 
 - (void)commonMDCBaseCellInit {
-  if (!self.rippleView) {
-    self.rippleView = [[MDCRippleView alloc] initWithFrame:self.bounds];
+  if (!self.inkView) {
+    self.inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
   }
-  //  _inkView.usesLegacyInkRipple = NO;
-  [self addSubview:_rippleView];
+  _inkView.usesLegacyInkRipple = NO;
+  [self addSubview:_inkView];
 }
 
 #pragma mark Ink
 
 - (void)startInk {
-  [self.rippleView beginRippleTouchDownAtPoint:_lastTouch animated:YES completion:nil];
-  //  [self.rippleView startTouchBeganAtPoint:_lastTouch
-  //                              animated:YES
-  //                        withCompletion:nil];
+  [self.inkView startTouchBeganAtPoint:_lastTouch
+                              animated:YES
+                        withCompletion:nil];
 }
 
 - (void)endInk {
-  [self.rippleView beginRippleTouchUpAnimated:YES completion:nil];
-  //  [self.rippleView startTouchEndAtPoint:_lastTouch
-  //                            animated:YES
-  //                      withCompletion:nil];
+  [self.inkView startTouchEndAtPoint:_lastTouch
+                            animated:YES
+                      withCompletion:nil];
 }
 
 #pragma mark Shadow
@@ -101,7 +98,7 @@
 - (void)layoutSubviews {
   [super layoutSubviews];
   [self updateShadowElevation];
-  //  self.inkView.frame = self.bounds;
+  self.inkView.frame = self.bounds;
 }
 
 #pragma mark UICollectionViewCell Overrides
@@ -118,8 +115,7 @@
 - (void)prepareForReuse {
   [super prepareForReuse];
   self.elevation = 0;
-  [self.rippleView cancelAllRipplesAnimated:NO];
-  //  [self.inkView cancelAllAnimationsAnimated:NO];
+  [self.inkView cancelAllAnimationsAnimated:NO];
 }
 
 #pragma mark Accessors
@@ -132,16 +128,16 @@
   [self updateShadowElevation];
 }
 
-//- (void)setInkColor:(UIColor *)inkColor {
-//  if ([self.inkColor isEqual:inkColor]) {
-//    return;
-//  }
-////  self.inkView.inkColor = inkColor;
-//}
-//
-//- (UIColor *)inkColor {
-//  return self.inkView.inkColor;
-//}
+- (void)setInkColor:(UIColor *)inkColor {
+  if ([self.inkColor isEqual:inkColor]) {
+    return;
+  }
+  self.inkView.inkColor = inkColor;
+}
+
+- (UIColor *)inkColor {
+  return self.inkView.inkColor;
+}
 
 - (MDCShadowLayer *)shadowLayer {
   if ([self.layer isMemberOfClass:[MDCShadowLayer class]]) {

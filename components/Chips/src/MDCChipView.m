@@ -16,7 +16,7 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
-#import "MaterialRipple.h"
+#import "MaterialInk.h"
 #import "MaterialMath.h"
 #import "MaterialShadowLayer.h"
 #import "MaterialShadowElevations.h"
@@ -106,7 +106,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 @property(nonatomic, readonly) BOOL showImageView;
 @property(nonatomic, readonly) BOOL showSelectedImageView;
 @property(nonatomic, readonly) BOOL showAccessoryView;
-@property(nonatomic, strong) MDCRippleView *inkView;
+@property(nonatomic, strong) MDCInkView *inkView;
 @property(nonatomic, readonly) CGFloat pixelScale;
 @end
 
@@ -169,9 +169,9 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
     _shadowColors = [NSMutableDictionary dictionary];
     _shadowColors[@(UIControlStateNormal)] = [UIColor blackColor];
 
-    _inkView = [[MDCRippleView alloc] initWithFrame:self.bounds];
-//    _inkView.usesLegacyInkRipple = NO;
-    _inkView.rippleColor = [self inkColorForState:UIControlStateNormal];
+    _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
+    _inkView.usesLegacyInkRipple = NO;
+    _inkView.inkColor = [self inkColorForState:UIControlStateNormal];
     [self addSubview:_inkView];
 
     _imageView = [[UIImageView alloc] init];
@@ -402,10 +402,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
 - (void)updateInkColor {
   UIColor *inkColor = [self inkColorForState:self.state];
-  if (inkColor == nil) {
-    return;
-  }
-  self.inkView.rippleColor = inkColor;
+  self.inkView.inkColor = inkColor ? inkColor : self.inkView.defaultInkColor;
 }
 
 - (nullable UIColor *)shadowColorForState:(UIControlState)state {
@@ -757,7 +754,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 
 - (void)willMoveToSuperview:(UIView *)newSuperview {
   [super willMoveToSuperview:newSuperview];
-  [self.inkView cancelAllRipplesAnimated:NO];
+  [self.inkView cancelAllAnimationsAnimated:NO];
 }
 
 - (BOOL)showImageView {
@@ -817,20 +814,19 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   if (!self.enabled) {
     return;
   }
-//  CGSize size = [self sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
-//  CGFloat widthDiff = 24;  // Difference between unselected and selected frame widths.
-//  _inkView.maxRippleRadius =
-//      (CGFloat)(MDCHypot(size.height, size.width + widthDiff) / 2 + 10 + widthDiff / 2);
+  CGSize size = [self sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
+  CGFloat widthDiff = 24;  // Difference between unselected and selected frame widths.
+  _inkView.maxRippleRadius =
+      (CGFloat)(MDCHypot(size.height, size.width + widthDiff) / 2 + 10 + widthDiff / 2);
 
-  [_inkView beginRippleTouchDownAtPoint:point animated:YES completion:nil];
+  [_inkView startTouchBeganAnimationAtPoint:point completion:nil];
 }
 
 - (void)startTouchEndedAnimationAtPoint:(CGPoint)point {
   if (!self.enabled) {
     return;
   }
-  [_inkView beginRippleTouchUpAnimated:YES completion:nil];
-//  [_inkView startTouchEndedAnimationAtPoint:point completion:nil];
+  [_inkView startTouchEndedAnimationAtPoint:point completion:nil];
 }
 
 - (BOOL)willChangeSizeWithSelectedValue:(BOOL)selected {

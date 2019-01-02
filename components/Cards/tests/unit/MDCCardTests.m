@@ -102,9 +102,9 @@
 }
 
 - (void)testCardInk {
-  XCTAssertEqual(self.card.rippleView.layer.sublayers.count, 0U);
+  XCTAssertEqual(self.card.inkView.layer.sublayers.count, 1U);
   self.card.highlighted = YES;
-  XCTAssertEqual(self.card.rippleView.layer.sublayers.count, 1U);
+  XCTAssertEqual(self.card.inkView.layer.sublayers.count, 2U);
 }
 
 - (void)testCardInteractabilityToggle {
@@ -123,29 +123,29 @@
   [self.cell layoutSubviews];
   XCTAssertEqual([self.cell shadowElevationForState:MDCCardCellStateNormal], 1);
   XCTAssertEqual(self.cell.cornerRadius, 4);
-  XCTAssertEqual(self.cell.rippleView.layer.sublayers.count, 0U);
+  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 1U);
   self.cell.selectable = YES;
   self.cell.selected = YES;
   XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 8);
-  XCTAssertEqual(self.cell.rippleView.layer.sublayers.count, 1U);
-  XCTAssertEqual(((CAShapeLayer *)self.cell.rippleView.layer.sublayers.lastObject).fillColor,
-                 self.cell.rippleView.rippleColor.CGColor);
+  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 2U);
+  XCTAssertEqual(((CAShapeLayer *)self.cell.inkView.layer.sublayers.lastObject).fillColor,
+                 self.cell.inkView.inkColor.CGColor);
   self.cell.selected = NO;
   XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 1);
-  XCTAssertEqual(self.cell.rippleView.layer.sublayers.count, 1U);
+  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 1U);
   self.cell.selected = YES;
   XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 8);
-  XCTAssertEqual(self.cell.rippleView.layer.sublayers.count, 1U);
-  XCTAssertEqual(((CAShapeLayer *)self.cell.rippleView.layer.sublayers.lastObject).fillColor,
-                 self.cell.rippleView.rippleColor.CGColor);
+  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 2U);
+  XCTAssertEqual(((CAShapeLayer *)self.cell.inkView.layer.sublayers.lastObject).fillColor,
+                 self.cell.inkView.inkColor.CGColor);
   XCTAssert(
     CGRectEqualToRect(
-      (((CAShapeLayer *)self.cell.rippleView.layer.sublayers.firstObject).frame),
-      self.cell.rippleView.layer.bounds));
+      (((CAShapeLayer *)self.cell.inkView.layer.sublayers.firstObject).frame),
+      self.cell.inkView.layer.bounds));
   self.cell.selected = NO;
   XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 1);
   XCTAssertEqual(self.cell.cornerRadius, 4);
-  XCTAssertEqual(self.cell.rippleView.layer.sublayers.count, 1U);
+  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 1U);
 }
 
 - (void)testCellInteractabilityToggle {
@@ -169,7 +169,7 @@
   [self.cell touchesBegan:touches withEvent:event];
 
   XCTAssertEqual(((MDCShadowLayer *)self.cell.layer).elevation, 8);
-  XCTAssertEqual(self.cell.rippleView.layer.sublayers.count, 1U);
+  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 2U);
 
   [self.cell touchesEnded:touches withEvent:event];
 
@@ -263,13 +263,13 @@
 }
 
 - (void)testCellInk {
-  XCTAssertEqual(self.cell.rippleView.layer.sublayers.count, 0U);
+  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 1U);
   [self.cell setState:MDCCardCellStateHighlighted animated:NO];
-  XCTAssertEqual(self.cell.rippleView.layer.sublayers.count, 1U);
+  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 2U);
   [self.cell setState:MDCCardCellStateSelected animated:NO];
-  XCTAssertEqual(self.cell.rippleView.layer.sublayers.count, 1U);
+  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 2U);
   [self.cell setState:MDCCardCellStateNormal animated:NO];
-  XCTAssertEqual(self.cell.rippleView.layer.sublayers.count, 1U);
+  XCTAssertEqual(self.cell.inkView.layer.sublayers.count, 1U);
 }
 
 static UIImage *FakeImage(void) {

@@ -61,13 +61,13 @@ static const BOOL MDCCardIsInteractableDefault = YES;
   self.layer.cornerRadius = MDCCardCornerRadiusDefault;
   _interactable = MDCCardIsInteractableDefault;
 
-  if (_rippleView == nil) {
-    _rippleView = [[MDCRippleView alloc] initWithFrame:self.bounds];
-    _rippleView.autoresizingMask =
-        (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-    _rippleView.layer.zPosition = FLT_MAX;
-    //    [_rippleView setRippleColor:UIColor.blueColor forState:MDCRippleStateSelected];
-    [self addSubview:_rippleView];
+  if (_inkView == nil) {
+    _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
+    _inkView.autoresizingMask = (UIViewAutoresizingFlexibleWidth |
+                                 UIViewAutoresizingFlexibleHeight);
+    _inkView.usesLegacyInkRipple = NO;
+    _inkView.layer.zPosition = FLT_MAX;
+    [self addSubview:_inkView];
   }
 
   if (_shadowElevations == nil) {
@@ -214,9 +214,9 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 
 - (void)setHighlighted:(BOOL)highlighted {
   if (highlighted && !self.highlighted) {
-    [self.rippleView beginRippleTouchDownAtPoint:_lastTouch animated:true completion:nil];
+    [self.inkView startTouchBeganAnimationAtPoint:_lastTouch completion:nil];
   } else if (!highlighted && self.highlighted) {
-    [self.rippleView beginRippleTouchUpAnimated:true completion:nil];
+    [self.inkView startTouchEndedAnimationAtPoint:_lastTouch completion:nil];
   }
   [super setHighlighted:highlighted];
   [self updateShadowElevation];
@@ -263,8 +263,10 @@ static const BOOL MDCCardIsInteractableDefault = YES;
 }
 
 - (void)updateInkForShape {
-  //  CGRect boundingBox = CGPathGetBoundingBox(self.layer.shapeLayer.path);
-  //  self.rippleView.layer.masksToBounds = NO;
+  CGRect boundingBox = CGPathGetBoundingBox(self.layer.shapeLayer.path);
+  self.inkView.maxRippleRadius =
+      (CGFloat)(MDCHypot(CGRectGetHeight(boundingBox), CGRectGetWidth(boundingBox)) / 2 + 10);
+  self.inkView.layer.masksToBounds = NO;
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {

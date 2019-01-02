@@ -17,12 +17,11 @@ import MaterialComponents.MaterialButtons_ButtonThemer
 import MaterialComponents.MaterialCards_CardThemer
 import MaterialComponentsBeta.MaterialContainerScheme
 import MaterialComponentsBeta.MaterialButtons_Theming
-import MaterialComponents.MaterialRipple
 
-class CardExampleViewController: UIViewController, MDCRippleViewDelegate {
-//  @IBOutlet weak var imageView: CardImageView!
+class CardExampleViewController: UIViewController {
+  @IBOutlet weak var imageView: CardImageView!
   @IBOutlet weak var card: MDCCard!
-//  @IBOutlet weak var button: MDCButton!
+  @IBOutlet weak var button: MDCButton!
 
   var colorScheme = MDCSemanticColorScheme()
   var shapeScheme = MDCShapeScheme()
@@ -37,22 +36,16 @@ class CardExampleViewController: UIViewController, MDCRippleViewDelegate {
     bundle.loadNibNamed("CardExampleViewController", owner: self, options: nil)
     view.frame = self.view.bounds
 
-//    button.applyTextTheme(withScheme: MDCContainerScheme())
+    button.applyTextTheme(withScheme: MDCContainerScheme())
 
     let cardScheme = MDCCardScheme();
     cardScheme.colorScheme = colorScheme
     cardScheme.shapeScheme = shapeScheme
     MDCCardThemer.applyScheme(cardScheme, to: card)
-//    card.isInteractable = false
+    card.isInteractable = false
 
-//    imageView.isAccessibilityElement = true
-//    imageView.accessibilityLabel = "Missing Dish"
-//    card.rippleView.rippleStyle = MDCRippleStyle.unbounded
-    card.rippleView.rippleViewDelegate = self
-//    card.rippleView.allowsSelection = true
-//    card.rippleView.setRippleColor(.blue state:MDCRippleState.normal)
-//    card.rippleView.
-
+    imageView.isAccessibilityElement = true
+    imageView.accessibilityLabel = "Missing Dish"
   }
 
   override public var traitCollection: UITraitCollection {
@@ -63,21 +56,6 @@ class CardExampleViewController: UIViewController, MDCRippleViewDelegate {
     return super.traitCollection
   }
 
-  func ripplePressDownAnimationDidBegin(_ rippleView: MDCRippleView) {
-    print("ripplePressDownAnimationDidBegin")
-  }
-
-  func ripplePressDownAnimationDidEnd(_ rippleView: MDCRippleView) {
-    print("ripplePressDownAnimationDidEnd")
-  }
-
-  func ripplePressUpAnimationDidBegin(_ rippleView: MDCRippleView) {
-    print("ripplePressUpAnimationDidBegin")
-  }
-
-  func ripplePressUpAnimationDidEnd(_ rippleView: MDCRippleView) {
-    print("ripplePressUpAnimationDidEnd")
-  }
 }
 
 extension CardExampleViewController {
@@ -88,7 +66,6 @@ extension CardExampleViewController {
       "description": "Cards contain content and actions about a single subject.",
       "primaryDemo": true,
       "presentable": true,
-      "debug": false,
     ]
   }
 }
