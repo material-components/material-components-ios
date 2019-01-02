@@ -66,7 +66,7 @@ typedef NS_ENUM(NSInteger, MDCRippleStyle) {
 
  @param rippleColor The color to set the active ripple to.
  */
-- (void)setActiveRippleColor:(UIColor *)rippleColor;
+- (void)setActiveRippleColor:(nullable UIColor *)rippleColor;
 
 /**
  Cancels all the existing ripples.
