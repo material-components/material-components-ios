@@ -17,7 +17,7 @@
 #import "MaterialChips.h"
 #import "MDCChipTextFieldScrollView.h"
 
-//static CGFloat const kChipsSpacing = 10.0f;
+static CGFloat const kChipsSpacing = 0.0f;
 
 @interface MDCChipTextField () <MDCChipTextFieldScrollViewDataSource>
 
@@ -52,7 +52,7 @@
 - (void)setupChipsContainerView {
   MDCChipTextFieldScrollView *chipsContainerView = [[MDCChipTextFieldScrollView alloc] initWithFrame:CGRectZero];
   chipsContainerView.translatesAutoresizingMaskIntoConstraints = NO;
-//  chipsContainerView.chipSpacing = kChipsSpacing;
+  chipsContainerView.chipSpacing = kChipsSpacing;
   chipsContainerView.dataSource = self;
   self.chipsContainerView = chipsContainerView;
   [self addSubview:chipsContainerView];

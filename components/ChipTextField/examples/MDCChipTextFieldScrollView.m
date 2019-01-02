@@ -153,7 +153,7 @@
                                                                 toItem:lastChipView
                                                              attribute:NSLayoutAttributeTrailing
                                                             multiplier:1
-                                                              constant:0];
+                                                              constant:self.chipSpacing];
 
   }
   NSLayoutConstraint *chipViewConstraintTrailing = [NSLayoutConstraint constraintWithItem:self.contentView
