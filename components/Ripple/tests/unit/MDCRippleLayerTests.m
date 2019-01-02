@@ -182,7 +182,7 @@
 
   // Then
   CAAnimationGroup *group = (CAAnimationGroup *)rippleLayer.addedAnimations.firstObject;
-  XCTAssertEqual(group.animations.count, 3);
+  XCTAssertEqual(group.animations.count, 3U);
   NSInteger animationsCount = 0;
   for (CAAnimation *animation in group.animations) {
     XCTAssertFalse(animation.removedOnCompletion);
@@ -218,7 +218,7 @@
   // Then
   XCTAssertTrue([rippleLayer.addedAnimations.firstObject isKindOfClass:[CABasicAnimation class]]);
   CABasicAnimation *basicAnimation = (CABasicAnimation *)rippleLayer.addedAnimations.firstObject;
-  XCTAssertEqual(rippleLayer.addedAnimations.count, 1);
+  XCTAssertEqual(rippleLayer.addedAnimations.count, 1U);
   XCTAssertEqualObjects(@"opacity", basicAnimation.keyPath);
   XCTAssertEqualObjects(@0, basicAnimation.toValue);
   XCTAssertEqualObjects(@1, basicAnimation.fromValue);
@@ -237,7 +237,7 @@
   // Then
   XCTAssertTrue([rippleLayer.addedAnimations.firstObject isKindOfClass:[CABasicAnimation class]]);
   CABasicAnimation *basicAnimation = (CABasicAnimation *)rippleLayer.addedAnimations.firstObject;
-  XCTAssertEqual(rippleLayer.addedAnimations.count, 1);
+  XCTAssertEqual(rippleLayer.addedAnimations.count, 1U);
   XCTAssertEqualObjects(@"opacity", basicAnimation.keyPath);
   XCTAssertEqualObjects(@1, basicAnimation.toValue);
   XCTAssertEqualObjects(@0, basicAnimation.fromValue);
@@ -256,7 +256,7 @@
   // Then
   XCTAssertTrue([rippleLayer.addedAnimations.firstObject isKindOfClass:[CABasicAnimation class]]);
   CABasicAnimation *basicAnimation = (CABasicAnimation *)rippleLayer.addedAnimations.firstObject;
-  XCTAssertEqual(rippleLayer.addedAnimations.count, 1);
+  XCTAssertEqual(rippleLayer.addedAnimations.count, 1U);
   XCTAssertEqualObjects(@"opacity", basicAnimation.keyPath);
   XCTAssertEqualObjects(@0, basicAnimation.toValue);
   XCTAssertEqualObjects(@1, basicAnimation.fromValue);
