@@ -113,10 +113,11 @@ static CGFloat const kChipsSpacing = 0.0f;
   UITextRange *textRange = [self textRangeFromPosition:self.beginningOfDocument
                                             toPosition:self.endOfDocument];
   CGRect inputRect = [self firstRectForRange:textRange];
-  // HACK: use a constant here
+//  HACK: use a hack constant here
   CGFloat textHorizontalDelta = textRect.size.width - inputRect.size.width - 17;
   CGFloat offsetAdjustment = textHorizontalDelta;
-//  // HACK: this assumption is also bad
+//  HACK: this assumption to find the UIFieldEditor is also bad,
+//  we need to remove this part of code after resolving the hack constant on the line above.
 //  UIScrollView *fieldEditor = nil;
 //  for (UIView *subview in self.subviews) {
 //    if ([subview isKindOfClass:[UIScrollView class]] && subview != self.chipsContainerView) {
