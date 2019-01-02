@@ -54,6 +54,28 @@
   [self snapshotVerifyView:snapshotView];
 }
 
+- (UIImage *)leadingImage {
+  NSBundle *bundle = [NSBundle bundleForClass:[MDCChipViewSnapshotTests class]];
+  UIImage *image = [UIImage imageNamed:@"ic_mask"
+                              inBundle:bundle
+         compatibleWithTraitCollection:nil];
+  return image;
+}
+
+- (UIButton *)deleteButton {
+  NSBundle *bundle = [NSBundle bundleForClass:[MDCChipViewSnapshotTests class]];
+  UIImage *image = [UIImage imageNamed:@"ic_cancel"
+                              inBundle:bundle
+         compatibleWithTraitCollection:nil];
+  image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+
+  UIButton *button = [[UIButton alloc] initWithFrame:CGRectZero];
+  button.tintColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.7];
+  [button setImage:image forState:UIControlStateNormal];
+
+  return button;
+}
+
 #pragma mark - Tests
 
 - (void)testDefaultChip {
@@ -71,6 +93,93 @@
 
 - (void)testOutlinedThemedChip {
   // When
+  [self.chip applyOutlinedThemeWithScheme:self.scheme];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
+#pragma mark - With Leading Image
+
+- (void)testDefaultChipWithImage {
+  // When
+  self.chip.imageView.image = [self leadingImage];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
+- (void)testBaselineThemedChipWithImage {
+  // When
+  self.chip.imageView.image = [self leadingImage];
+  [self.chip applyThemeWithScheme:self.scheme];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
+- (void)testOutlinedThemedChipWithImage {
+  // When
+  self.chip.imageView.image = [self leadingImage];
+  [self.chip applyOutlinedThemeWithScheme:self.scheme];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
+#pragma mark - With Accessory View
+
+- (void)testDefaultChipWithAccessoryView {
+  // When
+  self.chip.accessoryView = [self deleteButton];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
+- (void)testBaselineThemedChipWithAccessoryView {
+  // When
+  self.chip.accessoryView = [self deleteButton];
+  [self.chip applyThemeWithScheme:self.scheme];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
+- (void)testOutlinedThemedChipWithAccessoryView {
+  // When
+  self.chip.accessoryView = [self deleteButton];
+  [self.chip applyOutlinedThemeWithScheme:self.scheme];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
+#pragma mark - With Leading Image and Accessory View
+
+- (void)testDefaultChipWithImageAndAccessoryView {
+  // When
+  self.chip.imageView.image = [self leadingImage];
+  self.chip.accessoryView = [self deleteButton];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
+- (void)testBaselineThemedChipWithImageAndAccessoryView {
+  // When
+  self.chip.imageView.image = [self leadingImage];
+  self.chip.accessoryView = [self deleteButton];
+  [self.chip applyThemeWithScheme:self.scheme];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
+}
+
+- (void)testOutlinedThemedChipWithImageAndAccessoryView {
+  // When
+  self.chip.imageView.image = [self leadingImage];
+  self.chip.accessoryView = [self deleteButton];
   [self.chip applyOutlinedThemeWithScheme:self.scheme];
 
   // Then
