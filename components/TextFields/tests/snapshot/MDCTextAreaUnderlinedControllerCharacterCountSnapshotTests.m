@@ -30,11 +30,14 @@
   // update only that golden image.
   //  self.recordMode = YES;
 
-  self.textField = [[SnapshotFakeMDCMultilineTextField alloc] init];
+  SnapshotFakeMDCMultilineTextField *textField =
+      [[SnapshotFakeMDCMultilineTextField alloc] init];
+  self.textField = textField;
   self.textField.clearButtonMode = UITextFieldViewModeAlways;
 
   MDCTextInputControllerUnderline *controller =
       [[MDCTextInputControllerUnderline alloc] initWithTextInput:self.textField];
+  controller.minimumLines = 5;
   controller.floatingEnabled = NO;
   self.textFieldController = controller;
   self.textFieldController.characterCountMax = 50;
