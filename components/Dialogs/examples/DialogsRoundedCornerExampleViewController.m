@@ -15,6 +15,7 @@
 #import "DialogsRoundedCornerExampleViewController.h"
 #import "MaterialButtons.h"
 #import "MaterialDialogs.h"
+#import "MaterialButtons+ButtonThemer.h"
 
 @interface DialogsRoundedCornerSimpleController : UIViewController
 
@@ -29,9 +30,11 @@
 
   self.view.backgroundColor = [UIColor whiteColor];
 
+  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
+    
   _dismissButton = [[MDCFlatButton alloc] initWithFrame:CGRectZero];
+  [MDCTextButtonThemer applyScheme:buttonScheme toButton:_dismissButton];
   [_dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
-  [_dismissButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
   _dismissButton.autoresizingMask =
       UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin |
       UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
@@ -77,9 +80,11 @@
 
   self.view.backgroundColor = [UIColor whiteColor];
 
+  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
+
   _presentButton = [[MDCFlatButton alloc] initWithFrame:CGRectZero];
+  [MDCTextButtonThemer applyScheme:buttonScheme toButton:_presentButton];
   [_presentButton setTitle:@"Present" forState:UIControlStateNormal];
-  [_presentButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
   _presentButton.autoresizingMask =
       UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin |
       UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;

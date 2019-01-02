@@ -20,6 +20,7 @@
 #import "DialogDismissalOverPresentedControllerExampleViewController.h"
 #import "MaterialButtons.h"
 #import "MaterialDialogs.h"
+#import "MaterialButtons+ButtonThemer.h"
 
 #pragma mark - Helper View Controller
 
@@ -104,8 +105,10 @@
   [NSLayoutConstraint activateConstraints:constraints];
 
   // Add a button to show the dialog from this presented view controller.
+  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
+    
   _dialogButton = [[MDCFlatButton alloc] init];
-  [_dialogButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+  [MDCTextButtonThemer applyScheme:buttonScheme toButton:_dialogButton];
   [_dialogButton setBackgroundColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
   [_dialogButton setTitle:@"Show Dialog" forState:UIControlStateNormal];
   _dialogButton.translatesAutoresizingMaskIntoConstraints = NO;
@@ -158,9 +161,11 @@
 
   // Create a way to present a view controller.
   self.view.backgroundColor = [UIColor whiteColor];
+    
+  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
 
   _presentButton = [[MDCFlatButton alloc] init];
-  [_presentButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+  [MDCTextButtonThemer applyScheme:buttonScheme toButton:_presentButton];
   [_presentButton setBackgroundColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
   [_presentButton setTitle:@"Present View Controller" forState:UIControlStateNormal];
   _presentButton.translatesAutoresizingMaskIntoConstraints = NO;

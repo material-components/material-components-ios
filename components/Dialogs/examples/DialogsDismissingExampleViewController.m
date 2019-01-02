@@ -20,6 +20,7 @@
 #import "MaterialDialogs.h"
 #import "MaterialTypographyScheme.h"
 #import "supplemental/DialogWithPreferredContentSizeExampleViewController.h"
+#import "MaterialButtons+ButtonThemer.h"
 
 #pragma mark - DialogsDismissingExampleViewController Interfaces
 
@@ -185,9 +186,11 @@ static NSString *const kReusableIdentifierItem = @"cell";
 
   self.view.backgroundColor = [UIColor whiteColor];
 
+  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
+    
   _dismissButton = [[MDCFlatButton alloc] init];
+  [MDCTextButtonThemer applyScheme:buttonScheme toButton:_dismissButton];
   [_dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
-  [_dismissButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
   _dismissButton.autoresizingMask =
       UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin |
       UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
@@ -230,9 +233,11 @@ static NSString *const kReusableIdentifierItem = @"cell";
 
   self.view.backgroundColor = [UIColor whiteColor];
 
+  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
+    
   _dismissButton = [[MDCFlatButton alloc] init];
+  [MDCTextButtonThemer applyScheme:buttonScheme toButton:_dismissButton];
   [_dismissButton setTitle:@"material.io" forState:UIControlStateNormal];
-  [_dismissButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
   _dismissButton.autoresizingMask =
       UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin |
       UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;

@@ -203,7 +203,7 @@ extension SimpleTableViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
     let titleString = title ?? ""
-    cell.textLabel!.text = "\(titleString): Row \(indexPath.item)"
+    cell.textLabel?.text = "\(titleString): Row \(indexPath.item)"
     return cell
   }
 
