@@ -92,8 +92,17 @@
                                                                              constant:0];
   contentConstraintWidth.priority = UILayoutPriorityDefaultLow;
   [NSLayoutConstraint activateConstraints:@[contentConstraintTop, contentConstraintBottom, contentConstraintLeading, contentConstraintTrailing, contentConstraintHeight, contentConstraintWidth]];
-  self.trailingConstraint = contentConstraintTrailing;
   self.contentWidthConstraint = contentConstraintWidth;
+
+  NSLayoutConstraint *contentToChipTrailingConstraint = [NSLayoutConstraint constraintWithItem:contentView
+                                                                                     attribute:NSLayoutAttributeTrailing
+                                                                                     relatedBy:NSLayoutRelationEqual
+                                                                                        toItem:contentView
+                                                                                     attribute:NSLayoutAttributeLeading
+                                                                                    multiplier:1
+                                                                                      constant:0];
+  contentToChipTrailingConstraint.active = YES;
+  self.trailingConstraint = contentToChipTrailingConstraint;
 
   // Set fixed values for this scroll view.
   [self setShowsVerticalScrollIndicator:NO];
@@ -150,7 +159,8 @@
   NSLayoutConstraint *chipViewConstraintTrailing = [NSLayoutConstraint constraintWithItem:self.contentView
                                                                                 attribute:NSLayoutAttributeTrailing
                                                                                 relatedBy:NSLayoutRelationEqual
-                                                                                   toItem:chipView attribute:NSLayoutAttributeTrailing
+                                                                                   toItem:chipView
+                                                                                attribute:NSLayoutAttributeTrailing
                                                                                multiplier:1
                                                                                  constant:0];
   [NSLayoutConstraint activateConstraints:@[chipViewConstraintTop, chipViewConstraintBottom, chipViewConstraintCenterY, chipViewConstraintLeading, chipViewConstraintTrailing]];

@@ -298,14 +298,8 @@
 - (void)removeChip:(MDCChipView *)chip {
   // TODO: the hack way to handle remove right now. ContentOffset can be wrong.
   [self.chipViews removeObject:chip];
-  CGFloat originalChipContentWidth = self.chipsContainerView.contentSize.width;
   [self.chipsContainerView removeChipView:chip];
-  [self.chipsContainerView layoutIfNeeded];
-  CGFloat updatedChipContentWidth = self.chipsContainerView.contentSize.width;
-
-  if (self.chipsContainerHorizontalOffsetForTextEditing> 0) {
-    self.chipsContainerHorizontalOffsetForTextEditing -= (originalChipContentWidth - updatedChipContentWidth);
-  }
+  [self clearChipsContainerOffset];
 
   [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];
