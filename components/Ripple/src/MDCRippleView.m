@@ -113,7 +113,7 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.225;
   }
 }
 
-- (void)BeginRippleTouchDownAtPoint:(CGPoint)point
+- (void)beginRippleTouchDownAtPoint:(CGPoint)point
                            animated:(BOOL)animated
                          completion:(nullable MDCRippleCompletionBlock)completion {
   MDCRippleLayer *rippleLayer = [MDCRippleLayer layer];
@@ -125,7 +125,7 @@ static const CGFloat kRippleFadeOutDelay = (CGFloat)0.225;
   self.activeRippleLayer = rippleLayer;
 }
 
-- (void)BeginRippleTouchUpAnimated:(BOOL)animated
+- (void)beginRippleTouchUpAnimated:(BOOL)animated
                         completion:(nullable MDCRippleCompletionBlock)completion {
   [self.activeRippleLayer endRippleAnimated:animated completion:completion];
 }

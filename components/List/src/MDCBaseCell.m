@@ -58,14 +58,14 @@
 #pragma mark Ink
 
 - (void)startInk {
-  [self.rippleView BeginRippleTouchDownAtPoint:_lastTouch animated:YES completion:nil];
+  [self.rippleView beginRippleTouchDownAtPoint:_lastTouch animated:YES completion:nil];
   //  [self.rippleView startTouchBeganAtPoint:_lastTouch
   //                              animated:YES
   //                        withCompletion:nil];
 }
 
 - (void)endInk {
-  [self.rippleView BeginRippleTouchUpAnimated:YES completion:nil];
+  [self.rippleView beginRippleTouchUpAnimated:YES completion:nil];
   //  [self.rippleView startTouchEndAtPoint:_lastTouch
   //                            animated:YES
   //                      withCompletion:nil];

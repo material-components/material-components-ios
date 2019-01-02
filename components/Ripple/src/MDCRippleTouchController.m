@@ -155,7 +155,7 @@
   switch (recognizer.state) {
     case UIGestureRecognizerStateBegan: {
       _tapWentOutsideOfBounds = NO;
-      [self.rippleView BeginRippleTouchDownAtPoint:touchLocation
+      [self.rippleView beginRippleTouchDownAtPoint:touchLocation
                                           animated:YES
                                         completion:^{
                                           if (self.selectionMode) {
@@ -188,7 +188,7 @@
     }
     case UIGestureRecognizerStateEnded:
       if (!_selectionMode) {
-        [self.rippleView BeginRippleTouchUpAnimated:YES completion:nil];
+        [self.rippleView beginRippleTouchUpAnimated:YES completion:nil];
       }
       break;
     case UIGestureRecognizerStateCancelled:

@@ -96,13 +96,13 @@ typedef NS_ENUM(NSInteger, MDCRippleStyle) {
 /**
  Begins the ripple's touch down animation at the given point. This presents the ripple and leaves it
  on the view. If animated, it animates the expanding ripple circle effect.
- To then remove the ripple, `BeginRippleTouchUpAnimated` needs to be called.
+ To then remove the ripple, `beginRippleTouchUpAnimated` needs to be called.
 
  @param point The point to start the ripple animation.
  @param animated Whether or not the ripple should be animated or not.
  @param completion A completion block called after the completion of the animation.
  */
-- (void)BeginRippleTouchDownAtPoint:(CGPoint)point
+- (void)beginRippleTouchDownAtPoint:(CGPoint)point
                            animated:(BOOL)animated
                          completion:(nullable MDCRippleCompletionBlock)completion;
 
@@ -113,7 +113,7 @@ typedef NS_ENUM(NSInteger, MDCRippleStyle) {
  @param animated Whether or not the ripple should be animated or not.
  @param completion A completion block called after the completion of the animation.
  */
-- (void)BeginRippleTouchUpAnimated:(BOOL)animated
+- (void)beginRippleTouchUpAnimated:(BOOL)animated
                         completion:(nullable MDCRippleCompletionBlock)completion;
 @end
 

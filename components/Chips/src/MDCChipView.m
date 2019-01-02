@@ -822,14 +822,14 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
 //  _inkView.maxRippleRadius =
 //      (CGFloat)(MDCHypot(size.height, size.width + widthDiff) / 2 + 10 + widthDiff / 2);
 
-  [_inkView BeginRippleTouchDownAtPoint:point animated:YES completion:nil];
+  [_inkView beginRippleTouchDownAtPoint:point animated:YES completion:nil];
 }
 
 - (void)startTouchEndedAnimationAtPoint:(CGPoint)point {
   if (!self.enabled) {
     return;
   }
-  [_inkView BeginRippleTouchUpAnimated:YES completion:nil];
+  [_inkView beginRippleTouchUpAnimated:YES completion:nil];
 //  [_inkView startTouchEndedAnimationAtPoint:point completion:nil];
 }
 

@@ -166,24 +166,24 @@ static const BOOL MDCCardCellIsInteractableDefault = YES;
     case MDCCardCellStateSelected: {
       if (_state != MDCCardCellStateHighlighted) {
         if (animated) {
-          [self.rippleView BeginRippleTouchDownAtPoint:_lastTouch animated:YES completion:nil];
+          [self.rippleView beginRippleTouchDownAtPoint:_lastTouch animated:YES completion:nil];
         } else {
           [self.rippleView cancelAllRipplesAnimated:NO];
-          [self.rippleView BeginRippleTouchDownAtPoint:self.center animated:YES completion:nil];
+          [self.rippleView beginRippleTouchDownAtPoint:self.center animated:YES completion:nil];
         }
       }
       break;
     }
     case MDCCardCellStateNormal: {
-      [self.rippleView BeginRippleTouchUpAnimated:animated completion:nil];
+      [self.rippleView beginRippleTouchUpAnimated:animated completion:nil];
       break;
     }
     case MDCCardCellStateHighlighted: {
       // Note: setHighlighted: can get getting more calls with YES than NO when clicking rapidly.
       // To guard against ink never going away and darkening our card we call
       // startTouchEndedAnimationAtPoint:completion:.
-      [self.rippleView BeginRippleTouchUpAnimated:animated completion:nil];
-      [self.rippleView BeginRippleTouchDownAtPoint:_lastTouch animated:animated completion:nil];
+      [self.rippleView beginRippleTouchUpAnimated:animated completion:nil];
+      [self.rippleView beginRippleTouchDownAtPoint:_lastTouch animated:animated completion:nil];
       break;
     }
   }
