@@ -52,4 +52,6 @@
  */
 - (void)appendChipWithText:(nonnull NSString *)text NS_SWIFT_NAME(appendChip(text:));
 
+- (void)handleTextFieldReturnWithText:(nonnull NSString *)text NS_SWIFT_NAME(handleTextFieldReturn(text:));
+
 @end

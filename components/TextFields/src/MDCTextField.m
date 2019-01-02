@@ -387,6 +387,14 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
   return _fundament.underline;
 }
 
+- (BOOL)hasTextContent {
+  return self.text.length > 0;
+}
+
+- (void)clearText {
+  self.text = nil;
+}
+
 #pragma mark - UITextField Property Overrides
 
 #if defined(__IPHONE_10_0) && (__IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_10_0)
@@ -537,7 +545,7 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
     clearButtonWidth += 2 * MDCTextInputClearButtonImageBuiltInPadding;
 
     // Clear buttons are only shown if there is entered text or programatically set text to clear.
-    if (self.text.length > 0) {
+    if (self.hasTextContent > 0) {
       switch (self.clearButtonMode) {
         case UITextFieldViewModeAlways:
         case UITextFieldViewModeUnlessEditing:
@@ -581,7 +589,7 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
   if (self.rightView.superview) {
     editingRect.size.width += MDCTextInputEditingRectRightViewPaddingCorrection;
   } else {
-    if (self.text.length > 0) {
+    if (self.hasTextContent > 0) {
       CGFloat clearButtonWidth = CGRectGetWidth(self.clearButton.bounds);
 
       // The width is adjusted by the padding twice: once for the right side, once for left.

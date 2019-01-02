@@ -93,6 +93,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 @synthesize textColor = _textColor;
 @synthesize trailingUnderlineLabel = _trailingUnderlineLabel;
 @synthesize underline = _underline;
+@synthesize hasTextContent = _hasTextContent;
 @synthesize textInsetsMode = _textInsetsMode;
 
 - (instancetype)init {
@@ -389,6 +390,10 @@ static inline UIColor *MDCTextInputUnderlineColor() {
   [self.textInput sendSubviewToBack:_underline];
 }
 
+- (void)clearText {
+  self.text = nil;
+}
+
 #pragma mark - Border implementation
 
 - (void)setupBorder {
@@ -532,7 +537,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 
 - (CGFloat)clearButtonAlpha {
   CGFloat clearButtonAlpha = 0;
-  if (self.text.length > 0) {
+  if (self.textInput.hasTextContent) {
     switch (self.clearButtonMode) {
       case UITextFieldViewModeAlways:
         clearButtonAlpha = 1;
@@ -593,7 +598,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     }
   }
 
-  self.text = nil;
+  [self.textInput clearText];
   if (self.textInput.isFirstResponder) {
     if ([self.textInput isKindOfClass:[MDCMultilineTextField class]]) {
       MDCMultilineTextField *textField = (MDCMultilineTextField *)self.textInput;
