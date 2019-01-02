@@ -14,8 +14,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialRipple.h"
 #import "MDCRippleLayer.h"
+#import "MaterialRipple.h"
 
 @interface FakeMDCRippleViewAnimationDelegate : NSObject <MDCRippleViewDelegate>
 @property(nonatomic, strong) MDCRippleView *rippleView;
@@ -91,9 +91,11 @@
   XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
 
   // When
-  [rippleView beginRippleTouchDownAtPoint:CGPointMake(0, 0) animated:YES completion:^{
-    [expectation fulfill];
-  }];
+  [rippleView beginRippleTouchDownAtPoint:CGPointMake(0, 0)
+                                 animated:YES
+                               completion:^{
+                                 [expectation fulfill];
+                               }];
   [self waitForExpectationsWithTimeout:3 handler:nil];
 
   // Then
@@ -125,9 +127,10 @@
 
   // When
   [rippleView beginRippleTouchDownAtPoint:CGPointMake(0, 0) animated:NO completion:nil];
-  [rippleView beginRippleTouchUpAnimated:YES completion:^{
-    [expectation fulfill];
-  }];
+  [rippleView beginRippleTouchUpAnimated:YES
+                              completion:^{
+                                [expectation fulfill];
+                              }];
   [self waitForExpectationsWithTimeout:3 handler:nil];
 
   // Then
@@ -143,8 +146,8 @@
   [rippleView setActiveRippleColor:[UIColor blueColor]];
 
   // Then
-  XCTAssertTrue(CGColorEqualToColor([UIColor blueColor].CGColor,
-                                    rippleView.activeRippleLayer.fillColor));
+  XCTAssertTrue(
+      CGColorEqualToColor([UIColor blueColor].CGColor, rippleView.activeRippleLayer.fillColor));
   XCTAssertNotEqualObjects(rippleView.rippleColor, [UIColor blueColor]);
 }
 
@@ -157,8 +160,8 @@
   [rippleView setRippleColor:[UIColor blueColor]];
 
   // Then
-  XCTAssertFalse(CGColorEqualToColor([UIColor blueColor].CGColor,
-                                    rippleView.activeRippleLayer.fillColor));
+  XCTAssertFalse(
+      CGColorEqualToColor([UIColor blueColor].CGColor, rippleView.activeRippleLayer.fillColor));
   XCTAssertEqualObjects(rippleView.rippleColor, [UIColor blueColor]);
 }
 

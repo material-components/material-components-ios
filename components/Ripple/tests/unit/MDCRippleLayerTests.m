@@ -82,7 +82,8 @@
 
 - (void)testLayerTouchDownDidBeginDelegate {
   // Given
-  FakeMDCRippleLayerAnimationDelegate *delegate = [[FakeMDCRippleLayerAnimationDelegate alloc] init];
+  FakeMDCRippleLayerAnimationDelegate *delegate =
+      [[FakeMDCRippleLayerAnimationDelegate alloc] init];
   MDCRippleLayer *rippleLayer = [[MDCRippleLayer alloc] init];
   rippleLayer.rippleLayerDelegate = delegate;
   delegate.rippleLayer = rippleLayer;
@@ -96,16 +97,19 @@
 
 - (void)testLayerTouchDownDidEndDelegate {
   // Given
-  FakeMDCRippleLayerAnimationDelegate *delegate = [[FakeMDCRippleLayerAnimationDelegate alloc] init];
+  FakeMDCRippleLayerAnimationDelegate *delegate =
+      [[FakeMDCRippleLayerAnimationDelegate alloc] init];
   MDCRippleLayer *rippleLayer = [[MDCRippleLayer alloc] init];
   rippleLayer.rippleLayerDelegate = delegate;
   delegate.rippleLayer = rippleLayer;
   XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
 
   // When
-  [rippleLayer startRippleAtPoint:CGPointMake(0, 0) animated:YES completion:^{
-    [expectation fulfill];
-  }];
+  [rippleLayer startRippleAtPoint:CGPointMake(0, 0)
+                         animated:YES
+                       completion:^{
+                         [expectation fulfill];
+                       }];
   [self waitForExpectationsWithTimeout:3 handler:nil];
 
   // Then
@@ -114,7 +118,8 @@
 
 - (void)testLayerTouchUpDidBeginDelegate {
   // Given
-  FakeMDCRippleLayerAnimationDelegate *delegate = [[FakeMDCRippleLayerAnimationDelegate alloc] init];
+  FakeMDCRippleLayerAnimationDelegate *delegate =
+      [[FakeMDCRippleLayerAnimationDelegate alloc] init];
   MDCRippleLayer *rippleLayer = [[MDCRippleLayer alloc] init];
   rippleLayer.rippleLayerDelegate = delegate;
   delegate.rippleLayer = rippleLayer;
@@ -128,16 +133,18 @@
 
 - (void)testLayerTouchUpDidEndDelegate {
   // Given
-  FakeMDCRippleLayerAnimationDelegate *delegate = [[FakeMDCRippleLayerAnimationDelegate alloc] init];
+  FakeMDCRippleLayerAnimationDelegate *delegate =
+      [[FakeMDCRippleLayerAnimationDelegate alloc] init];
   MDCRippleLayer *rippleLayer = [[MDCRippleLayer alloc] init];
   rippleLayer.rippleLayerDelegate = delegate;
   delegate.rippleLayer = rippleLayer;
   XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
 
   // When
-  [rippleLayer endRippleAnimated:YES completion:^{
-    [expectation fulfill];
-  }];
+  [rippleLayer endRippleAnimated:YES
+                      completion:^{
+                        [expectation fulfill];
+                      }];
   [self waitForExpectationsWithTimeout:3 handler:nil];
 
   // Then
@@ -172,7 +179,7 @@
 
   // When
   [rippleLayer startRippleAtPoint:point animated:YES completion:nil];
-  
+
   // Then
   CAAnimationGroup *group = (CAAnimationGroup *)rippleLayer.addedAnimations.firstObject;
   XCTAssertEqual(group.animations.count, 3);
@@ -181,11 +188,12 @@
     XCTAssertFalse(animation.removedOnCompletion);
     if ([animation isKindOfClass:[CABasicAnimation class]]) {
       CABasicAnimation *basicAnimation = (CABasicAnimation *)animation;
-      if ([basicAnimation.keyPath isEqualToString: @"opacity"]) {
+      if ([basicAnimation.keyPath isEqualToString:@"opacity"]) {
         animationsCount += 1;
         XCTAssertEqualObjects(@1, basicAnimation.toValue);
         XCTAssertEqualObjects(@0, basicAnimation.fromValue);
-        XCTAssertEqualObjects([CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear], basicAnimation.timingFunction);
+        XCTAssertEqualObjects([CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear],
+                              basicAnimation.timingFunction);
       } else if ([basicAnimation.keyPath isEqualToString:@"transform.scale"]) {
         animationsCount += 1;
         XCTAssertEqualObjects(@1, basicAnimation.toValue);
@@ -214,7 +222,8 @@
   XCTAssertEqualObjects(@"opacity", basicAnimation.keyPath);
   XCTAssertEqualObjects(@0, basicAnimation.toValue);
   XCTAssertEqualObjects(@1, basicAnimation.fromValue);
-  XCTAssertEqualObjects([CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear], basicAnimation.timingFunction);
+  XCTAssertEqualObjects([CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear],
+                        basicAnimation.timingFunction);
   XCTAssertEqualWithAccuracy(basicAnimation.duration, (CGFloat)0.15, 0.0001);
 }
 
@@ -232,7 +241,8 @@
   XCTAssertEqualObjects(@"opacity", basicAnimation.keyPath);
   XCTAssertEqualObjects(@1, basicAnimation.toValue);
   XCTAssertEqualObjects(@0, basicAnimation.fromValue);
-  XCTAssertEqualObjects([CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear], basicAnimation.timingFunction);
+  XCTAssertEqualObjects([CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear],
+                        basicAnimation.timingFunction);
   XCTAssertEqualWithAccuracy(basicAnimation.duration, (CGFloat)0.075, 0.0001);
 }
 
@@ -250,7 +260,8 @@
   XCTAssertEqualObjects(@"opacity", basicAnimation.keyPath);
   XCTAssertEqualObjects(@0, basicAnimation.toValue);
   XCTAssertEqualObjects(@1, basicAnimation.fromValue);
-  XCTAssertEqualObjects([CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear], basicAnimation.timingFunction);
+  XCTAssertEqualObjects([CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear],
+                        basicAnimation.timingFunction);
   XCTAssertEqualWithAccuracy(basicAnimation.duration, (CGFloat)0.075, 0.0001);
 }
 @end
