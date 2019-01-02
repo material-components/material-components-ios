@@ -102,6 +102,24 @@ Pod::Spec.new do |mdc|
     extension.dependency "MaterialComponentsBeta/schemes/Container"
   end
 
+  # Ripple
+
+  mdc.subspec "Ripple" do |component|
+    component.ios.deployment_target = '8.0'
+    component.public_header_files = "components/#{component.base_name}/src/*.h"
+    component.source_files = "components/#{component.base_name}/src/*.{h,m}", "components/#{component.base_name}/src/private/*.{h,m}"
+
+    component.dependency "MaterialComponents/private/Math"
+
+    component.test_spec 'tests' do |tests|
+      tests.test_spec 'unit' do |unit_tests|
+        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}",
+            "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
+      end
+    end
+  end
+
   mdc.subspec "schemes" do |scheme_spec|
     scheme_spec.subspec "Container" do |scheme|
       scheme.ios.deployment_target = '8.0'
