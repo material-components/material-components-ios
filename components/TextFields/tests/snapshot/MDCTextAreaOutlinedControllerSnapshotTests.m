@@ -16,10 +16,10 @@
 #import "MaterialTextFields.h"
 #import "SnapshotFakeMDCMultilineTextField.h"
 
-@interface MDCTextFieldOutlinedTextAreaControllerSnapshotTests : MDCAbstractTextFieldSnapshotTests
+@interface MDCTextAreaOutlinedControllerSnapshotTests : MDCAbstractTextFieldSnapshotTests
 @end
 
-@implementation MDCTextFieldOutlinedTextAreaControllerSnapshotTests
+@implementation MDCTextAreaOutlinedControllerSnapshotTests
 
 - (void)setUp {
   [super setUp];
