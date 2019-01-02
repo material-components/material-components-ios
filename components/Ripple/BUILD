@@ -67,7 +67,6 @@ mdc_objc_library(
     ],
     visibility = ["//visibility:private"],
     deps = [
-        ":ColorThemer",
         ":Ripple",
         ":private",
     ],
