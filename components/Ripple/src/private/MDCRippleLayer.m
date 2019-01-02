@@ -21,7 +21,7 @@ static const CGFloat kRippleTouchDownDuration = (CGFloat)0.225;
 static const CGFloat kRippleTouchUpDuration = (CGFloat)0.15;
 static const CGFloat kRippleFadeInDuration = (CGFloat)0.075;
 static const CGFloat kRippleFadeOutDuration = (CGFloat)0.075;
-static const CGFloat kRippleFadeOutDelay = (CGFloat)0.225;
+static const CGFloat kRippleFadeOutDelay = (CGFloat)0.15;
 
 static CAMediaTimingFunction *materialTimingFunction(void) {
   return [[CAMediaTimingFunction alloc] initWithControlPoints:(float) 0.4:0:(float)0.2:1];
