@@ -19,11 +19,11 @@
 #import "MaterialTextFields.h"
 #import "SnapshotFakeMDCMultilineTextField.h"
 
-@interface MDCTextFieldOutlinedTextAreaControllerBaselineCharacterCountCyrillicSnapshotTests
-    : MDCAbstractTextFieldSnapshotTests
+@interface MDCTextAreaOutlinedControllerBaselineCharacterCountArabicSnapshotTests
+    : MDCAbstractTextFieldSnapshotTests <MDCTextFieldSnapshotTestCaseHooking>
 @end
 
-@implementation MDCTextFieldOutlinedTextAreaControllerBaselineCharacterCountCyrillicSnapshotTests
+@implementation MDCTextAreaOutlinedControllerBaselineCharacterCountArabicSnapshotTests
 
 - (void)setUp {
   [super setUp];
@@ -50,7 +50,15 @@
                                 toTextInputController:self.textFieldController];
   [MDCTextFieldTypographyThemer applyTypographyScheme:typographyScheme toTextInput:self.textField];
 
-  [self changeStringsToCyrillic];
+  [self changeStringsToArabic];
+}
+
+- (void)willGenerateSnapshotAndVerify {
+  if (@available(iOS 9.0, *)) {
+    [self changeLayoutToRTL];
+  } else {
+    NSLog(@"[ERROR] RTL tests can only run on iOS 9 or later.");
+  }
 }
 
 // NOTE: Additional test methods can be found in MDCAbstractTextFieldSnapshotTests.m

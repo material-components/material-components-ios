@@ -19,11 +19,11 @@
 #import "MaterialTextFields.h"
 #import "SnapshotFakeMDCMultilineTextField.h"
 
-@interface MDCTextFieldOutlinedTextAreaControllerBaselineCharacterCountHindiSnapshotTests
+@interface MDCTextAreaOutlinedControllerBaselineCharacterCountCyrillicSnapshotTests
     : MDCAbstractTextFieldSnapshotTests
 @end
 
-@implementation MDCTextFieldOutlinedTextAreaControllerBaselineCharacterCountHindiSnapshotTests
+@implementation MDCTextAreaOutlinedControllerBaselineCharacterCountCyrillicSnapshotTests
 
 - (void)setUp {
   [super setUp];
@@ -50,7 +50,7 @@
                                 toTextInputController:self.textFieldController];
   [MDCTextFieldTypographyThemer applyTypographyScheme:typographyScheme toTextInput:self.textField];
 
-  [self changeStringsToHindi];
+  [self changeStringsToCyrillic];
 }
 
 // NOTE: Additional test methods can be found in MDCAbstractTextFieldSnapshotTests.m

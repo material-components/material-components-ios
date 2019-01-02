@@ -8,21 +8,18 @@
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY MDCTextFieldSnapshotTestsIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
 #import "MDCAbstractTextFieldSnapshotTests.h"
-#import "MaterialTextFields+ColorThemer.h"
-#import "MaterialTextFields+TypographyThemer.h"
 #import "MaterialTextFields.h"
 #import "SnapshotFakeMDCMultilineTextField.h"
 
-@interface MDCTextFieldOutlinedTextAreaControllerBaselineCharacterCountSnapshotTests
-    : MDCAbstractTextFieldSnapshotTests
+@interface MDCTextAreaOutlinedControllerSnapshotTests : MDCAbstractTextFieldSnapshotTests
 @end
 
-@implementation MDCTextFieldOutlinedTextAreaControllerBaselineCharacterCountSnapshotTests
+@implementation MDCTextAreaOutlinedControllerSnapshotTests
 
 - (void)setUp {
   [super setUp];
@@ -36,18 +33,6 @@
 
   self.textFieldController =
       [[MDCTextInputControllerOutlinedTextArea alloc] initWithTextInput:self.textField];
-  self.textFieldController.characterCountMax = 50;
-  self.textFieldController.characterCountViewMode = UITextFieldViewModeAlways;
-  MDCSemanticColorScheme *colorScheme =
-      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-  MDCTypographyScheme *typographyScheme =
-      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
-
-  [MDCOutlinedTextFieldColorThemer applySemanticColorScheme:colorScheme
-                                      toTextInputController:self.textFieldController];
-  [MDCTextFieldTypographyThemer applyTypographyScheme:typographyScheme
-                                toTextInputController:self.textFieldController];
-  [MDCTextFieldTypographyThemer applyTypographyScheme:typographyScheme toTextInput:self.textField];
 }
 
 // NOTE: Additional test methods can be found in MDCAbstractTextFieldSnapshotTests.m
