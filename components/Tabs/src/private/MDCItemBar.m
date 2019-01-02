@@ -328,6 +328,21 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   [self updateColors];
 }
 
+// UISemanticContentAttribute was added in iOS SDK 9.0 but is available on devices running earlier
+// version of iOS. We ignore the partial-availability warning that gets thrown on our use of this
+// symbol.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpartial-availability"
+- (void)mdf_setSemanticContentAttribute:(UISemanticContentAttribute)semanticContentAttribute {
+  if (semanticContentAttribute == self.mdf_semanticContentAttribute) {
+    return;
+  }
+  [super mdf_setSemanticContentAttribute:semanticContentAttribute];
+  _collectionView.mdf_semanticContentAttribute = semanticContentAttribute;
+  [_collectionView.collectionViewLayout invalidateLayout];
+}
+#pragma clang diagnostic pop
+
 #pragma mark - UICollectionViewDelegate
 
 - (BOOL)collectionView:(UICollectionView *)collectionView

@@ -20,11 +20,9 @@
 #import "MaterialTextFields.h"
 
 @interface MDCTextFieldFilledControllerLeadingImageSnapshotTests : MDCAbstractTextFieldSnapshotTests
-@property(nonatomic, strong) MDCTextInputControllerFilled *textFieldController;
 @end
 
 @implementation MDCTextFieldFilledControllerLeadingImageSnapshotTests
-@dynamic textFieldController;
 
 - (void)setUp {
   [super setUp];
@@ -37,9 +35,10 @@
 
   [self addLeadingImage];
 
-  self.textFieldController =
+  MDCTextInputControllerFilled *controller =
       [[MDCTextInputControllerFilled alloc] initWithTextInput:self.textField];
-  self.textFieldController.floatingEnabled = NO;
+  controller.floatingEnabled = NO;
+  self.textFieldController = controller;
 }
 
 // NOTE: Additional test methods can be found in MDCAbstractTextFieldSnapshotTests.m

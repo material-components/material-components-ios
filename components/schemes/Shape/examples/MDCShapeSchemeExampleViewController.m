@@ -28,11 +28,11 @@
 #import "MaterialButtons+ShapeThemer.h"
 #import "MaterialButtons+Theming.h"
 #import "MaterialButtons.h"
-#import "MaterialCards+CardThemer.h"
 #import "MaterialCards+ShapeThemer.h"
+#import "MaterialCards+Theming.h"
 #import "MaterialCards.h"
-#import "MaterialChips+ChipThemer.h"
 #import "MaterialChips+ShapeThemer.h"
+#import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
 #import "MaterialColorScheme.h"
 #import "MaterialContainerScheme.h"
@@ -109,14 +109,9 @@
 }
 
 - (void)initializeComponentry {
-  MDCButtonScheme *buttonScheme = [[MDCButtonScheme alloc] init];
-  buttonScheme.colorScheme = self.colorScheme;
-  buttonScheme.shapeScheme = self.shapeScheme;
-  buttonScheme.typographyScheme = self.typographyScheme;
-
   self.containedButton = [[MDCButton alloc] init];
   [self.containedButton setTitle:@"Button" forState:UIControlStateNormal];
-  [MDCContainedButtonThemer applyScheme:buttonScheme toButton:self.containedButton];
+  [self.containedButton applyContainedThemeWithScheme:self.containerScheme];
   self.containedButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.componentContentView addSubview:self.containedButton];
 
@@ -129,27 +124,18 @@
   self.floatingButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.componentContentView addSubview:self.floatingButton];
 
-  MDCChipViewScheme *chipViewScheme = [[MDCChipViewScheme alloc] init];
-  chipViewScheme.colorScheme = self.colorScheme;
-  chipViewScheme.shapeScheme = self.shapeScheme;
-  chipViewScheme.typographyScheme = self.typographyScheme;
-
   self.chipView = [[MDCChipView alloc] init];
   self.chipView.titleLabel.text = @"Material";
   self.chipView.imageView.image = [self faceImage];
   self.chipView.accessoryView = [self deleteButton];
   self.chipView.minimumSize = CGSizeMake(140, 33);
   self.chipView.translatesAutoresizingMaskIntoConstraints = NO;
-  [MDCChipViewThemer applyScheme:chipViewScheme toChipView:self.chipView];
+  [self.chipView applyThemeWithScheme:self.containerScheme];
   [self.componentContentView addSubview:self.chipView];
-
-  MDCCardScheme *cardScheme = [[MDCCardScheme alloc] init];
-  cardScheme.colorScheme = self.colorScheme;
-  cardScheme.shapeScheme = self.shapeScheme;
 
   self.card = [[MDCCard alloc] init];
   self.card.translatesAutoresizingMaskIntoConstraints = NO;
-  [MDCCardThemer applyScheme:cardScheme toCard:self.card];
+  [self.card applyThemeWithScheme:self.containerScheme];
   self.card.backgroundColor = _colorScheme.primaryColor;
   [self.componentContentView addSubview:self.card];
 

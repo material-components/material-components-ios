@@ -14,9 +14,9 @@
 
 import UIKit
 
-import MaterialComponents.MaterialCards_CardThemer
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialTypographyScheme
+import MaterialComponentsBeta.MaterialContainerScheme
 
 class EditReorderCollectionViewController: UIViewController,
   UICollectionViewDelegate,
@@ -34,7 +34,14 @@ class EditReorderCollectionViewController: UIViewController,
   var colorScheme = MDCSemanticColorScheme()
   var shapeScheme = MDCShapeScheme()
   var typographyScheme = MDCTypographyScheme()
-  let cardScheme = MDCCardScheme()
+
+  var containerScheme: MDCContainerScheming {
+    let scheme = MDCContainerScheme()
+    scheme.colorScheme = colorScheme
+    scheme.typographyScheme = typographyScheme
+    scheme.shapeScheme = shapeScheme
+    return scheme
+  }
 
   let images = [
     (image: "amsterdam-kadoelen",     title: "Kadoelen"),
@@ -48,8 +55,6 @@ class EditReorderCollectionViewController: UIViewController,
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    cardScheme.colorScheme = colorScheme
-    cardScheme.shapeScheme = shapeScheme
     collectionView.frame = view.bounds
     collectionView.dataSource = self
     collectionView.delegate = self
@@ -137,7 +142,7 @@ class EditReorderCollectionViewController: UIViewController,
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
     guard let cardCell = cell as? CardEditReorderCollectionCell else { return cell }
 
-    cardCell.apply(cardScheme: cardScheme, typographyScheme: typographyScheme)
+    cardCell.apply(containerScheme: containerScheme, typographyScheme: typographyScheme)
 
     let title = dataSource[indexPath.item].title
     let imageName = dataSource[indexPath.item].image

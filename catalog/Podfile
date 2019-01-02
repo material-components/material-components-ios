@@ -59,6 +59,7 @@ target "MDCCatalog" do
   ]
   pod 'MaterialComponentsSnapshotTests', :path => '../', :testspecs => [
     'Cards/tests/snapshot',
+    'Chips/tests/snapshot',
     'TextFields/tests/snapshot',
   ]
   pod 'CatalogByConvention', "~> 2.5"

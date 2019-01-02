@@ -123,28 +123,28 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
 
     _chips = [NSMutableArray array];
 
-    MDCChipFieldTextField *chipTextField =
+    MDCChipFieldTextField *chipFieldTextField =
         [[MDCChipFieldTextField alloc] initWithFrame:self.bounds];
-    chipTextField.underline.hidden = YES;
-    chipTextField.delegate = self;
-    chipTextField.deletionDelegate = self;
-    chipTextField.positioningDelegate = self;
-    chipTextField.accessibilityTraits = UIAccessibilityTraitNone;
-    chipTextField.autocorrectionType = UITextAutocorrectionTypeNo;
-    chipTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
-    chipTextField.keyboardType = MDCChipFieldDefaultKeyboardType;
+    chipFieldTextField.underline.hidden = YES;
+    chipFieldTextField.delegate = self;
+    chipFieldTextField.deletionDelegate = self;
+    chipFieldTextField.positioningDelegate = self;
+    chipFieldTextField.accessibilityTraits = UIAccessibilityTraitNone;
+    chipFieldTextField.autocorrectionType = UITextAutocorrectionTypeNo;
+    chipFieldTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    chipFieldTextField.keyboardType = MDCChipFieldDefaultKeyboardType;
     // Listen for notifications posted when the text field is the first responder.
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(textFieldDidChange)
                                                  name:UITextFieldTextDidChangeNotification
-                                               object:chipTextField];
+                                               object:chipFieldTextField];
     // Also listen for notifications posted when the text field is not the first responder.
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(textFieldDidChange)
                                                  name:MDCTextFieldTextDidSetTextNotification
-                                               object:chipTextField];
-    [self addSubview:chipTextField];
-    _textField = chipTextField;
+                                               object:chipFieldTextField];
+    [self addSubview:chipFieldTextField];
+    _textField = chipFieldTextField;
   }
   return self;
 }
@@ -555,7 +555,7 @@ static inline UIBezierPath *MDCPathForClearButtonImageFrame(CGRect frame) {
   }
 }
 
-#pragma mark - MDCChipTextFieldDelegate
+#pragma mark - MDCChipFieldTextFieldDelegate
 
 - (void)textFieldShouldRespondToDeleteBackward:(UITextField *)textField {
   if ([self isAnyChipSelected]) {

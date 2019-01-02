@@ -19,11 +19,9 @@
 
 @interface MDCTextFieldFilledFloatingControllerBaselineSnapshotTests
     : MDCAbstractTextFieldSnapshotTests
-@property(nonatomic, strong) MDCTextInputControllerFilled *textFieldController;
 @end
 
 @implementation MDCTextFieldFilledFloatingControllerBaselineSnapshotTests
-@dynamic textFieldController;
 
 - (void)setUp {
   [super setUp];
@@ -34,9 +32,10 @@
 
   self.textField.clearButtonMode = UITextFieldViewModeAlways;
 
-  self.textFieldController =
+  MDCTextInputControllerFilled *controller =
       [[MDCTextInputControllerFilled alloc] initWithTextInput:self.textField];
-  self.textFieldController.floatingEnabled = YES;
+  controller.floatingEnabled = YES;
+  self.textFieldController = controller;
 
   MDCSemanticColorScheme *colorScheme =
       [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
@@ -44,7 +43,7 @@
       [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
 
   [MDCFilledTextFieldColorThemer applySemanticColorScheme:colorScheme
-                              toTextInputControllerFilled:self.textFieldController];
+                              toTextInputControllerFilled:controller];
   [MDCTextFieldTypographyThemer applyTypographyScheme:typographyScheme
                                 toTextInputController:self.textFieldController];
   [MDCTextFieldTypographyThemer applyTypographyScheme:typographyScheme toTextInput:self.textField];

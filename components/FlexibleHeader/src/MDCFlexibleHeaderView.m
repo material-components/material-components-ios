@@ -751,9 +751,11 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
 - (void)fhv_recalculatePhase {
   CGRect frame = self.frame;
 
-  if (frame.origin.y < 0) {
+  CGFloat topEdge = self.center.y - self.bounds.size.height / 2;
+
+  if (topEdge < 0) {
     _scrollPhase = MDCFlexibleHeaderScrollPhaseShifting;
-    _scrollPhaseValue = frame.origin.y + self.minMaxHeight.minimumHeightWithTopSafeArea;
+    _scrollPhaseValue = topEdge + self.minMaxHeight.minimumHeightWithTopSafeArea;
     CGFloat adjustedHeight = self.minMaxHeight.minimumHeightWithTopSafeArea;
     if ([self fhv_shouldCollapseToStatusBar]) {
       CGFloat statusBarHeight =
@@ -761,7 +763,7 @@ static inline MDCFlexibleHeaderShiftBehavior ShiftBehaviorForCurrentAppContext(
       adjustedHeight -= statusBarHeight;
     }
     if (adjustedHeight > 0) {
-      _scrollPhasePercentage = -frame.origin.y / adjustedHeight;
+      _scrollPhasePercentage = -topEdge / adjustedHeight;
     } else {
       _scrollPhasePercentage = 0;
     }
