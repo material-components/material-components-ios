@@ -92,7 +92,7 @@ class AppBarModalPresentationSwiftExamplePresented: UITableViewController {
     
     let cell = self.tableView.dequeueReusableCell(withIdentifier: "cell") ??
           UITableViewCell(style: .default, reuseIdentifier: "cell")
-    cell.layoutMargins = UIEdgeInsets.zero
+    cell.layoutMargins = .zero
     return cell
   }
 
@@ -188,7 +188,7 @@ extension AppBarModalPresentationSwiftExample {
     
     let cell = self.tableView.dequeueReusableCell(withIdentifier: "cell") ??
         UITableViewCell(style: .default, reuseIdentifier: "cell")
-    cell.layoutMargins = UIEdgeInsets.zero
+    cell.layoutMargins = .zero
     return cell
   }
 

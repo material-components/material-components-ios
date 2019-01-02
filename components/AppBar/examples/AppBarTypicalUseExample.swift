@@ -120,7 +120,7 @@ extension AppBarTypicalUseSwiftExample {
     
     let cell = self.tableView.dequeueReusableCell(withIdentifier: "cell") ??
         UITableViewCell(style: .default, reuseIdentifier: "cell")
-      cell.layoutMargins = UIEdgeInsets.zero
+      cell.layoutMargins = .zero
       cell.selectionStyle = .none
       return cell
   }
