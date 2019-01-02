@@ -59,7 +59,7 @@ wish to use Ripple in their app will need to manually clone the repo and add the
 Add the following to your `Podfile`:
 
 ```bash
-pod 'MaterialComponents/Ripple'
+pod 'MaterialComponentsBeta/Ripple'
 ```
 <!--{: .code-renderer.code-renderer--install }-->
 
@@ -76,7 +76,7 @@ To import the component:
 <!--<div class="material-code-render" markdown="1">-->
 #### Swift
 ```swift
-import MaterialComponents.MaterialRipple
+import MaterialComponentsBeta.MaterialRipple
 ```
 
 #### Objective-C

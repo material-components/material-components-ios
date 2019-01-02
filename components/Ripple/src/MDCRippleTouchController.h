@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
+
 #import "MDCRippleView.h"
 
 @protocol MDCRippleTouchControllerDelegate;
@@ -68,7 +69,7 @@ typedef NS_ENUM(NSInteger, MDCRippleState) {
     UILongPressGestureRecognizer *selectionGestureRecognizer;
 
 /**
- This BOOL tells the touch controller if to allow selection and all the logic and visuals
+ This BOOL tells the touch controller to allow selection and all the logic and visuals
  that come with it, for this ripple.
 
  Defaults to NO.
@@ -151,7 +152,7 @@ typedef NS_ENUM(NSInteger, MDCRippleState) {
 @optional
 
 /**
- Controls whether the ripple touch controller should be processing touches.
+ Controls whether the ripple touch controller should process touches.
 
  The touch controller will query this method to determine if it should start or continue to
  process touches controlling the ripple. Returning NO at the start of a gesture will prevent any
