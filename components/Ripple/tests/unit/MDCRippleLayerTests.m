@@ -144,7 +144,7 @@
   XCTAssertTrue(delegate.rippleTouchUpDidEnd);
 }
 
-- (void)testEndAnimationTimingInSpeedScaledLayer {
+- (void)testAnimationTimingInSpeedScaledLayer {
   // Given
   CapturingAnimationsMDCRippleLayer *rippleLayer = [[CapturingAnimationsMDCRippleLayer alloc] init];
   rippleLayer.bounds = CGRectMake(0, 0, 10, 10);
@@ -165,4 +165,92 @@
   }
 }
 
+- (void)testStartRippleAnimationCorrectness {
+  // Given
+  CapturingAnimationsMDCRippleLayer *rippleLayer = [[CapturingAnimationsMDCRippleLayer alloc] init];
+  CGPoint point = CGPointMake(10, 10);
+
+  // When
+  [rippleLayer startRippleAtPoint:point animated:YES completion:nil];
+  
+  // Then
+  CAAnimationGroup *group = (CAAnimationGroup *)rippleLayer.addedAnimations.firstObject;
+  XCTAssertEqual(group.animations.count, 3);
+  NSInteger animationsCount = 0;
+  for (CAAnimation *animation in group.animations) {
+    XCTAssertFalse(animation.removedOnCompletion);
+    if ([animation isKindOfClass:[CABasicAnimation class]]) {
+      CABasicAnimation *basicAnimation = (CABasicAnimation *)animation;
+      if ([basicAnimation.keyPath isEqualToString: @"opacity"]) {
+        animationsCount += 1;
+        XCTAssertEqualObjects(@1, basicAnimation.toValue);
+        XCTAssertEqualObjects(@0, basicAnimation.fromValue);
+        XCTAssertEqualObjects([CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear], basicAnimation.timingFunction);
+      } else if ([basicAnimation.keyPath isEqualToString:@"transform.scale"]) {
+        animationsCount += 1;
+        XCTAssertEqualObjects(@1, basicAnimation.toValue);
+        XCTAssertEqualObjects(@0.6, basicAnimation.fromValue);
+      }
+    } else if ([animation isKindOfClass:[CAKeyframeAnimation class]]) {
+      animationsCount += 1;
+      CAKeyframeAnimation *keyFrameAnimation = (CAKeyframeAnimation *)animation;
+      XCTAssertTrue(CGPointEqualToPoint(point, CGPathGetCurrentPoint(keyFrameAnimation.path)));
+    }
+  }
+  XCTAssertEqual(animationsCount, 3);
+}
+
+- (void)testEndRippleAnimationCorrectness {
+  // Given
+  CapturingAnimationsMDCRippleLayer *rippleLayer = [[CapturingAnimationsMDCRippleLayer alloc] init];
+
+  // When
+  [rippleLayer endRippleAnimated:YES completion:nil];
+
+  // Then
+  XCTAssertTrue([rippleLayer.addedAnimations.firstObject isKindOfClass:[CABasicAnimation class]]);
+  CABasicAnimation *basicAnimation = (CABasicAnimation *)rippleLayer.addedAnimations.firstObject;
+  XCTAssertEqual(rippleLayer.addedAnimations.count, 1);
+  XCTAssertEqualObjects(@"opacity", basicAnimation.keyPath);
+  XCTAssertEqualObjects(@0, basicAnimation.toValue);
+  XCTAssertEqualObjects(@1, basicAnimation.fromValue);
+  XCTAssertEqualObjects([CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear], basicAnimation.timingFunction);
+  XCTAssertEqualWithAccuracy(basicAnimation.duration, (CGFloat)0.15, 0.0001);
+}
+
+- (void)testFadeInRippleAnimationCorrectness {
+  // Given
+  CapturingAnimationsMDCRippleLayer *rippleLayer = [[CapturingAnimationsMDCRippleLayer alloc] init];
+
+  // When
+  [rippleLayer fadeInRippleAnimated:YES completion:nil];
+
+  // Then
+  XCTAssertTrue([rippleLayer.addedAnimations.firstObject isKindOfClass:[CABasicAnimation class]]);
+  CABasicAnimation *basicAnimation = (CABasicAnimation *)rippleLayer.addedAnimations.firstObject;
+  XCTAssertEqual(rippleLayer.addedAnimations.count, 1);
+  XCTAssertEqualObjects(@"opacity", basicAnimation.keyPath);
+  XCTAssertEqualObjects(@1, basicAnimation.toValue);
+  XCTAssertEqualObjects(@0, basicAnimation.fromValue);
+  XCTAssertEqualObjects([CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear], basicAnimation.timingFunction);
+  XCTAssertEqualWithAccuracy(basicAnimation.duration, (CGFloat)0.075, 0.0001);
+}
+
+- (void)testFadeOutRippleAnimationCorrectness {
+  // Given
+  CapturingAnimationsMDCRippleLayer *rippleLayer = [[CapturingAnimationsMDCRippleLayer alloc] init];
+
+  // When
+  [rippleLayer fadeOutRippleAnimated:YES completion:nil];
+
+  // Then
+  XCTAssertTrue([rippleLayer.addedAnimations.firstObject isKindOfClass:[CABasicAnimation class]]);
+  CABasicAnimation *basicAnimation = (CABasicAnimation *)rippleLayer.addedAnimations.firstObject;
+  XCTAssertEqual(rippleLayer.addedAnimations.count, 1);
+  XCTAssertEqualObjects(@"opacity", basicAnimation.keyPath);
+  XCTAssertEqualObjects(@0, basicAnimation.toValue);
+  XCTAssertEqualObjects(@1, basicAnimation.fromValue);
+  XCTAssertEqualObjects([CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear], basicAnimation.timingFunction);
+  XCTAssertEqualWithAccuracy(basicAnimation.duration, (CGFloat)0.075, 0.0001);
+}
 @end
