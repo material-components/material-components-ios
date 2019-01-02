@@ -82,7 +82,7 @@
   XCTAssertTrue(delegate.rippleTouchDownDidBegin);
 }
 
-- (void)testLayerTouchDownDidEndDelegate {
+- (void)testTouchDownDidEndDelegate {
   // Given
   FakeMDCRippleViewAnimationDelegate *delegate = [[FakeMDCRippleViewAnimationDelegate alloc] init];
   MDCRippleView *rippleView = [[MDCRippleView alloc] init];
@@ -102,7 +102,7 @@
   XCTAssertTrue(delegate.rippleTouchDownDidEnd);
 }
 
-- (void)testLayerTouchUpDidBeginDelegate {
+- (void)testTouchUpDidBeginDelegate {
   // Given
   FakeMDCRippleViewAnimationDelegate *delegate = [[FakeMDCRippleViewAnimationDelegate alloc] init];
   MDCRippleView *rippleView = [[MDCRippleView alloc] init];
@@ -117,7 +117,7 @@
   XCTAssertTrue(delegate.rippleTouchUpDidBegin);
 }
 
-- (void)testLayerTouchUpDidEndDelegate {
+- (void)testTouchUpDidEndDelegate {
   // Given
   FakeMDCRippleViewAnimationDelegate *delegate = [[FakeMDCRippleViewAnimationDelegate alloc] init];
   MDCRippleView *rippleView = [[MDCRippleView alloc] init];
