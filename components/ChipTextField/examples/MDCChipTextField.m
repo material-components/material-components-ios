@@ -21,7 +21,7 @@ static CGFloat const kChipsSpacing = 0.0f;
 
 @interface MDCChipTextField () <MDCChipTextFieldScrollViewDataSource>
 
-@property (nonatomic, weak) MDCChipTextFieldScrollView *chipsContainerView;
+@property (nonatomic, strong) MDCChipTextFieldScrollView *chipsContainerView;
 @property (nonatomic) CGFloat chipsContainerHorizontalOffsetForTextEditing;
 @property (nonatomic) CGFloat chipsContainerHorizontalWidthForTextEditing;
 

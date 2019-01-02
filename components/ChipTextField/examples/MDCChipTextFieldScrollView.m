@@ -16,7 +16,7 @@
 
 @interface MDCChipTextFieldScrollView ()
 
-@property (nonatomic, readwrite, weak) UIView *contentView;
+@property (nonatomic, readwrite, strong) UIView *contentView;
 
 @property (nonatomic, readwrite, weak) NSLayoutConstraint *trailingConstraint;
 @property (nonatomic, readwrite, weak) NSLayoutConstraint *contentWidthConstraint;
