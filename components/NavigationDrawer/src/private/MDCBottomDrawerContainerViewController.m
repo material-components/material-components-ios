@@ -178,6 +178,8 @@ static UIColor *DrawerShadowColor(void) {
 
 - (void)dealloc {
   [self removeScrollViewObserver];
+  [self.headerShadowLayer removeFromSuperlayer];
+  self.headerShadowLayer = nil;
   [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -494,10 +496,7 @@ static UIColor *DrawerShadowColor(void) {
 
 - (void)viewDidDisappear:(BOOL)animated {
   [super viewDidDisappear:animated];
-
   [self removeScrollViewObserver];
-  [self.headerShadowLayer removeFromSuperlayer];
-  self.headerShadowLayer = nil;
 }
 
 - (void)preferredContentSizeDidChangeForChildContentContainer:(id<UIContentContainer>)container {

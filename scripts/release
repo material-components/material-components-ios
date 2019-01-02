@@ -1,4 +1,4 @@
-#!/bin/bash +e
+#!/bin/bash
 #
 # Copyright 2017-present The Material Motion and Material Components for
 # iOS Authors. All Rights Reserved.
@@ -14,6 +14,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+# Abort if any command returns an error
+set -e
 
 parentcmd=$(basename "${BASH_SOURCE[1]}")
 cmd=$(basename "${BASH_SOURCE[0]}")
@@ -239,6 +242,27 @@ merge_release() {
     echo "Must provide a ${U}version${N} argument."
     exit 1
   fi
+  
+  deviance=$(git log develop..origin/develop --oneline | wc -l)
+  if [ $deviance -ne 0 ]; then
+    echo
+    echo "    Your local develop branch is behind origin/develop."
+    echo "    Refusing to continue until you've rebased off of origin/develop."
+    echo
+    echo "    git checkout develop"
+    echo "    git rebase origin/develop"
+    echo
+    exit 1
+  fi
+  
+  deviance=$(git log origin/develop..develop --oneline | wc -l)
+  if [ $deviance -ne "0" ]; then
+    echo
+    echo "    Your local develop branch is ahead of origin/develop."
+    echo "    Refusing to continue until you've landed your local changes into origin/develop."
+    echo
+    exit 1 # TODO: Revert this line so we bail out.
+  fi
 
   current_branch=$(current_branch)
   if [ "$current_branch" != "release-candidate" ]; then
@@ -447,8 +471,15 @@ generate_release_apidiff() {
     fi
   }
   trap clean_clones EXIT
+
+  # We do not need LFS for the temporary clones; they are used solely to do API diffs.
+  # See https://github.com/git-lfs/git-lfs/issues/2406 for where this flag came from.
+  export GIT_LFS_SKIP_SMUDGE=1
+
   "$dir/temporary_clone_at_ref" "$OLD_ROOT_PATH" $old_commit
   "$dir/temporary_clone_at_ref" "$NEW_ROOT_PATH" $new_commit
+  
+  unset GIT_LFS_SKIP_SMUDGE
 
   # Find command in all component src directories and grab search path for "Material$component.h"
   old_header_search_paths=""

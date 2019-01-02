@@ -20,6 +20,46 @@
 
 @implementation MDCAbstractTextFieldSnapshotTests (I18N)
 
+#pragma mark - Internal helpers
+
+- (void)MDCForceTextInputRightToLeft:(UIView *)view {
+  if ([view conformsToProtocol:@protocol(UITextInput)]) {
+    id<UITextInput> textInput = (id<UITextInput>)view;
+    UITextRange *textRange = [textInput textRangeFromPosition:textInput.beginningOfDocument
+                                                   toPosition:textInput.endOfDocument];
+    if (textRange) {
+      [textInput setBaseWritingDirection:UITextWritingDirectionRightToLeft forRange:textRange];
+    } else {
+      if (@available(iOS 11.0, *)) {
+        // Fail the test if `textRange` is nil since even an empty range should be non-nil.
+        XCTAssertNotNil(textRange);
+      } else {
+        // iOS before 11 would return `nil` for `beginningOfDocument` unless the UITextInput was
+        // in a view hierarchy, the first responder, and (for UITextView) selectable.
+        NSLog(@"[ERROR] Setting the base writing direction on an UITextInput only works on iOS "
+               "11+.");
+      }
+    }
+  }
+  for (UIView *subview in view.subviews) {
+    [self MDCForceTextInputRightToLeft:subview];
+  }
+}
+
+- (void)MDCForceViewLayoutRightToLeft:(UIView *)view NS_AVAILABLE_IOS(9.0) {
+  // Setting semanticContentAttribute results in a call to effectiveUserInterfaceLayoutDirection, so
+  // make sure we set it first.
+  [self.textField
+      MDCtest_setEffectiveUserInterfaceLayoutDirection:UIUserInterfaceLayoutDirectionRightToLeft];
+
+  view.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
+  for (UIView *subview in view.subviews) {
+    [self MDCForceViewLayoutRightToLeft:subview];
+  }
+}
+
+#pragma mark - Public API
+
 - (void)changeStringsToArabic {
   self.shortInputText = MDCTextFieldSnapshotTestsInputShortTextArabic;
   self.longInputText = MDCTextFieldSnapshotTestsInputLongTextArabic;
@@ -31,21 +71,42 @@
   self.longErrorText = MDCTextFieldSnapshotTestsErrorLongTextArabic;
 }
 
-// TODO(https://github.com/material-components/material-components-ios/issues/6022 ): Get Arabic
-// input text to be on the right side. Get placeholder text to move to the right side.
-- (void)changeLayoutToRTL {
-  // Setting semanticContentAttribute results in a call to effectiveUserInterfaceLayoutDirection, so
-  // make sure we set it first.
-  [self.textField
-      MDCtest_setEffectiveUserInterfaceLayoutDirection:UIUserInterfaceLayoutDirectionRightToLeft];
+- (void)changeStringsToCyrillic {
+  self.shortInputText = MDCTextFieldSnapshotTestsInputShortTextCyrillic;
+  self.longInputText = MDCTextFieldSnapshotTestsInputLongTextCyrillic;
+  self.shortPlaceholderText = MDCTextFieldSnapshotTestsPlaceholderShortTextCyrillic;
+  self.longPlaceholderText = MDCTextFieldSnapshotTestsPlaceholderLongTextCyrillic;
+  self.shortHelperText = MDCTextFieldSnapshotTestsHelperShortTextCyrillic;
+  self.longHelperText = MDCTextFieldSnapshotTestsHelperLongTextCyrillic;
+  self.shortErrorText = MDCTextFieldSnapshotTestsErrorShortTextCyrillic;
+  self.longErrorText = MDCTextFieldSnapshotTestsErrorLongTextCyrillic;
+}
 
-  // UISemanticContentAttribute was added in iOS SDK 9.0 but is available on devices running earlier
-  // version of iOS. We ignore the partial-availability warning that gets thrown on our use of this
-  // symbol.
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wpartial-availability"
-  self.textField.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
-#pragma clang diagnostic pop
+- (void)changeStringsToHindi {
+  self.shortInputText = MDCTextFieldSnapshotTestsInputShortTextHindi;
+  self.longInputText = MDCTextFieldSnapshotTestsInputLongTextHindi;
+  self.shortPlaceholderText = MDCTextFieldSnapshotTestsPlaceholderShortTextHindi;
+  self.longPlaceholderText = MDCTextFieldSnapshotTestsPlaceholderLongTextHindi;
+  self.shortHelperText = MDCTextFieldSnapshotTestsHelperShortTextHindi;
+  self.longHelperText = MDCTextFieldSnapshotTestsHelperLongTextHindi;
+  self.shortErrorText = MDCTextFieldSnapshotTestsErrorShortTextHindi;
+  self.longErrorText = MDCTextFieldSnapshotTestsErrorLongTextHindi;
+}
+
+- (void)changeStringsToKorean {
+  self.shortInputText = MDCTextFieldSnapshotTestsInputShortTextKorean;
+  self.longInputText = MDCTextFieldSnapshotTestsInputLongTextKorean;
+  self.shortPlaceholderText = MDCTextFieldSnapshotTestsPlaceholderShortTextKorean;
+  self.longPlaceholderText = MDCTextFieldSnapshotTestsPlaceholderLongTextKorean;
+  self.shortHelperText = MDCTextFieldSnapshotTestsHelperShortTextKorean;
+  self.longHelperText = MDCTextFieldSnapshotTestsHelperLongTextKorean;
+  self.shortErrorText = MDCTextFieldSnapshotTestsErrorShortTextKorean;
+  self.longErrorText = MDCTextFieldSnapshotTestsErrorLongTextKorean;
+}
+
+- (void)changeLayoutToRTL {
+  [self MDCForceTextInputRightToLeft:self.textField];
+  [self MDCForceViewLayoutRightToLeft:self.textField];
 }
 
 @end
