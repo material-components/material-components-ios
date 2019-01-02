@@ -34,9 +34,9 @@
 
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     if let chipTextField = textField as? MDCChipTextField,
-       let chipText = textField.text?.trimmingCharacters(in: .whitespacesAndNewlines), chipText.count > 0 {
-         chipTextField.appendChip(text: chipText)
-         chipTextField.text = ""
+       let chipText = textField.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+       chipText.count > 0 {
+       chipTextField.appendChip(text: chipText) chipTextField.text = ""
     }
     return true
   }
