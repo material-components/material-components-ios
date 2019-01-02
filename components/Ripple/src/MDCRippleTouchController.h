@@ -96,7 +96,6 @@ typedef NS_ENUM(NSInteger, MDCRippleState) {
  */
 @property(nonatomic, readonly) MDCRippleState state;
 
-
 /**
  Unavailable, please use `initWithView` instead.
  */
@@ -109,7 +108,6 @@ typedef NS_ENUM(NSInteger, MDCRippleState) {
  ripple is added as a subview to.
  */
 - (nonnull instancetype)initWithView:(nonnull UIView *)view NS_DESIGNATED_INITIALIZER;
-
 
 /**
  Sets the color of the ripple for state.
