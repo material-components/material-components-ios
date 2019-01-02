@@ -51,7 +51,7 @@
   [self changeStringsToArabic];
 }
 
-- (void)beforeGenerateSnapshotAndVerify {
+- (void)willGenerateSnapshotAndVerify {
   if (@available(iOS 9.0, *)) {
     [self changeLayoutToRTL];
   } else {

@@ -23,7 +23,7 @@
 
  -   Call @c setUp
  -   Assign strings to the relevant properties.
- -   Call @c beforeGenerateSnapshotAndVerify
+ -   Call @c willGenerateSnapshotAndVerify
  -   Call @c generateSnapshotAndVerify
  -   Call @c tearDown
  */
@@ -35,7 +35,7 @@
  Hook for test classes to execute any additional code desired before `generateSnapshotAndVerify` is
  called.
  */
-- (void)beforeGenerateSnapshotAndVerify;
+- (void)willGenerateSnapshotAndVerify;
 
 @end
 
