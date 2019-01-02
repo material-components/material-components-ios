@@ -42,6 +42,20 @@ mdc_objc_library(
 )
 
 mdc_objc_library(
+    name = "ObjcExamples",
+    srcs = glob([
+        "examples/*.h",
+        "examples/*.m",
+        "examples/supplemental/*.h",
+        "examples/supplemental/*.m",
+    ]),
+    visibility = ["//visibility:private"],
+    deps = [
+        ":Ripple",
+    ],
+)
+
+mdc_objc_library(
     name = "unit_test_sources",
     testonly = 1,
     srcs = glob(["tests/unit/*.m"]),

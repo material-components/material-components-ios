@@ -13,10 +13,8 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
+#import "MDCRippleView.h"
 
-@class MDCRippleGestureRecognizer;
-@class MDCRippleTouchController;
-@class MDCRippleView;
 @protocol MDCRippleTouchControllerDelegate;
 
 /**

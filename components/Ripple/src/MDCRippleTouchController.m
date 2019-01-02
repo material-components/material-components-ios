@@ -14,8 +14,6 @@
 
 #import "MDCRippleTouchController.h"
 
-#import "MDCRippleView.h"
-
 @implementation MDCRippleTouchController {
   BOOL _tapWentOutsideOfBounds;
   NSMutableDictionary<NSNumber *, UIColor *> *_rippleColors;
