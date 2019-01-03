@@ -28,7 +28,7 @@
             buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F56C18D8F10BA69D348E3AD45B3DA353"
+               BlueprintIdentifier = "674FDC5D181285D37A7365BCEF7D6864"
                BuildableName = "MaterialComponentsSnapshotTests-Unit-Tests.xctest"
                BlueprintName = "MaterialComponentsSnapshotTests-Unit-Tests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -64,12 +64,10 @@
             </BuildableReference>
          </TestableReference>
          <TestableReference
-            skipped = "NO"
-            parallelizable = "YES"
-            testExecutionOrdering = "random">
+            skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F56C18D8F10BA69D348E3AD45B3DA353"
+               BlueprintIdentifier = "674FDC5D181285D37A7365BCEF7D6864"
                BuildableName = "MaterialComponentsSnapshotTests-Unit-Tests.xctest"
                BlueprintName = "MaterialComponentsSnapshotTests-Unit-Tests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
