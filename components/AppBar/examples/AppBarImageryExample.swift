@@ -125,11 +125,10 @@ extension AppBarImagerySwiftExample {
   override func tableView(
     _ tableView: UITableView,
     cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-      var cell = self.tableView.dequeueReusableCell(withIdentifier: "cell")
-      if cell == nil {
-        cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
-      }
-      cell!.selectionStyle = .none
-      return cell!
+    
+    let cell = self.tableView.dequeueReusableCell(withIdentifier: "cell") ??
+        UITableViewCell(style: .default, reuseIdentifier: "cell")
+    cell.selectionStyle = .none
+    return cell
   }
 }
