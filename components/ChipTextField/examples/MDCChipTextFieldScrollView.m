@@ -106,6 +106,7 @@
   [self setShowsVerticalScrollIndicator:NO];
   [self setShowsHorizontalScrollIndicator:NO];
   self.bounces = NO;
+  self.scrollEnabled = NO;
 }
 
 - (void)appendChipView:(MDCChipView *)chipView {
