@@ -876,7 +876,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
 }
 
 - (void)updatePlaceholderAlpha {
-  CGFloat opacity = (self.hidesPlaceholderOnInput && self.textInput.text.length > 0) ? 0 : 1;
+  CGFloat opacity = (self.hidesPlaceholderOnInput && self.textInput.hasTextContent) ? 0 : 1;
   self.placeholderLabel.alpha = opacity;
 }
 
