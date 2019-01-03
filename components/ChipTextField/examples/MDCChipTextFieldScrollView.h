@@ -37,8 +37,8 @@
 @property (nonatomic, weak, nullable) id <MDCChipTextFieldScrollViewDataSource> dataSource;
 
 @property(nonatomic) CGFloat chipSpacing;
-@property(nonatomic) CGFloat contentHorizontalOffset;
-@property(nonatomic) CGFloat contentWidthConstant;
+
+- (void)scrollToRight;
 
 // TODO: remove these methods
 - (void)appendChipView:(MDCChipView *)chipView;

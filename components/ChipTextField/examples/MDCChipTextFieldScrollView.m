@@ -19,7 +19,6 @@
 @property (nonatomic, readwrite, strong) UIView *contentView;
 
 @property (nonatomic, readwrite, weak) NSLayoutConstraint *trailingConstraint;
-@property (nonatomic, readwrite, weak) NSLayoutConstraint *contentWidthConstraint;
 
 @end
 
@@ -92,7 +91,6 @@
                                                                              constant:0];
   contentConstraintWidth.priority = UILayoutPriorityDefaultLow;
   [NSLayoutConstraint activateConstraints:@[contentConstraintTop, contentConstraintBottom, contentConstraintLeading, contentConstraintTrailing, contentConstraintHeight, contentConstraintWidth]];
-  self.contentWidthConstraint = contentConstraintWidth;
 
   NSLayoutConstraint *contentToChipTrailingConstraint = [NSLayoutConstraint constraintWithItem:contentView
                                                                                      attribute:NSLayoutAttributeTrailing
@@ -113,6 +111,10 @@
 - (void)appendChipView:(MDCChipView *)chipView {
   self.trailingConstraint.active = NO;
   [self.contentView addSubview:chipView];
+  [chipView setContentHuggingPriority:UILayoutPriorityRequired
+                              forAxis:UILayoutConstraintAxisHorizontal];
+  [chipView setContentCompressionResistancePriority:UILayoutPriorityRequired
+                                            forAxis:UILayoutConstraintAxisHorizontal];
   NSLayoutConstraint *chipViewConstraintTop = [NSLayoutConstraint constraintWithItem:self.contentView
                                                                            attribute:NSLayoutAttributeTop
                                                                            relatedBy:NSLayoutRelationLessThanOrEqual
@@ -184,20 +186,8 @@
   }
 }
 
-- (void)setContentHorizontalOffset:(CGFloat)contentHorizontalOffset {
-  self.contentOffset = CGPointMake(contentHorizontalOffset, self.contentOffset.y);
-}
-
-- (CGFloat)contentHorizontalOffset {
-  return self.contentOffset.x;
-}
-
-- (void)setContentWidthConstant:(CGFloat)contentWidthConstant {
-  self.contentWidthConstraint.constant = contentWidthConstant;
-}
-
-- (CGFloat)contentWidthConstant {
-  return self.contentWidthConstraint.constant;
+- (void)scrollToRight {
+  self.contentOffset = CGPointMake(self.contentSize.width - self.bounds.size.width, self.contentOffset.y);
 }
 
 - (void)layoutSubviews {
