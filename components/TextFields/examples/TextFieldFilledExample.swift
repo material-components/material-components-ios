@@ -77,13 +77,13 @@ final class TextFieldFilledSwiftExample: UIViewController {
   let leadingImage: UIImage = {
     return UIImage.init(named: "ic_search",
                         in: Bundle(for: TextFieldFilledSwiftExample.self),
-                        compatibleWith: nil)!
+                        compatibleWith: nil) ?? UIImage()
   }()
 
   let trailingImage: UIImage = {
     return UIImage.init(named: "ic_done",
                         in: Bundle(for: TextFieldFilledSwiftExample.self),
-                        compatibleWith: nil)!
+                        compatibleWith: nil) ?? UIImage()
   }()
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
