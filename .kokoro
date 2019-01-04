@@ -304,7 +304,7 @@ run_cocoapods() {
     # Move into our cloned repo
     cd github/repo
 
-    gem install xcpretty cocoapods --no-rdoc --no-ri --no-document --quiet
+    gem install xcpretty cocoapods --no-ri --no-document --quiet
     pod --version
 
     # Install git-lfs
@@ -367,7 +367,7 @@ generate_website() {
     ./scripts/build_site.sh
 
     gem update --system
-    gem install bundler --no-rdoc --no-ri --no-document --quiet
+    gem install bundler --no-ri --no-document --quiet
     brew update
     brew install yarn --without-node
   fi
