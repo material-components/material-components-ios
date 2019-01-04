@@ -31,7 +31,6 @@
   if (self) {
     _chipsView = [[UIView alloc] initWithFrame:CGRectZero];
     _chipsView.translatesAutoresizingMaskIntoConstraints = NO;
-    //_chipsView.backgroundColor = [UIColor yellowColor];
     _chipsView.clipsToBounds = YES;
     self.leftView = _chipsView;
 
@@ -133,7 +132,6 @@
 - (CGRect)textRectForBounds:(CGRect)bounds {
   CGRect textRect = [super textRectForBounds:bounds];
   textRect.origin.x = MAX(self.insetX, textRect.origin.x);
-  //  editingRect.origin.x = self.insetX;
   return textRect;
 }
 
