@@ -301,6 +301,11 @@ static UIColor *DrawerShadowColor(void) {
   return [self isAccessibilityMode] || [self isMobileLandscape] || _shouldPresentAtFullscreen;
 }
 
+- (BOOL)contentReachesFullscreen {
+  return [self shouldPresentFullScreen] ? YES
+                                        : self.contentHeightSurplus >= self.contentHeaderTopInset;
+}
+
 /**
  The drawer height factor defines how much percentage of the screen space the drawer will take up
  when displayed. The expected range is 0 - 1 (0% - 100%).
@@ -791,11 +796,6 @@ static UIColor *DrawerShadowColor(void) {
   }
 
   return NSNotFound;
-}
-
-- (BOOL)contentReachesFullscreen {
-  return [self shouldPresentFullScreen] ? YES
-                                        : self.contentHeightSurplus >= self.contentHeaderTopInset;
 }
 
 @end
