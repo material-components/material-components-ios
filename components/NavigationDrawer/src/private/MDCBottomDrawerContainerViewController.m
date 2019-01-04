@@ -793,6 +793,11 @@ static UIColor *DrawerShadowColor(void) {
   return NSNotFound;
 }
 
+- (BOOL)contentReachesFullscreen {
+  return [self shouldPresentFullScreen] ? YES
+                                        : self.contentHeightSurplus >= self.contentHeaderTopInset;
+}
+
 @end
 
 #pragma mark - MDCBottomDrawerContainerViewController + Layout Values
@@ -801,11 +806,6 @@ static UIColor *DrawerShadowColor(void) {
 
 - (CGRect)presentingViewBounds {
   return CGRectStandardize(self.originalPresentingViewController.view.bounds);
-}
-
-- (BOOL)contentReachesFullscreen {
-  return [self shouldPresentFullScreen] ? YES
-                                        : self.contentHeightSurplus >= self.contentHeaderTopInset;
 }
 
 - (BOOL)contentScrollsToReveal {
