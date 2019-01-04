@@ -38,6 +38,7 @@
 
 @property(nonatomic) CGFloat chipSpacing;
 
+- (void)scrollToLeft;
 - (void)scrollToRight;
 
 // TODO: remove these methods

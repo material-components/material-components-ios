@@ -44,8 +44,21 @@ static CGFloat const kTextToEnterPlaceholderLength= 16.0f;
     [self addTarget:self
              action:@selector(chipTextFieldTextDidChange)
    forControlEvents:UIControlEventEditingChanged];
+
+    [self addTextFieldObservers];
   }
   return self;
+}
+
+- (void)addTextFieldObservers {
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(textFieldDidEndEditingWithNotification:)
+                                               name:UITextFieldTextDidEndEditingNotification
+                                             object:self];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(textFieldDidBeginEditingWithNotification:)
+                                               name:UITextFieldTextDidBeginEditingNotification
+                                             object:self];
 }
 
 - (void)setupChipsContainerView {
@@ -86,11 +99,12 @@ static CGFloat const kTextToEnterPlaceholderLength= 16.0f;
   [self.chipsContainerView layoutIfNeeded];
   [self.chipViews addObject:chipView];
 
-  [self clearChipsContainerOffset];
+  [self clearChipsContainerOffsetWithConstant:kTextToEnterPlaceholderLength];
 }
 
-- (void)clearChipsContainerOffset {
-  self.chipContainerViewConstraintTrailingConstant = -kTextToEnterPlaceholderLength;
+// TODO: the constant here reflects the margin, places calling this method need to be refactored.
+- (void)clearChipsContainerOffsetWithConstant:(CGFloat)constant {
+  self.chipContainerViewConstraintTrailingConstant = -constant;
   [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];
   [self layoutIfNeeded];
@@ -117,7 +131,7 @@ static CGFloat const kTextToEnterPlaceholderLength= 16.0f;
   CGFloat inputRectLength = inputRect.size.width;
 
   self.chipContainerViewConstraintTrailingConstant = -(inputRectLength + kTextToEnterPlaceholderLength);
-  [self invalidateIntrinsicContentSize];
+  [self setNeedsUpdateConstraints];
   [self setNeedsLayout];
   [self layoutIfNeeded];
   [self.chipsContainerView setNeedsLayout];
@@ -224,6 +238,11 @@ static CGFloat const kTextToEnterPlaceholderLength= 16.0f;
   return textRect;
 }
 
+- (CGRect)editingRectForBounds:(CGRect)bounds {
+  CGRect editingRect = [super editingRectForBounds:bounds];
+  return editingRect;
+}
+
 - (void)deleteBackward {
   NSInteger cursorPosition = [self offsetFromPosition:self.beginningOfDocument
                                            toPosition:self.selectedTextRange.start];
@@ -270,7 +289,7 @@ static CGFloat const kTextToEnterPlaceholderLength= 16.0f;
 - (void)removeChip:(MDCChipView *)chip {
   [self.chipViews removeObject:chip];
   [self.chipsContainerView removeChipView:chip];
-  [self clearChipsContainerOffset];
+  [self clearChipsContainerOffsetWithConstant:kTextToEnterPlaceholderLength];
 
   [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];
@@ -305,7 +324,16 @@ static CGFloat const kTextToEnterPlaceholderLength= 16.0f;
     [self selectLastChip];
   }
 }
+#pragma mark Notification Listener Methods
 
+- (void)textFieldDidBeginEditingWithNotification:(NSNotification *)notification {
+  [self setupEditingRect];
+}
+
+- (void)textFieldDidEndEditingWithNotification:(NSNotification *)notification {
+  [self clearChipsContainerOffsetWithConstant:0.0f];
+  [self.chipsContainerView scrollToLeft];
+}
 
 #pragma mark - MDCChipTextFieldScrollViewDataSource
 

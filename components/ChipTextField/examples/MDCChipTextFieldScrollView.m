@@ -187,6 +187,10 @@
   }
 }
 
+- (void)scrollToLeft {
+  self.contentOffset = CGPointMake(0.0f, self.contentOffset.y);
+}
+
 - (void)scrollToRight {
   self.contentOffset = CGPointMake(self.contentSize.width - self.bounds.size.width, self.contentOffset.y);
 }
