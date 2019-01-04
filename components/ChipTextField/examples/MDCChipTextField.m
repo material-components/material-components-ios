@@ -14,21 +14,21 @@
 
 #import "MDCChipTextField.h"
 
-#import "MaterialChips.h"
 #import "MDCChipTextFieldScrollView.h"
+#import "MaterialChips.h"
 
 static CGFloat const kChipsSpacing = 0.0f;
-static CGFloat const kTextToEnterPlaceholderLength= 16.0f;
+static CGFloat const kTextToEnterPlaceholderLength = 16.0f;
 
 @interface MDCChipTextField () <MDCChipTextFieldScrollViewDataSource>
 
-@property (nonatomic, strong) MDCChipTextFieldScrollView *chipsContainerView;
+@property(nonatomic, strong) MDCChipTextFieldScrollView *chipsContainerView;
 
-@property (nonatomic, readwrite, weak) NSLayoutConstraint *chipContainerViewConstraintLeading;
-@property (nonatomic, readwrite, weak) NSLayoutConstraint *chipContainerViewConstraintTrailing;
-@property (nonatomic) CGFloat chipContainerViewConstraintTrailingConstant;
+@property(nonatomic, readwrite, weak) NSLayoutConstraint *chipContainerViewConstraintLeading;
+@property(nonatomic, readwrite, weak) NSLayoutConstraint *chipContainerViewConstraintTrailing;
+@property(nonatomic) CGFloat chipContainerViewConstraintTrailingConstant;
 // Chip view models
-@property (nonatomic, strong) NSMutableArray<MDCChipView *> *chipViews;
+@property(nonatomic, strong) NSMutableArray<MDCChipView *> *chipViews;
 
 @end
 
@@ -42,8 +42,8 @@ static CGFloat const kTextToEnterPlaceholderLength= 16.0f;
     [self setupChipsContainerView];
 
     [self addTarget:self
-             action:@selector(chipTextFieldTextDidChange)
-   forControlEvents:UIControlEventEditingChanged];
+                  action:@selector(chipTextFieldTextDidChange)
+        forControlEvents:UIControlEventEditingChanged];
 
     [self addTextFieldObservers];
   }
@@ -51,39 +51,45 @@ static CGFloat const kTextToEnterPlaceholderLength= 16.0f;
 }
 
 - (void)addTextFieldObservers {
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(textFieldDidEndEditingWithNotification:)
-                                               name:UITextFieldTextDidEndEditingNotification
-                                             object:self];
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(textFieldDidBeginEditingWithNotification:)
-                                               name:UITextFieldTextDidBeginEditingNotification
-                                             object:self];
+  [[NSNotificationCenter defaultCenter]
+      addObserver:self
+         selector:@selector(textFieldDidEndEditingWithNotification:)
+             name:UITextFieldTextDidEndEditingNotification
+           object:self];
+  [[NSNotificationCenter defaultCenter]
+      addObserver:self
+         selector:@selector(textFieldDidBeginEditingWithNotification:)
+             name:UITextFieldTextDidBeginEditingNotification
+           object:self];
 }
 
 - (void)setupChipsContainerView {
-  MDCChipTextFieldScrollView *chipsContainerView = [[MDCChipTextFieldScrollView alloc] initWithFrame:CGRectZero];
+  MDCChipTextFieldScrollView *chipsContainerView =
+      [[MDCChipTextFieldScrollView alloc] initWithFrame:CGRectZero];
   chipsContainerView.translatesAutoresizingMaskIntoConstraints = NO;
   chipsContainerView.chipSpacing = kChipsSpacing;
   chipsContainerView.dataSource = self;
   self.chipsContainerView = chipsContainerView;
   [self addSubview:chipsContainerView];
-  
-  NSLayoutConstraint *chipContainerViewConstraintTop = [NSLayoutConstraint constraintWithItem:self.chipsContainerView
-                                                                                    attribute:NSLayoutAttributeTop
-                                                                                    relatedBy:NSLayoutRelationEqual
-                                                                                       toItem:self
-                                                                                    attribute:NSLayoutAttributeTop
-                                                                                   multiplier:1
-                                                                                     constant:0];
-  NSLayoutConstraint *chipContainerViewConstraintBottom = [NSLayoutConstraint constraintWithItem:self.chipsContainerView
-                                                                                       attribute:NSLayoutAttributeBottom
-                                                                                       relatedBy:NSLayoutRelationEqual
-                                                                                          toItem:self
-                                                                                       attribute:NSLayoutAttributeBottom
-                                                                                      multiplier:1
-                                                                                        constant:0];
-  [NSLayoutConstraint activateConstraints:@[chipContainerViewConstraintTop, chipContainerViewConstraintBottom]];
+
+  NSLayoutConstraint *chipContainerViewConstraintTop =
+      [NSLayoutConstraint constraintWithItem:self.chipsContainerView
+                                   attribute:NSLayoutAttributeTop
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:self
+                                   attribute:NSLayoutAttributeTop
+                                  multiplier:1
+                                    constant:0];
+  NSLayoutConstraint *chipContainerViewConstraintBottom =
+      [NSLayoutConstraint constraintWithItem:self.chipsContainerView
+                                   attribute:NSLayoutAttributeBottom
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:self
+                                   attribute:NSLayoutAttributeBottom
+                                  multiplier:1
+                                    constant:0];
+  [NSLayoutConstraint
+      activateConstraints:@[ chipContainerViewConstraintTop, chipContainerViewConstraintBottom ]];
   [self updateChipViewLeadingConstraints];
   [self updateChipViewTrailingConstraints];
 }
@@ -130,7 +136,8 @@ static CGFloat const kTextToEnterPlaceholderLength= 16.0f;
   CGRect inputRect = [self firstRectForRange:textRange];
   CGFloat inputRectLength = inputRect.size.width;
 
-  self.chipContainerViewConstraintTrailingConstant = -(inputRectLength + kTextToEnterPlaceholderLength);
+  self.chipContainerViewConstraintTrailingConstant =
+      -(inputRectLength + kTextToEnterPlaceholderLength);
   [self setNeedsUpdateConstraints];
   [self setNeedsLayout];
   [self layoutIfNeeded];
@@ -142,7 +149,8 @@ static CGFloat const kTextToEnterPlaceholderLength= 16.0f;
 #pragma mark - Constraints
 
 - (void)updateConstraints {
-  // TODO: This is not optimized for performance, but due to how MDCTextInputController works, we need to update constraints here
+  // TODO: This is not optimized for performance, but due to how MDCTextInputController works, we
+  // need to update constraints here
   [self updateChipViewLeadingConstraints];
   [self updateChipViewTrailingConstraints];
 
@@ -154,21 +162,23 @@ static CGFloat const kTextToEnterPlaceholderLength= 16.0f;
 
   NSLayoutConstraint *chipContainerViewConstraintLeading = nil;
   if (self.leftView) {
-    chipContainerViewConstraintLeading = [NSLayoutConstraint constraintWithItem:self.chipsContainerView
-                                                                      attribute:NSLayoutAttributeLeading
-                                                                      relatedBy:NSLayoutRelationEqual
-                                                                         toItem:self.leftView
-                                                                      attribute:NSLayoutAttributeTrailing
-                                                                     multiplier:1
-                                                                       constant:self.textInsets.left];
+    chipContainerViewConstraintLeading =
+        [NSLayoutConstraint constraintWithItem:self.chipsContainerView
+                                     attribute:NSLayoutAttributeLeading
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self.leftView
+                                     attribute:NSLayoutAttributeTrailing
+                                    multiplier:1
+                                      constant:self.textInsets.left];
   } else {
-    chipContainerViewConstraintLeading = [NSLayoutConstraint constraintWithItem:self.chipsContainerView
-                                                                      attribute:NSLayoutAttributeLeading
-                                                                      relatedBy:NSLayoutRelationEqual
-                                                                         toItem:self
-                                                                      attribute:NSLayoutAttributeLeading
-                                                                     multiplier:1
-                                                                       constant:self.textInsets.left];
+    chipContainerViewConstraintLeading =
+        [NSLayoutConstraint constraintWithItem:self.chipsContainerView
+                                     attribute:NSLayoutAttributeLeading
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self
+                                     attribute:NSLayoutAttributeLeading
+                                    multiplier:1
+                                      constant:self.textInsets.left];
   }
   chipContainerViewConstraintLeading.active = YES;
 
@@ -180,21 +190,23 @@ static CGFloat const kTextToEnterPlaceholderLength= 16.0f;
 
   NSLayoutConstraint *chipContainerViewConstraintTrailing = nil;
   if (self.rightView) {
-    chipContainerViewConstraintTrailing = [NSLayoutConstraint constraintWithItem:self.chipsContainerView
-                                                                       attribute:NSLayoutAttributeTrailing
-                                                                       relatedBy:NSLayoutRelationLessThanOrEqual
-                                                                          toItem:self.rightView
-                                                                       attribute:NSLayoutAttributeLeading
-                                                                      multiplier:1
-                                                                        constant:self.chipContainerViewConstraintTrailingConstant];
+    chipContainerViewConstraintTrailing =
+        [NSLayoutConstraint constraintWithItem:self.chipsContainerView
+                                     attribute:NSLayoutAttributeTrailing
+                                     relatedBy:NSLayoutRelationLessThanOrEqual
+                                        toItem:self.rightView
+                                     attribute:NSLayoutAttributeLeading
+                                    multiplier:1
+                                      constant:self.chipContainerViewConstraintTrailingConstant];
   } else {
-    chipContainerViewConstraintTrailing = [NSLayoutConstraint constraintWithItem:self.chipsContainerView
-                                                                       attribute:NSLayoutAttributeTrailing
-                                                                       relatedBy:NSLayoutRelationLessThanOrEqual
-                                                                          toItem:self.clearButton
-                                                                       attribute:NSLayoutAttributeLeading
-                                                                      multiplier:1
-                                                                        constant:self.chipContainerViewConstraintTrailingConstant];
+    chipContainerViewConstraintTrailing =
+        [NSLayoutConstraint constraintWithItem:self.chipsContainerView
+                                     attribute:NSLayoutAttributeTrailing
+                                     relatedBy:NSLayoutRelationLessThanOrEqual
+                                        toItem:self.clearButton
+                                     attribute:NSLayoutAttributeLeading
+                                    multiplier:1
+                                      constant:self.chipContainerViewConstraintTrailingConstant];
   }
   chipContainerViewConstraintTrailing.active = YES;
 

@@ -20,7 +20,7 @@
 
 @protocol MDCChipTextFieldScrollViewDelegate <NSObject, UIScrollViewDelegate>
 
-//TODO: delegate methods to handle touch event
+// TODO: delegate methods to handle touch event
 
 @end
 
@@ -33,8 +33,8 @@
 
 @interface MDCChipTextFieldScrollView : UIScrollView
 
-@property (nonatomic, weak, nullable) id <MDCChipTextFieldScrollViewDelegate> delegate;
-@property (nonatomic, weak, nullable) id <MDCChipTextFieldScrollViewDataSource> dataSource;
+@property(nonatomic, weak, nullable) id<MDCChipTextFieldScrollViewDelegate> delegate;
+@property(nonatomic, weak, nullable) id<MDCChipTextFieldScrollViewDataSource> dataSource;
 
 @property(nonatomic) CGFloat chipSpacing;
 
@@ -46,4 +46,3 @@
 - (void)removeChipView:(MDCChipView *)chipView;
 
 @end
-
