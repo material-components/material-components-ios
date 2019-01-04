@@ -366,6 +366,7 @@ generate_website() {
 
     ./scripts/build_site.sh
 
+    gem update --system
     gem install bundler --no-rdoc --no-ri --no-document --quiet
     brew update
     brew install yarn --without-node
