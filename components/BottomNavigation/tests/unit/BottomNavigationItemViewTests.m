@@ -128,6 +128,28 @@ static UIImage *fakeImage(void) {
   XCTAssertEqualObjects(item1.inkView.inkColor, item2.inkView.inkColor);
 }
 
+- (void)testSetTitleVisibilityUpdatesLayout {
+  // Given
+  MDCBottomNavigationItemView *view = [[MDCBottomNavigationItemView alloc] init];
+  view.title = @"Test Content";
+  view.image = fakeImage();
+  view.bounds = CGRectMake(0, 0, 100, 100);
+  view.contentVerticalMargin = 20;
+  view.contentHorizontalMargin = 20;
+  view.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
+  [view layoutIfNeeded];
+  CGFloat imageMidY = CGRectGetMidY(view.iconImageView.frame);
+  XCTAssertEqualWithAccuracy(imageMidY, 32.75, 0.001);
+
+  // When
+  view.titleVisibility = MDCBottomNavigationBarTitleVisibilityNever;
+  [view layoutIfNeeded];
+
+  // Then
+  imageMidY = CGRectGetMidY(view.iconImageView.frame);
+  XCTAssertEqualWithAccuracy(imageMidY, 50, 0.001);
+}
+
 - (void)testBadgeCenterIsCorrectWithoutRTL {
   // Given
   MDCBottomNavigationItemView *itemView = [[MDCBottomNavigationItemView alloc] init];
