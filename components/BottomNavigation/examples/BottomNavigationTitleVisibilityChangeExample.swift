@@ -109,7 +109,7 @@ extension BottomNavigationTitleVisibilityChangeExample {
   
   class func catalogMetadata() -> [String: Any] {
     return [
-      "breadcrumbs": ["Bottom Navigation", "Change title visibility"],
+      "breadcrumbs": ["Bottom Navigation", "Bottom Navigation Title Visibility (Swift)"],
       "primaryDemo": false,
       "presentable": false,
     ]
