@@ -132,7 +132,7 @@ filegroup(
 objc_bundle(
     name = "Bundle",
     bundle_imports = [":BundleFiles"],
-}
+)
 ```
 
 ### Exposing private APIs to unit tests
