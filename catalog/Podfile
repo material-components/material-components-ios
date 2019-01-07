@@ -57,9 +57,9 @@ target "MDCCatalog" do
     'Typography/UnitTests',
   ]
   pod 'MaterialComponentsBeta', :path => '../', :testspecs => [
-    'schemes/Container/tests/unit',
+    'schemes/Container/UnitTests',
     'ActionSheet/UnitTests',
-    'Ripple/tests/unit',
+    'Ripple/UnitTests',
     'Buttons+Theming/UnitTests',
     'ButtonBar+Theming/UnitTests',
     'Cards+Theming/UnitTests',

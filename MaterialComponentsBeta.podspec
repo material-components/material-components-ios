@@ -175,12 +175,12 @@ Pod::Spec.new do |mdc|
     component.dependency "MaterialComponents/AnimationTiming"
     component.dependency "MaterialComponents/private/Math"
 
-    component.test_spec 'tests' do |tests|
-      tests.test_spec 'unit' do |unit_tests|
-        unit_tests.source_files = "components/#{component.base_name}/tests/unit/*.{h,m,swift}",
-            "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
-        unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
-      end
+    component.test_spec 'UnitTests' do |unit_tests|
+      unit_tests.source_files = [
+        "components/#{component.base_name}/tests/unit/*.{h,m,swift}",
+        "components/#{component.base_name}/tests/unit/supplemental/*.{h,m,swift}"
+      ]
+      unit_tests.resources = "components/#{component.base_name}/tests/unit/resources/*"
     end
   end
 
