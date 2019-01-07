@@ -222,7 +222,7 @@
     BOOL mdc_adjustsFontForContentSizeCategory;
 
 /**
- If enabled, accessibilityViewIsModal will be enabled for all non-transient snackbar views.
+ If enabled, accessibilityViewIsModal will be enabled for all snackbar views.
 
  Default is set to NO.
  */
