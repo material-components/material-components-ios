@@ -178,9 +178,30 @@ mdc_objc_library(
     ],
 )
 
+swift_library(
+    name = "unit_test_swift_sources",
+    srcs = native.glob([
+        "tests/unit/*.swift",
+        "tests/unit/Theming/*.swift",
+    ]),
+    copts = [
+        "-swift-version",
+        "3",
+    ],
+    visibility = ["//visibility:private"],
+    deps = [
+        ":Buttons",
+        ":ColorThemer",
+        ":Theming",
+        ":TypographyThemer",
+        ":private",
+    ],
+)
+
 mdc_unit_test_suite(
     name = "unit_tests",
     deps = [
         ":unit_test_sources",
+        ":unit_test_swift_sources",
     ],
 )
