@@ -62,6 +62,23 @@ See [deprecation_policy.md](deprecation_policy.md) for details.
 MDC-iOS uses GitHub to file and track issues.
 To find an issue to work on, filter the issues list by the ["is:fixit" label](https://github.com/material-components/material-components-ios/labels/is%3Afixit).
 
+## Getting started
+
+If you're new to iOS development and have a computer running OS X, these steps should help you get all the prerequisites. More experienced users may just need to see the last steps.
+
+1. We assume you already have installed on you mac
+    1. XCode and the Xcode Command Line Tools which comes with [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
+    1. [cocoapods](https://guides.cocoapods.org/using/getting-started.html#installation).
+1. Install
+    1. [git lfs](https://github.com/material-components/material-components-ios/blob/develop/contributing/tools.md#using-git-lfs).
+1. To see your work within the catalog
+    1. `pod install --project-directory=catalog/`
+    1. `open catalog/MDCCatalog.workspace`
+    1. Navigate to the component you want to work on in Pods -> Development Pods -> Material Components -> <#component>.
+    1. Run the `MDCDragons` target to see the full set of examples. 
+    1. Tests can also be run from the Product menu.
+1. To send us a change make a [Pull Requests](https://help.github.com/articles/creating-a-pull-request-from-a-fork/) from [your own fork](https://help.github.com/articles/fork-a-repo/).
+
 ## The small print
 
 Contributions made by corporations are covered by a different agreement than the one above, the [Software Grant and Corporate Contributor License Agreement](https://cla.developers.google.com/about/google-corporate).
