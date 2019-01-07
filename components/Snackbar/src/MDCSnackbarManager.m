@@ -240,7 +240,8 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
       showSnackbarView:snackbarView
               animated:YES
             completion:^{
-              UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, snackbarView);
+              UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification,
+                                              snackbarView);
 
               if ([self isSnackbarTransient:snackbarView]) {
                 __weak MDCSnackbarMessageView *weakSnackbarView = snackbarView;
@@ -282,7 +283,8 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
                                        self.overlayView.hidden = YES;
                                        [self deactivateOverlay:self.overlayView];
 
-                                       UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil);
+                                       UIAccessibilityPostNotification(
+                                           UIAccessibilityLayoutChangedNotification, nil);
 
                                        self.currentSnackbar = nil;
 
