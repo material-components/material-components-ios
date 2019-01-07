@@ -236,14 +236,23 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 
   // Once the Snackbar has finished animating on screen, start the automatic dismiss timeout, but
   // only if the user isn't running VoiceOver.
+  __weak MDCSnackbarManagerInternal *weakSelf = self;
   [self.overlayView
       showSnackbarView:snackbarView
               animated:YES
             completion:^{
-              UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification,
-                                              snackbarView);
+              __strong MDCSnackbarManagerInternal *strongSelf = weakSelf;
+              if (!strongSelf.manager.shouldEnableAccessibilityViewIsModal &&
+                  [strongSelf isSnackbarTransient:snackbarView]) {
+                snackbarView.accessibilityElementsHidden = YES;
+                UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification,
+                                                message.voiceNotificationText);
+              } else {
+                UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification,
+                                                snackbarView);
+              }
 
-              if ([self isSnackbarTransient:snackbarView]) {
+              if ([strongSelf isSnackbarTransient:snackbarView]) {
                 __weak MDCSnackbarMessageView *weakSnackbarView = snackbarView;
                 dispatch_time_t popTime =
                     dispatch_time(DISPATCH_TIME_NOW, (int64_t)(message.duration * NSEC_PER_SEC));
