@@ -45,6 +45,7 @@ class DialogsMaterialThemingTests: XCTestCase {
     XCTAssertEqual(alert.messageColor, colorScheme.onSurfaceColor.withAlphaComponent(0.60))
     XCTAssertEqual(alert.titleIconTintColor, colorScheme.primaryColor)
     XCTAssertEqual(alert.scrimColor, colorScheme.onSurfaceColor.withAlphaComponent(0.32))
+    XCTAssertEqual(alert.backgroundColor, colorScheme.surfaceColor);
 
     // Typography
     XCTAssertEqual(alert.titleFont, typographyScheme.headline6)
@@ -128,5 +129,43 @@ class DialogsMaterialThemingTests: XCTestCase {
         XCTAssertEqual(button.minimumSize.height, 36, accuracy: 0.001)
       }
     }
+  }
+
+  func testAlertThemingWithCustomColorScheme() {
+    // Given
+    let alert: MDCAlertController = MDCAlertController(title: "Title", message: "Message")
+    let action = MDCAlertAction(title: "", emphasis: .high)
+    alert.addAction(action)
+
+    let alertView = alert.view as! MDCAlertControllerView
+    let button = alert.button(for: action)!
+    let presentationController = alert.mdc_dialogPresentationController!
+
+    let scheme: MDCContainerScheme = MDCContainerScheme()
+    let colorScheme = MDCSemanticColorScheme()
+    colorScheme.surfaceColor = .black
+    colorScheme.onSurfaceColor = .orange
+    colorScheme.primaryColor = .green
+    colorScheme.onPrimaryColor = .yellow
+    scheme.colorScheme = colorScheme
+
+    // When
+    alert.applyTheme(withScheme: scheme)
+
+    // Then
+    XCTAssertEqual(alertView.backgroundColor, colorScheme.surfaceColor);
+
+    XCTAssertEqual(alertView.titleColor, colorScheme.onSurfaceColor.withAlphaComponent(0.87))
+    XCTAssertEqual(alertView.messageColor, colorScheme.onSurfaceColor.withAlphaComponent(0.60))
+    XCTAssertEqual(presentationController.scrimColor,
+                   colorScheme.onSurfaceColor.withAlphaComponent(0.32))
+
+    XCTAssertEqual(alertView.titleIconTintColor, colorScheme.primaryColor)
+    XCTAssertEqual(button.backgroundColor(for: .normal), colorScheme.primaryColor)
+
+    XCTAssertEqual(button.titleColor(for: .normal), colorScheme.onPrimaryColor)
+    XCTAssertEqual(button.inkColor,
+                   colorScheme.onPrimaryColor.withAlphaComponent(ButtonsThemingTest.inkOpacity))
+    XCTAssertEqual(button.imageTintColor(for: .normal), colorScheme.onPrimaryColor)
   }
 }
