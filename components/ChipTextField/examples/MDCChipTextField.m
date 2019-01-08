@@ -151,9 +151,9 @@ static CGFloat const kTextToEnterPlaceholderLength = 16.0f;
 
 - (void)updateConstraints {
   // TODO: This is not optimized for performance, but due to how MDCTextInputController works, we
-  // need to update constraints here
-  [self updateChipViewLeadingConstraints];
-  [self updateChipViewTrailingConstraints];
+  // need to update constraints here using the latest textInsets values.
+  self.chipContainerViewConstraintLeading.constant = self.textInsets.left;
+  self.chipContainerViewConstraintTrailing.constant = self.chipContainerViewConstraintTrailingConstant;
 
   [super updateConstraints];
 }
