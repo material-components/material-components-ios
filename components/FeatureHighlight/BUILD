@@ -15,6 +15,7 @@
 
 load(
     "//:material_components_ios.bzl",
+    "mdc_extension_objc_library",
     "mdc_objc_library",
     "mdc_public_objc_library",
     "mdc_unit_test_suite",
@@ -48,48 +49,32 @@ objc_bundle(
     bundle_imports = [":BundleFiles"],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "ColorThemer",
-    srcs = native.glob(["src/ColorThemer/*.m"]),
-    hdrs = native.glob(["src/ColorThemer/*.h"]),
-    includes = ["src/ColorThemer"],
-    visibility = ["//visibility:public"],
     deps = [
         ":FeatureHighlight",
         "//components/Themes",
     ],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "FontThemer",
-    srcs = native.glob(["src/FontThemer/*.m"]),
-    hdrs = native.glob(["src/FontThemer/*.h"]),
-    includes = ["src/FontThemer"],
-    visibility = ["//visibility:public"],
     deps = [
         ":FeatureHighlight",
         "//components/Themes",
     ],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "TypographyThemer",
-    srcs = native.glob(["src/TypographyThemer/*.m"]),
-    hdrs = native.glob(["src/TypographyThemer/*.h"]),
-    includes = ["src/TypographyThemer"],
-    visibility = ["//visibility:public"],
     deps = [
         ":FeatureHighlight",
         "//components/schemes/Typography",
     ],
 )
 
-mdc_objc_library(
+mdc_extension_objc_library(
     name = "FeatureHighlightAccessibilityMutator",
-    srcs = native.glob(["src/FeatureHighlightAccessibilityMutator/*.m"]),
-    hdrs = native.glob(["src/FeatureHighlightAccessibilityMutator/*.h"]),
-    includes = ["src/FeatureHighlightAccessibilityMutator"],
-    visibility = ["//visibility:public"],
     deps = [
         ":FeatureHighlight",
         "@material_text_accessibility_ios//:MDFTextAccessibility",
@@ -126,6 +111,7 @@ mdc_objc_library(
 )
 
 mdc_unit_test_suite(
+    name = "unit_tests",
     deps = [
         ":unit_test_sources",
     ],

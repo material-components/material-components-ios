@@ -14,9 +14,10 @@
 
 #import "ChipsExamplesSupplemental.h"
 
+#import "MaterialChips+Theming.h"
 #import "MaterialChips.h"
+#import "MaterialContainerScheme.h"
 #import "MaterialTextFields.h"
-#import "MaterialChips+ChipThemer.h"
 
 @interface ChipsInputExampleViewController () <MDCChipFieldDelegate>
 @end
@@ -34,6 +35,14 @@
     _shapeScheme = [[MDCShapeScheme alloc] init];
   }
   return self;
+}
+
+- (MDCContainerScheme *)containerScheme {
+  MDCContainerScheme *scheme = [[MDCContainerScheme alloc] init];
+  scheme.colorScheme = self.colorScheme;
+  scheme.shapeScheme = self.shapeScheme;
+  scheme.typographyScheme = self.typographyScheme;
+  return scheme;
 }
 
 - (void)viewDidLoad {
@@ -64,16 +73,11 @@
 }
 
 - (void)chipField:(MDCChipField *)chipField didAddChip:(MDCChipView *)chip {
-  MDCChipViewScheme *scheme = [[MDCChipViewScheme alloc] init];
-  scheme.colorScheme = self.colorScheme;
-  scheme.typographyScheme = self.typographyScheme;
-  scheme.shapeScheme = self.shapeScheme;
-
   // Every other chip is stroked
   if (chipField.chips.count%2) {
-    [MDCChipViewThemer applyOutlinedVariantWithScheme:scheme toChipView:chip];
+    [chip applyOutlinedThemeWithScheme:[self containerScheme]];
   } else {
-    [MDCChipViewThemer applyScheme:scheme toChipView:chip];
+    [chip applyThemeWithScheme:[self containerScheme]];
   }
   [chip sizeToFit];
   CGFloat chipVerticalInset = MIN(0, (CGRectGetHeight(chip.bounds) - 48) / 2);

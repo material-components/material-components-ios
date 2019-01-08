@@ -29,7 +29,7 @@
  on all clients enabling inferTopSafeAreaInsetFromViewController on their flexible header view
  controller.
  */
-@interface MDCFlexibleHeaderTopSafeArea : NSObject
+__attribute__((objc_subclassing_restricted)) @interface MDCFlexibleHeaderTopSafeArea : NSObject
 
 #pragma mark Configuring the top safe area source
 
