@@ -76,7 +76,6 @@ navigationBar.titleInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
 ### BottomAppBar
 
 * [Enable tapping on area above Navigation Bar (#6036)](https://github.com/material-components/material-components-ios/commit/447707d4927e4cfc311e2e1f9ff9e7fceaf357c3) (Kirk Spaziani)
-* [Fix it/bottom app bar cut out (#5958)](https://github.com/material-components/material-components-ios/commit/068786a9c620e6e760b8f30d414067b1da203808) (Peter Friese)
 
 ### BottomNavigation
 
