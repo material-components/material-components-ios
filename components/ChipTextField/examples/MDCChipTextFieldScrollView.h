@@ -36,12 +36,16 @@
 @property(nonatomic, weak, nullable) id<MDCChipTextFieldScrollViewDelegate> delegate;
 @property(nonatomic, weak, nullable) id<MDCChipTextFieldScrollViewDataSource> dataSource;
 
+
+/**
+ The spacing between chips in this scroll view.
+ */
 @property(nonatomic) CGFloat chipSpacing;
 
 - (void)scrollToLeft;
 - (void)scrollToRight;
 
-// TODO: remove these methods
+// TODO: remove these methods if we decide to go with data source. Needs revisit.
 - (void)appendChipView:(MDCChipView *)chipView;
 - (void)removeChipView:(MDCChipView *)chipView;
 

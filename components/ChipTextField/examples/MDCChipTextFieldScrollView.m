@@ -122,10 +122,6 @@
 - (void)appendChipView:(MDCChipView *)chipView {
   self.trailingConstraint.active = NO;
   [self.contentView addSubview:chipView];
-  [chipView setContentHuggingPriority:UILayoutPriorityRequired
-                              forAxis:UILayoutConstraintAxisHorizontal];
-  [chipView setContentCompressionResistancePriority:UILayoutPriorityRequired
-                                            forAxis:UILayoutConstraintAxisHorizontal];
   NSLayoutConstraint *chipViewConstraintTop =
       [NSLayoutConstraint constraintWithItem:self.contentView
                                    attribute:NSLayoutAttributeTop
@@ -153,6 +149,8 @@
 
   NSLayoutConstraint *chipViewConstraintLeading = nil;
   NSInteger numberOfChips = [self.dataSource numberOfChipsOnScrollView:self];
+  // The left most chip is always done before all other chips are added right now,
+  // we should remove the assumption when moving to Beta
   if (numberOfChips == 0) {
     chipViewConstraintLeading = [NSLayoutConstraint constraintWithItem:self.contentView
                                                              attribute:NSLayoutAttributeLeading

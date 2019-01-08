@@ -545,7 +545,7 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
     clearButtonWidth += 2 * MDCTextInputClearButtonImageBuiltInPadding;
 
     // Clear buttons are only shown if there is entered text or programatically set text to clear.
-    if (self.hasTextContent > 0) {
+    if (self.hasTextContent) {
       switch (self.clearButtonMode) {
         case UITextFieldViewModeAlways:
         case UITextFieldViewModeUnlessEditing:
@@ -589,7 +589,7 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
   if (self.rightView.superview) {
     editingRect.size.width += MDCTextInputEditingRectRightViewPaddingCorrection;
   } else {
-    if (self.hasTextContent > 0) {
+    if (self.hasTextContent) {
       CGFloat clearButtonWidth = CGRectGetWidth(self.clearButton.bounds);
 
       // The width is adjusted by the padding twice: once for the right side, once for left.
