@@ -42,7 +42,7 @@ typedef NS_ENUM(NSInteger, MDCRippleStyle) {
  Our touch feedback ripple effect is a prominent entity across all our interactable components:
  i.e., buttons, cards, tab bars, list items.
 
- There can be multiple riples occuring at the same time, each represented by an MDCRippleLayer.
+ There can be multiple riples occurring at the same time, each represented by an MDCRippleLayer.
  */
 @interface MDCRippleView : UIView
 
