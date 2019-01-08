@@ -1,15 +1,48 @@
-# #develop#
+# 73.1.0
 
-Replace this text with a summarized description of this release's contents.
-## Breaking changes
+In this minor release we have added new theming extensions for Cards and Chips, as well as added a new component to beta called Ripple that will eventually be a successor to Ink. We also added additional functionality to Dialogs, NavigationBar, and snapshot testing for Textfields.
 
-Replace this explanations for how to resolve the breaking changes.
-## New deprecations
-
-Replace this text with links to deprecation guides.
 ## New features
 
-Replace this text with example code for each new feature.
+### Card Theming Extension Usage Example
+```swift
+  var scheme: MDCContainerScheming {
+    let scheme = MDCContainerScheme()
+    scheme.colorScheme = colorScheme
+    scheme.typographyScheme = typographyScheme
+    scheme.shapeScheme = shapeScheme
+    return scheme
+  }
+  ...
+  let card = MDCCard()
+  card.applyTheme(withScheme: scheme)
+```
+
+### Chips Theming Extension Usage Example
+```swift
+  var scheme: MDCContainerScheming {
+    let scheme = MDCContainerScheme()
+    scheme.colorScheme = colorScheme
+    scheme.typographyScheme = typographyScheme
+    scheme.shapeScheme = shapeScheme
+    return scheme
+  }
+  ...
+  let chipView = MDCChipView()
+  chipView.applyTheme(withScheme: scheme)
+```
+
+### Dialogs Background Color Usage Example
+```swift
+let alert = MDCAlertController(title: "Title", message: "Message")
+alert.backgroundColor = .white
+```
+### NavigationBar Title View Inset Usage Example
+```swift
+let navigationBar = MDCNavigationBar()
+navigationBar.titleInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+```
+
 ## API changes
 
 ### Cards+Theming
@@ -58,11 +91,17 @@ Replace this text with example code for each new feature.
 ### Cards
 
 * [Ran buildifier against all BUILD files. (#6077)](https://github.com/material-components/material-components-ios/commit/d170c64c363fbb6dec922df70004a33bbd23f097) (featherless)
+* [Add snapshot tests for Card component with variations (#6041)](https://github.com/material-components/material-components-ios/commit/fd8476e19676b1be6ceb5081c1496bb2822bf9e1) (rami-a)
+* [Cards theming extension + snapshots: Re-revert with fix (#6049)](https://github.com/material-components/material-components-ios/commit/58db37d09d93c06510f961de048ac8d7b92e89ed) (rami-a)
+* [Fix shadow elevation values for outlined cards (#6050)](https://github.com/material-components/material-components-ios/commit/e25d7c88cae098cfcd0eb9af02c6b05edc5dd537) (rami-a)
 
 ### Chips
 
 * [Create theming extension for Chips (#6087)](https://github.com/material-components/material-components-ios/commit/d442f890286e3fa0f5d5583aeacca799e300a6f2) (rami-a)
 * [Rename internal MDCTextField subclass in MDCChipField (#6032)](https://github.com/material-components/material-components-ios/commit/7ca47ab4af36e109b4df365b5e0886776f04d80e) (Galia Kaufman)
+* [Add more chip snapshot test to support image and accessory views (#6166)](https://github.com/material-components/material-components-ios/commit/987dcfef6aacfd9ed060cca9a9009b39721ee9fa) (rami-a)
+* [Add snapshot tests to Chips (#6098)](https://github.com/material-components/material-components-ios/commit/a4820525cfab8b7c7c1de3f209ab2e59ee148170) (rami-a)
+* [Update chips examples to use theming extension (#6096)](https://github.com/material-components/material-components-ios/commit/c604f9fd357728d0fbf2e9e509b9e978a1a4cfb8) (rami-a)
 
 ### Collections
 
@@ -111,9 +150,6 @@ Replace this text with example code for each new feature.
 * [Minor clean-up/refactor of text fields snapshot tests. (#6128)](https://github.com/material-components/material-components-ios/commit/df09824d27644307c421e85f6a88d94baae72bd2) (Robert Moore)
 * [Rename hook test method. (#6168)](https://github.com/material-components/material-components-ios/commit/2b33cbdc492c52ab86f0638ba97a5328f8ce7143) (Robert Moore)
 * [`Disabled` snapshot tests use text properties. (#6070)](https://github.com/material-components/material-components-ios/commit/b1f5019caa0ab40fae5f95753394f9d2358bdc72) (Robert Moore)
-
-## Multi-component changes
-
 * [Add Arabic snapshot tests for Filled style. (#6130)](https://github.com/material-components/material-components-ios/commit/2aa3d5aca37e4a6cfd3852228d183b77c5d757aa) (Robert Moore)
 * [Add Cyrillic snapshot tests. (#6150)](https://github.com/material-components/material-components-ios/commit/940cfb64cc2534bd0bac7c7003f75f3aa266a75a) (Robert Moore)
 * [Add Filled Floating Arabic RTL snapshot tests (#6139)](https://github.com/material-components/material-components-ios/commit/865cc4fc40477ce9863d08ae53771eb6572b0ae4) (Robert Moore)
@@ -121,25 +157,22 @@ Replace this text with example code for each new feature.
 * [Add Outlined text area snapshot tests. (#6145)](https://github.com/material-components/material-components-ios/commit/4f54ed4f9288f44d80341eb424c8c98bca944330) (Robert Moore)
 * [Add RTL Arabic snapshots for FullWidth (#6127)](https://github.com/material-components/material-components-ios/commit/9b4ac31eccbb9950fce1dea42173a51c8170be20) (Robert Moore)
 * [Add Underline Floating snapshot tests (#6146)](https://github.com/material-components/material-components-ios/commit/965169630d5f688a1b3e582c32ef298e9adc0663) (Robert Moore)
-* [Add examples bazel targets. (#6072)](https://github.com/material-components/material-components-ios/commit/8f4683d10dafdfdf235a74aac3770904b9d10fe4) (Robert Moore)
-* [Add more chip snapshot test to support image and accessory views (#6166)](https://github.com/material-components/material-components-ios/commit/987dcfef6aacfd9ed060cca9a9009b39721ee9fa) (rami-a)
-* [Add snapshot tests for Card component with variations (#6041)](https://github.com/material-components/material-components-ios/commit/fd8476e19676b1be6ceb5081c1496bb2822bf9e1) (rami-a)
-* [Add snapshot tests to Chips (#6098)](https://github.com/material-components/material-components-ios/commit/a4820525cfab8b7c7c1de3f209ab2e59ee148170) (rami-a)
-* [Add support to specify insets for snapshot tests (#6057)](https://github.com/material-components/material-components-ios/commit/8dcac3ab164a6929d2fbe744b0b12889e8098de3) (rami-a)
 * [Add underline multiline snapshots tests. (#6175)](https://github.com/material-components/material-components-ios/commit/5115e0be13565740f2a10aa1d4ebf4aec33e50bf) (Robert Moore)
 * [Add underlined Arabic snapshot tests. (#6123)](https://github.com/material-components/material-components-ios/commit/f962a7575918d8aa09da3b6c8b58b5fdaa1fab42) (Robert Moore)
 * [Adding Korean snapshot tests. (#6147)](https://github.com/material-components/material-components-ios/commit/26de801b03855cd28d250292efb4d6e459d1db9b) (Robert Moore)
 * [Arabic RTL snapshot tests (#6114)](https://github.com/material-components/material-components-ios/commit/0950eff8083a57bafb33e52567abf0779daa2bcd) (Robert Moore)
-* [Cards theming extension + snapshots: Re-revert with fix (#6049)](https://github.com/material-components/material-components-ios/commit/58db37d09d93c06510f961de048ac8d7b92e89ed) (rami-a)
-* [Fix for release-candidate merge issue with develop (#6068)](https://github.com/material-components/material-components-ios/commit/b380bca14e6882bbbcf2c924f0bff6d715d75be2) (rami-a)
-* [Fix shadow elevation values for outlined cards (#6050)](https://github.com/material-components/material-components-ios/commit/e25d7c88cae098cfcd0eb9af02c6b05edc5dd537) (rami-a)
 * [Fixing RTL input text alignment in snapshots. (#6132)](https://github.com/material-components/material-components-ios/commit/d30a6d3c2e0920f550fde06a7120c84d62e6d3a9) (Robert Moore)
-* [Make mdc_unit_test_suite's name explicit. (#6080)](https://github.com/material-components/material-components-ios/commit/003cf8bcd9d325ced57d28c21cc439d932fe2b1a) (featherless)
-* [Move files to src (#6138)](https://github.com/material-components/material-components-ios/commit/914def5fc7e09915de3b9a99070aebbe97d679f2) (Cody Weaver)
 * [Rename TextArea snapshot tests. (#6172)](https://github.com/material-components/material-components-ios/commit/7aecc62e4d087b7454a9cb69ee8eb97bd815b548) (Robert Moore)
 * [Revert cards theming exstension (#6048)](https://github.com/material-components/material-components-ios/commit/63a04350706838c88276483179b957b1a3c4e259) (Robert Moore)
 * [Truncate helper/error text. (#6165)](https://github.com/material-components/material-components-ios/commit/3930a5f5b48f82b5419cbb7cfd8e83044bb50411) (Robert Moore)
-* [Update chips examples to use theming extension (#6096)](https://github.com/material-components/material-components-ios/commit/c604f9fd357728d0fbf2e9e509b9e978a1a4cfb8) (rami-a)
+
+## Multi-component changes
+
+* [Add examples bazel targets. (#6072)](https://github.com/material-components/material-components-ios/commit/8f4683d10dafdfdf235a74aac3770904b9d10fe4) (Robert Moore)
+* [Add support to specify insets for snapshot tests (#6057)](https://github.com/material-components/material-components-ios/commit/8dcac3ab164a6929d2fbe744b0b12889e8098de3) (rami-a)
+* [Fix for release-candidate merge issue with develop (#6068)](https://github.com/material-components/material-components-ios/commit/b380bca14e6882bbbcf2c924f0bff6d715d75be2) (rami-a)
+* [Make mdc_unit_test_suite's name explicit. (#6080)](https://github.com/material-components/material-components-ios/commit/003cf8bcd9d325ced57d28c21cc439d932fe2b1a) (featherless)
+* [Move files to src (#6138)](https://github.com/material-components/material-components-ios/commit/914def5fc7e09915de3b9a99070aebbe97d679f2) (Cody Weaver)
 * [Update snapshot tests to utilize the new API for adding a background view (#6065)](https://github.com/material-components/material-components-ios/commit/653cedde4a6afdfb6080ed14bc2c7e5b659b3d25) (rami-a)
 * [Use mdc_extension_objc_library in BUILD (#6089)](https://github.com/material-components/material-components-ios/commit/5b1943dd787429db0d84293e6e4777ffe96a9525) (Robert Moore)
 * [{Beta} Fix name of "fake" Beta header. (#6055)](https://github.com/material-components/material-components-ios/commit/970de21252c823eef136397a7efbde3af0bb3dd0) (Robert Moore)
