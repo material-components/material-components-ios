@@ -271,6 +271,18 @@
     willBeginSwipeToDismissItemAtIndexPath:(nonnull NSIndexPath *)indexPath;
 
 /**
+ Sent to the receiver while the collection view index path is being swiped for dismissal,
+ with the current location of the swipe.
+
+ @param collectionView The collection view being swiped for dismissal.
+ @param indexPath The index path of the collection view being swiped for dismissal.
+ @param location The current location of the swiping.
+ */
+- (void)collectionView:(nonnull UICollectionView *)collectionView
+    didSwipeToDismissItemAtIndexPath:(nonnull NSIndexPath *)indexPath
+    atLocation:(CGPoint)location;
+
+/**
  Sent to the receiver after the collection view item has been dismissed.
 
  @param collectionView The collection view being swiped for dismissal.

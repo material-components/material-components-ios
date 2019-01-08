@@ -602,6 +602,14 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
         }
       }
 
+      // Notify delegate of the change in location.
+      if ([_delegate respondsToSelector:@selector(collectionView:
+                                            didSwipeToDismissItemAtIndexPath:atLocation:)]) {
+        [_delegate collectionView:_collectionView
+            didSwipeToDismissItemAtIndexPath:_dismissingCellIndexPath
+                                 atLocation:location];
+      }
+
       // Update the tracked item's position and alpha.
       CGAffineTransform transform;
       CGFloat alpha;
