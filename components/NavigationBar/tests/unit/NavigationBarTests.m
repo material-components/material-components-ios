@@ -291,13 +291,6 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
   }
 }
 
-- (void)setUpNavBarWithTitleViewLayoutBehavior:
-    (MDCNavigationBarTitleViewLayoutBehavior)layoutBahavior {
-  self.navBar.frame = CGRectMake(0, 0, 300, 25);
-  self.navBar.titleView = [[UIView alloc] init];
-  self.navBar.titleViewLayoutBehavior = layoutBahavior;
-}
-
 - (void)testTitleFontProperty {
   // Given
   self.navBar.title = @"this is a Title";
