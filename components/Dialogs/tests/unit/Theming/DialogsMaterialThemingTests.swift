@@ -169,7 +169,7 @@ class DialogsMaterialThemingTests: XCTestCase {
 
     XCTAssertEqual(button.titleColor(for: .normal), colorScheme.onPrimaryColor)
     XCTAssertEqual(button.inkColor,
-                   colorScheme.onPrimaryColor.withAlphaComponent(ButtonsThemingTest.inkOpacity))
+                   colorScheme.onPrimaryColor.withAlphaComponent(inkOpacity))
     XCTAssertEqual(button.imageTintColor(for: .normal), colorScheme.onPrimaryColor)
   }
 }
